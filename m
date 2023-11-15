@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC09D364C7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752153C481
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwgajtfI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930A4C433C7;
-	Wed, 15 Nov 2023 19:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJVGL4Jv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9F9C433C9;
+	Wed, 15 Nov 2023 19:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077251;
-	bh=I615xl2ZX1yYgWgnteZDs+GVB5Au+7y+tyOVaBX/624=;
+	s=korg; t=1700077253;
+	bh=pUz03s7MmfuRFkf/PonQVu8gTGmwQHok7C32vGfDe0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwgajtfIlO+c/MUo/zNVcvSMUL4qiZBR3tJoVtB/vahXbmzhN+KAI4ra1RpHfAG+u
-	 rLowB+ez+7Jt1dS99q1d8iVR1TKK8iDcizFONq6rcVAr2oeXia4dGFddG25E39t6fy
-	 udxLxervS0STHRra/jq87gttMBYtECXbX2vnLG3c=
+	b=UJVGL4JvZ0YGDceYgaG4H0ZA1bG53xMN5MN4a26Ydytb8pvC+YKEKWUXN31dVzY8O
+	 3POEDX6kkZrIF9wprM24wViGEieCuh6+uXlkw0xSES0yh3gkQ9uxSJmmwiEgSq40a5
+	 mOPTFFsrvdpd7xUTMTiTnwJhLnDFYWtizsWqYeOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Helen Koike <helen.koike@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 168/603] clk: imx: Select MXC_CLK for CLK_IMX8QXP
-Date: Wed, 15 Nov 2023 14:11:53 -0500
-Message-ID: <20231115191624.834055667@linuxfoundation.org>
+Subject: [PATCH 6.6 159/603] spi: tegra: Fix missing IRQ check in tegra_slink_probe()
+Date: Wed, 15 Nov 2023 14:11:44 -0500
+Message-ID: <20231115191624.196463004@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,42 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit 317e69c49b4ceef8aebb47d771498ccb3571bdf9 ]
+[ Upstream commit eb9913b511f10968a02cfa5329a896855dd152a3 ]
 
-If the i.MX8QXP clock provider is built-in but the MXC_CLK is
-built as module, build fails:
+This func misses checking for platform_get_irq()'s call and may passes the
+negative error codes to request_irq(), which takes unsigned IRQ #,
+causing it to fail with -EINVAL, overriding an original error code.
 
-aarch64-linux-ld: drivers/clk/imx/clk-imx8-acm.o: in function `imx8_acm_clk_probe':
-clk-imx8-acm.c:(.text+0x3d0): undefined reference to `imx_check_clk_hws'
+Fix this by stop calling request_irq() with invalid IRQ #s.
 
-Fix that by selecting MXC_CLK in case of CLK_IMX8QXP.
-
-Fixes: c2cccb6d0b33 ("clk: imx: add imx8qxp clk driver")
-Closes: https://lore.kernel.org/all/8b77219e-b59e-40f1-96f1-980a0b2debcf@infradead.org/
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: dc4dc3605639 ("spi: tegra: add spi driver for SLINK controller")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Reviewed-by: Helen Koike <helen.koike@collabora.com>
+Link: https://lore.kernel.org/r/tencent_73FCC06A3D1C14EE5175253C6FB46A07B709@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-tegra20-slink.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/imx/Kconfig b/drivers/clk/imx/Kconfig
-index f6b82e0b9703a..db3bca5f4ec9c 100644
---- a/drivers/clk/imx/Kconfig
-+++ b/drivers/clk/imx/Kconfig
-@@ -96,6 +96,7 @@ config CLK_IMX8QXP
- 	depends on (ARCH_MXC && ARM64) || COMPILE_TEST
- 	depends on IMX_SCU && HAVE_ARM_SMCCC
- 	select MXC_CLK_SCU
-+	select MXC_CLK
- 	help
- 	  Build the driver for IMX8QXP SCU based clocks.
+diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
+index 4d6db6182c5ed..f5cd365c913a8 100644
+--- a/drivers/spi/spi-tegra20-slink.c
++++ b/drivers/spi/spi-tegra20-slink.c
+@@ -1086,6 +1086,8 @@ static int tegra_slink_probe(struct platform_device *pdev)
+ 	reset_control_deassert(tspi->rst);
  
+ 	spi_irq = platform_get_irq(pdev, 0);
++	if (spi_irq < 0)
++		return spi_irq;
+ 	tspi->irq = spi_irq;
+ 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
+ 				   tegra_slink_isr_thread, IRQF_ONESHOT,
 -- 
 2.42.0
 
