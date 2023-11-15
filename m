@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED39381DC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A900F3A8C9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrM3zpm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CF3C433CB;
-	Wed, 15 Nov 2023 19:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HHMuFxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0AAC433C9;
+	Wed, 15 Nov 2023 19:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076912;
-	bh=uFJ6GuqmcdjuTVWVgdRNaACkxgvVqALSkVH5uWCkPYg=;
+	s=korg; t=1700076913;
+	bh=yQ6RDszFdVtbqTh8YZ+L72Yhp0oeBloY8G+HGqmFjmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JrM3zpm1nQN0mB41m/vBkA034SIVhtuzSR1l7KNsWVGla4tqrpM/QfjDEDbvZOlKn
-	 HPOgv5qtiiyr/+V9B6M2e9Zte9NcFy9sg0kAfcUSePjLr5h/gomKsB2RX9+vFo37S3
-	 KFYjvX/rxfe3zdBx/mu86R75Iz6GAhaJ2kFBTpso=
+	b=2HHMuFxXIpNJsaUl6wMTj7nZoXNXWkJaEE4aZoHGk63Nw1tpp8iLp53pLqnnwDK7I
+	 PCzi0vbdCr1A1aXCx/e5H8Bsu3UQBf9LS/neK6wH5FKHMwGutAgFBThbpnSW1sufXW
+	 tbU1S2/9yPLM3IVuoqHM2iJx3/FONANEyYSN2la0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Jim Harris <jim.harris@samsung.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Dave Marchevsky <davemarchevsky@fb.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 461/550] cxl/region: Prepare the decoder match range helper for reuse
-Date: Wed, 15 Nov 2023 14:17:25 -0500
-Message-ID: <20231115191632.828983598@linuxfoundation.org>
+Subject: [PATCH 6.6 065/603] bpf: Fix kfunc callback register type handling
+Date: Wed, 15 Nov 2023 14:10:10 -0500
+Message-ID: <20231115191617.655617653@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,100 +39,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 1110581412c7a223439bb3ecdcdd9f4432e08231 ]
+[ Upstream commit 06d686f771ddc27a8554cd8f5b22e071040dc90e ]
 
-match_decoder_by_range() and decoder_match_range() both determine
-if an HPA range matches a decoder. The first does it for root
-decoders and the second one operates on switch decoders.
+The kfunc code to handle KF_ARG_PTR_TO_CALLBACK does not check the reg
+type before using reg->subprogno. This can accidently permit invalid
+pointers from being passed into callback helpers (e.g. silently from
+different paths). Likewise, reg->subprogno from the per-register type
+union may not be meaningful either. We need to reject any other type
+except PTR_TO_FUNC.
 
-Tidy these up with clear naming and make the switch helper more
-like the root decoder helper in style and functionality. Make it
-take the actual range, rather than an endpoint decoder from which
-it extracts the range. Require an exact match on switch decoders,
-because unlike a root decoder that maps an entire region, Linux
-only supports 1:1 mapping of switch to endpoint decoders. Note that
-root-decoders are a super-set of switch-decoders and the range they
-cover is a super-set of a region, hence the use of range_contains() for
-that case.
-
-Aside from aesthetics and maintainability, this is in preparation
-for reuse.
-
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Jim Harris <jim.harris@samsung.com>
-Link: https://lore.kernel.org/r/011b1f498e1758bb8df17c5951be00bd8d489e3b.1698263080.git.alison.schofield@intel.com
-[djbw: fixup root decoder vs switch decoder range checks]
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 0cf36a85c140 ("cxl/region: Use cxl_calc_interleave_pos() for auto-discovery")
+Acked-by: Dave Marchevsky <davemarchevsky@fb.com>
+Fixes: 5d92ddc3de1b ("bpf: Add callback validation to kfunc verifier logic")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230912233214.1518551-14-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ kernel/bpf/verifier.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 8394cd96e1869..123474d6c475a 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1482,16 +1482,20 @@ static struct cxl_port *next_port(struct cxl_port *port)
- 	return port->parent_dport->port;
- }
- 
--static int decoder_match_range(struct device *dev, void *data)
-+static int match_switch_decoder_by_range(struct device *dev, void *data)
- {
--	struct cxl_endpoint_decoder *cxled = data;
- 	struct cxl_switch_decoder *cxlsd;
-+	struct range *r1, *r2 = data;
- 
- 	if (!is_switch_decoder(dev))
- 		return 0;
- 
- 	cxlsd = to_cxl_switch_decoder(dev);
--	return range_contains(&cxlsd->cxld.hpa_range, &cxled->cxld.hpa_range);
-+	r1 = &cxlsd->cxld.hpa_range;
-+
-+	if (is_root_decoder(dev))
-+		return range_contains(r1, r2);
-+	return (r1->start == r2->start && r1->end == r2->end);
- }
- 
- static void find_positions(const struct cxl_switch_decoder *cxlsd,
-@@ -1560,7 +1564,8 @@ static int cmp_decode_pos(const void *a, const void *b)
- 		goto err;
- 	}
- 
--	dev = device_find_child(&port->dev, cxled_a, decoder_match_range);
-+	dev = device_find_child(&port->dev, &cxled_a->cxld.hpa_range,
-+				match_switch_decoder_by_range);
- 	if (!dev) {
- 		struct range *range = &cxled_a->cxld.hpa_range;
- 
-@@ -2691,7 +2696,7 @@ static int devm_cxl_add_dax_region(struct cxl_region *cxlr)
- 	return rc;
- }
- 
--static int match_decoder_by_range(struct device *dev, void *data)
-+static int match_root_decoder_by_range(struct device *dev, void *data)
- {
- 	struct range *r1, *r2 = data;
- 	struct cxl_root_decoder *cxlrd;
-@@ -2822,7 +2827,7 @@ int cxl_add_to_region(struct cxl_port *root, struct cxl_endpoint_decoder *cxled)
- 	int rc;
- 
- 	cxlrd_dev = device_find_child(&root->dev, &cxld->hpa_range,
--				      match_decoder_by_range);
-+				      match_root_decoder_by_range);
- 	if (!cxlrd_dev) {
- 		dev_err(cxlmd->dev.parent,
- 			"%s:%s no CXL window for range %#llx:%#llx\n",
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 9f180ae74e492..82c9e5c470319 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -11202,6 +11202,10 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
+ 			break;
+ 		}
+ 		case KF_ARG_PTR_TO_CALLBACK:
++			if (reg->type != PTR_TO_FUNC) {
++				verbose(env, "arg%d expected pointer to func\n", i);
++				return -EINVAL;
++			}
+ 			meta->subprogno = reg->subprogno;
+ 			break;
+ 		case KF_ARG_PTR_TO_REFCOUNTED_KPTR:
 -- 
 2.42.0
 
