@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BCE364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C91364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oT40sGFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A060C433C7;
-	Wed, 15 Nov 2023 20:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpa8p3+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27835C433C8;
+	Wed, 15 Nov 2023 20:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078443;
-	bh=9lRa0bbTl1g4FXxnCHBKTWXXT1g0YCOKCIpeY8OqqDE=;
+	s=korg; t=1700078445;
+	bh=/h9nlfbKi3Ag6wr8hCdd8bB/2h5Pqoz5hpI6h18p0S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oT40sGFfrf7Rauda6zcYW2lgsuYEq7rhaipsq2xGJ0/I0ybcyGlQc4UP4QLL05BOB
-	 eK33EdoIeKkFg1JVTTybyMGCH0eIczUo3b8MzS3819VORQGL7wi42kznVeyumecQ5y
-	 FBMN/qWH9alboWjQ7aX+pg8qWQFjjwN9vhvRrNQA=
+	b=tpa8p3+OdT6J9VbIkbUzDGzRhdu3W9+zgY7KB+f/0+NU/gof8hPVrN7RTS+9ige8d
+	 +70xaFELAERdJX1VnWHxd5brX9OpM3pBQrGT/oOWEEaB77PD47tZKoviyS9SsA4P8w
+	 nKloOqeqsWtfnpCUqEUD7bBir5ItvymYXNOyqgFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 324/379] media: vidtv: psi: Add check for kstrdup
-Date: Wed, 15 Nov 2023 14:26:39 -0500
-Message-ID: <20231115192704.318907440@linuxfoundation.org>
+Subject: [PATCH 6.1 301/379] usb: host: xhci-plat: fix possible kernel oops while resuming
+Date: Wed, 15 Nov 2023 14:26:16 -0500
+Message-ID: <20231115192702.946841713@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,109 +42,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-[ Upstream commit 76a2c5df6ca8bd8ada45e953b8c72b746f42918d ]
+[ Upstream commit a5f928db59519a15e82ecba4ae3e7cbf5a44715a ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+If this driver enables the xHC clocks while resuming from sleep, it calls
+clk_prepare_enable() without checking for errors and blithely goes on to
+read/write the xHC's registers -- which, with the xHC not being clocked,
+at least on ARM32 usually causes an imprecise external abort exceptions
+which cause kernel oops.  Currently, the chips for which the driver does
+the clock dance on suspend/resume seem to be the Broadcom STB SoCs, based
+on ARM32 CPUs, as it seems...
 
-Fixes: 7a7899f6f58e ("media: vidtv: psi: Implement an Event Information Table (EIT)")
-Fixes: c2f78f0cb294 ("media: vidtv: psi: add a Network Information Table (NIT)")
-Fixes: f90cf6079bf6 ("media: vidtv: add a bridge driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
+
+Fixes: 8bd954c56197 ("usb: host: xhci-plat: suspend and resume clocks")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20231019102924.2797346-19-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_psi.c | 45 +++++++++++++++++---
- 1 file changed, 40 insertions(+), 5 deletions(-)
+ drivers/usb/host/xhci-plat.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vidtv/vidtv_psi.c b/drivers/media/test-drivers/vidtv/vidtv_psi.c
-index a5875380ef407..c45828bc5b278 100644
---- a/drivers/media/test-drivers/vidtv/vidtv_psi.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_psi.c
-@@ -301,16 +301,29 @@ struct vidtv_psi_desc_service *vidtv_psi_service_desc_init(struct vidtv_psi_desc
+diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+index 5fb55bf194931..c9a101f0e8d01 100644
+--- a/drivers/usb/host/xhci-plat.c
++++ b/drivers/usb/host/xhci-plat.c
+@@ -456,23 +456,38 @@ static int __maybe_unused xhci_plat_resume(struct device *dev)
+ 	int ret;
  
- 	desc->service_name_len = service_name_len;
- 
--	if (service_name && service_name_len)
-+	if (service_name && service_name_len) {
- 		desc->service_name = kstrdup(service_name, GFP_KERNEL);
-+		if (!desc->service_name)
-+			goto free_desc;
-+	}
- 
- 	desc->provider_name_len = provider_name_len;
- 
--	if (provider_name && provider_name_len)
-+	if (provider_name && provider_name_len) {
- 		desc->provider_name = kstrdup(provider_name, GFP_KERNEL);
-+		if (!desc->provider_name)
-+			goto free_desc_service_name;
-+	}
- 
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
+ 	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
+-		clk_prepare_enable(xhci->clk);
+-		clk_prepare_enable(xhci->reg_clk);
++		ret = clk_prepare_enable(xhci->clk);
++		if (ret)
++			return ret;
 +
-+free_desc_service_name:
-+	if (service_name && service_name_len)
-+		kfree(desc->service_name);
-+free_desc:
-+	kfree(desc);
-+	return NULL;
- }
- 
- struct vidtv_psi_desc_registration
-@@ -355,8 +368,13 @@ struct vidtv_psi_desc_network_name
- 
- 	desc->length = network_name_len;
- 
--	if (network_name && network_name_len)
-+	if (network_name && network_name_len) {
- 		desc->network_name = kstrdup(network_name, GFP_KERNEL);
-+		if (!desc->network_name) {
-+			kfree(desc);
-+			return NULL;
++		ret = clk_prepare_enable(xhci->reg_clk);
++		if (ret) {
++			clk_disable_unprepare(xhci->clk);
++			return ret;
 +		}
-+	}
+ 	}
  
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
-@@ -442,15 +460,32 @@ struct vidtv_psi_desc_short_event
- 		iso_language_code = "eng";
+ 	ret = xhci_priv_resume_quirk(hcd);
+ 	if (ret)
+-		return ret;
++		goto disable_clks;
  
- 	desc->iso_language_code = kstrdup(iso_language_code, GFP_KERNEL);
-+	if (!desc->iso_language_code)
-+		goto free_desc;
+ 	ret = xhci_resume(xhci, 0);
+ 	if (ret)
+-		return ret;
++		goto disable_clks;
  
--	if (event_name && event_name_len)
-+	if (event_name && event_name_len) {
- 		desc->event_name = kstrdup(event_name, GFP_KERNEL);
-+		if (!desc->event_name)
-+			goto free_desc_language_code;
-+	}
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
  
--	if (text && text_len)
-+	if (text && text_len) {
- 		desc->text = kstrdup(text, GFP_KERNEL);
-+		if (!desc->text)
-+			goto free_desc_event_name;
-+	}
- 
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
+ 	return 0;
 +
-+free_desc_event_name:
-+	if (event_name && event_name_len)
-+		kfree(desc->event_name);
-+free_desc_language_code:
-+	kfree(desc->iso_language_code);
-+free_desc:
-+	kfree(desc);
-+	return NULL;
++disable_clks:
++	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
++		clk_disable_unprepare(xhci->clk);
++		clk_disable_unprepare(xhci->reg_clk);
++	}
++
++	return ret;
  }
  
- struct vidtv_psi_desc *vidtv_psi_desc_clone(struct vidtv_psi_desc *desc)
+ static int __maybe_unused xhci_plat_runtime_suspend(struct device *dev)
 -- 
 2.42.0
 
