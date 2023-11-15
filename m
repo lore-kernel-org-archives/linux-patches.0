@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655553EA62
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7C63EA62
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gVscvyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F7BC433CC;
-	Wed, 15 Nov 2023 19:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5qg1rI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19B7C433CA;
+	Wed, 15 Nov 2023 19:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078344;
-	bh=Tp6GvX5u4LUaBaYUKPSzcpspBVUjM8n7ave3vL5XFgs=;
+	s=korg; t=1700078345;
+	bh=kHtOanCkFyETtAVESHWCDN/wa+0+MHPpoEwEJ0wTLpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gVscvyvcqwrkoOT0P7II2dN2F0UUa9S8JUbNQh8pnUE4l2N8uA7AFKd+pCYoiun1
-	 x73vAcIKz4CFhq/qtslU0FXJoOph75X14a8VIifklUh+DbQPD/6pva+DC3POKdkSzG
-	 4vpr25TCl1IxHhvpuQ7nZSc9q2vHlubHgvSpH1dE=
+	b=e5qg1rI2rWbZUG4O+i+beXWIwp0cqoBRP/RK5nteYgkBS6AiQ6GxprNKyELZmgdS8
+	 /w0gELnNJWiWEDXSRN4BcyW+Y704SZxj7fGIYDGGHbcAotdUokgsFsXLFm3k20T168
+	 ugI1ydSCLIU9BhAwmBZ0G71DjL6zkUsrVXPsDyyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Petr Mladek <pmladek@suse.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 264/379] livepatch: Fix missing newline character in klp_resolve_symbols()
-Date: Wed, 15 Nov 2023 14:25:39 -0500
-Message-ID: <20231115192700.749840838@linuxfoundation.org>
+Subject: [PATCH 6.1 265/379] pinctrl: renesas: rzg2l: Make reverse order of enable() for disable()
+Date: Wed, 15 Nov 2023 14:25:40 -0500
+Message-ID: <20231115192700.807223910@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,36 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 67e18e132f0fd738f8c8cac3aa1420312073f795 ]
+[ Upstream commit dd462cf53e4dff0f4eba5e6650e31ceddec74c6f ]
 
-Without the newline character, the log may not be printed immediately
-after the error occurs.
+We usually do reverse order of enable() for disable(). Currently, the
+ordering of irq_chip_disable_parent() is not correct in
+rzg2l_gpio_irq_disable(). Fix the incorrect order.
 
-Fixes: ca376a937486 ("livepatch: Prevent module-specific KLP rela sections from referencing vmlinux symbols")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20230914072644.4098857-1-zhengyejian1@huawei.com
+Fixes: db2e5f21a48e ("pinctrl: renesas: pinctrl-rzg2l: Add IRQ domain to handle GPIO interrupt")
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230918123355.262115-2-biju.das.jz@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/livepatch/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
-index 9ada0bc5247be..0e651fd4cc9fc 100644
---- a/kernel/livepatch/core.c
-+++ b/kernel/livepatch/core.c
-@@ -244,7 +244,7 @@ static int klp_resolve_symbols(Elf_Shdr *sechdrs, const char *strtab,
- 		 * symbols are exported and normal relas can be used instead.
- 		 */
- 		if (!sec_vmlinux && sym_vmlinux) {
--			pr_err("invalid access to vmlinux symbol '%s' from module-specific livepatch relocation section",
-+			pr_err("invalid access to vmlinux symbol '%s' from module-specific livepatch relocation section\n",
- 			       sym_name);
- 			return -EINVAL;
- 		}
+diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+index 2a617832a7e60..159812fe1c97c 100644
+--- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
++++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
+@@ -1173,6 +1173,8 @@ static void rzg2l_gpio_irq_disable(struct irq_data *d)
+ 	u32 port;
+ 	u8 bit;
+ 
++	irq_chip_disable_parent(d);
++
+ 	port = RZG2L_PIN_ID_TO_PORT(hwirq);
+ 	bit = RZG2L_PIN_ID_TO_PIN(hwirq);
+ 
+@@ -1187,7 +1189,6 @@ static void rzg2l_gpio_irq_disable(struct irq_data *d)
+ 	spin_unlock_irqrestore(&pctrl->lock, flags);
+ 
+ 	gpiochip_disable_irq(gc, hwirq);
+-	irq_chip_disable_parent(d);
+ }
+ 
+ static void rzg2l_gpio_irq_enable(struct irq_data *d)
 -- 
 2.42.0
 
