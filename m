@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3393BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF323BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKeUcqth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B34C433C7;
-	Wed, 15 Nov 2023 19:22:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaNFm566"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BA9C433C8;
+	Wed, 15 Nov 2023 19:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076164;
-	bh=GFjAOVmJDi9Y9ZVjTCbjeu5c0vYxtnJMCSGjhvpNZSI=;
+	s=korg; t=1700076165;
+	bh=K+MFtZi7Ofupc53U6jbdLo95/XtuxxGnyaTQo+6sao4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKeUcqth9ZD6Ts8YnGmrdGhAvj8FXqPtRCJAU73gqoYvhvnb3O5s8xiXt3GsGg6W9
-	 feUKyBzdNSlhAULO62yqsg2LUQPak3vPWem1w/ZFxNOCmcDZsEMJVh5fd1Fb+0yByN
-	 6ZYtoAwK0CcP2JWHm1FQPm8HOow6AS+pQPUpMVAo=
+	b=XaNFm566GYbTCedGxCdpG/lV08WnQjq/e2diMHN8gkHe9xBmqWwhESQcWkRoBXFca
+	 FY8CrTDIutHS9SNunkIH5n+PR9RNXQ6He4+DtSENe8HXMtxvQnES18BjjF4i3BVL7d
+	 SI1AjGouMPwMlCxEeoMCq1gKO7ciCOiSnpNggSRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 089/550] wifi: mt76: mt7996: fix wmm queue mapping
-Date: Wed, 15 Nov 2023 14:11:13 -0500
-Message-ID: <20231115191606.877179472@linuxfoundation.org>
+Subject: [PATCH 6.5 090/550] wifi: mt76: mt7996: fix rx rate report for CBW320-2
+Date: Wed, 15 Nov 2023 14:11:14 -0500
+Message-ID: <20231115191606.944360967@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,66 +45,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 9b11696e5c5bf6030a32571f3f88845226d8b662 ]
+[ Upstream commit 0197923ecf5eb4dbd785f5576040d49611f591a4 ]
 
-Firmware uses access class index (ACI) for wmm parameters update, so
-convert mac80211 queue to ACI in mt7996_conf_tx().
+RX vector reports channel bandwidth 320-1 and 320-2 with different
+values. Fix it to correctly report rx rate when using CBW320-2.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Fixes: 80f5a31d2856 ("wifi: mt76: mt7996: add support for EHT rate report")
 Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
 Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 12 +++++++++---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c  |  2 +-
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index f306e9c50ea3b..16db03e86d7a2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -184,7 +184,7 @@ static int mt7996_add_interface(struct ieee80211_hw *hw,
- 	mvif->mt76.omac_idx = idx;
- 	mvif->phy = phy;
- 	mvif->mt76.band_idx = band_idx;
--	mvif->mt76.wmm_idx = band_idx;
-+	mvif->mt76.wmm_idx = vif->type != NL80211_IFTYPE_AP;
- 
- 	ret = mt7996_mcu_add_dev_info(phy, vif, true);
- 	if (ret)
-@@ -414,10 +414,16 @@ mt7996_conf_tx(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	       const struct ieee80211_tx_queue_params *params)
- {
- 	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
-+	const u8 mq_to_aci[] = {
-+		[IEEE80211_AC_VO] = 3,
-+		[IEEE80211_AC_VI] = 2,
-+		[IEEE80211_AC_BE] = 0,
-+		[IEEE80211_AC_BK] = 1,
-+	};
- 
-+	/* firmware uses access class index */
-+	mvif->queue_params[mq_to_aci[queue]] = *params;
- 	/* no need to update right away, we'll get BSS_CHANGED_QOS */
--	queue = mt76_connac_lmac_mapping(queue);
--	mvif->queue_params[queue] = *params;
- 
- 	return 0;
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 8244bb3561028..6520761d9fe13 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -2580,7 +2580,7 @@ int mt7996_mcu_set_tx(struct mt7996_dev *dev, struct ieee80211_vif *vif)
- 
- 		e = (struct edca *)tlv;
- 		e->set = WMM_PARAM_SET;
--		e->queue = ac + mvif->mt76.wmm_idx * MT7996_MAX_WMM_SETS;
-+		e->queue = ac;
- 		e->aifs = q->aifs;
- 		e->txop = cpu_to_le16(q->txop);
- 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 7da3baecc6de2..37104e84db886 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -611,7 +611,9 @@ mt7996_mac_fill_rx_rate(struct mt7996_dev *dev,
+ 	case IEEE80211_STA_RX_BW_160:
+ 		status->bw = RATE_INFO_BW_160;
+ 		break;
++	/* rxv reports bw 320-1 and 320-2 separately */
+ 	case IEEE80211_STA_RX_BW_320:
++	case IEEE80211_STA_RX_BW_320 + 1:
+ 		status->bw = RATE_INFO_BW_320;
+ 		break;
+ 	default:
 -- 
 2.42.0
 
