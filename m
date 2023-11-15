@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E423DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B893DB97
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ9GcJJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DA0C433C7;
-	Wed, 15 Nov 2023 19:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijE/p57J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7450EC433C8;
+	Wed, 15 Nov 2023 19:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078256;
-	bh=JYHa/R+d8nGsNUyGeI2PeUPEYMvFLMZM/iLysQMJBRg=;
+	s=korg; t=1700078257;
+	bh=Sk6cwpoTXpFAQxAn12ZZpcGYhWAOmqwv72byA9TYz/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZ9GcJJr5T1wlmIeO/C9GWL/B9dmbrC5G+6TJ3330JUKWw6PlKu0cGzV8tyTZY34m
-	 UEdRANBx92/5hxZCQiGXzqk6hVU5Uho3s1m3bwX4je4J9TbDYBmw+epTi2y3BLACQr
-	 jTm9rubNoT8dv69l7oHBj0ThDBabpxU9T4UGd8GI=
+	b=ijE/p57JkJCHDlkUOKRGSgtJU//G4DMW44zXluQLiPg/KSOAWnkFYPpkSJwAx6Zca
+	 WDDp3FbAg2Fm9aEXJOh05WS2F9V8VG1SJe94HbElafAaqC1EV1JH23Y2v3qT2UM9kZ
+	 hFj2rpwWhgzuIBfzhc3y/Y4m0eEYef8BEjsEF5qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Danny Kaehn <danny.kaehn@plexus.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 191/379] crypto: hisilicon/hpre - Fix a erroneous check after snprintf()
-Date: Wed, 15 Nov 2023 14:24:26 -0500
-Message-ID: <20231115192656.401347788@linuxfoundation.org>
+Subject: [PATCH 6.1 209/379] hid: cp2112: Fix duplicate workqueue initialization
+Date: Wed, 15 Nov 2023 14:24:44 -0500
+Message-ID: <20231115192657.474659552@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,34 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Danny Kaehn <danny.kaehn@plexus.com>
 
-[ Upstream commit c977950146720abff14e46d8c53f5638b06a9182 ]
+[ Upstream commit e3c2d2d144c082dd71596953193adf9891491f42 ]
 
-This error handling looks really strange.
-Check if the string has been truncated instead.
+Previously the cp2112 driver called INIT_DELAYED_WORK within
+cp2112_gpio_irq_startup, resulting in duplicate initilizations of the
+workqueue on subsequent IRQ startups following an initial request. This
+resulted in a warning in set_work_data in workqueue.c, as well as a rare
+NULL dereference within process_one_work in workqueue.c.
 
-Fixes: 02ab994635eb ("crypto: hisilicon - Fixed some tiny bugs of HPRE")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Initialize the workqueue within _probe instead.
+
+Fixes: 13de9cca514e ("HID: cp2112: add IRQ chip handling")
+Signed-off-by: Danny Kaehn <danny.kaehn@plexus.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-cp2112.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
-index baf1faec7046f..2a4418f781a3f 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_main.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
-@@ -1031,7 +1031,7 @@ static int hpre_cluster_debugfs_init(struct hisi_qm *qm)
+diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
+index 27cadadda7c9d..86e0861caf7ca 100644
+--- a/drivers/hid/hid-cp2112.c
++++ b/drivers/hid/hid-cp2112.c
+@@ -1159,8 +1159,6 @@ static unsigned int cp2112_gpio_irq_startup(struct irq_data *d)
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 	struct cp2112_device *dev = gpiochip_get_data(gc);
  
- 	for (i = 0; i < clusters_num; i++) {
- 		ret = snprintf(buf, HPRE_DBGFS_VAL_MAX_LEN, "cluster%d", i);
--		if (ret < 0)
-+		if (ret >= HPRE_DBGFS_VAL_MAX_LEN)
- 			return -EINVAL;
- 		tmp_d = debugfs_create_dir(buf, qm->debug.debug_root);
+-	INIT_DELAYED_WORK(&dev->gpio_poll_worker, cp2112_gpio_poll_callback);
+-
+ 	if (!dev->gpio_poll) {
+ 		dev->gpio_poll = true;
+ 		schedule_delayed_work(&dev->gpio_poll_worker, 0);
+@@ -1356,6 +1354,8 @@ static int cp2112_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	girq->handler = handle_simple_irq;
+ 	girq->threaded = true;
  
++	INIT_DELAYED_WORK(&dev->gpio_poll_worker, cp2112_gpio_poll_callback);
++
+ 	ret = gpiochip_add_data(&dev->gc, dev);
+ 	if (ret < 0) {
+ 		hid_err(hdev, "error registering gpio chip\n");
 -- 
 2.42.0
 
