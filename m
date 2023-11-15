@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411FD43AD5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCED9249E2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oL763vZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EACC4E777;
-	Wed, 15 Nov 2023 20:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voOXT/Tc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C574C4E77D;
+	Wed, 15 Nov 2023 20:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081706;
-	bh=A9GpDK50iJ/U/yAiBjg0Yu0leIA1xxKW6WsCrP2n9yU=;
+	s=korg; t=1700081707;
+	bh=j6VP8YVqItD1jBtP8UZNKniuQH1tErVI9L5nKWWOTZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oL763vZDkUVjPSo8mArzZMbl1jlIgggMVs2rkLSKsGWuYj8oRLEiOjxr6XKPVyCyJ
-	 UNG2MJ+fqGcu+n2mP4PEsphGQq1bayLdkNZtGqp7sCue4gULKBd6tvG7Vb9HH9FcB5
-	 tNLzqRHAkuzvWeEx0xup1ZKf6JX4MIoIIlVDr7eU=
+	b=voOXT/TcWjn2cg1W4ofrtNIo71wnkgLhS6tLxEorkzNc5HIS1S5it8tiJScB2YIZt
+	 JJ6c/U5lsgTLwZYVGOvHHYEwJpftwNlCG6HFpcifNVNO8eQtTu3gEbKq55khnRIz2o
+	 GK9dHNYcYbByv+y3cxDkbVbjRBK8JyXVUPaFMbrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Maxim Schwalm <maxim.schwalm@gmail.com>
-Subject: [PATCH 5.10 074/191] drm/bridge: tc358768: Fix bit updates
-Date: Wed, 15 Nov 2023 15:45:49 -0500
-Message-ID: <20231115204649.039440630@linuxfoundation.org>
+	Tony Lindgren <tony@atomide.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 050/191] clk: ti: Add ti_dt_clk_name() helper to use clock-output-names
+Date: Wed, 15 Nov 2023 15:45:25 -0500
+Message-ID: <20231115204647.607024865@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -45,64 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit 66962d5c3c51377b9b90cae35b7e038950438e02 ]
+[ Upstream commit 2c1593328d7f02fe49de5ad6b42c36296c9d6922 ]
 
-The driver has a few places where it does:
+Let's create the clock alias based on the clock-output-names property if
+available. Also the component clock drivers can use ti_dt_clk_name() in
+the following patches.
 
-if (thing_is_enabled_in_config)
-	update_thing_bit_in_hw()
-
-This means that if the thing is _not_ enabled, the bit never gets
-cleared. This affects the h/vsyncs and continuous DSI clock bits.
-
-Fix the driver to always update the bit.
-
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> # Asus TF700T
-Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-4-31725f008a50@ideasonboard.com
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20220204071449.16762-7-tony@atomide.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 7af5b9eadd64 ("clk: ti: fix double free in of_ti_divider_clk_setup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/clk/ti/clk.c   | 20 +++++++++++++++++++-
+ drivers/clk/ti/clock.h |  1 +
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index 8f7460f011aea..48dab19f3e236 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -785,8 +785,8 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 		val |= BIT(i + 1);
- 	tc358768_write(priv, TC358768_HSTXVREGEN, val);
+diff --git a/drivers/clk/ti/clk.c b/drivers/clk/ti/clk.c
+index 29eafab4353ef..b941ce0f3c394 100644
+--- a/drivers/clk/ti/clk.c
++++ b/drivers/clk/ti/clk.c
+@@ -402,6 +402,24 @@ static const struct of_device_id simple_clk_match_table[] __initconst = {
+ 	{ }
+ };
  
--	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
--		tc358768_write(priv, TC358768_TXOPTIONCNTRL, 0x1);
-+	tc358768_write(priv, TC358768_TXOPTIONCNTRL,
-+		       (mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) ? 0 : BIT(0));
- 
- 	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
- 	val = tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk * 4);
-@@ -822,11 +822,12 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	tc358768_write(priv, TC358768_DSI_HACT, hact);
- 
- 	/* VSYNC polarity */
--	if (!(mode->flags & DRM_MODE_FLAG_NVSYNC))
--		tc358768_update_bits(priv, TC358768_CONFCTL, BIT(5), BIT(5));
-+	tc358768_update_bits(priv, TC358768_CONFCTL, BIT(5),
-+			     (mode->flags & DRM_MODE_FLAG_PVSYNC) ? BIT(5) : 0);
++/**
++ * ti_dt_clk_name - init clock name from first output name or node name
++ * @np: device node
++ *
++ * Use the first clock-output-name for the clock name if found. Fall back
++ * to legacy naming based on node name.
++ */
++const char *ti_dt_clk_name(struct device_node *np)
++{
++	const char *name;
 +
- 	/* HSYNC polarity */
--	if (mode->flags & DRM_MODE_FLAG_PHSYNC)
--		tc358768_update_bits(priv, TC358768_PP_MISC, BIT(0), BIT(0));
-+	tc358768_update_bits(priv, TC358768_PP_MISC, BIT(0),
-+			     (mode->flags & DRM_MODE_FLAG_PHSYNC) ? BIT(0) : 0);
++	if (!of_property_read_string_index(np, "clock-output-names", 0,
++					   &name))
++		return name;
++
++	return np->name;
++}
++
+ /**
+  * ti_clk_add_aliases - setup clock aliases
+  *
+@@ -418,7 +436,7 @@ void __init ti_clk_add_aliases(void)
+ 		clkspec.np = np;
+ 		clk = of_clk_get_from_provider(&clkspec);
  
- 	/* Start DSI Tx */
- 	tc358768_write(priv, TC358768_DSI_START, 0x1);
+-		ti_clk_add_alias(NULL, clk, np->name);
++		ti_clk_add_alias(NULL, clk, ti_dt_clk_name(np));
+ 	}
+ }
+ 
+diff --git a/drivers/clk/ti/clock.h b/drivers/clk/ti/clock.h
+index f1dd62de2bfcb..938f34e290ed2 100644
+--- a/drivers/clk/ti/clock.h
++++ b/drivers/clk/ti/clock.h
+@@ -214,6 +214,7 @@ struct clk *ti_clk_register(struct device *dev, struct clk_hw *hw,
+ 			    const char *con);
+ struct clk *ti_clk_register_omap_hw(struct device *dev, struct clk_hw *hw,
+ 				    const char *con);
++const char *ti_dt_clk_name(struct device_node *np);
+ int ti_clk_add_alias(struct device *dev, struct clk *clk, const char *con);
+ void ti_clk_add_aliases(void);
+ 
 -- 
 2.42.0
 
