@@ -1,39 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55780381DF;
-	Wed, 15 Nov 2023 19:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD5C381DF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/hvoqeL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5637C433C7;
-	Wed, 15 Nov 2023 19:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWf1ATfh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27FDC433C9;
+	Wed, 15 Nov 2023 19:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077699;
-	bh=sWalzTKT0Gz8E+OWv9ECaqJ3pQVZQSlVTd1mSBIK/1w=;
+	s=korg; t=1700077700;
+	bh=niOg1n4dGKdyOOluk2rJpGI/bHfXBtOrHM2ahiKq7tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/hvoqeLDTSYYw4lmKoPT157RSD3K3zhBvOYjKl8yKBMerSdrbJrbUWx5GxZv5epP
-	 6fcUHffZxVZ8rSwcW+9JuCXjfS6dVkcGuaYLuK1EdeGDKZzRhFHPEMY87gRapbqVh8
-	 B7+OnnDbUJJSNYVqxrSHnxFJGV5M/zkQdoq7Ihqw=
+	b=PWf1ATfhkOIc2B0kUwwDZffFB9HlIM0Rc4FagMc/yVlXAviVW3z8XPT+OnMI5N8aC
+	 aGIVVQl7AO7Pb3v4PvOTT2MrLdf5lXAyHJw3FP72cHBWv/LfoLy4rjraj/e8YVxpYN
+	 3zBbRvUqe8gaFYGhbq5uuVf6PY0ntu6snx1ck7Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	llvm@lists.linux.dev,
-	Ming Wang <wangming01@loongson.cn>,
-	Tom Rix <trix@redhat.com>,
-	bpf@vger.kernel.org,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 463/603] perf mem-events: Avoid uninitialized read
-Date: Wed, 15 Nov 2023 14:16:48 -0500
-Message-ID: <20231115191644.614925317@linuxfoundation.org>
+Subject: [PATCH 6.6 464/603] s390/ap: re-init AP queues on config on
+Date: Wed, 15 Nov 2023 14:16:49 -0500
+Message-ID: <20231115191644.675893979@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -52,54 +43,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 85f73c377b2ac9988a204b119aebb33ca5c60083 ]
+[ Upstream commit 32d1d9204f8db3360be55e65bd182a1a68f93308 ]
 
-pmu should be initialized to NULL before perf_pmus__scan loop. Fix and
-shrink the scope of pmu at the same time. Issue detected by clang-tidy.
+On a state toggle from config off to config on and on the
+state toggle from checkstop to not checkstop the queue's
+internal states was set but the state machine was not
+nudged. This did not care as on the first enqueue of a
+request the state machine kick ran.
 
-Fixes: 5752c20f3787 ("perf mem: Scan all PMUs instead of just core ones")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: llvm@lists.linux.dev
-Cc: Ming Wang <wangming01@loongson.cn>
-Cc: Tom Rix <trix@redhat.com>
-Cc: bpf@vger.kernel.org
-Link: https://lore.kernel.org/r/20231009183920.200859-10-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+However, within an Secure Execution guest a queue is
+only chosen by the scheduler when it has been bound.
+But to bind a queue, it needs to run through the initial
+states (reset, enable interrupts, ...). So this is like
+a chicken-and-egg problem and the result was in fact
+that a queue was unusable after a config off/on toggle.
+
+With some slight rework of the handling of these states
+now the new function _ap_queue_init_state() is called
+which is the core of the ap_queue_init_state() function
+but without locking handling. This has the benefit that
+it can be called on all the places where a (re-)init
+of the AP queue's state machine is needed.
+
+Fixes: 2d72eaf036d2 ("s390/ap: implement SE AP bind, unbind and associate")
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/mem-events.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/s390/crypto/ap_bus.c   | 21 ++++++++++-----------
+ drivers/s390/crypto/ap_bus.h   |  1 +
+ drivers/s390/crypto/ap_queue.c |  9 +++++++--
+ 3 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/util/mem-events.c b/tools/perf/util/mem-events.c
-index 39ffe8ceb3809..954b235e12e51 100644
---- a/tools/perf/util/mem-events.c
-+++ b/tools/perf/util/mem-events.c
-@@ -185,7 +185,6 @@ int perf_mem_events__record_args(const char **rec_argv, int *argv_nr,
- {
- 	int i = *argv_nr, k = 0;
- 	struct perf_mem_event *e;
--	struct perf_pmu *pmu;
+diff --git a/drivers/s390/crypto/ap_bus.c b/drivers/s390/crypto/ap_bus.c
+index 339812efe8221..d09e08b71cfba 100644
+--- a/drivers/s390/crypto/ap_bus.c
++++ b/drivers/s390/crypto/ap_bus.c
+@@ -1865,15 +1865,18 @@ static inline void ap_scan_domains(struct ap_card *ac)
+ 			}
+ 			/* get it and thus adjust reference counter */
+ 			get_device(dev);
+-			if (decfg)
++			if (decfg) {
+ 				AP_DBF_INFO("%s(%d,%d) new (decfg) queue dev created\n",
+ 					    __func__, ac->id, dom);
+-			else if (chkstop)
++			} else if (chkstop) {
+ 				AP_DBF_INFO("%s(%d,%d) new (chkstop) queue dev created\n",
+ 					    __func__, ac->id, dom);
+-			else
++			} else {
++				/* nudge the queue's state machine */
++				ap_queue_init_state(aq);
+ 				AP_DBF_INFO("%s(%d,%d) new queue dev created\n",
+ 					    __func__, ac->id, dom);
++			}
+ 			goto put_dev_and_continue;
+ 		}
+ 		/* handle state changes on already existing queue device */
+@@ -1895,10 +1898,8 @@ static inline void ap_scan_domains(struct ap_card *ac)
+ 		} else if (!chkstop && aq->chkstop) {
+ 			/* checkstop off */
+ 			aq->chkstop = false;
+-			if (aq->dev_state > AP_DEV_STATE_UNINITIATED) {
+-				aq->dev_state = AP_DEV_STATE_OPERATING;
+-				aq->sm_state = AP_SM_STATE_RESET_START;
+-			}
++			if (aq->dev_state > AP_DEV_STATE_UNINITIATED)
++				_ap_queue_init_state(aq);
+ 			spin_unlock_bh(&aq->lock);
+ 			AP_DBF_DBG("%s(%d,%d) queue dev checkstop off\n",
+ 				   __func__, ac->id, dom);
+@@ -1922,10 +1923,8 @@ static inline void ap_scan_domains(struct ap_card *ac)
+ 		} else if (!decfg && !aq->config) {
+ 			/* config on this queue device */
+ 			aq->config = true;
+-			if (aq->dev_state > AP_DEV_STATE_UNINITIATED) {
+-				aq->dev_state = AP_DEV_STATE_OPERATING;
+-				aq->sm_state = AP_SM_STATE_RESET_START;
+-			}
++			if (aq->dev_state > AP_DEV_STATE_UNINITIATED)
++				_ap_queue_init_state(aq);
+ 			spin_unlock_bh(&aq->lock);
+ 			AP_DBF_DBG("%s(%d,%d) queue dev config on\n",
+ 				   __func__, ac->id, dom);
+diff --git a/drivers/s390/crypto/ap_bus.h b/drivers/s390/crypto/ap_bus.h
+index be54b070c0316..3e34912a60506 100644
+--- a/drivers/s390/crypto/ap_bus.h
++++ b/drivers/s390/crypto/ap_bus.h
+@@ -287,6 +287,7 @@ struct ap_queue *ap_queue_create(ap_qid_t qid, int device_type);
+ void ap_queue_prepare_remove(struct ap_queue *aq);
+ void ap_queue_remove(struct ap_queue *aq);
+ void ap_queue_init_state(struct ap_queue *aq);
++void _ap_queue_init_state(struct ap_queue *aq);
  
- 	for (int j = 0; j < PERF_MEM_EVENTS__MAX; j++) {
- 		e = perf_mem_events__ptr(j);
-@@ -202,6 +201,8 @@ int perf_mem_events__record_args(const char **rec_argv, int *argv_nr,
- 			rec_argv[i++] = "-e";
- 			rec_argv[i++] = perf_mem_events__name(j, NULL);
- 		} else {
-+			struct perf_pmu *pmu = NULL;
+ struct ap_card *ap_card_create(int id, int queue_depth, int raw_type,
+ 			       int comp_type, unsigned int functions, int ml);
+diff --git a/drivers/s390/crypto/ap_queue.c b/drivers/s390/crypto/ap_queue.c
+index 1336e632adc4a..2943b2529d3a0 100644
+--- a/drivers/s390/crypto/ap_queue.c
++++ b/drivers/s390/crypto/ap_queue.c
+@@ -1160,14 +1160,19 @@ void ap_queue_remove(struct ap_queue *aq)
+ 	spin_unlock_bh(&aq->lock);
+ }
+ 
+-void ap_queue_init_state(struct ap_queue *aq)
++void _ap_queue_init_state(struct ap_queue *aq)
+ {
+-	spin_lock_bh(&aq->lock);
+ 	aq->dev_state = AP_DEV_STATE_OPERATING;
+ 	aq->sm_state = AP_SM_STATE_RESET_START;
+ 	aq->last_err_rc = 0;
+ 	aq->assoc_idx = ASSOC_IDX_INVALID;
+ 	ap_wait(ap_sm_event(aq, AP_SM_EVENT_POLL));
++}
 +
- 			if (!e->supported) {
- 				perf_mem_events__print_unsupport_hybrid(e, j);
- 				return -1;
++void ap_queue_init_state(struct ap_queue *aq)
++{
++	spin_lock_bh(&aq->lock);
++	_ap_queue_init_state(aq);
+ 	spin_unlock_bh(&aq->lock);
+ }
+ EXPORT_SYMBOL(ap_queue_init_state);
 -- 
 2.42.0
 
