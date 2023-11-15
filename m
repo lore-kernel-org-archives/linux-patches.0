@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5946945BF7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA0245BF7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlJR9CgK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064DAC433CC;
-	Wed, 15 Nov 2023 22:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vG75A57b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CDCC433C8;
+	Wed, 15 Nov 2023 22:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085778;
-	bh=u8ghjVz9LHMlWg0zRcg+0hqcAKg4RLRqHV4hb/AB0Qk=;
+	s=korg; t=1700085779;
+	bh=DICsJmoCe27W4sDLfdoRMro9v1c+7qAQNbys7XEBbwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HlJR9CgKGHVSUw1zs8Unw8qSBOlPVeWwf7shKe2q8QZMID+0XBQoWlL6MpFBCre7P
-	 gt+sR8oYRIi8u1nobKowM1UQb/kXzrVASH57DEOfdyPiVmvbXJF1XtgrZcHiSbca+/
-	 LN1FfC2bUlzBXM0rCOiF6sMhoZt25nU4Px0X1LrA=
+	b=vG75A57b6+OJQw74wY17r5GbRn1OdaqfPV+j72qfJxog7vxnANj4U1ebrojjX+w/M
+	 zOyWvTZz5OJw6r2LQo/fbYbbxWYHW+c7okOzAWnSfhSaOVSEEQQO+OnNDeLNxSPQRW
+	 x/PyuKwI3cFu63iCnwm5QLaMI4t5enFesc5WiLx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
-	Rob Herring <robh@kernel.org>,
-	Santosh Shilimkar <santosh.shilimkar@oracle.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dhruva Gole <d-gole@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 048/119] firmware: ti_sci: Replace HTTP links with HTTPS ones
-Date: Wed, 15 Nov 2023 17:00:38 -0500
-Message-ID: <20231115220134.124761526@linuxfoundation.org>
+Subject: [PATCH 5.4 049/119] firmware: ti_sci: Mark driver as non removable
+Date: Wed, 15 Nov 2023 17:00:39 -0500
+Message-ID: <20231115220134.156020607@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -37,151 +37,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit a6df49f4224324dd8588f6a0d9cff53cd61a196b ]
+[ Upstream commit 7b7a224b1ba1703583b25a3641ad9798f34d832a ]
 
-Rationale:
-Reduces attack surface on kernel devs opening the links for MITM
-as HTTPS traffic is much harder to manipulate.
+The TI-SCI message protocol provides a way to communicate between
+various compute processors with a central system controller entity. It
+provides the fundamental device management capability and clock control
+in the SOCs that it's used in.
 
-Deterministic algorithm:
-For each file:
-  If not .svg:
-    For each line:
-      If doesn't contain `\bxmlns\b`:
-        For each link, `\bhttp://[^# \t\r\n]*(?:\w|/)`:
-	  If neither `\bgnu\.org/license`, nor `\bmozilla\.org/MPL\b`:
-            If both the HTTP and HTTPS versions
-            return 200 OK and serve the same content:
-              Replace HTTP with HTTPS.
+The remove function failed to do all the necessary cleanup if
+there are registered users. Some things are freed however which
+likely results in an oops later on.
 
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Santosh Shilimkar <santosh.shilimkar@oracle.com>
-Stable-dep-of: 7b7a224b1ba1 ("firmware: ti_sci: Mark driver as non removable")
+Ensure that the driver isn't unbound by suppressing its bind and unbind
+sysfs attributes. As the driver is built-in there is no way to remove
+device once bound.
+
+We can also remove the ti_sci_remove call along with the
+ti_sci_debugfs_destroy as there are no callers for it any longer.
+
+Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Closes: https://lore.kernel.org/linux-arm-kernel/20230216083908.mvmydic5lpi3ogo7@pengutronix.de/
+Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20230921091025.133130-1-d-gole@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/interrupt-controller/ti,sci-intr.txt    | 2 +-
- drivers/firmware/ti_sci.c                                       | 2 +-
- drivers/firmware/ti_sci.h                                       | 2 +-
- drivers/irqchip/irq-ti-sci-inta.c                               | 2 +-
- drivers/irqchip/irq-ti-sci-intr.c                               | 2 +-
- drivers/reset/reset-ti-sci.c                                    | 2 +-
- include/linux/soc/ti/ti_sci_inta_msi.h                          | 2 +-
- include/linux/soc/ti/ti_sci_protocol.h                          | 2 +-
- 8 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/firmware/ti_sci.c | 46 +--------------------------------------
+ 1 file changed, 1 insertion(+), 45 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/ti,sci-intr.txt b/Documentation/devicetree/bindings/interrupt-controller/ti,sci-intr.txt
-index 1a8718f8855d6..178fca08278fe 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/ti,sci-intr.txt
-+++ b/Documentation/devicetree/bindings/interrupt-controller/ti,sci-intr.txt
-@@ -55,7 +55,7 @@ Required Properties:
- 			corresponds to a range of host irqs.
- 
- For more details on TISCI IRQ resource management refer:
--http://downloads.ti.com/tisci/esd/latest/2_tisci_msgs/rm/rm_irq.html
-+https://downloads.ti.com/tisci/esd/latest/2_tisci_msgs/rm/rm_irq.html
- 
- Example:
- --------
 diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 4126be9e32160..53cee17d01158 100644
+index 53cee17d01158..54340869e682a 100644
 --- a/drivers/firmware/ti_sci.c
 +++ b/drivers/firmware/ti_sci.c
-@@ -2,7 +2,7 @@
- /*
-  * Texas Instruments System Control Interface Protocol Driver
-  *
-- * Copyright (C) 2015-2016 Texas Instruments Incorporated - http://www.ti.com/
-+ * Copyright (C) 2015-2016 Texas Instruments Incorporated - https://www.ti.com/
-  *	Nishanth Menon
-  */
+@@ -208,19 +208,6 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
+ 	return 0;
+ }
  
-diff --git a/drivers/firmware/ti_sci.h b/drivers/firmware/ti_sci.h
-index f0d068c039444..57cd040629940 100644
---- a/drivers/firmware/ti_sci.h
-+++ b/drivers/firmware/ti_sci.h
-@@ -6,7 +6,7 @@
-  * The system works in a message response protocol
-  * See: http://processors.wiki.ti.com/index.php/TISCI for details
-  *
-- * Copyright (C)  2015-2016 Texas Instruments Incorporated - http://www.ti.com/
-+ * Copyright (C)  2015-2016 Texas Instruments Incorporated - https://www.ti.com/
-  */
+-/**
+- * ti_sci_debugfs_destroy() - clean up log debug file
+- * @pdev:	platform device pointer
+- * @info:	Pointer to SCI entity information
+- */
+-static void ti_sci_debugfs_destroy(struct platform_device *pdev,
+-				   struct ti_sci_info *info)
+-{
+-	if (IS_ERR(info->debug_region))
+-		return;
+-
+-	debugfs_remove(info->d);
+-}
+ #else /* CONFIG_DEBUG_FS */
+ static inline int ti_sci_debugfs_create(struct platform_device *dev,
+ 					struct ti_sci_info *info)
+@@ -3527,43 +3514,12 @@ static int ti_sci_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
- #ifndef __TI_SCI_H
-diff --git a/drivers/irqchip/irq-ti-sci-inta.c b/drivers/irqchip/irq-ti-sci-inta.c
-index 0a35499c46728..94cba59147883 100644
---- a/drivers/irqchip/irq-ti-sci-inta.c
-+++ b/drivers/irqchip/irq-ti-sci-inta.c
-@@ -2,7 +2,7 @@
- /*
-  * Texas Instruments' K3 Interrupt Aggregator irqchip driver
-  *
-- * Copyright (C) 2018-2019 Texas Instruments Incorporated - http://www.ti.com/
-+ * Copyright (C) 2018-2019 Texas Instruments Incorporated - https://www.ti.com/
-  *	Lokesh Vutla <lokeshvutla@ti.com>
-  */
- 
-diff --git a/drivers/irqchip/irq-ti-sci-intr.c b/drivers/irqchip/irq-ti-sci-intr.c
-index 7d0163d85fb9b..6b366d98fe3c2 100644
---- a/drivers/irqchip/irq-ti-sci-intr.c
-+++ b/drivers/irqchip/irq-ti-sci-intr.c
-@@ -2,7 +2,7 @@
- /*
-  * Texas Instruments' K3 Interrupt Router irqchip driver
-  *
-- * Copyright (C) 2018-2019 Texas Instruments Incorporated - http://www.ti.com/
-+ * Copyright (C) 2018-2019 Texas Instruments Incorporated - https://www.ti.com/
-  *	Lokesh Vutla <lokeshvutla@ti.com>
-  */
- 
-diff --git a/drivers/reset/reset-ti-sci.c b/drivers/reset/reset-ti-sci.c
-index bf68729ab7292..b799aefad547d 100644
---- a/drivers/reset/reset-ti-sci.c
-+++ b/drivers/reset/reset-ti-sci.c
-@@ -1,7 +1,7 @@
- /*
-  * Texas Instrument's System Control Interface (TI-SCI) reset driver
-  *
-- * Copyright (C) 2015-2017 Texas Instruments Incorporated - http://www.ti.com/
-+ * Copyright (C) 2015-2017 Texas Instruments Incorporated - https://www.ti.com/
-  *	Andrew F. Davis <afd@ti.com>
-  *
-  * This program is free software; you can redistribute it and/or modify
-diff --git a/include/linux/soc/ti/ti_sci_inta_msi.h b/include/linux/soc/ti/ti_sci_inta_msi.h
-index 11fb5048f5f6e..e3aa8b14612ee 100644
---- a/include/linux/soc/ti/ti_sci_inta_msi.h
-+++ b/include/linux/soc/ti/ti_sci_inta_msi.h
-@@ -2,7 +2,7 @@
- /*
-  * Texas Instruments' K3 TI SCI INTA MSI helper
-  *
-- * Copyright (C) 2018-2019 Texas Instruments Incorporated - http://www.ti.com/
-+ * Copyright (C) 2018-2019 Texas Instruments Incorporated - https://www.ti.com/
-  *	Lokesh Vutla <lokeshvutla@ti.com>
-  */
- 
-diff --git a/include/linux/soc/ti/ti_sci_protocol.h b/include/linux/soc/ti/ti_sci_protocol.h
-index 9531ec8232988..0fc452dd96d49 100644
---- a/include/linux/soc/ti/ti_sci_protocol.h
-+++ b/include/linux/soc/ti/ti_sci_protocol.h
-@@ -2,7 +2,7 @@
- /*
-  * Texas Instruments System Control Interface Protocol
-  *
-- * Copyright (C) 2015-2016 Texas Instruments Incorporated - http://www.ti.com/
-+ * Copyright (C) 2015-2016 Texas Instruments Incorporated - https://www.ti.com/
-  *	Nishanth Menon
-  */
- 
+-static int ti_sci_remove(struct platform_device *pdev)
+-{
+-	struct ti_sci_info *info;
+-	struct device *dev = &pdev->dev;
+-	int ret = 0;
+-
+-	of_platform_depopulate(dev);
+-
+-	info = platform_get_drvdata(pdev);
+-
+-	if (info->nb.notifier_call)
+-		unregister_restart_handler(&info->nb);
+-
+-	mutex_lock(&ti_sci_list_mutex);
+-	if (info->users)
+-		ret = -EBUSY;
+-	else
+-		list_del(&info->node);
+-	mutex_unlock(&ti_sci_list_mutex);
+-
+-	if (!ret) {
+-		ti_sci_debugfs_destroy(pdev, info);
+-
+-		/* Safe to free channels since no more users */
+-		mbox_free_channel(info->chan_tx);
+-		mbox_free_channel(info->chan_rx);
+-	}
+-
+-	return ret;
+-}
+-
+ static struct platform_driver ti_sci_driver = {
+ 	.probe = ti_sci_probe,
+-	.remove = ti_sci_remove,
+ 	.driver = {
+ 		   .name = "ti-sci",
+ 		   .of_match_table = of_match_ptr(ti_sci_of_match),
++		   .suppress_bind_attrs = true,
+ 	},
+ };
+ module_platform_driver(ti_sci_driver);
 -- 
 2.42.0
 
