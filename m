@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B733364CB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BB53A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCAao7+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02849C433CA;
-	Wed, 15 Nov 2023 19:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVWdZ9d4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA129C433C9;
+	Wed, 15 Nov 2023 19:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077745;
-	bh=33FtohS1U9+aX+SDRGV89FE00NQrcc3zyy1jsrvof/Y=;
+	s=korg; t=1700077746;
+	bh=nzA2GFqKi2DQsxH1eYb2HQ4IVfW03BMs8wNV7LUNFbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCAao7+DRhaZQCBkwNyoT0nGyWavo2qrSgbTSkynSd3slYj+NzJ/zunTjeF4bjyL3
-	 OSPDpd/239p6P3ScesUwfO7I52ZIVuCC1Co4s+ywg+4P0iksNtvwhG+JSlwhftj1i7
-	 Wjh2mVYH+FefJdWfKpJMaQ0USigpi+WzTYix+SbY=
+	b=AVWdZ9d4rGkD4SPDzTMefxMlMR/s+ypHjpvnL8iUkTQxftVyucQcv6NI2cgo2vz0e
+	 rQkrAx1GvuP9lHsB+M9JWOS85FOr/F9+9RYsyY8A6LGBH3D/gk6U+tCuzHwP42VfU9
+	 HeO7/lOT5iBgA1dJGHWyZA/Hhd8A9u/1BLZfyGAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	gor@linux.ibm.com,
-	hca@linux.ibm.com,
-	sumanthk@linux.ibm.com,
-	svens@linux.ibm.com,
-	Namhyung Kim <namhyung@kernel.org>,
+	Haren Myneni <haren@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 471/603] perf trace: Use the right bpf_probe_read(_str) variant for reading user data
-Date: Wed, 15 Nov 2023 14:16:56 -0500
-Message-ID: <20231115191645.106868851@linuxfoundation.org>
+Subject: [PATCH 6.6 472/603] powerpc/vas: Limit open window failure messages in log bufffer
+Date: Wed, 15 Nov 2023 14:16:57 -0500
+Message-ID: <20231115191645.163756397@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -49,169 +42,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Haren Myneni <haren@linux.ibm.com>
 
-[ Upstream commit 5069211e2f0b47e75119805e23ae6352d871e263 ]
+[ Upstream commit 73b25505ce043b561028e5571d84dc82aa53c2b4 ]
 
-Perf test case 111 Check open filename arg using perf trace + vfs_getname
-fails on s390. This is caused by a failing function
-bpf_probe_read() in file util/bpf_skel/augmented_raw_syscalls.bpf.c.
+The VAS open window call prints error message and returns -EBUSY
+after the migration suspend event initiated and until the resume
+event completed on the destination system. It can cause the log
+buffer filled with these error messages if the user space issues
+continuous open window calls.  Similar case even for DLPAR CPU
+remove event when no credits are available until the credits are
+freed or with the other DLPAR CPU add event.
 
-The root cause is the lookup by address. Function bpf_probe_read()
-is used. This function works only for architectures
-with ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE.
+So changes in the patch to use pr_err_ratelimited() instead of
+pr_err() to display open window failure and not-available credits
+error messages.
 
-On s390 is not possible to determine from the address to which
-address space the address belongs to (user or kernel space).
+Use pr_fmt() and make the corresponding changes to have the
+consistencein prefix all pr_*() messages (vas-api.c).
 
-Replace bpf_probe_read() by bpf_probe_read_kernel()
-and bpf_probe_read_str() by bpf_probe_read_user_str() to
-explicity specify the address space the address refers to.
-
-Output before:
- # ./perf trace -eopen,openat -- touch /tmp/111
- libbpf: prog 'sys_enter': BPF program load failed: Invalid argument
- libbpf: prog 'sys_enter': -- BEGIN PROG LOAD LOG --
- reg type unsupported for arg#0 function sys_enter#75
- 0: R1=ctx(off=0,imm=0) R10=fp0
- ; int sys_enter(struct syscall_enter_args *args)
- 0: (bf) r6 = r1           ; R1=ctx(off=0,imm=0) R6_w=ctx(off=0,imm=0)
- ; return bpf_get_current_pid_tgid();
- 1: (85) call bpf_get_current_pid_tgid#14      ; R0_w=scalar()
- 2: (63) *(u32 *)(r10 -8) = r0 ; R0_w=scalar() R10=fp0 fp-8=????mmmm
- 3: (bf) r2 = r10              ; R2_w=fp0 R10=fp0
- ;
- .....
- lines deleted here
- .....
- 23: (bf) r3 = r6              ; R3_w=ctx(off=0,imm=0) R6=ctx(off=0,imm=0)
- 24: (85) call bpf_probe_read#4
- unknown func bpf_probe_read#4
- processed 23 insns (limit 1000000) max_states_per_insn 0 \
-	 total_states 2 peak_states 2 mark_read 2
- -- END PROG LOAD LOG --
- libbpf: prog 'sys_enter': failed to load: -22
- libbpf: failed to load object 'augmented_raw_syscalls_bpf'
- libbpf: failed to load BPF skeleton 'augmented_raw_syscalls_bpf': -22
- ....
-
-Output after:
- # ./perf test -Fv 111
- 111: Check open filename arg using perf trace + vfs_getname          :
- --- start ---
-     1.085 ( 0.011 ms): touch/320753 openat(dfd: CWD, filename: \
-	"/tmp/temporary_file.SWH85", \
-	flags: CREAT|NOCTTY|NONBLOCK|WRONLY, mode: IRUGO|IWUGO) = 3
- ---- end ----
- Check open filename arg using perf trace + vfs_getname: Ok
- #
-
-Test with the sleep command shows:
-Output before:
- # ./perf trace -e *sleep sleep 1.234567890
-     0.000 (1234.681 ms): sleep/63114 clock_nanosleep(rqtp: \
-         { .tv_sec: 0, .tv_nsec: 0 }, rmtp: 0x3ffe0979720) = 0
- #
-
-Output after:
- # ./perf trace -e *sleep sleep 1.234567890
-     0.000 (1234.686 ms): sleep/64277 clock_nanosleep(rqtp: \
-         { .tv_sec: 1, .tv_nsec: 234567890 }, rmtp: 0x3fff3df9ea0) = 0
- #
-
-Fixes: 14e4b9f4289a ("perf trace: Raw augmented syscalls fix libbpf 1.0+ compatibility")
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Co-developed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: gor@linux.ibm.com
-Cc: hca@linux.ibm.com
-Cc: sumanthk@linux.ibm.com
-Cc: svens@linux.ibm.com
-Link: https://lore.kernel.org/r/20231019082642.3286650-1-tmricht@linux.ibm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 37e6764895ef ("powerpc/pseries/vas: Add VAS migration handler")
+Signed-off-by: Haren Myneni <haren@linux.ibm.com>
+[mpe: Use "vas-api" as the prefix to match the file name.]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231019215033.1335251-1-haren@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../util/bpf_skel/augmented_raw_syscalls.bpf.c   | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/powerpc/platforms/book3s/vas-api.c | 34 ++++++++++++-------------
+ arch/powerpc/platforms/pseries/vas.c    |  4 +--
+ 2 files changed, 18 insertions(+), 20 deletions(-)
 
-diff --git a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-index 939ec769bf4a5..52c270330ae0d 100644
---- a/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-+++ b/tools/perf/util/bpf_skel/augmented_raw_syscalls.bpf.c
-@@ -153,7 +153,7 @@ static inline
- unsigned int augmented_arg__read_str(struct augmented_arg *augmented_arg, const void *arg, unsigned int arg_len)
- {
- 	unsigned int augmented_len = sizeof(*augmented_arg);
--	int string_len = bpf_probe_read_str(&augmented_arg->value, arg_len, arg);
-+	int string_len = bpf_probe_read_user_str(&augmented_arg->value, arg_len, arg);
+diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
+index 77ea9335fd049..f381b177ea06a 100644
+--- a/arch/powerpc/platforms/book3s/vas-api.c
++++ b/arch/powerpc/platforms/book3s/vas-api.c
+@@ -4,6 +4,8 @@
+  * Copyright (C) 2019 Haren Myneni, IBM Corp
+  */
  
- 	augmented_arg->size = augmented_arg->err = 0;
- 	/*
-@@ -203,7 +203,7 @@ int sys_enter_connect(struct syscall_enter_args *args)
- 	_Static_assert(is_power_of_2(sizeof(augmented_args->saddr)), "sizeof(augmented_args->saddr) needs to be a power of two");
- 	socklen &= sizeof(augmented_args->saddr) - 1;
++#define pr_fmt(fmt)	"vas-api: " fmt
++
+ #include <linux/kernel.h>
+ #include <linux/device.h>
+ #include <linux/cdev.h>
+@@ -78,7 +80,7 @@ int get_vas_user_win_ref(struct vas_user_win_ref *task_ref)
+ 	task_ref->mm = get_task_mm(current);
+ 	if (!task_ref->mm) {
+ 		put_pid(task_ref->pid);
+-		pr_err("VAS: pid(%d): mm_struct is not found\n",
++		pr_err("pid(%d): mm_struct is not found\n",
+ 				current->pid);
+ 		return -EPERM;
+ 	}
+@@ -235,8 +237,7 @@ void vas_update_csb(struct coprocessor_request_block *crb,
+ 	rc = kill_pid_info(SIGSEGV, &info, pid);
+ 	rcu_read_unlock();
  
--	bpf_probe_read(&augmented_args->saddr, socklen, sockaddr_arg);
-+	bpf_probe_read_user(&augmented_args->saddr, socklen, sockaddr_arg);
- 
- 	return augmented__output(args, augmented_args, len + socklen);
+-	pr_devel("%s(): pid %d kill_proc_info() rc %d\n", __func__,
+-			pid_vnr(pid), rc);
++	pr_devel("pid %d kill_proc_info() rc %d\n", pid_vnr(pid), rc);
  }
-@@ -221,7 +221,7 @@ int sys_enter_sendto(struct syscall_enter_args *args)
  
- 	socklen &= sizeof(augmented_args->saddr) - 1;
+ void vas_dump_crb(struct coprocessor_request_block *crb)
+@@ -294,7 +295,7 @@ static int coproc_ioc_tx_win_open(struct file *fp, unsigned long arg)
  
--	bpf_probe_read(&augmented_args->saddr, socklen, sockaddr_arg);
-+	bpf_probe_read_user(&augmented_args->saddr, socklen, sockaddr_arg);
+ 	rc = copy_from_user(&uattr, uptr, sizeof(uattr));
+ 	if (rc) {
+-		pr_err("%s(): copy_from_user() returns %d\n", __func__, rc);
++		pr_err("copy_from_user() returns %d\n", rc);
+ 		return -EFAULT;
+ 	}
  
- 	return augmented__output(args, augmented_args, len + socklen);
- }
-@@ -311,7 +311,7 @@ int sys_enter_perf_event_open(struct syscall_enter_args *args)
-         if (augmented_args == NULL)
- 		goto failure;
+@@ -311,7 +312,7 @@ static int coproc_ioc_tx_win_open(struct file *fp, unsigned long arg)
+ 	txwin = cp_inst->coproc->vops->open_win(uattr.vas_id, uattr.flags,
+ 						cp_inst->coproc->cop_type);
+ 	if (IS_ERR(txwin)) {
+-		pr_err("%s() VAS window open failed, %ld\n", __func__,
++		pr_err_ratelimited("VAS window open failed rc=%ld\n",
+ 				PTR_ERR(txwin));
+ 		return PTR_ERR(txwin);
+ 	}
+@@ -405,8 +406,7 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
+ 	 * window is not opened. Shouldn't expect this error.
+ 	 */
+ 	if (!cp_inst || !cp_inst->txwin) {
+-		pr_err("%s(): Unexpected fault on paste address with TX window closed\n",
+-				__func__);
++		pr_err("Unexpected fault on paste address with TX window closed\n");
+ 		return VM_FAULT_SIGBUS;
+ 	}
  
--	if (bpf_probe_read(&augmented_args->__data, sizeof(*attr), attr) < 0)
-+	if (bpf_probe_read_user(&augmented_args->__data, sizeof(*attr), attr) < 0)
- 		goto failure;
+@@ -421,8 +421,7 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
+ 	 * issue NX request.
+ 	 */
+ 	if (txwin->task_ref.vma != vmf->vma) {
+-		pr_err("%s(): No previous mapping with paste address\n",
+-			__func__);
++		pr_err("No previous mapping with paste address\n");
+ 		return VM_FAULT_SIGBUS;
+ 	}
  
- 	attr_read = (const struct perf_event_attr_size *)augmented_args->__data;
-@@ -325,7 +325,7 @@ int sys_enter_perf_event_open(struct syscall_enter_args *args)
-                 goto failure;
+@@ -481,19 +480,19 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	txwin = cp_inst->txwin;
  
- 	// Now that we read attr->size and tested it against the size limits, read it completely
--	if (bpf_probe_read(&augmented_args->__data, size, attr) < 0)
-+	if (bpf_probe_read_user(&augmented_args->__data, size, attr) < 0)
- 		goto failure;
+ 	if ((vma->vm_end - vma->vm_start) > PAGE_SIZE) {
+-		pr_debug("%s(): size 0x%zx, PAGE_SIZE 0x%zx\n", __func__,
++		pr_debug("size 0x%zx, PAGE_SIZE 0x%zx\n",
+ 				(vma->vm_end - vma->vm_start), PAGE_SIZE);
+ 		return -EINVAL;
+ 	}
  
- 	return augmented__output(args, augmented_args, len + size);
-@@ -347,7 +347,7 @@ int sys_enter_clock_nanosleep(struct syscall_enter_args *args)
- 	if (size > sizeof(augmented_args->__data))
-                 goto failure;
+ 	/* Ensure instance has an open send window */
+ 	if (!txwin) {
+-		pr_err("%s(): No send window open?\n", __func__);
++		pr_err("No send window open?\n");
+ 		return -EINVAL;
+ 	}
  
--	bpf_probe_read(&augmented_args->__data, size, rqtp_arg);
-+	bpf_probe_read_user(&augmented_args->__data, size, rqtp_arg);
+ 	if (!cp_inst->coproc->vops || !cp_inst->coproc->vops->paste_addr) {
+-		pr_err("%s(): VAS API is not registered\n", __func__);
++		pr_err("VAS API is not registered\n");
+ 		return -EACCES;
+ 	}
  
- 	return augmented__output(args, augmented_args, len + size);
- failure:
-@@ -385,7 +385,7 @@ int sys_enter(struct syscall_enter_args *args)
- 	if (augmented_args == NULL)
- 		return 1;
+@@ -510,14 +509,14 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	 */
+ 	mutex_lock(&txwin->task_ref.mmap_mutex);
+ 	if (txwin->status != VAS_WIN_ACTIVE) {
+-		pr_err("%s(): Window is not active\n", __func__);
++		pr_err("Window is not active\n");
+ 		rc = -EACCES;
+ 		goto out;
+ 	}
  
--	bpf_probe_read(&augmented_args->args, sizeof(augmented_args->args), args);
-+	bpf_probe_read_kernel(&augmented_args->args, sizeof(augmented_args->args), args);
+ 	paste_addr = cp_inst->coproc->vops->paste_addr(txwin);
+ 	if (!paste_addr) {
+-		pr_err("%s(): Window paste address failed\n", __func__);
++		pr_err("Window paste address failed\n");
+ 		rc = -EINVAL;
+ 		goto out;
+ 	}
+@@ -533,8 +532,8 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	rc = remap_pfn_range(vma, vma->vm_start, pfn + vma->vm_pgoff,
+ 			vma->vm_end - vma->vm_start, prot);
  
+-	pr_devel("%s(): paste addr %llx at %lx, rc %d\n", __func__,
+-			paste_addr, vma->vm_start, rc);
++	pr_devel("paste addr %llx at %lx, rc %d\n", paste_addr,
++			vma->vm_start, rc);
+ 
+ 	txwin->task_ref.vma = vma;
+ 	vma->vm_ops = &vas_vm_ops;
+@@ -609,8 +608,7 @@ int vas_register_coproc_api(struct module *mod, enum vas_cop_type cop_type,
+ 		goto err;
+ 	}
+ 
+-	pr_devel("%s: Added dev [%d,%d]\n", __func__, MAJOR(devno),
+-			MINOR(devno));
++	pr_devel("Added dev [%d,%d]\n", MAJOR(devno), MINOR(devno));
+ 
+ 	return 0;
+ 
+diff --git a/arch/powerpc/platforms/pseries/vas.c b/arch/powerpc/platforms/pseries/vas.c
+index e25ac52acf507..b1f25bac280b4 100644
+--- a/arch/powerpc/platforms/pseries/vas.c
++++ b/arch/powerpc/platforms/pseries/vas.c
+@@ -341,7 +341,7 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
+ 
+ 	if (atomic_inc_return(&cop_feat_caps->nr_used_credits) >
+ 			atomic_read(&cop_feat_caps->nr_total_credits)) {
+-		pr_err("Credits are not available to allocate window\n");
++		pr_err_ratelimited("Credits are not available to allocate window\n");
+ 		rc = -EINVAL;
+ 		goto out;
+ 	}
+@@ -424,7 +424,7 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
+ 
+ 	put_vas_user_win_ref(&txwin->vas_win.task_ref);
+ 	rc = -EBUSY;
+-	pr_err("No credit is available to allocate window\n");
++	pr_err_ratelimited("No credit is available to allocate window\n");
+ 
+ out_free:
  	/*
- 	 * Jump to syscall specific augmenter, even if the default one,
-@@ -406,7 +406,7 @@ int sys_exit(struct syscall_exit_args *args)
- 	if (pid_filter__has(&pids_filtered, getpid()))
- 		return 0;
- 
--	bpf_probe_read(&exit_args, sizeof(exit_args), args);
-+	bpf_probe_read_kernel(&exit_args, sizeof(exit_args), args);
- 	/*
- 	 * Jump to syscall specific return augmenter, even if the default one,
- 	 * "!raw_syscalls:unaugmented" that will just return 1 to return the
 -- 
 2.42.0
 
