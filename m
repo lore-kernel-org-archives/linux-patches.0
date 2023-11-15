@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DAD3C46F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0207E3C46F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUbIUulx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A6CC433C7;
-	Wed, 15 Nov 2023 19:41:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrgaZQ3g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E0DC433C8;
+	Wed, 15 Nov 2023 19:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077267;
-	bh=uQue5NzCC7Lw2PuXFQX+sL2vcg5O0i81DJK9CLSQkUE=;
+	s=korg; t=1700077268;
+	bh=sAxA/0xjBz/YmJLUCwyQHlX/UFuZgUPxia/cg0VsjrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUbIUulxCpsnHtesGQvkyaf7/DAMsn3UrtKj6/ZyTAiMHnJx5cQ6caI4ozCt725Fc
-	 fH13snvi2EvA28Zo0d1V6Vfy0KHgKx5f7E4C7ewYQqhP9NyofhMNypBP0RSUyL09vn
-	 OpEJfPmHuj0/jKsKvlrnspjbDY+L8/yeeJGU7EHc=
+	b=XrgaZQ3gBpwLoucS2IneMBJD8YeVMUGGUnrcEKbGK4u5bndqhJhROIUiELump0rKH
+	 CgughtnC6lEryfbcSI3/WMdf+pCsQubKonvoomqrOmehF4VD5m4iQOjGxmBe+so2DA
+	 rqfmH4aOrlCWa4PuhPOgGe16Oxuc6T0CTEkNMP+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/603] clk: qcom: ipq5332: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
-Date: Wed, 15 Nov 2023 14:12:23 -0500
-Message-ID: <20231115191626.956794376@linuxfoundation.org>
+Subject: [PATCH 6.6 199/603] clk: mediatek: fix double free in mtk_clk_register_pllfh()
+Date: Wed, 15 Nov 2023 14:12:24 -0500
+Message-ID: <20231115191627.030467940@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,44 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 5635ef0bd1052420bc659a00be6fd0c60cec5cb9 ]
+[ Upstream commit bd54ccc0f147019dac38e7841876a7415459b875 ]
 
-GPLL clock rates are fixed and shouldn't be scaled based on the
-request from dependent clocks. Doing so will result in the unexpected
-behaviour. So drop the CLK_SET_RATE_PARENT flag from the GPLL clocks.
+The mtk_clk_register_pll_ops() currently frees the "pll" parameter.
+The function has two callers, mtk_clk_register_pll() and
+mtk_clk_register_pllfh().  The first one, the _pll() function relies on
+the free, but for the second _pllfh() function it causes a double free
+bug.
 
-Fixes: 3d89d52970fd ("clk: qcom: add Global Clock controller (GCC) driver for IPQ5332 SoC")
-Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230913-gpll_cleanup-v2-5-c8ceb1a37680@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Really the frees should be done in the caller because that's where
+the allocation is.
+
+Fixes: d7964de8a8ea ("clk: mediatek: Add new clock driver to handle FHCTL hardware")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/cd7fa365-28cc-4c34-ac64-6da57c98baa6@moroto.mountain
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq5332.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/clk/mediatek/clk-pll.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
-index b836159fbdefa..f98591148a976 100644
---- a/drivers/clk/qcom/gcc-ipq5332.c
-+++ b/drivers/clk/qcom/gcc-ipq5332.c
-@@ -112,7 +112,6 @@ static struct clk_alpha_pll_postdiv gpll2 = {
- 				&gpll2_main.clkr.hw },
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_postdiv_ro_ops,
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
+diff --git a/drivers/clk/mediatek/clk-pll.c b/drivers/clk/mediatek/clk-pll.c
+index a4eca5fd539c8..513ab6b1b3229 100644
+--- a/drivers/clk/mediatek/clk-pll.c
++++ b/drivers/clk/mediatek/clk-pll.c
+@@ -321,10 +321,8 @@ struct clk_hw *mtk_clk_register_pll_ops(struct mtk_clk_pll *pll,
  
-@@ -152,7 +151,6 @@ static struct clk_alpha_pll_postdiv gpll4 = {
- 				&gpll4_main.clkr.hw },
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_postdiv_ro_ops,
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
+ 	ret = clk_hw_register(NULL, &pll->hw);
  
+-	if (ret) {
+-		kfree(pll);
++	if (ret)
+ 		return ERR_PTR(ret);
+-	}
+ 
+ 	return &pll->hw;
+ }
+@@ -340,6 +338,8 @@ struct clk_hw *mtk_clk_register_pll(const struct mtk_pll_data *data,
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	hw = mtk_clk_register_pll_ops(pll, data, base, &mtk_pll_ops);
++	if (IS_ERR(hw))
++		kfree(pll);
+ 
+ 	return hw;
+ }
 -- 
 2.42.0
 
