@@ -1,36 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203B141223
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39423DB92
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYj0JXTa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C26C433C8;
-	Wed, 15 Nov 2023 19:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trSYVebc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F38C433C9;
+	Wed, 15 Nov 2023 19:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076839;
-	bh=1EBJgdcDxL1AnR85Vj/En1qUdlQIaV32hC+DMluLIrw=;
+	s=korg; t=1700076841;
+	bh=j4vKVH82JoWSqYZ0pI2Y+svHhnDCEpd7YyRefZ+b60M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYj0JXTaFpbof3oWP6YZHBpEznGH5+hLmYgz9g07HKy4RfWDEZeAtaBtCsNe4Fqg3
-	 xhCX6gsuaytN9mTtbUP8IlIAZuQKR5lZLiwzjUKxtqoPRdTc8lL39HlNEp2f39ueOv
-	 21gFT/+IWIdSRY2uJzldFID5P7QUUk1fl6ycRgaM=
+	b=trSYVebcidAkFrvbklg2m3WHv0NBGSJHK/TVL/kisHqAEL8xFl82Umdcyqy+WuAwP
+	 LPU+L6rPuRYB276MMlgHRC0NYyf5Q6NVwRD4oxDYTXebkpCjvrAlHsdrWmjz7dBT19
+	 H20DmXD3o7fUR28l2itfUlrGuk2wD62INTn3MvEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Disha Goel <disgoel@linux.vnet.ibm.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Disha Goel <disgoel@linux.ibm.com>,
-	maddy@linux.ibm.com,
-	Namhyung Kim <namhyung@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 439/550] perf vendor events: Update PMC used in PM_RUN_INST_CMPL event for power10 platform
-Date: Wed, 15 Nov 2023 14:17:03 -0500
-Message-ID: <20231115191631.232970173@linuxfoundation.org>
+Subject: [PATCH 6.6 043/603] wifi: cfg80211: fix off-by-one in element defrag
+Date: Wed, 15 Nov 2023 14:09:48 -0500
+Message-ID: <20231115191616.141289227@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -42,74 +38,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3f8b6e5b11192dacb721d2d28ea4589917f5e822 ]
+[ Upstream commit 43125539fc69c6aa63d34b516939431391bddeac ]
 
-The CPI_STALL_RATIO metric group can be used to present the high
-level CPI stall breakdown metrics in powerpc, which will show:
+If a fragment is the last element, it's erroneously not
+accepted. Fix that.
 
-- DISPATCH_STALL_CPI ( Dispatch stall cycles per insn )
-- ISSUE_STALL_CPI ( Issue stall cycles per insn )
-- EXECUTION_STALL_CPI ( Execution stall cycles per insn )
-- COMPLETION_STALL_CPI ( Completion stall cycles per insn )
-
-Commit cf26e043c2a9 ("perf vendor events power10: Add JSON
-metric events to present CPI stall cycles in powerpc)" which added
-the CPI_STALL_RATIO metric group, also modified
-the PMC value used in PM_RUN_INST_CMPL event from PMC4 to PMC5,
-to avoid multiplexing of events.
-But that got revert in recent changes. Fix this issue by changing
-back the PMC value used in PM_RUN_INST_CMPL to PMC5.
-
-Result with the fix:
-
- ./perf stat --metric-no-group -M CPI_STALL_RATIO <workload>
-
- Performance counter stats for 'workload':
-
-        68,745,426      PM_CMPL_STALL                    #     0.21 COMPLETION_STALL_CPI
-         7,692,827      PM_ISSUE_STALL                   #     0.02 ISSUE_STALL_CPI
-       322,638,223      PM_RUN_INST_CMPL                 #     0.05 DISPATCH_STALL_CPI
-                                                  #     0.48 EXECUTION_STALL_CPI
-        16,858,553      PM_DISP_STALL_CYC
-       153,880,133      PM_EXEC_STALL
-
-       0.089774592 seconds time elapsed
-
-"--metric-no-group" is used for forcing PM_RUN_INST_CMPL to be scheduled
-in all group for more accuracy.
-
-Fixes: 7d473f475b2a ("perf vendor events: Move JSON/events to appropriate files for power10 platform")
-Reported-by: Disha Goel <disgoel@linux.vnet.ibm.com>
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Reviewed-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Tested-by: Disha Goel<disgoel@linux.ibm.com>
-Cc: maddy@linux.ibm.com
-Link: https://lore.kernel.org/r/20231016143110.244255-1-kjain@linux.ibm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: f837a653a097 ("wifi: cfg80211: add element defragmentation helper")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230827135854.adca9fbd3317.I6b2df45eb71513f3e48efd196ae3cddec362dc1c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/pmu-events/arch/powerpc/power10/pmc.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/scan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
-index 0a2bf56ee7c10..1c44f0120505e 100644
---- a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
-+++ b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
-@@ -190,7 +190,7 @@
-     "BriefDescription": "Threshold counter exceeded a value of 128."
-   },
-   {
--    "EventCode": "0x400FA",
-+    "EventCode": "0x500FA",
-     "EventName": "PM_RUN_INST_CMPL",
-     "BriefDescription": "PowerPC instruction completed while the run latch is set."
-   }
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 8210a6090ac16..e4cc6209c7b9b 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2358,8 +2358,8 @@ ssize_t cfg80211_defragment_element(const struct element *elem, const u8 *ies,
+ 
+ 	/* elem might be invalid after the memmove */
+ 	next = (void *)(elem->data + elem->datalen);
+-
+ 	elem_datalen = elem->datalen;
++
+ 	if (elem->id == WLAN_EID_EXTENSION) {
+ 		copied = elem->datalen - 1;
+ 		if (copied > data_len)
+@@ -2380,7 +2380,7 @@ ssize_t cfg80211_defragment_element(const struct element *elem, const u8 *ies,
+ 
+ 	for (elem = next;
+ 	     elem->data < ies + ieslen &&
+-		elem->data + elem->datalen < ies + ieslen;
++		elem->data + elem->datalen <= ies + ieslen;
+ 	     elem = next) {
+ 		/* elem might be invalid after the memmove */
+ 		next = (void *)(elem->data + elem->datalen);
 -- 
 2.42.0
 
