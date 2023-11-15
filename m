@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C533EA7B
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B640E364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+Yr5tt7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC358C433C8;
-	Wed, 15 Nov 2023 19:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IK0B5vUY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613C3C43391;
+	Wed, 15 Nov 2023 19:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076819;
-	bh=LR7OgexGTdbU/da0YC1V2v0I+rAeOEvCJwpHyngCbfU=;
+	s=korg; t=1700076821;
+	bh=PpmwybdV6XOG/gQXTkTV08g7zmY7BSUfdU3DeX8/9ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+Yr5tt7cTnu4LQs/qQCWlE2WHWcidKV3ujSPFl65izVp1iTTGM6wJPk31tUT8ZJD
-	 lXFJKAviqqkQVOgLy5qs4kapy5prUlhTK/aTxVwxGHe4J8ODvBw9P/QhKvt+xFQs6G
-	 pb9GwmlWN4wshFT02jXSFOdSUbAk0zj5pBD+aTFI=
+	b=IK0B5vUYPrILniSsOS5Nr2S7u07lts+Y+g53uZJRXtL6Frs5xTYeQNHyOACfeBz7e
+	 WvHVuJl9Dar7jiY2cWJAyUg5YNb4B+vcUBsXmYRkMJHcV+IQNpPrJaXLJVK0W5XBXj
+	 WpF2b/HdRx3LCg9I9+FrQh6R9DB4tMmXnwY4u0uI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 433/550] powerpc/xive: Fix endian conversion size
-Date: Wed, 15 Nov 2023 14:16:57 -0500
-Message-ID: <20231115191630.782732813@linuxfoundation.org>
+Subject: [PATCH 6.6 037/603] wifi: cfg80211: add flush functions for wiphy work
+Date: Wed, 15 Nov 2023 14:09:42 -0500
+Message-ID: <20231115191615.734155126@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,43 +37,175 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ff7a60ab1e065257a0e467c13b519f4debcd7fcf ]
+[ Upstream commit 56cfb8ce1f7f6c4e5ca571a2ec0880e131cd0311 ]
 
-Sparse reports a size mismatch in the endian swap. The Opal
-implementation[1] passes the value as a __be64, and the receiving
-variable out_qsize is a u64, so the use of be32_to_cpu() appears to be
-an error.
+There may be sometimes reasons to actually run the work
+if it's pending, add flush functions for both regular and
+delayed wiphy work that will do this.
 
-[1]: https://github.com/open-power/skiboot/blob/80e2b1dc73/hw/xive.c#L3854
-
-Fixes: 88ec6b93c8e7 ("powerpc/xive: add OPAL extensions for the XIVE native exploitation support")
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231011053711.93427-2-bgray@linux.ibm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: eadfb54756ae ("wifi: mac80211: move sched-scan stop work to wiphy work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/xive/native.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/cfg80211.h | 21 +++++++++++++++++++++
+ net/wireless/core.c    | 34 ++++++++++++++++++++++++++++++++--
+ net/wireless/core.h    |  3 ++-
+ net/wireless/sysfs.c   |  4 ++--
+ 4 files changed, 57 insertions(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/sysdev/xive/native.c b/arch/powerpc/sysdev/xive/native.c
-index 9f0af4d795d88..f1c0fa6ece21d 100644
---- a/arch/powerpc/sysdev/xive/native.c
-+++ b/arch/powerpc/sysdev/xive/native.c
-@@ -802,7 +802,7 @@ int xive_native_get_queue_info(u32 vp_id, u32 prio,
- 	if (out_qpage)
- 		*out_qpage = be64_to_cpu(qpage);
- 	if (out_qsize)
--		*out_qsize = be32_to_cpu(qsize);
-+		*out_qsize = be64_to_cpu(qsize);
- 	if (out_qeoi_page)
- 		*out_qeoi_page = be64_to_cpu(qeoi_page);
- 	if (out_escalate_irq)
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 7192346e4a22d..308a004c1d1dc 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -5826,6 +5826,16 @@ void wiphy_work_queue(struct wiphy *wiphy, struct wiphy_work *work);
+  */
+ void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work);
+ 
++/**
++ * wiphy_work_flush - flush previously queued work
++ * @wiphy: the wiphy, for debug purposes
++ * @work: the work to flush, this can be %NULL to flush all work
++ *
++ * Flush the work (i.e. run it if pending). This must be called
++ * under the wiphy mutex acquired by wiphy_lock().
++ */
++void wiphy_work_flush(struct wiphy *wiphy, struct wiphy_work *work);
++
+ struct wiphy_delayed_work {
+ 	struct wiphy_work work;
+ 	struct wiphy *wiphy;
+@@ -5869,6 +5879,17 @@ void wiphy_delayed_work_queue(struct wiphy *wiphy,
+ void wiphy_delayed_work_cancel(struct wiphy *wiphy,
+ 			       struct wiphy_delayed_work *dwork);
+ 
++/**
++ * wiphy_delayed work_flush - flush previously queued delayed work
++ * @wiphy: the wiphy, for debug purposes
++ * @work: the work to flush
++ *
++ * Flush the work (i.e. run it if pending). This must be called
++ * under the wiphy mutex acquired by wiphy_lock().
++ */
++void wiphy_delayed_work_flush(struct wiphy *wiphy,
++			      struct wiphy_delayed_work *dwork);
++
+ /**
+  * struct wireless_dev - wireless device state
+  *
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index acec41c1809a8..563cfbe3237c9 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1049,7 +1049,8 @@ void wiphy_rfkill_start_polling(struct wiphy *wiphy)
+ }
+ EXPORT_SYMBOL(wiphy_rfkill_start_polling);
+ 
+-void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev)
++void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev,
++				  struct wiphy_work *end)
+ {
+ 	unsigned int runaway_limit = 100;
+ 	unsigned long flags;
+@@ -1068,6 +1069,10 @@ void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev)
+ 		wk->func(&rdev->wiphy, wk);
+ 
+ 		spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
++
++		if (wk == end)
++			break;
++
+ 		if (WARN_ON(--runaway_limit == 0))
+ 			INIT_LIST_HEAD(&rdev->wiphy_work_list);
+ 	}
+@@ -1118,7 +1123,7 @@ void wiphy_unregister(struct wiphy *wiphy)
+ #endif
+ 
+ 	/* surely nothing is reachable now, clean up work */
+-	cfg80211_process_wiphy_works(rdev);
++	cfg80211_process_wiphy_works(rdev, NULL);
+ 	wiphy_unlock(&rdev->wiphy);
+ 	rtnl_unlock();
+ 
+@@ -1640,6 +1645,21 @@ void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work)
+ }
+ EXPORT_SYMBOL_GPL(wiphy_work_cancel);
+ 
++void wiphy_work_flush(struct wiphy *wiphy, struct wiphy_work *work)
++{
++	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
++	unsigned long flags;
++	bool run;
++
++	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
++	run = !work || !list_empty(&work->entry);
++	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
++
++	if (run)
++		cfg80211_process_wiphy_works(rdev, work);
++}
++EXPORT_SYMBOL_GPL(wiphy_work_flush);
++
+ void wiphy_delayed_work_timer(struct timer_list *t)
+ {
+ 	struct wiphy_delayed_work *dwork = from_timer(dwork, t, timer);
+@@ -1672,6 +1692,16 @@ void wiphy_delayed_work_cancel(struct wiphy *wiphy,
+ }
+ EXPORT_SYMBOL_GPL(wiphy_delayed_work_cancel);
+ 
++void wiphy_delayed_work_flush(struct wiphy *wiphy,
++			      struct wiphy_delayed_work *dwork)
++{
++	lockdep_assert_held(&wiphy->mtx);
++
++	del_timer_sync(&dwork->timer);
++	wiphy_work_flush(wiphy, &dwork->work);
++}
++EXPORT_SYMBOL_GPL(wiphy_delayed_work_flush);
++
+ static int __init cfg80211_init(void)
+ {
+ 	int err;
+diff --git a/net/wireless/core.h b/net/wireless/core.h
+index ba9c7170afa44..e536c0b615a09 100644
+--- a/net/wireless/core.h
++++ b/net/wireless/core.h
+@@ -464,7 +464,8 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
+ 			  struct net_device *dev, enum nl80211_iftype ntype,
+ 			  struct vif_params *params);
+ void cfg80211_process_rdev_events(struct cfg80211_registered_device *rdev);
+-void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev);
++void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev,
++				  struct wiphy_work *end);
+ void cfg80211_process_wdev_events(struct wireless_dev *wdev);
+ 
+ bool cfg80211_does_bw_fit_range(const struct ieee80211_freq_range *freq_range,
+diff --git a/net/wireless/sysfs.c b/net/wireless/sysfs.c
+index c629bac3f2983..565511a3f461e 100644
+--- a/net/wireless/sysfs.c
++++ b/net/wireless/sysfs.c
+@@ -105,14 +105,14 @@ static int wiphy_suspend(struct device *dev)
+ 			cfg80211_leave_all(rdev);
+ 			cfg80211_process_rdev_events(rdev);
+ 		}
+-		cfg80211_process_wiphy_works(rdev);
++		cfg80211_process_wiphy_works(rdev, NULL);
+ 		if (rdev->ops->suspend)
+ 			ret = rdev_suspend(rdev, rdev->wiphy.wowlan_config);
+ 		if (ret == 1) {
+ 			/* Driver refuse to configure wowlan */
+ 			cfg80211_leave_all(rdev);
+ 			cfg80211_process_rdev_events(rdev);
+-			cfg80211_process_wiphy_works(rdev);
++			cfg80211_process_wiphy_works(rdev, NULL);
+ 			ret = rdev_suspend(rdev, NULL);
+ 		}
+ 		if (ret == 0)
 -- 
 2.42.0
 
