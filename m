@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BAA364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5344E364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jyr3Ja8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B4EC433CA;
-	Wed, 15 Nov 2023 19:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoUPm9GK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D16C433C7;
+	Wed, 15 Nov 2023 19:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076893;
-	bh=UfgjBLANxOTETSHcTmncKsYtc4ZAdwO/9iTQEaHLlxI=;
+	s=korg; t=1700076895;
+	bh=3w8gVbk5LhjRgbhoM8KiHwxnHeLdtc6Fv4c7iymb0RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jyr3Ja8fqM3miskz5XqMMWSfUS+q0hpex4Fd6krhvCtmxKTc/RraKit34rpAoh8GN
-	 k+djKIQussLAVZ3J3hL1SQ5MubLVgDg7REWOpSX+7KU60JriWb61E/J7+tuJ2kpERw
-	 skkylGN8IFkmmVTHkFsHk1cGAtOpP2kHDj50kyLU=
+	b=UoUPm9GKSJBO2XzHBEIGhHP/z3W6ImSUv8YDDcEYaw+E/pPA8iu4itW2ymgXnTGPL
+	 e4LUy9qUMnYsgehYvcDtrN09E/nGDkmuXuRkvD96T5FwhcsKS335qr32EJ3mNlEzw6
+	 u95lAMUwkxF72mpz+uqZWV4QqdIK83B0guMaIX+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/603] udp: lockless UDP_ENCAP_L2TPINUDP / UDP_GRO
-Date: Wed, 15 Nov 2023 14:10:04 -0500
-Message-ID: <20231115191617.207769195@linuxfoundation.org>
+Subject: [PATCH 6.5 456/550] cxl/memdev: Fix sanitize vs decoder setup locking
+Date: Wed, 15 Nov 2023 14:17:20 -0500
+Message-ID: <20231115191632.467001505@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,156 +40,334 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit ac9a7f4ce5dda1472e8f44096f33066c6ec1a3b4 ]
+[ Upstream commit 339818380868e34ff2c482db05031bf47a67d609 ]
 
-Move udp->encap_enabled to udp->udp_flags.
+The sanitize operation is destructive and the expectation is that the
+device is unmapped while in progress. The current implementation does a
+lockless check for decoders being active, but then does nothing to
+prevent decoders from racing to be committed. Introduce state tracking
+to resolve this race.
 
-Add udp_test_and_set_bit() helper to allow lockless
-udp_tunnel_encap_enable() implementation.
+This incidentally cleans up unpriveleged userspace from triggering mmio
+read cycles by spinning on reading the 'security/state' attribute. Which
+at a minimum is a waste since the kernel state machine can cache the
+completion result.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 70a36f571362 ("udp: annotate data-races around udp->encap_type")
+Lastly cxl_mem_sanitize() was mistakenly marked EXPORT_SYMBOL() in the
+original implementation, but an export was never required.
+
+Fixes: 0c36b6ad436a ("cxl/mbox: Add sanitization handling machinery")
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/udp.h        |  9 ++++-----
- include/net/udp_tunnel.h   |  9 +++------
- net/ipv4/udp.c             | 10 +++-------
- net/ipv4/udp_tunnel_core.c |  2 +-
- net/ipv6/udp.c             |  2 +-
- 5 files changed, 12 insertions(+), 20 deletions(-)
+ drivers/cxl/core/core.h   |  1 +
+ drivers/cxl/core/hdm.c    | 19 ++++++++++++++
+ drivers/cxl/core/mbox.c   | 55 ++++++++++++++++++++++++++++-----------
+ drivers/cxl/core/memdev.c | 43 ++++++++++++------------------
+ drivers/cxl/core/port.c   |  6 +++++
+ drivers/cxl/core/region.c |  6 -----
+ drivers/cxl/cxlmem.h      |  4 ++-
+ drivers/cxl/pci.c         |  5 ++++
+ 8 files changed, 90 insertions(+), 49 deletions(-)
 
-diff --git a/include/linux/udp.h b/include/linux/udp.h
-index bb2b87adfbea9..0cf83270a4a28 100644
---- a/include/linux/udp.h
-+++ b/include/linux/udp.h
-@@ -39,6 +39,7 @@ enum {
- 	UDP_FLAGS_GRO_ENABLED,	/* Request GRO aggregation */
- 	UDP_FLAGS_ACCEPT_FRAGLIST,
- 	UDP_FLAGS_ACCEPT_L4,
-+	UDP_FLAGS_ENCAP_ENABLED, /* This socket enabled encap */
- };
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index 45e7e044cf4a0..8e5f3d84311e5 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -75,6 +75,7 @@ resource_size_t __rcrb_to_component(struct device *dev,
+ 				    enum cxl_rcrb which);
  
- struct udp_sock {
-@@ -52,11 +53,7 @@ struct udp_sock {
+ extern struct rw_semaphore cxl_dpa_rwsem;
++extern struct rw_semaphore cxl_region_rwsem;
  
- 	int		 pending;	/* Any pending frames ? */
- 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
--	unsigned char	 encap_enabled:1; /* This socket enabled encap
--					   * processing; UDP tunnels and
--					   * different encapsulation layer set
--					   * this
--					   */
-+
- /* indicator bits used by pcflag: */
- #define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
- #define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
-@@ -104,6 +101,8 @@ struct udp_sock {
- 	test_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
- #define udp_set_bit(nr, sk)			\
- 	set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
-+#define udp_test_and_set_bit(nr, sk)		\
-+	test_and_set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
- #define udp_clear_bit(nr, sk)			\
- 	clear_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
- #define udp_assign_bit(nr, sk, val)		\
-diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
-index 0ca9b7a11baf5..29251c3519cf0 100644
---- a/include/net/udp_tunnel.h
-+++ b/include/net/udp_tunnel.h
-@@ -174,16 +174,13 @@ static inline int udp_tunnel_handle_offloads(struct sk_buff *skb, bool udp_csum)
- }
- #endif
- 
--static inline void udp_tunnel_encap_enable(struct socket *sock)
-+static inline void udp_tunnel_encap_enable(struct sock *sk)
- {
--	struct udp_sock *up = udp_sk(sock->sk);
--
--	if (up->encap_enabled)
-+	if (udp_test_and_set_bit(ENCAP_ENABLED, sk))
- 		return;
- 
--	up->encap_enabled = 1;
- #if IS_ENABLED(CONFIG_IPV6)
--	if (sock->sk->sk_family == PF_INET6)
-+	if (READ_ONCE(sk->sk_family) == PF_INET6)
- 		ipv6_stub->udpv6_encap_enable();
- #endif
- 	udp_encap_enable();
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 75ba86a87bb62..637a4faf9aff6 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -2618,7 +2618,7 @@ void udp_destroy_sock(struct sock *sk)
- 			if (encap_destroy)
- 				encap_destroy(sk);
- 		}
--		if (up->encap_enabled)
-+		if (udp_test_bit(ENCAP_ENABLED, sk))
- 			static_branch_dec(&udp_encap_needed_key);
+ int cxl_memdev_init(void);
+ void cxl_memdev_exit(void);
+diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+index 4449b34a80cc9..506c9e14cdf98 100644
+--- a/drivers/cxl/core/hdm.c
++++ b/drivers/cxl/core/hdm.c
+@@ -650,6 +650,25 @@ static int cxl_decoder_commit(struct cxl_decoder *cxld)
+ 		return -EBUSY;
  	}
+ 
++	/*
++	 * For endpoint decoders hosted on CXL memory devices that
++	 * support the sanitize operation, make sure sanitize is not in-flight.
++	 */
++	if (is_endpoint_decoder(&cxld->dev)) {
++		struct cxl_endpoint_decoder *cxled =
++			to_cxl_endpoint_decoder(&cxld->dev);
++		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
++		struct cxl_memdev_state *mds =
++			to_cxl_memdev_state(cxlmd->cxlds);
++
++		if (mds && mds->security.sanitize_active) {
++			dev_dbg(&cxlmd->dev,
++				"attempted to commit %s during sanitize\n",
++				dev_name(&cxld->dev));
++			return -EBUSY;
++		}
++	}
++
+ 	down_read(&cxl_dpa_rwsem);
+ 	/* common decoder settings */
+ 	ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(cxld->id));
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index 4df4f614f490e..b91bb98869917 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -1125,20 +1125,7 @@ int cxl_dev_state_identify(struct cxl_memdev_state *mds)
  }
-@@ -2685,9 +2685,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
- 			fallthrough;
- 		case UDP_ENCAP_L2TPINUDP:
- 			up->encap_type = val;
--			lock_sock(sk);
--			udp_tunnel_encap_enable(sk->sk_socket);
--			release_sock(sk);
-+			udp_tunnel_encap_enable(sk);
- 			break;
- 		default:
- 			err = -ENOPROTOOPT;
-@@ -2710,14 +2708,12 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
- 		break;
+ EXPORT_SYMBOL_NS_GPL(cxl_dev_state_identify, CXL);
  
- 	case UDP_GRO:
--		lock_sock(sk);
+-/**
+- * cxl_mem_sanitize() - Send a sanitization command to the device.
+- * @mds: The device data for the operation
+- * @cmd: The specific sanitization command opcode
+- *
+- * Return: 0 if the command was executed successfully, regardless of
+- * whether or not the actual security operation is done in the background,
+- * such as for the Sanitize case.
+- * Error return values can be the result of the mailbox command, -EINVAL
+- * when security requirements are not met or invalid contexts.
+- *
+- * See CXL 3.0 @8.2.9.8.5.1 Sanitize and @8.2.9.8.5.2 Secure Erase.
+- */
+-int cxl_mem_sanitize(struct cxl_memdev_state *mds, u16 cmd)
++static int __cxl_mem_sanitize(struct cxl_memdev_state *mds, u16 cmd)
+ {
+ 	int rc;
+ 	u32 sec_out = 0;
+@@ -1183,7 +1170,45 @@ int cxl_mem_sanitize(struct cxl_memdev_state *mds, u16 cmd)
  
- 		/* when enabling GRO, accept the related GSO packet type */
- 		if (valbool)
--			udp_tunnel_encap_enable(sk->sk_socket);
-+			udp_tunnel_encap_enable(sk);
- 		udp_assign_bit(GRO_ENABLED, sk, valbool);
- 		udp_assign_bit(ACCEPT_L4, sk, valbool);
--		release_sock(sk);
- 		break;
- 
- 	/*
-diff --git a/net/ipv4/udp_tunnel_core.c b/net/ipv4/udp_tunnel_core.c
-index 9b18f371af0d4..1e7e4aecdc48a 100644
---- a/net/ipv4/udp_tunnel_core.c
-+++ b/net/ipv4/udp_tunnel_core.c
-@@ -78,7 +78,7 @@ void setup_udp_tunnel_sock(struct net *net, struct socket *sock,
- 	udp_sk(sk)->gro_receive = cfg->gro_receive;
- 	udp_sk(sk)->gro_complete = cfg->gro_complete;
- 
--	udp_tunnel_encap_enable(sock);
-+	udp_tunnel_encap_enable(sk);
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(setup_udp_tunnel_sock);
+-EXPORT_SYMBOL_NS_GPL(cxl_mem_sanitize, CXL);
++
++
++/**
++ * cxl_mem_sanitize() - Send a sanitization command to the device.
++ * @cxlmd: The device for the operation
++ * @cmd: The specific sanitization command opcode
++ *
++ * Return: 0 if the command was executed successfully, regardless of
++ * whether or not the actual security operation is done in the background,
++ * such as for the Sanitize case.
++ * Error return values can be the result of the mailbox command, -EINVAL
++ * when security requirements are not met or invalid contexts, or -EBUSY
++ * if the sanitize operation is already in flight.
++ *
++ * See CXL 3.0 @8.2.9.8.5.1 Sanitize and @8.2.9.8.5.2 Secure Erase.
++ */
++int cxl_mem_sanitize(struct cxl_memdev *cxlmd, u16 cmd)
++{
++	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlmd->cxlds);
++	struct cxl_port  *endpoint;
++	int rc;
++
++	/* synchronize with cxl_mem_probe() and decoder write operations */
++	device_lock(&cxlmd->dev);
++	endpoint = cxlmd->endpoint;
++	down_read(&cxl_region_rwsem);
++	/*
++	 * Require an endpoint to be safe otherwise the driver can not
++	 * be sure that the device is unmapped.
++	 */
++	if (endpoint && endpoint->commit_end == -1)
++		rc = __cxl_mem_sanitize(mds, cmd);
++	else
++		rc = -EBUSY;
++	up_read(&cxl_region_rwsem);
++	device_unlock(&cxlmd->dev);
++
++	return rc;
++}
  
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 2c3281879b6df..90688877e9004 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1670,7 +1670,7 @@ void udpv6_destroy_sock(struct sock *sk)
- 			if (encap_destroy)
- 				encap_destroy(sk);
- 		}
--		if (up->encap_enabled) {
-+		if (udp_test_bit(ENCAP_ENABLED, sk)) {
- 			static_branch_dec(&udpv6_encap_needed_key);
- 			udp_encap_disable();
- 		}
+ static int add_dpa_res(struct device *dev, struct resource *parent,
+ 		       struct resource *res, resource_size_t start,
+diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+index 4c2e24a1a89c2..a02061028b710 100644
+--- a/drivers/cxl/core/memdev.c
++++ b/drivers/cxl/core/memdev.c
+@@ -125,13 +125,16 @@ static ssize_t security_state_show(struct device *dev,
+ 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+ 	struct cxl_dev_state *cxlds = cxlmd->cxlds;
+ 	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlds);
+-	u64 reg = readq(cxlds->regs.mbox + CXLDEV_MBOX_BG_CMD_STATUS_OFFSET);
+-	u32 pct = FIELD_GET(CXLDEV_MBOX_BG_CMD_COMMAND_PCT_MASK, reg);
+-	u16 cmd = FIELD_GET(CXLDEV_MBOX_BG_CMD_COMMAND_OPCODE_MASK, reg);
+ 	unsigned long state = mds->security.state;
++	int rc = 0;
+ 
+-	if (cmd == CXL_MBOX_OP_SANITIZE && pct != 100)
+-		return sysfs_emit(buf, "sanitize\n");
++	/* sync with latest submission state */
++	mutex_lock(&mds->mbox_mutex);
++	if (mds->security.sanitize_active)
++		rc = sysfs_emit(buf, "sanitize\n");
++	mutex_unlock(&mds->mbox_mutex);
++	if (rc)
++		return rc;
+ 
+ 	if (!(state & CXL_PMEM_SEC_STATE_USER_PASS_SET))
+ 		return sysfs_emit(buf, "disabled\n");
+@@ -152,24 +155,17 @@ static ssize_t security_sanitize_store(struct device *dev,
+ 				       const char *buf, size_t len)
+ {
+ 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+-	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlmd->cxlds);
+-	struct cxl_port *port = cxlmd->endpoint;
+ 	bool sanitize;
+ 	ssize_t rc;
+ 
+ 	if (kstrtobool(buf, &sanitize) || !sanitize)
+ 		return -EINVAL;
+ 
+-	if (!port || !is_cxl_endpoint(port))
+-		return -EINVAL;
+-
+-	/* ensure no regions are mapped to this memdev */
+-	if (port->commit_end != -1)
+-		return -EBUSY;
+-
+-	rc = cxl_mem_sanitize(mds, CXL_MBOX_OP_SANITIZE);
++	rc = cxl_mem_sanitize(cxlmd, CXL_MBOX_OP_SANITIZE);
++	if (rc)
++		return rc;
+ 
+-	return rc ? rc : len;
++	return len;
+ }
+ static struct device_attribute dev_attr_security_sanitize =
+ 	__ATTR(sanitize, 0200, NULL, security_sanitize_store);
+@@ -179,24 +175,17 @@ static ssize_t security_erase_store(struct device *dev,
+ 				    const char *buf, size_t len)
+ {
+ 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+-	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlmd->cxlds);
+-	struct cxl_port *port = cxlmd->endpoint;
+ 	ssize_t rc;
+ 	bool erase;
+ 
+ 	if (kstrtobool(buf, &erase) || !erase)
+ 		return -EINVAL;
+ 
+-	if (!port || !is_cxl_endpoint(port))
+-		return -EINVAL;
+-
+-	/* ensure no regions are mapped to this memdev */
+-	if (port->commit_end != -1)
+-		return -EBUSY;
+-
+-	rc = cxl_mem_sanitize(mds, CXL_MBOX_OP_SECURE_ERASE);
++	rc = cxl_mem_sanitize(cxlmd, CXL_MBOX_OP_SECURE_ERASE);
++	if (rc)
++		return rc;
+ 
+-	return rc ? rc : len;
++	return len;
+ }
+ static struct device_attribute dev_attr_security_erase =
+ 	__ATTR(erase, 0200, NULL, security_erase_store);
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 7ca01a834e188..5ba606c6e03ff 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -28,6 +28,12 @@
+  * instantiated by the core.
+  */
+ 
++/*
++ * All changes to the interleave configuration occur with this lock held
++ * for write.
++ */
++DECLARE_RWSEM(cxl_region_rwsem);
++
+ static DEFINE_IDA(cxl_port_ida);
+ static DEFINE_XARRAY(cxl_root_buses);
+ 
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index b4c6a749406f1..8394cd96e1869 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -28,12 +28,6 @@
+  * 3. Decoder targets
+  */
+ 
+-/*
+- * All changes to the interleave configuration occur with this lock held
+- * for write.
+- */
+-static DECLARE_RWSEM(cxl_region_rwsem);
+-
+ static struct cxl_region *to_cxl_region(struct device *dev);
+ 
+ static ssize_t uuid_show(struct device *dev, struct device_attribute *attr,
+diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+index fbdee1d637175..6933bc20e76b6 100644
+--- a/drivers/cxl/cxlmem.h
++++ b/drivers/cxl/cxlmem.h
+@@ -364,6 +364,7 @@ struct cxl_fw_state {
+  * @state: state of last security operation
+  * @enabled_cmds: All security commands enabled in the CEL
+  * @poll_tmo_secs: polling timeout
++ * @sanitize_active: sanitize completion pending
+  * @poll_dwork: polling work item
+  * @sanitize_node: sanitation sysfs file to notify
+  */
+@@ -371,6 +372,7 @@ struct cxl_security_state {
+ 	unsigned long state;
+ 	DECLARE_BITMAP(enabled_cmds, CXL_SEC_ENABLED_MAX);
+ 	int poll_tmo_secs;
++	bool sanitize_active;
+ 	struct delayed_work poll_dwork;
+ 	struct kernfs_node *sanitize_node;
+ };
+@@ -884,7 +886,7 @@ static inline void cxl_mem_active_dec(void)
+ }
+ #endif
+ 
+-int cxl_mem_sanitize(struct cxl_memdev_state *mds, u16 cmd);
++int cxl_mem_sanitize(struct cxl_memdev *cxlmd, u16 cmd);
+ 
+ struct cxl_hdm {
+ 	struct cxl_component_regs regs;
+diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
+index 565862d7946c5..0ecd339b5b8e9 100644
+--- a/drivers/cxl/pci.c
++++ b/drivers/cxl/pci.c
+@@ -154,6 +154,7 @@ static void cxl_mbox_sanitize_work(struct work_struct *work)
+ 		mds->security.poll_tmo_secs = 0;
+ 		if (mds->security.sanitize_node)
+ 			sysfs_notify_dirent(mds->security.sanitize_node);
++		mds->security.sanitize_active = false;
+ 
+ 		dev_dbg(cxlds->dev, "Sanitization operation ended\n");
+ 	} else {
+@@ -292,9 +293,13 @@ static int __cxl_pci_mbox_send_cmd(struct cxl_memdev_state *mds,
+ 		 * and allow userspace to poll(2) for completion.
+ 		 */
+ 		if (mbox_cmd->opcode == CXL_MBOX_OP_SANITIZE) {
++			if (mds->security.sanitize_active)
++				return -EBUSY;
++
+ 			/* give first timeout a second */
+ 			timeout = 1;
+ 			mds->security.poll_tmo_secs = timeout;
++			mds->security.sanitize_active = true;
+ 			schedule_delayed_work(&mds->security.poll_dwork,
+ 					      timeout * HZ);
+ 			dev_dbg(dev, "Sanitization operation started\n");
 -- 
 2.42.0
 
