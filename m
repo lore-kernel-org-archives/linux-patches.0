@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910FF4121C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF38364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTJaP/vQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 405A6C433C8;
-	Wed, 15 Nov 2023 19:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRx4ApMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DEBC433C7;
+	Wed, 15 Nov 2023 19:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076832;
-	bh=flthnTuqjZNSdrxAFgHu9HGxUz6t2KEWLGTcz4QosI8=;
+	s=korg; t=1700076833;
+	bh=lSToMCOS7jPiR/1c4PJ0QIYbRcJaG6hJGkr2HOh4Sms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTJaP/vQaPqwcHikLEjV0TIkljKgXjFJrE2K1qOfp44K4fKPMfKtXL6rmoMuszBnW
-	 E4LpnVDo+4yajgSky9BYQJDAGhYcQTZoU+9hjGrxEB80JAebTW9OzjDqHAhFMenngm
-	 QvgZgotSWTlKDz5s74kp30LFxYuWx6iaOkVlDXVA=
+	b=MRx4ApMjOJhn6IVHhuSC4nLjTm7OWeRWyDqerGX0zrtG4AGhdOCiKbdYYI8WknlyT
+	 nQArTzhQXZv87ccPhX5fK65lT+JzvLAfY9boPh5A4AlMXYssTSa6OwpPhj/Ej0jsk+
+	 L1OCwjNHfdgztNTiZojzhEeSHzgQ5LrrIm9Ern9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/603] wifi: mac80211: move offchannel works to wiphy work
-Date: Wed, 15 Nov 2023 14:09:45 -0500
-Message-ID: <20231115191615.923147202@linuxfoundation.org>
+Subject: [PATCH 6.5 437/550] powerpc/imc-pmu: Use the correct spinlock initializer.
+Date: Wed, 15 Nov 2023 14:17:01 -0500
+Message-ID: <20231115191631.066708799@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,201 +38,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 97c19e42b264e6b71a9ff9deea04c19f621805b9 ]
+[ Upstream commit 007240d59c11f87ac4f6cfc6a1d116630b6b634c ]
 
-Make the offchannel works wiphy works to have the
-wiphy locked for executing them.
+The macro __SPIN_LOCK_INITIALIZER() is implementation specific. Users
+that desire to initialize a spinlock in a struct must use
+__SPIN_LOCK_UNLOCKED().
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: eadfb54756ae ("wifi: mac80211: move sched-scan stop work to wiphy work")
+Use __SPIN_LOCK_UNLOCKED() for the spinlock_t in imc_global_refc.
+
+Fixes: 76d588dddc459 ("powerpc/imc-pmu: Fix use of mutex in IRQs disabled section")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230309134831.Nz12nqsU@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h |  4 ++--
- net/mac80211/main.c        |  6 +++---
- net/mac80211/offchannel.c  | 36 ++++++++++++++++++------------------
- 3 files changed, 23 insertions(+), 23 deletions(-)
+ arch/powerpc/perf/imc-pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 4e98e03e5de64..5321f75d0c6f3 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1583,9 +1583,9 @@ struct ieee80211_local {
- 	/*
- 	 * Remain-on-channel support
- 	 */
--	struct delayed_work roc_work;
-+	struct wiphy_delayed_work roc_work;
- 	struct list_head roc_list;
--	struct work_struct hw_roc_start, hw_roc_done;
-+	struct wiphy_work hw_roc_start, hw_roc_done;
- 	unsigned long hw_roc_start_time;
- 	u64 roc_cookie_counter;
- 
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index adb8637a37445..f1cbb7c5d4ac3 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -376,8 +376,8 @@ static void ieee80211_restart_work(struct work_struct *work)
- 	ieee80211_scan_cancel(local);
- 
- 	/* make sure any new ROC will consider local->in_reconfig */
--	flush_delayed_work(&local->roc_work);
--	flush_work(&local->hw_roc_done);
-+	wiphy_delayed_work_flush(local->hw.wiphy, &local->roc_work);
-+	wiphy_work_flush(local->hw.wiphy, &local->hw_roc_done);
- 
- 	/* wait for all packet processing to be done */
- 	synchronize_net();
-@@ -1480,11 +1480,11 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
- 	ieee80211_remove_interfaces(local);
- 
- 	wiphy_lock(local->hw.wiphy);
-+	wiphy_delayed_work_cancel(local->hw.wiphy, &local->roc_work);
- 	wiphy_work_cancel(local->hw.wiphy, &local->radar_detected_work);
- 	wiphy_unlock(local->hw.wiphy);
- 	rtnl_unlock();
- 
--	cancel_delayed_work_sync(&local->roc_work);
- 	cancel_work_sync(&local->restart_work);
- 	cancel_work_sync(&local->reconfig_filter);
- 	flush_work(&local->sched_scan_stopped_work);
-diff --git a/net/mac80211/offchannel.c b/net/mac80211/offchannel.c
-index cdf991e74ab99..5bedd9cef414d 100644
---- a/net/mac80211/offchannel.c
-+++ b/net/mac80211/offchannel.c
-@@ -230,7 +230,7 @@ static bool ieee80211_recalc_sw_work(struct ieee80211_local *local,
- 	if (dur == LONG_MAX)
- 		return false;
- 
--	mod_delayed_work(local->workqueue, &local->roc_work, dur);
-+	wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work, dur);
- 	return true;
- }
- 
-@@ -258,7 +258,7 @@ static void ieee80211_handle_roc_started(struct ieee80211_roc_work *roc,
- 	roc->notified = true;
- }
- 
--static void ieee80211_hw_roc_start(struct work_struct *work)
-+static void ieee80211_hw_roc_start(struct wiphy *wiphy, struct wiphy_work *work)
- {
- 	struct ieee80211_local *local =
- 		container_of(work, struct ieee80211_local, hw_roc_start);
-@@ -285,7 +285,7 @@ void ieee80211_ready_on_channel(struct ieee80211_hw *hw)
- 
- 	trace_api_ready_on_channel(local);
- 
--	ieee80211_queue_work(hw, &local->hw_roc_start);
-+	wiphy_work_queue(hw->wiphy, &local->hw_roc_start);
- }
- EXPORT_SYMBOL_GPL(ieee80211_ready_on_channel);
- 
-@@ -338,7 +338,7 @@ static void _ieee80211_start_next_roc(struct ieee80211_local *local)
- 				tmp->started = true;
- 				tmp->abort = true;
- 			}
--			ieee80211_queue_work(&local->hw, &local->hw_roc_done);
-+			wiphy_work_queue(local->hw.wiphy, &local->hw_roc_done);
- 			return;
- 		}
- 
-@@ -368,8 +368,8 @@ static void _ieee80211_start_next_roc(struct ieee80211_local *local)
- 			ieee80211_hw_config(local, 0);
- 		}
- 
--		ieee80211_queue_delayed_work(&local->hw, &local->roc_work,
--					     msecs_to_jiffies(min_dur));
-+		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work,
-+					 msecs_to_jiffies(min_dur));
- 
- 		/* tell userspace or send frame(s) */
- 		list_for_each_entry(tmp, &local->roc_list, list) {
-@@ -407,8 +407,8 @@ void ieee80211_start_next_roc(struct ieee80211_local *local)
- 		_ieee80211_start_next_roc(local);
- 	} else {
- 		/* delay it a bit */
--		ieee80211_queue_delayed_work(&local->hw, &local->roc_work,
--					     round_jiffies_relative(HZ/2));
-+		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work,
-+					 round_jiffies_relative(HZ / 2));
- 	}
- }
- 
-@@ -451,7 +451,7 @@ static void __ieee80211_roc_work(struct ieee80211_local *local)
- 	}
- }
- 
--static void ieee80211_roc_work(struct work_struct *work)
-+static void ieee80211_roc_work(struct wiphy *wiphy, struct wiphy_work *work)
- {
- 	struct ieee80211_local *local =
- 		container_of(work, struct ieee80211_local, roc_work.work);
-@@ -461,7 +461,7 @@ static void ieee80211_roc_work(struct work_struct *work)
- 	mutex_unlock(&local->mtx);
- }
- 
--static void ieee80211_hw_roc_done(struct work_struct *work)
-+static void ieee80211_hw_roc_done(struct wiphy *wiphy, struct wiphy_work *work)
- {
- 	struct ieee80211_local *local =
- 		container_of(work, struct ieee80211_local, hw_roc_done);
-@@ -482,7 +482,7 @@ void ieee80211_remain_on_channel_expired(struct ieee80211_hw *hw)
- 
- 	trace_api_remain_on_channel_expired(local);
- 
--	ieee80211_queue_work(hw, &local->hw_roc_done);
-+	wiphy_work_queue(hw->wiphy, &local->hw_roc_done);
- }
- EXPORT_SYMBOL_GPL(ieee80211_remain_on_channel_expired);
- 
-@@ -586,8 +586,8 @@ static int ieee80211_start_roc_work(struct ieee80211_local *local,
- 		/* if not HW assist, just queue & schedule work */
- 		if (!local->ops->remain_on_channel) {
- 			list_add_tail(&roc->list, &local->roc_list);
--			ieee80211_queue_delayed_work(&local->hw,
--						     &local->roc_work, 0);
-+			wiphy_delayed_work_queue(local->hw.wiphy,
-+						 &local->roc_work, 0);
- 		} else {
- 			/* otherwise actually kick it off here
- 			 * (for error handling)
-@@ -695,7 +695,7 @@ static int ieee80211_cancel_roc(struct ieee80211_local *local,
- 	if (!cookie)
- 		return -ENOENT;
- 
--	flush_work(&local->hw_roc_start);
-+	wiphy_work_flush(local->hw.wiphy, &local->hw_roc_start);
- 
- 	mutex_lock(&local->mtx);
- 	list_for_each_entry_safe(roc, tmp, &local->roc_list, list) {
-@@ -745,7 +745,7 @@ static int ieee80211_cancel_roc(struct ieee80211_local *local,
- 	} else {
- 		/* go through work struct to return to the operating channel */
- 		found->abort = true;
--		mod_delayed_work(local->workqueue, &local->roc_work, 0);
-+		wiphy_delayed_work_queue(local->hw.wiphy, &local->roc_work, 0);
- 	}
- 
-  out_unlock:
-@@ -994,9 +994,9 @@ int ieee80211_mgmt_tx_cancel_wait(struct wiphy *wiphy,
- 
- void ieee80211_roc_setup(struct ieee80211_local *local)
- {
--	INIT_WORK(&local->hw_roc_start, ieee80211_hw_roc_start);
--	INIT_WORK(&local->hw_roc_done, ieee80211_hw_roc_done);
--	INIT_DELAYED_WORK(&local->roc_work, ieee80211_roc_work);
-+	wiphy_work_init(&local->hw_roc_start, ieee80211_hw_roc_start);
-+	wiphy_work_init(&local->hw_roc_done, ieee80211_hw_roc_done);
-+	wiphy_delayed_work_init(&local->roc_work, ieee80211_roc_work);
- 	INIT_LIST_HEAD(&local->roc_list);
- }
- 
+diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
+index 9d229ef7f86ef..ada817c49b722 100644
+--- a/arch/powerpc/perf/imc-pmu.c
++++ b/arch/powerpc/perf/imc-pmu.c
+@@ -51,7 +51,7 @@ static int trace_imc_mem_size;
+  * core and trace-imc
+  */
+ static struct imc_pmu_ref imc_global_refc = {
+-	.lock = __SPIN_LOCK_INITIALIZER(imc_global_refc.lock),
++	.lock = __SPIN_LOCK_UNLOCKED(imc_global_refc.lock),
+ 	.id = 0,
+ 	.refc = 0,
+ };
 -- 
 2.42.0
 
