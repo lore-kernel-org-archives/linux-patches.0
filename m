@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC5D2C861
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327332C861
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWvD6gVI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C2EC433C8;
-	Wed, 15 Nov 2023 19:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYuzBcoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A47C433CA;
+	Wed, 15 Nov 2023 19:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076315;
-	bh=Obyl9zUnrL5WsasC3SmZjzA8vP/qAng/cwQB9NVk5Oc=;
+	s=korg; t=1700076317;
+	bh=dDBAR7P5E4dFNqMjFTK18gBUd6Mgb8/leD+Qlbkq/k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWvD6gVICmBnxGwZ46l7gYW9Xsc1eUkYvPbIrb8CwQeHo51ClZv20XOZVUGSIgUXA
-	 dCmp5UxQRDBimvNYmNtzHOt1tJxX9ONxBH/o3fW8Raa3K3J5SN7T7SviRMNaICeZAm
-	 D8mCUtlRFWg09rbfzq2WNp5/r080xE9uX4H+pDQY=
+	b=lYuzBcoPmhT4Q1Hqx8h40+vrlXdQcuBElQw2ICm0i460BgX9x96fqdQb1XOpiiHCE
+	 FV354LsBXRMahlqL1/NLHyMJS39ois7W82ibJi5u7OC/R3I9TuDP3YTweHZYs14bRt
+	 VlONO4DH8bALsF3iq+14H+RcWtClEQFij8U3RYTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
 	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 213/550] drm/bridge: lt8912b: Manually disable HPD only if it was enabled
-Date: Wed, 15 Nov 2023 14:13:17 -0500
-Message-ID: <20231115191615.561975695@linuxfoundation.org>
+Subject: [PATCH 6.5 214/550] drm/bridge: lt8912b: Add missing drm_bridge_attach call
+Date: Wed, 15 Nov 2023 14:13:18 -0500
+Message-ID: <20231115191615.632319602@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,40 +44,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 6985c5efc4057bc79137807295d84ada3123d051 ]
+[ Upstream commit f45acf7acf75921c0409d452f0165f51a19a74fd ]
 
-lt8912b only calls drm_bridge_hpd_enable() if it creates a connector and
-the next bridge has DRM_BRIDGE_OP_HPD set. However, when calling
-drm_bridge_hpd_disable() it misses checking if a connector was created,
-calling drm_bridge_hpd_disable() even if HPD was never enabled. I don't
-see any issues caused by this wrong call, though.
+The driver does not call drm_bridge_attach(), which causes the next
+bridge to not be added to the bridge chain. This causes the pipeline
+init to fail when DRM_BRIDGE_ATTACH_NO_CONNECTOR is used.
 
-Add the check to avoid wrongly calling drm_bridge_hpd_disable().
+Add the call to drm_bridge_attach().
 
-Fixes: 3b0a01a6a522 ("drm/bridge: lt8912b: Add hot plug detection")
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
 Reviewed-by: Robert Foss <rfoss@kernel.org>
 Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230804-lt8912b-v1-3-c542692c6a2f@ideasonboard.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20230804-lt8912b-v1-4-c542692c6a2f@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 2d752e083433f..9ee639e75a1c2 100644
+index 9ee639e75a1c2..03532efb893bb 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -587,7 +587,7 @@ static void lt8912_bridge_detach(struct drm_bridge *bridge)
+@@ -558,6 +558,13 @@ static int lt8912_bridge_attach(struct drm_bridge *bridge,
+ 	struct lt8912 *lt = bridge_to_lt8912(bridge);
+ 	int ret;
  
- 	lt8912_hard_power_off(lt);
- 
--	if (lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
-+	if (lt->connector.dev && lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
- 		drm_bridge_hpd_disable(lt->hdmi_port);
- }
- 
++	ret = drm_bridge_attach(bridge->encoder, lt->hdmi_port, bridge,
++				DRM_BRIDGE_ATTACH_NO_CONNECTOR);
++	if (ret < 0) {
++		dev_err(lt->dev, "Failed to attach next bridge (%d)\n", ret);
++		return ret;
++	}
++
+ 	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)) {
+ 		ret = lt8912_bridge_connector_init(bridge);
+ 		if (ret) {
 -- 
 2.42.0
 
