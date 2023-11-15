@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E42F43AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A64C43AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiACtCZg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE4AC433AB;
-	Wed, 15 Nov 2023 20:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZBh8EoN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03D3C433B6;
+	Wed, 15 Nov 2023 20:47:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081245;
-	bh=x14hu14Up5dC8aY63bW+E7o50DypGd3wUXzffQ82Mqo=;
+	s=korg; t=1700081246;
+	bh=Pd8cUX5j/k3YJ2t3O5gsh1TOn8yNlIH0P8q3pSrazNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OiACtCZg+Apc2/l0lLDpZMyKDDxkZrvN8XdUsw3H1Jti9vybEKmbfz+APEBh4/pxe
-	 13MfM2/EZ+0vVn1XRvgx92TWb3Zqk8zch0p4xFsKh/sj95fLNNfL1sjXBK6/8YsjUp
-	 4HDc84lKXQ1I6UsgS+n9RUYUo2FXU7hQHXMcj13U=
+	b=wZBh8EoNF/y8yWWNZemGUuCteJkP66wBv+lR2eqDnFMKRmX145cBY6XcLK3Z6zsUF
+	 Sn+HtVekUEhTN+GBoUNsp6zIS43nFqOt6Exige0h3BTt8FxNSK1kvt+tmgniWr0zE0
+	 xrqMxC4CxtTYn9Y5BP1Q1uMO9Dk4bnJeBiTXPjMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/244] thermal: core: prevent potential string overflow
-Date: Wed, 15 Nov 2023 15:33:50 -0500
-Message-ID: <20231115203550.653300042@linuxfoundation.org>
+Subject: [PATCH 5.15 021/244] tipc: Use size_add() in calls to struct_size()
+Date: Wed, 15 Nov 2023 15:33:33 -0500
+Message-ID: <20231115203549.634328058@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,45 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit c99626092efca3061b387043d4a7399bf75fbdd5 ]
+[ Upstream commit 2506a91734754de690869824fb0d1ac592ec1266 ]
 
-The dev->id value comes from ida_alloc() so it's a number between zero
-and INT_MAX.  If it's too high then these sprintf()s will overflow.
+If, for any reason, the open-coded arithmetic causes a wraparound,
+the protection that `struct_size()` adds against potential integer
+overflows is defeated. Fix this by hardening call to `struct_size()`
+with `size_add()`.
 
-Fixes: 203d3d4aa482 ("the generic thermal sysfs driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: e034c6d23bc4 ("tipc: Use struct_size() helper")
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/tipc/link.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 052e8e8fbb21e..ce748e03e4331 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -671,7 +671,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
- 	if (result)
- 		goto release_ida;
+diff --git a/net/tipc/link.c b/net/tipc/link.c
+index 655a2e1b6dfe4..d13a85b9cdb2d 100644
+--- a/net/tipc/link.c
++++ b/net/tipc/link.c
+@@ -1445,7 +1445,7 @@ u16 tipc_get_gap_ack_blks(struct tipc_gap_ack_blks **ga, struct tipc_link *l,
+ 		p = (struct tipc_gap_ack_blks *)msg_data(hdr);
+ 		sz = ntohs(p->len);
+ 		/* Sanity check */
+-		if (sz == struct_size(p, gacks, p->ugack_cnt + p->bgack_cnt)) {
++		if (sz == struct_size(p, gacks, size_add(p->ugack_cnt, p->bgack_cnt))) {
+ 			/* Good, check if the desired type exists */
+ 			if ((uc && p->ugack_cnt) || (!uc && p->bgack_cnt))
+ 				goto ok;
+@@ -1532,7 +1532,7 @@ static u16 tipc_build_gap_ack_blks(struct tipc_link *l, struct tipc_msg *hdr)
+ 			__tipc_build_gap_ack_blks(ga, l, ga->bgack_cnt) : 0;
  
--	sprintf(dev->attr_name, "cdev%d_trip_point", dev->id);
-+	snprintf(dev->attr_name, sizeof(dev->attr_name), "cdev%d_trip_point",
-+		 dev->id);
- 	sysfs_attr_init(&dev->attr.attr);
- 	dev->attr.attr.name = dev->attr_name;
- 	dev->attr.attr.mode = 0444;
-@@ -680,7 +681,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
- 	if (result)
- 		goto remove_symbol_link;
- 
--	sprintf(dev->weight_attr_name, "cdev%d_weight", dev->id);
-+	snprintf(dev->weight_attr_name, sizeof(dev->weight_attr_name),
-+		 "cdev%d_weight", dev->id);
- 	sysfs_attr_init(&dev->weight_attr.attr);
- 	dev->weight_attr.attr.name = dev->weight_attr_name;
- 	dev->weight_attr.attr.mode = S_IWUSR | S_IRUGO;
+ 	/* Total len */
+-	len = struct_size(ga, gacks, ga->bgack_cnt + ga->ugack_cnt);
++	len = struct_size(ga, gacks, size_add(ga->bgack_cnt, ga->ugack_cnt));
+ 	ga->len = htons(len);
+ 	return len;
+ }
 -- 
 2.42.0
 
