@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1DE31730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1074F33CDF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwYeoKxg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185F2C433CB;
-	Wed, 15 Nov 2023 19:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGnbNY2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A27C433C7;
+	Wed, 15 Nov 2023 19:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077444;
-	bh=UQO9uhItbvo0NvJyZwV1ZbRfRGnMW4zb6DYtIjBW6OU=;
+	s=korg; t=1700077445;
+	bh=bc+QMVeHRBvS4A5nf/Y8lyiX2ZOvvC+8tiCQn3XqXoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwYeoKxgzW41Hus7jY657mnw+xV88849TbM+HYzyF7OfsHAJAvH+FqKeYUpB1xdI9
-	 V4i57XmINJPSvmn0UeHgO25UFR+5JINRVO2l5p5p+0S4qvLtQECyWSFnKpmkTr2qiO
-	 wJCViMVezLvURZzgKgM2BMw9SUDD7TALmEeUrsCk=
+	b=XGnbNY2LUgs5YW3YHKJmeTzzt+te9hVefnwDk15/rr1kx2+rFYcSYHHAfc9rjRAzQ
+	 lvLaRXipSYDJobrlkna7HVMuCyWBVadVts6sTo+YZKc4aei+8QUWPQlBgH2yHx2Rqp
+	 0Yzo8zbryex9dLsmjSvv3I55gNmkBIs9Dogv2gSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wadim Egorov <w.egorov@phytec.de>,
-	Nishanth Menon <nm@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Jai Luthra <j-luthra@ti.com>,
 	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 307/603] arm64: dts: ti: k3-am625-beagleplay: Fix typo in ramoops reg
-Date: Wed, 15 Nov 2023 14:14:12 -0500
-Message-ID: <20231115191634.662998871@linuxfoundation.org>
+Subject: [PATCH 6.6 308/603] arm64: dts: ti: k3-am62a7-sk: Drop i2c-1 to 100Khz
+Date: Wed, 15 Nov 2023 14:14:13 -0500
+Message-ID: <20231115191634.734886714@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,36 +44,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wadim Egorov <w.egorov@phytec.de>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit 33269ac0b768b07da017df173d52952625c57870 ]
+[ Upstream commit 63e5aa69b821472a3203a29e17c025329c1b151f ]
 
-Seems like the address value of the reg property was mistyped.
-Update reg to 0x9ca00000 to match node's definition.
+The TLV320AIC3106 audio codec is interfaced on the i2c-1 bus. With the
+default rate of 400Khz the i2c register writes fail to sync:
 
-Fixes: f5a731f0787f ("arm64: dts: ti: Add k3-am625-beagleplay")
-Signed-off-by: Wadim Egorov <w.egorov@phytec.de>
-Reviewed-by: Nishanth Menon <nm@ti.com>
-Link: https://lore.kernel.org/r/20230925151444.1856852-1-w.egorov@phytec.de
+[   36.026387] tlv320aic3x 1-001b: Unable to sync registers 0x16-0x16. -110
+[   38.101130] omap_i2c 20010000.i2c: controller timed out
+
+Dropping the rate to 100Khz fixes the issue.
+
+Fixes: 38c4a08c820c ("arm64: dts: ti: Add support for AM62A7-SK")
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20231003-mcasp_am62a-v3-3-2b631ff319ca@ti.com
 Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts | 2 +-
+ arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-index 7cfdf562b53bf..2de74428a8bde 100644
---- a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-@@ -58,7 +58,7 @@ reserved-memory {
+diff --git a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+index cff283c75f8ec..99f2878de4c67 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+@@ -250,7 +250,7 @@ &main_i2c1 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&main_i2c1_pins_default>;
+-	clock-frequency = <400000>;
++	clock-frequency = <100000>;
  
- 		ramoops: ramoops@9ca00000 {
- 			compatible = "ramoops";
--			reg = <0x00 0x9c700000 0x00 0x00100000>;
-+			reg = <0x00 0x9ca00000 0x00 0x00100000>;
- 			record-size = <0x8000>;
- 			console-size = <0x8000>;
- 			ftrace-size = <0x00>;
+ 	exp1: gpio@22 {
+ 		compatible = "ti,tca6424";
 -- 
 2.42.0
 
