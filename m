@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF3639FC0
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4694C39FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/SBlcH2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED32EC4E778;
-	Wed, 15 Nov 2023 20:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eq1j20P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901D9C4E777;
+	Wed, 15 Nov 2023 20:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081572;
-	bh=rZJSGmXrGi4SHysY7E/D/j6nymm44PG0kOHIhELP2eM=;
+	s=korg; t=1700081573;
+	bh=/aDs76BvQnpdPEgfAhX/nRrxnwc898bfqbooHKaCYNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/SBlcH2OiSNJBX0hD2EwRoYbbpxrVqG+mv4DXNzFNLIOcew+Bj0lW9mTr7Gnbleg
-	 8LfiJeQBV8lMDD0m/3L2EOF9s5Su+0psbfdsbJYVT1yeomThk6WH7kw6YhdTVTH3Gx
-	 zMQGmEZGeqQliIK/Nh96Hp1OefFrPVads1v4hdo4=
+	b=2eq1j20Pi1P4yyx5CMT/f0W/fQ7WZvlLjVfkEt+Sc+JQLaGOSZsSCdf5QK+LFelm8
+	 nA72v56U1hm42d/18moeKtFYuFOvnuVXwi//fRsOOEkXkJQ1BNoA7OtUjUnuXbh9oH
+	 tXJxNoy6g/EELttNWbyuDoJOsAHBMz4vPaR+a+vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erik Kurzinger <ekurzinger@nvidia.com>,
-	Simon Ser <contact@emersion.fr>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/244] drm/syncobj: fix DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE
-Date: Wed, 15 Nov 2023 15:37:08 -0500
-Message-ID: <20231115203602.496373904@linuxfoundation.org>
+Subject: [PATCH 5.15 237/244] ASoC: hdmi-codec: register hpd callback on component probe
+Date: Wed, 15 Nov 2023 15:37:09 -0500
+Message-ID: <20231115203602.552663729@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,64 +42,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erik Kurzinger <ekurzinger@nvidia.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 101c9f637efa1655f55876644d4439e552267527 ]
+[ Upstream commit 15be353d55f9e12e34f9a819f51eb41fdef5eda8 ]
 
-If DRM_IOCTL_SYNCOBJ_TIMELINE_WAIT is invoked with the
-DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE flag set but no fence has yet been
-submitted for the given timeline point the call will fail immediately
-with EINVAL. This does not match the intended behavior where the call
-should wait until the fence has been submitted (or the timeout expires).
+The HDMI hotplug callback to the hdmi-codec is currently registered when
+jack is set.
 
-The following small example program illustrates the issue. It should
-wait for 5 seconds and then print ETIME, but instead it terminates right
-away after printing EINVAL.
+The hotplug not only serves to report the ASoC jack state but also to get
+the ELD. It should be registered when the component probes instead, so it
+does not depend on the card driver registering a jack for the HDMI to
+properly report the ELD.
 
-  #include <stdio.h>
-  #include <fcntl.h>
-  #include <time.h>
-  #include <errno.h>
-  #include <xf86drm.h>
-  int main(void)
-  {
-      int fd = open("/dev/dri/card0", O_RDWR);
-      uint32_t syncobj;
-      drmSyncobjCreate(fd, 0, &syncobj);
-      struct timespec ts;
-      clock_gettime(CLOCK_MONOTONIC, &ts);
-      uint64_t point = 1;
-      if (drmSyncobjTimelineWait(fd, &syncobj, &point, 1,
-                                 ts.tv_sec * 1000000000 + ts.tv_nsec + 5000000000, // 5s
-                                 DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE, NULL)) {
-          printf("drmSyncobjTimelineWait failed %d\n", errno);
-      }
-  }
-
-Fixes: 01d6c3578379 ("drm/syncobj: add support for timeline point wait v8")
-Signed-off-by: Erik Kurzinger <ekurzinger@nvidia.com>
-Reviewed by: Simon Ser <contact@emersion.fd>
-Signed-off-by: Simon Ser <contact@emersion.fr>
-Link: https://patchwork.freedesktop.org/patch/msgid/1fac96f1-2f3f-f9f9-4eb0-340f27a8f6c0@nvidia.com
+Fixes: 25ce4f2b3593 ("ASoC: hdmi-codec: Get ELD in before reporting plugged event")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20231106104013.704356-1-jbrunet@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_syncobj.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/hdmi-codec.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
-index 7e48dcd1bee4d..c26f916996352 100644
---- a/drivers/gpu/drm/drm_syncobj.c
-+++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -1056,7 +1056,8 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
- 		fence = drm_syncobj_fence_get(syncobjs[i]);
- 		if (!fence || dma_fence_chain_find_seqno(&fence, points[i])) {
- 			dma_fence_put(fence);
--			if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT) {
-+			if (flags & (DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT |
-+				     DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE)) {
- 				continue;
- 			} else {
- 				timeout = -EINVAL;
+diff --git a/sound/soc/codecs/hdmi-codec.c b/sound/soc/codecs/hdmi-codec.c
+index b07607a9ecea4..0a7e2f8ca71af 100644
+--- a/sound/soc/codecs/hdmi-codec.c
++++ b/sound/soc/codecs/hdmi-codec.c
+@@ -870,18 +870,13 @@ static int hdmi_codec_set_jack(struct snd_soc_component *component,
+ 			       void *data)
+ {
+ 	struct hdmi_codec_priv *hcp = snd_soc_component_get_drvdata(component);
+-	int ret = -ENOTSUPP;
+ 
+ 	if (hcp->hcd.ops->hook_plugged_cb) {
+ 		hcp->jack = jack;
+-		ret = hcp->hcd.ops->hook_plugged_cb(component->dev->parent,
+-						    hcp->hcd.data,
+-						    plugged_cb,
+-						    component->dev);
+-		if (ret)
+-			hcp->jack = NULL;
++		return 0;
+ 	}
+-	return ret;
++
++	return -ENOTSUPP;
+ }
+ 
+ static int hdmi_dai_spdif_probe(struct snd_soc_dai *dai)
+@@ -965,6 +960,21 @@ static int hdmi_of_xlate_dai_id(struct snd_soc_component *component,
+ 	return ret;
+ }
+ 
++static int hdmi_probe(struct snd_soc_component *component)
++{
++	struct hdmi_codec_priv *hcp = snd_soc_component_get_drvdata(component);
++	int ret = 0;
++
++	if (hcp->hcd.ops->hook_plugged_cb) {
++		ret = hcp->hcd.ops->hook_plugged_cb(component->dev->parent,
++						    hcp->hcd.data,
++						    plugged_cb,
++						    component->dev);
++	}
++
++	return ret;
++}
++
+ static void hdmi_remove(struct snd_soc_component *component)
+ {
+ 	struct hdmi_codec_priv *hcp = snd_soc_component_get_drvdata(component);
+@@ -975,6 +985,7 @@ static void hdmi_remove(struct snd_soc_component *component)
+ }
+ 
+ static const struct snd_soc_component_driver hdmi_driver = {
++	.probe			= hdmi_probe,
+ 	.remove			= hdmi_remove,
+ 	.dapm_widgets		= hdmi_widgets,
+ 	.num_dapm_widgets	= ARRAY_SIZE(hdmi_widgets),
 -- 
 2.42.0
 
