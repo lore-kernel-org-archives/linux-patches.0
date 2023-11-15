@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEB441223;
-	Wed, 15 Nov 2023 19:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0732364C8
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tk2qbJ16"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0581C433C8;
-	Wed, 15 Nov 2023 19:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMjnoLgG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516CFC433C7;
+	Wed, 15 Nov 2023 19:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076287;
-	bh=ymMAk+FtJcQoQiK5/K3FJT/IX19sAPWaEV0Y9PIOfJM=;
+	s=korg; t=1700076288;
+	bh=rbpv0BfQQaOlS7JeuCJV7IFbLPbWPv7llmNmV3DOzSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tk2qbJ165dO2+jg0y1MZ1rYAkG/RkgcoCUwooK5XJhNyiklMsIAjBwSE8T7S+ZmGC
-	 b1VutUa2waOKYYaz109XbgGI4ecHnhjmNU4/oA+AAqXUMDMVqy1GZ3lOCKkeWOOemk
-	 QZ1LjomekP2DZ60UVG/SXWbyHSRrg1700/SP6U0o=
+	b=DMjnoLgG6T+7DCUK9uY5l9aSteSwz43wqAO7kVpeJYmIAumLMhmifTqkvTCYF56RP
+	 814xo7dEJnpBViDZ21WakE2XvJGzeqgNsdojOEWjGyGX66Vw0X4kC5q2tZ3a/Omfit
+	 7gYj1Qkxfmj4GcJmEq8iHGLuNVl6U5DXxKY49LbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org,
+	Han Xu <han.xu@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 169/550] clk: linux/clk-provider.h: fix kernel-doc warnings and typos
-Date: Wed, 15 Nov 2023 14:12:33 -0500
-Message-ID: <20231115191612.423896623@linuxfoundation.org>
+Subject: [PATCH 6.5 170/550] spi: nxp-fspi: use the correct ioremap function
+Date: Wed, 15 Nov 2023 14:12:34 -0500
+Message-ID: <20231115191612.493914249@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,115 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Han Xu <han.xu@nxp.com>
 
-[ Upstream commit 84aefafe6b294041b7fa0757414c4a29c1bdeea2 ]
+[ Upstream commit c3aa5cb264a38ae9bbcce32abca4c155af0456df ]
 
-Fix spelling of "Structure".
+AHB memory as MMIO should be mapped with ioremap rather than ioremap_wc,
+which should have been used initially just to handle unaligned access as
+a workaround.
 
-Fix multiple kernel-doc warnings:
-
-clk-provider.h:269: warning: Function parameter or member 'recalc_rate' not described in 'clk_ops'
-clk-provider.h:468: warning: Function parameter or member 'parent_data' not described in 'clk_hw_register_fixed_rate_with_accuracy_parent_data'
-clk-provider.h:468: warning: Excess function parameter 'parent_name' description in 'clk_hw_register_fixed_rate_with_accuracy_parent_data'
-clk-provider.h:482: warning: Function parameter or member 'parent_data' not described in 'clk_hw_register_fixed_rate_parent_accuracy'
-clk-provider.h:482: warning: Excess function parameter 'parent_name' description in 'clk_hw_register_fixed_rate_parent_accuracy'
-clk-provider.h:687: warning: Function parameter or member 'flags' not described in 'clk_divider'
-clk-provider.h:1164: warning: Function parameter or member 'flags' not described in 'clk_fractional_divider'
-clk-provider.h:1164: warning: Function parameter or member 'approximation' not described in 'clk_fractional_divider'
-clk-provider.h:1213: warning: Function parameter or member 'flags' not described in 'clk_multiplier'
-
-Fixes: 9fba738a53dd ("clk: add duty cycle support")
-Fixes: b2476490ef11 ("clk: introduce the common clock framework")
-Fixes: 2d34f09e79c9 ("clk: fixed-rate: Add support for specifying parents via DT/pointers")
-Fixes: f5290d8e4f0c ("clk: asm9260: use parent index to link the reference clock")
-Fixes: 9d9f78ed9af0 ("clk: basic clock hardware types")
-Fixes: e2d0e90fae82 ("clk: new basic clk type for fractional divider")
-Fixes: f2e0a53271a4 ("clk: Add a basic multiplier clock")
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Michael Turquette <mturquette@baylibre.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org
-Link: https://lore.kernel.org/r/20230930221428.18463-1-rdunlap@infradead.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: d166a73503ef ("spi: fspi: dynamically alloc AHB memory")
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Link: https://lore.kernel.org/r/20231010201524.2021340-1-han.xu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/clk-provider.h | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/spi/spi-nxp-fspi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 0f0cd01906b4c..ec93fb23372b4 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -74,7 +74,7 @@ void clk_hw_forward_rate_request(const struct clk_hw *core,
- 				 unsigned long parent_rate);
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index 8e44de084bbe3..426aa885072af 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -760,7 +760,7 @@ static int nxp_fspi_read_ahb(struct nxp_fspi *f, const struct spi_mem_op *op)
+ 		f->memmap_len = len > NXP_FSPI_MIN_IOMAP ?
+ 				len : NXP_FSPI_MIN_IOMAP;
  
- /**
-- * struct clk_duty - Struture encoding the duty cycle ratio of a clock
-+ * struct clk_duty - Structure encoding the duty cycle ratio of a clock
-  *
-  * @num:	Numerator of the duty cycle ratio
-  * @den:	Denominator of the duty cycle ratio
-@@ -129,7 +129,7 @@ struct clk_duty {
-  * @restore_context: Restore the context of the clock after a restoration
-  *		of power.
-  *
-- * @recalc_rate	Recalculate the rate of this clock, by querying hardware. The
-+ * @recalc_rate: Recalculate the rate of this clock, by querying hardware. The
-  *		parent rate is an input parameter.  It is up to the caller to
-  *		ensure that the prepare_mutex is held across this call. If the
-  *		driver cannot figure out a rate for this clock, it must return
-@@ -456,7 +456,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
-  * clock with the clock framework
-  * @dev: device that is registering this clock
-  * @name: name of this clock
-- * @parent_name: name of clock's parent
-+ * @parent_data: name of clock's parent
-  * @flags: framework-specific flags
-  * @fixed_rate: non-adjustable clock rate
-  * @fixed_accuracy: non-adjustable clock accuracy
-@@ -471,7 +471,7 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
-  * the clock framework
-  * @dev: device that is registering this clock
-  * @name: name of this clock
-- * @parent_name: name of clock's parent
-+ * @parent_data: name of clock's parent
-  * @flags: framework-specific flags
-  * @fixed_rate: non-adjustable clock rate
-  */
-@@ -649,7 +649,7 @@ struct clk_div_table {
-  * Clock with an adjustable divider affecting its output frequency.  Implements
-  * .recalc_rate, .set_rate and .round_rate
-  *
-- * Flags:
-+ * @flags:
-  * CLK_DIVIDER_ONE_BASED - by default the divisor is the value read from the
-  *	register plus one.  If CLK_DIVIDER_ONE_BASED is set then the divider is
-  *	the raw value read from the register, with the value of zero considered
-@@ -1130,11 +1130,12 @@ struct clk_hw *clk_hw_register_fixed_factor_parent_hw(struct device *dev,
-  * @mwidth:	width of the numerator bit field
-  * @nshift:	shift to the denominator bit field
-  * @nwidth:	width of the denominator bit field
-+ * @approximation: clk driver's callback for calculating the divider clock
-  * @lock:	register lock
-  *
-  * Clock with adjustable fractional divider affecting its output frequency.
-  *
-- * Flags:
-+ * @flags:
-  * CLK_FRAC_DIVIDER_ZERO_BASED - by default the numerator and denominator
-  *	is the value read from the register. If CLK_FRAC_DIVIDER_ZERO_BASED
-  *	is set then the numerator and denominator are both the value read
-@@ -1191,7 +1192,7 @@ void clk_hw_unregister_fractional_divider(struct clk_hw *hw);
-  * Clock with an adjustable multiplier affecting its output frequency.
-  * Implements .recalc_rate, .set_rate and .round_rate
-  *
-- * Flags:
-+ * @flags:
-  * CLK_MULTIPLIER_ZERO_BYPASS - By default, the multiplier is the value read
-  *	from the register, with 0 being a valid value effectively
-  *	zeroing the output clock rate. If CLK_MULTIPLIER_ZERO_BYPASS is
+-		f->ahb_addr = ioremap_wc(f->memmap_phy + f->memmap_start,
++		f->ahb_addr = ioremap(f->memmap_phy + f->memmap_start,
+ 					 f->memmap_len);
+ 
+ 		if (!f->ahb_addr) {
 -- 
 2.42.0
 
