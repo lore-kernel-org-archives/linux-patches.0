@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128D04121C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870A24121C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SCuOzKxW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A6FC433C8;
-	Wed, 15 Nov 2023 19:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frUlDTB7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EF7C433C7;
+	Wed, 15 Nov 2023 19:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076477;
-	bh=VZLK4T4FhtWtFBiy5WFXjbXuzWZ0vJMZQRWPQhSn2fo=;
+	s=korg; t=1700076479;
+	bh=qM/ZgcBPJoWJf3t8WUV8oiUEPlcw5f4ufCbSqSRO+rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SCuOzKxWNUhuKD3DQuBj3zyknzqCBr4uMO9WfQ3iMdpGAV7dL1o/GJpnzsgdAIMzk
-	 iwVtSgsOP9VllygB5Gx9XBTy+XTm++9sBMID9QLhgQlG88hSEp01onrXGuw2Mlqw49
-	 GUc97AOFC0PsFN8XL4tN0US9+9jOa3DP2vQXH5zg=
+	b=frUlDTB7GH++erMMQezX7ZIVcK5PFjoqJjngZY7fMdNHfSymtZenOi+tc3c6KO+Oq
+	 D3NWYqlT/DgvJemzJHY/Vp9A/w9TuRw/vImAboRUze6gkVq0r4xmCY0dG0MDkT8lS0
+	 AWlng25M8rXrfwvPK+bvD4bN+eHXAclXcj9mAd04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Timur I. Davletshin" <timur.davletshin@gmail.com>,
-	Jo-Philipp Wich <jo@mein.io>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 314/550] hwrng: geode - fix accessing registers
-Date: Wed, 15 Nov 2023 14:14:58 -0500
-Message-ID: <20231115191622.595613707@linuxfoundation.org>
+Subject: [PATCH 6.5 315/550] RDMA/core: Use size_{add,sub,mul}() in calls to struct_size()
+Date: Wed, 15 Nov 2023 14:14:59 -0500
+Message-ID: <20231115191622.648469376@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,56 +42,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 464bd8ec2f06707f3773676a1bd2c64832a3c805 ]
+[ Upstream commit 81760bedc65194ff38e1e4faefd5f9f0c95c19a4 ]
 
-When the membase and pci_dev pointer were moved to a new struct in priv,
-the actual membase users were left untouched, and they started reading
-out arbitrary memory behind the struct instead of registers. This
-unfortunately turned the RNG into a constant number generator, depending
-on the content of what was at that offset.
+If, for any reason, the open-coded arithmetic causes a wraparound,
+the protection that `struct_size()` provides against potential integer
+overflows is defeated. Fix this by hardening calls to `struct_size()`
+with `size_add()`, `size_sub()` and `size_mul()`.
 
-To fix this, update geode_rng_data_{read,present}() to also get the
-membase via amd_geode_priv, and properly read from the right addresses
-again.
-
-Fixes: 9f6ec8dc574e ("hwrng: geode - Fix PCI device refcount leak")
-Reported-by: Timur I. Davletshin <timur.davletshin@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217882
-Tested-by: Timur I. Davletshin <timur.davletshin@gmail.com>
-Suggested-by: Jo-Philipp Wich <jo@mein.io>
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 467f432a521a ("RDMA/core: Split port and device counter sysfs attributes")
+Fixes: a4676388e2e2 ("RDMA/core: Simplify how the gid_attrs sysfs is created")
+Fixes: e9dd5daf884c ("IB/umad: Refactor code to use cdev_device_add()")
+Fixes: 324e227ea7c9 ("RDMA/device: Add ib_device_get_by_netdev()")
+Fixes: 5aad26a7eac5 ("IB/core: Use struct_size() in kzalloc()")
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/ZQdt4NsJFwwOYxUR@work
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/geode-rng.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/device.c   |  2 +-
+ drivers/infiniband/core/sa_query.c |  4 +++-
+ drivers/infiniband/core/sysfs.c    | 10 +++++-----
+ drivers/infiniband/core/user_mad.c |  4 +++-
+ 4 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
-index 12fbe80918319..159baf00a8675 100644
---- a/drivers/char/hw_random/geode-rng.c
-+++ b/drivers/char/hw_random/geode-rng.c
-@@ -58,7 +58,8 @@ struct amd_geode_priv {
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index a666847bd7143..010718738d04c 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -804,7 +804,7 @@ static int alloc_port_data(struct ib_device *device)
+ 	 * empty slots at the beginning.
+ 	 */
+ 	pdata_rcu = kzalloc(struct_size(pdata_rcu, pdata,
+-					rdma_end_port(device) + 1),
++					size_add(rdma_end_port(device), 1)),
+ 			    GFP_KERNEL);
+ 	if (!pdata_rcu)
+ 		return -ENOMEM;
+diff --git a/drivers/infiniband/core/sa_query.c b/drivers/infiniband/core/sa_query.c
+index 59179cfc20ef9..8175dde60b0a8 100644
+--- a/drivers/infiniband/core/sa_query.c
++++ b/drivers/infiniband/core/sa_query.c
+@@ -2159,7 +2159,9 @@ static int ib_sa_add_one(struct ib_device *device)
+ 	s = rdma_start_port(device);
+ 	e = rdma_end_port(device);
  
- static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- {
--	void __iomem *mem = (void __iomem *)rng->priv;
-+	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
-+	void __iomem *mem = priv->membase;
+-	sa_dev = kzalloc(struct_size(sa_dev, port, e - s + 1), GFP_KERNEL);
++	sa_dev = kzalloc(struct_size(sa_dev, port,
++				     size_add(size_sub(e, s), 1)),
++			 GFP_KERNEL);
+ 	if (!sa_dev)
+ 		return -ENOMEM;
  
- 	*data = readl(mem + GEODE_RNG_DATA_REG);
+diff --git a/drivers/infiniband/core/sysfs.c b/drivers/infiniband/core/sysfs.c
+index ee59d73915689..ec5efdc166601 100644
+--- a/drivers/infiniband/core/sysfs.c
++++ b/drivers/infiniband/core/sysfs.c
+@@ -903,7 +903,7 @@ alloc_hw_stats_device(struct ib_device *ibdev)
+ 	 * Two extra attribue elements here, one for the lifespan entry and
+ 	 * one to NULL terminate the list for the sysfs core code
+ 	 */
+-	data = kzalloc(struct_size(data, attrs, stats->num_counters + 1),
++	data = kzalloc(struct_size(data, attrs, size_add(stats->num_counters, 1)),
+ 		       GFP_KERNEL);
+ 	if (!data)
+ 		goto err_free_stats;
+@@ -1009,7 +1009,7 @@ alloc_hw_stats_port(struct ib_port *port, struct attribute_group *group)
+ 	 * Two extra attribue elements here, one for the lifespan entry and
+ 	 * one to NULL terminate the list for the sysfs core code
+ 	 */
+-	data = kzalloc(struct_size(data, attrs, stats->num_counters + 1),
++	data = kzalloc(struct_size(data, attrs, size_add(stats->num_counters, 1)),
+ 		       GFP_KERNEL);
+ 	if (!data)
+ 		goto err_free_stats;
+@@ -1140,7 +1140,7 @@ static int setup_gid_attrs(struct ib_port *port,
+ 	int ret;
  
-@@ -67,7 +68,8 @@ static int geode_rng_data_read(struct hwrng *rng, u32 *data)
+ 	gid_attr_group = kzalloc(struct_size(gid_attr_group, attrs_list,
+-					     attr->gid_tbl_len * 2),
++					     size_mul(attr->gid_tbl_len, 2)),
+ 				 GFP_KERNEL);
+ 	if (!gid_attr_group)
+ 		return -ENOMEM;
+@@ -1205,8 +1205,8 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
+ 	int ret;
  
- static int geode_rng_data_present(struct hwrng *rng, int wait)
- {
--	void __iomem *mem = (void __iomem *)rng->priv;
-+	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
-+	void __iomem *mem = priv->membase;
- 	int data, i;
+ 	p = kvzalloc(struct_size(p, attrs_list,
+-				attr->gid_tbl_len + attr->pkey_tbl_len),
+-		    GFP_KERNEL);
++				size_add(attr->gid_tbl_len, attr->pkey_tbl_len)),
++		     GFP_KERNEL);
+ 	if (!p)
+ 		return ERR_PTR(-ENOMEM);
+ 	p->ibdev = device;
+diff --git a/drivers/infiniband/core/user_mad.c b/drivers/infiniband/core/user_mad.c
+index 7e5c33aad1619..f5feca7fa9b9c 100644
+--- a/drivers/infiniband/core/user_mad.c
++++ b/drivers/infiniband/core/user_mad.c
+@@ -1378,7 +1378,9 @@ static int ib_umad_add_one(struct ib_device *device)
+ 	s = rdma_start_port(device);
+ 	e = rdma_end_port(device);
  
- 	for (i = 0; i < 20; i++) {
+-	umad_dev = kzalloc(struct_size(umad_dev, ports, e - s + 1), GFP_KERNEL);
++	umad_dev = kzalloc(struct_size(umad_dev, ports,
++				       size_add(size_sub(e, s), 1)),
++			   GFP_KERNEL);
+ 	if (!umad_dev)
+ 		return -ENOMEM;
+ 
 -- 
 2.42.0
 
