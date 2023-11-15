@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C0A3C46C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500083C46C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qXJ6hhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A113C433C8;
-	Wed, 15 Nov 2023 19:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWu+G7AM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05C6C433CA;
+	Wed, 15 Nov 2023 19:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077552;
-	bh=6RVySMLIEUVg/qfz98rdQ29WFUa3T9BMawvajcpbnRQ=;
+	s=korg; t=1700077554;
+	bh=fH+0tt9z/AaTXDQTxIr1H2vTiShUZwZHuvpl3tHdSWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2qXJ6hhDhhyyt7ofydb8GoQr3dGRxiJxCfSimDvc9X4k61wL7JiiUchoqSRi/4FQd
-	 49ukdkOPtpMyW1iCW4wsecv5XAvo0ZUBt1g8J6YcS3MTe+SWndWDG6IbSlEgO7lYZt
-	 cYOdjU89CRFb36EG9w9OEe0OdQ7JRgC63p0Cyums=
+	b=dWu+G7AMGc/cvwHLKmEvouf7/wXWEkaynRosdMAykJexPeMKX5jRVJAnWwSIAUYkv
+	 naUcXSpTosOO/O7rmXUNEisWOOVUf+wAe2bqVPKEDvaNdJXKk4FCVg9Axgs+UJw5BI
+	 bLl4EeZjjPGXj79juDtTLyltCgZSnbHIiipB2jRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chancel Liu <chancel.liu@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 352/603] ASoC: soc-pcm.c: Make sure DAI parameters cleared if the DAI becomes inactive
-Date: Wed, 15 Nov 2023 14:14:57 -0500
-Message-ID: <20231115191637.896027852@linuxfoundation.org>
+Subject: [PATCH 6.6 353/603] libnvdimm/of_pmem: Use devm_kstrdup instead of kstrdup and check its return value
+Date: Wed, 15 Nov 2023 14:14:58 -0500
+Message-ID: <20231115191637.963241090@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,80 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chancel Liu <chancel.liu@nxp.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 3efcb471f871cc095841d411f98c593228ecbac6 ]
+[ Upstream commit 6fd4ebfc4d61e3097b595ab2725d513e3bbd6739 ]
 
-The commit 1da681e52853 ("ASoC: soc-pcm.c: Clear DAIs parameters after
-stream_active is updated") tries to make sure DAI parameters can be
-cleared properly through moving the cleanup to the place where stream
-active status is updated. However, it will cause the cleanup only
-happening in soc_pcm_close().
+Use devm_kstrdup() instead of kstrdup() and check its return value to
+avoid memory leak.
 
-Suppose a case: aplay -Dhw:0 44100.wav 48000.wav. The case calls
-soc_pcm_open()->soc_pcm_hw_params()->soc_pcm_hw_free()->
-soc_pcm_hw_params()->soc_pcm_hw_free()->soc_pcm_close() in order. The
-parameters would be remained in the system even if the playback of
-44100.wav is finished.
-
-The case requires us clearing parameters in phase of soc_pcm_hw_free().
-However, moving the DAI parameters cleanup back to soc_pcm_hw_free()
-has the risk that DAIs parameters never be cleared if there're more
-than one stream, see commit 1da681e52853 ("ASoC: soc-pcm.c: Clear DAIs
-parameters after stream_active is updated") for more details.
-
-To meet all these requirements, in addition to do DAI parameters
-cleanup in soc_pcm_hw_free(), also check it in soc_pcm_close() to make
-sure DAI parameters cleared if the DAI becomes inactive.
-
-Fixes: 1da681e52853 ("ASoC: soc-pcm.c: Clear DAIs parameters after stream_active is updated")
-Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
-Link: https://lore.kernel.org/r/20230920153621.711373-2-chancel.liu@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 49bddc73d15c ("libnvdimm/of_pmem: Provide a unique name for bus provider")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-pcm.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/nvdimm/of_pmem.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 54704250c0a2c..0a20122b3e555 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -698,14 +698,12 @@ static int soc_pcm_clean(struct snd_soc_pcm_runtime *rtd,
+diff --git a/drivers/nvdimm/of_pmem.c b/drivers/nvdimm/of_pmem.c
+index 1b9f5b8a6167e..d3fca0ab62900 100644
+--- a/drivers/nvdimm/of_pmem.c
++++ b/drivers/nvdimm/of_pmem.c
+@@ -30,7 +30,13 @@ static int of_pmem_region_probe(struct platform_device *pdev)
+ 	if (!priv)
+ 		return -ENOMEM;
  
- 	if (!rollback) {
- 		snd_soc_runtime_deactivate(rtd, substream->stream);
--		/* clear the corresponding DAIs parameters when going to be inactive */
--		for_each_rtd_dais(rtd, i, dai) {
--			if (snd_soc_dai_active(dai) == 0)
--				soc_pcm_set_dai_params(dai, NULL);
- 
--			if (snd_soc_dai_stream_active(dai, substream->stream) == 0)
--				snd_soc_dai_digital_mute(dai, 1, substream->stream);
--		}
-+		/* Make sure DAI parameters cleared if the DAI becomes inactive */
-+		for_each_rtd_dais(rtd, i, dai)
-+			if (snd_soc_dai_active(dai) == 0 &&
-+			    (dai->rate || dai->channels || dai->sample_bits))
-+				soc_pcm_set_dai_params(dai, NULL);
- 	}
- 
- 	for_each_rtd_dais(rtd, i, dai)
-@@ -936,6 +934,15 @@ static int soc_pcm_hw_clean(struct snd_soc_pcm_runtime *rtd,
- 
- 	snd_soc_dpcm_mutex_assert_held(rtd);
- 
-+	/* clear the corresponding DAIs parameters when going to be inactive */
-+	for_each_rtd_dais(rtd, i, dai) {
-+		if (snd_soc_dai_active(dai) == 1)
-+			soc_pcm_set_dai_params(dai, NULL);
-+
-+		if (snd_soc_dai_stream_active(dai, substream->stream) == 1)
-+			snd_soc_dai_digital_mute(dai, 1, substream->stream);
+-	priv->bus_desc.provider_name = kstrdup(pdev->name, GFP_KERNEL);
++	priv->bus_desc.provider_name = devm_kstrdup(&pdev->dev, pdev->name,
++							GFP_KERNEL);
++	if (!priv->bus_desc.provider_name) {
++		kfree(priv);
++		return -ENOMEM;
 +	}
 +
- 	/* run the stream event */
- 	snd_soc_dapm_stream_stop(rtd, substream->stream);
+ 	priv->bus_desc.module = THIS_MODULE;
+ 	priv->bus_desc.of_node = np;
  
 -- 
 2.42.0
