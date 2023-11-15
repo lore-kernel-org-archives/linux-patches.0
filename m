@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B749D43AD7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4913043AD3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfJq7XdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662E2C4E77A;
-	Wed, 15 Nov 2023 20:53:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJfHZtcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA9FC4E779;
+	Wed, 15 Nov 2023 20:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081634;
-	bh=zYEwUsKKY1kt/EK45R5/V84XiMqwHjhbPjme+9CXL+8=;
+	s=korg; t=1700081636;
+	bh=6IdA5aniX3OFtNbNiVaMG3zvwID+TW5Jz6lteN9OY/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pfJq7XdJbsx2DZAOycr1lI9/0kpuQfeJsFLHUwSb+QGihfANxBd6HrzqWah6/TAhz
-	 sNl8SPgB0+3N2GGoM1vQ0bfMRE2GRGkAKNRrCVcN89gjiChcwlyA9HGwk39I6NCjbo
-	 EcjldYqAe0weCp9UGQ+VhDxpm7vTuDq3EpfHa4/0=
+	b=pJfHZtcsiyzwffRVuzGmgOjbZKtKlwELSF8BBlgOY0PWWBMGorBaUZq2Th+91+uW1
+	 T+ubJ0qzOy1aS6Sl6B3FU9zoTzWIeH903TRPLJizjnStTz/gXWcMmreSjHCMzalZzw
+	 s5gmoSul4roJi4PlV3EPhU0S7CAshFhNxvll5Tsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Neal Cardwell <ncardwell@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ayush Sawal <ayush.sawal@chelsio.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/191] tcp_metrics: properly set tp->snd_ssthresh in tcp_init_metrics()
-Date: Wed, 15 Nov 2023 15:44:56 -0500
-Message-ID: <20231115204645.803106644@linuxfoundation.org>
+Subject: [PATCH 5.10 030/191] chtls: fix tp->rcv_tstamp initialization
+Date: Wed, 15 Nov 2023 15:45:05 -0500
+Message-ID: <20231115204646.354033283@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -46,48 +45,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 081480014a64a69d901f8ef1ffdd56d6085cf87e ]
+[ Upstream commit 225d9ddbacb102621af6d28ff7bf5a0b4ce249d8 ]
 
-We need to set tp->snd_ssthresh to TCP_INFINITE_SSTHRESH
-in the case tcp_get_metrics() fails for some reason.
+tp->rcv_tstamp should be set to tcp_jiffies, not tcp_time_stamp().
 
-Fixes: 9ad7c049f0f7 ("tcp: RFC2988bis + taking RTT sample from 3WHS for the passive open side")
+Fixes: cc35c88ae4db ("crypto : chtls - CPL handler definition")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Ayush Sawal <ayush.sawal@chelsio.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 03ab7500f5745..a5d4e69acc05d 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -470,6 +470,10 @@ void tcp_init_metrics(struct sock *sk)
- 	u32 val, crtt = 0; /* cached RTT scaled by 8 */
+diff --git a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
+index cd6e016e62103..ccf2bec283d35 100644
+--- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
++++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_cm.c
+@@ -2259,7 +2259,7 @@ static void chtls_rx_ack(struct sock *sk, struct sk_buff *skb)
  
- 	sk_dst_confirm(sk);
-+	/* ssthresh may have been reduced unnecessarily during.
-+	 * 3WHS. Restore it back to its initial default.
-+	 */
-+	tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
- 	if (!dst)
- 		goto reset;
- 
-@@ -489,11 +493,6 @@ void tcp_init_metrics(struct sock *sk)
- 		tp->snd_ssthresh = val;
- 		if (tp->snd_ssthresh > tp->snd_cwnd_clamp)
- 			tp->snd_ssthresh = tp->snd_cwnd_clamp;
--	} else {
--		/* ssthresh may have been reduced unnecessarily during.
--		 * 3WHS. Restore it back to its initial default.
--		 */
--		tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
- 	}
- 	val = tcp_metric_get(tm, TCP_METRIC_REORDERING);
- 	if (val && tp->reordering != val)
+ 		if (tp->snd_una != snd_una) {
+ 			tp->snd_una = snd_una;
+-			tp->rcv_tstamp = tcp_time_stamp(tp);
++			tp->rcv_tstamp = tcp_jiffies32;
+ 			if (tp->snd_una == tp->snd_nxt &&
+ 			    !csk_flag_nochk(csk, CSK_TX_FAILOVER))
+ 				csk_reset_flag(csk, CSK_TX_WAIT_IDLE);
 -- 
 2.42.0
 
