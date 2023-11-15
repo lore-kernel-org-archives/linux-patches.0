@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650813DBAC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35093D396
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuZdSv9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17145C433C8;
-	Wed, 15 Nov 2023 19:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFCUxZY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE60C433C7;
+	Wed, 15 Nov 2023 19:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078394;
-	bh=LvDHmsWPYD7M4kjec7gPEsLcQ4mNMKVtTUeWxpPR6a0=;
+	s=korg; t=1700078395;
+	bh=ludvATVym2fS1GoB/MH0DnPkycFyekgedhiIOsXgiFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuZdSv9voaf5744pmMpNqQ4x0kc4K5xqZbjuWC7IRsEIT2FTKdHuQFBIACGMiIiLs
-	 TjDAgzTdVKxgtQCN4yPYoVqoRAO/OL+cm+zNq891QhQncFWdjGaN32y0B6lu0uD/gF
-	 rblCq3uthrxGxngeH3fwsC8DLlPYEt4ap6M3sH2Y=
+	b=jFCUxZY/BWhtA+8m9QJ7zYTRd897YYzejgSK7DdP3LYzPk52+5skhYmx6wcaZmbMp
+	 E/eVbhxt6UHWUwTW1TXHQnpgPb0W6CHWH3K5t3IzeQy4aN9j8csRuY0WYAZPkT2hF6
+	 qpFJKGAj2h3PwGiJL68B5umzI9U+GPXRxm9DXbyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
+	Haren Myneni <haren@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 296/379] powerpc/xive: Fix endian conversion size
-Date: Wed, 15 Nov 2023 14:26:11 -0500
-Message-ID: <20231115192702.656169005@linuxfoundation.org>
+Subject: [PATCH 6.1 297/379] powerpc/vas: Limit open window failure messages in log bufffer
+Date: Wed, 15 Nov 2023 14:26:12 -0500
+Message-ID: <20231115192702.712610009@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,39 +42,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Haren Myneni <haren@linux.ibm.com>
 
-[ Upstream commit ff7a60ab1e065257a0e467c13b519f4debcd7fcf ]
+[ Upstream commit 73b25505ce043b561028e5571d84dc82aa53c2b4 ]
 
-Sparse reports a size mismatch in the endian swap. The Opal
-implementation[1] passes the value as a __be64, and the receiving
-variable out_qsize is a u64, so the use of be32_to_cpu() appears to be
-an error.
+The VAS open window call prints error message and returns -EBUSY
+after the migration suspend event initiated and until the resume
+event completed on the destination system. It can cause the log
+buffer filled with these error messages if the user space issues
+continuous open window calls.  Similar case even for DLPAR CPU
+remove event when no credits are available until the credits are
+freed or with the other DLPAR CPU add event.
 
-[1]: https://github.com/open-power/skiboot/blob/80e2b1dc73/hw/xive.c#L3854
+So changes in the patch to use pr_err_ratelimited() instead of
+pr_err() to display open window failure and not-available credits
+error messages.
 
-Fixes: 88ec6b93c8e7 ("powerpc/xive: add OPAL extensions for the XIVE native exploitation support")
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+Use pr_fmt() and make the corresponding changes to have the
+consistencein prefix all pr_*() messages (vas-api.c).
+
+Fixes: 37e6764895ef ("powerpc/pseries/vas: Add VAS migration handler")
+Signed-off-by: Haren Myneni <haren@linux.ibm.com>
+[mpe: Use "vas-api" as the prefix to match the file name.]
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231011053711.93427-2-bgray@linux.ibm.com
+Link: https://msgid.link/20231019215033.1335251-1-haren@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/xive/native.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/book3s/vas-api.c | 34 ++++++++++++-------------
+ arch/powerpc/platforms/pseries/vas.c    |  4 +--
+ 2 files changed, 18 insertions(+), 20 deletions(-)
 
-diff --git a/arch/powerpc/sysdev/xive/native.c b/arch/powerpc/sysdev/xive/native.c
-index 3925825954bcc..e5baa91ddd07b 100644
---- a/arch/powerpc/sysdev/xive/native.c
-+++ b/arch/powerpc/sysdev/xive/native.c
-@@ -804,7 +804,7 @@ int xive_native_get_queue_info(u32 vp_id, u32 prio,
- 	if (out_qpage)
- 		*out_qpage = be64_to_cpu(qpage);
- 	if (out_qsize)
--		*out_qsize = be32_to_cpu(qsize);
-+		*out_qsize = be64_to_cpu(qsize);
- 	if (out_qeoi_page)
- 		*out_qeoi_page = be64_to_cpu(qeoi_page);
- 	if (out_escalate_irq)
+diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
+index 40f5ae5e1238d..92e60cb3163fa 100644
+--- a/arch/powerpc/platforms/book3s/vas-api.c
++++ b/arch/powerpc/platforms/book3s/vas-api.c
+@@ -4,6 +4,8 @@
+  * Copyright (C) 2019 Haren Myneni, IBM Corp
+  */
+ 
++#define pr_fmt(fmt)	"vas-api: " fmt
++
+ #include <linux/kernel.h>
+ #include <linux/device.h>
+ #include <linux/cdev.h>
+@@ -78,7 +80,7 @@ int get_vas_user_win_ref(struct vas_user_win_ref *task_ref)
+ 	task_ref->mm = get_task_mm(current);
+ 	if (!task_ref->mm) {
+ 		put_pid(task_ref->pid);
+-		pr_err("VAS: pid(%d): mm_struct is not found\n",
++		pr_err("pid(%d): mm_struct is not found\n",
+ 				current->pid);
+ 		return -EPERM;
+ 	}
+@@ -235,8 +237,7 @@ void vas_update_csb(struct coprocessor_request_block *crb,
+ 	rc = kill_pid_info(SIGSEGV, &info, pid);
+ 	rcu_read_unlock();
+ 
+-	pr_devel("%s(): pid %d kill_proc_info() rc %d\n", __func__,
+-			pid_vnr(pid), rc);
++	pr_devel("pid %d kill_proc_info() rc %d\n", pid_vnr(pid), rc);
+ }
+ 
+ void vas_dump_crb(struct coprocessor_request_block *crb)
+@@ -294,7 +295,7 @@ static int coproc_ioc_tx_win_open(struct file *fp, unsigned long arg)
+ 
+ 	rc = copy_from_user(&uattr, uptr, sizeof(uattr));
+ 	if (rc) {
+-		pr_err("%s(): copy_from_user() returns %d\n", __func__, rc);
++		pr_err("copy_from_user() returns %d\n", rc);
+ 		return -EFAULT;
+ 	}
+ 
+@@ -311,7 +312,7 @@ static int coproc_ioc_tx_win_open(struct file *fp, unsigned long arg)
+ 	txwin = cp_inst->coproc->vops->open_win(uattr.vas_id, uattr.flags,
+ 						cp_inst->coproc->cop_type);
+ 	if (IS_ERR(txwin)) {
+-		pr_err("%s() VAS window open failed, %ld\n", __func__,
++		pr_err_ratelimited("VAS window open failed rc=%ld\n",
+ 				PTR_ERR(txwin));
+ 		return PTR_ERR(txwin);
+ 	}
+@@ -405,8 +406,7 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
+ 	 * window is not opened. Shouldn't expect this error.
+ 	 */
+ 	if (!cp_inst || !cp_inst->txwin) {
+-		pr_err("%s(): Unexpected fault on paste address with TX window closed\n",
+-				__func__);
++		pr_err("Unexpected fault on paste address with TX window closed\n");
+ 		return VM_FAULT_SIGBUS;
+ 	}
+ 
+@@ -421,8 +421,7 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
+ 	 * issue NX request.
+ 	 */
+ 	if (txwin->task_ref.vma != vmf->vma) {
+-		pr_err("%s(): No previous mapping with paste address\n",
+-			__func__);
++		pr_err("No previous mapping with paste address\n");
+ 		return VM_FAULT_SIGBUS;
+ 	}
+ 
+@@ -481,19 +480,19 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	txwin = cp_inst->txwin;
+ 
+ 	if ((vma->vm_end - vma->vm_start) > PAGE_SIZE) {
+-		pr_debug("%s(): size 0x%zx, PAGE_SIZE 0x%zx\n", __func__,
++		pr_debug("size 0x%zx, PAGE_SIZE 0x%zx\n",
+ 				(vma->vm_end - vma->vm_start), PAGE_SIZE);
+ 		return -EINVAL;
+ 	}
+ 
+ 	/* Ensure instance has an open send window */
+ 	if (!txwin) {
+-		pr_err("%s(): No send window open?\n", __func__);
++		pr_err("No send window open?\n");
+ 		return -EINVAL;
+ 	}
+ 
+ 	if (!cp_inst->coproc->vops || !cp_inst->coproc->vops->paste_addr) {
+-		pr_err("%s(): VAS API is not registered\n", __func__);
++		pr_err("VAS API is not registered\n");
+ 		return -EACCES;
+ 	}
+ 
+@@ -510,14 +509,14 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	 */
+ 	mutex_lock(&txwin->task_ref.mmap_mutex);
+ 	if (txwin->status != VAS_WIN_ACTIVE) {
+-		pr_err("%s(): Window is not active\n", __func__);
++		pr_err("Window is not active\n");
+ 		rc = -EACCES;
+ 		goto out;
+ 	}
+ 
+ 	paste_addr = cp_inst->coproc->vops->paste_addr(txwin);
+ 	if (!paste_addr) {
+-		pr_err("%s(): Window paste address failed\n", __func__);
++		pr_err("Window paste address failed\n");
+ 		rc = -EINVAL;
+ 		goto out;
+ 	}
+@@ -533,8 +532,8 @@ static int coproc_mmap(struct file *fp, struct vm_area_struct *vma)
+ 	rc = remap_pfn_range(vma, vma->vm_start, pfn + vma->vm_pgoff,
+ 			vma->vm_end - vma->vm_start, prot);
+ 
+-	pr_devel("%s(): paste addr %llx at %lx, rc %d\n", __func__,
+-			paste_addr, vma->vm_start, rc);
++	pr_devel("paste addr %llx at %lx, rc %d\n", paste_addr,
++			vma->vm_start, rc);
+ 
+ 	txwin->task_ref.vma = vma;
+ 	vma->vm_ops = &vas_vm_ops;
+@@ -609,8 +608,7 @@ int vas_register_coproc_api(struct module *mod, enum vas_cop_type cop_type,
+ 		goto err;
+ 	}
+ 
+-	pr_devel("%s: Added dev [%d,%d]\n", __func__, MAJOR(devno),
+-			MINOR(devno));
++	pr_devel("Added dev [%d,%d]\n", MAJOR(devno), MINOR(devno));
+ 
+ 	return 0;
+ 
+diff --git a/arch/powerpc/platforms/pseries/vas.c b/arch/powerpc/platforms/pseries/vas.c
+index 041a25c08066b..5db8060776b0c 100644
+--- a/arch/powerpc/platforms/pseries/vas.c
++++ b/arch/powerpc/platforms/pseries/vas.c
+@@ -340,7 +340,7 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
+ 
+ 	if (atomic_inc_return(&cop_feat_caps->nr_used_credits) >
+ 			atomic_read(&cop_feat_caps->nr_total_credits)) {
+-		pr_err("Credits are not available to allocate window\n");
++		pr_err_ratelimited("Credits are not available to allocate window\n");
+ 		rc = -EINVAL;
+ 		goto out;
+ 	}
+@@ -423,7 +423,7 @@ static struct vas_window *vas_allocate_window(int vas_id, u64 flags,
+ 
+ 	put_vas_user_win_ref(&txwin->vas_win.task_ref);
+ 	rc = -EBUSY;
+-	pr_err("No credit is available to allocate window\n");
++	pr_err_ratelimited("No credit is available to allocate window\n");
+ 
+ out_free:
+ 	/*
 -- 
 2.42.0
 
