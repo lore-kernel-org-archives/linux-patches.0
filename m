@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098EF3DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8443DBA7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEWczNfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC68C433C7;
-	Wed, 15 Nov 2023 20:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWqsW/+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C71C433CC;
+	Wed, 15 Nov 2023 20:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078684;
-	bh=Iqun4NC9kUci49y8oY2t5ourXoHSJUdWG8U7ychDqhA=;
+	s=korg; t=1700078686;
+	bh=GNYP9SZ2OwAuphtEUxNraLvf/9KlZktKBAXOVfc8WjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEWczNfLiFz7GT8Dou/Lj5pMCkpTfN1mtA1Bu6Y4ZljyOHNsD9ww/AsYqBpXPa9A2
-	 l7WVK07duujmCTv9P7TiCxN5X/+7jtBFf1OyKl5e5ZoYEV99vfzMqwS+lzpLtSoWzO
-	 RmH5Brb88ia1+dP/CiY/npUzviF3/BfFLWLojSUA=
+	b=iWqsW/+SSpJ/3pBL9KfA9Jsg2EjndPQBHOyw7uFuh8dh52+Czkly0BtlVmYPKj0lF
+	 liHsbKcn7s2vNuJX+dGpns4ttHCoh4yPmO+wEtpOZF4mXyKEo9MZ6ODtDtArdbx4aK
+	 xcc6B3YpqHzUaiYSQxL9dCYMIGKJ5rQD1pzmbVKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 45/45] btrfs: use u64 for buffer sizes in the tree search ioctls
-Date: Wed, 15 Nov 2023 14:33:22 -0500
-Message-ID: <20231115191422.210566150@linuxfoundation.org>
+Subject: [PATCH 4.14 28/45] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 15 Nov 2023 14:33:05 -0500
+Message-ID: <20231115191421.284116272@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -43,75 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit dec96fc2dcb59723e041416b8dc53e011b4bfc2e ]
+[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
 
-In the tree search v2 ioctl we use the type size_t, which is an unsigned
-long, to track the buffer size in the local variable 'buf_size'. An
-unsigned long is 32 bits wide on a 32 bits architecture. The buffer size
-defined in struct btrfs_ioctl_search_args_v2 is a u64, so when we later
-try to copy the local variable 'buf_size' to the argument struct, when
-the search returns -EOVERFLOW, we copy only 32 bits which will be a
-problem on big endian systems.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with hardware interrupts being disabled.
+So replace kfree_skb() with dev_kfree_skb_irq() under
+spin_lock_irqsave(). Compile tested only.
 
-Fix this by using a u64 type for the buffer sizes, not only at
-btrfs_ioctl_tree_search_v2(), but also everywhere down the call chain
-so that we can use the u64 at btrfs_ioctl_tree_search_v2().
-
-Fixes: cc68a8a5a433 ("btrfs: new ioctl TREE_SEARCH_V2")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/linux-btrfs/ce6f4bd6-9453-4ffe-ba00-cee35495e10f@moroto.mountain/
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 53618cc1e51e ("Staging: sources for ST core")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/misc/ti-st/st_core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index d8255bd33d50a..93b83dc298ac9 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -1988,7 +1988,7 @@ static noinline int key_in_sk(struct btrfs_key *key,
- static noinline int copy_to_sk(struct btrfs_path *path,
- 			       struct btrfs_key *key,
- 			       struct btrfs_ioctl_search_key *sk,
--			       size_t *buf_size,
-+			       u64 *buf_size,
- 			       char __user *ubuf,
- 			       unsigned long *sk_offset,
- 			       int *num_found)
-@@ -2120,7 +2120,7 @@ static noinline int copy_to_sk(struct btrfs_path *path,
+diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
+index eda8d407be287..e5fbd61f69c8e 100644
+--- a/drivers/misc/ti-st/st_core.c
++++ b/drivers/misc/ti-st/st_core.c
+@@ -28,6 +28,7 @@
+ #include <linux/skbuff.h>
  
- static noinline int search_ioctl(struct inode *inode,
- 				 struct btrfs_ioctl_search_key *sk,
--				 size_t *buf_size,
-+				 u64 *buf_size,
- 				 char __user *ubuf)
- {
- 	struct btrfs_fs_info *info = btrfs_sb(inode->i_sb);
-@@ -2192,7 +2192,7 @@ static noinline int btrfs_ioctl_tree_search(struct file *file,
- 	struct btrfs_ioctl_search_key sk;
- 	struct inode *inode;
- 	int ret;
--	size_t buf_size;
-+	u64 buf_size;
+ #include <linux/ti_wilink_st.h>
++#include <linux/netdevice.h>
  
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
-@@ -2226,8 +2226,8 @@ static noinline int btrfs_ioctl_tree_search_v2(struct file *file,
- 	struct btrfs_ioctl_search_args_v2 args;
- 	struct inode *inode;
- 	int ret;
--	size_t buf_size;
--	const size_t buf_limit = SZ_16M;
-+	u64 buf_size;
-+	const u64 buf_limit = SZ_16M;
+ extern void st_kim_recv(void *, const unsigned char *, long);
+ void st_int_recv(void *, const unsigned char *, long);
+@@ -436,7 +437,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
+ 	case ST_LL_AWAKE_TO_ASLEEP:
+ 		pr_err("ST LL is illegal state(%ld),"
+ 			   "purging received skb.", st_ll_getstate(st_gdata));
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	case ST_LL_ASLEEP:
+ 		skb_queue_tail(&st_gdata->tx_waitq, skb);
+@@ -445,7 +446,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
+ 	default:
+ 		pr_err("ST LL is illegal state(%ld),"
+ 			   "purging received skb.", st_ll_getstate(st_gdata));
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	}
  
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
+@@ -499,7 +500,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
+ 				spin_unlock_irqrestore(&st_data->lock, flags);
+ 				break;
+ 			}
+-			kfree_skb(skb);
++			dev_kfree_skb_irq(skb);
+ 			spin_unlock_irqrestore(&st_data->lock, flags);
+ 		}
+ 		/* if wake-up is set in another context- restart sending */
 -- 
 2.42.0
 
