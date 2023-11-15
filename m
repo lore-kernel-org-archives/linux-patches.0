@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FAF45BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B4645BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wctsUKhE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC54C433CA;
-	Wed, 15 Nov 2023 22:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHynyadZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B67FC433C9;
+	Wed, 15 Nov 2023 22:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085801;
-	bh=QXTL+kcVvPzZUN4NwtKCg4TdB2EIJ2AJht6eAcViFHU=;
+	s=korg; t=1700085802;
+	bh=7/sfFfoW+ExY/nQ9Wr/XH+icC4UIs8tEwZXkw3u9RGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wctsUKhEIpdgZK835+IHcRWnOUoEA6MJ/M2/I/pUbrYnTe1QX4kzQwxsnWzsQIo0Z
-	 cBrjZWhGauYNf3YNnXUCgqRC25hiwcdDQ5q2YpT5GahLpSiTfFRpNESA27QP0VF7xR
-	 5o+2K/IxJxvGCzvLzooXTsY3Fjn9Crd5p9lTD+7w=
+	b=YHynyadZUq5FdoPqCbQWm60dN98A1K68zILcVd3s4omrcHqYrXAvf0ROfkO/3zl2I
+	 /DNViU+X9pBm/FTYTVjsjUFJZ60uyucW4pC9PXqZ2m/OeeKutheGVuOBzVBPu9IyAU
+	 iHraSzjP2zodyjeeQydedvRfe+yvu3pNvXYzBriE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 035/119] platform/x86: wmi: Fix probe failure when failing to register WMI devices
-Date: Wed, 15 Nov 2023 17:00:25 -0500
-Message-ID: <20231115220133.712428961@linuxfoundation.org>
+Subject: [PATCH 5.4 062/119] RDMA/hfi1: Workaround truncation compilation error
+Date: Wed, 15 Nov 2023 17:00:52 -0500
+Message-ID: <20231115220134.551929461@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -43,78 +44,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit ed85891a276edaf7a867de0e9acd0837bc3008f2 ]
+[ Upstream commit d4b2d165714c0ce8777d5131f6e0aad617b7adc4 ]
 
-When a WMI device besides the first one somehow fails to register,
-retval is returned while still containing a negative error code. This
-causes the ACPI device fail to probe, leaving behind zombie WMI devices
-leading to various errors later.
+Increase name array to be large enough to overcome the following
+compilation error.
 
-Handle the single error path separately and return 0 unconditionally
-after trying to register all WMI devices to solve the issue. Also
-continue to register WMI devices even if some fail to allocate memory.
+drivers/infiniband/hw/hfi1/efivar.c: In function ‘read_hfi1_efi_var’:
+drivers/infiniband/hw/hfi1/efivar.c:124:44: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  124 |         snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                                            ^
+drivers/infiniband/hw/hfi1/efivar.c:124:9: note: ‘snprintf’ output 2 or more bytes (assuming 65) into a destination of size 64
+  124 |         snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/infiniband/hw/hfi1/efivar.c:133:52: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
+  133 |                 snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                                                    ^
+drivers/infiniband/hw/hfi1/efivar.c:133:17: note: ‘snprintf’ output 2 or more bytes (assuming 65) into a destination of size 64
+  133 |                 snprintf(name, sizeof(name), "%s-%s", prefix_name, kind);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:243: drivers/infiniband/hw/hfi1/efivar.o] Error 1
 
-Fixes: 6ee50aaa9a20 ("platform/x86: wmi: Instantiate all devices before adding them")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231020211005.38216-4-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: c03c08d50b3d ("IB/hfi1: Check upper-case EFI variables")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/238fa39a8fd60e87a5ad7e1ca6584fcdf32e9519.1698159993.git.leonro@nvidia.com
+Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/wmi.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/hfi1/efivar.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/wmi.c b/drivers/platform/x86/wmi.c
-index 67c4ec554ada8..f4327c2873fa3 100644
---- a/drivers/platform/x86/wmi.c
-+++ b/drivers/platform/x86/wmi.c
-@@ -1154,8 +1154,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
- 	struct wmi_block *wblock, *next;
- 	union acpi_object *obj;
- 	acpi_status status;
--	int retval = 0;
- 	u32 i, total;
-+	int retval;
+diff --git a/drivers/infiniband/hw/hfi1/efivar.c b/drivers/infiniband/hw/hfi1/efivar.c
+index d106d23016ba0..75e39e403a581 100644
+--- a/drivers/infiniband/hw/hfi1/efivar.c
++++ b/drivers/infiniband/hw/hfi1/efivar.c
+@@ -152,7 +152,7 @@ int read_hfi1_efi_var(struct hfi1_devdata *dd, const char *kind,
+ 		      unsigned long *size, void **return_data)
+ {
+ 	char prefix_name[64];
+-	char name[64];
++	char name[128];
+ 	int result;
+ 	int i;
  
- 	status = acpi_evaluate_object(device->handle, "_WDG", NULL, &out);
- 	if (ACPI_FAILURE(status))
-@@ -1166,8 +1166,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
- 		return -ENXIO;
- 
- 	if (obj->type != ACPI_TYPE_BUFFER) {
--		retval = -ENXIO;
--		goto out_free_pointer;
-+		kfree(obj);
-+		return -ENXIO;
- 	}
- 
- 	gblock = (const struct guid_block *)obj->buffer.pointer;
-@@ -1188,8 +1188,8 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
- 
- 		wblock = kzalloc(sizeof(struct wmi_block), GFP_KERNEL);
- 		if (!wblock) {
--			retval = -ENOMEM;
--			break;
-+			dev_err(wmi_bus_dev, "Failed to allocate %pUL\n", &gblock[i].guid);
-+			continue;
- 		}
- 
- 		wblock->acpi_device = device;
-@@ -1228,9 +1228,9 @@ static int parse_wdg(struct device *wmi_bus_dev, struct acpi_device *device)
- 		}
- 	}
- 
--out_free_pointer:
--	kfree(out.pointer);
--	return retval;
-+	kfree(obj);
-+
-+	return 0;
- }
- 
- /*
 -- 
 2.42.0
 
