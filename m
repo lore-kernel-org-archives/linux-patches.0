@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3CC3DBAD
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC99B3DBAD
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzUpSzOv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC41EC433C8;
-	Wed, 15 Nov 2023 19:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjpXDgn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84216C433C8;
+	Wed, 15 Nov 2023 19:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076588;
-	bh=fqHQxeJDQb1i4l1q1xPdJvFlb9Lo/uaeNf7J68ElPeg=;
+	s=korg; t=1700076589;
+	bh=3Yo/cmCPN39tmoUn6o0uwg49aOwsh7wyugqbytQD8ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzUpSzOvuaY14Ob6piEonooF6nAxnSq9gHhvOTzSXe3zAvcpdiByzJpD9LSt4CW8W
-	 NH/TaOP908b0BLvuEoGstRRU+UDEO2ohYprYMm5fQpXx01arRc9Eq2tCI6g/wrlg76
-	 jw7bHNKaBF7SKVLs/SMetRs/Y/3NedchuSAa7ZGw=
+	b=fjpXDgn43PxPH0saqLNHRFC4dVHCauzAE2CgBzIlVTD65Nln7d/LrDWAf0RI1Z7YA
+	 0B06VYTB1Ln7k+wLoVHCFLMAw+9yH7eRps2oPbGvuIDc0kRWasctm2+4p3ebKm193a
+	 soo0lNxuOGnRVr2+7omVJtvZnZ3rvUxaWE2FDeug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Glozar <tglozar@redhat.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 323/550] nd_btt: Make BTT lanes preemptible
-Date: Wed, 15 Nov 2023 14:15:07 -0500
-Message-ID: <20231115191623.158699191@linuxfoundation.org>
+Subject: [PATCH 6.5 302/550] ARM: dts: BCM5301X: Explicitly disable unused switch CPU ports
+Date: Wed, 15 Nov 2023 14:14:46 -0500
+Message-ID: <20231115191621.743204403@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -37,97 +36,425 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 36c75ce3bd299878fd9b238e9803d3817ddafbf3 ]
+[ Upstream commit 473baeab929444295b0530f8766e4becb6a08973 ]
 
-nd_region_acquire_lane uses get_cpu, which disables preemption. This is
-an issue on PREEMPT_RT kernels, since btt_write_pg and also
-nd_region_acquire_lane itself take a spin lock, resulting in BUG:
-sleeping function called from invalid context.
+When redescribing ports I assumed that missing "label" (like "cpu")
+means switch port isn't used. That was incorrect and I realized my
+change made Linux always use the first (5) CPU port (there are 3 of
+them).
 
-Fix the issue by replacing get_cpu with smp_process_id and
-migrate_disable when needed. This makes BTT operations preemptible, thus
-permitting the use of spin_lock.
+While above should technically be possible it often isn't correct:
+1. Non-default switch ports are often connected to Ethernet interfaces
+   not fully covered by vendor setup (they may miss MACs)
+2. On some devices non-default ports require specifying fixed link
 
-BUG example occurring when running ndctl tests on PREEMPT_RT kernel:
+This fixes network connectivity for some devices. It was reported &
+tested for Netgear R8000. It also affects Linksys EA9200 with its
+downstream DTS.
 
-BUG: sleeping function called from invalid context at
-kernel/locking/spinlock_rt.c:48
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 4903, name:
-libndctl
-preempt_count: 1, expected: 0
-RCU nest depth: 0, expected: 0
-Preemption disabled at:
-[<ffffffffc1313db5>] nd_region_acquire_lane+0x15/0x90 [libnvdimm]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x8e/0xb0
- __might_resched+0x19b/0x250
- rt_spin_lock+0x4c/0x100
- ? btt_write_pg+0x2d7/0x500 [nd_btt]
- btt_write_pg+0x2d7/0x500 [nd_btt]
- ? local_clock_noinstr+0x9/0xc0
- btt_submit_bio+0x16d/0x270 [nd_btt]
- __submit_bio+0x48/0x80
- __submit_bio_noacct+0x7e/0x1e0
- submit_bio_wait+0x58/0xb0
- __blkdev_direct_IO_simple+0x107/0x240
- ? inode_set_ctime_current+0x51/0x110
- ? __pfx_submit_bio_wait_endio+0x10/0x10
- blkdev_write_iter+0x1d8/0x290
- vfs_write+0x237/0x330
- ...
- </TASK>
-
-Fixes: 5212e11fde4d ("nd_btt: atomic sector updates")
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Fixes: ba4aebce23b2 ("ARM: dts: BCM5301X: Describe switch ports in the main DTS")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20231013103314.10306-1-zajec5@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/region_devs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi  | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts     | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts     | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts      | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts    | 8 ++++++++
+ .../boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts      | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts    | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts       | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts       | 8 ++++++++
+ arch/arm/boot/dts/broadcom/bcm953012er.dts                | 8 ++++++++
+ 20 files changed, 160 insertions(+)
 
-diff --git a/drivers/nvdimm/region_devs.c b/drivers/nvdimm/region_devs.c
-index 8f134d63af131..3f5cf1a817525 100644
---- a/drivers/nvdimm/region_devs.c
-+++ b/drivers/nvdimm/region_devs.c
-@@ -938,7 +938,8 @@ unsigned int nd_region_acquire_lane(struct nd_region *nd_region)
- {
- 	unsigned int cpu, lane;
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi b/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
+index 42bcbf10957c4..9f9084269ef58 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm4708-buffalo-wzr-1166dhp-common.dtsi
+@@ -181,5 +181,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
+index e04d2e5ea51aa..72e960c888ac8 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xap-1510.dts
+@@ -85,5 +85,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
+index a399800139d9c..750e17482371c 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4708-luxul-xwc-1000.dts
+@@ -88,5 +88,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts b/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
+index fad3473810a2e..2bdbc7d18b0eb 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4708-netgear-r6250.dts
+@@ -122,5 +122,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts b/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
+index 5b2b7b8b3b123..b226bef3369cf 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4708-smartrg-sr400ac.dts
+@@ -145,6 +145,14 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
  
--	cpu = get_cpu();
-+	migrate_disable();
-+	cpu = smp_processor_id();
- 	if (nd_region->num_lanes < nr_cpu_ids) {
- 		struct nd_percpu_lane *ndl_lock, *ndl_count;
+diff --git a/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts b/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
+index d0a26b643b82f..192b8db5a89c3 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47081-buffalo-wzr-600dhp2.dts
+@@ -145,5 +145,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
+index 9f21d6d6d35b7..0198b5f9e4a75 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xap-1410.dts
+@@ -81,5 +81,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
+index 2561072917021..73ff1694a4a0b 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47081-luxul-xwr-1200.dts
+@@ -148,5 +148,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts b/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
+index 707c561703ed8..55fc9f44cbc7f 100644
+--- a/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
++++ b/arch/arm/boot/dts/broadcom/bcm4709-netgear-r8000.dts
+@@ -227,6 +227,14 @@ port@4 {
+ 			label = "wan";
+ 		};
  
-@@ -957,16 +958,15 @@ EXPORT_SYMBOL(nd_region_acquire_lane);
- void nd_region_release_lane(struct nd_region *nd_region, unsigned int lane)
- {
- 	if (nd_region->num_lanes < nr_cpu_ids) {
--		unsigned int cpu = get_cpu();
-+		unsigned int cpu = smp_processor_id();
- 		struct nd_percpu_lane *ndl_lock, *ndl_count;
++		port@5 {
++			status = "disabled";
++		};
++
++		port@7 {
++			status = "disabled";
++		};
++
+ 		port@8 {
+ 			label = "cpu";
+ 		};
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
+index 51ce510b3e3a0..48d6e04b36447 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-885l.dts
+@@ -143,6 +143,14 @@ port@4 {
+ 			label = "wan";
+ 		};
  
- 		ndl_count = per_cpu_ptr(nd_region->lane, cpu);
- 		ndl_lock = per_cpu_ptr(nd_region->lane, lane);
- 		if (--ndl_count->count == 0)
- 			spin_unlock(&ndl_lock->lock);
--		put_cpu();
- 	}
--	put_cpu();
-+	migrate_enable();
- }
- EXPORT_SYMBOL(nd_region_release_lane);
++		port@5 {
++			status = "disabled";
++		};
++
++		port@7 {
++			status = "disabled";
++		};
++
+ 		port@8 {
+ 			label = "cpu";
+ 		};
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
+index 60744f82c2b71..fe511d0b08f3c 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-dlink-dir-890l.dts
+@@ -191,6 +191,14 @@ port@4 {
+ 			label = "wan";
+ 		};
+ 
++		port@5 {
++			status = "disabled";
++		};
++
++		port@7 {
++			status = "disabled";
++		};
++
+ 		port@8 {
+ 			label = "cpu";
+ 			phy-mode = "rgmii";
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
+index e8991d4e248ce..e374062eb5b76 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-abr-4500.dts
+@@ -107,5 +107,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
+index 6875625869d9c..0d1ac4151e4f9 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xap-1610.dts
+@@ -83,5 +83,13 @@ port@1 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
+index 7cfa4607ef311..cf95af9db1e66 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xbr-4500.dts
+@@ -107,5 +107,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
+index d55e10095eae7..992c19e1cfa17 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwc-2000.dts
+@@ -75,5 +75,13 @@ port@0 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
+index ccf031c0e276d..4d0ba315a2049 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3100.dts
+@@ -147,5 +147,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
+index 789dd2a3d2263..c2c2899d33d22 100644
+--- a/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
++++ b/arch/arm/boot/dts/broadcom/bcm47094-luxul-xwr-3150-v1.dts
+@@ -122,5 +122,13 @@ port@4 {
+ 		port@5 {
+ 			label = "cpu";
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts b/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
+index 03ad614e6b721..0bf5106f7012c 100644
+--- a/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
++++ b/arch/arm/boot/dts/broadcom/bcm53015-meraki-mr26.dts
+@@ -124,6 +124,14 @@ fixed-link {
+ 				full-duplex;
+ 			};
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+ 
+diff --git a/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts b/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
+index 26c12bfb0bdd4..25eeacf6a2484 100644
+--- a/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
++++ b/arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts
+@@ -185,6 +185,14 @@ fixed-link {
+ 				full-duplex;
+ 			};
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
+ 
+diff --git a/arch/arm/boot/dts/broadcom/bcm953012er.dts b/arch/arm/boot/dts/broadcom/bcm953012er.dts
+index 4fe3b36533767..d939ec9f4a9e7 100644
+--- a/arch/arm/boot/dts/broadcom/bcm953012er.dts
++++ b/arch/arm/boot/dts/broadcom/bcm953012er.dts
+@@ -84,6 +84,14 @@ port@5 {
+ 			label = "cpu";
+ 			ethernet = <&gmac0>;
+ 		};
++
++		port@7 {
++			status = "disabled";
++		};
++
++		port@8 {
++			status = "disabled";
++		};
+ 	};
+ };
  
 -- 
 2.42.0
