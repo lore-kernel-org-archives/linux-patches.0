@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAED3EA6F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774283EA6F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eO7jYWzf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C09C433CA;
-	Wed, 15 Nov 2023 19:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+KLnu9/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26444C433C7;
+	Wed, 15 Nov 2023 19:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076247;
-	bh=TcY6NoWief80AUfbn8lAvMXxenBBZ1+Xtt6imWkE3pM=;
+	s=korg; t=1700076249;
+	bh=2awpdp4IHSsIjcXoy9CpMAVVde5yVXaiWHSJzi94nJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eO7jYWzfgz/H751zc4mlugjmGpYrRfDyNrHIDwxRfXGxndy+gcHlCeSd8N5WoAkod
-	 d1kxi+kY8wDSCHBwW6HjOfyiT5F6uGHcLfqfyNJC7qR5E62SOzsATkk4jbxFT6iKXM
-	 3hW23fmsPZf2OdHdg9coF2jJP9Q/IztSCo3olb4g=
+	b=h+KLnu9/1v14OlO1MJZV8GEF5GA3n9ltSCAC0QEuHUrpKGNOu3CFWSDzwLKXLJwwE
+	 5twrrWkA7VEj1oh+Sh5+DvD82P/J9kuRIVWFqdjAfXeJjl3z+qWVlg3fRDU3wm1wfq
+	 8tu+in9RrP/NDnDBo5v8XgSYMB0w4uKee1Q3QN7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 144/550] bpf: Fix unnecessary -EBUSY from htab_lock_bucket
-Date: Wed, 15 Nov 2023 14:12:08 -0500
-Message-ID: <20231115191610.679262571@linuxfoundation.org>
+Subject: [PATCH 6.5 145/550] ACPI: sysfs: Fix create_pnp_modalias() and create_of_modalias()
+Date: Wed, 15 Nov 2023 14:12:09 -0500
+Message-ID: <20231115191610.748007761@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,76 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit d35381aa73f7e1e8b25f3ed5283287a64d9ddff5 ]
+[ Upstream commit 48cf49d31994ff97b33c4044e618560ec84d35fb ]
 
-htab_lock_bucket uses the following logic to avoid recursion:
+snprintf() does not return negative values on error.
 
-1. preempt_disable();
-2. check percpu counter htab->map_locked[hash] for recursion;
-   2.1. if map_lock[hash] is already taken, return -BUSY;
-3. raw_spin_lock_irqsave();
+To know if the buffer was too small, the returned value needs to be
+compared with the length of the passed buffer. If it is greater or
+equal, the output has been truncated, so add checks for the truncation
+to create_pnp_modalias() and create_of_modalias(). Also make them
+return -ENOMEM in that case, as they already do that elsewhere.
 
-However, if an IRQ hits between 2 and 3, BPF programs attached to the IRQ
-logic will not able to access the same hash of the hashtab and get -EBUSY.
+Moreover, the remaining size of the buffer used by snprintf() needs to
+be updated after the first write to avoid out-of-bounds access as
+already done correctly in create_pnp_modalias(), but not in
+create_of_modalias(), so change the latter accordingly.
 
-This -EBUSY is not really necessary. Fix it by disabling IRQ before
-checking map_locked:
-
-1. preempt_disable();
-2. local_irq_save();
-3. check percpu counter htab->map_locked[hash] for recursion;
-   3.1. if map_lock[hash] is already taken, return -BUSY;
-4. raw_spin_lock().
-
-Similarly, use raw_spin_unlock() and local_irq_restore() in
-htab_unlock_bucket().
-
-Fixes: 20b6cc34ea74 ("bpf: Avoid hashtab deadlock with map_locked")
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/7a9576222aa40b1c84ad3a9ba3e64011d1a04d41.camel@linux.ibm.com
-Link: https://lore.kernel.org/bpf/20231012055741.3375999-1-song@kernel.org
+Fixes: 8765c5ba1949 ("ACPI / scan: Rework modalias creation when "compatible" is present")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+[ rjw: Merge two patches into one, combine changelogs, add subject ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/acpi/device_sysfs.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 56d3da7d0bc66..e209e748a8e05 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -155,13 +155,15 @@ static inline int htab_lock_bucket(const struct bpf_htab *htab,
- 	hash = hash & min_t(u32, HASHTAB_MAP_LOCK_MASK, htab->n_buckets - 1);
+diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
+index b9bbf07461992..a34d8578b3da6 100644
+--- a/drivers/acpi/device_sysfs.c
++++ b/drivers/acpi/device_sysfs.c
+@@ -158,8 +158,8 @@ static int create_pnp_modalias(const struct acpi_device *acpi_dev, char *modalia
+ 		return 0;
  
- 	preempt_disable();
-+	local_irq_save(flags);
- 	if (unlikely(__this_cpu_inc_return(*(htab->map_locked[hash])) != 1)) {
- 		__this_cpu_dec(*(htab->map_locked[hash]));
-+		local_irq_restore(flags);
- 		preempt_enable();
- 		return -EBUSY;
- 	}
+ 	len = snprintf(modalias, size, "acpi:");
+-	if (len <= 0)
+-		return len;
++	if (len >= size)
++		return -ENOMEM;
  
--	raw_spin_lock_irqsave(&b->raw_lock, flags);
-+	raw_spin_lock(&b->raw_lock);
- 	*pflags = flags;
+ 	size -= len;
  
- 	return 0;
-@@ -172,8 +174,9 @@ static inline void htab_unlock_bucket(const struct bpf_htab *htab,
- 				      unsigned long flags)
- {
- 	hash = hash & min_t(u32, HASHTAB_MAP_LOCK_MASK, htab->n_buckets - 1);
--	raw_spin_unlock_irqrestore(&b->raw_lock, flags);
-+	raw_spin_unlock(&b->raw_lock);
- 	__this_cpu_dec(*(htab->map_locked[hash]));
-+	local_irq_restore(flags);
- 	preempt_enable();
- }
+@@ -212,8 +212,10 @@ static int create_of_modalias(const struct acpi_device *acpi_dev, char *modalias
+ 	len = snprintf(modalias, size, "of:N%sT", (char *)buf.pointer);
+ 	ACPI_FREE(buf.pointer);
  
+-	if (len <= 0)
+-		return len;
++	if (len >= size)
++		return -ENOMEM;
++
++	size -= len;
+ 
+ 	of_compatible = acpi_dev->data.of_compatible;
+ 	if (of_compatible->type == ACPI_TYPE_PACKAGE) {
 -- 
 2.42.0
 
