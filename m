@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9E23BB2D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C59A3BB43
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0a4dLjgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDA8C433C8;
-	Wed, 15 Nov 2023 20:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Utjr/wfr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BAFC433CA;
+	Wed, 15 Nov 2023 20:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078408;
-	bh=KTiPfex45eBREzWwkt8SqIXr7NSYm28DL9TXwKVKEfI=;
+	s=korg; t=1700078410;
+	bh=wawxS7oO100s4uqACvMXLhL0U7QFAW6k62VmTAlgNR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0a4dLjgYvKgYcI3ureN1HhtVNylO5JlAlw1gdrqx8KJ2I07OKDXra46za7CvshQeT
-	 VFN8SlTEadlu5pDdeZ2v5rAtYF00u5z3xcea4HgVNUhJiRqLgHkcSqW+aI7i919+mx
-	 vA8vT2YHsNIhaViNCN6jkAp6edOwzQg28/XLIfyA=
+	b=Utjr/wfrYvo+gigd3dPhghbd5LB+4nI3lkeXlTleOmnfZn5tggGrZDYGLLCfpoR7k
+	 5eCsRR6T4DjOsBntVdCda4Ugm4yZJDZiBB+rPkPa/6mk91yuB5d2DsNR60H6xJBc96
+	 CbuF0qZ5/Hiqqc4iDDAwBl4qkgHB4sN8aRonFzXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+	Wang Yufen <wangyufen@huawei.com>,
+	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 270/379] usb: chipidea: Simplify Tegra DMA alignment code
-Date: Wed, 15 Nov 2023 14:25:45 -0500
-Message-ID: <20231115192701.105855689@linuxfoundation.org>
+Subject: [PATCH 6.1 299/379] powerpc/pseries: fix potential memory leak in init_cpu_associativity()
+Date: Wed, 15 Nov 2023 14:26:14 -0500
+Message-ID: <20231115192702.831385141@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -35,140 +37,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 2ae61a2562c0d1720545b0845829a65fb6a9c2c6 ]
+[ Upstream commit 95f1a128cd728a7257d78e868f1f5a145fc43736 ]
 
-The USB host on Tegra3 works with 32-bit alignment. Previous code tried
-to align the buffer, but it did align the wrapper struct instead, so
-the buffer was at a constant offset of 8 bytes (two pointers) from
-expected alignment.  Since kmalloc() guarantees at least 8-byte
-alignment already, the alignment-extending is removed.
+If the vcpu_associativity alloc memory successfully but the
+pcpu_associativity fails to alloc memory, the vcpu_associativity
+memory leaks.
 
-Fixes: fc53d5279094 ("usb: chipidea: tegra: Support host mode")
-Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
-Link: https://lore.kernel.org/r/a0d917d492b1f91ee0019e68b8e8bca9c585393f.1695934946.git.mirq-linux@rere.qmqm.pl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d62c8deeb6e6 ("powerpc/pseries: Provide vcpu dispatch statistics")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Reviewed-by: "Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/1671003983-10794-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/host.c | 45 +++++++++++++++----------------------
- 1 file changed, 18 insertions(+), 27 deletions(-)
+ arch/powerpc/platforms/pseries/lpar.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/chipidea/host.c b/drivers/usb/chipidea/host.c
-index fae4b2f9b9b21..34bbdfadd66f3 100644
---- a/drivers/usb/chipidea/host.c
-+++ b/drivers/usb/chipidea/host.c
-@@ -30,8 +30,7 @@ struct ehci_ci_priv {
- };
+diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
+index 2c2812a87d470..541199c6a587d 100644
+--- a/arch/powerpc/platforms/pseries/lpar.c
++++ b/arch/powerpc/platforms/pseries/lpar.c
+@@ -524,8 +524,10 @@ static ssize_t vcpudispatch_stats_write(struct file *file, const char __user *p,
  
- struct ci_hdrc_dma_aligned_buffer {
--	void *kmalloc_ptr;
--	void *old_xfer_buffer;
-+	void *original_buffer;
- 	u8 data[];
- };
+ 	if (cmd) {
+ 		rc = init_cpu_associativity();
+-		if (rc)
++		if (rc) {
++			destroy_cpu_associativity();
+ 			goto out;
++		}
  
-@@ -380,60 +379,52 @@ static int ci_ehci_bus_suspend(struct usb_hcd *hcd)
- 	return 0;
- }
- 
--static void ci_hdrc_free_dma_aligned_buffer(struct urb *urb)
-+static void ci_hdrc_free_dma_aligned_buffer(struct urb *urb, bool copy_back)
- {
- 	struct ci_hdrc_dma_aligned_buffer *temp;
--	size_t length;
- 
- 	if (!(urb->transfer_flags & URB_ALIGNED_TEMP_BUFFER))
- 		return;
-+	urb->transfer_flags &= ~URB_ALIGNED_TEMP_BUFFER;
- 
- 	temp = container_of(urb->transfer_buffer,
- 			    struct ci_hdrc_dma_aligned_buffer, data);
-+	urb->transfer_buffer = temp->original_buffer;
-+
-+	if (copy_back && usb_urb_dir_in(urb)) {
-+		size_t length;
- 
--	if (usb_urb_dir_in(urb)) {
- 		if (usb_pipeisoc(urb->pipe))
- 			length = urb->transfer_buffer_length;
- 		else
- 			length = urb->actual_length;
- 
--		memcpy(temp->old_xfer_buffer, temp->data, length);
-+		memcpy(temp->original_buffer, temp->data, length);
- 	}
--	urb->transfer_buffer = temp->old_xfer_buffer;
--	kfree(temp->kmalloc_ptr);
- 
--	urb->transfer_flags &= ~URB_ALIGNED_TEMP_BUFFER;
-+	kfree(temp);
- }
- 
- static int ci_hdrc_alloc_dma_aligned_buffer(struct urb *urb, gfp_t mem_flags)
- {
--	struct ci_hdrc_dma_aligned_buffer *temp, *kmalloc_ptr;
--	const unsigned int ci_hdrc_usb_dma_align = 32;
--	size_t kmalloc_size;
-+	struct ci_hdrc_dma_aligned_buffer *temp;
- 
- 	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0)
- 		return 0;
--	if (!((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)) && !(urb->transfer_buffer_length & 3))
-+	if (IS_ALIGNED((uintptr_t)urb->transfer_buffer, 4)
-+	    && IS_ALIGNED(urb->transfer_buffer_length, 4))
- 		return 0;
- 
--	/* Allocate a buffer with enough padding for alignment */
--	kmalloc_size = ALIGN(urb->transfer_buffer_length, 4) +
--		       sizeof(struct ci_hdrc_dma_aligned_buffer) +
--		       ci_hdrc_usb_dma_align - 1;
--
--	kmalloc_ptr = kmalloc(kmalloc_size, mem_flags);
--	if (!kmalloc_ptr)
-+	temp = kmalloc(sizeof(*temp) + ALIGN(urb->transfer_buffer_length, 4), mem_flags);
-+	if (!temp)
- 		return -ENOMEM;
- 
--	/* Position our struct dma_aligned_buffer such that data is aligned */
--	temp = PTR_ALIGN(kmalloc_ptr + 1, ci_hdrc_usb_dma_align) - 1;
--	temp->kmalloc_ptr = kmalloc_ptr;
--	temp->old_xfer_buffer = urb->transfer_buffer;
- 	if (usb_urb_dir_out(urb))
- 		memcpy(temp->data, urb->transfer_buffer,
- 		       urb->transfer_buffer_length);
--	urb->transfer_buffer = temp->data;
- 
-+	temp->original_buffer = urb->transfer_buffer;
-+	urb->transfer_buffer = temp->data;
- 	urb->transfer_flags |= URB_ALIGNED_TEMP_BUFFER;
- 
- 	return 0;
-@@ -450,7 +441,7 @@ static int ci_hdrc_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
- 
- 	ret = usb_hcd_map_urb_for_dma(hcd, urb, mem_flags);
- 	if (ret)
--		ci_hdrc_free_dma_aligned_buffer(urb);
-+		ci_hdrc_free_dma_aligned_buffer(urb, false);
- 
- 	return ret;
- }
-@@ -458,7 +449,7 @@ static int ci_hdrc_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
- static void ci_hdrc_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
- {
- 	usb_hcd_unmap_urb_for_dma(hcd, urb);
--	ci_hdrc_free_dma_aligned_buffer(urb);
-+	ci_hdrc_free_dma_aligned_buffer(urb, true);
- }
- 
- int ci_hdrc_host_init(struct ci_hdrc *ci)
+ 		for_each_possible_cpu(cpu) {
+ 			disp = per_cpu_ptr(&vcpu_disp_data, cpu);
 -- 
 2.42.0
 
