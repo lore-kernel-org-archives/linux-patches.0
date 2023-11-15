@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDE2364A8
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735743DBB5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTzj1OL9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F75C433C8;
-	Wed, 15 Nov 2023 19:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0ZG84CF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FCBC433C7;
+	Wed, 15 Nov 2023 19:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076597;
-	bh=Wb/uWYqAAkzq9Sn9ZJYtPj4XLsC1Ei8UjD9vyVMobpc=;
+	s=korg; t=1700076599;
+	bh=tQvJ75GRH2mkq8j07ijg9yu4CdynjVDmzcHBcDTua2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTzj1OL97cIaV4Jm8SDkrnMPSm89KYRi+h6kaMNVI3ggqBkN07uLyNTA19L6pDyiU
-	 96oWXbL8FFN2QUSyUsYettjGNO3kKcXgFl18zjJ3l1QQi78KPY7YJ4Hn0xQkGYAYo+
-	 w/aHG30eK3NsV730Vx74vW1BnwlpJ7nCYbUGxXHY=
+	b=y0ZG84CFyxGdpyZLLvcc1TiACLfLpj7xAB7LyR0aP8Zy3Gq8199SpywbZkGLXjqL4
+	 z+N2dG4yOuH4/3XWjmLtn8inZffX+/PorfLDuwN/KYf7uBllLjEtRVq2rsd4mLKMAX
+	 X1yH2t/1EgDu5jGat7d8B0j3xQW+UmwqS3dcwIZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 307/550] ASoC: cs35l41: Verify PM runtime resume errors in IRQ handler
-Date: Wed, 15 Nov 2023 14:14:51 -0500
-Message-ID: <20231115191622.098785429@linuxfoundation.org>
+Subject: [PATCH 6.5 308/550] ASoC: cs35l41: Undo runtime PM changes at driver exit time
+Date: Wed, 15 Nov 2023 14:14:52 -0500
+Message-ID: <20231115191622.163151897@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -46,51 +45,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 9f8948db9849d202dee3570507d3a0642f92d632 ]
+[ Upstream commit 2d5661e6008ae1a1cd6df7cc844908fb8b982c58 ]
 
-The interrupt handler invokes pm_runtime_get_sync() without checking the
-returned error code.
+According to the documentation, drivers are responsible for undoing at
+removal time all runtime PM changes done during probing.
 
-Add a proper verification and switch to pm_runtime_resume_and_get(), to
-avoid the need to call pm_runtime_put_noidle() for decrementing the PM
-usage counter before returning from the error condition.
+Hence, add the missing calls to pm_runtime_dont_use_autosuspend(), which
+are necessary for undoing pm_runtime_use_autosuspend().
+
+Note this would have been handled implicitly by
+devm_pm_runtime_enable(), but there is a need to continue using
+pm_runtime_enable()/pm_runtime_disable() in order to ensure the runtime
+PM is disabled as soon as the remove() callback is entered.
 
 Fixes: f517ba4924ad ("ASoC: cs35l41: Add support for hibernate memory retention mode")
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20230907171010.1447274-6-cristian.ciocaltea@collabora.com
+Link: https://lore.kernel.org/r/20230907171010.1447274-7-cristian.ciocaltea@collabora.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l41.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/soc/codecs/cs35l41.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/sound/soc/codecs/cs35l41.c b/sound/soc/codecs/cs35l41.c
-index c9f033d2782d2..abbe82071c1a4 100644
+index abbe82071c1a4..9e26e96f0776e 100644
 --- a/sound/soc/codecs/cs35l41.c
 +++ b/sound/soc/codecs/cs35l41.c
-@@ -386,10 +386,18 @@ static irqreturn_t cs35l41_irq(int irq, void *data)
- 	struct cs35l41_private *cs35l41 = data;
- 	unsigned int status[4] = { 0, 0, 0, 0 };
- 	unsigned int masks[4] = { 0, 0, 0, 0 };
--	int ret = IRQ_NONE;
- 	unsigned int i;
-+	int ret;
+@@ -1338,6 +1338,7 @@ int cs35l41_probe(struct cs35l41_private *cs35l41, const struct cs35l41_hw_cfg *
+ 	return 0;
  
--	pm_runtime_get_sync(cs35l41->dev);
-+	ret = pm_runtime_resume_and_get(cs35l41->dev);
-+	if (ret < 0) {
-+		dev_err(cs35l41->dev,
-+			"pm_runtime_resume_and_get failed in %s: %d\n",
-+			__func__, ret);
-+		return IRQ_NONE;
-+	}
-+
-+	ret = IRQ_NONE;
+ err_pm:
++	pm_runtime_dont_use_autosuspend(cs35l41->dev);
+ 	pm_runtime_disable(cs35l41->dev);
+ 	pm_runtime_put_noidle(cs35l41->dev);
  
- 	for (i = 0; i < ARRAY_SIZE(status); i++) {
- 		regmap_read(cs35l41->regmap,
+@@ -1354,6 +1355,7 @@ EXPORT_SYMBOL_GPL(cs35l41_probe);
+ void cs35l41_remove(struct cs35l41_private *cs35l41)
+ {
+ 	pm_runtime_get_sync(cs35l41->dev);
++	pm_runtime_dont_use_autosuspend(cs35l41->dev);
+ 	pm_runtime_disable(cs35l41->dev);
+ 
+ 	regmap_write(cs35l41->regmap, CS35L41_IRQ1_MASK1, 0xFFFFFFFF);
 -- 
 2.42.0
 
