@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A827F3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4108F3A8F3;
+	Wed, 15 Nov 2023 19:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yr+scg1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C81C433C7;
-	Wed, 15 Nov 2023 19:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+kR6N98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3693C433C8;
+	Wed, 15 Nov 2023 19:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077730;
-	bh=bT5gV/UyI3dBmNF3sAYOHIzJeMbxxef+ukFdCC9tMMg=;
+	s=korg; t=1700077732;
+	bh=PcYrztn+GnerQs1n8YJapL++P9j6o3LBnZ3K9rK2tkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yr+scg1fi3QXcLudz9g5xxezafv7DHxjF6LCd121BHB4VOu/AjGh0n5amFgWHyhqn
-	 /o9J68p2vEn3ABmVI31eiTkClGb0PVKzcqNxeIgB3zTQzuHLDugS1Y8+qiQDY/ycMW
-	 FJbccwJx7FUmvuxDYMWjWbDCgN/GavnQdRChAzas=
+	b=P+kR6N986Emqablfp+D6+oGu34fRLgXubojvpdDMsEdQOgobcoUD7GMOTkxh1Lknf
+	 JNpQgX+qJ2wIkY/Muoef7AFtHRpbOOr8hHoKKBdHvlo8uKUXJDVKaQRa49oQysW+t7
+	 +20nQ+yFElJzGVcIkBTZWOn+xVo8Z6djbTL8nyEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	kernel test robot <lkp@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	oe-kbuild-all@lists.linux.dev,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 484/603] 9p/net: fix possible memory leak in p9_check_errors()
-Date: Wed, 15 Nov 2023 14:17:09 -0500
-Message-ID: <20231115191645.864623753@linuxfoundation.org>
+Subject: [PATCH 6.6 467/603] perf tools: Do not ignore the default vmlinux.h
+Date: Wed, 15 Nov 2023 14:16:52 -0500
+Message-ID: <20231115191644.856202067@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,45 +44,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit ce07087964208eee2ca2f9ee4a98f8b5d9027fe6 ]
+[ Upstream commit 1f36b190ad2dea68e3a7e84b7b2f24ce8c4063ea ]
 
-When p9pdu_readf() is called with "s?d" attribute, it allocates a pointer
-that will store a string. But when p9pdu_readf() fails while handling "d"
-then this pointer will not be freed in p9_check_errors().
+The recent change made it possible to generate vmlinux.h from BTF and
+to ignore the file.  But we also have a minimal vmlinux.h that will be
+used by default.  It should not be ignored by GIT.
 
-Fixes: 51a87c552dfd ("9p: rework client code to use new protocol support functions")
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Message-ID: <20231027030302.11927-1-hbh25y@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: b7a2d774c9c5 ("perf build: Add ability to build with a generated vmlinux.h")
+Reported-by: kernel test robot <lkp@intel.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310110451.rvdUZJEY-lkp@intel.com/
+Cc: oe-kbuild-all@lists.linux.dev
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/client.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/perf/util/bpf_skel/vmlinux/.gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 tools/perf/util/bpf_skel/vmlinux/.gitignore
 
-diff --git a/net/9p/client.c b/net/9p/client.c
-index 86bbc7147fc14..b0e7cb7e1a54a 100644
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -540,12 +540,14 @@ static int p9_check_errors(struct p9_client *c, struct p9_req_t *req)
- 		return 0;
- 
- 	if (!p9_is_proto_dotl(c)) {
--		char *ename;
-+		char *ename = NULL;
- 
- 		err = p9pdu_readf(&req->rc, c->proto_version, "s?d",
- 				  &ename, &ecode);
--		if (err)
-+		if (err) {
-+			kfree(ename);
- 			goto out_err;
-+		}
- 
- 		if (p9_is_proto_dotu(c) && ecode < 512)
- 			err = -ecode;
+diff --git a/tools/perf/util/bpf_skel/vmlinux/.gitignore b/tools/perf/util/bpf_skel/vmlinux/.gitignore
+new file mode 100644
+index 0000000000000..49502c04183a2
+--- /dev/null
++++ b/tools/perf/util/bpf_skel/vmlinux/.gitignore
+@@ -0,0 +1 @@
++!vmlinux.h
 -- 
 2.42.0
 
