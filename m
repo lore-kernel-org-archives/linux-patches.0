@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6214743AD2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2811F249E2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsdVBSH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B7EC4E765;
-	Wed, 15 Nov 2023 20:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yf1+84eN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9292C4E760;
+	Wed, 15 Nov 2023 20:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081527;
-	bh=WyVVfF0CTGbq29/CQQwAa3k0TH0qInGTuP9v7PhmfZ0=;
+	s=korg; t=1700081529;
+	bh=PwEs8RqWVVvcKDu3g2VBHCuB0gOmFkfRXJ4TyLYxVW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rsdVBSH1e3dveIMiHxDkvV3aKacXa8MNEv6f70KdC8sQ7m8aHJdeIzM2q+I1OtWsX
-	 QYVWQvShl6KNHafue/PMaNf6DgvmEnwg2IDKhbu/m5gjDlyhC78/bGKGc2h4CrWMoG
-	 Ob75X1ZUV37/OSzqxRdoqsTe9MKlz4GxMNhRphD0=
+	b=Yf1+84eN6vQeZYj/GOc4FGB4Yukxntc5j+A7Xc6JRGNxMG+PvuElFCGLEt/PdrdqE
+	 E08CUDCkGQ9OSP/fydhZa0kLkcDel+HAcHAZfhXEhMrbHcO7WkOz+orc/bym2taYaJ
+	 geOitjVQUJACsO2ZQiD5tQrfEhS++Gj1uArfxIU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
-	Mark Brown <broonie@kernel.org>,
+	George Stark <gnstark@sberdevices.ru>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 208/244] regmap: prevent noinc writes from clobbering cache
-Date: Wed, 15 Nov 2023 15:36:40 -0500
-Message-ID: <20231115203600.841012292@linuxfoundation.org>
+Subject: [PATCH 5.15 209/244] pwm: sti: Reduce number of allocations and drop usage of chip_data
+Date: Wed, 15 Nov 2023 15:36:41 -0500
+Message-ID: <20231115203600.896064882@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -36,61 +37,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 984a4afdc87a1fc226fd657b1cd8255c13d3fc1a ]
+[ Upstream commit 2d6812b41e0d832919d72c72ebddf361df53ba1b ]
 
-Currently, noinc writes are cached as if they were standard incrementing
-writes, overwriting unrelated register values in the cache. Instead, we
-want to cache the last value written to the register, as is done in the
-accelerated noinc handler (regmap_noinc_readwrite).
+Instead of using one allocation per capture channel, use a single one. Also
+store it in driver data instead of chip data.
 
-Fixes: cdf6b11daa77 ("regmap: Add regmap_noinc_write API")
-Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
-Link: https://lore.kernel.org/r/20231101142926.2722603-2-ben.wolsieffer@hefring.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This has several advantages:
+
+ - driver data isn't cleared when pwm_put() is called
+ - Reduces memory fragmentation
+
+Also register the pwm chip only after the per capture channel data is
+initialized as the capture callback relies on this initialization and it
+might be called even before pwmchip_add() returns.
+
+It would be still better to have struct sti_pwm_compat_data and the
+per-channel data struct sti_cpt_ddata in a single memory chunk, but that's
+not easily possible because the number of capture channels isn't known yet
+when the driver data struct is allocated.
+
+Fixes: e926b12c611c ("pwm: Clear chip_data in pwm_put()")
+Reported-by: George Stark <gnstark@sberdevices.ru>
+Fixes: c97267ae831d ("pwm: sti: Add PWM capture callback")
+Link: https://lore.kernel.org/r/20230705080650.2353391-7-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/pwm/pwm-sti.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index 617d51a278497..7621b54975b57 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -1683,17 +1683,19 @@ static int _regmap_raw_write_impl(struct regmap *map, unsigned int reg,
+diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
+index f491d56254d7c..f8a3f30e54dd5 100644
+--- a/drivers/pwm/pwm-sti.c
++++ b/drivers/pwm/pwm-sti.c
+@@ -79,6 +79,7 @@ struct sti_pwm_compat_data {
+ 	unsigned int cpt_num_devs;
+ 	unsigned int max_pwm_cnt;
+ 	unsigned int max_prescale;
++	struct sti_cpt_ddata *ddata;
+ };
+ 
+ struct sti_pwm_chip {
+@@ -314,7 +315,7 @@ static int sti_pwm_capture(struct pwm_chip *chip, struct pwm_device *pwm,
+ {
+ 	struct sti_pwm_chip *pc = to_sti_pwmchip(chip);
+ 	struct sti_pwm_compat_data *cdata = pc->cdata;
+-	struct sti_cpt_ddata *ddata = pwm_get_chip_data(pwm);
++	struct sti_cpt_ddata *ddata = &cdata->ddata[pwm->hwpwm];
+ 	struct device *dev = pc->dev;
+ 	unsigned int effective_ticks;
+ 	unsigned long long high, low;
+@@ -417,7 +418,7 @@ static irqreturn_t sti_pwm_interrupt(int irq, void *data)
+ 	while (cpt_int_stat) {
+ 		devicenum = ffs(cpt_int_stat) - 1;
+ 
+-		ddata = pwm_get_chip_data(&pc->chip.pwms[devicenum]);
++		ddata = &pc->cdata->ddata[devicenum];
+ 
+ 		/*
+ 		 * Capture input:
+@@ -615,30 +616,28 @@ static int sti_pwm_probe(struct platform_device *pdev)
+ 			dev_err(dev, "failed to prepare clock\n");
+ 			return ret;
+ 		}
++
++		cdata->ddata = devm_kzalloc(dev, cdata->cpt_num_devs * sizeof(*cdata->ddata), GFP_KERNEL);
++		if (!cdata->ddata)
++			return -ENOMEM;
  	}
  
- 	if (!map->cache_bypass && map->format.parse_val) {
--		unsigned int ival;
-+		unsigned int ival, offset;
- 		int val_bytes = map->format.val_bytes;
--		for (i = 0; i < val_len / val_bytes; i++) {
--			ival = map->format.parse_val(val + (i * val_bytes));
--			ret = regcache_write(map,
--					     reg + regmap_get_offset(map, i),
--					     ival);
-+
-+		/* Cache the last written value for noinc writes */
-+		i = noinc ? val_len - val_bytes : 0;
-+		for (; i < val_len; i += val_bytes) {
-+			ival = map->format.parse_val(val + i);
-+			offset = noinc ? 0 : regmap_get_offset(map, i / val_bytes);
-+			ret = regcache_write(map, reg + offset, ival);
- 			if (ret) {
- 				dev_err(map->dev,
- 					"Error in caching of register: %x ret: %d\n",
--					reg + regmap_get_offset(map, i), ret);
-+					reg + offset, ret);
- 				return ret;
- 			}
- 		}
+ 	pc->chip.dev = dev;
+ 	pc->chip.ops = &sti_pwm_ops;
+ 	pc->chip.npwm = pc->cdata->pwm_num_devs;
+ 
+-	ret = pwmchip_add(&pc->chip);
+-	if (ret < 0) {
+-		clk_unprepare(pc->pwm_clk);
+-		clk_unprepare(pc->cpt_clk);
+-		return ret;
+-	}
+-
+ 	for (i = 0; i < cdata->cpt_num_devs; i++) {
+-		struct sti_cpt_ddata *ddata;
+-
+-		ddata = devm_kzalloc(dev, sizeof(*ddata), GFP_KERNEL);
+-		if (!ddata)
+-			return -ENOMEM;
++		struct sti_cpt_ddata *ddata = &cdata->ddata[i];
+ 
+ 		init_waitqueue_head(&ddata->wait);
+ 		mutex_init(&ddata->lock);
++	}
+ 
+-		pwm_set_chip_data(&pc->chip.pwms[i], ddata);
++	ret = pwmchip_add(&pc->chip);
++	if (ret < 0) {
++		clk_unprepare(pc->pwm_clk);
++		clk_unprepare(pc->cpt_clk);
++		return ret;
+ 	}
+ 
+ 	platform_set_drvdata(pdev, pc);
 -- 
 2.42.0
 
