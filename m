@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830AE3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97313A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elS6bajy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326F9C433CA;
-	Wed, 15 Nov 2023 19:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBk6X3AE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983ACC433C9;
+	Wed, 15 Nov 2023 19:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077759;
-	bh=727VTOS0kx8bbtt5RVTJzG8AywArWKjPKSqa5lqH8qo=;
+	s=korg; t=1700077760;
+	bh=JgZ87VhgzRtxSyQNWLaf22R3pcB0m0a/D3kpZ8itLRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=elS6bajypsYqmTeTMDma0KaXG/MpuTt6NhDbYgZAXI7syoZNB6HTzAsBQtd8ahuRD
-	 BEapAhtF1x4t2S/LIcYqii5rFUubnonNacaHCKq7tDPfNZupahXrPl7llH76yTmNjU
-	 TbKtoHpiVKjeQbD7u/Cix03Ao/mgd/MUhi340WL8=
+	b=MBk6X3AE+4os/R92wDBglCTUYkyPgBtgAHU93uYWEqLF5Sy+2UWSwNXmZgV71DClx
+	 4pw5P3r2kCspI1c/VDZcPvTDT06wtwd5EXDJRM5/Qq5K0+InOvFz5xffuAnPz+gY/6
+	 DnwQ3hLlTlv2Y48e/M6lMCOfJZ/rp4wvWEgR/BFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Richter <rrichter@amd.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 502/603] cxl/port: Fix @host confusion in cxl_dport_setup_regs()
-Date: Wed, 15 Nov 2023 14:17:27 -0500
-Message-ID: <20231115191646.951259757@linuxfoundation.org>
+Subject: [PATCH 6.6 503/603] cxl/hdm: Remove broken error path
+Date: Wed, 15 Nov 2023 14:17:28 -0500
+Message-ID: <20231115191647.011476764@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -45,127 +46,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 33d9c987bf8fb68a9292aba7cc4b1711fcb1be4d ]
+[ Upstream commit 5d09c63f11f083707b60c8ea0bb420651c47740f ]
 
-commit 5d2ffbe4b81a ("cxl/port: Store the downstream port's Component Register mappings in struct cxl_dport")
+Dan reports that cxl_decoder_commit() potentially leaks a hold of
+cxl_dpa_rwsem. The potential error case is a "should not" happen
+scenario, turn it into a "can not" happen scenario by adding the error
+check to cxl_port_setup_targets() where other setting validation occurs.
 
-...moved the dport component registers from a raw component_reg_phys
-passed in at dport instantiation time to a 'struct cxl_register_map'
-populated with both the component register data *and* the "host" device
-for mapping operations.
-
-While typical CXL switch dports are mapped by their associated 'struct
-cxl_port', an RCH host bridge dport registered by cxl_acpi needs to wait
-until the cxl_mem driver makes the attachment to map the registers. This
-is because there are no intervening 'struct cxl_port' instances between
-the root cxl_port and the endpoint port in an RCH topology.
-
-For now just mark the host as NULL in the RCH dport case until code that
-needs to map the dport registers arrives.
-
-This patch is not flagged for -stable since nothing in the current
-driver uses the dport->comp_map.
-
-Now, I am slightly uneasy that cxl_setup_comp_regs() sets map->host to a
-wrong value and then cxl_dport_setup_regs() fixes it up, but the
-alternatives I came up with are more messy. For example, adding an
-@logdev to 'struct cxl_register_map' that the dev_printk()s can fall
-back to when @host is NULL. I settled on "post-fixup+comment" since it
-is only RCH dports that have this special case where register probing is
-split between a host-bridge RCRB lookup and when cxl_mem_probe() does
-the association of the cxl_memdev and endpoint port.
-
-[moved rename of @comp_map to @reg_map into next patch]
-
-Fixes: 5d2ffbe4b81a ("cxl/port: Store the downstream port's Component Register mappings in struct cxl_dport")
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20231018171713.1883517-4-rrichter@amd.com
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: http://lore.kernel.org/r/63295673-5d63-4919-b851-3b06d48734c0@moroto.mountain
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 43 +++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ drivers/cxl/core/hdm.c    | 19 ++-----------------
+ drivers/cxl/core/region.c |  8 ++++++++
+ 2 files changed, 10 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index c24cfe2271948..2c6001592fe20 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -722,13 +722,23 @@ static int cxl_port_setup_regs(struct cxl_port *port,
- 				   component_reg_phys);
+diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
+index 3ad0d39d3d3fa..64e86b786db52 100644
+--- a/drivers/cxl/core/hdm.c
++++ b/drivers/cxl/core/hdm.c
+@@ -575,17 +575,11 @@ static void cxld_set_type(struct cxl_decoder *cxld, u32 *ctrl)
+ 			  CXL_HDM_DECODER0_CTRL_HOSTONLY);
  }
  
--static int cxl_dport_setup_regs(struct cxl_dport *dport,
-+static int cxl_dport_setup_regs(struct device *host, struct cxl_dport *dport,
- 				resource_size_t component_reg_phys)
+-static int cxlsd_set_targets(struct cxl_switch_decoder *cxlsd, u64 *tgt)
++static void cxlsd_set_targets(struct cxl_switch_decoder *cxlsd, u64 *tgt)
  {
-+	int rc;
-+
- 	if (dev_is_platform(dport->dport_dev))
- 		return 0;
--	return cxl_setup_comp_regs(dport->dport_dev, &dport->comp_map,
--				   component_reg_phys);
-+
-+	/*
-+	 * use @dport->dport_dev for the context for error messages during
-+	 * register probing, and fixup @host after the fact, since @host may be
-+	 * NULL.
-+	 */
-+	rc = cxl_setup_comp_regs(dport->dport_dev, &dport->comp_map,
-+				 component_reg_phys);
-+	dport->comp_map.host = host;
-+	return rc;
+ 	struct cxl_dport **t = &cxlsd->target[0];
+ 	int ways = cxlsd->cxld.interleave_ways;
+ 
+-	if (dev_WARN_ONCE(&cxlsd->cxld.dev,
+-			  ways > 8 || ways > cxlsd->nr_targets,
+-			  "ways: %d overflows targets: %d\n", ways,
+-			  cxlsd->nr_targets))
+-		return -ENXIO;
+-
+ 	*tgt = FIELD_PREP(GENMASK(7, 0), t[0]->port_id);
+ 	if (ways > 1)
+ 		*tgt |= FIELD_PREP(GENMASK(15, 8), t[1]->port_id);
+@@ -601,8 +595,6 @@ static int cxlsd_set_targets(struct cxl_switch_decoder *cxlsd, u64 *tgt)
+ 		*tgt |= FIELD_PREP(GENMASK_ULL(55, 48), t[6]->port_id);
+ 	if (ways > 7)
+ 		*tgt |= FIELD_PREP(GENMASK_ULL(63, 56), t[7]->port_id);
+-
+-	return 0;
  }
  
- static struct cxl_port *__devm_cxl_add_port(struct device *host,
-@@ -989,7 +999,16 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 	if (!dport)
- 		return ERR_PTR(-ENOMEM);
+ /*
+@@ -689,13 +681,7 @@ static int cxl_decoder_commit(struct cxl_decoder *cxld)
+ 		void __iomem *tl_lo = hdm + CXL_HDM_DECODER0_TL_LOW(id);
+ 		u64 targets;
  
--	if (rcrb != CXL_RESOURCE_NONE) {
-+	dport->dport_dev = dport_dev;
-+	dport->port_id = port_id;
-+	dport->port = port;
-+
-+	if (rcrb == CXL_RESOURCE_NONE) {
-+		rc = cxl_dport_setup_regs(&port->dev, dport,
-+					  component_reg_phys);
-+		if (rc)
-+			return ERR_PTR(rc);
-+	} else {
- 		dport->rcrb.base = rcrb;
- 		component_reg_phys = __rcrb_to_component(dport_dev, &dport->rcrb,
- 							 CXL_RCRB_DOWNSTREAM);
-@@ -998,6 +1017,14 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 			return ERR_PTR(-ENXIO);
- 		}
+-		rc = cxlsd_set_targets(cxlsd, &targets);
+-		if (rc) {
+-			dev_dbg(&port->dev, "%s: target configuration error\n",
+-				dev_name(&cxld->dev));
+-			goto err;
+-		}
+-
++		cxlsd_set_targets(cxlsd, &targets);
+ 		writel(upper_32_bits(targets), tl_hi);
+ 		writel(lower_32_bits(targets), tl_lo);
+ 	} else {
+@@ -713,7 +699,6 @@ static int cxl_decoder_commit(struct cxl_decoder *cxld)
  
-+		/*
-+		 * RCH @dport is not ready to map until associated with its
-+		 * memdev
-+		 */
-+		rc = cxl_dport_setup_regs(NULL, dport, component_reg_phys);
-+		if (rc)
-+			return ERR_PTR(rc);
-+
- 		dport->rch = true;
+ 	port->commit_end++;
+ 	rc = cxld_await_commit(hdm, cxld->id);
+-err:
+ 	if (rc) {
+ 		dev_dbg(&port->dev, "%s: error %d committing decoder\n",
+ 			dev_name(&cxld->dev), rc);
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index d1f513800c10d..85c0881fba442 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1189,6 +1189,14 @@ static int cxl_port_setup_targets(struct cxl_port *port,
+ 		return rc;
  	}
  
-@@ -1005,14 +1032,6 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
- 		dev_dbg(dport_dev, "Component Registers found for dport: %pa\n",
- 			&component_reg_phys);
- 
--	dport->dport_dev = dport_dev;
--	dport->port_id = port_id;
--	dport->port = port;
--
--	rc = cxl_dport_setup_regs(dport, component_reg_phys);
--	if (rc)
--		return ERR_PTR(rc);
--
- 	cond_cxl_root_lock(port);
- 	rc = add_dport(port, dport);
- 	cond_cxl_root_unlock(port);
++	if (iw > 8 || iw > cxlsd->nr_targets) {
++		dev_dbg(&cxlr->dev,
++			"%s:%s:%s: ways: %d overflows targets: %d\n",
++			dev_name(port->uport_dev), dev_name(&port->dev),
++			dev_name(&cxld->dev), iw, cxlsd->nr_targets);
++		return -ENXIO;
++	}
++
+ 	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
+ 		if (cxld->interleave_ways != iw ||
+ 		    cxld->interleave_granularity != ig ||
 -- 
 2.42.0
 
