@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF7441212
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F19841223
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOSHWjkb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81314C433C7;
-	Wed, 15 Nov 2023 19:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYvcFlqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E514C433CA;
+	Wed, 15 Nov 2023 19:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076766;
-	bh=9BkapJbscFhR15wRZJTh+EqIVqt1IeBG3XsfoeTNCdM=;
+	s=korg; t=1700076768;
+	bh=AUffdMteexZwrPNoehp4itEP1Y89a5iawdcjYcwhVNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOSHWjkbBFjl9v0VG2x2hxuQSB+qqpqfE64uogOauSk7V3wEmmLJv+epeDh9D0p6i
-	 f4xvR6OkTkjVrQjkmBpFsFNmhf5kmr0zGKD1gqYzGexFt3XdUFN16fNHhck77MoHlc
-	 jSmdQGVG6FmZ/BWYIkq7IL5gZTnEOtBaeAqzQyjs=
+	b=wYvcFlqhgcsNrPA6lf61LvCBmYG+079PHrIUtEhxmnvs0vs7LsU8X1fQmH0Bsd8rg
+	 DCq5VGAXEKtIQV/VHvSHGP28gztq8MKYKvbUFL+kJOkLRmVjhVbJmio1z6c2/prsmR
+	 QS5V8KLypDa4juVP8RbFC7v2T3UxwGMm2xPpOHws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derick Marks <derick.w.marks@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/603] ACPI/NUMA: Apply SRAT proximity domain to entire CFMWS window
-Date: Wed, 15 Nov 2023 14:09:25 -0500
-Message-ID: <20231115191614.570321275@linuxfoundation.org>
+Subject: [PATCH 6.5 415/550] interconnect: qcom: sdm845: Set ACV enable_mask
+Date: Wed, 15 Nov 2023 14:16:39 -0500
+Message-ID: <20231115191629.530097848@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,75 +38,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 8f1004679987302b155f14b966ca6d4335814fcb ]
+[ Upstream commit f8fe97a9fd2098de0570387029065eef657d50ee ]
 
-Commit fd49f99c1809 ("ACPI: NUMA: Add a node and memblk for each
-CFMWS not in SRAT") did not account for the case where the BIOS
-only partially describes a CFMWS Window in the SRAT. That means
-the omitted address ranges, of a partially described CFMWS Window,
-do not get assigned to a NUMA node.
+ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
 
-Replace the call to phys_to_target_node() with numa_add_memblks().
-Numa_add_memblks() searches an HPA range for existing memblk(s)
-and extends those memblk(s) to fill the entire CFMWS Window.
-
-Extending the existing memblks is a simple strategy that reuses
-SRAT defined proximity domains from part of a window to fill out
-the entire window, based on the knowledge* that all of a CFMWS
-window is of a similar performance class.
-
-*Note that this heuristic will evolve when CFMWS Windows present
-a wider range of characteristics. The extension of the proximity
-domain, implemented here, is likely a step in developing a more
-sophisticated performance profile in the future.
-
-There is no change in behavior when the SRAT does not describe
-the CFMWS Window at all. In that case, a new NUMA node with a
-single memblk covering the entire CFMWS Window is created.
-
-Fixes: fd49f99c1809 ("ACPI: NUMA: Add a node and memblk for each CFMWS not in SRAT")
-Reported-by: Derick Marks <derick.w.marks@intel.com>
-Suggested-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Tested-by: Derick Marks <derick.w.marks@intel.com>
-Link: https://lore.kernel.org/all/eaa0b7cffb0951a126223eef3cbe7b55b8300ad9.1689018477.git.alison.schofield%40intel.com
+Fixes: b5d2f741077a ("interconnect: qcom: Add sdm845 interconnect provider driver")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230811-topic-acv-v2-7-765ad70e539a@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/srat.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/interconnect/qcom/sdm845.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/numa/srat.c b/drivers/acpi/numa/srat.c
-index 1f4fc5f8a819d..12f330b0eac01 100644
---- a/drivers/acpi/numa/srat.c
-+++ b/drivers/acpi/numa/srat.c
-@@ -310,11 +310,16 @@ static int __init acpi_parse_cfmws(union acpi_subtable_headers *header,
- 	start = cfmws->base_hpa;
- 	end = cfmws->base_hpa + cfmws->window_size;
+diff --git a/drivers/interconnect/qcom/sdm845.c b/drivers/interconnect/qcom/sdm845.c
+index 39ee54ffdb7ba..02cf890684441 100644
+--- a/drivers/interconnect/qcom/sdm845.c
++++ b/drivers/interconnect/qcom/sdm845.c
+@@ -148,6 +148,7 @@ DEFINE_QNODE(xs_sys_tcu_cfg, SDM845_SLAVE_TCU, 1, 8);
  
--	/* Skip if the SRAT already described the NUMA details for this HPA */
--	node = phys_to_target_node(start);
--	if (node != NUMA_NO_NODE)
-+	/*
-+	 * The SRAT may have already described NUMA details for all,
-+	 * or a portion of, this CFMWS HPA range. Extend the memblks
-+	 * found for any portion of the window to cover the entire
-+	 * window.
-+	 */
-+	if (!numa_fill_memblks(start, end))
- 		return 0;
- 
-+	/* No SRAT description. Create a new node. */
- 	node = acpi_map_pxm_to_node(*fake_pxm);
- 
- 	if (node == NUMA_NO_NODE) {
+ static struct qcom_icc_bcm bcm_acv = {
+ 	.name = "ACV",
++	.enable_mask = BIT(3),
+ 	.keepalive = false,
+ 	.num_nodes = 1,
+ 	.nodes = { &ebi },
 -- 
 2.42.0
 
