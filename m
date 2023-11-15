@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C254141A80
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED39381DC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LQa0JSu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75140C433CB;
-	Wed, 15 Nov 2023 19:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JrM3zpm1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CF3C433CB;
+	Wed, 15 Nov 2023 19:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076910;
-	bh=PmeSWzMkvdHW6O9jYtdZ2o/UsphuSzy8WOlNuIlgC7o=;
+	s=korg; t=1700076912;
+	bh=uFJ6GuqmcdjuTVWVgdRNaACkxgvVqALSkVH5uWCkPYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0LQa0JSuqaBgst2uVPHf6EXWwUPwIOhlxXu/u7DVpCB92FR6SYXySEkK4I4ffcXTi
-	 GWBXoiHzizFwYwqiE+XhAbAg6jhXGmBO9mjzKdylDL+0ng6q30KW1cQEQdHRX4RYSx
-	 kVzH88OhzMVtXYUVluEQZj4Nk7s9EtZy5IeGILZ8=
+	b=JrM3zpm1nQN0mB41m/vBkA034SIVhtuzSR1l7KNsWVGla4tqrpM/QfjDEDbvZOlKn
+	 HPOgv5qtiiyr/+V9B6M2e9Zte9NcFy9sg0kAfcUSePjLr5h/gomKsB2RX9+vFo37S3
+	 KFYjvX/rxfe3zdBx/mu86R75Iz6GAhaJ2kFBTpso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aananth V <aananthv@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jim Harris <jim.harris@samsung.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/603] tcp: call tcp_try_undo_recovery when an RTOd TFO SYNACK is ACKed
-Date: Wed, 15 Nov 2023 14:10:09 -0500
-Message-ID: <20231115191617.575719967@linuxfoundation.org>
+Subject: [PATCH 6.5 461/550] cxl/region: Prepare the decoder match range helper for reuse
+Date: Wed, 15 Nov 2023 14:17:25 -0500
+Message-ID: <20231115191632.828983598@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -41,73 +41,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aananth V <aananthv@google.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit e326578a21414738de45f77badd332fb00bd0f58 ]
+[ Upstream commit 1110581412c7a223439bb3ecdcdd9f4432e08231 ]
 
-For passive TCP Fast Open sockets that had SYN/ACK timeout and did not
-send more data in SYN_RECV, upon receiving the final ACK in 3WHS, the
-congestion state may awkwardly stay in CA_Loss mode unless the CA state
-was undone due to TCP timestamp checks. However, if
-tcp_rcv_synrecv_state_fastopen() decides not to undo, then we should
-enter CA_Open, because at that point we have received an ACK covering
-the retransmitted SYNACKs. Currently, the icsk_ca_state is only set to
-CA_Open after we receive an ACK for a data-packet. This is because
-tcp_ack does not call tcp_fastretrans_alert (and tcp_process_loss) if
-!prior_packets
+match_decoder_by_range() and decoder_match_range() both determine
+if an HPA range matches a decoder. The first does it for root
+decoders and the second one operates on switch decoders.
 
-Note that tcp_process_loss() calls tcp_try_undo_recovery(), so having
-tcp_rcv_synrecv_state_fastopen() decide that if we're in CA_Loss we
-should call tcp_try_undo_recovery() is consistent with that, and
-low risk.
+Tidy these up with clear naming and make the switch helper more
+like the root decoder helper in style and functionality. Make it
+take the actual range, rather than an endpoint decoder from which
+it extracts the range. Require an exact match on switch decoders,
+because unlike a root decoder that maps an entire region, Linux
+only supports 1:1 mapping of switch to endpoint decoders. Note that
+root-decoders are a super-set of switch-decoders and the range they
+cover is a super-set of a region, hence the use of range_contains() for
+that case.
 
-Fixes: dad8cea7add9 ("tcp: fix TFO SYNACK undo to avoid double-timestamp-undo")
-Signed-off-by: Aananth V <aananthv@google.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Aside from aesthetics and maintainability, this is in preparation
+for reuse.
+
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Jim Harris <jim.harris@samsung.com>
+Link: https://lore.kernel.org/r/011b1f498e1758bb8df17c5951be00bd8d489e3b.1698263080.git.alison.schofield@intel.com
+[djbw: fixup root decoder vs switch decoder range checks]
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 0cf36a85c140 ("cxl/region: Use cxl_calc_interleave_pos() for auto-discovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/cxl/core/region.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 804821d6bd4d4..1f9d1d445fb3b 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -6450,22 +6450,23 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 8394cd96e1869..123474d6c475a 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1482,16 +1482,20 @@ static struct cxl_port *next_port(struct cxl_port *port)
+ 	return port->parent_dport->port;
+ }
  
- static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
+-static int decoder_match_range(struct device *dev, void *data)
++static int match_switch_decoder_by_range(struct device *dev, void *data)
  {
-+	struct tcp_sock *tp = tcp_sk(sk);
- 	struct request_sock *req;
+-	struct cxl_endpoint_decoder *cxled = data;
+ 	struct cxl_switch_decoder *cxlsd;
++	struct range *r1, *r2 = data;
  
- 	/* If we are still handling the SYNACK RTO, see if timestamp ECR allows
- 	 * undo. If peer SACKs triggered fast recovery, we can't undo here.
- 	 */
--	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss)
--		tcp_try_undo_loss(sk, false);
-+	if (inet_csk(sk)->icsk_ca_state == TCP_CA_Loss && !tp->packets_out)
-+		tcp_try_undo_recovery(sk);
+ 	if (!is_switch_decoder(dev))
+ 		return 0;
  
- 	/* Reset rtx states to prevent spurious retransmits_timed_out() */
--	tcp_sk(sk)->retrans_stamp = 0;
-+	tp->retrans_stamp = 0;
- 	inet_csk(sk)->icsk_retransmits = 0;
+ 	cxlsd = to_cxl_switch_decoder(dev);
+-	return range_contains(&cxlsd->cxld.hpa_range, &cxled->cxld.hpa_range);
++	r1 = &cxlsd->cxld.hpa_range;
++
++	if (is_root_decoder(dev))
++		return range_contains(r1, r2);
++	return (r1->start == r2->start && r1->end == r2->end);
+ }
  
- 	/* Once we leave TCP_SYN_RECV or TCP_FIN_WAIT_1,
- 	 * we no longer need req so release it.
- 	 */
--	req = rcu_dereference_protected(tcp_sk(sk)->fastopen_rsk,
-+	req = rcu_dereference_protected(tp->fastopen_rsk,
- 					lockdep_sock_is_held(sk));
- 	reqsk_fastopen_remove(sk, req, false);
+ static void find_positions(const struct cxl_switch_decoder *cxlsd,
+@@ -1560,7 +1564,8 @@ static int cmp_decode_pos(const void *a, const void *b)
+ 		goto err;
+ 	}
  
+-	dev = device_find_child(&port->dev, cxled_a, decoder_match_range);
++	dev = device_find_child(&port->dev, &cxled_a->cxld.hpa_range,
++				match_switch_decoder_by_range);
+ 	if (!dev) {
+ 		struct range *range = &cxled_a->cxld.hpa_range;
+ 
+@@ -2691,7 +2696,7 @@ static int devm_cxl_add_dax_region(struct cxl_region *cxlr)
+ 	return rc;
+ }
+ 
+-static int match_decoder_by_range(struct device *dev, void *data)
++static int match_root_decoder_by_range(struct device *dev, void *data)
+ {
+ 	struct range *r1, *r2 = data;
+ 	struct cxl_root_decoder *cxlrd;
+@@ -2822,7 +2827,7 @@ int cxl_add_to_region(struct cxl_port *root, struct cxl_endpoint_decoder *cxled)
+ 	int rc;
+ 
+ 	cxlrd_dev = device_find_child(&root->dev, &cxld->hpa_range,
+-				      match_decoder_by_range);
++				      match_root_decoder_by_range);
+ 	if (!cxlrd_dev) {
+ 		dev_err(cxlmd->dev.parent,
+ 			"%s:%s no CXL window for range %#llx:%#llx\n",
 -- 
 2.42.0
 
