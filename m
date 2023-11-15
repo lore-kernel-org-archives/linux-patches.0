@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5E63A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830AE3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Te3ZJOFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF5CC433C8;
-	Wed, 15 Nov 2023 19:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elS6bajy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326F9C433CA;
+	Wed, 15 Nov 2023 19:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077757;
-	bh=rXlNYr2EGLZt335Jug3zF9J02WSL26HARYLXxG3LcyY=;
+	s=korg; t=1700077759;
+	bh=727VTOS0kx8bbtt5RVTJzG8AywArWKjPKSqa5lqH8qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Te3ZJOFjsKBLRyMFNy8/Vms9WPa72y/i6THqEFLkKiQGl/V+fgMZP7fCwPIRaHX2H
-	 3hBuhpDbV7eQeGieDIDwVrrbqx2fO1+C6B89sUNc3nqnuOMvipODxgR/ZZ/UoJMb8E
-	 0fR7mj9ar3zadxUNgkKgVYCOtBLQC0EbpLczMnJw=
+	b=elS6bajypsYqmTeTMDma0KaXG/MpuTt6NhDbYgZAXI7syoZNB6HTzAsBQtd8ahuRD
+	 BEapAhtF1x4t2S/LIcYqii5rFUubnonNacaHCKq7tDPfNZupahXrPl7llH76yTmNjU
+	 TbKtoHpiVKjeQbD7u/Cix03Ao/mgd/MUhi340WL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Bowman <terry.bowman@amd.com>,
 	Robert Richter <rrichter@amd.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 501/603] cxl/core/regs: Rename @dev to @host in struct cxl_register_map
-Date: Wed, 15 Nov 2023 14:17:26 -0500
-Message-ID: <20231115191646.893557986@linuxfoundation.org>
+Subject: [PATCH 6.6 502/603] cxl/port: Fix @host confusion in cxl_dport_setup_regs()
+Date: Wed, 15 Nov 2023 14:17:27 -0500
+Message-ID: <20231115191646.951259757@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,206 +43,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Richter <rrichter@amd.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit dd22581f89537163f065e8ef7c125ce0fddf62cc ]
+[ Upstream commit 33d9c987bf8fb68a9292aba7cc4b1711fcb1be4d ]
 
-The primary role of @dev is to host the mappings for devm operations.
-@dev is too ambiguous as a name. I.e. when does @dev refer to the
-'struct device *' instance that the registers belong, and when does
-@dev refer to the 'struct device *' instance hosting the mapping for
-devm operations?
+commit 5d2ffbe4b81a ("cxl/port: Store the downstream port's Component Register mappings in struct cxl_dport")
 
-Clarify the role of @dev in cxl_register_map by renaming it to @host.
-Also, rename local variables to 'host' where map->host is used.
+...moved the dport component registers from a raw component_reg_phys
+passed in at dport instantiation time to a 'struct cxl_register_map'
+populated with both the component register data *and* the "host" device
+for mapping operations.
 
-Signed-off-by: Terry Bowman <terry.bowman@amd.com>
+While typical CXL switch dports are mapped by their associated 'struct
+cxl_port', an RCH host bridge dport registered by cxl_acpi needs to wait
+until the cxl_mem driver makes the attachment to map the registers. This
+is because there are no intervening 'struct cxl_port' instances between
+the root cxl_port and the endpoint port in an RCH topology.
+
+For now just mark the host as NULL in the RCH dport case until code that
+needs to map the dport registers arrives.
+
+This patch is not flagged for -stable since nothing in the current
+driver uses the dport->comp_map.
+
+Now, I am slightly uneasy that cxl_setup_comp_regs() sets map->host to a
+wrong value and then cxl_dport_setup_regs() fixes it up, but the
+alternatives I came up with are more messy. For example, adding an
+@logdev to 'struct cxl_register_map' that the dev_printk()s can fall
+back to when @host is NULL. I settled on "post-fixup+comment" since it
+is only RCH dports that have this special case where register probing is
+split between a host-bridge RCRB lookup and when cxl_mem_probe() does
+the association of the cxl_memdev and endpoint port.
+
+[moved rename of @comp_map to @reg_map into next patch]
+
+Fixes: 5d2ffbe4b81a ("cxl/port: Store the downstream port's Component Register mappings in struct cxl_dport")
 Signed-off-by: Robert Richter <rrichter@amd.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/20231018171713.1883517-3-rrichter@amd.com
+Link: https://lore.kernel.org/r/20231018171713.1883517-4-rrichter@amd.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 33d9c987bf8f ("cxl/port: Fix @host confusion in cxl_dport_setup_regs()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c  |  2 +-
- drivers/cxl/core/port.c |  4 ++--
- drivers/cxl/core/regs.c | 28 ++++++++++++++--------------
- drivers/cxl/cxl.h       |  4 ++--
- drivers/cxl/pci.c       |  2 +-
- 5 files changed, 20 insertions(+), 20 deletions(-)
+ drivers/cxl/core/port.c | 43 +++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index 506c9e14cdf98..3ad0d39d3d3fa 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -85,7 +85,7 @@ static int map_hdm_decoder_regs(struct cxl_port *port, void __iomem *crb,
- 				struct cxl_component_regs *regs)
- {
- 	struct cxl_register_map map = {
--		.dev = &port->dev,
-+		.host = &port->dev,
- 		.resource = port->component_reg_phys,
- 		.base = crb,
- 		.max_size = CXL_COMPONENT_REG_BLOCK_SIZE,
 diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 5ba606c6e03ff..c24cfe2271948 100644
+index c24cfe2271948..2c6001592fe20 100644
 --- a/drivers/cxl/core/port.c
 +++ b/drivers/cxl/core/port.c
-@@ -697,14 +697,14 @@ static struct cxl_port *cxl_port_alloc(struct device *uport_dev,
- 	return ERR_PTR(rc);
+@@ -722,13 +722,23 @@ static int cxl_port_setup_regs(struct cxl_port *port,
+ 				   component_reg_phys);
  }
  
--static int cxl_setup_comp_regs(struct device *dev, struct cxl_register_map *map,
-+static int cxl_setup_comp_regs(struct device *host, struct cxl_register_map *map,
- 			       resource_size_t component_reg_phys)
+-static int cxl_dport_setup_regs(struct cxl_dport *dport,
++static int cxl_dport_setup_regs(struct device *host, struct cxl_dport *dport,
+ 				resource_size_t component_reg_phys)
  {
- 	if (component_reg_phys == CXL_RESOURCE_NONE)
++	int rc;
++
+ 	if (dev_is_platform(dport->dport_dev))
  		return 0;
- 
- 	*map = (struct cxl_register_map) {
--		.dev = dev,
-+		.host = host,
- 		.reg_type = CXL_REGLOC_RBI_COMPONENT,
- 		.resource = component_reg_phys,
- 		.max_size = CXL_COMPONENT_REG_BLOCK_SIZE,
-diff --git a/drivers/cxl/core/regs.c b/drivers/cxl/core/regs.c
-index 6281127b3e9d9..e0fbe964f6f0a 100644
---- a/drivers/cxl/core/regs.c
-+++ b/drivers/cxl/core/regs.c
-@@ -204,7 +204,7 @@ int cxl_map_component_regs(const struct cxl_register_map *map,
- 			   struct cxl_component_regs *regs,
- 			   unsigned long map_mask)
- {
--	struct device *dev = map->dev;
-+	struct device *host = map->host;
- 	struct mapinfo {
- 		const struct cxl_reg_map *rmap;
- 		void __iomem **addr;
-@@ -225,7 +225,7 @@ int cxl_map_component_regs(const struct cxl_register_map *map,
- 			continue;
- 		phys_addr = map->resource + mi->rmap->offset;
- 		length = mi->rmap->size;
--		*(mi->addr) = devm_cxl_iomap_block(dev, phys_addr, length);
-+		*(mi->addr) = devm_cxl_iomap_block(host, phys_addr, length);
- 		if (!*(mi->addr))
- 			return -ENOMEM;
- 	}
-@@ -237,7 +237,7 @@ EXPORT_SYMBOL_NS_GPL(cxl_map_component_regs, CXL);
- int cxl_map_device_regs(const struct cxl_register_map *map,
- 			struct cxl_device_regs *regs)
- {
--	struct device *dev = map->dev;
-+	struct device *host = map->host;
- 	resource_size_t phys_addr = map->resource;
- 	struct mapinfo {
- 		const struct cxl_reg_map *rmap;
-@@ -259,7 +259,7 @@ int cxl_map_device_regs(const struct cxl_register_map *map,
- 
- 		addr = phys_addr + mi->rmap->offset;
- 		length = mi->rmap->size;
--		*(mi->addr) = devm_cxl_iomap_block(dev, addr, length);
-+		*(mi->addr) = devm_cxl_iomap_block(host, addr, length);
- 		if (!*(mi->addr))
- 			return -ENOMEM;
- 	}
-@@ -309,7 +309,7 @@ int cxl_find_regblock_instance(struct pci_dev *pdev, enum cxl_regloc_type type,
- 	int regloc, i;
- 
- 	*map = (struct cxl_register_map) {
--		.dev = &pdev->dev,
-+		.host = &pdev->dev,
- 		.resource = CXL_RESOURCE_NONE,
- 	};
- 
-@@ -403,15 +403,15 @@ EXPORT_SYMBOL_NS_GPL(cxl_map_pmu_regs, CXL);
- 
- static int cxl_map_regblock(struct cxl_register_map *map)
- {
--	struct device *dev = map->dev;
-+	struct device *host = map->host;
- 
- 	map->base = ioremap(map->resource, map->max_size);
- 	if (!map->base) {
--		dev_err(dev, "failed to map registers\n");
-+		dev_err(host, "failed to map registers\n");
- 		return -ENOMEM;
- 	}
- 
--	dev_dbg(dev, "Mapped CXL Memory Device resource %pa\n", &map->resource);
-+	dev_dbg(host, "Mapped CXL Memory Device resource %pa\n", &map->resource);
- 	return 0;
+-	return cxl_setup_comp_regs(dport->dport_dev, &dport->comp_map,
+-				   component_reg_phys);
++
++	/*
++	 * use @dport->dport_dev for the context for error messages during
++	 * register probing, and fixup @host after the fact, since @host may be
++	 * NULL.
++	 */
++	rc = cxl_setup_comp_regs(dport->dport_dev, &dport->comp_map,
++				 component_reg_phys);
++	dport->comp_map.host = host;
++	return rc;
  }
  
-@@ -425,28 +425,28 @@ static int cxl_probe_regs(struct cxl_register_map *map)
- {
- 	struct cxl_component_reg_map *comp_map;
- 	struct cxl_device_reg_map *dev_map;
--	struct device *dev = map->dev;
-+	struct device *host = map->host;
- 	void __iomem *base = map->base;
+ static struct cxl_port *__devm_cxl_add_port(struct device *host,
+@@ -989,7 +999,16 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 	if (!dport)
+ 		return ERR_PTR(-ENOMEM);
  
- 	switch (map->reg_type) {
- 	case CXL_REGLOC_RBI_COMPONENT:
- 		comp_map = &map->component_map;
--		cxl_probe_component_regs(dev, base, comp_map);
--		dev_dbg(dev, "Set up component registers\n");
-+		cxl_probe_component_regs(host, base, comp_map);
-+		dev_dbg(host, "Set up component registers\n");
- 		break;
- 	case CXL_REGLOC_RBI_MEMDEV:
- 		dev_map = &map->device_map;
--		cxl_probe_device_regs(dev, base, dev_map);
-+		cxl_probe_device_regs(host, base, dev_map);
- 		if (!dev_map->status.valid || !dev_map->mbox.valid ||
- 		    !dev_map->memdev.valid) {
--			dev_err(dev, "registers not found: %s%s%s\n",
-+			dev_err(host, "registers not found: %s%s%s\n",
- 				!dev_map->status.valid ? "status " : "",
- 				!dev_map->mbox.valid ? "mbox " : "",
- 				!dev_map->memdev.valid ? "memdev " : "");
- 			return -ENXIO;
+-	if (rcrb != CXL_RESOURCE_NONE) {
++	dport->dport_dev = dport_dev;
++	dport->port_id = port_id;
++	dport->port = port;
++
++	if (rcrb == CXL_RESOURCE_NONE) {
++		rc = cxl_dport_setup_regs(&port->dev, dport,
++					  component_reg_phys);
++		if (rc)
++			return ERR_PTR(rc);
++	} else {
+ 		dport->rcrb.base = rcrb;
+ 		component_reg_phys = __rcrb_to_component(dport_dev, &dport->rcrb,
+ 							 CXL_RCRB_DOWNSTREAM);
+@@ -998,6 +1017,14 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 			return ERR_PTR(-ENXIO);
  		}
  
--		dev_dbg(dev, "Probing device registers...\n");
-+		dev_dbg(host, "Probing device registers...\n");
- 		break;
- 	default:
- 		break;
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 76d92561af294..b5b015b661eae 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -247,7 +247,7 @@ struct cxl_pmu_reg_map {
++		/*
++		 * RCH @dport is not ready to map until associated with its
++		 * memdev
++		 */
++		rc = cxl_dport_setup_regs(NULL, dport, component_reg_phys);
++		if (rc)
++			return ERR_PTR(rc);
++
+ 		dport->rch = true;
+ 	}
  
- /**
-  * struct cxl_register_map - DVSEC harvested register block mapping parameters
-- * @dev: device for devm operations and logging
-+ * @host: device for devm operations and logging
-  * @base: virtual base of the register-block-BAR + @block_offset
-  * @resource: physical resource base of the register block
-  * @max_size: maximum mapping size to perform register search
-@@ -257,7 +257,7 @@ struct cxl_pmu_reg_map {
-  * @pmu_map: cxl_reg_maps for CXL Performance Monitoring Units
-  */
- struct cxl_register_map {
--	struct device *dev;
-+	struct device *host;
- 	void __iomem *base;
- 	resource_size_t resource;
- 	resource_size_t max_size;
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 33c48370a830c..8bece1e2e2491 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -474,7 +474,7 @@ static int cxl_rcrb_get_comp_regs(struct pci_dev *pdev,
- 	resource_size_t component_reg_phys;
+@@ -1005,14 +1032,6 @@ __devm_cxl_add_dport(struct cxl_port *port, struct device *dport_dev,
+ 		dev_dbg(dport_dev, "Component Registers found for dport: %pa\n",
+ 			&component_reg_phys);
  
- 	*map = (struct cxl_register_map) {
--		.dev = &pdev->dev,
-+		.host = &pdev->dev,
- 		.resource = CXL_RESOURCE_NONE,
- 	};
- 
+-	dport->dport_dev = dport_dev;
+-	dport->port_id = port_id;
+-	dport->port = port;
+-
+-	rc = cxl_dport_setup_regs(dport, component_reg_phys);
+-	if (rc)
+-		return ERR_PTR(rc);
+-
+ 	cond_cxl_root_lock(port);
+ 	rc = add_dport(port, dport);
+ 	cond_cxl_root_unlock(port);
 -- 
 2.42.0
 
