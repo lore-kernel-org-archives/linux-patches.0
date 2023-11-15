@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244A63A8F4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0533A8F4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTNFIMTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD655C433C8;
-	Wed, 15 Nov 2023 19:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqJeQm+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00596C433C7;
+	Wed, 15 Nov 2023 19:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078078;
-	bh=Ml+Q/HRQiNfhScOvWddQuJiVsgRDDqhtK+MtO9eQrow=;
+	s=korg; t=1700078080;
+	bh=ZBOdaqUNVFnKXLuSg9YLjwlHG7u4g/7CgRYSV+v0Q0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTNFIMTk7KnYaz1iHh5rG+t3R2kwf2Rrm2Hx2bRI5wjItH0EbFBjlat+46ePI1gtF
-	 GYBlDF07yHv2dtWhjdadx1lsjDgJRd12PYGBW76wqB3GKKZeAWdhT3OoU8J9HpMT+p
-	 6yoPhUzxnJOVr1Oy+2WjxmENb/wHU7OgQNm11mv4=
+	b=sqJeQm+nZf1gsDJSKEEwQ9++dYpEzfmqmTT6z/02PMQmVpmmGGIy/Q2HOttEczv37
+	 deSePxRzVlNKZ5A+rZaRC6bHaIBiEyGJvhe0MtQcMkGilHR0vFwRySDVKZS735jHAt
+	 w1uQDbVsTp2qrsRgIINKM3o9NNoQqYEa18V6d/LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Tony Lindgren <tony@atomide.com>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/379] clk: ti: fix double free in of_ti_divider_clk_setup()
-Date: Wed, 15 Nov 2023 14:22:52 -0500
-Message-ID: <20231115192650.876780052@linuxfoundation.org>
+Subject: [PATCH 6.1 098/379] clk: npcm7xx: Fix incorrect kfree
+Date: Wed, 15 Nov 2023 14:22:53 -0500
+Message-ID: <20231115192650.936322514@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -37,55 +36,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 
-[ Upstream commit 7af5b9eadd64c9e02a71f97c45bcdf3b64841f6b ]
+[ Upstream commit bbc5080bef4a245106aa8e8d424ba8847ca7c0ca ]
 
-The "div" pointer is freed in _register_divider() and again in
-of_ti_divider_clk_setup().  Delete the free in _register_divider()
+The corresponding allocation is:
 
-Fixes: fbbc18591585 ("clk: ti: divider: cleanup _register_divider and ti_clk_get_div_table")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/6d36eeec-6c8a-4f11-a579-aa3cd7c38749@moroto.mountain
-Reviewed-by: Tony Lindgren <tony@atomide.com>
+> npcm7xx_clk_data = kzalloc(struct_size(npcm7xx_clk_data, hws,
+> 			     NPCM7XX_NUM_CLOCKS), GFP_KERNEL);
+
+... so, kfree should be applied to npcm7xx_clk_data, not
+npcm7xx_clk_data->hws.
+
+Fixes: fcfd14369856 ("clk: npcm7xx: add clock controller")
+Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Link: https://lore.kernel.org/r/20230923133127.1815621-1-j.neuschaefer@gmx.net
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/divider.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/clk/clk-npcm7xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/ti/divider.c b/drivers/clk/ti/divider.c
-index 768a1f3398b47..5d5bb123ba949 100644
---- a/drivers/clk/ti/divider.c
-+++ b/drivers/clk/ti/divider.c
-@@ -309,7 +309,6 @@ static struct clk *_register_divider(struct device_node *node,
- 				     u32 flags,
- 				     struct clk_omap_divider *div)
- {
--	struct clk *clk;
- 	struct clk_init_data init;
- 	const char *parent_name;
- 	const char *name;
-@@ -326,12 +325,7 @@ static struct clk *_register_divider(struct device_node *node,
- 	div->hw.init = &init;
+diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
+index e319cfa51a8a3..030186def9c69 100644
+--- a/drivers/clk/clk-npcm7xx.c
++++ b/drivers/clk/clk-npcm7xx.c
+@@ -510,7 +510,7 @@ static void __init npcm7xx_clk_init(struct device_node *clk_np)
+ 	return;
  
- 	/* register the clock */
--	clk = of_ti_clk_register(node, &div->hw, name);
--
--	if (IS_ERR(clk))
--		kfree(div);
--
--	return clk;
-+	return of_ti_clk_register(node, &div->hw, name);
- }
- 
- int ti_clk_parse_divider_data(int *div_table, int num_dividers, int max_div,
+ npcm7xx_init_fail:
+-	kfree(npcm7xx_clk_data->hws);
++	kfree(npcm7xx_clk_data);
+ npcm7xx_init_np_err:
+ 	iounmap(clk_base);
+ npcm7xx_init_error:
 -- 
 2.42.0
 
