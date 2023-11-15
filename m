@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A8241238
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21794121C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTDLe/ll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A00C433CA;
-	Wed, 15 Nov 2023 19:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfQ0fsrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D17C433C9;
+	Wed, 15 Nov 2023 19:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076861;
-	bh=4dJF+MPZAcwwjHGcreOzimii5q/xxWngDiyIDwTizr8=;
+	s=korg; t=1700076863;
+	bh=g+7NOATQzlSPv6IUjbzkLDiGG74OP3IZPMmxztgLypU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTDLe/ll9EFc1mDJBd+6HhR3KCNIJUZKyAUkZD6CguK95uHItajDItOGzl2tU1+2l
-	 O4+iGZONt1TmUuUGAM4H+tB/DZA32J7hnLe+TxNK98K+DOEG+ESAR6PUz+SpwSqStj
-	 9iCha4vAz0QR/g1vqJf8a2toJT93gDlkNLNehvmw=
+	b=cfQ0fsrtsApA6m2a9x78I/kcM3l9lHzWbf80KXwgwwFTvpnKjKHXLw8ygPg9fYU+4
+	 a83+eWQqiYYRl7p4Ot8k3u7yMfJHdRCHVXTKsxLEl+VFoz+UKVt0XM5+syGAh2YCZf
+	 J4K89p04FnLKHBbeLK7iSpyVWsp7p8Lyd1AoBFy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 428/550] s390/ap: re-init AP queues on config on
-Date: Wed, 15 Nov 2023 14:16:52 -0500
-Message-ID: <20231115191630.439181022@linuxfoundation.org>
+Subject: [PATCH 6.6 032/603] PCI/MSI: Provide stubs for IMS functions
+Date: Wed, 15 Nov 2023 14:09:37 -0500
+Message-ID: <20231115191615.416155319@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,135 +38,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 32d1d9204f8db3360be55e65bd182a1a68f93308 ]
+[ Upstream commit 41efa431244f6498833ff8ee8dde28c4924c5479 ]
 
-On a state toggle from config off to config on and on the
-state toggle from checkstop to not checkstop the queue's
-internal states was set but the state machine was not
-nudged. This did not care as on the first enqueue of a
-request the state machine kick ran.
+The IMS related functions (pci_create_ims_domain(), pci_ims_alloc_irq(),
+and pci_ims_free_irq()) are not declared when CONFIG_PCI_MSI is disabled.
 
-However, within an Secure Execution guest a queue is
-only chosen by the scheduler when it has been bound.
-But to bind a queue, it needs to run through the initial
-states (reset, enable interrupts, ...). So this is like
-a chicken-and-egg problem and the result was in fact
-that a queue was unusable after a config off/on toggle.
+Provide definitions of these functions for use when callers are compiled
+with CONFIG_PCI_MSI disabled.
 
-With some slight rework of the handling of these states
-now the new function _ap_queue_init_state() is called
-which is the core of the ap_queue_init_state() function
-but without locking handling. This has the benefit that
-it can be called on all the places where a (re-)init
-of the AP queue's state machine is needed.
-
-Fixes: 2d72eaf036d2 ("s390/ap: implement SE AP bind, unbind and associate")
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 0194425af0c8 ("PCI/MSI: Provide IMS (Interrupt Message Store) support")
+Fixes: c9e5bea27383 ("PCI/MSI: Provide pci_ims_alloc/free_irq()")
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/14ff656899a3757453f8584c1109d7a9b98fa258.1697564731.git.reinette.chatre@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/ap_bus.c   | 21 ++++++++++-----------
- drivers/s390/crypto/ap_bus.h   |  1 +
- drivers/s390/crypto/ap_queue.c |  9 +++++++--
- 3 files changed, 18 insertions(+), 13 deletions(-)
+ include/linux/pci.h | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/s390/crypto/ap_bus.c b/drivers/s390/crypto/ap_bus.c
-index 420120be300f5..8028f76923b24 100644
---- a/drivers/s390/crypto/ap_bus.c
-+++ b/drivers/s390/crypto/ap_bus.c
-@@ -1873,15 +1873,18 @@ static inline void ap_scan_domains(struct ap_card *ac)
- 			}
- 			/* get it and thus adjust reference counter */
- 			get_device(dev);
--			if (decfg)
-+			if (decfg) {
- 				AP_DBF_INFO("%s(%d,%d) new (decfg) queue dev created\n",
- 					    __func__, ac->id, dom);
--			else if (chkstop)
-+			} else if (chkstop) {
- 				AP_DBF_INFO("%s(%d,%d) new (chkstop) queue dev created\n",
- 					    __func__, ac->id, dom);
--			else
-+			} else {
-+				/* nudge the queue's state machine */
-+				ap_queue_init_state(aq);
- 				AP_DBF_INFO("%s(%d,%d) new queue dev created\n",
- 					    __func__, ac->id, dom);
-+			}
- 			goto put_dev_and_continue;
- 		}
- 		/* handle state changes on already existing queue device */
-@@ -1903,10 +1906,8 @@ static inline void ap_scan_domains(struct ap_card *ac)
- 		} else if (!chkstop && aq->chkstop) {
- 			/* checkstop off */
- 			aq->chkstop = false;
--			if (aq->dev_state > AP_DEV_STATE_UNINITIATED) {
--				aq->dev_state = AP_DEV_STATE_OPERATING;
--				aq->sm_state = AP_SM_STATE_RESET_START;
--			}
-+			if (aq->dev_state > AP_DEV_STATE_UNINITIATED)
-+				_ap_queue_init_state(aq);
- 			spin_unlock_bh(&aq->lock);
- 			AP_DBF_DBG("%s(%d,%d) queue dev checkstop off\n",
- 				   __func__, ac->id, dom);
-@@ -1930,10 +1931,8 @@ static inline void ap_scan_domains(struct ap_card *ac)
- 		} else if (!decfg && !aq->config) {
- 			/* config on this queue device */
- 			aq->config = true;
--			if (aq->dev_state > AP_DEV_STATE_UNINITIATED) {
--				aq->dev_state = AP_DEV_STATE_OPERATING;
--				aq->sm_state = AP_SM_STATE_RESET_START;
--			}
-+			if (aq->dev_state > AP_DEV_STATE_UNINITIATED)
-+				_ap_queue_init_state(aq);
- 			spin_unlock_bh(&aq->lock);
- 			AP_DBF_DBG("%s(%d,%d) queue dev config on\n",
- 				   __func__, ac->id, dom);
-diff --git a/drivers/s390/crypto/ap_bus.h b/drivers/s390/crypto/ap_bus.h
-index 0d7b7eb374ad1..ff6fc0b2d38fd 100644
---- a/drivers/s390/crypto/ap_bus.h
-+++ b/drivers/s390/crypto/ap_bus.h
-@@ -301,6 +301,7 @@ struct ap_queue *ap_queue_create(ap_qid_t qid, int device_type);
- void ap_queue_prepare_remove(struct ap_queue *aq);
- void ap_queue_remove(struct ap_queue *aq);
- void ap_queue_init_state(struct ap_queue *aq);
-+void _ap_queue_init_state(struct ap_queue *aq);
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 8c7c2c3c6c652..b56417276042d 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1624,6 +1624,8 @@ struct msix_entry {
+ 	u16	entry;	/* Driver uses to specify entry, OS writes */
+ };
  
- struct ap_card *ap_card_create(int id, int queue_depth, int raw_type,
- 			       int comp_type, unsigned int functions, int ml);
-diff --git a/drivers/s390/crypto/ap_queue.c b/drivers/s390/crypto/ap_queue.c
-index 30df83735adf3..9cc144d154dc0 100644
---- a/drivers/s390/crypto/ap_queue.c
-+++ b/drivers/s390/crypto/ap_queue.c
-@@ -1205,14 +1205,19 @@ void ap_queue_remove(struct ap_queue *aq)
- 	spin_unlock_bh(&aq->lock);
- }
++struct msi_domain_template;
++
+ #ifdef CONFIG_PCI_MSI
+ int pci_msi_vec_count(struct pci_dev *dev);
+ void pci_disable_msi(struct pci_dev *dev);
+@@ -1656,6 +1658,11 @@ void pci_msix_free_irq(struct pci_dev *pdev, struct msi_map map);
+ void pci_free_irq_vectors(struct pci_dev *dev);
+ int pci_irq_vector(struct pci_dev *dev, unsigned int nr);
+ const struct cpumask *pci_irq_get_affinity(struct pci_dev *pdev, int vec);
++bool pci_create_ims_domain(struct pci_dev *pdev, const struct msi_domain_template *template,
++			   unsigned int hwsize, void *data);
++struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev, union msi_instance_cookie *icookie,
++				 const struct irq_affinity_desc *affdesc);
++void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map);
  
--void ap_queue_init_state(struct ap_queue *aq)
-+void _ap_queue_init_state(struct ap_queue *aq)
+ #else
+ static inline int pci_msi_vec_count(struct pci_dev *dev) { return -ENOSYS; }
+@@ -1719,6 +1726,25 @@ static inline const struct cpumask *pci_irq_get_affinity(struct pci_dev *pdev,
  {
--	spin_lock_bh(&aq->lock);
- 	aq->dev_state = AP_DEV_STATE_OPERATING;
- 	aq->sm_state = AP_SM_STATE_RESET_START;
- 	aq->last_err_rc = 0;
- 	aq->assoc_idx = ASSOC_IDX_INVALID;
- 	ap_wait(ap_sm_event(aq, AP_SM_EVENT_POLL));
+ 	return cpu_possible_mask;
+ }
++
++static inline bool pci_create_ims_domain(struct pci_dev *pdev,
++					 const struct msi_domain_template *template,
++					 unsigned int hwsize, void *data)
++{ return false; }
++
++static inline struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev,
++					       union msi_instance_cookie *icookie,
++					       const struct irq_affinity_desc *affdesc)
++{
++	struct msi_map map = { .index = -ENOSYS, };
++
++	return map;
 +}
 +
-+void ap_queue_init_state(struct ap_queue *aq)
++static inline void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map)
 +{
-+	spin_lock_bh(&aq->lock);
-+	_ap_queue_init_state(aq);
- 	spin_unlock_bh(&aq->lock);
- }
- EXPORT_SYMBOL(ap_queue_init_state);
++}
++
+ #endif
+ 
+ /**
+@@ -2616,14 +2642,6 @@ static inline bool pci_is_thunderbolt_attached(struct pci_dev *pdev)
+ void pci_uevent_ers(struct pci_dev *pdev, enum  pci_ers_result err_type);
+ #endif
+ 
+-struct msi_domain_template;
+-
+-bool pci_create_ims_domain(struct pci_dev *pdev, const struct msi_domain_template *template,
+-			   unsigned int hwsize, void *data);
+-struct msi_map pci_ims_alloc_irq(struct pci_dev *pdev, union msi_instance_cookie *icookie,
+-				 const struct irq_affinity_desc *affdesc);
+-void pci_ims_free_irq(struct pci_dev *pdev, struct msi_map map);
+-
+ #include <linux/dma-mapping.h>
+ 
+ #define pci_printk(level, pdev, fmt, arg...) \
 -- 
 2.42.0
 
