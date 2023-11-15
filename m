@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A822143AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD7843AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmtZT4GX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540F0C433CC;
-	Wed, 15 Nov 2023 20:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGbOgZAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066B4C43391;
+	Wed, 15 Nov 2023 20:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081229;
-	bh=1C0x11Vkyzd5ZdjiPA/Nno1cNE5XSnHdIe61a+zls+E=;
+	s=korg; t=1700081231;
+	bh=j3sO1PSUnt5dZaTcgwK7U0EYNWc+u6wlk2tvS+mMx2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AmtZT4GX2Xrs08+ioVBGAiNXZWOM/vhS7Jj6IqILgqCKYIjwK7YxBK6caQJ/yPGSp
-	 wpuHwlq8V3X1/mleOfYW6ZXuCTQY3h4oGwNvj/rZnviFH5Kg+xJmnpU2KF90Laz+Lf
-	 qsrmOQBPZUC2YDqXT1sDaGBW1SC+thWxbOFkjF1g=
+	b=nGbOgZApRvuvFP8MIlPv7D71ZUWBfUuxNgyOAJU4gtehTOTzOB8v09d7SNUt0NcSx
+	 uc/byvmN50bC3WOp6jcv4jy9FGrk1z9e9sERQH2yfMChNJf9ioKYbqPFfxdHK4QcId
+	 ggXhFd10IKot/HoP51X71Ateqzl/oyhRGMRWD4hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Neal Cardwell <ncardwell@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/244] tcp_metrics: add missing barriers on delete
-Date: Wed, 15 Nov 2023 15:33:41 -0500
-Message-ID: <20231115203550.120848358@linuxfoundation.org>
+Subject: [PATCH 5.15 030/244] tcp_metrics: properly set tp->snd_ssthresh in tcp_init_metrics()
+Date: Wed, 15 Nov 2023 15:33:42 -0500
+Message-ID: <20231115203550.186199437@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -46,43 +46,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cbc3a153222805d65f821e10f4f78b6afce06f86 ]
+[ Upstream commit 081480014a64a69d901f8ef1ffdd56d6085cf87e ]
 
-When removing an item from RCU protected list, we must prevent
-store-tearing, using rcu_assign_pointer() or WRITE_ONCE().
+We need to set tp->snd_ssthresh to TCP_INFINITE_SSTHRESH
+in the case tcp_get_metrics() fails for some reason.
 
-Fixes: 04f721c671656 ("tcp_metrics: Rewrite tcp_metrics_flush_all")
+Fixes: 9ad7c049f0f7 ("tcp: RFC2988bis + taking RTT sample from 3WHS for the passive open side")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
 Acked-by: Neal Cardwell <ncardwell@google.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_metrics.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 5df97aaac252e..0275bf7570b4c 100644
+index 0275bf7570b4c..940f75df19358 100644
 --- a/net/ipv4/tcp_metrics.c
 +++ b/net/ipv4/tcp_metrics.c
-@@ -908,7 +908,7 @@ static void tcp_metrics_flush_all(struct net *net)
- 			match = net ? net_eq(tm_net(tm), net) :
- 				!refcount_read(&tm_net(tm)->ns.count);
- 			if (match) {
--				*pp = tm->tcpm_next;
-+				rcu_assign_pointer(*pp, tm->tcpm_next);
- 				kfree_rcu(tm, rcu_head);
- 			} else {
- 				pp = &tm->tcpm_next;
-@@ -949,7 +949,7 @@ static int tcp_metrics_nl_cmd_del(struct sk_buff *skb, struct genl_info *info)
- 		if (addr_same(&tm->tcpm_daddr, &daddr) &&
- 		    (!src || addr_same(&tm->tcpm_saddr, &saddr)) &&
- 		    net_eq(tm_net(tm), net)) {
--			*pp = tm->tcpm_next;
-+			rcu_assign_pointer(*pp, tm->tcpm_next);
- 			kfree_rcu(tm, rcu_head);
- 			found = true;
- 		} else {
+@@ -470,6 +470,10 @@ void tcp_init_metrics(struct sock *sk)
+ 	u32 val, crtt = 0; /* cached RTT scaled by 8 */
+ 
+ 	sk_dst_confirm(sk);
++	/* ssthresh may have been reduced unnecessarily during.
++	 * 3WHS. Restore it back to its initial default.
++	 */
++	tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
+ 	if (!dst)
+ 		goto reset;
+ 
+@@ -489,11 +493,6 @@ void tcp_init_metrics(struct sock *sk)
+ 		tp->snd_ssthresh = val;
+ 		if (tp->snd_ssthresh > tp->snd_cwnd_clamp)
+ 			tp->snd_ssthresh = tp->snd_cwnd_clamp;
+-	} else {
+-		/* ssthresh may have been reduced unnecessarily during.
+-		 * 3WHS. Restore it back to its initial default.
+-		 */
+-		tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
+ 	}
+ 	val = tcp_metric_get(tm, TCP_METRIC_REORDERING);
+ 	if (val && tp->reordering != val)
 -- 
 2.42.0
 
