@@ -1,51 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEA4250EA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA0628369
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpPOyX2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581F4C4E766;
-	Wed, 15 Nov 2023 20:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yazz1YrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3ECEC4E767;
+	Wed, 15 Nov 2023 20:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081530;
-	bh=CwlplymFscvSx4zMfr8ymK4Lpk3u9bzi2gT7nP+52M4=;
+	s=korg; t=1700081532;
+	bh=z1LwIgIdXbqKyYAE0vwNSa0N1Rrb6MHiRq+fvauE+o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpPOyX2J4DlA4OO4Yih/xRqw/2x/6tK9FfP7Z2ZoFxejaMckGt+rcIhMOV0LG0jzb
-	 WxdWWO8RWIua/NnrtyV6AHL1SIO1yD6gP2MsV0puNYPSvZdLNqAbl8VD5Eg7OBQNw/
-	 eOT0NgoLdjrGOJvpF8PfBCddPSSSZ0vM2srUzEqQ=
+	b=yazz1YrWf1iVAL1KAKGLVNXuCIJa6qfE8BDqQG6vplR14k8cMt2XwkVHuS0f/m5Fh
+	 nGEFETIMGu9fHTE0cUv9rOT5ehhoi4sbCQQ+b7CvDD1KBMZaK9vMqjVs/UeheCK0a0
+	 b6PNbuoZFyQABLj8SslxLij0EaW8g5U+bDGjWsm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	German Gomez <german.gomez@arm.com>,
-	James Clark <james.clark@arm.com>,
-	Nick Terrell <terrelln@fb.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Changbin Du <changbin.du@huawei.com>,
-	liuwenyu <liuwenyu7@huawei.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 192/244] perf machine: Avoid out of bounds LBR memory read
-Date: Wed, 15 Nov 2023 15:36:24 -0500
-Message-ID: <20231115203559.884610855@linuxfoundation.org>
+Subject: [PATCH 5.15 210/244] pwm: brcmstb: Utilize appropriate clock APIs in suspend/resume
+Date: Wed, 15 Nov 2023 15:36:42 -0500
+Message-ID: <20231115203600.958572508@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -58,81 +37,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit ab8ce150781d326c6bfbe1e09f175ffde1186f80 ]
+[ Upstream commit e9bc4411548aaa738905d37851a0146c16b3bb21 ]
 
-Running perf top with address sanitizer and "--call-graph=lbr" fails
-due to reading sample 0 when no samples exist. Add a guard to prevent
-this.
+The suspend/resume functions currently utilize
+clk_disable()/clk_enable() respectively which may be no-ops with certain
+clock providers such as SCMI. Fix this to use clk_disable_unprepare()
+and clk_prepare_enable() respectively as we should.
 
-Fixes: e2b23483eb1d ("perf machine: Factor out lbr_callchain_add_lbr_ip()")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Sandipan Das <sandipan.das@amd.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Nick Terrell <terrelln@fb.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Changbin Du <changbin.du@huawei.com>
-Cc: liuwenyu <liuwenyu7@huawei.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20231024222353.3024098-3-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 3a9f5957020f ("pwm: Add Broadcom BCM7038 PWM controller support")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/pwm/pwm-brcmstb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 55a041329990c..a0df9d24b2cb4 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -2437,16 +2437,18 @@ static int lbr_callchain_add_lbr_ip(struct thread *thread,
- 		save_lbr_cursor_node(thread, cursor, i);
- 	}
+diff --git a/drivers/pwm/pwm-brcmstb.c b/drivers/pwm/pwm-brcmstb.c
+index 3b529f82b97c9..202e2d013685f 100644
+--- a/drivers/pwm/pwm-brcmstb.c
++++ b/drivers/pwm/pwm-brcmstb.c
+@@ -294,7 +294,7 @@ static int brcmstb_pwm_suspend(struct device *dev)
+ {
+ 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
  
--	/* Add LBR ip from first entries.to */
--	ip = entries[0].to;
--	flags = &entries[0].flags;
--	*branch_from = entries[0].from;
--	err = add_callchain_ip(thread, cursor, parent,
--			       root_al, &cpumode, ip,
--			       true, flags, NULL,
--			       *branch_from);
--	if (err)
--		return err;
-+	if (lbr_nr > 0) {
-+		/* Add LBR ip from first entries.to */
-+		ip = entries[0].to;
-+		flags = &entries[0].flags;
-+		*branch_from = entries[0].from;
-+		err = add_callchain_ip(thread, cursor, parent,
-+				root_al, &cpumode, ip,
-+				true, flags, NULL,
-+				*branch_from);
-+		if (err)
-+			return err;
-+	}
+-	clk_disable(p->clk);
++	clk_disable_unprepare(p->clk);
+ 
+ 	return 0;
+ }
+@@ -303,7 +303,7 @@ static int brcmstb_pwm_resume(struct device *dev)
+ {
+ 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
+ 
+-	clk_enable(p->clk);
++	clk_prepare_enable(p->clk);
  
  	return 0;
  }
