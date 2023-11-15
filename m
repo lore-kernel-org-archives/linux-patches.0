@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CD935F15
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3941B35F15
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vtbDJ6B9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF246C433C9;
-	Wed, 15 Nov 2023 22:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2YcryU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E52DC433C7;
+	Wed, 15 Nov 2023 22:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085724;
-	bh=7950+UY/eqG7wYq69gvMkEdeJDplQRgPADBzsYyK2no=;
+	s=korg; t=1700085725;
+	bh=xF/oqlzr0aF8BOCQ5ClGhTpl6kGIzzimYPz8it3SnkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vtbDJ6B90aLBj5iTNm5VKark4koVlvde2mE4lMboLap8MG4RrGEMSu2L7A9wDACyv
-	 pIHkl4Rvfgff6JiURCyS894w2681WOpKg1TwlIV1uLvA6c9595DOARPoGrdGwIdaCV
-	 KDb9w/NKzMTiRh0PXQoUdOPI4ibQRTkuAwuO41O0=
+	b=K2YcryU3ZHo9l3k3z6WiCz9EihLH8f0aX/U0K38PlFRdiLjPADqmQNsKMIxMkYIPu
+	 1joSniOCp9tbOoLb52ukA7xYqgdj2whbAo0dPagxhIPS1W3+mkTBbnU8ktKeaHH31g
+	 MAo7FO9a2SQrlG9Bv2XeQYgNiu+T2btseZz+Q4ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 012/119] can: dev: can_restart(): fix race condition between controller restart and netif_carrier_on()
-Date: Wed, 15 Nov 2023 17:00:02 -0500
-Message-ID: <20231115220132.985628535@linuxfoundation.org>
+Subject: [PATCH 5.4 013/119] thermal: core: prevent potential string overflow
+Date: Wed, 15 Nov 2023 17:00:03 -0500
+Message-ID: <20231115220133.019106038@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -42,99 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 6841cab8c4504835e4011689cbdb3351dec693fd ]
+[ Upstream commit c99626092efca3061b387043d4a7399bf75fbdd5 ]
 
-This race condition was discovered while updating the at91_can driver
-to use can_bus_off(). The following scenario describes how the
-converted at91_can driver would behave.
+The dev->id value comes from ida_alloc() so it's a number between zero
+and INT_MAX.  If it's too high then these sprintf()s will overflow.
 
-When a CAN device goes into BUS-OFF state, the driver usually
-stops/resets the CAN device and calls can_bus_off().
-
-This function sets the netif carrier to off, and (if configured by
-user space) schedules a delayed work that calls can_restart() to
-restart the CAN device.
-
-The can_restart() function first checks if the carrier is off and
-triggers an error message if the carrier is OK.
-
-Then it calls the driver's do_set_mode() function to restart the
-device, then it sets the netif carrier to on. There is a race window
-between these two calls.
-
-The at91 CAN controller (observed on the sama5d3, a single core 32 bit
-ARM CPU) has a hardware limitation. If the device goes into bus-off
-while sending a CAN frame, there is no way to abort the sending of
-this frame. After the controller is enabled again, another attempt is
-made to send it.
-
-If the bus is still faulty, the device immediately goes back to the
-bus-off state. The driver calls can_bus_off(), the netif carrier is
-switched off and another can_restart is scheduled. This occurs within
-the race window before the original can_restart() handler marks the
-netif carrier as OK. This would cause the 2nd can_restart() to be
-called with an OK netif carrier, resulting in an error message.
-
-The flow of the 1st can_restart() looks like this:
-
-can_restart()
-    // bail out if netif_carrier is OK
-
-    netif_carrier_ok(dev)
-    priv->do_set_mode(dev, CAN_MODE_START)
-        // enable CAN controller
-        // sama5d3 restarts sending old message
-
-        // CAN devices goes into BUS_OFF, triggers IRQ
-
-// IRQ handler start
-    at91_irq()
-        at91_irq_err_line()
-            can_bus_off()
-                netif_carrier_off()
-                schedule_delayed_work()
-// IRQ handler end
-
-    netif_carrier_on()
-
-The 2nd can_restart() will be called with an OK netif carrier and the
-error message will be printed.
-
-To close the race window, first set the netif carrier to on, then
-restart the controller. In case the restart fails with an error code,
-roll back the netif carrier to off.
-
-Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
-Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-2-91b5c1fd922c@pengutronix.de
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 203d3d4aa482 ("the generic thermal sysfs driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/dev.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/thermal/thermal_core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
-index b0f3bbc1d354f..05a2c873af56d 100644
---- a/drivers/net/can/dev/dev.c
-+++ b/drivers/net/can/dev/dev.c
-@@ -578,11 +578,12 @@ static void can_restart(struct net_device *dev)
- 	priv->can_stats.restarts++;
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index f4490b8120176..450a1eb90af52 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -740,7 +740,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
+ 	if (result)
+ 		goto release_ida;
  
- 	/* Now restart the device */
--	err = priv->do_set_mode(dev, CAN_MODE_START);
--
- 	netif_carrier_on(dev);
--	if (err)
-+	err = priv->do_set_mode(dev, CAN_MODE_START);
-+	if (err) {
- 		netdev_err(dev, "Error %d during restart", err);
-+		netif_carrier_off(dev);
-+	}
- }
+-	sprintf(dev->attr_name, "cdev%d_trip_point", dev->id);
++	snprintf(dev->attr_name, sizeof(dev->attr_name), "cdev%d_trip_point",
++		 dev->id);
+ 	sysfs_attr_init(&dev->attr.attr);
+ 	dev->attr.attr.name = dev->attr_name;
+ 	dev->attr.attr.mode = 0444;
+@@ -749,7 +750,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
+ 	if (result)
+ 		goto remove_symbol_link;
  
- static void can_restart_work(struct work_struct *work)
+-	sprintf(dev->weight_attr_name, "cdev%d_weight", dev->id);
++	snprintf(dev->weight_attr_name, sizeof(dev->weight_attr_name),
++		 "cdev%d_weight", dev->id);
+ 	sysfs_attr_init(&dev->weight_attr.attr);
+ 	dev->weight_attr.attr.name = dev->weight_attr_name;
+ 	dev->weight_attr.attr.mode = S_IWUSR | S_IRUGO;
 -- 
 2.42.0
 
