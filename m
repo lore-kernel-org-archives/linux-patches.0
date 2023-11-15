@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5565535EED
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6141364D1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYcNG4s4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B97C433C8;
-	Wed, 15 Nov 2023 20:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WULhDVMc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E52C433C8;
+	Wed, 15 Nov 2023 20:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081169;
-	bh=BUCyxH5T6W9Sk56fsOyiYxbpvFJdBXcOIDM1cGKDi+M=;
+	s=korg; t=1700081170;
+	bh=jnTR+mRx/2fZAs8dULeecJwLWdGJaKOWxWO097nnXrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYcNG4s4zXV1m9kHqPzxRplCCwNpgQrGPe/woMFKZzP+2gyeiYeOgAf9EQv/Kmiau
-	 9Hx/Bkny2Ue0KkVgl9DaT+djLfrTfIwEdNrjaKoH2vtnpF6jXeS5VaNb1WLpNedZAZ
-	 XGxcTN3UKIE8IjI7/K6Zfd0/mUNvjZRZe9J1Mjis=
+	b=WULhDVMcCrdEVvI4GGOs+Z9SD6ZzkL0kblA9tAi0J9TA/bYZKSOJZsZcv/Kv7EU2Q
+	 AdvGbi69Q3CmXStWk2DaYh966W9eHfx2Ey70fFcLSevv6zV1Go45MN8v+an0nLCRLe
+	 9maGfZ/1DOb0Ro3PuLbqCmv/UDjhcSyPy/gS/+6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Alexandru Ardelean <alexandru.ardelean@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 55/88] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 15 Nov 2023 15:36:07 -0500
-Message-ID: <20231115191429.461060022@linuxfoundation.org>
+Subject: [PATCH 4.19 56/88] tools: iio: privatize globals and functions in iio_generic_buffer.c file
+Date: Wed, 15 Nov 2023 15:36:08 -0500
+Message-ID: <20231115191429.513731015@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -41,63 +42,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Alexandru Ardelean <alexandru.ardelean@analog.com>
 
-[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
+[ Upstream commit ebe5112535b5cf389ca7d337cf6a0c1d885f9880 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with hardware interrupts being disabled.
-So replace kfree_skb() with dev_kfree_skb_irq() under
-spin_lock_irqsave(). Compile tested only.
+Mostly a tidy-up.
+But also helps to understand the limits of scope of these functions and
+globals.
 
-Fixes: 53618cc1e51e ("Staging: sources for ST core")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Link: https://lore.kernel.org/r/20210215104043.91251-24-alexandru.ardelean@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 2d3dff577dd0 ("tools: iio: iio_generic_buffer ensure alignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ti-st/st_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/iio/iio_generic_buffer.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
-index eda8d407be287..e5fbd61f69c8e 100644
---- a/drivers/misc/ti-st/st_core.c
-+++ b/drivers/misc/ti-st/st_core.c
-@@ -28,6 +28,7 @@
- #include <linux/skbuff.h>
+diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
+index 84545666a09c4..9a5af0f6592dc 100644
+--- a/tools/iio/iio_generic_buffer.c
++++ b/tools/iio/iio_generic_buffer.c
+@@ -53,7 +53,7 @@ enum autochan {
+  * Has the side effect of filling the channels[i].location values used
+  * in processing the buffer output.
+  **/
+-int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
++static int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+ {
+ 	int bytes = 0;
+ 	int i = 0;
+@@ -72,7 +72,7 @@ int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+ 	return bytes;
+ }
  
- #include <linux/ti_wilink_st.h>
-+#include <linux/netdevice.h>
- 
- extern void st_kim_recv(void *, const unsigned char *, long);
- void st_int_recv(void *, const unsigned char *, long);
-@@ -436,7 +437,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	case ST_LL_AWAKE_TO_ASLEEP:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	case ST_LL_ASLEEP:
- 		skb_queue_tail(&st_gdata->tx_waitq, skb);
-@@ -445,7 +446,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	default:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
+-void print1byte(uint8_t input, struct iio_channel_info *info)
++static void print1byte(uint8_t input, struct iio_channel_info *info)
+ {
+ 	/*
+ 	 * Shift before conversion to avoid sign extension
+@@ -89,7 +89,7 @@ void print1byte(uint8_t input, struct iio_channel_info *info)
  	}
+ }
  
-@@ -499,7 +500,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
- 				spin_unlock_irqrestore(&st_data->lock, flags);
- 				break;
- 			}
--			kfree_skb(skb);
-+			dev_kfree_skb_irq(skb);
- 			spin_unlock_irqrestore(&st_data->lock, flags);
- 		}
- 		/* if wake-up is set in another context- restart sending */
+-void print2byte(uint16_t input, struct iio_channel_info *info)
++static void print2byte(uint16_t input, struct iio_channel_info *info)
+ {
+ 	/* First swap if incorrect endian */
+ 	if (info->be)
+@@ -112,7 +112,7 @@ void print2byte(uint16_t input, struct iio_channel_info *info)
+ 	}
+ }
+ 
+-void print4byte(uint32_t input, struct iio_channel_info *info)
++static void print4byte(uint32_t input, struct iio_channel_info *info)
+ {
+ 	/* First swap if incorrect endian */
+ 	if (info->be)
+@@ -135,7 +135,7 @@ void print4byte(uint32_t input, struct iio_channel_info *info)
+ 	}
+ }
+ 
+-void print8byte(uint64_t input, struct iio_channel_info *info)
++static void print8byte(uint64_t input, struct iio_channel_info *info)
+ {
+ 	/* First swap if incorrect endian */
+ 	if (info->be)
+@@ -171,9 +171,8 @@ void print8byte(uint64_t input, struct iio_channel_info *info)
+  *			      to fill the location offsets.
+  * @num_channels:	number of channels
+  **/
+-void process_scan(char *data,
+-		  struct iio_channel_info *channels,
+-		  int num_channels)
++static void process_scan(char *data, struct iio_channel_info *channels,
++			 int num_channels)
+ {
+ 	int k;
+ 
+@@ -242,7 +241,7 @@ static int enable_disable_all_channels(char *dev_dir_name, int enable)
+ 	return 0;
+ }
+ 
+-void print_usage(void)
++static void print_usage(void)
+ {
+ 	fprintf(stderr, "Usage: generic_buffer [options]...\n"
+ 		"Capture, convert and output data from IIO device buffer\n"
+@@ -261,12 +260,12 @@ void print_usage(void)
+ 		"  -w <n>     Set delay between reads in us (event-less mode)\n");
+ }
+ 
+-enum autochan autochannels = AUTOCHANNELS_DISABLED;
+-char *dev_dir_name = NULL;
+-char *buf_dir_name = NULL;
+-bool current_trigger_set = false;
++static enum autochan autochannels = AUTOCHANNELS_DISABLED;
++static char *dev_dir_name = NULL;
++static char *buf_dir_name = NULL;
++static bool current_trigger_set = false;
+ 
+-void cleanup(void)
++static void cleanup(void)
+ {
+ 	int ret;
+ 
+@@ -298,14 +297,14 @@ void cleanup(void)
+ 	}
+ }
+ 
+-void sig_handler(int signum)
++static void sig_handler(int signum)
+ {
+ 	fprintf(stderr, "Caught signal %d\n", signum);
+ 	cleanup();
+ 	exit(-signum);
+ }
+ 
+-void register_cleanup(void)
++static void register_cleanup(void)
+ {
+ 	struct sigaction sa = { .sa_handler = sig_handler };
+ 	const int signums[] = { SIGINT, SIGTERM, SIGABRT };
 -- 
 2.42.0
 
