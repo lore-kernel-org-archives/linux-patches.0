@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695CD3309F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66993309F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2kP9M1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16918C433C8;
-	Wed, 15 Nov 2023 19:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yI4axj2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87699C433C7;
+	Wed, 15 Nov 2023 19:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077657;
-	bh=KMN9Fk2dKNYNOMuZPHd+XVtU+gU05+UVLaZP8TMsKBY=;
+	s=korg; t=1700077658;
+	bh=CTMIfyh8FABZ9yUysnEkPN9aRuXHzax/o51JLcOm7hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2kP9M1+L5CqVygSWLPmmpoSuyF+EDCagS/WQauckSmYEEONDUoQKTBTF+9XIbg9Z
-	 MJyfEJRIFGE6XKV2C6guTXk6Wdo7q70z4DN5s6ThYB7rb2wDSsGNJjUTFg9ShLFo9i
-	 NQeEocCDztv2H93V8Wl3B6vloQrUrPCJldVinJPw=
+	b=yI4axj2crVgj41UA9Kqcmx7p0s6JuPXRVAhiqBXojfLyEVyJETQxgyVrJqfxrAAsO
+	 OS8GG8qW0B0hNCkFXDd4dqKzehU6Z8ejniB59Zyxgkab5xQs3ag+4tBceuUjHrx5sc
+	 oC9ujVdxsIHKVlPRrBhPMslk6DPYRbCsaf0bTqsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 437/603] usb: chipidea: Fix DMA overwrite for Tegra
-Date: Wed, 15 Nov 2023 14:16:22 -0500
-Message-ID: <20231115191643.081010141@linuxfoundation.org>
+Subject: [PATCH 6.6 438/603] usb: chipidea: Simplify Tegra DMA alignment code
+Date: Wed, 15 Nov 2023 14:16:23 -0500
+Message-ID: <20231115191643.142416714@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,95 +44,131 @@ Content-Transfer-Encoding: 8bit
 
 From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
 
-[ Upstream commit 7ab8716713c931ac79988f2592e1cf8b2e4fec1b ]
+[ Upstream commit 2ae61a2562c0d1720545b0845829a65fb6a9c2c6 ]
 
-Tegra USB controllers seem to issue DMA in full 32-bit words only and thus
-may overwrite unevenly-sized buffers.  One such occurrence is detected by
-SLUB when receiving a reply to a 1-byte buffer (below).  Fix this by
-allocating a bounce buffer also for buffers with sizes not a multiple of 4.
-
-=============================================================================
-BUG kmalloc-64 (Tainted: G    B             ): kmalloc Redzone overwritten
------------------------------------------------------------------------------
-
-0x8555cd02-0x8555cd03 @offset=3330. First byte 0x0 instead of 0xcc
-Allocated in usb_get_status+0x2b/0xac age=1 cpu=3 pid=41
- __kmem_cache_alloc_node+0x12f/0x1e4
- __kmalloc+0x33/0x8c
- usb_get_status+0x2b/0xac
- hub_probe+0x5e9/0xcec
- usb_probe_interface+0xbf/0x21c
- really_probe+0xa5/0x2c4
- __driver_probe_device+0x75/0x174
- driver_probe_device+0x31/0x94
- __device_attach_driver+0x65/0xc0
- bus_for_each_drv+0x4b/0x74
- __device_attach+0x69/0x120
- bus_probe_device+0x65/0x6c
- device_add+0x48b/0x5f8
- usb_set_configuration+0x37b/0x6b4
- usb_generic_driver_probe+0x37/0x68
- usb_probe_device+0x35/0xb4
-Slab 0xbf622b80 objects=21 used=18 fp=0x8555cdc0 flags=0x800(slab|zone=0)
-Object 0x8555cd00 @offset=3328 fp=0x00000000
-
-Redzone  8555ccc0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555ccd0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555cce0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555ccf0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd00: 01 00 00 00 cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd10: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd20: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd30: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555cd40: cc cc cc cc                                      ....
-Padding  8555cd74: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
-CPU: 3 PID: 41 Comm: kworker/3:1 Tainted: G    B              6.6.0-rc1mq-00118-g59786f827ea1 #1115
-Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
-Workqueue: usb_hub_wq hub_event
-[<8010ca28>] (unwind_backtrace) from [<801090a5>] (show_stack+0x11/0x14)
-[<801090a5>] (show_stack) from [<805da2fb>] (dump_stack_lvl+0x4d/0x7c)
-[<805da2fb>] (dump_stack_lvl) from [<8026464f>] (check_bytes_and_report+0xb3/0xe4)
-[<8026464f>] (check_bytes_and_report) from [<802648e1>] (check_object+0x261/0x290)
-[<802648e1>] (check_object) from [<802671b1>] (free_to_partial_list+0x105/0x3f8)
-[<802671b1>] (free_to_partial_list) from [<80268613>] (__kmem_cache_free+0x103/0x128)
-[<80268613>] (__kmem_cache_free) from [<80425a67>] (usb_get_status+0x73/0xac)
-[<80425a67>] (usb_get_status) from [<80421b31>] (hub_probe+0x5e9/0xcec)
-[<80421b31>] (hub_probe) from [<80428bbb>] (usb_probe_interface+0xbf/0x21c)
-[<80428bbb>] (usb_probe_interface) from [<803ee13d>] (really_probe+0xa5/0x2c4)
-[<803ee13d>] (really_probe) from [<803ee3d1>] (__driver_probe_device+0x75/0x174)
-[<803ee3d1>] (__driver_probe_device) from [<803ee501>] (driver_probe_device+0x31/0x94)
-usb 1-1: device descriptor read/8, error -71
+The USB host on Tegra3 works with 32-bit alignment. Previous code tried
+to align the buffer, but it did align the wrapper struct instead, so
+the buffer was at a constant offset of 8 bytes (two pointers) from
+expected alignment.  Since kmalloc() guarantees at least 8-byte
+alignment already, the alignment-extending is removed.
 
 Fixes: fc53d5279094 ("usb: chipidea: tegra: Support host mode")
 Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
-Link: https://lore.kernel.org/r/ef8466b834c1726f5404c95c3e192e90460146f8.1695934946.git.mirq-linux@rere.qmqm.pl
+Link: https://lore.kernel.org/r/a0d917d492b1f91ee0019e68b8e8bca9c585393f.1695934946.git.mirq-linux@rere.qmqm.pl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/host.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/chipidea/host.c | 45 +++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/usb/chipidea/host.c b/drivers/usb/chipidea/host.c
-index 08af26b762a2d..abddd39d1ff1e 100644
+index abddd39d1ff1e..0cce192083701 100644
 --- a/drivers/usb/chipidea/host.c
 +++ b/drivers/usb/chipidea/host.c
-@@ -411,12 +411,13 @@ static int ci_hdrc_alloc_dma_aligned_buffer(struct urb *urb, gfp_t mem_flags)
- 	const unsigned int ci_hdrc_usb_dma_align = 32;
- 	size_t kmalloc_size;
+@@ -30,8 +30,7 @@ struct ehci_ci_priv {
+ };
  
--	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0 ||
--	    !((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)))
-+	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0)
-+		return 0;
-+	if (!((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)) && !(urb->transfer_buffer_length & 3))
+ struct ci_hdrc_dma_aligned_buffer {
+-	void *kmalloc_ptr;
+-	void *old_xfer_buffer;
++	void *original_buffer;
+ 	u8 data[];
+ };
+ 
+@@ -380,60 +379,52 @@ static int ci_ehci_bus_suspend(struct usb_hcd *hcd)
+ 	return 0;
+ }
+ 
+-static void ci_hdrc_free_dma_aligned_buffer(struct urb *urb)
++static void ci_hdrc_free_dma_aligned_buffer(struct urb *urb, bool copy_back)
+ {
+ 	struct ci_hdrc_dma_aligned_buffer *temp;
+-	size_t length;
+ 
+ 	if (!(urb->transfer_flags & URB_ALIGNED_TEMP_BUFFER))
+ 		return;
++	urb->transfer_flags &= ~URB_ALIGNED_TEMP_BUFFER;
+ 
+ 	temp = container_of(urb->transfer_buffer,
+ 			    struct ci_hdrc_dma_aligned_buffer, data);
++	urb->transfer_buffer = temp->original_buffer;
++
++	if (copy_back && usb_urb_dir_in(urb)) {
++		size_t length;
+ 
+-	if (usb_urb_dir_in(urb)) {
+ 		if (usb_pipeisoc(urb->pipe))
+ 			length = urb->transfer_buffer_length;
+ 		else
+ 			length = urb->actual_length;
+ 
+-		memcpy(temp->old_xfer_buffer, temp->data, length);
++		memcpy(temp->original_buffer, temp->data, length);
+ 	}
+-	urb->transfer_buffer = temp->old_xfer_buffer;
+-	kfree(temp->kmalloc_ptr);
+ 
+-	urb->transfer_flags &= ~URB_ALIGNED_TEMP_BUFFER;
++	kfree(temp);
+ }
+ 
+ static int ci_hdrc_alloc_dma_aligned_buffer(struct urb *urb, gfp_t mem_flags)
+ {
+-	struct ci_hdrc_dma_aligned_buffer *temp, *kmalloc_ptr;
+-	const unsigned int ci_hdrc_usb_dma_align = 32;
+-	size_t kmalloc_size;
++	struct ci_hdrc_dma_aligned_buffer *temp;
+ 
+ 	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0)
+ 		return 0;
+-	if (!((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)) && !(urb->transfer_buffer_length & 3))
++	if (IS_ALIGNED((uintptr_t)urb->transfer_buffer, 4)
++	    && IS_ALIGNED(urb->transfer_buffer_length, 4))
  		return 0;
  
- 	/* Allocate a buffer with enough padding for alignment */
--	kmalloc_size = urb->transfer_buffer_length +
-+	kmalloc_size = ALIGN(urb->transfer_buffer_length, 4) +
- 		       sizeof(struct ci_hdrc_dma_aligned_buffer) +
- 		       ci_hdrc_usb_dma_align - 1;
+-	/* Allocate a buffer with enough padding for alignment */
+-	kmalloc_size = ALIGN(urb->transfer_buffer_length, 4) +
+-		       sizeof(struct ci_hdrc_dma_aligned_buffer) +
+-		       ci_hdrc_usb_dma_align - 1;
+-
+-	kmalloc_ptr = kmalloc(kmalloc_size, mem_flags);
+-	if (!kmalloc_ptr)
++	temp = kmalloc(sizeof(*temp) + ALIGN(urb->transfer_buffer_length, 4), mem_flags);
++	if (!temp)
+ 		return -ENOMEM;
  
+-	/* Position our struct dma_aligned_buffer such that data is aligned */
+-	temp = PTR_ALIGN(kmalloc_ptr + 1, ci_hdrc_usb_dma_align) - 1;
+-	temp->kmalloc_ptr = kmalloc_ptr;
+-	temp->old_xfer_buffer = urb->transfer_buffer;
+ 	if (usb_urb_dir_out(urb))
+ 		memcpy(temp->data, urb->transfer_buffer,
+ 		       urb->transfer_buffer_length);
+-	urb->transfer_buffer = temp->data;
+ 
++	temp->original_buffer = urb->transfer_buffer;
++	urb->transfer_buffer = temp->data;
+ 	urb->transfer_flags |= URB_ALIGNED_TEMP_BUFFER;
+ 
+ 	return 0;
+@@ -450,7 +441,7 @@ static int ci_hdrc_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
+ 
+ 	ret = usb_hcd_map_urb_for_dma(hcd, urb, mem_flags);
+ 	if (ret)
+-		ci_hdrc_free_dma_aligned_buffer(urb);
++		ci_hdrc_free_dma_aligned_buffer(urb, false);
+ 
+ 	return ret;
+ }
+@@ -458,7 +449,7 @@ static int ci_hdrc_map_urb_for_dma(struct usb_hcd *hcd, struct urb *urb,
+ static void ci_hdrc_unmap_urb_for_dma(struct usb_hcd *hcd, struct urb *urb)
+ {
+ 	usb_hcd_unmap_urb_for_dma(hcd, urb);
+-	ci_hdrc_free_dma_aligned_buffer(urb);
++	ci_hdrc_free_dma_aligned_buffer(urb, true);
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
 -- 
 2.42.0
 
