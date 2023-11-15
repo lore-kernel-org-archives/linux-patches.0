@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448703BB33
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80FC3BB42
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnAQpOT0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA893C433C9;
-	Wed, 15 Nov 2023 19:54:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcMDfUAM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642E8C433C7;
+	Wed, 15 Nov 2023 19:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078065;
-	bh=XEWtEpxrw/WAFqrbGL4/GJJXr/qVjzaa6ItwUfLmnTs=;
+	s=korg; t=1700078066;
+	bh=PVr0/2Lp1wTjamtkL58sglTm3kx0rCxLGdQpqZdOzUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnAQpOT0yfWlEToF+W5ciMY0lE93+cM2GZYR0bXQRo+xwlxoRt3amGqjImyB6+2ET
-	 PRnpFQm8nbJUWjB3xHo2sM2FD0GpjEviuxC4J3xffgNAeYMSDmyoRKofdZMg6G4GDi
-	 xGvRJSeSzL5sADdOVpGukrf7bxygsqXM35pIES2E=
+	b=gcMDfUAMK/e+BNheMDViqiWqSuOu3fN2lyBZykDOCOp6nm0d4VbyE5f4QJyhgNMJC
+	 4sSTHXhhkGPBP+SQ5Y5yEaCCS8exFHAPoY/U55DeAPypvz0pFH/xkan/o8Vd/dXrI4
+	 jDSU9je3nb5p60RSMe3SxOJboRP8Y2JjFd1zwX0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Arseniy Velikanov <adomerlee@gmail.com>,
+	Danila Tikhonov <danila@jiaxyga.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/379] can: dev: can_restart(): dont crash kernel if carrier is OK
-Date: Wed, 15 Nov 2023 14:22:09 -0500
-Message-ID: <20231115192648.357154810@linuxfoundation.org>
+Subject: [PATCH 6.1 082/379] clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
+Date: Wed, 15 Nov 2023 14:22:37 -0500
+Message-ID: <20231115192649.984595007@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,44 +44,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Danila Tikhonov <danila@jiaxyga.com>
 
-[ Upstream commit fe5c9940dfd8ba0c73672dddb30acd1b7a11d4c7 ]
+[ Upstream commit 7138c244fb293f24ce8ab782961022eff00a10c4 ]
 
-During testing, I triggered a can_restart() with the netif carrier
-being OK [1]. The BUG_ON, which checks if the carrier is OK, results
-in a fatal kernel crash. This is neither helpful for debugging nor for
-a production system.
+Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
+didn't update its configuration" error.
 
-[1] The root cause is a race condition in can_restart() which will be
-fixed in the next patch.
-
-Do not crash the kernel, issue an error message instead, and continue
-restarting the CAN device anyway.
-
-Fixes: 39549eef3587 ("can: CAN Network device driver and Netlink interface")
-Link: https://lore.kernel.org/all/20231005-can-dev-fix-can-restart-v2-1-91b5c1fd922c@pengutronix.de
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
+Tested-by: Arseniy Velikanov <adomerlee@gmail.com>
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230913175612.8685-1-danila@jiaxyga.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/dev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sm8150.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
-index c1956b1e9faf7..f36bd9bd98517 100644
---- a/drivers/net/can/dev/dev.c
-+++ b/drivers/net/can/dev/dev.c
-@@ -132,7 +132,8 @@ static void can_restart(struct net_device *dev)
- 	struct can_frame *cf;
- 	int err;
- 
--	BUG_ON(netif_carrier_ok(dev));
-+	if (netif_carrier_ok(dev))
-+		netdev_err(dev, "Attempt to restart for bus-off recovery, but carrier is OK?\n");
- 
- 	/* No synchronization needed because the device is bus-off and
- 	 * no messages can come in or go out.
+diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+index 09cf827addabe..4501c15c4a417 100644
+--- a/drivers/clk/qcom/gcc-sm8150.c
++++ b/drivers/clk/qcom/gcc-sm8150.c
+@@ -792,7 +792,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.name = "gcc_sdcc2_apps_clk_src",
+ 		.parent_data = gcc_parents_6,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_6),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_rcg2_floor_ops,
+ 	},
+ };
 -- 
 2.42.0
 
