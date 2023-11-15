@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5983DB95
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0C63DB95
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6xdoQPT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E526C433C8;
-	Wed, 15 Nov 2023 20:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpvqnTsx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BAAC433C9;
+	Wed, 15 Nov 2023 20:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078451;
-	bh=X3B0DlqR3e35uf/v+ruNY+o5gPEKOiD52orhmE8XkgA=;
+	s=korg; t=1700078453;
+	bh=l19/Vz3ai7rKLktu1bUDF4y7gJZ4tqLVR4xL/ej9/1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6xdoQPTKd+3n3CCtEiRPYIvJx9QMx0rsVoEXBB/yXXWdWWAcofglW6a+nJGvCuUY
-	 zpV4AMxjv0eTDGaXZuVZUf4Vd1wOkoBNLtrVwFWczhCoJ/rRPF6d+Bsg93Wnwy4UrI
-	 uxx7FTIZ6PJYD1mmUyDzIrPviDDiQOjhpsWavSmI=
+	b=zpvqnTsxeBtYwct3uADoD4QmuEKWaIoWblcXcwnGrKAH5HhhfuQhYqJzvpb0v6jU8
+	 VACsw3CISFvDJvL8P7s8ucGrHdh0JNoofv+KI/HQq/wh1SA8r4XgIlgLxtqnktftYw
+	 LZOsKo48vViqbd5HWtlAjjTGx9WoI7w4GLLtRmzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 305/379] i3c: Fix potential refcount leak in i3c_master_register_new_i3c_devs
-Date: Wed, 15 Nov 2023 14:26:20 -0500
-Message-ID: <20231115192703.191366936@linuxfoundation.org>
+Subject: [PATCH 6.1 306/379] cxl/mem: Fix shutdown order
+Date: Wed, 15 Nov 2023 14:26:21 -0500
+Message-ID: <20231115192703.250704120@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,37 +45,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit cab63f64887616e3c4e31cfd8103320be6ebc8d3 ]
+[ Upstream commit 88d3917f82ed4215a2154432c26de1480a61b209 ]
 
-put_device() needs to be called on failure of device_register()
-to give up the reference initialized in it to avoid refcount leak.
+Ira reports that removing cxl_mock_mem causes a crash with the following
+trace:
 
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20230921082410.25548-1-dinghao.liu@zju.edu.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+ BUG: kernel NULL pointer dereference, address: 0000000000000044
+ [..]
+ RIP: 0010:cxl_region_decode_reset+0x7f/0x180 [cxl_core]
+ [..]
+ Call Trace:
+  <TASK>
+  cxl_region_detach+0xe8/0x210 [cxl_core]
+  cxl_decoder_kill_region+0x27/0x40 [cxl_core]
+  cxld_unregister+0x29/0x40 [cxl_core]
+  devres_release_all+0xb8/0x110
+  device_unbind_cleanup+0xe/0x70
+  device_release_driver_internal+0x1d2/0x210
+  bus_remove_device+0xd7/0x150
+  device_del+0x155/0x3e0
+  device_unregister+0x13/0x60
+  devm_release_action+0x4d/0x90
+  ? __pfx_unregister_port+0x10/0x10 [cxl_core]
+  delete_endpoint+0x121/0x130 [cxl_core]
+  devres_release_all+0xb8/0x110
+  device_unbind_cleanup+0xe/0x70
+  device_release_driver_internal+0x1d2/0x210
+  bus_remove_device+0xd7/0x150
+  device_del+0x155/0x3e0
+  ? lock_release+0x142/0x290
+  cdev_device_del+0x15/0x50
+  cxl_memdev_unregister+0x54/0x70 [cxl_core]
+
+This crash is due to the clearing out the cxl_memdev's driver context
+(@cxlds) before the subsystem is done with it. This is ultimately due to
+the region(s), that this memdev is a member, being torn down and expecting
+to be able to de-reference @cxlds, like here:
+
+static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
+...
+                if (cxlds->rcd)
+                        goto endpoint_reset;
+...
+
+Fix it by keeping the driver context valid until memdev-device
+unregistration, and subsequently the entire stack of related
+dependencies, unwinds.
+
+Fixes: 9cc238c7a526 ("cxl/pci: Introduce cdevm_file_operations")
+Reported-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Tested-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cxl/core/memdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 351c81a929a6c..ab0b5691b03e0 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1508,9 +1508,11 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- 			desc->dev->dev.of_node = desc->boardinfo->of_node;
+diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+index 20ce488a77540..03cf99cce7047 100644
+--- a/drivers/cxl/core/memdev.c
++++ b/drivers/cxl/core/memdev.c
+@@ -214,8 +214,8 @@ static void cxl_memdev_unregister(void *_cxlmd)
+ 	struct cxl_memdev *cxlmd = _cxlmd;
+ 	struct device *dev = &cxlmd->dev;
  
- 		ret = device_register(&desc->dev->dev);
--		if (ret)
-+		if (ret) {
- 			dev_err(&master->dev,
- 				"Failed to add I3C device (err = %d)\n", ret);
-+			put_device(&desc->dev->dev);
-+		}
- 	}
+-	cxl_memdev_shutdown(dev);
+ 	cdev_device_del(&cxlmd->cdev, dev);
++	cxl_memdev_shutdown(dev);
+ 	put_device(dev);
  }
  
 -- 
