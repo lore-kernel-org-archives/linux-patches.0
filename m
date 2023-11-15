@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38293DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650813DBAC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBs5p0Tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E82C433C8;
-	Wed, 15 Nov 2023 19:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuZdSv9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17145C433C8;
+	Wed, 15 Nov 2023 19:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078392;
-	bh=vyCDetnyMyyvAKBo8e4Sq6qY0GVBu1Z2TL7UWGAU1qY=;
+	s=korg; t=1700078394;
+	bh=LvDHmsWPYD7M4kjec7gPEsLcQ4mNMKVtTUeWxpPR6a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBs5p0TjlYotE8165Xappkw0ZgDJ7gbHMxIEhNee7Ig1iNDp2xFc+Ba/8cIlUtPqX
-	 Jx09eIseDb5xyOoiQxvs8zglADj8Lia5vK9DSBJrl49iEtY5xj/Jv4P27Vad2TUD4i
-	 /za1ZQUYFu0RLihW3c7b5IhFL+9EyqoypoiTCT4M=
+	b=JuZdSv9voaf5744pmMpNqQ4x0kc4K5xqZbjuWC7IRsEIT2FTKdHuQFBIACGMiIiLs
+	 TjDAgzTdVKxgtQCN4yPYoVqoRAO/OL+cm+zNq891QhQncFWdjGaN32y0B6lu0uD/gF
+	 rblCq3uthrxGxngeH3fwsC8DLlPYEt4ap6M3sH2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Benjamin Gray <bgray@linux.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 295/379] powerpc/40x: Remove stale PTE_ATOMIC_UPDATES macro
-Date: Wed, 15 Nov 2023 14:26:10 -0500
-Message-ID: <20231115192702.596271968@linuxfoundation.org>
+Subject: [PATCH 6.1 296/379] powerpc/xive: Fix endian conversion size
+Date: Wed, 15 Nov 2023 14:26:11 -0500
+Message-ID: <20231115192702.656169005@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -42,42 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Benjamin Gray <bgray@linux.ibm.com>
 
-[ Upstream commit cc8ee288f484a2a59c01ccd4d8a417d6ed3466e3 ]
+[ Upstream commit ff7a60ab1e065257a0e467c13b519f4debcd7fcf ]
 
-40x TLB handlers were reworked by commit 2c74e2586bb9 ("powerpc/40x:
-Rework 40x PTE access and TLB miss") to not require PTE_ATOMIC_UPDATES
-anymore.
+Sparse reports a size mismatch in the endian swap. The Opal
+implementation[1] passes the value as a __be64, and the receiving
+variable out_qsize is a u64, so the use of be32_to_cpu() appears to be
+an error.
 
-Then commit 4e1df545e2fa ("powerpc/pgtable: Drop PTE_ATOMIC_UPDATES")
-removed all code related to PTE_ATOMIC_UPDATES.
+[1]: https://github.com/open-power/skiboot/blob/80e2b1dc73/hw/xive.c#L3854
 
-Remove left over PTE_ATOMIC_UPDATES macro.
-
-Fixes: 2c74e2586bb9 ("powerpc/40x: Rework 40x PTE access and TLB miss")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Fixes: 88ec6b93c8e7 ("powerpc/xive: add OPAL extensions for the XIVE native exploitation support")
+Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/f061db5857fcd748f84a6707aad01754686ce97e.1695659959.git.christophe.leroy@csgroup.eu
+Link: https://msgid.link/20231011053711.93427-2-bgray@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/nohash/32/pte-40x.h | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/powerpc/sysdev/xive/native.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/nohash/32/pte-40x.h b/arch/powerpc/include/asm/nohash/32/pte-40x.h
-index 2d3153cfc0d79..acf61242e85bf 100644
---- a/arch/powerpc/include/asm/nohash/32/pte-40x.h
-+++ b/arch/powerpc/include/asm/nohash/32/pte-40x.h
-@@ -69,9 +69,6 @@
- 
- #define _PTE_NONE_MASK	0
- 
--/* Until my rework is finished, 40x still needs atomic PTE updates */
--#define PTE_ATOMIC_UPDATES	1
--
- #define _PAGE_BASE_NC	(_PAGE_PRESENT | _PAGE_ACCESSED)
- #define _PAGE_BASE	(_PAGE_BASE_NC)
- 
+diff --git a/arch/powerpc/sysdev/xive/native.c b/arch/powerpc/sysdev/xive/native.c
+index 3925825954bcc..e5baa91ddd07b 100644
+--- a/arch/powerpc/sysdev/xive/native.c
++++ b/arch/powerpc/sysdev/xive/native.c
+@@ -804,7 +804,7 @@ int xive_native_get_queue_info(u32 vp_id, u32 prio,
+ 	if (out_qpage)
+ 		*out_qpage = be64_to_cpu(qpage);
+ 	if (out_qsize)
+-		*out_qsize = be32_to_cpu(qsize);
++		*out_qsize = be64_to_cpu(qsize);
+ 	if (out_qeoi_page)
+ 		*out_qeoi_page = be64_to_cpu(qeoi_page);
+ 	if (out_escalate_irq)
 -- 
 2.42.0
 
