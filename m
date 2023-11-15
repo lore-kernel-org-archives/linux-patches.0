@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C253BB42
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506983BB42
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HH6flqpk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F724C433C7;
-	Wed, 15 Nov 2023 19:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLwhCOgF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD58C433C9;
+	Wed, 15 Nov 2023 19:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076198;
-	bh=JDckLiF4Fav6xzJCXN7fS+kXPABwk9142Uk4avtRk3M=;
+	s=korg; t=1700076200;
+	bh=J/neiRJMQfycXOscHVtJ9oY+GArfUJPIh41bdO/pJdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HH6flqpkwsCErtx0pAO0c+JWinRNZBIkf2tEnCuIvf3k89wgWhX4CDs/Hwql00ufp
-	 iaIc09z3NoPUbtQQiOLHtikiw1uGuqcHcQRVe/gtOoWAks40bT0GYalCav2i8DGHRj
-	 yOS7xJpkJL7+TStjVZkrwqJ3pR3WOyPAGT6lUvjQ=
+	b=fLwhCOgF4FbZ8UyhyxsYu5K8A/+AUOeGaEwlue3Qgpnc34+CM5+YTLeuzUrJCTtnG
+	 uSvquJpJ9GlcSE9paKdWg60rbq+bosEZdcQzfCRRarX6LPrO0EKJdhidgJUEvizVbQ
+	 au2FQlEjzcIgSofSY4Apw1P3RL0KTRviAtAv0ZMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 113/550] wifi: rtw88: Remove duplicate NULL check before calling usb_kill/free_urb()
-Date: Wed, 15 Nov 2023 14:11:37 -0500
-Message-ID: <20231115191608.528138190@linuxfoundation.org>
+Subject: [PATCH 6.5 114/550] thermal: core: prevent potential string overflow
+Date: Wed, 15 Nov 2023 14:11:38 -0500
+Message-ID: <20231115191608.599822323@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,51 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit de8dd096949820ce5656d41ce409a67603e79327 ]
+[ Upstream commit c99626092efca3061b387043d4a7399bf75fbdd5 ]
 
-Both usb_kill_urb() and usb_free_urb() do the NULL check itself, so there
-is no need to duplicate it prior to calling.
+The dev->id value comes from ida_alloc() so it's a number between zero
+and INT_MAX.  If it's too high then these sprintf()s will overflow.
 
-Fixes: a82dfd33d123 ("wifi: rtw88: Add common USB chip support")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Sascha Hauer <s.hauer@pengutronix.de>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231008025852.1239450-1-ruanjinjie@huawei.com
+Fixes: 203d3d4aa482 ("the generic thermal sysfs driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/thermal/thermal_core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
-index c279a500b4bdb..a34bc355fa13d 100644
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -628,8 +628,7 @@ static void rtw_usb_cancel_rx_bufs(struct rtw_usb *rtwusb)
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index cc2b5e81c6205..f66d8439ae9de 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -667,7 +667,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
+ 	if (result)
+ 		goto release_ida;
  
- 	for (i = 0; i < RTW_USB_RXCB_NUM; i++) {
- 		rxcb = &rtwusb->rx_cb[i];
--		if (rxcb->rx_urb)
--			usb_kill_urb(rxcb->rx_urb);
-+		usb_kill_urb(rxcb->rx_urb);
- 	}
- }
+-	sprintf(dev->attr_name, "cdev%d_trip_point", dev->id);
++	snprintf(dev->attr_name, sizeof(dev->attr_name), "cdev%d_trip_point",
++		 dev->id);
+ 	sysfs_attr_init(&dev->attr.attr);
+ 	dev->attr.attr.name = dev->attr_name;
+ 	dev->attr.attr.mode = 0444;
+@@ -676,7 +677,8 @@ int thermal_zone_bind_cooling_device(struct thermal_zone_device *tz,
+ 	if (result)
+ 		goto remove_symbol_link;
  
-@@ -640,10 +639,8 @@ static void rtw_usb_free_rx_bufs(struct rtw_usb *rtwusb)
- 
- 	for (i = 0; i < RTW_USB_RXCB_NUM; i++) {
- 		rxcb = &rtwusb->rx_cb[i];
--		if (rxcb->rx_urb) {
--			usb_kill_urb(rxcb->rx_urb);
--			usb_free_urb(rxcb->rx_urb);
--		}
-+		usb_kill_urb(rxcb->rx_urb);
-+		usb_free_urb(rxcb->rx_urb);
- 	}
- }
- 
+-	sprintf(dev->weight_attr_name, "cdev%d_weight", dev->id);
++	snprintf(dev->weight_attr_name, sizeof(dev->weight_attr_name),
++		 "cdev%d_weight", dev->id);
+ 	sysfs_attr_init(&dev->weight_attr.attr);
+ 	dev->weight_attr.attr.name = dev->weight_attr_name;
+ 	dev->weight_attr.attr.mode = S_IWUSR | S_IRUGO;
 -- 
 2.42.0
 
