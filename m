@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9F731725
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C8B31730
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uy8FHxFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992EDC433C8;
-	Wed, 15 Nov 2023 19:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfUcUL9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52262C433C9;
+	Wed, 15 Nov 2023 19:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077179;
-	bh=LcDfVqeTe9z95DyCRCbKypCoBOdVm8nr5chABh8mjP8=;
+	s=korg; t=1700077181;
+	bh=t8GkKASzv2aBcJqErHTPWY1hYZJMzT4aWKYOpsDxegc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uy8FHxFYFlxQl4TquTIpr30vzKNomWMAVHWedeF6yb+I2Khba7lvAM9Y0hWkCfuKi
-	 w8/5L6dA673C8fc7VnJnkFLz/1mSRLN6kzcpmL+yBQrhVc8G2a6V0Y9fpIt9078lFM
-	 nxYbaihz7KnaK1PBZ5ml94903+V8x5yMvlMRLvEs=
+	b=SfUcUL9EvSTggTyR5jd/qdq82YstI0R2QdhvWKDy4xBX0w6MM7BHOz29ieRMooNne
+	 TY72WYVokjl703xke0E7Jrd+pEsJ02Q0MUC4s55lDmw1Gmr7gGa6xwXdJxg/Pac1sV
+	 A1qkJV7ZYqTnlu3VufwWPmPuuOEXgtHGtmc9lYX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/603] Bluetooth: hci_sync: Fix Opcode prints in bt_dev_dbg/err
-Date: Wed, 15 Nov 2023 14:11:35 -0500
-Message-ID: <20231115191623.568348044@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.5 547/550] Revert "PCI/ASPM: Disable only ASPM_STATE_L1 when driver, disables L1"
+Date: Wed, 15 Nov 2023 14:18:51 -0500
+Message-ID: <20231115191638.839517037@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,55 +37,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marcel Ziswiler <marcel.ziswiler@toradex.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 530886897c789cf77c9a0d4a7cc5549f0768b5f8 ]
+commit 3cb4f534bac010258b2688395c2f13459a932be9 upstream.
 
-Printed Opcodes may be missing leading zeros:
+This reverts commit fb097dcd5a28c0a2325632405c76a66777a6bed9.
 
-	Bluetooth: hci0: Opcode 0x c03 failed: -110
+After fb097dcd5a28 ("PCI/ASPM: Disable only ASPM_STATE_L1 when driver
+disables L1"), disabling L1 via pci_disable_link_state(PCIE_LINK_STATE_L1),
+then enabling one substate, e.g., L1.1, via sysfs actually enables *all*
+the substates.
 
-Fix this by always printing leading zeros:
+For example, r8169 disables L1 because of hardware issues on a number of
+systems, which implicitly disables the L1.1 and L1.2 substates.
 
-	Bluetooth: hci0: Opcode 0x0c03 failed: -110
+On some systems, L1 and L1.1 work fine, but L1.2 causes missed rx packets.
+Enabling L1.1 via the sysfs "aspm_l1_1" attribute unexpectedly enables L1.2
+as well as L1.1.
 
-Fixes: d0b137062b2d ("Bluetooth: hci_sync: Rework init stages")
-Fixes: 6a98e3836fa2 ("Bluetooth: Add helper for serialized HCI command execution")
-Signed-off-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+After fb097dcd5a28, pci_disable_link_state(PCIE_LINK_STATE_L1) adds only
+ASPM_L1 (but not any of the L1.x substates) to the "aspm_disable" mask:
+
+  --- Before fb097dcd5a28
+  +++ After fb097dcd5a28
+
+  # r8169 disables L1:
+    pci_disable_link_state(PCIE_LINK_STATE_L1)
+  -   disable |= ASPM_L1 | ASPM_L1_1 | ASPM_L1_2 | ...  # disable L1, L1.x
+  +   disable |= ASPM_L1                                # disable L1 only
+
+  # write "1" to sysfs "aspm_l1_1" attribute:
+    l1_1_aspm
+      aspm_attr_store_common(state = ASPM_L1_1)
+        disable &= ~ASPM_L1_1              # enable L1.1
+        if (state & (ASPM_L1_1 | ...))     # if enabling any substate
+          disable &= ~ASPM_L1              # enable L1
+
+  # final state:
+  - disable = ASPM_L1_2 | ...              # L1, L1.1 enabled; L1.2 disabled
+  + disable = 0                            # L1, L1.1, L1.2 all enabled
+
+Enabling an L1.x substate removes the substate and L1 from the
+"aspm_disable" mask.  After fb097dcd5a28, the substates were not added to
+the mask when disabling L1, so enabling one substate implicitly enables all
+of them.
+
+Revert fb097dcd5a28 so enabling one substate doesn't enable the others.
+
+Link: https://lore.kernel.org/r/c75931ac-7208-4200-9ca1-821629cf5e28@gmail.com
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+[bhelgaas: work through example in commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/pcie/aspm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index a15ab0b874a9d..9e71362c04b48 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -152,7 +152,7 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
- 	struct sk_buff *skb;
- 	int err = 0;
- 
--	bt_dev_dbg(hdev, "Opcode 0x%4x", opcode);
-+	bt_dev_dbg(hdev, "Opcode 0x%4.4x", opcode);
- 
- 	hci_req_init(&req, hdev);
- 
-@@ -248,7 +248,7 @@ int __hci_cmd_sync_status_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
- 	skb = __hci_cmd_sync_sk(hdev, opcode, plen, param, event, timeout, sk);
- 	if (IS_ERR(skb)) {
- 		if (!event)
--			bt_dev_err(hdev, "Opcode 0x%4x failed: %ld", opcode,
-+			bt_dev_err(hdev, "Opcode 0x%4.4x failed: %ld", opcode,
- 				   PTR_ERR(skb));
- 		return PTR_ERR(skb);
- 	}
--- 
-2.42.0
-
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -1059,7 +1059,8 @@ static int __pci_disable_link_state(stru
+ 	if (state & PCIE_LINK_STATE_L0S)
+ 		link->aspm_disable |= ASPM_STATE_L0S;
+ 	if (state & PCIE_LINK_STATE_L1)
+-		link->aspm_disable |= ASPM_STATE_L1;
++		/* L1 PM substates require L1 */
++		link->aspm_disable |= ASPM_STATE_L1 | ASPM_STATE_L1SS;
+ 	if (state & PCIE_LINK_STATE_L1_1)
+ 		link->aspm_disable |= ASPM_STATE_L1_1;
+ 	if (state & PCIE_LINK_STATE_L1_2)
 
 
