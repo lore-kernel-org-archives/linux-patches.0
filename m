@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A68381BF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5739843AA7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSjZMNOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9DCC4E77B;
-	Wed, 15 Nov 2023 20:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXPxUiJn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B9FAC4E778;
+	Wed, 15 Nov 2023 20:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081625;
-	bh=19DyI3Sl4k+wPYLWt+F5l1h79Sw66jBezo/3jt8iuMs=;
+	s=korg; t=1700081626;
+	bh=RusFOEymhXmN0tJ0DKQeVEdrp2Z+61kxtJmR+ONsP5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kSjZMNOkWEIfeHvgrRDUwV9fgak65IondIN1Yh8U2TP2svCSmuVNYzOzJBLUOkkAp
-	 pAOPnZqnEJ5CxfkCFVQ7ACgBKxlSneiNcNIiZbnjiFM6tK8Xqb2z6/WaA+C48UzT+X
-	 Gb6CcUPj8PsaSELng7qN6TrcxqYN8iVgh71z9ycM=
+	b=cXPxUiJnlX5+mEQ1s0kYNn4DkVncJWK7b8ant0UUx7lYG5SspuvxPv72BoOonx6Oj
+	 vImwUuk5SuTEVBKcY5ndwdvi2m0YUhLlsZszGKfrxVNR36bbWf87TUHyoTHy9r9nZU
+	 JcTL0DKthbWqaILqKemJTvqVpDJcdM+BYXp5nf+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Wolsieffer <ben.wolsieffer@hefring.com>,
+	Yuntao Wang <ytcoode@gmail.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Darren Hart <dvhart@infradead.org>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/191] futex: Dont include process MM in futex key on no-MMU
-Date: Wed, 15 Nov 2023 15:44:40 -0500
-Message-ID: <20231115204644.842650948@linuxfoundation.org>
+Subject: [PATCH 5.10 006/191] x86/boot: Fix incorrect startup_gdt_descr.size
+Date: Wed, 15 Nov 2023 15:44:41 -0500
+Message-ID: <20231115204644.901170414@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -41,64 +37,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+From: Yuntao Wang <ytcoode@gmail.com>
 
-[ Upstream commit c73801ae4f22b390228ebf471d55668e824198b6 ]
+[ Upstream commit 001470fed5959d01faecbd57fcf2f60294da0de1 ]
 
-On no-MMU, all futexes are treated as private because there is no need
-to map a virtual address to physical to match the futex across
-processes. This doesn't quite work though, because private futexes
-include the current process's mm_struct as part of their key. This makes
-it impossible for one process to wake up a shared futex being waited on
-in another process.
+Since the size value is added to the base address to yield the last valid
+byte address of the GDT, the current size value of startup_gdt_descr is
+incorrect (too large by one), fix it.
 
-Fix this bug by excluding the mm_struct from the key. With
-a single address space, the futex address is already a unique key.
+[ mingo: This probably never mattered, because startup_gdt[] is only used
+         in a very controlled fashion - but make it consistent nevertheless. ]
 
-Fixes: 784bdf3bb694 ("futex: Assume all mappings are private on !MMU systems")
-Signed-off-by: Ben Wolsieffer <ben.wolsieffer@hefring.com>
+Fixes: 866b556efa12 ("x86/head/64: Install startup GDT")
+Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Darren Hart <dvhart@infradead.org>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: André Almeida <andrealmeid@igalia.com>
-Link: https://lore.kernel.org/r/20231019204548.1236437-2-ben.wolsieffer@hefring.com
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Link: https://lore.kernel.org/r/20230807084547.217390-1-ytcoode@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/core.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/x86/kernel/head64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/futex/core.c b/kernel/futex/core.c
-index 8dd0bc50ac36d..cde0ca876b935 100644
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -514,7 +514,17 @@ static int get_futex_key(u32 __user *uaddr, bool fshared, union futex_key *key,
- 	 *        but access_ok() should be faster than find_vma()
- 	 */
- 	if (!fshared) {
--		key->private.mm = mm;
-+		/*
-+		 * On no-MMU, shared futexes are treated as private, therefore
-+		 * we must not include the current process in the key. Since
-+		 * there is only one address space, the address is a unique key
-+		 * on its own.
-+		 */
-+		if (IS_ENABLED(CONFIG_MMU))
-+			key->private.mm = mm;
-+		else
-+			key->private.mm = NULL;
-+
- 		key->private.address = address;
- 		return 0;
- 	}
+diff --git a/arch/x86/kernel/head64.c b/arch/x86/kernel/head64.c
+index efe13ab366f47..8596b4dca9455 100644
+--- a/arch/x86/kernel/head64.c
++++ b/arch/x86/kernel/head64.c
+@@ -80,7 +80,7 @@ static struct desc_struct startup_gdt[GDT_ENTRIES] = {
+  * while the kernel still uses a direct mapping.
+  */
+ static struct desc_ptr startup_gdt_descr = {
+-	.size = sizeof(startup_gdt),
++	.size = sizeof(startup_gdt)-1,
+ 	.address = 0,
+ };
+ 
 -- 
 2.42.0
 
