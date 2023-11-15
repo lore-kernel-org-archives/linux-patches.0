@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BE12FC52
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6293E3C462
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoGf12hX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7F0C433C8;
-	Wed, 15 Nov 2023 19:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8TyCONC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7ACC433C7;
+	Wed, 15 Nov 2023 19:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077499;
-	bh=4M1cDiXhpZx7PqVu20dAoEe3o7DWPe5bt3kjJHS9ja4=;
+	s=korg; t=1700077501;
+	bh=6LwYQ5uai5ky5pU6LR2auuVtXG8Lbk2ljJ747SSqdVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FoGf12hXvJPEMQa3JerEA/5Oga/48r2IbPAaxoLaS9kHjWxm0PHiUP6h81J3yBZ4n
-	 rcvz+tgiDHsW7ikPeyb+l4hyXvhx2pqonTiCVoR5SbIRSHb5LTgTgp+hnCX2Hmri6c
-	 msGGc+/1tzef58hcBVQyluHWq4urbnV90kQ2+QZU=
+	b=x8TyCONChqM80RBYbpWM1QQ3pWVAjF/miwjcWZitdTIUOe1n6Tw/57ZnOLAAM0iUd
+	 2eKBvAALm5EvAkpSu75VgvI4Tw2AFQ+pjjId+tmTwRXtxTnl9Oho+OM609opxc08P4
+	 m6iWKLN9Zvdz21EEf67ny/WJMcrvCqO0cLSPCd4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 340/603] crypto: ccp - Fix DBC sample application error handling
-Date: Wed, 15 Nov 2023 14:14:45 -0500
-Message-ID: <20231115191637.063642829@linuxfoundation.org>
+Subject: [PATCH 6.6 341/603] crypto: ccp - Fix sample application signature passing
+Date: Wed, 15 Nov 2023 14:14:46 -0500
+Message-ID: <20231115191637.115712327@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,13 +44,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 70f242c1933e9e881c13c31640bb6d56e8b7e738 ]
+[ Upstream commit 2ad01eb5fad24627ab4e196dc54a220753b2238b ]
 
-The sample application was taking values from ioctl() and treating
-those as the error codes to present to a user.
+When parameters are sent the PSP returns back it's own signature
+for the application to verify the authenticity of the result.
 
-This is incorrect when ret is non-zero, the error is stored to `errno`.
-Use this value instead.
+Display this signature to the caller instead of the one the caller
+sent.
 
 Fixes: f40d42f116cf ("crypto: ccp - Add a sample python script for Dynamic Boost Control")
 Fixes: febe3ed3222f ("crypto: ccp - Add a sample library for ioctl use")
@@ -58,78 +58,36 @@ Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/crypto/ccp/dbc.c  | 16 ++++++++--------
- tools/crypto/ccp/dbc.py |  3 +--
- 2 files changed, 9 insertions(+), 10 deletions(-)
+ tools/crypto/ccp/dbc.c  | 1 +
+ tools/crypto/ccp/dbc.py | 5 +++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/tools/crypto/ccp/dbc.c b/tools/crypto/ccp/dbc.c
-index 37e813175642f..7774e981849fa 100644
+index 7774e981849fa..a807df0f05974 100644
 --- a/tools/crypto/ccp/dbc.c
 +++ b/tools/crypto/ccp/dbc.c
-@@ -8,6 +8,7 @@
-  */
- 
- #include <assert.h>
-+#include <errno.h>
- #include <string.h>
- #include <sys/ioctl.h>
- 
-@@ -22,16 +23,14 @@ int get_nonce(int fd, void *nonce_out, void *signature)
- 	struct dbc_user_nonce tmp = {
- 		.auth_needed = !!signature,
- 	};
--	int ret;
- 
- 	assert(nonce_out);
- 
- 	if (signature)
- 		memcpy(tmp.signature, signature, sizeof(tmp.signature));
- 
--	ret = ioctl(fd, DBCIOCNONCE, &tmp);
--	if (ret)
--		return ret;
-+	if (ioctl(fd, DBCIOCNONCE, &tmp))
-+		return errno;
- 	memcpy(nonce_out, tmp.nonce, sizeof(tmp.nonce));
- 
- 	return 0;
-@@ -47,7 +46,9 @@ int set_uid(int fd, __u8 *uid, __u8 *signature)
- 	memcpy(tmp.uid, uid, sizeof(tmp.uid));
- 	memcpy(tmp.signature, signature, sizeof(tmp.signature));
- 
--	return ioctl(fd, DBCIOCUID, &tmp);
-+	if (ioctl(fd, DBCIOCUID, &tmp))
-+		return errno;
-+	return 0;
- }
- 
- int process_param(int fd, int msg_index, __u8 *signature, int *data)
-@@ -63,9 +64,8 @@ int process_param(int fd, int msg_index, __u8 *signature, int *data)
- 
- 	memcpy(tmp.signature, signature, sizeof(tmp.signature));
- 
--	ret = ioctl(fd, DBCIOCPARAM, &tmp);
--	if (ret)
--		return ret;
-+	if (ioctl(fd, DBCIOCPARAM, &tmp))
-+		return errno;
+@@ -68,5 +68,6 @@ int process_param(int fd, int msg_index, __u8 *signature, int *data)
+ 		return errno;
  
  	*data = tmp.param;
++	memcpy(signature, tmp.signature, sizeof(tmp.signature));
  	return 0;
+ }
 diff --git a/tools/crypto/ccp/dbc.py b/tools/crypto/ccp/dbc.py
-index 3f6a825ffc9e4..3956efe7537ac 100644
+index 3956efe7537ac..2b91415b19407 100644
 --- a/tools/crypto/ccp/dbc.py
 +++ b/tools/crypto/ccp/dbc.py
-@@ -27,8 +27,7 @@ lib = ctypes.CDLL("./dbc_library.so", mode=ctypes.RTLD_GLOBAL)
- 
- 
- def handle_error(code):
--    val = code * -1
--    raise OSError(val, os.strerror(val))
-+    raise OSError(code, os.strerror(code))
- 
- 
- def get_nonce(device, signature):
+@@ -57,7 +57,8 @@ def process_param(device, message, signature, data=None):
+     if type(message) != tuple:
+         raise ValueError("Expected message tuple")
+     arg = ctypes.c_int(data if data else 0)
+-    ret = lib.process_param(device.fileno(), message[0], signature, ctypes.pointer(arg))
++    sig = ctypes.create_string_buffer(signature, len(signature))
++    ret = lib.process_param(device.fileno(), message[0], ctypes.pointer(sig), ctypes.pointer(arg))
+     if ret:
+         handle_error(ret)
+-    return arg, signature
++    return arg.value, sig.value
 -- 
 2.42.0
 
