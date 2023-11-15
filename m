@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C239381C6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99C8381C6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJR0wE5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05CEC433C9;
-	Wed, 15 Nov 2023 19:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S56elE7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8FFC433C8;
+	Wed, 15 Nov 2023 19:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078142;
-	bh=PWySqCyQQQz5gLWdm0wlTUzSJDBYb02lK6yr1TPX5ro=;
+	s=korg; t=1700078143;
+	bh=fPufrPj2narkigBj0MpEAbkB+bWxIXD0R6X4yEMc8S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJR0wE5SWCAiuD9r/djR4rQLYumEPDIPSkVb5PZWSOaEfbYaL0/89VjWq7UEJFqH3
-	 sQoZXgnAaIMATYMWr2n83axI1qZZ2n1+8wtw6IqDLxqlXbFbhwGb8gVOg66lnaf1Q8
-	 52SPfjNQYlC38H3XjJcUUYRmZkWmZXy5BskpMrxE=
+	b=S56elE7jzqwWYH2RoVbxpRJpmtnbQjX9CVAh4N+IIubIIOl5uU4pIKAV1lqHSDYNq
+	 8Iug7kwgiPdZ7hEo2GiawzjW9fibqH44dt6O/WQQkDueGEwk/5vC4mE16UJ2+lGzxR
+	 yBXXlkVLzIzHqu0KjAeMpEnSe/U7L2SVxb4vEybc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Nartowicz <deadbeef@nartowicz.co.uk>,
 	Armin Wolf <W_Armin@gmx.de>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/379] Revert "hwmon: (sch56xx-common) Add automatic module loading on supported devices"
-Date: Wed, 15 Nov 2023 14:23:06 -0500
-Message-ID: <20231115192651.694923111@linuxfoundation.org>
+Subject: [PATCH 6.1 112/379] hwmon: (sch5627) Use bit macros when accessing the control register
+Date: Wed, 15 Nov 2023 14:23:07 -0500
+Message-ID: <20231115192651.756367377@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,100 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit d621a46d05107f4e510383d6a38f2160c62d28f7 ]
+[ Upstream commit 7f0b28e0653f36b51542d25dd54ed312c397ecfc ]
 
-This reverts commit 393935baa45e5ccb9603cf7f9f020ed1bc0915f7.
+Use bit macros then accessing SCH5627_REG_CTRL, so that people
+do not need to look at the datasheet to find out what each bit
+does.
 
-As reported by Ian Nartowicz, this and the next patch
-result in a failure to load the driver on Celsius W280.
-While the alternative would be to add the board to the DMI
-override table, it is quite likely that other systems are
-also affected. Revert the offending patches to avoid future
-problems.
+Tested on a Fujitsu Esprimo P720.
 
-Fixes: 393935baa45e ("hwmon: (sch56xx-common) Add automatic module loading on supported devices")
-Reported-by: Ian Nartowicz <deadbeef@nartowicz.co.uk>
-Closes: https://lore.kernel.org/linux-hwmon/20231025192239.3c5389ae@debian.org/T/#t
-Cc: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20230907052639.16491-2-W_Armin@gmx.de
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 7da8a6354360 ("hwmon: (sch5627) Disallow write access if virtual registers are locked")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sch56xx-common.c | 40 ++--------------------------------
- 1 file changed, 2 insertions(+), 38 deletions(-)
+ drivers/hwmon/sch5627.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/sch56xx-common.c b/drivers/hwmon/sch56xx-common.c
-index 3ece53adabd62..ac1f725807155 100644
---- a/drivers/hwmon/sch56xx-common.c
-+++ b/drivers/hwmon/sch56xx-common.c
-@@ -7,10 +7,8 @@
+diff --git a/drivers/hwmon/sch5627.c b/drivers/hwmon/sch5627.c
+index 25fbbd4c9a2b3..87fc1fcf4ca3e 100644
+--- a/drivers/hwmon/sch5627.c
++++ b/drivers/hwmon/sch5627.c
+@@ -6,6 +6,7 @@
+ 
  #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
++#include <linux/bits.h>
  #include <linux/module.h>
--#include <linux/mod_devicetable.h>
+ #include <linux/mod_devicetable.h>
  #include <linux/init.h>
- #include <linux/platform_device.h>
--#include <linux/dmi.h>
- #include <linux/err.h>
- #include <linux/io.h>
- #include <linux/acpi.h>
-@@ -21,10 +19,7 @@
- #include <linux/slab.h>
- #include "sch56xx-common.h"
+@@ -32,6 +33,9 @@
+ #define SCH5627_REG_PRIMARY_ID		0x3f
+ #define SCH5627_REG_CTRL		0x40
  
--static bool ignore_dmi;
--module_param(ignore_dmi, bool, 0);
--MODULE_PARM_DESC(ignore_dmi, "Omit DMI check for supported devices (default=0)");
--
-+/* Insmod parameters */
- static bool nowayout = WATCHDOG_NOWAYOUT;
- module_param(nowayout, bool, 0);
- MODULE_PARM_DESC(nowayout, "Watchdog cannot be stopped once started (default="
-@@ -523,42 +518,11 @@ static int __init sch56xx_device_add(int address, const char *name)
- 	return PTR_ERR_OR_ZERO(sch56xx_pdev);
- }
++#define SCH5627_CTRL_START		BIT(0)
++#define SCH5627_CTRL_VBAT		BIT(4)
++
+ #define SCH5627_NO_TEMPS		8
+ #define SCH5627_NO_FANS			4
+ #define SCH5627_NO_IN			5
+@@ -147,7 +151,8 @@ static int sch5627_update_in(struct sch5627_data *data)
  
--/* For autoloading only */
--static const struct dmi_system_id sch56xx_dmi_table[] __initconst = {
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
--		},
--	},
--	{ }
--};
--MODULE_DEVICE_TABLE(dmi, sch56xx_dmi_table);
--
- static int __init sch56xx_init(void)
- {
--	const char *name = NULL;
- 	int address;
-+	const char *name = NULL;
+ 	/* Trigger a Vbat voltage measurement every 5 minutes */
+ 	if (time_after(jiffies, data->last_battery + 300 * HZ)) {
+-		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | 0x10);
++		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
++					  data->control | SCH5627_CTRL_VBAT);
+ 		data->last_battery = jiffies;
+ 	}
  
--	if (!ignore_dmi) {
--		if (!dmi_check_system(sch56xx_dmi_table))
--			return -ENODEV;
--
--		/*
--		 * Some machines like the Esprimo P720 and Esprimo C700 have
--		 * onboard devices named " Antiope"/" Theseus" instead of
--		 * "Antiope"/"Theseus", so we need to check for both.
--		 */
--		if (!dmi_find_device(DMI_DEV_TYPE_OTHER, "Antiope", NULL) &&
--		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Antiope", NULL) &&
--		    !dmi_find_device(DMI_DEV_TYPE_OTHER, "Theseus", NULL) &&
--		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Theseus", NULL))
--			return -ENODEV;
--	}
--
--	/*
--	 * Some devices like the Esprimo C700 have both onboard devices,
--	 * so we still have to check manually
--	 */
- 	address = sch56xx_find(0x4e, &name);
- 	if (address < 0)
- 		address = sch56xx_find(0x2e, &name);
+@@ -483,14 +488,13 @@ static int sch5627_probe(struct platform_device *pdev)
+ 		return val;
+ 
+ 	data->control = val;
+-	if (!(data->control & 0x01)) {
++	if (!(data->control & SCH5627_CTRL_START)) {
+ 		pr_err("hardware monitoring not enabled\n");
+ 		return -ENODEV;
+ 	}
+ 	/* Trigger a Vbat voltage measurement, so that we get a valid reading
+ 	   the first time we read Vbat */
+-	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
+-				  data->control | 0x10);
++	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | SCH5627_CTRL_VBAT);
+ 	data->last_battery = jiffies;
+ 
+ 	/*
 -- 
 2.42.0
 
