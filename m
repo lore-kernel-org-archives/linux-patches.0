@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD8A3C470
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6A13C470
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncLn8nuN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38603C433C7;
-	Wed, 15 Nov 2023 19:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYoWTvQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00D2C433C9;
+	Wed, 15 Nov 2023 19:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077353;
-	bh=7T5TyUKHxv90Dpi3iiIrcPHkYg9+7e7cdx1sds/479o=;
+	s=korg; t=1700077354;
+	bh=+QUYnvPJsyJnMATk8kQSIwwZWWY/AYzj2vqKUqcNpAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ncLn8nuNa7zqhRm+pdbPkL6xsoebunm7bQ1kfDOiMAtiVe01NdHaF3nfrbGXeTD4g
-	 /7VswFhxDwYgDp+LOcCXNC3QBN4I8UX+MCSA/5DBoBF7M1VM+5b5aGqtkdeGkPwobD
-	 844/oB5h+F2HJK0u+WKF/nbaN3WpaQD2AJ4QXta0=
+	b=PYoWTvQS6XX5OUHZ7nYhwPTY+GJKP8TNkGqtCtyf/yF+BBmOw2XXrxiePPw7etrdg
+	 ZalU2tSGOAeSCkPIu7FFqiN8VMXi/ua20W5nyzV048/78LfD58vapfo3ytVzKXLIU6
+	 Rbf95Uh2qRAyZKWz0OPHJBRKnTmsgaLxSUM/VPq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Fei Shao <fshao@chromium.org>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/603] io_uring/kbuf: Allow the full buffer id space for provided buffers
-Date: Wed, 15 Nov 2023 14:13:15 -0500
-Message-ID: <20231115191630.553839404@linuxfoundation.org>
+Subject: [PATCH 6.6 251/603] drm/mediatek: Add mmsys_dev_num to mt8188 vdosys0 driver data
+Date: Wed, 15 Nov 2023 14:13:16 -0500
+Message-ID: <20231115191630.630298896@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,72 +45,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriel Krisman Bertazi <krisman@suse.de>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit f74c746e476b9dad51448b9a9421aae72b60e25f ]
+[ Upstream commit ff64e4c31d969cdba20a41969edb3def15f3aaa0 ]
 
-nbufs tracks the number of buffers and not the last bgid. In 16-bit, we
-have 2^16 valid buffers, but the check mistakenly rejects the last
-bid. Let's fix it to make the interface consistent with the
-documentation.
+Add missing mmsys_dev_num to mt8188 vdosys0 driver data.
 
-Fixes: ddf0322db79c ("io_uring: add IORING_OP_PROVIDE_BUFFERS")
-Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Link: https://lore.kernel.org/r/20231005000531.30800-3-krisman@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 54b48080278a ("drm/mediatek: Add mediatek-drm of vdosys0 support for mt8188")
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Fei Shao <fshao@chromium.org>
+Tested-by: Fei Shao <fshao@chromium.org>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20231004024013.18956-2-jason-jh.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/kbuf.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
-index 74a4f9600642f..f6e5ae026e4be 100644
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -19,12 +19,15 @@
- 
- #define BGID_ARRAY	64
- 
-+/* BIDs are addressed by a 16-bit field in a CQE */
-+#define MAX_BIDS_PER_BGID (1 << 16)
-+
- struct io_provide_buf {
- 	struct file			*file;
- 	__u64				addr;
- 	__u32				len;
- 	__u32				bgid;
--	__u16				nbufs;
-+	__u32				nbufs;
- 	__u16				bid;
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index 93552d76b6e77..2d6a979afe8f9 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -288,6 +288,7 @@ static const struct mtk_mmsys_driver_data mt8186_mmsys_driver_data = {
+ static const struct mtk_mmsys_driver_data mt8188_vdosys0_driver_data = {
+ 	.main_path = mt8188_mtk_ddp_main,
+ 	.main_len = ARRAY_SIZE(mt8188_mtk_ddp_main),
++	.mmsys_dev_num = 1,
  };
  
-@@ -289,7 +292,7 @@ int io_remove_buffers_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 		return -EINVAL;
- 
- 	tmp = READ_ONCE(sqe->fd);
--	if (!tmp || tmp > USHRT_MAX)
-+	if (!tmp || tmp > MAX_BIDS_PER_BGID)
- 		return -EINVAL;
- 
- 	memset(p, 0, sizeof(*p));
-@@ -332,7 +335,7 @@ int io_provide_buffers_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe
- 		return -EINVAL;
- 
- 	tmp = READ_ONCE(sqe->fd);
--	if (!tmp || tmp > USHRT_MAX)
-+	if (!tmp || tmp > MAX_BIDS_PER_BGID)
- 		return -E2BIG;
- 	p->nbufs = tmp;
- 	p->addr = READ_ONCE(sqe->addr);
-@@ -352,7 +355,7 @@ int io_provide_buffers_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe
- 	tmp = READ_ONCE(sqe->off);
- 	if (tmp > USHRT_MAX)
- 		return -E2BIG;
--	if (tmp + p->nbufs > USHRT_MAX)
-+	if (tmp + p->nbufs > MAX_BIDS_PER_BGID)
- 		return -EINVAL;
- 	p->bid = tmp;
- 	return 0;
+ static const struct mtk_mmsys_driver_data mt8192_mmsys_driver_data = {
 -- 
 2.42.0
 
