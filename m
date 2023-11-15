@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E43839FC0
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C539339FC0
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1udA18zd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2812C4E777;
-	Wed, 15 Nov 2023 20:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMrp1h+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78499C4E77A;
+	Wed, 15 Nov 2023 20:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081798;
-	bh=bYSV7UN883lOPrhpw7djLbMmcUVhG7XNHmXeLI/9NyY=;
+	s=korg; t=1700081799;
+	bh=eSe6ifL1LmywS9KnOMZEFAjYBo923gjDrHdop+TOrro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1udA18zdNXkZq2UZqqo/5OGNu/3bBVJONCoHvfiGE8sM81DvOTzCcXD4FpxzEhker
-	 //QgxN3cPmshxp3B8d20P4ikBhhnpNGuVKIuF1pzVzrk9HDl7LFtjDMKnqK9KFVrtx
-	 03mdfNkwkAdJ/VU7Grbab5xz84gYBngD0Sa4grq4=
+	b=bMrp1h+rFWDbDts2NwfxeoxlxI9wprkHf9Kg4xBWpGyGs9zYCQScHcmWyRaSO1bOc
+	 iGbQqmUbLlIqYiMR1NHQe8+LxZK9a+UNzvZm00+atEPrlDcuVHu70mW09UpE3V5+Xb
+	 vK8VnvSsE9e4sc4GU9ddeo0mVsb5f5SdXzvUCjmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danny Kaehn <danny.kaehn@plexus.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 106/191] hid: cp2112: Fix IRQ shutdown stopping polling for all IRQs on chip
-Date: Wed, 15 Nov 2023 15:46:21 -0500
-Message-ID: <20231115204650.934539331@linuxfoundation.org>
+Subject: [PATCH 5.10 107/191] sh: bios: Revive earlyprintk support
+Date: Wed, 15 Nov 2023 15:46:22 -0500
+Message-ID: <20231115204650.991720193@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,43 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danny Kaehn <danny.kaehn@plexus.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit dc3115e6c5d9863ec1a9ff1acf004ede93c34361 ]
+[ Upstream commit 553f7ac78fbb41b2c93ab9b9d78e42274d27daa9 ]
 
-Previously cp2112_gpio_irq_shutdown() always cancelled the
-gpio_poll_worker, even if other IRQs were still active, and did not set
-the gpio_poll flag to false. This resulted in any call to _shutdown()
-resulting in interrupts no longer functioning on the chip until a
-_remove() occurred (a.e. the cp2112 is unplugged or system rebooted).
+The SuperH BIOS earlyprintk code is protected by CONFIG_EARLY_PRINTK.
+However, when this protection was added, it was missed that SuperH no
+longer defines an EARLY_PRINTK config symbol since commit
+e76fe57447e88916 ("sh: Remove old early serial console code V2"), so
+BIOS earlyprintk can no longer be used.
 
-Only cancel polling if all IRQs are disabled/masked, and correctly set
-the gpio_poll flag, allowing polling to restart when an interrupt is
-next enabled.
+Fix this by reviving the EARLY_PRINTK config symbol.
 
-Signed-off-by: Danny Kaehn <danny.kaehn@plexus.com>
-Fixes: 13de9cca514e ("HID: cp2112: add IRQ chip handling")
-Link: https://lore.kernel.org/r/20231011182317.1053344-1-danny.kaehn@plexus.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: d0380e6c3c0f6edb ("early_printk: consolidate random copies of identical code")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/c40972dfec3dcc6719808d5df388857360262878.1697708489.git.geert+renesas@glider.be
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-cp2112.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/sh/Kconfig.debug | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/hid/hid-cp2112.c
-+++ b/drivers/hid/hid-cp2112.c
-@@ -1171,7 +1171,10 @@ static void cp2112_gpio_irq_shutdown(str
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct cp2112_device *dev = gpiochip_get_data(gc);
+diff --git a/arch/sh/Kconfig.debug b/arch/sh/Kconfig.debug
+index 7bc1b10b81c96..f030dd4c08607 100644
+--- a/arch/sh/Kconfig.debug
++++ b/arch/sh/Kconfig.debug
+@@ -25,6 +25,17 @@ config STACK_DEBUG
+ 	  every function call and will therefore incur a major
+ 	  performance hit. Most users should say N.
  
--	cancel_delayed_work_sync(&dev->gpio_poll_worker);
-+	if (!dev->irq_mask) {
-+		dev->gpio_poll = false;
-+		cancel_delayed_work_sync(&dev->gpio_poll_worker);
-+	}
- }
- 
- static int cp2112_gpio_irq_type(struct irq_data *d, unsigned int type)
++config EARLY_PRINTK
++	bool "Early printk"
++	depends on SH_STANDARD_BIOS
++	help
++	  Say Y here to redirect kernel printk messages to the serial port
++	  used by the SH-IPL bootloader, starting very early in the boot
++	  process and ending when the kernel's serial console is initialised.
++	  This option is only useful while porting the kernel to a new machine,
++	  when the kernel may crash or hang before the serial console is
++	  initialised.  If unsure, say N.
++
+ config 4KSTACKS
+ 	bool "Use 4Kb for kernel stacks instead of 8Kb"
+ 	depends on DEBUG_KERNEL && (MMU || BROKEN) && !PAGE_SIZE_64KB
+-- 
+2.42.0
+
 
 
