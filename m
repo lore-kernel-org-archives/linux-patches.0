@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC004446B6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D691446B6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5mT1WFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E07AC433C8;
-	Wed, 15 Nov 2023 22:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2b8zg/5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05EFC433C9;
+	Wed, 15 Nov 2023 22:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085866;
-	bh=B3pXandJXbonBrQq5S36OvJI/ACme74ApzDiFH3FMi0=;
+	s=korg; t=1700085868;
+	bh=T+eTtbpGPsTFUxmii5JI5Xqo8R6o4u2bKIZhE2TDJ6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5mT1WFbLnW1VBigVKB1q9b+2skA8d6JI801+hFCHyE7nblTelpsSNUgKr4co1r5X
-	 eGXTTErT+IP/sq/m5Pw1bPZHuLL+q3mhQ2Z1ePISK6m7n6Z6v4mrxNL0MBlefWN/zp
-	 WCeWkdxbmh1HELJGJSAYMwMLQZ2Zja0ts0nZaKTk=
+	b=2b8zg/5kWVMuj6CccoGPcA0XhS7HJneQnda10V6ilVPH2vBZ9A9wBUNM27qt7nM2I
+	 KXnzFwFyAfObEVzf0cO8+ymPDX8X9/oy7FdzUDGKxiav4XNw7KeGUPOiAMSJMGFyWd
+	 ooo3PJp2cGOZr2gdPyxOWlnRUdGMB+hDh3adkteo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Wilcox <willy@infradead.org>,
-	Chris Mi <chrism@mellanox.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	NeilBrown <neilb@suse.de>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Furong Xu <0x1207@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 105/119] Fix termination state for idr_for_each_entry_ul()
-Date: Wed, 15 Nov 2023 17:01:35 -0500
-Message-ID: <20231115220135.905296608@linuxfoundation.org>
+Subject: [PATCH 5.4 106/119] net: stmmac: xgmac: Enable support for multiple Flexible PPS outputs
+Date: Wed, 15 Nov 2023 17:01:36 -0500
+Message-ID: <20231115220135.940227833@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -45,62 +44,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Furong Xu <0x1207@gmail.com>
 
-[ Upstream commit e8ae8ad479e2d037daa33756e5e72850a7bd37a9 ]
+[ Upstream commit db456d90a4c1b43b6251fa4348c8adc59b583274 ]
 
-The comment for idr_for_each_entry_ul() states
+>From XGMAC Core 3.20 and later, each Flexible PPS has individual PPSEN bit
+to select Fixed mode or Flexible mode. The PPSEN must be set, or it stays
+in Fixed PPS mode by default.
+XGMAC Core prior 3.20, only PPSEN0(bit 4) is writable. PPSEN{1,2,3} are
+read-only reserved, and they are already in Flexible mode by default, our
+new code always set PPSEN{1,2,3} do not make things worse ;-)
 
-  after normal termination @entry is left with the value NULL
-
-This is not correct in the case where UINT_MAX has an entry in the idr.
-In that case @entry will be non-NULL after termination.
-No current code depends on the documentation being correct, but to
-save future code we should fix it.
-
-Also fix idr_for_each_entry_continue_ul().  While this is not documented
-as leaving @entry as NULL, the mellanox driver appears to depend on
-it doing so.  So make that explicit in the documentation as well as in
-the code.
-
-Fixes: e33d2b74d805 ("idr: fix overflow case for idr_for_each_entry_ul()")
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Chris Mi <chrism@mellanox.com>
-Cc: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: NeilBrown <neilb@suse.de>
+Fixes: 95eaf3cd0a90 ("net: stmmac: dwxgmac: Add Flexible PPS support")
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Furong Xu <0x1207@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/idr.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h     |  2 +-
+ .../net/ethernet/stmicro/stmmac/dwxgmac2_core.c    | 14 +++++++++++++-
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/idr.h b/include/linux/idr.h
-index ac6e946b6767b..bbfd934cab226 100644
---- a/include/linux/idr.h
-+++ b/include/linux/idr.h
-@@ -200,7 +200,7 @@ static inline void idr_preload_end(void)
-  */
- #define idr_for_each_entry_ul(idr, entry, tmp, id)			\
- 	for (tmp = 0, id = 0;						\
--	     tmp <= id && ((entry) = idr_get_next_ul(idr, &(id))) != NULL; \
-+	     ((entry) = tmp <= id ? idr_get_next_ul(idr, &(id)) : NULL) != NULL; \
- 	     tmp = id, ++id)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
+index ff751ab3d7658..5efb9cf99b525 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
+@@ -212,7 +212,7 @@
+ 	((val) << XGMAC_PPS_MINIDX(x))
+ #define XGMAC_PPSCMD_START		0x2
+ #define XGMAC_PPSCMD_STOP		0x5
+-#define XGMAC_PPSEN0			BIT(4)
++#define XGMAC_PPSENx(x)			BIT(4 + (x) * 8)
+ #define XGMAC_PPSx_TARGET_TIME_SEC(x)	(0x00000d80 + (x) * 0x10)
+ #define XGMAC_PPSx_TARGET_TIME_NSEC(x)	(0x00000d84 + (x) * 0x10)
+ #define XGMAC_TRGTBUSY0			BIT(31)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+index 070bd7d1ae4ca..06fe2f185e0b3 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -1101,7 +1101,19 @@ static int dwxgmac2_flex_pps_config(void __iomem *ioaddr, int index,
  
- /**
-@@ -224,10 +224,12 @@ static inline void idr_preload_end(void)
-  * @id: Entry ID.
-  *
-  * Continue to iterate over entries, continuing after the current position.
-+ * After normal termination @entry is left with the value NULL.  This
-+ * is convenient for a "not found" value.
-  */
- #define idr_for_each_entry_continue_ul(idr, entry, tmp, id)		\
- 	for (tmp = id;							\
--	     tmp <= id && ((entry) = idr_get_next_ul(idr, &(id))) != NULL; \
-+	     ((entry) = tmp <= id ? idr_get_next_ul(idr, &(id)) : NULL) != NULL; \
- 	     tmp = id, ++id)
+ 	val |= XGMAC_PPSCMDx(index, XGMAC_PPSCMD_START);
+ 	val |= XGMAC_TRGTMODSELx(index, XGMAC_PPSCMD_START);
+-	val |= XGMAC_PPSEN0;
++
++	/* XGMAC Core has 4 PPS outputs at most.
++	 *
++	 * Prior XGMAC Core 3.20, Fixed mode or Flexible mode are selectable for
++	 * PPS0 only via PPSEN0. PPS{1,2,3} are in Flexible mode by default,
++	 * and can not be switched to Fixed mode, since PPSEN{1,2,3} are
++	 * read-only reserved to 0.
++	 * But we always set PPSEN{1,2,3} do not make things worse ;-)
++	 *
++	 * From XGMAC Core 3.20 and later, PPSEN{0,1,2,3} are writable and must
++	 * be set, or the PPS outputs stay in Fixed PPS mode by default.
++	 */
++	val |= XGMAC_PPSENx(index);
  
- /*
+ 	writel(cfg->start.tv_sec, ioaddr + XGMAC_PPSx_TARGET_TIME_SEC(index));
+ 
 -- 
 2.42.0
 
