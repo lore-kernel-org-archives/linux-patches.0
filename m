@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9A33DBA1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B41C3FB0F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOXhtszj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC9BC433C7;
-	Wed, 15 Nov 2023 19:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDuM0TPY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BFFC433C8;
+	Wed, 15 Nov 2023 19:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078364;
-	bh=lktR4Azq16bUmOIYoiPzoAoZRZ7JCaTp3teotlPvpGU=;
+	s=korg; t=1700078365;
+	bh=+jWkjjjyVtbJqWjVHu9a0OznOunAC9LTWbJXXqWhc+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOXhtszjvEBnUsqBs5qj1iL9haW7Ni3H/+V10C+mRGwjcKzOpzhsBcfZy3WvmNV0g
-	 D+04RNEYIHb1dpPEgqZEAca31Vk0s5OYJIRyBKgmE3Gcp1o+iS80TFz0rNfiv4h6G6
-	 dTcgaORhOR3h8rZqTGU2j6ZcDYQaN7REwgkyeSCQ=
+	b=tDuM0TPYWihVBjJLxF9A3eoUDJeB83Q8V53WvhSmNlRiyS0U5tpiAh/W1xgn1lJ9A
+	 x4X7z8HvnqlcAcrtdZXPWPovvKswOcZt+kosbL8/0hHmOfxFhs9BUUxUy/oeN1hpTz
+	 xHMr1KAEmtA7R6nBpG9KTLds4IbDb2GHaFBRsW08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabien Parent <fparent@baylibre.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Rob Herring <robh@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/379] dt-bindings: mfd: mt6397: Add binding for MT6357
-Date: Wed, 15 Nov 2023 14:25:18 -0500
-Message-ID: <20231115192659.506746374@linuxfoundation.org>
+Subject: [PATCH 6.1 271/379] dmaengine: ti: edma: handle irq_of_parse_and_map() errors
+Date: Wed, 15 Nov 2023 14:25:46 -0500
+Message-ID: <20231115192701.159075829@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -44,35 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabien Parent <fparent@baylibre.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 118ee241c423636c03527eada8f672301514751e ]
+[ Upstream commit 14f6d317913f634920a640e9047aa2e66f5bdcb7 ]
 
-Add binding documentation for the MT6357 PMIC.
+Zero is not a valid IRQ for in-kernel code and the irq_of_parse_and_map()
+function returns zero on error.  So this check for valid IRQs should only
+accept values > 0.
 
-Signed-off-by: Fabien Parent <fparent@baylibre.com>
-Signed-off-by: Alexandre Mergnat <amergnat@baylibre.com>
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20221005-mt6357-support-v3-1-7e0bd7c315b2@baylibre.com
-Stable-dep-of: 61fdd1f1d2c1 ("dt-bindings: mfd: mt6397: Split out compatible for MediaTek MT6366 PMIC")
+Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/f15cb6a7-8449-4f79-98b6-34072f04edbc@moroto.mountain
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/mfd/mt6397.txt | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/ti/edma.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/mfd/mt6397.txt b/Documentation/devicetree/bindings/mfd/mt6397.txt
-index 0088442efca1a..518986c44880f 100644
---- a/Documentation/devicetree/bindings/mfd/mt6397.txt
-+++ b/Documentation/devicetree/bindings/mfd/mt6397.txt
-@@ -21,6 +21,7 @@ Required properties:
- compatible:
- 	"mediatek,mt6323" for PMIC MT6323
- 	"mediatek,mt6331" for PMIC MT6331 and MT6332
-+	"mediatek,mt6357" for PMIC MT6357
- 	"mediatek,mt6358" for PMIC MT6358 and MT6366
- 	"mediatek,mt6359" for PMIC MT6359
- 	"mediatek,mt6397" for PMIC MT6397
+diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
+index fa06d7e6d8e38..7ec6e5d728b03 100644
+--- a/drivers/dma/ti/edma.c
++++ b/drivers/dma/ti/edma.c
+@@ -2410,7 +2410,7 @@ static int edma_probe(struct platform_device *pdev)
+ 	if (irq < 0 && node)
+ 		irq = irq_of_parse_and_map(node, 0);
+ 
+-	if (irq >= 0) {
++	if (irq > 0) {
+ 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccint",
+ 					  dev_name(dev));
+ 		ret = devm_request_irq(dev, irq, dma_irq_handler, 0, irq_name,
+@@ -2426,7 +2426,7 @@ static int edma_probe(struct platform_device *pdev)
+ 	if (irq < 0 && node)
+ 		irq = irq_of_parse_and_map(node, 2);
+ 
+-	if (irq >= 0) {
++	if (irq > 0) {
+ 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccerrint",
+ 					  dev_name(dev));
+ 		ret = devm_request_irq(dev, irq, dma_ccerr_handler, 0, irq_name,
 -- 
 2.42.0
 
