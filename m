@@ -1,31 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E50228371
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3BE3A8E3;
+	Wed, 15 Nov 2023 19:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC9GaLj5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26F3C433C9;
-	Wed, 15 Nov 2023 19:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fihlKgXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497CCC433C8;
+	Wed, 15 Nov 2023 19:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076027;
-	bh=SuHBy7E/NykkDtC6n19gCdulU5oaKDv7JLs8pq2REQ0=;
+	s=korg; t=1700076028;
+	bh=7GvDjbrBYuvBeOH1VCT+fEyeorrB5EkUWZH5ZtG3HCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GC9GaLj5UF4Dw42UMLAt65poD7yNSBtcKmO/nLN38Tl/Jjh12hHgjbt16w0kkZU0g
-	 E4YFS3EfNqawvpManJ9NbtFLe0aq16b0h/CfC0T4o1y6KpQ0tetWQgRY3qSXdOwuOb
-	 kPW/3JV1HsoSjXl8FVLW/ZKX/zFMGvv8MVtnxRH8=
+	b=fihlKgXE8eSg+5RUCCKLZwtDTeJGwsIF1D0fz35V80A3VHTo0BBbdA/JXD+fTEVz0
+	 3dhe+ET5t5/6MNrFi6OQ7KPYXVP+fhY2xN6k4h6AdL0orLeMN81+dtKAEdmhL3h33H
+	 kqRU8cTzpGAgfRAzR0ZRNajRaTcwtCuPGIHxb9ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yu-Chi Liang <ycliang@andestech.com>,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	David Howells <dhowells@redhat.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <christian@brauner.io>,
+	Matthew Wilcox <willy@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	David Laight <David.Laight@ACULAB.COM>,
+	x86@kernel.org,
+	linux-block@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-mm@kvack.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 005/550] sched/fair: Fix cfs_rq_is_decayed() on !SMP
-Date: Wed, 15 Nov 2023 14:09:49 -0500
-Message-ID: <20231115191601.087096401@linuxfoundation.org>
+Subject: [PATCH 6.5 006/550] iov_iter, x86: Be consistent about the __user tag on copy_mc_to_user()
+Date: Wed, 15 Nov 2023 14:09:50 -0500
+Message-ID: <20231115191601.155531580@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,45 +59,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengming Zhou <zhouchengming@bytedance.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c0490bc9bb62d9376f3dd4ec28e03ca0fef97152 ]
+[ Upstream commit 066baf92bed934c9fb4bcee97a193f47aa63431c ]
 
-We don't need to maintain per-queue leaf_cfs_rq_list on !SMP, since
-it's used for cfs_rq load tracking & balancing on SMP.
+copy_mc_to_user() has the destination marked __user on powerpc, but not on
+x86; the latter results in a sparse warning in lib/iov_iter.c.
 
-But sched debug interface uses it to print per-cfs_rq stats.
+Fix this by applying the tag on x86 too.
 
-This patch fixes the !SMP version of cfs_rq_is_decayed(), so the
-per-queue leaf_cfs_rq_list is also maintained correctly on !SMP,
-to fix the warning in assert_list_leaf_cfs_rq().
-
-Fixes: 0a00a354644e ("sched/fair: Delete useless condition in tg_unthrottle_up()")
-Reported-by: Leo Yu-Chi Liang <ycliang@andestech.com>
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Leo Yu-Chi Liang <ycliang@andestech.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Closes: https://lore.kernel.org/all/ZN87UsqkWcFLDxea@swlinux02/
-Link: https://lore.kernel.org/r/20230913132031.2242151-1-chengming.zhou@linux.dev
+Fixes: ec6347bb4339 ("x86, powerpc: Rename memcpy_mcsafe() to copy_mc_to_{user, kernel}()")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20230925120309.1731676-3-dhowells@redhat.com
+cc: Dan Williams <dan.j.williams@intel.com>
+cc: Thomas Gleixner <tglx@linutronix.de>
+cc: Ingo Molnar <mingo@redhat.com>
+cc: Borislav Petkov <bp@alien8.de>
+cc: Dave Hansen <dave.hansen@linux.intel.com>
+cc: "H. Peter Anvin" <hpa@zytor.com>
+cc: Alexander Viro <viro@zeniv.linux.org.uk>
+cc: Jens Axboe <axboe@kernel.dk>
+cc: Christoph Hellwig <hch@lst.de>
+cc: Christian Brauner <christian@brauner.io>
+cc: Matthew Wilcox <willy@infradead.org>
+cc: Linus Torvalds <torvalds@linux-foundation.org>
+cc: David Laight <David.Laight@ACULAB.COM>
+cc: x86@kernel.org
+cc: linux-block@vger.kernel.org
+cc: linux-fsdevel@vger.kernel.org
+cc: linux-mm@kvack.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/uaccess.h | 2 +-
+ arch/x86/lib/copy_mc.c         | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 1d9c2482c5a35..7e3ed4f447fdf 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4654,7 +4654,7 @@ static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
+diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+index 8bae40a662827..5c367c1290c35 100644
+--- a/arch/x86/include/asm/uaccess.h
++++ b/arch/x86/include/asm/uaccess.h
+@@ -496,7 +496,7 @@ copy_mc_to_kernel(void *to, const void *from, unsigned len);
+ #define copy_mc_to_kernel copy_mc_to_kernel
  
- static inline bool cfs_rq_is_decayed(struct cfs_rq *cfs_rq)
- {
--	return true;
-+	return !cfs_rq->nr_running;
+ unsigned long __must_check
+-copy_mc_to_user(void *to, const void *from, unsigned len);
++copy_mc_to_user(void __user *to, const void *from, unsigned len);
+ #endif
+ 
+ /*
+diff --git a/arch/x86/lib/copy_mc.c b/arch/x86/lib/copy_mc.c
+index 80efd45a77617..6e8b7e600def5 100644
+--- a/arch/x86/lib/copy_mc.c
++++ b/arch/x86/lib/copy_mc.c
+@@ -70,23 +70,23 @@ unsigned long __must_check copy_mc_to_kernel(void *dst, const void *src, unsigne
  }
+ EXPORT_SYMBOL_GPL(copy_mc_to_kernel);
  
- #define UPDATE_TG	0x0
+-unsigned long __must_check copy_mc_to_user(void *dst, const void *src, unsigned len)
++unsigned long __must_check copy_mc_to_user(void __user *dst, const void *src, unsigned len)
+ {
+ 	unsigned long ret;
+ 
+ 	if (copy_mc_fragile_enabled) {
+ 		__uaccess_begin();
+-		ret = copy_mc_fragile(dst, src, len);
++		ret = copy_mc_fragile((__force void *)dst, src, len);
+ 		__uaccess_end();
+ 		return ret;
+ 	}
+ 
+ 	if (static_cpu_has(X86_FEATURE_ERMS)) {
+ 		__uaccess_begin();
+-		ret = copy_mc_enhanced_fast_string(dst, src, len);
++		ret = copy_mc_enhanced_fast_string((__force void *)dst, src, len);
+ 		__uaccess_end();
+ 		return ret;
+ 	}
+ 
+-	return copy_user_generic(dst, src, len);
++	return copy_user_generic((__force void *)dst, src, len);
+ }
 -- 
 2.42.0
 
