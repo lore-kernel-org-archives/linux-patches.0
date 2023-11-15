@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6173EA97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565193EA7B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxD18fuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC83C433C8;
-	Wed, 15 Nov 2023 19:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDzbCkCw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022FCC433C7;
+	Wed, 15 Nov 2023 19:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076404;
-	bh=SFfDUzPhkHv1YgZYcCqPYER2fdWslxraBNu3F5d7ncw=;
+	s=korg; t=1700076406;
+	bh=behyjWGst69K6PMh5KRjzZntfVjKFk8/A5LnANTkgUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxD18fuAW+gP1L/xPujVkrIxfApkLqQoidtb0j8RNzqA/Vhpm99vyEe4ygROT4czK
-	 cT0TqwQCp6uYWG/4dzoZB7X9Q+J+FwPYPTuwYn45bedlpzr+m8hv7dFfgyY++KGYoH
-	 aQCIf0w9PFWzYOhsC7pGVd2rt9DYfJK/Z7mHa0jw=
+	b=EDzbCkCwVg1Qs2rSTFRPOnl5VZ6rjb3zvax9g11aEfHCJXH4ps3KQdFwb6zQ/Sw7O
+	 dhOIsSZUFhuW22LAr9lmT5aXEWavrcnL2m94CflgZz642U3+WRoAiDHh5vdhXw+pKk
+	 eMppsy4b+UBOIMAVTSfu4znFG1v7jMS5lbKTJHW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 270/550] arm64: dts: qcom: sm8150: add ref clock to PCIe PHYs
-Date: Wed, 15 Nov 2023 14:14:14 -0500
-Message-ID: <20231115191619.457508129@linuxfoundation.org>
+Subject: [PATCH 6.5 271/550] arm64: dts: qcom: sm8350: fix pinctrl for UART18
+Date: Wed, 15 Nov 2023 14:14:15 -0500
+Message-ID: <20231115191619.527068220@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,52 +45,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit c204b3709409279ac019f3d374e444bb0b1424f0 ]
+[ Upstream commit c1efa960114f743924b884da098298512a7e9983 ]
 
-Follow the rest of the platforms and add "ref" clocks to both PCIe PHYs
-found on the Qualcomm SM8150 platform.
+On sm8350 QUP18 uses GPIO 68/69, not 58/59. Fix correponding UART18
+pinconf configuraion.
 
-Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
+Fixes: 98374e6925b8 ("arm64: dts: qcom: sm8350: Set up WRAP2 QUPs")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230820142035.89903-15-dmitry.baryshkov@linaro.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230825214550.1650938-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 06c53000bb74d..19c6003dca153 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1893,8 +1893,12 @@ pcie0_phy: phy@1c06000 {
- 			ranges;
- 			clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
- 				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-+				 <&gcc GCC_PCIE_0_CLKREF_CLK>,
- 				 <&gcc GCC_PCIE0_PHY_REFGEN_CLK>;
--			clock-names = "aux", "cfg_ahb", "refgen";
-+			clock-names = "aux",
-+				      "cfg_ahb",
-+				      "ref",
-+				      "refgen";
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index c236967725c1b..df0a4cc9c4358 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -2939,7 +2939,7 @@ qup_uart6_default: qup-uart6-default-state {
+ 			};
  
- 			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
- 			reset-names = "phy";
-@@ -1991,8 +1995,12 @@ pcie1_phy: phy@1c0e000 {
- 			ranges;
- 			clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
- 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-+				 <&gcc GCC_PCIE_1_CLKREF_CLK>,
- 				 <&gcc GCC_PCIE1_PHY_REFGEN_CLK>;
--			clock-names = "aux", "cfg_ahb", "refgen";
-+			clock-names = "aux",
-+				      "cfg_ahb",
-+				      "ref",
-+				      "refgen";
- 
- 			resets = <&gcc GCC_PCIE_1_PHY_BCR>;
- 			reset-names = "phy";
+ 			qup_uart18_default: qup-uart18-default-state {
+-				pins = "gpio58", "gpio59";
++				pins = "gpio68", "gpio69";
+ 				function = "qup18";
+ 				drive-strength = <2>;
+ 				bias-disable;
 -- 
 2.42.0
 
