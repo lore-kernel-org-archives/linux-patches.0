@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153863EA72
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06A93EA6F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqJw0MeZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7119C433C8;
-	Wed, 15 Nov 2023 19:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlcpHRF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61186C433C9;
+	Wed, 15 Nov 2023 19:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076250;
-	bh=/tJaZvSAl5zZitAOYS2GiTobvrPHJcTs1oNdDyL0zz0=;
+	s=korg; t=1700076252;
+	bh=GcFPCWim84M6qz2Y2DfRrUrBgJ0Q4g43LCb4UzLmdUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vqJw0MeZ3qUO+vhIH0qLIA6ZvKHKG59JkndyEu8E4V0JG6JlpQZVXMQGzhPHRimiK
-	 HLxi/UeiQ+prnVvLR5vkDVIPrWdfpK/rCDH5Invy2XO+FSRcuJ5lvnr2WXkT9iTuAD
-	 +Gi7DJjyPbadp05Msmtqxy8wrwc5+vScjGlgV/+s=
+	b=RlcpHRF8C/4UENG/7Bb2oCcB/iRJ72r8/a2bo9du6d4wn0qj+K4s2Wu9UcJ0exZbm
+	 ZL6Gz7xxAdmWIHdyvOVw3fbXk9ThE7iDeh43y1K1wc2T89pfbIVuh32/HngEvjHwhX
+	 qXqh8D2MBL6mkneR1cb5HEyuVHhOCYNaNbgatbYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 146/550] mptcp: properly account fastopen data
-Date: Wed, 15 Nov 2023 14:12:10 -0500
-Message-ID: <20231115191610.823576645@linuxfoundation.org>
+Subject: [PATCH 6.5 137/550] wifi: iwlwifi: pcie: synchronize IRQs before NAPI
+Date: Wed, 15 Nov 2023 14:12:01 -0500
+Message-ID: <20231115191610.184513353@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,38 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit bf0e96108fb6707613dd055aff5e98b02b99bb14 ]
+[ Upstream commit 37fb29bd1f90f16d1abc95c0e9f0ff8eec9829ad ]
 
-Currently the socket level counter aggregating the received data
-does not take in account the data received via fastopen.
+When we want to synchronize the NAPI, which was added in
+commit 5af2bb3168db ("wifi: iwlwifi: call napi_synchronize()
+before freeing rx/tx queues"), we also need to make sure we
+can't actually reschedule the NAPI. Yes, this happens while
+interrupts are disabled, but interrupts may still be running
+or pending. Also call iwl_pcie_synchronize_irqs() to ensure
+we won't reschedule the NAPI.
 
-Address the issue updating the counter as required.
-
-Fixes: 38967f424b5b ("mptcp: track some aggregate data counters")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231023-send-net-next-20231023-2-v1-2-9dc60939d371@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4cf2f5904d97 ("iwlwifi: queue: avoid memory leak in reset flow")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20231017115047.a0f4104b479a.Id5c50a944f709092aa6256e32d8c63b2b8d8d3ac@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/fastopen.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c | 1 +
+ drivers/net/wireless/intel/iwlwifi/pcie/trans.c      | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/net/mptcp/fastopen.c b/net/mptcp/fastopen.c
-index bceaab8dd8e46..74698582a2859 100644
---- a/net/mptcp/fastopen.c
-+++ b/net/mptcp/fastopen.c
-@@ -52,6 +52,7 @@ void mptcp_fastopen_subflow_synack_set_params(struct mptcp_subflow_context *subf
- 
- 	mptcp_set_owner_r(skb, sk);
- 	__skb_queue_tail(&sk->sk_receive_queue, skb);
-+	mptcp_sk(sk)->bytes_received += skb->len;
- 
- 	sk->sk_data_ready(sk);
- 
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
+index fa46dad5fd680..2ecf6db95fb31 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans-gen2.c
+@@ -161,6 +161,7 @@ void _iwl_trans_pcie_gen2_stop_device(struct iwl_trans *trans)
+ 	if (test_and_clear_bit(STATUS_DEVICE_ENABLED, &trans->status)) {
+ 		IWL_DEBUG_INFO(trans,
+ 			       "DEVICE_ENABLED bit was set and is now cleared\n");
++		iwl_pcie_synchronize_irqs(trans);
+ 		iwl_pcie_rx_napi_sync(trans);
+ 		iwl_txq_gen2_tx_free(trans);
+ 		iwl_pcie_rx_stop(trans);
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+index 3e988da449738..d0209983587a2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+@@ -1263,6 +1263,7 @@ static void _iwl_trans_pcie_stop_device(struct iwl_trans *trans)
+ 	if (test_and_clear_bit(STATUS_DEVICE_ENABLED, &trans->status)) {
+ 		IWL_DEBUG_INFO(trans,
+ 			       "DEVICE_ENABLED bit was set and is now cleared\n");
++		iwl_pcie_synchronize_irqs(trans);
+ 		iwl_pcie_rx_napi_sync(trans);
+ 		iwl_pcie_tx_stop(trans);
+ 		iwl_pcie_rx_stop(trans);
 -- 
 2.42.0
 
