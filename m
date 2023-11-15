@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DC72E40E
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D512343AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/B60iOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD4CC32778;
-	Wed, 15 Nov 2023 20:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c843d9V/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8170AC32779;
+	Wed, 15 Nov 2023 20:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081322;
-	bh=7m6lDoP6kouBysjN2C9l1c93RgHYh+oir5LZQmI4CSg=;
+	s=korg; t=1700081323;
+	bh=j+V4AOth914tlv9D88g7NypVmY0rzcTu+bHR/DJUGaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/B60iOFd3PuYyvVL6p5C3lpF4dtJyp2wzIOcdbiJJk0mLD1RXgvfKm7aUilEN6zA
-	 bk25hELhiqsYUrVtVf6u5LRS1oK3m+sMAIXjquFIHTzQ3mK+U5PFP15QoNErscSQJY
-	 ZsH+SqOgU37hr0I8pkhrvmdAAp5ZbYmp8Ud/rMIM=
+	b=c843d9V/ioU9rzEJwkbJi2ghnYlAx4tO0z20v00bdgb3iP4AK/yMdAtbRWHopHs0T
+	 AiWmtr/s1xMa8NuLFFxtbgOOzLe3DILcBJ6su9OurMp76q/vDQZxt3O72uU5DSVgax
+	 lcai/2lqaUta41/zCS/Wdqz7sr8dRes9JdWFC8LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Velikanov <adomerlee@gmail.com>,
-	Danila Tikhonov <danila@jiaxyga.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/244] clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
-Date: Wed, 15 Nov 2023 15:34:08 -0500
-Message-ID: <20231115203551.721141403@linuxfoundation.org>
+Subject: [PATCH 5.15 047/244] ACPI: sysfs: Fix create_pnp_modalias() and create_of_modalias()
+Date: Wed, 15 Nov 2023 15:33:59 -0500
+Message-ID: <20231115203551.190802984@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -44,37 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Tikhonov <danila@jiaxyga.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 7138c244fb293f24ce8ab782961022eff00a10c4 ]
+[ Upstream commit 48cf49d31994ff97b33c4044e618560ec84d35fb ]
 
-Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
-didn't update its configuration" error.
+snprintf() does not return negative values on error.
 
-Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
-Tested-by: Arseniy Velikanov <adomerlee@gmail.com>
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230913175612.8685-1-danila@jiaxyga.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+To know if the buffer was too small, the returned value needs to be
+compared with the length of the passed buffer. If it is greater or
+equal, the output has been truncated, so add checks for the truncation
+to create_pnp_modalias() and create_of_modalias(). Also make them
+return -ENOMEM in that case, as they already do that elsewhere.
+
+Moreover, the remaining size of the buffer used by snprintf() needs to
+be updated after the first write to avoid out-of-bounds access as
+already done correctly in create_pnp_modalias(), but not in
+create_of_modalias(), so change the latter accordingly.
+
+Fixes: 8765c5ba1949 ("ACPI / scan: Rework modalias creation when "compatible" is present")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+[ rjw: Merge two patches into one, combine changelogs, add subject ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8150.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/device_sysfs.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 2457944857197..e9ed963f129da 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -792,7 +792,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_data = gcc_parents_6,
- 		.num_parents = ARRAY_SIZE(gcc_parents_6),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_rcg2_floor_ops,
- 	},
- };
+diff --git a/drivers/acpi/device_sysfs.c b/drivers/acpi/device_sysfs.c
+index 61271e61c3073..da9cd11adfb56 100644
+--- a/drivers/acpi/device_sysfs.c
++++ b/drivers/acpi/device_sysfs.c
+@@ -157,8 +157,8 @@ static int create_pnp_modalias(struct acpi_device *acpi_dev, char *modalias,
+ 		return 0;
+ 
+ 	len = snprintf(modalias, size, "acpi:");
+-	if (len <= 0)
+-		return len;
++	if (len >= size)
++		return -ENOMEM;
+ 
+ 	size -= len;
+ 
+@@ -211,8 +211,10 @@ static int create_of_modalias(struct acpi_device *acpi_dev, char *modalias,
+ 	len = snprintf(modalias, size, "of:N%sT", (char *)buf.pointer);
+ 	ACPI_FREE(buf.pointer);
+ 
+-	if (len <= 0)
+-		return len;
++	if (len >= size)
++		return -ENOMEM;
++
++	size -= len;
+ 
+ 	of_compatible = acpi_dev->data.of_compatible;
+ 	if (of_compatible->type == ACPI_TYPE_PACKAGE) {
 -- 
 2.42.0
 
