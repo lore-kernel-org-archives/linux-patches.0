@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116983EA7B
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6173EA97
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4UrbVvP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9269FC433CA;
-	Wed, 15 Nov 2023 19:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxD18fuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC83C433C8;
+	Wed, 15 Nov 2023 19:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076402;
-	bh=/qzDyTHAyVjCRqyNNH3F8mKKI34rG7DxvdGyyGHtsGc=;
+	s=korg; t=1700076404;
+	bh=SFfDUzPhkHv1YgZYcCqPYER2fdWslxraBNu3F5d7ncw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D4UrbVvPzNnDIhWKdeKrXfTw7ueVqdaMA3c0EPD5t2TfsmqTx7RsJROKgyK3CSig5
-	 hmp9hgaYV9EmsUluSGwJ/3EBhsUf+baL+oXBtGDK11RAerpAIzvgYOT9zIkLfoXLVv
-	 ITm2zPyg0Aq8y4YsqhBFm2oiF9gOOcKR53G4q5sM=
+	b=rxD18fuAW+gP1L/xPujVkrIxfApkLqQoidtb0j8RNzqA/Vhpm99vyEe4ygROT4czK
+	 cT0TqwQCp6uYWG/4dzoZB7X9Q+J+FwPYPTuwYn45bedlpzr+m8hv7dFfgyY++KGYoH
+	 aQCIf0w9PFWzYOhsC7pGVd2rt9DYfJK/Z7mHa0jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 269/550] arm64: dts: qcom: sc7280: drop incorrect EUD port on SoC side
-Date: Wed, 15 Nov 2023 14:14:13 -0500
-Message-ID: <20231115191619.369712342@linuxfoundation.org>
+Subject: [PATCH 6.5 270/550] arm64: dts: qcom: sm8150: add ref clock to PCIe PHYs
+Date: Wed, 15 Nov 2023 14:14:14 -0500
+Message-ID: <20231115191619.457508129@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,88 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 39c8af78cbefb8c71a5ad1fa088e761ef418f0a0 ]
+[ Upstream commit c204b3709409279ac019f3d374e444bb0b1424f0 ]
 
-Qualcomm Embedded USB Debugger (EUD) second port should point to Type-C
-USB connector.  Such connector was defined directly in root node of
-sc7280.dtsi which is clearly wrong.  SC7280 is a chip, so physically it
-does not have USB Type-C port.  The connector is usually accessible
-through some USB switch or controller.
+Follow the rest of the platforms and add "ref" clocks to both PCIe PHYs
+found on the Qualcomm SM8150 platform.
 
-Doug Anderson said that he wasn't ever able to use EUD on Herobrine
-boards, probably because of invalid or missing DTS description - DTS is
-saying EUD is on usb_2 node, which is connected to a USB Hub, not to the
-Type-C port.
-
-Correct the EUD/USB connector topology by removing the top-level fake
-USB connector and EUD port pointing to it, and disabling the incomplete
-EUD device node.
-
-This fixes also dtbs_check warnings:
-
-  sc7280-herobrine-crd.dtb: connector: ports:port@0: 'reg' is a required property
-
-Link: https://lore.kernel.org/all/CAD=FV=Xt26=rBf99mzkAuwwtb2f-jnKtnHaEhXnthz0a5zke4Q@mail.gmail.com/
-Fixes: 9ee402ccfeb1 ("arm64: dts: qcom: sc7280: Fix EUD dt node syntax")
-Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-Cc: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20230820075626.22600-1-krzysztof.kozlowski@linaro.org
+Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230820142035.89903-15-dmitry.baryshkov@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 20231d80c504b..91bb58c6b1a61 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -649,18 +649,6 @@ cpu7_opp_3014mhz: opp-3014400000 {
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 06c53000bb74d..19c6003dca153 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -1893,8 +1893,12 @@ pcie0_phy: phy@1c06000 {
+ 			ranges;
+ 			clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
+ 				 <&gcc GCC_PCIE_0_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_0_CLKREF_CLK>,
+ 				 <&gcc GCC_PCIE0_PHY_REFGEN_CLK>;
+-			clock-names = "aux", "cfg_ahb", "refgen";
++			clock-names = "aux",
++				      "cfg_ahb",
++				      "ref",
++				      "refgen";
  
--	eud_typec: connector {
--		compatible = "usb-c-connector";
--
--		ports {
--			port@0 {
--				con_eud: endpoint {
--					remote-endpoint = <&eud_con>;
--				};
--			};
--		};
--	};
--
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
-@@ -3625,6 +3613,8 @@ eud: eud@88e0000 {
- 			      <0 0x88e2000 0 0x1000>;
- 			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
+ 			resets = <&gcc GCC_PCIE_0_PHY_BCR>;
+ 			reset-names = "phy";
+@@ -1991,8 +1995,12 @@ pcie1_phy: phy@1c0e000 {
+ 			ranges;
+ 			clocks = <&gcc GCC_PCIE_PHY_AUX_CLK>,
+ 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
++				 <&gcc GCC_PCIE_1_CLKREF_CLK>,
+ 				 <&gcc GCC_PCIE1_PHY_REFGEN_CLK>;
+-			clock-names = "aux", "cfg_ahb", "refgen";
++			clock-names = "aux",
++				      "cfg_ahb",
++				      "ref",
++				      "refgen";
  
-+			status = "disabled";
-+
- 			ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-@@ -3635,13 +3625,6 @@ eud_ep: endpoint {
- 						remote-endpoint = <&usb2_role_switch>;
- 					};
- 				};
--
--				port@1 {
--					reg = <1>;
--					eud_con: endpoint {
--						remote-endpoint = <&con_eud>;
--					};
--				};
- 			};
- 		};
- 
+ 			resets = <&gcc GCC_PCIE_1_PHY_BCR>;
+ 			reset-names = "phy";
 -- 
 2.42.0
 
