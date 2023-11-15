@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABA1446CB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EB23FE20
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhtArVcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED10C433C7;
-	Wed, 15 Nov 2023 22:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o59A2KNZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62396C433CB;
+	Wed, 15 Nov 2023 22:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085826;
-	bh=Zu5WmmukpgPT1LuYPvwFYJkezLN2SQ/Y+a1jbNCUdJI=;
+	s=korg; t=1700085827;
+	bh=wHdpn6zpltjUurOz0/fSLzvVLpNUT5V2V8sxvddOWXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhtArVcV2cyOsjAG06hoDUDR7RNzjkHVIKfE4ngAd66RSSxa04yAhwwCJBYv8ZKs8
-	 FRwvlYTFqcAB9qFIPMFsgrtuK1lWjnzuPmtqrXiLdZt13dQn50mhjBhVSMsC8dI5t3
-	 fq93I7sX8rUzRJod3zuU/S84T0q9YTp8I+PFLQqg=
+	b=o59A2KNZG0wliNdW+e9D0lWIiesZ+stzeCY10xDQ50NoZGHPDBBSBQsp33zJmxQXo
+	 YbbGSq6sOLeu6bgCqErf0ciLInCojxYcdKJz6469J7JvrwgdLrWHVoskphy9LQj/T0
+	 G+egSYQLTS8RwUHa7mCs3EKc4kDAw40jfcMhgAwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 5.4 041/119] drm/radeon: possible buffer overflow
-Date: Wed, 15 Nov 2023 17:00:31 -0500
-Message-ID: <20231115220133.906240598@linuxfoundation.org>
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 032/119] clk: mediatek: clk-mt7629-eth: Add check for mtk_alloc_clk_data
+Date: Wed, 15 Nov 2023 17:00:22 -0500
+Message-ID: <20231115220133.619870802@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -43,45 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit dd05484f99d16715a88eedfca363828ef9a4c2d4 ]
+[ Upstream commit 0884393c63cc9a1772f7121a6645ba7bd76feeb9 ]
 
-Buffer 'afmt_status' of size 6 could overflow, since index 'afmt_idx' is
-checked after access.
+Add the check for the return value of mtk_alloc_clk_data() in order to
+avoid NULL pointer dereference.
 
-Fixes: 5cc4e5fc293b ("drm/radeon: Cleanup HDMI audio interrupt handling for evergreen")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 3b5e748615e7 ("clk: mediatek: add clock support for MT7629 SoC")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20230912093407.21505-4-jiasheng@iscas.ac.cn
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/evergreen.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/clk/mediatek/clk-mt7629-eth.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/radeon/evergreen.c b/drivers/gpu/drm/radeon/evergreen.c
-index 1d978a3d9c828..2156590c3d159 100644
---- a/drivers/gpu/drm/radeon/evergreen.c
-+++ b/drivers/gpu/drm/radeon/evergreen.c
-@@ -4819,14 +4819,15 @@ int evergreen_irq_process(struct radeon_device *rdev)
- 			break;
- 		case 44: /* hdmi */
- 			afmt_idx = src_data;
--			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
--				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
--
- 			if (afmt_idx > 5) {
- 				DRM_ERROR("Unhandled interrupt: %d %d\n",
- 					  src_id, src_data);
- 				break;
- 			}
-+
-+			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
-+				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
-+
- 			afmt_status[afmt_idx] &= ~AFMT_AZ_FORMAT_WTRIG;
- 			queue_hdmi = true;
- 			DRM_DEBUG("IH: HDMI%d\n", afmt_idx + 1);
+diff --git a/drivers/clk/mediatek/clk-mt7629-eth.c b/drivers/clk/mediatek/clk-mt7629-eth.c
+index 88279d0ea1a76..3ab7b672f8c70 100644
+--- a/drivers/clk/mediatek/clk-mt7629-eth.c
++++ b/drivers/clk/mediatek/clk-mt7629-eth.c
+@@ -83,6 +83,8 @@ static int clk_mt7629_ethsys_init(struct platform_device *pdev)
+ 	int r;
+ 
+ 	clk_data = mtk_alloc_clk_data(CLK_ETH_NR_CLK);
++	if (!clk_data)
++		return -ENOMEM;
+ 
+ 	mtk_clk_register_gates(node, eth_clks, CLK_ETH_NR_CLK, clk_data);
+ 
+@@ -105,6 +107,8 @@ static int clk_mt7629_sgmiisys_init(struct platform_device *pdev)
+ 	int r;
+ 
+ 	clk_data = mtk_alloc_clk_data(CLK_SGMII_NR_CLK);
++	if (!clk_data)
++		return -ENOMEM;
+ 
+ 	mtk_clk_register_gates(node, sgmii_clks[id++], CLK_SGMII_NR_CLK,
+ 			       clk_data);
 -- 
 2.42.0
 
