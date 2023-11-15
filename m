@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86717381DF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1428D3A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imznZNQk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37095C433C9;
-	Wed, 15 Nov 2023 19:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVIE9GVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FDEC433C8;
+	Wed, 15 Nov 2023 19:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078299;
-	bh=kGvb9+l0iV8NG4PX1bsOZDNABNJKZL9K7wYhllJhPwY=;
+	s=korg; t=1700078300;
+	bh=6oQVyhuWCU9Hq8ORPjfbkFvvQmhscFsha+g7rgfFZuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imznZNQkeeNEIl8GHDWtbVtF06vY9jd09Ab+/3+1sfGZxYTgQ9qi8Pklrewh1RA5B
-	 Z/XZkwLOS4g99PG3mF+05rj4aXWU4wgIRD45FH9R0wQ2UsC6PupRHvsk3g8Rg7p2xQ
-	 aAHIPRED+AjQz6upsViC6N/T8+iq7Bmfq3UJwFpU=
+	b=uVIE9GVGiY0+IHov3YbTPKjcbYw23XwIQ7Jemb0lPWnag8EY/813k8EochA9p3E1/
+	 BU1yA+LAlhon/cCAl5niMBDqylf25RC3P3xeaN0VNQ/ht4FoQDMg1l3BShTqaNYcPI
+	 NJC1wopIItSLtpPzj7YFq0tdrR9Pd9NPN2daAoaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangJinchao <wangjinchao@xfusion.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 236/379] padata: Fix refcnt handling in padata_free_shell()
-Date: Wed, 15 Nov 2023 14:25:11 -0500
-Message-ID: <20231115192659.075709445@linuxfoundation.org>
+Subject: [PATCH 6.1 237/379] crypto: qat - fix deadlock in backlog processing
+Date: Wed, 15 Nov 2023 14:25:12 -0500
+Message-ID: <20231115192659.133647810@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,108 +43,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangJinchao <wangjinchao@xfusion.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 7ddc21e317b360c3444de3023bcc83b85fabae2f ]
+[ Upstream commit 203b01001c4d741205b9c329acddc5193ed56fbd ]
 
-In a high-load arm64 environment, the pcrypt_aead01 test in LTP can lead
-to system UAF (Use-After-Free) issues. Due to the lengthy analysis of
-the pcrypt_aead01 function call, I'll describe the problem scenario
-using a simplified model:
+If a request has the flag CRYPTO_TFM_REQ_MAY_BACKLOG set, the function
+qat_alg_send_message_maybacklog(), enqueues it in a backlog list if
+either (1) there is already at least one request in the backlog list, or
+(2) the HW ring is nearly full or (3) the enqueue to the HW ring fails.
+If an interrupt occurs right before the lock in qat_alg_backlog_req() is
+taken and the backlog queue is being emptied, then there is no request
+in the HW queues that can trigger a subsequent interrupt that can clear
+the backlog queue. In addition subsequent requests are enqueued to the
+backlog list and not sent to the hardware.
 
-Suppose there's a user of padata named `user_function` that adheres to
-the padata requirement of calling `padata_free_shell` after `serial()`
-has been invoked, as demonstrated in the following code:
+Fix it by holding the lock while taking the decision if the request
+needs to be included in the backlog queue or not. This synchronizes the
+flow with the interrupt handler that drains the backlog queue.
 
-```c
-struct request {
-    struct padata_priv padata;
-    struct completion *done;
-};
+For performance reasons, the logic has been changed to try to enqueue
+first without holding the lock.
 
-void parallel(struct padata_priv *padata) {
-    do_something();
-}
-
-void serial(struct padata_priv *padata) {
-    struct request *request = container_of(padata,
-    				struct request,
-				padata);
-    complete(request->done);
-}
-
-void user_function() {
-    DECLARE_COMPLETION(done)
-    padata->parallel = parallel;
-    padata->serial = serial;
-    padata_do_parallel();
-    wait_for_completion(&done);
-    padata_free_shell();
-}
-```
-
-In the corresponding padata.c file, there's the following code:
-
-```c
-static void padata_serial_worker(struct work_struct *serial_work) {
-    ...
-    cnt = 0;
-
-    while (!list_empty(&local_list)) {
-        ...
-        padata->serial(padata);
-        cnt++;
-    }
-
-    local_bh_enable();
-
-    if (refcount_sub_and_test(cnt, &pd->refcnt))
-        padata_free_pd(pd);
-}
-```
-
-Because of the high system load and the accumulation of unexecuted
-softirq at this moment, `local_bh_enable()` in padata takes longer
-to execute than usual. Subsequently, when accessing `pd->refcnt`,
-`pd` has already been released by `padata_free_shell()`, resulting
-in a UAF issue with `pd->refcnt`.
-
-The fix is straightforward: add `refcount_dec_and_test` before calling
-`padata_free_pd` in `padata_free_shell`.
-
-Fixes: 07928d9bfc81 ("padata: Remove broken queue flushing")
-
-Signed-off-by: WangJinchao <wangjinchao@xfusion.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Fixes: 386823839732 ("crypto: qat - add backlog mechanism")
+Reported-by: Mikulas Patocka <mpatocka@redhat.com>
+Closes: https://lore.kernel.org/all/af9581e2-58f9-cc19-428f-6f18f1f83d54@redhat.com/T/
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/crypto/qat/qat_common/qat_algs_send.c | 46 ++++++++++---------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index de90af5fcbe6b..791d9cb07a501 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -1094,12 +1094,16 @@ EXPORT_SYMBOL(padata_alloc_shell);
-  */
- void padata_free_shell(struct padata_shell *ps)
+diff --git a/drivers/crypto/qat/qat_common/qat_algs_send.c b/drivers/crypto/qat/qat_common/qat_algs_send.c
+index ff5b4347f7831..607ed88f4b197 100644
+--- a/drivers/crypto/qat/qat_common/qat_algs_send.c
++++ b/drivers/crypto/qat/qat_common/qat_algs_send.c
+@@ -39,40 +39,44 @@ void qat_alg_send_backlog(struct qat_instance_backlog *backlog)
+ 	spin_unlock_bh(&backlog->lock);
+ }
+ 
+-static void qat_alg_backlog_req(struct qat_alg_req *req,
+-				struct qat_instance_backlog *backlog)
+-{
+-	INIT_LIST_HEAD(&req->list);
+-
+-	spin_lock_bh(&backlog->lock);
+-	list_add_tail(&req->list, &backlog->list);
+-	spin_unlock_bh(&backlog->lock);
+-}
+-
+-static int qat_alg_send_message_maybacklog(struct qat_alg_req *req)
++static bool qat_alg_try_enqueue(struct qat_alg_req *req)
  {
-+	struct parallel_data *pd;
+ 	struct qat_instance_backlog *backlog = req->backlog;
+ 	struct adf_etr_ring_data *tx_ring = req->tx_ring;
+ 	u32 *fw_req = req->fw_req;
+ 
+-	/* If any request is already backlogged, then add to backlog list */
++	/* Check if any request is already backlogged */
+ 	if (!list_empty(&backlog->list))
+-		goto enqueue;
++		return false;
+ 
+-	/* If ring is nearly full, then add to backlog list */
++	/* Check if ring is nearly full */
+ 	if (adf_ring_nearly_full(tx_ring))
+-		goto enqueue;
++		return false;
+ 
+-	/* If adding request to HW ring fails, then add to backlog list */
++	/* Try to enqueue to HW ring */
+ 	if (adf_send_message(tx_ring, fw_req))
+-		goto enqueue;
++		return false;
+ 
+-	return -EINPROGRESS;
++	return true;
++}
+ 
+-enqueue:
+-	qat_alg_backlog_req(req, backlog);
+ 
+-	return -EBUSY;
++static int qat_alg_send_message_maybacklog(struct qat_alg_req *req)
++{
++	struct qat_instance_backlog *backlog = req->backlog;
++	int ret = -EINPROGRESS;
 +
- 	if (!ps)
- 		return;
++	if (qat_alg_try_enqueue(req))
++		return ret;
++
++	spin_lock_bh(&backlog->lock);
++	if (!qat_alg_try_enqueue(req)) {
++		list_add_tail(&req->list, &backlog->list);
++		ret = -EBUSY;
++	}
++	spin_unlock_bh(&backlog->lock);
++
++	return ret;
+ }
  
- 	mutex_lock(&ps->pinst->lock);
- 	list_del(&ps->list);
--	padata_free_pd(rcu_dereference_protected(ps->pd, 1));
-+	pd = rcu_dereference_protected(ps->pd, 1);
-+	if (refcount_dec_and_test(&pd->refcnt))
-+		padata_free_pd(pd);
- 	mutex_unlock(&ps->pinst->lock);
- 
- 	kfree(ps);
+ int qat_alg_send_message(struct qat_alg_req *req)
 -- 
 2.42.0
 
