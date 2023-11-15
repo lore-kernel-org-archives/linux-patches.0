@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4064E31730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A4931730
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2+1omcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1ABBC433C8;
-	Wed, 15 Nov 2023 19:46:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkGALs2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E60C433C7;
+	Wed, 15 Nov 2023 19:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077595;
-	bh=EXoTRkx94aLEa/RCY3nu+jX7Sf+vV8Rc9L5JrfMTW1w=;
+	s=korg; t=1700077596;
+	bh=Z0Chi7nD35BL5iY0so+ti1InsW0lPXmFvBPvC4+fR+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K2+1omcELHxa7o4E2qb5HUgC7uxnnUkLU2IvM+J7DEpS7u3cS8yHsRW+NGOESlDSn
-	 bPaTMGma7zjHcR3EOkgxWpLXmD0T1qZ8apjqWbPPG295YaA6UiR3YGxDMhZBLYdUvf
-	 ySgH9hcYEfB9uYWBhv/5IWPX4p48oHZEeVvJ8AKE=
+	b=hkGALs2uLeJZjmMuWtnngTG6b7Hj+ZKrsV8KYeySnBMKrs4V7aUmQx2rR+TRlWB9p
+	 3L9jDl5Bc7yaQrc2zF5AFRKUAS9DA5jZQ76uukahvrjhb3vtP8amsP2Tq9sXiriwkA
+	 FPTjsCAaUIj0a0+pNTjzTOhPCmwXxQV6oI5PnW48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 378/603] RDMA/hns: Fix uninitialized ucmd in hns_roce_create_qp_common()
-Date: Wed, 15 Nov 2023 14:15:23 -0500
-Message-ID: <20231115191639.560555560@linuxfoundation.org>
+Subject: [PATCH 6.6 369/603] ASoC: Intel: sof_sdw_rt_sdca_jack_common: add rt713 support
+Date: Wed, 15 Nov 2023 14:15:14 -0500
+Message-ID: <20231115191639.050087259@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,42 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit c64e9710f9241e38a1c761ed1c1a30854784da66 ]
+[ Upstream commit b6d6e5abf64562985fdbbdbdfe8088cde634d834 ]
 
-ucmd in hns_roce_create_qp_common() are not initialized. But it works fine
-until new member sdb_addr is added to struct hns_roce_ib_create_qp.
+Adding rt713 support to sof_sdw_rt_sdca_jack_common.c.
 
-If the user-mode driver uses an old version ABI, then the value of the new
-member will be undefined after ib_copy_from_udata().
-
-This patch fixes it by initialize this variable to 0. And the default value
-of the new member sdb_addr will be 0 which is invalid.
-
-Fixes: 0425e3e6e0c7 ("RDMA/hns: Support flush cqe for hip08 in kernel space")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20231017125239.164455-3-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: fbaaf80d8cf6 ("ASoC: Intel: sof_sdw: add rt713 support")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20231012190826.142619-5-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_qp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_sdw_rt_sdca_jack_common.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
-index cdc1c6de43a17..828b58534aa97 100644
---- a/drivers/infiniband/hw/hns/hns_roce_qp.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -1064,7 +1064,7 @@ static int hns_roce_create_qp_common(struct hns_roce_dev *hr_dev,
- {
- 	struct hns_roce_ib_create_qp_resp resp = {};
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
--	struct hns_roce_ib_create_qp ucmd;
-+	struct hns_roce_ib_create_qp ucmd = {};
- 	int ret;
+diff --git a/sound/soc/intel/boards/sof_sdw_rt_sdca_jack_common.c b/sound/soc/intel/boards/sof_sdw_rt_sdca_jack_common.c
+index 623e3bebb8884..4360b9f5ff2c7 100644
+--- a/sound/soc/intel/boards/sof_sdw_rt_sdca_jack_common.c
++++ b/sound/soc/intel/boards/sof_sdw_rt_sdca_jack_common.c
+@@ -58,6 +58,11 @@ static const struct snd_soc_dapm_route rt712_sdca_map[] = {
+ 	{ "rt712 MIC2", NULL, "Headset Mic" },
+ };
  
- 	mutex_init(&hr_qp->mutex);
++static const struct snd_soc_dapm_route rt713_sdca_map[] = {
++	{ "Headphone", NULL, "rt713 HP" },
++	{ "rt713 MIC2", NULL, "Headset Mic" },
++};
++
+ static const struct snd_kcontrol_new rt_sdca_jack_controls[] = {
+ 	SOC_DAPM_PIN_SWITCH("Headphone"),
+ 	SOC_DAPM_PIN_SWITCH("Headset Mic"),
+@@ -109,6 +114,9 @@ static int rt_sdca_jack_rtd_init(struct snd_soc_pcm_runtime *rtd)
+ 	} else if (strstr(component->name_prefix, "rt712")) {
+ 		ret = snd_soc_dapm_add_routes(&card->dapm, rt712_sdca_map,
+ 					      ARRAY_SIZE(rt712_sdca_map));
++	} else if (strstr(component->name_prefix, "rt713")) {
++		ret = snd_soc_dapm_add_routes(&card->dapm, rt713_sdca_map,
++					      ARRAY_SIZE(rt713_sdca_map));
+ 	} else {
+ 		dev_err(card->dev, "%s is not supported\n", component->name_prefix);
+ 		return -EINVAL;
 -- 
 2.42.0
 
