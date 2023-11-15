@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B6333CDF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACADE33CDF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azmMyKgg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF91C433C9;
-	Wed, 15 Nov 2023 19:48:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxwidKGL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59094C433C8;
+	Wed, 15 Nov 2023 19:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077714;
-	bh=wuJwWBH0llu+W9MsnWQYTZOODXu0dxoS3/V/2osjiOc=;
+	s=korg; t=1700077716;
+	bh=ZNm0KlcioNsv2bJKEN5LxcsaOv7QuoLm17omQRXy05I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=azmMyKggGHZWT8hl2rU6CYxFo2BfrnGOwC4dpRJUAFRbxK106BiBqML2M4gOmzM67
-	 q+6rcy0++G11xj4jyy2C+CaYHvqZ4QTz/NJ4E9rqt0l7reeSCoCxtX1Jzz5/LGYEWc
-	 WmOGK2qAmZ/ffZWA9ZHVr9g/rVsE7Eq7kqj+sK0U=
+	b=VxwidKGLLZG1R3X1qgNICRRnFUtR4qk0gP0oaRhwguECZ5kj2fTMg4JLGNowjOTEN
+	 DiadIsWpsuqN840NdlUfdWUqPJzccdVKrYeqnfcMGMU3B7H9qxHeFJE22YtCe5443r
+	 PrLZjtiMvYR/wDNEAao3EbTbz1SESspEWcJW5WIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Disha Goel <disgoel@linux.vnet.ibm.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	maddy@linux.ibm.com,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 466/603] modpost: fix ishtp MODULE_DEVICE_TABLE built on big-endian host
-Date: Wed, 15 Nov 2023 14:16:51 -0500
-Message-ID: <20231115191644.797003664@linuxfoundation.org>
+Subject: [PATCH 6.6 475/603] perf vendor events: Update PMC used in PM_RUN_INST_CMPL event for power10 platform
+Date: Wed, 15 Nov 2023 14:17:00 -0500
+Message-ID: <20231115191645.334767960@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -37,68 +40,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit ac96a15a0f0c8812a3aaa587b871cd5527f6d736 ]
+[ Upstream commit 3f8b6e5b11192dacb721d2d28ea4589917f5e822 ]
 
-When MODULE_DEVICE_TABLE(ishtp, ) is built on a host with a different
-endianness from the target architecture, it results in an incorrect
-MODULE_ALIAS().
+The CPI_STALL_RATIO metric group can be used to present the high
+level CPI stall breakdown metrics in powerpc, which will show:
 
-For example, see a case where drivers/platform/x86/intel/ishtp_eclite.c
-is built as a module for x86.
+- DISPATCH_STALL_CPI ( Dispatch stall cycles per insn )
+- ISSUE_STALL_CPI ( Issue stall cycles per insn )
+- EXECUTION_STALL_CPI ( Execution stall cycles per insn )
+- COMPLETION_STALL_CPI ( Completion stall cycles per insn )
 
-If you build it on a little-endian host, you will get the correct
-MODULE_ALIAS:
+Commit cf26e043c2a9 ("perf vendor events power10: Add JSON
+metric events to present CPI stall cycles in powerpc)" which added
+the CPI_STALL_RATIO metric group, also modified
+the PMC value used in PM_RUN_INST_CMPL event from PMC4 to PMC5,
+to avoid multiplexing of events.
+But that got revert in recent changes. Fix this issue by changing
+back the PMC value used in PM_RUN_INST_CMPL to PMC5.
 
-    $ grep MODULE_ALIAS drivers/platform/x86/intel/ishtp_eclite.mod.c
-    MODULE_ALIAS("ishtp:{6A19CC4B-D760-4DE3-B14D-F25EBD0FBCD9}");
+Result with the fix:
 
-However, if you build it on a big-endian host, you will get a wrong
-MODULE_ALIAS:
+ ./perf stat --metric-no-group -M CPI_STALL_RATIO <workload>
 
-    $ grep MODULE_ALIAS drivers/platform/x86/intel/ishtp_eclite.mod.c
-    MODULE_ALIAS("ishtp:{BD0FBCD9-F25E-B14D-4DE3-D7606A19CC4B}");
+ Performance counter stats for 'workload':
 
-This issue has been unnoticed because the x86 kernel is most likely built
-natively on an x86 host.
+        68,745,426      PM_CMPL_STALL                    #     0.21 COMPLETION_STALL_CPI
+         7,692,827      PM_ISSUE_STALL                   #     0.02 ISSUE_STALL_CPI
+       322,638,223      PM_RUN_INST_CMPL                 #     0.05 DISPATCH_STALL_CPI
+                                                  #     0.48 EXECUTION_STALL_CPI
+        16,858,553      PM_DISP_STALL_CYC
+       153,880,133      PM_EXEC_STALL
 
-The guid field must not be reversed because guid_t is an array of __u8.
+       0.089774592 seconds time elapsed
 
-Fixes: fa443bc3c1e4 ("HID: intel-ish-hid: add support for MODULE_DEVICE_TABLE()")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
-Tested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+"--metric-no-group" is used for forcing PM_RUN_INST_CMPL to be scheduled
+in all group for more accuracy.
+
+Fixes: 7d473f475b2a ("perf vendor events: Move JSON/events to appropriate files for power10 platform")
+Reported-by: Disha Goel <disgoel@linux.vnet.ibm.com>
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Reviewed-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Tested-by: Disha Goel<disgoel@linux.ibm.com>
+Cc: maddy@linux.ibm.com
+Link: https://lore.kernel.org/r/20231016143110.244255-1-kjain@linux.ibm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/pmu-events/arch/powerpc/power10/pmc.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 70bf6a2f585ce..6583b36dbe694 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -1401,10 +1401,10 @@ static int do_mhi_ep_entry(const char *filename, void *symval, char *alias)
- /* Looks like: ishtp:{guid} */
- static int do_ishtp_entry(const char *filename, void *symval, char *alias)
- {
--	DEF_FIELD(symval, ishtp_device_id, guid);
-+	DEF_FIELD_ADDR(symval, ishtp_device_id, guid);
- 
- 	strcpy(alias, ISHTP_MODULE_PREFIX "{");
--	add_guid(alias, guid);
-+	add_guid(alias, *guid);
- 	strcat(alias, "}");
- 
- 	return 1;
+diff --git a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
+index c606ae03cd27d..0e0253d0e7577 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
++++ b/tools/perf/pmu-events/arch/powerpc/power10/pmc.json
+@@ -195,7 +195,7 @@
+     "BriefDescription": "Threshold counter exceeded a value of 128."
+   },
+   {
+-    "EventCode": "0x400FA",
++    "EventCode": "0x500FA",
+     "EventName": "PM_RUN_INST_CMPL",
+     "BriefDescription": "PowerPC instruction completed while the run latch is set."
+   }
 -- 
 2.42.0
 
