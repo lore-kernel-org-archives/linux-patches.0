@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675E931728
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF83731725
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWqQG5xV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F043C433C9;
-	Wed, 15 Nov 2023 19:39:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdIGBjaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3A2C433C8;
+	Wed, 15 Nov 2023 19:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077170;
-	bh=xTHwzH/JC0Mip5lrqi5TA4kRqUz5LCqBZA6t1V2UF5E=;
+	s=korg; t=1700077171;
+	bh=U055PtNhTu723KcX9CRT8ANQYa1Foon/d9Dr128tOJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWqQG5xVsPuEiCeFZLT4kXnNYGDN5cUa/CN+NjRF5dGM45gHpE5trW0BqiPonOE8H
-	 Kcwp+ybSLu4R4mkGJ3S85Kj4IsYkc9kjQVv4gJaVseDj7thJPICQDbq1wQsXYkVghJ
-	 VcElic37cEk1hOvOTx3Q/C8iNtDwZxu84ywMooJ8=
+	b=YdIGBjaX0l1q59kxADySD68ir9KaU9F8NdFswrU0U3/myBbMaZXgWk/1AVgQv4/Gv
+	 v8KarTdQsGrR6YwMFRWChCt2HU/B3+2sdnOFAS7oAprKrNcDiaPhqrOwkwqv8hLqfB
+	 bM5n80t8DQ3OQsQLtfV8vxxe2/v2OHR4j0Aow7Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 147/603] wifi: iwlwifi: empty overflow queue during flush
-Date: Wed, 15 Nov 2023 14:11:32 -0500
-Message-ID: <20231115191623.365772157@linuxfoundation.org>
+	Matthieu Baerts <matttbe@kernel.org>,
+	Geliang Tang <geliang.tang@suse.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.5 544/550] selftests: mptcp: fix wait_rm_addr/sf parameters
+Date: Wed, 15 Nov 2023 14:18:48 -0500
+Message-ID: <20231115191638.626945001@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,173 +39,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Geliang Tang <geliang.tang@suse.com>
 
-[ Upstream commit 658939fc68d3241f9a0019e224cd7154438c23f2 ]
+commit 9168ea02b898d3dde98b51e4bd3fb082bd438dab upstream.
 
-If a TX queue has no space for new TX frames, the driver will keep
-these frames in the overflow queue, and during reclaim flow it
-will retry to send the frames from that queue.
-But if the reclaim flow was invoked from TX queue flush, we will also
-TX these frames, which is wrong as we don't want to TX anything
-after flush.
-This might also cause assert 0x125F when removing the queue,
-saying that the driver removes a non-empty queue
-Fix this by TXing the overflow queue's frames only if we are
-not in flush queue flow.
+The second input parameter of 'wait_rm_addr/sf $1 1' is misused. If it's
+1, wait_rm_addr/sf will never break, and will loop ten times, then
+'wait_rm_addr/sf' equals to 'sleep 1'. This delay time is too long,
+which can sometimes make the tests fail.
 
-Fixes: a44509805895 ("iwlwifi: move reclaim flows to the queue file")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20231022173519.caf06c8709d9.Ibf664ccb3f952e836f8fa461ea58fc08e5c46e88@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A better way to use wait_rm_addr/sf is to use rm_addr/sf_count to obtain
+the current value, and then pass into wait_rm_addr/sf.
+
+Fixes: 4369c198e599 ("selftests: mptcp: test userspace pm out of transfer")
+Cc: stable@vger.kernel.org
+Suggested-by: Matthieu Baerts <matttbe@kernel.org>
+Reviewed-by: Matthieu Baerts <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
+Signed-off-by: Mat Martineau <martineau@kernel.org>
+Link: https://lore.kernel.org/r/20231025-send-net-next-20231025-v1-2-db8f25f798eb@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/tx.c    | 5 +++--
- drivers/net/wireless/intel/iwlwifi/iwl-trans.h | 7 ++++---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c    | 4 ++--
- drivers/net/wireless/intel/iwlwifi/queue/tx.c  | 9 +++++----
- drivers/net/wireless/intel/iwlwifi/queue/tx.h  | 2 +-
- 5 files changed, 15 insertions(+), 12 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-index 60a7b61d59aa3..ca1daec641c4f 100644
---- a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright(c) 2008 - 2014 Intel Corporation. All rights reserved.
-  * Copyright (C) 2019 Intel Corporation
-+ * Copyright (C) 2023 Intel Corporation
-  *****************************************************************************/
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3259,6 +3259,7 @@ userspace_pm_rm_sf_addr_ns1()
+ 	local addr=$1
+ 	local id=$2
+ 	local tk sp da dp
++	local cnt_addr cnt_sf
  
- #include <linux/kernel.h>
-@@ -1169,7 +1170,7 @@ void iwlagn_rx_reply_tx(struct iwl_priv *priv, struct iwl_rx_cmd_buffer *rxb)
- 			iwlagn_check_ratid_empty(priv, sta_id, tid);
- 		}
- 
--		iwl_trans_reclaim(priv->trans, txq_id, ssn, &skbs);
-+		iwl_trans_reclaim(priv->trans, txq_id, ssn, &skbs, false);
- 
- 		freed = 0;
- 
-@@ -1315,7 +1316,7 @@ void iwlagn_rx_reply_compressed_ba(struct iwl_priv *priv,
- 	 * block-ack window (we assume that they've been successfully
- 	 * transmitted ... if not, it's too late anyway). */
- 	iwl_trans_reclaim(priv->trans, scd_flow, ba_resp_scd_ssn,
--			  &reclaimed_skbs);
-+			  &reclaimed_skbs, false);
- 
- 	IWL_DEBUG_TX_REPLY(priv, "REPLY_COMPRESSED_BA [%d] Received from %pM, "
- 			   "sta_id = %d\n",
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-index 1b3c976d19feb..168eda2132fb8 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
-@@ -588,7 +588,7 @@ struct iwl_trans_ops {
- 	int (*tx)(struct iwl_trans *trans, struct sk_buff *skb,
- 		  struct iwl_device_tx_cmd *dev_cmd, int queue);
- 	void (*reclaim)(struct iwl_trans *trans, int queue, int ssn,
--			struct sk_buff_head *skbs);
-+			struct sk_buff_head *skbs, bool is_flush);
- 
- 	void (*set_q_ptrs)(struct iwl_trans *trans, int queue, int ptr);
- 
-@@ -1273,14 +1273,15 @@ static inline int iwl_trans_tx(struct iwl_trans *trans, struct sk_buff *skb,
+ 	tk=$(grep "type:1," "$evts_ns1" |
+ 	     sed -n 's/.*\(token:\)\([[:digit:]]*\).*$/\2/p;q')
+@@ -3268,11 +3269,13 @@ userspace_pm_rm_sf_addr_ns1()
+ 	     sed -n 's/.*\(daddr6:\)\([0-9a-f:.]*\).*$/\2/p;q')
+ 	dp=$(grep "type:10" "$evts_ns1" |
+ 	     sed -n 's/.*\(dport:\)\([[:digit:]]*\).*$/\2/p;q')
++	cnt_addr=$(rm_addr_count ${ns1})
++	cnt_sf=$(rm_sf_count ${ns1})
+ 	ip netns exec $ns1 ./pm_nl_ctl rem token $tk id $id
+ 	ip netns exec $ns1 ./pm_nl_ctl dsf lip "::ffff:$addr" \
+ 				lport $sp rip $da rport $dp token $tk
+-	wait_rm_addr $ns1 1
+-	wait_rm_sf $ns1 1
++	wait_rm_addr $ns1 "${cnt_addr}"
++	wait_rm_sf $ns1 "${cnt_sf}"
  }
  
- static inline void iwl_trans_reclaim(struct iwl_trans *trans, int queue,
--				     int ssn, struct sk_buff_head *skbs)
-+				     int ssn, struct sk_buff_head *skbs,
-+				     bool is_flush)
- {
- 	if (WARN_ON_ONCE(trans->state != IWL_TRANS_FW_ALIVE)) {
- 		IWL_ERR(trans, "%s bad state = %d\n", __func__, trans->state);
- 		return;
- 	}
+ userspace_pm_add_sf()
+@@ -3294,17 +3297,20 @@ userspace_pm_rm_sf_addr_ns2()
+ 	local addr=$1
+ 	local id=$2
+ 	local tk da dp sp
++	local cnt_addr cnt_sf
  
--	trans->ops->reclaim(trans, queue, ssn, skbs);
-+	trans->ops->reclaim(trans, queue, ssn, skbs, is_flush);
+ 	tk=$(sed -n 's/.*\(token:\)\([[:digit:]]*\).*$/\2/p;q' "$evts_ns2")
+ 	da=$(sed -n 's/.*\(daddr4:\)\([0-9.]*\).*$/\2/p;q' "$evts_ns2")
+ 	dp=$(sed -n 's/.*\(dport:\)\([[:digit:]]*\).*$/\2/p;q' "$evts_ns2")
+ 	sp=$(grep "type:10" "$evts_ns2" |
+ 	     sed -n 's/.*\(sport:\)\([[:digit:]]*\).*$/\2/p;q')
++	cnt_addr=$(rm_addr_count ${ns2})
++	cnt_sf=$(rm_sf_count ${ns2})
+ 	ip netns exec $ns2 ./pm_nl_ctl rem token $tk id $id
+ 	ip netns exec $ns2 ./pm_nl_ctl dsf lip $addr lport $sp \
+ 				rip $da rport $dp token $tk
+-	wait_rm_addr $ns2 1
+-	wait_rm_sf $ns2 1
++	wait_rm_addr $ns2 "${cnt_addr}"
++	wait_rm_sf $ns2 "${cnt_sf}"
  }
  
- static inline void iwl_trans_set_q_ptrs(struct iwl_trans *trans, int queue,
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index 8bdb239295c39..177a4628a913e 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1603,7 +1603,7 @@ static void iwl_mvm_rx_tx_cmd_single(struct iwl_mvm *mvm,
- 	seq_ctl = le16_to_cpu(tx_resp->seq_ctl);
- 
- 	/* we can free until ssn % q.n_bd not inclusive */
--	iwl_trans_reclaim(mvm->trans, txq_id, ssn, &skbs);
-+	iwl_trans_reclaim(mvm->trans, txq_id, ssn, &skbs, false);
- 
- 	while (!skb_queue_empty(&skbs)) {
- 		struct sk_buff *skb = __skb_dequeue(&skbs);
-@@ -1955,7 +1955,7 @@ static void iwl_mvm_tx_reclaim(struct iwl_mvm *mvm, int sta_id, int tid,
- 	 * block-ack window (we assume that they've been successfully
- 	 * transmitted ... if not, it's too late anyway).
- 	 */
--	iwl_trans_reclaim(mvm->trans, txq, index, &reclaimed_skbs);
-+	iwl_trans_reclaim(mvm->trans, txq, index, &reclaimed_skbs, is_flush);
- 
- 	skb_queue_walk(&reclaimed_skbs, skb) {
- 		struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
-diff --git a/drivers/net/wireless/intel/iwlwifi/queue/tx.c b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-index 340240b8954f6..ca74b1b63cac1 100644
---- a/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.c
-@@ -1575,7 +1575,7 @@ void iwl_txq_progress(struct iwl_txq *txq)
- 
- /* Frees buffers until index _not_ inclusive */
- void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
--		     struct sk_buff_head *skbs)
-+		     struct sk_buff_head *skbs, bool is_flush)
- {
- 	struct iwl_txq *txq = trans->txqs.txq[txq_id];
- 	int tfd_num, read_ptr, last_to_free;
-@@ -1650,9 +1650,11 @@ void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
- 	if (iwl_txq_space(trans, txq) > txq->low_mark &&
- 	    test_bit(txq_id, trans->txqs.queue_stopped)) {
- 		struct sk_buff_head overflow_skbs;
-+		struct sk_buff *skb;
- 
- 		__skb_queue_head_init(&overflow_skbs);
--		skb_queue_splice_init(&txq->overflow_q, &overflow_skbs);
-+		skb_queue_splice_init(&txq->overflow_q,
-+				      is_flush ? skbs : &overflow_skbs);
- 
- 		/*
- 		 * We are going to transmit from the overflow queue.
-@@ -1672,8 +1674,7 @@ void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
- 		 */
- 		spin_unlock_bh(&txq->lock);
- 
--		while (!skb_queue_empty(&overflow_skbs)) {
--			struct sk_buff *skb = __skb_dequeue(&overflow_skbs);
-+		while ((skb = __skb_dequeue(&overflow_skbs))) {
- 			struct iwl_device_tx_cmd *dev_cmd_ptr;
- 
- 			dev_cmd_ptr = *(void **)((u8 *)skb->cb +
-diff --git a/drivers/net/wireless/intel/iwlwifi/queue/tx.h b/drivers/net/wireless/intel/iwlwifi/queue/tx.h
-index b7d3808588bfb..4c09bc1930fa1 100644
---- a/drivers/net/wireless/intel/iwlwifi/queue/tx.h
-+++ b/drivers/net/wireless/intel/iwlwifi/queue/tx.h
-@@ -179,7 +179,7 @@ void iwl_txq_gen1_update_byte_cnt_tbl(struct iwl_trans *trans,
- 				      struct iwl_txq *txq, u16 byte_cnt,
- 				      int num_tbs);
- void iwl_txq_reclaim(struct iwl_trans *trans, int txq_id, int ssn,
--		     struct sk_buff_head *skbs);
-+		     struct sk_buff_head *skbs, bool is_flush);
- void iwl_txq_set_q_ptrs(struct iwl_trans *trans, int txq_id, int ptr);
- void iwl_trans_txq_freeze_timer(struct iwl_trans *trans, unsigned long txqs,
- 				bool freeze);
--- 
-2.42.0
-
+ userspace_tests()
 
 
