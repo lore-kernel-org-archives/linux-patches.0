@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F63433C9
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CE0433AF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hu0RL/TP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C0BC433C8;
-	Wed, 15 Nov 2023 19:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imYFy9dq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F64C433C7;
+	Wed, 15 Nov 2023 19:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076963;
-	bh=e0seoj7LTsnn1L6AY6pD90UrieCXGqQDd8Ra2LUyiUU=;
+	s=korg; t=1700076964;
+	bh=6ISIdQcGXucIkiLKHCxD6lpJyrevnMScoBJSApRicXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hu0RL/TPD99OtUAHE8Ax1O+6kYB/QeO248RZ+Xfnr4Z6q/INYp76iZ/Q1oJGI5xKI
-	 ykW840A0E53s6IAyHB+L1OFIBS5yPCy9k1O2P+vlRFhLy8+gXu1SCQPEupXLn0yLvR
-	 VSsZtfASe9Ug/fun7LF/8SgbuYRY/P45VPXwC32U=
+	b=imYFy9dq6ApEbLVzqB4Na/8SJD1oBBA1qb+8wV3d7GzitqWNhMjZp3BnnRVSKJR+/
+	 6naOGcWmE5+Rb0dHozHgsuUkwZ6SJdF/rMUNoLEhMF0TDIEcUE7YYRH+2xzgw6Zjeh
+	 3qk/oNL+H2PpXk7kawLQewNeb7yZFbRSaYnrrRmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 477/550] media: bttv: fix use after free error due to btv->timeout timer
-Date: Wed, 15 Nov 2023 14:17:41 -0500
-Message-ID: <20231115191633.933186961@linuxfoundation.org>
+Subject: [PATCH 6.6 081/603] wifi: mt76: mt7603: improve stuck beacon handling
+Date: Wed, 15 Nov 2023 14:10:26 -0500
+Message-ID: <20231115191618.734543013@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,54 +37,179 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit bd5b50b329e850d467e7bcc07b2b6bde3752fbda ]
+[ Upstream commit 3176205933494bd184c6acd70e796c382bc729b5 ]
 
-There may be some a race condition between timer function
-bttv_irq_timeout and bttv_remove. The timer is setup in
-probe and there is no timer_delete operation in remove
-function. When it hit kfree btv, the function might still be
-invoked, which will cause use after free bug.
+Before preparing the new beacon, check the queue status, flush out all
+previous beacons and buffered multicast packets, then (if necessary)
+try to recover more gracefully from a stuck beacon condition by making a
+less invasive attempt at getting the MAC un-stuck.
 
-This bug is found by static analysis, it may be false positive.
-
-Fix it by adding del_timer_sync invoking to the remove function.
-
-cpu0                cpu1
-                  bttv_probe
-                    ->timer_setup
-                      ->bttv_set_dma
-                        ->mod_timer;
-bttv_remove
-  ->kfree(btv);
-                  ->bttv_irq_timeout
-                    ->USE btv
-
-Fixes: 162e6376ac58 ("media: pci: Convert timers to use timer_setup()")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/bt8xx/bttv-driver.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../wireless/mediatek/mt76/mt7603/beacon.c    | 76 ++++++++++++++-----
+ .../net/wireless/mediatek/mt76/mt7603/regs.h  |  5 ++
+ 2 files changed, 60 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/media/pci/bt8xx/bttv-driver.c b/drivers/media/pci/bt8xx/bttv-driver.c
-index 734f02b91aa31..a50cae25b5463 100644
---- a/drivers/media/pci/bt8xx/bttv-driver.c
-+++ b/drivers/media/pci/bt8xx/bttv-driver.c
-@@ -3830,6 +3830,7 @@ static void bttv_remove(struct pci_dev *pci_dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c b/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
+index 888678732f290..c223f7c19e6da 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/beacon.c
+@@ -9,6 +9,23 @@ struct beacon_bc_data {
+ 	int count[MT7603_MAX_INTERFACES];
+ };
  
- 	/* free resources */
- 	free_irq(btv->c.pci->irq,btv);
-+	del_timer_sync(&btv->timeout);
- 	iounmap(btv->bt848_mmio);
- 	release_mem_region(pci_resource_start(btv->c.pci,0),
- 			   pci_resource_len(btv->c.pci,0));
++static void
++mt7603_mac_stuck_beacon_recovery(struct mt7603_dev *dev)
++{
++	if (dev->beacon_check % 5 != 4)
++		return;
++
++	mt76_clear(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_TX_DMA_EN);
++	mt76_set(dev, MT_SCH_4, MT_SCH_4_RESET);
++	mt76_clear(dev, MT_SCH_4, MT_SCH_4_RESET);
++	mt76_set(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_TX_DMA_EN);
++
++	mt76_set(dev, MT_WF_CFG_OFF_WOCCR, MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS);
++	mt76_set(dev, MT_ARB_SCR, MT_ARB_SCR_TX_DISABLE);
++	mt76_clear(dev, MT_ARB_SCR, MT_ARB_SCR_TX_DISABLE);
++	mt76_clear(dev, MT_WF_CFG_OFF_WOCCR, MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS);
++}
++
+ static void
+ mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
+ {
+@@ -16,6 +33,8 @@ mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
+ 	struct mt76_dev *mdev = &dev->mt76;
+ 	struct mt7603_vif *mvif = (struct mt7603_vif *)vif->drv_priv;
+ 	struct sk_buff *skb = NULL;
++	u32 om_idx = mvif->idx;
++	u32 val;
+ 
+ 	if (!(mdev->beacon_mask & BIT(mvif->idx)))
+ 		return;
+@@ -24,20 +43,33 @@ mt7603_update_beacon_iter(void *priv, u8 *mac, struct ieee80211_vif *vif)
+ 	if (!skb)
+ 		return;
+ 
+-	mt76_tx_queue_skb(dev, dev->mphy.q_tx[MT_TXQ_BEACON],
+-			  MT_TXQ_BEACON, skb, &mvif->sta.wcid, NULL);
++	if (om_idx)
++		om_idx |= 0x10;
++	val = MT_DMA_FQCR0_BUSY | MT_DMA_FQCR0_MODE |
++		FIELD_PREP(MT_DMA_FQCR0_TARGET_BSS, om_idx) |
++		FIELD_PREP(MT_DMA_FQCR0_DEST_PORT_ID, 3) |
++		FIELD_PREP(MT_DMA_FQCR0_DEST_QUEUE_ID, 8);
+ 
+ 	spin_lock_bh(&dev->ps_lock);
+-	mt76_wr(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY |
+-		FIELD_PREP(MT_DMA_FQCR0_TARGET_WCID, mvif->sta.wcid.idx) |
+-		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID,
+-			   dev->mphy.q_tx[MT_TXQ_CAB]->hw_idx) |
+-		FIELD_PREP(MT_DMA_FQCR0_DEST_PORT_ID, 3) |
+-		FIELD_PREP(MT_DMA_FQCR0_DEST_QUEUE_ID, 8));
+ 
+-	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000))
++	mt76_wr(dev, MT_DMA_FQCR0, val |
++		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID, MT_TX_HW_QUEUE_BCN));
++	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000)) {
+ 		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
++		goto out;
++	}
++
++	mt76_wr(dev, MT_DMA_FQCR0, val |
++		FIELD_PREP(MT_DMA_FQCR0_TARGET_QID, MT_TX_HW_QUEUE_BMC));
++	if (!mt76_poll(dev, MT_DMA_FQCR0, MT_DMA_FQCR0_BUSY, 0, 5000)) {
++		dev->beacon_check = MT7603_WATCHDOG_TIMEOUT;
++		goto out;
++	}
+ 
++	mt76_tx_queue_skb(dev, dev->mphy.q_tx[MT_TXQ_BEACON],
++			  MT_TXQ_BEACON, skb, &mvif->sta.wcid, NULL);
++
++out:
+ 	spin_unlock_bh(&dev->ps_lock);
+ }
+ 
+@@ -81,6 +113,18 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
+ 	data.dev = dev;
+ 	__skb_queue_head_init(&data.q);
+ 
++	/* Flush all previous CAB queue packets and beacons */
++	mt76_wr(dev, MT_WF_ARB_CAB_FLUSH, GENMASK(30, 16) | BIT(0));
++
++	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_CAB], false);
++	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_BEACON], false);
++
++	if (dev->mphy.q_tx[MT_TXQ_BEACON]->queued > 0)
++		dev->beacon_check++;
++	else
++		dev->beacon_check = 0;
++	mt7603_mac_stuck_beacon_recovery(dev);
++
+ 	q = dev->mphy.q_tx[MT_TXQ_BEACON];
+ 	spin_lock(&q->lock);
+ 	ieee80211_iterate_active_interfaces_atomic(mt76_hw(dev),
+@@ -89,14 +133,9 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
+ 	mt76_queue_kick(dev, q);
+ 	spin_unlock(&q->lock);
+ 
+-	/* Flush all previous CAB queue packets */
+-	mt76_wr(dev, MT_WF_ARB_CAB_FLUSH, GENMASK(30, 16) | BIT(0));
+-
+-	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_CAB], false);
+-
+ 	mt76_csa_check(mdev);
+ 	if (mdev->csa_complete)
+-		goto out;
++		return;
+ 
+ 	q = dev->mphy.q_tx[MT_TXQ_CAB];
+ 	do {
+@@ -108,7 +147,7 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
+ 		 skb_queue_len(&data.q) < 8);
+ 
+ 	if (skb_queue_empty(&data.q))
+-		goto out;
++		return;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(data.tail); i++) {
+ 		if (!data.tail[i])
+@@ -136,11 +175,6 @@ void mt7603_pre_tbtt_tasklet(struct tasklet_struct *t)
+ 		MT_WF_ARB_CAB_START_BSSn(0) |
+ 		(MT_WF_ARB_CAB_START_BSS0n(1) *
+ 		 ((1 << (MT7603_MAX_INTERFACES - 1)) - 1)));
+-
+-out:
+-	mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[MT_TXQ_BEACON], false);
+-	if (dev->mphy.q_tx[MT_TXQ_BEACON]->queued > hweight8(mdev->beacon_mask))
+-		dev->beacon_check++;
+ }
+ 
+ void mt7603_beacon_set_timer(struct mt7603_dev *dev, int idx, int intval)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/regs.h b/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
+index a39c9a0fcb1cb..524bceb8e9581 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/regs.h
+@@ -469,6 +469,11 @@ enum {
+ #define MT_WF_SEC_BASE			0x21a00
+ #define MT_WF_SEC(ofs)			(MT_WF_SEC_BASE + (ofs))
+ 
++#define MT_WF_CFG_OFF_BASE		0x21e00
++#define MT_WF_CFG_OFF(ofs)		(MT_WF_CFG_OFF_BASE + (ofs))
++#define MT_WF_CFG_OFF_WOCCR		MT_WF_CFG_OFF(0x004)
++#define MT_WF_CFG_OFF_WOCCR_TMAC_GC_DIS	BIT(4)
++
+ #define MT_SEC_SCR			MT_WF_SEC(0x004)
+ #define MT_SEC_SCR_MASK_ORDER		GENMASK(1, 0)
+ 
 -- 
 2.42.0
 
