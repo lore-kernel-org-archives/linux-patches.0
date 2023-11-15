@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A4943ACE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E700A28369
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLjEC2jB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD82C4E67E;
-	Wed, 15 Nov 2023 20:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qup0xAUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E54C4E67C;
+	Wed, 15 Nov 2023 20:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081459;
-	bh=9JMRCXWiRuDozgJY3LGisu/WmgKuaR14mSwDXu8xpWU=;
+	s=korg; t=1700081460;
+	bh=H2b86YXl7+loXzuHGh0UNH7+gXXcnx8O/o0p1ttTRKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLjEC2jB/e/1SVWDgtTKJGiTZDiNPGZNAT58yrP/wq2FtNWZduaBvVYePeFCy0PzB
-	 TQBEkTGYAGVy54FxumaEG8Se/RAmg8T6lRjPKawuZ0Q1dsECzMOW4RMv1nkA3Z+1bF
-	 3VoeYyRMDpd3PcxvAlDM58t5WFWTYF9pC0qqr9oI=
+	b=Qup0xAUZwvJEtJqxJh6XqIZIAg8YJWvpHK2eMPUd3U5xXL1FViWGLgxnA/1Iy6NLL
+	 e1E9qFTnmuzJV2L6jjZJgJkfup4bPiKQG/1zg3uQtreIcSnOFQFhl9I/ItAsj4VaqW
+	 DK4/GCIcmJ84MWdLv3LEpbfcf/cy7SzLSehmWOAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 140/244] ASoC: fsl: mpc5200_dma.c: Fix warning of Function parameter or member not described
-Date: Wed, 15 Nov 2023 15:35:32 -0500
-Message-ID: <20231115203556.752672667@linuxfoundation.org>
+Subject: [PATCH 5.15 141/244] IB/mlx5: Fix rdma counter binding for RAW QP
+Date: Wed, 15 Nov 2023 15:35:33 -0500
+Message-ID: <20231115203556.810069367@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,42 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 4a221b2e3340f4a3c2b414c46c846a26c6caf820 ]
+[ Upstream commit c1336bb4aa5e809a622a87d74311275514086596 ]
 
-This patch fixes the warnings of "Function parameter or member 'xxx'
-not described".
+Previously when we had a RAW QP, we bound a counter to it when it moved
+to INIT state, using the counter context inside RQC.
 
->> sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'component' not described in 'psc_dma_trigger'
-   sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'substream' not described in 'psc_dma_trigger'
-   sound/soc/fsl/mpc5200_dma.c:116: warning: Function parameter or member 'cmd' not described in 'psc_dma_trigger'
+But when we try to modify that counter later in RTS state we used
+modify QP which tries to change the counter inside QPC instead of RQC.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310061914.jJuekdHs-lkp@intel.com/
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Fixes: 6d1048bc1152 ("ASoC: fsl: mpc5200_dma: remove snd_pcm_ops")
-Link: https://lore.kernel.org/r/87il7fcqm8.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Now we correctly modify the counter set_id inside of RQC instead of QPC
+for the RAW QP.
+
+Fixes: d14133dd4161 ("IB/mlx5: Support set qp counter")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/2e5ab6713784a8fe997d19c508187a0dfecf2dfc.1696847964.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/mpc5200_dma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/mlx5/qp.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/sound/soc/fsl/mpc5200_dma.c b/sound/soc/fsl/mpc5200_dma.c
-index 9014978100207..3f7ccae3f6b1a 100644
---- a/sound/soc/fsl/mpc5200_dma.c
-+++ b/sound/soc/fsl/mpc5200_dma.c
-@@ -100,6 +100,9 @@ static irqreturn_t psc_dma_bcom_irq(int irq, void *_psc_dma_stream)
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 1080daf3a546f..d4b5ce37c2cbd 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -3955,6 +3955,30 @@ static unsigned int get_tx_affinity(struct ib_qp *qp,
+ 	return tx_affinity;
+ }
  
- /**
-  * psc_dma_trigger: start and stop the DMA transfer.
-+ * @component: triggered component
-+ * @substream: triggered substream
-+ * @cmd: triggered command
-  *
-  * This function is called by ALSA to start, stop, pause, and resume the DMA
-  * transfer of data.
++static int __mlx5_ib_qp_set_raw_qp_counter(struct mlx5_ib_qp *qp, u32 set_id,
++					   struct mlx5_core_dev *mdev)
++{
++	struct mlx5_ib_raw_packet_qp *raw_packet_qp = &qp->raw_packet_qp;
++	struct mlx5_ib_rq *rq = &raw_packet_qp->rq;
++	u32 in[MLX5_ST_SZ_DW(modify_rq_in)] = {};
++	void *rqc;
++
++	if (!qp->rq.wqe_cnt)
++		return 0;
++
++	MLX5_SET(modify_rq_in, in, rq_state, rq->state);
++	MLX5_SET(modify_rq_in, in, uid, to_mpd(qp->ibqp.pd)->uid);
++
++	rqc = MLX5_ADDR_OF(modify_rq_in, in, ctx);
++	MLX5_SET(rqc, rqc, state, MLX5_RQC_STATE_RDY);
++
++	MLX5_SET64(modify_rq_in, in, modify_bitmask,
++		   MLX5_MODIFY_RQ_IN_MODIFY_BITMASK_RQ_COUNTER_SET_ID);
++	MLX5_SET(rqc, rqc, counter_set_id, set_id);
++
++	return mlx5_core_modify_rq(mdev, rq->base.mqp.qpn, in);
++}
++
+ static int __mlx5_ib_qp_set_counter(struct ib_qp *qp,
+ 				    struct rdma_counter *counter)
+ {
+@@ -3970,6 +3994,9 @@ static int __mlx5_ib_qp_set_counter(struct ib_qp *qp,
+ 	else
+ 		set_id = mlx5_ib_get_counters_id(dev, mqp->port - 1);
+ 
++	if (mqp->type == IB_QPT_RAW_PACKET)
++		return __mlx5_ib_qp_set_raw_qp_counter(mqp, set_id, dev->mdev);
++
+ 	base = &mqp->trans_qp.base;
+ 	MLX5_SET(rts2rts_qp_in, in, opcode, MLX5_CMD_OP_RTS2RTS_QP);
+ 	MLX5_SET(rts2rts_qp_in, in, qpn, base->mqp.qpn);
 -- 
 2.42.0
 
