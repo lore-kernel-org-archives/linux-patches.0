@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10063DBB4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526E941743
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBsdpbJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AE0C433C8;
-	Wed, 15 Nov 2023 20:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5yFrvFd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B59C433C7;
+	Wed, 15 Nov 2023 20:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081201;
-	bh=b2kOF6MojhN9gejgIVyFPSb88d7xQjEYJrXViRuTB8s=;
+	s=korg; t=1700081203;
+	bh=QWv7zZqX/TBd3lP/O6oflTQjoRlVyFsSjzEipjnmMlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBsdpbJ7JMH63U2U1OTdnRPa8YfKPxDMxB7l2b+G/XWOL1NM1msrq8H4xfLdE+tFH
-	 M5PIP3okUZDioQG8b4AW40ZTxrwCBnp36kHHvr9KxePamSotFqN/IP+B2mC795fhtP
-	 nn5YAvSPQw3Xbdf11Is52J/BmQJGFMwr16eDaUgU=
+	b=a5yFrvFdbmgx+KQwqK35u2zg59Ocr/YCoENd1YF0x7qv/MYgUwi4R0nz+K0Rdg3uo
+	 jbX7OlQEQfNrTFJDvIXUwvgYYjGwAyz31Ow+UeuMI99Rgx8Q15m5ffvHpLugMoGwC9
+	 +mFkM1OV0KYFKAaHLM0MTTFGSF7OGJ8LRRNT7944=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Kees Cook <keescook@chromium.org>,
+	Wendy Wang <wendy.wang@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/244] pstore/platform: Add check for kstrdup
-Date: Wed, 15 Nov 2023 15:33:23 -0500
-Message-ID: <20231115203549.053415980@linuxfoundation.org>
+Subject: [PATCH 5.15 012/244] genirq/matrix: Exclude managed interrupts in irq_matrix_allocated()
+Date: Wed, 15 Nov 2023 15:33:24 -0500
+Message-ID: <20231115203549.115891558@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,61 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Chen Yu <yu.c.chen@intel.com>
 
-[ Upstream commit a19d48f7c5d57c0f0405a7d4334d1d38fe9d3c1c ]
+[ Upstream commit a0b0bad10587ae2948a7c36ca4ffc206007fbcf3 ]
 
-Add check for the return value of kstrdup() and return the error
-if it fails in order to avoid NULL pointer dereference.
+When a CPU is about to be offlined, x86 validates that all active
+interrupts which are targeted to this CPU can be migrated to the remaining
+online CPUs. If not, the offline operation is aborted.
 
-Fixes: 563ca40ddf40 ("pstore/platform: Switch pstore_info::name to const")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20230623022706.32125-1-jiasheng@iscas.ac.cn
-Signed-off-by: Kees Cook <keescook@chromium.org>
+The validation uses irq_matrix_allocated() to retrieve the number of
+vectors which are allocated on the outgoing CPU. The returned number of
+allocated vectors includes also vectors which are associated to managed
+interrupts.
+
+That's overaccounting because managed interrupts are:
+
+  - not migrated when the affinity mask of the interrupt targets only
+    the outgoing CPU
+
+  - migrated to another CPU, but in that case the vector is already
+    pre-allocated on the potential target CPUs and must not be taken into
+    account.
+
+As a consequence the check whether the remaining online CPUs have enough
+capacity for migrating the allocated vectors from the outgoing CPU might
+fail incorrectly.
+
+Let irq_matrix_allocated() return only the number of allocated non-managed
+interrupts to make this validation check correct.
+
+[ tglx: Amend changelog and fixup kernel-doc comment ]
+
+Fixes: 2f75d9e1c905 ("genirq: Implement bitmap matrix allocator")
+Reported-by: Wendy Wang <wendy.wang@intel.com>
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20231020072522.557846-1-yu.c.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/platform.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/irq/matrix.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/pstore/platform.c b/fs/pstore/platform.c
-index ad96ba97d8f97..3fc4739f82d86 100644
---- a/fs/pstore/platform.c
-+++ b/fs/pstore/platform.c
-@@ -561,6 +561,8 @@ static int pstore_write_user_compat(struct pstore_record *record,
+diff --git a/kernel/irq/matrix.c b/kernel/irq/matrix.c
+index bbfb26489aa1c..f9467637eab65 100644
+--- a/kernel/irq/matrix.c
++++ b/kernel/irq/matrix.c
+@@ -466,16 +466,16 @@ unsigned int irq_matrix_reserved(struct irq_matrix *m)
+ }
+ 
+ /**
+- * irq_matrix_allocated - Get the number of allocated irqs on the local cpu
++ * irq_matrix_allocated - Get the number of allocated non-managed irqs on the local CPU
+  * @m:		Pointer to the matrix to search
+  *
+- * This returns number of allocated irqs
++ * This returns number of allocated non-managed interrupts.
   */
- int pstore_register(struct pstore_info *psi)
+ unsigned int irq_matrix_allocated(struct irq_matrix *m)
  {
-+	char *new_backend;
-+
- 	if (backend && strcmp(backend, psi->name)) {
- 		pr_warn("ignoring unexpected backend '%s'\n", psi->name);
- 		return -EPERM;
-@@ -580,11 +582,16 @@ int pstore_register(struct pstore_info *psi)
- 		return -EINVAL;
- 	}
+ 	struct cpumap *cm = this_cpu_ptr(m->maps);
  
-+	new_backend = kstrdup(psi->name, GFP_KERNEL);
-+	if (!new_backend)
-+		return -ENOMEM;
-+
- 	mutex_lock(&psinfo_lock);
- 	if (psinfo) {
- 		pr_warn("backend '%s' already loaded: ignoring '%s'\n",
- 			psinfo->name, psi->name);
- 		mutex_unlock(&psinfo_lock);
-+		kfree(new_backend);
- 		return -EBUSY;
- 	}
+-	return cm->allocated;
++	return cm->allocated - cm->managed_allocated;
+ }
  
-@@ -617,7 +624,7 @@ int pstore_register(struct pstore_info *psi)
- 	 * Update the module parameter backend, so it is visible
- 	 * through /sys/module/pstore/parameters/backend
- 	 */
--	backend = kstrdup(psi->name, GFP_KERNEL);
-+	backend = new_backend;
- 
- 	pr_info("Registered %s as persistent store backend\n", psi->name);
- 
+ #ifdef CONFIG_GENERIC_IRQ_DEBUGFS
 -- 
 2.42.0
 
