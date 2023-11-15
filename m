@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0B32836D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8252836D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RyhqOigr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77320C433CA;
-	Wed, 15 Nov 2023 19:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvQ4ryRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0036BC433C7;
+	Wed, 15 Nov 2023 19:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076670;
-	bh=7rltYdjoAeLcSMxTyvn6uU32XAloQpfJDo8EPBxuBLU=;
+	s=korg; t=1700076672;
+	bh=y/cxYkWNW6/gaYb9L8Xh/2MBJPNBg75N5P0F0gDCQyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RyhqOigrhdZ0a11x6HoYhaTJjC3i9JeCPlY+CregF8Ndoqhb10GhYUvX970DNjrhW
-	 Yhj6NPUlm7DwQ0Qz0bGdjB3OeV1jomvMg/fykCsmIADN3kUSINv76eAZauRbIeldWP
-	 MWj7EJDAhAWdQkuc0qEPQQ87vCNaYnioB3FyRPi4=
+	b=AvQ4ryRZ+MTWAelNV9OqWmQ9Yhs+JdR1almMxpEh1hjEfGPnsiumRnTx6C7IKOO8d
+	 A5Nn+bgm7IFMiepk+OxPjefK6L/ZOZDxwYwf7FitPZs8BQ7+mrLRgUyDlLB/1hq5vh
+	 TifpSSBNuOeft0XS2wugocc3gBgfHqr9uTtlW03M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 374/550] leds: trigger: ledtrig-cpu:: Fix output may be truncated issue for cpu
-Date: Wed, 15 Nov 2023 14:15:58 -0500
-Message-ID: <20231115191626.745631842@linuxfoundation.org>
+Subject: [PATCH 6.5 375/550] scripts/gdb: fix usage of MOD_TEXT not defined when CONFIG_MODULES=n
+Date: Wed, 15 Nov 2023 14:15:59 -0500
+Message-ID: <20231115191626.819591526@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,57 +48,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Clément Léger <cleger@rivosinc.com>
 
-[ Upstream commit ff50f53276131a3059e8307d11293af388ed2bcd ]
+[ Upstream commit 16501630bdeb107141a0139ddc33f92ab5582c6f ]
 
-In order to teach the compiler that 'trig->name' will never be truncated,
-we need to tell it that 'cpu' is not negative.
+MOD_TEXT is only defined if CONFIG_MODULES=y which lead to loading failure
+of the gdb scripts when kernel is built without CONFIG_MODULES=y:
 
-When building with W=1, this fixes the following warnings:
+Reading symbols from vmlinux...
+Traceback (most recent call last):
+  File "/foo/vmlinux-gdb.py", line 25, in <module>
+    import linux.constants
+  File "/foo/scripts/gdb/linux/constants.py", line 14, in <module>
+    LX_MOD_TEXT = gdb.parse_and_eval("MOD_TEXT")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+gdb.error: No symbol "MOD_TEXT" in current context.
 
-  drivers/leds/trigger/ledtrig-cpu.c: In function ‘ledtrig_cpu_init’:
-  drivers/leds/trigger/ledtrig-cpu.c:155:56: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 5 [-Werror=format-truncation=]
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                                                        ^~
-  drivers/leds/trigger/ledtrig-cpu.c:155:52: note: directive argument in the range [-2147483648, 7]
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                                                    ^~~~~~~
-  drivers/leds/trigger/ledtrig-cpu.c:155:17: note: ‘snprintf’ output between 5 and 15 bytes into a destination of size 8
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Add a conditional check on CONFIG_MODULES to fix this error.
 
-Fixes: 8f88731d052d ("led-triggers: create a trigger for CPU activity")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/3f4be7a99933cf8566e630da54f6ab913caac432.1695453322.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lkml.kernel.org/r/20231031134848.119391-1-da.gomez@samsung.com
+Fixes: b4aff7513df3 ("scripts/gdb: use mem instead of core_layout to get the module address")
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Tested-by: Daniel Gomez <da.gomez@samsung.com>
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Pankaj Raghav <p.raghav@samsung.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/trigger/ledtrig-cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/gdb/linux/constants.py.in | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/leds/trigger/ledtrig-cpu.c b/drivers/leds/trigger/ledtrig-cpu.c
-index 8af4f9bb9cde8..05848a2fecff6 100644
---- a/drivers/leds/trigger/ledtrig-cpu.c
-+++ b/drivers/leds/trigger/ledtrig-cpu.c
-@@ -130,7 +130,7 @@ static int ledtrig_prepare_down_cpu(unsigned int cpu)
+diff --git a/scripts/gdb/linux/constants.py.in b/scripts/gdb/linux/constants.py.in
+index fab74ca9df6fc..d16099a2b1c68 100644
+--- a/scripts/gdb/linux/constants.py.in
++++ b/scripts/gdb/linux/constants.py.in
+@@ -63,10 +63,11 @@ LX_GDBPARSED(IRQD_LEVEL)
+ LX_GDBPARSED(IRQ_HIDDEN)
  
- static int __init ledtrig_cpu_init(void)
- {
--	int cpu;
-+	unsigned int cpu;
- 	int ret;
+ /* linux/module.h */
+-LX_GDBPARSED(MOD_TEXT)
+-LX_GDBPARSED(MOD_DATA)
+-LX_GDBPARSED(MOD_RODATA)
+-LX_GDBPARSED(MOD_RO_AFTER_INIT)
++if IS_BUILTIN(CONFIG_MODULES):
++    LX_GDBPARSED(MOD_TEXT)
++    LX_GDBPARSED(MOD_DATA)
++    LX_GDBPARSED(MOD_RODATA)
++    LX_GDBPARSED(MOD_RO_AFTER_INIT)
  
- 	/* Supports up to 9999 cpu cores */
-@@ -152,7 +152,7 @@ static int __init ledtrig_cpu_init(void)
- 		if (cpu >= 8)
- 			continue;
- 
--		snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-+		snprintf(trig->name, MAX_NAME_LEN, "cpu%u", cpu);
- 
- 		led_trigger_register_simple(trig->name, &trig->_trig);
- 	}
+ /* linux/mount.h */
+ LX_VALUE(MNT_NOSUID)
 -- 
 2.42.0
 
