@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AD443ADA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7E043ADA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Gj43e9W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C7FC4E779;
-	Wed, 15 Nov 2023 20:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhJL4GGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADABFC4E777;
+	Wed, 15 Nov 2023 20:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081819;
-	bh=pixQtsEBtxge55oiTsbZhmxRWzRIKp5aNYxUTrQ6xjQ=;
+	s=korg; t=1700081820;
+	bh=bcy/HHwuZasMBB5CT24rlcJRKUNZs7qY9b55o+d5LmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Gj43e9Wbf6+g76SYP4UJgRJprWBZOp3wf4lIR5wUsPmd5qssnT+Q/8Xmc+EEzw/V
-	 f9rkEXPa/38HBag6JvV67hRjp8nzRzUiAj/NW4KEPk4GbXmpKeOrGCNnwfgUzj8Ib+
-	 CvwP7ImRcykwx9p7Qc3TmqDZt74YJ6RgxnJUg7Tc=
+	b=zhJL4GGPnevh+FxbWmbXum4r1HuzOxhuQEXok2Bxd7SkCAMHM5pQNkHQNqTahvbpq
+	 xHkDAJ4hOG737Kw8RyXuw/F/pObj4flqu+eDJTSO3gmoRfiwYBh7FAsfS9XnYxswc3
+	 4Sj6M72DukKWTwczXzsIsWIXi6iWWP6SCQxCbwCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -43,9 +43,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 146/191] perf machine: Avoid out of bounds LBR memory read
-Date: Wed, 15 Nov 2023 15:47:01 -0500
-Message-ID: <20231115204653.274039124@linuxfoundation.org>
+Subject: [PATCH 5.10 147/191] perf hist: Add missing puts to hist__account_cycles
+Date: Wed, 15 Nov 2023 15:47:02 -0500
+Message-ID: <20231115204653.330906401@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -66,13 +66,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit ab8ce150781d326c6bfbe1e09f175ffde1186f80 ]
+[ Upstream commit c1149037f65bcf0334886180ebe3d5efcf214912 ]
 
-Running perf top with address sanitizer and "--call-graph=lbr" fails
-due to reading sample 0 when no samples exist. Add a guard to prevent
-this.
+Caught using reference count checking on perf top with
+"--call-graph=lbr". After this no memory leaks were detected.
 
-Fixes: e2b23483eb1d ("perf machine: Factor out lbr_callchain_add_lbr_ip()")
+Fixes: 57849998e2cd ("perf report: Add processing for cycle histograms")
 Signed-off-by: Ian Rogers <irogers@google.com>
 Cc: K Prateek Nayak <kprateek.nayak@amd.com>
 Cc: Ravi Bangoria <ravi.bangoria@amd.com>
@@ -96,46 +95,48 @@ Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 Cc: Yanteng Si <siyanteng@loongson.cn>
 Cc: Liam Howlett <liam.howlett@oracle.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20231024222353.3024098-3-irogers@google.com
+Link: https://lore.kernel.org/r/20231024222353.3024098-6-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ tools/perf/util/hist.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index df515cd8d0184..eec926c313b13 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -2387,16 +2387,18 @@ static int lbr_callchain_add_lbr_ip(struct thread *thread,
- 		save_lbr_cursor_node(thread, cursor, i);
+diff --git a/tools/perf/util/hist.c b/tools/perf/util/hist.c
+index 8a793e4c9400a..c78d8813811cc 100644
+--- a/tools/perf/util/hist.c
++++ b/tools/perf/util/hist.c
+@@ -2624,8 +2624,6 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
+ 
+ 	/* If we have branch cycles always annotate them. */
+ 	if (bs && bs->nr && entries[0].flags.cycles) {
+-		int i;
+-
+ 		bi = sample__resolve_bstack(sample, al);
+ 		if (bi) {
+ 			struct addr_map_symbol *prev = NULL;
+@@ -2640,7 +2638,7 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
+ 			 * Note that perf stores branches reversed from
+ 			 * program order!
+ 			 */
+-			for (i = bs->nr - 1; i >= 0; i--) {
++			for (int i = bs->nr - 1; i >= 0; i--) {
+ 				addr_map_symbol__account_cycles(&bi[i].from,
+ 					nonany_branch_mode ? NULL : prev,
+ 					bi[i].flags.cycles);
+@@ -2649,6 +2647,12 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
+ 				if (total_cycles)
+ 					*total_cycles += bi[i].flags.cycles;
+ 			}
++			for (unsigned int i = 0; i < bs->nr; i++) {
++				map__put(bi[i].to.ms.map);
++				maps__put(bi[i].to.ms.maps);
++				map__put(bi[i].from.ms.map);
++				maps__put(bi[i].from.ms.maps);
++			}
+ 			free(bi);
+ 		}
  	}
- 
--	/* Add LBR ip from first entries.to */
--	ip = entries[0].to;
--	flags = &entries[0].flags;
--	*branch_from = entries[0].from;
--	err = add_callchain_ip(thread, cursor, parent,
--			       root_al, &cpumode, ip,
--			       true, flags, NULL,
--			       *branch_from);
--	if (err)
--		return err;
-+	if (lbr_nr > 0) {
-+		/* Add LBR ip from first entries.to */
-+		ip = entries[0].to;
-+		flags = &entries[0].flags;
-+		*branch_from = entries[0].from;
-+		err = add_callchain_ip(thread, cursor, parent,
-+				root_al, &cpumode, ip,
-+				true, flags, NULL,
-+				*branch_from);
-+		if (err)
-+			return err;
-+	}
- 
- 	return 0;
- }
 -- 
 2.42.0
 
