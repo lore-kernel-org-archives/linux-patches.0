@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518382C861
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC5D2C861
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HByICNqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04449C433C7;
-	Wed, 15 Nov 2023 19:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWvD6gVI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C2EC433C8;
+	Wed, 15 Nov 2023 19:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076314;
-	bh=Xtiov/AD0I4+BKplENJX14OwZ6UomLTHq8CW6TKlfmk=;
+	s=korg; t=1700076315;
+	bh=Obyl9zUnrL5WsasC3SmZjzA8vP/qAng/cwQB9NVk5Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HByICNqsbe6p6o//AZj5jvogRwvJG44KeyHkEcJyiMFHYDgzLRuZmnx7IZcfGDe9J
-	 gLwwOU3hYcs0qI1XUENvteodxl+o7utJYUjqVxGdiy9q94bYL2vNAgPUUftI/S5UV0
-	 6b48LnAFp9odqJ2/hMJyYw9frlr+l6LUN/z8oxQI=
+	b=vWvD6gVICmBnxGwZ46l7gYW9Xsc1eUkYvPbIrb8CwQeHo51ClZv20XOZVUGSIgUXA
+	 dCmp5UxQRDBimvNYmNtzHOt1tJxX9ONxBH/o3fW8Raa3K3J5SN7T7SviRMNaICeZAm
+	 D8mCUtlRFWg09rbfzq2WNp5/r080xE9uX4H+pDQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 195/550] hwmon: (sch5627) Use bit macros when accessing the control register
-Date: Wed, 15 Nov 2023 14:12:59 -0500
-Message-ID: <20231115191614.286297907@linuxfoundation.org>
+Subject: [PATCH 6.5 213/550] drm/bridge: lt8912b: Manually disable HPD only if it was enabled
+Date: Wed, 15 Nov 2023 14:13:17 -0500
+Message-ID: <20231115191615.561975695@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,74 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 7f0b28e0653f36b51542d25dd54ed312c397ecfc ]
+[ Upstream commit 6985c5efc4057bc79137807295d84ada3123d051 ]
 
-Use bit macros then accessing SCH5627_REG_CTRL, so that people
-do not need to look at the datasheet to find out what each bit
-does.
+lt8912b only calls drm_bridge_hpd_enable() if it creates a connector and
+the next bridge has DRM_BRIDGE_OP_HPD set. However, when calling
+drm_bridge_hpd_disable() it misses checking if a connector was created,
+calling drm_bridge_hpd_disable() even if HPD was never enabled. I don't
+see any issues caused by this wrong call, though.
 
-Tested on a Fujitsu Esprimo P720.
+Add the check to avoid wrongly calling drm_bridge_hpd_disable().
 
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20230907052639.16491-2-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 7da8a6354360 ("hwmon: (sch5627) Disallow write access if virtual registers are locked")
+Fixes: 3b0a01a6a522 ("drm/bridge: lt8912b: Add hot plug detection")
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230804-lt8912b-v1-3-c542692c6a2f@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sch5627.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/sch5627.c b/drivers/hwmon/sch5627.c
-index 1bbda3b05532e..0eefb8c0aef25 100644
---- a/drivers/hwmon/sch5627.c
-+++ b/drivers/hwmon/sch5627.c
-@@ -6,6 +6,7 @@
+diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+index 2d752e083433f..9ee639e75a1c2 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -587,7 +587,7 @@ static void lt8912_bridge_detach(struct drm_bridge *bridge)
  
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 	lt8912_hard_power_off(lt);
  
-+#include <linux/bits.h>
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
- #include <linux/init.h>
-@@ -32,6 +33,9 @@
- #define SCH5627_REG_PRIMARY_ID		0x3f
- #define SCH5627_REG_CTRL		0x40
+-	if (lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
++	if (lt->connector.dev && lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
+ 		drm_bridge_hpd_disable(lt->hdmi_port);
+ }
  
-+#define SCH5627_CTRL_START		BIT(0)
-+#define SCH5627_CTRL_VBAT		BIT(4)
-+
- #define SCH5627_NO_TEMPS		8
- #define SCH5627_NO_FANS			4
- #define SCH5627_NO_IN			5
-@@ -147,7 +151,8 @@ static int sch5627_update_in(struct sch5627_data *data)
- 
- 	/* Trigger a Vbat voltage measurement every 5 minutes */
- 	if (time_after(jiffies, data->last_battery + 300 * HZ)) {
--		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | 0x10);
-+		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
-+					  data->control | SCH5627_CTRL_VBAT);
- 		data->last_battery = jiffies;
- 	}
- 
-@@ -483,14 +488,13 @@ static int sch5627_probe(struct platform_device *pdev)
- 		return val;
- 
- 	data->control = val;
--	if (!(data->control & 0x01)) {
-+	if (!(data->control & SCH5627_CTRL_START)) {
- 		pr_err("hardware monitoring not enabled\n");
- 		return -ENODEV;
- 	}
- 	/* Trigger a Vbat voltage measurement, so that we get a valid reading
- 	   the first time we read Vbat */
--	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
--				  data->control | 0x10);
-+	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | SCH5627_CTRL_VBAT);
- 	data->last_battery = jiffies;
- 
- 	/*
 -- 
 2.42.0
 
