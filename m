@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F563A8C9
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDC23A8C9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/FI8A7Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D897CC433CA;
-	Wed, 15 Nov 2023 19:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBZVuP+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3E3C433C9;
+	Wed, 15 Nov 2023 19:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077693;
-	bh=OwilQIF6Yi8x+haqpcXNaio3+GY1FVtrcES8KDdfCsA=;
+	s=korg; t=1700077694;
+	bh=DNKrQyDwX8lppB9ei+gOHQPN8ibOeLv64Af+wHATMHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/FI8A7ZyOTA9SoFHHFp0EbPfAYFTfWpLNBCChAGqhSoCyu+VJ2nBLL20LlS899I/
-	 m0cuNkvLRN6n1jQHWVUL7jlOiABCR69yiXAyknDWPprs6FGvXuNQRIbr8JGgrZfLJD
-	 thrUWixbOZwKjR8yYCAFL1vA9jHOv6n8MVi6Q8vI=
+	b=MBZVuP+mn02lCUEhUPEAPVgFNgBJ9gZcw5RXHNmwVuB6Fwy0hIUYBSD0KwqGw4MMb
+	 GqVAMLYDRQsfR5OFqw40wNpu4vLOMyBIX1r8+e5VBiOPyrOLZWegYUG53x/SwZcDbN
+	 6tlqp/cmjAqb6UTUsTshfNhPJDmPFT986iQ7FHaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 460/603] interconnect: fix error handling in qnoc_probe()
-Date: Wed, 15 Nov 2023 14:16:45 -0500
-Message-ID: <20231115191644.437343412@linuxfoundation.org>
+Subject: [PATCH 6.6 443/603] tools: iio: iio_generic_buffer ensure alignment
+Date: Wed, 15 Nov 2023 14:16:28 -0500
+Message-ID: <20231115191643.437659133@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,75 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 273f74a2e7d15a5c216a4a26b84b1563c7092c9d ]
+[ Upstream commit 2d3dff577dd0ea8fe9637a13822f7603c4a881c8 ]
 
-Add missing clk_disable_unprepare() and clk_bulk_disable_unprepare()
-in the error path in qnoc_probe(). And when qcom_icc_qos_set() fails,
-it needs remove nodes and disable clks.
+The iio_generic_buffer can return garbage values when the total size of
+scan data is not a multiple of the largest element in the scan. This can be
+demonstrated by reading a scan, consisting, for example of one 4-byte and
+one 2-byte element, where the 4-byte element is first in the buffer.
 
-Fixes: 2e2113c8a64f ("interconnect: qcom: rpm: Handle interface clocks")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20230803130521.959487-1-yangyingliang@huawei.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+The IIO generic buffer code does not take into account the last two
+padding bytes that are needed to ensure that the 4-byte data for next
+scan is correctly aligned.
+
+Add the padding bytes required to align the next sample with the scan size.
+
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: e58537ccce73 ("staging: iio: update example application.")
+Link: https://lore.kernel.org/r/ZRvlm4ktNLu+qmlf@dc78bmyyyyyyyyyyyyydt-3.rev.dnainternet.fi
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/icc-rpm.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ tools/iio/iio_generic_buffer.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index 2c16917ba1fda..e76356f91125f 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -497,7 +497,7 @@ int qnoc_probe(struct platform_device *pdev)
+diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
+index 44bbf80f0cfdd..0d0a7a19d6f95 100644
+--- a/tools/iio/iio_generic_buffer.c
++++ b/tools/iio/iio_generic_buffer.c
+@@ -54,9 +54,12 @@ enum autochan {
+ static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
+ {
+ 	unsigned int bytes = 0;
+-	int i = 0;
++	int i = 0, max = 0;
++	unsigned int misalignment;
  
- 	ret = devm_clk_bulk_get(dev, qp->num_intf_clks, qp->intf_clks);
- 	if (ret)
--		return ret;
-+		goto err_disable_unprepare_clk;
+ 	while (i < num_channels) {
++		if (channels[i].bytes > max)
++			max = channels[i].bytes;
+ 		if (bytes % channels[i].bytes == 0)
+ 			channels[i].location = bytes;
+ 		else
+@@ -66,6 +69,14 @@ static unsigned int size_from_channelarray(struct iio_channel_info *channels, in
+ 		bytes = channels[i].location + channels[i].bytes;
+ 		i++;
+ 	}
++	/*
++	 * We want the data in next sample to also be properly aligned so
++	 * we'll add padding at the end if needed. Adding padding only
++	 * works for channel data which size is 2^n bytes.
++	 */
++	misalignment = bytes % max;
++	if (misalignment)
++		bytes += max - misalignment;
  
- 	provider = &qp->provider;
- 	provider->dev = dev;
-@@ -512,13 +512,15 @@ int qnoc_probe(struct platform_device *pdev)
- 	/* If this fails, bus accesses will crash the platform! */
- 	ret = clk_bulk_prepare_enable(qp->num_intf_clks, qp->intf_clks);
- 	if (ret)
--		return ret;
-+		goto err_disable_unprepare_clk;
- 
- 	for (i = 0; i < num_nodes; i++) {
- 		size_t j;
- 
- 		node = icc_node_create(qnodes[i]->id);
- 		if (IS_ERR(node)) {
-+			clk_bulk_disable_unprepare(qp->num_intf_clks,
-+						   qp->intf_clks);
- 			ret = PTR_ERR(node);
- 			goto err_remove_nodes;
- 		}
-@@ -534,8 +536,11 @@ int qnoc_probe(struct platform_device *pdev)
- 		if (qnodes[i]->qos.ap_owned &&
- 		    qnodes[i]->qos.qos_mode != NOC_QOS_MODE_INVALID) {
- 			ret = qcom_icc_qos_set(node);
--			if (ret)
--				return ret;
-+			if (ret) {
-+				clk_bulk_disable_unprepare(qp->num_intf_clks,
-+							   qp->intf_clks);
-+				goto err_remove_nodes;
-+			}
- 		}
- 
- 		data->nodes[i] = node;
-@@ -563,6 +568,7 @@ int qnoc_probe(struct platform_device *pdev)
- 	icc_provider_deregister(provider);
- err_remove_nodes:
- 	icc_nodes_remove(provider);
-+err_disable_unprepare_clk:
- 	clk_disable_unprepare(qp->bus_clk);
- 
- 	return ret;
+ 	return bytes;
+ }
 -- 
 2.42.0
 
