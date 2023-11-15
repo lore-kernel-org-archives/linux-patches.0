@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81046364CB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B6333CDF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaZNahGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31729C433C8;
-	Wed, 15 Nov 2023 19:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azmMyKgg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF91C433C9;
+	Wed, 15 Nov 2023 19:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077713;
-	bh=PzEXSipmaFhRI6nbVU8/BV2xXE2aYsIRQBMkk1S+8Z8=;
+	s=korg; t=1700077714;
+	bh=wuJwWBH0llu+W9MsnWQYTZOODXu0dxoS3/V/2osjiOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BaZNahGar6wdGWx9raD/h5THJqF3Xw7UWc2zD+VfP01K5pEZzU08Z47ZMVVi9xPEF
-	 lw2FVP1UEw2jlLEFg3G/70csuSS/xezXejIHdia9He6IsS24Vj7YQZ/Uee9+8fdO5H
-	 peUQwDEhUaJbmyT1fCB38pNLroWHeIqJToPc+CPM=
+	b=azmMyKggGHZWT8hl2rU6CYxFo2BfrnGOwC4dpRJUAFRbxK106BiBqML2M4gOmzM67
+	 q+6rcy0++G11xj4jyy2C+CaYHvqZ4QTz/NJ4E9rqt0l7reeSCoCxtX1Jzz5/LGYEWc
+	 WmOGK2qAmZ/ffZWA9ZHVr9g/rVsE7Eq7kqj+sK0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 441/603] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 15 Nov 2023 14:16:26 -0500
-Message-ID: <20231115191643.318553894@linuxfoundation.org>
+Subject: [PATCH 6.6 466/603] modpost: fix ishtp MODULE_DEVICE_TABLE built on big-endian host
+Date: Wed, 15 Nov 2023 14:16:51 -0500
+Message-ID: <20231115191644.797003664@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -35,69 +37,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
+[ Upstream commit ac96a15a0f0c8812a3aaa587b871cd5527f6d736 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with hardware interrupts being disabled.
-So replace kfree_skb() with dev_kfree_skb_irq() under
-spin_lock_irqsave(). Compile tested only.
+When MODULE_DEVICE_TABLE(ishtp, ) is built on a host with a different
+endianness from the target architecture, it results in an incorrect
+MODULE_ALIAS().
 
-Fixes: 53618cc1e51e ("Staging: sources for ST core")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For example, see a case where drivers/platform/x86/intel/ishtp_eclite.c
+is built as a module for x86.
+
+If you build it on a little-endian host, you will get the correct
+MODULE_ALIAS:
+
+    $ grep MODULE_ALIAS drivers/platform/x86/intel/ishtp_eclite.mod.c
+    MODULE_ALIAS("ishtp:{6A19CC4B-D760-4DE3-B14D-F25EBD0FBCD9}");
+
+However, if you build it on a big-endian host, you will get a wrong
+MODULE_ALIAS:
+
+    $ grep MODULE_ALIAS drivers/platform/x86/intel/ishtp_eclite.mod.c
+    MODULE_ALIAS("ishtp:{BD0FBCD9-F25E-B14D-4DE3-D7606A19CC4B}");
+
+This issue has been unnoticed because the x86 kernel is most likely built
+natively on an x86 host.
+
+The guid field must not be reversed because guid_t is an array of __u8.
+
+Fixes: fa443bc3c1e4 ("HID: intel-ish-hid: add support for MODULE_DEVICE_TABLE()")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Tested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ti-st/st_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ scripts/mod/file2alias.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
-index c1a134bd8ba7b..b878431553abc 100644
---- a/drivers/misc/ti-st/st_core.c
-+++ b/drivers/misc/ti-st/st_core.c
-@@ -15,6 +15,7 @@
- #include <linux/skbuff.h>
+diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
+index 70bf6a2f585ce..6583b36dbe694 100644
+--- a/scripts/mod/file2alias.c
++++ b/scripts/mod/file2alias.c
+@@ -1401,10 +1401,10 @@ static int do_mhi_ep_entry(const char *filename, void *symval, char *alias)
+ /* Looks like: ishtp:{guid} */
+ static int do_ishtp_entry(const char *filename, void *symval, char *alias)
+ {
+-	DEF_FIELD(symval, ishtp_device_id, guid);
++	DEF_FIELD_ADDR(symval, ishtp_device_id, guid);
  
- #include <linux/ti_wilink_st.h>
-+#include <linux/netdevice.h>
+ 	strcpy(alias, ISHTP_MODULE_PREFIX "{");
+-	add_guid(alias, guid);
++	add_guid(alias, *guid);
+ 	strcat(alias, "}");
  
- /*
-  * function pointer pointing to either,
-@@ -429,7 +430,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	case ST_LL_AWAKE_TO_ASLEEP:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	case ST_LL_ASLEEP:
- 		skb_queue_tail(&st_gdata->tx_waitq, skb);
-@@ -438,7 +439,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	default:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	}
- 
-@@ -492,7 +493,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
- 				spin_unlock_irqrestore(&st_data->lock, flags);
- 				break;
- 			}
--			kfree_skb(skb);
-+			dev_kfree_skb_irq(skb);
- 			spin_unlock_irqrestore(&st_data->lock, flags);
- 		}
- 		/* if wake-up is set in another context- restart sending */
+ 	return 1;
 -- 
 2.42.0
 
