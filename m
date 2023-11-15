@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2F743AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F308E43AB9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oAhV7yv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B4AC433C7;
-	Wed, 15 Nov 2023 20:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNbyovIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AA4C433C7;
+	Wed, 15 Nov 2023 20:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081174;
-	bh=Q3qk5V2B9eACregbliF4U3Vwe7O8e5/327PFhCBdY1A=;
+	s=korg; t=1700081175;
+	bh=MrPFzjV04OIW7J5PY3FAhh618fam7m7ql0+P8JEnOT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0oAhV7yvGJFBvaNrVMtCXgCQAeH5l69W26zIDhAZ/6oddbPN7UA71L2ZyKMoOAFEk
-	 ozOAhZSvCH3FlWj1WqJbFGTzuiK9lUYiHENdLopFBDAj3Gb5kFVnUiZHjSHBHeUSEi
-	 azlUZAXTv4XsczEfJkNj0/OJeaoIvI+kgGCYByko=
+	b=HNbyovIY4bgnWNdNOH/7J1YyV/cZeoWTcJO5CpIHEcUkEjCzOA+bs84DOUYs+Rd/3
+	 nMyWkQxq+koc6BP33CDyCD2Fnj2ByxFx0KYw8Zw/IuVCobnmYM+PQIXxcQhnpfuMEc
+	 MMtnMilbmXB4RNFppPRyGyiR1ibs0KoN5nwL4ddc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 75/88] dccp/tcp: Call security_inet_conn_request() after setting IPv6 addresses.
-Date: Wed, 15 Nov 2023 15:36:27 -0500
-Message-ID: <20231115191430.579085377@linuxfoundation.org>
+Subject: [PATCH 4.19 84/88] fbdev: imsttfb: Fix error path of imsttfb_probe()
+Date: Wed, 15 Nov 2023 15:36:36 -0500
+Message-ID: <20231115191431.095137053@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -43,82 +41,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 23be1e0e2a83a8543214d2599a31d9a2185a796b ]
+[ Upstream commit 518ecb6a209f6ff678aeadf9f2bf870c0982ca85 ]
 
-Initially, commit 4237c75c0a35 ("[MLSXFRM]: Auto-labeling of child
-sockets") introduced security_inet_conn_request() in some functions
-where reqsk is allocated.  The hook is added just after the allocation,
-so reqsk's IPv6 remote address was not initialised then.
+Release ressources when init_imstt() returns failure.
 
-However, SELinux/Smack started to read it in netlbl_req_setattr()
-after commit e1adea927080 ("calipso: Allow request sockets to be
-relabelled by the lsm.").
-
-Commit 284904aa7946 ("lsm: Relocate the IPv4 security_inet_conn_request()
-hooks") fixed that kind of issue only in TCPv4 because IPv6 labeling was
-not supported at that time.  Finally, the same issue was introduced again
-in IPv6.
-
-Let's apply the same fix on DCCPv6 and TCPv6.
-
-Fixes: e1adea927080 ("calipso: Allow request sockets to be relabelled by the lsm.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: aba6ab57a910 ("fbdev: imsttfb: fix a resource leak in probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv6.c       | 6 +++---
- net/ipv6/syncookies.c | 7 ++++---
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/video/fbdev/imsttfb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index 9b8c6cf0e5eee..72ceefbf23120 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -349,15 +349,15 @@ static int dccp_v6_conn_request(struct sock *sk, struct sk_buff *skb)
- 	if (dccp_parse_options(sk, dreq, skb))
- 		goto drop_and_free;
- 
--	if (security_inet_conn_request(sk, skb, req))
--		goto drop_and_free;
--
- 	ireq = inet_rsk(req);
- 	ireq->ir_v6_rmt_addr = ipv6_hdr(skb)->saddr;
- 	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
- 	ireq->ireq_family = AF_INET6;
- 	ireq->ir_mark = inet_request_mark(sk, skb);
- 
-+	if (security_inet_conn_request(sk, skb, req))
-+		goto drop_and_free;
+diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
+index 4a3f89b223600..9a9018d143761 100644
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1529,8 +1529,10 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		goto error;
+ 	info->pseudo_palette = par->palette;
+ 	ret = init_imstt(info);
+-	if (!ret)
+-		pci_set_drvdata(pdev, info);
++	if (ret)
++		goto error;
 +
- 	if (ipv6_opt_accepted(sk, skb, IP6CB(skb)) ||
- 	    np->rxopt.bits.rxinfo || np->rxopt.bits.rxoinfo ||
- 	    np->rxopt.bits.rxhlim || np->rxopt.bits.rxohlim) {
-diff --git a/net/ipv6/syncookies.c b/net/ipv6/syncookies.c
-index ca291e342900c..ab073ac3d7ace 100644
---- a/net/ipv6/syncookies.c
-+++ b/net/ipv6/syncookies.c
-@@ -184,14 +184,15 @@ struct sock *cookie_v6_check(struct sock *sk, struct sk_buff *skb)
- 	treq->af_specific = &tcp_request_sock_ipv6_ops;
- 	treq->tfo_listener = false;
++	pci_set_drvdata(pdev, info);
+ 	return ret;
  
--	if (security_inet_conn_request(sk, skb, req))
--		goto out_free;
--
- 	req->mss = mss;
- 	ireq->ir_rmt_port = th->source;
- 	ireq->ir_num = ntohs(th->dest);
- 	ireq->ir_v6_rmt_addr = ipv6_hdr(skb)->saddr;
- 	ireq->ir_v6_loc_addr = ipv6_hdr(skb)->daddr;
-+
-+	if (security_inet_conn_request(sk, skb, req))
-+		goto out_free;
-+
- 	if (ipv6_opt_accepted(sk, skb, &TCP_SKB_CB(skb)->header.h6) ||
- 	    np->rxopt.bits.rxinfo || np->rxopt.bits.rxoinfo ||
- 	    np->rxopt.bits.rxhlim || np->rxopt.bits.rxohlim) {
+ error:
 -- 
 2.42.0
 
