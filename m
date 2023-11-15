@@ -1,35 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DDD28382
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C5A2C870
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFj4Sohb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CC4C433C8;
-	Wed, 15 Nov 2023 19:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dldn72IB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812D5C433C9;
+	Wed, 15 Nov 2023 19:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076368;
-	bh=AKoCM3z0NPiNfD82F6eua9Y5Ltd2uMNh5X8gJMwyxyA=;
+	s=korg; t=1700076369;
+	bh=ZP1nDyL2NSU8yeBCNkVDIF41PbDqV6nWmgIOI7s4Rx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFj4Sohbm11TQri+Pgd0ObpH6P/BRsimUz2rGuO49u9xS0yh2h8uD+Brkbs7CLtU2
-	 E7+txoEmcVNiFdQcRvaVcb0Wti3ema52B2K3iw+JizjLK8zq/f7Q/jrEhqW9FcelfL
-	 PLX+pjpC4duKAONXp61dfBQjWJsmdLh7P9oe7xcI=
+	b=Dldn72IBt+2h3Lj0d2Hl2WcRsSI2P0AC5uVaR/3E5vWDLQDtgWxnBF/VQd7ZmWSrZ
+	 6lcM9pxaZ//KsdBbDgRd5YyWqgVsJOONn4RleBzBNyYC4Mcb46pQUzRVvUCtc9w27M
+	 x0MUmQiFQ/8iG/A9M4u+heU38XrH+gJI9VH1K/cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Bertrand Marquis <bertrand.marquis@arm.com>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 247/550] arm64/arm: xen: enlighten: Fix KPTI checks
-Date: Wed, 15 Nov 2023 14:13:51 -0500
-Message-ID: <20231115191617.839026656@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Maxim Schwalm <maxim.schwalm@gmail.com>
+Subject: [PATCH 6.5 224/550] drm/bridge: tc358768: Fix tc358768_ns_to_cnt()
+Date: Wed, 15 Nov 2023 14:13:28 -0500
+Message-ID: <20231115191616.302401567@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -48,126 +45,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 20f3b8eafe0ba5d3c69d5011a9b07739e9645132 ]
+[ Upstream commit f1dabbe645065d20ca863c8d446c74c59ca1ca9d ]
 
-When KPTI is in use, we cannot register a runstate region as XEN
-requires that this is always a valid VA, which we cannot guarantee. Due
-to this, xen_starting_cpu() must avoid registering each CPU's runstate
-region, and xen_guest_init() must avoid setting up features that depend
-upon it.
+The tc358768_ns_to_cnt() is, most likely, supposed to do a div-round-up
+operation, but it misses subtracting one from the dividend.
 
-We tried to ensure that in commit:
+Fix this by just using DIV_ROUND_UP().
 
-  f88af7229f6f22ce (" xen/arm: do not setup the runstate info page if kpti is enabled")
-
-... where we added checks for xen_kernel_unmapped_at_usr(), which wraps
-arm64_kernel_unmapped_at_el0() on arm64 and is always false on 32-bit
-arm.
-
-Unfortunately, as xen_guest_init() is an early_initcall, this happens
-before secondary CPUs are booted and arm64 has finalized the
-ARM64_UNMAP_KERNEL_AT_EL0 cpucap which backs
-arm64_kernel_unmapped_at_el0(), and so this can subsequently be set as
-secondary CPUs are onlined. On a big.LITTLE system where the boot CPU
-does not require KPTI but some secondary CPUs do, this will result in
-xen_guest_init() intializing features that depend on the runstate
-region, and xen_starting_cpu() registering the runstate region on some
-CPUs before KPTI is subsequent enabled, resulting the the problems the
-aforementioned commit tried to avoid.
-
-Handle this more robsutly by deferring the initialization of the
-runstate region until secondary CPUs have been initialized and the
-ARM64_UNMAP_KERNEL_AT_EL0 cpucap has been finalized. The per-cpu work is
-moved into a new hotplug starting function which is registered later
-when we're certain that KPTI will not be used.
-
-Fixes: f88af7229f6f ("xen/arm: do not setup the runstate info page if kpti is enabled")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Bertrand Marquis <bertrand.marquis@arm.com>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Juergen Gross <jgross@suse.com>
-Cc: Stefano Stabellini <sstabellini@kernel.org>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> # Asus TF700T
+Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-11-31725f008a50@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/xen/enlighten.c   | 25 ++++++++++++++++---------
- include/linux/cpuhotplug.h |  1 +
- 2 files changed, 17 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/xen/enlighten.c b/arch/arm/xen/enlighten.c
-index 7d59765aef220..6cdcd39fb0961 100644
---- a/arch/arm/xen/enlighten.c
-+++ b/arch/arm/xen/enlighten.c
-@@ -164,9 +164,6 @@ static int xen_starting_cpu(unsigned int cpu)
- 	BUG_ON(err);
- 	per_cpu(xen_vcpu, cpu) = vcpup;
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index d1000d1f69f4e..6eed5c4232956 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -630,7 +630,7 @@ static int tc358768_setup_pll(struct tc358768_priv *priv,
  
--	if (!xen_kernel_unmapped_at_usr())
--		xen_setup_runstate_info(cpu);
--
- after_register_vcpu_info:
- 	enable_percpu_irq(xen_events_irq, 0);
- 	return 0;
-@@ -523,9 +520,6 @@ static int __init xen_guest_init(void)
- 		return -EINVAL;
- 	}
- 
--	if (!xen_kernel_unmapped_at_usr())
--		xen_time_setup_guest();
--
- 	if (xen_initial_domain())
- 		pvclock_gtod_register_notifier(&xen_pvclock_gtod_notifier);
- 
-@@ -535,7 +529,13 @@ static int __init xen_guest_init(void)
- }
- early_initcall(xen_guest_init);
- 
--static int __init xen_pm_init(void)
-+static int xen_starting_runstate_cpu(unsigned int cpu)
-+{
-+	xen_setup_runstate_info(cpu);
-+	return 0;
-+}
-+
-+static int __init xen_late_init(void)
+ static u32 tc358768_ns_to_cnt(u32 ns, u32 period_ps)
  {
- 	if (!xen_domain())
- 		return -ENODEV;
-@@ -548,9 +548,16 @@ static int __init xen_pm_init(void)
- 		do_settimeofday64(&ts);
- 	}
- 
--	return 0;
-+	if (xen_kernel_unmapped_at_usr())
-+		return 0;
-+
-+	xen_time_setup_guest();
-+
-+	return cpuhp_setup_state(CPUHP_AP_ARM_XEN_RUNSTATE_STARTING,
-+				 "arm/xen_runstate:starting",
-+				 xen_starting_runstate_cpu, NULL);
+-	return (ns * 1000 + period_ps) / period_ps;
++	return DIV_ROUND_UP(ns * 1000, period_ps);
  }
--late_initcall(xen_pm_init);
-+late_initcall(xen_late_init);
  
- 
- /* empty stubs */
-diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index 25b6e6e6ba6bc..f0231cc66746e 100644
---- a/include/linux/cpuhotplug.h
-+++ b/include/linux/cpuhotplug.h
-@@ -190,6 +190,7 @@ enum cpuhp_state {
- 	/* Must be the last timer callback */
- 	CPUHP_AP_DUMMY_TIMER_STARTING,
- 	CPUHP_AP_ARM_XEN_STARTING,
-+	CPUHP_AP_ARM_XEN_RUNSTATE_STARTING,
- 	CPUHP_AP_ARM_CORESIGHT_STARTING,
- 	CPUHP_AP_ARM_CORESIGHT_CTI_STARTING,
- 	CPUHP_AP_ARM64_ISNDEP_STARTING,
+ static u32 tc358768_ps_to_ns(u32 ps)
 -- 
 2.42.0
 
