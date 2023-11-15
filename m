@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0CC3BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D1A3BB2C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGeemWmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BEBC433C8;
-	Wed, 15 Nov 2023 19:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUyNGPcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91DCC433C8;
+	Wed, 15 Nov 2023 19:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077990;
-	bh=T6YDH6M2FCynyeUdmjo3/nJlWlR1cE5tojuW0kAj9uI=;
+	s=korg; t=1700077991;
+	bh=LV2Hb8hc5LEnGtU7Jal+tkZeZAvQzjr6CDi9WcQ3+aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGeemWmFHBB1DS2WF6SemcRgBclwVf+E8xWgoU6Fd93nsKCRPMqcytX12uUVZBK7V
-	 X1wGN8iOTXSY2UTL9YAii2ME/JBR4kvgfZVXzlRnV/wu/mc0XQbZeBhJ+Hbpf1dNRd
-	 eS3ptk/hGHyTD6pY/MeU6VLXg+IQ4dg3ouOOV/JY=
+	b=yUyNGPcZmQGEEOynzZWl5VoZqS2HSzmNYXbpNmyFwCvvXhSdt7M2mcjFF/Jo6XZSn
+	 IDPGVCyRjguvUlQk4ill7n2Du+w3fYr1QPZskCwRG3dkUOjZlQ5pErW7eYxFH52eBe
+	 q4fPZnj4G2pPeykDSfatfhIVWjS7ur2GzGhu+nxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/379] wifi: mt76: mt7603: rework/fix rx pse hang check
-Date: Wed, 15 Nov 2023 14:21:57 -0500
-Message-ID: <20231115192647.644725540@linuxfoundation.org>
+Subject: [PATCH 6.1 043/379] wifi: mt76: mt7603: improve watchdog reset reliablity
+Date: Wed, 15 Nov 2023 14:21:58 -0500
+Message-ID: <20231115192647.704598223@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,83 +43,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit baa19b2e4b7bbb509a7ca7939c8785477dcd40ee ]
+[ Upstream commit c677dda165231c3efffb9de4bace249d5d2a51b9 ]
 
-It turns out that the code in mt7603_rx_pse_busy() does not detect actual
-hardware hangs, it only checks for busy conditions in PSE.
-A reset should only be performed if these conditions are true and if there
-is no rx activity as well.
-Reset the counter whenever a rx interrupt occurs. In order to also deal with
-a fully loaded CPU that leaves interrupts disabled with continuous NAPI
-polling, also check for pending rx interrupts in the function itself.
+Only trigger PSE reset if PSE was stuck, otherwise it can cause DMA issues.
+Trigger the PSE reset while DMA is fully stopped in order to improve
+reliabilty.
 
 Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7603/core.c  |  2 ++
- .../net/wireless/mediatek/mt76/mt7603/mac.c   | 23 +++++++++++++------
- 2 files changed, 18 insertions(+), 7 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7603/mac.c   | 29 ++++++++-----------
+ 1 file changed, 12 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/core.c b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-index 60a996b63c0c0..915b8349146af 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/core.c
-@@ -42,11 +42,13 @@ irqreturn_t mt7603_irq_handler(int irq, void *dev_instance)
- 	}
- 
- 	if (intr & MT_INT_RX_DONE(0)) {
-+		dev->rx_pse_check = 0;
- 		mt7603_irq_disable(dev, MT_INT_RX_DONE(0));
- 		napi_schedule(&dev->mt76.napi[0]);
- 	}
- 
- 	if (intr & MT_INT_RX_DONE(1)) {
-+		dev->rx_pse_check = 0;
- 		mt7603_irq_disable(dev, MT_INT_RX_DONE(1));
- 		napi_schedule(&dev->mt76.napi[1]);
- 	}
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-index 6cff346d57a78..541dc1da94c00 100644
+index 541dc1da94c00..2980e1234d13f 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-@@ -1559,20 +1559,29 @@ static bool mt7603_rx_pse_busy(struct mt7603_dev *dev)
- {
- 	u32 addr, val;
+@@ -1430,15 +1430,6 @@ static void mt7603_mac_watchdog_reset(struct mt7603_dev *dev)
  
--	if (mt76_rr(dev, MT_MCU_DEBUG_RESET) & MT_MCU_DEBUG_RESET_QUEUES)
--		return true;
+ 	mt7603_beacon_set_timer(dev, -1, 0);
+ 
+-	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED] ||
+-	    dev->cur_reset_cause == RESET_CAUSE_RX_PSE_BUSY ||
+-	    dev->cur_reset_cause == RESET_CAUSE_BEACON_STUCK ||
+-	    dev->cur_reset_cause == RESET_CAUSE_TX_HANG)
+-		mt7603_pse_reset(dev);
 -
- 	if (mt7603_rx_fifo_busy(dev))
--		return false;
-+		goto out;
+-	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED])
+-		goto skip_dma_reset;
+-
+ 	mt7603_mac_stop(dev);
  
- 	addr = mt7603_reg_map(dev, MT_CLIENT_BASE_PHYS_ADDR + MT_CLIENT_STATUS);
- 	mt76_wr(dev, addr, 3);
- 	val = mt76_rr(dev, addr) >> 16;
+ 	mt76_clear(dev, MT_WPDMA_GLO_CFG,
+@@ -1448,28 +1439,32 @@ static void mt7603_mac_watchdog_reset(struct mt7603_dev *dev)
  
--	if (is_mt7628(dev) && (val & 0x4001) == 0x4001)
--		return true;
-+	if (!(val & BIT(0)))
-+		return false;
+ 	mt7603_irq_disable(dev, mask);
+ 
+-	mt76_set(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_FORCE_TX_EOF);
+-
+ 	mt7603_pse_client_reset(dev);
+ 
+ 	mt76_queue_tx_cleanup(dev, dev->mt76.q_mcu[MT_MCUQ_WM], true);
+ 	for (i = 0; i < __MT_TXQ_MAX; i++)
+ 		mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[i], true);
+ 
++	mt7603_dma_sched_reset(dev);
 +
-+	if (is_mt7628(dev))
-+		val &= 0xa000;
-+	else
-+		val &= 0x8000;
-+	if (!val)
-+		return false;
++	mt76_tx_status_check(&dev->mt76, true);
 +
-+out:
-+	if (mt76_rr(dev, MT_INT_SOURCE_CSR) &
-+	    (MT_INT_RX_DONE(0) | MT_INT_RX_DONE(1)))
-+		return false;
+ 	mt76_for_each_q_rx(&dev->mt76, i) {
+ 		mt76_queue_rx_reset(dev, i);
+ 	}
  
--	return (val & 0x8001) == 0x8001 || (val & 0xe001) == 0xe001;
-+	return true;
- }
+-	mt76_tx_status_check(&dev->mt76, true);
++	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED] ||
++	    dev->cur_reset_cause == RESET_CAUSE_RX_PSE_BUSY)
++		mt7603_pse_reset(dev);
  
- static bool
+-	mt7603_dma_sched_reset(dev);
++	if (!dev->reset_cause[RESET_CAUSE_RESET_FAILED]) {
++		mt7603_mac_dma_start(dev);
+ 
+-	mt7603_mac_dma_start(dev);
++		mt7603_irq_enable(dev, mask);
+ 
+-	mt7603_irq_enable(dev, mask);
++		clear_bit(MT76_RESET, &dev->mphy.state);
++	}
+ 
+-skip_dma_reset:
+-	clear_bit(MT76_RESET, &dev->mphy.state);
+ 	mutex_unlock(&dev->mt76.mutex);
+ 
+ 	mt76_worker_enable(&dev->mt76.tx_worker);
 -- 
 2.42.0
 
