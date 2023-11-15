@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2DA41212
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF7441212
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9nE09lT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D513DC433C9;
-	Wed, 15 Nov 2023 19:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOSHWjkb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81314C433C7;
+	Wed, 15 Nov 2023 19:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076765;
-	bh=W3gt3aucpAbcI5jm7RDWqf8Tkt76lgDLkHQYXJii6GE=;
+	s=korg; t=1700076766;
+	bh=9BkapJbscFhR15wRZJTh+EqIVqt1IeBG3XsfoeTNCdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9nE09lTUIw8+VkeeQ+pJFsrx8b170SLWVK8gr4rLH0oC/uT7zcrfPbJoARgAqzSp
-	 eLLejmVVlHn4JB6of6Fvxei/xUoh1GIhOlNLhnaY6TNBGELHCIV4bIbt7wG0Tkl0+7
-	 RMc1h3bbBoRikDwClftt9NWG3fbqirwM2kgVmNVw=
+	b=nOSHWjkbBFjl9v0VG2x2hxuQSB+qqpqfE64uogOauSk7V3wEmmLJv+epeDh9D0p6i
+	 f4xvR6OkTkjVrQjkmBpFsFNmhf5kmr0zGKD1gqYzGexFt3XdUFN16fNHhck77MoHlc
+	 jSmdQGVG6FmZ/BWYIkq7IL5gZTnEOtBaeAqzQyjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Derick Marks <derick.w.marks@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/603] nfsd: Handle EOPENSTALE correctly in the filecache
-Date: Wed, 15 Nov 2023 14:09:16 -0500
-Message-ID: <20231115191613.928068185@linuxfoundation.org>
+Subject: [PATCH 6.6 020/603] ACPI/NUMA: Apply SRAT proximity domain to entire CFMWS window
+Date: Wed, 15 Nov 2023 14:09:25 -0500
+Message-ID: <20231115191614.570321275@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,229 +44,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit d59b3515ab021e010fdc58a8f445ea62dd2f7f4c ]
+[ Upstream commit 8f1004679987302b155f14b966ca6d4335814fcb ]
 
-The nfsd_open code handles EOPENSTALE correctly, by retrying the call to
-fh_verify() and __nfsd_open(). However the filecache just drops the
-error on the floor, and immediately returns nfserr_stale to the caller.
+Commit fd49f99c1809 ("ACPI: NUMA: Add a node and memblk for each
+CFMWS not in SRAT") did not account for the case where the BIOS
+only partially describes a CFMWS Window in the SRAT. That means
+the omitted address ranges, of a partially described CFMWS Window,
+do not get assigned to a NUMA node.
 
-This patch ensures that we propagate the EOPENSTALE code back to
-nfsd_file_do_acquire, and that we handle it correctly.
+Replace the call to phys_to_target_node() with numa_add_memblks().
+Numa_add_memblks() searches an HPA range for existing memblk(s)
+and extends those memblk(s) to fill the entire CFMWS Window.
 
-Fixes: 65294c1f2c5e ("nfsd: add a new struct file caching facility to nfsd")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Message-Id: <20230911183027.11372-1-trond.myklebust@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Extending the existing memblks is a simple strategy that reuses
+SRAT defined proximity domains from part of a window to fill out
+the entire window, based on the knowledge* that all of a CFMWS
+window is of a similar performance class.
+
+*Note that this heuristic will evolve when CFMWS Windows present
+a wider range of characteristics. The extension of the proximity
+domain, implemented here, is likely a step in developing a more
+sophisticated performance profile in the future.
+
+There is no change in behavior when the SRAT does not describe
+the CFMWS Window at all. In that case, a new NUMA node with a
+single memblk covering the entire CFMWS Window is created.
+
+Fixes: fd49f99c1809 ("ACPI: NUMA: Add a node and memblk for each CFMWS not in SRAT")
+Reported-by: Derick Marks <derick.w.marks@intel.com>
+Suggested-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Tested-by: Derick Marks <derick.w.marks@intel.com>
+Link: https://lore.kernel.org/all/eaa0b7cffb0951a126223eef3cbe7b55b8300ad9.1689018477.git.alison.schofield%40intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/filecache.c | 27 +++++++++++++++++++--------
- fs/nfsd/vfs.c       | 28 +++++++++++++---------------
- fs/nfsd/vfs.h       |  4 ++--
- 3 files changed, 34 insertions(+), 25 deletions(-)
+ drivers/acpi/numa/srat.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
-index ee9c923192e08..07bf219f9ae48 100644
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -989,22 +989,21 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 	unsigned char need = may_flags & NFSD_FILE_MAY_MASK;
- 	struct net *net = SVC_NET(rqstp);
- 	struct nfsd_file *new, *nf;
--	const struct cred *cred;
-+	bool stale_retry = true;
- 	bool open_retry = true;
- 	struct inode *inode;
- 	__be32 status;
- 	int ret;
+diff --git a/drivers/acpi/numa/srat.c b/drivers/acpi/numa/srat.c
+index 1f4fc5f8a819d..12f330b0eac01 100644
+--- a/drivers/acpi/numa/srat.c
++++ b/drivers/acpi/numa/srat.c
+@@ -310,11 +310,16 @@ static int __init acpi_parse_cfmws(union acpi_subtable_headers *header,
+ 	start = cfmws->base_hpa;
+ 	end = cfmws->base_hpa + cfmws->window_size;
  
-+retry:
- 	status = fh_verify(rqstp, fhp, S_IFREG,
- 				may_flags|NFSD_MAY_OWNER_OVERRIDE);
- 	if (status != nfs_ok)
- 		return status;
- 	inode = d_inode(fhp->fh_dentry);
--	cred = get_current_cred();
+-	/* Skip if the SRAT already described the NUMA details for this HPA */
+-	node = phys_to_target_node(start);
+-	if (node != NUMA_NO_NODE)
++	/*
++	 * The SRAT may have already described NUMA details for all,
++	 * or a portion of, this CFMWS HPA range. Extend the memblks
++	 * found for any portion of the window to cover the entire
++	 * window.
++	 */
++	if (!numa_fill_memblks(start, end))
+ 		return 0;
  
--retry:
- 	rcu_read_lock();
--	nf = nfsd_file_lookup_locked(net, cred, inode, need, want_gc);
-+	nf = nfsd_file_lookup_locked(net, current_cred(), inode, need, want_gc);
- 	rcu_read_unlock();
++	/* No SRAT description. Create a new node. */
+ 	node = acpi_map_pxm_to_node(*fake_pxm);
  
- 	if (nf) {
-@@ -1026,7 +1025,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 
- 	rcu_read_lock();
- 	spin_lock(&inode->i_lock);
--	nf = nfsd_file_lookup_locked(net, cred, inode, need, want_gc);
-+	nf = nfsd_file_lookup_locked(net, current_cred(), inode, need, want_gc);
- 	if (unlikely(nf)) {
- 		spin_unlock(&inode->i_lock);
- 		rcu_read_unlock();
-@@ -1058,6 +1057,7 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 			goto construction_err;
- 		}
- 		open_retry = false;
-+		fh_put(fhp);
- 		goto retry;
- 	}
- 	this_cpu_inc(nfsd_file_cache_hits);
-@@ -1074,7 +1074,6 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 		nfsd_file_check_write_error(nf);
- 		*pnf = nf;
- 	}
--	put_cred(cred);
- 	trace_nfsd_file_acquire(rqstp, inode, may_flags, nf, status);
- 	return status;
- 
-@@ -1088,8 +1087,20 @@ nfsd_file_do_acquire(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 			status = nfs_ok;
- 			trace_nfsd_file_opened(nf, status);
- 		} else {
--			status = nfsd_open_verified(rqstp, fhp, may_flags,
--						    &nf->nf_file);
-+			ret = nfsd_open_verified(rqstp, fhp, may_flags,
-+						 &nf->nf_file);
-+			if (ret == -EOPENSTALE && stale_retry) {
-+				stale_retry = false;
-+				nfsd_file_unhash(nf);
-+				clear_and_wake_up_bit(NFSD_FILE_PENDING,
-+						      &nf->nf_flags);
-+				if (refcount_dec_and_test(&nf->nf_ref))
-+					nfsd_file_free(nf);
-+				nf = NULL;
-+				fh_put(fhp);
-+				goto retry;
-+			}
-+			status = nfserrno(ret);
- 			trace_nfsd_file_open(nf, status);
- 		}
- 	} else
-diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
-index 02f5fcaad03f3..b24462efa1781 100644
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -823,7 +823,7 @@ int nfsd_open_break_lease(struct inode *inode, int access)
-  * and additional flags.
-  * N.B. After this call fhp needs an fh_put
-  */
--static __be32
-+static int
- __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 			int may_flags, struct file **filp)
- {
-@@ -831,14 +831,12 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 	struct inode	*inode;
- 	struct file	*file;
- 	int		flags = O_RDONLY|O_LARGEFILE;
--	__be32		err;
--	int		host_err = 0;
-+	int		host_err = -EPERM;
- 
- 	path.mnt = fhp->fh_export->ex_path.mnt;
- 	path.dentry = fhp->fh_dentry;
- 	inode = d_inode(path.dentry);
- 
--	err = nfserr_perm;
- 	if (IS_APPEND(inode) && (may_flags & NFSD_MAY_WRITE))
- 		goto out;
- 
-@@ -847,7 +845,7 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 
- 	host_err = nfsd_open_break_lease(inode, may_flags);
- 	if (host_err) /* NOMEM or WOULDBLOCK */
--		goto out_nfserr;
-+		goto out;
- 
- 	if (may_flags & NFSD_MAY_WRITE) {
- 		if (may_flags & NFSD_MAY_READ)
-@@ -859,13 +857,13 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 	file = dentry_open(&path, flags, current_cred());
- 	if (IS_ERR(file)) {
- 		host_err = PTR_ERR(file);
--		goto out_nfserr;
-+		goto out;
- 	}
- 
- 	host_err = ima_file_check(file, may_flags);
- 	if (host_err) {
- 		fput(file);
--		goto out_nfserr;
-+		goto out;
- 	}
- 
- 	if (may_flags & NFSD_MAY_64BIT_COOKIE)
-@@ -874,10 +872,8 @@ __nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 		file->f_mode |= FMODE_32BITHASH;
- 
- 	*filp = file;
--out_nfserr:
--	err = nfserrno(host_err);
- out:
--	return err;
-+	return host_err;
- }
- 
- __be32
-@@ -885,6 +881,7 @@ nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- 		int may_flags, struct file **filp)
- {
- 	__be32 err;
-+	int host_err;
- 	bool retried = false;
- 
- 	validate_process_creds();
-@@ -904,12 +901,13 @@ nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
- retry:
- 	err = fh_verify(rqstp, fhp, type, may_flags);
- 	if (!err) {
--		err = __nfsd_open(rqstp, fhp, type, may_flags, filp);
--		if (err == nfserr_stale && !retried) {
-+		host_err = __nfsd_open(rqstp, fhp, type, may_flags, filp);
-+		if (host_err == -EOPENSTALE && !retried) {
- 			retried = true;
- 			fh_put(fhp);
- 			goto retry;
- 		}
-+		err = nfserrno(host_err);
- 	}
- 	validate_process_creds();
- 	return err;
-@@ -922,13 +920,13 @@ nfsd_open(struct svc_rqst *rqstp, struct svc_fh *fhp, umode_t type,
-  * @may_flags: internal permission flags
-  * @filp: OUT: open "struct file *"
-  *
-- * Returns an nfsstat value in network byte order.
-+ * Returns zero on success, or a negative errno value.
-  */
--__be32
-+int
- nfsd_open_verified(struct svc_rqst *rqstp, struct svc_fh *fhp, int may_flags,
- 		   struct file **filp)
- {
--	__be32 err;
-+	int err;
- 
- 	validate_process_creds();
- 	err = __nfsd_open(rqstp, fhp, S_IFREG, may_flags, filp);
-diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
-index a6890ea7b765b..e3c29596f4df1 100644
---- a/fs/nfsd/vfs.h
-+++ b/fs/nfsd/vfs.h
-@@ -104,8 +104,8 @@ __be32		nfsd_setxattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
- int 		nfsd_open_break_lease(struct inode *, int);
- __be32		nfsd_open(struct svc_rqst *, struct svc_fh *, umode_t,
- 				int, struct file **);
--__be32		nfsd_open_verified(struct svc_rqst *, struct svc_fh *,
--				int, struct file **);
-+int		nfsd_open_verified(struct svc_rqst *rqstp, struct svc_fh *fhp,
-+				   int may_flags, struct file **filp);
- __be32		nfsd_splice_read(struct svc_rqst *rqstp, struct svc_fh *fhp,
- 				struct file *file, loff_t offset,
- 				unsigned long *count,
+ 	if (node == NUMA_NO_NODE) {
 -- 
 2.42.0
 
