@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9D835F19
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0EA3DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lThgv/GB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76914C433C7;
-	Wed, 15 Nov 2023 20:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCEmY4nQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31F1C433C7;
+	Wed, 15 Nov 2023 20:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078633;
-	bh=pInbBjYgK355lN7Dn0rBCXjbdKDZd0glQ1lX9XU6uXY=;
+	s=korg; t=1700078635;
+	bh=ZRk6f/fwZbGbnYUyMYnob0BMbymMH53xN0a7P+hN1qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lThgv/GBTTPsZPTUvZdbA3980YWYpv7bA67e0B/zkfv8LNzY2sX1r+Nb5pdy3JQSB
-	 yWIr1BDG6+MMerfe8Dd43aKqbPqWtRXfL92OUo3keXGL/t7IBO13E3qr5/slG6aUyK
-	 +uqeJevjy8ky2VzfpUMFAWcFsv6ZIB8onPysQSeE=
+	b=LCEmY4nQfUzaS55jtrpohuHtIivwfN8bCOUvLD3AfC4REcTh+wLfKqetZjUUOvhVR
+	 nT44iabi2Zsz3PphdMMtRG2/X2mX76cQ3o2rF3IjaA0WYacXV5PXrim2Cds22qHxlw
+	 zn7VGy6vNogL0Ru+ASay7saCNvR3Ac2ciBEf+5UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Subject: [PATCH 4.14 14/45] drm/radeon: possible buffer overflow
-Date: Wed, 15 Nov 2023 14:32:51 -0500
-Message-ID: <20231115191420.501092175@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 15/45] drm/rockchip: cdn-dp: Fix some error handling paths in cdn_dp_probe()
+Date: Wed, 15 Nov 2023 14:32:52 -0500
+Message-ID: <20231115191420.552906763@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -43,45 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit dd05484f99d16715a88eedfca363828ef9a4c2d4 ]
+[ Upstream commit 44b968d0d0868b7a9b7a5c64464ada464ff4d532 ]
 
-Buffer 'afmt_status' of size 6 could overflow, since index 'afmt_idx' is
-checked after access.
+cdn_dp_audio_codec_init() can fail. So add some error handling.
 
-Fixes: 5cc4e5fc293b ("drm/radeon: Cleanup HDMI audio interrupt handling for evergreen")
-Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
-Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+If component_add() fails, the previous cdn_dp_audio_codec_init() call
+should be undone, as already done in the remove function.
+
+Fixes: 88582f564692 ("drm/rockchip: cdn-dp: Don't unregister audio dev when unbinding")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/8494a41602fadb7439630921a9779640698f2f9f.1693676045.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/evergreen.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/rockchip/cdn-dp-core.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/evergreen.c b/drivers/gpu/drm/radeon/evergreen.c
-index 24fe66c89dfb0..1f8d5658a5b85 100644
---- a/drivers/gpu/drm/radeon/evergreen.c
-+++ b/drivers/gpu/drm/radeon/evergreen.c
-@@ -4814,14 +4814,15 @@ int evergreen_irq_process(struct radeon_device *rdev)
- 			break;
- 		case 44: /* hdmi */
- 			afmt_idx = src_data;
--			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
--				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
--
- 			if (afmt_idx > 5) {
- 				DRM_ERROR("Unhandled interrupt: %d %d\n",
- 					  src_id, src_data);
- 				break;
- 			}
+diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+index 97ce3c5c3fce0..074614d390b31 100644
+--- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+@@ -1173,6 +1173,7 @@ static int cdn_dp_probe(struct platform_device *pdev)
+ 	struct cdn_dp_device *dp;
+ 	struct extcon_dev *extcon;
+ 	struct phy *phy;
++	int ret;
+ 	int i;
+ 
+ 	dp = devm_kzalloc(dev, sizeof(*dp), GFP_KERNEL);
+@@ -1213,9 +1214,19 @@ static int cdn_dp_probe(struct platform_device *pdev)
+ 	mutex_init(&dp->lock);
+ 	dev_set_drvdata(dev, dp);
+ 
+-	cdn_dp_audio_codec_init(dp, dev);
++	ret = cdn_dp_audio_codec_init(dp, dev);
++	if (ret)
++		return ret;
 +
-+			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
-+				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
++	ret = component_add(dev, &cdn_dp_component_ops);
++	if (ret)
++		goto err_audio_deinit;
+ 
+-	return component_add(dev, &cdn_dp_component_ops);
++	return 0;
 +
- 			afmt_status[afmt_idx] &= ~AFMT_AZ_FORMAT_WTRIG;
- 			queue_hdmi = true;
- 			DRM_DEBUG("IH: HDMI%d\n", afmt_idx + 1);
++err_audio_deinit:
++	platform_device_unregister(dp->audio_pdev);
++	return ret;
+ }
+ 
+ static int cdn_dp_remove(struct platform_device *pdev)
 -- 
 2.42.0
 
