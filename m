@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A553A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1550D3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXxbi/hz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F65C433C8;
-	Wed, 15 Nov 2023 19:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CUfWydG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0A84C433C8;
+	Wed, 15 Nov 2023 19:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077751;
-	bh=5/nwyWv8qfeOnmlzl2Heo3fl2Crr8jT/f1mkfJr2dmc=;
+	s=korg; t=1700077752;
+	bh=+WHmeOmy3RSU98v88t7X0saDTwSbJBxUXZ0nxFyUzWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXxbi/hzLdc4HJzz3dqk5RLISnJs+Fcyzt88/F/3P0j4pB1cUkVti44fimbSNclqK
-	 30dTZN+0zw5od2iNIYU6esZdxhMe8n3+3uym7im3dc38gU1LqSwyfOZqXLiZ08WS8M
-	 ye0Y7uQ3f2wyEe8qmZodtGQFMx4/VIRxpyyasKlo=
+	b=0CUfWydGBOF4JuESyJ/vOT283qpZJ1y+hYagNnqFC6XB1Y9D9dl6Yyqqhp01BeprN
+	 B0zkvAUxLrB+D29NwE1puNMcsTV406QfzjpXcPpKuvRfcb4Vt4E0aoPt2TnDYKRyhS
+	 ANpPZ+js47r0ti5yJ9zvAiqzbVPZGUODn1D5AXdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sumit Garg <sumit.garg@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 465/603] modpost: fix tee MODULE_DEVICE_TABLE built on big-endian host
-Date: Wed, 15 Nov 2023 14:16:50 -0500
-Message-ID: <20231115191644.738687934@linuxfoundation.org>
+Subject: [PATCH 6.6 490/603] cxl/pci: Remove inconsistent usage of dev_err_probe()
+Date: Wed, 15 Nov 2023 14:17:15 -0500
+Message-ID: <20231115191646.240186777@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,69 +45,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 7f54e00e5842663c2cea501bbbdfa572c94348a3 ]
+[ Upstream commit 2627c995c15dc375f4b5a591d782a14b1c0e3e7d ]
 
-When MODULE_DEVICE_TABLE(tee, ) is built on a host with a different
-endianness from the target architecture, it results in an incorrect
-MODULE_ALIAS().
+If dev_err_probe() is to be used it should at least be used consistently
+within the same function. It is also worth questioning whether
+every potential -ENOMEM needs an explicit error message.
 
-For example, see a case where drivers/char/hw_random/optee-rng.c
-is built as a module for ARM little-endian.
+Remove the cxl_setup_fw_upload() error prints for what are rare /
+hardware-independent failures.
 
-If you build it on a little-endian host, you will get the correct
-MODULE_ALIAS:
-
-    $ grep MODULE_ALIAS drivers/char/hw_random/optee-rng.mod.c
-    MODULE_ALIAS("tee:ab7a617c-b8e7-4d8f-8301-d09b61036b64*");
-
-However, if you build it on a big-endian host, you will get a wrong
-MODULE_ALIAS:
-
-    $ grep MODULE_ALIAS drivers/char/hw_random/optee-rng.mod.c
-    MODULE_ALIAS("tee:646b0361-9bd0-0183-8f4d-e7b87c617aab*");
-
-The same problem also occurs when you enable CONFIG_CPU_BIG_ENDIAN,
-and build it on a little-endian host.
-
-This issue has been unnoticed because the ARM kernel is configured for
-little-endian by default, and most likely built on a little-endian host
-(cross-build on x86 or native-build on ARM).
-
-The uuid field must not be reversed because uuid_t is an array of __u8.
-
-Fixes: 0fc1db9d1059 ("tee: add bus driver framework for TEE based devices")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Sumit Garg <sumit.garg@linaro.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 5f2da1971446 ("cxl/pci: Fix sanitize notifier setup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/file2alias.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/cxl/core/memdev.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 7056751c29b1f..70bf6a2f585ce 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -1348,13 +1348,13 @@ static int do_typec_entry(const char *filename, void *symval, char *alias)
- /* Looks like: tee:uuid */
- static int do_tee_entry(const char *filename, void *symval, char *alias)
- {
--	DEF_FIELD(symval, tee_client_device_id, uuid);
-+	DEF_FIELD_ADDR(symval, tee_client_device_id, uuid);
+diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+index 2a7a07f6d1652..6efe4e2a2cf53 100644
+--- a/drivers/cxl/core/memdev.c
++++ b/drivers/cxl/core/memdev.c
+@@ -970,7 +970,6 @@ int cxl_memdev_setup_fw_upload(struct cxl_memdev_state *mds)
+ 	struct cxl_dev_state *cxlds = &mds->cxlds;
+ 	struct device *dev = &cxlds->cxlmd->dev;
+ 	struct fw_upload *fwl;
+-	int rc;
  
- 	sprintf(alias, "tee:%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
--		uuid.b[0], uuid.b[1], uuid.b[2], uuid.b[3], uuid.b[4],
--		uuid.b[5], uuid.b[6], uuid.b[7], uuid.b[8], uuid.b[9],
--		uuid.b[10], uuid.b[11], uuid.b[12], uuid.b[13], uuid.b[14],
--		uuid.b[15]);
-+		uuid->b[0], uuid->b[1], uuid->b[2], uuid->b[3], uuid->b[4],
-+		uuid->b[5], uuid->b[6], uuid->b[7], uuid->b[8], uuid->b[9],
-+		uuid->b[10], uuid->b[11], uuid->b[12], uuid->b[13], uuid->b[14],
-+		uuid->b[15]);
+ 	if (!test_bit(CXL_MEM_COMMAND_ID_GET_FW_INFO, mds->enabled_cmds))
+ 		return 0;
+@@ -978,17 +977,9 @@ int cxl_memdev_setup_fw_upload(struct cxl_memdev_state *mds)
+ 	fwl = firmware_upload_register(THIS_MODULE, dev, dev_name(dev),
+ 				       &cxl_memdev_fw_ops, mds);
+ 	if (IS_ERR(fwl))
+-		return dev_err_probe(dev, PTR_ERR(fwl),
+-				     "Failed to register firmware loader\n");
+-
+-	rc = devm_add_action_or_reset(cxlds->dev, devm_cxl_remove_fw_upload,
+-				      fwl);
+-	if (rc)
+-		dev_err(dev,
+-			"Failed to add firmware loader remove action: %d\n",
+-			rc);
++		return PTR_ERR(fwl);
  
- 	add_wildcard(alias);
- 	return 1;
+-	return rc;
++	return devm_add_action_or_reset(cxlds->dev, devm_cxl_remove_fw_upload, fwl);
+ }
+ EXPORT_SYMBOL_NS_GPL(cxl_memdev_setup_fw_upload, CXL);
+ 
 -- 
 2.42.0
 
