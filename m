@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72623C465
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949F83C462
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wesuLtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970D5C433C9;
-	Wed, 15 Nov 2023 19:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/n9OlDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B27C433C9;
+	Wed, 15 Nov 2023 19:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077136;
-	bh=xI+7tFkSYAtJlhcP0SGG+uwhja77vTBnzOzD4qYqU5o=;
+	s=korg; t=1700077138;
+	bh=nxtplQbQbgrX3JfOiUMPVQLg0ZhJmKHWU61q9SBrP0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1wesuLtMfaQisEEPnLRqZb751yDrnLT+4RrpoMMNdLoyIQxvD5Fi8Y6TYgTzFfA5p
-	 voBbkEGFl/oJbJu5Ln+lH1pwqOLpDdnK2dreb5fey4FEfRYI4PTpprpEgM1pCQv47W
-	 yMtaohgW5e4pzCW1P6C59XDEOqBK03OD38aCyWT4=
+	b=m/n9OlDQcXcg1Y8I3BJgfLnYsOcvwCDv5K3Gs3u8tnHpbFerhDF+TwodB8L3Lsmkf
+	 H6ViALZZSAV1L7E9cmGAJL6UNZ53HdCJOW6BTG8omkfMZ4ukIJLw0C+1xL9TRVGXjl
+	 3nNIuuLmm9B4J4KVNYEoHxXxjSzKF6QSVQDgXH/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <eugen.hristev@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mark Brown <broonie@kernel.org>,
+	Rotem Saado <rotem.saado@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 533/550] ASoC: mediatek: mt8186_mt6366_rt1019_rt5682s: trivial: fix error messages
-Date: Wed, 15 Nov 2023 14:18:37 -0500
-Message-ID: <20231115191637.888273603@linuxfoundation.org>
+Subject: [PATCH 6.6 136/603] wifi: iwlwifi: yoyo: swap cdb and jacket bits values
+Date: Wed, 15 Nov 2023 14:11:21 -0500
+Message-ID: <20231115191622.648056821@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,51 +39,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eugen Hristev <eugen.hristev@collabora.com>
+From: Rotem Saado <rotem.saado@intel.com>
 
-[ Upstream commit 004fc58edea6f00db9ad07b40b882e8d976f7a54 ]
+[ Upstream commit 65008777b9dcd2002414ddb2c2158293a6e2fd6f ]
 
-Property 'playback-codecs' is referenced as 'speaker-codec' in the error
-message, and this can lead to confusion.
-Correct the error message such that the correct property name is
-referenced.
+The bits are wrong, the jacket bit should be 5 and cdb bit 4.
+Fix it.
 
-Fixes: 0da16e370dd7 ("ASoC: mediatek: mt8186: add machine driver with mt6366, rt1019 and rt5682s")
-Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20231031103139.77395-1-eugen.hristev@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1f171f4f1437 ("iwlwifi: Add support for getting rf id with blank otp")
+Signed-off-by: Rotem Saado <rotem.saado@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20231004123422.356d8dacda2f.I349ab888b43a11baa2453a1d6978a6a703e422f0@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c | 4 ++--
+ drivers/net/wireless/intel/iwlwifi/iwl-prph.h | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c b/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
-index 9c11016f032c2..9777ba89e956c 100644
---- a/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
-+++ b/sound/soc/mediatek/mt8186/mt8186-mt6366-rt1019-rt5682s.c
-@@ -1179,7 +1179,7 @@ static int mt8186_mt6366_rt1019_rt5682s_dev_probe(struct platform_device *pdev)
- 	playback_codec = of_get_child_by_name(pdev->dev.of_node, "playback-codecs");
- 	if (!playback_codec) {
- 		ret = -EINVAL;
--		dev_err_probe(&pdev->dev, ret, "Property 'speaker-codecs' missing or invalid\n");
-+		dev_err_probe(&pdev->dev, ret, "Property 'playback-codecs' missing or invalid\n");
- 		goto err_playback_codec;
- 	}
- 
-@@ -1193,7 +1193,7 @@ static int mt8186_mt6366_rt1019_rt5682s_dev_probe(struct platform_device *pdev)
- 	for_each_card_prelinks(card, i, dai_link) {
- 		ret = mt8186_mt6366_card_set_be_link(card, dai_link, playback_codec, "I2S3");
- 		if (ret) {
--			dev_err_probe(&pdev->dev, ret, "%s set speaker_codec fail\n",
-+			dev_err_probe(&pdev->dev, ret, "%s set playback_codec fail\n",
- 				      dai_link->name);
- 			goto err_probe;
- 		}
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-prph.h b/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
+index 6dd381ff0f9e7..2a63968b0e55b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
+@@ -348,8 +348,8 @@
+ #define RFIC_REG_RD			0xAD0470
+ #define WFPM_CTRL_REG			0xA03030
+ #define WFPM_OTP_CFG1_ADDR		0x00a03098
+-#define WFPM_OTP_CFG1_IS_JACKET_BIT	BIT(4)
+-#define WFPM_OTP_CFG1_IS_CDB_BIT	BIT(5)
++#define WFPM_OTP_CFG1_IS_JACKET_BIT	BIT(5)
++#define WFPM_OTP_CFG1_IS_CDB_BIT	BIT(4)
+ #define WFPM_OTP_BZ_BNJ_JACKET_BIT	5
+ #define WFPM_OTP_BZ_BNJ_CDB_BIT		4
+ #define WFPM_OTP_CFG1_IS_JACKET(_val)   (((_val) & 0x00000020) >> WFPM_OTP_BZ_BNJ_JACKET_BIT)
 -- 
 2.42.0
 
