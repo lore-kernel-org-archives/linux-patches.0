@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570E13A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5F73A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DW4kmPmb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5B0C433C9;
-	Wed, 15 Nov 2023 19:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3mtdAnn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999BFC433C7;
+	Wed, 15 Nov 2023 19:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077295;
-	bh=Kc9XiUrTLV81auMzpX64UP9Eo4VNUGTv/c5mzaFHtzg=;
+	s=korg; t=1700077296;
+	bh=oK6dwfZH8huCR/W+q4SFSuLSxNxHHEY3xID+NyfeiX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DW4kmPmbHY0QhaoQtrWF4wcZG5SfIkaGuPp5hru5kAoNc+oKG5bhPywfgYTQSvGZl
-	 3emoD9A+qM8TjYKoTVu3Z4C0f+UK2VnM9FvzkI8EsYbKQrNsAN5a93rkyl0dgWpI/i
-	 LiaL5Jq+oO9xBejLr8rjRw42LUANtgiA6Neyla9I=
+	b=t3mtdAnnlxKYs+t9b4hpqAM5pQkDmDA7vN+IbsE+SeTKYh4bRo+KU//UceIHkyVfe
+	 mpVhMWX/Ws3NZErVyPSp4lCZykTEn58XotCc5D3lHJ/F1tzePVD27cRBrRHa29LEHc
+	 SyZadHlZVZH0yyqLKtgKuqYqsqE7E0RjvUDqTopM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Marek Vasut <marex@denx.de>,
-	Robert Foss <rfoss@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Sui Jingfeng <suijingfeng@loongson.cn>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 216/603] drm: bridge: samsung-dsim: Fix waiting for empty cmd transfer FIFO on older Exynos
-Date: Wed, 15 Nov 2023 14:12:41 -0500
-Message-ID: <20231115191628.235677581@linuxfoundation.org>
+Subject: [PATCH 6.6 217/603] drm/loongson: Fix error handling in lsdc_pixel_pll_setup()
+Date: Wed, 15 Nov 2023 14:12:42 -0500
+Message-ID: <20231115191628.302507012@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,81 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 15f389da11257b806da75a070cfa41ca0cc15aae ]
+[ Upstream commit 5976a28b344ecb6810882a01b76a320cac21d307 ]
 
-Samsung DSIM used in older Exynos SoCs (like Exynos 4210, 4x12, 3250)
-doesn't report empty level of packer header FIFO. In case of those SoCs,
-use the old way of waiting for empty command tranfsfer FIFO, removed
-recently by commit 14806c641582 ("drm: bridge: samsung-dsim: Drain command transfer FIFO before transfer").
+There are two problems in lsdc_pixel_pll_setup()
+1. If kzalloc() fails then call iounmap() to release the resources.
+2. Both kzalloc and ioremap does not return error pointers on failure, so
+   using IS_ERR_OR_NULL() checks is a bit confusing and not very right,
+   fix this by changing those to NULL checks instead.
 
-Fixes: 14806c641582 ("drm: bridge: samsung-dsim: Drain command transfer FIFO before transfer")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230809145641.3213210-1-m.szyprowski@samsung.com
+Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Sui Jingfeng <suijingfeng@loongson.cn>
+Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230720123950.543082-1-harshit.m.mogalapalli@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/samsung-dsim.c | 18 ++++++++++++++++--
- include/drm/bridge/samsung-dsim.h     |  1 +
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/loongson/lsdc_pixpll.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
-index 6f2ca74238d14..19bdb32dbc9aa 100644
---- a/drivers/gpu/drm/bridge/samsung-dsim.c
-+++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-@@ -413,6 +413,7 @@ static const struct samsung_dsim_driver_data exynos3_dsi_driver_data = {
- 	.m_min = 41,
- 	.m_max = 125,
- 	.min_freq = 500,
-+	.has_broken_fifoctrl_emptyhdr = 1,
- };
+diff --git a/drivers/gpu/drm/loongson/lsdc_pixpll.c b/drivers/gpu/drm/loongson/lsdc_pixpll.c
+index 04c15b4697e21..2609a2256da4b 100644
+--- a/drivers/gpu/drm/loongson/lsdc_pixpll.c
++++ b/drivers/gpu/drm/loongson/lsdc_pixpll.c
+@@ -120,12 +120,14 @@ static int lsdc_pixel_pll_setup(struct lsdc_pixpll * const this)
+ 	struct lsdc_pixpll_parms *pparms;
  
- static const struct samsung_dsim_driver_data exynos4_dsi_driver_data = {
-@@ -429,6 +430,7 @@ static const struct samsung_dsim_driver_data exynos4_dsi_driver_data = {
- 	.m_min = 41,
- 	.m_max = 125,
- 	.min_freq = 500,
-+	.has_broken_fifoctrl_emptyhdr = 1,
- };
+ 	this->mmio = ioremap(this->reg_base, this->reg_size);
+-	if (IS_ERR_OR_NULL(this->mmio))
++	if (!this->mmio)
+ 		return -ENOMEM;
  
- static const struct samsung_dsim_driver_data exynos5_dsi_driver_data = {
-@@ -1010,8 +1012,20 @@ static int samsung_dsim_wait_for_hdr_fifo(struct samsung_dsim *dsi)
- 	do {
- 		u32 reg = samsung_dsim_read(dsi, DSIM_FIFOCTRL_REG);
+ 	pparms = kzalloc(sizeof(*pparms), GFP_KERNEL);
+-	if (IS_ERR_OR_NULL(pparms))
++	if (!pparms) {
++		iounmap(this->mmio);
+ 		return -ENOMEM;
++	}
  
--		if (reg & DSIM_SFR_HEADER_EMPTY)
--			return 0;
-+		if (!dsi->driver_data->has_broken_fifoctrl_emptyhdr) {
-+			if (reg & DSIM_SFR_HEADER_EMPTY)
-+				return 0;
-+		} else {
-+			if (!(reg & DSIM_SFR_HEADER_FULL)) {
-+				/*
-+				 * Wait a little bit, so the pending data can
-+				 * actually leave the FIFO to avoid overflow.
-+				 */
-+				if (!cond_resched())
-+					usleep_range(950, 1050);
-+				return 0;
-+			}
-+		}
+ 	pparms->ref_clock = LSDC_PLL_REF_CLK_KHZ;
  
- 		if (!cond_resched())
- 			usleep_range(950, 1050);
-diff --git a/include/drm/bridge/samsung-dsim.h b/include/drm/bridge/samsung-dsim.h
-index 05100e91ecb96..6fc9bb2979e45 100644
---- a/include/drm/bridge/samsung-dsim.h
-+++ b/include/drm/bridge/samsung-dsim.h
-@@ -53,6 +53,7 @@ struct samsung_dsim_driver_data {
- 	unsigned int plltmr_reg;
- 	unsigned int has_freqband:1;
- 	unsigned int has_clklane_stop:1;
-+	unsigned int has_broken_fifoctrl_emptyhdr:1;
- 	unsigned int num_clks;
- 	unsigned int min_freq;
- 	unsigned int max_freq;
 -- 
 2.42.0
 
