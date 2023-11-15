@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6203A8E5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8F241AB8
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txxUTZ5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3F3C433C9;
-	Wed, 15 Nov 2023 19:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sp36/+oC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1774C433CC;
+	Wed, 15 Nov 2023 19:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076953;
-	bh=quQ2Q/xgtfoefHT6Xv3kg+gjfaHuhZDhElNSw93cnxY=;
+	s=korg; t=1700076955;
+	bh=U10DjcbL2XGDJO7vCSTVmMaMcjZr0AqwDvh10vHydKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txxUTZ5OBz5/6mouot8IG1zjhod4S85EGELIETv7/q7xegRYf+ntcTK61iLc74dlx
-	 lEoVix73WY0Gwz6aWaFMODHoZPV5+e+1nNsek1cFwoxXSyQCmO8ynlcOkM/wGDjav+
-	 GHwjZOab3xKFyYq9G2RKFWEBGVNl84VvvHYu1MpU=
+	b=sp36/+oClv/JoYbweTG5Qw2lZlIfs43LC5n0Mhct/v1toLoooQaa72Sfhst8uKzJu
+	 FUYG0PtOOww4+1KwGamTVljM6Jozg5IfxlBE6b4CGFgo+XbxRBjJXU99tRFVRZ9dNb
+	 AoSwLTRr52eoxdSQmBAtmWoNf1r3OwDPKrIrNqH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Guoniu.zhou" <guoniu.zhou@nxp.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 474/550] media: ov5640: fix vblank unchange issue when work at dvp mode
-Date: Wed, 15 Nov 2023 14:17:38 -0500
-Message-ID: <20231115191633.725257748@linuxfoundation.org>
+Subject: [PATCH 6.6 078/603] cpufreq: tegra194: fix warning due to missing opp_put
+Date: Wed, 15 Nov 2023 14:10:23 -0500
+Message-ID: <20231115191618.520069104@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,83 +38,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guoniu.zhou <guoniu.zhou@nxp.com>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit 8fc29e3c9f682d4ad9b0764d44ecc6c19b000051 ]
+[ Upstream commit bae8222a6c291dbe58c908dab5c2abd3a75d0d63 ]
 
-The value of V4L2_CID_VBLANK control is initialized to default vblank
-value of 640x480 when driver probe. When OV5640 work at DVP mode, the
-control value won't update and lead to sensor can't output data if the
-resolution remain the same as last time since incorrect total vertical
-size. So update it when there is a new value applied.
+Fix the warning due to missing dev_pm_opp_put() call and hence
+wrong refcount value. This causes below warning message when
+trying to remove the module.
 
-Fixes: bce93b827de6 ("media: ov5640: Add VBLANK control")
-Signed-off-by: Guoniu.zhou <guoniu.zhou@nxp.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+ Call trace:
+  dev_pm_opp_put_opp_table+0x154/0x15c
+  dev_pm_opp_remove_table+0x34/0xa0
+  _dev_pm_opp_cpumask_remove_table+0x7c/0xbc
+  dev_pm_opp_of_cpumask_remove_table+0x10/0x18
+  tegra194_cpufreq_exit+0x24/0x34 [tegra194_cpufreq]
+  cpufreq_remove_dev+0xa8/0xf8
+  subsys_interface_unregister+0x90/0xe8
+  cpufreq_unregister_driver+0x54/0x9c
+  tegra194_cpufreq_remove+0x18/0x2c [tegra194_cpufreq]
+  platform_remove+0x24/0x74
+  device_remove+0x48/0x78
+  device_release_driver_internal+0xc8/0x160
+  driver_detach+0x4c/0x90
+  bus_remove_driver+0x68/0xb8
+  driver_unregister+0x2c/0x58
+  platform_driver_unregister+0x10/0x18
+  tegra194_ccplex_driver_exit+0x14/0x1e0 [tegra194_cpufreq]
+  __arm64_sys_delete_module+0x184/0x270
+
+Fixes: f41e1442ac5b ("cpufreq: tegra194: add OPP support and set bandwidth")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+[ Viresh: Add a blank line ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5640.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/cpufreq/tegra194-cpufreq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
-index 8b7ff2f3bdda7..7c041dafff2b1 100644
---- a/drivers/media/i2c/ov5640.c
-+++ b/drivers/media/i2c/ov5640.c
-@@ -2850,12 +2850,22 @@ static int ov5640_try_fmt_internal(struct v4l2_subdev *sd,
- 	return 0;
- }
+diff --git a/drivers/cpufreq/tegra194-cpufreq.c b/drivers/cpufreq/tegra194-cpufreq.c
+index 88ef5e57ccd05..386aed3637b4e 100644
+--- a/drivers/cpufreq/tegra194-cpufreq.c
++++ b/drivers/cpufreq/tegra194-cpufreq.c
+@@ -450,6 +450,8 @@ static int tegra_cpufreq_init_cpufreq_table(struct cpufreq_policy *policy,
+ 		if (IS_ERR(opp))
+ 			continue;
  
-+static void __v4l2_ctrl_vblank_update(struct ov5640_dev *sensor, u32 vblank)
-+{
-+	const struct ov5640_mode_info *mode = sensor->current_mode;
++		dev_pm_opp_put(opp);
 +
-+	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
-+				 OV5640_MAX_VTS - mode->height, 1, vblank);
-+
-+	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
-+}
-+
- static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
- {
- 	const struct ov5640_mode_info *mode = sensor->current_mode;
- 	enum ov5640_pixel_rate_id pixel_rate_id = mode->pixel_rate;
- 	struct v4l2_mbus_framefmt *fmt = &sensor->fmt;
--	const struct ov5640_timings *timings;
-+	const struct ov5640_timings *timings = ov5640_timings(sensor, mode);
- 	s32 exposure_val, exposure_max;
- 	unsigned int hblank;
- 	unsigned int i = 0;
-@@ -2874,6 +2884,8 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
- 		__v4l2_ctrl_s_ctrl_int64(sensor->ctrls.pixel_rate,
- 					 ov5640_calc_pixel_rate(sensor));
- 
-+		__v4l2_ctrl_vblank_update(sensor, timings->vblank_def);
-+
- 		return 0;
- 	}
- 
-@@ -2916,15 +2928,12 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
- 	__v4l2_ctrl_s_ctrl_int64(sensor->ctrls.pixel_rate, pixel_rate);
- 	__v4l2_ctrl_s_ctrl(sensor->ctrls.link_freq, i);
- 
--	timings = ov5640_timings(sensor, mode);
- 	hblank = timings->htot - mode->width;
- 	__v4l2_ctrl_modify_range(sensor->ctrls.hblank,
- 				 hblank, hblank, 1, hblank);
- 
- 	vblank = timings->vblank_def;
--	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
--				 OV5640_MAX_VTS - mode->height, 1, vblank);
--	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
-+	__v4l2_ctrl_vblank_update(sensor, vblank);
- 
- 	exposure_max = timings->crop.height + vblank - 4;
- 	exposure_val = clamp_t(s32, sensor->ctrls.exposure->val,
+ 		ret = dev_pm_opp_enable(cpu_dev, pos->frequency * KHZ);
+ 		if (ret < 0)
+ 			return ret;
 -- 
 2.42.0
 
