@@ -1,32 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE7031721
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270D431721
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvNABW1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473B6C433C9;
-	Wed, 15 Nov 2023 19:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsZFdGH3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7659C433CB;
+	Wed, 15 Nov 2023 19:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076782;
-	bh=6UR0dRdk32+N3HRzvovPSr+nmuT3JzusE688p8c7kOo=;
+	s=korg; t=1700076784;
+	bh=EGlBQYv/7VoH1+xFzBhd0GzxzlYuOpfREKviQfjPj/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvNABW1d1J3yCZFGfYWiBto9mw/qZ4/x14sX1CissDnpVy/gfrJEtC2F3ZOsDJvWV
-	 uRVG0X3216e2S5YX6iTvEsc93LUpDuxIwrTObbVdcN7z39iy40EtSjppnN+nOo3kzk
-	 n30Sq1Jx8z1iyXx0ei4+/glPcilWBdtQxPVqjYPM=
+	b=PsZFdGH3ykxRGSG/KDhhSBBjMZAx5QZTNyH1i+fcacQyK7/UK87ZCLJcDrgYdtEm2
+	 UfGT7GGPJEvBiuYjjjMXMdEL83R/Qi17kfoVVkuEHbqXqmSjDddlBzfxiUlhPkLEit
+	 N1C6AvaPBs+B2vLr8gAIibiJ/k1P+cyltEqXAE+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zhang Rui <rui.zhang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 406/550] interconnect: qcom: qdu1000: Set ACV enable_mask
-Date: Wed, 15 Nov 2023 14:16:30 -0500
-Message-ID: <20231115191628.900356454@linuxfoundation.org>
+Subject: [PATCH 6.6 025/603] x86/apic: Fake primary thread mask for XEN/PV
+Date: Wed, 15 Nov 2023 14:09:30 -0500
+Message-ID: <20231115191614.920169287@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,37 +42,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 8517824f0e94d52ab82742106314f0b8875e03c4 ]
+[ Upstream commit 965e05ff8af98c44f9937366715c512000373164 ]
 
-ACV expects an enable_mask corresponding to the APPS RSC, fill it in.
+The SMT control mechanism got added as speculation attack vector
+mitigation. The implemented logic relies on the primary thread mask to
+be set up properly.
 
-Fixes: 1f51339f7dd0 ("interconnect: qcom: Add QDU1000/QRU1000 interconnect driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230811-topic-acv-v2-1-765ad70e539a@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+This turns out to be an issue with XEN/PV guests because their CPU hotplug
+mechanics do not enumerate APICs and therefore the mask is never correctly
+populated.
+
+This went unnoticed so far because by chance XEN/PV ends up with
+smp_num_siblings == 2. So cpu_smt_control stays at its default value
+CPU_SMT_ENABLED and the primary thread mask is never evaluated in the
+context of CPU hotplug.
+
+This stopped "working" with the upcoming overhaul of the topology
+evaluation which legitimately provides a fake topology for XEN/PV. That
+sets smp_num_siblings to 1, which causes the core CPU hot-plug core to
+refuse to bring up the APs.
+
+This happens because cpu_smt_control is set to CPU_SMT_NOT_SUPPORTED which
+causes cpu_bootable() to evaluate the unpopulated primary thread mask with
+the conclusion that all non-boot CPUs are not valid to be plugged.
+
+The core code has already been made more robust against this kind of fail,
+but the primary thread mask really wants to be populated to avoid other
+issues all over the place.
+
+Just fake the mask by pretending that all XEN/PV vCPUs are primary threads,
+which is consistent because all of XEN/PVs topology is fake or non-existent.
+
+Fixes: 6a4d2657e048 ("x86/smp: Provide topology_is_primary_thread()")
+Fixes: f54d4434c281 ("x86/apic: Provide cpu_primary_thread mask")
+Reported-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Juergen Gross <jgross@suse.com>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Tested-by: Michael Kelley <mikelley@microsoft.com>
+Tested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20230814085112.210011520@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/qdu1000.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/apic/apic.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/qdu1000.c b/drivers/interconnect/qcom/qdu1000.c
-index a4cf559de2b0b..4725f5f5c6e19 100644
---- a/drivers/interconnect/qcom/qdu1000.c
-+++ b/drivers/interconnect/qcom/qdu1000.c
-@@ -768,6 +768,7 @@ static struct qcom_icc_node xs_sys_tcu_cfg = {
+diff --git a/arch/x86/kernel/apic/apic.c b/arch/x86/kernel/apic/apic.c
+index 760adac3d1a82..3cdf48493546d 100644
+--- a/arch/x86/kernel/apic/apic.c
++++ b/arch/x86/kernel/apic/apic.c
+@@ -36,6 +36,8 @@
+ #include <linux/smp.h>
+ #include <linux/mm.h>
  
- static struct qcom_icc_bcm bcm_acv = {
- 	.name = "ACV",
-+	.enable_mask = BIT(3),
- 	.num_nodes = 1,
- 	.nodes = { &ebi },
- };
++#include <xen/xen.h>
++
+ #include <asm/trace/irq_vectors.h>
+ #include <asm/irq_remapping.h>
+ #include <asm/pc-conf-reg.h>
+@@ -2344,6 +2346,15 @@ static int __init smp_init_primary_thread_mask(void)
+ {
+ 	unsigned int cpu;
+ 
++	/*
++	 * XEN/PV provides either none or useless topology information.
++	 * Pretend that all vCPUs are primary threads.
++	 */
++	if (xen_pv_domain()) {
++		cpumask_copy(&__cpu_primary_thread_mask, cpu_possible_mask);
++		return 0;
++	}
++
+ 	for (cpu = 0; cpu < nr_logical_cpuids; cpu++)
+ 		cpu_mark_primary_thread(cpu, cpuid_to_apicid[cpu]);
+ 	return 0;
 -- 
 2.42.0
 
