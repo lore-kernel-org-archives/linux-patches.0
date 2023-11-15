@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F487446AD
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F7E3C470
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRGyseeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2908C433CC;
-	Wed, 15 Nov 2023 19:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8G0bs2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A81C433CD;
+	Wed, 15 Nov 2023 19:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077018;
-	bh=pJUMt05/gYOi3z8O5u7PggbKr2Hlg6eefNkMusYLUGI=;
+	s=korg; t=1700077020;
+	bh=wCHBeoBoUWQNpbKP0opNLw3LR1797lRHy9sCa9cV4mE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HRGyseeElAKtS0c4gbmvtozJV3wxkLBkV2am4Zla8BWq/DVZ7ZJEwzxkQNoQQXNYW
-	 PWdyMk4UqqA8OZZqg/2wiA6lOO07z8n7J4nT5BJf+A0BNLb1xNWg9oeTWSMr3p8RUB
-	 HDEgTUdpjLiCVQnvwqFQ20Mv73pUtulxeOzje2mk=
+	b=X8G0bs2iP0M2hpXrxeQEBJZr+4LYywPCfP7hQs+V7xrkY6NHAfyqpZjhZ5O0Uf/B1
+	 o4kJ20aU51WzlGhWHrl+BeboVlPjCkGxI/wOEFAlcQFeyetYgrOXU7DkKESpE6Kp7A
+	 n2G7OcpOxWq2NKk7GGNCJjamnDD5UaPuFpV6VfcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Stark <gnstark@sberdevices.ru>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 494/550] pwm: sti: Reduce number of allocations and drop usage of chip_data
-Date: Wed, 15 Nov 2023 14:17:58 -0500
-Message-ID: <20231115191635.148448585@linuxfoundation.org>
+Subject: [PATCH 6.6 100/603] tcp_metrics: do not create an entry from tcp_init_metrics()
+Date: Wed, 15 Nov 2023 14:10:45 -0500
+Message-ID: <20231115191620.103753747@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,117 +38,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2d6812b41e0d832919d72c72ebddf361df53ba1b ]
+[ Upstream commit a135798e6e200ecb2f864cecca6d257ba278370c ]
 
-Instead of using one allocation per capture channel, use a single one. Also
-store it in driver data instead of chip data.
+tcp_init_metrics() only wants to get metrics if they were
+previously stored in the cache. Creating an entry is adding
+useless costs, especially when tcp_no_metrics_save is set.
 
-This has several advantages:
-
- - driver data isn't cleared when pwm_put() is called
- - Reduces memory fragmentation
-
-Also register the pwm chip only after the per capture channel data is
-initialized as the capture callback relies on this initialization and it
-might be called even before pwmchip_add() returns.
-
-It would be still better to have struct sti_pwm_compat_data and the
-per-channel data struct sti_cpt_ddata in a single memory chunk, but that's
-not easily possible because the number of capture channels isn't known yet
-when the driver data struct is allocated.
-
-Fixes: e926b12c611c ("pwm: Clear chip_data in pwm_put()")
-Reported-by: George Stark <gnstark@sberdevices.ru>
-Fixes: c97267ae831d ("pwm: sti: Add PWM capture callback")
-Link: https://lore.kernel.org/r/20230705080650.2353391-7-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 51c5d0c4b169 ("tcp: Maintain dynamic metrics in local cache.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-sti.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ net/ipv4/tcp_metrics.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pwm/pwm-sti.c b/drivers/pwm/pwm-sti.c
-index b1d1373648a38..c8800f84b917f 100644
---- a/drivers/pwm/pwm-sti.c
-+++ b/drivers/pwm/pwm-sti.c
-@@ -79,6 +79,7 @@ struct sti_pwm_compat_data {
- 	unsigned int cpt_num_devs;
- 	unsigned int max_pwm_cnt;
- 	unsigned int max_prescale;
-+	struct sti_cpt_ddata *ddata;
- };
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index 0c03f564878ff..7aca12c59c184 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -478,7 +478,7 @@ void tcp_init_metrics(struct sock *sk)
+ 		goto reset;
  
- struct sti_pwm_chip {
-@@ -314,7 +315,7 @@ static int sti_pwm_capture(struct pwm_chip *chip, struct pwm_device *pwm,
- {
- 	struct sti_pwm_chip *pc = to_sti_pwmchip(chip);
- 	struct sti_pwm_compat_data *cdata = pc->cdata;
--	struct sti_cpt_ddata *ddata = pwm_get_chip_data(pwm);
-+	struct sti_cpt_ddata *ddata = &cdata->ddata[pwm->hwpwm];
- 	struct device *dev = pc->dev;
- 	unsigned int effective_ticks;
- 	unsigned long long high, low;
-@@ -440,7 +441,7 @@ static irqreturn_t sti_pwm_interrupt(int irq, void *data)
- 	while (cpt_int_stat) {
- 		devicenum = ffs(cpt_int_stat) - 1;
- 
--		ddata = pwm_get_chip_data(&pc->chip.pwms[devicenum]);
-+		ddata = &pc->cdata->ddata[devicenum];
- 
- 		/*
- 		 * Capture input:
-@@ -638,30 +639,28 @@ static int sti_pwm_probe(struct platform_device *pdev)
- 			dev_err(dev, "failed to prepare clock\n");
- 			return ret;
- 		}
-+
-+		cdata->ddata = devm_kzalloc(dev, cdata->cpt_num_devs * sizeof(*cdata->ddata), GFP_KERNEL);
-+		if (!cdata->ddata)
-+			return -ENOMEM;
- 	}
- 
- 	pc->chip.dev = dev;
- 	pc->chip.ops = &sti_pwm_ops;
- 	pc->chip.npwm = pc->cdata->pwm_num_devs;
- 
--	ret = pwmchip_add(&pc->chip);
--	if (ret < 0) {
--		clk_unprepare(pc->pwm_clk);
--		clk_unprepare(pc->cpt_clk);
--		return ret;
--	}
--
- 	for (i = 0; i < cdata->cpt_num_devs; i++) {
--		struct sti_cpt_ddata *ddata;
--
--		ddata = devm_kzalloc(dev, sizeof(*ddata), GFP_KERNEL);
--		if (!ddata)
--			return -ENOMEM;
-+		struct sti_cpt_ddata *ddata = &cdata->ddata[i];
- 
- 		init_waitqueue_head(&ddata->wait);
- 		mutex_init(&ddata->lock);
-+	}
- 
--		pwm_set_chip_data(&pc->chip.pwms[i], ddata);
-+	ret = pwmchip_add(&pc->chip);
-+	if (ret < 0) {
-+		clk_unprepare(pc->pwm_clk);
-+		clk_unprepare(pc->cpt_clk);
-+		return ret;
- 	}
- 
- 	platform_set_drvdata(pdev, pc);
+ 	rcu_read_lock();
+-	tm = tcp_get_metrics(sk, dst, true);
++	tm = tcp_get_metrics(sk, dst, false);
+ 	if (!tm) {
+ 		rcu_read_unlock();
+ 		goto reset;
 -- 
 2.42.0
 
