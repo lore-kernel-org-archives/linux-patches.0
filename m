@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2201D3FB0F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E7D364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5XkeNDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D28C433C7;
-	Wed, 15 Nov 2023 20:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiN8Fja5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FAEC433BA;
+	Wed, 15 Nov 2023 20:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078430;
-	bh=xtc/zTtUBledwktISsGn0hBUXj6c7Vdblk2R1hjL9B4=;
+	s=korg; t=1700078432;
+	bh=XXxhGFX5dLbUThztvpX5LaB6P8C5n0H4GIhr52QQ6Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5XkeNDNdbEstA7utN/lCtOUdVegycWYcxmC7hiRw+gDcQYbwfu7ayPD3kDr4xjju
-	 v1W+W3qpcX0vkCpEgu7S8kHZ4jtI46N89RkFz6djAlIFR4DpKlnY/tcJn+NffFCHSm
-	 47+Ub0IUuPQZDragCqBLGWhmJ5SBtmMrmtz0D+qg=
+	b=iiN8Fja5Sv1X1tyYqhqJ2d34hcPrXH4US+N7vXNXwirVXoHucKqw+4M36/i4VmEFn
+	 bDPRDRgZCBMEKaPkVsj9PBoqJng7CzuOUEYj49/M97XIBEbvqrML/VRBLrWmssZ785
+	 d64+MYLgjELwrNchZAbzsmtyafy3QBR2fN8cSXr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 300/379] xhci: Loosen RPM as default policy to cover for AMD xHC 1.1
-Date: Wed, 15 Nov 2023 14:26:15 -0500
-Message-ID: <20231115192702.890197033@linuxfoundation.org>
+Subject: [PATCH 6.1 318/379] media: i2c: max9286: Fix some redundant of_node_put() calls
+Date: Wed, 15 Nov 2023 14:26:33 -0500
+Message-ID: <20231115192703.959757172@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,45 +46,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 4baf1218150985ee3ab0a27220456a1f027ea0ac ]
+[ Upstream commit 0822315e46b400f611cba1193456ee6a5dc3e41d ]
 
-The AMD USB host controller (1022:43f7) isn't going into PCI D3 by default
-without anything connected. This is because the policy that was introduced
-by commit a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all
-xHC 1.2 or later devices") only covered 1.2 or later.
+This is odd to have a of_node_put() just after a for_each_child_of_node()
+or a for_each_endpoint_of_node() loop. It should already be called
+during the last iteration.
 
-The 1.1 specification also has the same requirement as the 1.2
-specification for D3 support. So expand the runtime PM as default policy
-to all AMD 1.1 devices as well.
+Remove these calls.
 
-Fixes: a611bf473d1f ("xhci-pci: Set runtime PM as default policy on all xHC 1.2 or later devices")
-Link: https://composter.com.ua/documents/xHCI_Specification_for_USB.pdf
-Co-developed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20231019102924.2797346-15-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 66d8c9d2422d ("media: i2c: Add MAX9286 driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/max9286.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index 2aed88c28ef69..c4dd648710ae0 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -348,6 +348,8 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
- 	/* xHC spec requires PCI devices to support D3hot and D3cold */
- 	if (xhci->hci_version >= 0x120)
- 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
-+	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
-+		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+diff --git a/drivers/media/i2c/max9286.c b/drivers/media/i2c/max9286.c
+index 892cd97b7cab7..e8c28902d97e9 100644
+--- a/drivers/media/i2c/max9286.c
++++ b/drivers/media/i2c/max9286.c
+@@ -1234,7 +1234,6 @@ static int max9286_parse_dt(struct max9286_priv *priv)
  
- 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
- 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
+ 		i2c_mux_mask |= BIT(id);
+ 	}
+-	of_node_put(node);
+ 	of_node_put(i2c_mux);
+ 
+ 	/* Parse the endpoints */
+@@ -1298,7 +1297,6 @@ static int max9286_parse_dt(struct max9286_priv *priv)
+ 		priv->source_mask |= BIT(ep.port);
+ 		priv->nsources++;
+ 	}
+-	of_node_put(node);
+ 
+ 	/*
+ 	 * Parse the initial value of the reverse channel amplitude from
 -- 
 2.42.0
 
