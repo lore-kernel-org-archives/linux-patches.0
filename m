@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AFD3C480
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DB93C497
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFNUCFzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED76C433CA;
-	Wed, 15 Nov 2023 19:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pP7b/xri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B1AC433C9;
+	Wed, 15 Nov 2023 19:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077022;
-	bh=yctbJKbEeoiybxhtu/lkBXXkRr1SlY7xcfDcaBRf++g=;
+	s=korg; t=1700077023;
+	bh=bSdCI9Bo+o5WkhALGBTgOn/WDfIGjBXHtRGNeM2SbSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFNUCFzcLmc6i3Jj6noMJnVOdK3F8wDXmrD9b71d66cl5eA1O8n9ttT+NBOCZ3GaP
-	 hrMHzoZaDOQlzZQ/FizshxHifiD0k7H0+mWVOQYSG5C+XJcIGrVnCwgSkc210l8aob
-	 +Q+7k4uU1P13VYodoottUdghj8PKxZ6iUQxfM1V0=
+	b=pP7b/xrih3T0gZCwX1olHe/RJTMHEGop8/D+KlwZgFlnTF86kHyhfMHyas431nGQi
+	 XowXABbDY0lxrgrxlckjCA2oRTxUq8B76kAA4aFVYUk2eeMDPRPOF9iEFn3rNev4An
+	 DDjAxzHe105ghDVhvauH46cb0WjZlrXKGDFEiySs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 495/550] pwm: brcmstb: Utilize appropriate clock APIs in suspend/resume
-Date: Wed, 15 Nov 2023 14:17:59 -0500
-Message-ID: <20231115191635.221344828@linuxfoundation.org>
+Subject: [PATCH 6.6 101/603] wifi: rtlwifi: fix EDCA limit set by BT coexistence
+Date: Wed, 15 Nov 2023 14:10:46 -0500
+Message-ID: <20231115191620.185647511@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,53 +37,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit e9bc4411548aaa738905d37851a0146c16b3bb21 ]
+[ Upstream commit 3391ee7f9ea508c375d443cd712c2e699be235b4 ]
 
-The suspend/resume functions currently utilize
-clk_disable()/clk_enable() respectively which may be no-ops with certain
-clock providers such as SCMI. Fix this to use clk_disable_unprepare()
-and clk_prepare_enable() respectively as we should.
+In 'rtl92c_dm_check_edca_turbo()', 'rtl88e_dm_check_edca_turbo()',
+and 'rtl8723e_dm_check_edca_turbo()', the DL limit should be set
+from the corresponding field of 'rtlpriv->btcoexist' rather than
+UL. Compile tested only.
 
-Fixes: 3a9f5957020f ("pwm: Add Broadcom BCM7038 PWM controller support")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 0529c6b81761 ("rtlwifi: rtl8723ae: Update driver to match 06/28/14 Realtek version")
+Fixes: c151aed6aa14 ("rtlwifi: rtl8188ee: Update driver to match Realtek release of 06282014")
+Fixes: beb5bc402043 ("rtlwifi: rtl8192c-common: Convert common dynamic management routines for addition of rtl8192se and rtl8192de")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230928052327.120178-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-brcmstb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c       | 2 +-
+ drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c | 2 +-
+ drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pwm/pwm-brcmstb.c b/drivers/pwm/pwm-brcmstb.c
-index a3faa9a3de7cc..a7d529bf76adc 100644
---- a/drivers/pwm/pwm-brcmstb.c
-+++ b/drivers/pwm/pwm-brcmstb.c
-@@ -288,7 +288,7 @@ static int brcmstb_pwm_suspend(struct device *dev)
- {
- 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
+index 6f61d6a106272..5a34894a533be 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
+@@ -799,7 +799,7 @@ static void rtl88e_dm_check_edca_turbo(struct ieee80211_hw *hw)
+ 	}
  
--	clk_disable(p->clk);
-+	clk_disable_unprepare(p->clk);
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
  
- 	return 0;
- }
-@@ -297,7 +297,7 @@ static int brcmstb_pwm_resume(struct device *dev)
- {
- 	struct brcmstb_pwm *p = dev_get_drvdata(dev);
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
+index 0b6a15c2e5ccd..d92aad60edfe9 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
+@@ -640,7 +640,7 @@ static void rtl92c_dm_check_edca_turbo(struct ieee80211_hw *hw)
+ 	}
  
--	clk_enable(p->clk);
-+	clk_prepare_enable(p->clk);
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
  
- 	return 0;
- }
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
+index 8ada31380efa4..0ff8e355c23a4 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
+@@ -466,7 +466,7 @@ static void rtl8723e_dm_check_edca_turbo(struct ieee80211_hw *hw)
+ 	}
+ 
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
+ 
 -- 
 2.42.0
 
