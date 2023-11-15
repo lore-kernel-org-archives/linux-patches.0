@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD2B433AF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0E5433AF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDl+Ujg7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7B5C433CA;
-	Wed, 15 Nov 2023 19:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Exq2A8N8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19F3C433C7;
+	Wed, 15 Nov 2023 19:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076966;
-	bh=8jZW2OZ1XD8GVITkH30x0tImakqCAGrAPm8Z+gSmRPI=;
+	s=korg; t=1700076967;
+	bh=r19ayrRc3skBZlj/Ce/GeDh8MeAFdn+OOQMmPdQs+34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDl+Ujg7GXEW6OFg3khJd9wXySbF4CuhMQAYQ57PEacfiqLkC9b/ZyvlWi0WmjTiN
-	 6q8Q6FgwfmLlae/MnXyi4vRkqFK1Ab7jAsmlTzkoHZMtXs5QejIwN4iCsT5qasI+Us
-	 u6bQWNZfksGoXUtlS2HUGbPkXbLLvPk0QWE/rq0w=
+	b=Exq2A8N8+FRO9FeC4lY4ciV5zQ7voflxd6+sbWwaso1CMn7v+BCy89r2amlDOdWJ/
+	 bpfCnzmUZBqz+vlNxuyvyazPgDnYO/2qumOfbttbMQe8VbJawy9YyNlT3cMAkHyAMX
+	 xFw2VnemRa9o2Jd2GKhx1m79y3np5/Zgfx9Tu5og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 478/550] media: amphion: handle firmware debug message
-Date: Wed, 15 Nov 2023 14:17:42 -0500
-Message-ID: <20231115191634.002556740@linuxfoundation.org>
+Subject: [PATCH 6.6 082/603] wifi: mt76: remove unused error path in mt76_connac_tx_complete_skb
+Date: Wed, 15 Nov 2023 14:10:27 -0500
+Message-ID: <20231115191618.800137269@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,136 +37,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 6496617b2b06d7004a5cbd53d48f19567d6b018c ]
+[ Upstream commit 832f42699791e7a90e81c15da0ce886b4f8300b8 ]
 
-decoder firmware may notify host some debug message,
-it can help analyze the state of the firmware in case of error
+The error handling code was added in order to allow tx enqueue to fail after
+calling .tx_prepare_skb. Since this can no longer happen, the error handling
+code is unused.
 
-Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: bde2e77f7626 ("wifi: mt76: mt7996: set correct wcid in txp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_defs.h    |  1 +
- drivers/media/platform/amphion/vpu_helpers.c |  1 +
- drivers/media/platform/amphion/vpu_malone.c  |  1 +
- drivers/media/platform/amphion/vpu_msgs.c    | 31 ++++++++++++++++----
- 4 files changed, 29 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/dma.c        |  3 ---
+ .../net/wireless/mediatek/mt76/mt7615/pci_mac.c |  2 +-
+ .../wireless/mediatek/mt76/mt76_connac_mac.c    | 17 -----------------
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c |  2 +-
+ .../net/wireless/mediatek/mt76/mt7921/pci_mac.c |  2 +-
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c |  2 +-
+ 6 files changed, 4 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_defs.h b/drivers/media/platform/amphion/vpu_defs.h
-index 667637eedb5d4..7320852668d64 100644
---- a/drivers/media/platform/amphion/vpu_defs.h
-+++ b/drivers/media/platform/amphion/vpu_defs.h
-@@ -71,6 +71,7 @@ enum {
- 	VPU_MSG_ID_TIMESTAMP_INFO,
- 	VPU_MSG_ID_FIRMWARE_XCPT,
- 	VPU_MSG_ID_PIC_SKIPPED,
-+	VPU_MSG_ID_DBG_MSG,
- };
+diff --git a/drivers/net/wireless/mediatek/mt76/dma.c b/drivers/net/wireless/mediatek/mt76/dma.c
+index dc8f4e157eb29..6ca7b494c2c26 100644
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -330,9 +330,6 @@ mt76_dma_tx_cleanup_idx(struct mt76_dev *dev, struct mt76_queue *q, int idx,
+ 	if (e->txwi == DMA_DUMMY_DATA)
+ 		e->txwi = NULL;
  
- enum VPU_ENC_MEMORY_RESOURSE {
-diff --git a/drivers/media/platform/amphion/vpu_helpers.c b/drivers/media/platform/amphion/vpu_helpers.c
-index af3b336e5dc32..d12310af9ebce 100644
---- a/drivers/media/platform/amphion/vpu_helpers.c
-+++ b/drivers/media/platform/amphion/vpu_helpers.c
-@@ -489,6 +489,7 @@ const char *vpu_id_name(u32 id)
- 	case VPU_MSG_ID_UNSUPPORTED: return "unsupported";
- 	case VPU_MSG_ID_FIRMWARE_XCPT: return "exception";
- 	case VPU_MSG_ID_PIC_SKIPPED: return "skipped";
-+	case VPU_MSG_ID_DBG_MSG: return "debug msg";
- 	}
- 	return "<unknown>";
+-	if (e->skb == DMA_DUMMY_DATA)
+-		e->skb = NULL;
+-
+ 	*prev_e = *e;
+ 	memset(e, 0, sizeof(*e));
  }
-diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
-index c1d6606ad7e57..46713be69adbd 100644
---- a/drivers/media/platform/amphion/vpu_malone.c
-+++ b/drivers/media/platform/amphion/vpu_malone.c
-@@ -747,6 +747,7 @@ static struct vpu_pair malone_msgs[] = {
- 	{VPU_MSG_ID_UNSUPPORTED, VID_API_EVENT_UNSUPPORTED_STREAM},
- 	{VPU_MSG_ID_FIRMWARE_XCPT, VID_API_EVENT_FIRMWARE_XCPT},
- 	{VPU_MSG_ID_PIC_SKIPPED, VID_API_EVENT_PIC_SKIPPED},
-+	{VPU_MSG_ID_DBG_MSG, VID_API_EVENT_DBG_MSG_DEC},
- };
- 
- static void vpu_malone_pack_fs_alloc(struct vpu_rpc_event *pkt,
-diff --git a/drivers/media/platform/amphion/vpu_msgs.c b/drivers/media/platform/amphion/vpu_msgs.c
-index d0ead051f7d18..b74a407a19f22 100644
---- a/drivers/media/platform/amphion/vpu_msgs.c
-+++ b/drivers/media/platform/amphion/vpu_msgs.c
-@@ -23,6 +23,7 @@
- struct vpu_msg_handler {
- 	u32 id;
- 	void (*done)(struct vpu_inst *inst, struct vpu_rpc_event *pkt);
-+	u32 is_str;
- };
- 
- static void vpu_session_handle_start_done(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
-@@ -154,7 +155,7 @@ static void vpu_session_handle_error(struct vpu_inst *inst, struct vpu_rpc_event
- {
- 	char *str = (char *)pkt->data;
- 
--	if (strlen(str))
-+	if (*str)
- 		dev_err(inst->dev, "instance %d firmware error : %s\n", inst->id, str);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
+index 0019890fdb784..fbb1181c58ff3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/pci_mac.c
+@@ -106,7 +106,7 @@ int mt7615_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
  	else
- 		dev_err(inst->dev, "instance %d is unsupported stream\n", inst->id);
-@@ -180,6 +181,21 @@ static void vpu_session_handle_pic_skipped(struct vpu_inst *inst, struct vpu_rpc
- 	vpu_inst_unlock(inst);
+ 		mt76_connac_write_hw_txp(mdev, tx_info, txp, id);
+ 
+-	tx_info->skb = DMA_DUMMY_DATA;
++	tx_info->skb = NULL;
+ 
+ 	return 0;
  }
- 
-+static void vpu_session_handle_dbg_msg(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
-+{
-+	char *str = (char *)pkt->data;
-+
-+	if (*str)
-+		dev_info(inst->dev, "instance %d firmware dbg msg : %s\n", inst->id, str);
-+}
-+
-+static void vpu_terminate_string_msg(struct vpu_rpc_event *pkt)
-+{
-+	if (pkt->hdr.num == ARRAY_SIZE(pkt->data))
-+		pkt->hdr.num--;
-+	pkt->data[pkt->hdr.num] = 0;
-+}
-+
- static struct vpu_msg_handler handlers[] = {
- 	{VPU_MSG_ID_START_DONE, vpu_session_handle_start_done},
- 	{VPU_MSG_ID_STOP_DONE, vpu_session_handle_stop_done},
-@@ -193,9 +209,10 @@ static struct vpu_msg_handler handlers[] = {
- 	{VPU_MSG_ID_PIC_DECODED, vpu_session_handle_pic_decoded},
- 	{VPU_MSG_ID_DEC_DONE, vpu_session_handle_pic_done},
- 	{VPU_MSG_ID_PIC_EOS, vpu_session_handle_eos},
--	{VPU_MSG_ID_UNSUPPORTED, vpu_session_handle_error},
--	{VPU_MSG_ID_FIRMWARE_XCPT, vpu_session_handle_firmware_xcpt},
-+	{VPU_MSG_ID_UNSUPPORTED, vpu_session_handle_error, true},
-+	{VPU_MSG_ID_FIRMWARE_XCPT, vpu_session_handle_firmware_xcpt, true},
- 	{VPU_MSG_ID_PIC_SKIPPED, vpu_session_handle_pic_skipped},
-+	{VPU_MSG_ID_DBG_MSG, vpu_session_handle_dbg_msg, true},
- };
- 
- static int vpu_session_handle_msg(struct vpu_inst *inst, struct vpu_rpc_event *msg)
-@@ -219,8 +236,12 @@ static int vpu_session_handle_msg(struct vpu_inst *inst, struct vpu_rpc_event *m
- 		}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
+index ee5177fd6ddea..73db9e14db06c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
+@@ -151,23 +151,6 @@ void mt76_connac_tx_complete_skb(struct mt76_dev *mdev,
+ 		return;
  	}
  
--	if (handler && handler->done)
--		handler->done(inst, msg);
-+	if (handler) {
-+		if (handler->is_str)
-+			vpu_terminate_string_msg(msg);
-+		if (handler->done)
-+			handler->done(inst, msg);
-+	}
+-	/* error path */
+-	if (e->skb == DMA_DUMMY_DATA) {
+-		struct mt76_connac_txp_common *txp;
+-		struct mt76_txwi_cache *t;
+-		u16 token;
+-
+-		txp = mt76_connac_txwi_to_txp(mdev, e->txwi);
+-		if (is_mt76_fw_txp(mdev))
+-			token = le16_to_cpu(txp->fw.token);
+-		else
+-			token = le16_to_cpu(txp->hw.msdu_id[0]) &
+-				~MT_MSDU_ID_VALID;
+-
+-		t = mt76_token_put(mdev, token);
+-		e->skb = t ? t->skb : NULL;
+-	}
+-
+ 	if (e->skb)
+ 		mt76_tx_complete_skb(mdev, e->wcid, e->skb);
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index b8b0c0fda7522..2222fb9aa103e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -809,7 +809,7 @@ int mt7915_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 		txp->rept_wds_wcid = cpu_to_le16(wcid->idx);
+ 	else
+ 		txp->rept_wds_wcid = cpu_to_le16(0x3ff);
+-	tx_info->skb = DMA_DUMMY_DATA;
++	tx_info->skb = NULL;
  
- 	vpu_response_cmd(inst, msg_id, 1);
+ 	/* pass partial skb header to fw */
+ 	tx_info->buf[1].len = MT_CT_PARSE_LEN;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
+index e7a995e7e70a3..c866144ff0613 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci_mac.c
+@@ -48,7 +48,7 @@ int mt7921e_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 	memset(txp, 0, sizeof(struct mt76_connac_hw_txp));
+ 	mt76_connac_write_hw_txp(mdev, tx_info, txp, id);
  
+-	tx_info->skb = DMA_DUMMY_DATA;
++	tx_info->skb = NULL;
+ 
+ 	return 0;
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index ac8759febe485..0eebf915df265 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -995,7 +995,7 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 		txp->fw.rept_wds_wcid = cpu_to_le16(wcid->idx);
+ 	else
+ 		txp->fw.rept_wds_wcid = cpu_to_le16(0xfff);
+-	tx_info->skb = DMA_DUMMY_DATA;
++	tx_info->skb = NULL;
+ 
+ 	/* pass partial skb header to fw */
+ 	tx_info->buf[1].len = MT_CT_PARSE_LEN;
 -- 
 2.42.0
 
