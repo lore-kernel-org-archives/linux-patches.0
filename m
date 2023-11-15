@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B7941AB8
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE03441A84
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P73OO/LW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 948C8C433C8;
-	Wed, 15 Nov 2023 19:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSxGmG1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349DFC433C9;
+	Wed, 15 Nov 2023 19:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076970;
-	bh=TgGA0d7XkXWmWjDGXa+LZG+M75GX+avwMxDQr/1r/8c=;
+	s=korg; t=1700076972;
+	bh=qtAnINF6GTao9xcMVOUjOlj2A0xtpnyEFSUjmDkhaWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P73OO/LWRoVLaolfIQwLbsBRjwbw6EVCTUB22KbvkW8V7wTLiq+yUmL6xhxvZMHzH
-	 1lGa205Jc6ApnQLz9PX1bTlDwLzwisB26v1fXAcq960XWJ1nml8xe8k6t1UBFlzGJ9
-	 ppGLsn+KHfTny/Gmm6cIT4ud9FPUAH/maKUbaj3w=
+	b=nSxGmG1o6qn5m9IM2uKzaAru8lHwmzbabarsT8s8H8o4k+ON0icU6HfrkMREJbGog
+	 +pJTY3zz/aprjWSWP9A5Ym4NG/4aYpwxG9V7YJ6xkiZ/kJk421NbaYObHsvwRJ07z3
+	 KiXRSDOJya4C+v6DE5RFZoQR7HjfPb/T49kmqgcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Shao <fshao@chromium.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Michael-CY Lee <michael-cy.lee@mediatek.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 479/550] media: mtk-jpegenc: Fix bug in JPEG encode quality selection
-Date: Wed, 15 Nov 2023 14:17:43 -0500
-Message-ID: <20231115191634.070209148@linuxfoundation.org>
+Subject: [PATCH 6.6 083/603] wifi: mt76: mt7996: set correct wcid in txp
+Date: Wed, 15 Nov 2023 14:10:28 -0500
+Message-ID: <20231115191618.869163170@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,54 +40,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fei Shao <fshao@chromium.org>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 0aeccc63f3bc4cfd49dc4893da1409402ee6b295 ]
+[ Upstream commit bde2e77f76266fbd81ff74cb12b3d87f9460b1e0 ]
 
-The driver uses the upper-bound approach to decide the target JPEG
-encode quality, but there's a logic bug that if the desired quality is
-higher than what the driver can support, the driver falls back to using
-the worst quality.
+Set correct wcid in txp to let the SDO hw module look into the correct
+wtbl, otherwise the tx descriptor may be wrongly fiiled. This patch also
+fixed the issue that driver could not correctly report sta statistics,
+especially in WDS mode, which misled AQL.
 
-Fix the bug by assuming using the best quality in the beginning, and
-with trivial refactor to avoid long lines.
-
-Fixes: 45f13a57d813 ("media: platform: Add jpeg enc feature")
-Signed-off-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Co-developed-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
+Signed-off-by: Michael-CY Lee <michael-cy.lee@mediatek.com>
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h | 2 ++
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c       | 8 +++-----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-index 244018365b6f1..03ee8f93bd467 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-@@ -127,6 +127,7 @@ void mtk_jpeg_set_enc_params(struct mtk_jpeg_ctx *ctx,  void __iomem *base)
- 	u32 img_stride;
- 	u32 mem_stride;
- 	u32 i, enc_quality;
-+	u32 nr_enc_quality = ARRAY_SIZE(mtk_jpeg_enc_quality);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
+index 68ca0844cbbfa..87bfa441a9374 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac3_mac.h
+@@ -257,6 +257,8 @@ enum tx_mgnt_type {
+ #define MT_TXD7_UDP_TCP_SUM		BIT(15)
+ #define MT_TXD7_TX_TIME			GENMASK(9, 0)
  
- 	value = width << 16 | height;
- 	writel(value, base + JPEG_ENC_IMG_SIZE);
-@@ -157,8 +158,8 @@ void mtk_jpeg_set_enc_params(struct mtk_jpeg_ctx *ctx,  void __iomem *base)
- 	writel(img_stride, base + JPEG_ENC_IMG_STRIDE);
- 	writel(mem_stride, base + JPEG_ENC_STRIDE);
++#define MT_TXD9_WLAN_IDX		GENMASK(23, 8)
++
+ #define MT_TX_RATE_STBC			BIT(14)
+ #define MT_TX_RATE_NSS			GENMASK(13, 10)
+ #define MT_TX_RATE_MODE			GENMASK(9, 6)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 0eebf915df265..269e023e43113 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -991,10 +991,8 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 	}
  
--	enc_quality = mtk_jpeg_enc_quality[0].hardware_value;
--	for (i = 0; i < ARRAY_SIZE(mtk_jpeg_enc_quality); i++) {
-+	enc_quality = mtk_jpeg_enc_quality[nr_enc_quality - 1].hardware_value;
-+	for (i = 0; i < nr_enc_quality; i++) {
- 		if (ctx->enc_quality <= mtk_jpeg_enc_quality[i].quality_param) {
- 			enc_quality = mtk_jpeg_enc_quality[i].hardware_value;
- 			break;
+ 	txp->fw.token = cpu_to_le16(id);
+-	if (test_bit(MT_WCID_FLAG_4ADDR, &wcid->flags))
+-		txp->fw.rept_wds_wcid = cpu_to_le16(wcid->idx);
+-	else
+-		txp->fw.rept_wds_wcid = cpu_to_le16(0xfff);
++	txp->fw.rept_wds_wcid = cpu_to_le16(sta ? wcid->idx : 0xfff);
++
+ 	tx_info->skb = NULL;
+ 
+ 	/* pass partial skb header to fw */
+@@ -1051,7 +1049,7 @@ mt7996_txwi_free(struct mt7996_dev *dev, struct mt76_txwi_cache *t,
+ 		if (likely(t->skb->protocol != cpu_to_be16(ETH_P_PAE)))
+ 			mt7996_tx_check_aggr(sta, txwi);
+ 	} else {
+-		wcid_idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
++		wcid_idx = le32_get_bits(txwi[9], MT_TXD9_WLAN_IDX);
+ 	}
+ 
+ 	__mt76_tx_complete_skb(mdev, wcid_idx, t->skb, free_list);
 -- 
 2.42.0
 
