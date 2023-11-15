@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9FD43AAA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A54843AA6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQjuaYON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10EE7C433C9;
-	Wed, 15 Nov 2023 20:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VyHUzVyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF3DC433C8;
+	Wed, 15 Nov 2023 20:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081094;
-	bh=IQhJyEEENh7bnQhi5y2xatlsMM7BCN5cAVR2R7s7SGw=;
+	s=korg; t=1700081095;
+	bh=SndGfGahLPO5WuLXyoWY4uu3z9nYk5vadnWI1okKXPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQjuaYON3xwdog3+0q6AbvDhTA8s0WPecNoAKgv30QuzinF6cPwfMJCjvs5Es4phQ
-	 Taof8QUCV2wYYgNFxGYgRnuBdYvWR+J+5v5xeD/k6TBaaGksnlYPhs8EgBNH9+02ut
-	 aHpYz2Zc0ziV5KixN7J2xSljCYBCArSYrpzAvDKs=
+	b=VyHUzVyrsLaqc94v/IB8zkM+JmjBCv0Nn0IBgTTZko3n6k9mFahv2ETWcnIYgtYPu
+	 Wh4EpN0oFwiUZvxbNySTI6gMc4z5LND8PH+mHkAREYcRGSnHnUPNK3g89IWxngZb/8
+	 adE4qZrzSrTeLrzwZatQ9zjo43DwDeybkjDlHG1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Timur I. Davletshin" <timur.davletshin@gmail.com>,
-	Jo-Philipp Wich <jo@mein.io>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 35/88] hwrng: geode - fix accessing registers
-Date: Wed, 15 Nov 2023 15:35:47 -0500
-Message-ID: <20231115191428.284200542@linuxfoundation.org>
+Subject: [PATCH 4.19 36/88] sched/rt: Provide migrate_disable/enable() inlines
+Date: Wed, 15 Nov 2023 15:35:48 -0500
+Message-ID: <20231115191428.349184183@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -44,56 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 464bd8ec2f06707f3773676a1bd2c64832a3c805 ]
+[ Upstream commit 66630058e56b26b3a9cf2625e250a8c592dd0207 ]
 
-When the membase and pci_dev pointer were moved to a new struct in priv,
-the actual membase users were left untouched, and they started reading
-out arbitrary memory behind the struct instead of registers. This
-unfortunately turned the RNG into a constant number generator, depending
-on the content of what was at that offset.
+Code which solely needs to prevent migration of a task uses
+preempt_disable()/enable() pairs. This is the only reliable way to do so
+as setting the task affinity to a single CPU can be undone by a
+setaffinity operation from a different task/process.
 
-To fix this, update geode_rng_data_{read,present}() to also get the
-membase via amd_geode_priv, and properly read from the right addresses
-again.
+RT provides a seperate migrate_disable/enable() mechanism which does not
+disable preemption to achieve the semantic requirements of a (almost) fully
+preemptible kernel.
 
-Fixes: 9f6ec8dc574e ("hwrng: geode - Fix PCI device refcount leak")
-Reported-by: Timur I. Davletshin <timur.davletshin@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217882
-Tested-by: Timur I. Davletshin <timur.davletshin@gmail.com>
-Suggested-by: Jo-Philipp Wich <jo@mein.io>
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+As it is unclear from looking at a given code path whether the intention is
+to disable preemption or migration, introduce migrate_disable/enable()
+inline functions which can be used to annotate code which merely needs to
+disable migration. Map them to preempt_disable/enable() for now. The RT
+substitution will be provided later.
+
+Code which is annotated that way documents that it has no requirement to
+protect against reentrancy of a preempting task. Either this is not
+required at all or the call sites are already serialized by other means.
+
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Ben Segall <bsegall@google.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/878slclv1u.fsf@nanos.tec.linutronix.de
+Stable-dep-of: 36c75ce3bd29 ("nd_btt: Make BTT lanes preemptible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/geode-rng.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/linux/preempt.h | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
-index 207272979f233..2f8289865ec81 100644
---- a/drivers/char/hw_random/geode-rng.c
-+++ b/drivers/char/hw_random/geode-rng.c
-@@ -58,7 +58,8 @@ struct amd_geode_priv {
+diff --git a/include/linux/preempt.h b/include/linux/preempt.h
+index c01813c3fbe93..abeec72b4d359 100644
+--- a/include/linux/preempt.h
++++ b/include/linux/preempt.h
+@@ -325,4 +325,34 @@ static inline void preempt_notifier_init(struct preempt_notifier *notifier,
  
- static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- {
--	void __iomem *mem = (void __iomem *)rng->priv;
-+	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
-+	void __iomem *mem = priv->membase;
+ #endif
  
- 	*data = readl(mem + GEODE_RNG_DATA_REG);
- 
-@@ -67,7 +68,8 @@ static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- 
- static int geode_rng_data_present(struct hwrng *rng, int wait)
- {
--	void __iomem *mem = (void __iomem *)rng->priv;
-+	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
-+	void __iomem *mem = priv->membase;
- 	int data, i;
- 
- 	for (i = 0; i < 20; i++) {
++/**
++ * migrate_disable - Prevent migration of the current task
++ *
++ * Maps to preempt_disable() which also disables preemption. Use
++ * migrate_disable() to annotate that the intent is to prevent migration,
++ * but not necessarily preemption.
++ *
++ * Can be invoked nested like preempt_disable() and needs the corresponding
++ * number of migrate_enable() invocations.
++ */
++static __always_inline void migrate_disable(void)
++{
++	preempt_disable();
++}
++
++/**
++ * migrate_enable - Allow migration of the current task
++ *
++ * Counterpart to migrate_disable().
++ *
++ * As migrate_disable() can be invoked nested, only the outermost invocation
++ * reenables migration.
++ *
++ * Currently mapped to preempt_enable().
++ */
++static __always_inline void migrate_enable(void)
++{
++	preempt_enable();
++}
++
+ #endif /* __LINUX_PREEMPT_H */
 -- 
 2.42.0
 
