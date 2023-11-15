@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC2E3BB48
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEAE3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+JGXAin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1240C433C8;
-	Wed, 15 Nov 2023 19:51:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G64anOCG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E759C433C7;
+	Wed, 15 Nov 2023 19:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077882;
-	bh=ghDXs4KtFFFlmQz2TzY7o44FBhB14Q/ubhg2xpvjPTQ=;
+	s=korg; t=1700077883;
+	bh=EwevEiHh9JOsc+fCfcBmTaR45eqYpJWGbWfeJ8aTPqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+JGXAint17FUULvKwxMQZr7+KcF9eGirk0GGZChTGOPEK63xIzooQ+SlPTWMPHyF
-	 U4h+zeGBOZkmCnNR0AKtXAOxP3RQF6r38+Cg4dhN0IWRmgPpz+SuzoVqsRvmgUERnB
-	 XrYAm+Cql2wOLlbmPsS0hSLuvsCjq8RuOKaSi+DU=
+	b=G64anOCGhCUnvd3cV/HSUBXyDgQgpjKgOfMqDA6LqGMI1xr1PY/BaSI/MCQGFeAKP
+	 QAKmicpcx4iXZTH+xXBQJ3dh0XcMCSE0hOUB02qsLRx21YADI0iv9fpi+C5bDFtBla
+	 fbnXLNBWVCpyAmD1MYXhaxhIcyhUkUi2HB5AhzSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Ivo <diogo.ivo@siemens.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 578/603] net: ti: icss-iep: fix setting counter value
-Date: Wed, 15 Nov 2023 14:18:43 -0500
-Message-ID: <20231115191651.439283436@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Yu Chien Peter Lin <peterlin@andestech.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Subject: [PATCH 6.6 579/603] drivers: perf: Do not broadcast to other cpus when starting a counter
+Date: Wed, 15 Nov 2023 14:18:44 -0500
+Message-ID: <20231115191651.494342273@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -36,42 +39,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Diogo Ivo <diogo.ivo@siemens.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 83b9dda8afa4e968d9cce253f390b01c0612a2a5 ]
+[ Upstream commit 61e3d993c8bd3e80f8f1363ed5e04f88ab531b72 ]
 
-Currently icss_iep_set_counter() writes the upper 32-bits of the
-counter value to both the lower and upper counter registers, so
-fix this by writing the appropriate value to the lower register.
+This command:
 
-Fixes: c1e0230eeaab ("net: ti: icss-iep: Add IEP driver")
-Signed-off-by: Diogo Ivo <diogo.ivo@siemens.com>
-Link: https://lore.kernel.org/r/20231107120037.1513546-1-diogo.ivo@siemens.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+$ perf record -e cycles:k -e instructions:k -c 10000 -m 64M dd if=/dev/zero of=/dev/null count=1000
+
+gives rise to this kernel warning:
+
+[  444.364395] WARNING: CPU: 0 PID: 104 at kernel/smp.c:775 smp_call_function_many_cond+0x42c/0x436
+[  444.364515] Modules linked in:
+[  444.364657] CPU: 0 PID: 104 Comm: perf-exec Not tainted 6.6.0-rc6-00051-g391df82e8ec3-dirty #73
+[  444.364771] Hardware name: riscv-virtio,qemu (DT)
+[  444.364868] epc : smp_call_function_many_cond+0x42c/0x436
+[  444.364917]  ra : on_each_cpu_cond_mask+0x20/0x32
+[  444.364948] epc : ffffffff8009f9e0 ra : ffffffff8009fa5a sp : ff20000000003800
+[  444.364966]  gp : ffffffff81500aa0 tp : ff60000002b83000 t0 : ff200000000038c0
+[  444.364982]  t1 : ffffffff815021f0 t2 : 000000000000001f s0 : ff200000000038b0
+[  444.364998]  s1 : ff60000002c54d98 a0 : ff60000002a73940 a1 : 0000000000000000
+[  444.365013]  a2 : 0000000000000000 a3 : 0000000000000003 a4 : 0000000000000100
+[  444.365029]  a5 : 0000000000010100 a6 : 0000000000f00000 a7 : 0000000000000000
+[  444.365044]  s2 : 0000000000000000 s3 : ffffffffffffffff s4 : ff60000002c54d98
+[  444.365060]  s5 : ffffffff81539610 s6 : ffffffff80c20c48 s7 : 0000000000000000
+[  444.365075]  s8 : 0000000000000000 s9 : 0000000000000001 s10: 0000000000000001
+[  444.365090]  s11: ffffffff80099394 t3 : 0000000000000003 t4 : 00000000eac0c6e6
+[  444.365104]  t5 : 0000000400000000 t6 : ff60000002e010d0
+[  444.365120] status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
+[  444.365226] [<ffffffff8009f9e0>] smp_call_function_many_cond+0x42c/0x436
+[  444.365295] [<ffffffff8009fa5a>] on_each_cpu_cond_mask+0x20/0x32
+[  444.365311] [<ffffffff806e90dc>] pmu_sbi_ctr_start+0x7a/0xaa
+[  444.365327] [<ffffffff806e880c>] riscv_pmu_start+0x48/0x66
+[  444.365339] [<ffffffff8012111a>] perf_adjust_freq_unthr_context+0x196/0x1ac
+[  444.365356] [<ffffffff801237aa>] perf_event_task_tick+0x78/0x8c
+[  444.365368] [<ffffffff8003faf4>] scheduler_tick+0xe6/0x25e
+[  444.365383] [<ffffffff8008a042>] update_process_times+0x80/0x96
+[  444.365398] [<ffffffff800991ec>] tick_sched_handle+0x26/0x52
+[  444.365410] [<ffffffff800993e4>] tick_sched_timer+0x50/0x98
+[  444.365422] [<ffffffff8008a6aa>] __hrtimer_run_queues+0x126/0x18a
+[  444.365433] [<ffffffff8008b350>] hrtimer_interrupt+0xce/0x1da
+[  444.365444] [<ffffffff806cdc60>] riscv_timer_interrupt+0x30/0x3a
+[  444.365457] [<ffffffff8006afa6>] handle_percpu_devid_irq+0x80/0x114
+[  444.365470] [<ffffffff80065b82>] generic_handle_domain_irq+0x1c/0x2a
+[  444.365483] [<ffffffff8045faec>] riscv_intc_irq+0x2e/0x46
+[  444.365497] [<ffffffff808a9c62>] handle_riscv_irq+0x4a/0x74
+[  444.365521] [<ffffffff808aa760>] do_irq+0x7c/0x7e
+[  444.365796] ---[ end trace 0000000000000000 ]---
+
+That's because the fix in commit 3fec323339a4 ("drivers: perf: Fix panic
+in riscv SBI mmap support") was wrong since there is no need to broadcast
+to other cpus when starting a counter, that's only needed in mmap when
+the counters could have already been started on other cpus, so simply
+remove this broadcast.
+
+Fixes: 3fec323339a4 ("drivers: perf: Fix panic in riscv SBI mmap support")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Clément Léger <cleger@rivosinc.com>
+Tested-by: Yu Chien Peter Lin <peterlin@andestech.com>
+Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com> #On
+Link: https://lore.kernel.org/r/20231026084010.11888-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icss_iep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/perf/riscv_pmu_sbi.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
-index 4cf2a52e43783..3025e9c189702 100644
---- a/drivers/net/ethernet/ti/icssg/icss_iep.c
-+++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
-@@ -177,7 +177,7 @@ static void icss_iep_set_counter(struct icss_iep *iep, u64 ns)
- 	if (iep->plat_data->flags & ICSS_IEP_64BIT_COUNTER_SUPPORT)
- 		writel(upper_32_bits(ns), iep->base +
- 		       iep->plat_data->reg_offs[ICSS_IEP_COUNT_REG1]);
--	writel(upper_32_bits(ns), iep->base + iep->plat_data->reg_offs[ICSS_IEP_COUNT_REG0]);
-+	writel(lower_32_bits(ns), iep->base + iep->plat_data->reg_offs[ICSS_IEP_COUNT_REG0]);
+diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
+index 96c7f670c8f0d..fcb0c70ca2225 100644
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -543,8 +543,7 @@ static void pmu_sbi_ctr_start(struct perf_event *event, u64 ival)
+ 
+ 	if ((hwc->flags & PERF_EVENT_FLAG_USER_ACCESS) &&
+ 	    (hwc->flags & PERF_EVENT_FLAG_USER_READ_CNT))
+-		on_each_cpu_mask(mm_cpumask(event->owner->mm),
+-				 pmu_sbi_set_scounteren, (void *)event, 1);
++		pmu_sbi_set_scounteren((void *)event);
  }
  
- static void icss_iep_update_to_next_boundary(struct icss_iep *iep, u64 start_ns);
+ static void pmu_sbi_ctr_stop(struct perf_event *event, unsigned long flag)
+@@ -554,8 +553,7 @@ static void pmu_sbi_ctr_stop(struct perf_event *event, unsigned long flag)
+ 
+ 	if ((hwc->flags & PERF_EVENT_FLAG_USER_ACCESS) &&
+ 	    (hwc->flags & PERF_EVENT_FLAG_USER_READ_CNT))
+-		on_each_cpu_mask(mm_cpumask(event->owner->mm),
+-				 pmu_sbi_reset_scounteren, (void *)event, 1);
++		pmu_sbi_reset_scounteren((void *)event);
+ 
+ 	ret = sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP, hwc->idx, 1, flag, 0, 0, 0);
+ 	if (ret.error && (ret.error != SBI_ERR_ALREADY_STOPPED) &&
 -- 
 2.42.0
 
