@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B640E364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E2F364BE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IK0B5vUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 613C3C43391;
-	Wed, 15 Nov 2023 19:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKVe/AqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F57EC433C7;
+	Wed, 15 Nov 2023 19:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076821;
-	bh=PpmwybdV6XOG/gQXTkTV08g7zmY7BSUfdU3DeX8/9ks=;
+	s=korg; t=1700076823;
+	bh=k91LL5ulF2lnif8zCyzBKYsC6UGrLfrvS9QRgmmecO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IK0B5vUYPrILniSsOS5Nr2S7u07lts+Y+g53uZJRXtL6Frs5xTYeQNHyOACfeBz7e
-	 WvHVuJl9Dar7jiY2cWJAyUg5YNb4B+vcUBsXmYRkMJHcV+IQNpPrJaXLJVK0W5XBXj
-	 WpF2b/HdRx3LCg9I9+FrQh6R9DB4tMmXnwY4u0uI=
+	b=EKVe/AqAaReVaOtZDweyyRJNMfrsXUyQKbMcxbRIplAusCUyn+Cc59EDdR5RT9TKu
+	 G254dtmG1k0jkrYsjxbJTmijrSE3UTc+w+mXeo9ILsSykB74PeLpioIyTw/0l3UOFH
+	 gvKgOE48gjVwAYjKdh9UA20eLE7XvJ+3oFSE8os8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/603] wifi: cfg80211: add flush functions for wiphy work
-Date: Wed, 15 Nov 2023 14:09:42 -0500
-Message-ID: <20231115191615.734155126@linuxfoundation.org>
+Subject: [PATCH 6.5 434/550] powerpc: Hide empty pt_regs at base of the stack
+Date: Wed, 15 Nov 2023 14:16:58 -0500
+Message-ID: <20231115191630.855312233@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,175 +39,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 56cfb8ce1f7f6c4e5ca571a2ec0880e131cd0311 ]
+[ Upstream commit d45c4b48dafb5820e5cc267ff9a6d7784d13a43c ]
 
-There may be sometimes reasons to actually run the work
-if it's pending, add flush functions for both regular and
-delayed wiphy work that will do this.
+A thread started via eg. user_mode_thread() runs in the kernel to begin
+with and then may later return to userspace. While it's running in the
+kernel it has a pt_regs at the base of its kernel stack, but that
+pt_regs is all zeroes.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: eadfb54756ae ("wifi: mac80211: move sched-scan stop work to wiphy work")
+If the thread oopses in that state, it leads to an ugly stack trace with
+a big block of zero GPRs, as reported by Joel:
+
+  Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
+  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.5.0-rc7-00004-gf7757129e3de-dirty #3
+  Hardware name: IBM PowerNV (emulated by qemu) POWER9 0x4e1200 opal:v7.0 PowerNV
+  Call Trace:
+  [c0000000036afb00] [c0000000010dd058] dump_stack_lvl+0x6c/0x9c (unreliable)
+  [c0000000036afb30] [c00000000013c524] panic+0x178/0x424
+  [c0000000036afbd0] [c000000002005100] mount_root_generic+0x250/0x324
+  [c0000000036afca0] [c0000000020057d0] prepare_namespace+0x2d4/0x344
+  [c0000000036afd20] [c0000000020049c0] kernel_init_freeable+0x358/0x3ac
+  [c0000000036afdf0] [c0000000000111b0] kernel_init+0x30/0x1a0
+  [c0000000036afe50] [c00000000000debc] ret_from_kernel_user_thread+0x14/0x1c
+  --- interrupt: 0 at 0x0
+  NIP:  0000000000000000 LR: 0000000000000000 CTR: 0000000000000000
+  REGS: c0000000036afe80 TRAP: 0000   Not tainted  (6.5.0-rc7-00004-gf7757129e3de-dirty)
+  MSR:  0000000000000000 <>  CR: 00000000  XER: 00000000
+  CFAR: 0000000000000000 IRQMASK: 0
+  GPR00: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+  GPR04: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+  GPR08: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+  GPR12: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+  GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+  GPR20: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+  GPR24: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+  GPR28: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+  NIP [0000000000000000] 0x0
+  LR [0000000000000000] 0x0
+  --- interrupt: 0
+
+The all-zero pt_regs looks ugly and conveys no useful information, other
+than its presence. So detect that case and just show the presence of the
+frame by printing the interrupt marker, eg:
+
+  Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(0,0)
+  CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.5.0-rc3-00126-g18e9506562a0-dirty #301
+  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,HEAD hv:linux,kvm pSeries
+  Call Trace:
+  [c000000003aabb00] [c000000001143db8] dump_stack_lvl+0x6c/0x9c (unreliable)
+  [c000000003aabb30] [c00000000014c624] panic+0x178/0x424
+  [c000000003aabbd0] [c0000000020050fc] mount_root_generic+0x250/0x324
+  [c000000003aabca0] [c0000000020057cc] prepare_namespace+0x2d4/0x344
+  [c000000003aabd20] [c0000000020049bc] kernel_init_freeable+0x358/0x3ac
+  [c000000003aabdf0] [c0000000000111b0] kernel_init+0x30/0x1a0
+  [c000000003aabe50] [c00000000000debc] ret_from_kernel_user_thread+0x14/0x1c
+  --- interrupt: 0 at 0x0
+
+To avoid ever suppressing a valid pt_regs make sure the pt_regs has a
+zero MSR and TRAP value, and is located at the very base of the stack.
+
+Fixes: 6895dfc04741 ("powerpc: copy_thread fill in interrupt frame marker and back chain")
+Reported-by: Joel Stanley <joel@jms.id.au>
+Reported-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230824064210.907266-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 21 +++++++++++++++++++++
- net/wireless/core.c    | 34 ++++++++++++++++++++++++++++++++--
- net/wireless/core.h    |  3 ++-
- net/wireless/sysfs.c   |  4 ++--
- 4 files changed, 57 insertions(+), 5 deletions(-)
+ arch/powerpc/kernel/process.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 7192346e4a22d..308a004c1d1dc 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -5826,6 +5826,16 @@ void wiphy_work_queue(struct wiphy *wiphy, struct wiphy_work *work);
-  */
- void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work);
- 
-+/**
-+ * wiphy_work_flush - flush previously queued work
-+ * @wiphy: the wiphy, for debug purposes
-+ * @work: the work to flush, this can be %NULL to flush all work
-+ *
-+ * Flush the work (i.e. run it if pending). This must be called
-+ * under the wiphy mutex acquired by wiphy_lock().
-+ */
-+void wiphy_work_flush(struct wiphy *wiphy, struct wiphy_work *work);
-+
- struct wiphy_delayed_work {
- 	struct wiphy_work work;
- 	struct wiphy *wiphy;
-@@ -5869,6 +5879,17 @@ void wiphy_delayed_work_queue(struct wiphy *wiphy,
- void wiphy_delayed_work_cancel(struct wiphy *wiphy,
- 			       struct wiphy_delayed_work *dwork);
- 
-+/**
-+ * wiphy_delayed work_flush - flush previously queued delayed work
-+ * @wiphy: the wiphy, for debug purposes
-+ * @work: the work to flush
-+ *
-+ * Flush the work (i.e. run it if pending). This must be called
-+ * under the wiphy mutex acquired by wiphy_lock().
-+ */
-+void wiphy_delayed_work_flush(struct wiphy *wiphy,
-+			      struct wiphy_delayed_work *dwork);
-+
- /**
-  * struct wireless_dev - wireless device state
-  *
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index acec41c1809a8..563cfbe3237c9 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1049,7 +1049,8 @@ void wiphy_rfkill_start_polling(struct wiphy *wiphy)
+diff --git a/arch/powerpc/kernel/process.c b/arch/powerpc/kernel/process.c
+index b68898ac07e19..392404688cec3 100644
+--- a/arch/powerpc/kernel/process.c
++++ b/arch/powerpc/kernel/process.c
+@@ -2258,6 +2258,22 @@ unsigned long __get_wchan(struct task_struct *p)
+ 	return ret;
  }
- EXPORT_SYMBOL(wiphy_rfkill_start_polling);
  
--void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev)
-+void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev,
-+				  struct wiphy_work *end)
- {
- 	unsigned int runaway_limit = 100;
- 	unsigned long flags;
-@@ -1068,6 +1069,10 @@ void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev)
- 		wk->func(&rdev->wiphy, wk);
- 
- 		spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+
-+		if (wk == end)
-+			break;
-+
- 		if (WARN_ON(--runaway_limit == 0))
- 			INIT_LIST_HEAD(&rdev->wiphy_work_list);
- 	}
-@@ -1118,7 +1123,7 @@ void wiphy_unregister(struct wiphy *wiphy)
- #endif
- 
- 	/* surely nothing is reachable now, clean up work */
--	cfg80211_process_wiphy_works(rdev);
-+	cfg80211_process_wiphy_works(rdev, NULL);
- 	wiphy_unlock(&rdev->wiphy);
- 	rtnl_unlock();
- 
-@@ -1640,6 +1645,21 @@ void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work)
- }
- EXPORT_SYMBOL_GPL(wiphy_work_cancel);
- 
-+void wiphy_work_flush(struct wiphy *wiphy, struct wiphy_work *work)
++static bool empty_user_regs(struct pt_regs *regs, struct task_struct *tsk)
 +{
-+	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-+	unsigned long flags;
-+	bool run;
++	unsigned long stack_page;
 +
-+	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
-+	run = !work || !list_empty(&work->entry);
-+	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
++	// A non-empty pt_regs should never have a zero MSR or TRAP value.
++	if (regs->msr || regs->trap)
++		return false;
 +
-+	if (run)
-+		cfg80211_process_wiphy_works(rdev, work);
++	// Check it sits at the very base of the stack
++	stack_page = (unsigned long)task_stack_page(tsk);
++	if ((unsigned long)(regs + 1) != stack_page + THREAD_SIZE)
++		return false;
++
++	return true;
 +}
-+EXPORT_SYMBOL_GPL(wiphy_work_flush);
 +
- void wiphy_delayed_work_timer(struct timer_list *t)
- {
- 	struct wiphy_delayed_work *dwork = from_timer(dwork, t, timer);
-@@ -1672,6 +1692,16 @@ void wiphy_delayed_work_cancel(struct wiphy *wiphy,
- }
- EXPORT_SYMBOL_GPL(wiphy_delayed_work_cancel);
+ static int kstack_depth_to_print = CONFIG_PRINT_STACK_DEPTH;
  
-+void wiphy_delayed_work_flush(struct wiphy *wiphy,
-+			      struct wiphy_delayed_work *dwork)
-+{
-+	lockdep_assert_held(&wiphy->mtx);
+ void __no_sanitize_address show_stack(struct task_struct *tsk,
+@@ -2322,9 +2338,13 @@ void __no_sanitize_address show_stack(struct task_struct *tsk,
+ 			lr = regs->link;
+ 			printk("%s--- interrupt: %lx at %pS\n",
+ 			       loglvl, regs->trap, (void *)regs->nip);
+-			__show_regs(regs);
+-			printk("%s--- interrupt: %lx\n",
+-			       loglvl, regs->trap);
 +
-+	del_timer_sync(&dwork->timer);
-+	wiphy_work_flush(wiphy, &dwork->work);
-+}
-+EXPORT_SYMBOL_GPL(wiphy_delayed_work_flush);
-+
- static int __init cfg80211_init(void)
- {
- 	int err;
-diff --git a/net/wireless/core.h b/net/wireless/core.h
-index ba9c7170afa44..e536c0b615a09 100644
---- a/net/wireless/core.h
-+++ b/net/wireless/core.h
-@@ -464,7 +464,8 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
- 			  struct net_device *dev, enum nl80211_iftype ntype,
- 			  struct vif_params *params);
- void cfg80211_process_rdev_events(struct cfg80211_registered_device *rdev);
--void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev);
-+void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev,
-+				  struct wiphy_work *end);
- void cfg80211_process_wdev_events(struct wireless_dev *wdev);
++			// Detect the case of an empty pt_regs at the very base
++			// of the stack and suppress showing it in full.
++			if (!empty_user_regs(regs, tsk)) {
++				__show_regs(regs);
++				printk("%s--- interrupt: %lx\n", loglvl, regs->trap);
++			}
  
- bool cfg80211_does_bw_fit_range(const struct ieee80211_freq_range *freq_range,
-diff --git a/net/wireless/sysfs.c b/net/wireless/sysfs.c
-index c629bac3f2983..565511a3f461e 100644
---- a/net/wireless/sysfs.c
-+++ b/net/wireless/sysfs.c
-@@ -105,14 +105,14 @@ static int wiphy_suspend(struct device *dev)
- 			cfg80211_leave_all(rdev);
- 			cfg80211_process_rdev_events(rdev);
+ 			firstframe = 1;
  		}
--		cfg80211_process_wiphy_works(rdev);
-+		cfg80211_process_wiphy_works(rdev, NULL);
- 		if (rdev->ops->suspend)
- 			ret = rdev_suspend(rdev, rdev->wiphy.wowlan_config);
- 		if (ret == 1) {
- 			/* Driver refuse to configure wowlan */
- 			cfg80211_leave_all(rdev);
- 			cfg80211_process_rdev_events(rdev);
--			cfg80211_process_wiphy_works(rdev);
-+			cfg80211_process_wiphy_works(rdev, NULL);
- 			ret = rdev_suspend(rdev, NULL);
- 		}
- 		if (ret == 0)
 -- 
 2.42.0
 
