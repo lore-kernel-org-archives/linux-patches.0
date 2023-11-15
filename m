@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1737D3DB97
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B423BB4D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EC+yoatk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FA6C433C9;
-	Wed, 15 Nov 2023 19:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewcF2G3+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457EDC433C8;
+	Wed, 15 Nov 2023 19:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078197;
-	bh=pAmHmunnJiFZ+fzU0wAFssX/Twk2JS1G2t1tt/GGiOU=;
+	s=korg; t=1700078199;
+	bh=g7M35aL3QTf4m1Salpdmgax+T6n1WLl+k+JLaIXYN6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EC+yoatkssENHA2wLecauOQM4TD6a9C7P7GEhDr1iwZgeCAJ+uouvB5LKMT4WBKYu
-	 ZlnX+fKIG8u4fT6PFmfe/0vImC2/eQlBMdXRt7aLt/q/lk/7XPyRQmJMd79xLFCNa5
-	 01Ql7+ZB4XkmhX8dvNa6w4N/AhQTgeBXnIcKbruI=
+	b=ewcF2G3+a9BQM7gUCDKZGlStO+OWFHMxfg2+2XRVmore/SXkMpGFSGUlEeugTjI4k
+	 ix8uawiWWvyedWiVaI4eF71hyXXgVZZGEk7EZqPgKv6hl8UBD7wK2rTJXIHmVUEAe+
+	 76uxNdsTteaqLyT6YHvS7n72zjLEdAjY5pWeMZBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Rae Moar <rmoar@google.com>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dhruva Gole <d-gole@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/379] kunit: Fix missed memory release in kunit_free_suite_set()
-Date: Wed, 15 Nov 2023 14:24:07 -0500
-Message-ID: <20231115192655.292574188@linuxfoundation.org>
+Subject: [PATCH 6.1 173/379] firmware: ti_sci: Mark driver as non removable
+Date: Wed, 15 Nov 2023 14:24:08 -0500
+Message-ID: <20231115192655.349551689@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -38,73 +37,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit a6074cf0126b0bee51ab77a15930dc24a4d5db90 ]
+[ Upstream commit 7b7a224b1ba1703583b25a3641ad9798f34d832a ]
 
-modprobe cpumask_kunit and rmmod cpumask_kunit, kmemleak detect
-a suspected memory leak as below.
+The TI-SCI message protocol provides a way to communicate between
+various compute processors with a central system controller entity. It
+provides the fundamental device management capability and clock control
+in the SOCs that it's used in.
 
-If kunit_filter_suites() in kunit_module_init() succeeds, the
-suite_set.start will not be NULL and the kunit_free_suite_set() in
-kunit_module_exit() should free all the memory which has not
-been freed. However the test_cases in suites is left out.
+The remove function failed to do all the necessary cleanup if
+there are registered users. Some things are freed however which
+likely results in an oops later on.
 
-unreferenced object 0xffff54ac47e83200 (size 512):
-  comm "modprobe", pid 592, jiffies 4294913238 (age 1367.612s)
-  hex dump (first 32 bytes):
-    84 13 1a f0 d3 b6 ff ff 30 68 1a f0 d3 b6 ff ff  ........0h......
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000008dec63a2>] slab_post_alloc_hook+0xb8/0x368
-    [<00000000ec280d8e>] __kmem_cache_alloc_node+0x174/0x290
-    [<00000000896c7740>] __kmalloc+0x60/0x2c0
-    [<000000007a50fa06>] kunit_filter_suites+0x254/0x5b8
-    [<0000000078cc98e2>] kunit_module_notify+0xf4/0x240
-    [<0000000033cea952>] notifier_call_chain+0x98/0x17c
-    [<00000000973d05cc>] notifier_call_chain_robust+0x4c/0xa4
-    [<000000005f95895f>] blocking_notifier_call_chain_robust+0x4c/0x74
-    [<0000000048e36fa7>] load_module+0x1a2c/0x1c40
-    [<0000000004eb8a91>] init_module_from_file+0x94/0xcc
-    [<0000000037dbba28>] idempotent_init_module+0x184/0x278
-    [<00000000161b75cb>] __arm64_sys_finit_module+0x68/0xa8
-    [<000000006dc1669b>] invoke_syscall+0x44/0x100
-    [<00000000fa87e304>] el0_svc_common.constprop.1+0x68/0xe0
-    [<000000009d8ad866>] do_el0_svc+0x1c/0x28
-    [<000000005b83c607>] el0_svc+0x3c/0xc4
+Ensure that the driver isn't unbound by suppressing its bind and unbind
+sysfs attributes. As the driver is built-in there is no way to remove
+device once bound.
 
-Fixes: a127b154a8f2 ("kunit: tool: allow filtering test cases via glob")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Rae Moar <rmoar@google.com>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+We can also remove the ti_sci_remove call along with the
+ti_sci_debugfs_destroy as there are no callers for it any longer.
+
+Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Closes: https://lore.kernel.org/linux-arm-kernel/20230216083908.mvmydic5lpi3ogo7@pengutronix.de/
+Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20230921091025.133130-1-d-gole@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/kunit/executor.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/firmware/ti_sci.c | 46 +--------------------------------------
+ 1 file changed, 1 insertion(+), 45 deletions(-)
 
-diff --git a/lib/kunit/executor.c b/lib/kunit/executor.c
-index 74982b83707ca..05ac4cdb6806a 100644
---- a/lib/kunit/executor.c
-+++ b/lib/kunit/executor.c
-@@ -102,8 +102,10 @@ static void kunit_free_suite_set(struct suite_set suite_set)
- {
- 	struct kunit_suite * const *suites;
- 
--	for (suites = suite_set.start; suites < suite_set.end; suites++)
-+	for (suites = suite_set.start; suites < suite_set.end; suites++) {
-+		kfree((*suites)->test_cases);
- 		kfree(*suites);
-+	}
- 	kfree(suite_set.start);
+diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
+index 4c550cfbc086c..597d1a367d96d 100644
+--- a/drivers/firmware/ti_sci.c
++++ b/drivers/firmware/ti_sci.c
+@@ -190,19 +190,6 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
+ 	return 0;
  }
  
+-/**
+- * ti_sci_debugfs_destroy() - clean up log debug file
+- * @pdev:	platform device pointer
+- * @info:	Pointer to SCI entity information
+- */
+-static void ti_sci_debugfs_destroy(struct platform_device *pdev,
+-				   struct ti_sci_info *info)
+-{
+-	if (IS_ERR(info->debug_region))
+-		return;
+-
+-	debugfs_remove(info->d);
+-}
+ #else /* CONFIG_DEBUG_FS */
+ static inline int ti_sci_debugfs_create(struct platform_device *dev,
+ 					struct ti_sci_info *info)
+@@ -3451,43 +3438,12 @@ static int ti_sci_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int ti_sci_remove(struct platform_device *pdev)
+-{
+-	struct ti_sci_info *info;
+-	struct device *dev = &pdev->dev;
+-	int ret = 0;
+-
+-	of_platform_depopulate(dev);
+-
+-	info = platform_get_drvdata(pdev);
+-
+-	if (info->nb.notifier_call)
+-		unregister_restart_handler(&info->nb);
+-
+-	mutex_lock(&ti_sci_list_mutex);
+-	if (info->users)
+-		ret = -EBUSY;
+-	else
+-		list_del(&info->node);
+-	mutex_unlock(&ti_sci_list_mutex);
+-
+-	if (!ret) {
+-		ti_sci_debugfs_destroy(pdev, info);
+-
+-		/* Safe to free channels since no more users */
+-		mbox_free_channel(info->chan_tx);
+-		mbox_free_channel(info->chan_rx);
+-	}
+-
+-	return ret;
+-}
+-
+ static struct platform_driver ti_sci_driver = {
+ 	.probe = ti_sci_probe,
+-	.remove = ti_sci_remove,
+ 	.driver = {
+ 		   .name = "ti-sci",
+ 		   .of_match_table = of_match_ptr(ti_sci_of_match),
++		   .suppress_bind_attrs = true,
+ 	},
+ };
+ module_platform_driver(ti_sci_driver);
 -- 
 2.42.0
 
