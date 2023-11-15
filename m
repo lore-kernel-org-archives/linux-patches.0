@@ -1,41 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F0741A84
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFFF41A80
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZ3TiwqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9538C433CB;
-	Wed, 15 Nov 2023 19:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXKtWHI9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8116FC433C9;
+	Wed, 15 Nov 2023 19:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077005;
-	bh=W/cC/sUwkSm6tCDZJrJdFJeIX3brPtNntsGqJhkPfhg=;
+	s=korg; t=1700077006;
+	bh=uL4NXqwVV6fn4RWsf5mzyDSlUEMsZhw0uh9grlLO+Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZ3TiwqDnqctlyLQN5137CXQ2gfr6TZBdEkCGDt04w7Eef071S5arazPLMX0ZY276
-	 HyFPlo0octh8FD+lWauminx9CrYFVZc8pASDUf3roGggXJM7HDN51hBKOFixqcrO7B
-	 jbaVpsh33IT3ba6VjJPbIgHmOWCS3Kqww5xQCO74=
+	b=cXKtWHI9MsXM9MVod7UD7s8Lg01Gc0Lhhe8rPYXgODPLUsI0s2WGjztjw0T399kyr
+	 8ItUhR0nef69c0g1CoTKItTrOWd/MnNKvQlP0mdmAE3oTBmPCvxcUPrSQ229qA7vbi
+	 qwlVOr5wU084WJ/2Wyl3Bc9rfs7uuZrBK9wTwRBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mark Brown <broonie@kernel.org>,
-	"Srivatsa S. Bhat (VMware)" <srivatsa@csail.mit.edu>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jacob Pan <jacob.jun.pan@linux.intel.com>,
-	Arjan van de Ven <arjan@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Len Brown <len.brown@intel.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Sean Wang <sean.wang@mediatek.com>,
+	David Ruth <druth@chromium.org>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 490/550] cpupower: fix reference to nonexistent document
-Date: Wed, 15 Nov 2023 14:17:54 -0500
-Message-ID: <20231115191634.838625557@linuxfoundation.org>
+Subject: [PATCH 6.6 096/603] wifi: mt76: mt7921: fix the wrong rate selected in fw for the chanctx driver
+Date: Wed, 15 Nov 2023 14:10:41 -0500
+Message-ID: <20231115191619.809965964@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +40,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vegard Nossum <vegard.nossum@oracle.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 6feb1a9641197ee630bf43b5c34ea1d9f8b4a0aa ]
+[ Upstream commit c558d22e7a93affeb18aae1dcd777ddd1ad18da1 ]
 
-This file was renamed from .txt to .rst and left a dangling reference.
-Fix it.
+The variable band should be determined by the ieee80211_chanctx_conf when
+the driver is a kind of chanctx one e.g mt7921 and mt7922 driver so we
+added the extension to mt76_connac2_mac_tx_rate_val and
+mt76_connac_get_he_phy_cap for the firmware can select the proper rate.
 
-Fixes: 151f4e2bdc7a ("docs: power: convert docs to ReST and rename to *.rst")
-Cc: Mauro Carvalho Chehab <mchehab+samsung@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Srivatsa S. Bhat (VMware) <srivatsa@csail.mit.edu>
-Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: Jacob Pan <jacob.jun.pan@linux.intel.com>
-Cc: Arjan van de Ven <arjan@linux.intel.com>
-Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: Len Brown <len.brown@intel.com>
-Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 41ac53c899bd ("wifi: mt76: mt7921: introduce chanctx support")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Tested-by: David Ruth <druth@chromium.org>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/man/cpupower-powercap-info.1 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tools/power/cpupower/man/cpupower-powercap-info.1 b/tools/power/cpupower/man/cpupower-powercap-info.1
-index df3087000efb8..145d6f06fa72d 100644
---- a/tools/power/cpupower/man/cpupower-powercap-info.1
-+++ b/tools/power/cpupower/man/cpupower-powercap-info.1
-@@ -17,7 +17,7 @@ settings of all cores, see cpupower(1) how to choose specific cores.
- .SH "DOCUMENTATION"
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+index 0f0a519f956f8..8274a57e1f0fb 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+@@ -829,7 +829,9 @@ void mt76_connac_mcu_sta_tlv(struct mt76_phy *mphy, struct sk_buff *skb,
+ 			     struct ieee80211_vif *vif,
+ 			     u8 rcpi, u8 sta_state)
+ {
+-	struct cfg80211_chan_def *chandef = &mphy->chandef;
++	struct mt76_vif *mvif = (struct mt76_vif *)vif->drv_priv;
++	struct cfg80211_chan_def *chandef = mvif->ctx ?
++					    &mvif->ctx->def : &mphy->chandef;
+ 	enum nl80211_band band = chandef->chan->band;
+ 	struct mt76_dev *dev = mphy->dev;
+ 	struct sta_rec_ra_info *ra_info;
+@@ -1369,7 +1371,10 @@ EXPORT_SYMBOL_GPL(mt76_connac_get_phy_mode_ext);
+ const struct ieee80211_sta_he_cap *
+ mt76_connac_get_he_phy_cap(struct mt76_phy *phy, struct ieee80211_vif *vif)
+ {
+-	enum nl80211_band band = phy->chandef.chan->band;
++	struct mt76_vif *mvif = (struct mt76_vif *)vif->drv_priv;
++	struct cfg80211_chan_def *chandef = mvif->ctx ?
++					    &mvif->ctx->def : &phy->chandef;
++	enum nl80211_band band = chandef->chan->band;
+ 	struct ieee80211_supported_band *sband;
  
- kernel sources:
--Documentation/power/powercap/powercap.txt
-+Documentation/power/powercap/powercap.rst
- 
- 
- .SH "SEE ALSO"
+ 	sband = phy->hw->wiphy->bands[band];
 -- 
 2.42.0
 
