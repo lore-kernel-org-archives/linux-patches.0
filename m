@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5F73A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613BF3A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3mtdAnn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999BFC433C7;
-	Wed, 15 Nov 2023 19:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASfW5EmU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AE2C433C7;
+	Wed, 15 Nov 2023 19:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077296;
-	bh=oK6dwfZH8huCR/W+q4SFSuLSxNxHHEY3xID+NyfeiX0=;
+	s=korg; t=1700077298;
+	bh=Oy0lj2Cr/82yP5/LHHEySZaB9W65pusV3eowv2S5cRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3mtdAnnlxKYs+t9b4hpqAM5pQkDmDA7vN+IbsE+SeTKYh4bRo+KU//UceIHkyVfe
-	 mpVhMWX/Ws3NZErVyPSp4lCZykTEn58XotCc5D3lHJ/F1tzePVD27cRBrRHa29LEHc
-	 SyZadHlZVZH0yyqLKtgKuqYqsqE7E0RjvUDqTopM=
+	b=ASfW5EmUlUBDkcABgRELMNhQqBgwHxa3wWgjU8sdJzwRAqWtiCkWhQFYcH9Nt+/TX
+	 LH6CEgKtFRoBUhPi5dglmpFKkZJsMAW3t40lT1wE3UJC+k/yEfED35IJpPW0n8GNc5
+	 z9v9aXTlzWV8eRYEhMbuOqFRd+TM1tCOQdrWQH2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Sui Jingfeng <sui.jingfeng@linux.dev>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/603] drm/loongson: Fix error handling in lsdc_pixel_pll_setup()
-Date: Wed, 15 Nov 2023 14:12:42 -0500
-Message-ID: <20231115191628.302507012@linuxfoundation.org>
+Subject: [PATCH 6.6 218/603] drm/rockchip: vop: Fix reset of state in duplicate state crtc funcs
+Date: Wed, 15 Nov 2023 14:12:43 -0500
+Message-ID: <20231115191628.373075078@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,46 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 5976a28b344ecb6810882a01b76a320cac21d307 ]
+[ Upstream commit 13fc28804bf10ca0b7bce3efbba95c534836d7ca ]
 
-There are two problems in lsdc_pixel_pll_setup()
-1. If kzalloc() fails then call iounmap() to release the resources.
-2. Both kzalloc and ioremap does not return error pointers on failure, so
-   using IS_ERR_OR_NULL() checks is a bit confusing and not very right,
-   fix this by changing those to NULL checks instead.
+struct rockchip_crtc_state members such as output_type, output_bpc and
+enable_afbc is always reset to zero in the atomic_duplicate_state crtc
+funcs.
 
-Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230720123950.543082-1-harshit.m.mogalapalli@oracle.com
+Fix this by using kmemdup on the subclass rockchip_crtc_state struct.
+
+Fixes: 4e257d9eee23 ("drm/rockchip: get rid of rockchip_drm_crtc_mode_config")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230621223311.2239547-2-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/loongson/lsdc_pixpll.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/loongson/lsdc_pixpll.c b/drivers/gpu/drm/loongson/lsdc_pixpll.c
-index 04c15b4697e21..2609a2256da4b 100644
---- a/drivers/gpu/drm/loongson/lsdc_pixpll.c
-+++ b/drivers/gpu/drm/loongson/lsdc_pixpll.c
-@@ -120,12 +120,14 @@ static int lsdc_pixel_pll_setup(struct lsdc_pixpll * const this)
- 	struct lsdc_pixpll_parms *pparms;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index 14320bc73e5bf..06f647a20fe44 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -1614,7 +1614,8 @@ static struct drm_crtc_state *vop_crtc_duplicate_state(struct drm_crtc *crtc)
+ 	if (WARN_ON(!crtc->state))
+ 		return NULL;
  
- 	this->mmio = ioremap(this->reg_base, this->reg_size);
--	if (IS_ERR_OR_NULL(this->mmio))
-+	if (!this->mmio)
- 		return -ENOMEM;
- 
- 	pparms = kzalloc(sizeof(*pparms), GFP_KERNEL);
--	if (IS_ERR_OR_NULL(pparms))
-+	if (!pparms) {
-+		iounmap(this->mmio);
- 		return -ENOMEM;
-+	}
- 
- 	pparms->ref_clock = LSDC_PLL_REF_CLK_KHZ;
+-	rockchip_state = kzalloc(sizeof(*rockchip_state), GFP_KERNEL);
++	rockchip_state = kmemdup(to_rockchip_crtc_state(crtc->state),
++				 sizeof(*rockchip_state), GFP_KERNEL);
+ 	if (!rockchip_state)
+ 		return NULL;
  
 -- 
 2.42.0
