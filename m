@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD383A8E7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518382C861
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3FdSUbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78332C433C8;
-	Wed, 15 Nov 2023 19:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HByICNqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04449C433C7;
+	Wed, 15 Nov 2023 19:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076312;
-	bh=wq4nPE+1J6MVuUQ6BNNqK2bRVW3piiFpyLiGpWiEZls=;
+	s=korg; t=1700076314;
+	bh=Xtiov/AD0I4+BKplENJX14OwZ6UomLTHq8CW6TKlfmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3FdSUbxpn3rQHAINESMF7wFLP0qqbT5f5LDmjkkQdrQmjbyh6gC7neRP4eEVBMU8
-	 YQl6NN3DNPKU121A6oFSLw1x4rpVbkb0Emt2EDmk7UiJHpq4uZh8/JmbY3xvcuUp1Z
-	 TXrdzcOHLsHJWKjueJNZ50JRQG4+ZCSr2v8EZMBI=
+	b=HByICNqsbe6p6o//AZj5jvogRwvJG44KeyHkEcJyiMFHYDgzLRuZmnx7IZcfGDe9J
+	 gLwwOU3hYcs0qI1XUENvteodxl+o7utJYUjqVxGdiy9q94bYL2vNAgPUUftI/S5UV0
+	 6b48LnAFp9odqJ2/hMJyYw9frlr+l6LUN/z8oxQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 212/550] drm/bridge: lt8912b: Fix crash on bridge detach
-Date: Wed, 15 Nov 2023 14:13:16 -0500
-Message-ID: <20231115191615.482929875@linuxfoundation.org>
+Subject: [PATCH 6.5 195/550] hwmon: (sch5627) Use bit macros when accessing the control register
+Date: Wed, 15 Nov 2023 14:12:59 -0500
+Message-ID: <20231115191614.286297907@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,107 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 44283993144a03af9df31934d6c32bbd42d1a347 ]
+[ Upstream commit 7f0b28e0653f36b51542d25dd54ed312c397ecfc ]
 
-The lt8912b driver, in its bridge detach function, calls
-drm_connector_unregister() and drm_connector_cleanup().
+Use bit macros then accessing SCH5627_REG_CTRL, so that people
+do not need to look at the datasheet to find out what each bit
+does.
 
-drm_connector_unregister() should be called only for connectors
-explicitly registered with drm_connector_register(), which is not the
-case in lt8912b.
+Tested on a Fujitsu Esprimo P720.
 
-The driver's drm_connector_funcs.destroy hook is set to
-drm_connector_cleanup().
-
-Thus the driver should not call either drm_connector_unregister() nor
-drm_connector_cleanup() in its lt8912_bridge_detach(), as they cause a
-crash on bridge detach:
-
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-Mem abort info:
-  ESR = 0x0000000096000006
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x06: level 2 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
-  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-user pgtable: 4k pages, 48-bit VAs, pgdp=00000000858f3000
-[0000000000000000] pgd=0800000085918003, p4d=0800000085918003, pud=0800000085431003, pmd=0000000000000000
-Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
-Modules linked in: tidss(-) display_connector lontium_lt8912b tc358768 panel_lvds panel_simple drm_dma_helper drm_kms_helper drm drm_panel_orientation_quirks
-CPU: 3 PID: 462 Comm: rmmod Tainted: G        W          6.5.0-rc2+ #2
-Hardware name: Toradex Verdin AM62 on Verdin Development Board (DT)
-pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : drm_connector_cleanup+0x78/0x2d4 [drm]
-lr : lt8912_bridge_detach+0x54/0x6c [lontium_lt8912b]
-sp : ffff800082ed3a90
-x29: ffff800082ed3a90 x28: ffff0000040c1940 x27: 0000000000000000
-x26: 0000000000000000 x25: dead000000000122 x24: dead000000000122
-x23: dead000000000100 x22: ffff000003fb6388 x21: 0000000000000000
-x20: 0000000000000000 x19: ffff000003fb6260 x18: fffffffffffe56e8
-x17: 0000000000000000 x16: 0010000000000000 x15: 0000000000000038
-x14: 0000000000000000 x13: ffff800081914b48 x12: 000000000000040e
-x11: 000000000000015a x10: ffff80008196ebb8 x9 : ffff800081914b48
-x8 : 00000000ffffefff x7 : ffff0000040c1940 x6 : ffff80007aa649d0
-x5 : 0000000000000000 x4 : 0000000000000001 x3 : ffff80008159e008
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-Call trace:
- drm_connector_cleanup+0x78/0x2d4 [drm]
- lt8912_bridge_detach+0x54/0x6c [lontium_lt8912b]
- drm_bridge_detach+0x44/0x84 [drm]
- drm_encoder_cleanup+0x40/0xb8 [drm]
- drmm_encoder_alloc_release+0x1c/0x30 [drm]
- drm_managed_release+0xac/0x148 [drm]
- drm_dev_put.part.0+0x88/0xb8 [drm]
- devm_drm_dev_init_release+0x14/0x24 [drm]
- devm_action_release+0x14/0x20
- release_nodes+0x5c/0x90
- devres_release_all+0x8c/0xe0
- device_unbind_cleanup+0x18/0x68
- device_release_driver_internal+0x208/0x23c
- driver_detach+0x4c/0x94
- bus_remove_driver+0x70/0xf4
- driver_unregister+0x30/0x60
- platform_driver_unregister+0x14/0x20
- tidss_platform_driver_exit+0x18/0xb2c [tidss]
- __arm64_sys_delete_module+0x1a0/0x2b4
- invoke_syscall+0x48/0x110
- el0_svc_common.constprop.0+0x60/0x10c
- do_el0_svc_compat+0x1c/0x40
- el0_svc_compat+0x40/0xac
- el0t_32_sync_handler+0xb0/0x138
- el0t_32_sync+0x194/0x198
-Code: 9104a276 f2fbd5b7 aa0203e1 91008af8 (f85c0420)
-
-Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230804-lt8912b-v1-2-c542692c6a2f@ideasonboard.com
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20230907052639.16491-2-W_Armin@gmx.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 7da8a6354360 ("hwmon: (sch5627) Disallow write access if virtual registers are locked")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/hwmon/sch5627.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 0e581f6e3c885..2d752e083433f 100644
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -589,9 +589,6 @@ static void lt8912_bridge_detach(struct drm_bridge *bridge)
+diff --git a/drivers/hwmon/sch5627.c b/drivers/hwmon/sch5627.c
+index 1bbda3b05532e..0eefb8c0aef25 100644
+--- a/drivers/hwmon/sch5627.c
++++ b/drivers/hwmon/sch5627.c
+@@ -6,6 +6,7 @@
  
- 	if (lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
- 		drm_bridge_hpd_disable(lt->hdmi_port);
--
--	drm_connector_unregister(&lt->connector);
--	drm_connector_cleanup(&lt->connector);
- }
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
- static enum drm_connector_status
++#include <linux/bits.h>
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/init.h>
+@@ -32,6 +33,9 @@
+ #define SCH5627_REG_PRIMARY_ID		0x3f
+ #define SCH5627_REG_CTRL		0x40
+ 
++#define SCH5627_CTRL_START		BIT(0)
++#define SCH5627_CTRL_VBAT		BIT(4)
++
+ #define SCH5627_NO_TEMPS		8
+ #define SCH5627_NO_FANS			4
+ #define SCH5627_NO_IN			5
+@@ -147,7 +151,8 @@ static int sch5627_update_in(struct sch5627_data *data)
+ 
+ 	/* Trigger a Vbat voltage measurement every 5 minutes */
+ 	if (time_after(jiffies, data->last_battery + 300 * HZ)) {
+-		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | 0x10);
++		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
++					  data->control | SCH5627_CTRL_VBAT);
+ 		data->last_battery = jiffies;
+ 	}
+ 
+@@ -483,14 +488,13 @@ static int sch5627_probe(struct platform_device *pdev)
+ 		return val;
+ 
+ 	data->control = val;
+-	if (!(data->control & 0x01)) {
++	if (!(data->control & SCH5627_CTRL_START)) {
+ 		pr_err("hardware monitoring not enabled\n");
+ 		return -ENODEV;
+ 	}
+ 	/* Trigger a Vbat voltage measurement, so that we get a valid reading
+ 	   the first time we read Vbat */
+-	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL,
+-				  data->control | 0x10);
++	sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | SCH5627_CTRL_VBAT);
+ 	data->last_battery = jiffies;
+ 
+ 	/*
 -- 
 2.42.0
 
