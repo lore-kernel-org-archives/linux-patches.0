@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FADD31725
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC0A31725
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZhGoubi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DC7C433CC;
-	Wed, 15 Nov 2023 19:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZBp6otg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7987BC433C7;
+	Wed, 15 Nov 2023 19:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077183;
-	bh=dkxPNGPCNErXWoiH6DESwT9n/vM5dMTGP3ic/f13KIw=;
+	s=korg; t=1700077184;
+	bh=cjARZvmyJzmOGEshSXlLVoDS82j2W7CXR3IztwRFVj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cZhGoubinI9eR7dKtgg4gkUd/9msLLEE6E0JKGoOCFeErOwHIcjP9j1Lv8QdxIkq0
-	 17BDOGUatDa/lLBvAkFYB8Z+iNuu/Sij00r8vxFubjQUhZidgwlqm3alEr6oA13LJm
-	 mYQEqAbX0m0aq8cEyLnK/eLtP+LuNtrg40YsfPiE=
+	b=wZBp6otgOO8AfHVQ794dEWYRg3mAXI9Qnt/1EzWbaLEZMdG1rIbjY/ZljfZPcEna0
+	 pnLN0BhaK+Cya1yeXyDvaXocYjUQ14DsKAwZhKZm3HtjfMqiQof9cgGoDS9MJVfEjr
+	 h3MCfOneAAcx3CsiJqRYRPKQZ2wX8giNP4l/4CgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/603] bpf: Fix unnecessary -EBUSY from htab_lock_bucket
-Date: Wed, 15 Nov 2023 14:11:36 -0500
-Message-ID: <20231115191623.634125282@linuxfoundation.org>
+Subject: [PATCH 6.5 539/550] fbdev: imsttfb: fix a resource leak in probe
+Date: Wed, 15 Nov 2023 14:18:43 -0500
+Message-ID: <20231115191638.297723363@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -40,80 +38,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Song Liu <song@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d35381aa73f7e1e8b25f3ed5283287a64d9ddff5 ]
+[ Upstream commit aba6ab57a910ad4b940c2024d15f2cdbf5b7f76b ]
 
-htab_lock_bucket uses the following logic to avoid recursion:
+I've re-written the error handling but the bug is that if init_imstt()
+fails we need to call iounmap(par->cmap_regs).
 
-1. preempt_disable();
-2. check percpu counter htab->map_locked[hash] for recursion;
-   2.1. if map_lock[hash] is already taken, return -BUSY;
-3. raw_spin_lock_irqsave();
-
-However, if an IRQ hits between 2 and 3, BPF programs attached to the IRQ
-logic will not able to access the same hash of the hashtab and get -EBUSY.
-
-This -EBUSY is not really necessary. Fix it by disabling IRQ before
-checking map_locked:
-
-1. preempt_disable();
-2. local_irq_save();
-3. check percpu counter htab->map_locked[hash] for recursion;
-   3.1. if map_lock[hash] is already taken, return -BUSY;
-4. raw_spin_lock().
-
-Similarly, use raw_spin_unlock() and local_irq_restore() in
-htab_unlock_bucket().
-
-Fixes: 20b6cc34ea74 ("bpf: Avoid hashtab deadlock with map_locked")
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/7a9576222aa40b1c84ad3a9ba3e64011d1a04d41.camel@linux.ibm.com
-Link: https://lore.kernel.org/bpf/20231012055741.3375999-1-song@kernel.org
+Fixes: c75f5a550610 ("fbdev: imsttfb: Fix use after free bug in imsttfb_probe")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/video/fbdev/imsttfb.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index a8c7e1c5abfac..fd8d4b0addfca 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -155,13 +155,15 @@ static inline int htab_lock_bucket(const struct bpf_htab *htab,
- 	hash = hash & min_t(u32, HASHTAB_MAP_LOCK_MASK, htab->n_buckets - 1);
+diff --git a/drivers/video/fbdev/imsttfb.c b/drivers/video/fbdev/imsttfb.c
+index db7cf995aa784..d2806ba296aa3 100644
+--- a/drivers/video/fbdev/imsttfb.c
++++ b/drivers/video/fbdev/imsttfb.c
+@@ -1495,8 +1495,8 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  
- 	preempt_disable();
-+	local_irq_save(flags);
- 	if (unlikely(__this_cpu_inc_return(*(htab->map_locked[hash])) != 1)) {
- 		__this_cpu_dec(*(htab->map_locked[hash]));
-+		local_irq_restore(flags);
- 		preempt_enable();
- 		return -EBUSY;
+ 	if (!request_mem_region(addr, size, "imsttfb")) {
+ 		printk(KERN_ERR "imsttfb: Can't reserve memory region\n");
+-		framebuffer_release(info);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto release_info;
  	}
  
--	raw_spin_lock_irqsave(&b->raw_lock, flags);
-+	raw_spin_lock(&b->raw_lock);
- 	*pflags = flags;
+ 	switch (pdev->device) {
+@@ -1513,36 +1513,39 @@ static int imsttfb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 			printk(KERN_INFO "imsttfb: Device 0x%x unknown, "
+ 					 "contact maintainer.\n", pdev->device);
+ 			ret = -ENODEV;
+-			goto error;
++			goto release_mem_region;
+ 	}
  
- 	return 0;
-@@ -172,8 +174,9 @@ static inline void htab_unlock_bucket(const struct bpf_htab *htab,
- 				      unsigned long flags)
- {
- 	hash = hash & min_t(u32, HASHTAB_MAP_LOCK_MASK, htab->n_buckets - 1);
--	raw_spin_unlock_irqrestore(&b->raw_lock, flags);
-+	raw_spin_unlock(&b->raw_lock);
- 	__this_cpu_dec(*(htab->map_locked[hash]));
-+	local_irq_restore(flags);
- 	preempt_enable();
+ 	info->fix.smem_start = addr;
+ 	info->screen_base = (__u8 *)ioremap(addr, par->ramdac == IBM ?
+ 					    0x400000 : 0x800000);
+ 	if (!info->screen_base)
+-		goto error;
++		goto release_mem_region;
+ 	info->fix.mmio_start = addr + 0x800000;
+ 	par->dc_regs = ioremap(addr + 0x800000, 0x1000);
+ 	if (!par->dc_regs)
+-		goto error;
++		goto unmap_screen_base;
+ 	par->cmap_regs_phys = addr + 0x840000;
+ 	par->cmap_regs = (__u8 *)ioremap(addr + 0x840000, 0x1000);
+ 	if (!par->cmap_regs)
+-		goto error;
++		goto unmap_dc_regs;
+ 	info->pseudo_palette = par->palette;
+ 	ret = init_imstt(info);
+ 	if (ret)
+-		goto error;
++		goto unmap_cmap_regs;
+ 
+ 	pci_set_drvdata(pdev, info);
+-	return ret;
++	return 0;
+ 
+-error:
+-	if (par->dc_regs)
+-		iounmap(par->dc_regs);
+-	if (info->screen_base)
+-		iounmap(info->screen_base);
++unmap_cmap_regs:
++	iounmap(par->cmap_regs);
++unmap_dc_regs:
++	iounmap(par->dc_regs);
++unmap_screen_base:
++	iounmap(info->screen_base);
++release_mem_region:
+ 	release_mem_region(addr, size);
++release_info:
+ 	framebuffer_release(info);
+ 	return ret;
  }
- 
 -- 
 2.42.0
 
