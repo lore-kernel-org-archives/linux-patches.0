@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD7B3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7AF3A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozGhCKNS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD5FC433C7;
-	Wed, 15 Nov 2023 19:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+unlgbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB7CC433C9;
+	Wed, 15 Nov 2023 19:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077306;
-	bh=dxicgrVV0n3jUkChIGtw0C6TkNxJj0qrU9brottlX28=;
+	s=korg; t=1700077308;
+	bh=Akpa59Uoz8UBBqApT0zXrvbBI9srNyyo4L8nD4AQrwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozGhCKNSEdd+on7FiffdYJAF7sXsYRslAXOUiUpmDvLVKqsfMP7WnGmoU4KqyRoir
-	 4Z0r4W4GgvlKQywf9bNQXiknTWYm3CKps3TIpvq0t8ZJOrfEpWW0vTBuX5gOm8OxCF
-	 qq9cbp/GHETPCDLqt7wP8GH6J/FJHnviO1a2hX2s=
+	b=R+unlgbLat+n/Bpdk3M+yMxkWIlxthxNGX7utPyr+CB0LHs7Nq9tG1fI9cBvGOnxg
+	 /BWh6EVC+DQqfnhP31R6C4BHyrYEdBUdtF8bjcreYbtoX2e9Oz0Vvao6VVGwDn0/cr
+	 qx3VLSRQw/eKd8LbBg9xL67d5ebiAW3M7/2zO67g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Nishanth Menon <nm@ti.com>,
+	Helen Koike <helen.koike@collabora.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 223/603] drm/radeon: Remove the references of radeon_gem_ pread & pwrite ioctls
-Date: Wed, 15 Nov 2023 14:12:48 -0500
-Message-ID: <20231115191628.685887996@linuxfoundation.org>
+Subject: [PATCH 6.6 224/603] drm: bridge: it66121: Fix invalid connector dereference
+Date: Wed, 15 Nov 2023 14:12:49 -0500
+Message-ID: <20231115191628.736011042@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -37,89 +39,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit 52548038496fd58b762067b946f943c9bbcbd01e ]
+[ Upstream commit d0375f6858c4ff7244b62b02eb5e93428e1916cd ]
 
-Removing the functions of pread & pwrite & IOCTL defines, as their
-existence allows an authorized client to spam the system logs.
+Fix the NULL pointer dereference when no monitor is connected, and the
+sound card is opened from userspace.
 
-Fixes: db996e64b293 ("drm/radeon: Fix ENOSYS with better fitting error codes in radeon_gem.c")
-Suggested-by: Christian König <christian.koenig@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Instead return an empty buffer (of zeroes) as the EDID information to
+the sound framework if there is no connector attached.
+
+Fixes: e0fd83dbe924 ("drm: bridge: it66121: Add audio support")
+Reported-by: Nishanth Menon <nm@ti.com>
+Closes: https://lore.kernel.org/all/20230825105849.crhon42qndxqif4i@gondola/
+Reviewed-by: Helen Koike <helen.koike@collabora.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Tested-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230901-it66121_edid-v2-1-aa59605336b9@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon.h     |  4 ----
- drivers/gpu/drm/radeon/radeon_drv.c |  2 --
- drivers/gpu/drm/radeon/radeon_gem.c | 16 ----------------
- 3 files changed, 22 deletions(-)
+ drivers/gpu/drm/bridge/ite-it66121.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon.h b/drivers/gpu/drm/radeon/radeon.h
-index 8afb03bbce298..3d3d2109dfebc 100644
---- a/drivers/gpu/drm/radeon/radeon.h
-+++ b/drivers/gpu/drm/radeon/radeon.h
-@@ -2215,10 +2215,6 @@ int radeon_gem_pin_ioctl(struct drm_device *dev, void *data,
- 			 struct drm_file *file_priv);
- int radeon_gem_unpin_ioctl(struct drm_device *dev, void *data,
- 			   struct drm_file *file_priv);
--int radeon_gem_pwrite_ioctl(struct drm_device *dev, void *data,
--			    struct drm_file *file_priv);
--int radeon_gem_pread_ioctl(struct drm_device *dev, void *data,
--			   struct drm_file *file_priv);
- int radeon_gem_set_domain_ioctl(struct drm_device *dev, void *data,
- 				struct drm_file *filp);
- int radeon_gem_mmap_ioctl(struct drm_device *dev, void *data,
-diff --git a/drivers/gpu/drm/radeon/radeon_drv.c b/drivers/gpu/drm/radeon/radeon_drv.c
-index fa531493b1113..7bf08164140ef 100644
---- a/drivers/gpu/drm/radeon/radeon_drv.c
-+++ b/drivers/gpu/drm/radeon/radeon_drv.c
-@@ -555,8 +555,6 @@ static const struct drm_ioctl_desc radeon_ioctls_kms[] = {
- 	DRM_IOCTL_DEF_DRV(RADEON_GEM_CREATE, radeon_gem_create_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
- 	DRM_IOCTL_DEF_DRV(RADEON_GEM_MMAP, radeon_gem_mmap_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
- 	DRM_IOCTL_DEF_DRV(RADEON_GEM_SET_DOMAIN, radeon_gem_set_domain_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
--	DRM_IOCTL_DEF_DRV(RADEON_GEM_PREAD, radeon_gem_pread_ioctl, DRM_AUTH),
--	DRM_IOCTL_DEF_DRV(RADEON_GEM_PWRITE, radeon_gem_pwrite_ioctl, DRM_AUTH),
- 	DRM_IOCTL_DEF_DRV(RADEON_GEM_WAIT_IDLE, radeon_gem_wait_idle_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
- 	DRM_IOCTL_DEF_DRV(RADEON_CS, radeon_cs_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
- 	DRM_IOCTL_DEF_DRV(RADEON_INFO, radeon_info_ioctl, DRM_AUTH|DRM_RENDER_ALLOW),
-diff --git a/drivers/gpu/drm/radeon/radeon_gem.c b/drivers/gpu/drm/radeon/radeon_gem.c
-index 358d19242f4ba..3fec3acdaf284 100644
---- a/drivers/gpu/drm/radeon/radeon_gem.c
-+++ b/drivers/gpu/drm/radeon/radeon_gem.c
-@@ -311,22 +311,6 @@ int radeon_gem_info_ioctl(struct drm_device *dev, void *data,
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/bridge/ite-it66121.c b/drivers/gpu/drm/bridge/ite-it66121.c
+index 466641c77fe91..fc7f5ec5fb381 100644
+--- a/drivers/gpu/drm/bridge/ite-it66121.c
++++ b/drivers/gpu/drm/bridge/ite-it66121.c
+@@ -1447,10 +1447,14 @@ static int it66121_audio_get_eld(struct device *dev, void *data,
+ 	struct it66121_ctx *ctx = dev_get_drvdata(dev);
  
--int radeon_gem_pread_ioctl(struct drm_device *dev, void *data,
--			   struct drm_file *filp)
--{
--	/* TODO: implement */
--	DRM_ERROR("unimplemented %s\n", __func__);
--	return -EOPNOTSUPP;
--}
+ 	mutex_lock(&ctx->lock);
 -
--int radeon_gem_pwrite_ioctl(struct drm_device *dev, void *data,
--			    struct drm_file *filp)
--{
--	/* TODO: implement */
--	DRM_ERROR("unimplemented %s\n", __func__);
--	return -EOPNOTSUPP;
--}
+-	memcpy(buf, ctx->connector->eld,
+-	       min(sizeof(ctx->connector->eld), len));
 -
- int radeon_gem_create_ioctl(struct drm_device *dev, void *data,
- 			    struct drm_file *filp)
- {
++	if (!ctx->connector) {
++		/* Pass en empty ELD if connector not available */
++		dev_dbg(dev, "No connector present, passing empty EDID data");
++		memset(buf, 0, len);
++	} else {
++		memcpy(buf, ctx->connector->eld,
++		       min(sizeof(ctx->connector->eld), len));
++	}
+ 	mutex_unlock(&ctx->lock);
+ 
+ 	return 0;
 -- 
 2.42.0
 
