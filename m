@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD59E3C462
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2406E3C461
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlcJivy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E60FC433C9;
-	Wed, 15 Nov 2023 19:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXBaNaXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4913C433C7;
+	Wed, 15 Nov 2023 19:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077127;
-	bh=Abe+wYXbQDMKoTFuVKYR38yilc3Hxix5pMp13dGYEGo=;
+	s=korg; t=1700077129;
+	bh=STv5lYDJNOn6MFczLbdnrRGQob0Ib6CAO/ClQtTzpn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hlcJivy4YnVJzW8XgQx+ZvJK2LMxOwv7t4N2r/GaUXQCnvE1prXAcweg5Eg6ys0Fa
-	 AigBK7LEl7Fdr5n3z5Q1DJhwmChQ/uJoQSKcmvj1tKGkyHACQkjSuFQXW1TfA2QTIx
-	 ROI+0U/u2zxIwGPb81vxix85w9PaKA4kJfLGJZ+Y=
+	b=qXBaNaXE8MTFPaUVaZMdbf2oh+HK2oZPZVxbfnAWGOHTEyvy0n/9/R3N2hLETx4hp
+	 bHXtZ+sjl+TobPO7N7dmDB55IdAGa6RnZLeqCsdVlfhlxpGNQ+Rk+W5WvyLHmBATIo
+	 6uMeIejNxt4LjxDKKHsGbrTrPKhdhRB5mMOL/huE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Wunderlich <frank-w@public-files.de>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/603] thermal/drivers/mediatek: Fix probe for THERMAL_V2
-Date: Wed, 15 Nov 2023 14:11:09 -0500
-Message-ID: <20231115191621.820669288@linuxfoundation.org>
+Subject: [PATCH 6.6 133/603] wifi: iwlwifi: mvm: use correct sta ID for IGTK/BIGTK
+Date: Wed, 15 Nov 2023 14:11:18 -0500
+Message-ID: <20231115191622.469790793@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,41 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 5055fadfa7e16f2427d5b3c40b2bf563ddfdab22 ]
+[ Upstream commit 63ef576c9facf5d92702e249ad213fa73eb434bf ]
 
-Fix the probe function to call mtk_thermal_release_periodic_ts for
-everything != MTK_THERMAL_V1. This was accidentally changed from V1
-to V2 in the original patch.
+We don't (yet) send the IGTK down to the firmware, but when
+we do it needs to be with the broadcast station ID, not the
+multicast station ID. Same for the BIGTK, which we may send
+already if firmware advertises it (but it doesn't yet.)
 
-Reported-by: Frank Wunderlich <frank-w@public-files.de>
-Closes: https://lore.kernel.org/lkml/B0B3775B-B8D1-4284-814F-4F41EC22F532@public-files.de/
-Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Closes: https://lore.kernel.org/lkml/07a569b9-e691-64ea-dd65-3b49842af33d@linaro.org/
-Fixes: 33140e668b10 ("thermal/drivers/mediatek: Control buffer enablement tweaks")
-Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230918100706.1229239-1-msp@baylibre.com
+Fixes: a5de7de7e78e ("wifi: iwlwifi: mvm: enable TX beacon protection")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230926110319.dbc653913353.I82e90c86010f0b9588a180d9835fd11f666f5196@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mediatek/auxadc_thermal.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/mediatek/auxadc_thermal.c b/drivers/thermal/mediatek/auxadc_thermal.c
-index 843214d30bd8b..8b0edb2048443 100644
---- a/drivers/thermal/mediatek/auxadc_thermal.c
-+++ b/drivers/thermal/mediatek/auxadc_thermal.c
-@@ -1267,7 +1267,7 @@ static int mtk_thermal_probe(struct platform_device *pdev)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
+index 2c9f2f71b083a..f498206470410 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-key.c
+@@ -24,10 +24,15 @@ static u32 iwl_mvm_get_sec_sta_mask(struct iwl_mvm *mvm,
+ 			return 0;
+ 	}
  
- 	mtk_thermal_turn_on_buffer(mt, apmixed_base);
+-	/* AP group keys are per link and should be on the mcast STA */
++	/* AP group keys are per link and should be on the mcast/bcast STA */
+ 	if (vif->type == NL80211_IFTYPE_AP &&
+-	    !(keyconf->flags & IEEE80211_KEY_FLAG_PAIRWISE))
++	    !(keyconf->flags & IEEE80211_KEY_FLAG_PAIRWISE)) {
++		/* IGTK/BIGTK to bcast STA */
++		if (keyconf->keyidx >= 4)
++			return BIT(link_info->bcast_sta.sta_id);
++		/* GTK for data to mcast STA */
+ 		return BIT(link_info->mcast_sta.sta_id);
++	}
  
--	if (mt->conf->version != MTK_THERMAL_V2)
-+	if (mt->conf->version != MTK_THERMAL_V1)
- 		mtk_thermal_release_periodic_ts(mt, auxadc_base);
- 
- 	if (mt->conf->version == MTK_THERMAL_V1)
+ 	/* for client mode use the AP STA also for group keys */
+ 	if (!sta && vif->type == NL80211_IFTYPE_STATION)
 -- 
 2.42.0
 
