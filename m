@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFCD3DB8D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A402328371
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7+ivlNp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B709CC433CC;
-	Wed, 15 Nov 2023 19:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MF0joFjE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563C6C433C8;
+	Wed, 15 Nov 2023 19:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076037;
-	bh=oGoJVXLJ4rXzkgHk2aGArBKqiUlhNA23AOWr5LfHh6g=;
+	s=korg; t=1700076039;
+	bh=dijJLh//O2NOqvH//1hWWLo56JxzCVN8H+3t5dBrjVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7+ivlNpafq2ZHeLezCpz8e7vSwwxgeeE4tIQGyNiUwr74+Je6b9XAGd6wkITPN+o
-	 k82h645mW+Jg8f8onjggsxFNF0awJCn4ocr4sVK8IO9AXWSGX7c6R3iHXmhITPbOaK
-	 sAoiNxIyiJmBNAffZWtej7hsNGjhPqI3Zxni2tt8=
+	b=MF0joFjEH6KUZ+h2OVaRJRX2i4iwRbvFi7aRUl28jJSvvGX3PdK05HSu2bk7CqQMU
+	 GWkL78SkY12MiOtGCpf2/6vsD1gYUmEhTR4Qb659v1aanqFE6lru8Cyiu80/w0GrpB
+	 ZNOGAVKh4uEjA9qO/8OkQPEjaKEG0OXL9X8CSTAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Harshitha Prem <quic_hprem@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 036/550] irqchip/sifive-plic: Fix syscore registration for multi-socket systems
-Date: Wed, 15 Nov 2023 14:10:20 -0500
-Message-ID: <20231115191603.216641620@linuxfoundation.org>
+Subject: [PATCH 6.5 037/550] wifi: ath12k: fix undefined behavior with __fls in dp
+Date: Wed, 15 Nov 2023 14:10:21 -0500
+Message-ID: <20231115191603.286975427@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,54 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Harshitha Prem <quic_hprem@quicinc.com>
 
-[ Upstream commit f99b926f6543faeadba1b4524d8dc9c102489135 ]
+[ Upstream commit d48f55e773dcce8fcf9e587073452a4944011b11 ]
 
-Multi-socket systems have a separate PLIC in each socket, so __plic_init()
-is invoked for each PLIC. __plic_init() registers syscore operations, which
-obviously fails on the second invocation.
+When max virtual ap interfaces are configured in all the bands
+with ACS and hostapd restart is done every 60s,
+a crash is observed at random times because of handling the
+uninitialized peer fragments with fragment id of packet as 0.
 
-Move it into the already existing condition for installing the CPU hotplug
-state so it is only invoked once when the first PLIC is initialized.
+"__fls" would have an undefined behavior if the argument is passed
+as "0". Hence, added changes to handle the same.
 
-[ tglx: Massaged changelog ]
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 
-Fixes: e80f0b6a2cf3 ("irqchip/irq-sifive-plic: Add syscore callbacks for hibernation")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20231025142820.390238-4-apatel@ventanamicro.com
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Harshitha Prem <quic_hprem@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230821130343.29495-3-quic_hprem@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-sifive-plic.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
-index e1484905b7bdb..5b7bc4fd9517c 100644
---- a/drivers/irqchip/irq-sifive-plic.c
-+++ b/drivers/irqchip/irq-sifive-plic.c
-@@ -532,17 +532,18 @@ static int __init __plic_init(struct device_node *node,
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index ffd9a2018610f..fcb91b8ef00e3 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -3228,7 +3228,7 @@ static int ath12k_dp_rx_frag_h_mpdu(struct ath12k *ar,
+ 		goto out_unlock;
  	}
  
- 	/*
--	 * We can have multiple PLIC instances so setup cpuhp state only
--	 * when context handler for current/boot CPU is present.
-+	 * We can have multiple PLIC instances so setup cpuhp state
-+	 * and register syscore operations only when context handler
-+	 * for current/boot CPU is present.
- 	 */
- 	handler = this_cpu_ptr(&plic_handlers);
- 	if (handler->present && !plic_cpuhp_setup_done) {
- 		cpuhp_setup_state(CPUHP_AP_IRQ_SIFIVE_PLIC_STARTING,
- 				  "irqchip/sifive/plic:starting",
- 				  plic_starting_cpu, plic_dying_cpu);
-+		register_syscore_ops(&plic_irq_syscore_ops);
- 		plic_cpuhp_setup_done = true;
- 	}
--	register_syscore_ops(&plic_irq_syscore_ops);
- 
- 	pr_info("%pOFP: mapped %d interrupts with %d handlers for"
- 		" %d contexts.\n", node, nr_irqs, nr_handlers, nr_contexts);
+-	if (frag_no > __fls(rx_tid->rx_frag_bitmap))
++	if ((!rx_tid->rx_frag_bitmap || frag_no > __fls(rx_tid->rx_frag_bitmap)))
+ 		__skb_queue_tail(&rx_tid->rx_frags, msdu);
+ 	else
+ 		ath12k_dp_rx_h_sort_frags(ab, &rx_tid->rx_frags, msdu);
 -- 
 2.42.0
 
