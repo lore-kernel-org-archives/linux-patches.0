@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2CB3EA89
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643903EA89
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yo+ytvlp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D3FC433C7;
-	Wed, 15 Nov 2023 19:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAkIOL8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F09C433C9;
+	Wed, 15 Nov 2023 19:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076994;
-	bh=b93Dx92s0SjCfe13HMd/eAvselD1++HxnDBzHkhKB1Q=;
+	s=korg; t=1700076996;
+	bh=61DUVm0EWTOlpMTZZg6o2BlTUua64yxlhRxE42YGgOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yo+ytvlpNdIvez6+RwLbpjBvBEbMykrKC6kYNdY1l7QXoOgfze5SzVZoG/vUPviJO
-	 h5xs28OtcriwHcnMpzopGdw2IlRys9FPjQ01ThTzwbM1DrjKOVhnZJumJ6wAKLp7nr
-	 JX62W5ywlncV8pUw1dkn9njDPjbLrNJRB3lIlu6c=
+	b=dAkIOL8Gr1I6RZ0WxLj7n3Pl85hR8U3+z6hqg+fIQk+csjcl8AYUuBVO3NZXHvtvi
+	 fs52PwzbxKWzkoOE+FFR10/Vviyq+5dAdIHcX/yhMJg2VYAdRf0+nShNUnlrNpkUbt
+	 Pd3TL84EYPSbVNH8TJEmI/BWXHuJkpZELzV9/COY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 464/550] cxl/region: Fix cxl_region_rwsem lock held when returning to user space
-Date: Wed, 15 Nov 2023 14:17:28 -0500
-Message-ID: <20231115191633.032448299@linuxfoundation.org>
+Subject: [PATCH 6.6 088/603] wifi: mt76: mt7996: fix TWT command format
+Date: Wed, 15 Nov 2023 14:10:33 -0500
+Message-ID: <20231115191619.227209424@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,60 +39,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 3531b27f1f04a6bc9c95cf00d40efe618d57aa93 ]
+[ Upstream commit 84f313b7392f6501f05d8981105d79859b1252cb ]
 
-Fix a missed "goto out" to unlock on error to cleanup this splat:
+Align the command format of UNI_CMD_TWT_ARGT_UPDATE to firmware.
 
-    WARNING: lock held when returning to user space!
-    6.6.0-rc3-lizhijian+ #213 Not tainted
-    ------------------------------------------------
-    cxl/673 is leaving the kernel with locks still held!
-    1 lock held by cxl/673:
-     #0: ffffffffa013b9d0 (cxl_region_rwsem){++++}-{3:3}, at: commit_store+0x7d/0x3e0 [cxl_core]
-
-In terms of user visible impact of this bug for backports:
-
-cxl_region_invalidate_memregion() on x86 invokes wbinvd which is a
-problematic instruction for virtualized environments. So, on virtualized
-x86, cxl_region_invalidate_memregion() returns an error. This failure
-case got missed because CXL memory-expander device passthrough is not a
-production use case, and emulation of CXL devices is typically limited
-to kernel development builds with CONFIG_CXL_REGION_INVALIDATION_TEST=y,
-that makes cxl_region_invalidate_memregion() succeed.
-
-In other words, the expected exposure of this bug is limited to CXL
-subsystem development environments using QEMU that neglected
-CONFIG_CXL_REGION_INVALIDATION_TEST=y.
-
-Fixes: d1257d098a5a ("cxl/region: Move cache invalidation before region teardown, and before setup")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://lore.kernel.org/r/20231025085450.2514906-1-lizhijian@fujitsu.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 89d24cd71606e..7392206eb8699 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -288,7 +288,7 @@ static ssize_t commit_store(struct device *dev, struct device_attribute *attr,
- 	 */
- 	rc = cxl_region_invalidate_memregion(cxlr);
- 	if (rc)
--		return rc;
-+		goto out;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index cf443748ef7cc..b0e6f51041fdd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -3548,7 +3548,9 @@ int mt7996_mcu_twt_agrt_update(struct mt7996_dev *dev,
+ 			       int cmd)
+ {
+ 	struct {
+-		u8 _rsv[4];
++		/* fixed field */
++		u8 bss;
++		u8 _rsv[3];
  
- 	if (commit) {
- 		rc = cxl_region_decode_commit(cxlr);
+ 		__le16 tag;
+ 		__le16 len;
+@@ -3566,7 +3568,7 @@ int mt7996_mcu_twt_agrt_update(struct mt7996_dev *dev,
+ 		u8 exponent;
+ 		u8 is_ap;
+ 		u8 agrt_params;
+-		u8 __rsv2[135];
++		u8 __rsv2[23];
+ 	} __packed req = {
+ 		.tag = cpu_to_le16(UNI_CMD_TWT_ARGT_UPDATE),
+ 		.len = cpu_to_le16(sizeof(req) - 4),
+@@ -3576,6 +3578,7 @@ int mt7996_mcu_twt_agrt_update(struct mt7996_dev *dev,
+ 		.flowid = flow->id,
+ 		.peer_id = cpu_to_le16(flow->wcid),
+ 		.duration = flow->duration,
++		.bss = mvif->mt76.idx,
+ 		.bss_idx = mvif->mt76.idx,
+ 		.start_tsf = cpu_to_le64(flow->tsf),
+ 		.mantissa = flow->mantissa,
 -- 
 2.42.0
 
