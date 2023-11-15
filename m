@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABE73BB48
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C239381C6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYu09U5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C385C433C8;
-	Wed, 15 Nov 2023 19:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJR0wE5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05CEC433C9;
+	Wed, 15 Nov 2023 19:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078140;
-	bh=qq+pQWndxCbzLlHkOtEBqm1nwkr5IyBnqrzwIF2OXVI=;
+	s=korg; t=1700078142;
+	bh=PWySqCyQQQz5gLWdm0wlTUzSJDBYb02lK6yr1TPX5ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYu09U5tcwbYKWSVwq72MW0ZLRgDiGm7NnckoIkqI0mODPjEhg4NH820EEZ245nrM
-	 jtbaxDAvTENp/mqONZ5EstVyFgZ627UKS02RGt7eI2jBdKjWa6891JBakoVy0FfXoF
-	 rAP42TTmYF3aTGnmHcIXFGiYz0M1mjoxG9By4xPo=
+	b=RJR0wE5SWCAiuD9r/djR4rQLYumEPDIPSkVb5PZWSOaEfbYaL0/89VjWq7UEJFqH3
+	 sQoZXgnAaIMATYMWr2n83axI1qZZ2n1+8wtw6IqDLxqlXbFbhwGb8gVOg66lnaf1Q8
+	 52SPfjNQYlC38H3XjJcUUYRmZkWmZXy5BskpMrxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Maxim Schwalm <maxim.schwalm@gmail.com>
-Subject: [PATCH 6.1 134/379] drm/bridge: tc358768: Fix tc358768_ns_to_cnt()
-Date: Wed, 15 Nov 2023 14:23:29 -0500
-Message-ID: <20231115192653.057214581@linuxfoundation.org>
+	Ian Nartowicz <deadbeef@nartowicz.co.uk>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 111/379] Revert "hwmon: (sch56xx-common) Add automatic module loading on supported devices"
+Date: Wed, 15 Nov 2023 14:23:06 -0500
+Message-ID: <20231115192651.694923111@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -45,40 +43,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit f1dabbe645065d20ca863c8d446c74c59ca1ca9d ]
+[ Upstream commit d621a46d05107f4e510383d6a38f2160c62d28f7 ]
 
-The tc358768_ns_to_cnt() is, most likely, supposed to do a div-round-up
-operation, but it misses subtracting one from the dividend.
+This reverts commit 393935baa45e5ccb9603cf7f9f020ed1bc0915f7.
 
-Fix this by just using DIV_ROUND_UP().
+As reported by Ian Nartowicz, this and the next patch
+result in a failure to load the driver on Celsius W280.
+While the alternative would be to add the board to the DMI
+override table, it is quite likely that other systems are
+also affected. Revert the offending patches to avoid future
+problems.
 
-Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
-Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> # Asus TF700T
-Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-11-31725f008a50@ideasonboard.com
+Fixes: 393935baa45e ("hwmon: (sch56xx-common) Add automatic module loading on supported devices")
+Reported-by: Ian Nartowicz <deadbeef@nartowicz.co.uk>
+Closes: https://lore.kernel.org/linux-hwmon/20231025192239.3c5389ae@debian.org/T/#t
+Cc: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/sch56xx-common.c | 40 ++--------------------------------
+ 1 file changed, 2 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index 5fd89596c9a20..8429b6518b502 100644
---- a/drivers/gpu/drm/bridge/tc358768.c
-+++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -631,7 +631,7 @@ static int tc358768_setup_pll(struct tc358768_priv *priv,
+diff --git a/drivers/hwmon/sch56xx-common.c b/drivers/hwmon/sch56xx-common.c
+index 3ece53adabd62..ac1f725807155 100644
+--- a/drivers/hwmon/sch56xx-common.c
++++ b/drivers/hwmon/sch56xx-common.c
+@@ -7,10 +7,8 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
- static u32 tc358768_ns_to_cnt(u32 ns, u32 period_ps)
- {
--	return (ns * 1000 + period_ps) / period_ps;
-+	return DIV_ROUND_UP(ns * 1000, period_ps);
+ #include <linux/module.h>
+-#include <linux/mod_devicetable.h>
+ #include <linux/init.h>
+ #include <linux/platform_device.h>
+-#include <linux/dmi.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+ #include <linux/acpi.h>
+@@ -21,10 +19,7 @@
+ #include <linux/slab.h>
+ #include "sch56xx-common.h"
+ 
+-static bool ignore_dmi;
+-module_param(ignore_dmi, bool, 0);
+-MODULE_PARM_DESC(ignore_dmi, "Omit DMI check for supported devices (default=0)");
+-
++/* Insmod parameters */
+ static bool nowayout = WATCHDOG_NOWAYOUT;
+ module_param(nowayout, bool, 0);
+ MODULE_PARM_DESC(nowayout, "Watchdog cannot be stopped once started (default="
+@@ -523,42 +518,11 @@ static int __init sch56xx_device_add(int address, const char *name)
+ 	return PTR_ERR_OR_ZERO(sch56xx_pdev);
  }
  
- static u32 tc358768_ps_to_ns(u32 ps)
+-/* For autoloading only */
+-static const struct dmi_system_id sch56xx_dmi_table[] __initconst = {
+-	{
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
+-		},
+-	},
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(dmi, sch56xx_dmi_table);
+-
+ static int __init sch56xx_init(void)
+ {
+-	const char *name = NULL;
+ 	int address;
++	const char *name = NULL;
+ 
+-	if (!ignore_dmi) {
+-		if (!dmi_check_system(sch56xx_dmi_table))
+-			return -ENODEV;
+-
+-		/*
+-		 * Some machines like the Esprimo P720 and Esprimo C700 have
+-		 * onboard devices named " Antiope"/" Theseus" instead of
+-		 * "Antiope"/"Theseus", so we need to check for both.
+-		 */
+-		if (!dmi_find_device(DMI_DEV_TYPE_OTHER, "Antiope", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Antiope", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, "Theseus", NULL) &&
+-		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Theseus", NULL))
+-			return -ENODEV;
+-	}
+-
+-	/*
+-	 * Some devices like the Esprimo C700 have both onboard devices,
+-	 * so we still have to check manually
+-	 */
+ 	address = sch56xx_find(0x4e, &name);
+ 	if (address < 0)
+ 		address = sch56xx_find(0x2e, &name);
 -- 
 2.42.0
 
