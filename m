@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA67028369
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909D743AAE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hp3g5nPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFB4C4E77A;
-	Wed, 15 Nov 2023 20:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUUkopq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B4EC4E779;
+	Wed, 15 Nov 2023 20:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081661;
-	bh=NvDZR3W8jz3n/QR6wl3hzCEnwRQPWzOrFR2u9yeNSHE=;
+	s=korg; t=1700081663;
+	bh=LoIbWKpSuGqNXjkaIv46kx789jdNiqSVzRQv6E/wWUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hp3g5nPocEulimKy7a6E/gn6DTxraRkOCwQh1Au4S8z1+tXZukcU4RuCZKHmidtt7
-	 tdf7rY+89lPSqB+ZUV1IwAz6vl3nZANKgAm27yjCoWVTWZxMQiQvMNN6ckY+7/pZK/
-	 Q8k8hQlVwJgB3EweFLa/z93bD5aeo3JsjEJ+ngk8=
+	b=FUUkopq4kxBtJdboyryvVy4+33N3wdFGqTxMgIfzRbnFQcf28LxBeDAs/bRFy6KHf
+	 r6prROkjOTTHXI589r61iGNPLFEF05DqHrQ3t8kNDdTXRi5HjDOgP8A0Cy7wWCSW1r
+	 UMkS3v1mYG8+lrLH2NqZTQMk5RX2rfHblLGhA1Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/191] clk: asm9260: use parent index to link the reference clock
-Date: Wed, 15 Nov 2023 15:45:21 -0500
-Message-ID: <20231115204647.370945023@linuxfoundation.org>
+Subject: [PATCH 5.10 023/191] wifi: rtlwifi: fix EDCA limit set by BT coexistence
+Date: Wed, 15 Nov 2023 15:44:58 -0500
+Message-ID: <20231115204645.932511909@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,137 +43,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit f5290d8e4f0caa81a491448a27dd70e726095d07 ]
+[ Upstream commit 3391ee7f9ea508c375d443cd712c2e699be235b4 ]
 
-Rewrite clk-asm9260 to use parent index to use the reference clock.
-During this rework two helpers are added:
+In 'rtl92c_dm_check_edca_turbo()', 'rtl88e_dm_check_edca_turbo()',
+and 'rtl8723e_dm_check_edca_turbo()', the DL limit should be set
+from the corresponding field of 'rtlpriv->btcoexist' rather than
+UL. Compile tested only.
 
-- clk_hw_register_mux_table_parent_data() to supplement
-  clk_hw_register_mux_table() but using parent_data instead of
-  parent_names
-
-- clk_hw_register_fixed_rate_parent_accuracy() to be used instead of
-  directly calling __clk_hw_register_fixed_rate(). The later function is
-  an internal API, which is better not to be called directly.
-
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20220916061740.87167-2-dmitry.baryshkov@linaro.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 84aefafe6b29 ("clk: linux/clk-provider.h: fix kernel-doc warnings and typos")
+Fixes: 0529c6b81761 ("rtlwifi: rtl8723ae: Update driver to match 06/28/14 Realtek version")
+Fixes: c151aed6aa14 ("rtlwifi: rtl8188ee: Update driver to match Realtek release of 06282014")
+Fixes: beb5bc402043 ("rtlwifi: rtl8192c-common: Convert common dynamic management routines for addition of rtl8192se and rtl8192de")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230928052327.120178-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-asm9260.c    | 29 ++++++++++++-----------------
- include/linux/clk-provider.h | 21 +++++++++++++++++++++
- 2 files changed, 33 insertions(+), 17 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c       | 2 +-
+ drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c | 2 +-
+ drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c       | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/clk-asm9260.c b/drivers/clk/clk-asm9260.c
-index bacebd457e6f3..8b3c059e19a12 100644
---- a/drivers/clk/clk-asm9260.c
-+++ b/drivers/clk/clk-asm9260.c
-@@ -80,7 +80,7 @@ struct asm9260_mux_clock {
- 	u8			mask;
- 	u32			*table;
- 	const char		*name;
--	const char		**parent_names;
-+	const struct clk_parent_data *parent_data;
- 	u8			num_parents;
- 	unsigned long		offset;
- 	unsigned long		flags;
-@@ -232,10 +232,10 @@ static const struct asm9260_gate_data asm9260_ahb_gates[] __initconst = {
- 		HW_AHBCLKCTRL1,	16 },
- };
- 
--static const char __initdata *main_mux_p[] =   { NULL, NULL };
--static const char __initdata *i2s0_mux_p[] =   { NULL, NULL, "i2s0m_div"};
--static const char __initdata *i2s1_mux_p[] =   { NULL, NULL, "i2s1m_div"};
--static const char __initdata *clkout_mux_p[] = { NULL, NULL, "rtc"};
-+static struct clk_parent_data __initdata main_mux_p[] =   { { .index = 0, }, { .name = "pll" } };
-+static struct clk_parent_data __initdata i2s0_mux_p[] =   { { .index = 0, }, { .name = "pll" }, { .name = "i2s0m_div"} };
-+static struct clk_parent_data __initdata i2s1_mux_p[] =   { { .index = 0, }, { .name = "pll" }, { .name = "i2s1m_div"} };
-+static struct clk_parent_data __initdata clkout_mux_p[] = { { .index = 0, }, { .name = "pll" }, { .name = "rtc"} };
- static u32 three_mux_table[] = {0, 1, 3};
- 
- static struct asm9260_mux_clock asm9260_mux_clks[] __initdata = {
-@@ -255,9 +255,10 @@ static struct asm9260_mux_clock asm9260_mux_clks[] __initdata = {
- 
- static void __init asm9260_acc_init(struct device_node *np)
- {
--	struct clk_hw *hw;
-+	struct clk_hw *hw, *pll_hw;
- 	struct clk_hw **hws;
--	const char *ref_clk, *pll_clk = "pll";
-+	const char *pll_clk = "pll";
-+	struct clk_parent_data pll_parent_data = { .index = 0 };
- 	u32 rate;
- 	int n;
- 
-@@ -274,21 +275,15 @@ static void __init asm9260_acc_init(struct device_node *np)
- 	/* register pll */
- 	rate = (ioread32(base + HW_SYSPLLCTRL) & 0xffff) * 1000000;
- 
--	/* TODO: Convert to DT parent scheme */
--	ref_clk = of_clk_get_parent_name(np, 0);
--	hw = __clk_hw_register_fixed_rate(NULL, NULL, pll_clk,
--			ref_clk, NULL, NULL, 0, rate, 0,
--			CLK_FIXED_RATE_PARENT_ACCURACY);
--
--	if (IS_ERR(hw))
-+	pll_hw = clk_hw_register_fixed_rate_parent_accuracy(NULL, pll_clk, &pll_parent_data,
-+							0, rate);
-+	if (IS_ERR(pll_hw))
- 		panic("%pOFn: can't register REFCLK. Check DT!", np);
- 
- 	for (n = 0; n < ARRAY_SIZE(asm9260_mux_clks); n++) {
- 		const struct asm9260_mux_clock *mc = &asm9260_mux_clks[n];
- 
--		mc->parent_names[0] = ref_clk;
--		mc->parent_names[1] = pll_clk;
--		hw = clk_hw_register_mux_table(NULL, mc->name, mc->parent_names,
-+		hw = clk_hw_register_mux_table_parent_data(NULL, mc->name, mc->parent_data,
- 				mc->num_parents, mc->flags, base + mc->offset,
- 				0, mc->mask, 0, mc->table, &asm9260_clk_lock);
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
+index d10c14c694da8..a1b920843b869 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
+@@ -799,7 +799,7 @@ static void rtl88e_dm_check_edca_turbo(struct ieee80211_hw *hw)
  	}
-diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-index 03a5de5f99f4a..d199f79c70915 100644
---- a/include/linux/clk-provider.h
-+++ b/include/linux/clk-provider.h
-@@ -439,6 +439,20 @@ struct clk *clk_register_fixed_rate(struct device *dev, const char *name,
- 	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, NULL,	      \
- 				     (parent_data), NULL, (flags),	      \
- 				     (fixed_rate), (fixed_accuracy), 0)
-+/**
-+ * clk_hw_register_fixed_rate_parent_accuracy - register fixed-rate clock with
-+ * the clock framework
-+ * @dev: device that is registering this clock
-+ * @name: name of this clock
-+ * @parent_name: name of clock's parent
-+ * @flags: framework-specific flags
-+ * @fixed_rate: non-adjustable clock rate
-+ */
-+#define clk_hw_register_fixed_rate_parent_accuracy(dev, name, parent_data,    \
-+						   flags, fixed_rate)	      \
-+	__clk_hw_register_fixed_rate((dev), NULL, (name), NULL, NULL,      \
-+				     (parent_data), (flags), (fixed_rate), 0,    \
-+				     CLK_FIXED_RATE_PARENT_ACCURACY)
  
- void clk_unregister_fixed_rate(struct clk *clk);
- void clk_hw_unregister_fixed_rate(struct clk_hw *hw);
-@@ -858,6 +872,13 @@ struct clk *clk_register_mux_table(struct device *dev, const char *name,
- 			      (parent_names), NULL, NULL, (flags), (reg),     \
- 			      (shift), (mask), (clk_mux_flags), (table),      \
- 			      (lock))
-+#define clk_hw_register_mux_table_parent_data(dev, name, parent_data,	      \
-+				  num_parents, flags, reg, shift, mask,	      \
-+				  clk_mux_flags, table, lock)		      \
-+	__clk_hw_register_mux((dev), NULL, (name), (num_parents),	      \
-+			      NULL, NULL, (parent_data), (flags), (reg),      \
-+			      (shift), (mask), (clk_mux_flags), (table),      \
-+			      (lock))
- #define clk_hw_register_mux(dev, name, parent_names, num_parents, flags, reg, \
- 			    shift, width, clk_mux_flags, lock)		      \
- 	__clk_hw_register_mux((dev), NULL, (name), (num_parents),	      \
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
+ 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
+index 265a1a336304e..c493e50b7bc58 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
+@@ -640,7 +640,7 @@ static void rtl92c_dm_check_edca_turbo(struct ieee80211_hw *hw)
+ 	}
+ 
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
+ 
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
+index 8ada31380efa4..0ff8e355c23a4 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
+@@ -466,7 +466,7 @@ static void rtl8723e_dm_check_edca_turbo(struct ieee80211_hw *hw)
+ 	}
+ 
+ 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
+-		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
++		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
+ 		bt_change_edca = true;
+ 	}
+ 
 -- 
 2.42.0
 
