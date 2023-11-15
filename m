@@ -1,30 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EA5364B3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E066364B3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFkddYgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB2DC4E772;
-	Wed, 15 Nov 2023 20:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rn23+bBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0267C4E774;
+	Wed, 15 Nov 2023 20:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081545;
-	bh=U4ZGkTZOm04/v/dY01wwo+B3fUqGtUuMdZZCXBWhWBs=;
+	s=korg; t=1700081547;
+	bh=uO1gtRsIs7Db+p6mHVTOpCv9WEEDoESgn4lEFVCxNag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFkddYgcJwmUxUUQ7H8LGa6f84AiUvi0VZewXU2xmb0WnW4z8Kdblzwv9yUal/ji4
-	 icqsOWf3m6dIDhVfNmiQ8hSeTIV8hsExan74DtEdqc+/wQDOJSxgzdQDAfVMeolJ+A
-	 zO537cCf3RIePdvLCbxILFOyLL/hG0c0h4Kmag0Y=
+	b=Rn23+bBGw/kDg4TJWLdUm48XSsPWW6ftuWU1SydDR4qLHdB+CYWfKEyYH+NHzax4i
+	 pCy2LaFutXxzpoMeuUKGI2DWPPidknYcraCMtW7P3gwCxzpA9utDyUWCFsJTUGaACA
+	 qdCgHq784ekZc+KT/x/UWG16MUj8Qg/N9Lra8vNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	German Gomez <german.gomez@arm.com>,
+	James Clark <james.clark@arm.com>,
+	Nick Terrell <terrelln@fb.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Changbin Du <changbin.du@huawei.com>,
+	liuwenyu <liuwenyu7@huawei.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 219/244] dccp: Call security_inet_conn_request() after setting IPv4 addresses.
-Date: Wed, 15 Nov 2023 15:36:51 -0500
-Message-ID: <20231115203601.484116456@linuxfoundation.org>
+Subject: [PATCH 5.15 193/244] perf hist: Add missing puts to hist__account_cycles
+Date: Wed, 15 Nov 2023 15:36:25 -0500
+Message-ID: <20231115203559.954316881@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -43,57 +64,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit fa2df45af13091f76b89adb84a28f13818d5d631 ]
+[ Upstream commit c1149037f65bcf0334886180ebe3d5efcf214912 ]
 
-Initially, commit 4237c75c0a35 ("[MLSXFRM]: Auto-labeling of child
-sockets") introduced security_inet_conn_request() in some functions
-where reqsk is allocated.  The hook is added just after the allocation,
-so reqsk's IPv4 remote address was not initialised then.
+Caught using reference count checking on perf top with
+"--call-graph=lbr". After this no memory leaks were detected.
 
-However, SELinux/Smack started to read it in netlbl_req_setattr()
-after the cited commits.
-
-This bug was partially fixed by commit 284904aa7946 ("lsm: Relocate
-the IPv4 security_inet_conn_request() hooks").
-
-This patch fixes the last bug in DCCPv4.
-
-Fixes: 389fb800ac8b ("netlabel: Label incoming TCP connections correctly in SELinux")
-Fixes: 07feee8f812f ("netlabel: Cleanup the Smack/NetLabel code to fix incoming TCP connections")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 57849998e2cd ("perf report: Add processing for cycle histograms")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Sandipan Das <sandipan.das@amd.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: German Gomez <german.gomez@arm.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Nick Terrell <terrelln@fb.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Changbin Du <changbin.du@huawei.com>
+Cc: liuwenyu <liuwenyu7@huawei.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Song Liu <song@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Yanteng Si <siyanteng@loongson.cn>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20231024222353.3024098-6-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv4.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/util/hist.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
-index b44e46dc8e040..cab82344de9be 100644
---- a/net/dccp/ipv4.c
-+++ b/net/dccp/ipv4.c
-@@ -623,9 +623,6 @@ int dccp_v4_conn_request(struct sock *sk, struct sk_buff *skb)
- 	if (dccp_parse_options(sk, dreq, skb))
- 		goto drop_and_free;
+diff --git a/tools/perf/util/hist.c b/tools/perf/util/hist.c
+index b776465e04ef3..e67935b1e3060 100644
+--- a/tools/perf/util/hist.c
++++ b/tools/perf/util/hist.c
+@@ -2635,8 +2635,6 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
  
--	if (security_inet_conn_request(sk, skb, req))
--		goto drop_and_free;
+ 	/* If we have branch cycles always annotate them. */
+ 	if (bs && bs->nr && entries[0].flags.cycles) {
+-		int i;
 -
- 	ireq = inet_rsk(req);
- 	sk_rcv_saddr_set(req_to_sk(req), ip_hdr(skb)->daddr);
- 	sk_daddr_set(req_to_sk(req), ip_hdr(skb)->saddr);
-@@ -633,6 +630,9 @@ int dccp_v4_conn_request(struct sock *sk, struct sk_buff *skb)
- 	ireq->ireq_family = AF_INET;
- 	ireq->ir_iif = sk->sk_bound_dev_if;
- 
-+	if (security_inet_conn_request(sk, skb, req))
-+		goto drop_and_free;
-+
- 	/*
- 	 * Step 3: Process LISTEN state
- 	 *
+ 		bi = sample__resolve_bstack(sample, al);
+ 		if (bi) {
+ 			struct addr_map_symbol *prev = NULL;
+@@ -2651,7 +2649,7 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
+ 			 * Note that perf stores branches reversed from
+ 			 * program order!
+ 			 */
+-			for (i = bs->nr - 1; i >= 0; i--) {
++			for (int i = bs->nr - 1; i >= 0; i--) {
+ 				addr_map_symbol__account_cycles(&bi[i].from,
+ 					nonany_branch_mode ? NULL : prev,
+ 					bi[i].flags.cycles);
+@@ -2660,6 +2658,12 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
+ 				if (total_cycles)
+ 					*total_cycles += bi[i].flags.cycles;
+ 			}
++			for (unsigned int i = 0; i < bs->nr; i++) {
++				map__put(bi[i].to.ms.map);
++				maps__put(bi[i].to.ms.maps);
++				map__put(bi[i].from.ms.map);
++				maps__put(bi[i].from.ms.maps);
++			}
+ 			free(bi);
+ 		}
+ 	}
 -- 
 2.42.0
 
