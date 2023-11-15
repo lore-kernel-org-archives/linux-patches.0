@@ -1,33 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F03364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D673DB91
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ld3nnvM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6543BC433C7;
-	Wed, 15 Nov 2023 19:31:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZW6VC3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A687C433C9;
+	Wed, 15 Nov 2023 19:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076714;
-	bh=VsPAm/xMtWqXPs27iKhuJAtEFpaSV5/WTyjC39z0GL4=;
+	s=korg; t=1700076716;
+	bh=vL5sD+wXikLpB0SNAPvF/KJGavoA5i8niOhW5vRw8t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ld3nnvM40/xW6rF9rDad8F4v0NxMKyknKlqpciAwVgwujiD2qv9ggM2Vs/J4QSREj
-	 +xC+N0qPDf87TNoUQQEw/S1bc4nU9oAClzOOpZr3AjsdHnTWCgfVLp/JPW5xGoR07t
-	 WM2VICh1BBNbWjuhOFsVKuFZ9PG7WCrh+gLcd6BA=
+	b=RZW6VC3nmghqg4kAMWmb+sICSM1gc93pbbfdkhj1c3hsx/sFDVlKwpicAgEsCu4tG
+	 uNexRBNzYJOLipQtYUJPO4GcoY2aozMO/5l5hRo2JbPBn9zv0z4v4fI8eFFKVPyWeN
+	 rvHpLVUUM4UhNp/njh28aRXJ2gcTw72y5WzhLIOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Yury Norov <yury.norov@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Mel Gorman <mgorman@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 399/550] dmaengine: ti: edma: handle irq_of_parse_and_map() errors
-Date: Wed, 15 Nov 2023 14:16:23 -0500
-Message-ID: <20231115191628.522294485@linuxfoundation.org>
+Subject: [PATCH 6.6 003/603] sched/topology: Fix sched_numa_find_nth_cpu() in CPU-less case
+Date: Wed, 15 Nov 2023 14:09:08 -0500
+Message-ID: <20231115191613.361360889@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,50 +41,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Yury Norov <yury.norov@gmail.com>
 
-[ Upstream commit 14f6d317913f634920a640e9047aa2e66f5bdcb7 ]
+[ Upstream commit 617f2c38cb5ce60226042081c09e2ee3a90d03f8 ]
 
-Zero is not a valid IRQ for in-kernel code and the irq_of_parse_and_map()
-function returns zero on error.  So this check for valid IRQs should only
-accept values > 0.
+When the node provided by user is CPU-less, corresponding record in
+sched_domains_numa_masks is not set. Trying to dereference it in the
+following code leads to kernel crash.
 
-Fixes: 2b6b3b742019 ("ARM/dmaengine: edma: Merge the two drivers under drivers/dma/")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/f15cb6a7-8449-4f79-98b6-34072f04edbc@moroto.mountain
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+To avoid it, start searching from the nearest node with CPUs.
+
+Fixes: cd7f55359c90 ("sched: add sched_numa_find_nth_cpu()")
+Reported-by: Yicong Yang <yangyicong@hisilicon.com>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Link: https://lore.kernel.org/r/20230819141239.287290-4-yury.norov@gmail.com
+
+Closes: https://lore.kernel.org/lkml/CAAH8bW8C5humYnfpW3y5ypwx0E-09A3QxFE1JFzR66v+mO4XfA@mail.gmail.com/T/
+Closes: https://lore.kernel.org/lkml/ZMHSNQfv39HN068m@yury-ThinkPad/T/#mf6431cb0b7f6f05193c41adeee444bc95bf2b1c4
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/topology.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 9ea91c640c324..5d07aa5a74928 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2402,7 +2402,7 @@ static int edma_probe(struct platform_device *pdev)
- 	if (irq < 0 && node)
- 		irq = irq_of_parse_and_map(node, 0);
+diff --git a/kernel/sched/topology.c b/kernel/sched/topology.c
+index 05a5bc678c089..423d08947962c 100644
+--- a/kernel/sched/topology.c
++++ b/kernel/sched/topology.c
+@@ -2122,12 +2122,16 @@ static int hop_cmp(const void *a, const void *b)
+  */
+ int sched_numa_find_nth_cpu(const struct cpumask *cpus, int cpu, int node)
+ {
+-	struct __cmp_key k = { .cpus = cpus, .node = node, .cpu = cpu };
++	struct __cmp_key k = { .cpus = cpus, .cpu = cpu };
+ 	struct cpumask ***hop_masks;
+ 	int hop, ret = nr_cpu_ids;
  
--	if (irq >= 0) {
-+	if (irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccint",
- 					  dev_name(dev));
- 		ret = devm_request_irq(dev, irq, dma_irq_handler, 0, irq_name,
-@@ -2418,7 +2418,7 @@ static int edma_probe(struct platform_device *pdev)
- 	if (irq < 0 && node)
- 		irq = irq_of_parse_and_map(node, 2);
+ 	rcu_read_lock();
  
--	if (irq >= 0) {
-+	if (irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccerrint",
- 					  dev_name(dev));
- 		ret = devm_request_irq(dev, irq, dma_ccerr_handler, 0, irq_name,
++	/* CPU-less node entries are uninitialized in sched_domains_numa_masks */
++	node = numa_nearest_node(node, N_CPU);
++	k.node = node;
++
+ 	k.masks = rcu_dereference(sched_domains_numa_masks);
+ 	if (!k.masks)
+ 		goto unlock;
 -- 
 2.42.0
 
