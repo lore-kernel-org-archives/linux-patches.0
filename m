@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDBB2FC35
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6143A8FF
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeVzmh9u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D73C433C8;
-	Wed, 15 Nov 2023 19:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1GmuLUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A04C433C8;
+	Wed, 15 Nov 2023 19:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076625;
-	bh=VhF6u9UMG7d8VF845IX4gtGu8KjgcfVPxbW2K+vEU/M=;
+	s=korg; t=1700076627;
+	bh=wp7z9M3951kASruUvFkIz1+03f172t7myD5+XDjEiCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YeVzmh9u2eXtzAk/Z5g60YlRBqSqamelDbI5YXzMM1y8EhxaDAVDTcxqqRMa6mLtX
-	 hnmtFj7rAMICgSV4Kt8MF2hmYXTbjg4cqpWKJcKFGiU6bIt+/DoHQe2pxZLkrT2zln
-	 RGYsupRXWCwmwBEZkqyr+G87PrUfK9PZQ9A2msWc=
+	b=Z1GmuLUuquOzU9WCl7p+AxmE42mWe7gS+L8rzLM8GsiFZoPQfLXeZxXb51otGYtk6
+	 R0N0Ajpae3tijelASSUw7E3og9sppSW/ELIacfz3cZkO+ixGzONXYwVKyBUNBbs7M8
+	 POIhm2qVoE1L2oBvDIWz9bkMtXAroXlBqNgS9Enc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
 	Mark Brown <broonie@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 346/550] ASoC: SOF: core: Ensure sof_ops_free() is still called when probe never ran.
-Date: Wed, 15 Nov 2023 14:15:30 -0500
-Message-ID: <20231115191624.740838574@linuxfoundation.org>
+Subject: [PATCH 6.5 347/550] ASoC: fsl: Fix PM disable depth imbalance in fsl_easrc_probe
+Date: Wed, 15 Nov 2023 14:15:31 -0500
+Message-ID: <20231115191624.811996584@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,54 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit f549a82aff57865c47b5abd17336b23cd9bb2d2c ]
+[ Upstream commit 9e630efb5a4af56fdb15aa10405f5cfd3f5f5b83 ]
 
-In an effort to not call sof_ops_free twice, we stopped running it when
-probe was aborted.
+The pm_runtime_enable will increase power disable depth. Thus
+a pairing decrement is needed on the error handling path to
+keep it balanced according to context. We fix it by calling
+pm_runtime_disable when error returns.
 
-Check the result of cancel_work_sync to see if this was the case.
-
-Fixes: 31bb7bd9ffee ("ASoC: SOF: core: Only call sof_ops_free() on remove if the probe was successful")
-Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Link: https://lore.kernel.org/r/20231009115437.99976-2-maarten.lankhorst@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 955ac624058f ("ASoC: fsl_easrc: Add EASRC ASoC CPU DAI drivers")
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_C0D62E6D89818179A02A04A0C248F0DDC40A@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_easrc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sof/core.c b/sound/soc/sof/core.c
-index 2d1616b81485c..0938b259f7034 100644
---- a/sound/soc/sof/core.c
-+++ b/sound/soc/sof/core.c
-@@ -459,9 +459,10 @@ int snd_sof_device_remove(struct device *dev)
- 	struct snd_sof_dev *sdev = dev_get_drvdata(dev);
- 	struct snd_sof_pdata *pdata = sdev->pdata;
- 	int ret;
-+	bool aborted = false;
- 
- 	if (IS_ENABLED(CONFIG_SND_SOC_SOF_PROBE_WORK_QUEUE))
--		cancel_work_sync(&sdev->probe_work);
-+		aborted = cancel_work_sync(&sdev->probe_work);
- 
- 	/*
- 	 * Unregister any registered client device first before IPC and debugfs
-@@ -487,6 +488,9 @@ int snd_sof_device_remove(struct device *dev)
- 		snd_sof_free_debug(sdev);
- 		snd_sof_remove(sdev);
- 		sof_ops_free(sdev);
-+	} else if (aborted) {
-+		/* probe_work never ran */
-+		sof_ops_free(sdev);
+diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
+index 670cbdb361b6c..3c79650efac11 100644
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -1966,17 +1966,21 @@ static int fsl_easrc_probe(struct platform_device *pdev)
+ 					      &fsl_easrc_dai, 1);
+ 	if (ret) {
+ 		dev_err(dev, "failed to register ASoC DAI\n");
+-		return ret;
++		goto err_pm_disable;
  	}
  
- 	/* release firmware */
+ 	ret = devm_snd_soc_register_component(dev, &fsl_asrc_component,
+ 					      NULL, 0);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to register ASoC platform\n");
+-		return ret;
++		goto err_pm_disable;
+ 	}
+ 
+ 	return 0;
++
++err_pm_disable:
++	pm_runtime_disable(&pdev->dev);
++	return ret;
+ }
+ 
+ static void fsl_easrc_remove(struct platform_device *pdev)
 -- 
 2.42.0
 
