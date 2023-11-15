@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0592D31725
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B674731725
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WABVMcJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7AFC433C7;
-	Wed, 15 Nov 2023 19:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gah+w2rD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E4EC433C8;
+	Wed, 15 Nov 2023 19:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077166;
-	bh=nyXd9pkV2hyd0bW9i29JGQVGLxXfi1LeRhjedBp20oo=;
+	s=korg; t=1700077168;
+	bh=0G6ZySSTCtWthgmsELYD9Nnrcw0KsgaCtK05bJZ+tEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WABVMcJgdYepIO9VwVTfkjWEoV5/hrHVWy67ofco7SCllGl8Yqcp4Zuppkve6L27q
-	 ONiBJd/MKKFi5TlKD1BxMvhZ4Mt1icfvZV7Tw9iOm2wNZWFj38JBOugwz9j/hkAnFU
-	 Ur/YVgQ/fB53ZOtPMt8MqLp03bErA+rfzteG820I=
+	b=Gah+w2rD50azqDl2E7Wc3KUv+/AIkyMJpWvWvS8c/JHRW5y3tIhA4ZzBr7ihuE0bA
+	 wTmEgw/oRmiwgyz1bs5fci0py32jBEGXk4mi1kdrPocrky9AJrwquI1uBoOK0fOrC5
+	 1fobJMzWbF82zrxR1h6wDGJ/3EokSRbJeaX2Odjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 142/603] wifi: iwlwifi: mvm: remove TDLS stations from FW
-Date: Wed, 15 Nov 2023 14:11:27 -0500
-Message-ID: <20231115191623.020763884@linuxfoundation.org>
+Subject: [PATCH 6.5 543/550] Revert "drm/ast: report connection status on Display Port."
+Date: Wed, 15 Nov 2023 14:18:47 -0500
+Message-ID: <20231115191638.562823305@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,42 +36,201 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+This reverts commit f81bb0ac7872893241319ea82504956676ef02fd.
 
-[ Upstream commit 7b404c5cff3d4270fcd5212b6776c8484623ac74 ]
+The commit depends on e329cb53b45d ("drm/ast: Add BMC virtual
+connector") and will cause hangs on boot without that dependency.
 
-When we remove TDLS stations, we need to remove them from FW
-immediately, even while associated. Some previous refactoring
-here lost the sta ID condition, add it back.
-
-Fixes: 57974a55d995 ("wifi: iwlwifi: mvm: refactor iwl_mvm_mac_sta_state_common()")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20231011130030.933011e710a9.I77c069c781e8b2b698b86cc3f43fc3c7e2dde114@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/sta.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/ast/ast_dp.c    | 11 ----------
+ drivers/gpu/drm/ast/ast_dp501.c | 37 +++++++++++----------------------
+ drivers/gpu/drm/ast/ast_drv.h   |  2 --
+ drivers/gpu/drm/ast/ast_mode.c  | 30 ++------------------------
+ 4 files changed, 14 insertions(+), 66 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-index ebbe165510587..2c231f4623893 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-@@ -2059,7 +2059,8 @@ bool iwl_mvm_sta_del(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
- 		*status = IWL_MVM_QUEUE_FREE;
- 	}
+diff --git a/drivers/gpu/drm/ast/ast_dp.c b/drivers/gpu/drm/ast/ast_dp.c
+index fdd9a493aa9c0..6dc1a09504e13 100644
+--- a/drivers/gpu/drm/ast/ast_dp.c
++++ b/drivers/gpu/drm/ast/ast_dp.c
+@@ -7,17 +7,6 @@
+ #include <drm/drm_print.h>
+ #include "ast_drv.h"
  
--	if (vif->type == NL80211_IFTYPE_STATION) {
-+	if (vif->type == NL80211_IFTYPE_STATION &&
-+	    mvm_link->ap_sta_id == sta_id) {
- 		/* if associated - we can't remove the AP STA now */
- 		if (vif->cfg.assoc)
- 			return true;
+-bool ast_astdp_is_connected(struct ast_device *ast)
+-{
+-	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xD1, ASTDP_MCU_FW_EXECUTING))
+-		return false;
+-	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xDF, ASTDP_HPD))
+-		return false;
+-	if (!ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xDC, ASTDP_LINK_SUCCESS))
+-		return false;
+-	return true;
+-}
+-
+ int ast_astdp_read_edid(struct drm_device *dev, u8 *ediddata)
+ {
+ 	struct ast_device *ast = to_ast_device(dev);
+diff --git a/drivers/gpu/drm/ast/ast_dp501.c b/drivers/gpu/drm/ast/ast_dp501.c
+index fa7442b0c2612..1bc35a992369d 100644
+--- a/drivers/gpu/drm/ast/ast_dp501.c
++++ b/drivers/gpu/drm/ast/ast_dp501.c
+@@ -272,9 +272,11 @@ static bool ast_launch_m68k(struct drm_device *dev)
+ 	return true;
+ }
+ 
+-bool ast_dp501_is_connected(struct ast_device *ast)
++bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata)
+ {
+-	u32 boot_address, offset, data;
++	struct ast_device *ast = to_ast_device(dev);
++	u32 i, boot_address, offset, data;
++	u32 *pEDIDidx;
+ 
+ 	if (ast->config_mode == ast_use_p2a) {
+ 		boot_address = get_fw_base(ast);
+@@ -290,6 +292,14 @@ bool ast_dp501_is_connected(struct ast_device *ast)
+ 		data = ast_mindwm(ast, boot_address + offset);
+ 		if (!(data & AST_DP501_PNP_CONNECTED))
+ 			return false;
++
++		/* Read EDID */
++		offset = AST_DP501_EDID_DATA;
++		for (i = 0; i < 128; i += 4) {
++			data = ast_mindwm(ast, boot_address + offset + i);
++			pEDIDidx = (u32 *)(ediddata + i);
++			*pEDIDidx = data;
++		}
+ 	} else {
+ 		if (!ast->dp501_fw_buf)
+ 			return false;
+@@ -309,30 +319,7 @@ bool ast_dp501_is_connected(struct ast_device *ast)
+ 		data = readl(ast->dp501_fw_buf + offset);
+ 		if (!(data & AST_DP501_PNP_CONNECTED))
+ 			return false;
+-	}
+-	return true;
+-}
+-
+-bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata)
+-{
+-	struct ast_device *ast = to_ast_device(dev);
+-	u32 i, boot_address, offset, data;
+-	u32 *pEDIDidx;
+-
+-	if (!ast_dp501_is_connected(ast))
+-		return false;
+-
+-	if (ast->config_mode == ast_use_p2a) {
+-		boot_address = get_fw_base(ast);
+ 
+-		/* Read EDID */
+-		offset = AST_DP501_EDID_DATA;
+-		for (i = 0; i < 128; i += 4) {
+-			data = ast_mindwm(ast, boot_address + offset + i);
+-			pEDIDidx = (u32 *)(ediddata + i);
+-			*pEDIDidx = data;
+-		}
+-	} else {
+ 		/* Read EDID */
+ 		offset = AST_DP501_EDID_DATA;
+ 		for (i = 0; i < 128; i += 4) {
+diff --git a/drivers/gpu/drm/ast/ast_drv.h b/drivers/gpu/drm/ast/ast_drv.h
+index 8a0ffa8b5939b..5498a6676f2e8 100644
+--- a/drivers/gpu/drm/ast/ast_drv.h
++++ b/drivers/gpu/drm/ast/ast_drv.h
+@@ -468,7 +468,6 @@ void ast_patch_ahb_2500(struct ast_device *ast);
+ /* ast dp501 */
+ void ast_set_dp501_video_output(struct drm_device *dev, u8 mode);
+ bool ast_backup_fw(struct drm_device *dev, u8 *addr, u32 size);
+-bool ast_dp501_is_connected(struct ast_device *ast);
+ bool ast_dp501_read_edid(struct drm_device *dev, u8 *ediddata);
+ u8 ast_get_dp501_max_clk(struct drm_device *dev);
+ void ast_init_3rdtx(struct drm_device *dev);
+@@ -477,7 +476,6 @@ void ast_init_3rdtx(struct drm_device *dev);
+ struct ast_i2c_chan *ast_i2c_create(struct drm_device *dev);
+ 
+ /* aspeed DP */
+-bool ast_astdp_is_connected(struct ast_device *ast);
+ int ast_astdp_read_edid(struct drm_device *dev, u8 *ediddata);
+ void ast_dp_launch(struct drm_device *dev);
+ void ast_dp_power_on_off(struct drm_device *dev, bool no);
+diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
+index 0724516f29737..b3c670af6ef2b 100644
+--- a/drivers/gpu/drm/ast/ast_mode.c
++++ b/drivers/gpu/drm/ast/ast_mode.c
+@@ -1585,20 +1585,8 @@ static int ast_dp501_connector_helper_get_modes(struct drm_connector *connector)
+ 	return 0;
+ }
+ 
+-static int ast_dp501_connector_helper_detect_ctx(struct drm_connector *connector,
+-						 struct drm_modeset_acquire_ctx *ctx,
+-						 bool force)
+-{
+-	struct ast_device *ast = to_ast_device(connector->dev);
+-
+-	if (ast_dp501_is_connected(ast))
+-		return connector_status_connected;
+-	return connector_status_disconnected;
+-}
+-
+ static const struct drm_connector_helper_funcs ast_dp501_connector_helper_funcs = {
+ 	.get_modes = ast_dp501_connector_helper_get_modes,
+-	.detect_ctx = ast_dp501_connector_helper_detect_ctx,
+ };
+ 
+ static const struct drm_connector_funcs ast_dp501_connector_funcs = {
+@@ -1623,7 +1611,7 @@ static int ast_dp501_connector_init(struct drm_device *dev, struct drm_connector
+ 	connector->interlace_allowed = 0;
+ 	connector->doublescan_allowed = 0;
+ 
+-	connector->polled = DRM_CONNECTOR_POLL_CONNECT | DRM_CONNECTOR_POLL_DISCONNECT;
++	connector->polled = DRM_CONNECTOR_POLL_CONNECT;
+ 
+ 	return 0;
+ }
+@@ -1695,20 +1683,8 @@ static int ast_astdp_connector_helper_get_modes(struct drm_connector *connector)
+ 	return 0;
+ }
+ 
+-static int ast_astdp_connector_helper_detect_ctx(struct drm_connector *connector,
+-						 struct drm_modeset_acquire_ctx *ctx,
+-						 bool force)
+-{
+-	struct ast_device *ast = to_ast_device(connector->dev);
+-
+-	if (ast_astdp_is_connected(ast))
+-		return connector_status_connected;
+-	return connector_status_disconnected;
+-}
+-
+ static const struct drm_connector_helper_funcs ast_astdp_connector_helper_funcs = {
+ 	.get_modes = ast_astdp_connector_helper_get_modes,
+-	.detect_ctx = ast_astdp_connector_helper_detect_ctx,
+ };
+ 
+ static const struct drm_connector_funcs ast_astdp_connector_funcs = {
+@@ -1733,7 +1709,7 @@ static int ast_astdp_connector_init(struct drm_device *dev, struct drm_connector
+ 	connector->interlace_allowed = 0;
+ 	connector->doublescan_allowed = 0;
+ 
+-	connector->polled = DRM_CONNECTOR_POLL_CONNECT | DRM_CONNECTOR_POLL_DISCONNECT;
++	connector->polled = DRM_CONNECTOR_POLL_CONNECT;
+ 
+ 	return 0;
+ }
+@@ -1872,7 +1848,5 @@ int ast_mode_config_init(struct ast_device *ast)
+ 
+ 	drm_mode_config_reset(dev);
+ 
+-	drm_kms_helper_poll_init(dev);
+-
+ 	return 0;
+ }
 -- 
 2.42.0
 
