@@ -1,33 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0916433B4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C005433AE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wac8EBHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0A2C433C8;
-	Wed, 15 Nov 2023 19:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFEv7/AS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18538C433C8;
+	Wed, 15 Nov 2023 19:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077082;
-	bh=9r3DLRb+l9BrD3d0XRzx85HPSlff6VF8GWUJmEFPpdU=;
+	s=korg; t=1700077084;
+	bh=1hAv52ARnXmQBL9O2r5lo/zpDZWCqJyJFZh56qKRGs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wac8EBHD1IVC4637yqZF2tnDTtMFACwpvhraj+havIsLPI0tZO6hllfPwnuEjXyt8
-	 1Yo+I8+TXibZ95JRFu2Sz/MmtT/+7eDFzESxsNwL0J1O3xNmfI8EprIxR+EyCnLhR5
-	 xiAo3Zt1N25BQYCWHLxG8zMXypnYWncRQO3mTi9g=
+	b=mFEv7/ASwxqaDce786l6cabtQCA5sIuGr8RJ+/guLdfZselGRonhzWeHL3mae0VFc
+	 YgvrbKZW+jt8jlERYtytXiYwRFB5KYSCZT/bIyxsu8eFCZS6fFzrIpMOCTFrGBawMB
+	 9h01tiie9bpGR5mrP+C9aLesolhKgA84ZX7L6Vws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
+	Xiaoming Zhao <zxm377917@alibaba-inc.com>,
+	Gavin Li <gavinl@nvidia.com>,
+	Heng Qi <hengqi@linux.alibaba.com>,
+	Jason Wang <jasowang@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 515/550] net/smc: allow cdc msg send rather than drop it with NULL sndbuf_desc
-Date: Wed, 15 Nov 2023 14:18:19 -0500
-Message-ID: <20231115191636.635845432@linuxfoundation.org>
+Subject: [PATCH 6.6 119/603] virtio-net: fix per queue coalescing parameter setting
+Date: Wed, 15 Nov 2023 14:11:04 -0500
+Message-ID: <20231115191621.474307902@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,66 +41,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Heng Qi <hengqi@linux.alibaba.com>
 
-[ Upstream commit c5bf605ba4f9d6fbbb120595ab95002f4716edcb ]
+[ Upstream commit bfb2b3609162135625bf96acf5118051cd0d082e ]
 
-This patch re-fix the issues mentioned by commit 22a825c541d7
-("net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()").
+When the user sets a non-zero coalescing parameter to 0 for a specific
+virtqueue, it does not work as expected, so let's fix this.
 
-Blocking sending message do solve the issues though, but it also
-prevents the peer to receive the final message. Besides, in logic,
-whether the sndbuf_desc is NULL or not have no impact on the processing
-of cdc message sending.
-
-Hence that, this patch allows the cdc message sending but to check the
-sndbuf_desc with care in smc_cdc_tx_handler().
-
-Fixes: 22a825c541d7 ("net/smc: fix NULL sndbuf_desc in smc_cdc_tx_handler()")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Fixes: 394bd87764b6 ("virtio_net: support per queue interrupt coalesce command")
+Reported-by: Xiaoming Zhao <zxm377917@alibaba-inc.com>
+Cc: Gavin Li <gavinl@nvidia.com>
+Signed-off-by: Heng Qi <hengqi@linux.alibaba.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_cdc.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/virtio_net.c | 36 ++++++++++++++++--------------------
+ 1 file changed, 16 insertions(+), 20 deletions(-)
 
-diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
-index 01bdb7909a14b..3c06625ceb200 100644
---- a/net/smc/smc_cdc.c
-+++ b/net/smc/smc_cdc.c
-@@ -28,13 +28,15 @@ static void smc_cdc_tx_handler(struct smc_wr_tx_pend_priv *pnd_snd,
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index d3b976a591c84..4211f28c59dc8 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3296,27 +3296,23 @@ static int virtnet_send_notf_coal_vq_cmds(struct virtnet_info *vi,
  {
- 	struct smc_cdc_tx_pend *cdcpend = (struct smc_cdc_tx_pend *)pnd_snd;
- 	struct smc_connection *conn = cdcpend->conn;
-+	struct smc_buf_desc *sndbuf_desc;
- 	struct smc_sock *smc;
- 	int diff;
+ 	int err;
  
-+	sndbuf_desc = conn->sndbuf_desc;
- 	smc = container_of(conn, struct smc_sock, conn);
- 	bh_lock_sock(&smc->sk);
--	if (!wc_status) {
--		diff = smc_curs_diff(cdcpend->conn->sndbuf_desc->len,
-+	if (!wc_status && sndbuf_desc) {
-+		diff = smc_curs_diff(sndbuf_desc->len,
- 				     &cdcpend->conn->tx_curs_fin,
- 				     &cdcpend->cursor);
- 		/* sndbuf_space is decreased in smc_sendmsg */
-@@ -114,9 +116,6 @@ int smc_cdc_msg_send(struct smc_connection *conn,
- 	union smc_host_cursor cfed;
- 	int rc;
+-	if (ec->rx_coalesce_usecs || ec->rx_max_coalesced_frames) {
+-		err = virtnet_send_ctrl_coal_vq_cmd(vi, rxq2vq(queue),
+-						    ec->rx_coalesce_usecs,
+-						    ec->rx_max_coalesced_frames);
+-		if (err)
+-			return err;
+-		/* Save parameters */
+-		vi->rq[queue].intr_coal.max_usecs = ec->rx_coalesce_usecs;
+-		vi->rq[queue].intr_coal.max_packets = ec->rx_max_coalesced_frames;
+-	}
++	err = virtnet_send_ctrl_coal_vq_cmd(vi, rxq2vq(queue),
++					    ec->rx_coalesce_usecs,
++					    ec->rx_max_coalesced_frames);
++	if (err)
++		return err;
  
--	if (unlikely(!READ_ONCE(conn->sndbuf_desc)))
--		return -ENOBUFS;
--
- 	smc_cdc_add_pending_send(conn, pend);
+-	if (ec->tx_coalesce_usecs || ec->tx_max_coalesced_frames) {
+-		err = virtnet_send_ctrl_coal_vq_cmd(vi, txq2vq(queue),
+-						    ec->tx_coalesce_usecs,
+-						    ec->tx_max_coalesced_frames);
+-		if (err)
+-			return err;
+-		/* Save parameters */
+-		vi->sq[queue].intr_coal.max_usecs = ec->tx_coalesce_usecs;
+-		vi->sq[queue].intr_coal.max_packets = ec->tx_max_coalesced_frames;
+-	}
++	vi->rq[queue].intr_coal.max_usecs = ec->rx_coalesce_usecs;
++	vi->rq[queue].intr_coal.max_packets = ec->rx_max_coalesced_frames;
++
++	err = virtnet_send_ctrl_coal_vq_cmd(vi, txq2vq(queue),
++					    ec->tx_coalesce_usecs,
++					    ec->tx_max_coalesced_frames);
++	if (err)
++		return err;
++
++	vi->sq[queue].intr_coal.max_usecs = ec->tx_coalesce_usecs;
++	vi->sq[queue].intr_coal.max_packets = ec->tx_max_coalesced_frames;
  
- 	conn->tx_cdc_seq++;
+ 	return 0;
+ }
 -- 
 2.42.0
 
