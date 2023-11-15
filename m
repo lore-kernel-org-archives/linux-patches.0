@@ -1,33 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC033DB92
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF15C4121C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHI9pd/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D6EC433CC;
-	Wed, 15 Nov 2023 19:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svHNHEUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7B4C433CB;
+	Wed, 15 Nov 2023 19:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076852;
-	bh=Svh4VBjL1vGekOSyhGtAd2P1uns8ImDTTNYplEiszgI=;
+	s=korg; t=1700076854;
+	bh=2/Hi6CNldr55H6Mt7ay9HPnBatPIle4dcrY/Tq9IOkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHI9pd/CvbNZhKbpdS69zNCfD4eq5rQ6Fi1HzwTaTUpmfEehXX3rxvIHia7EzkQ1s
-	 DK5I+ZepPZNmFb0i7KNJZww5deUNyLMjtLJ/LgeMEUsUV15ZR9cG2r5Rrqa4kMCTVY
-	 TTRePTPJDldyWDF9R6xJYMmGDSVNsMXODz32FSGo=
+	b=svHNHEUaokvu0nWI14NMGV9V18/9V/LPJ1osVJcYcni17iHp82L0vmUblvq9x4sUn
+	 XqOSw9wPMZj1G69X4xZXBndrBoBr/KFJ24VekOkA7rNkfcPaxEBaoK165Ki1v3Smux
+	 c9AhsatqhK3qZ+wrOuj+iWKDpk/S8873mtX0Z5Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	German Gomez <german.gomez@arm.com>,
+	James Clark <james.clark@arm.com>,
+	Nick Terrell <terrelln@fb.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Changbin Du <changbin.du@huawei.com>,
+	liuwenyu <liuwenyu7@huawei.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/603] wifi: iwlwifi: dont use an uninitialized variable
-Date: Wed, 15 Nov 2023 14:09:51 -0500
-Message-ID: <20231115191616.380055314@linuxfoundation.org>
+Subject: [PATCH 6.5 443/550] libperf rc_check: Make implicit enabling work for GCC
+Date: Wed, 15 Nov 2023 14:17:07 -0500
+Message-ID: <20231115191631.516707720@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,44 +60,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit c46fcc6e43d617252945e706f04e5f82a59f2b8e ]
+[ Upstream commit 75265320d290c5f5891f16967b94883676c46705 ]
 
-Don't use variable err uninitialized.
-The reason for removing the check instead of initializing it
-in the beginning of the function is because that way
-static checkers will be able to catch issues if we do something
-wrong in the future.
+Make the implicit REFCOUNT_CHECKING robust to when building with GCC.
 
-Fixes: bf976c814c86 ("wifi: iwlwifi: mvm: implement link change ops")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230830112059.431b01bd8779.I31fc4ab35f551b85a10f974a6b18fc30191e9c35@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 9be6ab181b7b ("libperf rc_check: Enable implicitly with sanitizers")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Sandipan Das <sandipan.das@amd.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: German Gomez <german.gomez@arm.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Nick Terrell <terrelln@fb.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Changbin Du <changbin.du@huawei.com>
+Cc: liuwenyu <liuwenyu7@huawei.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Song Liu <song@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Yanteng Si <siyanteng@loongson.cn>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20231024222353.3024098-4-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 3 ---
- 1 file changed, 3 deletions(-)
+ tools/lib/perf/include/internal/rc_check.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index b719843e94576..778a311b500bc 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -1089,9 +1089,6 @@ iwl_mvm_mld_change_vif_links(struct ieee80211_hw *hw,
- 		}
- 	}
+diff --git a/tools/lib/perf/include/internal/rc_check.h b/tools/lib/perf/include/internal/rc_check.h
+index d5d771ccdc7b4..e88a6d8a0b0f9 100644
+--- a/tools/lib/perf/include/internal/rc_check.h
++++ b/tools/lib/perf/include/internal/rc_check.h
+@@ -9,8 +9,12 @@
+  * Enable reference count checking implicitly with leak checking, which is
+  * integrated into address sanitizer.
+  */
+-#if defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
++#if defined(__SANITIZE_ADDRESS__) || defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
+ #define REFCNT_CHECKING 1
++#elif defined(__has_feature)
++#if __has_feature(address_sanitizer) || __has_feature(leak_sanitizer)
++#define REFCNT_CHECKING 1
++#endif
+ #endif
  
--	if (err)
--		goto out_err;
--
- 	err = 0;
- 	if (new_links == 0) {
- 		mvmvif->link[0] = &mvmvif->deflink;
+ /*
 -- 
 2.42.0
 
