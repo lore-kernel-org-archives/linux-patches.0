@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31688C0C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477BF8C0C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1v578gP5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6503AC433C8;
-	Wed, 15 Nov 2023 19:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGhfcaRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF80C433C7;
+	Wed, 15 Nov 2023 19:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077437;
-	bh=Wj0/P+khevPa4ZASUGTArAtKe6vCn5hTOt3vd/xIHUI=;
+	s=korg; t=1700077439;
+	bh=QEI6Z8Jur33hQjFrDxvv7rtXaUkL78w0gMP9s/6PtEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1v578gP5W0VJ9+jUPr6VOcxt20dGRU1uaEqeyIFqDFWk2F8NKE7enkGhK9sbpsGnm
-	 FctLqOMMv3fA6y+NbPvD2cxbhun9YRU6tIF2cVnYA/1q/mLUquzcm6QVadl5QRFfuP
-	 DoL182e3yEeWM97vHIZZNkDgMzYWAc5W1O3OVKq4=
+	b=JGhfcaRrQbK4xw+vZg8fgwZD0TCqnWpbk7NlQg/ZgBJgq/kUqCxXLuAF/IqcyvKCT
+	 NgdVTMCKepML7LaXbxvIKur/wZLUMNyo++FYoOWe1r0/b1Ki4QMaDhUQhaW1IqkI3z
+	 W0Mp4akQqOCYqXvxSYicN1P19tb95YqLxF+PhLaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	=?UTF-8?q?Rapha=C3=ABl=20Gallais-Pou?= <raphael.gallais-pou@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dhruva Gole <d-gole@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 303/603] ARM: dts: stm32: stm32f7-pinctrl: dont use multiple blank lines
-Date: Wed, 15 Nov 2023 14:14:08 -0500
-Message-ID: <20231115191634.369532978@linuxfoundation.org>
+Subject: [PATCH 6.6 304/603] firmware: ti_sci: Mark driver as non removable
+Date: Wed, 15 Nov 2023 14:14:09 -0500
+Message-ID: <20231115191634.440825866@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,35 +44,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit 88bb50edb61068c4416df2e55677fb3159f647f1 ]
+[ Upstream commit 7b7a224b1ba1703583b25a3641ad9798f34d832a ]
 
-The patch fixes the following warning:
+The TI-SCI message protocol provides a way to communicate between
+various compute processors with a central system controller entity. It
+provides the fundamental device management capability and clock control
+in the SOCs that it's used in.
 
-arch/arm/dts/stm32f7-pinctrl.dtsi:380: check: Please don't use multiple blank lines
+The remove function failed to do all the necessary cleanup if
+there are registered users. Some things are freed however which
+likely results in an oops later on.
 
-Fixes: ba287d1a0137 ("ARM: dts: stm32: add pin map for LTDC on stm32f7")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Reviewed-by: Raphaël Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Ensure that the driver isn't unbound by suppressing its bind and unbind
+sysfs attributes. As the driver is built-in there is no way to remove
+device once bound.
+
+We can also remove the ti_sci_remove call along with the
+ti_sci_debugfs_destroy as there are no callers for it any longer.
+
+Fixes: aa276781a64a ("firmware: Add basic support for TI System Control Interface (TI-SCI) protocol")
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Closes: https://lore.kernel.org/linux-arm-kernel/20230216083908.mvmydic5lpi3ogo7@pengutronix.de/
+Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20230921091025.133130-1-d-gole@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32f7-pinctrl.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/firmware/ti_sci.c | 46 +--------------------------------------
+ 1 file changed, 1 insertion(+), 45 deletions(-)
 
-diff --git a/arch/arm/boot/dts/st/stm32f7-pinctrl.dtsi b/arch/arm/boot/dts/st/stm32f7-pinctrl.dtsi
-index 65480a9f5cc4e..842f2b17c4a81 100644
---- a/arch/arm/boot/dts/st/stm32f7-pinctrl.dtsi
-+++ b/arch/arm/boot/dts/st/stm32f7-pinctrl.dtsi
-@@ -376,7 +376,6 @@ pins2 {
- 				};
- 			};
+diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
+index 26a37f47f4ca5..66c3846c91476 100644
+--- a/drivers/firmware/ti_sci.c
++++ b/drivers/firmware/ti_sci.c
+@@ -190,19 +190,6 @@ static int ti_sci_debugfs_create(struct platform_device *pdev,
+ 	return 0;
+ }
  
+-/**
+- * ti_sci_debugfs_destroy() - clean up log debug file
+- * @pdev:	platform device pointer
+- * @info:	Pointer to SCI entity information
+- */
+-static void ti_sci_debugfs_destroy(struct platform_device *pdev,
+-				   struct ti_sci_info *info)
+-{
+-	if (IS_ERR(info->debug_region))
+-		return;
 -
- 			ltdc_pins_a: ltdc-0 {
- 				pins {
- 					pinmux = <STM32_PINMUX('E', 4, AF14)>, /* LCD_B0 */
+-	debugfs_remove(info->d);
+-}
+ #else /* CONFIG_DEBUG_FS */
+ static inline int ti_sci_debugfs_create(struct platform_device *dev,
+ 					struct ti_sci_info *info)
+@@ -3449,43 +3436,12 @@ static int ti_sci_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int ti_sci_remove(struct platform_device *pdev)
+-{
+-	struct ti_sci_info *info;
+-	struct device *dev = &pdev->dev;
+-	int ret = 0;
+-
+-	of_platform_depopulate(dev);
+-
+-	info = platform_get_drvdata(pdev);
+-
+-	if (info->nb.notifier_call)
+-		unregister_restart_handler(&info->nb);
+-
+-	mutex_lock(&ti_sci_list_mutex);
+-	if (info->users)
+-		ret = -EBUSY;
+-	else
+-		list_del(&info->node);
+-	mutex_unlock(&ti_sci_list_mutex);
+-
+-	if (!ret) {
+-		ti_sci_debugfs_destroy(pdev, info);
+-
+-		/* Safe to free channels since no more users */
+-		mbox_free_channel(info->chan_tx);
+-		mbox_free_channel(info->chan_rx);
+-	}
+-
+-	return ret;
+-}
+-
+ static struct platform_driver ti_sci_driver = {
+ 	.probe = ti_sci_probe,
+-	.remove = ti_sci_remove,
+ 	.driver = {
+ 		   .name = "ti-sci",
+ 		   .of_match_table = of_match_ptr(ti_sci_of_match),
++		   .suppress_bind_attrs = true,
+ 	},
+ };
+ module_platform_driver(ti_sci_driver);
 -- 
 2.42.0
 
