@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2719B3DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33EA3DBA7
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="le+5agNx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C53C433C8;
-	Wed, 15 Nov 2023 20:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5c9h4sQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56370C433CB;
+	Wed, 15 Nov 2023 20:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078508;
-	bh=3zJkjybA5L748mZUTvOHgWUPzQakRHuq9fnFgrxvlEs=;
+	s=korg; t=1700078509;
+	bh=q23Nw/B/Nvd+MyxfTnjgroYDsNMScl68K17rtlv1a+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=le+5agNx6t6hlnpUlHcQvczhIZmdJClj0fbT8iuUwS+ZqMjlskpaiFSdWpubc5Vsd
-	 GAWi3+xJ8sa5Q7DJ4DX+kmCxelxzTYMsmWtI1k1+fVYxbtgke/0zvVJyDALzQU17cR
-	 /N2dDNdGh8s+zj6TosH/aLu+9SQ6qtse5BRPQBBE=
+	b=D5c9h4sQQsXLLvs6KHagzE5bXcJbnj0Wg6EKwxkNMMybjrzTuU8daEW2he8WOWd9i
+	 rP2q6zLsdR1bxnSyvbXREJ7X7WFa+1lKuRWMoH40GRp6c8n9lgWy5NRz0cCBpKUg4o
+	 RjsgM3bKK9LwU5AAPaSeY+TWdhXPAYDUv/1veUqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Huhardeaux <tech@tootai.net>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Anup Patel <apatel@ventanamicro.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 365/379] netfilter: nat: fix ipv6 nat redirect with mapped and scoped addresses
-Date: Wed, 15 Nov 2023 14:27:20 -0500
-Message-ID: <20231115192706.753168393@linuxfoundation.org>
+Subject: [PATCH 6.1 366/379] RISC-V: Dont fail in riscv_of_parent_hartid() for disabled HARTs
+Date: Wed, 15 Nov 2023 14:27:21 -0500
+Message-ID: <20231115192706.812201782@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,94 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Anup Patel <apatel@ventanamicro.com>
 
-[ Upstream commit 80abbe8a8263106fe45a4f293b92b5c74cc9cc8a ]
+[ Upstream commit c4676f8dc1e12e68d6511f9ed89707fdad4c962c ]
 
-The ipv6 redirect target was derived from the ipv4 one, i.e. its
-identical to a 'dnat' with the first (primary) address assigned to the
-network interface.  The code has been moved around to make it usable
-from nf_tables too, but its still the same as it was back when this
-was added in 2012.
+The riscv_of_processor_hartid() used by riscv_of_parent_hartid() fails
+for HARTs disabled in the DT. This results in the following warning
+thrown by the RISC-V INTC driver for the E-core on SiFive boards:
 
-IPv6, however, has different types of addresses, if the 'wrong' address
-comes first the redirection does not work.
+[    0.000000] riscv-intc: unable to find hart id for /cpus/cpu@0/interrupt-controller
 
-In Daniels case, the addresses are:
-  inet6 ::ffff:192 ...
-  inet6 2a01: ...
+The riscv_of_parent_hartid() is only expected to read the hartid
+from the DT so we directly call of_get_cpu_hwid() instead of calling
+riscv_of_processor_hartid().
 
-... so the function attempts to redirect to the mapped address.
-
-Add more checks before the address is deemed correct:
-1. If the packets' daddr is scoped, search for a scoped address too
-2. skip tentative addresses
-3. skip mapped addresses
-
-Use the first address that appears to match our needs.
-
-Reported-by: Daniel Huhardeaux <tech@tootai.net>
-Closes: https://lore.kernel.org/netfilter/71be06b8-6aa0-4cf9-9e0b-e2839b01b22f@tootai.net/
-Fixes: 115e23ac78f8 ("netfilter: ip6tables: add REDIRECT target")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ad635e723e17 ("riscv: cpu: Add 64bit hartid support on RV64")
+Signed-off-by: Anup Patel <apatel@ventanamicro.com>
+Reviewed-by: Atish Patra <atishp@rivosinc.com>
+Link: https://lore.kernel.org/r/20231027154254.355853-2-apatel@ventanamicro.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_redirect.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/cpu.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_nat_redirect.c b/net/netfilter/nf_nat_redirect.c
-index 6616ba5d0b049..5b37487d9d11f 100644
---- a/net/netfilter/nf_nat_redirect.c
-+++ b/net/netfilter/nf_nat_redirect.c
-@@ -80,6 +80,26 @@ EXPORT_SYMBOL_GPL(nf_nat_redirect_ipv4);
+diff --git a/arch/riscv/kernel/cpu.c b/arch/riscv/kernel/cpu.c
+index 852ecccd8920f..0f76181dc634d 100644
+--- a/arch/riscv/kernel/cpu.c
++++ b/arch/riscv/kernel/cpu.c
+@@ -57,13 +57,14 @@ int riscv_of_processor_hartid(struct device_node *node, unsigned long *hart)
+  */
+ int riscv_of_parent_hartid(struct device_node *node, unsigned long *hartid)
+ {
+-	int rc;
+-
+ 	for (; node; node = node->parent) {
+ 		if (of_device_is_compatible(node, "riscv")) {
+-			rc = riscv_of_processor_hartid(node, hartid);
+-			if (!rc)
+-				return 0;
++			*hartid = (unsigned long)of_get_cpu_hwid(node, 0);
++			if (*hartid == ~0UL) {
++				pr_warn("Found CPU without hart ID\n");
++				return -ENODEV;
++			}
++			return 0;
+ 		}
+ 	}
  
- static const struct in6_addr loopback_addr = IN6ADDR_LOOPBACK_INIT;
- 
-+static bool nf_nat_redirect_ipv6_usable(const struct inet6_ifaddr *ifa, unsigned int scope)
-+{
-+	unsigned int ifa_addr_type = ipv6_addr_type(&ifa->addr);
-+
-+	if (ifa_addr_type & IPV6_ADDR_MAPPED)
-+		return false;
-+
-+	if ((ifa->flags & IFA_F_TENTATIVE) && (!(ifa->flags & IFA_F_OPTIMISTIC)))
-+		return false;
-+
-+	if (scope) {
-+		unsigned int ifa_scope = ifa_addr_type & IPV6_ADDR_SCOPE_MASK;
-+
-+		if (!(scope & ifa_scope))
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
- unsigned int
- nf_nat_redirect_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
- 		     unsigned int hooknum)
-@@ -89,14 +109,19 @@ nf_nat_redirect_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
- 	if (hooknum == NF_INET_LOCAL_OUT) {
- 		newdst.in6 = loopback_addr;
- 	} else {
-+		unsigned int scope = ipv6_addr_scope(&ipv6_hdr(skb)->daddr);
- 		struct inet6_dev *idev;
--		struct inet6_ifaddr *ifa;
- 		bool addr = false;
- 
- 		idev = __in6_dev_get(skb->dev);
- 		if (idev != NULL) {
-+			const struct inet6_ifaddr *ifa;
-+
- 			read_lock_bh(&idev->lock);
- 			list_for_each_entry(ifa, &idev->addr_list, if_list) {
-+				if (!nf_nat_redirect_ipv6_usable(ifa, scope))
-+					continue;
-+
- 				newdst.in6 = ifa->addr;
- 				addr = true;
- 				break;
 -- 
 2.42.0
 
