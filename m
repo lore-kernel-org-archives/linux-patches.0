@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DC4381DC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D423381DC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQAxprl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205E8C433C8;
-	Wed, 15 Nov 2023 19:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvpGBx2w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6B3C433C8;
+	Wed, 15 Nov 2023 19:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076932;
-	bh=UPmgo+O8kX//RCtw7MPyPO3jy3cxSXOCslIX6sm/OT0=;
+	s=korg; t=1700076933;
+	bh=kF/SuoACtF2xcSIVEzMEXZigFw5Ba5FA8EiMFL9Y0oY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LQAxprl/aw5RV/+sUhVlTYoCNGb7dFMxr+W5ftHl0izNN1laHJdxwpPtAigGSxQfb
-	 C8UzIlJQ7odAqz0wdiyqmdbGDYf94f06mqFdHl3U9pkzng80xgJ0CBiChqXqPp/e9k
-	 M8jRJsASXmnEonwhge6HAzEKS/UzZTXf7EOW/Hko=
+	b=QvpGBx2wXbodchwMTt02zJfn+wMStpFnz+x8gMEBFTE/njTLaVQKYFwORM+KoaCv/
+	 a6AocJbWex5ihXfWvC9Z6C9dV0AR+Dh9DOE30Yx9QsuBnvlq8SXZ69Ldjne4bBOqyM
+	 v7fn9awIs9eOlE0M3YbvRYCLmiG8Updq714IzPGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/603] tls: Use size_add() in call to struct_size()
-Date: Wed, 15 Nov 2023 14:10:13 -0500
-Message-ID: <20231115191617.832388703@linuxfoundation.org>
+Subject: [PATCH 6.5 469/550] pcmcia: ds: fix refcount leak in pcmcia_device_add()
+Date: Wed, 15 Nov 2023 14:17:33 -0500
+Message-ID: <20231115191633.390811123@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,41 +38,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a2713257ee2be22827d7bc248302d408c91bfb95 ]
+[ Upstream commit 402ab979b29126068e0b596b641422ff7490214c ]
 
-If, for any reason, the open-coded arithmetic causes a wraparound,
-the protection that `struct_size()` adds against potential integer
-overflows is defeated. Fix this by hardening call to `struct_size()`
-with `size_add()`.
+As the comment of device_register() says, it should use put_device()
+to give up the reference in the error path. Then, insofar resources
+will be freed in pcmcia_release_dev(), the error path is no longer
+needed. In particular, this means that the (previously missing) dropping
+of the reference to &p_dev->function_config->ref is now handled by
+pcmcia_release_dev().
 
-Fixes: b89fec54fd61 ("tls: rx: wrap decrypt params in a struct")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 360b65b95bae ("[PATCH] pcmcia: make config_t independent, add reference counting")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+[linux@dominikbrodowski.net: simplification, commit message rewrite]
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pcmcia/ds.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index e9d1e83a859d1..9634dfd636fd6 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1491,7 +1491,7 @@ static int tls_decrypt_sg(struct sock *sk, struct iov_iter *out_iov,
- 	 */
- 	aead_size = sizeof(*aead_req) + crypto_aead_reqsize(ctx->aead_recv);
- 	aead_size = ALIGN(aead_size, __alignof__(*dctx));
--	mem = kmalloc(aead_size + struct_size(dctx, sg, n_sgin + n_sgout),
-+	mem = kmalloc(aead_size + struct_size(dctx, sg, size_add(n_sgin, n_sgout)),
- 		      sk->sk_allocation);
- 	if (!mem) {
- 		err = -ENOMEM;
+diff --git a/drivers/pcmcia/ds.c b/drivers/pcmcia/ds.c
+index d500e5dbbc3f5..c90c68dee1e45 100644
+--- a/drivers/pcmcia/ds.c
++++ b/drivers/pcmcia/ds.c
+@@ -573,8 +573,14 @@ static struct pcmcia_device *pcmcia_device_add(struct pcmcia_socket *s,
+ 
+ 	pcmcia_device_query(p_dev);
+ 
+-	if (device_register(&p_dev->dev))
+-		goto err_unreg;
++	if (device_register(&p_dev->dev)) {
++		mutex_lock(&s->ops_mutex);
++		list_del(&p_dev->socket_device_list);
++		s->device_count--;
++		mutex_unlock(&s->ops_mutex);
++		put_device(&p_dev->dev);
++		return NULL;
++	}
+ 
+ 	return p_dev;
+ 
 -- 
 2.42.0
 
