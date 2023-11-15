@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184783A8DB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1773A8DB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcqcduGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF6FC433C7;
-	Wed, 15 Nov 2023 19:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjJN7wm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434D1C433C8;
+	Wed, 15 Nov 2023 19:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076052;
-	bh=UnuShsW6exS+uMXW3fo74BT08F+PG0/RYrqsZs9XugM=;
+	s=korg; t=1700076054;
+	bh=nkJIjSLcJJ4FsqF5yF9xzeHZYT98didJ1tA5NZflmk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PcqcduGSuRgeAebQxZ8y2XU3R2YU21VqTkMgqz22EwqLelsXXjz35Zzg5T7V1BA4M
-	 RRJoQ8q6AfAkka7+Id15RoEuHKwb/wF3Y5+uD626YT5s+9t70apGlKwmWTieUU96fU
-	 CvN/C/5DW3UGhkDhUJ3jE9syiiTgBuIzsSJFRNFk=
+	b=WjJN7wm5LlwQi6l6QdvdsHG/NvcHY0ARPVgPrnSISnRF4Erkii8cWG3pvsDexNMwL
+	 Dlbt1BVHDFjzqQvcWzEs8lENKQ2eid3tRyFoWXF82zE5LnqrUCIQUjgjVE8HwdR2cS
+	 CQsE7qVapf18hqhTBeJ30HiYFSdWM5P6C/ZMmgTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 028/550] drivers/clocksource/timer-ti-dm: Dont call clk_get_rate() in stop function
-Date: Wed, 15 Nov 2023 14:10:12 -0500
-Message-ID: <20231115191602.687668491@linuxfoundation.org>
+Subject: [PATCH 6.5 046/550] wifi: iwlwifi: honor the enable_ini value
+Date: Wed, 15 Nov 2023 14:10:30 -0500
+Message-ID: <20231115191603.899304055@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,115 +43,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 12590d4d0e331d3cb9e6b3494515cd61c8a6624e ]
+[ Upstream commit e0c1ca236e28e4263fba76d47a108ed95dcae33e ]
 
-clk_get_rate() might sleep, and that prevents dm-timer based PWM from being
-used from atomic context.
+In case the user sets the enable_ini to some preset, we want to honor
+the value.
 
-Fix that by getting fclk rate in probe() and using a notifier in case rate
-changes.
+Remove the ops to set the value of the module parameter is runtime, we
+don't want to allow to modify the value in runtime since we configure
+the firmware once at the beginning on its life.
 
-Fixes: af04aa856e93 ("ARM: OMAP: Move dmtimer driver out of plat-omap to drivers under clocksource")
-Signed-off-by: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/1696312220-11550-1-git-send-email-ivo.g.dimitrov.75@gmail.com
+Fixes: b49c2b252b58 ("iwlwifi: Configure FW debug preset via module param.")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230830112059.5734e0f374bb.I6698eda8ed2112378dd47ac5d62866ebe7a94f77@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-ti-dm.c | 36 ++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ .../wireless/intel/iwlwifi/fw/api/dbg-tlv.h   |  1 +
+ .../net/wireless/intel/iwlwifi/iwl-dbg-tlv.h  |  5 +-
+ drivers/net/wireless/intel/iwlwifi/iwl-drv.c  | 51 +++++++------------
+ .../net/wireless/intel/iwlwifi/iwl-trans.h    |  4 ++
+ 4 files changed, 25 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/clocksource/timer-ti-dm.c b/drivers/clocksource/timer-ti-dm.c
-index 349236a7ba5ff..2d0bed0877e03 100644
---- a/drivers/clocksource/timer-ti-dm.c
-+++ b/drivers/clocksource/timer-ti-dm.c
-@@ -141,6 +141,8 @@ struct dmtimer {
- 	struct platform_device *pdev;
- 	struct list_head node;
- 	struct notifier_block nb;
-+	struct notifier_block fclk_nb;
-+	unsigned long fclk_rate;
- };
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
+index ba538d70985f4..39bee9c00e071 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/api/dbg-tlv.h
+@@ -13,6 +13,7 @@
+ #define IWL_FW_INI_DOMAIN_ALWAYS_ON		0
+ #define IWL_FW_INI_REGION_ID_MASK		GENMASK(15, 0)
+ #define IWL_FW_INI_REGION_DUMP_POLICY_MASK	GENMASK(31, 16)
++#define IWL_FW_INI_PRESET_DISABLE		0xff
  
- static u32 omap_reserved_systimers;
-@@ -254,8 +256,7 @@ static inline void __omap_dm_timer_enable_posted(struct dmtimer *timer)
- 	timer->posted = OMAP_TIMER_POSTED;
- }
+ /**
+  * struct iwl_fw_ini_hcmd
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
+index 128059ca77e60..06fb7d6653905 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2018-2022 Intel Corporation
++ * Copyright (C) 2018-2023 Intel Corporation
+  */
+ #ifndef __iwl_dbg_tlv_h__
+ #define __iwl_dbg_tlv_h__
+@@ -10,7 +10,8 @@
+ #include <fw/file.h>
+ #include <fw/api/dbg-tlv.h>
  
--static inline void __omap_dm_timer_stop(struct dmtimer *timer,
--					unsigned long rate)
-+static inline void __omap_dm_timer_stop(struct dmtimer *timer)
- {
- 	u32 l;
+-#define IWL_DBG_TLV_MAX_PRESET 15
++#define IWL_DBG_TLV_MAX_PRESET	15
++#define ENABLE_INI		(IWL_DBG_TLV_MAX_PRESET + 1)
  
-@@ -270,7 +271,7 @@ static inline void __omap_dm_timer_stop(struct dmtimer *timer,
- 		 * Wait for functional clock period x 3.5 to make sure that
- 		 * timer is stopped
- 		 */
--		udelay(3500000 / rate + 1);
-+		udelay(3500000 / timer->fclk_rate + 1);
+ /**
+  * struct iwl_dbg_tlv_node - debug TLV node
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+index 3d87d26845e74..fb5e254757e71 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+@@ -1795,6 +1795,22 @@ struct iwl_drv *iwl_drv_start(struct iwl_trans *trans)
  #endif
- 	}
  
-@@ -349,6 +350,21 @@ static int omap_timer_context_notifier(struct notifier_block *nb,
- 	return NOTIFY_OK;
+ 	drv->trans->dbg.domains_bitmap = IWL_TRANS_FW_DBG_DOMAIN(drv->trans);
++	if (iwlwifi_mod_params.enable_ini != ENABLE_INI) {
++		/* We have a non-default value in the module parameter,
++		 * take its value
++		 */
++		drv->trans->dbg.domains_bitmap &= 0xffff;
++		if (iwlwifi_mod_params.enable_ini != IWL_FW_INI_PRESET_DISABLE) {
++			if (iwlwifi_mod_params.enable_ini > ENABLE_INI) {
++				IWL_ERR(trans,
++					"invalid enable_ini module parameter value: max = %d, using 0 instead\n",
++					ENABLE_INI);
++				iwlwifi_mod_params.enable_ini = 0;
++			}
++			drv->trans->dbg.domains_bitmap =
++				BIT(IWL_FW_DBG_DOMAIN_POS + iwlwifi_mod_params.enable_ini);
++		}
++	}
+ 
+ 	ret = iwl_request_firmware(drv, true);
+ 	if (ret) {
+@@ -1843,8 +1859,6 @@ void iwl_drv_stop(struct iwl_drv *drv)
+ 	kfree(drv);
  }
  
-+static int omap_timer_fclk_notifier(struct notifier_block *nb,
-+				    unsigned long event, void *data)
-+{
-+	struct clk_notifier_data *clk_data = data;
-+	struct dmtimer *timer = container_of(nb, struct dmtimer, fclk_nb);
-+
-+	switch (event) {
-+	case POST_RATE_CHANGE:
-+		timer->fclk_rate = clk_data->new_rate;
-+		return NOTIFY_OK;
-+	default:
-+		return NOTIFY_DONE;
-+	}
-+}
-+
- static int omap_dm_timer_reset(struct dmtimer *timer)
- {
- 	u32 l, timeout = 100000;
-@@ -755,7 +771,6 @@ static int omap_dm_timer_stop(struct omap_dm_timer *cookie)
- {
- 	struct dmtimer *timer;
- 	struct device *dev;
--	unsigned long rate = 0;
- 
- 	timer = to_dmtimer(cookie);
- 	if (unlikely(!timer))
-@@ -763,10 +778,7 @@ static int omap_dm_timer_stop(struct omap_dm_timer *cookie)
- 
- 	dev = &timer->pdev->dev;
- 
--	if (!timer->omap1)
--		rate = clk_get_rate(timer->fclk);
+-#define ENABLE_INI	(IWL_DBG_TLV_MAX_PRESET + 1)
 -
--	__omap_dm_timer_stop(timer, rate);
-+	__omap_dm_timer_stop(timer);
+ /* shared module parameters */
+ struct iwl_mod_params iwlwifi_mod_params = {
+ 	.fw_restart = true,
+@@ -1964,38 +1978,7 @@ module_param_named(uapsd_disable, iwlwifi_mod_params.uapsd_disable, uint, 0644);
+ MODULE_PARM_DESC(uapsd_disable,
+ 		 "disable U-APSD functionality bitmap 1: BSS 2: P2P Client (default: 3)");
  
- 	pm_runtime_put_sync(dev);
+-static int enable_ini_set(const char *arg, const struct kernel_param *kp)
+-{
+-	int ret = 0;
+-	bool res;
+-	__u32 new_enable_ini;
+-
+-	/* in case the argument type is a number */
+-	ret = kstrtou32(arg, 0, &new_enable_ini);
+-	if (!ret) {
+-		if (new_enable_ini > ENABLE_INI) {
+-			pr_err("enable_ini cannot be %d, in range 0-16\n", new_enable_ini);
+-			return -EINVAL;
+-		}
+-		goto out;
+-	}
+-
+-	/* in case the argument type is boolean */
+-	ret = kstrtobool(arg, &res);
+-	if (ret)
+-		return ret;
+-	new_enable_ini = (res ? ENABLE_INI : 0);
+-
+-out:
+-	iwlwifi_mod_params.enable_ini = new_enable_ini;
+-	return 0;
+-}
+-
+-static const struct kernel_param_ops enable_ini_ops = {
+-	.set = enable_ini_set
+-};
+-
+-module_param_cb(enable_ini, &enable_ini_ops, &iwlwifi_mod_params.enable_ini, 0644);
++module_param_named(enable_ini, iwlwifi_mod_params.enable_ini, uint, 0444);
+ MODULE_PARM_DESC(enable_ini,
+ 		 "0:disable, 1-15:FW_DBG_PRESET Values, 16:enabled without preset value defined,"
+ 		 "Debug INI TLV FW debug infrastructure (default: 16)");
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+index d02943d0ea625..b248944e11df9 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-trans.h
+@@ -56,6 +56,10 @@
+  *	6) Eventually, the free function will be called.
+  */
  
-@@ -1125,6 +1137,14 @@ static int omap_dm_timer_probe(struct platform_device *pdev)
- 		timer->fclk = devm_clk_get(dev, "fck");
- 		if (IS_ERR(timer->fclk))
- 			return PTR_ERR(timer->fclk);
++/* default preset 0 (start from bit 16)*/
++#define IWL_FW_DBG_DOMAIN_POS	16
++#define IWL_FW_DBG_DOMAIN	BIT(IWL_FW_DBG_DOMAIN_POS)
 +
-+		timer->fclk_nb.notifier_call = omap_timer_fclk_notifier;
-+		ret = devm_clk_notifier_register(dev, timer->fclk,
-+						 &timer->fclk_nb);
-+		if (ret)
-+			return ret;
-+
-+		timer->fclk_rate = clk_get_rate(timer->fclk);
- 	} else {
- 		timer->fclk = ERR_PTR(-ENODEV);
- 	}
+ #define IWL_TRANS_FW_DBG_DOMAIN(trans)	IWL_FW_INI_DOMAIN_ALWAYS_ON
+ 
+ #define FH_RSCSR_FRAME_SIZE_MSK		0x00003FFF	/* bits 0-13 */
 -- 
 2.42.0
 
