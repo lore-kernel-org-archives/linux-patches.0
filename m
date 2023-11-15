@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28BA1FCF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4BD43ADD
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaEyvnhm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90068C4E779;
-	Wed, 15 Nov 2023 20:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYyU2t8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51247C4E778;
+	Wed, 15 Nov 2023 20:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081831;
-	bh=OBvH0PwmBggZW9hgKfHoSHt6W1Zt3w2u5Gsb9xSu+uQ=;
+	s=korg; t=1700081833;
+	bh=SlSaLLJfeOg126MH20mYnlyYXN8rNyPVb9LE0wqvEKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HaEyvnhm+K3r9APah3sbuoDB/xZ4G/InYxr6kstZjw4+h6wr7nVjeU0RPUboCQSX9
-	 oyQg3oyjRs6gDCWwSpST6iy8tJoSHDWjvAuG0ir073ptQuyPabVQlp177kuLN200WM
-	 mFCyr4HrCfCe4iM4gw9dTQUt/KluKSsBghG8cjdA=
+	b=DYyU2t8eqXExhm3D+j7AgTvEVnWZx3BmUB8Qz4tm5zTdVi7zllIIg8b0pCgSmtvli
+	 r60XqLSg1oKvhtWJ6Yd/QoCBwjsiDviUDuQ+KeRVGfV+fQXRnH7LactE/hAB6vMagV
+	 xemOPYYeH9aFJ6j23PaR0sOdU+yRUYj2Uj7g8Ys8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 153/191] media: i2c: max9286: Fix some redundant of_node_put() calls
-Date: Wed, 15 Nov 2023 15:47:08 -0500
-Message-ID: <20231115204653.673162185@linuxfoundation.org>
+Subject: [PATCH 5.10 154/191] media: bttv: fix use after free error due to btv->timeout timer
+Date: Wed, 15 Nov 2023 15:47:09 -0500
+Message-ID: <20231115204653.731285217@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -46,48 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 0822315e46b400f611cba1193456ee6a5dc3e41d ]
+[ Upstream commit bd5b50b329e850d467e7bcc07b2b6bde3752fbda ]
 
-This is odd to have a of_node_put() just after a for_each_child_of_node()
-or a for_each_endpoint_of_node() loop. It should already be called
-during the last iteration.
+There may be some a race condition between timer function
+bttv_irq_timeout and bttv_remove. The timer is setup in
+probe and there is no timer_delete operation in remove
+function. When it hit kfree btv, the function might still be
+invoked, which will cause use after free bug.
 
-Remove these calls.
+This bug is found by static analysis, it may be false positive.
 
-Fixes: 66d8c9d2422d ("media: i2c: Add MAX9286 driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fix it by adding del_timer_sync invoking to the remove function.
+
+cpu0                cpu1
+                  bttv_probe
+                    ->timer_setup
+                      ->bttv_set_dma
+                        ->mod_timer;
+bttv_remove
+  ->kfree(btv);
+                  ->bttv_irq_timeout
+                    ->USE btv
+
+Fixes: 162e6376ac58 ("media: pci: Convert timers to use timer_setup()")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/max9286.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/media/pci/bt8xx/bttv-driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/i2c/max9286.c b/drivers/media/i2c/max9286.c
-index 62ce27552dd3c..a358eb3fe0f4d 100644
---- a/drivers/media/i2c/max9286.c
-+++ b/drivers/media/i2c/max9286.c
-@@ -1143,7 +1143,6 @@ static int max9286_parse_dt(struct max9286_priv *priv)
+diff --git a/drivers/media/pci/bt8xx/bttv-driver.c b/drivers/media/pci/bt8xx/bttv-driver.c
+index 1f0e4b913a053..5f1bd9b38e75f 100644
+--- a/drivers/media/pci/bt8xx/bttv-driver.c
++++ b/drivers/media/pci/bt8xx/bttv-driver.c
+@@ -4258,6 +4258,7 @@ static void bttv_remove(struct pci_dev *pci_dev)
  
- 		i2c_mux_mask |= BIT(id);
- 	}
--	of_node_put(node);
- 	of_node_put(i2c_mux);
- 
- 	/* Parse the endpoints */
-@@ -1207,7 +1206,6 @@ static int max9286_parse_dt(struct max9286_priv *priv)
- 		priv->source_mask |= BIT(ep.port);
- 		priv->nsources++;
- 	}
--	of_node_put(node);
- 
- 	priv->route_mask = priv->source_mask;
- 
+ 	/* free resources */
+ 	free_irq(btv->c.pci->irq,btv);
++	del_timer_sync(&btv->timeout);
+ 	iounmap(btv->bt848_mmio);
+ 	release_mem_region(pci_resource_start(btv->c.pci,0),
+ 			   pci_resource_len(btv->c.pci,0));
 -- 
 2.42.0
 
