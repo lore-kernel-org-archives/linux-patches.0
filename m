@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91E9364BE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E653A8FA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByrTndlq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3359BC433C9;
-	Wed, 15 Nov 2023 19:31:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLXQrjRM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DCAC433C7;
+	Wed, 15 Nov 2023 19:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076689;
-	bh=2TeOb49jBXU0GSHksUG5cxdXqZzxZOXzh1t8sQAqcC4=;
+	s=korg; t=1700076691;
+	bh=f68alni1goLr+9bjON2wUkQDjIiKvAcTozWLKSv43aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ByrTndlqTMXoUgZnyC+QNrFUElNu6MksAuciTPLWwca3Ork1fxwTH2MYKbSq7C0kh
-	 Kp0V8CeJug7xDUot/hElrbZiZu2GKEPqh+ycB+nSkatHe6bNvohFdhdeJgLbJGTS6b
-	 UH24VzS/ja1YXQBnEmYOYUj+M23S0hyTgphXPOhE=
+	b=gLXQrjRMqedk2j5v5eMrZCjBhELtmuonDHSMjxe0c3wjHQ/ior+MmT2wNutRlxYqL
+	 Wrv0UywyjlviSw0jrTwhtcP0NIgb/0OQyxptK1MhSY/9m8+t/CrplSC1iB4GmB8Nej
+	 IX6AcLYO812kzf2cnOXGJBmFDUAm82XpUi02yBY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangJinchao <wangjinchao@xfusion.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Danny Kaehn <danny.kaehn@plexus.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 360/550] padata: Fix refcnt handling in padata_free_shell()
-Date: Wed, 15 Nov 2023 14:15:44 -0500
-Message-ID: <20231115191625.757645992@linuxfoundation.org>
+Subject: [PATCH 6.5 351/550] hid: cp2112: Fix IRQ shutdown stopping polling for all IRQs on chip
+Date: Wed, 15 Nov 2023 14:15:35 -0500
+Message-ID: <20231115191625.093991547@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,108 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangJinchao <wangjinchao@xfusion.com>
+From: Danny Kaehn <danny.kaehn@plexus.com>
 
-[ Upstream commit 7ddc21e317b360c3444de3023bcc83b85fabae2f ]
+[ Upstream commit dc3115e6c5d9863ec1a9ff1acf004ede93c34361 ]
 
-In a high-load arm64 environment, the pcrypt_aead01 test in LTP can lead
-to system UAF (Use-After-Free) issues. Due to the lengthy analysis of
-the pcrypt_aead01 function call, I'll describe the problem scenario
-using a simplified model:
+Previously cp2112_gpio_irq_shutdown() always cancelled the
+gpio_poll_worker, even if other IRQs were still active, and did not set
+the gpio_poll flag to false. This resulted in any call to _shutdown()
+resulting in interrupts no longer functioning on the chip until a
+_remove() occurred (a.e. the cp2112 is unplugged or system rebooted).
 
-Suppose there's a user of padata named `user_function` that adheres to
-the padata requirement of calling `padata_free_shell` after `serial()`
-has been invoked, as demonstrated in the following code:
+Only cancel polling if all IRQs are disabled/masked, and correctly set
+the gpio_poll flag, allowing polling to restart when an interrupt is
+next enabled.
 
-```c
-struct request {
-    struct padata_priv padata;
-    struct completion *done;
-};
-
-void parallel(struct padata_priv *padata) {
-    do_something();
-}
-
-void serial(struct padata_priv *padata) {
-    struct request *request = container_of(padata,
-    				struct request,
-				padata);
-    complete(request->done);
-}
-
-void user_function() {
-    DECLARE_COMPLETION(done)
-    padata->parallel = parallel;
-    padata->serial = serial;
-    padata_do_parallel();
-    wait_for_completion(&done);
-    padata_free_shell();
-}
-```
-
-In the corresponding padata.c file, there's the following code:
-
-```c
-static void padata_serial_worker(struct work_struct *serial_work) {
-    ...
-    cnt = 0;
-
-    while (!list_empty(&local_list)) {
-        ...
-        padata->serial(padata);
-        cnt++;
-    }
-
-    local_bh_enable();
-
-    if (refcount_sub_and_test(cnt, &pd->refcnt))
-        padata_free_pd(pd);
-}
-```
-
-Because of the high system load and the accumulation of unexecuted
-softirq at this moment, `local_bh_enable()` in padata takes longer
-to execute than usual. Subsequently, when accessing `pd->refcnt`,
-`pd` has already been released by `padata_free_shell()`, resulting
-in a UAF issue with `pd->refcnt`.
-
-The fix is straightforward: add `refcount_dec_and_test` before calling
-`padata_free_pd` in `padata_free_shell`.
-
-Fixes: 07928d9bfc81 ("padata: Remove broken queue flushing")
-
-Signed-off-by: WangJinchao <wangjinchao@xfusion.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Danny Kaehn <danny.kaehn@plexus.com>
+Fixes: 13de9cca514e ("HID: cp2112: add IRQ chip handling")
+Link: https://lore.kernel.org/r/20231011182317.1053344-1-danny.kaehn@plexus.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 6 +++++-
+ drivers/hid/hid-cp2112.c | 6 +++++-
  1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index 222d60195de66..ff349e1084c1d 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -1102,12 +1102,16 @@ EXPORT_SYMBOL(padata_alloc_shell);
-  */
- void padata_free_shell(struct padata_shell *ps)
- {
-+	struct parallel_data *pd;
+diff --git a/drivers/hid/hid-cp2112.c b/drivers/hid/hid-cp2112.c
+index 3e669a867e319..2770d964133d5 100644
+--- a/drivers/hid/hid-cp2112.c
++++ b/drivers/hid/hid-cp2112.c
+@@ -1177,7 +1177,11 @@ static void cp2112_gpio_irq_shutdown(struct irq_data *d)
+ 	struct cp2112_device *dev = gpiochip_get_data(gc);
+ 
+ 	cp2112_gpio_irq_mask(d);
+-	cancel_delayed_work_sync(&dev->gpio_poll_worker);
 +
- 	if (!ps)
- 		return;
++	if (!dev->irq_mask) {
++		dev->gpio_poll = false;
++		cancel_delayed_work_sync(&dev->gpio_poll_worker);
++	}
+ }
  
- 	mutex_lock(&ps->pinst->lock);
- 	list_del(&ps->list);
--	padata_free_pd(rcu_dereference_protected(ps->pd, 1));
-+	pd = rcu_dereference_protected(ps->pd, 1);
-+	if (refcount_dec_and_test(&pd->refcnt))
-+		padata_free_pd(pd);
- 	mutex_unlock(&ps->pinst->lock);
- 
- 	kfree(ps);
+ static int cp2112_gpio_irq_type(struct irq_data *d, unsigned int type)
 -- 
 2.42.0
 
