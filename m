@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D26E3A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2883A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDESKOJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C73DC433CC;
-	Wed, 15 Nov 2023 19:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUmosyVA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87B2C433C9;
+	Wed, 15 Nov 2023 19:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077402;
-	bh=NrIwbpt9PY6GJVSpp4BSLGX2+Qcy1e5DhYE8Ux2Yy54=;
+	s=korg; t=1700077403;
+	bh=XWgx0pg+FXwdu9AuCPzbNjVE2xVjD2UlTbTjsBRVAKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDESKOJy3aHKjmVYiLlQsEVIgWMP5s9whqirJBLuCKLtqkwMaXSf/8OqyhZoFDEqj
-	 g3yHRE/KW6V1yUI522VthDrq/393C5g5z2GHXOSB9tnDOdaDCFCGdw5ikDk8jjlFsP
-	 aHzlK/XSfuA9CYkIez5ffX7HLvaL9Oq6ZlZhqFWY=
+	b=hUmosyVAbUXaMfgtgm8/JSoB1bRXndJq+jM50EMqL8T/4U5dah0VzX77PYDy2x+D9
+	 yhc4HgouoZxoTuAavc4raDX5Ye4zUR8P0iIwGW8iVaWJKY3TPHq80uambbyGRwUF9h
+	 Lo2TpPhWPzhvJhmHMtCcppE1bB0FZcXvP0NFoD/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Arnd Bergmann <arnd@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 281/603] arm64: dts: qcom: sm6125: Pad APPS IOMMU address to 8 characters
-Date: Wed, 15 Nov 2023 14:13:46 -0500
-Message-ID: <20231115191632.817508282@linuxfoundation.org>
+Subject: [PATCH 6.6 264/603] xen: irqfd: Use _IOW instead of the internal _IOC() macro
+Date: Wed, 15 Nov 2023 14:13:29 -0500
+Message-ID: <20231115191631.589124164@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,35 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 310cdafc4a56827d1aeda7cc297939034adb8f99 ]
+[ Upstream commit 767e33ca47dd8ace7769e0b0c19d7b0c38b2f72d ]
 
-APPS IOMMU is the only node in sm6125.dtsi that doesn't have its
-address padded to 8 hexadecimals; fix this by prepending a 0.
+_IOC() an internal helper that we should not use in driver code.  In
+particular, we got the data direction wrong here, which breaks a number
+of tools, as having "_IOC_NONE" should never be paired with a nonzero
+size.
 
-Fixes: 8ddb4bc3d3b5 ("arm64: dts: qcom: sm6125: Configure APPS SMMU")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Link: https://lore.kernel.org/r/20230723-sm6125-dpu-v4-2-a3f287dd6c07@somainline.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Use _IOW() instead.
+
+Fixes: f8941e6c4c71 ("xen: privcmd: Add support for irqfd")
+Reported-by: Arnd Bergmann <arnd@kernel.org>
+Closes: https://lore.kernel.org/all/268a2031-63b8-4c7d-b1e5-8ab83ca80b4a@app.fastmail.com/
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/599ca6f1b9dd2f0e6247ea37bee3ea6827404b6d.1697439990.git.viresh.kumar@linaro.org
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
+ include/uapi/xen/privcmd.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index d7c1a40617c64..197f8fed19a29 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -1208,7 +1208,7 @@ spmi_bus: spmi@1c40000 {
+diff --git a/include/uapi/xen/privcmd.h b/include/uapi/xen/privcmd.h
+index b143fafce84db..e145bca5105c5 100644
+--- a/include/uapi/xen/privcmd.h
++++ b/include/uapi/xen/privcmd.h
+@@ -138,6 +138,6 @@ struct privcmd_irqfd {
+ #define IOCTL_PRIVCMD_MMAP_RESOURCE				\
+ 	_IOC(_IOC_NONE, 'P', 7, sizeof(struct privcmd_mmap_resource))
+ #define IOCTL_PRIVCMD_IRQFD					\
+-	_IOC(_IOC_NONE, 'P', 8, sizeof(struct privcmd_irqfd))
++	_IOW('P', 8, struct privcmd_irqfd)
  
- 		apps_smmu: iommu@c600000 {
- 			compatible = "qcom,sm6125-smmu-500", "qcom,smmu-500", "arm,mmu-500";
--			reg = <0xc600000 0x80000>;
-+			reg = <0x0c600000 0x80000>;
- 			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 88 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
+ #endif /* __LINUX_PUBLIC_PRIVCMD_H__ */
 -- 
 2.42.0
 
