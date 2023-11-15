@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE98364C8
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774DC3C46B
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLK12v+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BB4C433CA;
-	Wed, 15 Nov 2023 19:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIFcOIBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27858C433C9;
+	Wed, 15 Nov 2023 19:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077339;
-	bh=MZ4NbJCTfHKi6M7C3iK8wAuXJU1uHYU/l8WGgr0x84E=;
+	s=korg; t=1700077341;
+	bh=Egbyh1psw/HLx7PZD28pHJLUui8WM6+/gjaR4N40Hhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLK12v+Q/zGMK1PTM6dhD1eXZeerMVG4JXVg8zCM/O9nfY2QgOX9HWtfsIduRLmKX
-	 xsarGqjhliPuiu8zRrXHQmisKxZVOTU+Qj/Mc5MsQxyYxCibfLlZiz92soH3LXuGIa
-	 IPnrnwdrSqCfYzv6Yn2j8DRKT/PwMflSgo9CwY4M=
+	b=HIFcOIBnuAWwIbj0KR3vUfCdpQ4MUPGlWG2aI26fRywX/sL2ObN4uGE23qLaMPnaO
+	 nx6u/JrmUL3ydtys7k/uv95N04Y76SRd7g/euVsfHzk0a9j2IX3mFGviKIeNisZDUg
+	 kMOkMeAuna0B4hrl5QHpNeIZk8tDZ5yZDo+CtJPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Nartowicz <deadbeef@nartowicz.co.uk>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 205/603] Revert "hwmon: (sch56xx-common) Add DMI override table"
-Date: Wed, 15 Nov 2023 14:12:30 -0500
-Message-ID: <20231115191627.452651616@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Maxim Schwalm <maxim.schwalm@gmail.com>
+Subject: [PATCH 6.6 235/603] drm/bridge: tc358768: Print logical values, not raw register values
+Date: Wed, 15 Nov 2023 14:13:00 -0500
+Message-ID: <20231115191629.460891849@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -43,91 +45,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 28da9dee3594423534f3ea1e1f61e6bb2d2fa651 ]
+[ Upstream commit 013ea98cdfccef3b7c38b087c1f629488d2ef683 ]
 
-This reverts commit fd2d53c367ae9983c2100ac733a834e0c79d7537.
+The driver debug prints DSI related timings as raw register values in
+hex. It is much more useful to see the "logical" value of the timing,
+not the register value.
 
-As reported by Ian Nartowicz, this and the preceding patch
-result in a failure to load the driver on Celsius W280.
-While the alternative would be to add the board to the DMI
-override table, it is quite likely that other systems are
-also affected. Revert the offending patches to avoid future
-problems.
+Change the prints to print the values separately, in case a single
+register contains multiple values, and use %u to have it in a more human
+consumable form.
 
-Fixes: fd2d53c367ae ("hwmon: (sch56xx-common) Add DMI override table")
-Reported-by: Ian Nartowicz <deadbeef@nartowicz.co.uk>
-Closes: https://lore.kernel.org/linux-hwmon/20231025192239.3c5389ae@debian.org/T/#t
-Cc: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> # Asus TF700T
+Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-7-31725f008a50@ideasonboard.com
+Stable-dep-of: f1dabbe64506 ("drm/bridge: tc358768: Fix tc358768_ns_to_cnt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sch56xx-common.c | 44 ++++++++--------------------------
- 1 file changed, 10 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hwmon/sch56xx-common.c b/drivers/hwmon/sch56xx-common.c
-index de3a0886c2f72..3ece53adabd62 100644
---- a/drivers/hwmon/sch56xx-common.c
-+++ b/drivers/hwmon/sch56xx-common.c
-@@ -523,28 +523,6 @@ static int __init sch56xx_device_add(int address, const char *name)
- 	return PTR_ERR_OR_ZERO(sch56xx_pdev);
- }
+diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
+index e42b5259ea344..163477ec91a9c 100644
+--- a/drivers/gpu/drm/bridge/tc358768.c
++++ b/drivers/gpu/drm/bridge/tc358768.c
+@@ -739,57 +739,59 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
  
--static const struct dmi_system_id sch56xx_dmi_override_table[] __initconst = {
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "CELSIUS W380"),
--		},
--	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ESPRIMO P710"),
--		},
--	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ESPRIMO E9900"),
--		},
--	},
--	{ }
--};
--
- /* For autoloading only */
- static const struct dmi_system_id sch56xx_dmi_table[] __initconst = {
- 	{
-@@ -565,18 +543,16 @@ static int __init sch56xx_init(void)
- 		if (!dmi_check_system(sch56xx_dmi_table))
- 			return -ENODEV;
+ 	/* LP11 > 100us for D-PHY Rx Init */
+ 	val = tc358768_ns_to_cnt(100 * 1000, dsibclk_nsk) - 1;
+-	dev_dbg(priv->dev, "LINEINITCNT: 0x%x\n", val);
++	dev_dbg(priv->dev, "LINEINITCNT: %u\n", val);
+ 	tc358768_write(priv, TC358768_LINEINITCNT, val);
  
--		if (!dmi_check_system(sch56xx_dmi_override_table)) {
--			/*
--			 * Some machines like the Esprimo P720 and Esprimo C700 have
--			 * onboard devices named " Antiope"/" Theseus" instead of
--			 * "Antiope"/"Theseus", so we need to check for both.
--			 */
--			if (!dmi_find_device(DMI_DEV_TYPE_OTHER, "Antiope", NULL) &&
--			    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Antiope", NULL) &&
--			    !dmi_find_device(DMI_DEV_TYPE_OTHER, "Theseus", NULL) &&
--			    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Theseus", NULL))
--				return -ENODEV;
--		}
-+		/*
-+		 * Some machines like the Esprimo P720 and Esprimo C700 have
-+		 * onboard devices named " Antiope"/" Theseus" instead of
-+		 * "Antiope"/"Theseus", so we need to check for both.
-+		 */
-+		if (!dmi_find_device(DMI_DEV_TYPE_OTHER, "Antiope", NULL) &&
-+		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Antiope", NULL) &&
-+		    !dmi_find_device(DMI_DEV_TYPE_OTHER, "Theseus", NULL) &&
-+		    !dmi_find_device(DMI_DEV_TYPE_OTHER, " Theseus", NULL))
-+			return -ENODEV;
- 	}
+ 	/* LPTimeCnt > 50ns */
+ 	val = tc358768_ns_to_cnt(50, dsibclk_nsk) - 1;
+ 	lptxcnt = val;
+-	dev_dbg(priv->dev, "LPTXTIMECNT: 0x%x\n", val);
++	dev_dbg(priv->dev, "LPTXTIMECNT: %u\n", val);
+ 	tc358768_write(priv, TC358768_LPTXTIMECNT, val);
  
- 	/*
+ 	/* 38ns < TCLK_PREPARE < 95ns */
+ 	val = tc358768_ns_to_cnt(65, dsibclk_nsk) - 1;
++	dev_dbg(priv->dev, "TCLK_PREPARECNT %u\n", val);
+ 	/* TCLK_PREPARE + TCLK_ZERO > 300ns */
+ 	val2 = tc358768_ns_to_cnt(300 - tc358768_to_ns(2 * ui_nsk),
+ 				  dsibclk_nsk) - 2;
++	dev_dbg(priv->dev, "TCLK_ZEROCNT %u\n", val2);
+ 	val |= val2 << 8;
+-	dev_dbg(priv->dev, "TCLK_HEADERCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_HEADERCNT, val);
+ 
+ 	/* TCLK_TRAIL > 60ns AND TEOT <= 105 ns + 12*UI */
+ 	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(2 * ui_nsk), dsibclk_nsk) - 5;
+ 	val = clamp(raw_val, 0, 127);
+-	dev_dbg(priv->dev, "TCLK_TRAILCNT: 0x%x\n", val);
++	dev_dbg(priv->dev, "TCLK_TRAILCNT: %u\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_TRAILCNT, val);
+ 
+ 	/* 40ns + 4*UI < THS_PREPARE < 85ns + 6*UI */
+ 	val = 50 + tc358768_to_ns(4 * ui_nsk);
+ 	val = tc358768_ns_to_cnt(val, dsibclk_nsk) - 1;
++	dev_dbg(priv->dev, "THS_PREPARECNT %u\n", val);
+ 	/* THS_PREPARE + THS_ZERO > 145ns + 10*UI */
+ 	raw_val = tc358768_ns_to_cnt(145 - tc358768_to_ns(3 * ui_nsk), dsibclk_nsk) - 10;
+ 	val2 = clamp(raw_val, 0, 127);
++	dev_dbg(priv->dev, "THS_ZEROCNT %u\n", val2);
+ 	val |= val2 << 8;
+-	dev_dbg(priv->dev, "THS_HEADERCNT: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_THS_HEADERCNT, val);
+ 
+ 	/* TWAKEUP > 1ms in lptxcnt steps */
+ 	val = tc358768_ns_to_cnt(1020000, dsibclk_nsk);
+ 	val = val / (lptxcnt + 1) - 1;
+-	dev_dbg(priv->dev, "TWAKEUP: 0x%x\n", val);
++	dev_dbg(priv->dev, "TWAKEUP: %u\n", val);
+ 	tc358768_write(priv, TC358768_TWAKEUP, val);
+ 
+ 	/* TCLK_POSTCNT > 60ns + 52*UI */
+ 	val = tc358768_ns_to_cnt(60 + tc358768_to_ns(52 * ui_nsk),
+ 				 dsibclk_nsk) - 3;
+-	dev_dbg(priv->dev, "TCLK_POSTCNT: 0x%x\n", val);
++	dev_dbg(priv->dev, "TCLK_POSTCNT: %u\n", val);
+ 	tc358768_write(priv, TC358768_TCLK_POSTCNT, val);
+ 
+ 	/* max(60ns + 4*UI, 8*UI) < THS_TRAILCNT < 105ns + 12*UI */
+ 	raw_val = tc358768_ns_to_cnt(60 + tc358768_to_ns(18 * ui_nsk),
+ 				     dsibclk_nsk) - 4;
+ 	val = clamp(raw_val, 0, 15);
+-	dev_dbg(priv->dev, "THS_TRAILCNT: 0x%x\n", val);
++	dev_dbg(priv->dev, "THS_TRAILCNT: %u\n", val);
+ 	tc358768_write(priv, TC358768_THS_TRAILCNT, val);
+ 
+ 	val = BIT(0);
+@@ -803,10 +805,11 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
+ 	val = tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk * 4);
+ 	val = tc358768_ns_to_cnt(val, dsibclk_nsk) / 4 - 1;
++	dev_dbg(priv->dev, "TXTAGOCNT: %u\n", val);
+ 	val2 = tc358768_ns_to_cnt(tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk),
+ 				  dsibclk_nsk) - 2;
++	dev_dbg(priv->dev, "RXTASURECNT: %u\n", val2);
+ 	val = val << 16 | val2;
+-	dev_dbg(priv->dev, "BTACNTRL1: 0x%x\n", val);
+ 	tc358768_write(priv, TC358768_BTACNTRL1, val);
+ 
+ 	/* START[0] */
 -- 
 2.42.0
 
