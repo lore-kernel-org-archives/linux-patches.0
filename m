@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE978433AF
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F63433C9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iU23n1H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250F1C433C8;
-	Wed, 15 Nov 2023 19:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hu0RL/TP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C0BC433C8;
+	Wed, 15 Nov 2023 19:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076961;
-	bh=9iKNko/kxQk9YKmCm94Bn//VUUGMjX5H9xOPTexUvhc=;
+	s=korg; t=1700076963;
+	bh=e0seoj7LTsnn1L6AY6pD90UrieCXGqQDd8Ra2LUyiUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iU23n1HvJEsl6/lqzoJ7NkQYq46wjw5PjLvjLX8uXeQiBp63+0/iqkIFar+JOpkn
-	 leRACjUAIS20Kkw5pA5GHhSupPh/ZZ3nyXHRug05hqiFpxHm4MPtc9Xb54j2z85MlA
-	 evcJshQXk63UexhJNrAhUDbaqB3eMxcGOoTTkJLA=
+	b=hu0RL/TPD99OtUAHE8Ax1O+6kYB/QeO248RZ+Xfnr4Z6q/INYp76iZ/Q1oJGI5xKI
+	 ykW840A0E53s6IAyHB+L1OFIBS5yPCy9k1O2P+vlRFhLy8+gXu1SCQPEupXLn0yLvR
+	 VSsZtfASe9Ug/fun7LF/8SgbuYRY/P45VPXwC32U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/603] wifi: mt76: mt7603: improve watchdog reset reliablity
-Date: Wed, 15 Nov 2023 14:10:25 -0500
-Message-ID: <20231115191618.666743683@linuxfoundation.org>
+Subject: [PATCH 6.5 477/550] media: bttv: fix use after free error due to btv->timeout timer
+Date: Wed, 15 Nov 2023 14:17:41 -0500
+Message-ID: <20231115191633.933186961@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,86 +38,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit c677dda165231c3efffb9de4bace249d5d2a51b9 ]
+[ Upstream commit bd5b50b329e850d467e7bcc07b2b6bde3752fbda ]
 
-Only trigger PSE reset if PSE was stuck, otherwise it can cause DMA issues.
-Trigger the PSE reset while DMA is fully stopped in order to improve
-reliabilty.
+There may be some a race condition between timer function
+bttv_irq_timeout and bttv_remove. The timer is setup in
+probe and there is no timer_delete operation in remove
+function. When it hit kfree btv, the function might still be
+invoked, which will cause use after free bug.
 
-Fixes: c8846e101502 ("mt76: add driver for MT7603E and MT7628/7688")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This bug is found by static analysis, it may be false positive.
+
+Fix it by adding del_timer_sync invoking to the remove function.
+
+cpu0                cpu1
+                  bttv_probe
+                    ->timer_setup
+                      ->bttv_set_dma
+                        ->mod_timer;
+bttv_remove
+  ->kfree(btv);
+                  ->bttv_irq_timeout
+                    ->USE btv
+
+Fixes: 162e6376ac58 ("media: pci: Convert timers to use timer_setup()")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7603/mac.c   | 29 ++++++++-----------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ drivers/media/pci/bt8xx/bttv-driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-index 7a506a0c46e2b..cf21d06257e53 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
-@@ -1441,15 +1441,6 @@ static void mt7603_mac_watchdog_reset(struct mt7603_dev *dev)
+diff --git a/drivers/media/pci/bt8xx/bttv-driver.c b/drivers/media/pci/bt8xx/bttv-driver.c
+index 734f02b91aa31..a50cae25b5463 100644
+--- a/drivers/media/pci/bt8xx/bttv-driver.c
++++ b/drivers/media/pci/bt8xx/bttv-driver.c
+@@ -3830,6 +3830,7 @@ static void bttv_remove(struct pci_dev *pci_dev)
  
- 	mt7603_beacon_set_timer(dev, -1, 0);
- 
--	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED] ||
--	    dev->cur_reset_cause == RESET_CAUSE_RX_PSE_BUSY ||
--	    dev->cur_reset_cause == RESET_CAUSE_BEACON_STUCK ||
--	    dev->cur_reset_cause == RESET_CAUSE_TX_HANG)
--		mt7603_pse_reset(dev);
--
--	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED])
--		goto skip_dma_reset;
--
- 	mt7603_mac_stop(dev);
- 
- 	mt76_clear(dev, MT_WPDMA_GLO_CFG,
-@@ -1459,28 +1450,32 @@ static void mt7603_mac_watchdog_reset(struct mt7603_dev *dev)
- 
- 	mt7603_irq_disable(dev, mask);
- 
--	mt76_set(dev, MT_WPDMA_GLO_CFG, MT_WPDMA_GLO_CFG_FORCE_TX_EOF);
--
- 	mt7603_pse_client_reset(dev);
- 
- 	mt76_queue_tx_cleanup(dev, dev->mt76.q_mcu[MT_MCUQ_WM], true);
- 	for (i = 0; i < __MT_TXQ_MAX; i++)
- 		mt76_queue_tx_cleanup(dev, dev->mphy.q_tx[i], true);
- 
-+	mt7603_dma_sched_reset(dev);
-+
-+	mt76_tx_status_check(&dev->mt76, true);
-+
- 	mt76_for_each_q_rx(&dev->mt76, i) {
- 		mt76_queue_rx_reset(dev, i);
- 	}
- 
--	mt76_tx_status_check(&dev->mt76, true);
-+	if (dev->reset_cause[RESET_CAUSE_RESET_FAILED] ||
-+	    dev->cur_reset_cause == RESET_CAUSE_RX_PSE_BUSY)
-+		mt7603_pse_reset(dev);
- 
--	mt7603_dma_sched_reset(dev);
-+	if (!dev->reset_cause[RESET_CAUSE_RESET_FAILED]) {
-+		mt7603_mac_dma_start(dev);
- 
--	mt7603_mac_dma_start(dev);
-+		mt7603_irq_enable(dev, mask);
- 
--	mt7603_irq_enable(dev, mask);
-+		clear_bit(MT76_RESET, &dev->mphy.state);
-+	}
- 
--skip_dma_reset:
--	clear_bit(MT76_RESET, &dev->mphy.state);
- 	mutex_unlock(&dev->mt76.mutex);
- 
- 	mt76_worker_enable(&dev->mt76.tx_worker);
+ 	/* free resources */
+ 	free_irq(btv->c.pci->irq,btv);
++	del_timer_sync(&btv->timeout);
+ 	iounmap(btv->bt848_mmio);
+ 	release_mem_region(pci_resource_start(btv->c.pci,0),
+ 			   pci_resource_len(btv->c.pci,0));
 -- 
 2.42.0
 
