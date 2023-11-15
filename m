@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58DC35F19
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D9A35F19
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBTtd5S/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92842C433CB;
-	Wed, 15 Nov 2023 20:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJOH/AdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D55C433C7;
+	Wed, 15 Nov 2023 20:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078531;
-	bh=nNV068tx1MbQpW7vjY/3WUPmg/fdmryTV8F+Fq8L+3k=;
+	s=korg; t=1700078533;
+	bh=yTKdwoGinUkj/38Eershupq5/TVvqvNSt05vOTUD3mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JBTtd5S/db75jbOxJOn/vlbNBTDlQsWyZUQZONyUT5NDNVG53wedVc+2UsxjkWHKI
-	 yK4YmJh0ql6X+Z1rDAD/p+mLywKg29ic7UR2AkvasGZAI5oXBQtpCtoSJNK4QMbA3R
-	 e0Nv4PCAGwB9pLDRS9IBnPYga25uWU8yRwjXazPE=
+	b=TJOH/AdMzRH2BWiw7VKuroUN9nqk4iJ1Da9gUc8XhmKVJGgaJ9WFQ/0hKo67XarmG
+	 yE/GPOje6Sdzmb/He0AjeWVrhI4d75PNRNWpxk4tAhAfT3wi+faFeA7Jq6C0R2j+QO
+	 /vYTHI0EtN7F95s5mwsccaMhnXZ8+VM0yco/dAk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	George Shuklin <george.shuklin@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 355/379] nvme: fix error-handling for io_uring nvme-passthrough
-Date: Wed, 15 Nov 2023 14:27:10 -0500
-Message-ID: <20231115192706.160350077@linuxfoundation.org>
+Subject: [PATCH 6.1 356/379] tg3: power down device only on SYSTEM_POWER_OFF
+Date: Wed, 15 Nov 2023 14:27:11 -0500
+Message-ID: <20231115192706.219820897@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -45,44 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anuj Gupta <anuj20.g@samsung.com>
+From: George Shuklin <george.shuklin@gmail.com>
 
-[ Upstream commit 1147dd0503564fa0e03489a039f9e0c748a03db4 ]
+[ Upstream commit 9fc3bc7643341dc5be7d269f3d3dbe441d8d7ac3 ]
 
-Driver may return an error before submitting the command to the device.
-Ensure that such error is propagated up.
+Dell R650xs servers hangs on reboot if tg3 driver calls
+tg3_power_down.
 
-Fixes: 456cba386e94 ("nvme: wire-up uring-cmd support for io-passthru on char-device.")
-Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
-Signed-off-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+This happens only if network adapters (BCM5720 for R650xs) were
+initialized using SNP (e.g. by booting ipxe.efi).
+
+The actual problem is on Dell side, but this fix allows servers
+to come back alive after reboot.
+
+Signed-off-by: George Shuklin <george.shuklin@gmail.com>
+Fixes: 2ca1c94ce0b6 ("tg3: Disable tg3 device on system reboot to avoid triggering AER")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231103115029.83273-1-george.shuklin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/ioctl.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/ioctl.c b/drivers/nvme/host/ioctl.c
-index b33004a4bcb5a..91e6d03475798 100644
---- a/drivers/nvme/host/ioctl.c
-+++ b/drivers/nvme/host/ioctl.c
-@@ -435,10 +435,13 @@ static enum rq_end_io_ret nvme_uring_cmd_end_io(struct request *req,
- 	void *cookie = READ_ONCE(ioucmd->cookie);
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 9609041016776..85570e40c8e9b 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18086,7 +18086,8 @@ static void tg3_shutdown(struct pci_dev *pdev)
+ 	if (netif_running(dev))
+ 		dev_close(dev);
  
- 	req->bio = pdu->bio;
--	if (nvme_req(req)->flags & NVME_REQ_CANCELLED)
-+	if (nvme_req(req)->flags & NVME_REQ_CANCELLED) {
- 		pdu->nvme_status = -EINTR;
--	else
-+	} else {
- 		pdu->nvme_status = nvme_req(req)->status;
-+		if (!pdu->nvme_status)
-+			pdu->nvme_status = blk_status_to_errno(err);
-+	}
- 	pdu->u.result = le64_to_cpu(nvme_req(req)->result.u64);
+-	tg3_power_down(tp);
++	if (system_state == SYSTEM_POWER_OFF)
++		tg3_power_down(tp);
  
- 	/*
+ 	rtnl_unlock();
+ 
 -- 
 2.42.0
 
