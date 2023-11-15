@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080EC381D1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA6E3DBAD
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dV/sxHwK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8563FC433C8;
-	Wed, 15 Nov 2023 20:00:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AOkK3/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDEEC433C9;
+	Wed, 15 Nov 2023 20:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078425;
-	bh=uSO4EaUmzxmE5vyeSfnZ2trWAa/NSyTQ3Ho9gigXEnY=;
+	s=korg; t=1700078428;
+	bh=apa89NDCPmdhvxQKuMrWHpdPQ84Shb3qA8O9S+1FBJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dV/sxHwKGb6WohLXb9hNp63+xwLnC/eqsnvFslsmKVR8//8PNLgnIABLSVptd+rPT
-	 UxU6NByTF+RN12FUM2APISxWLlazR3063ObEHcUmhVY4TaSO+1PyRsRpgvSvknyBJf
-	 XRu/lvW9C6Pp4iwdVjAUE0Zch+5Q3MInmza0GQfM=
+	b=1AOkK3/xoLAUvziJHa6b/EvVX6E/3Aaz2aULtV+Vte2ME3EGYf26iFOA903XUy0ad
+	 E4fvwvO/0FUBMuddjCtXnPbDdW3bmAGX0vbSiWBcz77XN6Eilt/JbPsGYrGWZpykhn
+	 jUihJ6aMDvlcAf/NJjOA5aZgKsgev2p6CrC7l/ZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	"Guoniu.zhou" <guoniu.zhou@nxp.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 316/379] media: ov5640: Drop dead code using frame_interval
-Date: Wed, 15 Nov 2023 14:26:31 -0500
-Message-ID: <20231115192703.843051456@linuxfoundation.org>
+Subject: [PATCH 6.1 317/379] media: ov5640: fix vblank unchange issue when work at dvp mode
+Date: Wed, 15 Nov 2023 14:26:32 -0500
+Message-ID: <20231115192703.898917691@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,58 +43,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+From: Guoniu.zhou <guoniu.zhou@nxp.com>
 
-[ Upstream commit eeaa47d182fedfe68b8fd40ef3798761c8904791 ]
+[ Upstream commit 8fc29e3c9f682d4ad9b0764d44ecc6c19b000051 ]
 
-The ov5640_update_pixel_rate() function handles the parallel and MIPI
-CSI-2 cases separately.
+The value of V4L2_CID_VBLANK control is initialized to default vblank
+value of 640x480 when driver probe. When OV5640 work at DVP mode, the
+control value won't update and lead to sensor can't output data if the
+resolution remain the same as last time since incorrect total vertical
+size. So update it when there is a new value applied.
 
-When running on a parallel setup the V4L2_CID_PIXEL_RATE value is
-calculated at the beginning of the function using the values configured
-with the frame_interval operations, and then the function immediately
-returns.
-
-The remaining of the function handles the MIPI CSI-2 configuration and
-should not use the 'current_fr' and 'def_fps' fields as those are only
-relevant for parallel mode.
-
-Drop a small section of dead code that updates vblank using
-frame_interval on a MIPI CSI-2 setup.
-
-Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Fixes: bce93b827de6 ("media: ov5640: Add VBLANK control")
+Signed-off-by: Guoniu.zhou <guoniu.zhou@nxp.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: 8fc29e3c9f68 ("media: ov5640: fix vblank unchange issue when work at dvp mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5640.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ drivers/media/i2c/ov5640.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
-index 2ee832426736d..505dd7c10235e 100644
+index 505dd7c10235e..aa9e5a99fc536 100644
 --- a/drivers/media/i2c/ov5640.c
 +++ b/drivers/media/i2c/ov5640.c
-@@ -2912,19 +2912,6 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
+@@ -2840,12 +2840,22 @@ static int ov5640_try_fmt_internal(struct v4l2_subdev *sd,
+ 	return 0;
+ }
+ 
++static void __v4l2_ctrl_vblank_update(struct ov5640_dev *sensor, u32 vblank)
++{
++	const struct ov5640_mode_info *mode = sensor->current_mode;
++
++	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
++				 OV5640_MAX_VTS - mode->height, 1, vblank);
++
++	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
++}
++
+ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
+ {
+ 	const struct ov5640_mode_info *mode = sensor->current_mode;
+ 	enum ov5640_pixel_rate_id pixel_rate_id = mode->pixel_rate;
+ 	struct v4l2_mbus_framefmt *fmt = &sensor->fmt;
+-	const struct ov5640_timings *timings;
++	const struct ov5640_timings *timings = ov5640_timings(sensor, mode);
+ 	s32 exposure_val, exposure_max;
+ 	unsigned int hblank;
+ 	unsigned int i = 0;
+@@ -2864,6 +2874,8 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
+ 		__v4l2_ctrl_s_ctrl_int64(sensor->ctrls.pixel_rate,
+ 					 ov5640_calc_pixel_rate(sensor));
+ 
++		__v4l2_ctrl_vblank_update(sensor, timings->vblank_def);
++
+ 		return 0;
+ 	}
+ 
+@@ -2906,15 +2918,12 @@ static int ov5640_update_pixel_rate(struct ov5640_dev *sensor)
+ 	__v4l2_ctrl_s_ctrl_int64(sensor->ctrls.pixel_rate, pixel_rate);
+ 	__v4l2_ctrl_s_ctrl(sensor->ctrls.link_freq, i);
+ 
+-	timings = ov5640_timings(sensor, mode);
+ 	hblank = timings->htot - mode->width;
+ 	__v4l2_ctrl_modify_range(sensor->ctrls.hblank,
  				 hblank, hblank, 1, hblank);
  
  	vblank = timings->vblank_def;
--
--	if (sensor->current_fr != mode->def_fps) {
--		/*
--		 * Compute the vertical blanking according to the framerate
--		 * configured with s_frame_interval.
--		 */
--		int fie_num = sensor->frame_interval.numerator;
--		int fie_denom = sensor->frame_interval.denominator;
--
--		vblank = ((fie_num * pixel_rate / fie_denom) / timings->htot) -
--			mode->height;
--	}
--
- 	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
- 				 OV5640_MAX_VTS - mode->height, 1, vblank);
- 	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
+-	__v4l2_ctrl_modify_range(sensor->ctrls.vblank, OV5640_MIN_VBLANK,
+-				 OV5640_MAX_VTS - mode->height, 1, vblank);
+-	__v4l2_ctrl_s_ctrl(sensor->ctrls.vblank, vblank);
++	__v4l2_ctrl_vblank_update(sensor, vblank);
+ 
+ 	exposure_max = timings->crop.height + vblank - 4;
+ 	exposure_val = clamp_t(s32, sensor->ctrls.exposure->val,
 -- 
 2.42.0
 
