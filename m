@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A742A28382
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7C328382
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJ3sQuLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CC0C433C7;
-	Wed, 15 Nov 2023 19:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUZ/0GwX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0895DC433C9;
+	Wed, 15 Nov 2023 19:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076388;
-	bh=mKJB6wgoKI96AfRhjgDItfS4HE6Vj887+8S2Z/0I0zE=;
+	s=korg; t=1700076390;
+	bh=kaXX8j/bJJhxrSLZpE8Cx9z0zEGYm3UQqFHMARTf98s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJ3sQuLDyZbMdMdgJ0P7cLch1HqEETYhPsUAUJffbWgkW/ZNNYDwJg03Pd6eDYfUF
-	 cIhOVhZkHRaSPmcfj7ZizgHcwmZkFo614inWPqv/XlLmhDIY6SxLk7iUSXdQl4QZoh
-	 MMfmLdPnv2caA+R193Rw/pcFvKL69rOOLNKDxY/w=
+	b=NUZ/0GwXgw6IHIqOkB+TQPlx2oF9eDmwK8zQGLwp1VNZh4B3V+60HP9cs2BICSLi0
+	 XpFWl09/thNab3c9DeXx7JHS7mJa6dxCqst3H8XPhGqM+ULKr/U0cd+SSmxRoAgBUF
+	 7lx5itj0VxKHiyEWf5JESXw+oOh26zbDMa7yWiRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
 	David Heidelberg <david@ixit.cz>,
+	Douglas Anderson <dianders@chromium.org>,
 	Stephen Boyd <swboyd@chromium.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 261/550] arm64: dts: qcom: sdm845: Fix PSCI power domain names
-Date: Wed, 15 Nov 2023 14:14:05 -0500
-Message-ID: <20231115191618.803610561@linuxfoundation.org>
+Subject: [PATCH 6.5 262/550] arm64: dts: qcom: sdm845: cheza doesnt support LMh node
+Date: Wed, 15 Nov 2023 14:14:06 -0500
+Message-ID: <20231115191618.876692866@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -48,62 +47,52 @@ Content-Transfer-Encoding: 8bit
 
 From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit a5f01673d3946e424091e6b8ff274716f9c21454 ]
+[ Upstream commit 197ae69d1caedb3203e0b189a39efb820675fd5c ]
 
-The original commit hasn't been updated according to
-refactoring done in sdm845.dtsi.
+Cheza firmware doesn't allow controlling LMh from the operating system.
 
-Fixes: a1ade6cac5a2 ("arm64: dts: qcom: sdm845: Switch PSCI cpu idle states from PC to OSI")
+Fixes: 36c6581214c4 ("arm64: dts: qcom: sdm845: Add support for LMh node")
 Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230912071205.11502-1-david@ixit.cz
+Link: https://lore.kernel.org/r/20230912071205.11502-2-david@ixit.cz
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-index 1ce413263b7f9..617be27e79523 100644
+index 617be27e79523..74c47a8499a26 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
-@@ -144,15 +144,15 @@ panel_in_edp: endpoint {
+@@ -143,6 +143,10 @@ panel_in_edp: endpoint {
+ 	};
  };
  
- &psci {
--	/delete-node/ cpu0;
--	/delete-node/ cpu1;
--	/delete-node/ cpu2;
--	/delete-node/ cpu3;
--	/delete-node/ cpu4;
--	/delete-node/ cpu5;
--	/delete-node/ cpu6;
--	/delete-node/ cpu7;
--	/delete-node/ cpu-cluster0;
-+	/delete-node/ power-domain-cpu0;
-+	/delete-node/ power-domain-cpu1;
-+	/delete-node/ power-domain-cpu2;
-+	/delete-node/ power-domain-cpu3;
-+	/delete-node/ power-domain-cpu4;
-+	/delete-node/ power-domain-cpu5;
-+	/delete-node/ power-domain-cpu6;
-+	/delete-node/ power-domain-cpu7;
-+	/delete-node/ power-domain-cluster;
- };
- 
- &cpus {
-@@ -338,6 +338,8 @@ flash@0 {
- 
- 
- &apps_rsc {
-+	/delete-property/ power-domains;
++&cpufreq_hw {
++	/delete-property/ interrupts-extended; /* reference to lmh_cluster[01] */
++};
 +
- 	regulators-0 {
- 		compatible = "qcom,pm8998-rpmh-regulators";
- 		qcom,pmic-id = "a";
+ &psci {
+ 	/delete-node/ power-domain-cpu0;
+ 	/delete-node/ power-domain-cpu1;
+@@ -275,6 +279,14 @@ &BIG_CPU_SLEEP_1
+ 			   &CLUSTER_SLEEP_0>;
+ };
+ 
++&lmh_cluster0 {
++	status = "disabled";
++};
++
++&lmh_cluster1 {
++	status = "disabled";
++};
++
+ /*
+  * Reserved memory changes
+  *
 -- 
 2.42.0
 
