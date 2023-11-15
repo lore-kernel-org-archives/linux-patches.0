@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E273A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1A23A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STcWPAQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBB9C433C8;
-	Wed, 15 Nov 2023 19:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="op1mAMyX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F34FC433C8;
+	Wed, 15 Nov 2023 19:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077621;
-	bh=Mruw1Swyayw7794AmhWSjUpD/3WqOm8Mw1mug2Nd4pI=;
+	s=korg; t=1700077623;
+	bh=JlUZtKAn8+kLmnLdgWJYXru/z7h9dKCDdZQSzCpwoNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=STcWPAQX1z+MXnft/YCaL4SVzVPBuFj2FVz6KuejHpK8xsF9zUleKudXJd2UcQLyF
-	 StutHGscOoTOqoRNy97/bIw7nnhinkFudlV2lkb5xWrCakaHgwlf/jFnTLBph8b4LT
-	 c58dL6HKRhJ3GEM0D0v5E8GewB+JQH0DWfSDwudA=
+	b=op1mAMyX6cooQb0NHE/gFmy7AgoxFdL5atsabN80rSVwekBVLIOPzJ/52I94ioz4T
+	 Oc7dfpaU4I04iUMaIipmT+vbfVEnEsHinq/qTH0VA0DbqvT7DM+u9KACBpW1+A0x2o
+	 Et7oFrtn+PIso/8BwE+UMLN9/4pMixLv1aeM2I7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rogan Dawes <rogan@dawes.za.net>,
-	Fabio Estevam <festevam@denx.de>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Lee Jones <lee@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 415/603] leds: pwm: Dont disable the PWM when the LED should be off
-Date: Wed, 15 Nov 2023 14:16:00 -0500
-Message-ID: <20231115191641.664652707@linuxfoundation.org>
+Subject: [PATCH 6.6 395/603] HID: logitech-hidpp: Move get_wireless_feature_index() check to hidpp_connect_event()
+Date: Wed, 15 Nov 2023 14:15:40 -0500
+Message-ID: <20231115191640.433251896@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -38,55 +36,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 76fe464c8e64e71b2e4af11edeef0e5d85eeb6aa ]
+[ Upstream commit ba9de350509504fb748837b71e23d7e84c83d93c ]
 
-Disabling a PWM (i.e. calling pwm_apply_state with .enabled = false)
-gives no guarantees what the PWM output does. It might freeze where it
-currently is, or go in a High-Z state or drive the active or inactive
-state, it might even continue to toggle.
+Calling get_wireless_feature_index() from probe() causes
+the wireless_feature_index to only get set for unifying devices which
+are already connected at probe() time. It does not get set for devices
+which connect later.
 
-To ensure that the LED gets really disabled, don't disable the PWM even
-when .duty_cycle is zero.
+Fix this by moving get_wireless_feature_index() to hidpp_connect_event(),
+this does not make a difference for devices connected at probe() since
+probe() will queue the hidpp_connect_event() for those at probe time.
 
-This fixes disabling a leds-pwm LED on i.MX28. The PWM on this SoC is
-one of those that freezes its output on disable, so if you disable an
-LED that is full on, it stays on. If you disable a LED with half
-brightness it goes off in 50% of the cases and full on in the other 50%.
+This series has been tested on the following devices:
+Logitech Bluetooth Laser Travel Mouse (bluetooth, HID++ 1.0)
+Logitech M720 Triathlon (bluetooth, HID++ 4.5)
+Logitech M720 Triathlon (unifying, HID++ 4.5)
+Logitech K400 Pro (unifying, HID++ 4.1)
+Logitech K270 (eQUAD nano Lite, HID++ 2.0)
+Logitech M185 (eQUAD nano Lite, HID++ 4.5)
+Logitech LX501 keyboard (27 Mhz, HID++ builtin scroll-wheel, HID++ 1.0)
+Logitech M-RAZ105 mouse (27 Mhz, HID++ extra mouse buttons, HID++ 1.0)
 
-Fixes: 41c42ff5dbe2 ("leds: simple driver for pwm driven LEDs")
-Reported-by: Rogan Dawes <rogan@dawes.za.net>
-Reported-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Fabio Estevam <festevam@denx.de>
-Link: https://lore.kernel.org/r/20230922192834.1695727-1-u.kleine-koenig@pengutronix.de
-Signed-off-by: Lee Jones <lee@kernel.org>
+And by bentiss:
+Logitech Touchpad T650 (unifying)
+Logitech Touchpad T651 (bluetooth)
+Logitech MX Master 3B (BLE)
+Logitech G403 (plain USB / Gaming receiver)
+
+Fixes: 0da0a63b7cba ("HID: logitech-hidpp: Support WirelessDeviceStatus connect events")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231010102029.111003-4-hdegoede@redhat.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pwm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-logitech-hidpp.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
-index 419b710984ab6..2b3bf1353b707 100644
---- a/drivers/leds/leds-pwm.c
-+++ b/drivers/leds/leds-pwm.c
-@@ -53,7 +53,7 @@ static int led_pwm_set(struct led_classdev *led_cdev,
- 		duty = led_dat->pwmstate.period - duty;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index c582d19b11d6c..7bf12ca0eb4a9 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -1835,15 +1835,14 @@ static int hidpp_battery_get_property(struct power_supply *psy,
+ /* -------------------------------------------------------------------------- */
+ #define HIDPP_PAGE_WIRELESS_DEVICE_STATUS			0x1d4b
  
- 	led_dat->pwmstate.duty_cycle = duty;
--	led_dat->pwmstate.enabled = duty > 0;
-+	led_dat->pwmstate.enabled = true;
- 	return pwm_apply_state(led_dat->pwm, &led_dat->pwmstate);
+-static int hidpp_set_wireless_feature_index(struct hidpp_device *hidpp)
++static int hidpp_get_wireless_feature_index(struct hidpp_device *hidpp, u8 *feature_index)
+ {
+ 	u8 feature_type;
+ 	int ret;
+ 
+ 	ret = hidpp_root_get_feature(hidpp,
+ 				     HIDPP_PAGE_WIRELESS_DEVICE_STATUS,
+-				     &hidpp->wireless_feature_index,
+-				     &feature_type);
++				     feature_index, &feature_type);
+ 
+ 	return ret;
  }
+@@ -4249,6 +4248,13 @@ static void hidpp_connect_event(struct hidpp_device *hidpp)
+ 		}
+ 	}
  
++	if (hidpp->protocol_major >= 2) {
++		u8 feature_index;
++
++		if (!hidpp_get_wireless_feature_index(hidpp, &feature_index))
++			hidpp->wireless_feature_index = feature_index;
++	}
++
+ 	if (hidpp->name == hdev->name && hidpp->protocol_major >= 2) {
+ 		name = hidpp_get_device_name(hidpp);
+ 		if (name) {
+@@ -4493,14 +4499,6 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		hidpp_overwrite_name(hdev);
+ 	}
+ 
+-	if (connected && hidpp->protocol_major >= 2) {
+-		ret = hidpp_set_wireless_feature_index(hidpp);
+-		if (ret == -ENOENT)
+-			hidpp->wireless_feature_index = 0;
+-		else if (ret)
+-			goto hid_hw_init_fail;
+-	}
+-
+ 	if (connected && (hidpp->quirks & HIDPP_QUIRK_CLASS_WTP)) {
+ 		ret = wtp_get_config(hidpp);
+ 		if (ret)
 -- 
 2.42.0
 
