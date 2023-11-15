@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5503DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD7F3DB95
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlxcNEcY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08FDC433C9;
-	Wed, 15 Nov 2023 20:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEULLzrT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E5F8C433C7;
+	Wed, 15 Nov 2023 20:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078643;
-	bh=s8QYciL2YnAijsoBefWLWlFftr0krG9CVsTuJdLewIs=;
+	s=korg; t=1700078644;
+	bh=g7WzhDQRe8po7tmvYrYcPTsnq5tDGk33fmJSzK/sBcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlxcNEcYSLn8U+EiD1yT9lkvtZCSaRpMog5/+KBj4gMyMZPIEi+aUWqTOTBK6vcS6
-	 cdxBDLF5W7mlCfkwe72QSbFCl74J05QYnE82qrJZTDVKJOTydQnVLIAZYRh+1h5jFs
-	 59zvnHYHpMY8W+psP7MQhxsRdkqQkAgmNoh7r6mA=
+	b=TEULLzrTyQK5bNLWiBMslm2zcOj8hHL9kFJRwMZVton5BqkmVWiGvbLLfvqjAcqvp
+	 DcxSnqOtP+Rz+aMu/6n6F96PaFUI6nbwIe8oZW61hEAWbBQxMrbfttKoG1+Gd0HhFO
+	 RHMwWKFf0m1DYHpK/UvCyu/1Zw4SOB57kMLezkLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Neal Cardwell <ncardwell@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Gou Hao <gouhao@uniontech.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 02/45] tcp_metrics: properly set tp->snd_ssthresh in tcp_init_metrics()
-Date: Wed, 15 Nov 2023 14:32:39 -0500
-Message-ID: <20231115191419.803920427@linuxfoundation.org>
+Subject: [PATCH 4.14 20/45] ext4: move ix sanity check to corrent position
+Date: Wed, 15 Nov 2023 14:32:57 -0500
+Message-ID: <20231115191420.815390773@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -44,50 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit 081480014a64a69d901f8ef1ffdd56d6085cf87e ]
+[ Upstream commit af90a8f4a09ec4a3de20142e37f37205d4687f28 ]
 
-We need to set tp->snd_ssthresh to TCP_INFINITE_SSTHRESH
-in the case tcp_get_metrics() fails for some reason.
+Check 'ix' before it is used.
 
-Fixes: 9ad7c049f0f7 ("tcp: RFC2988bis + taking RTT sample from 3WHS for the passive open side")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 80e675f906db ("ext4: optimize memmmove lengths in extent/index insertions")
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Link: https://lore.kernel.org/r/20230906013341.7199-1-gouhao@uniontech.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/ext4/extents.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
-index 11bb9751a799f..164e917d71b21 100644
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -467,6 +467,10 @@ void tcp_init_metrics(struct sock *sk)
- 	u32 val, crtt = 0; /* cached RTT scaled by 8 */
- 
- 	sk_dst_confirm(sk);
-+	/* ssthresh may have been reduced unnecessarily during.
-+	 * 3WHS. Restore it back to its initial default.
-+	 */
-+	tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
- 	if (!dst)
- 		goto reset;
- 
-@@ -485,11 +489,6 @@ void tcp_init_metrics(struct sock *sk)
- 		tp->snd_ssthresh = val;
- 		if (tp->snd_ssthresh > tp->snd_cwnd_clamp)
- 			tp->snd_ssthresh = tp->snd_cwnd_clamp;
--	} else {
--		/* ssthresh may have been reduced unnecessarily during.
--		 * 3WHS. Restore it back to its initial default.
--		 */
--		tp->snd_ssthresh = TCP_INFINITE_SSTHRESH;
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 652d16f90beb7..c8cce6bb02765 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1002,6 +1002,11 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
+ 		ix = curp->p_idx;
  	}
- 	val = tcp_metric_get(tm, TCP_METRIC_REORDERING);
- 	if (val && tp->reordering != val) {
+ 
++	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
++		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
++		return -EFSCORRUPTED;
++	}
++
+ 	len = EXT_LAST_INDEX(curp->p_hdr) - ix + 1;
+ 	BUG_ON(len < 0);
+ 	if (len > 0) {
+@@ -1011,11 +1016,6 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
+ 		memmove(ix + 1, ix, len * sizeof(struct ext4_extent_idx));
+ 	}
+ 
+-	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
+-		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
+-		return -EFSCORRUPTED;
+-	}
+-
+ 	ix->ei_block = cpu_to_le32(logical);
+ 	ext4_idx_store_pblock(ix, ptr);
+ 	le16_add_cpu(&curp->p_hdr->eh_entries, 1);
 -- 
 2.42.0
 
