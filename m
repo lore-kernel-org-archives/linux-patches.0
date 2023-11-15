@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283213DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53D23DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x94TafQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A32C433CB;
-	Wed, 15 Nov 2023 19:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8/Ky3d4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BBDC433C7;
+	Wed, 15 Nov 2023 19:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078171;
-	bh=btxosYFxH7OX3A6cBcvNWbQMkD5BZZet6A2K+YF9NI4=;
+	s=korg; t=1700078172;
+	bh=YCMSF6+z0TiItubqJtY4TQdrP/1q4oh+JcQYeMVSvOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x94TafQQ5o7Y6Gme62DnDn9e5XUw9kOYMRvyNer7+2Mj689uskjz4W5ty8296C8yu
-	 yAJEyA/A3LYy/Df3dS6Gl0xb2iYYFE2oWLurPxv888b0nQLCk7Ylj8R3vqmps5evUp
-	 r4xyZV4aPcV/xVW4OXrGYlY3qIazaiXFRybwRg94=
+	b=V8/Ky3d4uToBLuCwpz40jRkTLORILk5h69TUhfy0CUmmq7eB5NBnkTEvf12vIwpKO
+	 i7y0waNwxNyQDJeTuJ+Izm1c/S0qZ7WThZUhSBs80DSy0zsrnT3ABVpyH0JvcshTWs
+	 B+E4u5PIZtVdq7ZsJ8/W4Ui0d5NOs3uFT2XKO0mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/379] drm/amd/display: Refactor dm_get_plane_scale helper
-Date: Wed, 15 Nov 2023 14:23:32 -0500
-Message-ID: <20231115192653.230716099@linuxfoundation.org>
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Subject: [PATCH 6.1 155/379] perf/arm-cmn: Revamp model detection
+Date: Wed, 15 Nov 2023 14:23:50 -0500
+Message-ID: <20231115192654.281877172@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -37,83 +37,366 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michel Dänzer <mdaenzer@redhat.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit ec4d770bbb155674c2497f255f4199bdc42287a9 ]
+[ Upstream commit 7819e05a0dceac20c5ff78ec9b252faf3b76b824 ]
 
-Cleanup, no functional change intended.
+CMN implements a set of CoreSight-format peripheral ID registers which
+in principle we should be able to use to identify the hardware. However
+so far we have avoided trying to use the part number field since the
+TRMs have all described it as "configuration dependent". It turns out,
+though, that this is a quirk of the documentation generation process,
+and in fact the part number should always be a stable well-defined field
+which we can trust.
 
-Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: bc0b79ce2050 ("drm/amd/display: Bail from dm_check_crtc_cursor if no relevant change")
+To that end, revamp our model detection to rely less on ACPI/DT, and
+pave the way towards further using the hardware information as an
+identifier for userspace jevent metrics. This includes renaming the
+revision constants to maximise readability.
+
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-and-tested-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Link: https://lore.kernel.org/r/3c791eaae814b0126f9adbd5419bfb4a600dade7.1686588640.git.robin.murphy@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Stable-dep-of: e3e73f511c49 ("perf/arm-cmn: Fix DTC domain detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 23 +++++++++++--------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/perf/arm-cmn.c | 145 ++++++++++++++++++++++++++---------------
+ 1 file changed, 93 insertions(+), 52 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index ebd07e3f12571..73db46b9e3e1a 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -9626,6 +9626,17 @@ static void dm_get_oriented_plane_size(struct drm_plane_state *plane_state,
- 	}
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index cfb36adf4eb80..5e896218ac5f4 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -44,8 +44,11 @@
+ #define CMN_MAX_DTMS			(CMN_MAX_XPS + (CMN_MAX_DIMENSION - 1) * 4)
+ 
+ /* The CFG node has various info besides the discovery tree */
+-#define CMN_CFGM_PERIPH_ID_2		0x0010
+-#define CMN_CFGM_PID2_REVISION		GENMASK(7, 4)
++#define CMN_CFGM_PERIPH_ID_01		0x0008
++#define CMN_CFGM_PID0_PART_0		GENMASK_ULL(7, 0)
++#define CMN_CFGM_PID1_PART_1		GENMASK_ULL(35, 32)
++#define CMN_CFGM_PERIPH_ID_23		0x0010
++#define CMN_CFGM_PID2_REVISION		GENMASK_ULL(7, 4)
+ 
+ #define CMN_CFGM_INFO_GLOBAL		0x900
+ #define CMN_INFO_MULTIPLE_DTM_EN	BIT_ULL(63)
+@@ -186,6 +189,7 @@
+ #define CMN_WP_DOWN			2
+ 
+ 
++/* Internal values for encoding event support */
+ enum cmn_model {
+ 	CMN600 = 1,
+ 	CMN650 = 2,
+@@ -197,26 +201,34 @@ enum cmn_model {
+ 	CMN_650ON = CMN650 | CMN700,
+ };
+ 
++/* Actual part numbers and revision IDs defined by the hardware */
++enum cmn_part {
++	PART_CMN600 = 0x434,
++	PART_CMN650 = 0x436,
++	PART_CMN700 = 0x43c,
++	PART_CI700 = 0x43a,
++};
++
+ /* CMN-600 r0px shouldn't exist in silicon, thankfully */
+ enum cmn_revision {
+-	CMN600_R1P0,
+-	CMN600_R1P1,
+-	CMN600_R1P2,
+-	CMN600_R1P3,
+-	CMN600_R2P0,
+-	CMN600_R3P0,
+-	CMN600_R3P1,
+-	CMN650_R0P0 = 0,
+-	CMN650_R1P0,
+-	CMN650_R1P1,
+-	CMN650_R2P0,
+-	CMN650_R1P2,
+-	CMN700_R0P0 = 0,
+-	CMN700_R1P0,
+-	CMN700_R2P0,
+-	CI700_R0P0 = 0,
+-	CI700_R1P0,
+-	CI700_R2P0,
++	REV_CMN600_R1P0,
++	REV_CMN600_R1P1,
++	REV_CMN600_R1P2,
++	REV_CMN600_R1P3,
++	REV_CMN600_R2P0,
++	REV_CMN600_R3P0,
++	REV_CMN600_R3P1,
++	REV_CMN650_R0P0 = 0,
++	REV_CMN650_R1P0,
++	REV_CMN650_R1P1,
++	REV_CMN650_R2P0,
++	REV_CMN650_R1P2,
++	REV_CMN700_R0P0 = 0,
++	REV_CMN700_R1P0,
++	REV_CMN700_R2P0,
++	REV_CI700_R0P0 = 0,
++	REV_CI700_R1P0,
++	REV_CI700_R2P0,
+ };
+ 
+ enum cmn_node_type {
+@@ -306,7 +318,7 @@ struct arm_cmn {
+ 	unsigned int state;
+ 
+ 	enum cmn_revision rev;
+-	enum cmn_model model;
++	enum cmn_part part;
+ 	u8 mesh_x;
+ 	u8 mesh_y;
+ 	u16 num_xps;
+@@ -394,19 +406,35 @@ static struct arm_cmn_node *arm_cmn_node(const struct arm_cmn *cmn,
+ 	return NULL;
  }
  
-+static void
-+dm_get_plane_scale(struct drm_plane_state *plane_state,
-+		   int *out_plane_scale_w, int *out_plane_scale_h)
++static enum cmn_model arm_cmn_model(const struct arm_cmn *cmn)
 +{
-+	int plane_src_w, plane_src_h;
-+
-+	dm_get_oriented_plane_size(plane_state, &plane_src_w, &plane_src_h);
-+	*out_plane_scale_w = plane_state->crtc_w * 1000 / plane_src_w;
-+	*out_plane_scale_h = plane_state->crtc_h * 1000 / plane_src_h;
++	switch (cmn->part) {
++	case PART_CMN600:
++		return CMN600;
++	case PART_CMN650:
++		return CMN650;
++	case PART_CMN700:
++		return CMN700;
++	case PART_CI700:
++		return CI700;
++	default:
++		return 0;
++	};
 +}
 +
- static int dm_check_crtc_cursor(struct drm_atomic_state *state,
- 				struct drm_crtc *crtc,
- 				struct drm_crtc_state *new_crtc_state)
-@@ -9634,8 +9645,6 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
- 	struct drm_plane_state *new_cursor_state, *new_underlying_state;
- 	int i;
- 	int cursor_scale_w, cursor_scale_h, underlying_scale_w, underlying_scale_h;
--	int cursor_src_w, cursor_src_h;
--	int underlying_src_w, underlying_src_h;
+ static u32 arm_cmn_device_connect_info(const struct arm_cmn *cmn,
+ 				       const struct arm_cmn_node *xp, int port)
+ {
+ 	int offset = CMN_MXP__CONNECT_INFO(port);
  
- 	/* On DCE and DCN there is no dedicated hardware cursor plane. We get a
- 	 * cursor per pipe but it's going to inherit the scaling and
-@@ -9650,9 +9659,7 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
- 	if (!new_cursor_state->fb)
+ 	if (port >= 2) {
+-		if (cmn->model & (CMN600 | CMN650))
++		if (cmn->part == PART_CMN600 || cmn->part == PART_CMN650)
+ 			return 0;
+ 		/*
+ 		 * CI-700 may have extra ports, but still has the
+ 		 * mesh_port_connect_info registers in the way.
+ 		 */
+-		if (cmn->model == CI700)
++		if (cmn->part == PART_CI700)
+ 			offset += CI700_CONNECT_INFO_P2_5_OFFSET;
+ 	}
+ 
+@@ -640,7 +668,7 @@ static umode_t arm_cmn_event_attr_is_visible(struct kobject *kobj,
+ 
+ 	eattr = container_of(attr, typeof(*eattr), attr.attr);
+ 
+-	if (!(eattr->model & cmn->model))
++	if (!(eattr->model & arm_cmn_model(cmn)))
  		return 0;
  
--	dm_get_oriented_plane_size(new_cursor_state, &cursor_src_w, &cursor_src_h);
--	cursor_scale_w = new_cursor_state->crtc_w * 1000 / cursor_src_w;
--	cursor_scale_h = new_cursor_state->crtc_h * 1000 / cursor_src_h;
-+	dm_get_plane_scale(new_cursor_state, &cursor_scale_w, &cursor_scale_h);
+ 	type = eattr->type;
+@@ -658,7 +686,7 @@ static umode_t arm_cmn_event_attr_is_visible(struct kobject *kobj,
+ 		if ((intf & 4) && !(cmn->ports_used & BIT(intf & 3)))
+ 			return 0;
  
- 	/* Need to check all enabled planes, even if this commit doesn't change
- 	 * their state
-@@ -9670,10 +9677,8 @@ static int dm_check_crtc_cursor(struct drm_atomic_state *state,
- 		if (!new_underlying_state->fb)
- 			continue;
+-		if (chan == 4 && cmn->model == CMN600)
++		if (chan == 4 && cmn->part == PART_CMN600)
+ 			return 0;
  
--		dm_get_oriented_plane_size(new_underlying_state,
--					   &underlying_src_w, &underlying_src_h);
--		underlying_scale_w = new_underlying_state->crtc_w * 1000 / underlying_src_w;
--		underlying_scale_h = new_underlying_state->crtc_h * 1000 / underlying_src_h;
-+		dm_get_plane_scale(new_underlying_state,
-+				   &underlying_scale_w, &underlying_scale_h);
+ 		if ((chan == 5 && cmn->rsp_vc_num < 2) ||
+@@ -669,19 +697,19 @@ static umode_t arm_cmn_event_attr_is_visible(struct kobject *kobj,
+ 	}
  
- 		if (cursor_scale_w != underlying_scale_w ||
- 		    cursor_scale_h != underlying_scale_h) {
+ 	/* Revision-specific differences */
+-	if (cmn->model == CMN600) {
+-		if (cmn->rev < CMN600_R1P3) {
++	if (cmn->part == PART_CMN600) {
++		if (cmn->rev < REV_CMN600_R1P3) {
+ 			if (type == CMN_TYPE_CXRA && eventid > 0x10)
+ 				return 0;
+ 		}
+-		if (cmn->rev < CMN600_R1P2) {
++		if (cmn->rev < REV_CMN600_R1P2) {
+ 			if (type == CMN_TYPE_HNF && eventid == 0x1b)
+ 				return 0;
+ 			if (type == CMN_TYPE_CXRA || type == CMN_TYPE_CXHA)
+ 				return 0;
+ 		}
+-	} else if (cmn->model == CMN650) {
+-		if (cmn->rev < CMN650_R2P0 || cmn->rev == CMN650_R1P2) {
++	} else if (cmn->part == PART_CMN650) {
++		if (cmn->rev < REV_CMN650_R2P0 || cmn->rev == REV_CMN650_R1P2) {
+ 			if (type == CMN_TYPE_HNF && eventid > 0x22)
+ 				return 0;
+ 			if (type == CMN_TYPE_SBSX && eventid == 0x17)
+@@ -689,8 +717,8 @@ static umode_t arm_cmn_event_attr_is_visible(struct kobject *kobj,
+ 			if (type == CMN_TYPE_RNI && eventid > 0x10)
+ 				return 0;
+ 		}
+-	} else if (cmn->model == CMN700) {
+-		if (cmn->rev < CMN700_R2P0) {
++	} else if (cmn->part == PART_CMN700) {
++		if (cmn->rev < REV_CMN700_R2P0) {
+ 			if (type == CMN_TYPE_HNF && eventid > 0x2c)
+ 				return 0;
+ 			if (type == CMN_TYPE_CCHA && eventid > 0x74)
+@@ -698,7 +726,7 @@ static umode_t arm_cmn_event_attr_is_visible(struct kobject *kobj,
+ 			if (type == CMN_TYPE_CCLA && eventid > 0x27)
+ 				return 0;
+ 		}
+-		if (cmn->rev < CMN700_R1P0) {
++		if (cmn->rev < REV_CMN700_R1P0) {
+ 			if (type == CMN_TYPE_HNF && eventid > 0x2b)
+ 				return 0;
+ 		}
+@@ -1200,7 +1228,7 @@ static u32 arm_cmn_wp_config(struct perf_event *event)
+ 	u32 grp = CMN_EVENT_WP_GRP(event);
+ 	u32 exc = CMN_EVENT_WP_EXCLUSIVE(event);
+ 	u32 combine = CMN_EVENT_WP_COMBINE(event);
+-	bool is_cmn600 = to_cmn(event->pmu)->model == CMN600;
++	bool is_cmn600 = to_cmn(event->pmu)->part == PART_CMN600;
+ 
+ 	config = FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_DEV_SEL, dev) |
+ 		 FIELD_PREP(CMN_DTM_WPn_CONFIG_WP_CHN_SEL, chn) |
+@@ -1520,14 +1548,14 @@ static int arm_cmn_validate_group(struct arm_cmn *cmn, struct perf_event *event)
+ 	return ret;
+ }
+ 
+-static enum cmn_filter_select arm_cmn_filter_sel(enum cmn_model model,
++static enum cmn_filter_select arm_cmn_filter_sel(const struct arm_cmn *cmn,
+ 						 enum cmn_node_type type,
+ 						 unsigned int eventid)
+ {
+ 	struct arm_cmn_event_attr *e;
+-	int i;
++	enum cmn_model model = arm_cmn_model(cmn);
+ 
+-	for (i = 0; i < ARRAY_SIZE(arm_cmn_event_attrs) - 1; i++) {
++	for (int i = 0; i < ARRAY_SIZE(arm_cmn_event_attrs) - 1; i++) {
+ 		e = container_of(arm_cmn_event_attrs[i], typeof(*e), attr.attr);
+ 		if (e->model & model && e->type == type && e->eventid == eventid)
+ 			return e->fsel;
+@@ -1570,12 +1598,12 @@ static int arm_cmn_event_init(struct perf_event *event)
+ 		/* ...but the DTM may depend on which port we're watching */
+ 		if (cmn->multi_dtm)
+ 			hw->dtm_offset = CMN_EVENT_WP_DEV_SEL(event) / 2;
+-	} else if (type == CMN_TYPE_XP && cmn->model == CMN700) {
++	} else if (type == CMN_TYPE_XP && cmn->part == PART_CMN700) {
+ 		hw->wide_sel = true;
+ 	}
+ 
+ 	/* This is sufficiently annoying to recalculate, so cache it */
+-	hw->filter_sel = arm_cmn_filter_sel(cmn->model, type, eventid);
++	hw->filter_sel = arm_cmn_filter_sel(cmn, type, eventid);
+ 
+ 	bynodeid = CMN_EVENT_BYNODEID(event);
+ 	nodeid = CMN_EVENT_NODEID(event);
+@@ -2006,6 +2034,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 	void __iomem *cfg_region;
+ 	struct arm_cmn_node cfg, *dn;
+ 	struct arm_cmn_dtm *dtm;
++	enum cmn_part part;
+ 	u16 child_count, child_poff;
+ 	u32 xp_offset[CMN_MAX_XPS];
+ 	u64 reg;
+@@ -2017,7 +2046,19 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 		return -ENODEV;
+ 
+ 	cfg_region = cmn->base + rgn_offset;
+-	reg = readl_relaxed(cfg_region + CMN_CFGM_PERIPH_ID_2);
++
++	reg = readq_relaxed(cfg_region + CMN_CFGM_PERIPH_ID_01);
++	part = FIELD_GET(CMN_CFGM_PID0_PART_0, reg);
++	part |= FIELD_GET(CMN_CFGM_PID1_PART_1, reg) << 8;
++	if (cmn->part && cmn->part != part)
++		dev_warn(cmn->dev,
++			 "Firmware binding mismatch: expected part number 0x%x, found 0x%x\n",
++			 cmn->part, part);
++	cmn->part = part;
++	if (!arm_cmn_model(cmn))
++		dev_warn(cmn->dev, "Unknown part number: 0x%x\n", part);
++
++	reg = readl_relaxed(cfg_region + CMN_CFGM_PERIPH_ID_23);
+ 	cmn->rev = FIELD_GET(CMN_CFGM_PID2_REVISION, reg);
+ 
+ 	reg = readq_relaxed(cfg_region + CMN_CFGM_INFO_GLOBAL);
+@@ -2081,7 +2122,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 		if (xp->id == (1 << 3))
+ 			cmn->mesh_x = xp->logid;
+ 
+-		if (cmn->model == CMN600)
++		if (cmn->part == PART_CMN600)
+ 			xp->dtc = 0xf;
+ 		else
+ 			xp->dtc = 1 << readl_relaxed(xp_region + CMN_DTM_UNIT_INFO);
+@@ -2201,7 +2242,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 	if (cmn->num_xps == 1)
+ 		dev_warn(cmn->dev, "1x1 config not fully supported, translate XP events manually\n");
+ 
+-	dev_dbg(cmn->dev, "model %d, periph_id_2 revision %d\n", cmn->model, cmn->rev);
++	dev_dbg(cmn->dev, "periph_id part 0x%03x revision %d\n", cmn->part, cmn->rev);
+ 	reg = cmn->ports_used;
+ 	dev_dbg(cmn->dev, "mesh %dx%d, ID width %d, ports %6pbl%s\n",
+ 		cmn->mesh_x, cmn->mesh_y, arm_cmn_xyidbits(cmn), &reg,
+@@ -2256,17 +2297,17 @@ static int arm_cmn_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	cmn->dev = &pdev->dev;
+-	cmn->model = (unsigned long)device_get_match_data(cmn->dev);
++	cmn->part = (unsigned long)device_get_match_data(cmn->dev);
+ 	platform_set_drvdata(pdev, cmn);
+ 
+-	if (cmn->model == CMN600 && has_acpi_companion(cmn->dev)) {
++	if (cmn->part == PART_CMN600 && has_acpi_companion(cmn->dev)) {
+ 		rootnode = arm_cmn600_acpi_probe(pdev, cmn);
+ 	} else {
+ 		rootnode = 0;
+ 		cmn->base = devm_platform_ioremap_resource(pdev, 0);
+ 		if (IS_ERR(cmn->base))
+ 			return PTR_ERR(cmn->base);
+-		if (cmn->model == CMN600)
++		if (cmn->part == PART_CMN600)
+ 			rootnode = arm_cmn600_of_probe(pdev->dev.of_node);
+ 	}
+ 	if (rootnode < 0)
+@@ -2335,10 +2376,10 @@ static int arm_cmn_remove(struct platform_device *pdev)
+ 
+ #ifdef CONFIG_OF
+ static const struct of_device_id arm_cmn_of_match[] = {
+-	{ .compatible = "arm,cmn-600", .data = (void *)CMN600 },
+-	{ .compatible = "arm,cmn-650", .data = (void *)CMN650 },
+-	{ .compatible = "arm,cmn-700", .data = (void *)CMN700 },
+-	{ .compatible = "arm,ci-700", .data = (void *)CI700 },
++	{ .compatible = "arm,cmn-600", .data = (void *)PART_CMN600 },
++	{ .compatible = "arm,cmn-650" },
++	{ .compatible = "arm,cmn-700" },
++	{ .compatible = "arm,ci-700" },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(of, arm_cmn_of_match);
+@@ -2346,9 +2387,9 @@ MODULE_DEVICE_TABLE(of, arm_cmn_of_match);
+ 
+ #ifdef CONFIG_ACPI
+ static const struct acpi_device_id arm_cmn_acpi_match[] = {
+-	{ "ARMHC600", CMN600 },
+-	{ "ARMHC650", CMN650 },
+-	{ "ARMHC700", CMN700 },
++	{ "ARMHC600", PART_CMN600 },
++	{ "ARMHC650" },
++	{ "ARMHC700" },
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(acpi, arm_cmn_acpi_match);
 -- 
 2.42.0
 
