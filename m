@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B0F28368
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FAC31721
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kH0qBtXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56E6C433C8;
-	Wed, 15 Nov 2023 19:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDEwml1s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5287BC433C9;
+	Wed, 15 Nov 2023 19:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076707;
-	bh=v/154errmmJny2tLmLtdNBPBq0O6u/t8yICJ1/Bd0j0=;
+	s=korg; t=1700076708;
+	bh=0I0ZPZrK+yqL4IQoCuZ6vg9pwTckVAX+ujSpocYxKdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kH0qBtXO+Wd5GQws57Lx8oewHmmkYuF9IM0BNpWU539WXwzEFzXDbWoDv3oiKz4F0
-	 HKpSK9ZxiiaScjLpQ9rbnxxK0VJgyN2R4QsBwwOMdXXohFMuxkIDS+lY7n+S2/jWkr
-	 lpDh1RRXezzuk5c5JdYAAmQlgPu9fw63CKKSj0rU=
+	b=lDEwml1sgC7veC8en5IJuPdAsfZ+GWGM2Y0g/6SktbYCruZXPJGzuOuBLlB4kDTFY
+	 sq3MV76IKiYSiib9IXIyFF9FhukgDidfd1j8P3rzcQAnTCKEgcBDMPKndwdCwFwEfM
+	 53NLup48usHuwnhRZVAnSV1mMkyuLADKk2J6xx/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 397/550] usb: chipidea: Fix DMA overwrite for Tegra
-Date: Wed, 15 Nov 2023 14:16:21 -0500
-Message-ID: <20231115191628.373644881@linuxfoundation.org>
+	Zev Weiss <zev@bewilderbeest.net>,
+	Thomas Zajic <zlatko@gmx.at>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 001/603] hwmon: (nct6775) Fix incorrect variable reuse in fan_div calculation
+Date: Wed, 15 Nov 2023 14:09:06 -0500
+Message-ID: <20231115191613.210810188@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -35,106 +36,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+From: Zev Weiss <zev@bewilderbeest.net>
 
-[ Upstream commit 7ab8716713c931ac79988f2592e1cf8b2e4fec1b ]
+commit 920057ad521dc8669e534736c2a12c14ec9fb2d7 upstream.
 
-Tegra USB controllers seem to issue DMA in full 32-bit words only and thus
-may overwrite unevenly-sized buffers.  One such occurrence is detected by
-SLUB when receiving a reply to a 1-byte buffer (below).  Fix this by
-allocating a bounce buffer also for buffers with sizes not a multiple of 4.
+In the regmap conversion in commit 4ef2774511dc ("hwmon: (nct6775)
+Convert register access to regmap API") I reused the 'reg' variable
+for all three register reads in the fan speed calculation loop in
+nct6775_update_device(), but failed to notice that the value from the
+first one (data->REG_FAN[i]) is actually used in the call to
+nct6775_select_fan_div() at the end of the loop body.  Since that
+patch the register value passed to nct6775_select_fan_div() has been
+(conditionally) incorrectly clobbered with the value of a different
+register than intended, which has in at least some cases resulted in
+fan speeds being adjusted down to zero.
 
-=============================================================================
-BUG kmalloc-64 (Tainted: G    B             ): kmalloc Redzone overwritten
------------------------------------------------------------------------------
+Fix this by using dedicated temporaries for the two intermediate
+register reads instead of 'reg'.
 
-0x8555cd02-0x8555cd03 @offset=3330. First byte 0x0 instead of 0xcc
-Allocated in usb_get_status+0x2b/0xac age=1 cpu=3 pid=41
- __kmem_cache_alloc_node+0x12f/0x1e4
- __kmalloc+0x33/0x8c
- usb_get_status+0x2b/0xac
- hub_probe+0x5e9/0xcec
- usb_probe_interface+0xbf/0x21c
- really_probe+0xa5/0x2c4
- __driver_probe_device+0x75/0x174
- driver_probe_device+0x31/0x94
- __device_attach_driver+0x65/0xc0
- bus_for_each_drv+0x4b/0x74
- __device_attach+0x69/0x120
- bus_probe_device+0x65/0x6c
- device_add+0x48b/0x5f8
- usb_set_configuration+0x37b/0x6b4
- usb_generic_driver_probe+0x37/0x68
- usb_probe_device+0x35/0xb4
-Slab 0xbf622b80 objects=21 used=18 fp=0x8555cdc0 flags=0x800(slab|zone=0)
-Object 0x8555cd00 @offset=3328 fp=0x00000000
-
-Redzone  8555ccc0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555ccd0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555cce0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555ccf0: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd00: 01 00 00 00 cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd10: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd20: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Object   8555cd30: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  ................
-Redzone  8555cd40: cc cc cc cc                                      ....
-Padding  8555cd74: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a              ZZZZZZZZZZZZ
-CPU: 3 PID: 41 Comm: kworker/3:1 Tainted: G    B              6.6.0-rc1mq-00118-g59786f827ea1 #1115
-Hardware name: NVIDIA Tegra SoC (Flattened Device Tree)
-Workqueue: usb_hub_wq hub_event
-[<8010ca28>] (unwind_backtrace) from [<801090a5>] (show_stack+0x11/0x14)
-[<801090a5>] (show_stack) from [<805da2fb>] (dump_stack_lvl+0x4d/0x7c)
-[<805da2fb>] (dump_stack_lvl) from [<8026464f>] (check_bytes_and_report+0xb3/0xe4)
-[<8026464f>] (check_bytes_and_report) from [<802648e1>] (check_object+0x261/0x290)
-[<802648e1>] (check_object) from [<802671b1>] (free_to_partial_list+0x105/0x3f8)
-[<802671b1>] (free_to_partial_list) from [<80268613>] (__kmem_cache_free+0x103/0x128)
-[<80268613>] (__kmem_cache_free) from [<80425a67>] (usb_get_status+0x73/0xac)
-[<80425a67>] (usb_get_status) from [<80421b31>] (hub_probe+0x5e9/0xcec)
-[<80421b31>] (hub_probe) from [<80428bbb>] (usb_probe_interface+0xbf/0x21c)
-[<80428bbb>] (usb_probe_interface) from [<803ee13d>] (really_probe+0xa5/0x2c4)
-[<803ee13d>] (really_probe) from [<803ee3d1>] (__driver_probe_device+0x75/0x174)
-[<803ee3d1>] (__driver_probe_device) from [<803ee501>] (driver_probe_device+0x31/0x94)
-usb 1-1: device descriptor read/8, error -71
-
-Fixes: fc53d5279094 ("usb: chipidea: tegra: Support host mode")
-Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
-Link: https://lore.kernel.org/r/ef8466b834c1726f5404c95c3e192e90460146f8.1695934946.git.mirq-linux@rere.qmqm.pl
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Fixes: 4ef2774511dc ("hwmon: (nct6775) Convert register access to regmap API")
+Reported-by: Thomas Zajic <zlatko@gmx.at>
+Tested-by: Thomas Zajic <zlatko@gmx.at>
+Cc: stable@vger.kernel.org # v5.19+
+Link: https://lore.kernel.org/r/20230929200822.964-2-zev@bewilderbeest.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/host.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hwmon/nct6775-core.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/chipidea/host.c b/drivers/usb/chipidea/host.c
-index 08af26b762a2d..abddd39d1ff1e 100644
---- a/drivers/usb/chipidea/host.c
-+++ b/drivers/usb/chipidea/host.c
-@@ -411,12 +411,13 @@ static int ci_hdrc_alloc_dma_aligned_buffer(struct urb *urb, gfp_t mem_flags)
- 	const unsigned int ci_hdrc_usb_dma_align = 32;
- 	size_t kmalloc_size;
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -1614,17 +1614,21 @@ struct nct6775_data *nct6775_update_devi
+ 							  data->fan_div[i]);
  
--	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0 ||
--	    !((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)))
-+	if (urb->num_sgs || urb->sg || urb->transfer_buffer_length == 0)
-+		return 0;
-+	if (!((uintptr_t)urb->transfer_buffer & (ci_hdrc_usb_dma_align - 1)) && !(urb->transfer_buffer_length & 3))
- 		return 0;
+ 			if (data->has_fan_min & BIT(i)) {
+-				err = nct6775_read_value(data, data->REG_FAN_MIN[i], &reg);
++				u16 tmp;
++
++				err = nct6775_read_value(data, data->REG_FAN_MIN[i], &tmp);
+ 				if (err)
+ 					goto out;
+-				data->fan_min[i] = reg;
++				data->fan_min[i] = tmp;
+ 			}
  
- 	/* Allocate a buffer with enough padding for alignment */
--	kmalloc_size = urb->transfer_buffer_length +
-+	kmalloc_size = ALIGN(urb->transfer_buffer_length, 4) +
- 		       sizeof(struct ci_hdrc_dma_aligned_buffer) +
- 		       ci_hdrc_usb_dma_align - 1;
+ 			if (data->REG_FAN_PULSES[i]) {
+-				err = nct6775_read_value(data, data->REG_FAN_PULSES[i], &reg);
++				u16 tmp;
++
++				err = nct6775_read_value(data, data->REG_FAN_PULSES[i], &tmp);
+ 				if (err)
+ 					goto out;
+-				data->fan_pulses[i] = (reg >> data->FAN_PULSE_SHIFT[i]) & 0x03;
++				data->fan_pulses[i] = (tmp >> data->FAN_PULSE_SHIFT[i]) & 0x03;
+ 			}
  
--- 
-2.42.0
-
+ 			err = nct6775_select_fan_div(dev, data, i, reg);
 
 
