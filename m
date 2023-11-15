@@ -1,29 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1412B43ADA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AD443ADA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWfVaykr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4A0C4E77A;
-	Wed, 15 Nov 2023 20:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Gj43e9W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C7FC4E779;
+	Wed, 15 Nov 2023 20:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081817;
-	bh=Ix6b9+RUdtIYuGxqDaSv+fFVQZ7JCT7GcvAxtaz8Qjs=;
+	s=korg; t=1700081819;
+	bh=pixQtsEBtxge55oiTsbZhmxRWzRIKp5aNYxUTrQ6xjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWfVaykrc11jzPeGfIF05ZgTnsnIAwgA6Z1ASkCiIKMBFoMdhvfABodEhq5Cj4Gms
-	 CFQU/tx9UIJtNOGNi3h6w9upXKrCOdavI9q4elkHrhX+25QPfMcp6AruvAUP3tHzK8
-	 Divmy6mPpRMGLmdkTm4WurJq2e4ZHRdWVF4iLTSk=
+	b=1Gj43e9Wbf6+g76SYP4UJgRJprWBZOp3wf4lIR5wUsPmd5qssnT+Q/8Xmc+EEzw/V
+	 f9rkEXPa/38HBag6JvV67hRjp8nzRzUiAj/NW4KEPk4GbXmpKeOrGCNnwfgUzj8Ib+
+	 CvwP7ImRcykwx9p7Qc3TmqDZt74YJ6RgxnJUg7Tc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	German Gomez <german.gomez@arm.com>,
+	James Clark <james.clark@arm.com>,
+	Nick Terrell <terrelln@fb.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Changbin Du <changbin.du@huawei.com>,
+	liuwenyu <liuwenyu7@huawei.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 145/191] usb: host: xhci-plat: fix possible kernel oops while resuming
-Date: Wed, 15 Nov 2023 15:47:00 -0500
-Message-ID: <20231115204653.209539799@linuxfoundation.org>
+Subject: [PATCH 5.10 146/191] perf machine: Avoid out of bounds LBR memory read
+Date: Wed, 15 Nov 2023 15:47:01 -0500
+Message-ID: <20231115204653.274039124@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -42,78 +64,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit a5f928db59519a15e82ecba4ae3e7cbf5a44715a ]
+[ Upstream commit ab8ce150781d326c6bfbe1e09f175ffde1186f80 ]
 
-If this driver enables the xHC clocks while resuming from sleep, it calls
-clk_prepare_enable() without checking for errors and blithely goes on to
-read/write the xHC's registers -- which, with the xHC not being clocked,
-at least on ARM32 usually causes an imprecise external abort exceptions
-which cause kernel oops.  Currently, the chips for which the driver does
-the clock dance on suspend/resume seem to be the Broadcom STB SoCs, based
-on ARM32 CPUs, as it seems...
+Running perf top with address sanitizer and "--call-graph=lbr" fails
+due to reading sample 0 when no samples exist. Add a guard to prevent
+this.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
-
-Fixes: 8bd954c56197 ("usb: host: xhci-plat: suspend and resume clocks")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20231019102924.2797346-19-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e2b23483eb1d ("perf machine: Factor out lbr_callchain_add_lbr_ip()")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: K Prateek Nayak <kprateek.nayak@amd.com>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Sandipan Das <sandipan.das@amd.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: German Gomez <german.gomez@arm.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Nick Terrell <terrelln@fb.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Changbin Du <changbin.du@huawei.com>
+Cc: liuwenyu <liuwenyu7@huawei.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>
+Cc: Song Liu <song@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Yanteng Si <siyanteng@loongson.cn>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20231024222353.3024098-3-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-plat.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ tools/perf/util/machine.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index 972a44b2a7f12..e56a1fb9715a7 100644
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -466,23 +466,38 @@ static int __maybe_unused xhci_plat_resume(struct device *dev)
- 	int ret;
- 
- 	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
--		clk_prepare_enable(xhci->clk);
--		clk_prepare_enable(xhci->reg_clk);
-+		ret = clk_prepare_enable(xhci->clk);
-+		if (ret)
-+			return ret;
-+
-+		ret = clk_prepare_enable(xhci->reg_clk);
-+		if (ret) {
-+			clk_disable_unprepare(xhci->clk);
-+			return ret;
-+		}
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index df515cd8d0184..eec926c313b13 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -2387,16 +2387,18 @@ static int lbr_callchain_add_lbr_ip(struct thread *thread,
+ 		save_lbr_cursor_node(thread, cursor, i);
  	}
  
- 	ret = xhci_priv_resume_quirk(hcd);
- 	if (ret)
--		return ret;
-+		goto disable_clks;
- 
- 	ret = xhci_resume(xhci, 0);
- 	if (ret)
--		return ret;
-+		goto disable_clks;
- 
- 	pm_runtime_disable(dev);
- 	pm_runtime_set_active(dev);
- 	pm_runtime_enable(dev);
+-	/* Add LBR ip from first entries.to */
+-	ip = entries[0].to;
+-	flags = &entries[0].flags;
+-	*branch_from = entries[0].from;
+-	err = add_callchain_ip(thread, cursor, parent,
+-			       root_al, &cpumode, ip,
+-			       true, flags, NULL,
+-			       *branch_from);
+-	if (err)
+-		return err;
++	if (lbr_nr > 0) {
++		/* Add LBR ip from first entries.to */
++		ip = entries[0].to;
++		flags = &entries[0].flags;
++		*branch_from = entries[0].from;
++		err = add_callchain_ip(thread, cursor, parent,
++				root_al, &cpumode, ip,
++				true, flags, NULL,
++				*branch_from);
++		if (err)
++			return err;
++	}
  
  	return 0;
-+
-+disable_clks:
-+	if (!device_may_wakeup(dev) && (xhci->quirks & XHCI_SUSPEND_RESUME_CLKS)) {
-+		clk_disable_unprepare(xhci->clk);
-+		clk_disable_unprepare(xhci->reg_clk);
-+	}
-+
-+	return ret;
  }
- 
- static int __maybe_unused xhci_plat_runtime_suspend(struct device *dev)
 -- 
 2.42.0
 
