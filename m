@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DF53BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DED3BB38
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJU66c54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91B9C433C8;
-	Wed, 15 Nov 2023 19:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMJo8G0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8056CC433C7;
+	Wed, 15 Nov 2023 19:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076231;
-	bh=MMglp93Aptb/uKd7+PgR5iA2UDAxxNJNi8vvgChFV90=;
+	s=korg; t=1700076232;
+	bh=i3CbYYWU7wZ1jKIMKmTsyp5YrsCUwZvt3yX79hcakh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJU66c54tAPYCqbB9lQi0LrqfYLUGX9eTAthiqVC5oPZUPaXlVL224yeNGzL2XstY
-	 kckZtStdXoENe8qqR0Eq7LMsf+1G5AAYNy43qcHqwVQEfXPIahe9keatunEtI1Gk4m
-	 BiodQoTPBB/x/EpBTfElzcHfSHJFQFNrfNzUceHw=
+	b=sMJo8G0GujbeII0nR0qwuM1W/Ty3va3rzyFHGjyExV0hRBppvYFwCsXk0sn6EdniI
+	 JmfRTr8h0nbgAT91K6MFOq1B42P4eORj2+ggrB6iVQyGEjljEwIrTa03UhF6PkZoXx
+	 0iXGSIRShhGoNRMFGONSNv9BvnU+tWyouHaim8q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Velikanov <adomerlee@gmail.com>,
-	Danila Tikhonov <danila@jiaxyga.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 158/550] clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
-Date: Wed, 15 Nov 2023 14:12:22 -0500
-Message-ID: <20231115191611.653581454@linuxfoundation.org>
+Subject: [PATCH 6.5 159/550] regulator: mt6358: Fail probe on unknown chip ID
+Date: Wed, 15 Nov 2023 14:12:23 -0500
+Message-ID: <20231115191611.723838252@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,37 +43,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Tikhonov <danila@jiaxyga.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 7138c244fb293f24ce8ab782961022eff00a10c4 ]
+[ Upstream commit 7442edec72bc657e6ce38ae01de9f10e55decfaa ]
 
-Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
-didn't update its configuration" error.
+The MT6358 and MT6366 PMICs, and likely many others from MediaTek, have
+a chip ID register, making the chip semi-discoverable.
 
-Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
-Tested-by: Arseniy Velikanov <adomerlee@gmail.com>
-Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230913175612.8685-1-danila@jiaxyga.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The driver currently supports two PMICs and expects to be probed on one
+or the other. It does not account for incorrect mfd driver entries or
+device trees. While these should not happen, if they do, it could be
+catastrophic for the device. The driver should be sure the hardware is
+what it expects.
+
+Make the driver fail to probe if the chip ID presented is not a known
+one.
+
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: f0e3c6261af1 ("regulator: mt6366: Add support for MT6366 regulator")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230913082919.1631287-2-wenst@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sm8150.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/mt6358-regulator.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
-index 70b067f3618cb..889b297a875e1 100644
---- a/drivers/clk/qcom/gcc-sm8150.c
-+++ b/drivers/clk/qcom/gcc-sm8150.c
-@@ -775,7 +775,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_data = gcc_parents_6,
- 		.num_parents = ARRAY_SIZE(gcc_parents_6),
--		.flags = CLK_SET_RATE_PARENT,
-+		.flags = CLK_OPS_PARENT_ENABLE,
- 		.ops = &clk_rcg2_floor_ops,
- 	},
- };
+diff --git a/drivers/regulator/mt6358-regulator.c b/drivers/regulator/mt6358-regulator.c
+index 65fbd95f1dbb0..4ca8fbf4b3e2e 100644
+--- a/drivers/regulator/mt6358-regulator.c
++++ b/drivers/regulator/mt6358-regulator.c
+@@ -688,12 +688,18 @@ static int mt6358_regulator_probe(struct platform_device *pdev)
+ 	const struct mt6358_regulator_info *mt6358_info;
+ 	int i, max_regulator, ret;
+ 
+-	if (mt6397->chip_id == MT6366_CHIP_ID) {
+-		max_regulator = MT6366_MAX_REGULATOR;
+-		mt6358_info = mt6366_regulators;
+-	} else {
++	switch (mt6397->chip_id) {
++	case MT6358_CHIP_ID:
+ 		max_regulator = MT6358_MAX_REGULATOR;
+ 		mt6358_info = mt6358_regulators;
++		break;
++	case MT6366_CHIP_ID:
++		max_regulator = MT6366_MAX_REGULATOR;
++		mt6358_info = mt6366_regulators;
++		break;
++	default:
++		dev_err(&pdev->dev, "unsupported chip ID: %d\n", mt6397->chip_id);
++		return -EINVAL;
+ 	}
+ 
+ 	ret = mt6358_sync_vcn33_setting(&pdev->dev);
 -- 
 2.42.0
 
