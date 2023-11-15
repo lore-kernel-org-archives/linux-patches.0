@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17983C462
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F233C461
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmhPmBWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1ACC433C7;
-	Wed, 15 Nov 2023 19:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLlefrzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD24C433C7;
+	Wed, 15 Nov 2023 19:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077108;
-	bh=OlfyErGyX0odEDUQQka69xXSiHkSfo8f/D8wS6pmKmg=;
+	s=korg; t=1700077110;
+	bh=Iej/ocXcfmRX2TGBLuyNzQwlYrKNFZfEdSC2Hb1Rdh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zmhPmBWH6LY13HTUr/UaPTGVdsCj9zPPXp3mEKsoX+y4W6Mz3EEGNAnBFwb6aZS8Z
-	 YFUiyDrmAScJYFR+o5aFIWiHZk+jQYTuCJ0GqLUSymAdhbGKVXy9CtEzWaDixjkBui
-	 +PDYUn81lZ9SretVwt+WGjE/oAqyN8ijD2wWOJDA=
+	b=TLlefrzQI2JqSUNaL+pvgyIVZR5IzuccXhzATCMuRVHxE+ZrACbMiWOCq09j+Q9O0
+	 G3NDDnzHn9aLIFgcNgk2WJ8lCUQH8gz2+c7SV2Ca1YA1AtcN5cViE984C6BFhQvFcL
+	 6lpr93VKQCJ84hGAiP2vcgySzG0ZbdlvdjYMvago=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Ye Bin <yebin10@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 501/550] rxrpc: Fix two connection reaping bugs
-Date: Wed, 15 Nov 2023 14:18:05 -0500
-Message-ID: <20231115191635.652692742@linuxfoundation.org>
+Subject: [PATCH 6.5 521/550] blk-core: use pr_warn_ratelimited() in bio_check_ro()
+Date: Wed, 15 Nov 2023 14:18:25 -0500
+Message-ID: <20231115191637.058998932@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -44,59 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 61e4a86600029e6e8d468d1fad6b6c749bebed19 ]
+[ Upstream commit 1b0a151c10a6d823f033023b9fdd9af72a89591b ]
 
-Fix two connection reaping bugs:
+If one of the underlying disks of raid or dm is set to read-only, then
+each io will generate new log, which will cause message storm. This
+environment is indeed problematic, however we can't make sure our
+naive custormer won't do this, hence use pr_warn_ratelimited() to
+prevent message storm in this case.
 
- (1) rxrpc_connection_expiry is in units of seconds, so
-     rxrpc_disconnect_call() needs to multiply it by HZ when adding it to
-     jiffies.
-
- (2) rxrpc_client_conn_reap_timeout() should set RXRPC_CLIENT_REAP_TIMER if
-     local->kill_all_client_conns is clear, not if it is set (in which case
-     we don't need the timer).  Without this, old client connections don't
-     get cleaned up until the local endpoint is cleaned up.
-
-Fixes: 5040011d073d ("rxrpc: Make the local endpoint hold a ref on a connected call")
-Fixes: 0d6bf319bc5a ("rxrpc: Move the client conn cache management to the I/O thread")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/783911.1698364174@warthog.procyon.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Fixes: 57e95e4670d1 ("block: fix and cleanup bio_check_ro")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Link: https://lore.kernel.org/r/20231107111247.2157820-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/conn_object.c  | 2 +-
- net/rxrpc/local_object.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ block/blk-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/rxrpc/conn_object.c b/net/rxrpc/conn_object.c
-index ac85d4644a3c3..df8a271948a1c 100644
---- a/net/rxrpc/conn_object.c
-+++ b/net/rxrpc/conn_object.c
-@@ -212,7 +212,7 @@ void rxrpc_disconnect_call(struct rxrpc_call *call)
- 		conn->idle_timestamp = jiffies;
- 		if (atomic_dec_and_test(&conn->active))
- 			rxrpc_set_service_reap_timer(conn->rxnet,
--						     jiffies + rxrpc_connection_expiry);
-+						     jiffies + rxrpc_connection_expiry * HZ);
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 9866468c72a2a..3e01b4afb90ce 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -500,8 +500,8 @@ static inline void bio_check_ro(struct bio *bio)
+ 	if (op_is_write(bio_op(bio)) && bdev_read_only(bio->bi_bdev)) {
+ 		if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
+ 			return;
+-		pr_warn("Trying to write to read-only block-device %pg\n",
+-			bio->bi_bdev);
++		pr_warn_ratelimited("Trying to write to read-only block-device %pg\n",
++				    bio->bi_bdev);
+ 		/* Older lvm-tools actually trigger this */
  	}
- 
- 	rxrpc_put_call(call, rxrpc_call_put_io_thread);
-diff --git a/net/rxrpc/local_object.c b/net/rxrpc/local_object.c
-index 7d910aee4f8cb..c553a30e9c838 100644
---- a/net/rxrpc/local_object.c
-+++ b/net/rxrpc/local_object.c
-@@ -87,7 +87,7 @@ static void rxrpc_client_conn_reap_timeout(struct timer_list *timer)
- 	struct rxrpc_local *local =
- 		container_of(timer, struct rxrpc_local, client_conn_reap_timer);
- 
--	if (local->kill_all_client_conns &&
-+	if (!local->kill_all_client_conns &&
- 	    test_and_set_bit(RXRPC_CLIENT_CONN_REAP_TIMER, &local->client_conn_flags))
- 		rxrpc_wake_up_io_thread(local);
  }
 -- 
 2.42.0
