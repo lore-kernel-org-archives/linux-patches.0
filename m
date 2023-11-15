@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B10C433BB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DAE433BB
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dX044sh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3498C433C9;
-	Wed, 15 Nov 2023 19:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebkO9sdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE48C433C7;
+	Wed, 15 Nov 2023 19:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077027;
-	bh=0x2Sd6gZocSozmyAioHx/WRyDK2HaAZTl3RsPzllXO4=;
+	s=korg; t=1700077028;
+	bh=WOB+ABOdtCHTuqRZorG8gPWjaakEWCBl/qDIJ+Rwig8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dX044sh8qdvVaGRc8uCNKaqhaz0gmTM/hiWeCFJUpESPMg3BM+IxFLnr1ORD+dXHV
-	 H3/GTWPXZZ/zdJ/W0iD+6Z5FraG/g1MFJA4ZI052Q9Zg3yvnRBBJ7IDpcK2lv7kvJY
-	 75A/81vcD4C1c1YloIjK+tZNfvCZSL2BAhMPEU8o=
+	b=ebkO9sdWXGoMovMBJ9RX1PNLv/bwsSx7V3v6C6roqjb9D3WpeqtkDZ744nuUqZwM4
+	 BEV4qAj71TGCWrv/8Oq0yI4g+fDVLVs3kXonqxU0YklIK/BJvKWCUwP9Ub90WwY0cd
+	 RKXjtc+di4ocJe27E/PXJnFRQU5dzkrINk8sVq0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/603] ACPI: property: Allow _DSD buffer data only for byte accessors
-Date: Wed, 15 Nov 2023 14:10:47 -0500
-Message-ID: <20231115191620.264496001@linuxfoundation.org>
+Subject: [PATCH 6.5 497/550] watchdog: ixp4xx: Make sure restart always works
+Date: Wed, 15 Nov 2023 14:18:01 -0500
+Message-ID: <20231115191635.369389555@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
-References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
+References: <20231115191600.708733204@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,72 +39,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 046ece773cc77ef5d2a1431b188ac3d0840ed150 ]
+[ Upstream commit b4075ecfe348a44209534c75ad72392c63a489a6 ]
 
-In accordance with ACPI specificication and _DSD data buffer
-representation the data there is an array of bytes. Hence,
-accessing it with something longer will create a sparse data
-which is against of how device property APIs work in general
-and also not defined in the ACPI specification (see [1]).
-Fix the code to emit an error if non-byte accessor is used to
-retrieve _DSD buffer data.
+The IXP4xx watchdog in early "A0" silicon is unreliable and
+cannot be registered, however for some systems such as the
+USRobotics USR8200 the watchdog is the only restart option,
+so implement a "dummy" watchdog that can only support restart
+in this case.
 
-Fixes: 369af6bf2c28 ("ACPI: property: Read buffer properties as integers")
-Link: https://uefi.org/specs/ACPI/6.5/19_ASL_Reference.html#buffer-declare-buffer-object # [1]
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-[ rjw: Add missing braces ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 1aea522809e6 ("watchdog: ixp4xx: Implement restart")
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230926-ixp4xx-wdt-restart-v2-1-15cf4639b423@linaro.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/property.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/watchdog/ixp4xx_wdt.c | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index 413e4fcadcaf7..99b4e33554355 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -1102,25 +1102,26 @@ static int acpi_data_prop_read(const struct acpi_device_data *data,
- 	switch (proptype) {
- 	case DEV_PROP_STRING:
- 		break;
--	case DEV_PROP_U8 ... DEV_PROP_U64:
-+	default:
- 		if (obj->type == ACPI_TYPE_BUFFER) {
- 			if (nval > obj->buffer.length)
- 				return -EOVERFLOW;
--			break;
-+		} else {
-+			if (nval > obj->package.count)
-+				return -EOVERFLOW;
- 		}
--		fallthrough;
--	default:
--		if (nval > obj->package.count)
--			return -EOVERFLOW;
- 		break;
- 	}
- 	if (nval == 0)
- 		return -EINVAL;
+diff --git a/drivers/watchdog/ixp4xx_wdt.c b/drivers/watchdog/ixp4xx_wdt.c
+index 607ce4b8df574..ec0c08652ec2f 100644
+--- a/drivers/watchdog/ixp4xx_wdt.c
++++ b/drivers/watchdog/ixp4xx_wdt.c
+@@ -105,6 +105,25 @@ static const struct watchdog_ops ixp4xx_wdt_ops = {
+ 	.owner = THIS_MODULE,
+ };
  
--	if (obj->type != ACPI_TYPE_BUFFER)
--		items = obj->package.elements;
--	else
-+	if (obj->type == ACPI_TYPE_BUFFER) {
-+		if (proptype != DEV_PROP_U8)
-+			return -EPROTO;
- 		items = obj;
++/*
++ * The A0 version of the IXP422 had a bug in the watchdog making
++ * is useless, but we still need to use it to restart the system
++ * as it is the only way, so in this special case we register a
++ * "dummy" watchdog that doesn't really work, but will support
++ * the restart operation.
++ */
++static int ixp4xx_wdt_dummy(struct watchdog_device *wdd)
++{
++	return 0;
++}
++
++static const struct watchdog_ops ixp4xx_wdt_restart_only_ops = {
++	.start = ixp4xx_wdt_dummy,
++	.stop = ixp4xx_wdt_dummy,
++	.restart = ixp4xx_wdt_restart,
++	.owner = THIS_MODULE,
++};
++
+ static const struct watchdog_info ixp4xx_wdt_info = {
+ 	.options = WDIOF_KEEPALIVEPING
+ 		| WDIOF_MAGICCLOSE
+@@ -114,14 +133,17 @@ static const struct watchdog_info ixp4xx_wdt_info = {
+ 
+ static int ixp4xx_wdt_probe(struct platform_device *pdev)
+ {
++	static const struct watchdog_ops *iwdt_ops;
+ 	struct device *dev = &pdev->dev;
+ 	struct ixp4xx_wdt *iwdt;
+ 	struct clk *clk;
+ 	int ret;
+ 
+ 	if (!(read_cpuid_id() & 0xf) && !cpu_is_ixp46x()) {
+-		dev_err(dev, "Rev. A0 IXP42x CPU detected - watchdog disabled\n");
+-		return -ENODEV;
++		dev_info(dev, "Rev. A0 IXP42x CPU detected - only restart supported\n");
++		iwdt_ops = &ixp4xx_wdt_restart_only_ops;
 +	} else {
-+		items = obj->package.elements;
-+	}
++		iwdt_ops = &ixp4xx_wdt_ops;
+ 	}
  
- 	switch (proptype) {
- 	case DEV_PROP_U8:
+ 	iwdt = devm_kzalloc(dev, sizeof(*iwdt), GFP_KERNEL);
+@@ -141,7 +163,7 @@ static int ixp4xx_wdt_probe(struct platform_device *pdev)
+ 		iwdt->rate = IXP4XX_TIMER_FREQ;
+ 
+ 	iwdt->wdd.info = &ixp4xx_wdt_info;
+-	iwdt->wdd.ops = &ixp4xx_wdt_ops;
++	iwdt->wdd.ops = iwdt_ops;
+ 	iwdt->wdd.min_timeout = 1;
+ 	iwdt->wdd.max_timeout = U32_MAX / iwdt->rate;
+ 	iwdt->wdd.parent = dev;
 -- 
 2.42.0
 
