@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0C045BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781A845BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eswuHAJ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96227C433C7;
-	Wed, 15 Nov 2023 22:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXnLrT0F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2543DC433C9;
+	Wed, 15 Nov 2023 22:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085845;
-	bh=vO4xCSNpNbvgu1fSpilANuWmKmfK15fFOMEKAtjuIkU=;
+	s=korg; t=1700085847;
+	bh=b99L6E3Egj01WTP/rIoMCocKNg5nwI3Rl5KkrULWsyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eswuHAJ9IRNYQ4/WVjAF3urb5Jng/9yhi2FsYVcSgjrv0PpGwdGP9ASAmy+RaMBeF
-	 zDLHEZOZdXy81GNtxlMSMuosWhdgwzIcHPj6FqFaSGyxZGeZAut/gAc8wjTk5/csfY
-	 5+RHFcOlJHZHOWUnbXMjigskW7F6lABzgCF/TljQ=
+	b=LXnLrT0Fa6sjX67BxWXmevBWNo+W3I3RVKVStM1Rdnnc56Of/30zDEYgzA6+bXS3R
+	 /F/M+zEtkaJMJcmeWLu44Tal6kDzlm/5O/FyhCWwusFDJ5ZCVmWLVWa8HYUYb4iCm6
+	 gKlPhoEhD1oDMVYy0vRe3fTVpQ32wnvl6Wydg9uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 075/119] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 15 Nov 2023 17:01:05 -0500
-Message-ID: <20231115220134.969563078@linuxfoundation.org>
+Subject: [PATCH 5.4 093/119] media: dvb-usb-v2: af9035: fix missing unlock
+Date: Wed, 15 Nov 2023 17:01:23 -0500
+Message-ID: <20231115220135.518867573@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -41,63 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
+[ Upstream commit f31b2cb85f0ee165d78e1c43f6d69f82cc3b2145 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with hardware interrupts being disabled.
-So replace kfree_skb() with dev_kfree_skb_irq() under
-spin_lock_irqsave(). Compile tested only.
+Instead of returning an error, goto the mutex unlock at
+the end of the function.
 
-Fixes: 53618cc1e51e ("Staging: sources for ST core")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes smatch warning:
+
+drivers/media/usb/dvb-usb-v2/af9035.c:467 af9035_i2c_master_xfer() warn: inconsistent returns '&d->i2c_mutex'.
+  Locked on  : 326,387
+  Unlocked on: 465,467
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ti-st/st_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/usb/dvb-usb-v2/af9035.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
-index 7d9e23aa0b926..c19460e7f0f16 100644
---- a/drivers/misc/ti-st/st_core.c
-+++ b/drivers/misc/ti-st/st_core.c
-@@ -15,6 +15,7 @@
- #include <linux/skbuff.h>
- 
- #include <linux/ti_wilink_st.h>
-+#include <linux/netdevice.h>
- 
- extern void st_kim_recv(void *, const unsigned char *, long);
- void st_int_recv(void *, const unsigned char *, long);
-@@ -423,7 +424,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	case ST_LL_AWAKE_TO_ASLEEP:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	case ST_LL_ASLEEP:
- 		skb_queue_tail(&st_gdata->tx_waitq, skb);
-@@ -432,7 +433,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	default:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
+diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
+index 66dd1bdf6440a..c5f6af5debaf4 100644
+--- a/drivers/media/usb/dvb-usb-v2/af9035.c
++++ b/drivers/media/usb/dvb-usb-v2/af9035.c
+@@ -322,8 +322,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
+-			if (msg[0].len < 3 || msg[1].len < 1)
+-				return -EOPNOTSUPP;
++			if (msg[0].len < 3 || msg[1].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto unlock;
++			}
+ 			/* demod access via firmware interface */
+ 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+@@ -383,8 +385,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
+-			if (msg[0].len < 3)
+-				return -EOPNOTSUPP;
++			if (msg[0].len < 3) {
++				ret = -EOPNOTSUPP;
++				goto unlock;
++			}
+ 			/* demod access via firmware interface */
+ 			reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+@@ -459,6 +463,7 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 		ret = -EOPNOTSUPP;
  	}
  
-@@ -486,7 +487,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
- 				spin_unlock_irqrestore(&st_data->lock, flags);
- 				break;
- 			}
--			kfree_skb(skb);
-+			dev_kfree_skb_irq(skb);
- 			spin_unlock_irqrestore(&st_data->lock, flags);
- 		}
- 		/* if wake-up is set in another context- restart sending */
++unlock:
+ 	mutex_unlock(&d->i2c_mutex);
+ 
+ 	if (ret < 0)
 -- 
 2.42.0
 
