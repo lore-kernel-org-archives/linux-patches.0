@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AA845BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1932945BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxZNEs+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58897C433C8;
-	Wed, 15 Nov 2023 22:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDMSreNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFF5C433CB;
+	Wed, 15 Nov 2023 22:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085841;
-	bh=NP+C/So+FOaxVve1MRyIIC9WGwoJb1gcwnFfM6aHU5w=;
+	s=korg; t=1700085842;
+	bh=4yIAk2HBnPvWsxL33qJQjBelZxrzK2XWNOD+tFQwND8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxZNEs+urAEuG84sNMB4228161djPLR62xX2yajG/G2MM0hnhKczvVvdsmTkCn9Qu
-	 WqmVbs6rocuTSyp99pMXve1L2xSx+i0kJKLimB8Aq0VmwGLXENWxUioCuQ1hJ+3E4Q
-	 Y5lWuLyCmFCK/jTXc/HwFQAXlz5n7pAHBiFCNGOA=
+	b=HDMSreNVamSxeYH4txBw9Rkm5AmlmWO++BeirvutPGbdF7i5JJLZmeCpgUtpF0nB3
+	 qHyd4YDHVooqxpqEKYUpIxEJM+1hFQwRPIweFN8qy+83wXGtZf60IGYxogFec43NER
+	 JHwhq/3ok4eHI/2ckCIKGlc7tGmqCnm5uZ5NUIoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 090/119] pcmcia: ds: fix possible name leak in error path in pcmcia_device_add()
-Date: Wed, 15 Nov 2023 17:01:20 -0500
-Message-ID: <20231115220135.434219482@linuxfoundation.org>
+Subject: [PATCH 5.4 091/119] media: bttv: fix use after free error due to btv->timeout timer
+Date: Wed, 15 Nov 2023 17:01:21 -0500
+Message-ID: <20231115220135.458602894@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -42,50 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 99e1241049a92dd3e9a90a0f91e32ce390133278 ]
+[ Upstream commit bd5b50b329e850d467e7bcc07b2b6bde3752fbda ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically.
-Therefore, it needs to be freed, which is done by the driver core for
-us once all references to the device are gone. Therefore, move the
-dev_set_name() call immediately before the call device_register(), which
-either succeeds (then the freeing will be done upon subsequent remvoal),
-or puts the reference in the error call. Also, it is not unusual that the
-return value of dev_set_name is not checked.
+There may be some a race condition between timer function
+bttv_irq_timeout and bttv_remove. The timer is setup in
+probe and there is no timer_delete operation in remove
+function. When it hit kfree btv, the function might still be
+invoked, which will cause use after free bug.
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-[linux@dominikbrodowski.net: simplification, commit message modified]
-Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
+This bug is found by static analysis, it may be false positive.
+
+Fix it by adding del_timer_sync invoking to the remove function.
+
+cpu0                cpu1
+                  bttv_probe
+                    ->timer_setup
+                      ->bttv_set_dma
+                        ->mod_timer;
+bttv_remove
+  ->kfree(btv);
+                  ->bttv_irq_timeout
+                    ->USE btv
+
+Fixes: 162e6376ac58 ("media: pci: Convert timers to use timer_setup()")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pcmcia/ds.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/pci/bt8xx/bttv-driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pcmcia/ds.c b/drivers/pcmcia/ds.c
-index 63724e0d0472a..103862f7bdf1d 100644
---- a/drivers/pcmcia/ds.c
-+++ b/drivers/pcmcia/ds.c
-@@ -518,9 +518,6 @@ static struct pcmcia_device *pcmcia_device_add(struct pcmcia_socket *s,
- 	/* by default don't allow DMA */
- 	p_dev->dma_mask = DMA_MASK_NONE;
- 	p_dev->dev.dma_mask = &p_dev->dma_mask;
--	dev_set_name(&p_dev->dev, "%d.%d", p_dev->socket->sock, p_dev->device_no);
--	if (!dev_name(&p_dev->dev))
--		goto err_free;
- 	p_dev->devname = kasprintf(GFP_KERNEL, "pcmcia%s", dev_name(&p_dev->dev));
- 	if (!p_dev->devname)
- 		goto err_free;
-@@ -578,6 +575,7 @@ static struct pcmcia_device *pcmcia_device_add(struct pcmcia_socket *s,
+diff --git a/drivers/media/pci/bt8xx/bttv-driver.c b/drivers/media/pci/bt8xx/bttv-driver.c
+index 6441e7d63d971..a0be1ca89b29a 100644
+--- a/drivers/media/pci/bt8xx/bttv-driver.c
++++ b/drivers/media/pci/bt8xx/bttv-driver.c
+@@ -4258,6 +4258,7 @@ static void bttv_remove(struct pci_dev *pci_dev)
  
- 	pcmcia_device_query(p_dev);
- 
-+	dev_set_name(&p_dev->dev, "%d.%d", p_dev->socket->sock, p_dev->device_no);
- 	if (device_register(&p_dev->dev)) {
- 		mutex_lock(&s->ops_mutex);
- 		list_del(&p_dev->socket_device_list);
+ 	/* free resources */
+ 	free_irq(btv->c.pci->irq,btv);
++	del_timer_sync(&btv->timeout);
+ 	iounmap(btv->bt848_mmio);
+ 	release_mem_region(pci_resource_start(btv->c.pci,0),
+ 			   pci_resource_len(btv->c.pci,0));
 -- 
 2.42.0
 
