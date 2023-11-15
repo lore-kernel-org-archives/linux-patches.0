@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95363A8F3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900AE3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/ooY7Yn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E252C433CA;
-	Wed, 15 Nov 2023 19:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUY2ZnwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AFBC433C7;
+	Wed, 15 Nov 2023 19:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077793;
-	bh=KWLKMeaFPSRCnRkghT2qz32xdk7W0/Xh5wMr7WiHEBQ=;
+	s=korg; t=1700077796;
+	bh=2TgBdJe2nGr411EaxUBHVUeoWER2EREXfe5wL7kvWHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/ooY7Yn7mCdBvUd+0mDlALmCmsRbaRTUJiDrbGRcHliC0O1Tda8apLNhyIbl9jUN
-	 fG8ofyODPhNJoBgjs+gvOfqciPxNrofdvN51Um/buTAIyUBeS8AmAzMn+Zjrgn3HeB
-	 2zUpT+bL7U6BnzbovktX0EP8Kz1EzkDW8SnIParo=
+	b=zUY2ZnwQaxf+6ROFWo3vyDqF9/mY8AkgmEbFdPaJ9t3UWDrM1wkZ5fmMGimZXYTy+
+	 wdf7MaIZ7TFpso2oqfoF82Lb7Q+VLxoemF6X/TEEEtl8ilxFhd6kFQ32941vTEffSG
+	 EvOP5vOPVlqxUG96gURt6QaSlMcvuwcy1KIzgMO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <p.yadav@ti.com>,
-	Julien Massot <julien.massot@collabora.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Jai Luthra <j-luthra@ti.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 524/603] media: cadence: csi2rx: Unregister v4l2 async notifier
-Date: Wed, 15 Nov 2023 14:17:49 -0500
-Message-ID: <20231115191648.234044371@linuxfoundation.org>
+Subject: [PATCH 6.6 525/603] media: dvb-usb-v2: af9035: fix missing unlock
+Date: Wed, 15 Nov 2023 14:17:50 -0500
+Message-ID: <20231115191648.292790650@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -48,65 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav <p.yadav@ti.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit b2701715301a49b53d05c7d43f3fedc3b8743bfc ]
+[ Upstream commit f31b2cb85f0ee165d78e1c43f6d69f82cc3b2145 ]
 
-The notifier is added to the global notifier list when registered. When
-the module is removed, the struct csi2rx_priv in which the notifier is
-embedded, is destroyed. As a result the notifier list has a reference to
-a notifier that no longer exists. This causes invalid memory accesses
-when the list is iterated over. Similar for when the probe fails.
-Unregister and clean up the notifier to avoid this.
+Instead of returning an error, goto the mutex unlock at
+the end of the function.
 
-Fixes: 1fc3b37f34f6 ("media: v4l: cadence: Add Cadence MIPI-CSI2 RX driver")
+Fixes smatch warning:
 
-Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
-Tested-by: Julien Massot <julien.massot@collabora.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+drivers/media/usb/dvb-usb-v2/af9035.c:467 af9035_i2c_master_xfer() warn: inconsistent returns '&d->i2c_mutex'.
+  Locked on  : 326,387
+  Unlocked on: 465,467
+
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 7bf744f2de0a ("media: dvb-usb-v2: af9035: Fix null-ptr-deref in af9035_i2c_master_xfer")
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/cadence/cdns-csi2rx.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb-v2/af9035.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/cadence/cdns-csi2rx.c b/drivers/media/platform/cadence/cdns-csi2rx.c
-index 0d879d71d8185..9231ee7e9b3a9 100644
---- a/drivers/media/platform/cadence/cdns-csi2rx.c
-+++ b/drivers/media/platform/cadence/cdns-csi2rx.c
-@@ -479,8 +479,10 @@ static int csi2rx_parse_dt(struct csi2rx_priv *csi2rx)
- 	asd = v4l2_async_nf_add_fwnode_remote(&csi2rx->notifier, fwh,
- 					      struct v4l2_async_connection);
- 	of_node_put(ep);
--	if (IS_ERR(asd))
-+	if (IS_ERR(asd)) {
-+		v4l2_async_nf_cleanup(&csi2rx->notifier);
- 		return PTR_ERR(asd);
-+	}
+diff --git a/drivers/media/usb/dvb-usb-v2/af9035.c b/drivers/media/usb/dvb-usb-v2/af9035.c
+index 33a2aa8907e65..4eb7dd4599b7e 100644
+--- a/drivers/media/usb/dvb-usb-v2/af9035.c
++++ b/drivers/media/usb/dvb-usb-v2/af9035.c
+@@ -322,8 +322,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
+-			if (msg[0].len < 3 || msg[1].len < 1)
+-				return -EOPNOTSUPP;
++			if (msg[0].len < 3 || msg[1].len < 1) {
++				ret = -EOPNOTSUPP;
++				goto unlock;
++			}
+ 			/* demod access via firmware interface */
+ 			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+@@ -383,8 +385,10 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 			ret = -EOPNOTSUPP;
+ 		} else if ((msg[0].addr == state->af9033_i2c_addr[0]) ||
+ 			   (msg[0].addr == state->af9033_i2c_addr[1])) {
+-			if (msg[0].len < 3)
+-				return -EOPNOTSUPP;
++			if (msg[0].len < 3) {
++				ret = -EOPNOTSUPP;
++				goto unlock;
++			}
+ 			/* demod access via firmware interface */
+ 			u32 reg = msg[0].buf[0] << 16 | msg[0].buf[1] << 8 |
+ 					msg[0].buf[2];
+@@ -459,6 +463,7 @@ static int af9035_i2c_master_xfer(struct i2c_adapter *adap,
+ 		ret = -EOPNOTSUPP;
+ 	}
  
- 	csi2rx->notifier.ops = &csi2rx_notifier_ops;
++unlock:
+ 	mutex_unlock(&d->i2c_mutex);
  
-@@ -543,6 +545,7 @@ static int csi2rx_probe(struct platform_device *pdev)
- 	return 0;
- 
- err_cleanup:
-+	v4l2_async_nf_unregister(&csi2rx->notifier);
- 	v4l2_async_nf_cleanup(&csi2rx->notifier);
- err_free_priv:
- 	kfree(csi2rx);
-@@ -553,6 +556,8 @@ static void csi2rx_remove(struct platform_device *pdev)
- {
- 	struct csi2rx_priv *csi2rx = platform_get_drvdata(pdev);
- 
-+	v4l2_async_nf_unregister(&csi2rx->notifier);
-+	v4l2_async_nf_cleanup(&csi2rx->notifier);
- 	v4l2_async_unregister_subdev(&csi2rx->subdev);
- 	kfree(csi2rx);
- }
+ 	if (ret < 0)
 -- 
 2.42.0
 
