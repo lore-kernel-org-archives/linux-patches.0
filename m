@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B076C3DB8F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EB935F19
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHLwVpte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F92C433C8;
-	Wed, 15 Nov 2023 20:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvDo/dJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25AFC433C7;
+	Wed, 15 Nov 2023 20:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078625;
-	bh=BvjPBTeF35/wKnGGrgt/BEocDym2Hsywg0ICByjTePM=;
+	s=korg; t=1700078627;
+	bh=Ly7HXUVp9d6tnXbRKJhxO3q7IJI3s444DSrzBBDtmBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHLwVpte8FypleDp3YsZaUFmyqU77wArbTsg352K+I5qulArxEQTnoq8kjSZZghOg
-	 XnSZt5CY1Rj0p0VvhDWXa1BnEpPNUG+TG5bHOCblCwngbUMDomkW6oF1zYbe55oAbn
-	 UVWkefZqe5OX4VIuHzHvLr3gr4EBAr5b9qj1W7Oc=
+	b=pvDo/dJZWn8MkgE84bfgyZOfEY2fRRqO9+zlnao3hFqUKUAx/7b3HkxMvt3iwm2GU
+	 WYbv1Z65jite2ev5Ywxn94w8+1iwmGK0dj4/mF59A0aaSlTqqLs30l2PMZIeAeEDZ0
+	 nD6Fl5l9+BRDmtq34VL0K7Jkpu1bNbxxSoTJ1bwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 01/45] i40e: fix potential memory leaks in i40e_remove()
-Date: Wed, 15 Nov 2023 14:32:38 -0500
-Message-ID: <20231115191419.749189060@linuxfoundation.org>
+Subject: [PATCH 4.14 10/45] clk: mediatek: clk-mt6797: Add check for mtk_alloc_clk_data
+Date: Wed, 15 Nov 2023 14:32:47 -0500
+Message-ID: <20231115191420.275130545@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -44,48 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Staikov <andrii.staikov@intel.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 5ca636d927a106780451d957734f02589b972e2b ]
+[ Upstream commit 606f6366a35a3329545e38129804d65ef26ed7d2 ]
 
-Instead of freeing memory of a single VSI, make sure
-the memory for all VSIs is cleared before releasing VSIs.
-Add releasing of their resources in a loop with the iteration
-number equal to the number of allocated VSIs.
+Add the check for the return value of mtk_alloc_clk_data() in order to
+avoid NULL pointer dereference.
 
-Fixes: 41c445ff0f48 ("i40e: main driver core")
-Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 96596aa06628 ("clk: mediatek: add clk support for MT6797")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20230912093407.21505-3-jiasheng@iscas.ac.cn
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/clk/mediatek/clk-mt6797.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 50aa53988b483..a7bcdf7c6686c 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -11882,11 +11882,15 @@ static void i40e_remove(struct pci_dev *pdev)
- 			i40e_switch_branch_release(pf->veb[i]);
- 	}
+diff --git a/drivers/clk/mediatek/clk-mt6797.c b/drivers/clk/mediatek/clk-mt6797.c
+index 5702bc974ed99..1ee45f32c1d4e 100644
+--- a/drivers/clk/mediatek/clk-mt6797.c
++++ b/drivers/clk/mediatek/clk-mt6797.c
+@@ -396,6 +396,8 @@ static int mtk_topckgen_init(struct platform_device *pdev)
+ 		return PTR_ERR(base);
  
--	/* Now we can shutdown the PF's VSI, just before we kill
-+	/* Now we can shutdown the PF's VSIs, just before we kill
- 	 * adminq and hmc.
- 	 */
--	if (pf->vsi[pf->lan_vsi])
--		i40e_vsi_release(pf->vsi[pf->lan_vsi]);
-+	for (i = pf->num_alloc_vsi; i--;)
-+		if (pf->vsi[i]) {
-+			i40e_vsi_close(pf->vsi[i]);
-+			i40e_vsi_release(pf->vsi[i]);
-+			pf->vsi[i] = NULL;
-+		}
+ 	clk_data = mtk_alloc_clk_data(CLK_TOP_NR);
++	if (!clk_data)
++		return -ENOMEM;
  
- 	/* remove attached clients */
- 	if (pf->flags & I40E_FLAG_IWARP_ENABLED) {
+ 	mtk_clk_register_factors(top_fixed_divs, ARRAY_SIZE(top_fixed_divs),
+ 				 clk_data);
+@@ -554,6 +556,8 @@ static void mtk_infrasys_init_early(struct device_node *node)
+ 
+ 	if (!infra_clk_data) {
+ 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
++		if (!infra_clk_data)
++			return;
+ 
+ 		for (i = 0; i < CLK_INFRA_NR; i++)
+ 			infra_clk_data->clks[i] = ERR_PTR(-EPROBE_DEFER);
+@@ -578,6 +582,8 @@ static int mtk_infrasys_init(struct platform_device *pdev)
+ 
+ 	if (!infra_clk_data) {
+ 		infra_clk_data = mtk_alloc_clk_data(CLK_INFRA_NR);
++		if (!infra_clk_data)
++			return -ENOMEM;
+ 	} else {
+ 		for (i = 0; i < CLK_INFRA_NR; i++) {
+ 			if (infra_clk_data->clks[i] == ERR_PTR(-EPROBE_DEFER))
 -- 
 2.42.0
 
