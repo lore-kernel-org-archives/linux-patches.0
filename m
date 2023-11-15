@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CE341A87
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9508C41A87
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMjN03tp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB10C433CB;
-	Wed, 15 Nov 2023 19:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SDu0CUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA76C433D9;
+	Wed, 15 Nov 2023 19:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076727;
-	bh=gUcpbrFwAvs5m7wjFyyT7Gz76w+9VNzZh4+NhzHj9us=;
+	s=korg; t=1700076729;
+	bh=0B69Zn8eR1yeorBiqYIgHqEiO/7d6luPklkUCWAAwUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xMjN03tp3m6yVxAx2EYqH+LpxYdg7iKehx9dfxLJ2u32HZsWfL6K5FfYTlmuikdD9
-	 FF6DyFyZOoNBKrsmdM5nW+2Kjec5Ub2SORBf+SZb9WJDMf+SamYCX0CdFmxV7U5g5W
-	 YvbRAzW0bSxiLa73+XHT+oQxg8xOCkTUnzokChm8=
+	b=0SDu0CUsFtVS1Fs6otoZTKfBoyZs53AriAng5KfzbkTdkjkx7+Cc2XTy49xLlQ8EL
+	 88AGdgzlUtbxOGPwQRjlOq5VdoYw+bqBq0jqtIA+LBqlUGz1UDc7QtcOulB369DHrU
+	 N0MajMULZKxnBNoi+v/xvcJm0qQzsaqN0/2t/GZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jonas Blixt <jonas.blixt@actia.se>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 383/550] f2fs: compress: fix to avoid use-after-free on dic
-Date: Wed, 15 Nov 2023 14:16:07 -0500
-Message-ID: <20231115191627.397481800@linuxfoundation.org>
+Subject: [PATCH 6.5 403/550] USB: usbip: fix stub_dev hub disconnect
+Date: Wed, 15 Nov 2023 14:16:27 -0500
+Message-ID: <20231115191628.735356281@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,54 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Jonas Blixt <jonas.blixt@actia.se>
 
-[ Upstream commit b0327c84e91a0f4f0abced8cb83ec86a7083f086 ]
+[ Upstream commit 97475763484245916735a1aa9a3310a01d46b008 ]
 
-Call trace:
- __memcpy+0x128/0x250
- f2fs_read_multi_pages+0x940/0xf7c
- f2fs_mpage_readpages+0x5a8/0x624
- f2fs_readahead+0x5c/0x110
- page_cache_ra_unbounded+0x1b8/0x590
- do_sync_mmap_readahead+0x1dc/0x2e4
- filemap_fault+0x254/0xa8c
- f2fs_filemap_fault+0x2c/0x104
- __do_fault+0x7c/0x238
- do_handle_mm_fault+0x11bc/0x2d14
- do_mem_abort+0x3a8/0x1004
- el0_da+0x3c/0xa0
- el0t_64_sync_handler+0xc4/0xec
- el0t_64_sync+0x1b4/0x1b8
+If a hub is disconnected that has device(s) that's attached to the usbip layer
+the disconnect function might fail because it tries to release the port
+on an already disconnected hub.
 
-In f2fs_read_multi_pages(), once f2fs_decompress_cluster() was called if
-we hit cached page in compress_inode's cache, dic may be released, it needs
-break the loop rather than continuing it, in order to avoid accessing
-invalid dic pointer.
-
-Fixes: 6ce19aff0b8c ("f2fs: compress: add compress_inode to cache compressed blocks")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 6080cd0e9239 ("staging: usbip: claim ports used by shared devices")
+Signed-off-by: Jonas Blixt <jonas.blixt@actia.se>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230615092810.1215490-1-jonas.blixt@actia.se
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/usbip/stub_dev.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 63bb5ca6e0d79..1c5703c02132d 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2341,8 +2341,10 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
- 		f2fs_wait_on_block_writeback(inode, blkaddr);
- 
- 		if (f2fs_load_compressed_page(sbi, page, blkaddr)) {
--			if (atomic_dec_and_test(&dic->remaining_pages))
-+			if (atomic_dec_and_test(&dic->remaining_pages)) {
- 				f2fs_decompress_cluster(dic, true);
-+				break;
-+			}
- 			continue;
- 		}
+diff --git a/drivers/usb/usbip/stub_dev.c b/drivers/usb/usbip/stub_dev.c
+index 9c6954aad6c88..ce625b1ce9a51 100644
+--- a/drivers/usb/usbip/stub_dev.c
++++ b/drivers/usb/usbip/stub_dev.c
+@@ -464,8 +464,13 @@ static void stub_disconnect(struct usb_device *udev)
+ 	/* release port */
+ 	rc = usb_hub_release_port(udev->parent, udev->portnum,
+ 				  (struct usb_dev_state *) udev);
+-	if (rc) {
+-		dev_dbg(&udev->dev, "unable to release port\n");
++	/*
++	 * NOTE: If a HUB disconnect triggered disconnect of the down stream
++	 * device usb_hub_release_port will return -ENODEV so we can safely ignore
++	 * that error here.
++	 */
++	if (rc && (rc != -ENODEV)) {
++		dev_dbg(&udev->dev, "unable to release port (%i)\n", rc);
+ 		return;
+ 	}
  
 -- 
 2.42.0
