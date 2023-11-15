@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4582C3A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B0E3A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPvjQkM8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B97C433C9;
-	Wed, 15 Nov 2023 19:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3cryE1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCA5C433C7;
+	Wed, 15 Nov 2023 19:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077634;
-	bh=u1ReexMzx/3dinQ7MmCRSyTjel6XNkL12RsEUemYVvo=;
+	s=korg; t=1700077635;
+	bh=nShVZs+q69FMRGysNgylFDvkBj/s+gEjSvL840s25eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPvjQkM8Q/N6vAxEfyxsCdMQT8XqRBePEzhvyS5HD1K+NcrA0V7qqrFLxutkR+xNL
-	 hKwcBIfRFIkuNq6VkbSIENueSoim+z7KUawfcP4078BtEdVdGOf6Vq3kgM2Sceg9eL
-	 YHK6jAbMaICbAZzR8jOSb1uUHkBEtjIczLe3Ci/Y=
+	b=X3cryE1SXEjCvfEUOQ9//8jTaM3QGBaBVyAl4Ynl1mWe8d/UoPBty0aHzJzpbEMwU
+	 it9Z0zaEysFRsziVXVcvpPcqee8bRmKmCK5fn4/11eNuqof9/iRPD8t4c+EW8QpH6M
+	 3VkdhYyheOKUxGPHEdfld9ast3C0563aBcpYrtOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 392/603] sh: bios: Revive earlyprintk support
-Date: Wed, 15 Nov 2023 14:15:37 -0500
-Message-ID: <20231115191640.265997793@linuxfoundation.org>
+Subject: [PATCH 6.6 417/603] scripts/gdb: fix usage of MOD_TEXT not defined when CONFIG_MODULES=n
+Date: Wed, 15 Nov 2023 14:16:02 -0500
+Message-ID: <20231115191641.760091643@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -36,56 +41,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Clément Léger <cleger@rivosinc.com>
 
-[ Upstream commit 553f7ac78fbb41b2c93ab9b9d78e42274d27daa9 ]
+[ Upstream commit 16501630bdeb107141a0139ddc33f92ab5582c6f ]
 
-The SuperH BIOS earlyprintk code is protected by CONFIG_EARLY_PRINTK.
-However, when this protection was added, it was missed that SuperH no
-longer defines an EARLY_PRINTK config symbol since commit
-e76fe57447e88916 ("sh: Remove old early serial console code V2"), so
-BIOS earlyprintk can no longer be used.
+MOD_TEXT is only defined if CONFIG_MODULES=y which lead to loading failure
+of the gdb scripts when kernel is built without CONFIG_MODULES=y:
 
-Fix this by reviving the EARLY_PRINTK config symbol.
+Reading symbols from vmlinux...
+Traceback (most recent call last):
+  File "/foo/vmlinux-gdb.py", line 25, in <module>
+    import linux.constants
+  File "/foo/scripts/gdb/linux/constants.py", line 14, in <module>
+    LX_MOD_TEXT = gdb.parse_and_eval("MOD_TEXT")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+gdb.error: No symbol "MOD_TEXT" in current context.
 
-Fixes: d0380e6c3c0f6edb ("early_printk: consolidate random copies of identical code")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/c40972dfec3dcc6719808d5df388857360262878.1697708489.git.geert+renesas@glider.be
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Add a conditional check on CONFIG_MODULES to fix this error.
+
+Link: https://lkml.kernel.org/r/20231031134848.119391-1-da.gomez@samsung.com
+Fixes: b4aff7513df3 ("scripts/gdb: use mem instead of core_layout to get the module address")
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Tested-by: Daniel Gomez <da.gomez@samsung.com>
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+Cc: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Pankaj Raghav <p.raghav@samsung.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/Kconfig.debug | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ scripts/gdb/linux/constants.py.in | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/arch/sh/Kconfig.debug b/arch/sh/Kconfig.debug
-index c449e7c1b20ff..8bcd6c1431a95 100644
---- a/arch/sh/Kconfig.debug
-+++ b/arch/sh/Kconfig.debug
-@@ -22,6 +22,17 @@ config STACK_DEBUG
- 	  every function call and will therefore incur a major
- 	  performance hit. Most users should say N.
+diff --git a/scripts/gdb/linux/constants.py.in b/scripts/gdb/linux/constants.py.in
+index e3517d4ab8ec9..04c87b570aabe 100644
+--- a/scripts/gdb/linux/constants.py.in
++++ b/scripts/gdb/linux/constants.py.in
+@@ -66,10 +66,11 @@ LX_GDBPARSED(IRQD_LEVEL)
+ LX_GDBPARSED(IRQ_HIDDEN)
  
-+config EARLY_PRINTK
-+	bool "Early printk"
-+	depends on SH_STANDARD_BIOS
-+	help
-+	  Say Y here to redirect kernel printk messages to the serial port
-+	  used by the SH-IPL bootloader, starting very early in the boot
-+	  process and ending when the kernel's serial console is initialised.
-+	  This option is only useful while porting the kernel to a new machine,
-+	  when the kernel may crash or hang before the serial console is
-+	  initialised.  If unsure, say N.
-+
- config 4KSTACKS
- 	bool "Use 4Kb for kernel stacks instead of 8Kb"
- 	depends on DEBUG_KERNEL && (MMU || BROKEN) && !PAGE_SIZE_64KB
+ /* linux/module.h */
+-LX_GDBPARSED(MOD_TEXT)
+-LX_GDBPARSED(MOD_DATA)
+-LX_GDBPARSED(MOD_RODATA)
+-LX_GDBPARSED(MOD_RO_AFTER_INIT)
++if IS_BUILTIN(CONFIG_MODULES):
++    LX_GDBPARSED(MOD_TEXT)
++    LX_GDBPARSED(MOD_DATA)
++    LX_GDBPARSED(MOD_RODATA)
++    LX_GDBPARSED(MOD_RO_AFTER_INIT)
+ 
+ /* linux/mount.h */
+ LX_VALUE(MNT_NOSUID)
 -- 
 2.42.0
 
