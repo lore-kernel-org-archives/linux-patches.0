@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DF73BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7A13BB2C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4Dq1WWo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07637C433CA;
-	Wed, 15 Nov 2023 19:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEX1cf6u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBDEC433C7;
+	Wed, 15 Nov 2023 19:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078004;
-	bh=I1GRJRFcvnj3Y6tyI+QBbM445IJwUJFXaioJZOSANEI=;
+	s=korg; t=1700078005;
+	bh=QnzLMu8LH4iKt8q0uS/PR5+iPZk8g4a+hCrALzjRJlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4Dq1WWoKx5qaiyXpxZEuicgBuuz5lKvBz8H/cvmKDLqSObOVAs4IYVkxtbko40Ig
-	 zQhVUvhSN40xyty6ajQYOrHF5EZyUEDUQtW4g9HMfy94Sgg91tQx02wAC2TeGt+0mv
-	 GFfEl619aO7jYX1GXIUpyhi7dUPU+ez+M8Ovra1c=
+	b=kEX1cf6u6sqC/7UIVnZMO/6OO04yPy9YNXADVCH9o3wmCoVgnbI6RmH6nsIuj5i8g
+	 M/BNRmaQ61Wa1ms6626fMGODVAQQ2OxFHsFkyt2Q+E7n3BY6jsJ24/bBwo5P29tfpE
+	 wMG5skyUTVY8OdCAXqL3bIauCUpuoAFDe+9P02cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/379] wifi: rtlwifi: fix EDCA limit set by BT coexistence
-Date: Wed, 15 Nov 2023 14:22:05 -0500
-Message-ID: <20231115192648.122836749@linuxfoundation.org>
+Subject: [PATCH 6.1 051/379] ACPI: property: Allow _DSD buffer data only for byte accessors
+Date: Wed, 15 Nov 2023 14:22:06 -0500
+Message-ID: <20231115192648.178425507@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,68 +42,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 3391ee7f9ea508c375d443cd712c2e699be235b4 ]
+[ Upstream commit 046ece773cc77ef5d2a1431b188ac3d0840ed150 ]
 
-In 'rtl92c_dm_check_edca_turbo()', 'rtl88e_dm_check_edca_turbo()',
-and 'rtl8723e_dm_check_edca_turbo()', the DL limit should be set
-from the corresponding field of 'rtlpriv->btcoexist' rather than
-UL. Compile tested only.
+In accordance with ACPI specificication and _DSD data buffer
+representation the data there is an array of bytes. Hence,
+accessing it with something longer will create a sparse data
+which is against of how device property APIs work in general
+and also not defined in the ACPI specification (see [1]).
+Fix the code to emit an error if non-byte accessor is used to
+retrieve _DSD buffer data.
 
-Fixes: 0529c6b81761 ("rtlwifi: rtl8723ae: Update driver to match 06/28/14 Realtek version")
-Fixes: c151aed6aa14 ("rtlwifi: rtl8188ee: Update driver to match Realtek release of 06282014")
-Fixes: beb5bc402043 ("rtlwifi: rtl8192c-common: Convert common dynamic management routines for addition of rtl8192se and rtl8192de")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230928052327.120178-1-dmantipov@yandex.ru
+Fixes: 369af6bf2c28 ("ACPI: property: Read buffer properties as integers")
+Link: https://uefi.org/specs/ACPI/6.5/19_ASL_Reference.html#buffer-declare-buffer-object # [1]
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+[ rjw: Add missing braces ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c       | 2 +-
- drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c | 2 +-
- drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c       | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/property.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
-index 6f61d6a106272..5a34894a533be 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8188ee/dm.c
-@@ -799,7 +799,7 @@ static void rtl88e_dm_check_edca_turbo(struct ieee80211_hw *hw)
+diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
+index b8d9eb9a433ed..0565c18c2ee31 100644
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -1114,25 +1114,26 @@ static int acpi_data_prop_read(const struct acpi_device_data *data,
+ 	switch (proptype) {
+ 	case DEV_PROP_STRING:
+ 		break;
+-	case DEV_PROP_U8 ... DEV_PROP_U64:
++	default:
+ 		if (obj->type == ACPI_TYPE_BUFFER) {
+ 			if (nval > obj->buffer.length)
+ 				return -EOVERFLOW;
+-			break;
++		} else {
++			if (nval > obj->package.count)
++				return -EOVERFLOW;
+ 		}
+-		fallthrough;
+-	default:
+-		if (nval > obj->package.count)
+-			return -EOVERFLOW;
+ 		break;
  	}
+ 	if (nval == 0)
+ 		return -EINVAL;
  
- 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
--		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
-+		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
- 		bt_change_edca = true;
- 	}
+-	if (obj->type != ACPI_TYPE_BUFFER)
+-		items = obj->package.elements;
+-	else
++	if (obj->type == ACPI_TYPE_BUFFER) {
++		if (proptype != DEV_PROP_U8)
++			return -EPROTO;
+ 		items = obj;
++	} else {
++		items = obj->package.elements;
++	}
  
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c b/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
-index 0b6a15c2e5ccd..d92aad60edfe9 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8192c/dm_common.c
-@@ -640,7 +640,7 @@ static void rtl92c_dm_check_edca_turbo(struct ieee80211_hw *hw)
- 	}
- 
- 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
--		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
-+		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
- 		bt_change_edca = true;
- 	}
- 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
-index 8ada31380efa4..0ff8e355c23a4 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/dm.c
-@@ -466,7 +466,7 @@ static void rtl8723e_dm_check_edca_turbo(struct ieee80211_hw *hw)
- 	}
- 
- 	if (rtlpriv->btcoexist.bt_edca_dl != 0) {
--		edca_be_ul = rtlpriv->btcoexist.bt_edca_dl;
-+		edca_be_dl = rtlpriv->btcoexist.bt_edca_dl;
- 		bt_change_edca = true;
- 	}
- 
+ 	switch (proptype) {
+ 	case DEV_PROP_U8:
 -- 
 2.42.0
 
