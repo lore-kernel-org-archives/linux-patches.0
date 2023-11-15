@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6174F3A8F4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABF43A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFxQZS9k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE61C433C9;
-	Wed, 15 Nov 2023 19:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZljXxfvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A81C433C7;
+	Wed, 15 Nov 2023 19:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077798;
-	bh=IdQL+rR0O+wr2nnBYLUNSltz3Ce9lTHjCv/5QQGC6fQ=;
+	s=korg; t=1700077799;
+	bh=a8AEcAvbEs7v68bcI3ia5douVYlNNWJnCPMMLHumwPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vFxQZS9koqKbHwhnLAstMgNdr8plc3u9h0u4dP2eyBoLQ4nc8kjkWDob51SNo6B+x
-	 0wTImIWUw4+clhdOd7vmhldqwholt3IGyuZww/5hnYI/RxOlpzGy/NtnfIqdA7yTN4
-	 RLRA3pulj/V7CV5DRfYTqiKdfvWKRRKt/MEiBtiY=
+	b=ZljXxfvSwKSR7qLdY14v0WGFk1pDKjr7bCtZ686nE0fJmE5YcfPWqM+vKPAZ0X53+
+	 OtPMYBdgpYQl/puq0fgzVobedBhiUylKDLet6VRWrVlwEWs4bQWz5Ys1i2OOFtfbcq
+	 vumE3L4tCBc+f6Mc0hwCpiBNY42UmqQbeWvTaz7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Irui Wang <irui.wang@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 526/603] media: verisilicon: Fixes clock list for rk3588 av1 decoder
-Date: Wed, 15 Nov 2023 14:17:51 -0500
-Message-ID: <20231115191648.347968326@linuxfoundation.org>
+Subject: [PATCH 6.6 527/603] media: mediatek: vcodec: Handle invalid encoder vsi
+Date: Wed, 15 Nov 2023 14:17:52 -0500
+Message-ID: <20231115191648.410183857@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,36 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+From: Irui Wang <irui.wang@mediatek.com>
 
-[ Upstream commit 39377f84fb98561b86b645f0b7c33512eba7afaf ]
+[ Upstream commit 19e2e01f30b5d2b448b5db097130486ea95af36f ]
 
-Mainlined RK3588 clock driver manage by itself the dependency between
-aclk/hclk and their root clocks (aclk_vdpu_root/hclk_vdpu_root).
-RK3588 av1 video decoder do not have to take care of it anymore so
-remove them from the list and be compliant with yaml bindings description.
+Handle invalid encoder vsi in vpu_enc_init to ensure the encoder
+vsi is valid for future use.
 
-Fixes: 003afda97c65 ("media: verisilicon: Enable AV1 decoder on rk3588")
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Fixes: 1972e32431ed ("media: mediatek: vcodec: Fix possible invalid memory access for encoder")
+
+Signed-off-by: Irui Wang <irui.wang@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/rockchip_vpu_hw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/platform/verisilicon/rockchip_vpu_hw.c b/drivers/media/platform/verisilicon/rockchip_vpu_hw.c
-index 816ffa905a4bb..f975276707835 100644
---- a/drivers/media/platform/verisilicon/rockchip_vpu_hw.c
-+++ b/drivers/media/platform/verisilicon/rockchip_vpu_hw.c
-@@ -648,7 +648,7 @@ static const char * const rockchip_vpu_clk_names[] = {
- };
+diff --git a/drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c b/drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c
+index ae6290d28f8e9..84ad1cc6ad171 100644
+--- a/drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c
++++ b/drivers/media/platform/mediatek/vcodec/encoder/venc_vpu_if.c
+@@ -154,6 +154,11 @@ int vpu_enc_init(struct venc_vpu_inst *vpu)
+ 		return -EINVAL;
+ 	}
  
- static const char * const rk3588_vpu981_vpu_clk_names[] = {
--	"aclk", "hclk", "aclk_vdpu_root", "hclk_vdpu_root"
-+	"aclk", "hclk",
- };
++	if (IS_ERR_OR_NULL(vpu->vsi)) {
++		mtk_venc_err(vpu->ctx, "invalid venc vsi");
++		return -EINVAL;
++	}
++
+ 	return 0;
+ }
  
- /* VDPU1/VEPU1 */
 -- 
 2.42.0
 
