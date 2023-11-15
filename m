@@ -1,35 +1,53 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134543BB2C
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4863D396
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:55:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oG6K9DQ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E509C433C7;
-	Wed, 15 Nov 2023 19:55:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078107;
-	bh=vDWzx2dB/TiTP+RbD7UVCmpq43ddd3MLDo/7wqBSDx8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oG6K9DQ8UTx+UeAzWSGCuYQuh8CUH5vPo7CKLZvZLsw0lzKWiQoOe6wO+5PirNBqu
-	 AWAjhUf1HWiTb03ixN7ZD1/1Gzx5Um+rMLKwguXhO6UHPya084RBhjhcic6smP3O84
-	 87Px88psWOta8grKUAB2otH5Ym/nfkri1lbSC18k=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SCK3o16j"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1700078106; x=1731614106;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=9kn0IcXzVyhNwBtqgo8ESAmVudabJ++07BmvROIMeHg=;
+  b=SCK3o16jrB5NW1BsDHoDyU+gK3Y+kPXJl5m10C40LW7XedWjP0HBPpju
+   ShISj/DXElPWFaPekr8K+4G0cidO556+nT/4PmZxRZuh4wof1npr4RgRn
+   NbbGbQ7daHikDvmdKC5hLbfMo6If5SeYqHHLU7FBgH4E2qkE9/DVndKE/
+   lZOJh671FvuXnF0QUqkaT1B6V6xJCMQgnXjAFgmEHw/rGg8Qc7yCLK04v
+   CvTL803nZZWOpwkpYSUa6QPp+dL+iEY7iPOzErd5Y7w7cz8MBktCogDUR
+   XxRvX5LbGM9l6oakyMOpkE1QvA7dTHfXJ1lbHrsbNMryUCjX9wWAD49dY
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10895"; a="477166000"
+X-IronPort-AV: E=Sophos;i="6.03,305,1694761200"; 
+   d="scan'208";a="477166000"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Nov 2023 11:54:58 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10895"; a="768693288"
+X-IronPort-AV: E=Sophos;i="6.03,305,1694761200"; 
+   d="scan'208";a="768693288"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Nov 2023 11:54:58 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Smita.KoralahalliChannabasappa@amd.com,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/379] clk: renesas: rzg2l: Lock around writes to mux register
-Date: Wed, 15 Nov 2023 14:22:44 -0500
-Message-ID: <20231115192650.397464354@linuxfoundation.org>
-X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
-References: <20231115192645.143643130@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v10 3/3] x86/mce: Handle Intel threshold interrupt storms
+Date: Wed, 15 Nov 2023 11:54:50 -0800
+Message-ID: <20231115195450.12963-4-tony.luck@intel.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20231115195450.12963-1-tony.luck@intel.com>
+References: <20231004183623.17067-1-tony.luck@intel.com>
+ <20231115195450.12963-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,96 +56,326 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+Add an Intel specific hook into machine_check_poll() to keep track
+of per-CPU, per-bank corrected error logs (with a stub for the
+CONFIG_MCE_INTEL=n case).
 
-------------------
+When a storm is observed the rate of interrupts is reduced by setting
+a large threshold value for this bank in IA32_MCi_CTL2. This bank is
+added to the bitmap of banks for this CPU to poll. The polling rate
+is increased to once per second.
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+When a storm ends reset the threshold in IA32_MCi_CTL2 back to 1, remove
+the bank from the bitmap for polling, and change the polling rate back
+to the default.
 
-[ Upstream commit d2692ed490e680a41401cef879adebcfafb4298f ]
+If a CPU with banks in storm mode is taken offline, the new CPU
+that inherits ownership of those banks takes over management of
+storm(s) in the inherited bank(s).
 
-The SD MUX output (SD0) is further divided by 4 in G2{L,UL}.  The
-divided clock is SD0_DIV4. SD0_DIV4 is registered with
-CLK_SET_RATE_PARENT which means a rate request for it is propagated to
-the MUX and could reach rzg2l_cpg_sd_clk_mux_set_parent() concurrently
-with the users of SD0.
-Add proper locking to avoid concurrent accesses on SD MUX set rate
-registers.
+The cmci_discover() function was already very large. These changes
+pushed it well over the top. Refactor with three helper functions
+to bring it back under control.
 
-Fixes: eaff33646f4cb ("clk: renesas: rzg2l: Add SDHI clk mux support")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230929053915.1530607-4-claudiu.beznea@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Updated with review comments from Yazen.
+Link: https://lore.kernel.org/r/6ae4df67-ba0b-4b50-8c1d-a5d382105ad2@amd.com
+
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 23 +++++++++++++----------
- drivers/clk/renesas/rzg2l-cpg.h |  2 +-
- 2 files changed, 14 insertions(+), 11 deletions(-)
+ arch/x86/kernel/cpu/mce/internal.h  |   2 +
+ arch/x86/kernel/cpu/mce/intel.c     | 205 +++++++++++++++++++++-------
+ arch/x86/kernel/cpu/mce/threshold.c |   3 +
+ 3 files changed, 160 insertions(+), 50 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index 85e49f4eb6a50..a703a3b35e642 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -193,6 +193,7 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
- 	u32 shift = GET_SHIFT(hwdata->conf);
- 	const u32 clk_src_266 = 2;
- 	u32 msk, val, bitmask;
-+	unsigned long flags;
- 	int ret;
+diff --git a/arch/x86/kernel/cpu/mce/internal.h b/arch/x86/kernel/cpu/mce/internal.h
+index e55676f096d8..6315dbf58146 100644
+--- a/arch/x86/kernel/cpu/mce/internal.h
++++ b/arch/x86/kernel/cpu/mce/internal.h
+@@ -41,6 +41,7 @@ struct dentry *mce_get_debugfs_dir(void);
+ extern mce_banks_t mce_banks_ce_disabled;
  
- 	/*
-@@ -208,23 +209,25 @@ static int rzg2l_cpg_sd_clk_mux_set_parent(struct clk_hw *hw, u8 index)
- 	 */
- 	bitmask = (GENMASK(GET_WIDTH(hwdata->conf) - 1, 0) << shift) << 16;
- 	msk = off ? CPG_CLKSTATUS_SELSDHI1_STS : CPG_CLKSTATUS_SELSDHI0_STS;
-+	spin_lock_irqsave(&priv->rmw_lock, flags);
- 	if (index != clk_src_266) {
- 		writel(bitmask | ((clk_src_266 + 1) << shift), priv->base + off);
+ #ifdef CONFIG_X86_MCE_INTEL
++void mce_intel_handle_storm(int bank, bool on);
+ void cmci_disable_bank(int bank);
+ void intel_init_cmci(void);
+ void intel_init_lmce(void);
+@@ -48,6 +49,7 @@ void intel_clear_lmce(void);
+ bool intel_filter_mce(struct mce *m);
+ bool intel_mce_usable_address(struct mce *m);
+ #else
++static inline void mce_intel_handle_storm(int bank, bool on) { }
+ static inline void cmci_disable_bank(int bank) { }
+ static inline void intel_init_cmci(void) { }
+ static inline void intel_init_lmce(void) { }
+diff --git a/arch/x86/kernel/cpu/mce/intel.c b/arch/x86/kernel/cpu/mce/intel.c
+index fc4ffc434023..399b62e223d2 100644
+--- a/arch/x86/kernel/cpu/mce/intel.c
++++ b/arch/x86/kernel/cpu/mce/intel.c
+@@ -54,8 +54,27 @@ static DEFINE_RAW_SPINLOCK(cmci_discover_lock);
+  */
+ static DEFINE_SPINLOCK(cmci_poll_lock);
  
--		ret = readl_poll_timeout(priv->base + CPG_CLKSTATUS, val,
--					 !(val & msk), 100,
--					 CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
--		if (ret) {
--			dev_err(priv->dev, "failed to switch clk source\n");
--			return ret;
--		}
-+		ret = readl_poll_timeout_atomic(priv->base + CPG_CLKSTATUS, val,
-+						!(val & msk), 10,
-+						CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
-+		if (ret)
-+			goto unlock;
- 	}
++/* Linux non-storm CMCI threshold (may be overridden by BIOS) */
+ #define CMCI_THRESHOLD		1
  
- 	writel(bitmask | ((index + 1) << shift), priv->base + off);
- 
--	ret = readl_poll_timeout(priv->base + CPG_CLKSTATUS, val,
--				 !(val & msk), 100,
--				 CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
-+	ret = readl_poll_timeout_atomic(priv->base + CPG_CLKSTATUS, val,
-+					!(val & msk), 10,
-+					CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US);
-+unlock:
-+	spin_unlock_irqrestore(&priv->rmw_lock, flags);
++/*
++ * MCi_CTL2 threshold for each bank when there is no storm.
++ * Default value for each bank may have been set by BIOS.
++ */
++static u16 cmci_threshold[MAX_NR_BANKS];
 +
- 	if (ret)
- 		dev_err(priv->dev, "failed to switch clk source\n");
++/*
++ * High threshold to limit CMCI rate during storms. Max supported is
++ * 0x7FFF. Use this slightly smaller value so it has a distinctive
++ * signature when some asks "Why am I not seeing all corrected errors?"
++ * A high threshold is used instead of just disabling CMCI for a
++ * bank because both corrected and uncorrected errors may be logged
++ * in the same bank and signalled with CMCI. The threshold only applies
++ * to corrected errors, so keeping CMCI enabled means that uncorrected
++ * errors will still be processed in a timely fashion.
++ */
++#define CMCI_STORM_THRESHOLD	32749
++
+ static int cmci_supported(int *banks)
+ {
+ 	u64 cap;
+@@ -110,6 +129,31 @@ static bool lmce_supported(void)
+ 	return tmp & FEAT_CTL_LMCE_ENABLED;
+ }
  
-diff --git a/drivers/clk/renesas/rzg2l-cpg.h b/drivers/clk/renesas/rzg2l-cpg.h
-index b33a3e79161b6..aefa53a900597 100644
---- a/drivers/clk/renesas/rzg2l-cpg.h
-+++ b/drivers/clk/renesas/rzg2l-cpg.h
-@@ -43,7 +43,7 @@
- #define CPG_CLKSTATUS_SELSDHI0_STS	BIT(28)
- #define CPG_CLKSTATUS_SELSDHI1_STS	BIT(29)
++/*
++ * Set a new CMCI threshold value. Preserve the state of the
++ * MCI_CTL2_CMCI_EN bit in case this happens during a
++ * cmci_rediscover() operation.
++ */
++static void cmci_set_threshold(int bank, int thresh)
++{
++	unsigned long flags;
++	u64 val;
++
++	raw_spin_lock_irqsave(&cmci_discover_lock, flags);
++	rdmsrl(MSR_IA32_MCx_CTL2(bank), val);
++	val &= ~MCI_CTL2_CMCI_THRESHOLD_MASK;
++	wrmsrl(MSR_IA32_MCx_CTL2(bank), val | thresh);
++	raw_spin_unlock_irqrestore(&cmci_discover_lock, flags);
++}
++
++void mce_intel_handle_storm(int bank, bool on)
++{
++	if (on)
++		cmci_set_threshold(bank, CMCI_STORM_THRESHOLD);
++	else
++		cmci_set_threshold(bank, cmci_threshold[bank]);
++}
++
+ /*
+  * The interrupt handler. This is called on every event.
+  * Just call the poller directly to log any events.
+@@ -121,72 +165,130 @@ static void intel_threshold_interrupt(void)
+ 	machine_check_poll(MCP_TIMESTAMP, this_cpu_ptr(&mce_banks_owned));
+ }
  
--#define CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US	20000
-+#define CPG_SDHI_CLK_SWITCH_STATUS_TIMEOUT_US	200
++/*
++ * Check all the reasons why current CPU cannot claim
++ * ownership of a bank.
++ * 1: CPU already owns this bank
++ * 2: BIOS owns this bank
++ * 3: Some other CPU owns this bank
++ */
++static bool cmci_skip_bank(int bank, u64 *val)
++{
++	unsigned long *owned = (void *)this_cpu_ptr(&mce_banks_owned);
++
++	if (test_bit(bank, owned))
++		return true;
++
++	/* Skip banks in firmware first mode */
++	if (test_bit(bank, mce_banks_ce_disabled))
++		return true;
++
++	rdmsrl(MSR_IA32_MCx_CTL2(bank), *val);
++
++	/* Already owned by someone else? */
++	if (*val & MCI_CTL2_CMCI_EN) {
++		clear_bit(bank, owned);
++		__clear_bit(bank, this_cpu_ptr(mce_poll_banks));
++		return true;
++	}
++
++	return false;
++}
++
++/*
++ * Decide which CMCI interrupt threshold to use:
++ * 1: If this bank is in storm mode from whichever CPU was
++ *    the previous owner, stay in storm mode.
++ * 2: If ignoring any threshold set by BIOS, set Linux default
++ * 3: Try to honor BIOS threshold (unless buggy BIOS set it at zero).
++ */
++static u64 cmci_pick_threshold(u64 val, int *bios_zero_thresh)
++{
++	if ((val & MCI_CTL2_CMCI_THRESHOLD_MASK) == CMCI_STORM_THRESHOLD)
++		return val;
++
++	if (!mca_cfg.bios_cmci_threshold) {
++		val &= ~MCI_CTL2_CMCI_THRESHOLD_MASK;
++		val |= CMCI_THRESHOLD;
++	} else if (!(val & MCI_CTL2_CMCI_THRESHOLD_MASK)) {
++		/*
++		 * If bios_cmci_threshold boot option was specified
++		 * but the threshold is zero, we'll try to initialize
++		 * it to 1.
++		 */
++		*bios_zero_thresh = 1;
++		val |= CMCI_THRESHOLD;
++	}
++
++	return val;
++}
++
++/*
++ * Try to claim ownership of a bank.
++ */
++static void cmci_claim_bank(int bank, u64 val, int bios_zero_thresh, int *bios_wrong_thresh)
++{
++	struct mca_storm_desc *storm = this_cpu_ptr(&storm_desc);
++
++	val |= MCI_CTL2_CMCI_EN;
++	wrmsrl(MSR_IA32_MCx_CTL2(bank), val);
++	rdmsrl(MSR_IA32_MCx_CTL2(bank), val);
++
++	/* If the enable bit did not stick, this bank should be polled. */
++	if (!(val & MCI_CTL2_CMCI_EN)) {
++		WARN_ON(!test_bit(bank, this_cpu_ptr(mce_poll_banks)));
++		storm->banks[bank].poll_only = true;
++		return;
++	}
++
++	/* This CPU successfully set the enable bit. */
++	set_bit(bank, (void *)this_cpu_ptr(&mce_banks_owned));
++
++	if ((val & MCI_CTL2_CMCI_THRESHOLD_MASK) == CMCI_STORM_THRESHOLD) {
++		pr_notice("CPU%d BANK%d CMCI inherited storm\n", smp_processor_id(), bank);
++		mce_inherit_storm(bank);
++		cmci_storm_begin(bank);
++	} else {
++		__clear_bit(bank, this_cpu_ptr(mce_poll_banks));
++	}
++
++	/*
++	 * We are able to set thresholds for some banks that
++	 * had a threshold of 0. This means the BIOS has not
++	 * set the thresholds properly or does not work with
++	 * this boot option. Note down now and report later.
++	 */
++	if (mca_cfg.bios_cmci_threshold && bios_zero_thresh &&
++	    (val & MCI_CTL2_CMCI_THRESHOLD_MASK))
++		*bios_wrong_thresh = 1;
++
++	/* Save default threshold for each bank */
++	if (cmci_threshold[bank] == 0)
++		cmci_threshold[bank] = val & MCI_CTL2_CMCI_THRESHOLD_MASK;
++}
++
+ /*
+  * Enable CMCI (Corrected Machine Check Interrupt) for available MCE banks
+  * on this CPU. Use the algorithm recommended in the SDM to discover shared
+- * banks.
++ * banks. Called during initial bootstrap, and also for hotplug CPU operations
++ * to rediscover/reassign machine check banks.
+  */
+ static void cmci_discover(int banks)
+ {
+-	unsigned long *owned = (void *)this_cpu_ptr(&mce_banks_owned);
++	int bios_wrong_thresh = 0;
+ 	unsigned long flags;
+ 	int i;
+-	int bios_wrong_thresh = 0;
  
- /* n = 0/1/2 for PLL1/4/6 */
- #define CPG_SAMPLL_CLK1(n)	(0x04 + (16 * n))
+ 	raw_spin_lock_irqsave(&cmci_discover_lock, flags);
+ 	for (i = 0; i < banks; i++) {
+ 		u64 val;
+ 		int bios_zero_thresh = 0;
+ 
+-		if (test_bit(i, owned))
+-			continue;
+-
+-		/* Skip banks in firmware first mode */
+-		if (test_bit(i, mce_banks_ce_disabled))
++		if (cmci_skip_bank(i, &val))
+ 			continue;
+ 
+-		rdmsrl(MSR_IA32_MCx_CTL2(i), val);
+-
+-		/* Already owned by someone else? */
+-		if (val & MCI_CTL2_CMCI_EN) {
+-			clear_bit(i, owned);
+-			__clear_bit(i, this_cpu_ptr(mce_poll_banks));
+-			continue;
+-		}
+-
+-		if (!mca_cfg.bios_cmci_threshold) {
+-			val &= ~MCI_CTL2_CMCI_THRESHOLD_MASK;
+-			val |= CMCI_THRESHOLD;
+-		} else if (!(val & MCI_CTL2_CMCI_THRESHOLD_MASK)) {
+-			/*
+-			 * If bios_cmci_threshold boot option was specified
+-			 * but the threshold is zero, we'll try to initialize
+-			 * it to 1.
+-			 */
+-			bios_zero_thresh = 1;
+-			val |= CMCI_THRESHOLD;
+-		}
+-
+-		val |= MCI_CTL2_CMCI_EN;
+-		wrmsrl(MSR_IA32_MCx_CTL2(i), val);
+-		rdmsrl(MSR_IA32_MCx_CTL2(i), val);
+-
+-		/* Did the enable bit stick? -- the bank supports CMCI */
+-		if (val & MCI_CTL2_CMCI_EN) {
+-			set_bit(i, owned);
+-			__clear_bit(i, this_cpu_ptr(mce_poll_banks));
+-			/*
+-			 * We are able to set thresholds for some banks that
+-			 * had a threshold of 0. This means the BIOS has not
+-			 * set the thresholds properly or does not work with
+-			 * this boot option. Note down now and report later.
+-			 */
+-			if (mca_cfg.bios_cmci_threshold && bios_zero_thresh &&
+-					(val & MCI_CTL2_CMCI_THRESHOLD_MASK))
+-				bios_wrong_thresh = 1;
+-		} else {
+-			WARN_ON(!test_bit(i, this_cpu_ptr(mce_poll_banks)));
+-		}
++		val = cmci_pick_threshold(val, &bios_zero_thresh);
++		cmci_claim_bank(i, val, bios_zero_thresh, &bios_wrong_thresh);
+ 	}
+ 	raw_spin_unlock_irqrestore(&cmci_discover_lock, flags);
+ 	if (mca_cfg.bios_cmci_threshold && bios_wrong_thresh) {
+@@ -225,6 +327,9 @@ static void __cmci_disable_bank(int bank)
+ 	val &= ~MCI_CTL2_CMCI_EN;
+ 	wrmsrl(MSR_IA32_MCx_CTL2(bank), val);
+ 	__clear_bit(bank, this_cpu_ptr(mce_banks_owned));
++
++	if ((val & MCI_CTL2_CMCI_THRESHOLD_MASK) == CMCI_STORM_THRESHOLD)
++		cmci_storm_end(bank);
+ }
+ 
+ /*
+diff --git a/arch/x86/kernel/cpu/mce/threshold.c b/arch/x86/kernel/cpu/mce/threshold.c
+index 0e1988468ee4..89e31e1e5c9c 100644
+--- a/arch/x86/kernel/cpu/mce/threshold.c
++++ b/arch/x86/kernel/cpu/mce/threshold.c
+@@ -60,6 +60,9 @@ void mce_set_storm_mode(bool storm)
+ static void mce_handle_storm(unsigned int bank, bool on)
+ {
+ 	switch (boot_cpu_data.x86_vendor) {
++	case X86_VENDOR_INTEL:
++		mce_intel_handle_storm(bank, on);
++		break;
+ 	}
+ }
+ 
 -- 
-2.42.0
-
-
+2.41.0
 
