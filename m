@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560D03A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5373A8F3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vR9Ip2Ro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04366C433CD;
-	Wed, 15 Nov 2023 19:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyeNRc3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893CDC433C8;
+	Wed, 15 Nov 2023 19:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077787;
-	bh=oUjQ74weIvhBrPcXsA8hgj2kaMjKnqvhxegy/Q2Zm5I=;
+	s=korg; t=1700077788;
+	bh=UHfJF4R+soAri8DckuaXXUclWKCRpAbNHB67MA10oP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vR9Ip2Ro9kc1LMjbnu8iRaN28sdLPOmclTwXiT06OmAZhOVTeA4dr5kE4UNKTjZA5
-	 cOX32ndMCcw7E5U4U/LjYieLIEnIPOysiFlkYwEsX5xnESObB0DBw3RswxleleMSfc
-	 LW7vW2C4cX4qKof6cPbaMYJ3aDOj8uE0HDR1lsFs=
+	b=dyeNRc3T8UXtWa3EfverS/9lZsZeAtOkLCcXpRKHdRS/G4URBg7ZmWeVnUq8bNx5i
+	 sycG+QS6XAvfkiqxaKKC/b+hZ2iBbcck7D1x+tvDmQhrobSr75rIDYw4KeFA+BrskK
+	 dArDAXygnlI2v0UrkAabfeW+ZfR7uzoy5F1AFDFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 498/603] cxl/region: Calculate a target position in a region interleave
-Date: Wed, 15 Nov 2023 14:17:23 -0500
-Message-ID: <20231115191646.711551608@linuxfoundation.org>
+Subject: [PATCH 6.6 489/603] cxl/pci: Cleanup sanitize to always poll
+Date: Wed, 15 Nov 2023 14:17:14 -0500
+Message-ID: <20231115191646.177421703@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,194 +45,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit a3e00c964fb943934af916f48f0dd43b5110c866 ]
+[ Upstream commit e30a106558e7d1e06d1fcfd12466dc646673d03d ]
 
-Introduce a calculation to find a target's position in a region
-interleave. Perform a self-test of the calculation on user-defined
-regions.
+In preparation for fixing the init/teardown of the 'sanitize' workqueue
+and sysfs notification mechanism, arrange for cxl_mbox_sanitize_work()
+to be the single location where the sysfs attribute is notified. With
+that change there is no distinction between polled mode and interrupt
+mode. All the interrupt does is accelerate the polling interval.
 
-The region driver uses the kernel sort() function to put region
-targets in relative order. Positions are assigned based on each
-target's index in that sorted list. That relative sort doesn't
-consider the offset of a port into its parent port which causes
-some auto-discovered regions to fail creation. In one failure case,
-a 2 + 2 config (2 host bridges each with 2 endpoints), the sort
-puts all the targets of one port ahead of another port when they
-were expected to be interleaved.
+The change to check for "mds->security.sanitize_node" under the lock is
+there to ensure that the interrupt, the work routine and the
+setup/teardown code can all have a consistent view of the registered
+notifier and the workqueue state. I.e. the expectation is that the
+interrupt is live past the point that the sanitize sysfs attribute is
+published, and it may race teardown, so it must be consulted under a
+lock. Given that new locking requirement, cxl_pci_mbox_irq() is moved
+from hard to thread irq context.
 
-In preparation for repairing the autodiscovery region assembly,
-introduce a new method for discovering a target position in the
-region interleave.
+Lastly, some opportunistic replacements of
+"queue_delayed_work(system_wq, ...)", which is just open coded
+schedule_delayed_work(), are included.
 
-cxl_calc_interleave_pos() adds a method to find the target position by
-ascending from an endpoint to a root decoder. The calculation starts
-with the endpoint's local position and position in the parent port. It
-traverses towards the root decoder and examines both position and ways
-in order to allow the position to be refined all the way to the root
-decoder.
-
-This calculation: position = position * parent_ways + parent_pos;
-applied iteratively yields the correct position.
-
-Include a self-test that exercises this new position calculation against
-every successfully configured user-defined region.
-
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://lore.kernel.org/r/0ac32c75cf81dd8b86bf07d70ff139d33c2300bc.1698263080.git.alison.schofield@intel.com
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 0cf36a85c140 ("cxl/region: Use cxl_calc_interleave_pos() for auto-discovery")
+Stable-dep-of: 5f2da1971446 ("cxl/pci: Fix sanitize notifier setup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 127 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 127 insertions(+)
+ drivers/cxl/core/memdev.c |  3 +-
+ drivers/cxl/cxlmem.h      |  2 --
+ drivers/cxl/pci.c         | 60 ++++++++++++++++-----------------------
+ 3 files changed, 26 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index f43b2b051b301..ccde7489edbde 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1497,6 +1497,113 @@ static int match_switch_decoder_by_range(struct device *dev, void *data)
- 	return (r1->start == r2->start && r1->end == r2->end);
+diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+index 14b547c07f547..2a7a07f6d1652 100644
+--- a/drivers/cxl/core/memdev.c
++++ b/drivers/cxl/core/memdev.c
+@@ -561,8 +561,7 @@ static void cxl_memdev_security_shutdown(struct device *dev)
+ 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+ 	struct cxl_memdev_state *mds = to_cxl_memdev_state(cxlmd->cxlds);
+ 
+-	if (mds->security.poll)
+-		cancel_delayed_work_sync(&mds->security.poll_dwork);
++	cancel_delayed_work_sync(&mds->security.poll_dwork);
  }
  
-+static int find_pos_and_ways(struct cxl_port *port, struct range *range,
-+			     int *pos, int *ways)
-+{
-+	struct cxl_switch_decoder *cxlsd;
-+	struct cxl_port *parent;
-+	struct device *dev;
-+	int rc = -ENXIO;
-+
-+	parent = next_port(port);
-+	if (!parent)
-+		return rc;
-+
-+	dev = device_find_child(&parent->dev, range,
-+				match_switch_decoder_by_range);
-+	if (!dev) {
-+		dev_err(port->uport_dev,
-+			"failed to find decoder mapping %#llx-%#llx\n",
-+			range->start, range->end);
-+		return rc;
-+	}
-+	cxlsd = to_cxl_switch_decoder(dev);
-+	*ways = cxlsd->cxld.interleave_ways;
-+
-+	for (int i = 0; i < *ways; i++) {
-+		if (cxlsd->target[i] == port->parent_dport) {
-+			*pos = i;
-+			rc = 0;
-+			break;
-+		}
-+	}
-+	put_device(dev);
-+
-+	return rc;
-+}
-+
-+/**
-+ * cxl_calc_interleave_pos() - calculate an endpoint position in a region
-+ * @cxled: endpoint decoder member of given region
-+ *
-+ * The endpoint position is calculated by traversing the topology from
-+ * the endpoint to the root decoder and iteratively applying this
-+ * calculation:
-+ *
-+ *    position = position * parent_ways + parent_pos;
-+ *
-+ * ...where @position is inferred from switch and root decoder target lists.
-+ *
-+ * Return: position >= 0 on success
-+ *	   -ENXIO on failure
-+ */
-+static int cxl_calc_interleave_pos(struct cxl_endpoint_decoder *cxled)
-+{
-+	struct cxl_port *iter, *port = cxled_to_port(cxled);
-+	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
-+	struct range *range = &cxled->cxld.hpa_range;
-+	int parent_ways = 0, parent_pos = 0, pos = 0;
-+	int rc;
-+
-+	/*
-+	 * Example: the expected interleave order of the 4-way region shown
-+	 * below is: mem0, mem2, mem1, mem3
-+	 *
-+	 *		  root_port
-+	 *                 /      \
-+	 *      host_bridge_0    host_bridge_1
-+	 *        |    |           |    |
-+	 *       mem0 mem1        mem2 mem3
-+	 *
-+	 * In the example the calculator will iterate twice. The first iteration
-+	 * uses the mem position in the host-bridge and the ways of the host-
-+	 * bridge to generate the first, or local, position. The second
-+	 * iteration uses the host-bridge position in the root_port and the ways
-+	 * of the root_port to refine the position.
-+	 *
-+	 * A trace of the calculation per endpoint looks like this:
-+	 * mem0: pos = 0 * 2 + 0    mem2: pos = 0 * 2 + 0
-+	 *       pos = 0 * 2 + 0          pos = 0 * 2 + 1
-+	 *       pos: 0                   pos: 1
-+	 *
-+	 * mem1: pos = 0 * 2 + 1    mem3: pos = 0 * 2 + 1
-+	 *       pos = 1 * 2 + 0          pos = 1 * 2 + 1
-+	 *       pos: 2                   pos = 3
-+	 *
-+	 * Note that while this example is simple, the method applies to more
-+	 * complex topologies, including those with switches.
-+	 */
-+
-+	/* Iterate from endpoint to root_port refining the position */
-+	for (iter = port; iter; iter = next_port(iter)) {
-+		if (is_cxl_root(iter))
-+			break;
-+
-+		rc = find_pos_and_ways(iter, range, &parent_pos, &parent_ways);
-+		if (rc)
-+			return rc;
-+
-+		pos = pos * parent_ways + parent_pos;
-+	}
-+
-+	dev_dbg(&cxlmd->dev,
-+		"decoder:%s parent:%s port:%s range:%#llx-%#llx pos:%d\n",
-+		dev_name(&cxled->cxld.dev), dev_name(cxlmd->dev.parent),
-+		dev_name(&port->dev), range->start, range->end, pos);
-+
-+	return pos;
-+}
-+
- static void find_positions(const struct cxl_switch_decoder *cxlsd,
- 			   const struct cxl_port *iter_a,
- 			   const struct cxl_port *iter_b, int *a_pos,
-@@ -1760,6 +1867,26 @@ static int cxl_region_attach(struct cxl_region *cxlr,
- 		.end = p->res->end,
- 	};
+ static void cxl_memdev_shutdown(struct device *dev)
+diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+index 706f8a6d1ef43..55f00ad17a772 100644
+--- a/drivers/cxl/cxlmem.h
++++ b/drivers/cxl/cxlmem.h
+@@ -360,7 +360,6 @@ struct cxl_fw_state {
+  *
+  * @state: state of last security operation
+  * @enabled_cmds: All security commands enabled in the CEL
+- * @poll: polling for sanitization is enabled, device has no mbox irq support
+  * @poll_tmo_secs: polling timeout
+  * @poll_dwork: polling work item
+  * @sanitize_node: sanitation sysfs file to notify
+@@ -368,7 +367,6 @@ struct cxl_fw_state {
+ struct cxl_security_state {
+ 	unsigned long state;
+ 	DECLARE_BITMAP(enabled_cmds, CXL_SEC_ENABLED_MAX);
+-	bool poll;
+ 	int poll_tmo_secs;
+ 	struct delayed_work poll_dwork;
+ 	struct kernfs_node *sanitize_node;
+diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
+index aa1b3dd9e64c4..49d9b2ef5c5c0 100644
+--- a/drivers/cxl/pci.c
++++ b/drivers/cxl/pci.c
+@@ -128,10 +128,10 @@ static irqreturn_t cxl_pci_mbox_irq(int irq, void *id)
+ 	reg = readq(cxlds->regs.mbox + CXLDEV_MBOX_BG_CMD_STATUS_OFFSET);
+ 	opcode = FIELD_GET(CXLDEV_MBOX_BG_CMD_COMMAND_OPCODE_MASK, reg);
+ 	if (opcode == CXL_MBOX_OP_SANITIZE) {
++		mutex_lock(&mds->mbox_mutex);
+ 		if (mds->security.sanitize_node)
+-			sysfs_notify_dirent(mds->security.sanitize_node);
+-
+-		dev_dbg(cxlds->dev, "Sanitization operation ended\n");
++			mod_delayed_work(system_wq, &mds->security.poll_dwork, 0);
++		mutex_unlock(&mds->mbox_mutex);
+ 	} else {
+ 		/* short-circuit the wait in __cxl_pci_mbox_send_cmd() */
+ 		rcuwait_wake_up(&mds->mbox_wait);
+@@ -160,8 +160,7 @@ static void cxl_mbox_sanitize_work(struct work_struct *work)
+ 		int timeout = mds->security.poll_tmo_secs + 10;
  
-+	if (p->nr_targets != p->interleave_ways)
+ 		mds->security.poll_tmo_secs = min(15 * 60, timeout);
+-		queue_delayed_work(system_wq, &mds->security.poll_dwork,
+-				   timeout * HZ);
++		schedule_delayed_work(&mds->security.poll_dwork, timeout * HZ);
+ 	}
+ 	mutex_unlock(&mds->mbox_mutex);
+ }
+@@ -293,15 +292,11 @@ static int __cxl_pci_mbox_send_cmd(struct cxl_memdev_state *mds,
+ 		 * and allow userspace to poll(2) for completion.
+ 		 */
+ 		if (mbox_cmd->opcode == CXL_MBOX_OP_SANITIZE) {
+-			if (mds->security.poll) {
+-				/* give first timeout a second */
+-				timeout = 1;
+-				mds->security.poll_tmo_secs = timeout;
+-				queue_delayed_work(system_wq,
+-						   &mds->security.poll_dwork,
+-						   timeout * HZ);
+-			}
+-
++			/* give first timeout a second */
++			timeout = 1;
++			mds->security.poll_tmo_secs = timeout;
++			schedule_delayed_work(&mds->security.poll_dwork,
++					      timeout * HZ);
+ 			dev_dbg(dev, "Sanitization operation started\n");
+ 			goto success;
+ 		}
+@@ -384,7 +379,9 @@ static int cxl_pci_setup_mailbox(struct cxl_memdev_state *mds)
+ 	const int cap = readl(cxlds->regs.mbox + CXLDEV_MBOX_CAPS_OFFSET);
+ 	struct device *dev = cxlds->dev;
+ 	unsigned long timeout;
++	int irq, msgnum;
+ 	u64 md_status;
++	u32 ctrl;
+ 
+ 	timeout = jiffies + mbox_ready_timeout * HZ;
+ 	do {
+@@ -432,33 +429,26 @@ static int cxl_pci_setup_mailbox(struct cxl_memdev_state *mds)
+ 	dev_dbg(dev, "Mailbox payload sized %zu", mds->payload_size);
+ 
+ 	rcuwait_init(&mds->mbox_wait);
++	INIT_DELAYED_WORK(&mds->security.poll_dwork, cxl_mbox_sanitize_work);
+ 
+-	if (cap & CXLDEV_MBOX_CAP_BG_CMD_IRQ) {
+-		u32 ctrl;
+-		int irq, msgnum;
+-		struct pci_dev *pdev = to_pci_dev(cxlds->dev);
+-
+-		msgnum = FIELD_GET(CXLDEV_MBOX_CAP_IRQ_MSGNUM_MASK, cap);
+-		irq = pci_irq_vector(pdev, msgnum);
+-		if (irq < 0)
+-			goto mbox_poll;
+-
+-		if (cxl_request_irq(cxlds, irq, cxl_pci_mbox_irq, NULL))
+-			goto mbox_poll;
++	/* background command interrupts are optional */
++	if (!(cap & CXLDEV_MBOX_CAP_BG_CMD_IRQ))
 +		return 0;
-+
-+	/*
-+	 * Test the auto-discovery position calculator function
-+	 * against this successfully created user-defined region.
-+	 * A fail message here means that this interleave config
-+	 * will fail when presented as CXL_REGION_F_AUTO.
-+	 */
-+	for (int i = 0; i < p->nr_targets; i++) {
-+		struct cxl_endpoint_decoder *cxled = p->targets[i];
-+		int test_pos;
-+
-+		test_pos = cxl_calc_interleave_pos(cxled);
-+		dev_dbg(&cxled->cxld.dev,
-+			"Test cxl_calc_interleave_pos(): %s test_pos:%d cxled->pos:%d\n",
-+			(test_pos == cxled->pos) ? "success" : "fail",
-+			test_pos, cxled->pos);
-+	}
-+
- 	return 0;
  
- err_decrement:
+-		/* enable background command mbox irq support */
+-		ctrl = readl(cxlds->regs.mbox + CXLDEV_MBOX_CTRL_OFFSET);
+-		ctrl |= CXLDEV_MBOX_CTRL_BG_CMD_IRQ;
+-		writel(ctrl, cxlds->regs.mbox + CXLDEV_MBOX_CTRL_OFFSET);
++	msgnum = FIELD_GET(CXLDEV_MBOX_CAP_IRQ_MSGNUM_MASK, cap);
++	irq = pci_irq_vector(to_pci_dev(cxlds->dev), msgnum);
++	if (irq < 0)
++		return 0;
+ 
++	if (cxl_request_irq(cxlds, irq, NULL, cxl_pci_mbox_irq))
+ 		return 0;
+-	}
+ 
+-mbox_poll:
+-	mds->security.poll = true;
+-	INIT_DELAYED_WORK(&mds->security.poll_dwork, cxl_mbox_sanitize_work);
++	dev_dbg(cxlds->dev, "Mailbox interrupts enabled\n");
++	/* enable background command mbox irq support */
++	ctrl = readl(cxlds->regs.mbox + CXLDEV_MBOX_CTRL_OFFSET);
++	ctrl |= CXLDEV_MBOX_CTRL_BG_CMD_IRQ;
++	writel(ctrl, cxlds->regs.mbox + CXLDEV_MBOX_CTRL_OFFSET);
+ 
+-	dev_dbg(cxlds->dev, "Mailbox interrupts are unsupported");
+ 	return 0;
+ }
+ 
 -- 
 2.42.0
 
