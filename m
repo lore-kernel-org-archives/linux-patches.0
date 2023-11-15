@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9BE39FE5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1CB39FE5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bb2eOm2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6628CC4E750;
-	Wed, 15 Nov 2023 20:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lB6q6EZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C26C4E751;
+	Wed, 15 Nov 2023 20:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081494;
-	bh=+MSWwg5lpkZX5JkgPSsn0ITXmce2scm620kNeR9ygAI=;
+	s=korg; t=1700081496;
+	bh=QbVmRCccTdX1aGNIC8sYnNRJ+QzXp6YBXqIDCnrPdpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bb2eOm2HAuF70Cp7BGqy6R8lcn13PzWT8iBqDkWneFU28rCmeQHWtiOonxwkj640
-	 2WNUzO016NCKz0JmwB1EGUayaF/Frxwrax3RbYE3nfxqZd1nfrKzme2kFoR0BT/j4Z
-	 E6uFDw8QgYLQ9MmYtnejykQ320/gbS7c0AhgVj0k=
+	b=lB6q6EZDUB8Dm6Buc51KIVaWdumz7bmD2mSTawiQpmlETPnjNYUpVTW26T5K5XiDH
+	 QowTL3ix5GULxIRYNGW3ob90cYQcjs6PUYiM/YTdLTfuu8p8vjOqvcl9f+K9hMTth1
+	 0Q+f4xV7Y0wb/K95SjbllRHhCxltof2Z52LlfcPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/244] powerpc/xive: Fix endian conversion size
-Date: Wed, 15 Nov 2023 15:36:19 -0500
-Message-ID: <20231115203559.561833919@linuxfoundation.org>
+Subject: [PATCH 5.15 188/244] powerpc/imc-pmu: Use the correct spinlock initializer.
+Date: Wed, 15 Nov 2023 15:36:20 -0500
+Message-ID: <20231115203559.619176465@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,39 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit ff7a60ab1e065257a0e467c13b519f4debcd7fcf ]
+[ Upstream commit 007240d59c11f87ac4f6cfc6a1d116630b6b634c ]
 
-Sparse reports a size mismatch in the endian swap. The Opal
-implementation[1] passes the value as a __be64, and the receiving
-variable out_qsize is a u64, so the use of be32_to_cpu() appears to be
-an error.
+The macro __SPIN_LOCK_INITIALIZER() is implementation specific. Users
+that desire to initialize a spinlock in a struct must use
+__SPIN_LOCK_UNLOCKED().
 
-[1]: https://github.com/open-power/skiboot/blob/80e2b1dc73/hw/xive.c#L3854
+Use __SPIN_LOCK_UNLOCKED() for the spinlock_t in imc_global_refc.
 
-Fixes: 88ec6b93c8e7 ("powerpc/xive: add OPAL extensions for the XIVE native exploitation support")
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+Fixes: 76d588dddc459 ("powerpc/imc-pmu: Fix use of mutex in IRQs disabled section")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231011053711.93427-2-bgray@linux.ibm.com
+Link: https://msgid.link/20230309134831.Nz12nqsU@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/xive/native.c | 2 +-
+ arch/powerpc/perf/imc-pmu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/sysdev/xive/native.c b/arch/powerpc/sysdev/xive/native.c
-index 1aec282cd650d..b6323bdecfa4c 100644
---- a/arch/powerpc/sysdev/xive/native.c
-+++ b/arch/powerpc/sysdev/xive/native.c
-@@ -786,7 +786,7 @@ int xive_native_get_queue_info(u32 vp_id, u32 prio,
- 	if (out_qpage)
- 		*out_qpage = be64_to_cpu(qpage);
- 	if (out_qsize)
--		*out_qsize = be32_to_cpu(qsize);
-+		*out_qsize = be64_to_cpu(qsize);
- 	if (out_qeoi_page)
- 		*out_qeoi_page = be64_to_cpu(qeoi_page);
- 	if (out_escalate_irq)
+diff --git a/arch/powerpc/perf/imc-pmu.c b/arch/powerpc/perf/imc-pmu.c
+index b8a100b9736c7..55a853edc3bea 100644
+--- a/arch/powerpc/perf/imc-pmu.c
++++ b/arch/powerpc/perf/imc-pmu.c
+@@ -50,7 +50,7 @@ static int trace_imc_mem_size;
+  * core and trace-imc
+  */
+ static struct imc_pmu_ref imc_global_refc = {
+-	.lock = __SPIN_LOCK_INITIALIZER(imc_global_refc.lock),
++	.lock = __SPIN_LOCK_UNLOCKED(imc_global_refc.lock),
+ 	.id = 0,
+ 	.refc = 0,
+ };
 -- 
 2.42.0
 
