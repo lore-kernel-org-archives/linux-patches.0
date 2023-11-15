@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2773A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40E83A8CC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDT/Z3Q4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3F1C433C8;
-	Wed, 15 Nov 2023 19:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVVWEqfz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B22C433C9;
+	Wed, 15 Nov 2023 19:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077380;
-	bh=PLIO7P/dQ9Z7YorPb8mM4ThOiDn1fhaJEHPFaQCb+Eo=;
+	s=korg; t=1700077381;
+	bh=7bWRhVhdu5X/Hxh3XzrSNWG86iEz8SLcpp3+2ePWFxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDT/Z3Q410F/3wffyc/CydqCJN6d/BuJcg6DZCK/HvDQMI/is8hy5OGXFS2IaOOVU
-	 ohM+89GiQMEGpfvkkStKFuOOzP0Kd30S7Y2UxSxtXR+zyxrSXAjmaaC7KNQ4aSRzGe
-	 cDh3c5J0wch0Iajk2KCyNMj/badyP0XntBixdzj0=
+	b=TVVWEqfzBeTdLFOqqJLdS/Z95Cu1AgeU3H7BwcBrYwvqS1az0wk+iXnotEgwUb63x
+	 UuAxzdAgeRkJhHGy+3UQnklmzob6uTVxa8lmJgfNLJpEZd+7RazOJkEn14XRE3lOiQ
+	 mIbrIWk//FAvlhO7GOJEN5g+XXnr7SXQcLPk3CvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Xiaogang.Chen" <xiaogang.chen@amd.com>,
 	Felix Kuehling <Felix.Kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 241/603] drm/amdgpu: Increase IH soft ring size for GFX v9.4.3 dGPU
-Date: Wed, 15 Nov 2023 14:13:06 -0500
-Message-ID: <20231115191629.886661988@linuxfoundation.org>
+Subject: [PATCH 6.6 242/603] drm/amdkfd: fix some race conditions in vram buffer alloc/free of svm code
+Date: Wed, 15 Nov 2023 14:13:07 -0500
+Message-ID: <20231115191629.962864898@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -38,46 +37,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Xiaogang Chen <xiaogang.chen@amd.com>
 
-[ Upstream commit bcfb9cee61207b80f37663ffa08c135657a27ad5 ]
+[ Upstream commit 7bfaa160caed8192f8262c4638f552cad94bcf5a ]
 
-On GFX v9.4.3 dGPU, applications have random timeout failure when XNACK
-on, dmesg log has "amdgpu: IH soft ring buffer overflow 0x900, 0x900",
-because dGPU mode has 272 cam entries. After increasing IH soft ring
-to 512 entries, no more IH soft ring overflow message and application
-passed.
+This patch fixes:
+1: ref number of prange's svm_bo got decreased by an async call from hmm. When
+wait svm_bo of prange got released we shoul also wait prang->svm_bo become NULL,
+otherwise prange->svm_bo may be set to null after allocate new vram buffer.
 
-Fixes: bf80d34b6c58 ("drm/amdgpu: Increase soft IH ring size")
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+2: During waiting svm_bo of prange got released in a while loop should reschedule
+current task to give other tasks oppotunity to run, specially the the workque
+task that handles svm_bo ref release, otherwise we may enter to softlock.
+
+Signed-off-by: Xiaogang.Chen <xiaogang.chen@amd.com>
 Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-index 6c6184f0dbc17..508f02eb0cf8f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ih.h
-@@ -28,7 +28,7 @@
- #define AMDGPU_IH_MAX_NUM_IVS	32
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index bb16b795d1bc2..bb65a99439802 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -495,11 +495,11 @@ svm_range_validate_svm_bo(struct kfd_node *node, struct svm_range *prange)
  
- #define IH_RING_SIZE	(256 * 1024)
--#define IH_SW_RING_SIZE	(8 * 1024)	/* enough for 256 CAM entries */
-+#define IH_SW_RING_SIZE	(16 * 1024)	/* enough for 512 CAM entries */
+ 	/* We need a new svm_bo. Spin-loop to wait for concurrent
+ 	 * svm_range_bo_release to finish removing this range from
+-	 * its range list. After this, it is safe to reuse the
+-	 * svm_bo pointer and svm_bo_list head.
++	 * its range list and set prange->svm_bo to null. After this,
++	 * it is safe to reuse the svm_bo pointer and svm_bo_list head.
+ 	 */
+-	while (!list_empty_careful(&prange->svm_bo_list))
+-		;
++	while (!list_empty_careful(&prange->svm_bo_list) || prange->svm_bo)
++		cond_resched();
  
- struct amdgpu_device;
- struct amdgpu_iv_entry;
+ 	return false;
+ }
 -- 
 2.42.0
 
