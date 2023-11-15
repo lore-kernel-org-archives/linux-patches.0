@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AF6249E2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6784E250EA
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsGTq6Dp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E7DC433C8;
-	Wed, 15 Nov 2023 20:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+Ie3GdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D30C433C9;
+	Wed, 15 Nov 2023 20:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081188;
-	bh=mGArqo7pK38Twhafrd1USJ8tq4vdrWCzrcs4wbDzttc=;
+	s=korg; t=1700081190;
+	bh=UBvyEugtN3SEjewfAdTr4txn1x9P4muuG4Y+wZDA2n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UsGTq6DpJI0frpH3IxHk8JLmoGmKSgDA0V6udC1/rzh+mXmIXiUH46KSNMFhZj0YT
-	 rVmjilQNE+XajGtSf6Od51j27YDNnESgW2X8+yWYJxwYZxGQUmmt/RBwL0VIjpUKdf
-	 sLJufCwhJ8k3TiyIbNeJRWsT2bg7mk1stMW4esdA=
+	b=Z+Ie3GdAzKGqNkrk/T6vvVu3yvSPKTtLekBPqWYRfV7R2VBuMyGyBaMdqiQbEeZKa
+	 NtEYV5Bc8VGRaDWd4FGurc2CDJ1O3uJA2Y0mQoMXipbmFMkdhs+6GvM7Sn2Jy1hgfP
+	 Q5obezOIdi0E8Wwp5T0WOrByGhNOtFoi6gMM8P3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karsten Graul <kgraul@linux.ibm.com>,
-	Ursula Braun <ubraun@linux.ibm.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 79/88] net/smc: wait for pending work before clcsock release_sock
-Date: Wed, 15 Nov 2023 15:36:31 -0500
-Message-ID: <20231115191430.830506616@linuxfoundation.org>
+Subject: [PATCH 4.19 80/88] net/smc: fix dangling sock under state SMC_APPFINCLOSEWAIT
+Date: Wed, 15 Nov 2023 15:36:32 -0500
+Message-ID: <20231115191430.876549096@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
 References: <20231115191426.221330369@linuxfoundation.org>
@@ -43,137 +43,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karsten Graul <kgraul@linux.ibm.com>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit fd57770dd198f5b2ddd5b9e6bf282cf98d63adb9 ]
+[ Upstream commit 5211c9729484c923f8d2e06bd29f9322cc42bb8f ]
 
-When the clcsock is already released using sock_release() and a pending
-smc_listen_work accesses the clcsock than that will fail. Solve this
-by canceling and waiting for the work to complete first. Because the
-work holds the sock_lock it must make sure that the lock is not hold
-before the new helper smc_clcsock_release() is invoked. And before the
-smc_listen_work starts working check if the parent listen socket is
-still valid, otherwise stop the work early.
+Considering scenario:
 
-Signed-off-by: Karsten Graul <kgraul@linux.ibm.com>
-Signed-off-by: Ursula Braun <ubraun@linux.ibm.com>
+				smc_cdc_rx_handler
+__smc_release
+				sock_set_flag
+smc_close_active()
+sock_set_flag
+
+__set_bit(DEAD)			__set_bit(DONE)
+
+Dues to __set_bit is not atomic, the DEAD or DONE might be lost.
+if the DEAD flag lost, the state SMC_CLOSED  will be never be reached
+in smc_close_passive_work:
+
+if (sock_flag(sk, SOCK_DEAD) &&
+	smc_close_sent_any_close(conn)) {
+	sk->sk_state = SMC_CLOSED;
+} else {
+	/* just shutdown, but not yet closed locally */
+	sk->sk_state = SMC_APPFINCLOSEWAIT;
+}
+
+Replace sock_set_flags or __set_bit to set_bit will fix this problem.
+Since set_bit is atomic.
+
+Fixes: b38d732477e4 ("smc: socket closing and linkgroup cleanup")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 5211c9729484 ("net/smc: fix dangling sock under state SMC_APPFINCLOSEWAIT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c    | 14 ++++++++------
- net/smc/smc_close.c | 25 +++++++++++++++++++++----
- net/smc/smc_close.h |  1 +
- 3 files changed, 30 insertions(+), 10 deletions(-)
+ net/smc/af_smc.c    | 4 ++--
+ net/smc/smc.h       | 5 +++++
+ net/smc/smc_cdc.c   | 2 +-
+ net/smc/smc_close.c | 2 +-
+ 4 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 6f342f6cc4876..6b30bec54b624 100644
+index 6b30bec54b624..ad0ac657fe12c 100644
 --- a/net/smc/af_smc.c
 +++ b/net/smc/af_smc.c
-@@ -158,10 +158,9 @@ static int smc_release(struct socket *sock)
+@@ -141,7 +141,7 @@ static int smc_release(struct socket *sock)
  
- 	if (sk->sk_state == SMC_CLOSED) {
- 		if (smc->clcsock) {
--			mutex_lock(&smc->clcsock_release_lock);
--			sock_release(smc->clcsock);
--			smc->clcsock = NULL;
--			mutex_unlock(&smc->clcsock_release_lock);
-+			release_sock(sk);
-+			smc_clcsock_release(smc);
-+			lock_sock(sk);
- 		}
- 		if (!smc->use_fallback)
- 			smc_conn_free(&smc->conn);
-@@ -1014,13 +1013,13 @@ static void smc_listen_out(struct smc_sock *new_smc)
- 	struct smc_sock *lsmc = new_smc->listen_smc;
- 	struct sock *newsmcsk = &new_smc->sk;
+ 	if (!smc->use_fallback) {
+ 		rc = smc_close_active(smc);
+-		sock_set_flag(sk, SOCK_DEAD);
++		smc_sock_set_flag(sk, SOCK_DEAD);
+ 		sk->sk_shutdown |= SHUTDOWN_MASK;
+ 	} else {
+ 		if (sk->sk_state != SMC_LISTEN && sk->sk_state != SMC_INIT)
+@@ -852,7 +852,7 @@ static int smc_clcsock_accept(struct smc_sock *lsmc, struct smc_sock **new_smc)
+ 		if (new_clcsock)
+ 			sock_release(new_clcsock);
+ 		new_sk->sk_state = SMC_CLOSED;
+-		sock_set_flag(new_sk, SOCK_DEAD);
++		smc_sock_set_flag(new_sk, SOCK_DEAD);
+ 		sock_put(new_sk); /* final */
+ 		*new_smc = NULL;
+ 		goto out;
+diff --git a/net/smc/smc.h b/net/smc/smc.h
+index adbdf195eb085..c3b0e1e3f505d 100644
+--- a/net/smc/smc.h
++++ b/net/smc/smc.h
+@@ -268,4 +268,9 @@ static inline bool using_ipsec(struct smc_sock *smc)
+ struct sock *smc_accept_dequeue(struct sock *parent, struct socket *new_sock);
+ void smc_close_non_accepted(struct sock *sk);
  
--	lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 	if (lsmc->sk.sk_state == SMC_LISTEN) {
-+		lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 		smc_accept_enqueue(&lsmc->sk, newsmcsk);
-+		release_sock(&lsmc->sk);
- 	} else { /* no longer listening */
- 		smc_close_non_accepted(newsmcsk);
- 	}
--	release_sock(&lsmc->sk);
- 
- 	/* Wake up accept */
- 	lsmc->sk.sk_data_ready(&lsmc->sk);
-@@ -1216,6 +1215,9 @@ static void smc_listen_work(struct work_struct *work)
- 	int rc = 0;
- 	u8 ibport;
- 
-+	if (new_smc->listen_smc->sk.sk_state != SMC_LISTEN)
-+		return smc_listen_out_err(new_smc);
-+
- 	if (new_smc->use_fallback) {
- 		smc_listen_out_connected(new_smc);
- 		return;
-diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
-index 3e7858793d485..cac0773f5ebd9 100644
---- a/net/smc/smc_close.c
-+++ b/net/smc/smc_close.c
-@@ -21,6 +21,22 @@
- 
- #define SMC_CLOSE_WAIT_LISTEN_CLCSOCK_TIME	(5 * HZ)
- 
-+/* release the clcsock that is assigned to the smc_sock */
-+void smc_clcsock_release(struct smc_sock *smc)
++static inline void smc_sock_set_flag(struct sock *sk, enum sock_flags flag)
 +{
-+	struct socket *tcp;
-+
-+	if (smc->listen_smc && current_work() != &smc->smc_listen_work)
-+		cancel_work_sync(&smc->smc_listen_work);
-+	mutex_lock(&smc->clcsock_release_lock);
-+	if (smc->clcsock) {
-+		tcp = smc->clcsock;
-+		smc->clcsock = NULL;
-+		sock_release(tcp);
-+	}
-+	mutex_unlock(&smc->clcsock_release_lock);
++	set_bit(flag, &sk->sk_flags);
 +}
 +
- static void smc_close_cleanup_listen(struct sock *parent)
- {
- 	struct sock *sk;
-@@ -331,6 +347,7 @@ static void smc_close_passive_work(struct work_struct *work)
- 						   close_work);
- 	struct smc_sock *smc = container_of(conn, struct smc_sock, conn);
- 	struct smc_cdc_conn_state_flags *rxflags;
-+	bool release_clcsock = false;
- 	struct sock *sk = &smc->sk;
- 	int old_state;
- 
-@@ -417,13 +434,13 @@ static void smc_close_passive_work(struct work_struct *work)
- 		if ((sk->sk_state == SMC_CLOSED) &&
- 		    (sock_flag(sk, SOCK_DEAD) || !sk->sk_socket)) {
- 			smc_conn_free(conn);
--			if (smc->clcsock) {
--				sock_release(smc->clcsock);
--				smc->clcsock = NULL;
--			}
-+			if (smc->clcsock)
-+				release_clcsock = true;
- 		}
+ #endif	/* __SMC_H */
+diff --git a/net/smc/smc_cdc.c b/net/smc/smc_cdc.c
+index 333e4353498f8..c657fd29ff5d0 100644
+--- a/net/smc/smc_cdc.c
++++ b/net/smc/smc_cdc.c
+@@ -304,7 +304,7 @@ static void smc_cdc_msg_recv_action(struct smc_sock *smc,
+ 		smc->sk.sk_shutdown |= RCV_SHUTDOWN;
+ 		if (smc->clcsock && smc->clcsock->sk)
+ 			smc->clcsock->sk->sk_shutdown |= RCV_SHUTDOWN;
+-		sock_set_flag(&smc->sk, SOCK_DONE);
++		smc_sock_set_flag(&smc->sk, SOCK_DONE);
+ 		sock_hold(&smc->sk); /* sock_put in close_work */
+ 		if (!schedule_work(&conn->close_work))
+ 			sock_put(&smc->sk);
+diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
+index cac0773f5ebd9..4ea28ec7ad135 100644
+--- a/net/smc/smc_close.c
++++ b/net/smc/smc_close.c
+@@ -164,7 +164,7 @@ static void smc_close_active_abort(struct smc_sock *smc)
+ 		break;
  	}
- 	release_sock(sk);
-+	if (release_clcsock)
-+		smc_clcsock_release(smc);
- 	sock_put(sk); /* sock_hold done by schedulers of close_work */
+ 
+-	sock_set_flag(sk, SOCK_DEAD);
++	smc_sock_set_flag(sk, SOCK_DEAD);
+ 	sk->sk_state_change(sk);
  }
  
-diff --git a/net/smc/smc_close.h b/net/smc/smc_close.h
-index 19eb6a211c23c..e0e3b5df25d24 100644
---- a/net/smc/smc_close.h
-+++ b/net/smc/smc_close.h
-@@ -23,5 +23,6 @@ void smc_close_wake_tx_prepared(struct smc_sock *smc);
- int smc_close_active(struct smc_sock *smc);
- int smc_close_shutdown_write(struct smc_sock *smc);
- void smc_close_init(struct smc_sock *smc);
-+void smc_clcsock_release(struct smc_sock *smc);
- 
- #endif /* SMC_CLOSE_H */
 -- 
 2.42.0
 
