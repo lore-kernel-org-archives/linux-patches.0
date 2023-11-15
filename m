@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21613DB8D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694903DB8D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVYDThxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8935BC433C9;
-	Wed, 15 Nov 2023 19:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQs4h9YY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E82C433CA;
+	Wed, 15 Nov 2023 19:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076080;
-	bh=13FPn6XHC2dTcjFRpkTeEFJUmvHnQTaMula/7oU9R1s=;
+	s=korg; t=1700076082;
+	bh=8HWTpNQWzEkyRCShSQIunINInjS9k7A/CWRZkP9k04k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVYDThxU0RlxLUbl7jqA3WhFV7I1Qd1G6fIYQWWyQPFoumeFVEB5v1knB4DzZN7r8
-	 VHWnWQEUuPTSHToQjmaDC0RGOfyi6ntjyej1X+CqUBwfM/sLfRK9UqSO2cHRotZzqp
-	 cKHGtrgBDmWfeFvwlSWTZN5As3Ep/Z39ZIMMN0k0=
+	b=NQs4h9YYYDnyL5XVJbwnwR5O7zeCrCeaQAmzL9Es2YQGFVahnxL8LqI0ocGZf5W7O
+	 TjKwLUUTxskDwg9K2UgG9zRIZ9UJmNG3hZMTAkbMRez82ld5vj+8xJJ2SohGwVoRoV
+	 hYIqz/jjiItgeO3owvaCZzRY1PCSfwAo7DMxOJek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 056/550] udp: introduce udp->udp_flags
-Date: Wed, 15 Nov 2023 14:10:40 -0500
-Message-ID: <20231115191604.569993238@linuxfoundation.org>
+Subject: [PATCH 6.5 065/550] udplite: fix various data-races
+Date: Wed, 15 Nov 2023 14:10:49 -0500
+Message-ID: <20231115191605.193103857@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,167 +45,174 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 81b36803ac139827538ac5ce4028e750a3c53f53 ]
+[ Upstream commit 882af43a0fc37e26d85fb0df0c9edd3bed928de4 ]
 
-According to syzbot, it is time to use proper atomic flags
-for various UDP flags.
+udp->pcflag, udp->pcslen and udp->pcrlen reads/writes are racy.
 
-Add udp_flags field, and convert udp->corkflag to first
-bit in it.
+Move udp->pcflag to udp->udp_flags for atomicity,
+and add READ_ONCE()/WRITE_ONCE() annotations for pcslen and pcrlen.
 
+Fixes: ba4e58eca8aa ("[NET]: Supporting UDP-Lite (RFC 3828) in Linux")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: a0002127cd74 ("udp: move udp->no_check6_tx to udp->udp_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/udp.h | 28 +++++++++++++++++++++-------
- net/ipv4/udp.c      | 12 ++++++------
- net/ipv6/udp.c      |  6 +++---
- 3 files changed, 30 insertions(+), 16 deletions(-)
+ include/linux/udp.h   |  6 ++----
+ include/net/udplite.h | 14 +++++++++-----
+ net/ipv4/udp.c        | 21 +++++++++++----------
+ net/ipv6/udp.c        |  9 +++++----
+ 4 files changed, 27 insertions(+), 23 deletions(-)
 
 diff --git a/include/linux/udp.h b/include/linux/udp.h
-index 43c1fb2d2c21a..23f0693e0d9cc 100644
+index 58156edec0096..d04188714dca1 100644
 --- a/include/linux/udp.h
 +++ b/include/linux/udp.h
-@@ -32,14 +32,20 @@ static inline u32 udp_hashfn(const struct net *net, u32 num, u32 mask)
- 	return (num + net_hash_mix(net)) & mask;
- }
+@@ -40,6 +40,8 @@ enum {
+ 	UDP_FLAGS_ACCEPT_FRAGLIST,
+ 	UDP_FLAGS_ACCEPT_L4,
+ 	UDP_FLAGS_ENCAP_ENABLED, /* This socket enabled encap */
++	UDP_FLAGS_UDPLITE_SEND_CC, /* set via udplite setsockopt */
++	UDP_FLAGS_UDPLITE_RECV_CC, /* set via udplite setsockopt */
+ };
  
-+enum {
-+	UDP_FLAGS_CORK,		/* Cork is required */
-+};
-+
  struct udp_sock {
- 	/* inet_sock has to be the first member */
- 	struct inet_sock inet;
- #define udp_port_hash		inet.sk.__sk_common.skc_u16hashes[0]
- #define udp_portaddr_hash	inet.sk.__sk_common.skc_u16hashes[1]
- #define udp_portaddr_node	inet.sk.__sk_common.skc_portaddr_node
-+
-+	unsigned long	 udp_flags;
-+
+@@ -54,10 +56,6 @@ struct udp_sock {
  	int		 pending;	/* Any pending frames ? */
--	unsigned int	 corkflag;	/* Cork is required */
  	__u8		 encap_type;	/* Is this an Encapsulation socket? */
- 	unsigned char	 no_check6_tx:1,/* Send zero UDP6 checksums on TX? */
- 			 no_check6_rx:1,/* Allow zero UDP6 checksums on RX? */
-@@ -51,6 +57,11 @@ struct udp_sock {
- 			 gro_enabled:1,	/* Request GRO aggregation */
- 			 accept_udp_l4:1,
- 			 accept_udp_fraglist:1;
-+/* indicator bits used by pcflag: */
-+#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
-+#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
-+#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
-+	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
+ 
+-/* indicator bits used by pcflag: */
+-#define UDPLITE_SEND_CC  0x1  		/* set via udplite setsockopt         */
+-#define UDPLITE_RECV_CC  0x2		/* set via udplite setsocktopt        */
+-	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
  	/*
  	 * Following member retains the information to create a UDP header
  	 * when the socket is uncorked.
-@@ -62,12 +73,6 @@ struct udp_sock {
- 	 */
- 	__u16		 pcslen;
- 	__u16		 pcrlen;
--/* indicator bits used by pcflag: */
--#define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
--#define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
--#define UDPLITE_RECV_CC  0x4		/* set via udplite setsocktopt        */
--	__u8		 pcflag;        /* marks socket as UDP-Lite if > 0    */
--	__u8		 unused[3];
- 	/*
- 	 * For encapsulation sockets.
- 	 */
-@@ -95,6 +100,15 @@ struct udp_sock {
- 	int		forward_threshold;
- };
+diff --git a/include/net/udplite.h b/include/net/udplite.h
+index 299c14ce2bb94..dd60b51364837 100644
+--- a/include/net/udplite.h
++++ b/include/net/udplite.h
+@@ -66,14 +66,18 @@ static inline int udplite_checksum_init(struct sk_buff *skb, struct udphdr *uh)
+ /* Fast-path computation of checksum. Socket may not be locked. */
+ static inline __wsum udplite_csum(struct sk_buff *skb)
+ {
+-	const struct udp_sock *up = udp_sk(skb->sk);
+ 	const int off = skb_transport_offset(skb);
++	const struct sock *sk = skb->sk;
+ 	int len = skb->len - off;
  
-+#define udp_test_bit(nr, sk)			\
-+	test_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
-+#define udp_set_bit(nr, sk)			\
-+	set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
-+#define udp_clear_bit(nr, sk)			\
-+	clear_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
-+#define udp_assign_bit(nr, sk, val)		\
-+	assign_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags, val)
+-	if ((up->pcflag & UDPLITE_SEND_CC) && up->pcslen < len) {
+-		if (0 < up->pcslen)
+-			len = up->pcslen;
+-		udp_hdr(skb)->len = htons(up->pcslen);
++	if (udp_test_bit(UDPLITE_SEND_CC, sk)) {
++		u16 pcslen = READ_ONCE(udp_sk(sk)->pcslen);
 +
- #define UDP_MAX_SEGMENTS	(1 << 6UL)
++		if (pcslen < len) {
++			if (pcslen > 0)
++				len = pcslen;
++			udp_hdr(skb)->len = htons(pcslen);
++		}
+ 	}
+ 	skb->ip_summed = CHECKSUM_NONE;     /* no HW support for checksumming */
  
- #define udp_sk(ptr) container_of_const(ptr, struct udp_sock, inet.sk)
 diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 4c847baf52d1c..c7873bb4375d0 100644
+index be0370a64cc15..f712ff61beb8a 100644
 --- a/net/ipv4/udp.c
 +++ b/net/ipv4/udp.c
-@@ -1080,7 +1080,7 @@ int udp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	u8 tos, scope;
- 	__be16 dport;
- 	int err, is_udplite = IS_UDPLITE(sk);
--	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
-+	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
- 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
- 	struct sk_buff *skb;
- 	struct ip_options_data opt_copy;
-@@ -1344,11 +1344,11 @@ void udp_splice_eof(struct socket *sock)
- 	struct sock *sk = sock->sk;
- 	struct udp_sock *up = udp_sk(sk);
+@@ -2149,7 +2149,8 @@ static int udp_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 	/*
+ 	 * 	UDP-Lite specific tests, ignored on UDP sockets
+ 	 */
+-	if ((up->pcflag & UDPLITE_RECV_CC)  &&  UDP_SKB_CB(skb)->partial_cov) {
++	if (udp_test_bit(UDPLITE_RECV_CC, sk) && UDP_SKB_CB(skb)->partial_cov) {
++		u16 pcrlen = READ_ONCE(up->pcrlen);
  
--	if (!up->pending || READ_ONCE(up->corkflag))
-+	if (!up->pending || udp_test_bit(CORK, sk))
- 		return;
- 
- 	lock_sock(sk);
--	if (up->pending && !READ_ONCE(up->corkflag))
-+	if (up->pending && !udp_test_bit(CORK, sk))
- 		udp_push_pending_frames(sk);
- 	release_sock(sk);
- }
-@@ -2683,9 +2683,9 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
- 	switch (optname) {
- 	case UDP_CORK:
- 		if (val != 0) {
--			WRITE_ONCE(up->corkflag, 1);
-+			udp_set_bit(CORK, sk);
- 		} else {
--			WRITE_ONCE(up->corkflag, 0);
-+			udp_clear_bit(CORK, sk);
- 			lock_sock(sk);
- 			push_pending_frames(sk);
- 			release_sock(sk);
-@@ -2808,7 +2808,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
- 
- 	switch (optname) {
- 	case UDP_CORK:
--		val = READ_ONCE(up->corkflag);
-+		val = udp_test_bit(CORK, sk);
+ 		/*
+ 		 * MIB statistics other than incrementing the error count are
+@@ -2162,7 +2163,7 @@ static int udp_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 		 * delivery of packets with coverage values less than a value
+ 		 * provided by the application."
+ 		 */
+-		if (up->pcrlen == 0) {          /* full coverage was set  */
++		if (pcrlen == 0) {          /* full coverage was set  */
+ 			net_dbg_ratelimited("UDPLite: partial coverage %d while full coverage %d requested\n",
+ 					    UDP_SKB_CB(skb)->cscov, skb->len);
+ 			goto drop;
+@@ -2173,9 +2174,9 @@ static int udp_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 		 * that it wants x while sender emits packets of smaller size y.
+ 		 * Therefore the above ...()->partial_cov statement is essential.
+ 		 */
+-		if (UDP_SKB_CB(skb)->cscov  <  up->pcrlen) {
++		if (UDP_SKB_CB(skb)->cscov < pcrlen) {
+ 			net_dbg_ratelimited("UDPLite: coverage %d too small, need min %d\n",
+-					    UDP_SKB_CB(skb)->cscov, up->pcrlen);
++					    UDP_SKB_CB(skb)->cscov, pcrlen);
+ 			goto drop;
+ 		}
+ 	}
+@@ -2754,8 +2755,8 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 			val = 8;
+ 		else if (val > USHRT_MAX)
+ 			val = USHRT_MAX;
+-		up->pcslen = val;
+-		up->pcflag |= UDPLITE_SEND_CC;
++		WRITE_ONCE(up->pcslen, val);
++		udp_set_bit(UDPLITE_SEND_CC, sk);
  		break;
  
- 	case UDP_ENCAP:
+ 	/* The receiver specifies a minimum checksum coverage value. To make
+@@ -2768,8 +2769,8 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 			val = 8;
+ 		else if (val > USHRT_MAX)
+ 			val = USHRT_MAX;
+-		up->pcrlen = val;
+-		up->pcflag |= UDPLITE_RECV_CC;
++		WRITE_ONCE(up->pcrlen, val);
++		udp_set_bit(UDPLITE_RECV_CC, sk);
+ 		break;
+ 
+ 	default:
+@@ -2833,11 +2834,11 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
+ 	/* The following two cannot be changed on UDP sockets, the return is
+ 	 * always 0 (which corresponds to the full checksum coverage of UDP). */
+ 	case UDPLITE_SEND_CSCOV:
+-		val = up->pcslen;
++		val = READ_ONCE(up->pcslen);
+ 		break;
+ 
+ 	case UDPLITE_RECV_CSCOV:
+-		val = up->pcrlen;
++		val = READ_ONCE(up->pcrlen);
+ 		break;
+ 
+ 	default:
 diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 24d3c5c791218..816247afc2f89 100644
+index 9988160ca4a76..8d79642ae45dd 100644
 --- a/net/ipv6/udp.c
 +++ b/net/ipv6/udp.c
-@@ -1361,7 +1361,7 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
- 	int addr_len = msg->msg_namelen;
- 	bool connected = false;
- 	int ulen = len;
--	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
-+	int corkreq = udp_test_bit(CORK, sk) || msg->msg_flags & MSG_MORE;
- 	int err;
- 	int is_udplite = IS_UDPLITE(sk);
- 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
-@@ -1673,11 +1673,11 @@ static void udpv6_splice_eof(struct socket *sock)
- 	struct sock *sk = sock->sk;
- 	struct udp_sock *up = udp_sk(sk);
+@@ -760,16 +760,17 @@ static int udpv6_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 	/*
+ 	 * UDP-Lite specific tests, ignored on UDP sockets (see net/ipv4/udp.c).
+ 	 */
+-	if ((up->pcflag & UDPLITE_RECV_CC)  &&  UDP_SKB_CB(skb)->partial_cov) {
++	if (udp_test_bit(UDPLITE_RECV_CC, sk) && UDP_SKB_CB(skb)->partial_cov) {
++		u16 pcrlen = READ_ONCE(up->pcrlen);
  
--	if (!up->pending || READ_ONCE(up->corkflag))
-+	if (!up->pending || udp_test_bit(CORK, sk))
- 		return;
- 
- 	lock_sock(sk);
--	if (up->pending && !READ_ONCE(up->corkflag))
-+	if (up->pending && !udp_test_bit(CORK, sk))
- 		udp_v6_push_pending_frames(sk);
- 	release_sock(sk);
- }
+-		if (up->pcrlen == 0) {          /* full coverage was set  */
++		if (pcrlen == 0) {          /* full coverage was set  */
+ 			net_dbg_ratelimited("UDPLITE6: partial coverage %d while full coverage %d requested\n",
+ 					    UDP_SKB_CB(skb)->cscov, skb->len);
+ 			goto drop;
+ 		}
+-		if (UDP_SKB_CB(skb)->cscov  <  up->pcrlen) {
++		if (UDP_SKB_CB(skb)->cscov < pcrlen) {
+ 			net_dbg_ratelimited("UDPLITE6: coverage %d too small, need min %d\n",
+-					    UDP_SKB_CB(skb)->cscov, up->pcrlen);
++					    UDP_SKB_CB(skb)->cscov, pcrlen);
+ 			goto drop;
+ 		}
+ 	}
 -- 
 2.42.0
 
