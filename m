@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441AD41212
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D628A4121C
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBlyAoGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F27C433C7;
-	Wed, 15 Nov 2023 19:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1pGd2C/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2B5C433C7;
+	Wed, 15 Nov 2023 19:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076271;
-	bh=DRO8m4KIvRiVdrGMKLl6xVTIzfpfkDanecjexnLjwLs=;
+	s=korg; t=1700076272;
+	bh=OjK4tkOT5vEGJS94JH+Rpw2XC2oBpSplnoDdQzE6g0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBlyAoGxnZAtmPjoMczbQz8O0ut88m+to+6AWJnigNO93DxyEDqSayzWf2aYauELk
-	 U/3K0bcoryQw300Rge7X5wbEqYrL0K3sRZv9HBa8DzTQNTO9aGaRErOLiA5LiVbQXX
-	 4IpLkjvg1AfK8lfLmN4wb/6Ni/YVasdcJuNsZ3Cs=
+	b=Q1pGd2C/gfToN1GTrZzOTkzB91jhjnDD9uVCRlRGW8De753OcRVU6Pm8IU8qAJj7e
+	 MKhjr5mBNCJxisSNCo7X2j7svLscr546fno04OEbHoOZJcTkzms7tGPiXRQklnLd3K
+	 ElLJFgZgqUsAyhhX+9zddN1TvFsOW52YQtCAgbII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 167/550] clk: renesas: rzg2l: Use FIELD_GET() for PLL register fields
-Date: Wed, 15 Nov 2023 14:12:31 -0500
-Message-ID: <20231115191612.293659850@linuxfoundation.org>
+Subject: [PATCH 6.5 185/550] clk: qcom: ipq9574: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+Date: Wed, 15 Nov 2023 14:12:49 -0500
+Message-ID: <20231115191613.558549767@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,53 +43,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 
-[ Upstream commit 72977f07b035e488c3f1928832a1616c6cae7278 ]
+[ Upstream commit 99a8f8764b70158a712992640a6be46a8fd79d15 ]
 
-Use FIELD_GET() for PLL register fields.  This is its purpose.
+GPLL clock rates are fixed and shouldn't be scaled based on the request
+from dependent clocks. Doing so will result in the unexpected behaviour.
+So drop the CLK_SET_RATE_PARENT flag from the GPLL clocks.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230912045157.177966-14-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Stable-dep-of: a2b23159499e ("clk: renesas: rzg2l: Fix computation formula")
+----
+Changes in V2:
+	- No changes
+
+Fixes: d75b82cff488 ("clk: qcom: Add Global Clock Controller driver for IPQ9574")
+Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230913-gpll_cleanup-v2-4-c8ceb1a37680@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/rzg2l-cpg.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/clk/qcom/gcc-ipq9574.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/clk/renesas/rzg2l-cpg.c b/drivers/clk/renesas/rzg2l-cpg.c
-index a0970f77c473f..03028362cf619 100644
---- a/drivers/clk/renesas/rzg2l-cpg.c
-+++ b/drivers/clk/renesas/rzg2l-cpg.c
-@@ -11,6 +11,7 @@
-  * Copyright (C) 2015 Renesas Electronics Corp.
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/clk/renesas.h>
-@@ -39,14 +40,13 @@
- #define WARN_DEBUG(x)	do { } while (0)
- #endif
- 
--#define DIV_RSMASK(v, s, m)	((v >> s) & m)
- #define GET_SHIFT(val)		((val >> 12) & 0xff)
- #define GET_WIDTH(val)		((val >> 8) & 0xf)
- 
--#define KDIV(val)		DIV_RSMASK(val, 16, 0xffff)
--#define MDIV(val)		DIV_RSMASK(val, 6, 0x3ff)
--#define PDIV(val)		DIV_RSMASK(val, 0, 0x3f)
--#define SDIV(val)		DIV_RSMASK(val, 0, 0x7)
-+#define KDIV(val)		FIELD_GET(GENMASK(31, 16), val)
-+#define MDIV(val)		FIELD_GET(GENMASK(15, 6), val)
-+#define PDIV(val)		FIELD_GET(GENMASK(5, 0), val)
-+#define SDIV(val)		FIELD_GET(GENMASK(2, 0), val)
- 
- #define CLK_ON_R(reg)		(reg)
- #define CLK_MON_R(reg)		(0x180 + (reg))
+diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
+index 6914f962c8936..272080448e60b 100644
+--- a/drivers/clk/qcom/gcc-ipq9574.c
++++ b/drivers/clk/qcom/gcc-ipq9574.c
+@@ -87,7 +87,6 @@ static struct clk_fixed_factor gpll0_out_main_div2 = {
+ 			&gpll0_main.clkr.hw
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_fixed_factor_ops,
+ 	},
+ };
+@@ -102,7 +101,6 @@ static struct clk_alpha_pll_postdiv gpll0 = {
+ 			&gpll0_main.clkr.hw
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+ 	},
+ };
+@@ -132,7 +130,6 @@ static struct clk_alpha_pll_postdiv gpll4 = {
+ 			&gpll4_main.clkr.hw
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+ 	},
+ };
+@@ -162,7 +159,6 @@ static struct clk_alpha_pll_postdiv gpll2 = {
+ 			&gpll2_main.clkr.hw
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+ 	},
+ };
 -- 
 2.42.0
 
