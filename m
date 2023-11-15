@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BE528368
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F15F381D1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbjMB4ur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82819C433C9;
-	Wed, 15 Nov 2023 20:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWJJVHJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C46EC433CB;
+	Wed, 15 Nov 2023 20:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078469;
-	bh=UpdlqZhvfsCvIAbXsK+QHM2/zXsry+Flu/RjIbZ/ay8=;
+	s=korg; t=1700078471;
+	bh=GgZynByfMzkzWtqsnJy57gjMSba074xcvetUNHrdWms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wbjMB4urx0NYNsY59ROxe9chOFNZTfUxPhwUb/8g3Igdm7QueSTvMq2C+FhMLb7FS
-	 8xWZar+7Uw3UdENW65xyGaXYuIU7f2PsV1vmYn4utU9SYwLhrES+pAGKBKMzFNiYw0
-	 xL1bkrpiA+LJzLSr67J6vFkqXOy4hQIu+5N1LcgU=
+	b=RWJJVHJ09Ar7r3Rq9yUkSocGp53loIkVDFl4FL1b7tHXSq1RWQMqc2sEjhINKaueF
+	 nYYL12ETOAzt0e7RM4PMjCQoDDQmEALxkC8UDCJCsR0PWL/kFZh8dBMW1inPycEiKH
+	 XQmqCdFdHwEk2UMAQR8G5jFnFuvKQDJnLiEex/dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Yunsheng Lin <linyunsheng@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 341/379] octeontx2-pf: Fix holes in error code
-Date: Wed, 15 Nov 2023 14:26:56 -0500
-Message-ID: <20231115192705.319611419@linuxfoundation.org>
+Subject: [PATCH 6.1 342/379] net: page_pool: add missing free_percpu when page_pool_init fail
+Date: Wed, 15 Nov 2023 14:26:57 -0500
+Message-ID: <20231115192705.379171133@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -43,153 +47,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 7aeeb2cb7a2570bb69a87ad14018b03e06ce5be5 ]
+[ Upstream commit 8ffbd1669ed1d58939d6e878dffaa2f60bf961a4 ]
 
-Error code strings are not getting printed properly
-due to holes. Print error code as well.
+When ptr_ring_init() returns failure in page_pool_init(), free_percpu()
+is not called to free pool->recycle_stats, which may cause memory
+leak.
 
-Fixes: 51afe9026d0c ("octeontx2-pf: NIX TX overwrites SQ_CTX_HW_S[SQ_INT]")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://lore.kernel.org/r/20231027021953.1819959-2-rkannoth@marvell.com
+Fixes: ad6fa1e1ab1b ("page_pool: Add recycle stats")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Yunsheng Lin <linyunsheng@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Link: https://lore.kernel.org/r/20231030091256.2915394-1-shaojijie@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 80 +++++++++++--------
- 1 file changed, 46 insertions(+), 34 deletions(-)
+ net/core/page_pool.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 17e546d0d7e55..101d79a0bb436 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1194,31 +1194,32 @@ static char *nix_mnqerr_e_str[NIX_MNQERR_MAX] = {
- };
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 2396c99bedeaa..caf6d950d54ad 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -209,8 +209,12 @@ static int page_pool_init(struct page_pool *pool,
+ 		return -ENOMEM;
+ #endif
  
- static char *nix_snd_status_e_str[NIX_SND_STATUS_MAX] =  {
--	"NIX_SND_STATUS_GOOD",
--	"NIX_SND_STATUS_SQ_CTX_FAULT",
--	"NIX_SND_STATUS_SQ_CTX_POISON",
--	"NIX_SND_STATUS_SQB_FAULT",
--	"NIX_SND_STATUS_SQB_POISON",
--	"NIX_SND_STATUS_HDR_ERR",
--	"NIX_SND_STATUS_EXT_ERR",
--	"NIX_SND_STATUS_JUMP_FAULT",
--	"NIX_SND_STATUS_JUMP_POISON",
--	"NIX_SND_STATUS_CRC_ERR",
--	"NIX_SND_STATUS_IMM_ERR",
--	"NIX_SND_STATUS_SG_ERR",
--	"NIX_SND_STATUS_MEM_ERR",
--	"NIX_SND_STATUS_INVALID_SUBDC",
--	"NIX_SND_STATUS_SUBDC_ORDER_ERR",
--	"NIX_SND_STATUS_DATA_FAULT",
--	"NIX_SND_STATUS_DATA_POISON",
--	"NIX_SND_STATUS_NPC_DROP_ACTION",
--	"NIX_SND_STATUS_LOCK_VIOL",
--	"NIX_SND_STATUS_NPC_UCAST_CHAN_ERR",
--	"NIX_SND_STATUS_NPC_MCAST_CHAN_ERR",
--	"NIX_SND_STATUS_NPC_MCAST_ABORT",
--	"NIX_SND_STATUS_NPC_VTAG_PTR_ERR",
--	"NIX_SND_STATUS_NPC_VTAG_SIZE_ERR",
--	"NIX_SND_STATUS_SEND_STATS_ERR",
-+	[NIX_SND_STATUS_GOOD] = "NIX_SND_STATUS_GOOD",
-+	[NIX_SND_STATUS_SQ_CTX_FAULT] = "NIX_SND_STATUS_SQ_CTX_FAULT",
-+	[NIX_SND_STATUS_SQ_CTX_POISON] = "NIX_SND_STATUS_SQ_CTX_POISON",
-+	[NIX_SND_STATUS_SQB_FAULT] = "NIX_SND_STATUS_SQB_FAULT",
-+	[NIX_SND_STATUS_SQB_POISON] = "NIX_SND_STATUS_SQB_POISON",
-+	[NIX_SND_STATUS_HDR_ERR] = "NIX_SND_STATUS_HDR_ERR",
-+	[NIX_SND_STATUS_EXT_ERR] = "NIX_SND_STATUS_EXT_ERR",
-+	[NIX_SND_STATUS_JUMP_FAULT] = "NIX_SND_STATUS_JUMP_FAULT",
-+	[NIX_SND_STATUS_JUMP_POISON] = "NIX_SND_STATUS_JUMP_POISON",
-+	[NIX_SND_STATUS_CRC_ERR] = "NIX_SND_STATUS_CRC_ERR",
-+	[NIX_SND_STATUS_IMM_ERR] = "NIX_SND_STATUS_IMM_ERR",
-+	[NIX_SND_STATUS_SG_ERR] = "NIX_SND_STATUS_SG_ERR",
-+	[NIX_SND_STATUS_MEM_ERR] = "NIX_SND_STATUS_MEM_ERR",
-+	[NIX_SND_STATUS_INVALID_SUBDC] = "NIX_SND_STATUS_INVALID_SUBDC",
-+	[NIX_SND_STATUS_SUBDC_ORDER_ERR] = "NIX_SND_STATUS_SUBDC_ORDER_ERR",
-+	[NIX_SND_STATUS_DATA_FAULT] = "NIX_SND_STATUS_DATA_FAULT",
-+	[NIX_SND_STATUS_DATA_POISON] = "NIX_SND_STATUS_DATA_POISON",
-+	[NIX_SND_STATUS_NPC_DROP_ACTION] = "NIX_SND_STATUS_NPC_DROP_ACTION",
-+	[NIX_SND_STATUS_LOCK_VIOL] = "NIX_SND_STATUS_LOCK_VIOL",
-+	[NIX_SND_STATUS_NPC_UCAST_CHAN_ERR] = "NIX_SND_STAT_NPC_UCAST_CHAN_ERR",
-+	[NIX_SND_STATUS_NPC_MCAST_CHAN_ERR] = "NIX_SND_STAT_NPC_MCAST_CHAN_ERR",
-+	[NIX_SND_STATUS_NPC_MCAST_ABORT] = "NIX_SND_STATUS_NPC_MCAST_ABORT",
-+	[NIX_SND_STATUS_NPC_VTAG_PTR_ERR] = "NIX_SND_STATUS_NPC_VTAG_PTR_ERR",
-+	[NIX_SND_STATUS_NPC_VTAG_SIZE_ERR] = "NIX_SND_STATUS_NPC_VTAG_SIZE_ERR",
-+	[NIX_SND_STATUS_SEND_MEM_FAULT] = "NIX_SND_STATUS_SEND_MEM_FAULT",
-+	[NIX_SND_STATUS_SEND_STATS_ERR] = "NIX_SND_STATUS_SEND_STATS_ERR",
- };
+-	if (ptr_ring_init(&pool->ring, ring_qsize, GFP_KERNEL) < 0)
++	if (ptr_ring_init(&pool->ring, ring_qsize, GFP_KERNEL) < 0) {
++#ifdef CONFIG_PAGE_POOL_STATS
++		free_percpu(pool->recycle_stats);
++#endif
+ 		return -ENOMEM;
++	}
  
- static irqreturn_t otx2_q_intr_handler(int irq, void *data)
-@@ -1238,14 +1239,16 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
- 			continue;
- 
- 		if (val & BIT_ULL(42)) {
--			netdev_err(pf->netdev, "CQ%lld: error reading NIX_LF_CQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
-+			netdev_err(pf->netdev,
-+				   "CQ%lld: error reading NIX_LF_CQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
- 				   qidx, otx2_read64(pf, NIX_LF_ERR_INT));
- 		} else {
- 			if (val & BIT_ULL(NIX_CQERRINT_DOOR_ERR))
- 				netdev_err(pf->netdev, "CQ%lld: Doorbell error",
- 					   qidx);
- 			if (val & BIT_ULL(NIX_CQERRINT_CQE_FAULT))
--				netdev_err(pf->netdev, "CQ%lld: Memory fault on CQE write to LLC/DRAM",
-+				netdev_err(pf->netdev,
-+					   "CQ%lld: Memory fault on CQE write to LLC/DRAM",
- 					   qidx);
- 		}
- 
-@@ -1268,7 +1271,8 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
- 			     (val & NIX_SQINT_BITS));
- 
- 		if (val & BIT_ULL(42)) {
--			netdev_err(pf->netdev, "SQ%lld: error reading NIX_LF_SQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
-+			netdev_err(pf->netdev,
-+				   "SQ%lld: error reading NIX_LF_SQ_OP_INT, NIX_LF_ERR_INT 0x%llx\n",
- 				   qidx, otx2_read64(pf, NIX_LF_ERR_INT));
- 			goto done;
- 		}
-@@ -1278,8 +1282,11 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
- 			goto chk_mnq_err_dbg;
- 
- 		sq_op_err_code = FIELD_GET(GENMASK(7, 0), sq_op_err_dbg);
--		netdev_err(pf->netdev, "SQ%lld: NIX_LF_SQ_OP_ERR_DBG(%llx)  err=%s\n",
--			   qidx, sq_op_err_dbg, nix_sqoperr_e_str[sq_op_err_code]);
-+		netdev_err(pf->netdev,
-+			   "SQ%lld: NIX_LF_SQ_OP_ERR_DBG(0x%llx)  err=%s(%#x)\n",
-+			   qidx, sq_op_err_dbg,
-+			   nix_sqoperr_e_str[sq_op_err_code],
-+			   sq_op_err_code);
- 
- 		otx2_write64(pf, NIX_LF_SQ_OP_ERR_DBG, BIT_ULL(44));
- 
-@@ -1296,16 +1303,21 @@ static irqreturn_t otx2_q_intr_handler(int irq, void *data)
- 			goto chk_snd_err_dbg;
- 
- 		mnq_err_code = FIELD_GET(GENMASK(7, 0), mnq_err_dbg);
--		netdev_err(pf->netdev, "SQ%lld: NIX_LF_MNQ_ERR_DBG(%llx)  err=%s\n",
--			   qidx, mnq_err_dbg,  nix_mnqerr_e_str[mnq_err_code]);
-+		netdev_err(pf->netdev,
-+			   "SQ%lld: NIX_LF_MNQ_ERR_DBG(0x%llx)  err=%s(%#x)\n",
-+			   qidx, mnq_err_dbg,  nix_mnqerr_e_str[mnq_err_code],
-+			   mnq_err_code);
- 		otx2_write64(pf, NIX_LF_MNQ_ERR_DBG, BIT_ULL(44));
- 
- chk_snd_err_dbg:
- 		snd_err_dbg = otx2_read64(pf, NIX_LF_SEND_ERR_DBG);
- 		if (snd_err_dbg & BIT(44)) {
- 			snd_err_code = FIELD_GET(GENMASK(7, 0), snd_err_dbg);
--			netdev_err(pf->netdev, "SQ%lld: NIX_LF_SND_ERR_DBG:0x%llx err=%s\n",
--				   qidx, snd_err_dbg, nix_snd_status_e_str[snd_err_code]);
-+			netdev_err(pf->netdev,
-+				   "SQ%lld: NIX_LF_SND_ERR_DBG:0x%llx err=%s(%#x)\n",
-+				   qidx, snd_err_dbg,
-+				   nix_snd_status_e_str[snd_err_code],
-+				   snd_err_code);
- 			otx2_write64(pf, NIX_LF_SEND_ERR_DBG, BIT_ULL(44));
- 		}
+ 	atomic_set(&pool->pages_state_release_cnt, 0);
  
 -- 
 2.42.0
