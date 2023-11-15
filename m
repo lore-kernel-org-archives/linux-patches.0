@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FF73A8CC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F2C3A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQrYCALC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58883C433C9;
-	Wed, 15 Nov 2023 19:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjmP0uc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CE8C433C7;
+	Wed, 15 Nov 2023 19:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077408;
-	bh=vm8utHu1JWhMrz7RcpVNjUUmGJgO9P6c+s+b+xpTFBA=;
+	s=korg; t=1700077410;
+	bh=DRLvMXwWHEsmy++5wgz1HtzjS1LJuhRIZ97LSAc7sY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQrYCALCWqgwRAGjlSU3re7uITbggFnnWlGup4inJaUFGaorGkP6X0aZr2INxi9sI
-	 0N2FhxLuP4cX0fzz02pEON/qrAxsFXKIRsEFqR+Ht3WvMuOcq3hlyllLWuxSMyWuok
-	 KDKUmhTwY3v1nr2NRVlUGRg5Xir6xv+MvgQCs0Tc=
+	b=bjmP0uc5h8X1LZXQh+hcsI2tckY8XO6SpknuUPZVqljCRibIUhTYWkr+0Brh4GhBg
+	 5sFS987aLVF9PJFM6ws4+4I3gg7QqOgNgmFxNJh0b2uF+H0GKgCJKS7t15npgzrjZ8
+	 X1/QeZetkW1t9ar40lLz4Q68ikfbYcs2QkPqxbAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Richard Acayan <mailingradian@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 284/603] arm64: dts: qcom: qrb2210-rb1: Fix regulators
-Date: Wed, 15 Nov 2023 14:13:49 -0500
-Message-ID: <20231115191633.034115529@linuxfoundation.org>
+Subject: [PATCH 6.6 285/603] arm64: dts: qcom: sdm670: Fix pdc mapping
+Date: Wed, 15 Nov 2023 14:13:50 -0500
+Message-ID: <20231115191633.099942287@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -47,235 +45,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 31bee70793b67f4b428825434542afc72ddb2b3b ]
+[ Upstream commit ad75cda991f7b335d3b2417f82db07680f92648a ]
 
-Commit b4fe47d12f1f ("arm64: dts: qcom: qrb2210-rb1: Add regulators")
-introduced regulator settings that were never put in place, as all of the
-properties ended 'microvolts' instead of 'microvolt' (which dt schema did
-not check for back then).
+As pointed out by Richard, I missed a non-continuity in one of the ranges.
+Fix it.
 
-Fix the microvolts-microvolt typo and adjust voltage ranges where it's
-necessary to fit within the volt = base + n*step formula.
-
-Reported-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: b4fe47d12f1f ("arm64: dts: qcom: qrb2210-rb1: Add regulators")
+Reported-by: Richard Acayan <mailingradian@gmail.com>
+Fixes: b51ee205dc4f ("arm64: dts: qcom: sdm670: Add PDC")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230906-topic-rb1_features_sans_icc-v1-2-e92ce6fbde16@linaro.org
+Acked-by: Richard Acayan <mailingradian@gmail.com>
+Link: https://lore.kernel.org/r/20230818-topic-670_pdc_fix-v1-1-1ba025041de7@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 86 ++++++++++++------------
- 1 file changed, 43 insertions(+), 43 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm670.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-index 5cda5b761455b..0f7c591878962 100644
---- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -150,15 +150,15 @@ regulators {
- 
- 		pm2250_s3: s3 {
- 			/* 0.4V-1.6625V -> 1.3V (Power tree requirements) */
--			regulator-min-microvolts = <1350000>;
--			regulator-max-microvolts = <1350000>;
-+			regulator-min-microvolt = <1352000>;
-+			regulator-max-microvolt = <1352000>;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_s4: s4 {
- 			/* 1.2V-2.35V -> 2.05V (Power tree requirements) */
--			regulator-min-microvolts = <2072000>;
--			regulator-max-microvolts = <2072000>;
-+			regulator-min-microvolt = <2072000>;
-+			regulator-max-microvolt = <2072000>;
- 			regulator-boot-on;
- 		};
- 
-@@ -166,47 +166,47 @@ pm2250_s4: s4 {
- 
- 		pm2250_l2: l2 {
- 			/* LPDDR4X VDD2 */
--			regulator-min-microvolts = <1136000>;
--			regulator-max-microvolts = <1136000>;
-+			regulator-min-microvolt = <1136000>;
-+			regulator-max-microvolt = <1136000>;
- 			regulator-always-on;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l3: l3 {
- 			/* LPDDR4X VDDQ */
--			regulator-min-microvolts = <616000>;
--			regulator-max-microvolts = <616000>;
-+			regulator-min-microvolt = <616000>;
-+			regulator-max-microvolt = <616000>;
- 			regulator-always-on;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l4: l4 {
--			/* max = 3.05V -> max = just below 3V (SDHCI2) */
--			regulator-min-microvolts = <1648000>;
--			regulator-max-microvolts = <2992000>;
-+			/* max = 3.05V -> max = 2.7 to disable 3V signaling (SDHCI2) */
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2700000>;
- 			regulator-allow-set-load;
- 		};
- 
- 		pm2250_l5: l5 {
- 			/* CSI/DSI */
--			regulator-min-microvolts = <1232000>;
--			regulator-max-microvolts = <1232000>;
-+			regulator-min-microvolt = <1232000>;
-+			regulator-max-microvolt = <1232000>;
- 			regulator-allow-set-load;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l6: l6 {
- 			/* DRAM PLL */
--			regulator-min-microvolts = <928000>;
--			regulator-max-microvolts = <928000>;
-+			regulator-min-microvolt = <928000>;
-+			regulator-max-microvolt = <928000>;
- 			regulator-always-on;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l7: l7 {
- 			/* Wi-Fi CX/MX */
--			regulator-min-microvolts = <664000>;
--			regulator-max-microvolts = <664000>;
-+			regulator-min-microvolt = <664000>;
-+			regulator-max-microvolt = <664000>;
- 		};
- 
- 		/*
-@@ -216,37 +216,37 @@ pm2250_l7: l7 {
- 
- 		pm2250_l10: l10 {
- 			/* Wi-Fi RFA */
--			regulator-min-microvolts = <1300000>;
--			regulator-max-microvolts = <1300000>;
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
- 		};
- 
- 		pm2250_l11: l11 {
- 			/* GPS RF1 */
--			regulator-min-microvolts = <1000000>;
--			regulator-max-microvolts = <1000000>;
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1000000>;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l12: l12 {
- 			/* USB PHYs */
--			regulator-min-microvolts = <928000>;
--			regulator-max-microvolts = <928000>;
-+			regulator-min-microvolt = <928000>;
-+			regulator-max-microvolt = <928000>;
- 			regulator-allow-set-load;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l13: l13 {
- 			/* USB/QFPROM/PLLs */
--			regulator-min-microvolts = <1800000>;
--			regulator-max-microvolts = <1800000>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
- 			regulator-allow-set-load;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l14: l14 {
- 			/* SDHCI1 VQMMC */
--			regulator-min-microvolts = <1800000>;
--			regulator-max-microvolts = <1800000>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
- 			regulator-allow-set-load;
- 			/* Broken hardware, never turn it off! */
- 			regulator-always-on;
-@@ -254,8 +254,8 @@ pm2250_l14: l14 {
- 
- 		pm2250_l15: l15 {
- 			/* WCD/DSI/BT VDDIO */
--			regulator-min-microvolts = <1800000>;
--			regulator-max-microvolts = <1800000>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
- 			regulator-allow-set-load;
- 			regulator-always-on;
- 			regulator-boot-on;
-@@ -263,47 +263,47 @@ pm2250_l15: l15 {
- 
- 		pm2250_l16: l16 {
- 			/* GPS RF2 */
--			regulator-min-microvolts = <1800000>;
--			regulator-max-microvolts = <1800000>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l17: l17 {
--			regulator-min-microvolts = <3000000>;
--			regulator-max-microvolts = <3000000>;
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
- 		};
- 
- 		pm2250_l18: l18 {
- 			/* VDD_PXn */
--			regulator-min-microvolts = <1800000>;
--			regulator-max-microvolts = <1800000>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
- 		};
- 
- 		pm2250_l19: l19 {
- 			/* VDD_PXn */
--			regulator-min-microvolts = <1800000>;
--			regulator-max-microvolts = <1800000>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
- 		};
- 
- 		pm2250_l20: l20 {
- 			/* SDHCI1 VMMC */
--			regulator-min-microvolts = <2856000>;
--			regulator-max-microvolts = <2856000>;
-+			regulator-min-microvolt = <2400000>;
-+			regulator-max-microvolt = <3600000>;
- 			regulator-allow-set-load;
- 		};
- 
- 		pm2250_l21: l21 {
- 			/* SDHCI2 VMMC */
--			regulator-min-microvolts = <2960000>;
--			regulator-max-microvolts = <3300000>;
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <3300000>;
- 			regulator-allow-set-load;
- 			regulator-boot-on;
- 		};
- 
- 		pm2250_l22: l22 {
- 			/* Wi-Fi */
--			regulator-min-microvolts = <3312000>;
--			regulator-max-microvolts = <3312000>;
-+			regulator-min-microvolt = <3312000>;
-+			regulator-max-microvolt = <3312000>;
- 		};
- 	};
- };
+diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+index 84cd2e39266fe..ba2043d67370a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -1328,7 +1328,8 @@ pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sdm670-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
+ 			qcom,pdc-ranges = <0 480 40>, <41 521 7>, <49 529 4>,
+-					  <54 534 24>, <79 559 30>, <115 630 7>;
++					  <54 534 24>, <79 559 15>, <94 609 15>,
++					  <115 630 7>;
+ 			#interrupt-cells = <2>;
+ 			interrupt-parent = <&intc>;
+ 			interrupt-controller;
 -- 
 2.42.0
 
