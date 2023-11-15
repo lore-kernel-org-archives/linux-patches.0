@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A31E3A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914843A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RepqmVy3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC76C433C8;
-	Wed, 15 Nov 2023 19:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3DNpiGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3DBC433C8;
+	Wed, 15 Nov 2023 19:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077867;
-	bh=6FpuizoJz+eMk7vQJcRKs4AJlmxzh7dBxMa7jcDN/80=;
+	s=korg; t=1700077869;
+	bh=/QdO7GE7xIfqhbKpnFiitazoqrXDr5i0aYE13leBH9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RepqmVy3cswBMKbTZnFAuzxHA7kpbxY/19TjtJ0EuOpNKyLIHeIcUYbb4d0j33p7f
-	 Y2NnM2/hdi1gAnR9FepUNqedoDBDva1NoL2FNTW+K+sG1F2rwlWdimm6DLilZ5/5n5
-	 5+LFPMA1v9R8RXFKsF2ShSI2zLMkZgePchBfBgBg=
+	b=d3DNpiGjr+FgHDeDm187e9aWbEw8xmU2de9AoMo8MclZL/pUrWTZ3+Ifqm1LzHma1
+	 Jbu3FzBXYDLcnjGn5pwP+xvgOqHdJS+1NHnxm/ckB73HfTuxuMIsvQfpBNyFyMtKH5
+	 5NL2IzpcQih7tzFQ40uFuJjnZE/oUj6XvlcPW4v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hsin-Wei Hung <hsinweih@uci.edu>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 544/603] rxrpc: Fix two connection reaping bugs
-Date: Wed, 15 Nov 2023 14:18:09 -0500
-Message-ID: <20231115191649.428634820@linuxfoundation.org>
+Subject: [PATCH 6.6 545/603] bpf: Check map->usercnt after timer->timer is assigned
+Date: Wed, 15 Nov 2023 14:18:10 -0500
+Message-ID: <20231115191649.485403031@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,60 +43,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 61e4a86600029e6e8d468d1fad6b6c749bebed19 ]
+[ Upstream commit fd381ce60a2d79cc967506208085336d3d268ae0 ]
 
-Fix two connection reaping bugs:
+When there are concurrent uref release and bpf timer init operations,
+the following sequence diagram is possible. It will break the guarantee
+provided by bpf_timer: bpf_timer will still be alive after userspace
+application releases or unpins the map. It also will lead to kmemleak
+for old kernel version which doesn't release bpf_timer when map is
+released.
 
- (1) rxrpc_connection_expiry is in units of seconds, so
-     rxrpc_disconnect_call() needs to multiply it by HZ when adding it to
-     jiffies.
+bpf program X:
 
- (2) rxrpc_client_conn_reap_timeout() should set RXRPC_CLIENT_REAP_TIMER if
-     local->kill_all_client_conns is clear, not if it is set (in which case
-     we don't need the timer).  Without this, old client connections don't
-     get cleaned up until the local endpoint is cleaned up.
+bpf_timer_init()
+  lock timer->lock
+    read timer->timer as NULL
+    read map->usercnt != 0
 
-Fixes: 5040011d073d ("rxrpc: Make the local endpoint hold a ref on a connected call")
-Fixes: 0d6bf319bc5a ("rxrpc: Move the client conn cache management to the I/O thread")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/783911.1698364174@warthog.procyon.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+                process Y:
+
+                close(map_fd)
+                  // put last uref
+                  bpf_map_put_uref()
+                    atomic_dec_and_test(map->usercnt)
+                      array_map_free_timers()
+                        bpf_timer_cancel_and_free()
+                          // just return
+                          read timer->timer is NULL
+
+    t = bpf_map_kmalloc_node()
+    timer->timer = t
+  unlock timer->lock
+
+Fix the problem by checking map->usercnt after timer->timer is assigned,
+so when there are concurrent uref release and bpf timer init, either
+bpf_timer_cancel_and_free() from uref release reads a no-NULL timer
+or the newly-added atomic64_read() returns a zero usercnt.
+
+Because atomic_dec_and_test(map->usercnt) and READ_ONCE(timer->timer)
+in bpf_timer_cancel_and_free() are not protected by a lock, so add
+a memory barrier to guarantee the order between map->usercnt and
+timer->timer. Also use WRITE_ONCE(timer->timer, x) to match the lockless
+read of timer->timer in bpf_timer_cancel_and_free().
+
+Reported-by: Hsin-Wei Hung <hsinweih@uci.edu>
+Closes: https://lore.kernel.org/bpf/CABcoxUaT2k9hWsS1tNgXyoU3E-=PuOgMn737qK984fbFmfYixQ@mail.gmail.com
+Fixes: b00628b1c7d5 ("bpf: Introduce bpf timers.")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20231030063616.1653024-1-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/conn_object.c  | 2 +-
- net/rxrpc/local_object.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/helpers.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/net/rxrpc/conn_object.c b/net/rxrpc/conn_object.c
-index ac85d4644a3c3..df8a271948a1c 100644
---- a/net/rxrpc/conn_object.c
-+++ b/net/rxrpc/conn_object.c
-@@ -212,7 +212,7 @@ void rxrpc_disconnect_call(struct rxrpc_call *call)
- 		conn->idle_timestamp = jiffies;
- 		if (atomic_dec_and_test(&conn->active))
- 			rxrpc_set_service_reap_timer(conn->rxnet,
--						     jiffies + rxrpc_connection_expiry);
-+						     jiffies + rxrpc_connection_expiry * HZ);
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 68f54e16c7be0..607be04db75b9 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -1176,13 +1176,6 @@ BPF_CALL_3(bpf_timer_init, struct bpf_timer_kern *, timer, struct bpf_map *, map
+ 		ret = -EBUSY;
+ 		goto out;
  	}
- 
- 	rxrpc_put_call(call, rxrpc_call_put_io_thread);
-diff --git a/net/rxrpc/local_object.c b/net/rxrpc/local_object.c
-index 7d910aee4f8cb..c553a30e9c838 100644
---- a/net/rxrpc/local_object.c
-+++ b/net/rxrpc/local_object.c
-@@ -87,7 +87,7 @@ static void rxrpc_client_conn_reap_timeout(struct timer_list *timer)
- 	struct rxrpc_local *local =
- 		container_of(timer, struct rxrpc_local, client_conn_reap_timer);
- 
--	if (local->kill_all_client_conns &&
-+	if (!local->kill_all_client_conns &&
- 	    test_and_set_bit(RXRPC_CLIENT_CONN_REAP_TIMER, &local->client_conn_flags))
- 		rxrpc_wake_up_io_thread(local);
- }
+-	if (!atomic64_read(&map->usercnt)) {
+-		/* maps with timers must be either held by user space
+-		 * or pinned in bpffs.
+-		 */
+-		ret = -EPERM;
+-		goto out;
+-	}
+ 	/* allocate hrtimer via map_kmalloc to use memcg accounting */
+ 	t = bpf_map_kmalloc_node(map, sizeof(*t), GFP_ATOMIC, map->numa_node);
+ 	if (!t) {
+@@ -1195,7 +1188,21 @@ BPF_CALL_3(bpf_timer_init, struct bpf_timer_kern *, timer, struct bpf_map *, map
+ 	rcu_assign_pointer(t->callback_fn, NULL);
+ 	hrtimer_init(&t->timer, clockid, HRTIMER_MODE_REL_SOFT);
+ 	t->timer.function = bpf_timer_cb;
+-	timer->timer = t;
++	WRITE_ONCE(timer->timer, t);
++	/* Guarantee the order between timer->timer and map->usercnt. So
++	 * when there are concurrent uref release and bpf timer init, either
++	 * bpf_timer_cancel_and_free() called by uref release reads a no-NULL
++	 * timer or atomic64_read() below returns a zero usercnt.
++	 */
++	smp_mb();
++	if (!atomic64_read(&map->usercnt)) {
++		/* maps with timers must be either held by user space
++		 * or pinned in bpffs.
++		 */
++		WRITE_ONCE(timer->timer, NULL);
++		kfree(t);
++		ret = -EPERM;
++	}
+ out:
+ 	__bpf_spin_unlock_irqrestore(&timer->lock);
+ 	return ret;
+@@ -1370,7 +1377,7 @@ void bpf_timer_cancel_and_free(void *val)
+ 	/* The subsequent bpf_timer_start/cancel() helpers won't be able to use
+ 	 * this timer, since it won't be initialized.
+ 	 */
+-	timer->timer = NULL;
++	WRITE_ONCE(timer->timer, NULL);
+ out:
+ 	__bpf_spin_unlock_irqrestore(&timer->lock);
+ 	if (!t)
 -- 
 2.42.0
 
