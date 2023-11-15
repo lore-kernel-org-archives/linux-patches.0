@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20B718C27
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411FD43AD5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:55:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wz74usg6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AF9C4E779;
-	Wed, 15 Nov 2023 20:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oL763vZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EACC4E777;
+	Wed, 15 Nov 2023 20:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081704;
-	bh=Py0OSIczWiinkROuzJs26yhbf7RbCp46Cpbojrj+8cg=;
+	s=korg; t=1700081706;
+	bh=A9GpDK50iJ/U/yAiBjg0Yu0leIA1xxKW6WsCrP2n9yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wz74usg6fQF/26ee7v3MXiZfEDX+AdzS/ppscEvjXHNJhKjoYTS7B4pPZZV5bzOH4
-	 2fyR+31Dd7rLEUVy25U7MmcnoM78ZeU7HB+j1hFA60W6qgN7MRM3uIt8A5n6BAqNuv
-	 1/WoZLBKtfK0NStFVzarG2Rpk9ITcWoOrT0ls7cI=
+	b=oL763vZDkUVjPSo8mArzZMbl1jlIgggMVs2rkLSKsGWuYj8oRLEiOjxr6XKPVyCyJ
+	 UNG2MJ+fqGcu+n2mP4PEsphGQq1bayLdkNZtGqp7sCue4gULKBd6tvG7Vb9HH9FcB5
+	 tNLzqRHAkuzvWeEx0xup1ZKf6JX4MIoIIlVDr7eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Robert Foss <robert.foss@linaro.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Marcel Ziswiler <marcel.ziswiler@toradex.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Andreas Westman Dorcsak <hedmoo@yahoo.com>,
 	Maxim Schwalm <maxim.schwalm@gmail.com>
-Subject: [PATCH 5.10 073/191] drm/bridge: tc358768: Disable non-continuous clock mode
-Date: Wed, 15 Nov 2023 15:45:48 -0500
-Message-ID: <20231115204648.979911143@linuxfoundation.org>
+Subject: [PATCH 5.10 074/191] drm/bridge: tc358768: Fix bit updates
+Date: Wed, 15 Nov 2023 15:45:49 -0500
+Message-ID: <20231115204649.039440630@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -44,76 +45,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Osipenko <digetx@gmail.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit fbc5a90e82c1131869e76ce5b082693b8a75c121 ]
+[ Upstream commit 66962d5c3c51377b9b90cae35b7e038950438e02 ]
 
-Non-continuous clock mode doesn't work because driver doesn't support it
-properly. The bridge driver programs wrong bitfields that are required by
-the non-continuous mode (BTACNTRL1 register bitfields are swapped in the
-code), but fixing them doesn't help.
+The driver has a few places where it does:
 
-Display panel of ASUS Transformer TF700T tablet supports non-continuous
-mode and display doesn't work at all using that mode. There are no
-device-trees that are actively using this DSI bridge in upstream yet,
-so clearly the broken mode wasn't ever tested properly. It's a bit too
-difficult to get LP mode working, hence let's disable the offending mode
-for now and fall back to continuous mode.
+if (thing_is_enabled_in_config)
+	update_thing_bit_in_hw()
 
-Tested-by: Andreas Westman Dorcsak <hedmoo@yahoo.com> # Asus TF700T
-Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> #TF700T
-Signed-off-by: Dmitry Osipenko <digetx@gmail.com>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20211002233447.1105-5-digetx@gmail.com
-Stable-dep-of: 66962d5c3c51 ("drm/bridge: tc358768: Fix bit updates")
+This means that if the thing is _not_ enabled, the bit never gets
+cleared. This affects the h/vsyncs and continuous DSI clock bits.
+
+Fix the driver to always update the bit.
+
+Fixes: ff1ca6397b1d ("drm/bridge: Add tc358768 driver")
+Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Tested-by: Maxim Schwalm <maxim.schwalm@gmail.com> # Asus TF700T
+Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230906-tc358768-v4-4-31725f008a50@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358768.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/tc358768.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/tc358768.c b/drivers/gpu/drm/bridge/tc358768.c
-index a5e7afa5e6275..8f7460f011aea 100644
+index 8f7460f011aea..48dab19f3e236 100644
 --- a/drivers/gpu/drm/bridge/tc358768.c
 +++ b/drivers/gpu/drm/bridge/tc358768.c
-@@ -637,6 +637,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- {
- 	struct tc358768_priv *priv = bridge_to_tc358768(bridge);
- 	struct mipi_dsi_device *dsi_dev = priv->output.dev;
-+	unsigned long mode_flags = dsi_dev->mode_flags;
- 	u32 val, val2, lptxcnt, hact, data_type;
- 	s32 raw_val;
- 	const struct drm_display_mode *mode;
-@@ -644,6 +645,11 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
- 	u32 dsiclk, dsibclk;
- 	int ret, i;
- 
-+	if (mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) {
-+		dev_warn_once(priv->dev, "Non-continuous mode unimplemented, falling back to continuous\n");
-+		mode_flags &= ~MIPI_DSI_CLOCK_NON_CONTINUOUS;
-+	}
-+
- 	tc358768_hw_enable(priv);
- 
- 	ret = tc358768_sw_reset(priv);
-@@ -779,7 +785,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+@@ -785,8 +785,8 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
  		val |= BIT(i + 1);
  	tc358768_write(priv, TC358768_HSTXVREGEN, val);
  
--	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
-+	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
- 		tc358768_write(priv, TC358768_TXOPTIONCNTRL, 0x1);
+-	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
+-		tc358768_write(priv, TC358768_TXOPTIONCNTRL, 0x1);
++	tc358768_write(priv, TC358768_TXOPTIONCNTRL,
++		       (mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS) ? 0 : BIT(0));
  
  	/* TXTAGOCNT[26:16] RXTASURECNT[10:0] */
-@@ -836,7 +842,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	val = tc358768_to_ns((lptxcnt + 1) * dsibclk_nsk * 4);
+@@ -822,11 +822,12 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
+ 	tc358768_write(priv, TC358768_DSI_HACT, hact);
  
- 	val |= TC358768_DSI_CONTROL_TXMD;
+ 	/* VSYNC polarity */
+-	if (!(mode->flags & DRM_MODE_FLAG_NVSYNC))
+-		tc358768_update_bits(priv, TC358768_CONFCTL, BIT(5), BIT(5));
++	tc358768_update_bits(priv, TC358768_CONFCTL, BIT(5),
++			     (mode->flags & DRM_MODE_FLAG_PVSYNC) ? BIT(5) : 0);
++
+ 	/* HSYNC polarity */
+-	if (mode->flags & DRM_MODE_FLAG_PHSYNC)
+-		tc358768_update_bits(priv, TC358768_PP_MISC, BIT(0), BIT(0));
++	tc358768_update_bits(priv, TC358768_PP_MISC, BIT(0),
++			     (mode->flags & DRM_MODE_FLAG_PHSYNC) ? BIT(0) : 0);
  
--	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
-+	if (!(mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
- 		val |= TC358768_DSI_CONTROL_HSCKMD;
- 
- 	if (dsi_dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
+ 	/* Start DSI Tx */
+ 	tc358768_write(priv, TC358768_DSI_START, 0x1);
 -- 
 2.42.0
 
