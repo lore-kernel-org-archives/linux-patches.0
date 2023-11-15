@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97313A8F2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8783A8F2
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBk6X3AE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983ACC433C9;
-	Wed, 15 Nov 2023 19:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSEx1oX2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115E3C433C7;
+	Wed, 15 Nov 2023 19:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077760;
-	bh=JgZ87VhgzRtxSyQNWLaf22R3pcB0m0a/D3kpZ8itLRI=;
+	s=korg; t=1700077762;
+	bh=lbwtxrmO9PR2RYVr7td9DE13SOIEBmnIvKzbsUhVxeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBk6X3AE+4os/R92wDBglCTUYkyPgBtgAHU93uYWEqLF5Sy+2UWSwNXmZgV71DClx
-	 4pw5P3r2kCspI1c/VDZcPvTDT06wtwd5EXDJRM5/Qq5K0+InOvFz5xffuAnPz+gY/6
-	 DnwQ3hLlTlv2Y48e/M6lMCOfJZ/rp4wvWEgR/BFg=
+	b=PSEx1oX25UuX5s3twQ1JpeopAtnbbH4GPQsRDz8wP9kcN/IQ1/ZYxg2qNzAyC9j1q
+	 6M+Tsfj5y6So7vRhE384eQ9Y2FEbE4XSxMebVhaR7IB5CJWoI/5JTnPzbX0zcWQndc
+	 rxjTpOa1wv7ci42ZDECn6ciXMrWKHctols9s/u/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 503/603] cxl/hdm: Remove broken error path
-Date: Wed, 15 Nov 2023 14:17:28 -0500
-Message-ID: <20231115191647.011476764@linuxfoundation.org>
+Subject: [PATCH 6.6 504/603] pcmcia: cs: fix possible hung task and memory leak pccardd()
+Date: Wed, 15 Nov 2023 14:17:29 -0500
+Message-ID: <20231115191647.069430124@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,101 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5d09c63f11f083707b60c8ea0bb420651c47740f ]
+[ Upstream commit e3ea1b4847e49234e691c0d66bf030bd65bb7f2b ]
 
-Dan reports that cxl_decoder_commit() potentially leaks a hold of
-cxl_dpa_rwsem. The potential error case is a "should not" happen
-scenario, turn it into a "can not" happen scenario by adding the error
-check to cxl_port_setup_targets() where other setting validation occurs.
+If device_register() returns error in pccardd(), it leads two issues:
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: http://lore.kernel.org/r/63295673-5d63-4919-b851-3b06d48734c0@moroto.mountain
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+1. The socket_released has never been completed, it will block
+   pcmcia_unregister_socket(), because of waiting for completion
+   of socket_released.
+2. The device name allocated by dev_set_name() is leaked.
+
+Fix this two issues by calling put_device() when device_register() fails.
+socket_released can be completed in pcmcia_release_socket(), the name can
+be freed in kobject_cleanup().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Dominik Brodowski <linux@dominikbrodowski.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c    | 19 ++-----------------
- drivers/cxl/core/region.c |  8 ++++++++
- 2 files changed, 10 insertions(+), 17 deletions(-)
+ drivers/pcmcia/cs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index 3ad0d39d3d3fa..64e86b786db52 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -575,17 +575,11 @@ static void cxld_set_type(struct cxl_decoder *cxld, u32 *ctrl)
- 			  CXL_HDM_DECODER0_CTRL_HOSTONLY);
- }
- 
--static int cxlsd_set_targets(struct cxl_switch_decoder *cxlsd, u64 *tgt)
-+static void cxlsd_set_targets(struct cxl_switch_decoder *cxlsd, u64 *tgt)
- {
- 	struct cxl_dport **t = &cxlsd->target[0];
- 	int ways = cxlsd->cxld.interleave_ways;
- 
--	if (dev_WARN_ONCE(&cxlsd->cxld.dev,
--			  ways > 8 || ways > cxlsd->nr_targets,
--			  "ways: %d overflows targets: %d\n", ways,
--			  cxlsd->nr_targets))
--		return -ENXIO;
--
- 	*tgt = FIELD_PREP(GENMASK(7, 0), t[0]->port_id);
- 	if (ways > 1)
- 		*tgt |= FIELD_PREP(GENMASK(15, 8), t[1]->port_id);
-@@ -601,8 +595,6 @@ static int cxlsd_set_targets(struct cxl_switch_decoder *cxlsd, u64 *tgt)
- 		*tgt |= FIELD_PREP(GENMASK_ULL(55, 48), t[6]->port_id);
- 	if (ways > 7)
- 		*tgt |= FIELD_PREP(GENMASK_ULL(63, 56), t[7]->port_id);
--
--	return 0;
- }
- 
- /*
-@@ -689,13 +681,7 @@ static int cxl_decoder_commit(struct cxl_decoder *cxld)
- 		void __iomem *tl_lo = hdm + CXL_HDM_DECODER0_TL_LOW(id);
- 		u64 targets;
- 
--		rc = cxlsd_set_targets(cxlsd, &targets);
--		if (rc) {
--			dev_dbg(&port->dev, "%s: target configuration error\n",
--				dev_name(&cxld->dev));
--			goto err;
--		}
--
-+		cxlsd_set_targets(cxlsd, &targets);
- 		writel(upper_32_bits(targets), tl_hi);
- 		writel(lower_32_bits(targets), tl_lo);
- 	} else {
-@@ -713,7 +699,6 @@ static int cxl_decoder_commit(struct cxl_decoder *cxld)
- 
- 	port->commit_end++;
- 	rc = cxld_await_commit(hdm, cxld->id);
--err:
- 	if (rc) {
- 		dev_dbg(&port->dev, "%s: error %d committing decoder\n",
- 			dev_name(&cxld->dev), rc);
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index d1f513800c10d..85c0881fba442 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1189,6 +1189,14 @@ static int cxl_port_setup_targets(struct cxl_port *port,
- 		return rc;
+diff --git a/drivers/pcmcia/cs.c b/drivers/pcmcia/cs.c
+index 5658745c398f5..b33be1e63c98f 100644
+--- a/drivers/pcmcia/cs.c
++++ b/drivers/pcmcia/cs.c
+@@ -605,6 +605,7 @@ static int pccardd(void *__skt)
+ 		dev_warn(&skt->dev, "PCMCIA: unable to register socket\n");
+ 		skt->thread = NULL;
+ 		complete(&skt->thread_done);
++		put_device(&skt->dev);
+ 		return 0;
  	}
- 
-+	if (iw > 8 || iw > cxlsd->nr_targets) {
-+		dev_dbg(&cxlr->dev,
-+			"%s:%s:%s: ways: %d overflows targets: %d\n",
-+			dev_name(port->uport_dev), dev_name(&port->dev),
-+			dev_name(&cxld->dev), iw, cxlsd->nr_targets);
-+		return -ENXIO;
-+	}
-+
- 	if (test_bit(CXL_REGION_F_AUTO, &cxlr->flags)) {
- 		if (cxld->interleave_ways != iw ||
- 		    cxld->interleave_granularity != ig ||
+ 	ret = pccard_sysfs_add_socket(&skt->dev);
 -- 
 2.42.0
 
