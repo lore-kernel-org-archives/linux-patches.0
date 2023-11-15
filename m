@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB76381A5
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67227381A5
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1R7c4lVr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579AEC4E77A;
-	Wed, 15 Nov 2023 20:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5e23PEd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DEEC4E779;
+	Wed, 15 Nov 2023 20:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081614;
-	bh=BOHqnSiGiwPfLFV0T6HK/FiWK8Z961qleHSun8oiXjU=;
+	s=korg; t=1700081616;
+	bh=guPMJRUw3Ic/4CQ1YLd/13mtZj+ZgRpgGNfSt10D+vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1R7c4lVrO3Xn1DctLktC/Kjk1UKV2TkI7pUH2I/mdghdzhxU99fnLvUdb/ymLr6AA
-	 s1MXsnckYjrj+v5m+JkXbIR1XZq6qmec8QJAIM+pGE4jR1qbPsr0fT691GFHDGjp1p
-	 42+RRuA/ME1CeAw7G8eFIclwFmuY+mfVskPp96uk=
+	b=y5e23PEdH7vbhJeSOEnrkix7eh4BaKTV5gFAQrHiC5IBv0u66/nm2ljwngB1PXnRy
+	 lKLeEEm5rfQpNLsoqcsV0qQ5f0W8ItmWO5G73pXJ1GkDpOfEg/ACBNQHmcYBISohfh
+	 Jzl3MyQS1PnQklMdhcx4KWHUkmeW1BeXTmwVtMM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Geoff Levand <geoff@infradead.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/191] net: spider_net: Use size_add() in call to struct_size()
-Date: Wed, 15 Nov 2023 15:44:52 -0500
-Message-ID: <20231115204645.538446480@linuxfoundation.org>
+Subject: [PATCH 5.10 018/191] wifi: rtw88: debug: Fix the NULL vs IS_ERR() bug for debugfs_create_file()
+Date: Wed, 15 Nov 2023 15:44:53 -0500
+Message-ID: <20231115204645.610653766@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -44,38 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 0201409079b975e46cc40e8bdff4bd61329ee10f ]
+[ Upstream commit 74f7957c9b1b95553faaf146a2553e023a9d1720 ]
 
-If, for any reason, the open-coded arithmetic causes a wraparound,
-the protection that `struct_size()` adds against potential integer
-overflows is defeated. Fix this by hardening call to `struct_size()`
-with `size_add()`.
+Since debugfs_create_file() return ERR_PTR and never return NULL, so use
+IS_ERR() to check it instead of checking NULL.
 
-Fixes: 3f1071ec39f7 ("net: spider_net: Use struct_size() helper")
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Geoff Levand <geoff@infradead.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230919050651.962694-1-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/toshiba/spider_net.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/toshiba/spider_net.c b/drivers/net/ethernet/toshiba/spider_net.c
-index 5f5b33e6653b2..9d4c49f28d31f 100644
---- a/drivers/net/ethernet/toshiba/spider_net.c
-+++ b/drivers/net/ethernet/toshiba/spider_net.c
-@@ -2311,7 +2311,7 @@ spider_net_alloc_card(void)
- 	struct spider_net_card *card;
- 
- 	netdev = alloc_etherdev(struct_size(card, darray,
--					    tx_descriptors + rx_descriptors));
-+					    size_add(tx_descriptors, rx_descriptors)));
- 	if (!netdev)
- 		return NULL;
- 
+diff --git a/drivers/net/wireless/realtek/rtw88/debug.c b/drivers/net/wireless/realtek/rtw88/debug.c
+index 8bb6cc8ca74e5..83413cda9bc5e 100644
+--- a/drivers/net/wireless/realtek/rtw88/debug.c
++++ b/drivers/net/wireless/realtek/rtw88/debug.c
+@@ -901,9 +901,9 @@ static struct rtw_debugfs_priv rtw_debug_priv_coex_info = {
+ #define rtw_debugfs_add_core(name, mode, fopname, parent)		\
+ 	do {								\
+ 		rtw_debug_priv_ ##name.rtwdev = rtwdev;			\
+-		if (!debugfs_create_file(#name, mode,			\
++		if (IS_ERR(debugfs_create_file(#name, mode,		\
+ 					 parent, &rtw_debug_priv_ ##name,\
+-					 &file_ops_ ##fopname))		\
++					 &file_ops_ ##fopname)))	\
+ 			pr_debug("Unable to initialize debugfs:%s\n",	\
+ 			       #name);					\
+ 	} while (0)
 -- 
 2.42.0
 
