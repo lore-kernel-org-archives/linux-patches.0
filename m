@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9578443ACE
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6F343ACE
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgeOn0Tb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465B1C4E667;
-	Wed, 15 Nov 2023 20:50:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuaEY+6s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0687C4E668;
+	Wed, 15 Nov 2023 20:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081446;
-	bh=nzBvXkn+f+62ciZ//dx5Gkz/oOV6wzFHfK4KN7vkaoI=;
+	s=korg; t=1700081448;
+	bh=/0yKmdOw/Z6QMU37TfRzwpeS30B+7WNhj4cvL4lXov0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgeOn0TbPK8IOJEqu6q+o3YsEZ86zqNWXrPhKwE5jxBGLRLre6IrHUK+CudMdLCeK
-	 GCf2Xr+frotzNzsOHOTA1dmO5+OpuOMA0bifsSViS2CSBxpZQE6f0N/3BeSccKNQbm
-	 5eTR7OEjs2rsGZHP+Xtu8KelEyV10DXduSlVZMGM=
+	b=EuaEY+6sbT6eHrkpiyO/oJ/7tv8KkVFRO7ibKWJTr2/aEX52IW/knfWQ71dRjqDoF
+	 m8aUJpnKf31bj3+U3L4tCBoP90aUcYVyP7yxyRPBFwzBwoFzGKpzYkWWp10lkEiizY
+	 Lwj8BFIGbGKbmmNIwFWdg1LNNSpsq0v3GTw6XQ0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 158/244] ASoC: ams-delta.c: use component after check
-Date: Wed, 15 Nov 2023 15:35:50 -0500
-Message-ID: <20231115203557.824505902@linuxfoundation.org>
+Subject: [PATCH 5.15 159/244] mfd: core: Un-constify mfd_cell.of_reg
+Date: Wed, 15 Nov 2023 15:35:51 -0500
+Message-ID: <20231115203557.884305825@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -37,60 +36,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
 
-[ Upstream commit bd0f7498bc9084d8cccc5484cd004b40f314b763 ]
+[ Upstream commit 3c70342f1f0045dc827bb2f02d814ce31e0e0d05 ]
 
-	static void cx81801_close()
-	{
-		...
-(A)		struct snd_soc_dapm_context *dapm = &component->card->dapm;
-		...
-(B)		if (!component)
-			return;
-	}
+Enable dynamically filling in the whole mfd_cell structure. All other
+fields already allow that.
 
-(A) uses component before NULL check (B). This patch moves it after (B).
-
-Fixes: d0fdfe34080c ("ASoC: cx20442: replace codec to component")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/3e608474-e99a-4866-ae98-3054a4221f09@moroto.mountain
-Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/87ttqdq623.wl-kuninori.morimoto.gx@renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 466a62d7642f ("mfd: core: Make a best effort attempt to match devices with the correct of_nodes")
+Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+Link: https://lore.kernel.org/r/b73fe4bc4bd6ba1af90940a640ed65fe254c0408.1693253717.git.mirq-linux@rere.qmqm.pl
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/ams-delta.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/mfd/core.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/ti/ams-delta.c b/sound/soc/ti/ams-delta.c
-index ecd24d412a9b0..4537ef1b676f5 100644
---- a/sound/soc/ti/ams-delta.c
-+++ b/sound/soc/ti/ams-delta.c
-@@ -303,7 +303,7 @@ static int cx81801_open(struct tty_struct *tty)
- static void cx81801_close(struct tty_struct *tty)
- {
- 	struct snd_soc_component *component = tty->disc_data;
--	struct snd_soc_dapm_context *dapm = &component->card->dapm;
-+	struct snd_soc_dapm_context *dapm;
+diff --git a/include/linux/mfd/core.h b/include/linux/mfd/core.h
+index 0bc7cba798a34..b449765b5cac1 100644
+--- a/include/linux/mfd/core.h
++++ b/include/linux/mfd/core.h
+@@ -92,7 +92,7 @@ struct mfd_cell {
+ 	 * (above) when matching OF nodes with devices that have identical
+ 	 * compatible strings
+ 	 */
+-	const u64 of_reg;
++	u64 of_reg;
  
- 	del_timer_sync(&cx81801_timer);
- 
-@@ -315,6 +315,8 @@ static void cx81801_close(struct tty_struct *tty)
- 
- 	v253_ops.close(tty);
- 
-+	dapm = &component->card->dapm;
-+
- 	/* Revert back to default audio input/output constellation */
- 	snd_soc_dapm_mutex_lock(dapm);
- 
+ 	/* Set to 'true' to use 'of_reg' (above) - allows for of_reg=0 */
+ 	bool use_of_reg;
 -- 
 2.42.0
 
