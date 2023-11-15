@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AE743AD2
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C8218657
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sl/kkoI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CF2C4E761;
-	Wed, 15 Nov 2023 20:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRrciUDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532C4C4E762;
+	Wed, 15 Nov 2023 20:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081520;
-	bh=JeliLSHZR4beElzX4NA22BLJAL/9d1DNXg7N9EQUJIg=;
+	s=korg; t=1700081522;
+	bh=rjJiDCYnbsWYLR9iiodrLYEmsdPrXgUXhhDwPRF9nQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sl/kkoI5FPhx37FMgGh3rro3fzkqFQ1HwrXZIeiZNcqmtaZuJHc+mYjVOtWnOF73k
-	 mtc2BXR1fvOx6La92ZIPXe+JtR2JTId5+1u5gT5Qkr7i5TjJZAx43ivHgWTJzt8AwP
-	 aZJTeuj6R0SR09II4Clx6VszwoVbSjIRDIef2a7w=
+	b=uRrciUDzebjcjElppteaQqtby9Kntv2RhgSvGoV3LvEV/Azd9KCNLjvLDrHtFH/YC
+	 fbraneW9daGu695HtCdIZQZPSZuUCwBDxhYgVK4C4yKIEEmEBsF3Iq8iHCWieq1vEI
+	 5FxQ5mXomMA83h7zPy637kXy3e9x/XqLyJoQfY7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 204/244] media: vidtv: psi: Add check for kstrdup
-Date: Wed, 15 Nov 2023 15:36:36 -0500
-Message-ID: <20231115203600.597641657@linuxfoundation.org>
+Subject: [PATCH 5.15 205/244] media: vidtv: mux: Add check and kfree for kstrdup
+Date: Wed, 15 Nov 2023 15:36:37 -0500
+Message-ID: <20231115203600.658692043@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -44,107 +44,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 76a2c5df6ca8bd8ada45e953b8c72b746f42918d ]
+[ Upstream commit 1fd6eb12642e0c32692924ff359c07de4b781d78 ]
 
 Add check for the return value of kstrdup() and return the error
 if it fails in order to avoid NULL pointer dereference.
+Moreover, use kfree() in the later error handling in order to avoid
+memory leak.
 
-Fixes: 7a7899f6f58e ("media: vidtv: psi: Implement an Event Information Table (EIT)")
 Fixes: c2f78f0cb294 ("media: vidtv: psi: add a Network Information Table (NIT)")
-Fixes: f90cf6079bf6 ("media: vidtv: add a bridge driver")
 Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_psi.c | 45 +++++++++++++++++---
- 1 file changed, 40 insertions(+), 5 deletions(-)
+ drivers/media/test-drivers/vidtv/vidtv_mux.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vidtv/vidtv_psi.c b/drivers/media/test-drivers/vidtv/vidtv_psi.c
-index c11ac8dca73df..988324587c4ed 100644
---- a/drivers/media/test-drivers/vidtv/vidtv_psi.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_psi.c
-@@ -307,16 +307,29 @@ struct vidtv_psi_desc_service *vidtv_psi_service_desc_init(struct vidtv_psi_desc
- 
- 	desc->service_name_len = service_name_len;
- 
--	if (service_name && service_name_len)
-+	if (service_name && service_name_len) {
- 		desc->service_name = kstrdup(service_name, GFP_KERNEL);
-+		if (!desc->service_name)
-+			goto free_desc;
-+	}
- 
- 	desc->provider_name_len = provider_name_len;
- 
--	if (provider_name && provider_name_len)
-+	if (provider_name && provider_name_len) {
- 		desc->provider_name = kstrdup(provider_name, GFP_KERNEL);
-+		if (!desc->provider_name)
-+			goto free_desc_service_name;
-+	}
- 
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
+diff --git a/drivers/media/test-drivers/vidtv/vidtv_mux.c b/drivers/media/test-drivers/vidtv/vidtv_mux.c
+index b51e6a3b8cbeb..f99878eff7ace 100644
+--- a/drivers/media/test-drivers/vidtv/vidtv_mux.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_mux.c
+@@ -504,13 +504,16 @@ struct vidtv_mux *vidtv_mux_init(struct dvb_frontend *fe,
+ 	m->priv = args->priv;
+ 	m->network_id = args->network_id;
+ 	m->network_name = kstrdup(args->network_name, GFP_KERNEL);
++	if (!m->network_name)
++		goto free_mux_buf;
 +
-+free_desc_service_name:
-+	if (service_name && service_name_len)
-+		kfree(desc->service_name);
-+free_desc:
-+	kfree(desc);
-+	return NULL;
- }
+ 	m->timing.current_jiffies = get_jiffies_64();
  
- struct vidtv_psi_desc_registration
-@@ -361,8 +374,13 @@ struct vidtv_psi_desc_network_name
+ 	if (args->channels)
+ 		m->channels = args->channels;
+ 	else
+ 		if (vidtv_channels_init(m) < 0)
+-			goto free_mux_buf;
++			goto free_mux_network_name;
  
- 	desc->length = network_name_len;
- 
--	if (network_name && network_name_len)
-+	if (network_name && network_name_len) {
- 		desc->network_name = kstrdup(network_name, GFP_KERNEL);
-+		if (!desc->network_name) {
-+			kfree(desc);
-+			return NULL;
-+		}
-+	}
- 
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
-@@ -448,15 +466,32 @@ struct vidtv_psi_desc_short_event
- 		iso_language_code = "eng";
- 
- 	desc->iso_language_code = kstrdup(iso_language_code, GFP_KERNEL);
-+	if (!desc->iso_language_code)
-+		goto free_desc;
- 
--	if (event_name && event_name_len)
-+	if (event_name && event_name_len) {
- 		desc->event_name = kstrdup(event_name, GFP_KERNEL);
-+		if (!desc->event_name)
-+			goto free_desc_language_code;
-+	}
- 
--	if (text && text_len)
-+	if (text && text_len) {
- 		desc->text = kstrdup(text, GFP_KERNEL);
-+		if (!desc->text)
-+			goto free_desc_event_name;
-+	}
- 
- 	vidtv_psi_desc_chain(head, (struct vidtv_psi_desc *)desc);
- 	return desc;
-+
-+free_desc_event_name:
-+	if (event_name && event_name_len)
-+		kfree(desc->event_name);
-+free_desc_language_code:
-+	kfree(desc->iso_language_code);
-+free_desc:
-+	kfree(desc);
-+	return NULL;
- }
- 
- struct vidtv_psi_desc *vidtv_psi_desc_clone(struct vidtv_psi_desc *desc)
+ 	/* will alloc data for pmt_sections after initializing pat */
+ 	if (vidtv_channel_si_init(m) < 0)
+@@ -527,6 +530,8 @@ struct vidtv_mux *vidtv_mux_init(struct dvb_frontend *fe,
+ 	vidtv_channel_si_destroy(m);
+ free_channels:
+ 	vidtv_channels_destroy(m);
++free_mux_network_name:
++	kfree(m->network_name);
+ free_mux_buf:
+ 	vfree(m->mux_buf);
+ free_mux:
 -- 
 2.42.0
 
