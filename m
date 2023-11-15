@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58733DBA1
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE183DB97
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6pzH92b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5317CC433C9;
-	Wed, 15 Nov 2023 19:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgavMu7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F75CC433C9;
+	Wed, 15 Nov 2023 19:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078382;
-	bh=vtZpYbrFix4JgEwJv6sOZS7If3PasYocbVaxjYA/qr8=;
+	s=korg; t=1700078384;
+	bh=TPVAUC9J8YOeurDNjeLHjbQjrRIiOeLPMR7nrLrR/8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I6pzH92byyoiQg8B2YjddbLx2/RcyAnWKABFhLTb9lVEbqNZajBsxjMF/zi/LsfQ1
-	 CV2FBnZnPo0PYtyApMDp0jXMOIoK5bRAGAthVelNWgQaZkCzybKCWgObKsiFZAhTWb
-	 efSqVn6qxQxuOLC4gvPLNFCBcf7ZooSEFgpiOH6I=
+	b=CgavMu7Vh8M7rfaJ8W02X3WUIDrALeR5MDjnooiRxwSj47smJt5sMhNPCfxjfmOSF
+	 svzyt5fG9hDFwbEP6MMqt8ZE1eIilw9yp6gT9ecQmQSqoRWCln1I+VRYSXwuqEuRAJ
+	 +6WbXVjExKs+aZQAOyfYF6e8SUUWApZOtsQN6KEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 272/379] misc: st_core: Do not call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 15 Nov 2023 14:25:47 -0500
-Message-ID: <20231115192701.219095286@linuxfoundation.org>
+Subject: [PATCH 6.1 290/379] interconnect: qcom: sm8350: Retire DEFINE_QBCM
+Date: Wed, 15 Nov 2023 14:26:05 -0500
+Message-ID: <20231115192702.296489401@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -41,63 +43,341 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 4d08c3d12b61022501989f9f071514d2d6f77c47 ]
+[ Upstream commit edd13c04ff0d90ed152902a88f01f466c77a0cf9 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with hardware interrupts being disabled.
-So replace kfree_skb() with dev_kfree_skb_irq() under
-spin_lock_irqsave(). Compile tested only.
+The struct definition macros are hard to read and compare, expand them.
 
-Fixes: 53618cc1e51e ("Staging: sources for ST core")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20230823035020.1281892-1-ruanjinjie@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Link: https://lore.kernel.org/r/20230811-topic-icc_retire_macrosd-v1-19-c03aaeffc769@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Stable-dep-of: df1b8356a80a ("interconnect: qcom: sm8350: Set ACV enable_mask")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ti-st/st_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/interconnect/qcom/sm8350.c | 308 ++++++++++++++++++++++++++---
+ 1 file changed, 276 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/misc/ti-st/st_core.c b/drivers/misc/ti-st/st_core.c
-index 7f6976a9f508b..48e0f8377e659 100644
---- a/drivers/misc/ti-st/st_core.c
-+++ b/drivers/misc/ti-st/st_core.c
-@@ -15,6 +15,7 @@
- #include <linux/skbuff.h>
+diff --git a/drivers/interconnect/qcom/sm8350.c b/drivers/interconnect/qcom/sm8350.c
+index 5398e7c8d826b..1959208409396 100644
+--- a/drivers/interconnect/qcom/sm8350.c
++++ b/drivers/interconnect/qcom/sm8350.c
+@@ -165,38 +165,282 @@ DEFINE_QNODE(ebi_disp, SM8350_SLAVE_EBI1_DISP, 4, 4);
+ DEFINE_QNODE(qns_mem_noc_hf_disp, SM8350_SLAVE_MNOC_HF_MEM_NOC_DISP, 2, 32, SM8350_MASTER_MNOC_HF_MEM_NOC_DISP);
+ DEFINE_QNODE(qns_mem_noc_sf_disp, SM8350_SLAVE_MNOC_SF_MEM_NOC_DISP, 2, 32, SM8350_MASTER_MNOC_SF_MEM_NOC_DISP);
  
- #include <linux/ti_wilink_st.h>
-+#include <linux/netdevice.h>
+-DEFINE_QBCM(bcm_acv, "ACV", false, &ebi);
+-DEFINE_QBCM(bcm_ce0, "CE0", false, &qxm_crypto);
+-DEFINE_QBCM(bcm_cn0, "CN0", true, &qnm_gemnoc_cnoc, &qnm_gemnoc_pcie);
+-DEFINE_QBCM(bcm_cn1, "CN1", false, &xm_qdss_dap, &qhs_ahb2phy0, &qhs_ahb2phy1, &qhs_aoss, &qhs_apss, &qhs_camera_cfg, &qhs_clk_ctl, &qhs_compute_cfg, &qhs_cpr_cx, &qhs_cpr_mmcx, &qhs_cpr_mx, &qhs_crypto0_cfg, &qhs_cx_rdpm, &qhs_dcc_cfg, &qhs_display_cfg, &qhs_gpuss_cfg, &qhs_hwkm, &qhs_imem_cfg, &qhs_ipa, &qhs_ipc_router, &qhs_mss_cfg, &qhs_mx_rdpm, &qhs_pcie0_cfg, &qhs_pcie1_cfg, &qhs_pimem_cfg, &qhs_pka_wrapper_cfg, &qhs_pmu_wrapper_cfg, &qhs_qdss_cfg, &qhs_qup0, &qhs_qup1, &qhs_qup2, &qhs_security, &qhs_spss_cfg, &qhs_tcsr, &qhs_tlmm, &qhs_ufs_card_cfg, &qhs_ufs_mem_cfg, &qhs_usb3_0, &qhs_usb3_1, &qhs_venus_cfg, &qhs_vsense_ctrl_cfg, &qns_a1_noc_cfg, &qns_a2_noc_cfg, &qns_ddrss_cfg, &qns_mnoc_cfg, &qns_snoc_cfg, &srvc_cnoc);
+-DEFINE_QBCM(bcm_cn2, "CN2", false, &qhs_lpass_cfg, &qhs_pdm, &qhs_qspi, &qhs_sdc2, &qhs_sdc4);
+-DEFINE_QBCM(bcm_co0, "CO0", false, &qns_nsp_gemnoc);
+-DEFINE_QBCM(bcm_co3, "CO3", false, &qxm_nsp);
+-DEFINE_QBCM(bcm_mc0, "MC0", true, &ebi);
+-DEFINE_QBCM(bcm_mm0, "MM0", true, &qns_mem_noc_hf);
+-DEFINE_QBCM(bcm_mm1, "MM1", false, &qnm_camnoc_hf, &qxm_mdp0, &qxm_mdp1);
+-DEFINE_QBCM(bcm_mm4, "MM4", false, &qns_mem_noc_sf);
+-DEFINE_QBCM(bcm_mm5, "MM5", false, &qnm_camnoc_icp, &qnm_camnoc_sf, &qnm_video0, &qnm_video1, &qnm_video_cvp, &qxm_rot);
+-DEFINE_QBCM(bcm_sh0, "SH0", true, &qns_llcc);
+-DEFINE_QBCM(bcm_sh2, "SH2", false, &alm_gpu_tcu, &alm_sys_tcu);
+-DEFINE_QBCM(bcm_sh3, "SH3", false, &qnm_cmpnoc);
+-DEFINE_QBCM(bcm_sh4, "SH4", false, &chm_apps);
+-DEFINE_QBCM(bcm_sn0, "SN0", true, &qns_gemnoc_sf);
+-DEFINE_QBCM(bcm_sn2, "SN2", false, &qns_gemnoc_gc);
+-DEFINE_QBCM(bcm_sn3, "SN3", false, &qxs_pimem);
+-DEFINE_QBCM(bcm_sn4, "SN4", false, &xs_qdss_stm);
+-DEFINE_QBCM(bcm_sn5, "SN5", false, &xm_pcie3_0);
+-DEFINE_QBCM(bcm_sn6, "SN6", false, &xm_pcie3_1);
+-DEFINE_QBCM(bcm_sn7, "SN7", false, &qnm_aggre1_noc);
+-DEFINE_QBCM(bcm_sn8, "SN8", false, &qnm_aggre2_noc);
+-DEFINE_QBCM(bcm_sn14, "SN14", false, &qns_pcie_mem_noc);
+-DEFINE_QBCM(bcm_acv_disp, "ACV", false, &ebi_disp);
+-DEFINE_QBCM(bcm_mc0_disp, "MC0", false, &ebi_disp);
+-DEFINE_QBCM(bcm_mm0_disp, "MM0", false, &qns_mem_noc_hf_disp);
+-DEFINE_QBCM(bcm_mm1_disp, "MM1", false, &qxm_mdp0_disp, &qxm_mdp1_disp);
+-DEFINE_QBCM(bcm_mm4_disp, "MM4", false, &qns_mem_noc_sf_disp);
+-DEFINE_QBCM(bcm_mm5_disp, "MM5", false, &qxm_rot_disp);
+-DEFINE_QBCM(bcm_sh0_disp, "SH0", false, &qns_llcc_disp);
++static struct qcom_icc_bcm bcm_acv = {
++	.name = "ACV",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &ebi },
++};
++
++static struct qcom_icc_bcm bcm_ce0 = {
++	.name = "CE0",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qxm_crypto },
++};
++
++static struct qcom_icc_bcm bcm_cn0 = {
++	.name = "CN0",
++	.keepalive = true,
++	.num_nodes = 2,
++	.nodes = { &qnm_gemnoc_cnoc, &qnm_gemnoc_pcie },
++};
++
++static struct qcom_icc_bcm bcm_cn1 = {
++	.name = "CN1",
++	.keepalive = false,
++	.num_nodes = 47,
++	.nodes = { &xm_qdss_dap,
++		   &qhs_ahb2phy0,
++		   &qhs_ahb2phy1,
++		   &qhs_aoss,
++		   &qhs_apss,
++		   &qhs_camera_cfg,
++		   &qhs_clk_ctl,
++		   &qhs_compute_cfg,
++		   &qhs_cpr_cx,
++		   &qhs_cpr_mmcx,
++		   &qhs_cpr_mx,
++		   &qhs_crypto0_cfg,
++		   &qhs_cx_rdpm,
++		   &qhs_dcc_cfg,
++		   &qhs_display_cfg,
++		   &qhs_gpuss_cfg,
++		   &qhs_hwkm,
++		   &qhs_imem_cfg,
++		   &qhs_ipa,
++		   &qhs_ipc_router,
++		   &qhs_mss_cfg,
++		   &qhs_mx_rdpm,
++		   &qhs_pcie0_cfg,
++		   &qhs_pcie1_cfg,
++		   &qhs_pimem_cfg,
++		   &qhs_pka_wrapper_cfg,
++		   &qhs_pmu_wrapper_cfg,
++		   &qhs_qdss_cfg,
++		   &qhs_qup0,
++		   &qhs_qup1,
++		   &qhs_qup2,
++		   &qhs_security,
++		   &qhs_spss_cfg,
++		   &qhs_tcsr,
++		   &qhs_tlmm,
++		   &qhs_ufs_card_cfg,
++		   &qhs_ufs_mem_cfg,
++		   &qhs_usb3_0,
++		   &qhs_usb3_1,
++		   &qhs_venus_cfg,
++		   &qhs_vsense_ctrl_cfg,
++		   &qns_a1_noc_cfg,
++		   &qns_a2_noc_cfg,
++		   &qns_ddrss_cfg,
++		   &qns_mnoc_cfg,
++		   &qns_snoc_cfg,
++		   &srvc_cnoc
++	},
++};
++
++static struct qcom_icc_bcm bcm_cn2 = {
++	.name = "CN2",
++	.keepalive = false,
++	.num_nodes = 5,
++	.nodes = { &qhs_lpass_cfg, &qhs_pdm, &qhs_qspi, &qhs_sdc2, &qhs_sdc4 },
++};
++
++static struct qcom_icc_bcm bcm_co0 = {
++	.name = "CO0",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_nsp_gemnoc },
++};
++
++static struct qcom_icc_bcm bcm_co3 = {
++	.name = "CO3",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qxm_nsp },
++};
++
++static struct qcom_icc_bcm bcm_mc0 = {
++	.name = "MC0",
++	.keepalive = true,
++	.num_nodes = 1,
++	.nodes = { &ebi },
++};
++
++static struct qcom_icc_bcm bcm_mm0 = {
++	.name = "MM0",
++	.keepalive = true,
++	.num_nodes = 1,
++	.nodes = { &qns_mem_noc_hf },
++};
++
++static struct qcom_icc_bcm bcm_mm1 = {
++	.name = "MM1",
++	.keepalive = false,
++	.num_nodes = 3,
++	.nodes = { &qnm_camnoc_hf, &qxm_mdp0, &qxm_mdp1 },
++};
++
++static struct qcom_icc_bcm bcm_mm4 = {
++	.name = "MM4",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_mem_noc_sf },
++};
++
++static struct qcom_icc_bcm bcm_mm5 = {
++	.name = "MM5",
++	.keepalive = false,
++	.num_nodes = 6,
++	.nodes = { &qnm_camnoc_icp,
++		   &qnm_camnoc_sf,
++		   &qnm_video0,
++		   &qnm_video1,
++		   &qnm_video_cvp,
++		   &qxm_rot
++	},
++};
++
++static struct qcom_icc_bcm bcm_sh0 = {
++	.name = "SH0",
++	.keepalive = true,
++	.num_nodes = 1,
++	.nodes = { &qns_llcc },
++};
++
++static struct qcom_icc_bcm bcm_sh2 = {
++	.name = "SH2",
++	.keepalive = false,
++	.num_nodes = 2,
++	.nodes = { &alm_gpu_tcu, &alm_sys_tcu },
++};
++
++static struct qcom_icc_bcm bcm_sh3 = {
++	.name = "SH3",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qnm_cmpnoc },
++};
++
++static struct qcom_icc_bcm bcm_sh4 = {
++	.name = "SH4",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &chm_apps },
++};
++
++static struct qcom_icc_bcm bcm_sn0 = {
++	.name = "SN0",
++	.keepalive = true,
++	.num_nodes = 1,
++	.nodes = { &qns_gemnoc_sf },
++};
++
++static struct qcom_icc_bcm bcm_sn2 = {
++	.name = "SN2",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_gemnoc_gc },
++};
++
++static struct qcom_icc_bcm bcm_sn3 = {
++	.name = "SN3",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qxs_pimem },
++};
++
++static struct qcom_icc_bcm bcm_sn4 = {
++	.name = "SN4",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &xs_qdss_stm },
++};
++
++static struct qcom_icc_bcm bcm_sn5 = {
++	.name = "SN5",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &xm_pcie3_0 },
++};
++
++static struct qcom_icc_bcm bcm_sn6 = {
++	.name = "SN6",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &xm_pcie3_1 },
++};
++
++static struct qcom_icc_bcm bcm_sn7 = {
++	.name = "SN7",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qnm_aggre1_noc },
++};
++
++static struct qcom_icc_bcm bcm_sn8 = {
++	.name = "SN8",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qnm_aggre2_noc },
++};
++
++static struct qcom_icc_bcm bcm_sn14 = {
++	.name = "SN14",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_pcie_mem_noc },
++};
++
++static struct qcom_icc_bcm bcm_acv_disp = {
++	.name = "ACV",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &ebi_disp },
++};
++
++static struct qcom_icc_bcm bcm_mc0_disp = {
++	.name = "MC0",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &ebi_disp },
++};
++
++static struct qcom_icc_bcm bcm_mm0_disp = {
++	.name = "MM0",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_mem_noc_hf_disp },
++};
++
++static struct qcom_icc_bcm bcm_mm1_disp = {
++	.name = "MM1",
++	.keepalive = false,
++	.num_nodes = 2,
++	.nodes = { &qxm_mdp0_disp, &qxm_mdp1_disp },
++};
++
++static struct qcom_icc_bcm bcm_mm4_disp = {
++	.name = "MM4",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_mem_noc_sf_disp },
++};
++
++static struct qcom_icc_bcm bcm_mm5_disp = {
++	.name = "MM5",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qxm_rot_disp },
++};
++
++static struct qcom_icc_bcm bcm_sh0_disp = {
++	.name = "SH0",
++	.keepalive = false,
++	.num_nodes = 1,
++	.nodes = { &qns_llcc_disp },
++};
  
- extern void st_kim_recv(void *, const unsigned char *, long);
- void st_int_recv(void *, const unsigned char *, long);
-@@ -435,7 +436,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	case ST_LL_AWAKE_TO_ASLEEP:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	case ST_LL_ASLEEP:
- 		skb_queue_tail(&st_gdata->tx_waitq, skb);
-@@ -444,7 +445,7 @@ static void st_int_enqueue(struct st_data_s *st_gdata, struct sk_buff *skb)
- 	default:
- 		pr_err("ST LL is illegal state(%ld),"
- 			   "purging received skb.", st_ll_getstate(st_gdata));
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	}
- 
-@@ -498,7 +499,7 @@ void st_tx_wakeup(struct st_data_s *st_data)
- 				spin_unlock_irqrestore(&st_data->lock, flags);
- 				break;
- 			}
--			kfree_skb(skb);
-+			dev_kfree_skb_irq(skb);
- 			spin_unlock_irqrestore(&st_data->lock, flags);
- 		}
- 		/* if wake-up is set in another context- restart sending */
+ static struct qcom_icc_bcm * const aggre1_noc_bcms[] = {
+ };
 -- 
 2.42.0
 
