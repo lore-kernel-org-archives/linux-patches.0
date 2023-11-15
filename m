@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BB63DB8D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434973DB8D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSPNZ0jg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E35C433C7;
-	Wed, 15 Nov 2023 19:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQjlbqNc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5973C433CA;
+	Wed, 15 Nov 2023 19:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076077;
-	bh=y9DmejM8tT3Ne9GDbNhqORxDf6w6LFRQZtxg12V57mc=;
+	s=korg; t=1700076079;
+	bh=6xd0LZZ3dDEtlyJKd9qI/iysLNaGFjsRWD2l8QF5nec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xSPNZ0jg3eO4JemGilYkL1lf06KfoUVsNJ7OQJHKgDY4atxJpj2FwUlIikm/SpYJP
-	 He4CoVmSJYmC2QoYiqnlffptiOa41kAAM1VMZEyCjHr8Vb6rZ41eKGV/MlVMp+B+m0
-	 oq40NU/mxiS/xj6O9+5hsVa8lLI/zXQA9XBcN69o=
+	b=IQjlbqNcSMcjFPxh59IaL7myk64JhB7ydV5946styOfFLFSsT2npg3RmqK04K/ZSN
+	 2VgzMY0+BKEwU8ycaT9JhbvhSFN0XybTPIVsF5ruCSBzGZJuNiyKgx3vql1ZGGXX1o
+	 JWdOGaYLtl+PpuschJEYWNoW8Gryj66R7jMQoUO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wendy Wang <wendy.wang@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>,
+	Juergen Gross <jgross@suse.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zhang Rui <rui.zhang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 035/550] genirq/matrix: Exclude managed interrupts in irq_matrix_allocated()
-Date: Wed, 15 Nov 2023 14:10:19 -0500
-Message-ID: <20231115191603.142484607@linuxfoundation.org>
+Subject: [PATCH 6.5 026/550] x86/apic: Fake primary thread mask for XEN/PV
+Date: Wed, 15 Nov 2023 14:10:10 -0500
+Message-ID: <20231115191602.535505989@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,71 +46,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yu <yu.c.chen@intel.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit a0b0bad10587ae2948a7c36ca4ffc206007fbcf3 ]
+[ Upstream commit 965e05ff8af98c44f9937366715c512000373164 ]
 
-When a CPU is about to be offlined, x86 validates that all active
-interrupts which are targeted to this CPU can be migrated to the remaining
-online CPUs. If not, the offline operation is aborted.
+The SMT control mechanism got added as speculation attack vector
+mitigation. The implemented logic relies on the primary thread mask to
+be set up properly.
 
-The validation uses irq_matrix_allocated() to retrieve the number of
-vectors which are allocated on the outgoing CPU. The returned number of
-allocated vectors includes also vectors which are associated to managed
-interrupts.
+This turns out to be an issue with XEN/PV guests because their CPU hotplug
+mechanics do not enumerate APICs and therefore the mask is never correctly
+populated.
 
-That's overaccounting because managed interrupts are:
+This went unnoticed so far because by chance XEN/PV ends up with
+smp_num_siblings == 2. So cpu_smt_control stays at its default value
+CPU_SMT_ENABLED and the primary thread mask is never evaluated in the
+context of CPU hotplug.
 
-  - not migrated when the affinity mask of the interrupt targets only
-    the outgoing CPU
+This stopped "working" with the upcoming overhaul of the topology
+evaluation which legitimately provides a fake topology for XEN/PV. That
+sets smp_num_siblings to 1, which causes the core CPU hot-plug core to
+refuse to bring up the APs.
 
-  - migrated to another CPU, but in that case the vector is already
-    pre-allocated on the potential target CPUs and must not be taken into
-    account.
+This happens because cpu_smt_control is set to CPU_SMT_NOT_SUPPORTED which
+causes cpu_bootable() to evaluate the unpopulated primary thread mask with
+the conclusion that all non-boot CPUs are not valid to be plugged.
 
-As a consequence the check whether the remaining online CPUs have enough
-capacity for migrating the allocated vectors from the outgoing CPU might
-fail incorrectly.
+The core code has already been made more robust against this kind of fail,
+but the primary thread mask really wants to be populated to avoid other
+issues all over the place.
 
-Let irq_matrix_allocated() return only the number of allocated non-managed
-interrupts to make this validation check correct.
+Just fake the mask by pretending that all XEN/PV vCPUs are primary threads,
+which is consistent because all of XEN/PVs topology is fake or non-existent.
 
-[ tglx: Amend changelog and fixup kernel-doc comment ]
-
-Fixes: 2f75d9e1c905 ("genirq: Implement bitmap matrix allocator")
-Reported-by: Wendy Wang <wendy.wang@intel.com>
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Fixes: 6a4d2657e048 ("x86/smp: Provide topology_is_primary_thread()")
+Fixes: f54d4434c281 ("x86/apic: Provide cpu_primary_thread mask")
+Reported-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20231020072522.557846-1-yu.c.chen@intel.com
+Tested-by: Juergen Gross <jgross@suse.com>
+Tested-by: Sohil Mehta <sohil.mehta@intel.com>
+Tested-by: Michael Kelley <mikelley@microsoft.com>
+Tested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20230814085112.210011520@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/matrix.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kernel/apic/apic.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/kernel/irq/matrix.c b/kernel/irq/matrix.c
-index 1698e77645acf..75d0ae490e29c 100644
---- a/kernel/irq/matrix.c
-+++ b/kernel/irq/matrix.c
-@@ -466,16 +466,16 @@ unsigned int irq_matrix_reserved(struct irq_matrix *m)
- }
+diff --git a/arch/x86/kernel/apic/apic.c b/arch/x86/kernel/apic/apic.c
+index af49e24b46a43..7e0c7fbdc7d08 100644
+--- a/arch/x86/kernel/apic/apic.c
++++ b/arch/x86/kernel/apic/apic.c
+@@ -36,6 +36,8 @@
+ #include <linux/smp.h>
+ #include <linux/mm.h>
  
- /**
-- * irq_matrix_allocated - Get the number of allocated irqs on the local cpu
-+ * irq_matrix_allocated - Get the number of allocated non-managed irqs on the local CPU
-  * @m:		Pointer to the matrix to search
-  *
-- * This returns number of allocated irqs
-+ * This returns number of allocated non-managed interrupts.
-  */
- unsigned int irq_matrix_allocated(struct irq_matrix *m)
++#include <xen/xen.h>
++
+ #include <asm/trace/irq_vectors.h>
+ #include <asm/irq_remapping.h>
+ #include <asm/pc-conf-reg.h>
+@@ -2408,6 +2410,15 @@ static int __init smp_init_primary_thread_mask(void)
  {
- 	struct cpumap *cm = this_cpu_ptr(m->maps);
+ 	unsigned int cpu;
  
--	return cm->allocated;
-+	return cm->allocated - cm->managed_allocated;
- }
- 
- #ifdef CONFIG_GENERIC_IRQ_DEBUGFS
++	/*
++	 * XEN/PV provides either none or useless topology information.
++	 * Pretend that all vCPUs are primary threads.
++	 */
++	if (xen_pv_domain()) {
++		cpumask_copy(&__cpu_primary_thread_mask, cpu_possible_mask);
++		return 0;
++	}
++
+ 	for (cpu = 0; cpu < nr_logical_cpuids; cpu++)
+ 		cpu_mark_primary_thread(cpu, cpuid_to_apicid[cpu]);
+ 	return 0;
 -- 
 2.42.0
 
