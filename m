@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD873DB95
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E50228371
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFodUrYT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57653C433C8;
-	Wed, 15 Nov 2023 19:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC9GaLj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26F3C433C9;
+	Wed, 15 Nov 2023 19:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076025;
-	bh=mByu1WIWOOxjIjB256VxniQkCiDXU/HE78ewecxc3EM=;
+	s=korg; t=1700076027;
+	bh=SuHBy7E/NykkDtC6n19gCdulU5oaKDv7JLs8pq2REQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFodUrYT1E3FKMxl+xxOgsKeyf2wcjD2b4pIL56D9COIB58tpQFXV2f0+nie+SekQ
-	 chfmlh4e8JtsFmIGMWgrjjVIceDMRRl56M7qVAAI6N6JNzgIjor+kCAdeeQSmtMw/A
-	 qVe160mtn5l7nQ4j45f1LYwqXyn+DMDWjdBfcZlE=
+	b=GC9GaLj5UF4Dw42UMLAt65poD7yNSBtcKmO/nLN38Tl/Jjh12hHgjbt16w0kkZU0g
+	 E4YFS3EfNqawvpManJ9NbtFLe0aq16b0h/CfC0T4o1y6KpQ0tetWQgRY3qSXdOwuOb
+	 kPW/3JV1HsoSjXl8FVLW/ZKX/zFMGvv8MVtnxRH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yury Norov <yury.norov@gmail.com>,
+	Leo Yu-Chi Liang <ycliang@andestech.com>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Mel Gorman <mgorman@suse.de>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 004/550] sched/topology: Fix sched_numa_find_nth_cpu() in non-NUMA case
-Date: Wed, 15 Nov 2023 14:09:48 -0500
-Message-ID: <20231115191601.020062279@linuxfoundation.org>
+Subject: [PATCH 6.5 005/550] sched/fair: Fix cfs_rq_is_decayed() on !SMP
+Date: Wed, 15 Nov 2023 14:09:49 -0500
+Message-ID: <20231115191601.087096401@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,39 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yury Norov <yury.norov@gmail.com>
+From: Chengming Zhou <zhouchengming@bytedance.com>
 
-[ Upstream commit 8ab63d418d4339d996f80d02a00dbce0aa3ff972 ]
+[ Upstream commit c0490bc9bb62d9376f3dd4ec28e03ca0fef97152 ]
 
-When CONFIG_NUMA is enabled, sched_numa_find_nth_cpu() searches for a
-CPU in sched_domains_numa_masks. The masks includes only online CPUs,
-so effectively offline CPUs are skipped.
+We don't need to maintain per-queue leaf_cfs_rq_list on !SMP, since
+it's used for cfs_rq load tracking & balancing on SMP.
 
-When CONFIG_NUMA is disabled, the fallback function should be consistent.
+But sched debug interface uses it to print per-cfs_rq stats.
 
-Fixes: cd7f55359c90 ("sched: add sched_numa_find_nth_cpu()")
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
+This patch fixes the !SMP version of cfs_rq_is_decayed(), so the
+per-queue leaf_cfs_rq_list is also maintained correctly on !SMP,
+to fix the warning in assert_list_leaf_cfs_rq().
+
+Fixes: 0a00a354644e ("sched/fair: Delete useless condition in tg_unthrottle_up()")
+Reported-by: Leo Yu-Chi Liang <ycliang@andestech.com>
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: Mel Gorman <mgorman@suse.de>
-Link: https://lore.kernel.org/r/20230819141239.287290-5-yury.norov@gmail.com
+Tested-by: Leo Yu-Chi Liang <ycliang@andestech.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Closes: https://lore.kernel.org/all/ZN87UsqkWcFLDxea@swlinux02/
+Link: https://lore.kernel.org/r/20230913132031.2242151-1-chengming.zhou@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/topology.h | 2 +-
+ kernel/sched/fair.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/topology.h b/include/linux/topology.h
-index fea32377f7c77..52f5850730b3e 100644
---- a/include/linux/topology.h
-+++ b/include/linux/topology.h
-@@ -251,7 +251,7 @@ extern const struct cpumask *sched_numa_hop_mask(unsigned int node, unsigned int
- #else
- static __always_inline int sched_numa_find_nth_cpu(const struct cpumask *cpus, int cpu, int node)
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 1d9c2482c5a35..7e3ed4f447fdf 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4654,7 +4654,7 @@ static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
+ 
+ static inline bool cfs_rq_is_decayed(struct cfs_rq *cfs_rq)
  {
--	return cpumask_nth(cpu, cpus);
-+	return cpumask_nth_and(cpu, cpus, cpu_online_mask);
+-	return true;
++	return !cfs_rq->nr_running;
  }
  
- static inline const struct cpumask *
+ #define UPDATE_TG	0x0
 -- 
 2.42.0
 
