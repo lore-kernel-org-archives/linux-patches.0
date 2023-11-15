@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDC23A8C9
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350F13A8C9
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBZVuP+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3E3C433C9;
-	Wed, 15 Nov 2023 19:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVYibxJX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8ED7C433C8;
+	Wed, 15 Nov 2023 19:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077694;
-	bh=DNKrQyDwX8lppB9ei+gOHQPN8ibOeLv64Af+wHATMHc=;
+	s=korg; t=1700077696;
+	bh=Ap3SjNM2P8aBDHmJWzhgWIp8eFxAlNp+YG0L7H8QhuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBZVuP+mn02lCUEhUPEAPVgFNgBJ9gZcw5RXHNmwVuB6Fwy0hIUYBSD0KwqGw4MMb
-	 GqVAMLYDRQsfR5OFqw40wNpu4vLOMyBIX1r8+e5VBiOPyrOLZWegYUG53x/SwZcDbN
-	 6tlqp/cmjAqb6UTUsTshfNhPJDmPFT986iQ7FHaM=
+	b=yVYibxJXkyV4jJPlLb0d1J4Srpu1Ivg3DlMBVf/uT9trhx2py73oQMCwKTQur1JKG
+	 RjQRIwgKhNUcZe3qhlfaDN12PLdBgj6ysEa8F2D/yWty0Sl5iC2Yu6tIKf7MX0/QUc
+	 swaKCP0sWYX6tx2plGOyY7twsdU5ZCx7+t7OboQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 443/603] tools: iio: iio_generic_buffer ensure alignment
-Date: Wed, 15 Nov 2023 14:16:28 -0500
-Message-ID: <20231115191643.437659133@linuxfoundation.org>
+Subject: [PATCH 6.6 461/603] perf build: Add missing comment about NO_LIBTRACEEVENT=1
+Date: Wed, 15 Nov 2023 14:16:46 -0500
+Message-ID: <20231115191644.498060462@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,63 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 2d3dff577dd0ea8fe9637a13822f7603c4a881c8 ]
+[ Upstream commit c1783ddfb62420c44cdf4672dad2046f056c624b ]
 
-The iio_generic_buffer can return garbage values when the total size of
-scan data is not a multiple of the largest element in the scan. This can be
-demonstrated by reading a scan, consisting, for example of one 4-byte and
-one 2-byte element, where the 4-byte element is first in the buffer.
+By default perf will fail the build if the development files for
+libtraceevent are not available.
 
-The IIO generic buffer code does not take into account the last two
-padding bytes that are needed to ensure that the 4-byte data for next
-scan is correctly aligned.
+To build perf without libtraceevent support, disabling several features
+such as 'perf trace', one needs to add NO_LIBTRACEVENT=1 to the make
+command line.
 
-Add the padding bytes required to align the next sample with the scan size.
+Add the missing comments about that to the tools/perf/Makefile.perf
+file, just like all the other such command line toggles.
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: e58537ccce73 ("staging: iio: update example application.")
-Link: https://lore.kernel.org/r/ZRvlm4ktNLu+qmlf@dc78bmyyyyyyyyyyyyydt-3.rev.dnainternet.fi
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 378ef0f5d9d7f465 ("perf build: Use libtraceevent from the system")
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Link: https://lore.kernel.org/r/ZR6+MhXtLnv6ow6E@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ tools/perf/Makefile.perf | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index 44bbf80f0cfdd..0d0a7a19d6f95 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -54,9 +54,12 @@ enum autochan {
- static unsigned int size_from_channelarray(struct iio_channel_info *channels, int num_channels)
- {
- 	unsigned int bytes = 0;
--	int i = 0;
-+	int i = 0, max = 0;
-+	unsigned int misalignment;
- 
- 	while (i < num_channels) {
-+		if (channels[i].bytes > max)
-+			max = channels[i].bytes;
- 		if (bytes % channels[i].bytes == 0)
- 			channels[i].location = bytes;
- 		else
-@@ -66,6 +69,14 @@ static unsigned int size_from_channelarray(struct iio_channel_info *channels, in
- 		bytes = channels[i].location + channels[i].bytes;
- 		i++;
- 	}
-+	/*
-+	 * We want the data in next sample to also be properly aligned so
-+	 * we'll add padding at the end if needed. Adding padding only
-+	 * works for channel data which size is 2^n bytes.
-+	 */
-+	misalignment = bytes % max;
-+	if (misalignment)
-+		bytes += max - misalignment;
- 
- 	return bytes;
- }
+diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
+index 37af6df7b978d..86569f230e60d 100644
+--- a/tools/perf/Makefile.perf
++++ b/tools/perf/Makefile.perf
+@@ -69,6 +69,10 @@ include ../scripts/utilities.mak
+ # Define NO_LIBDW_DWARF_UNWIND if you do not want libdw support
+ # for dwarf backtrace post unwind.
+ #
++# Define NO_LIBTRACEEVENT=1 if you don't want libtraceevent to be linked,
++# this will remove multiple features and tools, such as 'perf trace',
++# that need it to read tracefs event format files, etc.
++#
+ # Define NO_PERF_READ_VDSO32 if you do not want to build perf-read-vdso32
+ # for reading the 32-bit compatibility VDSO in 64-bit mode
+ #
 -- 
 2.42.0
 
