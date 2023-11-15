@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19403DBA7
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CD83DB8F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OC8llqP4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FC0C433C9;
-	Wed, 15 Nov 2023 20:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow2Ci84h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5A1C433C8;
+	Wed, 15 Nov 2023 20:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078678;
-	bh=7an9wsqKQ5/ZGl0pB6dlIVHq9C0agPnlbZLTyr1VH8U=;
+	s=korg; t=1700078680;
+	bh=PcyAS2ry7H4ddLNRbrlUduLr6HKJ7z8g/iFx+31L8WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OC8llqP41rQc9yDEbis6JQqlfxCn21s/V2BSD5qwKbE1zl+DttOwuv+d70/ULaC1W
-	 q+YXZPgGlEkH/J31zA7Rzt9EH5TR6BtYD2o33hef9RpJivfBvWaR0Myhq01Gm+ubDQ
-	 ossjnoQ506QuXovW5AQfmHi9i6SvvAw6C5Wr/mUg=
+	b=Ow2Ci84hKec0QgaInud2Q/fVDrdNdYxBhnBDcipuC/ni+EFDKq5vfmtzAMCAEgbsQ
+	 0EfCydOHTCB6/z9s/KpCIKF2XJvigum5jvC23kauLDBKgOC1l/00/Slau1wXSkJ9eN
+	 wnLo9nneQjHTQl+2OZNvfHTAQf+YpFmSsgwYxHu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <zenczykowski@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 42/45] netfilter: xt_recent: fix (increase) ipv6 literal buffer length
-Date: Wed, 15 Nov 2023 14:33:19 -0500
-Message-ID: <20231115191422.039952643@linuxfoundation.org>
+Subject: [PATCH 4.14 43/45] fbdev: fsl-diu-fb: mark wr_reg_wa() static
+Date: Wed, 15 Nov 2023 14:33:20 -0500
+Message-ID: <20231115191422.093428398@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191419.641552204@linuxfoundation.org>
 References: <20231115191419.641552204@linuxfoundation.org>
@@ -37,51 +36,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Żenczykowski <zenczykowski@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7b308feb4fd2d1c06919445c65c8fbf8e9fd1781 ]
+[ Upstream commit a5035c81847430dfa3482807b07325f29e9e8c09 ]
 
-in6_pton() supports 'low-32-bit dot-decimal representation'
-(this is useful with DNS64/NAT64 networks for example):
+wr_reg_wa() is not an appropriate name for a global function, and doesn't need
+to be global anyway, so mark it static and avoid the warning:
 
-  # echo +aaaa:bbbb:cccc:dddd:eeee:ffff:1.2.3.4 > /proc/self/net/xt_recent/DEFAULT
-  # cat /proc/self/net/xt_recent/DEFAULT
-  src=aaaa:bbbb:cccc:dddd:eeee:ffff:0102:0304 ttl: 0 last_seen: 9733848829 oldest_pkt: 1 9733848829
+drivers/video/fbdev/fsl-diu-fb.c:493:6: error: no previous prototype for 'wr_reg_wa' [-Werror=missing-prototypes]
 
-but the provided buffer is too short:
-
-  # echo +aaaa:bbbb:cccc:dddd:eeee:ffff:255.255.255.255 > /proc/self/net/xt_recent/DEFAULT
-  -bash: echo: write error: Invalid argument
-
-Fixes: 079aa88fe717 ("netfilter: xt_recent: IPv6 support")
-Signed-off-by: Maciej Żenczykowski <zenczykowski@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 0d9dab39fbbe ("powerpc/5121: fsl-diu-fb: fix issue with re-enabling DIU area descriptor")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_recent.c | 2 +-
+ drivers/video/fbdev/fsl-diu-fb.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_recent.c b/net/netfilter/xt_recent.c
-index cafbddf844d62..a2462351f9c41 100644
---- a/net/netfilter/xt_recent.c
-+++ b/net/netfilter/xt_recent.c
-@@ -566,7 +566,7 @@ recent_mt_proc_write(struct file *file, const char __user *input,
+diff --git a/drivers/video/fbdev/fsl-diu-fb.c b/drivers/video/fbdev/fsl-diu-fb.c
+index 25abbcf389134..8bdd82f760565 100644
+--- a/drivers/video/fbdev/fsl-diu-fb.c
++++ b/drivers/video/fbdev/fsl-diu-fb.c
+@@ -489,7 +489,7 @@ static enum fsl_diu_monitor_port fsl_diu_name_to_port(const char *s)
+  * Workaround for failed writing desc register of planes.
+  * Needed with MPC5121 DIU rev 2.0 silicon.
+  */
+-void wr_reg_wa(u32 *reg, u32 val)
++static void wr_reg_wa(u32 *reg, u32 val)
  {
- 	struct recent_table *t = PDE_DATA(file_inode(file));
- 	struct recent_entry *e;
--	char buf[sizeof("+b335:1d35:1e55:dead:c0de:1715:5afe:c0de")];
-+	char buf[sizeof("+b335:1d35:1e55:dead:c0de:1715:255.255.255.255")];
- 	const char *c = buf;
- 	union nf_inet_addr addr = {};
- 	u_int16_t family;
+ 	do {
+ 		out_be32(reg, val);
 -- 
 2.42.0
 
