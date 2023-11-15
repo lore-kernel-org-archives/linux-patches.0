@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1006E3D96E
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3F93DBA1
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSbsomvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5123C433C7;
-	Wed, 15 Nov 2023 19:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAI1qaJs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4805EC433C7;
+	Wed, 15 Nov 2023 19:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700078357;
-	bh=Y4zv3ra360U0h/XrIRERfeg6Sv0VQQQuuZcX5dky5Q4=;
+	s=korg; t=1700078359;
+	bh=qwAoTstkdilDQswxHB1COxR3WgVTtQT7YJJGcVb8IDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xSbsomvok84FJVBoqsUkqlByDFi1LbHIucnzKioZjaAx4V00k8R2+fYfxljk3ab6u
-	 NrUZ/ttc1M5rK2yF1UJSL6kSqIyvH/qV3IRhXl4kY9SmTHuzxmkLu9Zf2KpI2MbZNd
-	 SYSwTXk0lx8G30GBr/t7CA1GwGu/oAp1OiI7XRCY=
+	b=OAI1qaJsw/YELtJLVHMdOd9IbHfErUiDLy+HQzQgUSlb3uHgg8yFoG1cqxXuRpWzh
+	 +n1Gf7GhT0EiAhLEk4iqUHACsrONK7sXIQEevwwFyN5snhtXEyLk+RoKzvhn/juYrL
+	 /HjMEc/ox7S4wtKikEqpu/VAtAk0R3tQCjka2DPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lee Jones <lee@kernel.org>,
+	Rae Moar <rmoar@google.com>,
+	John Johansen <john.johansen@canonical.com>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 249/379] leds: trigger: ledtrig-cpu:: Fix output may be truncated issue for cpu
-Date: Wed, 15 Nov 2023 14:25:24 -0500
-Message-ID: <20231115192659.868237902@linuxfoundation.org>
+Subject: [PATCH 6.1 250/379] kunit: add macro to allow conditionally exposing static symbols to tests
+Date: Wed, 15 Nov 2023 14:25:25 -0500
+Message-ID: <20231115192659.928623527@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115192645.143643130@linuxfoundation.org>
 References: <20231115192645.143643130@linuxfoundation.org>
@@ -36,64 +38,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Rae Moar <rmoar@google.com>
 
-[ Upstream commit ff50f53276131a3059e8307d11293af388ed2bcd ]
+[ Upstream commit 9c988fae6f6ae3224a568ab985881b66bb50c9ec ]
 
-In order to teach the compiler that 'trig->name' will never be truncated,
-we need to tell it that 'cpu' is not negative.
+Create two macros:
 
-When building with W=1, this fixes the following warnings:
+VISIBLE_IF_KUNIT - A macro that sets symbols to be static if CONFIG_KUNIT
+is not enabled. Otherwise if CONFIG_KUNIT is enabled there is no change to
+the symbol definition.
 
-  drivers/leds/trigger/ledtrig-cpu.c: In function ‘ledtrig_cpu_init’:
-  drivers/leds/trigger/ledtrig-cpu.c:155:56: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 5 [-Werror=format-truncation=]
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                                                        ^~
-  drivers/leds/trigger/ledtrig-cpu.c:155:52: note: directive argument in the range [-2147483648, 7]
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                                                    ^~~~~~~
-  drivers/leds/trigger/ledtrig-cpu.c:155:17: note: ‘snprintf’ output between 5 and 15 bytes into a destination of size 8
-    155 |                 snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+EXPORT_SYMBOL_IF_KUNIT(symbol) - Exports symbol into
+EXPORTED_FOR_KUNIT_TESTING namespace only if CONFIG_KUNIT is enabled. Must
+use MODULE_IMPORT_NS(EXPORTED_FOR_KUNIT_TESTING) in test file in order to
+use symbols.
 
-Fixes: 8f88731d052d ("led-triggers: create a trigger for CPU activity")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/3f4be7a99933cf8566e630da54f6ab913caac432.1695453322.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Rae Moar <rmoar@google.com>
+Reviewed-by: John Johansen <john.johansen@canonical.com>
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: 8884ba07786c ("apparmor: fix invalid reference on profile->disconnected")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/trigger/ledtrig-cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/kunit/visibility.h | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+ create mode 100644 include/kunit/visibility.h
 
-diff --git a/drivers/leds/trigger/ledtrig-cpu.c b/drivers/leds/trigger/ledtrig-cpu.c
-index 8af4f9bb9cde8..05848a2fecff6 100644
---- a/drivers/leds/trigger/ledtrig-cpu.c
-+++ b/drivers/leds/trigger/ledtrig-cpu.c
-@@ -130,7 +130,7 @@ static int ledtrig_prepare_down_cpu(unsigned int cpu)
- 
- static int __init ledtrig_cpu_init(void)
- {
--	int cpu;
-+	unsigned int cpu;
- 	int ret;
- 
- 	/* Supports up to 9999 cpu cores */
-@@ -152,7 +152,7 @@ static int __init ledtrig_cpu_init(void)
- 		if (cpu >= 8)
- 			continue;
- 
--		snprintf(trig->name, MAX_NAME_LEN, "cpu%d", cpu);
-+		snprintf(trig->name, MAX_NAME_LEN, "cpu%u", cpu);
- 
- 		led_trigger_register_simple(trig->name, &trig->_trig);
- 	}
+diff --git a/include/kunit/visibility.h b/include/kunit/visibility.h
+new file mode 100644
+index 0000000000000..0dfe35feeec60
+--- /dev/null
++++ b/include/kunit/visibility.h
+@@ -0,0 +1,33 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * KUnit API to allow symbols to be conditionally visible during KUnit
++ * testing
++ *
++ * Copyright (C) 2022, Google LLC.
++ * Author: Rae Moar <rmoar@google.com>
++ */
++
++#ifndef _KUNIT_VISIBILITY_H
++#define _KUNIT_VISIBILITY_H
++
++#if IS_ENABLED(CONFIG_KUNIT)
++    /**
++     * VISIBLE_IF_KUNIT - A macro that sets symbols to be static if
++     * CONFIG_KUNIT is not enabled. Otherwise if CONFIG_KUNIT is enabled
++     * there is no change to the symbol definition.
++     */
++    #define VISIBLE_IF_KUNIT
++    /**
++     * EXPORT_SYMBOL_IF_KUNIT(symbol) - Exports symbol into
++     * EXPORTED_FOR_KUNIT_TESTING namespace only if CONFIG_KUNIT is
++     * enabled. Must use MODULE_IMPORT_NS(EXPORTED_FOR_KUNIT_TESTING)
++     * in test file in order to use symbols.
++     */
++    #define EXPORT_SYMBOL_IF_KUNIT(symbol) EXPORT_SYMBOL_NS(symbol, \
++	    EXPORTED_FOR_KUNIT_TESTING)
++#else
++    #define VISIBLE_IF_KUNIT static
++    #define EXPORT_SYMBOL_IF_KUNIT(symbol)
++#endif
++
++#endif /* _KUNIT_VISIBILITY_H */
 -- 
 2.42.0
 
