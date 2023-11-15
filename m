@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC763309F
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDE03309F
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjBj4yHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDA8C433C9;
-	Wed, 15 Nov 2023 19:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4q1Ii6y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101D9C433C7;
+	Wed, 15 Nov 2023 19:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077598;
-	bh=i5ZrQu/vNjxy+N0juXHn4vfoHgqyWIwHgZHfuSTaExk=;
+	s=korg; t=1700077600;
+	bh=zk7BEK/bxnMpVnK6QpemsaLRWVzwxTuV37ac+sBKrrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjBj4yHsIsyJnPIEJZM0xdmuOEbX2RIy0G5M6EU1KnmC22zmB51XhNl8WZH9IpjCD
-	 dG+YooDH3oDCfrd/WQLLmIC3n5by/1HO4RE1myKfTotLEMudnteZmoqnOCJN9Z1vrn
-	 RCDMDs82aBSu+k7BdM65jJYc0MdXQOJ+6mfgnsPQ=
+	b=o4q1Ii6y6J5Orr6yt5ROkrPvwFlbPulz6TAQbDlo8JiV/xM6GZHHJsuA8eb4BRUYG
+	 eqSHZFNJyTpfIGTBKvj8TrSoQGsTGaZm9ZZLXMgr09jTapoguKKqyVA+PnDrf55r3i
+	 SsaEllcIPj1BwrtJz5/Zec4VPibSDfBQtCxARmPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Damian Muszynski <damian.muszynski@intel.com>,
+	Tero Kristo <tero.kristo@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 393/603] HID: logitech-hidpp: Dont restart IO, instead defer hid_connect() only
-Date: Wed, 15 Nov 2023 14:15:38 -0500
-Message-ID: <20231115191640.318423475@linuxfoundation.org>
+Subject: [PATCH 6.6 402/603] crypto: qat - refactor fw config related functions
+Date: Wed, 15 Nov 2023 14:15:47 -0500
+Message-ID: <20231115191640.854361162@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,116 +44,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit 11ca0322a41920df2b462d2e45b0731e47ff475b ]
+[ Upstream commit 2990d2edac6061c6f0f646a46e40957244be2268 ]
 
-Restarting IO causes 2 problems:
+The logic that selects the correct adf_fw_config structure based on the
+configured service is replicated twice in the uof_get_name() and
+uof_get_ae_mask() functions. Refactor the code so that there is no
+replication.
 
-1. Some devices do not like IO being restarted this was addressed in
-   commit 498ba2069035 ("HID: logitech-hidpp: Don't restart communication
-   if not necessary"), but that change has issues of its own and needs to
-   be reverted.
+This does not introduce any functional change.
 
-2. Restarting IO and specifically calling hid_device_io_stop() causes
-   received packets to be missed, which may cause connect-events to
-   get missed.
-
-Restarting IO was introduced in commit 91cf9a98ae41 ("HID: logitech-hidpp:
-make .probe usbhid capable") to allow to retrieve the device's name and
-serial number and store these in hdev->name and hdev->uniq before
-connecting any hid subdrivers (hid-input, hidraw) exporting this info
-to userspace.
-
-But this does not require restarting IO, this merely requires deferring
-calling hid_connect(). Calling hid_hw_start() with a connect-mask of
-0 makes it skip calling hid_connect(), so hidpp_probe() can simply call
-hid_connect() later without needing to restart IO.
-
-Remove the stop + restart of IO and instead just call hid_connect() later
-to avoid the issues caused by restarting IO.
-
-Now that IO is no longer stopped, hid_hw_close() must be called at the end
-of probe() to balance the hid_hw_open() done at the beginning probe().
-
-This series has been tested on the following devices:
-Logitech Bluetooth Laser Travel Mouse (bluetooth, HID++ 1.0)
-Logitech M720 Triathlon (bluetooth, HID++ 4.5)
-Logitech M720 Triathlon (unifying, HID++ 4.5)
-Logitech K400 Pro (unifying, HID++ 4.1)
-Logitech K270 (eQUAD nano Lite, HID++ 2.0)
-Logitech M185 (eQUAD nano Lite, HID++ 4.5)
-Logitech LX501 keyboard (27 Mhz, HID++ builtin scroll-wheel, HID++ 1.0)
-Logitech M-RAZ105 mouse (27 Mhz, HID++ extra mouse buttons, HID++ 1.0)
-
-And by bentiss:
-Logitech Touchpad T650 (unifying)
-Logitech Touchpad T651 (bluetooth)
-Logitech MX Master 3B (BLE)
-Logitech G403 (plain USB / Gaming receiver)
-
-Fixes: 498ba2069035 ("HID: logitech-hidpp: Don't restart communication if not necessary")
-Suggested-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231010102029.111003-2-hdegoede@redhat.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Damian Muszynski <damian.muszynski@intel.com>
+Reviewed-by: Tero Kristo <tero.kristo@linux.intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: a238487f7965 ("crypto: qat - fix ring to service map for QAT GEN4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ .../intel/qat/qat_4xxx/adf_4xxx_hw_data.c     | 69 ++++++++-----------
+ 1 file changed, 28 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index a209d51bd2476..aa4f232c4518a 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4460,8 +4460,10 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 			 hdev->name);
+diff --git a/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c b/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
+index 12b5d18191119..10839269c4d32 100644
+--- a/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
++++ b/drivers/crypto/intel/qat/qat_4xxx/adf_4xxx_hw_data.c
+@@ -394,40 +394,42 @@ static u32 uof_get_num_objs(void)
+ 	return ARRAY_SIZE(adf_fw_cy_config);
+ }
  
- 	/*
--	 * Plain USB connections need to actually call start and open
--	 * on the transport driver to allow incoming data.
-+	 * First call hid_hw_start(hdev, 0) to allow IO without connecting any
-+	 * hid subdrivers (hid-input, hidraw). This allows retrieving the dev's
-+	 * name and serial number and store these in hdev->name and hdev->uniq,
-+	 * before the hid-input and hidraw drivers expose these to userspace.
- 	 */
- 	ret = hid_hw_start(hdev, will_restart ? 0 : connect_mask);
- 	if (ret) {
-@@ -4519,19 +4521,14 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 	flush_work(&hidpp->work);
- 
- 	if (will_restart) {
--		/* Reset the HID node state */
--		hid_device_io_stop(hdev);
--		hid_hw_close(hdev);
--		hid_hw_stop(hdev);
+-static const char *uof_get_name(struct adf_accel_dev *accel_dev, u32 obj_num,
+-				const char * const fw_objs[], int num_objs)
++static const struct adf_fw_config *get_fw_config(struct adf_accel_dev *accel_dev)
+ {
+-	int id;
 -
- 		if (hidpp->quirks & HIDPP_QUIRK_DELAYED_INIT)
- 			connect_mask &= ~HID_CONNECT_HIDINPUT;
- 
- 		/* Now export the actual inputs and hidraw nodes to the world */
--		ret = hid_hw_start(hdev, connect_mask);
-+		ret = hid_connect(hdev, connect_mask);
- 		if (ret) {
--			hid_err(hdev, "%s:hid_hw_start returned error\n", __func__);
--			goto hid_hw_start_fail;
-+			hid_err(hdev, "%s:hid_connect returned error %d\n", __func__, ret);
-+			goto hid_hw_init_fail;
- 		}
+ 	switch (get_service_enabled(accel_dev)) {
+ 	case SVC_CY:
+ 	case SVC_CY2:
+-		id = adf_fw_cy_config[obj_num].obj;
+-		break;
++		return adf_fw_cy_config;
+ 	case SVC_DC:
+-		id = adf_fw_dc_config[obj_num].obj;
+-		break;
++		return adf_fw_dc_config;
+ 	case SVC_DCC:
+-		id = adf_fw_dcc_config[obj_num].obj;
+-		break;
++		return adf_fw_dcc_config;
+ 	case SVC_SYM:
+-		id = adf_fw_sym_config[obj_num].obj;
+-		break;
++		return adf_fw_sym_config;
+ 	case SVC_ASYM:
+-		id =  adf_fw_asym_config[obj_num].obj;
+-		break;
++		return adf_fw_asym_config;
+ 	case SVC_ASYM_DC:
+ 	case SVC_DC_ASYM:
+-		id = adf_fw_asym_dc_config[obj_num].obj;
+-		break;
++		return adf_fw_asym_dc_config;
+ 	case SVC_SYM_DC:
+ 	case SVC_DC_SYM:
+-		id = adf_fw_sym_dc_config[obj_num].obj;
+-		break;
++		return adf_fw_sym_dc_config;
+ 	default:
+-		id = -EINVAL;
+-		break;
++		return NULL;
  	}
++}
++
++static const char *uof_get_name(struct adf_accel_dev *accel_dev, u32 obj_num,
++				const char * const fw_objs[], int num_objs)
++{
++	const struct adf_fw_config *fw_config;
++	int id;
++
++	fw_config = get_fw_config(accel_dev);
++	if (fw_config)
++		id = fw_config[obj_num].obj;
++	else
++		id = -EINVAL;
  
-@@ -4543,6 +4540,11 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 				 ret);
- 	}
+ 	if (id < 0 || id > num_objs)
+ 		return NULL;
+@@ -451,28 +453,13 @@ static const char *uof_get_name_402xx(struct adf_accel_dev *accel_dev, u32 obj_n
  
-+	/*
-+	 * This relies on logi_dj_ll_close() being a no-op so that DJ connection
-+	 * events will still be received.
-+	 */
-+	hid_hw_close(hdev);
- 	return ret;
+ static u32 uof_get_ae_mask(struct adf_accel_dev *accel_dev, u32 obj_num)
+ {
+-	switch (get_service_enabled(accel_dev)) {
+-	case SVC_CY:
+-		return adf_fw_cy_config[obj_num].ae_mask;
+-	case SVC_DC:
+-		return adf_fw_dc_config[obj_num].ae_mask;
+-	case SVC_DCC:
+-		return adf_fw_dcc_config[obj_num].ae_mask;
+-	case SVC_CY2:
+-		return adf_fw_cy_config[obj_num].ae_mask;
+-	case SVC_SYM:
+-		return adf_fw_sym_config[obj_num].ae_mask;
+-	case SVC_ASYM:
+-		return adf_fw_asym_config[obj_num].ae_mask;
+-	case SVC_ASYM_DC:
+-	case SVC_DC_ASYM:
+-		return adf_fw_asym_dc_config[obj_num].ae_mask;
+-	case SVC_SYM_DC:
+-	case SVC_DC_SYM:
+-		return adf_fw_sym_dc_config[obj_num].ae_mask;
+-	default:
++	const struct adf_fw_config *fw_config;
++
++	fw_config = get_fw_config(accel_dev);
++	if (!fw_config)
+ 		return 0;
+-	}
++
++	return fw_config[obj_num].ae_mask;
+ }
  
- hid_hw_init_fail:
+ void adf_init_hw_data_4xxx(struct adf_hw_device_data *hw_data, u32 dev_id)
 -- 
 2.42.0
 
