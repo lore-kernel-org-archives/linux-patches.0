@@ -1,29 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5183E41A80
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB05341A81;
+	Wed, 15 Nov 2023 19:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8r/Snpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F78C433CC;
-	Wed, 15 Nov 2023 19:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4KpT/be"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D8BC433C7;
+	Wed, 15 Nov 2023 19:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076740;
-	bh=pwbNxomCrhpWEQ3K4KC84H889aJN6499h/acS3qMQHs=;
+	s=korg; t=1700076741;
+	bh=rAsmqsTaQIAgAUi/vKnMBZhkAEWhtoD02GWkqmUksj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q8r/SnpjMv9cLrDvICjjTMpIODItCiHTTe+syxTr6xyymWNfGdVO4vmLNF/BWdNLA
-	 O6MqJeegKmEKruGrb3eAPDqKVC2gUY4CKEaBJ6O7JszMuW05Xq3xlWfcIwhx+ie1wX
-	 bxuhBytcEsyiK9LZ+ZzBGa535N3YCd49ZRzUph8Y=
+	b=r4KpT/beXeJLGNQXs/g4gmKq1TtmgyMbxx8Q+3lenAxvQnVJaDlLXklxuoQDn+pd9
+	 CWiRMSWqW8yDNoxMqqTNyMMXZLLVT+9hrXfbJHO8Dq0+xmql9J90yvBDhJAYsENM9a
+	 j2rde08plZnAuR0sfFWTE0tGVkRaYIiWLqPOQKmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	GUO Zihua <guozihua@huawei.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	bpf@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 386/550] tty: tty_jobctrl: fix pid memleak in disassociate_ctty()
-Date: Wed, 15 Nov 2023 14:16:10 -0500
-Message-ID: <20231115191627.601822092@linuxfoundation.org>
+Subject: [PATCH 6.5 387/550] perf parse-events: Remove unused PE_PMU_EVENT_FAKE token
+Date: Wed, 15 Nov 2023 14:16:11 -0500
+Message-ID: <20231115191627.668324833@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -42,115 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 11e7f27b79757b6586645d87b95d5b78375ecdfc ]
+[ Upstream commit 84efbdb7fb8e0844a3f9c67a6bdcc89db1012e1c ]
 
-There is a pid leakage:
-------------------------------
-unreferenced object 0xffff88810c181940 (size 224):
-  comm "sshd", pid 8191, jiffies 4294946950 (age 524.570s)
-  hex dump (first 32 bytes):
-    01 00 00 00 00 00 00 00 00 00 00 00 ad 4e ad de  .............N..
-    ff ff ff ff 6b 6b 6b 6b ff ff ff ff ff ff ff ff  ....kkkk........
-  backtrace:
-    [<ffffffff814774e6>] kmem_cache_alloc+0x5c6/0x9b0
-    [<ffffffff81177342>] alloc_pid+0x72/0x570
-    [<ffffffff81140ac4>] copy_process+0x1374/0x2470
-    [<ffffffff81141d77>] kernel_clone+0xb7/0x900
-    [<ffffffff81142645>] __se_sys_clone+0x85/0xb0
-    [<ffffffff8114269b>] __x64_sys_clone+0x2b/0x30
-    [<ffffffff83965a72>] do_syscall_64+0x32/0x80
-    [<ffffffff83a00085>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
+Removed by commit 70c90e4a6b2f ("perf parse-events: Avoid scanning
+PMUs before parsing").
 
-It turns out that there is a race condition between disassociate_ctty() and
-tty_signal_session_leader(), which caused this leakage.
-
-The pid memleak is triggered by the following race:
-task[sshd]                     task[bash]
------------------------        -----------------------
-                               disassociate_ctty();
-                               spin_lock_irq(&current->sighand->siglock);
-                               put_pid(current->signal->tty_old_pgrp);
-                               current->signal->tty_old_pgrp = NULL;
-                               tty = tty_kref_get(current->signal->tty);
-                               spin_unlock_irq(&current->sighand->siglock);
-tty_vhangup();
-tty_lock(tty);
-...
-tty_signal_session_leader();
-spin_lock_irq(&p->sighand->siglock);
-...
-if (tty->ctrl.pgrp) //tty->ctrl.pgrp is not NULL
-p->signal->tty_old_pgrp = get_pid(tty->ctrl.pgrp); //An extra get
-spin_unlock_irq(&p->sighand->siglock);
-...
-tty_unlock(tty);
-                               if (tty) {
-                                   tty_lock(tty);
-                                   ...
-                                   put_pid(tty->ctrl.pgrp);
-                                   tty->ctrl.pgrp = NULL; //It's too late
-                                   ...
-                                   tty_unlock(tty);
-                               }
-
-The issue is believed to be introduced by commit c8bcd9c5be24 ("tty:
-Fix ->session locking") who moves the unlock of siglock in
-disassociate_ctty() above "if (tty)", making a small window allowing
-tty_signal_session_leader() to kick in. It can be easily reproduced by
-adding a delay before "if (tty)" and at the entrance of
-tty_signal_session_leader().
-
-To fix this issue, we move "put_pid(current->signal->tty_old_pgrp)" after
-"tty->ctrl.pgrp = NULL".
-
-Fixes: c8bcd9c5be24 ("tty: Fix ->session locking")
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Co-developed-by: GUO Zihua <guozihua@huawei.com>
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
-Link: https://lore.kernel.org/r/20230831023329.165737-1-yiyang13@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: bpf@vger.kernel.org
+Link: https://lore.kernel.org/r/20230627181030.95608-2-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: ede72dca45b1 ("perf parse-events: Fix tracepoint name memory leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty_jobctrl.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ tools/perf/util/parse-events.y | 42 ++--------------------------------
+ 1 file changed, 2 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/tty/tty_jobctrl.c b/drivers/tty/tty_jobctrl.c
-index 0d04287da0984..ef8741c3e6629 100644
---- a/drivers/tty/tty_jobctrl.c
-+++ b/drivers/tty/tty_jobctrl.c
-@@ -300,12 +300,7 @@ void disassociate_ctty(int on_exit)
- 		return;
- 	}
- 
--	spin_lock_irq(&current->sighand->siglock);
--	put_pid(current->signal->tty_old_pgrp);
--	current->signal->tty_old_pgrp = NULL;
--	tty = tty_kref_get(current->signal->tty);
--	spin_unlock_irq(&current->sighand->siglock);
+diff --git a/tools/perf/util/parse-events.y b/tools/perf/util/parse-events.y
+index c590cf7f02a45..43557f20d0989 100644
+--- a/tools/perf/util/parse-events.y
++++ b/tools/perf/util/parse-events.y
+@@ -70,7 +70,7 @@ static void free_list_evsel(struct list_head* list_evsel)
+ %token PE_LEGACY_CACHE
+ %token PE_PREFIX_MEM PE_PREFIX_RAW PE_PREFIX_GROUP
+ %token PE_ERROR
+-%token PE_KERNEL_PMU_EVENT PE_PMU_EVENT_FAKE
++%token PE_KERNEL_PMU_EVENT
+ %token PE_ARRAY_ALL PE_ARRAY_RANGE
+ %token PE_DRV_CFG_TERM
+ %token PE_TERM_HW
+@@ -88,7 +88,7 @@ static void free_list_evsel(struct list_head* list_evsel)
+ %type <str> PE_MODIFIER_EVENT
+ %type <str> PE_MODIFIER_BP
+ %type <str> PE_EVENT_NAME
+-%type <str> PE_KERNEL_PMU_EVENT PE_PMU_EVENT_FAKE
++%type <str> PE_KERNEL_PMU_EVENT
+ %type <str> PE_DRV_CFG_TERM
+ %type <str> name_or_raw name_or_legacy
+ %destructor { free ($$); } <str>
+@@ -421,44 +421,6 @@ PE_KERNEL_PMU_EVENT opt_pmu_config
+ 		YYABORT;
+ 	$$ = list;
+ }
+-|
+-PE_PMU_EVENT_FAKE sep_dc
+-{
+-	struct list_head *list;
+-	int err;
 -
-+	tty = get_current_tty();
- 	if (tty) {
- 		unsigned long flags;
+-	list = alloc_list();
+-	if (!list)
+-		YYABORT;
+-
+-	err = parse_events_add_pmu(_parse_state, list, $1, /*head_config=*/NULL,
+-				   /*auto_merge_stats=*/false);
+-	free($1);
+-	if (err < 0) {
+-		free(list);
+-		YYABORT;
+-	}
+-	$$ = list;
+-}
+-|
+-PE_PMU_EVENT_FAKE opt_pmu_config
+-{
+-	struct list_head *list;
+-	int err;
+-
+-	list = alloc_list();
+-	if (!list)
+-		YYABORT;
+-
+-	err = parse_events_add_pmu(_parse_state, list, $1, $2, /*auto_merge_stats=*/false);
+-	free($1);
+-	parse_events_terms__delete($2);
+-	if (err < 0) {
+-		free(list);
+-		YYABORT;
+-	}
+-	$$ = list;
+-}
  
-@@ -320,6 +315,16 @@ void disassociate_ctty(int on_exit)
- 		tty_kref_put(tty);
- 	}
- 
-+	/* If tty->ctrl.pgrp is not NULL, it may be assigned to
-+	 * current->signal->tty_old_pgrp in a race condition, and
-+	 * cause pid memleak. Release current->signal->tty_old_pgrp
-+	 * after tty->ctrl.pgrp set to NULL.
-+	 */
-+	spin_lock_irq(&current->sighand->siglock);
-+	put_pid(current->signal->tty_old_pgrp);
-+	current->signal->tty_old_pgrp = NULL;
-+	spin_unlock_irq(&current->sighand->siglock);
-+
- 	/* Now clear signal->tty under the lock */
- 	read_lock(&tasklist_lock);
- 	session_clear_tty(task_session(current));
+ value_sym:
+ PE_VALUE_SYM_HW
 -- 
 2.42.0
 
