@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01653DB8D
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B373DB8D
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpSuZr87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509AFC433C7;
-	Wed, 15 Nov 2023 19:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YXR2VOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71E7C433C8;
+	Wed, 15 Nov 2023 19:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076121;
-	bh=qwMhULPB1HF3+XVVzMtxxXajPoPkCBMzWs4CscONyHU=;
+	s=korg; t=1700076123;
+	bh=fPqv4v5wX96k398UtJ/uJZzmcPfUj+MljHkVRcfr5I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PpSuZr87+Gnu2u6EjvBofhZYksV98jWs5Zq9uN1EpE4bwWgvL7wVJ5zgn8QbcpYVX
-	 zC9SYXqcauLDIKul/3+qiPsA97I2ea4zUKyBQkBUMxIKPYyW8XQmP7QIWAR0oIVLsW
-	 sOhYTegPulZtAf+CE+3IjIhqQJzCimRM1LItPYk8=
+	b=2YXR2VOZOz/3OWSuoQfdVxDn7xlO1PYqDPQ4J6eSz2Rn9qIfvdL3qrJWE9plKDaZh
+	 eHcl8uRm+mlEWUVBMb1gqUdfaheWY9Aa3qFZu3PeycEa5KP+zR0EBW5a6gN4HZWoFD
+	 SnS29/5QrrRNRFDmlCUXcjEa0Jl+nMCJ6hHEw3Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 062/550] udp: lockless UDP_ENCAP_L2TPINUDP / UDP_GRO
-Date: Wed, 15 Nov 2023 14:10:46 -0500
-Message-ID: <20231115191604.984128370@linuxfoundation.org>
+Subject: [PATCH 6.5 063/550] udp: annotate data-races around udp->encap_type
+Date: Wed, 15 Nov 2023 14:10:47 -0500
+Message-ID: <20231115191605.053699518@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -45,150 +46,201 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ac9a7f4ce5dda1472e8f44096f33066c6ec1a3b4 ]
+[ Upstream commit 70a36f571362a8de8b8c02d21ae524fc776287f2 ]
 
-Move udp->encap_enabled to udp->udp_flags.
+syzbot/KCSAN complained about UDP_ENCAP_L2TPINUDP setsockopt() racing.
 
-Add udp_test_and_set_bit() helper to allow lockless
-udp_tunnel_encap_enable() implementation.
+Add READ_ONCE()/WRITE_ONCE() to document races on this lockless field.
 
+syzbot report was:
+BUG: KCSAN: data-race in udp_lib_setsockopt / udp_lib_setsockopt
+
+read-write to 0xffff8881083603fa of 1 bytes by task 16557 on cpu 0:
+udp_lib_setsockopt+0x682/0x6c0
+udp_setsockopt+0x73/0xa0 net/ipv4/udp.c:2779
+sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
+__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
+__do_sys_setsockopt net/socket.c:2274 [inline]
+__se_sys_setsockopt net/socket.c:2271 [inline]
+__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read-write to 0xffff8881083603fa of 1 bytes by task 16554 on cpu 1:
+udp_lib_setsockopt+0x682/0x6c0
+udp_setsockopt+0x73/0xa0 net/ipv4/udp.c:2779
+sock_common_setsockopt+0x61/0x70 net/core/sock.c:3697
+__sys_setsockopt+0x1c9/0x230 net/socket.c:2263
+__do_sys_setsockopt net/socket.c:2274 [inline]
+__se_sys_setsockopt net/socket.c:2271 [inline]
+__x64_sys_setsockopt+0x66/0x80 net/socket.c:2271
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x01 -> 0x05
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 16554 Comm: syz-executor.5 Not tainted 6.5.0-rc7-syzkaller-00004-gf7757129e3de #0
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 70a36f571362 ("udp: annotate data-races around udp->encap_type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/udp.h        |  9 ++++-----
- include/net/udp_tunnel.h   |  9 +++------
- net/ipv4/udp.c             | 10 +++-------
- net/ipv4/udp_tunnel_core.c |  2 +-
- net/ipv6/udp.c             |  2 +-
- 5 files changed, 12 insertions(+), 20 deletions(-)
+ drivers/net/gtp.c      | 4 ++--
+ net/ipv4/udp.c         | 9 +++++----
+ net/ipv4/xfrm4_input.c | 4 ++--
+ net/ipv6/udp.c         | 5 +++--
+ net/ipv6/xfrm6_input.c | 4 ++--
+ net/l2tp/l2tp_core.c   | 6 +++---
+ 6 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/udp.h b/include/linux/udp.h
-index bb2b87adfbea9..0cf83270a4a28 100644
---- a/include/linux/udp.h
-+++ b/include/linux/udp.h
-@@ -39,6 +39,7 @@ enum {
- 	UDP_FLAGS_GRO_ENABLED,	/* Request GRO aggregation */
- 	UDP_FLAGS_ACCEPT_FRAGLIST,
- 	UDP_FLAGS_ACCEPT_L4,
-+	UDP_FLAGS_ENCAP_ENABLED, /* This socket enabled encap */
- };
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 477b4d4f860bd..bace989591f75 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -629,7 +629,7 @@ static void __gtp_encap_destroy(struct sock *sk)
+ 			gtp->sk0 = NULL;
+ 		else
+ 			gtp->sk1u = NULL;
+-		udp_sk(sk)->encap_type = 0;
++		WRITE_ONCE(udp_sk(sk)->encap_type, 0);
+ 		rcu_assign_sk_user_data(sk, NULL);
+ 		release_sock(sk);
+ 		sock_put(sk);
+@@ -681,7 +681,7 @@ static int gtp_encap_recv(struct sock *sk, struct sk_buff *skb)
  
- struct udp_sock {
-@@ -52,11 +53,7 @@ struct udp_sock {
+ 	netdev_dbg(gtp->dev, "encap_recv sk=%p\n", sk);
  
- 	int		 pending;	/* Any pending frames ? */
- 	__u8		 encap_type;	/* Is this an Encapsulation socket? */
--	unsigned char	 encap_enabled:1; /* This socket enabled encap
--					   * processing; UDP tunnels and
--					   * different encapsulation layer set
--					   * this
--					   */
-+
- /* indicator bits used by pcflag: */
- #define UDPLITE_BIT      0x1  		/* set by udplite proto init function */
- #define UDPLITE_SEND_CC  0x2  		/* set via udplite setsockopt         */
-@@ -104,6 +101,8 @@ struct udp_sock {
- 	test_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
- #define udp_set_bit(nr, sk)			\
- 	set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
-+#define udp_test_and_set_bit(nr, sk)		\
-+	test_and_set_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
- #define udp_clear_bit(nr, sk)			\
- 	clear_bit(UDP_FLAGS_##nr, &udp_sk(sk)->udp_flags)
- #define udp_assign_bit(nr, sk, val)		\
-diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
-index 0ca9b7a11baf5..29251c3519cf0 100644
---- a/include/net/udp_tunnel.h
-+++ b/include/net/udp_tunnel.h
-@@ -174,16 +174,13 @@ static inline int udp_tunnel_handle_offloads(struct sk_buff *skb, bool udp_csum)
- }
- #endif
- 
--static inline void udp_tunnel_encap_enable(struct socket *sock)
-+static inline void udp_tunnel_encap_enable(struct sock *sk)
- {
--	struct udp_sock *up = udp_sk(sock->sk);
--
--	if (up->encap_enabled)
-+	if (udp_test_and_set_bit(ENCAP_ENABLED, sk))
- 		return;
- 
--	up->encap_enabled = 1;
- #if IS_ENABLED(CONFIG_IPV6)
--	if (sock->sk->sk_family == PF_INET6)
-+	if (READ_ONCE(sk->sk_family) == PF_INET6)
- 		ipv6_stub->udpv6_encap_enable();
- #endif
- 	udp_encap_enable();
+-	switch (udp_sk(sk)->encap_type) {
++	switch (READ_ONCE(udp_sk(sk)->encap_type)) {
+ 	case UDP_ENCAP_GTP0:
+ 		netdev_dbg(gtp->dev, "received GTP0 packet\n");
+ 		ret = gtp0_udp_encap_recv(gtp, skb);
 diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index a2eb4921d2440..4df99839e7a30 100644
+index 4df99839e7a30..be0370a64cc15 100644
 --- a/net/ipv4/udp.c
 +++ b/net/ipv4/udp.c
-@@ -2643,7 +2643,7 @@ void udp_destroy_sock(struct sock *sk)
- 			if (encap_destroy)
- 				encap_destroy(sk);
- 		}
--		if (up->encap_enabled)
-+		if (udp_test_bit(ENCAP_ENABLED, sk))
- 			static_branch_dec(&udp_encap_needed_key);
+@@ -744,7 +744,7 @@ int __udp4_lib_err(struct sk_buff *skb, u32 info, struct udp_table *udptable)
+ 			       iph->saddr, uh->source, skb->dev->ifindex,
+ 			       inet_sdif(skb), udptable, NULL);
+ 
+-	if (!sk || udp_sk(sk)->encap_type) {
++	if (!sk || READ_ONCE(udp_sk(sk)->encap_type)) {
+ 		/* No socket for error: try tunnels before discarding */
+ 		if (static_branch_unlikely(&udp_encap_needed_key)) {
+ 			sk = __udp4_lib_err_encap(net, iph, uh, udptable, sk, skb,
+@@ -2110,7 +2110,8 @@ static int udp_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
  	}
- }
-@@ -2710,9 +2710,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ 	nf_reset_ct(skb);
+ 
+-	if (static_branch_unlikely(&udp_encap_needed_key) && up->encap_type) {
++	if (static_branch_unlikely(&udp_encap_needed_key) &&
++	    READ_ONCE(up->encap_type)) {
+ 		int (*encap_rcv)(struct sock *sk, struct sk_buff *skb);
+ 
+ 		/*
+@@ -2709,7 +2710,7 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+ #endif
  			fallthrough;
  		case UDP_ENCAP_L2TPINUDP:
- 			up->encap_type = val;
--			lock_sock(sk);
--			udp_tunnel_encap_enable(sk->sk_socket);
--			release_sock(sk);
-+			udp_tunnel_encap_enable(sk);
+-			up->encap_type = val;
++			WRITE_ONCE(up->encap_type, val);
+ 			udp_tunnel_encap_enable(sk);
  			break;
  		default:
- 			err = -ENOPROTOOPT;
-@@ -2735,14 +2733,12 @@ int udp_lib_setsockopt(struct sock *sk, int level, int optname,
+@@ -2810,7 +2811,7 @@ int udp_lib_getsockopt(struct sock *sk, int level, int optname,
  		break;
  
- 	case UDP_GRO:
--		lock_sock(sk);
- 
- 		/* when enabling GRO, accept the related GSO packet type */
- 		if (valbool)
--			udp_tunnel_encap_enable(sk->sk_socket);
-+			udp_tunnel_encap_enable(sk);
- 		udp_assign_bit(GRO_ENABLED, sk, valbool);
- 		udp_assign_bit(ACCEPT_L4, sk, valbool);
--		release_sock(sk);
+ 	case UDP_ENCAP:
+-		val = up->encap_type;
++		val = READ_ONCE(up->encap_type);
  		break;
  
- 	/*
-diff --git a/net/ipv4/udp_tunnel_core.c b/net/ipv4/udp_tunnel_core.c
-index 5f8104cf082d0..732e21b75ba28 100644
---- a/net/ipv4/udp_tunnel_core.c
-+++ b/net/ipv4/udp_tunnel_core.c
-@@ -78,7 +78,7 @@ void setup_udp_tunnel_sock(struct net *net, struct socket *sock,
- 	udp_sk(sk)->gro_receive = cfg->gro_receive;
- 	udp_sk(sk)->gro_complete = cfg->gro_complete;
+ 	case UDP_NO_CHECK6_TX:
+diff --git a/net/ipv4/xfrm4_input.c b/net/ipv4/xfrm4_input.c
+index eac206a290d05..183f6dc372429 100644
+--- a/net/ipv4/xfrm4_input.c
++++ b/net/ipv4/xfrm4_input.c
+@@ -85,11 +85,11 @@ int xfrm4_udp_encap_rcv(struct sock *sk, struct sk_buff *skb)
+ 	struct udphdr *uh;
+ 	struct iphdr *iph;
+ 	int iphlen, len;
+-
+ 	__u8 *udpdata;
+ 	__be32 *udpdata32;
+-	__u16 encap_type = up->encap_type;
++	u16 encap_type;
  
--	udp_tunnel_encap_enable(sock);
-+	udp_tunnel_encap_enable(sk);
- }
- EXPORT_SYMBOL_GPL(setup_udp_tunnel_sock);
- 
++	encap_type = READ_ONCE(up->encap_type);
+ 	/* if this is not encapsulated socket, then just return now */
+ 	if (!encap_type)
+ 		return 1;
 diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index 3e9497418758f..4f39511bb0969 100644
+index 4f39511bb0969..9988160ca4a76 100644
 --- a/net/ipv6/udp.c
 +++ b/net/ipv6/udp.c
-@@ -1699,7 +1699,7 @@ void udpv6_destroy_sock(struct sock *sk)
- 			if (encap_destroy)
- 				encap_destroy(sk);
- 		}
--		if (up->encap_enabled) {
-+		if (udp_test_bit(ENCAP_ENABLED, sk)) {
- 			static_branch_dec(&udpv6_encap_needed_key);
- 			udp_encap_disable();
- 		}
+@@ -604,7 +604,7 @@ int __udp6_lib_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 	sk = __udp6_lib_lookup(net, daddr, uh->dest, saddr, uh->source,
+ 			       inet6_iif(skb), inet6_sdif(skb), udptable, NULL);
+ 
+-	if (!sk || udp_sk(sk)->encap_type) {
++	if (!sk || READ_ONCE(udp_sk(sk)->encap_type)) {
+ 		/* No socket for error: try tunnels before discarding */
+ 		if (static_branch_unlikely(&udpv6_encap_needed_key)) {
+ 			sk = __udp6_lib_err_encap(net, hdr, offset, uh,
+@@ -721,7 +721,8 @@ static int udpv6_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
+ 	}
+ 	nf_reset_ct(skb);
+ 
+-	if (static_branch_unlikely(&udpv6_encap_needed_key) && up->encap_type) {
++	if (static_branch_unlikely(&udpv6_encap_needed_key) &&
++	    READ_ONCE(up->encap_type)) {
+ 		int (*encap_rcv)(struct sock *sk, struct sk_buff *skb);
+ 
+ 		/*
+diff --git a/net/ipv6/xfrm6_input.c b/net/ipv6/xfrm6_input.c
+index 4907ab241d6be..4156387248e40 100644
+--- a/net/ipv6/xfrm6_input.c
++++ b/net/ipv6/xfrm6_input.c
+@@ -81,14 +81,14 @@ int xfrm6_udp_encap_rcv(struct sock *sk, struct sk_buff *skb)
+ 	struct ipv6hdr *ip6h;
+ 	int len;
+ 	int ip6hlen = sizeof(struct ipv6hdr);
+-
+ 	__u8 *udpdata;
+ 	__be32 *udpdata32;
+-	__u16 encap_type = up->encap_type;
++	u16 encap_type;
+ 
+ 	if (skb->protocol == htons(ETH_P_IP))
+ 		return xfrm4_udp_encap_rcv(sk, skb);
+ 
++	encap_type = READ_ONCE(up->encap_type);
+ 	/* if this is not encapsulated socket, then just return now */
+ 	if (!encap_type)
+ 		return 1;
+diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+index 03608d3ded4b8..8d21ff25f1602 100644
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -1139,9 +1139,9 @@ static void l2tp_tunnel_destruct(struct sock *sk)
+ 	switch (tunnel->encap) {
+ 	case L2TP_ENCAPTYPE_UDP:
+ 		/* No longer an encapsulation socket. See net/ipv4/udp.c */
+-		(udp_sk(sk))->encap_type = 0;
+-		(udp_sk(sk))->encap_rcv = NULL;
+-		(udp_sk(sk))->encap_destroy = NULL;
++		WRITE_ONCE(udp_sk(sk)->encap_type, 0);
++		udp_sk(sk)->encap_rcv = NULL;
++		udp_sk(sk)->encap_destroy = NULL;
+ 		break;
+ 	case L2TP_ENCAPTYPE_IP:
+ 		break;
 -- 
 2.42.0
 
