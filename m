@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6CB250EA
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EC328368
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBWaiGrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F50C32792;
-	Wed, 15 Nov 2023 20:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjK43F0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34564C3278E;
+	Wed, 15 Nov 2023 20:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081356;
-	bh=VJkqkpNm0iYxxz56rVMSWhb5pZRzCzKM1N5ql6gQubg=;
+	s=korg; t=1700081358;
+	bh=JTDq2XIKWrDu9AJM7MFsmakLRR/e6BZpa8LsQKWby5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YBWaiGrIY4WDfNqyLTP6iseP9yMCH2z+AzgpW8eQtO4y8psLALZa8i+bf/di88ZCs
-	 o0qoHPlw42X8Y6wTRaIPfIrfRpe8cfQ5pv/YYj1Hqhfu8VHs2vRUma4IzHLZl0KtoU
-	 tq9T/Fqa498Nzfd6KdNjAlwB3qqHc5AM15ZdlnPI=
+	b=hjK43F0wVQAD+JyGkpN3pW1I4K9nBDHRgvCHas/I95J2OHVqv6HlDh1+6Dx+hw5/W
+	 ZvdXhRtPasiJsNp575v6f0j4Y/cWjcDXaGX0R9E9WW1Qii2a2xggo9ITjKlpfE/7my
+	 TQiAKwu33XE35eD15BxP35pQw0eXwxryyv2zXlRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/244] drm/bridge: lt9611uxc: Register and attach our DSI device at probe
-Date: Wed, 15 Nov 2023 15:34:55 -0500
-Message-ID: <20231115203554.537187546@linuxfoundation.org>
+Subject: [PATCH 5.15 104/244] drm/bridge: lt9611uxc: fix the race in the error path
+Date: Wed, 15 Nov 2023 15:34:56 -0500
+Message-ID: <20231115203554.593338602@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,74 +42,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <maxime@cerno.tech>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 4a46ace5ac621c0f84b3910bc3c93acf6c93963b ]
+[ Upstream commit 15fe53be46eaf4f6339cd433972ecc90513e3076 ]
 
-In order to avoid any probe ordering issue, the best practice is to move
-the secondary MIPI-DSI device registration and attachment to the
-MIPI-DSI host at probe time. Let's do this.
+If DSI host attachment fails, the LT9611UXC driver will remove the
+bridge without ensuring that there is no outstanding HPD work being
+done. In rare cases this can result in the warnings regarding the mutex
+being incorrect. Fix this by forcebly freing IRQ and flushing the work.
 
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20211025151536.1048186-11-maxime@cerno.tech
-Stable-dep-of: 15fe53be46ea ("drm/bridge: lt9611uxc: fix the race in the error path")
+DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+WARNING: CPU: 0 PID: 10 at kernel/locking/mutex.c:582 __mutex_lock+0x468/0x77c
+Modules linked in:
+CPU: 0 PID: 10 Comm: kworker/0:1 Tainted: G     U             6.6.0-rc5-next-20231011-gd81f81c2b682-dirty #1206
+Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+Workqueue: events lt9611uxc_hpd_work
+pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __mutex_lock+0x468/0x77c
+lr : __mutex_lock+0x468/0x77c
+sp : ffff8000800a3c70
+x29: ffff8000800a3c70 x28: 0000000000000000 x27: ffffd595fe333000
+x26: ffff7c2f0002c005 x25: ffffd595ff1b3000 x24: ffffd595fccda5a0
+x23: 0000000000000000 x22: 0000000000000002 x21: ffff7c2f056d91c8
+x20: 0000000000000000 x19: ffff7c2f056d91c8 x18: fffffffffffe8db0
+x17: 000000040044ffff x16: 005000f2b5503510 x15: 0000000000000000
+x14: 000000000006efb8 x13: 0000000000000000 x12: 0000000000000037
+x11: 0000000000000001 x10: 0000000000001470 x9 : ffff8000800a3ae0
+x8 : ffff7c2f0027f8d0 x7 : ffff7c2f0027e400 x6 : ffffd595fc702b54
+x5 : 0000000000000000 x4 : ffff8000800a0000 x3 : 0000000000000000
+x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff7c2f0027e400
+Call trace:
+ __mutex_lock+0x468/0x77c
+ mutex_lock_nested+0x24/0x30
+ drm_bridge_hpd_notify+0x2c/0x5c
+ lt9611uxc_hpd_work+0x6c/0x80
+ process_one_work+0x1ec/0x51c
+ worker_thread+0x1ec/0x3e4
+ kthread+0x120/0x124
+ ret_from_fork+0x10/0x20
+irq event stamp: 15799
+hardirqs last  enabled at (15799): [<ffffd595fc702ba4>] finish_task_switch.isra.0+0xa8/0x278
+hardirqs last disabled at (15798): [<ffffd595fd5a1580>] __schedule+0x7b8/0xbd8
+softirqs last  enabled at (15794): [<ffffd595fc690698>] __do_softirq+0x498/0x4e0
+softirqs last disabled at (15771): [<ffffd595fc69615c>] ____do_softirq+0x10/0x1c
+
+Fixes: bc6fa8676ebb ("drm/bridge/lontium-lt9611uxc: move HPD notification out of IRQ handler")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231011220002.382422-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 31 +++++++++++++---------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-index b58842f69fff1..1e33b3150bdc5 100644
+index 1e33b3150bdc5..2a848e14181bd 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-@@ -367,18 +367,6 @@ static int lt9611uxc_bridge_attach(struct drm_bridge *bridge,
- 			return ret;
- 	}
+@@ -927,9 +927,9 @@ static int lt9611uxc_probe(struct i2c_client *client,
+ 	init_waitqueue_head(&lt9611uxc->wq);
+ 	INIT_WORK(&lt9611uxc->work, lt9611uxc_hpd_work);
  
--	/* Attach primary DSI */
--	lt9611uxc->dsi0 = lt9611uxc_attach_dsi(lt9611uxc, lt9611uxc->dsi0_node);
--	if (IS_ERR(lt9611uxc->dsi0))
--		return PTR_ERR(lt9611uxc->dsi0);
--
--	/* Attach secondary DSI, if specified */
--	if (lt9611uxc->dsi1_node) {
--		lt9611uxc->dsi1 = lt9611uxc_attach_dsi(lt9611uxc, lt9611uxc->dsi1_node);
--		if (IS_ERR(lt9611uxc->dsi1))
--			return PTR_ERR(lt9611uxc->dsi1);
--	}
--
- 	return 0;
- }
- 
-@@ -958,8 +946,27 @@ static int lt9611uxc_probe(struct i2c_client *client,
- 
- 	drm_bridge_add(&lt9611uxc->bridge);
- 
-+	/* Attach primary DSI */
-+	lt9611uxc->dsi0 = lt9611uxc_attach_dsi(lt9611uxc, lt9611uxc->dsi0_node);
-+	if (IS_ERR(lt9611uxc->dsi0)) {
-+		ret = PTR_ERR(lt9611uxc->dsi0);
-+		goto err_remove_bridge;
-+	}
-+
-+	/* Attach secondary DSI, if specified */
-+	if (lt9611uxc->dsi1_node) {
-+		lt9611uxc->dsi1 = lt9611uxc_attach_dsi(lt9611uxc, lt9611uxc->dsi1_node);
-+		if (IS_ERR(lt9611uxc->dsi1)) {
-+			ret = PTR_ERR(lt9611uxc->dsi1);
-+			goto err_remove_bridge;
-+		}
-+	}
-+
+-	ret = devm_request_threaded_irq(dev, client->irq, NULL,
+-					lt9611uxc_irq_thread_handler,
+-					IRQF_ONESHOT, "lt9611uxc", lt9611uxc);
++	ret = request_threaded_irq(client->irq, NULL,
++				   lt9611uxc_irq_thread_handler,
++				   IRQF_ONESHOT, "lt9611uxc", lt9611uxc);
+ 	if (ret) {
+ 		dev_err(dev, "failed to request irq\n");
+ 		goto err_disable_regulators;
+@@ -965,6 +965,8 @@ static int lt9611uxc_probe(struct i2c_client *client,
  	return lt9611uxc_audio_init(dev, lt9611uxc);
  
-+err_remove_bridge:
-+	drm_bridge_remove(&lt9611uxc->bridge);
-+
- err_disable_regulators:
- 	regulator_bulk_disable(ARRAY_SIZE(lt9611uxc->supplies), lt9611uxc->supplies);
+ err_remove_bridge:
++	free_irq(client->irq, lt9611uxc);
++	cancel_work_sync(&lt9611uxc->work);
+ 	drm_bridge_remove(&lt9611uxc->bridge);
  
+ err_disable_regulators:
+@@ -981,7 +983,7 @@ static int lt9611uxc_remove(struct i2c_client *client)
+ {
+ 	struct lt9611uxc *lt9611uxc = i2c_get_clientdata(client);
+ 
+-	disable_irq(client->irq);
++	free_irq(client->irq, lt9611uxc);
+ 	cancel_work_sync(&lt9611uxc->work);
+ 	lt9611uxc_audio_exit(lt9611uxc);
+ 	drm_bridge_remove(&lt9611uxc->bridge);
 -- 
 2.42.0
 
