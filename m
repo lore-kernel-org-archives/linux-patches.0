@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DD73BB29
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DF53BB29
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVr5YqWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5873BC433CC;
-	Wed, 15 Nov 2023 19:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJU66c54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91B9C433C8;
+	Wed, 15 Nov 2023 19:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076229;
-	bh=m0t2pxsYyzaTWXboVfD6xJZLmOxTVYStpJh+Wr5Ba/A=;
+	s=korg; t=1700076231;
+	bh=MMglp93Aptb/uKd7+PgR5iA2UDAxxNJNi8vvgChFV90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVr5YqWj/MqwoQeVYxL/OpFw2L5rU8Bob42KiyJkajbQeBkn/NQDSgYvYXmN+JtDN
-	 wSVGRyP7jxEUE2+8/P2u+g/06azivkweEeytw63ewptsSEmn6RG1zhciXj9ia3WiSu
-	 TrxrA0Zo8WmrdVECQAcWUKnttJJcTGCbgwCA5WKE=
+	b=ZJU66c54tAPYCqbB9lQi0LrqfYLUGX9eTAthiqVC5oPZUPaXlVL224yeNGzL2XstY
+	 kckZtStdXoENe8qqR0Eq7LMsf+1G5AAYNy43qcHqwVQEfXPIahe9keatunEtI1Gk4m
+	 BiodQoTPBB/x/EpBTfElzcHfSHJFQFNrfNzUceHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Arseniy Velikanov <adomerlee@gmail.com>,
+	Danila Tikhonov <danila@jiaxyga.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 157/550] clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
-Date: Wed, 15 Nov 2023 14:12:21 -0500
-Message-ID: <20231115191611.577156825@linuxfoundation.org>
+Subject: [PATCH 6.5 158/550] clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
+Date: Wed, 15 Nov 2023 14:12:22 -0500
+Message-ID: <20231115191611.653581454@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,46 +44,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Danila Tikhonov <danila@jiaxyga.com>
 
-[ Upstream commit 1fc62c8347397faf4e18249e88ecd4470c0a5357 ]
+[ Upstream commit 7138c244fb293f24ce8ab782961022eff00a10c4 ]
 
-The SMMU GDSC doesn't have to be ALWAYS-ON and shouldn't feature the
-HW_CTRL flag (it's separate from hw_ctrl_addr).  In addition to that,
-it should feature a cxc entry for bimc_smmu_axi_clk and be marked as
-votable.
+Set .flags = CLK_OPS_PARENT_ENABLE to fix "gcc_sdcc2_apps_clk_src: rcg
+didn't update its configuration" error.
 
-Fix all of these issues.
-
-Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Link: https://lore.kernel.org/r/20230531-topic-8998_mmssclk-v3-5-ba1b1fd9ee75@linaro.org
+Fixes: 2a1d7eb854bb ("clk: qcom: gcc: Add global clock controller driver for SM8150")
+Tested-by: Arseniy Velikanov <adomerlee@gmail.com>
+Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230913175612.8685-1-danila@jiaxyga.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8998.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sm8150.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
-index 9b98e0fb8b914..7b1d105afbd8c 100644
---- a/drivers/clk/qcom/mmcc-msm8998.c
-+++ b/drivers/clk/qcom/mmcc-msm8998.c
-@@ -2628,11 +2628,13 @@ static struct gdsc camss_cpp_gdsc = {
- static struct gdsc bimc_smmu_gdsc = {
- 	.gdscr = 0xe020,
- 	.gds_hw_ctrl = 0xe024,
-+	.cxcs = (unsigned int []){ 0xe008 },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "bimc_smmu",
+diff --git a/drivers/clk/qcom/gcc-sm8150.c b/drivers/clk/qcom/gcc-sm8150.c
+index 70b067f3618cb..889b297a875e1 100644
+--- a/drivers/clk/qcom/gcc-sm8150.c
++++ b/drivers/clk/qcom/gcc-sm8150.c
+@@ -775,7 +775,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.name = "gcc_sdcc2_apps_clk_src",
+ 		.parent_data = gcc_parents_6,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_6),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_rcg2_floor_ops,
  	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = HW_CTRL | ALWAYS_ON,
-+	.flags = VOTABLE,
  };
- 
- static struct clk_regmap *mmcc_msm8998_clocks[] = {
 -- 
 2.42.0
 
