@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8567245BE4
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1459945BE4
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 22:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e59068ot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EF7C433C9;
-	Wed, 15 Nov 2023 22:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROKteGPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FB6C433C7;
+	Wed, 15 Nov 2023 22:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700085811;
-	bh=26590lgEHnRIl0ZgpdSA86JGhxmdOm88P6jLm+c02FE=;
+	s=korg; t=1700085812;
+	bh=EZq1VnfVBA1uhLb7TzwSF6jY3kypD5y0fX3k1dIfwsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e59068otdUvr4ax1PkwNyi7mV6esnBYz+mXvltU4pA9e44H86LzpYlUQrY2ldrxcU
-	 CX2dANIYbSs/u1/QCQkjai7ltXtm0lqp80n+xcM/knQvyrUe7WDKptM1oVpn10MFkZ
-	 woA9QnNx1428VNVS9hWU/D05fAMJgDEYY+gt1wZc=
+	b=ROKteGPqMkSrDth9fjTLlNbp6BhxSH93oKdGBAYVEyUiymmSr645oCBWe/yy4ucWX
+	 iL6NKDk0A6r0xSRZb1xosag1YbywKMZze7NB8IlB50hLHn2Xe6spfIBfLCCPGmbTDr
+	 4OgiNtCB/vir7dT9dU53fkhSkxVqDaHb/5J83cW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <uwe@kleine-koenig.org>,
-	Jeff LaBundy <jeff@labundy.com>,
-	Pavel Machek <pavel@ucw.cz>,
+	Rogan Dawes <rogan@dawes.za.net>,
+	Fabio Estevam <festevam@denx.de>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 068/119] leds: pwm: convert to atomic PWM API
-Date: Wed, 15 Nov 2023 17:00:58 -0500
-Message-ID: <20231115220134.744213580@linuxfoundation.org>
+Subject: [PATCH 5.4 069/119] leds: pwm: Dont disable the PWM when the LED should be off
+Date: Wed, 15 Nov 2023 17:00:59 -0500
+Message-ID: <20231115220134.777849148@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115220132.607437515@linuxfoundation.org>
 References: <20231115220132.607437515@linuxfoundation.org>
@@ -44,115 +45,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <uwe@kleine-koenig.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit dd47a83453e4a5b0d6a91fe702b7fbc1984fb610 ]
+[ Upstream commit 76fe464c8e64e71b2e4af11edeef0e5d85eeb6aa ]
 
-pwm_config(), pwm_enable() and pwm_disable() should get removed in the
-long run. So update the driver to use the atomic API that is here to
-stay.
+Disabling a PWM (i.e. calling pwm_apply_state with .enabled = false)
+gives no guarantees what the PWM output does. It might freeze where it
+currently is, or go in a High-Z state or drive the active or inactive
+state, it might even continue to toggle.
 
-A few side effects:
+To ensure that the LED gets really disabled, don't disable the PWM even
+when .duty_cycle is zero.
 
- - led_pwm_set() now returns an error when setting the PWM fails.
- - During .probe() the PWM isn't disabled implicitly by pwm_apply_args()
-   any more.
+This fixes disabling a leds-pwm LED on i.MX28. The PWM on this SoC is
+one of those that freezes its output on disable, so if you disable an
+LED that is full on, it stays on. If you disable a LED with half
+brightness it goes off in 50% of the cases and full on in the other 50%.
 
-Signed-off-by: Uwe Kleine-König <uwe@kleine-koenig.org>
-Tested-by: Jeff LaBundy <jeff@labundy.com>
-Signed-off-by: Pavel Machek <pavel@ucw.cz>
-Stable-dep-of: 76fe464c8e64 ("leds: pwm: Don't disable the PWM when the LED should be off")
+Fixes: 41c42ff5dbe2 ("leds: simple driver for pwm driven LEDs")
+Reported-by: Rogan Dawes <rogan@dawes.za.net>
+Reported-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Fabio Estevam <festevam@denx.de>
+Link: https://lore.kernel.org/r/20230922192834.1695727-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pwm.c | 41 +++++++++--------------------------------
- 1 file changed, 9 insertions(+), 32 deletions(-)
+ drivers/leds/leds-pwm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/leds/leds-pwm.c b/drivers/leds/leds-pwm.c
-index b72fd89ff3903..9111cdede0eee 100644
+index 9111cdede0eee..acc99e01eb4ad 100644
 --- a/drivers/leds/leds-pwm.c
 +++ b/drivers/leds/leds-pwm.c
-@@ -22,9 +22,8 @@
- struct led_pwm_data {
- 	struct led_classdev	cdev;
- 	struct pwm_device	*pwm;
-+	struct pwm_state	pwmstate;
- 	unsigned int		active_low;
--	unsigned int		period;
--	int			duty;
- };
+@@ -46,7 +46,7 @@ static int led_pwm_set(struct led_classdev *led_cdev,
+ 		duty = led_dat->pwmstate.period - duty;
  
- struct led_pwm_priv {
-@@ -32,44 +31,29 @@ struct led_pwm_priv {
- 	struct led_pwm_data leds[0];
- };
- 
--static void __led_pwm_set(struct led_pwm_data *led_dat)
--{
--	int new_duty = led_dat->duty;
--
--	pwm_config(led_dat->pwm, new_duty, led_dat->period);
--
--	if (new_duty == 0)
--		pwm_disable(led_dat->pwm);
--	else
--		pwm_enable(led_dat->pwm);
--}
--
- static int led_pwm_set(struct led_classdev *led_cdev,
- 		       enum led_brightness brightness)
- {
- 	struct led_pwm_data *led_dat =
- 		container_of(led_cdev, struct led_pwm_data, cdev);
- 	unsigned int max = led_dat->cdev.max_brightness;
--	unsigned long long duty =  led_dat->period;
-+	unsigned long long duty = led_dat->pwmstate.period;
- 
- 	duty *= brightness;
- 	do_div(duty, max);
- 
- 	if (led_dat->active_low)
--		duty = led_dat->period - duty;
--
--	led_dat->duty = duty;
--
--	__led_pwm_set(led_dat);
-+		duty = led_dat->pwmstate.period - duty;
- 
--	return 0;
-+	led_dat->pwmstate.duty_cycle = duty;
-+	led_dat->pwmstate.enabled = duty > 0;
-+	return pwm_apply_state(led_dat->pwm, &led_dat->pwmstate);
+ 	led_dat->pwmstate.duty_cycle = duty;
+-	led_dat->pwmstate.enabled = duty > 0;
++	led_dat->pwmstate.enabled = true;
+ 	return pwm_apply_state(led_dat->pwm, &led_dat->pwmstate);
  }
  
- static int led_pwm_add(struct device *dev, struct led_pwm_priv *priv,
- 		       struct led_pwm *led, struct fwnode_handle *fwnode)
- {
- 	struct led_pwm_data *led_data = &priv->leds[priv->num_leds];
--	struct pwm_args pargs;
- 	int ret;
- 
- 	led_data->active_low = led->active_low;
-@@ -93,17 +77,10 @@ static int led_pwm_add(struct device *dev, struct led_pwm_priv *priv,
- 
- 	led_data->cdev.brightness_set_blocking = led_pwm_set;
- 
--	/*
--	 * FIXME: pwm_apply_args() should be removed when switching to the
--	 * atomic PWM API.
--	 */
--	pwm_apply_args(led_data->pwm);
--
--	pwm_get_args(led_data->pwm, &pargs);
-+	pwm_init_state(led_data->pwm, &led_data->pwmstate);
- 
--	led_data->period = pargs.period;
--	if (!led_data->period)
--		led_data->period = led->pwm_period_ns;
-+	if (!led_data->pwmstate.period)
-+		led_data->pwmstate.period = led->pwm_period_ns;
- 
- 	ret = devm_led_classdev_register(dev, &led_data->cdev);
- 	if (ret == 0) {
 -- 
 2.42.0
 
