@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AE6381DC
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB42381DC
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUuy7yuS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CEDC433C9;
-	Wed, 15 Nov 2023 19:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRAHvut2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9BAC433C9;
+	Wed, 15 Nov 2023 19:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076940;
-	bh=A5zO0YEg5xXK+bH9CRqr02fBDuHTBx/qb+HE0OoRItI=;
+	s=korg; t=1700076941;
+	bh=J7yT9CjBdGcKaA6q4pvIt1asz24efJ5Xgkgf0FUOM4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yUuy7yuSHJ/xqJi4tAhxplJ/bo0mvUqyYyCsWL5kgHsZX/f+cvdwv7exbZfCe67+e
-	 Q6rLAQGAeMfdMMXwTi9+m4lGs1TPP8vNQn8Wvvsc0jeli5+yVCh4Y0skvpH6hn1uS0
-	 nh5ubGQxC8cahGLi+qXAXsiLp2HYI2bsDHXnLdic=
+	b=nRAHvut2TQejiR8ZkysEs85yFY8E1KZIfUFs74eL47W9J/O0jSczlm0ewBsZ+J9F0
+	 qnc7Dswr9ia8Pk9U3qbrx7gj2Az/2qwWOljM7R12g0Hy+KZZeSGbXeObboGJH5lpTk
+	 CQXGk/sz5o/U8chP0DRMZVVtmKeXiSg4BCYBZ/6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 471/550] media: imx-jpeg: initiate a drain of the capture queue in dynamic resolution change
-Date: Wed, 15 Nov 2023 14:17:35 -0500
-Message-ID: <20231115191633.513852543@linuxfoundation.org>
+Subject: [PATCH 6.6 075/603] wifi: ath11k: fix boot failure with one MSI vector
+Date: Wed, 15 Nov 2023 14:10:20 -0500
+Message-ID: <20231115191618.296567278@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
-References: <20231115191600.708733204@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+References: <20231115191613.097702445@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,91 +39,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 1c2786632e20c8f0fd4004fae3b3490276e5e5da ]
+[ Upstream commit 39564b475ac5a589e6c22c43a08cbd283c295d2c ]
 
-The last buffer from before the change must be marked,
-with the V4L2_BUF_FLAG_LAST flag,
-similarly to the Drain sequence above.
+Commit 5b32b6dd96633 ("ath11k: Remove core PCI references from
+PCI common code") breaks with one MSI vector because it moves
+affinity setting after IRQ request, see below log:
 
-Meanwhile if V4L2_DEC_CMD_STOP is sent before
-the source change triggered,
-we need to restore the is_draing flag after
-the draining in dynamic resolution change.
+[ 1417.278835] ath11k_pci 0000:02:00.0: failed to receive control response completion, polling..
+[ 1418.302829] ath11k_pci 0000:02:00.0: Service connect timeout
+[ 1418.302833] ath11k_pci 0000:02:00.0: failed to connect to HTT: -110
+[ 1418.303669] ath11k_pci 0000:02:00.0: failed to start core: -110
 
-Fixes: b4e1fb8643da ("media: imx-jpeg: Support dynamic resolution change")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+The detail is, if do affinity request after IRQ activated,
+which is done in request_irq(), kernel caches that request and
+returns success directly. Later when a subsequent MHI interrupt is
+fired, kernel will do the real affinity setting work, as a result,
+changs the MSI vector. However at that time host has configured
+old vector to hardware, so host never receives CE or DP interrupts.
+
+Fix it by setting affinity before registering MHI controller
+where host is, for the first time, doing IRQ request.
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
+Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.1.0.1-01160-QCAMSLSWPLZ-1
+
+Fixes: 5b32b6dd9663 ("ath11k: Remove core PCI references from PCI common code")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230907015606.16297-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/nxp/imx-jpeg/mxc-jpeg.c    | 27 ++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath11k/pci.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-index 9512c0a619667..9ef0cb20f63be 100644
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -1322,6 +1322,20 @@ static bool mxc_jpeg_compare_format(const struct mxc_jpeg_fmt *fmt1,
- 	return false;
- }
+diff --git a/drivers/net/wireless/ath/ath11k/pci.c b/drivers/net/wireless/ath/ath11k/pci.c
+index a5aa1857ec14b..09e65c5e55c4a 100644
+--- a/drivers/net/wireless/ath/ath11k/pci.c
++++ b/drivers/net/wireless/ath/ath11k/pci.c
+@@ -854,10 +854,16 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
+ 	if (ret)
+ 		goto err_pci_disable_msi;
  
-+static void mxc_jpeg_set_last_buffer(struct mxc_jpeg_ctx *ctx)
-+{
-+	struct vb2_v4l2_buffer *next_dst_buf;
-+
-+	next_dst_buf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
-+	if (!next_dst_buf) {
-+		ctx->fh.m2m_ctx->is_draining = true;
-+		ctx->fh.m2m_ctx->next_buf_last = true;
-+		return;
++	ret = ath11k_pci_set_irq_affinity_hint(ab_pci, cpumask_of(0));
++	if (ret) {
++		ath11k_err(ab, "failed to set irq affinity %d\n", ret);
++		goto err_pci_disable_msi;
 +	}
 +
-+	v4l2_m2m_last_buffer_done(ctx->fh.m2m_ctx, next_dst_buf);
-+}
-+
- static bool mxc_jpeg_source_change(struct mxc_jpeg_ctx *ctx,
- 				   struct mxc_jpeg_src_buf *jpeg_src_buf)
- {
-@@ -1378,6 +1392,8 @@ static bool mxc_jpeg_source_change(struct mxc_jpeg_ctx *ctx,
- 		mxc_jpeg_sizeimage(q_data_cap);
- 		notify_src_chg(ctx);
- 		ctx->source_change = 1;
-+		if (vb2_is_streaming(v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx)))
-+			mxc_jpeg_set_last_buffer(ctx);
+ 	ret = ath11k_mhi_register(ab_pci);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to register mhi: %d\n", ret);
+-		goto err_pci_disable_msi;
++		goto err_irq_affinity_cleanup;
  	}
  
- 	return ctx->source_change ? true : false;
-@@ -1638,8 +1654,13 @@ static void mxc_jpeg_stop_streaming(struct vb2_queue *q)
- 		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
+ 	ret = ath11k_hal_srng_init(ab);
+@@ -878,12 +884,6 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
+ 		goto err_ce_free;
  	}
  
--	if (V4L2_TYPE_IS_OUTPUT(q->type) || !ctx->source_change)
--		v4l2_m2m_update_stop_streaming_state(ctx->fh.m2m_ctx, q);
-+	v4l2_m2m_update_stop_streaming_state(ctx->fh.m2m_ctx, q);
-+	/* if V4L2_DEC_CMD_STOP is sent before the source change triggered,
-+	 * restore the is_draining flag
-+	 */
-+	if (V4L2_TYPE_IS_CAPTURE(q->type) && ctx->source_change && ctx->fh.m2m_ctx->last_src_buf)
-+		ctx->fh.m2m_ctx->is_draining = true;
+-	ret = ath11k_pci_set_irq_affinity_hint(ab_pci, cpumask_of(0));
+-	if (ret) {
+-		ath11k_err(ab, "failed to set irq affinity %d\n", ret);
+-		goto err_free_irq;
+-	}
+-
+ 	/* kernel may allocate a dummy vector before request_irq and
+ 	 * then allocate a real vector when request_irq is called.
+ 	 * So get msi_data here again to avoid spurious interrupt
+@@ -892,20 +892,17 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
+ 	ret = ath11k_pci_config_msi_data(ab_pci);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to config msi_data: %d\n", ret);
+-		goto err_irq_affinity_cleanup;
++		goto err_free_irq;
+ 	}
+ 
+ 	ret = ath11k_core_init(ab);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to init core: %d\n", ret);
+-		goto err_irq_affinity_cleanup;
++		goto err_free_irq;
+ 	}
+ 	ath11k_qmi_fwreset_from_cold_boot(ab);
+ 	return 0;
+ 
+-err_irq_affinity_cleanup:
+-	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
+-
+ err_free_irq:
+ 	ath11k_pcic_free_irq(ab);
+ 
+@@ -918,6 +915,9 @@ static int ath11k_pci_probe(struct pci_dev *pdev,
+ err_mhi_unregister:
+ 	ath11k_mhi_unregister(ab_pci);
+ 
++err_irq_affinity_cleanup:
++	ath11k_pci_set_irq_affinity_hint(ab_pci, NULL);
 +
- 	if (V4L2_TYPE_IS_OUTPUT(q->type) &&
- 	    v4l2_m2m_has_stopped(ctx->fh.m2m_ctx)) {
- 		notify_eos(ctx);
-@@ -1916,7 +1937,7 @@ static int mxc_jpeg_buf_prepare(struct vb2_buffer *vb)
- 		return -EINVAL;
- 	for (i = 0; i < q_data->fmt->mem_planes; i++) {
- 		sizeimage = mxc_jpeg_get_plane_size(q_data, i);
--		if (vb2_plane_size(vb, i) < sizeimage) {
-+		if (!ctx->source_change && vb2_plane_size(vb, i) < sizeimage) {
- 			dev_err(dev, "plane %d too small (%lu < %lu)",
- 				i, vb2_plane_size(vb, i), sizeimage);
- 			return -EINVAL;
+ err_pci_disable_msi:
+ 	ath11k_pci_free_msi(ab_pci);
+ 
 -- 
 2.42.0
 
