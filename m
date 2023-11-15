@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EA83FB19
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2431241223
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:27:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfppIc5d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AD2C433C7;
-	Wed, 15 Nov 2023 19:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xP8Wnydb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACEEC433C8;
+	Wed, 15 Nov 2023 19:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700076426;
-	bh=dCMJcjkR0YWl60C//lEpyfgIe+aWMNLXXcPwdmx7w2w=;
+	s=korg; t=1700076428;
+	bh=6YCE/orUhamx5V+5GXhTm6S338T3uAOt//kExa+/16I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pfppIc5dwq7T+O94y3p7/rjHf/F650D7LLuDb2CXZoP05YHlR9pO0NNwN/biAggMn
-	 NhcYcoHhPKXwVgQIoO8lRHXEHsmKRZu8B7LHz9tO0GLA7Gmx3UyobcQLTXPj4p/76S
-	 M1YAxiIYUAvoDMrzuJRF8Q7XjpGGDzUkIxCFGkUE=
+	b=xP8WnydbfKmyBA9luE1vrvQXINz5AEiQopX3W0wXF2Ii6u+8QGSGSM7Z4IlMpw1A4
+	 1pFqThPvSCUDYLpGbOQRJy75Vbq61C/7ro66M8lr1L5kZEsUJD7Z8VSeH8qWPPSWHt
+	 AqyKnY42+9Sf+y+d2Vh7dwqbpwedVeAj/In4pQv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Will Deacon <will@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 257/550] perf/arm-cmn: Fix DTC domain detection
-Date: Wed, 15 Nov 2023 14:14:01 -0500
-Message-ID: <20231115191618.519680970@linuxfoundation.org>
+Subject: [PATCH 6.5 248/550] drm/rockchip: Fix type promotion bug in rockchip_gem_iommu_map()
+Date: Wed, 15 Nov 2023 14:13:52 -0500
+Message-ID: <20231115191617.887134283@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191600.708733204@linuxfoundation.org>
 References: <20231115191600.708733204@linuxfoundation.org>
@@ -43,66 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit e3e73f511c49c741f6309862c2248958ad77bbaa ]
+[ Upstream commit 6471da5ee311d53ef46eebcb7725bc94266cc0cf ]
 
-It transpires that dtm_unit_info is another register which got shuffled
-in CMN-700 without me noticing. Fix that in a way which also proactively
-fixes the fragile laziness of its consumer, just in case any further
-fields ever get added alongside dtc_domain.
+The "ret" variable is declared as ssize_t and it can hold negative error
+codes but the "rk_obj->base.size" variable is type size_t.  This means
+that when we compare them, they are both type promoted to size_t and the
+negative error code becomes a high unsigned value and is treated as
+success.  Add a cast to fix this.
 
-Fixes: 23760a014417 ("perf/arm-cmn: Add CMN-700 support")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Link: https://lore.kernel.org/r/3076ee83d0554f6939fbb6ee49ab2bdb28d8c7ee.1697824215.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 38f993b7c59e ("drm/rockchip: Do not use DMA mapping API if attached to IOMMU domain")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/2bfa28b5-145d-4b9e-a18a-98819dd686ce@moroto.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm-cmn.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 43aba01399bef..4a2cb49010599 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -110,7 +110,9 @@
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index b8f8b45ebf594..93ed841f5dcea 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -40,7 +40,7 @@ static int rockchip_gem_iommu_map(struct rockchip_gem_object *rk_obj)
  
- #define CMN_DTM_PMEVCNTSR		0x240
- 
--#define CMN_DTM_UNIT_INFO		0x0910
-+#define CMN650_DTM_UNIT_INFO		0x0910
-+#define CMN_DTM_UNIT_INFO		0x0960
-+#define CMN_DTM_UNIT_INFO_DTC_DOMAIN	GENMASK_ULL(1, 0)
- 
- #define CMN_DTM_NUM_COUNTERS		4
- /* Want more local counters? Why not replicate the whole DTM! Ugh... */
-@@ -2007,6 +2009,16 @@ static int arm_cmn_init_dtcs(struct arm_cmn *cmn)
- 	return 0;
- }
- 
-+static unsigned int arm_cmn_dtc_domain(struct arm_cmn *cmn, void __iomem *xp_region)
-+{
-+	int offset = CMN_DTM_UNIT_INFO;
-+
-+	if (cmn->part == PART_CMN650 || cmn->part == PART_CI700)
-+		offset = CMN650_DTM_UNIT_INFO;
-+
-+	return FIELD_GET(CMN_DTM_UNIT_INFO_DTC_DOMAIN, readl_relaxed(xp_region + offset));
-+}
-+
- static void arm_cmn_init_node_info(struct arm_cmn *cmn, u32 offset, struct arm_cmn_node *node)
- {
- 	int level;
-@@ -2138,7 +2150,7 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 		if (cmn->part == PART_CMN600)
- 			xp->dtc = 0xf;
- 		else
--			xp->dtc = 1 << readl_relaxed(xp_region + CMN_DTM_UNIT_INFO);
-+			xp->dtc = 1 << arm_cmn_dtc_domain(cmn, xp_region);
- 
- 		xp->dtm = dtm - cmn->dtms;
- 		arm_cmn_init_dtm(dtm++, xp, 0);
+ 	ret = iommu_map_sgtable(private->domain, rk_obj->dma_addr, rk_obj->sgt,
+ 				prot);
+-	if (ret < rk_obj->base.size) {
++	if (ret < (ssize_t)rk_obj->base.size) {
+ 		DRM_ERROR("failed to map buffer: size=%zd request_size=%zd\n",
+ 			  ret, rk_obj->base.size);
+ 		ret = -ENOMEM;
 -- 
 2.42.0
 
