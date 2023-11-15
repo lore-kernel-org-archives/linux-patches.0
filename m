@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDE843AD3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94C343AD3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lESKfBcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12DBC4E777;
-	Wed, 15 Nov 2023 20:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKOkic3y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D26C4E778;
+	Wed, 15 Nov 2023 20:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081700;
-	bh=8sF9rND9SaBtflulpyxuG5PtgKR52/ADHjEODZTUc80=;
+	s=korg; t=1700081701;
+	bh=zUQ3+QZUVWyL3UM/4h5Y1qdpSmRdKaIAIBbdHtot2Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lESKfBcKpECjzf28WTBeEzOJvLBkv0oj47v/t2zHwXxALwucj3yZtHHAADIYJVtEM
-	 8OeB/X1DEwcXpN9LMyiQIgTiKyIA/t+zpphWS0V47FtnR0uL3EpSM1ChgLxmGG0uQe
-	 +qBG9ZaiFCxDGzRyqB5V/wvko5VmbU3fl2AdPfJw=
+	b=vKOkic3yEEzNx18bM2qmR3acse7ufh2zFM5fokei75q1Qe3LPicTDdhGdHx+FcpiJ
+	 Kib/pN2j0QzBVzz/Osn3ni9fBhJDqO/hgxmQX/QCZGwBmf57cf1DhvpS0/bvYULJaQ
+	 5ZxAHzk1gzvpqGN2pjoyY6x8RKO86u15vJvltsXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/191] drm/rockchip: vop: Fix call to crtc reset helper
-Date: Wed, 15 Nov 2023 15:45:45 -0500
-Message-ID: <20231115204648.796417360@linuxfoundation.org>
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Subject: [PATCH 5.10 071/191] drm/radeon: possible buffer overflow
+Date: Wed, 15 Nov 2023 15:45:46 -0500
+Message-ID: <20231115204648.859741326@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
 References: <20231115204644.490636297@linuxfoundation.org>
@@ -43,41 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit 5aacd290837828c089a83ac9795c74c4c9e2c923 ]
+[ Upstream commit dd05484f99d16715a88eedfca363828ef9a4c2d4 ]
 
-Allocation of crtc_state may fail in vop_crtc_reset, causing an invalid
-pointer to be passed to __drm_atomic_helper_crtc_reset.
+Buffer 'afmt_status' of size 6 could overflow, since index 'afmt_idx' is
+checked after access.
 
-Fix this by adding a NULL check of crtc_state, similar to other drivers.
-
-Fixes: 01e2eaf40c9d ("drm/rockchip: Convert to using __drm_atomic_helper_crtc_reset() for reset.")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230621223311.2239547-4-jonas@kwiboo.se
+Fixes: 5cc4e5fc293b ("drm/radeon: Cleanup HDMI audio interrupt handling for evergreen")
+Co-developed-by: Ivanov Mikhail <ivanov.mikhail1@huawei-partners.com>
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/evergreen.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index 2f1e55a905d42..05fcc9e078d6d 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -1559,7 +1559,10 @@ static void vop_crtc_reset(struct drm_crtc *crtc)
- 	if (crtc->state)
- 		vop_crtc_destroy_state(crtc, crtc->state);
- 
--	__drm_atomic_helper_crtc_reset(crtc, &crtc_state->base);
-+	if (crtc_state)
-+		__drm_atomic_helper_crtc_reset(crtc, &crtc_state->base);
-+	else
-+		__drm_atomic_helper_crtc_reset(crtc, NULL);
- }
- 
- #ifdef CONFIG_DRM_ANALOGIX_DP
+diff --git a/drivers/gpu/drm/radeon/evergreen.c b/drivers/gpu/drm/radeon/evergreen.c
+index 14d90dc376e71..061ef6c008592 100644
+--- a/drivers/gpu/drm/radeon/evergreen.c
++++ b/drivers/gpu/drm/radeon/evergreen.c
+@@ -4819,14 +4819,15 @@ int evergreen_irq_process(struct radeon_device *rdev)
+ 			break;
+ 		case 44: /* hdmi */
+ 			afmt_idx = src_data;
+-			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
+-				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
+-
+ 			if (afmt_idx > 5) {
+ 				DRM_ERROR("Unhandled interrupt: %d %d\n",
+ 					  src_id, src_data);
+ 				break;
+ 			}
++
++			if (!(afmt_status[afmt_idx] & AFMT_AZ_FORMAT_WTRIG))
++				DRM_DEBUG("IH: IH event w/o asserted irq bit?\n");
++
+ 			afmt_status[afmt_idx] &= ~AFMT_AZ_FORMAT_WTRIG;
+ 			queue_hdmi = true;
+ 			DRM_DEBUG("IH: HDMI%d\n", afmt_idx + 1);
 -- 
 2.42.0
 
