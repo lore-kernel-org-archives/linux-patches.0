@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1382031730
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A1428383
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kaahpjss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B00E5C433C7;
-	Wed, 15 Nov 2023 19:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+XmNMOm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A96C433C8;
+	Wed, 15 Nov 2023 19:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077539;
-	bh=U5fG0LHRlfoZGi2f6X9CALJ9JBHRPdD0FYbqIikijX0=;
+	s=korg; t=1700077541;
+	bh=5usueZtFGQzVvtTkanJY+fkeJjzt87NPQg3jJ6JYlNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KaahpjssmwLQTFxb1P0PR0rSKmScPlRPr6BIcP4WcSCo0bu976qdn5PMcVj1cj21y
-	 yOBZAkjK5tHs2/fKIkmM9aRg7N7a7Ip/ShrMzbKjvj0t/UDYDwKwktcDCnCIkzUgmG
-	 nAJj70mFdDBLIBYxM12Avi7tUstcYtlaNSr8bdk0=
+	b=d+XmNMOmr/DYlWID+9UgVbjIzsDE69Z4hcq4vP/wbcuIbJOrGXvffv8bHYMzXP5D3
+	 yuycrfpArvW1Akf0Ke77LmRQVM+2cI6bmolP5wmWkXbHMXHIfjSoyNp5gpWg28rkFx
+	 ONX6ayWHu87E1oQmr0Q55d60IukLDI4K9ZRMFrn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gou Hao <gouhao@uniontech.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Adam Guerin <adam.guerin@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 365/603] ext4: move ix sanity check to corrent position
-Date: Wed, 15 Nov 2023 14:15:10 -0500
-Message-ID: <20231115191638.772410095@linuxfoundation.org>
+Subject: [PATCH 6.6 348/603] crypto: qat - ignore subsequent state up commands
+Date: Wed, 15 Nov 2023 14:14:53 -0500
+Message-ID: <20231115191637.611127924@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -42,49 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gou Hao <gouhao@uniontech.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit af90a8f4a09ec4a3de20142e37f37205d4687f28 ]
+[ Upstream commit 9c20cb8b1847dedddec3d5163079290542bf00bf ]
 
-Check 'ix' before it is used.
+If the device is already in the up state, a subsequent write of `up` to
+the sysfs attribute /sys/bus/pci/devices/<BDF>/qat/state brings the
+device down.
+Fix this behaviour by ignoring subsequent `up` commands if the device is
+already in the up state.
 
-Fixes: 80e675f906db ("ext4: optimize memmmove lengths in extent/index insertions")
-Signed-off-by: Gou Hao <gouhao@uniontech.com>
-Link: https://lore.kernel.org/r/20230906013341.7199-1-gouhao@uniontech.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 1bdc85550a2b ("crypto: qat - fix concurrency issue when device state changes")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Adam Guerin <adam.guerin@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/crypto/intel/qat/qat_common/adf_sysfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 202c76996b621..4d8496d1a8ac4 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -1010,6 +1010,11 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
- 		ix = curp->p_idx;
- 	}
+diff --git a/drivers/crypto/intel/qat/qat_common/adf_sysfs.c b/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
+index a8f33558d7cb8..8880af1aa1b5b 100644
+--- a/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
++++ b/drivers/crypto/intel/qat/qat_common/adf_sysfs.c
+@@ -68,7 +68,9 @@ static ssize_t state_store(struct device *dev, struct device_attribute *attr,
+ 		dev_info(dev, "Starting device qat_dev%d\n", accel_id);
  
-+	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
-+		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
-+		return -EFSCORRUPTED;
-+	}
-+
- 	len = EXT_LAST_INDEX(curp->p_hdr) - ix + 1;
- 	BUG_ON(len < 0);
- 	if (len > 0) {
-@@ -1019,11 +1024,6 @@ static int ext4_ext_insert_index(handle_t *handle, struct inode *inode,
- 		memmove(ix + 1, ix, len * sizeof(struct ext4_extent_idx));
- 	}
- 
--	if (unlikely(ix > EXT_MAX_INDEX(curp->p_hdr))) {
--		EXT4_ERROR_INODE(inode, "ix > EXT_MAX_INDEX!");
--		return -EFSCORRUPTED;
--	}
--
- 	ix->ei_block = cpu_to_le32(logical);
- 	ext4_idx_store_pblock(ix, ptr);
- 	le16_add_cpu(&curp->p_hdr->eh_entries, 1);
+ 		ret = adf_dev_up(accel_dev, true);
+-		if (ret < 0) {
++		if (ret == -EALREADY) {
++			break;
++		} else if (ret) {
+ 			dev_err(dev, "Failed to start device qat_dev%d\n",
+ 				accel_id);
+ 			adf_dev_down(accel_dev, true);
 -- 
 2.42.0
 
