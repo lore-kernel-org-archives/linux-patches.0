@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BC143AB6
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94F743AB6
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OX9uOpqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD531C116AF;
-	Wed, 15 Nov 2023 20:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="atbEwdKp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68728C116B0;
+	Wed, 15 Nov 2023 20:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081276;
-	bh=o32/OiIXohd19a+SBmr3ZryDAUb106cb/e2DykZH6K0=;
+	s=korg; t=1700081277;
+	bh=yorl03C4pBYSsqJURDk7KGwA384KrMd4jCOcZbs/o5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OX9uOpqBnR4NdV+bmQX3L5IAEh2A3kKoW8Oa4yD4lRUh+OxoOCgCtNIjXFU1QBQR4
-	 cifP5w9+NW2/EYDpP9KACUYekV0R3UTLzY7kQonFyQ0pAzourwAkUN2EF9IYaPTGCf
-	 gWfsTWb0a3wQdXmpi64MmJoBCK5KS78RipW5h9IA=
+	b=atbEwdKpu4/92MIwD6Ubxprx/ar8CFpWA3vvUbDBPtFyT6AnjZg90sw4P1vdcjKea
+	 hPPtEAoRotop7GhB3HJlqECJfQSrOjeTMdcVYVowCzSkBntbW5oRk8eTtd90Q4p93A
+	 r0qEuCnUVy0Wv78qpE/N19BqOkHnvLJPYemEy3Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>,
+	Laurentiu Palcu <laurentiu.palcu@nxp.com>,
+	Robert Chiras <robert.chiras@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/244] clk: imx: imx8mq: correct error handling path
-Date: Wed, 15 Nov 2023 15:34:10 -0500
-Message-ID: <20231115203551.836654382@linuxfoundation.org>
+Subject: [PATCH 5.15 059/244] clk: imx: imx8qxp: Fix elcdif_pll clock
+Date: Wed, 15 Nov 2023 15:34:11 -0500
+Message-ID: <20231115203551.898243447@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -44,69 +45,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Robert Chiras <robert.chiras@nxp.com>
 
-[ Upstream commit 577ad169966e6e75b10e004389a3f79813e84b5d ]
+[ Upstream commit 15cee75dacb82ade710d61bfd536011933ef9bf2 ]
 
-Avoid memory leak in error handling path. It does not make
-much sense for the SoC without clk driver, to make program behavior
-correct, let's fix it.
+Move the elcdif_pll clock initialization before the lcd_clk, since the
+elcdif_clk needs to be initialized ahead of lcd_clk, being its parent.
+This change fixes issues with the LCD clocks during suspend/resume.
 
-Fixes: b80522040cd3 ("clk: imx: Add clock driver for i.MX8MQ CCM")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202309240551.e46NllPa-lkp@intel.com/
+Fixes: babfaa9556d7 ("clk: imx: scu: add more scu clocks")
+Suggested-by: Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>
+Acked-by: Laurentiu Palcu <laurentiu.palcu@nxp.com>
+Signed-off-by: Robert Chiras <robert.chiras@nxp.com>
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20231001122618.194498-1-peng.fan@oss.nxp.com
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20230912-imx8-clk-v1-v1-2-69a34bcfcae1@nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mq.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/clk/imx/clk-imx8qxp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mq.c b/drivers/clk/imx/clk-imx8mq.c
-index 83cc2b1c32947..791f6bdd88b8a 100644
---- a/drivers/clk/imx/clk-imx8mq.c
-+++ b/drivers/clk/imx/clk-imx8mq.c
-@@ -288,8 +288,7 @@ static int imx8mq_clocks_probe(struct platform_device *pdev)
- 	void __iomem *base;
- 	int err;
+diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
+index 40a2efb1329be..32df47c56621a 100644
+--- a/drivers/clk/imx/clk-imx8qxp.c
++++ b/drivers/clk/imx/clk-imx8qxp.c
+@@ -148,10 +148,10 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
+ 	imx_clk_scu("adc0_clk",  IMX_SC_R_ADC_0, IMX_SC_PM_CLK_PER);
+ 	imx_clk_scu("adc1_clk",  IMX_SC_R_ADC_1, IMX_SC_PM_CLK_PER);
+ 	imx_clk_scu("pwm_clk",   IMX_SC_R_LCD_0_PWM_0, IMX_SC_PM_CLK_PER);
++	imx_clk_scu("elcdif_pll", IMX_SC_R_ELCDIF_PLL, IMX_SC_PM_CLK_PLL);
+ 	imx_clk_scu2("lcd_clk", lcd_sels, ARRAY_SIZE(lcd_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_PER);
+ 	imx_clk_scu2("lcd_pxl_clk", lcd_pxl_sels, ARRAY_SIZE(lcd_pxl_sels), IMX_SC_R_LCD_0, IMX_SC_PM_CLK_MISC0);
+ 	imx_clk_scu("lcd_pxl_bypass_div_clk", IMX_SC_R_LCD_0, IMX_SC_PM_CLK_BYPASS);
+-	imx_clk_scu("elcdif_pll", IMX_SC_R_ELCDIF_PLL, IMX_SC_PM_CLK_PLL);
  
--	clk_hw_data = kzalloc(struct_size(clk_hw_data, hws,
--					  IMX8MQ_CLK_END), GFP_KERNEL);
-+	clk_hw_data = devm_kzalloc(dev, struct_size(clk_hw_data, hws, IMX8MQ_CLK_END), GFP_KERNEL);
- 	if (WARN_ON(!clk_hw_data))
- 		return -ENOMEM;
- 
-@@ -306,10 +305,12 @@ static int imx8mq_clocks_probe(struct platform_device *pdev)
- 	hws[IMX8MQ_CLK_EXT4] = imx_obtain_fixed_clk_hw(np, "clk_ext4");
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mq-anatop");
--	base = of_iomap(np, 0);
-+	base = devm_of_iomap(dev, np, 0, NULL);
- 	of_node_put(np);
--	if (WARN_ON(!base))
--		return -ENOMEM;
-+	if (WARN_ON(IS_ERR(base))) {
-+		err = PTR_ERR(base);
-+		goto unregister_hws;
-+	}
- 
- 	hws[IMX8MQ_ARM_PLL_REF_SEL] = imx_clk_hw_mux("arm_pll_ref_sel", base + 0x28, 16, 2, pll_ref_sels, ARRAY_SIZE(pll_ref_sels));
- 	hws[IMX8MQ_GPU_PLL_REF_SEL] = imx_clk_hw_mux("gpu_pll_ref_sel", base + 0x18, 16, 2, pll_ref_sels, ARRAY_SIZE(pll_ref_sels));
-@@ -395,8 +396,10 @@ static int imx8mq_clocks_probe(struct platform_device *pdev)
- 
- 	np = dev->of_node;
- 	base = devm_platform_ioremap_resource(pdev, 0);
--	if (WARN_ON(IS_ERR(base)))
--		return PTR_ERR(base);
-+	if (WARN_ON(IS_ERR(base))) {
-+		err = PTR_ERR(base);
-+		goto unregister_hws;
-+	}
- 
- 	/* CORE */
- 	hws[IMX8MQ_CLK_A53_DIV] = imx8m_clk_hw_composite_core("arm_a53_div", imx8mq_a53_sels, base + 0x8000);
+ 	/* Audio SS */
+ 	imx_clk_scu("audio_pll0_clk", IMX_SC_R_AUDIO_PLL_0, IMX_SC_PM_CLK_PLL);
 -- 
 2.42.0
 
