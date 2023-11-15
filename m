@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AD6364CB
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D3F28383
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 19:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q12lqzQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B46C433C8;
-	Wed, 15 Nov 2023 19:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCEa80Dq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB31DC433C8;
+	Wed, 15 Nov 2023 19:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700077507;
-	bh=VG816C542MoPSKdbk+j8Xwqemy34ZT6YDApRcN12vCo=;
+	s=korg; t=1700077509;
+	bh=GH2b3HyTcvW9HF8u2Rd0Nw83mhDVPIeF3w+O2fjMVOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q12lqzQFn/niwqk9x1+d6mTuVY9V1x1x2DV+L90dz+CAklAZfQqx3DJHXA6On6V7u
-	 uGkUXhW55nRew/Pu2r/wfSeQ1AYu19vmlQr/Lc/Rbv15NpmpBp5kjQKWhK4Y83tZdl
-	 IMu2QDMYN94HSFxb091WFEoEnUesUIY24Lwacs7w=
+	b=KCEa80DquJCElHFfNpIzXA41zatjRiyMv9LAa5CcyvLZBssd5QgI/V4QuYXtXq0G3
+	 c73bdtNvi/0nW0ixBwvaTLL61UYEPLTCAj2U/Bx0jez0ZjiWoFsCkAVDbRv1s7ERHm
+	 qFUuNardBLYyZ4D3WzH940E2f5kwSk2bV3GXhM7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Timur I. Davletshin" <timur.davletshin@gmail.com>,
-	Jo-Philipp Wich <jo@mein.io>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 345/603] hwrng: geode - fix accessing registers
-Date: Wed, 15 Nov 2023 14:14:50 -0500
-Message-ID: <20231115191637.394444622@linuxfoundation.org>
+Subject: [PATCH 6.6 321/603] memory: tegra: Set BPMP msg flags to reset IPC channels
+Date: Wed, 15 Nov 2023 14:14:26 -0500
+Message-ID: <20231115191635.726241670@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
 References: <20231115191613.097702445@linuxfoundation.org>
@@ -44,56 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Thierry Reding <treding@nvidia.com>
 
-[ Upstream commit 464bd8ec2f06707f3773676a1bd2c64832a3c805 ]
+[ Upstream commit f344675a34383ae26a8230f4b1cd99cbd0defebd ]
 
-When the membase and pci_dev pointer were moved to a new struct in priv,
-the actual membase users were left untouched, and they started reading
-out arbitrary memory behind the struct instead of registers. This
-unfortunately turned the RNG into a constant number generator, depending
-on the content of what was at that offset.
+Set the 'TEGRA_BPMP_MESSAGE_RESET' bit in newly added 'flags' field
+of 'struct tegra_bpmp_message' to request for the reset of BPMP IPC
+channels. This is used along with the 'suspended' check in BPMP driver
+for handling early bandwidth requests due to the hotplug of CPU's
+during system resume before the driver gets resumed.
 
-To fix this, update geode_rng_data_{read,present}() to also get the
-membase via amd_geode_priv, and properly read from the right addresses
-again.
-
-Fixes: 9f6ec8dc574e ("hwrng: geode - Fix PCI device refcount leak")
-Reported-by: Timur I. Davletshin <timur.davletshin@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217882
-Tested-by: Timur I. Davletshin <timur.davletshin@gmail.com>
-Suggested-by: Jo-Philipp Wich <jo@mein.io>
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: f41e1442ac5b ("cpufreq: tegra194: add OPP support and set bandwidth")
+Co-developed-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/geode-rng.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/memory/tegra/tegra234.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
-index 12fbe80918319..159baf00a8675 100644
---- a/drivers/char/hw_random/geode-rng.c
-+++ b/drivers/char/hw_random/geode-rng.c
-@@ -58,7 +58,8 @@ struct amd_geode_priv {
+diff --git a/drivers/memory/tegra/tegra234.c b/drivers/memory/tegra/tegra234.c
+index 9e5b5dbd9c8df..2845041f32d69 100644
+--- a/drivers/memory/tegra/tegra234.c
++++ b/drivers/memory/tegra/tegra234.c
+@@ -986,6 +986,10 @@ static int tegra234_mc_icc_set(struct icc_node *src, struct icc_node *dst)
+ 	msg.rx.data = &bwmgr_resp;
+ 	msg.rx.size = sizeof(bwmgr_resp);
  
- static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- {
--	void __iomem *mem = (void __iomem *)rng->priv;
-+	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
-+	void __iomem *mem = priv->membase;
- 
- 	*data = readl(mem + GEODE_RNG_DATA_REG);
- 
-@@ -67,7 +68,8 @@ static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- 
- static int geode_rng_data_present(struct hwrng *rng, int wait)
- {
--	void __iomem *mem = (void __iomem *)rng->priv;
-+	struct amd_geode_priv *priv = (struct amd_geode_priv *)rng->priv;
-+	void __iomem *mem = priv->membase;
- 	int data, i;
- 
- 	for (i = 0; i < 20; i++) {
++	if (pclient->bpmp_id >= TEGRA_ICC_BPMP_CPU_CLUSTER0 &&
++	    pclient->bpmp_id <= TEGRA_ICC_BPMP_CPU_CLUSTER2)
++		msg.flags = TEGRA_BPMP_MESSAGE_RESET;
++
+ 	ret = tegra_bpmp_transfer(mc->bpmp, &msg);
+ 	if (ret < 0) {
+ 		dev_err(mc->dev, "BPMP transfer failed: %d\n", ret);
 -- 
 2.42.0
 
