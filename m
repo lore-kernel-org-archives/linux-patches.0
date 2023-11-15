@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40D8364B3
-	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54066364B3
+	for <patches@lists.linux.dev>; Wed, 15 Nov 2023 20:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBmiprto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5408DC3277E;
-	Wed, 15 Nov 2023 20:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1q6RYjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE58DC3277F;
+	Wed, 15 Nov 2023 20:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700081332;
-	bh=VYmoS7hIaiL6xUH+NNLe8QVhSW8D439j3tvxm5be3EI=;
+	s=korg; t=1700081334;
+	bh=JlYfsFndsBqwJdsHdXyfo0GpgAxblqdzNVFT7HBMYWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aBmiprtoHA9LFHCXZ1ZDTrygD8BuJyqJ0eF6lFc4FlzyCwftWSQDe6BKG6tbJ17Se
-	 pdt0v/QBboMcD3RqV3Ancqh66gnrBWBQsLeo76DVCtQV9+kJ33+BfFzvk1RGjCPYFQ
-	 ftf7+uGjRu9B0qd7GhgEbu6aI8W7y+dtHYjkhjLY=
+	b=o1q6RYjYQwrNZBLH8El857X2TRoB+KU34XlpnbMHBcLnjMS4XVUIHzeKh5zP7d0d5
+	 jDJWK7QO9UU8DVfY2XIMcf/9Saxe7HG86Nd1bpmsktiXewFapci8++bSqE0cVA0tA2
+	 RkFWrwbZKwX4pwEY7Y0EHLWnj4wQ1cifE8EcmqgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Adrien Grassein <adrien.grassein@gmail.com>,
+	Robert Foss <robert.foss@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/244] drm/bridge: lt8912b: Register and attach our DSI device at probe
-Date: Wed, 15 Nov 2023 15:34:41 -0500
-Message-ID: <20231115203553.699521100@linuxfoundation.org>
+Subject: [PATCH 5.15 090/244] drm/bridge: lt8912b: Add hot plug detection
+Date: Wed, 15 Nov 2023 15:34:42 -0500
+Message-ID: <20231115203553.761315185@linuxfoundation.org>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
 References: <20231115203548.387164783@linuxfoundation.org>
@@ -42,54 +44,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <maxime@cerno.tech>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-[ Upstream commit d89078c37b10f05fa4f4791b71db2572db361b68 ]
+[ Upstream commit 3b0a01a6a5224ed9b3f69f44edaa889b2e2b9779 ]
 
-In order to avoid any probe ordering issue, the best practice is to move
-the secondary MIPI-DSI device registration and attachment to the
-MIPI-DSI host at probe time. Let's do this.
+Enable hot plug detection when it is available on the HDMI port.
+Without this connecting to a different monitor with incompatible timing
+before the 10 seconds poll period will lead to a broken display output.
 
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20211025151536.1048186-7-maxime@cerno.tech
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Adrien Grassein <adrien.grassein@gmail.com>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221128112320.25708-1-francesco@dolcini.it
 Stable-dep-of: 941882a0e96d ("drm/bridge: lt8912b: Fix bridge_detach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/lontium-lt8912b.c b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-index 24ca22b0b9f56..6ad3b2d1819f1 100644
+index 6ad3b2d1819f1..a89e505aa3811 100644
 --- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
 +++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -552,10 +552,6 @@ static int lt8912_bridge_attach(struct drm_bridge *bridge,
- 	if (ret)
- 		goto error;
- 
--	ret = lt8912_attach_dsi(lt);
--	if (ret)
--		goto error;
--
- 	lt->is_attached = true;
- 
+@@ -506,14 +506,27 @@ static int lt8912_attach_dsi(struct lt8912 *lt)
  	return 0;
-@@ -714,8 +710,15 @@ static int lt8912_probe(struct i2c_client *client,
+ }
  
- 	drm_bridge_add(&lt->bridge);
- 
-+	ret = lt8912_attach_dsi(lt);
-+	if (ret)
-+		goto err_attach;
++static void lt8912_bridge_hpd_cb(void *data, enum drm_connector_status status)
++{
++	struct lt8912 *lt = data;
 +
- 	return 0;
++	if (lt->bridge.dev)
++		drm_helper_hpd_irq_event(lt->bridge.dev);
++}
++
+ static int lt8912_bridge_connector_init(struct drm_bridge *bridge)
+ {
+ 	int ret;
+ 	struct lt8912 *lt = bridge_to_lt8912(bridge);
+ 	struct drm_connector *connector = &lt->connector;
  
-+err_attach:
-+	drm_bridge_remove(&lt->bridge);
-+	lt8912_free_i2c(lt);
- err_i2c:
- 	lt8912_put_dt(lt);
- err_dt_parse:
+-	connector->polled = DRM_CONNECTOR_POLL_CONNECT |
+-			    DRM_CONNECTOR_POLL_DISCONNECT;
++	if (lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD) {
++		drm_bridge_hpd_enable(lt->hdmi_port, lt8912_bridge_hpd_cb, lt);
++		connector->polled = DRM_CONNECTOR_POLL_HPD;
++	} else {
++		connector->polled = DRM_CONNECTOR_POLL_CONNECT |
++				    DRM_CONNECTOR_POLL_DISCONNECT;
++	}
+ 
+ 	ret = drm_connector_init(bridge->dev, connector,
+ 				 &lt8912_connector_funcs,
+@@ -567,6 +580,10 @@ static void lt8912_bridge_detach(struct drm_bridge *bridge)
+ 
+ 	if (lt->is_attached) {
+ 		lt8912_hard_power_off(lt);
++
++		if (lt->hdmi_port->ops & DRM_BRIDGE_OP_HPD)
++			drm_bridge_hpd_disable(lt->hdmi_port);
++
+ 		drm_connector_unregister(&lt->connector);
+ 		drm_connector_cleanup(&lt->connector);
+ 	}
 -- 
 2.42.0
 
