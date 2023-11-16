@@ -1,140 +1,86 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8525F328CB;
-	Thu, 16 Nov 2023 14:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC398364DC
+	for <patches@lists.linux.dev>; Thu, 16 Nov 2023 16:46:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6ce2de8da87so454512a34.1;
-        Thu, 16 Nov 2023 06:36:33 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZPkPhEEw"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-5bdc185c449so789515a12.0
+        for <patches@lists.linux.dev>; Thu, 16 Nov 2023 08:46:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700153215; x=1700758015; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OolimXFjci2sq0iqnv6FTsXghgRy0JeCTvt6M1ohGfU=;
+        b=ZPkPhEEwIM+L7xcSE5blJJSA9YCmoBXqRF+Sj1JGcX1CCOrZpFCLbvkuNslFP2JwlQ
+         5JB5ehu/rAQuzuiIqgijC88sM7Z5XjbdCNk9vL+5AS5k4n4Z5rw/SYBfmXE9GSoPPs0t
+         sTa4c+hLZ5UXh5UhK1eaDaGRRryiira9NO2WoTzLHj0cGpZV9pPnJmv+wWTwV4VjXvre
+         rruwcoQvmkVN37UmxpAUUIT0UwmRVZtsU+G2ObOiSfG9FphRPnXF15WItHTo9bVQsxIU
+         +jRhEG1O8Z5DjT6AG2bQ9EfU3n3VfJq2fl0c74Us1mZC+UhnfGjPiH/M/apY3rE/yquy
+         iUzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700145392; x=1700750192;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hQe83AHexfh3GazMLDTY5AyEL167MohegfRBMKLl7I8=;
-        b=eew6CxPuwDBiLOspPOPPNFv6wx+5Uhf+qvP+98h1oirHQ6Tt5xjpcR6W5RCGCz6rkK
-         ojMtMh8NRAAwg8QA0MyIYB2p/61FhRWyd2MFine3U3Gv+YwkYRl5QIUyAMqAV7k/qZav
-         +DLuNrv9ZXYYBeOQ/4Pn2NShEd3K/KXsFfWUMxw4Ih5K8pOdzDJnm3MdR5IeB9ju20ji
-         ho5MSBLMYcwsr1/UncJUgI3tFOxMjdjcmrpDK9YefqBRmu4czGecUXmlNAj1/xvV1hr0
-         SPYtHV+ZNFA4JgAAE+w6o1JI1a9OKbzGnRctJiJQcxH7R+LII/nQyV+PfuToD2DwcMYz
-         iqzA==
-X-Gm-Message-State: AOJu0YyOI/rKbfYARZd5v9Ws+W35y60UCOgaYp9bUqdX6PhkuIznIVy5
-	H4DpB8K/LIgOViEztWfhTH0=
-X-Google-Smtp-Source: AGHT+IHU4Lxx+/myT+H5YB5iQwSXHLDIA41zmD2u+pjBktk3mb+GPBhIH+yVJJ2/AO7NCTzQtZy56A==
-X-Received: by 2002:a05:6830:10c7:b0:6c4:ae52:9599 with SMTP id z7-20020a05683010c700b006c4ae529599mr9476568oto.7.1700145392505;
-        Thu, 16 Nov 2023 06:36:32 -0800 (PST)
-Received: from localhost ([2600:380:7a60:430d:7a98:972a:884d:31ff])
-        by smtp.gmail.com with ESMTPSA id l2-20020a9d7082000000b006cd099bb052sm912460otj.1.2023.11.16.06.36.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Nov 2023 06:36:32 -0800 (PST)
-Date: Thu, 16 Nov 2023 06:36:30 -0800
-From: Moritz Fischer <mdf@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dexuan Cui <decui@microsoft.com>, devicetree@vger.kernel.org,
-	David Woodhouse <dwmw2@infradead.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>, iommu@lists.linux.dev,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	"K. Y. Srinivasan" <kys@microsoft.com>, Len Brown <lenb@kernel.org>,
-	linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-hyperv@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-snps-arc@lists.infradead.org,
-	linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Hector Martin <marcan@marcan.st>,
-	Palmer Dabbelt <palmer@dabbelt.com>, patches@lists.linux.dev,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Krishna Reddy <vdumpa@nvidia.com>, Vineet Gupta <vgupta@kernel.org>,
-	virtualization@lists.linux.dev, Wei Liu <wei.liu@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	=?iso-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>, Christoph Hellwig <hch@lst.de>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Moritz Fischer <mdf@kernel.org>,
-	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v2 12/17] iommu: Make iommu_ops_from_fwnode() static
-Message-ID: <ZVYo7s_dV9HDm1qU@archbook>
-References: <0-v2-36a0088ecaa7+22c6e-iommu_fwspec_jgg@nvidia.com>
- <12-v2-36a0088ecaa7+22c6e-iommu_fwspec_jgg@nvidia.com>
+        d=1e100.net; s=20230601; t=1700153215; x=1700758015;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OolimXFjci2sq0iqnv6FTsXghgRy0JeCTvt6M1ohGfU=;
+        b=YTk/YDupYUUArVY1eOvSnxU8IK5AOPONJmTUk1cJ67tSuIhdmLDrTe3uf1PkWUa+X8
+         QOL+Jy3xclWT3cji6sCU4sFI5jUewdL5+ByNPb3btQo1gPh4HMpUm8BXUmMPoTgnnnoA
+         9Wec4WBKn5SZ29CPC0wGyhIsNtkRjerawwDa9KoebTOMvCCQqBLe87HiwKAfKa+vguvA
+         rnnelDGNAEWSP31XHjYuhI7p7HtFJ7FWY5pVuFXlnXiEQA2pcTBV9Bz/+qz+DvcXjrDc
+         7PqHsrTPCQROBxwVPYVm0xoMS/8UflcYdnjKiIpPgy/juKgVEa16ClEbgyYMUivqUTKh
+         co4A==
+X-Gm-Message-State: AOJu0YxCkTI18F8Mybqn2L0qGgr29ndK9p2F62l3FuddhmqXMWucSq9/
+	euhAPe7ZE81Iq6rwLNDGAQMLGl3zpXKQ1xole/o=
+X-Google-Smtp-Source: AGHT+IF5/SEQWJEREMGPHUCZ1LmNZM1iuxnvDxRQDsGxq6HYPAtPUUhqGTz0d14cg9BfIQnvICXiZip82B4crhq7aEs=
+X-Received: by 2002:a17:90a:6f84:b0:280:1a19:6dd5 with SMTP id
+ e4-20020a17090a6f8400b002801a196dd5mr13185462pjk.36.1700153214846; Thu, 16
+ Nov 2023 08:46:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <12-v2-36a0088ecaa7+22c6e-iommu_fwspec_jgg@nvidia.com>
+References: <20231115191613.097702445@linuxfoundation.org>
+In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Thu, 16 Nov 2023 11:46:43 -0500
+Message-ID: <CAJq+SaD5K8eH-vrhTDM47P8pnb_GjxiPN4cTp6dKji_cO6okqQ@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/603] 6.6.2-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Nov 15, 2023 at 10:06:03AM -0400, Jason Gunthorpe wrote:
-> There are no external callers now.
-> 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Moritz Fischer <mdf@kernel.org>
-> ---
->  drivers/iommu/iommu.c | 3 ++-
->  include/linux/iommu.h | 7 -------
->  2 files changed, 2 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 5af98cad06f9ef..ea6aede326131e 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -2928,7 +2928,8 @@ bool iommu_default_passthrough(void)
->  }
->  EXPORT_SYMBOL_GPL(iommu_default_passthrough);
->  
-> -const struct iommu_ops *iommu_ops_from_fwnode(struct fwnode_handle *fwnode)
-> +static const struct iommu_ops *
-> +iommu_ops_from_fwnode(struct fwnode_handle *fwnode)
->  {
->  	const struct iommu_ops *ops = NULL;
->  	struct iommu_device *iommu;
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 72ec71bd31a376..05c5ad6bad6339 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -831,7 +831,6 @@ static inline void iommu_fwspec_free(struct device *dev)
->  	dev->iommu->fwspec = NULL;
->  }
->  int iommu_fwspec_add_ids(struct device *dev, u32 *ids, int num_ids);
-> -const struct iommu_ops *iommu_ops_from_fwnode(struct fwnode_handle *fwnode);
->  int iommu_fwspec_append_ids(struct iommu_fwspec *fwspec, u32 *ids, int num_ids);
->  
->  static inline struct iommu_fwspec *dev_iommu_fwspec_get(struct device *dev)
-> @@ -1187,12 +1186,6 @@ static inline int iommu_fwspec_add_ids(struct device *dev, u32 *ids,
->  	return -ENODEV;
->  }
->  
-> -static inline
-> -const struct iommu_ops *iommu_ops_from_fwnode(struct fwnode_handle *fwnode)
-> -{
-> -	return NULL;
-> -}
-> -
->  static inline int
->  iommu_dev_enable_feature(struct device *dev, enum iommu_dev_features feat)
->  {
-> -- 
-> 2.42.0
-> 
+> This is the start of the stable review cycle for the 6.6.2 release.
+> There are 603 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 17 Nov 2023 19:14:03 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.2-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
+
+Tested-by: Allen Pais <apais@linux.microsoft.com>
+
+Thanks.
