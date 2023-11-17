@@ -1,85 +1,161 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CA5225A2
-	for <patches@lists.linux.dev>; Thu, 16 Nov 2023 23:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C1D10E8
+	for <patches@lists.linux.dev>; Fri, 17 Nov 2023 01:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nc9ifE4A"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-6b709048d8eso1294123b3a.2
-        for <patches@lists.linux.dev>; Thu, 16 Nov 2023 15:44:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ofj6Mt+N"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-1eb6c559ab4so777982fac.0
+        for <patches@lists.linux.dev>; Thu, 16 Nov 2023 17:13:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700178295; x=1700783095; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gzRF8uHq6PjJBxbhxhi0V10xOOQOgpxlbEBlX7hXGSU=;
-        b=Nc9ifE4Am/jEDy4nj+M+BnOphQ1ROkeOZsqozlLK9TOOJu2zI0ZFi2/1qYYmNMKUBr
-         dKnrb1Q0SwOeo9VQ2j+qfPGX3a7ZUSNssxgeGiT/wD2cPmhiHMPjqvJ09p2NA9lkfF9L
-         PM0Fcrb2gL3oauVsUMfSG+fhT7bqXSNvbWRHOYrkBu2+/6c9aieC7LPu08JBfe+35CoC
-         mOsNNCTn3GaTOKEj3lctdPghhtO4kDl5ZeVDW9iqyx+uzI+nbVAPyyt3J1VI/+77/0m7
-         99JuA3G4E2Ft9dtxLpbxWsVSyqyrIjiUpXXqBx5qhZMLwOUsam0QJcRYdBJZqgPFGBeN
-         arcw==
+        d=gmail.com; s=20230601; t=1700183622; x=1700788422; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tb/j8lYGcn1mOyOg9PPEH6m2FEKY37irMVBOlxYFInQ=;
+        b=Ofj6Mt+NtZQkcKoDbAVE3bCBCTresGNwZ72buJrpoOLNC0ZPBOINACWggK6mxuEg76
+         UPCZuvGiCcFqiisHwNTy3fv7Rz1WcotslEOM4mCpKO1jGxEDLx/bLAXYJ8kkbqNx5Vc6
+         zIOUIKxuEDiEGPr3akv62QbJ5tgNSKnqKciPsik8j5vwAIyUmrt8ms53zaEt2t3F5QxQ
+         5Zhqi2TcY9IjielX2dt7974HUfZ0xgpDXBSnx01N2hPbHeYlTvZFcbYUHLW18+zl8zAb
+         cE19WjllYdIgmXP+ekjqoUwXjGW7Kq4KUxDtDBrzn+a2/hMgmIlvFN5lX5sygTzdqFcN
+         jchg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700178295; x=1700783095;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gzRF8uHq6PjJBxbhxhi0V10xOOQOgpxlbEBlX7hXGSU=;
-        b=F54i0JFYzpXo2t4n3wwC7IArtdbWkwTUw6DgXtk6EGIF3Umrx3TJ1JBGbp5A2YMQV1
-         DdCJO0FOn/MD++o/3sP2Rofdu5e1IHlQJgpCcAgAK47astzUxeaEDylCGKAnV6QVYrZj
-         m4tIQaUvbbpv6e41cGqhSMOX8AJl2VYrUH4GY758umg7qECTo7fZfEXZBbP0m1Ll7IIa
-         O+bmSUEvd30XzMfxxV4TO9/qdYWnMKFHS1ND81zNZQGofzWJNaecNQ2lukTHew9Mz1gF
-         aKwdaSE+CqyoeWhEW0KCDS/Em9onPJydQnOp8ruTrJQq0n2Xa015etPdBkqW5MEgGNut
-         uF+Q==
-X-Gm-Message-State: AOJu0Yx1+Ky6KifUHjW6VBtTa8k8bxw01aYt9Svsf2ByuikZlN7ULign
-	RlSDmj047Z8TJXgj/vYHiuHQYHjGVo8=
-X-Google-Smtp-Source: AGHT+IFYAXnKf+Mqzf4eTA54yG1aQFbfDgf3fpmvkk8Vo+h1M85WnXVJcWXq3Sm/iRTBr/QF2Xm7kw==
-X-Received: by 2002:a05:6a20:3d93:b0:182:119d:2d0e with SMTP id s19-20020a056a203d9300b00182119d2d0emr17452371pzi.20.1700178295271;
-        Thu, 16 Nov 2023 15:44:55 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id a8-20020a62bd08000000b006c2d5a31ab9sm284858pff.81.2023.11.16.15.44.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Nov 2023 15:44:54 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700183622; x=1700788422;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:subject:from:user-agent:mime-version:date
+         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tb/j8lYGcn1mOyOg9PPEH6m2FEKY37irMVBOlxYFInQ=;
+        b=WuEIr4dyyI+uS9XzW+TEeqsRT7k2zGCG09Ao01LsGbJ9n1qVPD6LgixqF9jYicQLkC
+         GBvasokhG0Ak9nAwe7vXjkNrO55ZuL4t40FTI2SxT7JK7zvW2DLipPAbNmsmzsEXqUz1
+         pX4tfxQIZRX1L9VV4IgqRA++NeNg9wo0MFcgIYFEXd+Y3NDWrnLfx3CiXScZfWZGf9R8
+         CzjBXCtmjKmp3JCeBuDUy2uTSXj+Q4YWtC0t2bdhHyHymaKN92Nc7klePxWPLIzjDeMV
+         xPFt9dbhsZKe/mE8fg0/mlJ5cd+QyL4vTkjXw++anCb13j+ZSujQ3rWHPAWN0ZUP44kw
+         UoIA==
+X-Gm-Message-State: AOJu0Yxwj/753WEooQ9Z9ALAtakIrGgZV3DgOBGY8F0CuBYUt7bwTBw/
+	A4OR+k6Rr3cAYHVSLbXKWCU=
+X-Google-Smtp-Source: AGHT+IEZm8AJcFRt1piLXlyhYR0Qy4nFmv8JExNEV93A/DI339lEmh/FvapCNJqciPSxR7OwMExMjg==
+X-Received: by 2002:a05:6870:be8d:b0:1f0:3d9c:173a with SMTP id nx13-20020a056870be8d00b001f03d9c173amr20589356oab.56.1700183622377;
+        Thu, 16 Nov 2023 17:13:42 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id k16-20020aa788d0000000b006c107a9e8f0sm337331pff.128.2023.11.16.17.13.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Nov 2023 17:13:41 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 16 Nov 2023 15:44:53 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.6 000/603] 6.6.2-rc1 review
-Message-ID: <7585d234-ec25-4a75-8283-0c6452e97ca4@roeck-us.net>
-References: <20231115191613.097702445@linuxfoundation.org>
+Message-ID: <b5367845-8d70-4fcf-861a-ff9b8849c9c9@roeck-us.net>
+Date: Thu, 16 Nov 2023 17:13:39 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231115191613.097702445@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 5.10 000/191] 5.10.201-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+References: <20231115204644.490636297@linuxfoundation.org>
+Content-Language: en-US
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+In-Reply-To: <20231115204644.490636297@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Nov 15, 2023 at 02:09:05PM -0500, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.2 release.
-> There are 603 patches in this series, all will be posted as a response
+On 11/15/23 12:44, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.201 release.
+> There are 191 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Fri, 17 Nov 2023 19:14:03 +0000.
+> Responses should be made by Fri, 17 Nov 2023 20:46:03 +0000.
 > Anything received after that time might be too late.
 > 
 
 Build results:
-	total: 157 pass: 157 fail: 0
+	total: 159 pass: 155 fail: 4
+Failed builds:
+	arm:allmodconfig
+	arm64:allmodconfig
+	i386:tools/perf
+	x86_64:tools/perf
 Qemu test results:
-	total: 530 pass: 530 fail: 0
+	total: 495 pass: 495 fail: 0
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+with:
+
+Building arm64:allmodconfig ... failed
+--------------
+Error log:
+drivers/interconnect/qcom/osm-l3.c:6:10: fatal error: linux/args.h: No such file or directory
+
+There is no linux/args.h in v5.10.y.
+
+Caused by "interconnect: qcom: osm-l3: Replace custom implementation of COUNT_ARGS()".
+
+Also:
+
+Building i386:tools/perf ... failed
+
+util/evlist.c: In function ‘evlist__add_aux_dummy’:
+util/evlist.c:269:24: error: implicit declaration of function ‘evlist__dummy_event’; did you mean ‘evsel__is_dummy_event’? [-Werror=implicit-function-declaration]
+    269 |  struct evsel *evsel = evlist__dummy_event(evlist);
+        |                        ^~~~~~~~~~~~~~~~~~~
+        |                        evsel__is_dummy_event
+util/evlist.c:269:24: error: initialization of ‘struct evsel *’ from ‘int’ makes pointer from integer without a cast
+
+There is indeed no 'evlist__dummy_event' function in v5.10.y.
+
+This is with v5.10.200-192-g550b7e1fee20. I am a bit puzzled why others
+don't seem to see those problems.
 
 Guenter
+
