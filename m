@@ -1,51 +1,51 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86FC30F9F
-	for <patches@lists.linux.dev>; Fri, 17 Nov 2023 14:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E7E79C5
+	for <patches@lists.linux.dev>; Fri, 17 Nov 2023 15:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GkSil/B8"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-1f573a9ee2fso1077024fac.0
-        for <patches@lists.linux.dev>; Fri, 17 Nov 2023 06:58:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dhA7cXtN"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1cc68c1fac2so18963315ad.0
+        for <patches@lists.linux.dev>; Fri, 17 Nov 2023 07:15:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700233101; x=1700837901; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1700234113; x=1700838913; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=/5gqeOk8feLBS0SVWM5fyR+OkggU3UYj4wNoik2oBu4=;
-        b=GkSil/B8NI+q5njvd/fcp1rU3FnckIHS8syFYd1uN2F2n1qLsFH10vpWdQYeQBnR/y
-         dS9CuoSOLhEthRXTajrsQCHckJqzjTJhCI2NGmy1ISEkdS91ZF/85VaFdaTEmR4FGJmI
-         Qj8yuWGPL8UI/Uw2R1aP8SwGTIrvM0bVYUZmaMWvw089x9uyUZ4AtT4AgVHQNGrCC19J
-         lxzMzDGJI4htsQq97zK9WPnMn5MmyOAcYjsQ+vyP6QtP9YlMZmZ1f/s8XIMXsSuEEtPB
-         toOqrV8+v9rP7Kh4ZlUgIBvaS7rCPTt2U42jIEzHC5qv7xiUjyU0bvHt0pfKKsruBA80
-         5S8Q==
+        bh=IQCcBRlGrNv8PpHXqM0OdJs3VT+KoaRRoFmGD2ZH7g0=;
+        b=dhA7cXtN2TBEGH4pFlkx7Q+Jeype0LoeY1d3mJNe+kElLNoOSIJ9LAZe7fI+M6mNST
+         hY3mAgHQIu0jNkBLkZapq16HI4oZ0Xvlpxn9NSxA/ddZVz/HMZHsFS2rz8oKQOmV/Mv1
+         6lnqvxoOED8WAZW1BtXyC3UyMNs0/PT9EqeXH1xXWePUjh522siCHNj8G2FT1g1Fm1dR
+         jMUrCh3CA3d3oghj3089gcYUJJMgEwVkIJqnX/JvxZdAi1kOGYKaKmzRoZlJOBTuVHgv
+         EPdQbnUo/R5/Nr8plf/I/XZsjvUGkJ/TL+2occ4Tvzc8ZoWKbFXzvIjP5s4lwassdGXG
+         L6rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700233101; x=1700837901;
+        d=1e100.net; s=20230601; t=1700234113; x=1700838913;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/5gqeOk8feLBS0SVWM5fyR+OkggU3UYj4wNoik2oBu4=;
-        b=ilBWDA8/hXMKkcKtur7Y8Es6PVJ9yHOyGcnI6+ImauyJcThSCzMoGhThzvutKnVPDw
-         Me2Na5ixw/aQEx20Hhw4GjSjbR9iGfeZ/+9uy5ldwJQUp7G0XOyhbykjfXlRpo1mjdqG
-         v0O1XPpNCEY7EhpPQ28xz+/P9bs6SnxU+QHW5i0nG693lj3J2MjvMfssaUenHbVheJjU
-         Q/tCAhuuBZtwpx92tJxi+xGuFWytgHy3bdXE10r0/dQEE36gGfooV6mkcWF6PWbdJjeR
-         ydM9UsEq2MHj8VztFIq7WmEAs6/tbSo1MXd0vI7GGrzyv+/EKe02+5TG7Dfqa4wq8di5
-         wQ0A==
-X-Gm-Message-State: AOJu0YypH6+ie3GpjMieN9JK1MJosfvkZZR4cmZ2QJZvr0XT/OAYyUnn
-	ashfpNQqQTEkT6unSVzc2BE=
-X-Google-Smtp-Source: AGHT+IEwCtwmZWJXyTl3ADPNSBhkBIb2qtZRVcopLY1VSTVmkUYxdL+BL3sJYjOcy7GDqfJ533m0Xw==
-X-Received: by 2002:a05:6870:e9a6:b0:1e9:e97e:24e5 with SMTP id r38-20020a056870e9a600b001e9e97e24e5mr22886670oao.20.1700233100829;
-        Fri, 17 Nov 2023 06:58:20 -0800 (PST)
+        bh=IQCcBRlGrNv8PpHXqM0OdJs3VT+KoaRRoFmGD2ZH7g0=;
+        b=UGS+bSVjzNoE3EDX3CFgn+bO4GzHprg0gIcx/D4XLKpYz2aCoWCAKwx8g4k3E2I+z4
+         AdmmQKnWps8rrFtUFsl0WnbRsLrg4zfBU7Int7E1eX8dwxNSars3Q6JfYDWoQyQ974Wa
+         Zh/5yARN7skMnS7XttzpB8cvf0R/WJm0wFLRzoBVOBx50ffPcB0NzpGdVbN9ruFAm8ps
+         42+how2sPgEEBD8AqC8XxpcdhdNUret3RaBa01KcjYn8GyUpfcRAGfH9zeiAoK3y/CvQ
+         w3rm7XwNKKYdmbrNN8YGXlxRvesbYARL0zSrN0K49Ygmgdd+UmKCa09qUy1qzC6/416T
+         w68w==
+X-Gm-Message-State: AOJu0YzLMmHGd30naa6DwJs+OpCkisJest2dhdGPrbdwuEE6dpotW/72
+	OOO93h+a0kUZVPpzg/Vrmcw=
+X-Google-Smtp-Source: AGHT+IELT8ha/v+aHBi1cfw7SHMUmAKdxivsF+wc9Qvt9TQtgEAJJJov8uFVj/jG7au6Q9F707OgXg==
+X-Received: by 2002:a17:902:f707:b0:1cc:6e8f:c14e with SMTP id h7-20020a170902f70700b001cc6e8fc14emr15665557plo.15.1700234112780;
+        Fri, 17 Nov 2023 07:15:12 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id m63-20020a625842000000b006bdd1ce6915sm1563104pfb.193.2023.11.17.06.58.18
+        by smtp.gmail.com with ESMTPSA id y17-20020a63e251000000b005ab7b055573sm1513389pgj.79.2023.11.17.07.15.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 06:58:19 -0800 (PST)
+        Fri, 17 Nov 2023 07:15:12 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <1059aa1f-ad92-4022-a2f5-c313561ae742@roeck-us.net>
-Date: Fri, 17 Nov 2023 06:58:18 -0800
+Message-ID: <826b241f-3d93-4585-bd22-90cff75f7bb0@roeck-us.net>
+Date: Fri, 17 Nov 2023 07:15:10 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,17 +55,16 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 5.10 000/191] 5.10.201-rc1 review
 Content-Language: en-US
-To: Naresh Kamboju <naresh.kamboju@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
+To: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
 References: <20231115204644.490636297@linuxfoundation.org>
  <b5367845-8d70-4fcf-861a-ff9b8849c9c9@roeck-us.net>
- <CA+G9fYtOMKserwz7w_gpe4bZnEwrd_-zSyndSepFP_jO9X-o1w@mail.gmail.com>
+ <ZVbIoqXjfn7V1NtT@codewreck.org>
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
@@ -110,76 +109,50 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <CA+G9fYtOMKserwz7w_gpe4bZnEwrd_-zSyndSepFP_jO9X-o1w@mail.gmail.com>
+In-Reply-To: <ZVbIoqXjfn7V1NtT@codewreck.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 11/16/23 23:41, Naresh Kamboju wrote:
-> On Fri, 17 Nov 2023 at 06:43, Guenter Roeck <linux@roeck-us.net> wrote:
->>
->> On 11/15/23 12:44, Greg Kroah-Hartman wrote:
->>> This is the start of the stable review cycle for the 5.10.201 release.
->>> There are 191 patches in this series, all will be posted as a response
->>> to this one.  If anyone has any issues with these being applied, please
->>> let me know.
->>>
->>> Responses should be made by Fri, 17 Nov 2023 20:46:03 +0000.
->>> Anything received after that time might be too late.
->>>
->>
->> Build results:
->>          total: 159 pass: 155 fail: 4
+Hi,
+
+On 11/16/23 17:57, Dominique Martinet wrote:
+> Guenter Roeck wrote on Thu, Nov 16, 2023 at 05:13:39PM -0800:
 >> Failed builds:
->>          arm:allmodconfig
->>          arm64:allmodconfig
->>          i386:tools/perf
->>          x86_64:tools/perf
->> Qemu test results:
->>          total: 495 pass: 495 fail: 0
->>
->> with:
->>
->> Building arm64:allmodconfig ... failed
->> --------------
->> Error log:
->> drivers/interconnect/qcom/osm-l3.c:6:10: fatal error: linux/args.h: No such file or directory
->>
->> There is no linux/args.h in v5.10.y.
->>
->> Caused by "interconnect: qcom: osm-l3: Replace custom implementation of COUNT_ARGS()".
->>
->> Also:
->>
->> Building i386:tools/perf ... failed
->>
->> util/evlist.c: In function ‘evlist__add_aux_dummy’:
->> util/evlist.c:269:24: error: implicit declaration of function ‘evlist__dummy_event’; did you mean ‘evsel__is_dummy_event’? [-Werror=implicit-function-declaration]
->>      269 |  struct evsel *evsel = evlist__dummy_event(evlist);
->>          |                        ^~~~~~~~~~~~~~~~~~~
->>          |                        evsel__is_dummy_event
->> util/evlist.c:269:24: error: initialization of ‘struct evsel *’ from ‘int’ makes pointer from integer without a cast
->>
->> There is indeed no 'evlist__dummy_event' function in v5.10.y.
->>
+>> 	arm:allmodconfig
+>> 	arm64:allmodconfig
+>> 	i386:tools/perf
+>> 	x86_64:tools/perf
+> 
 >> This is with v5.10.200-192-g550b7e1fee20. I am a bit puzzled why others
 >> don't seem to see those problems.
 > 
-> Thanks for reporting allmodconfig build failures.
+> The perf problem was reported by Florian Fainelli, but my current test
+> build does not include userspace tools as we're not shipping them (and
+> would rely on $distro packages when I need perf as a user rather than
+> building it).
 > 
-> My apologies.
-> The LKFT found allmodconfig failure lately due to infra issues / timeouts,
-> the builds have been re-triggered manually.
+> Likewise, it looks like neither Linaro nor me build the qcom driver...
+> I'm building kernels that have been trimmed down for our boards (with
+> that exact config we're shipping and providing for our customers), and
+> arm* drivers are especially fractured so it's a bit misleading to see
+> "arm64 pass", that's just the tip of the actual setup tested.
 > 
->          arm:allmodconfig - FAILED
->          arm64:allmodconfig - FAILED
 > 
-> LKFT have stopped building perf on 5.x and 4.x branches, because we
-> reported several perf build issues and were not solved in the past.
+> (Anyway, the main reason for me is mostly that $job is a small company
+> that cannot afford extensive upstream testing, so I just don't have the
+> time to do extended tests -- for the same reason we're only supporting
+> the 5.10 tree so I'm focusing my limited time on just this branch, even
+> if I'd love to do more.
+> I'm just taking the stance that some test is better than no test and
+> report back things we'd need to test before shipping customers a few
+> weeks later anyway -- thank you for covering more!)
 > 
 
-Kind of makes (sad) sense; after all, I had stopped building perf on
-4.14.y as well for the same reason. I'll do the same for 4.19.y and
-for all 5.x branches.
+Just to clarify, I wasn't assuming or expecting that _everyone_ would report
+those errors. I was just puzzled that I had not seen _any_ reports, especially
+since arm:allmodconfig and arm64:allmodconfig both failed to build for me
+(and I had somehow missed Florian's perf report).
 
+Thanks,
 Guenter
 
