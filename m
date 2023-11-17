@@ -1,85 +1,121 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DB5CA57
-	for <patches@lists.linux.dev>; Fri, 17 Nov 2023 04:24:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5502D278;
+	Fri, 17 Nov 2023 05:58:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K4CZMPuc"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-58a42c3cbb8so774738eaf.3
-        for <patches@lists.linux.dev>; Thu, 16 Nov 2023 20:24:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700195064; x=1700799864; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AFveOmJik6YY9ZRLOk+sCI/MXeTb5qg3AWh1DG6limk=;
-        b=K4CZMPuctQQKwrAflKC14Aa4fjlJiaqJgJHFLN1ZXVn988YcMGOxfIcTeJOZmdnW8e
-         /DonKF8aX2eq4QgAXTlYnIIaPfmEErdofDxVTFpDOANnsxoaIcLfhq6P32Ho7C2xx0cz
-         ASwDhXunXMjJB06nn4pBeRjsknTZFfYBIbgcJXvTjuWdbA88Xkg9cMIGmNP/G3CuGhfA
-         tHahtrvpKgPJfMtbZwaPytaSP8w2iVLPbZF0bv2DyS7qF7Xt3XkaUz5HDTcXdqc8/4pl
-         BDGjoKlAdoTN4ozCs2VcoHEszbIXW4sSdF6EWN8BeATWGFs7wJLTXR4XLtjmDw4YUVkT
-         72Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700195064; x=1700799864;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AFveOmJik6YY9ZRLOk+sCI/MXeTb5qg3AWh1DG6limk=;
-        b=sE9AsCWUb5KIRImEiNwuywWia+ACP5CwOONvzC0p2HUMrPP5RGrXWG3Pw+cts0IVCY
-         f14j900lOKP6D4yr/dkf76fcEiNuGT85SX/0ecbes+QGTKa7S7BgzEhdIhvn6j/2+blE
-         dVhTiQjVZYVu1KLMQi1Eb+5C7eWGvl5Sj2SNvSuQzj3soiK+bgH7fYdE6JCn+M9VXY6L
-         TZZMsbzhT30AVpqbcoiFBfwTAFhiDIQeSJpFIiHsk915/oEGckXEs+C/wtR9APH4lITm
-         0LUxr7F0l+mDpxDToIXesJ01+hpMrzzIXCQU76DuhyVNfk7jL/7wQWhTGYtOVuSSTztH
-         0Lng==
-X-Gm-Message-State: AOJu0YxGNfsfoR7b3nZP2T7pwkdiFVqKtr4qpTmVI6HBBTv49b/EASeZ
-	Ce2jT4+iWpnuN4xZU1V+AMA=
-X-Google-Smtp-Source: AGHT+IHuVn9VaCdTI1zb9XGaQfyybHaDC7kpyPSoItyKNID0FO3pFfC9O9Kc0l9ykmhdn7DC3EIOXw==
-X-Received: by 2002:a05:6820:2c04:b0:58a:67b5:2df2 with SMTP id dw4-20020a0568202c0400b0058a67b52df2mr12344585oob.8.1700195064516;
-        Thu, 16 Nov 2023 20:24:24 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id u38-20020a4a8c29000000b005840989d13bsm169967ooj.44.2023.11.16.20.24.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Nov 2023 20:24:24 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 16 Nov 2023 20:24:22 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 4.19 00/88] 4.19.299-rc1 review
-Message-ID: <906a58e1-ca7e-47ce-80ae-c6586156224d@roeck-us.net>
-References: <20231115191426.221330369@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JPmtshJI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1700200686; x=1731736686;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=764IZoVQhx16LgTa6GgD/tKF6hSla9ceQN/OG1Ayc6I=;
+  b=JPmtshJIQp5cFuh3ldnQUJuWgxKQpcksrRIl919urOBE17I92AoXOhXn
+   FZYv9RikWPa/sEPh6Cxcm3Z2Z9MS7ausHDrAx40PQetvaKB0mcqjKaeon
+   5feGaSzAHHKCynsJ1sZzynyCiVqnnADmarFmZlarceY9kMNKIRdlraoIX
+   fLvsN38XioMln/TpyZWsPYOpHZPJjdjwqDie6PnMCpmeqaNkWUrzt6E9x
+   ySiSRp+pe+mnFc23u1YZE0VbR02FjvKdowOriWbvs7obDqTbc6Ojs4/VL
+   oX7F2JVJffo8O4h7wzgB0A7Mxuott1Zw6erhz6rsGimD6BMlfjJWo6DYF
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10896"; a="376290965"
+X-IronPort-AV: E=Sophos;i="6.04,206,1695711600"; 
+   d="scan'208";a="376290965"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2023 21:58:06 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10896"; a="883015200"
+X-IronPort-AV: E=Sophos;i="6.04,206,1695711600"; 
+   d="scan'208";a="883015200"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.39.65])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Nov 2023 21:58:04 -0800
+Message-ID: <aa9039ca-69a5-4dca-8205-0b17782c7319@intel.com>
+Date: Fri, 17 Nov 2023 07:58:00 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231115191426.221330369@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mmc: sdhci-of-dwcmshc: Use logical OR instead of bitwise
+ OR in dwcmshc_probe()
+To: Nathan Chancellor <nathan@kernel.org>, ulf.hansson@linaro.org
+Cc: dfustini@baylibre.com, linux-mmc@vger.kernel.org, llvm@lists.linux.dev,
+ patches@lists.linux.dev
+References: <20231116-sdhci-of-dwcmshc-fix-wbitwise-instead-of-logical-v1-1-7e1a7f4ccaab@kernel.org>
+Content-Language: en-US
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <20231116-sdhci-of-dwcmshc-fix-wbitwise-instead-of-logical-v1-1-7e1a7f4ccaab@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 15, 2023 at 03:35:12PM -0500, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.299 release.
-> There are 88 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 17/11/23 03:46, Nathan Chancellor wrote:
+> Clang warns (or errors with CONFIG_WERROR=y):
 > 
-> Responses should be made by Fri, 17 Nov 2023 19:14:03 +0000.
-> Anything received after that time might be too late.
+>   drivers/mmc/host/sdhci-of-dwcmshc.c:873:7: error: use of bitwise '|' with boolean operands [-Werror,-Wbitwise-instead-of-logical]
+>     873 |                 if ((device_property_read_bool(dev, "mmc-ddr-1_8v")) |
+>         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>     874 |                     (device_property_read_bool(dev, "mmc-hs200-1_8v")) |
+>         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>         |                                                                        ||
+>     875 |                     (device_property_read_bool(dev, "mmc-hs400-1_8v")))
+>         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   drivers/mmc/host/sdhci-of-dwcmshc.c:873:7: note: cast one or both operands to int to silence this warning
+>   drivers/mmc/host/sdhci-of-dwcmshc.c:873:7: error: use of bitwise '|' with boolean operands [-Werror,-Wbitwise-instead-of-logical]
+>     873 |                 if ((device_property_read_bool(dev, "mmc-ddr-1_8v")) |
+>         |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>         |                                                                      ||
+>     874 |                     (device_property_read_bool(dev, "mmc-hs200-1_8v")) |
+>         |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   drivers/mmc/host/sdhci-of-dwcmshc.c:873:7: note: cast one or both operands to int to silence this warning
+>   2 errors generated.
 > 
+> There is little reason for this if statement to use bitwise ORs, as the
+> short circuiting of logical OR does not need to be avoided in this
+> context; it would be wasteful to call device_property_read_bool() three
+> times if the first two calls returned true. Switch to logical OR to fix
+> the warning.
+> 
+> While in the area, the parentheses around the calls to
+> device_property_read_bool() are not necessary and make the if statement
+> harder to read, so remove them.
+> 
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1960
+> Fixes: aff35fbc7830 ("mmc: sdhci-of-dwcmshc: Add support for T-Head TH1520")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-Build results:
-	total: 149 pass: 149 fail: 0
-Qemu test results:
-	total: 441 pass: 441 fail: 0
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+> ---
+>  drivers/mmc/host/sdhci-of-dwcmshc.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/mmc/host/sdhci-of-dwcmshc.c b/drivers/mmc/host/sdhci-of-dwcmshc.c
+> index 0eb72544c09e..a1f57af6acfb 100644
+> --- a/drivers/mmc/host/sdhci-of-dwcmshc.c
+> +++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+> @@ -870,9 +870,9 @@ static int dwcmshc_probe(struct platform_device *pdev)
+>  	if (pltfm_data == &sdhci_dwcmshc_th1520_pdata) {
+>  		priv->delay_line = PHY_SDCLKDL_DC_DEFAULT;
+>  
+> -		if ((device_property_read_bool(dev, "mmc-ddr-1_8v")) |
+> -		    (device_property_read_bool(dev, "mmc-hs200-1_8v")) |
+> -		    (device_property_read_bool(dev, "mmc-hs400-1_8v")))
+> +		if (device_property_read_bool(dev, "mmc-ddr-1_8v") ||
+> +		    device_property_read_bool(dev, "mmc-hs200-1_8v") ||
+> +		    device_property_read_bool(dev, "mmc-hs400-1_8v"))
+>  			priv->flags |= FLAG_IO_FIXED_1V8;
+>  		else
+>  			priv->flags &= ~FLAG_IO_FIXED_1V8;
+> 
+> ---
+> base-commit: 3f00051234f02d0d9d1f63b9a334d0fd4c65b6ca
+> change-id: 20231116-sdhci-of-dwcmshc-fix-wbitwise-instead-of-logical-bf8fed73b5bb
+> 
+> Best regards,
 
-Guenter
