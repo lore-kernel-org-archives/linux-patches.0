@@ -1,51 +1,51 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C1D10E8
-	for <patches@lists.linux.dev>; Fri, 17 Nov 2023 01:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992301370
+	for <patches@lists.linux.dev>; Fri, 17 Nov 2023 01:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ofj6Mt+N"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-1eb6c559ab4so777982fac.0
-        for <patches@lists.linux.dev>; Thu, 16 Nov 2023 17:13:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UHnZwqqM"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3b2e44c7941so879526b6e.2
+        for <patches@lists.linux.dev>; Thu, 16 Nov 2023 17:25:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700183622; x=1700788422; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tb/j8lYGcn1mOyOg9PPEH6m2FEKY37irMVBOlxYFInQ=;
-        b=Ofj6Mt+NtZQkcKoDbAVE3bCBCTresGNwZ72buJrpoOLNC0ZPBOINACWggK6mxuEg76
-         UPCZuvGiCcFqiisHwNTy3fv7Rz1WcotslEOM4mCpKO1jGxEDLx/bLAXYJ8kkbqNx5Vc6
-         zIOUIKxuEDiEGPr3akv62QbJ5tgNSKnqKciPsik8j5vwAIyUmrt8ms53zaEt2t3F5QxQ
-         5Zhqi2TcY9IjielX2dt7974HUfZ0xgpDXBSnx01N2hPbHeYlTvZFcbYUHLW18+zl8zAb
-         cE19WjllYdIgmXP+ekjqoUwXjGW7Kq4KUxDtDBrzn+a2/hMgmIlvFN5lX5sygTzdqFcN
-         jchg==
+        d=gmail.com; s=20230601; t=1700184339; x=1700789139; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=WKeX8QHzT5xr6BXfBhXLId9dWsY3VlMa6hhbkyDTa9o=;
+        b=UHnZwqqMu9AfeqJ6eukD2KvruN+d/jO9NeYw6eVTAo0uVs/CqODd3/aSW15kkLZtWJ
+         xL2XleJm1qmS7Uo4GyjLpstVwihk76NzvNJPsozkUSdfqUPTou83wjCUhVtNaFSidXBy
+         sv6VmnPNxCp1Moz1wvNihbzU11XG7IM07lHYS0H4p/xYF++c3FMTLB+KEOAGMGbwu6d3
+         rK3MNbvfEJ+luEtLjbme/MWqUS0/6Tk6gsQjBSnVJ+RFYNL4QUd5R8OSpgz8RGtFn02l
+         h6RuQqNTc6GiRjfttL9M11cLAQHOz4JouV9kchBuF2o4+d37msi5HjAqgmgp7G5xUD3k
+         xkBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700183622; x=1700788422;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:subject:from:user-agent:mime-version:date
-         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tb/j8lYGcn1mOyOg9PPEH6m2FEKY37irMVBOlxYFInQ=;
-        b=WuEIr4dyyI+uS9XzW+TEeqsRT7k2zGCG09Ao01LsGbJ9n1qVPD6LgixqF9jYicQLkC
-         GBvasokhG0Ak9nAwe7vXjkNrO55ZuL4t40FTI2SxT7JK7zvW2DLipPAbNmsmzsEXqUz1
-         pX4tfxQIZRX1L9VV4IgqRA++NeNg9wo0MFcgIYFEXd+Y3NDWrnLfx3CiXScZfWZGf9R8
-         CzjBXCtmjKmp3JCeBuDUy2uTSXj+Q4YWtC0t2bdhHyHymaKN92Nc7klePxWPLIzjDeMV
-         xPFt9dbhsZKe/mE8fg0/mlJ5cd+QyL4vTkjXw++anCb13j+ZSujQ3rWHPAWN0ZUP44kw
-         UoIA==
-X-Gm-Message-State: AOJu0Yxwj/753WEooQ9Z9ALAtakIrGgZV3DgOBGY8F0CuBYUt7bwTBw/
-	A4OR+k6Rr3cAYHVSLbXKWCU=
-X-Google-Smtp-Source: AGHT+IEZm8AJcFRt1piLXlyhYR0Qy4nFmv8JExNEV93A/DI339lEmh/FvapCNJqciPSxR7OwMExMjg==
-X-Received: by 2002:a05:6870:be8d:b0:1f0:3d9c:173a with SMTP id nx13-20020a056870be8d00b001f03d9c173amr20589356oab.56.1700183622377;
-        Thu, 16 Nov 2023 17:13:42 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700184339; x=1700789139;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WKeX8QHzT5xr6BXfBhXLId9dWsY3VlMa6hhbkyDTa9o=;
+        b=SNV0YYfJlonX9GV1poERg3oSHJc1JpiZpXsM+fCgwv5a5sgjF89TGL4tRhsC3dlBXg
+         2//xKi5PPSqsZbZoTedS09D/6p2VZIMqahnrYFBLAY1cvBDZnJ+eZQPRU1WOurC7jSct
+         I0chCKoez+OucQ/BYWS95OhJ76CbQ/1lAYJBU+e2p3E4veGqtHJW2c+kyjgldOG+JHFf
+         3ooPItL/zRvgKWMvvkhsGHENFzWiy0P0d90EfRoqqXWbiC4DI6RS8mrz45mQFMZF7zIg
+         hZpyoD4Mnxf4eRN9ItWs7yepCOcKlcdHp4AGf2FhJ+FzUK++G1MzeV0ofkVY4ZcAhhad
+         3EyQ==
+X-Gm-Message-State: AOJu0Yx/mUQzREJAKo8QfgftO1qRY4GAphc8H1QpsQ8H4guh3JeIBfkb
+	uPgh+xc2sD+9ZQs06ZIdSao=
+X-Google-Smtp-Source: AGHT+IHVZfCoY6DZrNPuUIFzCQwR0gnLkJlylOsH1iukFRXnRgKhgIut3+ChVZhxhNZMkjhkJjjmrw==
+X-Received: by 2002:a05:6870:9d0e:b0:1ea:3f79:defb with SMTP id pp14-20020a0568709d0e00b001ea3f79defbmr20013084oab.52.1700184339500;
+        Thu, 16 Nov 2023 17:25:39 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id k16-20020aa788d0000000b006c107a9e8f0sm337331pff.128.2023.11.16.17.13.40
+        by smtp.gmail.com with ESMTPSA id l187-20020a6325c4000000b0058ee60f8e4dsm337961pgl.34.2023.11.16.17.25.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Nov 2023 17:13:41 -0800 (PST)
+        Thu, 16 Nov 2023 17:25:39 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <b5367845-8d70-4fcf-861a-ff9b8849c9c9@roeck-us.net>
-Date: Thu, 16 Nov 2023 17:13:39 -0800
+Message-ID: <e23be029-25b5-4bfc-a5b9-60eda0c214b6@roeck-us.net>
+Date: Thu, 16 Nov 2023 17:25:37 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,8 +53,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Guenter Roeck <linux@roeck-us.net>
 Subject: Re: [PATCH 5.10 000/191] 5.10.201-rc1 review
+Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
@@ -62,7 +62,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
 References: <20231115204644.490636297@linuxfoundation.org>
-Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
  RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
@@ -121,11 +121,12 @@ On 11/15/23 12:44, Greg Kroah-Hartman wrote:
 > 
 
 Build results:
-	total: 159 pass: 155 fail: 4
+	total: 159 pass: 154 fail: 5
 Failed builds:
 	arm:allmodconfig
 	arm64:allmodconfig
 	i386:tools/perf
+	x86_64:allyesconfig
 	x86_64:tools/perf
 Qemu test results:
 	total: 495 pass: 495 fail: 0
@@ -147,9 +148,9 @@ Building i386:tools/perf ... failed
 
 util/evlist.c: In function ‘evlist__add_aux_dummy’:
 util/evlist.c:269:24: error: implicit declaration of function ‘evlist__dummy_event’; did you mean ‘evsel__is_dummy_event’? [-Werror=implicit-function-declaration]
-    269 |  struct evsel *evsel = evlist__dummy_event(evlist);
-        |                        ^~~~~~~~~~~~~~~~~~~
-        |                        evsel__is_dummy_event
+   269 |  struct evsel *evsel = evlist__dummy_event(evlist);
+       |                        ^~~~~~~~~~~~~~~~~~~
+       |                        evsel__is_dummy_event
 util/evlist.c:269:24: error: initialization of ‘struct evsel *’ from ‘int’ makes pointer from integer without a cast
 
 There is indeed no 'evlist__dummy_event' function in v5.10.y.
