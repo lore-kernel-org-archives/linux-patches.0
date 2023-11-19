@@ -1,107 +1,250 @@
-Received: from omta034.useast.a.cloudfilter.net (omta034.useast.a.cloudfilter.net [44.202.169.33])
+Received: from mail.marcansoft.com (marcansoft.com [212.63.210.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8682ED4
-	for <patches@lists.linux.dev>; Sat, 18 Nov 2023 01:19:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840D865F;
+	Sun, 19 Nov 2023 08:10:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=marcan.st
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marcan.st
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="E7GJrUg5"
-Received: from eig-obgw-5003a.ext.cloudfilter.net ([10.0.29.159])
-	by cmsmtp with ESMTPS
-	id 421arAG7BjtZ349yQrAjXb; Sat, 18 Nov 2023 01:18:14 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id 49yLrMq0mnCfv49yMrbZ5U; Sat, 18 Nov 2023 01:18:10 +0000
-X-Authority-Analysis: v=2.4 cv=KKpJsXJo c=1 sm=1 tr=0 ts=655810d2
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=BNY50KLci1gA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=XFdaU8tal97uqFnNbpwA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=hhRvX3KXz/8AkEk+OrqEncluUTlqt9mXbv+0o5iH0oc=; b=E7GJrUg5+IiB92oB18U99HLHTX
-	+QEaYtWucbDoZ9AsxNRuV0Hj3IFCHCVhUn3cEb4C4En6t9mU4S42a4FH8fLL15/VRNXSRkDu+ZEEK
-	XUseWMyYO5uHdz3XL9BP7qX916KO3Ua6oexyVVahExJFtMkmpBvK1oB4UTdfqzDf0xoOmbOR1hx5L
-	EavRqZ0my4Ez1vVeXEKRU7eaRTQKSKYlP3dIraX8Gw/MBZivsHn3j68BD/IqO/w2yh4cpTZsgg7DD
-	tb9cZoVt94Vxcfmxw31jgbTKy+3T2QmSUz7WaBqaz5zX1KIP4F3PCoDUQhXQ/FQNYI2xtFT+4PXar
-	lC/uUCjA==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:55590 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1r49yJ-001zmw-0W;
-	Fri, 17 Nov 2023 18:18:07 -0700
-Subject: Re: [PATCH 5.15 000/244] 5.15.139-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org
-References: <20231115203548.387164783@linuxfoundation.org>
-In-Reply-To: <20231115203548.387164783@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <953bcc5f-a1bf-81a7-4307-09c115752156@w6rz.net>
-Date: Fri, 17 Nov 2023 17:18:04 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=marcan.st header.i=@marcan.st header.b="fnmZORRU"
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: marcan@marcan.st)
+	by mail.marcansoft.com (Postfix) with ESMTPSA id DD580447DB;
+	Sun, 19 Nov 2023 08:10:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=marcan.st; s=default;
+	t=1700381447; bh=GM+if5fLHpvJrFY5qSih6je/CvwvPPLKRrXfiPD5JZ0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=fnmZORRU99JAVouDyTggPcE3iI5afMoj+u2Q93VQ586jKo2M/q9GZEdwubNM4sfTG
+	 O/GNq8IBB2FxoNxqr+83D6QLnNoyRUshU83ipS6MAOREVA4UCBzzO13RzDdjxIUQMP
+	 eudSVW93AZc92wzpKNKzYiJbsCHq3HNLwf37Q4rYng+gvpQzwQv6Hir4FQs3pVEOHW
+	 PWvxNrEeCr6uJqj6WxIZxJOcGOrqTmHPOFdam47KxGPA3SBUOixBt51uEWtRaaJNpU
+	 +oztbcTSFkScA/2bBEJM1o2bzkZzy2rOmG6UsRBkmN8P7aMUR0GoioW59JerR3gTgu
+	 E9BI6sjTeb8xw==
+Message-ID: <20a7ef6d-a8ca-4bd8-ad7e-11856db617a2@marcan.st>
+Date: Sun, 19 Nov 2023 17:10:30 +0900
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/17] iommu: Add iommu_fwspec_alloc/dealloc()
 Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1r49yJ-001zmw-0W
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:55590
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfMC89L08ZKwWyVJDwvaFGQcx9FYBlGTufgkq6wbRIfwXOo8j0DtYM0q1yXaxOPRQXEvUtD9G5SsPRGwmP3H7CHT4nC5SwSdiX1boICJQBheuKVqN8I9u
- jQSp+ueQQmQ0TSbK5sUFlqcDVx2BY0UbFd4eHMo/luWaNiWCkv+CbHvX2jKnefTt9RbzUgCLEgONKQ==
+To: Jason Gunthorpe <jgg@nvidia.com>, acpica-devel@lists.linux.dev,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
+ asahi@lists.linux.dev, Catalin Marinas <catalin.marinas@arm.com>,
+ Dexuan Cui <decui@microsoft.com>, devicetree@vger.kernel.org,
+ David Woodhouse <dwmw2@infradead.org>, Frank Rowand
+ <frowand.list@gmail.com>, Hanjun Guo <guohanjun@huawei.com>,
+ Haiyang Zhang <haiyangz@microsoft.com>, iommu@lists.linux.dev,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+ "K. Y. Srinivasan" <kys@microsoft.com>, Len Brown <lenb@kernel.org>,
+ linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-hyperv@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-riscv@lists.infradead.org, linux-snps-arc@lists.infradead.org,
+ linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, patches@lists.linux.dev,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Robert Moore <robert.moore@intel.com>, Rob Herring <robh+dt@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>, Sudeep Holla <sudeep.holla@arm.com>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Sven Peter <sven@svenpeter.dev>, Thierry Reding <thierry.reding@gmail.com>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Krishna Reddy <vdumpa@nvidia.com>, Vineet Gupta <vgupta@kernel.org>,
+ virtualization@lists.linux.dev, Wei Liu <wei.liu@kernel.org>,
+ Will Deacon <will@kernel.org>
+Cc: =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
+ Lu Baolu <baolu.lu@linux.intel.com>, Christoph Hellwig <hch@lst.de>,
+ Jerry Snitselaar <jsnitsel@redhat.com>, Moritz Fischer <mdf@kernel.org>,
+ Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Rob Herring <robh@kernel.org>
+References: <6-v2-36a0088ecaa7+22c6e-iommu_fwspec_jgg@nvidia.com>
+From: Hector Martin <marcan@marcan.st>
+In-Reply-To: <6-v2-36a0088ecaa7+22c6e-iommu_fwspec_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 11/15/23 12:33 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.139 release.
-> There are 244 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 17 Nov 2023 20:34:45 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.139-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 2023/11/15 23:05, Jason Gunthorpe wrote:
+> Allow fwspec to exist independently from the dev->iommu by providing
+> functions to allow allocating and freeing the raw struct iommu_fwspec.
+> 
+> Reflow the existing paths to call the new alloc/dealloc functions.
+> 
+> Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/iommu.c | 82 ++++++++++++++++++++++++++++++++-----------
+>  include/linux/iommu.h | 11 +++++-
+>  2 files changed, 72 insertions(+), 21 deletions(-)
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 18a82a20934d53..86bbb9e75c7e03 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -361,10 +361,8 @@ static void dev_iommu_free(struct device *dev)
+>  	struct dev_iommu *param = dev->iommu;
+>  
+>  	dev->iommu = NULL;
+> -	if (param->fwspec) {
+> -		fwnode_handle_put(param->fwspec->iommu_fwnode);
+> -		kfree(param->fwspec);
+> -	}
+> +	if (param->fwspec)
+> +		iommu_fwspec_dealloc(param->fwspec);
+>  	kfree(param);
+>  }
+>  
+> @@ -2920,10 +2918,61 @@ const struct iommu_ops *iommu_ops_from_fwnode(struct fwnode_handle *fwnode)
+>  	return ops;
+>  }
+>  
+> +static int iommu_fwspec_assign_iommu(struct iommu_fwspec *fwspec,
+> +				     struct device *dev,
+> +				     struct fwnode_handle *iommu_fwnode)
+> +{
+> +	const struct iommu_ops *ops;
+> +
+> +	if (fwspec->iommu_fwnode) {
+> +		/*
+> +		 * fwspec->iommu_fwnode is the first iommu's fwnode. In the rare
+> +		 * case of multiple iommus for one device they must point to the
+> +		 * same driver, checked via same ops.
+> +		 */
+> +		ops = iommu_ops_from_fwnode(iommu_fwnode);
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+This carries over a related bug from the original code: If a device has
+two IOMMUs and the first one probes but the second one defers, ops will
+be NULL here and the check will fail with EINVAL.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Adding a check for that case here fixes it:
 
+		if (!ops)
+			return driver_deferred_probe_check_state(dev);
+
+With that, for the whole series:
+
+Tested-by: Hector Martin <marcan@marcan.st>
+
+I can't specifically test for the probe races the series intends to fix
+though, since that bug we only hit extremely rarely. I'm just testing
+that nothing breaks.
+
+> +		if (fwspec->ops != ops)
+> +			return -EINVAL;
+> +		return 0;
+> +	}
+> +
+> +	if (!fwspec->ops) {
+> +		ops = iommu_ops_from_fwnode(iommu_fwnode);
+> +		if (!ops)
+> +			return driver_deferred_probe_check_state(dev);
+> +		fwspec->ops = ops;
+> +	}
+> +
+> +	of_node_get(to_of_node(iommu_fwnode));
+> +	fwspec->iommu_fwnode = iommu_fwnode;
+> +	return 0;
+> +}
+> +
+> +struct iommu_fwspec *iommu_fwspec_alloc(void)
+> +{
+> +	struct iommu_fwspec *fwspec;
+> +
+> +	fwspec = kzalloc(sizeof(*fwspec), GFP_KERNEL);
+> +	if (!fwspec)
+> +		return ERR_PTR(-ENOMEM);
+> +	return fwspec;
+> +}
+> +
+> +void iommu_fwspec_dealloc(struct iommu_fwspec *fwspec)
+> +{
+> +	if (!fwspec)
+> +		return;
+> +
+> +	if (fwspec->iommu_fwnode)
+> +		fwnode_handle_put(fwspec->iommu_fwnode);
+> +	kfree(fwspec);
+> +}
+> +
+>  int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode,
+>  		      const struct iommu_ops *ops)
+>  {
+>  	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+> +	int ret;
+>  
+>  	if (fwspec)
+>  		return ops == fwspec->ops ? 0 : -EINVAL;
+> @@ -2931,29 +2980,22 @@ int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode,
+>  	if (!dev_iommu_get(dev))
+>  		return -ENOMEM;
+>  
+> -	fwspec = kzalloc(sizeof(*fwspec), GFP_KERNEL);
+> -	if (!fwspec)
+> -		return -ENOMEM;
+> +	fwspec = iommu_fwspec_alloc();
+> +	if (IS_ERR(fwspec))
+> +		return PTR_ERR(fwspec);
+>  
+> -	of_node_get(to_of_node(iommu_fwnode));
+> -	fwspec->iommu_fwnode = iommu_fwnode;
+>  	fwspec->ops = ops;
+> +	ret = iommu_fwspec_assign_iommu(fwspec, dev, iommu_fwnode);
+> +	if (ret) {
+> +		iommu_fwspec_dealloc(fwspec);
+> +		return ret;
+> +	}
+> +
+>  	dev_iommu_fwspec_set(dev, fwspec);
+>  	return 0;
+>  }
+>  EXPORT_SYMBOL_GPL(iommu_fwspec_init);
+>  
+> -void iommu_fwspec_free(struct device *dev)
+> -{
+> -	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+> -
+> -	if (fwspec) {
+> -		fwnode_handle_put(fwspec->iommu_fwnode);
+> -		kfree(fwspec);
+> -		dev_iommu_fwspec_set(dev, NULL);
+> -	}
+> -}
+> -EXPORT_SYMBOL_GPL(iommu_fwspec_free);
+>  
+>  int iommu_fwspec_add_ids(struct device *dev, u32 *ids, int num_ids)
+>  {
+> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
+> index e98a4ca8f536b7..c7c68cb59aa4dc 100644
+> --- a/include/linux/iommu.h
+> +++ b/include/linux/iommu.h
+> @@ -813,9 +813,18 @@ struct iommu_sva {
+>  	struct iommu_domain		*domain;
+>  };
+>  
+> +struct iommu_fwspec *iommu_fwspec_alloc(void);
+> +void iommu_fwspec_dealloc(struct iommu_fwspec *fwspec);
+> +
+>  int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode,
+>  		      const struct iommu_ops *ops);
+> -void iommu_fwspec_free(struct device *dev);
+> +static inline void iommu_fwspec_free(struct device *dev)
+> +{
+> +	if (!dev->iommu)
+> +		return;
+> +	iommu_fwspec_dealloc(dev->iommu->fwspec);
+> +	dev->iommu->fwspec = NULL;
+> +}
+>  int iommu_fwspec_add_ids(struct device *dev, u32 *ids, int num_ids);
+>  const struct iommu_ops *iommu_ops_from_fwnode(struct fwnode_handle *fwnode);
+>  
+
+- Hector
