@@ -1,59 +1,59 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B0D3985F
-	for <patches@lists.linux.dev>; Mon, 20 Nov 2023 22:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4968C39860
+	for <patches@lists.linux.dev>; Mon, 20 Nov 2023 22:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="j2pIjZh4"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ePI5/k74"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700518932; x=1732054932;
+  t=1700519026; x=1732055026;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=xjUvBJTTQnZp3m+hVm9BSG9vJvnsE8/fJMpy6S/WRZU=;
-  b=j2pIjZh4EW7r3BmS2/W6MtT2+7+MLGaIsLZhmdU+16i4+HKzZsInhFdh
-   Vpj5kfxssb++07TUfGi2qsrk2cX+eSyN4QULPu24SDn0EIr8jkA2oWFps
-   riAmtCZX5PsCh7xqt/9vb/D3cUhr8PIlNi0YUK4r6NJb8RRcI9bD9FMi1
-   A8tOKFfj/K/7REtOCvcpnNZfxze2NRMf4ta+GEdOs0t/MvRdRvgyePUbI
-   s1M44rxl7HkwN4BDbOxbGSz7FjRoIsB8y4uHatBr5nmgwdYYUbEewIf6e
-   IXpZoYp/ZTNCWCSaNGupfg317F7ipvVcfS2uQUOimTBpXlt+DEwgKdD6G
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10900"; a="371058747"
+  bh=C4+i/0yKz9L3g91nygDL+hLXfW76NBhVrFdWPuVP+jg=;
+  b=ePI5/k74PPHbF6DjPJwalC9k8PLigZZ1UYgpOqpk0+mCJsZscxOtCpqi
+   5GSQwBT7IbkpRjGNRwRtgKyzdydOSdXgVTVXIJMo3g5NFjsFVGcWA5vCu
+   W+ONnmnj7l7UdON9m8PICVyaDOy9XhGxNirCzDBEgwRmMfJi37llrIHMJ
+   Da0C/GNn7E3lhIoLylnidxbxo8b37N9ZsesAla3zne2HDRXNRK5inTmRj
+   JBMRSSlu24P6dxXCMMgu+UNbhudMTSHDgBGM9IHrUWw2KbvPBt+6HVJSs
+   nU9Vfvai74pHhMn0S6K+4o/pQU1KuVvXAOjLgLgJ1WJBQIplrk1SAAhc3
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10900"; a="422820773"
 X-IronPort-AV: E=Sophos;i="6.04,214,1695711600"; 
-   d="scan'208";a="371058747"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2023 14:22:10 -0800
+   d="scan'208";a="422820773"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2023 14:23:34 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10900"; a="857130558"
+X-IronPort-AV: E=McAfee;i="6600,9927,10900"; a="742856365"
 X-IronPort-AV: E=Sophos;i="6.04,214,1695711600"; 
-   d="scan'208";a="857130558"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by FMSMGA003.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Nov 2023 14:22:10 -0800
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+   d="scan'208";a="742856365"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+  by orsmga006.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 20 Nov 2023 14:23:34 -0800
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.34; Mon, 20 Nov 2023 14:22:10 -0800
-Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ 15.1.2507.34; Mon, 20 Nov 2023 14:23:34 -0800
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.34; Mon, 20 Nov 2023 14:22:09 -0800
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ 15.1.2507.34; Mon, 20 Nov 2023 14:23:33 -0800
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.34 via Frontend Transport; Mon, 20 Nov 2023 14:22:09 -0800
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.100)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ 15.1.2507.34 via Frontend Transport; Mon, 20 Nov 2023 14:23:33 -0800
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.101)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.34; Mon, 20 Nov 2023 14:22:09 -0800
+ 15.1.2507.34; Mon, 20 Nov 2023 14:23:32 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hShgusPkQ7E4FuINarcvPvWy5e8M5+/+hzyi5tW2THg6f8AJd/2KLJ+R8u/sjwSTT3IKIUFjBUvd8YlcFZ0Yss9ZgqJmADNP0kHInpQjKKVw/37X8DbfOWJujOA9EM8QIFPAugYgyMbvNpimagS8aa+GfI/5+Ik7XElxDh3jN5OAIKC/ckr96n16nx4PV/dxE4SPdt7Uok/+GA77yftEjMClRiZ68oUxNEmpfgTxEBmvIztnjVNNOOHBinN+3sg6+IY7npPoqhSVr26lXh05qcdrlKz6ohgIlKhPh/C/aQXKgKuirDxXx4iNlYBD73W4A/u/RChZhGnQw6tQXsaVWQ==
+ b=VzC5ToaovPK3jE50doZEBA6C+uufigxpYZw7n8Z2+WdHBJQ/TVE49Gmdu6V1jDP6lGpplwAK+C/9tibkMzkQYumPQpsQbFpNrUsiA1ty3YFrVXqnreeaqBdNfdyGvb2p9u8Q9lShYANPk6gI+/EMw1J/tHOsPHP+0I1O3AOXmxgK3qIUTMk6ZH03V3pvj5MffsVQqZZ0DCjutZqjDWrpJ8pw7vPT2klUo7T+TYJi7NdP/Ia1ndzdlMb8LFJeqcCb14QrtTnETxtq698B4QC9bokr63MW132XIRGmH+Qp4SF/9t+p5JWiMTGMAs0S7bDpnvWgL6Sk+/W9rQNXEQ5vpA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WzT80QX3mmyQLY3QkbgBVRpp3fZ3SvBnvvPTosF25wc=;
- b=LWaaEJI7/B7d538uhzlaq8sIW4g8X8UmqZlAvQQ0yVmRg7IPy5mqHy5KXoEyT3MbwwVwwjMiESXGvx0L16w3H2OrMRovAloKduhdaGdwwa5MAmmnWygwebpYinn0wV1IPGEkYWIURz3FFzAao2BF6ytpqdurbc93RkyYvNMNrdTMZOLEt7rakN72/tpUdAOfjjJxlXtvl3dGmhOuem4KGQokKZsSko2YFFmxPHiecHVh/jE2VNePCK+Vr6AzreEEV+bnedzU0dxVVu3sYepks1zzuSLH+O6mR2/oxaXVsyx13rgT5fiCDu65jmcG2wZTBXefEsZNpCWjNNHcSMTTgg==
+ bh=PA7ICDMmHCiE1IyK4X8vPv95R2DDAm02XDzIC+nUrS4=;
+ b=EruZtkCmfZQlt43v++P/bq367prEeyhHp5krjUZ+cSvCo7UCptay0W30Abm0uzkp567j5/OQDypRioU1ul8GCs7NHMj/vTt4s68HJ0X6YVfSQlHfEWqxSwe28XD0B8VeC2zZL2HlF4rHnBVvR5kw/ictSFJMYKThqSXtcGgBN9jk9gKnrQiZUz0/CBE7i0fR0nPDZL+qrkQ4MAunh7qDkv1aqoEfDZZg6Bocy226N5WdDpX2/PrpZnyEX3D5GEcbAC7qEowgLFC/JCl1Syx9myUuiosGxNfoX56SmZ7bMxw/25mD2rUH23hFC/R8prkXPQLCyJuqKbeaN5kr4g06RQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -63,16 +63,15 @@ Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
  by CY8PR11MB7797.namprd11.prod.outlook.com (2603:10b6:930:76::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7002.27; Mon, 20 Nov
- 2023 22:22:06 +0000
+ 2023 22:23:30 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::6710:537d:b74:f1e5]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::6710:537d:b74:f1e5%5]) with mapi id 15.20.7002.019; Mon, 20 Nov 2023
- 22:22:06 +0000
-Message-ID: <532da5f5-f191-4abd-8452-ec7594275b6a@intel.com>
-Date: Mon, 20 Nov 2023 14:22:04 -0800
+ 22:23:30 +0000
+Message-ID: <3fb83b18-c9cc-42f6-813b-c5cfa526e91c@intel.com>
+Date: Mon, 20 Nov 2023 14:23:29 -0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 5/8] x86/resctrl: Add node-scope to the options for
- feature scope
+Subject: Re: [PATCH v11 6/8] x86/resctrl: Introduce snc_nodes_per_l3_cache
 Content-Language: en-US
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, "Peter
  Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, "Shuah
@@ -84,9 +83,9 @@ CC: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
 	<patches@lists.linux.dev>
 References: <20231031211708.37390-1-tony.luck@intel.com>
  <20231109230915.73600-1-tony.luck@intel.com>
- <20231109230915.73600-6-tony.luck@intel.com>
+ <20231109230915.73600-7-tony.luck@intel.com>
 From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20231109230915.73600-6-tony.luck@intel.com>
+In-Reply-To: <20231109230915.73600-7-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: MW2PR16CA0001.namprd16.prod.outlook.com (2603:10b6:907::14)
@@ -99,81 +98,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CY8PR11MB7797:EE_
-X-MS-Office365-Filtering-Correlation-Id: d2a3a7b4-6207-4a27-f3f9-08dbea1720e5
+X-MS-Office365-Filtering-Correlation-Id: 4379f6b0-48e6-447c-ea12-08dbea17532b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 28h/uoWHPQ8i6CWH09NlnPuHAdYoxY3pnFnZC3I2AMvOK7a2Sxx20YpIKKneQ51xtwQxv8snamawBKwjzruJNqYzs5mCj5v64+vLymgzQF/EcTQzIL0L1FKKH6bGCsFYn72+trT4boUa0vYkN9arXhOoCEdM9wTgCqPTKpR9Ubx4NRS1Mmu3NJW9evhQDMnSJ75MXtfZdgyB20B+3LTogmL2GqlOQBgj70x/gopwfyfRCtVWhmkMnBl9itt8+pHynJ9VW01phbh42skBgNyvMJbF2jFZwvujrunD1gkkKhS7uTepRGvTDvBWhaB2bgWgJ30FZ/5V3lGFZ1nAFCOV/WhgeiLJOV63IoCAjZJO+IuR4kovIrKyuEYcfgbCsyQdsZMfRlsd/udokfa3y9ePpPtPZ3v3tlGsohBcWrNAfoRPvESbR+QhAo7qNPiiX2dZkBiPwnacbtVvo9ast89rDXvtjDs0SxVhNDXlRFFDQi6j9q83Qr1pUn2Nyjr0h39B/CZPvqaInvRXoQFDBoYTsNnJ+fm3EuYgYc8DQ7hwteKXiKhfwHQcVLw0E73hgQnMuSqznN5mJe3VL5fkEKguaRQ5jSjg+yIBOdCxaHS6LHcnb3ivbcFnwJYue8h6WPJ7146/ZfAXmFG0IDpN3+3FHA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(396003)(376002)(39860400002)(366004)(136003)(230922051799003)(451199024)(64100799003)(186009)(1800799012)(83380400001)(53546011)(6512007)(26005)(41300700001)(4326008)(8676002)(8936002)(38100700002)(7416002)(2906002)(4744005)(44832011)(5660300002)(478600001)(6486002)(6506007)(110136005)(66476007)(66556008)(66946007)(54906003)(316002)(36756003)(31696002)(86362001)(82960400001)(31686004)(2616005)(43740500002)(45980500001);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: Ie6u6qB6tZVbQ4IwOcBoMMesMyu0/DqcU/AnSFT3YYfDbElCp8WbXdJtPrCJk7N2nnXkKtSquqBY1QgPu4EorwMcYhO5S8o9O+nitGLxO1c8ejc3EZaRYHJ03GDx1IxG8njEvOto5fu/tpNJE3Zws0Wg4We6gv6zSaR6v30m/ciIOv+kdG0EXsFe477n47FoH+eZpxGId/wioMWEBTqqHGYcWKy3hYA5OramwZDYu0iOAmrfMNkKPknY7erjoZM2h0Lj7Rjr1xXjKYarEfuNn5xgwUCqtx/x2a24tfAl2m5xSuY+HiKWHb552vDRjALaRJc0j8KxUAamiJurG+/tsjh8tt/vVVs3fKpc7HjTmTtbmICNg0Ny/QUb3LcRM1QH3Vgb9NTuFAZwVSljuu5qiaDNxxjYGYj1QZoNbup1bQGYYKffP5bHMVC7z0xXHIXnD4jJeHeKuAzOn/eFT+OKIPMpKqwz2vdlytdt+0exMYs9FQQTCOb1jnMs/jbqqpKCpvkdyS4NnhPNRZ6iXPM5F9598N0OvhawRZ3tbhhMGygF/cmBP8drzlkjGyClyYRlJ0Yt8lZV0V4BreuVp1Tpg8yFRj9KGpZHEsz9cjVuyYFbObh1ndV7QnMJJunQQPH0IcaHAE1J0CBXqLCeq+ctWA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(396003)(376002)(39860400002)(366004)(136003)(230922051799003)(451199024)(64100799003)(186009)(1800799012)(83380400001)(53546011)(6512007)(26005)(41300700001)(4326008)(8676002)(8936002)(38100700002)(7416002)(2906002)(44832011)(5660300002)(478600001)(6486002)(6506007)(110136005)(66476007)(66556008)(66946007)(54906003)(316002)(36756003)(31696002)(86362001)(82960400001)(31686004)(2616005)(43740500002)(45980500001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?M2Q4NzEvejU2enZvRkxQWHFFSysrbGRVVWRJcnFIMEZrY3REemhHUkRKN01S?=
- =?utf-8?B?eGtzdW10a0tUNFpkSmo2SWEvUTViVWNPVmJpVnJ6UlFDeTNhaXkwWUdyRTMv?=
- =?utf-8?B?M3ptSlJ4elJsQWpYL3hxYkZXSDJucVg3TERMNURqMDcrWm1lSjkwSTMyVERY?=
- =?utf-8?B?REY3alJtczN6eU51TXVGb1FTNVRldTNpQTFpNzBNVVZmTFFaZVZKUS85TjFP?=
- =?utf-8?B?S2p3ak54bXpvN2lvam9HRVA3TEpZeGlTY3FTQm5VekN3U2kvZEczMGZ4TU1o?=
- =?utf-8?B?R2JGc3FESVcvY1FVSHZaZHlpNTlUaXNpeGZmMyt1Zmc3NjlvdlU2akJGbzVF?=
- =?utf-8?B?am1NcjF0Q09kY0pXWElMWU9WVUNrQktlK2lVcUxsOGFXV2M2RXBsSW5NNXBo?=
- =?utf-8?B?NkNQRjZTbWZpS1MrTkJkSm84UVhOaUpBckpTUHhnYXpXdWRUZ28xYUNUTFI3?=
- =?utf-8?B?RHhKVzdjOVdIU1RHUk1XSnF6d0pYcHhzOW1jb0piSk5TSzJBdGZYTlFCdWIy?=
- =?utf-8?B?dkxacXdUOFFsRi9VY3dZRWhzU3NTL2JxejAxRmtjWm9haUc1UXJWbTB4Wk1B?=
- =?utf-8?B?OGZxS0hUb2xRbmkzMFNwcTBSNDRwM0pQL3JVdWYrN0RTTzFEdmpWc25kQ3N0?=
- =?utf-8?B?ZlorMFV0akRBTWtUWjM0VUMyTDV4THd1bWc1eHZzTm1VU0NaSURMZmV6ZDVz?=
- =?utf-8?B?bUxOczAybk94WFdFZkY2M1NvcXhUNVB0bDMwWUpuQytpUTNwQlkrR1ZaU3E2?=
- =?utf-8?B?Y3lMdDZqaTZZVnJ4OU4rWkVXSkxIZzc0c1hvVS9CVzlUM2s1Ykg1TENjaFZs?=
- =?utf-8?B?aUZ4VTlGdjlLZXJIeXpnYklZYmxnSFNVYzFVWXQxTXQ5akVpZXAxQWF0N014?=
- =?utf-8?B?YUVuUG9TN3pxcDMrNGlYT0VyQTR2RGwvMy9TbzJlcEdCdEEwbmZUUE02UHRE?=
- =?utf-8?B?eWtYSy9rRVhzLzkwOXFLMW1CNVdtUjBzTTQzbGFyWEZrZ3dmcXpSZGJrbWpK?=
- =?utf-8?B?aVlFNDhOcDV4ZXFQNHFxMW9aZWhNTHY0Q1J4T2F0bm82UUt4ak9zdFRwZm5M?=
- =?utf-8?B?TUQ2ZXFPTkwvUUtzcTJrMnhxSTNSd1dHN3FDcTlCbjV2dmxPQldCN1J2Ulhu?=
- =?utf-8?B?cmpIUjJSL0d5SHNMaFpqZm9NSyswL3FwcEFsZkZVNG1CaHJYcFQ4WUY2WW94?=
- =?utf-8?B?bW1KMVVKTnpKeXFxM0xqZm9lMmRpWmFqVVZUbGlLNThoMG1BMnJacUQ4NU14?=
- =?utf-8?B?dHg4a0VyRERLV01xdkFJSHd2aUpVSGhXbkRqVVM0cGl1bGdxakVEWjRCYVBR?=
- =?utf-8?B?Vm16Mms4R3FMT3BFUERHWDdtUkhtbW5sbWc2L1Vka0gvY3EvaHdHS3hDVVMr?=
- =?utf-8?B?cVRLSGZmNFRXNTJYc2xvK3RwNFFQOW1uQmhrU0F3UnViNU56TjJVTUF1aWFm?=
- =?utf-8?B?TVRHRVlXQUxOTXM4Qlp4cDNUTXRvckJMeHBsUVZWZFZuU1UxaHRNM2MzTmVl?=
- =?utf-8?B?Y1lGSUFtd1pEZXp3VDh3QjVvSklDcjBCdll3MzdINmhUUFhVeTZKSWJnN3JR?=
- =?utf-8?B?a09nMzl4L25GTGJuU2txeU9ZbDFvWEk0V1gzYm1BRDg1YWRPaVlCTjZJNTh5?=
- =?utf-8?B?bVVHNnl5MUdKVGhPRnVSSXFwbDZYNG0rOXNlVTFmZk9lZkFXWXBndTlTVzZV?=
- =?utf-8?B?UWVDMGVOMk5xZUpoS0sxR2M4b3Z6NXVIMTg2MFlVZlF0T3FNQW1ta0d0R21i?=
- =?utf-8?B?dXN5U2hjeWZrM2w0RXFvanA4MWhpazZDNUVXUzdyTnFMcXpsNTg1Z2x2NXA5?=
- =?utf-8?B?WDJLbDIwVlcrZ2ZRZU03T3ZHcEZiODhrTW11UVJ4QXEvWGdLQjZIdXVQQU50?=
- =?utf-8?B?UnlCaFdLTFRtSW16SGpOTE1PSXpZaFlyRGNKTkl5QWYwc09DNHlvaFBrOFNh?=
- =?utf-8?B?SkZhTUE0K0Y1KzR3d1JReG5ORFRENCs4anZ6RWtMQ2Jpc1F1Q0krU3VnUXBz?=
- =?utf-8?B?NDRmczRseTJac3V6ZnV4TEJ0SnFKUms0TzNSUnIvU25JY3ZqcDA2KzdwZTB4?=
- =?utf-8?B?YktGbTdoWk93T1kyZEJ1aHpoMjZTdjJ2bndWUTRqdzdNRjIzZ2ZWaUdlMjVY?=
- =?utf-8?B?c3VZUWJsMklkanduQWwySE0zVTc0dTJQMWloYUsxdkQ0SHoyR0hLTWNHWlB5?=
- =?utf-8?B?MXc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2a3a7b4-6207-4a27-f3f9-08dbea1720e5
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?em1ySC94UG5BZXFOVS9NeEJ1MlV0L3JFVzgrY0lXNXA5NitDWmNQR0FpNkpa?=
+ =?utf-8?B?MDlDb290emZDMWhYcFQrYndwcGp3YVhTYkVCck1GZ1NRVFNOK0x2M0k3VlZE?=
+ =?utf-8?B?SXdqaG9MR0MzRHdEbEIxb3hYSEN5VGpRMGFvZHpZT3RodkJNTmgwWm5mZ0hB?=
+ =?utf-8?B?SWhPQjkzR096SnBQWTBqYW8xSHJjdG5xeFRSd0JEYXcvMnRBMVo4alZtVWMv?=
+ =?utf-8?B?N0dpMklGc21aM3NIQWhlL3pSa1pmUWR4LzFPMEY5UEpBUURyOFlmTVhhVUtY?=
+ =?utf-8?B?NGhkM1gvMkYybzB1M0dTc3YzdWJDT0dIYkpRS2xiYmtLc1N1MkdRaEVrQmdV?=
+ =?utf-8?B?VGdEY0d6WkI1K0JMeU15eU5PWG9aQzVNaVZ5d2JGVlNXL0xwTlFTcDZtTmpi?=
+ =?utf-8?B?MmpxTlVwdDg2U09LcHJmNkJWbm1EbDJyeW9zb1drNDZmSGRlLzYwM0svblI0?=
+ =?utf-8?B?dnFwSUZ3RHV1YjByUFR2RXNJM1JpODJMNmRsN04waVpYUCtLK2ZIa2RpUFpR?=
+ =?utf-8?B?SElSb3VBd2dHUloyZm9hQVJ2NDFrdEV2RU8zcnJ6Z1ZtK3I4TmJTTlpORjdI?=
+ =?utf-8?B?L1RBSTZCK0NhSUdGS2pmb1hPOGIzcEs1S0h5ZnlCTHBwOWhUVkQyOFNZYUpB?=
+ =?utf-8?B?ZUVDMlNMcWt6cDJCQlo1a29KdXB1ZlkyaEpucVRLNE12K2FPTUlYTnNpSmRC?=
+ =?utf-8?B?TlpaNVUyTVVhcEU0WCtjMVVjVnZSNTBzVFM0RmthSUh1M0dXZ1BOd0VrcXEx?=
+ =?utf-8?B?MlVTbDhnZXFhSWsrSTg4bEhHZkhYdXpyVnZza0V4ZktyQzk2NEdhQkloYm5w?=
+ =?utf-8?B?WndpRnVNYzQ1bUJoNDZzN0FYOWFpTTBGdnB0ZDMvMVhuT0dhY0Vpa2o4SEhr?=
+ =?utf-8?B?QkplNmUyZDRoVU4wVkhqUlNXOE4xQWtkS01VeWpwcWlxcHJQY3Q0T25kMWor?=
+ =?utf-8?B?Y0Q1a2V6TXA4THhSTENJTHIyVThDMW50dkNSYzFLMURHdWM0VFY4eWRCak1S?=
+ =?utf-8?B?SDVZZ2NreW9qWDEzdzlhUUcxeldqdmxmSU1MQmorWTU2UEJQR0tTZ1h6dUxr?=
+ =?utf-8?B?SThLUklWWGlhWVRSZ0JLZHJjM3ZmQzhQdUhrSjVhZk5MRTNKdHludUtiQTd4?=
+ =?utf-8?B?YnJCRDZpUXBQYkh5MWhKTUYrQmQ1ZU1XWGNDUm9pK1JyMFJmMjZjM1B6dWFl?=
+ =?utf-8?B?OTVWT21SYnpFNEhja3NBOWJXSHhpVWtBcitIRkVRZ2ZOMXh3WW9QZnZ6dUVm?=
+ =?utf-8?B?QmRxcXFzOFJ2Zk8zZGNNQ1g0NU9xSWE4SHNCR2oxaTdwN05rWFNKbmFhSDZV?=
+ =?utf-8?B?MHZBNno1YTgzQWxyYVp2anpwNDE1TjRjNE5MUjVLV3plbDdaS2FXMS9sM0Ur?=
+ =?utf-8?B?NXBacHJvRS91M3pYQUtTK2tmcURaNHZxT3NEUUVyQ2V5R3dnczZBYTlvbnFQ?=
+ =?utf-8?B?M1ZsalJTMWpBY2txemZXTUJpM05zZjRaWUR2NjZDVUNCOFlSZ0RqSzRTa2oy?=
+ =?utf-8?B?VmtxbEJVYzdZNFF2RUV1QlEyVVJzaW9yMGozTnducTZETkdvYXFjeE1MWFFr?=
+ =?utf-8?B?ZVpabGpmU0c3cTlWU2F1d1JWbElrMTEyQkZwSFByckQ4VmVWSzJ5dUplT0JK?=
+ =?utf-8?B?ZGVKOHVKajhnNVp0bVJ0Y1FtdFI1TVVGVVRZa0FNeTVwbXNYbVM2UmJadVRq?=
+ =?utf-8?B?MDNVakNXM0N1ZEJDcjJOWVZEajZOWEtQY2UxeDJQTWtrSUJLU2M3SzRyL1Ev?=
+ =?utf-8?B?b1VsMjZnTCtzZTNZbzk4MGhOdkM4RUVMR1BhUFNLN1dPQ0JtYXZzaFRTUG4y?=
+ =?utf-8?B?bHNQY1oyN0Y3Ymw3TVh1NUJGRTlDMlFyRWNsVWZRN0VGOU4xVjhUMGpjV3hw?=
+ =?utf-8?B?WTVvTzI1YW9Ndnc4c3Y1dzh5REJVLzR0ektPS2VER1Z1TWxRNUJPL3lOUGdD?=
+ =?utf-8?B?SU5QdiswclNVcHFJbk9hRWUvZSszVGo4ZWw4K2U3N09ZcWovck5LLzJqbHor?=
+ =?utf-8?B?dU9KMWQ4c2FYM2MvWEh3Skl5SUNpNVloaEo1eWQ2dmRBZTQ4bTNZbzFVQzZW?=
+ =?utf-8?B?c0FFYkpOV0dDdjBZT1BaWTl5OGVjV0dJeUozazVzUEViSDNMZnVzMDJwR2ky?=
+ =?utf-8?B?dytGVHZVa2FhdEltaklUOHJWQkp6M1VjTURrV3hJeVZKUXF0RGNUMEJpSElO?=
+ =?utf-8?B?Z0E9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4379f6b0-48e6-447c-ea12-08dbea17532b
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2023 22:22:06.1598
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2023 22:23:30.4988
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Dot9Ax6/5miglCJwcQ/jsUF2Idt+jWqHp4tki69rpkoAiN6IqAxt28TE6xrI2mAGofGLqeo7ILnJsYzNDzKfcNLkVTQD58WtnyMsnYzOmK4=
+X-MS-Exchange-CrossTenant-UserPrincipalName: sjY7Koo9XqL7mo79IzhG2Sv+PBdgXOQ7UO88yLi1Qi/WI51wb4MEQtn4JVHEPA0owhpRJAg5mJ4tckRvpRpPPHEcg+hRvDNgf755lM1IdXo=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR11MB7797
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
 On 11/9/2023 3:09 PM, Tony Luck wrote:
-> Currently supported resctrl features are all domain scoped the same as the
-> scope of the L2 or L3 caches.
+> Intel Sub-NUMA Cluster (SNC) is a feature that subdivides the CPU cores
+> and memory controllers on a socket into two or more groups. These are
+> presented to the operating system as NUMA nodes.
 > 
-> Add RESCTRL_NODE as a new option for features that are scoped at the
-> same granularity as NUMA nodes. This is needed for Intel's Sub-NUMA
-> Cluster (SNC) feature where monitoring features are node scoped.
+> This may enable some workloads to have slightly lower latency to memory
+> as the memory controller(s) in an SNC node are electrically closer to the
+> CPU cores on that SNC node. This cost may be offset by lower bandwidth
+> since the memory accesses for each core can only be interleaved between
+> the memory controllers on the same SNC node.
 > 
+> Resctrl monitoring on an Intel system depends upon attaching RMIDs to tasks
+> to track L3 cache occupancy and memory bandwidth. There is an MSR that
+> controls how the RMIDs are shared between SNC nodes.
+> 
+> The default mode divides them numerically. E.g. when there are two SNC
+> nodes on a socket the lower number half of the RMIDs are given to the
+> first node, the remainder to the second node. This would be difficult
+> to use with the Linux resctrl interface as specific RMID values assigned
+> to resctrl groups are not visible to users.
+> 
+> The other mode divides the RMIDs and renumbers the ones on the second
+> SNC node to start from zero.
+> 
+> Even with this renumbering SNC mode requires several changes in resctrl
+> behavior for correct operation.
+> 
+> Add a global integer "snc_nodes_per_l3_cache" that will show how many
+> SNC nodes share each L3 cache. When this is "1", SNC mode is either
+> not implemented, or not enabled, but all places that need to check
+> it are updated to take appropriate action when SNC mode is enabled.
+> 
+> Code that needs to take action when SNC is enabled is:
+> 1) The number of logical RMIDs per L3 cache available for use is the
+>    number of physical RMIDs divided by the number of SNC nodes.
+> 2) Likewise the "mon_scale" value must be divided by the number of SNC
+>    nodes.
+> 3) The RMID renumbering operates when using the value from the
+>    IA32_PQR_ASSOC MSR to count accesses by a task. When reading an RMID
+>    counter, code must adjust from the logical RMID used to the physical
+>    RMID value for the SNC node that it wishes to read and load the
+>    adjusted value into the IA32_QM_EVTSEL MSR.
+> 4) The L3 cache is divided between the SNC nodes. So the value
+>    reported in the resctrl "size" file is divided by the number of SNC
+>    nodes because the effective amount of cache that can be allocated
+>    is reduced by that factor.
+> 5) The "-o mba_MBps" mount option must be disabled in SNC mode
+>    because the monitoring is being done per SNC node, while the
+>    bandwidth allocation is still done at the L3 cache scope.
+>    Trying to use this feedback loop might result in contradictory
+>    changes to the throttling level coming from each of the SNC
+>    node bandwidth measurements.
+> 
+
+The latter part of this changelog stopped being in imperative mood.
+To reduce confusion I slightly reworked it below to address the
+parts I noticed. I often get it wrong myself so please check again.
+
+	Add a global integer "snc_nodes_per_l3_cache" that shows how many
+	SNC nodes share each L3 cache. When "snc_nodes_per_l3_cache" is "1",
+	SNC mode is either not implemented, or not enabled.
+
+	Update all places to take appropriate action when SNC mode is enabled:
+	1) The number of logical RMIDs per L3 cache available for use is the
+	   number of physical RMIDs divided by the number of SNC nodes.
+	2) Likewise the "mon_scale" value must be divided by the number of SNC
+	   nodes.
+	3) The RMID renumbering operates when using the value from the
+	   IA32_PQR_ASSOC MSR to count accesses by a task. When reading an RMID
+	   counter, adjust from the logical RMID to the physical
+	   RMID value for the SNC node that it wishes to read and load the
+	   adjusted value into the IA32_QM_EVTSEL MSR.
+	4) Divide the L3 cache between the SNC nodes. Divide the value
+	   reported in the resctrl "size" file by the number of SNC
+	   nodes because the effective amount of cache that can be allocated
+	   is reduced by that factor.
+	5) Disable the "-o mba_MBps" mount option in SNC mode
+	   because the monitoring is being done per SNC node, while the
+	   bandwidth allocation is still done at the L3 cache scope.
+	   Trying to use this feedback loop might result in contradictory
+	   changes to the throttling level coming from each of the SNC
+	   node bandwidth measurements.
+
 > Reviewed-by: Peter Newman <peternewman@google.com>
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
 
-Please follow guidance in section "Ordering of commit tags" from
-Documentation/process/maintainer-tip.rst
+(same comment as previous patch about commit tag ordering)
 
-With that addressed (thus adding Reviewed-by tags after your 
-author SOB):
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 
 Reinette
