@@ -1,96 +1,146 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625491F939
-	for <patches@lists.linux.dev>; Tue, 21 Nov 2023 07:09:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r5Ksp-0008AB-GM; Tue, 21 Nov 2023 08:09:19 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r5Kso-00AWnv-MC; Tue, 21 Nov 2023 08:09:18 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r5Kso-004pby-Cy; Tue, 21 Nov 2023 08:09:18 +0100
-Date: Tue, 21 Nov 2023 08:09:18 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: sre@kernel.org, nicolas.ferre@microchip.com,
-	alexandre.belloni@bootlin.com, claudiu.beznea@tuxon.dev,
-	linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH] power: reset: at91: Drop '__init' from
- at91_wakeup_status()
-Message-ID: <20231121070918.xsjpdmfnrd563xok@pengutronix.de>
-References: <20231120-fix-at91-modpost-warnings-v1-1-813671933863@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D839430D1E
+	for <patches@lists.linux.dev>; Tue, 21 Nov 2023 11:55:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="Aj070316"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 820D040E01E3;
+	Tue, 21 Nov 2023 11:55:03 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id kafUwt00W7Tn; Tue, 21 Nov 2023 11:55:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1700567701; bh=3ViODio9hxdCESGN+YaO4XUuDqr800FK22MlYHsgMTE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Aj0703161sDM55cSRYuw6vSSa2zhOzytw9PbW/w80xmLEVUmGTcYP9gT+WRxh4cBf
+	 7URtpMyitIoygq7uoPN0kX9xsSm8eEShW+Kaw68gfUxqum9BaDWWwayAwO5fg/m+9z
+	 MlCJrkOAk5bEDGnHwn2CzudbCWh+UN4FDcR1TM0/fH2oExmPXLw9GbgOai7Ceh7BVa
+	 bXlynPWZuemPGZq5+WMaPdlZWbOyvucWzm2YTh2ipoO8nnm1YAIzJII9R2SW0VNoC6
+	 NWacx+wfpOPacv9rq1HWpwa75rgdWB+pkJYrh1HbPWDYpiH+/kl+SDIv6xu6fbG5Qp
+	 6yItloD/dKgiiuBXDejL9PuvjA5NrEfc6joJr0DJH4Sf190rLaZlQAbYoeos3qgny9
+	 l72TsKt9auFvVyR5KZF3CoANaRrmVa1XJXShNaxMVCkopYoK+SlRyNLeCUpQ5fE/a8
+	 5mX6IVoFDBbgj8WnkzIEYVkeNE7Sdz+utF6tl0epMpdrf22E0ugsOyqUm8O1L5nbcx
+	 CV1bYSJxpOWXOuAGcIemQZtf7kfFuYG2MVAyp5nXDKVqSArEal3g9i1Aclanb5QE+J
+	 I3tTS6xZ4HHcpj8C9HvxH1/AJ813+kLDmWOCEdgJvx+ofcVn/FMGT150FFHLzG6zG7
+	 SFBV5+mAApAKCnCNEWtVPnDQ=
+Received: from zn.tnic (pd95304da.dip0.t-ipconnect.de [217.83.4.218])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 4B6CA40E01AD;
+	Tue, 21 Nov 2023 11:54:53 +0000 (UTC)
+Date: Tue, 21 Nov 2023 12:54:48 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Tony Luck <tony.luck@intel.com>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
+	x86@kernel.org, linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+Message-ID: <20231121115448.GCZVyaiNkNvb4t2NxB@fat_crate.local>
+References: <20230929181626.210782-1-tony.luck@intel.com>
+ <20231004183623.17067-1-tony.luck@intel.com>
+ <20231004183623.17067-3-tony.luck@intel.com>
+ <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
+ <ZTa37L2nlnbok8dz@agluck-desk3>
+ <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
+ <ZVPu/hX9b7lUkrBY@agluck-desk3>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2f2ll4udxq7343yq"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231120-fix-at91-modpost-warnings-v1-1-813671933863@kernel.org>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: patches@lists.linux.dev
+In-Reply-To: <ZVPu/hX9b7lUkrBY@agluck-desk3>
 
+On Tue, Nov 14, 2023 at 02:04:46PM -0800, Tony Luck wrote:
+> Before any storm happens, machine_check_poll() may only be called once
+> a month, or less, when errors occur.
 
---2f2ll4udxq7343yq
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Err:
 
-On Mon, Nov 20, 2023 at 03:35:32PM -0700, Nathan Chancellor wrote:
-> When building with clang, there are two section mismatch warnings:
->=20
->   WARNING: modpost: vmlinux: section mismatch in reference: at91_poweroff=
-_probe+0x7c (section: .text) -> at91_wakeup_status (section: .init.text)
->   WARNING: modpost: vmlinux: section mismatch in reference: at91_shdwc_pr=
-obe+0xcc (section: .text) -> at91_wakeup_status (section: .init.text)
->=20
-> Drop '__init' from at91_wakeup_status() to clear up the mismatch.
->=20
-> Fixes: dde74a5de817 ("power: reset: at91-sama5d2_shdwc: Stop using module=
-_platform_driver_probe()")
-> Fixes: 099806de68b7 ("power: reset: at91-poweroff: Stop using module_plat=
-form_driver_probe()")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+[  317.825546] mce: mc_poll_banks_default: CPU2 irq ctxt level: 1
+[  317.825585] mce: mc_poll_banks_default: CPU0 irq ctxt level: 1
+[  317.825585] mce: mc_poll_banks_default: CPU1 irq ctxt level: 1
+[  317.825586] mce: mc_poll_banks_default: CPU3 irq ctxt level: 1
+[  317.825586] mce: mc_poll_banks_default: CPU4 irq ctxt level: 1
+[  317.825586] mce: mc_poll_banks_default: CPU5 irq ctxt level: 1
+[  629.121536] mce: mc_poll_banks_default: CPU1 irq ctxt level: 1
+[  629.121536] mce: mc_poll_banks_default: CPU4 irq ctxt level: 1
+[  629.121560] mce: mc_poll_banks_default: CPU2 irq ctxt level: 1
+[  629.121561] mce: mc_poll_banks_default: CPU0 irq ctxt level: 1
+[  629.121561] mce: mc_poll_banks_default: CPU5 irq ctxt level: 1
+[  629.121569] mce: mc_poll_banks_default: CPU3 irq ctxt level: 1
+[  940.417507] mce: mc_poll_banks_default: CPU2 irq ctxt level: 1
+[  940.417508] mce: mc_poll_banks_default: CPU3 irq ctxt level: 1
+[  940.417508] mce: mc_poll_banks_default: CPU1 irq ctxt level: 1
+[  940.417508] mce: mc_poll_banks_default: CPU4 irq ctxt level: 1
+[  940.417509] mce: mc_poll_banks_default: CPU5 irq ctxt level: 1
+[  940.417508] mce: mc_poll_banks_default: CPU0 irq ctxt level: 1
+...
 
-Thanks.
+That's from my coffeelake test box.
 
-Reviewed-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+The irq context level thing says we're in softirq context when the
+polling happens.
 
-Best regards
-Uwe
+> When a storm is detected for a bank, that bank (and any others in storm
+> mode) will be checked once per second.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+Ok.
 
---2f2ll4udxq7343yq
-Content-Type: application/pgp-signature; name="signature.asc"
+> For a bank that doesn't support CMCI, then polling is the only way
+> to find errors. You are right, these will feed into the history
+> tracker, but while at 5-minute interval will not be able to trigger
+> a storm.
 
------BEGIN PGP SIGNATURE-----
+Yes. But you need to call into the storm handling code somehow. So you
+do that from the polling code.
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmVcV50ACgkQj4D7WH0S
-/k6i7QgAjsgw7n9dc9ir6cJZCu+PqNKZsiedUBAktzbcC66zMgVG/8wj+eGdfh0O
-uqVHPQTSkSB2j7I2RJ5GO7t5sZQcCPAvMCuEtQ1t3JjRtOjW7akVbQU1QGTgL5J9
-gjce8YieAb32Ay0evFzY+1fRgShuKbzVWabFqvu1Q+s3K4A787yDapbNShsS7iCB
-0P4qPRbakATfOb03UI43w8rPRlOy1Bn9bCtTWQp9VCmBUOchp+3PZxjDXbfHhxN1
-IlckFADdhQGr8fMd5X9+JDRSUSqHNAX12pka+a8KUilNT/N32VrsTxqqeGU6PHuC
-tP53uVK8Ah58s2KP+IEzNUkJLzCkWQ==
-=EwAJ
------END PGP SIGNATURE-----
+And if the machine supports CMCI, you do the same - call the polling
+code which then does the storm check.
 
---2f2ll4udxq7343yq--
+> Since that 5-minute interval is halved every time error is
+> found consecutively, it is possible at the 1-second poll interval to
+> fill out enough bits to indicate a storm. I think I need to add some
+> code to handle that case as it makes no sense to mess with the CMCI
+> threshold in IA32_MCi_CTL2 for a bank that doesn't support CMCI.
+> Probably will just skip tracking for any such banks.
+
+Ok.
+
+> Aren't interrupts disabled while running the code after the timer fires?
+
+No, see above.
+
+> Whichever of the timer and the CMCI happens first will run. Second to
+> arrive will pend the interrupt and be handled when interrupts are
+> enabled as the first completes.
+
+So I still don't like the timer calling machine_check_poll() and
+cmci_mc_poll_banks() doing the same without any proper synchronization
+between the two.
+
+Yes, when you get a CMCI interrupt, you poll and do the call the storm
+code. Now what happens if the polling runs from softirq context and you
+get a CMCI interrupt at exactly the same time. I.e., is
+machine_check_poll() reentrant and audited properly?
+
+I hope I'm making more sense.
+
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
