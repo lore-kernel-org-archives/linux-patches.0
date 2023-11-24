@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C1039FD4;
-	Fri, 24 Nov 2023 18:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A6B39FDD;
+	Fri, 24 Nov 2023 18:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="it6Svqt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771AFC433C7;
-	Fri, 24 Nov 2023 18:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ie6JeJ0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF066C433C7;
+	Fri, 24 Nov 2023 18:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849246;
-	bh=zVHKZpU8Ckn3dGBPZLvCwtW+QRsuVp9lrFOt232oZ9M=;
+	s=korg; t=1700849249;
+	bh=WWMYo7LcvsYQ/LOz/PX6dV33RzPL87slCDiLgpYFPbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=it6Svqt6k2+lQB45R53JBacWJmWNAZVjsjfZI8AOdC/GkBM5pXIP+xBH5ky2xsRl6
-	 qiNQ96sZ98U7ZKZjg2srv97lLg6pvtyvsDNw4wAAGQNwhicTJZSQXlzOLZHUwCPLZh
-	 LpXZv+0jrE0FTrhu5PGznXS+zJQI84C3Rf5sCsZc=
+	b=Ie6JeJ0Ip6glaw0AKau41Qjw0oifhB6GwM7K49z8a5BUGj4NzqXc9pWICgDV20fWs
+	 Vt2uyIas13jDo80gCFmFoQ6taLZO+bFS0Z4boHajWbM4W2RROTstXQnaEGcy6i0Qx2
+	 PMSlcxaEe4iWZWImTQZj7hWNFM1VmdaR997tiOpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhujun2 <zhujun2@cmss.chinamobile.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Trevor Wu <trevor.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/530] selftests/efivarfs: create-read: fix a resource leak
-Date: Fri, 24 Nov 2023 17:44:07 +0000
-Message-ID: <20231124172030.541616020@linuxfoundation.org>
+Subject: [PATCH 6.6 082/530] ASoC: mediatek: mt8188-mt6359: support dynamic pinctrl
+Date: Fri, 24 Nov 2023 17:44:08 +0000
+Message-ID: <20231124172030.575399900@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,35 +43,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhujun2 <zhujun2@cmss.chinamobile.com>
+From: Trevor Wu <trevor.wu@mediatek.com>
 
-[ Upstream commit 3f6f8a8c5e11a9b384a36df4f40f0c9a653b6975 ]
+[ Upstream commit d601bb78f06b9e3cbb52e6b87b88add9920a11b6 ]
 
-The opened file should be closed in main(), otherwise resource
-leak will occur that this problem was discovered by code reading
+To avoid power leakage, it is recommended to replace the default pinctrl
+state with dynamic pinctrl since certain audio pinmux functions can
+remain in a HIGH state even when audio is disabled. Linking pinctrl with
+DAPM using SND_SOC_DAPM_PINCTRL will ensure that audio pins remain in
+GPIO mode by default and only switch to an audio function when necessary.
 
-Signed-off-by: zhujun2 <zhujun2@cmss.chinamobile.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Trevor Wu <trevor.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230825024935.10878-2-trevor.wu@mediatek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/efivarfs/create-read.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/mediatek/mt8188/mt8188-mt6359.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/tools/testing/selftests/efivarfs/create-read.c b/tools/testing/selftests/efivarfs/create-read.c
-index 9674a19396a32..7bc7af4eb2c17 100644
---- a/tools/testing/selftests/efivarfs/create-read.c
-+++ b/tools/testing/selftests/efivarfs/create-read.c
-@@ -32,8 +32,10 @@ int main(int argc, char **argv)
- 	rc = read(fd, buf, sizeof(buf));
- 	if (rc != 0) {
- 		fprintf(stderr, "Reading a new var should return EOF\n");
-+		close(fd);
- 		return EXIT_FAILURE;
+diff --git a/sound/soc/mediatek/mt8188/mt8188-mt6359.c b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+index 9017f48b6272b..f7e22abb75846 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-mt6359.c
++++ b/sound/soc/mediatek/mt8188/mt8188-mt6359.c
+@@ -246,6 +246,11 @@ static const struct snd_soc_dapm_widget mt8188_mt6359_widgets[] = {
+ 	SND_SOC_DAPM_MIC("Headset Mic", NULL),
+ 	SND_SOC_DAPM_SINK("HDMI"),
+ 	SND_SOC_DAPM_SINK("DP"),
++
++	/* dynamic pinctrl */
++	SND_SOC_DAPM_PINCTRL("ETDM_SPK_PIN", "aud_etdm_spk_on", "aud_etdm_spk_off"),
++	SND_SOC_DAPM_PINCTRL("ETDM_HP_PIN", "aud_etdm_hp_on", "aud_etdm_hp_off"),
++	SND_SOC_DAPM_PINCTRL("MTKAIF_PIN", "aud_mtkaif_on", "aud_mtkaif_off"),
+ };
+ 
+ static const struct snd_kcontrol_new mt8188_mt6359_controls[] = {
+@@ -267,6 +272,7 @@ static int mt8188_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 		snd_soc_rtdcom_lookup(rtd, AFE_PCM_NAME);
+ 	struct snd_soc_component *cmpnt_codec =
+ 		asoc_rtd_to_codec(rtd, 0)->component;
++	struct snd_soc_dapm_widget *pin_w = NULL, *w;
+ 	struct mtk_base_afe *afe;
+ 	struct mt8188_afe_private *afe_priv;
+ 	struct mtkaif_param *param;
+@@ -306,6 +312,18 @@ static int mt8188_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 		return 0;
  	}
  
-+	close(fd);
- 	return EXIT_SUCCESS;
- }
++	for_each_card_widgets(rtd->card, w) {
++		if (!strcmp(w->name, "MTKAIF_PIN")) {
++			pin_w = w;
++			break;
++		}
++	}
++
++	if (pin_w)
++		dapm_pinctrl_event(pin_w, NULL, SND_SOC_DAPM_PRE_PMU);
++	else
++		dev_dbg(afe->dev, "%s(), no pinmux widget, please check if default on\n", __func__);
++
+ 	pm_runtime_get_sync(afe->dev);
+ 	mt6359_mtkaif_calibration_enable(cmpnt_codec);
+ 
+@@ -403,6 +421,9 @@ static int mt8188_mt6359_mtkaif_calibration(struct snd_soc_pcm_runtime *rtd)
+ 	for (i = 0; i < MT8188_MTKAIF_MISO_NUM; i++)
+ 		param->mtkaif_phase_cycle[i] = mtkaif_phase_cycle[i];
+ 
++	if (pin_w)
++		dapm_pinctrl_event(pin_w, NULL, SND_SOC_DAPM_POST_PMD);
++
+ 	dev_dbg(afe->dev, "%s(), end, calibration ok %d\n",
+ 		__func__, param->mtkaif_calibration_ok);
+ 
 -- 
 2.42.0
 
