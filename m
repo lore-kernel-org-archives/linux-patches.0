@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C0E2E84A;
-	Fri, 24 Nov 2023 18:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F54E2F86B;
+	Fri, 24 Nov 2023 18:39:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXAygLL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4285C433C8;
-	Fri, 24 Nov 2023 18:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1HALjbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625DCC433C8;
+	Fri, 24 Nov 2023 18:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851169;
-	bh=w+ZNLYN3p9wA5+SEyWy6DzZ1xF9yDDlohJcXHhQrbQ4=;
+	s=korg; t=1700851171;
+	bh=M3Nw2EtxtneWTCn3UvsU3OeE38uYJto1bsz30IVk0U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NXAygLL5va6Lt5z1LrCBX+Rvumg1DaeJ9ZzJjndxDE6Qb3zWCQhiMffpCieOUzKQg
-	 AFJUDeuzqenKt0aqLQE4R4Rsjc4dgbwsV6eB1YOqHQBQIa+t4ePforAOGyaqCVt641
-	 Wt7IG5RG9psN9ZoP916/01vFmtDKqBXbqJXs5qYM=
+	b=G1HALjbOJbPKyIm148JtX+o4s2Q0m8igktZrr0i02zByMFiFl42CAzOhcYcDGKaI+
+	 sfAkz8eNuStflMfys5fk12qmJSwmM9hdvLuIXo0By5JcJ2UbU818WM8U85hCQ5e2Ak
+	 DIxEzEBYChRpb+RWHQCtSWurTmgl6GgOSxt2jn84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Christian Brauner <brauner@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 341/491] selftests/clone3: Fix broken test under !CONFIG_TIME_NS
-Date: Fri, 24 Nov 2023 17:49:37 +0000
-Message-ID: <20231124172034.813974142@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	kernel test robot <lkp@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.5 342/491] tracing: Have the user copy of synthetic event address use correct context
+Date: Fri, 24 Nov 2023 17:49:38 +0000
+Message-ID: <20231124172034.848730712@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,68 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit fc7f04dc23db50206bee7891516ed4726c3f64cf upstream.
+commit 4f7969bcd6d33042d62e249b41b5578161e4c868 upstream.
 
-When execute the following command to test clone3 under !CONFIG_TIME_NS:
+A synthetic event is created by the synthetic event interface that can
+read both user or kernel address memory. In reality, it reads any
+arbitrary memory location from within the kernel. If the address space is
+in USER (where CONFIG_ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE is set) then
+it uses strncpy_from_user_nofault() to copy strings otherwise it uses
+strncpy_from_kernel_nofault().
 
-  # make headers && cd tools/testing/selftests/clone3 && make && ./clone3
+But since both functions use the same variable there's no annotation to
+what that variable is (ie. __user). This makes sparse complain.
 
-we can see the following error info:
+Quiet sparse by typecasting the strncpy_from_user_nofault() variable to
+a __user pointer.
 
-  # [7538] Trying clone3() with flags 0x80 (size 0)
-  # Invalid argument - Failed to create new process
-  # [7538] clone3() with flags says: -22 expected 0
-  not ok 18 [7538] Result (-22) is different than expected (0)
-  ...
-  # Totals: pass:18 fail:1 xfail:0 xpass:0 skip:0 error:0
+Link: https://lore.kernel.org/linux-trace-kernel/20231031151033.73c42e23@gandalf.local.home
 
-This is because if CONFIG_TIME_NS is not set, but the flag
-CLONE_NEWTIME (0x80) is used to clone a time namespace, it
-will return -EINVAL in copy_time_ns().
-
-If kernel does not support CONFIG_TIME_NS, /proc/self/ns/time
-will be not exist, and then we should skip clone3() test with
-CLONE_NEWTIME.
-
-With this patch under !CONFIG_TIME_NS:
-
-  # make headers && cd tools/testing/selftests/clone3 && make && ./clone3
-  ...
-  # Time namespaces are not supported
-  ok 18 # SKIP Skipping clone3() with CLONE_NEWTIME
-  ...
-  # Totals: pass:18 fail:0 xfail:0 xpass:0 skip:1 error:0
-
-Link: https://lkml.kernel.org/r/1689066814-13295-1-git-send-email-yangtiezhu@loongson.cn
-Fixes: 515bddf0ec41 ("selftests/clone3: test clone3 with CLONE_NEWTIME")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Fixes: 0934ae9977c2 ("tracing: Fix reading strings from synthetic events");
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311010013.fm8WTxa5-lkp@intel.com/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/clone3/clone3.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events_synth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/clone3/clone3.c
-+++ b/tools/testing/selftests/clone3/clone3.c
-@@ -196,7 +196,12 @@ int main(int argc, char *argv[])
- 			CLONE3_ARGS_NO_TEST);
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -452,7 +452,7 @@ static unsigned int trace_string(struct
  
- 	/* Do a clone3() in a new time namespace */
--	test_clone3(CLONE_NEWTIME, 0, 0, CLONE3_ARGS_NO_TEST);
-+	if (access("/proc/self/ns/time", F_OK) == 0) {
-+		test_clone3(CLONE_NEWTIME, 0, 0, CLONE3_ARGS_NO_TEST);
-+	} else {
-+		ksft_print_msg("Time namespaces are not supported\n");
-+		ksft_test_result_skip("Skipping clone3() with CLONE_NEWTIME\n");
-+	}
- 
- 	/* Do a clone3() with exit signal (SIGCHLD) in flags */
- 	test_clone3(SIGCHLD, 0, -EINVAL, CLONE3_ARGS_NO_TEST);
+ #ifdef CONFIG_ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
+ 		if ((unsigned long)str_val < TASK_SIZE)
+-			ret = strncpy_from_user_nofault(str_field, str_val, STR_VAR_LEN_MAX);
++			ret = strncpy_from_user_nofault(str_field, (const void __user *)str_val, STR_VAR_LEN_MAX);
+ 		else
+ #endif
+ 			ret = strncpy_from_kernel_nofault(str_field, str_val, STR_VAR_LEN_MAX);
 
 
