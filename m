@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460A42EAEA;
-	Fri, 24 Nov 2023 18:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC902C1A2;
+	Fri, 24 Nov 2023 18:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1C0DXjF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58B4C433C8;
-	Fri, 24 Nov 2023 18:57:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrWEL5FI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A77FC433C8;
+	Fri, 24 Nov 2023 18:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852222;
-	bh=Mu9w67G/hVG5FCjiLPFJ1WT0XHjLYicHOdS14QGfmI8=;
+	s=korg; t=1700852224;
+	bh=YsbZQLFG7xs0O8bJem+HfqdgfJONGKH7oYIcCdDne88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1C0DXjFEzGsFQ7gwMjPJsacPAcbjsdmduzOpilEe/T82N7xZ69XvRyTh7LGBhSKn
-	 swFLdUFjlqJ4jR/pVCT1Gv7xe7902+Q0E/y9OSnXAlU7RMyorxvfyt4pwAeutWZpnc
-	 mA7Z/GReOfu0G2sFWNRhabXZZSXcKIPSL56Ce634=
+	b=ZrWEL5FI1zpSLJfOje6Yc5O42cG0a1jPGVkbVlAxSKmFU64QqWo7rxNB5dNtqvgoc
+	 EHqfZg2TjQJ/8JFFWwGpOaBnPbDMIHih48A0/27nOXI03A5UAZHIKrXJeroS39MjH6
+	 WjjiHThyN0GbRniWg+8BC86yGhxZ3gMBT6Np6SjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 268/372] smb3: fix creating FIFOs when mounting with "sfu" mount option
-Date: Fri, 24 Nov 2023 17:50:55 +0000
-Message-ID: <20231124172019.412644058@linuxfoundation.org>
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
+	Benjamin Bara <benjamin.bara@skidata.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 245/372] i2c: core: Run atomic i2c xfer when !preemptible
+Date: Fri, 24 Nov 2023 17:50:32 +0000
+Message-ID: <20231124172018.701648607@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -41,81 +44,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Benjamin Bara <benjamin.bara@skidata.com>
 
-commit 72bc63f5e23a38b65ff2a201bdc11401d4223fa9 upstream.
+commit aa49c90894d06e18a1ee7c095edbd2f37c232d02 upstream.
 
-Fixes some xfstests including generic/564 and generic/157
+Since bae1d3a05a8b, i2c transfers are non-atomic if preemption is
+disabled. However, non-atomic i2c transfers require preemption (e.g. in
+wait_for_completion() while waiting for the DMA).
 
-The "sfu" mount option can be useful for creating special files (character
-and block devices in particular) but could not create FIFOs. It did
-recognize existing empty files with the "system" attribute flag as FIFOs
-but this is too general, so to support creating FIFOs more safely use a new
-tag (but the same length as those for char and block devices ie "IntxLNK"
-and "IntxBLK") "LnxFIFO" to indicate that the file should be treated as a
-FIFO (when mounted with the "sfu").   For some additional context note that
-"sfu" followed the way that "Services for Unix" on Windows handled these
-special files (at least for character and block devices and symlinks),
-which is different than newer Windows which can handle special files
-as reparse points (which isn't an option to many servers).
+panic() calls preempt_disable_notrace() before calling
+emergency_restart(). Therefore, if an i2c device is used for the
+restart, the xfer should be atomic. This avoids warnings like:
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[   12.667612] WARNING: CPU: 1 PID: 1 at kernel/rcu/tree_plugin.h:318 rcu_note_context_switch+0x33c/0x6b0
+[   12.676926] Voluntary context switch within RCU read-side critical section!
+...
+[   12.742376]  schedule_timeout from wait_for_completion_timeout+0x90/0x114
+[   12.749179]  wait_for_completion_timeout from tegra_i2c_wait_completion+0x40/0x70
+...
+[   12.994527]  atomic_notifier_call_chain from machine_restart+0x34/0x58
+[   13.001050]  machine_restart from panic+0x2a8/0x32c
+
+Use !preemptible() instead, which is basically the same check as
+pre-v5.2.
+
+Fixes: bae1d3a05a8b ("i2c: core: remove use of in_atomic()")
+Cc: stable@vger.kernel.org # v5.2+
+Suggested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Acked-by: Wolfram Sang <wsa@kernel.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Tested-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
+Link: https://lore.kernel.org/r/20230327-tegra-pmic-reboot-v7-2-18699d5dcd76@skidata.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifspdu.h |    2 +-
- fs/smb/client/inode.c   |    4 ++++
- fs/smb/client/smb2ops.c |    8 +++++++-
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/i2c/i2c-core.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/cifspdu.h
-+++ b/fs/smb/client/cifspdu.h
-@@ -2570,7 +2570,7 @@ typedef struct {
+--- a/drivers/i2c/i2c-core.h
++++ b/drivers/i2c/i2c-core.h
+@@ -29,7 +29,7 @@ int i2c_dev_irq_from_resources(const str
+  */
+ static inline bool i2c_in_atomic_xfer_mode(void)
+ {
+-	return system_state > SYSTEM_RUNNING && irqs_disabled();
++	return system_state > SYSTEM_RUNNING && !preemptible();
+ }
  
- 
- struct win_dev {
--	unsigned char type[8]; /* IntxCHR or IntxBLK */
-+	unsigned char type[8]; /* IntxCHR or IntxBLK or LnxFIFO*/
- 	__le64 major;
- 	__le64 minor;
- } __attribute__((packed));
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -567,6 +567,10 @@ cifs_sfu_type(struct cifs_fattr *fattr,
- 			cifs_dbg(FYI, "Symlink\n");
- 			fattr->cf_mode |= S_IFLNK;
- 			fattr->cf_dtype = DT_LNK;
-+		} else if (memcmp("LnxFIFO", pbuf, 8) == 0) {
-+			cifs_dbg(FYI, "FIFO\n");
-+			fattr->cf_mode |= S_IFIFO;
-+			fattr->cf_dtype = DT_FIFO;
- 		} else {
- 			fattr->cf_mode |= S_IFREG; /* file? */
- 			fattr->cf_dtype = DT_REG;
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5215,7 +5215,7 @@ smb2_make_node(unsigned int xid, struct
- 	 * over SMB2/SMB3 and Samba will do this with SMB3.1.1 POSIX Extensions
- 	 */
- 
--	if (!S_ISCHR(mode) && !S_ISBLK(mode))
-+	if (!S_ISCHR(mode) && !S_ISBLK(mode) && !S_ISFIFO(mode))
- 		return rc;
- 
- 	cifs_dbg(FYI, "sfu compat create special file\n");
-@@ -5263,6 +5263,12 @@ smb2_make_node(unsigned int xid, struct
- 		pdev->minor = cpu_to_le64(MINOR(dev));
- 		rc = tcon->ses->server->ops->sync_write(xid, &fid, &io_parms,
- 							&bytes_written, iov, 1);
-+	} else if (S_ISFIFO(mode)) {
-+		memcpy(pdev->type, "LnxFIFO", 8);
-+		pdev->major = 0;
-+		pdev->minor = 0;
-+		rc = tcon->ses->server->ops->sync_write(xid, &fid, &io_parms,
-+							&bytes_written, iov, 1);
- 	}
- 	tcon->ses->server->ops->close(xid, tcon, &fid);
- 	d_drop(dentry);
+ static inline int __i2c_lock_bus_helper(struct i2c_adapter *adap)
 
 
