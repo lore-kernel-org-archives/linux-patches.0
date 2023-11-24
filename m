@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC973A8FB;
-	Fri, 24 Nov 2023 18:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEA0381DE;
+	Fri, 24 Nov 2023 18:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FetlDL3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752F5C433C8;
-	Fri, 24 Nov 2023 18:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqY6zCJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A63C433C7;
+	Fri, 24 Nov 2023 18:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850728;
-	bh=oklbQznctnN0Rc0zcKp8y4oGjxcvvjuu1y0V0QHziTI=;
+	s=korg; t=1700850731;
+	bh=ie8zTSRfufoe/DPazLFo22GwDmo7lvHh2vn2sMtEIQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FetlDL3XoCTHmAiJGBJ6oxcnnfcu2SR4LRQRCQal6jIxzhuH7+Y18WZpwMdvN9M+k
-	 Z3t2qsm/S4Cx6Ode3HshMixh/9Rn1zSZfAirAlrcpYDYXAZmAdhrVjY3TT+OAzhQPO
-	 CjthW7XNoZQLo6BZqN9N+XnXee7fsTgCgDr39d/A=
+	b=fqY6zCJT+xRY7nsw/Hc00jfi96KjxutKX7RnVH8xzWYeBsasydG2+soGt6c9FrGO6
+	 nMb2yMawm39eGKbdsS0eJ46nKQziv4G3dP6Fd+85ZJNSIPz9bKds5HlpOv1Xia2UKH
+	 m7DQ3g6pFc3OWo/KZJx67BPjnDx7RvM6BJhNLdiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <jun.lei@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 141/491] drm/amd/display: Avoid NULL dereference of timing generator
-Date: Fri, 24 Nov 2023 17:46:17 +0000
-Message-ID: <20231124172028.728088782@linuxfoundation.org>
+Subject: [PATCH 6.5 142/491] kgdb: Flush console before entering kgdb on panic
+Date: Fri, 24 Nov 2023 17:46:18 +0000
+Message-ID: <20231124172028.757556599@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -45,46 +42,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <wayne.lin@amd.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit b1904ed480cee3f9f4036ea0e36d139cb5fee2d6 ]
+[ Upstream commit dd712d3d45807db9fcae28a522deee85c1f2fde6 ]
 
-[Why & How]
-Check whether assigned timing generator is NULL or not before
-accessing its funcs to prevent NULL dereference.
+When entering kdb/kgdb on a kernel panic, it was be observed that the
+console isn't flushed before the `kdb` prompt came up. Specifically,
+when using the buddy lockup detector on arm64 and running:
+  echo HARDLOCKUP > /sys/kernel/debug/provoke-crash/DIRECT
 
-Reviewed-by: Jun Lei <jun.lei@amd.com>
-Acked-by: Hersen Wu <hersenxs.wu@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+I could see:
+  [   26.161099] lkdtm: Performing direct entry HARDLOCKUP
+  [   32.499881] watchdog: Watchdog detected hard LOCKUP on cpu 6
+  [   32.552865] Sending NMI from CPU 5 to CPUs 6:
+  [   32.557359] NMI backtrace for cpu 6
+  ... [backtrace for cpu 6] ...
+  [   32.558353] NMI backtrace for cpu 5
+  ... [backtrace for cpu 5] ...
+  [   32.867471] Sending NMI from CPU 5 to CPUs 0-4,7:
+  [   32.872321] NMI backtrace forP cpuANC: Hard LOCKUP
+
+  Entering kdb (current=..., pid 0) on processor 5 due to Keyboard Entry
+  [5]kdb>
+
+As you can see, backtraces for the other CPUs start printing and get
+interleaved with the kdb PANIC print.
+
+Let's replicate the commands to flush the console in the kdb panic
+entry point to avoid this.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230822131945.1.I5b460ae8f954e4c4f628a373d6e74713c06dd26f@changeid
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_stream.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/debug/debug_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-index 6e11d2b701f82..569d40eb7059d 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-@@ -556,7 +556,7 @@ uint32_t dc_stream_get_vblank_counter(const struct dc_stream_state *stream)
- 	for (i = 0; i < MAX_PIPES; i++) {
- 		struct timing_generator *tg = res_ctx->pipe_ctx[i].stream_res.tg;
+diff --git a/kernel/debug/debug_core.c b/kernel/debug/debug_core.c
+index d5e9ccde3ab8e..3a904d8697c8f 100644
+--- a/kernel/debug/debug_core.c
++++ b/kernel/debug/debug_core.c
+@@ -1006,6 +1006,9 @@ void kgdb_panic(const char *msg)
+ 	if (panic_timeout)
+ 		return;
  
--		if (res_ctx->pipe_ctx[i].stream != stream)
-+		if (res_ctx->pipe_ctx[i].stream != stream || !tg)
- 			continue;
++	debug_locks_off();
++	console_flush_on_panic(CONSOLE_FLUSH_PENDING);
++
+ 	if (dbg_kdb_mode)
+ 		kdb_printf("PANIC: %s\n", msg);
  
- 		return tg->funcs->get_frame_count(tg);
-@@ -615,7 +615,7 @@ bool dc_stream_get_scanoutpos(const struct dc_stream_state *stream,
- 	for (i = 0; i < MAX_PIPES; i++) {
- 		struct timing_generator *tg = res_ctx->pipe_ctx[i].stream_res.tg;
- 
--		if (res_ctx->pipe_ctx[i].stream != stream)
-+		if (res_ctx->pipe_ctx[i].stream != stream || !tg)
- 			continue;
- 
- 		tg->funcs->get_scanoutpos(tg,
 -- 
 2.42.0
 
