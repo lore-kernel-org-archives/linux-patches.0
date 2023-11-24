@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8EF3A8EC;
-	Fri, 24 Nov 2023 18:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF0B3A8EA;
+	Fri, 24 Nov 2023 18:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRugTYXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3F1C433C7;
-	Fri, 24 Nov 2023 18:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQMgHT++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A274C433C7;
+	Fri, 24 Nov 2023 18:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850647;
-	bh=cHgQrZhlyCAPc0j6QcFtXQoTanBw1r9saJzk0MV1qxM=;
+	s=korg; t=1700850649;
+	bh=qno5ot/KG/1dmz5mRHuoiPMYr644XG4/1gDh1TyEGaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRugTYXr+TyveA5Bnl6NxMq5Gl41jUkoHZxaVVGmCDU10gWrzhH9SfpxEHRdTCXaX
-	 or6nZYv1cDvc1PwH/d5/jUcWaVFLQLjxCUlJo/zZQzY0u0L/16QnQnWHipfHXJrXt8
-	 M5VpaQO34jreoHyLoM/zxN1Mg5JqVje8yRqzMLDk=
+	b=fQMgHT++5UR+kOn95HMbQFKRIrfCBJ2B7337BCIZQ7Y9R7uRLM55ymowf7rpmld1p
+	 T+YLIo3ZzoHwgbGIPW2dK86kt2Oj7aDPGz0wbAH+fI/8SJzKM/rqe+aH/lwMU6dnSh
+	 /2RUuzysLscq4/S+n0lOD7ABardrx9b82FjMc8cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	syzbot+e27f3dbdab04e43b9f73@syzkaller.appspotmail.com,
+	Rajeshwar R Shinde <coolrrsh@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 132/491] i3c: master: mipi-i3c-hci: Fix a kernel panic for accessing DAT_data.
-Date: Fri, 24 Nov 2023 17:46:08 +0000
-Message-ID: <20231124172028.466634240@linuxfoundation.org>
+Subject: [PATCH 6.5 133/491] media: gspca: cpia1: shift-out-of-bounds in set_flicker
+Date: Fri, 24 Nov 2023 17:46:09 +0000
+Message-ID: <20231124172028.493505577@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,80 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Rajeshwar R Shinde <coolrrsh@gmail.com>
 
-[ Upstream commit b53e9758a31c683fc8615df930262192ed5f034b ]
+[ Upstream commit 099be1822d1f095433f4b08af9cc9d6308ec1953 ]
 
-The `i3c_master_bus_init` function may attach the I2C devices before the
-I3C bus initialization. In this flow, the DAT `alloc_entry`` will be used
-before the DAT `init`. Additionally, if the `i3c_master_bus_init` fails,
-the DAT `cleanup` will execute before the device is detached, which will
-execue DAT `free_entry` function. The above scenario can cause the driver
-to use DAT_data when it is NULL.
+Syzkaller reported the following issue:
+UBSAN: shift-out-of-bounds in drivers/media/usb/gspca/cpia1.c:1031:27
+shift exponent 245 is too large for 32-bit type 'int'
 
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20231023080237.560936-1-billy_tsai@aspeedtech.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+When the value of the variable "sd->params.exposure.gain" exceeds the
+number of bits in an integer, a shift-out-of-bounds error is reported. It
+is triggered because the variable "currentexp" cannot be left-shifted by
+more than the number of bits in an integer. In order to avoid invalid
+range during left-shift, the conditional expression is added.
+
+Reported-by: syzbot+e27f3dbdab04e43b9f73@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/20230818164522.12806-1-coolrrsh@gmail.com
+Link: https://syzkaller.appspot.com/bug?extid=e27f3dbdab04e43b9f73
+Signed-off-by: Rajeshwar R Shinde <coolrrsh@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dat_v1.c | 29 ++++++++++++++++--------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ drivers/media/usb/gspca/cpia1.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dat_v1.c b/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
-index 97bb49ff5b53b..47b9b4d4ed3fc 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
-@@ -64,15 +64,17 @@ static int hci_dat_v1_init(struct i3c_hci *hci)
- 		return -EOPNOTSUPP;
- 	}
+diff --git a/drivers/media/usb/gspca/cpia1.c b/drivers/media/usb/gspca/cpia1.c
+index 46ed95483e222..5f5fa851ca640 100644
+--- a/drivers/media/usb/gspca/cpia1.c
++++ b/drivers/media/usb/gspca/cpia1.c
+@@ -18,6 +18,7 @@
  
--	/* use a bitmap for faster free slot search */
--	hci->DAT_data = bitmap_zalloc(hci->DAT_entries, GFP_KERNEL);
--	if (!hci->DAT_data)
--		return -ENOMEM;
--
--	/* clear them */
--	for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
--		dat_w0_write(dat_idx, 0);
--		dat_w1_write(dat_idx, 0);
-+	if (!hci->DAT_data) {
-+		/* use a bitmap for faster free slot search */
-+		hci->DAT_data = bitmap_zalloc(hci->DAT_entries, GFP_KERNEL);
-+		if (!hci->DAT_data)
-+			return -ENOMEM;
-+
-+		/* clear them */
-+		for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
-+			dat_w0_write(dat_idx, 0);
-+			dat_w1_write(dat_idx, 0);
-+		}
- 	}
+ #include <linux/input.h>
+ #include <linux/sched/signal.h>
++#include <linux/bitops.h>
  
- 	return 0;
-@@ -87,7 +89,13 @@ static void hci_dat_v1_cleanup(struct i3c_hci *hci)
- static int hci_dat_v1_alloc_entry(struct i3c_hci *hci)
- {
- 	unsigned int dat_idx;
-+	int ret;
+ #include "gspca.h"
  
-+	if (!hci->DAT_data) {
-+		ret = hci_dat_v1_init(hci);
-+		if (ret)
-+			return ret;
-+	}
- 	dat_idx = find_first_zero_bit(hci->DAT_data, hci->DAT_entries);
- 	if (dat_idx >= hci->DAT_entries)
- 		return -ENOENT;
-@@ -103,7 +111,8 @@ static void hci_dat_v1_free_entry(struct i3c_hci *hci, unsigned int dat_idx)
- {
- 	dat_w0_write(dat_idx, 0);
- 	dat_w1_write(dat_idx, 0);
--	__clear_bit(dat_idx, hci->DAT_data);
-+	if (hci->DAT_data)
-+		__clear_bit(dat_idx, hci->DAT_data);
- }
- 
- static void hci_dat_v1_set_dynamic_addr(struct i3c_hci *hci,
+@@ -1028,6 +1029,8 @@ static int set_flicker(struct gspca_dev *gspca_dev, int on, int apply)
+ 			sd->params.exposure.expMode = 2;
+ 			sd->exposure_status = EXPOSURE_NORMAL;
+ 		}
++		if (sd->params.exposure.gain >= BITS_PER_TYPE(currentexp))
++			return -EINVAL;
+ 		currentexp = currentexp << sd->params.exposure.gain;
+ 		sd->params.exposure.gain = 0;
+ 		/* round down current exposure to nearest value */
 -- 
 2.42.0
 
