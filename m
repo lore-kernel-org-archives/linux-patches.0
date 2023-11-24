@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFA939FEA;
-	Fri, 24 Nov 2023 18:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF40381CE;
+	Fri, 24 Nov 2023 18:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Al5TNdr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD051C433C8;
-	Fri, 24 Nov 2023 18:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvfPkNli"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A1AC433C8;
+	Fri, 24 Nov 2023 18:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849083;
-	bh=lzNFakjQZGqt93W/CWkkS9vkNUbu26NW8LSdiY0V38k=;
+	s=korg; t=1700849085;
+	bh=SzG2PpsFWZXyokyPkPqa0oNqQ6Vfllt8dcALKlqHXtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Al5TNdr0x7JZHl4ngI1cxXDCdnc2BXigr9jhtn3NCdcMzBcWCVEYvQhHVVk+Pa0Gb
-	 mD4TQ6ayiqR1+dX5bAyqvcK9dd1J4+w3Fu1+YN02xMMSaYfLwJqFanokfr2wg3NmFz
-	 eakIuwcXXCdnly+wSNL4mCcnd8bUfHL3yQoh/Xjg=
+	b=CvfPkNliij9vXMLSOFBG639x6BA6tw/FCEtEMF2xFooSDrwVfYBdjPUDM09XvNKaL
+	 oDuke1pcn7ru24ZYrfveXr8ni5qGEZjhyqOqYPmlCpPy4X1EAmUrS2IWnj6sAPJmJ5
+	 OrzLSOAuBW/8Gp0aC1OApoJ0I3WnwYfVJfdzubJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/530] tsnep: Fix tsnep_request_irq() format-overflow warning
-Date: Fri, 24 Nov 2023 17:43:27 +0000
-Message-ID: <20231124172029.308583388@linuxfoundation.org>
+Subject: [PATCH 6.6 042/530] gpiolib: acpi: Add a ignore interrupt quirk for Peaq C1010
+Date: Fri, 24 Nov 2023 17:43:28 +0000
+Message-ID: <20231124172029.337201079@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,78 +45,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerhard Engleder <gerhard@engleder-embedded.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 00e984cb986b31e9313745e51daceaa1e1eb7351 ]
+[ Upstream commit 6cc64f6173751d212c9833bde39e856b4f585a3e ]
 
-Compiler warns about a possible format-overflow in tsnep_request_irq():
-drivers/net/ethernet/engleder/tsnep_main.c:884:55: warning: 'sprintf' may write a terminating nul past the end of the destination [-Wformat-overflow=]
-                         sprintf(queue->name, "%s-rx-%d", name,
-                                                       ^
-drivers/net/ethernet/engleder/tsnep_main.c:881:55: warning: 'sprintf' may write a terminating nul past the end of the destination [-Wformat-overflow=]
-                         sprintf(queue->name, "%s-tx-%d", name,
-                                                       ^
-drivers/net/ethernet/engleder/tsnep_main.c:878:49: warning: '-txrx-' directive writing 6 bytes into a region of size between 5 and 25 [-Wformat-overflow=]
-                         sprintf(queue->name, "%s-txrx-%d", name,
-                                                 ^~~~~~
+On the Peaq C1010 2-in-1 INT33FC:00 pin 3 is connected to
+a "dolby" button. At the ACPI level an _AEI event-handler
+is connected which sets an ACPI variable to 1 on both
+edges. This variable can be polled + cleared to 0 using WMI.
 
-Actually overflow cannot happen. Name is limited to IFNAMSIZ, because
-netdev_name() is called during ndo_open(). queue_index is single char,
-because less than 10 queues are supported.
+Since the variable is set on both edges the WMI interface is pretty
+useless even when polling. So instead of writing a custom WMI
+driver for this the x86-android-tablets code instantiates
+a gpio-keys platform device for the "dolby" button.
 
-Fix warning with snprintf(). Additionally increase buffer to 32 bytes,
-because those 7 additional bytes were unused anyway.
+Add an ignore_interrupt quirk for INT33FC:00 pin 3 on the Peaq C1010,
+so that it is not seen as busy when the gpio-keys driver requests it.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310182028.vmDthIUa-lkp@intel.com/
-Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20231023183856.58373-1-gerhard@engleder-embedded.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Note this replaces a hack in x86-android-tablets where it would
+call acpi_gpiochip_free_interrupts() on the INT33FC:00 GPIO
+controller. acpi_gpiochip_free_interrupts() is considered private
+(internal) gpiolib API so x86-android-tablets should stop using it.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20230909141816.58358-3-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/engleder/tsnep.h      |  2 +-
- drivers/net/ethernet/engleder/tsnep_main.c | 12 ++++++------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpio/gpiolib-acpi.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/net/ethernet/engleder/tsnep.h b/drivers/net/ethernet/engleder/tsnep.h
-index 6e14c918e3fb7..f188fba021a62 100644
---- a/drivers/net/ethernet/engleder/tsnep.h
-+++ b/drivers/net/ethernet/engleder/tsnep.h
-@@ -143,7 +143,7 @@ struct tsnep_rx {
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index 51e41676de0b8..5d04720107ef5 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -1655,6 +1655,26 @@ static const struct dmi_system_id gpiolib_acpi_quirks[] __initconst = {
+ 			.ignore_wake = "SYNA1202:00@16",
+ 		},
+ 	},
++	{
++		/*
++		 * On the Peaq C1010 2-in-1 INT33FC:00 pin 3 is connected to
++		 * a "dolby" button. At the ACPI level an _AEI event-handler
++		 * is connected which sets an ACPI variable to 1 on both
++		 * edges. This variable can be polled + cleared to 0 using
++		 * WMI. But since the variable is set on both edges the WMI
++		 * interface is pretty useless even when polling.
++		 * So instead the x86-android-tablets code instantiates
++		 * a gpio-keys platform device for it.
++		 * Ignore the _AEI handler for the pin, so that it is not busy.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "PEAQ"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "PEAQ PMM C1010 MD99187"),
++		},
++		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
++			.ignore_interrupt = "INT33FC:00@3",
++		},
++	},
+ 	{} /* Terminating entry */
+ };
  
- struct tsnep_queue {
- 	struct tsnep_adapter *adapter;
--	char name[IFNAMSIZ + 9];
-+	char name[IFNAMSIZ + 16];
- 
- 	struct tsnep_tx *tx;
- 	struct tsnep_rx *rx;
-diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
-index 8b992dc9bb52b..38da2d6c250e6 100644
---- a/drivers/net/ethernet/engleder/tsnep_main.c
-+++ b/drivers/net/ethernet/engleder/tsnep_main.c
-@@ -1779,14 +1779,14 @@ static int tsnep_request_irq(struct tsnep_queue *queue, bool first)
- 		dev = queue->adapter;
- 	} else {
- 		if (queue->tx && queue->rx)
--			sprintf(queue->name, "%s-txrx-%d", name,
--				queue->rx->queue_index);
-+			snprintf(queue->name, sizeof(queue->name), "%s-txrx-%d",
-+				 name, queue->rx->queue_index);
- 		else if (queue->tx)
--			sprintf(queue->name, "%s-tx-%d", name,
--				queue->tx->queue_index);
-+			snprintf(queue->name, sizeof(queue->name), "%s-tx-%d",
-+				 name, queue->tx->queue_index);
- 		else
--			sprintf(queue->name, "%s-rx-%d", name,
--				queue->rx->queue_index);
-+			snprintf(queue->name, sizeof(queue->name), "%s-rx-%d",
-+				 name, queue->rx->queue_index);
- 		handler = tsnep_irq_txrx;
- 		dev = queue;
- 	}
 -- 
 2.42.0
 
