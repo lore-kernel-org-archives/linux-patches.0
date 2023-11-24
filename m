@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AE32E655;
-	Fri, 24 Nov 2023 18:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997ED33CDB;
+	Fri, 24 Nov 2023 18:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDq6Hnak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC414C433C7;
-	Fri, 24 Nov 2023 18:36:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKVRqwd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCC8C433C7;
+	Fri, 24 Nov 2023 18:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850973;
-	bh=2Rkw2d8/24znwmS8SWT1GU+fEOUljr03r0AgFXUWB0Y=;
+	s=korg; t=1700850975;
+	bh=ZEI/0WXgHUkg4u+5hmk2zf9zykWiC2MFD5B5mnqD6tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDq6Hnak3iaTsEew+j8CcP1cVXVMG0sAYATtAkvXLEKMpjXfhw8j1uIxC6gHRbzVR
-	 Wrihr/1Aj6up8JnPvZ6PyIIraDHCUTO/Jr6RCUivVJYOLMl/azhw5MwbfokFK8xPaT
-	 +Cx1TV869WhcIkADkZmBQrDMSv8b2nONCJy64p3g=
+	b=eKVRqwd87tvj4w4s24udtLBKgLVHHaQe/B4WKy2ulB6G5aMaaM3MfHNlIHVp51DCm
+	 uVnpGax6LMqVEoWPK57KjnsLZ2cIFwEDbb41DQ80kvm6PqoVSLdbqkGGnPeX4nF3k+
+	 MJAIJc1ROHM2d+8DsWEOnJoo+bmyTXgfShumovss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.5 262/491] dm crypt: account large pages in cc->n_allocated_pages
-Date: Fri, 24 Nov 2023 17:48:18 +0000
-Message-ID: <20231124172032.437015895@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Jakub Acs <acsjakub@amazon.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.5 263/491] mm/damon/lru_sort: avoid divide-by-zero in hot threshold calculation
+Date: Fri, 24 Nov 2023 17:48:19 +0000
+Message-ID: <20231124172032.472029176@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,66 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 9793c269da6cd339757de6ba5b2c8681b54c99af upstream.
+commit 44063f125af4bb4efd1d500d8091fa33a98af325 upstream.
 
-The commit 5054e778fcd9c ("dm crypt: allocate compound pages if
-possible") changed dm-crypt to use compound pages to improve
-performance. Unfortunately, there was an oversight: the allocation of
-compound pages was not accounted at all. Normal pages are accounted in
-a percpu counter cc->n_allocated_pages and dm-crypt is limited to
-allocate at most 2% of memory. Because compound pages were not
-accounted at all, dm-crypt could allocate memory over the 2% limit.
+When calculating the hotness threshold for lru_prio scheme of
+DAMON_LRU_SORT, the module divides some values by the maximum nr_accesses.
+However, due to the type of the related variables, simple division-based
+calculation of the divisor can return zero.  As a result, divide-by-zero
+is possible.  Fix it by using damon_max_nr_accesses(), which handles the
+case.
 
-Fix this by adding the accounting of compound pages, so that memory
-consumption of dm-crypt is properly limited.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 5054e778fcd9c ("dm crypt: allocate compound pages if possible")
-Cc: stable@vger.kernel.org	# v6.5+
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lkml.kernel.org/r/20231019194924.100347-5-sj@kernel.org
+Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Reported-by: Jakub Acs <acsjakub@amazon.de>
+Cc: <stable@vger.kernel.org>	[6.0+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ mm/damon/lru_sort.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -1700,11 +1700,17 @@ retry:
- 		order = min(order, remaining_order);
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -193,9 +193,7 @@ static int damon_lru_sort_apply_paramete
+ 	if (err)
+ 		return err;
  
- 		while (order > 0) {
-+			if (unlikely(percpu_counter_read_positive(&cc->n_allocated_pages) +
-+					(1 << order) > dm_crypt_pages_per_client))
-+				goto decrease_order;
- 			pages = alloc_pages(gfp_mask
- 				| __GFP_NOMEMALLOC | __GFP_NORETRY | __GFP_NOWARN | __GFP_COMP,
- 				order);
--			if (likely(pages != NULL))
-+			if (likely(pages != NULL)) {
-+				percpu_counter_add(&cc->n_allocated_pages, 1 << order);
- 				goto have_pages;
-+			}
-+decrease_order:
- 			order--;
- 		}
- 
-@@ -1742,10 +1748,13 @@ static void crypt_free_buffer_pages(stru
- 
- 	if (clone->bi_vcnt > 0) { /* bio_for_each_folio_all crashes with an empty bio */
- 		bio_for_each_folio_all(fi, clone) {
--			if (folio_test_large(fi.folio))
-+			if (folio_test_large(fi.folio)) {
-+				percpu_counter_sub(&cc->n_allocated_pages,
-+						1 << folio_order(fi.folio));
- 				folio_put(fi.folio);
--			else
-+			} else {
- 				mempool_free(&fi.folio->page, &cc->page_pool);
-+			}
- 		}
- 	}
- }
+-	/* aggr_interval / sample_interval is the maximum nr_accesses */
+-	hot_thres = damon_lru_sort_mon_attrs.aggr_interval /
+-		damon_lru_sort_mon_attrs.sample_interval *
++	hot_thres = damon_max_nr_accesses(&damon_lru_sort_mon_attrs) *
+ 		hot_thres_access_freq / 1000;
+ 	scheme = damon_lru_sort_new_hot_scheme(hot_thres);
+ 	if (!scheme)
 
 
