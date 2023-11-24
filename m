@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C000133CFD;
-	Fri, 24 Nov 2023 19:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641CD3418B;
+	Fri, 24 Nov 2023 19:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9N/nkX8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA9BC433C8;
-	Fri, 24 Nov 2023 19:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQt8vTp6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10ABC433C8;
+	Fri, 24 Nov 2023 19:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852588;
-	bh=amyljbAvqpa/r55bC2seaX3bdSTyAtHjS1WlYcDVeeo=;
+	s=korg; t=1700852591;
+	bh=Ld6tps4G4JmyTojarWsF+dTNYHTq1r8Dn5FTxU2slLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9N/nkX86kaVCj3BwIfPPl7uNDCRl0rnDAtmkwbRejupOj2Q4DkcyEfWYdO/RiSxB
-	 5nAFgQEU7Te0FFaWv+1dkMqUib9o0nYUd0K3Xu128YF365suU2VsyxoofMx0XD4om1
-	 dXrYXirRHPtGEnHD90MQlYojkPRIm7ByIJ2ny/u8=
+	b=vQt8vTp6iVWqHHEmq2ABXq7/L9OYotVoEzY5NNTcUQp5dHlnm4csQQB+Kbs2Lysct
+	 /ZwMrUUvBTCu8Leus/LKTYp0NJCaaun0NvxzZL/FnBG5/+gTtyBLLphDOxBq4t94xO
+	 BRlfzUa2DMf54mAvWgrFTSPTmAXhtj7fB0ornHg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hardik Gajjar <hgajjar@de.adit-jv.com>,
+	syzbot+e441aeeb422763cc5511@syzkaller.appspotmail.com,
+	Marco Elver <elver@google.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 044/193] usb: gadget: f_ncm: Always set current gadget in ncm_bind()
-Date: Fri, 24 Nov 2023 17:52:51 +0000
-Message-ID: <20231124171949.020114354@linuxfoundation.org>
+Subject: [PATCH 5.10 045/193] 9p/trans_fd: Annotate data-racy writes to file::f_flags
+Date: Fri, 24 Nov 2023 17:52:52 +0000
+Message-ID: <20231124171949.065662767@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -41,135 +43,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hardik Gajjar <hgajjar@de.adit-jv.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit a04224da1f3424b2c607b12a3bd1f0e302fb8231 ]
+[ Upstream commit 355f074609dbf3042900ea9d30fcd2b0c323a365 ]
 
-Previously, gadget assignment to the net device occurred exclusively
-during the initial binding attempt.
+syzbot reported:
 
-Nevertheless, the gadget pointer could change during bind/unbind
-cycles due to various conditions, including the unloading/loading
-of the UDC device driver or the detachment/reconnection of an
-OTG-capable USB hub device.
+ | BUG: KCSAN: data-race in p9_fd_create / p9_fd_create
+ |
+ | read-write to 0xffff888130fb3d48 of 4 bytes by task 15599 on cpu 0:
+ |  p9_fd_open net/9p/trans_fd.c:842 [inline]
+ |  p9_fd_create+0x210/0x250 net/9p/trans_fd.c:1092
+ |  p9_client_create+0x595/0xa70 net/9p/client.c:1010
+ |  v9fs_session_init+0xf9/0xd90 fs/9p/v9fs.c:410
+ |  v9fs_mount+0x69/0x630 fs/9p/vfs_super.c:123
+ |  legacy_get_tree+0x74/0xd0 fs/fs_context.c:611
+ |  vfs_get_tree+0x51/0x190 fs/super.c:1519
+ |  do_new_mount+0x203/0x660 fs/namespace.c:3335
+ |  path_mount+0x496/0xb30 fs/namespace.c:3662
+ |  do_mount fs/namespace.c:3675 [inline]
+ |  __do_sys_mount fs/namespace.c:3884 [inline]
+ |  [...]
+ |
+ | read-write to 0xffff888130fb3d48 of 4 bytes by task 15563 on cpu 1:
+ |  p9_fd_open net/9p/trans_fd.c:842 [inline]
+ |  p9_fd_create+0x210/0x250 net/9p/trans_fd.c:1092
+ |  p9_client_create+0x595/0xa70 net/9p/client.c:1010
+ |  v9fs_session_init+0xf9/0xd90 fs/9p/v9fs.c:410
+ |  v9fs_mount+0x69/0x630 fs/9p/vfs_super.c:123
+ |  legacy_get_tree+0x74/0xd0 fs/fs_context.c:611
+ |  vfs_get_tree+0x51/0x190 fs/super.c:1519
+ |  do_new_mount+0x203/0x660 fs/namespace.c:3335
+ |  path_mount+0x496/0xb30 fs/namespace.c:3662
+ |  do_mount fs/namespace.c:3675 [inline]
+ |  __do_sys_mount fs/namespace.c:3884 [inline]
+ |  [...]
+ |
+ | value changed: 0x00008002 -> 0x00008802
 
-This patch relocates the gether_set_gadget() function out from
-ncm_opts->bound condition check, ensuring that the correct gadget
-is assigned during each bind request.
+Within p9_fd_open(), O_NONBLOCK is added to f_flags of the read and
+write files. This may happen concurrently if e.g. mounting process
+modifies the fd in another thread.
 
-The provided logs demonstrate the consistency of ncm_opts throughout
-the power cycle, while the gadget may change.
+Mark the plain read-modify-writes as intentional data-races, with the
+assumption that the result of executing the accesses concurrently will
+always result in the same result despite the accesses themselves not
+being atomic.
 
-* OTG hub connected during boot up and assignment of gadget and
-  ncm_opts pointer
-
-[    2.366301] usb 2-1.5: New USB device found, idVendor=2996, idProduct=0105
-[    2.366304] usb 2-1.5: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[    2.366306] usb 2-1.5: Product: H2H Bridge
-[    2.366308] usb 2-1.5: Manufacturer: Aptiv
-[    2.366309] usb 2-1.5: SerialNumber: 13FEB2021
-[    2.427989] usb 2-1.5: New USB device found, VID=2996, PID=0105
-[    2.428959] dabridge 2-1.5:1.0: dabridge 2-4 total endpoints=5, 0000000093a8d681
-[    2.429710] dabridge 2-1.5:1.0: P(0105) D(22.06.22) F(17.3.16) H(1.1) high-speed
-[    2.429714] dabridge 2-1.5:1.0: Hub 2-2 P(0151) V(06.87)
-[    2.429956] dabridge 2-1.5:1.0: All downstream ports in host mode
-
-[    2.430093] gadget 000000003c414d59 ------> gadget pointer
-
-* NCM opts and associated gadget pointer during First ncm_bind
-
-[   34.763929] NCM opts 00000000aa304ac9
-[   34.763930] NCM gadget 000000003c414d59
-
-* OTG capable hub disconnecte or assume driver unload.
-
-[   97.203114] usb 2-1: USB disconnect, device number 2
-[   97.203118] usb 2-1.1: USB disconnect, device number 3
-[   97.209217] usb 2-1.5: USB disconnect, device number 4
-[   97.230990] dabr_udc deleted
-
-* Reconnect the OTG hub or load driver assaign new gadget pointer.
-
-[  111.534035] usb 2-1.1: New USB device found, idVendor=2996, idProduct=0120, bcdDevice= 6.87
-[  111.534038] usb 2-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[  111.534040] usb 2-1.1: Product: Vendor
-[  111.534041] usb 2-1.1: Manufacturer: Aptiv
-[  111.534042] usb 2-1.1: SerialNumber: Superior
-[  111.535175] usb 2-1.1: New USB device found, VID=2996, PID=0120
-[  111.610995] usb 2-1.5: new high-speed USB device number 8 using xhci-hcd
-[  111.630052] usb 2-1.5: New USB device found, idVendor=2996, idProduct=0105, bcdDevice=21.02
-[  111.630055] usb 2-1.5: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[  111.630057] usb 2-1.5: Product: H2H Bridge
-[  111.630058] usb 2-1.5: Manufacturer: Aptiv
-[  111.630059] usb 2-1.5: SerialNumber: 13FEB2021
-[  111.687464] usb 2-1.5: New USB device found, VID=2996, PID=0105
-[  111.690375] dabridge 2-1.5:1.0: dabridge 2-8 total endpoints=5, 000000000d87c961
-[  111.691172] dabridge 2-1.5:1.0: P(0105) D(22.06.22) F(17.3.16) H(1.1) high-speed
-[  111.691176] dabridge 2-1.5:1.0: Hub 2-6 P(0151) V(06.87)
-[  111.691646] dabridge 2-1.5:1.0: All downstream ports in host mode
-
-[  111.692298] gadget 00000000dc72f7a9 --------> new gadget ptr on connect
-
-* NCM opts and associated gadget pointer during second ncm_bind
-
-[  113.271786] NCM opts 00000000aa304ac9 -----> same opts ptr used during first bind
-[  113.271788] NCM gadget 00000000dc72f7a9 ----> however new gaget ptr, that will not set
-                                                 in net_device due to ncm_opts->bound = true
-
-Signed-off-by: Hardik Gajjar <hgajjar@de.adit-jv.com>
-Link: https://lore.kernel.org/r/20231020153324.82794-1-hgajjar@de.adit-jv.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+e441aeeb422763cc5511@syzkaller.appspotmail.com
+Signed-off-by: Marco Elver <elver@google.com>
+Link: https://lore.kernel.org/r/ZO38mqkS0TYUlpFp@elver.google.com
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Message-ID: <20231025103445.1248103-1-asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_ncm.c | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ net/9p/trans_fd.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
-index 00aea45a04e95..d42cd1d036bdf 100644
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1435,7 +1435,7 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
- 	struct usb_composite_dev *cdev = c->cdev;
- 	struct f_ncm		*ncm = func_to_ncm(f);
- 	struct usb_string	*us;
--	int			status;
-+	int			status = 0;
- 	struct usb_ep		*ep;
- 	struct f_ncm_opts	*ncm_opts;
+diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
+index e070a0b8e5ca3..63f4d2067059e 100644
+--- a/net/9p/trans_fd.c
++++ b/net/9p/trans_fd.c
+@@ -823,14 +823,21 @@ static int p9_fd_open(struct p9_client *client, int rfd, int wfd)
+ 		goto out_free_ts;
+ 	if (!(ts->rd->f_mode & FMODE_READ))
+ 		goto out_put_rd;
+-	/* prevent workers from hanging on IO when fd is a pipe */
+-	ts->rd->f_flags |= O_NONBLOCK;
++	/* Prevent workers from hanging on IO when fd is a pipe.
++	 * It's technically possible for userspace or concurrent mounts to
++	 * modify this flag concurrently, which will likely result in a
++	 * broken filesystem. However, just having bad flags here should
++	 * not crash the kernel or cause any other sort of bug, so mark this
++	 * particular data race as intentional so that tooling (like KCSAN)
++	 * can allow it and detect further problems.
++	 */
++	data_race(ts->rd->f_flags |= O_NONBLOCK);
+ 	ts->wr = fget(wfd);
+ 	if (!ts->wr)
+ 		goto out_put_rd;
+ 	if (!(ts->wr->f_mode & FMODE_WRITE))
+ 		goto out_put_wr;
+-	ts->wr->f_flags |= O_NONBLOCK;
++	data_race(ts->wr->f_flags |= O_NONBLOCK);
  
-@@ -1453,22 +1453,17 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
- 		f->os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
- 	}
- 
--	/*
--	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
--	 * configurations are bound in sequence with list_for_each_entry,
--	 * in each configuration its functions are bound in sequence
--	 * with list_for_each_entry, so we assume no race condition
--	 * with regard to ncm_opts->bound access
--	 */
--	if (!ncm_opts->bound) {
--		mutex_lock(&ncm_opts->lock);
--		gether_set_gadget(ncm_opts->net, cdev->gadget);
-+	mutex_lock(&ncm_opts->lock);
-+	gether_set_gadget(ncm_opts->net, cdev->gadget);
-+	if (!ncm_opts->bound)
- 		status = gether_register_netdev(ncm_opts->net);
--		mutex_unlock(&ncm_opts->lock);
--		if (status)
--			goto fail;
--		ncm_opts->bound = true;
--	}
-+	mutex_unlock(&ncm_opts->lock);
-+
-+	if (status)
-+		goto fail;
-+
-+	ncm_opts->bound = true;
-+
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
- 	if (IS_ERR(us)) {
+ 	client->trans = ts;
+ 	client->status = Connected;
 -- 
 2.42.0
 
