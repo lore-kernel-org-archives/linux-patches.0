@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AA539FEE;
-	Fri, 24 Nov 2023 18:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174D02E621;
+	Fri, 24 Nov 2023 18:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN3MQQ2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8F9C433C8;
-	Fri, 24 Nov 2023 18:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCLf5vAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CB0C433C8;
+	Fri, 24 Nov 2023 18:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850815;
-	bh=mANm+bOBHCyfONuzeq8+PfjYNMWG9I6Opifo4/cFvYg=;
+	s=korg; t=1700850817;
+	bh=iagWXwayRQGSU6JhYdch3FlZvR+v4rdGJphssj6XX28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vN3MQQ2IOSCPuMKNNuUJ3hUicG3ExBtNHKZkkzMbooj2tE90QLxmvMjvC9+AujT0+
-	 gfOYx1J4wBJSnUS2ChvrJr/PFJ+UtoEcveMoDnQkhOJoVieO867ItwnzayqlY+/BXK
-	 l3O2Jm8Eunyk9YQxEbUn+ys6LKFeUsMJmOM4ngl4=
+	b=tCLf5vApunkv/YyuZuc2Do3IULqZAUi63s7uk8lrfAeQUfTDjjQsFYs0XvgUOEk+8
+	 9bc9FotZ7eLfuxvfwgzLbANEGecQf04iPipRB9w6sFj1omFLxdlc7NEStlT8VtJap9
+	 xkWQlblB+jB+zI40b6AtWmkRhyTKmUGdH4nG5UGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Martins <joao.m.martins@oracle.com>,
+	kernel test robot <lkp@intel.com>,
 	Shannon Nelson <shannon.nelson@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 200/491] pds_core: use correct index to mask irq
-Date: Fri, 24 Nov 2023 17:47:16 +0000
-Message-ID: <20231124172030.514889254@linuxfoundation.org>
+Subject: [PATCH 6.5 201/491] pds_core: fix up some format-truncation complaints
+Date: Fri, 24 Nov 2023 17:47:17 +0000
+Message-ID: <20231124172030.542720020@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -45,63 +45,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 09d4c14c6c5e6e781a3879fed7f8e116a18b8c65 ]
+[ Upstream commit 7c02f6ae676a954216a192612040f9a0cde3adf7 ]
 
-Use the qcq's interrupt index, not the irq number, to mask
-the interrupt.  Since the irq number can be out of range from
-the number of possible interrupts, we can end up accessing
-and potentially scribbling on out-of-range and/or unmapped
-memory, making the kernel angry.
+Our friendly kernel test robot pointed out a couple of potential
+string truncation issues.  None of which were we worried about,
+but can be relatively easily fixed to quiet the complaints.
 
-    [ 3116.039364] BUG: unable to handle page fault for address: ffffbeea1c3edf84
-    [ 3116.047059] #PF: supervisor write access in kernel mode
-    [ 3116.052895] #PF: error_code(0x0002) - not-present page
-    [ 3116.058636] PGD 100000067 P4D 100000067 PUD 1001f2067 PMD 10f82e067 PTE 0
-    [ 3116.066221] Oops: 0002 [#1] SMP NOPTI
-    [ 3116.092948] RIP: 0010:iowrite32+0x9/0x76
-    [ 3116.190452] Call Trace:
-    [ 3116.193185]  <IRQ>
-    [ 3116.195430]  ? show_trace_log_lvl+0x1d6/0x2f9
-    [ 3116.200298]  ? show_trace_log_lvl+0x1d6/0x2f9
-    [ 3116.205166]  ? pdsc_adminq_isr+0x43/0x55 [pds_core]
-    [ 3116.210618]  ? __die_body.cold+0x8/0xa
-    [ 3116.214806]  ? page_fault_oops+0x16d/0x1ac
-    [ 3116.219382]  ? exc_page_fault+0xbe/0x13b
-    [ 3116.223764]  ? asm_exc_page_fault+0x22/0x27
-    [ 3116.228440]  ? iowrite32+0x9/0x76
-    [ 3116.232143]  pdsc_adminq_isr+0x43/0x55 [pds_core]
-    [ 3116.237627]  __handle_irq_event_percpu+0x3a/0x184
-    [ 3116.243088]  handle_irq_event+0x57/0xb0
-    [ 3116.247575]  handle_edge_irq+0x87/0x225
-    [ 3116.252062]  __common_interrupt+0x3e/0xbc
-    [ 3116.256740]  common_interrupt+0x7b/0x98
-    [ 3116.261216]  </IRQ>
-    [ 3116.263745]  <TASK>
-    [ 3116.266268]  asm_common_interrupt+0x22/0x27
-
-Reported-by: Joao Martins <joao.m.martins@oracle.com>
-Fixes: 01ba61b55b20 ("pds_core: Add adminq processing and commands")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310211736.66syyDpp-lkp@intel.com/
+Fixes: 45d76f492938 ("pds_core: set up device and adminq")
 Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Link: https://lore.kernel.org/r/20231113183257.71110-2-shannon.nelson@amd.com
+Link: https://lore.kernel.org/r/20231113183257.71110-3-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/adminq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/pds_core/core.h    | 2 +-
+ drivers/net/ethernet/amd/pds_core/dev.c     | 8 ++++++--
+ drivers/net/ethernet/amd/pds_core/devlink.c | 2 +-
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/adminq.c b/drivers/net/ethernet/amd/pds_core/adminq.c
-index 045fe133f6ee9..5beadabc21361 100644
---- a/drivers/net/ethernet/amd/pds_core/adminq.c
-+++ b/drivers/net/ethernet/amd/pds_core/adminq.c
-@@ -146,7 +146,7 @@ irqreturn_t pdsc_adminq_isr(int irq, void *data)
- 	}
+diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
+index e545fafc48196..b1c1f1007b065 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.h
++++ b/drivers/net/ethernet/amd/pds_core/core.h
+@@ -15,7 +15,7 @@
+ #define PDSC_DRV_DESCRIPTION	"AMD/Pensando Core Driver"
  
- 	queue_work(pdsc->wq, &qcq->work);
--	pds_core_intr_mask(&pdsc->intr_ctrl[irq], PDS_CORE_INTR_MASK_CLEAR);
-+	pds_core_intr_mask(&pdsc->intr_ctrl[qcq->intx], PDS_CORE_INTR_MASK_CLEAR);
+ #define PDSC_WATCHDOG_SECS	5
+-#define PDSC_QUEUE_NAME_MAX_SZ  32
++#define PDSC_QUEUE_NAME_MAX_SZ  16
+ #define PDSC_ADMINQ_MIN_LENGTH	16	/* must be a power of two */
+ #define PDSC_NOTIFYQ_LENGTH	64	/* must be a power of two */
+ #define PDSC_TEARDOWN_RECOVERY	false
+diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
+index f77cd9f5a2fda..eb178728edba9 100644
+--- a/drivers/net/ethernet/amd/pds_core/dev.c
++++ b/drivers/net/ethernet/amd/pds_core/dev.c
+@@ -254,10 +254,14 @@ static int pdsc_identify(struct pdsc *pdsc)
+ 	struct pds_core_drv_identity drv = {};
+ 	size_t sz;
+ 	int err;
++	int n;
  
- 	return IRQ_HANDLED;
- }
+ 	drv.drv_type = cpu_to_le32(PDS_DRIVER_LINUX);
+-	snprintf(drv.driver_ver_str, sizeof(drv.driver_ver_str),
+-		 "%s %s", PDS_CORE_DRV_NAME, utsname()->release);
++	/* Catching the return quiets a Wformat-truncation complaint */
++	n = snprintf(drv.driver_ver_str, sizeof(drv.driver_ver_str),
++		     "%s %s", PDS_CORE_DRV_NAME, utsname()->release);
++	if (n > sizeof(drv.driver_ver_str))
++		dev_dbg(pdsc->dev, "release name truncated, don't care\n");
+ 
+ 	/* Next let's get some info about the device
+ 	 * We use the devcmd_lock at this level in order to
+diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
+index d9607033bbf21..d2abf32b93fe3 100644
+--- a/drivers/net/ethernet/amd/pds_core/devlink.c
++++ b/drivers/net/ethernet/amd/pds_core/devlink.c
+@@ -104,7 +104,7 @@ int pdsc_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
+ 	struct pds_core_fw_list_info fw_list;
+ 	struct pdsc *pdsc = devlink_priv(dl);
+ 	union pds_core_dev_comp comp;
+-	char buf[16];
++	char buf[32];
+ 	int listlen;
+ 	int err;
+ 	int i;
 -- 
 2.42.0
 
