@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B80139FD4;
-	Fri, 24 Nov 2023 18:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF072C1BA;
+	Fri, 24 Nov 2023 18:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVWT1D1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF09BC433C7;
-	Fri, 24 Nov 2023 18:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jar+OSK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A27C433C8;
+	Fri, 24 Nov 2023 18:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848933;
-	bh=I70msAXvK7NKk0T65xZ1GEzRdg2y742sIMnf/JshByo=;
+	s=korg; t=1700848935;
+	bh=3E9FmljrmNiSWLrVAHG/IYTHgJ3CCVKFJzPFibh01y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVWT1D1qR1OYm94vkbrDfymyiD/KpmMyJWZx3TOCiVdYgXzv+Vy4SaWMHIJvakpTy
-	 5QavqWVVH5Vrdu0hO2lkqg/161D+lHvIqmgY9r+d3fL+FDQ0Jqbjj/OcRSL9tNOiap
-	 vB5mxCosuqyi9pH82Jj8SsWL9ZrXUR7H+5XN5tFw=
+	b=Jar+OSK+zL/A2ik8fL3O6uOP1C8BKMDTunI3KmRsUMf+PTdbfPEXPNqfdSUd6Whkh
+	 wiNsmjsPZ8v6ADYUuR8HpFH0I7tQuA05jvZ9E5EwxaqA6Bj3PPIIhoNDu/7AYwgt92
+	 Y0HOuYOgStKy0EEpqtTBYPaK+9UHYDaBnQv1S+ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.14 40/57] jbd2: fix potential data lost in recovering journal raced with synchronizing fs bdev
-Date: Fri, 24 Nov 2023 17:51:04 +0000
-Message-ID: <20231124171931.789636327@linuxfoundation.org>
+	syzbot+e27f3dbdab04e43b9f73@syzkaller.appspotmail.com,
+	Rajeshwar R Shinde <coolrrsh@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 23/57] media: gspca: cpia1: shift-out-of-bounds in set_flicker
+Date: Fri, 24 Nov 2023 17:50:47 +0000
+Message-ID: <20231124171931.124237637@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -43,94 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Rajeshwar R Shinde <coolrrsh@gmail.com>
 
-commit 61187fce8600e8ef90e601be84f9d0f3222c1206 upstream.
+[ Upstream commit 099be1822d1f095433f4b08af9cc9d6308ec1953 ]
 
-JBD2 makes sure journal data is fallen on fs device by sync_blockdev(),
-however, other process could intercept the EIO information from bdev's
-mapping, which leads journal recovering successful even EIO occurs during
-data written back to fs device.
+Syzkaller reported the following issue:
+UBSAN: shift-out-of-bounds in drivers/media/usb/gspca/cpia1.c:1031:27
+shift exponent 245 is too large for 32-bit type 'int'
 
-We found this problem in our product, iscsi + multipath is chosen for block
-device of ext4. Unstable network may trigger kpartx to rescan partitions in
-device mapper layer. Detailed process is shown as following:
+When the value of the variable "sd->params.exposure.gain" exceeds the
+number of bits in an integer, a shift-out-of-bounds error is reported. It
+is triggered because the variable "currentexp" cannot be left-shifted by
+more than the number of bits in an integer. In order to avoid invalid
+range during left-shift, the conditional expression is added.
 
-  mount          kpartx          irq
-jbd2_journal_recover
- do_one_pass
-  memcpy(nbh->b_data, obh->b_data) // copy data to fs dev from journal
-  mark_buffer_dirty // mark bh dirty
-         vfs_read
-	  generic_file_read_iter // dio
-	   filemap_write_and_wait_range
-	    __filemap_fdatawrite_range
-	     do_writepages
-	      block_write_full_folio
-	       submit_bh_wbc
-	            >>  EIO occurs in disk  <<
-	                     end_buffer_async_write
-			      mark_buffer_write_io_error
-			       mapping_set_error
-			        set_bit(AS_EIO, &mapping->flags) // set!
-	    filemap_check_errors
-	     test_and_clear_bit(AS_EIO, &mapping->flags) // clear!
- err2 = sync_blockdev
-  filemap_write_and_wait
-   filemap_check_errors
-    test_and_clear_bit(AS_EIO, &mapping->flags) // false
- err2 = 0
-
-Filesystem is mounted successfully even data from journal is failed written
-into disk, and ext4/ocfs2 could become corrupted.
-
-Fix it by comparing the wb_err state in fs block device before recovering
-and after recovering.
-
-A reproducer can be found in the kernel bugzilla referenced below.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217888
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230919012525.1783108-1-chengzhihao1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+e27f3dbdab04e43b9f73@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/20230818164522.12806-1-coolrrsh@gmail.com
+Link: https://syzkaller.appspot.com/bug?extid=e27f3dbdab04e43b9f73
+Signed-off-by: Rajeshwar R Shinde <coolrrsh@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/recovery.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/usb/gspca/cpia1.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/jbd2/recovery.c
-+++ b/fs/jbd2/recovery.c
-@@ -250,6 +250,8 @@ int jbd2_journal_recover(journal_t *jour
- 	journal_superblock_t *	sb;
+diff --git a/drivers/media/usb/gspca/cpia1.c b/drivers/media/usb/gspca/cpia1.c
+index e91d00762e94b..bf34479a87cc5 100644
+--- a/drivers/media/usb/gspca/cpia1.c
++++ b/drivers/media/usb/gspca/cpia1.c
+@@ -28,6 +28,7 @@
  
- 	struct recovery_info	info;
-+	errseq_t		wb_err;
-+	struct address_space	*mapping;
+ #include <linux/input.h>
+ #include <linux/sched/signal.h>
++#include <linux/bitops.h>
  
- 	memset(&info, 0, sizeof(info));
- 	sb = journal->j_superblock;
-@@ -267,6 +269,9 @@ int jbd2_journal_recover(journal_t *jour
- 		return 0;
- 	}
+ #include "gspca.h"
  
-+	wb_err = 0;
-+	mapping = journal->j_fs_dev->bd_inode->i_mapping;
-+	errseq_check_and_advance(&mapping->wb_err, &wb_err);
- 	err = do_one_pass(journal, &info, PASS_SCAN);
- 	if (!err)
- 		err = do_one_pass(journal, &info, PASS_REVOKE);
-@@ -287,6 +292,9 @@ int jbd2_journal_recover(journal_t *jour
- 	err2 = sync_blockdev(journal->j_fs_dev);
- 	if (!err)
- 		err = err2;
-+	err2 = errseq_check_and_advance(&mapping->wb_err, &wb_err);
-+	if (!err)
-+		err = err2;
- 	/* Make sure all replayed data is on permanent storage */
- 	if (journal->j_flags & JBD2_BARRIER) {
- 		err2 = blkdev_issue_flush(journal->j_fs_dev, GFP_KERNEL, NULL);
+@@ -1032,6 +1033,8 @@ static int set_flicker(struct gspca_dev *gspca_dev, int on, int apply)
+ 			sd->params.exposure.expMode = 2;
+ 			sd->exposure_status = EXPOSURE_NORMAL;
+ 		}
++		if (sd->params.exposure.gain >= BITS_PER_TYPE(currentexp))
++			return -EINVAL;
+ 		currentexp = currentexp << sd->params.exposure.gain;
+ 		sd->params.exposure.gain = 0;
+ 		/* round down current exposure to nearest value */
+-- 
+2.42.0
+
 
 
