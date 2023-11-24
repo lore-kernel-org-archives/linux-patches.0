@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7B339FDD;
-	Fri, 24 Nov 2023 18:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20F839FD9;
+	Fri, 24 Nov 2023 18:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvKrWtOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D223C433C7;
-	Fri, 24 Nov 2023 18:00:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKfgSEAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC70C433C7;
+	Fri, 24 Nov 2023 18:01:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848857;
-	bh=cXQyM5dBFnfpKrls6Uc9XrJWzZGgFxc1EEmPwMBQj1s=;
+	s=korg; t=1700848860;
+	bh=C6CfkuKX+mjrR66d0MT3vqUxVh94gVtCY9/34RwQ4yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yvKrWtOKLjMcq3gv7aIdIrqFKzwqjVliTFAOGSa9jpl1UONL2HTmCuduY8Z00D1YL
-	 Uf/dlNkO8qBiWVDj0TrxLfKYJJFiRtSr7wFK+7P4v06RceV4OaUMPVWSm3/gF4fXLq
-	 UVuH4j+a7iEq5bTqqkdPbbXN357riYOH6BnHMyQ4=
+	b=MKfgSEAHkJGwCLTK5lWJ55UlSIvfwJ4H2psMY+pHuvaYj3Lmq/Pc72T0c3trr54T8
+	 cxztP20i/sz2NTVkS3d1L5l1xf//mCs0+TTlUo+BbAOMEXs1wUcr4aAPwpKWu1h6lX
+	 Ji2g4hVLUdDDi+xDiHgxP3SdXCSTYf1boi/1dJ8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	zhujun2 <zhujun2@cmss.chinamobile.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 02/57] clocksource/drivers/timer-imx-gpt: Fix potential memory leak
-Date: Fri, 24 Nov 2023 17:50:26 +0000
-Message-ID: <20231124171930.365963582@linuxfoundation.org>
+Subject: [PATCH 4.14 11/57] selftests/efivarfs: create-read: fix a resource leak
+Date: Fri, 24 Nov 2023 17:50:35 +0000
+Message-ID: <20231124171930.707356793@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -43,64 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacky Bai <ping.bai@nxp.com>
+From: zhujun2 <zhujun2@cmss.chinamobile.com>
 
-[ Upstream commit 8051a993ce222a5158bccc6ac22ace9253dd71cb ]
+[ Upstream commit 3f6f8a8c5e11a9b384a36df4f40f0c9a653b6975 ]
 
-Fix coverity Issue CID 250382:  Resource leak (RESOURCE_LEAK).
-Add kfree when error return.
+The opened file should be closed in main(), otherwise resource
+leak will occur that this problem was discovered by code reading
 
-Signed-off-by: Jacky Bai <ping.bai@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20231009083922.1942971-1-ping.bai@nxp.com
+Signed-off-by: zhujun2 <zhujun2@cmss.chinamobile.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-imx-gpt.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ tools/testing/selftests/efivarfs/create-read.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clocksource/timer-imx-gpt.c b/drivers/clocksource/timer-imx-gpt.c
-index 6ec6d79b237ce..fcc12f72e907f 100644
---- a/drivers/clocksource/timer-imx-gpt.c
-+++ b/drivers/clocksource/timer-imx-gpt.c
-@@ -489,12 +489,16 @@ static int __init mxc_timer_init_dt(struct device_node *np,  enum imx_gpt_type t
- 		return -ENOMEM;
+diff --git a/tools/testing/selftests/efivarfs/create-read.c b/tools/testing/selftests/efivarfs/create-read.c
+index 9674a19396a32..7bc7af4eb2c17 100644
+--- a/tools/testing/selftests/efivarfs/create-read.c
++++ b/tools/testing/selftests/efivarfs/create-read.c
+@@ -32,8 +32,10 @@ int main(int argc, char **argv)
+ 	rc = read(fd, buf, sizeof(buf));
+ 	if (rc != 0) {
+ 		fprintf(stderr, "Reading a new var should return EOF\n");
++		close(fd);
+ 		return EXIT_FAILURE;
+ 	}
  
- 	imxtm->base = of_iomap(np, 0);
--	if (!imxtm->base)
--		return -ENXIO;
-+	if (!imxtm->base) {
-+		ret = -ENXIO;
-+		goto err_kfree;
-+	}
- 
- 	imxtm->irq = irq_of_parse_and_map(np, 0);
--	if (imxtm->irq <= 0)
--		return -EINVAL;
-+	if (imxtm->irq <= 0) {
-+		ret = -EINVAL;
-+		goto err_kfree;
-+	}
- 
- 	imxtm->clk_ipg = of_clk_get_by_name(np, "ipg");
- 
-@@ -507,11 +511,15 @@ static int __init mxc_timer_init_dt(struct device_node *np,  enum imx_gpt_type t
- 
- 	ret = _mxc_timer_init(imxtm);
- 	if (ret)
--		return ret;
-+		goto err_kfree;
- 
- 	initialized = 1;
- 
- 	return 0;
-+
-+err_kfree:
-+	kfree(imxtm);
-+	return ret;
++	close(fd);
+ 	return EXIT_SUCCESS;
  }
- 
- static int __init imx1_timer_init_dt(struct device_node *np)
 -- 
 2.42.0
 
