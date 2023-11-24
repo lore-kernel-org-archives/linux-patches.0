@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C4F2D62A;
-	Fri, 24 Nov 2023 18:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350022E621;
+	Fri, 24 Nov 2023 18:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iiwNe9hp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F67DC433C8;
-	Fri, 24 Nov 2023 18:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIDW2rC6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCCCC433C7;
+	Fri, 24 Nov 2023 18:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850794;
-	bh=tTrVNjNdGdmn65eymDfxA67WaZVa5Zk4dxzs/MKFQd0=;
+	s=korg; t=1700850797;
+	bh=ADL6/YMA8l/z+BPZXwRLQbILN7jFdLnsdc0lFKxhU60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iiwNe9hp2aLgLS2N5BEfAsdxp/xxM/69qsUtYIt64LJ8xnaymdV6CeP2zBTXItwVx
-	 OfXaGvRct2yls0VKapciAiO+0w6i6yfbCFJHpNiJV4MVinrKBqDFP9Pj+i3G3OT/Xb
-	 yfZAZwYcOu6ifDCtaJiyhaPJb50swXNGnv1/4MAw=
+	b=aIDW2rC61NDT8E1SVJAnPFdghVCU7evJ1tRzneKTbakX8ICK2AjChQlffjlzMAj1a
+	 p8GR7VdNxEbGB74q1g9jcfueAx03U/No9mKfKRO/dIKd8MMCKsEKkTxQ6XA7TDHMYs
+	 yotQWdtaN6sm1tD1pKn2wGoQnTqWQky3Qpy96NBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Qing Wang <qinwang@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 167/491] drm/i915/tc: Fix -Wformat-truncation in intel_tc_port_init
-Date: Fri, 24 Nov 2023 17:46:43 +0000
-Message-ID: <20231124172029.492030326@linuxfoundation.org>
+Subject: [PATCH 6.5 168/491] vdpa_sim_blk: allocate the buffer zeroed
+Date: Fri, 24 Nov 2023 17:46:44 +0000
+Message-ID: <20231124172029.522995875@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -46,80 +46,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nirmoy Das <nirmoy.das@intel.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 9506fba463fcbdf8c8b7af3ec9ee34360df843fe ]
+[ Upstream commit 0d82410252ea324f0064e75b9865bb74cccc1dda ]
 
-Fix below compiler warning:
+Deleting and recreating a device can lead to having the same
+content as the old device, so let's always allocate buffers
+completely zeroed out.
 
-intel_tc.c:1879:11: error: ‘%d’ directive output may be truncated
-writing between 1 and 11 bytes into a region of size 3
-[-Werror=format-truncation=]
-"%c/TC#%d", port_name(port), tc_port + 1);
-           ^~
-intel_tc.c:1878:2: note: ‘snprintf’ output between 7 and 17 bytes
-into a destination of size 8
-  snprintf(tc->port_name, sizeof(tc->port_name),
-  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    "%c/TC#%d", port_name(port), tc_port + 1);
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-v2: use kasprintf(Imre)
-v3: use const for port_name, and fix tc mem leak(Imre)
-
-Fixes: 3eafcddf766b ("drm/i915/tc: Move TC port fields to a new intel_tc_port struct")
-Cc: Mika Kahola <mika.kahola@intel.com>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231026125636.5080-1-nirmoy.das@intel.com
-(cherry picked from commit 70a3cbbe620ee66afb0c066624196077767e61b2)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: abebb16254b3 ("vdpa_sim_blk: support shared backend")
+Suggested-by: Qing Wang <qinwang@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20231031144339.121453-1-sgarzare@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_tc.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_tc.c b/drivers/gpu/drm/i915/display/intel_tc.c
-index 3ebf41859043e..cdf2455440bea 100644
---- a/drivers/gpu/drm/i915/display/intel_tc.c
-+++ b/drivers/gpu/drm/i915/display/intel_tc.c
-@@ -58,7 +58,7 @@ struct intel_tc_port {
- 	struct delayed_work link_reset_work;
- 	int link_refcount;
- 	bool legacy_port:1;
--	char port_name[8];
-+	const char *port_name;
- 	enum tc_port_mode mode;
- 	enum tc_port_mode init_mode;
- 	enum phy_fia phy_fia;
-@@ -1841,8 +1841,12 @@ int intel_tc_port_init(struct intel_digital_port *dig_port, bool is_legacy)
- 	else
- 		tc->phy_ops = &icl_tc_phy_ops;
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+index b3a3cb1657955..b137f36793439 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+@@ -437,7 +437,7 @@ static int vdpasim_blk_dev_add(struct vdpa_mgmt_dev *mdev, const char *name,
+ 	if (blk->shared_backend) {
+ 		blk->buffer = shared_buffer;
+ 	} else {
+-		blk->buffer = kvmalloc(VDPASIM_BLK_CAPACITY << SECTOR_SHIFT,
++		blk->buffer = kvzalloc(VDPASIM_BLK_CAPACITY << SECTOR_SHIFT,
+ 				       GFP_KERNEL);
+ 		if (!blk->buffer) {
+ 			ret = -ENOMEM;
+@@ -495,7 +495,7 @@ static int __init vdpasim_blk_init(void)
+ 		goto parent_err;
  
--	snprintf(tc->port_name, sizeof(tc->port_name),
--		 "%c/TC#%d", port_name(port), tc_port + 1);
-+	tc->port_name = kasprintf(GFP_KERNEL, "%c/TC#%d", port_name(port),
-+				  tc_port + 1);
-+	if (!tc->port_name) {
-+		kfree(tc);
-+		return -ENOMEM;
-+	}
- 
- 	mutex_init(&tc->lock);
- 	/* TODO: Combine the two works */
-@@ -1863,6 +1867,7 @@ void intel_tc_port_cleanup(struct intel_digital_port *dig_port)
- {
- 	intel_tc_port_suspend(dig_port);
- 
-+	kfree(dig_port->tc->port_name);
- 	kfree(dig_port->tc);
- 	dig_port->tc = NULL;
- }
+ 	if (shared_backend) {
+-		shared_buffer = kvmalloc(VDPASIM_BLK_CAPACITY << SECTOR_SHIFT,
++		shared_buffer = kvzalloc(VDPASIM_BLK_CAPACITY << SECTOR_SHIFT,
+ 					 GFP_KERNEL);
+ 		if (!shared_buffer) {
+ 			ret = -ENOMEM;
 -- 
 2.42.0
 
