@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323BD39FF8;
-	Fri, 24 Nov 2023 18:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF7239FC6;
+	Fri, 24 Nov 2023 18:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHdifpCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3427C433C8;
-	Fri, 24 Nov 2023 18:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCjAe/lE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38881C433C7;
+	Fri, 24 Nov 2023 18:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849479;
-	bh=QlBXBM1aye9cLlXQ9D/X/UGJtigVVNCfdoByxP612sY=;
+	s=korg; t=1700849481;
+	bh=fUjtgI/xDsQSXIE0vuBA95IdnDe1aznx6ye0HxBORSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHdifpCizyA6rrVRzNB0xGIKr/AcogjnGe+MGOdev2BHUvI6lDd45kumHsiadrtaD
-	 0KgR4tXQkYNAJlNTT6OhkIbXvkF/grVs0adt9qP2UFvcdXROSylggxqZ/az1TMBiz+
-	 icurgBct+GtL46AL8CUqJjHkV70nUXrpa5bisLk8=
+	b=ZCjAe/lEBc4xUmUPW6k89FcNG0BNr4F+oZwHWx1o/C21vO/JQDEbL1qfDqqo8HyFP
+	 duRg+d8P9DCn+siEr8QYTCDb2brx+DYQXuWcIa5RO9ZHUorCElBQxrdDUvjWYT/ifi
+	 lhTLybJs+GWzIRgQSqRr7hxnMDZXgW9fC429Z0P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/530] xen/events: fix delayed eoi list handling
-Date: Fri, 24 Nov 2023 17:46:04 +0000
-Message-ID: <20231124172034.094042925@linuxfoundation.org>
+Subject: [PATCH 6.6 199/530] blk-mq: make sure active queue usage is held for bio_integrity_prep()
+Date: Fri, 24 Nov 2023 17:46:05 +0000
+Message-ID: <20231124172034.129485766@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,45 +44,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Christoph Hellwig <hch@infradead.org>
 
-[ Upstream commit 47d970204054f859f35a2237baa75c2d84fcf436 ]
+[ Upstream commit b0077e269f6c152e807fdac90b58caf012cdbaab ]
 
-When delaying eoi handling of events, the related elements are queued
-into the percpu lateeoi list. In case the list isn't empty, the
-elements should be sorted by the time when eoi handling is to happen.
+blk_integrity_unregister() can come if queue usage counter isn't held
+for one bio with integrity prepared, so this request may be completed with
+calling profile->complete_fn, then kernel panic.
 
-Unfortunately a new element will never be queued at the start of the
-list, even if it has a handling time lower than all other list
-elements.
+Another constraint is that bio_integrity_prep() needs to be called
+before bio merge.
 
-Fix that by handling that case the same way as for an empty list.
+Fix the issue by:
 
-Fixes: e99502f76271 ("xen/events: defer eoi in case of excessive number of events")
-Reported-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+- call bio_integrity_prep() with one queue usage counter grabbed reliably
+
+- call bio_integrity_prep() before bio merge
+
+Fixes: 900e080752025f00 ("block: move queue enter logic into blk_mq_submit_bio()")
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
+Link: https://lore.kernel.org/r/20231113035231.2708053-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/events/events_base.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ block/blk-mq.c | 75 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 38 insertions(+), 37 deletions(-)
 
-diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
-index 2cf0c2b693861..c50419638ac0a 100644
---- a/drivers/xen/events/events_base.c
-+++ b/drivers/xen/events/events_base.c
-@@ -604,7 +604,9 @@ static void lateeoi_list_add(struct irq_info *info)
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 1fafd54dce3cb..6ab7f360ff2ac 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -2875,11 +2875,8 @@ static struct request *blk_mq_get_new_requests(struct request_queue *q,
+ 	};
+ 	struct request *rq;
  
- 	spin_lock_irqsave(&eoi->eoi_list_lock, flags);
+-	if (unlikely(bio_queue_enter(bio)))
+-		return NULL;
+-
+ 	if (blk_mq_attempt_bio_merge(q, bio, nsegs))
+-		goto queue_exit;
++		return NULL;
  
--	if (list_empty(&eoi->eoi_list)) {
-+	elem = list_first_entry_or_null(&eoi->eoi_list, struct irq_info,
-+					eoi_list);
-+	if (!elem || info->eoi_time < elem->eoi_time) {
- 		list_add(&info->eoi_list, &eoi->eoi_list);
- 		mod_delayed_work_on(info->eoi_cpu, system_wq,
- 				    &eoi->delayed, delay);
+ 	rq_qos_throttle(q, bio);
+ 
+@@ -2895,35 +2892,23 @@ static struct request *blk_mq_get_new_requests(struct request_queue *q,
+ 	rq_qos_cleanup(q, bio);
+ 	if (bio->bi_opf & REQ_NOWAIT)
+ 		bio_wouldblock_error(bio);
+-queue_exit:
+-	blk_queue_exit(q);
+ 	return NULL;
+ }
+ 
+-static inline struct request *blk_mq_get_cached_request(struct request_queue *q,
+-		struct blk_plug *plug, struct bio **bio, unsigned int nsegs)
++/* return true if this @rq can be used for @bio */
++static bool blk_mq_can_use_cached_rq(struct request *rq, struct blk_plug *plug,
++		struct bio *bio)
+ {
+-	struct request *rq;
+-	enum hctx_type type, hctx_type;
++	enum hctx_type type = blk_mq_get_hctx_type(bio->bi_opf);
++	enum hctx_type hctx_type = rq->mq_hctx->type;
+ 
+-	if (!plug)
+-		return NULL;
+-	rq = rq_list_peek(&plug->cached_rq);
+-	if (!rq || rq->q != q)
+-		return NULL;
++	WARN_ON_ONCE(rq_list_peek(&plug->cached_rq) != rq);
+ 
+-	if (blk_mq_attempt_bio_merge(q, *bio, nsegs)) {
+-		*bio = NULL;
+-		return NULL;
+-	}
+-
+-	type = blk_mq_get_hctx_type((*bio)->bi_opf);
+-	hctx_type = rq->mq_hctx->type;
+ 	if (type != hctx_type &&
+ 	    !(type == HCTX_TYPE_READ && hctx_type == HCTX_TYPE_DEFAULT))
+-		return NULL;
+-	if (op_is_flush(rq->cmd_flags) != op_is_flush((*bio)->bi_opf))
+-		return NULL;
++		return false;
++	if (op_is_flush(rq->cmd_flags) != op_is_flush(bio->bi_opf))
++		return false;
+ 
+ 	/*
+ 	 * If any qos ->throttle() end up blocking, we will have flushed the
+@@ -2931,12 +2916,12 @@ static inline struct request *blk_mq_get_cached_request(struct request_queue *q,
+ 	 * before we throttle.
+ 	 */
+ 	plug->cached_rq = rq_list_next(rq);
+-	rq_qos_throttle(q, *bio);
++	rq_qos_throttle(rq->q, bio);
+ 
+ 	blk_mq_rq_time_init(rq, 0);
+-	rq->cmd_flags = (*bio)->bi_opf;
++	rq->cmd_flags = bio->bi_opf;
+ 	INIT_LIST_HEAD(&rq->queuelist);
+-	return rq;
++	return true;
+ }
+ 
+ static void bio_set_ioprio(struct bio *bio)
+@@ -2966,7 +2951,7 @@ void blk_mq_submit_bio(struct bio *bio)
+ 	struct blk_plug *plug = blk_mq_plug(bio);
+ 	const int is_sync = op_is_sync(bio->bi_opf);
+ 	struct blk_mq_hw_ctx *hctx;
+-	struct request *rq;
++	struct request *rq = NULL;
+ 	unsigned int nr_segs = 1;
+ 	blk_status_t ret;
+ 
+@@ -2977,20 +2962,36 @@ void blk_mq_submit_bio(struct bio *bio)
+ 			return;
+ 	}
+ 
+-	if (!bio_integrity_prep(bio))
+-		return;
+-
+ 	bio_set_ioprio(bio);
+ 
+-	rq = blk_mq_get_cached_request(q, plug, &bio, nr_segs);
+-	if (!rq) {
+-		if (!bio)
++	if (plug) {
++		rq = rq_list_peek(&plug->cached_rq);
++		if (rq && rq->q != q)
++			rq = NULL;
++	}
++	if (rq) {
++		if (!bio_integrity_prep(bio))
+ 			return;
+-		rq = blk_mq_get_new_requests(q, plug, bio, nr_segs);
+-		if (unlikely(!rq))
++		if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
+ 			return;
++		if (blk_mq_can_use_cached_rq(rq, plug, bio))
++			goto done;
++		percpu_ref_get(&q->q_usage_counter);
++	} else {
++		if (unlikely(bio_queue_enter(bio)))
++			return;
++		if (!bio_integrity_prep(bio))
++			goto fail;
++	}
++
++	rq = blk_mq_get_new_requests(q, plug, bio, nr_segs);
++	if (unlikely(!rq)) {
++fail:
++		blk_queue_exit(q);
++		return;
+ 	}
+ 
++done:
+ 	trace_block_getrq(bio);
+ 
+ 	rq_qos_track(q, rq, bio);
 -- 
 2.42.0
 
