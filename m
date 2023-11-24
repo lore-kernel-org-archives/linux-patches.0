@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A91339BE;
-	Fri, 24 Nov 2023 19:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09AC335F04;
+	Fri, 24 Nov 2023 19:24:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDV3NZMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2420FC433C7;
-	Fri, 24 Nov 2023 19:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i47GpgTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90272C433C7;
+	Fri, 24 Nov 2023 19:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853890;
-	bh=Uaz7ZKZ3Hdk0VeIBiPe5/vKHluz42YxKAgktwbruVB8=;
+	s=korg; t=1700853892;
+	bh=gUaEFuF6/WvPytcNBraSOwSQFI4HQqmfTEmR4GPyY2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDV3NZMy53LJh0P+bRj+sKOv0DxJBlz8Ra5veeMh5uUbQTQcKg+mO3lSopitrELzJ
-	 MtN4GHVXvY9weR3WVmoGH7PQ3CnvUmuvE+TVKMe6FNvVmMDdBQDWouFXr4eKbsnnNq
-	 5lPZf2swjUDRaCk1d6f7drBk9Aetu4WnUUxOUTD8=
+	b=i47GpgTt7Y/WklNWF2d3B/AsNQoX97A/qbeQBtgO3YTSfcRA28HvAyzLJJHvlJBTm
+	 u67/5Q0nxSTgaVL4/zOpfItKgxTtqAu+E6TEOwpz5zZf7fo/eJr36+2jaucRonaRpY
+	 lOi0gZvgN3PmrTuLDQFUEB4Io9eBF0c+MKE7ANec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Peterson <rpeterso@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 037/159] gfs2: ignore negated quota changes
-Date: Fri, 24 Nov 2023 17:54:14 +0000
-Message-ID: <20231124171943.450802522@linuxfoundation.org>
+Subject: [PATCH 5.4 065/159] tools/power/turbostat: Fix a knl bug
+Date: Fri, 24 Nov 2023 17:54:42 +0000
+Message-ID: <20231124171944.656898536@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -42,89 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 4c6a08125f2249531ec01783a5f4317d7342add5 ]
+[ Upstream commit 137f01b3529d292a68d22e9681e2f903c768f790 ]
 
-When lots of quota changes are made, there may be cases in which an
-inode's quota information is increased and then decreased, such as when
-blocks are added to a file, then deleted from it. If the timing is
-right, function do_qc can add pending quota changes to a transaction,
-then later, another call to do_qc can negate those changes, resulting
-in a net gain of 0. The quota_change information is recorded in the qc
-buffer (and qd element of the inode as well). The buffer is added to the
-transaction by the first call to do_qc, but a subsequent call changes
-the value from non-zero back to zero. At that point it's too late to
-remove the buffer_head from the transaction. Later, when the quota sync
-code is called, the zero-change qd element is discovered and flagged as
-an assert warning. If the fs is mounted with errors=panic, the kernel
-will panic.
+MSR_KNL_CORE_C6_RESIDENCY should be evaluated only if
+1. this is KNL platform
+AND
+2. need to get C6 residency or need to calculate C1 residency
 
-This is usually seen when files are truncated and the quota changes are
-negated by punch_hole/truncate which uses gfs2_quota_hold and
-gfs2_quota_unhold rather than block allocations that use gfs2_quota_lock
-and gfs2_quota_unlock which automatically do quota sync.
+Fix the broken logic introduced by commit 1e9042b9c8d4 ("tools/power
+turbostat: Fix CPU%C1 display value").
 
-This patch solves the problem by adding a check to qd_check_sync such
-that net-zero quota changes already added to the transaction are no
-longer deemed necessary to be synced, and skipped.
-
-In this case references are taken for the qd and the slot from do_qc
-so those need to be put. The normal sequence of events for a normal
-non-zero quota change is as follows:
-
-gfs2_quota_change
-   do_qc
-      qd_hold
-      slot_hold
-
-Later, when the changes are to be synced:
-
-gfs2_quota_sync
-   qd_fish
-      qd_check_sync
-         gets qd ref via lockref_get_not_dead
-   do_sync
-      do_qc(QC_SYNC)
-         qd_put
-	    lockref_put_or_lock
-   qd_unlock
-      qd_put
-         lockref_put_or_lock
-
-In the net-zero change case, we add a check to qd_check_sync so it puts
-the qd and slot references acquired in gfs2_quota_change and skip the
-unneeded sync.
-
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 1e9042b9c8d4 ("tools/power turbostat: Fix CPU%C1 display value")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index cbee745169b8f..ce3d65787e016 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -431,6 +431,17 @@ static int qd_check_sync(struct gfs2_sbd *sdp, struct gfs2_quota_data *qd,
- 	    (sync_gen && (qd->qd_sync_gen >= *sync_gen)))
- 		return 0;
- 
-+	/*
-+	 * If qd_change is 0 it means a pending quota change was negated.
-+	 * We should not sync it, but we still have a qd reference and slot
-+	 * reference taken by gfs2_quota_change -> do_qc that need to be put.
-+	 */
-+	if (!qd->qd_change && test_and_clear_bit(QDF_CHANGE, &qd->qd_flags)) {
-+		slot_put(qd);
-+		qd_put(qd);
-+		return 0;
-+	}
-+
- 	if (!lockref_get_not_dead(&qd->qd_lockref))
- 		return 0;
- 
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 8bf6b01b35608..d4235d1ab912c 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -1881,7 +1881,7 @@ int get_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
+ 	if ((DO_BIC(BIC_CPU_c6) || soft_c1_residency_display(BIC_CPU_c6)) && !do_knl_cstates) {
+ 		if (get_msr(cpu, MSR_CORE_C6_RESIDENCY, &c->c6))
+ 			return -7;
+-	} else if (do_knl_cstates || soft_c1_residency_display(BIC_CPU_c6)) {
++	} else if (do_knl_cstates && soft_c1_residency_display(BIC_CPU_c6)) {
+ 		if (get_msr(cpu, MSR_KNL_CORE_C6_RESIDENCY, &c->c6))
+ 			return -7;
+ 	}
 -- 
 2.42.0
 
