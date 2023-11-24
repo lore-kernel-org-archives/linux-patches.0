@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E029731759;
-	Fri, 24 Nov 2023 18:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C34133CC7;
+	Fri, 24 Nov 2023 18:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E10F16IZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702ECC433C7;
-	Fri, 24 Nov 2023 18:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7XTKOve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA07DC433C7;
+	Fri, 24 Nov 2023 18:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850940;
-	bh=ffrae3t/CkbCTXpIc5HeqIqRmhTUq54eQNIByCgmdv0=;
+	s=korg; t=1700850943;
+	bh=9i5KBZKWXyN6I9QHFUNLQndfbLSXbU15HYr+5NT6LAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E10F16IZjTC0pMqRScsYjTckvWojc+DDl3MS6mrS0L4zXlbNvF7HrDEh6dE3mNJA5
-	 mMlqKo98cqTZZhCSfd5Xcvw/1WizmB7JOYRr4FgY9Z4EQTNeMZqS0xmI1xQzasKVn4
-	 WcDPuUaajuCDxwx4OpYaeZnD385qpMHsFSY0quN4=
+	b=W7XTKOveX+YPSVy8TrsBpJUtnibfX/VnuA4SU5LHMcqrq8BY13ZhMWqen6sfY7YKs
+	 S+oVZ56q1XXzuqbxbemoX6x2K5hQ9x+NeS0uahfbPTbOPEL3nUj3dU5rVaNUpcTrIx
+	 EkFCbQ/MfRhk7b57Sq/LO4rSgSGmIHm6Zw7xv+d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 215/491] net/mlx5e: Check return value of snprintf writing to fw_version buffer for representors
-Date: Fri, 24 Nov 2023 17:47:31 +0000
-Message-ID: <20231124172030.997863275@linuxfoundation.org>
+	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.5 243/491] KVM: x86: Ignore MSR_AMD64_TW_CFG access
+Date: Fri, 24 Nov 2023 17:47:59 +0000
+Message-ID: <20231124172031.858749082@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,73 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-[ Upstream commit 1b2bd0c0264febcd8d47209079a6671c38e6558b ]
+commit 2770d4722036d6bd24bcb78e9cd7f6e572077d03 upstream.
 
-Treat the operation as an error case when the return value is equivalent to
-the size of the name buffer. Failed to write null terminator to the name
-buffer, making the string malformed and should not be used. Provide a
-string with only the firmware version when forming the string with the
-board id fails. This logic for representors is identical to normal flow
-with ethtool.
+Hyper-V enabled Windows Server 2022 KVM VM cannot be started on Zen1 Ryzen
+since it crashes at boot with SYSTEM_THREAD_EXCEPTION_NOT_HANDLED +
+STATUS_PRIVILEGED_INSTRUCTION (in other words, because of an unexpected #GP
+in the guest kernel).
 
-Without check, will trigger -Wformat-truncation with W=1.
+This is because Windows tries to set bit 8 in MSR_AMD64_TW_CFG and can't
+handle receiving a #GP when doing so.
 
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c: In function 'mlx5e_rep_get_drvinfo':
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:78:31: warning: '%.16s' directive output may be truncated writing up to 16 bytes into a region of size between 13 and 22 [-Wformat-truncation=]
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                               ^~~~~
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:77:9: note: 'snprintf' output between 12 and 37 bytes into a destination of size 32
-      77 |         snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                  ~~~~~~~~~~~~~~~~~~~~~
-      79 |                  fw_rev_maj(mdev), fw_rev_min(mdev),
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                  fw_rev_sub(mdev), mdev->board_id);
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Give this MSR the same treatment that commit 2e32b7190641
+("x86, kvm: Add MSR_AMD64_BU_CFG2 to the list of ignored MSRs") gave
+MSR_AMD64_BU_CFG2 under justification that this MSR is baremetal-relevant
+only.
+Although apparently it was then needed for Linux guests, not Windows as in
+this case.
 
-Fixes: cf83c8fdcd47 ("net/mlx5e: Add missing ethtool driver info for representors")
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-16-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+With this change, the aforementioned guest setup is able to finish booting
+successfully.
+
+This issue can be reproduced either on a Summit Ridge Ryzen (with
+just "-cpu host") or on a Naples EPYC (with "-cpu host,stepping=1" since
+EPYC is ordinarily stepping 2).
+
+Alternatively, userspace could solve the problem by using MSR filters, but
+forcing every userspace to define a filter isn't very friendly and doesn't
+add much, if any, value.  The only potential hiccup is if one of these
+"baremetal-only" MSRs ever requires actual emulation and/or has F/M/S
+specific behavior.  But if that happens, then KVM can still punt *that*
+handling to userspace since userspace MSR filters "win" over KVM's default
+handling.
+
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/1ce85d9c7c9e9632393816cf19c902e0a3f411f1.1697731406.git.maciej.szmigiero@oracle.com
+[sean: call out MSR filtering alternative]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/msr-index.h |    1 +
+ arch/x86/kvm/x86.c               |    2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 0cd44ef190058..87fda65852fb7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -71,13 +71,17 @@ static void mlx5e_rep_get_drvinfo(struct net_device *dev,
- {
- 	struct mlx5e_priv *priv = netdev_priv(dev);
- 	struct mlx5_core_dev *mdev = priv->mdev;
-+	int count;
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -553,6 +553,7 @@
+ #define MSR_AMD64_CPUID_FN_1		0xc0011004
+ #define MSR_AMD64_LS_CFG		0xc0011020
+ #define MSR_AMD64_DC_CFG		0xc0011022
++#define MSR_AMD64_TW_CFG		0xc0011023
  
- 	strscpy(drvinfo->driver, mlx5e_rep_driver_name,
- 		sizeof(drvinfo->driver));
--	snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
--		 "%d.%d.%04d (%.16s)",
--		 fw_rev_maj(mdev), fw_rev_min(mdev),
--		 fw_rev_sub(mdev), mdev->board_id);
-+	count = snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d (%.16s)", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev), mdev->board_id);
-+	if (count == sizeof(drvinfo->fw_version))
-+		snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev));
- }
+ #define MSR_AMD64_DE_CFG		0xc0011029
+ #define MSR_AMD64_DE_CFG_LFENCE_SERIALIZE_BIT	 1
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -3643,6 +3643,7 @@ int kvm_set_msr_common(struct kvm_vcpu *
+ 	case MSR_AMD64_PATCH_LOADER:
+ 	case MSR_AMD64_BU_CFG2:
+ 	case MSR_AMD64_DC_CFG:
++	case MSR_AMD64_TW_CFG:
+ 	case MSR_F15H_EX_CFG:
+ 		break;
  
- static const struct counter_desc sw_rep_stats_desc[] = {
--- 
-2.42.0
-
+@@ -4067,6 +4068,7 @@ int kvm_get_msr_common(struct kvm_vcpu *
+ 	case MSR_AMD64_BU_CFG2:
+ 	case MSR_IA32_PERF_CTL:
+ 	case MSR_AMD64_DC_CFG:
++	case MSR_AMD64_TW_CFG:
+ 	case MSR_F15H_EX_CFG:
+ 	/*
+ 	 * Intel Sandy Bridge CPUs must support the RAPL (running average power
 
 
