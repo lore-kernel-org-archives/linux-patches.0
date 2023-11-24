@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584E031759;
-	Fri, 24 Nov 2023 19:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8296431759;
+	Fri, 24 Nov 2023 19:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uW1KBVgR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C2CC43395;
-	Fri, 24 Nov 2023 19:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxDbacne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FFDC43391;
+	Fri, 24 Nov 2023 19:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853032;
-	bh=rIs2aQqTZI9mge9PtgjuBVX/a8LmFo4rib6iQzHsrn8=;
+	s=korg; t=1700853035;
+	bh=DkQUMe1iAH+UWQtwN9WEBBWf9owfiDRF2HxkZ5SDbsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uW1KBVgRDHjqeTEjwNeiYXzemZVrp4Ak6GWhSuRwofe7Ie3WWse3zMdv964ubgR3Q
-	 E7wSdxxR9OnPMsfzk0EJ04soRyddDoPQsyKgRtXT5es/EC8V75uLeVOCu91VHNXo9H
-	 Sew8AUgaDLKVlojASsNGPj+BJ4k9Khw567ur5vy4=
+	b=jxDbacneB+MGow8ZKrKZTh9HyY91QPSgs6oYZcmsUsYxFrx3z9cg8m9ajP8xzBodm
+	 EFuT+3NvZ5/hLa3Y22mDaJOVqF+AyS2WZhPfX04bbiPYF6vbDVyqy4pvsYhL6I7B8V
+	 sdIHjZ0BiX/y8RK+60auNFjHKA4A0+3pj9VVCbrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Held <felix.held@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/297] drm/amd: Fix UBSAN array-index-out-of-bounds for SMU7
-Date: Fri, 24 Nov 2023 17:51:09 +0000
-Message-ID: <20231124172001.055160499@linuxfoundation.org>
+Subject: [PATCH 5.15 028/297] drm/amd: Fix UBSAN array-index-out-of-bounds for Polaris and Tonga
+Date: Fri, 24 Nov 2023 17:51:10 +0000
+Message-ID: <20231124172001.086014694@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -45,65 +44,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 760efbca74a405dc439a013a5efaa9fadc95a8c3 ]
+[ Upstream commit 0f0e59075b5c22f1e871fbd508d6e4f495048356 ]
 
 For pptable structs that use flexible array sizes, use flexible arrays.
 
-Suggested-by: Felix Held <felix.held@amd.com>
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2874
+Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2036742
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/include/pptable.h                 | 4 ++--
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ .../gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h    | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/include/pptable.h b/drivers/gpu/drm/amd/include/pptable.h
-index 0b6a057e0a4c4..5aac8d545bdc6 100644
---- a/drivers/gpu/drm/amd/include/pptable.h
-+++ b/drivers/gpu/drm/amd/include/pptable.h
-@@ -78,7 +78,7 @@ typedef struct _ATOM_PPLIB_THERMALCONTROLLER
- typedef struct _ATOM_PPLIB_STATE
- {
-     UCHAR ucNonClockStateIndex;
--    UCHAR ucClockStateIndices[1]; // variable-sized
-+    UCHAR ucClockStateIndices[]; // variable-sized
- } ATOM_PPLIB_STATE;
- 
- 
-@@ -473,7 +473,7 @@ typedef struct _ATOM_PPLIB_STATE_V2
-       /**
-       * Driver will read the first ucNumDPMLevels in this array
-       */
--      UCHAR clockInfoIndex[1];
-+      UCHAR clockInfoIndex[];
- } ATOM_PPLIB_STATE_V2;
- 
- typedef struct _StateArray{
 diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h
-index b0ac4d121adca..41444e27bfc0c 100644
+index 41444e27bfc0c..e0e40b054c08b 100644
 --- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h
 +++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h
-@@ -179,7 +179,7 @@ typedef struct _ATOM_Tonga_MCLK_Dependency_Record {
- typedef struct _ATOM_Tonga_MCLK_Dependency_Table {
+@@ -164,7 +164,7 @@ typedef struct _ATOM_Tonga_State {
+ typedef struct _ATOM_Tonga_State_Array {
+ 	UCHAR ucRevId;
+ 	UCHAR ucNumEntries;		/* Number of entries. */
+-	ATOM_Tonga_State entries[1];	/* Dynamically allocate entries. */
++	ATOM_Tonga_State entries[];	/* Dynamically allocate entries. */
+ } ATOM_Tonga_State_Array;
+ 
+ typedef struct _ATOM_Tonga_MCLK_Dependency_Record {
+@@ -210,7 +210,7 @@ typedef struct _ATOM_Polaris_SCLK_Dependency_Record {
+ typedef struct _ATOM_Polaris_SCLK_Dependency_Table {
+ 	UCHAR ucRevId;
+ 	UCHAR ucNumEntries;							/* Number of entries. */
+-	ATOM_Polaris_SCLK_Dependency_Record entries[1];				 /* Dynamically allocate entries. */
++	ATOM_Polaris_SCLK_Dependency_Record entries[];				 /* Dynamically allocate entries. */
+ } ATOM_Polaris_SCLK_Dependency_Table;
+ 
+ typedef struct _ATOM_Tonga_PCIE_Record {
+@@ -222,7 +222,7 @@ typedef struct _ATOM_Tonga_PCIE_Record {
+ typedef struct _ATOM_Tonga_PCIE_Table {
  	UCHAR ucRevId;
  	UCHAR ucNumEntries; 										/* Number of entries. */
--	ATOM_Tonga_MCLK_Dependency_Record entries[1];				/* Dynamically allocate entries. */
-+	ATOM_Tonga_MCLK_Dependency_Record entries[];				/* Dynamically allocate entries. */
- } ATOM_Tonga_MCLK_Dependency_Table;
+-	ATOM_Tonga_PCIE_Record entries[1];							/* Dynamically allocate entries. */
++	ATOM_Tonga_PCIE_Record entries[];							/* Dynamically allocate entries. */
+ } ATOM_Tonga_PCIE_Table;
  
- typedef struct _ATOM_Tonga_SCLK_Dependency_Record {
-@@ -194,7 +194,7 @@ typedef struct _ATOM_Tonga_SCLK_Dependency_Record {
- typedef struct _ATOM_Tonga_SCLK_Dependency_Table {
+ typedef struct _ATOM_Polaris10_PCIE_Record {
+@@ -235,7 +235,7 @@ typedef struct _ATOM_Polaris10_PCIE_Record {
+ typedef struct _ATOM_Polaris10_PCIE_Table {
+ 	UCHAR ucRevId;
+ 	UCHAR ucNumEntries;                                         /* Number of entries. */
+-	ATOM_Polaris10_PCIE_Record entries[1];                      /* Dynamically allocate entries. */
++	ATOM_Polaris10_PCIE_Record entries[];                      /* Dynamically allocate entries. */
+ } ATOM_Polaris10_PCIE_Table;
+ 
+ 
+@@ -252,7 +252,7 @@ typedef struct _ATOM_Tonga_MM_Dependency_Record {
+ typedef struct _ATOM_Tonga_MM_Dependency_Table {
  	UCHAR ucRevId;
  	UCHAR ucNumEntries; 										/* Number of entries. */
--	ATOM_Tonga_SCLK_Dependency_Record entries[1];				 /* Dynamically allocate entries. */
-+	ATOM_Tonga_SCLK_Dependency_Record entries[];				 /* Dynamically allocate entries. */
- } ATOM_Tonga_SCLK_Dependency_Table;
+-	ATOM_Tonga_MM_Dependency_Record entries[1]; 			   /* Dynamically allocate entries. */
++	ATOM_Tonga_MM_Dependency_Record entries[]; 			   /* Dynamically allocate entries. */
+ } ATOM_Tonga_MM_Dependency_Table;
  
- typedef struct _ATOM_Polaris_SCLK_Dependency_Record {
+ typedef struct _ATOM_Tonga_Voltage_Lookup_Record {
+@@ -265,7 +265,7 @@ typedef struct _ATOM_Tonga_Voltage_Lookup_Record {
+ typedef struct _ATOM_Tonga_Voltage_Lookup_Table {
+ 	UCHAR ucRevId;
+ 	UCHAR ucNumEntries; 										/* Number of entries. */
+-	ATOM_Tonga_Voltage_Lookup_Record entries[1];				/* Dynamically allocate entries. */
++	ATOM_Tonga_Voltage_Lookup_Record entries[];				/* Dynamically allocate entries. */
+ } ATOM_Tonga_Voltage_Lookup_Table;
+ 
+ typedef struct _ATOM_Tonga_Fan_Table {
 -- 
 2.42.0
 
