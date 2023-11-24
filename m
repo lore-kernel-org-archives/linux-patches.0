@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BB939FF7;
-	Fri, 24 Nov 2023 18:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6718039FF7;
+	Fri, 24 Nov 2023 18:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gmj7+6Zr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08603C433C7;
-	Fri, 24 Nov 2023 18:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsIo0nDf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82CCAC433C7;
+	Fri, 24 Nov 2023 18:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850058;
-	bh=in/ylI53VjtVo2eYAvX74liSBbq5qaB7Cje+bZ7glfY=;
+	s=korg; t=1700850060;
+	bh=rEdCAAYCJu8lmhsElXJNnse3vl+RLyUUf6pmX6yvhuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gmj7+6ZrXr+QZrhmPF44wxQbF7y26HBcKQaFLXZK+hp5kHERDOXMcXswIRblnTz+d
-	 SDfFgvYWiJ4gvraVG4dmxS68ObIe2qmh/JP854lInukHpq2DTwqyDaNxVHc8cL1zFb
-	 qgjXqhXBQiD0tgIpal7R4ZN13A58SvWNONPd0A1M=
+	b=OsIo0nDf1ejDu0cLI2/zANHyVaZb3prdHM8tPCHHU8mxQvLXBapUg7s3eIynf5pXI
+	 EiCfxjguS34kE20kyHrMVL5ywCKFRGABeaUiZyKbGu56PiSCWH0aGtUjlEfvY6ueMt
+	 3EHUJuz9zKtZSMpCq+T8RgV724P6apqM3fVZd6jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meng Tang <tangmeng@uniontech.com>,
-	Guan Wentao <guanwentao@uniontech.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Muhammad Ahmed <ahmed.ahmed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 404/530] Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE
-Date: Fri, 24 Nov 2023 17:49:30 +0000
-Message-ID: <20231124172040.348785035@linuxfoundation.org>
+Subject: [PATCH 6.6 405/530] drm/amd/display: enable dsc_clk even if dsc_pg disabled
+Date: Fri, 24 Nov 2023 17:49:31 +0000
+Message-ID: <20231124172040.384650141@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,73 +46,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guan Wentao <guanwentao@uniontech.com>
+From: Muhammad Ahmed <ahmed.ahmed@amd.com>
 
-[ Upstream commit da06ff1f585ea784c79f80e7fab0e0c4ebb49c1c ]
+[ Upstream commit 40255df370e94d44f0f0a924400d68db0ee31bec ]
 
-Add PID/VID 0bda:b85b for Realtek RTL8852BE USB bluetooth part.
-The PID/VID was reported by the patch last year. [1]
-Some SBCs like rockpi 5B A8 module contains the device.
-And it`s founded in website. [2] [3]
+[why]
+need to enable dsc_clk regardless dsc_pg
 
-Here is the device tables in /sys/kernel/debug/usb/devices .
-
-T:  Bus=07 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0bda ProdID=b85b Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-
-Link: https://lore.kernel.org/all/20220420052402.19049-1-tangmeng@uniontech.com/ [1]
-Link: https://forum.radxa.com/t/bluetooth-on-ubuntu/13051/4 [2]
-Link: https://ubuntuforums.org/showthread.php?t=2489527 [3]
-
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Meng Tang <tangmeng@uniontech.com>
-Signed-off-by: Guan Wentao <guanwentao@uniontech.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Muhammad Ahmed <ahmed.ahmed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c           | 8 ++++----
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 3 +++
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index e3f11ea2a9fcd..66080fae072f2 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -543,6 +543,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0bda, 0xb85b), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3570), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 38abbd0c9d997..186936ad283a5 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -1843,7 +1843,7 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
+ 	if (dc->hwss.subvp_pipe_control_lock)
+ 		dc->hwss.subvp_pipe_control_lock(dc, context, true, true, NULL, subvp_prev_use);
+ 
+-	if (dc->debug.enable_double_buffered_dsc_pg_support)
++	if (dc->hwss.update_dsc_pg)
+ 		dc->hwss.update_dsc_pg(dc, context, false);
+ 
+ 	disable_dangling_plane(dc, context);
+@@ -1950,7 +1950,7 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
+ 		dc->hwss.optimize_bandwidth(dc, context);
+ 	}
+ 
+-	if (dc->debug.enable_double_buffered_dsc_pg_support)
++	if (dc->hwss.update_dsc_pg)
+ 		dc->hwss.update_dsc_pg(dc, context, true);
+ 
+ 	if (dc->ctx->dce_version >= DCE_VERSION_MAX)
+@@ -2197,7 +2197,7 @@ void dc_post_update_surfaces_to_stream(struct dc *dc)
+ 
+ 		dc->hwss.optimize_bandwidth(dc, context);
+ 
+-		if (dc->debug.enable_double_buffered_dsc_pg_support)
++		if (dc->hwss.update_dsc_pg)
+ 			dc->hwss.update_dsc_pg(dc, context, true);
+ 	}
+ 
+@@ -3533,7 +3533,7 @@ static void commit_planes_for_stream(struct dc *dc,
+ 		if (get_seamless_boot_stream_count(context) == 0)
+ 			dc->hwss.prepare_bandwidth(dc, context);
+ 
+-		if (dc->debug.enable_double_buffered_dsc_pg_support)
++		if (dc->hwss.update_dsc_pg)
+ 			dc->hwss.update_dsc_pg(dc, context, false);
+ 
+ 		context_clock_trace(dc, context);
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
+index be59e1c02f8aa..c9140b50c3454 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
+@@ -77,6 +77,9 @@ void dcn32_dsc_pg_control(
+ 	if (hws->ctx->dc->debug.disable_dsc_power_gate)
+ 		return;
+ 
++	if (!hws->ctx->dc->debug.enable_double_buffered_dsc_pg_support)
++		return;
++
+ 	REG_GET(DC_IP_REQUEST_CNTL, IP_REQUEST_EN, &org_ip_request_cntl);
+ 	if (org_ip_request_cntl == 0)
+ 		REG_SET(DC_IP_REQUEST_CNTL, 0, IP_REQUEST_EN, 1);
 -- 
 2.42.0
 
