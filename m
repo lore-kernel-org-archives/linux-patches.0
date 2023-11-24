@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A3A381D4;
-	Fri, 24 Nov 2023 18:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013BD381D4;
+	Fri, 24 Nov 2023 18:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvtdnTo3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9E6C433C8;
-	Fri, 24 Nov 2023 18:23:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfMCx4I+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8119BC433CA;
+	Fri, 24 Nov 2023 18:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850182;
-	bh=Of6wbpHlNePnjOT68DtM/I24ykPFBCiguFkR8bYn1dQ=;
+	s=korg; t=1700850184;
+	bh=EHHG/A8u6NU8J0DBtErEUIgMMLJml6I2/ryklNg0RKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvtdnTo3TGds3UbGWSDdekbMozano7EoWM9QMgJNFADFKH2pTOKQQFrLUVOAN0pAF
-	 3DNtN8Rb9pYfEqgu2NJosy5wECfmEd36yB22TpaIq67rQ5mRWH2tOGychXr9tIf3BY
-	 hpIWvyt0AVaJWaBp4zpIV1sEq+vUIrh2VBeMPwTI=
+	b=pfMCx4I+imuJyzPcZa7Ye5SftyJMGysDp41Zk2Tpd6kOdXyjfdNBYFv5BgzytjHtI
+	 K8qgy4tSX9zKdy+O36Fv2bgYEebcRFIwcmn1rKH7qV/BNSsXzUG+QE2kO/t4Kf0SSN
+	 92VgsWrZqFdI+xIPAkGbN0GHWsIiVjhAgk6whuSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Christoph Lameter <cl@linux.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 477/530] mm: kmem: drop __GFP_NOFAIL when allocating objcg vectors
-Date: Fri, 24 Nov 2023 17:50:43 +0000
-Message-ID: <20231124172042.594224001@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 478/530] mptcp: deal with large GSO size
+Date: Fri, 24 Nov 2023 17:50:44 +0000
+Message-ID: <20231124172042.625013824@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,52 +44,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Gushchin <roman.gushchin@linux.dev>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 24948e3b7b12e0031a6edb4f49bbb9fb2ad1e4e9 upstream.
+commit 9fce92f050f448a0d1ddd9083ef967d9930f1e52 upstream.
 
-Objcg vectors attached to slab pages to store slab object ownership
-information are allocated using gfp flags for the original slab
-allocation.  Depending on slab page order and the size of slab objects,
-objcg vector can take several pages.
+After the blamed commit below, the TCP sockets (and the MPTCP subflows)
+can build egress packets larger than 64K. That exceeds the maximum DSS
+data size, the length being misrepresent on the wire and the stream being
+corrupted, as later observed on the receiver:
 
-If the original allocation was done with the __GFP_NOFAIL flag, it
-triggered a warning in the page allocation code.  Indeed, order > 1 pages
-should not been allocated with the __GFP_NOFAIL flag.
+  WARNING: CPU: 0 PID: 9696 at net/mptcp/protocol.c:705 __mptcp_move_skbs_from_subflow+0x2604/0x26e0
+  CPU: 0 PID: 9696 Comm: syz-executor.7 Not tainted 6.6.0-rc5-gcd8bdf563d46 #45
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+  netlink: 8 bytes leftover after parsing attributes in process `syz-executor.4'.
+  RIP: 0010:__mptcp_move_skbs_from_subflow+0x2604/0x26e0 net/mptcp/protocol.c:705
+  RSP: 0018:ffffc90000006e80 EFLAGS: 00010246
+  RAX: ffffffff83e9f674 RBX: ffff88802f45d870 RCX: ffff888102ad0000
+  netlink: 8 bytes leftover after parsing attributes in process `syz-executor.4'.
+  RDX: 0000000080000303 RSI: 0000000000013908 RDI: 0000000000003908
+  RBP: ffffc90000007110 R08: ffffffff83e9e078 R09: 1ffff1100e548c8a
+  R10: dffffc0000000000 R11: ffffed100e548c8b R12: 0000000000013908
+  R13: dffffc0000000000 R14: 0000000000003908 R15: 000000000031cf29
+  FS:  00007f239c47e700(0000) GS:ffff88811b200000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f239c45cd78 CR3: 000000006a66c006 CR4: 0000000000770ef0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+  PKRU: 55555554
+  Call Trace:
+   <IRQ>
+   mptcp_data_ready+0x263/0xac0 net/mptcp/protocol.c:819
+   subflow_data_ready+0x268/0x6d0 net/mptcp/subflow.c:1409
+   tcp_data_queue+0x21a1/0x7a60 net/ipv4/tcp_input.c:5151
+   tcp_rcv_established+0x950/0x1d90 net/ipv4/tcp_input.c:6098
+   tcp_v6_do_rcv+0x554/0x12f0 net/ipv6/tcp_ipv6.c:1483
+   tcp_v6_rcv+0x2e26/0x3810 net/ipv6/tcp_ipv6.c:1749
+   ip6_protocol_deliver_rcu+0xd6b/0x1ae0 net/ipv6/ip6_input.c:438
+   ip6_input+0x1c5/0x470 net/ipv6/ip6_input.c:483
+   ipv6_rcv+0xef/0x2c0 include/linux/netfilter.h:304
+   __netif_receive_skb+0x1ea/0x6a0 net/core/dev.c:5532
+   process_backlog+0x353/0x660 net/core/dev.c:5974
+   __napi_poll+0xc6/0x5a0 net/core/dev.c:6536
+   net_rx_action+0x6a0/0xfd0 net/core/dev.c:6603
+   __do_softirq+0x184/0x524 kernel/softirq.c:553
+   do_softirq+0xdd/0x130 kernel/softirq.c:454
 
-Fix this by simply dropping the __GFP_NOFAIL flag when allocating the
-objcg vector.  It effectively allows to skip the accounting of a single
-slab object under a heavy memory pressure.
+Address the issue explicitly bounding the maximum GSO size to what MPTCP
+actually allows.
 
-An alternative would be to implement the mechanism to fallback to order-0
-allocations for accounting metadata, which is also not perfect because it
-will increase performance penalty and memory footprint of the kernel
-memory accounting under memory pressure.
-
-Link: https://lkml.kernel.org/r/ZUp8ZFGxwmCx4ZFr@P9FQF9L96D.corp.robot.car
-Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
-Reported-by: Christoph Lameter <cl@linux.com>
-Closes: https://lkml.kernel.org/r/6b42243e-f197-600a-5d22-56bd728a5ad8@gentwo.org
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/450
+Fixes: 7c4e983c4f3c ("net: allow gso_max_size to exceed 65536")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20231114-upstream-net-20231113-mptcp-misc-fixes-6-7-rc2-v1-1-7b9cd6a7b7f4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2864,7 +2864,8 @@ static void commit_charge(struct folio *
-  * Moreover, it should not come from DMA buffer and is not readily
-  * reclaimable. So those GFP bits should be masked off.
-  */
--#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | __GFP_ACCOUNT)
-+#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | \
-+				 __GFP_ACCOUNT | __GFP_NOFAIL)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1231,6 +1231,8 @@ static void mptcp_update_infinite_map(st
+ 	mptcp_do_fallback(ssk);
+ }
  
- /*
-  * mod_objcg_mlstate() may be called with irq enabled, so
++#define MPTCP_MAX_GSO_SIZE (GSO_LEGACY_MAX_SIZE - (MAX_TCP_HEADER + 1))
++
+ static int mptcp_sendmsg_frag(struct sock *sk, struct sock *ssk,
+ 			      struct mptcp_data_frag *dfrag,
+ 			      struct mptcp_sendmsg_info *info)
+@@ -1257,6 +1259,8 @@ static int mptcp_sendmsg_frag(struct soc
+ 		return -EAGAIN;
+ 
+ 	/* compute send limit */
++	if (unlikely(ssk->sk_gso_max_size > MPTCP_MAX_GSO_SIZE))
++		ssk->sk_gso_max_size = MPTCP_MAX_GSO_SIZE;
+ 	info->mss_now = tcp_send_mss(ssk, &info->size_goal, info->flags);
+ 	copy = info->size_goal;
+ 
 
 
