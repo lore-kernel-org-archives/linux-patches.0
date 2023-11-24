@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C3739FD4;
-	Fri, 24 Nov 2023 18:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D757E39FC6;
+	Fri, 24 Nov 2023 18:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O1dfBmk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2CBC433C7;
-	Fri, 24 Nov 2023 18:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BByCMpEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D4DC433C8;
+	Fri, 24 Nov 2023 18:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849176;
-	bh=XK6r3pfZa+V2I7Pg5tv84jqaMsXkYAwNtMAOXsuGKzs=;
+	s=korg; t=1700849178;
+	bh=wYQJWgiKJAi3XM53d8UmMJGdbDVxIQ6x9W9u7Pgsghk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1O1dfBmkg640SSi0OLnKBap8SebvzzeL9ZVUOo9bdberKtPNCqU7M4s2Txe2hoW9e
-	 x/CG8bt0r9moYx90yuF7FAcnLi5+8chSxOBiIDEGmbfVkODbxgsjjfedB4oVH+LY1+
-	 uRBSVr/xnnxZ09kda5PHjMKdASzyJNwc3EEd//54=
+	b=BByCMpEg9ZvxBn9BTUWs6p4yMxj5lJzZbb+LHOLg0nupJPfVoDilesgDsvIFF5oSI
+	 H9x1iheASKrhNKWAcsNdEgPKnih93NhwYJZ2e2WCwiu262MGZyIJOdaNy9YNTuxk6i
+	 iQKx8kis5/A7M8bxYvTfCkAESQFq0adLjFEK10rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Leo Liu <leo.liu@amd.com>,
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/530] md: dont rely on mddev->pers to be set in mddev_suspend()
-Date: Fri, 24 Nov 2023 17:43:39 +0000
-Message-ID: <20231124172029.673614806@linuxfoundation.org>
+Subject: [PATCH 6.6 054/530] drm/amdgpu: not to save bo in the case of RAS err_event_athub
+Date: Fri, 24 Nov 2023 17:43:40 +0000
+Message-ID: <20231124172029.699748838@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,41 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: David (Ming Qiang) Wu <David.Wu3@amd.com>
 
-[ Upstream commit b721e7885eb242aa2459ee66bb42ceef1bcf0f0c ]
+[ Upstream commit fa1f1cc09d588a90c8ce3f507c47df257461d148 ]
 
-'active_io' used to be initialized while the array is running, and
-'mddev->pers' is set while the array is running as well. Hence caller
-must hold 'reconfig_mutex' and guarantee 'mddev->pers' is set before
-calling mddev_suspend().
+err_event_athub will corrupt VCPU buffer and not good to
+be restored in amdgpu_vcn_resume() and in this case
+the VCPU buffer needs to be cleared for VCN firmware to
+work properly.
 
-Now that 'active_io' is initialized when mddev is allocated, such
-restriction doesn't exist anymore. In the meantime, follow up patches
-will refactor mddev_suspend(), hence add checking for 'mddev->pers' to
-prevent null-ptr-deref.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230825030956.1527023-4-yukuai1@huaweicloud.com
+Acked-by: Leo Liu <leo.liu@amd.com>
+Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index a104a025084dc..9247e55c7eafc 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -449,7 +449,7 @@ void mddev_suspend(struct mddev *mddev)
- 	set_bit(MD_ALLOW_SB_UPDATE, &mddev->flags);
- 	percpu_ref_kill(&mddev->active_io);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
+index 36b55d2bd51a9..03b4bcfca1963 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
+@@ -292,8 +292,15 @@ int amdgpu_vcn_suspend(struct amdgpu_device *adev)
+ 	void *ptr;
+ 	int i, idx;
  
--	if (mddev->pers->prepare_suspend)
-+	if (mddev->pers && mddev->pers->prepare_suspend)
- 		mddev->pers->prepare_suspend(mddev);
++	bool in_ras_intr = amdgpu_ras_intr_triggered();
++
+ 	cancel_delayed_work_sync(&adev->vcn.idle_work);
  
- 	wait_event(mddev->sb_wait, percpu_ref_is_zero(&mddev->active_io));
++	/* err_event_athub will corrupt VCPU buffer, so we need to
++	 * restore fw data and clear buffer in amdgpu_vcn_resume() */
++	if (in_ras_intr)
++		return 0;
++
+ 	for (i = 0; i < adev->vcn.num_vcn_inst; ++i) {
+ 		if (adev->vcn.harvest_config & (1 << i))
+ 			continue;
 -- 
 2.42.0
 
