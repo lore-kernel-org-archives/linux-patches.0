@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A315B35F1A;
-	Fri, 24 Nov 2023 19:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1093535F1A;
+	Fri, 24 Nov 2023 19:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18xz604l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30DE0C433C7;
-	Fri, 24 Nov 2023 19:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2sDVxVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF2AC433C7;
+	Fri, 24 Nov 2023 19:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853090;
-	bh=W7c6jFS/AEHB1i2GcHUgQ7gCxdEmaS4arbi+A8ba4ao=;
+	s=korg; t=1700853092;
+	bh=2preVVLmc79Avz25PlMDNicynkPB3l+CkMHBLqOIksM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=18xz604l9ExLrksJWjIPF46P+rEqzbJp9+a43AUvd9idcLkoK50rQjysKhEn11Nft
-	 FMLxbWRwyCisBO+CKsf4j7y1WeezMffmc4gbXJhvMaXmS95HQAVqW3ZNVmlYbKQYuD
-	 UrN1kTk+aJt4Y4zCo9N2dmCVROWSUfMHclJeKzOs=
+	b=u2sDVxVPR1Mzjy2u4uQkyMcMjbKk/hXbYPS9IHFSiRbGA0K9hKmPPYEX3oai07WVw
+	 IizIzw4wM4Pp+hvmlMX+PaoeZsDhQuicaZP9gSJGEanxxkf93+FnavMahEDgaDBjM6
+	 jfWszGeN1E9Ump9UbGko5K8jOKlbVZOwk2tewsLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Airlie <airlied@redhat.com>,
-	Philipp Stanner <pstanner@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	Zack Rusin <zackr@vmware.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kuogee Hsieh <khsieh@codeaurora.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Stephen Boyd <swboyd@chromium.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Jani Nikula <jani.nikula@intel.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/297] drm: vmwgfx_surface.c: copy user-array safely
-Date: Fri, 24 Nov 2023 17:51:07 +0000
-Message-ID: <20231124172000.983153082@linuxfoundation.org>
+Subject: [PATCH 5.15 026/297] drm/msm/dp: skip validity check for DP CTS EDID checksum
+Date: Fri, 24 Nov 2023 17:51:08 +0000
+Message-ID: <20231124172001.017741271@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -44,42 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <pstanner@redhat.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 06ab64a0d836ac430c5f94669710a78aa43942cb ]
+[ Upstream commit a251c9d8e30833b260101edb9383b176ee2b7cb1 ]
 
-Currently, there is no overflow-check with memdup_user().
+The DP CTS test for EDID last block checksum expects the checksum for
+the last block, invalid or not. Skip the validity check.
 
-Use the new function memdup_array_user() instead of memdup_user() for
-duplicating the user-space array safely.
+For the most part (*), the EDIDs returned by drm_get_edid() will be
+valid anyway, and there's the CTS workaround to get the checksum for
+completely invalid EDIDs. See commit 7948fe12d47a ("drm/msm/dp: return
+correct edid checksum after corrupted edid checksum read").
 
-Suggested-by: David Airlie <airlied@redhat.com>
-Signed-off-by: Philipp Stanner <pstanner@redhat.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230920123612.16914-7-pstanner@redhat.com
+This lets us remove one user of drm_edid_block_valid() with hopes the
+function can be removed altogether in the future.
+
+(*) drm_get_edid() ignores checksum errors on CTA extensions.
+
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Kuogee Hsieh <khsieh@codeaurora.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/555361/
+Link: https://lore.kernel.org/r/20230901142034.580802-1-jani.nikula@intel.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_surface.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_panel.c | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-index 5d53a5f9d1237..872af7d4b3fc9 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-@@ -807,9 +807,9 @@ int vmw_surface_define_ioctl(struct drm_device *dev, void *data,
- 	metadata->num_sizes = num_sizes;
- 	user_srf->size = size;
- 	metadata->sizes =
--		memdup_user((struct drm_vmw_size __user *)(unsigned long)
-+		memdup_array_user((struct drm_vmw_size __user *)(unsigned long)
- 			    req->size_addr,
--			    sizeof(*metadata->sizes) * metadata->num_sizes);
-+			    metadata->num_sizes, sizeof(*metadata->sizes));
- 	if (IS_ERR(metadata->sizes)) {
- 		ret = PTR_ERR(metadata->sizes);
- 		goto out_no_sizes;
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 62b742e701d2c..f9d31069f4848 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -263,26 +263,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+ 
+ static u8 dp_panel_get_edid_checksum(struct edid *edid)
+ {
+-	struct edid *last_block;
+-	u8 *raw_edid;
+-	bool is_edid_corrupt = false;
++	edid += edid->extensions;
+ 
+-	if (!edid) {
+-		DRM_ERROR("invalid edid input\n");
+-		return 0;
+-	}
+-
+-	raw_edid = (u8 *)edid;
+-	raw_edid += (edid->extensions * EDID_LENGTH);
+-	last_block = (struct edid *)raw_edid;
+-
+-	/* block type extension */
+-	drm_edid_block_valid(raw_edid, 1, false, &is_edid_corrupt);
+-	if (!is_edid_corrupt)
+-		return last_block->checksum;
+-
+-	DRM_ERROR("Invalid block, no checksum\n");
+-	return 0;
++	return edid->checksum;
+ }
+ 
+ void dp_panel_handle_sink_request(struct dp_panel *dp_panel)
 -- 
 2.42.0
 
