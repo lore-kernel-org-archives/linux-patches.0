@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4292228DBA;
-	Fri, 24 Nov 2023 18:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926EF2E64F;
+	Fri, 24 Nov 2023 18:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNUVb8iB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65837C433C8;
-	Fri, 24 Nov 2023 18:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RX7odTIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0948C433C8;
+	Fri, 24 Nov 2023 18:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852187;
-	bh=J4AOv1Xk+Z0QWG4Vox8fa38dcECudEoSCzAGu8D5YhU=;
+	s=korg; t=1700852190;
+	bh=gYC1k8nfIQ241kxaCZyT1X8vajvyoK93LU+O1XjN4W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNUVb8iBumsZ9PNbs4tKAovykvBUzGJWFAx/X6S3sAuamYq026zUeHYTAvhB96MFU
-	 aDpSyUZAHSIZhmgmkr8WjpwJMMFlqsXhoYXryhGDTV6yEuKxYRwz1n04phr46J+Oxm
-	 T2OBupXXjqV2n5/c7l2ZolYQ3/VIr/pRa4pZYySQ=
+	b=RX7odTIX+ZB+Zx/hdnDgciSlFEcIlIRE2AgO/oiv4CgZYyBvqGiiI0gkQXDCIsTzI
+	 XLge2OIVI9erMqyz8lBLfzHma0qhEN/cFuXKVNCzNEhr473sqdwJrnmcGG2Lo5qLeQ
+	 ha2HrwtyJPIP8jwUR7ZBhPOLUDBHUp1TaPDCSJ8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 255/372] mm/memory_hotplug: use pfn math in place of direct struct page manipulation
-Date: Fri, 24 Nov 2023 17:50:42 +0000
-Message-ID: <20231124172019.015294353@linuxfoundation.org>
+	Nicolas Pitre <nico@fluxnic.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 256/372] mtd: cfi_cmdset_0001: Byte swap OTP info
+Date: Fri, 24 Nov 2023 17:50:43 +0000
+Message-ID: <20231124172019.042702104@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -47,46 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 1640a0ef80f6d572725f5b0330038c18e98ea168 upstream.
+commit 565fe150624ee77dc63a735cc1b3bff5101f38a3 upstream.
 
-When dealing with hugetlb pages, manipulating struct page pointers
-directly can get to wrong struct page, since struct page is not guaranteed
-to be contiguous on SPARSEMEM without VMEMMAP.  Use pfn calculation to
-handle it properly.
+Currently the offset into the device when looking for OTP
+bits can go outside of the address of the MTD NOR devices,
+and if that memory isn't readable, bad things happen
+on the IXP4xx (added prints that illustrate the problem before
+the crash):
 
-Without the fix, a wrong number of page might be skipped. Since skip cannot be
-negative, scan_movable_page() will end early and might miss a movable page with
--ENOENT. This might fail offline_pages(). No bug is reported. The fix comes
-from code inspection.
+cfi_intelext_otp_walk walk OTP on chip 0 start at reg_prot_offset 0x00000100
+ixp4xx_copy_from copy from 0x00000100 to 0xc880dd78
+cfi_intelext_otp_walk walk OTP on chip 0 start at reg_prot_offset 0x12000000
+ixp4xx_copy_from copy from 0x12000000 to 0xc880dd78
+8<--- cut here ---
+Unable to handle kernel paging request at virtual address db000000
+[db000000] *pgd=00000000
+(...)
 
-Link: https://lkml.kernel.org/r/20230913201248.452081-4-zi.yan@sent.com
-Fixes: eeb0efd071d8 ("mm,memory_hotplug: fix scan_movable_pages() for gigantic hugepages")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This happens in this case because the IXP4xx is big endian and
+the 32- and 16-bit fields in the struct cfi_intelext_otpinfo are not
+properly byteswapped. Compare to how the code in read_pri_intelext()
+byteswaps the fields in struct cfi_pri_intelext.
+
+Adding a small byte swapping loop for the OTP in read_pri_intelext()
+and the crash goes away.
+
+The problem went unnoticed for many years until I enabled
+CONFIG_MTD_OTP on the IXP4xx as well, triggering the bug.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicolas Pitre <nico@fluxnic.net>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231020-mtd-otp-byteswap-v4-1-0d132c06aa9d@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory_hotplug.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/chips/cfi_cmdset_0001.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1611,7 +1611,7 @@ static int scan_movable_pages(unsigned l
- 		 */
- 		if (HPageMigratable(head))
- 			goto found;
--		skip = compound_nr(head) - (page - head);
-+		skip = compound_nr(head) - (pfn - page_to_pfn(head));
- 		pfn += skip - 1;
+--- a/drivers/mtd/chips/cfi_cmdset_0001.c
++++ b/drivers/mtd/chips/cfi_cmdset_0001.c
+@@ -421,9 +421,25 @@ read_pri_intelext(struct map_info *map,
+ 		extra_size = 0;
+ 
+ 		/* Protection Register info */
+-		if (extp->NumProtectionFields)
++		if (extp->NumProtectionFields) {
++			struct cfi_intelext_otpinfo *otp =
++				(struct cfi_intelext_otpinfo *)&extp->extra[0];
++
+ 			extra_size += (extp->NumProtectionFields - 1) *
+-				      sizeof(struct cfi_intelext_otpinfo);
++				sizeof(struct cfi_intelext_otpinfo);
++
++			if (extp_size >= sizeof(*extp) + extra_size) {
++				int i;
++
++				/* Do some byteswapping if necessary */
++				for (i = 0; i < extp->NumProtectionFields - 1; i++) {
++					otp->ProtRegAddr = le32_to_cpu(otp->ProtRegAddr);
++					otp->FactGroups = le16_to_cpu(otp->FactGroups);
++					otp->UserGroups = le16_to_cpu(otp->UserGroups);
++					otp++;
++				}
++			}
++		}
  	}
- 	return -ENOENT;
+ 
+ 	if (extp->MinorVersion >= '1') {
 
 
