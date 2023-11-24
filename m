@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1842E64F;
-	Fri, 24 Nov 2023 18:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2052E64F;
+	Fri, 24 Nov 2023 18:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekvbZoI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3848AC433C8;
-	Fri, 24 Nov 2023 18:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Id6V6miW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EB4C433C8;
+	Fri, 24 Nov 2023 18:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852079;
-	bh=HFdyrGPNcHm2VzTXAXUg7Q//XSuu0zlK+9M5zfxd2as=;
+	s=korg; t=1700852082;
+	bh=DYwbUEofHXymB6UqTpGigZnHPuhrwt9tEnOL+mSQ7mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ekvbZoI5uzPyhXv47HTUvng2PU1wOuWczWBkAEGnmLsqGroD8/k8PCFVIaJ75OLur
-	 ZEMQNaxpyu/Qadh11gPxbeLEzX/8SyNkYsAIVP90cf+2FEtbx2ZwTeQpE6xJtJJKov
-	 nnomnQ9ktBmdcam+yZPsi0dIf2PzlyGJ55ZS7K/U=
+	b=Id6V6miWjmL98/6XYLD2zP0AtH4xbMAHnNkRewYzc9YqyzSjROIEWXyC0GpPu99ym
+	 BgOjIqB/tj9Wagr4Y3HT5gHp65jVNy9dqbF3ZvYW5ByHQGecm7FuCqL6S8OIqqKIHa
+	 elKCafVGX7gI7pfPsz+BQFapu+RLJwlhYjAmgcNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 211/372] ksmbd: handle malformed smb1 message
-Date: Fri, 24 Nov 2023 17:49:58 +0000
-Message-ID: <20231124172017.504196679@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 212/372] ksmbd: fix slab out of bounds write in smb_inherit_dacl()
+Date: Fri, 24 Nov 2023 17:49:59 +0000
+Message-ID: <20231124172017.537018394@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,45 +44,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 5a5409d90bd05f87fe5623a749ccfbf3f7c7d400 upstream.
+commit eebff19acaa35820cb09ce2ccb3d21bee2156ffb upstream.
 
-If set_smb1_rsp_status() is not implemented, It will cause NULL pointer
-dereferece error when client send malformed smb1 message.
-This patch add set_smb1_rsp_status() to ignore malformed smb1 message.
+slab out-of-bounds write is caused by that offsets is bigger than pntsd
+allocation size. This patch add the check to validate 3 offsets using
+allocation size.
 
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-22271
 Cc: stable@vger.kernel.org
-Reported-by: Robert Morris <rtm@csail.mit.edu>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb_common.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/server/smbacl.c |   29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -372,11 +372,22 @@ static int smb1_allocate_rsp_buf(struct
- 	return 0;
- }
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1107,6 +1107,7 @@ pass:
+ 		struct smb_acl *pdacl;
+ 		struct smb_sid *powner_sid = NULL, *pgroup_sid = NULL;
+ 		int powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
++		int pntsd_alloc_size;
  
-+/**
-+ * set_smb1_rsp_status() - set error type in smb response header
-+ * @work:	smb work containing smb response header
-+ * @err:	error code to set in response
-+ */
-+static void set_smb1_rsp_status(struct ksmbd_work *work, __le32 err)
-+{
-+	work->send_no_response = 1;
-+}
+ 		if (parent_pntsd->osidoffset) {
+ 			powner_sid = (struct smb_sid *)((char *)parent_pntsd +
+@@ -1119,9 +1120,10 @@ pass:
+ 			pgroup_sid_size = 1 + 1 + 6 + (pgroup_sid->num_subauth * 4);
+ 		}
+ 
+-		pntsd = kzalloc(sizeof(struct smb_ntsd) + powner_sid_size +
+-				pgroup_sid_size + sizeof(struct smb_acl) +
+-				nt_size, GFP_KERNEL);
++		pntsd_alloc_size = sizeof(struct smb_ntsd) + powner_sid_size +
++			pgroup_sid_size + sizeof(struct smb_acl) + nt_size;
 +
- static struct smb_version_ops smb1_server_ops = {
- 	.get_cmd_val = get_smb1_cmd_val,
- 	.init_rsp_hdr = init_smb1_rsp_hdr,
- 	.allocate_rsp_buf = smb1_allocate_rsp_buf,
- 	.check_user_session = smb1_check_user_session,
-+	.set_rsp_status = set_smb1_rsp_status,
- };
++		pntsd = kzalloc(pntsd_alloc_size, GFP_KERNEL);
+ 		if (!pntsd) {
+ 			rc = -ENOMEM;
+ 			goto free_aces_base;
+@@ -1136,6 +1138,27 @@ pass:
+ 		pntsd->gsidoffset = parent_pntsd->gsidoffset;
+ 		pntsd->dacloffset = parent_pntsd->dacloffset;
  
- static int smb1_negotiate(struct ksmbd_work *work)
++		if ((u64)le32_to_cpu(pntsd->osidoffset) + powner_sid_size >
++		    pntsd_alloc_size) {
++			rc = -EINVAL;
++			kfree(pntsd);
++			goto free_aces_base;
++		}
++
++		if ((u64)le32_to_cpu(pntsd->gsidoffset) + pgroup_sid_size >
++		    pntsd_alloc_size) {
++			rc = -EINVAL;
++			kfree(pntsd);
++			goto free_aces_base;
++		}
++
++		if ((u64)le32_to_cpu(pntsd->dacloffset) + sizeof(struct smb_acl) + nt_size >
++		    pntsd_alloc_size) {
++			rc = -EINVAL;
++			kfree(pntsd);
++			goto free_aces_base;
++		}
++
+ 		if (pntsd->osidoffset) {
+ 			struct smb_sid *owner_sid = (struct smb_sid *)((char *)pntsd +
+ 					le32_to_cpu(pntsd->osidoffset));
 
 
