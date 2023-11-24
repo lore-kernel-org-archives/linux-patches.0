@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C162EAEA;
-	Fri, 24 Nov 2023 18:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E074F2D626;
+	Fri, 24 Nov 2023 18:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlM6MF+i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC04C433C8;
-	Fri, 24 Nov 2023 18:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qi4z8hv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DBAEC433C7;
+	Fri, 24 Nov 2023 18:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851329;
-	bh=IvPLyYHYZD3WQkgiGWi2OQZA/QSq0zc0Vi7upZfKXFU=;
+	s=korg; t=1700851331;
+	bh=ifaAyk5ygZJH25X27x7blYTmzWTycFU2S3mTgenxKIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlM6MF+irBqi06cKKiQkb9rcUCPdorQb03SissPzVzqsOXXm4o62y3ibK9l6WwGx4
-	 T29ZcS6BFQfx2U1/ZqLxPZbqM7P6aZICSp9bvSglxDeTrfJX1xW4SffHoBW56KNrPe
-	 IqRfbpkdCrxdmz6dEbBIwbjZDOGuazSCqMrKQzNQ=
+	b=Qi4z8hv83K0tIf/ePqzGPboqXEyrkyjc87Z70BI2lLmBvhRykcv7U7WT4dIoNYVbv
+	 GwiDjjDK913kOGf/IvABf6+/JsZwp4v/+97AMPDF+uj2asCwoSNxBSu2WoDs40LIlZ
+	 5mEyXSUvD7wtKkGNSm3LaBjRE7V3EpRsbejAVmKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.5 404/491] ALSA: hda/realtek: Add quirks for HP Laptops
-Date: Fri, 24 Nov 2023 17:50:40 +0000
-Message-ID: <20231124172036.746054343@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.5 381/491] parisc: Prevent booting 64-bit kernels on PA1.x machines
+Date: Fri, 24 Nov 2023 17:50:17 +0000
+Message-ID: <20231124172036.045468399@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,33 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 5d639b60971f003d3a9b2b31f8ec73b0718b5d57 upstream.
+commit a406b8b424fa01f244c1aab02ba186258448c36b upstream.
 
-These HP laptops use Realtek HDA codec combined with 2 or 4 CS35L41
-Amplifiers using SPI with Internal Boost.
+Bail out early with error message when trying to boot a 64-bit kernel on
+32-bit machines. This fixes the previous commit to include the check for
+true 64-bit kernels as well.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231115162116.494968-3-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 591d2108f3abc ("parisc: Add runtime check to prevent PA2.0 kernels on PA1.x machines")
+Cc:  <stable@vger.kernel.org> # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/parisc/kernel/head.S |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9740,6 +9740,9 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8c70, "HP EliteBook 835 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c71, "HP EliteBook 845 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c72, "HP EliteBook 865 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8ca4, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8ca7, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8cf5, "HP ZBook Studio 16", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
- 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -70,9 +70,8 @@ $bss_loop:
+ 	stw,ma          %arg2,4(%r1)
+ 	stw,ma          %arg3,4(%r1)
+ 
+-#if !defined(CONFIG_64BIT) && defined(CONFIG_PA20)
+-	/* This 32-bit kernel was compiled for PA2.0 CPUs. Check current CPU
+-	 * and halt kernel if we detect a PA1.x CPU. */
++#if defined(CONFIG_PA20)
++	/* check for 64-bit capable CPU as required by current kernel */
+ 	ldi		32,%r10
+ 	mtctl		%r10,%cr11
+ 	.level 2.0
 
 
