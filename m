@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934B633CF2;
-	Fri, 24 Nov 2023 19:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0AB63A1;
+	Fri, 24 Nov 2023 19:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Or722b9g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069FCC433C7;
-	Fri, 24 Nov 2023 19:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ubh858t1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8856BC433CA;
+	Fri, 24 Nov 2023 19:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853219;
-	bh=HKoCGW2bmdKZ5QJ0l8UGM9FThwa3jh/4CLksuUrR+dg=;
+	s=korg; t=1700853221;
+	bh=yZurPj4anInY3yThdZYf2dy6AiPAYwfSfwABhhUkpf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Or722b9gVH71tOTtHgykT1zg/afynB2zFgmq32lzMUgZIIg3Aid0T5xSFCX6vdFVP
-	 310go3spmXZarZrrdOSFpdwNCv8fMasFytiJD48RhPc3N7VkQcPmfYJEhDcwCyMWDO
-	 OeNeexNlN01hZWVbvX6+1uL6Ffg1cbapHxm3P6wE=
+	b=Ubh858t1ppE2S9zFgveUzSe3JYIZfMRYY7tYeRyT0dkWa/pDR866NCUuPYwEJz5sm
+	 /o5kOppUK5X0wlTxjzjokZcPolT6/m+udqQxHtAUJI9mJ0i/7STXl1oDr6FW4PlW9A
+	 yVUpKPqEvzkk3E8cXM6TNAvCyT/5thkENszgDDew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Philipp Stanner <pstanner@redhat.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Tony Lindgren <tony@atomide.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/297] i2c: dev: copy userspace array safely
-Date: Fri, 24 Nov 2023 17:51:59 +0000
-Message-ID: <20231124172002.940283258@linuxfoundation.org>
+Subject: [PATCH 5.15 078/297] ASoC: ti: omap-mcbsp: Fix runtime PM underflow warnings
+Date: Fri, 24 Nov 2023 17:52:00 +0000
+Message-ID: <20231124172002.977274378@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,37 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <pstanner@redhat.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit cc9c54232f04aef3a5d7f64a0ece7df00f1aaa3d ]
+[ Upstream commit fbb74e56378d8306f214658e3d525a8b3f000c5a ]
 
-i2c-dev.c utilizes memdup_user() to copy a userspace array. This is done
-without an overflow check.
+We need to check for an active device as otherwise we get warnings
+for some mcbsp instances for "Runtime PM usage count underflow!".
 
-Use the new wrapper memdup_array_user() to copy the array more safely.
-
-Suggested-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Philipp Stanner <pstanner@redhat.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Reported-by: Andreas Kemnade <andreas@kemnade.info>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20231030052340.13415-1-tony@atomide.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/ti/omap-mcbsp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
-index 6fd2b6718b086..9fefceb3a95d4 100644
---- a/drivers/i2c/i2c-dev.c
-+++ b/drivers/i2c/i2c-dev.c
-@@ -450,8 +450,8 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
- 		if (rdwr_arg.nmsgs > I2C_RDWR_IOCTL_MAX_MSGS)
- 			return -EINVAL;
+diff --git a/sound/soc/ti/omap-mcbsp.c b/sound/soc/ti/omap-mcbsp.c
+index 4479d74f0a458..81d2be87e9739 100644
+--- a/sound/soc/ti/omap-mcbsp.c
++++ b/sound/soc/ti/omap-mcbsp.c
+@@ -74,14 +74,16 @@ static int omap2_mcbsp_set_clks_src(struct omap_mcbsp *mcbsp, u8 fck_src_id)
+ 		return -EINVAL;
+ 	}
  
--		rdwr_pa = memdup_user(rdwr_arg.msgs,
--				      rdwr_arg.nmsgs * sizeof(struct i2c_msg));
-+		rdwr_pa = memdup_array_user(rdwr_arg.msgs,
-+					    rdwr_arg.nmsgs, sizeof(struct i2c_msg));
- 		if (IS_ERR(rdwr_pa))
- 			return PTR_ERR(rdwr_pa);
+-	pm_runtime_put_sync(mcbsp->dev);
++	if (mcbsp->active)
++		pm_runtime_put_sync(mcbsp->dev);
+ 
+ 	r = clk_set_parent(mcbsp->fclk, fck_src);
+ 	if (r)
+ 		dev_err(mcbsp->dev, "CLKS: could not clk_set_parent() to %s\n",
+ 			src);
+ 
+-	pm_runtime_get_sync(mcbsp->dev);
++	if (mcbsp->active)
++		pm_runtime_get_sync(mcbsp->dev);
+ 
+ 	clk_put(fck_src);
  
 -- 
 2.42.0
