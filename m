@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B4733076;
-	Fri, 24 Nov 2023 19:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD5A33076;
+	Fri, 24 Nov 2023 19:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlvHnVf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D706AC433C9;
-	Fri, 24 Nov 2023 19:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDHhyR/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57227C433C8;
+	Fri, 24 Nov 2023 19:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852496;
-	bh=cTih9LWrI02GqQDG+Rhh/2IRiCCajdv+yjWJpnxXvxo=;
+	s=korg; t=1700852498;
+	bh=Hzh/weonqEfLLowy9K4V3z8OMeDworDaJE878AEBqqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MlvHnVf4sllUdHk1G7x/q4uFXBYA+js+dv+kUBT2dox5ik2NAgm77ufy9qAXw1VwE
-	 pvIp1yLqbQcLd2uK0p4wT7nwovhGXFopTht+IhXZYPAJjYps0ajClyWoS4svNl6mg9
-	 nEH/mkJB4aeqyU5vJUqM8gCcKPtdcarMLkapH5vs=
+	b=GDHhyR/vTpYZOUHuPP0zQGmQNpdhQnHlLhf9LyA8OpiL2OrJ/GzYlAUbo57YaVm7R
+	 aIG9oLkWvvsBaoB5tbE3RrxRlCTPiAA4qtzCTk1SHdqgiOQmFgE9Tauj3ujveItobx
+	 JBvKR2KqU0/IMV3pQYrTd425VGItYPUi93oiWYEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 359/372] drm/i915: Fix potential spectre vulnerability
-Date: Fri, 24 Nov 2023 17:52:26 +0000
-Message-ID: <20231124172022.266971141@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 350/372] ext4: correct offset of gdb backup in non meta_bg group to update_backups
+Date: Fri, 24 Nov 2023 17:52:17 +0000
+Message-ID: <20231124172022.007596519@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,36 +42,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit 1a8e9bad6ef563c28ab0f8619628d5511be55431 upstream.
+commit 31f13421c004a420c0e9d288859c9ea9259ea0cc upstream.
 
-Fix smatch warning:
-drivers/gpu/drm/i915/gem/i915_gem_context.c:847 set_proto_ctx_sseu()
-warn: potential spectre issue 'pc->user_engines' [r] (local cap)
+Commit 0aeaa2559d6d5 ("ext4: fix corruption when online resizing a 1K
+bigalloc fs") found that primary superblock's offset in its group is
+not equal to offset of backup superblock in its group when block size
+is 1K and bigalloc is enabled. As group descriptor blocks are right
+after superblock, we can't pass block number of gdb to update_backups
+for the same reason.
 
-Fixes: d4433c7600f7 ("drm/i915/gem: Use the proto-context to handle create parameters (v5)")
-Cc: <stable@vger.kernel.org> # v5.15+
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231103110922.430122-1-tvrtko.ursulin@linux.intel.com
-(cherry picked from commit 27b086382c22efb7e0a16442f7bdc2e120108ef3)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+The root casue of the issue above is that leading 1K padding block is
+count as data block offset for primary block while backup block has no
+padding block offset in its group.
+
+Remove padding data block count to fix the issue for gdb backups.
+
+For meta_bg case, update_backups treat blk_off as block number, do no
+conversion in this case.
+
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20230826174712.4059355-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_context.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/resize.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
-@@ -844,6 +844,7 @@ static int set_proto_ctx_sseu(struct drm
- 		if (idx >= pc->num_user_engines)
- 			return -EINVAL;
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1602,6 +1602,8 @@ exit_journal:
+ 		int gdb_num_end = ((group + flex_gd->count - 1) /
+ 				   EXT4_DESC_PER_BLOCK(sb));
+ 		int meta_bg = ext4_has_feature_meta_bg(sb);
++		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
++					 ext4_group_first_block_no(sb, 0);
+ 		sector_t old_gdb = 0;
  
-+		idx = array_index_nospec(idx, pc->num_user_engines);
- 		pe = &pc->user_engines[idx];
- 
- 		/* Only render engine supports RPCS configuration. */
+ 		update_backups(sb, ext4_group_first_block_no(sb, 0),
+@@ -1613,8 +1615,8 @@ exit_journal:
+ 						     gdb_num);
+ 			if (old_gdb == gdb_bh->b_blocknr)
+ 				continue;
+-			update_backups(sb, gdb_bh->b_blocknr, gdb_bh->b_data,
+-				       gdb_bh->b_size, meta_bg);
++			update_backups(sb, gdb_bh->b_blocknr - padding_blocks,
++				       gdb_bh->b_data, gdb_bh->b_size, meta_bg);
+ 			old_gdb = gdb_bh->b_blocknr;
+ 		}
+ 	}
 
 
