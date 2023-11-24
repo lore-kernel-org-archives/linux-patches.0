@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E34A39FC3;
-	Fri, 24 Nov 2023 18:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB3A39FC3;
+	Fri, 24 Nov 2023 18:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5b7qrhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC677C433C7;
-	Fri, 24 Nov 2023 18:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q19CX6uH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C074C433C7;
+	Fri, 24 Nov 2023 18:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849918;
-	bh=5gj6qjSrXd6hLwv/Q2F6QzQ2nbx5dg1W0saAY0uTgLI=;
+	s=korg; t=1700849920;
+	bh=v0SWq/eqiQigrDjrqV/CxQ/uefUk1fVD6DMLAobgQu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A5b7qrhUAs6G1TuOtVPM9EvC0G6nQOqP1W7u4w7akZQfmPOTL52FIhFjSAMovWXW6
-	 W+LdI/DnUhJRgsuhUZGoi7RjtCsT0py5X8EP7ocV+GcutrIrC101+wAgj50tHMA1Hp
-	 MjaFah1YZqZY3dZSFmUGydPqC46tzUtGlCZkHdHY=
+	b=q19CX6uHu8Q8g+vCoOrEH7oELqPi63p3CsvIo82Wa3Jn7XP80DCX+p/fpnjz3O2I4
+	 PXFHvDRBTa8gQbulEVNEsbWvUTYd0qrQyhhv0az2NqRVXIbN9M0QGoR2UNIRcJXpHu
+	 nAuo+0KLHGLNYUvrPuA8KaV1GPey0wKSd5g5k8k8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Subject: [PATCH 6.6 372/530] mcb: fix error handling for different scenarios when parsing
-Date: Fri, 24 Nov 2023 17:48:58 +0000
-Message-ID: <20231124172039.339011770@linuxfoundation.org>
+	Gaurav Batra <gbatra@linux.vnet.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.6 373/530] powerpc/pseries/iommu: enable_ddw incorrectly returns direct mapping for SR-IOV device
+Date: Fri, 24 Nov 2023 17:48:59 +0000
+Message-ID: <20231124172039.363757082@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -36,62 +35,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanjuán García, Jorge <Jorge.SanjuanGarcia@duagon.com>
+From: Gaurav Batra <gbatra@linux.vnet.ibm.com>
 
-commit 63ba2d07b4be72b94216d20561f43e1150b25d98 upstream.
+commit 3bf983e4e93ce8e6d69e9d63f52a66ec0856672e upstream.
 
-chameleon_parse_gdd() may fail for different reasons and end up
-in the err tag. Make sure we at least always free the mcb_device
-allocated with mcb_alloc_dev().
+When a device is initialized, the driver invokes dma_supported() twice -
+first for streaming mappings followed by coherent mappings. For an
+SR-IOV device, default window is deleted and DDW created. With vPMEM
+enabled, TCE mappings are dynamically created for both vPMEM and SR-IOV
+device.  There are no direct mappings.
 
-If mcb_device_register() fails, make sure to give up the reference
-in the same place the device was added.
+First time when dma_supported() is called with 64 bit mask, DDW is created
+and marked as dynamic window. The second time dma_supported() is called,
+enable_ddw() finds existing window for the device and incorrectly returns
+it as "direct mapping".
 
-Fixes: 728ac3389296 ("mcb: mcb-parse: fix error handing in chameleon_parse_gdd()")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Link: https://lore.kernel.org/r/20231019141434.57971-2-jorge.sanjuangarcia@duagon.com
+This only happens when size of DDW is big enough to map max LPAR memory.
+
+This results in streaming TCEs to not get dynamically mapped, since code
+incorrently assumes these are already pre-mapped. The adapter initially
+comes up but goes down due to EEH.
+
+Fixes: 381ceda88c4c ("powerpc/pseries/iommu: Make use of DDW for indirect mapping")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Gaurav Batra <gbatra@linux.vnet.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231003030802.47914-1-gbatra@linux.vnet.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mcb/mcb-core.c  | 1 +
- drivers/mcb/mcb-parse.c | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/iommu.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mcb/mcb-core.c b/drivers/mcb/mcb-core.c
-index 2a4a5e71ad4e..ba4530459de8 100644
---- a/drivers/mcb/mcb-core.c
-+++ b/drivers/mcb/mcb-core.c
-@@ -246,6 +246,7 @@ int mcb_device_register(struct mcb_bus *bus, struct mcb_device *dev)
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -914,7 +914,8 @@ static int remove_ddw(struct device_node
  	return 0;
- 
- out:
-+	put_device(&dev->dev);
- 
- 	return ret;
  }
-diff --git a/drivers/mcb/mcb-parse.c b/drivers/mcb/mcb-parse.c
-index 656b6b71c768..1ae37e693de0 100644
---- a/drivers/mcb/mcb-parse.c
-+++ b/drivers/mcb/mcb-parse.c
-@@ -106,7 +106,7 @@ static int chameleon_parse_gdd(struct mcb_bus *bus,
- 	return 0;
  
- err:
--	put_device(&mdev->dev);
-+	mcb_free_dev(mdev);
+-static bool find_existing_ddw(struct device_node *pdn, u64 *dma_addr, int *window_shift)
++static bool find_existing_ddw(struct device_node *pdn, u64 *dma_addr, int *window_shift,
++			      bool *direct_mapping)
+ {
+ 	struct dma_win *window;
+ 	const struct dynamic_dma_window_prop *dma64;
+@@ -927,6 +928,7 @@ static bool find_existing_ddw(struct dev
+ 			dma64 = window->prop;
+ 			*dma_addr = be64_to_cpu(dma64->dma_base);
+ 			*window_shift = be32_to_cpu(dma64->window_shift);
++			*direct_mapping = window->direct;
+ 			found = true;
+ 			break;
+ 		}
+@@ -1270,10 +1272,8 @@ static bool enable_ddw(struct pci_dev *d
  
- 	return ret;
- }
--- 
-2.43.0
-
+ 	mutex_lock(&dma_win_init_mutex);
+ 
+-	if (find_existing_ddw(pdn, &dev->dev.archdata.dma_offset, &len)) {
+-		direct_mapping = (len >= max_ram_len);
++	if (find_existing_ddw(pdn, &dev->dev.archdata.dma_offset, &len, &direct_mapping))
+ 		goto out_unlock;
+-	}
+ 
+ 	/*
+ 	 * If we already went through this for a previous function of
 
 
