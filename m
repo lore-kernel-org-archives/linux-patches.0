@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F28133E9;
-	Fri, 24 Nov 2023 18:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB2C2C85B;
+	Fri, 24 Nov 2023 18:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nd012cLq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E53EC433C8;
-	Fri, 24 Nov 2023 18:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LubIEKHf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CC7C433C9;
+	Fri, 24 Nov 2023 18:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852251;
-	bh=l1FS/1JJuBM8T1002POG4xY2tD1/GkWNZj+RbQhqB5U=;
+	s=korg; t=1700852254;
+	bh=0/SfRBaEhPCcVPuvLrzn2XOGA3TrXG/nR9FGypmxwVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nd012cLq8TaeTkljhVX7WRfY24G4shh1A7n8+hTHECUZLnKvAqlfH1goiJTAqyq8X
-	 Ye1Iim24KnmwubHcnEtioqNMYhV7K2bRNtbrKTImkhN5CeTgqzh2OZf6p+3lj5Jr8t
-	 HabZRstqRr/Jve3k71Rnkb2JBsIffzvWd0orx/gE=
+	b=LubIEKHfzyhd3rNx3QsPxJIntcAU7gOVAfD7naXOOXC/RtyvThf/m47uA1maTCoKJ
+	 keWkPdvpKXqTYYfxteOM/pCOOrkscirIp16qidNgSBpDtdeWkDrlTdMr58FMSNP5Do
+	 7HqJ1v7waQyGMJMmPhl1UEAXQZx3XTcJHoUdGxOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandradeep Dey <codesigning@chandradeepdey.com>,
+	Matus Malych <matus@malych.org>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 281/372] ALSA: hda/realtek - Enable internal speaker of ASUS K6500ZC
-Date: Fri, 24 Nov 2023 17:51:08 +0000
-Message-ID: <20231124172019.815740258@linuxfoundation.org>
+Subject: [PATCH 6.1 282/372] ALSA: hda/realtek: Enable Mute LED on HP 255 G10
+Date: Fri, 24 Nov 2023 17:51:09 +0000
+Message-ID: <20231124172019.844596001@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -41,16 +41,17 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandradeep Dey <codesigning@chandradeepdey.com>
+From: Matus Malych <matus@malych.org>
 
-commit 713f040cd22285fcc506f40a0d259566e6758c3c upstream.
+commit b944aa9d86d5f782bfe5e51336434c960304839c upstream.
 
-Apply the already existing quirk chain ALC294_FIXUP_ASUS_SPK to enable
-the internal speaker of ASUS K6500ZC.
+HP 255 G10 has a mute LED that can be made to work using quirk
+ALC236_FIXUP_HP_MUTE_LED_COEFBIT2.
+Enable already existing quirk - at correct line to keep order
 
-Signed-off-by: Chandradeep Dey <codesigning@chandradeepdey.com>
+Signed-off-by: Matus Malych <matus@malych.org>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/NizcVHQ--3-9@chandradeepdey.com
+Link: https://lore.kernel.org/r/20231114133524.11340-1-matus@malych.org
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -59,13 +60,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -9699,6 +9699,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x115d, "Asus 1015E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x1043, 0x11c0, "ASUS X556UR", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x125e, "ASUS Q524UQK", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+@@ -9660,6 +9660,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8abb, "HP ZBook Firefly 14 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ad1, "HP EliteBook 840 14 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ad2, "HP EliteBook 860 16 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b2f, "HP 255 15.6 inch G10 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8b42, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b43, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b44, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
 
 
