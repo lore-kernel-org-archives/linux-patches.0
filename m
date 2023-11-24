@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007D935F15;
-	Fri, 24 Nov 2023 18:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDBF33CFD;
+	Fri, 24 Nov 2023 18:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxKML0wo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BFAC433C8;
-	Fri, 24 Nov 2023 18:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hw1X3eQR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0764CC433C8;
+	Fri, 24 Nov 2023 18:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851570;
-	bh=owxaDZRqbwOGFmyiSGyicnUUqvIDz4P0pIDzz/L4224=;
+	s=korg; t=1700851573;
+	bh=Ih9liR/MLdMp4zNz7T/zVyzz4i4TQhvFK2BdW51MUKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxKML0woEgRIGcuNKEvTcU8EYgFtpvfalqrshzXawaBnUgSJ1e4P72k/UMJjgteIx
-	 1hM3XDAgHKnwSLFuFK+4mxlmmW9tdgAJ5bzK/dPoToqSTMMHgKPq/x1Jmyp/fyIo7o
-	 XX4n5r+8MVsODbz+5zkIJ9ievLI5ckA1lNlwpgaA=
+	b=hw1X3eQR+RQ3ZcZeNW7RaO5joZjcF2XfogmcoQv9buhyV5+Gvm3i3jPghxL0q6yFK
+	 3hKZ0A2tB3txvMpk/JgFzgCsCa8LW7ZodNuXQ6JNwEvOW+m1reoOtydKrjqo+FKdhO
+	 vD68g/D2oEfiILfyw1iza/txjIq9ad7xynTGAjNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ran Xiaokai <ran.xiaokai@zte.com.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/372] locking/ww_mutex/test: Fix potential workqueue corruption
-Date: Fri, 24 Nov 2023 17:46:28 +0000
-Message-ID: <20231124172010.480836640@linuxfoundation.org>
+Subject: [PATCH 6.1 010/372] cpu/hotplug: Dont offline the last non-isolated CPU
+Date: Fri, 24 Nov 2023 17:46:37 +0000
+Message-ID: <20231124172010.786724283@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,117 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Ran Xiaokai <ran.xiaokai@zte.com.cn>
 
-[ Upstream commit bccdd808902f8c677317cec47c306e42b93b849e ]
+[ Upstream commit 38685e2a0476127db766f81b1c06019ddc4c9ffa ]
 
-In some cases running with the test-ww_mutex code, I was seeing
-odd behavior where sometimes it seemed flush_workqueue was
-returning before all the work threads were finished.
+If a system has isolated CPUs via the "isolcpus=" command line parameter,
+then an attempt to offline the last housekeeping CPU will result in a
+WARN_ON() when rebuilding the scheduler domains and a subsequent panic due
+to and unhandled empty CPU mas in partition_sched_domains_locked().
 
-Often this would cause strange crashes as the mutexes would be
-freed while they were being used.
+cpuset_hotplug_workfn()
+  rebuild_sched_domains_locked()
+    ndoms = generate_sched_domains(&doms, &attr);
+      cpumask_and(doms[0], top_cpuset.effective_cpus, housekeeping_cpumask(HK_FLAG_DOMAIN));
 
-Looking at the code, there is a lifetime problem as the
-controlling thread that spawns the work allocates the
-"struct stress" structures that are passed to the workqueue
-threads. Then when the workqueue threads are finished,
-they free the stress struct that was passed to them.
+Thus results in an empty CPU mask which triggers the warning and then the
+subsequent crash:
 
-Unfortunately the workqueue work_struct node is in the stress
-struct. Which means the work_struct is freed before the work
-thread returns and while flush_workqueue is waiting.
+WARNING: CPU: 4 PID: 80 at kernel/sched/topology.c:2366 build_sched_domains+0x120c/0x1408
+Call trace:
+ build_sched_domains+0x120c/0x1408
+ partition_sched_domains_locked+0x234/0x880
+ rebuild_sched_domains_locked+0x37c/0x798
+ rebuild_sched_domains+0x30/0x58
+ cpuset_hotplug_workfn+0x2a8/0x930
 
-It seems like a better idea to have the controlling thread
-both allocate and free the stress structures, so that we can
-be sure we don't corrupt the workqueue by freeing the structure
-prematurely.
+Unable to handle kernel paging request at virtual address fffe80027ab37080
+ partition_sched_domains_locked+0x318/0x880
+ rebuild_sched_domains_locked+0x37c/0x798
 
-So this patch reworks the test to do so, and with this change
-I no longer see the early flush_workqueue returns.
+Aside of the resulting crash, it does not make any sense to offline the last
+last housekeeping CPU.
 
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230922043616.19282-3-jstultz@google.com
+Prevent this by masking out the non-housekeeping CPUs when selecting a
+target CPU for initiating the CPU unplug operation via the work queue.
+
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/202310171709530660462@zte.com.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/test-ww_mutex.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ kernel/cpu.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/locking/test-ww_mutex.c b/kernel/locking/test-ww_mutex.c
-index 43efb2a041602..b1e25695185a4 100644
---- a/kernel/locking/test-ww_mutex.c
-+++ b/kernel/locking/test-ww_mutex.c
-@@ -466,7 +466,6 @@ static void stress_inorder_work(struct work_struct *work)
- 	} while (!time_after(jiffies, stress->timeout));
- 
- 	kfree(order);
--	kfree(stress);
- }
- 
- struct reorder_lock {
-@@ -531,7 +530,6 @@ static void stress_reorder_work(struct work_struct *work)
- 	list_for_each_entry_safe(ll, ln, &locks, link)
- 		kfree(ll);
- 	kfree(order);
--	kfree(stress);
- }
- 
- static void stress_one_work(struct work_struct *work)
-@@ -552,8 +550,6 @@ static void stress_one_work(struct work_struct *work)
- 			break;
- 		}
- 	} while (!time_after(jiffies, stress->timeout));
--
--	kfree(stress);
- }
- 
- #define STRESS_INORDER BIT(0)
-@@ -564,15 +560,24 @@ static void stress_one_work(struct work_struct *work)
- static int stress(int nlocks, int nthreads, unsigned int flags)
- {
- 	struct ww_mutex *locks;
--	int n;
-+	struct stress *stress_array;
-+	int n, count;
- 
- 	locks = kmalloc_array(nlocks, sizeof(*locks), GFP_KERNEL);
- 	if (!locks)
- 		return -ENOMEM;
- 
-+	stress_array = kmalloc_array(nthreads, sizeof(*stress_array),
-+				     GFP_KERNEL);
-+	if (!stress_array) {
-+		kfree(locks);
-+		return -ENOMEM;
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index f8eb1825f704f..0e4d362e90825 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -1243,11 +1243,14 @@ static int cpu_down_maps_locked(unsigned int cpu, enum cpuhp_state target)
+ 	/*
+ 	 * Ensure that the control task does not run on the to be offlined
+ 	 * CPU to prevent a deadlock against cfs_b->period_timer.
++	 * Also keep at least one housekeeping cpu onlined to avoid generating
++	 * an empty sched_domain span.
+ 	 */
+-	cpu = cpumask_any_but(cpu_online_mask, cpu);
+-	if (cpu >= nr_cpu_ids)
+-		return -EBUSY;
+-	return work_on_cpu(cpu, __cpu_down_maps_locked, &work);
++	for_each_cpu_and(cpu, cpu_online_mask, housekeeping_cpumask(HK_TYPE_DOMAIN)) {
++		if (cpu != work.cpu)
++			return work_on_cpu(cpu, __cpu_down_maps_locked, &work);
 +	}
-+
- 	for (n = 0; n < nlocks; n++)
- 		ww_mutex_init(&locks[n], &ww_class);
++	return -EBUSY;
+ }
  
-+	count = 0;
- 	for (n = 0; nthreads; n++) {
- 		struct stress *stress;
- 		void (*fn)(struct work_struct *work);
-@@ -596,9 +601,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
- 		if (!fn)
- 			continue;
- 
--		stress = kmalloc(sizeof(*stress), GFP_KERNEL);
--		if (!stress)
--			break;
-+		stress = &stress_array[count++];
- 
- 		INIT_WORK(&stress->work, fn);
- 		stress->locks = locks;
-@@ -613,6 +616,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
- 
- 	for (n = 0; n < nlocks; n++)
- 		ww_mutex_destroy(&locks[n]);
-+	kfree(stress_array);
- 	kfree(locks);
- 
- 	return 0;
+ static int cpu_down(unsigned int cpu, enum cpuhp_state target)
 -- 
 2.42.0
 
