@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083A03173F;
-	Fri, 24 Nov 2023 19:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C842EAEA;
+	Fri, 24 Nov 2023 19:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+Xn4q/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7155AC433C7;
-	Fri, 24 Nov 2023 19:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ws2z/jmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEC7C433C8;
+	Fri, 24 Nov 2023 19:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853330;
-	bh=eY0sw4M6qwjG4xjUzECX3qybKSUJQShjv4KjWvsPkxM=;
+	s=korg; t=1700853333;
+	bh=kjuY0HURZLHzzcsgCnUU6ZE5SKiVVQhh3LER52wV9ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v+Xn4q/VrDuOVVx90fLpgQlUkO+UoqKzJLzHgltTSIBDqRy+o1Nu58qa4OabTiGCq
-	 /vL7i8C7k0ICbQFCdJXsIhfBBIhCKF140JpjjzU+roS6Tpfv8fbRNOKG+ETy8jXgVU
-	 HZpqcIy54WN8stN6fNKud5iItmjxDF3H3Oc5idhY=
+	b=Ws2z/jmP0OsjKFZyyGanyl8mwwp/Y67Sb8AO72nZ8fR8tSJDGrxdnWp8SQWLkM7If
+	 jetHQM2jTN8wA8J8a5v1oDys4uV5Y85Ra2IjqsCNA6FCnTwpbc3/Uv/w15q5Q+tTSK
+	 Dy53Nv/wWhPxDQYNMyPR2DWkP5ZdCyj5DI0IrmKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hch@lst.de,
-	kernel test robot <oliver.sang@intel.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Dave Chinner <dchinner@redhat.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Chandan Babu R <chandanbabu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 145/297] xfs: fix use-after-free in xattr node block inactivation
-Date: Fri, 24 Nov 2023 17:53:07 +0000
-Message-ID: <20231124172005.345463459@linuxfoundation.org>
+Subject: [PATCH 5.15 146/297] xfs: dont leak memory when attr fork loading fails
+Date: Fri, 24 Nov 2023 17:53:08 +0000
+Message-ID: <20231124172005.374026163@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -48,156 +46,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 95ff0363f3f6ae70c21a0f2b0603e54438e5988b ]
+[ Upstream commit c78c2d0903183a41beb90c56a923e30f90fa91b9 ]
 
-The kernel build robot reported a UAF error while running xfs/433
-(edited somewhat for brevity):
+I observed the following evidence of a memory leak while running xfs/399
+from the xfs fsck test suite (edited for brevity):
 
- BUG: KASAN: use-after-free in xfs_attr3_node_inactive (fs/xfs/xfs_attr_inactive.c:214) xfs
- Read of size 4 at addr ffff88820ac2bd44 by task kworker/0:2/139
+XFS (sde): Metadata corruption detected at xfs_attr_shortform_verify_struct.part.0+0x7b/0xb0 [xfs], inode 0x1172 attr fork
+XFS: Assertion failed: ip->i_af.if_u1.if_data == NULL, file: fs/xfs/libxfs/xfs_inode_fork.c, line: 315
+------------[ cut here ]------------
+WARNING: CPU: 2 PID: 91635 at fs/xfs/xfs_message.c:104 assfail+0x46/0x4a [xfs]
+CPU: 2 PID: 91635 Comm: xfs_scrub Tainted: G        W         5.19.0-rc7-xfsx #rc7 6e6475eb29fd9dda3181f81b7ca7ff961d277a40
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:assfail+0x46/0x4a [xfs]
+Call Trace:
+ <TASK>
+ xfs_ifork_zap_attr+0x7c/0xb0
+ xfs_iformat_attr_fork+0x86/0x110
+ xfs_inode_from_disk+0x41d/0x480
+ xfs_iget+0x389/0xd70
+ xfs_bulkstat_one_int+0x5b/0x540
+ xfs_bulkstat_iwalk+0x1e/0x30
+ xfs_iwalk_ag_recs+0xd1/0x160
+ xfs_iwalk_run_callbacks+0xb9/0x180
+ xfs_iwalk_ag+0x1d8/0x2e0
+ xfs_iwalk+0x141/0x220
+ xfs_bulkstat+0x105/0x180
+ xfs_ioc_bulkstat.constprop.0.isra.0+0xc5/0x130
+ xfs_file_ioctl+0xa5f/0xef0
+ __x64_sys_ioctl+0x82/0xa0
+ do_syscall_64+0x2b/0x80
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
- CPU: 0 PID: 139 Comm: kworker/0:2 Tainted: G S                5.19.0-rc2-00004-g7cf2b0f9611b #1
- Hardware name: Hewlett-Packard p6-1451cx/2ADA, BIOS 8.15 02/05/2013
- Workqueue: xfs-inodegc/sdb4 xfs_inodegc_worker [xfs]
- Call Trace:
-  <TASK>
- dump_stack_lvl (lib/dump_stack.c:107 (discriminator 1))
- print_address_description+0x1f/0x200
- print_report.cold (mm/kasan/report.c:430)
- kasan_report (mm/kasan/report.c:162 mm/kasan/report.c:493)
- xfs_attr3_node_inactive (fs/xfs/xfs_attr_inactive.c:214) xfs
- xfs_attr3_root_inactive (fs/xfs/xfs_attr_inactive.c:296) xfs
- xfs_attr_inactive (fs/xfs/xfs_attr_inactive.c:371) xfs
- xfs_inactive (fs/xfs/xfs_inode.c:1781) xfs
- xfs_inodegc_worker (fs/xfs/xfs_icache.c:1837 fs/xfs/xfs_icache.c:1860) xfs
- process_one_work
- worker_thread
- kthread
- ret_from_fork
-  </TASK>
+This newly-added assertion checks that there aren't any incore data
+structures hanging off the incore fork when we're trying to reset its
+contents.  From the call trace, it is evident that iget was trying to
+construct an incore inode from the ondisk inode, but the attr fork
+verifier failed and we were trying to undo all the memory allocations
+that we had done earlier.
 
- Allocated by task 139:
- kasan_save_stack (mm/kasan/common.c:39)
- __kasan_slab_alloc (mm/kasan/common.c:45 mm/kasan/common.c:436 mm/kasan/common.c:469)
- kmem_cache_alloc (mm/slab.h:750 mm/slub.c:3214 mm/slub.c:3222 mm/slub.c:3229 mm/slub.c:3239)
- _xfs_buf_alloc (include/linux/instrumented.h:86 include/linux/atomic/atomic-instrumented.h:41 fs/xfs/xfs_buf.c:232) xfs
- xfs_buf_get_map (fs/xfs/xfs_buf.c:660) xfs
- xfs_buf_read_map (fs/xfs/xfs_buf.c:777) xfs
- xfs_trans_read_buf_map (fs/xfs/xfs_trans_buf.c:289) xfs
- xfs_da_read_buf (fs/xfs/libxfs/xfs_da_btree.c:2652) xfs
- xfs_da3_node_read (fs/xfs/libxfs/xfs_da_btree.c:392) xfs
- xfs_attr3_root_inactive (fs/xfs/xfs_attr_inactive.c:272) xfs
- xfs_attr_inactive (fs/xfs/xfs_attr_inactive.c:371) xfs
- xfs_inactive (fs/xfs/xfs_inode.c:1781) xfs
- xfs_inodegc_worker (fs/xfs/xfs_icache.c:1837 fs/xfs/xfs_icache.c:1860) xfs
- process_one_work
- worker_thread
- kthread
- ret_from_fork
+The three assertions in xfs_ifork_zap_attr check that the caller has
+already called xfs_idestroy_fork, which clearly has not been done here.
+As the zap function then zeroes the pointers, we've effectively leaked
+the memory.
 
- Freed by task 139:
- kasan_save_stack (mm/kasan/common.c:39)
- kasan_set_track (mm/kasan/common.c:45)
- kasan_set_free_info (mm/kasan/generic.c:372)
- __kasan_slab_free (mm/kasan/common.c:368 mm/kasan/common.c:328 mm/kasan/common.c:374)
- kmem_cache_free (mm/slub.c:1753 mm/slub.c:3507 mm/slub.c:3524)
- xfs_buf_rele (fs/xfs/xfs_buf.c:1040) xfs
- xfs_attr3_node_inactive (fs/xfs/xfs_attr_inactive.c:210) xfs
- xfs_attr3_root_inactive (fs/xfs/xfs_attr_inactive.c:296) xfs
- xfs_attr_inactive (fs/xfs/xfs_attr_inactive.c:371) xfs
- xfs_inactive (fs/xfs/xfs_inode.c:1781) xfs
- xfs_inodegc_worker (fs/xfs/xfs_icache.c:1837 fs/xfs/xfs_icache.c:1860) xfs
- process_one_work
- worker_thread
- kthread
- ret_from_fork
+The shortest change would have been to insert an extra call to
+xfs_idestroy_fork, but it makes more sense to bundle the _idestroy_fork
+call into _zap_attr, since all other callsites call _idestroy_fork
+immediately prior to calling _zap_attr.  IOWs, it eliminates one way to
+fail.
 
-I reproduced this for my own satisfaction, and got the same report,
-along with an extra morsel:
+Note: This change only applies cleanly to 2ed5b09b3e8f, since we just
+reworked the attr fork lifetime.  However, I think this memory leak has
+existed since 0f45a1b20cd8, since the chain xfs_iformat_attr_fork ->
+xfs_iformat_local -> xfs_init_local_fork will allocate
+ifp->if_u1.if_data, but if xfs_ifork_verify_local_attr fails,
+xfs_iformat_attr_fork will free i_afp without freeing any of the stuff
+hanging off i_afp.  The solution for older kernels I think is to add the
+missing call to xfs_idestroy_fork just prior to calling kmem_cache_free.
 
- The buggy address belongs to the object at ffff88802103a800
-  which belongs to the cache xfs_buf of size 432
- The buggy address is located 396 bytes inside of
-  432-byte region [ffff88802103a800, ffff88802103a9b0)
+Found by fuzzing a.sfattr.hdr.totsize = lastbit in xfs/399.
 
-I tracked this code down to:
+[ backport note: did not include refactoring of xfs_idestroy_fork into
+xfs_ifork_zap_attr, simply added the missing call as suggested in the
+commit for backports ]
 
-	error = xfs_trans_get_buf(*trans, mp->m_ddev_targp,
-			child_blkno,
-			XFS_FSB_TO_BB(mp, mp->m_attr_geo->fsbcount), 0,
-			&child_bp);
-	if (error)
-		return error;
-	error = bp->b_error;
-
-That doesn't look right -- I think this should be dereferencing
-child_bp, not bp.  Looking through the codebase history, I think this
-was added by commit 2911edb653b9 ("xfs: remove the mappedbno argument to
-xfs_da_get_buf"), which replaced a call to xfs_da_get_buf with the
-current call to xfs_trans_get_buf.  Not sure why we trans_brelse'd @bp
-earlier in the function, but I'm guessing it's to avoid pinning too many
-buffers in memory while we inactivate the bottom of the attr tree.
-Hence we now have to get the buffer back.
-
-I /think/ this was supposed to check child_bp->b_error and fail the rest
-of the invalidation if child_bp had experienced any kind of IO or
-corruption error.  I bet the xfs_da3_node_read earlier in the loop will
-catch most cases of incoming on-disk corruption which makes this check
-mostly moot unless someone corrupts the buffer and the AIL pushes it out
-to disk while the buffer's unlocked.
-
-In the first case we'll never get to the bad check, and in the second
-case the AIL will shut down the log, at which point there's no reason to
-check b_error.  Remove the check, and null out @bp to avoid this problem
-in the future.
-
-Cc: hch@lst.de
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Fixes: 2911edb653b9 ("xfs: remove the mappedbno argument to xfs_da_get_buf")
+Fixes: 2ed5b09b3e8f ("xfs: make inode attribute forks a permanent part of struct xfs_inode")
+Probably-Fixes: 0f45a1b20cd8 ("xfs: improve local fork verification")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_attr_inactive.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/xfs/libxfs/xfs_inode_fork.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/xfs/xfs_attr_inactive.c b/fs/xfs/xfs_attr_inactive.c
-index 2b5da6218977c..2afa6d9a7f8f6 100644
---- a/fs/xfs/xfs_attr_inactive.c
-+++ b/fs/xfs/xfs_attr_inactive.c
-@@ -158,6 +158,7 @@ xfs_attr3_node_inactive(
+diff --git a/fs/xfs/libxfs/xfs_inode_fork.c b/fs/xfs/libxfs/xfs_inode_fork.c
+index 20095233d7bc0..c1f965af8432d 100644
+--- a/fs/xfs/libxfs/xfs_inode_fork.c
++++ b/fs/xfs/libxfs/xfs_inode_fork.c
+@@ -330,6 +330,7 @@ xfs_iformat_attr_fork(
  	}
- 	child_fsb = be32_to_cpu(ichdr.btree[0].before);
- 	xfs_trans_brelse(*trans, bp);	/* no locks for later trans */
-+	bp = NULL;
  
- 	/*
- 	 * If this is the node level just above the leaves, simply loop
-@@ -211,12 +212,8 @@ xfs_attr3_node_inactive(
- 				&child_bp);
- 		if (error)
- 			return error;
--		error = bp->b_error;
--		if (error) {
--			xfs_trans_brelse(*trans, child_bp);
--			return error;
--		}
- 		xfs_trans_binval(*trans, child_bp);
-+		child_bp = NULL;
- 
- 		/*
- 		 * If we're not done, re-read the parent to get the next
-@@ -233,6 +230,7 @@ xfs_attr3_node_inactive(
- 						  bp->b_addr);
- 			child_fsb = be32_to_cpu(phdr.btree[i + 1].before);
- 			xfs_trans_brelse(*trans, bp);
-+			bp = NULL;
- 		}
- 		/*
- 		 * Atomically commit the whole invalidate stuff.
+ 	if (error) {
++		xfs_idestroy_fork(ip->i_afp);
+ 		kmem_cache_free(xfs_ifork_zone, ip->i_afp);
+ 		ip->i_afp = NULL;
+ 	}
 -- 
 2.42.0
 
