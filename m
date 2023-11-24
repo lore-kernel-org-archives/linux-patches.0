@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF443307D;
-	Fri, 24 Nov 2023 19:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684AB3173F;
+	Fri, 24 Nov 2023 19:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxVXIMkG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C1AC433C7;
-	Fri, 24 Nov 2023 19:15:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7jTjD6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D1FC433C8;
+	Fri, 24 Nov 2023 19:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853325;
-	bh=I+leSNNWDLI+bXiGBPmZ/plfV555qq92dowCz8tH+ZU=;
+	s=korg; t=1700853328;
+	bh=TAMkXVt9dVdBY0Byo9pSyB+ZbvKsej1RofAxeJ50YxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxVXIMkGhi8NOw3Rdjwu2XnWiIav3I64RJUezh8XLYYB5kivQ0FqZGMK+h4u5bswf
-	 1Nx8jXQqWknesWDFLaGdpGI/lgq57g+T4DE2463DLPYCjK9QmsPuWLm0VUVkVgLV1S
-	 K1qCcx5R8yEf67GezIN/SuALVdhcWiPz7+ijknbM=
+	b=S7jTjD6O+nTXccobOxZD+Yk5QkETlw5oifkne/G4SNJcxJ5kmCXll26o9ND0lyqyC
+	 9QzhIOpCy9dM8eh5RNuZx3G4MAQYu/yWQmxhvfpUh5PG9Mlwoycs5Wgcf8BTeWcp7u
+	 ZSK0yF2B+tEPWcMZcLoFUzFenxAu31hKQEsDzbD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Chandan Babu R <chandanbabu@kernel.org>,
+	Gavin Li <gavinl@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/297] xfs: flush inode gc workqueue before clearing agi bucket
-Date: Fri, 24 Nov 2023 17:53:06 +0000
-Message-ID: <20231124172005.310441523@linuxfoundation.org>
+Subject: [PATCH 5.15 127/297] net/mlx5e: fix double free of encap_header in update funcs
+Date: Fri, 24 Nov 2023 17:52:49 +0000
+Message-ID: <20231124172004.752046836@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -46,49 +43,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Gavin Li <gavinl@nvidia.com>
 
-[ Upstream commit 04a98a036cf8b810dda172a9dcfcbd783bf63655 ]
+[ Upstream commit 3a4aa3cb83563df942be49d145ee3b7ddf17d6bb ]
 
-In the procedure of recover AGI unlinked lists, if something bad
-happenes on one of the unlinked inode in the bucket list, we would call
-xlog_recover_clear_agi_bucket() to clear the whole unlinked bucket list,
-not the unlinked inodes after the bad one. If we have already added some
-inodes to the gc workqueue before the bad inode in the list, we could
-get below error when freeing those inodes, and finaly fail to complete
-the log recover procedure.
+Follow up to the previous patch to fix the same issue for
+mlx5e_tc_tun_update_header_ipv4{6} when mlx5_packet_reformat_alloc()
+fails.
 
- XFS (ram0): Internal error xfs_iunlink_remove at line 2456 of file
- fs/xfs/xfs_inode.c.  Caller xfs_ifree+0xb0/0x360 [xfs]
+When mlx5_packet_reformat_alloc() fails, the encap_header allocated in
+mlx5e_tc_tun_update_header_ipv4{6} will be released within it. However,
+e->encap_header is already set to the previously freed encap_header
+before mlx5_packet_reformat_alloc(). As a result, the later
+mlx5e_encap_put() will free e->encap_header again, causing a double free
+issue.
 
-The problem is xlog_recover_clear_agi_bucket() clear the bucket list, so
-the gc worker fail to check the agino in xfs_verify_agino(). Fix this by
-flush workqueue before clearing the bucket.
+mlx5e_encap_put()
+     --> mlx5e_encap_dealloc()
+         --> kfree(e->encap_header)
 
-Fixes: ab23a7768739 ("xfs: per-cpu deferred inode inactivation queues")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Chandan Babu R <chandanbabu@kernel.org>
+This patch fix it by not setting e->encap_header until
+mlx5_packet_reformat_alloc() success.
+
+Fixes: a54e20b4fcae ("net/mlx5e: Add basic TC tunnel set action for SRIOV offloads")
+Signed-off-by: Gavin Li <gavinl@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/20231114215846.5902-7-saeed@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_log_recover.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../ethernet/mellanox/mlx5/core/en/tc_tun.c   | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/fs/xfs/xfs_log_recover.c b/fs/xfs/xfs_log_recover.c
-index aeb01d4c0423b..04961ebf16ea2 100644
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -2739,6 +2739,7 @@ xlog_recover_process_one_iunlink(
- 	 * Call xlog_recover_clear_agi_bucket() to perform a transaction to
- 	 * clear the inode pointer in the bucket.
- 	 */
-+	xfs_inodegc_flush(mp);
- 	xlog_recover_clear_agi_bucket(mp, agno, bucket);
- 	return NULLAGINO;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+index 44071592bd6e2..303e6e7a5c448 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+@@ -397,16 +397,12 @@ int mlx5e_tc_tun_update_header_ipv4(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto free_encap;
+ 
+-	e->encap_size = ipv4_encap_size;
+-	kfree(e->encap_header);
+-	e->encap_header = encap_header;
+-
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(attr.n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+ 		 * and not used before that.
+ 		 */
+-		goto release_neigh;
++		goto free_encap;
+ 	}
+ 
+ 	memset(&reformat_params, 0, sizeof(reformat_params));
+@@ -420,6 +416,10 @@ int mlx5e_tc_tun_update_header_ipv4(struct mlx5e_priv *priv,
+ 		goto free_encap;
+ 	}
+ 
++	e->encap_size = ipv4_encap_size;
++	kfree(e->encap_header);
++	e->encap_header = encap_header;
++
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(attr.out_dev));
+ 	mlx5e_route_lookup_ipv4_put(&attr);
+@@ -660,16 +660,12 @@ int mlx5e_tc_tun_update_header_ipv6(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto free_encap;
+ 
+-	e->encap_size = ipv6_encap_size;
+-	kfree(e->encap_header);
+-	e->encap_header = encap_header;
+-
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(attr.n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+ 		 * and not used before that.
+ 		 */
+-		goto release_neigh;
++		goto free_encap;
+ 	}
+ 
+ 	memset(&reformat_params, 0, sizeof(reformat_params));
+@@ -683,6 +679,10 @@ int mlx5e_tc_tun_update_header_ipv6(struct mlx5e_priv *priv,
+ 		goto free_encap;
+ 	}
+ 
++	e->encap_size = ipv6_encap_size;
++	kfree(e->encap_header);
++	e->encap_header = encap_header;
++
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(attr.out_dev));
+ 	mlx5e_route_lookup_ipv6_put(&attr);
 -- 
 2.42.0
 
