@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFFD2D787;
-	Fri, 24 Nov 2023 19:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4EC33076;
+	Fri, 24 Nov 2023 19:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ry4AAcoO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1213C433C8;
-	Fri, 24 Nov 2023 19:13:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kzfVZipo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CC4C433C7;
+	Fri, 24 Nov 2023 19:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853197;
-	bh=glvLba6niyGN/8IdhCCMkgl4nqubO51VP0J8SKcufbw=;
+	s=korg; t=1700853199;
+	bh=Y8sQm+pVd14rptav3tnd0G3IVteUCvcwpjsvSrqv7hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ry4AAcoOO6rdgNlgHVCHx1otwzzm4B3YwoErJycU5R4E+Od1/MCMe964cJGW0FHMZ
-	 kQZi765ro9PnSN5/xmzD8+Oa2AkS591E1aoaw0QUycGkya487gdYzot4bMfX0NAUKA
-	 YHpJO3gV/MKTGFX2q/NoFwWZw+ooZovR8Nkfiniw=
+	b=kzfVZipoFTVSSRl5wTvTOaqSEjcncW0D1QN67Bu22w1PkwPOnX+nNrAdOzsJzQ1iN
+	 HvwK87M7Vm9YqArb4ZHWWolPaEvGed6Rt6qSpXb/gqTjDAIsbUevUa0UYJ8SMzEjp0
+	 E8rXPAWNtguGtIYsG7kzai5I2NzWdaeEPimiGYtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Olga Kornievskaia <kolga@netapp.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/297] SUNRPC: Add an IS_ERR() check back to where it was
-Date: Fri, 24 Nov 2023 17:52:14 +0000
-Message-ID: <20231124172003.476178624@linuxfoundation.org>
+Subject: [PATCH 5.15 093/297] NFSv4.1: fix SP4_MACH_CRED protection for pnfs IO
+Date: Fri, 24 Nov 2023 17:52:15 +0000
+Message-ID: <20231124172003.504742523@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,42 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit 4f3ed837186fc0d2722ba8d2457a594322e9c2ef ]
+[ Upstream commit 5cc7688bae7f0757c39c1d3dfdd827b724061067 ]
 
-This IS_ERR() check was deleted during in a cleanup because, at the time,
-the rpcb_call_async() function could not return an error pointer.  That
-changed in commit 25cf32ad5dba ("SUNRPC: Handle allocation failure in
-rpc_new_task()") and now it can return an error pointer.  Put the check
-back.
+If the client is doing pnfs IO and Kerberos is configured and EXCHANGEID
+successfully negotiated SP4_MACH_CRED and WRITE/COMMIT are on the
+list of state protected operations, then we need to make sure to
+choose the DS's rpc_client structure instead of the MDS's one.
 
-A related revert was done in commit 13bd90141804 ("Revert "SUNRPC:
-Remove unreachable error condition"").
-
-Fixes: 037e910b52b0 ("SUNRPC: Remove unreachable error condition in rpcb_getport_async()")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: fb91fb0ee7b2 ("NFS: Move call to nfs4_state_protect_write() to nfs4_write_setup()")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/rpcb_clnt.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfs/nfs4proc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
-index 647b323cc1d56..638b14f28101e 100644
---- a/net/sunrpc/rpcb_clnt.c
-+++ b/net/sunrpc/rpcb_clnt.c
-@@ -746,6 +746,10 @@ void rpcb_getport_async(struct rpc_task *task)
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 565d11a21f5e2..d65af9a60c35c 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -5608,7 +5608,7 @@ static void nfs4_proc_write_setup(struct nfs_pgio_header *hdr,
  
- 	child = rpcb_call_async(rpcb_clnt, map, proc);
- 	rpc_release_client(rpcb_clnt);
-+	if (IS_ERR(child)) {
-+		/* rpcb_map_release() has freed the arguments */
-+		return;
-+	}
+ 	msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_WRITE];
+ 	nfs4_init_sequence(&hdr->args.seq_args, &hdr->res.seq_res, 0, 0);
+-	nfs4_state_protect_write(server->nfs_client, clnt, msg, hdr);
++	nfs4_state_protect_write(hdr->ds_clp ? hdr->ds_clp : server->nfs_client, clnt, msg, hdr);
+ }
  
- 	xprt->stat.bind_count++;
- 	rpc_put_task(child);
+ static void nfs4_proc_commit_rpc_prepare(struct rpc_task *task, struct nfs_commit_data *data)
+@@ -5649,7 +5649,8 @@ static void nfs4_proc_commit_setup(struct nfs_commit_data *data, struct rpc_mess
+ 	data->res.server = server;
+ 	msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_COMMIT];
+ 	nfs4_init_sequence(&data->args.seq_args, &data->res.seq_res, 1, 0);
+-	nfs4_state_protect(server->nfs_client, NFS_SP4_MACH_CRED_COMMIT, clnt, msg);
++	nfs4_state_protect(data->ds_clp ? data->ds_clp : server->nfs_client,
++			NFS_SP4_MACH_CRED_COMMIT, clnt, msg);
+ }
+ 
+ static int _nfs4_proc_commit(struct file *dst, struct nfs_commitargs *args,
 -- 
 2.42.0
 
