@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4066E35F1A;
-	Fri, 24 Nov 2023 19:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47963307D;
+	Fri, 24 Nov 2023 19:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4dweC6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AF7C433C7;
-	Fri, 24 Nov 2023 19:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evoF+zTD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340BEC433C7;
+	Fri, 24 Nov 2023 19:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853130;
-	bh=qJIWCGHg7tZb0xWwviQAtgW5xC69zm2YRu5T7YjfnXY=;
+	s=korg; t=1700853132;
+	bh=OXbDYiqGD6kE9hBSoZg2t39A8IojxTfGtMCCUezD8R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4dweC6qoXtqDM3wA/FK5XybeJacvhzM2vrgFioFfMTFTF3ttRvX38JgjhQuDxpZS
-	 cBUsg3SMVqD9uNf99qVilynw2gxkEpTLNCdZQgSCuJVKhSDUJVwAKM9jELYRxS85xA
-	 mMvYKZ1hkTipbOmeTRcuU2ERnYacu5Oj7MMtKfkE=
+	b=evoF+zTDqF3qMpFpJm9jpo8Zpvq/X5MIjCF5jS9Ol9lxqE5BucEX4cbLJVnfky5Vf
+	 2Lnda7eJq3ztLjTLufgYx8tn7aPNXfSAjcSi72Yc8iKoCoG7RBW9FRO6Mt/zIK9PVn
+	 6TXk0In7ovM3kQjFaqDxWWq2iUb6I6gyus/wFxnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Lin <axel.lin@ingics.com>,
-	Boris Brezillon <boris.brezillon@free-electrons.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	zhenwei pi <pizhenwei@bytedance.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/297] i2c: sun6i-p2wi: Prevent potential division by zero
-Date: Fri, 24 Nov 2023 17:51:47 +0000
-Message-ID: <20231124172002.512669260@linuxfoundation.org>
+Subject: [PATCH 5.15 066/297] virtio-blk: fix implicit overflow on virtio_max_dma_size
+Date: Fri, 24 Nov 2023 17:51:48 +0000
+Message-ID: <20231124172002.556178748@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,37 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Axel Lin <axel.lin@ingics.com>
+From: zhenwei pi <pizhenwei@bytedance.com>
 
-[ Upstream commit 5ac61d26b8baff5b2e5a9f3dc1ef63297e4b53e7 ]
+[ Upstream commit fafb51a67fb883eb2dde352539df939a251851be ]
 
-Make sure we don't OOPS in case clock-frequency is set to 0 in a DT. The
-variable set here is later used as a divisor.
+The following codes have an implicit conversion from size_t to u32:
+(u32)max_size = (size_t)virtio_max_dma_size(vdev);
 
-Signed-off-by: Axel Lin <axel.lin@ingics.com>
-Acked-by: Boris Brezillon <boris.brezillon@free-electrons.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+This may lead overflow, Ex (size_t)4G -> (u32)0. Once
+virtio_max_dma_size() has a larger size than U32_MAX, use U32_MAX
+instead.
+
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Message-Id: <20230904061045.510460-1-pizhenwei@bytedance.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-sun6i-p2wi.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/block/virtio_blk.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-sun6i-p2wi.c b/drivers/i2c/busses/i2c-sun6i-p2wi.c
-index 9e3483f507ff5..f2ed13b551088 100644
---- a/drivers/i2c/busses/i2c-sun6i-p2wi.c
-+++ b/drivers/i2c/busses/i2c-sun6i-p2wi.c
-@@ -201,6 +201,11 @@ static int p2wi_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index d2ba849bb8d19..affeca0dbc7ea 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -743,6 +743,7 @@ static int virtblk_probe(struct virtio_device *vdev)
+ 	u16 min_io_size;
+ 	u8 physical_block_exp, alignment_offset;
+ 	unsigned int queue_depth;
++	size_t max_dma_size;
  
-+	if (clk_freq == 0) {
-+		dev_err(dev, "clock-frequency is set to 0 in DT\n");
-+		return -EINVAL;
-+	}
-+
- 	if (of_get_child_count(np) > 1) {
- 		dev_err(dev, "P2WI only supports one slave device\n");
- 		return -EINVAL;
+ 	if (!vdev->config->get) {
+ 		dev_err(&vdev->dev, "%s failure: config access disabled\n",
+@@ -844,7 +845,8 @@ static int virtblk_probe(struct virtio_device *vdev)
+ 	/* No real sector limit. */
+ 	blk_queue_max_hw_sectors(q, -1U);
+ 
+-	max_size = virtio_max_dma_size(vdev);
++	max_dma_size = virtio_max_dma_size(vdev);
++	max_size = max_dma_size > U32_MAX ? U32_MAX : max_dma_size;
+ 
+ 	/* Host can optionally specify maximum segment size and number of
+ 	 * segments. */
 -- 
 2.42.0
 
