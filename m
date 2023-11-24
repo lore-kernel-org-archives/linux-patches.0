@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9E633CCA;
-	Fri, 24 Nov 2023 19:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F4A35EE6;
+	Fri, 24 Nov 2023 19:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19iDqu3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD9BC433C8;
-	Fri, 24 Nov 2023 19:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfBW3qTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669A9C433C7;
+	Fri, 24 Nov 2023 19:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853162;
-	bh=ztkbbrVSdJ8hTmtisivO5YmB3HlLo+z0bjvqdlpp0+A=;
+	s=korg; t=1700853164;
+	bh=GVYbVBeW7d/tuuXGfye7P2JV+0g+qF0ASr5Pan2IJa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19iDqu3A6RZsftT3lhFZrgF3It+Jw4DqOPoZRLuv6NrozJbFXyN7FVALw70fJQzWj
-	 XypJMbGv1MMmgqW9++duyzXfOcdFXyEJZbRObuIIWTonqu8Wp7AURtK3UT8ovkZzVy
-	 8IbRVvD+c6yIs5uP2IDeCmqMaCXkJDtC8iEiwoNk=
+	b=VfBW3qTrAQ2yxSsK64t3KoCMn+9X4YvaIs6+joiOJPqUOE5Kmu4OhGS8lI8f/JZTb
+	 MUQACJVRlWrDkNO8jGiTKTVUzYsti+CEC+9l3fLsF/ffLRetFUA3Ywc9f5RPcw5cdt
+	 mU4z5HskjOmbZEamRkPCBqKao3lus7HamtxKp0+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+38e876a8aa44b7115c76@syzkaller.appspotmail.com,
-	Juntong Deng <juntong.deng@outlook.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/297] fs/jfs: Add validity check for db_maxag and db_agpref
-Date: Fri, 24 Nov 2023 17:51:26 +0000
-Message-ID: <20231124172001.685304861@linuxfoundation.org>
+Subject: [PATCH 5.15 072/297] media: cobalt: Use FIELD_GET() to extract Link Width
+Date: Fri, 24 Nov 2023 17:51:54 +0000
+Message-ID: <20231124172002.768172168@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -37,54 +37,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juntong Deng <juntong.deng@outlook.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 64933ab7b04881c6c18b21ff206c12278341c72e ]
+[ Upstream commit f301fedbeecfdce91cb898d6fa5e62f269801fee ]
 
-Both db_maxag and db_agpref are used as the index of the
-db_agfree array, but there is currently no validity check for
-db_maxag and db_agpref, which can lead to errors.
+Use FIELD_GET() to extract PCIe Negotiated and Maximum Link Width fields
+instead of custom masking and shifting.
 
-The following is related bug reported by Syzbot:
-
-UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dmap.c:639:20
-index 7936 is out of range for type 'atomic_t[128]'
-
-Add checking that the values of db_maxag and db_agpref are valid
-indexes for the db_agfree array.
-
-Reported-by: syzbot+38e876a8aa44b7115c76@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=38e876a8aa44b7115c76
-Signed-off-by: Juntong Deng <juntong.deng@outlook.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/pci/cobalt/cobalt-driver.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index a700950429c5f..217a673b751ef 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -195,6 +195,12 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
- 	bmp->db_maxag = le32_to_cpu(dbmp_le->dn_maxag);
- 	bmp->db_agpref = le32_to_cpu(dbmp_le->dn_agpref);
-+	if (bmp->db_maxag >= MAXAG || bmp->db_maxag < 0 ||
-+		bmp->db_agpref >= MAXAG || bmp->db_agpref < 0) {
-+		err = -EINVAL;
-+		goto err_release_metapage;
-+	}
-+
- 	bmp->db_aglevel = le32_to_cpu(dbmp_le->dn_aglevel);
- 	bmp->db_agheight = le32_to_cpu(dbmp_le->dn_agheight);
- 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+diff --git a/drivers/media/pci/cobalt/cobalt-driver.c b/drivers/media/pci/cobalt/cobalt-driver.c
+index 16af58f2f93cc..f9cee061517bd 100644
+--- a/drivers/media/pci/cobalt/cobalt-driver.c
++++ b/drivers/media/pci/cobalt/cobalt-driver.c
+@@ -8,6 +8,7 @@
+  *  All rights reserved.
+  */
+ 
++#include <linux/bitfield.h>
+ #include <linux/delay.h>
+ #include <media/i2c/adv7604.h>
+ #include <media/i2c/adv7842.h>
+@@ -210,17 +211,17 @@ void cobalt_pcie_status_show(struct cobalt *cobalt)
+ 	pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &stat);
+ 	cobalt_info("PCIe link capability 0x%08x: %s per lane and %u lanes\n",
+ 			capa, get_link_speed(capa),
+-			(capa & PCI_EXP_LNKCAP_MLW) >> 4);
++			FIELD_GET(PCI_EXP_LNKCAP_MLW, capa));
+ 	cobalt_info("PCIe link control 0x%04x\n", ctrl);
+ 	cobalt_info("PCIe link status 0x%04x: %s per lane and %u lanes\n",
+ 		    stat, get_link_speed(stat),
+-		    (stat & PCI_EXP_LNKSTA_NLW) >> 4);
++		    FIELD_GET(PCI_EXP_LNKSTA_NLW, stat));
+ 
+ 	/* Bus */
+ 	pcie_capability_read_dword(pci_bus_dev, PCI_EXP_LNKCAP, &capa);
+ 	cobalt_info("PCIe bus link capability 0x%08x: %s per lane and %u lanes\n",
+ 			capa, get_link_speed(capa),
+-			(capa & PCI_EXP_LNKCAP_MLW) >> 4);
++			FIELD_GET(PCI_EXP_LNKCAP_MLW, capa));
+ 
+ 	/* Slot */
+ 	pcie_capability_read_dword(pci_dev, PCI_EXP_SLTCAP, &capa);
+@@ -239,7 +240,7 @@ static unsigned pcie_link_get_lanes(struct cobalt *cobalt)
+ 	if (!pci_is_pcie(pci_dev))
+ 		return 0;
+ 	pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &link);
+-	return (link & PCI_EXP_LNKSTA_NLW) >> 4;
++	return FIELD_GET(PCI_EXP_LNKSTA_NLW, link);
+ }
+ 
+ static unsigned pcie_bus_link_get_lanes(struct cobalt *cobalt)
+@@ -250,7 +251,7 @@ static unsigned pcie_bus_link_get_lanes(struct cobalt *cobalt)
+ 	if (!pci_is_pcie(pci_dev))
+ 		return 0;
+ 	pcie_capability_read_dword(pci_dev, PCI_EXP_LNKCAP, &link);
+-	return (link & PCI_EXP_LNKCAP_MLW) >> 4;
++	return FIELD_GET(PCI_EXP_LNKCAP_MLW, link);
+ }
+ 
+ static void msi_config_show(struct cobalt *cobalt, struct pci_dev *pci_dev)
 -- 
 2.42.0
 
