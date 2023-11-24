@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692312C87B;
-	Fri, 24 Nov 2023 19:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95934339BE;
+	Fri, 24 Nov 2023 19:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMIk/4Hf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96830C433C7;
-	Fri, 24 Nov 2023 19:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4sEVnA7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1873DC433C7;
+	Fri, 24 Nov 2023 19:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852779;
-	bh=ZcfM/dDrEupyHktlpBUYvT8dMaBmU0dATCdOGfKfOfs=;
+	s=korg; t=1700852782;
+	bh=2RCne5sGsxQHx+wge2QhFIDg9ulH4CtPN0aNgxSnfUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eMIk/4HfXXN8cu09EE9FJ3vfjokHJgh7NEvOgwLf1Y++WRUf616fe/La4/tlZNlXq
-	 aiNdASZkaQS3Sd7ynl9oOBcZUtK3Bg8kGR+FEOsMpxlmnodlimpRjJEv73jJo2NYoB
-	 406Rh679ixcsYbOOFcZefy4ngRh3AG7af8sEp36M=
+	b=J4sEVnA7fQHgIV3DRJbuxcv+p2LyqSSb6ZsHsss5NXJvsH8Y+curBeBXm7RZLEPZa
+	 MD8Mh6sgZU7fqu0XZQ8v7xgnxkqdB5pqxMawa+jKzo6WJXkc5RJWxD+HxTNuuZFLjs
+	 ohjSXo1AwTgWt92CRoGmpvt5mK34iYDaXAuNNeq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/193] macvlan: Dont propagate promisc change to lower dev in passthru
-Date: Fri, 24 Nov 2023 17:53:32 +0000
-Message-ID: <20231124171950.644835484@linuxfoundation.org>
+	Nitin Yadav <n-yadav@ti.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 113/193] mmc: sdhci_am654: fix start loop index for TAP value parsing
+Date: Fri, 24 Nov 2023 17:54:00 +0000
+Message-ID: <20231124171951.764196682@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -44,61 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Nitin Yadav <n-yadav@ti.com>
 
-[ Upstream commit 7e1caeace0418381f36b3aa8403dfd82fc57fc53 ]
+commit 71956d0cb56c1e5f9feeb4819db87a076418e930 upstream.
 
-Macvlan device in passthru mode sets its lower device promiscuous mode
-according to its MACVLAN_FLAG_NOPROMISC flag instead of synchronizing it to
-its own promiscuity setting. However, macvlan_change_rx_flags() function
-doesn't check the mode before propagating such changes to the lower device
-which can cause net_device->promiscuity counter overflow as illustrated by
-reproduction example [0] and resulting dmesg log [1]. Fix the issue by
-first verifying the mode in macvlan_change_rx_flags() function before
-propagating promiscuous mode change to the lower device.
+ti,otap-del-sel-legacy/ti,itap-del-sel-legacy passed from DT
+are currently ignored for all SD/MMC and eMMC modes. Fix this
+by making start loop index to MMC_TIMING_LEGACY.
 
-[0]:
-ip link add macvlan1 link enp8s0f0 type macvlan mode passthru
-ip link set macvlan1 promisc on
-ip l set dev macvlan1 up
-ip link set macvlan1 promisc off
-ip l set dev macvlan1 down
-ip l set dev macvlan1 up
-
-[1]:
-[ 5156.281724] macvlan1: entered promiscuous mode
-[ 5156.285467] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
-[ 5156.287639] macvlan1: left promiscuous mode
-[ 5156.288339] mlx5_core 0000:08:00.0 enp8s0f0: left promiscuous mode
-[ 5156.290907] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
-[ 5156.317197] mlx5_core 0000:08:00.0 enp8s0f0: promiscuity touches roof, set promiscuity failed. promiscuity feature of device might be broken.
-
-Fixes: efdbd2b30caa ("macvlan: Propagate promiscuity setting to lower devices.")
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20231114175915.1649154-1-vladbu@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8ee5fc0e0b3b ("mmc: sdhci_am654: Update OTAPDLY writes")
+Signed-off-by: Nitin Yadav <n-yadav@ti.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231026061458.1116276-1-n-yadav@ti.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macvlan.c | 2 +-
+ drivers/mmc/host/sdhci_am654.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index 5869bc2c3aa79..9c77e6ab2b307 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -765,7 +765,7 @@ static void macvlan_change_rx_flags(struct net_device *dev, int change)
- 	if (dev->flags & IFF_UP) {
- 		if (change & IFF_ALLMULTI)
- 			dev_set_allmulti(lowerdev, dev->flags & IFF_ALLMULTI ? 1 : -1);
--		if (change & IFF_PROMISC)
-+		if (!macvlan_passthru(vlan->port) && change & IFF_PROMISC)
- 			dev_set_promiscuity(lowerdev,
- 					    dev->flags & IFF_PROMISC ? 1 : -1);
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -600,7 +600,7 @@ static int sdhci_am654_get_otap_delay(st
+ 		return 0;
+ 	}
  
--- 
-2.42.0
-
+-	for (i = MMC_TIMING_MMC_HS; i <= MMC_TIMING_MMC_HS400; i++) {
++	for (i = MMC_TIMING_LEGACY; i <= MMC_TIMING_MMC_HS400; i++) {
+ 
+ 		ret = device_property_read_u32(dev, td[i].otap_binding,
+ 					       &sdhci_am654->otap_del_sel[i]);
 
 
