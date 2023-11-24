@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C3C39FE3;
-	Fri, 24 Nov 2023 18:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1BA39FFC;
+	Fri, 24 Nov 2023 18:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaDNcJKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE94C433C8;
-	Fri, 24 Nov 2023 18:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WR5CFTqJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8955C433C8;
+	Fri, 24 Nov 2023 18:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849588;
-	bh=r53A8FG+gbbJArRsk/feOryTVyF1QNVwrf97LWQDu9w=;
+	s=korg; t=1700849591;
+	bh=0HzRr2ve8KlFeJclZP4ChB87zw6vYE71WSbPZ20mWZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaDNcJKz17H+Y+gW6CtSYZVYcq/mGUnxiNUQv9r4DtZNnPxtCVqJ/JZYNP/6rTSz8
-	 GNo5/Y6hsrvA7Pp2/A8ovuQKwWZldidwfP25PB1yoBiBrqKYudqG30zhzgVFlJe1tn
-	 VE7PPajzgG2v5sU4r4D7Ac6t1BxKgFsz7xDHX4wQ=
+	b=WR5CFTqJsWTTo+Kv/9+1d4pu6K0J8+YivljPYBuCnhAYFIaVp6v5v9Cgp9dEPlswB
+	 88gZSOYF8Vmr3GYMmiEY2P/vawnQUcbU9uZ6eWhRW8j7t0PxC0CNw8dr/jgLQr0whU
+	 KXV1+15GUSzgc7fsmJEsFHxfrHAFA1cXKWxKpKtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Cruz Zhao <cruzzhao@linux.alibaba.com>,
+	Tianchen Ding <dtcccc@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/530] net/mlx5: Decouple PHC .adjtime and .adjphase implementations
-Date: Fri, 24 Nov 2023 17:46:23 +0000
-Message-ID: <20231124172034.670578991@linuxfoundation.org>
+Subject: [PATCH 6.6 218/530] net/mlx5e: fix double free of encap_header
+Date: Fri, 24 Nov 2023 17:46:24 +0000
+Message-ID: <20231124172034.701296430@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,44 +46,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Dust Li <dust.li@linux.alibaba.com>
 
-[ Upstream commit fd64fd13c49a53012ce9170449dcd9eb71c11284 ]
+[ Upstream commit 6f9b1a0731662648949a1c0587f6acb3b7f8acf1 ]
 
-When running a phase adjustment operation, the free running clock should
-not be modified at all. The phase control keyword is intended to trigger an
-internal servo on the device that will converge to the provided delta. A
-free running counter cannot implement phase adjustment.
+When mlx5_packet_reformat_alloc() fails, the encap_header allocated in
+mlx5e_tc_tun_create_header_ipv4{6} will be released within it. However,
+e->encap_header is already set to the previously freed encap_header
+before mlx5_packet_reformat_alloc(). As a result, the later
+mlx5e_encap_put() will free e->encap_header again, causing a double free
+issue.
 
-Fixes: 8e11a68e2e8a ("net/mlx5: Add adjphase function to support hardware-only offset control")
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+mlx5e_encap_put()
+    --> mlx5e_encap_dealloc()
+        --> kfree(e->encap_header)
+
+This happens when cmd: MLX5_CMD_OP_ALLOC_PACKET_REFORMAT_CONTEXT fail.
+
+This patch fix it by not setting e->encap_header until
+mlx5_packet_reformat_alloc() success.
+
+Fixes: d589e785baf5e ("net/mlx5e: Allow concurrent creation of encap entries")
+Reported-by: Cruz Zhao <cruzzhao@linux.alibaba.com>
+Reported-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+Signed-off-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-5-saeed@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-index aa29f09e83564..0c83ef174275a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-@@ -384,7 +384,12 @@ static int mlx5_ptp_adjtime(struct ptp_clock_info *ptp, s64 delta)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+index 00a04fdd756f5..8bca696b6658c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+@@ -300,9 +300,6 @@ int mlx5e_tc_tun_create_header_ipv4(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto destroy_neigh_entry;
  
- static int mlx5_ptp_adjphase(struct ptp_clock_info *ptp, s32 delta)
- {
--	return mlx5_ptp_adjtime(ptp, delta);
-+	struct mlx5_clock *clock = container_of(ptp, struct mlx5_clock, ptp_info);
-+	struct mlx5_core_dev *mdev;
-+
-+	mdev = container_of(clock, struct mlx5_core_dev, clock);
-+
-+	return mlx5_ptp_adjtime_real_time(mdev, delta);
- }
+-	e->encap_size = ipv4_encap_size;
+-	e->encap_header = encap_header;
+-
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(attr.n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+@@ -322,6 +319,8 @@ int mlx5e_tc_tun_create_header_ipv4(struct mlx5e_priv *priv,
+ 		goto destroy_neigh_entry;
+ 	}
  
- static int mlx5_ptp_freq_adj_real_time(struct mlx5_core_dev *mdev, long scaled_ppm)
++	e->encap_size = ipv4_encap_size;
++	e->encap_header = encap_header;
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(attr.out_dev));
+ 	mlx5e_route_lookup_ipv4_put(&attr);
+@@ -568,9 +567,6 @@ int mlx5e_tc_tun_create_header_ipv6(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto destroy_neigh_entry;
+ 
+-	e->encap_size = ipv6_encap_size;
+-	e->encap_header = encap_header;
+-
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(attr.n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+@@ -590,6 +586,8 @@ int mlx5e_tc_tun_create_header_ipv6(struct mlx5e_priv *priv,
+ 		goto destroy_neigh_entry;
+ 	}
+ 
++	e->encap_size = ipv6_encap_size;
++	e->encap_header = encap_header;
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(attr.out_dev));
+ 	mlx5e_route_lookup_ipv6_put(&attr);
 -- 
 2.42.0
 
