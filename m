@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A2939FF7;
-	Fri, 24 Nov 2023 18:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A77E381D4;
+	Fri, 24 Nov 2023 18:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lTzEweXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC6CC433C8;
-	Fri, 24 Nov 2023 18:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rb3epQTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC2BC433C8;
+	Fri, 24 Nov 2023 18:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850326;
-	bh=ZPahxXMuM9DBn8+uQXO1nEv+O17iBh8NUFGMJukKR20=;
+	s=korg; t=1700850329;
+	bh=RD0jKt94bLZsgzd91+2LY/UANdEO4uS166WrUpP0S6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lTzEweXyyJFKW7gYFTeHVX5At3RlrCifym2dNxsk9XC13q9OTqLH0L2GHZqWfRVd2
-	 MdiYCNDpauyZx4SH1jNME+wXWorFUhBbJ/2l5nni8RVod+9t3eEzXk+yAtddZzhVVC
-	 XoHmWrdTGbXvvQ52Yl25YyLkqzj5BsClURvfgbGA=
+	b=rb3epQTEC3BD7HzC3ywhKNqQKkCj5PoNhS0iowfDHi1jRH+DXshkM507mIhJJfHvM
+	 vqHnnvLXicrQtpWCACOgspTleq6mpGdVeh9/UpbAAoS/vpvyD7clPTV0rk3Dax6udt
+	 nL3agvxZ+owYn70pH5p0T+Rviz78iFR+rOiFdG8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 517/530] drm/amdgpu: dont use pci_is_thunderbolt_attached()
-Date: Fri, 24 Nov 2023 17:51:23 +0000
-Message-ID: <20231124172043.925015504@linuxfoundation.org>
+	Tim Huang <Tim.Huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>
+Subject: [PATCH 6.6 518/530] drm/amdgpu: fix GRBM read timeout when do mes_self_test
+Date: Fri, 24 Nov 2023 17:51:24 +0000
+Message-ID: <20231124172043.955737625@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,96 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Tim Huang <Tim.Huang@amd.com>
 
-commit 7b1c6263eaf4fd64ffe1cafdc504a42ee4bfbb33 upstream.
+commit 36e7ff5c13cb15cb7b06c76d42bb76cbf6b7ea75 upstream.
 
-It's only valid on Intel systems with the Intel VSEC.
-Use dev_is_removable() instead.  This should do the right
-thing regardless of the platform.
+Use a proper MEID to make sure the CP_HQD_* and CP_GFX_HQD_* registers
+can be touched when initialize the compute and gfx mqd in mes_self_test.
+Otherwise, we expect no response from CP and an GRBM eventual timeout.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2925
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    8 ++++----
- drivers/gpu/drm/amd/amdgpu/nbio_v2_3.c     |    5 +++--
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -43,6 +43,7 @@
- #include <drm/drm_fb_helper.h>
- #include <drm/drm_probe_helper.h>
- #include <drm/amdgpu_drm.h>
-+#include <linux/device.h>
- #include <linux/vgaarb.h>
- #include <linux/vga_switcheroo.h>
- #include <linux/efi.h>
-@@ -2018,7 +2019,6 @@ out:
-  */
- static int amdgpu_device_ip_early_init(struct amdgpu_device *adev)
- {
--	struct drm_device *dev = adev_to_drm(adev);
- 	struct pci_dev *parent;
- 	int i, r;
- 	bool total;
-@@ -2089,7 +2089,7 @@ static int amdgpu_device_ip_early_init(s
- 	    (amdgpu_is_atpx_hybrid() ||
- 	     amdgpu_has_atpx_dgpu_power_cntl()) &&
- 	    ((adev->flags & AMD_IS_APU) == 0) &&
--	    !pci_is_thunderbolt_attached(to_pci_dev(dev->dev)))
-+	    !dev_is_removable(&adev->pdev->dev))
- 		adev->flags |= AMD_IS_PX;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+@@ -556,8 +556,20 @@ static void amdgpu_mes_queue_init_mqd(st
+ 	mqd_prop.hqd_queue_priority = p->hqd_queue_priority;
+ 	mqd_prop.hqd_active = false;
  
- 	if (!(adev->flags & AMD_IS_APU)) {
-@@ -3903,7 +3903,7 @@ fence_driver_init:
++	if (p->queue_type == AMDGPU_RING_TYPE_GFX ||
++	    p->queue_type == AMDGPU_RING_TYPE_COMPUTE) {
++		mutex_lock(&adev->srbm_mutex);
++		amdgpu_gfx_select_me_pipe_q(adev, p->ring->me, p->ring->pipe, 0, 0, 0);
++	}
++
+ 	mqd_mgr->init_mqd(adev, q->mqd_cpu_ptr, &mqd_prop);
  
- 	px = amdgpu_device_supports_px(ddev);
++	if (p->queue_type == AMDGPU_RING_TYPE_GFX ||
++	    p->queue_type == AMDGPU_RING_TYPE_COMPUTE) {
++		amdgpu_gfx_select_me_pipe_q(adev, 0, 0, 0, 0, 0);
++		mutex_unlock(&adev->srbm_mutex);
++	}
++
+ 	amdgpu_bo_unreserve(q->mqd_obj);
+ }
  
--	if (px || (!pci_is_thunderbolt_attached(adev->pdev) &&
-+	if (px || (!dev_is_removable(&adev->pdev->dev) &&
- 				apple_gmux_detect(NULL, NULL)))
- 		vga_switcheroo_register_client(adev->pdev,
- 					       &amdgpu_switcheroo_ops, px);
-@@ -4048,7 +4048,7 @@ void amdgpu_device_fini_sw(struct amdgpu
- 
- 	px = amdgpu_device_supports_px(adev_to_drm(adev));
- 
--	if (px || (!pci_is_thunderbolt_attached(adev->pdev) &&
-+	if (px || (!dev_is_removable(&adev->pdev->dev) &&
- 				apple_gmux_detect(NULL, NULL)))
- 		vga_switcheroo_unregister_client(adev->pdev);
- 
---- a/drivers/gpu/drm/amd/amdgpu/nbio_v2_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nbio_v2_3.c
-@@ -28,6 +28,7 @@
- #include "nbio/nbio_2_3_offset.h"
- #include "nbio/nbio_2_3_sh_mask.h"
- #include <uapi/linux/kfd_ioctl.h>
-+#include <linux/device.h>
- #include <linux/pci.h>
- 
- #define smnPCIE_CONFIG_CNTL	0x11180044
-@@ -361,7 +362,7 @@ static void nbio_v2_3_enable_aspm(struct
- 
- 		data |= NAVI10_PCIE__LC_L0S_INACTIVITY_DEFAULT << PCIE_LC_CNTL__LC_L0S_INACTIVITY__SHIFT;
- 
--		if (pci_is_thunderbolt_attached(adev->pdev))
-+		if (dev_is_removable(&adev->pdev->dev))
- 			data |= NAVI10_PCIE__LC_L1_INACTIVITY_TBT_DEFAULT  << PCIE_LC_CNTL__LC_L1_INACTIVITY__SHIFT;
- 		else
- 			data |= NAVI10_PCIE__LC_L1_INACTIVITY_DEFAULT << PCIE_LC_CNTL__LC_L1_INACTIVITY__SHIFT;
-@@ -480,7 +481,7 @@ static void nbio_v2_3_program_aspm(struc
- 
- 	def = data = RREG32_PCIE(smnPCIE_LC_CNTL);
- 	data |= NAVI10_PCIE__LC_L0S_INACTIVITY_DEFAULT << PCIE_LC_CNTL__LC_L0S_INACTIVITY__SHIFT;
--	if (pci_is_thunderbolt_attached(adev->pdev))
-+	if (dev_is_removable(&adev->pdev->dev))
- 		data |= NAVI10_PCIE__LC_L1_INACTIVITY_TBT_DEFAULT  << PCIE_LC_CNTL__LC_L1_INACTIVITY__SHIFT;
- 	else
- 		data |= NAVI10_PCIE__LC_L1_INACTIVITY_DEFAULT << PCIE_LC_CNTL__LC_L1_INACTIVITY__SHIFT;
+@@ -993,9 +1005,13 @@ int amdgpu_mes_add_ring(struct amdgpu_de
+ 	switch (queue_type) {
+ 	case AMDGPU_RING_TYPE_GFX:
+ 		ring->funcs = adev->gfx.gfx_ring[0].funcs;
++		ring->me = adev->gfx.gfx_ring[0].me;
++		ring->pipe = adev->gfx.gfx_ring[0].pipe;
+ 		break;
+ 	case AMDGPU_RING_TYPE_COMPUTE:
+ 		ring->funcs = adev->gfx.compute_ring[0].funcs;
++		ring->me = adev->gfx.compute_ring[0].me;
++		ring->pipe = adev->gfx.compute_ring[0].pipe;
+ 		break;
+ 	case AMDGPU_RING_TYPE_SDMA:
+ 		ring->funcs = adev->sdma.instance[0].ring.funcs;
 
 
