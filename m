@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4483834189;
-	Fri, 24 Nov 2023 19:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5912D33CFD;
+	Fri, 24 Nov 2023 19:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6ZO6KhP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2CDC433C8;
-	Fri, 24 Nov 2023 19:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCx/D9kP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F2FC433C7;
+	Fri, 24 Nov 2023 19:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852421;
-	bh=Tf91UA69LYZocgRcK6WTZiCjw+Nt0Yr/t6FoG45FLQ4=;
+	s=korg; t=1700852424;
+	bh=bwhZnmFPijPJ6if2ScgXeTlG4zj95K1vynMMNXmbBis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6ZO6KhPsv1oUmlcsQ8iBljUGbkJ0jdspLJaL6BRT5LSG3cW4wVDFFkbiFlGlh5vg
-	 +3twPMSYYYb5P4pU5ov7PJw+SNVST2ZydfDcsuGAW0J3hpKbRTeNVzFeOE0Z716Y10
-	 Li8uG6czTr+EIWKJWPhgJtIH4w+f7BD8GrzjIWHI=
+	b=HCx/D9kPQHpiEt8e7tJTUNSSRrbcJGZ9RnlLcJvDWm2kWwZp6i5Jel+qwVg4u5JCf
+	 2PNd4Jc2+8uI2BDvLrmZmPGZKywixflWJslPdSiEDLWBUrWn1emYPnFxmUupQ/0HvF
+	 qSOH6SXFFbrH3SL7o9tFq2N+A/k1k7UVsGJZyY0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"J. Bruce Fields" <bfields@redhat.com>,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 349/372] ext4: apply umask if ACL support is disabled
-Date: Fri, 24 Nov 2023 17:52:16 +0000
-Message-ID: <20231124172021.983896672@linuxfoundation.org>
+	Mahmoud Adam <mngyadam@amazon.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 327/372] nfsd: fix file memleak on client_opens_release
+Date: Fri, 24 Nov 2023 17:51:54 +0000
+Message-ID: <20231124172021.288496805@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,45 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Mahmoud Adam <mngyadam@amazon.com>
 
-commit 484fd6c1de13b336806a967908a927cc0356e312 upstream.
+commit bc1b5acb40201a0746d68a7d7cfc141899937f4f upstream.
 
-The function ext4_init_acl() calls posix_acl_create() which is
-responsible for applying the umask.  But without
-CONFIG_EXT4_FS_POSIX_ACL, ext4_init_acl() is an empty inline function,
-and nobody applies the umask.
+seq_release should be called to free the allocated seq_file
 
-This fixes a bug which causes the umask to be ignored with O_TMPFILE
-on ext4:
-
- https://github.com/MusicPlayerDaemon/MPD/issues/558
- https://bugs.gentoo.org/show_bug.cgi?id=686142#c3
- https://bugzilla.kernel.org/show_bug.cgi?id=203625
-
-Reviewed-by: "J. Bruce Fields" <bfields@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Link: https://lore.kernel.org/r/20230919081824.1096619-1-max.kellermann@ionos.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org # v5.3+
+Signed-off-by: Mahmoud Adam <mngyadam@amazon.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
+Reviewed-by: NeilBrown <neilb@suse.de>
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/acl.h |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfsd/nfs4state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/acl.h
-+++ b/fs/ext4/acl.h
-@@ -68,6 +68,11 @@ extern int ext4_init_acl(handle_t *, str
- static inline int
- ext4_init_acl(handle_t *handle, struct inode *inode, struct inode *dir)
- {
-+	/* usually, the umask is applied by posix_acl_create(), but if
-+	   ext4 ACL support is disabled at compile time, we need to do
-+	   it here, because posix_acl_create() will never be called */
-+	inode->i_mode &= ~current_umask();
-+
- 	return 0;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2799,7 +2799,7 @@ static int client_opens_release(struct i
+ 
+ 	/* XXX: alternatively, we could get/drop in seq start/stop */
+ 	drop_client(clp);
+-	return 0;
++	return seq_release(inode, file);
  }
- #endif  /* CONFIG_EXT4_FS_POSIX_ACL */
+ 
+ static const struct file_operations client_states_fops = {
 
 
