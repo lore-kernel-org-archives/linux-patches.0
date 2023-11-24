@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B094639FD7;
-	Fri, 24 Nov 2023 18:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA3439FD7;
+	Fri, 24 Nov 2023 18:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHpzfVKf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401AFC433C7;
-	Fri, 24 Nov 2023 18:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKqMqks4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51D6C433C7;
+	Fri, 24 Nov 2023 18:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849289;
-	bh=jgkWuun0yrUP/C4l/EE6X02UsWhiy2iYuslVRvYwvlI=;
+	s=korg; t=1700849292;
+	bh=jcNYOc1p/tlL2tK38hNJ6rkjIQtqe0+51Ivgres/Dd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHpzfVKfZCauPTvPuE38zZTgasJTWznU+vZ/OwH5fTKfKs1kvM7pr5g875CnhqMBn
-	 2w/399Nsmoc66XSuYQ8sQWBxDlrT0EjL7CPRk7yhxgVDVmcFlADwxnV+Xbdo7o5Ym1
-	 rSCrV4TRsU9xr9NApoWBk9Boq+htCCavwsLTJOWE=
+	b=LKqMqks4FlslE/9Gwymy7hSwP9eV7sBwbf38wzHcUIvycgIIiGEwsbuDf4Kwuxal8
+	 T1kWW0YDHqg6PSgLJoBXLobhpt7PZ92gXTTTRtJnARCUMSXtSzwRmS1NOMaeb2j1/g
+	 z+/mp/wwiXm4j38Vosd7aTexPgwmnBmgYTsI3KWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/530] phy: qualcomm: phy-qcom-eusb2-repeater: Zero out untouched tuning regs
-Date: Fri, 24 Nov 2023 17:44:49 +0000
-Message-ID: <20231124172031.853797461@linuxfoundation.org>
+Subject: [PATCH 6.6 106/530] PCI: Use FIELD_GET() to extract Link Width
+Date: Fri, 24 Nov 2023 17:44:32 +0000
+Message-ID: <20231124172031.350663157@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -36,149 +37,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 99a517a582fc1272d1d3cf3b9e671a14d7db77b8 ]
+[ Upstream commit d1f9b39da4a5347150246871325190018cda8cb3 ]
 
-The vendor kernel zeroes out all tuning data outside the init sequence
-as part of initialization. Follow suit to avoid UB.
+Use FIELD_GET() to extract PCIe Negotiated and Maximum Link Width fields
+instead of custom masking and shifting.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230830-topic-eusb2_override-v2-3-7d8c893d93f6@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20230919125648.1920-7-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[bhelgaas: drop duplicate include of <linux/bitfield.h>]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 58 ++++++++++++++-----
- 1 file changed, 44 insertions(+), 14 deletions(-)
+ drivers/pci/pci-sysfs.c | 5 ++---
+ drivers/pci/pci.c       | 5 ++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-index 7561da01e633d..d4fb85c20eb0f 100644
---- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-+++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-@@ -24,9 +24,18 @@
- #define EUSB2_FORCE_VAL_5		0xeD
- #define V_CLK_19P2M_EN			BIT(6)
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index d9eede2dbc0e1..5a6241044c3c8 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -12,7 +12,7 @@
+  * Modeled after usb's driverfs.c
+  */
  
-+#define EUSB2_TUNE_USB2_CROSSOVER	0x50
- #define EUSB2_TUNE_IUSB2		0x51
-+#define EUSB2_TUNE_RES_FSDIF		0x52
-+#define EUSB2_TUNE_HSDISC		0x53
- #define EUSB2_TUNE_SQUELCH_U		0x54
-+#define EUSB2_TUNE_USB2_SLEW		0x55
-+#define EUSB2_TUNE_USB2_EQU		0x56
- #define EUSB2_TUNE_USB2_PREEM		0x57
-+#define EUSB2_TUNE_USB2_HS_COMP_CUR	0x58
-+#define EUSB2_TUNE_EUSB_SLEW		0x59
-+#define EUSB2_TUNE_EUSB_EQU		0x5A
-+#define EUSB2_TUNE_EUSB_HS_COMP_CUR	0x5B
- 
- #define QCOM_EUSB2_REPEATER_INIT_CFG(r, v)	\
- 	{					\
-@@ -35,9 +44,18 @@
- 	}
- 
- enum reg_fields {
-+	F_TUNE_EUSB_HS_COMP_CUR,
-+	F_TUNE_EUSB_EQU,
-+	F_TUNE_EUSB_SLEW,
-+	F_TUNE_USB2_HS_COMP_CUR,
- 	F_TUNE_USB2_PREEM,
-+	F_TUNE_USB2_EQU,
-+	F_TUNE_USB2_SLEW,
- 	F_TUNE_SQUELCH_U,
-+	F_TUNE_HSDISC,
-+	F_TUNE_RES_FSDIF,
- 	F_TUNE_IUSB2,
-+	F_TUNE_USB2_CROSSOVER,
- 	F_NUM_TUNE_FIELDS,
- 
- 	F_FORCE_VAL_5 = F_NUM_TUNE_FIELDS,
-@@ -50,9 +68,18 @@ enum reg_fields {
- };
- 
- static struct reg_field eusb2_repeater_tune_reg_fields[F_NUM_FIELDS] = {
-+	[F_TUNE_EUSB_HS_COMP_CUR] = REG_FIELD(EUSB2_TUNE_EUSB_HS_COMP_CUR, 0, 1),
-+	[F_TUNE_EUSB_EQU] = REG_FIELD(EUSB2_TUNE_EUSB_EQU, 0, 1),
-+	[F_TUNE_EUSB_SLEW] = REG_FIELD(EUSB2_TUNE_EUSB_SLEW, 0, 1),
-+	[F_TUNE_USB2_HS_COMP_CUR] = REG_FIELD(EUSB2_TUNE_USB2_HS_COMP_CUR, 0, 1),
- 	[F_TUNE_USB2_PREEM] = REG_FIELD(EUSB2_TUNE_USB2_PREEM, 0, 2),
-+	[F_TUNE_USB2_EQU] = REG_FIELD(EUSB2_TUNE_USB2_EQU, 0, 1),
-+	[F_TUNE_USB2_SLEW] = REG_FIELD(EUSB2_TUNE_USB2_SLEW, 0, 1),
- 	[F_TUNE_SQUELCH_U] = REG_FIELD(EUSB2_TUNE_SQUELCH_U, 0, 2),
-+	[F_TUNE_HSDISC] = REG_FIELD(EUSB2_TUNE_HSDISC, 0, 2),
-+	[F_TUNE_RES_FSDIF] = REG_FIELD(EUSB2_TUNE_RES_FSDIF, 0, 2),
- 	[F_TUNE_IUSB2] = REG_FIELD(EUSB2_TUNE_IUSB2, 0, 3),
-+	[F_TUNE_USB2_CROSSOVER] = REG_FIELD(EUSB2_TUNE_USB2_CROSSOVER, 0, 2),
- 
- 	[F_FORCE_VAL_5] = REG_FIELD(EUSB2_FORCE_VAL_5, 0, 7),
- 	[F_FORCE_EN_5] = REG_FIELD(EUSB2_FORCE_EN_5, 0, 7),
-@@ -62,13 +89,8 @@ static struct reg_field eusb2_repeater_tune_reg_fields[F_NUM_FIELDS] = {
- 	[F_RPTR_STATUS] = REG_FIELD(EUSB2_RPTR_STATUS, 0, 7),
- };
- 
--struct eusb2_repeater_init_tbl {
--	unsigned int reg;
--	unsigned int val;
--};
 -
- struct eusb2_repeater_cfg {
--	const struct eusb2_repeater_init_tbl *init_tbl;
-+	const u32 *init_tbl;
- 	int init_tbl_num;
- 	const char * const *vreg_list;
- 	int num_vregs;
-@@ -87,10 +109,10 @@ static const char * const pm8550b_vreg_l[] = {
- 	"vdd18", "vdd3",
- };
++#include <linux/bitfield.h>
+ #include <linux/kernel.h>
+ #include <linux/sched.h>
+ #include <linux/pci.h>
+@@ -230,8 +230,7 @@ static ssize_t current_link_width_show(struct device *dev,
+ 	if (err)
+ 		return -EINVAL;
  
--static const struct eusb2_repeater_init_tbl pm8550b_init_tbl[] = {
--	QCOM_EUSB2_REPEATER_INIT_CFG(F_TUNE_IUSB2, 0x8),
--	QCOM_EUSB2_REPEATER_INIT_CFG(F_TUNE_SQUELCH_U, 0x3),
--	QCOM_EUSB2_REPEATER_INIT_CFG(F_TUNE_USB2_PREEM, 0x5),
-+static const u32 pm8550b_init_tbl[F_NUM_TUNE_FIELDS] = {
-+	[F_TUNE_IUSB2] = 0x8,
-+	[F_TUNE_SQUELCH_U] = 0x3,
-+	[F_TUNE_USB2_PREEM] = 0x5,
- };
+-	return sysfs_emit(buf, "%u\n",
+-		(linkstat & PCI_EXP_LNKSTA_NLW) >> PCI_EXP_LNKSTA_NLW_SHIFT);
++	return sysfs_emit(buf, "%u\n", FIELD_GET(PCI_EXP_LNKSTA_NLW, linkstat));
+ }
+ static DEVICE_ATTR_RO(current_link_width);
  
- static const struct eusb2_repeater_cfg pm8550b_eusb2_cfg = {
-@@ -118,8 +140,9 @@ static int eusb2_repeater_init_vregs(struct eusb2_repeater *rptr)
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 5e51e8bd5c13a..ec43ebfc24a5d 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -6260,8 +6260,7 @@ u32 pcie_bandwidth_available(struct pci_dev *dev, struct pci_dev **limiting_dev,
+ 		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
  
- static int eusb2_repeater_init(struct phy *phy)
- {
-+	struct reg_field *regfields = eusb2_repeater_tune_reg_fields;
- 	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
--	const struct eusb2_repeater_init_tbl *init_tbl = rptr->cfg->init_tbl;
-+	const u32 *init_tbl = rptr->cfg->init_tbl;
- 	u32 val;
- 	int ret;
- 	int i;
-@@ -130,9 +153,16 @@ static int eusb2_repeater_init(struct phy *phy)
+ 		next_speed = pcie_link_speed[lnksta & PCI_EXP_LNKSTA_CLS];
+-		next_width = (lnksta & PCI_EXP_LNKSTA_NLW) >>
+-			PCI_EXP_LNKSTA_NLW_SHIFT;
++		next_width = FIELD_GET(PCI_EXP_LNKSTA_NLW, lnksta);
  
- 	regmap_field_update_bits(rptr->regs[F_EN_CTL1], EUSB2_RPTR_EN, EUSB2_RPTR_EN);
+ 		next_bw = next_width * PCIE_SPEED2MBS_ENC(next_speed);
  
--	for (i = 0; i < rptr->cfg->init_tbl_num; i++)
--		regmap_field_update_bits(rptr->regs[init_tbl[i].reg],
--					 init_tbl[i].val, init_tbl[i].val);
-+	for (i = 0; i < F_NUM_TUNE_FIELDS; i++) {
-+		if (init_tbl[i]) {
-+			regmap_field_update_bits(rptr->regs[i], init_tbl[i], init_tbl[i]);
-+		} else {
-+			/* Write 0 if there's no value set */
-+			u32 mask = GENMASK(regfields[i].msb, regfields[i].lsb);
-+
-+			regmap_field_update_bits(rptr->regs[i], mask, 0);
-+		}
-+	}
+@@ -6333,7 +6332,7 @@ enum pcie_link_width pcie_get_width_cap(struct pci_dev *dev)
  
- 	ret = regmap_field_read_poll_timeout(rptr->regs[F_RPTR_STATUS],
- 					     val, val & RPTR_OK, 10, 5);
+ 	pcie_capability_read_dword(dev, PCI_EXP_LNKCAP, &lnkcap);
+ 	if (lnkcap)
+-		return (lnkcap & PCI_EXP_LNKCAP_MLW) >> 4;
++		return FIELD_GET(PCI_EXP_LNKCAP_MLW, lnkcap);
+ 
+ 	return PCIE_LNK_WIDTH_UNKNOWN;
+ }
 -- 
 2.42.0
 
