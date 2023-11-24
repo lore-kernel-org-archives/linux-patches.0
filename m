@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B943A8C3;
-	Fri, 24 Nov 2023 18:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC973A8FB;
+	Fri, 24 Nov 2023 18:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="194hIJOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0891C433C8;
-	Fri, 24 Nov 2023 18:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FetlDL3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752F5C433C8;
+	Fri, 24 Nov 2023 18:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850726;
-	bh=CnsWSn4D1oop//yLTJsCperWSh58zmJKq8QeWA3Ec+k=;
+	s=korg; t=1700850728;
+	bh=oklbQznctnN0Rc0zcKp8y4oGjxcvvjuu1y0V0QHziTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=194hIJORLwEL+tALvp0hIC8JNfltxk27jUv4ox7rLXZ0b69KU9jbfOaa+7bAVD4Bt
-	 6tNW86syvxzIAHpVZwSm5o4yeWf+D42RZNyL/k34aLyHYHpqht0TuY9TrunpQnP7Jl
-	 3bAATDJphik3tJg8s9cdzWEc4KmtufMC6apa3xF8=
+	b=FetlDL3XoCTHmAiJGBJ6oxcnnfcu2SR4LRQRCQal6jIxzhuH7+Y18WZpwMdvN9M+k
+	 Z3t2qsm/S4Cx6Ode3HshMixh/9Rn1zSZfAirAlrcpYDYXAZmAdhrVjY3TT+OAzhQPO
+	 CjthW7XNoZQLo6BZqN9N+XnXee7fsTgCgDr39d/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+59875ffef5cb9c9b29e9@syzkaller.appspotmail.com,
-	"Ricardo B. Marliere" <ricardo@marliere.net>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jun Lei <jun.lei@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 140/491] media: imon: fix access to invalid resource for the second interface
-Date: Fri, 24 Nov 2023 17:46:16 +0000
-Message-ID: <20231124172028.698154419@linuxfoundation.org>
+Subject: [PATCH 6.5 141/491] drm/amd/display: Avoid NULL dereference of timing generator
+Date: Fri, 24 Nov 2023 17:46:17 +0000
+Message-ID: <20231124172028.728088782@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -45,52 +45,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Wayne Lin <wayne.lin@amd.com>
 
-[ Upstream commit a1766a4fd83befa0b34d932d532e7ebb7fab1fa7 ]
+[ Upstream commit b1904ed480cee3f9f4036ea0e36d139cb5fee2d6 ]
 
-imon driver probes two USB interfaces, and at the probe of the second
-interface, the driver assumes blindly that the first interface got
-bound with the same imon driver.  It's usually true, but it's still
-possible that the first interface is bound with another driver via a
-malformed descriptor.  Then it may lead to a memory corruption, as
-spotted by syzkaller; imon driver accesses the data from drvdata as
-struct imon_context object although it's a completely different one
-that was assigned by another driver.
+[Why & How]
+Check whether assigned timing generator is NULL or not before
+accessing its funcs to prevent NULL dereference.
 
-This patch adds a sanity check -- whether the first interface is
-really bound with the imon driver or not -- for avoiding the problem
-above at the probe time.
-
-Reported-by: syzbot+59875ffef5cb9c9b29e9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000a838aa0603cc74d6@google.com/
-Tested-by: Ricardo B. Marliere <ricardo@marliere.net>
-Link: https://lore.kernel.org/r/20230922005152.163640-1-ricardo@marliere.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reviewed-by: Jun Lei <jun.lei@amd.com>
+Acked-by: Hersen Wu <hersenxs.wu@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_stream.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 74546f7e34691..5719dda6e0f0e 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -2427,6 +2427,12 @@ static int imon_probe(struct usb_interface *interface,
- 		goto fail;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
+index 6e11d2b701f82..569d40eb7059d 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
+@@ -556,7 +556,7 @@ uint32_t dc_stream_get_vblank_counter(const struct dc_stream_state *stream)
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		struct timing_generator *tg = res_ctx->pipe_ctx[i].stream_res.tg;
  
-+	if (first_if->dev.driver != interface->dev.driver) {
-+		dev_err(&interface->dev, "inconsistent driver matching\n");
-+		ret = -EINVAL;
-+		goto fail;
-+	}
-+
- 	if (ifnum == 0) {
- 		ictx = imon_init_intf0(interface, id);
- 		if (!ictx) {
+-		if (res_ctx->pipe_ctx[i].stream != stream)
++		if (res_ctx->pipe_ctx[i].stream != stream || !tg)
+ 			continue;
+ 
+ 		return tg->funcs->get_frame_count(tg);
+@@ -615,7 +615,7 @@ bool dc_stream_get_scanoutpos(const struct dc_stream_state *stream,
+ 	for (i = 0; i < MAX_PIPES; i++) {
+ 		struct timing_generator *tg = res_ctx->pipe_ctx[i].stream_res.tg;
+ 
+-		if (res_ctx->pipe_ctx[i].stream != stream)
++		if (res_ctx->pipe_ctx[i].stream != stream || !tg)
+ 			continue;
+ 
+ 		tg->funcs->get_scanoutpos(tg,
 -- 
 2.42.0
 
