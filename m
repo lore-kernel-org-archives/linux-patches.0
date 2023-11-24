@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3B034189;
-	Fri, 24 Nov 2023 19:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613352C1A2;
+	Fri, 24 Nov 2023 19:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKc6ByBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D91BC433C8;
-	Fri, 24 Nov 2023 19:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/jdseFk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2A3C433C7;
+	Fri, 24 Nov 2023 19:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852844;
-	bh=tNtjrNknEjLjBwuKi/DuSUy5xckuovAZQSa1WZDw/YI=;
+	s=korg; t=1700852847;
+	bh=RGqM+Q2F9Y+G7MfXjz77o6i6aePogWCFqsQV+4htNuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nKc6ByBWEKl6I30eiSL8RCdLCqhdXtJZTotTvFwGNn8uA+94n0MVUwUXcJIacbB7p
-	 g4CjzbfBkyNU3VYOTlcPabeh+DabVaP4ANEgV1g6AcHhlszrVS74zA2l5DYRaPc4Kb
-	 8Ph4epbLKgoxamo//eMpENIafzQ9g8WtQlRC6NGM=
+	b=1/jdseFkTqpxuUbhla2OMpVRM6jKwPAvWKQhSrZ8ndA5W8bqyJRYzF//GlifaIPku
+	 NILMz5w4asV4pyjFu9iu2aRITfcydydAr9lHFAlAu8JOMfW1oo9JrTXL4Zr8soRPgy
+	 ue7SzZ3Q2IoYW80vUqI8ivvclwajiFcD4whOp/U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	Raul E Rangel <rrangel@chromium.org>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 5.10 121/193] ima: detect changes to the backing overlay file
-Date: Fri, 24 Nov 2023 17:54:08 +0000
-Message-ID: <20231124171952.068626895@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 112/193] mmc: vub300: fix an error code
+Date: Fri, 24 Nov 2023 17:53:59 +0000
+Message-ID: <20231124171951.728035960@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,113 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mimi Zohar <zohar@linux.ibm.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit b836c4d29f2744200b2af41e14bf50758dddc818 upstream.
+commit b44f9da81783fda72632ef9b0d05ea3f3ca447a5 upstream.
 
-Commit 18b44bc5a672 ("ovl: Always reevaluate the file signature for
-IMA") forced signature re-evaulation on every file access.
+This error path should return -EINVAL instead of success.
 
-Instead of always re-evaluating the file's integrity, detect a change
-to the backing file, by comparing the cached file metadata with the
-backing file's metadata.  Verifying just the i_version has not changed
-is insufficient.  In addition save and compare the i_ino and s_dev
-as well.
-
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Tested-by: Eric Snowberg <eric.snowberg@oracle.com>
-Tested-by: Raul E Rangel <rrangel@chromium.org>
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Link: https://lore.kernel.org/r/0769d30c-ad80-421b-bf5d-7d6f5d85604e@moroto.mountain
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/super.c              |    2 +-
- security/integrity/ima/ima_api.c  |    5 +++++
- security/integrity/ima/ima_main.c |   16 +++++++++++++++-
- security/integrity/integrity.h    |    2 ++
- 4 files changed, 23 insertions(+), 2 deletions(-)
+ drivers/mmc/host/vub300.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -2028,7 +2028,7 @@ static int ovl_fill_super(struct super_b
- 	sb->s_xattr = ovl_xattr_handlers;
- 	sb->s_fs_info = ofs;
- 	sb->s_flags |= SB_POSIXACL;
--	sb->s_iflags |= SB_I_SKIP_SYNC | SB_I_IMA_UNVERIFIABLE_SIGNATURE;
-+	sb->s_iflags |= SB_I_SKIP_SYNC;
- 
- 	err = -ENOMEM;
- 	root_dentry = ovl_get_root(sb, upperpath.dentry, oe);
---- a/security/integrity/ima/ima_api.c
-+++ b/security/integrity/ima/ima_api.c
-@@ -212,6 +212,7 @@ int ima_collect_measurement(struct integ
- {
- 	const char *audit_cause = "failed";
- 	struct inode *inode = file_inode(file);
-+	struct inode *real_inode = d_real_inode(file_dentry(file));
- 	const char *filename = file->f_path.dentry->d_name.name;
- 	int result = 0;
- 	int length;
-@@ -262,6 +263,10 @@ int ima_collect_measurement(struct integ
- 	iint->ima_hash = tmpbuf;
- 	memcpy(iint->ima_hash, &hash, length);
- 	iint->version = i_version;
-+	if (real_inode != inode) {
-+		iint->real_ino = real_inode->i_ino;
-+		iint->real_dev = real_inode->i_sb->s_dev;
-+	}
- 
- 	/* Possibly temporary failure due to type of read (eg. O_DIRECT) */
- 	if (!result)
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -26,6 +26,7 @@
- #include <linux/ima.h>
- #include <linux/iversion.h>
- #include <linux/fs.h>
-+#include <linux/iversion.h>
- 
- #include "ima.h"
- 
-@@ -197,7 +198,7 @@ static int process_measurement(struct fi
- 			       u32 secid, char *buf, loff_t size, int mask,
- 			       enum ima_hooks func)
- {
--	struct inode *inode = file_inode(file);
-+	struct inode *backing_inode, *inode = file_inode(file);
- 	struct integrity_iint_cache *iint = NULL;
- 	struct ima_template_desc *template_desc = NULL;
- 	char *pathbuf = NULL;
-@@ -271,6 +272,19 @@ static int process_measurement(struct fi
- 		iint->measured_pcrs = 0;
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2311,6 +2311,7 @@ static int vub300_probe(struct usb_inter
+ 		vub300->read_only =
+ 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 	} else {
++		retval = -EINVAL;
+ 		goto error5;
  	}
- 
-+	/* Detect and re-evaluate changes made to the backing file. */
-+	backing_inode = d_real_inode(file_dentry(file));
-+	if (backing_inode != inode &&
-+	    (action & IMA_DO_MASK) && (iint->flags & IMA_DONE_MASK)) {
-+		if (!IS_I_VERSION(backing_inode) ||
-+		    backing_inode->i_sb->s_dev != iint->real_dev ||
-+		    backing_inode->i_ino != iint->real_ino ||
-+		    !inode_eq_iversion(backing_inode, iint->version)) {
-+			iint->flags &= ~IMA_DONE_MASK;
-+			iint->measured_pcrs = 0;
-+		}
-+	}
-+
- 	/* Determine if already appraised/measured based on bitmask
- 	 * (IMA_MEASURE, IMA_MEASURED, IMA_XXXX_APPRAISE, IMA_XXXX_APPRAISED,
- 	 *  IMA_AUDIT, IMA_AUDITED)
---- a/security/integrity/integrity.h
-+++ b/security/integrity/integrity.h
-@@ -131,6 +131,8 @@ struct integrity_iint_cache {
- 	unsigned long flags;
- 	unsigned long measured_pcrs;
- 	unsigned long atomic_flags;
-+	unsigned long real_ino;
-+	dev_t real_dev;
- 	enum integrity_status ima_file_status:4;
- 	enum integrity_status ima_mmap_status:4;
- 	enum integrity_status ima_bprm_status:4;
+ 	usb_set_intfdata(interface, vub300);
 
 
