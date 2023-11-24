@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398AE39FC3;
-	Fri, 24 Nov 2023 18:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A163D381D6;
+	Fri, 24 Nov 2023 18:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fatcLgkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92ACC433C7;
-	Fri, 24 Nov 2023 18:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQOE74LG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B61C433C8;
+	Fri, 24 Nov 2023 18:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849773;
-	bh=F81TUhiXx8Fy8/WKzxeSReiaqzrOIYVQmd3DYr4Ax14=;
+	s=korg; t=1700849775;
+	bh=8icLZK2ZEebxifNYzhO9nxRVZ6jSdcnHumeluRtEREY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fatcLgkXm2zicQZpWPOdqLIMP7XqjSU1Mzg/5P3gweuoKZbh8Ih1heNMXmeZ1d4ni
-	 OCKrcnzR07P9hV3a+sM42pFRfY3zRiR99BI3qndWU0h4Pu7K20RAED/MsOi3qYwmca
-	 Y/ivKC5zGR8I9QxogmKorBttGSYPducfuZQp836s=
+	b=pQOE74LG/q5fcS/Ga3tzoXPw2IWzPuYh2lprlvJEDlzVBsTlXf9LuQVwxi1exCUWO
+	 sYh8G6r1BShVsJ/bcj5HqKvoL75pd2qJqyaSHJQO4g6+h/HLqMouWlM17RsfOHWd29
+	 IzcYVnQv2smI5ojRfcXcPZhjFonQD6WCx83key9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.6 314/530] clk: visconti: Fix undefined behavior bug in struct visconti_pll_provider
-Date: Fri, 24 Nov 2023 17:48:00 +0000
-Message-ID: <20231124172037.596425233@linuxfoundation.org>
+	Michal Suchanek <msuchanek@suse.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 315/530] integrity: powerpc: Do not select CA_MACHINE_KEYRING
+Date: Fri, 24 Nov 2023 17:48:01 +0000
+Message-ID: <20231124172037.627456200@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,109 +41,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Michal Suchanek <msuchanek@suse.de>
 
-commit 5ad1e217a2b23aa046b241183bd9452d259d70d0 upstream.
+commit 3edc22655647378dea01900f7b04e017ff96bda9 upstream.
 
-`struct clk_hw_onecell_data` is a flexible structure, which means that
-it contains flexible-array member at the bottom, in this case array
-`hws`:
+No other platform needs CA_MACHINE_KEYRING, either.
 
-include/linux/clk-provider.h:
-1380 struct clk_hw_onecell_data {
-1381         unsigned int num;
-1382         struct clk_hw *hws[] __counted_by(num);
-1383 };
+This is policy that should be decided by the administrator, not Kconfig
+dependencies.
 
-This could potentially lead to an overwrite of the objects following
-`clk_data` in `struct visconti_pll_provider`, in this case
-`struct device_node *node;`, at run-time:
-
-drivers/clk/visconti/pll.h:
- 16 struct visconti_pll_provider {
- 17         void __iomem *reg_base;
- 18         struct clk_hw_onecell_data clk_data;
- 19         struct device_node *node;
- 20 };
-
-Notice that a total of 56 bytes are allocated for flexible-array `hws`
-at line 328. See below:
-
-include/dt-bindings/clock/toshiba,tmpv770x.h:
- 14 #define TMPV770X_NR_PLL		7
-
-drivers/clk/visconti/pll-tmpv770x.c:
- 69 ctx = visconti_init_pll(np, reg_base, TMPV770X_NR_PLL);
-
-drivers/clk/visconti/pll.c:
-321 struct visconti_pll_provider * __init visconti_init_pll(struct device_node *np,
-322                                                         void __iomem *base,
-323                                                         unsigned long nr_plls)
-324 {
-325         struct visconti_pll_provider *ctx;
-...
-328         ctx = kzalloc(struct_size(ctx, clk_data.hws, nr_plls), GFP_KERNEL);
-
-`struct_size(ctx, clk_data.hws, nr_plls)` above translates to
-sizeof(struct visconti_pll_provider) + sizeof(struct clk_hw *) * 7 ==
-24 + 8 * 7 == 24 + 56
-		  ^^^^
-		   |
-	allocated bytes for flex array `hws`
-
-$ pahole -C visconti_pll_provider drivers/clk/visconti/pll.o
-struct visconti_pll_provider {
-	void *                     reg_base;             /*     0     8 */
-	struct clk_hw_onecell_data clk_data;             /*     8     8 */
-	struct device_node *       node;                 /*    16     8 */
-
-	/* size: 24, cachelines: 1, members: 3 */
-	/* last cacheline: 24 bytes */
-};
-
-And then, after the allocation, some data is written into all members
-of `struct visconti_pll_provider`:
-
-332         for (i = 0; i < nr_plls; ++i)
-333                 ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
-334
-335         ctx->node = np;
-336         ctx->reg_base = base;
-337         ctx->clk_data.num = nr_plls;
-
-Fix all these by placing the declaration of object `clk_data` at the
-end of `struct visconti_pll_provider`. Also, add a comment to make it
-clear that this object must always be last in the structure, and
-prevent this bug from being introduced again in the future.
-
--Wflex-array-member-not-at-end is coming in GCC-14, and we are getting
-ready to enable it globally.
-
-Fixes: b4cbe606dc36 ("clk: visconti: Add support common clock driver and reset driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/57a831d94ee2b3889b11525d4ad500356f89576f.1697492890.git.gustavoars@kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Cc: stable@vger.kernel.org # v6.6+
+Fixes: d7d91c4743c4 ("integrity: PowerVM machine keyring enablement")
+Signed-off-by: Michal Suchanek <msuchanek@suse.de>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/visconti/pll.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ security/integrity/Kconfig | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/clk/visconti/pll.h
-+++ b/drivers/clk/visconti/pll.h
-@@ -15,8 +15,10 @@
- 
- struct visconti_pll_provider {
- 	void __iomem *reg_base;
--	struct clk_hw_onecell_data clk_data;
- 	struct device_node *node;
-+
-+	/* Must be last */
-+	struct clk_hw_onecell_data clk_data;
- };
- 
- #define VISCONTI_PLL_RATE(_rate, _dacen, _dsmen, \
+diff --git a/security/integrity/Kconfig b/security/integrity/Kconfig
+index 232191ee09e3..b6e074ac0227 100644
+--- a/security/integrity/Kconfig
++++ b/security/integrity/Kconfig
+@@ -68,8 +68,6 @@ config INTEGRITY_MACHINE_KEYRING
+ 	depends on INTEGRITY_ASYMMETRIC_KEYS
+ 	depends on SYSTEM_BLACKLIST_KEYRING
+ 	depends on LOAD_UEFI_KEYS || LOAD_PPC_KEYS
+-	select INTEGRITY_CA_MACHINE_KEYRING if LOAD_PPC_KEYS
+-	select INTEGRITY_CA_MACHINE_KEYRING_MAX if LOAD_PPC_KEYS
+ 	help
+ 	 If set, provide a keyring to which Machine Owner Keys (MOK) may
+ 	 be added. This keyring shall contain just MOK keys.  Unlike keys
+-- 
+2.43.0
+
 
 
