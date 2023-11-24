@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8922381BF;
-	Fri, 24 Nov 2023 18:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2B239FE1;
+	Fri, 24 Nov 2023 18:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWudGoKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D01C433C8;
-	Fri, 24 Nov 2023 18:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWSJiED8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84D2C433C8;
+	Fri, 24 Nov 2023 18:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849553;
-	bh=Icg5qRn3t6qVqAQpfMi0RovbzIOYs+Cp0uKIPcT0mfY=;
+	s=korg; t=1700849556;
+	bh=K9xm/Z2vcMAhsaqwcnfagHvC+4p0E/W2G5B1IHpYAH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWudGoKCzlLRdSGhoUruN0sr63b0cpJ4nUgba11ztt+rd9KqHKKmip2dDqLTobndm
-	 s8vJt2JlITkISGbszF0aY2/V/bIcLzeAkP5V44leFCNNmRcgL15DJ6JH8h1TOOgJZT
-	 k1RYuSYCjjBS34IY7r3LLFcx4Rz1yQB7p14qZYkE=
+	b=sWSJiED8DCSzlbhHhr39uDddgKJMTLGmekW5xHfHplU3JCpdzrc++WLwC8Ndt0xVM
+	 iChnp3mzCU507WuammUNpaDJ99YsxxKRZuOB8Lke5hjN6AgD1IlzSqGMyr7iUU0m/W
+	 XCqh+HPtCR4x8Wgd2fko4S0PKlu0+qymAoyDFGtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 228/530] net/mlx5e: Check return value of snprintf writing to fw_version buffer for representors
-Date: Fri, 24 Nov 2023 17:46:34 +0000
-Message-ID: <20231124172034.991029285@linuxfoundation.org>
+Subject: [PATCH 6.6 229/530] net: sched: do not offload flows with a helper in act_ct
+Date: Fri, 24 Nov 2023 17:46:35 +0000
+Message-ID: <20231124172035.021875559@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,71 +43,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 1b2bd0c0264febcd8d47209079a6671c38e6558b ]
+[ Upstream commit 7cd5af0e937a197295f3aa3721031f0fbae49cff ]
 
-Treat the operation as an error case when the return value is equivalent to
-the size of the name buffer. Failed to write null terminator to the name
-buffer, making the string malformed and should not be used. Provide a
-string with only the firmware version when forming the string with the
-board id fails. This logic for representors is identical to normal flow
-with ethtool.
+There is no hardware supporting ct helper offload. However, prior to this
+patch, a flower filter with a helper in the ct action can be successfully
+set into the HW, for example (eth1 is a bnxt NIC):
 
-Without check, will trigger -Wformat-truncation with W=1.
+  # tc qdisc add dev eth1 ingress_block 22 ingress
+  # tc filter add block 22 proto ip flower skip_sw ip_proto tcp \
+    dst_port 21 ct_state -trk action ct helper ipv4-tcp-ftp
+  # tc filter show dev eth1 ingress
 
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c: In function 'mlx5e_rep_get_drvinfo':
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:78:31: warning: '%.16s' directive output may be truncated writing up to 16 bytes into a region of size between 13 and 22 [-Wformat-truncation=]
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                               ^~~~~
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:77:9: note: 'snprintf' output between 12 and 37 bytes into a destination of size 32
-      77 |         snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                  ~~~~~~~~~~~~~~~~~~~~~
-      79 |                  fw_rev_maj(mdev), fw_rev_min(mdev),
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                  fw_rev_sub(mdev), mdev->board_id);
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    filter block 22 protocol ip pref 49152 flower chain 0 handle 0x1
+      eth_type ipv4
+      ip_proto tcp
+      dst_port 21
+      ct_state -trk
+      skip_sw
+      in_hw in_hw_count 1   <----
+        action order 1: ct zone 0 helper ipv4-tcp-ftp pipe
+         index 2 ref 1 bind 1
+        used_hw_stats delayed
 
-Fixes: cf83c8fdcd47 ("net/mlx5e: Add missing ethtool driver info for representors")
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-16-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This might cause the flower filter not to work as expected in the HW.
+
+This patch avoids this problem by simply returning -EOPNOTSUPP in
+tcf_ct_offload_act_setup() to not allow to offload flows with a helper
+in act_ct.
+
+Fixes: a21b06e73191 ("net: sched: add helper support in act_ct")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://lore.kernel.org/r/f8685ec7702c4a448a1371a8b34b43217b583b9d.1699898008.git.lucien.xin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ include/net/tc_act/tc_ct.h | 9 +++++++++
+ net/sched/act_ct.c         | 3 +++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index fd1cce542b680..825f9c687633f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -71,13 +71,17 @@ static void mlx5e_rep_get_drvinfo(struct net_device *dev,
- {
- 	struct mlx5e_priv *priv = netdev_priv(dev);
- 	struct mlx5_core_dev *mdev = priv->mdev;
-+	int count;
- 
- 	strscpy(drvinfo->driver, mlx5e_rep_driver_name,
- 		sizeof(drvinfo->driver));
--	snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
--		 "%d.%d.%04d (%.16s)",
--		 fw_rev_maj(mdev), fw_rev_min(mdev),
--		 fw_rev_sub(mdev), mdev->board_id);
-+	count = snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d (%.16s)", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev), mdev->board_id);
-+	if (count == sizeof(drvinfo->fw_version))
-+		snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev));
+diff --git a/include/net/tc_act/tc_ct.h b/include/net/tc_act/tc_ct.h
+index b24ea2d9400ba..1dc2f827d0bcf 100644
+--- a/include/net/tc_act/tc_ct.h
++++ b/include/net/tc_act/tc_ct.h
+@@ -57,6 +57,11 @@ static inline struct nf_flowtable *tcf_ct_ft(const struct tc_action *a)
+ 	return to_ct_params(a)->nf_ft;
  }
  
- static const struct counter_desc sw_rep_stats_desc[] = {
++static inline struct nf_conntrack_helper *tcf_ct_helper(const struct tc_action *a)
++{
++	return to_ct_params(a)->helper;
++}
++
+ #else
+ static inline uint16_t tcf_ct_zone(const struct tc_action *a) { return 0; }
+ static inline int tcf_ct_action(const struct tc_action *a) { return 0; }
+@@ -64,6 +69,10 @@ static inline struct nf_flowtable *tcf_ct_ft(const struct tc_action *a)
+ {
+ 	return NULL;
+ }
++static inline struct nf_conntrack_helper *tcf_ct_helper(const struct tc_action *a)
++{
++	return NULL;
++}
+ #endif /* CONFIG_NF_CONNTRACK */
+ 
+ #if IS_ENABLED(CONFIG_NET_ACT_CT)
+diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
+index 3922d825ef2d8..6dcc4585576e8 100644
+--- a/net/sched/act_ct.c
++++ b/net/sched/act_ct.c
+@@ -1535,6 +1535,9 @@ static int tcf_ct_offload_act_setup(struct tc_action *act, void *entry_data,
+ 	if (bind) {
+ 		struct flow_action_entry *entry = entry_data;
+ 
++		if (tcf_ct_helper(act))
++			return -EOPNOTSUPP;
++
+ 		entry->id = FLOW_ACTION_CT;
+ 		entry->ct.action = tcf_ct_action(act);
+ 		entry->ct.zone = tcf_ct_zone(act);
 -- 
 2.42.0
 
