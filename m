@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B6D39FE1;
-	Fri, 24 Nov 2023 18:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FE2381D4;
+	Fri, 24 Nov 2023 18:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ehpfpdfi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6BBC433C8;
-	Fri, 24 Nov 2023 18:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfCa6Drl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF6EC433C8;
+	Fri, 24 Nov 2023 18:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850102;
-	bh=oQe3//lJbPHcIu/5AWz1ZT9gNPolxy3Yg9J0LYU25+4=;
+	s=korg; t=1700850105;
+	bh=wsoSx6d4pSuss0d0RhpgW7YMo6x5X36O6OEv1xIqS+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhpfpdfiFR52/l+3DuEVx0Xv88Og+3h4g5gWaDUYk5hw7LN4+7zOd0ErpigJNUxaG
-	 eDcKzZCywvBy+h+kIm2IHgZIP54PbefC2D97XyCYiSx1Zkm385ZJ/hdWW6m0moN9AL
-	 mk03Di3o5HJ6IypJ7gCmVIzbCCIW8yYNzO8i6L2w=
+	b=dfCa6DrlyIuYiHfhcJ9OoRQvRUNNBZ0b8gwLUqDxfvwbrWgTmt/UrHQwN97DiHYFo
+	 nAIA2g/2eW0hig6Qnenwtoes7YxIykNqjt8hTSHzfPXJfBc3Iib9ZumUo8fZKkhNXM
+	 fVZH9e6RLLNtDJg0kI8MEjbYqqD/HjY+G4zz7b4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
 	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 446/530] net: dsa: lan9303: consequently nested-lock physical MDIO
-Date: Fri, 24 Nov 2023 17:50:12 +0000
-Message-ID: <20231124172041.671883602@linuxfoundation.org>
+	Klaus Kudielka <klaus.kudielka@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 447/530] net: phylink: initialize carrier state at creation
+Date: Fri, 24 Nov 2023 17:50:13 +0000
+Message-ID: <20231124172041.699951477@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,171 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Klaus Kudielka <klaus.kudielka@gmail.com>
 
-commit 5a22fbcc10f3f7d94c5d88afbbffa240a3677057 upstream.
+commit 02d5fdbf4f2b8c406f7a4c98fa52aa181a11d733 upstream.
 
-When LAN9303 is MDIO-connected two callchains exist into
-mdio->bus->write():
+Background: Turris Omnia (Armada 385); eth2 (mvneta) connected to SFP bus;
+SFP module is present, but no fiber connected, so definitely no carrier.
 
-1. switch ports 1&2 ("physical" PHYs):
+After booting, eth2 is down, but netdev LED trigger surprisingly reports
+link active. Then, after "ip link set eth2 up", the link indicator goes
+away - as I would have expected it from the beginning.
 
-virtual (switch-internal) MDIO bus (lan9303_switch_ops->phy_{read|write})->
-  lan9303_mdio_phy_{read|write} -> mdiobus_{read|write}_nested
+It turns out, that the default carrier state after netdev creation is
+"carrier ok". Some ethernet drivers explicitly call netif_carrier_off
+during probing, others (like mvneta) don't - which explains the current
+behaviour: only when the device is brought up, phylink_start calls
+netif_carrier_off.
 
-2. LAN9303 virtual PHY:
+Fix this for all drivers using phylink, by calling netif_carrier_off in
+phylink_create.
 
-virtual MDIO bus (lan9303_phy_{read|write}) ->
-  lan9303_virt_phy_reg_{read|write} -> regmap -> lan9303_mdio_{read|write}
-
-If the latter functions just take
-mutex_lock(&sw_dev->device->bus->mdio_lock) it triggers a LOCKDEP
-false-positive splat. It's false-positive because the first
-mdio_lock in the second callchain above belongs to virtual MDIO bus, the
-second mdio_lock belongs to physical MDIO bus.
-
-Consequent annotation in lan9303_mdio_{read|write} as nested lock
-(similar to lan9303_mdio_phy_{read|write}, it's the same physical MDIO bus)
-prevents the following splat:
-
-WARNING: possible circular locking dependency detected
-5.15.71 #1 Not tainted
-------------------------------------------------------
-kworker/u4:3/609 is trying to acquire lock:
-ffff000011531c68 (lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock){+.+.}-{3:3}, at: regmap_lock_mutex
-but task is already holding lock:
-ffff0000114c44d8 (&bus->mdio_lock){+.+.}-{3:3}, at: mdiobus_read
-which lock already depends on the new lock.
-the existing dependency chain (in reverse order) is:
--> #1 (&bus->mdio_lock){+.+.}-{3:3}:
-       lock_acquire
-       __mutex_lock
-       mutex_lock_nested
-       lan9303_mdio_read
-       _regmap_read
-       regmap_read
-       lan9303_probe
-       lan9303_mdio_probe
-       mdio_probe
-       really_probe
-       __driver_probe_device
-       driver_probe_device
-       __device_attach_driver
-       bus_for_each_drv
-       __device_attach
-       device_initial_probe
-       bus_probe_device
-       deferred_probe_work_func
-       process_one_work
-       worker_thread
-       kthread
-       ret_from_fork
--> #0 (lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock){+.+.}-{3:3}:
-       __lock_acquire
-       lock_acquire.part.0
-       lock_acquire
-       __mutex_lock
-       mutex_lock_nested
-       regmap_lock_mutex
-       regmap_read
-       lan9303_phy_read
-       dsa_slave_phy_read
-       __mdiobus_read
-       mdiobus_read
-       get_phy_device
-       mdiobus_scan
-       __mdiobus_register
-       dsa_register_switch
-       lan9303_probe
-       lan9303_mdio_probe
-       mdio_probe
-       really_probe
-       __driver_probe_device
-       driver_probe_device
-       __device_attach_driver
-       bus_for_each_drv
-       __device_attach
-       device_initial_probe
-       bus_probe_device
-       deferred_probe_work_func
-       process_one_work
-       worker_thread
-       kthread
-       ret_from_fork
-other info that might help us debug this:
- Possible unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(&bus->mdio_lock);
-                               lock(lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock);
-                               lock(&bus->mdio_lock);
-  lock(lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock);
-*** DEADLOCK ***
-5 locks held by kworker/u4:3/609:
- #0: ffff000002842938 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work
- #1: ffff80000bacbd60 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work
- #2: ffff000007645178 (&dev->mutex){....}-{3:3}, at: __device_attach
- #3: ffff8000096e6e78 (dsa2_mutex){+.+.}-{3:3}, at: dsa_register_switch
- #4: ffff0000114c44d8 (&bus->mdio_lock){+.+.}-{3:3}, at: mdiobus_read
-stack backtrace:
-CPU: 1 PID: 609 Comm: kworker/u4:3 Not tainted 5.15.71 #1
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
- dump_backtrace
- show_stack
- dump_stack_lvl
- dump_stack
- print_circular_bug
- check_noncircular
- __lock_acquire
- lock_acquire.part.0
- lock_acquire
- __mutex_lock
- mutex_lock_nested
- regmap_lock_mutex
- regmap_read
- lan9303_phy_read
- dsa_slave_phy_read
- __mdiobus_read
- mdiobus_read
- get_phy_device
- mdiobus_scan
- __mdiobus_register
- dsa_register_switch
- lan9303_probe
- lan9303_mdio_probe
-...
-
+Fixes: 089381b27abe ("leds: initial support for Turris Omnia LEDs")
 Cc: stable@vger.kernel.org
-Fixes: dc7005831523 ("net: dsa: LAN9303: add MDIO managed mode support")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Klaus Kudielka <klaus.kudielka@gmail.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20231027065741.534971-1-alexander.sverdlin@siemens.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/lan9303_mdio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/phylink.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/dsa/lan9303_mdio.c
-+++ b/drivers/net/dsa/lan9303_mdio.c
-@@ -32,7 +32,7 @@ static int lan9303_mdio_write(void *ctx,
- 	struct lan9303_mdio *sw_dev = (struct lan9303_mdio *)ctx;
- 
- 	reg <<= 2; /* reg num to offset */
--	mutex_lock(&sw_dev->device->bus->mdio_lock);
-+	mutex_lock_nested(&sw_dev->device->bus->mdio_lock, MDIO_MUTEX_NESTED);
- 	lan9303_mdio_real_write(sw_dev->device, reg, val & 0xffff);
- 	lan9303_mdio_real_write(sw_dev->device, reg + 2, (val >> 16) & 0xffff);
- 	mutex_unlock(&sw_dev->device->bus->mdio_lock);
-@@ -50,7 +50,7 @@ static int lan9303_mdio_read(void *ctx,
- 	struct lan9303_mdio *sw_dev = (struct lan9303_mdio *)ctx;
- 
- 	reg <<= 2; /* reg num to offset */
--	mutex_lock(&sw_dev->device->bus->mdio_lock);
-+	mutex_lock_nested(&sw_dev->device->bus->mdio_lock, MDIO_MUTEX_NESTED);
- 	*val = lan9303_mdio_real_read(sw_dev->device, reg);
- 	*val |= (lan9303_mdio_real_read(sw_dev->device, reg + 2) << 16);
- 	mutex_unlock(&sw_dev->device->bus->mdio_lock);
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -1631,6 +1631,7 @@ struct phylink *phylink_create(struct ph
+ 	pl->config = config;
+ 	if (config->type == PHYLINK_NETDEV) {
+ 		pl->netdev = to_net_dev(config->dev);
++		netif_carrier_off(pl->netdev);
+ 	} else if (config->type == PHYLINK_DEV) {
+ 		pl->dev = config->dev;
+ 	} else {
 
 
