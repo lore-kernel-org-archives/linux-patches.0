@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9D3381DE;
-	Fri, 24 Nov 2023 18:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609A339FE8;
+	Fri, 24 Nov 2023 18:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHdjqQkR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0510EC433C7;
-	Fri, 24 Nov 2023 18:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLL5Uxkr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD3AC433C8;
+	Fri, 24 Nov 2023 18:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850038;
-	bh=7Qw+gIWOXnupVX/Vna1YGuAVHIuOjE+QUh/NJHzUrh0=;
+	s=korg; t=1700850040;
+	bh=ggfHSYOSr/DL97wpwBvAPDaBbTrf9SJ5b9+WPM4oCBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHdjqQkRf/bcTyWHWfiKJOV45blUnQ8lOt2yAWEKu1+qazTl9itJq7nTOFusU6SfM
-	 sysjcy/QuXSBYUurBDLgfbMON33AAscfiMg3xw19HaWLmQmvoMaVFdB+PsWWOkA45r
-	 UnQTbtjzo5C+AQU4ssicdoLyXJFqOfKi6EAkh77g=
+	b=TLL5Uxkr882XNrzo+KvUbF9TL8W/i724wnjNPhk6gMT33lOMH/tW8gEgn3sepznNW
+	 93zW4l5l9acv7KVpwxSfdtzeGlJzAs7KygaP+22XqiwwTDUIUJ7/zmJDV35IodP6Mz
+	 M1jSEBW3JqhXcwtTaF2QBJXt7pCNb/u/Pwdjxo0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masum Reza <masumrezarock100@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 403/530] Bluetooth: btusb: Add RTW8852BE device 13d3:3570 to device tables
-Date: Fri, 24 Nov 2023 17:49:29 +0000
-Message-ID: <20231124172040.308679618@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 421/530] smb: client: fix use-after-free bug in cifs_debug_data_proc_show()
+Date: Fri, 24 Nov 2023 17:49:47 +0000
+Message-ID: <20231124172040.883209415@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,68 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masum Reza <masumrezarock100@gmail.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 02be109d3a405dbc4d53fb4b4473d7a113548088 ]
+commit d328c09ee9f15ee5a26431f5aad7c9239fa85e62 upstream.
 
-This device is used in TP-Link TX20E WiFi+Bluetooth adapter.
+Skip SMB sessions that are being teared down
+(e.g. @ses->ses_status == SES_EXITING) in cifs_debug_data_proc_show()
+to avoid use-after-free in @ses.
 
-Relevant information in /sys/kernel/debug/usb/devices
-about the Bluetooth device is listed as the below.
+This fixes the following GPF when reading from /proc/fs/cifs/DebugData
+while mounting and umounting
 
-T:  Bus=01 Lev=01 Prnt=01 Port=08 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=13d3 ProdID=3570 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+  [ 816.251274] general protection fault, probably for non-canonical
+  address 0x6b6b6b6b6b6b6d81: 0000 [#1] PREEMPT SMP NOPTI
+  ...
+  [  816.260138] Call Trace:
+  [  816.260329]  <TASK>
+  [  816.260499]  ? die_addr+0x36/0x90
+  [  816.260762]  ? exc_general_protection+0x1b3/0x410
+  [  816.261126]  ? asm_exc_general_protection+0x26/0x30
+  [  816.261502]  ? cifs_debug_tcon+0xbd/0x240 [cifs]
+  [  816.261878]  ? cifs_debug_tcon+0xab/0x240 [cifs]
+  [  816.262249]  cifs_debug_data_proc_show+0x516/0xdb0 [cifs]
+  [  816.262689]  ? seq_read_iter+0x379/0x470
+  [  816.262995]  seq_read_iter+0x118/0x470
+  [  816.263291]  proc_reg_read_iter+0x53/0x90
+  [  816.263596]  ? srso_alias_return_thunk+0x5/0x7f
+  [  816.263945]  vfs_read+0x201/0x350
+  [  816.264211]  ksys_read+0x75/0x100
+  [  816.264472]  do_syscall_64+0x3f/0x90
+  [  816.264750]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+  [  816.265135] RIP: 0033:0x7fd5e669d381
 
-Signed-off-by: Masum Reza <masumrezarock100@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: da06ff1f585e ("Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/cifs_debug.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 63ebd5677d267..e3f11ea2a9fcd 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -543,6 +543,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3570), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -452,6 +452,11 @@ skip_rdma:
+ 		seq_printf(m, "\n\n\tSessions: ");
+ 		i = 0;
+ 		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
++			spin_lock(&ses->ses_lock);
++			if (ses->ses_status == SES_EXITING) {
++				spin_unlock(&ses->ses_lock);
++				continue;
++			}
+ 			i++;
+ 			if ((ses->serverDomain == NULL) ||
+ 				(ses->serverOS == NULL) ||
+@@ -472,6 +477,7 @@ skip_rdma:
+ 				ses->ses_count, ses->serverOS, ses->serverNOS,
+ 				ses->capabilities, ses->ses_status);
+ 			}
++			spin_unlock(&ses->ses_lock);
  
--- 
-2.42.0
-
+ 			seq_printf(m, "\n\tSecurity type: %s ",
+ 				get_security_type_str(server->ops->select_sectype(server, ses->sectype)));
 
 
