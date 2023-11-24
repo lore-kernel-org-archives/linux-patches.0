@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3697533CFD;
-	Fri, 24 Nov 2023 19:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143E22EAEA;
+	Fri, 24 Nov 2023 19:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6GvOESw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82AFC433C8;
-	Fri, 24 Nov 2023 19:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5us/UGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347EFC433C8;
+	Fri, 24 Nov 2023 19:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852908;
-	bh=D+WGItkQ+M8h4NQmen8qrO+sVRKvb/BG/u5JahwyZzk=;
+	s=korg; t=1700852910;
+	bh=eMC02YXB1pTtpymTJUnJcwKRTb2pfsb1stAOTmnC1r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z6GvOESwB65serPT/lj6rxcUJ78Q7M+pn63NmX1cJlQc1L1UiXv9LaHoUJAMoUToO
-	 m7Y80PfOIDSI8RBXt/rBaRsuI51JJXz4aoiYJAvl42H4x9J34GvtjUUIWnUQLaDHtg
-	 eRsmzuA3AoStsozKVGwQkF+hGz5eNZRP96H+yH04=
+	b=N5us/UGn842asnZDAaEKrmYX8rD+zzhkAT6cRgwtBP25be1FfObrKdafiYUhRupEC
+	 zJ6rKz3CXPn0ZePVlumDp6+H9RDsCjJipcczxipwnMB/gzNluUuRGaHWCJEjDb2Y9W
+	 kpLreo/raLfSJBLNGRdkmSylntA5Bo7NUiriMlI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinhyung Kang <s47.kang@samsung.com>,
-	Jaroslav Kysela <perex@perex.cz>,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 145/193] ALSA: info: Fix potential deadlock at disconnection
-Date: Fri, 24 Nov 2023 17:54:32 +0000
-Message-ID: <20231124171953.007008866@linuxfoundation.org>
+Subject: [PATCH 5.10 146/193] ALSA: hda/realtek - Add Dell ALC295 to pin fall back table
+Date: Fri, 24 Nov 2023 17:54:33 +0000
+Message-ID: <20231124171953.045031997@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,121 +41,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kailang Yang <kailang@realtek.com>
 
-commit c7a60651953359f98dbf24b43e1bf561e1573ed4 upstream.
+commit 4b21a669ca21ed8f24ef4530b2918be5730114de upstream.
 
-As reported recently, ALSA core info helper may cause a deadlock at
-the forced device disconnection during the procfs operation.
+Add ALC295 to pin fall back table.
+Remove 5 pin quirks for Dell ALC295.
+ALC295 was only support MIC2 for external MIC function.
+ALC295 assigned model "ALC269_FIXUP_DELL1_MIC_NO_PRESENCE" for pin
+fall back table.
+It was assigned wrong model. So, let's remove it.
 
-The proc_remove() (that is called from the snd_card_disconnect()
-helper) has a synchronization of the pending procfs accesses via
-wait_for_completion().  Meanwhile, ALSA procfs helper takes the global
-mutex_lock(&info_mutex) at both the proc_open callback and
-snd_card_info_disconnect() helper.  Since the proc_open can't finish
-due to the mutex lock, wait_for_completion() never returns, either,
-hence it deadlocks.
-
-	TASK#1				TASK#2
-	proc_reg_open()
-	  takes use_pde()
-	snd_info_text_entry_open()
-					snd_card_disconnect()
-					snd_info_card_disconnect()
-					  takes mutex_lock(&info_mutex)
-					proc_remove()
-					wait_for_completion(unused_pde)
-					  ... waiting task#1 closes
-	mutex_lock(&info_mutex)
-		=> DEADLOCK
-
-This patch is a workaround for avoiding the deadlock scenario above.
-
-The basic strategy is to move proc_remove() call outside the mutex
-lock.  proc_remove() can work gracefully without extra locking, and it
-can delete the tree recursively alone.  So, we call proc_remove() at
-snd_info_card_disconnection() at first, then delete the rest resources
-recursively within the info_mutex lock.
-
-After the change, the function snd_info_disconnect() doesn't do
-disconnection by itself any longer, but it merely clears the procfs
-pointer.  So rename the function to snd_info_clear_entries() for
-avoiding confusion.
-
-The similar change is applied to snd_info_free_entry(), too.  Since
-the proc_remove() is called only conditionally with the non-NULL
-entry->p, it's skipped after the snd_info_clear_entries() call.
-
-Reported-by: Shinhyung Kang <s47.kang@samsung.com>
-Closes: https://lore.kernel.org/r/664457955.21699345385931.JavaMail.epsvc@epcpadp4
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+Fixes: fbc571290d9f ("ALSA: hda/realtek - Fixed Headphone Mic can't record on Dell platform")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231109141954.4283-1-tiwai@suse.de
+Link: https://lore.kernel.org/r/7c1998e873834df98d59bd7e0d08c72e@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/info.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ sound/pci/hda/patch_realtek.c |   19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
---- a/sound/core/info.c
-+++ b/sound/core/info.c
-@@ -57,7 +57,7 @@ struct snd_info_private_data {
- };
- 
- static int snd_info_version_init(void);
--static void snd_info_disconnect(struct snd_info_entry *entry);
-+static void snd_info_clear_entries(struct snd_info_entry *entry);
- 
- /*
- 
-@@ -570,11 +570,16 @@ void snd_info_card_disconnect(struct snd
- {
- 	if (!card)
- 		return;
--	mutex_lock(&info_mutex);
-+
- 	proc_remove(card->proc_root_link);
--	card->proc_root_link = NULL;
- 	if (card->proc_root)
--		snd_info_disconnect(card->proc_root);
-+		proc_remove(card->proc_root->p);
-+
-+	mutex_lock(&info_mutex);
-+	if (card->proc_root)
-+		snd_info_clear_entries(card->proc_root);
-+	card->proc_root_link = NULL;
-+	card->proc_root = NULL;
- 	mutex_unlock(&info_mutex);
- }
- 
-@@ -746,15 +751,14 @@ struct snd_info_entry *snd_info_create_c
- }
- EXPORT_SYMBOL(snd_info_create_card_entry);
- 
--static void snd_info_disconnect(struct snd_info_entry *entry)
-+static void snd_info_clear_entries(struct snd_info_entry *entry)
- {
- 	struct snd_info_entry *p;
- 
- 	if (!entry->p)
- 		return;
- 	list_for_each_entry(p, &entry->children, list)
--		snd_info_disconnect(p);
--	proc_remove(entry->p);
-+		snd_info_clear_entries(p);
- 	entry->p = NULL;
- }
- 
-@@ -771,8 +775,9 @@ void snd_info_free_entry(struct snd_info
- 	if (!entry)
- 		return;
- 	if (entry->p) {
-+		proc_remove(entry->p);
- 		mutex_lock(&info_mutex);
--		snd_info_disconnect(entry);
-+		snd_info_clear_entries(entry);
- 		mutex_unlock(&info_mutex);
- 	}
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9881,22 +9881,6 @@ static const struct snd_hda_pin_quirk al
+ 		{0x12, 0x90a60130},
+ 		{0x17, 0x90170110},
+ 		{0x21, 0x03211020}),
+-	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
+-		{0x14, 0x90170110},
+-		{0x21, 0x04211020}),
+-	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
+-		{0x14, 0x90170110},
+-		{0x21, 0x04211030}),
+-	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE,
+-		ALC295_STANDARD_PINS,
+-		{0x17, 0x21014020},
+-		{0x18, 0x21a19030}),
+-	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE,
+-		ALC295_STANDARD_PINS,
+-		{0x17, 0x21014040},
+-		{0x18, 0x21a19050}),
+-	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE,
+-		ALC295_STANDARD_PINS),
+ 	SND_HDA_PIN_QUIRK(0x10ec0298, 0x1028, "Dell", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE,
+ 		ALC298_STANDARD_PINS,
+ 		{0x17, 0x90170110}),
+@@ -9940,6 +9924,9 @@ static const struct snd_hda_pin_quirk al
+ 	SND_HDA_PIN_QUIRK(0x10ec0289, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
+ 		{0x19, 0x40000000},
+ 		{0x1b, 0x40000000}),
++	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
++		{0x19, 0x40000000},
++		{0x1b, 0x40000000}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1028, "Dell", ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
+ 		{0x19, 0x40000000},
+ 		{0x1a, 0x40000000}),
 
 
