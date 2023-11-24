@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B255B2EAEA;
-	Fri, 24 Nov 2023 19:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391FD2EAEA;
+	Fri, 24 Nov 2023 19:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZsEEFyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403AAC433C8;
-	Fri, 24 Nov 2023 19:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJ6qSpUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B743CC433C7;
+	Fri, 24 Nov 2023 19:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852762;
-	bh=OVQEoAIJQycYElSErNkZgbcP4XaumHdY6p1FzJCMvD8=;
+	s=korg; t=1700852765;
+	bh=BSwnJVClrQqr0hbrgfHoQJTMlZjmEYWPeyDVMn9SxFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZsEEFyyDLtRo2vyhnsbAp6ct0a+mMsbyheekPzM3KsRZUu2HD/TIHv7OpHAmtQdb
-	 lmaM5BInM7iPB7FyahR6gCdlFTMPy/Ajj1t1yfxF6ntyZy50G1kSJ1thbwtUqNjOX7
-	 fLMGjpl3l2r1j7fUuThxNcKIoVdJ3MHRXEhAU5Uw=
+	b=NJ6qSpUfW1/lN2zWyQsspbIsB4GHa4KXWJ7Oc9eV9XjsAILpqPxIRe5D/iQCQ/kvI
+	 N+CeGbYbXic1UhEldMaUt2qGGs3Km2+M9J3YecBlh+rLRND/Tc6Cfo+H/ccy8gL7Y/
+	 kavHPEbcv9HDKEOIUeKAM1Axy8+f4yTb0VH31uuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Ekaterina Esina <eesina@astralinux.ru>,
-	Anastasia Belova <abelova@astralinux.ru>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/193] cifs: fix check of rc in function generate_smb3signingkey
-Date: Fri, 24 Nov 2023 17:53:35 +0000
-Message-ID: <20231124171950.762053829@linuxfoundation.org>
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.10 089/193] media: venus: hfi: add checks to perform sanity on queue pointers
+Date: Fri, 24 Nov 2023 17:53:36 +0000
+Message-ID: <20231124171950.809652122@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -44,52 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekaterina Esina <eesina@astralinux.ru>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-[ Upstream commit 181724fc72486dec2bec8803459be05b5162aaa8 ]
+commit 5e538fce33589da6d7cb2de1445b84d3a8a692f7 upstream.
 
-Remove extra check after condition, add check after generating key
-for encryption. The check is needed to return non zero rc before
-rewriting it with generating key for decryption.
+Read and write pointers are used to track the packet index in the memory
+shared between video driver and firmware. There is a possibility of OOB
+access if the read or write pointer goes beyond the queue memory size.
+Add checks for the read and write pointer to avoid OOB access.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Fixes: d70e9fa55884 ("cifs: try opening channels after mounting")
-Signed-off-by: Ekaterina Esina <eesina@astralinux.ru>
-Co-developed-by: Anastasia Belova <abelova@astralinux.ru>
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2transport.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/cifs/smb2transport.c b/fs/cifs/smb2transport.c
-index e6fa76ab70be7..d659eb70df76d 100644
---- a/fs/cifs/smb2transport.c
-+++ b/fs/cifs/smb2transport.c
-@@ -433,6 +433,8 @@ generate_smb3signingkey(struct cifs_ses *ses,
- 				  ptriplet->encryption.context,
- 				  ses->smb3encryptionkey,
- 				  SMB3_ENC_DEC_KEY_SIZE);
-+		if (rc)
-+			return rc;
- 		rc = generate_key(ses, ptriplet->decryption.label,
- 				  ptriplet->decryption.context,
- 				  ses->smb3decryptionkey,
-@@ -441,9 +443,6 @@ generate_smb3signingkey(struct cifs_ses *ses,
- 			return rc;
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -206,6 +206,11 @@ static int venus_write_queue(struct venu
+ 
+ 	new_wr_idx = wr_idx + dwords;
+ 	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
++
++	if (wr_ptr < (u32 *)queue->qmem.kva ||
++	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
++		return -EINVAL;
++
+ 	if (new_wr_idx < qsize) {
+ 		memcpy(wr_ptr, packet, dwords << 2);
+ 	} else {
+@@ -273,6 +278,11 @@ static int venus_read_queue(struct venus
  	}
  
--	if (rc)
--		return rc;
--
- #ifdef CONFIG_CIFS_DEBUG_DUMP_KEYS
- 	cifs_dbg(VFS, "%s: dumping generated AES session keys\n", __func__);
- 	/*
--- 
-2.42.0
-
+ 	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
++
++	if (rd_ptr < (u32 *)queue->qmem.kva ||
++	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
++		return -EINVAL;
++
+ 	dwords = *rd_ptr >> 2;
+ 	if (!dwords)
+ 		return -EINVAL;
 
 
