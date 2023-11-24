@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185113306F;
-	Fri, 24 Nov 2023 18:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A2039FCC;
+	Fri, 24 Nov 2023 18:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7W4un4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98644C433C8;
-	Fri, 24 Nov 2023 18:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9m5C/Dr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E04C433C8;
+	Fri, 24 Nov 2023 18:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850859;
-	bh=HjlaMCqWVvER5oleR+l6UTBSkfKZbWNgnGlHhQ3a/2E=;
+	s=korg; t=1700850862;
+	bh=4PI9yoY/7viJexNiM7kySubXzAOEaDTeegSLoqgfZas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7W4un4ZNui93hvbV0Opaf7SfvAy9834BI8gCgejBVUFc4NJvqHJffy8lWnCHY7hp
-	 p7CntiAcO4ESp8aWMiKk1ti8OxFYyvCM/X+JebwLHD57eBQ6+UwSySnt3/Eo52F9us
-	 QbB9GfqnaCAfLb94NcmtJAU21JtSGY+u4woCyhf8=
+	b=h9m5C/DrTSlmj9LfDO4tzG08qKW6HOnPovFZXy/EQKgTQSiftEgItyjDWb94oE2ut
+	 BhZtk3vr/076Yy61tM10Ro0r1YkHDGweuPdrneU93hzRGudSyFaNTnkmVR1JPWfR8G
+	 ExDMSk0+i95D+nZ9aJLWO0KqS8/LbwItH230rngA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 193/491] net: ethernet: cortina: Fix MTU max setting
-Date: Fri, 24 Nov 2023 17:47:09 +0000
-Message-ID: <20231124172030.285861093@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Rao Shoaib <rao.shoaib@oracle.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+7a2d546fa43e49315ed3@syzkaller.appspotmail.com
+Subject: [PATCH 6.5 194/491] af_unix: fix use-after-free in unix_stream_read_actor()
+Date: Fri, 24 Nov 2023 17:47:10 +0000
+Message-ID: <20231124172030.321178248@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,89 +44,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit dc6c0bfbaa947dd7976e30e8c29b10c868b6fa42 ]
+[ Upstream commit 4b7b492615cf3017190f55444f7016812b66611d ]
 
-The RX max frame size is over 10000 for the Gemini ethernet,
-but the TX max frame size is actually just 2047 (0x7ff after
-checking the datasheet). Reflect this in what we offer to Linux,
-cap the MTU at the TX max frame minus ethernet headers.
+syzbot reported the following crash [1]
 
-We delete the code disabling the hardware checksum for large
-MTUs as netdev->mtu can no longer be larger than
-netdev->max_mtu meaning the if()-clause in gmac_fix_features()
-is never true.
+After releasing unix socket lock, u->oob_skb can be changed
+by another thread. We must temporarily increase skb refcount
+to make sure this other thread will not free the skb under us.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20231109-gemini-largeframe-fix-v4-3-6e611528db08@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[1]
+
+BUG: KASAN: slab-use-after-free in unix_stream_read_actor+0xa7/0xc0 net/unix/af_unix.c:2866
+Read of size 4 at addr ffff88801f3b9cc4 by task syz-executor107/5297
+
+CPU: 1 PID: 5297 Comm: syz-executor107 Not tainted 6.6.0-syzkaller-15910-gb8e3a87a627b #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/09/2023
+Call Trace:
+<TASK>
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0xd9/0x1b0 lib/dump_stack.c:106
+print_address_description mm/kasan/report.c:364 [inline]
+print_report+0xc4/0x620 mm/kasan/report.c:475
+kasan_report+0xda/0x110 mm/kasan/report.c:588
+unix_stream_read_actor+0xa7/0xc0 net/unix/af_unix.c:2866
+unix_stream_recv_urg net/unix/af_unix.c:2587 [inline]
+unix_stream_read_generic+0x19a5/0x2480 net/unix/af_unix.c:2666
+unix_stream_recvmsg+0x189/0x1b0 net/unix/af_unix.c:2903
+sock_recvmsg_nosec net/socket.c:1044 [inline]
+sock_recvmsg+0xe2/0x170 net/socket.c:1066
+____sys_recvmsg+0x21f/0x5c0 net/socket.c:2803
+___sys_recvmsg+0x115/0x1a0 net/socket.c:2845
+__sys_recvmsg+0x114/0x1e0 net/socket.c:2875
+do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
+entry_SYSCALL_64_after_hwframe+0x63/0x6b
+RIP: 0033:0x7fc67492c559
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 51 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fc6748ab228 EFLAGS: 00000246 ORIG_RAX: 000000000000002f
+RAX: ffffffffffffffda RBX: 000000000000001c RCX: 00007fc67492c559
+RDX: 0000000040010083 RSI: 0000000020000140 RDI: 0000000000000004
+RBP: 00007fc6749b6348 R08: 00007fc6748ab6c0 R09: 00007fc6748ab6c0
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007fc6749b6340
+R13: 00007fc6749b634c R14: 00007ffe9fac52a0 R15: 00007ffe9fac5388
+</TASK>
+
+Allocated by task 5295:
+kasan_save_stack+0x33/0x50 mm/kasan/common.c:45
+kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+__kasan_slab_alloc+0x81/0x90 mm/kasan/common.c:328
+kasan_slab_alloc include/linux/kasan.h:188 [inline]
+slab_post_alloc_hook mm/slab.h:763 [inline]
+slab_alloc_node mm/slub.c:3478 [inline]
+kmem_cache_alloc_node+0x180/0x3c0 mm/slub.c:3523
+__alloc_skb+0x287/0x330 net/core/skbuff.c:641
+alloc_skb include/linux/skbuff.h:1286 [inline]
+alloc_skb_with_frags+0xe4/0x710 net/core/skbuff.c:6331
+sock_alloc_send_pskb+0x7e4/0x970 net/core/sock.c:2780
+sock_alloc_send_skb include/net/sock.h:1884 [inline]
+queue_oob net/unix/af_unix.c:2147 [inline]
+unix_stream_sendmsg+0xb5f/0x10a0 net/unix/af_unix.c:2301
+sock_sendmsg_nosec net/socket.c:730 [inline]
+__sock_sendmsg+0xd5/0x180 net/socket.c:745
+____sys_sendmsg+0x6ac/0x940 net/socket.c:2584
+___sys_sendmsg+0x135/0x1d0 net/socket.c:2638
+__sys_sendmsg+0x117/0x1e0 net/socket.c:2667
+do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
+entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+Freed by task 5295:
+kasan_save_stack+0x33/0x50 mm/kasan/common.c:45
+kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+kasan_save_free_info+0x2b/0x40 mm/kasan/generic.c:522
+____kasan_slab_free mm/kasan/common.c:236 [inline]
+____kasan_slab_free+0x15b/0x1b0 mm/kasan/common.c:200
+kasan_slab_free include/linux/kasan.h:164 [inline]
+slab_free_hook mm/slub.c:1800 [inline]
+slab_free_freelist_hook+0x114/0x1e0 mm/slub.c:1826
+slab_free mm/slub.c:3809 [inline]
+kmem_cache_free+0xf8/0x340 mm/slub.c:3831
+kfree_skbmem+0xef/0x1b0 net/core/skbuff.c:1015
+__kfree_skb net/core/skbuff.c:1073 [inline]
+consume_skb net/core/skbuff.c:1288 [inline]
+consume_skb+0xdf/0x170 net/core/skbuff.c:1282
+queue_oob net/unix/af_unix.c:2178 [inline]
+unix_stream_sendmsg+0xd49/0x10a0 net/unix/af_unix.c:2301
+sock_sendmsg_nosec net/socket.c:730 [inline]
+__sock_sendmsg+0xd5/0x180 net/socket.c:745
+____sys_sendmsg+0x6ac/0x940 net/socket.c:2584
+___sys_sendmsg+0x135/0x1d0 net/socket.c:2638
+__sys_sendmsg+0x117/0x1e0 net/socket.c:2667
+do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
+entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+The buggy address belongs to the object at ffff88801f3b9c80
+which belongs to the cache skbuff_head_cache of size 240
+The buggy address is located 68 bytes inside of
+freed 240-byte region [ffff88801f3b9c80, ffff88801f3b9d70)
+
+The buggy address belongs to the physical page:
+page:ffffea00007cee40 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1f3b9
+flags: 0xfff00000000800(slab|node=0|zone=1|lastcpupid=0x7ff)
+page_type: 0xffffffff()
+raw: 00fff00000000800 ffff888142a60640 dead000000000122 0000000000000000
+raw: 0000000000000000 00000000000c000c 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 0, migratetype Unmovable, gfp_mask 0x12cc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY), pid 5299, tgid 5283 (syz-executor107), ts 103803840339, free_ts 103600093431
+set_page_owner include/linux/page_owner.h:31 [inline]
+post_alloc_hook+0x2cf/0x340 mm/page_alloc.c:1537
+prep_new_page mm/page_alloc.c:1544 [inline]
+get_page_from_freelist+0xa25/0x36c0 mm/page_alloc.c:3312
+__alloc_pages+0x1d0/0x4a0 mm/page_alloc.c:4568
+alloc_pages_mpol+0x258/0x5f0 mm/mempolicy.c:2133
+alloc_slab_page mm/slub.c:1870 [inline]
+allocate_slab+0x251/0x380 mm/slub.c:2017
+new_slab mm/slub.c:2070 [inline]
+___slab_alloc+0x8c7/0x1580 mm/slub.c:3223
+__slab_alloc.constprop.0+0x56/0xa0 mm/slub.c:3322
+__slab_alloc_node mm/slub.c:3375 [inline]
+slab_alloc_node mm/slub.c:3468 [inline]
+kmem_cache_alloc_node+0x132/0x3c0 mm/slub.c:3523
+__alloc_skb+0x287/0x330 net/core/skbuff.c:641
+alloc_skb include/linux/skbuff.h:1286 [inline]
+alloc_skb_with_frags+0xe4/0x710 net/core/skbuff.c:6331
+sock_alloc_send_pskb+0x7e4/0x970 net/core/sock.c:2780
+sock_alloc_send_skb include/net/sock.h:1884 [inline]
+queue_oob net/unix/af_unix.c:2147 [inline]
+unix_stream_sendmsg+0xb5f/0x10a0 net/unix/af_unix.c:2301
+sock_sendmsg_nosec net/socket.c:730 [inline]
+__sock_sendmsg+0xd5/0x180 net/socket.c:745
+____sys_sendmsg+0x6ac/0x940 net/socket.c:2584
+___sys_sendmsg+0x135/0x1d0 net/socket.c:2638
+__sys_sendmsg+0x117/0x1e0 net/socket.c:2667
+page last free stack trace:
+reset_page_owner include/linux/page_owner.h:24 [inline]
+free_pages_prepare mm/page_alloc.c:1137 [inline]
+free_unref_page_prepare+0x4f8/0xa90 mm/page_alloc.c:2347
+free_unref_page+0x33/0x3b0 mm/page_alloc.c:2487
+__unfreeze_partials+0x21d/0x240 mm/slub.c:2655
+qlink_free mm/kasan/quarantine.c:168 [inline]
+qlist_free_all+0x6a/0x170 mm/kasan/quarantine.c:187
+kasan_quarantine_reduce+0x18e/0x1d0 mm/kasan/quarantine.c:294
+__kasan_slab_alloc+0x65/0x90 mm/kasan/common.c:305
+kasan_slab_alloc include/linux/kasan.h:188 [inline]
+slab_post_alloc_hook mm/slab.h:763 [inline]
+slab_alloc_node mm/slub.c:3478 [inline]
+slab_alloc mm/slub.c:3486 [inline]
+__kmem_cache_alloc_lru mm/slub.c:3493 [inline]
+kmem_cache_alloc+0x15d/0x380 mm/slub.c:3502
+vm_area_dup+0x21/0x2f0 kernel/fork.c:500
+__split_vma+0x17d/0x1070 mm/mmap.c:2365
+split_vma mm/mmap.c:2437 [inline]
+vma_modify+0x25d/0x450 mm/mmap.c:2472
+vma_modify_flags include/linux/mm.h:3271 [inline]
+mprotect_fixup+0x228/0xc80 mm/mprotect.c:635
+do_mprotect_pkey+0x852/0xd60 mm/mprotect.c:809
+__do_sys_mprotect mm/mprotect.c:830 [inline]
+__se_sys_mprotect mm/mprotect.c:827 [inline]
+__x64_sys_mprotect+0x78/0xb0 mm/mprotect.c:827
+do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
+entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+Memory state around the buggy address:
+ffff88801f3b9b80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ffff88801f3b9c00: fb fb fb fb fb fb fc fc fc fc fc fc fc fc fc fc
+>ffff88801f3b9c80: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+^
+ffff88801f3b9d00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fc fc
+ffff88801f3b9d80: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+
+Fixes: 876c14ad014d ("af_unix: fix holding spinlock in oob handling")
+Reported-and-tested-by: syzbot+7a2d546fa43e49315ed3@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Rao Shoaib <rao.shoaib@oracle.com>
+Reviewed-by: Rao shoaib <rao.shoaib@oracle.com>
+Link: https://lore.kernel.org/r/20231113134938.168151-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 17 ++++-------------
- drivers/net/ethernet/cortina/gemini.h |  2 +-
- 2 files changed, 5 insertions(+), 14 deletions(-)
+ net/unix/af_unix.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index a2d4ace01ed3c..e7137b468f5bc 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -2000,15 +2000,6 @@ static int gmac_change_mtu(struct net_device *netdev, int new_mtu)
- 	return 0;
- }
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 3e8a04a136688..3e6eeacb13aec 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2553,15 +2553,16 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
  
--static netdev_features_t gmac_fix_features(struct net_device *netdev,
--					   netdev_features_t features)
--{
--	if (netdev->mtu + ETH_HLEN + VLAN_HLEN > MTU_SIZE_BIT_MASK)
--		features &= ~GMAC_OFFLOAD_FEATURES;
+ 	if (!(state->flags & MSG_PEEK))
+ 		WRITE_ONCE(u->oob_skb, NULL);
 -
--	return features;
--}
--
- static int gmac_set_features(struct net_device *netdev,
- 			     netdev_features_t features)
- {
-@@ -2234,7 +2225,6 @@ static const struct net_device_ops gmac_351x_ops = {
- 	.ndo_set_mac_address	= gmac_set_mac_address,
- 	.ndo_get_stats64	= gmac_get_stats64,
- 	.ndo_change_mtu		= gmac_change_mtu,
--	.ndo_fix_features	= gmac_fix_features,
- 	.ndo_set_features	= gmac_set_features,
- };
++	else
++		skb_get(oob_skb);
+ 	unix_state_unlock(sk);
  
-@@ -2486,11 +2476,12 @@ static int gemini_ethernet_port_probe(struct platform_device *pdev)
+ 	chunk = state->recv_actor(oob_skb, 0, chunk, state);
  
- 	netdev->hw_features = GMAC_OFFLOAD_FEATURES;
- 	netdev->features |= GMAC_OFFLOAD_FEATURES | NETIF_F_GRO;
--	/* We can handle jumbo frames up to 10236 bytes so, let's accept
--	 * payloads of 10236 bytes minus VLAN and ethernet header
-+	/* We can receive jumbo frames up to 10236 bytes but only
-+	 * transmit 2047 bytes so, let's accept payloads of 2047
-+	 * bytes minus VLAN and ethernet header
- 	 */
- 	netdev->min_mtu = ETH_MIN_MTU;
--	netdev->max_mtu = 10236 - VLAN_ETH_HLEN;
-+	netdev->max_mtu = MTU_SIZE_BIT_MASK - VLAN_ETH_HLEN;
+-	if (!(state->flags & MSG_PEEK)) {
++	if (!(state->flags & MSG_PEEK))
+ 		UNIXCB(oob_skb).consumed += 1;
+-		kfree_skb(oob_skb);
+-	}
++
++	consume_skb(oob_skb);
  
- 	port->freeq_refill = 0;
- 	netif_napi_add(netdev, &port->napi, gmac_napi_poll);
-diff --git a/drivers/net/ethernet/cortina/gemini.h b/drivers/net/ethernet/cortina/gemini.h
-index 99efb11557436..24bb989981f23 100644
---- a/drivers/net/ethernet/cortina/gemini.h
-+++ b/drivers/net/ethernet/cortina/gemini.h
-@@ -502,7 +502,7 @@ union gmac_txdesc_3 {
- #define SOF_BIT			0x80000000
- #define EOF_BIT			0x40000000
- #define EOFIE_BIT		BIT(29)
--#define MTU_SIZE_BIT_MASK	0x1fff
-+#define MTU_SIZE_BIT_MASK	0x7ff /* Max MTU 2047 bytes */
+ 	mutex_unlock(&u->iolock);
  
- /* GMAC Tx Descriptor */
- struct gmac_txdesc {
 -- 
 2.42.0
 
