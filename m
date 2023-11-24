@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA642381D6;
-	Fri, 24 Nov 2023 18:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F9E381D6;
+	Fri, 24 Nov 2023 18:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/OuHics"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71580C433C8;
-	Fri, 24 Nov 2023 18:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkS0zZSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AE4C433C7;
+	Fri, 24 Nov 2023 18:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849563;
-	bh=DO+aNVeYybmYXjthjyEowoNAERrWPeiXItEsxOQDXQY=;
+	s=korg; t=1700849566;
+	bh=GxeRd5+j7q8f0byxzqLMf1Q3ZFwuCWyBmp18NUxP6XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/OuHicsATpZUowcWNHNORzmLmrJ9EJmLS7BOYNHVSdw5hwCsdqBe8+N9L8Cr7LpK
-	 qS5xBV6JgwoeAYfnMPsOQgZ3v6lwpRP1G88JWgCITS4kzhQtfInPxhzruJi9LR8vE5
-	 2PcEnsFLIQVBt88r9qBi5UHOaWtDqfMx/0aq2YYY=
+	b=GkS0zZSVIjewHEUE8rvsZ8D8mep2miq68AXHgPuTe8A1pX7dEKCLCWil1ZNPl0OZe
+	 xr3uxhDIw/7Z8uhOE0kpIIC9WCyqSTVV7oyf8MoUSnjc1pzyH5yJsNW5U1wsPDvol3
+	 gLBjDCJsPzP7lRxof+7gmuUc5w+100yledhwHQv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 214/530] io_uring/fdinfo: remove need for sqpoll lock for thread/pid retrieval
-Date: Fri, 24 Nov 2023 17:46:20 +0000
-Message-ID: <20231124172034.583703420@linuxfoundation.org>
+Subject: [PATCH 6.6 232/530] tools/power/turbostat: Enable the C-state Pre-wake printing
+Date: Fri, 24 Nov 2023 17:46:38 +0000
+Message-ID: <20231124172035.109141642@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,102 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Chen Yu <yu.c.chen@intel.com>
 
-[ Upstream commit a0d45c3f596be53c1bd8822a1984532d14fdcea9 ]
+[ Upstream commit b61b7d8c4c22c4298a50ae5d0ee88facb85ce665 ]
 
-A previous commit added a trylock for getting the SQPOLL thread info via
-fdinfo, but this introduced a regression where we often fail to get it if
-the thread is busy. For that case, we end up not printing the current CPU
-and PID info.
+Currently the C-state Pre-wake will not be printed due to the
+probe has not been invoked. Invoke the probe function accordingly.
 
-Rather than rely on this lock, just print the pid we already stored in
-the io_sq_data struct, and ensure we update the current CPU every time
-we've slept or potentially rescheduled. The latter won't potentially be
-100% accurate, but that wasn't the case before either as the task can
-get migrated at any time unless it has been pinned at creation time.
-
-We retain keeping the io_sq_data dereference inside the ctx->uring_lock,
-as it has always been, as destruction of the thread and data happen below
-that. We could make this RCU safe, but there's little point in doing that.
-
-With this, we always print the last valid information we had, rather than
-have spurious outputs with missing information.
-
-Fixes: 7644b1a1c9a7 ("io_uring/fdinfo: lock SQ thread while retrieving thread cpu/pid")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: aeb01e6d71ff ("tools/power turbostat: Print the C-state Pre-wake settings")
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/fdinfo.c |  9 ++-------
- io_uring/sqpoll.c | 12 ++++++++++--
- 2 files changed, 12 insertions(+), 9 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
-index f04a43044d917..976e9500f6518 100644
---- a/io_uring/fdinfo.c
-+++ b/io_uring/fdinfo.c
-@@ -145,13 +145,8 @@ __cold void io_uring_show_fdinfo(struct seq_file *m, struct file *f)
- 	if (has_lock && (ctx->flags & IORING_SETUP_SQPOLL)) {
- 		struct io_sq_data *sq = ctx->sq_data;
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 4e19bd2fa8b9f..785de89077de0 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -5790,6 +5790,7 @@ void process_cpuid()
+ 	rapl_probe(family, model);
+ 	perf_limit_reasons_probe(family, model);
+ 	automatic_cstate_conversion_probe(family, model);
++	prewake_cstate_probe(family, model);
  
--		if (mutex_trylock(&sq->lock)) {
--			if (sq->thread) {
--				sq_pid = task_pid_nr(sq->thread);
--				sq_cpu = task_cpu(sq->thread);
--			}
--			mutex_unlock(&sq->lock);
--		}
-+		sq_pid = sq->task_pid;
-+		sq_cpu = sq->sq_cpu;
- 	}
+ 	check_tcc_offset(model_orig);
  
- 	seq_printf(m, "SqThread:\t%d\n", sq_pid);
-diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
-index bd6c2c7959a5b..65b5dbe3c850e 100644
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -214,6 +214,7 @@ static bool io_sqd_handle_event(struct io_sq_data *sqd)
- 			did_sig = get_signal(&ksig);
- 		cond_resched();
- 		mutex_lock(&sqd->lock);
-+		sqd->sq_cpu = raw_smp_processor_id();
- 	}
- 	return did_sig || test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state);
- }
-@@ -229,10 +230,15 @@ static int io_sq_thread(void *data)
- 	snprintf(buf, sizeof(buf), "iou-sqp-%d", sqd->task_pid);
- 	set_task_comm(current, buf);
- 
--	if (sqd->sq_cpu != -1)
-+	/* reset to our pid after we've set task_comm, for fdinfo */
-+	sqd->task_pid = current->pid;
-+
-+	if (sqd->sq_cpu != -1) {
- 		set_cpus_allowed_ptr(current, cpumask_of(sqd->sq_cpu));
--	else
-+	} else {
- 		set_cpus_allowed_ptr(current, cpu_online_mask);
-+		sqd->sq_cpu = raw_smp_processor_id();
-+	}
- 
- 	mutex_lock(&sqd->lock);
- 	while (1) {
-@@ -261,6 +267,7 @@ static int io_sq_thread(void *data)
- 				mutex_unlock(&sqd->lock);
- 				cond_resched();
- 				mutex_lock(&sqd->lock);
-+				sqd->sq_cpu = raw_smp_processor_id();
- 			}
- 			continue;
- 		}
-@@ -294,6 +301,7 @@ static int io_sq_thread(void *data)
- 				mutex_unlock(&sqd->lock);
- 				schedule();
- 				mutex_lock(&sqd->lock);
-+				sqd->sq_cpu = raw_smp_processor_id();
- 			}
- 			list_for_each_entry(ctx, &sqd->ctx_list, sqd_list)
- 				atomic_andnot(IORING_SQ_NEED_WAKEUP,
 -- 
 2.42.0
 
