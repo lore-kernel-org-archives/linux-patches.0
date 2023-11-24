@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1103639FF7;
-	Fri, 24 Nov 2023 18:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAE739FF8;
+	Fri, 24 Nov 2023 18:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLmo+ce6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F58C433C8;
-	Fri, 24 Nov 2023 18:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmLqA+CK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24ED8C433C8;
+	Fri, 24 Nov 2023 18:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850015;
-	bh=fkVdWiu+7ib8SFpYzI+37zLBhqxrYnh5RTcgNCrKHUQ=;
+	s=korg; t=1700850018;
+	bh=OPd8WzNcc+Y9/vZasPkGfaq73BQ+wc4S66+nCI3WFHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hLmo+ce6b5zWXBeEjHQQU74g8I0I0v9loXseXhd6Dqm6LQ4s2x3Fg+SNOSp+dF5ze
-	 G5V8/+yP7AcoLPu6Mma9AvD/a/nE00WD1IqaUdqq/rSVY7q8/YS4k7KOx3dEHvTop7
-	 Ja92XVEvlW6l3IfwCTgP2gNyCWURych6yiOVykpU=
+	b=CmLqA+CKZNuJOOMx6T6xMNqRNTs4IBwAuz2ijGerMUBLkgLrIsbPebBI5dWVt+Xa8
+	 wTntOyDBLS6XqtZvM/ZYKGvMGdrmABjPMVxbaIDmAdWQTjr/CAaPjCY1Jz13Ux2/JP
+	 PqfeaSolGDwG4zGgSzAsaCsEK0VwuyaV8QZZgZfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 412/530] parisc: Prevent booting 64-bit kernels on PA1.x machines
-Date: Fri, 24 Nov 2023 17:49:38 +0000
-Message-ID: <20231124172040.595015522@linuxfoundation.org>
+Subject: [PATCH 6.6 413/530] parisc/pgtable: Do not drop upper 5 address bits of physical address
+Date: Fri, 24 Nov 2023 17:49:39 +0000
+Message-ID: <20231124172040.626896677@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,33 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-commit a406b8b424fa01f244c1aab02ba186258448c36b upstream.
+commit 166b0110d1ee53290bd11618df6e3991c117495a upstream.
 
-Bail out early with error message when trying to boot a 64-bit kernel on
-32-bit machines. This fixes the previous commit to include the check for
-true 64-bit kernels as well.
+When calculating the pfn for the iitlbt/idtlbt instruction, do not
+drop the upper 5 address bits. This doesn't seem to have an effect
+on physical hardware which uses less physical address bits, but in
+qemu the missing bits are visible.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Fixes: 591d2108f3abc ("parisc: Add runtime check to prevent PA2.0 kernels on PA1.x machines")
-Cc:  <stable@vger.kernel.org> # v6.0+
+Cc:  <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/head.S |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/parisc/kernel/entry.S |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/parisc/kernel/head.S
-+++ b/arch/parisc/kernel/head.S
-@@ -70,9 +70,8 @@ $bss_loop:
- 	stw,ma          %arg2,4(%r1)
- 	stw,ma          %arg3,4(%r1)
+--- a/arch/parisc/kernel/entry.S
++++ b/arch/parisc/kernel/entry.S
+@@ -475,13 +475,13 @@
+ 	 * to a CPU TLB 4k PFN (4k => 12 bits to shift) */
+ 	#define PAGE_ADD_SHIFT		(PAGE_SHIFT-12)
+ 	#define PAGE_ADD_HUGE_SHIFT	(REAL_HPAGE_SHIFT-12)
++	#define PFN_START_BIT	(63-ASM_PFN_PTE_SHIFT+(63-58)-PAGE_ADD_SHIFT)
  
--#if !defined(CONFIG_64BIT) && defined(CONFIG_PA20)
--	/* This 32-bit kernel was compiled for PA2.0 CPUs. Check current CPU
--	 * and halt kernel if we detect a PA1.x CPU. */
-+#if defined(CONFIG_PA20)
-+	/* check for 64-bit capable CPU as required by current kernel */
- 	ldi		32,%r10
- 	mtctl		%r10,%cr11
- 	.level 2.0
+ 	/* Drop prot bits and convert to page addr for iitlbt and idtlbt */
+ 	.macro		convert_for_tlb_insert20 pte,tmp
+ #ifdef CONFIG_HUGETLB_PAGE
+ 	copy		\pte,\tmp
+-	extrd,u		\tmp,(63-ASM_PFN_PTE_SHIFT)+(63-58)+PAGE_ADD_SHIFT,\
+-				64-PAGE_SHIFT-PAGE_ADD_SHIFT,\pte
++	extrd,u		\tmp,PFN_START_BIT,PFN_START_BIT+1,\pte
+ 
+ 	depdi		_PAGE_SIZE_ENCODING_DEFAULT,63,\
+ 				(63-58)+PAGE_ADD_SHIFT,\pte
+@@ -489,8 +489,7 @@
+ 	depdi		_HUGE_PAGE_SIZE_ENCODING_DEFAULT,63,\
+ 				(63-58)+PAGE_ADD_HUGE_SHIFT,\pte
+ #else /* Huge pages disabled */
+-	extrd,u		\pte,(63-ASM_PFN_PTE_SHIFT)+(63-58)+PAGE_ADD_SHIFT,\
+-				64-PAGE_SHIFT-PAGE_ADD_SHIFT,\pte
++	extrd,u		\pte,PFN_START_BIT,PFN_START_BIT+1,\pte
+ 	depdi		_PAGE_SIZE_ENCODING_DEFAULT,63,\
+ 				(63-58)+PAGE_ADD_SHIFT,\pte
+ #endif
 
 
