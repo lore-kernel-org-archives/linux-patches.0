@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655BF39FE1;
-	Fri, 24 Nov 2023 18:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB3B39FEE;
+	Fri, 24 Nov 2023 18:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tfji/mUT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CCEC433C7;
-	Fri, 24 Nov 2023 18:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5htrUHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584C1C433C7;
+	Fri, 24 Nov 2023 18:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848913;
-	bh=c6o3w954suhCSX+7ws/FerQRUbplTG51T9+IVNnp5XE=;
+	s=korg; t=1700848915;
+	bh=8IT4BxsQG0irH+WpcBG32G630PV+a826CyGFOqcQTHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tfji/mUTgdmI3zpOGYReXXpWs+hNvYYrQZ8Pt/uNThT18v2YAzSqk46vU9BpUTumc
-	 V9fCDo0H4x+gxoflMhnFHJ58wx5y11VL/8hPFpoJyi7Is/+WdnkOjYyS0khuPHYPvC
-	 yx95kPIzEegogMal9D91blLUN/hcidV0GDFy3Wxo=
+	b=Y5htrUHE0J8B8/3D9Wi/jaRIXC9ZXgz0y2s84iwdXs7lcxdoSnRsajletdnHM2OkL
+	 OfD5DuO3z9UckUmP57uWKs7MDGnAe7fdzH8pbByim8pKgB+KcqEgukRLAQoiWhfdEx
+	 znpZGK7sDj7UKb2qvjelvZUv/YXCbM0bwzNDAbRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 4.14 32/57] hvc/xen: fix error path in xen_hvc_init() to always register frontend driver
-Date: Fri, 24 Nov 2023 17:50:56 +0000
-Message-ID: <20231124171931.464180408@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 4.14 33/57] PCI/sysfs: Protect drivers D3cold preference from user space
+Date: Fri, 24 Nov 2023 17:50:57 +0000
+Message-ID: <20231124171931.504623076@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -35,58 +37,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 2704c9a5593f4a47620c12dad78838ca62b52f48 upstream.
+commit 70b70a4307cccebe91388337b1c85735ce4de6ff upstream.
 
-The xen_hvc_init() function should always register the frontend driver,
-even when there's no primary console — as there may be secondary consoles.
-(Qemu can always add secondary consoles, but only the toolstack can add
-the primary because it's special.)
+struct pci_dev contains two flags which govern whether the device may
+suspend to D3cold:
 
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231020161529.355083-3-dwmw2@infradead.org
+* no_d3cold provides an opt-out for drivers (e.g. if a device is known
+  to not wake from D3cold)
+
+* d3cold_allowed provides an opt-out for user space (default is true,
+  user space may set to false)
+
+Since commit 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend"),
+the user space setting overwrites the driver setting.  Essentially user
+space is trusted to know better than the driver whether D3cold is
+working.
+
+That feels unsafe and wrong.  Assume that the change was introduced
+inadvertently and do not overwrite no_d3cold when d3cold_allowed is
+modified.  Instead, consider d3cold_allowed in addition to no_d3cold
+when choosing a suspend state for the device.
+
+That way, user space may opt out of D3cold if the driver hasn't, but it
+may no longer force an opt in if the driver has opted out.
+
+Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
+Link: https://lore.kernel.org/r/b8a7f4af2b73f6b506ad8ddee59d747cbf834606.1695025365.git.lukas@wunner.de
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Cc: stable@vger.kernel.org	# v4.8+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/hvc/hvc_xen.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pci/pci-acpi.c  |    2 +-
+ drivers/pci/pci-sysfs.c |    5 +----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/hvc/hvc_xen.c
-+++ b/drivers/tty/hvc/hvc_xen.c
-@@ -600,7 +600,7 @@ static int __init xen_hvc_init(void)
- 		ops = &dom0_hvc_ops;
- 		r = xen_initial_domain_console_init();
- 		if (r < 0)
--			return r;
-+			goto register_fe;
- 		info = vtermno_to_xencons(HVC_COOKIE);
- 	} else {
- 		ops = &domU_hvc_ops;
-@@ -609,7 +609,7 @@ static int __init xen_hvc_init(void)
- 		else
- 			r = xen_pv_console_init();
- 		if (r < 0)
--			return r;
-+			goto register_fe;
+--- a/drivers/pci/pci-acpi.c
++++ b/drivers/pci/pci-acpi.c
+@@ -482,7 +482,7 @@ static pci_power_t acpi_pci_choose_state
+ {
+ 	int acpi_state, d_max;
  
- 		info = vtermno_to_xencons(HVC_COOKIE);
- 		info->irq = bind_evtchn_to_irq_lateeoi(info->evtchn);
-@@ -634,6 +634,7 @@ static int __init xen_hvc_init(void)
- 	}
+-	if (pdev->no_d3cold)
++	if (pdev->no_d3cold || !pdev->d3cold_allowed)
+ 		d_max = ACPI_STATE_D3_HOT;
+ 	else
+ 		d_max = ACPI_STATE_D3_COLD;
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -534,10 +534,7 @@ static ssize_t d3cold_allowed_store(stru
+ 		return -EINVAL;
  
- 	r = 0;
-+ register_fe:
- #ifdef CONFIG_HVC_XEN_FRONTEND
- 	r = xenbus_register_frontend(&xencons_driver);
- #endif
+ 	pdev->d3cold_allowed = !!val;
+-	if (pdev->d3cold_allowed)
+-		pci_d3cold_enable(pdev);
+-	else
+-		pci_d3cold_disable(pdev);
++	pci_bridge_d3_update(pdev);
+ 
+ 	pm_runtime_resume(dev);
+ 
 
 
