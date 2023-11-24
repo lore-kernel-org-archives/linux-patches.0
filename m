@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147D633CCA;
-	Fri, 24 Nov 2023 18:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079DB33063;
+	Fri, 24 Nov 2023 18:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xUimzU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1CDC433C7;
-	Fri, 24 Nov 2023 18:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7Q0HM2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EB3C433C8;
+	Fri, 24 Nov 2023 18:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850117;
-	bh=c0LcbN0jEzWS8Qh0eY3oCSwdzqwMEqOcCyiWbEdHjxk=;
+	s=korg; t=1700850120;
+	bh=Woo09A/CHfNyNWr9+HolwGQxeRO6SjVJDmx/gxie4ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1xUimzU/90c9gc4mQMEd+O6TXoveKqn9wbMXj75MxiVQsecor7HksqOC3cJGCuYGE
-	 BwRm2jeFyr2gkb3kfmxCI4iuXzuy86opI6HDL63rI2Xc2iaFgsqNEk0QnM9MdcSvfv
-	 YAEyPMlYzes7ecbifNQ86Lh3HA/D2qRkGaJ17yrI=
+	b=F7Q0HM2J8Ohz2mAwzri6PSYRP4cgoW3oMLjGjiDaHUdRg9tieCHazxQvj0kfJyxHs
+	 hHlos0scnFNrhPADmpBzswWJKHmCyukkq2PZh+Gwprbl4wQVRYRSOy6mdalezQ4zSc
+	 +3x7XMqo4IivZIYB9wsXqtav14G4/qhELW6yIQiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Su Hui <suhui@nfschina.com>,
+	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 451/530] f2fs: set the default compress_level on ioctl
-Date: Fri, 24 Nov 2023 17:50:17 +0000
-Message-ID: <20231124172041.820170844@linuxfoundation.org>
+Subject: [PATCH 6.6 452/530] f2fs: avoid format-overflow warning
+Date: Fri, 24 Nov 2023 17:50:18 +0000
+Message-ID: <20231124172041.846115700@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -34,48 +36,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Su Hui <suhui@nfschina.com>
 
-commit f5f3bd903a5d3e3b2ba89f11e0e29db25e60c048 upstream.
+commit e0d4e8acb3789c5a8651061fbab62ca24a45c063 upstream.
 
-Otherwise, we'll get a broken inode.
+With gcc and W=1 option, there's a warning like this:
 
- # touch $FILE
- # f2fs_io setflags compression $FILE
- # f2fs_io set_coption 2 8 $FILE
+fs/f2fs/compress.c: In function ‘f2fs_init_page_array_cache’:
+fs/f2fs/compress.c:1984:47: error: ‘%u’ directive writing between
+1 and 7 bytes into a region of size between 5 and 8
+[-Werror=format-overflow=]
+ 1984 |  sprintf(slab_name, "f2fs_page_array_entry-%u:%u", MAJOR(dev),
+		MINOR(dev));
+      |                                               ^~
 
-[  112.227612] F2FS-fs (dm-51): sanity_check_compress_inode: inode (ino=8d3fe) has unsupported compress level: 0, run fsck to fix
+String "f2fs_page_array_entry-%u:%u" can up to 35. The first "%u" can up
+to 4 and the second "%u" can up to 7, so total size is "24 + 4 + 7 = 35".
+slab_name's size should be 35 rather than 32.
 
 Cc: stable@vger.kernel.org
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/f2fs/compress.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -4006,6 +4006,15 @@ static int f2fs_ioc_set_compress_option(
- 	F2FS_I(inode)->i_compress_algorithm = option.algorithm;
- 	F2FS_I(inode)->i_log_cluster_size = option.log_cluster_size;
- 	F2FS_I(inode)->i_cluster_size = BIT(option.log_cluster_size);
-+	/* Set default level */
-+	if (F2FS_I(inode)->i_compress_algorithm == COMPRESS_ZSTD)
-+		F2FS_I(inode)->i_compress_level = F2FS_ZSTD_DEFAULT_CLEVEL;
-+	else
-+		F2FS_I(inode)->i_compress_level = 0;
-+	/* Adjust mount option level */
-+	if (option.algorithm == F2FS_OPTION(sbi).compress_algorithm &&
-+	    F2FS_OPTION(sbi).compress_level)
-+		F2FS_I(inode)->i_compress_level = F2FS_OPTION(sbi).compress_level;
- 	f2fs_mark_inode_dirty_sync(inode, true);
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1976,7 +1976,7 @@ void f2fs_destroy_compress_inode(struct
+ int f2fs_init_page_array_cache(struct f2fs_sb_info *sbi)
+ {
+ 	dev_t dev = sbi->sb->s_bdev->bd_dev;
+-	char slab_name[32];
++	char slab_name[35];
  
- 	if (!f2fs_is_compress_backend_ready(inode))
+ 	if (!f2fs_sb_has_compression(sbi))
+ 		return 0;
 
 
