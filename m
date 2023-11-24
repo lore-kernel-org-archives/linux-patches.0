@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0957939FDD;
-	Fri, 24 Nov 2023 18:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A5F39FDD;
+	Fri, 24 Nov 2023 18:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4/ce4wP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF99C433C7;
-	Fri, 24 Nov 2023 18:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJJ1mkum"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0619EC433C7;
+	Fri, 24 Nov 2023 18:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849880;
-	bh=ttCOWSkgy31uIZZQIWu05S3JvIZSYwtlO/ZCSA1pG8Q=;
+	s=korg; t=1700849883;
+	bh=K5PARVt487qiLVJUQReoKQjZXVEeNVNzQht4xxeEkJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4/ce4wPHYAsgLLm/0IBj+BpncyQq0GhcgyuHQQoJr6z1hJVfr42Pn6BECPhWtM2Z
-	 blG4Rn1pwZ7GL9A9ey+e+vWsxwZv4CNd22AhL6otUIS1zZZIB+23y8iHX8wPVpVbY1
-	 qFuP7crTvk2Vo18BXBQFf8kxwAUcKGaWf9tsYlT8=
+	b=GJJ1mkumgilplKtPG5jpqpMRBsd8GaodeUuVmAjX860vnUG4o04Gl0XMFk5D+R7m6
+	 00mRHtR7QTxlyAx62Vx7mrMNBWtlygA6hSGUeH214RNlRemqoj/KdqLBl2u+7H7lq1
+	 6cR55lzMpXd0QcfmM3J4D2UarMOxPRQKwUep6uzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
 	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.6 358/530] selftests/resctrl: Fix feature checks
-Date: Fri, 24 Nov 2023 17:48:44 +0000
-Message-ID: <20231124172038.904892653@linuxfoundation.org>
+Subject: [PATCH 6.6 359/530] selftests/resctrl: Reduce failures due to outliers in MBA/MBM tests
+Date: Fri, 24 Nov 2023 17:48:45 +0000
+Message-ID: <20231124172038.933646168@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -46,57 +46,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 06035f019422ba17e85c11e70d6d8bdbe9fa1afd upstream.
+commit ef43c30858754d99373a63dff33280a9969b49bc upstream.
 
-The MBA and CMT tests expect support of other features to be able to
-run.
+The initial value of 5% chosen for the maximum allowed percentage
+difference between resctrl mbm value and IMC mbm value in
 
-When platform only supports MBA but not MBM, MBA test will fail with:
-Failed to open total bw file: No such file or directory
+commit 06bd03a57f8c ("selftests/resctrl: Fix MBA/MBM results reporting
+       format") was "randomly chosen value" (as admitted by the changelog).
 
-When platform only supports CMT but not CAT, CMT test will fail with:
-Failed to open bit mask file '/sys/fs/resctrl/info/L3/cbm_mask': No such file or directory
+When running tests in our lab across a large number platforms, 5%
+difference upper bound for success seems a bit on the low side for the
+MBA and MBM tests. Some platforms produce outliers that are slightly
+above that, typically 6-7%, which leads MBA/MBM test frequently
+failing.
 
-It leads to the test reporting test fail (even if no test was run at
-all).
+Replace the "randomly chosen value" with a success bound that is based
+on those measurements across large number of platforms by relaxing the
+MBA/MBM success bound to 8%. The relaxed bound removes the failures due
+the frequent outliers.
 
-Extend feature checks to cover these two conditions to show these tests
-were skipped rather than failed.
+Fixed commit description style error during merge:
+Shuah Khan <skhan@linuxfoundation.org>
 
-Fixes: ee0415681eb6 ("selftests/resctrl: Use resctrl/info for feature detection")
+Fixes: 06bd03a57f8c ("selftests/resctrl: Fix MBA/MBM results reporting format")
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
-Cc: <stable@vger.kernel.org> # selftests/resctrl: Refactor feature check to use resource and feature name
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/resctrl/resctrl_tests.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/testing/selftests/resctrl/mba_test.c |    2 +-
+ tools/testing/selftests/resctrl/mbm_test.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/resctrl/resctrl_tests.c
-+++ b/tools/testing/selftests/resctrl/resctrl_tests.c
-@@ -111,7 +111,9 @@ static void run_mba_test(char **benchmar
- 		return;
- 	}
+--- a/tools/testing/selftests/resctrl/mba_test.c
++++ b/tools/testing/selftests/resctrl/mba_test.c
+@@ -12,7 +12,7 @@
  
--	if (!validate_resctrl_feature_request("MB", NULL) || (get_vendor() != ARCH_INTEL)) {
-+	if (!validate_resctrl_feature_request("MB", NULL) ||
-+	    !validate_resctrl_feature_request("L3_MON", "mbm_local_bytes") ||
-+	    (get_vendor() != ARCH_INTEL)) {
- 		ksft_test_result_skip("Hardware does not support MBA or MBA is disabled\n");
- 		goto umount;
- 	}
-@@ -135,7 +137,8 @@ static void run_cmt_test(char **benchmar
- 		return;
- 	}
+ #define RESULT_FILE_NAME	"result_mba"
+ #define NUM_OF_RUNS		5
+-#define MAX_DIFF_PERCENT	5
++#define MAX_DIFF_PERCENT	8
+ #define ALLOCATION_MAX		100
+ #define ALLOCATION_MIN		10
+ #define ALLOCATION_STEP		10
+--- a/tools/testing/selftests/resctrl/mbm_test.c
++++ b/tools/testing/selftests/resctrl/mbm_test.c
+@@ -11,7 +11,7 @@
+ #include "resctrl.h"
  
--	if (!validate_resctrl_feature_request("L3_MON", "llc_occupancy")) {
-+	if (!validate_resctrl_feature_request("L3_MON", "llc_occupancy") ||
-+	    !validate_resctrl_feature_request("L3", NULL)) {
- 		ksft_test_result_skip("Hardware does not support CMT or CMT is disabled\n");
- 		goto umount;
- 	}
+ #define RESULT_FILE_NAME	"result_mbm"
+-#define MAX_DIFF_PERCENT	5
++#define MAX_DIFF_PERCENT	8
+ #define NUM_OF_RUNS		5
+ 
+ static int
 
 
