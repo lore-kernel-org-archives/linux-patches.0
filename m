@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468D639FF7;
-	Fri, 24 Nov 2023 18:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F2E39FD7;
+	Fri, 24 Nov 2023 18:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpJGjY31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA675C433C7;
-	Fri, 24 Nov 2023 18:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRDHXUW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C56C433C8;
+	Fri, 24 Nov 2023 18:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849151;
-	bh=bmy/333k1LARQU4vfebbjLa0bS9xb9Vls0G0vBmRLMY=;
+	s=korg; t=1700849153;
+	bh=lVmOWCAK/gJPuR5FI9ErSF3Vq/Pu4zCbGpAO40Iv3Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpJGjY31TkAzbePYcW9XdS7T6a7Oi5MdhadzhcVaNW1y5o22C7d5WirCqoL3mkQZQ
-	 d4b9KAyZn2BYuQQgW6x+EYDfg4W3bELiYJpTXsLM4Zh9SoIlpn0wE9EOwrngrzwXBE
-	 iaY9l6ZVzIJE4zFFm/Nzh+zvbcO4wRyQe4lC9H9g=
+	b=sRDHXUW6OCK8zB75gFHWmUKTlsxcUA7KMmNoZvgaN1ml9kUmyBC9zT5Jh5Uni/I88
+	 +vlI5qQknQSbJ2nFaiC19mUWnWXcI4kvDpBdgLo1nG5isLFvZmP9/64qenXkVxp8Zx
+	 euLnJc1sjpZc0rDB2r/6eK0Akcul6AY0ZecSXSF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ma Ke <make_ruc2021@163.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/530] drm/panel: fix a possible null pointer dereference
-Date: Fri, 24 Nov 2023 17:43:54 +0000
-Message-ID: <20231124172030.131892501@linuxfoundation.org>
+Subject: [PATCH 6.6 069/530] drm/panel/panel-tpo-tpg110: fix a possible null pointer dereference
+Date: Fri, 24 Nov 2023 17:43:55 +0000
+Message-ID: <20231124172030.162625842@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,30 +44,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 924e5814d1f84e6fa5cb19c6eceb69f066225229 ]
+[ Upstream commit f22def5970c423ea7f87d5247bd0ef91416b0658 ]
 
-In versatile_panel_get_modes(), the return value of drm_mode_duplicate()
-is assigned to mode, which will lead to a NULL pointer dereference
-on failure of drm_mode_duplicate(). Add a check to avoid npd.
+In tpg110_get_modes(), the return value of drm_mode_duplicate() is
+assigned to mode, which will lead to a NULL pointer dereference on
+failure of drm_mode_duplicate(). Add a check to avoid npd.
 
 Signed-off-by: Ma Ke <make_ruc2021@163.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20231007033105.3997998-1-make_ruc2021@163.com
+Link: https://lore.kernel.org/r/20231009090446.4043798-1-make_ruc2021@163.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231007033105.3997998-1-make_ruc2021@163.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20231009090446.4043798-1-make_ruc2021@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-arm-versatile.c | 2 ++
+ drivers/gpu/drm/panel/panel-tpo-tpg110.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-arm-versatile.c b/drivers/gpu/drm/panel/panel-arm-versatile.c
-index abb0788843c60..503ecea72c5ea 100644
---- a/drivers/gpu/drm/panel/panel-arm-versatile.c
-+++ b/drivers/gpu/drm/panel/panel-arm-versatile.c
-@@ -267,6 +267,8 @@ static int versatile_panel_get_modes(struct drm_panel *panel,
- 	connector->display_info.bus_flags = vpanel->panel_type->bus_flags;
+diff --git a/drivers/gpu/drm/panel/panel-tpo-tpg110.c b/drivers/gpu/drm/panel/panel-tpo-tpg110.c
+index 845304435e235..f6a212e542cb9 100644
+--- a/drivers/gpu/drm/panel/panel-tpo-tpg110.c
++++ b/drivers/gpu/drm/panel/panel-tpo-tpg110.c
+@@ -379,6 +379,8 @@ static int tpg110_get_modes(struct drm_panel *panel,
+ 	connector->display_info.bus_flags = tpg->panel_mode->bus_flags;
  
- 	mode = drm_mode_duplicate(connector->dev, &vpanel->panel_type->mode);
+ 	mode = drm_mode_duplicate(connector->dev, &tpg->panel_mode->mode);
 +	if (!mode)
 +		return -ENOMEM;
  	drm_mode_set_name(mode);
