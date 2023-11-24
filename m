@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C113418B;
-	Fri, 24 Nov 2023 18:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2287033CC7;
+	Fri, 24 Nov 2023 18:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5UiMznC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF50C433CA;
-	Fri, 24 Nov 2023 18:46:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZExGop3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C501C433C9;
+	Fri, 24 Nov 2023 18:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851563;
-	bh=EzqlwK9+BkdVleJ/tC1gP3FiVOlFGqG69GUPclxsOAU=;
+	s=korg; t=1700851565;
+	bh=qgTv+uHI/xQY7qmOWS5r/H0RbyxgxhUpPXqNUYzKMnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c5UiMznCtZQ5rdE7EFqWm41ZYVrIJLBhi38W9ucsrvh+iTBUdx/Ad3vKg/U6ltBO9
-	 vmgrCmEzONMBZfJpDeU/AgwsXNtDCs0db13nYte376Dwt2FnapxCUappMuFkoFfFJN
-	 OugB8NTwx+T/v4+Ws2mbQrEdXU423nYKNR6XWEqM=
+	b=ZExGop3rEAHtfTwNfbvtYqGZ1crllYwaCFnO2D6VuQj6hZhuUyqI5GTSyOj+LLdj9
+	 G23uILFgEBsdSe8A9Gu7ePcE+8Rje2aGF7ZRlGOKrptdtTZRUsoI6+n7OnLxcDKQrf
+	 ZKkdGwf/1GEM5Sb/Hd36RRL0pp2/aiRe0GWdg7os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.5 490/491] powerpc/powernv: Fix fortify source warnings in opal-prd.c
-Date: Fri, 24 Nov 2023 17:52:06 +0000
-Message-ID: <20231124172039.361301393@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.5 491/491] tracing: Have trace_event_file have ref counters
+Date: Fri, 24 Nov 2023 17:52:07 +0000
+Message-ID: <20231124172039.395042526@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,92 +43,252 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit feea65a338e52297b68ceb688eaf0ffc50310a83 upstream.
+commit bb32500fb9b78215e4ef6ee8b4345c5f5d7eafb4 upstream.
 
-As reported by Mahesh & Aneesh, opal_prd_msg_notifier() triggers a
-FORTIFY_SOURCE warning:
+The following can crash the kernel:
 
-  memcpy: detected field-spanning write (size 32) of single field "&item->msg" at arch/powerpc/platforms/powernv/opal-prd.c:355 (size 4)
-  WARNING: CPU: 9 PID: 660 at arch/powerpc/platforms/powernv/opal-prd.c:355 opal_prd_msg_notifier+0x174/0x188 [opal_prd]
-  NIP opal_prd_msg_notifier+0x174/0x188 [opal_prd]
-  LR  opal_prd_msg_notifier+0x170/0x188 [opal_prd]
-  Call Trace:
-    opal_prd_msg_notifier+0x170/0x188 [opal_prd] (unreliable)
-    notifier_call_chain+0xc0/0x1b0
-    atomic_notifier_call_chain+0x2c/0x40
-    opal_message_notify+0xf4/0x2c0
+ # cd /sys/kernel/tracing
+ # echo 'p:sched schedule' > kprobe_events
+ # exec 5>>events/kprobes/sched/enable
+ # > kprobe_events
+ # exec 5>&-
 
-This happens because the copy is targeting item->msg, which is only 4
-bytes in size, even though the enclosing item was allocated with extra
-space following the msg.
+The above commands:
 
-To fix the warning define struct opal_prd_msg with a union of the header
-and a flex array, and have the memcpy target the flex array.
+ 1. Change directory to the tracefs directory
+ 2. Create a kprobe event (doesn't matter what one)
+ 3. Open bash file descriptor 5 on the enable file of the kprobe event
+ 4. Delete the kprobe event (removes the files too)
+ 5. Close the bash file descriptor 5
 
-Reported-by: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Reported-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Tested-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Reviewed-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230821142820.497107-1-mpe@ellerman.id.au
+The above causes a crash!
+
+ BUG: kernel NULL pointer dereference, address: 0000000000000028
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: 0000 [#1] PREEMPT SMP PTI
+ CPU: 6 PID: 877 Comm: bash Not tainted 6.5.0-rc4-test-00008-g2c6b6b1029d4-dirty #186
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+ RIP: 0010:tracing_release_file_tr+0xc/0x50
+
+What happens here is that the kprobe event creates a trace_event_file
+"file" descriptor that represents the file in tracefs to the event. It
+maintains state of the event (is it enabled for the given instance?).
+Opening the "enable" file gets a reference to the event "file" descriptor
+via the open file descriptor. When the kprobe event is deleted, the file is
+also deleted from the tracefs system which also frees the event "file"
+descriptor.
+
+But as the tracefs file is still opened by user space, it will not be
+totally removed until the final dput() is called on it. But this is not
+true with the event "file" descriptor that is already freed. If the user
+does a write to or simply closes the file descriptor it will reference the
+event "file" descriptor that was just freed, causing a use-after-free bug.
+
+To solve this, add a ref count to the event "file" descriptor as well as a
+new flag called "FREED". The "file" will not be freed until the last
+reference is released. But the FREE flag will be set when the event is
+removed to prevent any more modifications to that event from happening,
+even if there's still a reference to the event "file" descriptor.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231031000031.1e705592@gandalf.local.home/
+Link: https://lore.kernel.org/linux-trace-kernel/20231031122453.7a48b923@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Mark Rutland <mark.rutland@arm.com>
+Fixes: f5ca233e2e66d ("tracing: Increase trace array ref count on enable and filter files")
+Reported-by: Beau Belgrave <beaub@linux.microsoft.com>
+Tested-by: Beau Belgrave <beaub@linux.microsoft.com>
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/powernv/opal-prd.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ include/linux/trace_events.h       |    4 +++
+ kernel/trace/trace.c               |   15 ++++++++++++
+ kernel/trace/trace.h               |    3 ++
+ kernel/trace/trace_events.c        |   43 ++++++++++++++++++++++++-------------
+ kernel/trace/trace_events_filter.c |    3 ++
+ 5 files changed, 53 insertions(+), 15 deletions(-)
 
---- a/arch/powerpc/platforms/powernv/opal-prd.c
-+++ b/arch/powerpc/platforms/powernv/opal-prd.c
-@@ -24,13 +24,20 @@
- #include <linux/uaccess.h>
- 
- 
-+struct opal_prd_msg {
-+	union {
-+		struct opal_prd_msg_header header;
-+		DECLARE_FLEX_ARRAY(u8, data);
-+	};
-+};
-+
- /*
-  * The msg member must be at the end of the struct, as it's followed by the
-  * message data.
-  */
- struct opal_prd_msg_queue_item {
--	struct list_head		list;
--	struct opal_prd_msg_header	msg;
-+	struct list_head	list;
-+	struct opal_prd_msg	msg;
+--- a/include/linux/trace_events.h
++++ b/include/linux/trace_events.h
+@@ -492,6 +492,7 @@ enum {
+ 	EVENT_FILE_FL_TRIGGER_COND_BIT,
+ 	EVENT_FILE_FL_PID_FILTER_BIT,
+ 	EVENT_FILE_FL_WAS_ENABLED_BIT,
++	EVENT_FILE_FL_FREED_BIT,
  };
  
- static struct device_node *prd_node;
-@@ -156,7 +163,7 @@ static ssize_t opal_prd_read(struct file
- 	int rc;
+ extern struct trace_event_file *trace_get_event_file(const char *instance,
+@@ -630,6 +631,7 @@ extern int __kprobe_event_add_fields(str
+  *  TRIGGER_COND  - When set, one or more triggers has an associated filter
+  *  PID_FILTER    - When set, the event is filtered based on pid
+  *  WAS_ENABLED   - Set when enabled to know to clear trace on module removal
++ *  FREED         - File descriptor is freed, all fields should be considered invalid
+  */
+ enum {
+ 	EVENT_FILE_FL_ENABLED		= (1 << EVENT_FILE_FL_ENABLED_BIT),
+@@ -643,6 +645,7 @@ enum {
+ 	EVENT_FILE_FL_TRIGGER_COND	= (1 << EVENT_FILE_FL_TRIGGER_COND_BIT),
+ 	EVENT_FILE_FL_PID_FILTER	= (1 << EVENT_FILE_FL_PID_FILTER_BIT),
+ 	EVENT_FILE_FL_WAS_ENABLED	= (1 << EVENT_FILE_FL_WAS_ENABLED_BIT),
++	EVENT_FILE_FL_FREED		= (1 << EVENT_FILE_FL_FREED_BIT),
+ };
  
- 	/* we need at least a header's worth of data */
--	if (count < sizeof(item->msg))
-+	if (count < sizeof(item->msg.header))
- 		return -EINVAL;
+ struct trace_event_file {
+@@ -671,6 +674,7 @@ struct trace_event_file {
+ 	 * caching and such. Which is mostly OK ;-)
+ 	 */
+ 	unsigned long		flags;
++	atomic_t		ref;	/* ref count for opened files */
+ 	atomic_t		sm_ref;	/* soft-mode reference counter */
+ 	atomic_t		tm_ref;	/* trigger-mode reference counter */
+ };
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5000,6 +5000,20 @@ int tracing_open_file_tr(struct inode *i
+ 	if (ret)
+ 		return ret;
  
- 	if (*ppos)
-@@ -186,7 +193,7 @@ static ssize_t opal_prd_read(struct file
- 			return -EINTR;
++	mutex_lock(&event_mutex);
++
++	/* Fail if the file is marked for removal */
++	if (file->flags & EVENT_FILE_FL_FREED) {
++		trace_array_put(file->tr);
++		ret = -ENODEV;
++	} else {
++		event_file_get(file);
++	}
++
++	mutex_unlock(&event_mutex);
++	if (ret)
++		return ret;
++
+ 	filp->private_data = inode->i_private;
+ 
+ 	return 0;
+@@ -5010,6 +5024,7 @@ int tracing_release_file_tr(struct inode
+ 	struct trace_event_file *file = inode->i_private;
+ 
+ 	trace_array_put(file->tr);
++	event_file_put(file);
+ 
+ 	return 0;
+ }
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -1656,6 +1656,9 @@ extern void event_trigger_unregister(str
+ 				     char *glob,
+ 				     struct event_trigger_data *trigger_data);
+ 
++extern void event_file_get(struct trace_event_file *file);
++extern void event_file_put(struct trace_event_file *file);
++
+ /**
+  * struct event_trigger_ops - callbacks for trace event triggers
+  *
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -990,26 +990,38 @@ static void remove_subsystem(struct trac
  	}
+ }
  
--	size = be16_to_cpu(item->msg.size);
-+	size = be16_to_cpu(item->msg.header.size);
- 	if (size > count) {
- 		err = -EINVAL;
- 		goto err_requeue;
-@@ -352,7 +359,7 @@ static int opal_prd_msg_notifier(struct
- 	if (!item)
- 		return -ENOMEM;
+-static void remove_event_file_dir(struct trace_event_file *file)
++void event_file_get(struct trace_event_file *file)
+ {
+-	struct dentry *dir = file->dir;
+-	struct dentry *child;
++	atomic_inc(&file->ref);
++}
  
--	memcpy(&item->msg, msg->params, msg_size);
-+	memcpy(&item->msg.data, msg->params, msg_size);
+-	if (dir) {
+-		spin_lock(&dir->d_lock);	/* probably unneeded */
+-		list_for_each_entry(child, &dir->d_subdirs, d_child) {
+-			if (d_really_is_positive(child))	/* probably unneeded */
+-				d_inode(child)->i_private = NULL;
+-		}
+-		spin_unlock(&dir->d_lock);
++void event_file_put(struct trace_event_file *file)
++{
++	if (WARN_ON_ONCE(!atomic_read(&file->ref))) {
++		if (file->flags & EVENT_FILE_FL_FREED)
++			kmem_cache_free(file_cachep, file);
++		return;
++	}
  
- 	spin_lock_irqsave(&opal_prd_msg_queue_lock, flags);
- 	list_add_tail(&item->list, &opal_prd_msg_queue);
+-		tracefs_remove(dir);
++	if (atomic_dec_and_test(&file->ref)) {
++		/* Count should only go to zero when it is freed */
++		if (WARN_ON_ONCE(!(file->flags & EVENT_FILE_FL_FREED)))
++			return;
++		kmem_cache_free(file_cachep, file);
+ 	}
++}
++
++static void remove_event_file_dir(struct trace_event_file *file)
++{
++	struct dentry *dir = file->dir;
++
++	tracefs_remove(dir);
+ 
+ 	list_del(&file->list);
+ 	remove_subsystem(file->system);
+ 	free_event_filter(file->filter);
+-	kmem_cache_free(file_cachep, file);
++	file->flags |= EVENT_FILE_FL_FREED;
++	event_file_put(file);
+ }
+ 
+ /*
+@@ -1382,7 +1394,7 @@ event_enable_read(struct file *filp, cha
+ 		flags = file->flags;
+ 	mutex_unlock(&event_mutex);
+ 
+-	if (!file)
++	if (!file || flags & EVENT_FILE_FL_FREED)
+ 		return -ENODEV;
+ 
+ 	if (flags & EVENT_FILE_FL_ENABLED &&
+@@ -1420,7 +1432,7 @@ event_enable_write(struct file *filp, co
+ 		ret = -ENODEV;
+ 		mutex_lock(&event_mutex);
+ 		file = event_file_data(filp);
+-		if (likely(file))
++		if (likely(file && !(file->flags & EVENT_FILE_FL_FREED)))
+ 			ret = ftrace_event_enable_disable(file, val);
+ 		mutex_unlock(&event_mutex);
+ 		break;
+@@ -1694,7 +1706,7 @@ event_filter_read(struct file *filp, cha
+ 
+ 	mutex_lock(&event_mutex);
+ 	file = event_file_data(filp);
+-	if (file)
++	if (file && !(file->flags & EVENT_FILE_FL_FREED))
+ 		print_event_filter(file, s);
+ 	mutex_unlock(&event_mutex);
+ 
+@@ -2810,6 +2822,7 @@ trace_create_new_event(struct trace_even
+ 	atomic_set(&file->tm_ref, 0);
+ 	INIT_LIST_HEAD(&file->triggers);
+ 	list_add(&file->list, &tr->events);
++	event_file_get(file);
+ 
+ 	return file;
+ }
+--- a/kernel/trace/trace_events_filter.c
++++ b/kernel/trace/trace_events_filter.c
+@@ -2088,6 +2088,9 @@ int apply_event_filter(struct trace_even
+ 	struct event_filter *filter = NULL;
+ 	int err;
+ 
++	if (file->flags & EVENT_FILE_FL_FREED)
++		return -ENODEV;
++
+ 	if (!strcmp(strstrip(filter_string), "0")) {
+ 		filter_disable(file);
+ 		filter = event_filter(file);
 
 
