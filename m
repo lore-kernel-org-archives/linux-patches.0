@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4785733CCA;
-	Fri, 24 Nov 2023 19:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD5A33E9;
+	Fri, 24 Nov 2023 19:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ks8NWDi3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F51C433C8;
-	Fri, 24 Nov 2023 19:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOoLbhQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7C9C433C7;
+	Fri, 24 Nov 2023 19:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853671;
-	bh=prQzZnpOcRt1xIKiNK0+0I0JOAC5joAE168PjSmrY4U=;
+	s=korg; t=1700853673;
+	bh=Vt1vPIQCmWLVIE+LaIIPiUpr+tB5pBCrMZDRqohp74k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ks8NWDi3Nu2vO+KJBXipRoAg+Q4vsK7uXyy3jlmNK4zGr+B0a9lLh4HYkGbIEcphi
-	 gDCyWEHdT4meTu+fwmxpyz1Uagb5H0nsryxUqMRXCQI65K9n80NitbKEyw8TFFIoG+
-	 d961PX4TdJ3p3AF2Af3DAshvhpD9ZBX38/JOsc5U=
+	b=vOoLbhQtLw/kfP0GWIPE6PkSDTYiMsXUPGFElnzQEXBLg2RXcW1mn+MQ+V+610lfR
+	 1PZzYANd0QDXKpvdWtdnHmVj4ApJGZgvdf36kZoqqV8b2iHIjxgsed9XJjrqEiy8eJ
+	 ZxX3TEOfdfAg7/aO/BMK6jJSvjqpLC3Me6RqPYeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.15 282/297] ext4: correct offset of gdb backup in non meta_bg group to update_backups
-Date: Fri, 24 Nov 2023 17:55:24 +0000
-Message-ID: <20231124172009.987378652@linuxfoundation.org>
+	Joe Ferner <joe.m.ferner@gmail.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.15 265/297] media: sharp: fix sharp encoding
+Date: Fri, 24 Nov 2023 17:55:07 +0000
+Message-ID: <20231124172009.422539302@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,57 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Sean Young <sean@mess.org>
 
-commit 31f13421c004a420c0e9d288859c9ea9259ea0cc upstream.
+commit 4f7efc71891462ab7606da7039f480d7c1584a13 upstream.
 
-Commit 0aeaa2559d6d5 ("ext4: fix corruption when online resizing a 1K
-bigalloc fs") found that primary superblock's offset in its group is
-not equal to offset of backup superblock in its group when block size
-is 1K and bigalloc is enabled. As group descriptor blocks are right
-after superblock, we can't pass block number of gdb to update_backups
-for the same reason.
+The Sharp protocol[1] encoding has incorrect timings for bit space.
 
-The root casue of the issue above is that leading 1K padding block is
-count as data block offset for primary block while backup block has no
-padding block offset in its group.
+[1] https://www.sbprojects.net/knowledge/ir/sharp.php
 
-Remove padding data block count to fix the issue for gdb backups.
-
-For meta_bg case, update_backups treat blk_off as block number, do no
-conversion in this case.
-
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230826174712.4059355-2-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fixes: d35afc5fe097 ("[media] rc: ir-sharp-decoder: Add encode capability")
+Cc: stable@vger.kernel.org
+Reported-by: Joe Ferner <joe.m.ferner@gmail.com>
+Closes: https://sourceforge.net/p/lirc/mailman/message/38604507/
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/resize.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/rc/ir-sharp-decoder.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -1555,6 +1555,8 @@ exit_journal:
- 		int gdb_num_end = ((group + flex_gd->count - 1) /
- 				   EXT4_DESC_PER_BLOCK(sb));
- 		int meta_bg = ext4_has_feature_meta_bg(sb);
-+		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
-+					 ext4_group_first_block_no(sb, 0);
- 		sector_t old_gdb = 0;
+--- a/drivers/media/rc/ir-sharp-decoder.c
++++ b/drivers/media/rc/ir-sharp-decoder.c
+@@ -15,7 +15,9 @@
+ #define SHARP_UNIT		40  /* us */
+ #define SHARP_BIT_PULSE		(8    * SHARP_UNIT) /* 320us */
+ #define SHARP_BIT_0_PERIOD	(25   * SHARP_UNIT) /* 1ms (680us space) */
+-#define SHARP_BIT_1_PERIOD	(50   * SHARP_UNIT) /* 2ms (1680ms space) */
++#define SHARP_BIT_1_PERIOD	(50   * SHARP_UNIT) /* 2ms (1680us space) */
++#define SHARP_BIT_0_SPACE	(17   * SHARP_UNIT) /* 680us space */
++#define SHARP_BIT_1_SPACE	(42   * SHARP_UNIT) /* 1680us space */
+ #define SHARP_ECHO_SPACE	(1000 * SHARP_UNIT) /* 40 ms */
+ #define SHARP_TRAILER_SPACE	(125  * SHARP_UNIT) /* 5 ms (even longer) */
  
- 		update_backups(sb, ext4_group_first_block_no(sb, 0),
-@@ -1566,8 +1568,8 @@ exit_journal:
- 						     gdb_num);
- 			if (old_gdb == gdb_bh->b_blocknr)
- 				continue;
--			update_backups(sb, gdb_bh->b_blocknr, gdb_bh->b_data,
--				       gdb_bh->b_size, meta_bg);
-+			update_backups(sb, gdb_bh->b_blocknr - padding_blocks,
-+				       gdb_bh->b_data, gdb_bh->b_size, meta_bg);
- 			old_gdb = gdb_bh->b_blocknr;
- 		}
- 	}
+@@ -168,8 +170,8 @@ static const struct ir_raw_timings_pd ir
+ 	.header_pulse  = 0,
+ 	.header_space  = 0,
+ 	.bit_pulse     = SHARP_BIT_PULSE,
+-	.bit_space[0]  = SHARP_BIT_0_PERIOD,
+-	.bit_space[1]  = SHARP_BIT_1_PERIOD,
++	.bit_space[0]  = SHARP_BIT_0_SPACE,
++	.bit_space[1]  = SHARP_BIT_1_SPACE,
+ 	.trailer_pulse = SHARP_BIT_PULSE,
+ 	.trailer_space = SHARP_ECHO_SPACE,
+ 	.msb_first     = 1,
 
 
