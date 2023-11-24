@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A52381D8;
-	Fri, 24 Nov 2023 18:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD96381D7;
+	Fri, 24 Nov 2023 18:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxigGQSN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A72C433C7;
-	Fri, 24 Nov 2023 18:02:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTjbjQPC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0411FC433C7;
+	Fri, 24 Nov 2023 18:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848966;
-	bh=gBKW8V+2V6n+4lN5l/UOov3POCzpL+DXjRz8/WxBs8k=;
+	s=korg; t=1700848969;
+	bh=C2xCdZoIavO2v2lhg7NTrUCgzkTaxq87WkaWVxMltgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QxigGQSNicITDfGfsVrr91j1e0Qv6n7sDiYtQ85sqrovJRxDjH93ykXMbPRtJqDAa
-	 nofrqU3gsZPbpd2ehCUFoIiJBXQbGUkiQ2L8Xd9UgFnHF9bNL7XlhYTSNDvVZhVaBa
-	 HGUJczXTjEc0C2EL4qY8aeS3+8zYzqmquOoxgrks=
+	b=vTjbjQPCmHrvdg55NBBij/h/LvQsz9uvfimwRFYLrcpa5cMkr9OYzYcqMDT4BfaEc
+	 RNzw57ehOCj/kR6cYno8ZnZdKMVuyendoLnmfi2ApMTgthZ17C77J1UBHr0pAL++Hc
+	 Uxk7pzPBbj+5faO2e+YLW/MF8ODq/C7fJhQNl420=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-hardening@vger.kernel.org,
-	Lukas Loidolt <e1634039@student.tuwien.ac.at>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 4.14 28/57] randstruct: Fix gcc-plugin performance mode to stay in group
-Date: Fri, 24 Nov 2023 17:50:52 +0000
-Message-ID: <20231124171931.319031047@linuxfoundation.org>
+	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 4.14 29/57] KVM: x86: Ignore MSR_AMD64_TW_CFG access
+Date: Fri, 24 Nov 2023 17:50:53 +0000
+Message-ID: <20231124171931.354468824@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -42,59 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-commit 381fdb73d1e2a48244de7260550e453d1003bb8e upstream.
+commit 2770d4722036d6bd24bcb78e9cd7f6e572077d03 upstream.
 
-The performance mode of the gcc-plugin randstruct was shuffling struct
-members outside of the cache-line groups. Limit the range to the
-specified group indexes.
+Hyper-V enabled Windows Server 2022 KVM VM cannot be started on Zen1 Ryzen
+since it crashes at boot with SYSTEM_THREAD_EXCEPTION_NOT_HANDLED +
+STATUS_PRIVILEGED_INSTRUCTION (in other words, because of an unexpected #GP
+in the guest kernel).
 
-Cc: linux-hardening@vger.kernel.org
+This is because Windows tries to set bit 8 in MSR_AMD64_TW_CFG and can't
+handle receiving a #GP when doing so.
+
+Give this MSR the same treatment that commit 2e32b7190641
+("x86, kvm: Add MSR_AMD64_BU_CFG2 to the list of ignored MSRs") gave
+MSR_AMD64_BU_CFG2 under justification that this MSR is baremetal-relevant
+only.
+Although apparently it was then needed for Linux guests, not Windows as in
+this case.
+
+With this change, the aforementioned guest setup is able to finish booting
+successfully.
+
+This issue can be reproduced either on a Summit Ridge Ryzen (with
+just "-cpu host") or on a Naples EPYC (with "-cpu host,stepping=1" since
+EPYC is ordinarily stepping 2).
+
+Alternatively, userspace could solve the problem by using MSR filters, but
+forcing every userspace to define a filter isn't very friendly and doesn't
+add much, if any, value.  The only potential hiccup is if one of these
+"baremetal-only" MSRs ever requires actual emulation and/or has F/M/S
+specific behavior.  But if that happens, then KVM can still punt *that*
+handling to userspace since userspace MSR filters "win" over KVM's default
+handling.
+
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 Cc: stable@vger.kernel.org
-Reported-by: Lukas Loidolt <e1634039@student.tuwien.ac.at>
-Closes: https://lore.kernel.org/all/f3ca77f0-e414-4065-83a5-ae4c4d25545d@student.tuwien.ac.at
-Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/1ce85d9c7c9e9632393816cf19c902e0a3f411f1.1697731406.git.maciej.szmigiero@oracle.com
+[sean: call out MSR filtering alternative]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gcc-plugins/randomize_layout_plugin.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/msr-index.h |    1 +
+ arch/x86/kvm/x86.c               |    2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -209,12 +209,14 @@ static void partition_struct(tree *field
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -414,6 +414,7 @@
+ #define MSR_AMD64_OSVW_STATUS		0xc0010141
+ #define MSR_AMD64_LS_CFG		0xc0011020
+ #define MSR_AMD64_DC_CFG		0xc0011022
++#define MSR_AMD64_TW_CFG		0xc0011023
  
- static void performance_shuffle(tree *newtree, unsigned long length, ranctx *prng_state)
- {
--	unsigned long i, x;
-+	unsigned long i, x, index;
- 	struct partition_group size_group[length];
- 	unsigned long num_groups = 0;
- 	unsigned long randnum;
+ #define MSR_AMD64_DE_CFG		0xc0011029
+ #define MSR_AMD64_DE_CFG_LFENCE_SERIALIZE_BIT	 1
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -2304,6 +2304,7 @@ int kvm_set_msr_common(struct kvm_vcpu *
+ 	case MSR_AMD64_PATCH_LOADER:
+ 	case MSR_AMD64_BU_CFG2:
+ 	case MSR_AMD64_DC_CFG:
++	case MSR_AMD64_TW_CFG:
+ 	case MSR_F15H_EX_CFG:
+ 		break;
  
- 	partition_struct(newtree, length, (struct partition_group *)&size_group, &num_groups);
-+
-+	/* FIXME: this group shuffle is currently a no-op. */
- 	for (i = num_groups - 1; i > 0; i--) {
- 		struct partition_group tmp;
- 		randnum = ranval(prng_state) % (i + 1);
-@@ -224,11 +226,14 @@ static void performance_shuffle(tree *ne
- 	}
- 
- 	for (x = 0; x < num_groups; x++) {
--		for (i = size_group[x].start + size_group[x].length - 1; i > size_group[x].start; i--) {
-+		for (index = size_group[x].length - 1; index > 0; index--) {
- 			tree tmp;
-+
-+			i = size_group[x].start + index;
- 			if (DECL_BIT_FIELD_TYPE(newtree[i]))
- 				continue;
--			randnum = ranval(prng_state) % (i + 1);
-+			randnum = ranval(prng_state) % (index + 1);
-+			randnum += size_group[x].start;
- 			// we could handle this case differently if desired
- 			if (DECL_BIT_FIELD_TYPE(newtree[randnum]))
- 				continue;
+@@ -2598,6 +2599,7 @@ int kvm_get_msr_common(struct kvm_vcpu *
+ 	case MSR_AMD64_BU_CFG2:
+ 	case MSR_IA32_PERF_CTL:
+ 	case MSR_AMD64_DC_CFG:
++	case MSR_AMD64_TW_CFG:
+ 	case MSR_F15H_EX_CFG:
+ 		msr_info->data = 0;
+ 		break;
 
 
