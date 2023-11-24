@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEAF39FC2;
-	Fri, 24 Nov 2023 18:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1A039FD7;
+	Fri, 24 Nov 2023 18:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4Lo/1U+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF563C433C8;
-	Fri, 24 Nov 2023 18:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAFd6Ude"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C19C433C8;
+	Fri, 24 Nov 2023 18:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848958;
-	bh=luo+iK7dL4+gbnXuoSKo6RAZ+wEgCpnixphdgkNAVsM=;
+	s=korg; t=1700848960;
+	bh=nAI5d3O94KTYQ8c8zKUMWgIh+WEw4UbA1XR6pxSZ6Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q4Lo/1U+SRN1f0wPrOhN3cxTvAidQx5VFCp8BljOYGAq8QBpQK3Z6tEqF37ucqcOR
-	 0N6ezFwKMGnT3MHpviZ6txi4NV6nTp3+gzs8OobUVsqKd4azxUqxYrh4+Eu/EkznYr
-	 WfEuinH1ApCiJ1zDX+OmXIIajo9Iu6vyl+OcUFVo=
+	b=GAFd6Ude/gDzJ0nkLw7sqmeSCXMtI8Oeqiia0lS3iyExuJ6xTMA00TlYGmyEWHseM
+	 Yt1EcM9Cqdq2esyKFNc6eKNghf+3U8VCAm04h03f43WS99MhByE3QG5SPAjFPpXZG8
+	 stFK4SDaA4sRkLdVhATz6/z0mi0oxjUxQ/Lcsvn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Peterson <rpeterso@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 25/57] gfs2: ignore negated quota changes
-Date: Fri, 24 Nov 2023 17:50:49 +0000
-Message-ID: <20231124171931.195562923@linuxfoundation.org>
+Subject: [PATCH 4.14 26/57] pwm: Fix double shift bug
+Date: Fri, 24 Nov 2023 17:50:50 +0000
+Message-ID: <20231124171931.239997561@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -36,95 +38,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 4c6a08125f2249531ec01783a5f4317d7342add5 ]
+[ Upstream commit d27abbfd4888d79dd24baf50e774631046ac4732 ]
 
-When lots of quota changes are made, there may be cases in which an
-inode's quota information is increased and then decreased, such as when
-blocks are added to a file, then deleted from it. If the timing is
-right, function do_qc can add pending quota changes to a transaction,
-then later, another call to do_qc can negate those changes, resulting
-in a net gain of 0. The quota_change information is recorded in the qc
-buffer (and qd element of the inode as well). The buffer is added to the
-transaction by the first call to do_qc, but a subsequent call changes
-the value from non-zero back to zero. At that point it's too late to
-remove the buffer_head from the transaction. Later, when the quota sync
-code is called, the zero-change qd element is discovered and flagged as
-an assert warning. If the fs is mounted with errors=panic, the kernel
-will panic.
+These enums are passed to set/test_bit().  The set/test_bit() functions
+take a bit number instead of a shifted value.  Passing a shifted value
+is a double shift bug like doing BIT(BIT(1)).  The double shift bug
+doesn't cause a problem here because we are only checking 0 and 1 but
+if the value was 5 or above then it can lead to a buffer overflow.
 
-This is usually seen when files are truncated and the quota changes are
-negated by punch_hole/truncate which uses gfs2_quota_hold and
-gfs2_quota_unhold rather than block allocations that use gfs2_quota_lock
-and gfs2_quota_unlock which automatically do quota sync.
-
-This patch solves the problem by adding a check to qd_check_sync such
-that net-zero quota changes already added to the transaction are no
-longer deemed necessary to be synced, and skipped.
-
-In this case references are taken for the qd and the slot from do_qc
-so those need to be put. The normal sequence of events for a normal
-non-zero quota change is as follows:
-
-gfs2_quota_change
-   do_qc
-      qd_hold
-      slot_hold
-
-Later, when the changes are to be synced:
-
-gfs2_quota_sync
-   qd_fish
-      qd_check_sync
-         gets qd ref via lockref_get_not_dead
-   do_sync
-      do_qc(QC_SYNC)
-         qd_put
-	    lockref_put_or_lock
-   qd_unlock
-      qd_put
-         lockref_put_or_lock
-
-In the net-zero change case, we add a check to qd_check_sync so it puts
-the qd and slot references acquired in gfs2_quota_change and skip the
-unneeded sync.
-
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/linux/pwm.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index a833e2e071675..9cef9f1ab63fa 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -434,6 +434,17 @@ static int qd_check_sync(struct gfs2_sbd *sdp, struct gfs2_quota_data *qd,
- 	    (sync_gen && (qd->qd_sync_gen >= *sync_gen)))
- 		return 0;
+diff --git a/include/linux/pwm.h b/include/linux/pwm.h
+index bd7d611d63e91..c6e981035c3fd 100644
+--- a/include/linux/pwm.h
++++ b/include/linux/pwm.h
+@@ -44,8 +44,8 @@ struct pwm_args {
+ };
  
-+	/*
-+	 * If qd_change is 0 it means a pending quota change was negated.
-+	 * We should not sync it, but we still have a qd reference and slot
-+	 * reference taken by gfs2_quota_change -> do_qc that need to be put.
-+	 */
-+	if (!qd->qd_change && test_and_clear_bit(QDF_CHANGE, &qd->qd_flags)) {
-+		slot_put(qd);
-+		qd_put(qd);
-+		return 0;
-+	}
-+
- 	if (!lockref_get_not_dead(&qd->qd_lockref))
- 		return 0;
+ enum {
+-	PWMF_REQUESTED = 1 << 0,
+-	PWMF_EXPORTED = 1 << 1,
++	PWMF_REQUESTED = 0,
++	PWMF_EXPORTED = 1,
+ };
  
+ /*
 -- 
 2.42.0
 
