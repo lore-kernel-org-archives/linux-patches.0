@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C40A381D6;
-	Fri, 24 Nov 2023 18:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE3E3A8C2;
+	Fri, 24 Nov 2023 18:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00Tqnk01"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36F0C433C7;
-	Fri, 24 Nov 2023 18:10:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcEthtao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA89C433C7;
+	Fri, 24 Nov 2023 18:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849449;
-	bh=fg7TPX6hECAfYtRJsgQU8/2C1+sXU5c/CKNfci6Xoe8=;
+	s=korg; t=1700849451;
+	bh=uT1LOeqCjcHhgoE2rwbY1eij3SBS4vjNHD9Ud5Jqz4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00Tqnk01uhG8NeYt2GO4d4UMLKYmhQklFrAR5nGenNdyWvVTiyP8nLo1z3VWYRx05
-	 jcVYbL8fb1RiiTQBDmJCQiv8/6ZNizQP+R0Eazt6+HtWk3+hNrcxvGHORYC5kjrPaf
-	 D6vifQ1NRlGmmgEIh2UVfiCTKCrVq4XHaO9thfio=
+	b=DcEthtaoJGM8t28WeitcgudYxMx4EC1gouZl0ZEOD7kvack4vVQwlNnj+Uq52AgDP
+	 hU4++wQb0pjkeMm38Jgg33q+fDjk2P/Pcz9EB1+PxvpFTiZEIXuAlNdorjJUh5DU6x
+	 xrcnVxVqQ9uhGpxlkLjq3tB//Haycox1fDqVa+/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinghao Jia <jinghao@linux.ibm.com>,
-	Ruowen Qin <ruowenq2@illinois.edu>,
-	Jinghao Jia <jinghao7@illinois.edu>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/530] samples/bpf: syscall_tp_user: Fix array out-of-bound access
-Date: Fri, 24 Nov 2023 17:45:27 +0000
-Message-ID: <20231124172032.986872869@linuxfoundation.org>
+Subject: [PATCH 6.6 162/530] dt-bindings: serial: fix regex pattern for matching serial node children
+Date: Fri, 24 Nov 2023 17:45:28 +0000
+Message-ID: <20231124172033.013029944@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,85 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinghao Jia <jinghao@linux.ibm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 9220c3ef6fefbf18f24aeedb1142a642b3de0596 ]
+[ Upstream commit 42851dfd4dbe38e34724a00063a9fad5cfc48dcd ]
 
-Commit 06744f24696e ("samples/bpf: Add openat2() enter/exit tracepoint
-to syscall_tp sample") added two more eBPF programs to support the
-openat2() syscall. However, it did not increase the size of the array
-that holds the corresponding bpf_links. This leads to an out-of-bound
-access on that array in the bpf_object__for_each_program loop and could
-corrupt other variables on the stack. On our testing QEMU, it corrupts
-the map1_fds array and causes the sample to fail:
+The regular expression pattern for matching serial node children should
+accept only nodes starting and ending with the set of words: bluetooth,
+gnss, gps or mcu.  Add missing brackets to enforce such matching.
 
-  # ./syscall_tp
-  prog #0: map ids 4 5
-  verify map:4 val: 5
-  map_lookup failed: Bad file descriptor
-
-Dynamically allocate the array based on the number of programs reported
-by libbpf to prevent similar inconsistencies in the future
-
-Fixes: 06744f24696e ("samples/bpf: Add openat2() enter/exit tracepoint to syscall_tp sample")
-Signed-off-by: Jinghao Jia <jinghao@linux.ibm.com>
-Signed-off-by: Ruowen Qin <ruowenq2@illinois.edu>
-Signed-off-by: Jinghao Jia <jinghao7@illinois.edu>
-Link: https://lore.kernel.org/r/20230917214220.637721-4-jinghao7@illinois.edu
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 0c559bc8abfb ("dt-bindings: serial: restrict possible child node names")
+Reported-by: Andreas Kemnade <andreas@kemnade.info>
+Closes: https://lore.kernel.org/all/20231004170021.36b32465@aktux/
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20231005093247.128166-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/syscall_tp_user.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ Documentation/devicetree/bindings/serial/serial.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/samples/bpf/syscall_tp_user.c b/samples/bpf/syscall_tp_user.c
-index 18c94c7e8a40e..7a09ac74fac07 100644
---- a/samples/bpf/syscall_tp_user.c
-+++ b/samples/bpf/syscall_tp_user.c
-@@ -48,7 +48,7 @@ static void verify_map(int map_id)
- static int test(char *filename, int nr_tests)
- {
- 	int map0_fds[nr_tests], map1_fds[nr_tests], fd, i, j = 0;
--	struct bpf_link *links[nr_tests * 4];
-+	struct bpf_link **links = NULL;
- 	struct bpf_object *objs[nr_tests];
- 	struct bpf_program *prog;
+diff --git a/Documentation/devicetree/bindings/serial/serial.yaml b/Documentation/devicetree/bindings/serial/serial.yaml
+index ea277560a5966..5727bd549deca 100644
+--- a/Documentation/devicetree/bindings/serial/serial.yaml
++++ b/Documentation/devicetree/bindings/serial/serial.yaml
+@@ -96,7 +96,7 @@ then:
+     rts-gpios: false
  
-@@ -60,6 +60,19 @@ static int test(char *filename, int nr_tests)
- 			goto cleanup;
- 		}
- 
-+		/* One-time initialization */
-+		if (!links) {
-+			int nr_progs = 0;
-+
-+			bpf_object__for_each_program(prog, objs[i])
-+				nr_progs += 1;
-+
-+			links = calloc(nr_progs * nr_tests, sizeof(struct bpf_link *));
-+
-+			if (!links)
-+				goto cleanup;
-+		}
-+
- 		/* load BPF program */
- 		if (bpf_object__load(objs[i])) {
- 			fprintf(stderr, "loading BPF object file failed\n");
-@@ -107,8 +120,12 @@ static int test(char *filename, int nr_tests)
- 	}
- 
- cleanup:
--	for (j--; j >= 0; j--)
--		bpf_link__destroy(links[j]);
-+	if (links) {
-+		for (j--; j >= 0; j--)
-+			bpf_link__destroy(links[j]);
-+
-+		free(links);
-+	}
- 
- 	for (i--; i >= 0; i--)
- 		bpf_object__close(objs[i]);
+ patternProperties:
+-  "^bluetooth|gnss|gps|mcu$":
++  "^(bluetooth|gnss|gps|mcu)$":
+     if:
+       type: object
+     then:
 -- 
 2.42.0
 
