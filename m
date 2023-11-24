@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D143139FD9;
-	Fri, 24 Nov 2023 18:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A48939FD9;
+	Fri, 24 Nov 2023 18:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9L9JMXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06621C433C8;
-	Fri, 24 Nov 2023 18:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhX3GB8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D532C433C8;
+	Fri, 24 Nov 2023 18:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849998;
-	bh=cfFH1nHG9eDS0KNsIifoYid6W1bBAfmFzz3y6jjE+hQ=;
+	s=korg; t=1700850001;
+	bh=jt3NEgDqPFfrc5XDeOxrhGpK+k/NldW6V0VUUlV/jtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9L9JMXmmmIsrIw7R6urSTh4yOgevY4JZJC98wYvylwEh04z8KSBjNBxa+VnJSQ4Y
-	 yIBmYVNwXqETmP/8qXmGumhwkXLgeuUXQJv7npbR22d5hpKydstmJ8dcJ1/dvDTra2
-	 snznb8DmVFbGeUtLeIcJZS2F6tEmjjjeC2bDzqFU=
+	b=YhX3GB8+ulMjX947u/EQ9w5sRrvd+XC2f7SvQ8Is5nZGek63wJPTOu68OxUItSWnW
+	 tJWm54eyLp46SdmN7qBXCpMMTZ3sKRiiOHKk6SVp9EuH5f1gRMzNcSUr+7PwIe4wjQ
+	 RCJ6TnJXrvPtM7GGuGyIg5LoiHD0dEvBA6BBwOnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -26,9 +26,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Mike Rapoport (IBM)" <rppt@kernel.org>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 380/530] mm/cma: use nth_page() in place of direct struct page manipulation
-Date: Fri, 24 Nov 2023 17:49:06 +0000
-Message-ID: <20231124172039.581976419@linuxfoundation.org>
+Subject: [PATCH 6.6 381/530] mm/hugetlb: use nth_page() in place of direct struct page manipulation
+Date: Fri, 24 Nov 2023 17:49:07 +0000
+Message-ID: <20231124172039.613322737@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -49,33 +49,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Zi Yan <ziy@nvidia.com>
 
-commit 2e7cfe5cd5b6b0b98abf57a3074885979e187c1c upstream.
-
-Patch series "Use nth_page() in place of direct struct page manipulation",
-v3.
-
-On SPARSEMEM without VMEMMAP, struct page is not guaranteed to be
-contiguous, since each memory section's memmap might be allocated
-independently.  hugetlb pages can go beyond a memory section size, thus
-direct struct page manipulation on hugetlb pages/subpages might give wrong
-struct page.  Kernel provides nth_page() to do the manipulation properly.
-Use that whenever code can see hugetlb pages.
-
-
-This patch (of 5):
+commit 426056efe835cf4864ccf4c328fe3af9146fc539 upstream.
 
 When dealing with hugetlb pages, manipulating struct page pointers
 directly can get to wrong struct page, since struct page is not guaranteed
 to be contiguous on SPARSEMEM without VMEMMAP.  Use nth_page() to handle
 it properly.
 
-Without the fix, page_kasan_tag_reset() could reset wrong page tags,
-causing a wrong kasan result.  No related bug is reported.  The fix
-comes from code inspection.
+A wrong or non-existing page might be tried to be grabbed, either
+leading to a non freeable page or kernel memory access errors.  No bug
+is reported.  It comes from code inspection.
 
-Link: https://lkml.kernel.org/r/20230913201248.452081-1-zi.yan@sent.com
-Link: https://lkml.kernel.org/r/20230913201248.452081-2-zi.yan@sent.com
-Fixes: 2813b9c02962 ("kasan, mm, arm64: tag non slab memory allocated via pagealloc")
+Link: https://lkml.kernel.org/r/20230913201248.452081-3-zi.yan@sent.com
+Fixes: 57a196a58421 ("hugetlb: simplify hugetlb handling in follow_page_mask")
 Signed-off-by: Zi Yan <ziy@nvidia.com>
 Reviewed-by: Muchun Song <songmuchun@bytedance.com>
 Cc: David Hildenbrand <david@redhat.com>
@@ -87,19 +73,19 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/cma.c |    2 +-
+ mm/hugetlb.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/cma.c
-+++ b/mm/cma.c
-@@ -505,7 +505,7 @@ struct page *cma_alloc(struct cma *cma,
- 	 */
- 	if (page) {
- 		for (i = 0; i < count; i++)
--			page_kasan_tag_reset(page + i);
-+			page_kasan_tag_reset(nth_page(page, i));
- 	}
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6520,7 +6520,7 @@ struct page *hugetlb_follow_page_mask(st
+ 			}
+ 		}
  
- 	if (ret && !no_warn) {
+-		page += ((address & ~huge_page_mask(h)) >> PAGE_SHIFT);
++		page = nth_page(page, ((address & ~huge_page_mask(h)) >> PAGE_SHIFT));
+ 
+ 		/*
+ 		 * Note that page may be a sub-page, and with vmemmap
 
 
