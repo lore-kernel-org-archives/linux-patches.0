@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FE6321AD;
-	Fri, 24 Nov 2023 18:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7353928DBA;
+	Fri, 24 Nov 2023 18:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5r9zy4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E04C433C7;
-	Fri, 24 Nov 2023 18:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAxT3BYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0155CC433C7;
+	Fri, 24 Nov 2023 18:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852096;
-	bh=FlLbwPGG2iSP/lw81PI8Azj+2hIe6OWrB1BDJVTJ6mo=;
+	s=korg; t=1700852099;
+	bh=zpZTvrsUBXIJYinTBpsjIAmxr2NLlH0Msqqn6TXw2K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5r9zy4wsUKZetnvz5ojxFh0eeXA1J7q7HMbrcO5q+csX+NUMzHqWG98neoOlK4i2
-	 tyracdLHwDpnsUDVsdRDROCvCXxcuEgTX+6osUzfVzcwM0TTR/ndHVWO9DslIRfMdz
-	 uE7+pH9XCgX7HOzEnD3jCXCtv5uMjlssHV9BOOGE=
+	b=XAxT3BYA/YJOacS7CpzNVbvJX66bvdNswfWuJ7gQZVtwkO7ZX+jRCMNNp9hHeyMNb
+	 KXFMynikDqtezHjk+ByMei3bLIDRvK5WMu3eFm2iaTSe1apYzECe/CJ/FkSnNxa4mM
+	 zOtFBE5CKM3AmrBWPL+bHFewZIx9FzX1BItOuZHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 194/372] regmap: Ensure range selector registers are updated after cache sync
-Date: Fri, 24 Nov 2023 17:49:41 +0000
-Message-ID: <20231124172016.922632107@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>
+Subject: [PATCH 6.1 195/372] wifi: ath11k: fix temperature event locking
+Date: Fri, 24 Nov 2023 17:49:42 +0000
+Message-ID: <20231124172016.949880571@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -41,90 +42,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 0ec7731655de196bc1e4af99e495b38778109d22 upstream.
+commit 1a5352a81b4720ba43d9c899974e3bddf7ce0ce8 upstream.
 
-When we sync the register cache we do so with the cache bypassed in order
-to avoid overhead from writing the synced values back into the cache. If
-the regmap has ranges and the selector register for those ranges is in a
-register which is cached this has the unfortunate side effect of meaning
-that the physical and cached copies of the selector register can be out of
-sync after a cache sync. The cache will have whatever the selector was when
-the sync started and the hardware will have the selector for the register
-that was synced last.
+The ath11k active pdevs are protected by RCU but the temperature event
+handling code calling ath11k_mac_get_ar_by_pdev_id() was not marked as a
+read-side critical section as reported by RCU lockdep:
 
-Fix this by rewriting all cached selector registers after every sync,
-ensuring that the hardware and cache have the same content. This will
-result in extra writes that wouldn't otherwise be needed but is simple
-so hopefully robust. We don't read from the hardware since not all
-devices have physical read support.
+	=============================
+	WARNING: suspicious RCU usage
+	6.6.0-rc6 #7 Not tainted
+	-----------------------------
+	drivers/net/wireless/ath/ath11k/mac.c:638 suspicious rcu_dereference_check() usage!
 
-Given that nobody noticed this until now it is likely that we are rarely if
-ever hitting this case.
+	other info that might help us debug this:
 
-Reported-by: Hector Martin <marcan@marcan.st>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20231026-regmap-fix-selector-sync-v1-1-633ded82770d@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	rcu_scheduler_active = 2, debug_locks = 1
+	no locks held by swapper/0/0.
+	...
+	Call trace:
+	...
+	 lockdep_rcu_suspicious+0x16c/0x22c
+	 ath11k_mac_get_ar_by_pdev_id+0x194/0x1b0 [ath11k]
+	 ath11k_wmi_tlv_op_rx+0xa84/0x2c1c [ath11k]
+	 ath11k_htc_rx_completion_handler+0x388/0x510 [ath11k]
+
+Mark the code in question as an RCU read-side critical section to avoid
+any potential use-after-free issues.
+
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
+
+Fixes: a41d10348b01 ("ath11k: add thermal sensor device support")
+Cc: stable@vger.kernel.org      # 5.7
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231019153115.26401-2-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regcache.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/net/wireless/ath/ath11k/wmi.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/base/regmap/regcache.c
-+++ b/drivers/base/regmap/regcache.c
-@@ -331,6 +331,11 @@ static int regcache_default_sync(struct
- 	return 0;
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -7775,15 +7775,19 @@ ath11k_wmi_pdev_temperature_event(struct
+ 	ath11k_dbg(ab, ATH11K_DBG_WMI,
+ 		   "pdev temperature ev temp %d pdev_id %d\n", ev->temp, ev->pdev_id);
+ 
++	rcu_read_lock();
++
+ 	ar = ath11k_mac_get_ar_by_pdev_id(ab, ev->pdev_id);
+ 	if (!ar) {
+ 		ath11k_warn(ab, "invalid pdev id in pdev temperature ev %d", ev->pdev_id);
+-		kfree(tb);
+-		return;
++		goto exit;
+ 	}
+ 
+ 	ath11k_thermal_event_temperature(ar, ev->temp);
+ 
++exit:
++	rcu_read_unlock();
++
+ 	kfree(tb);
  }
  
-+static int rbtree_all(const void *key, const struct rb_node *node)
-+{
-+	return 0;
-+}
-+
- /**
-  * regcache_sync - Sync the register cache with the hardware.
-  *
-@@ -348,6 +353,7 @@ int regcache_sync(struct regmap *map)
- 	unsigned int i;
- 	const char *name;
- 	bool bypass;
-+	struct rb_node *node;
- 
- 	if (WARN_ON(map->cache_type == REGCACHE_NONE))
- 		return -EINVAL;
-@@ -392,6 +398,30 @@ out:
- 	map->async = false;
- 	map->cache_bypass = bypass;
- 	map->no_sync_defaults = false;
-+
-+	/*
-+	 * If we did any paging with cache bypassed and a cached
-+	 * paging register then the register and cache state might
-+	 * have gone out of sync, force writes of all the paging
-+	 * registers.
-+	 */
-+	rb_for_each(node, 0, &map->range_tree, rbtree_all) {
-+		struct regmap_range_node *this =
-+			rb_entry(node, struct regmap_range_node, node);
-+
-+		/* If there's nothing in the cache there's nothing to sync */
-+		ret = regcache_read(map, this->selector_reg, &i);
-+		if (ret != 0)
-+			continue;
-+
-+		ret = _regmap_write(map, this->selector_reg, i);
-+		if (ret != 0) {
-+			dev_err(map->dev, "Failed to write %x = %x: %d\n",
-+				this->selector_reg, i, ret);
-+			break;
-+		}
-+	}
-+
- 	map->unlock(map->lock_arg);
- 
- 	regmap_async_complete(map);
 
 
