@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07602FC4E;
-	Fri, 24 Nov 2023 18:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A152FC21;
+	Fri, 24 Nov 2023 18:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PiCmBAtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D173C433C8;
-	Fri, 24 Nov 2023 18:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/rotAqV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7569C433C7;
+	Fri, 24 Nov 2023 18:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851033;
-	bh=cS7pLic9ctEjMcfYYUxiBSJBr3YJAobo4/nRV6wif+g=;
+	s=korg; t=1700851036;
+	bh=E+puQ6hhVztygsXnqHELRDjCymQBfn28vORGtKt+n+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PiCmBAtuYKbBc25UHLZdjTLwztUpBJpxLK7GnWrybEXHI+bHG336P5XOJ7f2gho/7
-	 hM/w1SkrDGFzqafB1wV/loFPO341j/RO2/VLunqihXqc65sMVeIVBkC1DELLES2bC8
-	 7iyNOAX4uhQSXTKQXeWWaWjOkASasmCZEXGvRtVM=
+	b=S/rotAqVFhcv9b6QnoKW+/QX0MExFIQ1aytIwR21p059Rh2ScpzUx9bUl1WHgF80f
+	 uCPLPiyTlD6///dqFrWBY0k9dstYDwB7f1xQDtqYkS2C/BsN4BPlsCdIXaVkQ6eQ3K
+	 V4VeELTVHvJJXltM9eX4YRMn8gy3CW6FS4HEgDrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maria Yu <quic_aiquny@quicinc.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.5 287/491] arm64: module: Fix PLT counting when CONFIG_RANDOMIZE_BASE=n
-Date: Fri, 24 Nov 2023 17:48:43 +0000
-Message-ID: <20231124172033.197098827@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.5 288/491] parisc/agp: Use 64-bit LE values in SBA IOMMU PDIR table
+Date: Fri, 24 Nov 2023 17:48:44 +0000
+Message-ID: <20231124172033.227535524@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,70 +40,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maria Yu <quic_aiquny@quicinc.com>
+From: Helge Deller <deller@gmx.de>
 
-commit d35686444fc80950c731e33a2f6ad4a55822be9b upstream.
+commit 86bb854d134f4429feb35d2e05f55c6e036770d2 upstream.
 
-The counting of module PLTs has been broken when CONFIG_RANDOMIZE_BASE=n
-since commit:
+The PDIR table of the System Bus Adapter (SBA) I/O MMU uses 64-bit
+little-endian pointers.
 
-  3e35d303ab7d22c4 ("arm64: module: rework module VA range selection")
-
-Prior to that commit, when CONFIG_RANDOMIZE_BASE=n, the kernel image and
-all modules were placed within a 128M region, and no PLTs were necessary
-for B or BL. Hence count_plts() and partition_branch_plt_relas() skipped
-handling B and BL when CONFIG_RANDOMIZE_BASE=n.
-
-After that commit, modules can be placed anywhere within a 2G window
-regardless of CONFIG_RANDOMIZE_BASE, and hence PLTs may be necessary for
-B and BL even when CONFIG_RANDOMIZE_BASE=n. Unfortunately that commit
-failed to update count_plts() and partition_branch_plt_relas()
-accordingly.
-
-Due to this, module_emit_plt_entry() may fail if an insufficient number
-of PLT entries have been reserved, resulting in modules failing to load
-with -ENOEXEC.
-
-Fix this by counting PLTs regardless of CONFIG_RANDOMIZE_BASE in
-count_plts() and partition_branch_plt_relas().
-
-Fixes: 3e35d303ab7d ("arm64: module: rework module VA range selection")
-Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-Cc: <stable@vger.kernel.org> # 6.5.x
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Fixes: 3e35d303ab7d ("arm64: module: rework module VA range selection")
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20231024010954.6768-1-quic_aiquny@quicinc.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # v6.4+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/module-plts.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/char/agp/parisc-agp.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/kernel/module-plts.c b/arch/arm64/kernel/module-plts.c
-index bd69a4e7cd60..79200f21e123 100644
---- a/arch/arm64/kernel/module-plts.c
-+++ b/arch/arm64/kernel/module-plts.c
-@@ -167,9 +167,6 @@ static unsigned int count_plts(Elf64_Sym *syms, Elf64_Rela *rela, int num,
- 		switch (ELF64_R_TYPE(rela[i].r_info)) {
- 		case R_AARCH64_JUMP26:
- 		case R_AARCH64_CALL26:
--			if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
--				break;
--
- 			/*
- 			 * We only have to consider branch targets that resolve
- 			 * to symbols that are defined in a different section.
-@@ -269,9 +266,6 @@ static int partition_branch_plt_relas(Elf64_Sym *syms, Elf64_Rela *rela,
- {
- 	int i = 0, j = numrels - 1;
+diff --git a/drivers/char/agp/parisc-agp.c b/drivers/char/agp/parisc-agp.c
+index c6f181702b9a..edbc4d338117 100644
+--- a/drivers/char/agp/parisc-agp.c
++++ b/drivers/char/agp/parisc-agp.c
+@@ -38,7 +38,7 @@ static struct _parisc_agp_info {
  
--	if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
--		return 0;
--
- 	while (i < j) {
- 		if (branch_rela_needs_plt(syms, &rela[i], dstidx))
- 			i++;
+ 	int lba_cap_offset;
+ 
+-	u64 *gatt;
++	__le64 *gatt;
+ 	u64 gatt_entries;
+ 
+ 	u64 gart_base;
+@@ -104,7 +104,7 @@ parisc_agp_create_gatt_table(struct agp_bridge_data *bridge)
+ 	int i;
+ 
+ 	for (i = 0; i < info->gatt_entries; i++) {
+-		info->gatt[i] = (unsigned long)agp_bridge->scratch_page;
++		info->gatt[i] = cpu_to_le64(agp_bridge->scratch_page);
+ 	}
+ 
+ 	return 0;
+@@ -158,9 +158,9 @@ parisc_agp_insert_memory(struct agp_memory *mem, off_t pg_start, int type)
+ 		for (k = 0;
+ 		     k < info->io_pages_per_kpage;
+ 		     k++, j++, paddr += info->io_page_size) {
+-			info->gatt[j] =
++			info->gatt[j] = cpu_to_le64(
+ 				parisc_agp_mask_memory(agp_bridge,
+-					paddr, type);
++					paddr, type));
+ 			asm_io_fdc(&info->gatt[j]);
+ 		}
+ 	}
+@@ -184,7 +184,7 @@ parisc_agp_remove_memory(struct agp_memory *mem, off_t pg_start, int type)
+ 	io_pg_start = info->io_pages_per_kpage * pg_start;
+ 	io_pg_count = info->io_pages_per_kpage * mem->page_count;
+ 	for (i = io_pg_start; i < io_pg_count + io_pg_start; i++) {
+-		info->gatt[i] = agp_bridge->scratch_page;
++		info->gatt[i] = cpu_to_le64(agp_bridge->scratch_page);
+ 	}
+ 
+ 	agp_bridge->driver->tlb_flush(mem);
+@@ -204,7 +204,8 @@ parisc_agp_mask_memory(struct agp_bridge_data *bridge, dma_addr_t addr,
+ 	pa |= (ci >> PAGE_SHIFT) & 0xff;/* move CI (8 bits) into lowest byte */
+ 	pa |= SBA_PDIR_VALID_BIT;	/* set "valid" bit */
+ 
+-	return cpu_to_le64(pa);
++	/* return native (big-endian) PDIR entry */
++	return pa;
+ }
+ 
+ static void
+@@ -251,7 +252,8 @@ static int __init
+ agp_ioc_init(void __iomem *ioc_regs)
+ {
+ 	struct _parisc_agp_info *info = &parisc_agp_info;
+-        u64 iova_base, *io_pdir, io_tlb_ps;
++        u64 iova_base, io_tlb_ps;
++	__le64 *io_pdir;
+         int io_tlb_shift;
+ 
+         printk(KERN_INFO DRVPFX "IO PDIR shared with sba_iommu\n");
 -- 
 2.43.0
 
