@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8B1364C4;
-	Fri, 24 Nov 2023 19:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2782E853;
+	Fri, 24 Nov 2023 19:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTcFQVO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3808BC433C7;
-	Fri, 24 Nov 2023 19:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klwHaWtf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9390C433C9;
+	Fri, 24 Nov 2023 19:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853917;
-	bh=gBMDFMYfntDjF7Yy2EPO/sX11qlWOENwpnIZKO/ceo8=;
+	s=korg; t=1700853920;
+	bh=lBRogZ9nZtgFha3KfubOQwjnlYnTO3ZKFxifBIajd5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YTcFQVO5dzril39oEpqTOLyrTVq8ncSueYt86NTMUF1ZuQAoUQ/qX2nKo2hCG4plf
-	 b2kzNx/A8zn65bZL2fS5KNz2cYVLPPXJPSrVQnMGEaP0osnu4JRP8+7pVIcq9MxZp3
-	 Qg65MX070DcWBQN63yb3G9uP7deUC4dc4YCiCr7c=
+	b=klwHaWtfrnC8seEi4851OOefP0P3j0B4jSkIPuKqeeV8MrXeUuUBdoGwhPB20XXc/
+	 xJ24a5GBU/zsetvJeHy7hijehPGi4v2o8C57TmNQOhI5nWNJ9r7nFHxM/dfGRaLw5i
+	 HUW/whuH+ZXj0UB0HKuHP4/ShWSUoQAngGtYhadM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.4 083/159] parisc/pdc: Add width field to struct pdc_model
-Date: Fri, 24 Nov 2023 17:55:00 +0000
-Message-ID: <20231124171945.380867706@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	Ekaterina Esina <eesina@astralinux.ru>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 066/159] cifs: spnego: add ; in HOST_KEY_LEN
+Date: Fri, 24 Nov 2023 17:54:43 +0000
+Message-ID: <20231124171944.697414123@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -40,28 +44,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-commit 6240553b52c475d9fc9674de0521b77e692f3764 upstream.
+[ Upstream commit ff31ba19d732efb9aca3633935d71085e68d5076 ]
 
-PDC2.0 specifies the additional PSW-bit field.
+"host=" should start with ';' (as in cifs_get_spnego_key)
+So its length should be 6.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Fixes: 7c9c3760b3a5 ("[CIFS] add constants for string lengths of keynames in SPNEGO upcall string")
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Co-developed-by: Ekaterina Esina <eesina@astralinux.ru>
+Signed-off-by: Ekaterina Esina <eesina@astralinux.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/uapi/asm/pdc.h |    1 +
- 1 file changed, 1 insertion(+)
+ fs/cifs/cifs_spnego.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/include/uapi/asm/pdc.h
-+++ b/arch/parisc/include/uapi/asm/pdc.h
-@@ -465,6 +465,7 @@ struct pdc_model {		/* for PDC_MODEL */
- 	unsigned long arch_rev;
- 	unsigned long pot_key;
- 	unsigned long curr_key;
-+	unsigned long width;	/* default of PSW_W bit (1=enabled) */
- };
+diff --git a/fs/cifs/cifs_spnego.c b/fs/cifs/cifs_spnego.c
+index 7f01c6e607918..6eb65988321fc 100644
+--- a/fs/cifs/cifs_spnego.c
++++ b/fs/cifs/cifs_spnego.c
+@@ -76,8 +76,8 @@ struct key_type cifs_spnego_key_type = {
+  * strlen(";sec=ntlmsspi") */
+ #define MAX_MECH_STR_LEN	13
  
- struct pdc_cache_cf {		/* for PDC_CACHE  (I/D-caches) */
+-/* strlen of "host=" */
+-#define HOST_KEY_LEN		5
++/* strlen of ";host=" */
++#define HOST_KEY_LEN		6
+ 
+ /* strlen of ";ip4=" or ";ip6=" */
+ #define IP_KEY_LEN		5
+-- 
+2.42.0
+
 
 
