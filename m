@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B6D381D6;
-	Fri, 24 Nov 2023 18:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3856C381D6;
+	Fri, 24 Nov 2023 18:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQ/3fwm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA1EC433C8;
-	Fri, 24 Nov 2023 18:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9OTtQqZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC97C433C8;
+	Fri, 24 Nov 2023 18:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850157;
-	bh=MOM+XhsyLC/EYGMjvJNiB9azfIdgGNaD+KJ/v7MvarI=;
+	s=korg; t=1700850160;
+	bh=ELTDsoXldzoVK4tJ7/jn0Bs3yJ9cu/ewvwymdf7aulU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qQ/3fwm0dg0Z+IN2moC1ubpEpFFLjMvO/l/xtRfFiTaODwhS16Z/NEPg0TJaoSla9
-	 gegXoXRVM0HnpyLhLP98hwxfXluL77V6y+CMQKB0VcCu+lwMJowtcO/3T+nODaZ5yG
-	 EP/k4Ka8lRQZBEcWZywpo3VyPCLTuW95Vx5UwFQY=
+	b=k9OTtQqZWjGWlm2Px7Ob9Zhw7fnZIWa2oUa/9ki6DMOO0hIUU0iHqFBRlNVsrwCJ9
+	 mZb5IPyxLdR1mc+bgn9lGXAppsp6w24vJprKCr4wLSVk/yYuwFsGk39mIs0fKZIWZY
+	 kK2tvhve8pDAVX9yucxfsyAI+WvfBUNU428Nr5H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Petr Tesarik <petr.tesarik1@huawei-partners.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
 	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.6 468/530] swiotlb: do not free decrypted pages if dynamic
-Date: Fri, 24 Nov 2023 17:50:34 +0000
-Message-ID: <20231124172042.317504085@linuxfoundation.org>
+Subject: [PATCH 6.6 469/530] swiotlb: fix out-of-bounds TLB allocations with CONFIG_SWIOTLB_DYNAMIC
+Date: Fri, 24 Nov 2023 17:50:35 +0000
+Message-ID: <20231124172042.349387737@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,99 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Tesarik <petrtesarik@huaweicloud.com>
+From: Petr Tesarik <petr.tesarik1@huawei-partners.com>
 
-commit a5e3b127455d073f146a2a4ea3e7117635d34c5c upstream.
+commit 53c87e846e335e3c18044c397cc35178163d7827 upstream.
 
-Fix these two error paths:
+Limit the free list length to the size of the IO TLB. Transient pool can be
+smaller than IO_TLB_SEGSIZE, but the free list is initialized with the
+assumption that the total number of slots is a multiple of IO_TLB_SEGSIZE.
+As a result, swiotlb_area_find_slots() may allocate slots past the end of
+a transient IO TLB buffer.
 
-1. When set_memory_decrypted() fails, pages may be left fully or partially
-   decrypted.
-
-2. Decrypted pages may be freed if swiotlb_alloc_tlb() determines that the
-   physical address is too high.
-
-To fix the first issue, call set_memory_encrypted() on the allocated region
-after a failed decryption attempt. If that also fails, leak the pages.
-
-To fix the second issue, check that the TLB physical address is below the
-requested limit before decrypting.
-
-Let the caller differentiate between unsuitable physical address (=> retry
-from a lower zone) and allocation failures (=> no point in retrying).
-
-Cc: stable@vger.kernel.org
+Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Closes: https://lore.kernel.org/linux-iommu/104a8c8fedffd1ff8a2890983e2ec1c26bff6810.camel@linux.ibm.com/
 Fixes: 79636caad361 ("swiotlb: if swiotlb is full, fall back to a transient memory pool")
+Cc: stable@vger.kernel.org
 Signed-off-by: Petr Tesarik <petr.tesarik1@huawei-partners.com>
-Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/dma/swiotlb.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ kernel/dma/swiotlb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index 26202274784f..71392c9fac10 100644
+index 71392c9fac10..33d942615be5 100644
 --- a/kernel/dma/swiotlb.c
 +++ b/kernel/dma/swiotlb.c
-@@ -558,29 +558,40 @@ void __init swiotlb_exit(void)
-  * alloc_dma_pages() - allocate pages to be used for DMA
-  * @gfp:	GFP flags for the allocation.
-  * @bytes:	Size of the buffer.
-+ * @phys_limit:	Maximum allowed physical address of the buffer.
-  *
-  * Allocate pages from the buddy allocator. If successful, make the allocated
-  * pages decrypted that they can be used for DMA.
-  *
-- * Return: Decrypted pages, or %NULL on failure.
-+ * Return: Decrypted pages, %NULL on allocation failure, or ERR_PTR(-EAGAIN)
-+ * if the allocated physical address was above @phys_limit.
-  */
--static struct page *alloc_dma_pages(gfp_t gfp, size_t bytes)
-+static struct page *alloc_dma_pages(gfp_t gfp, size_t bytes, u64 phys_limit)
- {
- 	unsigned int order = get_order(bytes);
- 	struct page *page;
-+	phys_addr_t paddr;
- 	void *vaddr;
+@@ -283,7 +283,8 @@ static void swiotlb_init_io_tlb_pool(struct io_tlb_pool *mem, phys_addr_t start,
+ 	}
  
- 	page = alloc_pages(gfp, order);
- 	if (!page)
- 		return NULL;
- 
--	vaddr = page_address(page);
-+	paddr = page_to_phys(page);
-+	if (paddr + bytes - 1 > phys_limit) {
-+		__free_pages(page, order);
-+		return ERR_PTR(-EAGAIN);
-+	}
-+
-+	vaddr = phys_to_virt(paddr);
- 	if (set_memory_decrypted((unsigned long)vaddr, PFN_UP(bytes)))
- 		goto error;
- 	return page;
- 
- error:
--	__free_pages(page, order);
-+	/* Intentional leak if pages cannot be encrypted again. */
-+	if (!set_memory_encrypted((unsigned long)vaddr, PFN_UP(bytes)))
-+		__free_pages(page, order);
- 	return NULL;
- }
- 
-@@ -618,11 +629,7 @@ static struct page *swiotlb_alloc_tlb(struct device *dev, size_t bytes,
- 	else if (phys_limit <= DMA_BIT_MASK(32))
- 		gfp |= __GFP_DMA32;
- 
--	while ((page = alloc_dma_pages(gfp, bytes)) &&
--	       page_to_phys(page) + bytes - 1 > phys_limit) {
--		/* allocated, but too high */
--		__free_pages(page, get_order(bytes));
--
-+	while (IS_ERR(page = alloc_dma_pages(gfp, bytes, phys_limit))) {
- 		if (IS_ENABLED(CONFIG_ZONE_DMA32) &&
- 		    phys_limit < DMA_BIT_MASK(64) &&
- 		    !(gfp & (__GFP_DMA32 | __GFP_DMA)))
+ 	for (i = 0; i < mem->nslabs; i++) {
+-		mem->slots[i].list = IO_TLB_SEGSIZE - io_tlb_offset(i);
++		mem->slots[i].list = min(IO_TLB_SEGSIZE - io_tlb_offset(i),
++					 mem->nslabs - i);
+ 		mem->slots[i].orig_addr = INVALID_PHYS_ADDR;
+ 		mem->slots[i].alloc_size = 0;
+ 	}
 -- 
 2.43.0
 
