@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E21839FF3;
-	Fri, 24 Nov 2023 18:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F15E2F86B;
+	Fri, 24 Nov 2023 18:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0d9V2N7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A30FC433C8;
-	Fri, 24 Nov 2023 18:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znpaJrlt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E32BC433C7;
+	Fri, 24 Nov 2023 18:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850542;
-	bh=IcvLvRwrx1hk95DYxUbTXUX7cc0iTq0Wyf2fcJLWKSU=;
+	s=korg; t=1700850544;
+	bh=qoJdi3wk/MNfHWQ5VAcjOWB2Np9luU+u1q72q1LvN9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0d9V2N7KDMvgJO+uEm8XTcJueNN45dwFlA12Rw4kAjXBZ8/EeqRlGs7Pmry1+iIjM
-	 0CLLUrX1+MRf/uEg8WpCq0KNw2GQqDKROU5m8eDgMid+N0vlvuuL4pw6oxGt4Gly+A
-	 tA0YVSZzzvSdoPV/7d8g6VaLd+jANhH6csLTIXPk=
+	b=znpaJrltiJ8gPWLlZC+S7+or5SbYhQ4A4A7eUPXh18mUMIaQwX3NIKgiwit92db7u
+	 0T9vSIaMEtnFmjcd3jLwG3QC0wGP+CXly11EcmOQzcrcohTh+XFegCDCTGft1LGRVV
+	 pzFJbOZhyP3R6GpTSsRmqptReaFCX+sWEl87dYv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Khvainitski <me@khvoinitsky.org>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Vincent Whitchurch <vincent.whitchurch@axis.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 091/491] HID: lenovo: Detect quirk-free fw on cptkbd and stop applying workaround
-Date: Fri, 24 Nov 2023 17:45:27 +0000
-Message-ID: <20231124172027.330664475@linuxfoundation.org>
+Subject: [PATCH 6.5 092/491] ARM: 9320/1: fix stack depot IRQ stack filter
+Date: Fri, 24 Nov 2023 17:45:28 +0000
+Message-ID: <20231124172027.358792750@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,124 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Khvainitski <me@khvoinitsky.org>
+From: Vincent Whitchurch <vincent.whitchurch@axis.com>
 
-[ Upstream commit 46a0a2c96f0f47628190f122c2e3d879e590bcbe ]
+[ Upstream commit b0150014878c32197cfa66e3e2f79e57f66babc0 ]
 
-Built-in firmware of cptkbd handles scrolling by itself (when middle
-button is pressed) but with issues: it does not support horizontal and
-hi-res scrolling and upon middle button release it sends middle button
-click even if there was a scrolling event. Commit 3cb5ff0220e3 ("HID:
-lenovo: Hide middle-button press until release") workarounds last
-issue but it's impossible to workaround scrolling-related issues
-without firmware modification.
+Place IRQ handlers such as gic_handle_irq() in the irqentry section even
+if FUNCTION_GRAPH_TRACER is not enabled.  Without this, the stack
+depot's filter_irq_stacks() does not correctly filter out IRQ stacks in
+those configurations, which hampers deduplication and eventually leads
+to "Stack depot reached limit capacity" splats with KASAN.
 
-Likely, Dennis Schneider has reverse engineered the firmware and
-provided an instruction on how to patch it [1]. However,
-aforementioned workaround prevents userspace (libinput) from knowing
-exact moment when middle button has been pressed down and performing
-"On-Button scrolling". This commit detects correctly-behaving patched
-firmware if cursor movement events has been received during middle
-button being pressed and stops applying workaround for this device.
+A similar fix was done for arm64 in commit f6794950f0e5ba37e3bbed
+("arm64: set __exception_irq_entry with __irq_entry as a default").
 
-Link: https://hohlerde.org/rauch/en/elektronik/projekte/tpkbd-fix/ [1]
+Link: https://lore.kernel.org/r/20230803-arm-irqentry-v1-1-8aad8e260b1c@axis.com
 
-Signed-off-by: Mikhail Khvainitski <me@khvoinitsky.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-lenovo.c | 68 ++++++++++++++++++++++++++--------------
- 1 file changed, 45 insertions(+), 23 deletions(-)
+ arch/arm/include/asm/exception.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/hid/hid-lenovo.c b/drivers/hid/hid-lenovo.c
-index 44763c0da4441..9c1181313e44d 100644
---- a/drivers/hid/hid-lenovo.c
-+++ b/drivers/hid/hid-lenovo.c
-@@ -51,7 +51,12 @@ struct lenovo_drvdata {
- 	int select_right;
- 	int sensitivity;
- 	int press_speed;
--	u8 middlebutton_state; /* 0:Up, 1:Down (undecided), 2:Scrolling */
-+	/* 0: Up
-+	 * 1: Down (undecided)
-+	 * 2: Scrolling
-+	 * 3: Patched firmware, disable workaround
-+	 */
-+	u8 middlebutton_state;
- 	bool fn_lock;
- };
+diff --git a/arch/arm/include/asm/exception.h b/arch/arm/include/asm/exception.h
+index 58e039a851af0..3c82975d46db3 100644
+--- a/arch/arm/include/asm/exception.h
++++ b/arch/arm/include/asm/exception.h
+@@ -10,10 +10,6 @@
  
-@@ -668,31 +673,48 @@ static int lenovo_event_cptkbd(struct hid_device *hdev,
- {
- 	struct lenovo_drvdata *cptkbd_data = hid_get_drvdata(hdev);
+ #include <linux/interrupt.h>
  
--	/* "wheel" scroll events */
--	if (usage->type == EV_REL && (usage->code == REL_WHEEL ||
--			usage->code == REL_HWHEEL)) {
--		/* Scroll events disable middle-click event */
--		cptkbd_data->middlebutton_state = 2;
--		return 0;
--	}
-+	if (cptkbd_data->middlebutton_state != 3) {
-+		/* REL_X and REL_Y events during middle button pressed
-+		 * are only possible on patched, bug-free firmware
-+		 * so set middlebutton_state to 3
-+		 * to never apply workaround anymore
-+		 */
-+		if (cptkbd_data->middlebutton_state == 1 &&
-+				usage->type == EV_REL &&
-+				(usage->code == REL_X || usage->code == REL_Y)) {
-+			cptkbd_data->middlebutton_state = 3;
-+			/* send middle button press which was hold before */
-+			input_event(field->hidinput->input,
-+				EV_KEY, BTN_MIDDLE, 1);
-+			input_sync(field->hidinput->input);
-+		}
+-#ifdef CONFIG_FUNCTION_GRAPH_TRACER
+ #define __exception_irq_entry	__irq_entry
+-#else
+-#define __exception_irq_entry
+-#endif
  
--	/* Middle click events */
--	if (usage->type == EV_KEY && usage->code == BTN_MIDDLE) {
--		if (value == 1) {
--			cptkbd_data->middlebutton_state = 1;
--		} else if (value == 0) {
--			if (cptkbd_data->middlebutton_state == 1) {
--				/* No scrolling inbetween, send middle-click */
--				input_event(field->hidinput->input,
--					EV_KEY, BTN_MIDDLE, 1);
--				input_sync(field->hidinput->input);
--				input_event(field->hidinput->input,
--					EV_KEY, BTN_MIDDLE, 0);
--				input_sync(field->hidinput->input);
-+		/* "wheel" scroll events */
-+		if (usage->type == EV_REL && (usage->code == REL_WHEEL ||
-+				usage->code == REL_HWHEEL)) {
-+			/* Scroll events disable middle-click event */
-+			cptkbd_data->middlebutton_state = 2;
-+			return 0;
-+		}
-+
-+		/* Middle click events */
-+		if (usage->type == EV_KEY && usage->code == BTN_MIDDLE) {
-+			if (value == 1) {
-+				cptkbd_data->middlebutton_state = 1;
-+			} else if (value == 0) {
-+				if (cptkbd_data->middlebutton_state == 1) {
-+					/* No scrolling inbetween, send middle-click */
-+					input_event(field->hidinput->input,
-+						EV_KEY, BTN_MIDDLE, 1);
-+					input_sync(field->hidinput->input);
-+					input_event(field->hidinput->input,
-+						EV_KEY, BTN_MIDDLE, 0);
-+					input_sync(field->hidinput->input);
-+				}
-+				cptkbd_data->middlebutton_state = 0;
- 			}
--			cptkbd_data->middlebutton_state = 0;
-+			return 1;
- 		}
--		return 1;
- 	}
- 
- 	if (usage->type == EV_KEY && usage->code == KEY_FN_ESC && value == 1) {
+ #endif /* __ASM_ARM_EXCEPTION_H */
 -- 
 2.42.0
 
