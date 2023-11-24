@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F50F2C87B;
-	Fri, 24 Nov 2023 18:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837BD2C87B;
+	Fri, 24 Nov 2023 18:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnqqjcww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91259C433C8;
-	Fri, 24 Nov 2023 18:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0x3gYz0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10174C433C7;
+	Fri, 24 Nov 2023 18:57:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852263;
-	bh=imM91HP0c0jcrJWRjDlA8q7DMgIFj7OpIUav+9PhzTc=;
+	s=korg; t=1700852266;
+	bh=Czh9FNdNN8BqurtTGUUYoVnCMdGB4ihBSSNmjfFkpzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnqqjcwwQfaldgUfmKjuBdE6XDt4G9/3O+hDFVIwR3qu8L1n5BfYB14SWvXsSMCJF
-	 QxYUSg7vkxWuN+fsUREk29+oLvjn9dq11kUiuE7Pio2f21PO7MLTKyAqKws0JB0nzp
-	 ZOU7ram+qNybPfAiVTWyJ1V+57KOz3WRcJxDTSQE=
+	b=A0x3gYz0RQMzqAMI31Ka626N98rIaVCB7xGNTwKsZokJZ7kB7ZYgLu9trSIo6mkhP
+	 xch4Vkiz5DYiXdEYRUdbYQN3EFIiEBHp7+VBUEK/pY9/5TFNfOQiBOrqJjRjBD/svv
+	 IXJKzzx4LqbJZOHeIRrGJSaqKYaBhanTrDaY0mmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 286/372] cpufreq: stats: Fix buffer overflow detection in trans_stats()
-Date: Fri, 24 Nov 2023 17:51:13 +0000
-Message-ID: <20231124172019.961063761@linuxfoundation.org>
+Subject: [PATCH 6.1 287/372] clk: visconti: remove unused visconti_pll_provider::regmap
+Date: Fri, 24 Nov 2023 17:51:14 +0000
+Message-ID: <20231124172019.989239191@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,85 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit ea167a7fc2426f7685c3735e104921c1a20a6d3f ]
+[ Upstream commit 7e626a080bb2db47c27c29fea569ff18afec52ed ]
 
-Commit 3c0897c180c6 ("cpufreq: Use scnprintf() for avoiding potential
-buffer overflow") switched from snprintf to the more secure scnprintf
-but never updated the exit condition for PAGE_SIZE.
+Field regmap of struct visconti_pll_provider is never used. Remove it.
 
-As the commit say and as scnprintf document, what scnprintf returns what
-is actually written not counting the '\0' end char. This results in the
-case of len exceeding the size, len set to PAGE_SIZE - 1, as it can be
-written at max PAGE_SIZE - 1 (as '\0' is not counted)
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-Because of len is never set to PAGE_SIZE, the function never break early,
-never prints the warning and never return -EFBIG.
-
-Fix this by changing the condition to PAGE_SIZE - 1 to correctly trigger
-the error.
-
-Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
-Fixes: 3c0897c180c6 ("cpufreq: Use scnprintf() for avoiding potential buffer overflow")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20230302205028.2539197-1-dario.binacchi@amarulasolutions.com
+Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 5ad1e217a2b2 ("clk: visconti: Fix undefined behavior bug in struct visconti_pll_provider")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq_stats.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/clk/visconti/pll.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
-index 1570d6f3e75d3..6e57df7a2249f 100644
---- a/drivers/cpufreq/cpufreq_stats.c
-+++ b/drivers/cpufreq/cpufreq_stats.c
-@@ -131,25 +131,25 @@ static ssize_t show_trans_table(struct cpufreq_policy *policy, char *buf)
- 	len += scnprintf(buf + len, PAGE_SIZE - len, "   From  :    To\n");
- 	len += scnprintf(buf + len, PAGE_SIZE - len, "         : ");
- 	for (i = 0; i < stats->state_num; i++) {
--		if (len >= PAGE_SIZE)
-+		if (len >= PAGE_SIZE - 1)
- 			break;
- 		len += scnprintf(buf + len, PAGE_SIZE - len, "%9u ",
- 				stats->freq_table[i]);
- 	}
--	if (len >= PAGE_SIZE)
--		return PAGE_SIZE;
-+	if (len >= PAGE_SIZE - 1)
-+		return PAGE_SIZE - 1;
+diff --git a/drivers/clk/visconti/pll.h b/drivers/clk/visconti/pll.h
+index 16dae35ab3701..01d07f1bf01b1 100644
+--- a/drivers/clk/visconti/pll.h
++++ b/drivers/clk/visconti/pll.h
+@@ -15,7 +15,6 @@
  
- 	len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
- 
- 	for (i = 0; i < stats->state_num; i++) {
--		if (len >= PAGE_SIZE)
-+		if (len >= PAGE_SIZE - 1)
- 			break;
- 
- 		len += scnprintf(buf + len, PAGE_SIZE - len, "%9u: ",
- 				stats->freq_table[i]);
- 
- 		for (j = 0; j < stats->state_num; j++) {
--			if (len >= PAGE_SIZE)
-+			if (len >= PAGE_SIZE - 1)
- 				break;
- 
- 			if (pending)
-@@ -159,12 +159,12 @@ static ssize_t show_trans_table(struct cpufreq_policy *policy, char *buf)
- 
- 			len += scnprintf(buf + len, PAGE_SIZE - len, "%9u ", count);
- 		}
--		if (len >= PAGE_SIZE)
-+		if (len >= PAGE_SIZE - 1)
- 			break;
- 		len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
- 	}
- 
--	if (len >= PAGE_SIZE) {
-+	if (len >= PAGE_SIZE - 1) {
- 		pr_warn_once("cpufreq transition table exceeds PAGE_SIZE. Disabling\n");
- 		return -EFBIG;
- 	}
+ struct visconti_pll_provider {
+ 	void __iomem *reg_base;
+-	struct regmap *regmap;
+ 	struct clk_hw_onecell_data clk_data;
+ 	struct device_node *node;
+ };
 -- 
 2.42.0
 
