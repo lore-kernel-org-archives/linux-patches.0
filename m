@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F78C2EAEA;
-	Fri, 24 Nov 2023 18:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C812E64F;
+	Fri, 24 Nov 2023 18:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdJ5l5jC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9D97C433C7;
-	Fri, 24 Nov 2023 18:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8pUNGvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AFEC433C8;
+	Fri, 24 Nov 2023 18:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851901;
-	bh=hYAX17S+O+Zh8lCbvkE8XgoXhSSxGGRAFSSk75ue6Yg=;
+	s=korg; t=1700851903;
+	bh=sBxuPqe91knl0aa1pNGUKLzuJgL7gKZB2MRVMaP8gNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QdJ5l5jCVThyZz7EyPGQvCiAfPYOI/gi1IBSvslkYGYajCyhtI1n9IxZ18QzpGlQJ
-	 ntFdDEtxLE6vX2EiBXVSMVcYnEMgkBhDaDlvHynQcODVaHWUsCeQEQaf6GGeKeht6a
-	 CrMIqDbHibYQJqN42nM4Vsa8wyli7d3YLxSUU2co=
+	b=D8pUNGvS9aaTQAm+7FhKsRa1Xcokexgl5YSotPggLckNCsgdNCLY3xsVkzThzk3Q4
+	 LbHZN0u/RjLyA1cSSZ+N0C0AF7wBP/P4fBghW9/wPgsG8tiXKoI2BZ7J16oumZDCRM
+	 +0L58/LJfJntUa5eMFWxOc/I298wIx9DlVDx4jdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <jun.lei@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/372] drm/amd/display: Avoid NULL dereference of timing generator
-Date: Fri, 24 Nov 2023 17:48:13 +0000
-Message-ID: <20231124172014.036389600@linuxfoundation.org>
+Subject: [PATCH 6.1 134/372] net: hns3: fix VF reset fail issue
+Date: Fri, 24 Nov 2023 17:48:41 +0000
+Message-ID: <20231124172014.951643450@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -45,46 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <wayne.lin@amd.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit b1904ed480cee3f9f4036ea0e36d139cb5fee2d6 ]
+[ Upstream commit 65e98bb56fa3ce2edb400930c05238c9b380500e ]
 
-[Why & How]
-Check whether assigned timing generator is NULL or not before
-accessing its funcs to prevent NULL dereference.
+Currently the reset process in hns3 and firmware watchdog init process is
+asynchronous. We think firmware watchdog initialization is completed
+before VF clear the interrupt source. However, firmware initialization
+may not complete early. So VF will receive multiple reset interrupts
+and fail to reset.
 
-Reviewed-by: Jun Lei <jun.lei@amd.com>
-Acked-by: Hersen Wu <hersenxs.wu@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+So we add delay before VF interrupt source and 5 ms delay
+is enough to avoid second reset interrupt.
+
+Fixes: 427900d27d86 ("net: hns3: fix the timing issue of VF clearing interrupt sources")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_stream.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c  | 14 +++++++++++++-
+ .../ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h  |  1 +
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-index 38d71b5c1f2d5..556c57c390ffd 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-@@ -567,7 +567,7 @@ uint32_t dc_stream_get_vblank_counter(const struct dc_stream_state *stream)
- 	for (i = 0; i < MAX_PIPES; i++) {
- 		struct timing_generator *tg = res_ctx->pipe_ctx[i].stream_res.tg;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 90ceec730d5bd..5a978ea101a90 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -2035,8 +2035,18 @@ static enum hclgevf_evt_cause hclgevf_check_evt_cause(struct hclgevf_dev *hdev,
+ 	return HCLGEVF_VECTOR0_EVENT_OTHER;
+ }
  
--		if (res_ctx->pipe_ctx[i].stream != stream)
-+		if (res_ctx->pipe_ctx[i].stream != stream || !tg)
- 			continue;
++static void hclgevf_reset_timer(struct timer_list *t)
++{
++	struct hclgevf_dev *hdev = from_timer(hdev, t, reset_timer);
++
++	hclgevf_clear_event_cause(hdev, HCLGEVF_VECTOR0_EVENT_RST);
++	hclgevf_reset_task_schedule(hdev);
++}
++
+ static irqreturn_t hclgevf_misc_irq_handle(int irq, void *data)
+ {
++#define HCLGEVF_RESET_DELAY	5
++
+ 	enum hclgevf_evt_cause event_cause;
+ 	struct hclgevf_dev *hdev = data;
+ 	u32 clearval;
+@@ -2048,7 +2058,8 @@ static irqreturn_t hclgevf_misc_irq_handle(int irq, void *data)
  
- 		return tg->funcs->get_frame_count(tg);
-@@ -626,7 +626,7 @@ bool dc_stream_get_scanoutpos(const struct dc_stream_state *stream,
- 	for (i = 0; i < MAX_PIPES; i++) {
- 		struct timing_generator *tg = res_ctx->pipe_ctx[i].stream_res.tg;
+ 	switch (event_cause) {
+ 	case HCLGEVF_VECTOR0_EVENT_RST:
+-		hclgevf_reset_task_schedule(hdev);
++		mod_timer(&hdev->reset_timer,
++			  jiffies + msecs_to_jiffies(HCLGEVF_RESET_DELAY));
+ 		break;
+ 	case HCLGEVF_VECTOR0_EVENT_MBX:
+ 		hclgevf_mbx_handler(hdev);
+@@ -2994,6 +3005,7 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
+ 		 HCLGEVF_DRIVER_NAME);
  
--		if (res_ctx->pipe_ctx[i].stream != stream)
-+		if (res_ctx->pipe_ctx[i].stream != stream || !tg)
- 			continue;
+ 	hclgevf_task_schedule(hdev, round_jiffies_relative(HZ));
++	timer_setup(&hdev->reset_timer, hclgevf_reset_timer, 0);
  
- 		tg->funcs->get_scanoutpos(tg,
+ 	return 0;
+ 
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
+index 59ca6c794d6db..d65ace07b4569 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
+@@ -219,6 +219,7 @@ struct hclgevf_dev {
+ 	enum hnae3_reset_type reset_level;
+ 	unsigned long reset_pending;
+ 	enum hnae3_reset_type reset_type;
++	struct timer_list reset_timer;
+ 
+ #define HCLGEVF_RESET_REQUESTED		0
+ #define HCLGEVF_RESET_PENDING		1
 -- 
 2.42.0
 
