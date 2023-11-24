@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDF639FF8;
-	Fri, 24 Nov 2023 18:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C20D381DF;
+	Fri, 24 Nov 2023 18:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEZTi7cO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41096C433C8;
-	Fri, 24 Nov 2023 18:03:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o43JvJUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79E6C433C9;
+	Fri, 24 Nov 2023 18:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848981;
-	bh=T5Q/jlpX1Owje5686S0zUEKZxuPy/hON17LaFWfNBl4=;
+	s=korg; t=1700848984;
+	bh=trGYYNocwH89NTPRlH/bmC7IVi6xism0stc7wNsVxII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEZTi7cOgcDPb9d8s0ZBfMCFYamy8/GbgMNFIp3Enq5MgVYPfAi12uHtVggBJyPue
-	 WJIZKg8rDSZIKnCke+c1UTIVJHQzGhX2h8mSrnCWdjFrbPdd49mmkFuNjNUvIzY0tr
-	 b7Kfj640WS+kXkNfAYONlGJz1NiTg6rz5OaU7vag=
+	b=o43JvJUb+LwJDrdKPdlgLUtsdrlM9rTpLcZl+K0a33IPnhVyE2e3Mwx7jDDyCTPyO
+	 VDwUsGrU50tQok+K52i3U5mLC/FNddI0LTgwbk0Scv3Swa9AexEMltc7yhjORpiJIx
+	 H+5sTQHqn+s+C44zDPGHPpwOpBF/1CL21VhETeP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Hebert <nhebert@chromium.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 4.14 51/57] media: venus: hfi: fix the check to handle session buffer requirement
-Date: Fri, 24 Nov 2023 17:51:15 +0000
-Message-ID: <20231124171932.202420820@linuxfoundation.org>
+	"J. Bruce Fields" <bfields@redhat.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.14 52/57] ext4: apply umask if ACL support is disabled
+Date: Fri, 24 Nov 2023 17:51:16 +0000
+Message-ID: <20231124171932.248783782@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -43,36 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit b18e36dfd6c935da60a971310374f3dfec3c82e1 upstream.
+commit 484fd6c1de13b336806a967908a927cc0356e312 upstream.
 
-Buffer requirement, for different buffer type, comes from video firmware.
-While copying these requirements, there is an OOB possibility when the
-payload from firmware is more than expected size. Fix the check to avoid
-the OOB possibility.
+The function ext4_init_acl() calls posix_acl_create() which is
+responsible for applying the umask.  But without
+CONFIG_EXT4_FS_POSIX_ACL, ext4_init_acl() is an empty inline function,
+and nobody applies the umask.
 
+This fixes a bug which causes the umask to be ignored with O_TMPFILE
+on ext4:
+
+ https://github.com/MusicPlayerDaemon/MPD/issues/558
+ https://bugs.gentoo.org/show_bug.cgi?id=686142#c3
+ https://bugzilla.kernel.org/show_bug.cgi?id=203625
+
+Reviewed-by: "J. Bruce Fields" <bfields@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
-Reviewed-by: Nathan Hebert <nhebert@chromium.org>
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Link: https://lore.kernel.org/r/20230919081824.1096619-1-max.kellermann@ionos.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_msgs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/acl.h |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-+++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-@@ -412,7 +412,7 @@ session_get_prop_buf_req(struct hfi_msg_
- 		memcpy(&bufreq[idx], buf_req, sizeof(*bufreq));
- 		idx++;
- 
--		if (idx > HFI_BUFFER_TYPE_MAX)
-+		if (idx >= HFI_BUFFER_TYPE_MAX)
- 			return HFI_ERR_SESSION_INVALID_PARAMETER;
- 
- 		req_bytes -= sizeof(struct hfi_buffer_requirements);
+--- a/fs/ext4/acl.h
++++ b/fs/ext4/acl.h
+@@ -67,6 +67,11 @@ extern int ext4_init_acl(handle_t *, str
+ static inline int
+ ext4_init_acl(handle_t *handle, struct inode *inode, struct inode *dir)
+ {
++	/* usually, the umask is applied by posix_acl_create(), but if
++	   ext4 ACL support is disabled at compile time, we need to do
++	   it here, because posix_acl_create() will never be called */
++	inode->i_mode &= ~current_umask();
++
+ 	return 0;
+ }
+ #endif  /* CONFIG_EXT4_FS_POSIX_ACL */
 
 
