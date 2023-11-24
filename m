@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97AE35F1D;
-	Fri, 24 Nov 2023 18:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7233833CFB;
+	Fri, 24 Nov 2023 18:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgOWGf5Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72422C433C7;
-	Fri, 24 Nov 2023 18:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OG0+b0DY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9530C433C7;
+	Fri, 24 Nov 2023 18:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851115;
-	bh=oMb0rjW53u67HuFyOAdjUgfQZMMBb5Qf9M3WUasPRLs=;
+	s=korg; t=1700851118;
+	bh=w/f4zRt/JshF1vU8YbZc5JgXEObrUr6z3QdWnUyddSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgOWGf5ZqOvUtQtCWFVdMAANymoujv2tf5pm9+LCWT9aY6poCevF/qRhUxvM3/jqC
-	 bLwocH2CR0+8tHu2dpdLzgkqhKuZJCXvE+kYiFMoCyliH5oOTwOGsChMiQexvifcIp
-	 RC4cKkmGdTF3Ym73Zdjn9rfpU5QnDit1kPxq4zPk=
+	b=OG0+b0DYLkttIoaiGCjL7wdeGjdAkSyd18tSroU2/XdYkNaPok8LhHD5fifGzE3Y2
+	 Dco3RWMPolZBT9wPLTMQ6fqbKrpyXloaYVYenavSerFq3Dx1sS+lpR7GrC627ebsuy
+	 zE+KJKyCbOt2uskura1shEb20AeT8QhAtoeQ+tFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.5 319/491] ACPI: FPDT: properly handle invalid FPDT subtables
-Date: Fri, 24 Nov 2023 17:49:15 +0000
-Message-ID: <20231124172034.154037996@linuxfoundation.org>
+	Vignesh Viswanathan <quic_viswanat@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.5 320/491] arm64: dts: qcom: ipq9574: Fix hwlock index for SMEM
+Date: Fri, 24 Nov 2023 17:49:16 +0000
+Message-ID: <20231124172034.186385343@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,166 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Khoruzhick <anarsoul@gmail.com>
+From: Vignesh Viswanathan <quic_viswanat@quicinc.com>
 
-commit a83c68a3bf7c418c9a46693c63c638852b0c1f4e upstream.
+commit 5fe8508e2bc8eb4208b0434b6c1ca306c1519ade upstream.
 
-Buggy BIOSes may have invalid FPDT subtables, e.g. on my hardware:
+SMEM uses lock index 3 of the TCSR Mutex hwlock for allocations
+in SMEM region shared by the Host and FW.
 
-S3PT subtable:
+Fix the SMEM hwlock index to 3 for IPQ9574.
 
-7F20FE30: 53 33 50 54 24 00 00 00-00 00 00 00 00 00 18 01  *S3PT$...........*
-7F20FE40: 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  *................*
-7F20FE50: 00 00 00 00
-
-Here the first record has zero length.
-
-FBPT subtable:
-
-7F20FE50:             46 42 50 54-3C 00 00 00 46 42 50 54  *....FBPT<...FBPT*
-7F20FE60: 02 00 30 02 00 00 00 00-00 00 00 00 00 00 00 00  *..0.............*
-7F20FE70: 2A A6 BC 6E 0B 00 00 00-1A 44 41 70 0B 00 00 00  **..n.....DAp....*
-7F20FE80: 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  *................*
-
-And here FBPT table has FBPT signature repeated instead of the first
-record.
-
-Current code will be looping indefinitely due to zero length records, so
-break out of the loop if record length is zero.
-
-While we are here, add proper handling for fpdt_process_subtable()
-failures.
-
-Fixes: d1eb86e59be0 ("ACPI: tables: introduce support for FPDT table")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
-[ rjw: Comment edit, added empty code lines ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 46384ac7a618 ("arm64: dts: qcom: ipq9574: Add SMEM support")
+Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230904172516.479866-5-quic_viswanat@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_fpdt.c |   45 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 37 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/acpi_fpdt.c
-+++ b/drivers/acpi/acpi_fpdt.c
-@@ -194,12 +194,19 @@ static int fpdt_process_subtable(u64 add
- 		record_header = (void *)subtable_header + offset;
- 		offset += record_header->length;
- 
-+		if (!record_header->length) {
-+			pr_err(FW_BUG "Zero-length record found in FPTD.\n");
-+			result = -EINVAL;
-+			goto err;
-+		}
-+
- 		switch (record_header->type) {
- 		case RECORD_S3_RESUME:
- 			if (subtable_type != SUBTABLE_S3PT) {
- 				pr_err(FW_BUG "Invalid record %d for subtable %s\n",
- 				     record_header->type, signature);
--				return -EINVAL;
-+				result = -EINVAL;
-+				goto err;
- 			}
- 			if (record_resume) {
- 				pr_err("Duplicate resume performance record found.\n");
-@@ -208,7 +215,7 @@ static int fpdt_process_subtable(u64 add
- 			record_resume = (struct resume_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &resume_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
- 		case RECORD_S3_SUSPEND:
- 			if (subtable_type != SUBTABLE_S3PT) {
-@@ -223,13 +230,14 @@ static int fpdt_process_subtable(u64 add
- 			record_suspend = (struct suspend_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &suspend_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
- 		case RECORD_BOOT:
- 			if (subtable_type != SUBTABLE_FBPT) {
- 				pr_err(FW_BUG "Invalid %d for subtable %s\n",
- 				     record_header->type, signature);
--				return -EINVAL;
-+				result = -EINVAL;
-+				goto err;
- 			}
- 			if (record_boot) {
- 				pr_err("Duplicate boot performance record found.\n");
-@@ -238,7 +246,7 @@ static int fpdt_process_subtable(u64 add
- 			record_boot = (struct boot_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &boot_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
- 
- 		default:
-@@ -247,6 +255,18 @@ static int fpdt_process_subtable(u64 add
- 		}
- 	}
- 	return 0;
-+
-+err:
-+	if (record_boot)
-+		sysfs_remove_group(fpdt_kobj, &boot_attr_group);
-+
-+	if (record_suspend)
-+		sysfs_remove_group(fpdt_kobj, &suspend_attr_group);
-+
-+	if (record_resume)
-+		sysfs_remove_group(fpdt_kobj, &resume_attr_group);
-+
-+	return result;
- }
- 
- static int __init acpi_init_fpdt(void)
-@@ -255,6 +275,7 @@ static int __init acpi_init_fpdt(void)
- 	struct acpi_table_header *header;
- 	struct fpdt_subtable_entry *subtable;
- 	u32 offset = sizeof(*header);
-+	int result;
- 
- 	status = acpi_get_table(ACPI_SIG_FPDT, 0, &header);
- 
-@@ -263,8 +284,8 @@ static int __init acpi_init_fpdt(void)
- 
- 	fpdt_kobj = kobject_create_and_add("fpdt", acpi_kobj);
- 	if (!fpdt_kobj) {
--		acpi_put_table(header);
--		return -ENOMEM;
-+		result = -ENOMEM;
-+		goto err_nomem;
- 	}
- 
- 	while (offset < header->length) {
-@@ -272,8 +293,10 @@ static int __init acpi_init_fpdt(void)
- 		switch (subtable->type) {
- 		case SUBTABLE_FBPT:
- 		case SUBTABLE_S3PT:
--			fpdt_process_subtable(subtable->address,
-+			result = fpdt_process_subtable(subtable->address,
- 					      subtable->type);
-+			if (result)
-+				goto err_subtable;
- 			break;
- 		default:
- 			/* Other types are reserved in ACPI 6.4 spec. */
-@@ -282,6 +305,12 @@ static int __init acpi_init_fpdt(void)
- 		offset += sizeof(*subtable);
- 	}
- 	return 0;
-+err_subtable:
-+	kobject_put(fpdt_kobj);
-+
-+err_nomem:
-+	acpi_put_table(header);
-+	return result;
- }
- 
- fs_initcall(acpi_init_fpdt);
+--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+@@ -174,7 +174,7 @@
+ 		smem@4aa00000 {
+ 			compatible = "qcom,smem";
+ 			reg = <0x0 0x4aa00000 0x0 0x100000>;
+-			hwlocks = <&tcsr_mutex 0>;
++			hwlocks = <&tcsr_mutex 3>;
+ 			no-map;
+ 		};
+ 	};
 
 
