@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62584286B5;
-	Fri, 24 Nov 2023 18:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2822FC21;
+	Fri, 24 Nov 2023 18:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JX50fikM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB5DC433C8;
-	Fri, 24 Nov 2023 18:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0CFot3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B99C433C7;
+	Fri, 24 Nov 2023 18:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851692;
-	bh=rb0ckjQWcANtmAMEqK/kIbODOfruhs6DbYZZ0lxsBxc=;
+	s=korg; t=1700851695;
+	bh=c7G1Ur/rEwc1Rf+hCig2osoNrQRXCXXYyNP/hK1B5Ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JX50fikMqD0P4CVIzkuzWLdkFUWmy5ACN01p1fpj5UUMWse0Q4tUFKqDYaxgWU9b8
-	 hZkL3H2c6j4utYT2l+HWLIgsUnXn9vAql+XyPHYW+2KWFTH3TvDYj3rWua5Z5mmxD9
-	 G3yBKHOmiiwf+EdrsTd4oKMRf2R+yVkVqE10Skkw=
+	b=L0CFot3HXYn+4nDHEcMfH81BgOYZxRgW4ullnnzDyWgzpjZuh8/gVhkOd9xJvpG1+
+	 vo0amDWlYBNiprc0Lzoqqx/WK7B6RnkBh6ZXswRFzWwemOkaIVwOCzmayY4BBWLfO9
+	 soptGFok4GyHOCDVhLDHnnVZc62Weh5AUiaIIeY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Liu <leo.liu@amd.com>,
-	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/372] drm/amdgpu: not to save bo in the case of RAS err_event_athub
-Date: Fri, 24 Nov 2023 17:47:00 +0000
-Message-ID: <20231124172011.591509316@linuxfoundation.org>
+Subject: [PATCH 6.1 024/372] bpf: Ensure proper register state printing for cond jumps
+Date: Fri, 24 Nov 2023 17:46:51 +0000
+Message-ID: <20231124172011.289514567@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,43 +44,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David (Ming Qiang) Wu <David.Wu3@amd.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit fa1f1cc09d588a90c8ce3f507c47df257461d148 ]
+[ Upstream commit 1a8a315f008a58f54fecb012b928aa6a494435b3 ]
 
-err_event_athub will corrupt VCPU buffer and not good to
-be restored in amdgpu_vcn_resume() and in this case
-the VCPU buffer needs to be cleared for VCN firmware to
-work properly.
+Verifier emits relevant register state involved in any given instruction
+next to it after `;` to the right, if possible. Or, worst case, on the
+separate line repeating instruction index.
 
-Acked-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+E.g., a nice and simple case would be:
+
+  2: (d5) if r0 s<= 0x0 goto pc+1       ; R0_w=0
+
+But if there is some intervening extra output (e.g., precision
+backtracking log) involved, we are supposed to see the state after the
+precision backtrack log:
+
+  4: (75) if r0 s>= 0x0 goto pc+1
+  mark_precise: frame0: last_idx 4 first_idx 0 subseq_idx -1
+  mark_precise: frame0: regs=r0 stack= before 2: (d5) if r0 s<= 0x0 goto pc+1
+  mark_precise: frame0: regs=r0 stack= before 1: (b7) r0 = 0
+  6: R0_w=0
+
+First off, note that in `6: R0_w=0` instruction index corresponds to the
+next instruction, not to the conditional jump instruction itself, which
+is wrong and we'll get to that.
+
+But besides that, the above is a happy case that does work today. Yet,
+if it so happens that precision backtracking had to traverse some of the
+parent states, this `6: R0_w=0` state output would be missing.
+
+This is due to a quirk of print_verifier_state() routine, which performs
+mark_verifier_state_clean(env) at the end. This marks all registers as
+"non-scratched", which means that subsequent logic to print *relevant*
+registers (that is, "scratched ones") fails and doesn't see anything
+relevant to print and skips the output altogether.
+
+print_verifier_state() is used both to print instruction context, but
+also to print an **entire** verifier state indiscriminately, e.g.,
+during precision backtracking (and in a few other situations, like
+during entering or exiting subprogram).  Which means if we have to print
+entire parent state before getting to printing instruction context
+state, instruction context is marked as clean and is omitted.
+
+Long story short, this is definitely not intentional. So we fix this
+behavior in this patch by teaching print_verifier_state() to clear
+scratch state only if it was used to print instruction state, not the
+parent/callback state. This is determined by print_all option, so if
+it's not set, we don't clear scratch state. This fixes missing
+instruction state for these cases.
+
+As for the mismatched instruction index, we fix that by making sure we
+call print_insn_state() early inside check_cond_jmp_op() before we
+adjusted insn_idx based on jump branch taken logic. And with that we get
+desired correct information:
+
+  9: (16) if w4 == 0x1 goto pc+9
+  mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1
+  mark_precise: frame0: parent state regs=r4 stack=: R2_w=1944 R4_rw=P1 R10=fp0
+  mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9
+  mark_precise: frame0: regs=r4 stack= before 8: (66) if w4 s> 0x3 goto pc+5
+  mark_precise: frame0: regs=r4 stack= before 7: (b7) r4 = 1
+  9: R4=1
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20231011223728.3188086-6-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/bpf/verifier.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-index 5c1193dd7d88c..48e612023d0c7 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
-@@ -391,8 +391,15 @@ int amdgpu_vcn_suspend(struct amdgpu_device *adev)
- 	void *ptr;
- 	int i, idx;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index eb3f52be115d6..7fbc6492fe7b4 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -978,7 +978,8 @@ static void print_verifier_state(struct bpf_verifier_env *env,
+ 	if (state->in_async_callback_fn)
+ 		verbose(env, " async_cb");
+ 	verbose(env, "\n");
+-	mark_verifier_state_clean(env);
++	if (!print_all)
++		mark_verifier_state_clean(env);
+ }
  
-+	bool in_ras_intr = amdgpu_ras_intr_triggered();
-+
- 	cancel_delayed_work_sync(&adev->vcn.idle_work);
+ static inline u32 vlog_alignment(u32 pos)
+@@ -10476,6 +10477,8 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 		    !sanitize_speculative_path(env, insn, *insn_idx + 1,
+ 					       *insn_idx))
+ 			return -EFAULT;
++		if (env->log.level & BPF_LOG_LEVEL)
++			print_insn_state(env, this_branch->frame[this_branch->curframe]);
+ 		*insn_idx += insn->off;
+ 		return 0;
+ 	} else if (pred == 0) {
+@@ -10488,6 +10491,8 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+ 					       *insn_idx + insn->off + 1,
+ 					       *insn_idx))
+ 			return -EFAULT;
++		if (env->log.level & BPF_LOG_LEVEL)
++			print_insn_state(env, this_branch->frame[this_branch->curframe]);
+ 		return 0;
+ 	}
  
-+	/* err_event_athub will corrupt VCPU buffer, so we need to
-+	 * restore fw data and clear buffer in amdgpu_vcn_resume() */
-+	if (in_ras_intr)
-+		return 0;
-+
- 	for (i = 0; i < adev->vcn.num_vcn_inst; ++i) {
- 		if (adev->vcn.harvest_config & (1 << i))
- 			continue;
 -- 
 2.42.0
 
