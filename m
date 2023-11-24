@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3711639FD4;
-	Fri, 24 Nov 2023 18:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF9B381D5;
+	Fri, 24 Nov 2023 18:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aj43nu4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91ECC433C7;
-	Fri, 24 Nov 2023 18:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POtrn0V/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A13EC433C7;
+	Fri, 24 Nov 2023 18:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849384;
-	bh=hvKMTv2zTZf/CAY0L+P1Px2nuJmC8Blso53SCrfFbBI=;
+	s=korg; t=1700849386;
+	bh=8KNZvz2M+13bZkEsB9soYfTKBYgGTlWA+D/zQHxTLbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aj43nu4yZi+Rebn+8wVghZp1rzb95O/VIBfvx9/pLQnguyA4T+sTcFmhyXv6qm3g+
-	 B5e/bSX4Blt5wkbDjg3nokd3JtMZG7r2kwMN/lv+jl61G5vjV097rcEu/3I+viu7vt
-	 tx7r5yIsAV6TULbIx1m3KAb6YvVOfUhp6txX0sWw=
+	b=POtrn0V/t8FYuystpU/d2Y3ipbay4vEgmo8G5nkeZozh1CANzz8xADzza0abnYpnG
+	 2nCX/dQCQc6Yt3e2njL9QIDR9RTmC/irkjjTzRjohvdxkGNZaQ3+jMoSROGQrs7tkZ
+	 jOg4Sa1lX1z2xyu1ITL9y5whSV1xcWOKtZCjaOhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Axel Lin <axel.lin@ingics.com>,
+	Boris Brezillon <boris.brezillon@free-electrons.com>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/530] i2c: fix memleak in i2c_new_client_device()
-Date: Fri, 24 Nov 2023 17:45:01 +0000
-Message-ID: <20231124172032.199971188@linuxfoundation.org>
+Subject: [PATCH 6.6 136/530] i2c: sun6i-p2wi: Prevent potential division by zero
+Date: Fri, 24 Nov 2023 17:45:02 +0000
+Message-ID: <20231124172032.229463999@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,97 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Axel Lin <axel.lin@ingics.com>
 
-[ Upstream commit 6af79f7fe748fe6a3c5c3a63d7f35981a82c2769 ]
+[ Upstream commit 5ac61d26b8baff5b2e5a9f3dc1ef63297e4b53e7 ]
 
-Yang Yingliang reported a memleak:
-===
+Make sure we don't OOPS in case clock-frequency is set to 0 in a DT. The
+variable set here is later used as a divisor.
 
-I got memory leak as follows when doing fault injection test:
-
-unreferenced object 0xffff888014aec078 (size 8):
-  comm "xrun", pid 356, jiffies 4294910619 (age 16.332s)
-  hex dump (first 8 bytes):
-    31 2d 30 30 31 63 00 00                          1-001c..
-  backtrace:
-    [<00000000eb56c0a9>] __kmalloc_track_caller+0x1a6/0x300
-    [<000000000b220ea3>] kvasprintf+0xad/0x140
-    [<00000000b83203e5>] kvasprintf_const+0x62/0x190
-    [<000000002a5eab37>] kobject_set_name_vargs+0x56/0x140
-    [<00000000300ac279>] dev_set_name+0xb0/0xe0
-    [<00000000b66ebd6f>] i2c_new_client_device+0x7e4/0x9a0
-
-If device_register() returns error in i2c_new_client_device(),
-the name allocated by i2c_dev_set_name() need be freed. As
-comment of device_register() says, it should use put_device()
-to give up the reference in the error path.
-
-===
-I think this solution is less intrusive and more robust than he
-originally proposed solutions, though.
-
-Reported-by: Yang Yingliang <yangyingliang@huawei.com>
-Closes: http://patchwork.ozlabs.org/project/linux-i2c/patch/20221124085448.3620240-1-yangyingliang@huawei.com/
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Axel Lin <axel.lin@ingics.com>
+Acked-by: Boris Brezillon <boris.brezillon@free-electrons.com>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-base.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-sun6i-p2wi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index 60746652fd525..7f30bcceebaed 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -931,8 +931,9 @@ int i2c_dev_irq_from_resources(const struct resource *resources,
- struct i2c_client *
- i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *info)
- {
--	struct i2c_client	*client;
--	int			status;
-+	struct i2c_client *client;
-+	bool need_put = false;
-+	int status;
- 
- 	client = kzalloc(sizeof *client, GFP_KERNEL);
- 	if (!client)
-@@ -970,7 +971,6 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
- 	client->dev.fwnode = info->fwnode;
- 
- 	device_enable_async_suspend(&client->dev);
--	i2c_dev_set_name(adap, client, info);
- 
- 	if (info->swnode) {
- 		status = device_add_software_node(&client->dev, info->swnode);
-@@ -982,6 +982,7 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
- 		}
+diff --git a/drivers/i2c/busses/i2c-sun6i-p2wi.c b/drivers/i2c/busses/i2c-sun6i-p2wi.c
+index fa6020dced595..85e035e7a1d75 100644
+--- a/drivers/i2c/busses/i2c-sun6i-p2wi.c
++++ b/drivers/i2c/busses/i2c-sun6i-p2wi.c
+@@ -201,6 +201,11 @@ static int p2wi_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  	}
  
-+	i2c_dev_set_name(adap, client, info);
- 	status = device_register(&client->dev);
- 	if (status)
- 		goto out_remove_swnode;
-@@ -993,6 +994,7 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
- 
- out_remove_swnode:
- 	device_remove_software_node(&client->dev);
-+	need_put = true;
- out_err_put_of_node:
- 	of_node_put(info->of_node);
- out_err:
-@@ -1000,7 +1002,10 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
- 		"Failed to register i2c client %s at 0x%02x (%d)\n",
- 		client->name, client->addr, status);
- out_err_silent:
--	kfree(client);
-+	if (need_put)
-+		put_device(&client->dev);
-+	else
-+		kfree(client);
- 	return ERR_PTR(status);
- }
- EXPORT_SYMBOL_GPL(i2c_new_client_device);
++	if (clk_freq == 0) {
++		dev_err(dev, "clock-frequency is set to 0 in DT\n");
++		return -EINVAL;
++	}
++
+ 	if (of_get_child_count(np) > 1) {
+ 		dev_err(dev, "P2WI only supports one slave device\n");
+ 		return -EINVAL;
 -- 
 2.42.0
 
