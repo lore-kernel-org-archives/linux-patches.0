@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012DE39FE3;
-	Fri, 24 Nov 2023 18:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600BD364A4;
+	Fri, 24 Nov 2023 18:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+QfAga0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D22FC433C7;
-	Fri, 24 Nov 2023 18:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYOxorxz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC14EC433C8;
+	Fri, 24 Nov 2023 18:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849543;
-	bh=X4edO5yN8qG4H5HdgUa5NIxWvgRJYPR+wafJqqj6mZ4=;
+	s=korg; t=1700849546;
+	bh=NYu2Oi/AUBD0WkNokMpRz0d4UZhsrLI/n0yuVstOhLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+QfAga0FUNxGmmo9KWex7rxJbxyu3ru8j90058IcMfyIZ/9jLcYuLYGNau91B8Gi
-	 swnztQIx2qBld23Kdc72rBUfDNsT7ylFRYvRNTvT0Cr1TLs4yn7zUaq4SV2Pi7OnHL
-	 0AaAth0NvqTkdOsAhJnzIATNhUVy5RnnbnflQcDk=
+	b=KYOxorxzrPHT4VVm5/DJqC3dlBRT7DKpNBUEbSOabnutEX/KBoMShAQtpKOcEJp5L
+	 AKg04QIjnSApkrIVWi5kMaSagqMnDM+KJzpfxzqWq/npHNHUBE4uvTOyPZCxs6PnpB
+	 +2tBvinPX6GpglWjXypRmEhbZ/WEU650QRf4trzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 224/530] net/mlx5e: Update doorbell for port timestamping CQ before the software counter
-Date: Fri, 24 Nov 2023 17:46:30 +0000
-Message-ID: <20231124172034.876754116@linuxfoundation.org>
+Subject: [PATCH 6.6 225/530] net/mlx5: Increase size of irq name buffer
+Date: Fri, 24 Nov 2023 17:46:31 +0000
+Message-ID: <20231124172034.900076127@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,92 +46,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-[ Upstream commit 92214be5979c0961a471b7eaaaeacab41bdf456c ]
+[ Upstream commit 3338bebfc26a1e2cebbba82a1cf12c0159608e73 ]
 
-Previously, mlx5e_ptp_poll_ts_cq would update the device doorbell with the
-incremented consumer index after the relevant software counters in the
-kernel were updated. In the mlx5e_sq_xmit_wqe context, this would lead to
-either overrunning the device CQ or exceeding the expected software buffer
-size in the device CQ if the device CQ size was greater than the software
-buffer size. Update the relevant software counter only after updating the
-device CQ consumer index in the port timestamping napi_poll context.
+Without increased buffer size, will trigger -Wformat-truncation with W=1
+for the snprintf operation writing to the buffer.
 
-Log:
-    mlx5_core 0000:08:00.0: cq_err_event_notifier:517:(pid 0): CQ error on CQN 0x487, syndrome 0x1
-    mlx5_core 0000:08:00.0 eth2: mlx5e_cq_error_event: cqn=0x000487 event=0x04
+    drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c: In function 'mlx5_irq_alloc':
+    drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c:296:7: error: '@pci:' directive output may be truncated writing 5 bytes into a region of size between 1 and 32 [-Werror=format-truncation=]
+      296 |    "%s@pci:%s", name, pci_name(dev->pdev));
+          |       ^~~~~
+    drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c:295:2: note: 'snprintf' output 6 or more bytes (assuming 37) into a destination of size 32
+      295 |  snprintf(irq->name, MLX5_MAX_IRQ_NAME,
+          |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      296 |    "%s@pci:%s", name, pci_name(dev->pdev));
+          |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 1880bc4e4a96 ("net/mlx5e: Add TX port timestamp support")
+Fixes: ada9f5d00797 ("IB/mlx5: Fix eq names to display nicely in /proc/interrupts")
+Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
 Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-12-saeed@kernel.org
+Link: https://lore.kernel.org/r/20231114215846.5902-13-saeed@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en/ptp.c  | 20 +++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c | 6 +++---
+ drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h | 3 +++
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
-index bb11e644d24f7..af3928eddafd1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
-@@ -177,6 +177,8 @@ static void mlx5e_ptpsq_mark_ts_cqes_undelivered(struct mlx5e_ptpsq *ptpsq,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
+index 653648216730a..4dcf995cb1a20 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
+@@ -28,7 +28,7 @@
+ struct mlx5_irq {
+ 	struct atomic_notifier_head nh;
+ 	cpumask_var_t mask;
+-	char name[MLX5_MAX_IRQ_NAME];
++	char name[MLX5_MAX_IRQ_FORMATTED_NAME];
+ 	struct mlx5_irq_pool *pool;
+ 	int refcount;
+ 	struct msi_map map;
+@@ -292,8 +292,8 @@ struct mlx5_irq *mlx5_irq_alloc(struct mlx5_irq_pool *pool, int i,
+ 	else
+ 		irq_sf_set_name(pool, name, i);
+ 	ATOMIC_INIT_NOTIFIER_HEAD(&irq->nh);
+-	snprintf(irq->name, MLX5_MAX_IRQ_NAME,
+-		 "%s@pci:%s", name, pci_name(dev->pdev));
++	snprintf(irq->name, MLX5_MAX_IRQ_FORMATTED_NAME,
++		 MLX5_IRQ_NAME_FORMAT_STR, name, pci_name(dev->pdev));
+ 	err = request_irq(irq->map.virq, irq_int_handler, 0, irq->name,
+ 			  &irq->nh);
+ 	if (err) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h
+index d3a77a0ab8488..c4d377f8df308 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h
+@@ -7,6 +7,9 @@
+ #include <linux/mlx5/driver.h>
  
- static void mlx5e_ptp_handle_ts_cqe(struct mlx5e_ptpsq *ptpsq,
- 				    struct mlx5_cqe64 *cqe,
-+				    u8 *md_buff,
-+				    u8 *md_buff_sz,
- 				    int budget)
- {
- 	struct mlx5e_ptp_port_ts_cqe_list *pending_cqe_list = ptpsq->ts_cqe_pending_list;
-@@ -211,19 +213,24 @@ static void mlx5e_ptp_handle_ts_cqe(struct mlx5e_ptpsq *ptpsq,
- 	mlx5e_ptpsq_mark_ts_cqes_undelivered(ptpsq, hwtstamp);
- out:
- 	napi_consume_skb(skb, budget);
--	mlx5e_ptp_metadata_fifo_push(&ptpsq->metadata_freelist, metadata_id);
-+	md_buff[*md_buff_sz++] = metadata_id;
- 	if (unlikely(mlx5e_ptp_metadata_map_unhealthy(&ptpsq->metadata_map)) &&
- 	    !test_and_set_bit(MLX5E_SQ_STATE_RECOVERING, &sq->state))
- 		queue_work(ptpsq->txqsq.priv->wq, &ptpsq->report_unhealthy_work);
- }
- 
--static bool mlx5e_ptp_poll_ts_cq(struct mlx5e_cq *cq, int budget)
-+static bool mlx5e_ptp_poll_ts_cq(struct mlx5e_cq *cq, int napi_budget)
- {
- 	struct mlx5e_ptpsq *ptpsq = container_of(cq, struct mlx5e_ptpsq, ts_cq);
--	struct mlx5_cqwq *cqwq = &cq->wq;
-+	int budget = min(napi_budget, MLX5E_TX_CQ_POLL_BUDGET);
-+	u8 metadata_buff[MLX5E_TX_CQ_POLL_BUDGET];
-+	u8 metadata_buff_sz = 0;
-+	struct mlx5_cqwq *cqwq;
- 	struct mlx5_cqe64 *cqe;
- 	int work_done = 0;
- 
-+	cqwq = &cq->wq;
-+
- 	if (unlikely(!test_bit(MLX5E_SQ_STATE_ENABLED, &ptpsq->txqsq.state)))
- 		return false;
- 
-@@ -234,7 +241,8 @@ static bool mlx5e_ptp_poll_ts_cq(struct mlx5e_cq *cq, int budget)
- 	do {
- 		mlx5_cqwq_pop(cqwq);
- 
--		mlx5e_ptp_handle_ts_cqe(ptpsq, cqe, budget);
-+		mlx5e_ptp_handle_ts_cqe(ptpsq, cqe,
-+					metadata_buff, &metadata_buff_sz, napi_budget);
- 	} while ((++work_done < budget) && (cqe = mlx5_cqwq_get_cqe(cqwq)));
- 
- 	mlx5_cqwq_update_db_record(cqwq);
-@@ -242,6 +250,10 @@ static bool mlx5e_ptp_poll_ts_cq(struct mlx5e_cq *cq, int budget)
- 	/* ensure cq space is freed before enabling more cqes */
- 	wmb();
- 
-+	while (metadata_buff_sz > 0)
-+		mlx5e_ptp_metadata_fifo_push(&ptpsq->metadata_freelist,
-+					     metadata_buff[--metadata_buff_sz]);
-+
- 	mlx5e_txqsq_wake(&ptpsq->txqsq);
- 
- 	return work_done == budget;
+ #define MLX5_MAX_IRQ_NAME (32)
++#define MLX5_IRQ_NAME_FORMAT_STR ("%s@pci:%s")
++#define MLX5_MAX_IRQ_FORMATTED_NAME \
++	(MLX5_MAX_IRQ_NAME + sizeof(MLX5_IRQ_NAME_FORMAT_STR))
+ /* max irq_index is 2047, so four chars */
+ #define MLX5_MAX_IRQ_IDX_CHARS (4)
+ #define MLX5_EQ_REFS_PER_IRQ (2)
 -- 
 2.42.0
 
