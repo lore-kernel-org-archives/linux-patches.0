@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33E333CFD;
-	Fri, 24 Nov 2023 18:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220442E64F;
+	Fri, 24 Nov 2023 18:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWkn7CF+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4132EC433C7;
-	Fri, 24 Nov 2023 18:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcsK7f9a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D46C433C8;
+	Fri, 24 Nov 2023 18:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852300;
-	bh=0nObKwnzm6RQelYWEo+ONzCt9PIm1kYJfBm99GRBV3A=;
+	s=korg; t=1700852303;
+	bh=ILHGn/0rQ1b23KrEn3FNjDRQBjvd24O/fqR0Zx8VrnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WWkn7CF+/xFC7S6pUI+6ClJ5jczBQjYq4OS2dqDgqOQ+CAbox0l5epq1aGvbgFOlP
-	 Paw8oZU/awbVwwqfyd5YG0enmGP3pp6QRbAsVjmcyBREUt+Gq50lfsmFhsqVNZun/L
-	 JnkU0pnExQTzDk2SDMTPjYsuhbTEJvWc0VJQ7MMQ=
+	b=VcsK7f9aXBq3pcOa3fpKbOB5fvbWvSQT+1C6jQab+cK/VUxPW02iSXY2D4bSpJE7i
+	 4qr9iH/74J2pLw9cQ0o7sBaaeyRB8zFyTd1HZyq+eJaw5H5+xk401AhU1zNzKDS2p6
+	 RqSdWMAXxY91p6fWHUTE4fEyQm9DM9ZMLibkF+2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.1 276/372] xfs: recovery should not clear di_flushiter unconditionally
-Date: Fri, 24 Nov 2023 17:51:03 +0000
-Message-ID: <20231124172019.661435612@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 277/372] btrfs: zoned: wait for data BG to be finished on direct IO allocation
+Date: Fri, 24 Nov 2023 17:51:04 +0000
+Message-ID: <20231124172019.691022360@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,80 +43,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit 7930d9e103700cde15833638855b750715c12091 upstream.
+commit 776a838f1fa95670c1c1cf7109a898090b473fa3 upstream.
 
-Because on v3 inodes, di_flushiter doesn't exist. It overlaps with
-zero padding in the inode, except when NREXT64=1 configurations are
-in use and the zero padding is no longer padding but holds the 64
-bit extent counter.
+Running the fio command below on a ZNS device results in "Resource
+temporarily unavailable" error.
 
-This manifests obviously on big endian platforms (e.g. s390) because
-the log dinode is in host order and the overlap is the LSBs of the
-extent count field. It is not noticed on little endian machines
-because the overlap is at the MSB end of the extent count field and
-we need to get more than 2^^48 extents in the inode before it
-manifests. i.e. the heat death of the universe will occur before we
-see the problem in little endian machines.
+  $ sudo fio --name=w --directory=/mnt --filesize=1GB --bs=16MB --numjobs=16 \
+        --rw=write --ioengine=libaio --iodepth=128 --direct=1
 
-This is a zero-day issue for NREXT64=1 configuraitons on big endian
-machines. Fix it by only clearing di_flushiter on v2 inodes during
-recovery.
+  fio: io_u error on file /mnt/w.2.0: Resource temporarily unavailable: write offset=117440512, buflen=16777216
+  fio: io_u error on file /mnt/w.2.0: Resource temporarily unavailable: write offset=134217728, buflen=16777216
+  ...
 
-Fixes: 9b7d16e34bbe ("xfs: Introduce XFS_DIFLAG2_NREXT64 and associated helpers")
-cc: stable@kernel.org # 5.19+
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+This happens because -EAGAIN error returned from btrfs_reserve_extent()
+called from btrfs_new_extent_direct() is spilling over to the userland.
+
+btrfs_reserve_extent() returns -EAGAIN when there is no active zone
+available. Then, the caller should wait for some other on-going IO to
+finish a zone and retry the allocation.
+
+This logic is already implemented for buffered write in cow_file_range(),
+but it is missing for the direct IO counterpart. Implement the same logic
+for it.
+
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Fixes: 2ce543f47843 ("btrfs: zoned: wait until zone is finished when allocation didn't progress")
+CC: stable@vger.kernel.org # 6.1+
+Tested-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode_item_recover.c |   32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ fs/btrfs/inode.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/xfs/xfs_inode_item_recover.c
-+++ b/fs/xfs/xfs_inode_item_recover.c
-@@ -369,24 +369,26 @@ xlog_recover_inode_commit_pass2(
- 	 * superblock flag to determine whether we need to look at di_flushiter
- 	 * to skip replay when the on disk inode is newer than the log one
- 	 */
--	if (!xfs_has_v3inodes(mp) &&
--	    ldip->di_flushiter < be16_to_cpu(dip->di_flushiter)) {
--		/*
--		 * Deal with the wrap case, DI_MAX_FLUSH is less
--		 * than smaller numbers
--		 */
--		if (be16_to_cpu(dip->di_flushiter) == DI_MAX_FLUSH &&
--		    ldip->di_flushiter < (DI_MAX_FLUSH >> 1)) {
--			/* do nothing */
--		} else {
--			trace_xfs_log_recover_inode_skip(log, in_f);
--			error = 0;
--			goto out_release;
-+	if (!xfs_has_v3inodes(mp)) {
-+		if (ldip->di_flushiter < be16_to_cpu(dip->di_flushiter)) {
-+			/*
-+			 * Deal with the wrap case, DI_MAX_FLUSH is less
-+			 * than smaller numbers
-+			 */
-+			if (be16_to_cpu(dip->di_flushiter) == DI_MAX_FLUSH &&
-+			    ldip->di_flushiter < (DI_MAX_FLUSH >> 1)) {
-+				/* do nothing */
-+			} else {
-+				trace_xfs_log_recover_inode_skip(log, in_f);
-+				error = 0;
-+				goto out_release;
-+			}
- 		}
-+
-+		/* Take the opportunity to reset the flush iteration count */
-+		ldip->di_flushiter = 0;
- 	}
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -7166,8 +7166,15 @@ static struct extent_map *btrfs_new_exte
+ 	int ret;
  
--	/* Take the opportunity to reset the flush iteration count */
--	ldip->di_flushiter = 0;
+ 	alloc_hint = get_extent_allocation_hint(inode, start, len);
++again:
+ 	ret = btrfs_reserve_extent(root, len, len, fs_info->sectorsize,
+ 				   0, alloc_hint, &ins, 1, 1);
++	if (ret == -EAGAIN) {
++		ASSERT(btrfs_is_zoned(fs_info));
++		wait_on_bit_io(&inode->root->fs_info->flags, BTRFS_FS_NEED_ZONE_FINISH,
++			       TASK_UNINTERRUPTIBLE);
++		goto again;
++	}
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
- 	if (unlikely(S_ISREG(ldip->di_mode))) {
- 		if ((ldip->di_format != XFS_DINODE_FMT_EXTENTS) &&
 
 
