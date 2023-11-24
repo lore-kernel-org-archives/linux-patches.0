@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373FF339BE;
-	Fri, 24 Nov 2023 19:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B041A2EAEA;
+	Fri, 24 Nov 2023 19:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xhle8w6H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B953CC433C7;
-	Fri, 24 Nov 2023 19:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYVYdMSU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE54C433C8;
+	Fri, 24 Nov 2023 19:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853626;
-	bh=0Gt2KYig4PjQ4GCc+ElyEFkJO+MOwtr7TF4pTqixuo0=;
+	s=korg; t=1700853628;
+	bh=skafKTf0QZFSJiU1UYF/vBUIEDeMbJmkxttrjVLkZHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xhle8w6HNuTE6kO3BuOiMxD5yZwx6A1A45cI5+SCiFYnlWYjh0KPJ/J1vDP0NL/Hw
-	 PqGVeqRaHj3m0573cPpVgaq1TWxS3JpuVagf1dUoIg5eT7HPz3mFL22bBa40dHFLF6
-	 2ClWH4uKbAnJh6dV5VkvF9gclImBlWelifPEpwM8=
+	b=IYVYdMSUY6pCbRv8rCKbCXUhPFg2Cc2qqChhpFELjEl/djBw6puw6PbZ7X5ohhn4b
+	 qIJIUgLT4Scg74X3UwUu9Qw4vVWd9aHTkjrpsd8/WdaRILYwuPPxk0XcsePgu+fGGJ
+	 N1NSz8d+qtJAKDezKDZ3Zf9iILKlu38KRD07LCdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Krasavin <pkrasavin@imaqliq.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Rokosov <ddrokosov@salutedevices.com>,
+	Hector Martin <marcan@marcan.st>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 239/297] tty: serial: meson: fix hard LOCKUP on crtscts mode
-Date: Fri, 24 Nov 2023 17:54:41 +0000
-Message-ID: <20231124172008.555242926@linuxfoundation.org>
+Subject: [PATCH 5.15 240/297] regmap: Ensure range selector registers are updated after cache sync
+Date: Fri, 24 Nov 2023 17:54:42 +0000
+Message-ID: <20231124172008.594200017@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,99 +42,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Krasavin <pkrasavin@imaqliq.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 2a1d728f20edeee7f26dc307ed9df4e0d23947ab ]
+[ Upstream commit 0ec7731655de196bc1e4af99e495b38778109d22 ]
 
-There might be hard lockup if we set crtscts mode on port without RTS/CTS configured:
+When we sync the register cache we do so with the cache bypassed in order
+to avoid overhead from writing the synced values back into the cache. If
+the regmap has ranges and the selector register for those ranges is in a
+register which is cached this has the unfortunate side effect of meaning
+that the physical and cached copies of the selector register can be out of
+sync after a cache sync. The cache will have whatever the selector was when
+the sync started and the hardware will have the selector for the register
+that was synced last.
 
-# stty -F /dev/ttyAML6 crtscts; echo 1 > /dev/ttyAML6; echo 2 > /dev/ttyAML6
-[   95.890386] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-[   95.890857] rcu:     3-...0: (201 ticks this GP) idle=e33c/1/0x4000000000000000 softirq=5844/5846 fqs=4984
-[   95.900212] rcu:     (detected by 2, t=21016 jiffies, g=7753, q=296 ncpus=4)
-[   95.906972] Task dump for CPU 3:
-[   95.910178] task:bash            state:R  running task     stack:0     pid:205   ppid:1      flags:0x00000202
-[   95.920059] Call trace:
-[   95.922485]  __switch_to+0xe4/0x168
-[   95.925951]  0xffffff8003477508
-[   95.974379] watchdog: Watchdog detected hard LOCKUP on cpu 3
-[   95.974424] Modules linked in: 88x2cs(O) rtc_meson_vrtc
+Fix this by rewriting all cached selector registers after every sync,
+ensuring that the hardware and cache have the same content. This will
+result in extra writes that wouldn't otherwise be needed but is simple
+so hopefully robust. We don't read from the hardware since not all
+devices have physical read support.
 
-Possible solution would be to not allow to setup crtscts on such port.
+Given that nobody noticed this until now it is likely that we are rarely if
+ever hitting this case.
 
-Tested on S905X3 based board.
-
-Fixes: ff7693d079e5 ("ARM: meson: serial: add MesonX SoC on-chip uart driver")
+Reported-by: Hector Martin <marcan@marcan.st>
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Krasavin <pkrasavin@imaqliq.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Rokosov <ddrokosov@salutedevices.com>
-
-v6: stable tag added
-v5: https://lore.kernel.org/lkml/OF43DA36FF.2BD3BB21-ON00258A47.005A8125-00258A47.005A9513@gdc.ru/
-added missed Reviewed-by tags, Fixes tag added according to Dmitry and Neil notes
-v4: https://lore.kernel.org/lkml/OF55521400.7512350F-ON00258A47.003F7254-00258A47.0040E15C@gdc.ru/
-More correct patch subject according to Jiri's note
-v3: https://lore.kernel.org/lkml/OF6CF5FFA0.CCFD0E8E-ON00258A46.00549EDF-00258A46.0054BB62@gdc.ru/
-"From:" line added to the mail
-v2: https://lore.kernel.org/lkml/OF950BEF72.7F425944-ON00258A46.00488A76-00258A46.00497D44@gdc.ru/
-braces for single statement removed according to Dmitry's note
-v1: https://lore.kernel.org/lkml/OF28B2B8C9.5BC0CD28-ON00258A46.0037688F-00258A46.0039155B@gdc.ru/
-Link: https://lore.kernel.org/r/OF66360032.51C36182-ON00258A48.003F656B-00258A48.0040092C@gdc.ru
-
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20231026-regmap-fix-selector-sync-v1-1-633ded82770d@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/meson_uart.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/base/regmap/regcache.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
-index b6e8db0ddf065..7e653d681ac01 100644
---- a/drivers/tty/serial/meson_uart.c
-+++ b/drivers/tty/serial/meson_uart.c
-@@ -368,10 +368,14 @@ static void meson_uart_set_termios(struct uart_port *port,
- 	else
- 		val |= AML_UART_STOP_BIT_1SB;
+diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
+index 0b517a83c4493..b04e8c90aca20 100644
+--- a/drivers/base/regmap/regcache.c
++++ b/drivers/base/regmap/regcache.c
+@@ -325,6 +325,11 @@ static int regcache_default_sync(struct regmap *map, unsigned int min,
+ 	return 0;
+ }
  
--	if (cflags & CRTSCTS)
--		val &= ~AML_UART_TWO_WIRE_EN;
--	else
-+	if (cflags & CRTSCTS) {
-+		if (port->flags & UPF_HARD_FLOW)
-+			val &= ~AML_UART_TWO_WIRE_EN;
-+		else
-+			termios->c_cflag &= ~CRTSCTS;
-+	} else {
- 		val |= AML_UART_TWO_WIRE_EN;
++static int rbtree_all(const void *key, const struct rb_node *node)
++{
++	return 0;
++}
++
+ /**
+  * regcache_sync - Sync the register cache with the hardware.
+  *
+@@ -342,6 +347,7 @@ int regcache_sync(struct regmap *map)
+ 	unsigned int i;
+ 	const char *name;
+ 	bool bypass;
++	struct rb_node *node;
+ 
+ 	if (WARN_ON(map->cache_type == REGCACHE_NONE))
+ 		return -EINVAL;
+@@ -386,6 +392,30 @@ int regcache_sync(struct regmap *map)
+ 	map->async = false;
+ 	map->cache_bypass = bypass;
+ 	map->no_sync_defaults = false;
++
++	/*
++	 * If we did any paging with cache bypassed and a cached
++	 * paging register then the register and cache state might
++	 * have gone out of sync, force writes of all the paging
++	 * registers.
++	 */
++	rb_for_each(node, 0, &map->range_tree, rbtree_all) {
++		struct regmap_range_node *this =
++			rb_entry(node, struct regmap_range_node, node);
++
++		/* If there's nothing in the cache there's nothing to sync */
++		ret = regcache_read(map, this->selector_reg, &i);
++		if (ret != 0)
++			continue;
++
++		ret = _regmap_write(map, this->selector_reg, i);
++		if (ret != 0) {
++			dev_err(map->dev, "Failed to write %x = %x: %d\n",
++				this->selector_reg, i, ret);
++			break;
++		}
 +	}
++
+ 	map->unlock(map->lock_arg);
  
- 	writel(val, port->membase + AML_UART_CONTROL);
- 
-@@ -731,6 +735,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
- 	int ret = 0;
- 	int irq;
-+	bool has_rtscts;
- 
- 	if (pdev->dev.of_node)
- 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
-@@ -758,6 +763,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 		return irq;
- 
- 	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
-+	has_rtscts = of_property_read_bool(pdev->dev.of_node, "uart-has-rtscts");
- 
- 	if (meson_ports[pdev->id]) {
- 		dev_err(&pdev->dev, "port %d already allocated\n", pdev->id);
-@@ -782,6 +788,8 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	port->mapsize = resource_size(res_mem);
- 	port->irq = irq;
- 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
-+	if (has_rtscts)
-+		port->flags |= UPF_HARD_FLOW;
- 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
- 	port->dev = &pdev->dev;
- 	port->line = pdev->id;
+ 	regmap_async_complete(map);
 -- 
 2.42.0
 
