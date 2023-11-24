@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F4C39FF7;
-	Fri, 24 Nov 2023 18:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC4433CFD;
+	Fri, 24 Nov 2023 18:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DeCRujvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D51C433C7;
-	Fri, 24 Nov 2023 18:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNJmy0T4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15430C433C7;
+	Fri, 24 Nov 2023 18:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850283;
-	bh=usc3e2nZc31IKxrKa1fZklIKwRAC2a1Pzj2Xzf7dUdE=;
+	s=korg; t=1700850286;
+	bh=5Tr6kKqok24oE0sp2mGLgiglh1YjCxmc/uqOljNmthg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DeCRujvVZJ7HOsMfc3P+I++o1wk8Rdrr3wPpuW79myPeWdlnjO8cSUMZ3BqDPYDvL
-	 SeLPta0jwbp+7t0w3BkMgzDGW6y/6D9dbn5S9xuH0aeQDOVbcSTKWkdZJnu90BWxUc
-	 7d8/T/oFcPlO6BGIv8KLRo5y1CbEpE+OGqPfMxMY=
+	b=PNJmy0T4+k8saCV89ACqu06pPoPcCMcB0sfXnDeVTgr2zaJwTQWW3jYPQKRMPLhKL
+	 Dj9W3Mjobl36aHXTy2ndWjTSdbLgf91lMbOPHG2SXo38LUlUYN0TP7/9ChGJLHRHlm
+	 Jq4PF/3i+XH83SyNFHhMOHdxQas7zBsVfjN1ZHL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 511/530] drm/i915/mtl: Support HBR3 rate with C10 phy and eDP in MTL
-Date: Fri, 24 Nov 2023 17:51:17 +0000
-Message-ID: <20231124172043.719551794@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 520/530] drm/amdgpu: dont use ATRM for external devices
+Date: Fri, 24 Nov 2023 17:51:26 +0000
+Message-ID: <20231124172044.008288335@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,39 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit ce4941c2d6459664761c9854701015d8e99414fb upstream.
+commit 432e664e7c98c243fab4c3c95bd463bea3aeed28 upstream.
 
-eDP specification supports HBR3 link rate since v1.4a. Moreover,
-C10 phy can support HBR3 link rate for both DP and eDP. Therefore,
-do not clamp the supported rates for eDP at 6.75Gbps.
+The ATRM ACPI method is for fetching the dGPU vbios rom
+image on laptops and all-in-one systems.  It should not be
+used for external add in cards.  If the dGPU is thunderbolt
+connected, don't try ATRM.
 
-Cc: <stable@vger.kernel.org>
+v2: pci_is_thunderbolt_attached only works for Intel.  Use
+    pdev->external_facing instead.
+v3: dev_is_removable() seems to be what we want
 
-BSpec: 70073 74224
-
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Signed-off-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231018113622.2761997-1-chaitanya.kumar.borah@intel.com
-(cherry picked from commit a3431650f30a94b179d419ef87c21213655c28cd)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2925
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -430,7 +430,7 @@ static int mtl_max_source_rate(struct in
- 	enum phy phy = intel_port_to_phy(i915, dig_port->base.port);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -29,6 +29,7 @@
+ #include "amdgpu.h"
+ #include "atom.h"
  
- 	if (intel_is_c10phy(i915, phy))
--		return intel_dp_is_edp(intel_dp) ? 675000 : 810000;
-+		return 810000;
++#include <linux/device.h>
+ #include <linux/pci.h>
+ #include <linux/slab.h>
+ #include <linux/acpi.h>
+@@ -287,6 +288,10 @@ static bool amdgpu_atrm_get_bios(struct
+ 	if (adev->flags & AMD_IS_APU)
+ 		return false;
  
- 	return 2000000;
- }
++	/* ATRM is for on-platform devices only */
++	if (dev_is_removable(&adev->pdev->dev))
++		return false;
++
+ 	while ((pdev = pci_get_class(PCI_CLASS_DISPLAY_VGA << 8, pdev)) != NULL) {
+ 		dhandle = ACPI_HANDLE(&pdev->dev);
+ 		if (!dhandle)
 
 
