@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EC539FD9;
-	Fri, 24 Nov 2023 18:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9D3381DE;
+	Fri, 24 Nov 2023 18:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmX7C68X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A971C433C7;
-	Fri, 24 Nov 2023 18:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHdjqQkR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0510EC433C7;
+	Fri, 24 Nov 2023 18:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850035;
-	bh=RxneErGgQomPeOh2VjD8VhJaa9WOjGOFRWIjTuXtJO0=;
+	s=korg; t=1700850038;
+	bh=7Qw+gIWOXnupVX/Vna1YGuAVHIuOjE+QUh/NJHzUrh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmX7C68XidxzZcDOzzenLNB0IiaHHhtlmocTTCkoZfTVmKu8NNjCFeOMPAv9QKlSy
-	 O+6gNV++Uxyi9mNQrrwAs9+PQZjojMh2LFBnqjfS0YWgLtkHmLqxqxBImlqbHMDYSh
-	 pYbbOAo/stpxH03e3Tep+8Qm+FlgISM2ILJ/UEzA=
+	b=DHdjqQkRf/bcTyWHWfiKJOV45blUnQ8lOt2yAWEKu1+qazTl9itJq7nTOFusU6SfM
+	 sysjcy/QuXSBYUurBDLgfbMON33AAscfiMg3xw19HaWLmQmvoMaVFdB+PsWWOkA45r
+	 UnQTbtjzo5C+AQU4ssicdoLyXJFqOfKi6EAkh77g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 420/530] smb3: fix caching of ctime on setxattr
-Date: Fri, 24 Nov 2023 17:49:46 +0000
-Message-ID: <20231124172040.856031751@linuxfoundation.org>
+	Masum Reza <masumrezarock100@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 403/530] Bluetooth: btusb: Add RTW8852BE device 13d3:3570 to device tables
+Date: Fri, 24 Nov 2023 17:49:29 +0000
+Message-ID: <20231124172040.308679618@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -40,38 +42,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Masum Reza <masumrezarock100@gmail.com>
 
-commit 5923d6686a100c2b4cabd4c2ca9d5a12579c7614 upstream.
+[ Upstream commit 02be109d3a405dbc4d53fb4b4473d7a113548088 ]
 
-Fixes xfstest generic/728 which had been failing due to incorrect
-ctime after setxattr and removexattr
+This device is used in TP-Link TX20E WiFi+Bluetooth adapter.
 
-Update ctime on successful set of xattr
+Relevant information in /sys/kernel/debug/usb/devices
+about the Bluetooth device is listed as the below.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+T:  Bus=01 Lev=01 Prnt=01 Port=08 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3570 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Signed-off-by: Masum Reza <masumrezarock100@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: da06ff1f585e ("Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/xattr.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/xattr.c
-+++ b/fs/smb/client/xattr.c
-@@ -150,10 +150,13 @@ static int cifs_xattr_set(const struct x
- 		if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_XATTR)
- 			goto out;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 63ebd5677d267..e3f11ea2a9fcd 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -543,6 +543,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3570), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
  
--		if (pTcon->ses->server->ops->set_EA)
-+		if (pTcon->ses->server->ops->set_EA) {
- 			rc = pTcon->ses->server->ops->set_EA(xid, pTcon,
- 				full_path, name, value, (__u16)size,
- 				cifs_sb->local_nls, cifs_sb);
-+			if (rc == 0)
-+				inode_set_ctime_current(inode);
-+		}
- 		break;
- 
- 	case XATTR_CIFS_ACL:
+-- 
+2.42.0
+
 
 
