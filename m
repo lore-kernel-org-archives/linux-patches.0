@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BE92E655;
-	Fri, 24 Nov 2023 18:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D468C34189;
+	Fri, 24 Nov 2023 18:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZKrYVIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B4EC433C7;
-	Fri, 24 Nov 2023 18:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq7kr6k8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE08C433C9;
+	Fri, 24 Nov 2023 18:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851279;
-	bh=EVHlYn4GFpLf1bUVHIvWGY59y4c45j0mRLW/T1ruus4=;
+	s=korg; t=1700851281;
+	bh=G9Q95lIfy8A5Jaw5J0j9P4epvA4PrQe9g080154FLak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZKrYVIfq7rg9J+x5drbnq3JaqMutxxn6XifpZc6U16BgA+wrttkgn1vbxBa3xhpo
-	 gMUGdkmz9uWMiTHDApTpiOcuBknbKQVqnuFvcuh/ktgzv1vO03N09M0wa+3BWD0FXU
-	 bXni5jUe8xkb4BXoel1CpS202MCcQQ4DYnM1dRYY=
+	b=Yq7kr6k8UPyMs2dHIBn1tO3HBS1DoinaTCkC+1Vr7aQQiCJXBOPkGHsX2g4h9dl2J
+	 RrjJdzJ0tsja5bYzy+H22fiuOFm9jzzQa4txc6svoFyT7yAtKSXZY7mmxVPLlemHdL
+	 xrw4FFUbwpW11lDHlUf8kcqTXPSgXbhBujf4Wkvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.5 359/491] i3c: master: svc: fix ibi may not return mandatory data byte
-Date: Fri, 24 Nov 2023 17:49:55 +0000
-Message-ID: <20231124172035.361279361@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.5 350/491] s390/cmma: fix handling of swapper_pg_dir and invalid_pg_dir
+Date: Fri, 24 Nov 2023 17:49:46 +0000
+Message-ID: <20231124172035.078556929@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,52 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit c85e209b799f12d18a90ae6353b997b1bb1274a5 upstream.
+commit 84bb41d5df48868055d159d9247b80927f1f70f9 upstream.
 
-MSTATUS[RXPEND] is only updated after the data transfer cycle started. This
-creates an issue when the I3C clock is slow, and the CPU is running fast
-enough that MSTATUS[RXPEND] may not be updated when the code reaches
-checking point. As a result, mandatory data can be missed.
+If the cmma no-dat feature is available the kernel page tables are walked
+to identify and mark all pages which are used for address translation (all
+region, segment, and page tables). In a subsequent loop all other pages are
+marked as "no-dat" pages with the ESSA instruction.
 
-Add a wait for MSTATUS[COMPLETE] to ensure that all mandatory data is
-already in FIFO. It also works without mandatory data.
+This information is visible to the hypervisor, so that the hypervisor can
+optimize purging of guest TLB entries. All pages used for swapper_pg_dir
+and invalid_pg_dir are incorrectly marked as no-dat, which in turn can
+result in incorrect guest TLB flushes.
 
-Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
-Cc:  <stable@vger.kernel.org>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231023161658.3890811-4-Frank.Li@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fix this by marking those pages correctly as being used for DAT.
+
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/s390/mm/page-states.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -333,6 +333,7 @@ static int svc_i3c_master_handle_ibi(str
- 	struct i3c_ibi_slot *slot;
- 	unsigned int count;
- 	u32 mdatactrl;
-+	int ret, val;
- 	u8 *buf;
+--- a/arch/s390/mm/page-states.c
++++ b/arch/s390/mm/page-states.c
+@@ -188,6 +188,12 @@ void __init cmma_init_nodat(void)
+ 		return;
+ 	/* Mark pages used in kernel page tables */
+ 	mark_kernel_pgd();
++	page = virt_to_page(&swapper_pg_dir);
++	for (i = 0; i < 4; i++)
++		set_bit(PG_arch_1, &page[i].flags);
++	page = virt_to_page(&invalid_pg_dir);
++	for (i = 0; i < 4; i++)
++		set_bit(PG_arch_1, &page[i].flags);
  
- 	slot = i3c_generic_ibi_get_free_slot(data->ibi_pool);
-@@ -342,6 +343,13 @@ static int svc_i3c_master_handle_ibi(str
- 	slot->len = 0;
- 	buf = slot->data;
- 
-+	ret = readl_relaxed_poll_timeout(master->regs + SVC_I3C_MSTATUS, val,
-+						SVC_I3C_MSTATUS_COMPLETE(val), 0, 1000);
-+	if (ret) {
-+		dev_err(master->dev, "Timeout when polling for COMPLETE\n");
-+		return ret;
-+	}
-+
- 	while (SVC_I3C_MSTATUS_RXPEND(readl(master->regs + SVC_I3C_MSTATUS))  &&
- 	       slot->len < SVC_I3C_FIFO_SIZE) {
- 		mdatactrl = readl(master->regs + SVC_I3C_MDATACTRL);
+ 	/* Set all kernel pages not used for page tables to stable/no-dat */
+ 	for_each_mem_pfn_range(i, MAX_NUMNODES, &start, &end, NULL) {
 
 
