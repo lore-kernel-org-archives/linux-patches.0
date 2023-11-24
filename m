@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8852C381DE;
-	Fri, 24 Nov 2023 18:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17786381D4;
+	Fri, 24 Nov 2023 18:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kql+79St"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13805C433C8;
-	Fri, 24 Nov 2023 18:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KG7cguUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B1FC433C7;
+	Fri, 24 Nov 2023 18:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849366;
-	bh=bwhcz6vEms7aAWqhMjHQuUl24TBdCVDgItibeTBK0Tg=;
+	s=korg; t=1700849368;
+	bh=PvW9lLCLuFpnUj86LJ/Xi22n3cgZlf5ZitY4+qIFGmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kql+79StvDK3mibd6nXmmTR8yd1fQib0tuxM5rKVkQlaHpoyyilK6ILTtdPmkKGSG
-	 Ba0HLtn25QWqs+oVs/0WBQ0lP+fTfxdUFNDFpIDMQhZZilFZuXZSevbRpfq4VbB+zS
-	 bhMvscMKTeb9f9NHmYeMm9ZiZW1Upl9PmyOnhJdk=
+	b=KG7cguUXEXVCwRrCbYxtkoV5I0SZsIe+E6WGzFBl3s0m6Tz5a81WeEinlAuGljtqg
+	 hQ1aLIwdAyfrs/tmQ6T2+2fzSrb46zRAqga8r5goOW/b+/JP6ZB1EJO2pV3P13hhmw
+	 v6hdppkNeCfTikMVQyHopk81UDAdnSvzPM3591rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Tony Lindgren <tony@atomide.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>,
+	Dave Airlie <airlied@redhat.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/530] ASoC: ti: omap-mcbsp: Fix runtime PM underflow warnings
-Date: Fri, 24 Nov 2023 17:45:18 +0000
-Message-ID: <20231124172032.719600398@linuxfoundation.org>
+Subject: [PATCH 6.6 153/530] drm/qxl: prevent memory leak
+Date: Fri, 24 Nov 2023 17:45:19 +0000
+Message-ID: <20231124172032.747013027@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,44 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Lindgren <tony@atomide.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit fbb74e56378d8306f214658e3d525a8b3f000c5a ]
+[ Upstream commit 0e8b9f258baed25f1c5672613699247c76b007b5 ]
 
-We need to check for an active device as otherwise we get warnings
-for some mcbsp instances for "Runtime PM usage count underflow!".
+The allocated memory for qdev->dumb_heads should be released
+in qxl_destroy_monitors_object before qxl suspend.
+otherwise,qxl_create_monitors_object will be called to
+reallocate memory for qdev->dumb_heads after qxl resume,
+it will cause memory leak.
 
-Reported-by: Andreas Kemnade <andreas@kemnade.info>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20231030052340.13415-1-tony@atomide.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Link: https://lore.kernel.org/r/20230801025309.4049813-1-zhouzongmin@kylinos.cn
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/omap-mcbsp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/qxl/qxl_display.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/ti/omap-mcbsp.c b/sound/soc/ti/omap-mcbsp.c
-index fdabed5133e83..b399d86f22777 100644
---- a/sound/soc/ti/omap-mcbsp.c
-+++ b/sound/soc/ti/omap-mcbsp.c
-@@ -74,14 +74,16 @@ static int omap2_mcbsp_set_clks_src(struct omap_mcbsp *mcbsp, u8 fck_src_id)
+diff --git a/drivers/gpu/drm/qxl/qxl_display.c b/drivers/gpu/drm/qxl/qxl_display.c
+index 6492a70e3c396..404b0483bb7cb 100644
+--- a/drivers/gpu/drm/qxl/qxl_display.c
++++ b/drivers/gpu/drm/qxl/qxl_display.c
+@@ -1229,6 +1229,9 @@ int qxl_destroy_monitors_object(struct qxl_device *qdev)
+ 	if (!qdev->monitors_config_bo)
  		return 0;
- 	}
  
--	pm_runtime_put_sync(mcbsp->dev);
-+	if (mcbsp->active)
-+		pm_runtime_put_sync(mcbsp->dev);
- 
- 	r = clk_set_parent(mcbsp->fclk, fck_src);
- 	if (r)
- 		dev_err(mcbsp->dev, "CLKS: could not clk_set_parent() to %s\n",
- 			src);
- 
--	pm_runtime_get_sync(mcbsp->dev);
-+	if (mcbsp->active)
-+		pm_runtime_get_sync(mcbsp->dev);
- 
- 	clk_put(fck_src);
++	kfree(qdev->dumb_heads);
++	qdev->dumb_heads = NULL;
++
+ 	qdev->monitors_config = NULL;
+ 	qdev->ram_header->monitors_config = 0;
  
 -- 
 2.42.0
