@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C16F321AD;
-	Fri, 24 Nov 2023 18:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9415A33076;
+	Fri, 24 Nov 2023 18:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ba7KUfPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A42C433C7;
-	Fri, 24 Nov 2023 18:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktYn7yqm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22646C433C8;
+	Fri, 24 Nov 2023 18:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852286;
-	bh=49p6T9CFoFneqA2jfMiAhgA8lemb9k1z5R/kgM1uzrc=;
+	s=korg; t=1700852288;
+	bh=IYpiaQ38uRI+fjyTaaQXahJx9wGPb9grW1I13Qq9ubY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ba7KUfPc9DPdZRZ+rVHMTZ/tWqrkp2qLsfKJmDqwhZz1uj2WkZfWCuR/+W54Qd4jJ
-	 Tx7EZesW5jbTkG0cdo6on6rUWvq7psQuBG1dHzwrjDdmgAe3CnUbg3xYA0DoTKiQ9C
-	 XaBKJDOVMRMy43oSqJi9tcZLti1QIRZltr0ffzuI=
+	b=ktYn7yqmiPv3GlB+/HpwJ4hAqSASONLsc+WL3PFENqaUMNIUfYhLbqLPOi9J2M9Zf
+	 Ldd4kTWiobHsng5CqxYWRyl3GIb8YQ8WBGbKtRAoZj+RRnqyeB1WNa365ZCHHYqA2R
+	 VTTxuCqy0Y8uhwC9/Lh/BYWNJ0SMT+am2DyBLsQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Muhammad Ahmed <ahmed.ahmed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Gregory Price <gregory.price@memverge.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Fan Ni <fan.ni@samsung.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 294/372] drm/amd/display: enable dsc_clk even if dsc_pg disabled
-Date: Fri, 24 Nov 2023 17:51:21 +0000
-Message-ID: <20231124172020.226942795@linuxfoundation.org>
+Subject: [PATCH 6.1 295/372] cxl/region: Validate region mode vs decoder mode
+Date: Fri, 24 Nov 2023 17:51:22 +0000
+Message-ID: <20231124172020.264449593@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -46,81 +47,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Ahmed <ahmed.ahmed@amd.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 40255df370e94d44f0f0a924400d68db0ee31bec ]
+[ Upstream commit 1b9b7a6fd618239db47a83da39dff9e725a5865a ]
 
-[why]
-need to enable dsc_clk regardless dsc_pg
+In preparation for a new region mode, do not, for example, allow
+'ram' decoders to be assigned to 'pmem' regions and vice versa.
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Muhammad Ahmed <ahmed.ahmed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Tested-by: Fan Ni <fan.ni@samsung.com>
+Link: https://lore.kernel.org/r/167601995111.1924368.7459128614177994602.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 0718588c7aaa ("cxl/region: Do not try to cleanup after cxl_region_setup_targets() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c           | 8 ++++----
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 3 +++
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ drivers/cxl/core/region.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 9d321f4f486e2..7a309547c2b3f 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1806,7 +1806,7 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
- 	if (dc->hwss.subvp_pipe_control_lock)
- 		dc->hwss.subvp_pipe_control_lock(dc, context, true, true, NULL, subvp_prev_use);
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 9709bbf773b72..99b0501066e57 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1191,6 +1191,12 @@ static int cxl_region_attach(struct cxl_region *cxlr,
+ 	struct cxl_dport *dport;
+ 	int i, rc = -ENXIO;
  
--	if (dc->debug.enable_double_buffered_dsc_pg_support)
-+	if (dc->hwss.update_dsc_pg)
- 		dc->hwss.update_dsc_pg(dc, context, false);
- 
- 	disable_dangling_plane(dc, context);
-@@ -1905,7 +1905,7 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
- 		dc->hwss.optimize_bandwidth(dc, context);
- 	}
- 
--	if (dc->debug.enable_double_buffered_dsc_pg_support)
-+	if (dc->hwss.update_dsc_pg)
- 		dc->hwss.update_dsc_pg(dc, context, true);
- 
- 	if (dc->ctx->dce_version >= DCE_VERSION_MAX)
-@@ -2193,7 +2193,7 @@ void dc_post_update_surfaces_to_stream(struct dc *dc)
- 
- 		dc->hwss.optimize_bandwidth(dc, context);
- 
--		if (dc->debug.enable_double_buffered_dsc_pg_support)
-+		if (dc->hwss.update_dsc_pg)
- 			dc->hwss.update_dsc_pg(dc, context, true);
- 	}
- 
-@@ -3453,7 +3453,7 @@ static void commit_planes_for_stream(struct dc *dc,
- 		if (get_seamless_boot_stream_count(context) == 0)
- 			dc->hwss.prepare_bandwidth(dc, context);
- 
--		if (dc->debug.enable_double_buffered_dsc_pg_support)
-+		if (dc->hwss.update_dsc_pg)
- 			dc->hwss.update_dsc_pg(dc, context, false);
- 
- 		context_clock_trace(dc, context);
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-index d477dcc9149fa..50b3547977281 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -79,6 +79,9 @@ void dcn32_dsc_pg_control(
- 	if (hws->ctx->dc->debug.disable_dsc_power_gate)
- 		return;
- 
-+	if (!hws->ctx->dc->debug.enable_double_buffered_dsc_pg_support)
-+		return;
++	if (cxled->mode != cxlr->mode) {
++		dev_dbg(&cxlr->dev, "%s region mode: %d mismatch: %d\n",
++			dev_name(&cxled->cxld.dev), cxlr->mode, cxled->mode);
++		return -EINVAL;
++	}
 +
- 	REG_GET(DC_IP_REQUEST_CNTL, IP_REQUEST_EN, &org_ip_request_cntl);
- 	if (org_ip_request_cntl == 0)
- 		REG_SET(DC_IP_REQUEST_CNTL, 0, IP_REQUEST_EN, 1);
+ 	if (cxled->mode == CXL_DECODER_DEAD) {
+ 		dev_dbg(&cxlr->dev, "%s dead\n", dev_name(&cxled->cxld.dev));
+ 		return -ENODEV;
 -- 
 2.42.0
 
