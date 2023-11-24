@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3EA34189;
-	Fri, 24 Nov 2023 19:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3B034189;
+	Fri, 24 Nov 2023 19:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM5Y2Ro6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7E2C433C8;
-	Fri, 24 Nov 2023 19:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKc6ByBW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D91BC433C8;
+	Fri, 24 Nov 2023 19:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852842;
-	bh=BNjgYGveehWQX3kQK7xr4nEqwdbhv7x6f6frhguvK3c=;
+	s=korg; t=1700852844;
+	bh=tNtjrNknEjLjBwuKi/DuSUy5xckuovAZQSa1WZDw/YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bM5Y2Ro6GbitRNjbWxHs5ZqLT8GPBUeKXv3TTZeN6QW/6NMGk0J6uvGxTlpXMuA2E
-	 MCPT6myn3xWI4CTP4/Gd5wrSfDsJ22cjc07PSRiVpZXYNcFHadVAv7pnZ4VBmRtJwt
-	 3TdL3e2Q3QhISFfpUWFkxkBPG+gcbSjMY/s2vr+4=
+	b=nKc6ByBWEKl6I30eiSL8RCdLCqhdXtJZTotTvFwGNn8uA+94n0MVUwUXcJIacbB7p
+	 g4CjzbfBkyNU3VYOTlcPabeh+DabVaP4ANEgV1g6AcHhlszrVS74zA2l5DYRaPc4Kb
+	 8Ph4epbLKgoxamo//eMpENIafzQ9g8WtQlRC6NGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 120/193] firmware: qcom_scm: use 64-bit calling convention only when client is 64-bit
-Date: Fri, 24 Nov 2023 17:54:07 +0000
-Message-ID: <20231124171952.036204854@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Eric Snowberg <eric.snowberg@oracle.com>,
+	Raul E Rangel <rrangel@chromium.org>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.10 121/193] ima: detect changes to the backing overlay file
+Date: Fri, 24 Nov 2023 17:54:08 +0000
+Message-ID: <20231124171952.068626895@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,52 +43,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+From: Mimi Zohar <zohar@linux.ibm.com>
 
-commit 3337a6fea25370d3d244ec6bb38c71ee86fcf837 upstream.
+commit b836c4d29f2744200b2af41e14bf50758dddc818 upstream.
 
-Per the "SMC calling convention specification", the 64-bit calling
-convention can only be used when the client is 64-bit. Whereas the
-32-bit calling convention can be used by either a 32-bit or a 64-bit
-client.
+Commit 18b44bc5a672 ("ovl: Always reevaluate the file signature for
+IMA") forced signature re-evaulation on every file access.
 
-Currently during SCM probe, irrespective of the client, 64-bit calling
-convention is made, which is incorrect and may lead to the undefined
-behaviour when the client is 32-bit. Let's fix it.
+Instead of always re-evaluating the file's integrity, detect a change
+to the backing file, by comparing the cached file metadata with the
+backing file's metadata.  Verifying just the i_version has not changed
+is insufficient.  In addition save and compare the i_ino and s_dev
+as well.
 
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Tested-by: Eric Snowberg <eric.snowberg@oracle.com>
+Tested-by: Raul E Rangel <rrangel@chromium.org>
 Cc: stable@vger.kernel.org
-Fixes: 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and legacy conventions")
-Reviewed-By: Elliot Berman <quic_eberman@quicinc.com>
-Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Link: https://lore.kernel.org/r/20230925-scm-v3-1-8790dff6a749@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/qcom_scm.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/overlayfs/super.c              |    2 +-
+ security/integrity/ima/ima_api.c  |    5 +++++
+ security/integrity/ima/ima_main.c |   16 +++++++++++++++-
+ security/integrity/integrity.h    |    2 ++
+ 4 files changed, 23 insertions(+), 2 deletions(-)
 
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -137,6 +137,12 @@ static enum qcom_scm_convention __get_co
- 		return qcom_scm_convention;
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -2028,7 +2028,7 @@ static int ovl_fill_super(struct super_b
+ 	sb->s_xattr = ovl_xattr_handlers;
+ 	sb->s_fs_info = ofs;
+ 	sb->s_flags |= SB_POSIXACL;
+-	sb->s_iflags |= SB_I_SKIP_SYNC | SB_I_IMA_UNVERIFIABLE_SIGNATURE;
++	sb->s_iflags |= SB_I_SKIP_SYNC;
  
- 	/*
-+	 * Per the "SMC calling convention specification", the 64-bit calling
-+	 * convention can only be used when the client is 64-bit, otherwise
-+	 * system will encounter the undefined behaviour.
-+	 */
-+#if IS_ENABLED(CONFIG_ARM64)
-+	/*
- 	 * Device isn't required as there is only one argument - no device
- 	 * needed to dma_map_single to secure world
- 	 */
-@@ -156,6 +162,7 @@ static enum qcom_scm_convention __get_co
- 		forced = true;
- 		goto found;
+ 	err = -ENOMEM;
+ 	root_dentry = ovl_get_root(sb, upperpath.dentry, oe);
+--- a/security/integrity/ima/ima_api.c
++++ b/security/integrity/ima/ima_api.c
+@@ -212,6 +212,7 @@ int ima_collect_measurement(struct integ
+ {
+ 	const char *audit_cause = "failed";
+ 	struct inode *inode = file_inode(file);
++	struct inode *real_inode = d_real_inode(file_dentry(file));
+ 	const char *filename = file->f_path.dentry->d_name.name;
+ 	int result = 0;
+ 	int length;
+@@ -262,6 +263,10 @@ int ima_collect_measurement(struct integ
+ 	iint->ima_hash = tmpbuf;
+ 	memcpy(iint->ima_hash, &hash, length);
+ 	iint->version = i_version;
++	if (real_inode != inode) {
++		iint->real_ino = real_inode->i_ino;
++		iint->real_dev = real_inode->i_sb->s_dev;
++	}
+ 
+ 	/* Possibly temporary failure due to type of read (eg. O_DIRECT) */
+ 	if (!result)
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -26,6 +26,7 @@
+ #include <linux/ima.h>
+ #include <linux/iversion.h>
+ #include <linux/fs.h>
++#include <linux/iversion.h>
+ 
+ #include "ima.h"
+ 
+@@ -197,7 +198,7 @@ static int process_measurement(struct fi
+ 			       u32 secid, char *buf, loff_t size, int mask,
+ 			       enum ima_hooks func)
+ {
+-	struct inode *inode = file_inode(file);
++	struct inode *backing_inode, *inode = file_inode(file);
+ 	struct integrity_iint_cache *iint = NULL;
+ 	struct ima_template_desc *template_desc = NULL;
+ 	char *pathbuf = NULL;
+@@ -271,6 +272,19 @@ static int process_measurement(struct fi
+ 		iint->measured_pcrs = 0;
  	}
-+#endif
  
- 	probed_convention = SMC_CONVENTION_ARM_32;
- 	ret = __scm_smc_call(NULL, &desc, probed_convention, &res, true);
++	/* Detect and re-evaluate changes made to the backing file. */
++	backing_inode = d_real_inode(file_dentry(file));
++	if (backing_inode != inode &&
++	    (action & IMA_DO_MASK) && (iint->flags & IMA_DONE_MASK)) {
++		if (!IS_I_VERSION(backing_inode) ||
++		    backing_inode->i_sb->s_dev != iint->real_dev ||
++		    backing_inode->i_ino != iint->real_ino ||
++		    !inode_eq_iversion(backing_inode, iint->version)) {
++			iint->flags &= ~IMA_DONE_MASK;
++			iint->measured_pcrs = 0;
++		}
++	}
++
+ 	/* Determine if already appraised/measured based on bitmask
+ 	 * (IMA_MEASURE, IMA_MEASURED, IMA_XXXX_APPRAISE, IMA_XXXX_APPRAISED,
+ 	 *  IMA_AUDIT, IMA_AUDITED)
+--- a/security/integrity/integrity.h
++++ b/security/integrity/integrity.h
+@@ -131,6 +131,8 @@ struct integrity_iint_cache {
+ 	unsigned long flags;
+ 	unsigned long measured_pcrs;
+ 	unsigned long atomic_flags;
++	unsigned long real_ino;
++	dev_t real_dev;
+ 	enum integrity_status ima_file_status:4;
+ 	enum integrity_status ima_mmap_status:4;
+ 	enum integrity_status ima_bprm_status:4;
 
 
