@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D40139FF7;
-	Fri, 24 Nov 2023 18:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971732E40E;
+	Fri, 24 Nov 2023 18:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0d3FUD23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A499EC433C7;
-	Fri, 24 Nov 2023 18:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwpbkXIZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F185C433C8;
+	Fri, 24 Nov 2023 18:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850802;
-	bh=b/kW9XHR/LbHVxXK60gK3mMiGWEhWQMJXk0dttM42Es=;
+	s=korg; t=1700850805;
+	bh=2y9xvEBAoygEbPu2e5jCF2JemC+HE9tlInjxa3s1K9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0d3FUD23JYBvOFYU/2OhTagtAGh/QPJRZJ4IO7Ctu5y0al90Mc1uaaYPn303qHzrv
-	 d8IZUSlgrLoULcHK/kh49xZ3WFKPzZkCLpSHRXvCflLYxH65h/kVSxcqdcExCpnOF0
-	 pePKRTvW83XDmzMJKvPmGqCUhoBW1kQ6KlmdqCFY=
+	b=SwpbkXIZ3qCUgZ6Al1SFAGZnYyspJ9S8JgT23dz9uRlKxE6FbvwdI49sVz5C4xZBe
+	 mByJASmhrP1UTOI0QsoUnIETBDcb0GK0dGqneySbJaUB/NObLxz9BE5eD6v3msrj4f
+	 cCODRQpMMlKismu5oC6aL88uR6ixwmDJo6CPzKBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KP Singh <kpsingh@kernel.org>,
-	linux-hardening@vger.kernel.org,
-	kernel test robot <lkp@intel.com>,
-	Bill Wendling <morbo@google.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 170/491] gcc-plugins: randstruct: Only warn about true flexible arrays
-Date: Fri, 24 Nov 2023 17:46:46 +0000
-Message-ID: <20231124172029.578507512@linuxfoundation.org>
+Subject: [PATCH 6.5 161/491] SUNRPC: Add an IS_ERR() check back to where it was
+Date: Fri, 24 Nov 2023 17:46:37 +0000
+Message-ID: <20231124172029.315136352@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -46,66 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 1ee60356c2dca938362528404af95b8ef3e49b6a ]
+[ Upstream commit 4f3ed837186fc0d2722ba8d2457a594322e9c2ef ]
 
-The randstruct GCC plugin tried to discover "fake" flexible arrays
-to issue warnings about them in randomized structs. In the future
-LSM overhead reduction series, it would be legal to have a randomized
-struct with a 1-element array, and this should _not_ be treated as a
-flexible array, especially since commit df8fc4e934c1 ("kbuild: Enable
--fstrict-flex-arrays=3"). Disable the 0-sized and 1-element array
-discovery logic in the plugin, but keep the "true" flexible array check.
+This IS_ERR() check was deleted during in a cleanup because, at the time,
+the rpcb_call_async() function could not return an error pointer.  That
+changed in commit 25cf32ad5dba ("SUNRPC: Handle allocation failure in
+rpc_new_task()") and now it can return an error pointer.  Put the check
+back.
 
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: linux-hardening@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311021532.iBwuZUZ0-lkp@intel.com/
-Fixes: df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3")
-Reviewed-by: Bill Wendling <morbo@google.com>
-Acked-by: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20231104204334.work.160-kees@kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+A related revert was done in commit 13bd90141804 ("Revert "SUNRPC:
+Remove unreachable error condition"").
+
+Fixes: 037e910b52b0 ("SUNRPC: Remove unreachable error condition in rpcb_getport_async()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gcc-plugins/randomize_layout_plugin.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ net/sunrpc/rpcb_clnt.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
-index 951b74ba1b242..5e5744b65f8a9 100644
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -273,8 +273,6 @@ static bool is_flexible_array(const_tree field)
- {
- 	const_tree fieldtype;
- 	const_tree typesize;
--	const_tree elemtype;
--	const_tree elemsize;
+diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
+index 5988a5c5ff3f0..102c3818bc54d 100644
+--- a/net/sunrpc/rpcb_clnt.c
++++ b/net/sunrpc/rpcb_clnt.c
+@@ -769,6 +769,10 @@ void rpcb_getport_async(struct rpc_task *task)
  
- 	fieldtype = TREE_TYPE(field);
- 	typesize = TYPE_SIZE(fieldtype);
-@@ -282,20 +280,12 @@ static bool is_flexible_array(const_tree field)
- 	if (TREE_CODE(fieldtype) != ARRAY_TYPE)
- 		return false;
+ 	child = rpcb_call_async(rpcb_clnt, map, proc);
+ 	rpc_release_client(rpcb_clnt);
++	if (IS_ERR(child)) {
++		/* rpcb_map_release() has freed the arguments */
++		return;
++	}
  
--	elemtype = TREE_TYPE(fieldtype);
--	elemsize = TYPE_SIZE(elemtype);
--
- 	/* size of type is represented in bits */
- 
- 	if (typesize == NULL_TREE && TYPE_DOMAIN(fieldtype) != NULL_TREE &&
- 	    TYPE_MAX_VALUE(TYPE_DOMAIN(fieldtype)) == NULL_TREE)
- 		return true;
- 
--	if (typesize != NULL_TREE &&
--	    (TREE_CONSTANT(typesize) && (!tree_to_uhwi(typesize) ||
--	     tree_to_uhwi(typesize) == tree_to_uhwi(elemsize))))
--		return true;
--
- 	return false;
- }
- 
+ 	xprt->stat.bind_count++;
+ 	rpc_put_task(child);
 -- 
 2.42.0
 
