@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9906A39FEA;
-	Fri, 24 Nov 2023 18:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264139FF7;
+	Fri, 24 Nov 2023 18:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAShc26i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDFDC433C8;
-	Fri, 24 Nov 2023 18:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWdgCHGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC3FC433C8;
+	Fri, 24 Nov 2023 18:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849753;
-	bh=z0tIe70DQcj/c0QevsCLPrJ76QhZdU8cUSPXBVQC7fA=;
+	s=korg; t=1700849755;
+	bh=VVLfcdWMTMbzbKRCDB7RVXpXdTD+KcRxJbG/tHPoxGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cAShc26iJ6AR/EVtkL6M6qetbgzz0SaKEYg7BapafKTi6RsAMkDnMCm7Zpi+tDsbB
-	 DXTmpsJylQl0BGe+e1fXUvtISx9WjyDLEk/wh0rllr/KKoyiWndJWEAL+E5Dwup/eq
-	 h/dVN0RiUCLNM5nc6WRI4bLLDIUeYibv1NkbsL1M=
+	b=WWdgCHGsY9/rAxcp2aN/0S3iWIZLU/F6mq+KX25PSeYLfOWPESmou/INb7mPAC+qZ
+	 lydT9a5iq2z+IKabFVW7KWm96Adh4ogkO1BfeUZkLAesnfayJwA3RTQwfcq0m6eQpj
+	 7kwUx962PepYsNhwBwVQcfcFe+N7h0feTNVO7NMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Li <pengfei.li_1@nxp.com>,
-	Emil Kronborg <emil.kronborg@protonmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 307/530] pmdomain: imx: Make imx pgc power domain also set the fwnode
-Date: Fri, 24 Nov 2023 17:47:53 +0000
-Message-ID: <20231124172037.378894276@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 308/530] parisc/agp: Use 64-bit LE values in SBA IOMMU PDIR table
+Date: Fri, 24 Nov 2023 17:47:54 +0000
+Message-ID: <20231124172037.408233054@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,42 +40,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengfei Li <pengfei.li_1@nxp.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 374de39d38f97b0e58cfee88da590b2d056ccf7f upstream.
+commit 86bb854d134f4429feb35d2e05f55c6e036770d2 upstream.
 
-Currently, The imx pgc power domain doesn't set the fwnode
-pointer, which results in supply regulator device can't get
-consumer imx pgc power domain device from fwnode when creating
-a link.
+The PDIR table of the System Bus Adapter (SBA) I/O MMU uses 64-bit
+little-endian pointers.
 
-This causes the driver core to instead try to create a link
-between the parent gpc device of imx pgc power domain device and
-supply regulator device. However, at this point, the gpc device
-has already been bound, and the link creation will fail. So adding
-the fwnode pointer to the imx pgc power domain device will fix
-this issue.
-
-Signed-off-by: Pengfei Li <pengfei.li_1@nxp.com>
-Tested-by: Emil Kronborg <emil.kronborg@protonmail.com>
-Fixes: 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231020185949.537083-1-pengfei.li_1@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # v6.4+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/gpc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/agp/parisc-agp.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/pmdomain/imx/gpc.c
-+++ b/drivers/pmdomain/imx/gpc.c
-@@ -498,6 +498,7 @@ static int imx_gpc_probe(struct platform
+--- a/drivers/char/agp/parisc-agp.c
++++ b/drivers/char/agp/parisc-agp.c
+@@ -38,7 +38,7 @@ static struct _parisc_agp_info {
  
- 			pd_pdev->dev.parent = &pdev->dev;
- 			pd_pdev->dev.of_node = np;
-+			pd_pdev->dev.fwnode = of_fwnode_handle(np);
+ 	int lba_cap_offset;
  
- 			ret = platform_device_add(pd_pdev);
- 			if (ret) {
+-	u64 *gatt;
++	__le64 *gatt;
+ 	u64 gatt_entries;
+ 
+ 	u64 gart_base;
+@@ -104,7 +104,7 @@ parisc_agp_create_gatt_table(struct agp_
+ 	int i;
+ 
+ 	for (i = 0; i < info->gatt_entries; i++) {
+-		info->gatt[i] = (unsigned long)agp_bridge->scratch_page;
++		info->gatt[i] = cpu_to_le64(agp_bridge->scratch_page);
+ 	}
+ 
+ 	return 0;
+@@ -158,9 +158,9 @@ parisc_agp_insert_memory(struct agp_memo
+ 		for (k = 0;
+ 		     k < info->io_pages_per_kpage;
+ 		     k++, j++, paddr += info->io_page_size) {
+-			info->gatt[j] =
++			info->gatt[j] = cpu_to_le64(
+ 				parisc_agp_mask_memory(agp_bridge,
+-					paddr, type);
++					paddr, type));
+ 			asm_io_fdc(&info->gatt[j]);
+ 		}
+ 	}
+@@ -184,7 +184,7 @@ parisc_agp_remove_memory(struct agp_memo
+ 	io_pg_start = info->io_pages_per_kpage * pg_start;
+ 	io_pg_count = info->io_pages_per_kpage * mem->page_count;
+ 	for (i = io_pg_start; i < io_pg_count + io_pg_start; i++) {
+-		info->gatt[i] = agp_bridge->scratch_page;
++		info->gatt[i] = cpu_to_le64(agp_bridge->scratch_page);
+ 	}
+ 
+ 	agp_bridge->driver->tlb_flush(mem);
+@@ -204,7 +204,8 @@ parisc_agp_mask_memory(struct agp_bridge
+ 	pa |= (ci >> PAGE_SHIFT) & 0xff;/* move CI (8 bits) into lowest byte */
+ 	pa |= SBA_PDIR_VALID_BIT;	/* set "valid" bit */
+ 
+-	return cpu_to_le64(pa);
++	/* return native (big-endian) PDIR entry */
++	return pa;
+ }
+ 
+ static void
+@@ -251,7 +252,8 @@ static int __init
+ agp_ioc_init(void __iomem *ioc_regs)
+ {
+ 	struct _parisc_agp_info *info = &parisc_agp_info;
+-        u64 iova_base, *io_pdir, io_tlb_ps;
++        u64 iova_base, io_tlb_ps;
++	__le64 *io_pdir;
+         int io_tlb_shift;
+ 
+         printk(KERN_INFO DRVPFX "IO PDIR shared with sba_iommu\n");
 
 
