@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00274321AD;
-	Fri, 24 Nov 2023 18:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F4C33E9;
+	Fri, 24 Nov 2023 18:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G20r2zKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E81C433C7;
-	Fri, 24 Nov 2023 18:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZfPZgxt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3759C433C8;
+	Fri, 24 Nov 2023 18:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851176;
-	bh=Hy3tHC0Nvr5aVQK8633DSbBm1DsTlCcsq5OOmXeb1N0=;
+	s=korg; t=1700851179;
+	bh=hHmbfISyJcAUOjySEvTc+xyDeCgnE7Y4/M2pvNXnx54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G20r2zKY0eh6S9+zzoUIc4h2LZrfKxf66ASCWI8/N/WPG//nWfwM0FFYgAPE3L61Q
-	 VbbjzsuPCPmIG6gsiqyfXPFoxfWS48mxMy5GD/1R0sgrFixjJD0dx8+oKtNE7PYQDe
-	 q95VrGFfP6yFX2QEMdmCa7TIMVQLAvNyTQbYaogg=
+	b=JZfPZgxtCzsvR922Ab/wt0i7BHv2oLa0Ew++iniSGQtSzaelne/geqEDsO02KrUb+
+	 q3zVftXhuCG98dzTh5eAhtbFLK8xsWZNhqmldfyt6wOMNly8LZCsSB0y58EX3EbjKC
+	 id6GxZbPhf0etWOD2R22qn3xBpxYBa9QIP90irX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Saravana Kannan <saravanak@google.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	James Clark <james.clark@arm.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Subject: [PATCH 6.5 343/491] driver core: Release all resources during unbind before updating device links
-Date: Fri, 24 Nov 2023 17:49:39 +0000
-Message-ID: <20231124172034.881941012@linuxfoundation.org>
+	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Subject: [PATCH 6.5 344/491] mcb: fix error handling for different scenarios when parsing
+Date: Fri, 24 Nov 2023 17:49:40 +0000
+Message-ID: <20231124172034.913875061@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -50,46 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Sanjuán García, Jorge <Jorge.SanjuanGarcia@duagon.com>
 
-commit 2e84dc37920012b458e9458b19fc4ed33f81bc74 upstream.
+commit 63ba2d07b4be72b94216d20561f43e1150b25d98 upstream.
 
-This commit fixes a bug in commit 9ed9895370ae ("driver core: Functional
-dependencies tracking support") where the device link status was
-incorrectly updated in the driver unbind path before all the device's
-resources were released.
+chameleon_parse_gdd() may fail for different reasons and end up
+in the err tag. Make sure we at least always free the mcb_device
+allocated with mcb_alloc_dev().
 
-Fixes: 9ed9895370ae ("driver core: Functional dependencies tracking support")
+If mcb_device_register() fails, make sure to give up the reference
+in the same place the device was added.
+
+Fixes: 728ac3389296 ("mcb: mcb-parse: fix error handing in chameleon_parse_gdd()")
 Cc: stable <stable@kernel.org>
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Closes: https://lore.kernel.org/all/20231014161721.f4iqyroddkcyoefo@pengutronix.de/
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Yang Yingliang <yangyingliang@huawei.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Matti Vaittinen <mazziesaccount@gmail.com>
-Cc: James Clark <james.clark@arm.com>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
-Tested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231018013851.3303928-1-saravanak@google.com
+Reviewed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Link: https://lore.kernel.org/r/20231019141434.57971-2-jorge.sanjuangarcia@duagon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/dd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mcb/mcb-core.c  |    1 +
+ drivers/mcb/mcb-parse.c |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1274,8 +1274,8 @@ static void __device_release_driver(stru
- 		if (dev->bus && dev->bus->dma_cleanup)
- 			dev->bus->dma_cleanup(dev);
+--- a/drivers/mcb/mcb-core.c
++++ b/drivers/mcb/mcb-core.c
+@@ -246,6 +246,7 @@ int mcb_device_register(struct mcb_bus *
+ 	return 0;
  
--		device_links_driver_cleanup(dev);
- 		device_unbind_cleanup(dev);
-+		device_links_driver_cleanup(dev);
+ out:
++	put_device(&dev->dev);
  
- 		klist_remove(&dev->p->knode_driver);
- 		device_pm_check_callbacks(dev);
+ 	return ret;
+ }
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -106,7 +106,7 @@ static int chameleon_parse_gdd(struct mc
+ 	return 0;
+ 
+ err:
+-	put_device(&mdev->dev);
++	mcb_free_dev(mdev);
+ 
+ 	return ret;
+ }
 
 
