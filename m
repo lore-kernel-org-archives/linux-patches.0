@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88A734189;
-	Fri, 24 Nov 2023 19:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B29364A5;
+	Fri, 24 Nov 2023 19:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/Oo1bMQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A9FC433C8;
-	Fri, 24 Nov 2023 19:07:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGhaMQXa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929E7C433C8;
+	Fri, 24 Nov 2023 19:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852857;
-	bh=1d6QdJ+vDCucEaFcVoVsruNVUOt9PppVQRgQ0KaAlZU=;
+	s=korg; t=1700852859;
+	bh=UxqdkEpVxcN6DtGAAF908TklHO9KY3Yaa0Z6PmNHuWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/Oo1bMQ9LOcIGwYAhZTFSuBTDpKt6c5pJsnT4RHTSB1qFQ6jp3+zKZ12pxpOVJ0B
-	 r89nkqtyI1tff138N0T9DMNISh2pTt/QRI9Z1oEZhrz8LL6V1TlTFczXjl5Y8V1axk
-	 tUSyJFgSpIl/5ShkWyCzjMPF+mABJ+yb0eE7NfNE=
+	b=cGhaMQXaTzm1Ph2uVaWUByBJ4QBjYHYqLn+Q8ZKeU+ZpRkJ7MNANthbHbPdC29i9Y
+	 /vKP5f5OUwZmLKWbGx8Q2xa4cTdvtmVW02UgBqPhNYXZ0vPVKo4rlF4IAr9WyprgI+
+	 LNs6OqMd/gYM4r0p5SpFfwqH59Wd6NEUomTbyCUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Krasavin <pkrasavin@imaqliq.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Rokosov <ddrokosov@salutedevices.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 151/193] tty: serial: meson: fix hard LOCKUP on crtscts mode
-Date: Fri, 24 Nov 2023 17:54:38 +0000
-Message-ID: <20231124171953.238567829@linuxfoundation.org>
+Subject: [PATCH 5.10 152/193] cpufreq: stats: Fix buffer overflow detection in trans_stats()
+Date: Fri, 24 Nov 2023 17:54:39 +0000
+Message-ID: <20231124171953.282274078@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,99 +42,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Krasavin <pkrasavin@imaqliq.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 2a1d728f20edeee7f26dc307ed9df4e0d23947ab ]
+[ Upstream commit ea167a7fc2426f7685c3735e104921c1a20a6d3f ]
 
-There might be hard lockup if we set crtscts mode on port without RTS/CTS configured:
+Commit 3c0897c180c6 ("cpufreq: Use scnprintf() for avoiding potential
+buffer overflow") switched from snprintf to the more secure scnprintf
+but never updated the exit condition for PAGE_SIZE.
 
-# stty -F /dev/ttyAML6 crtscts; echo 1 > /dev/ttyAML6; echo 2 > /dev/ttyAML6
-[   95.890386] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-[   95.890857] rcu:     3-...0: (201 ticks this GP) idle=e33c/1/0x4000000000000000 softirq=5844/5846 fqs=4984
-[   95.900212] rcu:     (detected by 2, t=21016 jiffies, g=7753, q=296 ncpus=4)
-[   95.906972] Task dump for CPU 3:
-[   95.910178] task:bash            state:R  running task     stack:0     pid:205   ppid:1      flags:0x00000202
-[   95.920059] Call trace:
-[   95.922485]  __switch_to+0xe4/0x168
-[   95.925951]  0xffffff8003477508
-[   95.974379] watchdog: Watchdog detected hard LOCKUP on cpu 3
-[   95.974424] Modules linked in: 88x2cs(O) rtc_meson_vrtc
+As the commit say and as scnprintf document, what scnprintf returns what
+is actually written not counting the '\0' end char. This results in the
+case of len exceeding the size, len set to PAGE_SIZE - 1, as it can be
+written at max PAGE_SIZE - 1 (as '\0' is not counted)
 
-Possible solution would be to not allow to setup crtscts on such port.
+Because of len is never set to PAGE_SIZE, the function never break early,
+never prints the warning and never return -EFBIG.
 
-Tested on S905X3 based board.
+Fix this by changing the condition to PAGE_SIZE - 1 to correctly trigger
+the error.
 
-Fixes: ff7693d079e5 ("ARM: meson: serial: add MesonX SoC on-chip uart driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Krasavin <pkrasavin@imaqliq.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Rokosov <ddrokosov@salutedevices.com>
-
-v6: stable tag added
-v5: https://lore.kernel.org/lkml/OF43DA36FF.2BD3BB21-ON00258A47.005A8125-00258A47.005A9513@gdc.ru/
-added missed Reviewed-by tags, Fixes tag added according to Dmitry and Neil notes
-v4: https://lore.kernel.org/lkml/OF55521400.7512350F-ON00258A47.003F7254-00258A47.0040E15C@gdc.ru/
-More correct patch subject according to Jiri's note
-v3: https://lore.kernel.org/lkml/OF6CF5FFA0.CCFD0E8E-ON00258A46.00549EDF-00258A46.0054BB62@gdc.ru/
-"From:" line added to the mail
-v2: https://lore.kernel.org/lkml/OF950BEF72.7F425944-ON00258A46.00488A76-00258A46.00497D44@gdc.ru/
-braces for single statement removed according to Dmitry's note
-v1: https://lore.kernel.org/lkml/OF28B2B8C9.5BC0CD28-ON00258A46.0037688F-00258A46.0039155B@gdc.ru/
-Link: https://lore.kernel.org/r/OF66360032.51C36182-ON00258A48.003F656B-00258A48.0040092C@gdc.ru
-
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
+Fixes: 3c0897c180c6 ("cpufreq: Use scnprintf() for avoiding potential buffer overflow")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/meson_uart.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/cpufreq/cpufreq_stats.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
-index bdc394afec5be..bb66a3f06626c 100644
---- a/drivers/tty/serial/meson_uart.c
-+++ b/drivers/tty/serial/meson_uart.c
-@@ -370,10 +370,14 @@ static void meson_uart_set_termios(struct uart_port *port,
- 	else
- 		val |= AML_UART_STOP_BIT_1SB;
+diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
+index 6cd5c8ab5d49f..ab856dd2d5fc0 100644
+--- a/drivers/cpufreq/cpufreq_stats.c
++++ b/drivers/cpufreq/cpufreq_stats.c
+@@ -131,25 +131,25 @@ static ssize_t show_trans_table(struct cpufreq_policy *policy, char *buf)
+ 	len += scnprintf(buf + len, PAGE_SIZE - len, "   From  :    To\n");
+ 	len += scnprintf(buf + len, PAGE_SIZE - len, "         : ");
+ 	for (i = 0; i < stats->state_num; i++) {
+-		if (len >= PAGE_SIZE)
++		if (len >= PAGE_SIZE - 1)
+ 			break;
+ 		len += scnprintf(buf + len, PAGE_SIZE - len, "%9u ",
+ 				stats->freq_table[i]);
+ 	}
+-	if (len >= PAGE_SIZE)
+-		return PAGE_SIZE;
++	if (len >= PAGE_SIZE - 1)
++		return PAGE_SIZE - 1;
  
--	if (cflags & CRTSCTS)
--		val &= ~AML_UART_TWO_WIRE_EN;
--	else
-+	if (cflags & CRTSCTS) {
-+		if (port->flags & UPF_HARD_FLOW)
-+			val &= ~AML_UART_TWO_WIRE_EN;
-+		else
-+			termios->c_cflag &= ~CRTSCTS;
-+	} else {
- 		val |= AML_UART_TWO_WIRE_EN;
-+	}
+ 	len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
  
- 	writel(val, port->membase + AML_UART_CONTROL);
+ 	for (i = 0; i < stats->state_num; i++) {
+-		if (len >= PAGE_SIZE)
++		if (len >= PAGE_SIZE - 1)
+ 			break;
  
-@@ -731,6 +735,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
- 	int ret = 0;
- 	int irq;
-+	bool has_rtscts;
+ 		len += scnprintf(buf + len, PAGE_SIZE - len, "%9u: ",
+ 				stats->freq_table[i]);
  
- 	if (pdev->dev.of_node)
- 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
-@@ -758,6 +763,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 		return irq;
+ 		for (j = 0; j < stats->state_num; j++) {
+-			if (len >= PAGE_SIZE)
++			if (len >= PAGE_SIZE - 1)
+ 				break;
  
- 	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
-+	has_rtscts = of_property_read_bool(pdev->dev.of_node, "uart-has-rtscts");
+ 			if (pending)
+@@ -159,12 +159,12 @@ static ssize_t show_trans_table(struct cpufreq_policy *policy, char *buf)
  
- 	if (meson_ports[pdev->id]) {
- 		dev_err(&pdev->dev, "port %d already allocated\n", pdev->id);
-@@ -782,6 +788,8 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	port->mapsize = resource_size(res_mem);
- 	port->irq = irq;
- 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
-+	if (has_rtscts)
-+		port->flags |= UPF_HARD_FLOW;
- 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
- 	port->dev = &pdev->dev;
- 	port->line = pdev->id;
+ 			len += scnprintf(buf + len, PAGE_SIZE - len, "%9u ", count);
+ 		}
+-		if (len >= PAGE_SIZE)
++		if (len >= PAGE_SIZE - 1)
+ 			break;
+ 		len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
+ 	}
+ 
+-	if (len >= PAGE_SIZE) {
++	if (len >= PAGE_SIZE - 1) {
+ 		pr_warn_once("cpufreq transition table exceeds PAGE_SIZE. Disabling\n");
+ 		return -EFBIG;
+ 	}
 -- 
 2.42.0
 
