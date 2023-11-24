@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4264A2FC4E;
-	Fri, 24 Nov 2023 18:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66B73418B;
+	Fri, 24 Nov 2023 18:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0W3i9os"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C322CC433C7;
-	Fri, 24 Nov 2023 18:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQU/f/HM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3364FC433C9;
+	Fri, 24 Nov 2023 18:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852340;
-	bh=FIQX1zuBoGumYgQx5pPK0zk5h/KnwrJJvJK3dFUBapg=;
+	s=korg; t=1700852342;
+	bh=BgeFNODpiTXRNdeNoYkQ0EiwJ/PI/D+Ds2spgroTX0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H0W3i9os+PvR9AdBLaznU3HPLBXzRF/QrIbWIR6H2I+dAblehCKZQ+R+Nmm91OQ9A
-	 pwRmx9S7qsiCDsP8hZin6HkJWdgX35FSFo5NJIwuribEoiXRSYOnsr4gVge/AcJC2s
-	 H7QIz6RnU6SDweLKxGQD0mk+JMqFiF4PsmUJCQPs=
+	b=AQU/f/HMutPw8NOUaChMpDtziSsyUlhVU249uv0NJJu+6Vj8fe5Yi/CskLiFusFbk
+	 CbimY41mI2Ycx0JIjtjGlwzVWIWUloEyT7YEkKJWgNaEfvIhd0dgmEoqRnEKxQYBNm
+	 xKahdJ13mCNO6IZ9yrUJxZRz21H7aiGyKnU8pWIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Su Hui <suhui@nfschina.com>,
+	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.1 316/372] f2fs: do not return EFSCORRUPTED, but try to run online repair
-Date: Fri, 24 Nov 2023 17:51:43 +0000
-Message-ID: <20231124172020.920764285@linuxfoundation.org>
+Subject: [PATCH 6.1 317/372] f2fs: avoid format-overflow warning
+Date: Fri, 24 Nov 2023 17:51:44 +0000
+Message-ID: <20231124172020.954111718@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -34,95 +36,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Su Hui <suhui@nfschina.com>
 
-commit 50a472bbc79ff9d5a88be8019a60e936cadf9f13 upstream.
+commit e0d4e8acb3789c5a8651061fbab62ca24a45c063 upstream.
 
-If we return the error, there's no way to recover the status as of now, since
-fsck does not fix the xattr boundary issue.
+With gcc and W=1 option, there's a warning like this:
+
+fs/f2fs/compress.c: In function ‘f2fs_init_page_array_cache’:
+fs/f2fs/compress.c:1984:47: error: ‘%u’ directive writing between
+1 and 7 bytes into a region of size between 5 and 8
+[-Werror=format-overflow=]
+ 1984 |  sprintf(slab_name, "f2fs_page_array_entry-%u:%u", MAJOR(dev),
+		MINOR(dev));
+      |                                               ^~
+
+String "f2fs_page_array_entry-%u:%u" can up to 35. The first "%u" can up
+to 4 and the second "%u" can up to 7, so total size is "24 + 4 + 7 = 35".
+slab_name's size should be 35 rather than 32.
 
 Cc: stable@vger.kernel.org
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/node.c  |    4 +++-
- fs/f2fs/xattr.c |   20 +++++++++++++-------
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ fs/f2fs/compress.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -2738,7 +2738,9 @@ recover_xnid:
- 	f2fs_update_inode_page(inode);
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1983,7 +1983,7 @@ void f2fs_destroy_compress_inode(struct
+ int f2fs_init_page_array_cache(struct f2fs_sb_info *sbi)
+ {
+ 	dev_t dev = sbi->sb->s_bdev->bd_dev;
+-	char slab_name[32];
++	char slab_name[35];
  
- 	/* 3: update and set xattr node page dirty */
--	memcpy(F2FS_NODE(xpage), F2FS_NODE(page), VALID_XATTR_BLOCK_SIZE);
-+	if (page)
-+		memcpy(F2FS_NODE(xpage), F2FS_NODE(page),
-+				VALID_XATTR_BLOCK_SIZE);
- 
- 	set_page_dirty(xpage);
- 	f2fs_put_page(xpage, 1);
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -363,10 +363,10 @@ static int lookup_all_xattrs(struct inod
- 
- 	*xe = __find_xattr(cur_addr, last_txattr_addr, NULL, index, len, name);
- 	if (!*xe) {
--		f2fs_err(F2FS_I_SB(inode), "inode (%lu) has corrupted xattr",
-+		f2fs_err(F2FS_I_SB(inode), "lookup inode (%lu) has corrupted xattr",
- 								inode->i_ino);
- 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
--		err = -EFSCORRUPTED;
-+		err = -ENODATA;
- 		f2fs_handle_error(F2FS_I_SB(inode),
- 					ERROR_CORRUPTED_XATTR);
- 		goto out;
-@@ -583,13 +583,12 @@ ssize_t f2fs_listxattr(struct dentry *de
- 
- 		if ((void *)(entry) + sizeof(__u32) > last_base_addr ||
- 			(void *)XATTR_NEXT_ENTRY(entry) > last_base_addr) {
--			f2fs_err(F2FS_I_SB(inode), "inode (%lu) has corrupted xattr",
-+			f2fs_err(F2FS_I_SB(inode), "list inode (%lu) has corrupted xattr",
- 						inode->i_ino);
- 			set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
--			error = -EFSCORRUPTED;
- 			f2fs_handle_error(F2FS_I_SB(inode),
- 						ERROR_CORRUPTED_XATTR);
--			goto cleanup;
-+			break;
- 		}
- 
- 		if (!handler || (handler->list && !handler->list(dentry)))
-@@ -650,7 +649,7 @@ static int __f2fs_setxattr(struct inode
- 
- 	if (size > MAX_VALUE_LEN(inode))
- 		return -E2BIG;
--
-+retry:
- 	error = read_all_xattrs(inode, ipage, &base_addr);
- 	if (error)
- 		return error;
-@@ -660,7 +659,14 @@ static int __f2fs_setxattr(struct inode
- 	/* find entry with wanted name. */
- 	here = __find_xattr(base_addr, last_base_addr, NULL, index, len, name);
- 	if (!here) {
--		f2fs_err(F2FS_I_SB(inode), "inode (%lu) has corrupted xattr",
-+		if (!F2FS_I(inode)->i_xattr_nid) {
-+			f2fs_notice(F2FS_I_SB(inode),
-+				"recover xattr in inode (%lu)", inode->i_ino);
-+			f2fs_recover_xattr_data(inode, NULL);
-+			kfree(base_addr);
-+			goto retry;
-+		}
-+		f2fs_err(F2FS_I_SB(inode), "set inode (%lu) has corrupted xattr",
- 								inode->i_ino);
- 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
- 		error = -EFSCORRUPTED;
+ 	if (!f2fs_sb_has_compression(sbi))
+ 		return 0;
 
 
