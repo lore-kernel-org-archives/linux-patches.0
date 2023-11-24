@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C59381BF;
-	Fri, 24 Nov 2023 18:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642782EAEA;
+	Fri, 24 Nov 2023 18:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZd2rx96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738B8C433C8;
-	Fri, 24 Nov 2023 18:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKh8bPdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB904C433C7;
+	Fri, 24 Nov 2023 18:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850992;
-	bh=JgvVK9MMHeM/8yCbsrgzNJi4oxupU0SxZUiw2wXbCZk=;
+	s=korg; t=1700850995;
+	bh=5+4QT7N7GLummeBKlMooruYIbS2pxepfuZ/3J6Zo9AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZd2rx96Xj33IZGj4OFwrvb+iHrAlGVHb2Vh+p31PrHjqam9ssjyX/sw0FKlho2Cs
-	 MHWAFFVac9/REYUbRc1mYxMqphs7mqIFcTSlrUihZ2RqUNW20G7MPk/0jvwDXjnNGm
-	 SxLmSu2f0VvBJ9IW7q4Vb4UkKOiDC9dbiuDMpr+w=
+	b=QKh8bPdPKwluCnxDPVFiKsnr1175qYEyjgvryyMDNZCaeDP6Qoa29GC5OBnrW2GcK
+	 XRIDDLsp4CI/fBRz8ph9XnI9eZvQ+67b773J6p1dq0xBR1EKp5h3fsa1JuEAijFNW+
+	 /HfrJsYsDxhCcyuZzYWR9I2CCox+OuittafnrP1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Shih <victor.shih@genesyslogic.com.tw>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Kai-Heng Feng <kai.heng.geng@canonical.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.5 246/491] mmc: sdhci-pci-gli: GL9755: Mask the replay timer timeout of AER
-Date: Fri, 24 Nov 2023 17:48:02 +0000
-Message-ID: <20231124172031.947184282@linuxfoundation.org>
+	Luca Boccassi <bluca@debian.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>
+Subject: [PATCH 6.5 247/491] sched: psi: fix unprivileged polling against cgroups
+Date: Fri, 24 Nov 2023 17:48:03 +0000
+Message-ID: <20231124172031.980875640@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,50 +43,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Shih <victor.shih@genesyslogic.com.tw>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit 85dd3af64965c1c0eb7373b340a1b1f7773586b0 upstream.
+commit 8b39d20eceeda6c4eb23df1497f9ed2fffdc8f69 upstream.
 
-Due to a flaw in the hardware design, the GL9755 replay timer frequently
-times out when ASPM is enabled. As a result, the warning messages will
-often appear in the system log when the system accesses the GL9755
-PCI config. Therefore, the replay timer timeout must be masked.
+519fabc7aaba ("psi: remove 500ms min window size limitation for
+triggers") breaks unprivileged psi polling on cgroups.
 
-Fixes: 36ed2fd32b2c ("mmc: sdhci-pci-gli: A workaround to allow GL9755 to enter ASPM L1.2")
-Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Acked-by: Kai-Heng Feng <kai.heng.geng@canonical.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231107095741.8832-3-victorshihgli@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Historically, we had a privilege check for polling in the open() of a
+pressure file in /proc, but were erroneously missing it for the open()
+of cgroup pressure files.
+
+When unprivileged polling was introduced in d82caa273565 ("sched/psi:
+Allow unprivileged polling of N*2s period"), it needed to filter
+privileges depending on the exact polling parameters, and as such
+moved the CAP_SYS_RESOURCE check from the proc open() callback to
+psi_trigger_create(). Both the proc files as well as cgroup files go
+through this during write(). This implicitly added the missing check
+for privileges required for HT polling for cgroups.
+
+When 519fabc7aaba ("psi: remove 500ms min window size limitation for
+triggers") followed right after to remove further restrictions on the
+RT polling window, it incorrectly assumed the cgroup privilege check
+was still missing and added it to the cgroup open(), mirroring what we
+used to do for proc files in the past.
+
+As a result, unprivileged poll requests that would be supported now
+get rejected when opening the cgroup pressure file for writing.
+
+Remove the cgroup open() check. psi_trigger_create() handles it.
+
+Fixes: 519fabc7aaba ("psi: remove 500ms min window size limitation for triggers")
+Reported-by: Luca Boccassi <bluca@debian.org>
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Luca Boccassi <bluca@debian.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Cc: stable@vger.kernel.org # 6.5+
+Link: https://lore.kernel.org/r/20231026164114.2488682-1-hannes@cmpxchg.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/cgroup/cgroup.c |   12 ------------
+ 1 file changed, 12 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -149,6 +149,9 @@
- #define PCI_GLI_9755_PM_CTRL     0xFC
- #define   PCI_GLI_9755_PM_STATE    GENMASK(1, 0)
- 
-+#define PCI_GLI_9755_CORRERR_MASK				0x214
-+#define   PCI_GLI_9755_CORRERR_MASK_REPLAY_TIMER_TIMEOUT	  BIT(12)
-+
- #define SDHCI_GLI_9767_GM_BURST_SIZE			0x510
- #define   SDHCI_GLI_9767_GM_BURST_SIZE_AXI_ALWAYS_SET	  BIT(8)
- 
-@@ -756,6 +759,11 @@ static void gl9755_hw_setting(struct sdh
- 	value &= ~PCI_GLI_9755_PM_STATE;
- 	pci_write_config_dword(pdev, PCI_GLI_9755_PM_CTRL, value);
- 
-+	/* mask the replay timer timeout of AER */
-+	pci_read_config_dword(pdev, PCI_GLI_9755_CORRERR_MASK, &value);
-+	value |= PCI_GLI_9755_CORRERR_MASK_REPLAY_TIMER_TIMEOUT;
-+	pci_write_config_dword(pdev, PCI_GLI_9755_CORRERR_MASK, value);
-+
- 	gl9755_wt_off(pdev);
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -3836,14 +3836,6 @@ static __poll_t cgroup_pressure_poll(str
+ 	return psi_trigger_poll(&ctx->psi.trigger, of->file, pt);
  }
  
+-static int cgroup_pressure_open(struct kernfs_open_file *of)
+-{
+-	if (of->file->f_mode & FMODE_WRITE && !capable(CAP_SYS_RESOURCE))
+-		return -EPERM;
+-
+-	return 0;
+-}
+-
+ static void cgroup_pressure_release(struct kernfs_open_file *of)
+ {
+ 	struct cgroup_file_ctx *ctx = of->priv;
+@@ -5243,7 +5235,6 @@ static struct cftype cgroup_psi_files[]
+ 	{
+ 		.name = "io.pressure",
+ 		.file_offset = offsetof(struct cgroup, psi_files[PSI_IO]),
+-		.open = cgroup_pressure_open,
+ 		.seq_show = cgroup_io_pressure_show,
+ 		.write = cgroup_io_pressure_write,
+ 		.poll = cgroup_pressure_poll,
+@@ -5252,7 +5243,6 @@ static struct cftype cgroup_psi_files[]
+ 	{
+ 		.name = "memory.pressure",
+ 		.file_offset = offsetof(struct cgroup, psi_files[PSI_MEM]),
+-		.open = cgroup_pressure_open,
+ 		.seq_show = cgroup_memory_pressure_show,
+ 		.write = cgroup_memory_pressure_write,
+ 		.poll = cgroup_pressure_poll,
+@@ -5261,7 +5251,6 @@ static struct cftype cgroup_psi_files[]
+ 	{
+ 		.name = "cpu.pressure",
+ 		.file_offset = offsetof(struct cgroup, psi_files[PSI_CPU]),
+-		.open = cgroup_pressure_open,
+ 		.seq_show = cgroup_cpu_pressure_show,
+ 		.write = cgroup_cpu_pressure_write,
+ 		.poll = cgroup_pressure_poll,
+@@ -5271,7 +5260,6 @@ static struct cftype cgroup_psi_files[]
+ 	{
+ 		.name = "irq.pressure",
+ 		.file_offset = offsetof(struct cgroup, psi_files[PSI_IRQ]),
+-		.open = cgroup_pressure_open,
+ 		.seq_show = cgroup_irq_pressure_show,
+ 		.write = cgroup_irq_pressure_write,
+ 		.poll = cgroup_pressure_poll,
 
 
