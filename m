@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAB839FE3;
-	Fri, 24 Nov 2023 18:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EADF39FE3;
+	Fri, 24 Nov 2023 18:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxkKNtGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F681C433C9;
-	Fri, 24 Nov 2023 18:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0sp0Slk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C09C433C7;
+	Fri, 24 Nov 2023 18:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849016;
-	bh=PE+eDPqcwLeAm7K+W7wMljJdm83gbBaTTM5Ibf1Vsao=;
+	s=korg; t=1700849019;
+	bh=sGdbOMkSRoWXxGIXcrET2XAEl1VbGfPVjvqbLdWF5TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxkKNtGZW5T1kDlsz/BeW790oa95EGm9eHg9rbSOF1+Rq5ujgOihlhp2iy3HCPmCy
-	 I0mTLDVs/JSSWLvNlOzQhDYJEWTPVVgDISY3Mm15f9fdC4pmg5pi1xxQquL2RcMAZU
-	 VlD4U+CEzair/nkOek6HHMEdlmVbCI6in5qmt1ZU=
+	b=y0sp0SlkUGLz/M7fpJFQpIbUuMQhFxKGgBuO1haOOrsaid48I9wwpA1meAm+x9jAt
+	 nWuE7OPOkCgVPrlUyP21W8OBLG4fllCSDLQ+yv6CfSbiNJ8hP++ywDCvo03y+SkshB
+	 EuntPb8RPdBwLfQtNDkjCor8s4pcb0Pk5UCCrjMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Mario Casquero <mcasquer@redhat.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Rik van Riel <riel@surriel.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/530] x86/mm: Drop the 4 MB restriction on minimal NUMA node memory size
-Date: Fri, 24 Nov 2023 17:43:01 +0000
-Message-ID: <20231124172028.559361714@linuxfoundation.org>
+Subject: [PATCH 6.6 016/530] wifi: plfxlc: fix clang-specific fortify warning
+Date: Fri, 24 Nov 2023 17:43:02 +0000
+Message-ID: <20231124172028.589276630@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -48,110 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (IBM) <rppt@kernel.org>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit a1e2b8b36820d8c91275f207e77e91645b7c6836 ]
+[ Upstream commit a763e92c78615ea838f5b9a841398b1d4adb968e ]
 
-Qi Zheng reported crashes in a production environment and provided a
-simplified example as a reproducer:
+When compiling with clang 16.0.6 and CONFIG_FORTIFY_SOURCE=y, I've
+noticed the following (somewhat confusing due to absence of an actual
+source code location):
 
- |  For example, if we use Qemu to start a two NUMA node kernel,
- |  one of the nodes has 2M memory (less than NODE_MIN_SIZE),
- |  and the other node has 2G, then we will encounter the
- |  following panic:
- |
- |    BUG: kernel NULL pointer dereference, address: 0000000000000000
- |    <...>
- |    RIP: 0010:_raw_spin_lock_irqsave+0x22/0x40
- |    <...>
- |    Call Trace:
- |      <TASK>
- |      deactivate_slab()
- |      bootstrap()
- |      kmem_cache_init()
- |      start_kernel()
- |      secondary_startup_64_no_verify()
+In file included from drivers/net/wireless/purelifi/plfxlc/mac.c:6:
+In file included from ./include/linux/netdevice.h:24:
+In file included from ./include/linux/timer.h:6:
+In file included from ./include/linux/ktime.h:24:
+In file included from ./include/linux/time.h:60:
+In file included from ./include/linux/time32.h:13:
+In file included from ./include/linux/timex.h:67:
+In file included from ./arch/x86/include/asm/timex.h:5:
+In file included from ./arch/x86/include/asm/processor.h:23:
+In file included from ./arch/x86/include/asm/msr.h:11:
+In file included from ./arch/x86/include/asm/cpumask.h:5:
+In file included from ./include/linux/cpumask.h:12:
+In file included from ./include/linux/bitmap.h:11:
+In file included from ./include/linux/string.h:254:
+./include/linux/fortify-string.h:592:4: warning: call to '__read_overflow2_field'
+declared with 'warning' attribute: detected read beyond size of field (2nd
+parameter); maybe use struct_group()? [-Wattribute-warning]
+                        __read_overflow2_field(q_size_field, size);
 
-The crashes happen because of inconsistency between the nodemask that
-has nodes with less than 4MB as memoryless, and the actual memory fed
-into the core mm.
+The compiler actually complains on 'plfxlc_get_et_strings()' where
+fortification logic inteprets call to 'memcpy()' as an attempt to copy
+the whole 'et_strings' array from its first member and so issues an
+overread warning. This warning may be silenced by passing an address
+of the whole array and not the first member to 'memcpy()'.
 
-The commit:
-
-  9391a3f9c7f1 ("[PATCH] x86_64: Clear more state when ignoring empty node in SRAT parsing")
-
-... that introduced minimal size of a NUMA node does not explain why
-a node size cannot be less than 4MB and what boot failures this
-restriction might fix.
-
-Fixes have been submitted to the core MM code to tighten up the
-memory topologies it accepts and to not crash on weird input:
-
-  mm: page_alloc: skip memoryless nodes entirely
-  mm: memory_hotplug: drop memoryless node from fallback lists
-
-Andrew has accepted them into the -mm tree, but there are no
-stable SHA1's yet.
-
-This patch drops the limitation for minimal node size on x86:
-
-  - which works around the crash without the fixes to the core MM.
-  - makes x86 topologies less weird,
-  - removes an arbitrary and undocumented limitation on NUMA topologies.
-
-[ mingo: Improved changelog clarity. ]
-
-Reported-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/r/ZS+2qqjEO5/867br@gmail.com
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230829094541.234751-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/numa.h | 7 -------
- arch/x86/mm/numa.c          | 7 -------
- 2 files changed, 14 deletions(-)
+ drivers/net/wireless/purelifi/plfxlc/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/numa.h b/arch/x86/include/asm/numa.h
-index e3bae2b60a0db..ef2844d691735 100644
---- a/arch/x86/include/asm/numa.h
-+++ b/arch/x86/include/asm/numa.h
-@@ -12,13 +12,6 @@
+diff --git a/drivers/net/wireless/purelifi/plfxlc/mac.c b/drivers/net/wireless/purelifi/plfxlc/mac.c
+index 94ee831b5de35..506d2f31efb5a 100644
+--- a/drivers/net/wireless/purelifi/plfxlc/mac.c
++++ b/drivers/net/wireless/purelifi/plfxlc/mac.c
+@@ -666,7 +666,7 @@ static void plfxlc_get_et_strings(struct ieee80211_hw *hw,
+ 				  u32 sset, u8 *data)
+ {
+ 	if (sset == ETH_SS_STATS)
+-		memcpy(data, *et_strings, sizeof(et_strings));
++		memcpy(data, et_strings, sizeof(et_strings));
+ }
  
- #define NR_NODE_MEMBLKS		(MAX_NUMNODES*2)
- 
--/*
-- * Too small node sizes may confuse the VM badly. Usually they
-- * result from BIOS bugs. So dont recognize nodes as standalone
-- * NUMA entities that have less than this amount of RAM listed:
-- */
--#define NODE_MIN_SIZE (4*1024*1024)
--
- extern int numa_off;
- 
- /*
-diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
-index c01c5506fd4ae..aa39d678fe81d 100644
---- a/arch/x86/mm/numa.c
-+++ b/arch/x86/mm/numa.c
-@@ -602,13 +602,6 @@ static int __init numa_register_memblks(struct numa_meminfo *mi)
- 		if (start >= end)
- 			continue;
- 
--		/*
--		 * Don't confuse VM with a node that doesn't have the
--		 * minimum amount of memory:
--		 */
--		if (end && (end - start) < NODE_MIN_SIZE)
--			continue;
--
- 		alloc_node_data(nid);
- 	}
- 
+ static void plfxlc_get_et_stats(struct ieee80211_hw *hw,
 -- 
 2.42.0
 
