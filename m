@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5A833CC2;
-	Fri, 24 Nov 2023 18:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7788D33CFD;
+	Fri, 24 Nov 2023 18:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgqgfaBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F354C433C8;
-	Fri, 24 Nov 2023 18:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRovOfzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056B9C433C8;
+	Fri, 24 Nov 2023 18:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852236;
-	bh=ZVYkXEN+I7U42BYSdp6Kqv9fk43iAFaCGZ0sLNMh7kk=;
+	s=korg; t=1700852239;
+	bh=vVQ/BZyWMULkaz4DE3Pkm6XNceiz3fzHKhzyd9Vemj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgqgfaBsUZwRYaht3fS8UK8gaBa1GPc189afD5/A2pT1Z5xaAng2W/kXRNou6+uqo
-	 iRSB/2hWkfd2dYEKrKvF1gfiKBUvDsSMNqfh0Ue2j4YhUdwL31aSvke6o8PWUpm3Sw
-	 54+a2NRqv9njXfjbAyHcb45DOaGhMN3SpDVvWdkk=
+	b=rRovOfzjIZ7egBT+gQmOsIXSvwkuqeFPk0zOE3QwZ3WKsk0e2ZUc1mAM5qjx0Rna2
+	 yLmCwb6uUNM8kQJiR/wO0m3y7OsAAo1/zTAQU2EjOccIzSIWP7Ry2Nhz/0LPs+n4JC
+	 Ea5SpHPGbGNJbpibRgKd4qCGp/J3p5i2a6pamfMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 250/372] dmaengine: stm32-mdma: correct desc prep when channel running
-Date: Fri, 24 Nov 2023 17:50:37 +0000
-Message-ID: <20231124172018.866436953@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.1 251/372] s390/cmma: fix initial kernel address space page table walk
+Date: Fri, 24 Nov 2023 17:50:38 +0000
+Message-ID: <20231124172018.892694412@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,48 +43,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 03f25d53b145bc2f7ccc82fc04e4482ed734f524 upstream.
+commit 16ba44826a04834d3eeeda4b731c2ea3481062b7 upstream.
 
-In case of the prep descriptor while the channel is already running, the
-CCR register value stored into the channel could already have its EN bit
-set.  This would lead to a bad transfer since, at start transfer time,
-enabling the channel while other registers aren't yet properly set.
-To avoid this, ensure to mask the CCR_EN bit when storing the ccr value
-into the mdma channel structure.
+If the cmma no-dat feature is available the kernel page tables are walked
+to identify and mark all pages which are used for address translation (all
+region, segment, and page tables). In a subsequent loop all other pages are
+marked as "no-dat" pages with the ESSA instruction.
 
-Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: stable@vger.kernel.org
-Tested-by: Alain Volmat <alain.volmat@foss.st.com>
-Link: https://lore.kernel.org/r/20231009082450.452877-1-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This information is visible to the hypervisor, so that the hypervisor can
+optimize purging of guest TLB entries. The initial loop however does not
+cover the complete kernel address space. This can result in pages being
+marked as not being used for dynamic address translation, even though they
+are. In turn guest TLB entries incorrectly may not be purged.
+
+Fix this by adjusting the end address of the kernel address range being
+walked.
+
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32-mdma.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/mm/page-states.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -490,7 +490,7 @@ static int stm32_mdma_set_xfer_param(str
- 	src_maxburst = chan->dma_config.src_maxburst;
- 	dst_maxburst = chan->dma_config.dst_maxburst;
+--- a/arch/s390/mm/page-states.c
++++ b/arch/s390/mm/page-states.c
+@@ -162,15 +162,22 @@ static void mark_kernel_p4d(pgd_t *pgd,
  
--	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
-+	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & ~STM32_MDMA_CCR_EN;
- 	ctcr = stm32_mdma_read(dmadev, STM32_MDMA_CTCR(chan->id));
- 	ctbr = stm32_mdma_read(dmadev, STM32_MDMA_CTBR(chan->id));
+ static void mark_kernel_pgd(void)
+ {
+-	unsigned long addr, next;
++	unsigned long addr, next, max_addr;
+ 	struct page *page;
+ 	pgd_t *pgd;
+ 	int i;
  
-@@ -966,7 +966,7 @@ stm32_mdma_prep_dma_memcpy(struct dma_ch
- 	if (!desc)
- 		return NULL;
+ 	addr = 0;
++	/*
++	 * Figure out maximum virtual address accessible with the
++	 * kernel ASCE. This is required to keep the page table walker
++	 * from accessing non-existent entries.
++	 */
++	max_addr = (S390_lowcore.kernel_asce.val & _ASCE_TYPE_MASK) >> 2;
++	max_addr = 1UL << (max_addr * 11 + 31);
+ 	pgd = pgd_offset_k(addr);
+ 	do {
+-		next = pgd_addr_end(addr, MODULES_END);
++		next = pgd_addr_end(addr, max_addr);
+ 		if (pgd_none(*pgd))
+ 			continue;
+ 		if (!pgd_folded(*pgd)) {
+@@ -179,7 +186,7 @@ static void mark_kernel_pgd(void)
+ 				set_bit(PG_arch_1, &page[i].flags);
+ 		}
+ 		mark_kernel_p4d(pgd, addr, next);
+-	} while (pgd++, addr = next, addr != MODULES_END);
++	} while (pgd++, addr = next, addr != max_addr);
+ }
  
--	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
-+	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & ~STM32_MDMA_CCR_EN;
- 	ctcr = stm32_mdma_read(dmadev, STM32_MDMA_CTCR(chan->id));
- 	ctbr = stm32_mdma_read(dmadev, STM32_MDMA_CTBR(chan->id));
- 	cbndtr = stm32_mdma_read(dmadev, STM32_MDMA_CBNDTR(chan->id));
+ void __init cmma_init_nodat(void)
 
 
