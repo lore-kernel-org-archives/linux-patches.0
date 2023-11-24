@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF7239FC6;
-	Fri, 24 Nov 2023 18:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A91D39FC3;
+	Fri, 24 Nov 2023 18:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCjAe/lE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38881C433C7;
-	Fri, 24 Nov 2023 18:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eM9F646U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A472BC433C8;
+	Fri, 24 Nov 2023 18:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849481;
-	bh=fUjtgI/xDsQSXIE0vuBA95IdnDe1aznx6ye0HxBORSE=;
+	s=korg; t=1700849484;
+	bh=tCi+CdJlwwarFSPdJ870Cuvca4YeH/mzSqZqtXKgVfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCjAe/lEBc4xUmUPW6k89FcNG0BNr4F+oZwHWx1o/C21vO/JQDEbL1qfDqqo8HyFP
-	 duRg+d8P9DCn+siEr8QYTCDb2brx+DYQXuWcIa5RO9ZHUorCElBQxrdDUvjWYT/ifi
-	 lhTLybJs+GWzIRgQSqRr7hxnMDZXgW9fC429Z0P8=
+	b=eM9F646UoEI8NEk6OGLuLDaLhYtXGQKKgwmujtE5ZVnDKwLszX74YrxhBlRpBY9Uh
+	 qPniXg1QKzl4IldyfmTpOSOy705wF/uYRn0YMrnvYf7L+48fcRTfBig93ynCu4MRnR
+	 HW7oMIJ7UQkjKlJeEbT0HIDPviAJzpW13Xaas9sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Eric Dumazet <edumazet@google.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 199/530] blk-mq: make sure active queue usage is held for bio_integrity_prep()
-Date: Fri, 24 Nov 2023 17:46:05 +0000
-Message-ID: <20231124172034.129485766@linuxfoundation.org>
+Subject: [PATCH 6.6 200/530] ptp: annotate data-race around q->head and q->tail
+Date: Fri, 24 Nov 2023 17:46:06 +0000
+Message-ID: <20231124172034.160664994@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,167 +43,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@infradead.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b0077e269f6c152e807fdac90b58caf012cdbaab ]
+[ Upstream commit 73bde5a3294853947252cd9092a3517c7cb0cd2d ]
 
-blk_integrity_unregister() can come if queue usage counter isn't held
-for one bio with integrity prepared, so this request may be completed with
-calling profile->complete_fn, then kernel panic.
+As I was working on a syzbot report, I found that KCSAN would
+probably complain that reading q->head or q->tail without
+barriers could lead to invalid results.
 
-Another constraint is that bio_integrity_prep() needs to be called
-before bio merge.
+Add corresponding READ_ONCE() and WRITE_ONCE() to avoid
+load-store tearing.
 
-Fix the issue by:
-
-- call bio_integrity_prep() with one queue usage counter grabbed reliably
-
-- call bio_integrity_prep() before bio merge
-
-Fixes: 900e080752025f00 ("block: move queue enter logic into blk_mq_submit_bio()")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Link: https://lore.kernel.org/r/20231113035231.2708053-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://lore.kernel.org/r/20231109174859.3995880-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 75 +++++++++++++++++++++++++-------------------------
- 1 file changed, 38 insertions(+), 37 deletions(-)
+ drivers/ptp/ptp_chardev.c | 3 ++-
+ drivers/ptp/ptp_clock.c   | 5 +++--
+ drivers/ptp/ptp_private.h | 8 ++++++--
+ drivers/ptp/ptp_sysfs.c   | 3 ++-
+ 4 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 1fafd54dce3cb..6ab7f360ff2ac 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -2875,11 +2875,8 @@ static struct request *blk_mq_get_new_requests(struct request_queue *q,
- 	};
- 	struct request *rq;
+diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
+index 362bf756e6b78..5a3a4cc0bec82 100644
+--- a/drivers/ptp/ptp_chardev.c
++++ b/drivers/ptp/ptp_chardev.c
+@@ -490,7 +490,8 @@ ssize_t ptp_read(struct posix_clock *pc,
  
--	if (unlikely(bio_queue_enter(bio)))
--		return NULL;
--
- 	if (blk_mq_attempt_bio_merge(q, bio, nsegs))
--		goto queue_exit;
-+		return NULL;
+ 	for (i = 0; i < cnt; i++) {
+ 		event[i] = queue->buf[queue->head];
+-		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
++		/* Paired with READ_ONCE() in queue_cnt() */
++		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
+ 	}
  
- 	rq_qos_throttle(q, bio);
+ 	spin_unlock_irqrestore(&queue->lock, flags);
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index 80f74e38c2da4..9a50bfb56453c 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -56,10 +56,11 @@ static void enqueue_external_timestamp(struct timestamp_event_queue *queue,
+ 	dst->t.sec = seconds;
+ 	dst->t.nsec = remainder;
  
-@@ -2895,35 +2892,23 @@ static struct request *blk_mq_get_new_requests(struct request_queue *q,
- 	rq_qos_cleanup(q, bio);
- 	if (bio->bi_opf & REQ_NOWAIT)
- 		bio_wouldblock_error(bio);
--queue_exit:
--	blk_queue_exit(q);
- 	return NULL;
++	/* Both WRITE_ONCE() are paired with READ_ONCE() in queue_cnt() */
+ 	if (!queue_free(queue))
+-		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
++		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
+ 
+-	queue->tail = (queue->tail + 1) % PTP_MAX_TIMESTAMPS;
++	WRITE_ONCE(queue->tail, (queue->tail + 1) % PTP_MAX_TIMESTAMPS);
+ 
+ 	spin_unlock_irqrestore(&queue->lock, flags);
  }
- 
--static inline struct request *blk_mq_get_cached_request(struct request_queue *q,
--		struct blk_plug *plug, struct bio **bio, unsigned int nsegs)
-+/* return true if this @rq can be used for @bio */
-+static bool blk_mq_can_use_cached_rq(struct request *rq, struct blk_plug *plug,
-+		struct bio *bio)
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index 75f58fc468a71..b8d4f61f14be4 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -76,9 +76,13 @@ struct ptp_vclock {
+  * that a writer might concurrently increment the tail does not
+  * matter, since the queue remains nonempty nonetheless.
+  */
+-static inline int queue_cnt(struct timestamp_event_queue *q)
++static inline int queue_cnt(const struct timestamp_event_queue *q)
  {
--	struct request *rq;
--	enum hctx_type type, hctx_type;
-+	enum hctx_type type = blk_mq_get_hctx_type(bio->bi_opf);
-+	enum hctx_type hctx_type = rq->mq_hctx->type;
- 
--	if (!plug)
--		return NULL;
--	rq = rq_list_peek(&plug->cached_rq);
--	if (!rq || rq->q != q)
--		return NULL;
-+	WARN_ON_ONCE(rq_list_peek(&plug->cached_rq) != rq);
- 
--	if (blk_mq_attempt_bio_merge(q, *bio, nsegs)) {
--		*bio = NULL;
--		return NULL;
--	}
--
--	type = blk_mq_get_hctx_type((*bio)->bi_opf);
--	hctx_type = rq->mq_hctx->type;
- 	if (type != hctx_type &&
- 	    !(type == HCTX_TYPE_READ && hctx_type == HCTX_TYPE_DEFAULT))
--		return NULL;
--	if (op_is_flush(rq->cmd_flags) != op_is_flush((*bio)->bi_opf))
--		return NULL;
-+		return false;
-+	if (op_is_flush(rq->cmd_flags) != op_is_flush(bio->bi_opf))
-+		return false;
- 
- 	/*
- 	 * If any qos ->throttle() end up blocking, we will have flushed the
-@@ -2931,12 +2916,12 @@ static inline struct request *blk_mq_get_cached_request(struct request_queue *q,
- 	 * before we throttle.
- 	 */
- 	plug->cached_rq = rq_list_next(rq);
--	rq_qos_throttle(q, *bio);
-+	rq_qos_throttle(rq->q, bio);
- 
- 	blk_mq_rq_time_init(rq, 0);
--	rq->cmd_flags = (*bio)->bi_opf;
-+	rq->cmd_flags = bio->bi_opf;
- 	INIT_LIST_HEAD(&rq->queuelist);
--	return rq;
-+	return true;
+-	int cnt = q->tail - q->head;
++	/*
++	 * Paired with WRITE_ONCE() in enqueue_external_timestamp(),
++	 * ptp_read(), extts_fifo_show().
++	 */
++	int cnt = READ_ONCE(q->tail) - READ_ONCE(q->head);
+ 	return cnt < 0 ? PTP_MAX_TIMESTAMPS + cnt : cnt;
  }
  
- static void bio_set_ioprio(struct bio *bio)
-@@ -2966,7 +2951,7 @@ void blk_mq_submit_bio(struct bio *bio)
- 	struct blk_plug *plug = blk_mq_plug(bio);
- 	const int is_sync = op_is_sync(bio->bi_opf);
- 	struct blk_mq_hw_ctx *hctx;
--	struct request *rq;
-+	struct request *rq = NULL;
- 	unsigned int nr_segs = 1;
- 	blk_status_t ret;
- 
-@@ -2977,20 +2962,36 @@ void blk_mq_submit_bio(struct bio *bio)
- 			return;
+diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
+index 6e4d5456a8851..34ea5c16123a1 100644
+--- a/drivers/ptp/ptp_sysfs.c
++++ b/drivers/ptp/ptp_sysfs.c
+@@ -90,7 +90,8 @@ static ssize_t extts_fifo_show(struct device *dev,
+ 	qcnt = queue_cnt(queue);
+ 	if (qcnt) {
+ 		event = queue->buf[queue->head];
+-		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
++		/* Paired with READ_ONCE() in queue_cnt() */
++		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
  	}
+ 	spin_unlock_irqrestore(&queue->lock, flags);
  
--	if (!bio_integrity_prep(bio))
--		return;
--
- 	bio_set_ioprio(bio);
- 
--	rq = blk_mq_get_cached_request(q, plug, &bio, nr_segs);
--	if (!rq) {
--		if (!bio)
-+	if (plug) {
-+		rq = rq_list_peek(&plug->cached_rq);
-+		if (rq && rq->q != q)
-+			rq = NULL;
-+	}
-+	if (rq) {
-+		if (!bio_integrity_prep(bio))
- 			return;
--		rq = blk_mq_get_new_requests(q, plug, bio, nr_segs);
--		if (unlikely(!rq))
-+		if (blk_mq_attempt_bio_merge(q, bio, nr_segs))
- 			return;
-+		if (blk_mq_can_use_cached_rq(rq, plug, bio))
-+			goto done;
-+		percpu_ref_get(&q->q_usage_counter);
-+	} else {
-+		if (unlikely(bio_queue_enter(bio)))
-+			return;
-+		if (!bio_integrity_prep(bio))
-+			goto fail;
-+	}
-+
-+	rq = blk_mq_get_new_requests(q, plug, bio, nr_segs);
-+	if (unlikely(!rq)) {
-+fail:
-+		blk_queue_exit(q);
-+		return;
- 	}
- 
-+done:
- 	trace_block_getrq(bio);
- 
- 	rq_qos_track(q, rq, bio);
 -- 
 2.42.0
 
