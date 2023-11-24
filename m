@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1922C1A2;
-	Fri, 24 Nov 2023 19:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFFD2D787;
+	Fri, 24 Nov 2023 19:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IObGolmE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41106C433C8;
-	Fri, 24 Nov 2023 19:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ry4AAcoO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1213C433C8;
+	Fri, 24 Nov 2023 19:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853194;
-	bh=8/EIP52LrnZuHW+7iirnquJz4aVK7qeZ4yiq4ZdYBUY=;
+	s=korg; t=1700853197;
+	bh=glvLba6niyGN/8IdhCCMkgl4nqubO51VP0J8SKcufbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IObGolmEsgBB5m7AY4aj1z34M3UgNQqiTzViM7OgGQ+692g9rj6vj3cu1T5qzfk1F
-	 wzvk8jooc9J+bPcDfKpDR73+ENBhLFW2v2TaprwWOGQniwubqa/Wu8m6j4ANPn0s/C
-	 yZH+LO6agrDXlsdA6WMOJp1tvZFLErYb0V5kLp3M=
+	b=Ry4AAcoOO6rdgNlgHVCHx1otwzzm4B3YwoErJycU5R4E+Od1/MCMe964cJGW0FHMZ
+	 kQZi765ro9PnSN5/xmzD8+Oa2AkS591E1aoaw0QUycGkya487gdYzot4bMfX0NAUKA
+	 YHpJO3gV/MKTGFX2q/NoFwWZw+ooZovR8Nkfiniw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Marc Zyngier <maz@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/297] gpio: Add helpers to ease the transition towards immutable irq_chip
-Date: Fri, 24 Nov 2023 17:52:13 +0000
-Message-ID: <20231124172003.432550908@linuxfoundation.org>
+Subject: [PATCH 5.15 092/297] SUNRPC: Add an IS_ERR() check back to where it was
+Date: Fri, 24 Nov 2023 17:52:14 +0000
+Message-ID: <20231124172003.476178624@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,52 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 36b78aae4bfee749bbde73be570796bfd0f56bec ]
+[ Upstream commit 4f3ed837186fc0d2722ba8d2457a594322e9c2ef ]
 
-Add a couple of new helpers to make it slightly simpler to convert
-drivers to immutable irq_chip structures:
+This IS_ERR() check was deleted during in a cleanup because, at the time,
+the rpcb_call_async() function could not return an error pointer.  That
+changed in commit 25cf32ad5dba ("SUNRPC: Handle allocation failure in
+rpc_new_task()") and now it can return an error pointer.  Put the check
+back.
 
-- GPIOCHIP_IRQ_RESOURCE_HELPERS populates the irq_chip structure
-  with the resource management callbacks
+A related revert was done in commit 13bd90141804 ("Revert "SUNRPC:
+Remove unreachable error condition"").
 
-- gpio_irq_chip_set_chip() populates the gpio_irq_chip.chip
-  structure, avoiding the proliferation of ugly casts
-
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Bartosz Golaszewski <brgl@bgdev.pl>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20220419141846.598305-4-maz@kernel.org
-Stable-dep-of: dc3115e6c5d9 ("hid: cp2112: Fix IRQ shutdown stopping polling for all IRQs on chip")
+Fixes: 037e910b52b0 ("SUNRPC: Remove unreachable error condition in rpcb_getport_async()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/gpio/driver.h | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/sunrpc/rpcb_clnt.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
-index b241fc23ff3a2..91f60d1e3eb31 100644
---- a/include/linux/gpio/driver.h
-+++ b/include/linux/gpio/driver.h
-@@ -599,6 +599,18 @@ void gpiochip_enable_irq(struct gpio_chip *gc, unsigned int offset);
- int gpiochip_irq_reqres(struct irq_data *data);
- void gpiochip_irq_relres(struct irq_data *data);
+diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
+index 647b323cc1d56..638b14f28101e 100644
+--- a/net/sunrpc/rpcb_clnt.c
++++ b/net/sunrpc/rpcb_clnt.c
+@@ -746,6 +746,10 @@ void rpcb_getport_async(struct rpc_task *task)
  
-+/* Paste this in your irq_chip structure  */
-+#define	GPIOCHIP_IRQ_RESOURCE_HELPERS					\
-+		.irq_request_resources  = gpiochip_irq_reqres,		\
-+		.irq_release_resources  = gpiochip_irq_relres
-+
-+static inline void gpio_irq_chip_set_chip(struct gpio_irq_chip *girq,
-+					  const struct irq_chip *chip)
-+{
-+	/* Yes, dropping const is ugly, but it isn't like we have a choice */
-+	girq->chip = (struct irq_chip *)chip;
-+}
-+
- /* Line status inquiry for drivers */
- bool gpiochip_line_is_open_drain(struct gpio_chip *gc, unsigned int offset);
- bool gpiochip_line_is_open_source(struct gpio_chip *gc, unsigned int offset);
+ 	child = rpcb_call_async(rpcb_clnt, map, proc);
+ 	rpc_release_client(rpcb_clnt);
++	if (IS_ERR(child)) {
++		/* rpcb_map_release() has freed the arguments */
++		return;
++	}
+ 
+ 	xprt->stat.bind_count++;
+ 	rpc_put_task(child);
 -- 
 2.42.0
 
