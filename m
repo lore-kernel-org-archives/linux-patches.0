@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1054F33076;
-	Fri, 24 Nov 2023 19:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897B82C87B;
+	Fri, 24 Nov 2023 19:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4JNRV9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 951D9C433C8;
-	Fri, 24 Nov 2023 19:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKTQUIdj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BD2C433C7;
+	Fri, 24 Nov 2023 19:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852690;
-	bh=yqwHCpxj/k9zZSZoq22oaf4nt1DCwnjqnGgVdvOOeLE=;
+	s=korg; t=1700852693;
+	bh=93c9DmFFpDkRlW4+aTnv+I843Q1BBQ74PCZT729sumU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R4JNRV9zzFBeaBr+Lsvn+pXMlW+IV3b2OcJXHvjFdK0Vhlp5K/zHN2aSmQZddLVIw
-	 jaC7qT07/ZzfM4NWnEWR+oJ2ixmM7QFdbTrz7K97WVKdNpPQgttfUdTcsuG6YuEORX
-	 STbEVvpMTpkdBxCkaGJyl0re7JqXJ+x0ZAN6zJbs=
+	b=XKTQUIdjR6y0Rit5hJHxhqKCHRpiHVULipwfvSvWQ/GHW5iMXf8WP9htkRMUV/3dZ
+	 e3NCp5qh9tCibMDh1A7u3XI0ywfdRvaxOsuaGxsIG916iwT2Up/tNnmW1ylHmuo5+I
+	 GMm73BFJIQ32TYlZnSxZGTcI2uvgaLYndnYsTXaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/193] net/mlx5e: Check return value of snprintf writing to fw_version buffer for representors
-Date: Fri, 24 Nov 2023 17:53:31 +0000
-Message-ID: <20231124171950.596935145@linuxfoundation.org>
+Subject: [PATCH 5.10 061/193] gpio: Dont fiddle with irqchips marked as immutable
+Date: Fri, 24 Nov 2023 17:53:08 +0000
+Message-ID: <20231124171949.695765699@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -44,71 +43,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 1b2bd0c0264febcd8d47209079a6671c38e6558b ]
+[ Upstream commit 6c846d026d490b2383d395bc8e7b06336219667b ]
 
-Treat the operation as an error case when the return value is equivalent to
-the size of the name buffer. Failed to write null terminator to the name
-buffer, making the string malformed and should not be used. Provide a
-string with only the firmware version when forming the string with the
-board id fails. This logic for representors is identical to normal flow
-with ethtool.
+In order to move away from gpiolib messing with the internals of
+unsuspecting irqchips, add a flag by which irqchips advertise
+that they are not to be messed with, and do solemnly swear that
+they correctly call into the gpiolib helpers when required.
 
-Without check, will trigger -Wformat-truncation with W=1.
+Also nudge the users into converting their drivers to the
+new model.
 
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c: In function 'mlx5e_rep_get_drvinfo':
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:78:31: warning: '%.16s' directive output may be truncated writing up to 16 bytes into a region of size between 13 and 22 [-Wformat-truncation=]
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                               ^~~~~
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:77:9: note: 'snprintf' output between 12 and 37 bytes into a destination of size 32
-      77 |         snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                  ~~~~~~~~~~~~~~~~~~~~~
-      79 |                  fw_rev_maj(mdev), fw_rev_min(mdev),
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                  fw_rev_sub(mdev), mdev->board_id);
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: cf83c8fdcd47 ("net/mlx5e: Add missing ethtool driver info for representors")
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-16-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Bartosz Golaszewski <brgl@bgdev.pl>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20220419141846.598305-2-maz@kernel.org
+Stable-dep-of: dc3115e6c5d9 ("hid: cp2112: Fix IRQ shutdown stopping polling for all IRQs on chip")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib.c | 7 ++++++-
+ include/linux/irq.h    | 2 ++
+ kernel/irq/debugfs.c   | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 5a13d47d2c09d..f9f1a79d6bddb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -61,13 +61,17 @@ static void mlx5e_rep_get_drvinfo(struct net_device *dev,
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index d10f621085e2e..8a6510d0fe5fc 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -1491,6 +1491,11 @@ static void gpiochip_set_irq_hooks(struct gpio_chip *gc)
  {
- 	struct mlx5e_priv *priv = netdev_priv(dev);
- 	struct mlx5_core_dev *mdev = priv->mdev;
-+	int count;
+ 	struct irq_chip *irqchip = gc->irq.chip;
  
- 	strlcpy(drvinfo->driver, mlx5e_rep_driver_name,
- 		sizeof(drvinfo->driver));
--	snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
--		 "%d.%d.%04d (%.16s)",
--		 fw_rev_maj(mdev), fw_rev_min(mdev),
--		 fw_rev_sub(mdev), mdev->board_id);
-+	count = snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d (%.16s)", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev), mdev->board_id);
-+	if (count == sizeof(drvinfo->fw_version))
-+		snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev));
- }
++	if (irqchip->flags & IRQCHIP_IMMUTABLE)
++		return;
++
++	chip_warn(gc, "not an immutable chip, please consider fixing it!\n");
++
+ 	if (!irqchip->irq_request_resources &&
+ 	    !irqchip->irq_release_resources) {
+ 		irqchip->irq_request_resources = gpiochip_irq_reqres;
+@@ -1667,7 +1672,7 @@ static void gpiochip_irqchip_remove(struct gpio_chip *gc)
+ 		irq_domain_remove(gc->irq.domain);
+ 	}
  
- static void mlx5e_uplink_rep_get_drvinfo(struct net_device *dev,
+-	if (irqchip) {
++	if (irqchip && !(irqchip->flags & IRQCHIP_IMMUTABLE)) {
+ 		if (irqchip->irq_request_resources == gpiochip_irq_reqres) {
+ 			irqchip->irq_request_resources = NULL;
+ 			irqchip->irq_release_resources = NULL;
+diff --git a/include/linux/irq.h b/include/linux/irq.h
+index b89a8ac83d1bc..da4cd9fb3e5f3 100644
+--- a/include/linux/irq.h
++++ b/include/linux/irq.h
+@@ -568,6 +568,7 @@ struct irq_chip {
+  * IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND:  Invokes __enable_irq()/__disable_irq() for wake irqs
+  *                                    in the suspend path if they are in disabled state
+  * IRQCHIP_AFFINITY_PRE_STARTUP:      Default affinity update before startup
++ * IRQCHIP_IMMUTABLE:		      Don't ever change anything in this chip
+  */
+ enum {
+ 	IRQCHIP_SET_TYPE_MASKED			= (1 <<  0),
+@@ -581,6 +582,7 @@ enum {
+ 	IRQCHIP_SUPPORTS_NMI			= (1 <<  8),
+ 	IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND	= (1 <<  9),
+ 	IRQCHIP_AFFINITY_PRE_STARTUP		= (1 << 10),
++	IRQCHIP_IMMUTABLE			= (1 << 11),
+ };
+ 
+ #include <linux/irqdesc.h>
+diff --git a/kernel/irq/debugfs.c b/kernel/irq/debugfs.c
+index e4cff358b437e..7ff52d94b42c0 100644
+--- a/kernel/irq/debugfs.c
++++ b/kernel/irq/debugfs.c
+@@ -58,6 +58,7 @@ static const struct irq_bit_descr irqchip_flags[] = {
+ 	BIT_MASK_DESCR(IRQCHIP_SUPPORTS_LEVEL_MSI),
+ 	BIT_MASK_DESCR(IRQCHIP_SUPPORTS_NMI),
+ 	BIT_MASK_DESCR(IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND),
++	BIT_MASK_DESCR(IRQCHIP_IMMUTABLE),
+ };
+ 
+ static void
 -- 
 2.42.0
 
