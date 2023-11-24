@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D173039FD0;
-	Fri, 24 Nov 2023 17:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973BA381D6;
+	Fri, 24 Nov 2023 17:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZm5aTTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5D2C433C7;
-	Fri, 24 Nov 2023 17:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z16DMOoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E059CC433C8;
+	Fri, 24 Nov 2023 17:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848650;
-	bh=pjWvv3BkieQgmnn7MQQzp6lfYd6iZkaDpXX9+T2RSr0=;
+	s=korg; t=1700848653;
+	bh=74vYEUsJ8cmkqtOHJ8EwX2VvxoGrP4Z+usdCqyMv5zQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZm5aTTxcUX127HWTrMTn17bCma9TEM0JLix6wPjpFJU6cc3ATPjPrl/cI0dYZqaD
-	 3wk+3wUlriIN19S6ppSTXS6jOxxiM7P5a1t8abY8apq7NLQ7qRMCcN9CZl/WujJm9S
-	 A54dseRvpB7drrKekaLTVq1QKmPfWaNTSBGpMBsU=
+	b=Z16DMOoU7WdXQgjP7KBKf0dZp0UZLyujO952NHtisJEsCMP6JlSE/QNNYBmkDF0Hc
+	 QcwY6mS2zK3oXvHKpN4tRA3KKvcT1qRRsIYJbKV2SA6zUKIPEmyIug0++r9SvOLLo/
+	 bDNA4xaKAa8K/C/gSVrpCitgV9VmiMJUs0MwQIj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Ayrapetyan <robert.ayrapetyan@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Yi Yang <yiyang13@huawei.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 27/97] HID: Add quirk for Dell Pro Wireless Keyboard and Mouse KM5221W
-Date: Fri, 24 Nov 2023 17:50:00 +0000
-Message-ID: <20231124171935.150232067@linuxfoundation.org>
+Subject: [PATCH 4.19 28/97] tty: vcc: Add check for kstrdup() in vcc_probe()
+Date: Fri, 24 Nov 2023 17:50:01 +0000
+Message-ID: <20231124171935.192935239@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -42,45 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Kosina <jkosina@suse.cz>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit 62cc9c3cb3ec1bf31cc116146185ed97b450836a ]
+[ Upstream commit d81ffb87aaa75f842cd7aa57091810353755b3e6 ]
 
-This device needs ALWAYS_POLL quirk, otherwise it keeps reconnecting
-indefinitely.
+Add check for the return value of kstrdup() and return the error, if it
+fails in order to avoid NULL pointer dereference.
 
-Reported-by: Robert Ayrapetyan <robert.ayrapetyan@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230904035220.48164-1-yiyang13@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 1 +
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/tty/vcc.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index a9d6f8acf70b5..93faf083e550b 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -343,6 +343,7 @@
+diff --git a/drivers/tty/vcc.c b/drivers/tty/vcc.c
+index 10a832a2135e2..31ecba1133159 100644
+--- a/drivers/tty/vcc.c
++++ b/drivers/tty/vcc.c
+@@ -586,18 +586,22 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 		return -ENOMEM;
  
- #define USB_VENDOR_ID_DELL				0x413c
- #define USB_DEVICE_ID_DELL_PIXART_USB_OPTICAL_MOUSE	0x301a
-+#define USB_DEVICE_ID_DELL_PRO_WIRELESS_KM5221W		0x4503
+ 	name = kstrdup(dev_name(&vdev->dev), GFP_KERNEL);
++	if (!name) {
++		rv = -ENOMEM;
++		goto free_port;
++	}
  
- #define USB_VENDOR_ID_DELORME		0x1163
- #define USB_DEVICE_ID_DELORME_EARTHMATE	0x0100
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index a2ab338166e61..0b85f95810b30 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -68,6 +68,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_STRAFE), HID_QUIRK_NO_INIT_REPORTS | HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CREATIVELABS, USB_DEVICE_ID_CREATIVE_SB_OMNI_SURROUND_51), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_DELL, USB_DEVICE_ID_DELL_PIXART_USB_OPTICAL_MOUSE), HID_QUIRK_ALWAYS_POLL },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_DELL, USB_DEVICE_ID_DELL_PRO_WIRELESS_KM5221W), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_DMI, USB_DEVICE_ID_DMI_ENC), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_DRACAL_RAPHNET, USB_DEVICE_ID_RAPHNET_2NES2SNES), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_DRACAL_RAPHNET, USB_DEVICE_ID_RAPHNET_4NES4SNES), HID_QUIRK_MULTI_INPUT },
+ 	rv = vio_driver_init(&port->vio, vdev, VDEV_CONSOLE_CON, vcc_versions,
+ 			     ARRAY_SIZE(vcc_versions), NULL, name);
+ 	if (rv)
+-		goto free_port;
++		goto free_name;
+ 
+ 	port->vio.debug = vcc_dbg_vio;
+ 	vcc_ldc_cfg.debug = vcc_dbg_ldc;
+ 
+ 	rv = vio_ldc_alloc(&port->vio, &vcc_ldc_cfg, port);
+ 	if (rv)
+-		goto free_port;
++		goto free_name;
+ 
+ 	spin_lock_init(&port->lock);
+ 
+@@ -631,6 +635,11 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 		goto unreg_tty;
+ 	}
+ 	port->domain = kstrdup(domain, GFP_KERNEL);
++	if (!port->domain) {
++		rv = -ENOMEM;
++		goto unreg_tty;
++	}
++
+ 
+ 	mdesc_release(hp);
+ 
+@@ -660,8 +669,9 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 	vcc_table_remove(port->index);
+ free_ldc:
+ 	vio_ldc_free(&port->vio);
+-free_port:
++free_name:
+ 	kfree(name);
++free_port:
+ 	kfree(port);
+ 
+ 	return rv;
 -- 
 2.42.0
 
