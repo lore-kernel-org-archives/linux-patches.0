@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6718039FF7;
-	Fri, 24 Nov 2023 18:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CAE39FF7;
+	Fri, 24 Nov 2023 18:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsIo0nDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82CCAC433C7;
-	Fri, 24 Nov 2023 18:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2pN8NrB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071E0C433C8;
+	Fri, 24 Nov 2023 18:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850060;
-	bh=rEdCAAYCJu8lmhsElXJNnse3vl+RLyUUf6pmX6yvhuM=;
+	s=korg; t=1700850063;
+	bh=IKe/G64n//hUczacjlBuOYU6biHHV2mU6+dXu4AufOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OsIo0nDf1ejDu0cLI2/zANHyVaZb3prdHM8tPCHHU8mxQvLXBapUg7s3eIynf5pXI
-	 EiCfxjguS34kE20kyHrMVL5ywCKFRGABeaUiZyKbGu56PiSCWH0aGtUjlEfvY6ueMt
-	 3EHUJuz9zKtZSMpCq+T8RgV724P6apqM3fVZd6jU=
+	b=i2pN8NrBZsPJlvwrNJBglC/p+kGI7ZSMPalhXu3Flb3ACR1tRPjLGQxL+Vqyf1ETo
+	 vM0cOFHjJc0QasTUibogoHGqPCrDaVx2UJIT9gQxHsgjsaGAT0SZq8+l5mrlM6QXIy
+	 sowXeHyfQ2m/xVjyAAOg6UUBoTd9Px2owHaLvyiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Muhammad Ahmed <ahmed.ahmed@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 405/530] drm/amd/display: enable dsc_clk even if dsc_pg disabled
-Date: Fri, 24 Nov 2023 17:49:31 +0000
-Message-ID: <20231124172040.384650141@linuxfoundation.org>
+Subject: [PATCH 6.6 406/530] torture: Make torture_hrtimeout_ns() take an hrtimer mode parameter
+Date: Fri, 24 Nov 2023 17:49:32 +0000
+Message-ID: <20231124172040.417688694@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -46,81 +42,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Ahmed <ahmed.ahmed@amd.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 40255df370e94d44f0f0a924400d68db0ee31bec ]
+[ Upstream commit a741deac787f0d2d7068638c067db20af9e63752 ]
 
-[why]
-need to enable dsc_clk regardless dsc_pg
+The current torture-test sleeps are waiting for a duration, but there
+are situations where it is better to wait for an absolute time, for
+example, when ending a stutter interval.  This commit therefore adds
+an hrtimer mode parameter to torture_hrtimeout_ns().  Why not also the
+other torture_hrtimeout_*() functions?  The theory is that most absolute
+times will be in nanoseconds, especially not (say) jiffies.
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Muhammad Ahmed <ahmed.ahmed@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Stable-dep-of: cca42bd8eb1b ("rcutorture: Fix stuttering races and other issues")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c           | 8 ++++----
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 3 +++
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ include/linux/torture.h |  3 ++-
+ kernel/torture.c        | 13 +++++++------
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 38abbd0c9d997..186936ad283a5 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1843,7 +1843,7 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
- 	if (dc->hwss.subvp_pipe_control_lock)
- 		dc->hwss.subvp_pipe_control_lock(dc, context, true, true, NULL, subvp_prev_use);
+diff --git a/include/linux/torture.h b/include/linux/torture.h
+index bb466eec01e42..017f0f710815a 100644
+--- a/include/linux/torture.h
++++ b/include/linux/torture.h
+@@ -81,7 +81,8 @@ static inline void torture_random_init(struct torture_random_state *trsp)
+ }
  
--	if (dc->debug.enable_double_buffered_dsc_pg_support)
-+	if (dc->hwss.update_dsc_pg)
- 		dc->hwss.update_dsc_pg(dc, context, false);
+ /* Definitions for high-resolution-timer sleeps. */
+-int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, struct torture_random_state *trsp);
++int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, const enum hrtimer_mode mode,
++			 struct torture_random_state *trsp);
+ int torture_hrtimeout_us(u32 baset_us, u32 fuzzt_ns, struct torture_random_state *trsp);
+ int torture_hrtimeout_ms(u32 baset_ms, u32 fuzzt_us, struct torture_random_state *trsp);
+ int torture_hrtimeout_jiffies(u32 baset_j, struct torture_random_state *trsp);
+diff --git a/kernel/torture.c b/kernel/torture.c
+index b28b05bbef027..e851b8e9390b3 100644
+--- a/kernel/torture.c
++++ b/kernel/torture.c
+@@ -87,14 +87,15 @@ EXPORT_SYMBOL_GPL(verbose_torout_sleep);
+  * nanosecond random fuzz.  This function and its friends desynchronize
+  * testing from the timer wheel.
+  */
+-int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, struct torture_random_state *trsp)
++int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, const enum hrtimer_mode mode,
++			 struct torture_random_state *trsp)
+ {
+ 	ktime_t hto = baset_ns;
  
- 	disable_dangling_plane(dc, context);
-@@ -1950,7 +1950,7 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
- 		dc->hwss.optimize_bandwidth(dc, context);
- 	}
+ 	if (trsp)
+ 		hto += torture_random(trsp) % fuzzt_ns;
+ 	set_current_state(TASK_IDLE);
+-	return schedule_hrtimeout(&hto, HRTIMER_MODE_REL);
++	return schedule_hrtimeout(&hto, mode);
+ }
+ EXPORT_SYMBOL_GPL(torture_hrtimeout_ns);
  
--	if (dc->debug.enable_double_buffered_dsc_pg_support)
-+	if (dc->hwss.update_dsc_pg)
- 		dc->hwss.update_dsc_pg(dc, context, true);
+@@ -106,7 +107,7 @@ int torture_hrtimeout_us(u32 baset_us, u32 fuzzt_ns, struct torture_random_state
+ {
+ 	ktime_t baset_ns = baset_us * NSEC_PER_USEC;
  
- 	if (dc->ctx->dce_version >= DCE_VERSION_MAX)
-@@ -2197,7 +2197,7 @@ void dc_post_update_surfaces_to_stream(struct dc *dc)
+-	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
++	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
+ }
+ EXPORT_SYMBOL_GPL(torture_hrtimeout_us);
  
- 		dc->hwss.optimize_bandwidth(dc, context);
+@@ -123,7 +124,7 @@ int torture_hrtimeout_ms(u32 baset_ms, u32 fuzzt_us, struct torture_random_state
+ 		fuzzt_ns = (u32)~0U;
+ 	else
+ 		fuzzt_ns = fuzzt_us * NSEC_PER_USEC;
+-	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
++	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
+ }
+ EXPORT_SYMBOL_GPL(torture_hrtimeout_ms);
  
--		if (dc->debug.enable_double_buffered_dsc_pg_support)
-+		if (dc->hwss.update_dsc_pg)
- 			dc->hwss.update_dsc_pg(dc, context, true);
- 	}
+@@ -136,7 +137,7 @@ int torture_hrtimeout_jiffies(u32 baset_j, struct torture_random_state *trsp)
+ {
+ 	ktime_t baset_ns = jiffies_to_nsecs(baset_j);
  
-@@ -3533,7 +3533,7 @@ static void commit_planes_for_stream(struct dc *dc,
- 		if (get_seamless_boot_stream_count(context) == 0)
- 			dc->hwss.prepare_bandwidth(dc, context);
+-	return torture_hrtimeout_ns(baset_ns, jiffies_to_nsecs(1), trsp);
++	return torture_hrtimeout_ns(baset_ns, jiffies_to_nsecs(1), HRTIMER_MODE_REL, trsp);
+ }
+ EXPORT_SYMBOL_GPL(torture_hrtimeout_jiffies);
  
--		if (dc->debug.enable_double_buffered_dsc_pg_support)
-+		if (dc->hwss.update_dsc_pg)
- 			dc->hwss.update_dsc_pg(dc, context, false);
+@@ -153,7 +154,7 @@ int torture_hrtimeout_s(u32 baset_s, u32 fuzzt_ms, struct torture_random_state *
+ 		fuzzt_ns = (u32)~0U;
+ 	else
+ 		fuzzt_ns = fuzzt_ms * NSEC_PER_MSEC;
+-	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
++	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
+ }
+ EXPORT_SYMBOL_GPL(torture_hrtimeout_s);
  
- 		context_clock_trace(dc, context);
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-index be59e1c02f8aa..c9140b50c3454 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -77,6 +77,9 @@ void dcn32_dsc_pg_control(
- 	if (hws->ctx->dc->debug.disable_dsc_power_gate)
- 		return;
- 
-+	if (!hws->ctx->dc->debug.enable_double_buffered_dsc_pg_support)
-+		return;
-+
- 	REG_GET(DC_IP_REQUEST_CNTL, IP_REQUEST_EN, &org_ip_request_cntl);
- 	if (org_ip_request_cntl == 0)
- 		REG_SET(DC_IP_REQUEST_CNTL, 0, IP_REQUEST_EN, 1);
 -- 
 2.42.0
 
