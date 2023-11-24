@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6EB2EAEA;
-	Fri, 24 Nov 2023 18:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6101E2D787;
+	Fri, 24 Nov 2023 18:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOjEbuZn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEF5C433C8;
-	Fri, 24 Nov 2023 18:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwLDgynB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABF9C433C7;
+	Fri, 24 Nov 2023 18:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851969;
-	bh=IIaPBeo0L/u1tbHxkRyMS5ljH8fXM9LoAnVlbLtwJiw=;
+	s=korg; t=1700851972;
+	bh=NzHtH6pKYzeF2kXtxK+Zf3N5fdOXCZfmA4l9ku7W/Ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOjEbuZnYBhSgLtbfEE7pJxIqSarYMAIFxuIjGojFt3HgK1ZmYzxJdPJfz6qxR0ts
-	 xE5Sk0IhZRe7+NDA74AT47zt0TQudIvsbRdAhfeGe6Z6V9+su9TmRJk3nsYMYUX2wM
-	 ocatK6ijyNoLjXT+v1qYcIO5oXu+SsC3L6KxhgOA=
+	b=EwLDgynBDqoXZZX00RGwzbM9e9b8m5wlprYgEz/mRsine4l28pntzvGKoA1p776Ot
+	 vl+VWf8ess66cRLo21+IBigQRCC52tgSREwz9aDEBYIzVgKdyDrCJo3fov6gtFcmQl
+	 vhUZ9fWu/UrBILpz7EtsDptTEZwbhrRYXTLOxLk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yonglong Liu <liuyonglong@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/372] net: ethernet: cortina: Fix max RX frame define
-Date: Fri, 24 Nov 2023 17:48:49 +0000
-Message-ID: <20231124172015.215026541@linuxfoundation.org>
+Subject: [PATCH 6.1 133/372] net: hns3: fix variable may not initialized problem in hns3_init_mac_addr()
+Date: Fri, 24 Nov 2023 17:48:40 +0000
+Message-ID: <20231124172014.921374885@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,53 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 510e35fb931ffc3b100e5d5ae4595cd3beca9f1a ]
+[ Upstream commit dbd2f3b20c6ae425665b6975d766e3653d453e73 ]
 
-Enumerator 3 is 1548 bytes according to the datasheet.
-Not 1542.
+When a VF is calling hns3_init_mac_addr(), get_mac_addr() may
+return fail, then the value of mac_addr_temp is not initialized.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20231109-gemini-largeframe-fix-v4-1-6e611528db08@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 76ad4f0ee747 ("net: hns3: Add support of HNS3 Ethernet Driver for hip08 SoC")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 4 ++--
- drivers/net/ethernet/cortina/gemini.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index fdf10318758b4..15a0a39cc33c1 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -432,8 +432,8 @@ static const struct gmac_max_framelen gmac_maxlens[] = {
- 		.val = CONFIG0_MAXLEN_1536,
- 	},
- 	{
--		.max_l3_len = 1542,
--		.val = CONFIG0_MAXLEN_1542,
-+		.max_l3_len = 1548,
-+		.val = CONFIG0_MAXLEN_1548,
- 	},
- 	{
- 		.max_l3_len = 9212,
-diff --git a/drivers/net/ethernet/cortina/gemini.h b/drivers/net/ethernet/cortina/gemini.h
-index 9fdf77d5eb374..99efb11557436 100644
---- a/drivers/net/ethernet/cortina/gemini.h
-+++ b/drivers/net/ethernet/cortina/gemini.h
-@@ -787,7 +787,7 @@ union gmac_config0 {
- #define  CONFIG0_MAXLEN_1536	0
- #define  CONFIG0_MAXLEN_1518	1
- #define  CONFIG0_MAXLEN_1522	2
--#define  CONFIG0_MAXLEN_1542	3
-+#define  CONFIG0_MAXLEN_1548	3
- #define  CONFIG0_MAXLEN_9k	4	/* 9212 */
- #define  CONFIG0_MAXLEN_10k	5	/* 10236 */
- #define  CONFIG0_MAXLEN_1518__6	6
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 04c9baca1b0f8..5ad22b815b2f0 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -5139,7 +5139,7 @@ static int hns3_init_mac_addr(struct net_device *netdev)
+ 	struct hns3_nic_priv *priv = netdev_priv(netdev);
+ 	char format_mac_addr[HNAE3_FORMAT_MAC_ADDR_LEN];
+ 	struct hnae3_handle *h = priv->ae_handle;
+-	u8 mac_addr_temp[ETH_ALEN];
++	u8 mac_addr_temp[ETH_ALEN] = {0};
+ 	int ret = 0;
+ 
+ 	if (h->ae_algo->ops->get_mac_addr)
 -- 
 2.42.0
 
