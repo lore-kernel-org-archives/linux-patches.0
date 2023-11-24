@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6ADA2C85B;
-	Fri, 24 Nov 2023 18:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD1E28387;
+	Fri, 24 Nov 2023 18:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgUPmt7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B12FC433C7;
-	Fri, 24 Nov 2023 18:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDTEwuot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFF4C433C7;
+	Fri, 24 Nov 2023 18:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850877;
-	bh=+FVhdxu2tl+foZPJFehkpuLJFqDUodOe60Jjuh7PjRI=;
+	s=korg; t=1700850880;
+	bh=iNEpDT5mAOuixS0MP2jRQqUUv1ILjM/q+B4OD3xVQls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kgUPmt7n3sHsIFGkWqYLW6a3rqRpSt1NfRou/bW4LdejJ704iGlTIyB2A+N4MoYFp
-	 ZIOMUQTjOZ6YisSQ2xttaZL7avxX24nMKIaBETkM9EvleK65R/POrpqjDK16pwbr2Z
-	 +JWic+8iGRAReUs7kQyLCLBkMS7Ta9BrC6X6I4lY=
+	b=hDTEwuotm7mlyLyoMFmI2JYJAfxtuNWIoOJ3nTmI15ATx/WMEdT+JcHRlUTf/1hO9
+	 Lskh60KFLL/qHjsceRrRizZ8YuPA5t/o2H2+RfyNLHTiZD8KQa4ZVDRvlFjZbq7rs0
+	 Q4l0gqJB9+qUap4GUkFiV+8CsGxsDowGRnOKJKQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Will Deacon <will@kernel.org>,
-	Besar Wicaksono <bwicaksono@nvidia.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.5 225/491] perf: arm_cspmu: Reject events meant for other PMUs
-Date: Fri, 24 Nov 2023 17:47:41 +0000
-Message-ID: <20231124172031.317850145@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.5 226/491] drivers: perf: Check find_first_bit() return value
+Date: Fri, 24 Nov 2023 17:47:42 +0000
+Message-ID: <20231124172031.348496611@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -45,44 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit 15c7ef7341a2e54cfa12ac502c65d6fd2cce2b62 upstream.
+commit c6e316ac05532febb0c966fa9b55f5258ed037be upstream.
 
-Coresight PMU driver didn't reject events meant for other PMUs.
-This caused some of the Core PMU events disappearing from
-the output of "perf list". In addition, trying to run e.g.
+We must check the return value of find_first_bit() before using the
+return value as an index array since it happens to overflow the array
+and then panic:
 
-     $ perf stat -e r2 sleep 1
+[  107.318430] Kernel BUG [#1]
+[  107.319434] CPU: 3 PID: 1238 Comm: kill Tainted: G            E      6.6.0-rc6ubuntu-defconfig #2
+[  107.319465] Hardware name: riscv-virtio,qemu (DT)
+[  107.319551] epc : pmu_sbi_ovf_handler+0x3a4/0x3ae
+[  107.319840]  ra : pmu_sbi_ovf_handler+0x52/0x3ae
+[  107.319868] epc : ffffffff80a0a77c ra : ffffffff80a0a42a sp : ffffaf83fecda350
+[  107.319884]  gp : ffffffff823961a8 tp : ffffaf8083db1dc0 t0 : ffffaf83fecda480
+[  107.319899]  t1 : ffffffff80cafe62 t2 : 000000000000ff00 s0 : ffffaf83fecda520
+[  107.319921]  s1 : ffffaf83fecda380 a0 : 00000018fca29df0 a1 : ffffffffffffffff
+[  107.319936]  a2 : 0000000001073734 a3 : 0000000000000004 a4 : 0000000000000000
+[  107.319951]  a5 : 0000000000000040 a6 : 000000001d1c8774 a7 : 0000000000504d55
+[  107.319965]  s2 : ffffffff82451f10 s3 : ffffffff82724e70 s4 : 000000000000003f
+[  107.319980]  s5 : 0000000000000011 s6 : ffffaf8083db27c0 s7 : 0000000000000000
+[  107.319995]  s8 : 0000000000000001 s9 : 00007fffb45d6558 s10: 00007fffb45d81a0
+[  107.320009]  s11: ffffaf7ffff60000 t3 : 0000000000000004 t4 : 0000000000000000
+[  107.320023]  t5 : ffffaf7f80000000 t6 : ffffaf8000000000
+[  107.320037] status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
+[  107.320081] [<ffffffff80a0a77c>] pmu_sbi_ovf_handler+0x3a4/0x3ae
+[  107.320112] [<ffffffff800b42d0>] handle_percpu_devid_irq+0x9e/0x1a0
+[  107.320131] [<ffffffff800ad92c>] generic_handle_domain_irq+0x28/0x36
+[  107.320148] [<ffffffff8065f9f8>] riscv_intc_irq+0x36/0x4e
+[  107.320166] [<ffffffff80caf4a0>] handle_riscv_irq+0x54/0x86
+[  107.320189] [<ffffffff80cb0036>] do_irq+0x64/0x96
+[  107.320271] Code: 85a6 855e b097 ff7f 80e7 9220 b709 9002 4501 bbd9 (9002) 6097
+[  107.320585] ---[ end trace 0000000000000000 ]---
+[  107.320704] Kernel panic - not syncing: Fatal exception in interrupt
+[  107.320775] SMP: stopping secondary CPUs
+[  107.321219] Kernel Offset: 0x0 from 0xffffffff80000000
+[  107.333051] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
 
-made Coresight PMU driver to handle the event instead of letting
-Core PMU driver to deal with it.
-
+Fixes: 4905ec2fb7e6 ("RISC-V: Add sscofpmf extension support")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20231109082128.40777-1-alexghiti@rivosinc.com
 Cc: stable@vger.kernel.org
-Fixes: e37dfd65731d ("perf: arm_cspmu: Add support for ARM CoreSight PMU driver")
-Signed-off-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Besar Wicaksono <bwicaksono@nvidia.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20231103001654.35565-1-ilkka@os.amperecomputing.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/arm_cspmu/arm_cspmu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/perf/riscv_pmu_sbi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/perf/arm_cspmu/arm_cspmu.c
-+++ b/drivers/perf/arm_cspmu/arm_cspmu.c
-@@ -635,6 +635,9 @@ static int arm_cspmu_event_init(struct p
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -629,6 +629,11 @@ static irqreturn_t pmu_sbi_ovf_handler(i
  
- 	cspmu = to_arm_cspmu(event->pmu);
- 
-+	if (event->attr.type != event->pmu->type)
-+		return -ENOENT;
+ 	/* Firmware counter don't support overflow yet */
+ 	fidx = find_first_bit(cpu_hw_evt->used_hw_ctrs, RISCV_MAX_COUNTERS);
++	if (fidx == RISCV_MAX_COUNTERS) {
++		csr_clear(CSR_SIP, BIT(riscv_pmu_irq_num));
++		return IRQ_NONE;
++	}
 +
- 	/*
- 	 * Following other "uncore" PMUs, we do not support sampling mode or
- 	 * attach to a task (per-process mode).
+ 	event = cpu_hw_evt->events[fidx];
+ 	if (!event) {
+ 		csr_clear(CSR_SIP, BIT(riscv_pmu_irq_num));
 
 
