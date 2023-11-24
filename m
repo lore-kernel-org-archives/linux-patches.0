@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872B639FC3;
-	Fri, 24 Nov 2023 18:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A947D39FED;
+	Fri, 24 Nov 2023 18:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8+nL1TZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD74C433C8;
-	Fri, 24 Nov 2023 18:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8ifv0pM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34814C433C7;
+	Fri, 24 Nov 2023 18:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849338;
-	bh=GuQWrI2Urnh+E2FybtBakwbGhBFTjdbScjht5juz05o=;
+	s=korg; t=1700849340;
+	bh=jUKcC5T/M0Sg8DWe/nNTi5kcwwRJwcviYmh+Qu2SgZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8+nL1TZLNkP48zrBx5kVvOCE95ThO8r22nPhdbIaDU7vokbnQqAeCzX/+/aWLkf3
-	 i8x5eBgH7MUHiZwWfJZTuIZl7nk+xko7AiGfc5FVsbh5U07UXAU06Sk4v/JMu0HLkp
-	 Esd7LiCudo31u3RuhciQwYXJPWluvdc7jjro+aLQ=
+	b=d8ifv0pMKGeQGwQ2JbiOU6k73Fxxs6WGeT5b7sp0NUUzK+oo8GzfARYi/kcTFl/Ua
+	 h5VHe/nkO2EK4XoOvjCIM99NQcHEMHoDt5ceBYe9RFiUZWfwL5xE7ST0yMHYHFjj9k
+	 009ojIk434oOjVGPUpWUoopI6Rv8cAOjUEXBp4s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Peterson <rpeterso@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 142/530] gfs2: ignore negated quota changes
-Date: Fri, 24 Nov 2023 17:45:08 +0000
-Message-ID: <20231124172032.403887382@linuxfoundation.org>
+Subject: [PATCH 6.6 143/530] gfs2: fix an oops in gfs2_permission
+Date: Fri, 24 Nov 2023 17:45:09 +0000
+Message-ID: <20231124172032.435387649@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,88 +42,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 4c6a08125f2249531ec01783a5f4317d7342add5 ]
+[ Upstream commit 0abd1557e21c617bd13fc18f7725fc6363c05913 ]
 
-When lots of quota changes are made, there may be cases in which an
-inode's quota information is increased and then decreased, such as when
-blocks are added to a file, then deleted from it. If the timing is
-right, function do_qc can add pending quota changes to a transaction,
-then later, another call to do_qc can negate those changes, resulting
-in a net gain of 0. The quota_change information is recorded in the qc
-buffer (and qd element of the inode as well). The buffer is added to the
-transaction by the first call to do_qc, but a subsequent call changes
-the value from non-zero back to zero. At that point it's too late to
-remove the buffer_head from the transaction. Later, when the quota sync
-code is called, the zero-change qd element is discovered and flagged as
-an assert warning. If the fs is mounted with errors=panic, the kernel
-will panic.
+In RCU mode, we might race with gfs2_evict_inode(), which zeroes
+->i_gl.  Freeing of the object it points to is RCU-delayed, so
+if we manage to fetch the pointer before it's been replaced with
+NULL, we are fine.  Check if we'd fetched NULL and treat that
+as "bail out and tell the caller to get out of RCU mode".
 
-This is usually seen when files are truncated and the quota changes are
-negated by punch_hole/truncate which uses gfs2_quota_hold and
-gfs2_quota_unhold rather than block allocations that use gfs2_quota_lock
-and gfs2_quota_unlock which automatically do quota sync.
-
-This patch solves the problem by adding a check to qd_check_sync such
-that net-zero quota changes already added to the transaction are no
-longer deemed necessary to be synced, and skipped.
-
-In this case references are taken for the qd and the slot from do_qc
-so those need to be put. The normal sequence of events for a normal
-non-zero quota change is as follows:
-
-gfs2_quota_change
-   do_qc
-      qd_hold
-      slot_hold
-
-Later, when the changes are to be synced:
-
-gfs2_quota_sync
-   qd_fish
-      qd_check_sync
-         gets qd ref via lockref_get_not_dead
-   do_sync
-      do_qc(QC_SYNC)
-         qd_put
-	    lockref_put_or_lock
-   qd_unlock
-      qd_put
-         lockref_put_or_lock
-
-In the net-zero change case, we add a check to qd_check_sync so it puts
-the qd and slot references acquired in gfs2_quota_change and skip the
-unneeded sync.
-
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/gfs2/inode.c | 11 +++++++++--
+ fs/gfs2/super.c |  2 +-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index 171b2713d2e5e..41d0232532a03 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -457,6 +457,17 @@ static int qd_check_sync(struct gfs2_sbd *sdp, struct gfs2_quota_data *qd,
- 	    (sync_gen && (qd->qd_sync_gen >= *sync_gen)))
- 		return 0;
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 0eac045079047..eb4bbe1728c06 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1868,14 +1868,21 @@ int gfs2_permission(struct mnt_idmap *idmap, struct inode *inode,
+ {
+ 	struct gfs2_inode *ip;
+ 	struct gfs2_holder i_gh;
++	struct gfs2_glock *gl;
+ 	int error;
  
-+	/*
-+	 * If qd_change is 0 it means a pending quota change was negated.
-+	 * We should not sync it, but we still have a qd reference and slot
-+	 * reference taken by gfs2_quota_change -> do_qc that need to be put.
-+	 */
-+	if (!qd->qd_change && test_and_clear_bit(QDF_CHANGE, &qd->qd_flags)) {
-+		slot_put(qd);
-+		qd_put(qd);
-+		return 0;
-+	}
-+
- 	if (!lockref_get_not_dead(&qd->qd_lockref))
- 		return 0;
+ 	gfs2_holder_mark_uninitialized(&i_gh);
+ 	ip = GFS2_I(inode);
+-	if (gfs2_glock_is_locked_by_me(ip->i_gl) == NULL) {
++	gl = rcu_dereference(ip->i_gl);
++	if (unlikely(!gl)) {
++		/* inode is getting torn down, must be RCU mode */
++		WARN_ON_ONCE(!(mask & MAY_NOT_BLOCK));
++		return -ECHILD;
++        }
++	if (gfs2_glock_is_locked_by_me(gl) == NULL) {
+ 		if (mask & MAY_NOT_BLOCK)
+ 			return -ECHILD;
+-		error = gfs2_glock_nq_init(ip->i_gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
++		error = gfs2_glock_nq_init(gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
+ 		if (error)
+ 			return error;
+ 	}
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 02d93da21b2b0..0dd5641990b90 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1550,7 +1550,7 @@ static void gfs2_evict_inode(struct inode *inode)
+ 		wait_on_bit_io(&ip->i_flags, GIF_GLOP_PENDING, TASK_UNINTERRUPTIBLE);
+ 		gfs2_glock_add_to_lru(ip->i_gl);
+ 		gfs2_glock_put_eventually(ip->i_gl);
+-		ip->i_gl = NULL;
++		rcu_assign_pointer(ip->i_gl, NULL);
+ 	}
+ }
  
 -- 
 2.42.0
