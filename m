@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A0B63A1;
-	Fri, 24 Nov 2023 19:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0720A3306F;
+	Fri, 24 Nov 2023 19:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cH2G371f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BE3C433C7;
-	Fri, 24 Nov 2023 19:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imuHVrYY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87669C433C7;
+	Fri, 24 Nov 2023 19:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853955;
-	bh=WxPayuXj2kvobWr6gb8mVkDyrFe4ee0vedA1yaNJrI8=;
+	s=korg; t=1700853957;
+	bh=OM555tjCqex584ZvxIzSM+6m0MRyzM2Sz3ZDD+4j1kY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cH2G371f6LjC4FAF0CXspH15A1npju2tG5kV6p/iuo88y3rdMGDyAfGtCpbIPQ1TS
-	 8ukNX2JK/mCcw3x4X9hqTEDDd0GlrGYYIbb4ypV4xtGVWx1Gpn77aHPBvksEP8Fykh
-	 sO86pErK/tiRcm9BTVrtJwfLCf03iUBXH2NcQi/M=
+	b=imuHVrYYtTl9YITFQJoUF0PA9LdMNE6I8mrbI5bvRR62VoaY7I92Y4Se/uDbY3wUr
+	 jxF5NoeN1RB9H6DXlaTwWfDF+ZnCj/ehoaGFtsRAg+C0l7iOvaOcRNCAb0Khia9o5Z
+	 Xw4sE/2lo41zhZlJbjtSnW6CBfIr57YmAOBalrMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.4 073/159] KVM: x86: Ignore MSR_AMD64_TW_CFG access
-Date: Fri, 24 Nov 2023 17:54:50 +0000
-Message-ID: <20231124171945.008312994@linuxfoundation.org>
+	Gal Pressman <gal@nvidia.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 064/159] macvlan: Dont propagate promisc change to lower dev in passthru
+Date: Fri, 24 Nov 2023 17:54:41 +0000
+Message-ID: <20231124171944.606795871@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -41,78 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-commit 2770d4722036d6bd24bcb78e9cd7f6e572077d03 upstream.
+[ Upstream commit 7e1caeace0418381f36b3aa8403dfd82fc57fc53 ]
 
-Hyper-V enabled Windows Server 2022 KVM VM cannot be started on Zen1 Ryzen
-since it crashes at boot with SYSTEM_THREAD_EXCEPTION_NOT_HANDLED +
-STATUS_PRIVILEGED_INSTRUCTION (in other words, because of an unexpected #GP
-in the guest kernel).
+Macvlan device in passthru mode sets its lower device promiscuous mode
+according to its MACVLAN_FLAG_NOPROMISC flag instead of synchronizing it to
+its own promiscuity setting. However, macvlan_change_rx_flags() function
+doesn't check the mode before propagating such changes to the lower device
+which can cause net_device->promiscuity counter overflow as illustrated by
+reproduction example [0] and resulting dmesg log [1]. Fix the issue by
+first verifying the mode in macvlan_change_rx_flags() function before
+propagating promiscuous mode change to the lower device.
 
-This is because Windows tries to set bit 8 in MSR_AMD64_TW_CFG and can't
-handle receiving a #GP when doing so.
+[0]:
+ip link add macvlan1 link enp8s0f0 type macvlan mode passthru
+ip link set macvlan1 promisc on
+ip l set dev macvlan1 up
+ip link set macvlan1 promisc off
+ip l set dev macvlan1 down
+ip l set dev macvlan1 up
 
-Give this MSR the same treatment that commit 2e32b7190641
-("x86, kvm: Add MSR_AMD64_BU_CFG2 to the list of ignored MSRs") gave
-MSR_AMD64_BU_CFG2 under justification that this MSR is baremetal-relevant
-only.
-Although apparently it was then needed for Linux guests, not Windows as in
-this case.
+[1]:
+[ 5156.281724] macvlan1: entered promiscuous mode
+[ 5156.285467] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
+[ 5156.287639] macvlan1: left promiscuous mode
+[ 5156.288339] mlx5_core 0000:08:00.0 enp8s0f0: left promiscuous mode
+[ 5156.290907] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
+[ 5156.317197] mlx5_core 0000:08:00.0 enp8s0f0: promiscuity touches roof, set promiscuity failed. promiscuity feature of device might be broken.
 
-With this change, the aforementioned guest setup is able to finish booting
-successfully.
-
-This issue can be reproduced either on a Summit Ridge Ryzen (with
-just "-cpu host") or on a Naples EPYC (with "-cpu host,stepping=1" since
-EPYC is ordinarily stepping 2).
-
-Alternatively, userspace could solve the problem by using MSR filters, but
-forcing every userspace to define a filter isn't very friendly and doesn't
-add much, if any, value.  The only potential hiccup is if one of these
-"baremetal-only" MSRs ever requires actual emulation and/or has F/M/S
-specific behavior.  But if that happens, then KVM can still punt *that*
-handling to userspace since userspace MSR filters "win" over KVM's default
-handling.
-
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1ce85d9c7c9e9632393816cf19c902e0a3f411f1.1697731406.git.maciej.szmigiero@oracle.com
-[sean: call out MSR filtering alternative]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: efdbd2b30caa ("macvlan: Propagate promiscuity setting to lower devices.")
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20231114175915.1649154-1-vladbu@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/msr-index.h |    1 +
- arch/x86/kvm/x86.c               |    2 ++
- 2 files changed, 3 insertions(+)
+ drivers/net/macvlan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -469,6 +469,7 @@
- #define MSR_AMD64_OSVW_STATUS		0xc0010141
- #define MSR_AMD64_LS_CFG		0xc0011020
- #define MSR_AMD64_DC_CFG		0xc0011022
-+#define MSR_AMD64_TW_CFG		0xc0011023
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index 545d181453504..46398b06676c0 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -765,7 +765,7 @@ static void macvlan_change_rx_flags(struct net_device *dev, int change)
+ 	if (dev->flags & IFF_UP) {
+ 		if (change & IFF_ALLMULTI)
+ 			dev_set_allmulti(lowerdev, dev->flags & IFF_ALLMULTI ? 1 : -1);
+-		if (change & IFF_PROMISC)
++		if (!macvlan_passthru(vlan->port) && change & IFF_PROMISC)
+ 			dev_set_promiscuity(lowerdev,
+ 					    dev->flags & IFF_PROMISC ? 1 : -1);
  
- #define MSR_AMD64_DE_CFG		0xc0011029
- #define MSR_AMD64_DE_CFG_LFENCE_SERIALIZE_BIT	 1
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -2720,6 +2720,7 @@ int kvm_set_msr_common(struct kvm_vcpu *
- 	case MSR_AMD64_PATCH_LOADER:
- 	case MSR_AMD64_BU_CFG2:
- 	case MSR_AMD64_DC_CFG:
-+	case MSR_AMD64_TW_CFG:
- 	case MSR_F15H_EX_CFG:
- 		break;
- 
-@@ -3029,6 +3030,7 @@ int kvm_get_msr_common(struct kvm_vcpu *
- 	case MSR_AMD64_BU_CFG2:
- 	case MSR_IA32_PERF_CTL:
- 	case MSR_AMD64_DC_CFG:
-+	case MSR_AMD64_TW_CFG:
- 	case MSR_F15H_EX_CFG:
- 		msr_info->data = 0;
- 		break;
+-- 
+2.42.0
+
 
 
