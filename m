@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F70D39FD9;
-	Fri, 24 Nov 2023 17:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2718E39FEE;
+	Fri, 24 Nov 2023 17:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdjCbPxy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28878C433C8;
-	Fri, 24 Nov 2023 17:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txaJa3cL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FA0C433C7;
+	Fri, 24 Nov 2023 17:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848790;
-	bh=h/KP59Vkx7H1tuwHWLVHtyI80VLGXLOcPAHxiflpMOA=;
+	s=korg; t=1700848794;
+	bh=LHkvXdj3QNFusoRwwAAVZQO9T8/sA/zfgZR3785h2go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdjCbPxyJ62END0aLmIE/LsLpYx6ZfzbCLqoN7laFRoRc+E4FqbTFpMvrK88elJKn
-	 ppILlIi6rGfoonE1VyaWDe/KWi5FUBG2t7UM+zy8EQbQUD05/BZ2zW+OTdFLhhhkSf
-	 sswSlqTkx3DD3JxbIiT2SiZYD64J1kGerx1wDbys=
+	b=txaJa3cLersZhOQ+ahcKLBGpdaLVV84bjPIG5dL8IpYBHjCWOKibQJ+xrPXz1LUbS
+	 0H8ikBqw+pCMm6Y6kcZM3bTLwPCkGnowHqjwY4NSP8+1xjAk2ywU/7bVvMxKD0aNbQ
+	 jtwQ2WumuEAInevfo106EE6DafMx/6UGuigblhx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 4.19 82/97] net: dsa: lan9303: consequently nested-lock physical MDIO
-Date: Fri, 24 Nov 2023 17:50:55 +0000
-Message-ID: <20231124171937.239501559@linuxfoundation.org>
+	Jean Delvare <jdelvare@suse.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 4.19 83/97] i2c: i801: fix potential race in i801_block_transaction_byte_by_byte
+Date: Fri, 24 Nov 2023 17:50:56 +0000
+Message-ID: <20231124171937.279592232@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -42,171 +44,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 5a22fbcc10f3f7d94c5d88afbbffa240a3677057 upstream.
+commit f78ca48a8ba9cdec96e8839351e49eec3233b177 upstream.
 
-When LAN9303 is MDIO-connected two callchains exist into
-mdio->bus->write():
+Currently we set SMBHSTCNT_LAST_BYTE only after the host has started
+receiving the last byte. If we get e.g. preempted before setting
+SMBHSTCNT_LAST_BYTE, the host may be finished with receiving the byte
+before SMBHSTCNT_LAST_BYTE is set.
+Therefore change the code to set SMBHSTCNT_LAST_BYTE before writing
+SMBHSTSTS_BYTE_DONE for the byte before the last byte. Now the code
+is also consistent with what we do in i801_isr_byte_done().
 
-1. switch ports 1&2 ("physical" PHYs):
-
-virtual (switch-internal) MDIO bus (lan9303_switch_ops->phy_{read|write})->
-  lan9303_mdio_phy_{read|write} -> mdiobus_{read|write}_nested
-
-2. LAN9303 virtual PHY:
-
-virtual MDIO bus (lan9303_phy_{read|write}) ->
-  lan9303_virt_phy_reg_{read|write} -> regmap -> lan9303_mdio_{read|write}
-
-If the latter functions just take
-mutex_lock(&sw_dev->device->bus->mdio_lock) it triggers a LOCKDEP
-false-positive splat. It's false-positive because the first
-mdio_lock in the second callchain above belongs to virtual MDIO bus, the
-second mdio_lock belongs to physical MDIO bus.
-
-Consequent annotation in lan9303_mdio_{read|write} as nested lock
-(similar to lan9303_mdio_phy_{read|write}, it's the same physical MDIO bus)
-prevents the following splat:
-
-WARNING: possible circular locking dependency detected
-5.15.71 #1 Not tainted
-------------------------------------------------------
-kworker/u4:3/609 is trying to acquire lock:
-ffff000011531c68 (lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock){+.+.}-{3:3}, at: regmap_lock_mutex
-but task is already holding lock:
-ffff0000114c44d8 (&bus->mdio_lock){+.+.}-{3:3}, at: mdiobus_read
-which lock already depends on the new lock.
-the existing dependency chain (in reverse order) is:
--> #1 (&bus->mdio_lock){+.+.}-{3:3}:
-       lock_acquire
-       __mutex_lock
-       mutex_lock_nested
-       lan9303_mdio_read
-       _regmap_read
-       regmap_read
-       lan9303_probe
-       lan9303_mdio_probe
-       mdio_probe
-       really_probe
-       __driver_probe_device
-       driver_probe_device
-       __device_attach_driver
-       bus_for_each_drv
-       __device_attach
-       device_initial_probe
-       bus_probe_device
-       deferred_probe_work_func
-       process_one_work
-       worker_thread
-       kthread
-       ret_from_fork
--> #0 (lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock){+.+.}-{3:3}:
-       __lock_acquire
-       lock_acquire.part.0
-       lock_acquire
-       __mutex_lock
-       mutex_lock_nested
-       regmap_lock_mutex
-       regmap_read
-       lan9303_phy_read
-       dsa_slave_phy_read
-       __mdiobus_read
-       mdiobus_read
-       get_phy_device
-       mdiobus_scan
-       __mdiobus_register
-       dsa_register_switch
-       lan9303_probe
-       lan9303_mdio_probe
-       mdio_probe
-       really_probe
-       __driver_probe_device
-       driver_probe_device
-       __device_attach_driver
-       bus_for_each_drv
-       __device_attach
-       device_initial_probe
-       bus_probe_device
-       deferred_probe_work_func
-       process_one_work
-       worker_thread
-       kthread
-       ret_from_fork
-other info that might help us debug this:
- Possible unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(&bus->mdio_lock);
-                               lock(lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock);
-                               lock(&bus->mdio_lock);
-  lock(lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock);
-*** DEADLOCK ***
-5 locks held by kworker/u4:3/609:
- #0: ffff000002842938 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work
- #1: ffff80000bacbd60 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work
- #2: ffff000007645178 (&dev->mutex){....}-{3:3}, at: __device_attach
- #3: ffff8000096e6e78 (dsa2_mutex){+.+.}-{3:3}, at: dsa_register_switch
- #4: ffff0000114c44d8 (&bus->mdio_lock){+.+.}-{3:3}, at: mdiobus_read
-stack backtrace:
-CPU: 1 PID: 609 Comm: kworker/u4:3 Not tainted 5.15.71 #1
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
- dump_backtrace
- show_stack
- dump_stack_lvl
- dump_stack
- print_circular_bug
- check_noncircular
- __lock_acquire
- lock_acquire.part.0
- lock_acquire
- __mutex_lock
- mutex_lock_nested
- regmap_lock_mutex
- regmap_read
- lan9303_phy_read
- dsa_slave_phy_read
- __mdiobus_read
- mdiobus_read
- get_phy_device
- mdiobus_scan
- __mdiobus_register
- dsa_register_switch
- lan9303_probe
- lan9303_mdio_probe
-...
-
+Reported-by: Jean Delvare <jdelvare@suse.com>
+Closes: https://lore.kernel.org/linux-i2c/20230828152747.09444625@endymion.delvare/
 Cc: stable@vger.kernel.org
-Fixes: dc7005831523 ("net: dsa: LAN9303: add MDIO managed mode support")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20231027065741.534971-1-alexander.sverdlin@siemens.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/lan9303_mdio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-i801.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/drivers/net/dsa/lan9303_mdio.c
-+++ b/drivers/net/dsa/lan9303_mdio.c
-@@ -41,7 +41,7 @@ static int lan9303_mdio_write(void *ctx,
- 	struct lan9303_mdio *sw_dev = (struct lan9303_mdio *)ctx;
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -712,15 +712,11 @@ static int i801_block_transaction_byte_b
+ 		return i801_check_post(priv, status);
+ 	}
  
- 	reg <<= 2; /* reg num to offset */
--	mutex_lock(&sw_dev->device->bus->mdio_lock);
-+	mutex_lock_nested(&sw_dev->device->bus->mdio_lock, MDIO_MUTEX_NESTED);
- 	lan9303_mdio_real_write(sw_dev->device, reg, val & 0xffff);
- 	lan9303_mdio_real_write(sw_dev->device, reg + 2, (val >> 16) & 0xffff);
- 	mutex_unlock(&sw_dev->device->bus->mdio_lock);
-@@ -59,7 +59,7 @@ static int lan9303_mdio_read(void *ctx,
- 	struct lan9303_mdio *sw_dev = (struct lan9303_mdio *)ctx;
+-	for (i = 1; i <= len; i++) {
+-		if (i == len && read_write == I2C_SMBUS_READ)
+-			smbcmd |= SMBHSTCNT_LAST_BYTE;
+-		outb_p(smbcmd, SMBHSTCNT(priv));
+-
+-		if (i == 1)
+-			outb_p(inb(SMBHSTCNT(priv)) | SMBHSTCNT_START,
+-			       SMBHSTCNT(priv));
++	if (len == 1 && read_write == I2C_SMBUS_READ)
++		smbcmd |= SMBHSTCNT_LAST_BYTE;
++	outb_p(smbcmd | SMBHSTCNT_START, SMBHSTCNT(priv));
  
- 	reg <<= 2; /* reg num to offset */
--	mutex_lock(&sw_dev->device->bus->mdio_lock);
-+	mutex_lock_nested(&sw_dev->device->bus->mdio_lock, MDIO_MUTEX_NESTED);
- 	*val = lan9303_mdio_real_read(sw_dev->device, reg);
- 	*val |= (lan9303_mdio_real_read(sw_dev->device, reg + 2) << 16);
- 	mutex_unlock(&sw_dev->device->bus->mdio_lock);
++	for (i = 1; i <= len; i++) {
+ 		status = i801_wait_byte_done(priv);
+ 		if (status)
+ 			goto exit;
+@@ -743,9 +739,12 @@ static int i801_block_transaction_byte_b
+ 			data->block[0] = len;
+ 		}
+ 
+-		/* Retrieve/store value in SMBBLKDAT */
+-		if (read_write == I2C_SMBUS_READ)
++		if (read_write == I2C_SMBUS_READ) {
+ 			data->block[i] = inb_p(SMBBLKDAT(priv));
++			if (i == len - 1)
++				outb_p(smbcmd | SMBHSTCNT_LAST_BYTE, SMBHSTCNT(priv));
++		}
++
+ 		if (read_write == I2C_SMBUS_WRITE && i+1 <= len)
+ 			outb_p(data->block[i+1], SMBBLKDAT(priv));
+ 
 
 
