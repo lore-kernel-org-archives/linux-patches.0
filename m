@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A1A3173F;
-	Fri, 24 Nov 2023 19:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE603173F;
+	Fri, 24 Nov 2023 19:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUg9TcKC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A84BC433CA;
-	Fri, 24 Nov 2023 19:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQaBlmWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FE8C433C7;
+	Fri, 24 Nov 2023 19:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852937;
-	bh=GHwonyJqzO7kxZBobM0pRJVYVJLXw6AmJb2OERE+mWY=;
+	s=korg; t=1700852940;
+	bh=uIau4Bi0v18PmqBmklB6JA47Lynnkhh8Fftv/TbkStM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUg9TcKCSHRm+cpPt0FU0fzA45gLNPN+f2o/NC1IctF+tso/y4RqCpakjPonMX2Ca
-	 NBUJV3MgKHVk/DttX3OGG+QMsuLen9wqYNKvDOUFtE8ZR61DJJ6tN8Q6/YUcBat+C7
-	 22FdYF17PLEOFda/fbfRIWUDV7cYuHL08l5Fezis=
+	b=oQaBlmWL3kNlJazAtVDZWUjXEae7oYbS+rvPs5o+O4WIP+OWzwqfed+FEWzCAfzm5
+	 8Nvnn95wpZFITFzwD/59Z3hZ4xbWry9jcqzPIi7z6rrneJGCHPmXqoc9dHEsGAZrCZ
+	 iYKmLCxKZIGwQLFuk1rncvTK3Y7XurIXAjRflmN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.10 183/193] ext4: remove gdb backup copy for meta bg in setup_new_flex_group_blocks
-Date: Fri, 24 Nov 2023 17:55:10 +0000
-Message-ID: <20231124171954.489589688@linuxfoundation.org>
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 184/193] ext4: properly sync file size update after O_SYNC direct IO
+Date: Fri, 24 Nov 2023 17:55:11 +0000
+Message-ID: <20231124171954.536459421@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,67 +44,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 40dd7953f4d606c280074f10d23046b6812708ce upstream.
+commit 91562895f8030cb9a0470b1db49de79346a69f91 upstream.
 
-Wrong check of gdb backup in meta bg as following:
-first_group is the first group of meta_bg which contains target group, so
-target group is always >= first_group. We check if target group has gdb
-backup by comparing first_group with [group + 1] and [group +
-EXT4_DESC_PER_BLOCK(sb) - 1]. As group >= first_group, then [group + N] is
-> first_group. So no copy of gdb backup in meta bg is done in
-setup_new_flex_group_blocks.
+Gao Xiang has reported that on ext4 O_SYNC direct IO does not properly
+sync file size update and thus if we crash at unfortunate moment, the
+file can have smaller size although O_SYNC IO has reported successful
+completion. The problem happens because update of on-disk inode size is
+handled in ext4_dio_write_iter() *after* iomap_dio_rw() (and thus
+dio_complete() in particular) has returned and generic_file_sync() gets
+called by dio_complete(). Fix the problem by handling on-disk inode size
+update directly in our ->end_io completion handler.
 
-No need to do gdb backup copy in meta bg from setup_new_flex_group_blocks
-as we always copy updated gdb block to backups at end of
-ext4_flex_group_add as following:
-
-ext4_flex_group_add
-  /* no gdb backup copy for meta bg any more */
-  setup_new_flex_group_blocks
-
-  /* update current group number */
-  ext4_update_super
-    sbi->s_groups_count += flex_gd->count;
-
-  /*
-   * if group in meta bg contains backup is added, the primary gdb block
-   * of the meta bg will be copy to backup in new added group here.
-   */
-  for (; gdb_num <= gdb_num_end; gdb_num++)
-    update_backups(...)
-
-In summary, we can remove wrong gdb backup copy code in
-setup_new_flex_group_blocks.
-
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230826174712.4059355-5-shikemeng@huaweicloud.com
+References: https://lore.kernel.org/all/02d18236-26ef-09b0-90ad-030c4fe3ee20@linux.alibaba.com
+Reported-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+CC: stable@vger.kernel.org
+Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Tested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20231013121350.26872-1-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/resize.c |    9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ fs/ext4/file.c |  153 ++++++++++++++++++++++++---------------------------------
+ 1 file changed, 65 insertions(+), 88 deletions(-)
 
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -554,13 +554,8 @@ static int setup_new_flex_group_blocks(s
- 		if (meta_bg == 0 && !ext4_bg_has_super(sb, group))
- 			goto handle_itb;
+--- a/fs/ext4/file.c
++++ b/fs/ext4/file.c
+@@ -280,80 +280,38 @@ out:
+ }
  
--		if (meta_bg == 1) {
--			ext4_group_t first_group;
--			first_group = ext4_meta_bg_first_group(sb, group);
--			if (first_group != group + 1 &&
--			    first_group != group + EXT4_DESC_PER_BLOCK(sb) - 1)
--				goto handle_itb;
+ static ssize_t ext4_handle_inode_extension(struct inode *inode, loff_t offset,
+-					   ssize_t written, size_t count)
++					   ssize_t count)
+ {
+ 	handle_t *handle;
+-	bool truncate = false;
+-	u8 blkbits = inode->i_blkbits;
+-	ext4_lblk_t written_blk, end_blk;
+-	int ret;
+-
+-	/*
+-	 * Note that EXT4_I(inode)->i_disksize can get extended up to
+-	 * inode->i_size while the I/O was running due to writeback of delalloc
+-	 * blocks. But, the code in ext4_iomap_alloc() is careful to use
+-	 * zeroed/unwritten extents if this is possible; thus we won't leave
+-	 * uninitialized blocks in a file even if we didn't succeed in writing
+-	 * as much as we intended.
+-	 */
+-	WARN_ON_ONCE(i_size_read(inode) < EXT4_I(inode)->i_disksize);
+-	if (offset + count <= EXT4_I(inode)->i_disksize) {
+-		/*
+-		 * We need to ensure that the inode is removed from the orphan
+-		 * list if it has been added prematurely, due to writeback of
+-		 * delalloc blocks.
+-		 */
+-		if (!list_empty(&EXT4_I(inode)->i_orphan) && inode->i_nlink) {
+-			handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
+-
+-			if (IS_ERR(handle)) {
+-				ext4_orphan_del(NULL, inode);
+-				return PTR_ERR(handle);
+-			}
+-
+-			ext4_orphan_del(handle, inode);
+-			ext4_journal_stop(handle);
 -		}
-+		if (meta_bg == 1)
-+			goto handle_itb;
+-
+-		return written;
+-	}
+-
+-	if (written < 0)
+-		goto truncate;
  
- 		block = start + ext4_bg_has_super(sb, group);
- 		/* Copy all of the GDT blocks into the backup in this group */
++	lockdep_assert_held_write(&inode->i_rwsem);
+ 	handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
+-	if (IS_ERR(handle)) {
+-		written = PTR_ERR(handle);
+-		goto truncate;
+-	}
++	if (IS_ERR(handle))
++		return PTR_ERR(handle);
+ 
+-	if (ext4_update_inode_size(inode, offset + written)) {
+-		ret = ext4_mark_inode_dirty(handle, inode);
++	if (ext4_update_inode_size(inode, offset + count)) {
++		int ret = ext4_mark_inode_dirty(handle, inode);
+ 		if (unlikely(ret)) {
+-			written = ret;
+ 			ext4_journal_stop(handle);
+-			goto truncate;
++			return ret;
+ 		}
+ 	}
+ 
+-	/*
+-	 * We may need to truncate allocated but not written blocks beyond EOF.
+-	 */
+-	written_blk = ALIGN(offset + written, 1 << blkbits);
+-	end_blk = ALIGN(offset + count, 1 << blkbits);
+-	if (written_blk < end_blk && ext4_can_truncate(inode))
+-		truncate = true;
+-
+-	/*
+-	 * Remove the inode from the orphan list if it has been extended and
+-	 * everything went OK.
+-	 */
+-	if (!truncate && inode->i_nlink)
++	if (inode->i_nlink)
+ 		ext4_orphan_del(handle, inode);
+ 	ext4_journal_stop(handle);
+ 
+-	if (truncate) {
+-truncate:
++	return count;
++}
++
++/*
++ * Clean up the inode after DIO or DAX extending write has completed and the
++ * inode size has been updated using ext4_handle_inode_extension().
++ */
++static void ext4_inode_extension_cleanup(struct inode *inode, ssize_t count)
++{
++	lockdep_assert_held_write(&inode->i_rwsem);
++	if (count < 0) {
+ 		ext4_truncate_failed_write(inode);
+ 		/*
+ 		 * If the truncate operation failed early, then the inode may
+@@ -362,9 +320,28 @@ truncate:
+ 		 */
+ 		if (inode->i_nlink)
+ 			ext4_orphan_del(NULL, inode);
++		return;
+ 	}
++	/*
++	 * If i_disksize got extended due to writeback of delalloc blocks while
++	 * the DIO was running we could fail to cleanup the orphan list in
++	 * ext4_handle_inode_extension(). Do it now.
++	 */
++	if (!list_empty(&EXT4_I(inode)->i_orphan) && inode->i_nlink) {
++		handle_t *handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
+ 
+-	return written;
++		if (IS_ERR(handle)) {
++			/*
++			 * The write has successfully completed. Not much to
++			 * do with the error here so just cleanup the orphan
++			 * list and hope for the best.
++			 */
++			ext4_orphan_del(NULL, inode);
++			return;
++		}
++		ext4_orphan_del(handle, inode);
++		ext4_journal_stop(handle);
++	}
+ }
+ 
+ static int ext4_dio_write_end_io(struct kiocb *iocb, ssize_t size,
+@@ -373,31 +350,22 @@ static int ext4_dio_write_end_io(struct
+ 	loff_t pos = iocb->ki_pos;
+ 	struct inode *inode = file_inode(iocb->ki_filp);
+ 
++	if (!error && size && flags & IOMAP_DIO_UNWRITTEN)
++		error = ext4_convert_unwritten_extents(NULL, inode, pos, size);
+ 	if (error)
+ 		return error;
+-
+-	if (size && flags & IOMAP_DIO_UNWRITTEN) {
+-		error = ext4_convert_unwritten_extents(NULL, inode, pos, size);
+-		if (error < 0)
+-			return error;
+-	}
+ 	/*
+-	 * If we are extending the file, we have to update i_size here before
+-	 * page cache gets invalidated in iomap_dio_rw(). Otherwise racing
+-	 * buffered reads could zero out too much from page cache pages. Update
+-	 * of on-disk size will happen later in ext4_dio_write_iter() where
+-	 * we have enough information to also perform orphan list handling etc.
+-	 * Note that we perform all extending writes synchronously under
+-	 * i_rwsem held exclusively so i_size update is safe here in that case.
+-	 * If the write was not extending, we cannot see pos > i_size here
+-	 * because operations reducing i_size like truncate wait for all
+-	 * outstanding DIO before updating i_size.
++	 * Note that EXT4_I(inode)->i_disksize can get extended up to
++	 * inode->i_size while the I/O was running due to writeback of delalloc
++	 * blocks. But the code in ext4_iomap_alloc() is careful to use
++	 * zeroed/unwritten extents if this is possible; thus we won't leave
++	 * uninitialized blocks in a file even if we didn't succeed in writing
++	 * as much as we intended.
+ 	 */
+-	pos += size;
+-	if (pos > i_size_read(inode))
+-		i_size_write(inode, pos);
+-
+-	return 0;
++	WARN_ON_ONCE(i_size_read(inode) < READ_ONCE(EXT4_I(inode)->i_disksize));
++	if (pos + size <= READ_ONCE(EXT4_I(inode)->i_disksize))
++		return size;
++	return ext4_handle_inode_extension(inode, pos, size);
+ }
+ 
+ static const struct iomap_dio_ops ext4_dio_write_ops = {
+@@ -572,9 +540,16 @@ static ssize_t ext4_dio_write_iter(struc
+ 			   is_sync_kiocb(iocb) || unaligned_io || extend);
+ 	if (ret == -ENOTBLK)
+ 		ret = 0;
+-
+-	if (extend)
+-		ret = ext4_handle_inode_extension(inode, offset, ret, count);
++	if (extend) {
++		/*
++		 * We always perform extending DIO write synchronously so by
++		 * now the IO is completed and ext4_handle_inode_extension()
++		 * was called. Cleanup the inode in case of error or race with
++		 * writeback of delalloc blocks.
++		 */
++		WARN_ON_ONCE(ret == -EIOCBQUEUED);
++		ext4_inode_extension_cleanup(inode, ret);
++	}
+ 
+ out:
+ 	if (ilock_shared)
+@@ -655,8 +630,10 @@ ext4_dax_write_iter(struct kiocb *iocb,
+ 
+ 	ret = dax_iomap_rw(iocb, from, &ext4_iomap_ops);
+ 
+-	if (extend)
+-		ret = ext4_handle_inode_extension(inode, offset, ret, count);
++	if (extend) {
++		ret = ext4_handle_inode_extension(inode, offset, ret);
++		ext4_inode_extension_cleanup(inode, ret);
++	}
+ out:
+ 	inode_unlock(inode);
+ 	if (ret > 0)
 
 
