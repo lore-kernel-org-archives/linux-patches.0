@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C473539FEE;
-	Fri, 24 Nov 2023 18:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C19B2C85B;
+	Fri, 24 Nov 2023 18:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/gRUZDg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCB1C433C7;
-	Fri, 24 Nov 2023 18:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKhRkIyS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A94C433C8;
+	Fri, 24 Nov 2023 18:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850837;
-	bh=GWFf6Qx5yYyOjW4GVkLpTGyQHkJJaS8OtgdsFhiN8FQ=;
+	s=korg; t=1700850840;
+	bh=8lrIAnpRM9sRLzOyzvvcC6FMyUv1Qbd7pTjRroskC+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/gRUZDgiKIdD2axDY64I6sM2l9hJXYAS6oiNZBGWH9kqcVZluyhFgdiR9hzI3w2h
-	 hfrp/ucS+jY/FfFeNXnB3S1Zo4LN22SLoX5yH+9pS2beR4lKD++NoH86PwYa8JxO+u
-	 BQtXqcnzahsKN/UC4JOaZPMkrnppZwXMTemaBjl4=
+	b=vKhRkIySSshv3ol42vh14oqWSKKHs5WPLsz/89Rq6ZTgWH32ZglcZ1EGm4bJHCYBR
+	 s4gex3m+G5UQVNjxNzSCVOffraACv0xaRt9V7OLs8smxJvqkdyWoXuQEKjio79GSiB
+	 Fg0hdKCTdgmYM7g1tVEK8sZNULLQUwKORV1EWPZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 208/491] net/mlx5: Consolidate devlink documentation in devlink/mlx5.rst
-Date: Fri, 24 Nov 2023 17:47:24 +0000
-Message-ID: <20231124172030.764779173@linuxfoundation.org>
+Subject: [PATCH 6.5 209/491] net/mlx5e: Make tx_port_ts logic resilient to out-of-order CQEs
+Date: Fri, 24 Nov 2023 17:47:25 +0000
+Message-ID: <20231124172030.795217163@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -46,566 +45,623 @@ Content-Transfer-Encoding: 8bit
 
 From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-[ Upstream commit b608dd670bb69c89d5074685899d4c1089f57a16 ]
+[ Upstream commit 3178308ad4ca38955cad684d235153d4939f1fcd ]
 
-De-duplicate documentation by removing mellanox/mlx5/devlink.rst. Instead,
-only use the generic devlink documentation directory to document mlx5
-devlink parameters. Avoid providing general devlink tool usage information
-in mlx5-specific documentation.
+Use a map structure for associating CQEs containing port timestamping
+information with the appropriate skb. Track order of WQEs submitted using a
+FIFO. Check if the corresponding port timestamping CQEs from the lookup
+values in the FIFO are considered dropped due to time elapsed. Return the
+lookup value to a freelist after consuming the skb. Reuse the freed lookup
+in future WQE submission iterations.
+
+The map structure uses an integer identifier for the key and returns an skb
+corresponding to that identifier. Embed the integer identifier in the WQE
+submitted to the WQ for the transmit path when the SQ is a PTP (port
+timestamping) SQ. The embedded identifier can then be queried using a field
+in the CQE of the corresponding port timestamping CQ. In the port
+timestamping napi_poll context, the identifier is queried from the CQE
+polled from CQ and used to lookup the corresponding skb from the WQE submit
+path. The skb reference is removed from map and then embedded with the port
+HW timestamp information from the CQE and eventually consumed.
+
+The metadata freelist FIFO is an array containing integer identifiers that
+can be pushed and popped in the FIFO. The purpose of this structure is
+bookkeeping what identifier values can safely be used in a subsequent WQE
+submission and should not contain identifiers that have still not been
+reaped by processing a corresponding CQE completion on the port
+timestamping CQ.
+
+The ts_cqe_pending_list structure is a combination of an array and linked
+list. The array is pre-populated with the nodes that will be added and
+removed from the head of the linked list. Each node contains the unique
+identifier value associated with the values submitted in the WQEs and
+retrieved in the port timestamping CQEs. When a WQE is submitted, the node
+in the array corresponding to the identifier popped from the metadata
+freelist is added to the end of the CQE pending list and is marked as
+"in-use". The node is removed from the linked list under two conditions.
+The first condition is that the corresponding port timestamping CQE is
+polled in the PTP napi_poll context. The second condition is that more than
+a second has elapsed since the DMA timestamp value corresponding to the WQE
+submission. When the first condition occurs, the "in-use" bit in the linked
+list node is cleared, and the resources corresponding to the WQE submission
+are then released. The second condition, however, indicates that the port
+timestamping CQE will likely never be delivered. It's not impossible for
+the device to post a CQE after an infinite amount of time though highly
+improbable. In order to be resilient to this improbable case, resources
+related to the corresponding WQE submission are still kept, the identifier
+value is not returned to the freelist, and the "in-use" bit is cleared on
+the node to indicate that it's no longer part of the linked list of "likely
+to be delivered" port timestamping CQE identifiers. A count for the number
+of port timestamping CQEs considered highly likely to never be delivered by
+the device is maintained. This count gets decremented in the unlikely event
+a port timestamping CQE considered unlikely to ever be delivered is polled
+in the PTP napi_poll context.
 
 Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Stable-dep-of: 92214be5979c ("net/mlx5e: Update doorbell for port timestamping CQ before the software counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/devlink.rst        | 313 ------------------
- .../ethernet/mellanox/mlx5/index.rst          |   1 -
- Documentation/networking/devlink/mlx5.rst     | 179 ++++++++++
- 3 files changed, 179 insertions(+), 314 deletions(-)
- delete mode 100644 Documentation/networking/device_drivers/ethernet/mellanox/mlx5/devlink.rst
+ .../ethernet/mellanox/mlx5/counters.rst       |   6 +
+ .../net/ethernet/mellanox/mlx5/core/en/ptp.c  | 215 +++++++++++++-----
+ .../net/ethernet/mellanox/mlx5/core/en/ptp.h  |  57 ++++-
+ .../ethernet/mellanox/mlx5/core/en_ethtool.c  |   3 +-
+ .../ethernet/mellanox/mlx5/core/en_stats.c    |   4 +-
+ .../ethernet/mellanox/mlx5/core/en_stats.h    |   4 +-
+ .../net/ethernet/mellanox/mlx5/core/en_tx.c   |  28 ++-
+ 7 files changed, 236 insertions(+), 81 deletions(-)
 
-diff --git a/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/devlink.rst b/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/devlink.rst
-deleted file mode 100644
-index a4edf908b707c..0000000000000
---- a/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/devlink.rst
-+++ /dev/null
-@@ -1,313 +0,0 @@
--.. SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
--.. include:: <isonum.txt>
--
--=======
--Devlink
--=======
--
--:Copyright: |copy| 2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
--
--Contents
--========
--
--- `Info`_
--- `Parameters`_
--- `Health reporters`_
--
--Info
--====
--
--The devlink info reports the running and stored firmware versions on device.
--It also prints the device PSID which represents the HCA board type ID.
--
--User command example::
--
--   $ devlink dev info pci/0000:00:06.0
--      pci/0000:00:06.0:
--      driver mlx5_core
--      versions:
--         fixed:
--            fw.psid MT_0000000009
--         running:
--            fw.version 16.26.0100
--         stored:
--            fw.version 16.26.0100
--
--Parameters
--==========
--
--flow_steering_mode: Device flow steering mode
-----------------------------------------------
--The flow steering mode parameter controls the flow steering mode of the driver.
--Two modes are supported:
--
--1. 'dmfs' - Device managed flow steering.
--2. 'smfs' - Software/Driver managed flow steering.
--
--In DMFS mode, the HW steering entities are created and managed through the
--Firmware.
--In SMFS mode, the HW steering entities are created and managed though by
--the driver directly into hardware without firmware intervention.
--
--SMFS mode is faster and provides better rule insertion rate compared to default DMFS mode.
--
--User command examples:
--
--- Set SMFS flow steering mode::
--
--    $ devlink dev param set pci/0000:06:00.0 name flow_steering_mode value "smfs" cmode runtime
--
--- Read device flow steering mode::
--
--    $ devlink dev param show pci/0000:06:00.0 name flow_steering_mode
--      pci/0000:06:00.0:
--      name flow_steering_mode type driver-specific
--      values:
--         cmode runtime value smfs
--
--enable_roce: RoCE enablement state
------------------------------------
--If the device supports RoCE disablement, RoCE enablement state controls device
--support for RoCE capability. Otherwise, the control occurs in the driver stack.
--When RoCE is disabled at the driver level, only raw ethernet QPs are supported.
--
--To change RoCE enablement state, a user must change the driverinit cmode value
--and run devlink reload.
--
--User command examples:
--
--- Disable RoCE::
--
--    $ devlink dev param set pci/0000:06:00.0 name enable_roce value false cmode driverinit
--    $ devlink dev reload pci/0000:06:00.0
--
--- Read RoCE enablement state::
--
--    $ devlink dev param show pci/0000:06:00.0 name enable_roce
--      pci/0000:06:00.0:
--      name enable_roce type generic
--      values:
--         cmode driverinit value true
--
--esw_port_metadata: Eswitch port metadata state
------------------------------------------------
--When applicable, disabling eswitch metadata can increase packet rate
--up to 20% depending on the use case and packet sizes.
--
--Eswitch port metadata state controls whether to internally tag packets with
--metadata. Metadata tagging must be enabled for multi-port RoCE, failover
--between representors and stacked devices.
--By default metadata is enabled on the supported devices in E-switch.
--Metadata is applicable only for E-switch in switchdev mode and
--users may disable it when NONE of the below use cases will be in use:
--
--1. HCA is in Dual/multi-port RoCE mode.
--2. VF/SF representor bonding (Usually used for Live migration)
--3. Stacked devices
--
--When metadata is disabled, the above use cases will fail to initialize if
--users try to enable them.
--
--- Show eswitch port metadata::
--
--    $ devlink dev param show pci/0000:06:00.0 name esw_port_metadata
--      pci/0000:06:00.0:
--        name esw_port_metadata type driver-specific
--          values:
--            cmode runtime value true
--
--- Disable eswitch port metadata::
--
--    $ devlink dev param set pci/0000:06:00.0 name esw_port_metadata value false cmode runtime
--
--- Change eswitch mode to switchdev mode where after choosing the metadata value::
--
--    $ devlink dev eswitch set pci/0000:06:00.0 mode switchdev
--
--hairpin_num_queues: Number of hairpin queues
----------------------------------------------
--We refer to a TC NIC rule that involves forwarding as "hairpin".
--
--Hairpin queues are mlx5 hardware specific implementation for hardware
--forwarding of such packets.
--
--- Show the number of hairpin queues::
--
--    $ devlink dev param show pci/0000:06:00.0 name hairpin_num_queues
--      pci/0000:06:00.0:
--        name hairpin_num_queues type driver-specific
--          values:
--            cmode driverinit value 2
--
--- Change the number of hairpin queues::
--
--    $ devlink dev param set pci/0000:06:00.0 name hairpin_num_queues value 4 cmode driverinit
--
--hairpin_queue_size: Size of the hairpin queues
------------------------------------------------
--Control the size of the hairpin queues.
--
--- Show the size of the hairpin queues::
--
--    $ devlink dev param show pci/0000:06:00.0 name hairpin_queue_size
--      pci/0000:06:00.0:
--        name hairpin_queue_size type driver-specific
--          values:
--            cmode driverinit value 1024
--
--- Change the size (in packets) of the hairpin queues::
--
--    $ devlink dev param set pci/0000:06:00.0 name hairpin_queue_size value 512 cmode driverinit
--
--Health reporters
--================
--
--tx reporter
-------------
--The tx reporter is responsible for reporting and recovering of the following two error scenarios:
--
--- tx timeout
--    Report on kernel tx timeout detection.
--    Recover by searching lost interrupts.
--- tx error completion
--    Report on error tx completion.
--    Recover by flushing the tx queue and reset it.
--
--tx reporter also support on demand diagnose callback, on which it provides
--real time information of its send queues status.
--
--User commands examples:
--
--- Diagnose send queues status::
--
--    $ devlink health diagnose pci/0000:82:00.0 reporter tx
--
--.. note::
--   This command has valid output only when interface is up, otherwise the command has empty output.
--
--- Show number of tx errors indicated, number of recover flows ended successfully,
--  is autorecover enabled and graceful period from last recover::
--
--    $ devlink health show pci/0000:82:00.0 reporter tx
--
--rx reporter
-------------
--The rx reporter is responsible for reporting and recovering of the following two error scenarios:
--
--- rx queues' initialization (population) timeout
--    Population of rx queues' descriptors on ring initialization is done
--    in napi context via triggering an irq. In case of a failure to get
--    the minimum amount of descriptors, a timeout would occur, and
--    descriptors could be recovered by polling the EQ (Event Queue).
--- rx completions with errors (reported by HW on interrupt context)
--    Report on rx completion error.
--    Recover (if needed) by flushing the related queue and reset it.
--
--rx reporter also supports on demand diagnose callback, on which it
--provides real time information of its receive queues' status.
--
--- Diagnose rx queues' status and corresponding completion queue::
--
--    $ devlink health diagnose pci/0000:82:00.0 reporter rx
--
--NOTE: This command has valid output only when interface is up. Otherwise, the command has empty output.
--
--- Show number of rx errors indicated, number of recover flows ended successfully,
--  is autorecover enabled, and graceful period from last recover::
--
--    $ devlink health show pci/0000:82:00.0 reporter rx
--
--fw reporter
-------------
--The fw reporter implements `diagnose` and `dump` callbacks.
--It follows symptoms of fw error such as fw syndrome by triggering
--fw core dump and storing it into the dump buffer.
--The fw reporter diagnose command can be triggered any time by the user to check
--current fw status.
--
--User commands examples:
--
--- Check fw heath status::
--
--    $ devlink health diagnose pci/0000:82:00.0 reporter fw
--
--- Read FW core dump if already stored or trigger new one::
--
--    $ devlink health dump show pci/0000:82:00.0 reporter fw
--
--.. note::
--   This command can run only on the PF which has fw tracer ownership,
--   running it on other PF or any VF will return "Operation not permitted".
--
--fw fatal reporter
-------------------
--The fw fatal reporter implements `dump` and `recover` callbacks.
--It follows fatal errors indications by CR-space dump and recover flow.
--The CR-space dump uses vsc interface which is valid even if the FW command
--interface is not functional, which is the case in most FW fatal errors.
--The recover function runs recover flow which reloads the driver and triggers fw
--reset if needed.
--On firmware error, the health buffer is dumped into the dmesg. The log
--level is derived from the error's severity (given in health buffer).
--
--User commands examples:
--
--- Run fw recover flow manually::
--
--    $ devlink health recover pci/0000:82:00.0 reporter fw_fatal
--
--- Read FW CR-space dump if already stored or trigger new one::
--
--    $ devlink health dump show pci/0000:82:00.1 reporter fw_fatal
--
--.. note::
--   This command can run only on PF.
--
--vnic reporter
---------------
--The vnic reporter implements only the `diagnose` callback.
--It is responsible for querying the vnic diagnostic counters from fw and displaying
--them in realtime.
--
--Description of the vnic counters:
--
--- total_q_under_processor_handle
--        number of queues in an error state due to
--        an async error or errored command.
--- send_queue_priority_update_flow
--        number of QP/SQ priority/SL update events.
--- cq_overrun
--        number of times CQ entered an error state due to an overflow.
--- async_eq_overrun
--        number of times an EQ mapped to async events was overrun.
--        comp_eq_overrun number of times an EQ mapped to completion events was
--        overrun.
--- quota_exceeded_command
--        number of commands issued and failed due to quota exceeded.
--- invalid_command
--        number of commands issued and failed dues to any reason other than quota
--        exceeded.
--- nic_receive_steering_discard
--        number of packets that completed RX flow
--        steering but were discarded due to a mismatch in flow table.
--- generated_pkt_steering_fail
--	number of packets generated by the VNIC experiencing unexpected steering
--	failure (at any point in steering flow).
--- handled_pkt_steering_fail
--	number of packets handled by the VNIC experiencing unexpected steering
--	failure (at any point in steering flow owned by the VNIC, including the FDB
--	for the eswitch owner).
--
--User commands examples:
--
--- Diagnose PF/VF vnic counters::
--
--        $ devlink health diagnose pci/0000:82:00.1 reporter vnic
--
--- Diagnose representor vnic counters (performed by supplying devlink port of the
--  representor, which can be obtained via devlink port command)::
--
--        $ devlink health diagnose pci/0000:82:00.1/65537 reporter vnic
--
--.. note::
--   This command can run over all interfaces such as PF/VF and representor ports.
-diff --git a/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/index.rst b/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/index.rst
-index 3fdcd6b61ccfa..581a91caa5795 100644
---- a/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/index.rst
-+++ b/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/index.rst
-@@ -13,7 +13,6 @@ Contents:
-    :maxdepth: 2
+diff --git a/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/counters.rst b/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/counters.rst
+index a395df9c27513..008e560e12b58 100644
+--- a/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/counters.rst
++++ b/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/counters.rst
+@@ -683,6 +683,12 @@ the software port.
+        time protocol.
+      - Error
  
-    kconfig
--   devlink
-    switchdev
-    tracepoints
-    counters
-diff --git a/Documentation/networking/devlink/mlx5.rst b/Documentation/networking/devlink/mlx5.rst
-index 202798d6501e7..196a4bb28df1e 100644
---- a/Documentation/networking/devlink/mlx5.rst
-+++ b/Documentation/networking/devlink/mlx5.rst
-@@ -18,6 +18,11 @@ Parameters
-    * - ``enable_roce``
-      - driverinit
-      - Type: Boolean
++   * - `ptp_cq[i]_late_cqe`
++     - Number of times a CQE has been delivered on the PTP timestamping CQ when
++       the CQE was not expected since a certain amount of time had elapsed where
++       the device typically ensures not posting the CQE.
++     - Error
 +
-+       If the device supports RoCE disablement, RoCE enablement state controls
-+       device support for RoCE capability. Otherwise, the control occurs in the
-+       driver stack. When RoCE is disabled at the driver level, only raw
-+       ethernet QPs are supported.
-    * - ``io_eq_size``
-      - driverinit
-      - The range is between 64 and 4096.
-@@ -48,6 +53,9 @@ parameters.
-        * ``smfs`` Software managed flow steering. In SMFS mode, the HW
-          steering entities are created and manage through the driver without
-          firmware intervention.
-+
-+       SMFS mode is faster and provides better rule insertion rate compared to
-+       default DMFS mode.
-    * - ``fdb_large_groups``
-      - u32
-      - driverinit
-@@ -71,7 +79,24 @@ parameters.
-        deprecated.
+ .. [#ring_global] The corresponding ring and global counters do not share the
+                   same name (i.e. do not follow the common naming scheme).
  
-        Default: disabled
-+   * - ``esw_port_metadata``
-+     - Boolean
-+     - runtime
-+     - When applicable, disabling eswitch metadata can increase packet rate up
-+       to 20% depending on the use case and packet sizes.
-+
-+       Eswitch port metadata state controls whether to internally tag packets
-+       with metadata. Metadata tagging must be enabled for multi-port RoCE,
-+       failover between representors and stacked devices. By default metadata is
-+       enabled on the supported devices in E-switch. Metadata is applicable only
-+       for E-switch in switchdev mode and users may disable it when NONE of the
-+       below use cases will be in use:
-+       1. HCA is in Dual/multi-port RoCE mode.
-+       2. VF/SF representor bonding (Usually used for Live migration)
-+       3. Stacked devices
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+index b0b429a0321ed..8680d21f3e7b0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
+@@ -5,6 +5,8 @@
+ #include "en/txrx.h"
+ #include "en/params.h"
+ #include "en/fs_tt_redirect.h"
++#include <linux/list.h>
++#include <linux/spinlock.h>
  
-+       When metadata is disabled, the above use cases will fail to initialize if
-+       users try to enable them.
-    * - ``hairpin_num_queues``
-      - u32
-      - driverinit
-@@ -104,3 +129,157 @@ The ``mlx5`` driver reports the following versions
-    * - ``fw.version``
-      - stored, running
-      - Three digit major.minor.subminor firmware version number.
+ struct mlx5e_ptp_fs {
+ 	struct mlx5_flow_handle *l2_rule;
+@@ -19,6 +21,48 @@ struct mlx5e_ptp_params {
+ 	struct mlx5e_rq_param rq_param;
+ };
+ 
++struct mlx5e_ptp_port_ts_cqe_tracker {
++	u8 metadata_id;
++	bool inuse : 1;
++	struct list_head entry;
++};
 +
-+Health reporters
-+================
++struct mlx5e_ptp_port_ts_cqe_list {
++	struct mlx5e_ptp_port_ts_cqe_tracker *nodes;
++	struct list_head tracker_list_head;
++	/* Sync list operations in xmit and napi_poll contexts */
++	spinlock_t tracker_list_lock;
++};
 +
-+tx reporter
-+-----------
-+The tx reporter is responsible for reporting and recovering of the following two error scenarios:
++static inline void
++mlx5e_ptp_port_ts_cqe_list_add(struct mlx5e_ptp_port_ts_cqe_list *list, u8 metadata)
++{
++	struct mlx5e_ptp_port_ts_cqe_tracker *tracker = &list->nodes[metadata];
 +
-+- tx timeout
-+    Report on kernel tx timeout detection.
-+    Recover by searching lost interrupts.
-+- tx error completion
-+    Report on error tx completion.
-+    Recover by flushing the tx queue and reset it.
++	WARN_ON_ONCE(tracker->inuse);
++	tracker->inuse = true;
++	spin_lock(&list->tracker_list_lock);
++	list_add_tail(&tracker->entry, &list->tracker_list_head);
++	spin_unlock(&list->tracker_list_lock);
++}
 +
-+tx reporter also support on demand diagnose callback, on which it provides
-+real time information of its send queues status.
++static void
++mlx5e_ptp_port_ts_cqe_list_remove(struct mlx5e_ptp_port_ts_cqe_list *list, u8 metadata)
++{
++	struct mlx5e_ptp_port_ts_cqe_tracker *tracker = &list->nodes[metadata];
 +
-+User commands examples:
++	WARN_ON_ONCE(!tracker->inuse);
++	tracker->inuse = false;
++	spin_lock(&list->tracker_list_lock);
++	list_del(&tracker->entry);
++	spin_unlock(&list->tracker_list_lock);
++}
 +
-+- Diagnose send queues status::
++void mlx5e_ptpsq_track_metadata(struct mlx5e_ptpsq *ptpsq, u8 metadata)
++{
++	mlx5e_ptp_port_ts_cqe_list_add(ptpsq->ts_cqe_pending_list, metadata);
++}
 +
-+    $ devlink health diagnose pci/0000:82:00.0 reporter tx
+ struct mlx5e_skb_cb_hwtstamp {
+ 	ktime_t cqe_hwtstamp;
+ 	ktime_t port_hwtstamp;
+@@ -79,75 +123,88 @@ void mlx5e_skb_cb_hwtstamp_handler(struct sk_buff *skb, int hwtstamp_type,
+ 	memset(skb->cb, 0, sizeof(struct mlx5e_skb_cb_hwtstamp));
+ }
+ 
+-#define PTP_WQE_CTR2IDX(val) ((val) & ptpsq->ts_cqe_ctr_mask)
+-
+-static bool mlx5e_ptp_ts_cqe_drop(struct mlx5e_ptpsq *ptpsq, u16 skb_ci, u16 skb_id)
++static struct sk_buff *
++mlx5e_ptp_metadata_map_lookup(struct mlx5e_ptp_metadata_map *map, u16 metadata)
+ {
+-	return (ptpsq->ts_cqe_ctr_mask && (skb_ci != skb_id));
++	return map->data[metadata];
+ }
+ 
+-static bool mlx5e_ptp_ts_cqe_ooo(struct mlx5e_ptpsq *ptpsq, u16 skb_id)
++static struct sk_buff *
++mlx5e_ptp_metadata_map_remove(struct mlx5e_ptp_metadata_map *map, u16 metadata)
+ {
+-	u16 skb_ci = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_cc);
+-	u16 skb_pi = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_pc);
++	struct sk_buff *skb;
+ 
+-	if (PTP_WQE_CTR2IDX(skb_id - skb_ci) >= PTP_WQE_CTR2IDX(skb_pi - skb_ci))
+-		return true;
++	skb = map->data[metadata];
++	map->data[metadata] = NULL;
+ 
+-	return false;
++	return skb;
+ }
+ 
+-static void mlx5e_ptp_skb_fifo_ts_cqe_resync(struct mlx5e_ptpsq *ptpsq, u16 skb_ci,
+-					     u16 skb_id, int budget)
++static void mlx5e_ptpsq_mark_ts_cqes_undelivered(struct mlx5e_ptpsq *ptpsq,
++						 ktime_t port_tstamp)
+ {
+-	struct skb_shared_hwtstamps hwts = {};
+-	struct sk_buff *skb;
++	struct mlx5e_ptp_port_ts_cqe_list *cqe_list = ptpsq->ts_cqe_pending_list;
++	ktime_t timeout = ns_to_ktime(MLX5E_PTP_TS_CQE_UNDELIVERED_TIMEOUT);
++	struct mlx5e_ptp_metadata_map *metadata_map = &ptpsq->metadata_map;
++	struct mlx5e_ptp_port_ts_cqe_tracker *pos, *n;
 +
-+.. note::
-+   This command has valid output only when interface is up, otherwise the command has empty output.
++	spin_lock(&cqe_list->tracker_list_lock);
++	list_for_each_entry_safe(pos, n, &cqe_list->tracker_list_head, entry) {
++		struct sk_buff *skb =
++			mlx5e_ptp_metadata_map_lookup(metadata_map, pos->metadata_id);
++		ktime_t dma_tstamp = mlx5e_skb_cb_get_hwts(skb)->cqe_hwtstamp;
+ 
+-	ptpsq->cq_stats->resync_event++;
++		if (!dma_tstamp ||
++		    ktime_after(ktime_add(dma_tstamp, timeout), port_tstamp))
++			break;
+ 
+-	while (skb_ci != skb_id) {
+-		skb = mlx5e_skb_fifo_pop(&ptpsq->skb_fifo);
+-		hwts.hwtstamp = mlx5e_skb_cb_get_hwts(skb)->cqe_hwtstamp;
+-		skb_tstamp_tx(skb, &hwts);
+-		ptpsq->cq_stats->resync_cqe++;
+-		napi_consume_skb(skb, budget);
+-		skb_ci = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_cc);
++		metadata_map->undelivered_counter++;
++		WARN_ON_ONCE(!pos->inuse);
++		pos->inuse = false;
++		list_del(&pos->entry);
+ 	}
++	spin_unlock(&cqe_list->tracker_list_lock);
+ }
+ 
++#define PTP_WQE_CTR2IDX(val) ((val) & ptpsq->ts_cqe_ctr_mask)
 +
-+- Show number of tx errors indicated, number of recover flows ended successfully,
-+  is autorecover enabled and graceful period from last recover::
+ static void mlx5e_ptp_handle_ts_cqe(struct mlx5e_ptpsq *ptpsq,
+ 				    struct mlx5_cqe64 *cqe,
+ 				    int budget)
+ {
+-	u16 skb_id = PTP_WQE_CTR2IDX(be16_to_cpu(cqe->wqe_counter));
+-	u16 skb_ci = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_cc);
++	struct mlx5e_ptp_port_ts_cqe_list *pending_cqe_list = ptpsq->ts_cqe_pending_list;
++	u8 metadata_id = PTP_WQE_CTR2IDX(be16_to_cpu(cqe->wqe_counter));
++	bool is_err_cqe = !!MLX5E_RX_ERR_CQE(cqe);
+ 	struct mlx5e_txqsq *sq = &ptpsq->txqsq;
+ 	struct sk_buff *skb;
+ 	ktime_t hwtstamp;
+ 
+-	if (unlikely(MLX5E_RX_ERR_CQE(cqe))) {
+-		skb = mlx5e_skb_fifo_pop(&ptpsq->skb_fifo);
+-		ptpsq->cq_stats->err_cqe++;
+-		goto out;
++	if (likely(pending_cqe_list->nodes[metadata_id].inuse)) {
++		mlx5e_ptp_port_ts_cqe_list_remove(pending_cqe_list, metadata_id);
++	} else {
++		/* Reclaim space in the unlikely event CQE was delivered after
++		 * marking it late.
++		 */
++		ptpsq->metadata_map.undelivered_counter--;
++		ptpsq->cq_stats->late_cqe++;
+ 	}
+ 
+-	if (mlx5e_ptp_ts_cqe_drop(ptpsq, skb_ci, skb_id)) {
+-		if (mlx5e_ptp_ts_cqe_ooo(ptpsq, skb_id)) {
+-			/* already handled by a previous resync */
+-			ptpsq->cq_stats->ooo_cqe_drop++;
+-			return;
+-		}
+-		mlx5e_ptp_skb_fifo_ts_cqe_resync(ptpsq, skb_ci, skb_id, budget);
++	skb = mlx5e_ptp_metadata_map_remove(&ptpsq->metadata_map, metadata_id);
 +
-+    $ devlink health show pci/0000:82:00.0 reporter tx
++	if (unlikely(is_err_cqe)) {
++		ptpsq->cq_stats->err_cqe++;
++		goto out;
+ 	}
+ 
+-	skb = mlx5e_skb_fifo_pop(&ptpsq->skb_fifo);
+ 	hwtstamp = mlx5e_cqe_ts_to_ns(sq->ptp_cyc2time, sq->clock, get_cqe_ts(cqe));
+ 	mlx5e_skb_cb_hwtstamp_handler(skb, MLX5E_SKB_CB_PORT_HWTSTAMP,
+ 				      hwtstamp, ptpsq->cq_stats);
+ 	ptpsq->cq_stats->cqe++;
+ 
++	mlx5e_ptpsq_mark_ts_cqes_undelivered(ptpsq, hwtstamp);
+ out:
+ 	napi_consume_skb(skb, budget);
++	mlx5e_ptp_metadata_fifo_push(&ptpsq->metadata_freelist, metadata_id);
+ }
+ 
+ static bool mlx5e_ptp_poll_ts_cq(struct mlx5e_cq *cq, int budget)
+@@ -291,36 +348,78 @@ static void mlx5e_ptp_destroy_sq(struct mlx5_core_dev *mdev, u32 sqn)
+ 
+ static int mlx5e_ptp_alloc_traffic_db(struct mlx5e_ptpsq *ptpsq, int numa)
+ {
+-	int wq_sz = mlx5_wq_cyc_get_size(&ptpsq->txqsq.wq);
+-	struct mlx5_core_dev *mdev = ptpsq->txqsq.mdev;
++	struct mlx5e_ptp_metadata_fifo *metadata_freelist = &ptpsq->metadata_freelist;
++	struct mlx5e_ptp_metadata_map *metadata_map = &ptpsq->metadata_map;
++	struct mlx5e_ptp_port_ts_cqe_list *cqe_list;
++	int db_sz;
++	int md;
+ 
+-	ptpsq->skb_fifo.fifo = kvzalloc_node(array_size(wq_sz, sizeof(*ptpsq->skb_fifo.fifo)),
+-					     GFP_KERNEL, numa);
+-	if (!ptpsq->skb_fifo.fifo)
++	cqe_list = kvzalloc_node(sizeof(*ptpsq->ts_cqe_pending_list), GFP_KERNEL, numa);
++	if (!cqe_list)
+ 		return -ENOMEM;
++	ptpsq->ts_cqe_pending_list = cqe_list;
 +
-+rx reporter
-+-----------
-+The rx reporter is responsible for reporting and recovering of the following two error scenarios:
++	db_sz = min_t(u32, mlx5_wq_cyc_get_size(&ptpsq->txqsq.wq),
++		      1 << MLX5_CAP_GEN_2(ptpsq->txqsq.mdev,
++					  ts_cqe_metadata_size2wqe_counter));
++	ptpsq->ts_cqe_ctr_mask = db_sz - 1;
 +
-+- rx queues' initialization (population) timeout
-+    Population of rx queues' descriptors on ring initialization is done
-+    in napi context via triggering an irq. In case of a failure to get
-+    the minimum amount of descriptors, a timeout would occur, and
-+    descriptors could be recovered by polling the EQ (Event Queue).
-+- rx completions with errors (reported by HW on interrupt context)
-+    Report on rx completion error.
-+    Recover (if needed) by flushing the related queue and reset it.
++	cqe_list->nodes = kvzalloc_node(array_size(db_sz, sizeof(*cqe_list->nodes)),
++					GFP_KERNEL, numa);
++	if (!cqe_list->nodes)
++		goto free_cqe_list;
++	INIT_LIST_HEAD(&cqe_list->tracker_list_head);
++	spin_lock_init(&cqe_list->tracker_list_lock);
 +
-+rx reporter also supports on demand diagnose callback, on which it
-+provides real time information of its receive queues' status.
++	metadata_freelist->data =
++		kvzalloc_node(array_size(db_sz, sizeof(*metadata_freelist->data)),
++			      GFP_KERNEL, numa);
++	if (!metadata_freelist->data)
++		goto free_cqe_list_nodes;
++	metadata_freelist->mask = ptpsq->ts_cqe_ctr_mask;
 +
-+- Diagnose rx queues' status and corresponding completion queue::
++	for (md = 0; md < db_sz; ++md) {
++		cqe_list->nodes[md].metadata_id = md;
++		metadata_freelist->data[md] = md;
++	}
++	metadata_freelist->pc = db_sz;
 +
-+    $ devlink health diagnose pci/0000:82:00.0 reporter rx
++	metadata_map->data =
++		kvzalloc_node(array_size(db_sz, sizeof(*metadata_map->data)),
++			      GFP_KERNEL, numa);
++	if (!metadata_map->data)
++		goto free_metadata_freelist;
++	metadata_map->capacity = db_sz;
+ 
+-	ptpsq->skb_fifo.pc   = &ptpsq->skb_fifo_pc;
+-	ptpsq->skb_fifo.cc   = &ptpsq->skb_fifo_cc;
+-	ptpsq->skb_fifo.mask = wq_sz - 1;
+-	if (MLX5_CAP_GEN_2(mdev, ts_cqe_metadata_size2wqe_counter))
+-		ptpsq->ts_cqe_ctr_mask =
+-			(1 << MLX5_CAP_GEN_2(mdev, ts_cqe_metadata_size2wqe_counter)) - 1;
+ 	return 0;
 +
-+.. note::
-+   This command has valid output only when interface is up. Otherwise, the command has empty output.
++free_metadata_freelist:
++	kvfree(metadata_freelist->data);
++free_cqe_list_nodes:
++	kvfree(cqe_list->nodes);
++free_cqe_list:
++	kvfree(cqe_list);
++	return -ENOMEM;
+ }
+ 
+-static void mlx5e_ptp_drain_skb_fifo(struct mlx5e_skb_fifo *skb_fifo)
++static void mlx5e_ptp_drain_metadata_map(struct mlx5e_ptp_metadata_map *map)
+ {
+-	while (*skb_fifo->pc != *skb_fifo->cc) {
+-		struct sk_buff *skb = mlx5e_skb_fifo_pop(skb_fifo);
++	int idx;
 +
-+- Show number of rx errors indicated, number of recover flows ended successfully,
-+  is autorecover enabled, and graceful period from last recover::
++	for (idx = 0; idx < map->capacity; ++idx) {
++		struct sk_buff *skb = map->data[idx];
+ 
+ 		dev_kfree_skb_any(skb);
+ 	}
+ }
+ 
+-static void mlx5e_ptp_free_traffic_db(struct mlx5e_skb_fifo *skb_fifo)
++static void mlx5e_ptp_free_traffic_db(struct mlx5e_ptpsq *ptpsq)
+ {
+-	mlx5e_ptp_drain_skb_fifo(skb_fifo);
+-	kvfree(skb_fifo->fifo);
++	mlx5e_ptp_drain_metadata_map(&ptpsq->metadata_map);
++	kvfree(ptpsq->metadata_map.data);
++	kvfree(ptpsq->metadata_freelist.data);
++	kvfree(ptpsq->ts_cqe_pending_list->nodes);
++	kvfree(ptpsq->ts_cqe_pending_list);
+ }
+ 
+ static int mlx5e_ptp_open_txqsq(struct mlx5e_ptp *c, u32 tisn,
+@@ -348,8 +447,7 @@ static int mlx5e_ptp_open_txqsq(struct mlx5e_ptp *c, u32 tisn,
+ 	if (err)
+ 		goto err_free_txqsq;
+ 
+-	err = mlx5e_ptp_alloc_traffic_db(ptpsq,
+-					 dev_to_node(mlx5_core_dma_dev(c->mdev)));
++	err = mlx5e_ptp_alloc_traffic_db(ptpsq, dev_to_node(mlx5_core_dma_dev(c->mdev)));
+ 	if (err)
+ 		goto err_free_txqsq;
+ 
+@@ -366,7 +464,7 @@ static void mlx5e_ptp_close_txqsq(struct mlx5e_ptpsq *ptpsq)
+ 	struct mlx5e_txqsq *sq = &ptpsq->txqsq;
+ 	struct mlx5_core_dev *mdev = sq->mdev;
+ 
+-	mlx5e_ptp_free_traffic_db(&ptpsq->skb_fifo);
++	mlx5e_ptp_free_traffic_db(ptpsq);
+ 	cancel_work_sync(&sq->recover_work);
+ 	mlx5e_ptp_destroy_sq(mdev, sq->sqn);
+ 	mlx5e_free_txqsq_descs(sq);
+@@ -534,7 +632,10 @@ static void mlx5e_ptp_build_params(struct mlx5e_ptp *c,
+ 
+ 	/* SQ */
+ 	if (test_bit(MLX5E_PTP_STATE_TX, c->state)) {
+-		params->log_sq_size = orig->log_sq_size;
++		params->log_sq_size =
++			min(MLX5_CAP_GEN_2(c->mdev, ts_cqe_metadata_size2wqe_counter),
++			    MLX5E_PTP_MAX_LOG_SQ_SIZE);
++		params->log_sq_size = min(params->log_sq_size, orig->log_sq_size);
+ 		mlx5e_ptp_build_sq_param(c->mdev, params, &cparams->txq_sq_param);
+ 	}
+ 	/* RQ */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
+index cc7efde88ac3c..7c5597d4589df 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
+@@ -7,18 +7,36 @@
+ #include "en.h"
+ #include "en_stats.h"
+ #include "en/txrx.h"
++#include <linux/ktime.h>
+ #include <linux/ptp_classify.h>
++#include <linux/time64.h>
+ 
+ #define MLX5E_PTP_CHANNEL_IX 0
++#define MLX5E_PTP_MAX_LOG_SQ_SIZE (8U)
++#define MLX5E_PTP_TS_CQE_UNDELIVERED_TIMEOUT (1 * NSEC_PER_SEC)
 +
-+    $ devlink health show pci/0000:82:00.0 reporter rx
++struct mlx5e_ptp_metadata_fifo {
++	u8  cc;
++	u8  pc;
++	u8  mask;
++	u8  *data;
++};
 +
-+fw reporter
-+-----------
-+The fw reporter implements `diagnose` and `dump` callbacks.
-+It follows symptoms of fw error such as fw syndrome by triggering
-+fw core dump and storing it into the dump buffer.
-+The fw reporter diagnose command can be triggered any time by the user to check
-+current fw status.
++struct mlx5e_ptp_metadata_map {
++	u16             undelivered_counter;
++	u16             capacity;
++	struct sk_buff  **data;
++};
+ 
+ struct mlx5e_ptpsq {
+ 	struct mlx5e_txqsq       txqsq;
+ 	struct mlx5e_cq          ts_cq;
+-	u16                      skb_fifo_cc;
+-	u16                      skb_fifo_pc;
+-	struct mlx5e_skb_fifo    skb_fifo;
+ 	struct mlx5e_ptp_cq_stats *cq_stats;
+ 	u16                      ts_cqe_ctr_mask;
 +
-+User commands examples:
++	struct mlx5e_ptp_port_ts_cqe_list  *ts_cqe_pending_list;
++	struct mlx5e_ptp_metadata_fifo     metadata_freelist;
++	struct mlx5e_ptp_metadata_map      metadata_map;
+ };
+ 
+ enum {
+@@ -69,12 +87,35 @@ static inline bool mlx5e_use_ptpsq(struct sk_buff *skb)
+ 		fk.ports.dst == htons(PTP_EV_PORT));
+ }
+ 
+-static inline bool mlx5e_ptpsq_fifo_has_room(struct mlx5e_txqsq *sq)
++static inline void mlx5e_ptp_metadata_fifo_push(struct mlx5e_ptp_metadata_fifo *fifo, u8 metadata)
+ {
+-	if (!sq->ptpsq)
+-		return true;
++	fifo->data[fifo->mask & fifo->pc++] = metadata;
++}
 +
-+- Check fw heath status::
++static inline u8
++mlx5e_ptp_metadata_fifo_pop(struct mlx5e_ptp_metadata_fifo *fifo)
++{
++	return fifo->data[fifo->mask & fifo->cc++];
++}
+ 
+-	return mlx5e_skb_fifo_has_room(&sq->ptpsq->skb_fifo);
++static inline void
++mlx5e_ptp_metadata_map_put(struct mlx5e_ptp_metadata_map *map,
++			   struct sk_buff *skb, u8 metadata)
++{
++	WARN_ON_ONCE(map->data[metadata]);
++	map->data[metadata] = skb;
++}
 +
-+    $ devlink health diagnose pci/0000:82:00.0 reporter fw
++static inline bool mlx5e_ptpsq_metadata_freelist_empty(struct mlx5e_ptpsq *ptpsq)
++{
++	struct mlx5e_ptp_metadata_fifo *freelist;
 +
-+- Read FW core dump if already stored or trigger new one::
++	if (likely(!ptpsq))
++		return false;
 +
-+    $ devlink health dump show pci/0000:82:00.0 reporter fw
++	freelist = &ptpsq->metadata_freelist;
 +
-+.. note::
-+   This command can run only on the PF which has fw tracer ownership,
-+   running it on other PF or any VF will return "Operation not permitted".
++	return freelist->pc == freelist->cc;
+ }
+ 
+ int mlx5e_ptp_open(struct mlx5e_priv *priv, struct mlx5e_params *params,
+@@ -89,6 +130,8 @@ void mlx5e_ptp_free_rx_fs(struct mlx5e_flow_steering *fs,
+ 			  const struct mlx5e_profile *profile);
+ int mlx5e_ptp_rx_manage_fs(struct mlx5e_priv *priv, bool set);
+ 
++void mlx5e_ptpsq_track_metadata(struct mlx5e_ptpsq *ptpsq, u8 metadata);
 +
-+fw fatal reporter
-+-----------------
-+The fw fatal reporter implements `dump` and `recover` callbacks.
-+It follows fatal errors indications by CR-space dump and recover flow.
-+The CR-space dump uses vsc interface which is valid even if the FW command
-+interface is not functional, which is the case in most FW fatal errors.
-+The recover function runs recover flow which reloads the driver and triggers fw
-+reset if needed.
-+On firmware error, the health buffer is dumped into the dmesg. The log
-+level is derived from the error's severity (given in health buffer).
+ enum {
+ 	MLX5E_SKB_CB_CQE_HWTSTAMP  = BIT(0),
+ 	MLX5E_SKB_CB_PORT_HWTSTAMP = BIT(1),
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+index 27861b68ced57..3d2d5d3b59f0b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+@@ -2061,7 +2061,8 @@ static int set_pflag_tx_port_ts(struct net_device *netdev, bool enable)
+ 	struct mlx5e_params new_params;
+ 	int err;
+ 
+-	if (!MLX5_CAP_GEN(mdev, ts_cqe_to_dest_cqn))
++	if (!MLX5_CAP_GEN(mdev, ts_cqe_to_dest_cqn) ||
++	    !MLX5_CAP_GEN_2(mdev, ts_cqe_metadata_size2wqe_counter))
+ 		return -EOPNOTSUPP;
+ 
+ 	/* Don't allow changing the PTP state if HTB offload is active, because
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+index 4d77055abd4be..dfdd357974164 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+@@ -2142,9 +2142,7 @@ static const struct counter_desc ptp_cq_stats_desc[] = {
+ 	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, err_cqe) },
+ 	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, abort) },
+ 	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, abort_abs_diff_ns) },
+-	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, resync_cqe) },
+-	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, resync_event) },
+-	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, ooo_cqe_drop) },
++	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, late_cqe) },
+ };
+ 
+ static const struct counter_desc ptp_rq_stats_desc[] = {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
+index 67938b4ea1b90..13a07e52ae92b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
+@@ -449,9 +449,7 @@ struct mlx5e_ptp_cq_stats {
+ 	u64 err_cqe;
+ 	u64 abort;
+ 	u64 abort_abs_diff_ns;
+-	u64 resync_cqe;
+-	u64 resync_event;
+-	u64 ooo_cqe_drop;
++	u64 late_cqe;
+ };
+ 
+ struct mlx5e_rep_stats {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
+index c7eb6b238c2ba..d41435c22ce56 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
+@@ -372,7 +372,7 @@ mlx5e_txwqe_complete(struct mlx5e_txqsq *sq, struct sk_buff *skb,
+ 		     const struct mlx5e_tx_attr *attr,
+ 		     const struct mlx5e_tx_wqe_attr *wqe_attr, u8 num_dma,
+ 		     struct mlx5e_tx_wqe_info *wi, struct mlx5_wqe_ctrl_seg *cseg,
+-		     bool xmit_more)
++		     struct mlx5_wqe_eth_seg *eseg, bool xmit_more)
+ {
+ 	struct mlx5_wq_cyc *wq = &sq->wq;
+ 	bool send_doorbell;
+@@ -394,11 +394,16 @@ mlx5e_txwqe_complete(struct mlx5e_txqsq *sq, struct sk_buff *skb,
+ 
+ 	mlx5e_tx_check_stop(sq);
+ 
+-	if (unlikely(sq->ptpsq)) {
++	if (unlikely(sq->ptpsq &&
++		     (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))) {
++		u8 metadata_index = be32_to_cpu(eseg->flow_table_metadata);
 +
-+User commands examples:
-+
-+- Run fw recover flow manually::
-+
-+    $ devlink health recover pci/0000:82:00.0 reporter fw_fatal
-+
-+- Read FW CR-space dump if already stored or trigger new one::
-+
-+    $ devlink health dump show pci/0000:82:00.1 reporter fw_fatal
-+
-+.. note::
-+   This command can run only on PF.
-+
-+vnic reporter
-+-------------
-+The vnic reporter implements only the `diagnose` callback.
-+It is responsible for querying the vnic diagnostic counters from fw and displaying
-+them in realtime.
-+
-+Description of the vnic counters:
-+
-+- total_q_under_processor_handle
-+        number of queues in an error state due to
-+        an async error or errored command.
-+- send_queue_priority_update_flow
-+        number of QP/SQ priority/SL update events.
-+- cq_overrun
-+        number of times CQ entered an error state due to an overflow.
-+- async_eq_overrun
-+        number of times an EQ mapped to async events was overrun.
-+        comp_eq_overrun number of times an EQ mapped to completion events was
-+        overrun.
-+- quota_exceeded_command
-+        number of commands issued and failed due to quota exceeded.
-+- invalid_command
-+        number of commands issued and failed dues to any reason other than quota
-+        exceeded.
-+- nic_receive_steering_discard
-+        number of packets that completed RX flow
-+        steering but were discarded due to a mismatch in flow table.
-+- generated_pkt_steering_fail
-+	number of packets generated by the VNIC experiencing unexpected steering
-+	failure (at any point in steering flow).
-+- handled_pkt_steering_fail
-+	number of packets handled by the VNIC experiencing unexpected steering
-+	failure (at any point in steering flow owned by the VNIC, including the FDB
-+	for the eswitch owner).
-+
-+User commands examples:
-+
-+- Diagnose PF/VF vnic counters::
-+
-+        $ devlink health diagnose pci/0000:82:00.1 reporter vnic
-+
-+- Diagnose representor vnic counters (performed by supplying devlink port of the
-+  representor, which can be obtained via devlink port command)::
-+
-+        $ devlink health diagnose pci/0000:82:00.1/65537 reporter vnic
-+
-+.. note::
-+   This command can run over all interfaces such as PF/VF and representor ports.
+ 		mlx5e_skb_cb_hwtstamp_init(skb);
+-		mlx5e_skb_fifo_push(&sq->ptpsq->skb_fifo, skb);
++		mlx5e_ptpsq_track_metadata(sq->ptpsq, metadata_index);
++		mlx5e_ptp_metadata_map_put(&sq->ptpsq->metadata_map, skb,
++					   metadata_index);
+ 		if (!netif_tx_queue_stopped(sq->txq) &&
+-		    !mlx5e_skb_fifo_has_room(&sq->ptpsq->skb_fifo)) {
++		    mlx5e_ptpsq_metadata_freelist_empty(sq->ptpsq)) {
+ 			netif_tx_stop_queue(sq->txq);
+ 			sq->stats->stopped++;
+ 		}
+@@ -483,13 +488,16 @@ mlx5e_sq_xmit_wqe(struct mlx5e_txqsq *sq, struct sk_buff *skb,
+ 	if (unlikely(num_dma < 0))
+ 		goto err_drop;
+ 
+-	mlx5e_txwqe_complete(sq, skb, attr, wqe_attr, num_dma, wi, cseg, xmit_more);
++	mlx5e_txwqe_complete(sq, skb, attr, wqe_attr, num_dma, wi, cseg, eseg, xmit_more);
+ 
+ 	return;
+ 
+ err_drop:
+ 	stats->dropped++;
+ 	dev_kfree_skb_any(skb);
++	if (unlikely(sq->ptpsq && (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP)))
++		mlx5e_ptp_metadata_fifo_push(&sq->ptpsq->metadata_freelist,
++					     be32_to_cpu(eseg->flow_table_metadata));
+ 	mlx5e_tx_flush(sq);
+ }
+ 
+@@ -645,9 +653,9 @@ void mlx5e_tx_mpwqe_ensure_complete(struct mlx5e_txqsq *sq)
+ static void mlx5e_cqe_ts_id_eseg(struct mlx5e_ptpsq *ptpsq, struct sk_buff *skb,
+ 				 struct mlx5_wqe_eth_seg *eseg)
+ {
+-	if (ptpsq->ts_cqe_ctr_mask && unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))
+-		eseg->flow_table_metadata = cpu_to_be32(ptpsq->skb_fifo_pc &
+-							ptpsq->ts_cqe_ctr_mask);
++	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))
++		eseg->flow_table_metadata =
++			cpu_to_be32(mlx5e_ptp_metadata_fifo_pop(&ptpsq->metadata_freelist));
+ }
+ 
+ static void mlx5e_txwqe_build_eseg(struct mlx5e_priv *priv, struct mlx5e_txqsq *sq,
+@@ -766,7 +774,7 @@ void mlx5e_txqsq_wake(struct mlx5e_txqsq *sq)
+ {
+ 	if (netif_tx_queue_stopped(sq->txq) &&
+ 	    mlx5e_wqc_has_room_for(&sq->wq, sq->cc, sq->pc, sq->stop_room) &&
+-	    mlx5e_ptpsq_fifo_has_room(sq) &&
++	    !mlx5e_ptpsq_metadata_freelist_empty(sq->ptpsq) &&
+ 	    !test_bit(MLX5E_SQ_STATE_RECOVERING, &sq->state)) {
+ 		netif_tx_wake_queue(sq->txq);
+ 		sq->stats->wake++;
+@@ -1031,7 +1039,7 @@ void mlx5i_sq_xmit(struct mlx5e_txqsq *sq, struct sk_buff *skb,
+ 	if (unlikely(num_dma < 0))
+ 		goto err_drop;
+ 
+-	mlx5e_txwqe_complete(sq, skb, &attr, &wqe_attr, num_dma, wi, cseg, xmit_more);
++	mlx5e_txwqe_complete(sq, skb, &attr, &wqe_attr, num_dma, wi, cseg, eseg, xmit_more);
+ 
+ 	return;
+ 
 -- 
 2.42.0
 
