@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE01381D6;
-	Fri, 24 Nov 2023 18:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA642381D6;
+	Fri, 24 Nov 2023 18:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAqJyzEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9820C433C7;
-	Fri, 24 Nov 2023 18:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/OuHics"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71580C433C8;
+	Fri, 24 Nov 2023 18:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849561;
-	bh=3QZQnVJcrqn5aRJIHiNINULoI5+afrivmxz88d1DbhA=;
+	s=korg; t=1700849563;
+	bh=DO+aNVeYybmYXjthjyEowoNAERrWPeiXItEsxOQDXQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAqJyzEMamnfkwakQ1VTGSpSTboJP1oLHKwt+v2YROKRhXVGtbOpOUEPDSRZc3ZqR
-	 4w+pxtR3wgk0iaTWHS4jHZEZDdP3rwQbo8iIlReoHaYTea0AJ57AtSs+KZJOKFYZ0X
-	 Z2Gxoj58bIsWl5WUGH1ly7cCpuHH5XlSZ34nTE2c=
+	b=U/OuHicsATpZUowcWNHNORzmLmrJ9EJmLS7BOYNHVSdw5hwCsdqBe8+N9L8Cr7LpK
+	 qS5xBV6JgwoeAYfnMPsOQgZ3v6lwpRP1G88JWgCITS4kzhQtfInPxhzruJi9LR8vE5
+	 2PcEnsFLIQVBt88r9qBi5UHOaWtDqfMx/0aq2YYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 231/530] tools/power/turbostat: Fix a knl bug
-Date: Fri, 24 Nov 2023 17:46:37 +0000
-Message-ID: <20231124172035.081089291@linuxfoundation.org>
+Subject: [PATCH 6.6 214/530] io_uring/fdinfo: remove need for sqpoll lock for thread/pid retrieval
+Date: Fri, 24 Nov 2023 17:46:20 +0000
+Message-ID: <20231124172034.583703420@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,39 +41,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 137f01b3529d292a68d22e9681e2f903c768f790 ]
+[ Upstream commit a0d45c3f596be53c1bd8822a1984532d14fdcea9 ]
 
-MSR_KNL_CORE_C6_RESIDENCY should be evaluated only if
-1. this is KNL platform
-AND
-2. need to get C6 residency or need to calculate C1 residency
+A previous commit added a trylock for getting the SQPOLL thread info via
+fdinfo, but this introduced a regression where we often fail to get it if
+the thread is busy. For that case, we end up not printing the current CPU
+and PID info.
 
-Fix the broken logic introduced by commit 1e9042b9c8d4 ("tools/power
-turbostat: Fix CPU%C1 display value").
+Rather than rely on this lock, just print the pid we already stored in
+the io_sq_data struct, and ensure we update the current CPU every time
+we've slept or potentially rescheduled. The latter won't potentially be
+100% accurate, but that wasn't the case before either as the task can
+get migrated at any time unless it has been pinned at creation time.
 
-Fixes: 1e9042b9c8d4 ("tools/power turbostat: Fix CPU%C1 display value")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Len Brown <len.brown@intel.com>
+We retain keeping the io_sq_data dereference inside the ctx->uring_lock,
+as it has always been, as destruction of the thread and data happen below
+that. We could make this RCU safe, but there's little point in doing that.
+
+With this, we always print the last valid information we had, rather than
+have spurious outputs with missing information.
+
+Fixes: 7644b1a1c9a7 ("io_uring/fdinfo: lock SQ thread while retrieving thread cpu/pid")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/fdinfo.c |  9 ++-------
+ io_uring/sqpoll.c | 12 ++++++++++--
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 9a10512e34078..4e19bd2fa8b9f 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -2180,7 +2180,7 @@ int get_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
- 	if ((DO_BIC(BIC_CPU_c6) || soft_c1_residency_display(BIC_CPU_c6)) && !do_knl_cstates) {
- 		if (get_msr(cpu, MSR_CORE_C6_RESIDENCY, &c->c6))
- 			return -7;
--	} else if (do_knl_cstates || soft_c1_residency_display(BIC_CPU_c6)) {
-+	} else if (do_knl_cstates && soft_c1_residency_display(BIC_CPU_c6)) {
- 		if (get_msr(cpu, MSR_KNL_CORE_C6_RESIDENCY, &c->c6))
- 			return -7;
+diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
+index f04a43044d917..976e9500f6518 100644
+--- a/io_uring/fdinfo.c
++++ b/io_uring/fdinfo.c
+@@ -145,13 +145,8 @@ __cold void io_uring_show_fdinfo(struct seq_file *m, struct file *f)
+ 	if (has_lock && (ctx->flags & IORING_SETUP_SQPOLL)) {
+ 		struct io_sq_data *sq = ctx->sq_data;
+ 
+-		if (mutex_trylock(&sq->lock)) {
+-			if (sq->thread) {
+-				sq_pid = task_pid_nr(sq->thread);
+-				sq_cpu = task_cpu(sq->thread);
+-			}
+-			mutex_unlock(&sq->lock);
+-		}
++		sq_pid = sq->task_pid;
++		sq_cpu = sq->sq_cpu;
  	}
+ 
+ 	seq_printf(m, "SqThread:\t%d\n", sq_pid);
+diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
+index bd6c2c7959a5b..65b5dbe3c850e 100644
+--- a/io_uring/sqpoll.c
++++ b/io_uring/sqpoll.c
+@@ -214,6 +214,7 @@ static bool io_sqd_handle_event(struct io_sq_data *sqd)
+ 			did_sig = get_signal(&ksig);
+ 		cond_resched();
+ 		mutex_lock(&sqd->lock);
++		sqd->sq_cpu = raw_smp_processor_id();
+ 	}
+ 	return did_sig || test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state);
+ }
+@@ -229,10 +230,15 @@ static int io_sq_thread(void *data)
+ 	snprintf(buf, sizeof(buf), "iou-sqp-%d", sqd->task_pid);
+ 	set_task_comm(current, buf);
+ 
+-	if (sqd->sq_cpu != -1)
++	/* reset to our pid after we've set task_comm, for fdinfo */
++	sqd->task_pid = current->pid;
++
++	if (sqd->sq_cpu != -1) {
+ 		set_cpus_allowed_ptr(current, cpumask_of(sqd->sq_cpu));
+-	else
++	} else {
+ 		set_cpus_allowed_ptr(current, cpu_online_mask);
++		sqd->sq_cpu = raw_smp_processor_id();
++	}
+ 
+ 	mutex_lock(&sqd->lock);
+ 	while (1) {
+@@ -261,6 +267,7 @@ static int io_sq_thread(void *data)
+ 				mutex_unlock(&sqd->lock);
+ 				cond_resched();
+ 				mutex_lock(&sqd->lock);
++				sqd->sq_cpu = raw_smp_processor_id();
+ 			}
+ 			continue;
+ 		}
+@@ -294,6 +301,7 @@ static int io_sq_thread(void *data)
+ 				mutex_unlock(&sqd->lock);
+ 				schedule();
+ 				mutex_lock(&sqd->lock);
++				sqd->sq_cpu = raw_smp_processor_id();
+ 			}
+ 			list_for_each_entry(ctx, &sqd->ctx_list, sqd_list)
+ 				atomic_andnot(IORING_SQ_NEED_WAKEUP,
 -- 
 2.42.0
 
