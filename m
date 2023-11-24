@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FD731748;
-	Fri, 24 Nov 2023 19:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1818233CCA;
+	Fri, 24 Nov 2023 19:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShURu14e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08654C433C7;
-	Fri, 24 Nov 2023 19:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFbff8UN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F1A8C433C8;
+	Fri, 24 Nov 2023 19:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853583;
-	bh=jXSWUmVnchVzdtimWpdVfNMPYa2R/ojl4nUznl0h97o=;
+	s=korg; t=1700853585;
+	bh=MOYFS0H1DQySzGWM62eUddA3LEU8KBe7Ha48UfDz80U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShURu14efNkDgKmvLCHutVmiAQuDvrb+GiLlSGsNm4W2q9NcYQ/7uxpkNQsLPhtD+
-	 T37lwq4usLuAjDkH/7N/KnhGQ4zTDAF+PoJHOAgA1fwUcJMAWLrytqL37OORarJUK5
-	 W5hyDYkwYgGcNLOwE2A3d6KvVEqgPPAwnQDNlbiQ=
+	b=aFbff8UNLUOUuyebv+g/a7pQMW5j03xrcKZ7IhfcVlqjBzDpnMsmuHqW23HWhDc/f
+	 DSQgfsSj+l613KltbnVjz96A9iEIQe2yRffH6JV7NK8bb6gdlZBXlWwNdbu+/nRi0S
+	 sHLCF5Muv2IlrXmsxJ5Laui8rnw9vZuJ8iS18XdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.15 247/297] ksmbd: fix slab out of bounds write in smb_inherit_dacl()
-Date: Fri, 24 Nov 2023 17:54:49 +0000
-Message-ID: <20231124172008.838629931@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 248/297] arm64: dts: qcom: ipq6018: switch TCSR mutex to MMIO
+Date: Fri, 24 Nov 2023 17:54:50 +0000
+Message-ID: <20231124172008.867005087@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,77 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit eebff19acaa35820cb09ce2ccb3d21bee2156ffb ]
+[ Upstream commit f5e303aefc06b7508d7a490f9a2d80e4dc134c70 ]
 
-slab out-of-bounds write is caused by that offsets is bigger than pntsd
-allocation size. This patch add the check to validate 3 offsets using
-allocation size.
+The TCSR mutex bindings allow device to be described only with address
+space (so it uses MMIO, not syscon regmap).  This seems reasonable as
+TCSR mutex is actually a dedicated IO address space and it also fixes DT
+schema checks:
 
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-22271
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+  qcom/ipq6018-cp01-c1.dtb: hwlock: 'reg' is a required property
+  qcom/ipq6018-cp01-c1.dtb: hwlock: 'syscon' does not match any of the regexes: 'pinctrl-[0-9]+'
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220909092035.223915-12-krzysztof.kozlowski@linaro.org
+Stable-dep-of: 72fc3d58b87b ("arm64: dts: qcom: ipq6018: Fix tcsr_mutex register size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smbacl.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ksmbd/smbacl.c b/fs/ksmbd/smbacl.c
-index 3781bca2c8fc4..83f805248a814 100644
---- a/fs/ksmbd/smbacl.c
-+++ b/fs/ksmbd/smbacl.c
-@@ -1105,6 +1105,7 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 		struct smb_acl *pdacl;
- 		struct smb_sid *powner_sid = NULL, *pgroup_sid = NULL;
- 		int powner_sid_size = 0, pgroup_sid_size = 0, pntsd_size;
-+		int pntsd_alloc_size;
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index 13651a5ac5a69..43339557d7e5a 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -129,12 +129,6 @@
+ 		};
+ 	};
  
- 		if (parent_pntsd->osidoffset) {
- 			powner_sid = (struct smb_sid *)((char *)parent_pntsd +
-@@ -1117,9 +1118,10 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 			pgroup_sid_size = 1 + 1 + 6 + (pgroup_sid->num_subauth * 4);
- 		}
+-	tcsr_mutex: hwlock {
+-		compatible = "qcom,tcsr-mutex";
+-		syscon = <&tcsr_mutex_regs 0 0x80>;
+-		#hwlock-cells = <1>;
+-	};
+-
+ 	pmuv8: pmu {
+ 		compatible = "arm,cortex-a53-pmu";
+ 		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(4) |
+@@ -253,9 +247,10 @@
+ 			#reset-cells = <1>;
+ 		};
  
--		pntsd = kzalloc(sizeof(struct smb_ntsd) + powner_sid_size +
--				pgroup_sid_size + sizeof(struct smb_acl) +
--				nt_size, GFP_KERNEL);
-+		pntsd_alloc_size = sizeof(struct smb_ntsd) + powner_sid_size +
-+			pgroup_sid_size + sizeof(struct smb_acl) + nt_size;
-+
-+		pntsd = kzalloc(pntsd_alloc_size, GFP_KERNEL);
- 		if (!pntsd) {
- 			rc = -ENOMEM;
- 			goto free_aces_base;
-@@ -1134,6 +1136,27 @@ int smb_inherit_dacl(struct ksmbd_conn *conn,
- 		pntsd->gsidoffset = parent_pntsd->gsidoffset;
- 		pntsd->dacloffset = parent_pntsd->dacloffset;
+-		tcsr_mutex_regs: syscon@1905000 {
+-			compatible = "syscon";
+-			reg = <0x0 0x01905000 0x0 0x8000>;
++		tcsr_mutex: hwlock@1905000 {
++			compatible = "qcom,ipq6018-tcsr-mutex", "qcom,tcsr-mutex";
++			reg = <0x0 0x01905000 0x0 0x1000>;
++			#hwlock-cells = <1>;
+ 		};
  
-+		if ((u64)le32_to_cpu(pntsd->osidoffset) + powner_sid_size >
-+		    pntsd_alloc_size) {
-+			rc = -EINVAL;
-+			kfree(pntsd);
-+			goto free_aces_base;
-+		}
-+
-+		if ((u64)le32_to_cpu(pntsd->gsidoffset) + pgroup_sid_size >
-+		    pntsd_alloc_size) {
-+			rc = -EINVAL;
-+			kfree(pntsd);
-+			goto free_aces_base;
-+		}
-+
-+		if ((u64)le32_to_cpu(pntsd->dacloffset) + sizeof(struct smb_acl) + nt_size >
-+		    pntsd_alloc_size) {
-+			rc = -EINVAL;
-+			kfree(pntsd);
-+			goto free_aces_base;
-+		}
-+
- 		if (pntsd->osidoffset) {
- 			struct smb_sid *owner_sid = (struct smb_sid *)((char *)pntsd +
- 					le32_to_cpu(pntsd->osidoffset));
+ 		tcsr: syscon@1937000 {
 -- 
 2.42.0
 
