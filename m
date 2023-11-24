@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA4333CD1;
-	Fri, 24 Nov 2023 18:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56072FC4E;
+	Fri, 24 Nov 2023 18:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVBKEKsI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E6EC433C8;
-	Fri, 24 Nov 2023 18:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjhGtwdb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E599C433C8;
+	Fri, 24 Nov 2023 18:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852281;
-	bh=6YzCfVWF+a76rR2H0LD+Z6iDWoS4yPY/c7y6/M83xY8=;
+	s=korg; t=1700852283;
+	bh=edfJ9dS70p17Kj3gdLHmhxDOL9LFRmPeUt+tHrwEOvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVBKEKsIH/caBZs9xhaeAo0l6QMqBJeyoZ145TCFtNcsncX39zvAS7dD2nRzIGmuw
-	 9+ebGyQxO4y7ULYJdsCmOu58OuNVbHaNLjo+1Ga/PQ4NYf3FS7NDKWjszbULqamBK/
-	 cdCZNTTHkYEDTnRpXx1s+QvnU/Kq6V6jdIb9P/kE=
+	b=rjhGtwdbLJZuGD441Vgn0mCdLOi3tHoIDYzXdDw9tnlgXUIImkPim6N+sghB8YFE8
+	 c7H8ATVt7AaPVkbXD2jCkhrudd6SJOMV/sGGmpeAoOuAf+292XEzG9A4iCedH271yX
+	 xrT/zYL5y8wKWz6Z8gruYdaSD30WQZ7zM5QtcVC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masum Reza <masumrezarock100@gmail.com>,
+	Meng Tang <tangmeng@uniontech.com>,
+	Guan Wentao <guanwentao@uniontech.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 292/372] Bluetooth: btusb: Add RTW8852BE device 13d3:3570 to device tables
-Date: Fri, 24 Nov 2023 17:51:19 +0000
-Message-ID: <20231124172020.158726985@linuxfoundation.org>
+Subject: [PATCH 6.1 293/372] Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE
+Date: Fri, 24 Nov 2023 17:51:20 +0000
+Message-ID: <20231124172020.190114701@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,18 +43,20 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masum Reza <masumrezarock100@gmail.com>
+From: Guan Wentao <guanwentao@uniontech.com>
 
-[ Upstream commit 02be109d3a405dbc4d53fb4b4473d7a113548088 ]
+[ Upstream commit da06ff1f585ea784c79f80e7fab0e0c4ebb49c1c ]
 
-This device is used in TP-Link TX20E WiFi+Bluetooth adapter.
+Add PID/VID 0bda:b85b for Realtek RTL8852BE USB bluetooth part.
+The PID/VID was reported by the patch last year. [1]
+Some SBCs like rockpi 5B A8 module contains the device.
+And it`s founded in website. [2] [3]
 
-Relevant information in /sys/kernel/debug/usb/devices
-about the Bluetooth device is listed as the below.
+Here is the device tables in /sys/kernel/debug/usb/devices .
 
-T:  Bus=01 Lev=01 Prnt=01 Port=08 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+T:  Bus=07 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
 D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=13d3 ProdID=3570 Rev= 0.00
+P:  Vendor=0bda ProdID=b85b Rev= 0.00
 S:  Manufacturer=Realtek
 S:  Product=Bluetooth Radio
 S:  SerialNumber=00e04c000001
@@ -81,27 +84,32 @@ I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
 E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-Signed-off-by: Masum Reza <masumrezarock100@gmail.com>
+Link: https://lore.kernel.org/all/20220420052402.19049-1-tangmeng@uniontech.com/ [1]
+Link: https://forum.radxa.com/t/bluetooth-on-ubuntu/13051/4 [2]
+Link: https://ubuntuforums.org/showthread.php?t=2489527 [3]
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Meng Tang <tangmeng@uniontech.com>
+Signed-off-by: Guan Wentao <guanwentao@uniontech.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: da06ff1f585e ("Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/bluetooth/btusb.c | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 697a55e3b65eb..9c651f56627b2 100644
+index 9c651f56627b2..954f7f3b5cc30 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
 @@ -537,6 +537,8 @@ static const struct usb_device_id blacklist_table[] = {
  						     BTUSB_WIDEBAND_SPEECH },
  	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3570), .driver_info = BTUSB_REALTEK |
++	{ USB_DEVICE(0x0bda, 0xb85b), .driver_info = BTUSB_REALTEK |
 +						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
+ 	{ USB_DEVICE(0x13d3, 0x3570), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },
- 
+ 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
 -- 
 2.42.0
 
