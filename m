@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD50639FE3;
-	Fri, 24 Nov 2023 18:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFEEC39FDD;
+	Fri, 24 Nov 2023 18:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJScJP6C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA414C433C8;
-	Fri, 24 Nov 2023 18:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwgzW+z0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E64C433C8;
+	Fri, 24 Nov 2023 18:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849808;
-	bh=VQZeeuii/eSoiiVDMP29la6kmx4dHiws2INPXpMCzDw=;
+	s=korg; t=1700849810;
+	bh=bm8uQJkrAF/ultY/N+YzLzIEZjnD8Y3reJz+V0HDP84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJScJP6C8m4mVzJLC+l1dxyoAaNiwxrxnzt1ugUZQrlPmJtr/Upi/mIuxAgdARWZ1
-	 pWMgrVCLwmh9iyTEGhEtWjC9svNkF0RXzZx14pDIt3jEVeW+g4pKm1FgPMYLdODXYa
-	 3QaSAVZfQ6/j/XsrkgV/TMxBQZx66OUac5Oh/HCc=
+	b=xwgzW+z0DMVTZTVukUxMx/sz9V+5NOOY88O+kQWWnbLcFxsclkerO5K95SMKzBtPX
+	 P5V8Q0bv4tDdKRzv6BnAjvXx6uHSzRjZru6PFL0xy/G5z3SYHA6CY0tyCd3ozlUssK
+	 4mvd9j1QkOoGRPkZUl4LLY8p1z3VVCBYWmGWGmpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 321/530] mmc: vub300: fix an error code
-Date: Fri, 24 Nov 2023 17:48:07 +0000
-Message-ID: <20231124172037.808825227@linuxfoundation.org>
+	Tom Talpey <tom@talpey.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 330/530] svcrdma: Drop connection after an RDMA Read error
+Date: Fri, 24 Nov 2023 17:48:16 +0000
+Message-ID: <20231124172038.069886492@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,31 +41,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit b44f9da81783fda72632ef9b0d05ea3f3ca447a5 upstream.
+commit 197115ebf358cb440c73e868b2a0a5ef728decc6 upstream.
 
-This error path should return -EINVAL instead of success.
+When an RPC Call message cannot be pulled from the client, that
+is a message loss, by definition. Close the connection to trigger
+the client to resend.
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/0769d30c-ad80-421b-bf5d-7d6f5d85604e@moroto.mountain
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2309,6 +2309,7 @@ static int vub300_probe(struct usb_inter
- 		vub300->read_only =
- 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
- 	} else {
-+		retval = -EINVAL;
- 		goto error5;
- 	}
- 	usb_set_intfdata(interface, vub300);
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -852,7 +852,8 @@ out_readfail:
+ 	if (ret == -EINVAL)
+ 		svc_rdma_send_error(rdma_xprt, ctxt, ret);
+ 	svc_rdma_recv_ctxt_put(rdma_xprt, ctxt);
+-	return ret;
++	svc_xprt_deferred_close(xprt);
++	return -ENOTCONN;
+ 
+ out_backchannel:
+ 	svc_rdma_handle_bc_reply(rqstp, ctxt);
 
 
