@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF81D28DBB;
-	Fri, 24 Nov 2023 19:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EB23307D;
+	Fri, 24 Nov 2023 19:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEk6Bsdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4A1C433C7;
-	Fri, 24 Nov 2023 19:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLBPf5HU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A66C433C7;
+	Fri, 24 Nov 2023 19:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853982;
-	bh=HKHvvIaNg+x/WXbfWinpCEFKx7iQnJhaJh1s+5+413Q=;
+	s=korg; t=1700853985;
+	bh=drAZr0RIM0M8T3eJJFjagyRE87LYCbCeuqcvcOzMUUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MEk6BsdksOzUrqPSaavr7+pgSfxIfc3kwsrO2EJxaknv92F+ZoHVNnE/xbHP7GRdg
-	 X3qVdmbxvi2KQDE5fihM2hp+NlgFg92xxp0OQSL0vp3nnAoqf3B3izRrKKVoOXmmgP
-	 k0Xbk+wEJZeRcbB9s3o6xteU5j8eRR9g6+h8av8U=
+	b=KLBPf5HUuK3P+gu4AN6zDcD6yAc/+d64VQsc8mLeGiV3UqZe/xetY0IAFa6CKYV+G
+	 +l0Qr+Ex/8eZuR4B1Y48WGpgAO+hlfQpDD2lQgAiI9EsWgoNJdRQZmr1kcsdNjGMif
+	 9pRfS8e9EKXpTJQVaqxhk7xP9+Q4S+pmcmgXoCA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Krasavin <pkrasavin@imaqliq.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Rokosov <ddrokosov@salutedevices.com>,
+	Alain Michaud <alainm@chromium.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 109/159] tty: serial: meson: fix hard LOCKUP on crtscts mode
-Date: Fri, 24 Nov 2023 17:55:26 +0000
-Message-ID: <20231124171946.419973139@linuxfoundation.org>
+Subject: [PATCH 5.4 110/159] Bluetooth: btusb: Add flag to define wideband speech capability
+Date: Fri, 24 Nov 2023 17:55:27 +0000
+Message-ID: <20231124171946.463376956@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -43,99 +42,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Krasavin <pkrasavin@imaqliq.com>
+From: Alain Michaud <alainm@chromium.org>
 
-[ Upstream commit 2a1d728f20edeee7f26dc307ed9df4e0d23947ab ]
+[ Upstream commit 3e4e3f73b9f4944ebd8100dbe107f2325aa79c6d ]
 
-There might be hard lockup if we set crtscts mode on port without RTS/CTS configured:
+This change adds a new flag to define a controller's wideband speech
+capability.  This is required since no reliable over HCI mechanism
+exists to query the controller and driver's compatibility with
+wideband speech.
 
-# stty -F /dev/ttyAML6 crtscts; echo 1 > /dev/ttyAML6; echo 2 > /dev/ttyAML6
-[   95.890386] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-[   95.890857] rcu:     3-...0: (201 ticks this GP) idle=e33c/1/0x4000000000000000 softirq=5844/5846 fqs=4984
-[   95.900212] rcu:     (detected by 2, t=21016 jiffies, g=7753, q=296 ncpus=4)
-[   95.906972] Task dump for CPU 3:
-[   95.910178] task:bash            state:R  running task     stack:0     pid:205   ppid:1      flags:0x00000202
-[   95.920059] Call trace:
-[   95.922485]  __switch_to+0xe4/0x168
-[   95.925951]  0xffffff8003477508
-[   95.974379] watchdog: Watchdog detected hard LOCKUP on cpu 3
-[   95.974424] Modules linked in: 88x2cs(O) rtc_meson_vrtc
-
-Possible solution would be to not allow to setup crtscts on such port.
-
-Tested on S905X3 based board.
-
-Fixes: ff7693d079e5 ("ARM: meson: serial: add MesonX SoC on-chip uart driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Krasavin <pkrasavin@imaqliq.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Rokosov <ddrokosov@salutedevices.com>
-
-v6: stable tag added
-v5: https://lore.kernel.org/lkml/OF43DA36FF.2BD3BB21-ON00258A47.005A8125-00258A47.005A9513@gdc.ru/
-added missed Reviewed-by tags, Fixes tag added according to Dmitry and Neil notes
-v4: https://lore.kernel.org/lkml/OF55521400.7512350F-ON00258A47.003F7254-00258A47.0040E15C@gdc.ru/
-More correct patch subject according to Jiri's note
-v3: https://lore.kernel.org/lkml/OF6CF5FFA0.CCFD0E8E-ON00258A46.00549EDF-00258A46.0054BB62@gdc.ru/
-"From:" line added to the mail
-v2: https://lore.kernel.org/lkml/OF950BEF72.7F425944-ON00258A46.00488A76-00258A46.00497D44@gdc.ru/
-braces for single statement removed according to Dmitry's note
-v1: https://lore.kernel.org/lkml/OF28B2B8C9.5BC0CD28-ON00258A46.0037688F-00258A46.0039155B@gdc.ru/
-Link: https://lore.kernel.org/r/OF66360032.51C36182-ON00258A48.003F656B-00258A48.0040092C@gdc.ru
-
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alain Michaud <alainm@chromium.org>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+Stable-dep-of: da06ff1f585e ("Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/meson_uart.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btusb.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
-index a193cbc78ebc0..60c0a4079e093 100644
---- a/drivers/tty/serial/meson_uart.c
-+++ b/drivers/tty/serial/meson_uart.c
-@@ -367,10 +367,14 @@ static void meson_uart_set_termios(struct uart_port *port,
- 	else
- 		val |= AML_UART_STOP_BIT_1SB;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 79f77315854f4..c42324ae8eeff 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -57,6 +57,7 @@ static struct usb_driver btusb_driver;
+ #define BTUSB_IFNUM_2		0x80000
+ #define BTUSB_CW6622		0x100000
+ #define BTUSB_MEDIATEK		0x200000
++#define BTUSB_WIDEBAND_SPEECH	0x400000
  
--	if (cflags & CRTSCTS)
--		val &= ~AML_UART_TWO_WIRE_EN;
--	else
-+	if (cflags & CRTSCTS) {
-+		if (port->flags & UPF_HARD_FLOW)
-+			val &= ~AML_UART_TWO_WIRE_EN;
-+		else
-+			termios->c_cflag &= ~CRTSCTS;
-+	} else {
- 		val |= AML_UART_TWO_WIRE_EN;
-+	}
+ static const struct usb_device_id btusb_table[] = {
+ 	/* Generic Bluetooth USB device */
+@@ -332,15 +333,21 @@ static const struct usb_device_id blacklist_table[] = {
+ 	{ USB_DEVICE(0x1286, 0x204e), .driver_info = BTUSB_MARVELL },
  
- 	writel(val, port->membase + AML_UART_CONTROL);
+ 	/* Intel Bluetooth devices */
+-	{ USB_DEVICE(0x8087, 0x0025), .driver_info = BTUSB_INTEL_NEW },
+-	{ USB_DEVICE(0x8087, 0x0026), .driver_info = BTUSB_INTEL_NEW },
+-	{ USB_DEVICE(0x8087, 0x0029), .driver_info = BTUSB_INTEL_NEW },
++	{ USB_DEVICE(0x8087, 0x0025), .driver_info = BTUSB_INTEL_NEW |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x8087, 0x0026), .driver_info = BTUSB_INTEL_NEW |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x8087, 0x0029), .driver_info = BTUSB_INTEL_NEW |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x8087, 0x07da), .driver_info = BTUSB_CSR },
+ 	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL },
+ 	{ USB_DEVICE(0x8087, 0x0a2a), .driver_info = BTUSB_INTEL },
+-	{ USB_DEVICE(0x8087, 0x0a2b), .driver_info = BTUSB_INTEL_NEW },
+-	{ USB_DEVICE(0x8087, 0x0aa7), .driver_info = BTUSB_INTEL },
+-	{ USB_DEVICE(0x8087, 0x0aaa), .driver_info = BTUSB_INTEL_NEW },
++	{ USB_DEVICE(0x8087, 0x0a2b), .driver_info = BTUSB_INTEL_NEW |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x8087, 0x0aa7), .driver_info = BTUSB_INTEL |
++						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x8087, 0x0aaa), .driver_info = BTUSB_INTEL_NEW |
++						     BTUSB_WIDEBAND_SPEECH },
  
-@@ -666,6 +670,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
- 	int ret = 0;
- 	int irq;
-+	bool has_rtscts;
- 
- 	if (pdev->dev.of_node)
- 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
-@@ -693,6 +698,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 		return irq;
- 
- 	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
-+	has_rtscts = of_property_read_bool(pdev->dev.of_node, "uart-has-rtscts");
- 
- 	if (meson_ports[pdev->id]) {
- 		dev_err(&pdev->dev, "port %d already allocated\n", pdev->id);
-@@ -717,6 +723,8 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	port->mapsize = resource_size(res_mem);
- 	port->irq = irq;
- 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
-+	if (has_rtscts)
-+		port->flags |= UPF_HARD_FLOW;
- 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
- 	port->dev = &pdev->dev;
- 	port->line = pdev->id;
+ 	/* Other Intel Bluetooth devices */
+ 	{ USB_VENDOR_AND_INTERFACE_INFO(0x8087, 0xe0, 0x01, 0x01),
 -- 
 2.42.0
 
