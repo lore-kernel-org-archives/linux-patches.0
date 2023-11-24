@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257E32E64F;
-	Fri, 24 Nov 2023 18:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B582E858;
+	Fri, 24 Nov 2023 18:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwTeT6QA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8202C433C8;
-	Fri, 24 Nov 2023 18:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrqhX104"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22172C433C7;
+	Fri, 24 Nov 2023 18:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852205;
-	bh=uvdawoahPb+RwBxFEYRTfJ68Fca0L9ZwDUNQzh5DNgU=;
+	s=korg; t=1700852207;
+	bh=vSncyJ6EMCZPd44w5MJJxiJU7H77ArXGEGRyTJtfVTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwTeT6QAw3j9rokXtj7Di5sXSgtyHHZ+RyB906L1VwVNrxREhtqoGIB1UQaXLz1kd
-	 Svoj2POERwqYlqb23X2HlE1zbuIK/QEIf5isLcOGKgvlrJTqCC8l5sBO/aPPsWDgSX
-	 uqtlzDXzQSdBrSSUlvIW3JSeOr5OdykRs6rNqMzQ=
+	b=KrqhX104XErt2OfMifoQ0Tx2LkmH3mtLHAn6v4dQ01mjf6AqIRG/yqkJOdYJpwuX+
+	 MF/OBJNMJHda6U0aWCK3qqS5rKQeE7PTgia9rCblIp4SXhex681yxG9/nytpEU1pYb
+	 QtEaTDOdCsXVMzYlBqEnscE5xOEVeuG0Du6jIFoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Nishanth Menon <nm@ti.com>,
-	Benjamin Bara <benjamin.bara@skidata.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 244/372] kernel/reboot: emergency_restart: Set correct system_state
-Date: Fri, 24 Nov 2023 17:50:31 +0000
-Message-ID: <20231124172018.669064539@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 262/372] i3c: master: svc: fix SDA keep low when polling IBIWON timeout happen
+Date: Fri, 24 Nov 2023 17:50:49 +0000
+Message-ID: <20231124172019.218217662@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,49 +42,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Bara <benjamin.bara@skidata.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 60466c067927abbcaff299845abd4b7069963139 upstream.
+commit dfd7cd6aafdb1f5ba93828e97e56b38304b23a05 upstream.
 
-As the emergency restart does not call kernel_restart_prepare(), the
-system_state stays in SYSTEM_RUNNING.
+Upon IBIWON timeout, the SDA line will always be kept low if we don't emit
+a stop. Calling svc_i3c_master_emit_stop() there will let the bus return to
+idle state.
 
-Since bae1d3a05a8b, this hinders i2c_in_atomic_xfer_mode() from becoming
-active, and therefore might lead to avoidable warnings in the restart
-handlers, e.g.:
-
-[   12.667612] WARNING: CPU: 1 PID: 1 at kernel/rcu/tree_plugin.h:318 rcu_note_context_switch+0x33c/0x6b0
-[   12.676926] Voluntary context switch within RCU read-side critical section!
-...
-[   12.742376]  schedule_timeout from wait_for_completion_timeout+0x90/0x114
-[   12.749179]  wait_for_completion_timeout from tegra_i2c_wait_completion+0x40/0x70
-...
-[   12.994527]  atomic_notifier_call_chain from machine_restart+0x34/0x58
-[   13.001050]  machine_restart from panic+0x2a8/0x32c
-
-Avoid these by setting the correct system_state.
-
-Fixes: bae1d3a05a8b ("i2c: core: remove use of in_atomic()")
-Cc: stable@vger.kernel.org # v5.2+
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Tested-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
-Link: https://lore.kernel.org/r/20230327-tegra-pmic-reboot-v7-1-18699d5dcd76@skidata.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
+Cc:  <stable@vger.kernel.org>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20231023161658.3890811-6-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/reboot.c |    1 +
+ drivers/i3c/master/svc-i3c-master.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/kernel/reboot.c
-+++ b/kernel/reboot.c
-@@ -74,6 +74,7 @@ void __weak (*pm_power_off)(void);
- void emergency_restart(void)
- {
- 	kmsg_dump(KMSG_DUMP_EMERG);
-+	system_state = SYSTEM_RESTART;
- 	machine_emergency_restart();
- }
- EXPORT_SYMBOL_GPL(emergency_restart);
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -397,6 +397,7 @@ static void svc_i3c_master_ibi_work(stru
+ 					 SVC_I3C_MSTATUS_IBIWON(val), 0, 1000);
+ 	if (ret) {
+ 		dev_err(master->dev, "Timeout when polling for IBIWON\n");
++		svc_i3c_master_emit_stop(master);
+ 		goto reenable_ibis;
+ 	}
+ 
 
 
