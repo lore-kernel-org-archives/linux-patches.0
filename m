@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613352C1A2;
-	Fri, 24 Nov 2023 19:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C827D2EAEA;
+	Fri, 24 Nov 2023 19:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/jdseFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2A3C433C7;
-	Fri, 24 Nov 2023 19:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSoA+r0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51AD2C433C8;
+	Fri, 24 Nov 2023 19:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852847;
-	bh=RGqM+Q2F9Y+G7MfXjz77o6i6aePogWCFqsQV+4htNuI=;
+	s=korg; t=1700852849;
+	bh=xPtZOBduajBXu0rXAvkB5I0a6BUWd47sUmeGjE4mdAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/jdseFkTqpxuUbhla2OMpVRM6jKwPAvWKQhSrZ8ndA5W8bqyJRYzF//GlifaIPku
-	 NILMz5w4asV4pyjFu9iu2aRITfcydydAr9lHFAlAu8JOMfW1oo9JrTXL4Zr8soRPgy
-	 ue7SzZ3Q2IoYW80vUqI8ivvclwajiFcD4whOp/U8=
+	b=TSoA+r0lZ46Y1tS74y9tIGhRsFPH3vKg2DeqnmF4Xd362oqwPxN5CoOw2/cMqZ9r0
+	 VfYRyRyAxsQLZjRu4jUb3I81gkaZYT0TJ/4yRZ6gfWVu7NQxmu9EsKR5cEheCjhltN
+	 IWIZylAbL1p7cqTLGHmaV/x9Bkm0H3fBgsO6VQ8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 112/193] mmc: vub300: fix an error code
-Date: Fri, 24 Nov 2023 17:53:59 +0000
-Message-ID: <20231124171951.728035960@linuxfoundation.org>
+	Joshua Yeong <joshua.yeong@starfivetech.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.10 140/193] i3c: master: cdns: Fix reading status register
+Date: Fri, 24 Nov 2023 17:54:27 +0000
+Message-ID: <20231124171952.796547634@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -41,31 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Joshua Yeong <joshua.yeong@starfivetech.com>
 
-commit b44f9da81783fda72632ef9b0d05ea3f3ca447a5 upstream.
+commit 4bd8405257da717cd556f99e5fb68693d12c9766 upstream.
 
-This error path should return -EINVAL instead of success.
+IBIR_DEPTH and CMDR_DEPTH should read from status0 instead of status1.
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/0769d30c-ad80-421b-bf5d-7d6f5d85604e@moroto.mountain
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 603f2bee2c54 ("i3c: master: Add driver for Cadence IP")
+Signed-off-by: Joshua Yeong <joshua.yeong@starfivetech.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20230913031743.11439-2-joshua.yeong@starfivetech.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/i3c/master/i3c-master-cdns.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2311,6 +2311,7 @@ static int vub300_probe(struct usb_inter
- 		vub300->read_only =
- 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
- 	} else {
-+		retval = -EINVAL;
- 		goto error5;
- 	}
- 	usb_set_intfdata(interface, vub300);
+--- a/drivers/i3c/master/i3c-master-cdns.c
++++ b/drivers/i3c/master/i3c-master-cdns.c
+@@ -192,7 +192,7 @@
+ #define SLV_STATUS1_HJ_DIS		BIT(18)
+ #define SLV_STATUS1_MR_DIS		BIT(17)
+ #define SLV_STATUS1_PROT_ERR		BIT(16)
+-#define SLV_STATUS1_DA(x)		(((s) & GENMASK(15, 9)) >> 9)
++#define SLV_STATUS1_DA(s)		(((s) & GENMASK(15, 9)) >> 9)
+ #define SLV_STATUS1_HAS_DA		BIT(8)
+ #define SLV_STATUS1_DDR_RX_FULL		BIT(7)
+ #define SLV_STATUS1_DDR_TX_FULL		BIT(6)
+@@ -1622,13 +1622,13 @@ static int cdns_i3c_master_probe(struct
+ 	/* Device ID0 is reserved to describe this master. */
+ 	master->maxdevs = CONF_STATUS0_DEVS_NUM(val);
+ 	master->free_rr_slots = GENMASK(master->maxdevs, 1);
++	master->caps.ibirfifodepth = CONF_STATUS0_IBIR_DEPTH(val);
++	master->caps.cmdrfifodepth = CONF_STATUS0_CMDR_DEPTH(val);
+ 
+ 	val = readl(master->regs + CONF_STATUS1);
+ 	master->caps.cmdfifodepth = CONF_STATUS1_CMD_DEPTH(val);
+ 	master->caps.rxfifodepth = CONF_STATUS1_RX_DEPTH(val);
+ 	master->caps.txfifodepth = CONF_STATUS1_TX_DEPTH(val);
+-	master->caps.ibirfifodepth = CONF_STATUS0_IBIR_DEPTH(val);
+-	master->caps.cmdrfifodepth = CONF_STATUS0_CMDR_DEPTH(val);
+ 
+ 	spin_lock_init(&master->ibi.lock);
+ 	master->ibi.num_slots = CONF_STATUS1_IBI_HW_RES(val);
 
 
