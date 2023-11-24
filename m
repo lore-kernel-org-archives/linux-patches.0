@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6038739FDD;
-	Fri, 24 Nov 2023 18:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60638381DE;
+	Fri, 24 Nov 2023 18:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRqjKqXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3D7C433C8;
-	Fri, 24 Nov 2023 18:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfzF2fgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80499C433C8;
+	Fri, 24 Nov 2023 18:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849612;
-	bh=aq488A2fSnHTRicZsnRlnvA+3JlX1fYXZIkubSaVg+M=;
+	s=korg; t=1700849614;
+	bh=hyFDb3Is/U91gQETgVACG+by6shktDwFG+W7HyJ17jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRqjKqXB5dBGryQjRjIATnFHxL2ut03U+Ysk8z+XEmGV4KUpLBRbU2QfxyDpVVeXo
-	 inWaj49kgKTSaGa9A5oP9pILP8Dp9dMwaAqwTVIVV0f+pDrb0gDwJoXRC6gKPk9Sj0
-	 2mYBFeqkOoqBhg6SSyzVf/kpAIPjn9dMjBZMVQnk=
+	b=nfzF2fgZSZ6ogzyEastg3sE/kbxS7DLfi6xnWb8jzbW4mPhkKHkjL2/ysQ4/RY7sK
+	 P6MIMAPIlRJSZxd/dljH+9RnVFZK6ApFCIxtUG0+JJc0VkQcF2VSgJeAcUjEAIasj3
+	 I1uOLSGmA5dLJGTedQ7ODrK0Fr6qZhG2FTySy02E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 251/530] scsi: ufs: core: Fix racing issue between ufshcd_mcq_abort() and ISR
-Date: Fri, 24 Nov 2023 17:46:57 +0000
-Message-ID: <20231124172035.701304779@linuxfoundation.org>
+	Pengfei Xu <pengfei.xu@intel.com>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.6 252/530] x86/shstk: Delay signal entry SSP write until after user accesses
+Date: Fri, 24 Nov 2023 17:46:58 +0000
+Message-ID: <20231124172035.731716602@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -36,57 +36,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Rick Edgecombe <rick.p.edgecombe@intel.com>
 
-commit 27900d7119c464b43cd9eac69c85884d17bae240 upstream.
+commit 31255e072b2e91f97645d792d25b2db744186dd1 upstream.
 
-If command timeout happens and cq complete IRQ is raised at the same time,
-ufshcd_mcq_abort clears lprb->cmd and a NULL pointer deref happens in the
-ISR. Error log:
+When a signal is being delivered, the kernel needs to make accesses to
+userspace. These accesses could encounter an access error, in which case
+the signal delivery itself will trigger a segfault. Usually this would
+result in the kernel killing the process. But in the case of a SEGV signal
+handler being configured, the failure of the first signal delivery will
+result in *another* signal getting delivered. The second signal may
+succeed if another thread has resolved the issue that triggered the
+segfault (i.e. a well timed mprotect()/mmap()), or the second signal is
+being delivered to another stack (i.e. an alt stack).
 
-ufshcd_abort: Device abort task at tag 18
-Unable to handle kernel NULL pointer dereference at virtual address
-0000000000000108
-pc : [0xffffffe27ef867ac] scsi_dma_unmap+0xc/0x44
-lr : [0xffffffe27f1b898c] ufshcd_release_scsi_cmd+0x24/0x114
+On x86, in the non-shadow stack case, all the accesses to userspace are
+done before changes to the registers (in pt_regs). The operation is
+aborted when an access error occurs, so although there may be writes done
+for the first signal, control flow changes for the signal (regs->ip,
+regs->sp, etc) are not committed until all the accesses have already
+completed successfully. This means that the second signal will be
+delivered as if it happened at the time of the first signal. It will
+effectively replace the first aborted signal, overwriting the half-written
+frame of the aborted signal. So on sigreturn from the second signal,
+control flow will resume happily from the point of control flow where the
+original signal was delivered.
 
-Fixes: f1304d442077 ("scsi: ufs: mcq: Added ufshcd_mcq_abort()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20231106075117.8995-1-peter.wang@mediatek.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The problem is, when shadow stack is active, the shadow stack SSP
+register/MSR is updated *before* some of the userspace accesses. This
+means if the earlier accesses succeed and the later ones fail, the second
+signal will not be delivered at the same spot on the shadow stack as the
+first one. So on sigreturn from the second signal, the SSP will be
+pointing to the wrong location on the shadow stack (off by a frame).
+
+Pengfei privately reported that while using a shadow stack enabled glibc,
+the “signal06” test in the LTP test-suite hung. It turns out it is
+testing the above described double signal scenario. When this test was
+compiled with shadow stack, the first signal pushed a shadow stack
+sigframe, then the second pushed another. When the second signal was
+handled, the SSP was at the first shadow stack signal frame instead of
+the original location. The test then got stuck as the #CP from the twice
+incremented SSP was incorrect and generated segfaults in a loop.
+
+Fix this by adjusting the SSP register only after any userspace accesses,
+such that there can be no failures after the SSP is adjusted. Do this by
+moving the shadow stack sigframe push logic to happen after all other
+userspace accesses.
+
+Note, sigreturn (as opposed to the signal delivery dealt with in this
+patch) has ordering behavior that could lead to similar failures. The
+ordering issues there extend beyond shadow stack to include the alt stack
+restoration. Fixing that would require cross-arch changes, and the
+ordering today does not cause any known test or apps breakages. So leave
+it as is, for now.
+
+[ dhansen: minor changelog/subject tweak ]
+
+Fixes: 05e36022c054 ("x86/shstk: Handle signals for shadow stack")
+Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+Signed-off-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20231107182251.91276-1-rick.p.edgecombe%40intel.com
+Link: https://github.com/linux-test-project/ltp/blob/master/testcases/kernel/syscalls/signal/signal06.c
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufs-mcq.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kernel/signal_64.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -630,6 +630,7 @@ int ufshcd_mcq_abort(struct scsi_cmnd *c
- 	int tag = scsi_cmd_to_rq(cmd)->tag;
- 	struct ufshcd_lrb *lrbp = &hba->lrb[tag];
- 	struct ufs_hw_queue *hwq;
-+	unsigned long flags;
- 	int err = FAILED;
+--- a/arch/x86/kernel/signal_64.c
++++ b/arch/x86/kernel/signal_64.c
+@@ -175,9 +175,6 @@ int x64_setup_rt_frame(struct ksignal *k
+ 	frame = get_sigframe(ksig, regs, sizeof(struct rt_sigframe), &fp);
+ 	uc_flags = frame_uc_flags(regs);
  
- 	if (!ufshcd_cmd_inflight(lrbp->cmd)) {
-@@ -670,8 +671,10 @@ int ufshcd_mcq_abort(struct scsi_cmnd *c
+-	if (setup_signal_shadow_stack(ksig))
+-		return -EFAULT;
+-
+ 	if (!user_access_begin(frame, sizeof(*frame)))
+ 		return -EFAULT;
+ 
+@@ -198,6 +195,9 @@ int x64_setup_rt_frame(struct ksignal *k
+ 			return -EFAULT;
  	}
  
- 	err = SUCCESS;
-+	spin_lock_irqsave(&hwq->cq_lock, flags);
- 	if (ufshcd_cmd_inflight(lrbp->cmd))
- 		ufshcd_release_scsi_cmd(hba, lrbp);
-+	spin_unlock_irqrestore(&hwq->cq_lock, flags);
- 
- out:
- 	return err;
++	if (setup_signal_shadow_stack(ksig))
++		return -EFAULT;
++
+ 	/* Set up registers for signal handler */
+ 	regs->di = ksig->sig;
+ 	/* In case the signal handler was declared without prototypes */
 
 
