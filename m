@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CB139FEE;
-	Fri, 24 Nov 2023 18:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A720381D5;
+	Fri, 24 Nov 2023 18:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6a7s3vv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04D5C433C8;
-	Fri, 24 Nov 2023 18:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fADsrLVQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AC4C433C8;
+	Fri, 24 Nov 2023 18:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848938;
-	bh=y9/5QWP4uyW8/T9UVeIpEs9qdg12mS/C8fH7nvxljmc=;
+	s=korg; t=1700848940;
+	bh=IugxkVbBTMMb2BEpjzm3DV8jDkAOGoSxCu+idTCijE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6a7s3vv4mIgQ+iuTMuUwdYbxVlD6rrROgM3+J2i05svOBsPKcXpRPV9WxCEfKUlf
-	 ODZtYJYkvTHqU84muzWKNqFU+Rh2e31NKCpB2QGoOUE6nqxT/MZKJg4SjHJ252wL2K
-	 Dn89brflXOn9LAQvj6Ehp7pURify3MKMW/w7QpUg=
+	b=fADsrLVQ2P44tP1HNwHNiTEZpUT9G3NaPPq+tr9+HEoxIvbaFm6jGVSquetQX7PYj
+	 6kS2xh112nCLx4OCxUMgKETy8n63fKdYb9a+T1BVlcCAb22+ownFjGI59ya10Eb09G
+	 OM540TGKAy+S+mICxq53y8opi9MkBaRYE9XLs/Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Subject: [PATCH 4.14 41/57] mcb: fix error handling for different scenarios when parsing
-Date: Fri, 24 Nov 2023 17:51:05 +0000
-Message-ID: <20231124171931.827079880@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 4.14 42/57] s390/cmma: fix initial kernel address space page table walk
+Date: Fri, 24 Nov 2023 17:51:06 +0000
+Message-ID: <20231124171931.865334821@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -36,55 +37,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanjuán García, Jorge <Jorge.SanjuanGarcia@duagon.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 63ba2d07b4be72b94216d20561f43e1150b25d98 upstream.
+commit 16ba44826a04834d3eeeda4b731c2ea3481062b7 upstream.
 
-chameleon_parse_gdd() may fail for different reasons and end up
-in the err tag. Make sure we at least always free the mcb_device
-allocated with mcb_alloc_dev().
+If the cmma no-dat feature is available the kernel page tables are walked
+to identify and mark all pages which are used for address translation (all
+region, segment, and page tables). In a subsequent loop all other pages are
+marked as "no-dat" pages with the ESSA instruction.
 
-If mcb_device_register() fails, make sure to give up the reference
-in the same place the device was added.
+This information is visible to the hypervisor, so that the hypervisor can
+optimize purging of guest TLB entries. The initial loop however does not
+cover the complete kernel address space. This can result in pages being
+marked as not being used for dynamic address translation, even though they
+are. In turn guest TLB entries incorrectly may not be purged.
 
-Fixes: 728ac3389296 ("mcb: mcb-parse: fix error handing in chameleon_parse_gdd()")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Link: https://lore.kernel.org/r/20231019141434.57971-2-jorge.sanjuangarcia@duagon.com
+Fix this by adjusting the end address of the kernel address range being
+walked.
+
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mcb/mcb-core.c  |    1 +
- drivers/mcb/mcb-parse.c |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/mm/page-states.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/mcb/mcb-core.c
-+++ b/drivers/mcb/mcb-core.c
-@@ -251,6 +251,7 @@ int mcb_device_register(struct mcb_bus *
- 	return 0;
+--- a/arch/s390/mm/page-states.c
++++ b/arch/s390/mm/page-states.c
+@@ -167,15 +167,22 @@ static void mark_kernel_p4d(pgd_t *pgd,
  
- out:
-+	put_device(&dev->dev);
+ static void mark_kernel_pgd(void)
+ {
+-	unsigned long addr, next;
++	unsigned long addr, next, max_addr;
+ 	struct page *page;
+ 	pgd_t *pgd;
+ 	int i;
  
- 	return ret;
+ 	addr = 0;
++	/*
++	 * Figure out maximum virtual address accessible with the
++	 * kernel ASCE. This is required to keep the page table walker
++	 * from accessing non-existent entries.
++	 */
++	max_addr = (S390_lowcore.kernel_asce.val & _ASCE_TYPE_MASK) >> 2;
++	max_addr = 1UL << (max_addr * 11 + 31);
+ 	pgd = pgd_offset_k(addr);
+ 	do {
+-		next = pgd_addr_end(addr, MODULES_END);
++		next = pgd_addr_end(addr, max_addr);
+ 		if (pgd_none(*pgd))
+ 			continue;
+ 		if (!pgd_folded(*pgd)) {
+@@ -184,7 +191,7 @@ static void mark_kernel_pgd(void)
+ 				set_bit(PG_arch_1, &page[i].flags);
+ 		}
+ 		mark_kernel_p4d(pgd, addr, next);
+-	} while (pgd++, addr = next, addr != MODULES_END);
++	} while (pgd++, addr = next, addr != max_addr);
  }
---- a/drivers/mcb/mcb-parse.c
-+++ b/drivers/mcb/mcb-parse.c
-@@ -105,7 +105,7 @@ static int chameleon_parse_gdd(struct mc
- 	return 0;
  
- err:
--	put_device(&mdev->dev);
-+	mcb_free_dev(mdev);
- 
- 	return ret;
- }
+ void __init cmma_init_nodat(void)
 
 
