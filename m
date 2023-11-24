@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CF033CC7;
-	Fri, 24 Nov 2023 18:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38AA2FC21;
+	Fri, 24 Nov 2023 18:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTx/nBOc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FC8C433C8;
-	Fri, 24 Nov 2023 18:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5pdyl3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98951C433C8;
+	Fri, 24 Nov 2023 18:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851783;
-	bh=hxCXnZUnLvrc6mZKpC+m4w64c781CnmboYn9Y6sAHPY=;
+	s=korg; t=1700851785;
+	bh=g2UAiVcIdszMMG5tIth+eMD5boWitucA22IPvqD+Av8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sTx/nBOcIl5Vsrzb5l7Y+ly1VUe2eXdIIJ2MtlwVQloXGu9HS2tjPmqSgGc910t8h
-	 gA2HyWPouJNlJG8A2+gSO5qAvg0mN+JGT2vQRAH0dnXVH7ny+N6rTD7Y/U87w/IRiY
-	 OaCfF+h7/wmtvDuuUMjxquwzNAl0VGqv6oHD+ZR0=
+	b=u5pdyl3a/pMLu/RA/jmNzXcBWBKNmETb0SqF2RDNG1NVwWg3PkX41nq0wtj9s4WKT
+	 CAvF9cFadRa7OnrGIpkBH/2cYmDh+aaykKFZnUkSUkvpWFlMs7g+2eS411NvFJDCTF
+	 dosnEJcwImgFJF7igMNJyEVRGgNcEe64eczwXlTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/372] i3c: mipi-i3c-hci: Fix out of bounds access in hci_dma_irq_handler
-Date: Fri, 24 Nov 2023 17:48:01 +0000
-Message-ID: <20231124172013.671927660@linuxfoundation.org>
+Subject: [PATCH 6.1 095/372] i2c: fix memleak in i2c_new_client_device()
+Date: Fri, 24 Nov 2023 17:48:02 +0000
+Message-ID: <20231124172013.700182048@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,36 +43,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 45a832f989e520095429589d5b01b0c65da9b574 ]
+[ Upstream commit 6af79f7fe748fe6a3c5c3a63d7f35981a82c2769 ]
 
-Do not loop over ring headers in hci_dma_irq_handler() that are not
-allocated and enabled in hci_dma_init(). Otherwise out of bounds access
-will occur from rings->headers[i] access when i >= number of allocated
-ring headers.
+Yang Yingliang reported a memleak:
+===
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20230921055704.1087277-5-jarkko.nikula@linux.intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+I got memory leak as follows when doing fault injection test:
+
+unreferenced object 0xffff888014aec078 (size 8):
+  comm "xrun", pid 356, jiffies 4294910619 (age 16.332s)
+  hex dump (first 8 bytes):
+    31 2d 30 30 31 63 00 00                          1-001c..
+  backtrace:
+    [<00000000eb56c0a9>] __kmalloc_track_caller+0x1a6/0x300
+    [<000000000b220ea3>] kvasprintf+0xad/0x140
+    [<00000000b83203e5>] kvasprintf_const+0x62/0x190
+    [<000000002a5eab37>] kobject_set_name_vargs+0x56/0x140
+    [<00000000300ac279>] dev_set_name+0xb0/0xe0
+    [<00000000b66ebd6f>] i2c_new_client_device+0x7e4/0x9a0
+
+If device_register() returns error in i2c_new_client_device(),
+the name allocated by i2c_dev_set_name() need be freed. As
+comment of device_register() says, it should use put_device()
+to give up the reference in the error path.
+
+===
+I think this solution is less intrusive and more robust than he
+originally proposed solutions, though.
+
+Reported-by: Yang Yingliang <yangyingliang@huawei.com>
+Closes: http://patchwork.ozlabs.org/project/linux-i2c/patch/20221124085448.3620240-1-yangyingliang@huawei.com/
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/i2c-core-base.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index 2990ac9eaade7..71b5dbe45c45c 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -734,7 +734,7 @@ static bool hci_dma_irq_handler(struct i3c_hci *hci, unsigned int mask)
- 	unsigned int i;
- 	bool handled = false;
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index 7539b0740351d..5e3976ba52650 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -916,8 +916,9 @@ int i2c_dev_irq_from_resources(const struct resource *resources,
+ struct i2c_client *
+ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *info)
+ {
+-	struct i2c_client	*client;
+-	int			status;
++	struct i2c_client *client;
++	bool need_put = false;
++	int status;
  
--	for (i = 0; mask && i < 8; i++) {
-+	for (i = 0; mask && i < rings->total; i++) {
- 		struct hci_rh_data *rh;
- 		u32 status;
+ 	client = kzalloc(sizeof *client, GFP_KERNEL);
+ 	if (!client)
+@@ -955,7 +956,6 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
+ 	client->dev.fwnode = info->fwnode;
  
+ 	device_enable_async_suspend(&client->dev);
+-	i2c_dev_set_name(adap, client, info);
+ 
+ 	if (info->swnode) {
+ 		status = device_add_software_node(&client->dev, info->swnode);
+@@ -967,6 +967,7 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
+ 		}
+ 	}
+ 
++	i2c_dev_set_name(adap, client, info);
+ 	status = device_register(&client->dev);
+ 	if (status)
+ 		goto out_remove_swnode;
+@@ -978,6 +979,7 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
+ 
+ out_remove_swnode:
+ 	device_remove_software_node(&client->dev);
++	need_put = true;
+ out_err_put_of_node:
+ 	of_node_put(info->of_node);
+ out_err:
+@@ -985,7 +987,10 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
+ 		"Failed to register i2c client %s at 0x%02x (%d)\n",
+ 		client->name, client->addr, status);
+ out_err_silent:
+-	kfree(client);
++	if (need_put)
++		put_device(&client->dev);
++	else
++		kfree(client);
+ 	return ERR_PTR(status);
+ }
+ EXPORT_SYMBOL_GPL(i2c_new_client_device);
 -- 
 2.42.0
 
