@@ -1,29 +1,29 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2592E22069
-	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 19:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07A51EB32
+	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 19:48:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=deller@gmx.de header.b="rCRqeoHv"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=deller@gmx.de header.b="VkTAiB5u"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1700855259; x=1701460059; i=deller@gmx.de;
-	bh=dutzQTH16tMCgNogtMlxISGpAb756yATkebYUyKYHaE=;
+	t=1700855298; x=1701460098; i=deller@gmx.de;
+	bh=OVEBpfUU7SZZ+YX9sqtJ1N4aP33XtHbSVkcqMqapQck=;
 	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
 	 In-Reply-To;
-	b=rCRqeoHv29O1yO/AdKobdETKzCi2grysA9rzg4SzKk+JjeW4Lr3D3Aqz1XTRMG+d
-	 pdCtGNWEO4TkmYbiD3lKapFN09+5V2mkuAQn1slxK+d/m3rTAlVWCIUmMvIoEevxE
-	 q+Hhza3ww4XkRX7Z4svRqmLmAgtPBoueDkQbspYP1LCY4zI9MnGx+Ky4nGHQb+Cb2
-	 oiaB/nsusZa+YF8BnGSIEgH8/ttRToBcBhn3PNOGWrBCDHIW8QY2iewRuTRj8xuce
-	 mRjd3ceGGaGeYtKabtDHQ+hzhpMUoLkCspbin4PP2K9BLkKVFXw6WoXLkK/d5IAGt
-	 CRjK5hioLvkq4DgU3A==
+	b=VkTAiB5uVXw4HargaoHl1SCrtR5EaGgR0R+t4XaJiAtnDgxTwKPWUYfYLAqjy2au
+	 PKYb6PqcHrk3QDwiH9CX1k2ZAeTk1CeX2u7VUdVvhYNZXkzkYFTHERv3gXtDMpu8i
+	 JdkgZKAFc5chyLlS0cZK8sQGhIndUbobzjAwZV63ouOWNkVh6IuyghrWbbkmlF0pz
+	 vhbOt6keJb95lDMFrXwLquBJtyMqoZsTvHl3khubIOSQcajUsFj6z8z8z2kFUbp5e
+	 8C0YZSj4sI7cGskeDp09myNvj5MnSc1wHos3BbU8DXDUeNB064IDe7t3MIho7+sWn
+	 JsZr5jrqq6JdquHSzQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.60] ([94.134.145.42]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEFzr-1qz9NG0oDt-00AH19; Fri, 24
- Nov 2023 20:47:39 +0100
-Message-ID: <ed27b9c1-024c-4839-85cc-91fa88a2271a@gmx.de>
-Date: Fri, 24 Nov 2023 20:47:38 +0100
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4QsO-1rGolA02WU-011Ppo; Fri, 24
+ Nov 2023 20:48:18 +0100
+Message-ID: <ea2ad6bb-22a5-4100-937f-eff9d9bc5f4d@gmx.de>
+Date: Fri, 24 Nov 2023 20:48:17 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -31,13 +31,13 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 084/159] parisc/power: Add power soft-off when running
+Subject: Re: [PATCH 5.4 102/159] parisc/power: Fix power soft-off when running
  on qemu
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev
 References: <20231124171941.909624388@linuxfoundation.org>
- <20231124171945.420849740@linuxfoundation.org>
+ <20231124171946.135466035@linuxfoundation.org>
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
  xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
@@ -82,29 +82,29 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20231124171945.420849740@linuxfoundation.org>
+In-Reply-To: <20231124171946.135466035@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:UVPxouMS9RfRJAfz81C9URHAaWZeIKSALSZqFpMSyvQPtCHHiec
- C1iW73Fes2htzITx9otV5GyULuldQA6gkKRs+ll49lXSTXYlG9uTDv2exruNBE9sypBSksg
- 3/m4PxNplAO/aCZhYk5wDUmuc5G9alxGh3+lu1lw2fkHHywj0Z4TkZklBXuSbQjwVvZgICW
- T5m6xXPq5I/NBz3IYcwKg==
+X-Provags-ID: V03:K1:1uTtGi7ex0ePQQJ3u8PQj1Nhc0CMf7uXz5Jhn5XPsaxLvF7i623
+ WfbOH8JxYuHeF7pIFClbxd+M+KwaOdnC91/KdpUPK2Dg1JzimpCIk4emdUfVAaoY+Wcfu5m
+ 7RPCiQiCNSqayDT7U1it9MkqcZR/nIKYQUAnM0OAMhNwxa0iMo1/qr2QCoyEHSyfoPqIZ3R
+ fBPcrTjhzBiCn+wVtHIkw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:VbVjzVdHtQA=;GpJDqtt2ud9RUfsgdakI/dVnHpU
- q7tEnbvhpaB1KgEqOcoxzNwjf9h8ydjLDGLU3IG4khlekujDqbNv0g0E0hybSb5soIMPyqAdg
- c3lUsDmJRfECVjf5DGqVJ3rgpgVDcbCiC0cwOZqUHjKD5DKQrlDyZavTlDs6NNJNR06Tpss80
- btj7DFaoE74OHXMfL7vrST+ZpP4wcG054tpjH/4+iQfQU+KnEoDwJJXVHMdS96rJz7Rwr4MZ+
- N9Mp8uEO2GtLDk6J6iPYWg1f14PrNOJrmZZ+Zk1coNKj7alqwvJ/9Cf0EfbwWy35/Z/PlBdyd
- En3PXkG82WK7jZmd+jcq2Gawb40i0X2UJ5LdkeWTGNGn7wsVwxMLsbdwHXWE1+27oBLromf1u
- fP8up7rhbUjJtQ2wNOBrxPxzM8W/4zynTcDXsLnGtwHJrW+hwNuMAjDQW/HmezVUFiwoaQ25o
- 2TIbgRaS1/80wA2gdXlTY+hvpyhlOjyJZWbVGttUt0E9ThovDr6rMRrkMJZE0Jia74FRgphYF
- I8YVhZgwk6AajpIwIN3LKFhuFjhRLRIccIgdC8f2bxoAU1gOBNU+VWoPXmjvC2nBG5pzh2NTu
- 7E9Zs/hwxFx542yfAumjNhu6NXl1n0nYhN5PYxdFCbkvdPxsx64kvJn6198D413nzPU1RA2AN
- l5+5fA4FH+igpYczQ5SJn8q9yxsTjddihZMZV/iRJCbS7fyL+CQbeuNTBK6NxqW888OLuO+4D
- BYoWh4zgD665ma/vfc362BLmb+Z11xtHdnkyPRTJS9Rk5rHrNFgJKGxLAkXSfZmje66Pia0yr
- gOkzljjaewTvEQUiHUyjmTx5HwWfY6+TeTs5DZCoKSn9kqKL5aNY3IwwqQDV7a2Hu64oGP90i
- 5TywDMo42/cIME5Mrw16oICge0TGJXuASc2gm9cUtSnF3kfk0IL0+s6P6flUNFinQA+IpcV9s
- Rmqwzw==
+UI-OutboundReport: notjunk:1;M01:P0:hjKUtT2HOFQ=;YRFhi2xJLi18Ga0kHxuaOZIzTBe
+ BK4p/CEhq8X6gKYyrAbvBqJmWKO2vR6gSBziaSMGjVDND0tWcAmhWy3FUgYwXLUSPZD4W8O6J
+ Lpx1xhaWz36xYmc4bscFrCVXFclPOok59hD17XHnFQ0ZJO1FniEWnNvZHu13CQWnrkVKU2LlT
+ eBeH+iw46l2E/gkgXfdz4rs7pRV1jRXIO5YRbSXgiuYpxG9/V+IlTK6pZTKFRMD2QoGrH2jUj
+ UY3BMucyh8XDvftDfSH67WL2nBvS4H4LYgxaUDzYtJWfDnQwaypyPMuvUDjpk++q5GtU+xsu2
+ bbLf8hqqFPvan8uAuS+4B020GOjWyfljhe/LRtkGbGzVaZDeHPCdNicUgOTLaMaYr8G9frBVd
+ oUaAAa3+evdM6E/ThhDUW4HIrtmCIiw5SA045qY4cKS4j2GQxsRDfckZbjg0DkQch30dvv3Zo
+ FokHTz0CLRgWQT8d90Cg584Z2V/WmUo5QdJbiFN6AVoCL31oWVjA2rXBaIKQv8sbrNReFcEa8
+ cObInFF7aDbLbyjzxFD+9bL0p4W+TogA1YZxj1V0iKJ5qvhHRC0C8N/Q0tMPpU8RKmefV1r2Q
+ 7HDuiFJo1Is210//ot4krbvkLLFicZ6p1sK8u5FyAWWxM8pVmKPy0g2hq4QXsHNC++wb3B3BC
+ Mm4eHWyIl+PSD7vZtTDv6u7kRoT930LHMLZOoQVSmp1UrN15sjonXyoLBmqUxn4FvxAkyOchW
+ yRRewVbiHmOhuwnz2ayZQGs7PQfwUnGCNwqnZRVJq8YV7Ek0WZNIs9reTkkkXHGUlyMvskjf4
+ U0KZji5tX/Ait5NSo8Fmhuf9myYRG56innn9dDhBvDTdvI1zeLHC8RiYhQiqMB14etzXBzh2M
+ E8c4p33Vx+yHx/nzKEvCl+5W9JWhCb33zFBFZx447I75TMCLlmtg22YWSBg9T9O5gqhpIThyO
+ pSvb9Q==
 
 On 11/24/23 18:55, Greg Kroah-Hartman wrote:
 > 5.4-stable review patch.  If anyone has any objections, please let me kn=
@@ -116,56 +116,36 @@ It depends on code which was added in 5.19...
 Thanks,
 Helge
 
-
-
+>
 > ------------------
 >
 > From: Helge Deller <deller@gmx.de>
 >
-> commit d0c219472980d15f5cbc5c8aec736848bda3f235 upstream.
+> commit 6ad6e15a9c46b8f0932cd99724f26f3db4db1cdf upstream.
 >
+> Firmware returns the physical address of the power switch,
+> so need to use gsc_writel() instead of direct memory access.
+>
+> Fixes: d0c219472980 ("parisc/power: Add power soft-off when running on q=
+emu")
 > Signed-off-by: Helge Deller <deller@gmx.de>
 > Cc: stable@vger.kernel.org # v6.0+
 > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
->   drivers/parisc/power.c |   16 +++++++++++++++-
->   1 file changed, 15 insertions(+), 1 deletion(-)
+>   drivers/parisc/power.c |    2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > --- a/drivers/parisc/power.c
 > +++ b/drivers/parisc/power.c
-> @@ -192,6 +192,14 @@ static struct notifier_block parisc_pani
->   	.priority	=3D INT_MAX,
->   };
->
-> +/* qemu soft power-off function */
-> +static int qemu_power_off(struct sys_off_data *data)
-> +{
-> +	/* this turns the system off via SeaBIOS */
-> +	*(int *)data->cb_data =3D 0;
-> +	pdc_soft_power_button(1);
-> +	return NOTIFY_DONE;
-> +}
->
->   static int __init power_init(void)
+> @@ -196,7 +196,7 @@ static struct notifier_block parisc_pani
+>   static int qemu_power_off(struct sys_off_data *data)
 >   {
-> @@ -221,7 +229,13 @@ static int __init power_init(void)
->   				soft_power_reg);
->   	}
->
-> -	power_task =3D kthread_run(kpowerswd, (void*)soft_power_reg, KTHREAD_N=
-AME);
-> +	power_task =3D NULL;
-> +	if (running_on_qemu && soft_power_reg)
-> +		register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT=
-,
-> +					qemu_power_off, (void *)soft_power_reg);
-> +	else
-> +		power_task =3D kthread_run(kpowerswd, (void*)soft_power_reg,
-> +					KTHREAD_NAME);
->   	if (IS_ERR(power_task)) {
->   		printk(KERN_ERR DRIVER_NAME ": thread creation failed.  Driver not l=
-oaded.\n");
->   		pdc_soft_power_button(0);
+>   	/* this turns the system off via SeaBIOS */
+> -	*(int *)data->cb_data =3D 0;
+> +	gsc_writel(0, (unsigned long) data->cb_data);
+>   	pdc_soft_power_button(1);
+>   	return NOTIFY_DONE;
+>   }
 >
 >
 
