@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C20D381DF;
-	Fri, 24 Nov 2023 18:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7B0381DF;
+	Fri, 24 Nov 2023 18:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o43JvJUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79E6C433C9;
-	Fri, 24 Nov 2023 18:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvGIESGU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBCDC433C8;
+	Fri, 24 Nov 2023 18:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848984;
-	bh=trGYYNocwH89NTPRlH/bmC7IVi6xism0stc7wNsVxII=;
+	s=korg; t=1700848986;
+	bh=lFoqJNl7mQ3O93TWE8fCeY4OFBHE2P7eKHnqwG4RCOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o43JvJUb+LwJDrdKPdlgLUtsdrlM9rTpLcZl+K0a33IPnhVyE2e3Mwx7jDDyCTPyO
-	 VDwUsGrU50tQok+K52i3U5mLC/FNddI0LTgwbk0Scv3Swa9AexEMltc7yhjORpiJIx
-	 H+5sTQHqn+s+C44zDPGHPpwOpBF/1CL21VhETeP0=
+	b=mvGIESGUQt1R4NOpXTU+srWvAEJwEfLP2nFHqgVc5y3FmD8dtnnaHeZYkUg2U6mAj
+	 zErzRsJrryKCJmnbTfocevKxs7kXxQui6EZbYa/AGceKpAnXfXEGebJf/EyABctyWK
+	 wQ0BhWsisYzMtiooT5H4w+qGj69LN8WWwuRlpFoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"J. Bruce Fields" <bfields@redhat.com>,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.14 52/57] ext4: apply umask if ACL support is disabled
-Date: Fri, 24 Nov 2023 17:51:16 +0000
-Message-ID: <20231124171932.248783782@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 4.14 53/57] ext4: correct offset of gdb backup in non meta_bg group to update_backups
+Date: Fri, 24 Nov 2023 17:51:17 +0000
+Message-ID: <20231124171932.292655930@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -42,45 +42,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit 484fd6c1de13b336806a967908a927cc0356e312 upstream.
+commit 31f13421c004a420c0e9d288859c9ea9259ea0cc upstream.
 
-The function ext4_init_acl() calls posix_acl_create() which is
-responsible for applying the umask.  But without
-CONFIG_EXT4_FS_POSIX_ACL, ext4_init_acl() is an empty inline function,
-and nobody applies the umask.
+Commit 0aeaa2559d6d5 ("ext4: fix corruption when online resizing a 1K
+bigalloc fs") found that primary superblock's offset in its group is
+not equal to offset of backup superblock in its group when block size
+is 1K and bigalloc is enabled. As group descriptor blocks are right
+after superblock, we can't pass block number of gdb to update_backups
+for the same reason.
 
-This fixes a bug which causes the umask to be ignored with O_TMPFILE
-on ext4:
+The root casue of the issue above is that leading 1K padding block is
+count as data block offset for primary block while backup block has no
+padding block offset in its group.
 
- https://github.com/MusicPlayerDaemon/MPD/issues/558
- https://bugs.gentoo.org/show_bug.cgi?id=686142#c3
- https://bugzilla.kernel.org/show_bug.cgi?id=203625
+Remove padding data block count to fix the issue for gdb backups.
 
-Reviewed-by: "J. Bruce Fields" <bfields@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Link: https://lore.kernel.org/r/20230919081824.1096619-1-max.kellermann@ionos.com
+For meta_bg case, update_backups treat blk_off as block number, do no
+conversion in this case.
+
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lore.kernel.org/r/20230826174712.4059355-2-shikemeng@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/acl.h |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ext4/resize.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/acl.h
-+++ b/fs/ext4/acl.h
-@@ -67,6 +67,11 @@ extern int ext4_init_acl(handle_t *, str
- static inline int
- ext4_init_acl(handle_t *handle, struct inode *inode, struct inode *dir)
- {
-+	/* usually, the umask is applied by posix_acl_create(), but if
-+	   ext4 ACL support is disabled at compile time, we need to do
-+	   it here, because posix_acl_create() will never be called */
-+	inode->i_mode &= ~current_umask();
-+
- 	return 0;
- }
- #endif  /* CONFIG_EXT4_FS_POSIX_ACL */
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1538,6 +1538,8 @@ exit_journal:
+ 		int gdb_num_end = ((group + flex_gd->count - 1) /
+ 				   EXT4_DESC_PER_BLOCK(sb));
+ 		int meta_bg = ext4_has_feature_meta_bg(sb);
++		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
++					 ext4_group_first_block_no(sb, 0);
+ 		sector_t old_gdb = 0;
+ 
+ 		update_backups(sb, sbi->s_sbh->b_blocknr, (char *)es,
+@@ -1549,8 +1551,8 @@ exit_journal:
+ 						     gdb_num);
+ 			if (old_gdb == gdb_bh->b_blocknr)
+ 				continue;
+-			update_backups(sb, gdb_bh->b_blocknr, gdb_bh->b_data,
+-				       gdb_bh->b_size, meta_bg);
++			update_backups(sb, gdb_bh->b_blocknr - padding_blocks,
++				       gdb_bh->b_data, gdb_bh->b_size, meta_bg);
+ 			old_gdb = gdb_bh->b_blocknr;
+ 		}
+ 	}
 
 
