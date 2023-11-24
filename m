@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0B02EB15;
-	Fri, 24 Nov 2023 19:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850372FC36;
+	Fri, 24 Nov 2023 19:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fN7Nnhba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D85AC433C8;
-	Fri, 24 Nov 2023 19:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpFhddND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104BEC433C8;
+	Fri, 24 Nov 2023 19:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700854081;
-	bh=Ccd4Ozj9uhVO1fJ40RaDFV16Zi2tmXxOqMKOCtG+c5g=;
+	s=korg; t=1700854084;
+	bh=uFK4aF1vzOTHEIipGUSFMBrqpPN4+M/cNO4IoX/FVgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fN7NnhbaFknO0oUceONvfySlNwmjGsIuupGeBo9gNM36nxp6yhqUld+hWz53oNlRW
-	 6utrLhYJYe/oWr7LLVCoE2jCXR72L7S7yIC3KvGUE1JirRm4FAcIAZYi+MH0N+O9Bt
-	 qvJzWv+O2sYJUBZhcRufm+S3mVagCOnTtOUnDXL0=
+	b=dpFhddNDXrxisZG3gIFWxV6eglnOzjo8WYnNOuKUbJkJh8btnEK386Mahlj394bwA
+	 t0MFM98leNHTeuR8qjELvxsGoYhU1MANn7GHerKRBINgdqOXD2Ti4kKm7w7qw3QoKZ
+	 MnSdxcSRhMdIJr+PYR5l1AU/ZRonRyR800nRegSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.4 124/159] media: venus: hfi: add checks to handle capabilities from firmware
-Date: Fri, 24 Nov 2023 17:55:41 +0000
-Message-ID: <20231124171946.997020353@linuxfoundation.org>
+	Mahmoud Adam <mngyadam@amazon.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neilb@suse.de>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.4 125/159] nfsd: fix file memleak on client_opens_release
+Date: Fri, 24 Nov 2023 17:55:42 +0000
+Message-ID: <20231124171947.033728353@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -42,69 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Mahmoud Adam <mngyadam@amazon.com>
 
-commit 8d0b89398b7ebc52103e055bf36b60b045f5258f upstream.
+commit bc1b5acb40201a0746d68a7d7cfc141899937f4f upstream.
 
-The hfi parser, parses the capabilities received from venus firmware and
-copies them to core capabilities. Consider below api, for example,
-fill_caps - In this api, caps in core structure gets updated with the
-number of capabilities received in firmware data payload. If the same api
-is called multiple times, there is a possibility of copying beyond the max
-allocated size in core caps.
-Similar possibilities in fill_raw_fmts and fill_profile_level functions.
+seq_release should be called to free the allocated seq_file
 
-Cc: stable@vger.kernel.org
-Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Cc: stable@vger.kernel.org # v5.3+
+Signed-off-by: Mahmoud Adam <mngyadam@amazon.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
+Reviewed-by: NeilBrown <neilb@suse.de>
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_parser.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/nfsd/nfs4state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_parser.c
-+++ b/drivers/media/platform/qcom/venus/hfi_parser.c
-@@ -89,6 +89,9 @@ static void fill_profile_level(struct ve
- {
- 	const struct hfi_profile_level *pl = data;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2571,7 +2571,7 @@ static int client_opens_release(struct i
  
-+	if (cap->num_pl + num >= HFI_MAX_PROFILE_COUNT)
-+		return;
-+
- 	memcpy(&cap->pl[cap->num_pl], pl, num * sizeof(*pl));
- 	cap->num_pl += num;
+ 	/* XXX: alternatively, we could get/drop in seq start/stop */
+ 	drop_client(clp);
+-	return 0;
++	return seq_release(inode, file);
  }
-@@ -114,6 +117,9 @@ fill_caps(struct venus_caps *cap, const
- {
- 	const struct hfi_capability *caps = data;
  
-+	if (cap->num_caps + num >= MAX_CAP_ENTRIES)
-+		return;
-+
- 	memcpy(&cap->caps[cap->num_caps], caps, num * sizeof(*caps));
- 	cap->num_caps += num;
- }
-@@ -140,6 +146,9 @@ static void fill_raw_fmts(struct venus_c
- {
- 	const struct raw_formats *formats = fmts;
- 
-+	if (cap->num_fmts + num_fmts >= MAX_FMT_ENTRIES)
-+		return;
-+
- 	memcpy(&cap->fmts[cap->num_fmts], formats, num_fmts * sizeof(*formats));
- 	cap->num_fmts += num_fmts;
- }
-@@ -162,6 +171,9 @@ parse_raw_formats(struct venus_core *cor
- 		rawfmts[i].buftype = fmt->buffer_type;
- 		i++;
- 
-+		if (i >= MAX_FMT_ENTRIES)
-+			return;
-+
- 		if (pinfo->num_planes > MAX_PLANES)
- 			break;
- 
+ static const struct file_operations client_states_fops = {
 
 
