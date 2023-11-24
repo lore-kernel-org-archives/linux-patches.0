@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87C92E858;
-	Fri, 24 Nov 2023 18:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CA0286B5;
+	Fri, 24 Nov 2023 18:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIf3aPYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE06AC433C8;
-	Fri, 24 Nov 2023 18:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnUI0nJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDC5C433C8;
+	Fri, 24 Nov 2023 18:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852002;
-	bh=JCEyyfxSzesVsP8WLo/8GKPMe0G1FWBR+VJWpqWygJI=;
+	s=korg; t=1700852004;
+	bh=+FY6OxSJkjCLyxAD3zjAg8/p+YbqKDPXcJDcqZKQFRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIf3aPYuI+j5rVDCdM6SVOodTsSJSp5vM8SKm9xBVpvQZ8BpNOfIKHXCFBRU2i/EN
-	 owypNEXKO2S3MwNLxDvaBacq3QJxNtGfZNa1vAVJlvxWFCKpPIze5+IVosRO24E1Wu
-	 08DRUOoP3IeP5XLa9FjFPoY6gIe7z6yzxZIg4UjM=
+	b=LnUI0nJJHSxHszZkNiRyqAEzPhEgS/IHEc0x3gT7RVRv6bVRXOV8GEDJQeIHqj5i3
+	 zCXa5mmh+o+eSlhaA+2llcTe9WtGmMx50niEXLx52Fw4xIrtroSd3lwjb7XJYGRmZh
+	 bqoo/FlNTRBnOknpMPs2Deng+uti2vEjAJwQKI38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 163/372] media: venus: hfi: add checks to perform sanity on queue pointers
-Date: Fri, 24 Nov 2023 17:49:10 +0000
-Message-ID: <20231124172015.918640774@linuxfoundation.org>
+	Pavel Krasavin <pkrasavin@imaqliq.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Rokosov <ddrokosov@salutedevices.com>
+Subject: [PATCH 6.1 181/372] tty: serial: meson: fix hard LOCKUP on crtscts mode
+Date: Fri, 24 Nov 2023 17:49:28 +0000
+Message-ID: <20231124172016.498535623@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,50 +42,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Pavel Krasavin <pkrasavin@imaqliq.com>
 
-commit 5e538fce33589da6d7cb2de1445b84d3a8a692f7 upstream.
+commit 2a1d728f20edeee7f26dc307ed9df4e0d23947ab upstream.
 
-Read and write pointers are used to track the packet index in the memory
-shared between video driver and firmware. There is a possibility of OOB
-access if the read or write pointer goes beyond the queue memory size.
-Add checks for the read and write pointer to avoid OOB access.
+There might be hard lockup if we set crtscts mode on port without RTS/CTS configured:
 
+# stty -F /dev/ttyAML6 crtscts; echo 1 > /dev/ttyAML6; echo 2 > /dev/ttyAML6
+[   95.890386] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   95.890857] rcu:     3-...0: (201 ticks this GP) idle=e33c/1/0x4000000000000000 softirq=5844/5846 fqs=4984
+[   95.900212] rcu:     (detected by 2, t=21016 jiffies, g=7753, q=296 ncpus=4)
+[   95.906972] Task dump for CPU 3:
+[   95.910178] task:bash            state:R  running task     stack:0     pid:205   ppid:1      flags:0x00000202
+[   95.920059] Call trace:
+[   95.922485]  __switch_to+0xe4/0x168
+[   95.925951]  0xffffff8003477508
+[   95.974379] watchdog: Watchdog detected hard LOCKUP on cpu 3
+[   95.974424] Modules linked in: 88x2cs(O) rtc_meson_vrtc
+
+Possible solution would be to not allow to setup crtscts on such port.
+
+Tested on S905X3 based board.
+
+Fixes: ff7693d079e5 ("ARM: meson: serial: add MesonX SoC on-chip uart driver")
 Cc: stable@vger.kernel.org
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Pavel Krasavin <pkrasavin@imaqliq.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Rokosov <ddrokosov@salutedevices.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/tty/serial/meson_uart.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -205,6 +205,11 @@ static int venus_write_queue(struct venu
+--- a/drivers/tty/serial/meson_uart.c
++++ b/drivers/tty/serial/meson_uart.c
+@@ -380,10 +380,14 @@ static void meson_uart_set_termios(struc
+ 	else
+ 		val |= AML_UART_STOP_BIT_1SB;
  
- 	new_wr_idx = wr_idx + dwords;
- 	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
-+
-+	if (wr_ptr < (u32 *)queue->qmem.kva ||
-+	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
-+		return -EINVAL;
-+
- 	if (new_wr_idx < qsize) {
- 		memcpy(wr_ptr, packet, dwords << 2);
- 	} else {
-@@ -272,6 +277,11 @@ static int venus_read_queue(struct venus
- 	}
+-	if (cflags & CRTSCTS)
+-		val &= ~AML_UART_TWO_WIRE_EN;
+-	else
++	if (cflags & CRTSCTS) {
++		if (port->flags & UPF_HARD_FLOW)
++			val &= ~AML_UART_TWO_WIRE_EN;
++		else
++			termios->c_cflag &= ~CRTSCTS;
++	} else {
+ 		val |= AML_UART_TWO_WIRE_EN;
++	}
  
- 	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
-+
-+	if (rd_ptr < (u32 *)queue->qmem.kva ||
-+	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
-+		return -EINVAL;
-+
- 	dwords = *rd_ptr >> 2;
- 	if (!dwords)
- 		return -EINVAL;
+ 	writel(val, port->membase + AML_UART_CONTROL);
+ 
+@@ -698,6 +702,7 @@ static int meson_uart_probe(struct platf
+ 	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
+ 	int ret = 0;
+ 	int irq;
++	bool has_rtscts;
+ 
+ 	if (pdev->dev.of_node)
+ 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
+@@ -725,6 +730,7 @@ static int meson_uart_probe(struct platf
+ 		return irq;
+ 
+ 	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
++	has_rtscts = of_property_read_bool(pdev->dev.of_node, "uart-has-rtscts");
+ 
+ 	if (meson_ports[pdev->id]) {
+ 		dev_err(&pdev->dev, "port %d already allocated\n", pdev->id);
+@@ -744,6 +750,8 @@ static int meson_uart_probe(struct platf
+ 	port->mapsize = resource_size(res_mem);
+ 	port->irq = irq;
+ 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
++	if (has_rtscts)
++		port->flags |= UPF_HARD_FLOW;
+ 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
+ 	port->dev = &pdev->dev;
+ 	port->line = pdev->id;
 
 
