@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36FB3A8C9;
-	Fri, 24 Nov 2023 18:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7942E621;
+	Fri, 24 Nov 2023 18:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bw3WN0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CC6C433C8;
-	Fri, 24 Nov 2023 18:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lv5uITew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4725C433C7;
+	Fri, 24 Nov 2023 18:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850758;
-	bh=KP4xoatBTnwng/yMClsIKTw/+W4BFMvO8feksjzQWWY=;
+	s=korg; t=1700850761;
+	bh=zZQGcCiwGrmHPQ7zEtJykBdsl9hdg3oozB8/TR5Hxkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2bw3WN0AtqwnUaBAlnaA9O+QS/pE93xWqpvrHQNWcQKImaqVnr7UjFDAq/75Qmtxu
-	 Aw1njIxZrTzOyr1K9OA8sxEzH6QbdhFaR4KVb20X+IpeIOTm217O5Ez4NLLLG2Tckc
-	 kcpEjCcL9gmruaXVf01VgtOfREqwFgHmskCP3zV4=
+	b=lv5uITewnYMIKWf6ToG9I8lhPRaEeN4kKGckuIu/k2J8MrwaugkKUpBVd16XUM8XQ
+	 maOW0Gz46Gp5/JpROd9BhjVkL1aNImvHBw42CNbNTASUp/X0D+ICRsWAydoZFpd+C/
+	 rW9OSXGvFLNb2aHvp544tw4ybMVBoc3JEIR8lDCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonglong Liu <liuyonglong@huawei.com>,
+	Jian Shen <shenjian15@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 178/491] net: hns3: add barrier in vf mailbox reply process
-Date: Fri, 24 Nov 2023 17:46:54 +0000
-Message-ID: <20231124172029.826450817@linuxfoundation.org>
+Subject: [PATCH 6.5 179/491] net: hns3: fix incorrect capability bit display for copper port
+Date: Fri, 24 Nov 2023 17:46:55 +0000
+Message-ID: <20231124172029.855003714@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,49 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonglong Liu <liuyonglong@huawei.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit ac92c0a9a0603fb448e60f38e63302e4eebb8035 ]
+[ Upstream commit 75b247b57d8b71bcb679e4cb37d0db104848806c ]
 
-In hclgevf_mbx_handler() and hclgevf_get_mbx_resp() functions,
-there is a typical store-store and load-load scenario between
-received_resp and additional_info. This patch adds barrier
-to fix the problem.
+Currently, the FEC capability bit is default set for device version V2.
+It's incorrect for the copper port. Eventhough it doesn't make the nic
+work abnormal, but the capability information display in debugfs may
+confuse user. So clear it when driver get the port type inforamtion.
 
-Fixes: 4671042f1ef0 ("net: hns3: add match_id to check mailbox response from PF to VF")
-Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
+Fixes: 433ccce83504 ("net: hns3: use FEC capability queried from firmware")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c
-index bbf7b14079de3..85c2a634c8f96 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c
-@@ -63,6 +63,9 @@ static int hclgevf_get_mbx_resp(struct hclgevf_dev *hdev, u16 code0, u16 code1,
- 		i++;
- 	}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 71154c0976aff..dd2baa05adba0 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -11664,6 +11664,7 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 		goto err_msi_irq_uninit;
  
-+	/* ensure additional_info will be seen after received_resp */
-+	smp_rmb();
-+
- 	if (i >= HCLGEVF_MAX_TRY_TIMES) {
- 		dev_err(&hdev->pdev->dev,
- 			"VF could not get mbx(%u,%u) resp(=%d) from PF in %d tries\n",
-@@ -178,6 +181,10 @@ static void hclgevf_handle_mbx_response(struct hclgevf_dev *hdev,
- 	resp->resp_status = hclgevf_resp_to_errno(resp_status);
- 	memcpy(resp->additional_info, req->msg.resp_data,
- 	       HCLGE_MBX_MAX_RESP_DATA_SIZE * sizeof(u8));
-+
-+	/* ensure additional_info will be seen before setting received_resp */
-+	smp_wmb();
-+
- 	if (match_id) {
- 		/* If match_id is not zero, it means PF support match_id.
- 		 * if the match_id is right, VF get the right response, or
+ 	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER) {
++		clear_bit(HNAE3_DEV_SUPPORT_FEC_B, ae_dev->caps);
+ 		if (hnae3_dev_phy_imp_supported(hdev))
+ 			ret = hclge_update_tp_port_info(hdev);
+ 		else
 -- 
 2.42.0
 
