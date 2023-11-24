@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4473D2FC21;
-	Fri, 24 Nov 2023 18:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F9422F1D;
+	Fri, 24 Nov 2023 18:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvnVdzXl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C578AC433C8;
-	Fri, 24 Nov 2023 18:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvo8K0tw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52250C433C8;
+	Fri, 24 Nov 2023 18:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852335;
-	bh=1yWaH3D9c6Er6yzW7IyfJ1C4sKRp6AVDR8c44WIHVjI=;
+	s=korg; t=1700852337;
+	bh=6YLbCEG3+7wCgJYPmhtEiadT50uYh/IQKZfGyYYuObw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvnVdzXlX2wxZysVV02sCjrCyeghoxx2OUBBeKLixjf4iTRSqnyA3KyLmY5hmuoeR
-	 I2Bvtk63LZ9h19tx5KZ9Oc9J2teCSCpnDSw1guQl4h25zy673CaopXEWXtbj+jjdBd
-	 S+z4HY8/sWysYAEzk54DBMLybn9KiaQM6T8JLHas=
+	b=zvo8K0twjUvbbKhw2IgH6K7OogS4AX0i9J/WEVmHRg9PHg5cGoOHmoM6nvidw1R0t
+	 r2R0j8tRnz1ChxTTR27D6azLsenpbyD+X9ZFDmvCJMo1uaubs34UBGqSh2cVe7UJqM
+	 fDmx9lpDakAwFzwXTtHB3uc4cZ6sFWgBDDh8bniY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.1 315/372] i2c: i801: fix potential race in i801_block_transaction_byte_by_byte
-Date: Fri, 24 Nov 2023 17:51:42 +0000
-Message-ID: <20231124172020.888466281@linuxfoundation.org>
+	Jim Harris <jim.harris@samsung.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 298/372] cxl/region: Do not try to cleanup after cxl_region_setup_targets() fails
+Date: Fri, 24 Nov 2023 17:51:25 +0000
+Message-ID: <20231124172020.362219786@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,66 +45,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jim Harris <jim.harris@samsung.com>
 
-commit f78ca48a8ba9cdec96e8839351e49eec3233b177 upstream.
+[ Upstream commit 0718588c7aaa7a1510b4de972370535b61dddd0d ]
 
-Currently we set SMBHSTCNT_LAST_BYTE only after the host has started
-receiving the last byte. If we get e.g. preempted before setting
-SMBHSTCNT_LAST_BYTE, the host may be finished with receiving the byte
-before SMBHSTCNT_LAST_BYTE is set.
-Therefore change the code to set SMBHSTCNT_LAST_BYTE before writing
-SMBHSTSTS_BYTE_DONE for the byte before the last byte. Now the code
-is also consistent with what we do in i801_isr_byte_done().
+Commit 5e42bcbc3fef ("cxl/region: decrement ->nr_targets on error in
+cxl_region_attach()") tried to avoid 'eiw' initialization errors when
+->nr_targets exceeded 16, by just decrementing ->nr_targets when
+cxl_region_setup_targets() failed.
 
-Reported-by: Jean Delvare <jdelvare@suse.com>
-Closes: https://lore.kernel.org/linux-i2c/20230828152747.09444625@endymion.delvare/
-Cc: stable@vger.kernel.org
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Commit 86987c766276 ("cxl/region: Cleanup target list on attach error")
+extended that cleanup to also clear cxled->pos and p->targets[pos]. The
+initialization error was incidentally fixed separately by:
+Commit 8d4285425714 ("cxl/region: Fix port setup uninitialized variable
+warnings") which was merged a few days after 5e42bcbc3fef.
+
+But now the original cleanup when cxl_region_setup_targets() fails
+prevents endpoint and switch decoder resources from being reused:
+
+1) the cleanup does not set the decoder's region to NULL, which results
+   in future dpa_size_store() calls returning -EBUSY
+2) the decoder is not properly freed, which results in future commit
+   errors associated with the upstream switch
+
+Now that the initialization errors were fixed separately, the proper
+cleanup for this case is to just return immediately. Then the resources
+associated with this target get cleanup up as normal when the failed
+region is deleted.
+
+The ->nr_targets decrement in the error case also helped prevent
+a p->targets[] array overflow, so add a new check to prevent against
+that overflow.
+
+Tested by trying to create an invalid region for a 2 switch * 2 endpoint
+topology, and then following up with creating a valid region.
+
+Fixes: 5e42bcbc3fef ("cxl/region: decrement ->nr_targets on error in cxl_region_attach()")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jim Harris <jim.harris@samsung.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Acked-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/169703589120.1202031.14696100866518083806.stgit@bgt-140510-bm03.eng.stellus.in
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/cxl/core/region.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -690,15 +690,11 @@ static int i801_block_transaction_byte_b
- 		return i801_check_post(priv, result ? priv->status : -ETIMEDOUT);
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 1ee51327e989d..13b1b18612d3f 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1291,6 +1291,12 @@ static int cxl_region_attach(struct cxl_region *cxlr,
+ 		return -ENXIO;
  	}
  
--	for (i = 1; i <= len; i++) {
--		if (i == len && read_write == I2C_SMBUS_READ)
--			smbcmd |= SMBHSTCNT_LAST_BYTE;
--		outb_p(smbcmd, SMBHSTCNT(priv));
--
--		if (i == 1)
--			outb_p(inb(SMBHSTCNT(priv)) | SMBHSTCNT_START,
--			       SMBHSTCNT(priv));
-+	if (len == 1 && read_write == I2C_SMBUS_READ)
-+		smbcmd |= SMBHSTCNT_LAST_BYTE;
-+	outb_p(smbcmd | SMBHSTCNT_START, SMBHSTCNT(priv));
- 
-+	for (i = 1; i <= len; i++) {
- 		status = i801_wait_byte_done(priv);
- 		if (status)
- 			goto exit;
-@@ -721,9 +717,12 @@ static int i801_block_transaction_byte_b
- 			data->block[0] = len;
- 		}
- 
--		/* Retrieve/store value in SMBBLKDAT */
--		if (read_write == I2C_SMBUS_READ)
-+		if (read_write == I2C_SMBUS_READ) {
- 			data->block[i] = inb_p(SMBBLKDAT(priv));
-+			if (i == len - 1)
-+				outb_p(smbcmd | SMBHSTCNT_LAST_BYTE, SMBHSTCNT(priv));
-+		}
++	if (p->nr_targets >= p->interleave_ways) {
++		dev_dbg(&cxlr->dev, "region already has %d endpoints\n",
++			p->nr_targets);
++		return -EINVAL;
++	}
 +
- 		if (read_write == I2C_SMBUS_WRITE && i+1 <= len)
- 			outb_p(data->block[i+1], SMBBLKDAT(priv));
+ 	ep_port = cxled_to_port(cxled);
+ 	root_port = cxlrd_to_port(cxlrd);
+ 	dport = cxl_find_dport_by_dev(root_port, ep_port->host_bridge);
+@@ -1339,7 +1345,7 @@ static int cxl_region_attach(struct cxl_region *cxlr,
+ 	if (p->nr_targets == p->interleave_ways) {
+ 		rc = cxl_region_setup_targets(cxlr);
+ 		if (rc)
+-			goto err_decrement;
++			return rc;
+ 		p->state = CXL_CONFIG_ACTIVE;
+ 	}
  
+@@ -1351,12 +1357,6 @@ static int cxl_region_attach(struct cxl_region *cxlr,
+ 	};
+ 
+ 	return 0;
+-
+-err_decrement:
+-	p->nr_targets--;
+-	cxled->pos = -1;
+-	p->targets[pos] = NULL;
+-	return rc;
+ }
+ 
+ static int cxl_region_detach(struct cxl_endpoint_decoder *cxled)
+-- 
+2.42.0
+
 
 
