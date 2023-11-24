@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E78263A1;
-	Fri, 24 Nov 2023 18:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4BE321AD;
+	Fri, 24 Nov 2023 18:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkxYMFxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E89BC433C8;
-	Fri, 24 Nov 2023 18:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zS8EIkvY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4075C433C7;
+	Fri, 24 Nov 2023 18:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852364;
-	bh=O5+smgJr3AYXPrbOhljuaMlGdj8k9OE9ZhXl9y94kYg=;
+	s=korg; t=1700852367;
+	bh=7exE/3vzJFEMEKV1qaPk67CkjtwgotQ5CiBcQIgAPbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkxYMFxLaJpqB6JlWmrzjPh2iDp7l1DUqKTac6ZHbBZgRMDGttApUA022guzdqCk/
-	 P+idTa/gsnQWPQfFDRy+CBUNnsSFyp3WilN/yZpkgeX+RXhzzbuVfQp+eEeu+TkqUa
-	 lSFEjqpxegiQkArhIf4bJsLTB572h9bplsvT/BC8=
+	b=zS8EIkvYLW7NfA3UmzQeWaaVFjYwV5txAeRD6vTjxDntsHkuOsbhxVMf6YNwIXQiA
+	 0FiacHxCUuUQuN+QT/Nwl21v7gPEEcB8Ckkbqz5a4ClAS5fkXfqok+yZY5DBnJPqs/
+	 M7wBsEcsd4D0l6dtuFjBMViuPvDdMHcvqYKECLw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Robert Richter <rrichter@amd.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 301/372] cxl: Unify debug messages when calling devm_cxl_add_port()
-Date: Fri, 24 Nov 2023 17:51:28 +0000
-Message-ID: <20231124172020.467369749@linuxfoundation.org>
+Subject: [PATCH 6.1 302/372] cxl/mem: Move devm_cxl_add_endpoint() from cxl_core to cxl_mem
+Date: Fri, 24 Nov 2023 17:51:29 +0000
+Message-ID: <20231124172020.502942054@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,124 +43,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Richter <rrichter@amd.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit f3cd264c4ec1ab9b8918f3b083cfc13c5e7c26b7 ]
+[ Upstream commit 7592d935b7ae71e2b4ff93830743c39a9d13d113 ]
 
-CXL ports are added in a couple of code paths using devm_cxl_add_port().
-Debug messages are individually generated, but are incomplete and
-inconsistent. Change this by moving its generation to
-devm_cxl_add_port(). This unifies the messages and reduces code
-duplication.  Also, generate messages on failure. Use a
-__devm_cxl_add_port() wrapper to keep the readability of the error
-exits.
+tl;dr: Clean up an unnecessary export and enable cxl_test.
 
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Link: https://lore.kernel.org/r/20221018132341.76259-4-rrichter@amd.com
+An RCD (Restricted CXL Device), in contrast to a typical CXL device in
+a VH topology, obtains its component registers from the bottom half of
+the associated CXL host bridge RCRB (Root Complex Register Block). In
+turn this means that cxl_rcrb_to_component() needs to be called from
+devm_cxl_add_endpoint().
+
+Presently devm_cxl_add_endpoint() is part of the CXL core, but the only
+user is the CXL mem module. Move it from cxl_core to cxl_mem to not only
+get rid of an unnecessary export, but to also enable its call out to
+cxl_rcrb_to_component(), in a subsequent patch, to be mocked by
+cxl_test. Recall that cxl_test can only mock exported symbols, and since
+cxl_rcrb_to_component() is itself inside the core, all callers must be
+outside of cxl_core to allow cxl_test to mock it.
+
+Reviewed-by: Robert Richter <rrichter@amd.com>
+Link: https://lore.kernel.org/r/166993045072.1882361.13944923741276843683.stgit@dwillia2-xfh.jf.intel.com
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Stable-dep-of: 98a04c7aced2 ("cxl/region: Fix x1 root-decoder granularity calculations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/acpi.c      |  2 --
- drivers/cxl/core/port.c | 51 +++++++++++++++++++++++++++++++----------
- 2 files changed, 39 insertions(+), 14 deletions(-)
+ drivers/cxl/core/core.h |  8 --------
+ drivers/cxl/core/port.c | 39 ---------------------------------------
+ drivers/cxl/cxl.h       |  2 --
+ drivers/cxl/cxlmem.h    |  9 +++++++++
+ drivers/cxl/mem.c       | 38 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 47 insertions(+), 49 deletions(-)
 
-diff --git a/drivers/cxl/acpi.c b/drivers/cxl/acpi.c
-index 07b184382707e..dd610556a3afa 100644
---- a/drivers/cxl/acpi.c
-+++ b/drivers/cxl/acpi.c
-@@ -219,7 +219,6 @@ static int add_host_bridge_uport(struct device *match, void *arg)
- 	port = devm_cxl_add_port(host, match, dport->component_reg_phys, dport);
- 	if (IS_ERR(port))
- 		return PTR_ERR(port);
--	dev_dbg(host, "%s: add: %s\n", dev_name(match), dev_name(&port->dev));
+diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
+index 1d8f87be283fb..8c04672dca563 100644
+--- a/drivers/cxl/core/core.h
++++ b/drivers/cxl/core/core.h
+@@ -58,14 +58,6 @@ extern struct rw_semaphore cxl_dpa_rwsem;
  
- 	return 0;
- }
-@@ -465,7 +464,6 @@ static int cxl_acpi_probe(struct platform_device *pdev)
- 	root_port = devm_cxl_add_port(host, host, CXL_RESOURCE_NONE, NULL);
- 	if (IS_ERR(root_port))
- 		return PTR_ERR(root_port);
--	dev_dbg(host, "add: %s\n", dev_name(&root_port->dev));
+ bool is_switch_decoder(struct device *dev);
+ struct cxl_switch_decoder *to_cxl_switch_decoder(struct device *dev);
+-static inline struct cxl_ep *cxl_ep_load(struct cxl_port *port,
+-					 struct cxl_memdev *cxlmd)
+-{
+-	if (!port)
+-		return NULL;
+-
+-	return xa_load(&port->endpoints, (unsigned long)&cxlmd->dev);
+-}
  
- 	rc = bus_for_each_dev(adev->dev.bus, NULL, root_port,
- 			      add_host_bridge_dport);
+ int cxl_memdev_init(void);
+ void cxl_memdev_exit(void);
 diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index e7556864ea808..93560d749aed8 100644
+index 93560d749aed8..585c2b43c7c7f 100644
 --- a/drivers/cxl/core/port.c
 +++ b/drivers/cxl/core/port.c
-@@ -655,16 +655,10 @@ static struct cxl_port *cxl_port_alloc(struct device *uport,
- 	return ERR_PTR(rc);
+@@ -1151,45 +1151,6 @@ static void reap_dports(struct cxl_port *port)
+ 	}
  }
  
--/**
-- * devm_cxl_add_port - register a cxl_port in CXL memory decode hierarchy
-- * @host: host device for devm operations
-- * @uport: "physical" device implementing this upstream port
-- * @component_reg_phys: (optional) for configurable cxl_port instances
-- * @parent_dport: next hop up in the CXL memory decode hierarchy
-- */
--struct cxl_port *devm_cxl_add_port(struct device *host, struct device *uport,
--				   resource_size_t component_reg_phys,
--				   struct cxl_dport *parent_dport)
-+static struct cxl_port *__devm_cxl_add_port(struct device *host,
-+					    struct device *uport,
-+					    resource_size_t component_reg_phys,
-+					    struct cxl_dport *parent_dport)
+-int devm_cxl_add_endpoint(struct cxl_memdev *cxlmd,
+-			  struct cxl_dport *parent_dport)
+-{
+-	struct cxl_port *parent_port = parent_dport->port;
+-	struct cxl_dev_state *cxlds = cxlmd->cxlds;
+-	struct cxl_port *endpoint, *iter, *down;
+-	int rc;
+-
+-	/*
+-	 * Now that the path to the root is established record all the
+-	 * intervening ports in the chain.
+-	 */
+-	for (iter = parent_port, down = NULL; !is_cxl_root(iter);
+-	     down = iter, iter = to_cxl_port(iter->dev.parent)) {
+-		struct cxl_ep *ep;
+-
+-		ep = cxl_ep_load(iter, cxlmd);
+-		ep->next = down;
+-	}
+-
+-	endpoint = devm_cxl_add_port(&parent_port->dev, &cxlmd->dev,
+-				     cxlds->component_reg_phys, parent_dport);
+-	if (IS_ERR(endpoint))
+-		return PTR_ERR(endpoint);
+-
+-	rc = cxl_endpoint_autoremove(cxlmd, endpoint);
+-	if (rc)
+-		return rc;
+-
+-	if (!endpoint->dev.driver) {
+-		dev_err(&cxlmd->dev, "%s failed probe\n",
+-			dev_name(&endpoint->dev));
+-		return -ENXIO;
+-	}
+-
+-	return 0;
+-}
+-EXPORT_SYMBOL_NS_GPL(devm_cxl_add_endpoint, CXL);
+-
+ static void cxl_detach_ep(void *data)
  {
- 	struct cxl_port *port;
- 	struct device *dev;
-@@ -702,6 +696,41 @@ struct cxl_port *devm_cxl_add_port(struct device *host, struct device *uport,
- 	put_device(dev);
- 	return ERR_PTR(rc);
- }
-+
-+/**
-+ * devm_cxl_add_port - register a cxl_port in CXL memory decode hierarchy
-+ * @host: host device for devm operations
-+ * @uport: "physical" device implementing this upstream port
-+ * @component_reg_phys: (optional) for configurable cxl_port instances
-+ * @parent_dport: next hop up in the CXL memory decode hierarchy
-+ */
-+struct cxl_port *devm_cxl_add_port(struct device *host, struct device *uport,
-+				   resource_size_t component_reg_phys,
-+				   struct cxl_dport *parent_dport)
+ 	struct cxl_memdev *cxlmd = data;
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index ac75554b5d763..8787ef1e64047 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -562,8 +562,6 @@ struct pci_bus *cxl_port_to_pci_bus(struct cxl_port *port);
+ struct cxl_port *devm_cxl_add_port(struct device *host, struct device *uport,
+ 				   resource_size_t component_reg_phys,
+ 				   struct cxl_dport *parent_dport);
+-int devm_cxl_add_endpoint(struct cxl_memdev *cxlmd,
+-			  struct cxl_dport *parent_dport);
+ struct cxl_port *find_cxl_root(struct device *dev);
+ int devm_cxl_enumerate_ports(struct cxl_memdev *cxlmd);
+ int cxl_bus_rescan(void);
+diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+index 88e3a8e54b6a4..7e50b4e93ee53 100644
+--- a/drivers/cxl/cxlmem.h
++++ b/drivers/cxl/cxlmem.h
+@@ -76,6 +76,15 @@ static inline bool is_cxl_endpoint(struct cxl_port *port)
+ 
+ struct cxl_memdev *devm_cxl_add_memdev(struct cxl_dev_state *cxlds);
+ 
++static inline struct cxl_ep *cxl_ep_load(struct cxl_port *port,
++					 struct cxl_memdev *cxlmd)
 +{
-+	struct cxl_port *port, *parent_port;
++	if (!port)
++		return NULL;
 +
-+	port = __devm_cxl_add_port(host, uport, component_reg_phys,
-+				   parent_dport);
++	return xa_load(&port->endpoints, (unsigned long)&cxlmd->dev);
++}
 +
-+	parent_port = parent_dport ? parent_dport->port : NULL;
-+	if (IS_ERR(port)) {
-+		dev_dbg(uport, "Failed to add %s%s%s%s: %ld\n",
-+			dev_name(&port->dev),
-+			parent_port ? " to " : "",
-+			parent_port ? dev_name(&parent_port->dev) : "",
-+			parent_port ? "" : " (root port)",
-+			PTR_ERR(port));
-+	} else {
-+		dev_dbg(uport, "%s added%s%s%s\n",
-+			dev_name(&port->dev),
-+			parent_port ? " to " : "",
-+			parent_port ? dev_name(&parent_port->dev) : "",
-+			parent_port ? "" : " (root port)");
+ /**
+  * struct cxl_mbox_cmd - A command to be submitted to hardware.
+  * @opcode: (input) The command set and command submitted to hardware.
+diff --git a/drivers/cxl/mem.c b/drivers/cxl/mem.c
+index 64ccf053d32c3..80263d12a8541 100644
+--- a/drivers/cxl/mem.c
++++ b/drivers/cxl/mem.c
+@@ -45,6 +45,44 @@ static int cxl_mem_dpa_show(struct seq_file *file, void *data)
+ 	return 0;
+ }
+ 
++static int devm_cxl_add_endpoint(struct cxl_memdev *cxlmd,
++				 struct cxl_dport *parent_dport)
++{
++	struct cxl_port *parent_port = parent_dport->port;
++	struct cxl_dev_state *cxlds = cxlmd->cxlds;
++	struct cxl_port *endpoint, *iter, *down;
++	int rc;
++
++	/*
++	 * Now that the path to the root is established record all the
++	 * intervening ports in the chain.
++	 */
++	for (iter = parent_port, down = NULL; !is_cxl_root(iter);
++	     down = iter, iter = to_cxl_port(iter->dev.parent)) {
++		struct cxl_ep *ep;
++
++		ep = cxl_ep_load(iter, cxlmd);
++		ep->next = down;
 +	}
 +
-+	return port;
++	endpoint = devm_cxl_add_port(&parent_port->dev, &cxlmd->dev,
++				     cxlds->component_reg_phys, parent_dport);
++	if (IS_ERR(endpoint))
++		return PTR_ERR(endpoint);
++
++	rc = cxl_endpoint_autoremove(cxlmd, endpoint);
++	if (rc)
++		return rc;
++
++	if (!endpoint->dev.driver) {
++		dev_err(&cxlmd->dev, "%s failed probe\n",
++			dev_name(&endpoint->dev));
++		return -ENXIO;
++	}
++
++	return 0;
 +}
- EXPORT_SYMBOL_NS_GPL(devm_cxl_add_port, CXL);
- 
- struct pci_bus *cxl_port_to_pci_bus(struct cxl_port *port)
-@@ -1147,8 +1176,6 @@ int devm_cxl_add_endpoint(struct cxl_memdev *cxlmd,
- 	if (IS_ERR(endpoint))
- 		return PTR_ERR(endpoint);
- 
--	dev_dbg(&cxlmd->dev, "add: %s\n", dev_name(&endpoint->dev));
--
- 	rc = cxl_endpoint_autoremove(cxlmd, endpoint);
- 	if (rc)
- 		return rc;
++
+ static int cxl_mem_probe(struct device *dev)
+ {
+ 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
 -- 
 2.42.0
 
