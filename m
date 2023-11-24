@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAFF321AD;
-	Fri, 24 Nov 2023 19:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421EC321AD;
+	Fri, 24 Nov 2023 19:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WBsJQXV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70F2C433C8;
-	Fri, 24 Nov 2023 19:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNoMp/2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A273C433C8;
+	Fri, 24 Nov 2023 19:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853905;
-	bh=pOo5jZyc1DBbILoyI79uQ8wpaj0gi5BCAg5tWY0D8q0=;
+	s=korg; t=1700853907;
+	bh=KwSDi+ivYn5bNa/QXfYOX2i1sj/XWNrZs06xGdNQ2SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1WBsJQXVDkBwJdCFQmd0ZSz9Q45WXLu/FkugMeWASDGBHyYlfRhSxxbscaMiWT1id
-	 p6aZqQODQi6h9heym8YqYbvdmw6YQIWk7KKZCVRTqoBRTHvfEbpHpFRmlalAKorJus
-	 Tfpw7Ge4HUirEOzxGBTKXDwYYdLwr5z2Hx+hMJt8=
+	b=JNoMp/2+WX1NbyAIeX6q6Pn7tRHROI+vl6/xDb5wpjQB7ib2ztUXcdpMdqxIT6ZI1
+	 Bqtv6eSYYLSmivRmkmhj982tUG/Nda4toj4phXmZQWL+VARlWAWqfwo7sMkKNob6Xb
+	 gcvkkADkdPnUT4ro9X64c/bZf6VJtRFPm3COyHbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.4 078/159] ACPI: resource: Do IRQ override on TongFang GMxXGxx
-Date: Fri, 24 Nov 2023 17:54:55 +0000
-Message-ID: <20231124171945.188225044@linuxfoundation.org>
+	Rong Chen <rong.chen@amlogic.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 079/159] mmc: meson-gx: Remove setting of CMD_CFG_ERROR
+Date: Fri, 24 Nov 2023 17:54:56 +0000
+Message-ID: <20231124171945.222340796@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -42,45 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Rong Chen <rong.chen@amlogic.com>
 
-commit 0da9eccde3270b832c059ad618bf66e510c75d33 upstream.
+commit 57925e16c9f7d18012bcf45bfa658f92c087981a upstream.
 
-The TongFang GMxXGxx/TUXEDO Stellaris/Pollaris Gen5 needs IRQ overriding
-for the keyboard to work.
+For the t7 and older SoC families, the CMD_CFG_ERROR has no effect.
+Starting from SoC family C3, setting this bit without SG LINK data
+address will cause the controller to generate an IRQ and stop working.
 
-Adding an entry for this laptop to the override_table makes the internal
-keyboard functional.
+To fix it, don't set the bit CMD_CFG_ERROR anymore.
 
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: All applicable <stable@vger.kernel.org>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 18f92bc02f17 ("mmc: meson-gx: make sure the descriptor is stopped on errors")
+Signed-off-by: Rong Chen <rong.chen@amlogic.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231026073156.2868310-1-rong.chen@amlogic.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/mmc/host/meson-gx-mmc.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -443,6 +443,18 @@ static const struct dmi_system_id asus_l
- 		},
- 	},
- 	{
-+		/* TongFang GMxXGxx/TUXEDO Polaris 15 Gen5 AMD */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxx"),
-+		},
-+	},
-+	{
-+		/* TongFang GM6XGxX/TUXEDO Stellaris 16 Gen5 AMD */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "GM6XGxX"),
-+		},
-+	},
-+	{
- 		.ident = "Asus ExpertBook B2502",
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -803,7 +803,6 @@ static void meson_mmc_start_cmd(struct m
+ 
+ 	cmd_cfg |= FIELD_PREP(CMD_CFG_CMD_INDEX_MASK, cmd->opcode);
+ 	cmd_cfg |= CMD_CFG_OWNER;  /* owned by CPU */
+-	cmd_cfg |= CMD_CFG_ERROR; /* stop in case of error */
+ 
+ 	meson_mmc_set_response_bits(cmd, &cmd_cfg);
+ 
 
 
