@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9812FC4E;
-	Fri, 24 Nov 2023 18:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4670928DBB;
+	Fri, 24 Nov 2023 18:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmqOuZ+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A71DC433C8;
-	Fri, 24 Nov 2023 18:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBnmloSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A96C433C8;
+	Fri, 24 Nov 2023 18:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851838;
-	bh=yQY8b56RRhSRM4FHOJMe++aH7HDtU8+ccp+xF1GOsdY=;
+	s=korg; t=1700851841;
+	bh=kB20QdPK6DZb6sN+o9iurqV9/hcRov7nCjgImlPEKuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmqOuZ+jU5N5BATtKlbDEAw49GK+PTXHeDqoa8VBaDxZ6XRG1mDTlKr7rCM8WjVaw
-	 pugtawXAgZGazEX4+7BdinruUeI1z8SB0d3ZBZ057BQbuaBqugZIPs0O7aY5mztkm/
-	 JthZDnPnWyIkAA1Dtm8jFjSuthza/A6AeMIyFrHY=
+	b=lBnmloSIKZGa6EtXT91MFH1wmgrP5G8qahIVsfzMdFAIrjn8qWMn47gspgiGvSJx0
+	 Ic3jz1xdmHOfXqllGrwUdNE/OcjRzzL2rOkS0GI2Pzy31XZ12NUnQT21q4vJAS7T8u
+	 NiYl9s4rT0CDAkTpT1c3JS785ChobzszBr7NLkgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/372] sched/core: Optimize in_task() and in_interrupt() a bit
-Date: Fri, 24 Nov 2023 17:48:23 +0000
-Message-ID: <20231124172014.349706533@linuxfoundation.org>
+Subject: [PATCH 6.1 117/372] SUNRPC: ECONNRESET might require a rebind
+Date: Fri, 24 Nov 2023 17:48:24 +0000
+Message-ID: <20231124172014.380644932@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,98 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 87c3a5893e865739ce78aa7192d36011022e0af7 ]
+[ Upstream commit 4b09ca1508a60be30b2e3940264e93d7aeb5c97e ]
 
-Except on x86, preempt_count is always accessed with READ_ONCE().
-Repeated invocations in macros like irq_count() produce repeated loads.
-These redundant instructions appear in various fast paths. In the one
-shown below, for example, irq_count() is evaluated during kernel entry
-if !tick_nohz_full_cpu(smp_processor_id()).
+If connect() is returning ECONNRESET, it usually means that nothing is
+listening on that port. If so, a rebind might be required in order to
+obtain the new port on which the RPC service is listening.
 
-0001ed0a <irq_enter_rcu>:
-   1ed0a:       4e56 0000       linkw %fp,#0
-   1ed0e:       200f            movel %sp,%d0
-   1ed10:       0280 ffff e000  andil #-8192,%d0
-   1ed16:       2040            moveal %d0,%a0
-   1ed18:       2028 0008       movel %a0@(8),%d0
-   1ed1c:       0680 0001 0000  addil #65536,%d0
-   1ed22:       2140 0008       movel %d0,%a0@(8)
-   1ed26:       082a 0001 000f  btst #1,%a2@(15)
-   1ed2c:       670c            beqs 1ed3a <irq_enter_rcu+0x30>
-   1ed2e:       2028 0008       movel %a0@(8),%d0
-   1ed32:       2028 0008       movel %a0@(8),%d0
-   1ed36:       2028 0008       movel %a0@(8),%d0
-   1ed3a:       4e5e            unlk %fp
-   1ed3c:       4e75            rts
-
-This patch doesn't prevent the pointless btst and beqs instructions
-above, but it does eliminate 2 of the 3 pointless move instructions
-here and elsewhere.
-
-On x86, preempt_count is per-cpu data and the problem does not arise
-presumably because the compiler is free to optimize more effectively.
-
-This patch was tested on m68k and x86. I was expecting no changes
-to object code for x86 and mostly that's what I saw. However, there
-were a few places where code generation was perturbed for some reason.
-
-The performance issue addressed here is minor on uniprocessor m68k. I
-got a 0.01% improvement from this patch for a simple "find /sys -false"
-benchmark. For architectures and workloads susceptible to cache line bounce
-the improvement is expected to be larger. The only SMP architecture I have
-is x86, and as x86 unaffected I have not done any further measurements.
-
-Fixes: 15115830c887 ("preempt: Cleanup the macro maze a bit")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/0a403120a682a525e6db2d81d1a3ffcc137c3742.1694756831.git.fthain@linux-m68k.org
+Fixes: fd01b2597941 ("SUNRPC: ECONNREFUSED should cause a rebind.")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/preempt.h | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/sunrpc/clnt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/preempt.h b/include/linux/preempt.h
-index 0df425bf9bd75..8cfcc5d454512 100644
---- a/include/linux/preempt.h
-+++ b/include/linux/preempt.h
-@@ -98,14 +98,21 @@ static __always_inline unsigned char interrupt_context_level(void)
- 	return level;
- }
- 
-+/*
-+ * These macro definitions avoid redundant invocations of preempt_count()
-+ * because such invocations would result in redundant loads given that
-+ * preempt_count() is commonly implemented with READ_ONCE().
-+ */
-+
- #define nmi_count()	(preempt_count() & NMI_MASK)
- #define hardirq_count()	(preempt_count() & HARDIRQ_MASK)
- #ifdef CONFIG_PREEMPT_RT
- # define softirq_count()	(current->softirq_disable_cnt & SOFTIRQ_MASK)
-+# define irq_count()		((preempt_count() & (NMI_MASK | HARDIRQ_MASK)) | softirq_count())
- #else
- # define softirq_count()	(preempt_count() & SOFTIRQ_MASK)
-+# define irq_count()		(preempt_count() & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_MASK))
- #endif
--#define irq_count()	(nmi_count() | hardirq_count() | softirq_count())
- 
- /*
-  * Macros to retrieve the current execution context:
-@@ -118,7 +125,11 @@ static __always_inline unsigned char interrupt_context_level(void)
- #define in_nmi()		(nmi_count())
- #define in_hardirq()		(hardirq_count())
- #define in_serving_softirq()	(softirq_count() & SOFTIRQ_OFFSET)
--#define in_task()		(!(in_nmi() | in_hardirq() | in_serving_softirq()))
-+#ifdef CONFIG_PREEMPT_RT
-+# define in_task()		(!((preempt_count() & (NMI_MASK | HARDIRQ_MASK)) | in_serving_softirq()))
-+#else
-+# define in_task()		(!(preempt_count() & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET)))
-+#endif
- 
- /*
-  * The following macros are deprecated and should not be used in new code:
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 2b803383c7b31..f0bbd6cb4e39b 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2157,6 +2157,7 @@ call_connect_status(struct rpc_task *task)
+ 	task->tk_status = 0;
+ 	switch (status) {
+ 	case -ECONNREFUSED:
++	case -ECONNRESET:
+ 		/* A positive refusal suggests a rebind is needed. */
+ 		if (RPC_IS_SOFTCONN(task))
+ 			break;
+@@ -2165,7 +2166,6 @@ call_connect_status(struct rpc_task *task)
+ 			goto out_retry;
+ 		}
+ 		fallthrough;
+-	case -ECONNRESET:
+ 	case -ECONNABORTED:
+ 	case -ENETDOWN:
+ 	case -ENETUNREACH:
 -- 
 2.42.0
 
