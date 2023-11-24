@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F75114F7B;
-	Fri, 24 Nov 2023 19:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D525F31759;
+	Fri, 24 Nov 2023 19:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZV2EtSQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA0BC433C8;
-	Fri, 24 Nov 2023 19:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkpU8xHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605D4C433C8;
+	Fri, 24 Nov 2023 19:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853177;
-	bh=fGSxKsdrjVCCCFowP+xBcVtWgt8zeXuVV+dtwiYxsKs=;
+	s=korg; t=1700853179;
+	bh=SjUztJBfEddu0RRbAB4M1vbzu5/Tbc4G0bN91Cido94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZV2EtSQMFz43hO060glfOWp1Lkuafc7QTjxR+RKiNS0MP90MSI3xvce6ks/+r971
-	 K4vqUHduOfeouTKCckh59tuth/AQYBHwJ6w9QfgcrbMsXkcgFmC5qDX4pwhrQDovWY
-	 24pkgKmkWbeDR3NIqbd6U7T8FrXB+acysLVFb+vc=
+	b=tkpU8xHSgFOdDBwBH3mxyHwEMSEa0HgGlRsU5IuJnFePMwDnnjFsIexWGsyaU6Cbk
+	 yDU6UaDrMoy43VnU46uC94+7xOtB0pD5Jc4izfBwI9EnrH+Tah4PAOpVzr6+46w3cZ
+	 5FGtyquGn7NpnzT0BD/wrlewgd1UVa6fOTTvG6Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Thain <fthain@linux-m68k.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Pratyush Yadav <p.yadav@ti.com>,
+	Julien Massot <julien.massot@collabora.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jai Luthra <j-luthra@ti.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/297] sched/core: Optimize in_task() and in_interrupt() a bit
-Date: Fri, 24 Nov 2023 17:52:07 +0000
-Message-ID: <20231124172003.226684981@linuxfoundation.org>
+Subject: [PATCH 5.15 086/297] media: cadence: csi2rx: Unregister v4l2 async notifier
+Date: Fri, 24 Nov 2023 17:52:08 +0000
+Message-ID: <20231124172003.258790105@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,100 +48,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Pratyush Yadav <p.yadav@ti.com>
 
-[ Upstream commit 87c3a5893e865739ce78aa7192d36011022e0af7 ]
+[ Upstream commit b2701715301a49b53d05c7d43f3fedc3b8743bfc ]
 
-Except on x86, preempt_count is always accessed with READ_ONCE().
-Repeated invocations in macros like irq_count() produce repeated loads.
-These redundant instructions appear in various fast paths. In the one
-shown below, for example, irq_count() is evaluated during kernel entry
-if !tick_nohz_full_cpu(smp_processor_id()).
+The notifier is added to the global notifier list when registered. When
+the module is removed, the struct csi2rx_priv in which the notifier is
+embedded, is destroyed. As a result the notifier list has a reference to
+a notifier that no longer exists. This causes invalid memory accesses
+when the list is iterated over. Similar for when the probe fails.
+Unregister and clean up the notifier to avoid this.
 
-0001ed0a <irq_enter_rcu>:
-   1ed0a:       4e56 0000       linkw %fp,#0
-   1ed0e:       200f            movel %sp,%d0
-   1ed10:       0280 ffff e000  andil #-8192,%d0
-   1ed16:       2040            moveal %d0,%a0
-   1ed18:       2028 0008       movel %a0@(8),%d0
-   1ed1c:       0680 0001 0000  addil #65536,%d0
-   1ed22:       2140 0008       movel %d0,%a0@(8)
-   1ed26:       082a 0001 000f  btst #1,%a2@(15)
-   1ed2c:       670c            beqs 1ed3a <irq_enter_rcu+0x30>
-   1ed2e:       2028 0008       movel %a0@(8),%d0
-   1ed32:       2028 0008       movel %a0@(8),%d0
-   1ed36:       2028 0008       movel %a0@(8),%d0
-   1ed3a:       4e5e            unlk %fp
-   1ed3c:       4e75            rts
+Fixes: 1fc3b37f34f6 ("media: v4l: cadence: Add Cadence MIPI-CSI2 RX driver")
 
-This patch doesn't prevent the pointless btst and beqs instructions
-above, but it does eliminate 2 of the 3 pointless move instructions
-here and elsewhere.
-
-On x86, preempt_count is per-cpu data and the problem does not arise
-presumably because the compiler is free to optimize more effectively.
-
-This patch was tested on m68k and x86. I was expecting no changes
-to object code for x86 and mostly that's what I saw. However, there
-were a few places where code generation was perturbed for some reason.
-
-The performance issue addressed here is minor on uniprocessor m68k. I
-got a 0.01% improvement from this patch for a simple "find /sys -false"
-benchmark. For architectures and workloads susceptible to cache line bounce
-the improvement is expected to be larger. The only SMP architecture I have
-is x86, and as x86 unaffected I have not done any further measurements.
-
-Fixes: 15115830c887 ("preempt: Cleanup the macro maze a bit")
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/0a403120a682a525e6db2d81d1a3ffcc137c3742.1694756831.git.fthain@linux-m68k.org
+Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
+Tested-by: Julien Massot <julien.massot@collabora.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/preempt.h | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/media/platform/cadence/cdns-csi2rx.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/preempt.h b/include/linux/preempt.h
-index b32e3dabe28bd..9c4534a69a8f7 100644
---- a/include/linux/preempt.h
-+++ b/include/linux/preempt.h
-@@ -98,14 +98,21 @@ static __always_inline unsigned char interrupt_context_level(void)
- 	return level;
- }
+--- a/drivers/media/platform/cadence/cdns-csi2rx.c
++++ b/drivers/media/platform/cadence/cdns-csi2rx.c
+@@ -407,8 +407,10 @@ static int csi2rx_parse_dt(struct csi2rx
+ 							   fwh,
+ 							   struct v4l2_async_subdev);
+ 	of_node_put(ep);
+-	if (IS_ERR(asd))
++	if (IS_ERR(asd)) {
++		v4l2_async_notifier_cleanup(&csi2rx->notifier);
+ 		return PTR_ERR(asd);
++	}
  
-+/*
-+ * These macro definitions avoid redundant invocations of preempt_count()
-+ * because such invocations would result in redundant loads given that
-+ * preempt_count() is commonly implemented with READ_ONCE().
-+ */
-+
- #define nmi_count()	(preempt_count() & NMI_MASK)
- #define hardirq_count()	(preempt_count() & HARDIRQ_MASK)
- #ifdef CONFIG_PREEMPT_RT
- # define softirq_count()	(current->softirq_disable_cnt & SOFTIRQ_MASK)
-+# define irq_count()		((preempt_count() & (NMI_MASK | HARDIRQ_MASK)) | softirq_count())
- #else
- # define softirq_count()	(preempt_count() & SOFTIRQ_MASK)
-+# define irq_count()		(preempt_count() & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_MASK))
- #endif
--#define irq_count()	(nmi_count() | hardirq_count() | softirq_count())
+ 	csi2rx->notifier.ops = &csi2rx_notifier_ops;
  
- /*
-  * Macros to retrieve the current execution context:
-@@ -118,7 +125,11 @@ static __always_inline unsigned char interrupt_context_level(void)
- #define in_nmi()		(nmi_count())
- #define in_hardirq()		(hardirq_count())
- #define in_serving_softirq()	(softirq_count() & SOFTIRQ_OFFSET)
--#define in_task()		(!(in_nmi() | in_hardirq() | in_serving_softirq()))
-+#ifdef CONFIG_PREEMPT_RT
-+# define in_task()		(!((preempt_count() & (NMI_MASK | HARDIRQ_MASK)) | in_serving_softirq()))
-+#else
-+# define in_task()		(!(preempt_count() & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET)))
-+#endif
+@@ -471,6 +473,7 @@ static int csi2rx_probe(struct platform_
+ 	return 0;
  
- /*
-  * The following macros are deprecated and should not be used in new code:
--- 
-2.42.0
-
+ err_cleanup:
++	v4l2_async_notifier_unregister(&csi2rx->notifier);
+ 	v4l2_async_notifier_cleanup(&csi2rx->notifier);
+ err_free_priv:
+ 	kfree(csi2rx);
+@@ -481,6 +484,8 @@ static int csi2rx_remove(struct platform
+ {
+ 	struct csi2rx_priv *csi2rx = platform_get_drvdata(pdev);
+ 
++	v4l2_async_notifier_unregister(&csi2rx->notifier);
++	v4l2_async_notifier_cleanup(&csi2rx->notifier);
+ 	v4l2_async_unregister_subdev(&csi2rx->subdev);
+ 	kfree(csi2rx);
+ 
 
 
