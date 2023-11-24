@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE62381DE;
-	Fri, 24 Nov 2023 18:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7524839FD0;
+	Fri, 24 Nov 2023 18:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1YimJxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3CEC433C8;
-	Fri, 24 Nov 2023 18:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Th2se05j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0935C433C8;
+	Fri, 24 Nov 2023 18:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850045;
-	bh=htycuGr/04OVQnSLWfIFypMnDoqxx1B98Be/g8x7u5M=;
+	s=korg; t=1700850048;
+	bh=F3Db+A/s41z/4lZPB3VLkUjThVHd+Uo288WxOIQZAXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1YimJxLh7v70iq4oW570ZoP06pSPh556pUah2mjQ61GJy7Y0rbX8cbjYkS/Zhkcb
-	 gzEPP/WnRAjuKKw4PCDGSJRFvjj4WBOjECEONHVrRXyra6xI6Ds9tVwTCizrSILMrq
-	 CZ9Rmf3c8e475VEnpctniImaqpMSSKIu1L4zZ58A=
+	b=Th2se05jnG7Se1SJRe9vOrC1HfrKB7rRvprNNXPvxNWmEeNhSVl29WkVQGTeS0lhi
+	 pdwU77RVnjAh82hrpjzFdgrhufkjY76EcrCKflqYfpmLjV8a0hU+npqhThL/vkyYSS
+	 xrIHgGo7Qkg/wv3QXV+Nd7TD05yWRk+ZfySycmy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Eduard Bachmakov <e.bachmakov@gmail.com>,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 423/530] smb: client: fix potential deadlock when releasing mids
-Date: Fri, 24 Nov 2023 17:49:49 +0000
-Message-ID: <20231124172040.940067092@linuxfoundation.org>
+Subject: [PATCH 6.6 424/530] smb: client: fix mount when dns_resolver key is not available
+Date: Fri, 24 Nov 2023 17:49:50 +0000
+Message-ID: <20231124172040.970792168@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,95 +44,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-commit e6322fd177c6885a21dd4609dc5e5c973d1a2eb7 upstream.
+commit 5e2fd17f434d2fed78efb123e2fc6711e4f598f1 upstream.
 
-All release_mid() callers seem to hold a reference of @mid so there is
-no need to call kref_put(&mid->refcount, __release_mid) under
-@server->mid_lock spinlock.  If they don't, then an use-after-free bug
-would have occurred anyways.
+There was a wrong assumption that with CONFIG_CIFS_DFS_UPCALL=y there
+would always be a dns_resolver key set up so we could unconditionally
+upcall to resolve UNC hostname rather than using the value provided by
+mount(2).
 
-By getting rid of such spinlock also fixes a potential deadlock as
-shown below
+Only require it when performing automount of junctions within a DFS
+share so users that don't have dns_resolver key still can mount their
+regular shares with server hostname resolved by mount.cifs(8).
 
-CPU 0                                CPU 1
-------------------------------------------------------------------
-cifs_demultiplex_thread()            cifs_debug_data_proc_show()
- release_mid()
-  spin_lock(&server->mid_lock);
-                                     spin_lock(&cifs_tcp_ses_lock)
-				      spin_lock(&server->mid_lock)
-  __release_mid()
-   smb2_find_smb_tcon()
-    spin_lock(&cifs_tcp_ses_lock) *deadlock*
-
+Fixes: 348a04a8d113 ("smb: client: get rid of dfs code dep in namespace.c")
 Cc: stable@vger.kernel.org
+Tested-by: Eduard Bachmakov <e.bachmakov@gmail.com>
+Reported-by: Eduard Bachmakov <e.bachmakov@gmail.com>
+Closes: https://lore.kernel.org/all/CADCRUiNvZuiUZ0VGZZO9HRyPyw6x92kiA7o7Q4tsX5FkZqUkKg@mail.gmail.com/
 Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsproto.h |    7 ++++++-
- fs/smb/client/smb2misc.c  |    2 +-
- fs/smb/client/transport.c |   11 +----------
- 3 files changed, 8 insertions(+), 12 deletions(-)
+ fs/smb/client/dfs.c        |   18 +++++++++++++-----
+ fs/smb/client/fs_context.h |    1 +
+ fs/smb/client/namespace.c  |   17 +++++++++++++++--
+ 3 files changed, 29 insertions(+), 7 deletions(-)
 
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -81,7 +81,7 @@ extern char *cifs_build_path_to_root(str
- extern char *build_wildcard_path_from_dentry(struct dentry *direntry);
- char *cifs_build_devname(char *nodename, const char *prepath);
- extern void delete_mid(struct mid_q_entry *mid);
--extern void release_mid(struct mid_q_entry *mid);
-+void __release_mid(struct kref *refcount);
- extern void cifs_wake_up_task(struct mid_q_entry *mid);
- extern int cifs_handle_standard(struct TCP_Server_Info *server,
- 				struct mid_q_entry *mid);
-@@ -740,4 +740,9 @@ static inline bool dfs_src_pathname_equa
- 	return true;
+--- a/fs/smb/client/dfs.c
++++ b/fs/smb/client/dfs.c
+@@ -263,15 +263,23 @@ out:
+ 	return rc;
  }
  
-+static inline void release_mid(struct mid_q_entry *mid)
+-/* Resolve UNC hostname in @ctx->source and set ip addr in @ctx->dstaddr */
++/*
++ * If @ctx->dfs_automount, then update @ctx->dstaddr earlier with the DFS root
++ * server from where we'll start following any referrals.  Otherwise rely on the
++ * value provided by mount(2) as the user might not have dns_resolver key set up
++ * and therefore failing to upcall to resolve UNC hostname under @ctx->source.
++ */
+ static int update_fs_context_dstaddr(struct smb3_fs_context *ctx)
+ {
+ 	struct sockaddr *addr = (struct sockaddr *)&ctx->dstaddr;
+-	int rc;
++	int rc = 0;
+ 
+-	rc = dns_resolve_server_name_to_ip(ctx->source, addr, NULL);
+-	if (!rc)
+-		cifs_set_port(addr, ctx->port);
++	if (!ctx->nodfs && ctx->dfs_automount) {
++		rc = dns_resolve_server_name_to_ip(ctx->source, addr, NULL);
++		if (!rc)
++			cifs_set_port(addr, ctx->port);
++		ctx->dfs_automount = false;
++	}
+ 	return rc;
+ }
+ 
+--- a/fs/smb/client/fs_context.h
++++ b/fs/smb/client/fs_context.h
+@@ -268,6 +268,7 @@ struct smb3_fs_context {
+ 	bool witness:1; /* use witness protocol */
+ 	char *leaf_fullpath;
+ 	struct cifs_ses *dfs_root_ses;
++	bool dfs_automount:1; /* set for dfs automount only */
+ };
+ 
+ extern const struct fs_parameter_spec smb3_fs_parameters[];
+--- a/fs/smb/client/namespace.c
++++ b/fs/smb/client/namespace.c
+@@ -117,6 +117,18 @@ cifs_build_devname(char *nodename, const
+ 	return dev;
+ }
+ 
++static bool is_dfs_mount(struct dentry *dentry)
 +{
-+	kref_put(&mid->refcount, __release_mid);
++	struct cifs_sb_info *cifs_sb = CIFS_SB(dentry->d_sb);
++	struct cifs_tcon *tcon = cifs_sb_master_tcon(cifs_sb);
++	bool ret;
++
++	spin_lock(&tcon->tc_lock);
++	ret = !!tcon->origin_fullpath;
++	spin_unlock(&tcon->tc_lock);
++	return ret;
 +}
 +
- #endif			/* _CIFSPROTO_H */
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -787,7 +787,7 @@ __smb2_handle_cancelled_cmd(struct cifs_
+ /* Return full path out of a dentry set for automount */
+ static char *automount_fullpath(struct dentry *dentry, void *page)
  {
- 	struct close_cancelled_open *cancelled;
+@@ -212,8 +224,9 @@ static struct vfsmount *cifs_do_automoun
+ 		ctx->source = NULL;
+ 		goto out;
+ 	}
+-	cifs_dbg(FYI, "%s: ctx: source=%s UNC=%s prepath=%s\n",
+-		 __func__, ctx->source, ctx->UNC, ctx->prepath);
++	ctx->dfs_automount = is_dfs_mount(mntpt);
++	cifs_dbg(FYI, "%s: ctx: source=%s UNC=%s prepath=%s dfs_automount=%d\n",
++		 __func__, ctx->source, ctx->UNC, ctx->prepath, ctx->dfs_automount);
  
--	cancelled = kzalloc(sizeof(*cancelled), GFP_ATOMIC);
-+	cancelled = kzalloc(sizeof(*cancelled), GFP_KERNEL);
- 	if (!cancelled)
- 		return -ENOMEM;
- 
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -76,7 +76,7 @@ alloc_mid(const struct smb_hdr *smb_buff
- 	return temp;
- }
- 
--static void __release_mid(struct kref *refcount)
-+void __release_mid(struct kref *refcount)
- {
- 	struct mid_q_entry *midEntry =
- 			container_of(refcount, struct mid_q_entry, refcount);
-@@ -156,15 +156,6 @@ static void __release_mid(struct kref *r
- 	mempool_free(midEntry, cifs_mid_poolp);
- }
- 
--void release_mid(struct mid_q_entry *mid)
--{
--	struct TCP_Server_Info *server = mid->server;
--
--	spin_lock(&server->mid_lock);
--	kref_put(&mid->refcount, __release_mid);
--	spin_unlock(&server->mid_lock);
--}
--
- void
- delete_mid(struct mid_q_entry *mid)
- {
+ 	mnt = fc_mount(fc);
+ out:
 
 
