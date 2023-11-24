@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067F6381D7;
-	Fri, 24 Nov 2023 18:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04B239FD9;
+	Fri, 24 Nov 2023 18:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UfDGEE3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887FAC433C8;
-	Fri, 24 Nov 2023 18:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGAkZaJj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E12C433C8;
+	Fri, 24 Nov 2023 18:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849735;
-	bh=uOiCXOK+TiWzt+E+1MGGE8aJB8MIa/RmQtxmK/AvVhw=;
+	s=korg; t=1700849738;
+	bh=qtzOy/3r9KmSnhNfaouzQexGZFLHohSSobkrH1K0ZHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1UfDGEE3ntGT+LgnNA0DSQK6iYQZzaWX1MhPz/O24uUI6Apux1dhRBuLP527Fw/Vd
-	 E4jawnFqz+m1edWJX7kMHZZSw7zQq6ntxOXjLdZBoDTXnYymRRiJla7cU1jypZieZu
-	 tZHho7Ruw96RD18NLhPai5E9Nmdk5u5ueuW3l8SQ=
+	b=pGAkZaJjNerp+al0xUd92yORYmMW7GdMlXpwUBVLdNv1sJXv0fP9Xwe8BM9Bep/R5
+	 UVVeoYjil49AmQ7qtLUdPqVe7BYt1s9t9q0YSEabz9EGXSgoDacLZToKlP7KjXrwpD
+	 A8XslhE7/azCtlLBKt1dIEwwMstnUvcztb74WLGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.6 275/530] watchdog: move softlockup_panic back to early_param
-Date: Fri, 24 Nov 2023 17:47:21 +0000
-Message-ID: <20231124172036.416856270@linuxfoundation.org>
+	jirislaby@kernel.org,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>
+Subject: [PATCH 6.6 266/530] tty/sysrq: replace smp_processor_id() with get_cpu()
+Date: Fri, 24 Nov 2023 17:47:12 +0000
+Message-ID: <20231124172036.129529706@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,55 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit 8b793bcda61f6c3ed4f5b2ded7530ef6749580cb upstream.
+commit dd976a97d15b47656991e185a94ef42a0fa5cfd4 upstream.
 
-Setting softlockup_panic from do_sysctl_args() causes it to take effect
-later in boot.  The lockup detector is enabled before SMP is brought
-online, but do_sysctl_args runs afterwards.  If a user wants to set
-softlockup_panic on boot and have it trigger should a softlockup occur
-during onlining of the non-boot processors, they could do this prior to
-commit f117955a2255 ("kernel/watchdog.c: convert {soft/hard}lockup boot
-parameters to sysctl aliases").  However, after this commit the value
-of softlockup_panic is set too late to be of help for this type of
-problem.  Restore the prior behavior.
+The smp_processor_id() shouldn't be called from preemptible code.
+Instead use get_cpu() and put_cpu() which disables preemption in
+addition to getting the processor id. Enable preemption back after
+calling schedule_work() to make sure that the work gets scheduled on all
+cores other than the current core. We want to avoid a scenario where
+current core's stack trace is printed multiple times and one core's
+stack trace isn't printed because of scheduling of current task.
 
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+This fixes the following bug:
+
+[  119.143590] sysrq: Show backtrace of all active CPUs
+[  119.143902] BUG: using smp_processor_id() in preemptible [00000000] code: bash/873
+[  119.144586] caller is debug_smp_processor_id+0x20/0x30
+[  119.144827] CPU: 6 PID: 873 Comm: bash Not tainted 5.10.124-dirty #3
+[  119.144861] Hardware name: QEMU QEMU Virtual Machine, BIOS 2023.05-1 07/22/2023
+[  119.145053] Call trace:
+[  119.145093]  dump_backtrace+0x0/0x1a0
+[  119.145122]  show_stack+0x18/0x70
+[  119.145141]  dump_stack+0xc4/0x11c
+[  119.145159]  check_preemption_disabled+0x100/0x110
+[  119.145175]  debug_smp_processor_id+0x20/0x30
+[  119.145195]  sysrq_handle_showallcpus+0x20/0xc0
+[  119.145211]  __handle_sysrq+0x8c/0x1a0
+[  119.145227]  write_sysrq_trigger+0x94/0x12c
+[  119.145247]  proc_reg_write+0xa8/0xe4
+[  119.145266]  vfs_write+0xec/0x280
+[  119.145282]  ksys_write+0x6c/0x100
+[  119.145298]  __arm64_sys_write+0x20/0x30
+[  119.145315]  el0_svc_common.constprop.0+0x78/0x1e4
+[  119.145332]  do_el0_svc+0x24/0x8c
+[  119.145348]  el0_svc+0x10/0x20
+[  119.145364]  el0_sync_handler+0x134/0x140
+[  119.145381]  el0_sync+0x180/0x1c0
+
+Cc: jirislaby@kernel.org
 Cc: stable@vger.kernel.org
-Fixes: f117955a2255 ("kernel/watchdog.c: convert {soft/hard}lockup boot parameters to sysctl aliases")
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Fixes: 47cab6a722d4 ("debug lockups: Improve lockup detection, fix generic arch fallback")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/r/20231009162021.3607632-1-usama.anjum@collabora.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c |    1 -
- kernel/watchdog.c     |    7 +++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/tty/sysrq.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -1576,7 +1576,6 @@ static const struct sysctl_alias sysctl_
- 	{"hung_task_panic",			"kernel.hung_task_panic" },
- 	{"numa_zonelist_order",			"vm.numa_zonelist_order" },
- 	{"softlockup_all_cpu_backtrace",	"kernel.softlockup_all_cpu_backtrace" },
--	{"softlockup_panic",			"kernel.softlockup_panic" },
- 	{ }
- };
+--- a/drivers/tty/sysrq.c
++++ b/drivers/tty/sysrq.c
+@@ -262,13 +262,14 @@ static void sysrq_handle_showallcpus(u8
+ 		if (in_hardirq())
+ 			regs = get_irq_regs();
  
---- a/kernel/watchdog.c
-+++ b/kernel/watchdog.c
-@@ -283,6 +283,13 @@ static DEFINE_PER_CPU(struct hrtimer, wa
- static DEFINE_PER_CPU(bool, softlockup_touch_sync);
- static unsigned long soft_lockup_nmi_warn;
+-		pr_info("CPU%d:\n", smp_processor_id());
++		pr_info("CPU%d:\n", get_cpu());
+ 		if (regs)
+ 			show_regs(regs);
+ 		else
+ 			show_stack(NULL, NULL, KERN_INFO);
  
-+static int __init softlockup_panic_setup(char *str)
-+{
-+	softlockup_panic = simple_strtoul(str, NULL, 0);
-+	return 1;
-+}
-+__setup("softlockup_panic=", softlockup_panic_setup);
-+
- static int __init nowatchdog_setup(char *str)
- {
- 	watchdog_user_enabled = 0;
+ 		schedule_work(&sysrq_showallcpus);
++		put_cpu();
+ 	}
+ }
+ 
 
 
