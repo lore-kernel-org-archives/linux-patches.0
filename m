@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03EF2EAEA;
-	Fri, 24 Nov 2023 18:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459B92C87B;
+	Fri, 24 Nov 2023 18:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTKLVPSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28574C433C8;
-	Fri, 24 Nov 2023 18:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRNlXAbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92D7C433C7;
+	Fri, 24 Nov 2023 18:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852041;
-	bh=ZKLIEkuBEv8WY/rINi3ZfrtYO68EzR70LczDw7/aPX8=;
+	s=korg; t=1700852044;
+	bh=wcPoDI1Cafs2ZtXK9nyQ3TMZKVPxs++10zaxUMFq6Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTKLVPSf+x3MimUAz4tBM/o5SD7dSkP5vs85pYc7HDIPehiBwQobUsmDs3bYp4VyM
-	 dzQVWkLxfUENjkMn6zaIe7I9YSxp0SjxhYuMQNbqGtBd36heFV9f3YSOxmTGMqWOCY
-	 NxXWgcDqTA3j60eXTzO/B8PC14Ov+raTrISgdvMo=
+	b=DRNlXAbLwGHADwVM50MST25UeapbGPQAAB78dRJP3WnXG9kqKyCUYOFoUx/+gvMIF
+	 RYHdCrqfFeYnBwEKYZ0tla1z1SYTqfdA+pB7OcEPa3fAQ5qOQ1FRX8X6oKtlo3k25l
+	 XTIPrKCIKIAHjYunG4cO4kUWZlofMTjjbaZW5xhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Jakub Acs <acsjakub@amazon.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 189/372] mm/damon/lru_sort: avoid divide-by-zero in hot threshold calculation
-Date: Fri, 24 Nov 2023 17:49:36 +0000
-Message-ID: <20231124172016.760767363@linuxfoundation.org>
+	Carl Huang <quic_cjhuang@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>
+Subject: [PATCH 6.1 198/372] wifi: ath11k: fix gtk offload status event locking
+Date: Fri, 24 Nov 2023 17:49:45 +0000
+Message-ID: <20231124172017.060298214@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,40 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 44063f125af4bb4efd1d500d8091fa33a98af325 upstream.
+commit 1dea3c0720a146bd7193969f2847ccfed5be2221 upstream.
 
-When calculating the hotness threshold for lru_prio scheme of
-DAMON_LRU_SORT, the module divides some values by the maximum nr_accesses.
-However, due to the type of the related variables, simple division-based
-calculation of the divisor can return zero.  As a result, divide-by-zero
-is possible.  Fix it by using damon_max_nr_accesses(), which handles the
-case.
+The ath11k active pdevs are protected by RCU but the gtk offload status
+event handling code calling ath11k_mac_get_arvif_by_vdev_id() was not
+marked as a read-side critical section.
 
-Link: https://lkml.kernel.org/r/20231019194924.100347-5-sj@kernel.org
-Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Reported-by: Jakub Acs <acsjakub@amazon.de>
-Cc: <stable@vger.kernel.org>	[6.0+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Mark the code in question as an RCU read-side critical section to avoid
+any potential use-after-free issues.
+
+Compile tested only.
+
+Fixes: a16d9b50cfba ("ath11k: support GTK rekey offload")
+Cc: stable@vger.kernel.org      # 5.18
+Cc: Carl Huang <quic_cjhuang@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231019155342.31631-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/lru_sort.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -195,9 +195,7 @@ static int damon_lru_sort_apply_paramete
- 	if (err)
- 		return err;
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -8001,12 +8001,13 @@ static void ath11k_wmi_gtk_offload_statu
+ 		return;
+ 	}
  
--	/* aggr_interval / sample_interval is the maximum nr_accesses */
--	hot_thres = damon_lru_sort_mon_attrs.aggr_interval /
--		damon_lru_sort_mon_attrs.sample_interval *
-+	hot_thres = damon_max_nr_accesses(&damon_lru_sort_mon_attrs) *
- 		hot_thres_access_freq / 1000;
- 	scheme = damon_lru_sort_new_hot_scheme(hot_thres);
- 	if (!scheme)
++	rcu_read_lock();
++
+ 	arvif = ath11k_mac_get_arvif_by_vdev_id(ab, ev->vdev_id);
+ 	if (!arvif) {
+ 		ath11k_warn(ab, "failed to get arvif for vdev_id:%d\n",
+ 			    ev->vdev_id);
+-		kfree(tb);
+-		return;
++		goto exit;
+ 	}
+ 
+ 	ath11k_dbg(ab, ATH11K_DBG_WMI, "wmi gtk offload event refresh_cnt %d\n",
+@@ -8023,6 +8024,8 @@ static void ath11k_wmi_gtk_offload_statu
+ 
+ 	ieee80211_gtk_rekey_notify(arvif->vif, arvif->bssid,
+ 				   (void *)&replay_ctr_be, GFP_ATOMIC);
++exit:
++	rcu_read_unlock();
+ 
+ 	kfree(tb);
+ }
 
 
