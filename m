@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777BC364DE;
-	Fri, 24 Nov 2023 18:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB32C33CCA;
+	Fri, 24 Nov 2023 18:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDztM53e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDEAC433C7;
-	Fri, 24 Nov 2023 18:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flwQ6nfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F68C433C7;
+	Fri, 24 Nov 2023 18:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851593;
-	bh=2R0Jwpol12mHX/z4sCwMRw9SGHXNyJLzWb56txfQjhs=;
+	s=korg; t=1700851595;
+	bh=7Dyg30axeMO83oQoR09UWIo0Eq9YMIyNLZp5Hs+Robg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDztM53esfwC+BkMFcxWys27AoSydK+VuarSJ2DyuKVdDFPr44fWPu6V2bvA6fbw0
-	 fVXyltCmXL4jqiIbCVzUDN5G42h41ctKUvS5npaEea4kqg0f4geeuZpNSUGADdkjjD
-	 n4qOM6n0DqH3gijIAvaJ4+1Dt6btRTD0kUA/CMag=
+	b=flwQ6nfex73RpQs2ZH1TnYMjAJA/FpE0b1LYgrlyWF3HXoeRmXSFmDv6v3kXtpM/o
+	 y3js3UgFulgwTWQAVWCBYzM/m5hpfZDSr4iiUcKHv50637z4IMZ7E5Yh1jxtQDzi/n
+	 zub1ctVcpSi+eiR5phoGHWS3Xbjto48tka1lMZUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Antipov <dmantipov@yandex.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/372] wifi: ath9k: fix clang-specific fortify warnings
-Date: Fri, 24 Nov 2023 17:46:45 +0000
-Message-ID: <20231124172011.078083207@linuxfoundation.org>
+Subject: [PATCH 6.1 019/372] wifi: ath10k: fix clang-specific fortify warning
+Date: Fri, 24 Nov 2023 17:46:46 +0000
+Message-ID: <20231124172011.112528201@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -37,7 +37,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -46,35 +45,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 95f97fe0ac974467ab4da215985a32b2fdf48af0 ]
+[ Upstream commit cb4c132ebfeac5962f7258ffc831caa0c4dada1a ]
 
 When compiling with clang 16.0.6 and CONFIG_FORTIFY_SOURCE=y, I've
 noticed the following (somewhat confusing due to absence of an actual
 source code location):
 
-In file included from drivers/net/wireless/ath/ath9k/debug.c:17:
-In file included from ./include/linux/slab.h:16:
-In file included from ./include/linux/gfp.h:7:
-In file included from ./include/linux/mmzone.h:8:
-In file included from ./include/linux/spinlock.h:56:
-In file included from ./include/linux/preempt.h:79:
-In file included from ./arch/x86/include/asm/preempt.h:9:
-In file included from ./include/linux/thread_info.h:60:
-In file included from ./arch/x86/include/asm/thread_info.h:53:
-In file included from ./arch/x86/include/asm/cpufeature.h:5:
-In file included from ./arch/x86/include/asm/processor.h:23:
-In file included from ./arch/x86/include/asm/msr.h:11:
-In file included from ./arch/x86/include/asm/cpumask.h:5:
-In file included from ./include/linux/cpumask.h:12:
-In file included from ./include/linux/bitmap.h:11:
-In file included from ./include/linux/string.h:254:
-./include/linux/fortify-string.h:592:4: warning: call to '__read_overflow2_field'
-declared with 'warning' attribute: detected read beyond size of field (2nd
-parameter); maybe use struct_group()? [-Wattribute-warning]
-                        __read_overflow2_field(q_size_field, size);
-
-In file included from drivers/net/wireless/ath/ath9k/htc_drv_debug.c:17:
-In file included from drivers/net/wireless/ath/ath9k/htc.h:20:
+In file included from drivers/net/wireless/ath/ath10k/debug.c:8:
 In file included from ./include/linux/module.h:13:
 In file included from ./include/linux/stat.h:19:
 In file included from ./include/linux/time.h:60:
@@ -92,47 +69,32 @@ declared with 'warning' attribute: detected read beyond size of field (2nd
 parameter); maybe use struct_group()? [-Wattribute-warning]
                         __read_overflow2_field(q_size_field, size);
 
-The compiler actually complains on 'ath9k_get_et_strings()' and
-'ath9k_htc_get_et_strings()' due to the same reason: fortification logic
-inteprets call to 'memcpy()' as an attempt to copy the whole array from
-it's first member and so issues an overread warning. These warnings may
-be silenced by passing an address of the whole array and not the first
-member to 'memcpy()'.
+The compiler actually complains on 'ath10k_debug_get_et_strings()' where
+fortification logic inteprets call to 'memcpy()' as an attempt to copy
+the whole 'ath10k_gstrings_stats' array from it's first member and so
+issues an overread warning. This warning may be silenced by passing
+an address of the whole array and not the first member to 'memcpy()'.
 
 Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230829093856.234584-1-dmantipov@yandex.ru
+Link: https://lore.kernel.org/r/20230829093652.234537-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/debug.c         | 2 +-
- drivers/net/wireless/ath/ath9k/htc_drv_debug.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/debug.c b/drivers/net/wireless/ath/ath9k/debug.c
-index fb7a2952d0ce8..d9bac1c343490 100644
---- a/drivers/net/wireless/ath/ath9k/debug.c
-+++ b/drivers/net/wireless/ath/ath9k/debug.c
-@@ -1333,7 +1333,7 @@ void ath9k_get_et_strings(struct ieee80211_hw *hw,
- 			  u32 sset, u8 *data)
+diff --git a/drivers/net/wireless/ath/ath10k/debug.c b/drivers/net/wireless/ath/ath10k/debug.c
+index c861e66ef6bc5..41f387e15dcd0 100644
+--- a/drivers/net/wireless/ath/ath10k/debug.c
++++ b/drivers/net/wireless/ath/ath10k/debug.c
+@@ -1139,7 +1139,7 @@ void ath10k_debug_get_et_strings(struct ieee80211_hw *hw,
+ 				 u32 sset, u8 *data)
  {
  	if (sset == ETH_SS_STATS)
--		memcpy(data, *ath9k_gstrings_stats,
-+		memcpy(data, ath9k_gstrings_stats,
- 		       sizeof(ath9k_gstrings_stats));
- }
- 
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-index c55aab01fff5d..e79bbcd3279af 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-@@ -428,7 +428,7 @@ void ath9k_htc_get_et_strings(struct ieee80211_hw *hw,
- 			      u32 sset, u8 *data)
- {
- 	if (sset == ETH_SS_STATS)
--		memcpy(data, *ath9k_htc_gstrings_stats,
-+		memcpy(data, ath9k_htc_gstrings_stats,
- 		       sizeof(ath9k_htc_gstrings_stats));
+-		memcpy(data, *ath10k_gstrings_stats,
++		memcpy(data, ath10k_gstrings_stats,
+ 		       sizeof(ath10k_gstrings_stats));
  }
  
 -- 
