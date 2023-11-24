@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35EF33CC7;
-	Fri, 24 Nov 2023 18:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374FC2E655;
+	Fri, 24 Nov 2023 18:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5Vqr9A+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6309EC433C8;
-	Fri, 24 Nov 2023 18:36:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX60CgAG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAE16C433C7;
+	Fri, 24 Nov 2023 18:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851018;
-	bh=kmpwIOJpM7H/mLSAegnIwFskjQCoH8l3SaYWRtm1kXQ=;
+	s=korg; t=1700851021;
+	bh=1HuW2yGzepkqEHBo2wfbxhqzP+by8xIUt+9FBPzstcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5Vqr9A+JgtvITBmUSmdxB5/UBxqDv+ibENVVFI5jzNFESw8pniRR80VnxOsGI57y
-	 Ao1Croar07VnsIXbBoy00zG5kQdnCoGJGGhdONYAXOm8N4GsupT/kM3gt/syCXcGKd
-	 /VkZGVBS3hL0HWt2EqJGnZU3n/dkPOBlza7/6IoQ=
+	b=mX60CgAGAp9i2BC8tmswd/1egvLJQlWn8EnmPlz+BH65DNQwa0wmfU0g7dKrK7KM8
+	 ps1r3+kk9wqamp0aKkN4U83+aWAE42T1GlaA3JJLIBlTNzBN4k5YYfMHTZ7LS2OTtJ
+	 MKDEGmnVbCRqfFONWOlP5KNAe4TO/Vo4NaIcmvrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Raits <igor.raits@gmail.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Hao Jia <jiahao.os@bytedance.com>
-Subject: [PATCH 6.5 281/491] sched/core: Fix RQCF_ACT_SKIP leak
-Date: Fri, 24 Nov 2023 17:48:37 +0000
-Message-ID: <20231124172033.022576144@linuxfoundation.org>
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.5 282/491] KEYS: trusted: tee: Refactor register SHM usage
+Date: Fri, 24 Nov 2023 17:48:38 +0000
+Message-ID: <20231124172033.050783529@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,78 +42,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Jia <jiahao.os@bytedance.com>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-commit 5ebde09d91707a4a9bec1e3d213e3c12ffde348f upstream.
+commit c745cd1718b7825d69315fe7127e2e289e617598 upstream.
 
-Igor Raits and Bagas Sanjaya report a RQCF_ACT_SKIP leak warning.
+The OP-TEE driver using the old SMC based ABI permits overlapping shared
+buffers, but with the new FF-A based ABI each physical page may only
+be registered once.
 
-This warning may be triggered in the following situations:
+As the key and blob buffer are allocated adjancently, there is no need
+for redundant register shared memory invocation. Also, it is incompatibile
+with FF-A based ABI limitation. So refactor register shared memory
+implementation to use only single invocation to register both key and blob
+buffers.
 
-    CPU0                                      CPU1
-
-__schedule()
-  *rq->clock_update_flags <<= 1;*   unregister_fair_sched_group()
-  pick_next_task_fair+0x4a/0x410      destroy_cfs_bandwidth()
-    newidle_balance+0x115/0x3e0       for_each_possible_cpu(i) *i=0*
-      rq_unpin_lock(this_rq, rf)      __cfsb_csd_unthrottle()
-      raw_spin_rq_unlock(this_rq)
-                                      rq_lock(*CPU0_rq*, &rf)
-                                      rq_clock_start_loop_update()
-                                      rq->clock_update_flags & RQCF_ACT_SKIP <--
-      raw_spin_rq_lock(this_rq)
-
-The purpose of RQCF_ACT_SKIP is to skip the update rq clock,
-but the update is very early in __schedule(), but we clear
-RQCF_*_SKIP very late, causing it to span that gap above
-and triggering this warning.
-
-In __schedule() we can clear the RQCF_*_SKIP flag immediately
-after update_rq_clock() to avoid this RQCF_ACT_SKIP leak warning.
-And set rq->clock_update_flags to RQCF_UPDATED to avoid
-rq->clock_update_flags < RQCF_ACT_SKIP warning that may be triggered later.
-
-Fixes: ebb83d84e49b ("sched/core: Avoid multiple calling update_rq_clock() in __cfsb_csd_unthrottle()")
-Closes: https://lore.kernel.org/all/20230913082424.73252-1-jiahao.os@bytedance.com
-Reported-by: Igor Raits <igor.raits@gmail.com>
-Reported-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Hao Jia <jiahao.os@bytedance.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/a5dd536d-041a-2ce9-f4b7-64d8d85c86dc@gmail.com
+[jarkko: Added cc to stable.]
+Cc: stable@vger.kernel.org # v5.16+
+Fixes: 4615e5a34b95 ("optee: add FF-A support")
+Reported-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Tested-by: Jens Wiklander <jens.wiklander@linaro.org>
+Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ security/keys/trusted-keys/trusted_tee.c |   64 +++++++++----------------------
+ 1 file changed, 20 insertions(+), 44 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -5377,8 +5377,6 @@ context_switch(struct rq *rq, struct tas
- 	/* switch_mm_cid() requires the memory barriers above. */
- 	switch_mm_cid(rq, prev, next);
+--- a/security/keys/trusted-keys/trusted_tee.c
++++ b/security/keys/trusted-keys/trusted_tee.c
+@@ -65,24 +65,16 @@ static int trusted_tee_seal(struct trust
+ 	int ret;
+ 	struct tee_ioctl_invoke_arg inv_arg;
+ 	struct tee_param param[4];
+-	struct tee_shm *reg_shm_in = NULL, *reg_shm_out = NULL;
++	struct tee_shm *reg_shm = NULL;
  
--	rq->clock_update_flags &= ~(RQCF_ACT_SKIP|RQCF_REQ_SKIP);
+ 	memset(&inv_arg, 0, sizeof(inv_arg));
+ 	memset(&param, 0, sizeof(param));
+ 
+-	reg_shm_in = tee_shm_register_kernel_buf(pvt_data.ctx, p->key,
+-						 p->key_len);
+-	if (IS_ERR(reg_shm_in)) {
+-		dev_err(pvt_data.dev, "key shm register failed\n");
+-		return PTR_ERR(reg_shm_in);
+-	}
 -
- 	prepare_lock_switch(rq, next, rf);
+-	reg_shm_out = tee_shm_register_kernel_buf(pvt_data.ctx, p->blob,
+-						  sizeof(p->blob));
+-	if (IS_ERR(reg_shm_out)) {
+-		dev_err(pvt_data.dev, "blob shm register failed\n");
+-		ret = PTR_ERR(reg_shm_out);
+-		goto out;
++	reg_shm = tee_shm_register_kernel_buf(pvt_data.ctx, p->key,
++					      sizeof(p->key) + sizeof(p->blob));
++	if (IS_ERR(reg_shm)) {
++		dev_err(pvt_data.dev, "shm register failed\n");
++		return PTR_ERR(reg_shm);
+ 	}
  
- 	/* Here we just switch the register state and the stack. */
-@@ -6634,6 +6632,7 @@ static void __sched notrace __schedule(u
- 	/* Promote REQ to ACT */
- 	rq->clock_update_flags <<= 1;
- 	update_rq_clock(rq);
-+	rq->clock_update_flags = RQCF_UPDATED;
+ 	inv_arg.func = TA_CMD_SEAL;
+@@ -90,13 +82,13 @@ static int trusted_tee_seal(struct trust
+ 	inv_arg.num_params = 4;
  
- 	switch_count = &prev->nivcsw;
+ 	param[0].attr = TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INPUT;
+-	param[0].u.memref.shm = reg_shm_in;
++	param[0].u.memref.shm = reg_shm;
+ 	param[0].u.memref.size = p->key_len;
+ 	param[0].u.memref.shm_offs = 0;
+ 	param[1].attr = TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_OUTPUT;
+-	param[1].u.memref.shm = reg_shm_out;
++	param[1].u.memref.shm = reg_shm;
+ 	param[1].u.memref.size = sizeof(p->blob);
+-	param[1].u.memref.shm_offs = 0;
++	param[1].u.memref.shm_offs = sizeof(p->key);
  
-@@ -6713,8 +6712,6 @@ static void __sched notrace __schedule(u
- 		/* Also unlocks the rq: */
- 		rq = context_switch(rq, prev, next, &rf);
- 	} else {
--		rq->clock_update_flags &= ~(RQCF_ACT_SKIP|RQCF_REQ_SKIP);
+ 	ret = tee_client_invoke_func(pvt_data.ctx, &inv_arg, param);
+ 	if ((ret < 0) || (inv_arg.ret != 0)) {
+@@ -107,11 +99,7 @@ static int trusted_tee_seal(struct trust
+ 		p->blob_len = param[1].u.memref.size;
+ 	}
+ 
+-out:
+-	if (reg_shm_out)
+-		tee_shm_free(reg_shm_out);
+-	if (reg_shm_in)
+-		tee_shm_free(reg_shm_in);
++	tee_shm_free(reg_shm);
+ 
+ 	return ret;
+ }
+@@ -124,24 +112,16 @@ static int trusted_tee_unseal(struct tru
+ 	int ret;
+ 	struct tee_ioctl_invoke_arg inv_arg;
+ 	struct tee_param param[4];
+-	struct tee_shm *reg_shm_in = NULL, *reg_shm_out = NULL;
++	struct tee_shm *reg_shm = NULL;
+ 
+ 	memset(&inv_arg, 0, sizeof(inv_arg));
+ 	memset(&param, 0, sizeof(param));
+ 
+-	reg_shm_in = tee_shm_register_kernel_buf(pvt_data.ctx, p->blob,
+-						 p->blob_len);
+-	if (IS_ERR(reg_shm_in)) {
+-		dev_err(pvt_data.dev, "blob shm register failed\n");
+-		return PTR_ERR(reg_shm_in);
+-	}
 -
- 		rq_unpin_lock(rq, &rf);
- 		__balance_callbacks(rq);
- 		raw_spin_rq_unlock_irq(rq);
+-	reg_shm_out = tee_shm_register_kernel_buf(pvt_data.ctx, p->key,
+-						  sizeof(p->key));
+-	if (IS_ERR(reg_shm_out)) {
+-		dev_err(pvt_data.dev, "key shm register failed\n");
+-		ret = PTR_ERR(reg_shm_out);
+-		goto out;
++	reg_shm = tee_shm_register_kernel_buf(pvt_data.ctx, p->key,
++					      sizeof(p->key) + sizeof(p->blob));
++	if (IS_ERR(reg_shm)) {
++		dev_err(pvt_data.dev, "shm register failed\n");
++		return PTR_ERR(reg_shm);
+ 	}
+ 
+ 	inv_arg.func = TA_CMD_UNSEAL;
+@@ -149,11 +129,11 @@ static int trusted_tee_unseal(struct tru
+ 	inv_arg.num_params = 4;
+ 
+ 	param[0].attr = TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INPUT;
+-	param[0].u.memref.shm = reg_shm_in;
++	param[0].u.memref.shm = reg_shm;
+ 	param[0].u.memref.size = p->blob_len;
+-	param[0].u.memref.shm_offs = 0;
++	param[0].u.memref.shm_offs = sizeof(p->key);
+ 	param[1].attr = TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_OUTPUT;
+-	param[1].u.memref.shm = reg_shm_out;
++	param[1].u.memref.shm = reg_shm;
+ 	param[1].u.memref.size = sizeof(p->key);
+ 	param[1].u.memref.shm_offs = 0;
+ 
+@@ -166,11 +146,7 @@ static int trusted_tee_unseal(struct tru
+ 		p->key_len = param[1].u.memref.size;
+ 	}
+ 
+-out:
+-	if (reg_shm_out)
+-		tee_shm_free(reg_shm_out);
+-	if (reg_shm_in)
+-		tee_shm_free(reg_shm_in);
++	tee_shm_free(reg_shm);
+ 
+ 	return ret;
+ }
 
 
