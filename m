@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C42731748;
-	Fri, 24 Nov 2023 19:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3303D28DBB;
+	Fri, 24 Nov 2023 19:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXcJhvfK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F95DC433C9;
-	Fri, 24 Nov 2023 19:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hl7EL+cx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A475CC433C8;
+	Fri, 24 Nov 2023 19:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852708;
-	bh=no4XfktE5HS4LiRBuijGHbtDnggERP7tDEukzhgRnH8=;
+	s=korg; t=1700852711;
+	bh=mPaI1199Dv6AVgvQLXj+DAHJ27u8oTgzzglK3GgWaGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXcJhvfKAVrPXOIaG4Zh7V2pFXUxe7/BoqSWJAHHovFcvPr1zra4d9r+tC50A4T7Y
-	 lYBfxe2akg6sY2tYG+cQpNCdhPFTGpcGFbAqgboa2CnaROD15mm1ajn6Y2nDo1qTtS
-	 CINDOcatF2byk+0WJ1z8Ahj0cAB26ENFZ8f0y+7Y=
+	b=hl7EL+cxk0caXjL++PSJ4JxcLOteYXw3+83P0Q9a0I38bfHD8Ifb2/RVhb/iqY6hV
+	 3sqO3a0BisTQ3Ch1COR+g3aF4RLu3wwIV7y7lxU0OMTvPDzEduHegJx5AW+jjXfnEb
+	 kwJeE3i2zraIQTgz95eOitUDxbxGevNC+EH7202w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3e5130844b0c0e2b4948@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/193] gfs2: Silence "suspicious RCU usage in gfs2_permission" warning
-Date: Fri, 24 Nov 2023 17:53:14 +0000
-Message-ID: <20231124171949.920705976@linuxfoundation.org>
+Subject: [PATCH 5.10 058/193] wifi: iwlwifi: Use FW rate for non-data frames
+Date: Fri, 24 Nov 2023 17:53:05 +0000
+Message-ID: <20231124171949.580633763@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,57 +43,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 074d7306a4fe22fcac0b53f699f92757ab1cee99 ]
+[ Upstream commit 499d02790495958506a64f37ceda7e97345a50a8 ]
 
-Commit 0abd1557e21c added rcu_dereference() for dereferencing ip->i_gl
-in gfs2_permission.  This now causes lockdep to complain when
-gfs2_permission is called in non-RCU context:
+Currently we are setting the rate in the tx cmd for
+mgmt frames (e.g. during connection establishment).
+This was problematic when sending mgmt frames in eSR mode,
+as we don't know what link this frame will be sent on
+(This is decided by the FW), so we don't know what is the
+lowest rate.
+Fix this by not setting the rate in tx cmd and rely
+on FW to choose the right one.
+Set rate only for injected frames with fixed rate,
+or when no sta is given.
+Also set for important frames (EAPOL etc.) the High Priority flag.
 
-    WARNING: suspicious RCU usage in gfs2_permission
-
-Switch to rcu_dereference_check() and check for the MAY_NOT_BLOCK flag
-to shut up lockdep when we know that dereferencing ip->i_gl is safe.
-
-Fixes: 0abd1557e21c ("gfs2: fix an oops in gfs2_permission")
-Reported-by: syzbot+3e5130844b0c0e2b4948@syzkaller.appspotmail.com
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 055b22e770dd ("iwlwifi: mvm: Set Tx rate and flags when there is not station")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230913145231.6c7e59620ee0.I6eaed3ccdd6dd62b9e664facc484081fc5275843@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 963dc72e7155f..d75d56d9ea0ca 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -1835,6 +1835,7 @@ static const char *gfs2_get_link(struct dentry *dentry,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+index d310337b16251..99150fec151b8 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+@@ -532,16 +532,20 @@ iwl_mvm_set_tx_params(struct iwl_mvm *mvm, struct sk_buff *skb,
+ 			flags |= IWL_TX_FLAGS_ENCRYPT_DIS;
  
- int gfs2_permission(struct inode *inode, int mask)
- {
-+	int may_not_block = mask & MAY_NOT_BLOCK;
- 	struct gfs2_inode *ip;
- 	struct gfs2_holder i_gh;
- 	struct gfs2_glock *gl;
-@@ -1842,14 +1843,14 @@ int gfs2_permission(struct inode *inode, int mask)
+ 		/*
+-		 * For data packets rate info comes from the fw. Only
+-		 * set rate/antenna during connection establishment or in case
+-		 * no station is given.
++		 * For data and mgmt packets rate info comes from the fw. Only
++		 * set rate/antenna for injected frames with fixed rate, or
++		 * when no sta is given.
+ 		 */
+-		if (!sta || !ieee80211_is_data(hdr->frame_control) ||
+-		    mvmsta->sta_state < IEEE80211_STA_AUTHORIZED) {
++		if (unlikely(!sta ||
++			     info->control.flags & IEEE80211_TX_CTRL_RATE_INJECT)) {
+ 			flags |= IWL_TX_FLAGS_CMD_RATE;
+ 			rate_n_flags =
+ 				iwl_mvm_get_tx_rate_n_flags(mvm, info, sta,
+ 							    hdr->frame_control);
++		} else if (!ieee80211_is_data(hdr->frame_control) ||
++			   mvmsta->sta_state < IEEE80211_STA_AUTHORIZED) {
++			/* These are important frames */
++			flags |= IWL_TX_FLAGS_HIGH_PRI;
+ 		}
  
- 	gfs2_holder_mark_uninitialized(&i_gh);
- 	ip = GFS2_I(inode);
--	gl = rcu_dereference(ip->i_gl);
-+	gl = rcu_dereference_check(ip->i_gl, !may_not_block);
- 	if (unlikely(!gl)) {
- 		/* inode is getting torn down, must be RCU mode */
--		WARN_ON_ONCE(!(mask & MAY_NOT_BLOCK));
-+		WARN_ON_ONCE(!may_not_block);
- 		return -ECHILD;
-         }
- 	if (gfs2_glock_is_locked_by_me(gl) == NULL) {
--		if (mask & MAY_NOT_BLOCK)
-+		if (may_not_block)
- 			return -ECHILD;
- 		error = gfs2_glock_nq_init(gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
- 		if (error)
+ 		if (mvm->trans->trans_cfg->device_family >=
 -- 
 2.42.0
 
