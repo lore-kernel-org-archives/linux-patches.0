@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A85C2C1A2;
-	Fri, 24 Nov 2023 19:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7082E64F;
+	Fri, 24 Nov 2023 19:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPUlxwZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6922C433C7;
-	Fri, 24 Nov 2023 19:21:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/ZTRJUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CF2C433C7;
+	Fri, 24 Nov 2023 19:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853696;
-	bh=9FnktVJUaeojwgm8Pjyir8B4lk1nVPdQpX1vVbDICbM=;
+	s=korg; t=1700853698;
+	bh=lNQWSvBK3+GsjSjXxNeUB7I7tgKm2g+fj5rNBklVi7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPUlxwZVBSQsvlE+svw3M/DTwPIJFd1vvdzPaYMkWjXRjWYa4RaMC1Laz4lj4aMuH
-	 ZW/GpGeyMzLjoz17Xqnc2Pqwn4YHfO7y6jwWneFtRqYGQGbmEpV3I1oCs0KqVXv0AJ
-	 Ns/6Vx7Q+iRQJvfmyMBirBt6m6NtXzh+X1RV9rT8=
+	b=p/ZTRJUEqAPU0svbOM9vUkZ4MsMYq+ZP7369oC0vokMSeHgqQfL/iS8VOqcS7D+B9
+	 y52fe8Dao3GiImBcoWFIOZlK2e1gM7QWezOGaqEgo3GjPd1MqVMrLerJMG7z7Pcnor
+	 ub+ovlD7InPTbAmu0kJEKy7F4L16GaugO5e3XUK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Hebert <nhebert@chromium.org>,
 	Vikash Garodia <quic_vgarodia@quicinc.com>,
 	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 267/297] media: venus: hfi: fix the check to handle session buffer requirement
-Date: Fri, 24 Nov 2023 17:55:09 +0000
-Message-ID: <20231124172009.492211732@linuxfoundation.org>
+Subject: [PATCH 5.15 268/297] media: venus: hfi: add checks to handle capabilities from firmware
+Date: Fri, 24 Nov 2023 17:55:10 +0000
+Message-ID: <20231124172009.526964764@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -45,34 +44,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit b18e36dfd6c935da60a971310374f3dfec3c82e1 upstream.
+commit 8d0b89398b7ebc52103e055bf36b60b045f5258f upstream.
 
-Buffer requirement, for different buffer type, comes from video firmware.
-While copying these requirements, there is an OOB possibility when the
-payload from firmware is more than expected size. Fix the check to avoid
-the OOB possibility.
+The hfi parser, parses the capabilities received from venus firmware and
+copies them to core capabilities. Consider below api, for example,
+fill_caps - In this api, caps in core structure gets updated with the
+number of capabilities received in firmware data payload. If the same api
+is called multiple times, there is a possibility of copying beyond the max
+allocated size in core caps.
+Similar possibilities in fill_raw_fmts and fill_profile_level functions.
 
 Cc: stable@vger.kernel.org
-Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
-Reviewed-by: Nathan Hebert <nhebert@chromium.org>
+Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
 Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_msgs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/hfi_parser.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-+++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-@@ -367,7 +367,7 @@ session_get_prop_buf_req(struct hfi_msg_
- 		memcpy(&bufreq[idx], buf_req, sizeof(*bufreq));
- 		idx++;
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -89,6 +89,9 @@ static void fill_profile_level(struct hf
+ {
+ 	const struct hfi_profile_level *pl = data;
  
--		if (idx > HFI_BUFFER_TYPE_MAX)
-+		if (idx >= HFI_BUFFER_TYPE_MAX)
- 			return HFI_ERR_SESSION_INVALID_PARAMETER;
++	if (cap->num_pl + num >= HFI_MAX_PROFILE_COUNT)
++		return;
++
+ 	memcpy(&cap->pl[cap->num_pl], pl, num * sizeof(*pl));
+ 	cap->num_pl += num;
+ }
+@@ -114,6 +117,9 @@ fill_caps(struct hfi_plat_caps *cap, con
+ {
+ 	const struct hfi_capability *caps = data;
  
- 		req_bytes -= sizeof(struct hfi_buffer_requirements);
++	if (cap->num_caps + num >= MAX_CAP_ENTRIES)
++		return;
++
+ 	memcpy(&cap->caps[cap->num_caps], caps, num * sizeof(*caps));
+ 	cap->num_caps += num;
+ }
+@@ -140,6 +146,9 @@ static void fill_raw_fmts(struct hfi_pla
+ {
+ 	const struct raw_formats *formats = fmts;
+ 
++	if (cap->num_fmts + num_fmts >= MAX_FMT_ENTRIES)
++		return;
++
+ 	memcpy(&cap->fmts[cap->num_fmts], formats, num_fmts * sizeof(*formats));
+ 	cap->num_fmts += num_fmts;
+ }
+@@ -162,6 +171,9 @@ parse_raw_formats(struct venus_core *cor
+ 		rawfmts[i].buftype = fmt->buffer_type;
+ 		i++;
+ 
++		if (i >= MAX_FMT_ENTRIES)
++			return;
++
+ 		if (pinfo->num_planes > MAX_PLANES)
+ 			break;
+ 
 
 
