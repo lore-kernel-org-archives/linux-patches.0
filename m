@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9492B2C85B;
-	Fri, 24 Nov 2023 18:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5C42E84A;
+	Fri, 24 Nov 2023 18:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZX3cjXvG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208A5C433C7;
-	Fri, 24 Nov 2023 18:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04enMFZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA813C433C7;
+	Fri, 24 Nov 2023 18:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852310;
-	bh=Nj0o0d/rydMfnLBCClHwSzaqMySpwSv7vPiBPlMSHBE=;
+	s=korg; t=1700852313;
+	bh=UmqNPrBdR/EtfLuuplvTzSmMLjAqCIe/uZeFasN+c8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZX3cjXvGp1x/XI0Lksva7hC1WDhUN5CZHieSmfFj6xqL+KlBLj0rU+mVGARwZcRDL
-	 A6ffQA4tcHwXT3tdxUzP7x3N4rNIUmer5py8zWZIemiNOPJI/79qFo9El/eOANPaew
-	 tQ5TOzDnNR8Bqg8mp5AmtlCdEGn/v8QdlqUhdeuw=
+	b=04enMFZcNP21ScU3k+03KhvEZ6RJAnZMxxUGBsBV9jjfbFBF5eg5dVHNROtzGE70Z
+	 vm3HMmoZwZlM9ILhvUGvwZeAFBW8LTDusbhWrh0rr3kkakEiODpznmwbej5OdOFFvt
+	 tRr7uwenUDhtTKlyKqcprNWVemoYgWbIDZY3g0IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Fan Ni <fan.ni@samsung.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 297/372] cxl/region: Move region-position validation to a helper
-Date: Fri, 24 Nov 2023 17:51:24 +0000
-Message-ID: <20231124172020.328901558@linuxfoundation.org>
+	Robert Marko <robert.marko@sartura.hr>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.1 306/372] Revert "i2c: pxa: move to generic GPIO recovery"
+Date: Fri, 24 Nov 2023 17:51:33 +0000
+Message-ID: <20231124172020.614111007@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,198 +44,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Robert Marko <robert.marko@sartura.hr>
 
-[ Upstream commit 9995576cef48dcbb0ba3de068292ed14f72fa0eb ]
+commit 7b211c7671212cad0b83603c674838c7e824d845 upstream.
 
-In preparation for region autodiscovery, that needs all devices
-discovered before their relative position in the region can be
-determined, consolidate all position dependent validation in a helper.
+This reverts commit 0b01392c18b9993a584f36ace1d61118772ad0ca.
 
-Recall that in the on-demand region creation flow the end-user picks the
-position of a given endpoint decoder in a region. In the autodiscovery
-case the position of an endpoint decoder can only be determined after
-all other endpoint decoders that claim to decode the region's address
-range have been enumerated and attached. So, in the autodiscovery case
-endpoint decoders may be attached before their relative position is
-known. Once all decoders arrive, then positions can be determined and
-validated with cxl_region_validate_position() the same as user initiated
-on-demand creation.
+Conversion of PXA to generic I2C recovery, makes the I2C bus completely
+lock up if recovery pinctrl is present in the DT and I2C recovery is
+enabled.
 
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Tested-by: Fan Ni <fan.ni@samsung.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/167601997584.1924368.4615769326126138969.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 0718588c7aaa ("cxl/region: Do not try to cleanup after cxl_region_setup_targets() fails")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So, until the generic I2C recovery can also work with PXA lets revert
+to have working I2C and I2C recovery again.
+
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Cc: stable@vger.kernel.org # 5.11+
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Acked-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/region.c | 119 ++++++++++++++++++++++++--------------
- 1 file changed, 76 insertions(+), 43 deletions(-)
+ drivers/i2c/busses/i2c-pxa.c |   76 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 68 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index bd1c511bba987..1ee51327e989d 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1181,35 +1181,13 @@ static int cxl_region_setup_targets(struct cxl_region *cxlr)
- 	return 0;
+--- a/drivers/i2c/busses/i2c-pxa.c
++++ b/drivers/i2c/busses/i2c-pxa.c
+@@ -264,6 +264,9 @@ struct pxa_i2c {
+ 	u32			hs_mask;
+ 
+ 	struct i2c_bus_recovery_info recovery;
++	struct pinctrl		*pinctrl;
++	struct pinctrl_state	*pinctrl_default;
++	struct pinctrl_state	*pinctrl_recovery;
+ };
+ 
+ #define _IBMR(i2c)	((i2c)->reg_ibmr)
+@@ -1302,12 +1305,13 @@ static void i2c_pxa_prepare_recovery(str
+ 	 */
+ 	gpiod_set_value(i2c->recovery.scl_gpiod, ibmr & IBMR_SCLS);
+ 	gpiod_set_value(i2c->recovery.sda_gpiod, ibmr & IBMR_SDAS);
++
++	WARN_ON(pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_recovery));
  }
  
--static int cxl_region_attach(struct cxl_region *cxlr,
--			     struct cxl_endpoint_decoder *cxled, int pos)
-+static int cxl_region_validate_position(struct cxl_region *cxlr,
-+					struct cxl_endpoint_decoder *cxled,
-+					int pos)
+ static void i2c_pxa_unprepare_recovery(struct i2c_adapter *adap)
  {
--	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(cxlr->dev.parent);
- 	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
--	struct cxl_port *ep_port, *root_port, *iter;
- 	struct cxl_region_params *p = &cxlr->params;
--	struct cxl_dport *dport;
--	int i, rc = -ENXIO;
--
--	if (cxled->mode != cxlr->mode) {
--		dev_dbg(&cxlr->dev, "%s region mode: %d mismatch: %d\n",
--			dev_name(&cxled->cxld.dev), cxlr->mode, cxled->mode);
--		return -EINVAL;
--	}
--
--	if (cxled->mode == CXL_DECODER_DEAD) {
--		dev_dbg(&cxlr->dev, "%s dead\n", dev_name(&cxled->cxld.dev));
--		return -ENODEV;
--	}
--
--	/* all full of members, or interleave config not established? */
--	if (p->state > CXL_CONFIG_INTERLEAVE_ACTIVE) {
--		dev_dbg(&cxlr->dev, "region already active\n");
--		return -EBUSY;
--	} else if (p->state < CXL_CONFIG_INTERLEAVE_ACTIVE) {
--		dev_dbg(&cxlr->dev, "interleave config missing\n");
--		return -ENXIO;
--	}
-+	int i;
+ 	struct pxa_i2c *i2c = adap->algo_data;
+-	struct i2c_bus_recovery_info *bri = adap->bus_recovery_info;
+ 	u32 isr;
  
- 	if (pos < 0 || pos >= p->interleave_ways) {
- 		dev_dbg(&cxlr->dev, "position %d out of range %d\n", pos,
-@@ -1248,6 +1226,71 @@ static int cxl_region_attach(struct cxl_region *cxlr,
- 		}
+ 	/*
+@@ -1321,7 +1325,7 @@ static void i2c_pxa_unprepare_recovery(s
+ 		i2c_pxa_do_reset(i2c);
  	}
  
-+	return 0;
-+}
+-	WARN_ON(pinctrl_select_state(bri->pinctrl, bri->pins_default));
++	WARN_ON(pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_default));
+ 
+ 	dev_dbg(&i2c->adap.dev, "recovery: IBMR 0x%08x ISR 0x%08x\n",
+ 	        readl(_IBMR(i2c)), readl(_ISR(i2c)));
+@@ -1343,20 +1347,76 @@ static int i2c_pxa_init_recovery(struct
+ 	if (IS_ENABLED(CONFIG_I2C_PXA_SLAVE))
+ 		return 0;
+ 
+-	bri->pinctrl = devm_pinctrl_get(dev);
+-	if (PTR_ERR(bri->pinctrl) == -ENODEV) {
+-		bri->pinctrl = NULL;
++	i2c->pinctrl = devm_pinctrl_get(dev);
++	if (PTR_ERR(i2c->pinctrl) == -ENODEV)
++		i2c->pinctrl = NULL;
++	if (IS_ERR(i2c->pinctrl))
++		return PTR_ERR(i2c->pinctrl);
 +
-+static int cxl_region_attach_position(struct cxl_region *cxlr,
-+				      struct cxl_root_decoder *cxlrd,
-+				      struct cxl_endpoint_decoder *cxled,
-+				      const struct cxl_dport *dport, int pos)
-+{
-+	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
-+	struct cxl_port *iter;
-+	int rc;
++	if (!i2c->pinctrl)
++		return 0;
 +
-+	if (cxlrd->calc_hb(cxlrd, pos) != dport) {
-+		dev_dbg(&cxlr->dev, "%s:%s invalid target position for %s\n",
-+			dev_name(&cxlmd->dev), dev_name(&cxled->cxld.dev),
-+			dev_name(&cxlrd->cxlsd.cxld.dev));
-+		return -ENXIO;
++	i2c->pinctrl_default = pinctrl_lookup_state(i2c->pinctrl,
++						    PINCTRL_STATE_DEFAULT);
++	i2c->pinctrl_recovery = pinctrl_lookup_state(i2c->pinctrl, "recovery");
++
++	if (IS_ERR(i2c->pinctrl_default) || IS_ERR(i2c->pinctrl_recovery)) {
++		dev_info(dev, "missing pinmux recovery information: %ld %ld\n",
++			 PTR_ERR(i2c->pinctrl_default),
++			 PTR_ERR(i2c->pinctrl_recovery));
++		return 0;
 +	}
 +
-+	for (iter = cxled_to_port(cxled); !is_cxl_root(iter);
-+	     iter = to_cxl_port(iter->dev.parent)) {
-+		rc = cxl_port_attach_region(iter, cxlr, cxled, pos);
-+		if (rc)
-+			goto err;
++	/*
++	 * Claiming GPIOs can influence the pinmux state, and may glitch the
++	 * I2C bus. Do this carefully.
++	 */
++	bri->scl_gpiod = devm_gpiod_get(dev, "scl", GPIOD_OUT_HIGH_OPEN_DRAIN);
++	if (bri->scl_gpiod == ERR_PTR(-EPROBE_DEFER))
++		return -EPROBE_DEFER;
++	if (IS_ERR(bri->scl_gpiod)) {
++		dev_info(dev, "missing scl gpio recovery information: %pe\n",
++			 bri->scl_gpiod);
++		return 0;
 +	}
 +
-+	return 0;
++	/*
++	 * We have SCL. Pull SCL low and wait a bit so that SDA glitches
++	 * have no effect.
++	 */
++	gpiod_direction_output(bri->scl_gpiod, 0);
++	udelay(10);
++	bri->sda_gpiod = devm_gpiod_get(dev, "sda", GPIOD_OUT_HIGH_OPEN_DRAIN);
 +
-+err:
-+	for (iter = cxled_to_port(cxled); !is_cxl_root(iter);
-+	     iter = to_cxl_port(iter->dev.parent))
-+		cxl_port_detach_region(iter, cxlr, cxled);
-+	return rc;
-+}
++	/* Wait a bit in case of a SDA glitch, and then release SCL. */
++	udelay(10);
++	gpiod_direction_output(bri->scl_gpiod, 1);
 +
-+static int cxl_region_attach(struct cxl_region *cxlr,
-+			     struct cxl_endpoint_decoder *cxled, int pos)
-+{
-+	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(cxlr->dev.parent);
-+	struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
-+	struct cxl_region_params *p = &cxlr->params;
-+	struct cxl_port *ep_port, *root_port;
-+	struct cxl_dport *dport;
-+	int rc = -ENXIO;
++	if (bri->sda_gpiod == ERR_PTR(-EPROBE_DEFER))
++		return -EPROBE_DEFER;
 +
-+	if (cxled->mode != cxlr->mode) {
-+		dev_dbg(&cxlr->dev, "%s region mode: %d mismatch: %d\n",
-+			dev_name(&cxled->cxld.dev), cxlr->mode, cxled->mode);
-+		return -EINVAL;
-+	}
-+
-+	if (cxled->mode == CXL_DECODER_DEAD) {
-+		dev_dbg(&cxlr->dev, "%s dead\n", dev_name(&cxled->cxld.dev));
-+		return -ENODEV;
-+	}
-+
-+	/* all full of members, or interleave config not established? */
-+	if (p->state > CXL_CONFIG_INTERLEAVE_ACTIVE) {
-+		dev_dbg(&cxlr->dev, "region already active\n");
-+		return -EBUSY;
-+	} else if (p->state < CXL_CONFIG_INTERLEAVE_ACTIVE) {
-+		dev_dbg(&cxlr->dev, "interleave config missing\n");
-+		return -ENXIO;
-+	}
-+
- 	ep_port = cxled_to_port(cxled);
- 	root_port = cxlrd_to_port(cxlrd);
- 	dport = cxl_find_dport_by_dev(root_port, ep_port->host_bridge);
-@@ -1258,13 +1301,6 @@ static int cxl_region_attach(struct cxl_region *cxlr,
- 		return -ENXIO;
++	if (IS_ERR(bri->sda_gpiod)) {
++		dev_info(dev, "missing sda gpio recovery information: %pe\n",
++			 bri->sda_gpiod);
+ 		return 0;
  	}
+-	if (IS_ERR(bri->pinctrl))
+-		return PTR_ERR(bri->pinctrl);
  
--	if (cxlrd->calc_hb(cxlrd, pos) != dport) {
--		dev_dbg(&cxlr->dev, "%s:%s invalid target position for %s\n",
--			dev_name(&cxlmd->dev), dev_name(&cxled->cxld.dev),
--			dev_name(&cxlrd->cxlsd.cxld.dev));
--		return -ENXIO;
--	}
--
- 	if (cxled->cxld.target_type != cxlr->type) {
- 		dev_dbg(&cxlr->dev, "%s:%s type mismatch: %d vs %d\n",
- 			dev_name(&cxlmd->dev), dev_name(&cxled->cxld.dev),
-@@ -1288,12 +1324,13 @@ static int cxl_region_attach(struct cxl_region *cxlr,
- 		return -EINVAL;
- 	}
+ 	bri->prepare_recovery = i2c_pxa_prepare_recovery;
+ 	bri->unprepare_recovery = i2c_pxa_unprepare_recovery;
++	bri->recover_bus = i2c_generic_scl_recovery;
  
--	for (iter = ep_port; !is_cxl_root(iter);
--	     iter = to_cxl_port(iter->dev.parent)) {
--		rc = cxl_port_attach_region(iter, cxlr, cxled, pos);
--		if (rc)
--			goto err;
--	}
-+	rc = cxl_region_validate_position(cxlr, cxled, pos);
-+	if (rc)
-+		return rc;
+ 	i2c->adap.bus_recovery_info = bri;
+ 
+-	return 0;
++	/*
++	 * Claiming GPIOs can change the pinmux state, which confuses the
++	 * pinctrl since pinctrl's idea of the current setting is unaffected
++	 * by the pinmux change caused by claiming the GPIO. Work around that
++	 * by switching pinctrl to the GPIO state here. We do it this way to
++	 * avoid glitching the I2C bus.
++	 */
++	pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_recovery);
 +
-+	rc = cxl_region_attach_position(cxlr, cxlrd, cxled, dport, pos);
-+	if (rc)
-+		return rc;
- 
- 	p->targets[pos] = cxled;
- 	cxled->pos = pos;
-@@ -1319,10 +1356,6 @@ static int cxl_region_attach(struct cxl_region *cxlr,
- 	p->nr_targets--;
- 	cxled->pos = -1;
- 	p->targets[pos] = NULL;
--err:
--	for (iter = ep_port; !is_cxl_root(iter);
--	     iter = to_cxl_port(iter->dev.parent))
--		cxl_port_detach_region(iter, cxlr, cxled);
- 	return rc;
++	return pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_default);
  }
  
--- 
-2.42.0
-
+ static int i2c_pxa_probe(struct platform_device *dev)
 
 
