@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C3E33CFB;
-	Fri, 24 Nov 2023 18:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EFB22F1D;
+	Fri, 24 Nov 2023 18:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsvefLYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00CF3C433C8;
-	Fri, 24 Nov 2023 18:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dV9h3KBm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78552C433C8;
+	Fri, 24 Nov 2023 18:36:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851011;
-	bh=U6DttP2PYlsSeVkJV65PJFQAQsR13l1L2OQmv9lBLjg=;
+	s=korg; t=1700851013;
+	bh=CSvK6Y4o/Gx3j/WZcLBIISJ7QvwY52s0voyxWpSmezk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RsvefLYkHr7lLxVI99Q0WbeDmeAYxMfmcKwiBhURNSk3v4ZUv3D4C4sW42J+KtZLU
-	 UVhs4UYTrBy3EhUqSduOqMioNtYseTX03X998jn+lX8lifVj5XTZc0XsnjqEvPBXD+
-	 iQ2Mz6pD+mGl5gZplGC3GooCt1i2ukydrdfz+SPo=
+	b=dV9h3KBmwkJtwsJ5IiZOtOuGQNtowmxcEmo7xUCia3OA660uXhKYf3KNttXVPYBV1
+	 ynjL/kLAinFu3K+OIiy9PzySjRY1wiWP1pKCfpS2DJBUJIiFiIIxgdABU9AiUPYssv
+	 d+lfw2DglYP2cMlz3MNIrY06n5VyCRZg15sA24MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.5 270/491] parisc: Add nop instructions after TLB inserts
-Date: Fri, 24 Nov 2023 17:48:26 +0000
-Message-ID: <20231124172032.689984301@linuxfoundation.org>
+	Rong Chen <rong.chen@amlogic.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.5 279/491] mmc: meson-gx: Remove setting of CMD_CFG_ERROR
+Date: Fri, 24 Nov 2023 17:48:35 +0000
+Message-ID: <20231124172032.958065841@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,304 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave@parisc-linux.org>
+From: Rong Chen <rong.chen@amlogic.com>
 
-commit ad4aa06e1d92b06ed56c7240252927bd60632efe upstream.
+commit 57925e16c9f7d18012bcf45bfa658f92c087981a upstream.
 
-An excerpt from the PA8800 ERS states:
+For the t7 and older SoC families, the CMD_CFG_ERROR has no effect.
+Starting from SoC family C3, setting this bit without SG LINK data
+address will cause the controller to generate an IRQ and stop working.
 
-* The PA8800 violates the seven instruction pipeline rule when performing
-  TLB inserts or PxTLBE instructions with the PSW C bit on. The instruction
-  will take effect by the 12th instruction after the insert or purge.
+To fix it, don't set the bit CMD_CFG_ERROR anymore.
 
-I believe we have a problem with handling TLB misses. We don't fill
-the pipeline following TLB inserts. As a result, we likely fault again
-after returning from the interruption.
-
-The above statement indicates that we need at least seven instructions
-after the insert on pre PA8800 processors and we need 12 instructions
-on PA8800/PA8900 processors.
-
-Here we add macros and code to provide the required number instructions
-after a TLB insert.
-
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Suggested-by: Helge Deller <deller@gmx.de>
+Fixes: 18f92bc02f17 ("mmc: meson-gx: make sure the descriptor is stopped on errors")
+Signed-off-by: Rong Chen <rong.chen@amlogic.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://lore.kernel.org/r/20231026073156.2868310-1-rong.chen@amlogic.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/entry.S |   81 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 52 insertions(+), 29 deletions(-)
+ drivers/mmc/host/meson-gx-mmc.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/parisc/kernel/entry.S
-+++ b/arch/parisc/kernel/entry.S
-@@ -36,6 +36,24 @@
- 	.level 2.0
- #endif
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -801,7 +801,6 @@ static void meson_mmc_start_cmd(struct m
  
-+/*
-+ * We need seven instructions after a TLB insert for it to take effect.
-+ * The PA8800/PA8900 processors are an exception and need 12 instructions.
-+ * The RFI changes both IAOQ_Back and IAOQ_Front, so it counts as one.
-+ */
-+#ifdef CONFIG_64BIT
-+#define NUM_PIPELINE_INSNS    12
-+#else
-+#define NUM_PIPELINE_INSNS    7
-+#endif
-+
-+	/* Insert num nops */
-+	.macro	insert_nops num
-+	.rept \num
-+	nop
-+	.endr
-+	.endm
-+
- 	/* Get aligned page_table_lock address for this mm from cr28/tr4 */
- 	.macro  get_ptl reg
- 	mfctl	%cr28,\reg
-@@ -415,24 +433,20 @@
- 3:
- 	.endm
+ 	cmd_cfg |= FIELD_PREP(CMD_CFG_CMD_INDEX_MASK, cmd->opcode);
+ 	cmd_cfg |= CMD_CFG_OWNER;  /* owned by CPU */
+-	cmd_cfg |= CMD_CFG_ERROR; /* stop in case of error */
  
--	/* Release page_table_lock without reloading lock address.
--	   We use an ordered store to ensure all prior accesses are
--	   performed prior to releasing the lock. */
--	.macro		ptl_unlock0	spc,tmp,tmp2
-+	/* Release page_table_lock if for user space. We use an ordered
-+	   store to ensure all prior accesses are performed prior to
-+	   releasing the lock. Note stw may not be executed, so we
-+	   provide one extra nop when CONFIG_TLB_PTLOCK is defined. */
-+	.macro		ptl_unlock	spc,tmp,tmp2
- #ifdef CONFIG_TLB_PTLOCK
--98:	ldi		__ARCH_SPIN_LOCK_UNLOCKED_VAL, \tmp2
-+98:	get_ptl		\tmp
-+	ldi		__ARCH_SPIN_LOCK_UNLOCKED_VAL, \tmp2
- 	or,COND(=)	%r0,\spc,%r0
- 	stw,ma		\tmp2,0(\tmp)
- 99:	ALTERNATIVE(98b, 99b, ALT_COND_NO_SMP, INSN_NOP)
--#endif
--	.endm
--
--	/* Release page_table_lock. */
--	.macro		ptl_unlock1	spc,tmp,tmp2
--#ifdef CONFIG_TLB_PTLOCK
--98:	get_ptl		\tmp
--	ptl_unlock0	\spc,\tmp,\tmp2
--99:	ALTERNATIVE(98b, 99b, ALT_COND_NO_SMP, INSN_NOP)
-+	insert_nops	NUM_PIPELINE_INSNS - 4
-+#else
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- #endif
- 	.endm
+ 	meson_mmc_set_response_bits(cmd, &cmd_cfg);
  
-@@ -1124,7 +1138,7 @@ dtlb_miss_20w:
- 	
- 	idtlbt          pte,prot
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1133,6 +1147,7 @@ dtlb_check_alias_20w:
- 
- 	idtlbt          pte,prot
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1150,7 +1165,7 @@ nadtlb_miss_20w:
- 
- 	idtlbt          pte,prot
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1159,6 +1174,7 @@ nadtlb_check_alias_20w:
- 
- 	idtlbt          pte,prot
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1184,7 +1200,7 @@ dtlb_miss_11:
- 
- 	mtsp		t1, %sr1	/* Restore sr1 */
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1194,6 +1210,7 @@ dtlb_check_alias_11:
- 	idtlba          pte,(va)
- 	idtlbp          prot,(va)
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1217,7 +1234,7 @@ nadtlb_miss_11:
- 
- 	mtsp		t1, %sr1	/* Restore sr1 */
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1227,6 +1244,7 @@ nadtlb_check_alias_11:
- 	idtlba          pte,(va)
- 	idtlbp          prot,(va)
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1246,7 +1264,7 @@ dtlb_miss_20:
- 
- 	idtlbt          pte,prot
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1255,6 +1273,7 @@ dtlb_check_alias_20:
- 	
- 	idtlbt          pte,prot
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1274,7 +1293,7 @@ nadtlb_miss_20:
- 	
- 	idtlbt		pte,prot
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1283,6 +1302,7 @@ nadtlb_check_alias_20:
- 
- 	idtlbt          pte,prot
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1319,7 +1339,7 @@ itlb_miss_20w:
- 	
- 	iitlbt          pte,prot
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1343,7 +1363,7 @@ naitlb_miss_20w:
- 
- 	iitlbt          pte,prot
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1352,6 +1372,7 @@ naitlb_check_alias_20w:
- 
- 	iitlbt		pte,prot
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1377,7 +1398,7 @@ itlb_miss_11:
- 
- 	mtsp		t1, %sr1	/* Restore sr1 */
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1401,7 +1422,7 @@ naitlb_miss_11:
- 
- 	mtsp		t1, %sr1	/* Restore sr1 */
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1411,6 +1432,7 @@ naitlb_check_alias_11:
- 	iitlba          pte,(%sr0, va)
- 	iitlbp          prot,(%sr0, va)
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1431,7 +1453,7 @@ itlb_miss_20:
- 
- 	iitlbt          pte,prot
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1451,7 +1473,7 @@ naitlb_miss_20:
- 
- 	iitlbt          pte,prot
- 
--	ptl_unlock1	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1460,6 +1482,7 @@ naitlb_check_alias_20:
- 
- 	iitlbt          pte,prot
- 
-+	insert_nops	NUM_PIPELINE_INSNS - 1
- 	rfir
- 	nop
- 
-@@ -1481,7 +1504,7 @@ dbit_trap_20w:
- 		
- 	idtlbt          pte,prot
- 
--	ptl_unlock0	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- #else
-@@ -1507,7 +1530,7 @@ dbit_trap_11:
- 
- 	mtsp            t1, %sr1     /* Restore sr1 */
- 
--	ptl_unlock0	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- 
-@@ -1527,7 +1550,7 @@ dbit_trap_20:
- 	
- 	idtlbt		pte,prot
- 
--	ptl_unlock0	spc,t0,t1
-+	ptl_unlock	spc,t0,t1
- 	rfir
- 	nop
- #endif
 
 
