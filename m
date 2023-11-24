@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF9939FE3;
-	Fri, 24 Nov 2023 18:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5159E39FE3;
+	Fri, 24 Nov 2023 18:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxeCbXqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54072C433C7;
-	Fri, 24 Nov 2023 18:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqrl97WL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39D0C433C7;
+	Fri, 24 Nov 2023 18:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849659;
-	bh=zFt+erVSW7aCCwoizb4Xzkb3+Wtdx56cdU/Vsh0Eisg=;
+	s=korg; t=1700849662;
+	bh=y5L0h772cZC3OCGdu7RuD0vH8cPpA7AJ5y+eHE85LUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxeCbXqtXMve6v7l4oGlh03c/7P7e6zPqc3vxtqnka802UxkViK5yIc2LgXWArtZn
-	 X4ASrqjaoFlKOwQkCFyvUaopKtDSi9Cto8o6wKMOkSBEEUK0xeczvBhUN0+1P34E5t
-	 IlF+qUxPXreC6+WR2Jo/BeJimgiZAdnMhSOHampY=
+	b=sqrl97WLjQNDl/R7DRlLKXLw4wEJ0M9rYX9VJCRw4wK3nXoTlzBtJ5wiIAjr825IG
+	 dw9qGtuL65SScpxuLj0/zhyC8FNeYH5MqMWl2Sp7qFI/LZvJ2znmq9LAXhuL3Z7P+q
+	 ktU/foUD93rA2oGRJ0QWZbmclyBK/2oiMXooWqPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Mohamed Mahmoud <mmahmoud@redhat.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Tao Lyu <tao.lyu@epfl.ch>,
 	Eduard Zingerman <eddyz87@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 245/530] bpf: Fix check_stack_write_fixed_off() to correctly spill imm
-Date: Fri, 24 Nov 2023 17:46:51 +0000
-Message-ID: <20231124172035.510645310@linuxfoundation.org>
+Subject: [PATCH 6.6 246/530] bpf: Fix precision tracking for BPF_ALU | BPF_TO_BE | BPF_END
+Date: Fri, 24 Nov 2023 17:46:52 +0000
+Message-ID: <20231124172035.542906837@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -37,74 +39,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hao Sun <sunhao.th@gmail.com>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-commit 811c363645b33e6e22658634329e95f383dfc705 upstream.
+commit 291d044fd51f8484066300ee42afecf8c8db7b3a upstream.
 
-In check_stack_write_fixed_off(), imm value is cast to u32 before being
-spilled to the stack. Therefore, the sign information is lost, and the
-range information is incorrect when load from the stack again.
+BPF_END and BPF_NEG has a different specification for the source bit in
+the opcode compared to other ALU/ALU64 instructions, and is either
+reserved or use to specify the byte swap endianness. In both cases the
+source bit does not encode source operand location, and src_reg is a
+reserved field.
 
-For the following prog:
-0: r2 = r10
-1: *(u64*)(r2 -40) = -44
-2: r0 = *(u64*)(r2 - 40)
-3: if r0 s<= 0xa goto +2
-4: r0 = 1
-5: exit
-6: r0  = 0
-7: exit
+backtrack_insn() currently does not differentiate BPF_END and BPF_NEG
+from other ALU/ALU64 instructions, which leads to r0 being incorrectly
+marked as precise when processing BPF_ALU | BPF_TO_BE | BPF_END
+instructions. This commit teaches backtrack_insn() to correctly mark
+precision for such case.
 
-The verifier gives:
-func#0 @0
-0: R1=ctx(off=0,imm=0) R10=fp0
-0: (bf) r2 = r10                      ; R2_w=fp0 R10=fp0
-1: (7a) *(u64 *)(r2 -40) = -44        ; R2_w=fp0 fp-40_w=4294967252
-2: (79) r0 = *(u64 *)(r2 -40)         ; R0_w=4294967252 R2_w=fp0
-fp-40_w=4294967252
-3: (c5) if r0 s< 0xa goto pc+2
-mark_precise: frame0: last_idx 3 first_idx 0 subseq_idx -1
-mark_precise: frame0: regs=r0 stack= before 2: (79) r0 = *(u64 *)(r2 -40)
-3: R0_w=4294967252
-4: (b7) r0 = 1                        ; R0_w=1
-5: (95) exit
-verification time 7971 usec
-stack depth 40
-processed 6 insns (limit 1000000) max_states_per_insn 0 total_states 0
-peak_states 0 mark_read 0
+While precise tracking of BPF_NEG and other BPF_END instructions are
+correct and does not need fixing, this commit opt to process all BPF_NEG
+and BPF_END instructions within the same if-clause to better align with
+current convention used in the verifier (e.g. check_alu_op).
 
-So remove the incorrect cast, since imm field is declared as s32, and
-__mark_reg_known() takes u64, so imm would be correctly sign extended
-by compiler.
-
-Fixes: ecdf985d7615 ("bpf: track immediate values written to stack by BPF_ST instruction")
+Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Reported-by: Mohamed Mahmoud <mmahmoud@redhat.com>
+Closes: https://lore.kernel.org/r/87jzrrwptf.fsf@toke.dk
+Tested-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Tao Lyu <tao.lyu@epfl.ch>
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20231101-fix-check-stack-write-v3-1-f05c2b1473d5@gmail.com
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://lore.kernel.org/r/20231102053913.12004-2-shung-hsi.yu@suse.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -4376,7 +4376,7 @@ static int check_stack_write_fixed_off(s
- 		   insn->imm != 0 && env->bpf_capable) {
- 		struct bpf_reg_state fake_reg = {};
- 
--		__mark_reg_known(&fake_reg, (u32)insn->imm);
-+		__mark_reg_known(&fake_reg, insn->imm);
- 		fake_reg.type = SCALAR_VALUE;
- 		save_register_state(state, spi, &fake_reg, size);
- 	} else if (reg && is_spillable_regtype(reg->type)) {
+@@ -3444,7 +3444,12 @@ static int backtrack_insn(struct bpf_ver
+ 	if (class == BPF_ALU || class == BPF_ALU64) {
+ 		if (!bt_is_reg_set(bt, dreg))
+ 			return 0;
+-		if (opcode == BPF_MOV) {
++		if (opcode == BPF_END || opcode == BPF_NEG) {
++			/* sreg is reserved and unused
++			 * dreg still need precision before this insn
++			 */
++			return 0;
++		} else if (opcode == BPF_MOV) {
+ 			if (BPF_SRC(insn->code) == BPF_X) {
+ 				/* dreg = sreg or dreg = (s8, s16, s32)sreg
+ 				 * dreg needs precision after this insn
 
 
