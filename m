@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5772C1A2;
-	Fri, 24 Nov 2023 19:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CDA2511F;
+	Fri, 24 Nov 2023 19:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxbY99OC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B217C433C7;
-	Fri, 24 Nov 2023 19:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aesNrUiD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0AD4C433C7;
+	Fri, 24 Nov 2023 19:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853940;
-	bh=k3ADtOA2VyNGZ0oFEWOTpOEKNbIh0q9ItQNKbcNecg4=;
+	s=korg; t=1700853943;
+	bh=I/ZmqpcYb+0sD880xun09+KD5SlI5d36j8XczSJJ9yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxbY99OCSssaPVQJZlCnkSj7kaaMM7ewqvsUswygoAT5v/sIPBrlSNlvfz22q3RN0
-	 hppA1z6R9CEUYQwGjkVy5W/LpOrSa88WEmnyTyuCVWjTKxcICDP22S8omas6Ke/UBG
-	 PLOht1o1ZQtyIsJAM6bh21rJmIxmRNIsthkWQm8c=
+	b=aesNrUiDMXdVL/DtyCc9hTGIlPyy4CKChaZDm/l1GXvO1Eo01Rr2bY8GZQN0xJWgn
+	 HaZTRf8uvg/jUfVsMqz2O8cdBuUT2fKojGDweOUfdPwLsWkrQRMqUq4U2kEeVNcGb4
+	 rDiX4obK4FDFkPDIzJI2eaGLTSX/+gIPqtmLQd+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.4 067/159] media: venus: hfi: add checks to perform sanity on queue pointers
-Date: Fri, 24 Nov 2023 17:54:44 +0000
-Message-ID: <20231124171944.746033428@linuxfoundation.org>
+	linux-hardening@vger.kernel.org,
+	Lukas Loidolt <e1634039@student.tuwien.ac.at>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.4 068/159] randstruct: Fix gcc-plugin performance mode to stay in group
+Date: Fri, 24 Nov 2023 17:54:45 +0000
+Message-ID: <20231124171944.785943949@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -42,50 +42,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 5e538fce33589da6d7cb2de1445b84d3a8a692f7 upstream.
+commit 381fdb73d1e2a48244de7260550e453d1003bb8e upstream.
 
-Read and write pointers are used to track the packet index in the memory
-shared between video driver and firmware. There is a possibility of OOB
-access if the read or write pointer goes beyond the queue memory size.
-Add checks for the read and write pointer to avoid OOB access.
+The performance mode of the gcc-plugin randstruct was shuffling struct
+members outside of the cache-line groups. Limit the range to the
+specified group indexes.
 
+Cc: linux-hardening@vger.kernel.org
 Cc: stable@vger.kernel.org
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-by: Lukas Loidolt <e1634039@student.tuwien.ac.at>
+Closes: https://lore.kernel.org/all/f3ca77f0-e414-4065-83a5-ae4c4d25545d@student.tuwien.ac.at
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ scripts/gcc-plugins/randomize_layout_plugin.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -206,6 +206,11 @@ static int venus_write_queue(struct venu
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -209,12 +209,14 @@ static void partition_struct(tree *field
  
- 	new_wr_idx = wr_idx + dwords;
- 	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
+ static void performance_shuffle(tree *newtree, unsigned long length, ranctx *prng_state)
+ {
+-	unsigned long i, x;
++	unsigned long i, x, index;
+ 	struct partition_group size_group[length];
+ 	unsigned long num_groups = 0;
+ 	unsigned long randnum;
+ 
+ 	partition_struct(newtree, length, (struct partition_group *)&size_group, &num_groups);
 +
-+	if (wr_ptr < (u32 *)queue->qmem.kva ||
-+	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
-+		return -EINVAL;
-+
- 	if (new_wr_idx < qsize) {
- 		memcpy(wr_ptr, packet, dwords << 2);
- 	} else {
-@@ -273,6 +278,11 @@ static int venus_read_queue(struct venus
++	/* FIXME: this group shuffle is currently a no-op. */
+ 	for (i = num_groups - 1; i > 0; i--) {
+ 		struct partition_group tmp;
+ 		randnum = ranval(prng_state) % (i + 1);
+@@ -224,11 +226,14 @@ static void performance_shuffle(tree *ne
  	}
  
- 	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
+ 	for (x = 0; x < num_groups; x++) {
+-		for (i = size_group[x].start + size_group[x].length - 1; i > size_group[x].start; i--) {
++		for (index = size_group[x].length - 1; index > 0; index--) {
+ 			tree tmp;
 +
-+	if (rd_ptr < (u32 *)queue->qmem.kva ||
-+	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
-+		return -EINVAL;
-+
- 	dwords = *rd_ptr >> 2;
- 	if (!dwords)
- 		return -EINVAL;
++			i = size_group[x].start + index;
+ 			if (DECL_BIT_FIELD_TYPE(newtree[i]))
+ 				continue;
+-			randnum = ranval(prng_state) % (i + 1);
++			randnum = ranval(prng_state) % (index + 1);
++			randnum += size_group[x].start;
+ 			// we could handle this case differently if desired
+ 			if (DECL_BIT_FIELD_TYPE(newtree[randnum]))
+ 				continue;
 
 
