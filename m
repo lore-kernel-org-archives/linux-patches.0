@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA1F2FC4E;
-	Fri, 24 Nov 2023 18:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D5833CFD;
+	Fri, 24 Nov 2023 18:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+wX7tyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5A1C433C8;
-	Fri, 24 Nov 2023 18:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQ50sC48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97422C433CB;
+	Fri, 24 Nov 2023 18:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852046;
-	bh=13wTJIB0BYKRre6SRtmYfiKiBFJaEusrKlFhwvsk7qc=;
+	s=korg; t=1700852048;
+	bh=SWjKKwmIlcvxTuFoaI+usBvUOmjlc+vtggfKt67jWso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A+wX7tydEgfm/F+RV6FrFPRIYg0SPAPChF43iFMV4KC/VU9L7fnWls+8bI80yuAIW
-	 y6uOy89RDZ+SqAQ3ffJVpuvCypfUbjfgQ0zGMGc/0qYEyKwBeDiflZjtjm4z4rYHpR
-	 8Vc6m7TkZ9CwQvw583qGD6GYDFX9HDlDdSesWU2Y=
+	b=eQ50sC48VGH0oFYF6KyqkoNQT447W/54/vWwENaSWSDfxh3o9qq3kGuamFdE3B+bR
+	 OJS2koVoQYLFtTdtwyJ5WmNwMf7gAknbuzMRtg/l+ayS45fQijDRtmU+YIoIynYy6+
+	 z/dV7CdtwhtokjaBThMf2eBaJXV1sgmDJOuMAnzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Chen <rong.chen@amlogic.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 199/372] mmc: meson-gx: Remove setting of CMD_CFG_ERROR
-Date: Fri, 24 Nov 2023 17:49:46 +0000
-Message-ID: <20231124172017.095275624@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 200/372] genirq/generic_chip: Make irq_remove_generic_chip() irqdomain aware
+Date: Fri, 24 Nov 2023 17:49:47 +0000
+Message-ID: <20231124172017.125767381@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,36 +41,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Chen <rong.chen@amlogic.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit 57925e16c9f7d18012bcf45bfa658f92c087981a upstream.
+commit 5e7afb2eb7b2a7c81e9f608cbdf74a07606fd1b5 upstream.
 
-For the t7 and older SoC families, the CMD_CFG_ERROR has no effect.
-Starting from SoC family C3, setting this bit without SG LINK data
-address will cause the controller to generate an IRQ and stop working.
+irq_remove_generic_chip() calculates the Linux interrupt number for removing the
+handler and interrupt chip based on gc::irq_base as a linear function of
+the bit positions of set bits in the @msk argument.
 
-To fix it, don't set the bit CMD_CFG_ERROR anymore.
+When the generic chip is present in an irq domain, i.e. created with a call
+to irq_alloc_domain_generic_chips(), gc::irq_base contains not the base
+Linux interrupt number.  It contains the base hardware interrupt for this
+chip. It is set to 0 for the first chip in the domain, 0 + N for the next
+chip, where $N is the number of hardware interrupts per chip.
 
-Fixes: 18f92bc02f17 ("mmc: meson-gx: make sure the descriptor is stopped on errors")
-Signed-off-by: Rong Chen <rong.chen@amlogic.com>
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+That means the Linux interrupt number cannot be calculated based on
+gc::irq_base for irqdomain based chips without a domain map lookup, which
+is currently missing.
+
+Rework the code to take the irqdomain case into account and calculate the
+Linux interrupt number by a irqdomain lookup of the domain specific
+hardware interrupt number.
+
+[ tglx: Massage changelog. Reshuffle the logic and add a proper comment. ]
+
+Fixes: cfefd21e693d ("genirq: Add chip suspend and resume callbacks")
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231026073156.2868310-1-rong.chen@amlogic.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20231024150335.322282-1-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c |    1 -
- 1 file changed, 1 deletion(-)
+ kernel/irq/generic-chip.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/drivers/mmc/host/meson-gx-mmc.c
-+++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -817,7 +817,6 @@ static void meson_mmc_start_cmd(struct m
+--- a/kernel/irq/generic-chip.c
++++ b/kernel/irq/generic-chip.c
+@@ -544,21 +544,34 @@ EXPORT_SYMBOL_GPL(irq_setup_alt_chip);
+ void irq_remove_generic_chip(struct irq_chip_generic *gc, u32 msk,
+ 			     unsigned int clr, unsigned int set)
+ {
+-	unsigned int i = gc->irq_base;
++	unsigned int i, virq;
  
- 	cmd_cfg |= FIELD_PREP(CMD_CFG_CMD_INDEX_MASK, cmd->opcode);
- 	cmd_cfg |= CMD_CFG_OWNER;  /* owned by CPU */
--	cmd_cfg |= CMD_CFG_ERROR; /* stop in case of error */
+ 	raw_spin_lock(&gc_lock);
+ 	list_del(&gc->list);
+ 	raw_spin_unlock(&gc_lock);
  
- 	meson_mmc_set_response_bits(cmd, &cmd_cfg);
+-	for (; msk; msk >>= 1, i++) {
++	for (i = 0; msk; msk >>= 1, i++) {
+ 		if (!(msk & 0x01))
+ 			continue;
  
++		/*
++		 * Interrupt domain based chips store the base hardware
++		 * interrupt number in gc::irq_base. Otherwise gc::irq_base
++		 * contains the base Linux interrupt number.
++		 */
++		if (gc->domain) {
++			virq = irq_find_mapping(gc->domain, gc->irq_base + i);
++			if (!virq)
++				continue;
++		} else {
++			virq = gc->irq_base + i;
++		}
++
+ 		/* Remove handler first. That will mask the irq line */
+-		irq_set_handler(i, NULL);
+-		irq_set_chip(i, &no_irq_chip);
+-		irq_set_chip_data(i, NULL);
+-		irq_modify_status(i, clr, set);
++		irq_set_handler(virq, NULL);
++		irq_set_chip(virq, &no_irq_chip);
++		irq_set_chip_data(virq, NULL);
++		irq_modify_status(virq, clr, set);
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(irq_remove_generic_chip);
 
 
