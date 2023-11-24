@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD5A33E9;
-	Fri, 24 Nov 2023 19:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF82339BE;
+	Fri, 24 Nov 2023 19:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOoLbhQt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7C9C433C7;
-	Fri, 24 Nov 2023 19:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKR7Uysy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B69C433C7;
+	Fri, 24 Nov 2023 19:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853673;
-	bh=Vt1vPIQCmWLVIE+LaIIPiUpr+tB5pBCrMZDRqohp74k=;
+	s=korg; t=1700853676;
+	bh=YlR2IbalPyhAGp5XYfxj5IDVIaiwbB0XUYbgxY8Vc2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vOoLbhQtLw/kfP0GWIPE6PkSDTYiMsXUPGFElnzQEXBLg2RXcW1mn+MQ+V+610lfR
-	 1PZzYANd0QDXKpvdWtdnHmVj4ApJGZgvdf36kZoqqV8b2iHIjxgsed9XJjrqEiy8eJ
-	 ZxX3TEOfdfAg7/aO/BMK6jJSvjqpLC3Me6RqPYeY=
+	b=lKR7Uysyp/XxFjxiRrj+LIsCXEKtVcAgLfqOLsIHyPFmn599eOtLL0+TxclU8WeBc
+	 w9LQfglf0e2AmAukAC9UELv27ARKGZJ/+PChAwUZQ67HU8raxdJKClyPDZ6UlgMfdk
+	 Fd0upeHMuAghaVuymRMY0DOb0rvHToMFejXcJ3pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Ferner <joe.m.ferner@gmail.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 265/297] media: sharp: fix sharp encoding
-Date: Fri, 24 Nov 2023 17:55:07 +0000
-Message-ID: <20231124172009.422539302@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.15 283/297] ext4: correct return value of ext4_convert_meta_bg
+Date: Fri, 24 Nov 2023 17:55:25 +0000
+Message-ID: <20231124172010.023908269@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,48 +42,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit 4f7efc71891462ab7606da7039f480d7c1584a13 upstream.
+commit 48f1551592c54f7d8e2befc72a99ff4e47f7dca0 upstream.
 
-The Sharp protocol[1] encoding has incorrect timings for bit space.
+Avoid to ignore error in "err".
 
-[1] https://www.sbprojects.net/knowledge/ir/sharp.php
-
-Fixes: d35afc5fe097 ("[media] rc: ir-sharp-decoder: Add encode capability")
-Cc: stable@vger.kernel.org
-Reported-by: Joe Ferner <joe.m.ferner@gmail.com>
-Closes: https://sourceforge.net/p/lirc/mailman/message/38604507/
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Link: https://lore.kernel.org/r/20230826174712.4059355-4-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/ir-sharp-decoder.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/ext4/resize.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/media/rc/ir-sharp-decoder.c
-+++ b/drivers/media/rc/ir-sharp-decoder.c
-@@ -15,7 +15,9 @@
- #define SHARP_UNIT		40  /* us */
- #define SHARP_BIT_PULSE		(8    * SHARP_UNIT) /* 320us */
- #define SHARP_BIT_0_PERIOD	(25   * SHARP_UNIT) /* 1ms (680us space) */
--#define SHARP_BIT_1_PERIOD	(50   * SHARP_UNIT) /* 2ms (1680ms space) */
-+#define SHARP_BIT_1_PERIOD	(50   * SHARP_UNIT) /* 2ms (1680us space) */
-+#define SHARP_BIT_0_SPACE	(17   * SHARP_UNIT) /* 680us space */
-+#define SHARP_BIT_1_SPACE	(42   * SHARP_UNIT) /* 1680us space */
- #define SHARP_ECHO_SPACE	(1000 * SHARP_UNIT) /* 40 ms */
- #define SHARP_TRAILER_SPACE	(125  * SHARP_UNIT) /* 5 ms (even longer) */
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1938,9 +1938,7 @@ static int ext4_convert_meta_bg(struct s
  
-@@ -168,8 +170,8 @@ static const struct ir_raw_timings_pd ir
- 	.header_pulse  = 0,
- 	.header_space  = 0,
- 	.bit_pulse     = SHARP_BIT_PULSE,
--	.bit_space[0]  = SHARP_BIT_0_PERIOD,
--	.bit_space[1]  = SHARP_BIT_1_PERIOD,
-+	.bit_space[0]  = SHARP_BIT_0_SPACE,
-+	.bit_space[1]  = SHARP_BIT_1_SPACE,
- 	.trailer_pulse = SHARP_BIT_PULSE,
- 	.trailer_space = SHARP_ECHO_SPACE,
- 	.msb_first     = 1,
+ errout:
+ 	ret = ext4_journal_stop(handle);
+-	if (!err)
+-		err = ret;
+-	return ret;
++	return err ? err : ret;
+ 
+ invalid_resize_inode:
+ 	ext4_error(sb, "corrupted/inconsistent resize inode");
 
 
