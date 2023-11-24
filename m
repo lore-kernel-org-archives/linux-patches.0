@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A9139FDD;
-	Fri, 24 Nov 2023 18:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0486C39FDD;
+	Fri, 24 Nov 2023 18:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cUCqe7x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D6BC433C8;
-	Fri, 24 Nov 2023 18:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIKrtazW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C1BC433C7;
+	Fri, 24 Nov 2023 18:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849274;
-	bh=n2F5lzTNzWvF/0uTUTFeUHPrZLdUGQInPruD9MRlGDo=;
+	s=korg; t=1700849276;
+	bh=jfKrK4I0J/nVArKkqot8N4nuDJvjcFg3VffwFEZY3iE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cUCqe7xGZev83oFb2rKq9bpTJECAv5GAvzpnTfKPvSLm5MjLlSp5cXV6jA1Yqig/
-	 cifu+Y74oe+0U8ymB+gPcKpC0MdAIkbjjzd16W3G4q7NjE8GFXeZXGtNh6l27v7OVm
-	 tbQuBqBexXyBPBdYuSfQnIzB0TgmxscTWqcqASf0=
+	b=LIKrtazWIotuZ3AkacOdfGZwnYqZwDGxcF/15sb21LDcvfXo9/U6m0nOodYob9FLl
+	 m/9jGvt8TDtCrGgJ5nUoRTxIqE7zZDCrNPjHEGE1xZN3hmfB/FIi9QnkKBMZgxk7rN
+	 QnSH1TrbJCnTI0CMU2HgksmrdhYQY/xpArlFfb8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/530] mfd: intel-lpss: Add Intel Lunar Lake-M PCI IDs
-Date: Fri, 24 Nov 2023 17:44:43 +0000
-Message-ID: <20231124172031.673471851@linuxfoundation.org>
+Subject: [PATCH 6.6 118/530] iio: adc: stm32-adc: harden against NULL pointer deref in stm32_adc_probe()
+Date: Fri, 24 Nov 2023 17:44:44 +0000
+Message-ID: <20231124172031.707682326@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,44 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Zhang Shurong <zhang_shurong@foxmail.com>
 
-[ Upstream commit e53b22b10c6e0de0cf2a03a92b18fdad70f266c7 ]
+[ Upstream commit 3a23b384e7e3d64d5587ad10729a34d4f761517e ]
 
-Add Intel Lunar Lake-M SoC PCI IDs.
+of_match_device() may fail and returns a NULL pointer.
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20231002083344.75611-1-jarkko.nikula@linux.intel.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+In practice there is no known reasonable way to trigger this, but
+in case one is added in future, harden the code by adding the check
+
+Signed-off-by: Zhang Shurong <zhang_shurong@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_994DA85912C937E3B5405BA960B31ED90A08@qq.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel-lpss-pci.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/iio/adc/stm32-adc-core.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/intel-lpss-pci.c b/drivers/mfd/intel-lpss-pci.c
-index 699f44ffff0e4..ae5759200622c 100644
---- a/drivers/mfd/intel-lpss-pci.c
-+++ b/drivers/mfd/intel-lpss-pci.c
-@@ -561,6 +561,19 @@ static const struct pci_device_id intel_lpss_pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0xa3e2), (kernel_ulong_t)&spt_i2c_info },
- 	{ PCI_VDEVICE(INTEL, 0xa3e3), (kernel_ulong_t)&spt_i2c_info },
- 	{ PCI_VDEVICE(INTEL, 0xa3e6), (kernel_ulong_t)&spt_uart_info },
-+	/* LNL-M */
-+	{ PCI_VDEVICE(INTEL, 0xa825), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0xa826), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0xa827), (kernel_ulong_t)&tgl_info },
-+	{ PCI_VDEVICE(INTEL, 0xa830), (kernel_ulong_t)&tgl_info },
-+	{ PCI_VDEVICE(INTEL, 0xa846), (kernel_ulong_t)&tgl_info },
-+	{ PCI_VDEVICE(INTEL, 0xa850), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0xa851), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0xa852), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0xa878), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0xa879), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0xa87a), (kernel_ulong_t)&ehl_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0xa87b), (kernel_ulong_t)&ehl_i2c_info },
- 	{ }
- };
- MODULE_DEVICE_TABLE(pci, intel_lpss_pci_ids);
+diff --git a/drivers/iio/adc/stm32-adc-core.c b/drivers/iio/adc/stm32-adc-core.c
+index 2f082006550fd..bbd5bdd732f01 100644
+--- a/drivers/iio/adc/stm32-adc-core.c
++++ b/drivers/iio/adc/stm32-adc-core.c
+@@ -708,6 +708,8 @@ static int stm32_adc_probe(struct platform_device *pdev)
+ 	struct stm32_adc_priv *priv;
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = pdev->dev.of_node;
++	const struct of_device_id *of_id;
++
+ 	struct resource *res;
+ 	u32 max_rate;
+ 	int ret;
+@@ -720,8 +722,11 @@ static int stm32_adc_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 	platform_set_drvdata(pdev, &priv->common);
+ 
+-	priv->cfg = (const struct stm32_adc_priv_cfg *)
+-		of_match_device(dev->driver->of_match_table, dev)->data;
++	of_id = of_match_device(dev->driver->of_match_table, dev);
++	if (!of_id)
++		return -ENODEV;
++
++	priv->cfg = (const struct stm32_adc_priv_cfg *)of_id->data;
+ 	priv->nb_adc_max = priv->cfg->num_adcs;
+ 	spin_lock_init(&priv->common.lock);
+ 
 -- 
 2.42.0
 
