@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801FB3A8CA;
-	Fri, 24 Nov 2023 18:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BD23BB20;
+	Fri, 24 Nov 2023 18:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrkILkLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0869DC433C7;
-	Fri, 24 Nov 2023 18:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDjdYkdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706C7C433C7;
+	Fri, 24 Nov 2023 18:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850669;
-	bh=VoJuWfubMBaTpihTay4bE8UGwrFbrKLWBfAXt2EKupE=;
+	s=korg; t=1700850671;
+	bh=W5189LlvjNka7zIx02HlV9ijRCeInRxWsfxnMheeT6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrkILkLSFxmiKyWsxgrybBR944EWDX/d9u1yLTFe4J7y7IGtGMmF0plubifACWalN
-	 r6GUqjWeZ/hWBefHz0oO+y2vG1iQQeHoLVDQysscQjMM5Kz12F8LS6QbW6N8EIkvmF
-	 NBBpqe5nfnvKLeJro5c7c6CSv0D6BgxegNgOeLZA=
+	b=sDjdYkdRaCPZ4iw/Kq9W9yuAcFBJhfa+ggMTFWw3OYr2yaOhQRrNvWjAbIGXbfG8/
+	 blChhjX/enbktH1opfPiWsKBjn4o0OQXaEz3Kdvd3e6SDQgQCPgPwE2KfFmGdi6n5M
+	 VORFRv33uExURZUGnSHZjPE/U7jBdChyzej+6mZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 107/491] ASoC: Intel: soc-acpi-cht: Add Lenovo Yoga Tab 3 Pro YT3-X90 quirk
-Date: Fri, 24 Nov 2023 17:45:43 +0000
-Message-ID: <20231124172027.772191328@linuxfoundation.org>
+Subject: [PATCH 6.5 135/491] media: ipu-bridge: increase sensor_name size
+Date: Fri, 24 Nov 2023 17:46:11 +0000
+Message-ID: <20231124172028.555531580@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,88 +42,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 2cb54788393134d8174ee594002baae3ce52c61e ]
+[ Upstream commit 83d0d4cc1423194b580356966107379490edd02e ]
 
-The Lenovo Yoga Tab 3 Pro YT3-X90 x86 tablet, which ships with Android with
-a custom kernel as factory OS, does not list the used WM5102 codec inside
-its DSDT.
+Fixes this compiler warning:
 
-Workaround this with a new snd_soc_acpi_intel_baytrail_machines[] entry
-which matches on the SST id instead of the codec id like nocodec does,
-combined with using a machine_quirk callback which returns NULL on
-other machines to skip the new entry on other machines.
+In file included from include/linux/property.h:14,
+                 from include/linux/acpi.h:16,
+                 from drivers/media/pci/intel/ipu-bridge.c:4:
+In function 'ipu_bridge_init_swnode_names',
+    inlined from 'ipu_bridge_create_connection_swnodes' at drivers/media/pci/intel/ipu-bridge.c:445:2,
+    inlined from 'ipu_bridge_connect_sensor' at drivers/media/pci/intel/ipu-bridge.c:656:3:
+include/linux/fwnode.h:81:49: warning: '%u' directive output may be truncated writing between 1 and 3 bytes into a region of size 2 [-Wformat-truncation=]
+   81 | #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
+      |                                                 ^~~~~~~~~
+drivers/media/pci/intel/ipu-bridge.c:384:18: note: in expansion of macro 'SWNODE_GRAPH_PORT_NAME_FMT'
+  384 |                  SWNODE_GRAPH_PORT_NAME_FMT, sensor->link);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+include/linux/fwnode.h: In function 'ipu_bridge_connect_sensor':
+include/linux/fwnode.h:81:55: note: format string is defined here
+   81 | #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
+      |                                                       ^~
+In function 'ipu_bridge_init_swnode_names',
+    inlined from 'ipu_bridge_create_connection_swnodes' at drivers/media/pci/intel/ipu-bridge.c:445:2,
+    inlined from 'ipu_bridge_connect_sensor' at drivers/media/pci/intel/ipu-bridge.c:656:3:
+include/linux/fwnode.h:81:49: note: directive argument in the range [0, 255]
+   81 | #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
+      |                                                 ^~~~~~~~~
+drivers/media/pci/intel/ipu-bridge.c:384:18: note: in expansion of macro 'SWNODE_GRAPH_PORT_NAME_FMT'
+  384 |                  SWNODE_GRAPH_PORT_NAME_FMT, sensor->link);
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/media/pci/intel/ipu-bridge.c:382:9: note: 'snprintf' output between 7 and 9 bytes into a destination of size 7
+  382 |         snprintf(sensor->node_names.remote_port,
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  383 |                  sizeof(sensor->node_names.remote_port),
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  384 |                  SWNODE_GRAPH_PORT_NAME_FMT, sensor->link);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231021211534.114991-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/common/soc-acpi-intel-cht-match.c   | 43 +++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/media/pci/intel/ipu-bridge.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-cht-match.c b/sound/soc/intel/common/soc-acpi-intel-cht-match.c
-index cdcbf04b8832f..5e2ec60e2954b 100644
---- a/sound/soc/intel/common/soc-acpi-intel-cht-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-cht-match.c
-@@ -75,6 +75,39 @@ static struct snd_soc_acpi_mach *cht_ess8316_quirk(void *arg)
- 	return arg;
- }
+diff --git a/drivers/media/pci/intel/ipu-bridge.h b/drivers/media/pci/intel/ipu-bridge.h
+index 1ff0b2d04d929..1ed53d51e16a1 100644
+--- a/drivers/media/pci/intel/ipu-bridge.h
++++ b/drivers/media/pci/intel/ipu-bridge.h
+@@ -103,7 +103,7 @@ struct ipu_property_names {
+ struct ipu_node_names {
+ 	char port[7];
+ 	char endpoint[11];
+-	char remote_port[7];
++	char remote_port[9];
+ 	char vcm[16];
+ };
  
-+/*
-+ * The Lenovo Yoga Tab 3 Pro YT3-X90, with Android factory OS has a buggy DSDT
-+ * with the coded not being listed at all.
-+ */
-+static const struct dmi_system_id lenovo_yoga_tab3_x90[] = {
-+	{
-+		/* Lenovo Yoga Tab 3 Pro YT3-X90, codec missing from DSDT */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
-+			DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
-+		},
-+	},
-+	{ }
-+};
-+
-+static struct snd_soc_acpi_mach cht_lenovo_yoga_tab3_x90_mach = {
-+	.id = "10WM5102",
-+	.drv_name = "bytcr_wm5102",
-+	.fw_filename = "intel/fw_sst_22a8.bin",
-+	.board = "bytcr_wm5102",
-+	.sof_tplg_filename = "sof-cht-wm5102.tplg",
-+};
-+
-+static struct snd_soc_acpi_mach *lenovo_yt3_x90_quirk(void *arg)
-+{
-+	if (dmi_check_system(lenovo_yoga_tab3_x90))
-+		return &cht_lenovo_yoga_tab3_x90_mach;
-+
-+	/* Skip wildcard match snd_soc_acpi_intel_cherrytrail_machines[] entry */
-+	return NULL;
-+}
-+
- static const struct snd_soc_acpi_codecs rt5640_comp_ids = {
- 	.num_codecs = 2,
- 	.codecs = { "10EC5640", "10EC3276" },
-@@ -175,6 +208,16 @@ struct snd_soc_acpi_mach  snd_soc_acpi_intel_cherrytrail_machines[] = {
- 		.drv_name = "sof_pcm512x",
- 		.sof_tplg_filename = "sof-cht-src-50khz-pcm512x.tplg",
- 	},
-+	/*
-+	 * Special case for the Lenovo Yoga Tab 3 Pro YT3-X90 where the DSDT
-+	 * misses the codec. Match on the SST id instead, lenovo_yt3_x90_quirk()
-+	 * will return a YT3 specific mach or NULL when called on other hw,
-+	 * skipping this entry.
-+	 */
-+	{
-+		.id = "808622A8",
-+		.machine_quirk = lenovo_yt3_x90_quirk,
-+	},
- 
- #if IS_ENABLED(CONFIG_SND_SOC_INTEL_BYT_CHT_NOCODEC_MACH)
- 	/*
 -- 
 2.42.0
 
