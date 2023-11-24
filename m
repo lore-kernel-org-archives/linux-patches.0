@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7E435F04;
-	Fri, 24 Nov 2023 19:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6041D35F04;
+	Fri, 24 Nov 2023 19:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpIGEOih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B71C433C8;
-	Fri, 24 Nov 2023 19:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uaV3ZpUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AF6C433C8;
+	Fri, 24 Nov 2023 19:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853775;
-	bh=R6zBERxDCLWuMN/ZmaOkF1g5AL/T9bJBjK1YOtIA540=;
+	s=korg; t=1700853778;
+	bh=PhrbjZrrZtTERL3xuCI292yurBy14OoFs64hQEvmSCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tpIGEOih1BErlcZpy/SnLjIj9UtYpY0+KKwrbSD1BlBP3wcAMYnH5QjAVAbacLYlv
-	 wW2+j+ULceXpmc2g0uvjzaSX0rl4B9u/9polq3wAvB/+VxPpfcVxuxvG/x0q0rJPZ4
-	 FmcvyLa7CTg14yLImQHKrHiULOv3Kn2F7FIxZwF4=
+	b=uaV3ZpUlk1K0J18o6u1fMjjyPjIJBFgp13asobundeh7LAqJu6DAwHAO8lp45NngF
+	 I3zeNliu6W0TknmIV8yrgxCphi+4rq/MbmlDklNHhFT1Jxewss2OVIpLu3CR+V/MJF
+	 /0E4ROwsref5R3h2b9BQBrIn3o0PrXJoR9ME7arw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Whitchurch <vincent.whitchurch@axis.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/159] ARM: 9320/1: fix stack depot IRQ stack filter
-Date: Fri, 24 Nov 2023 17:54:03 +0000
-Message-ID: <20231124171942.948387263@linuxfoundation.org>
+Subject: [PATCH 5.4 027/159] ALSA: hda: Fix possible null-ptr-deref when assigning a stream
+Date: Fri, 24 Nov 2023 17:54:04 +0000
+Message-ID: <20231124171943.000344593@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -42,43 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Whitchurch <vincent.whitchurch@axis.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit b0150014878c32197cfa66e3e2f79e57f66babc0 ]
+[ Upstream commit f93dc90c2e8ed664985e366aa6459ac83cdab236 ]
 
-Place IRQ handlers such as gic_handle_irq() in the irqentry section even
-if FUNCTION_GRAPH_TRACER is not enabled.  Without this, the stack
-depot's filter_irq_stacks() does not correctly filter out IRQ stacks in
-those configurations, which hampers deduplication and eventually leads
-to "Stack depot reached limit capacity" splats with KASAN.
+While AudioDSP drivers assign streams exclusively of HOST or LINK type,
+nothing blocks a user to attempt to assign a COUPLED stream. As
+supplied substream instance may be a stub, what is the case when
+code-loading, such scenario ends with null-ptr-deref.
 
-A similar fix was done for arm64 in commit f6794950f0e5ba37e3bbed
-("arm64: set __exception_irq_entry with __irq_entry as a default").
-
-Link: https://lore.kernel.org/r/20230803-arm-irqentry-v1-1-8aad8e260b1c@axis.com
-
-Signed-off-by: Vincent Whitchurch <vincent.whitchurch@axis.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://lore.kernel.org/r/20231006102857.749143-2-cezary.rojewski@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/exception.h | 4 ----
- 1 file changed, 4 deletions(-)
+ sound/hda/hdac_stream.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/include/asm/exception.h b/arch/arm/include/asm/exception.h
-index 58e039a851af0..3c82975d46db3 100644
---- a/arch/arm/include/asm/exception.h
-+++ b/arch/arm/include/asm/exception.h
-@@ -10,10 +10,6 @@
+diff --git a/sound/hda/hdac_stream.c b/sound/hda/hdac_stream.c
+index 2beb94828729d..f810f401c1de8 100644
+--- a/sound/hda/hdac_stream.c
++++ b/sound/hda/hdac_stream.c
+@@ -313,8 +313,10 @@ struct hdac_stream *snd_hdac_stream_assign(struct hdac_bus *bus,
+ 	struct hdac_stream *res = NULL;
  
- #include <linux/interrupt.h>
+ 	/* make a non-zero unique key for the substream */
+-	int key = (substream->pcm->device << 16) | (substream->number << 2) |
+-		(substream->stream + 1);
++	int key = (substream->number << 2) | (substream->stream + 1);
++
++	if (substream->pcm)
++		key |= (substream->pcm->device << 16);
  
--#ifdef CONFIG_FUNCTION_GRAPH_TRACER
- #define __exception_irq_entry	__irq_entry
--#else
--#define __exception_irq_entry
--#endif
- 
- #endif /* __ASM_ARM_EXCEPTION_H */
+ 	spin_lock_irq(&bus->reg_lock);
+ 	list_for_each_entry(azx_dev, &bus->stream_list, list) {
 -- 
 2.42.0
 
