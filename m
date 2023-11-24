@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D80439FE8;
-	Fri, 24 Nov 2023 18:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2DF39FE1;
+	Fri, 24 Nov 2023 18:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfM6YFMM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F9EC433C7;
-	Fri, 24 Nov 2023 18:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sO7Pqhc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA9CC433C7;
+	Fri, 24 Nov 2023 18:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850234;
-	bh=jkd2WIVSg1u+BYeg5glCZDJss1xcFvhGbiXSoq2tKL0=;
+	s=korg; t=1700850236;
+	bh=3JPGcNkCgX+A/UP1SDxH+X0jT6H7f4iDZPtw66tG42o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfM6YFMMB/J7+nAvRoccBFSR+v2wIRqY0y5qPFgQry52qjDidDDUno1C2zeKe62EQ
-	 +yuJoKf0mq4zvr7L6qfSIqH9TSddg86gNb2OugcBHhla3/itR+nmtd03EHtbC4aLv1
-	 BjrjRhDSQOlY1JhZUDjz7cTVYWRsGQ2fhFhmDdQs=
+	b=sO7Pqhc9LnmCtk5JTpZ3HZHVmRrwj6DED3ZTahmWZ908H2X/RNvdIxJIBkPGmi12J
+	 +HOjyfyMwrAl1lsALNLPuFC0bLaZ5yTtIHTwVwoSSL6k0AiGMjq+i4AJP/k+6k9UcK
+	 4U7wi3iOaUH9BiyzkddyUdWJ5lqGUiK4CVnYnpPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 499/530] ext4: correct offset of gdb backup in non meta_bg group to update_backups
-Date: Fri, 24 Nov 2023 17:51:05 +0000
-Message-ID: <20231124172043.343226815@linuxfoundation.org>
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	stable@kernel.org,
+	Jan Kara <jack@suse.cz>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.6 500/530] ext4: mark buffer new if it is unwritten to avoid stale data exposure
+Date: Fri, 24 Nov 2023 17:51:06 +0000
+Message-ID: <20231124172043.374116947@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,57 +44,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-commit 31f13421c004a420c0e9d288859c9ea9259ea0cc upstream.
+commit 2cd8bdb5efc1e0d5b11a4b7ba6b922fd2736a87f upstream.
 
-Commit 0aeaa2559d6d5 ("ext4: fix corruption when online resizing a 1K
-bigalloc fs") found that primary superblock's offset in its group is
-not equal to offset of backup superblock in its group when block size
-is 1K and bigalloc is enabled. As group descriptor blocks are right
-after superblock, we can't pass block number of gdb to update_backups
-for the same reason.
+** Short Version **
 
-The root casue of the issue above is that leading 1K padding block is
-count as data block offset for primary block while backup block has no
-padding block offset in its group.
+In ext4 with dioread_nolock, we could have a scenario where the bh returned by
+get_blocks (ext4_get_block_unwritten()) in __block_write_begin_int() has
+UNWRITTEN and MAPPED flag set. Since such a bh does not have NEW flag set we
+never zero out the range of bh that is not under write, causing whatever stale
+data is present in the folio at that time to be written out to disk. To fix this
+mark the buffer as new, in case it is unwritten, in ext4_get_block_unwritten().
 
-Remove padding data block count to fix the issue for gdb backups.
+** Long Version **
 
-For meta_bg case, update_backups treat blk_off as block number, do no
-conversion in this case.
+The issue mentioned above was resulting in two different bugs:
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230826174712.4059355-2-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+1. On block size < page size case in ext4, generic/269 was reliably
+failing with dioread_nolock. The state of the write was as follows:
+
+  * The write was extending i_size.
+  * The last block of the file was fallocated and had an unwritten extent
+  * We were near ENOSPC and hence we were switching to non-delayed alloc
+    allocation.
+
+In this case, the back trace that triggers the bug is as follows:
+
+  ext4_da_write_begin()
+    /* switch to nodelalloc due to low space */
+    ext4_write_begin()
+      ext4_should_dioread_nolock() // true since mount flags still have delalloc
+      __block_write_begin(..., ext4_get_block_unwritten)
+        __block_write_begin_int()
+          for(each buffer head in page) {
+            /* first iteration, this is bh1 which contains i_size */
+            if (!buffer_mapped)
+              get_block() /* returns bh with only UNWRITTEN and MAPPED */
+            /* second iteration, bh2 */
+              if (!buffer_mapped)
+                get_block() /* we fail here, could be ENOSPC */
+          }
+          if (err)
+            /*
+             * this would zero out all new buffers and mark them uptodate.
+             * Since bh1 was never marked new, we skip it here which causes
+             * the bug later.
+             */
+            folio_zero_new_buffers();
+      /* ext4_wrte_begin() error handling */
+      ext4_truncate_failed_write()
+        ext4_truncate()
+          ext4_block_truncate_page()
+            __ext4_block_zero_page_range()
+              if(!buffer_uptodate())
+                ext4_read_bh_lock()
+                  ext4_read_bh() -> ... ext4_submit_bh_wbc()
+                    BUG_ON(buffer_unwritten(bh)); /* !!! */
+
+2. The second issue is stale data exposure with page size >= blocksize
+with dioread_nolock. The conditions needed for it to happen are same as
+the previous issue ie dioread_nolock around ENOSPC condition. The issue
+is also similar where in __block_write_begin_int() when we call
+ext4_get_block_unwritten() on the buffer_head and the underlying extent
+is unwritten, we get an unwritten and mapped buffer head. Since it is
+not new, we never zero out the partial range which is not under write,
+thus writing stale data to disk. This can be easily observed with the
+following reproducer:
+
+ fallocate -l 4k testfile
+ xfs_io -c "pwrite 2k 2k" testfile
+ # hexdump output will have stale data in from byte 0 to 2k in testfile
+ hexdump -C testfile
+
+NOTE: To trigger this, we need dioread_nolock enabled and write happening via
+ext4_write_begin(), which is usually used when we have -o nodealloc. Since
+dioread_nolock is disabled with nodelalloc, the only alternate way to call
+ext4_write_begin() is to ensure that delayed alloc switches to nodelalloc ie
+ext4_da_write_begin() calls ext4_write_begin(). This will usually happen when
+ext4 is almost full like the way generic/269 was triggering it in Issue 1 above.
+This might make the issue harder to hit. Hence, for reliable replication, I used
+the below patch to temporarily allow dioread_nolock with nodelalloc and then
+mount the disk with -o nodealloc,dioread_nolock. With this you can hit the stale
+data issue 100% of times:
+
+@@ -508,8 +508,8 @@ static inline int ext4_should_dioread_nolock(struct inode *inode)
+  if (ext4_should_journal_data(inode))
+    return 0;
+  /* temporary fix to prevent generic/422 test failures */
+- if (!test_opt(inode->i_sb, DELALLOC))
+-   return 0;
++ // if (!test_opt(inode->i_sb, DELALLOC))
++ //  return 0;
+  return 1;
+ }
+
+After applying this patch to mark buffer as NEW, both the above issues are
+fixed.
+
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Cc: stable@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/d0ed09d70a9733fbb5349c5c7b125caac186ecdf.1695033645.git.ojaswin@linux.ibm.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/resize.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ext4/inode.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -1601,6 +1601,8 @@ exit_journal:
- 		int gdb_num_end = ((group + flex_gd->count - 1) /
- 				   EXT4_DESC_PER_BLOCK(sb));
- 		int meta_bg = ext4_has_feature_meta_bg(sb);
-+		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
-+					 ext4_group_first_block_no(sb, 0);
- 		sector_t old_gdb = 0;
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -789,10 +789,22 @@ int ext4_get_block(struct inode *inode,
+ int ext4_get_block_unwritten(struct inode *inode, sector_t iblock,
+ 			     struct buffer_head *bh_result, int create)
+ {
++	int ret = 0;
++
+ 	ext4_debug("ext4_get_block_unwritten: inode %lu, create flag %d\n",
+ 		   inode->i_ino, create);
+-	return _ext4_get_block(inode, iblock, bh_result,
++	ret = _ext4_get_block(inode, iblock, bh_result,
+ 			       EXT4_GET_BLOCKS_CREATE_UNWRIT_EXT);
++
++	/*
++	 * If the buffer is marked unwritten, mark it as new to make sure it is
++	 * zeroed out correctly in case of partial writes. Otherwise, there is
++	 * a chance of stale data getting exposed.
++	 */
++	if (ret == 0 && buffer_unwritten(bh_result))
++		set_buffer_new(bh_result);
++
++	return ret;
+ }
  
- 		update_backups(sb, ext4_group_first_block_no(sb, 0),
-@@ -1612,8 +1614,8 @@ exit_journal:
- 						     gdb_num);
- 			if (old_gdb == gdb_bh->b_blocknr)
- 				continue;
--			update_backups(sb, gdb_bh->b_blocknr, gdb_bh->b_data,
--				       gdb_bh->b_size, meta_bg);
-+			update_backups(sb, gdb_bh->b_blocknr - padding_blocks,
-+				       gdb_bh->b_data, gdb_bh->b_size, meta_bg);
- 			old_gdb = gdb_bh->b_blocknr;
- 		}
- 	}
+ /* Maximum number of blocks we map for direct IO at once. */
 
 
