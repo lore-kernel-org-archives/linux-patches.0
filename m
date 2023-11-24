@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FF939FD7;
-	Fri, 24 Nov 2023 17:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F70D39FD9;
+	Fri, 24 Nov 2023 17:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVv4krt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE48C433C8;
-	Fri, 24 Nov 2023 17:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdjCbPxy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28878C433C8;
+	Fri, 24 Nov 2023 17:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848788;
-	bh=E8aVgq1zeAhsnafPvtifcJbo/4Oo9DvhiM0jT+wqNuI=;
+	s=korg; t=1700848790;
+	bh=h/KP59Vkx7H1tuwHWLVHtyI80VLGXLOcPAHxiflpMOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVv4krt5qByjEYMMtayfvrzHUhQkGixT8xv+ja21mU2KQ1Ttn0IpPLq6ZqnyosQSf
-	 vRUWjMJBcYoK4gzaCWWA7OfwBAuMGdc3Ybm0FzxPkSOJWqJNl8bKQk6jImVQbphbPH
-	 P91tfDQpjLCZW5em7oUJUR1qlP7ghWWXofyH9wGI=
+	b=EdjCbPxyJ62END0aLmIE/LsLpYx6ZfzbCLqoN7laFRoRc+E4FqbTFpMvrK88elJKn
+	 ppILlIi6rGfoonE1VyaWDe/KWi5FUBG2t7UM+zy8EQbQUD05/BZ2zW+OTdFLhhhkSf
+	 sswSlqTkx3DD3JxbIiT2SiZYD64J1kGerx1wDbys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Krasavin <pkrasavin@imaqliq.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Rokosov <ddrokosov@salutedevices.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 81/97] tty: serial: meson: fix hard LOCKUP on crtscts mode
-Date: Fri, 24 Nov 2023 17:50:54 +0000
-Message-ID: <20231124171937.203125282@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.19 82/97] net: dsa: lan9303: consequently nested-lock physical MDIO
+Date: Fri, 24 Nov 2023 17:50:55 +0000
+Message-ID: <20231124171937.239501559@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -43,101 +42,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Krasavin <pkrasavin@imaqliq.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 2a1d728f20edeee7f26dc307ed9df4e0d23947ab ]
+commit 5a22fbcc10f3f7d94c5d88afbbffa240a3677057 upstream.
 
-There might be hard lockup if we set crtscts mode on port without RTS/CTS configured:
+When LAN9303 is MDIO-connected two callchains exist into
+mdio->bus->write():
 
-# stty -F /dev/ttyAML6 crtscts; echo 1 > /dev/ttyAML6; echo 2 > /dev/ttyAML6
-[   95.890386] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-[   95.890857] rcu:     3-...0: (201 ticks this GP) idle=e33c/1/0x4000000000000000 softirq=5844/5846 fqs=4984
-[   95.900212] rcu:     (detected by 2, t=21016 jiffies, g=7753, q=296 ncpus=4)
-[   95.906972] Task dump for CPU 3:
-[   95.910178] task:bash            state:R  running task     stack:0     pid:205   ppid:1      flags:0x00000202
-[   95.920059] Call trace:
-[   95.922485]  __switch_to+0xe4/0x168
-[   95.925951]  0xffffff8003477508
-[   95.974379] watchdog: Watchdog detected hard LOCKUP on cpu 3
-[   95.974424] Modules linked in: 88x2cs(O) rtc_meson_vrtc
+1. switch ports 1&2 ("physical" PHYs):
 
-Possible solution would be to not allow to setup crtscts on such port.
+virtual (switch-internal) MDIO bus (lan9303_switch_ops->phy_{read|write})->
+  lan9303_mdio_phy_{read|write} -> mdiobus_{read|write}_nested
 
-Tested on S905X3 based board.
+2. LAN9303 virtual PHY:
 
-Fixes: ff7693d079e5 ("ARM: meson: serial: add MesonX SoC on-chip uart driver")
+virtual MDIO bus (lan9303_phy_{read|write}) ->
+  lan9303_virt_phy_reg_{read|write} -> regmap -> lan9303_mdio_{read|write}
+
+If the latter functions just take
+mutex_lock(&sw_dev->device->bus->mdio_lock) it triggers a LOCKDEP
+false-positive splat. It's false-positive because the first
+mdio_lock in the second callchain above belongs to virtual MDIO bus, the
+second mdio_lock belongs to physical MDIO bus.
+
+Consequent annotation in lan9303_mdio_{read|write} as nested lock
+(similar to lan9303_mdio_phy_{read|write}, it's the same physical MDIO bus)
+prevents the following splat:
+
+WARNING: possible circular locking dependency detected
+5.15.71 #1 Not tainted
+------------------------------------------------------
+kworker/u4:3/609 is trying to acquire lock:
+ffff000011531c68 (lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock){+.+.}-{3:3}, at: regmap_lock_mutex
+but task is already holding lock:
+ffff0000114c44d8 (&bus->mdio_lock){+.+.}-{3:3}, at: mdiobus_read
+which lock already depends on the new lock.
+the existing dependency chain (in reverse order) is:
+-> #1 (&bus->mdio_lock){+.+.}-{3:3}:
+       lock_acquire
+       __mutex_lock
+       mutex_lock_nested
+       lan9303_mdio_read
+       _regmap_read
+       regmap_read
+       lan9303_probe
+       lan9303_mdio_probe
+       mdio_probe
+       really_probe
+       __driver_probe_device
+       driver_probe_device
+       __device_attach_driver
+       bus_for_each_drv
+       __device_attach
+       device_initial_probe
+       bus_probe_device
+       deferred_probe_work_func
+       process_one_work
+       worker_thread
+       kthread
+       ret_from_fork
+-> #0 (lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock){+.+.}-{3:3}:
+       __lock_acquire
+       lock_acquire.part.0
+       lock_acquire
+       __mutex_lock
+       mutex_lock_nested
+       regmap_lock_mutex
+       regmap_read
+       lan9303_phy_read
+       dsa_slave_phy_read
+       __mdiobus_read
+       mdiobus_read
+       get_phy_device
+       mdiobus_scan
+       __mdiobus_register
+       dsa_register_switch
+       lan9303_probe
+       lan9303_mdio_probe
+       mdio_probe
+       really_probe
+       __driver_probe_device
+       driver_probe_device
+       __device_attach_driver
+       bus_for_each_drv
+       __device_attach
+       device_initial_probe
+       bus_probe_device
+       deferred_probe_work_func
+       process_one_work
+       worker_thread
+       kthread
+       ret_from_fork
+other info that might help us debug this:
+ Possible unsafe locking scenario:
+       CPU0                    CPU1
+       ----                    ----
+  lock(&bus->mdio_lock);
+                               lock(lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock);
+                               lock(&bus->mdio_lock);
+  lock(lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock);
+*** DEADLOCK ***
+5 locks held by kworker/u4:3/609:
+ #0: ffff000002842938 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work
+ #1: ffff80000bacbd60 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work
+ #2: ffff000007645178 (&dev->mutex){....}-{3:3}, at: __device_attach
+ #3: ffff8000096e6e78 (dsa2_mutex){+.+.}-{3:3}, at: dsa_register_switch
+ #4: ffff0000114c44d8 (&bus->mdio_lock){+.+.}-{3:3}, at: mdiobus_read
+stack backtrace:
+CPU: 1 PID: 609 Comm: kworker/u4:3 Not tainted 5.15.71 #1
+Workqueue: events_unbound deferred_probe_work_func
+Call trace:
+ dump_backtrace
+ show_stack
+ dump_stack_lvl
+ dump_stack
+ print_circular_bug
+ check_noncircular
+ __lock_acquire
+ lock_acquire.part.0
+ lock_acquire
+ __mutex_lock
+ mutex_lock_nested
+ regmap_lock_mutex
+ regmap_read
+ lan9303_phy_read
+ dsa_slave_phy_read
+ __mdiobus_read
+ mdiobus_read
+ get_phy_device
+ mdiobus_scan
+ __mdiobus_register
+ dsa_register_switch
+ lan9303_probe
+ lan9303_mdio_probe
+...
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Krasavin <pkrasavin@imaqliq.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Rokosov <ddrokosov@salutedevices.com>
-
-v6: stable tag added
-v5: https://lore.kernel.org/lkml/OF43DA36FF.2BD3BB21-ON00258A47.005A8125-00258A47.005A9513@gdc.ru/
-added missed Reviewed-by tags, Fixes tag added according to Dmitry and Neil notes
-v4: https://lore.kernel.org/lkml/OF55521400.7512350F-ON00258A47.003F7254-00258A47.0040E15C@gdc.ru/
-More correct patch subject according to Jiri's note
-v3: https://lore.kernel.org/lkml/OF6CF5FFA0.CCFD0E8E-ON00258A46.00549EDF-00258A46.0054BB62@gdc.ru/
-"From:" line added to the mail
-v2: https://lore.kernel.org/lkml/OF950BEF72.7F425944-ON00258A46.00488A76-00258A46.00497D44@gdc.ru/
-braces for single statement removed according to Dmitry's note
-v1: https://lore.kernel.org/lkml/OF28B2B8C9.5BC0CD28-ON00258A46.0037688F-00258A46.0039155B@gdc.ru/
-Link: https://lore.kernel.org/r/OF66360032.51C36182-ON00258A48.003F656B-00258A48.0040092C@gdc.ru
-
+Fixes: dc7005831523 ("net: dsa: LAN9303: add MDIO managed mode support")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20231027065741.534971-1-alexander.sverdlin@siemens.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/meson_uart.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/net/dsa/lan9303_mdio.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
-index a193cbc78ebc0..60c0a4079e093 100644
---- a/drivers/tty/serial/meson_uart.c
-+++ b/drivers/tty/serial/meson_uart.c
-@@ -367,10 +367,14 @@ static void meson_uart_set_termios(struct uart_port *port,
- 	else
- 		val |= AML_UART_STOP_BIT_1SB;
+--- a/drivers/net/dsa/lan9303_mdio.c
++++ b/drivers/net/dsa/lan9303_mdio.c
+@@ -41,7 +41,7 @@ static int lan9303_mdio_write(void *ctx,
+ 	struct lan9303_mdio *sw_dev = (struct lan9303_mdio *)ctx;
  
--	if (cflags & CRTSCTS)
--		val &= ~AML_UART_TWO_WIRE_EN;
--	else
-+	if (cflags & CRTSCTS) {
-+		if (port->flags & UPF_HARD_FLOW)
-+			val &= ~AML_UART_TWO_WIRE_EN;
-+		else
-+			termios->c_cflag &= ~CRTSCTS;
-+	} else {
- 		val |= AML_UART_TWO_WIRE_EN;
-+	}
+ 	reg <<= 2; /* reg num to offset */
+-	mutex_lock(&sw_dev->device->bus->mdio_lock);
++	mutex_lock_nested(&sw_dev->device->bus->mdio_lock, MDIO_MUTEX_NESTED);
+ 	lan9303_mdio_real_write(sw_dev->device, reg, val & 0xffff);
+ 	lan9303_mdio_real_write(sw_dev->device, reg + 2, (val >> 16) & 0xffff);
+ 	mutex_unlock(&sw_dev->device->bus->mdio_lock);
+@@ -59,7 +59,7 @@ static int lan9303_mdio_read(void *ctx,
+ 	struct lan9303_mdio *sw_dev = (struct lan9303_mdio *)ctx;
  
- 	writel(val, port->membase + AML_UART_CONTROL);
- 
-@@ -666,6 +670,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
- 	int ret = 0;
- 	int irq;
-+	bool has_rtscts;
- 
- 	if (pdev->dev.of_node)
- 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
-@@ -693,6 +698,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 		return irq;
- 
- 	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
-+	has_rtscts = of_property_read_bool(pdev->dev.of_node, "uart-has-rtscts");
- 
- 	if (meson_ports[pdev->id]) {
- 		dev_err(&pdev->dev, "port %d already allocated\n", pdev->id);
-@@ -717,6 +723,8 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	port->mapsize = resource_size(res_mem);
- 	port->irq = irq;
- 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
-+	if (has_rtscts)
-+		port->flags |= UPF_HARD_FLOW;
- 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
- 	port->dev = &pdev->dev;
- 	port->line = pdev->id;
--- 
-2.42.0
-
+ 	reg <<= 2; /* reg num to offset */
+-	mutex_lock(&sw_dev->device->bus->mdio_lock);
++	mutex_lock_nested(&sw_dev->device->bus->mdio_lock, MDIO_MUTEX_NESTED);
+ 	*val = lan9303_mdio_real_read(sw_dev->device, reg);
+ 	*val |= (lan9303_mdio_real_read(sw_dev->device, reg + 2) << 16);
+ 	mutex_unlock(&sw_dev->device->bus->mdio_lock);
 
 
