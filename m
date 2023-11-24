@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EA02EAEA;
-	Fri, 24 Nov 2023 19:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6045E2EAEA;
+	Fri, 24 Nov 2023 19:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roeEhtMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F918C433C7;
-	Fri, 24 Nov 2023 19:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8Z+VPcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2569C433C7;
+	Fri, 24 Nov 2023 19:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852864;
-	bh=/4JzRhXKvHDpnmyMQp/wafXoKZdGPP2g39wA91eeBHM=;
+	s=korg; t=1700852867;
+	bh=PmlAVliV+Zl5PbGR4vNEu/ZOoJBIc9UHhPKgQaqyz1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roeEhtMrspIJQr0s8nZo71T1F1BQdmQXIHW21f2PtbMlm23pzfw1cY8eJhr8Pu/Lx
-	 R4JIaTiBTLhfadvHN82tTN1GRWB4x/T4VPhoYWak5fv0f2i2DO6fRRBT9A5W8Rd4IJ
-	 qe3TQUdAmzHlooipZ++qCACpRETMVEKU80xhP0C0=
+	b=l8Z+VPcfym5t/aB+iZl10jNKYEYjc/R05HGbegEEAuO59ttUZ0FS6htneJQ6sCbmz
+	 x6cWP0ERxbbO75k7vDnhvYgI3kKDYLP+3cX3gG+cbX6WVSgAiP0XBBJEo6wENPagHc
+	 7PQMAWhxsAsS/z+Qo/P5+k3Ak0iLkgtTZOxopVJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Larry Finger <Larry.Finger@lwfinger.net>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 154/193] bluetooth: Add device 0bda:887b to device tables
-Date: Fri, 24 Nov 2023 17:54:41 +0000
-Message-ID: <20231124171953.365441468@linuxfoundation.org>
+Subject: [PATCH 5.10 155/193] bluetooth: Add device 13d3:3571 to device tables
+Date: Fri, 24 Nov 2023 17:54:42 +0000
+Message-ID: <20231124171953.403086199@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -44,15 +44,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Larry Finger <Larry.Finger@lwfinger.net>
 
-[ Upstream commit 730a1d1a93a3e30c3723f87af97a8517334b2203 ]
+[ Upstream commit 069f534247bb6db4f8c2c2ea8e9155abf495c37e ]
 
-This device is part of a Realtek RTW8852BE chip.
+This device is part of a Realtek RTW8852BE chip. The device table is as follows:
 
-The device table entry is as follows:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=12 Cnt=02 Dev#=  3 Spd=12   MxCh= 0
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
 D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0bda ProdID=887b Rev= 0.00
+P:  Vendor=13d3 ProdID=3571 Rev= 0.00
 S:  Manufacturer=Realtek
 S:  Product=Bluetooth Radio
 S:  SerialNumber=00e04c000001
@@ -89,14 +87,14 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index fffb73e6f49d4..bb1ec0cac2b29 100644
+index bb1ec0cac2b29..6c225f48a26d4 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -418,6 +418,8 @@ static const struct usb_device_id blacklist_table[] = {
- 	/* Realtek 8852BE Bluetooth devices */
- 	{ USB_DEVICE(0x0cb8, 0xc559), .driver_info = BTUSB_REALTEK |
+@@ -420,6 +420,8 @@ static const struct usb_device_id blacklist_table[] = {
  						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
+ 	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
 +						     BTUSB_WIDEBAND_SPEECH },
  
  	/* Realtek Bluetooth devices */
