@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1A039FD7;
-	Fri, 24 Nov 2023 18:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D7A2AF00;
+	Fri, 24 Nov 2023 18:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAFd6Ude"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C19C433C8;
-	Fri, 24 Nov 2023 18:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTTnBicg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDCDC433C8;
+	Fri, 24 Nov 2023 18:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848960;
-	bh=nAI5d3O94KTYQ8c8zKUMWgIh+WEw4UbA1XR6pxSZ6Io=;
+	s=korg; t=1700848964;
+	bh=EgvyH82N5Olix1tqH3vdF+zzlKhDEJVyIMCfsniksJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GAFd6Ude/gDzJ0nkLw7sqmeSCXMtI8Oeqiia0lS3iyExuJ6xTMA00TlYGmyEWHseM
-	 Yt1EcM9Cqdq2esyKFNc6eKNghf+3U8VCAm04h03f43WS99MhByE3QG5SPAjFPpXZG8
-	 stFK4SDaA4sRkLdVhATz6/z0mi0oxjUxQ/Lcsvn8=
+	b=VTTnBicgwSBFqbV3aNLqXhWS19AjrdDE6cUCxL6m/q4yY2J+a/bwBxQTyVVKhsuxG
+	 Je63ue6nB2dXl7I2sr0P1wG/R42dZQm77dUNzIEe06IhTUwp7Kage/eJyqyLNlwg/t
+	 mcoAy4x+VlpR81d0W7/FGd32WkyGv/kuTBBvoh8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Sam Protsenko <semen.protsenko@linaro.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 26/57] pwm: Fix double shift bug
-Date: Fri, 24 Nov 2023 17:50:50 +0000
-Message-ID: <20231124171931.239997561@linuxfoundation.org>
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 4.14 27/57] media: venus: hfi: add checks to perform sanity on queue pointers
+Date: Fri, 24 Nov 2023 17:50:51 +0000
+Message-ID: <20231124171931.276117254@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -38,49 +36,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-[ Upstream commit d27abbfd4888d79dd24baf50e774631046ac4732 ]
+commit 5e538fce33589da6d7cb2de1445b84d3a8a692f7 upstream.
 
-These enums are passed to set/test_bit().  The set/test_bit() functions
-take a bit number instead of a shifted value.  Passing a shifted value
-is a double shift bug like doing BIT(BIT(1)).  The double shift bug
-doesn't cause a problem here because we are only checking 0 and 1 but
-if the value was 5 or above then it can lead to a buffer overflow.
+Read and write pointers are used to track the packet index in the memory
+shared between video driver and firmware. There is a possibility of OOB
+access if the read or write pointer goes beyond the queue memory size.
+Add checks for the read and write pointer to avoid OOB access.
 
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/pwm.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/linux/pwm.h b/include/linux/pwm.h
-index bd7d611d63e91..c6e981035c3fd 100644
---- a/include/linux/pwm.h
-+++ b/include/linux/pwm.h
-@@ -44,8 +44,8 @@ struct pwm_args {
- };
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -220,6 +220,11 @@ static int venus_write_queue(struct venu
  
- enum {
--	PWMF_REQUESTED = 1 << 0,
--	PWMF_EXPORTED = 1 << 1,
-+	PWMF_REQUESTED = 0,
-+	PWMF_EXPORTED = 1,
- };
+ 	new_wr_idx = wr_idx + dwords;
+ 	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
++
++	if (wr_ptr < (u32 *)queue->qmem.kva ||
++	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
++		return -EINVAL;
++
+ 	if (new_wr_idx < qsize) {
+ 		memcpy(wr_ptr, packet, dwords << 2);
+ 	} else {
+@@ -287,6 +292,11 @@ static int venus_read_queue(struct venus
+ 	}
  
- /*
--- 
-2.42.0
-
+ 	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
++
++	if (rd_ptr < (u32 *)queue->qmem.kva ||
++	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
++		return -EINVAL;
++
+ 	dwords = *rd_ptr >> 2;
+ 	if (!dwords)
+ 		return -EINVAL;
 
 
