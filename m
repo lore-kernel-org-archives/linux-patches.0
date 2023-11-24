@@ -1,43 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A832C2D626;
-	Fri, 24 Nov 2023 18:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5D71A5A4;
+	Fri, 24 Nov 2023 18:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUbQ5nGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4182C433C8;
-	Fri, 24 Nov 2023 18:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNXyUz1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB56C433C9;
+	Fri, 24 Nov 2023 18:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851264;
-	bh=aqMaudOxfcL+aVftteqcVJxCdE3QStICEWx1EnVjECA=;
+	s=korg; t=1700851266;
+	bh=+HtF0UPJi9UXrcJ3fbQ6X4l8XAgonknNzMFY6MAQpNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LUbQ5nGd0Vz/dVs+Z8TxmRc23xHSwRQJ4BTbpG36at9he1ZmFU8Fm9Vm3W5MeowEa
-	 QpC4HB0A/kNSOgzucK8GFFe1L0VXeajXrB+b4p3rQ2Bxg5si29PbawYXHBOfLjf6rC
-	 SfYjs30555mw5nZ27uKzh9fCe+01wbuL7mE15hJo=
+	b=KNXyUz1YPj6XlKnHYV5ASrfJN5B9/FpCiRFZJzzyDpbrwH/J4XMcl3rV0LsTFI7Lr
+	 yVMCv+smTB71QAcNzD3yhLdbALUlceRfMviD8DxEwblUcZKmE2Mb6EReVxYLi751yb
+	 g0nOZGP/S710jdgBuNoZ/b11uijWCYaOmf7iyWak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	Alexey Izbyshev <izbyshev@ispras.ru>,
-	David Hildenbrand <david@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Ayush Jain <ayush.jain3@amd.com>,
-	Greg Thelen <gthelen@google.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Peter Xu <peterx@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Szabolcs Nagy <Szabolcs.Nagy@arm.com>,
-	Topi Miettinen <toiwoton@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 353/491] mm: make PR_MDWE_REFUSE_EXEC_GAIN an unsigned long
-Date: Fri, 24 Nov 2023 17:49:49 +0000
-Message-ID: <20231124172035.170441869@linuxfoundation.org>
+	Nicolas Pitre <nico@fluxnic.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.5 354/491] mtd: cfi_cmdset_0001: Byte swap OTP info
+Date: Fri, 24 Nov 2023 17:49:50 +0000
+Message-ID: <20231124172035.203533502@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -56,80 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florent Revest <revest@chromium.org>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 0da668333fb07805c2836d5d50e26eda915b24a1 upstream.
+commit 565fe150624ee77dc63a735cc1b3bff5101f38a3 upstream.
 
-Defining a prctl flag as an int is a footgun because on a 64 bit machine
-and with a variadic implementation of prctl (like in musl and glibc), when
-used directly as a prctl argument, it can get casted to long with garbage
-upper bits which would result in unexpected behaviors.
+Currently the offset into the device when looking for OTP
+bits can go outside of the address of the MTD NOR devices,
+and if that memory isn't readable, bad things happen
+on the IXP4xx (added prints that illustrate the problem before
+the crash):
 
-This patch changes the constant to an unsigned long to eliminate that
-possibilities.  This does not break UAPI.
+cfi_intelext_otp_walk walk OTP on chip 0 start at reg_prot_offset 0x00000100
+ixp4xx_copy_from copy from 0x00000100 to 0xc880dd78
+cfi_intelext_otp_walk walk OTP on chip 0 start at reg_prot_offset 0x12000000
+ixp4xx_copy_from copy from 0x12000000 to 0xc880dd78
+8<--- cut here ---
+Unable to handle kernel paging request at virtual address db000000
+[db000000] *pgd=00000000
+(...)
 
-I think that a stable backport would be "nice to have": to reduce the
-chances that users build binaries that could end up with garbage bits in
-their MDWE prctl arguments.  We are not aware of anyone having yet
-encountered this corner case with MDWE prctls but a backport would reduce
-the likelihood it happens, since this sort of issues has happened with
-other prctls.  But If this is perceived as a backporting burden, I suppose
-we could also live without a stable backport.
+This happens in this case because the IXP4xx is big endian and
+the 32- and 16-bit fields in the struct cfi_intelext_otpinfo are not
+properly byteswapped. Compare to how the code in read_pri_intelext()
+byteswaps the fields in struct cfi_pri_intelext.
 
-Link: https://lkml.kernel.org/r/20230828150858.393570-5-revest@chromium.org
-Fixes: b507808ebce2 ("mm: implement memory-deny-write-execute as a prctl")
-Signed-off-by: Florent Revest <revest@chromium.org>
-Suggested-by: Alexey Izbyshev <izbyshev@ispras.ru>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Ayush Jain <ayush.jain3@amd.com>
-Cc: Greg Thelen <gthelen@google.com>
-Cc: Joey Gouly <joey.gouly@arm.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Szabolcs Nagy <Szabolcs.Nagy@arm.com>
-Cc: Topi Miettinen <toiwoton@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Adding a small byte swapping loop for the OTP in read_pri_intelext()
+and the crash goes away.
+
+The problem went unnoticed for many years until I enabled
+CONFIG_MTD_OTP on the IXP4xx as well, triggering the bug.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicolas Pitre <nico@fluxnic.net>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231020-mtd-otp-byteswap-v4-1-0d132c06aa9d@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/prctl.h       | 2 +-
- tools/include/uapi/linux/prctl.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/chips/cfi_cmdset_0001.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/prctl.h b/include/uapi/linux/prctl.h
-index 3c36aeade991..9a85c69782bd 100644
---- a/include/uapi/linux/prctl.h
-+++ b/include/uapi/linux/prctl.h
-@@ -283,7 +283,7 @@ struct prctl_mm_map {
+--- a/drivers/mtd/chips/cfi_cmdset_0001.c
++++ b/drivers/mtd/chips/cfi_cmdset_0001.c
+@@ -422,9 +422,25 @@ read_pri_intelext(struct map_info *map,
+ 		extra_size = 0;
  
- /* Memory deny write / execute */
- #define PR_SET_MDWE			65
--# define PR_MDWE_REFUSE_EXEC_GAIN	1
-+# define PR_MDWE_REFUSE_EXEC_GAIN	(1UL << 0)
+ 		/* Protection Register info */
+-		if (extp->NumProtectionFields)
++		if (extp->NumProtectionFields) {
++			struct cfi_intelext_otpinfo *otp =
++				(struct cfi_intelext_otpinfo *)&extp->extra[0];
++
+ 			extra_size += (extp->NumProtectionFields - 1) *
+-				      sizeof(struct cfi_intelext_otpinfo);
++				sizeof(struct cfi_intelext_otpinfo);
++
++			if (extp_size >= sizeof(*extp) + extra_size) {
++				int i;
++
++				/* Do some byteswapping if necessary */
++				for (i = 0; i < extp->NumProtectionFields - 1; i++) {
++					otp->ProtRegAddr = le32_to_cpu(otp->ProtRegAddr);
++					otp->FactGroups = le16_to_cpu(otp->FactGroups);
++					otp->UserGroups = le16_to_cpu(otp->UserGroups);
++					otp++;
++				}
++			}
++		}
+ 	}
  
- #define PR_GET_MDWE			66
- 
-diff --git a/tools/include/uapi/linux/prctl.h b/tools/include/uapi/linux/prctl.h
-index 3c36aeade991..9a85c69782bd 100644
---- a/tools/include/uapi/linux/prctl.h
-+++ b/tools/include/uapi/linux/prctl.h
-@@ -283,7 +283,7 @@ struct prctl_mm_map {
- 
- /* Memory deny write / execute */
- #define PR_SET_MDWE			65
--# define PR_MDWE_REFUSE_EXEC_GAIN	1
-+# define PR_MDWE_REFUSE_EXEC_GAIN	(1UL << 0)
- 
- #define PR_GET_MDWE			66
- 
--- 
-2.43.0
-
+ 	if (extp->MinorVersion >= '1') {
 
 
