@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC902C1A2;
-	Fri, 24 Nov 2023 18:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F6533CD1;
+	Fri, 24 Nov 2023 18:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrWEL5FI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A77FC433C8;
-	Fri, 24 Nov 2023 18:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjMoTcvi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADECBC433C7;
+	Fri, 24 Nov 2023 18:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852224;
-	bh=YsbZQLFG7xs0O8bJem+HfqdgfJONGKH7oYIcCdDne88=;
+	s=korg; t=1700852227;
+	bh=JIU44eoLhHKSBFymy4/Rek9l9yrJBWA8ECcZd6xONEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrWEL5FI1zpSLJfOje6Yc5O42cG0a1jPGVkbVlAxSKmFU64QqWo7rxNB5dNtqvgoc
-	 EHqfZg2TjQJ/8JFFWwGpOaBnPbDMIHih48A0/27nOXI03A5UAZHIKrXJeroS39MjH6
-	 WjjiHThyN0GbRniWg+8BC86yGhxZ3gMBT6Np6SjQ=
+	b=pjMoTcvipLS1k9UZ+JYuTmqLGf/oMRQRF4tN6gYE24csDSYWs9WyIkp/az/XmIJLc
+	 ElzExlA9sdSmGQx62bG8HBP3c/xKLZzOikQBE24tBNzetV/94svTD9lv28Wgvkrbon
+	 nWQt8Rti59VuPFdrZUvabGw6X9e5i1O3ktesS5YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Wolfram Sang <wsa@kernel.org>,
-	Nishanth Menon <nm@ti.com>,
-	Benjamin Bara <benjamin.bara@skidata.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 245/372] i2c: core: Run atomic i2c xfer when !preemptible
-Date: Fri, 24 Nov 2023 17:50:32 +0000
-Message-ID: <20231124172018.701648607@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	kernel test robot <lkp@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 246/372] tracing: Have the user copy of synthetic event address use correct context
+Date: Fri, 24 Nov 2023 17:50:33 +0000
+Message-ID: <20231124172018.737112780@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,54 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Bara <benjamin.bara@skidata.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit aa49c90894d06e18a1ee7c095edbd2f37c232d02 upstream.
+commit 4f7969bcd6d33042d62e249b41b5578161e4c868 upstream.
 
-Since bae1d3a05a8b, i2c transfers are non-atomic if preemption is
-disabled. However, non-atomic i2c transfers require preemption (e.g. in
-wait_for_completion() while waiting for the DMA).
+A synthetic event is created by the synthetic event interface that can
+read both user or kernel address memory. In reality, it reads any
+arbitrary memory location from within the kernel. If the address space is
+in USER (where CONFIG_ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE is set) then
+it uses strncpy_from_user_nofault() to copy strings otherwise it uses
+strncpy_from_kernel_nofault().
 
-panic() calls preempt_disable_notrace() before calling
-emergency_restart(). Therefore, if an i2c device is used for the
-restart, the xfer should be atomic. This avoids warnings like:
+But since both functions use the same variable there's no annotation to
+what that variable is (ie. __user). This makes sparse complain.
 
-[   12.667612] WARNING: CPU: 1 PID: 1 at kernel/rcu/tree_plugin.h:318 rcu_note_context_switch+0x33c/0x6b0
-[   12.676926] Voluntary context switch within RCU read-side critical section!
-...
-[   12.742376]  schedule_timeout from wait_for_completion_timeout+0x90/0x114
-[   12.749179]  wait_for_completion_timeout from tegra_i2c_wait_completion+0x40/0x70
-...
-[   12.994527]  atomic_notifier_call_chain from machine_restart+0x34/0x58
-[   13.001050]  machine_restart from panic+0x2a8/0x32c
+Quiet sparse by typecasting the strncpy_from_user_nofault() variable to
+a __user pointer.
 
-Use !preemptible() instead, which is basically the same check as
-pre-v5.2.
+Link: https://lore.kernel.org/linux-trace-kernel/20231031151033.73c42e23@gandalf.local.home
 
-Fixes: bae1d3a05a8b ("i2c: core: remove use of in_atomic()")
-Cc: stable@vger.kernel.org # v5.2+
-Suggested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Acked-by: Wolfram Sang <wsa@kernel.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Tested-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
-Link: https://lore.kernel.org/r/20230327-tegra-pmic-reboot-v7-2-18699d5dcd76@skidata.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Fixes: 0934ae9977c2 ("tracing: Fix reading strings from synthetic events");
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311010013.fm8WTxa5-lkp@intel.com/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core.h |    2 +-
+ kernel/trace/trace_events_synth.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/i2c-core.h
-+++ b/drivers/i2c/i2c-core.h
-@@ -29,7 +29,7 @@ int i2c_dev_irq_from_resources(const str
-  */
- static inline bool i2c_in_atomic_xfer_mode(void)
- {
--	return system_state > SYSTEM_RUNNING && irqs_disabled();
-+	return system_state > SYSTEM_RUNNING && !preemptible();
- }
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -473,7 +473,7 @@ static unsigned int trace_string(struct
  
- static inline int __i2c_lock_bus_helper(struct i2c_adapter *adap)
+ #ifdef CONFIG_ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
+ 		if ((unsigned long)str_val < TASK_SIZE)
+-			ret = strncpy_from_user_nofault(str_field, str_val, STR_VAR_LEN_MAX);
++			ret = strncpy_from_user_nofault(str_field, (const void __user *)str_val, STR_VAR_LEN_MAX);
+ 		else
+ #endif
+ 			ret = strncpy_from_kernel_nofault(str_field, str_val, STR_VAR_LEN_MAX);
 
 
