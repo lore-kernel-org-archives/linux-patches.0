@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53ECE2D787;
-	Fri, 24 Nov 2023 18:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032C32C87B;
+	Fri, 24 Nov 2023 18:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBpHTUml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8B4C433C8;
-	Fri, 24 Nov 2023 18:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJnTwbH7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370B3C433C9;
+	Fri, 24 Nov 2023 18:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852087;
-	bh=/1cxiWP5hlG3eKLOFWff0q5dhvPaYVh76TY07gzUNx0=;
+	s=korg; t=1700852089;
+	bh=qJ5Rp21sSqgFDY9V4E+uO83d06H8R9Sx807V6s8xLGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBpHTUml/ymX21D9UcmfvTih4yu/KMbF1umYmu4aqk1v2CFWrEOKbiqJCYuD4Nfvn
-	 tG/2u05YCgkKV+kJvYlHQoEAs+VzpYlRljsjpQrq+UErAOkq8opXDgVu4/Ejuyh2ni
-	 Kr8WRhENGDVP3W/egt55hT66XKSDLc1Z97LRuf7U=
+	b=lJnTwbH7GvjVihbowEuR04gHH8MEYVKq5Cmg6vdsOW8Ds6kvSEQPQMsGRlrb0fXkr
+	 LWm/KPDOFZfarJe1x23gUUxCKSZwtyQk490HnycbNPC3y32UZD3Gefy6EQSAvrsQyD
+	 HfDGHEOpR+ypjZP07ONRqWxBGEwAB58qSz8BzRuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Yadav <n-yadav@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 214/372] mmc: sdhci_am654: fix start loop index for TAP value parsing
-Date: Fri, 24 Nov 2023 17:50:01 +0000
-Message-ID: <20231124172017.609808290@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Jakub Acs <acsjakub@amazon.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 191/372] mm/damon: implement a function for max nr_accesses safe calculation
+Date: Fri, 24 Nov 2023 17:49:38 +0000
+Message-ID: <20231124172016.829418587@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,35 +42,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Yadav <n-yadav@ti.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 71956d0cb56c1e5f9feeb4819db87a076418e930 upstream.
+commit 35f5d94187a6a3a8df2cba54beccca1c2379edb8 upstream.
 
-ti,otap-del-sel-legacy/ti,itap-del-sel-legacy passed from DT
-are currently ignored for all SD/MMC and eMMC modes. Fix this
-by making start loop index to MMC_TIMING_LEGACY.
+Patch series "avoid divide-by-zero due to max_nr_accesses overflow".
 
-Fixes: 8ee5fc0e0b3b ("mmc: sdhci_am654: Update OTAPDLY writes")
-Signed-off-by: Nitin Yadav <n-yadav@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231026061458.1116276-1-n-yadav@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The maximum nr_accesses of given DAMON context can be calculated by
+dividing the aggregation interval by the sampling interval.  Some logics
+in DAMON uses the maximum nr_accesses as a divisor.  Hence, the value
+shouldn't be zero.  Such case is avoided since DAMON avoids setting the
+agregation interval as samller than the sampling interval.  However, since
+nr_accesses is unsigned int while the intervals are unsigned long, the
+maximum nr_accesses could be zero while casting.
+
+Avoid the divide-by-zero by implementing a function that handles the
+corner case (first patch), and replaces the vulnerable direct max
+nr_accesses calculations (remaining patches).
+
+Note that the patches for the replacements are divided for broken commits,
+to make backporting on required tres easier.  Especially, the last patch
+is for a patch that not yet merged into the mainline but in mm tree.
+
+
+This patch (of 4):
+
+The maximum nr_accesses of given DAMON context can be calculated by
+dividing the aggregation interval by the sampling interval.  Some logics
+in DAMON uses the maximum nr_accesses as a divisor.  Hence, the value
+shouldn't be zero.  Such case is avoided since DAMON avoids setting the
+agregation interval as samller than the sampling interval.  However, since
+nr_accesses is unsigned int while the intervals are unsigned long, the
+maximum nr_accesses could be zero while casting.  Implement a function
+that handles the corner case.
+
+Note that this commit is not fixing the real issue since this is only
+introducing the safe function that will replaces the problematic
+divisions.  The replacements will be made by followup commits, to make
+backporting on stable series easier.
+
+Link: https://lkml.kernel.org/r/20231019194924.100347-1-sj@kernel.org
+Link: https://lkml.kernel.org/r/20231019194924.100347-2-sj@kernel.org
+Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Reported-by: Jakub Acs <acsjakub@amazon.de>
+Cc: <stable@vger.kernel.org>	[5.16+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/damon.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -597,7 +597,7 @@ static int sdhci_am654_get_otap_delay(st
- 		return 0;
- 	}
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -559,6 +559,13 @@ static inline bool damon_target_has_pid(
+ 	return ctx->ops.id == DAMON_OPS_VADDR || ctx->ops.id == DAMON_OPS_FVADDR;
+ }
  
--	for (i = MMC_TIMING_MMC_HS; i <= MMC_TIMING_MMC_HS400; i++) {
-+	for (i = MMC_TIMING_LEGACY; i <= MMC_TIMING_MMC_HS400; i++) {
++static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs)
++{
++	/* {aggr,sample}_interval are unsigned long, hence could overflow */
++	return min(attrs->aggr_interval / attrs->sample_interval,
++			(unsigned long)UINT_MAX);
++}
++
  
- 		ret = device_property_read_u32(dev, td[i].otap_binding,
- 					       &sdhci_am654->otap_del_sel[i]);
+ int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
+ int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
 
 
