@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4862E853;
-	Fri, 24 Nov 2023 18:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4B233090;
+	Fri, 24 Nov 2023 18:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xG7Zut30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD88C433C7;
-	Fri, 24 Nov 2023 18:35:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUDSzS9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9574C433C7;
+	Fri, 24 Nov 2023 18:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850913;
-	bh=85svPIgeVSkbFJjTp1ddFPmtGjiwFgkyRSW+r9jXKI4=;
+	s=korg; t=1700850916;
+	bh=z5yMem1OzlVwnegxkC6RVuewZFAvnzPwBV1tEVoSeXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xG7Zut30F9toJRD8aK7k4kxuSWf6c0geN98+8Zw1KvuzvJSb/T2KXoBDl8RkEHbFy
-	 NQ/TJOFfoLhlJZLpjuO+pHi/EUFUemlsSPGrmdxKsKQLmArLVt9aenpmEDOoNFSouL
-	 74NDGAKXgMJQDNNP9p/2NSxLW4QxO8HlFmLTE4zM=
+	b=gUDSzS9jwBYPBw8rwi7BD6GVFSBFPnuAuCWJqX6nQxGlWwSb+wOhB50+beUt7uJVK
+	 37YYrKAVRrVXfq+j2ulFYMnUCAlDcjBzVm/bCF486+OQ+g5iFRvAwR1QYPw0Dw9VC9
+	 nD8+wFJxkFiomctYgleeR4Sau9+rJiTzA9XoayNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitri John Ledkov <dimitri.ledkov@canonical.com>,
-	Julian Andres Klode <julian.klode@canonical.com>,
-	Roxana Nicolescu <roxana.nicolescu@canonical.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.5 238/491] crypto: x86/sha - load modules based on CPU features
-Date: Fri, 24 Nov 2023 17:47:54 +0000
-Message-ID: <20231124172031.706749761@linuxfoundation.org>
+	Iain Lane <iain@orangesquash.org.uk>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.5 239/491] x86/PCI: Avoid PME from D3hot/D3cold for AMD Rembrandt and Phoenix USB4
+Date: Fri, 24 Nov 2023 17:47:55 +0000
+Message-ID: <20231124172031.740180520@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,102 +42,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roxana Nicolescu <roxana.nicolescu@canonical.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 1c43c0f1f84aa59dfc98ce66f0a67b2922aa7f9d upstream.
+commit 7d08f21f8c6307cb05cabb8d86e90ff6ccba57e9 upstream.
 
-x86 optimized crypto modules are built as modules rather than build-in and
-they are not loaded when the crypto API is initialized, resulting in the
-generic builtin module (sha1-generic) being used instead.
+Iain reports that USB devices can't be used to wake a Lenovo Z13 from
+suspend.  This occurs because on some AMD platforms, even though the Root
+Ports advertise PME_Support for D3hot and D3cold, wakeup events from
+devices on a USB4 controller don't result in wakeup interrupts from the
+Root Port when amd-pmc has put the platform in a hardware sleep state.
 
-It was discovered when creating a sha1/sha256 checksum of a 2Gb file by
-using kcapi-tools because it would take significantly longer than creating
-a sha512 checksum of the same file. trace-cmd showed that for sha1/256 the
-generic module was used, whereas for sha512 the optimized module was used
-instead.
+If amd-pmc will be involved in the suspend, remove D3hot and D3cold from
+the PME_Support mask of Root Ports above USB4 controllers so we avoid those
+states if we need wakeups.
 
-Add module aliases() for these x86 optimized crypto modules based on CPU
-feature bits so udev gets a chance to load them later in the boot
-process. This resulted in ~3x decrease in the real-time execution of
-kcapi-dsg.
+Restore D3 support at resume so that it can be used by runtime suspend.
 
-Fix is inspired from commit
-aa031b8f702e ("crypto: x86/sha512 - load based on CPU features")
-where a similar fix was done for sha512.
+This affects both AMD Rembrandt and Phoenix SoCs.
 
-Cc: stable@vger.kernel.org # 5.15+
-Suggested-by: Dimitri John Ledkov <dimitri.ledkov@canonical.com>
-Suggested-by: Julian Andres Klode <julian.klode@canonical.com>
-Signed-off-by: Roxana Nicolescu <roxana.nicolescu@canonical.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+"pm_suspend_target_state == PM_SUSPEND_ON" means we're doing runtime
+suspend, and amd-pmc will not be involved.  In that case PMEs work as
+advertised in D3hot/D3cold, so we don't need to do anything.
+
+Note that amd-pmc is technically optional, and there's no need for this
+quirk if it's not present, but we assume it's always present because power
+consumption is so high without it.
+
+Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
+Link: https://lore.kernel.org/r/20231004144959.158840-1-mario.limonciello@amd.com
+Reported-by: Iain Lane <iain@orangesquash.org.uk>
+Closes: https://forums.lenovo.com/t5/Ubuntu/Z13-can-t-resume-from-suspend-with-external-USB-keyboard/m-p/5217121
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+[bhelgaas: commit log, move to arch/x86/pci/fixup.c, add #includes]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/crypto/sha1_ssse3_glue.c   |   12 ++++++++++++
- arch/x86/crypto/sha256_ssse3_glue.c |   12 ++++++++++++
- 2 files changed, 24 insertions(+)
+ arch/x86/pci/fixup.c |   59 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
---- a/arch/x86/crypto/sha1_ssse3_glue.c
-+++ b/arch/x86/crypto/sha1_ssse3_glue.c
-@@ -24,8 +24,17 @@
- #include <linux/types.h>
- #include <crypto/sha1.h>
- #include <crypto/sha1_base.h>
-+#include <asm/cpu_device_id.h>
- #include <asm/simd.h>
+--- a/arch/x86/pci/fixup.c
++++ b/arch/x86/pci/fixup.c
+@@ -3,9 +3,11 @@
+  * Exceptions for specific devices. Usually work-arounds for fatal design flaws.
+  */
  
-+static const struct x86_cpu_id module_cpu_ids[] = {
-+	X86_MATCH_FEATURE(X86_FEATURE_AVX2, NULL),
-+	X86_MATCH_FEATURE(X86_FEATURE_AVX, NULL),
-+	X86_MATCH_FEATURE(X86_FEATURE_SSSE3, NULL),
-+	{}
-+};
-+MODULE_DEVICE_TABLE(x86cpu, module_cpu_ids);
++#include <linux/bitfield.h>
+ #include <linux/delay.h>
+ #include <linux/dmi.h>
+ #include <linux/pci.h>
++#include <linux/suspend.h>
+ #include <linux/vgaarb.h>
+ #include <asm/amd_nb.h>
+ #include <asm/hpet.h>
+@@ -904,3 +906,60 @@ static void chromeos_fixup_apl_pci_l1ss_
+ }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x5ad6, chromeos_save_apl_pci_l1ss_capability);
+ DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_INTEL, 0x5ad6, chromeos_fixup_apl_pci_l1ss_capability);
 +
- static int sha1_update(struct shash_desc *desc, const u8 *data,
- 			     unsigned int len, sha1_block_fn *sha1_xform)
- {
-@@ -301,6 +310,9 @@ static inline void unregister_sha1_ni(vo
- 
- static int __init sha1_ssse3_mod_init(void)
- {
-+	if (!x86_match_cpu(module_cpu_ids))
-+		return -ENODEV;
++#ifdef CONFIG_SUSPEND
++/*
++ * Root Ports on some AMD SoCs advertise PME_Support for D3hot and D3cold, but
++ * if the SoC is put into a hardware sleep state by the amd-pmc driver, the
++ * Root Ports don't generate wakeup interrupts for USB devices.
++ *
++ * When suspending, remove D3hot and D3cold from the PME_Support advertised
++ * by the Root Port so we don't use those states if we're expecting wakeup
++ * interrupts.  Restore the advertised PME_Support when resuming.
++ */
++static void amd_rp_pme_suspend(struct pci_dev *dev)
++{
++	struct pci_dev *rp;
 +
- 	if (register_sha1_ssse3())
- 		goto fail;
- 
---- a/arch/x86/crypto/sha256_ssse3_glue.c
-+++ b/arch/x86/crypto/sha256_ssse3_glue.c
-@@ -38,11 +38,20 @@
- #include <crypto/sha2.h>
- #include <crypto/sha256_base.h>
- #include <linux/string.h>
-+#include <asm/cpu_device_id.h>
- #include <asm/simd.h>
- 
- asmlinkage void sha256_transform_ssse3(struct sha256_state *state,
- 				       const u8 *data, int blocks);
- 
-+static const struct x86_cpu_id module_cpu_ids[] = {
-+	X86_MATCH_FEATURE(X86_FEATURE_AVX2, NULL),
-+	X86_MATCH_FEATURE(X86_FEATURE_AVX, NULL),
-+	X86_MATCH_FEATURE(X86_FEATURE_SSSE3, NULL),
-+	{}
-+};
-+MODULE_DEVICE_TABLE(x86cpu, module_cpu_ids);
++	/*
++	 * PM_SUSPEND_ON means we're doing runtime suspend, which means
++	 * amd-pmc will not be involved so PMEs during D3 work as advertised.
++	 *
++	 * The PMEs *do* work if amd-pmc doesn't put the SoC in the hardware
++	 * sleep state, but we assume amd-pmc is always present.
++	 */
++	if (pm_suspend_target_state == PM_SUSPEND_ON)
++		return;
 +
- static int _sha256_update(struct shash_desc *desc, const u8 *data,
- 			  unsigned int len, sha256_block_fn *sha256_xform)
- {
-@@ -366,6 +375,9 @@ static inline void unregister_sha256_ni(
- 
- static int __init sha256_ssse3_mod_init(void)
- {
-+	if (!x86_match_cpu(module_cpu_ids))
-+		return -ENODEV;
++	rp = pcie_find_root_port(dev);
++	if (!rp->pm_cap)
++		return;
 +
- 	if (register_sha256_ssse3())
- 		goto fail;
- 
++	rp->pme_support &= ~((PCI_PM_CAP_PME_D3hot|PCI_PM_CAP_PME_D3cold) >>
++				    PCI_PM_CAP_PME_SHIFT);
++	dev_info_once(&rp->dev, "quirk: disabling D3cold for suspend\n");
++}
++
++static void amd_rp_pme_resume(struct pci_dev *dev)
++{
++	struct pci_dev *rp;
++	u16 pmc;
++
++	rp = pcie_find_root_port(dev);
++	if (!rp->pm_cap)
++		return;
++
++	pci_read_config_word(rp, rp->pm_cap + PCI_PM_PMC, &pmc);
++	rp->pme_support = FIELD_GET(PCI_PM_CAP_PME_MASK, pmc);
++}
++/* Rembrandt (yellow_carp) */
++DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x162e, amd_rp_pme_suspend);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x162e, amd_rp_pme_resume);
++DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x162f, amd_rp_pme_suspend);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x162f, amd_rp_pme_resume);
++/* Phoenix (pink_sardine) */
++DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_suspend);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1668, amd_rp_pme_resume);
++DECLARE_PCI_FIXUP_SUSPEND(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_suspend);
++DECLARE_PCI_FIXUP_RESUME(PCI_VENDOR_ID_AMD, 0x1669, amd_rp_pme_resume);
++#endif /* CONFIG_SUSPEND */
 
 
