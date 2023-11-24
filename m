@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9453307D;
-	Fri, 24 Nov 2023 19:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F6333CF2;
+	Fri, 24 Nov 2023 19:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvlI7FKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CA3C433C8;
-	Fri, 24 Nov 2023 19:16:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZ91aqJf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE114C433C9;
+	Fri, 24 Nov 2023 19:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853361;
-	bh=TLdLXLYYMTstFr8icWJPLNxPFUalfLAfse9HhHqSCc0=;
+	s=korg; t=1700853364;
+	bh=nQkEE/oZddyvDVEDEZwLqgczrd61VNhh+hGwOsQzVDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RvlI7FKsX6lKAAwKwjiq+6oW3f0M9yQT7tdcUua5a8czHGr9uIDjf8oRnX1S8qfPi
-	 3dn4MRxADDJGHKuJbE5pB4ydmnCM+Vaurvj2C4dgbsUzoZpkv3NUVryMIIYZW4Ruv2
-	 Sc3G4A5xrpT89COLWuk08KMusLklgOwAa+uSd0/8=
+	b=CZ91aqJfSEsoGqCZuo0WTK9N8LrPMqmgysxOLUsqaDy9t06AXf0h7danzP1ilyT7O
+	 wOmxlY7isYoUvZeop+2JFnnNh18yf7C8kFcTJwIryWfwwv4pQaIIqGveEAKOQyxo4m
+	 tfL0EJ52U9/wiQJ/pHknGRu9xb349DCyCkMdOxpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/297] net/mlx5e: Check return value of snprintf writing to fw_version buffer for representors
-Date: Fri, 24 Nov 2023 17:52:55 +0000
-Message-ID: <20231124172004.935042505@linuxfoundation.org>
+Subject: [PATCH 5.15 134/297] macvlan: Dont propagate promisc change to lower dev in passthru
+Date: Fri, 24 Nov 2023 17:52:56 +0000
+Message-ID: <20231124172004.971427981@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -44,71 +44,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 1b2bd0c0264febcd8d47209079a6671c38e6558b ]
+[ Upstream commit 7e1caeace0418381f36b3aa8403dfd82fc57fc53 ]
 
-Treat the operation as an error case when the return value is equivalent to
-the size of the name buffer. Failed to write null terminator to the name
-buffer, making the string malformed and should not be used. Provide a
-string with only the firmware version when forming the string with the
-board id fails. This logic for representors is identical to normal flow
-with ethtool.
+Macvlan device in passthru mode sets its lower device promiscuous mode
+according to its MACVLAN_FLAG_NOPROMISC flag instead of synchronizing it to
+its own promiscuity setting. However, macvlan_change_rx_flags() function
+doesn't check the mode before propagating such changes to the lower device
+which can cause net_device->promiscuity counter overflow as illustrated by
+reproduction example [0] and resulting dmesg log [1]. Fix the issue by
+first verifying the mode in macvlan_change_rx_flags() function before
+propagating promiscuous mode change to the lower device.
 
-Without check, will trigger -Wformat-truncation with W=1.
+[0]:
+ip link add macvlan1 link enp8s0f0 type macvlan mode passthru
+ip link set macvlan1 promisc on
+ip l set dev macvlan1 up
+ip link set macvlan1 promisc off
+ip l set dev macvlan1 down
+ip l set dev macvlan1 up
 
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c: In function 'mlx5e_rep_get_drvinfo':
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:78:31: warning: '%.16s' directive output may be truncated writing up to 16 bytes into a region of size between 13 and 22 [-Wformat-truncation=]
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                               ^~~~~
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:77:9: note: 'snprintf' output between 12 and 37 bytes into a destination of size 32
-      77 |         snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                  ~~~~~~~~~~~~~~~~~~~~~
-      79 |                  fw_rev_maj(mdev), fw_rev_min(mdev),
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                  fw_rev_sub(mdev), mdev->board_id);
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[1]:
+[ 5156.281724] macvlan1: entered promiscuous mode
+[ 5156.285467] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
+[ 5156.287639] macvlan1: left promiscuous mode
+[ 5156.288339] mlx5_core 0000:08:00.0 enp8s0f0: left promiscuous mode
+[ 5156.290907] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
+[ 5156.317197] mlx5_core 0000:08:00.0 enp8s0f0: promiscuity touches roof, set promiscuity failed. promiscuity feature of device might be broken.
 
-Fixes: cf83c8fdcd47 ("net/mlx5e: Add missing ethtool driver info for representors")
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-16-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: efdbd2b30caa ("macvlan: Propagate promiscuity setting to lower devices.")
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20231114175915.1649154-1-vladbu@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/macvlan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index 3d614bf5cff9e..7a00faa62d993 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -66,13 +66,17 @@ static void mlx5e_rep_get_drvinfo(struct net_device *dev,
- {
- 	struct mlx5e_priv *priv = netdev_priv(dev);
- 	struct mlx5_core_dev *mdev = priv->mdev;
-+	int count;
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index 3dd1528dde028..6f0b6c924d724 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -770,7 +770,7 @@ static void macvlan_change_rx_flags(struct net_device *dev, int change)
+ 	if (dev->flags & IFF_UP) {
+ 		if (change & IFF_ALLMULTI)
+ 			dev_set_allmulti(lowerdev, dev->flags & IFF_ALLMULTI ? 1 : -1);
+-		if (change & IFF_PROMISC)
++		if (!macvlan_passthru(vlan->port) && change & IFF_PROMISC)
+ 			dev_set_promiscuity(lowerdev,
+ 					    dev->flags & IFF_PROMISC ? 1 : -1);
  
- 	strlcpy(drvinfo->driver, mlx5e_rep_driver_name,
- 		sizeof(drvinfo->driver));
--	snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
--		 "%d.%d.%04d (%.16s)",
--		 fw_rev_maj(mdev), fw_rev_min(mdev),
--		 fw_rev_sub(mdev), mdev->board_id);
-+	count = snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d (%.16s)", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev), mdev->board_id);
-+	if (count == sizeof(drvinfo->fw_version))
-+		snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev));
- }
- 
- static const struct counter_desc sw_rep_stats_desc[] = {
 -- 
 2.42.0
 
