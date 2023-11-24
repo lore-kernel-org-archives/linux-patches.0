@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD5A33076;
-	Fri, 24 Nov 2023 19:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C4A28DBB;
+	Fri, 24 Nov 2023 19:01:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDHhyR/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57227C433C8;
-	Fri, 24 Nov 2023 19:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RuZ41aJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1CDC433C8;
+	Fri, 24 Nov 2023 19:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852498;
-	bh=Hzh/weonqEfLLowy9K4V3z8OMeDworDaJE878AEBqqU=;
+	s=korg; t=1700852501;
+	bh=egbzEpN+EOUlUoj5Yo152ihdpT1N0ateXdLxwDAqFAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GDHhyR/vTpYZOUHuPP0zQGmQNpdhQnHlLhf9LyA8OpiL2OrJ/GzYlAUbo57YaVm7R
-	 aIG9oLkWvvsBaoB5tbE3RrxRlCTPiAA4qtzCTk1SHdqgiOQmFgE9Tauj3ujveItobx
-	 JBvKR2KqU0/IMV3pQYrTd425VGItYPUi93oiWYEI=
+	b=0RuZ41aJApIqR3a0w2Iq4G+YslZFh9tKCdcROJzYE9UU92FSamTK5fm557b7xFgWH
+	 RBJF9g7rN99j/Of8RX7y1wajfNjP9bC+AzYghtvengbRds/P1GJuV8BXeSPSrIxenf
+	 VCXTnyS52pgngcxXFUkY3niuapZthFtITqsJCLfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 350/372] ext4: correct offset of gdb backup in non meta_bg group to update_backups
-Date: Fri, 24 Nov 2023 17:52:17 +0000
-Message-ID: <20231124172022.007596519@linuxfoundation.org>
+	John Stultz <jstultz@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/193] locking/ww_mutex/test: Fix potential workqueue corruption
+Date: Fri, 24 Nov 2023 17:52:08 +0000
+Message-ID: <20231124171947.183102133@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
-References: <20231124172010.413667921@linuxfoundation.org>
+In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
+References: <20231124171947.127438872@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,61 +38,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: John Stultz <jstultz@google.com>
 
-commit 31f13421c004a420c0e9d288859c9ea9259ea0cc upstream.
+[ Upstream commit bccdd808902f8c677317cec47c306e42b93b849e ]
 
-Commit 0aeaa2559d6d5 ("ext4: fix corruption when online resizing a 1K
-bigalloc fs") found that primary superblock's offset in its group is
-not equal to offset of backup superblock in its group when block size
-is 1K and bigalloc is enabled. As group descriptor blocks are right
-after superblock, we can't pass block number of gdb to update_backups
-for the same reason.
+In some cases running with the test-ww_mutex code, I was seeing
+odd behavior where sometimes it seemed flush_workqueue was
+returning before all the work threads were finished.
 
-The root casue of the issue above is that leading 1K padding block is
-count as data block offset for primary block while backup block has no
-padding block offset in its group.
+Often this would cause strange crashes as the mutexes would be
+freed while they were being used.
 
-Remove padding data block count to fix the issue for gdb backups.
+Looking at the code, there is a lifetime problem as the
+controlling thread that spawns the work allocates the
+"struct stress" structures that are passed to the workqueue
+threads. Then when the workqueue threads are finished,
+they free the stress struct that was passed to them.
 
-For meta_bg case, update_backups treat blk_off as block number, do no
-conversion in this case.
+Unfortunately the workqueue work_struct node is in the stress
+struct. Which means the work_struct is freed before the work
+thread returns and while flush_workqueue is waiting.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230826174712.4059355-2-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It seems like a better idea to have the controlling thread
+both allocate and free the stress structures, so that we can
+be sure we don't corrupt the workqueue by freeing the structure
+prematurely.
+
+So this patch reworks the test to do so, and with this change
+I no longer see the early flush_workqueue returns.
+
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230922043616.19282-3-jstultz@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/resize.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/locking/test-ww_mutex.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -1602,6 +1602,8 @@ exit_journal:
- 		int gdb_num_end = ((group + flex_gd->count - 1) /
- 				   EXT4_DESC_PER_BLOCK(sb));
- 		int meta_bg = ext4_has_feature_meta_bg(sb);
-+		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
-+					 ext4_group_first_block_no(sb, 0);
- 		sector_t old_gdb = 0;
+diff --git a/kernel/locking/test-ww_mutex.c b/kernel/locking/test-ww_mutex.c
+index 3e82f449b4ff7..da36997d8742c 100644
+--- a/kernel/locking/test-ww_mutex.c
++++ b/kernel/locking/test-ww_mutex.c
+@@ -426,7 +426,6 @@ static void stress_inorder_work(struct work_struct *work)
+ 	} while (!time_after(jiffies, stress->timeout));
  
- 		update_backups(sb, ext4_group_first_block_no(sb, 0),
-@@ -1613,8 +1615,8 @@ exit_journal:
- 						     gdb_num);
- 			if (old_gdb == gdb_bh->b_blocknr)
- 				continue;
--			update_backups(sb, gdb_bh->b_blocknr, gdb_bh->b_data,
--				       gdb_bh->b_size, meta_bg);
-+			update_backups(sb, gdb_bh->b_blocknr - padding_blocks,
-+				       gdb_bh->b_data, gdb_bh->b_size, meta_bg);
- 			old_gdb = gdb_bh->b_blocknr;
+ 	kfree(order);
+-	kfree(stress);
+ }
+ 
+ struct reorder_lock {
+@@ -491,7 +490,6 @@ static void stress_reorder_work(struct work_struct *work)
+ 	list_for_each_entry_safe(ll, ln, &locks, link)
+ 		kfree(ll);
+ 	kfree(order);
+-	kfree(stress);
+ }
+ 
+ static void stress_one_work(struct work_struct *work)
+@@ -512,8 +510,6 @@ static void stress_one_work(struct work_struct *work)
+ 			break;
  		}
- 	}
+ 	} while (!time_after(jiffies, stress->timeout));
+-
+-	kfree(stress);
+ }
+ 
+ #define STRESS_INORDER BIT(0)
+@@ -524,15 +520,24 @@ static void stress_one_work(struct work_struct *work)
+ static int stress(int nlocks, int nthreads, unsigned int flags)
+ {
+ 	struct ww_mutex *locks;
+-	int n;
++	struct stress *stress_array;
++	int n, count;
+ 
+ 	locks = kmalloc_array(nlocks, sizeof(*locks), GFP_KERNEL);
+ 	if (!locks)
+ 		return -ENOMEM;
+ 
++	stress_array = kmalloc_array(nthreads, sizeof(*stress_array),
++				     GFP_KERNEL);
++	if (!stress_array) {
++		kfree(locks);
++		return -ENOMEM;
++	}
++
+ 	for (n = 0; n < nlocks; n++)
+ 		ww_mutex_init(&locks[n], &ww_class);
+ 
++	count = 0;
+ 	for (n = 0; nthreads; n++) {
+ 		struct stress *stress;
+ 		void (*fn)(struct work_struct *work);
+@@ -556,9 +561,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
+ 		if (!fn)
+ 			continue;
+ 
+-		stress = kmalloc(sizeof(*stress), GFP_KERNEL);
+-		if (!stress)
+-			break;
++		stress = &stress_array[count++];
+ 
+ 		INIT_WORK(&stress->work, fn);
+ 		stress->locks = locks;
+@@ -573,6 +576,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
+ 
+ 	for (n = 0; n < nlocks; n++)
+ 		ww_mutex_destroy(&locks[n]);
++	kfree(stress_array);
+ 	kfree(locks);
+ 
+ 	return 0;
+-- 
+2.42.0
+
 
 
