@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158F9381D4;
-	Fri, 24 Nov 2023 18:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8083B381D4;
+	Fri, 24 Nov 2023 18:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGyWu+rX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C48C433C8;
-	Fri, 24 Nov 2023 18:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oW4N9u5u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108D5C433C7;
+	Fri, 24 Nov 2023 18:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849850;
-	bh=xICKt58d5bBPe+DX/VVNFEwlQJsbP9UtCrQPRqXLpn8=;
+	s=korg; t=1700849853;
+	bh=31eOCKgYjoy4O+6ENI1GPGALaApNcy6bHPQbrLoPHIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGyWu+rX8VG2gelES0eW0R8NEyAkmeWwVRMJ/SXqcnxh3PILvf3kqsrTZ0TfCeTIs
-	 9KGQ7G64S5pKyBdgeu27WPb28Jz3q9Sgul/UiCxNvDbyCpQCfga8oLFTIXl0f2K+L/
-	 PO66QvMt1MgIcl/hlx92//dKacQBM1eYKark5f/8=
+	b=oW4N9u5ug0IQ7a+FcLtvbceb20tvLqcSHfs2HaSR9dr7brT1n3XW4PmIxXoJXFhLn
+	 fl1IOrsVq6eO6O0Ei0F+AQO+eiZv4JVT0nwyxdnCo+5oegJe1zoUzRuO4fsgu6ILdU
+	 vhmDKLUJF1G4a/0oy/rJCDACnHZ2oi5RcwNNlWKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
 	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 345/530] leds: trigger: netdev: Move size check in set_device_name
-Date: Fri, 24 Nov 2023 17:48:31 +0000
-Message-ID: <20231124172038.524080850@linuxfoundation.org>
+Subject: [PATCH 6.6 346/530] mfd: qcom-spmi-pmic: Fix reference leaks in revid helper
+Date: Fri, 24 Nov 2023 17:48:32 +0000
+Message-ID: <20231124172038.553190967@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,62 +42,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 259e33cbb1712a7dd844fc9757661cc47cb0e39b upstream.
+commit a0fa44c261e448c531f9adb3a5189a3520f3e316 upstream.
 
-GCC 13.2 complains about array subscript 17 is above array bounds of
-'char[16]' with IFNAMSIZ set to 16.
+The Qualcomm SPMI PMIC revid implementation is broken in multiple ways.
 
-The warning is correct but this scenario is impossible.
-set_device_name is called by device_name_store (store sysfs entry) and
-netdev_trig_activate.
+First, it totally ignores struct device_node reference counting and
+leaks references to the parent bus node as well as each child it
+iterates over using an open-coded for_each_child_of_node().
 
-device_name_store already check if size is >= of IFNAMSIZ and return
--EINVAL. (making the warning scenario impossible)
+Second, it leaks references to each spmi device on the bus that it
+iterates over by failing to drop the reference taken by the
+spmi_device_from_of() helper.
 
-netdev_trig_activate works on already defined interface, where the name
-has already been checked and should already follow the condition of
-strlen() < IFNAMSIZ.
+Fix the struct device_node leaks by reimplementing the lookup using
+for_each_child_of_node() and adding the missing reference count
+decrements. Fix the sibling struct device leaks by dropping the
+unnecessary lookups of devices with the wrong USID.
 
-Aside from the scenario being impossible, set_device_name can be
-improved to both mute the warning and make the function safer.
-To make it safer, move size check from device_name_store directly to
-set_device_name and prevent any out of bounds scenario.
+Note that this still leaves one struct device reference leak in case a
+base device is found but it is not the parent of the device used for the
+lookup. This will be addressed in a follow-on patch.
 
-Cc: stable@vger.kernel.org
-Fixes: 28a6a2ef18ad ("leds: trigger: netdev: refactor code setting device name")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202309192035.GTJEEbem-lkp@intel.com/
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Link: https://lore.kernel.org/r/20231007131042.15032-1-ansuelsmth@gmail.com
+Fixes: e9c11c6e3a0e ("mfd: qcom-spmi-pmic: expose the PMIC revid information to clients")
+Cc: stable@vger.kernel.org	# 6.0
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Caleb Connolly <caleb.connolly@linaro.org>
+Link: https://lore.kernel.org/r/20231003152927.15000-2-johan+linaro@kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/trigger/ledtrig-netdev.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mfd/qcom-spmi-pmic.c |   32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
---- a/drivers/leds/trigger/ledtrig-netdev.c
-+++ b/drivers/leds/trigger/ledtrig-netdev.c
-@@ -221,6 +221,9 @@ static ssize_t device_name_show(struct d
- static int set_device_name(struct led_netdev_data *trigger_data,
- 			   const char *name, size_t size)
- {
-+	if (size >= IFNAMSIZ)
-+		return -EINVAL;
-+
- 	cancel_delayed_work_sync(&trigger_data->work);
+--- a/drivers/mfd/qcom-spmi-pmic.c
++++ b/drivers/mfd/qcom-spmi-pmic.c
+@@ -81,7 +81,7 @@ static struct spmi_device *qcom_pmic_get
+ 	struct spmi_device *sdev;
+ 	struct qcom_spmi_dev *ctx;
+ 	struct device_node *spmi_bus;
+-	struct device_node *other_usid = NULL;
++	struct device_node *child;
+ 	int function_parent_usid, ret;
+ 	u32 pmic_addr;
  
- 	mutex_lock(&trigger_data->lock);
-@@ -263,9 +266,6 @@ static ssize_t device_name_store(struct
- 	struct led_netdev_data *trigger_data = led_trigger_get_drvdata(dev);
- 	int ret;
- 
--	if (size >= IFNAMSIZ)
--		return -EINVAL;
+@@ -105,28 +105,34 @@ static struct spmi_device *qcom_pmic_get
+ 	 * device for USID 2.
+ 	 */
+ 	spmi_bus = of_get_parent(sdev->dev.of_node);
+-	do {
+-		other_usid = of_get_next_child(spmi_bus, other_usid);
 -
- 	ret = set_device_name(trigger_data, buf, size);
+-		ret = of_property_read_u32_index(other_usid, "reg", 0, &pmic_addr);
+-		if (ret)
+-			return ERR_PTR(ret);
++	sdev = ERR_PTR(-ENODATA);
++	for_each_child_of_node(spmi_bus, child) {
++		ret = of_property_read_u32_index(child, "reg", 0, &pmic_addr);
++		if (ret) {
++			of_node_put(child);
++			sdev = ERR_PTR(ret);
++			break;
++		}
  
- 	if (ret < 0)
+-		sdev = spmi_device_from_of(other_usid);
+ 		if (pmic_addr == function_parent_usid - (ctx->num_usids - 1)) {
+-			if (!sdev)
++			sdev = spmi_device_from_of(child);
++			if (!sdev) {
+ 				/*
+ 				 * If the base USID for this PMIC hasn't probed yet
+ 				 * but the secondary USID has, then we need to defer
+ 				 * the function driver so that it will attempt to
+ 				 * probe again when the base USID is ready.
+ 				 */
+-				return ERR_PTR(-EPROBE_DEFER);
+-			return sdev;
++				sdev = ERR_PTR(-EPROBE_DEFER);
++			}
++			of_node_put(child);
++			break;
+ 		}
+-	} while (other_usid->sibling);
++	}
++
++	of_node_put(spmi_bus);
+ 
+-	return ERR_PTR(-ENODATA);
++	return sdev;
+ }
+ 
+ static int pmic_spmi_load_revid(struct regmap *map, struct device *dev,
 
 
