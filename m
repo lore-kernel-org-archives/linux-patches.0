@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74B231748;
-	Fri, 24 Nov 2023 19:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78582E858;
+	Fri, 24 Nov 2023 19:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZ1puY1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19A7C433C8;
-	Fri, 24 Nov 2023 19:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ucs6X6Lc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42878C433C9;
+	Fri, 24 Nov 2023 19:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852666;
-	bh=m5a/meUkL75YEI1xbfGvc63PUGUFfCG09qvEuE+tIXQ=;
+	s=korg; t=1700852668;
+	bh=/XAbLv+2faJRpMNWmXyiQlqFs/juzR7qRcw4seaplBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZ1puY1/FwiFDER7isU7mSOFVRGoec5f76bo7x40K9S9yodFdtQmNSnZoUInYnlMt
-	 1VMeyleP1Y89Vd835tlxdg5Q2gYpETf5cocjFSo3T+6C5UrQXUsUlnClet6HDcqcvn
-	 PLhqBQ5EHam2Xr/pi7vNXfiuYWBPhMqej2BKZK8Q=
+	b=ucs6X6Lc4yJin6eiVP9n3IlpWCvJOppA0I5lzIksXgTj+tVTFoCHrXUkP3lnwxPoF
+	 w8LgjW5QmHNXWYa2g5GFgJdPkoecJdvUKzNrBTKnaAqksSeSiZV429JQyB2jNmDKMB
+	 nrMGKZ/Pjw2ae21ySTZ2isHwEsi+rniiCc7zJd7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Richard Cochran <richardcochran@gmail.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/193] ptp: annotate data-race around q->head and q->tail
-Date: Fri, 24 Nov 2023 17:53:22 +0000
-Message-ID: <20231124171950.235012028@linuxfoundation.org>
+Subject: [PATCH 5.10 076/193] bonding: stop the device in bond_setup_by_slave()
+Date: Fri, 24 Nov 2023 17:53:23 +0000
+Message-ID: <20231124171950.281493189@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -45,94 +47,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 73bde5a3294853947252cd9092a3517c7cb0cd2d ]
+[ Upstream commit 3cffa2ddc4d3fcf70cde361236f5a614f81a09b2 ]
 
-As I was working on a syzbot report, I found that KCSAN would
-probably complain that reading q->head or q->tail without
-barriers could lead to invalid results.
+Commit 9eed321cde22 ("net: lapbether: only support ethernet devices")
+has been able to keep syzbot away from net/lapb, until today.
 
-Add corresponding READ_ONCE() and WRITE_ONCE() to avoid
-load-store tearing.
+In the following splat [1], the issue is that a lapbether device has
+been created on a bonding device without members. Then adding a non
+ARPHRD_ETHER member forced the bonding master to change its type.
 
-Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
+The fix is to make sure we call dev_close() in bond_setup_by_slave()
+so that the potential linked lapbether devices (or any other devices
+having assumptions on the physical device) are removed.
+
+A similar bug has been addressed in commit 40baec225765
+("bonding: fix panic on non-ARPHRD_ETHER enslave failure")
+
+[1]
+skbuff: skb_under_panic: text:ffff800089508810 len:44 put:40 head:ffff0000c78e7c00 data:ffff0000c78e7bea tail:0x16 end:0x140 dev:bond0
+kernel BUG at net/core/skbuff.c:192 !
+Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 0 PID: 6007 Comm: syz-executor383 Not tainted 6.6.0-rc3-syzkaller-gbf6547d8715b #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : skb_panic net/core/skbuff.c:188 [inline]
+pc : skb_under_panic+0x13c/0x140 net/core/skbuff.c:202
+lr : skb_panic net/core/skbuff.c:188 [inline]
+lr : skb_under_panic+0x13c/0x140 net/core/skbuff.c:202
+sp : ffff800096a06aa0
+x29: ffff800096a06ab0 x28: ffff800096a06ba0 x27: dfff800000000000
+x26: ffff0000ce9b9b50 x25: 0000000000000016 x24: ffff0000c78e7bea
+x23: ffff0000c78e7c00 x22: 000000000000002c x21: 0000000000000140
+x20: 0000000000000028 x19: ffff800089508810 x18: ffff800096a06100
+x17: 0000000000000000 x16: ffff80008a629a3c x15: 0000000000000001
+x14: 1fffe00036837a32 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000201 x10: 0000000000000000 x9 : cb50b496c519aa00
+x8 : cb50b496c519aa00 x7 : 0000000000000001 x6 : 0000000000000001
+x5 : ffff800096a063b8 x4 : ffff80008e280f80 x3 : ffff8000805ad11c
+x2 : 0000000000000001 x1 : 0000000100000201 x0 : 0000000000000086
+Call trace:
+skb_panic net/core/skbuff.c:188 [inline]
+skb_under_panic+0x13c/0x140 net/core/skbuff.c:202
+skb_push+0xf0/0x108 net/core/skbuff.c:2446
+ip6gre_header+0xbc/0x738 net/ipv6/ip6_gre.c:1384
+dev_hard_header include/linux/netdevice.h:3136 [inline]
+lapbeth_data_transmit+0x1c4/0x298 drivers/net/wan/lapbether.c:257
+lapb_data_transmit+0x8c/0xb0 net/lapb/lapb_iface.c:447
+lapb_transmit_buffer+0x178/0x204 net/lapb/lapb_out.c:149
+lapb_send_control+0x220/0x320 net/lapb/lapb_subr.c:251
+__lapb_disconnect_request+0x9c/0x17c net/lapb/lapb_iface.c:326
+lapb_device_event+0x288/0x4e0 net/lapb/lapb_iface.c:492
+notifier_call_chain+0x1a4/0x510 kernel/notifier.c:93
+raw_notifier_call_chain+0x3c/0x50 kernel/notifier.c:461
+call_netdevice_notifiers_info net/core/dev.c:1970 [inline]
+call_netdevice_notifiers_extack net/core/dev.c:2008 [inline]
+call_netdevice_notifiers net/core/dev.c:2022 [inline]
+__dev_close_many+0x1b8/0x3c4 net/core/dev.c:1508
+dev_close_many+0x1e0/0x470 net/core/dev.c:1559
+dev_close+0x174/0x250 net/core/dev.c:1585
+lapbeth_device_event+0x2e4/0x958 drivers/net/wan/lapbether.c:466
+notifier_call_chain+0x1a4/0x510 kernel/notifier.c:93
+raw_notifier_call_chain+0x3c/0x50 kernel/notifier.c:461
+call_netdevice_notifiers_info net/core/dev.c:1970 [inline]
+call_netdevice_notifiers_extack net/core/dev.c:2008 [inline]
+call_netdevice_notifiers net/core/dev.c:2022 [inline]
+__dev_close_many+0x1b8/0x3c4 net/core/dev.c:1508
+dev_close_many+0x1e0/0x470 net/core/dev.c:1559
+dev_close+0x174/0x250 net/core/dev.c:1585
+bond_enslave+0x2298/0x30cc drivers/net/bonding/bond_main.c:2332
+bond_do_ioctl+0x268/0xc64 drivers/net/bonding/bond_main.c:4539
+dev_ifsioc+0x754/0x9ac
+dev_ioctl+0x4d8/0xd34 net/core/dev_ioctl.c:786
+sock_do_ioctl+0x1d4/0x2d0 net/socket.c:1217
+sock_ioctl+0x4e8/0x834 net/socket.c:1322
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:871 [inline]
+__se_sys_ioctl fs/ioctl.c:857 [inline]
+__arm64_sys_ioctl+0x14c/0x1c8 fs/ioctl.c:857
+__invoke_syscall arch/arm64/kernel/syscall.c:37 [inline]
+invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:51
+el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:136
+do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:155
+el0_svc+0x58/0x16c arch/arm64/kernel/entry-common.c:678
+el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:696
+el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
+Code: aa1803e6 aa1903e7 a90023f5 94785b8b (d4210000)
+
+Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://lore.kernel.org/r/20231109174859.3995880-1-edumazet@google.com
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20231109180102.4085183-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_chardev.c | 3 ++-
- drivers/ptp/ptp_clock.c   | 5 +++--
- drivers/ptp/ptp_private.h | 8 ++++++--
- drivers/ptp/ptp_sysfs.c   | 3 ++-
- 4 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
-index af3bc65c4595d..9311f3d09c8fc 100644
---- a/drivers/ptp/ptp_chardev.c
-+++ b/drivers/ptp/ptp_chardev.c
-@@ -487,7 +487,8 @@ ssize_t ptp_read(struct posix_clock *pc,
- 
- 	for (i = 0; i < cnt; i++) {
- 		event[i] = queue->buf[queue->head];
--		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
-+		/* Paired with READ_ONCE() in queue_cnt() */
-+		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
- 	}
- 
- 	spin_unlock_irqrestore(&queue->lock, flags);
-diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
-index 21c4c34c52d8d..ed766943a3563 100644
---- a/drivers/ptp/ptp_clock.c
-+++ b/drivers/ptp/ptp_clock.c
-@@ -55,10 +55,11 @@ static void enqueue_external_timestamp(struct timestamp_event_queue *queue,
- 	dst->t.sec = seconds;
- 	dst->t.nsec = remainder;
- 
-+	/* Both WRITE_ONCE() are paired with READ_ONCE() in queue_cnt() */
- 	if (!queue_free(queue))
--		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
-+		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
- 
--	queue->tail = (queue->tail + 1) % PTP_MAX_TIMESTAMPS;
-+	WRITE_ONCE(queue->tail, (queue->tail + 1) % PTP_MAX_TIMESTAMPS);
- 
- 	spin_unlock_irqrestore(&queue->lock, flags);
- }
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index 6b97155148f11..d2cb956706763 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -55,9 +55,13 @@ struct ptp_clock {
-  * that a writer might concurrently increment the tail does not
-  * matter, since the queue remains nonempty nonetheless.
-  */
--static inline int queue_cnt(struct timestamp_event_queue *q)
-+static inline int queue_cnt(const struct timestamp_event_queue *q)
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index bcb019121d835..50fabba042488 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1433,6 +1433,10 @@ static void bond_compute_features(struct bonding *bond)
+ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 				struct net_device *slave_dev)
  {
--	int cnt = q->tail - q->head;
-+	/*
-+	 * Paired with WRITE_ONCE() in enqueue_external_timestamp(),
-+	 * ptp_read(), extts_fifo_show().
-+	 */
-+	int cnt = READ_ONCE(q->tail) - READ_ONCE(q->head);
- 	return cnt < 0 ? PTP_MAX_TIMESTAMPS + cnt : cnt;
++	bool was_up = !!(bond_dev->flags & IFF_UP);
++
++	dev_close(bond_dev);
++
+ 	bond_dev->header_ops	    = slave_dev->header_ops;
+ 
+ 	bond_dev->type		    = slave_dev->type;
+@@ -1447,6 +1451,8 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 		bond_dev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
+ 		bond_dev->flags |= (IFF_POINTOPOINT | IFF_NOARP);
+ 	}
++	if (was_up)
++		dev_open(bond_dev, NULL);
  }
  
-diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
-index 8cd59e8481631..8d52815e05b31 100644
---- a/drivers/ptp/ptp_sysfs.c
-+++ b/drivers/ptp/ptp_sysfs.c
-@@ -78,7 +78,8 @@ static ssize_t extts_fifo_show(struct device *dev,
- 	qcnt = queue_cnt(queue);
- 	if (qcnt) {
- 		event = queue->buf[queue->head];
--		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
-+		/* Paired with READ_ONCE() in queue_cnt() */
-+		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
- 	}
- 	spin_unlock_irqrestore(&queue->lock, flags);
- 
+ /* On bonding slaves other than the currently active slave, suppress
 -- 
 2.42.0
 
