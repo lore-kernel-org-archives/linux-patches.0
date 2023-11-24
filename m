@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48BB33CFD;
-	Fri, 24 Nov 2023 18:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5070C286B5;
+	Fri, 24 Nov 2023 18:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvwq2dsg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2D0C433C9;
-	Fri, 24 Nov 2023 18:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14VYDCpP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57F2C433C9;
+	Fri, 24 Nov 2023 18:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851750;
-	bh=aDOSRANcOHgrMdzUDO2V+v9ZDHQurv0G9d1oaXuKxAg=;
+	s=korg; t=1700851753;
+	bh=mDi/18257KqBe4xvW7+E9RcBtSiTlc2tbjTwqCTnfRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvwq2dsgB5MOPG4h6AulPB4WXmPUnC4XBuZl2nx3Vw5Fp9EJhTeFKx1G+3Mbm4Fh+
-	 Ix3+jrliRO7pZnswbs/eKMJeNIhEKm1ZeMqxArpAJAhmP6zniJJpknDoc9ZtXBWT5O
-	 f7ysHM2uEO6ASIy0C/nHJMpBopQttKzqtrHHd/yA=
+	b=14VYDCpPlnghPGFS8Lzfd8M3ItNsaO5/2NHzW0DC69wk5ujQcJbwm/uFjbOabZTus
+	 g0YyZVERxo3LB45bdr7Ct5+n4FGrfyuYHq3c2alEZUf7Qwj6nUAuVJsl/YjS4TSvzf
+	 Tpa2dEhytSw9kFgMaUkAV8FYCqJ+h2GzMXDLonJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lu Jialin <lujialin4@huawei.com>,
+	Guo Zihua <guozihua@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/372] ASoC: SOF: Pass PCI SSID to machine driver
-Date: Fri, 24 Nov 2023 17:47:23 +0000
-Message-ID: <20231124172012.343925350@linuxfoundation.org>
+Subject: [PATCH 6.1 057/372] crypto: pcrypt - Fix hungtask for PADATA_RESET
+Date: Fri, 24 Nov 2023 17:47:24 +0000
+Message-ID: <20231124172012.377527615@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,129 +43,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Lu Jialin <lujialin4@huawei.com>
 
-[ Upstream commit ba2de401d32625fe538d3f2c00ca73740dd2d516 ]
+[ Upstream commit 8f4f68e788c3a7a696546291258bfa5fdb215523 ]
 
-Pass the PCI SSID of the audio interface through to the machine driver.
-This allows the machine driver to use the SSID to uniquely identify the
-specific hardware configuration and apply any platform-specific
-configuration.
+We found a hungtask bug in test_aead_vec_cfg as follows:
 
-struct snd_sof_pdata is passed around inside the SOF code, but it then
-passes configuration information to the machine driver through
-struct snd_soc_acpi_mach and struct snd_soc_acpi_mach_params. So SSID
-information has been added to both snd_sof_pdata and
-snd_soc_acpi_mach_params.
+INFO: task cryptomgr_test:391009 blocked for more than 120 seconds.
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+Call trace:
+ __switch_to+0x98/0xe0
+ __schedule+0x6c4/0xf40
+ schedule+0xd8/0x1b4
+ schedule_timeout+0x474/0x560
+ wait_for_common+0x368/0x4e0
+ wait_for_completion+0x20/0x30
+ wait_for_completion+0x20/0x30
+ test_aead_vec_cfg+0xab4/0xd50
+ test_aead+0x144/0x1f0
+ alg_test_aead+0xd8/0x1e0
+ alg_test+0x634/0x890
+ cryptomgr_test+0x40/0x70
+ kthread+0x1e0/0x220
+ ret_from_fork+0x10/0x18
+ Kernel panic - not syncing: hung_task: blocked tasks
 
-PCI does not define 0x0000 as an invalid value so we can't use zero to
-indicate that the struct member was not written. Instead a flag is
-included to indicate that a value has been written to the
-subsystem_vendor and subsystem_device members.
+For padata_do_parallel, when the return err is 0 or -EBUSY, it will call
+wait_for_completion(&wait->completion) in test_aead_vec_cfg. In normal
+case, aead_request_complete() will be called in pcrypt_aead_serial and the
+return err is 0 for padata_do_parallel. But, when pinst->flags is
+PADATA_RESET, the return err is -EBUSY for padata_do_parallel, and it
+won't call aead_request_complete(). Therefore, test_aead_vec_cfg will
+hung at wait_for_completion(&wait->completion), which will cause
+hungtask.
 
-sof_pci_probe() creates the struct snd_sof_pdata. It is passed a struct
-pci_dev so it can fill in the SSID value.
+The problem comes as following:
+(padata_do_parallel)                 |
+    rcu_read_lock_bh();              |
+    err = -EINVAL;                   |   (padata_replace)
+                                     |     pinst->flags |= PADATA_RESET;
+    err = -EBUSY                     |
+    if (pinst->flags & PADATA_RESET) |
+        rcu_read_unlock_bh()         |
+        return err
 
-sof_machine_check() finds the appropriate struct snd_soc_acpi_mach. It
-copies the SSID information across to the struct snd_soc_acpi_mach_params.
-This done before calling any custom set_mach_params() so that it could be
-used by the set_mach_params() callback to apply variant params.
+In order to resolve the problem, we replace the return err -EBUSY with
+-EAGAIN, which means parallel_data is changing, and the caller should call
+it again.
 
-The machine driver receives the struct snd_soc_acpi_mach as its
-platform_data.
+v3:
+remove retry and just change the return err.
+v2:
+introduce padata_try_do_parallel() in pcrypt_aead_encrypt and
+pcrypt_aead_decrypt to solve the hungtask.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230912163207.3498161-3-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Lu Jialin <lujialin4@huawei.com>
+Signed-off-by: Guo Zihua <guozihua@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-acpi.h    | 7 +++++++
- include/sound/sof.h         | 8 ++++++++
- sound/soc/sof/sof-audio.c   | 7 +++++++
- sound/soc/sof/sof-pci-dev.c | 8 ++++++++
- 4 files changed, 30 insertions(+)
+ crypto/pcrypt.c | 4 ++++
+ kernel/padata.c | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/sound/soc-acpi.h b/include/sound/soc-acpi.h
-index 528279056b3ab..1a5f90b0a5463 100644
---- a/include/sound/soc-acpi.h
-+++ b/include/sound/soc-acpi.h
-@@ -67,6 +67,10 @@ static inline struct snd_soc_acpi_mach *snd_soc_acpi_codec_list(void *arg)
-  * @i2s_link_mask: I2S/TDM links enabled on the board
-  * @num_dai_drivers: number of elements in @dai_drivers
-  * @dai_drivers: pointer to dai_drivers, used e.g. in nocodec mode
-+ * @subsystem_vendor: optional PCI SSID vendor value
-+ * @subsystem_device: optional PCI SSID device value
-+ * @subsystem_id_set: true if a value has been written to
-+ *		      subsystem_vendor and subsystem_device.
-  */
- struct snd_soc_acpi_mach_params {
- 	u32 acpi_ipc_irq_index;
-@@ -79,6 +83,9 @@ struct snd_soc_acpi_mach_params {
- 	u32 i2s_link_mask;
- 	u32 num_dai_drivers;
- 	struct snd_soc_dai_driver *dai_drivers;
-+	unsigned short subsystem_vendor;
-+	unsigned short subsystem_device;
-+	bool subsystem_id_set;
- };
+diff --git a/crypto/pcrypt.c b/crypto/pcrypt.c
+index 9d10b846ccf73..005a36cb21bc4 100644
+--- a/crypto/pcrypt.c
++++ b/crypto/pcrypt.c
+@@ -117,6 +117,8 @@ static int pcrypt_aead_encrypt(struct aead_request *req)
+ 	err = padata_do_parallel(ictx->psenc, padata, &ctx->cb_cpu);
+ 	if (!err)
+ 		return -EINPROGRESS;
++	if (err == -EBUSY)
++		return -EAGAIN;
  
- /**
-diff --git a/include/sound/sof.h b/include/sound/sof.h
-index 341fef19e6124..1caeb7bf109b4 100644
---- a/include/sound/sof.h
-+++ b/include/sound/sof.h
-@@ -63,6 +63,14 @@ struct snd_sof_pdata {
- 	const char *name;
- 	const char *platform;
+ 	return err;
+ }
+@@ -164,6 +166,8 @@ static int pcrypt_aead_decrypt(struct aead_request *req)
+ 	err = padata_do_parallel(ictx->psdec, padata, &ctx->cb_cpu);
+ 	if (!err)
+ 		return -EINPROGRESS;
++	if (err == -EBUSY)
++		return -EAGAIN;
  
-+	/*
-+	 * PCI SSID. As PCI does not define 0 as invalid, the subsystem_id_set
-+	 * flag indicates that a value has been written to these members.
-+	 */
-+	unsigned short subsystem_vendor;
-+	unsigned short subsystem_device;
-+	bool subsystem_id_set;
-+
- 	struct device *dev;
+ 	return err;
+ }
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 791d9cb07a501..7bef7dae3db54 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -194,7 +194,7 @@ int padata_do_parallel(struct padata_shell *ps,
+ 		*cb_cpu = cpu;
+ 	}
  
- 	/* indicate how many first bytes shouldn't be loaded into DSP memory. */
-diff --git a/sound/soc/sof/sof-audio.c b/sound/soc/sof/sof-audio.c
-index cf2c0db57d899..061ab7289a6c3 100644
---- a/sound/soc/sof/sof-audio.c
-+++ b/sound/soc/sof/sof-audio.c
-@@ -832,6 +832,13 @@ int sof_machine_check(struct snd_sof_dev *sdev)
- 		mach = snd_sof_machine_select(sdev);
- 		if (mach) {
- 			sof_pdata->machine = mach;
-+
-+			if (sof_pdata->subsystem_id_set) {
-+				mach->mach_params.subsystem_vendor = sof_pdata->subsystem_vendor;
-+				mach->mach_params.subsystem_device = sof_pdata->subsystem_device;
-+				mach->mach_params.subsystem_id_set = true;
-+			}
-+
- 			snd_sof_set_mach_params(mach, sdev);
- 			return 0;
- 		}
-diff --git a/sound/soc/sof/sof-pci-dev.c b/sound/soc/sof/sof-pci-dev.c
-index 05fb4e20e8a40..99cc272e321d0 100644
---- a/sound/soc/sof/sof-pci-dev.c
-+++ b/sound/soc/sof/sof-pci-dev.c
-@@ -217,6 +217,14 @@ int sof_pci_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
- 		return ret;
- 
- 	sof_pdata->name = pci_name(pci);
-+
-+	/* PCI defines a vendor ID of 0xFFFF as invalid. */
-+	if (pci->subsystem_vendor != 0xFFFF) {
-+		sof_pdata->subsystem_vendor = pci->subsystem_vendor;
-+		sof_pdata->subsystem_device = pci->subsystem_device;
-+		sof_pdata->subsystem_id_set = true;
-+	}
-+
- 	sof_pdata->desc = desc;
- 	sof_pdata->dev = dev;
+-	err =  -EBUSY;
++	err = -EBUSY;
+ 	if ((pinst->flags & PADATA_RESET))
+ 		goto out;
  
 -- 
 2.42.0
