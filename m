@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6273E2E658;
-	Fri, 24 Nov 2023 18:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1712D626;
+	Fri, 24 Nov 2023 18:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bb3C2PUw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD84C433C8;
-	Fri, 24 Nov 2023 18:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjBULlvo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCD8C433C8;
+	Fri, 24 Nov 2023 18:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851056;
-	bh=8VnTqDjN995EH68KD0oRJeVT8dD+ftkqhBp8MreETIU=;
+	s=korg; t=1700851058;
+	bh=zPONxCNOBs0bIcIPnoV2V/vkicGt04PgfG6TVbln+iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bb3C2PUws7rcuAuOTnQeg77QW2WcqEXDcRJh/7O8pnBacSXH+OUe8AUydOkgY3yv1
-	 mMekmJpjmTabKZ1xM08AwzA/Tki81mHaoC88WVxq64H20lUDH6ja0KFMMFp1X3GGaF
-	 UOxLr75UxEXwZimriuAyCdmH5uVuDO5n9dDiQrog=
+	b=NjBULlvox7k0rL/9IjDfSHM+1q1CGJv+mkxh5YDv0eSeLXxH9Bq8tIvroRAiG5XmL
+	 waImPgRW8I9LIdlF4VxjGU2u8Trxb3GcqkIjSLAG31VyxSj0KBksGC5eRb8ijAxnhT
+	 v5+BizBwRzfsXZwu3lN44MIxME2l1JdJMjTBfUw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.5 295/491] clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
-Date: Fri, 24 Nov 2023 17:48:51 +0000
-Message-ID: <20231124172033.435614576@linuxfoundation.org>
+	Hector Martin <marcan@marcan.st>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.5 272/491] regmap: Ensure range selector registers are updated after cache sync
+Date: Fri, 24 Nov 2023 17:48:28 +0000
+Message-ID: <20231124172032.746931587@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -35,81 +35,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit e641a070137dd959932c7c222e000d9d941167a2 upstream.
+commit 0ec7731655de196bc1e4af99e495b38778109d22 upstream.
 
-GPLL, NSS crypto PLL clock rates are fixed and shouldn't be scaled based
-on the request from dependent clocks. Doing so will result in the
-unexpected behaviour. So drop the CLK_SET_RATE_PARENT flag from the PLL
-clocks.
+When we sync the register cache we do so with the cache bypassed in order
+to avoid overhead from writing the synced values back into the cache. If
+the regmap has ranges and the selector register for those ranges is in a
+register which is cached this has the unfortunate side effect of meaning
+that the physical and cached copies of the selector register can be out of
+sync after a cache sync. The cache will have whatever the selector was when
+the sync started and the hardware will have the selector for the register
+that was synced last.
 
+Fix this by rewriting all cached selector registers after every sync,
+ensuring that the hardware and cache have the same content. This will
+result in extra writes that wouldn't otherwise be needed but is simple
+so hopefully robust. We don't read from the hardware since not all
+devices have physical read support.
+
+Given that nobody noticed this until now it is likely that we are rarely if
+ever hitting this case.
+
+Reported-by: Hector Martin <marcan@marcan.st>
 Cc: stable@vger.kernel.org
-Fixes: b8e7e519625f ("clk: qcom: ipq8074: add remaining PLL’s")
-Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Link: https://lore.kernel.org/r/20230913-gpll_cleanup-v2-1-c8ceb1a37680@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20231026-regmap-fix-selector-sync-v1-1-633ded82770d@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-ipq8074.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/base/regmap/regcache.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -76,7 +76,6 @@ static struct clk_fixed_factor gpll0_out
- 				&gpll0_main.clkr.hw },
- 		.num_parents = 1,
- 		.ops = &clk_fixed_factor_ops,
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
+--- a/drivers/base/regmap/regcache.c
++++ b/drivers/base/regmap/regcache.c
+@@ -334,6 +334,11 @@ static int regcache_default_sync(struct
+ 	return 0;
+ }
  
-@@ -122,7 +121,6 @@ static struct clk_alpha_pll_postdiv gpll
- 				&gpll2_main.clkr.hw },
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_postdiv_ro_ops,
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
++static int rbtree_all(const void *key, const struct rb_node *node)
++{
++	return 0;
++}
++
+ /**
+  * regcache_sync - Sync the register cache with the hardware.
+  *
+@@ -351,6 +356,7 @@ int regcache_sync(struct regmap *map)
+ 	unsigned int i;
+ 	const char *name;
+ 	bool bypass;
++	struct rb_node *node;
  
-@@ -155,7 +153,6 @@ static struct clk_alpha_pll_postdiv gpll
- 				&gpll4_main.clkr.hw },
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_postdiv_ro_ops,
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
+ 	if (WARN_ON(map->cache_type == REGCACHE_NONE))
+ 		return -EINVAL;
+@@ -392,6 +398,30 @@ out:
+ 	/* Restore the bypass state */
+ 	map->cache_bypass = bypass;
+ 	map->no_sync_defaults = false;
++
++	/*
++	 * If we did any paging with cache bypassed and a cached
++	 * paging register then the register and cache state might
++	 * have gone out of sync, force writes of all the paging
++	 * registers.
++	 */
++	rb_for_each(node, 0, &map->range_tree, rbtree_all) {
++		struct regmap_range_node *this =
++			rb_entry(node, struct regmap_range_node, node);
++
++		/* If there's nothing in the cache there's nothing to sync */
++		ret = regcache_read(map, this->selector_reg, &i);
++		if (ret != 0)
++			continue;
++
++		ret = _regmap_write(map, this->selector_reg, i);
++		if (ret != 0) {
++			dev_err(map->dev, "Failed to write %x = %x: %d\n",
++				this->selector_reg, i, ret);
++			break;
++		}
++	}
++
+ 	map->unlock(map->lock_arg);
  
-@@ -189,7 +186,6 @@ static struct clk_alpha_pll_postdiv gpll
- 				&gpll6_main.clkr.hw },
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_postdiv_ro_ops,
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
- 
-@@ -202,7 +198,6 @@ static struct clk_fixed_factor gpll6_out
- 				&gpll6_main.clkr.hw },
- 		.num_parents = 1,
- 		.ops = &clk_fixed_factor_ops,
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
- 
-@@ -267,7 +262,6 @@ static struct clk_alpha_pll_postdiv nss_
- 				&nss_crypto_pll_main.clkr.hw },
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_postdiv_ro_ops,
--		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
- 
+ 	regmap_async_complete(map);
 
 
