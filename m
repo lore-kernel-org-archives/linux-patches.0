@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031482511F;
-	Fri, 24 Nov 2023 19:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEC92FC36;
+	Fri, 24 Nov 2023 19:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+GEs4Wn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C673C433C7;
-	Fri, 24 Nov 2023 19:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHbT8176"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FFEC433C7;
+	Fri, 24 Nov 2023 19:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853315;
-	bh=ZwJPcb3fUKD5XhalPjET9FYBvQBJC5WV3S/RHStm514=;
+	s=korg; t=1700853318;
+	bh=lvtUD0ZJeJ4xQz/cNMM22sWiLGWZSEvY13on6D9KbMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+GEs4Wn7MS5Bzh141TQwIBpMWFaUmtK/EpMVSPL1CIRmakRR2G729PUIgSUl0qhL
-	 MhgnDKsMhOKUmMhE2l0Bz9LMFWVOHvCMK+cv0/Gtw7/9stHyqaYlC7C2w9Hkn50xXR
-	 NnwRjg8gIZpHSgjBCAmcJ/Pkr1JacEJqP9toR1Go=
+	b=jHbT8176OkhKgO8APXDKjhj+jtP5R2xnqWPqTmTLBhC+XyagrJSx6hwBs9GVaFEQx
+	 BsmK6zP9PPd6JB58xcqbNsN/SuCjurzBHOzO18F+kePGTEV5mkqK+H3gll/C8z5Yil
+	 JaASnivlLSmjW/2DpOJTXWmxvcDHUzVXtcaY/ZfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -25,9 +25,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Chandan Babu R <chandanbabu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 140/297] xfs: dont leak xfs_buf_cancel structures when recovery fails
-Date: Fri, 24 Nov 2023 17:53:02 +0000
-Message-ID: <20231124172005.158958560@linuxfoundation.org>
+Subject: [PATCH 5.15 141/297] xfs: convert buf_cancel_table allocation to kmalloc_array
+Date: Fri, 24 Nov 2023 17:53:03 +0000
+Message-ID: <20231124172005.202343160@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -48,35 +48,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 8db074bd84df5ccc88bff3f8f900f66f4b8349fa ]
+[ Upstream commit 910bbdf2f4d7df46781bc9b723048f5ebed3d0d7 ]
 
-If log recovery fails, we free the memory used by the buffer
-cancellation buckets, but we don't actually traverse each bucket list to
-free the individual xfs_buf_cancel objects.  This leads to a memory
-leak, as reported by kmemleak in xfs/051:
-
-unreferenced object 0xffff888103629560 (size 32):
-  comm "mount", pid 687045, jiffies 4296935916 (age 10.752s)
-  hex dump (first 32 bytes):
-    08 d3 0a 01 00 00 00 00 08 00 00 00 01 00 00 00  ................
-    d0 f5 0b 92 81 88 ff ff 80 64 64 25 81 88 ff ff  .........dd%....
-  backtrace:
-    [<ffffffffa0317c83>] kmem_alloc+0x73/0x140 [xfs]
-    [<ffffffffa03234a9>] xlog_recover_buf_commit_pass1+0x139/0x200 [xfs]
-    [<ffffffffa032dc27>] xlog_recover_commit_trans+0x307/0x350 [xfs]
-    [<ffffffffa032df15>] xlog_recovery_process_trans+0xa5/0xe0 [xfs]
-    [<ffffffffa032e12d>] xlog_recover_process_data+0x8d/0x140 [xfs]
-    [<ffffffffa032e49d>] xlog_do_recovery_pass+0x19d/0x740 [xfs]
-    [<ffffffffa032f22d>] xlog_do_log_recovery+0x6d/0x150 [xfs]
-    [<ffffffffa032f343>] xlog_do_recover+0x33/0x1d0 [xfs]
-    [<ffffffffa032faba>] xlog_recover+0xda/0x190 [xfs]
-    [<ffffffffa03194bc>] xfs_log_mount+0x14c/0x360 [xfs]
-    [<ffffffffa030bfed>] xfs_mountfs+0x50d/0xa60 [xfs]
-    [<ffffffffa03124b5>] xfs_fs_fill_super+0x6a5/0x950 [xfs]
-    [<ffffffff812b92a5>] get_tree_bdev+0x175/0x280
-    [<ffffffff812b7c3a>] vfs_get_tree+0x1a/0x80
-    [<ffffffff812e366f>] path_mount+0x6ff/0xaa0
-    [<ffffffff812e3b13>] __x64_sys_mount+0x103/0x140
+While we're messing around with how recovery allocates and frees the
+buffer cancellation table, convert the allocation to use kmalloc_array
+instead of the old kmem_alloc APIs, and make it handle a null return,
+even though that's not likely.
 
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
@@ -86,36 +63,73 @@ Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_buf_item_recover.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/xfs/libxfs/xfs_log_recover.h |  2 +-
+ fs/xfs/xfs_buf_item_recover.c   | 14 ++++++++++----
+ fs/xfs/xfs_log_recover.c        |  4 +++-
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
+diff --git a/fs/xfs/libxfs/xfs_log_recover.h b/fs/xfs/libxfs/xfs_log_recover.h
+index b8b65a6e9b1ec..81a065b0b5710 100644
+--- a/fs/xfs/libxfs/xfs_log_recover.h
++++ b/fs/xfs/libxfs/xfs_log_recover.h
+@@ -120,7 +120,7 @@ int xlog_recover_iget(struct xfs_mount *mp, xfs_ino_t ino,
+ 		struct xfs_inode **ipp);
+ void xlog_recover_release_intent(struct xlog *log, unsigned short intent_type,
+ 		uint64_t intent_id);
+-void xlog_alloc_buf_cancel_table(struct xlog *log);
++int xlog_alloc_buf_cancel_table(struct xlog *log);
+ void xlog_free_buf_cancel_table(struct xlog *log);
+ 
+ #ifdef DEBUG
 diff --git a/fs/xfs/xfs_buf_item_recover.c b/fs/xfs/xfs_buf_item_recover.c
-index dc099b2f4984c..635f7f8ed9c2d 100644
+index 635f7f8ed9c2d..31cbe7deebfaf 100644
 --- a/fs/xfs/xfs_buf_item_recover.c
 +++ b/fs/xfs/xfs_buf_item_recover.c
-@@ -1044,9 +1044,22 @@ void
- xlog_free_buf_cancel_table(
+@@ -1025,19 +1025,25 @@ xlog_check_buf_cancel_table(
+ }
+ #endif
+ 
+-void
++int
+ xlog_alloc_buf_cancel_table(
  	struct xlog	*log)
  {
-+	int		i;
-+
- 	if (!log->l_buf_cancel_table)
- 		return;
++	void		*p;
+ 	int		i;
  
-+	for (i = 0; i < XLOG_BC_TABLE_SIZE; i++) {
-+		struct xfs_buf_cancel	*bc;
+ 	ASSERT(log->l_buf_cancel_table == NULL);
+ 
+-	log->l_buf_cancel_table = kmem_zalloc(XLOG_BC_TABLE_SIZE *
+-						 sizeof(struct list_head),
+-						 0);
++	p = kmalloc_array(XLOG_BC_TABLE_SIZE, sizeof(struct list_head),
++			  GFP_KERNEL);
++	if (!p)
++		return -ENOMEM;
 +
-+		while ((bc = list_first_entry_or_null(
-+				&log->l_buf_cancel_table[i],
-+				struct xfs_buf_cancel, bc_list))) {
-+			list_del(&bc->bc_list);
-+			kmem_free(bc);
-+		}
-+	}
++	log->l_buf_cancel_table = p;
+ 	for (i = 0; i < XLOG_BC_TABLE_SIZE; i++)
+ 		INIT_LIST_HEAD(&log->l_buf_cancel_table[i]);
 +
- 	kmem_free(log->l_buf_cancel_table);
- 	log->l_buf_cancel_table = NULL;
++	return 0;
  }
+ 
+ void
+diff --git a/fs/xfs/xfs_log_recover.c b/fs/xfs/xfs_log_recover.c
+index 18d8eebc2d445..aeb01d4c0423b 100644
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -3256,7 +3256,9 @@ xlog_do_log_recovery(
+ 	 * First do a pass to find all of the cancelled buf log items.
+ 	 * Store them in the buf_cancel_table for use in the second pass.
+ 	 */
+-	xlog_alloc_buf_cancel_table(log);
++	error = xlog_alloc_buf_cancel_table(log);
++	if (error)
++		return error;
+ 
+ 	error = xlog_do_recovery_pass(log, head_blk, tail_blk,
+ 				      XLOG_RECOVER_PASS1, NULL);
 -- 
 2.42.0
 
