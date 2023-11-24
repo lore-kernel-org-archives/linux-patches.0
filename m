@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4212FC36;
-	Fri, 24 Nov 2023 19:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB792EAEA;
+	Fri, 24 Nov 2023 19:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oIQ7pVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA7CC433B8;
-	Fri, 24 Nov 2023 19:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9Alhetq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38142C433C8;
+	Fri, 24 Nov 2023 19:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700854017;
-	bh=cBpVYwnmyrDhZSzb/aBaBR7mLweaFBJl59tx9xVSeXE=;
+	s=korg; t=1700854019;
+	bh=+dtlyo5Fv6YpZ7LszOD2kWWy8Y2R2nYPhWMG/+EH9ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oIQ7pVzEQFZpnGN0FO6+t9GkwercWQ8o2410ObT5ZWABZE10ko8usBB/CJCvlInN
-	 qAuMtwlneIGCuQIEgVO7FhCG5U8IalSWhHkyRtIbkZuvB9fsMphrpzoOMMBhSB9PC8
-	 RdsZ451hawqOrYtqdMpwQtBo50QMEnehMWphi7WY=
+	b=i9AlhetqEiyNMvn9jfgSOseQCsa6XMA6S9uRTiYfeOp27vvgiuNvrx5d86mGX9rBj
+	 ADpLN3joGrlqKTeXUL2gH5jZxmQu/SujUvrwfeBTJY9WGRdbv5wMKQM+hGqrR/gEua
+	 RqJBpQd/8uwLUsWegQN5Mkoyg9BpwTsZ540splqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 098/159] mm/cma: use nth_page() in place of direct struct page manipulation
-Date: Fri, 24 Nov 2023 17:55:15 +0000
-Message-ID: <20231124171945.974713926@linuxfoundation.org>
+	Joshua Yeong <joshua.yeong@starfivetech.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.4 099/159] i3c: master: cdns: Fix reading status register
+Date: Fri, 24 Nov 2023 17:55:16 +0000
+Message-ID: <20231124171946.012524250@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -47,59 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Joshua Yeong <joshua.yeong@starfivetech.com>
 
-commit 2e7cfe5cd5b6b0b98abf57a3074885979e187c1c upstream.
+commit 4bd8405257da717cd556f99e5fb68693d12c9766 upstream.
 
-Patch series "Use nth_page() in place of direct struct page manipulation",
-v3.
+IBIR_DEPTH and CMDR_DEPTH should read from status0 instead of status1.
 
-On SPARSEMEM without VMEMMAP, struct page is not guaranteed to be
-contiguous, since each memory section's memmap might be allocated
-independently.  hugetlb pages can go beyond a memory section size, thus
-direct struct page manipulation on hugetlb pages/subpages might give wrong
-struct page.  Kernel provides nth_page() to do the manipulation properly.
-Use that whenever code can see hugetlb pages.
-
-
-This patch (of 5):
-
-When dealing with hugetlb pages, manipulating struct page pointers
-directly can get to wrong struct page, since struct page is not guaranteed
-to be contiguous on SPARSEMEM without VMEMMAP.  Use nth_page() to handle
-it properly.
-
-Without the fix, page_kasan_tag_reset() could reset wrong page tags,
-causing a wrong kasan result.  No related bug is reported.  The fix
-comes from code inspection.
-
-Link: https://lkml.kernel.org/r/20230913201248.452081-1-zi.yan@sent.com
-Link: https://lkml.kernel.org/r/20230913201248.452081-2-zi.yan@sent.com
-Fixes: 2813b9c02962 ("kasan, mm, arm64: tag non slab memory allocated via pagealloc")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 603f2bee2c54 ("i3c: master: Add driver for Cadence IP")
+Signed-off-by: Joshua Yeong <joshua.yeong@starfivetech.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20230913031743.11439-2-joshua.yeong@starfivetech.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/cma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master/i3c-master-cdns.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/mm/cma.c
-+++ b/mm/cma.c
-@@ -481,7 +481,7 @@ struct page *cma_alloc(struct cma *cma,
- 	 */
- 	if (page) {
- 		for (i = 0; i < count; i++)
--			page_kasan_tag_reset(page + i);
-+			page_kasan_tag_reset(nth_page(page, i));
- 	}
+--- a/drivers/i3c/master/i3c-master-cdns.c
++++ b/drivers/i3c/master/i3c-master-cdns.c
+@@ -189,7 +189,7 @@
+ #define SLV_STATUS1_HJ_DIS		BIT(18)
+ #define SLV_STATUS1_MR_DIS		BIT(17)
+ #define SLV_STATUS1_PROT_ERR		BIT(16)
+-#define SLV_STATUS1_DA(x)		(((s) & GENMASK(15, 9)) >> 9)
++#define SLV_STATUS1_DA(s)		(((s) & GENMASK(15, 9)) >> 9)
+ #define SLV_STATUS1_HAS_DA		BIT(8)
+ #define SLV_STATUS1_DDR_RX_FULL		BIT(7)
+ #define SLV_STATUS1_DDR_TX_FULL		BIT(6)
+@@ -1580,13 +1580,13 @@ static int cdns_i3c_master_probe(struct
+ 	/* Device ID0 is reserved to describe this master. */
+ 	master->maxdevs = CONF_STATUS0_DEVS_NUM(val);
+ 	master->free_rr_slots = GENMASK(master->maxdevs, 1);
++	master->caps.ibirfifodepth = CONF_STATUS0_IBIR_DEPTH(val);
++	master->caps.cmdrfifodepth = CONF_STATUS0_CMDR_DEPTH(val);
  
- 	if (ret && !no_warn) {
+ 	val = readl(master->regs + CONF_STATUS1);
+ 	master->caps.cmdfifodepth = CONF_STATUS1_CMD_DEPTH(val);
+ 	master->caps.rxfifodepth = CONF_STATUS1_RX_DEPTH(val);
+ 	master->caps.txfifodepth = CONF_STATUS1_TX_DEPTH(val);
+-	master->caps.ibirfifodepth = CONF_STATUS0_IBIR_DEPTH(val);
+-	master->caps.cmdrfifodepth = CONF_STATUS0_CMDR_DEPTH(val);
+ 
+ 	spin_lock_init(&master->ibi.lock);
+ 	master->ibi.num_slots = CONF_STATUS1_IBI_HW_RES(val);
 
 
