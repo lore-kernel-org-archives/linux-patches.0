@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B562D787;
-	Fri, 24 Nov 2023 18:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713C52F86B;
+	Fri, 24 Nov 2023 18:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLe2DAA7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B46C433C8;
-	Fri, 24 Nov 2023 18:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1nLAk51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83F3C433C7;
+	Fri, 24 Nov 2023 18:42:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851336;
-	bh=U7T5VksooxVobSFD/Y4DE//tqRd2/i2eBQ2GoatIlNQ=;
+	s=korg; t=1700851339;
+	bh=y72AlVQ3jAyqtcUEp0WVqRyrec+JVjdbQJxXBd/8VB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fLe2DAA7FfrcCzS+2zmuVGix/4L9pNGXG4nUSmcCo3HNAEs/+yA5k/AzjRiHT3S9t
-	 /yxGlZfQ8QJ+fJs0RdpebZQ8+h1MfliROapXobIMKhx+RSePrZcJB4rgCjCqp7kLUC
-	 c8KK+QprPegMDLQfmgtu85nFG1rTc07mICEjAYak=
+	b=N1nLAk51RBiPThd4zSxcizWzO2tQHt9KQSqlJkC0CDTlEU2b6DwUdlEYVT2fGeJn8
+	 mb+TicN1cwe9ftOl2BtGO2Nxk8259QfTMFheEsQewqgp6XAzn4jz0vyJpJs3JtRbuW
+	 z3MRyvgLZj0SZv+oQCyPQeQm9gMZ9ZhoOwLxVsok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.5 383/491] parisc/power: Fix power soft-off when running on qemu
-Date: Fri, 24 Nov 2023 17:50:19 +0000
-Message-ID: <20231124172036.107415853@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Oleksandr Natalenko <oleksandr@natalenko.name>
+Subject: [PATCH 6.5 384/491] xhci: Enable RPM on controllers that support low-power states
+Date: Fri, 24 Nov 2023 17:50:20 +0000
+Message-ID: <20231124172036.138906860@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -40,31 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-commit 6ad6e15a9c46b8f0932cd99724f26f3db4db1cdf upstream.
+commit a5d6264b638efeca35eff72177fd28d149e0764b upstream.
 
-Firmware returns the physical address of the power switch,
-so need to use gsc_writel() instead of direct memory access.
+Use the low-power states of the underlying platform to enable runtime PM.
+If the platform doesn't support runtime D3, then enabling default RPM will
+result in the controller malfunctioning, as in the case of hotplug devices
+not being detected because of a failed interrupt generation.
 
-Fixes: d0c219472980 ("parisc/power: Add power soft-off when running on qemu")
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v6.0+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20231019102924.2797346-16-mathias.nyman@linux.intel.com
+Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/power.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-pci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/parisc/power.c
-+++ b/drivers/parisc/power.c
-@@ -201,7 +201,7 @@ static struct notifier_block parisc_pani
- static int qemu_power_off(struct sys_off_data *data)
- {
- 	/* this turns the system off via SeaBIOS */
--	*(int *)data->cb_data = 0;
-+	gsc_writel(0, (unsigned long) data->cb_data);
- 	pdc_soft_power_button(1);
- 	return NOTIFY_DONE;
- }
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index bde43cef8846..95ed9404f6f8 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -695,7 +695,9 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ 	/* USB-2 and USB-3 roothubs initialized, allow runtime pm suspend */
+ 	pm_runtime_put_noidle(&dev->dev);
+ 
+-	if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
++	if (pci_choose_state(dev, PMSG_SUSPEND) == PCI_D0)
++		pm_runtime_forbid(&dev->dev);
++	else if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
+ 		pm_runtime_allow(&dev->dev);
+ 
+ 	dma_set_max_seg_size(&dev->dev, UINT_MAX);
+-- 
+2.43.0
+
 
 
