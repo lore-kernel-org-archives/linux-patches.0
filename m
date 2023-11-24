@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EB22E858;
-	Fri, 24 Nov 2023 18:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05B328DBA;
+	Fri, 24 Nov 2023 18:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPQqzoZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978D2C433C8;
-	Fri, 24 Nov 2023 18:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwrJawNF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29735C433C9;
+	Fri, 24 Nov 2023 18:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852109;
-	bh=/k/n50ugphZO4l820z0WVUI/4cEZwZZt874Jw6+ZV00=;
+	s=korg; t=1700852112;
+	bh=kmqrx5dUL4kw7bWv9G+MYKbGZC4W0Wm8f43n8jBJFMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPQqzoZBjsU5YAyp3N4sfmjdvQEUEPWLKat0GGsktp3Gyeu0P0WSHfMph4aoI0k7w
-	 jKAlomq87tzfaSSURJkmDhUtFUCnHbmG/hxGJ9Td52/Yz280gJaIQIGLmz39xdmBgV
-	 08A8VtQJJWVKlEAgpKi65UbCXxNNs+CtEXMcSVDU=
+	b=GwrJawNFostnonoSCtO/J4hky12q8+HHj1UxlyvZCmbl2r/FFdwKoZcDx0Jc9m3W3
+	 nvT33rNhg+dcGUk52/vo8ATDECjE8QH/vYxtwA+RBDIyhkSa2wa+zST8eOKQi6q+2w
+	 bZ9r2zzdmtd/dECDtgJiVdjaUcN2nVM59giqAvME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.1 216/372] PCI/ASPM: Fix L1 substate handling in aspm_attr_store_common()
-Date: Fri, 24 Nov 2023 17:50:03 +0000
-Message-ID: <20231124172017.676326724@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christoph Paasch <cpaasch@apple.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Frederic Weisbecker <frederic@kernel.org>
+Subject: [PATCH 6.1 225/372] rcu: kmemleak: Ignore kmemleak false positives when RCU-freeing objects
+Date: Fri, 24 Nov 2023 17:50:12 +0000
+Message-ID: <20231124172017.992187134@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -41,51 +44,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit 8e37372ad0bea4c9b4712d9943f6ae96cff9491f upstream.
+commit 5f98fd034ca6fd1ab8c91a3488968a0e9caaabf6 upstream.
 
-aspm_attr_store_common(), which handles sysfs control of ASPM, has the same
-problem as fb097dcd5a28 ("PCI/ASPM: Disable only ASPM_STATE_L1 when driver
-disables L1"): disabling L1 adds only ASPM_L1 (but not any of the L1.x
-substates) to the "aspm_disable" mask.
+Since the actual slab freeing is deferred when calling kvfree_rcu(), so
+is the kmemleak_free() callback informing kmemleak of the object
+deletion. From the perspective of the kvfree_rcu() caller, the object is
+freed and it may remove any references to it. Since kmemleak does not
+scan RCU internal data storing the pointer, it will report such objects
+as leaks during the grace period.
 
-Enabling one substate, e.g., L1.1, via sysfs removes ASPM_L1 from the
-disable mask.  Since disabling L1 via sysfs doesn't add any of the
-substates to the disable mask, enabling L1.1 actually enables *all* the
-substates.
+Tell kmemleak to ignore such objects on the kvfree_call_rcu() path. Note
+that the tiny RCU implementation does not have such issue since the
+objects can be tracked from the rcu_ctrlblk structure.
 
-In this scenario:
-
-  - Write 0 to "l1_aspm" to disable L1
-  - Write 1 to "l1_1_aspm" to enable L1.1
-
-the intention is to disable L1 and all L1.x substates, then enable just
-L1.1, but in fact, *all* L1.x substates are enabled.
-
-Fix this by explicitly disabling all the L1.x substates when disabling L1.
-
-Fixes: 72ea91afbfb0 ("PCI/ASPM: Add sysfs attributes for controlling ASPM link states")
-Link: https://lore.kernel.org/r/6ba7dd79-9cfe-4ed0-a002-d99cb842f361@gmail.com
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://lore.kernel.org/all/F903A825-F05F-4B77-A2B5-7356282FBA2C@apple.com/
+Cc: <stable@vger.kernel.org>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pcie/aspm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/rcu/tree.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/pci/pcie/aspm.c
-+++ b/drivers/pci/pcie/aspm.c
-@@ -1248,6 +1248,8 @@ static ssize_t aspm_attr_store_common(st
- 			link->aspm_disable &= ~ASPM_STATE_L1;
- 	} else {
- 		link->aspm_disable |= state;
-+		if (state & ASPM_STATE_L1)
-+			link->aspm_disable |= ASPM_STATE_L1SS;
- 	}
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -31,6 +31,7 @@
+ #include <linux/bitops.h>
+ #include <linux/export.h>
+ #include <linux/completion.h>
++#include <linux/kmemleak.h>
+ #include <linux/moduleparam.h>
+ #include <linux/panic.h>
+ #include <linux/panic_notifier.h>
+@@ -3382,6 +3383,14 @@ void kvfree_call_rcu(struct rcu_head *he
  
- 	pcie_config_aspm_link(link, policy_to_aspm_state(link));
+ 	WRITE_ONCE(krcp->count, krcp->count + 1);
+ 
++	/*
++	 * The kvfree_rcu() caller considers the pointer freed at this point
++	 * and likely removes any references to it. Since the actual slab
++	 * freeing (and kmemleak_free()) is deferred, tell kmemleak to ignore
++	 * this object (no scanning or false positives reporting).
++	 */
++	kmemleak_ignore(ptr);
++
+ 	// Set timer to drain after KFREE_DRAIN_JIFFIES.
+ 	if (rcu_scheduler_active == RCU_SCHEDULER_RUNNING)
+ 		schedule_delayed_monitor_work(krcp);
 
 
