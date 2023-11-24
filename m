@@ -1,105 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA8A339BE;
-	Fri, 24 Nov 2023 19:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1DA33CC2
+	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 19:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZC9Q52I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93647C433C7;
-	Fri, 24 Nov 2023 19:18:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853520;
-	bh=tRuOBqxXAax/47gngJuEJzrmVe0tjX2+eAz81Hp8lE8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZC9Q52Itw1G7HCs2iXpzoAtKTvVxUwm2I/LNN5em/8L0V2G8+vEGCsBER72VmYCX
-	 eZxV3m4OaeXzT6KOvkRcd0LqgnJZPlPvCYrqvYRQM34Yws28tgh7DJ81QoOqIGDdxd
-	 lfprzlKHWXW+vMelqA7ZDuetzWJox5HHTQxQpKBM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 222/297] mm/cma: use nth_page() in place of direct struct page manipulation
-Date: Fri, 24 Nov 2023 17:54:24 +0000
-Message-ID: <20231124172007.976479283@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
-References: <20231124172000.087816911@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CalCFT+o"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-59b5484fbe6so21895717b3.1
+        for <patches@lists.linux.dev>; Fri, 24 Nov 2023 11:18:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700853508; x=1701458308; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Y5EvPm+dIyyxToEIiLBN/BUv/oh/7CgG9QocWi6TRY=;
+        b=CalCFT+oRb2YeiSvW2oD9YatKYAHbdFoSEd89k9RWNNISl1Ah4UnhcME4iShgdZaQw
+         N5a5RIUqzT3/1icL+C7S2O0c5Ro7f5EUMguO9FZQPlv1BFuenWwfYQTmTzOx3K9HqEkh
+         JDoSVDENW8Q325ACmiU1Bez3MNrCOv8EVART2djFt2XxJ6j8y/QUmOyhf2RgIdiP1tjj
+         evk3gxlV1Ivyl/HVNbn4S6Pi2bbmaWUvXQoQ5J+UTcUl9OrdXIqAqwyr14aXxuvS8m+K
+         TJ1/BhQsbaZLhCbLfKInZ01rwMhjnT0Ubdh4cCLkjxF9QHQpFeJP1sOlxBjdiIbZpyIB
+         VbDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700853508; x=1701458308;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6Y5EvPm+dIyyxToEIiLBN/BUv/oh/7CgG9QocWi6TRY=;
+        b=pgcHsK8RipI4Efq0d3ku05r+UR/lasPQP0ROHTyKZ8egyaq52Vj67CUtuz+xC5HUzJ
+         rSMppVTjCCdawxTpB/iUi4FfQ9nqH1q+vY34gD8ISK3eadIF1q9iztLYLvBeAvW1+z4B
+         xdBPNnT0nh5cOD9pReEwdA0Zdhc48U5UAx3Oz+YaJpH0aZSxz6lIxD6QoaDUd3iq2jtJ
+         /Z5x63Aqh6uCFXLvTDsiPsXgBh5hB789WmKlfx85lJKUW2UBQYHHd0Ev57intosbZifF
+         1RhAfsTc7yyF8tOogu1JQTubQJlyjAmFFTE8hnviMyqOp9ksWIFxmQSMQfnPSR7IGXsB
+         hNEw==
+X-Gm-Message-State: AOJu0YzscD7Fsx0DQZfAIQXunGJVN/tAsTerJFN55jnd2YHJ/Lf3VR1J
+	QjDejJGVEFmx/FVkfntNtXBlNk/2ftpTz53nWzFs3A==
+X-Google-Smtp-Source: AGHT+IG0J+CigbyzoWqpfwOWZHGZshBQ3BB6VtNdolTpxujJlcObsE89jrok8amrqDkQvtpvSn2O/PyFKR2BHzwUbio=
+X-Received: by 2002:a81:5e43:0:b0:5be:7046:b2f7 with SMTP id
+ s64-20020a815e43000000b005be7046b2f7mr4634734ywb.40.1700853508071; Fri, 24
+ Nov 2023 11:18:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20231124172010.413667921@linuxfoundation.org>
+In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Sat, 25 Nov 2023 00:48:17 +0530
+Message-ID: <CA+G9fYs1QwVjKK0wBcm2EtDbSbvG7fu7Ca=SBAZfGDAsEJLPZw@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/372] 6.1.64-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Zhen Lei <thunder.leizhen@huawei.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	Frederic Weisbecker <frederic@kernel.org>, "Paul E. McKenney" <paulmck@kernel.org>, rcu <rcu@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+On Sat, 25 Nov 2023 at 00:17, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.64 release.
+> There are 372 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 26 Nov 2023 17:19:17 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.64-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-------------------
+Following build warnings / errors noticed while building the
+arm64 tinyconfig on stable-rc linux-6.1.y, linux-6.5.y and linux-6.6.y.
 
-From: Zi Yan <ziy@nvidia.com>
+> Zhen Lei <thunder.leizhen@huawei.com>
+>     rcu: Dump memory object info if callback function is invalid
 
-commit 2e7cfe5cd5b6b0b98abf57a3074885979e187c1c upstream.
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Patch series "Use nth_page() in place of direct struct page manipulation",
-v3.
+Build log:
+kernel/rcu/update.c:49:
+kernel/rcu/rcu.h: In function 'debug_rcu_head_callback':
+kernel/rcu/rcu.h:218:17: error: implicit declaration of function
+'kmem_dump_obj'; did you mean 'mem_dump_obj'?
+[-Werror=implicit-function-declaration]
+  218 |                 kmem_dump_obj(rhp);
+      |                 ^~~~~~~~~~~~~
+      |                 mem_dump_obj
+cc1: some warnings being treated as errors
 
-On SPARSEMEM without VMEMMAP, struct page is not guaranteed to be
-contiguous, since each memory section's memmap might be allocated
-independently.  hugetlb pages can go beyond a memory section size, thus
-direct struct page manipulation on hugetlb pages/subpages might give wrong
-struct page.  Kernel provides nth_page() to do the manipulation properly.
-Use that whenever code can see hugetlb pages.
-
-
-This patch (of 5):
-
-When dealing with hugetlb pages, manipulating struct page pointers
-directly can get to wrong struct page, since struct page is not guaranteed
-to be contiguous on SPARSEMEM without VMEMMAP.  Use nth_page() to handle
-it properly.
-
-Without the fix, page_kasan_tag_reset() could reset wrong page tags,
-causing a wrong kasan result.  No related bug is reported.  The fix
-comes from code inspection.
-
-Link: https://lkml.kernel.org/r/20230913201248.452081-1-zi.yan@sent.com
-Link: https://lkml.kernel.org/r/20230913201248.452081-2-zi.yan@sent.com
-Fixes: 2813b9c02962 ("kasan, mm, arm64: tag non slab memory allocated via pagealloc")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Mike Rapoport (IBM) <rppt@kernel.org>
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- mm/cma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- a/mm/cma.c
-+++ b/mm/cma.c
-@@ -503,7 +503,7 @@ struct page *cma_alloc(struct cma *cma,
- 	 */
- 	if (page) {
- 		for (i = 0; i < count; i++)
--			page_kasan_tag_reset(page + i);
-+			page_kasan_tag_reset(nth_page(page, i));
- 	}
- 
- 	if (ret && !no_warn) {
-
-
+--
+Linaro LKFT
+https://lkft.linaro.org
