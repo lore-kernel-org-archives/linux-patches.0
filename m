@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606F9381D4;
-	Fri, 24 Nov 2023 18:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6E739FFD;
+	Fri, 24 Nov 2023 18:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhFeCuDV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7F8C433C9;
-	Fri, 24 Nov 2023 18:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lc4MUIGS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE54C433C7;
+	Fri, 24 Nov 2023 18:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850525;
-	bh=TH5lbTGsWYJWxC7eynhgm7G+0VvOXfnj8R5gsYyYSu8=;
+	s=korg; t=1700850527;
+	bh=VksqWlSJj9svooBcR9794QUUeDlHRKtY9GmcVt016Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhFeCuDVzEIB3ImCU9MfubeUrCd23mw0KrWI7pirG3gMJZRyFEIRHY/QO4BibGAIA
-	 lxYPz7lyM94X9IOtlyQBzQcifyWRitHT6ZITkqoXOUTNqn3JAy9tZ5MAAVvOyfUOTb
-	 iXmCGGOOADGJZ2upsSkWq7Vj0dhkkLx5jACZ7v/s=
+	b=lc4MUIGS6AlTQeXCid8p2oCswwGRKtlb2aquR48oJ8MN1AyZk+f2GmvmiK9JAAMZV
+	 83JBt2VtV9neN3WEZlJ6hONzKikCweO544dZQYzwvZqOS5ZMMjoCO88qdZWSAIwp+Q
+	 7vZtvovcnMT1sx79wp1wGyQmjPKB2G/cZ4u2tSLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Airlie <airlied@redhat.com>,
-	Philipp Stanner <pstanner@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	Zack Rusin <zackr@vmware.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Stylon Wang <stylon.wang@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 059/491] kernel: watch_queue: copy user-array safely
-Date: Fri, 24 Nov 2023 17:44:55 +0000
-Message-ID: <20231124172026.433270631@linuxfoundation.org>
+Subject: [PATCH 6.5 050/491] drm/amd/display: add seamless pipe topology transition check
+Date: Fri, 24 Nov 2023 17:44:46 +0000
+Message-ID: <20231124172026.189597971@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,39 +45,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <pstanner@redhat.com>
+From: Wenjing Liu <wenjing.liu@amd.com>
 
-[ Upstream commit ca0776571d3163bd03b3e8c9e3da936abfaecbf6 ]
+[ Upstream commit 15c6798ae26d5c7a7776f4f7d0c1fa8c462688a2 ]
 
-Currently, there is no overflow-check with memdup_user().
+[why]
+We have a few cases where we need to perform update topology update
+in dc update interface. However some of the updates are not seamless
+This could cause user noticible glitches. To enforce seamless transition
+we are adding a checking condition and error logging so the corruption
+as result of non seamless transition can be easily spotted.
 
-Use the new function memdup_array_user() instead of memdup_user() for
-duplicating the user-space array safely.
-
-Suggested-by: David Airlie <airlied@redhat.com>
-Signed-off-by: Philipp Stanner <pstanner@redhat.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230920123612.16914-5-pstanner@redhat.com
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Acked-by: Stylon Wang <stylon.wang@amd.com>
+Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watch_queue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c      |  8 +++
+ .../drm/amd/display/dc/dcn32/dcn32_hwseq.c    | 52 +++++++++++++++++++
+ .../drm/amd/display/dc/dcn32/dcn32_hwseq.h    |  4 ++
+ .../gpu/drm/amd/display/dc/dcn32/dcn32_init.c |  1 +
+ .../gpu/drm/amd/display/dc/inc/hw_sequencer.h |  3 ++
+ 5 files changed, 68 insertions(+)
 
-diff --git a/kernel/watch_queue.c b/kernel/watch_queue.c
-index d0b6b390ee423..778b4056700ff 100644
---- a/kernel/watch_queue.c
-+++ b/kernel/watch_queue.c
-@@ -331,7 +331,7 @@ long watch_queue_set_filter(struct pipe_inode_info *pipe,
- 	    filter.__reserved != 0)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index ab79bcd264164..93e6265e58509 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -4414,6 +4414,14 @@ bool dc_update_planes_and_stream(struct dc *dc,
+ 				update_type,
+ 				context);
+ 	} else {
++		if (!stream_update &&
++				dc->hwss.is_pipe_topology_transition_seamless &&
++				!dc->hwss.is_pipe_topology_transition_seamless(
++						dc, dc->current_state, context)) {
++
++			DC_LOG_ERROR("performing non-seamless pipe topology transition with surface only update!\n");
++			BREAK_TO_DEBUGGER();
++		}
+ 		commit_planes_for_stream(
+ 				dc,
+ 				srf_updates,
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
+index b6608d7ab4450..5b3d0e5b90a3e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
+@@ -1621,3 +1621,55 @@ void dcn32_blank_phantom(struct dc *dc,
+ 	if (tg->funcs->is_tg_enabled(tg))
+ 		hws->funcs.wait_for_blank_complete(opp);
+ }
++
++bool dcn32_is_pipe_topology_transition_seamless(struct dc *dc,
++		const struct dc_state *cur_ctx,
++		const struct dc_state *new_ctx)
++{
++	int i;
++	const struct pipe_ctx *cur_pipe, *new_pipe;
++	bool is_seamless = true;
++
++	for (i = 0; i < dc->res_pool->pipe_count; i++) {
++		cur_pipe = &cur_ctx->res_ctx.pipe_ctx[i];
++		new_pipe = &new_ctx->res_ctx.pipe_ctx[i];
++
++		if (resource_is_pipe_type(cur_pipe, FREE_PIPE) ||
++				resource_is_pipe_type(new_pipe, FREE_PIPE))
++			/* adding or removing free pipes is always seamless */
++			continue;
++		else if (resource_is_pipe_type(cur_pipe, OTG_MASTER)) {
++			if (resource_is_pipe_type(new_pipe, OTG_MASTER))
++				if (cur_pipe->stream->stream_id == new_pipe->stream->stream_id)
++				/* OTG master with the same stream is seamless */
++					continue;
++		} else if (resource_is_pipe_type(cur_pipe, OPP_HEAD)) {
++			if (resource_is_pipe_type(new_pipe, OPP_HEAD)) {
++				if (cur_pipe->stream_res.tg == new_pipe->stream_res.tg)
++					/*
++					 * OPP heads sharing the same timing
++					 * generator is seamless
++					 */
++					continue;
++			}
++		} else if (resource_is_pipe_type(cur_pipe, DPP_PIPE)) {
++			if (resource_is_pipe_type(new_pipe, DPP_PIPE)) {
++				if (cur_pipe->stream_res.opp == new_pipe->stream_res.opp)
++					/*
++					 * DPP pipes sharing the same OPP head is
++					 * seamless
++					 */
++					continue;
++			}
++		}
++
++		/*
++		 * This pipe's transition doesn't fall under any seamless
++		 * conditions
++		 */
++		is_seamless = false;
++		break;
++	}
++
++	return is_seamless;
++}
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.h b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.h
+index 616d5219119e9..9992e40acd217 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.h
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.h
+@@ -120,4 +120,8 @@ void dcn32_blank_phantom(struct dc *dc,
+ 		int width,
+ 		int height);
  
--	tf = memdup_user(_filter->filters, filter.nr_filters * sizeof(*tf));
-+	tf = memdup_array_user(_filter->filters, filter.nr_filters, sizeof(*tf));
- 	if (IS_ERR(tf))
- 		return PTR_ERR(tf);
++bool dcn32_is_pipe_topology_transition_seamless(struct dc *dc,
++		const struct dc_state *cur_ctx,
++		const struct dc_state *new_ctx);
++
+ #endif /* __DC_HWSS_DCN32_H__ */
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c
+index 279f312f74076..12e0f48a13e48 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c
+@@ -116,6 +116,7 @@ static const struct hw_sequencer_funcs dcn32_funcs = {
+ 	.update_dsc_pg = dcn32_update_dsc_pg,
+ 	.apply_update_flags_for_phantom = dcn32_apply_update_flags_for_phantom,
+ 	.blank_phantom = dcn32_blank_phantom,
++	.is_pipe_topology_transition_seamless = dcn32_is_pipe_topology_transition_seamless,
+ };
  
+ static const struct hwseq_private_funcs dcn32_private_funcs = {
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/hw_sequencer.h b/drivers/gpu/drm/amd/display/dc/inc/hw_sequencer.h
+index 7a702e216e530..66e680902c95c 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/hw_sequencer.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/hw_sequencer.h
+@@ -401,6 +401,9 @@ struct hw_sequencer_funcs {
+ 			struct dc_state *context,
+ 			struct pipe_ctx *phantom_pipe);
+ 	void (*apply_update_flags_for_phantom)(struct pipe_ctx *phantom_pipe);
++	bool (*is_pipe_topology_transition_seamless)(struct dc *dc,
++			const struct dc_state *cur_ctx,
++			const struct dc_state *new_ctx);
+ 
+ 	void (*commit_subvp_config)(struct dc *dc, struct dc_state *context);
+ 	void (*enable_phantom_streams)(struct dc *dc, struct dc_state *context);
 -- 
 2.42.0
 
