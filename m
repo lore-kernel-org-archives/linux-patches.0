@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A5B321AD;
-	Fri, 24 Nov 2023 18:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4904222F1D;
+	Fri, 24 Nov 2023 18:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWd83ehP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44178C433C8;
-	Fri, 24 Nov 2023 18:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5JHuY4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E39C433C8;
+	Fri, 24 Nov 2023 18:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851958;
-	bh=y18dteQgWfHatS44nvNeQ2mk+bgIxAjJyqtec83cUIc=;
+	s=korg; t=1700851961;
+	bh=tneHs2QH22Kug9dvVIa/Og3hovJDE63x+jBLHXrHRyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VWd83ehPzlab/mFcgdE1f3GQEAvAwRxLLXj3mZF3cfiPOqKX6+KZDQwrdb/LP5joP
-	 SFaHCFGnDojp9Wk+4BCzy4BXdTHs5XxIkdiTIFu/Rvs8BXuCNCATtsCAaszU1r31Ct
-	 eO/QyZixZ/6t8/WOcoTacUdzPeXVsezSd0vHh9S4=
+	b=l5JHuY4eqJdbb58Dao1ezkQfsno3DMCKmPUrqSGuMSZIliw0VKu0bqdNY6N7T6KYY
+	 43eP3rKiqlE2nR1hCl6PnooZH+pjymgqqCGswL7eWqgKEJokJGbPIDP0fV7qar5Mhy
+	 CC06upXx48cy3jseQsJhLxTD1TcwVJbMQpKL2GyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6177e1f90d92583bcc58@syzkaller.appspotmail.com,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/372] ppp: limit MRU to 64K
-Date: Fri, 24 Nov 2023 17:48:45 +0000
-Message-ID: <20231124172015.085740060@linuxfoundation.org>
+Subject: [PATCH 6.1 139/372] xen/events: fix delayed eoi list handling
+Date: Fri, 24 Nov 2023 17:48:46 +0000
+Message-ID: <20231124172015.119694501@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,74 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit c0a2a1b0d631fc460d830f52d06211838874d655 ]
+[ Upstream commit 47d970204054f859f35a2237baa75c2d84fcf436 ]
 
-ppp_sync_ioctl allows setting device MRU, but does not sanity check
-this input.
+When delaying eoi handling of events, the related elements are queued
+into the percpu lateeoi list. In case the list isn't empty, the
+elements should be sorted by the time when eoi handling is to happen.
 
-Limit to a sane upper bound of 64KB.
+Unfortunately a new element will never be queued at the start of the
+list, even if it has a handling time lower than all other list
+elements.
 
-No implementation I could find generates larger than 64KB frames.
-RFC 2823 mentions an upper bound of PPP over SDL of 64KB based on the
-16-bit length field. Other protocols will be smaller, such as PPPoE
-(9KB jumbo frame) and PPPoA (18190 maximum CPCS-SDU size, RFC 2364).
-PPTP and L2TP encapsulate in IP.
+Fix that by handling that case the same way as for an empty list.
 
-Syzbot managed to trigger alloc warning in __alloc_pages:
-
-	if (WARN_ON_ONCE_GFP(order > MAX_ORDER, gfp))
-
-    WARNING: CPU: 1 PID: 37 at mm/page_alloc.c:4544 __alloc_pages+0x3ab/0x4a0 mm/page_alloc.c:4544
-
-    __alloc_skb+0x12b/0x330 net/core/skbuff.c:651
-    __netdev_alloc_skb+0x72/0x3f0 net/core/skbuff.c:715
-    netdev_alloc_skb include/linux/skbuff.h:3225 [inline]
-    dev_alloc_skb include/linux/skbuff.h:3238 [inline]
-    ppp_sync_input drivers/net/ppp/ppp_synctty.c:669 [inline]
-    ppp_sync_receive+0xff/0x680 drivers/net/ppp/ppp_synctty.c:334
-    tty_ldisc_receive_buf+0x14c/0x180 drivers/tty/tty_buffer.c:390
-    tty_port_default_receive_buf+0x70/0xb0 drivers/tty/tty_port.c:37
-    receive_buf drivers/tty/tty_buffer.c:444 [inline]
-    flush_to_ldisc+0x261/0x780 drivers/tty/tty_buffer.c:494
-    process_one_work+0x884/0x15c0 kernel/workqueue.c:2630
-
-With call
-
-    ioctl$PPPIOCSMRU1(r1, 0x40047452, &(0x7f0000000100)=0x5e6417a8)
-
-Similar code exists in other drivers that implement ppp_channel_ops
-ioctl PPPIOCSMRU. Those might also be in scope. Notably excluded from
-this are pppol2tp_ioctl and pppoe_ioctl.
-
-This code goes back to the start of git history.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+6177e1f90d92583bcc58@syzkaller.appspotmail.com
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e99502f76271 ("xen/events: defer eoi in case of excessive number of events")
+Reported-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_synctty.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/xen/events/events_base.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index 1ac231408398a..94ef6f9ca5103 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -462,6 +462,10 @@ ppp_sync_ioctl(struct ppp_channel *chan, unsigned int cmd, unsigned long arg)
- 	case PPPIOCSMRU:
- 		if (get_user(val, (int __user *) argp))
- 			break;
-+		if (val > U16_MAX) {
-+			err = -EINVAL;
-+			break;
-+		}
- 		if (val < PPP_MRU)
- 			val = PPP_MRU;
- 		ap->mru = val;
+diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
+index 80b46de14f413..af9115d648092 100644
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -600,7 +600,9 @@ static void lateeoi_list_add(struct irq_info *info)
+ 
+ 	spin_lock_irqsave(&eoi->eoi_list_lock, flags);
+ 
+-	if (list_empty(&eoi->eoi_list)) {
++	elem = list_first_entry_or_null(&eoi->eoi_list, struct irq_info,
++					eoi_list);
++	if (!elem || info->eoi_time < elem->eoi_time) {
+ 		list_add(&info->eoi_list, &eoi->eoi_list);
+ 		mod_delayed_work_on(info->eoi_cpu, system_wq,
+ 				    &eoi->delayed, delay);
 -- 
 2.42.0
 
