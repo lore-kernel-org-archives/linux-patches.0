@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33C12EAEA;
-	Fri, 24 Nov 2023 19:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74B231748;
+	Fri, 24 Nov 2023 19:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vd8eS4eD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47341C433C8;
-	Fri, 24 Nov 2023 19:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZ1puY1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19A7C433C8;
+	Fri, 24 Nov 2023 19:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852663;
-	bh=/MYKxYGQNeky6nF2ANCm3RPE/av8LD0dFxgRUTel+Is=;
+	s=korg; t=1700852666;
+	bh=m5a/meUkL75YEI1xbfGvc63PUGUFfCG09qvEuE+tIXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vd8eS4eDQLgYbBZW4ptEwRTQhbhe3fjgyaymJ7/We4FSdIeUj/vuZAspjDiSsi1y4
-	 RxQ7ZqxcFLDvMs6S8ECIawFBaYzDAo4sH00hNEQ5030xvFCl7DEwiusGtOLsZvetSE
-	 mNVILlJyqlx4ND/ddURWA7IhheP4wbarStkhIrHU=
+	b=CZ1puY1/FwiFDER7isU7mSOFVRGoec5f76bo7x40K9S9yodFdtQmNSnZoUInYnlMt
+	 1VMeyleP1Y89Vd835tlxdg5Q2gYpETf5cocjFSo3T+6C5UrQXUsUlnClet6HDcqcvn
+	 PLhqBQ5EHam2Xr/pi7vNXfiuYWBPhMqej2BKZK8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/193] xen/events: fix delayed eoi list handling
-Date: Fri, 24 Nov 2023 17:53:21 +0000
-Message-ID: <20231124171950.194063199@linuxfoundation.org>
+Subject: [PATCH 5.10 075/193] ptp: annotate data-race around q->head and q->tail
+Date: Fri, 24 Nov 2023 17:53:22 +0000
+Message-ID: <20231124171950.235012028@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,45 +43,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 47d970204054f859f35a2237baa75c2d84fcf436 ]
+[ Upstream commit 73bde5a3294853947252cd9092a3517c7cb0cd2d ]
 
-When delaying eoi handling of events, the related elements are queued
-into the percpu lateeoi list. In case the list isn't empty, the
-elements should be sorted by the time when eoi handling is to happen.
+As I was working on a syzbot report, I found that KCSAN would
+probably complain that reading q->head or q->tail without
+barriers could lead to invalid results.
 
-Unfortunately a new element will never be queued at the start of the
-list, even if it has a handling time lower than all other list
-elements.
+Add corresponding READ_ONCE() and WRITE_ONCE() to avoid
+load-store tearing.
 
-Fix that by handling that case the same way as for an empty list.
-
-Fixes: e99502f76271 ("xen/events: defer eoi in case of excessive number of events")
-Reported-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: d94ba80ebbea ("ptp: Added a brand new class driver for ptp clocks.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://lore.kernel.org/r/20231109174859.3995880-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/events/events_base.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_chardev.c | 3 ++-
+ drivers/ptp/ptp_clock.c   | 5 +++--
+ drivers/ptp/ptp_private.h | 8 ++++++--
+ drivers/ptp/ptp_sysfs.c   | 3 ++-
+ 4 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
-index 52891546e6973..24e39984914fe 100644
---- a/drivers/xen/events/events_base.c
-+++ b/drivers/xen/events/events_base.c
-@@ -551,7 +551,9 @@ static void lateeoi_list_add(struct irq_info *info)
+diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
+index af3bc65c4595d..9311f3d09c8fc 100644
+--- a/drivers/ptp/ptp_chardev.c
++++ b/drivers/ptp/ptp_chardev.c
+@@ -487,7 +487,8 @@ ssize_t ptp_read(struct posix_clock *pc,
  
- 	spin_lock_irqsave(&eoi->eoi_list_lock, flags);
+ 	for (i = 0; i < cnt; i++) {
+ 		event[i] = queue->buf[queue->head];
+-		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
++		/* Paired with READ_ONCE() in queue_cnt() */
++		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
+ 	}
  
--	if (list_empty(&eoi->eoi_list)) {
-+	elem = list_first_entry_or_null(&eoi->eoi_list, struct irq_info,
-+					eoi_list);
-+	if (!elem || info->eoi_time < elem->eoi_time) {
- 		list_add(&info->eoi_list, &eoi->eoi_list);
- 		mod_delayed_work_on(info->eoi_cpu, system_wq,
- 				    &eoi->delayed, delay);
+ 	spin_unlock_irqrestore(&queue->lock, flags);
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index 21c4c34c52d8d..ed766943a3563 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -55,10 +55,11 @@ static void enqueue_external_timestamp(struct timestamp_event_queue *queue,
+ 	dst->t.sec = seconds;
+ 	dst->t.nsec = remainder;
+ 
++	/* Both WRITE_ONCE() are paired with READ_ONCE() in queue_cnt() */
+ 	if (!queue_free(queue))
+-		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
++		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
+ 
+-	queue->tail = (queue->tail + 1) % PTP_MAX_TIMESTAMPS;
++	WRITE_ONCE(queue->tail, (queue->tail + 1) % PTP_MAX_TIMESTAMPS);
+ 
+ 	spin_unlock_irqrestore(&queue->lock, flags);
+ }
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index 6b97155148f11..d2cb956706763 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -55,9 +55,13 @@ struct ptp_clock {
+  * that a writer might concurrently increment the tail does not
+  * matter, since the queue remains nonempty nonetheless.
+  */
+-static inline int queue_cnt(struct timestamp_event_queue *q)
++static inline int queue_cnt(const struct timestamp_event_queue *q)
+ {
+-	int cnt = q->tail - q->head;
++	/*
++	 * Paired with WRITE_ONCE() in enqueue_external_timestamp(),
++	 * ptp_read(), extts_fifo_show().
++	 */
++	int cnt = READ_ONCE(q->tail) - READ_ONCE(q->head);
+ 	return cnt < 0 ? PTP_MAX_TIMESTAMPS + cnt : cnt;
+ }
+ 
+diff --git a/drivers/ptp/ptp_sysfs.c b/drivers/ptp/ptp_sysfs.c
+index 8cd59e8481631..8d52815e05b31 100644
+--- a/drivers/ptp/ptp_sysfs.c
++++ b/drivers/ptp/ptp_sysfs.c
+@@ -78,7 +78,8 @@ static ssize_t extts_fifo_show(struct device *dev,
+ 	qcnt = queue_cnt(queue);
+ 	if (qcnt) {
+ 		event = queue->buf[queue->head];
+-		queue->head = (queue->head + 1) % PTP_MAX_TIMESTAMPS;
++		/* Paired with READ_ONCE() in queue_cnt() */
++		WRITE_ONCE(queue->head, (queue->head + 1) % PTP_MAX_TIMESTAMPS);
+ 	}
+ 	spin_unlock_irqrestore(&queue->lock, flags);
+ 
 -- 
 2.42.0
 
