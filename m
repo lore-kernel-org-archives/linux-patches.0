@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333C6339BE;
-	Fri, 24 Nov 2023 19:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373FF339BE;
+	Fri, 24 Nov 2023 19:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNua7lxh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDBCC433C8;
-	Fri, 24 Nov 2023 19:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xhle8w6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B953CC433C7;
+	Fri, 24 Nov 2023 19:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853623;
-	bh=3EcB/3ubyGGjFwBasAvhrpNgystd5x2F2DGBxet6C8A=;
+	s=korg; t=1700853626;
+	bh=0Gt2KYig4PjQ4GCc+ElyEFkJO+MOwtr7TF4pTqixuo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNua7lxhQiT/lMZV81CYOIYIFvKrY7nxGQAx4c/+na4dMp9Ut50LFnXKcRPDXt3uT
-	 HfkTH+q+zvrUcXCxCh5pqSY6/97r1Fycb/M0qzAe7kzfvzBP0XQRMXo7H6GYY/2Zlu
-	 UmGOZ5INSKe3a3tbDKPuwpvqBAtUicUqiQT8dk70=
+	b=Xhle8w6HNuTE6kO3BuOiMxD5yZwx6A1A45cI5+SCiFYnlWYjh0KPJ/J1vDP0NL/Hw
+	 PqGVeqRaHj3m0573cPpVgaq1TWxS3JpuVagf1dUoIg5eT7HPz3mFL22bBa40dHFLF6
+	 2ClWH4uKbAnJh6dV5VkvF9gclImBlWelifPEpwM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 262/297] i2c: i801: fix potential race in i801_block_transaction_byte_by_byte
-Date: Fri, 24 Nov 2023 17:55:04 +0000
-Message-ID: <20231124172009.327147508@linuxfoundation.org>
+	Pavel Krasavin <pkrasavin@imaqliq.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Rokosov <ddrokosov@salutedevices.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 239/297] tty: serial: meson: fix hard LOCKUP on crtscts mode
+Date: Fri, 24 Nov 2023 17:54:41 +0000
+Message-ID: <20231124172008.555242926@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -44,66 +43,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Pavel Krasavin <pkrasavin@imaqliq.com>
 
-commit f78ca48a8ba9cdec96e8839351e49eec3233b177 upstream.
+[ Upstream commit 2a1d728f20edeee7f26dc307ed9df4e0d23947ab ]
 
-Currently we set SMBHSTCNT_LAST_BYTE only after the host has started
-receiving the last byte. If we get e.g. preempted before setting
-SMBHSTCNT_LAST_BYTE, the host may be finished with receiving the byte
-before SMBHSTCNT_LAST_BYTE is set.
-Therefore change the code to set SMBHSTCNT_LAST_BYTE before writing
-SMBHSTSTS_BYTE_DONE for the byte before the last byte. Now the code
-is also consistent with what we do in i801_isr_byte_done().
+There might be hard lockup if we set crtscts mode on port without RTS/CTS configured:
 
-Reported-by: Jean Delvare <jdelvare@suse.com>
-Closes: https://lore.kernel.org/linux-i2c/20230828152747.09444625@endymion.delvare/
+# stty -F /dev/ttyAML6 crtscts; echo 1 > /dev/ttyAML6; echo 2 > /dev/ttyAML6
+[   95.890386] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   95.890857] rcu:     3-...0: (201 ticks this GP) idle=e33c/1/0x4000000000000000 softirq=5844/5846 fqs=4984
+[   95.900212] rcu:     (detected by 2, t=21016 jiffies, g=7753, q=296 ncpus=4)
+[   95.906972] Task dump for CPU 3:
+[   95.910178] task:bash            state:R  running task     stack:0     pid:205   ppid:1      flags:0x00000202
+[   95.920059] Call trace:
+[   95.922485]  __switch_to+0xe4/0x168
+[   95.925951]  0xffffff8003477508
+[   95.974379] watchdog: Watchdog detected hard LOCKUP on cpu 3
+[   95.974424] Modules linked in: 88x2cs(O) rtc_meson_vrtc
+
+Possible solution would be to not allow to setup crtscts on such port.
+
+Tested on S905X3 based board.
+
+Fixes: ff7693d079e5 ("ARM: meson: serial: add MesonX SoC on-chip uart driver")
 Cc: stable@vger.kernel.org
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/i2c/busses/i2c-i801.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+Signed-off-by: Pavel Krasavin <pkrasavin@imaqliq.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Rokosov <ddrokosov@salutedevices.com>
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -702,15 +702,11 @@ static int i801_block_transaction_byte_b
- 		return i801_check_post(priv, result ? priv->status : -ETIMEDOUT);
- 	}
+v6: stable tag added
+v5: https://lore.kernel.org/lkml/OF43DA36FF.2BD3BB21-ON00258A47.005A8125-00258A47.005A9513@gdc.ru/
+added missed Reviewed-by tags, Fixes tag added according to Dmitry and Neil notes
+v4: https://lore.kernel.org/lkml/OF55521400.7512350F-ON00258A47.003F7254-00258A47.0040E15C@gdc.ru/
+More correct patch subject according to Jiri's note
+v3: https://lore.kernel.org/lkml/OF6CF5FFA0.CCFD0E8E-ON00258A46.00549EDF-00258A46.0054BB62@gdc.ru/
+"From:" line added to the mail
+v2: https://lore.kernel.org/lkml/OF950BEF72.7F425944-ON00258A46.00488A76-00258A46.00497D44@gdc.ru/
+braces for single statement removed according to Dmitry's note
+v1: https://lore.kernel.org/lkml/OF28B2B8C9.5BC0CD28-ON00258A46.0037688F-00258A46.0039155B@gdc.ru/
+Link: https://lore.kernel.org/r/OF66360032.51C36182-ON00258A48.003F656B-00258A48.0040092C@gdc.ru
+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/tty/serial/meson_uart.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
+index b6e8db0ddf065..7e653d681ac01 100644
+--- a/drivers/tty/serial/meson_uart.c
++++ b/drivers/tty/serial/meson_uart.c
+@@ -368,10 +368,14 @@ static void meson_uart_set_termios(struct uart_port *port,
+ 	else
+ 		val |= AML_UART_STOP_BIT_1SB;
  
--	for (i = 1; i <= len; i++) {
--		if (i == len && read_write == I2C_SMBUS_READ)
--			smbcmd |= SMBHSTCNT_LAST_BYTE;
--		outb_p(smbcmd, SMBHSTCNT(priv));
--
--		if (i == 1)
--			outb_p(inb(SMBHSTCNT(priv)) | SMBHSTCNT_START,
--			       SMBHSTCNT(priv));
-+	if (len == 1 && read_write == I2C_SMBUS_READ)
-+		smbcmd |= SMBHSTCNT_LAST_BYTE;
-+	outb_p(smbcmd | SMBHSTCNT_START, SMBHSTCNT(priv));
+-	if (cflags & CRTSCTS)
+-		val &= ~AML_UART_TWO_WIRE_EN;
+-	else
++	if (cflags & CRTSCTS) {
++		if (port->flags & UPF_HARD_FLOW)
++			val &= ~AML_UART_TWO_WIRE_EN;
++		else
++			termios->c_cflag &= ~CRTSCTS;
++	} else {
+ 		val |= AML_UART_TWO_WIRE_EN;
++	}
  
-+	for (i = 1; i <= len; i++) {
- 		status = i801_wait_byte_done(priv);
- 		if (status)
- 			goto exit;
-@@ -733,9 +729,12 @@ static int i801_block_transaction_byte_b
- 			data->block[0] = len;
- 		}
+ 	writel(val, port->membase + AML_UART_CONTROL);
  
--		/* Retrieve/store value in SMBBLKDAT */
--		if (read_write == I2C_SMBUS_READ)
-+		if (read_write == I2C_SMBUS_READ) {
- 			data->block[i] = inb_p(SMBBLKDAT(priv));
-+			if (i == len - 1)
-+				outb_p(smbcmd | SMBHSTCNT_LAST_BYTE, SMBHSTCNT(priv));
-+		}
-+
- 		if (read_write == I2C_SMBUS_WRITE && i+1 <= len)
- 			outb_p(data->block[i+1], SMBBLKDAT(priv));
+@@ -731,6 +735,7 @@ static int meson_uart_probe(struct platform_device *pdev)
+ 	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
+ 	int ret = 0;
+ 	int irq;
++	bool has_rtscts;
  
+ 	if (pdev->dev.of_node)
+ 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
+@@ -758,6 +763,7 @@ static int meson_uart_probe(struct platform_device *pdev)
+ 		return irq;
+ 
+ 	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
++	has_rtscts = of_property_read_bool(pdev->dev.of_node, "uart-has-rtscts");
+ 
+ 	if (meson_ports[pdev->id]) {
+ 		dev_err(&pdev->dev, "port %d already allocated\n", pdev->id);
+@@ -782,6 +788,8 @@ static int meson_uart_probe(struct platform_device *pdev)
+ 	port->mapsize = resource_size(res_mem);
+ 	port->irq = irq;
+ 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
++	if (has_rtscts)
++		port->flags |= UPF_HARD_FLOW;
+ 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
+ 	port->dev = &pdev->dev;
+ 	port->line = pdev->id;
+-- 
+2.42.0
+
 
 
