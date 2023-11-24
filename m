@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FD033CC2;
-	Fri, 24 Nov 2023 18:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C7633CC2;
+	Fri, 24 Nov 2023 18:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYiUMjSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30ACEC433C8;
-	Fri, 24 Nov 2023 18:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzP/NCmA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C41C433C7;
+	Fri, 24 Nov 2023 18:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850847;
-	bh=CCTotj3vHCXth1ihqHNSJ7z+j6z80UL24aJ7x669Oks=;
+	s=korg; t=1700850850;
+	bh=4/HhHhYbn2G/fESUU462i/3VPHTQghn0dKPVDipkQho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYiUMjSJ4RC4OwN4YIDTbH7C9x2Rga9BfLNFabxvoKubHNmbOyhmiy5NQunyh2vUM
-	 gnHwjzZ9Qvz79uV+67x1FD9SWxG8BQpTp9kQ2ubuTiA9wMtgrzmwI/zLBu/hXOv0Uh
-	 dWocuRMxr5woea8ppTgMewCkjdMivS5yx4RZphjI=
+	b=mzP/NCmAv3jCGpmyJNkZ+x+261wFmDlOs8SBtV3wfrtK4fKxrtmm4PAhyA5FNjg6r
+	 FDU7Q9+D89PD/x9G7F/ZkBCfBcRHF997fi1m7j8+MgJH1xWJ1GbiHlN4yhUB8oEZql
+	 tHFM6dIM5baIYAFk9e2MUgaGRoO211gds8Cj74EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 212/491] net/mlx5: Increase size of irq name buffer
-Date: Fri, 24 Nov 2023 17:47:28 +0000
-Message-ID: <20231124172030.899419921@linuxfoundation.org>
+Subject: [PATCH 6.5 213/491] net/mlx5e: Reduce the size of icosq_str
+Date: Fri, 24 Nov 2023 17:47:29 +0000
+Message-ID: <20231124172030.927294411@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,74 +42,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Saeed Mahameed <saeedm@nvidia.com>
 
-[ Upstream commit 3338bebfc26a1e2cebbba82a1cf12c0159608e73 ]
+[ Upstream commit dce94142842e119b982c27c1b62bd20890c7fd21 ]
 
-Without increased buffer size, will trigger -Wformat-truncation with W=1
-for the snprintf operation writing to the buffer.
+icosq_str size is unnecessarily too long, and it causes a build warning
+-Wformat-truncation with W=1. Looking closely, It doesn't need to be 255B,
+hence this patch reduces the size to 32B which should be more than enough
+to host the string: "ICOSQ: 0x%x, ".
 
-    drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c: In function 'mlx5_irq_alloc':
-    drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c:296:7: error: '@pci:' directive output may be truncated writing 5 bytes into a region of size between 1 and 32 [-Werror=format-truncation=]
-      296 |    "%s@pci:%s", name, pci_name(dev->pdev));
-          |       ^~~~~
-    drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c:295:2: note: 'snprintf' output 6 or more bytes (assuming 37) into a destination of size 32
-      295 |  snprintf(irq->name, MLX5_MAX_IRQ_NAME,
-          |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      296 |    "%s@pci:%s", name, pci_name(dev->pdev));
-          |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+While here, add a missing space in the formatted string.
 
-Fixes: ada9f5d00797 ("IB/mlx5: Fix eq names to display nicely in /proc/interrupts")
+This fixes the following build warning:
+
+$ KCFLAGS='-Wall -Werror'
+$ make O=/tmp/kbuild/linux W=1 -s -j12 drivers/net/ethernet/mellanox/mlx5/core/
+
+drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c: In function 'mlx5e_reporter_rx_timeout':
+drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c:718:56:
+error: ', CQ: 0x' directive output may be truncated writing 8 bytes into a region of size between 0 and 255 [-Werror=format-truncation=]
+  718 |                  "RX timeout on channel: %d, %sRQ: 0x%x, CQ: 0x%x",
+      |                                                        ^~~~~~~~
+drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c:717:9: note: 'snprintf' output between 43 and 322 bytes into a destination of size 288
+  717 |         snprintf(err_str, sizeof(err_str),
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  718 |                  "RX timeout on channel: %d, %sRQ: 0x%x, CQ: 0x%x",
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  719 |                  rq->ix, icosq_str, rq->rqn, rq->cq.mcq.cqn);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixes: 521f31af004a ("net/mlx5e: Allow RQ outside of channel context")
 Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-13-saeed@kernel.org
+Link: https://lore.kernel.org/r/20231114215846.5902-14-saeed@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c | 6 +++---
- drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h | 3 +++
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-index cba2a4afb5fda..235e170c65bb7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-@@ -28,7 +28,7 @@
- struct mlx5_irq {
- 	struct atomic_notifier_head nh;
- 	cpumask_var_t mask;
--	char name[MLX5_MAX_IRQ_NAME];
-+	char name[MLX5_MAX_IRQ_FORMATTED_NAME];
- 	struct mlx5_irq_pool *pool;
- 	int refcount;
- 	struct msi_map map;
-@@ -289,8 +289,8 @@ struct mlx5_irq *mlx5_irq_alloc(struct mlx5_irq_pool *pool, int i,
- 	else
- 		irq_sf_set_name(pool, name, i);
- 	ATOMIC_INIT_NOTIFIER_HEAD(&irq->nh);
--	snprintf(irq->name, MLX5_MAX_IRQ_NAME,
--		 "%s@pci:%s", name, pci_name(dev->pdev));
-+	snprintf(irq->name, MLX5_MAX_IRQ_FORMATTED_NAME,
-+		 MLX5_IRQ_NAME_FORMAT_STR, name, pci_name(dev->pdev));
- 	err = request_irq(irq->map.virq, irq_int_handler, 0, irq->name,
- 			  &irq->nh);
- 	if (err) {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h
-index d3a77a0ab8488..c4d377f8df308 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.h
-@@ -7,6 +7,9 @@
- #include <linux/mlx5/driver.h>
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
+index e8eea9ffd5eb6..03b119a434bc9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
+@@ -702,11 +702,11 @@ static int mlx5e_rx_reporter_dump(struct devlink_health_reporter *reporter,
  
- #define MLX5_MAX_IRQ_NAME (32)
-+#define MLX5_IRQ_NAME_FORMAT_STR ("%s@pci:%s")
-+#define MLX5_MAX_IRQ_FORMATTED_NAME \
-+	(MLX5_MAX_IRQ_NAME + sizeof(MLX5_IRQ_NAME_FORMAT_STR))
- /* max irq_index is 2047, so four chars */
- #define MLX5_MAX_IRQ_IDX_CHARS (4)
- #define MLX5_EQ_REFS_PER_IRQ (2)
+ void mlx5e_reporter_rx_timeout(struct mlx5e_rq *rq)
+ {
+-	char icosq_str[MLX5E_REPORTER_PER_Q_MAX_LEN] = {};
+ 	char err_str[MLX5E_REPORTER_PER_Q_MAX_LEN];
+ 	struct mlx5e_icosq *icosq = rq->icosq;
+ 	struct mlx5e_priv *priv = rq->priv;
+ 	struct mlx5e_err_ctx err_ctx = {};
++	char icosq_str[32] = {};
+ 
+ 	err_ctx.ctx = rq;
+ 	err_ctx.recover = mlx5e_rx_reporter_timeout_recover;
+@@ -715,7 +715,7 @@ void mlx5e_reporter_rx_timeout(struct mlx5e_rq *rq)
+ 	if (icosq)
+ 		snprintf(icosq_str, sizeof(icosq_str), "ICOSQ: 0x%x, ", icosq->sqn);
+ 	snprintf(err_str, sizeof(err_str),
+-		 "RX timeout on channel: %d, %sRQ: 0x%x, CQ: 0x%x",
++		 "RX timeout on channel: %d, %s RQ: 0x%x, CQ: 0x%x",
+ 		 rq->ix, icosq_str, rq->rqn, rq->cq.mcq.cqn);
+ 
+ 	mlx5e_health_report(priv, priv->rx_reporter, err_str, &err_ctx);
 -- 
 2.42.0
 
