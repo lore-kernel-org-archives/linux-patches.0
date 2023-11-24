@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8495939FC6;
-	Fri, 24 Nov 2023 18:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06618381CE;
+	Fri, 24 Nov 2023 18:03:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pE2LF3ck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5024C433C7;
-	Fri, 24 Nov 2023 18:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4OOEIdw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39111C433C7;
+	Fri, 24 Nov 2023 18:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848999;
-	bh=0PnJtsPhJwg2agI6SRcvHHt0IgFTv/usVE6tXtIMSak=;
+	s=korg; t=1700849001;
+	bh=C2SZMbxTA66gF3BPCAE4z54Q1uLH/HnYtDU961piwto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pE2LF3ckN/M8vjO60vL4Hd1G+RCG/JT+dW3IsX7urhl2uSR1g61KBuDxYgJSzPCT0
-	 cCf/5vgqLNXwFiYD4N6MTMMYiYdMnJwVWIoZfnO0gZxY62GVdMCUOtyWvUrmCS3dRB
-	 0Gf3QqJpGKe88rvjFlIN5hXipx3r+cWyfCBu2cwY=
+	b=u4OOEIdwGHJ6Kmpodeu6fZZvn+VLDijXmSCPacfSLHl/owMNXCyPeFFaghI1VrA8p
+	 9YEmOLko8wgyOB7lpvj2oPALTRSoNLT1fvkpuUQ+y809wWFLW4L1GjxqqiqznT5/7/
+	 4NnABp57+60J0j2ncIEjQ2SD/OMaHgzem2Vt7e4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 4.14 48/57] net: dsa: lan9303: consequently nested-lock physical MDIO
-Date: Fri, 24 Nov 2023 17:51:12 +0000
-Message-ID: <20231124171932.094178810@linuxfoundation.org>
+	John Stultz <jstultz@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/530] locking/ww_mutex/test: Fix potential workqueue corruption
+Date: Fri, 24 Nov 2023 17:42:47 +0000
+Message-ID: <20231124172028.149519939@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
-References: <20231124171930.281665051@linuxfoundation.org>
+In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
+References: <20231124172028.107505484@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,175 +38,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.14-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: John Stultz <jstultz@google.com>
 
-commit 5a22fbcc10f3f7d94c5d88afbbffa240a3677057 upstream.
+[ Upstream commit bccdd808902f8c677317cec47c306e42b93b849e ]
 
-When LAN9303 is MDIO-connected two callchains exist into
-mdio->bus->write():
+In some cases running with the test-ww_mutex code, I was seeing
+odd behavior where sometimes it seemed flush_workqueue was
+returning before all the work threads were finished.
 
-1. switch ports 1&2 ("physical" PHYs):
+Often this would cause strange crashes as the mutexes would be
+freed while they were being used.
 
-virtual (switch-internal) MDIO bus (lan9303_switch_ops->phy_{read|write})->
-  lan9303_mdio_phy_{read|write} -> mdiobus_{read|write}_nested
+Looking at the code, there is a lifetime problem as the
+controlling thread that spawns the work allocates the
+"struct stress" structures that are passed to the workqueue
+threads. Then when the workqueue threads are finished,
+they free the stress struct that was passed to them.
 
-2. LAN9303 virtual PHY:
+Unfortunately the workqueue work_struct node is in the stress
+struct. Which means the work_struct is freed before the work
+thread returns and while flush_workqueue is waiting.
 
-virtual MDIO bus (lan9303_phy_{read|write}) ->
-  lan9303_virt_phy_reg_{read|write} -> regmap -> lan9303_mdio_{read|write}
+It seems like a better idea to have the controlling thread
+both allocate and free the stress structures, so that we can
+be sure we don't corrupt the workqueue by freeing the structure
+prematurely.
 
-If the latter functions just take
-mutex_lock(&sw_dev->device->bus->mdio_lock) it triggers a LOCKDEP
-false-positive splat. It's false-positive because the first
-mdio_lock in the second callchain above belongs to virtual MDIO bus, the
-second mdio_lock belongs to physical MDIO bus.
+So this patch reworks the test to do so, and with this change
+I no longer see the early flush_workqueue returns.
 
-Consequent annotation in lan9303_mdio_{read|write} as nested lock
-(similar to lan9303_mdio_phy_{read|write}, it's the same physical MDIO bus)
-prevents the following splat:
-
-WARNING: possible circular locking dependency detected
-5.15.71 #1 Not tainted
-------------------------------------------------------
-kworker/u4:3/609 is trying to acquire lock:
-ffff000011531c68 (lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock){+.+.}-{3:3}, at: regmap_lock_mutex
-but task is already holding lock:
-ffff0000114c44d8 (&bus->mdio_lock){+.+.}-{3:3}, at: mdiobus_read
-which lock already depends on the new lock.
-the existing dependency chain (in reverse order) is:
--> #1 (&bus->mdio_lock){+.+.}-{3:3}:
-       lock_acquire
-       __mutex_lock
-       mutex_lock_nested
-       lan9303_mdio_read
-       _regmap_read
-       regmap_read
-       lan9303_probe
-       lan9303_mdio_probe
-       mdio_probe
-       really_probe
-       __driver_probe_device
-       driver_probe_device
-       __device_attach_driver
-       bus_for_each_drv
-       __device_attach
-       device_initial_probe
-       bus_probe_device
-       deferred_probe_work_func
-       process_one_work
-       worker_thread
-       kthread
-       ret_from_fork
--> #0 (lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock){+.+.}-{3:3}:
-       __lock_acquire
-       lock_acquire.part.0
-       lock_acquire
-       __mutex_lock
-       mutex_lock_nested
-       regmap_lock_mutex
-       regmap_read
-       lan9303_phy_read
-       dsa_slave_phy_read
-       __mdiobus_read
-       mdiobus_read
-       get_phy_device
-       mdiobus_scan
-       __mdiobus_register
-       dsa_register_switch
-       lan9303_probe
-       lan9303_mdio_probe
-       mdio_probe
-       really_probe
-       __driver_probe_device
-       driver_probe_device
-       __device_attach_driver
-       bus_for_each_drv
-       __device_attach
-       device_initial_probe
-       bus_probe_device
-       deferred_probe_work_func
-       process_one_work
-       worker_thread
-       kthread
-       ret_from_fork
-other info that might help us debug this:
- Possible unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(&bus->mdio_lock);
-                               lock(lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock);
-                               lock(&bus->mdio_lock);
-  lock(lan9303_mdio:131:(&lan9303_mdio_regmap_config)->lock);
-*** DEADLOCK ***
-5 locks held by kworker/u4:3/609:
- #0: ffff000002842938 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work
- #1: ffff80000bacbd60 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work
- #2: ffff000007645178 (&dev->mutex){....}-{3:3}, at: __device_attach
- #3: ffff8000096e6e78 (dsa2_mutex){+.+.}-{3:3}, at: dsa_register_switch
- #4: ffff0000114c44d8 (&bus->mdio_lock){+.+.}-{3:3}, at: mdiobus_read
-stack backtrace:
-CPU: 1 PID: 609 Comm: kworker/u4:3 Not tainted 5.15.71 #1
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
- dump_backtrace
- show_stack
- dump_stack_lvl
- dump_stack
- print_circular_bug
- check_noncircular
- __lock_acquire
- lock_acquire.part.0
- lock_acquire
- __mutex_lock
- mutex_lock_nested
- regmap_lock_mutex
- regmap_read
- lan9303_phy_read
- dsa_slave_phy_read
- __mdiobus_read
- mdiobus_read
- get_phy_device
- mdiobus_scan
- __mdiobus_register
- dsa_register_switch
- lan9303_probe
- lan9303_mdio_probe
-...
-
-Cc: stable@vger.kernel.org
-Fixes: dc7005831523 ("net: dsa: LAN9303: add MDIO managed mode support")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20231027065741.534971-1-alexander.sverdlin@siemens.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230922043616.19282-3-jstultz@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lan9303_mdio.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/locking/test-ww_mutex.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/drivers/net/dsa/lan9303_mdio.c
-+++ b/drivers/net/dsa/lan9303_mdio.c
-@@ -41,7 +41,7 @@ static int lan9303_mdio_write(void *ctx,
- 	struct lan9303_mdio *sw_dev = (struct lan9303_mdio *)ctx;
+diff --git a/kernel/locking/test-ww_mutex.c b/kernel/locking/test-ww_mutex.c
+index 93cca6e698600..7c5a8f05497f2 100644
+--- a/kernel/locking/test-ww_mutex.c
++++ b/kernel/locking/test-ww_mutex.c
+@@ -466,7 +466,6 @@ static void stress_inorder_work(struct work_struct *work)
+ 	} while (!time_after(jiffies, stress->timeout));
  
- 	reg <<= 2; /* reg num to offset */
--	mutex_lock(&sw_dev->device->bus->mdio_lock);
-+	mutex_lock_nested(&sw_dev->device->bus->mdio_lock, MDIO_MUTEX_NESTED);
- 	lan9303_mdio_real_write(sw_dev->device, reg, val & 0xffff);
- 	lan9303_mdio_real_write(sw_dev->device, reg + 2, (val >> 16) & 0xffff);
- 	mutex_unlock(&sw_dev->device->bus->mdio_lock);
-@@ -59,7 +59,7 @@ static int lan9303_mdio_read(void *ctx,
- 	struct lan9303_mdio *sw_dev = (struct lan9303_mdio *)ctx;
+ 	kfree(order);
+-	kfree(stress);
+ }
  
- 	reg <<= 2; /* reg num to offset */
--	mutex_lock(&sw_dev->device->bus->mdio_lock);
-+	mutex_lock_nested(&sw_dev->device->bus->mdio_lock, MDIO_MUTEX_NESTED);
- 	*val = lan9303_mdio_real_read(sw_dev->device, reg);
- 	*val |= (lan9303_mdio_real_read(sw_dev->device, reg + 2) << 16);
- 	mutex_unlock(&sw_dev->device->bus->mdio_lock);
+ struct reorder_lock {
+@@ -531,7 +530,6 @@ static void stress_reorder_work(struct work_struct *work)
+ 	list_for_each_entry_safe(ll, ln, &locks, link)
+ 		kfree(ll);
+ 	kfree(order);
+-	kfree(stress);
+ }
+ 
+ static void stress_one_work(struct work_struct *work)
+@@ -552,8 +550,6 @@ static void stress_one_work(struct work_struct *work)
+ 			break;
+ 		}
+ 	} while (!time_after(jiffies, stress->timeout));
+-
+-	kfree(stress);
+ }
+ 
+ #define STRESS_INORDER BIT(0)
+@@ -564,15 +560,24 @@ static void stress_one_work(struct work_struct *work)
+ static int stress(int nlocks, int nthreads, unsigned int flags)
+ {
+ 	struct ww_mutex *locks;
+-	int n;
++	struct stress *stress_array;
++	int n, count;
+ 
+ 	locks = kmalloc_array(nlocks, sizeof(*locks), GFP_KERNEL);
+ 	if (!locks)
+ 		return -ENOMEM;
+ 
++	stress_array = kmalloc_array(nthreads, sizeof(*stress_array),
++				     GFP_KERNEL);
++	if (!stress_array) {
++		kfree(locks);
++		return -ENOMEM;
++	}
++
+ 	for (n = 0; n < nlocks; n++)
+ 		ww_mutex_init(&locks[n], &ww_class);
+ 
++	count = 0;
+ 	for (n = 0; nthreads; n++) {
+ 		struct stress *stress;
+ 		void (*fn)(struct work_struct *work);
+@@ -596,9 +601,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
+ 		if (!fn)
+ 			continue;
+ 
+-		stress = kmalloc(sizeof(*stress), GFP_KERNEL);
+-		if (!stress)
+-			break;
++		stress = &stress_array[count++];
+ 
+ 		INIT_WORK(&stress->work, fn);
+ 		stress->locks = locks;
+@@ -613,6 +616,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
+ 
+ 	for (n = 0; n < nlocks; n++)
+ 		ww_mutex_destroy(&locks[n]);
++	kfree(stress_array);
+ 	kfree(locks);
+ 
+ 	return 0;
+-- 
+2.42.0
+
 
 
