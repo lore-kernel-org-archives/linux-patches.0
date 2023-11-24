@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0381B39FDA;
-	Fri, 24 Nov 2023 17:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE3C39FD0;
+	Fri, 24 Nov 2023 17:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSKo6uxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F7AC433C7;
-	Fri, 24 Nov 2023 17:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziEYg4oO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FFEC433C8;
+	Fri, 24 Nov 2023 17:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848777;
-	bh=3Iwe5WT4s4K+LGjZlTwOm8hFwFPRgZnSnyDBsNMKZpI=;
+	s=korg; t=1700848780;
+	bh=DzrD9E1yO+CSFd1KYchb2sqmezPkB1CJMnKE9CPaZ8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSKo6uxBX2gPBUyMsZx1ctsXaPzNqdh3jlUo/d4fwfcpitr3V/qSJNn0g9QPiWx06
-	 qdVzBqFy/Vt7I3+7fvguRGDiUYWYFHXwkVgryPFD7PGxFK9+dUl836tTgKOBn6P47x
-	 uu/k29xZlU6rgm8LoGddimj6nwBUHhQnr6BUoXXA=
+	b=ziEYg4oO0wik9DtaezcSWz680GcUFm5+/DBEQ6HmLbiovnmlrMDtFjuUNBx1jO1zI
+	 8QRN0quyBPVFmRmkZjDTguxbiM+mB8r1KuXK/27Ig+jAuLVImpa2IrozQ8td5ARP8O
+	 OTXuIQQHrmOw+fMfZeTDqYAsgueMvVCHccXUSmb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kevin Hilman <khilman@baylibre.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	Dmitry Safonov <dima@arista.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Colin Ian King <colin.king@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 77/97] tty/serial: Migrate meson_uart to use has_sysrq
-Date: Fri, 24 Nov 2023 17:50:50 +0000
-Message-ID: <20231124171937.037530116@linuxfoundation.org>
+Subject: [PATCH 4.19 78/97] serial: meson: remove redundant initialization of variable id
+Date: Fri, 24 Nov 2023 17:50:51 +0000
+Message-ID: <20231124171937.081565084@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -44,54 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Safonov <dima@arista.com>
+From: Colin Ian King <colin.king@canonical.com>
 
-[ Upstream commit dca3ac8d3bc9436eb5fd35b80cdcad762fbfa518 ]
+[ Upstream commit 021212f5335229ed12e3d31f9b7d30bd3bb66f7d ]
 
-The SUPPORT_SYSRQ ifdeffery is not nice as:
-- May create misunderstanding about sizeof(struct uart_port) between
-  different objects
-- Prevents moving functions from serial_core.h
-- Reduces readability (well, it's ifdeffery - it's hard to follow)
+The variable id being initialized with a value that is never read
+and it is being updated later with a new value. The initialization is
+redundant and can be removed. Since id is just being used in a for-loop
+inside a local scope, move the declaration of id to that scope.
 
-In order to remove SUPPORT_SYSRQ, has_sysrq variable has been added.
-Initialise it in driver's probe and remove ifdeffery.
-
-Cc: Kevin Hilman <khilman@baylibre.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-amlogic@lists.infradead.org
-Signed-off-by: Dmitry Safonov <dima@arista.com>
-Link: https://lore.kernel.org/r/20191213000657.931618-22-dima@arista.com
+Reviewed-by: Kevin Hilman <khilman@baylibre.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Colin Ian King <colin.king@canonical.com>
+Addresses-Coverity: ("Unused value")
+Link: https://lore.kernel.org/r/20210426101106.9122-1-colin.king@canonical.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 2a1d728f20ed ("tty: serial: meson: fix hard LOCKUP on crtscts mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/meson_uart.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/tty/serial/meson_uart.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
-index 849ce8c1ef392..4c3616cc00833 100644
+index 4c3616cc00833..6a74a31231ebf 100644
 --- a/drivers/tty/serial/meson_uart.c
 +++ b/drivers/tty/serial/meson_uart.c
-@@ -5,10 +5,6 @@
-  * Copyright (C) 2014 Carlo Caione <carlo@caione.org>
-  */
+@@ -664,12 +664,13 @@ static int meson_uart_probe(struct platform_device *pdev)
+ 	struct resource *res_mem, *res_irq;
+ 	struct uart_port *port;
+ 	int ret = 0;
+-	int id = -1;
  
--#if defined(CONFIG_SERIAL_MESON_CONSOLE) && defined(CONFIG_MAGIC_SYSRQ)
--#define SUPPORT_SYSRQ
--#endif
--
- #include <linux/clk.h>
- #include <linux/console.h>
- #include <linux/delay.h>
-@@ -716,6 +712,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	port->mapsize = resource_size(res_mem);
- 	port->irq = res_irq->start;
- 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
-+	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
- 	port->dev = &pdev->dev;
- 	port->line = pdev->id;
- 	port->type = PORT_MESON;
+ 	if (pdev->dev.of_node)
+ 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
+ 
+ 	if (pdev->id < 0) {
++		int id;
++
+ 		for (id = AML_UART_PORT_OFFSET; id < AML_UART_PORT_NUM; id++) {
+ 			if (!meson_ports[id]) {
+ 				pdev->id = id;
 -- 
 2.42.0
 
