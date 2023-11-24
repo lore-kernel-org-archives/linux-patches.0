@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3441C341AE;
-	Fri, 24 Nov 2023 18:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9F0321AD;
+	Fri, 24 Nov 2023 18:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKyfzVzg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69D3C433C8;
-	Fri, 24 Nov 2023 18:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLVhnHhf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E22C433C7;
+	Fri, 24 Nov 2023 18:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850890;
-	bh=wCADJHrJaPj3lzd2veSsOdKLCbtsnW2Io/TaTEtDy4A=;
+	s=korg; t=1700850892;
+	bh=DBdSeweK/FQwsQgXgH0K8GwZvexHGb5CyTVsBYGPcxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKyfzVzgDNGlRjx6lQ9JHhINb7i5jv+s272m6FmSX3amM/9Yl7yLQ6nYrDSDAs/DK
-	 g95XsCuFmruNe6CqBD0xrA6he8JBrcfcGew6L6B+Ni4Cy/X04OkKQt6CSog+lvR/9h
-	 fgUGBMpeepulcJc9X4hwz7Q2kYrCpRBNP90KVNww=
+	b=cLVhnHhfFGY4x0kKhlzpMq3NjO5ZlhIrpxmn2lG3Zd/q8s6dZ0ytfdmw5CyD+0nPY
+	 tyi7v1M4+iB21FQr7ILfnUL8L8OIP4opA5mf3rxKaAkctHg+8g6HFaxELlPW5kRETk
+	 kgO6ukWXrmXUxCXS4JaAGq9P61J+JMKFmSqzNjCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-hardening@vger.kernel.org,
-	Lukas Loidolt <e1634039@student.tuwien.ac.at>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.5 230/491] randstruct: Fix gcc-plugin performance mode to stay in group
-Date: Fri, 24 Nov 2023 17:47:46 +0000
-Message-ID: <20231124172031.467754103@linuxfoundation.org>
+	Hao Sun <sunhao.th@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.5 231/491] bpf: Fix check_stack_write_fixed_off() to correctly spill imm
+Date: Fri, 24 Nov 2023 17:47:47 +0000
+Message-ID: <20231124172031.497225055@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,59 +43,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Hao Sun <sunhao.th@gmail.com>
 
-commit 381fdb73d1e2a48244de7260550e453d1003bb8e upstream.
+commit 811c363645b33e6e22658634329e95f383dfc705 upstream.
 
-The performance mode of the gcc-plugin randstruct was shuffling struct
-members outside of the cache-line groups. Limit the range to the
-specified group indexes.
+In check_stack_write_fixed_off(), imm value is cast to u32 before being
+spilled to the stack. Therefore, the sign information is lost, and the
+range information is incorrect when load from the stack again.
 
-Cc: linux-hardening@vger.kernel.org
+For the following prog:
+0: r2 = r10
+1: *(u64*)(r2 -40) = -44
+2: r0 = *(u64*)(r2 - 40)
+3: if r0 s<= 0xa goto +2
+4: r0 = 1
+5: exit
+6: r0  = 0
+7: exit
+
+The verifier gives:
+func#0 @0
+0: R1=ctx(off=0,imm=0) R10=fp0
+0: (bf) r2 = r10                      ; R2_w=fp0 R10=fp0
+1: (7a) *(u64 *)(r2 -40) = -44        ; R2_w=fp0 fp-40_w=4294967252
+2: (79) r0 = *(u64 *)(r2 -40)         ; R0_w=4294967252 R2_w=fp0
+fp-40_w=4294967252
+3: (c5) if r0 s< 0xa goto pc+2
+mark_precise: frame0: last_idx 3 first_idx 0 subseq_idx -1
+mark_precise: frame0: regs=r0 stack= before 2: (79) r0 = *(u64 *)(r2 -40)
+3: R0_w=4294967252
+4: (b7) r0 = 1                        ; R0_w=1
+5: (95) exit
+verification time 7971 usec
+stack depth 40
+processed 6 insns (limit 1000000) max_states_per_insn 0 total_states 0
+peak_states 0 mark_read 0
+
+So remove the incorrect cast, since imm field is declared as s32, and
+__mark_reg_known() takes u64, so imm would be correctly sign extended
+by compiler.
+
+Fixes: ecdf985d7615 ("bpf: track immediate values written to stack by BPF_ST instruction")
 Cc: stable@vger.kernel.org
-Reported-by: Lukas Loidolt <e1634039@student.tuwien.ac.at>
-Closes: https://lore.kernel.org/all/f3ca77f0-e414-4065-83a5-ae4c4d25545d@student.tuwien.ac.at
-Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Hao Sun <sunhao.th@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20231101-fix-check-stack-write-v3-1-f05c2b1473d5@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gcc-plugins/randomize_layout_plugin.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ kernel/bpf/verifier.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -191,12 +191,14 @@ static void partition_struct(tree *field
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4368,7 +4368,7 @@ static int check_stack_write_fixed_off(s
+ 		   insn->imm != 0 && env->bpf_capable) {
+ 		struct bpf_reg_state fake_reg = {};
  
- static void performance_shuffle(tree *newtree, unsigned long length, ranctx *prng_state)
- {
--	unsigned long i, x;
-+	unsigned long i, x, index;
- 	struct partition_group size_group[length];
- 	unsigned long num_groups = 0;
- 	unsigned long randnum;
- 
- 	partition_struct(newtree, length, (struct partition_group *)&size_group, &num_groups);
-+
-+	/* FIXME: this group shuffle is currently a no-op. */
- 	for (i = num_groups - 1; i > 0; i--) {
- 		struct partition_group tmp;
- 		randnum = ranval(prng_state) % (i + 1);
-@@ -206,11 +208,14 @@ static void performance_shuffle(tree *ne
- 	}
- 
- 	for (x = 0; x < num_groups; x++) {
--		for (i = size_group[x].start + size_group[x].length - 1; i > size_group[x].start; i--) {
-+		for (index = size_group[x].length - 1; index > 0; index--) {
- 			tree tmp;
-+
-+			i = size_group[x].start + index;
- 			if (DECL_BIT_FIELD_TYPE(newtree[i]))
- 				continue;
--			randnum = ranval(prng_state) % (i + 1);
-+			randnum = ranval(prng_state) % (index + 1);
-+			randnum += size_group[x].start;
- 			// we could handle this case differently if desired
- 			if (DECL_BIT_FIELD_TYPE(newtree[randnum]))
- 				continue;
+-		__mark_reg_known(&fake_reg, (u32)insn->imm);
++		__mark_reg_known(&fake_reg, insn->imm);
+ 		fake_reg.type = SCALAR_VALUE;
+ 		save_register_state(state, spi, &fake_reg, size);
+ 	} else if (reg && is_spillable_regtype(reg->type)) {
 
 
