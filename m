@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5BF2EAEA;
-	Fri, 24 Nov 2023 19:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5C028DBB;
+	Fri, 24 Nov 2023 19:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kN2JkUhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D621EC433C7;
-	Fri, 24 Nov 2023 19:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIuT9aAA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF54C433C8;
+	Fri, 24 Nov 2023 19:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853975;
-	bh=Xg+hViAO3Wui1+d8YoTHmEvdoRy2Sw1i7KuLl9netL8=;
+	s=korg; t=1700853977;
+	bh=zw28BlohxHWuk7qoxS1AlRLObfoaY6tkAUImzuk6pNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kN2JkUhDDO3itkjT5Y8gV0BrsGB9F7qXnFvRh2mtdvq+ulpDO9FvWC+TfF7e+c4GQ
-	 9Wb/v/AWbowFbAeiSFxaPYcoM9ine0M0Uj2jqoBxJrZDdnPjTjawygKkcv57bB/kTP
-	 hglTbC0xbF5lM3q0WfYsaA1wH5kLbEt/qccrsCIo=
+	b=qIuT9aAAalE0soXPutJ+94KoCBrOJUwgrEnj08ez+02Ibm0lBGAZoJg5gszlfl+H9
+	 iKYgfjAVsHzzn3hCNjO6c6Nz2w2CkTHS38izdr4Mpswgp4oOuwi5uQk3bnvJaCte0X
+	 1S9CZduXsv4FZF5w+M5i3BMsRjVhevqTYwmOCMOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kevin Hilman <khilman@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Colin Ian King <colin.king@canonical.com>,
+	Neil Armstrong <narmstrong@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 106/159] serial: meson: remove redundant initialization of variable id
-Date: Fri, 24 Nov 2023 17:55:23 +0000
-Message-ID: <20231124171946.296190575@linuxfoundation.org>
+Subject: [PATCH 5.4 107/159] tty: serial: meson: retrieve port FIFO size from DT
+Date: Fri, 24 Nov 2023 17:55:24 +0000
+Message-ID: <20231124171946.340888863@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -43,46 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Neil Armstrong <narmstrong@baylibre.com>
 
-[ Upstream commit 021212f5335229ed12e3d31f9b7d30bd3bb66f7d ]
+[ Upstream commit 27d44e05d7b85d9d4cfe0a3c0663ea49752ece93 ]
 
-The variable id being initialized with a value that is never read
-and it is being updated later with a new value. The initialization is
-redundant and can be removed. Since id is just being used in a for-loop
-inside a local scope, move the declaration of id to that scope.
+Now the DT bindings has a property to get the FIFO size for a particular port,
+retrieve it and use to setup the FIFO interrupts threshold.
 
 Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Addresses-Coverity: ("Unused value")
-Link: https://lore.kernel.org/r/20210426101106.9122-1-colin.king@canonical.com
+Signed-off-by: Neil Armstrong <narmstrong@baylibre.com>
+Link: https://lore.kernel.org/r/20210518075833.3736038-3-narmstrong@baylibre.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 2a1d728f20ed ("tty: serial: meson: fix hard LOCKUP on crtscts mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/meson_uart.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/meson_uart.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
-index 4c3616cc00833..6a74a31231ebf 100644
+index 6a74a31231ebf..7563fd215d816 100644
 --- a/drivers/tty/serial/meson_uart.c
 +++ b/drivers/tty/serial/meson_uart.c
-@@ -664,12 +664,13 @@ static int meson_uart_probe(struct platform_device *pdev)
+@@ -663,6 +663,7 @@ static int meson_uart_probe(struct platform_device *pdev)
+ {
  	struct resource *res_mem, *res_irq;
  	struct uart_port *port;
++	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
  	int ret = 0;
--	int id = -1;
  
  	if (pdev->dev.of_node)
- 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
+@@ -690,6 +691,8 @@ static int meson_uart_probe(struct platform_device *pdev)
+ 	if (!res_irq)
+ 		return -ENODEV;
  
- 	if (pdev->id < 0) {
-+		int id;
++	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
 +
- 		for (id = AML_UART_PORT_OFFSET; id < AML_UART_PORT_NUM; id++) {
- 			if (!meson_ports[id]) {
- 				pdev->id = id;
+ 	if (meson_ports[pdev->id]) {
+ 		dev_err(&pdev->dev, "port %d already allocated\n", pdev->id);
+ 		return -EBUSY;
+@@ -719,7 +722,7 @@ static int meson_uart_probe(struct platform_device *pdev)
+ 	port->type = PORT_MESON;
+ 	port->x_char = 0;
+ 	port->ops = &meson_uart_ops;
+-	port->fifosize = 64;
++	port->fifosize = fifosize;
+ 
+ 	meson_ports[pdev->id] = port;
+ 	platform_set_drvdata(pdev, port);
 -- 
 2.42.0
 
