@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD71828DBB;
-	Fri, 24 Nov 2023 18:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768612C87B;
+	Fri, 24 Nov 2023 18:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fInRNDGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B519C433C7;
-	Fri, 24 Nov 2023 18:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSf6DRLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA48C433C8;
+	Fri, 24 Nov 2023 18:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851770;
-	bh=43Is4Tpr3jHKN3lWeD/cAFxTDb0guZrZ3+fyIXblOUY=;
+	s=korg; t=1700851773;
+	bh=st4QvdiDEJ2u4L8Pc8S6x0JKS8QP2/xcxUlm6V2vqCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fInRNDGCCJfMbYKAeIsHmsITqZ8VndHFNOewua64NlmJhIUXdemQkQOz/LytLdZQ8
-	 VqTp4bKupj08FaIsulnmpJca0Tkw9yN8BP+wtOXFDn7PxZ3uMrT0t0SS3bnq/d8EDd
-	 2Xdq1kP0qcxhpzyTUWw6Pd+hsozKDodZwJI+xJeE=
+	b=JSf6DRLE0er7ObuaUweSKuYksCE9U0MI4V8nNvaBksCnzW84EOJg/y7G3DEuV1dGC
+	 NihA3ctEzSkYEV4PBG/WmmrCmay+J//25oR27VezZ4GWry/iY+0New2GNHpQFCAZSe
+	 4hjy6+My0cOaXn7kvAFAkdvmu+rL589sBH8NfF1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/372] soundwire: dmi-quirks: update HP Omen match
-Date: Fri, 24 Nov 2023 17:47:56 +0000
-Message-ID: <20231124172013.501435552@linuxfoundation.org>
+Subject: [PATCH 6.1 090/372] f2fs: fix error handling of __get_node_page
+Date: Fri, 24 Nov 2023 17:47:57 +0000
+Message-ID: <20231124172013.536353329@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,37 +42,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 4ea2b6d3128ea4d502c4015df0dc16b7d1070954 ]
+[ Upstream commit 9b4c8dd99fe48721410741651d426015e03a4b7a ]
 
-New platforms have a slightly different DMI product name, remove
-trailing characters/digits to handle all cases
+Use f2fs_handle_error to record inconsistent node block error
+and return -EFSCORRUPTED instead of -EINVAL.
 
-Closes: https://github.com/thesofproject/linux/issues/4611
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20231013010833.114271-1-yung-chuan.liao@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/node.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index 2a1096dab63d3..9ebdd0cd0b1cf 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -141,7 +141,7 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16-k0xxx"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "OMEN by HP Gaming Laptop 16"),
- 		},
- 		.driver_data = (void *)hp_omen_16,
- 	},
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index a010b4bc36d2c..b73d44df9423b 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -1455,7 +1455,8 @@ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
+ 			  ofs_of_node(page), cpver_of_node(page),
+ 			  next_blkaddr_of_node(page));
+ 	set_sbi_flag(sbi, SBI_NEED_FSCK);
+-	err = -EINVAL;
++	f2fs_handle_error(sbi, ERROR_INCONSISTENT_FOOTER);
++	err = -EFSCORRUPTED;
+ out_err:
+ 	ClearPageUptodate(page);
+ out_put_err:
 -- 
 2.42.0
 
