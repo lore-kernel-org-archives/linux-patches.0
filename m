@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5022E64F;
-	Fri, 24 Nov 2023 19:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E20339BE;
+	Fri, 24 Nov 2023 19:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpTzEwwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7FCC433C7;
-	Fri, 24 Nov 2023 19:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ot+ScuTu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2964C433CA;
+	Fri, 24 Nov 2023 19:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700854004;
-	bh=GW58C0MDcyeZhFAGJB5DD+ouDZPcKWynJLdDX7z9Trg=;
+	s=korg; t=1700854007;
+	bh=5/GLu7FYeW0T+7bUl8LGGDfv0tg7fLHdsR0go6hfO/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpTzEwwfa8fOgZN49yIydhT5TTBTe+CNHUt5m8Nhl5CyEskC/DsPmLJ2P3fiOFskf
-	 SUaz3AKCmmcTLef0V0kI4fbRXElr4ZSV3r78AYYlN8SxZdVARZFviarcSs17ZQ9p+Y
-	 GKr2mENGCL3JjfC65hLTcEet77K+X0U5DjugSH0g=
+	b=ot+ScuTu996OV2s/6M+TVXcoTYw+c/xOTgS3zUEHIO0ZjxSxSISB7JCkKPAlTF7QC
+	 J9atcXEzHfaR3T/gVpQLouhDvnGELRvdbUelnz/E4xloCk9cU0wTxE5gPymf2P4oZk
+	 1z6Mu3M0S3gn1vepOTSkdZloB3zyU4bjU99App3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johnathan Mantey <johnathanx.mantey@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 117/159] Revert ncsi: Propagate carrier gain/loss events to the NCSI controller
-Date: Fri, 24 Nov 2023 17:55:34 +0000
-Message-ID: <20231124171946.722113535@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Subject: [PATCH 5.4 094/159] mcb: fix error handling for different scenarios when parsing
+Date: Fri, 24 Nov 2023 17:55:11 +0000
+Message-ID: <20231124171945.811169165@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -36,52 +36,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
+From: Sanjuán García, Jorge <Jorge.SanjuanGarcia@duagon.com>
 
-commit 9e2e7efbbbff69d8340abb56d375dd79d1f5770f upstream.
+commit 63ba2d07b4be72b94216d20561f43e1150b25d98 upstream.
 
-This reverts commit 3780bb29311eccb7a1c9641032a112eed237f7e3.
+chameleon_parse_gdd() may fail for different reasons and end up
+in the err tag. Make sure we at least always free the mcb_device
+allocated with mcb_alloc_dev().
 
-The cited commit introduced unwanted behavior.
+If mcb_device_register() fails, make sure to give up the reference
+in the same place the device was added.
 
-The intent for the commit was to be able to detect carrier loss/gain
-for just the NIC connected to the BMC. The unwanted effect is a
-carrier loss for auxiliary paths also causes the BMC to lose
-carrier. The BMC never regains carrier despite the secondary NIC
-regaining a link.
-
-This change, when merged, needs to be backported to stable kernels.
-5.4-stable, 5.10-stable, 5.15-stable, 6.1-stable, 6.5-stable
-
-Fixes: 3780bb29311e ("ncsi: Propagate carrier gain/loss events to the NCSI controller")
-CC: stable@vger.kernel.org
-Signed-off-by: Johnathan Mantey <johnathanx.mantey@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 728ac3389296 ("mcb: mcb-parse: fix error handing in chameleon_parse_gdd()")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Jose Javier Rodriguez Barbarin <JoseJavier.Rodriguez@duagon.com>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Link: https://lore.kernel.org/r/20231019141434.57971-2-jorge.sanjuangarcia@duagon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ncsi/ncsi-aen.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/mcb/mcb-core.c  |    1 +
+ drivers/mcb/mcb-parse.c |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ncsi/ncsi-aen.c
-+++ b/net/ncsi/ncsi-aen.c
-@@ -89,11 +89,6 @@ static int ncsi_aen_handler_lsc(struct n
- 	if ((had_link == has_link) || chained)
- 		return 0;
+--- a/drivers/mcb/mcb-core.c
++++ b/drivers/mcb/mcb-core.c
+@@ -248,6 +248,7 @@ int mcb_device_register(struct mcb_bus *
+ 	return 0;
  
--	if (had_link)
--		netif_carrier_off(ndp->ndev.dev);
--	else
--		netif_carrier_on(ndp->ndev.dev);
--
- 	if (!ndp->multi_package && !nc->package->multi_channel) {
- 		if (had_link) {
- 			ndp->flags |= NCSI_DEV_RESHUFFLE;
+ out:
++	put_device(&dev->dev);
+ 
+ 	return ret;
+ }
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -106,7 +106,7 @@ static int chameleon_parse_gdd(struct mc
+ 	return 0;
+ 
+ err:
+-	put_device(&mdev->dev);
++	mcb_free_dev(mdev);
+ 
+ 	return ret;
+ }
 
 
