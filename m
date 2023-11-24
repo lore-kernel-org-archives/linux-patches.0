@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DEE3307D;
-	Fri, 24 Nov 2023 18:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97AE35F1D;
+	Fri, 24 Nov 2023 18:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVp15eKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0262FC433C8;
-	Fri, 24 Nov 2023 18:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgOWGf5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72422C433C7;
+	Fri, 24 Nov 2023 18:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851113;
-	bh=jxWRyLiZUb60Z8ZWxEK3759Fjzyr3groeE73xiTUL9k=;
+	s=korg; t=1700851115;
+	bh=oMb0rjW53u67HuFyOAdjUgfQZMMBb5Qf9M3WUasPRLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVp15eKs8X1qoyCSSfeqfg5mdgMYJ66ia6abhyPPEwK4BtFUG0a2OFVeestmt7riq
-	 Td/P1sGuHghSHxdR5hhNi+8NC5hc5KZbnHTi/cGTHvDyyCuu4dmbTcA1xFwiaDP7Sq
-	 IgaOkPGCs1xTWsNBQIZoJ1mR8yIkObOqpkK+UsBk=
+	b=qgOWGf5ZqOvUtQtCWFVdMAANymoujv2tf5pm9+LCWT9aY6poCevF/qRhUxvM3/jqC
+	 bLwocH2CR0+8tHu2dpdLzgkqhKuZJCXvE+kYiFMoCyliH5oOTwOGsChMiQexvifcIp
+	 RC4cKkmGdTF3Ym73Zdjn9rfpU5QnDit1kPxq4zPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.5 318/491] firmware: qcom_scm: use 64-bit calling convention only when client is 64-bit
-Date: Fri, 24 Nov 2023 17:49:14 +0000
-Message-ID: <20231124172034.124865402@linuxfoundation.org>
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.5 319/491] ACPI: FPDT: properly handle invalid FPDT subtables
+Date: Fri, 24 Nov 2023 17:49:15 +0000
+Message-ID: <20231124172034.154037996@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,52 +41,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
-commit 3337a6fea25370d3d244ec6bb38c71ee86fcf837 upstream.
+commit a83c68a3bf7c418c9a46693c63c638852b0c1f4e upstream.
 
-Per the "SMC calling convention specification", the 64-bit calling
-convention can only be used when the client is 64-bit. Whereas the
-32-bit calling convention can be used by either a 32-bit or a 64-bit
-client.
+Buggy BIOSes may have invalid FPDT subtables, e.g. on my hardware:
 
-Currently during SCM probe, irrespective of the client, 64-bit calling
-convention is made, which is incorrect and may lead to the undefined
-behaviour when the client is 32-bit. Let's fix it.
+S3PT subtable:
 
-Cc: stable@vger.kernel.org
-Fixes: 9a434cee773a ("firmware: qcom_scm: Dynamically support SMCCC and legacy conventions")
-Reviewed-By: Elliot Berman <quic_eberman@quicinc.com>
-Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Link: https://lore.kernel.org/r/20230925-scm-v3-1-8790dff6a749@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+7F20FE30: 53 33 50 54 24 00 00 00-00 00 00 00 00 00 18 01  *S3PT$...........*
+7F20FE40: 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  *................*
+7F20FE50: 00 00 00 00
+
+Here the first record has zero length.
+
+FBPT subtable:
+
+7F20FE50:             46 42 50 54-3C 00 00 00 46 42 50 54  *....FBPT<...FBPT*
+7F20FE60: 02 00 30 02 00 00 00 00-00 00 00 00 00 00 00 00  *..0.............*
+7F20FE70: 2A A6 BC 6E 0B 00 00 00-1A 44 41 70 0B 00 00 00  **..n.....DAp....*
+7F20FE80: 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  *................*
+
+And here FBPT table has FBPT signature repeated instead of the first
+record.
+
+Current code will be looping indefinitely due to zero length records, so
+break out of the loop if record length is zero.
+
+While we are here, add proper handling for fpdt_process_subtable()
+failures.
+
+Fixes: d1eb86e59be0 ("ACPI: tables: introduce support for FPDT table")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+[ rjw: Comment edit, added empty code lines ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/qcom_scm.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/acpi/acpi_fpdt.c |   45 +++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 37 insertions(+), 8 deletions(-)
 
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -172,6 +172,12 @@ static enum qcom_scm_convention __get_co
- 		return qcom_scm_convention;
+--- a/drivers/acpi/acpi_fpdt.c
++++ b/drivers/acpi/acpi_fpdt.c
+@@ -194,12 +194,19 @@ static int fpdt_process_subtable(u64 add
+ 		record_header = (void *)subtable_header + offset;
+ 		offset += record_header->length;
  
- 	/*
-+	 * Per the "SMC calling convention specification", the 64-bit calling
-+	 * convention can only be used when the client is 64-bit, otherwise
-+	 * system will encounter the undefined behaviour.
-+	 */
-+#if IS_ENABLED(CONFIG_ARM64)
-+	/*
- 	 * Device isn't required as there is only one argument - no device
- 	 * needed to dma_map_single to secure world
- 	 */
-@@ -191,6 +197,7 @@ static enum qcom_scm_convention __get_co
- 		forced = true;
- 		goto found;
++		if (!record_header->length) {
++			pr_err(FW_BUG "Zero-length record found in FPTD.\n");
++			result = -EINVAL;
++			goto err;
++		}
++
+ 		switch (record_header->type) {
+ 		case RECORD_S3_RESUME:
+ 			if (subtable_type != SUBTABLE_S3PT) {
+ 				pr_err(FW_BUG "Invalid record %d for subtable %s\n",
+ 				     record_header->type, signature);
+-				return -EINVAL;
++				result = -EINVAL;
++				goto err;
+ 			}
+ 			if (record_resume) {
+ 				pr_err("Duplicate resume performance record found.\n");
+@@ -208,7 +215,7 @@ static int fpdt_process_subtable(u64 add
+ 			record_resume = (struct resume_performance_record *)record_header;
+ 			result = sysfs_create_group(fpdt_kobj, &resume_attr_group);
+ 			if (result)
+-				return result;
++				goto err;
+ 			break;
+ 		case RECORD_S3_SUSPEND:
+ 			if (subtable_type != SUBTABLE_S3PT) {
+@@ -223,13 +230,14 @@ static int fpdt_process_subtable(u64 add
+ 			record_suspend = (struct suspend_performance_record *)record_header;
+ 			result = sysfs_create_group(fpdt_kobj, &suspend_attr_group);
+ 			if (result)
+-				return result;
++				goto err;
+ 			break;
+ 		case RECORD_BOOT:
+ 			if (subtable_type != SUBTABLE_FBPT) {
+ 				pr_err(FW_BUG "Invalid %d for subtable %s\n",
+ 				     record_header->type, signature);
+-				return -EINVAL;
++				result = -EINVAL;
++				goto err;
+ 			}
+ 			if (record_boot) {
+ 				pr_err("Duplicate boot performance record found.\n");
+@@ -238,7 +246,7 @@ static int fpdt_process_subtable(u64 add
+ 			record_boot = (struct boot_performance_record *)record_header;
+ 			result = sysfs_create_group(fpdt_kobj, &boot_attr_group);
+ 			if (result)
+-				return result;
++				goto err;
+ 			break;
+ 
+ 		default:
+@@ -247,6 +255,18 @@ static int fpdt_process_subtable(u64 add
+ 		}
  	}
-+#endif
+ 	return 0;
++
++err:
++	if (record_boot)
++		sysfs_remove_group(fpdt_kobj, &boot_attr_group);
++
++	if (record_suspend)
++		sysfs_remove_group(fpdt_kobj, &suspend_attr_group);
++
++	if (record_resume)
++		sysfs_remove_group(fpdt_kobj, &resume_attr_group);
++
++	return result;
+ }
  
- 	probed_convention = SMC_CONVENTION_ARM_32;
- 	ret = __scm_smc_call(NULL, &desc, probed_convention, &res, true);
+ static int __init acpi_init_fpdt(void)
+@@ -255,6 +275,7 @@ static int __init acpi_init_fpdt(void)
+ 	struct acpi_table_header *header;
+ 	struct fpdt_subtable_entry *subtable;
+ 	u32 offset = sizeof(*header);
++	int result;
+ 
+ 	status = acpi_get_table(ACPI_SIG_FPDT, 0, &header);
+ 
+@@ -263,8 +284,8 @@ static int __init acpi_init_fpdt(void)
+ 
+ 	fpdt_kobj = kobject_create_and_add("fpdt", acpi_kobj);
+ 	if (!fpdt_kobj) {
+-		acpi_put_table(header);
+-		return -ENOMEM;
++		result = -ENOMEM;
++		goto err_nomem;
+ 	}
+ 
+ 	while (offset < header->length) {
+@@ -272,8 +293,10 @@ static int __init acpi_init_fpdt(void)
+ 		switch (subtable->type) {
+ 		case SUBTABLE_FBPT:
+ 		case SUBTABLE_S3PT:
+-			fpdt_process_subtable(subtable->address,
++			result = fpdt_process_subtable(subtable->address,
+ 					      subtable->type);
++			if (result)
++				goto err_subtable;
+ 			break;
+ 		default:
+ 			/* Other types are reserved in ACPI 6.4 spec. */
+@@ -282,6 +305,12 @@ static int __init acpi_init_fpdt(void)
+ 		offset += sizeof(*subtable);
+ 	}
+ 	return 0;
++err_subtable:
++	kobject_put(fpdt_kobj);
++
++err_nomem:
++	acpi_put_table(header);
++	return result;
+ }
+ 
+ fs_initcall(acpi_init_fpdt);
 
 
