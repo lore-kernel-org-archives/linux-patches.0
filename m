@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F5833CCA;
-	Fri, 24 Nov 2023 18:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606142D787;
+	Fri, 24 Nov 2023 18:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flHqp61d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50101C433C8;
-	Fri, 24 Nov 2023 18:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roFk4UA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E1FC433C7;
+	Fri, 24 Nov 2023 18:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850908;
-	bh=+Hzmn29WRJv0t0FUvH57J4CFMaP0yQkmUTb3ZqutTL0=;
+	s=korg; t=1700850911;
+	bh=Rxh4wg1RqGcSwL3HZcbEWv7Q07YyaIACA/s5cBYbvUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flHqp61dwX13sQTVa2/HEqpQBcqItzunYJuIXhaQLu3YSyfD82VeaojvrwpgNQlYY
-	 cn9CxBjgcuZXDKupLHZmSoWizD/AJquevBvo66EQbreXVMu/JRzZYWen4BD5h5U5VZ
-	 L1xuAkVj3LSgV71BTt3kwEjJzzJZT/c9uXRWsaPg=
+	b=roFk4UA0Ed/I6N1Vc66WALN2SDvIno9KtNyMoBMPfS8HMSMxXeGGt0ftbTbR9a6Fr
+	 u+ujCSXDMVKihrgMHPcYXbnY7RkIktytppHDLdTY//8n+PXtZz/wak/z5tjSNagKDT
+	 3pfqMuxzwMbi32XcHjWFdMdauBdUy/0QFc2DLkgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.5 236/491] scsi: qla2xxx: Fix system crash due to bad pointer access
-Date: Fri, 24 Nov 2023 17:47:52 +0000
-Message-ID: <20231124172031.649075462@linuxfoundation.org>
+Subject: [PATCH 6.5 237/491] scsi: ufs: core: Fix racing issue between ufshcd_mcq_abort() and ISR
+Date: Fri, 24 Nov 2023 17:47:53 +0000
+Message-ID: <20231124172031.674775241@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,72 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-commit 19597cad64d608aa8ac2f8aef50a50187a565223 upstream.
+commit 27900d7119c464b43cd9eac69c85884d17bae240 upstream.
 
-User experiences system crash when running AER error injection.  The
-perturbation causes the abort-all-I/O path to trigger. The driver assumes
-all I/O on this path is FCP only. If there is both NVMe & FCP traffic, a
-system crash happens. Add additional check to see if I/O is FCP or not
-before access.
+If command timeout happens and cq complete IRQ is raised at the same time,
+ufshcd_mcq_abort clears lprb->cmd and a NULL pointer deref happens in the
+ISR. Error log:
 
-PID: 999019  TASK: ff35d769f24722c0  CPU: 53  COMMAND: "kworker/53:1"
- 0 [ff3f78b964847b58] machine_kexec at ffffffffae86973d
- 1 [ff3f78b964847ba8] __crash_kexec at ffffffffae9be29d
- 2 [ff3f78b964847c70] crash_kexec at ffffffffae9bf528
- 3 [ff3f78b964847c78] oops_end at ffffffffae8282ab
- 4 [ff3f78b964847c98] exc_page_fault at ffffffffaf2da502
- 5 [ff3f78b964847cc0] asm_exc_page_fault at ffffffffaf400b62
-   [exception RIP: qla2x00_abort_srb+444]
-   RIP: ffffffffc07b5f8c  RSP: ff3f78b964847d78  RFLAGS: 00010046
-   RAX: 0000000000000282  RBX: ff35d74a0195a200  RCX: ff35d76886fd03a0
-   RDX: 0000000000000001  RSI: ffffffffc07c5ec8  RDI: ff35d74a0195a200
-   RBP: ff35d76913d22080   R8: ff35d7694d103200   R9: ff35d7694d103200
-   R10: 0000000100000000  R11: ffffffffb05d6630  R12: 0000000000010000
-   R13: ff3f78b964847df8  R14: ff35d768d8754000  R15: ff35d768877248e0
-   ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
- 6 [ff3f78b964847d70] qla2x00_abort_srb at ffffffffc07b5f84 [qla2xxx]
- 7 [ff3f78b964847de0] __qla2x00_abort_all_cmds at ffffffffc07b6238 [qla2xxx]
- 8 [ff3f78b964847e38] qla2x00_abort_all_cmds at ffffffffc07ba635 [qla2xxx]
- 9 [ff3f78b964847e58] qla2x00_terminate_rport_io at ffffffffc08145eb [qla2xxx]
-10 [ff3f78b964847e70] fc_terminate_rport_io at ffffffffc045987e [scsi_transport_fc]
-11 [ff3f78b964847e88] process_one_work at ffffffffae914f15
-12 [ff3f78b964847ed0] worker_thread at ffffffffae9154c0
-13 [ff3f78b964847f10] kthread at ffffffffae91c456
-14 [ff3f78b964847f50] ret_from_fork at ffffffffae8036ef
+ufshcd_abort: Device abort task at tag 18
+Unable to handle kernel NULL pointer dereference at virtual address
+0000000000000108
+pc : [0xffffffe27ef867ac] scsi_dma_unmap+0xc/0x44
+lr : [0xffffffe27f1b898c] ufshcd_release_scsi_cmd+0x24/0x114
 
+Fixes: f1304d442077 ("scsi: ufs: mcq: Added ufshcd_mcq_abort()")
 Cc: stable@vger.kernel.org
-Fixes: f45bca8c5052 ("scsi: qla2xxx: Fix double scsi_done for abort path")
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20231030064912.37912-1-njavali@marvell.com
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20231106075117.8995-1-peter.wang@mediatek.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufs-mcq.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1835,8 +1835,16 @@ static void qla2x00_abort_srb(struct qla
- 		}
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -632,6 +632,7 @@ int ufshcd_mcq_abort(struct scsi_cmnd *c
+ 	int tag = scsi_cmd_to_rq(cmd)->tag;
+ 	struct ufshcd_lrb *lrbp = &hba->lrb[tag];
+ 	struct ufs_hw_queue *hwq;
++	unsigned long flags;
+ 	int err = FAILED;
  
- 		spin_lock_irqsave(qp->qp_lock_ptr, *flags);
--		if (ret_cmd && blk_mq_request_started(scsi_cmd_to_rq(cmd)))
--			sp->done(sp, res);
-+		switch (sp->type) {
-+		case SRB_SCSI_CMD:
-+			if (ret_cmd && blk_mq_request_started(scsi_cmd_to_rq(cmd)))
-+				sp->done(sp, res);
-+			break;
-+		default:
-+			if (ret_cmd)
-+				sp->done(sp, res);
-+			break;
-+		}
- 	} else {
- 		sp->done(sp, res);
+ 	if (!ufshcd_cmd_inflight(lrbp->cmd)) {
+@@ -672,8 +673,10 @@ int ufshcd_mcq_abort(struct scsi_cmnd *c
  	}
+ 
+ 	err = SUCCESS;
++	spin_lock_irqsave(&hwq->cq_lock, flags);
+ 	if (ufshcd_cmd_inflight(lrbp->cmd))
+ 		ufshcd_release_scsi_cmd(hba, lrbp);
++	spin_unlock_irqrestore(&hwq->cq_lock, flags);
+ 
+ out:
+ 	return err;
 
 
