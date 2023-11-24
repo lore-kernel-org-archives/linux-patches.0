@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220442E64F;
-	Fri, 24 Nov 2023 18:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC482D787;
+	Fri, 24 Nov 2023 18:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcsK7f9a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D46C433C8;
-	Fri, 24 Nov 2023 18:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cv1sKG1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C96DC433C8;
+	Fri, 24 Nov 2023 18:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852303;
-	bh=ILHGn/0rQ1b23KrEn3FNjDRQBjvd24O/fqR0Zx8VrnI=;
+	s=korg; t=1700852305;
+	bh=Ub+g1KgMGmZ3NvGf7F2T2kCscKdgc3V3qFQZSR79d5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VcsK7f9aXBq3pcOa3fpKbOB5fvbWvSQT+1C6jQab+cK/VUxPW02iSXY2D4bSpJE7i
-	 4qr9iH/74J2pLw9cQ0o7sBaaeyRB8zFyTd1HZyq+eJaw5H5+xk401AhU1zNzKDS2p6
-	 RqSdWMAXxY91p6fWHUTE4fEyQm9DM9ZMLibkF+2E=
+	b=cv1sKG1YmoX4/nF/nX1104uk7ya6mPRjPDIzfNYBUcFQz6u6gRuRR1MIXgBmf87BU
+	 Ov+3QiR5i8GhQ8X475CMtTjcJziQlQEqjBatF9BHOn82mlEAFNjFo3rMsjM86iWeNn
+	 pDi5tyz9wa0QbUlOpJPkaskl/cFENd1kJDHYYD0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 277/372] btrfs: zoned: wait for data BG to be finished on direct IO allocation
-Date: Fri, 24 Nov 2023 17:51:04 +0000
-Message-ID: <20231124172019.691022360@linuxfoundation.org>
+	Shinhyung Kang <s47.kang@samsung.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 278/372] ALSA: info: Fix potential deadlock at disconnection
+Date: Fri, 24 Nov 2023 17:51:05 +0000
+Message-ID: <20231124172019.723628933@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,60 +42,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 776a838f1fa95670c1c1cf7109a898090b473fa3 upstream.
+commit c7a60651953359f98dbf24b43e1bf561e1573ed4 upstream.
 
-Running the fio command below on a ZNS device results in "Resource
-temporarily unavailable" error.
+As reported recently, ALSA core info helper may cause a deadlock at
+the forced device disconnection during the procfs operation.
 
-  $ sudo fio --name=w --directory=/mnt --filesize=1GB --bs=16MB --numjobs=16 \
-        --rw=write --ioengine=libaio --iodepth=128 --direct=1
+The proc_remove() (that is called from the snd_card_disconnect()
+helper) has a synchronization of the pending procfs accesses via
+wait_for_completion().  Meanwhile, ALSA procfs helper takes the global
+mutex_lock(&info_mutex) at both the proc_open callback and
+snd_card_info_disconnect() helper.  Since the proc_open can't finish
+due to the mutex lock, wait_for_completion() never returns, either,
+hence it deadlocks.
 
-  fio: io_u error on file /mnt/w.2.0: Resource temporarily unavailable: write offset=117440512, buflen=16777216
-  fio: io_u error on file /mnt/w.2.0: Resource temporarily unavailable: write offset=134217728, buflen=16777216
-  ...
+	TASK#1				TASK#2
+	proc_reg_open()
+	  takes use_pde()
+	snd_info_text_entry_open()
+					snd_card_disconnect()
+					snd_info_card_disconnect()
+					  takes mutex_lock(&info_mutex)
+					proc_remove()
+					wait_for_completion(unused_pde)
+					  ... waiting task#1 closes
+	mutex_lock(&info_mutex)
+		=> DEADLOCK
 
-This happens because -EAGAIN error returned from btrfs_reserve_extent()
-called from btrfs_new_extent_direct() is spilling over to the userland.
+This patch is a workaround for avoiding the deadlock scenario above.
 
-btrfs_reserve_extent() returns -EAGAIN when there is no active zone
-available. Then, the caller should wait for some other on-going IO to
-finish a zone and retry the allocation.
+The basic strategy is to move proc_remove() call outside the mutex
+lock.  proc_remove() can work gracefully without extra locking, and it
+can delete the tree recursively alone.  So, we call proc_remove() at
+snd_info_card_disconnection() at first, then delete the rest resources
+recursively within the info_mutex lock.
 
-This logic is already implemented for buffered write in cow_file_range(),
-but it is missing for the direct IO counterpart. Implement the same logic
-for it.
+After the change, the function snd_info_disconnect() doesn't do
+disconnection by itself any longer, but it merely clears the procfs
+pointer.  So rename the function to snd_info_clear_entries() for
+avoiding confusion.
 
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Fixes: 2ce543f47843 ("btrfs: zoned: wait until zone is finished when allocation didn't progress")
-CC: stable@vger.kernel.org # 6.1+
-Tested-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The similar change is applied to snd_info_free_entry(), too.  Since
+the proc_remove() is called only conditionally with the non-NULL
+entry->p, it's skipped after the snd_info_clear_entries() call.
+
+Reported-by: Shinhyung Kang <s47.kang@samsung.com>
+Closes: https://lore.kernel.org/r/664457955.21699345385931.JavaMail.epsvc@epcpadp4
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231109141954.4283-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/core/info.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -7166,8 +7166,15 @@ static struct extent_map *btrfs_new_exte
- 	int ret;
+--- a/sound/core/info.c
++++ b/sound/core/info.c
+@@ -56,7 +56,7 @@ struct snd_info_private_data {
+ };
  
- 	alloc_hint = get_extent_allocation_hint(inode, start, len);
-+again:
- 	ret = btrfs_reserve_extent(root, len, len, fs_info->sectorsize,
- 				   0, alloc_hint, &ins, 1, 1);
-+	if (ret == -EAGAIN) {
-+		ASSERT(btrfs_is_zoned(fs_info));
-+		wait_on_bit_io(&inode->root->fs_info->flags, BTRFS_FS_NEED_ZONE_FINISH,
-+			       TASK_UNINTERRUPTIBLE);
-+		goto again;
-+	}
- 	if (ret)
- 		return ERR_PTR(ret);
+ static int snd_info_version_init(void);
+-static void snd_info_disconnect(struct snd_info_entry *entry);
++static void snd_info_clear_entries(struct snd_info_entry *entry);
+ 
+ /*
+ 
+@@ -569,11 +569,16 @@ void snd_info_card_disconnect(struct snd
+ {
+ 	if (!card)
+ 		return;
+-	mutex_lock(&info_mutex);
++
+ 	proc_remove(card->proc_root_link);
+-	card->proc_root_link = NULL;
+ 	if (card->proc_root)
+-		snd_info_disconnect(card->proc_root);
++		proc_remove(card->proc_root->p);
++
++	mutex_lock(&info_mutex);
++	if (card->proc_root)
++		snd_info_clear_entries(card->proc_root);
++	card->proc_root_link = NULL;
++	card->proc_root = NULL;
+ 	mutex_unlock(&info_mutex);
+ }
+ 
+@@ -745,15 +750,14 @@ struct snd_info_entry *snd_info_create_c
+ }
+ EXPORT_SYMBOL(snd_info_create_card_entry);
+ 
+-static void snd_info_disconnect(struct snd_info_entry *entry)
++static void snd_info_clear_entries(struct snd_info_entry *entry)
+ {
+ 	struct snd_info_entry *p;
+ 
+ 	if (!entry->p)
+ 		return;
+ 	list_for_each_entry(p, &entry->children, list)
+-		snd_info_disconnect(p);
+-	proc_remove(entry->p);
++		snd_info_clear_entries(p);
+ 	entry->p = NULL;
+ }
+ 
+@@ -770,8 +774,9 @@ void snd_info_free_entry(struct snd_info
+ 	if (!entry)
+ 		return;
+ 	if (entry->p) {
++		proc_remove(entry->p);
+ 		mutex_lock(&info_mutex);
+-		snd_info_disconnect(entry);
++		snd_info_clear_entries(entry);
+ 		mutex_unlock(&info_mutex);
+ 	}
  
 
 
