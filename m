@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4276139FDD;
-	Fri, 24 Nov 2023 18:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636EA39FE1;
+	Fri, 24 Nov 2023 18:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+Wm7ve/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E20C433C8;
-	Fri, 24 Nov 2023 18:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnnNrWOO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BC0C433C8;
+	Fri, 24 Nov 2023 18:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849865;
-	bh=FhCr+//o9GGWC/X2JkYhutw/hvr8aLkWKEViVmBliI8=;
+	s=korg; t=1700849868;
+	bh=kj7+p2F6ZN9Kq5aWA5TEWHQiBR/fjn9NGTq57FXhACQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+Wm7ve/PWc7LihUS8TBuOq0DRwLYHVVP4Tt0Ec5BDrifq0IJl/EtB3a0baji0WVp
-	 8WAp6+wjveiZBEyl/CidIl2kZtVc8cazk6Zc+Tm5D2n07dp/HcE/8CJEy156g3YjXB
-	 7lX9IZjYGe8pcVpgTyB9ryXu6U7O4AhQok7YYrDs=
+	b=bnnNrWOOZFW77nXLi1kmSt4SXE0xq3R1h+IV0TWfRDSXPR9G8WaHoF9MV4GNRNl51
+	 0hvVLfiZkB4RSdQI+OGkT3xrQNYvx+lM3Vp2aeFbjxRSifJybXE+kuMxkaaNduEcOJ
+	 TNW3u9FVaQdAS+WDuJFfXhO5QWLqVnNBOtNix7ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>
-Subject: [PATCH 6.6 327/530] PCI: exynos: Dont discard .remove() callback
-Date: Fri, 24 Nov 2023 17:48:13 +0000
-Message-ID: <20231124172037.977720593@linuxfoundation.org>
+	Chad Schroeder <CSchroeder@sonifi.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.6 328/530] PCI: Lengthen reset delay for VideoPropulsion Torrent QN16e card
+Date: Fri, 24 Nov 2023 17:48:14 +0000
+Message-ID: <20231124172038.008220761@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -36,59 +36,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 83a939f0fdc208ff3639dd3d42ac9b3c35607fd2 upstream.
+commit c9260693aa0c1e029ed23693cfd4d7814eee6624 upstream.
 
-With CONFIG_PCI_EXYNOS=y and exynos_pcie_remove() marked with __exit, the
-function is discarded from the driver. In this case a bound device can
-still get unbound, e.g via sysfs. Then no cleanup code is run resulting in
-resource leaks or worse.
+Commit ac91e6980563 ("PCI: Unify delay handling for reset and resume")
+shortened an unconditional 1 sec delay after a Secondary Bus Reset to 100
+msec for PCIe (per PCIe r6.1 sec 6.6.1).  The 1 sec delay is only required
+for Conventional PCI.
 
-The right thing to do is do always have the remove callback available.
-This fixes the following warning by modpost:
+But it turns out that there are PCIe devices which require a longer delay
+than prescribed before first config space access after reset recovery or
+resume from D3cold:
 
-  WARNING: modpost: drivers/pci/controller/dwc/pci-exynos: section mismatch in reference: exynos_pcie_driver+0x8 (section: .data) -> exynos_pcie_remove (section: .exit.text)
+Chad reports that a "VideoPropulsion Torrent QN16e" MPEG QAM Modulator
+"raises a PCI system error (PERR), as reported by the IPMI event log, and
+the hardware itself would suffer a catastrophic event, cycling the server"
+unless the longer delay is observed.
 
-(with ARCH=x86_64 W=1 allmodconfig).
+The card is specified to conform to PCIe r1.0 and indeed only supports Gen1
+speed (2.5 GT/s) according to lspci.  PCIe r1.0 sec 7.6 prescribes the same
+100 msec delay as PCIe r6.1 sec 6.6.1:
 
-Fixes: 340cba6092c2 ("pci: Add PCIe driver for Samsung Exynos")
-Link: https://lore.kernel.org/r/20231001170254.2506508-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+  To allow components to perform internal initialization, system software
+  must wait for at least 100 ms from the end of a reset (cold/warm/hot)
+  before it is permitted to issue Configuration Requests
+
+The behavior of the Torrent QN16e card thus appears to be a quirk.  Treat
+it as such and lengthen the reset delay for this specific device.
+
+Fixes: ac91e6980563 ("PCI: Unify delay handling for reset and resume")
+Link: https://lore.kernel.org/r/47727e792c7f0282dc144e3ec8ce8eb6e713394e.1695304512.git.lukas@wunner.de
+Reported-by: Chad Schroeder <CSchroeder@sonifi.com>
+Closes: https://lore.kernel.org/linux-pci/DM6PR16MB2844903E34CAB910082DF019B1FAA@DM6PR16MB2844.namprd16.prod.outlook.com/
+Tested-by: Chad Schroeder <CSchroeder@sonifi.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.4+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-exynos.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/quirks.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/pci/controller/dwc/pci-exynos.c
-+++ b/drivers/pci/controller/dwc/pci-exynos.c
-@@ -375,7 +375,7 @@ fail_probe:
- 	return ret;
- }
- 
--static int __exit exynos_pcie_remove(struct platform_device *pdev)
-+static int exynos_pcie_remove(struct platform_device *pdev)
- {
- 	struct exynos_pcie *ep = platform_get_drvdata(pdev);
- 
-@@ -431,7 +431,7 @@ static const struct of_device_id exynos_
- 
- static struct platform_driver exynos_pcie_driver = {
- 	.probe		= exynos_pcie_probe,
--	.remove		= __exit_p(exynos_pcie_remove),
-+	.remove		= exynos_pcie_remove,
- 	.driver = {
- 		.name	= "exynos-pcie",
- 		.of_match_table = exynos_pcie_of_match,
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -6211,3 +6211,15 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_I
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_XILINX, 0x5020, of_pci_make_dev_node);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_XILINX, 0x5021, of_pci_make_dev_node);
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_REDHAT, 0x0005, of_pci_make_dev_node);
++
++/*
++ * Devices known to require a longer delay before first config space access
++ * after reset recovery or resume from D3cold:
++ *
++ * VideoPropulsion (aka Genroco) Torrent QN16e MPEG QAM Modulator
++ */
++static void pci_fixup_d3cold_delay_1sec(struct pci_dev *pdev)
++{
++	pdev->d3cold_delay = 1000;
++}
++DECLARE_PCI_FIXUP_FINAL(0x5555, 0x0004, pci_fixup_d3cold_delay_1sec);
 
 
