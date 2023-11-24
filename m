@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FFE2E64F;
-	Fri, 24 Nov 2023 19:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A6028DBB;
+	Fri, 24 Nov 2023 19:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afEFV82A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1714FC43391;
-	Fri, 24 Nov 2023 19:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikI4jU0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2EEC43397;
+	Fri, 24 Nov 2023 19:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853025;
-	bh=xNXHf0GVgaoJbCFTBzH7+70z7HPRyUT6VVQQRkY89YM=;
+	s=korg; t=1700853027;
+	bh=dS3XO2nMnwWLzT43p2miQZ7zHEo3UOA4dcFEovMgSzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=afEFV82AOfRa6ozKiLUrcYYy8iA9yRoVSpURN2FUww+wtTPC8/hMKWfwcaBWex5ET
-	 S90qjYsZoIwY6Nx4WrttQBGp91N6dZsm07XEOX6YswaKKbhl8dEEJYasSxBt3POiC8
-	 +JuGj/uwe30xJkX86yMvv+bL6XxnY2GXueBaQk0Y=
+	b=ikI4jU0zdPbA6vKACBWSZZHB6YdbelB+5bV2bD+z4xLTB/IUD+2ggHfXzeyBxzPeg
+	 xvojeS7k05ZjBvqO/a/cHCc9LoS63wm2TG3foJLsaMTVH1f0w6j8iD6NtcLsC2Z7rN
+	 nIonFB5s75sg9GB/ASSmRqE23X+3KtpioXh7Cdvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/297] wifi: ath10k: fix clang-specific fortify warning
-Date: Fri, 24 Nov 2023 17:50:54 +0000
-Message-ID: <20231124172000.536533625@linuxfoundation.org>
+Subject: [PATCH 5.15 003/297] clocksource/drivers/timer-imx-gpt: Fix potential memory leak
+Date: Fri, 24 Nov 2023 17:50:45 +0000
+Message-ID: <20231124172000.204588268@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,60 +43,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Jacky Bai <ping.bai@nxp.com>
 
-[ Upstream commit cb4c132ebfeac5962f7258ffc831caa0c4dada1a ]
+[ Upstream commit 8051a993ce222a5158bccc6ac22ace9253dd71cb ]
 
-When compiling with clang 16.0.6 and CONFIG_FORTIFY_SOURCE=y, I've
-noticed the following (somewhat confusing due to absence of an actual
-source code location):
+Fix coverity Issue CID 250382:  Resource leak (RESOURCE_LEAK).
+Add kfree when error return.
 
-In file included from drivers/net/wireless/ath/ath10k/debug.c:8:
-In file included from ./include/linux/module.h:13:
-In file included from ./include/linux/stat.h:19:
-In file included from ./include/linux/time.h:60:
-In file included from ./include/linux/time32.h:13:
-In file included from ./include/linux/timex.h:67:
-In file included from ./arch/x86/include/asm/timex.h:5:
-In file included from ./arch/x86/include/asm/processor.h:23:
-In file included from ./arch/x86/include/asm/msr.h:11:
-In file included from ./arch/x86/include/asm/cpumask.h:5:
-In file included from ./include/linux/cpumask.h:12:
-In file included from ./include/linux/bitmap.h:11:
-In file included from ./include/linux/string.h:254:
-./include/linux/fortify-string.h:592:4: warning: call to '__read_overflow2_field'
-declared with 'warning' attribute: detected read beyond size of field (2nd
-parameter); maybe use struct_group()? [-Wattribute-warning]
-                        __read_overflow2_field(q_size_field, size);
-
-The compiler actually complains on 'ath10k_debug_get_et_strings()' where
-fortification logic inteprets call to 'memcpy()' as an attempt to copy
-the whole 'ath10k_gstrings_stats' array from it's first member and so
-issues an overread warning. This warning may be silenced by passing
-an address of the whole array and not the first member to 'memcpy()'.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230829093652.234537-1-dmantipov@yandex.ru
+Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20231009083922.1942971-1-ping.bai@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clocksource/timer-imx-gpt.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/debug.c b/drivers/net/wireless/ath/ath10k/debug.c
-index 39378e3f9b2bb..6e1b65b8ae656 100644
---- a/drivers/net/wireless/ath/ath10k/debug.c
-+++ b/drivers/net/wireless/ath/ath10k/debug.c
-@@ -1139,7 +1139,7 @@ void ath10k_debug_get_et_strings(struct ieee80211_hw *hw,
- 				 u32 sset, u8 *data)
- {
- 	if (sset == ETH_SS_STATS)
--		memcpy(data, *ath10k_gstrings_stats,
-+		memcpy(data, ath10k_gstrings_stats,
- 		       sizeof(ath10k_gstrings_stats));
+diff --git a/drivers/clocksource/timer-imx-gpt.c b/drivers/clocksource/timer-imx-gpt.c
+index 7b2c70f2f353b..fabff69e52e58 100644
+--- a/drivers/clocksource/timer-imx-gpt.c
++++ b/drivers/clocksource/timer-imx-gpt.c
+@@ -454,12 +454,16 @@ static int __init mxc_timer_init_dt(struct device_node *np,  enum imx_gpt_type t
+ 		return -ENOMEM;
+ 
+ 	imxtm->base = of_iomap(np, 0);
+-	if (!imxtm->base)
+-		return -ENXIO;
++	if (!imxtm->base) {
++		ret = -ENXIO;
++		goto err_kfree;
++	}
+ 
+ 	imxtm->irq = irq_of_parse_and_map(np, 0);
+-	if (imxtm->irq <= 0)
+-		return -EINVAL;
++	if (imxtm->irq <= 0) {
++		ret = -EINVAL;
++		goto err_kfree;
++	}
+ 
+ 	imxtm->clk_ipg = of_clk_get_by_name(np, "ipg");
+ 
+@@ -472,11 +476,15 @@ static int __init mxc_timer_init_dt(struct device_node *np,  enum imx_gpt_type t
+ 
+ 	ret = _mxc_timer_init(imxtm);
+ 	if (ret)
+-		return ret;
++		goto err_kfree;
+ 
+ 	initialized = 1;
+ 
+ 	return 0;
++
++err_kfree:
++	kfree(imxtm);
++	return ret;
  }
  
+ static int __init imx1_timer_init_dt(struct device_node *np)
 -- 
 2.42.0
 
