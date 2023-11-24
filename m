@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BD735F04;
-	Fri, 24 Nov 2023 19:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66022339BE;
+	Fri, 24 Nov 2023 19:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hw/dSwPL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71512C433C8;
-	Fri, 24 Nov 2023 19:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n31ZpreM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE515C433C8;
+	Fri, 24 Nov 2023 19:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853605;
-	bh=3Nn/E9FIP5RFfxf/NdYQ8PAMAM6T6K4gAImhzoiIpBM=;
+	s=korg; t=1700853608;
+	bh=Yw1hEo62+TYnV/OVU0azFUtAGB8JTnrZzuqqMxStj9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hw/dSwPLj36oPHvIJCMzAtU7Wk/75wFt8Z3wRBmmbb+UuwEvsa44uM9qzBgRebi1B
-	 OqPRbaE8Mgm5vZGcGm6exli1wuYdkgPZL+S0q0QS+l1sxfeeMp8+Rgs+k0PnqgzW8l
-	 k7Lbr7bRdi/Sp/euLV1+QcMYRiqF/GMpmHkJeieA=
+	b=n31ZpreMJ8yf4SRkxelQrlaTbUYuPL8JPharxyjLHXRCdI/XcsOQIqeZtJdqFh5wU
+	 ugcWWJV4EH8EDzGA/v14vdEbYkEgZuNWe+LzfyxeL50IIXAFoGG3KozjDn9HpUd3w0
+	 CYLgZTJeprezZnitBMweoRXybl9x1bZ1Vu8DEmo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 238/297] serial: meson: Use platform_get_irq() to get the interrupt
-Date: Fri, 24 Nov 2023 17:54:40 +0000
-Message-ID: <20231124172008.513938591@linuxfoundation.org>
+	Vanshidhar Konda <vanshikonda@os.amperecomputing.com>,
+	Darren Hart <darren@os.amperecomputing.com>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	linux-watchdog@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 5.15 256/297] sbsa_gwdt: Calculate timeout with 64-bit math
+Date: Fri, 24 Nov 2023 17:54:58 +0000
+Message-ID: <20231124172009.129056335@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -41,69 +46,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Darren Hart <darren@os.amperecomputing.com>
 
-[ Upstream commit 5b68061983471470d4109bac776145245f06bc09 ]
+commit 5d6aa89bba5bd6af2580f872b57f438dab883738 upstream.
 
-platform_get_resource(pdev, IORESOURCE_IRQ, ..) relies on static
-allocation of IRQ resources in DT core code, this causes an issue
-when using hierarchical interrupt domains using "interrupts" property
-in the node as this bypasses the hierarchical setup and messes up the
-irq chaining.
+Commit abd3ac7902fb ("watchdog: sbsa: Support architecture version 1")
+introduced new timer math for watchdog revision 1 with the 48 bit offset
+register.
 
-In preparation for removal of static setup of IRQ resource from DT core
-code use platform_get_irq().
+The gwdt->clk and timeout are u32, but the argument being calculated is
+u64. Without a cast, the compiler performs u32 operations, truncating
+intermediate steps, resulting in incorrect values.
 
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/r/20211224142917.6966-5-prabhakar.mahadev-lad.rj@bp.renesas.com
+A watchdog revision 1 implementation with a gwdt->clk of 1GHz and a
+timeout of 600s writes 3647256576 to the one shot watchdog instead of
+300000000000, resulting in the watchdog firing in 3.6s instead of 600s.
+
+Force u64 math by casting the first argument (gwdt->clk) as a u64. Make
+the order of operations explicit with parenthesis.
+
+Fixes: abd3ac7902fb ("watchdog: sbsa: Support architecture version 1")
+Reported-by: Vanshidhar Konda <vanshikonda@os.amperecomputing.com>
+Signed-off-by: Darren Hart <darren@os.amperecomputing.com>
+Cc: Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: linux-watchdog@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: <stable@vger.kernel.org> # 5.14.x
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/7d1713c5ffab19b0f3de796d82df19e8b1f340de.1695286124.git.darren@os.amperecomputing.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 2a1d728f20ed ("tty: serial: meson: fix hard LOCKUP on crtscts mode")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/meson_uart.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/watchdog/sbsa_gwdt.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
-index 62e6c1af13445..b6e8db0ddf065 100644
---- a/drivers/tty/serial/meson_uart.c
-+++ b/drivers/tty/serial/meson_uart.c
-@@ -726,10 +726,11 @@ static int meson_uart_probe_clocks(struct platform_device *pdev,
+--- a/drivers/watchdog/sbsa_gwdt.c
++++ b/drivers/watchdog/sbsa_gwdt.c
+@@ -153,14 +153,14 @@ static int sbsa_gwdt_set_timeout(struct
+ 	timeout = clamp_t(unsigned int, timeout, 1, wdd->max_hw_heartbeat_ms / 1000);
  
- static int meson_uart_probe(struct platform_device *pdev)
- {
--	struct resource *res_mem, *res_irq;
-+	struct resource *res_mem;
- 	struct uart_port *port;
- 	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
- 	int ret = 0;
-+	int irq;
+ 	if (action)
+-		sbsa_gwdt_reg_write(gwdt->clk * timeout, gwdt);
++		sbsa_gwdt_reg_write((u64)gwdt->clk * timeout, gwdt);
+ 	else
+ 		/*
+ 		 * In the single stage mode, The first signal (WS0) is ignored,
+ 		 * the timeout is (WOR * 2), so the WOR should be configured
+ 		 * to half value of timeout.
+ 		 */
+-		sbsa_gwdt_reg_write(gwdt->clk / 2 * timeout, gwdt);
++		sbsa_gwdt_reg_write(((u64)gwdt->clk / 2) * timeout, gwdt);
  
- 	if (pdev->dev.of_node)
- 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
-@@ -752,9 +753,9 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	if (!res_mem)
- 		return -ENODEV;
- 
--	res_irq = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
--	if (!res_irq)
--		return -ENODEV;
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return irq;
- 
- 	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
- 
-@@ -779,7 +780,7 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	port->iotype = UPIO_MEM;
- 	port->mapbase = res_mem->start;
- 	port->mapsize = resource_size(res_mem);
--	port->irq = res_irq->start;
-+	port->irq = irq;
- 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
- 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
- 	port->dev = &pdev->dev;
--- 
-2.42.0
-
+ 	return 0;
+ }
 
 
