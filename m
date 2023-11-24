@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C4B364B7;
-	Fri, 24 Nov 2023 19:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1B9339BE;
+	Fri, 24 Nov 2023 19:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9TCq80D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2540C433C8;
-	Fri, 24 Nov 2023 19:16:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s631fIvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DE9C433C8;
+	Fri, 24 Nov 2023 19:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853369;
-	bh=P88lq7XInpYnpYKW0sXYoQQO/pJ2N+XjBzAV9cO+LQw=;
+	s=korg; t=1700853372;
+	bh=4HB39gRIpDdXjTDnvKbfmRMc4Yv3TaQ+h6QvsxnqXgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9TCq80DocoB7UCQ4v1yg4s2xOzGWj+bcVpAIrTTPIVVz24bmF6ukCufAjYMS07Nx
-	 YSZsJgBkD5NNhTp8xZRcf9piGRlNl5eb170xEmBEtRB5xUty8bcK507Ml2cVxJihQI
-	 CaRNd1jI+1wUW6CnPnfgak+fFlyjP8FI22DCSs3U=
+	b=s631fIvjVGkOD/DNxlOtYE1JFaj0kTWhzalCDQN7gI3QghMH0RFSdfpkx7MCir4E7
+	 gZYJ6wf4aW8B6R9yzYag6pE77EuoqZPRDt48Ryi01tG3efM6cIFdsFjCTzBEkDMbbO
+	 bv9QEVNjQguOYjNGv+IQDyh8hLuXaXj/XdqLI2MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 153/297] xfs: fix memory leak in xfs_errortag_init
-Date: Fri, 24 Nov 2023 17:53:15 +0000
-Message-ID: <20231124172005.626443132@linuxfoundation.org>
+	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 162/297] scsi: megaraid_sas: Increase register read retry rount from 3 to 30 for selected registers
+Date: Fri, 24 Nov 2023 17:53:24 +0000
+Message-ID: <20231124172005.920374416@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -44,70 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Chandrakanth patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit cf4f4c12dea7a977a143c8fe5af1740b7f9876f8 ]
+commit 8e3ed9e786511ad800c33605ed904b9de49323cf upstream.
 
-When `xfs_sysfs_init` returns failed, `mp->m_errortag` needs to free.
-Otherwise kmemleak would report memory leak after mounting xfs image:
+In BMC environments with concurrent access to multiple registers, certain
+registers occasionally yield a value of 0 even after 3 retries due to
+hardware errata. As a fix, we have extended the retry count from 3 to 30.
 
-unreferenced object 0xffff888101364900 (size 192):
-  comm "mount", pid 13099, jiffies 4294915218 (age 335.207s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<00000000f08ad25c>] __kmalloc+0x41/0x1b0
-    [<00000000dca9aeb6>] kmem_alloc+0xfd/0x430
-    [<0000000040361882>] xfs_errortag_init+0x20/0x110
-    [<00000000b384a0f6>] xfs_mountfs+0x6ea/0x1a30
-    [<000000003774395d>] xfs_fs_fill_super+0xe10/0x1a80
-    [<000000009cf07b6c>] get_tree_bdev+0x3e7/0x700
-    [<00000000046b5426>] vfs_get_tree+0x8e/0x2e0
-    [<00000000952ec082>] path_mount+0xf8c/0x1990
-    [<00000000beb1f838>] do_mount+0xee/0x110
-    [<000000000e9c41bb>] __x64_sys_mount+0x14b/0x1f0
-    [<00000000f7bb938e>] do_syscall_64+0x3b/0x90
-    [<000000003fcd67a9>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+The same errata applies to the mpt3sas driver, and a similar patch has
+been accepted. Please find more details in the mpt3sas patch reference
+link.
 
-Fixes: c68401011522 ("xfs: expose errortag knobs via sysfs")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20230829090020.5417-2-ranjan.kumar@broadcom.com
+Fixes: 272652fcbf1a ("scsi: megaraid_sas: add retry logic in megasas_readl")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chandrakanth patil <chandrakanth.patil@broadcom.com>
+Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
+Link: https://lore.kernel.org/r/20231003110021.168862-2-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_error.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/scsi/megaraid/megaraid_sas_base.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/xfs/xfs_error.c b/fs/xfs/xfs_error.c
-index 81c445e9489bd..b0ccec92e015d 100644
---- a/fs/xfs/xfs_error.c
-+++ b/fs/xfs/xfs_error.c
-@@ -224,13 +224,18 @@ int
- xfs_errortag_init(
- 	struct xfs_mount	*mp)
- {
-+	int ret;
-+
- 	mp->m_errortag = kmem_zalloc(sizeof(unsigned int) * XFS_ERRTAG_MAX,
- 			KM_MAYFAIL);
- 	if (!mp->m_errortag)
- 		return -ENOMEM;
- 
--	return xfs_sysfs_init(&mp->m_errortag_kobj, &xfs_errortag_ktype,
--			       &mp->m_kobj, "errortag");
-+	ret = xfs_sysfs_init(&mp->m_errortag_kobj, &xfs_errortag_ktype,
-+				&mp->m_kobj, "errortag");
-+	if (ret)
-+		kmem_free(mp->m_errortag);
-+	return ret;
- }
- 
- void
--- 
-2.42.0
-
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -263,13 +263,13 @@ u32 megasas_readl(struct megasas_instanc
+ 	 * Fusion registers could intermittently return all zeroes.
+ 	 * This behavior is transient in nature and subsequent reads will
+ 	 * return valid value. As a workaround in driver, retry readl for
+-	 * upto three times until a non-zero value is read.
++	 * up to thirty times until a non-zero value is read.
+ 	 */
+ 	if (instance->adapter_type == AERO_SERIES) {
+ 		do {
+ 			ret_val = readl(addr);
+ 			i++;
+-		} while (ret_val == 0 && i < 3);
++		} while (ret_val == 0 && i < 30);
+ 		return ret_val;
+ 	} else {
+ 		return readl(addr);
 
 
