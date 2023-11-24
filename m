@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0079B339BE;
-	Fri, 24 Nov 2023 19:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7CB63A1;
+	Fri, 24 Nov 2023 19:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYqQUl4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A6DC433D9;
-	Fri, 24 Nov 2023 19:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="csTpUNPP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F074BC433CA;
+	Fri, 24 Nov 2023 19:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853525;
-	bh=7qJw7enL65ka3I1pjNuVAWakb5iLyDqYBD1gMFyBPgU=;
+	s=korg; t=1700853528;
+	bh=eotha9dsX8oxkwN1r4RPU3xBkA0erfmpHhRjwP/JSoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYqQUl4LXAbI6+U++LefcElq08Vx01aXjeMfz8z/M7eO1I+C/K5tHMmol5gfcrJz9
-	 Y8GDQ2i/wOlCa0CqMZtUidXF+wEpm1ROuDcZQMZg9S21KGiJu6RtOY+Ub97ZxT3iiB
-	 QYR1kUMupN+BvCH/IX7Rk8d3osO6NkNWdvwbK6c8=
+	b=csTpUNPPsEi5wte0WoBAhzRpiNSkxqBn3Qju27dVKBQlwkal04WqcmSPnBa0UIYPx
+	 lwoD769gEC6vt3bH1YNkYR21kDr1MUjscLJhpiuImYtQYZqZkM9huw9o5DnAzEo/kp
+	 0C8pIWjFQvrucpwgIMlysr6DAzoF95Rvz/jiA17Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 224/297] mtd: cfi_cmdset_0001: Byte swap OTP info
-Date: Fri, 24 Nov 2023 17:54:26 +0000
-Message-ID: <20231124172008.039019333@linuxfoundation.org>
+	Joshua Yeong <joshua.yeong@starfivetech.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.15 225/297] i3c: master: cdns: Fix reading status register
+Date: Fri, 24 Nov 2023 17:54:27 +0000
+Message-ID: <20231124172008.073103194@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,75 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Joshua Yeong <joshua.yeong@starfivetech.com>
 
-commit 565fe150624ee77dc63a735cc1b3bff5101f38a3 upstream.
+commit 4bd8405257da717cd556f99e5fb68693d12c9766 upstream.
 
-Currently the offset into the device when looking for OTP
-bits can go outside of the address of the MTD NOR devices,
-and if that memory isn't readable, bad things happen
-on the IXP4xx (added prints that illustrate the problem before
-the crash):
-
-cfi_intelext_otp_walk walk OTP on chip 0 start at reg_prot_offset 0x00000100
-ixp4xx_copy_from copy from 0x00000100 to 0xc880dd78
-cfi_intelext_otp_walk walk OTP on chip 0 start at reg_prot_offset 0x12000000
-ixp4xx_copy_from copy from 0x12000000 to 0xc880dd78
-8<--- cut here ---
-Unable to handle kernel paging request at virtual address db000000
-[db000000] *pgd=00000000
-(...)
-
-This happens in this case because the IXP4xx is big endian and
-the 32- and 16-bit fields in the struct cfi_intelext_otpinfo are not
-properly byteswapped. Compare to how the code in read_pri_intelext()
-byteswaps the fields in struct cfi_pri_intelext.
-
-Adding a small byte swapping loop for the OTP in read_pri_intelext()
-and the crash goes away.
-
-The problem went unnoticed for many years until I enabled
-CONFIG_MTD_OTP on the IXP4xx as well, triggering the bug.
+IBIR_DEPTH and CMDR_DEPTH should read from status0 instead of status1.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolas Pitre <nico@fluxnic.net>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20231020-mtd-otp-byteswap-v4-1-0d132c06aa9d@linaro.org
+Fixes: 603f2bee2c54 ("i3c: master: Add driver for Cadence IP")
+Signed-off-by: Joshua Yeong <joshua.yeong@starfivetech.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20230913031743.11439-2-joshua.yeong@starfivetech.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/chips/cfi_cmdset_0001.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/i3c/master/i3c-master-cdns.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mtd/chips/cfi_cmdset_0001.c
-+++ b/drivers/mtd/chips/cfi_cmdset_0001.c
-@@ -421,9 +421,25 @@ read_pri_intelext(struct map_info *map,
- 		extra_size = 0;
+--- a/drivers/i3c/master/i3c-master-cdns.c
++++ b/drivers/i3c/master/i3c-master-cdns.c
+@@ -192,7 +192,7 @@
+ #define SLV_STATUS1_HJ_DIS		BIT(18)
+ #define SLV_STATUS1_MR_DIS		BIT(17)
+ #define SLV_STATUS1_PROT_ERR		BIT(16)
+-#define SLV_STATUS1_DA(x)		(((s) & GENMASK(15, 9)) >> 9)
++#define SLV_STATUS1_DA(s)		(((s) & GENMASK(15, 9)) >> 9)
+ #define SLV_STATUS1_HAS_DA		BIT(8)
+ #define SLV_STATUS1_DDR_RX_FULL		BIT(7)
+ #define SLV_STATUS1_DDR_TX_FULL		BIT(6)
+@@ -1624,13 +1624,13 @@ static int cdns_i3c_master_probe(struct
+ 	/* Device ID0 is reserved to describe this master. */
+ 	master->maxdevs = CONF_STATUS0_DEVS_NUM(val);
+ 	master->free_rr_slots = GENMASK(master->maxdevs, 1);
++	master->caps.ibirfifodepth = CONF_STATUS0_IBIR_DEPTH(val);
++	master->caps.cmdrfifodepth = CONF_STATUS0_CMDR_DEPTH(val);
  
- 		/* Protection Register info */
--		if (extp->NumProtectionFields)
-+		if (extp->NumProtectionFields) {
-+			struct cfi_intelext_otpinfo *otp =
-+				(struct cfi_intelext_otpinfo *)&extp->extra[0];
-+
- 			extra_size += (extp->NumProtectionFields - 1) *
--				      sizeof(struct cfi_intelext_otpinfo);
-+				sizeof(struct cfi_intelext_otpinfo);
-+
-+			if (extp_size >= sizeof(*extp) + extra_size) {
-+				int i;
-+
-+				/* Do some byteswapping if necessary */
-+				for (i = 0; i < extp->NumProtectionFields - 1; i++) {
-+					otp->ProtRegAddr = le32_to_cpu(otp->ProtRegAddr);
-+					otp->FactGroups = le16_to_cpu(otp->FactGroups);
-+					otp->UserGroups = le16_to_cpu(otp->UserGroups);
-+					otp++;
-+				}
-+			}
-+		}
- 	}
+ 	val = readl(master->regs + CONF_STATUS1);
+ 	master->caps.cmdfifodepth = CONF_STATUS1_CMD_DEPTH(val);
+ 	master->caps.rxfifodepth = CONF_STATUS1_RX_DEPTH(val);
+ 	master->caps.txfifodepth = CONF_STATUS1_TX_DEPTH(val);
+-	master->caps.ibirfifodepth = CONF_STATUS0_IBIR_DEPTH(val);
+-	master->caps.cmdrfifodepth = CONF_STATUS0_CMDR_DEPTH(val);
  
- 	if (extp->MinorVersion >= '1') {
+ 	spin_lock_init(&master->ibi.lock);
+ 	master->ibi.num_slots = CONF_STATUS1_IBI_HW_RES(val);
 
 
