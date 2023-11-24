@@ -1,51 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C017B3306F;
-	Fri, 24 Nov 2023 19:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBE93306F;
+	Fri, 24 Nov 2023 19:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcMpm9rh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA8DC433C7;
-	Fri, 24 Nov 2023 19:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OylRdCr+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E90FC433C7;
+	Fri, 24 Nov 2023 19:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853885;
-	bh=J0qzmFd38Ruxa7GssFmsxsAN7qJtaMxQZYesYyULdmM=;
+	s=korg; t=1700853887;
+	bh=vrtNZdD8aw3d0oHKibPgniMa4uOqsYU2ei0BC6Ao9O0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcMpm9rhiiziAacNCEZHeP259ndiPfjRrtn/D6qBOOHes2bBtKz+EZtVFiwmNTr7Q
-	 XwETLHIDj/ipsrVzxqXmiCfa6OaxqckAFvps1WCjHkbpeL75jmUMQg95eUq5uZbMCr
-	 YW7U5DDhXMShnO5PoPk5s1+C8LqSfUyMLCeAyD5w=
+	b=OylRdCr+A2DBye6JIhHpu2q11kQT/y1ZQnFV6oRxHd0DLWFjY1fORoKizATWKDyzS
+	 cbXCM/DJx9jgP1ssNZuiuJk63lIkCeqEkUF4wX/vzTIt8AP06lNQPozzSskSZXCTae
+	 pw3LQSrXSDG8x0UjhLX0GzXC8G+bkvVweojnrDX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	German Gomez <german.gomez@arm.com>,
-	James Clark <james.clark@arm.com>,
-	Nick Terrell <terrelln@fb.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Changbin Du <changbin.du@huawei.com>,
-	liuwenyu <liuwenyu7@huawei.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 045/159] perf hist: Add missing puts to hist__account_cycles
-Date: Fri, 24 Nov 2023 17:54:22 +0000
-Message-ID: <20231124171943.822904741@linuxfoundation.org>
+Subject: [PATCH 5.4 046/159] NFSv4.1: fix SP4_MACH_CRED protection for pnfs IO
+Date: Fri, 24 Nov 2023 17:54:23 +0000
+Message-ID: <20231124171943.860825066@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -64,77 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit c1149037f65bcf0334886180ebe3d5efcf214912 ]
+[ Upstream commit 5cc7688bae7f0757c39c1d3dfdd827b724061067 ]
 
-Caught using reference count checking on perf top with
-"--call-graph=lbr". After this no memory leaks were detected.
+If the client is doing pnfs IO and Kerberos is configured and EXCHANGEID
+successfully negotiated SP4_MACH_CRED and WRITE/COMMIT are on the
+list of state protected operations, then we need to make sure to
+choose the DS's rpc_client structure instead of the MDS's one.
 
-Fixes: 57849998e2cd ("perf report: Add processing for cycle histograms")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Sandipan Das <sandipan.das@amd.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Nick Terrell <terrelln@fb.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Changbin Du <changbin.du@huawei.com>
-Cc: liuwenyu <liuwenyu7@huawei.com>
-Cc: Yang Jihong <yangjihong1@huawei.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20231024222353.3024098-6-irogers@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: fb91fb0ee7b2 ("NFS: Move call to nfs4_state_protect_write() to nfs4_write_setup()")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/hist.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/nfs/nfs4proc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/hist.c b/tools/perf/util/hist.c
-index 151b9e43c88f9..9a02c1fd83493 100644
---- a/tools/perf/util/hist.c
-+++ b/tools/perf/util/hist.c
-@@ -2576,8 +2576,6 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index c41d149626047..b7529656b4307 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -5369,7 +5369,7 @@ static void nfs4_proc_write_setup(struct nfs_pgio_header *hdr,
  
- 	/* If we have branch cycles always annotate them. */
- 	if (bs && bs->nr && entries[0].flags.cycles) {
--		int i;
--
- 		bi = sample__resolve_bstack(sample, al);
- 		if (bi) {
- 			struct addr_map_symbol *prev = NULL;
-@@ -2592,12 +2590,18 @@ void hist__account_cycles(struct branch_stack *bs, struct addr_location *al,
- 			 * Note that perf stores branches reversed from
- 			 * program order!
- 			 */
--			for (i = bs->nr - 1; i >= 0; i--) {
-+			for (int i = bs->nr - 1; i >= 0; i--) {
- 				addr_map_symbol__account_cycles(&bi[i].from,
- 					nonany_branch_mode ? NULL : prev,
- 					bi[i].flags.cycles);
- 				prev = &bi[i].to;
- 			}
-+			for (unsigned int i = 0; i < bs->nr; i++) {
-+				map__put(bi[i].to.ms.map);
-+				maps__put(bi[i].to.ms.maps);
-+				map__put(bi[i].from.ms.map);
-+				maps__put(bi[i].from.ms.maps);
-+			}
- 			free(bi);
- 		}
- 	}
+ 	msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_WRITE];
+ 	nfs4_init_sequence(&hdr->args.seq_args, &hdr->res.seq_res, 0, 0);
+-	nfs4_state_protect_write(server->nfs_client, clnt, msg, hdr);
++	nfs4_state_protect_write(hdr->ds_clp ? hdr->ds_clp : server->nfs_client, clnt, msg, hdr);
+ }
+ 
+ static void nfs4_proc_commit_rpc_prepare(struct rpc_task *task, struct nfs_commit_data *data)
+@@ -5410,7 +5410,8 @@ static void nfs4_proc_commit_setup(struct nfs_commit_data *data, struct rpc_mess
+ 	data->res.server = server;
+ 	msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_COMMIT];
+ 	nfs4_init_sequence(&data->args.seq_args, &data->res.seq_res, 1, 0);
+-	nfs4_state_protect(server->nfs_client, NFS_SP4_MACH_CRED_COMMIT, clnt, msg);
++	nfs4_state_protect(data->ds_clp ? data->ds_clp : server->nfs_client,
++			NFS_SP4_MACH_CRED_COMMIT, clnt, msg);
+ }
+ 
+ static int _nfs4_proc_commit(struct file *dst, struct nfs_commitargs *args,
 -- 
 2.42.0
 
