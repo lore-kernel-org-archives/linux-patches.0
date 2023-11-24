@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A961833CC2;
-	Fri, 24 Nov 2023 18:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FDC14F7B;
+	Fri, 24 Nov 2023 18:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYsEqppo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31429C433C7;
-	Fri, 24 Nov 2023 18:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqbCYVQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A201BC433C7;
+	Fri, 24 Nov 2023 18:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851936;
-	bh=2bt/LhCasp1/PjJ9Z0XrdN+YPUjmBVvdMEYPdt4aXKg=;
+	s=korg; t=1700851939;
+	bh=ZccyRZyJqgjXQYXK54by4NACiSBbnimXEQDQpgTnHlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYsEqppoIzRfwM7Vqt0snLaFn7Ixv31WR/nE7UzTdk+Pc8zp6gXc6zyN7eNN4xwkK
-	 NwdxhTJc3OmDLYgFxWISPbq14cgvEpjU4ABLTknblZfRb0+0oc2MS7ThFfutcIAQpd
-	 MEaMXLv2GqIZX+KnjpOMqkyi/S7UHjqCbavW2EaY=
+	b=KqbCYVQ1MdZmjcVNDUsY39UYUamyhZBIRhDS7Gwp8iv0uZpQp6QzZBwyCh7laN7j5
+	 Y1t2o5XlvDHNchcFVj1DmK+wDc5ebJWQncsVKQiU83Ac52OH5ccOm39VFjxoDCZwkM
+	 KZ1tzUYr4ZcQc82EeeywrVXryW7+d2Lp6/pP6JwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/372] net/mlx5e: Check return value of snprintf writing to fw_version buffer
-Date: Fri, 24 Nov 2023 17:49:01 +0000
-Message-ID: <20231124172015.618520682@linuxfoundation.org>
+Subject: [PATCH 6.1 155/372] net/mlx5e: Check return value of snprintf writing to fw_version buffer for representors
+Date: Fri, 24 Nov 2023 17:49:02 +0000
+Message-ID: <20231124172015.649546197@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -46,56 +46,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-[ Upstream commit 41e63c2baa11dc2aa71df5dd27a5bd87d11b6bbb ]
+[ Upstream commit 1b2bd0c0264febcd8d47209079a6671c38e6558b ]
 
 Treat the operation as an error case when the return value is equivalent to
 the size of the name buffer. Failed to write null terminator to the name
 buffer, making the string malformed and should not be used. Provide a
 string with only the firmware version when forming the string with the
-board id fails.
+board id fails. This logic for representors is identical to normal flow
+with ethtool.
 
 Without check, will trigger -Wformat-truncation with W=1.
 
-    drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c: In function 'mlx5e_ethtool_get_drvinfo':
-    drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c:49:31: warning: '%.16s' directive output may be truncated writing up to 16 bytes into a region of size between 13 and 22 [-Wformat-truncation=]
-      49 |                  "%d.%d.%04d (%.16s)",
+    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c: In function 'mlx5e_rep_get_drvinfo':
+    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:78:31: warning: '%.16s' directive output may be truncated writing up to 16 bytes into a region of size between 13 and 22 [-Wformat-truncation=]
+      78 |                  "%d.%d.%04d (%.16s)",
          |                               ^~~~~
-    drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c:48:9: note: 'snprintf' output between 12 and 37 bytes into a destination of size 32
-      48 |         snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
+    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:77:9: note: 'snprintf' output between 12 and 37 bytes into a destination of size 32
+      77 |         snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      49 |                  "%d.%d.%04d (%.16s)",
+      78 |                  "%d.%d.%04d (%.16s)",
          |                  ~~~~~~~~~~~~~~~~~~~~~
-      50 |                  fw_rev_maj(mdev), fw_rev_min(mdev), fw_rev_sub(mdev),
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      51 |                  mdev->board_id);
-         |                  ~~~~~~~~~~~~~~~
+      79 |                  fw_rev_maj(mdev), fw_rev_min(mdev),
+         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      80 |                  fw_rev_sub(mdev), mdev->board_id);
+         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 84e11edb71de ("net/mlx5e: Show board id in ethtool driver information")
+Fixes: cf83c8fdcd47 ("net/mlx5e: Add missing ethtool driver info for representors")
 Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
 Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/20231114215846.5902-16-saeed@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_ethtool.c    | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 1728e197558d0..eeba91d9c5211 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -43,12 +43,17 @@ void mlx5e_ethtool_get_drvinfo(struct mlx5e_priv *priv,
- 			       struct ethtool_drvinfo *drvinfo)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index bd895ef341a0b..2653cb96c3105 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -69,13 +69,17 @@ static void mlx5e_rep_get_drvinfo(struct net_device *dev,
  {
+ 	struct mlx5e_priv *priv = netdev_priv(dev);
  	struct mlx5_core_dev *mdev = priv->mdev;
 +	int count;
  
- 	strscpy(drvinfo->driver, KBUILD_MODNAME, sizeof(drvinfo->driver));
+ 	strscpy(drvinfo->driver, mlx5e_rep_driver_name,
+ 		sizeof(drvinfo->driver));
 -	snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
 -		 "%d.%d.%04d (%.16s)",
--		 fw_rev_maj(mdev), fw_rev_min(mdev), fw_rev_sub(mdev),
--		 mdev->board_id);
+-		 fw_rev_maj(mdev), fw_rev_min(mdev),
+-		 fw_rev_sub(mdev), mdev->board_id);
 +	count = snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
 +			 "%d.%d.%04d (%.16s)", fw_rev_maj(mdev),
 +			 fw_rev_min(mdev), fw_rev_sub(mdev), mdev->board_id);
@@ -103,10 +106,9 @@ index 1728e197558d0..eeba91d9c5211 100644
 +		snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
 +			 "%d.%d.%04d", fw_rev_maj(mdev),
 +			 fw_rev_min(mdev), fw_rev_sub(mdev));
-+
- 	strscpy(drvinfo->bus_info, dev_name(mdev->device),
- 		sizeof(drvinfo->bus_info));
  }
+ 
+ static const struct counter_desc sw_rep_stats_desc[] = {
 -- 
 2.42.0
 
