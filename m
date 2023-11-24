@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339951A5A4;
-	Fri, 24 Nov 2023 18:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AE533CC2;
+	Fri, 24 Nov 2023 18:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDLJoqUv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88CFC433C7;
-	Fri, 24 Nov 2023 18:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TarJ7PW7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F76C433C7;
+	Fri, 24 Nov 2023 18:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851349;
-	bh=bmM6qdQgXKiNjKPt1PWr5ARNdDlDhLEtcqLTKnURSAU=;
+	s=korg; t=1700851351;
+	bh=KJ2SNfudsbRb2SAJZjSEvKpdQrqPqOzn+hdcX+ekF5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDLJoqUvSvJ7fJ+GSJezUsbAk2SiQmm2tT8mPPZZw279y8eVZIqiTC9ccyRatmRyB
-	 B8qIMyshU7aZ/3lsJMiom3HtOAp4Ou0Jc3I1ybBILoLI8XD4KAFJRVuxto2AacAE4p
-	 9eSczCHevimvz2A7Fv8pGizWXbsz3O7TfwntN+n8=
+	b=TarJ7PW7whzek0RGbOwdEc3WTj6hly8BgmRLU0KG7K5GXV+hhhkluLYOoiiRA/FVc
+	 P9tys/bO+q/BkSWJZCn50cWvhsj5me6eeCOxAiHfQRVHSC70DSrY4M8si+IlWVG/qZ
+	 Nh5Y9BAQegWxBrQtNvske2Hq33R1JriuunGEk8l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 378/491] rcutorture: Fix stuttering races and other issues
-Date: Fri, 24 Nov 2023 17:50:14 +0000
-Message-ID: <20231124172035.943985344@linuxfoundation.org>
+	Robert Marko <robert.marko@sartura.hr>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.5 406/491] Revert "i2c: pxa: move to generic GPIO recovery"
+Date: Fri, 24 Nov 2023 17:50:42 +0000
+Message-ID: <20231124172036.806081420@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,127 +44,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joel Fernandes (Google) <joel@joelfernandes.org>
+From: Robert Marko <robert.marko@sartura.hr>
 
-[ Upstream commit cca42bd8eb1b54a4c9bbf48c79d120e66619a3e4 ]
+commit 7b211c7671212cad0b83603c674838c7e824d845 upstream.
 
-The stuttering code isn't functioning as expected. Ideally, it should
-pause the torture threads for a designated period before resuming. Yet,
-it fails to halt the test for the correct duration. Additionally, a race
-condition exists, potentially causing the stuttering code to pause for
-an extended period if the 'spt' variable is non-zero due to the stutter
-orchestration thread's inadequate CPU time.
+This reverts commit 0b01392c18b9993a584f36ace1d61118772ad0ca.
 
-Moreover, over-stuttering can hinder RCU's progress on TREE07 kernels.
-This happens as the stuttering code may run within a softirq due to RCU
-callbacks. Consequently, ksoftirqd keeps a CPU busy for several seconds,
-thus obstructing RCU's progress. This situation triggers a warning
-message in the logs:
+Conversion of PXA to generic I2C recovery, makes the I2C bus completely
+lock up if recovery pinctrl is present in the DT and I2C recovery is
+enabled.
 
-[ 2169.481783] rcu_torture_writer: rtort_pipe_count: 9
+So, until the generic I2C recovery can also work with PXA lets revert
+to have working I2C and I2C recovery again.
 
-This warning suggests that an RCU torture object, although invisible to
-RCU readers, couldn't make it past the pipe array and be freed -- a
-strong indication that there weren't enough grace periods during the
-stutter interval.
-
-To address these issues, this patch sets the "stutter end" time to an
-absolute point in the future set by the main stutter thread. This is
-then used for waiting in stutter_wait(). While the stutter thread still
-defines this absolute time, the waiters' waiting logic doesn't rely on
-the stutter thread receiving sufficient CPU time to halt the stuttering
-as the halting is now self-controlled.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Cc: stable@vger.kernel.org # 5.11+
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Acked-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/torture.c | 45 ++++++++++++---------------------------------
- 1 file changed, 12 insertions(+), 33 deletions(-)
+ drivers/i2c/busses/i2c-pxa.c |   76 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 68 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/torture.c b/kernel/torture.c
-index fd2168058dac8..cd299ccc4e5d5 100644
---- a/kernel/torture.c
-+++ b/kernel/torture.c
-@@ -713,7 +713,7 @@ static void torture_shutdown_cleanup(void)
-  * suddenly applied to or removed from the system.
-  */
- static struct task_struct *stutter_task;
--static int stutter_pause_test;
-+static ktime_t stutter_till_abs_time;
- static int stutter;
- static int stutter_gap;
+--- a/drivers/i2c/busses/i2c-pxa.c
++++ b/drivers/i2c/busses/i2c-pxa.c
+@@ -264,6 +264,9 @@ struct pxa_i2c {
+ 	u32			hs_mask;
  
-@@ -723,30 +723,16 @@ static int stutter_gap;
-  */
- bool stutter_wait(const char *title)
- {
--	unsigned int i = 0;
- 	bool ret = false;
--	int spt;
-+	ktime_t till_ns;
+ 	struct i2c_bus_recovery_info recovery;
++	struct pinctrl		*pinctrl;
++	struct pinctrl_state	*pinctrl_default;
++	struct pinctrl_state	*pinctrl_recovery;
+ };
  
- 	cond_resched_tasks_rcu_qs();
--	spt = READ_ONCE(stutter_pause_test);
--	for (; spt; spt = READ_ONCE(stutter_pause_test)) {
--		if (!ret && !rt_task(current)) {
--			sched_set_normal(current, MAX_NICE);
--			ret = true;
--		}
--		if (spt == 1) {
--			torture_hrtimeout_jiffies(1, NULL);
--		} else if (spt == 2) {
--			while (READ_ONCE(stutter_pause_test)) {
--				if (!(i++ & 0xffff))
--					torture_hrtimeout_us(10, 0, NULL);
--				cond_resched();
--			}
--		} else {
--			torture_hrtimeout_jiffies(round_jiffies_relative(HZ), NULL);
--		}
--		torture_shutdown_absorb(title);
-+	till_ns = READ_ONCE(stutter_till_abs_time);
-+	if (till_ns && ktime_before(ktime_get(), till_ns)) {
-+		torture_hrtimeout_ns(till_ns, 0, HRTIMER_MODE_ABS, NULL);
-+		ret = true;
- 	}
-+	torture_shutdown_absorb(title);
- 	return ret;
+ #define _IBMR(i2c)	((i2c)->reg_ibmr)
+@@ -1300,12 +1303,13 @@ static void i2c_pxa_prepare_recovery(str
+ 	 */
+ 	gpiod_set_value(i2c->recovery.scl_gpiod, ibmr & IBMR_SCLS);
+ 	gpiod_set_value(i2c->recovery.sda_gpiod, ibmr & IBMR_SDAS);
++
++	WARN_ON(pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_recovery));
  }
- EXPORT_SYMBOL_GPL(stutter_wait);
-@@ -757,23 +743,16 @@ EXPORT_SYMBOL_GPL(stutter_wait);
-  */
- static int torture_stutter(void *arg)
- {
--	DEFINE_TORTURE_RANDOM(rand);
--	int wtime;
-+	ktime_t till_ns;
  
- 	VERBOSE_TOROUT_STRING("torture_stutter task started");
- 	do {
- 		if (!torture_must_stop() && stutter > 1) {
--			wtime = stutter;
--			if (stutter > 2) {
--				WRITE_ONCE(stutter_pause_test, 1);
--				wtime = stutter - 3;
--				torture_hrtimeout_jiffies(wtime, &rand);
--				wtime = 2;
--			}
--			WRITE_ONCE(stutter_pause_test, 2);
--			torture_hrtimeout_jiffies(wtime, NULL);
-+			till_ns = ktime_add_ns(ktime_get(),
-+					       jiffies_to_nsecs(stutter));
-+			WRITE_ONCE(stutter_till_abs_time, till_ns);
-+			torture_hrtimeout_jiffies(stutter - 1, NULL);
- 		}
--		WRITE_ONCE(stutter_pause_test, 0);
- 		if (!torture_must_stop())
- 			torture_hrtimeout_jiffies(stutter_gap, NULL);
- 		torture_shutdown_absorb("torture_stutter");
--- 
-2.42.0
-
+ static void i2c_pxa_unprepare_recovery(struct i2c_adapter *adap)
+ {
+ 	struct pxa_i2c *i2c = adap->algo_data;
+-	struct i2c_bus_recovery_info *bri = adap->bus_recovery_info;
+ 	u32 isr;
+ 
+ 	/*
+@@ -1319,7 +1323,7 @@ static void i2c_pxa_unprepare_recovery(s
+ 		i2c_pxa_do_reset(i2c);
+ 	}
+ 
+-	WARN_ON(pinctrl_select_state(bri->pinctrl, bri->pins_default));
++	WARN_ON(pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_default));
+ 
+ 	dev_dbg(&i2c->adap.dev, "recovery: IBMR 0x%08x ISR 0x%08x\n",
+ 	        readl(_IBMR(i2c)), readl(_ISR(i2c)));
+@@ -1341,20 +1345,76 @@ static int i2c_pxa_init_recovery(struct
+ 	if (IS_ENABLED(CONFIG_I2C_PXA_SLAVE))
+ 		return 0;
+ 
+-	bri->pinctrl = devm_pinctrl_get(dev);
+-	if (PTR_ERR(bri->pinctrl) == -ENODEV) {
+-		bri->pinctrl = NULL;
++	i2c->pinctrl = devm_pinctrl_get(dev);
++	if (PTR_ERR(i2c->pinctrl) == -ENODEV)
++		i2c->pinctrl = NULL;
++	if (IS_ERR(i2c->pinctrl))
++		return PTR_ERR(i2c->pinctrl);
++
++	if (!i2c->pinctrl)
++		return 0;
++
++	i2c->pinctrl_default = pinctrl_lookup_state(i2c->pinctrl,
++						    PINCTRL_STATE_DEFAULT);
++	i2c->pinctrl_recovery = pinctrl_lookup_state(i2c->pinctrl, "recovery");
++
++	if (IS_ERR(i2c->pinctrl_default) || IS_ERR(i2c->pinctrl_recovery)) {
++		dev_info(dev, "missing pinmux recovery information: %ld %ld\n",
++			 PTR_ERR(i2c->pinctrl_default),
++			 PTR_ERR(i2c->pinctrl_recovery));
++		return 0;
++	}
++
++	/*
++	 * Claiming GPIOs can influence the pinmux state, and may glitch the
++	 * I2C bus. Do this carefully.
++	 */
++	bri->scl_gpiod = devm_gpiod_get(dev, "scl", GPIOD_OUT_HIGH_OPEN_DRAIN);
++	if (bri->scl_gpiod == ERR_PTR(-EPROBE_DEFER))
++		return -EPROBE_DEFER;
++	if (IS_ERR(bri->scl_gpiod)) {
++		dev_info(dev, "missing scl gpio recovery information: %pe\n",
++			 bri->scl_gpiod);
++		return 0;
++	}
++
++	/*
++	 * We have SCL. Pull SCL low and wait a bit so that SDA glitches
++	 * have no effect.
++	 */
++	gpiod_direction_output(bri->scl_gpiod, 0);
++	udelay(10);
++	bri->sda_gpiod = devm_gpiod_get(dev, "sda", GPIOD_OUT_HIGH_OPEN_DRAIN);
++
++	/* Wait a bit in case of a SDA glitch, and then release SCL. */
++	udelay(10);
++	gpiod_direction_output(bri->scl_gpiod, 1);
++
++	if (bri->sda_gpiod == ERR_PTR(-EPROBE_DEFER))
++		return -EPROBE_DEFER;
++
++	if (IS_ERR(bri->sda_gpiod)) {
++		dev_info(dev, "missing sda gpio recovery information: %pe\n",
++			 bri->sda_gpiod);
+ 		return 0;
+ 	}
+-	if (IS_ERR(bri->pinctrl))
+-		return PTR_ERR(bri->pinctrl);
+ 
+ 	bri->prepare_recovery = i2c_pxa_prepare_recovery;
+ 	bri->unprepare_recovery = i2c_pxa_unprepare_recovery;
++	bri->recover_bus = i2c_generic_scl_recovery;
+ 
+ 	i2c->adap.bus_recovery_info = bri;
+ 
+-	return 0;
++	/*
++	 * Claiming GPIOs can change the pinmux state, which confuses the
++	 * pinctrl since pinctrl's idea of the current setting is unaffected
++	 * by the pinmux change caused by claiming the GPIO. Work around that
++	 * by switching pinctrl to the GPIO state here. We do it this way to
++	 * avoid glitching the I2C bus.
++	 */
++	pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_recovery);
++
++	return pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_default);
+ }
+ 
+ static int i2c_pxa_probe(struct platform_device *dev)
 
 
