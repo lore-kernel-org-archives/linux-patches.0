@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561AD381D7;
-	Fri, 24 Nov 2023 18:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E2339FDD;
+	Fri, 24 Nov 2023 18:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHzwhuTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C29BC433C7;
-	Fri, 24 Nov 2023 18:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RX8Zpuph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E5AC433C8;
+	Fri, 24 Nov 2023 18:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849523;
-	bh=m3CEQzDXTplOg4fhUZuw/e6WzN+4lVdRfwUrB0+GEzk=;
+	s=korg; t=1700849526;
+	bh=xzOvNITvcrWhqheJBRmnpe61h721I7mT4pjllDCCMmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHzwhuTvqLNzoSIq31rbNC9ItU0/L1lCg5sE6tdC5UrknM33xjQ6MdTpy6m5N1KAq
-	 UJemiXL+5fJA9OvoJxv3225rH2U9V+UaUu4omsNJb+Ck6LglBiXtEq1AatgBcSiOsH
-	 IjM7p3VEnQqKxxJC7jpj8wVY0b2hZQb4oNljrdEo=
+	b=RX8ZpuphYwSkp1YJCePAnOUvDE3W9R00ZkkYtV8/JfS1UyNOZONEXdL33CMlU2b68
+	 XkuAM32rO+lx9ODZoOt3Il0WJaNqFUAz8E4wl4oiGUuYmIxhbsMlEVoGm70zhNN/7l
+	 Ik5YhdGCPumSpZY7cEZFxnP6mQOPt30c/mH+j86w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jijie Shao <shaojijie@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 191/530] net: hns3: fix out-of-bounds access may occur when coalesce info is read via debugfs
-Date: Fri, 24 Nov 2023 17:45:57 +0000
-Message-ID: <20231124172033.882565838@linuxfoundation.org>
+Subject: [PATCH 6.6 192/530] net: hns3: fix variable may not initialized problem in hns3_init_mac_addr()
+Date: Fri, 24 Nov 2023 17:45:58 +0000
+Message-ID: <20231124172033.914457140@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,44 +45,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 53aba458f23846112c0d44239580ff59bc5c36c3 ]
+[ Upstream commit dbd2f3b20c6ae425665b6975d766e3653d453e73 ]
 
-The hns3 driver define an array of string to show the coalesce
-info, but if the kernel adds a new mode or a new state,
-out-of-bounds access may occur when coalesce info is read via
-debugfs, this patch fix the problem.
+When a VF is calling hns3_init_mac_addr(), get_mac_addr() may
+return fail, then the value of mac_addr_temp is not initialized.
 
-Fixes: c99fead7cb07 ("net: hns3: add debugfs support for interrupt coalesce")
+Fixes: 76ad4f0ee747 ("net: hns3: Add support of HNS3 Ethernet Driver for hip08 SoC")
 Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-index b8508533878be..4f385a18d288e 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
-@@ -500,11 +500,14 @@ static void hns3_get_coal_info(struct hns3_enet_tqp_vector *tqp_vector,
- 	}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index cf50368441b78..677cfaa5fe08c 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -5140,7 +5140,7 @@ static int hns3_init_mac_addr(struct net_device *netdev)
+ 	struct hns3_nic_priv *priv = netdev_priv(netdev);
+ 	char format_mac_addr[HNAE3_FORMAT_MAC_ADDR_LEN];
+ 	struct hnae3_handle *h = priv->ae_handle;
+-	u8 mac_addr_temp[ETH_ALEN];
++	u8 mac_addr_temp[ETH_ALEN] = {0};
+ 	int ret = 0;
  
- 	sprintf(result[j++], "%d", i);
--	sprintf(result[j++], "%s", dim_state_str[dim->state]);
-+	sprintf(result[j++], "%s", dim->state < ARRAY_SIZE(dim_state_str) ?
-+		dim_state_str[dim->state] : "unknown");
- 	sprintf(result[j++], "%u", dim->profile_ix);
--	sprintf(result[j++], "%s", dim_cqe_mode_str[dim->mode]);
-+	sprintf(result[j++], "%s", dim->mode < ARRAY_SIZE(dim_cqe_mode_str) ?
-+		dim_cqe_mode_str[dim->mode] : "unknown");
- 	sprintf(result[j++], "%s",
--		dim_tune_stat_str[dim->tune_state]);
-+		dim->tune_state < ARRAY_SIZE(dim_tune_stat_str) ?
-+		dim_tune_stat_str[dim->tune_state] : "unknown");
- 	sprintf(result[j++], "%u", dim->steps_left);
- 	sprintf(result[j++], "%u", dim->steps_right);
- 	sprintf(result[j++], "%u", dim->tired);
+ 	if (h->ae_algo->ops->get_mac_addr)
 -- 
 2.42.0
 
