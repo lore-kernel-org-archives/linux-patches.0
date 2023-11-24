@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8677B381DE;
-	Fri, 24 Nov 2023 18:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813D839FF7;
+	Fri, 24 Nov 2023 18:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cK2FMuFP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F14C433C7;
-	Fri, 24 Nov 2023 18:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hr/XHtRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80161C433C7;
+	Fri, 24 Nov 2023 18:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850224;
-	bh=TlG8bvJHBzXu2xg3/vcdT4FzejEXdRKDlx0BGG0+wKo=;
+	s=korg; t=1700850226;
+	bh=3FkTIAmOKq8frBfgah70vEyLSVAb2EbMj+sWF4mqMGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cK2FMuFPjDQbKgRxhdaYOIUf2XDqO+uWYhoGlmAoAQgOhJUrpyDkWT+9S9mnyHzh/
-	 TCCMAjoUCDmaEDA9MN9boWgmqP5LFrtBE/b5dqcfrUG8kBw8qx6WikhiG2JY2dLmn5
-	 746Pl8G77En/wYuGDycNNn1iWXC0VvONfLp9M+4w=
+	b=Hr/XHtROKbUQCxIAKxx/8o/9VRzwvgjoQcRPjDVKEMHl0U9GAgxsuT6XxCHhA/wt7
+	 cBadPIEDOOl6t2fEWENJWT81pjPnLaMHWsI7rXHSGqtmaQyNl4jhXEX5EbGacle3Ti
+	 y+xHbOkbzdwIAhNAFWE/qjqhCjrqix+kzzndFCqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.6 495/530] ext4: fix race between writepages and remount
-Date: Fri, 24 Nov 2023 17:51:01 +0000
-Message-ID: <20231124172043.214026294@linuxfoundation.org>
+	Wang Jianjian <wangjianjian0@foxmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.6 496/530] ext4: no need to generate from free list in mballoc
+Date: Fri, 24 Nov 2023 17:51:02 +0000
+Message-ID: <20231124172043.251194049@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,158 +42,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Wang Jianjian <wangjianjian0@foxmail.com>
 
-commit 745f17a4166e79315e4b7f33ce89d03e75a76983 upstream.
+commit ebf6cb7c6e1241984f75f29f1bdbfa2fe7168f88 upstream.
 
-We got a WARNING in ext4_add_complete_io:
-==================================================================
- WARNING: at fs/ext4/page-io.c:231 ext4_put_io_end_defer+0x182/0x250
- CPU: 10 PID: 77 Comm: ksoftirqd/10 Tainted: 6.3.0-rc2 #85
- RIP: 0010:ext4_put_io_end_defer+0x182/0x250 [ext4]
- [...]
- Call Trace:
-  <TASK>
-  ext4_end_bio+0xa8/0x240 [ext4]
-  bio_endio+0x195/0x310
-  blk_update_request+0x184/0x770
-  scsi_end_request+0x2f/0x240
-  scsi_io_completion+0x75/0x450
-  scsi_finish_command+0xef/0x160
-  scsi_complete+0xa3/0x180
-  blk_complete_reqs+0x60/0x80
-  blk_done_softirq+0x25/0x40
-  __do_softirq+0x119/0x4c8
-  run_ksoftirqd+0x42/0x70
-  smpboot_thread_fn+0x136/0x3c0
-  kthread+0x140/0x1a0
-  ret_from_fork+0x2c/0x50
-==================================================================
+Commit 7a2fcbf7f85 ("ext4: don't use blocks freed but not yet committed in
+buddy cache init") added a code to mark as used blocks in the list of not yet
+committed freed blocks during initialization of a buddy page. However
+ext4_mb_free_metadata() makes sure buddy page is already loaded and takes a
+reference to it so it cannot happen that ext4_mb_init_cache() is called
+when efd list is non-empty. Just remove the
+ext4_mb_generate_from_freelist() call.
 
-Above issue may happen as follows:
-
-            cpu1                        cpu2
-----------------------------|----------------------------
-mount -o dioread_lock
-ext4_writepages
- ext4_do_writepages
-  *if (ext4_should_dioread_nolock(inode))*
-    // rsv_blocks is not assigned here
-                                 mount -o remount,dioread_nolock
-  ext4_journal_start_with_reserve
-   __ext4_journal_start
-    __ext4_journal_start_sb
-     jbd2__journal_start
-      *if (rsv_blocks)*
-        // h_rsv_handle is not initialized here
-  mpage_map_and_submit_extent
-    mpage_map_one_extent
-      dioread_nolock = ext4_should_dioread_nolock(inode)
-      if (dioread_nolock && (map->m_flags & EXT4_MAP_UNWRITTEN))
-        mpd->io_submit.io_end->handle = handle->h_rsv_handle
-        ext4_set_io_unwritten_flag
-          io_end->flag |= EXT4_IO_END_UNWRITTEN
-      // now io_end->handle is NULL but has EXT4_IO_END_UNWRITTEN flag
-
-scsi_finish_command
- scsi_io_completion
-  scsi_io_completion_action
-   scsi_end_request
-    blk_update_request
-     req_bio_endio
-      bio_endio
-       bio->bi_end_io  > ext4_end_bio
-        ext4_put_io_end_defer
-	 ext4_add_complete_io
-	  // trigger WARN_ON(!io_end->handle && sbi->s_journal);
-
-The immediate cause of this problem is that ext4_should_dioread_nolock()
-function returns inconsistent values in the ext4_do_writepages() and
-mpage_map_one_extent(). There are four conditions in this function that
-can be changed at mount time to cause this problem. These four conditions
-can be divided into two categories:
-
-    (1) journal_data and EXT4_EXTENTS_FL, which can be changed by ioctl
-    (2) DELALLOC and DIOREAD_NOLOCK, which can be changed by remount
-
-The two in the first category have been fixed by commit c8585c6fcaf2
-("ext4: fix races between changing inode journal mode and ext4_writepages")
-and commit cb85f4d23f79 ("ext4: fix race between writepages and enabling
-EXT4_EXTENTS_FL") respectively.
-
-Two cases in the other category have not yet been fixed, and the above
-issue is caused by this situation. We refer to the fix for the first
-category, when applying options during remount, we grab s_writepages_rwsem
-to avoid racing with writepages ops to trigger this problem.
-
-Fixes: 6b523df4fb5a ("ext4: use transaction reservation for extent conversion in ext4_end_io")
-Cc: stable@vger.kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230524072538.2883391-1-libaokun1@huawei.com
+Fixes: 7a2fcbf7f85('ext4: don't use blocks freed but not yet committed in buddy cache init')
+Signed-off-by: Wang Jianjian <wangjianjian0@foxmail.com>
+Link: https://lore.kernel.org/r/tencent_53CBCB1668358AE862684E453DF37B722008@qq.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    3 ++-
- fs/ext4/super.c |   14 ++++++++++++++
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c |   39 ++++++---------------------------------
+ 1 file changed, 6 insertions(+), 33 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -1676,7 +1676,8 @@ struct ext4_sb_info {
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -417,8 +417,6 @@ static const char * const ext4_groupinfo
  
- 	/*
- 	 * Barrier between writepages ops and changing any inode's JOURNAL_DATA
--	 * or EXTENTS flag.
-+	 * or EXTENTS flag or between writepages ops and changing DELALLOC or
-+	 * DIOREAD_NOLOCK mount options on remount.
- 	 */
- 	struct percpu_rw_semaphore s_writepages_rwsem;
- 	struct dax_device *s_daxdev;
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6443,6 +6443,7 @@ static int __ext4_remount(struct fs_cont
- 	struct ext4_mount_options old_opts;
- 	ext4_group_t g;
- 	int err = 0;
-+	int alloc_ctx;
- #ifdef CONFIG_QUOTA
- 	int enable_quota = 0;
- 	int i, j;
-@@ -6483,7 +6484,16 @@ static int __ext4_remount(struct fs_cont
+ static void ext4_mb_generate_from_pa(struct super_block *sb, void *bitmap,
+ 					ext4_group_t group);
+-static void ext4_mb_generate_from_freelist(struct super_block *sb, void *bitmap,
+-						ext4_group_t group);
+ static void ext4_mb_new_preallocation(struct ext4_allocation_context *ac);
  
- 	}
+ static bool ext4_mb_good_group(struct ext4_allocation_context *ac,
+@@ -1361,17 +1359,17 @@ static int ext4_mb_init_cache(struct pag
+ 		 * We place the buddy block and bitmap block
+ 		 * close together
+ 		 */
++		grinfo = ext4_get_group_info(sb, group);
++		if (!grinfo) {
++			err = -EFSCORRUPTED;
++		        goto out;
++		}
+ 		if ((first_block + i) & 1) {
+ 			/* this is block of buddy */
+ 			BUG_ON(incore == NULL);
+ 			mb_debug(sb, "put buddy for group %u in page %lu/%x\n",
+ 				group, page->index, i * blocksize);
+ 			trace_ext4_mb_buddy_bitmap_load(sb, group);
+-			grinfo = ext4_get_group_info(sb, group);
+-			if (!grinfo) {
+-				err = -EFSCORRUPTED;
+-				goto out;
+-			}
+ 			grinfo->bb_fragments = 0;
+ 			memset(grinfo->bb_counters, 0,
+ 			       sizeof(*grinfo->bb_counters) *
+@@ -1398,7 +1396,7 @@ static int ext4_mb_init_cache(struct pag
  
-+	/*
-+	 * Changing the DIOREAD_NOLOCK or DELALLOC mount options may cause
-+	 * two calls to ext4_should_dioread_nolock() to return inconsistent
-+	 * values, triggering WARN_ON in ext4_add_complete_io(). we grab
-+	 * here s_writepages_rwsem to avoid race between writepages ops and
-+	 * remount.
-+	 */
-+	alloc_ctx = ext4_writepages_down_write(sb);
- 	ext4_apply_options(fc, sb);
-+	ext4_writepages_up_write(sb, alloc_ctx);
+ 			/* mark all preallocated blks used in in-core bitmap */
+ 			ext4_mb_generate_from_pa(sb, data, group);
+-			ext4_mb_generate_from_freelist(sb, data, group);
++			WARN_ON_ONCE(!RB_EMPTY_ROOT(&grinfo->bb_free_root));
+ 			ext4_unlock_group(sb, group);
  
- 	if ((old_opts.s_mount_opt & EXT4_MOUNT_JOURNAL_CHECKSUM) ^
- 	    test_opt(sb, JOURNAL_CHECKSUM)) {
-@@ -6701,6 +6711,8 @@ restore_opts:
- 	if (sb_rdonly(sb) && !(old_sb_flags & SB_RDONLY) &&
- 	    sb_any_quota_suspended(sb))
- 		dquot_resume(sb, -1);
-+
-+	alloc_ctx = ext4_writepages_down_write(sb);
- 	sb->s_flags = old_sb_flags;
- 	sbi->s_mount_opt = old_opts.s_mount_opt;
- 	sbi->s_mount_opt2 = old_opts.s_mount_opt2;
-@@ -6709,6 +6721,8 @@ restore_opts:
- 	sbi->s_commit_interval = old_opts.s_commit_interval;
- 	sbi->s_min_batch_time = old_opts.s_min_batch_time;
- 	sbi->s_max_batch_time = old_opts.s_max_batch_time;
-+	ext4_writepages_up_write(sb, alloc_ctx);
-+
- 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->s_system_blks)
- 		ext4_release_system_zone(sb);
- #ifdef CONFIG_QUOTA
+ 			/* set incore so that the buddy information can be
+@@ -4959,31 +4957,6 @@ try_group_pa:
+ }
+ 
+ /*
+- * the function goes through all block freed in the group
+- * but not yet committed and marks them used in in-core bitmap.
+- * buddy must be generated from this bitmap
+- * Need to be called with the ext4 group lock held
+- */
+-static void ext4_mb_generate_from_freelist(struct super_block *sb, void *bitmap,
+-						ext4_group_t group)
+-{
+-	struct rb_node *n;
+-	struct ext4_group_info *grp;
+-	struct ext4_free_data *entry;
+-
+-	grp = ext4_get_group_info(sb, group);
+-	if (!grp)
+-		return;
+-	n = rb_first(&(grp->bb_free_root));
+-
+-	while (n) {
+-		entry = rb_entry(n, struct ext4_free_data, efd_node);
+-		mb_set_bits(bitmap, entry->efd_start_cluster, entry->efd_count);
+-		n = rb_next(n);
+-	}
+-}
+-
+-/*
+  * the function goes through all preallocation in this group and marks them
+  * used in in-core bitmap. buddy must be generated from this bitmap
+  * Need to be called with ext4 group lock held
 
 
