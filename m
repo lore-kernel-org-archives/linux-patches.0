@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3303D28DBB;
-	Fri, 24 Nov 2023 19:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBFE2C87B;
+	Fri, 24 Nov 2023 19:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hl7EL+cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A475CC433C8;
-	Fri, 24 Nov 2023 19:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txs5vcdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7345EC433C7;
+	Fri, 24 Nov 2023 19:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852711;
-	bh=mPaI1199Dv6AVgvQLXj+DAHJ27u8oTgzzglK3GgWaGk=;
+	s=korg; t=1700852713;
+	bh=+AEekAJc2EvZdKq+lXWjBwUrZRJq/5dtYsnl/5HCoiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hl7EL+cxk0caXjL++PSJ4JxcLOteYXw3+83P0Q9a0I38bfHD8Ifb2/RVhb/iqY6hV
-	 3sqO3a0BisTQ3Ch1COR+g3aF4RLu3wwIV7y7lxU0OMTvPDzEduHegJx5AW+jjXfnEb
-	 kwJeE3i2zraIQTgz95eOitUDxbxGevNC+EH7202w=
+	b=txs5vcdIaYGES/+3zsNyjNLHEVD7BRzPWIfqjn4UK/ZNXmcKXT9dAdbmV7742wSJx
+	 XOQH0aVzyaIcALqwn0OadbxS/MJDmcqXIYHg/1rFUYnjFtxguFf1IYrRYCuBoVi8m1
+	 7MOa0mp6c+9OUKXuFz8sxUFMTBC8CB4vAP4p8DoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 058/193] wifi: iwlwifi: Use FW rate for non-data frames
-Date: Fri, 24 Nov 2023 17:53:05 +0000
-Message-ID: <20231124171949.580633763@linuxfoundation.org>
+Subject: [PATCH 5.10 086/193] tools/power/turbostat: Fix a knl bug
+Date: Fri, 24 Nov 2023 17:53:33 +0000
+Message-ID: <20231124171950.683209872@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,62 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 499d02790495958506a64f37ceda7e97345a50a8 ]
+[ Upstream commit 137f01b3529d292a68d22e9681e2f903c768f790 ]
 
-Currently we are setting the rate in the tx cmd for
-mgmt frames (e.g. during connection establishment).
-This was problematic when sending mgmt frames in eSR mode,
-as we don't know what link this frame will be sent on
-(This is decided by the FW), so we don't know what is the
-lowest rate.
-Fix this by not setting the rate in tx cmd and rely
-on FW to choose the right one.
-Set rate only for injected frames with fixed rate,
-or when no sta is given.
-Also set for important frames (EAPOL etc.) the High Priority flag.
+MSR_KNL_CORE_C6_RESIDENCY should be evaluated only if
+1. this is KNL platform
+AND
+2. need to get C6 residency or need to calculate C1 residency
 
-Fixes: 055b22e770dd ("iwlwifi: mvm: Set Tx rate and flags when there is not station")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230913145231.6c7e59620ee0.I6eaed3ccdd6dd62b9e664facc484081fc5275843@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix the broken logic introduced by commit 1e9042b9c8d4 ("tools/power
+turbostat: Fix CPU%C1 display value").
+
+Fixes: 1e9042b9c8d4 ("tools/power turbostat: Fix CPU%C1 display value")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index d310337b16251..99150fec151b8 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -532,16 +532,20 @@ iwl_mvm_set_tx_params(struct iwl_mvm *mvm, struct sk_buff *skb,
- 			flags |= IWL_TX_FLAGS_ENCRYPT_DIS;
- 
- 		/*
--		 * For data packets rate info comes from the fw. Only
--		 * set rate/antenna during connection establishment or in case
--		 * no station is given.
-+		 * For data and mgmt packets rate info comes from the fw. Only
-+		 * set rate/antenna for injected frames with fixed rate, or
-+		 * when no sta is given.
- 		 */
--		if (!sta || !ieee80211_is_data(hdr->frame_control) ||
--		    mvmsta->sta_state < IEEE80211_STA_AUTHORIZED) {
-+		if (unlikely(!sta ||
-+			     info->control.flags & IEEE80211_TX_CTRL_RATE_INJECT)) {
- 			flags |= IWL_TX_FLAGS_CMD_RATE;
- 			rate_n_flags =
- 				iwl_mvm_get_tx_rate_n_flags(mvm, info, sta,
- 							    hdr->frame_control);
-+		} else if (!ieee80211_is_data(hdr->frame_control) ||
-+			   mvmsta->sta_state < IEEE80211_STA_AUTHORIZED) {
-+			/* These are important frames */
-+			flags |= IWL_TX_FLAGS_HIGH_PRI;
- 		}
- 
- 		if (mvm->trans->trans_cfg->device_family >=
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index d33c9d427e573..9d4a249cc98bb 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -1995,7 +1995,7 @@ int get_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
+ 	if ((DO_BIC(BIC_CPU_c6) || soft_c1_residency_display(BIC_CPU_c6)) && !do_knl_cstates) {
+ 		if (get_msr(cpu, MSR_CORE_C6_RESIDENCY, &c->c6))
+ 			return -7;
+-	} else if (do_knl_cstates || soft_c1_residency_display(BIC_CPU_c6)) {
++	} else if (do_knl_cstates && soft_c1_residency_display(BIC_CPU_c6)) {
+ 		if (get_msr(cpu, MSR_KNL_CORE_C6_RESIDENCY, &c->c6))
+ 			return -7;
+ 	}
 -- 
 2.42.0
 
