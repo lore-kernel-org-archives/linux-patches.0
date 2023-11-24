@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB6239FE9;
-	Fri, 24 Nov 2023 18:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB9933CFD;
+	Fri, 24 Nov 2023 18:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0V7GDMX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84301C433C9;
-	Fri, 24 Nov 2023 18:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srow3AV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DD5C433C7;
+	Fri, 24 Nov 2023 18:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849855;
-	bh=CvEcDi0kd+/qi2B3AwawhMF/TBZDiTtWaDUgENVhHQg=;
+	s=korg; t=1700849858;
+	bh=VlqlKH0J476LlKxUcqr95kjNoSyu8flBomBCTcsevMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0V7GDMXggBfns3t+pFNcYBAKiSpF9eqfk/8AesKhdvHxvGWxmzXZC2JxZb0YA+hL
-	 uFXKKvTxZpWVv7IoCFNEIwO9GPggevrNZT65klibcQotfTWB/QpwNHjxTNdu4Q5b8e
-	 mkgqmsIfWtBiBn4l0iN82Bbl7lwOK6AY3Rlt/oU4=
+	b=srow3AV71+lNzq1aciSsluWMLj8XFHTn3blrAR/GZQfDHsu7+9f/QcPBhLSXUfpXx
+	 I5cv4zN+USIrf939F6EwDSJtshkRdOrJammd/E2znzGF8sF8yojmRwhVDwSJDA7FKJ
+	 FyIPaA06aYQalKRiv8R7sxFXZP+iRv0jb+Gmhq+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@micron.com>,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 323/530] mmc: Add quirk MMC_QUIRK_BROKEN_CACHE_FLUSH for Micron eMMC Q2J54A
-Date: Fri, 24 Nov 2023 17:48:09 +0000
-Message-ID: <20231124172037.867189578@linuxfoundation.org>
+	Serge Semin <fancer.lancer@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
+Subject: [PATCH 6.6 324/530] PCI: qcom-ep: Add dedicated callback for writing to DBI2 registers
+Date: Fri, 24 Nov 2023 17:48:10 +0000
+Message-ID: <20231124172037.896453284@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -36,110 +36,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bean Huo <beanhuo@micron.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit ed9009ad300c0f15a3ecfe9613547b1962bde02c upstream.
+commit a07d2497ed657eb2efeb967af47e22f573dcd1d6 upstream.
 
-Micron MTFC4GACAJCN eMMC supports cache but requires that flush cache
-operation be allowed only after a write has occurred. Otherwise, the
-cache flush command or subsequent commands will time out.
+The DWC core driver exposes the write_dbi2() callback for writing to the
+DBI2 registers in a vendor-specific way.
 
-Signed-off-by: Bean Huo <beanhuo@micron.com>
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231030224809.59245-1-beanhuo@iokpp.de
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+On the Qcom EP platforms, the DBI_CS2 bit in the ELBI region needs to be
+asserted before writing to any DBI2 registers and deasserted once done.
+
+So, let's implement the callback for the Qcom PCIe EP driver so that the
+DBI2 writes are correctly handled in the hardware.
+
+Without this callback, the DBI2 register writes like BAR size won't go
+through and as a result, the default BAR size is set for all BARs.
+
+[kwilczynski: commit log, renamed function to match the DWC convention]
+Fixes: f55fee56a631 ("PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver")
+Suggested-by: Serge Semin <fancer.lancer@gmail.com>
+Link: https://lore.kernel.org/linux-pci/20231025130029.74693-2-manivannan.sadhasivam@linaro.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Cc: stable@vger.kernel.org # 5.16+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c  |    4 +++-
- drivers/mmc/core/card.h   |    4 ++++
- drivers/mmc/core/mmc.c    |    8 ++++++--
- drivers/mmc/core/quirks.h |    7 ++++---
- include/linux/mmc/card.h  |    2 ++
- 5 files changed, 19 insertions(+), 6 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom-ep.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -2381,8 +2381,10 @@ enum mmc_issued mmc_blk_mq_issue_rq(stru
- 			}
- 			ret = mmc_blk_cqe_issue_flush(mq, req);
- 			break;
--		case REQ_OP_READ:
- 		case REQ_OP_WRITE:
-+			card->written_flag = true;
-+			fallthrough;
-+		case REQ_OP_READ:
- 			if (host->cqe_enabled)
- 				ret = mmc_blk_cqe_issue_rw_rq(mq, req);
- 			else
---- a/drivers/mmc/core/card.h
-+++ b/drivers/mmc/core/card.h
-@@ -280,4 +280,8 @@ static inline int mmc_card_broken_sd_cac
- 	return c->quirks & MMC_QUIRK_BROKEN_SD_CACHE;
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -123,6 +123,7 @@
+ 
+ /* ELBI registers */
+ #define ELBI_SYS_STTS				0x08
++#define ELBI_CS2_ENABLE				0xa4
+ 
+ /* DBI registers */
+ #define DBI_CON_STATUS				0x44
+@@ -263,6 +264,21 @@ static void qcom_pcie_dw_stop_link(struc
+ 	disable_irq(pcie_ep->perst_irq);
  }
  
-+static inline int mmc_card_broken_cache_flush(const struct mmc_card *c)
++static void qcom_pcie_dw_write_dbi2(struct dw_pcie *pci, void __iomem *base,
++				    u32 reg, size_t size, u32 val)
 +{
-+	return c->quirks & MMC_QUIRK_BROKEN_CACHE_FLUSH;
-+}
- #endif
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -2081,13 +2081,17 @@ static int _mmc_flush_cache(struct mmc_h
- {
- 	int err = 0;
- 
-+	if (mmc_card_broken_cache_flush(host->card) && !host->card->written_flag)
-+		return 0;
++	struct qcom_pcie_ep *pcie_ep = to_pcie_ep(pci);
++	int ret;
 +
- 	if (_mmc_cache_enabled(host)) {
- 		err = mmc_switch(host->card, EXT_CSD_CMD_SET_NORMAL,
- 				 EXT_CSD_FLUSH_CACHE, 1,
- 				 CACHE_FLUSH_TIMEOUT_MS);
- 		if (err)
--			pr_err("%s: cache flush error %d\n",
--			       mmc_hostname(host), err);
-+			pr_err("%s: cache flush error %d\n", mmc_hostname(host), err);
-+		else
-+			host->card->written_flag = false;
- 	}
++	writel(1, pcie_ep->elbi + ELBI_CS2_ENABLE);
++
++	ret = dw_pcie_write(pci->dbi_base2 + reg, size, val);
++	if (ret)
++		dev_err(pci->dev, "Failed to write DBI2 register (0x%x): %d\n", reg, ret);
++
++	writel(0, pcie_ep->elbi + ELBI_CS2_ENABLE);
++}
++
+ static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
+ {
+ 	struct dw_pcie *pci = &pcie_ep->pci;
+@@ -519,6 +535,7 @@ static const struct dw_pcie_ops pci_ops
+ 	.link_up = qcom_pcie_dw_link_up,
+ 	.start_link = qcom_pcie_dw_start_link,
+ 	.stop_link = qcom_pcie_dw_stop_link,
++	.write_dbi2 = qcom_pcie_dw_write_dbi2,
+ };
  
- 	return err;
---- a/drivers/mmc/core/quirks.h
-+++ b/drivers/mmc/core/quirks.h
-@@ -110,11 +110,12 @@ static const struct mmc_fixup __maybe_un
- 		  MMC_QUIRK_TRIM_BROKEN),
- 
- 	/*
--	 * Micron MTFC4GACAJCN-1M advertises TRIM but it does not seems to
--	 * support being used to offload WRITE_ZEROES.
-+	 * Micron MTFC4GACAJCN-1M supports TRIM but does not appear to support
-+	 * WRITE_ZEROES offloading. It also supports caching, but the cache can
-+	 * only be flushed after a write has occurred.
- 	 */
- 	MMC_FIXUP("Q2J54A", CID_MANFID_MICRON, 0x014e, add_quirk_mmc,
--		  MMC_QUIRK_TRIM_BROKEN),
-+		  MMC_QUIRK_TRIM_BROKEN | MMC_QUIRK_BROKEN_CACHE_FLUSH),
- 
- 	/*
- 	 * Kingston EMMC04G-M627 advertises TRIM but it does not seems to
---- a/include/linux/mmc/card.h
-+++ b/include/linux/mmc/card.h
-@@ -295,7 +295,9 @@ struct mmc_card {
- #define MMC_QUIRK_BROKEN_HPI	(1<<13)		/* Disable broken HPI support */
- #define MMC_QUIRK_BROKEN_SD_DISCARD	(1<<14)	/* Disable broken SD discard support */
- #define MMC_QUIRK_BROKEN_SD_CACHE	(1<<15)	/* Disable broken SD cache support */
-+#define MMC_QUIRK_BROKEN_CACHE_FLUSH	(1<<16)	/* Don't flush cache until the write has occurred */
- 
-+	bool			written_flag;	/* Indicates eMMC has been written since power on */
- 	bool			reenable_cmdq;	/* Re-enable Command Queue */
- 
- 	unsigned int		erase_size;	/* erase size in sectors */
+ static int qcom_pcie_ep_get_io_resources(struct platform_device *pdev,
 
 
