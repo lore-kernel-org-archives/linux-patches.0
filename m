@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BD23BB20;
-	Fri, 24 Nov 2023 18:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCB728DA1;
+	Fri, 24 Nov 2023 18:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDjdYkdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706C7C433C7;
-	Fri, 24 Nov 2023 18:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LdCEE1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02E3C433C8;
+	Fri, 24 Nov 2023 18:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850671;
-	bh=W5189LlvjNka7zIx02HlV9ijRCeInRxWsfxnMheeT6w=;
+	s=korg; t=1700850674;
+	bh=j/dMPwSc8Q8kF636LHhtcEf9FuJyeeW8Nu5aQK42pRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDjdYkdRaCPZ4iw/Kq9W9yuAcFBJhfa+ggMTFWw3OYr2yaOhQRrNvWjAbIGXbfG8/
-	 blChhjX/enbktH1opfPiWsKBjn4o0OQXaEz3Kdvd3e6SDQgQCPgPwE2KfFmGdi6n5M
-	 VORFRv33uExURZUGnSHZjPE/U7jBdChyzej+6mZU=
+	b=2LdCEE1ZAEcpGmBOplbDfmbSjuECkuhPUuV0Khd5PImNK/nOjiCwbP/X78hKdBroP
+	 XuVPGQqRi9Xz66QUFrgZ9IvqotT5HrJoDbc5ZMcZjWU2EtX6+4ggJWLbcn3KYhWSE4
+	 ZRma8mGiCrURFt/45AUwPiLSagRjQJE6m9oeA0b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Dave Airlie <airlied@redhat.com>,
+	Philipp Stanner <pstanner@redhat.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 135/491] media: ipu-bridge: increase sensor_name size
-Date: Fri, 24 Nov 2023 17:46:11 +0000
-Message-ID: <20231124172028.555531580@linuxfoundation.org>
+Subject: [PATCH 6.5 144/491] i2c: dev: copy userspace array safely
+Date: Fri, 24 Nov 2023 17:46:20 +0000
+Message-ID: <20231124172028.815541615@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,64 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Philipp Stanner <pstanner@redhat.com>
 
-[ Upstream commit 83d0d4cc1423194b580356966107379490edd02e ]
+[ Upstream commit cc9c54232f04aef3a5d7f64a0ece7df00f1aaa3d ]
 
-Fixes this compiler warning:
+i2c-dev.c utilizes memdup_user() to copy a userspace array. This is done
+without an overflow check.
 
-In file included from include/linux/property.h:14,
-                 from include/linux/acpi.h:16,
-                 from drivers/media/pci/intel/ipu-bridge.c:4:
-In function 'ipu_bridge_init_swnode_names',
-    inlined from 'ipu_bridge_create_connection_swnodes' at drivers/media/pci/intel/ipu-bridge.c:445:2,
-    inlined from 'ipu_bridge_connect_sensor' at drivers/media/pci/intel/ipu-bridge.c:656:3:
-include/linux/fwnode.h:81:49: warning: '%u' directive output may be truncated writing between 1 and 3 bytes into a region of size 2 [-Wformat-truncation=]
-   81 | #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
-      |                                                 ^~~~~~~~~
-drivers/media/pci/intel/ipu-bridge.c:384:18: note: in expansion of macro 'SWNODE_GRAPH_PORT_NAME_FMT'
-  384 |                  SWNODE_GRAPH_PORT_NAME_FMT, sensor->link);
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
-include/linux/fwnode.h: In function 'ipu_bridge_connect_sensor':
-include/linux/fwnode.h:81:55: note: format string is defined here
-   81 | #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
-      |                                                       ^~
-In function 'ipu_bridge_init_swnode_names',
-    inlined from 'ipu_bridge_create_connection_swnodes' at drivers/media/pci/intel/ipu-bridge.c:445:2,
-    inlined from 'ipu_bridge_connect_sensor' at drivers/media/pci/intel/ipu-bridge.c:656:3:
-include/linux/fwnode.h:81:49: note: directive argument in the range [0, 255]
-   81 | #define SWNODE_GRAPH_PORT_NAME_FMT              "port@%u"
-      |                                                 ^~~~~~~~~
-drivers/media/pci/intel/ipu-bridge.c:384:18: note: in expansion of macro 'SWNODE_GRAPH_PORT_NAME_FMT'
-  384 |                  SWNODE_GRAPH_PORT_NAME_FMT, sensor->link);
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/media/pci/intel/ipu-bridge.c:382:9: note: 'snprintf' output between 7 and 9 bytes into a destination of size 7
-  382 |         snprintf(sensor->node_names.remote_port,
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  383 |                  sizeof(sensor->node_names.remote_port),
-      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  384 |                  SWNODE_GRAPH_PORT_NAME_FMT, sensor->link);
-      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use the new wrapper memdup_array_user() to copy the array more safely.
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+Suggested-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Philipp Stanner <pstanner@redhat.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu-bridge.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/i2c-dev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/intel/ipu-bridge.h b/drivers/media/pci/intel/ipu-bridge.h
-index 1ff0b2d04d929..1ed53d51e16a1 100644
---- a/drivers/media/pci/intel/ipu-bridge.h
-+++ b/drivers/media/pci/intel/ipu-bridge.h
-@@ -103,7 +103,7 @@ struct ipu_property_names {
- struct ipu_node_names {
- 	char port[7];
- 	char endpoint[11];
--	char remote_port[7];
-+	char remote_port[9];
- 	char vcm[16];
- };
+diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
+index a01b59e3599b5..7d337380a05d9 100644
+--- a/drivers/i2c/i2c-dev.c
++++ b/drivers/i2c/i2c-dev.c
+@@ -450,8 +450,8 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		if (rdwr_arg.nmsgs > I2C_RDWR_IOCTL_MAX_MSGS)
+ 			return -EINVAL;
+ 
+-		rdwr_pa = memdup_user(rdwr_arg.msgs,
+-				      rdwr_arg.nmsgs * sizeof(struct i2c_msg));
++		rdwr_pa = memdup_array_user(rdwr_arg.msgs,
++					    rdwr_arg.nmsgs, sizeof(struct i2c_msg));
+ 		if (IS_ERR(rdwr_pa))
+ 			return PTR_ERR(rdwr_pa);
  
 -- 
 2.42.0
