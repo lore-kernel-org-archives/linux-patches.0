@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970EA35F04;
-	Fri, 24 Nov 2023 19:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285A0339BE;
+	Fri, 24 Nov 2023 19:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2nrMGtQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A58C433C8;
-	Fri, 24 Nov 2023 19:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XB2oLItN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A448FC433C7;
+	Fri, 24 Nov 2023 19:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852952;
-	bh=D6mAYZneYMA5QejgN4mgqe1l6DNaOsYjVd/RoETVmHM=;
+	s=korg; t=1700852955;
+	bh=4b7oLvwhNkMrNflgbOkrlxpt8O+gmbO2AHpGTwgeJao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2nrMGtQqK2tQO2MhUKOpur4ivb0TEFpRA82MYiXF1u5Zau9XEMlRYlCkqHwTxR5b
-	 DcnDv//5VPfGWKt/QB24QiO0rPwc7sojKtmPqm6t+lK+lG1879jE+ckb2SNWA6mfb6
-	 UnMPjEMvGaN6AIvj6m46qU3EYKYXgwW3LWvqXXHs=
+	b=XB2oLItNgfgqGq4OSBtQI3H0W9Bq9+V+swvMcxdSUv+EJqvkTD9dWq96qtgx+r3c1
+	 VHCMbkps2zixSS3J82SbW8vODTa52tBfmuCditCv3h97r5tlrRUAUTM9m+zVIDNmBr
+	 MgBCwpAgqJEKhWYdvyiD0mUZ5JMe2uyeF+Vm61jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	He Gao <hegao@google.com>
-Subject: [PATCH 5.10 188/193] io_uring/fdinfo: lock SQ thread while retrieving thread cpu/pid
-Date: Fri, 24 Nov 2023 17:55:15 +0000
-Message-ID: <20231124171954.709375244@linuxfoundation.org>
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.10 189/193] powerpc/powernv: Fix fortify source warnings in opal-prd.c
+Date: Fri, 24 Nov 2023 17:55:16 +0000
+Message-ID: <20231124171954.750733172@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,60 +42,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 7644b1a1c9a7ae8ab99175989bfc8676055edb46 upstream.
+commit feea65a338e52297b68ceb688eaf0ffc50310a83 upstream.
 
-We could race with SQ thread exit, and if we do, we'll hit a NULL pointer
-dereference when the thread is cleared. Grab the SQPOLL data lock before
-attempting to get the task cpu and pid for fdinfo, this ensures we have a
-stable view of it.
+As reported by Mahesh & Aneesh, opal_prd_msg_notifier() triggers a
+FORTIFY_SOURCE warning:
 
-Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218032
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: He Gao <hegao@google.com>
+  memcpy: detected field-spanning write (size 32) of single field "&item->msg" at arch/powerpc/platforms/powernv/opal-prd.c:355 (size 4)
+  WARNING: CPU: 9 PID: 660 at arch/powerpc/platforms/powernv/opal-prd.c:355 opal_prd_msg_notifier+0x174/0x188 [opal_prd]
+  NIP opal_prd_msg_notifier+0x174/0x188 [opal_prd]
+  LR  opal_prd_msg_notifier+0x170/0x188 [opal_prd]
+  Call Trace:
+    opal_prd_msg_notifier+0x170/0x188 [opal_prd] (unreliable)
+    notifier_call_chain+0xc0/0x1b0
+    atomic_notifier_call_chain+0x2c/0x40
+    opal_message_notify+0xf4/0x2c0
+
+This happens because the copy is targeting item->msg, which is only 4
+bytes in size, even though the enclosing item was allocated with extra
+space following the msg.
+
+To fix the warning define struct opal_prd_msg with a union of the header
+and a flex array, and have the memcpy target the flex array.
+
+Reported-by: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Reported-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Tested-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Reviewed-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230821142820.497107-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ arch/powerpc/platforms/powernv/opal-prd.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -10238,7 +10238,7 @@ static int io_uring_show_cred(struct seq
+--- a/arch/powerpc/platforms/powernv/opal-prd.c
++++ b/arch/powerpc/platforms/powernv/opal-prd.c
+@@ -24,13 +24,20 @@
+ #include <linux/uaccess.h>
  
- static void __io_uring_show_fdinfo(struct io_ring_ctx *ctx, struct seq_file *m)
- {
--	struct io_sq_data *sq = NULL;
-+	int sq_pid = -1, sq_cpu = -1;
- 	bool has_lock;
- 	int i;
  
-@@ -10251,13 +10251,19 @@ static void __io_uring_show_fdinfo(struc
- 	has_lock = mutex_trylock(&ctx->uring_lock);
- 
- 	if (has_lock && (ctx->flags & IORING_SETUP_SQPOLL)) {
--		sq = ctx->sq_data;
--		if (!sq->thread)
--			sq = NULL;
-+		struct io_sq_data *sq = ctx->sq_data;
++struct opal_prd_msg {
++	union {
++		struct opal_prd_msg_header header;
++		DECLARE_FLEX_ARRAY(u8, data);
++	};
++};
 +
-+		if (mutex_trylock(&sq->lock)) {
-+			if (sq->thread) {
-+				sq_pid = task_pid_nr(sq->thread);
-+				sq_cpu = task_cpu(sq->thread);
-+			}
-+			mutex_unlock(&sq->lock);
-+		}
+ /*
+  * The msg member must be at the end of the struct, as it's followed by the
+  * message data.
+  */
+ struct opal_prd_msg_queue_item {
+-	struct list_head		list;
+-	struct opal_prd_msg_header	msg;
++	struct list_head	list;
++	struct opal_prd_msg	msg;
+ };
+ 
+ static struct device_node *prd_node;
+@@ -159,7 +166,7 @@ static ssize_t opal_prd_read(struct file
+ 	int rc;
+ 
+ 	/* we need at least a header's worth of data */
+-	if (count < sizeof(item->msg))
++	if (count < sizeof(item->msg.header))
+ 		return -EINVAL;
+ 
+ 	if (*ppos)
+@@ -189,7 +196,7 @@ static ssize_t opal_prd_read(struct file
+ 			return -EINTR;
  	}
  
--	seq_printf(m, "SqThread:\t%d\n", sq ? task_pid_nr(sq->thread) : -1);
--	seq_printf(m, "SqThreadCpu:\t%d\n", sq ? task_cpu(sq->thread) : -1);
-+	seq_printf(m, "SqThread:\t%d\n", sq_pid);
-+	seq_printf(m, "SqThreadCpu:\t%d\n", sq_cpu);
- 	seq_printf(m, "UserFiles:\t%u\n", ctx->nr_user_files);
- 	for (i = 0; has_lock && i < ctx->nr_user_files; i++) {
- 		struct file *f = io_file_from_index(ctx, i);
+-	size = be16_to_cpu(item->msg.size);
++	size = be16_to_cpu(item->msg.header.size);
+ 	if (size > count) {
+ 		err = -EINVAL;
+ 		goto err_requeue;
+@@ -355,7 +362,7 @@ static int opal_prd_msg_notifier(struct
+ 	if (!item)
+ 		return -ENOMEM;
+ 
+-	memcpy(&item->msg, msg->params, msg_size);
++	memcpy(&item->msg.data, msg->params, msg_size);
+ 
+ 	spin_lock_irqsave(&opal_prd_msg_queue_lock, flags);
+ 	list_add_tail(&item->list, &opal_prd_msg_queue);
 
 
