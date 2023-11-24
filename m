@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C5839FEA;
-	Fri, 24 Nov 2023 18:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71082511F;
+	Fri, 24 Nov 2023 18:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPEEj/WT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5EFC433C8;
-	Fri, 24 Nov 2023 18:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoeGhEKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C1FC433C8;
+	Fri, 24 Nov 2023 18:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849908;
-	bh=/qnipRgx0bfA3BLk0i2vCD2P2sLBwtwYXTletGg6jOc=;
+	s=korg; t=1700849910;
+	bh=Fq5FgvaqaT5AeH5dIpJ0uq6TG1QwLIPuDP7ueyHMKsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aPEEj/WTWYvbfkcFsaKM8OOZww8W2R9u9EqADSHuAoBY2ZOa/4vBxAfxLd7T2TVp/
-	 4iE7BOcj2AY1GO8vcYC7d3AabMZFb5rlFGqpKnV9WqBNrg0/wlpgogtpahr+Cqmdbi
-	 Q1jOBBbM4ABtBeW/xXQngis6roUGQekk14WcWrZQ=
+	b=CoeGhEKRuJ6QHoKi8VSdZK5kPhb+cGKbO4OVBQ/1UEQWb/X9kN0xEC19f9OBx+ebj
+	 SQxr4+OvcYx075hgTBMZ4I45jyFzHUsdlAu2zXyVuhp9vjqLIfT7OsXm76rJaISw+H
+	 F0h1WE5vU6hz7tJTdyhycLH8oqmoOeTPs7JLB8SU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Wolfram Sang <wsa@kernel.org>,
-	Nishanth Menon <nm@ti.com>,
-	Benjamin Bara <benjamin.bara@skidata.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 368/530] i2c: core: Run atomic i2c xfer when !preemptible
-Date: Fri, 24 Nov 2023 17:48:54 +0000
-Message-ID: <20231124172039.209700849@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Christian Brauner <brauner@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 369/530] selftests/clone3: Fix broken test under !CONFIG_TIME_NS
+Date: Fri, 24 Nov 2023 17:48:55 +0000
+Message-ID: <20231124172039.237597080@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,54 +44,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Bara <benjamin.bara@skidata.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit aa49c90894d06e18a1ee7c095edbd2f37c232d02 upstream.
+commit fc7f04dc23db50206bee7891516ed4726c3f64cf upstream.
 
-Since bae1d3a05a8b, i2c transfers are non-atomic if preemption is
-disabled. However, non-atomic i2c transfers require preemption (e.g. in
-wait_for_completion() while waiting for the DMA).
+When execute the following command to test clone3 under !CONFIG_TIME_NS:
 
-panic() calls preempt_disable_notrace() before calling
-emergency_restart(). Therefore, if an i2c device is used for the
-restart, the xfer should be atomic. This avoids warnings like:
+  # make headers && cd tools/testing/selftests/clone3 && make && ./clone3
 
-[   12.667612] WARNING: CPU: 1 PID: 1 at kernel/rcu/tree_plugin.h:318 rcu_note_context_switch+0x33c/0x6b0
-[   12.676926] Voluntary context switch within RCU read-side critical section!
-...
-[   12.742376]  schedule_timeout from wait_for_completion_timeout+0x90/0x114
-[   12.749179]  wait_for_completion_timeout from tegra_i2c_wait_completion+0x40/0x70
-...
-[   12.994527]  atomic_notifier_call_chain from machine_restart+0x34/0x58
-[   13.001050]  machine_restart from panic+0x2a8/0x32c
+we can see the following error info:
 
-Use !preemptible() instead, which is basically the same check as
-pre-v5.2.
+  # [7538] Trying clone3() with flags 0x80 (size 0)
+  # Invalid argument - Failed to create new process
+  # [7538] clone3() with flags says: -22 expected 0
+  not ok 18 [7538] Result (-22) is different than expected (0)
+  ...
+  # Totals: pass:18 fail:1 xfail:0 xpass:0 skip:0 error:0
 
-Fixes: bae1d3a05a8b ("i2c: core: remove use of in_atomic()")
-Cc: stable@vger.kernel.org # v5.2+
-Suggested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Acked-by: Wolfram Sang <wsa@kernel.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Tested-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
-Link: https://lore.kernel.org/r/20230327-tegra-pmic-reboot-v7-2-18699d5dcd76@skidata.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+This is because if CONFIG_TIME_NS is not set, but the flag
+CLONE_NEWTIME (0x80) is used to clone a time namespace, it
+will return -EINVAL in copy_time_ns().
+
+If kernel does not support CONFIG_TIME_NS, /proc/self/ns/time
+will be not exist, and then we should skip clone3() test with
+CLONE_NEWTIME.
+
+With this patch under !CONFIG_TIME_NS:
+
+  # make headers && cd tools/testing/selftests/clone3 && make && ./clone3
+  ...
+  # Time namespaces are not supported
+  ok 18 # SKIP Skipping clone3() with CLONE_NEWTIME
+  ...
+  # Totals: pass:18 fail:0 xfail:0 xpass:0 skip:1 error:0
+
+Link: https://lkml.kernel.org/r/1689066814-13295-1-git-send-email-yangtiezhu@loongson.cn
+Fixes: 515bddf0ec41 ("selftests/clone3: test clone3 with CLONE_NEWTIME")
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/clone3/clone3.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/i2c-core.h
-+++ b/drivers/i2c/i2c-core.h
-@@ -29,7 +29,7 @@ int i2c_dev_irq_from_resources(const str
-  */
- static inline bool i2c_in_atomic_xfer_mode(void)
- {
--	return system_state > SYSTEM_RUNNING && irqs_disabled();
-+	return system_state > SYSTEM_RUNNING && !preemptible();
- }
+--- a/tools/testing/selftests/clone3/clone3.c
++++ b/tools/testing/selftests/clone3/clone3.c
+@@ -196,7 +196,12 @@ int main(int argc, char *argv[])
+ 			CLONE3_ARGS_NO_TEST);
  
- static inline int __i2c_lock_bus_helper(struct i2c_adapter *adap)
+ 	/* Do a clone3() in a new time namespace */
+-	test_clone3(CLONE_NEWTIME, 0, 0, CLONE3_ARGS_NO_TEST);
++	if (access("/proc/self/ns/time", F_OK) == 0) {
++		test_clone3(CLONE_NEWTIME, 0, 0, CLONE3_ARGS_NO_TEST);
++	} else {
++		ksft_print_msg("Time namespaces are not supported\n");
++		ksft_test_result_skip("Skipping clone3() with CLONE_NEWTIME\n");
++	}
+ 
+ 	/* Do a clone3() with exit signal (SIGCHLD) in flags */
+ 	test_clone3(SIGCHLD, 0, -EINVAL, CLONE3_ARGS_NO_TEST);
 
 
