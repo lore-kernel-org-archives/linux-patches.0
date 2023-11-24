@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B153307D;
-	Fri, 24 Nov 2023 19:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEB13173F;
+	Fri, 24 Nov 2023 19:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dwv4qP6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34BAC433C7;
-	Fri, 24 Nov 2023 19:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkNFfL4U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC29C433C7;
+	Fri, 24 Nov 2023 19:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852681;
-	bh=nnNZL/hKZkE7vjaEMJvGtuRUHjXRjNLp5amxj+lW94s=;
+	s=korg; t=1700852683;
+	bh=s+359obzTTAFDHLsTkQqg2JMY09aw8gMbWh27FCtu1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dwv4qP6TxWOsbH4Z9Dl7X83u4lbv7eQybBRUEnRXiqNq4wDh8wdi7xfVyKtpiO0TR
-	 tmZCOar4WVhA0N7zwWbNARnpdG/V7b0pJv+UC5l6656rz/F+l4FXmxoDFipcqMUfw2
-	 GmFXr5rfp/fJVahrxGmkiIBn41FVQ0+IeKAtALcA=
+	b=pkNFfL4UyucPYFR50axGiNsMIJZoC007kT/yRHtOV4E498gDBGAyRYDoX/ywRv7gh
+	 wWbuZDBmfjekQyuL4tXpCH4+RZdQUurqXKr6BilBwTlcqwtYzBEL5/rHcYn3IOYRYh
+	 CDDcatdYWAf89nZ8iLii2dpfuo8O6VhKlhi0+0xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	k2ci <kernel-bot@kylinos.cn>,
-	Linkui Xiao <xiaolinkui@kylinos.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/193] netfilter: nf_conntrack_bridge: initialize err to 0
-Date: Fri, 24 Nov 2023 17:53:27 +0000
-Message-ID: <20231124171950.429337309@linuxfoundation.org>
+Subject: [PATCH 5.10 081/193] net: stmmac: fix rx budget limit check
+Date: Fri, 24 Nov 2023 17:53:28 +0000
+Message-ID: <20231124171950.474266414@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,41 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkui Xiao <xiaolinkui@kylinos.cn>
+From: Baruch Siach <baruch@tkos.co.il>
 
-[ Upstream commit a44af08e3d4d7566eeea98d7a29fe06e7b9de944 ]
+[ Upstream commit fa02de9e75889915b554eda1964a631fd019973b ]
 
-K2CI reported a problem:
+The while loop condition verifies 'count < limit'. Neither value change
+before the 'count >= limit' check. As is this check is dead code. But
+code inspection reveals a code path that modifies 'count' and then goto
+'drain_data' and back to 'read_again'. So there is a need to verify
+count value sanity after 'read_again'.
 
-	consume_skb(skb);
-	return err;
-[nf_br_ip_fragment() error]  uninitialized symbol 'err'.
+Move 'read_again' up to fix the count limit check.
 
-err is not initialized, because returning 0 is expected, initialize err
-to 0.
-
-Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
-Reported-by: k2ci <kernel-bot@kylinos.cn>
-Signed-off-by: Linkui Xiao <xiaolinkui@kylinos.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
+Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Link: https://lore.kernel.org/r/d9486296c3b6b12ab3a0515fcd47d56447a07bfc.1699897370.git.baruch@tkos.co.il
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/nf_conntrack_bridge.c | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
-index fdbed31585553..d14b2dbbd1dfb 100644
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -36,7 +36,7 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
- 	ktime_t tstamp = skb->tstamp;
- 	struct ip_frag_state state;
- 	struct iphdr *iph;
--	int err;
-+	int err = 0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 83e9a4d019c16..59a07a01e80ca 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3858,10 +3858,10 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 			len = 0;
+ 		}
  
- 	/* for offloaded checksums cleanup checksum before fragmentation */
- 	if (skb->ip_summed == CHECKSUM_PARTIAL &&
++read_again:
+ 		if (count >= limit)
+ 			break;
+ 
+-read_again:
+ 		buf1_len = 0;
+ 		buf2_len = 0;
+ 		entry = next_entry;
 -- 
 2.42.0
 
