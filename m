@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97ACA381DE;
-	Fri, 24 Nov 2023 17:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CA039FC3;
+	Fri, 24 Nov 2023 17:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxu3aYxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241C6C433C8;
-	Fri, 24 Nov 2023 17:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3xxoA08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5DEC433C8;
+	Fri, 24 Nov 2023 17:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848723;
-	bh=BnO4upvIqv5xsyDvIG5j/KKgUOoTkIcDxKVdHHFIIkk=;
+	s=korg; t=1700848725;
+	bh=idIT+idDiYHDtDgymrdOkFuc2Pxhm78i7w/HDf57xr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxu3aYxkJAB8A99eZW9udJIRUT2le46ZpSGAF6sn4OMPB9ZMZtyXG5sg5Ow1qicGd
-	 jqYwzMxSs/QLRETXEzuwwi3lbDPIrnu7y2Qmj39l3d9D5Vg2RmT4K5KKBsup7BlaVQ
-	 hUtxLs/cuYGcFHsz0K7lO/GFleTTP9FbPbZ/JprY=
+	b=J3xxoA08ocHd5ZCuyS5v55Jpr1o1pQ6blwoGJQyk62xNzieQV4IJzVlzsFzfmpZRV
+	 tD3qKO2wzRzp0pYz3Q5CTwgEh4fXhB8lri3r8LFrkV2fOp00DPbl/BboUR9oXmBUp0
+	 nmFavo5XI5ylAjghFkr992lI4Pgkjo8EOebV4JfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 4.19 56/97] genirq/generic_chip: Make irq_remove_generic_chip() irqdomain aware
-Date: Fri, 24 Nov 2023 17:50:29 +0000
-Message-ID: <20231124171936.242195321@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 4.19 57/97] PCI: keystone: Dont discard .remove() callback
+Date: Fri, 24 Nov 2023 17:50:30 +0000
+Message-ID: <20231124171936.279146843@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -35,88 +35,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 5e7afb2eb7b2a7c81e9f608cbdf74a07606fd1b5 upstream.
+commit 200bddbb3f5202bbce96444fdc416305de14f547 upstream.
 
-irq_remove_generic_chip() calculates the Linux interrupt number for removing the
-handler and interrupt chip based on gc::irq_base as a linear function of
-the bit positions of set bits in the @msk argument.
+With CONFIG_PCIE_KEYSTONE=y and ks_pcie_remove() marked with __exit, the
+function is discarded from the driver. In this case a bound device can
+still get unbound, e.g via sysfs. Then no cleanup code is run resulting in
+resource leaks or worse.
 
-When the generic chip is present in an irq domain, i.e. created with a call
-to irq_alloc_domain_generic_chips(), gc::irq_base contains not the base
-Linux interrupt number.  It contains the base hardware interrupt for this
-chip. It is set to 0 for the first chip in the domain, 0 + N for the next
-chip, where $N is the number of hardware interrupts per chip.
+The right thing to do is do always have the remove callback available.
+Note that this driver cannot be compiled as a module, so ks_pcie_remove()
+was always discarded before this change and modpost couldn't warn about
+this issue. Furthermore the __ref annotation also prevents a warning.
 
-That means the Linux interrupt number cannot be calculated based on
-gc::irq_base for irqdomain based chips without a domain map lookup, which
-is currently missing.
-
-Rework the code to take the irqdomain case into account and calculate the
-Linux interrupt number by a irqdomain lookup of the domain specific
-hardware interrupt number.
-
-[ tglx: Massage changelog. Reshuffle the logic and add a proper comment. ]
-
-Fixes: cfefd21e693d ("genirq: Add chip suspend and resume callbacks")
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Fixes: 0c4ffcfe1fbc ("PCI: keystone: Add TI Keystone PCIe driver")
+Link: https://lore.kernel.org/r/20231001170254.2506508-4-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231024150335.322282-1-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/generic-chip.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/irq/generic-chip.c
-+++ b/kernel/irq/generic-chip.c
-@@ -537,21 +537,34 @@ EXPORT_SYMBOL_GPL(irq_setup_alt_chip);
- void irq_remove_generic_chip(struct irq_chip_generic *gc, u32 msk,
- 			     unsigned int clr, unsigned int set)
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -376,7 +376,7 @@ static const struct dw_pcie_ops dw_pcie_
+ 	.link_up = ks_dw_pcie_link_up,
+ };
+ 
+-static int __exit ks_pcie_remove(struct platform_device *pdev)
++static int ks_pcie_remove(struct platform_device *pdev)
  {
--	unsigned int i = gc->irq_base;
-+	unsigned int i, virq;
+ 	struct keystone_pcie *ks_pcie = platform_get_drvdata(pdev);
  
- 	raw_spin_lock(&gc_lock);
- 	list_del(&gc->list);
- 	raw_spin_unlock(&gc_lock);
+@@ -454,7 +454,7 @@ fail_clk:
  
--	for (; msk; msk >>= 1, i++) {
-+	for (i = 0; msk; msk >>= 1, i++) {
- 		if (!(msk & 0x01))
- 			continue;
- 
-+		/*
-+		 * Interrupt domain based chips store the base hardware
-+		 * interrupt number in gc::irq_base. Otherwise gc::irq_base
-+		 * contains the base Linux interrupt number.
-+		 */
-+		if (gc->domain) {
-+			virq = irq_find_mapping(gc->domain, gc->irq_base + i);
-+			if (!virq)
-+				continue;
-+		} else {
-+			virq = gc->irq_base + i;
-+		}
-+
- 		/* Remove handler first. That will mask the irq line */
--		irq_set_handler(i, NULL);
--		irq_set_chip(i, &no_irq_chip);
--		irq_set_chip_data(i, NULL);
--		irq_modify_status(i, clr, set);
-+		irq_set_handler(virq, NULL);
-+		irq_set_chip(virq, &no_irq_chip);
-+		irq_set_chip_data(virq, NULL);
-+		irq_modify_status(virq, clr, set);
- 	}
- }
- EXPORT_SYMBOL_GPL(irq_remove_generic_chip);
+ static struct platform_driver ks_pcie_driver __refdata = {
+ 	.probe  = ks_pcie_probe,
+-	.remove = __exit_p(ks_pcie_remove),
++	.remove = ks_pcie_remove,
+ 	.driver = {
+ 		.name	= "keystone-pcie",
+ 		.of_match_table = of_match_ptr(ks_pcie_of_match),
 
 
