@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A88364A7;
-	Fri, 24 Nov 2023 19:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAA53307D;
+	Fri, 24 Nov 2023 19:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlHBv3PT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97D6C433C8;
-	Fri, 24 Nov 2023 19:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIszf5c2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23747C433C8;
+	Fri, 24 Nov 2023 19:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852945;
-	bh=KEsZi3TBhiqlQMEEN9y6+euRj4yfXxqv4UZsL422l0E=;
+	s=korg; t=1700852947;
+	bh=+wFNQMyVGZYWeuKj7dv83EfROSQi6TysiVFa9uaLeTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BlHBv3PTT6D3/QGqDQZFfuC68oICr3X0iWOncNLMxf7KnjN5BLfBqCxomkU1utL2x
-	 RXnQsoMVZsVo67ty6KEwertOq0N9bgP0yIaT3olUIYA1vo0wEOmtEJJe3f9utmQqm8
-	 nO887+jan+JGzuW6Ysb2H2WouGcZf8VC/zeX2tP0=
+	b=PIszf5c2oGXjFP3Cx/IvW/89csQrmD0RRoRoMqCqLzpGWBn+n2lRsyIHGp2DVoIWq
+	 MvLf3ZfE+2zaMke4My4JDDd4gPjBa4cU85l4CceMOdNDLekGo75hv4K30MPNyuxYne
+	 GCPqgb67ba5MMCnTpR27yPgAbg5x9yVqqsb2qy1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 186/193] drm/amdgpu: fix error handling in amdgpu_bo_list_get()
-Date: Fri, 24 Nov 2023 17:55:13 +0000
-Message-ID: <20231124171954.620050541@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.10 169/193] f2fs: avoid format-overflow warning
+Date: Fri, 24 Nov 2023 17:54:56 +0000
+Message-ID: <20231124171953.938775275@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,32 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Su Hui <suhui@nfschina.com>
 
-commit 12f76050d8d4d10dab96333656b821bd4620d103 upstream.
+commit e0d4e8acb3789c5a8651061fbab62ca24a45c063 upstream.
 
-We should not leak the pointer where we couldn't grab the reference
-on to the caller because it can be that the error handling still
-tries to put the reference then.
+With gcc and W=1 option, there's a warning like this:
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+fs/f2fs/compress.c: In function ‘f2fs_init_page_array_cache’:
+fs/f2fs/compress.c:1984:47: error: ‘%u’ directive writing between
+1 and 7 bytes into a region of size between 5 and 8
+[-Werror=format-overflow=]
+ 1984 |  sprintf(slab_name, "f2fs_page_array_entry-%u:%u", MAJOR(dev),
+		MINOR(dev));
+      |                                               ^~
+
+String "f2fs_page_array_entry-%u:%u" can up to 35. The first "%u" can up
+to 4 and the second "%u" can up to 7, so total size is "24 + 4 + 7 = 35".
+slab_name's size should be 35 rather than 32.
+
 Cc: stable@vger.kernel.org
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/compress.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-@@ -178,6 +178,7 @@ int amdgpu_bo_list_get(struct amdgpu_fpr
- 	}
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1574,7 +1574,7 @@ unlock:
+ int f2fs_init_page_array_cache(struct f2fs_sb_info *sbi)
+ {
+ 	dev_t dev = sbi->sb->s_bdev->bd_dev;
+-	char slab_name[32];
++	char slab_name[35];
  
- 	rcu_read_unlock();
-+	*result = NULL;
- 	return -ENOENT;
- }
+ 	sprintf(slab_name, "f2fs_page_array_entry-%u:%u", MAJOR(dev), MINOR(dev));
  
 
 
