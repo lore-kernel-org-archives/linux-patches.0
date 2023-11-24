@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A4F2FC21;
-	Fri, 24 Nov 2023 18:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4422FC4E;
+	Fri, 24 Nov 2023 18:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0V291bH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7099EC433C8;
-	Fri, 24 Nov 2023 18:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UO1Tbjax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD452C433C8;
+	Fri, 24 Nov 2023 18:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852273;
-	bh=8mZjzWuAO7vAcqpPGIEUyr8/PD3z1sC8MK1ipsP6bnk=;
+	s=korg; t=1700852276;
+	bh=/aa2b/7Zu6FZUHcsSzYUbMGa0b+eyFWYIaiek+VbqFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0V291bH420qRMRoEK2AW9GwK7N+TxbLfRcM9CCtVsWYuvzTNgH8R4zVyRB7JRkloY
-	 Sk8gDlxw6t6DEJ5rDZLIpNRUmSuTdu2pq94UBWRzEJ0ywo+HFHQwCW1RwqIyu8usJE
-	 7c3G5b+Qk+GxMcuZAB8OctE+bJes/tqM9r817Jug=
+	b=UO1Tbjaxl91hcjBtBLif/lNSpUQ8nnLfhnsWIBCS+EbN71tpku3RpmiTULPucOZWo
+	 f0sx6GCook1BFqruvMeiAbIlQCHZ1Nnf4Kp++xvXANoBwdt4bgEujlQSAnGJ6ajoc0
+	 r+gJNy8BAmVOjj2qBhhHq773H8cCEVaDA8lC93Uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Lukyanov <dukzcry@ya.ru>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 289/372] Bluetooth: btusb: Add Realtek RTL8852BE support ID 0x0cb8:0xc559
-Date: Fri, 24 Nov 2023 17:51:16 +0000
-Message-ID: <20231124172020.043289074@linuxfoundation.org>
+Subject: [PATCH 6.1 290/372] bluetooth: Add device 0bda:887b to device tables
+Date: Fri, 24 Nov 2023 17:51:17 +0000
+Message-ID: <20231124172020.078486835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,18 +42,17 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Lukyanov <dukzcry@ya.ru>
+From: Larry Finger <Larry.Finger@lwfinger.net>
 
-[ Upstream commit 393b4916b7b5b94faf5c6a7c68df1c62d17e4f38 ]
+[ Upstream commit 730a1d1a93a3e30c3723f87af97a8517334b2203 ]
 
-Add the support ID(0x0cb8, 0xc559) to usb_device_id table for
-Realtek RTL8852BE.
+This device is part of a Realtek RTW8852BE chip.
 
-The device info from /sys/kernel/debug/usb/devices as below.
+The device table entry is as follows:
 
-T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+T:  Bus=03 Lev=01 Prnt=01 Port=12 Cnt=02 Dev#=  3 Spd=12   MxCh= 0
 D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0cb8 ProdID=c559 Rev= 0.00
+P:  Vendor=0bda ProdID=887b Rev= 0.00
 S:  Manufacturer=Realtek
 S:  Product=Bluetooth Radio
 S:  SerialNumber=00e04c000001
@@ -81,29 +80,27 @@ I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
 E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-Signed-off-by: Artem Lukyanov <dukzcry@ya.ru>
+Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: da06ff1f585e ("Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 4a6369d1dd171..0cc58447e4f0b 100644
+index 0cc58447e4f0b..60a7e4ad2566b 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -532,6 +532,10 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x13d3, 0x3592), .driver_info = BTUSB_REALTEK |
+@@ -535,6 +535,8 @@ static const struct usb_device_id blacklist_table[] = {
+ 	/* Realtek 8852BE Bluetooth devices */
+ 	{ USB_DEVICE(0x0cb8, 0xc559), .driver_info = BTUSB_REALTEK |
  						     BTUSB_WIDEBAND_SPEECH },
- 
-+	/* Realtek 8852BE Bluetooth devices */
-+	{ USB_DEVICE(0x0cb8, 0xc559), .driver_info = BTUSB_REALTEK |
++	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
 +						     BTUSB_WIDEBAND_SPEECH },
-+
+ 
  	/* Realtek Bluetooth devices */
  	{ USB_VENDOR_AND_INTERFACE_INFO(0x0bda, 0xe0, 0x01, 0x01),
- 	  .driver_info = BTUSB_REALTEK },
 -- 
 2.42.0
 
