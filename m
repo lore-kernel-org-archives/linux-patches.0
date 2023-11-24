@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACEB39FEA;
-	Fri, 24 Nov 2023 18:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7A039FF3;
+	Fri, 24 Nov 2023 18:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynCYHLlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98262C433C8;
-	Fri, 24 Nov 2023 18:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFQuf1eS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FBAC433C7;
+	Fri, 24 Nov 2023 18:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849513;
-	bh=MLVciqWoIOV3bEbYYRWGUuUpc84jKMrWb4muwQiWZ7o=;
+	s=korg; t=1700849516;
+	bh=iyrZDeXwGJzPhmSnzLrhaUafIf43kEnvQ/wr3sR4PBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ynCYHLlw6sn+stq7i4yHX8pZYKvQuL+n0bny+Q3XsqOnhWvFrRlSCs+4um014NUd+
-	 SPVnBc/ailf+2xwaFEubJ3c3G2ByFRlgmbXckdrlxYlsUJGpvijH7+3rAWZFDILEN4
-	 7mS6m5Evo0Ug5lBUTitAAPnBHfLdjBj4MJZKnWD4=
+	b=wFQuf1eSKmSyagY13K/tKaHfhwEdY6bR8uDECsYWJf3FBvBlIUyozh/8IXGcTctjq
+	 s/wPcoZpiGaFSqlAMEv2fttx9ISCIFPoZqjeJOmFwIfH9LAaBCev6Sg/Q1+QWsSIwT
+	 3V9XHm1Zfur5buhhIUoyxQoQHTwp01KcMM0Es7EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jian Shen <shenjian15@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/530] pds_core: use correct index to mask irq
-Date: Fri, 24 Nov 2023 17:46:17 +0000
-Message-ID: <20231124172034.483610857@linuxfoundation.org>
+Subject: [PATCH 6.6 188/530] net: hns3: fix add VLAN fail issue
+Date: Fri, 24 Nov 2023 17:45:54 +0000
+Message-ID: <20231124172033.791420021@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -37,71 +37,194 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 09d4c14c6c5e6e781a3879fed7f8e116a18b8c65 ]
+[ Upstream commit 472a2ff63efb30234cbf6b2cdaf8117f21b4f8bc ]
 
-Use the qcq's interrupt index, not the irq number, to mask
-the interrupt.  Since the irq number can be out of range from
-the number of possible interrupts, we can end up accessing
-and potentially scribbling on out-of-range and/or unmapped
-memory, making the kernel angry.
+The hclge_sync_vlan_filter is called in periodic task,
+trying to remove VLAN from vlan_del_fail_bmap. It can
+be concurrence with VLAN adding operation from user.
+So once user failed to delete a VLAN id, and add it
+again soon, it may be removed by the periodic task,
+which may cause the software configuration being
+inconsistent with hardware. So add mutex handling
+to avoid this.
 
-    [ 3116.039364] BUG: unable to handle page fault for address: ffffbeea1c3edf84
-    [ 3116.047059] #PF: supervisor write access in kernel mode
-    [ 3116.052895] #PF: error_code(0x0002) - not-present page
-    [ 3116.058636] PGD 100000067 P4D 100000067 PUD 1001f2067 PMD 10f82e067 PTE 0
-    [ 3116.066221] Oops: 0002 [#1] SMP NOPTI
-    [ 3116.092948] RIP: 0010:iowrite32+0x9/0x76
-    [ 3116.190452] Call Trace:
-    [ 3116.193185]  <IRQ>
-    [ 3116.195430]  ? show_trace_log_lvl+0x1d6/0x2f9
-    [ 3116.200298]  ? show_trace_log_lvl+0x1d6/0x2f9
-    [ 3116.205166]  ? pdsc_adminq_isr+0x43/0x55 [pds_core]
-    [ 3116.210618]  ? __die_body.cold+0x8/0xa
-    [ 3116.214806]  ? page_fault_oops+0x16d/0x1ac
-    [ 3116.219382]  ? exc_page_fault+0xbe/0x13b
-    [ 3116.223764]  ? asm_exc_page_fault+0x22/0x27
-    [ 3116.228440]  ? iowrite32+0x9/0x76
-    [ 3116.232143]  pdsc_adminq_isr+0x43/0x55 [pds_core]
-    [ 3116.237627]  __handle_irq_event_percpu+0x3a/0x184
-    [ 3116.243088]  handle_irq_event+0x57/0xb0
-    [ 3116.247575]  handle_edge_irq+0x87/0x225
-    [ 3116.252062]  __common_interrupt+0x3e/0xbc
-    [ 3116.256740]  common_interrupt+0x7b/0x98
-    [ 3116.261216]  </IRQ>
-    [ 3116.263745]  <TASK>
-    [ 3116.266268]  asm_common_interrupt+0x22/0x27
+     user                        hns3 driver
 
-Reported-by: Joao Martins <joao.m.martins@oracle.com>
-Fixes: 01ba61b55b20 ("pds_core: Add adminq processing and commands")
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Link: https://lore.kernel.org/r/20231113183257.71110-2-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+                                           periodic task
+                                                │
+  add vlan 10 ───── hns3_vlan_rx_add_vid        │
+       │             (suppose success)          │
+       │                                        │
+  del vlan 10 ─────  hns3_vlan_rx_kill_vid      │
+       │           (suppose fail,add to         │
+       │             vlan_del_fail_bmap)        │
+       │                                        │
+  add vlan 10 ───── hns3_vlan_rx_add_vid        │
+                     (suppose success)          │
+                                       foreach vlan_del_fail_bmp
+                                            del vlan 10
+
+Fixes: fe4144d47eef ("net: hns3: sync VLAN filter entries when kill VLAN ID failed")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/adminq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../hisilicon/hns3/hns3pf/hclge_main.c        | 28 +++++++++++++------
+ .../hisilicon/hns3/hns3vf/hclgevf_main.c      | 11 ++++++--
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/adminq.c b/drivers/net/ethernet/amd/pds_core/adminq.c
-index 045fe133f6ee9..5beadabc21361 100644
---- a/drivers/net/ethernet/amd/pds_core/adminq.c
-+++ b/drivers/net/ethernet/amd/pds_core/adminq.c
-@@ -146,7 +146,7 @@ irqreturn_t pdsc_adminq_isr(int irq, void *data)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index c42574e297476..a884e8f7e947b 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -10026,8 +10026,6 @@ static void hclge_rm_vport_vlan_table(struct hclge_vport *vport, u16 vlan_id,
+ 	struct hclge_vport_vlan_cfg *vlan, *tmp;
+ 	struct hclge_dev *hdev = vport->back;
+ 
+-	mutex_lock(&hdev->vport_lock);
+-
+ 	list_for_each_entry_safe(vlan, tmp, &vport->vlan_list, node) {
+ 		if (vlan->vlan_id == vlan_id) {
+ 			if (is_write_tbl && vlan->hd_tbl_status)
+@@ -10042,8 +10040,6 @@ static void hclge_rm_vport_vlan_table(struct hclge_vport *vport, u16 vlan_id,
+ 			break;
+ 		}
+ 	}
+-
+-	mutex_unlock(&hdev->vport_lock);
+ }
+ 
+ void hclge_rm_vport_all_vlan_table(struct hclge_vport *vport, bool is_del_list)
+@@ -10452,11 +10448,16 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
+ 	 * handle mailbox. Just record the vlan id, and remove it after
+ 	 * reset finished.
+ 	 */
++	mutex_lock(&hdev->vport_lock);
+ 	if ((test_bit(HCLGE_STATE_RST_HANDLING, &hdev->state) ||
+ 	     test_bit(HCLGE_STATE_RST_FAIL, &hdev->state)) && is_kill) {
+ 		set_bit(vlan_id, vport->vlan_del_fail_bmap);
++		mutex_unlock(&hdev->vport_lock);
+ 		return -EBUSY;
++	} else if (!is_kill && test_bit(vlan_id, vport->vlan_del_fail_bmap)) {
++		clear_bit(vlan_id, vport->vlan_del_fail_bmap);
+ 	}
++	mutex_unlock(&hdev->vport_lock);
+ 
+ 	/* when port base vlan enabled, we use port base vlan as the vlan
+ 	 * filter entry. In this case, we don't update vlan filter table
+@@ -10471,17 +10472,22 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
  	}
  
- 	queue_work(pdsc->wq, &qcq->work);
--	pds_core_intr_mask(&pdsc->intr_ctrl[irq], PDS_CORE_INTR_MASK_CLEAR);
-+	pds_core_intr_mask(&pdsc->intr_ctrl[qcq->intx], PDS_CORE_INTR_MASK_CLEAR);
+ 	if (!ret) {
+-		if (!is_kill)
++		if (!is_kill) {
+ 			hclge_add_vport_vlan_table(vport, vlan_id,
+ 						   writen_to_tbl);
+-		else if (is_kill && vlan_id != 0)
++		} else if (is_kill && vlan_id != 0) {
++			mutex_lock(&hdev->vport_lock);
+ 			hclge_rm_vport_vlan_table(vport, vlan_id, false);
++			mutex_unlock(&hdev->vport_lock);
++		}
+ 	} else if (is_kill) {
+ 		/* when remove hw vlan filter failed, record the vlan id,
+ 		 * and try to remove it from hw later, to be consistence
+ 		 * with stack
+ 		 */
++		mutex_lock(&hdev->vport_lock);
+ 		set_bit(vlan_id, vport->vlan_del_fail_bmap);
++		mutex_unlock(&hdev->vport_lock);
+ 	}
  
- 	return IRQ_HANDLED;
+ 	hclge_set_vport_vlan_fltr_change(vport);
+@@ -10521,6 +10527,7 @@ static void hclge_sync_vlan_filter(struct hclge_dev *hdev)
+ 	int i, ret, sync_cnt = 0;
+ 	u16 vlan_id;
+ 
++	mutex_lock(&hdev->vport_lock);
+ 	/* start from vport 1 for PF is always alive */
+ 	for (i = 0; i < hdev->num_alloc_vport; i++) {
+ 		struct hclge_vport *vport = &hdev->vport[i];
+@@ -10531,21 +10538,26 @@ static void hclge_sync_vlan_filter(struct hclge_dev *hdev)
+ 			ret = hclge_set_vlan_filter_hw(hdev, htons(ETH_P_8021Q),
+ 						       vport->vport_id, vlan_id,
+ 						       true);
+-			if (ret && ret != -EINVAL)
++			if (ret && ret != -EINVAL) {
++				mutex_unlock(&hdev->vport_lock);
+ 				return;
++			}
+ 
+ 			clear_bit(vlan_id, vport->vlan_del_fail_bmap);
+ 			hclge_rm_vport_vlan_table(vport, vlan_id, false);
+ 			hclge_set_vport_vlan_fltr_change(vport);
+ 
+ 			sync_cnt++;
+-			if (sync_cnt >= HCLGE_MAX_SYNC_COUNT)
++			if (sync_cnt >= HCLGE_MAX_SYNC_COUNT) {
++				mutex_unlock(&hdev->vport_lock);
+ 				return;
++			}
+ 
+ 			vlan_id = find_first_bit(vport->vlan_del_fail_bmap,
+ 						 VLAN_N_VID);
+ 		}
+ 	}
++	mutex_unlock(&hdev->vport_lock);
+ 
+ 	hclge_sync_vlan_fltr_state(hdev);
  }
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index a4d68fb216fb9..1c62e58ff6d89 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -1206,6 +1206,8 @@ static int hclgevf_set_vlan_filter(struct hnae3_handle *handle,
+ 	     test_bit(HCLGEVF_STATE_RST_FAIL, &hdev->state)) && is_kill) {
+ 		set_bit(vlan_id, hdev->vlan_del_fail_bmap);
+ 		return -EBUSY;
++	} else if (!is_kill && test_bit(vlan_id, hdev->vlan_del_fail_bmap)) {
++		clear_bit(vlan_id, hdev->vlan_del_fail_bmap);
+ 	}
+ 
+ 	hclgevf_build_send_msg(&send_msg, HCLGE_MBX_SET_VLAN,
+@@ -1233,20 +1235,25 @@ static void hclgevf_sync_vlan_filter(struct hclgevf_dev *hdev)
+ 	int ret, sync_cnt = 0;
+ 	u16 vlan_id;
+ 
++	if (bitmap_empty(hdev->vlan_del_fail_bmap, VLAN_N_VID))
++		return;
++
++	rtnl_lock();
+ 	vlan_id = find_first_bit(hdev->vlan_del_fail_bmap, VLAN_N_VID);
+ 	while (vlan_id != VLAN_N_VID) {
+ 		ret = hclgevf_set_vlan_filter(handle, htons(ETH_P_8021Q),
+ 					      vlan_id, true);
+ 		if (ret)
+-			return;
++			break;
+ 
+ 		clear_bit(vlan_id, hdev->vlan_del_fail_bmap);
+ 		sync_cnt++;
+ 		if (sync_cnt >= HCLGEVF_MAX_SYNC_COUNT)
+-			return;
++			break;
+ 
+ 		vlan_id = find_first_bit(hdev->vlan_del_fail_bmap, VLAN_N_VID);
+ 	}
++	rtnl_unlock();
+ }
+ 
+ static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
 -- 
 2.42.0
 
