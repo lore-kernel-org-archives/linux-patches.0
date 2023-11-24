@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF8C33CCA;
-	Fri, 24 Nov 2023 18:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3481633075;
+	Fri, 24 Nov 2023 18:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+6sOGDa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C77C433C7;
-	Fri, 24 Nov 2023 18:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdJ3sgYV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C39C433C8;
+	Fri, 24 Nov 2023 18:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852036;
-	bh=mL6lr1p22wELI0aGyxRipCUfuQz8yasVsobsDJgCWKg=;
+	s=korg; t=1700852039;
+	bh=rk8EWz8PSg+QmSUF3F2o1n40soT0i35MJ7bz5udGI3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+6sOGDaG5j2AdYupAyyXwxKPGAeZ2IfzHWYefzgezJjzMt26KdDi897QEocrjCyy
-	 PwJRMycrIMEoYxSp6MXX9HQGD5H5YKYRatdO8zc3jtstvdMoAisZWAh3vAM5T3saXy
-	 1N9zm6j5fPX89Mo1NfF+ZcY4dX25HhypwHFKCfn4=
+	b=YdJ3sgYVUwVJR2wgN69Yh1L7KrWZLbKbHRx9RfXY6iS0tn6bt1xISSa9Qkr9K+UC/
+	 ahxfcU67Yrx+5Y7DlwjTPf7vpbU04YZshYwLKRZ5K2zB1bEN3jIecQIzxNdrt/yZEK
+	 Yq8ULm97QTsa5Kn4rN2p41uYs0pBuJsD25Q/wmo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth patil <chandrakanth.patil@broadcom.com>,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 170/372] scsi: megaraid_sas: Increase register read retry rount from 3 to 30 for selected registers
-Date: Fri, 24 Nov 2023 17:49:17 +0000
-Message-ID: <20231124172016.155941498@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 161/372] i915/perf: Fix NULL deref bugs with drm_dbg() calls
+Date: Fri, 24 Nov 2023 17:49:08 +0000
+Message-ID: <20231124172015.847931403@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,47 +42,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth patil <chandrakanth.patil@broadcom.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-commit 8e3ed9e786511ad800c33605ed904b9de49323cf upstream.
+commit 471aa951bf1206d3c10d0daa67005b8e4db4ff83 upstream.
 
-In BMC environments with concurrent access to multiple registers, certain
-registers occasionally yield a value of 0 even after 3 retries due to
-hardware errata. As a fix, we have extended the retry count from 3 to 30.
+When i915 perf interface is not available dereferencing it will lead to
+NULL dereferences.
 
-The same errata applies to the mpt3sas driver, and a similar patch has
-been accepted. Please find more details in the mpt3sas patch reference
-link.
+As returning -ENOTSUPP is pretty clear return when perf interface is not
+available.
 
-Link: https://lore.kernel.org/r/20230829090020.5417-2-ranjan.kumar@broadcom.com
-Fixes: 272652fcbf1a ("scsi: megaraid_sas: add retry logic in megasas_readl")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chandrakanth patil <chandrakanth.patil@broadcom.com>
-Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
-Link: https://lore.kernel.org/r/20231003110021.168862-2-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 2fec539112e8 ("i915/perf: Replace DRM_DEBUG with driver specific drm_dbg call")
+Suggested-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Cc: <stable@vger.kernel.org> # v6.0+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231027172822.2753059-1-harshit.m.mogalapalli@oracle.com
+[tursulin: added stable tag]
+(cherry picked from commit 36f27350ff745bd228ab04d7845dfbffc177a889)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_base.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/i915_perf.c |   15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -263,13 +263,13 @@ u32 megasas_readl(struct megasas_instanc
- 	 * Fusion registers could intermittently return all zeroes.
- 	 * This behavior is transient in nature and subsequent reads will
- 	 * return valid value. As a workaround in driver, retry readl for
--	 * upto three times until a non-zero value is read.
-+	 * up to thirty times until a non-zero value is read.
- 	 */
- 	if (instance->adapter_type == AERO_SERIES) {
- 		do {
- 			ret_val = readl(addr);
- 			i++;
--		} while (ret_val == 0 && i < 3);
-+		} while (ret_val == 0 && i < 30);
- 		return ret_val;
- 	} else {
- 		return readl(addr);
+--- a/drivers/gpu/drm/i915/i915_perf.c
++++ b/drivers/gpu/drm/i915/i915_perf.c
+@@ -3809,11 +3809,8 @@ int i915_perf_open_ioctl(struct drm_devi
+ 	u32 known_open_flags;
+ 	int ret;
+ 
+-	if (!perf->i915) {
+-		drm_dbg(&perf->i915->drm,
+-			"i915 perf interface not available for this system\n");
++	if (!perf->i915)
+ 		return -ENOTSUPP;
+-	}
+ 
+ 	known_open_flags = I915_PERF_FLAG_FD_CLOEXEC |
+ 			   I915_PERF_FLAG_FD_NONBLOCK |
+@@ -4140,11 +4137,8 @@ int i915_perf_add_config_ioctl(struct dr
+ 	struct i915_oa_reg *regs;
+ 	int err, id;
+ 
+-	if (!perf->i915) {
+-		drm_dbg(&perf->i915->drm,
+-			"i915 perf interface not available for this system\n");
++	if (!perf->i915)
+ 		return -ENOTSUPP;
+-	}
+ 
+ 	if (!perf->metrics_kobj) {
+ 		drm_dbg(&perf->i915->drm,
+@@ -4306,11 +4300,8 @@ int i915_perf_remove_config_ioctl(struct
+ 	struct i915_oa_config *oa_config;
+ 	int ret;
+ 
+-	if (!perf->i915) {
+-		drm_dbg(&perf->i915->drm,
+-			"i915 perf interface not available for this system\n");
++	if (!perf->i915)
+ 		return -ENOTSUPP;
+-	}
+ 
+ 	if (i915_perf_stream_paranoid && !perfmon_capable()) {
+ 		drm_dbg(&perf->i915->drm,
 
 
