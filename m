@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD5F1A5A4;
-	Fri, 24 Nov 2023 19:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E346033CCA;
+	Fri, 24 Nov 2023 19:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zf7qBNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6308C433C8;
-	Fri, 24 Nov 2023 19:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZMy9Tz1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71706C433C8;
+	Fri, 24 Nov 2023 19:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853728;
-	bh=AIcChaYyCYFY9KMnERvnhChAGT5fVPiUiSHF51himOk=;
+	s=korg; t=1700853730;
+	bh=V3Z6FD9/rTvBtK47Z3bpq4e5ruJ+BNbMjZoK5lZyacA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0zf7qBNBioaSM918+7ylhPG2HhV5kMaa0rUh9hmp1f50Ed0gPFRCdusVyXGPIe6nl
-	 3Y2k3Iq3XZ7ySsnuIDoT/E0ueNP4bFaLpNS5p+lZd8bDZtcjBcbV1SirCCMQcxFCOK
-	 FLysTNrFSS/gFjLJGOI4keXRQ/5XPjVpbePc9OBo=
+	b=LZMy9Tz1cFjE7zucoc0aWmOED8ifwtfZ2yv7z+2fx0ckJ5reltyJpXv7PX207u8jJ
+	 9SYDrph2Ek8pY6NIhh4jWf7ANhSSb25DhHTx/KF6tU1KyH2fyHl7K29ucp++UCvwc9
+	 LBcslpjDCrpdnJ1bUGrmWey07sbGjSQkJB6s6pkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Saravana Kannan <saravanak@google.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	James Clark <james.clark@arm.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>
-Subject: [PATCH 5.15 297/297] driver core: Release all resources during unbind before updating device links
-Date: Fri, 24 Nov 2023 17:55:39 +0000
-Message-ID: <20231124172010.485979506@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 290/297] drm/amdgpu: dont use ATRM for external devices
+Date: Fri, 24 Nov 2023 17:55:32 +0000
+Message-ID: <20231124172010.262664906@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,62 +35,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 2e84dc37920012b458e9458b19fc4ed33f81bc74 upstream.
+commit 432e664e7c98c243fab4c3c95bd463bea3aeed28 upstream.
 
-This commit fixes a bug in commit 9ed9895370ae ("driver core: Functional
-dependencies tracking support") where the device link status was
-incorrectly updated in the driver unbind path before all the device's
-resources were released.
+The ATRM ACPI method is for fetching the dGPU vbios rom
+image on laptops and all-in-one systems.  It should not be
+used for external add in cards.  If the dGPU is thunderbolt
+connected, don't try ATRM.
 
-Fixes: 9ed9895370ae ("driver core: Functional dependencies tracking support")
-Cc: stable <stable@kernel.org>
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Closes: https://lore.kernel.org/all/20231014161721.f4iqyroddkcyoefo@pengutronix.de/
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Cc: Yang Yingliang <yangyingliang@huawei.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Matti Vaittinen <mazziesaccount@gmail.com>
-Cc: James Clark <james.clark@arm.com>
-Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
-Tested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231018013851.3303928-1-saravanak@google.com
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+v2: pci_is_thunderbolt_attached only works for Intel.  Use
+    pdev->external_facing instead.
+v3: dev_is_removable() seems to be what we want
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2925
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/dd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1228,8 +1228,6 @@ static void __device_release_driver(stru
- 		else if (drv->remove)
- 			drv->remove(dev);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -29,6 +29,7 @@
+ #include "amdgpu.h"
+ #include "atom.h"
  
--		device_links_driver_cleanup(dev);
--
- 		devres_release_all(dev);
- 		arch_teardown_dma_ops(dev);
- 		kfree(dev->dma_range_map);
-@@ -1241,6 +1239,8 @@ static void __device_release_driver(stru
- 		pm_runtime_reinit(dev);
- 		dev_pm_set_driver_flags(dev, 0);
++#include <linux/device.h>
+ #include <linux/pci.h>
+ #include <linux/slab.h>
+ #include <linux/acpi.h>
+@@ -289,6 +290,10 @@ static bool amdgpu_atrm_get_bios(struct
+ 	if (adev->flags & AMD_IS_APU)
+ 		return false;
  
-+		device_links_driver_cleanup(dev);
++	/* ATRM is for on-platform devices only */
++	if (dev_is_removable(&adev->pdev->dev))
++		return false;
 +
- 		klist_remove(&dev->p->knode_driver);
- 		device_pm_check_callbacks(dev);
- 		if (dev->bus)
+ 	while ((pdev = pci_get_class(PCI_CLASS_DISPLAY_VGA << 8, pdev)) != NULL) {
+ 		dhandle = ACPI_HANDLE(&pdev->dev);
+ 		if (!dhandle)
 
 
