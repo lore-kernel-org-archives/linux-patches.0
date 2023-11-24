@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66B73418B;
-	Fri, 24 Nov 2023 18:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B898339BE;
+	Fri, 24 Nov 2023 18:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQU/f/HM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3364FC433C9;
-	Fri, 24 Nov 2023 18:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enj9P3hx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA00DC433C7;
+	Fri, 24 Nov 2023 18:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852342;
-	bh=BgeFNODpiTXRNdeNoYkQ0EiwJ/PI/D+Ds2spgroTX0g=;
+	s=korg; t=1700852345;
+	bh=/LFpPrrhulETCkWK1yMWU2/nA5G7m1K0jk0nmql+cpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQU/f/HMutPw8NOUaChMpDtziSsyUlhVU249uv0NJJu+6Vj8fe5Yi/CskLiFusFbk
-	 CbimY41mI2Ycx0JIjtjGlwzVWIWUloEyT7YEkKJWgNaEfvIhd0dgmEoqRnEKxQYBNm
-	 xKahdJ13mCNO6IZ9yrUJxZRz21H7aiGyKnU8pWIc=
+	b=enj9P3hx7LXlCEkmBJQOZ00HK8qr68OTeAxbS6Dow65nmZFGK39i1LThaAJNnUaLr
+	 z3GyKg4lWCZD1H0RNdpgStu4mqFDwRcGspnMOj3+7JkHeZ8V911g+SxgbdPbiUz2+4
+	 VKlFRJvNifyb8xNiVDncz9zZiDOn2l2Mmx4Eew38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.1 317/372] f2fs: avoid format-overflow warning
-Date: Fri, 24 Nov 2023 17:51:44 +0000
-Message-ID: <20231124172020.954111718@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.1 318/372] media: lirc: drop trailing space from scancode transmit
+Date: Fri, 24 Nov 2023 17:51:45 +0000
+Message-ID: <20231124172020.991013546@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -36,50 +35,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Sean Young <sean@mess.org>
 
-commit e0d4e8acb3789c5a8651061fbab62ca24a45c063 upstream.
+commit c8a489f820179fb12251e262b50303c29de991ac upstream.
 
-With gcc and W=1 option, there's a warning like this:
+When transmitting, infrared drivers expect an odd number of samples; iow
+without a trailing space. No problems have been observed so far, so
+this is just belt and braces.
 
-fs/f2fs/compress.c: In function ‘f2fs_init_page_array_cache’:
-fs/f2fs/compress.c:1984:47: error: ‘%u’ directive writing between
-1 and 7 bytes into a region of size between 5 and 8
-[-Werror=format-overflow=]
- 1984 |  sprintf(slab_name, "f2fs_page_array_entry-%u:%u", MAJOR(dev),
-		MINOR(dev));
-      |                                               ^~
-
-String "f2fs_page_array_entry-%u:%u" can up to 35. The first "%u" can up
-to 4 and the second "%u" can up to 7, so total size is "24 + 4 + 7 = 35".
-slab_name's size should be 35 rather than 32.
-
+Fixes: 9b6192589be7 ("media: lirc: implement scancode sending")
 Cc: stable@vger.kernel.org
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/compress.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/lirc_dev.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1983,7 +1983,7 @@ void f2fs_destroy_compress_inode(struct
- int f2fs_init_page_array_cache(struct f2fs_sb_info *sbi)
- {
- 	dev_t dev = sbi->sb->s_bdev->bd_dev;
--	char slab_name[32];
-+	char slab_name[35];
+--- a/drivers/media/rc/lirc_dev.c
++++ b/drivers/media/rc/lirc_dev.c
+@@ -276,7 +276,11 @@ static ssize_t lirc_transmit(struct file
+ 		if (ret < 0)
+ 			goto out_kfree_raw;
  
- 	if (!f2fs_sb_has_compression(sbi))
- 		return 0;
+-		count = ret;
++		/* drop trailing space */
++		if (!(ret % 2))
++			count = ret - 1;
++		else
++			count = ret;
+ 
+ 		txbuf = kmalloc_array(count, sizeof(unsigned int), GFP_KERNEL);
+ 		if (!txbuf) {
 
 
