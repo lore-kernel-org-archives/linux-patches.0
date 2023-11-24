@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB2C33CFD;
-	Fri, 24 Nov 2023 19:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8973433E9;
+	Fri, 24 Nov 2023 19:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uthfC/KN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E553C433CA;
-	Fri, 24 Nov 2023 19:08:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sjx8EbhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6A8C433CA;
+	Fri, 24 Nov 2023 19:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852922;
-	bh=7K12tzJqgQTh2+dack+MIjS3Lpi5pjcHdAREX8SizE4=;
+	s=korg; t=1700852925;
+	bh=hha4WMPzne5IlHVXQwfAEW9aeksl/qwIFNuIRbqPbM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uthfC/KNX8n/LRARLfCqqwbR6LUa0R6mYqtfD1QGUGhXfgv8CQeeuIr8U5EtDiBP+
-	 HLfDJaLeER5CeOTa0rqZ3RQPHuc3v4QaCp8YsRhRGx9fxmtWebYiwRVbbl/xQkbxMd
-	 JSPpYEO6pqBCQ5UHajPzkqZmhIZ1eMZ6OszG44UU=
+	b=Sjx8EbhHcp+fy7s0IYxCM/LLsfhcicMBPcKqgJ6WSqOwqFv+U65Fy/es/s4XRnDSF
+	 ouZeFo2UD21nslzzvkknqXfbmBI8YiEU6qc2vs2fNmCLJsRe/2nzjfXImlHBRwJvv4
+	 ZPC0ugWxmeIKgnZvOfF9jZL3tRUgGgG8Vw7vEI8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.10 177/193] media: qcom: camss: Fix vfe_get() error jump
-Date: Fri, 24 Nov 2023 17:55:04 +0000
-Message-ID: <20231124171954.251111929@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 178/193] Revert "net: r8169: Disable multicast filter for RTL8168H and RTL8107E"
+Date: Fri, 24 Nov 2023 17:55:05 +0000
+Message-ID: <20231124171954.283055779@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,99 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 26bda3da00c3edef727a6acb00ed2eb4b22f8723 upstream.
+commit 6a26310273c323380da21eb23fcfd50e31140913 upstream.
 
-Right now it is possible to do a vfe_get() with the internal reference
-count at 1. If vfe_check_clock_rates() returns non-zero then we will
-leave the reference count as-is and
+This reverts commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df.
 
-run:
-- pm_runtime_put_sync()
-- vfe->ops->pm_domain_off()
+I couldn't reproduce the reported issue. What I did, based on a pcap
+packet log provided by the reporter:
+- Used same chip version (RTL8168h)
+- Set MAC address to the one used on the reporters system
+- Replayed the EAPOL unicast packet that, according to the reporter,
+  was filtered out by the mc filter.
+The packet was properly received.
 
-skip:
-- camss_disable_clocks()
+Therefore the root cause of the reported issue seems to be somewhere
+else. Disabling mc filtering completely for the most common chip
+version is a quite big hammer. Therefore revert the change and wait
+for further analysis results from the reporter.
 
-Subsequent vfe_put() calls will when the ref-count is non-zero
-unconditionally run:
-
-- pm_runtime_put_sync()
-- vfe->ops->pm_domain_off()
-- camss_disable_clocks()
-
-vfe_get() should not attempt to roll-back on error when the ref-count is
-non-zero as the upper layers will still do their own vfe_put() operations.
-
-vfe_put() will drop the reference count and do the necessary power
-domain release, the cleanup jumps in vfe_get() should only be run when
-the ref-count is zero.
-
-[   50.095796] CPU: 7 PID: 3075 Comm: cam Not tainted 6.3.2+ #80
-[   50.095798] Hardware name: LENOVO 21BXCTO1WW/21BXCTO1WW, BIOS N3HET82W (1.54 ) 05/26/2023
-[   50.095799] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   50.095802] pc : refcount_warn_saturate+0xf4/0x148
-[   50.095804] lr : refcount_warn_saturate+0xf4/0x148
-[   50.095805] sp : ffff80000c7cb8b0
-[   50.095806] x29: ffff80000c7cb8b0 x28: ffff16ecc0e3fc10 x27: 0000000000000000
-[   50.095810] x26: 0000000000000000 x25: 0000000000020802 x24: 0000000000000000
-[   50.095813] x23: ffff16ecc7360640 x22: 00000000ffffffff x21: 0000000000000005
-[   50.095815] x20: ffff16ed175f4400 x19: ffffb4d9852942a8 x18: ffffffffffffffff
-[   50.095818] x17: ffffb4d9852d4a48 x16: ffffb4d983da5db8 x15: ffff80000c7cb320
-[   50.095821] x14: 0000000000000001 x13: 2e656572662d7265 x12: 7466612d65737520
-[   50.095823] x11: 00000000ffffefff x10: ffffb4d9850cebf0 x9 : ffffb4d9835cf954
-[   50.095826] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000057fa8
-[   50.095829] x5 : ffff16f813fe3d08 x4 : 0000000000000000 x3 : ffff621e8f4d2000
-[   50.095832] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff16ed32119040
-[   50.095835] Call trace:
-[   50.095836]  refcount_warn_saturate+0xf4/0x148
-[   50.095838]  device_link_put_kref+0x84/0xc8
-[   50.095843]  device_link_del+0x38/0x58
-[   50.095846]  vfe_pm_domain_off+0x3c/0x50 [qcom_camss]
-[   50.095860]  vfe_put+0x114/0x140 [qcom_camss]
-[   50.095869]  csid_set_power+0x2c8/0x408 [qcom_camss]
-[   50.095878]  pipeline_pm_power_one+0x164/0x170 [videodev]
-[   50.095896]  pipeline_pm_power+0xc4/0x110 [videodev]
-[   50.095909]  v4l2_pipeline_pm_use+0x5c/0xa0 [videodev]
-[   50.095923]  v4l2_pipeline_pm_get+0x1c/0x30 [videodev]
-[   50.095937]  video_open+0x7c/0x100 [qcom_camss]
-[   50.095945]  v4l2_open+0x84/0x130 [videodev]
-[   50.095960]  chrdev_open+0xc8/0x250
-[   50.095964]  do_dentry_open+0x1bc/0x498
-[   50.095966]  vfs_open+0x34/0x40
-[   50.095968]  path_openat+0xb44/0xf20
-[   50.095971]  do_filp_open+0xa4/0x160
-[   50.095974]  do_sys_openat2+0xc8/0x188
-[   50.095975]  __arm64_sys_openat+0x6c/0xb8
-[   50.095977]  invoke_syscall+0x50/0x128
-[   50.095982]  el0_svc_common.constprop.0+0x4c/0x100
-[   50.095985]  do_el0_svc+0x40/0xa8
-[   50.095988]  el0_svc+0x2c/0x88
-[   50.095991]  el0t_64_sync_handler+0xf4/0x120
-[   50.095994]  el0t_64_sync+0x190/0x198
-[   50.095996] ---[ end trace 0000000000000000 ]---
-
-Fixes: 779096916dae ("media: camss: vfe: Fix runtime PM imbalance on error")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1282,7 +1282,7 @@ static int vfe_get(struct vfe_device *vf
- 	} else {
- 		ret = vfe_check_clock_rates(vfe);
- 		if (ret < 0)
--			goto error_pm_runtime_get;
-+			goto error_pm_domain;
- 	}
- 	vfe->power_count++;
- 
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -2581,9 +2581,7 @@ static void rtl_set_rx_mode(struct net_d
+ 		rx_mode &= ~AcceptMulticast;
+ 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
+ 		   dev->flags & IFF_ALLMULTI ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
++		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
+ 		/* accept all multicasts */
+ 	} else if (netdev_mc_empty(dev)) {
+ 		rx_mode &= ~AcceptMulticast;
 
 
