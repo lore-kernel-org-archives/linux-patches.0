@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079ED2C85B;
-	Fri, 24 Nov 2023 18:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31106364C1;
+	Fri, 24 Nov 2023 18:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arJ/xjAf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F591C433C8;
-	Fri, 24 Nov 2023 18:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8X6JsKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDFEC433C8;
+	Fri, 24 Nov 2023 18:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851204;
-	bh=prXatOzkIlmUici9V3Pq48SyPSLoXzyjaZXXtjH4FsQ=;
+	s=korg; t=1700851207;
+	bh=LaQkTibzop11ZYkMAwwl497ox55ulL/TQ5HSFzTXGy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arJ/xjAfICEyEC1IFcEZapzPJXc7mQkI/TwBYWrI2pNUvcmTdk5N367tM49rXdKiu
-	 wL6vyCxswI10mNVU6sfJBteSQ6Ys7LCWKQkwPyTsQqleqYxJdVSzHQqvONWg9tmFLi
-	 0aswstI3xh0hfmFiv8BrXrFSG5V1xKS/N0ZpLcg0=
+	b=x8X6JsKPU4qZ/yaiRplHnoY2xqcyNOiSmYyBUQ4djeibKf8RxjkZJ51kFGMIX7aLR
+	 qzQ4Og0mQe9r93nZZFle1vcecZX2lk8o0DH0NttS0gjSNm2SMofYaPxaIT3gVl/25M
+	 1X8xEhdQbVQg6M94jFN3B+07rBU+bmhgbRBBHiYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.5 330/491] ASoC: codecs: wsa883x: make use of new mute_unmute_on_trigger flag
-Date: Fri, 24 Nov 2023 17:49:26 +0000
-Message-ID: <20231124172034.482479313@linuxfoundation.org>
+	Reinette Chatre <reinette.chatre@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.5 331/491] selftests/resctrl: Fix uninitialized .sa_flags
+Date: Fri, 24 Nov 2023 17:49:27 +0000
+Message-ID: <20231124172034.511853832@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -36,67 +36,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 805ce81826c896dd3c351a32814b28557f9edf54 upstream.
+commit beb7f471847663559bd0fe60af1d70e05a1d7c6c upstream.
 
-In the current setup the PA is left unmuted even when the
-Soundwire ports are not started streaming. This can lead to click
-and pop sounds during start.
-There is a same issue in the reverse order where in the PA is
-left unmute even after the data stream is stopped, the time
-between data stream stopping and port closing is long enough
-to accumulate DC on the line resulting in Click/Pop noise
-during end of stream.
+signal_handler_unregister() calls sigaction() with uninitializing
+sa_flags in the struct sigaction.
 
-making use of new mute_unmute_on_trigger flag is helping a
-lot with this Click/Pop issues reported on this Codec
+Make sure sa_flags is always initialized in signal_handler_unregister()
+by initializing the struct sigaction when declaring it. Also add the
+initialization to signal_handler_register() even if there are no know
+bugs in there because correctness is then obvious from the code itself.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231027105747.32450-3-srinivas.kandagatla@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Fixes: 73c55fa5ab55 ("selftests/resctrl: Commonize the signal handler register/unregister for all tests")
+Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wsa883x.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ tools/testing/selftests/resctrl/resctrl_val.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/codecs/wsa883x.c
-+++ b/sound/soc/codecs/wsa883x.c
-@@ -1203,9 +1203,6 @@ static int wsa883x_spkr_event(struct snd
- 			break;
- 		}
+diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
+index 51963a6f2186..01bbe11a8983 100644
+--- a/tools/testing/selftests/resctrl/resctrl_val.c
++++ b/tools/testing/selftests/resctrl/resctrl_val.c
+@@ -482,7 +482,7 @@ void ctrlc_handler(int signum, siginfo_t *info, void *ptr)
+  */
+ int signal_handler_register(void)
+ {
+-	struct sigaction sigact;
++	struct sigaction sigact = {};
+ 	int ret = 0;
  
--		snd_soc_component_write_field(component, WSA883X_DRE_CTL_1,
--					      WSA883X_DRE_GAIN_EN_MASK,
--					      WSA883X_DRE_GAIN_FROM_CSR);
- 		if (wsa883x->port_enable[WSA883X_PORT_COMP])
- 			snd_soc_component_write_field(component, WSA883X_DRE_CTL_0,
- 						      WSA883X_DRE_OFFSET_MASK,
-@@ -1218,9 +1215,6 @@ static int wsa883x_spkr_event(struct snd
- 		snd_soc_component_write_field(component, WSA883X_PDM_WD_CTL,
- 					      WSA883X_PDM_EN_MASK,
- 					      WSA883X_PDM_ENABLE);
--		snd_soc_component_write_field(component, WSA883X_PA_FSM_CTL,
--					      WSA883X_GLOBAL_PA_EN_MASK,
--					      WSA883X_GLOBAL_PA_ENABLE);
+ 	sigact.sa_sigaction = ctrlc_handler;
+@@ -504,7 +504,7 @@ int signal_handler_register(void)
+  */
+ void signal_handler_unregister(void)
+ {
+-	struct sigaction sigact;
++	struct sigaction sigact = {};
  
- 		break;
- 	case SND_SOC_DAPM_PRE_PMD:
-@@ -1346,6 +1340,7 @@ static const struct snd_soc_dai_ops wsa8
- 	.hw_free = wsa883x_hw_free,
- 	.mute_stream = wsa883x_digital_mute,
- 	.set_stream = wsa883x_set_sdw_stream,
-+	.mute_unmute_on_trigger = true,
- };
- 
- static struct snd_soc_dai_driver wsa883x_dais[] = {
+ 	sigact.sa_handler = SIG_DFL;
+ 	sigemptyset(&sigact.sa_mask);
+-- 
+2.43.0
+
 
 
