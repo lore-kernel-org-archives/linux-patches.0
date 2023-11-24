@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B248C39FE3;
-	Fri, 24 Nov 2023 18:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD90381D4;
+	Fri, 24 Nov 2023 18:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPNWwE5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE074C433C8;
-	Fri, 24 Nov 2023 18:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1PdNJvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3054C433C7;
+	Fri, 24 Nov 2023 18:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850469;
-	bh=GNBBjODQIb2KqloBzYRl4FFdR5lyJyOuy0MFkIQECk8=;
+	s=korg; t=1700850472;
+	bh=r6g3v32y3Xtssw79v/zzwDSGhfEhw4tmc+tgX2aSYk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LPNWwE5E+4ZiGEWlF68f4ZnldWZj7iovyVK/+NUXSGrFPyvQBTnsy26/hqN18tgeX
-	 xMpr+lmMf7MP3wDE8WjVwJlQa6wPe5LwC+2KnJeLApwMJhDj10naeZTUwoCj0mPTIz
-	 YScq8ru9ihRV28YSxQN37p2MRqGbOna5ZTjdj3Uc=
+	b=a1PdNJvDyFeeY8jJB7DN3k/vmj42BIltfdakacDRajZ6DRbGUY07anwKcght2AyhT
+	 h5AKcBMRMt8vTKRPIgQKE6z3BKLsf11pcCQcNUOkpt/QwCmmAQ/Mty0XcstiamVRMG
+	 YjSxA6BHxnrJE5KLoZ0zcpLUKQ/s3WJoSmRYNr5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <khsieh@codeaurora.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Stephen Boyd <swboyd@chromium.org>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Jani Nikula <jani.nikula@intel.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Felix Held <felix.held@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 062/491] drm/msm/dp: skip validity check for DP CTS EDID checksum
-Date: Fri, 24 Nov 2023 17:44:58 +0000
-Message-ID: <20231124172026.517762782@linuxfoundation.org>
+Subject: [PATCH 6.5 063/491] drm/amd: Fix UBSAN array-index-out-of-bounds for SMU7
+Date: Fri, 24 Nov 2023 17:44:59 +0000
+Message-ID: <20231124172026.547202771@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -51,77 +43,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit a251c9d8e30833b260101edb9383b176ee2b7cb1 ]
+[ Upstream commit 760efbca74a405dc439a013a5efaa9fadc95a8c3 ]
 
-The DP CTS test for EDID last block checksum expects the checksum for
-the last block, invalid or not. Skip the validity check.
+For pptable structs that use flexible array sizes, use flexible arrays.
 
-For the most part (*), the EDIDs returned by drm_get_edid() will be
-valid anyway, and there's the CTS workaround to get the checksum for
-completely invalid EDIDs. See commit 7948fe12d47a ("drm/msm/dp: return
-correct edid checksum after corrupted edid checksum read").
-
-This lets us remove one user of drm_edid_block_valid() with hopes the
-function can be removed altogether in the future.
-
-(*) drm_get_edid() ignores checksum errors on CTA extensions.
-
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/555361/
-Link: https://lore.kernel.org/r/20230901142034.580802-1-jani.nikula@intel.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Suggested-by: Felix Held <felix.held@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2874
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_panel.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/amd/include/pptable.h                 | 4 ++--
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 42d52510ffd4a..86a8e06c7a60f 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -289,26 +289,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
- 
- static u8 dp_panel_get_edid_checksum(struct edid *edid)
+diff --git a/drivers/gpu/drm/amd/include/pptable.h b/drivers/gpu/drm/amd/include/pptable.h
+index 0b6a057e0a4c4..5aac8d545bdc6 100644
+--- a/drivers/gpu/drm/amd/include/pptable.h
++++ b/drivers/gpu/drm/amd/include/pptable.h
+@@ -78,7 +78,7 @@ typedef struct _ATOM_PPLIB_THERMALCONTROLLER
+ typedef struct _ATOM_PPLIB_STATE
  {
--	struct edid *last_block;
--	u8 *raw_edid;
--	bool is_edid_corrupt = false;
-+	edid += edid->extensions;
+     UCHAR ucNonClockStateIndex;
+-    UCHAR ucClockStateIndices[1]; // variable-sized
++    UCHAR ucClockStateIndices[]; // variable-sized
+ } ATOM_PPLIB_STATE;
  
--	if (!edid) {
--		DRM_ERROR("invalid edid input\n");
--		return 0;
--	}
--
--	raw_edid = (u8 *)edid;
--	raw_edid += (edid->extensions * EDID_LENGTH);
--	last_block = (struct edid *)raw_edid;
--
--	/* block type extension */
--	drm_edid_block_valid(raw_edid, 1, false, &is_edid_corrupt);
--	if (!is_edid_corrupt)
--		return last_block->checksum;
--
--	DRM_ERROR("Invalid block, no checksum\n");
--	return 0;
-+	return edid->checksum;
- }
  
- void dp_panel_handle_sink_request(struct dp_panel *dp_panel)
+@@ -473,7 +473,7 @@ typedef struct _ATOM_PPLIB_STATE_V2
+       /**
+       * Driver will read the first ucNumDPMLevels in this array
+       */
+-      UCHAR clockInfoIndex[1];
++      UCHAR clockInfoIndex[];
+ } ATOM_PPLIB_STATE_V2;
+ 
+ typedef struct _StateArray{
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h
+index b0ac4d121adca..41444e27bfc0c 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pptable_v1_0.h
+@@ -179,7 +179,7 @@ typedef struct _ATOM_Tonga_MCLK_Dependency_Record {
+ typedef struct _ATOM_Tonga_MCLK_Dependency_Table {
+ 	UCHAR ucRevId;
+ 	UCHAR ucNumEntries; 										/* Number of entries. */
+-	ATOM_Tonga_MCLK_Dependency_Record entries[1];				/* Dynamically allocate entries. */
++	ATOM_Tonga_MCLK_Dependency_Record entries[];				/* Dynamically allocate entries. */
+ } ATOM_Tonga_MCLK_Dependency_Table;
+ 
+ typedef struct _ATOM_Tonga_SCLK_Dependency_Record {
+@@ -194,7 +194,7 @@ typedef struct _ATOM_Tonga_SCLK_Dependency_Record {
+ typedef struct _ATOM_Tonga_SCLK_Dependency_Table {
+ 	UCHAR ucRevId;
+ 	UCHAR ucNumEntries; 										/* Number of entries. */
+-	ATOM_Tonga_SCLK_Dependency_Record entries[1];				 /* Dynamically allocate entries. */
++	ATOM_Tonga_SCLK_Dependency_Record entries[];				 /* Dynamically allocate entries. */
+ } ATOM_Tonga_SCLK_Dependency_Table;
+ 
+ typedef struct _ATOM_Polaris_SCLK_Dependency_Record {
 -- 
 2.42.0
 
