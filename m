@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BF11A5A4;
-	Fri, 24 Nov 2023 19:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6393033CFD;
+	Fri, 24 Nov 2023 19:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3ii/LcR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702EEC433CC;
-	Fri, 24 Nov 2023 19:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfHoH4/Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C73C433CC;
+	Fri, 24 Nov 2023 19:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852992;
-	bh=H5/pMzkmDNvDrWWtSUXFdsu8b3pw4k83mLhqkb7/oZs=;
+	s=korg; t=1700852995;
+	bh=IIY6A+prp+WnXOsAqWQg9tQtHByTJhr7Q8v8w3uYDGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T3ii/LcRLp07v3DRFP3JMUYk7UwigOlzV7VCtSc8EWS3EwWLXckfgh/EChzDTvVpt
-	 ueh2yRofVnOOuWRbOzThfmnc+1GZz2TFZTHSa/Wz+7poFwrFoZuo+nXFe1RRCuTFti
-	 3ieeeAKFRccZdsvfANB+zwYn/rSgj5u4VmEaiGBM=
+	b=lfHoH4/YCW2okxBpR2kynB761YcKkgW1WRURHM7HIHBTniXOM7H8RQYPbwdrMhNSC
+	 M2nnBpq42EGeitraumxJQkBmY9XbMvTKJQ/QW2V2VPwKE+kiQMXrHFYXS7sK5LQKyh
+	 vsZWWvvTdf9U7jhGGjemtpcSr/32zPdv8CD7Gok0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/297] locking/ww_mutex/test: Fix potential workqueue corruption
-Date: Fri, 24 Nov 2023 17:50:43 +0000
-Message-ID: <20231124172000.138929900@linuxfoundation.org>
+Subject: [PATCH 5.15 004/297] clocksource/drivers/timer-atmel-tcb: Fix initialization on SAM9 hardware
+Date: Fri, 24 Nov 2023 17:50:46 +0000
+Message-ID: <20231124172000.244974062@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,117 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-[ Upstream commit bccdd808902f8c677317cec47c306e42b93b849e ]
+[ Upstream commit 6d3bc4c02d59996d1d3180d8ed409a9d7d5900e0 ]
 
-In some cases running with the test-ww_mutex code, I was seeing
-odd behavior where sometimes it seemed flush_workqueue was
-returning before all the work threads were finished.
+On SAM9 hardware two cascaded 16 bit timers are used to form a 32 bit
+high resolution timer that is used as scheduler clock when the kernel
+has been configured that way (CONFIG_ATMEL_CLOCKSOURCE_TCB).
 
-Often this would cause strange crashes as the mutexes would be
-freed while they were being used.
+The driver initially triggers a reset-to-zero of the two timers but this
+reset is only performed on the next rising clock. For the first timer
+this is ok - it will be in the next 60ns (16MHz clock). For the chained
+second timer this will only happen after the first timer overflows, i.e.
+after 2^16 clocks (~4ms with a 16MHz clock). So with other words the
+scheduler clock resets to 0 after the first 2^16 clock cycles.
 
-Looking at the code, there is a lifetime problem as the
-controlling thread that spawns the work allocates the
-"struct stress" structures that are passed to the workqueue
-threads. Then when the workqueue threads are finished,
-they free the stress struct that was passed to them.
+It looks like that the scheduler does not like this and behaves wrongly
+over its lifetime, e.g. some tasks are scheduled with a long delay. Why
+that is and if there are additional requirements for this behaviour has
+not been further analysed.
 
-Unfortunately the workqueue work_struct node is in the stress
-struct. Which means the work_struct is freed before the work
-thread returns and while flush_workqueue is waiting.
+There is a simple fix for resetting the second timer as well when the
+first timer is reset and this is to set the ATMEL_TC_ASWTRG_SET bit in
+the Channel Mode register (CMR) of the first timer. This will also rise
+the TIOA line (clock input of the second timer) when a software trigger
+respective SYNC is issued.
 
-It seems like a better idea to have the controlling thread
-both allocate and free the stress structures, so that we can
-be sure we don't corrupt the workqueue by freeing the structure
-prematurely.
-
-So this patch reworks the test to do so, and with this change
-I no longer see the early flush_workqueue returns.
-
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230922043616.19282-3-jstultz@google.com
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20231007161803.31342-1-rwahl@gmx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/test-ww_mutex.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/clocksource/timer-atmel-tcb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/locking/test-ww_mutex.c b/kernel/locking/test-ww_mutex.c
-index 3e82f449b4ff7..da36997d8742c 100644
---- a/kernel/locking/test-ww_mutex.c
-+++ b/kernel/locking/test-ww_mutex.c
-@@ -426,7 +426,6 @@ static void stress_inorder_work(struct work_struct *work)
- 	} while (!time_after(jiffies, stress->timeout));
- 
- 	kfree(order);
--	kfree(stress);
- }
- 
- struct reorder_lock {
-@@ -491,7 +490,6 @@ static void stress_reorder_work(struct work_struct *work)
- 	list_for_each_entry_safe(ll, ln, &locks, link)
- 		kfree(ll);
- 	kfree(order);
--	kfree(stress);
- }
- 
- static void stress_one_work(struct work_struct *work)
-@@ -512,8 +510,6 @@ static void stress_one_work(struct work_struct *work)
- 			break;
- 		}
- 	} while (!time_after(jiffies, stress->timeout));
--
--	kfree(stress);
- }
- 
- #define STRESS_INORDER BIT(0)
-@@ -524,15 +520,24 @@ static void stress_one_work(struct work_struct *work)
- static int stress(int nlocks, int nthreads, unsigned int flags)
- {
- 	struct ww_mutex *locks;
--	int n;
-+	struct stress *stress_array;
-+	int n, count;
- 
- 	locks = kmalloc_array(nlocks, sizeof(*locks), GFP_KERNEL);
- 	if (!locks)
- 		return -ENOMEM;
- 
-+	stress_array = kmalloc_array(nthreads, sizeof(*stress_array),
-+				     GFP_KERNEL);
-+	if (!stress_array) {
-+		kfree(locks);
-+		return -ENOMEM;
-+	}
-+
- 	for (n = 0; n < nlocks; n++)
- 		ww_mutex_init(&locks[n], &ww_class);
- 
-+	count = 0;
- 	for (n = 0; nthreads; n++) {
- 		struct stress *stress;
- 		void (*fn)(struct work_struct *work);
-@@ -556,9 +561,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
- 		if (!fn)
- 			continue;
- 
--		stress = kmalloc(sizeof(*stress), GFP_KERNEL);
--		if (!stress)
--			break;
-+		stress = &stress_array[count++];
- 
- 		INIT_WORK(&stress->work, fn);
- 		stress->locks = locks;
-@@ -573,6 +576,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
- 
- 	for (n = 0; n < nlocks; n++)
- 		ww_mutex_destroy(&locks[n]);
-+	kfree(stress_array);
- 	kfree(locks);
- 
- 	return 0;
+diff --git a/drivers/clocksource/timer-atmel-tcb.c b/drivers/clocksource/timer-atmel-tcb.c
+index 27af17c995900..2a90c92a9182a 100644
+--- a/drivers/clocksource/timer-atmel-tcb.c
++++ b/drivers/clocksource/timer-atmel-tcb.c
+@@ -315,6 +315,7 @@ static void __init tcb_setup_dual_chan(struct atmel_tc *tc, int mck_divisor_idx)
+ 	writel(mck_divisor_idx			/* likely divide-by-8 */
+ 			| ATMEL_TC_WAVE
+ 			| ATMEL_TC_WAVESEL_UP		/* free-run */
++			| ATMEL_TC_ASWTRG_SET		/* TIOA0 rises at software trigger */
+ 			| ATMEL_TC_ACPA_SET		/* TIOA0 rises at 0 */
+ 			| ATMEL_TC_ACPC_CLEAR,		/* (duty cycle 50%) */
+ 			tcaddr + ATMEL_TC_REG(0, CMR));
 -- 
 2.42.0
 
