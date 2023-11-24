@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5DD33076;
-	Fri, 24 Nov 2023 19:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E601033076;
+	Fri, 24 Nov 2023 19:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sfel7Iaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59F8C433C8;
-	Fri, 24 Nov 2023 19:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PY0wWYCQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C51DC433C7;
+	Fri, 24 Nov 2023 19:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852729;
-	bh=/UafLnObksuycwX7oGbJnoQJVfy4m2ex4AtyWpNmXmk=;
+	s=korg; t=1700852732;
+	bh=rkCy/HxQ00lCHrV7yHp63aGBBVY/ylorPJVnyoJAGOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sfel7IaatI4NqKG8drrUp855y68ErQDvKrf3axXB4xi4aMlv9bH7h8VmS5S2YneFP
-	 rvR5yOtL90GXgZZXxL3qkrr9eESAv591G8sGRzF07lwNXIBWZRWYZkIG4KxR8KjxnJ
-	 L0VV87qImI0eCaeHtmcb5HkZbJcEkhWmb5KF8x7o=
+	b=PY0wWYCQDexuRpS5s/8aUnIH9UenehsN8n35Kz8wt69/hKubTvuOp4cNu9gpWqVG6
+	 BX0ALIRTsv7Ge1x3e5DacXKs2/kL5zVfan/JFGzxB9N2RrVdPAK7eL3ofqEQLie/rP
+	 a5HcRPxPI+GujY/o7ZayEnVOxaVuaASCtCTsPG6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Savkov <asavkov@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.10 100/193] audit: dont WARN_ON_ONCE(!current->mm) in audit_exe_compare()
-Date: Fri, 24 Nov 2023 17:53:47 +0000
-Message-ID: <20231124171951.259331142@linuxfoundation.org>
+	jirislaby@kernel.org,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>
+Subject: [PATCH 5.10 101/193] tty/sysrq: replace smp_processor_id() with get_cpu()
+Date: Fri, 24 Nov 2023 17:53:48 +0000
+Message-ID: <20231124171951.300019806@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -41,37 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moore <paul@paul-moore.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit 969d90ec212bae4b45bf9d21d7daa30aa6cf055e upstream.
+commit dd976a97d15b47656991e185a94ef42a0fa5cfd4 upstream.
 
-eBPF can end up calling into the audit code from some odd places, and
-some of these places don't have @current set properly so we end up
-tripping the `WARN_ON_ONCE(!current->mm)` near the top of
-`audit_exe_compare()`.  While the basic `!current->mm` check is good,
-the `WARN_ON_ONCE()` results in some scary console messages so let's
-drop that and just do the regular `!current->mm` check to avoid
-problems.
+The smp_processor_id() shouldn't be called from preemptible code.
+Instead use get_cpu() and put_cpu() which disables preemption in
+addition to getting the processor id. Enable preemption back after
+calling schedule_work() to make sure that the work gets scheduled on all
+cores other than the current core. We want to avoid a scenario where
+current core's stack trace is printed multiple times and one core's
+stack trace isn't printed because of scheduling of current task.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 47846d51348d ("audit: don't take task_lock() in audit_exe_compare() code path")
-Reported-by: Artem Savkov <asavkov@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+This fixes the following bug:
+
+[  119.143590] sysrq: Show backtrace of all active CPUs
+[  119.143902] BUG: using smp_processor_id() in preemptible [00000000] code: bash/873
+[  119.144586] caller is debug_smp_processor_id+0x20/0x30
+[  119.144827] CPU: 6 PID: 873 Comm: bash Not tainted 5.10.124-dirty #3
+[  119.144861] Hardware name: QEMU QEMU Virtual Machine, BIOS 2023.05-1 07/22/2023
+[  119.145053] Call trace:
+[  119.145093]  dump_backtrace+0x0/0x1a0
+[  119.145122]  show_stack+0x18/0x70
+[  119.145141]  dump_stack+0xc4/0x11c
+[  119.145159]  check_preemption_disabled+0x100/0x110
+[  119.145175]  debug_smp_processor_id+0x20/0x30
+[  119.145195]  sysrq_handle_showallcpus+0x20/0xc0
+[  119.145211]  __handle_sysrq+0x8c/0x1a0
+[  119.145227]  write_sysrq_trigger+0x94/0x12c
+[  119.145247]  proc_reg_write+0xa8/0xe4
+[  119.145266]  vfs_write+0xec/0x280
+[  119.145282]  ksys_write+0x6c/0x100
+[  119.145298]  __arm64_sys_write+0x20/0x30
+[  119.145315]  el0_svc_common.constprop.0+0x78/0x1e4
+[  119.145332]  do_el0_svc+0x24/0x8c
+[  119.145348]  el0_svc+0x10/0x20
+[  119.145364]  el0_sync_handler+0x134/0x140
+[  119.145381]  el0_sync+0x180/0x1c0
+
+Cc: jirislaby@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: 47cab6a722d4 ("debug lockups: Improve lockup detection, fix generic arch fallback")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/r/20231009162021.3607632-1-usama.anjum@collabora.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit_watch.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/sysrq.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/audit_watch.c
-+++ b/kernel/audit_watch.c
-@@ -531,7 +531,7 @@ int audit_exe_compare(struct task_struct
- 	if (tsk != current)
- 		return 0;
+--- a/drivers/tty/sysrq.c
++++ b/drivers/tty/sysrq.c
+@@ -262,13 +262,14 @@ static void sysrq_handle_showallcpus(int
+ 		if (in_irq())
+ 			regs = get_irq_regs();
  
--	if (WARN_ON_ONCE(!current->mm))
-+	if (!current->mm)
- 		return 0;
- 	exe_file = get_mm_exe_file(current->mm);
- 	if (!exe_file)
+-		pr_info("CPU%d:\n", smp_processor_id());
++		pr_info("CPU%d:\n", get_cpu());
+ 		if (regs)
+ 			show_regs(regs);
+ 		else
+ 			show_stack(NULL, NULL, KERN_INFO);
+ 
+ 		schedule_work(&sysrq_showallcpus);
++		put_cpu();
+ 	}
+ }
+ 
 
 
