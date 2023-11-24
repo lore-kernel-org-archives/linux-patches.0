@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8988439FC2;
-	Fri, 24 Nov 2023 18:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C5039FD9;
+	Fri, 24 Nov 2023 18:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNIgJOSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165BDC433C8;
-	Fri, 24 Nov 2023 18:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ogjUYH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DFAC433C7;
+	Fri, 24 Nov 2023 18:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849576;
-	bh=hRopyKMJ0giuZsG3Jg4GwK52LnqHW4w5i5xHNZuMknI=;
+	s=korg; t=1700849578;
+	bh=PPxmiGde53q7KpD3JjjHbta8U+5CjOQ68eYervnT4Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNIgJOSh6CcFC1S4fcNK9135vMPs8kJLj3kq/bEgFlNWFQ1Q43tP3bUkglwhHDH9i
-	 G0lhSR4qiuwUx3z0zBSM4YOOfO0JEJF7j3C2FRGRF3qhYZoP4CJCtKReCso8EqDG0p
-	 Ui3PghJrt37fFLf9SIhGu8eVR5lorqQ0t/KVgsYo=
+	b=0ogjUYH1iTteHKtHueXwDP78R7bgVqyC2mMqP5pkzv3tBSYuDfh5ePnd669MY5LCA
+	 Y3oLlxHfFRCzYG0W8zyBH1M6YgrkuvOt0UyapwiI9YIL753BRvjm1rlRf/kOJDMt9z
+	 Ys7c2EXDgR+fvbj2wezmvsRZ6XsGKXAXyXtoPzfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.6 236/530] perf/core: Fix cpuctx refcounting
-Date: Fri, 24 Nov 2023 17:46:42 +0000
-Message-ID: <20231124172035.237752763@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.6 237/530] i915/perf: Fix NULL deref bugs with drm_dbg() calls
+Date: Fri, 24 Nov 2023 17:46:43 +0000
+Message-ID: <20231124172035.266264998@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,99 +42,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-commit 889c58b3155ff4c8e8671c95daef63d6fabbb6b1 upstream.
+commit 471aa951bf1206d3c10d0daa67005b8e4db4ff83 upstream.
 
-Audit of the refcounting turned up that perf_pmu_migrate_context()
-fails to migrate the ctx refcount.
+When i915 perf interface is not available dereferencing it will lead to
+NULL dereferences.
 
-Fixes: bd2756811766 ("perf: Rewrite core context handling")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lkml.kernel.org/r/20230612093539.085862001@infradead.org
-Cc: <stable@vger.kernel.org>
+As returning -ENOTSUPP is pretty clear return when perf interface is not
+available.
+
+Fixes: 2fec539112e8 ("i915/perf: Replace DRM_DEBUG with driver specific drm_dbg call")
+Suggested-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Cc: <stable@vger.kernel.org> # v6.0+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231027172822.2753059-1-harshit.m.mogalapalli@oracle.com
+[tursulin: added stable tag]
+(cherry picked from commit 36f27350ff745bd228ab04d7845dfbffc177a889)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/perf_event.h |   13 ++++++++-----
- kernel/events/core.c       |   17 +++++++++++++++++
- 2 files changed, 25 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/i915/i915_perf.c |   15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -843,11 +843,11 @@ struct perf_event {
- };
+--- a/drivers/gpu/drm/i915/i915_perf.c
++++ b/drivers/gpu/drm/i915/i915_perf.c
+@@ -4286,11 +4286,8 @@ int i915_perf_open_ioctl(struct drm_devi
+ 	u32 known_open_flags;
+ 	int ret;
  
- /*
-- *           ,-----------------------[1:n]----------------------.
-- *           V                                                  V
-- * perf_event_context <-[1:n]-> perf_event_pmu_context <--- perf_event
-- *           ^                      ^     |                     |
-- *           `--------[1:n]---------'     `-[n:1]-> pmu <-[1:n]-'
-+ *           ,-----------------------[1:n]------------------------.
-+ *           V                                                    V
-+ * perf_event_context <-[1:n]-> perf_event_pmu_context <-[1:n]- perf_event
-+ *                                        |                       |
-+ *                                        `--[n:1]-> pmu <-[1:n]--'
-  *
-  *
-  * struct perf_event_pmu_context  lifetime is refcount based and RCU freed
-@@ -865,6 +865,9 @@ struct perf_event {
-  * ctx->mutex pinning the configuration. Since we hold a reference on
-  * group_leader (through the filedesc) it can't go away, therefore it's
-  * associated pmu_ctx must exist and cannot change due to ctx->mutex.
-+ *
-+ * perf_event holds a refcount on perf_event_context
-+ * perf_event holds a refcount on perf_event_pmu_context
-  */
- struct perf_event_pmu_context {
- 	struct pmu			*pmu;
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4816,6 +4816,11 @@ find_get_pmu_context(struct pmu *pmu, st
- 	void *task_ctx_data = NULL;
+-	if (!perf->i915) {
+-		drm_dbg(&perf->i915->drm,
+-			"i915 perf interface not available for this system\n");
++	if (!perf->i915)
+ 		return -ENOTSUPP;
+-	}
  
- 	if (!ctx->task) {
-+		/*
-+		 * perf_pmu_migrate_context() / __perf_pmu_install_event()
-+		 * relies on the fact that find_get_pmu_context() cannot fail
-+		 * for CPU contexts.
-+		 */
- 		struct perf_cpu_pmu_context *cpc;
+ 	known_open_flags = I915_PERF_FLAG_FD_CLOEXEC |
+ 			   I915_PERF_FLAG_FD_NONBLOCK |
+@@ -4666,11 +4663,8 @@ int i915_perf_add_config_ioctl(struct dr
+ 	struct i915_oa_reg *regs;
+ 	int err, id;
  
- 		cpc = per_cpu_ptr(pmu->cpu_pmu_context, event->cpu);
-@@ -12877,6 +12882,9 @@ static void __perf_pmu_install_event(str
- 				     int cpu, struct perf_event *event)
- {
- 	struct perf_event_pmu_context *epc;
-+	struct perf_event_context *old_ctx = event->ctx;
-+
-+	get_ctx(ctx); /* normally find_get_context() */
+-	if (!perf->i915) {
+-		drm_dbg(&perf->i915->drm,
+-			"i915 perf interface not available for this system\n");
++	if (!perf->i915)
+ 		return -ENOTSUPP;
+-	}
  
- 	event->cpu = cpu;
- 	epc = find_get_pmu_context(pmu, ctx, event);
-@@ -12885,6 +12893,11 @@ static void __perf_pmu_install_event(str
- 	if (event->state >= PERF_EVENT_STATE_OFF)
- 		event->state = PERF_EVENT_STATE_INACTIVE;
- 	perf_install_in_context(ctx, event, cpu);
-+
-+	/*
-+	 * Now that event->ctx is updated and visible, put the old ctx.
-+	 */
-+	put_ctx(old_ctx);
- }
+ 	if (!perf->metrics_kobj) {
+ 		drm_dbg(&perf->i915->drm,
+@@ -4832,11 +4826,8 @@ int i915_perf_remove_config_ioctl(struct
+ 	struct i915_oa_config *oa_config;
+ 	int ret;
  
- static void __perf_pmu_install(struct perf_event_context *ctx,
-@@ -12923,6 +12936,10 @@ void perf_pmu_migrate_context(struct pmu
- 	struct perf_event_context *src_ctx, *dst_ctx;
- 	LIST_HEAD(events);
+-	if (!perf->i915) {
+-		drm_dbg(&perf->i915->drm,
+-			"i915 perf interface not available for this system\n");
++	if (!perf->i915)
+ 		return -ENOTSUPP;
+-	}
  
-+	/*
-+	 * Since per-cpu context is persistent, no need to grab an extra
-+	 * reference.
-+	 */
- 	src_ctx = &per_cpu_ptr(&perf_cpu_context, src_cpu)->ctx;
- 	dst_ctx = &per_cpu_ptr(&perf_cpu_context, dst_cpu)->ctx;
- 
+ 	if (i915_perf_stream_paranoid && !perfmon_capable()) {
+ 		drm_dbg(&perf->i915->drm,
 
 
