@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB702C87B;
-	Fri, 24 Nov 2023 18:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18102C87B;
+	Fri, 24 Nov 2023 18:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSEgmg9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B01DC433C7;
-	Fri, 24 Nov 2023 18:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Otz+U6cs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194D4C433C8;
+	Fri, 24 Nov 2023 18:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852177;
-	bh=rNJb0k340OSF9naCl9Yw3ycWQnWJBhJjQYg/SGw7Ewk=;
+	s=korg; t=1700852180;
+	bh=aPkL6j+4elro8eRCwexqZCpJ+bOhNiYA0oKiMkN2TBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSEgmg9hnpSDPQVkzAvMykIB3cjvusbYb+aaO8wOVfu5cEqMHisbgF0N9x23Cgesi
-	 hLcSTSufHU5SBdA0pcuAi9nm6Kcgqs6N5wdqvD6mipr5zBNuR9ch2bnsKYgxc7YN5k
-	 v2DnLVOR/HWNowVrXxk6i38TeUKMCijI4irkzWrc=
+	b=Otz+U6cslDFQ6PbwjRsZsdwUYrIkui16Db6dcB7rq5ZaLninYkq/1IBcNMBzIOdw9
+	 uuJefvqFlBfLFhNWTfPKHUYMBfzSmjiIBLcB4lc8BKtAmRY/DJt7S2QjHnETrGhVst
+	 jSWt5R/meR0YzYGawm56r1U2RMfRIyYHd6nH/wuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 243/372] quota: explicitly forbid quota files from being encrypted
-Date: Fri, 24 Nov 2023 17:50:30 +0000
-Message-ID: <20231124172018.637094113@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.1 252/372] s390/cmma: fix detection of DAT pages
+Date: Fri, 24 Nov 2023 17:50:39 +0000
+Message-ID: <20231124172018.925475633@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -41,64 +42,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit d3cc1b0be258191d6360c82ea158c2972f8d3991 upstream.
+commit 44d93045247661acbd50b1629e62f415f2747577 upstream.
 
-Since commit d7e7b9af104c ("fscrypt: stop using keyrings subsystem for
-fscrypt_master_key"), xfstest generic/270 causes a WARNING when run on
-f2fs with test_dummy_encryption in the mount options:
+If the cmma no-dat feature is available the kernel page tables are walked
+to identify and mark all pages which are used for address translation (all
+region, segment, and page tables). In a subsequent loop all other pages are
+marked as "no-dat" pages with the ESSA instruction.
 
-$ kvm-xfstests -c f2fs/encrypt generic/270
-[...]
-WARNING: CPU: 1 PID: 2453 at fs/crypto/keyring.c:240 fscrypt_destroy_keyring+0x1f5/0x260
+This information is visible to the hypervisor, so that the hypervisor can
+optimize purging of guest TLB entries. The initial loop however is
+incorrect: only the first three of the four pages which belong to segment
+and region tables will be marked as being used for DAT. The last page is
+incorrectly marked as no-dat.
 
-The cause of the WARNING is that not all encrypted inodes have been
-evicted before fscrypt_destroy_keyring() is called, which violates an
-assumption.  This happens because the test uses an external quota file,
-which gets automatically encrypted due to test_dummy_encryption.
+This can result in incorrect guest TLB flushes.
 
-Encryption of quota files has never really been supported.  On ext4,
-ext4_quota_read() does not decrypt the data, so encrypted quota files
-are always considered invalid on ext4.  On f2fs, f2fs_quota_read() uses
-the pagecache, so trying to use an encrypted quota file gets farther,
-resulting in the issue described above being possible.  But this was
-never intended to be possible, and there is no use case for it.
+Fix this by simply marking all four pages.
 
-Therefore, make the quota support layer explicitly reject using
-IS_ENCRYPTED inodes when quotaon is attempted.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Message-Id: <20230905003227.326998-1-ebiggers@kernel.org>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/quota/dquot.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/s390/mm/page-states.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -2403,6 +2403,20 @@ static int vfs_setup_quota_inode(struct
- 	if (sb_has_quota_loaded(sb, type))
- 		return -EBUSY;
- 
-+	/*
-+	 * Quota files should never be encrypted.  They should be thought of as
-+	 * filesystem metadata, not user data.  New-style internal quota files
-+	 * cannot be encrypted by users anyway, but old-style external quota
-+	 * files could potentially be incorrectly created in an encrypted
-+	 * directory, hence this explicit check.  Some reasons why encrypted
-+	 * quota files don't work include: (1) some filesystems that support
-+	 * encryption don't handle it in their quota_read and quota_write, and
-+	 * (2) cleaning up encrypted quota files at unmount would need special
-+	 * consideration, as quota files are cleaned up later than user files.
-+	 */
-+	if (IS_ENCRYPTED(inode))
-+		return -EINVAL;
-+
- 	dqopt->files[type] = igrab(inode);
- 	if (!dqopt->files[type])
- 		return -EIO;
+--- a/arch/s390/mm/page-states.c
++++ b/arch/s390/mm/page-states.c
+@@ -132,7 +132,7 @@ static void mark_kernel_pud(p4d_t *p4d,
+ 			continue;
+ 		if (!pud_folded(*pud)) {
+ 			page = phys_to_page(pud_val(*pud));
+-			for (i = 0; i < 3; i++)
++			for (i = 0; i < 4; i++)
+ 				set_bit(PG_arch_1, &page[i].flags);
+ 		}
+ 		mark_kernel_pmd(pud, addr, next);
+@@ -153,7 +153,7 @@ static void mark_kernel_p4d(pgd_t *pgd,
+ 			continue;
+ 		if (!p4d_folded(*p4d)) {
+ 			page = phys_to_page(p4d_val(*p4d));
+-			for (i = 0; i < 3; i++)
++			for (i = 0; i < 4; i++)
+ 				set_bit(PG_arch_1, &page[i].flags);
+ 		}
+ 		mark_kernel_pud(p4d, addr, next);
+@@ -182,7 +182,7 @@ static void mark_kernel_pgd(void)
+ 			continue;
+ 		if (!pgd_folded(*pgd)) {
+ 			page = phys_to_page(pgd_val(*pgd));
+-			for (i = 0; i < 3; i++)
++			for (i = 0; i < 4; i++)
+ 				set_bit(PG_arch_1, &page[i].flags);
+ 		}
+ 		mark_kernel_p4d(pgd, addr, next);
 
 
