@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FFD33CDB;
-	Fri, 24 Nov 2023 18:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646AF39FD4;
+	Fri, 24 Nov 2023 18:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rs2RQOj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BEFC433C8;
-	Fri, 24 Nov 2023 18:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkJjGfSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3976C433C7;
+	Fri, 24 Nov 2023 18:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850832;
-	bh=tbLvcGtfI4qiz5f6Nrn346+/YLTEy/9QKhrGpasWY3M=;
+	s=korg; t=1700850835;
+	bh=WeyFhmfep4Jmy5qufLDyXAjtmK+4EhRkBIZoW70slFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rs2RQOj/me9FX6wz2ZC/51j3ipcjvXPXPxJuHokAxRy3TTO7LPVyvs+lMjg0MaDD3
-	 pgcD1h/x8XNzzhro12MMtnUAvRff/A7U4RPvWcys+Rhu/d8JtRDjNU7TKDU+pJChPq
-	 BMfKWl1ZlXGp5qouuLRDZeyIb0zdCLUw5/ihtodE=
+	b=GkJjGfSVnU3Rtf4NNu480DRMfCIvi//8pXdzT6n0kUhiXzSLE/LMcPitpGGrAH6/i
+	 NGkw1l1T7u7IauKJBgs+mfczEcqsgD1351gSXKSbzBVGiwxE65AteeV9SH0pCaUu5s
+	 +Lev9KOI2KClaXt9jEk//ZJImgHqd9vUH6LA1dnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 207/491] net/mlx5e: Fix pedit endianness
-Date: Fri, 24 Nov 2023 17:47:23 +0000
-Message-ID: <20231124172030.729569469@linuxfoundation.org>
+Subject: [PATCH 6.5 190/491] bonding: stop the device in bond_setup_by_slave()
+Date: Fri, 24 Nov 2023 17:47:06 +0000
+Message-ID: <20231124172030.190663720@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,172 +45,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0c101a23ca7eaf00eef1328eefb04b3a93401cc8 ]
+[ Upstream commit 3cffa2ddc4d3fcf70cde361236f5a614f81a09b2 ]
 
-Referenced commit addressed endianness issue in mlx5 pedit implementation
-in ad hoc manner instead of systematically treating integer values
-according to their types which left pedit fields of sizes not equal to 4
-and where the bytes being modified are not least significant ones broken on
-big endian machines since wrong bits will be consumed during parsing which
-leads to following example error when applying pedit to source and
-destination MAC addresses:
+Commit 9eed321cde22 ("net: lapbether: only support ethernet devices")
+has been able to keep syzbot away from net/lapb, until today.
 
-[Wed Oct 18 12:52:42 2023] mlx5_core 0001:00:00.1 p1v3_r: attempt to offload an unsupported field (cmd 0)
-[Wed Oct 18 12:52:42 2023] mask: 00000000330c5b68: 00 00 00 00 ff ff 00 00 00 00 ff ff 00 00 00 00  ................
-[Wed Oct 18 12:52:42 2023] mask: 0000000017d22fd9: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[Wed Oct 18 12:52:42 2023] mask: 000000008186d717: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[Wed Oct 18 12:52:42 2023] mask: 0000000029eb6149: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[Wed Oct 18 12:52:42 2023] mask: 000000007ed103e4: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[Wed Oct 18 12:52:42 2023] mask: 00000000db8101a6: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-[Wed Oct 18 12:52:42 2023] mask: 00000000ec3c08a9: 00 00 00 00 00 00 00 00 00 00 00 00              ............
+In the following splat [1], the issue is that a lapbether device has
+been created on a bonding device without members. Then adding a non
+ARPHRD_ETHER member forced the bonding master to change its type.
 
-Treat masks and values of pedit and filter match as network byte order,
-refactor pointers to them to void pointers instead of confusing u32
-pointers and only cast to pointer-to-integer when reading a value from
-them. Treat pedit mlx5_fields->field_mask as host byte order according to
-its type u32, change the constants in fields array accordingly.
+The fix is to make sure we call dev_close() in bond_setup_by_slave()
+so that the potential linked lapbether devices (or any other devices
+having assumptions on the physical device) are removed.
 
-Fixes: 82198d8bcdef ("net/mlx5e: Fix endianness when calculating pedit mask first bit")
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-8-saeed@kernel.org
+A similar bug has been addressed in commit 40baec225765
+("bonding: fix panic on non-ARPHRD_ETHER enslave failure")
+
+[1]
+skbuff: skb_under_panic: text:ffff800089508810 len:44 put:40 head:ffff0000c78e7c00 data:ffff0000c78e7bea tail:0x16 end:0x140 dev:bond0
+kernel BUG at net/core/skbuff.c:192 !
+Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 0 PID: 6007 Comm: syz-executor383 Not tainted 6.6.0-rc3-syzkaller-gbf6547d8715b #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : skb_panic net/core/skbuff.c:188 [inline]
+pc : skb_under_panic+0x13c/0x140 net/core/skbuff.c:202
+lr : skb_panic net/core/skbuff.c:188 [inline]
+lr : skb_under_panic+0x13c/0x140 net/core/skbuff.c:202
+sp : ffff800096a06aa0
+x29: ffff800096a06ab0 x28: ffff800096a06ba0 x27: dfff800000000000
+x26: ffff0000ce9b9b50 x25: 0000000000000016 x24: ffff0000c78e7bea
+x23: ffff0000c78e7c00 x22: 000000000000002c x21: 0000000000000140
+x20: 0000000000000028 x19: ffff800089508810 x18: ffff800096a06100
+x17: 0000000000000000 x16: ffff80008a629a3c x15: 0000000000000001
+x14: 1fffe00036837a32 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000201 x10: 0000000000000000 x9 : cb50b496c519aa00
+x8 : cb50b496c519aa00 x7 : 0000000000000001 x6 : 0000000000000001
+x5 : ffff800096a063b8 x4 : ffff80008e280f80 x3 : ffff8000805ad11c
+x2 : 0000000000000001 x1 : 0000000100000201 x0 : 0000000000000086
+Call trace:
+skb_panic net/core/skbuff.c:188 [inline]
+skb_under_panic+0x13c/0x140 net/core/skbuff.c:202
+skb_push+0xf0/0x108 net/core/skbuff.c:2446
+ip6gre_header+0xbc/0x738 net/ipv6/ip6_gre.c:1384
+dev_hard_header include/linux/netdevice.h:3136 [inline]
+lapbeth_data_transmit+0x1c4/0x298 drivers/net/wan/lapbether.c:257
+lapb_data_transmit+0x8c/0xb0 net/lapb/lapb_iface.c:447
+lapb_transmit_buffer+0x178/0x204 net/lapb/lapb_out.c:149
+lapb_send_control+0x220/0x320 net/lapb/lapb_subr.c:251
+__lapb_disconnect_request+0x9c/0x17c net/lapb/lapb_iface.c:326
+lapb_device_event+0x288/0x4e0 net/lapb/lapb_iface.c:492
+notifier_call_chain+0x1a4/0x510 kernel/notifier.c:93
+raw_notifier_call_chain+0x3c/0x50 kernel/notifier.c:461
+call_netdevice_notifiers_info net/core/dev.c:1970 [inline]
+call_netdevice_notifiers_extack net/core/dev.c:2008 [inline]
+call_netdevice_notifiers net/core/dev.c:2022 [inline]
+__dev_close_many+0x1b8/0x3c4 net/core/dev.c:1508
+dev_close_many+0x1e0/0x470 net/core/dev.c:1559
+dev_close+0x174/0x250 net/core/dev.c:1585
+lapbeth_device_event+0x2e4/0x958 drivers/net/wan/lapbether.c:466
+notifier_call_chain+0x1a4/0x510 kernel/notifier.c:93
+raw_notifier_call_chain+0x3c/0x50 kernel/notifier.c:461
+call_netdevice_notifiers_info net/core/dev.c:1970 [inline]
+call_netdevice_notifiers_extack net/core/dev.c:2008 [inline]
+call_netdevice_notifiers net/core/dev.c:2022 [inline]
+__dev_close_many+0x1b8/0x3c4 net/core/dev.c:1508
+dev_close_many+0x1e0/0x470 net/core/dev.c:1559
+dev_close+0x174/0x250 net/core/dev.c:1585
+bond_enslave+0x2298/0x30cc drivers/net/bonding/bond_main.c:2332
+bond_do_ioctl+0x268/0xc64 drivers/net/bonding/bond_main.c:4539
+dev_ifsioc+0x754/0x9ac
+dev_ioctl+0x4d8/0xd34 net/core/dev_ioctl.c:786
+sock_do_ioctl+0x1d4/0x2d0 net/socket.c:1217
+sock_ioctl+0x4e8/0x834 net/socket.c:1322
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:871 [inline]
+__se_sys_ioctl fs/ioctl.c:857 [inline]
+__arm64_sys_ioctl+0x14c/0x1c8 fs/ioctl.c:857
+__invoke_syscall arch/arm64/kernel/syscall.c:37 [inline]
+invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:51
+el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:136
+do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:155
+el0_svc+0x58/0x16c arch/arm64/kernel/entry-common.c:678
+el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:696
+el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
+Code: aa1803e6 aa1903e7 a90023f5 94785b8b (d4210000)
+
+Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20231109180102.4085183-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_tc.c   | 60 ++++++++++---------
- 1 file changed, 32 insertions(+), 28 deletions(-)
+ drivers/net/bonding/bond_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index 5797d8607633e..fdef505c4b88f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -3148,7 +3148,7 @@ static struct mlx5_fields fields[] = {
- 	OFFLOAD(DIPV6_31_0,   32, U32_MAX, ip6.daddr.s6_addr32[3], 0,
- 		dst_ipv4_dst_ipv6.ipv6_layout.ipv6[12]),
- 	OFFLOAD(IPV6_HOPLIMIT, 8,  U8_MAX, ip6.hop_limit, 0, ttl_hoplimit),
--	OFFLOAD(IP_DSCP, 16,  0xc00f, ip6, 0, ip_dscp),
-+	OFFLOAD(IP_DSCP, 16,  0x0fc0, ip6, 0, ip_dscp),
- 
- 	OFFLOAD(TCP_SPORT, 16, U16_MAX, tcp.source,  0, tcp_sport),
- 	OFFLOAD(TCP_DPORT, 16, U16_MAX, tcp.dest,    0, tcp_dport),
-@@ -3159,21 +3159,31 @@ static struct mlx5_fields fields[] = {
- 	OFFLOAD(UDP_DPORT, 16, U16_MAX, udp.dest,   0, udp_dport),
- };
- 
--static unsigned long mask_to_le(unsigned long mask, int size)
-+static u32 mask_field_get(void *mask, struct mlx5_fields *f)
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index a64ebb7f5b712..363b6cb33ae08 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1499,6 +1499,10 @@ static void bond_compute_features(struct bonding *bond)
+ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 				struct net_device *slave_dev)
  {
--	__be32 mask_be32;
--	__be16 mask_be16;
--
--	if (size == 32) {
--		mask_be32 = (__force __be32)(mask);
--		mask = (__force unsigned long)cpu_to_le32(be32_to_cpu(mask_be32));
--	} else if (size == 16) {
--		mask_be32 = (__force __be32)(mask);
--		mask_be16 = *(__be16 *)&mask_be32;
--		mask = (__force unsigned long)cpu_to_le16(be16_to_cpu(mask_be16));
-+	switch (f->field_bsize) {
-+	case 32:
-+		return be32_to_cpu(*(__be32 *)mask) & f->field_mask;
-+	case 16:
-+		return be16_to_cpu(*(__be16 *)mask) & (u16)f->field_mask;
-+	default:
-+		return *(u8 *)mask & (u8)f->field_mask;
- 	}
-+}
++	bool was_up = !!(bond_dev->flags & IFF_UP);
++
++	dev_close(bond_dev);
++
+ 	bond_dev->header_ops	    = slave_dev->header_ops;
  
--	return mask;
-+static void mask_field_clear(void *mask, struct mlx5_fields *f)
-+{
-+	switch (f->field_bsize) {
-+	case 32:
-+		*(__be32 *)mask &= ~cpu_to_be32(f->field_mask);
-+		break;
-+	case 16:
-+		*(__be16 *)mask &= ~cpu_to_be16((u16)f->field_mask);
-+		break;
-+	default:
-+		*(u8 *)mask &= ~(u8)f->field_mask;
-+		break;
-+	}
+ 	bond_dev->type		    = slave_dev->type;
+@@ -1513,6 +1517,8 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 		bond_dev->flags &= ~(IFF_BROADCAST | IFF_MULTICAST);
+ 		bond_dev->flags |= (IFF_POINTOPOINT | IFF_NOARP);
+ 	}
++	if (was_up)
++		dev_open(bond_dev, NULL);
  }
  
- static int offload_pedit_fields(struct mlx5e_priv *priv,
-@@ -3185,11 +3195,12 @@ static int offload_pedit_fields(struct mlx5e_priv *priv,
- 	struct pedit_headers *set_masks, *add_masks, *set_vals, *add_vals;
- 	struct pedit_headers_action *hdrs = parse_attr->hdrs;
- 	void *headers_c, *headers_v, *action, *vals_p;
--	u32 *s_masks_p, *a_masks_p, s_mask, a_mask;
- 	struct mlx5e_tc_mod_hdr_acts *mod_acts;
--	unsigned long mask, field_mask;
-+	void *s_masks_p, *a_masks_p;
- 	int i, first, last, next_z;
- 	struct mlx5_fields *f;
-+	unsigned long mask;
-+	u32 s_mask, a_mask;
- 	u8 cmd;
- 
- 	mod_acts = &parse_attr->mod_hdr_acts;
-@@ -3205,15 +3216,11 @@ static int offload_pedit_fields(struct mlx5e_priv *priv,
- 		bool skip;
- 
- 		f = &fields[i];
--		/* avoid seeing bits set from previous iterations */
--		s_mask = 0;
--		a_mask = 0;
--
- 		s_masks_p = (void *)set_masks + f->offset;
- 		a_masks_p = (void *)add_masks + f->offset;
- 
--		s_mask = *s_masks_p & f->field_mask;
--		a_mask = *a_masks_p & f->field_mask;
-+		s_mask = mask_field_get(s_masks_p, f);
-+		a_mask = mask_field_get(a_masks_p, f);
- 
- 		if (!s_mask && !a_mask) /* nothing to offload here */
- 			continue;
-@@ -3240,22 +3247,20 @@ static int offload_pedit_fields(struct mlx5e_priv *priv,
- 					 match_mask, f->field_bsize))
- 				skip = true;
- 			/* clear to denote we consumed this field */
--			*s_masks_p &= ~f->field_mask;
-+			mask_field_clear(s_masks_p, f);
- 		} else {
- 			cmd  = MLX5_ACTION_TYPE_ADD;
- 			mask = a_mask;
- 			vals_p = (void *)add_vals + f->offset;
- 			/* add 0 is no change */
--			if ((*(u32 *)vals_p & f->field_mask) == 0)
-+			if (!mask_field_get(vals_p, f))
- 				skip = true;
- 			/* clear to denote we consumed this field */
--			*a_masks_p &= ~f->field_mask;
-+			mask_field_clear(a_masks_p, f);
- 		}
- 		if (skip)
- 			continue;
- 
--		mask = mask_to_le(mask, f->field_bsize);
--
- 		first = find_first_bit(&mask, f->field_bsize);
- 		next_z = find_next_zero_bit(&mask, f->field_bsize, first);
- 		last  = find_last_bit(&mask, f->field_bsize);
-@@ -3282,10 +3287,9 @@ static int offload_pedit_fields(struct mlx5e_priv *priv,
- 		MLX5_SET(set_action_in, action, field, f->field);
- 
- 		if (cmd == MLX5_ACTION_TYPE_SET) {
-+			unsigned long field_mask = f->field_mask;
- 			int start;
- 
--			field_mask = mask_to_le(f->field_mask, f->field_bsize);
--
- 			/* if field is bit sized it can start not from first bit */
- 			start = find_first_bit(&field_mask, f->field_bsize);
- 
+ /* On bonding slaves other than the currently active slave, suppress
 -- 
 2.42.0
 
