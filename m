@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C821728DBB;
-	Fri, 24 Nov 2023 19:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908C528DBB;
+	Fri, 24 Nov 2023 19:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkVD6H38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D90C433C8;
-	Fri, 24 Nov 2023 19:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxRNVlNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B78C433C8;
+	Fri, 24 Nov 2023 19:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853142;
-	bh=IwYHOeAC3MsEiBvt5Op/qb1vBJWCWhFjURnYRQlwbmI=;
+	s=korg; t=1700853145;
+	bh=JfpaKtEww1+Viqzg+Bpbd1lnJa7SAe/L1xvgrvQ8PoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkVD6H38eMzEYsO9XSuDZz7hXahxyMjaWXePo/YylyWAGEak1IBx+mCsLCYqr2E97
-	 2U0YJlMObQkFQ+frzeEfEXJTu1XLbgQLDA6P9dcB/iuTDLjUwWvOA8aMSuD4cUdSfV
-	 xbPXJMg/NoKlBEd0Wm/cNZwrnw53zhDw5eG2KZTg=
+	b=kxRNVlNTUqXiRJ+YYTLoostn0LM1JNkoNw41nDL/8z71Y59aRvZhi5w+QZbmOaWLO
+	 i4dn65h6P24pmMJhse7C3a45Q1yliG4FUZHsv5wgBoBFKP2e7+hIkqu/5RzqVLp9oR
+	 ++JDSdXQdBZJnGRQVKMTnDUoinrgyJqDNOvu6qFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Peterson <rpeterso@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Mikhail Khvainitski <me@khvoinitsky.org>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/297] gfs2: ignore negated quota changes
-Date: Fri, 24 Nov 2023 17:51:52 +0000
-Message-ID: <20231124172002.697825796@linuxfoundation.org>
+Subject: [PATCH 5.15 047/297] HID: lenovo: Detect quirk-free fw on cptkbd and stop applying workaround
+Date: Fri, 24 Nov 2023 17:51:29 +0000
+Message-ID: <20231124172001.797138621@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,89 +42,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Mikhail Khvainitski <me@khvoinitsky.org>
 
-[ Upstream commit 4c6a08125f2249531ec01783a5f4317d7342add5 ]
+[ Upstream commit 46a0a2c96f0f47628190f122c2e3d879e590bcbe ]
 
-When lots of quota changes are made, there may be cases in which an
-inode's quota information is increased and then decreased, such as when
-blocks are added to a file, then deleted from it. If the timing is
-right, function do_qc can add pending quota changes to a transaction,
-then later, another call to do_qc can negate those changes, resulting
-in a net gain of 0. The quota_change information is recorded in the qc
-buffer (and qd element of the inode as well). The buffer is added to the
-transaction by the first call to do_qc, but a subsequent call changes
-the value from non-zero back to zero. At that point it's too late to
-remove the buffer_head from the transaction. Later, when the quota sync
-code is called, the zero-change qd element is discovered and flagged as
-an assert warning. If the fs is mounted with errors=panic, the kernel
-will panic.
+Built-in firmware of cptkbd handles scrolling by itself (when middle
+button is pressed) but with issues: it does not support horizontal and
+hi-res scrolling and upon middle button release it sends middle button
+click even if there was a scrolling event. Commit 3cb5ff0220e3 ("HID:
+lenovo: Hide middle-button press until release") workarounds last
+issue but it's impossible to workaround scrolling-related issues
+without firmware modification.
 
-This is usually seen when files are truncated and the quota changes are
-negated by punch_hole/truncate which uses gfs2_quota_hold and
-gfs2_quota_unhold rather than block allocations that use gfs2_quota_lock
-and gfs2_quota_unlock which automatically do quota sync.
+Likely, Dennis Schneider has reverse engineered the firmware and
+provided an instruction on how to patch it [1]. However,
+aforementioned workaround prevents userspace (libinput) from knowing
+exact moment when middle button has been pressed down and performing
+"On-Button scrolling". This commit detects correctly-behaving patched
+firmware if cursor movement events has been received during middle
+button being pressed and stops applying workaround for this device.
 
-This patch solves the problem by adding a check to qd_check_sync such
-that net-zero quota changes already added to the transaction are no
-longer deemed necessary to be synced, and skipped.
+Link: https://hohlerde.org/rauch/en/elektronik/projekte/tpkbd-fix/ [1]
 
-In this case references are taken for the qd and the slot from do_qc
-so those need to be put. The normal sequence of events for a normal
-non-zero quota change is as follows:
-
-gfs2_quota_change
-   do_qc
-      qd_hold
-      slot_hold
-
-Later, when the changes are to be synced:
-
-gfs2_quota_sync
-   qd_fish
-      qd_check_sync
-         gets qd ref via lockref_get_not_dead
-   do_sync
-      do_qc(QC_SYNC)
-         qd_put
-	    lockref_put_or_lock
-   qd_unlock
-      qd_put
-         lockref_put_or_lock
-
-In the net-zero change case, we add a check to qd_check_sync so it puts
-the qd and slot references acquired in gfs2_quota_change and skip the
-unneeded sync.
-
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Mikhail Khvainitski <me@khvoinitsky.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/hid/hid-lenovo.c | 68 ++++++++++++++++++++++++++--------------
+ 1 file changed, 45 insertions(+), 23 deletions(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index dc77080a82bbf..c381580095baf 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -431,6 +431,17 @@ static int qd_check_sync(struct gfs2_sbd *sdp, struct gfs2_quota_data *qd,
- 	    (sync_gen && (qd->qd_sync_gen >= *sync_gen)))
- 		return 0;
- 
-+	/*
-+	 * If qd_change is 0 it means a pending quota change was negated.
-+	 * We should not sync it, but we still have a qd reference and slot
-+	 * reference taken by gfs2_quota_change -> do_qc that need to be put.
+diff --git a/drivers/hid/hid-lenovo.c b/drivers/hid/hid-lenovo.c
+index 93b1f935e526e..901c1959efed4 100644
+--- a/drivers/hid/hid-lenovo.c
++++ b/drivers/hid/hid-lenovo.c
+@@ -50,7 +50,12 @@ struct lenovo_drvdata {
+ 	int select_right;
+ 	int sensitivity;
+ 	int press_speed;
+-	u8 middlebutton_state; /* 0:Up, 1:Down (undecided), 2:Scrolling */
++	/* 0: Up
++	 * 1: Down (undecided)
++	 * 2: Scrolling
++	 * 3: Patched firmware, disable workaround
 +	 */
-+	if (!qd->qd_change && test_and_clear_bit(QDF_CHANGE, &qd->qd_flags)) {
-+		slot_put(qd);
-+		qd_put(qd);
-+		return 0;
-+	}
-+
- 	if (!lockref_get_not_dead(&qd->qd_lockref))
- 		return 0;
++	u8 middlebutton_state;
+ 	bool fn_lock;
+ };
  
+@@ -529,31 +534,48 @@ static int lenovo_event_cptkbd(struct hid_device *hdev,
+ {
+ 	struct lenovo_drvdata *cptkbd_data = hid_get_drvdata(hdev);
+ 
+-	/* "wheel" scroll events */
+-	if (usage->type == EV_REL && (usage->code == REL_WHEEL ||
+-			usage->code == REL_HWHEEL)) {
+-		/* Scroll events disable middle-click event */
+-		cptkbd_data->middlebutton_state = 2;
+-		return 0;
+-	}
++	if (cptkbd_data->middlebutton_state != 3) {
++		/* REL_X and REL_Y events during middle button pressed
++		 * are only possible on patched, bug-free firmware
++		 * so set middlebutton_state to 3
++		 * to never apply workaround anymore
++		 */
++		if (cptkbd_data->middlebutton_state == 1 &&
++				usage->type == EV_REL &&
++				(usage->code == REL_X || usage->code == REL_Y)) {
++			cptkbd_data->middlebutton_state = 3;
++			/* send middle button press which was hold before */
++			input_event(field->hidinput->input,
++				EV_KEY, BTN_MIDDLE, 1);
++			input_sync(field->hidinput->input);
++		}
+ 
+-	/* Middle click events */
+-	if (usage->type == EV_KEY && usage->code == BTN_MIDDLE) {
+-		if (value == 1) {
+-			cptkbd_data->middlebutton_state = 1;
+-		} else if (value == 0) {
+-			if (cptkbd_data->middlebutton_state == 1) {
+-				/* No scrolling inbetween, send middle-click */
+-				input_event(field->hidinput->input,
+-					EV_KEY, BTN_MIDDLE, 1);
+-				input_sync(field->hidinput->input);
+-				input_event(field->hidinput->input,
+-					EV_KEY, BTN_MIDDLE, 0);
+-				input_sync(field->hidinput->input);
++		/* "wheel" scroll events */
++		if (usage->type == EV_REL && (usage->code == REL_WHEEL ||
++				usage->code == REL_HWHEEL)) {
++			/* Scroll events disable middle-click event */
++			cptkbd_data->middlebutton_state = 2;
++			return 0;
++		}
++
++		/* Middle click events */
++		if (usage->type == EV_KEY && usage->code == BTN_MIDDLE) {
++			if (value == 1) {
++				cptkbd_data->middlebutton_state = 1;
++			} else if (value == 0) {
++				if (cptkbd_data->middlebutton_state == 1) {
++					/* No scrolling inbetween, send middle-click */
++					input_event(field->hidinput->input,
++						EV_KEY, BTN_MIDDLE, 1);
++					input_sync(field->hidinput->input);
++					input_event(field->hidinput->input,
++						EV_KEY, BTN_MIDDLE, 0);
++					input_sync(field->hidinput->input);
++				}
++				cptkbd_data->middlebutton_state = 0;
+ 			}
+-			cptkbd_data->middlebutton_state = 0;
++			return 1;
+ 		}
+-		return 1;
+ 	}
+ 
+ 	return 0;
 -- 
 2.42.0
 
