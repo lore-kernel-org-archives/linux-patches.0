@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A2C3306F;
-	Fri, 24 Nov 2023 19:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4502E84A;
+	Fri, 24 Nov 2023 19:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3+QCjUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B70DC433C7;
-	Fri, 24 Nov 2023 19:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGhaZKIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C5DC433C7;
+	Fri, 24 Nov 2023 19:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852655;
-	bh=oVIk4Lgy04swOaSYIW8bYboqO4W4vRtmHZg9/APwmKI=;
+	s=korg; t=1700852658;
+	bh=a8qk8WHLiatSD0m4wnbcsqq0m8aLBPELxRTRpR9cFAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3+QCjUYUZfy7k1Qbg6Dlpx1flfB/NnR/rQH/CrAUbSh57auZIV6mVmAnoE54Gupq
-	 mCRxveWyLneLLNTzxCDjN3pfh6tCyjhaFm0tlVv1eUSn9EGrRrFcwsjhVRCAi4bvTS
-	 Hh+3cZSH7+L6yaItwuR0svWfk8xQ3y59RI9v2ksI=
+	b=rGhaZKIKVcDdZ5erNe3z4jmya53WRx/81gSyeNxFL0XEWE6AHMMqPz//YVuGkMWCj
+	 D+bNVnkNWYu0+bIKxNPdiE55ye8qR+WDNSRSQ8JiF1yeN5KbzduCiP+8GxK7QKH+vY
+	 TKQaACU7hj6QzDSiKgPQxUjIOUzwwXDksnnNOKeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jijie Shao <shaojijie@huawei.com>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 071/193] net: hns3: fix VF reset fail issue
-Date: Fri, 24 Nov 2023 17:53:18 +0000
-Message-ID: <20231124171950.084562380@linuxfoundation.org>
+Subject: [PATCH 5.10 072/193] tipc: Fix kernel-infoleak due to uninitialized TLV value
+Date: Fri, 24 Nov 2023 17:53:19 +0000
+Message-ID: <20231124171950.125142229@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,81 +43,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 65e98bb56fa3ce2edb400930c05238c9b380500e ]
+[ Upstream commit fb317eb23b5ee4c37b0656a9a52a3db58d9dd072 ]
 
-Currently the reset process in hns3 and firmware watchdog init process is
-asynchronous. We think firmware watchdog initialization is completed
-before VF clear the interrupt source. However, firmware initialization
-may not complete early. So VF will receive multiple reset interrupts
-and fail to reset.
+KMSAN reported the following kernel-infoleak issue:
 
-So we add delay before VF interrupt source and 5 ms delay
-is enough to avoid second reset interrupt.
+=====================================================
+BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
+BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x4ec/0x2bc0 lib/iov_iter.c:186
+ instrument_copy_to_user include/linux/instrumented.h:114 [inline]
+ copy_to_user_iter lib/iov_iter.c:24 [inline]
+ iterate_ubuf include/linux/iov_iter.h:29 [inline]
+ iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
+ iterate_and_advance include/linux/iov_iter.h:271 [inline]
+ _copy_to_iter+0x4ec/0x2bc0 lib/iov_iter.c:186
+ copy_to_iter include/linux/uio.h:197 [inline]
+ simple_copy_to_iter net/core/datagram.c:532 [inline]
+ __skb_datagram_iter.5+0x148/0xe30 net/core/datagram.c:420
+ skb_copy_datagram_iter+0x52/0x210 net/core/datagram.c:546
+ skb_copy_datagram_msg include/linux/skbuff.h:3960 [inline]
+ netlink_recvmsg+0x43d/0x1630 net/netlink/af_netlink.c:1967
+ sock_recvmsg_nosec net/socket.c:1044 [inline]
+ sock_recvmsg net/socket.c:1066 [inline]
+ __sys_recvfrom+0x476/0x860 net/socket.c:2246
+ __do_sys_recvfrom net/socket.c:2264 [inline]
+ __se_sys_recvfrom net/socket.c:2260 [inline]
+ __x64_sys_recvfrom+0x130/0x200 net/socket.c:2260
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-Fixes: 427900d27d86 ("net: hns3: fix the timing issue of VF clearing interrupt sources")
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Uninit was created at:
+ slab_post_alloc_hook+0x103/0x9e0 mm/slab.h:768
+ slab_alloc_node mm/slub.c:3478 [inline]
+ kmem_cache_alloc_node+0x5f7/0xb50 mm/slub.c:3523
+ kmalloc_reserve+0x13c/0x4a0 net/core/skbuff.c:560
+ __alloc_skb+0x2fd/0x770 net/core/skbuff.c:651
+ alloc_skb include/linux/skbuff.h:1286 [inline]
+ tipc_tlv_alloc net/tipc/netlink_compat.c:156 [inline]
+ tipc_get_err_tlv+0x90/0x5d0 net/tipc/netlink_compat.c:170
+ tipc_nl_compat_recv+0x1042/0x15d0 net/tipc/netlink_compat.c:1324
+ genl_family_rcv_msg_doit net/netlink/genetlink.c:972 [inline]
+ genl_family_rcv_msg net/netlink/genetlink.c:1052 [inline]
+ genl_rcv_msg+0x1220/0x12c0 net/netlink/genetlink.c:1067
+ netlink_rcv_skb+0x4a4/0x6a0 net/netlink/af_netlink.c:2545
+ genl_rcv+0x41/0x60 net/netlink/genetlink.c:1076
+ netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
+ netlink_unicast+0xf4b/0x1230 net/netlink/af_netlink.c:1368
+ netlink_sendmsg+0x1242/0x1420 net/netlink/af_netlink.c:1910
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg net/socket.c:745 [inline]
+ ____sys_sendmsg+0x997/0xd60 net/socket.c:2588
+ ___sys_sendmsg+0x271/0x3b0 net/socket.c:2642
+ __sys_sendmsg net/socket.c:2671 [inline]
+ __do_sys_sendmsg net/socket.c:2680 [inline]
+ __se_sys_sendmsg net/socket.c:2678 [inline]
+ __x64_sys_sendmsg+0x2fa/0x4a0 net/socket.c:2678
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+Bytes 34-35 of 36 are uninitialized
+Memory access of size 36 starts at ffff88802d464a00
+Data copied to user address 00007ff55033c0a0
+
+CPU: 0 PID: 30322 Comm: syz-executor.0 Not tainted 6.6.0-14500-g1c41041124bd #10
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc38 04/01/2014
+=====================================================
+
+tipc_add_tlv() puts TLV descriptor and value onto `skb`. This size is
+calculated with TLV_SPACE() macro. It adds the size of struct tlv_desc and
+the length of TLV value passed as an argument, and aligns the result to a
+multiple of TLV_ALIGNTO, i.e., a multiple of 4 bytes.
+
+If the size of struct tlv_desc plus the length of TLV value is not aligned,
+the current implementation leaves the remaining bytes uninitialized. This
+is the cause of the above kernel-infoleak issue.
+
+This patch resolves this issue by clearing data up to an aligned size.
+
+Fixes: d0796d1ef63d ("tipc: convert legacy nl bearer dump to nl compat")
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c  | 14 +++++++++++++-
- .../ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h  |  1 +
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ net/tipc/netlink_compat.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 7d05915c35e38..2bb0ce1761fb0 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -2363,8 +2363,18 @@ static enum hclgevf_evt_cause hclgevf_check_evt_cause(struct hclgevf_dev *hdev,
- 	return HCLGEVF_VECTOR0_EVENT_OTHER;
- }
+diff --git a/net/tipc/netlink_compat.c b/net/tipc/netlink_compat.c
+index 2d62932b59878..6f0c09b6a1531 100644
+--- a/net/tipc/netlink_compat.c
++++ b/net/tipc/netlink_compat.c
+@@ -101,6 +101,7 @@ static int tipc_add_tlv(struct sk_buff *skb, u16 type, void *data, u16 len)
+ 		return -EMSGSIZE;
  
-+static void hclgevf_reset_timer(struct timer_list *t)
-+{
-+	struct hclgevf_dev *hdev = from_timer(hdev, t, reset_timer);
-+
-+	hclgevf_clear_event_cause(hdev, HCLGEVF_VECTOR0_EVENT_RST);
-+	hclgevf_reset_task_schedule(hdev);
-+}
-+
- static irqreturn_t hclgevf_misc_irq_handle(int irq, void *data)
- {
-+#define HCLGEVF_RESET_DELAY	5
-+
- 	enum hclgevf_evt_cause event_cause;
- 	struct hclgevf_dev *hdev = data;
- 	u32 clearval;
-@@ -2376,7 +2386,8 @@ static irqreturn_t hclgevf_misc_irq_handle(int irq, void *data)
- 
- 	switch (event_cause) {
- 	case HCLGEVF_VECTOR0_EVENT_RST:
--		hclgevf_reset_task_schedule(hdev);
-+		mod_timer(&hdev->reset_timer,
-+			  jiffies + msecs_to_jiffies(HCLGEVF_RESET_DELAY));
- 		break;
- 	case HCLGEVF_VECTOR0_EVENT_MBX:
- 		hclgevf_mbx_handler(hdev);
-@@ -3269,6 +3280,7 @@ static int hclgevf_init_hdev(struct hclgevf_dev *hdev)
- 		 HCLGEVF_DRIVER_NAME);
- 
- 	hclgevf_task_schedule(hdev, round_jiffies_relative(HZ));
-+	timer_setup(&hdev->reset_timer, hclgevf_reset_timer, 0);
- 
- 	return 0;
- 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
-index c9b0fa5e8589d..9469af8c49ace 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.h
-@@ -274,6 +274,7 @@ struct hclgevf_dev {
- 	enum hnae3_reset_type reset_level;
- 	unsigned long reset_pending;
- 	enum hnae3_reset_type reset_type;
-+	struct timer_list reset_timer;
- 
- #define HCLGEVF_RESET_REQUESTED		0
- #define HCLGEVF_RESET_PENDING		1
+ 	skb_put(skb, TLV_SPACE(len));
++	memset(tlv, 0, TLV_SPACE(len));
+ 	tlv->tlv_type = htons(type);
+ 	tlv->tlv_len = htons(TLV_LENGTH(len));
+ 	if (len && data)
 -- 
 2.42.0
 
