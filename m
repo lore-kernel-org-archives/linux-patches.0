@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4BD33E9;
-	Fri, 24 Nov 2023 19:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30EC31748;
+	Fri, 24 Nov 2023 19:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENX+dTrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2770FC433C7;
-	Fri, 24 Nov 2023 19:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+auEhTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B162FC433C8;
+	Fri, 24 Nov 2023 19:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852608;
-	bh=eIoQqemLbLL26vsxoIVN+YlI6xbxnjgeTK9Y9lHKK2w=;
+	s=korg; t=1700852611;
+	bh=funH2ee9SLxN9hGUQZc2wrxPeb9IzLZJQkREzyicSqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENX+dTrQ+1dazAXp3TjWlqj75qyBMYqBwp8a+PEfeQc1H4V5tDDKZFT78/KH3BrJf
-	 kgisx1TIOHEftF4hxxMfpsuVqF5EItWhkUSJ1SXCc8SSHmSD2wFTrzlLRQ//aUWVzv
-	 rmwTB9KGumDnOuBWGac1ztVEFh/7niVmH+g3t6cI=
+	b=R+auEhTJ9OnzyJSsDXFYUPm7WFWeCon2TN4EvYJmhLABa7GbFytZAZU/uNcKeKU20
+	 dDtwwIMaf9edWT4ROX6h/zEyA9wFdyr4f/8cRwTvZjccTkP6I9kM6yTS5hyC8dBj7+
+	 0mqqwwash1pH5HCYD2VM7dwkDCRP2tt2Ca/rsOes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	syzbot+59875ffef5cb9c9b29e9@syzkaller.appspotmail.com,
+	"Ricardo B. Marliere" <ricardo@marliere.net>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/193] media: cobalt: Use FIELD_GET() to extract Link Width
-Date: Fri, 24 Nov 2023 17:52:58 +0000
-Message-ID: <20231124171949.313939650@linuxfoundation.org>
+Subject: [PATCH 5.10 052/193] media: imon: fix access to invalid resource for the second interface
+Date: Fri, 24 Nov 2023 17:52:59 +0000
+Message-ID: <20231124171949.354555791@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -37,79 +39,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit f301fedbeecfdce91cb898d6fa5e62f269801fee ]
+[ Upstream commit a1766a4fd83befa0b34d932d532e7ebb7fab1fa7 ]
 
-Use FIELD_GET() to extract PCIe Negotiated and Maximum Link Width fields
-instead of custom masking and shifting.
+imon driver probes two USB interfaces, and at the probe of the second
+interface, the driver assumes blindly that the first interface got
+bound with the same imon driver.  It's usually true, but it's still
+possible that the first interface is bound with another driver via a
+malformed descriptor.  Then it may lead to a memory corruption, as
+spotted by syzkaller; imon driver accesses the data from drvdata as
+struct imon_context object although it's a completely different one
+that was assigned by another driver.
 
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This patch adds a sanity check -- whether the first interface is
+really bound with the imon driver or not -- for avoiding the problem
+above at the probe time.
+
+Reported-by: syzbot+59875ffef5cb9c9b29e9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/000000000000a838aa0603cc74d6@google.com/
+Tested-by: Ricardo B. Marliere <ricardo@marliere.net>
+Link: https://lore.kernel.org/r/20230922005152.163640-1-ricardo@marliere.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cobalt/cobalt-driver.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/media/rc/imon.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/pci/cobalt/cobalt-driver.c b/drivers/media/pci/cobalt/cobalt-driver.c
-index 1bd8bbe57a30e..1f230b14cbfdd 100644
---- a/drivers/media/pci/cobalt/cobalt-driver.c
-+++ b/drivers/media/pci/cobalt/cobalt-driver.c
-@@ -8,6 +8,7 @@
-  *  All rights reserved.
-  */
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 98a38755c694e..253a1d1a840a0 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -2430,6 +2430,12 @@ static int imon_probe(struct usb_interface *interface,
+ 		goto fail;
+ 	}
  
-+#include <linux/bitfield.h>
- #include <linux/delay.h>
- #include <media/i2c/adv7604.h>
- #include <media/i2c/adv7842.h>
-@@ -210,17 +211,17 @@ void cobalt_pcie_status_show(struct cobalt *cobalt)
- 	pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &stat);
- 	cobalt_info("PCIe link capability 0x%08x: %s per lane and %u lanes\n",
- 			capa, get_link_speed(capa),
--			(capa & PCI_EXP_LNKCAP_MLW) >> 4);
-+			FIELD_GET(PCI_EXP_LNKCAP_MLW, capa));
- 	cobalt_info("PCIe link control 0x%04x\n", ctrl);
- 	cobalt_info("PCIe link status 0x%04x: %s per lane and %u lanes\n",
- 		    stat, get_link_speed(stat),
--		    (stat & PCI_EXP_LNKSTA_NLW) >> 4);
-+		    FIELD_GET(PCI_EXP_LNKSTA_NLW, stat));
- 
- 	/* Bus */
- 	pcie_capability_read_dword(pci_bus_dev, PCI_EXP_LNKCAP, &capa);
- 	cobalt_info("PCIe bus link capability 0x%08x: %s per lane and %u lanes\n",
- 			capa, get_link_speed(capa),
--			(capa & PCI_EXP_LNKCAP_MLW) >> 4);
-+			FIELD_GET(PCI_EXP_LNKCAP_MLW, capa));
- 
- 	/* Slot */
- 	pcie_capability_read_dword(pci_dev, PCI_EXP_SLTCAP, &capa);
-@@ -239,7 +240,7 @@ static unsigned pcie_link_get_lanes(struct cobalt *cobalt)
- 	if (!pci_is_pcie(pci_dev))
- 		return 0;
- 	pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &link);
--	return (link & PCI_EXP_LNKSTA_NLW) >> 4;
-+	return FIELD_GET(PCI_EXP_LNKSTA_NLW, link);
- }
- 
- static unsigned pcie_bus_link_get_lanes(struct cobalt *cobalt)
-@@ -250,7 +251,7 @@ static unsigned pcie_bus_link_get_lanes(struct cobalt *cobalt)
- 	if (!pci_is_pcie(pci_dev))
- 		return 0;
- 	pcie_capability_read_dword(pci_dev, PCI_EXP_LNKCAP, &link);
--	return (link & PCI_EXP_LNKCAP_MLW) >> 4;
-+	return FIELD_GET(PCI_EXP_LNKCAP_MLW, link);
- }
- 
- static void msi_config_show(struct cobalt *cobalt, struct pci_dev *pci_dev)
++	if (first_if->dev.driver != interface->dev.driver) {
++		dev_err(&interface->dev, "inconsistent driver matching\n");
++		ret = -EINVAL;
++		goto fail;
++	}
++
+ 	if (ifnum == 0) {
+ 		ictx = imon_init_intf0(interface, id);
+ 		if (!ictx) {
 -- 
 2.42.0
 
