@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6CA286B5;
-	Fri, 24 Nov 2023 18:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14760364A7;
+	Fri, 24 Nov 2023 18:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3wBLCfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23AE6C433C8;
-	Fri, 24 Nov 2023 18:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3UdvQZg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95757C433C8;
+	Fri, 24 Nov 2023 18:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851720;
-	bh=gB0Rmd0XltjEtIBcSMBAEmMpwVuksQiAWVZyScLF2XE=;
+	s=korg; t=1700851722;
+	bh=boli1RNEgcHIj7KS9/cYPtZzwJ2spASjxFU2D8a1Fww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3wBLCfeUfkisaWymDkXf7xs7D431Iiw1MzlftPzdUVnXIqeG91CEvQJwUzrCvq1O
-	 mbwKyECZJLp/+G1h+wV54E5AXFk7PUh7ywzrPmmStV95zs3yqcd/TU5m8ggwiWlec5
-	 /woFTfiZdLyZg/a16iO4Ay7S6T84hH4T8M2zDZys=
+	b=l3UdvQZg0qppKz0U/Rfk62UwO9k9M8aOLHLip/eFDNnHTcegbx7MYS+x2w81kValk
+	 mE4D/HxMCSKnZZpx6AJB5oK59KtlyqVaWJ05gQJROLQKW/VxcOs7jShRhjYWL+CngX
+	 nrR6Zg7AxHUCprCWeeo51imyyGDle5eRV23iE/JQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/372] ALSA: hda: Fix possible null-ptr-deref when assigning a stream
-Date: Fri, 24 Nov 2023 17:47:36 +0000
-Message-ID: <20231124172012.787832916@linuxfoundation.org>
+Subject: [PATCH 6.1 070/372] PCI: tegra194: Use FIELD_GET()/FIELD_PREP() with Link Width fields
+Date: Fri, 24 Nov 2023 17:47:37 +0000
+Message-ID: <20231124172012.826704529@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -36,46 +37,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit f93dc90c2e8ed664985e366aa6459ac83cdab236 ]
+[ Upstream commit 759574abd78e3b47ec45bbd31a64e8832cf73f97 ]
 
-While AudioDSP drivers assign streams exclusively of HOST or LINK type,
-nothing blocks a user to attempt to assign a COUPLED stream. As
-supplied substream instance may be a stub, what is the case when
-code-loading, such scenario ends with null-ptr-deref.
+Use FIELD_GET() to extract PCIe Negotiated Link Width field instead of
+custom masking and shifting.
 
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20231006102857.749143-2-cezary.rojewski@intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Similarly, change custom code that misleadingly used
+PCI_EXP_LNKSTA_NLW_SHIFT to prepare value for PCI_EXP_LNKCAP write
+to use FIELD_PREP() with correct field define (PCI_EXP_LNKCAP_MLW).
+
+Link: https://lore.kernel.org/r/20230919125648.1920-5-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/hdac_stream.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/hda/hdac_stream.c b/sound/hda/hdac_stream.c
-index 1b8be39c38a96..741a5d17ae4cb 100644
---- a/sound/hda/hdac_stream.c
-+++ b/sound/hda/hdac_stream.c
-@@ -338,8 +338,10 @@ struct hdac_stream *snd_hdac_stream_assign(struct hdac_bus *bus,
- 	struct hdac_stream *res = NULL;
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 2241029537a03..5d1ae2706f6ea 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -9,6 +9,7 @@
+  * Author: Vidya Sagar <vidyas@nvidia.com>
+  */
  
- 	/* make a non-zero unique key for the substream */
--	int key = (substream->pcm->device << 16) | (substream->number << 2) |
--		(substream->stream + 1);
-+	int key = (substream->number << 2) | (substream->stream + 1);
-+
-+	if (substream->pcm)
-+		key |= (substream->pcm->device << 16);
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+@@ -324,8 +325,7 @@ static void apply_bad_link_workaround(struct dw_pcie_rp *pp)
+ 	 */
+ 	val = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base + PCI_EXP_LNKSTA);
+ 	if (val & PCI_EXP_LNKSTA_LBMS) {
+-		current_link_width = (val & PCI_EXP_LNKSTA_NLW) >>
+-				     PCI_EXP_LNKSTA_NLW_SHIFT;
++		current_link_width = FIELD_GET(PCI_EXP_LNKSTA_NLW, val);
+ 		if (pcie->init_link_width > current_link_width) {
+ 			dev_warn(pci->dev, "PCIe link is bad, width reduced\n");
+ 			val = dw_pcie_readw_dbi(pci, pcie->pcie_cap_base +
+@@ -740,8 +740,7 @@ static void tegra_pcie_enable_system_interrupts(struct dw_pcie_rp *pp)
  
- 	spin_lock_irq(&bus->reg_lock);
- 	list_for_each_entry(azx_dev, &bus->stream_list, list) {
+ 	val_w = dw_pcie_readw_dbi(&pcie->pci, pcie->pcie_cap_base +
+ 				  PCI_EXP_LNKSTA);
+-	pcie->init_link_width = (val_w & PCI_EXP_LNKSTA_NLW) >>
+-				PCI_EXP_LNKSTA_NLW_SHIFT;
++	pcie->init_link_width = FIELD_GET(PCI_EXP_LNKSTA_NLW, val_w);
+ 
+ 	val_w = dw_pcie_readw_dbi(&pcie->pci, pcie->pcie_cap_base +
+ 				  PCI_EXP_LNKCTL);
+@@ -900,7 +899,7 @@ static int tegra_pcie_dw_host_init(struct dw_pcie_rp *pp)
+ 	/* Configure Max lane width from DT */
+ 	val = dw_pcie_readl_dbi(pci, pcie->pcie_cap_base + PCI_EXP_LNKCAP);
+ 	val &= ~PCI_EXP_LNKCAP_MLW;
+-	val |= (pcie->num_lanes << PCI_EXP_LNKSTA_NLW_SHIFT);
++	val |= FIELD_PREP(PCI_EXP_LNKCAP_MLW, pcie->num_lanes);
+ 	dw_pcie_writel_dbi(pci, pcie->pcie_cap_base + PCI_EXP_LNKCAP, val);
+ 
+ 	/* Clear Slot Clock Configuration bit if SRNS configuration */
 -- 
 2.42.0
 
