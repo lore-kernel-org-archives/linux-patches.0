@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E03381DF;
-	Fri, 24 Nov 2023 18:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C2539FC6;
+	Fri, 24 Nov 2023 18:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmHn1MBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0FBC433C8;
-	Fri, 24 Nov 2023 18:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2XE2361"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9093FC433C8;
+	Fri, 24 Nov 2023 18:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848825;
-	bh=sgjLos859KeSLD66jgY+FM9naP8zQ7JnMaAQoF0p7wM=;
+	s=korg; t=1700848827;
+	bh=quN9LGMfehvNXU04oDQK0nhQFlm8pDU4iE8q2MD0qUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmHn1MBKFQN8J/MLYCA/6+tpWJFi26TjcgXGy7OKI9kj+Ci9K+w98K/DJYCmB0Z9t
-	 g5Rk64wmFvPg4G8L1U9YQxtVlesPugZYuaAbWm2fbhtIeaJ78lvsa2fbUFMSt9V9TZ
-	 iP15gbbOL/W8ND80SjGp046ezzzf3keKeTvW5x0o=
+	b=k2XE2361UIqdrUehDAzPKNMw6vY4zw4xahqWR4rfKzJeGee1GH7ugdMZHArxTFYR6
+	 ow1mzuOaSkA5ON6ORkI8UmkK93M+tcXfm1KOyiA0c+/4JWCqzMmmuTTQf6M9nAibjB
+	 uxjuAXpttizRFILoCFXevkO0RmlVEx91rjzfa/2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 4.19 94/97] drm/amdgpu: fix error handling in amdgpu_bo_list_get()
-Date: Fri, 24 Nov 2023 17:51:07 +0000
-Message-ID: <20231124171937.721251663@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 4.19 70/97] s390/cmma: fix handling of swapper_pg_dir and invalid_pg_dir
+Date: Fri, 24 Nov 2023 17:50:43 +0000
+Message-ID: <20231124171936.750273919@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -35,39 +36,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 12f76050d8d4d10dab96333656b821bd4620d103 upstream.
+commit 84bb41d5df48868055d159d9247b80927f1f70f9 upstream.
 
-We should not leak the pointer where we couldn't grab the reference
-on to the caller because it can be that the error handling still
-tries to put the reference then.
+If the cmma no-dat feature is available the kernel page tables are walked
+to identify and mark all pages which are used for address translation (all
+region, segment, and page tables). In a subsequent loop all other pages are
+marked as "no-dat" pages with the ESSA instruction.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+This information is visible to the hypervisor, so that the hypervisor can
+optimize purging of guest TLB entries. All pages used for swapper_pg_dir
+and invalid_pg_dir are incorrectly marked as no-dat, which in turn can
+result in incorrect guest TLB flushes.
+
+Fix this by marking those pages correctly as being used for DAT.
+
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/mm/page-states.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bo_list.c
-@@ -168,6 +168,7 @@ int amdgpu_bo_list_get(struct amdgpu_fpr
- 	}
+--- a/arch/s390/mm/page-states.c
++++ b/arch/s390/mm/page-states.c
+@@ -204,6 +204,12 @@ void __init cmma_init_nodat(void)
+ 		return;
+ 	/* Mark pages used in kernel page tables */
+ 	mark_kernel_pgd();
++	page = virt_to_page(&swapper_pg_dir);
++	for (i = 0; i < 4; i++)
++		set_bit(PG_arch_1, &page[i].flags);
++	page = virt_to_page(&invalid_pg_dir);
++	for (i = 0; i < 4; i++)
++		set_bit(PG_arch_1, &page[i].flags);
  
- 	rcu_read_unlock();
-+	*result = NULL;
- 	return -ENOENT;
- }
- 
+ 	/* Set all kernel pages not used for page tables to stable/no-dat */
+ 	for_each_memblock(memory, reg) {
 
 
