@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E6A39FD7;
-	Fri, 24 Nov 2023 18:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477F82D787;
+	Fri, 24 Nov 2023 18:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4AbkK7V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C52FC433C9;
-	Fri, 24 Nov 2023 18:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+KmluZs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5036C433C9;
+	Fri, 24 Nov 2023 18:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848976;
-	bh=bVOf6ykizHlY6kILmv25sHkMooZkYK5vkudQxpSOXyE=;
+	s=korg; t=1700848979;
+	bh=6UhsmQXdPZiHGmOxwdWqWoZrrILameD6ptxu+YkThg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4AbkK7Ve7bxjYJxj/KMKJNODdHbzSjo2KwU2clCB/ab9fMhtXxSuju/g5gb4Arcd
-	 kYDHWEUW/E90hQZVDUqs5WLNoOaa1F8BvjBOdlV3cwnc+dLMPa29DCcyPInFJ+YyH+
-	 U8/tX0pbgCAgeUxbD8mWCItqosEsY3ys+AwABcm0=
+	b=L+KmluZs6Y28HWTadDGiJm7lStp8SpHrssJ72XkySca1zwMGrwcIGiudXkhGQH8qw
+	 h+gRTnBJBUQqwP/lJa9dY7fsRh7q96K7iOT+n0YW81m5+DlLlDGNaKc5fmdFzCDETn
+	 729c4IxQvp1c+MeoGy+LOOOzycUpipe2C8X/X7ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 4.14 49/57] i2c: i801: fix potential race in i801_block_transaction_byte_by_byte
-Date: Fri, 24 Nov 2023 17:51:13 +0000
-Message-ID: <20231124171932.125003539@linuxfoundation.org>
+	Joe Ferner <joe.m.ferner@gmail.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 4.14 50/57] media: sharp: fix sharp encoding
+Date: Fri, 24 Nov 2023 17:51:14 +0000
+Message-ID: <20231124171932.159789782@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -44,66 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Sean Young <sean@mess.org>
 
-commit f78ca48a8ba9cdec96e8839351e49eec3233b177 upstream.
+commit 4f7efc71891462ab7606da7039f480d7c1584a13 upstream.
 
-Currently we set SMBHSTCNT_LAST_BYTE only after the host has started
-receiving the last byte. If we get e.g. preempted before setting
-SMBHSTCNT_LAST_BYTE, the host may be finished with receiving the byte
-before SMBHSTCNT_LAST_BYTE is set.
-Therefore change the code to set SMBHSTCNT_LAST_BYTE before writing
-SMBHSTSTS_BYTE_DONE for the byte before the last byte. Now the code
-is also consistent with what we do in i801_isr_byte_done().
+The Sharp protocol[1] encoding has incorrect timings for bit space.
 
-Reported-by: Jean Delvare <jdelvare@suse.com>
-Closes: https://lore.kernel.org/linux-i2c/20230828152747.09444625@endymion.delvare/
+[1] https://www.sbprojects.net/knowledge/ir/sharp.php
+
+Fixes: d35afc5fe097 ("[media] rc: ir-sharp-decoder: Add encode capability")
 Cc: stable@vger.kernel.org
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Reported-by: Joe Ferner <joe.m.ferner@gmail.com>
+Closes: https://sourceforge.net/p/lirc/mailman/message/38604507/
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/media/rc/ir-sharp-decoder.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -707,15 +707,11 @@ static int i801_block_transaction_byte_b
- 		return i801_check_post(priv, status);
- 	}
+--- a/drivers/media/rc/ir-sharp-decoder.c
++++ b/drivers/media/rc/ir-sharp-decoder.c
+@@ -23,7 +23,9 @@
+ #define SHARP_UNIT		40000  /* ns */
+ #define SHARP_BIT_PULSE		(8    * SHARP_UNIT) /* 320us */
+ #define SHARP_BIT_0_PERIOD	(25   * SHARP_UNIT) /* 1ms (680us space) */
+-#define SHARP_BIT_1_PERIOD	(50   * SHARP_UNIT) /* 2ms (1680ms space) */
++#define SHARP_BIT_1_PERIOD	(50   * SHARP_UNIT) /* 2ms (1680us space) */
++#define SHARP_BIT_0_SPACE	(17   * SHARP_UNIT) /* 680us space */
++#define SHARP_BIT_1_SPACE	(42   * SHARP_UNIT) /* 1680us space */
+ #define SHARP_ECHO_SPACE	(1000 * SHARP_UNIT) /* 40 ms */
+ #define SHARP_TRAILER_SPACE	(125  * SHARP_UNIT) /* 5 ms (even longer) */
  
--	for (i = 1; i <= len; i++) {
--		if (i == len && read_write == I2C_SMBUS_READ)
--			smbcmd |= SMBHSTCNT_LAST_BYTE;
--		outb_p(smbcmd, SMBHSTCNT(priv));
--
--		if (i == 1)
--			outb_p(inb(SMBHSTCNT(priv)) | SMBHSTCNT_START,
--			       SMBHSTCNT(priv));
-+	if (len == 1 && read_write == I2C_SMBUS_READ)
-+		smbcmd |= SMBHSTCNT_LAST_BYTE;
-+	outb_p(smbcmd | SMBHSTCNT_START, SMBHSTCNT(priv));
- 
-+	for (i = 1; i <= len; i++) {
- 		status = i801_wait_byte_done(priv);
- 		if (status)
- 			goto exit;
-@@ -738,9 +734,12 @@ static int i801_block_transaction_byte_b
- 			data->block[0] = len;
- 		}
- 
--		/* Retrieve/store value in SMBBLKDAT */
--		if (read_write == I2C_SMBUS_READ)
-+		if (read_write == I2C_SMBUS_READ) {
- 			data->block[i] = inb_p(SMBBLKDAT(priv));
-+			if (i == len - 1)
-+				outb_p(smbcmd | SMBHSTCNT_LAST_BYTE, SMBHSTCNT(priv));
-+		}
-+
- 		if (read_write == I2C_SMBUS_WRITE && i+1 <= len)
- 			outb_p(data->block[i+1], SMBBLKDAT(priv));
- 
+@@ -177,8 +179,8 @@ static const struct ir_raw_timings_pd ir
+ 	.header_pulse  = 0,
+ 	.header_space  = 0,
+ 	.bit_pulse     = SHARP_BIT_PULSE,
+-	.bit_space[0]  = SHARP_BIT_0_PERIOD,
+-	.bit_space[1]  = SHARP_BIT_1_PERIOD,
++	.bit_space[0]  = SHARP_BIT_0_SPACE,
++	.bit_space[1]  = SHARP_BIT_1_SPACE,
+ 	.trailer_pulse = SHARP_BIT_PULSE,
+ 	.trailer_space = SHARP_ECHO_SPACE,
+ 	.msb_first     = 1,
 
 
