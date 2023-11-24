@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A55F2EAEA;
-	Fri, 24 Nov 2023 19:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223193307D;
+	Fri, 24 Nov 2023 19:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfyU++Tp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D6EC433C8;
-	Fri, 24 Nov 2023 19:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbvsvO6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491C2C433C8;
+	Fri, 24 Nov 2023 19:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852671;
-	bh=532PADS6SRyGoyjXw/jeolOJrQe0mkZZcn/2YEqFyVc=;
+	s=korg; t=1700852673;
+	bh=Jxh8q6WpK4jW38pg9Y51alZdIMmwdmjxI9wyxGg5KAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfyU++TpxNfgmdS47fAqOFNZC5N+CQGlRTDvFfn3P5r6hBL7hgFxXFMwGCveUwJyG
-	 Ou//rK0K3V4XG0nwLzk3g9/pEm90qinxtBJsUaE0HGs9Iur/D4fykVD+mwupxsLW1S
-	 KsCXpfcCQKgKRVE4D4/IxwRdvDn14YkPLFOfvUz0=
+	b=rbvsvO6dI4U++fpE0AaF04vKu7H7CIU4yadTWEZwL8kscGe8bhiNxZTOCsy0245wi
+	 Nym87VW6J+EhQ7NIv+yup+hp2MDMVWSJylcHOP/vkyvx86iVrAIbFHXY7Mz2BJmS0e
+	 2oaGx5tU9nA0sYxhQvg/JleJbihSFovf8hMEJI0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/193] net: ethernet: cortina: Fix max RX frame define
-Date: Fri, 24 Nov 2023 17:53:24 +0000
-Message-ID: <20231124171950.312293476@linuxfoundation.org>
+Subject: [PATCH 5.10 060/193] SUNRPC: ECONNRESET might require a rebind
+Date: Fri, 24 Nov 2023 17:53:07 +0000
+Message-ID: <20231124171949.656273095@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -44,53 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 510e35fb931ffc3b100e5d5ae4595cd3beca9f1a ]
+[ Upstream commit 4b09ca1508a60be30b2e3940264e93d7aeb5c97e ]
 
-Enumerator 3 is 1548 bytes according to the datasheet.
-Not 1542.
+If connect() is returning ECONNRESET, it usually means that nothing is
+listening on that port. If so, a rebind might be required in order to
+obtain the new port on which the RPC service is listening.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20231109-gemini-largeframe-fix-v4-1-6e611528db08@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fd01b2597941 ("SUNRPC: ECONNREFUSED should cause a rebind.")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 4 ++--
- drivers/net/ethernet/cortina/gemini.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/sunrpc/clnt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 85ea073b742fb..6c735e0d1950f 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -433,8 +433,8 @@ static const struct gmac_max_framelen gmac_maxlens[] = {
- 		.val = CONFIG0_MAXLEN_1536,
- 	},
- 	{
--		.max_l3_len = 1542,
--		.val = CONFIG0_MAXLEN_1542,
-+		.max_l3_len = 1548,
-+		.val = CONFIG0_MAXLEN_1548,
- 	},
- 	{
- 		.max_l3_len = 9212,
-diff --git a/drivers/net/ethernet/cortina/gemini.h b/drivers/net/ethernet/cortina/gemini.h
-index 9fdf77d5eb374..99efb11557436 100644
---- a/drivers/net/ethernet/cortina/gemini.h
-+++ b/drivers/net/ethernet/cortina/gemini.h
-@@ -787,7 +787,7 @@ union gmac_config0 {
- #define  CONFIG0_MAXLEN_1536	0
- #define  CONFIG0_MAXLEN_1518	1
- #define  CONFIG0_MAXLEN_1522	2
--#define  CONFIG0_MAXLEN_1542	3
-+#define  CONFIG0_MAXLEN_1548	3
- #define  CONFIG0_MAXLEN_9k	4	/* 9212 */
- #define  CONFIG0_MAXLEN_10k	5	/* 10236 */
- #define  CONFIG0_MAXLEN_1518__6	6
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index c7c1754f87440..da34b23a66dbd 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -2074,6 +2074,7 @@ call_connect_status(struct rpc_task *task)
+ 	task->tk_status = 0;
+ 	switch (status) {
+ 	case -ECONNREFUSED:
++	case -ECONNRESET:
+ 		/* A positive refusal suggests a rebind is needed. */
+ 		if (RPC_IS_SOFTCONN(task))
+ 			break;
+@@ -2082,7 +2083,6 @@ call_connect_status(struct rpc_task *task)
+ 			goto out_retry;
+ 		}
+ 		fallthrough;
+-	case -ECONNRESET:
+ 	case -ECONNABORTED:
+ 	case -ENETDOWN:
+ 	case -ENETUNREACH:
 -- 
 2.42.0
 
