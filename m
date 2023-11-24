@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C19B2C85B;
-	Fri, 24 Nov 2023 18:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB25C33CCA;
+	Fri, 24 Nov 2023 18:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKhRkIyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A94C433C8;
-	Fri, 24 Nov 2023 18:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ReTyWWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B07CC433C9;
+	Fri, 24 Nov 2023 18:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850840;
-	bh=8lrIAnpRM9sRLzOyzvvcC6FMyUv1Qbd7pTjRroskC+k=;
+	s=korg; t=1700850842;
+	bh=eD9oaz7ZqXo7LK1wNEw3onLHfn9rISa2uDALU/fKXFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKhRkIySSshv3ol42vh14oqWSKKHs5WPLsz/89Rq6ZTgWH32ZglcZ1EGm4bJHCYBR
-	 s4gex3m+G5UQVNjxNzSCVOffraACv0xaRt9V7OLs8smxJvqkdyWoXuQEKjio79GSiB
-	 Fg0hdKCTdgmYM7g1tVEK8sZNULLQUwKORV1EWPZY=
+	b=2ReTyWWG2P34IbiH+UfJumtEiX9iYU5B9xQbOlFNtL8sU5scedXURjH7XjLeGHHtv
+	 WZFPgl+59060KM7OJ6DyTdw/5OkFa6FZPWKSwMkmimjdRuBxIEzn5kLL9mrnGyv2U0
+	 z/ABwrdNo7MAjZQC9rLPqGEGZ9aez1OVap0H1mvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 209/491] net/mlx5e: Make tx_port_ts logic resilient to out-of-order CQEs
-Date: Fri, 24 Nov 2023 17:47:25 +0000
-Message-ID: <20231124172030.795217163@linuxfoundation.org>
+Subject: [PATCH 6.5 210/491] net/mlx5e: Add recovery flow for tx devlink health reporter for unhealthy PTP SQ
+Date: Fri, 24 Nov 2023 17:47:26 +0000
+Message-ID: <20231124172030.829870167@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -45,57 +45,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-[ Upstream commit 3178308ad4ca38955cad684d235153d4939f1fcd ]
+[ Upstream commit 53b836a44db4259b94ffcfff321fb3d63f976b76 ]
 
-Use a map structure for associating CQEs containing port timestamping
-information with the appropriate skb. Track order of WQEs submitted using a
-FIFO. Check if the corresponding port timestamping CQEs from the lookup
-values in the FIFO are considered dropped due to time elapsed. Return the
-lookup value to a freelist after consuming the skb. Reuse the freed lookup
-in future WQE submission iterations.
-
-The map structure uses an integer identifier for the key and returns an skb
-corresponding to that identifier. Embed the integer identifier in the WQE
-submitted to the WQ for the transmit path when the SQ is a PTP (port
-timestamping) SQ. The embedded identifier can then be queried using a field
-in the CQE of the corresponding port timestamping CQ. In the port
-timestamping napi_poll context, the identifier is queried from the CQE
-polled from CQ and used to lookup the corresponding skb from the WQE submit
-path. The skb reference is removed from map and then embedded with the port
-HW timestamp information from the CQE and eventually consumed.
-
-The metadata freelist FIFO is an array containing integer identifiers that
-can be pushed and popped in the FIFO. The purpose of this structure is
-bookkeeping what identifier values can safely be used in a subsequent WQE
-submission and should not contain identifiers that have still not been
-reaped by processing a corresponding CQE completion on the port
-timestamping CQ.
-
-The ts_cqe_pending_list structure is a combination of an array and linked
-list. The array is pre-populated with the nodes that will be added and
-removed from the head of the linked list. Each node contains the unique
-identifier value associated with the values submitted in the WQEs and
-retrieved in the port timestamping CQEs. When a WQE is submitted, the node
-in the array corresponding to the identifier popped from the metadata
-freelist is added to the end of the CQE pending list and is marked as
-"in-use". The node is removed from the linked list under two conditions.
-The first condition is that the corresponding port timestamping CQE is
-polled in the PTP napi_poll context. The second condition is that more than
-a second has elapsed since the DMA timestamp value corresponding to the WQE
-submission. When the first condition occurs, the "in-use" bit in the linked
-list node is cleared, and the resources corresponding to the WQE submission
-are then released. The second condition, however, indicates that the port
-timestamping CQE will likely never be delivered. It's not impossible for
-the device to post a CQE after an infinite amount of time though highly
-improbable. In order to be resilient to this improbable case, resources
-related to the corresponding WQE submission are still kept, the identifier
-value is not returned to the freelist, and the "in-use" bit is cleared on
-the node to indicate that it's no longer part of the linked list of "likely
-to be delivered" port timestamping CQE identifiers. A count for the number
-of port timestamping CQEs considered highly likely to never be delivered by
-the device is maintained. This count gets decremented in the unlikely event
-a port timestamping CQE considered unlikely to ever be delivered is polled
-in the PTP napi_poll context.
+A new check for the tx devlink health reporter is introduced for
+determining when the PTP port timestamping SQ is considered unhealthy. If
+there are enough CQEs considered never to be delivered, the space that can
+be utilized on the SQ decreases significantly, impacting performance and
+usability of the SQ. The health reporter is triggered when the number of
+likely never delivered port timestamping CQEs that utilize the space of the
+PTP SQ is greater than 93.75% of the total capacity of the SQ. A devlink
+health reporter recover method is also provided for this specific TX error
+context that restarts the PTP SQ.
 
 Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
@@ -103,565 +63,226 @@ Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Stable-dep-of: 92214be5979c ("net/mlx5e: Update doorbell for port timestamping CQ before the software counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/counters.rst       |   6 +
- .../net/ethernet/mellanox/mlx5/core/en/ptp.c  | 215 +++++++++++++-----
- .../net/ethernet/mellanox/mlx5/core/en/ptp.h  |  57 ++++-
- .../ethernet/mellanox/mlx5/core/en_ethtool.c  |   3 +-
- .../ethernet/mellanox/mlx5/core/en_stats.c    |   4 +-
- .../ethernet/mellanox/mlx5/core/en_stats.h    |   4 +-
- .../net/ethernet/mellanox/mlx5/core/en_tx.c   |  28 ++-
- 7 files changed, 236 insertions(+), 81 deletions(-)
+ Documentation/networking/devlink/mlx5.rst     |  5 +-
+ .../ethernet/mellanox/mlx5/core/en/health.h   |  1 +
+ .../net/ethernet/mellanox/mlx5/core/en/ptp.c  | 22 +++++++
+ .../net/ethernet/mellanox/mlx5/core/en/ptp.h  |  2 +
+ .../mellanox/mlx5/core/en/reporter_tx.c       | 65 +++++++++++++++++++
+ 5 files changed, 94 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/counters.rst b/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/counters.rst
-index a395df9c27513..008e560e12b58 100644
---- a/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/counters.rst
-+++ b/Documentation/networking/device_drivers/ethernet/mellanox/mlx5/counters.rst
-@@ -683,6 +683,12 @@ the software port.
-        time protocol.
-      - Error
+diff --git a/Documentation/networking/devlink/mlx5.rst b/Documentation/networking/devlink/mlx5.rst
+index 196a4bb28df1e..702f204a3dbd3 100644
+--- a/Documentation/networking/devlink/mlx5.rst
++++ b/Documentation/networking/devlink/mlx5.rst
+@@ -135,7 +135,7 @@ Health reporters
  
-+   * - `ptp_cq[i]_late_cqe`
-+     - Number of times a CQE has been delivered on the PTP timestamping CQ when
-+       the CQE was not expected since a certain amount of time had elapsed where
-+       the device typically ensures not posting the CQE.
-+     - Error
-+
- .. [#ring_global] The corresponding ring and global counters do not share the
-                   same name (i.e. do not follow the common naming scheme).
+ tx reporter
+ -----------
+-The tx reporter is responsible for reporting and recovering of the following two error scenarios:
++The tx reporter is responsible for reporting and recovering of the following three error scenarios:
  
+ - tx timeout
+     Report on kernel tx timeout detection.
+@@ -143,6 +143,9 @@ The tx reporter is responsible for reporting and recovering of the following two
+ - tx error completion
+     Report on error tx completion.
+     Recover by flushing the tx queue and reset it.
++- tx PTP port timestamping CQ unhealthy
++    Report too many CQEs never delivered on port ts CQ.
++    Recover by flushing and re-creating all PTP channels.
+ 
+ tx reporter also support on demand diagnose callback, on which it provides
+ real time information of its send queues status.
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/health.h b/drivers/net/ethernet/mellanox/mlx5/core/en/health.h
+index 0107e4e73bb06..415840c3ef84f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/health.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/health.h
+@@ -18,6 +18,7 @@ void mlx5e_reporter_tx_create(struct mlx5e_priv *priv);
+ void mlx5e_reporter_tx_destroy(struct mlx5e_priv *priv);
+ void mlx5e_reporter_tx_err_cqe(struct mlx5e_txqsq *sq);
+ int mlx5e_reporter_tx_timeout(struct mlx5e_txqsq *sq);
++void mlx5e_reporter_tx_ptpsq_unhealthy(struct mlx5e_ptpsq *ptpsq);
+ 
+ int mlx5e_health_cq_diag_fmsg(struct mlx5e_cq *cq, struct devlink_fmsg *fmsg);
+ int mlx5e_health_cq_common_diag_fmsg(struct mlx5e_cq *cq, struct devlink_fmsg *fmsg);
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
-index b0b429a0321ed..8680d21f3e7b0 100644
+index 8680d21f3e7b0..bb11e644d24f7 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.c
-@@ -5,6 +5,8 @@
+@@ -2,6 +2,7 @@
+ // Copyright (c) 2020 Mellanox Technologies
+ 
+ #include "en/ptp.h"
++#include "en/health.h"
  #include "en/txrx.h"
  #include "en/params.h"
  #include "en/fs_tt_redirect.h"
-+#include <linux/list.h>
-+#include <linux/spinlock.h>
+@@ -140,6 +141,12 @@ mlx5e_ptp_metadata_map_remove(struct mlx5e_ptp_metadata_map *map, u16 metadata)
+ 	return skb;
+ }
  
- struct mlx5e_ptp_fs {
- 	struct mlx5_flow_handle *l2_rule;
-@@ -19,6 +21,48 @@ struct mlx5e_ptp_params {
- 	struct mlx5e_rq_param rq_param;
- };
- 
-+struct mlx5e_ptp_port_ts_cqe_tracker {
-+	u8 metadata_id;
-+	bool inuse : 1;
-+	struct list_head entry;
-+};
-+
-+struct mlx5e_ptp_port_ts_cqe_list {
-+	struct mlx5e_ptp_port_ts_cqe_tracker *nodes;
-+	struct list_head tracker_list_head;
-+	/* Sync list operations in xmit and napi_poll contexts */
-+	spinlock_t tracker_list_lock;
-+};
-+
-+static inline void
-+mlx5e_ptp_port_ts_cqe_list_add(struct mlx5e_ptp_port_ts_cqe_list *list, u8 metadata)
++static bool mlx5e_ptp_metadata_map_unhealthy(struct mlx5e_ptp_metadata_map *map)
 +{
-+	struct mlx5e_ptp_port_ts_cqe_tracker *tracker = &list->nodes[metadata];
-+
-+	WARN_ON_ONCE(tracker->inuse);
-+	tracker->inuse = true;
-+	spin_lock(&list->tracker_list_lock);
-+	list_add_tail(&tracker->entry, &list->tracker_list_head);
-+	spin_unlock(&list->tracker_list_lock);
++	/* Considered beginning unhealthy state if size * 15 / 2^4 cannot be reclaimed. */
++	return map->undelivered_counter > (map->capacity >> 4) * 15;
 +}
 +
-+static void
-+mlx5e_ptp_port_ts_cqe_list_remove(struct mlx5e_ptp_port_ts_cqe_list *list, u8 metadata)
-+{
-+	struct mlx5e_ptp_port_ts_cqe_tracker *tracker = &list->nodes[metadata];
-+
-+	WARN_ON_ONCE(!tracker->inuse);
-+	tracker->inuse = false;
-+	spin_lock(&list->tracker_list_lock);
-+	list_del(&tracker->entry);
-+	spin_unlock(&list->tracker_list_lock);
-+}
-+
-+void mlx5e_ptpsq_track_metadata(struct mlx5e_ptpsq *ptpsq, u8 metadata)
-+{
-+	mlx5e_ptp_port_ts_cqe_list_add(ptpsq->ts_cqe_pending_list, metadata);
-+}
-+
- struct mlx5e_skb_cb_hwtstamp {
- 	ktime_t cqe_hwtstamp;
- 	ktime_t port_hwtstamp;
-@@ -79,75 +123,88 @@ void mlx5e_skb_cb_hwtstamp_handler(struct sk_buff *skb, int hwtstamp_type,
- 	memset(skb->cb, 0, sizeof(struct mlx5e_skb_cb_hwtstamp));
- }
- 
--#define PTP_WQE_CTR2IDX(val) ((val) & ptpsq->ts_cqe_ctr_mask)
--
--static bool mlx5e_ptp_ts_cqe_drop(struct mlx5e_ptpsq *ptpsq, u16 skb_ci, u16 skb_id)
-+static struct sk_buff *
-+mlx5e_ptp_metadata_map_lookup(struct mlx5e_ptp_metadata_map *map, u16 metadata)
+ static void mlx5e_ptpsq_mark_ts_cqes_undelivered(struct mlx5e_ptpsq *ptpsq,
+ 						 ktime_t port_tstamp)
  {
--	return (ptpsq->ts_cqe_ctr_mask && (skb_ci != skb_id));
-+	return map->data[metadata];
- }
- 
--static bool mlx5e_ptp_ts_cqe_ooo(struct mlx5e_ptpsq *ptpsq, u16 skb_id)
-+static struct sk_buff *
-+mlx5e_ptp_metadata_map_remove(struct mlx5e_ptp_metadata_map *map, u16 metadata)
- {
--	u16 skb_ci = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_cc);
--	u16 skb_pi = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_pc);
-+	struct sk_buff *skb;
- 
--	if (PTP_WQE_CTR2IDX(skb_id - skb_ci) >= PTP_WQE_CTR2IDX(skb_pi - skb_ci))
--		return true;
-+	skb = map->data[metadata];
-+	map->data[metadata] = NULL;
- 
--	return false;
-+	return skb;
- }
- 
--static void mlx5e_ptp_skb_fifo_ts_cqe_resync(struct mlx5e_ptpsq *ptpsq, u16 skb_ci,
--					     u16 skb_id, int budget)
-+static void mlx5e_ptpsq_mark_ts_cqes_undelivered(struct mlx5e_ptpsq *ptpsq,
-+						 ktime_t port_tstamp)
- {
--	struct skb_shared_hwtstamps hwts = {};
--	struct sk_buff *skb;
-+	struct mlx5e_ptp_port_ts_cqe_list *cqe_list = ptpsq->ts_cqe_pending_list;
-+	ktime_t timeout = ns_to_ktime(MLX5E_PTP_TS_CQE_UNDELIVERED_TIMEOUT);
-+	struct mlx5e_ptp_metadata_map *metadata_map = &ptpsq->metadata_map;
-+	struct mlx5e_ptp_port_ts_cqe_tracker *pos, *n;
-+
-+	spin_lock(&cqe_list->tracker_list_lock);
-+	list_for_each_entry_safe(pos, n, &cqe_list->tracker_list_head, entry) {
-+		struct sk_buff *skb =
-+			mlx5e_ptp_metadata_map_lookup(metadata_map, pos->metadata_id);
-+		ktime_t dma_tstamp = mlx5e_skb_cb_get_hwts(skb)->cqe_hwtstamp;
- 
--	ptpsq->cq_stats->resync_event++;
-+		if (!dma_tstamp ||
-+		    ktime_after(ktime_add(dma_tstamp, timeout), port_tstamp))
-+			break;
- 
--	while (skb_ci != skb_id) {
--		skb = mlx5e_skb_fifo_pop(&ptpsq->skb_fifo);
--		hwts.hwtstamp = mlx5e_skb_cb_get_hwts(skb)->cqe_hwtstamp;
--		skb_tstamp_tx(skb, &hwts);
--		ptpsq->cq_stats->resync_cqe++;
--		napi_consume_skb(skb, budget);
--		skb_ci = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_cc);
-+		metadata_map->undelivered_counter++;
-+		WARN_ON_ONCE(!pos->inuse);
-+		pos->inuse = false;
-+		list_del(&pos->entry);
- 	}
-+	spin_unlock(&cqe_list->tracker_list_lock);
- }
- 
-+#define PTP_WQE_CTR2IDX(val) ((val) & ptpsq->ts_cqe_ctr_mask)
-+
- static void mlx5e_ptp_handle_ts_cqe(struct mlx5e_ptpsq *ptpsq,
- 				    struct mlx5_cqe64 *cqe,
- 				    int budget)
- {
--	u16 skb_id = PTP_WQE_CTR2IDX(be16_to_cpu(cqe->wqe_counter));
--	u16 skb_ci = PTP_WQE_CTR2IDX(ptpsq->skb_fifo_cc);
-+	struct mlx5e_ptp_port_ts_cqe_list *pending_cqe_list = ptpsq->ts_cqe_pending_list;
-+	u8 metadata_id = PTP_WQE_CTR2IDX(be16_to_cpu(cqe->wqe_counter));
-+	bool is_err_cqe = !!MLX5E_RX_ERR_CQE(cqe);
- 	struct mlx5e_txqsq *sq = &ptpsq->txqsq;
- 	struct sk_buff *skb;
- 	ktime_t hwtstamp;
- 
--	if (unlikely(MLX5E_RX_ERR_CQE(cqe))) {
--		skb = mlx5e_skb_fifo_pop(&ptpsq->skb_fifo);
--		ptpsq->cq_stats->err_cqe++;
--		goto out;
-+	if (likely(pending_cqe_list->nodes[metadata_id].inuse)) {
-+		mlx5e_ptp_port_ts_cqe_list_remove(pending_cqe_list, metadata_id);
-+	} else {
-+		/* Reclaim space in the unlikely event CQE was delivered after
-+		 * marking it late.
-+		 */
-+		ptpsq->metadata_map.undelivered_counter--;
-+		ptpsq->cq_stats->late_cqe++;
- 	}
- 
--	if (mlx5e_ptp_ts_cqe_drop(ptpsq, skb_ci, skb_id)) {
--		if (mlx5e_ptp_ts_cqe_ooo(ptpsq, skb_id)) {
--			/* already handled by a previous resync */
--			ptpsq->cq_stats->ooo_cqe_drop++;
--			return;
--		}
--		mlx5e_ptp_skb_fifo_ts_cqe_resync(ptpsq, skb_ci, skb_id, budget);
-+	skb = mlx5e_ptp_metadata_map_remove(&ptpsq->metadata_map, metadata_id);
-+
-+	if (unlikely(is_err_cqe)) {
-+		ptpsq->cq_stats->err_cqe++;
-+		goto out;
- 	}
- 
--	skb = mlx5e_skb_fifo_pop(&ptpsq->skb_fifo);
- 	hwtstamp = mlx5e_cqe_ts_to_ns(sq->ptp_cyc2time, sq->clock, get_cqe_ts(cqe));
- 	mlx5e_skb_cb_hwtstamp_handler(skb, MLX5E_SKB_CB_PORT_HWTSTAMP,
- 				      hwtstamp, ptpsq->cq_stats);
- 	ptpsq->cq_stats->cqe++;
- 
-+	mlx5e_ptpsq_mark_ts_cqes_undelivered(ptpsq, hwtstamp);
+@@ -205,6 +212,9 @@ static void mlx5e_ptp_handle_ts_cqe(struct mlx5e_ptpsq *ptpsq,
  out:
  	napi_consume_skb(skb, budget);
-+	mlx5e_ptp_metadata_fifo_push(&ptpsq->metadata_freelist, metadata_id);
+ 	mlx5e_ptp_metadata_fifo_push(&ptpsq->metadata_freelist, metadata_id);
++	if (unlikely(mlx5e_ptp_metadata_map_unhealthy(&ptpsq->metadata_map)) &&
++	    !test_and_set_bit(MLX5E_SQ_STATE_RECOVERING, &sq->state))
++		queue_work(ptpsq->txqsq.priv->wq, &ptpsq->report_unhealthy_work);
  }
  
  static bool mlx5e_ptp_poll_ts_cq(struct mlx5e_cq *cq, int budget)
-@@ -291,36 +348,78 @@ static void mlx5e_ptp_destroy_sq(struct mlx5_core_dev *mdev, u32 sqn)
- 
- static int mlx5e_ptp_alloc_traffic_db(struct mlx5e_ptpsq *ptpsq, int numa)
- {
--	int wq_sz = mlx5_wq_cyc_get_size(&ptpsq->txqsq.wq);
--	struct mlx5_core_dev *mdev = ptpsq->txqsq.mdev;
-+	struct mlx5e_ptp_metadata_fifo *metadata_freelist = &ptpsq->metadata_freelist;
-+	struct mlx5e_ptp_metadata_map *metadata_map = &ptpsq->metadata_map;
-+	struct mlx5e_ptp_port_ts_cqe_list *cqe_list;
-+	int db_sz;
-+	int md;
- 
--	ptpsq->skb_fifo.fifo = kvzalloc_node(array_size(wq_sz, sizeof(*ptpsq->skb_fifo.fifo)),
--					     GFP_KERNEL, numa);
--	if (!ptpsq->skb_fifo.fifo)
-+	cqe_list = kvzalloc_node(sizeof(*ptpsq->ts_cqe_pending_list), GFP_KERNEL, numa);
-+	if (!cqe_list)
- 		return -ENOMEM;
-+	ptpsq->ts_cqe_pending_list = cqe_list;
-+
-+	db_sz = min_t(u32, mlx5_wq_cyc_get_size(&ptpsq->txqsq.wq),
-+		      1 << MLX5_CAP_GEN_2(ptpsq->txqsq.mdev,
-+					  ts_cqe_metadata_size2wqe_counter));
-+	ptpsq->ts_cqe_ctr_mask = db_sz - 1;
-+
-+	cqe_list->nodes = kvzalloc_node(array_size(db_sz, sizeof(*cqe_list->nodes)),
-+					GFP_KERNEL, numa);
-+	if (!cqe_list->nodes)
-+		goto free_cqe_list;
-+	INIT_LIST_HEAD(&cqe_list->tracker_list_head);
-+	spin_lock_init(&cqe_list->tracker_list_lock);
-+
-+	metadata_freelist->data =
-+		kvzalloc_node(array_size(db_sz, sizeof(*metadata_freelist->data)),
-+			      GFP_KERNEL, numa);
-+	if (!metadata_freelist->data)
-+		goto free_cqe_list_nodes;
-+	metadata_freelist->mask = ptpsq->ts_cqe_ctr_mask;
-+
-+	for (md = 0; md < db_sz; ++md) {
-+		cqe_list->nodes[md].metadata_id = md;
-+		metadata_freelist->data[md] = md;
-+	}
-+	metadata_freelist->pc = db_sz;
-+
-+	metadata_map->data =
-+		kvzalloc_node(array_size(db_sz, sizeof(*metadata_map->data)),
-+			      GFP_KERNEL, numa);
-+	if (!metadata_map->data)
-+		goto free_metadata_freelist;
-+	metadata_map->capacity = db_sz;
- 
--	ptpsq->skb_fifo.pc   = &ptpsq->skb_fifo_pc;
--	ptpsq->skb_fifo.cc   = &ptpsq->skb_fifo_cc;
--	ptpsq->skb_fifo.mask = wq_sz - 1;
--	if (MLX5_CAP_GEN_2(mdev, ts_cqe_metadata_size2wqe_counter))
--		ptpsq->ts_cqe_ctr_mask =
--			(1 << MLX5_CAP_GEN_2(mdev, ts_cqe_metadata_size2wqe_counter)) - 1;
- 	return 0;
-+
-+free_metadata_freelist:
-+	kvfree(metadata_freelist->data);
-+free_cqe_list_nodes:
-+	kvfree(cqe_list->nodes);
-+free_cqe_list:
-+	kvfree(cqe_list);
-+	return -ENOMEM;
+@@ -422,6 +432,14 @@ static void mlx5e_ptp_free_traffic_db(struct mlx5e_ptpsq *ptpsq)
+ 	kvfree(ptpsq->ts_cqe_pending_list);
  }
  
--static void mlx5e_ptp_drain_skb_fifo(struct mlx5e_skb_fifo *skb_fifo)
-+static void mlx5e_ptp_drain_metadata_map(struct mlx5e_ptp_metadata_map *map)
- {
--	while (*skb_fifo->pc != *skb_fifo->cc) {
--		struct sk_buff *skb = mlx5e_skb_fifo_pop(skb_fifo);
-+	int idx;
++static void mlx5e_ptpsq_unhealthy_work(struct work_struct *work)
++{
++	struct mlx5e_ptpsq *ptpsq =
++		container_of(work, struct mlx5e_ptpsq, report_unhealthy_work);
 +
-+	for (idx = 0; idx < map->capacity; ++idx) {
-+		struct sk_buff *skb = map->data[idx];
- 
- 		dev_kfree_skb_any(skb);
- 	}
- }
- 
--static void mlx5e_ptp_free_traffic_db(struct mlx5e_skb_fifo *skb_fifo)
-+static void mlx5e_ptp_free_traffic_db(struct mlx5e_ptpsq *ptpsq)
- {
--	mlx5e_ptp_drain_skb_fifo(skb_fifo);
--	kvfree(skb_fifo->fifo);
-+	mlx5e_ptp_drain_metadata_map(&ptpsq->metadata_map);
-+	kvfree(ptpsq->metadata_map.data);
-+	kvfree(ptpsq->metadata_freelist.data);
-+	kvfree(ptpsq->ts_cqe_pending_list->nodes);
-+	kvfree(ptpsq->ts_cqe_pending_list);
- }
- 
++	mlx5e_reporter_tx_ptpsq_unhealthy(ptpsq);
++}
++
  static int mlx5e_ptp_open_txqsq(struct mlx5e_ptp *c, u32 tisn,
-@@ -348,8 +447,7 @@ static int mlx5e_ptp_open_txqsq(struct mlx5e_ptp *c, u32 tisn,
+ 				int txq_ix, struct mlx5e_ptp_params *cparams,
+ 				int tc, struct mlx5e_ptpsq *ptpsq)
+@@ -451,6 +469,8 @@ static int mlx5e_ptp_open_txqsq(struct mlx5e_ptp *c, u32 tisn,
  	if (err)
  		goto err_free_txqsq;
  
--	err = mlx5e_ptp_alloc_traffic_db(ptpsq,
--					 dev_to_node(mlx5_core_dma_dev(c->mdev)));
-+	err = mlx5e_ptp_alloc_traffic_db(ptpsq, dev_to_node(mlx5_core_dma_dev(c->mdev)));
- 	if (err)
- 		goto err_free_txqsq;
++	INIT_WORK(&ptpsq->report_unhealthy_work, mlx5e_ptpsq_unhealthy_work);
++
+ 	return 0;
  
-@@ -366,7 +464,7 @@ static void mlx5e_ptp_close_txqsq(struct mlx5e_ptpsq *ptpsq)
+ err_free_txqsq:
+@@ -464,6 +484,8 @@ static void mlx5e_ptp_close_txqsq(struct mlx5e_ptpsq *ptpsq)
  	struct mlx5e_txqsq *sq = &ptpsq->txqsq;
  	struct mlx5_core_dev *mdev = sq->mdev;
  
--	mlx5e_ptp_free_traffic_db(&ptpsq->skb_fifo);
-+	mlx5e_ptp_free_traffic_db(ptpsq);
++	if (current_work() != &ptpsq->report_unhealthy_work)
++		cancel_work_sync(&ptpsq->report_unhealthy_work);
+ 	mlx5e_ptp_free_traffic_db(ptpsq);
  	cancel_work_sync(&sq->recover_work);
  	mlx5e_ptp_destroy_sq(mdev, sq->sqn);
- 	mlx5e_free_txqsq_descs(sq);
-@@ -534,7 +632,10 @@ static void mlx5e_ptp_build_params(struct mlx5e_ptp *c,
- 
- 	/* SQ */
- 	if (test_bit(MLX5E_PTP_STATE_TX, c->state)) {
--		params->log_sq_size = orig->log_sq_size;
-+		params->log_sq_size =
-+			min(MLX5_CAP_GEN_2(c->mdev, ts_cqe_metadata_size2wqe_counter),
-+			    MLX5E_PTP_MAX_LOG_SQ_SIZE);
-+		params->log_sq_size = min(params->log_sq_size, orig->log_sq_size);
- 		mlx5e_ptp_build_sq_param(c->mdev, params, &cparams->txq_sq_param);
- 	}
- 	/* RQ */
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
-index cc7efde88ac3c..7c5597d4589df 100644
+index 7c5597d4589df..7b700d0f956a8 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en/ptp.h
-@@ -7,18 +7,36 @@
- #include "en.h"
- #include "en_stats.h"
- #include "en/txrx.h"
-+#include <linux/ktime.h>
+@@ -10,6 +10,7 @@
+ #include <linux/ktime.h>
  #include <linux/ptp_classify.h>
-+#include <linux/time64.h>
+ #include <linux/time64.h>
++#include <linux/workqueue.h>
  
  #define MLX5E_PTP_CHANNEL_IX 0
-+#define MLX5E_PTP_MAX_LOG_SQ_SIZE (8U)
-+#define MLX5E_PTP_TS_CQE_UNDELIVERED_TIMEOUT (1 * NSEC_PER_SEC)
-+
-+struct mlx5e_ptp_metadata_fifo {
-+	u8  cc;
-+	u8  pc;
-+	u8  mask;
-+	u8  *data;
-+};
-+
-+struct mlx5e_ptp_metadata_map {
-+	u16             undelivered_counter;
-+	u16             capacity;
-+	struct sk_buff  **data;
-+};
- 
- struct mlx5e_ptpsq {
- 	struct mlx5e_txqsq       txqsq;
- 	struct mlx5e_cq          ts_cq;
--	u16                      skb_fifo_cc;
--	u16                      skb_fifo_pc;
--	struct mlx5e_skb_fifo    skb_fifo;
+ #define MLX5E_PTP_MAX_LOG_SQ_SIZE (8U)
+@@ -34,6 +35,7 @@ struct mlx5e_ptpsq {
  	struct mlx5e_ptp_cq_stats *cq_stats;
  	u16                      ts_cqe_ctr_mask;
-+
-+	struct mlx5e_ptp_port_ts_cqe_list  *ts_cqe_pending_list;
-+	struct mlx5e_ptp_metadata_fifo     metadata_freelist;
-+	struct mlx5e_ptp_metadata_map      metadata_map;
- };
  
- enum {
-@@ -69,12 +87,35 @@ static inline bool mlx5e_use_ptpsq(struct sk_buff *skb)
- 		fk.ports.dst == htons(PTP_EV_PORT));
++	struct work_struct                 report_unhealthy_work;
+ 	struct mlx5e_ptp_port_ts_cqe_list  *ts_cqe_pending_list;
+ 	struct mlx5e_ptp_metadata_fifo     metadata_freelist;
+ 	struct mlx5e_ptp_metadata_map      metadata_map;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+index b35ff289af492..ff8242f67c545 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+@@ -164,6 +164,43 @@ static int mlx5e_tx_reporter_timeout_recover(void *ctx)
+ 	return err;
  }
  
--static inline bool mlx5e_ptpsq_fifo_has_room(struct mlx5e_txqsq *sq)
-+static inline void mlx5e_ptp_metadata_fifo_push(struct mlx5e_ptp_metadata_fifo *fifo, u8 metadata)
- {
--	if (!sq->ptpsq)
--		return true;
-+	fifo->data[fifo->mask & fifo->pc++] = metadata;
++static int mlx5e_tx_reporter_ptpsq_unhealthy_recover(void *ctx)
++{
++	struct mlx5e_ptpsq *ptpsq = ctx;
++	struct mlx5e_channels *chs;
++	struct net_device *netdev;
++	struct mlx5e_priv *priv;
++	int carrier_ok;
++	int err;
++
++	if (!test_bit(MLX5E_SQ_STATE_RECOVERING, &ptpsq->txqsq.state))
++		return 0;
++
++	priv = ptpsq->txqsq.priv;
++
++	mutex_lock(&priv->state_lock);
++	chs = &priv->channels;
++	netdev = priv->netdev;
++
++	carrier_ok = netif_carrier_ok(netdev);
++	netif_carrier_off(netdev);
++
++	mlx5e_deactivate_priv_channels(priv);
++
++	mlx5e_ptp_close(chs->ptp);
++	err = mlx5e_ptp_open(priv, &chs->params, chs->c[0]->lag_port, &chs->ptp);
++
++	mlx5e_activate_priv_channels(priv);
++
++	/* return carrier back if needed */
++	if (carrier_ok)
++		netif_carrier_on(netdev);
++
++	mutex_unlock(&priv->state_lock);
++
++	return err;
 +}
 +
-+static inline u8
-+mlx5e_ptp_metadata_fifo_pop(struct mlx5e_ptp_metadata_fifo *fifo)
+ /* state lock cannot be grabbed within this function.
+  * It can cause a dead lock or a read-after-free.
+  */
+@@ -516,6 +553,15 @@ static int mlx5e_tx_reporter_timeout_dump(struct mlx5e_priv *priv, struct devlin
+ 	return mlx5e_tx_reporter_dump_sq(priv, fmsg, to_ctx->sq);
+ }
+ 
++static int mlx5e_tx_reporter_ptpsq_unhealthy_dump(struct mlx5e_priv *priv,
++						  struct devlink_fmsg *fmsg,
++						  void *ctx)
 +{
-+	return fifo->data[fifo->mask & fifo->cc++];
++	struct mlx5e_ptpsq *ptpsq = ctx;
++
++	return mlx5e_tx_reporter_dump_sq(priv, fmsg, &ptpsq->txqsq);
 +}
++
+ static int mlx5e_tx_reporter_dump_all_sqs(struct mlx5e_priv *priv,
+ 					  struct devlink_fmsg *fmsg)
+ {
+@@ -621,6 +667,25 @@ int mlx5e_reporter_tx_timeout(struct mlx5e_txqsq *sq)
+ 	return to_ctx.status;
+ }
  
--	return mlx5e_skb_fifo_has_room(&sq->ptpsq->skb_fifo);
-+static inline void
-+mlx5e_ptp_metadata_map_put(struct mlx5e_ptp_metadata_map *map,
-+			   struct sk_buff *skb, u8 metadata)
++void mlx5e_reporter_tx_ptpsq_unhealthy(struct mlx5e_ptpsq *ptpsq)
 +{
-+	WARN_ON_ONCE(map->data[metadata]);
-+	map->data[metadata] = skb;
++	struct mlx5e_ptp_metadata_map *map = &ptpsq->metadata_map;
++	char err_str[MLX5E_REPORTER_PER_Q_MAX_LEN];
++	struct mlx5e_txqsq *txqsq = &ptpsq->txqsq;
++	struct mlx5e_cq *ts_cq = &ptpsq->ts_cq;
++	struct mlx5e_priv *priv = txqsq->priv;
++	struct mlx5e_err_ctx err_ctx = {};
++
++	err_ctx.ctx = ptpsq;
++	err_ctx.recover = mlx5e_tx_reporter_ptpsq_unhealthy_recover;
++	err_ctx.dump = mlx5e_tx_reporter_ptpsq_unhealthy_dump;
++	snprintf(err_str, sizeof(err_str),
++		 "Unhealthy TX port TS queue: %d, SQ: 0x%x, CQ: 0x%x, Undelivered CQEs: %u Map Capacity: %u",
++		 txqsq->ch_ix, txqsq->sqn, ts_cq->mcq.cqn, map->undelivered_counter, map->capacity);
++
++	mlx5e_health_report(priv, priv->tx_reporter, err_str, &err_ctx);
 +}
 +
-+static inline bool mlx5e_ptpsq_metadata_freelist_empty(struct mlx5e_ptpsq *ptpsq)
-+{
-+	struct mlx5e_ptp_metadata_fifo *freelist;
-+
-+	if (likely(!ptpsq))
-+		return false;
-+
-+	freelist = &ptpsq->metadata_freelist;
-+
-+	return freelist->pc == freelist->cc;
- }
- 
- int mlx5e_ptp_open(struct mlx5e_priv *priv, struct mlx5e_params *params,
-@@ -89,6 +130,8 @@ void mlx5e_ptp_free_rx_fs(struct mlx5e_flow_steering *fs,
- 			  const struct mlx5e_profile *profile);
- int mlx5e_ptp_rx_manage_fs(struct mlx5e_priv *priv, bool set);
- 
-+void mlx5e_ptpsq_track_metadata(struct mlx5e_ptpsq *ptpsq, u8 metadata);
-+
- enum {
- 	MLX5E_SKB_CB_CQE_HWTSTAMP  = BIT(0),
- 	MLX5E_SKB_CB_PORT_HWTSTAMP = BIT(1),
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 27861b68ced57..3d2d5d3b59f0b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -2061,7 +2061,8 @@ static int set_pflag_tx_port_ts(struct net_device *netdev, bool enable)
- 	struct mlx5e_params new_params;
- 	int err;
- 
--	if (!MLX5_CAP_GEN(mdev, ts_cqe_to_dest_cqn))
-+	if (!MLX5_CAP_GEN(mdev, ts_cqe_to_dest_cqn) ||
-+	    !MLX5_CAP_GEN_2(mdev, ts_cqe_metadata_size2wqe_counter))
- 		return -EOPNOTSUPP;
- 
- 	/* Don't allow changing the PTP state if HTB offload is active, because
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-index 4d77055abd4be..dfdd357974164 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
-@@ -2142,9 +2142,7 @@ static const struct counter_desc ptp_cq_stats_desc[] = {
- 	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, err_cqe) },
- 	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, abort) },
- 	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, abort_abs_diff_ns) },
--	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, resync_cqe) },
--	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, resync_event) },
--	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, ooo_cqe_drop) },
-+	{ MLX5E_DECLARE_PTP_CQ_STAT(struct mlx5e_ptp_cq_stats, late_cqe) },
- };
- 
- static const struct counter_desc ptp_rq_stats_desc[] = {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
-index 67938b4ea1b90..13a07e52ae92b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.h
-@@ -449,9 +449,7 @@ struct mlx5e_ptp_cq_stats {
- 	u64 err_cqe;
- 	u64 abort;
- 	u64 abort_abs_diff_ns;
--	u64 resync_cqe;
--	u64 resync_event;
--	u64 ooo_cqe_drop;
-+	u64 late_cqe;
- };
- 
- struct mlx5e_rep_stats {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-index c7eb6b238c2ba..d41435c22ce56 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tx.c
-@@ -372,7 +372,7 @@ mlx5e_txwqe_complete(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 		     const struct mlx5e_tx_attr *attr,
- 		     const struct mlx5e_tx_wqe_attr *wqe_attr, u8 num_dma,
- 		     struct mlx5e_tx_wqe_info *wi, struct mlx5_wqe_ctrl_seg *cseg,
--		     bool xmit_more)
-+		     struct mlx5_wqe_eth_seg *eseg, bool xmit_more)
- {
- 	struct mlx5_wq_cyc *wq = &sq->wq;
- 	bool send_doorbell;
-@@ -394,11 +394,16 @@ mlx5e_txwqe_complete(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 
- 	mlx5e_tx_check_stop(sq);
- 
--	if (unlikely(sq->ptpsq)) {
-+	if (unlikely(sq->ptpsq &&
-+		     (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))) {
-+		u8 metadata_index = be32_to_cpu(eseg->flow_table_metadata);
-+
- 		mlx5e_skb_cb_hwtstamp_init(skb);
--		mlx5e_skb_fifo_push(&sq->ptpsq->skb_fifo, skb);
-+		mlx5e_ptpsq_track_metadata(sq->ptpsq, metadata_index);
-+		mlx5e_ptp_metadata_map_put(&sq->ptpsq->metadata_map, skb,
-+					   metadata_index);
- 		if (!netif_tx_queue_stopped(sq->txq) &&
--		    !mlx5e_skb_fifo_has_room(&sq->ptpsq->skb_fifo)) {
-+		    mlx5e_ptpsq_metadata_freelist_empty(sq->ptpsq)) {
- 			netif_tx_stop_queue(sq->txq);
- 			sq->stats->stopped++;
- 		}
-@@ -483,13 +488,16 @@ mlx5e_sq_xmit_wqe(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 	if (unlikely(num_dma < 0))
- 		goto err_drop;
- 
--	mlx5e_txwqe_complete(sq, skb, attr, wqe_attr, num_dma, wi, cseg, xmit_more);
-+	mlx5e_txwqe_complete(sq, skb, attr, wqe_attr, num_dma, wi, cseg, eseg, xmit_more);
- 
- 	return;
- 
- err_drop:
- 	stats->dropped++;
- 	dev_kfree_skb_any(skb);
-+	if (unlikely(sq->ptpsq && (skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP)))
-+		mlx5e_ptp_metadata_fifo_push(&sq->ptpsq->metadata_freelist,
-+					     be32_to_cpu(eseg->flow_table_metadata));
- 	mlx5e_tx_flush(sq);
- }
- 
-@@ -645,9 +653,9 @@ void mlx5e_tx_mpwqe_ensure_complete(struct mlx5e_txqsq *sq)
- static void mlx5e_cqe_ts_id_eseg(struct mlx5e_ptpsq *ptpsq, struct sk_buff *skb,
- 				 struct mlx5_wqe_eth_seg *eseg)
- {
--	if (ptpsq->ts_cqe_ctr_mask && unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))
--		eseg->flow_table_metadata = cpu_to_be32(ptpsq->skb_fifo_pc &
--							ptpsq->ts_cqe_ctr_mask);
-+	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP))
-+		eseg->flow_table_metadata =
-+			cpu_to_be32(mlx5e_ptp_metadata_fifo_pop(&ptpsq->metadata_freelist));
- }
- 
- static void mlx5e_txwqe_build_eseg(struct mlx5e_priv *priv, struct mlx5e_txqsq *sq,
-@@ -766,7 +774,7 @@ void mlx5e_txqsq_wake(struct mlx5e_txqsq *sq)
- {
- 	if (netif_tx_queue_stopped(sq->txq) &&
- 	    mlx5e_wqc_has_room_for(&sq->wq, sq->cc, sq->pc, sq->stop_room) &&
--	    mlx5e_ptpsq_fifo_has_room(sq) &&
-+	    !mlx5e_ptpsq_metadata_freelist_empty(sq->ptpsq) &&
- 	    !test_bit(MLX5E_SQ_STATE_RECOVERING, &sq->state)) {
- 		netif_tx_wake_queue(sq->txq);
- 		sq->stats->wake++;
-@@ -1031,7 +1039,7 @@ void mlx5i_sq_xmit(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 	if (unlikely(num_dma < 0))
- 		goto err_drop;
- 
--	mlx5e_txwqe_complete(sq, skb, &attr, &wqe_attr, num_dma, wi, cseg, xmit_more);
-+	mlx5e_txwqe_complete(sq, skb, &attr, &wqe_attr, num_dma, wi, cseg, eseg, xmit_more);
- 
- 	return;
- 
+ static const struct devlink_health_reporter_ops mlx5_tx_reporter_ops = {
+ 		.name = "tx",
+ 		.recover = mlx5e_tx_reporter_recover,
 -- 
 2.42.0
 
