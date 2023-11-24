@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D123D31748;
-	Fri, 24 Nov 2023 18:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DEC2EAEA;
+	Fri, 24 Nov 2023 18:45:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBSmnc0m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F93C433C7;
-	Fri, 24 Nov 2023 18:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5u2Sj4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CE6C433C8;
+	Fri, 24 Nov 2023 18:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851538;
-	bh=Q34RczBenGGpabn9nM859baP1TaHLkz4XB4l56bYnrg=;
+	s=korg; t=1700851541;
+	bh=L5uWjfumcrquwQi56EVASmleKDbGF2qx7wndCyn6yRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zBSmnc0mqT6nfJcKMXjQKiHdsK7QHDQGa5G7Ovyqw8kEDpC2OvoMX2R+UHRY/OoIa
-	 lFBGo9ZIU2trCpM/JNcON22JhQ2QSR4BfBodvGF0oGJxEA84nzFTylvWAJ82tHrbfg
-	 UKFHTqLHLPnhO5qlPKuFMNaAAIUqRR/+EYEUaTZ4=
+	b=c5u2Sj4VYyz1+MuTrdTmQoopJruHZoXWrgV3LSeuXdNPOvsqiQXXJqNIQVZT9QZid
+	 RqVxDodyL+gNSo2KYV0DjOJiCtR4theZaUXG5prFwHWb9Y/8ek5wAamsPiEZxYQu3l
+	 NUhcTZPridl4NaO4jkfdXdh+eHqDjxLsPWhtBO2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	stable@kernel.org,
 	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.5 463/491] ext4: correct return value of ext4_convert_meta_bg
-Date: Fri, 24 Nov 2023 17:51:39 +0000
-Message-ID: <20231124172038.533685056@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.5 464/491] ext4: correct the start block of counting reserved clusters
+Date: Fri, 24 Nov 2023 17:51:40 +0000
+Message-ID: <20231124172038.567253426@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,33 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 48f1551592c54f7d8e2befc72a99ff4e47f7dca0 upstream.
+commit 40ea98396a3659062267d1fe5f99af4f7e4f05e3 upstream.
 
-Avoid to ignore error in "err".
+When big allocate feature is enabled, we need to count and update
+reserved clusters before removing a delayed only extent_status entry.
+{init|count|get}_rsvd() have already done this, but the start block
+number of this counting isn't correct in the following case.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Link: https://lore.kernel.org/r/20230826174712.4059355-4-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+  lblk            end
+   |               |
+   v               v
+          -------------------------
+          |                       | orig_es
+          -------------------------
+                   ^              ^
+      len1 is 0    |     len2     |
+
+If the start block of the orig_es entry founded is bigger than lblk, we
+passed lblk as start block to count_rsvd(), but the length is correct,
+finally, the range to be counted is offset. This patch fix this by
+passing the start blocks to 'orig_es->lblk + len1'.
+
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20230824092619.1327976-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/resize.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/ext4/extents_status.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -1982,9 +1982,7 @@ static int ext4_convert_meta_bg(struct s
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -1431,8 +1431,8 @@ static int __es_remove_extent(struct ino
+ 			}
+ 		}
+ 		if (count_reserved)
+-			count_rsvd(inode, lblk, orig_es.es_len - len1 - len2,
+-				   &orig_es, &rc);
++			count_rsvd(inode, orig_es.es_lblk + len1,
++				   orig_es.es_len - len1 - len2, &orig_es, &rc);
+ 		goto out_get_reserved;
+ 	}
  
- errout:
- 	ret = ext4_journal_stop(handle);
--	if (!err)
--		err = ret;
--	return ret;
-+	return err ? err : ret;
- 
- invalid_resize_inode:
- 	ext4_error(sb, "corrupted/inconsistent resize inode");
 
 
