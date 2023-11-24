@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AE533CC2;
-	Fri, 24 Nov 2023 18:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2E035F04;
+	Fri, 24 Nov 2023 18:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TarJ7PW7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F76C433C7;
-	Fri, 24 Nov 2023 18:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gIWC+t+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1EFC433C7;
+	Fri, 24 Nov 2023 18:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851351;
-	bh=KJ2SNfudsbRb2SAJZjSEvKpdQrqPqOzn+hdcX+ekF5I=;
+	s=korg; t=1700851354;
+	bh=rfCFxeGSs2UFOZJyiZnm5lHLix8fHlICM4D09YiMw9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TarJ7PW7whzek0RGbOwdEc3WTj6hly8BgmRLU0KG7K5GXV+hhhkluLYOoiiRA/FVc
-	 P9tys/bO+q/BkSWJZCn50cWvhsj5me6eeCOxAiHfQRVHSC70DSrY4M8si+IlWVG/qZ
-	 Nh5Y9BAQegWxBrQtNvske2Hq33R1JriuunGEk8l0=
+	b=0gIWC+t+f+kmS65Oscmf6MgAeIxxntyVTwqcmRXstD+VtUuAq1Hv8lTuLeZz05BSI
+	 MEZirlkxr40YA66fJqqFhCBqpwCyJzhY4+BuHzTEIw71WgfroPJ1uUuu4kyAts7iDC
+	 u3Dc1dpBD79jTNmYfwsWur12Cc5DMIOXntgR9iDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robert.marko@sartura.hr>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.5 406/491] Revert "i2c: pxa: move to generic GPIO recovery"
-Date: Fri, 24 Nov 2023 17:50:42 +0000
-Message-ID: <20231124172036.806081420@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 6.5 415/491] gfs2: dont withdraw if init_threads() got interrupted
+Date: Fri, 24 Nov 2023 17:50:51 +0000
+Message-ID: <20231124172037.077557666@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,148 +41,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Marko <robert.marko@sartura.hr>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit 7b211c7671212cad0b83603c674838c7e824d845 upstream.
+commit 0cdc6f44e9fdc2d20d720145bf99a39f611f6d61 upstream.
 
-This reverts commit 0b01392c18b9993a584f36ace1d61118772ad0ca.
+In gfs2_fill_super(), when mounting a gfs2 filesystem is interrupted,
+kthread_create() can return -EINTR.  When that happens, we roll back
+what has already been done and abort the mount.
 
-Conversion of PXA to generic I2C recovery, makes the I2C bus completely
-lock up if recovery pinctrl is present in the DT and I2C recovery is
-enabled.
+Since commit 62dd0f98a0e5 ("gfs2: Flag a withdraw if init_threads()
+fails), we are calling gfs2_withdraw_delayed() in gfs2_fill_super();
+first via gfs2_make_fs_rw(), then directly.  But gfs2_withdraw_delayed()
+only marks the filesystem as withdrawing and relies on a caller further
+up the stack to do the actual withdraw, which doesn't exist in the
+gfs2_fill_super() case.  Because the filesystem is marked as withdrawing
+/ withdrawn, function gfs2_lm_unmount() doesn't release the dlm
+lockspace, so when we try to mount that filesystem again, we get:
 
-So, until the generic I2C recovery can also work with PXA lets revert
-to have working I2C and I2C recovery again.
+    gfs2: fsid=gohan:gohan0: Trying to join cluster "lock_dlm", "gohan:gohan0"
+    gfs2: fsid=gohan:gohan0: dlm_new_lockspace error -17
 
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Cc: stable@vger.kernel.org # 5.11+
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Acked-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Since commit b77b4a4815a9 ("gfs2: Rework freeze / thaw logic"), the
+deadlock this gfs2_withdraw_delayed() call was supposed to work around
+cannot occur anymore because freeze_go_callback() won't take the
+sb->s_umount semaphore unconditionally anymore, so we can get rid of the
+gfs2_withdraw_delayed() in gfs2_fill_super() entirely.
+
+Reported-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: stable@vger.kernel.org # v6.5+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-pxa.c |   76 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 68 insertions(+), 8 deletions(-)
+ fs/gfs2/ops_fstype.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-pxa.c
-+++ b/drivers/i2c/busses/i2c-pxa.c
-@@ -264,6 +264,9 @@ struct pxa_i2c {
- 	u32			hs_mask;
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -1261,10 +1261,8 @@ static int gfs2_fill_super(struct super_
  
- 	struct i2c_bus_recovery_info recovery;
-+	struct pinctrl		*pinctrl;
-+	struct pinctrl_state	*pinctrl_default;
-+	struct pinctrl_state	*pinctrl_recovery;
- };
- 
- #define _IBMR(i2c)	((i2c)->reg_ibmr)
-@@ -1300,12 +1303,13 @@ static void i2c_pxa_prepare_recovery(str
- 	 */
- 	gpiod_set_value(i2c->recovery.scl_gpiod, ibmr & IBMR_SCLS);
- 	gpiod_set_value(i2c->recovery.sda_gpiod, ibmr & IBMR_SDAS);
-+
-+	WARN_ON(pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_recovery));
- }
- 
- static void i2c_pxa_unprepare_recovery(struct i2c_adapter *adap)
- {
- 	struct pxa_i2c *i2c = adap->algo_data;
--	struct i2c_bus_recovery_info *bri = adap->bus_recovery_info;
- 	u32 isr;
- 
- 	/*
-@@ -1319,7 +1323,7 @@ static void i2c_pxa_unprepare_recovery(s
- 		i2c_pxa_do_reset(i2c);
+ 	if (!sb_rdonly(sb)) {
+ 		error = init_threads(sdp);
+-		if (error) {
+-			gfs2_withdraw_delayed(sdp);
++		if (error)
+ 			goto fail_per_node;
+-		}
  	}
  
--	WARN_ON(pinctrl_select_state(bri->pinctrl, bri->pins_default));
-+	WARN_ON(pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_default));
- 
- 	dev_dbg(&i2c->adap.dev, "recovery: IBMR 0x%08x ISR 0x%08x\n",
- 	        readl(_IBMR(i2c)), readl(_ISR(i2c)));
-@@ -1341,20 +1345,76 @@ static int i2c_pxa_init_recovery(struct
- 	if (IS_ENABLED(CONFIG_I2C_PXA_SLAVE))
- 		return 0;
- 
--	bri->pinctrl = devm_pinctrl_get(dev);
--	if (PTR_ERR(bri->pinctrl) == -ENODEV) {
--		bri->pinctrl = NULL;
-+	i2c->pinctrl = devm_pinctrl_get(dev);
-+	if (PTR_ERR(i2c->pinctrl) == -ENODEV)
-+		i2c->pinctrl = NULL;
-+	if (IS_ERR(i2c->pinctrl))
-+		return PTR_ERR(i2c->pinctrl);
-+
-+	if (!i2c->pinctrl)
-+		return 0;
-+
-+	i2c->pinctrl_default = pinctrl_lookup_state(i2c->pinctrl,
-+						    PINCTRL_STATE_DEFAULT);
-+	i2c->pinctrl_recovery = pinctrl_lookup_state(i2c->pinctrl, "recovery");
-+
-+	if (IS_ERR(i2c->pinctrl_default) || IS_ERR(i2c->pinctrl_recovery)) {
-+		dev_info(dev, "missing pinmux recovery information: %ld %ld\n",
-+			 PTR_ERR(i2c->pinctrl_default),
-+			 PTR_ERR(i2c->pinctrl_recovery));
-+		return 0;
-+	}
-+
-+	/*
-+	 * Claiming GPIOs can influence the pinmux state, and may glitch the
-+	 * I2C bus. Do this carefully.
-+	 */
-+	bri->scl_gpiod = devm_gpiod_get(dev, "scl", GPIOD_OUT_HIGH_OPEN_DRAIN);
-+	if (bri->scl_gpiod == ERR_PTR(-EPROBE_DEFER))
-+		return -EPROBE_DEFER;
-+	if (IS_ERR(bri->scl_gpiod)) {
-+		dev_info(dev, "missing scl gpio recovery information: %pe\n",
-+			 bri->scl_gpiod);
-+		return 0;
-+	}
-+
-+	/*
-+	 * We have SCL. Pull SCL low and wait a bit so that SDA glitches
-+	 * have no effect.
-+	 */
-+	gpiod_direction_output(bri->scl_gpiod, 0);
-+	udelay(10);
-+	bri->sda_gpiod = devm_gpiod_get(dev, "sda", GPIOD_OUT_HIGH_OPEN_DRAIN);
-+
-+	/* Wait a bit in case of a SDA glitch, and then release SCL. */
-+	udelay(10);
-+	gpiod_direction_output(bri->scl_gpiod, 1);
-+
-+	if (bri->sda_gpiod == ERR_PTR(-EPROBE_DEFER))
-+		return -EPROBE_DEFER;
-+
-+	if (IS_ERR(bri->sda_gpiod)) {
-+		dev_info(dev, "missing sda gpio recovery information: %pe\n",
-+			 bri->sda_gpiod);
- 		return 0;
- 	}
--	if (IS_ERR(bri->pinctrl))
--		return PTR_ERR(bri->pinctrl);
- 
- 	bri->prepare_recovery = i2c_pxa_prepare_recovery;
- 	bri->unprepare_recovery = i2c_pxa_unprepare_recovery;
-+	bri->recover_bus = i2c_generic_scl_recovery;
- 
- 	i2c->adap.bus_recovery_info = bri;
- 
--	return 0;
-+	/*
-+	 * Claiming GPIOs can change the pinmux state, which confuses the
-+	 * pinctrl since pinctrl's idea of the current setting is unaffected
-+	 * by the pinmux change caused by claiming the GPIO. Work around that
-+	 * by switching pinctrl to the GPIO state here. We do it this way to
-+	 * avoid glitching the I2C bus.
-+	 */
-+	pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_recovery);
-+
-+	return pinctrl_select_state(i2c->pinctrl, i2c->pinctrl_default);
- }
- 
- static int i2c_pxa_probe(struct platform_device *dev)
+ 	error = gfs2_freeze_lock_shared(sdp);
 
 
