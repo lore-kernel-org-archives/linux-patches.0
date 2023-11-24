@@ -1,40 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0591C2E84A;
-	Fri, 24 Nov 2023 18:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34A933076;
+	Fri, 24 Nov 2023 18:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUq4Oypy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57376C433C8;
-	Fri, 24 Nov 2023 18:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xstE6kbJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB075C433C7;
+	Fri, 24 Nov 2023 18:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852379;
-	bh=weAAYLO37DhTk8Y6IZDu25vVE/7zMyHaotCMK8Frhn8=;
+	s=korg; t=1700852382;
+	bh=3au6NInuJNzXRVnYPhjFDTXU3LZor+61XBxvaBVVcR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUq4OypyDASVzIy/XOspnS8xvKUAfT+5E2sqMkKFIzuLsqxdU75dRXsI7PXYG3uYU
-	 0SjloS4t8vDJFA6qnQ3kT4Hwjg1iSrwzENJTHh14hCSJwQN9z8uF1oAvQ1EaQtXxkE
-	 PNUwlx6Eyd7ZqhS93Fn50TwIaptPLfx2k31lV4Yg=
+	b=xstE6kbJJprq10XN5AxCojS7nSobO6HcK2WtLkDJ1nrXu0U75av0sbqRviX+RRU3W
+	 ZqJH4HzSDt+WVmnuBfnD74xJCYAKuQza2OWZm7TtuF0qTca5gyl/9wbgr8g33Y9HKC
+	 MmCr0pMpk3Da1xCFXXKRYsGmX0uYbVLRTqqK+jYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Guillaume Ranquet <granquet@baylibre.com>,
-	Bo-Chen Chen <rex-bc.chen@mediatek.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 325/372] drm/mediatek/dp: fix memory leak on ->get_edid callback error path
-Date: Fri, 24 Nov 2023 17:51:52 +0000
-Message-ID: <20231124172021.215392068@linuxfoundation.org>
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Christoph Lameter <cl@linux.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 334/372] mm: kmem: drop __GFP_NOFAIL when allocating objcg vectors
+Date: Fri, 24 Nov 2023 17:52:01 +0000
+Message-ID: <20231124172021.518691014@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -53,45 +44,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Roman Gushchin <roman.gushchin@linux.dev>
 
-commit fcaf9761fd5884a64eaac48536f8c27ecfd2e6bc upstream.
+commit 24948e3b7b12e0031a6edb4f49bbb9fb2ad1e4e9 upstream.
 
-Setting new_edid to NULL leaks the buffer.
+Objcg vectors attached to slab pages to store slab object ownership
+information are allocated using gfp flags for the original slab
+allocation.  Depending on slab page order and the size of slab objects,
+objcg vector can take several pages.
 
-Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
-Cc: Markus Schneider-Pargmann <msp@baylibre.com>
-Cc: Guillaume Ranquet <granquet@baylibre.com>
-Cc: Bo-Chen Chen <rex-bc.chen@mediatek.com>
-Cc: CK Hu <ck.hu@mediatek.com>
-Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-mediatek@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: <stable@vger.kernel.org> # v6.1+
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Guillaume Ranquet <granquet@baylibre.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230914131058.2472260-1-jani.nikula@intel.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+If the original allocation was done with the __GFP_NOFAIL flag, it
+triggered a warning in the page allocation code.  Indeed, order > 1 pages
+should not been allocated with the __GFP_NOFAIL flag.
+
+Fix this by simply dropping the __GFP_NOFAIL flag when allocating the
+objcg vector.  It effectively allows to skip the accounting of a single
+slab object under a heavy memory pressure.
+
+An alternative would be to implement the mechanism to fallback to order-0
+allocations for accounting metadata, which is also not perfect because it
+will increase performance penalty and memory footprint of the kernel
+memory accounting under memory pressure.
+
+Link: https://lkml.kernel.org/r/ZUp8ZFGxwmCx4ZFr@P9FQF9L96D.corp.robot.car
+Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reported-by: Christoph Lameter <cl@linux.com>
+Closes: https://lkml.kernel.org/r/6b42243e-f197-600a-5d22-56bd728a5ad8@gentwo.org
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/memcontrol.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -2005,6 +2005,7 @@ static struct edid *mtk_dp_get_edid(stru
- 	 */
- 	if (mtk_dp_parse_capabilities(mtk_dp)) {
- 		drm_err(mtk_dp->drm_dev, "Can't parse capabilities\n");
-+		kfree(new_edid);
- 		new_edid = NULL;
- 	}
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2854,7 +2854,8 @@ static void commit_charge(struct folio *
+  * Moreover, it should not come from DMA buffer and is not readily
+  * reclaimable. So those GFP bits should be masked off.
+  */
+-#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | __GFP_ACCOUNT)
++#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | \
++				 __GFP_ACCOUNT | __GFP_NOFAIL)
  
+ /*
+  * mod_objcg_mlstate() may be called with irq enabled, so
 
 
