@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9A23173F;
-	Fri, 24 Nov 2023 19:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13C5339BE;
+	Fri, 24 Nov 2023 19:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrFt70BP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B386C433C7;
-	Fri, 24 Nov 2023 19:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlRXg7Dy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06885C433C8;
+	Fri, 24 Nov 2023 19:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853416;
-	bh=589t5c/daH1Qa7kkR91YXgMbq8y1H9lTERJofgHz6sA=;
+	s=korg; t=1700853419;
+	bh=FKaRS0EcXv0QJBVb4RXkotuBa8oUWUbjV8xyFdc5wes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hrFt70BPIbVLT7cpZFlBa4f1i3LrASLOCD3O2pRIN0uFY3OdYtEf3MRqhn1dfpO0I
-	 ThUfH2TfgOHW2GbJT1Erbr3W4TQ6w0TxLCycnXLwKN6tXPkY9zD+uyhM3Nvd2CLzeS
-	 soh9Gf+9fbnOSMuTskKMPLHl00ceo/qPUu3gf1H8=
+	b=TlRXg7DyrugjlfWxEubMuucITaluasZSKjEbLdXo37sijuji6UCvR+5jLzTVedy+v
+	 opgptlKolEyMgqvIb/AO5ley37pFKwS/Aq34HTivs5w3cZRwzCEy6Vn8RDRgOxLqm3
+	 i+3dlwuOQ+cbRID/mPZoqhxQRkBMYwbRUUInVDpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 179/297] parisc/power: Add power soft-off when running on qemu
-Date: Fri, 24 Nov 2023 17:53:41 +0000
-Message-ID: <20231124172006.511837276@linuxfoundation.org>
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Subject: [PATCH 5.15 180/297] clk: socfpga: Fix undefined behavior bug in struct stratix10_clock_data
+Date: Fri, 24 Nov 2023 17:53:42 +0000
+Message-ID: <20231124172006.543514684@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -40,48 +42,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit d0c219472980d15f5cbc5c8aec736848bda3f235 upstream.
+commit d761bb01c85b22d5b44abe283eb89019693f6595 upstream.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v6.0+
+`struct clk_hw_onecell_data` is a flexible structure, which means that
+it contains flexible-array member at the bottom, in this case array
+`hws`:
+
+include/linux/clk-provider.h:
+1380 struct clk_hw_onecell_data {
+1381         unsigned int num;
+1382         struct clk_hw *hws[] __counted_by(num);
+1383 };
+
+This could potentially lead to an overwrite of the objects following
+`clk_data` in `struct stratix10_clock_data`, in this case
+`void __iomem *base;` at run-time:
+
+drivers/clk/socfpga/stratix10-clk.h:
+  9 struct stratix10_clock_data {
+ 10         struct clk_hw_onecell_data      clk_data;
+ 11         void __iomem            *base;
+ 12 };
+
+There are currently three different places where memory is allocated for
+`struct stratix10_clock_data`, including the flex-array `hws` in
+`struct clk_hw_onecell_data`:
+
+drivers/clk/socfpga/clk-agilex.c:
+469         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
+470                                 num_clks), GFP_KERNEL);
+
+drivers/clk/socfpga/clk-agilex.c:
+509         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
+510                                 num_clks), GFP_KERNEL);
+
+drivers/clk/socfpga/clk-s10.c:
+400         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
+401                                                  num_clks), GFP_KERNEL);
+
+I'll use just one of them to describe the issue. See below.
+
+Notice that a total of 440 bytes are allocated for flexible-array member
+`hws` at line 469:
+
+include/dt-bindings/clock/agilex-clock.h:
+ 70 #define AGILEX_NUM_CLKS	55
+
+drivers/clk/socfpga/clk-agilex.c:
+459         struct stratix10_clock_data *clk_data;
+460         void __iomem *base;
+...
+466
+467         num_clks = AGILEX_NUM_CLKS;
+468
+469         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
+470                                 num_clks), GFP_KERNEL);
+
+`struct_size(clk_data, clk_data.hws, num_clks)`	above translates to
+sizeof(struct stratix10_clock_data) + sizeof(struct clk_hw *) * 55 ==
+16 + 8 * 55 == 16 + 440
+		    ^^^
+		     |
+	allocated bytes for flex-array `hws`
+
+474         for (i = 0; i < num_clks; i++)
+475                 clk_data->clk_data.hws[i] = ERR_PTR(-ENOENT);
+476
+477         clk_data->base = base;
+
+and then some data is written into both `hws` and `base` objects.
+
+Fix this by placing the declaration of object `clk_data` at the end of
+`struct stratix10_clock_data`. Also, add a comment to make it clear
+that this object must always be last in the structure.
+
+-Wflex-array-member-not-at-end is coming in GCC-14, and we are getting
+ready to enable it globally.
+
+Fixes: ba7e258425ac ("clk: socfpga: Convert to s10/agilex/n5x to use clk_hw")
+Cc: stable@vger.kernel.org
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/1da736106d8e0806aeafa6e471a13ced490eae22.1698117815.git.gustavoars@kernel.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/power.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/clk/socfpga/stratix10-clk.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/parisc/power.c
-+++ b/drivers/parisc/power.c
-@@ -197,6 +197,14 @@ static struct notifier_block parisc_pani
- 	.priority	= INT_MAX,
+diff --git a/drivers/clk/socfpga/stratix10-clk.h b/drivers/clk/socfpga/stratix10-clk.h
+index 75234e0783e1..83fe4eb3133c 100644
+--- a/drivers/clk/socfpga/stratix10-clk.h
++++ b/drivers/clk/socfpga/stratix10-clk.h
+@@ -7,8 +7,10 @@
+ #define	__STRATIX10_CLK_H
+ 
+ struct stratix10_clock_data {
+-	struct clk_hw_onecell_data	clk_data;
+ 	void __iomem		*base;
++
++	/* Must be last */
++	struct clk_hw_onecell_data	clk_data;
  };
  
-+/* qemu soft power-off function */
-+static int qemu_power_off(struct sys_off_data *data)
-+{
-+	/* this turns the system off via SeaBIOS */
-+	*(int *)data->cb_data = 0;
-+	pdc_soft_power_button(1);
-+	return NOTIFY_DONE;
-+}
- 
- static int __init power_init(void)
- {
-@@ -226,7 +234,13 @@ static int __init power_init(void)
- 				soft_power_reg);
- 	}
- 
--	power_task = kthread_run(kpowerswd, (void*)soft_power_reg, KTHREAD_NAME);
-+	power_task = NULL;
-+	if (running_on_qemu && soft_power_reg)
-+		register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
-+					qemu_power_off, (void *)soft_power_reg);
-+	else
-+		power_task = kthread_run(kpowerswd, (void*)soft_power_reg,
-+					KTHREAD_NAME);
- 	if (IS_ERR(power_task)) {
- 		printk(KERN_ERR DRIVER_NAME ": thread creation failed.  Driver not loaded.\n");
- 		pdc_soft_power_button(0);
+ struct stratix10_pll_clock {
+-- 
+2.43.0
+
 
 
