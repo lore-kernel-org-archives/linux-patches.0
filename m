@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A1A35F04;
-	Fri, 24 Nov 2023 19:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4066E35F1A;
+	Fri, 24 Nov 2023 19:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYqQU5ah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC77C433C8;
-	Fri, 24 Nov 2023 19:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4dweC6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AF7C433C7;
+	Fri, 24 Nov 2023 19:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853127;
-	bh=Rf9UO1FTpXLldgPwS65MyYHFoXtIoKRclquYCvOV7Ko=;
+	s=korg; t=1700853130;
+	bh=qJIWCGHg7tZb0xWwviQAtgW5xC69zm2YRu5T7YjfnXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tYqQU5ahSgK2YLp5n8zfEcQhIkU9aV2xXCr0PBMxGFLfZGbmCEahlWKKWLwqONxbo
-	 EEA3eqWmDMVk/ooRcQTN4kWkCvWx6H3uSNVMMkZoKldXlDsbwcE/sEzsORxl5HVV5F
-	 Gs50e2MO9ziwPspFxmBS0f+TAiWMQ2x6vryTeHo8=
+	b=J4dweC6qoXtqDM3wA/FK5XybeJacvhzM2vrgFioFfMTFTF3ttRvX38JgjhQuDxpZS
+	 cBUsg3SMVqD9uNf99qVilynw2gxkEpTLNCdZQgSCuJVKhSDUJVwAKM9jELYRxS85xA
+	 mMvYKZ1hkTipbOmeTRcuU2ERnYacu5Oj7MMtKfkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Axel Lin <axel.lin@ingics.com>,
+	Boris Brezillon <boris.brezillon@free-electrons.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/297] i3c: mipi-i3c-hci: Fix out of bounds access in hci_dma_irq_handler
-Date: Fri, 24 Nov 2023 17:51:46 +0000
-Message-ID: <20231124172002.480918788@linuxfoundation.org>
+Subject: [PATCH 5.15 065/297] i2c: sun6i-p2wi: Prevent potential division by zero
+Date: Fri, 24 Nov 2023 17:51:47 +0000
+Message-ID: <20231124172002.512669260@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,36 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Axel Lin <axel.lin@ingics.com>
 
-[ Upstream commit 45a832f989e520095429589d5b01b0c65da9b574 ]
+[ Upstream commit 5ac61d26b8baff5b2e5a9f3dc1ef63297e4b53e7 ]
 
-Do not loop over ring headers in hci_dma_irq_handler() that are not
-allocated and enabled in hci_dma_init(). Otherwise out of bounds access
-will occur from rings->headers[i] access when i >= number of allocated
-ring headers.
+Make sure we don't OOPS in case clock-frequency is set to 0 in a DT. The
+variable set here is later used as a divisor.
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20230921055704.1087277-5-jarkko.nikula@linux.intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Axel Lin <axel.lin@ingics.com>
+Acked-by: Boris Brezillon <boris.brezillon@free-electrons.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-sun6i-p2wi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index af873a9be0507..dd2dc00399600 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -734,7 +734,7 @@ static bool hci_dma_irq_handler(struct i3c_hci *hci, unsigned int mask)
- 	unsigned int i;
- 	bool handled = false;
+diff --git a/drivers/i2c/busses/i2c-sun6i-p2wi.c b/drivers/i2c/busses/i2c-sun6i-p2wi.c
+index 9e3483f507ff5..f2ed13b551088 100644
+--- a/drivers/i2c/busses/i2c-sun6i-p2wi.c
++++ b/drivers/i2c/busses/i2c-sun6i-p2wi.c
+@@ -201,6 +201,11 @@ static int p2wi_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
  
--	for (i = 0; mask && i < 8; i++) {
-+	for (i = 0; mask && i < rings->total; i++) {
- 		struct hci_rh_data *rh;
- 		u32 status;
- 
++	if (clk_freq == 0) {
++		dev_err(dev, "clock-frequency is set to 0 in DT\n");
++		return -EINVAL;
++	}
++
+ 	if (of_get_child_count(np) > 1) {
+ 		dev_err(dev, "P2WI only supports one slave device\n");
+ 		return -EINVAL;
 -- 
 2.42.0
 
