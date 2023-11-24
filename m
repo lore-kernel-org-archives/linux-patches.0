@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4827731759;
-	Fri, 24 Nov 2023 18:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B768533E9;
+	Fri, 24 Nov 2023 18:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdI3cUWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D1EC433C8;
-	Fri, 24 Nov 2023 18:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G04If0FK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459DCC433C7;
+	Fri, 24 Nov 2023 18:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851041;
-	bh=Ws5HN4k1mtBQN1aieAf1r7EDwhz1W75NOSfOVyoiPf0=;
+	s=korg; t=1700851043;
+	bh=zcIjo4JaFDU15t/b40/7JdhSYan27xY9sjNnpE97g0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdI3cUWvinQgpfd9hdx882ZXNC0QE8/FfdUeC4okAzBrFDqiSoX62HT6LlaRGFjV8
-	 0VjvD13UGcd46HATMbnNYUYkJXcDGLAnVEin9+grcI8cp/2mmf3EPPIzMdqHb8Oahd
-	 Ij/KWna+qud6D8yBz0B6YG6WhSnSEErOzEd9Re/Y=
+	b=G04If0FKvg4115mzbHWtsUvG++b2vwmDzfa6KsYOVs/i2/5OUc5HUYq/9f94fn+Ub
+	 zbR4JdbkC92AcYlbrnLjCK0HmfqKOKbU+4fCxtflFQDbIeTKHRCJxNU+g1vcAzOQj5
+	 y9bYeKp7Fk8c6N36Ev0nI9Ec2UpyiOyi51+jF95s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.5 289/491] parisc/pdc: Add width field to struct pdc_model
-Date: Fri, 24 Nov 2023 17:48:45 +0000
-Message-ID: <20231124172033.254800134@linuxfoundation.org>
+Subject: [PATCH 6.5 290/491] parisc/power: Add power soft-off when running on qemu
+Date: Fri, 24 Nov 2023 17:48:46 +0000
+Message-ID: <20231124172033.280674188@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,26 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-commit 6240553b52c475d9fc9674de0521b77e692f3764 upstream.
-
-PDC2.0 specifies the additional PSW-bit field.
+commit d0c219472980d15f5cbc5c8aec736848bda3f235 upstream.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/uapi/asm/pdc.h |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/parisc/power.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/arch/parisc/include/uapi/asm/pdc.h
-+++ b/arch/parisc/include/uapi/asm/pdc.h
-@@ -472,6 +472,7 @@ struct pdc_model {		/* for PDC_MODEL */
- 	unsigned long arch_rev;
- 	unsigned long pot_key;
- 	unsigned long curr_key;
-+	unsigned long width;	/* default of PSW_W bit (1=enabled) */
+--- a/drivers/parisc/power.c
++++ b/drivers/parisc/power.c
+@@ -197,6 +197,14 @@ static struct notifier_block parisc_pani
+ 	.priority	= INT_MAX,
  };
  
- struct pdc_cache_cf {		/* for PDC_CACHE  (I/D-caches) */
++/* qemu soft power-off function */
++static int qemu_power_off(struct sys_off_data *data)
++{
++	/* this turns the system off via SeaBIOS */
++	*(int *)data->cb_data = 0;
++	pdc_soft_power_button(1);
++	return NOTIFY_DONE;
++}
+ 
+ static int __init power_init(void)
+ {
+@@ -226,7 +234,13 @@ static int __init power_init(void)
+ 				soft_power_reg);
+ 	}
+ 
+-	power_task = kthread_run(kpowerswd, (void*)soft_power_reg, KTHREAD_NAME);
++	power_task = NULL;
++	if (running_on_qemu && soft_power_reg)
++		register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
++					qemu_power_off, (void *)soft_power_reg);
++	else
++		power_task = kthread_run(kpowerswd, (void*)soft_power_reg,
++					KTHREAD_NAME);
+ 	if (IS_ERR(power_task)) {
+ 		printk(KERN_ERR DRIVER_NAME ": thread creation failed.  Driver not loaded.\n");
+ 		pdc_soft_power_button(0);
 
 
