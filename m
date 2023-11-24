@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189FF33CC2;
-	Fri, 24 Nov 2023 19:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F982EB15;
+	Fri, 24 Nov 2023 19:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2RLvmyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB29C433C8;
-	Fri, 24 Nov 2023 19:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09RNWtlg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F726C433C8;
+	Fri, 24 Nov 2023 19:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853540;
-	bh=82tKIxZ0VsZRx/tymRSegqkIAlBZDYsqouJmlQuw/no=;
+	s=korg; t=1700853543;
+	bh=/Q2id4fhWRIfRa4vMey1DHTn/v98/oKrU09C8W7yGfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2RLvmyI3R+AIaWT5+7piRH+DzMPjrlHXoTT2IfFHq0nBx2jB6AnhAdrw6K3/b3Hu
-	 9VWxEW1SG89oiKEhmD5ofbXPFiIUJzQrAU8TckTTyliTPTqYyyAq2OZxMdbTMRaVW9
-	 hx84zrCkWAO2CNnifvUAp+X4PzThGj9E3ojKZg4w=
+	b=09RNWtlgZWP3l6QGodvbfunqqx7rL/opEszgkXbMVYlz7/bnL/CPDUfN3F+Q+hOhP
+	 S8QHdI+6Qo4euG45L8HdMu5GZN4bnHwOWKRNX5+X0EN5vMpAwnMPdAOJo2/kr69S+a
+	 0zGNXr5nLJqXL9gGcU7URTzaSJH+5rJiWvA7qLNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.15 229/297] i3c: master: svc: fix check wrong status register in irq handler
-Date: Fri, 24 Nov 2023 17:54:31 +0000
-Message-ID: <20231124172008.208195684@linuxfoundation.org>
+Subject: [PATCH 5.15 230/297] i3c: master: svc: fix SDA keep low when polling IBIWON timeout happen
+Date: Fri, 24 Nov 2023 17:54:32 +0000
+Message-ID: <20231124172008.239723988@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -44,32 +44,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Li <Frank.Li@nxp.com>
 
-commit 225d5ef048c4ed01a475c95d94833bd7dd61072d upstream.
+commit dfd7cd6aafdb1f5ba93828e97e56b38304b23a05 upstream.
 
-svc_i3c_master_irq_handler() wrongly checks register SVC_I3C_MINTMASKED. It
-should be SVC_I3C_MSTATUS.
+Upon IBIWON timeout, the SDA line will always be kept low if we don't emit
+a stop. Calling svc_i3c_master_emit_stop() there will let the bus return to
+idle state.
 
 Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
 Cc:  <stable@vger.kernel.org>
 Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231023161658.3890811-5-Frank.Li@nxp.com
+Link: https://lore.kernel.org/r/20231023161658.3890811-6-Frank.Li@nxp.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master/svc-i3c-master.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/i3c/master/svc-i3c-master.c
 +++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -438,7 +438,7 @@ reenable_ibis:
- static irqreturn_t svc_i3c_master_irq_handler(int irq, void *dev_id)
- {
- 	struct svc_i3c_master *master = (struct svc_i3c_master *)dev_id;
--	u32 active = readl(master->regs + SVC_I3C_MINTMASKED);
-+	u32 active = readl(master->regs + SVC_I3C_MSTATUS);
+@@ -366,6 +366,7 @@ static void svc_i3c_master_ibi_work(stru
+ 					 SVC_I3C_MSTATUS_IBIWON(val), 0, 1000);
+ 	if (ret) {
+ 		dev_err(master->dev, "Timeout when polling for IBIWON\n");
++		svc_i3c_master_emit_stop(master);
+ 		goto reenable_ibis;
+ 	}
  
- 	if (!SVC_I3C_MSTATUS_SLVSTART(active))
- 		return IRQ_NONE;
 
 
