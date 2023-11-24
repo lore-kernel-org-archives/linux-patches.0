@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0262D381D6;
-	Fri, 24 Nov 2023 17:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7962E381DF;
+	Fri, 24 Nov 2023 17:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5ByPLtD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83924C433C7;
-	Fri, 24 Nov 2023 17:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFjDTkXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040C6C433C7;
+	Fri, 24 Nov 2023 17:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848703;
-	bh=IIyLfpBsPuAoxRiZ/WdPYbcd1p3Ji+XJEwIYq/rFqAY=;
+	s=korg; t=1700848706;
+	bh=goVZ9i3RnYhyFuKZolJa6aSKKEmZhpqiAKzBv4EeacE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5ByPLtD7UDaC5OhBBxiUBDprjz9FsevC6+k4kBEyXCPVsQO+aIV54g/16MvormIi
-	 EZq7i4ZOy1DhVi6AgO/+RQiifz+LY4FFUocXqLkiOifMlU9y8xr9/OXAxJUZBT/TmK
-	 c+w0ouuF9Y3IplX8LEgiJFCyaKWKbOnKo15QRJHc=
+	b=OFjDTkXvIGtte9ENzu/MJcyoBqRH9Yzp2R90igkakKgwgvG+kg7wSnm/oWsPpZ194
+	 G1pHZBLQ3RYPMPrSicPqSG5jQiusp+yPVb2qa0V8vmoiU9XkqrLluD45/voxBcvOHD
+	 qhDppwIbKTAZ49KBb0oIOa4jODQhgB/jFwMXG4eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Held <felix.held@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 13/97] drm/amd: Fix UBSAN array-index-out-of-bounds for SMU7
-Date: Fri, 24 Nov 2023 17:49:46 +0000
-Message-ID: <20231124171934.627467816@linuxfoundation.org>
+Subject: [PATCH 4.19 41/97] xen/events: fix delayed eoi list handling
+Date: Fri, 24 Nov 2023 17:50:14 +0000
+Message-ID: <20231124171935.681070664@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -43,67 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 760efbca74a405dc439a013a5efaa9fadc95a8c3 ]
+[ Upstream commit 47d970204054f859f35a2237baa75c2d84fcf436 ]
 
-For pptable structs that use flexible array sizes, use flexible arrays.
+When delaying eoi handling of events, the related elements are queued
+into the percpu lateeoi list. In case the list isn't empty, the
+elements should be sorted by the time when eoi handling is to happen.
 
-Suggested-by: Felix Held <felix.held@amd.com>
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2874
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Unfortunately a new element will never be queued at the start of the
+list, even if it has a handling time lower than all other list
+elements.
+
+Fix that by handling that case the same way as for an empty list.
+
+Fixes: e99502f76271 ("xen/events: defer eoi in case of excessive number of events")
+Reported-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/include/pptable.h              | 4 ++--
- drivers/gpu/drm/amd/powerplay/hwmgr/pptable_v1_0.h | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/xen/events/events_base.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/include/pptable.h b/drivers/gpu/drm/amd/include/pptable.h
-index 0b6a057e0a4c4..5aac8d545bdc6 100644
---- a/drivers/gpu/drm/amd/include/pptable.h
-+++ b/drivers/gpu/drm/amd/include/pptable.h
-@@ -78,7 +78,7 @@ typedef struct _ATOM_PPLIB_THERMALCONTROLLER
- typedef struct _ATOM_PPLIB_STATE
- {
-     UCHAR ucNonClockStateIndex;
--    UCHAR ucClockStateIndices[1]; // variable-sized
-+    UCHAR ucClockStateIndices[]; // variable-sized
- } ATOM_PPLIB_STATE;
+diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
+index 960666aba12bf..3b27b98175c6d 100644
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -490,7 +490,9 @@ static void lateeoi_list_add(struct irq_info *info)
  
+ 	spin_lock_irqsave(&eoi->eoi_list_lock, flags);
  
-@@ -473,7 +473,7 @@ typedef struct _ATOM_PPLIB_STATE_V2
-       /**
-       * Driver will read the first ucNumDPMLevels in this array
-       */
--      UCHAR clockInfoIndex[1];
-+      UCHAR clockInfoIndex[];
- } ATOM_PPLIB_STATE_V2;
- 
- typedef struct _StateArray{
-diff --git a/drivers/gpu/drm/amd/powerplay/hwmgr/pptable_v1_0.h b/drivers/gpu/drm/amd/powerplay/hwmgr/pptable_v1_0.h
-index 1e870f58dd12a..d5a4a08c6d392 100644
---- a/drivers/gpu/drm/amd/powerplay/hwmgr/pptable_v1_0.h
-+++ b/drivers/gpu/drm/amd/powerplay/hwmgr/pptable_v1_0.h
-@@ -179,7 +179,7 @@ typedef struct _ATOM_Tonga_MCLK_Dependency_Record {
- typedef struct _ATOM_Tonga_MCLK_Dependency_Table {
- 	UCHAR ucRevId;
- 	UCHAR ucNumEntries; 										/* Number of entries. */
--	ATOM_Tonga_MCLK_Dependency_Record entries[1];				/* Dynamically allocate entries. */
-+	ATOM_Tonga_MCLK_Dependency_Record entries[];				/* Dynamically allocate entries. */
- } ATOM_Tonga_MCLK_Dependency_Table;
- 
- typedef struct _ATOM_Tonga_SCLK_Dependency_Record {
-@@ -194,7 +194,7 @@ typedef struct _ATOM_Tonga_SCLK_Dependency_Record {
- typedef struct _ATOM_Tonga_SCLK_Dependency_Table {
- 	UCHAR ucRevId;
- 	UCHAR ucNumEntries; 										/* Number of entries. */
--	ATOM_Tonga_SCLK_Dependency_Record entries[1];				 /* Dynamically allocate entries. */
-+	ATOM_Tonga_SCLK_Dependency_Record entries[];				 /* Dynamically allocate entries. */
- } ATOM_Tonga_SCLK_Dependency_Table;
- 
- typedef struct _ATOM_Polaris_SCLK_Dependency_Record {
+-	if (list_empty(&eoi->eoi_list)) {
++	elem = list_first_entry_or_null(&eoi->eoi_list, struct irq_info,
++					eoi_list);
++	if (!elem || info->eoi_time < elem->eoi_time) {
+ 		list_add(&info->eoi_list, &eoi->eoi_list);
+ 		mod_delayed_work_on(info->eoi_cpu, system_wq,
+ 				    &eoi->delayed, delay);
 -- 
 2.42.0
 
