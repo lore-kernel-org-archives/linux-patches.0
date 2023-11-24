@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C332D787;
-	Fri, 24 Nov 2023 18:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1355E33075;
+	Fri, 24 Nov 2023 18:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TheI58+7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F033CC433C8;
-	Fri, 24 Nov 2023 18:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KuchFNpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E67C433C8;
+	Fri, 24 Nov 2023 18:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852142;
-	bh=L17kSNRBZQLQG9xd8JrrQRs2tf4WtYo+GhYc/FbLE+M=;
+	s=korg; t=1700852144;
+	bh=PRRK1K7oJnkbwxh9FpOWfTZZZuiKunhDGv5NqJCeUJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TheI58+7kwe1a4lSM8bEg5wd7CwABrGW0KaxU0u98f5L2GY81LgWr0RCjjISmbWkF
-	 izGfd3TjUHERMgLG4D6nt3ATrGBQrfdE6Nquimm0E7GQ9DMWvDmzFhqsDmUyyUvo9Y
-	 9cBSE6jqpurfnJVWnSDS6hbnDdyB2F+BCMjpH/8I=
+	b=KuchFNpySpHPWJGLoV3TP0Yt+aMA+qGK7zaDbYFhQLDzM6l19gV+QdFaom18xaYJ/
+	 XaGVBBQfvB7CHW3V5watWa2QBNU4Z/KmlPcGuusWvKeez7O/3q/f+C83AD1z2iUWce
+	 Sf1wo++nH0Y+KwTetP0rAq9RhcZqEDrOZfr/6xUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 236/372] netfilter: nf_tables: split async and sync catchall in two functions
-Date: Fri, 24 Nov 2023 17:50:23 +0000
-Message-ID: <20231124172018.387606809@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 237/372] selftests/resctrl: Remove duplicate feature check from CMT test
+Date: Fri, 24 Nov 2023 17:50:24 +0000
+Message-ID: <20231124172018.422773263@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -36,128 +37,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 8837ba3e58ea1e3d09ae36db80b1e80853aada95 ]
+commit 030b48fb2cf045dead8ee2c5ead560930044c029 upstream.
 
-list_for_each_entry_safe() does not work for the async case which runs
-under RCU, therefore, split GC logic for catchall in two functions
-instead, one for each of the sync and async GC variants.
+The test runner run_cmt_test() in resctrl_tests.c checks for CMT
+feature and does not run cmt_resctrl_val() if CMT is not supported.
+Then cmt_resctrl_val() also check is CMT is supported.
 
-The catchall sync GC variant never sees a _DEAD bit set on ever, thus,
-this handling is removed in such case, moreover, allocate GC sync batch
-via GFP_KERNEL.
+Remove the duplicated feature check for CMT from cmt_resctrl_val().
 
-Fixes: 93995bf4af2c ("netfilter: nf_tables: remove catchall element in GC sync path")
-Reported-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 61 ++++++++++++++++++-----------------
- 1 file changed, 32 insertions(+), 29 deletions(-)
+ tools/testing/selftests/resctrl/cmt_test.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 6a34a4a2f4a42..421211eba838b 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9271,16 +9271,14 @@ void nft_trans_gc_queue_sync_done(struct nft_trans_gc *trans)
- 	call_rcu(&trans->rcu, nft_trans_gc_trans_free);
- }
+--- a/tools/testing/selftests/resctrl/cmt_test.c
++++ b/tools/testing/selftests/resctrl/cmt_test.c
+@@ -91,9 +91,6 @@ int cmt_resctrl_val(int cpu_no, int n, c
+ 	if (ret)
+ 		return ret;
  
--static struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
--						  unsigned int gc_seq,
--						  bool sync)
-+struct nft_trans_gc *nft_trans_gc_catchall_async(struct nft_trans_gc *gc,
-+						 unsigned int gc_seq)
- {
--	struct nft_set_elem_catchall *catchall, *next;
-+	struct nft_set_elem_catchall *catchall;
- 	const struct nft_set *set = gc->set;
--	struct nft_elem_priv *elem_priv;
- 	struct nft_set_ext *ext;
- 
--	list_for_each_entry_safe(catchall, next, &set->catchall_list, list) {
-+	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
- 		ext = nft_set_elem_ext(set, catchall->elem);
- 
- 		if (!nft_set_elem_expired(ext))
-@@ -9290,39 +9288,44 @@ static struct nft_trans_gc *nft_trans_gc_catchall(struct nft_trans_gc *gc,
- 
- 		nft_set_elem_dead(ext);
- dead_elem:
--		if (sync)
--			gc = nft_trans_gc_queue_sync(gc, GFP_ATOMIC);
--		else
--			gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
+-	if (!validate_resctrl_feature_request(CMT_STR))
+-		return -1;
 -
-+		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
- 		if (!gc)
- 			return NULL;
- 
--		elem_priv = catchall->elem;
--		if (sync) {
--			struct nft_set_elem elem = {
--				.priv = elem_priv,
--			};
--
--			nft_setelem_data_deactivate(gc->net, gc->set, &elem);
--			nft_setelem_catchall_destroy(catchall);
--		}
--
--		nft_trans_gc_elem_add(gc, elem_priv);
-+		nft_trans_gc_elem_add(gc, catchall->elem);
- 	}
- 
- 	return gc;
- }
- 
--struct nft_trans_gc *nft_trans_gc_catchall_async(struct nft_trans_gc *gc,
--						 unsigned int gc_seq)
--{
--	return nft_trans_gc_catchall(gc, gc_seq, false);
--}
--
- struct nft_trans_gc *nft_trans_gc_catchall_sync(struct nft_trans_gc *gc)
- {
--	return nft_trans_gc_catchall(gc, 0, true);
-+	struct nft_set_elem_catchall *catchall, *next;
-+	const struct nft_set *set = gc->set;
-+	struct nft_set_elem elem;
-+	struct nft_set_ext *ext;
-+
-+	WARN_ON_ONCE(!lockdep_commit_lock_is_held(gc->net));
-+
-+	list_for_each_entry_safe(catchall, next, &set->catchall_list, list) {
-+		ext = nft_set_elem_ext(set, catchall->elem);
-+
-+		if (!nft_set_elem_expired(ext))
-+			continue;
-+
-+		gc = nft_trans_gc_queue_sync(gc, GFP_KERNEL);
-+		if (!gc)
-+			return NULL;
-+
-+		memset(&elem, 0, sizeof(elem));
-+		elem.priv = catchall->elem;
-+
-+		nft_setelem_data_deactivate(gc->net, gc->set, &elem);
-+		nft_setelem_catchall_destroy(catchall);
-+		nft_trans_gc_elem_add(gc, elem.priv);
-+	}
-+
-+	return gc;
- }
- 
- static void nf_tables_module_autoload_cleanup(struct net *net)
--- 
-2.42.0
-
+ 	ret = get_cbm_mask("L3", cbm_mask);
+ 	if (ret)
+ 		return ret;
 
 
