@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C2539FC6;
-	Fri, 24 Nov 2023 18:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859182AF00;
+	Fri, 24 Nov 2023 18:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2XE2361"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9093FC433C8;
-	Fri, 24 Nov 2023 18:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XE8O/vlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12556C433C8;
+	Fri, 24 Nov 2023 18:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848827;
-	bh=quN9LGMfehvNXU04oDQK0nhQFlm8pDU4iE8q2MD0qUY=;
+	s=korg; t=1700848830;
+	bh=gmLr/6S13kwtA3Ync5b/gqXaltokE7ifezcM99KxmXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2XE2361UIqdrUehDAzPKNMw6vY4zw4xahqWR4rfKzJeGee1GH7ugdMZHArxTFYR6
-	 ow1mzuOaSkA5ON6ORkI8UmkK93M+tcXfm1KOyiA0c+/4JWCqzMmmuTTQf6M9nAibjB
-	 uxjuAXpttizRFILoCFXevkO0RmlVEx91rjzfa/2E=
+	b=XE8O/vlTfDblyQk0lBOdvkm13ezTzVscq2rpXU9eFWugDb7L4aEk/spOix+gemYHC
+	 MudpxkcJZk3FESLiheAzDs/Qcr14Msav4Fu04+3CWP7fDK7VZXlasAp8VYDqabSdoV
+	 Smx3MQE1Bk4Viyv/EjD2FKAtLIYVaHOK5mCnKgdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 4.19 70/97] s390/cmma: fix handling of swapper_pg_dir and invalid_pg_dir
-Date: Fri, 24 Nov 2023 17:50:43 +0000
-Message-ID: <20231124171936.750273919@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 4.19 71/97] parisc: Prevent booting 64-bit kernels on PA1.x machines
+Date: Fri, 24 Nov 2023 17:50:44 +0000
+Message-ID: <20231124171936.795906630@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -42,45 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 84bb41d5df48868055d159d9247b80927f1f70f9 upstream.
+commit a406b8b424fa01f244c1aab02ba186258448c36b upstream.
 
-If the cmma no-dat feature is available the kernel page tables are walked
-to identify and mark all pages which are used for address translation (all
-region, segment, and page tables). In a subsequent loop all other pages are
-marked as "no-dat" pages with the ESSA instruction.
+Bail out early with error message when trying to boot a 64-bit kernel on
+32-bit machines. This fixes the previous commit to include the check for
+true 64-bit kernels as well.
 
-This information is visible to the hypervisor, so that the hypervisor can
-optimize purging of guest TLB entries. All pages used for swapper_pg_dir
-and invalid_pg_dir are incorrectly marked as no-dat, which in turn can
-result in incorrect guest TLB flushes.
-
-Fix this by marking those pages correctly as being used for DAT.
-
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 591d2108f3abc ("parisc: Add runtime check to prevent PA2.0 kernels on PA1.x machines")
+Cc:  <stable@vger.kernel.org> # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/page-states.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/parisc/kernel/head.S |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/arch/s390/mm/page-states.c
-+++ b/arch/s390/mm/page-states.c
-@@ -204,6 +204,12 @@ void __init cmma_init_nodat(void)
- 		return;
- 	/* Mark pages used in kernel page tables */
- 	mark_kernel_pgd();
-+	page = virt_to_page(&swapper_pg_dir);
-+	for (i = 0; i < 4; i++)
-+		set_bit(PG_arch_1, &page[i].flags);
-+	page = virt_to_page(&invalid_pg_dir);
-+	for (i = 0; i < 4; i++)
-+		set_bit(PG_arch_1, &page[i].flags);
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -69,9 +69,8 @@ $bss_loop:
+ 	stw,ma          %arg2,4(%r1)
+ 	stw,ma          %arg3,4(%r1)
  
- 	/* Set all kernel pages not used for page tables to stable/no-dat */
- 	for_each_memblock(memory, reg) {
+-#if !defined(CONFIG_64BIT) && defined(CONFIG_PA20)
+-	/* This 32-bit kernel was compiled for PA2.0 CPUs. Check current CPU
+-	 * and halt kernel if we detect a PA1.x CPU. */
++#if defined(CONFIG_PA20)
++	/* check for 64-bit capable CPU as required by current kernel */
+ 	ldi		32,%r10
+ 	mtctl		%r10,%cr11
+ 	.level 2.0
 
 
