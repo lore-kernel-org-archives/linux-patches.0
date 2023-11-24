@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4122F35F1A;
-	Fri, 24 Nov 2023 19:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C128135F04;
+	Fri, 24 Nov 2023 19:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouJY3SNP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2923C433CB;
-	Fri, 24 Nov 2023 19:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yo88FBGX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A73C433CB;
+	Fri, 24 Nov 2023 19:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853491;
-	bh=Tl5i//zi64sbROncZYffy9DTa2QtHMZ1WaDzsTqQDcg=;
+	s=korg; t=1700853493;
+	bh=UcjGjzbu4BwwyyTvdIoc7dwbJeGEr95Y6Fhfis5pzyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ouJY3SNPfSeM28faxwN84dwqicf34qJ1T2BVXyBhyL2oCXsc33cg5zFf6Sc6JJJ38
-	 e7DF9LbxGoP8BxQzemc/VpsOkgLjuVDyOyLoXkQCRrejnFoxv4fT3XBRHfDgy/MkV+
-	 wAPXt4OyIi7A9XH8QDqpbQ+qtUrdVMeg8SRscphE=
+	b=Yo88FBGX+Hwl+Um/P734mIDmy4Vm1U5xgin02CBuVOwInbMQ+FH6ZyV1gSTLpj5Eo
+	 BQluo8CwADn6lYSOz5zMsU9KgbCtIxA5eKWxDnog05UC6tlqB2F0NzU6biL6m13xvu
+	 gPkSo0uvtM7bSkTL+TmW8aFoj6nAzcmfh/0toxm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Yadav <n-yadav@ti.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 184/297] mmc: sdhci_am654: fix start loop index for TAP value parsing
-Date: Fri, 24 Nov 2023 17:53:46 +0000
-Message-ID: <20231124172006.670936604@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.15 185/297] PCI/ASPM: Fix L1 substate handling in aspm_attr_store_common()
+Date: Fri, 24 Nov 2023 17:53:47 +0000
+Message-ID: <20231124172006.707529568@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,35 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Yadav <n-yadav@ti.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 71956d0cb56c1e5f9feeb4819db87a076418e930 upstream.
+commit 8e37372ad0bea4c9b4712d9943f6ae96cff9491f upstream.
 
-ti,otap-del-sel-legacy/ti,itap-del-sel-legacy passed from DT
-are currently ignored for all SD/MMC and eMMC modes. Fix this
-by making start loop index to MMC_TIMING_LEGACY.
+aspm_attr_store_common(), which handles sysfs control of ASPM, has the same
+problem as fb097dcd5a28 ("PCI/ASPM: Disable only ASPM_STATE_L1 when driver
+disables L1"): disabling L1 adds only ASPM_L1 (but not any of the L1.x
+substates) to the "aspm_disable" mask.
 
-Fixes: 8ee5fc0e0b3b ("mmc: sdhci_am654: Update OTAPDLY writes")
-Signed-off-by: Nitin Yadav <n-yadav@ti.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Enabling one substate, e.g., L1.1, via sysfs removes ASPM_L1 from the
+disable mask.  Since disabling L1 via sysfs doesn't add any of the
+substates to the disable mask, enabling L1.1 actually enables *all* the
+substates.
+
+In this scenario:
+
+  - Write 0 to "l1_aspm" to disable L1
+  - Write 1 to "l1_1_aspm" to enable L1.1
+
+the intention is to disable L1 and all L1.x substates, then enable just
+L1.1, but in fact, *all* L1.x substates are enabled.
+
+Fix this by explicitly disabling all the L1.x substates when disabling L1.
+
+Fixes: 72ea91afbfb0 ("PCI/ASPM: Add sysfs attributes for controlling ASPM link states")
+Link: https://lore.kernel.org/r/6ba7dd79-9cfe-4ed0-a002-d99cb842f361@gmail.com
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231026061458.1116276-1-n-yadav@ti.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci_am654.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pcie/aspm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/host/sdhci_am654.c
-+++ b/drivers/mmc/host/sdhci_am654.c
-@@ -600,7 +600,7 @@ static int sdhci_am654_get_otap_delay(st
- 		return 0;
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -1231,6 +1231,8 @@ static ssize_t aspm_attr_store_common(st
+ 			link->aspm_disable &= ~ASPM_STATE_L1;
+ 	} else {
+ 		link->aspm_disable |= state;
++		if (state & ASPM_STATE_L1)
++			link->aspm_disable |= ASPM_STATE_L1SS;
  	}
  
--	for (i = MMC_TIMING_MMC_HS; i <= MMC_TIMING_MMC_HS400; i++) {
-+	for (i = MMC_TIMING_LEGACY; i <= MMC_TIMING_MMC_HS400; i++) {
- 
- 		ret = device_property_read_u32(dev, td[i].otap_binding,
- 					       &sdhci_am654->otap_del_sel[i]);
+ 	pcie_config_aspm_link(link, policy_to_aspm_state(link));
 
 
