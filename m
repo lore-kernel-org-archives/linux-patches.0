@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2287033CC7;
-	Fri, 24 Nov 2023 18:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05F5364C1;
+	Fri, 24 Nov 2023 18:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZExGop3r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C501C433C9;
-	Fri, 24 Nov 2023 18:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LkmNMZUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07158C433C8;
+	Fri, 24 Nov 2023 18:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851565;
-	bh=qgTv+uHI/xQY7qmOWS5r/H0RbyxgxhUpPXqNUYzKMnk=;
+	s=korg; t=1700851568;
+	bh=agN2MhSdkCDy6VZ4ZRF6xgiSPGw+2Pzk4c0Q1sglx8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZExGop3rEAHtfTwNfbvtYqGZ1crllYwaCFnO2D6VuQj6hZhuUyqI5GTSyOj+LLdj9
-	 G23uILFgEBsdSe8A9Gu7ePcE+8Rje2aGF7ZRlGOKrptdtTZRUsoI6+n7OnLxcDKQrf
-	 ZKkdGwf/1GEM5Sb/Hd36RRL0pp2/aiRe0GWdg7os=
+	b=LkmNMZUt7ilHQdAYwJ3aHHFToTP2PPNUFoXHShefa4JUzWY6Qa/PsqLwdBF+IHmjD
+	 8a4Nm2NdxS5An6I5TRcfNt67/fUZ0FnE4/nOIRSmWmo7mK0okGlaNwbHDuBT+RLsh3
+	 cw3XqrV8n/NRSCyHCR0Cx0T28JLDmM1j6VwekMKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Beau Belgrave <beaub@linux.microsoft.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.5 491/491] tracing: Have trace_event_file have ref counters
-Date: Fri, 24 Nov 2023 17:52:07 +0000
-Message-ID: <20231124172039.395042526@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.5 486/491] drm/amd/display: Fix DSC not Enabled on Direct MST Sink
+Date: Fri, 24 Nov 2023 17:52:02 +0000
+Message-ID: <20231124172039.236447914@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,252 +45,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Fangzhi Zuo <jerry.zuo@amd.com>
 
-commit bb32500fb9b78215e4ef6ee8b4345c5f5d7eafb4 upstream.
+commit a58555359a9f870543aaddef277c3396159895ce upstream.
 
-The following can crash the kernel:
+[WHY & HOW]
+For the scenario when a dsc capable MST sink device is directly
+connected, it needs to use max dsc compression as the link bw constraint.
 
- # cd /sys/kernel/tracing
- # echo 'p:sched schedule' > kprobe_events
- # exec 5>>events/kprobes/sched/enable
- # > kprobe_events
- # exec 5>&-
-
-The above commands:
-
- 1. Change directory to the tracefs directory
- 2. Create a kprobe event (doesn't matter what one)
- 3. Open bash file descriptor 5 on the enable file of the kprobe event
- 4. Delete the kprobe event (removes the files too)
- 5. Close the bash file descriptor 5
-
-The above causes a crash!
-
- BUG: kernel NULL pointer dereference, address: 0000000000000028
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: 0000 [#1] PREEMPT SMP PTI
- CPU: 6 PID: 877 Comm: bash Not tainted 6.5.0-rc4-test-00008-g2c6b6b1029d4-dirty #186
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
- RIP: 0010:tracing_release_file_tr+0xc/0x50
-
-What happens here is that the kprobe event creates a trace_event_file
-"file" descriptor that represents the file in tracefs to the event. It
-maintains state of the event (is it enabled for the given instance?).
-Opening the "enable" file gets a reference to the event "file" descriptor
-via the open file descriptor. When the kprobe event is deleted, the file is
-also deleted from the tracefs system which also frees the event "file"
-descriptor.
-
-But as the tracefs file is still opened by user space, it will not be
-totally removed until the final dput() is called on it. But this is not
-true with the event "file" descriptor that is already freed. If the user
-does a write to or simply closes the file descriptor it will reference the
-event "file" descriptor that was just freed, causing a use-after-free bug.
-
-To solve this, add a ref count to the event "file" descriptor as well as a
-new flag called "FREED". The "file" will not be freed until the last
-reference is released. But the FREE flag will be set when the event is
-removed to prevent any more modifications to that event from happening,
-even if there's still a reference to the event "file" descriptor.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231031000031.1e705592@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20231031122453.7a48b923@gandalf.local.home
-
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Fixes: f5ca233e2e66d ("tracing: Increase trace array ref count on enable and filter files")
-Reported-by: Beau Belgrave <beaub@linux.microsoft.com>
-Tested-by: Beau Belgrave <beaub@linux.microsoft.com>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_events.h       |    4 +++
- kernel/trace/trace.c               |   15 ++++++++++++
- kernel/trace/trace.h               |    3 ++
- kernel/trace/trace_events.c        |   43 ++++++++++++++++++++++++-------------
- kernel/trace/trace_events_filter.c |    3 ++
- 5 files changed, 53 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   29 +++++-------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -492,6 +492,7 @@ enum {
- 	EVENT_FILE_FL_TRIGGER_COND_BIT,
- 	EVENT_FILE_FL_PID_FILTER_BIT,
- 	EVENT_FILE_FL_WAS_ENABLED_BIT,
-+	EVENT_FILE_FL_FREED_BIT,
- };
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1591,31 +1591,31 @@ enum dc_status dm_dp_mst_is_port_support
+ 	unsigned int upper_link_bw_in_kbps = 0, down_link_bw_in_kbps = 0;
+ 	unsigned int max_compressed_bw_in_kbps = 0;
+ 	struct dc_dsc_bw_range bw_range = {0};
+-	struct drm_dp_mst_topology_mgr *mst_mgr;
++	uint16_t full_pbn = aconnector->mst_output_port->full_pbn;
  
- extern struct trace_event_file *trace_get_event_file(const char *instance,
-@@ -630,6 +631,7 @@ extern int __kprobe_event_add_fields(str
-  *  TRIGGER_COND  - When set, one or more triggers has an associated filter
-  *  PID_FILTER    - When set, the event is filtered based on pid
-  *  WAS_ENABLED   - Set when enabled to know to clear trace on module removal
-+ *  FREED         - File descriptor is freed, all fields should be considered invalid
-  */
- enum {
- 	EVENT_FILE_FL_ENABLED		= (1 << EVENT_FILE_FL_ENABLED_BIT),
-@@ -643,6 +645,7 @@ enum {
- 	EVENT_FILE_FL_TRIGGER_COND	= (1 << EVENT_FILE_FL_TRIGGER_COND_BIT),
- 	EVENT_FILE_FL_PID_FILTER	= (1 << EVENT_FILE_FL_PID_FILTER_BIT),
- 	EVENT_FILE_FL_WAS_ENABLED	= (1 << EVENT_FILE_FL_WAS_ENABLED_BIT),
-+	EVENT_FILE_FL_FREED		= (1 << EVENT_FILE_FL_FREED_BIT),
- };
- 
- struct trace_event_file {
-@@ -671,6 +674,7 @@ struct trace_event_file {
- 	 * caching and such. Which is mostly OK ;-)
+ 	/*
+-	 * check if the mode could be supported if DSC pass-through is supported
+-	 * AND check if there enough bandwidth available to support the mode
+-	 * with DSC enabled.
++	 * Consider the case with the depth of the mst topology tree is equal or less than 2
++	 * A. When dsc bitstream can be transmitted along the entire path
++	 *    1. dsc is possible between source and branch/leaf device (common dsc params is possible), AND
++	 *    2. dsc passthrough supported at MST branch, or
++	 *    3. dsc decoding supported at leaf MST device
++	 *    Use maximum dsc compression as bw constraint
++	 * B. When dsc bitstream cannot be transmitted along the entire path
++	 *    Use native bw as bw constraint
  	 */
- 	unsigned long		flags;
-+	atomic_t		ref;	/* ref count for opened files */
- 	atomic_t		sm_ref;	/* soft-mode reference counter */
- 	atomic_t		tm_ref;	/* trigger-mode reference counter */
- };
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5000,6 +5000,20 @@ int tracing_open_file_tr(struct inode *i
- 	if (ret)
- 		return ret;
+ 	if (is_dsc_common_config_possible(stream, &bw_range) &&
+-	    aconnector->mst_output_port->passthrough_aux) {
+-		mst_mgr = aconnector->mst_output_port->mgr;
+-		mutex_lock(&mst_mgr->lock);
+-
++	   (aconnector->mst_output_port->passthrough_aux ||
++	    aconnector->dsc_aux == &aconnector->mst_output_port->aux)) {
+ 		cur_link_settings = stream->link->verified_link_cap;
  
-+	mutex_lock(&event_mutex);
-+
-+	/* Fail if the file is marked for removal */
-+	if (file->flags & EVENT_FILE_FL_FREED) {
-+		trace_array_put(file->tr);
-+		ret = -ENODEV;
-+	} else {
-+		event_file_get(file);
-+	}
-+
-+	mutex_unlock(&event_mutex);
-+	if (ret)
-+		return ret;
-+
- 	filp->private_data = inode->i_private;
+ 		upper_link_bw_in_kbps = dc_link_bandwidth_kbps(aconnector->dc_link,
+-							       &cur_link_settings
+-							       );
+-		down_link_bw_in_kbps = kbps_from_pbn(aconnector->mst_output_port->full_pbn);
++							       &cur_link_settings);
++		down_link_bw_in_kbps = kbps_from_pbn(full_pbn);
  
- 	return 0;
-@@ -5010,6 +5024,7 @@ int tracing_release_file_tr(struct inode
- 	struct trace_event_file *file = inode->i_private;
+ 		/* pick the bottleneck */
+ 		end_to_end_bw_in_kbps = min(upper_link_bw_in_kbps,
+ 					    down_link_bw_in_kbps);
  
- 	trace_array_put(file->tr);
-+	event_file_put(file);
- 
- 	return 0;
- }
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1656,6 +1656,9 @@ extern void event_trigger_unregister(str
- 				     char *glob,
- 				     struct event_trigger_data *trigger_data);
- 
-+extern void event_file_get(struct trace_event_file *file);
-+extern void event_file_put(struct trace_event_file *file);
-+
- /**
-  * struct event_trigger_ops - callbacks for trace event triggers
-  *
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -990,26 +990,38 @@ static void remove_subsystem(struct trac
+-		mutex_unlock(&mst_mgr->lock);
+-
+ 		/*
+ 		 * use the maximum dsc compression bandwidth as the required
+ 		 * bandwidth for the mode
+@@ -1630,8 +1630,7 @@ enum dc_status dm_dp_mst_is_port_support
+ 		/* check if mode could be supported within full_pbn */
+ 		bpp = convert_dc_color_depth_into_bpc(stream->timing.display_color_depth) * 3;
+ 		pbn = drm_dp_calc_pbn_mode(stream->timing.pix_clk_100hz / 10, bpp, false);
+-
+-		if (pbn > aconnector->mst_output_port->full_pbn)
++		if (pbn > full_pbn)
+ 			return DC_FAIL_BANDWIDTH_VALIDATE;
  	}
- }
  
--static void remove_event_file_dir(struct trace_event_file *file)
-+void event_file_get(struct trace_event_file *file)
- {
--	struct dentry *dir = file->dir;
--	struct dentry *child;
-+	atomic_inc(&file->ref);
-+}
- 
--	if (dir) {
--		spin_lock(&dir->d_lock);	/* probably unneeded */
--		list_for_each_entry(child, &dir->d_subdirs, d_child) {
--			if (d_really_is_positive(child))	/* probably unneeded */
--				d_inode(child)->i_private = NULL;
--		}
--		spin_unlock(&dir->d_lock);
-+void event_file_put(struct trace_event_file *file)
-+{
-+	if (WARN_ON_ONCE(!atomic_read(&file->ref))) {
-+		if (file->flags & EVENT_FILE_FL_FREED)
-+			kmem_cache_free(file_cachep, file);
-+		return;
-+	}
- 
--		tracefs_remove(dir);
-+	if (atomic_dec_and_test(&file->ref)) {
-+		/* Count should only go to zero when it is freed */
-+		if (WARN_ON_ONCE(!(file->flags & EVENT_FILE_FL_FREED)))
-+			return;
-+		kmem_cache_free(file_cachep, file);
- 	}
-+}
-+
-+static void remove_event_file_dir(struct trace_event_file *file)
-+{
-+	struct dentry *dir = file->dir;
-+
-+	tracefs_remove(dir);
- 
- 	list_del(&file->list);
- 	remove_subsystem(file->system);
- 	free_event_filter(file->filter);
--	kmem_cache_free(file_cachep, file);
-+	file->flags |= EVENT_FILE_FL_FREED;
-+	event_file_put(file);
- }
- 
- /*
-@@ -1382,7 +1394,7 @@ event_enable_read(struct file *filp, cha
- 		flags = file->flags;
- 	mutex_unlock(&event_mutex);
- 
--	if (!file)
-+	if (!file || flags & EVENT_FILE_FL_FREED)
- 		return -ENODEV;
- 
- 	if (flags & EVENT_FILE_FL_ENABLED &&
-@@ -1420,7 +1432,7 @@ event_enable_write(struct file *filp, co
- 		ret = -ENODEV;
- 		mutex_lock(&event_mutex);
- 		file = event_file_data(filp);
--		if (likely(file))
-+		if (likely(file && !(file->flags & EVENT_FILE_FL_FREED)))
- 			ret = ftrace_event_enable_disable(file, val);
- 		mutex_unlock(&event_mutex);
- 		break;
-@@ -1694,7 +1706,7 @@ event_filter_read(struct file *filp, cha
- 
- 	mutex_lock(&event_mutex);
- 	file = event_file_data(filp);
--	if (file)
-+	if (file && !(file->flags & EVENT_FILE_FL_FREED))
- 		print_event_filter(file, s);
- 	mutex_unlock(&event_mutex);
- 
-@@ -2810,6 +2822,7 @@ trace_create_new_event(struct trace_even
- 	atomic_set(&file->tm_ref, 0);
- 	INIT_LIST_HEAD(&file->triggers);
- 	list_add(&file->list, &tr->events);
-+	event_file_get(file);
- 
- 	return file;
- }
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -2088,6 +2088,9 @@ int apply_event_filter(struct trace_even
- 	struct event_filter *filter = NULL;
- 	int err;
- 
-+	if (file->flags & EVENT_FILE_FL_FREED)
-+		return -ENODEV;
-+
- 	if (!strcmp(strstrip(filter_string), "0")) {
- 		filter_disable(file);
- 		filter = event_filter(file);
 
 
