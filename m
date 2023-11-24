@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF19381BF;
-	Fri, 24 Nov 2023 18:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF0733063;
+	Fri, 24 Nov 2023 18:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtdtzmvX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D022C433C8;
-	Fri, 24 Nov 2023 18:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYCyb7Q5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EBFC433C7;
+	Fri, 24 Nov 2023 18:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850576;
-	bh=CXFkYMiO7CeCV7eqLA9ZCTV6vd3HZDjaDL31Eem5QOU=;
+	s=korg; t=1700850579;
+	bh=auuLbcASmmmbAO/TX2mzC3OpGBuDO1IlLXAXCy6mf44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HtdtzmvX//kdlNEnMjYVEaiI76je00aQ8DpJ7mPOMP/Ae0TOOzbwUUn2Ysld4pK+S
-	 RTv+9sXjUj5MIlHGxKQNS9GtOBCYtlTXQjFfmMuKLxsMZdVuyeTNqY/6tiNCovqD/B
-	 +dXkyC1kA6/mWp9jitFjJvIQDJVZrCGQrl/sEWgM=
+	b=GYCyb7Q5EOcg+fZ7mML+yUcQQoMuoWWAmUaDECmeNxj+BgLvopjYIqlYZM8OYKdLt
+	 M9qyN6nSwzkOaqEThgbGl587u2Wmcg/Uxet8HAw4hbItwRVvguj4BmpN61hRRTNLi5
+	 rezpgrtAJkbC/OYRqLwCB6ZhVrWaBXcRtYhdCvpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <fancer.lancer@gmail.com>,
 	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 104/491] PCI: dwc: Add missing PCI_EXP_LNKCAP_MLW handling
-Date: Fri, 24 Nov 2023 17:45:40 +0000
-Message-ID: <20231124172027.685833248@linuxfoundation.org>
+Subject: [PATCH 6.5 105/491] misc: pci_endpoint_test: Add Device ID for R-Car S4-8 PCIe controller
+Date: Fri, 24 Nov 2023 17:45:41 +0000
+Message-ID: <20231124172027.714617765@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -47,68 +46,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 89db0793c9f2da265ecb6c1681f899d9af157f37 ]
+[ Upstream commit 6c4b39937f4e65688ea294725ae432b2565821ff ]
 
-Update dw_pcie_link_set_max_link_width() to set PCI_EXP_LNKCAP_MLW.
+Add Renesas R8A779F0 in pci_device_id table so that pci-epf-test
+can be used for testing PCIe EP on R-Car S4-8.
 
-In accordance with the DW PCIe RC/EP HW manuals [1,2,3,...] aside with
-the PORT_LINK_CTRL_OFF.LINK_CAPABLE and GEN2_CTRL_OFF.NUM_OF_LANES[8:0]
-field there is another one which needs to be updated.
-
-It's LINK_CAPABILITIES_REG.PCIE_CAP_MAX_LINK_WIDTH. If it isn't done at
-the very least the maximum link-width capability CSR won't expose the
-actual maximum capability.
-
-[1] DesignWare Cores PCI Express Controller Databook - DWC PCIe Root Port,
-    Version 4.60a, March 2015, p.1032
-[2] DesignWare Cores PCI Express Controller Databook - DWC PCIe Root Port,
-    Version 4.70a, March 2016, p.1065
-[3] DesignWare Cores PCI Express Controller Databook - DWC PCIe Root Port,
-    Version 4.90a, March 2016, p.1057
-...
-[X] DesignWare Cores PCI Express Controller Databook - DWC PCIe Endpoint,
-      Version 5.40a, March 2019, p.1396
-[X+1] DesignWare Cores PCI Express Controller Databook - DWC PCIe Root Port,
-      Version 5.40a, March 2019, p.1266
-
-Suggested-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/linux-pci/20231018085631.1121289-4-yoshihiro.shimoda.uh@renesas.com
+Link: https://lore.kernel.org/linux-pci/20231018085631.1121289-16-yoshihiro.shimoda.uh@renesas.com
 Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/misc/pci_endpoint_test.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index d14b4da700eaf..8e6f6ac42dc96 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -734,7 +734,8 @@ static void dw_pcie_link_set_max_speed(struct dw_pcie *pci, u32 link_gen)
+diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
+index 7e1acc68d4359..af519088732d9 100644
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -82,6 +82,7 @@
+ #define PCI_DEVICE_ID_RENESAS_R8A774B1		0x002b
+ #define PCI_DEVICE_ID_RENESAS_R8A774C0		0x002d
+ #define PCI_DEVICE_ID_RENESAS_R8A774E1		0x0025
++#define PCI_DEVICE_ID_RENESAS_R8A779F0		0x0031
  
- static void dw_pcie_link_set_max_link_width(struct dw_pcie *pci, u32 num_lanes)
- {
--	u32 lwsc, plc;
-+	u32 lnkcap, lwsc, plc;
-+	u8 cap;
+ static DEFINE_IDA(pci_endpoint_test_ida);
  
- 	if (!num_lanes)
- 		return;
-@@ -770,6 +771,12 @@ static void dw_pcie_link_set_max_link_width(struct dw_pcie *pci, u32 num_lanes)
- 	}
- 	dw_pcie_writel_dbi(pci, PCIE_PORT_LINK_CONTROL, plc);
- 	dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, lwsc);
-+
-+	cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	lnkcap = dw_pcie_readl_dbi(pci, cap + PCI_EXP_LNKCAP);
-+	lnkcap &= ~PCI_EXP_LNKCAP_MLW;
-+	lnkcap |= FIELD_PREP(PCI_EXP_LNKCAP_MLW, num_lanes);
-+	dw_pcie_writel_dbi(pci, cap + PCI_EXP_LNKCAP, lnkcap);
- }
- 
- void dw_pcie_iatu_detect(struct dw_pcie *pci)
+@@ -991,6 +992,9 @@ static const struct pci_device_id pci_endpoint_test_tbl[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, PCI_DEVICE_ID_RENESAS_R8A774B1),},
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, PCI_DEVICE_ID_RENESAS_R8A774C0),},
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, PCI_DEVICE_ID_RENESAS_R8A774E1),},
++	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, PCI_DEVICE_ID_RENESAS_R8A779F0),
++	  .driver_data = (kernel_ulong_t)&default_data,
++	},
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_J721E),
+ 	  .driver_data = (kernel_ulong_t)&j721e_data,
+ 	},
 -- 
 2.42.0
 
