@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7FE39FF7;
-	Fri, 24 Nov 2023 18:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8718639FE3;
+	Fri, 24 Nov 2023 18:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAH3NGuq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B82C433C8;
-	Fri, 24 Nov 2023 18:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rt5c/jR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F23C433C8;
+	Fri, 24 Nov 2023 18:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849421;
-	bh=Him7LNA3/3ib5EY7TvAFUzgFuyLfW5PJyZuWYPCl8qY=;
+	s=korg; t=1700849424;
+	bh=5boYX/uAT/YdCTa71jQYR1cIbKMBTMEszDxq4/q9TuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAH3NGuq3MHQF4xOdGX5GlTjy5pIOQY5/4tMnvrRtEe2mm9tXDIuTD4sC2DON/QRB
-	 lxWYH0EUQM+AnwZ16fpluiE8uKwGkXwvA1L8Mc4WVcsgUVO5hibzqiMmpUh6fE9ctF
-	 0B0eQyzlk8UNCTVrHebtx9dnRushWhmtGVZYN9n4=
+	b=Rt5c/jR0RtUmtkD/bxLVOAoRzg7G9k9CyO7iRzgZM5Gidy3wNcSjvpeLWogQuu28d
+	 ponQgDI+VFJC5Q8gK3KzF4gp5bTmBnyxtyD2DZagjdoNp6pa4p7KcvIUkGf/CMsY2i
+	 +72dIuIxEjAOcyaxz5T7YZclPp5t8xTyhgiSaVeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Qing Wang <qinwang@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/530] riscv: split cache ops out of dma-noncoherent.c
-Date: Fri, 24 Nov 2023 17:45:41 +0000
-Message-ID: <20231124172033.401804603@linuxfoundation.org>
+Subject: [PATCH 6.6 176/530] vdpa_sim_blk: allocate the buffer zeroed
+Date: Fri, 24 Nov 2023 17:45:42 +0000
+Message-ID: <20231124172033.434790247@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -39,99 +39,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 946bb33d330251966223f770f64885c79448b1a1 ]
+[ Upstream commit 0d82410252ea324f0064e75b9865bb74cccc1dda ]
 
-The cache ops are also used by the pmem code which is unconditionally
-built into the kernel.  Move them into a separate file that is built
-based on the correct config option.
+Deleting and recreating a device can lead to having the same
+content as the old device, so let's always allocate buffers
+completely zeroed out.
 
-Fixes: fd962781270e ("riscv: RISCV_NONSTANDARD_CACHE_OPS shouldn't depend on RISCV_DMA_NONCOHERENT")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com> #
-Link: https://lore.kernel.org/r/20231028155101.1039049-1-hch@lst.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: abebb16254b3 ("vdpa_sim_blk: support shared backend")
+Suggested-by: Qing Wang <qinwang@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20231031144339.121453-1-sgarzare@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/Makefile          |  1 +
- arch/riscv/mm/cache-ops.c       | 17 +++++++++++++++++
- arch/riscv/mm/dma-noncoherent.c | 15 ---------------
- 3 files changed, 18 insertions(+), 15 deletions(-)
- create mode 100644 arch/riscv/mm/cache-ops.c
+ drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/mm/Makefile b/arch/riscv/mm/Makefile
-index 9c454f90fd3da..3a4dfc8babcf8 100644
---- a/arch/riscv/mm/Makefile
-+++ b/arch/riscv/mm/Makefile
-@@ -36,3 +36,4 @@ endif
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+index b3a3cb1657955..b137f36793439 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+@@ -437,7 +437,7 @@ static int vdpasim_blk_dev_add(struct vdpa_mgmt_dev *mdev, const char *name,
+ 	if (blk->shared_backend) {
+ 		blk->buffer = shared_buffer;
+ 	} else {
+-		blk->buffer = kvmalloc(VDPASIM_BLK_CAPACITY << SECTOR_SHIFT,
++		blk->buffer = kvzalloc(VDPASIM_BLK_CAPACITY << SECTOR_SHIFT,
+ 				       GFP_KERNEL);
+ 		if (!blk->buffer) {
+ 			ret = -ENOMEM;
+@@ -495,7 +495,7 @@ static int __init vdpasim_blk_init(void)
+ 		goto parent_err;
  
- obj-$(CONFIG_DEBUG_VIRTUAL) += physaddr.o
- obj-$(CONFIG_RISCV_DMA_NONCOHERENT) += dma-noncoherent.o
-+obj-$(CONFIG_RISCV_NONSTANDARD_CACHE_OPS) += cache-ops.o
-diff --git a/arch/riscv/mm/cache-ops.c b/arch/riscv/mm/cache-ops.c
-new file mode 100644
-index 0000000000000..a993ad11d0eca
---- /dev/null
-+++ b/arch/riscv/mm/cache-ops.c
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2021 Western Digital Corporation or its affiliates.
-+ */
-+
-+#include <asm/dma-noncoherent.h>
-+
-+struct riscv_nonstd_cache_ops noncoherent_cache_ops __ro_after_init;
-+
-+void
-+riscv_noncoherent_register_cache_ops(const struct riscv_nonstd_cache_ops *ops)
-+{
-+	if (!ops)
-+		return;
-+	noncoherent_cache_ops = *ops;
-+}
-+EXPORT_SYMBOL_GPL(riscv_noncoherent_register_cache_ops);
-diff --git a/arch/riscv/mm/dma-noncoherent.c b/arch/riscv/mm/dma-noncoherent.c
-index b76e7e192eb18..341bd6706b4c5 100644
---- a/arch/riscv/mm/dma-noncoherent.c
-+++ b/arch/riscv/mm/dma-noncoherent.c
-@@ -15,12 +15,6 @@ static bool noncoherent_supported __ro_after_init;
- int dma_cache_alignment __ro_after_init = ARCH_DMA_MINALIGN;
- EXPORT_SYMBOL_GPL(dma_cache_alignment);
- 
--struct riscv_nonstd_cache_ops noncoherent_cache_ops __ro_after_init = {
--	.wback = NULL,
--	.inv = NULL,
--	.wback_inv = NULL,
--};
--
- static inline void arch_dma_cache_wback(phys_addr_t paddr, size_t size)
- {
- 	void *vaddr = phys_to_virt(paddr);
-@@ -162,12 +156,3 @@ void __init riscv_set_dma_cache_alignment(void)
- 	if (!noncoherent_supported)
- 		dma_cache_alignment = 1;
- }
--
--void riscv_noncoherent_register_cache_ops(const struct riscv_nonstd_cache_ops *ops)
--{
--	if (!ops)
--		return;
--
--	noncoherent_cache_ops = *ops;
--}
--EXPORT_SYMBOL_GPL(riscv_noncoherent_register_cache_ops);
+ 	if (shared_backend) {
+-		shared_buffer = kvmalloc(VDPASIM_BLK_CAPACITY << SECTOR_SHIFT,
++		shared_buffer = kvzalloc(VDPASIM_BLK_CAPACITY << SECTOR_SHIFT,
+ 					 GFP_KERNEL);
+ 		if (!shared_buffer) {
+ 			ret = -ENOMEM;
 -- 
 2.42.0
 
