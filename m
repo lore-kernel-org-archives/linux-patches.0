@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2052C1A2;
-	Fri, 24 Nov 2023 19:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51502C1A2;
+	Fri, 24 Nov 2023 19:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khqhxdzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8399C433C7;
-	Fri, 24 Nov 2023 19:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qwkMKM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63D7BC433C9;
+	Fri, 24 Nov 2023 19:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853461;
-	bh=k0eFp1vAsjTpIX4pG1zrg7XeqslEIeM8W+b7An6zZp8=;
+	s=korg; t=1700853463;
+	bh=AIvr32vQnv3Kqd0ZLyCSqni5vi/AIGnvZAquxB6yEgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=khqhxdzcoUpsQTtubFoh427lZtcEilFaZysJovqsNIF5W0WOGbDUqsfdgfh+jXZ+c
-	 Hrb6IywwPh6QIoEsg2auc8XB5HwADoPdrhrae/HMt42cLZS6YJKJhAI0mhP5wnjGwO
-	 mug/2hKcQ9WG00DzQB5XE67w2VWKXTspZkrCf+uU=
+	b=0qwkMKM0auEXaQ6HVi0ZegCxKX28kIUOGqCdKu0AMltipKMyVZ6FT17+MkDDg6pp4
+	 IU2lEMvggwJUd3AW+yKPmTHr86q2HhwDbb1iJb7GJHbj7tSnWUIrtkLRjqQQWCZiJq
+	 YxtDOH3h3ocWE+zM7dxd+4s4JA9a4nCuVyJC6uqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Eric Snowberg <eric.snowberg@oracle.com>,
-	Raul E Rangel <rrangel@chromium.org>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 5.15 198/297] ima: detect changes to the backing overlay file
-Date: Fri, 24 Nov 2023 17:54:00 +0000
-Message-ID: <20231124172007.143526693@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>
+Subject: [PATCH 5.15 199/297] wifi: ath11k: fix temperature event locking
+Date: Fri, 24 Nov 2023 17:54:01 +0000
+Message-ID: <20231124172007.171970462@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,113 +42,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mimi Zohar <zohar@linux.ibm.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit b836c4d29f2744200b2af41e14bf50758dddc818 upstream.
+commit 1a5352a81b4720ba43d9c899974e3bddf7ce0ce8 upstream.
 
-Commit 18b44bc5a672 ("ovl: Always reevaluate the file signature for
-IMA") forced signature re-evaulation on every file access.
+The ath11k active pdevs are protected by RCU but the temperature event
+handling code calling ath11k_mac_get_ar_by_pdev_id() was not marked as a
+read-side critical section as reported by RCU lockdep:
 
-Instead of always re-evaluating the file's integrity, detect a change
-to the backing file, by comparing the cached file metadata with the
-backing file's metadata.  Verifying just the i_version has not changed
-is insufficient.  In addition save and compare the i_ino and s_dev
-as well.
+	=============================
+	WARNING: suspicious RCU usage
+	6.6.0-rc6 #7 Not tainted
+	-----------------------------
+	drivers/net/wireless/ath/ath11k/mac.c:638 suspicious rcu_dereference_check() usage!
 
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Tested-by: Eric Snowberg <eric.snowberg@oracle.com>
-Tested-by: Raul E Rangel <rrangel@chromium.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+	other info that might help us debug this:
+
+	rcu_scheduler_active = 2, debug_locks = 1
+	no locks held by swapper/0/0.
+	...
+	Call trace:
+	...
+	 lockdep_rcu_suspicious+0x16c/0x22c
+	 ath11k_mac_get_ar_by_pdev_id+0x194/0x1b0 [ath11k]
+	 ath11k_wmi_tlv_op_rx+0xa84/0x2c1c [ath11k]
+	 ath11k_htc_rx_completion_handler+0x388/0x510 [ath11k]
+
+Mark the code in question as an RCU read-side critical section to avoid
+any potential use-after-free issues.
+
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
+
+Fixes: a41d10348b01 ("ath11k: add thermal sensor device support")
+Cc: stable@vger.kernel.org      # 5.7
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231019153115.26401-2-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/super.c              |    2 +-
- security/integrity/ima/ima_api.c  |    5 +++++
- security/integrity/ima/ima_main.c |   16 +++++++++++++++-
- security/integrity/integrity.h    |    2 ++
- 4 files changed, 23 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -2140,7 +2140,7 @@ static int ovl_fill_super(struct super_b
- 		ovl_trusted_xattr_handlers;
- 	sb->s_fs_info = ofs;
- 	sb->s_flags |= SB_POSIXACL;
--	sb->s_iflags |= SB_I_SKIP_SYNC | SB_I_IMA_UNVERIFIABLE_SIGNATURE;
-+	sb->s_iflags |= SB_I_SKIP_SYNC;
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -6855,15 +6855,19 @@ ath11k_wmi_pdev_temperature_event(struct
+ 	ath11k_dbg(ab, ATH11K_DBG_WMI,
+ 		   "pdev temperature ev temp %d pdev_id %d\n", ev->temp, ev->pdev_id);
  
- 	err = -ENOMEM;
- 	root_dentry = ovl_get_root(sb, upperpath.dentry, oe);
---- a/security/integrity/ima/ima_api.c
-+++ b/security/integrity/ima/ima_api.c
-@@ -216,6 +216,7 @@ int ima_collect_measurement(struct integ
- {
- 	const char *audit_cause = "failed";
- 	struct inode *inode = file_inode(file);
-+	struct inode *real_inode = d_real_inode(file_dentry(file));
- 	const char *filename = file->f_path.dentry->d_name.name;
- 	int result = 0;
- 	int length;
-@@ -266,6 +267,10 @@ int ima_collect_measurement(struct integ
- 	iint->ima_hash = tmpbuf;
- 	memcpy(iint->ima_hash, &hash, length);
- 	iint->version = i_version;
-+	if (real_inode != inode) {
-+		iint->real_ino = real_inode->i_ino;
-+		iint->real_dev = real_inode->i_sb->s_dev;
-+	}
- 
- 	/* Possibly temporary failure due to type of read (eg. O_DIRECT) */
- 	if (!result)
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -26,6 +26,7 @@
- #include <linux/ima.h>
- #include <linux/iversion.h>
- #include <linux/fs.h>
-+#include <linux/iversion.h>
- 
- #include "ima.h"
- 
-@@ -202,7 +203,7 @@ static int process_measurement(struct fi
- 			       u32 secid, char *buf, loff_t size, int mask,
- 			       enum ima_hooks func)
- {
--	struct inode *inode = file_inode(file);
-+	struct inode *backing_inode, *inode = file_inode(file);
- 	struct integrity_iint_cache *iint = NULL;
- 	struct ima_template_desc *template_desc = NULL;
- 	char *pathbuf = NULL;
-@@ -278,6 +279,19 @@ static int process_measurement(struct fi
- 		iint->measured_pcrs = 0;
++	rcu_read_lock();
++
+ 	ar = ath11k_mac_get_ar_by_pdev_id(ab, ev->pdev_id);
+ 	if (!ar) {
+ 		ath11k_warn(ab, "invalid pdev id in pdev temperature ev %d", ev->pdev_id);
+-		kfree(tb);
+-		return;
++		goto exit;
  	}
  
-+	/* Detect and re-evaluate changes made to the backing file. */
-+	backing_inode = d_real_inode(file_dentry(file));
-+	if (backing_inode != inode &&
-+	    (action & IMA_DO_MASK) && (iint->flags & IMA_DONE_MASK)) {
-+		if (!IS_I_VERSION(backing_inode) ||
-+		    backing_inode->i_sb->s_dev != iint->real_dev ||
-+		    backing_inode->i_ino != iint->real_ino ||
-+		    !inode_eq_iversion(backing_inode, iint->version)) {
-+			iint->flags &= ~IMA_DONE_MASK;
-+			iint->measured_pcrs = 0;
-+		}
-+	}
+ 	ath11k_thermal_event_temperature(ar, ev->temp);
+ 
++exit:
++	rcu_read_unlock();
 +
- 	/* Determine if already appraised/measured based on bitmask
- 	 * (IMA_MEASURE, IMA_MEASURED, IMA_XXXX_APPRAISE, IMA_XXXX_APPRAISED,
- 	 *  IMA_AUDIT, IMA_AUDITED)
---- a/security/integrity/integrity.h
-+++ b/security/integrity/integrity.h
-@@ -131,6 +131,8 @@ struct integrity_iint_cache {
- 	unsigned long flags;
- 	unsigned long measured_pcrs;
- 	unsigned long atomic_flags;
-+	unsigned long real_ino;
-+	dev_t real_dev;
- 	enum integrity_status ima_file_status:4;
- 	enum integrity_status ima_mmap_status:4;
- 	enum integrity_status ima_bprm_status:4;
+ 	kfree(tb);
+ }
+ 
 
 
