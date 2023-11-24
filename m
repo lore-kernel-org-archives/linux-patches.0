@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE6F39FD7;
-	Fri, 24 Nov 2023 18:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F8F39FE1;
+	Fri, 24 Nov 2023 18:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5b/z/8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9069C433CA;
-	Fri, 24 Nov 2023 18:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvcYzycz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B43C433C7;
+	Fri, 24 Nov 2023 18:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849282;
-	bh=e5SXLtvDt2gU02bqhyDR4bk6hdOd1cWdW+P2GZ3fPIA=;
+	s=korg; t=1700849284;
+	bh=r8B0Iv2hiLw52loOYW7mFeBjtbtiDiNibvet9m8e65s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5b/z/8lEgUInaXakVYEfGwGoQrMdU0OEs7kE6ygX6jnqYSeSAZNdNA+wqnxrQJEq
-	 ExIpYLYWBuYlb18M/SLAnLBwfHJtLEPmKSYH3n3V7hsUy9hC3nIrRsKEZ9A14W2AcZ
-	 u60oehUd87I9Z2OBaJQ/H8QoCE+0bFWJiC0Dj7FM=
+	b=GvcYzycz1S9wK8z2wx7AnbSifESXxXUttote2kNmOttBAnqmgn26ty2hvqA9xNW6V
+	 kkkpi9osy1125ylg0Rn+5wq228inttWCFugbl1wGMdDidRi/a8glRKNnix/m1am0rk
+	 tUDfDme/RfoQYemOyPGjBP37ODc0lcthmWWnJ8n8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/530] tty: vcc: Add check for kstrdup() in vcc_probe()
-Date: Fri, 24 Nov 2023 17:44:46 +0000
-Message-ID: <20231124172031.764467597@linuxfoundation.org>
+Subject: [PATCH 6.6 121/530] dt-bindings: phy: qcom,snps-eusb2-repeater: Add magic tuning overrides
+Date: Fri, 24 Nov 2023 17:44:47 +0000
+Message-ID: <20231124172031.795913446@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,74 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit d81ffb87aaa75f842cd7aa57091810353755b3e6 ]
+[ Upstream commit c20b59b2996c89c4f072c3312e6210528a298330 ]
 
-Add check for the return value of kstrdup() and return the error, if it
-fails in order to avoid NULL pointer dereference.
+The EUSB2 repeater requires some alterations to its init sequence,
+depending on board design.
 
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20230904035220.48164-1-yiyang13@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add support for making the necessary changes to that sequence to make USB
+functional on SM8550-based Xperia 1 V.
+
+They all have lackluster description due to lack of information.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20230830-topic-eusb2_override-v2-1-7d8c893d93f6@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vcc.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ .../phy/qcom,snps-eusb2-repeater.yaml         | 21 +++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/tty/vcc.c b/drivers/tty/vcc.c
-index a39ed981bfd3e..5b625f20233b4 100644
---- a/drivers/tty/vcc.c
-+++ b/drivers/tty/vcc.c
-@@ -579,18 +579,22 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 		return -ENOMEM;
+diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
+index 029569d5fcf35..24c733c10e0e9 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-repeater.yaml
+@@ -32,6 +32,27 @@ properties:
  
- 	name = kstrdup(dev_name(&vdev->dev), GFP_KERNEL);
-+	if (!name) {
-+		rv = -ENOMEM;
-+		goto free_port;
-+	}
+   vdd3-supply: true
  
- 	rv = vio_driver_init(&port->vio, vdev, VDEV_CONSOLE_CON, vcc_versions,
- 			     ARRAY_SIZE(vcc_versions), NULL, name);
- 	if (rv)
--		goto free_port;
-+		goto free_name;
- 
- 	port->vio.debug = vcc_dbg_vio;
- 	vcc_ldc_cfg.debug = vcc_dbg_ldc;
- 
- 	rv = vio_ldc_alloc(&port->vio, &vcc_ldc_cfg, port);
- 	if (rv)
--		goto free_port;
-+		goto free_name;
- 
- 	spin_lock_init(&port->lock);
- 
-@@ -624,6 +628,11 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 		goto unreg_tty;
- 	}
- 	port->domain = kstrdup(domain, GFP_KERNEL);
-+	if (!port->domain) {
-+		rv = -ENOMEM;
-+		goto unreg_tty;
-+	}
++  qcom,tune-usb2-disc-thres:
++    $ref: /schemas/types.yaml#/definitions/uint8
++    description: High-Speed disconnect threshold
++    minimum: 0
++    maximum: 7
++    default: 0
 +
- 
- 	mdesc_release(hp);
- 
-@@ -653,8 +662,9 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 	vcc_table_remove(port->index);
- free_ldc:
- 	vio_ldc_free(&port->vio);
--free_port:
-+free_name:
- 	kfree(name);
-+free_port:
- 	kfree(port);
- 
- 	return rv;
++  qcom,tune-usb2-amplitude:
++    $ref: /schemas/types.yaml#/definitions/uint8
++    description: High-Speed trasmit amplitude
++    minimum: 0
++    maximum: 15
++    default: 8
++
++  qcom,tune-usb2-preem:
++    $ref: /schemas/types.yaml#/definitions/uint8
++    description: High-Speed TX pre-emphasis tuning
++    minimum: 0
++    maximum: 7
++    default: 5
++
+ required:
+   - compatible
+   - reg
 -- 
 2.42.0
 
