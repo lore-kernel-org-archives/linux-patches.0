@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A77E381D4;
-	Fri, 24 Nov 2023 18:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F93239FF7;
+	Fri, 24 Nov 2023 18:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rb3epQTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC2BC433C8;
-	Fri, 24 Nov 2023 18:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ne2bjRT0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF47C433CC;
+	Fri, 24 Nov 2023 18:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850329;
-	bh=RD0jKt94bLZsgzd91+2LY/UANdEO4uS166WrUpP0S6k=;
+	s=korg; t=1700850331;
+	bh=pUaPCavaSmCILjp3noQ3h3ryiJswEhcfb+/MtXFq0kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rb3epQTEC3BD7HzC3ywhKNqQKkCj5PoNhS0iowfDHi1jRH+DXshkM507mIhJJfHvM
-	 vqHnnvLXicrQtpWCACOgspTleq6mpGdVeh9/UpbAAoS/vpvyD7clPTV0rk3Dax6udt
-	 nL3agvxZ+owYn70pH5p0T+Rviz78iFR+rOiFdG8A=
+	b=ne2bjRT0hJS7Tvu70uKYQC6kSK1MNKxm0GTXqCPiOjcwHU/5DBDMl4LcY48twB7HA
+	 rVbKd9XtwVtjsRFvKljZh+/F1NhzwgHHgpBN6HoO5CPrUzzkPzJwWq2GmCzxaBtUCD
+	 YXptoag0kB7z9mbHoat/yrxhf1i1S8RjwJPYa+zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <Tim.Huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>
-Subject: [PATCH 6.6 518/530] drm/amdgpu: fix GRBM read timeout when do mes_self_test
-Date: Fri, 24 Nov 2023 17:51:24 +0000
-Message-ID: <20231124172043.955737625@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 519/530] drm/amdgpu: add a retry for IP discovery init
+Date: Fri, 24 Nov 2023 17:51:25 +0000
+Message-ID: <20231124172043.981983621@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,60 +41,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Huang <Tim.Huang@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 36e7ff5c13cb15cb7b06c76d42bb76cbf6b7ea75 upstream.
+commit 3938eb956e383ef88b8fc7d556492336ebee52df upstream.
 
-Use a proper MEID to make sure the CP_HQD_* and CP_GFX_HQD_* registers
-can be touched when initialize the compute and gfx mqd in mes_self_test.
-Otherwise, we expect no response from CP and an GRBM eventual timeout.
+AMD dGPUs have integrated FW that runs as soon as the
+device gets power and initializes the board (determines
+the amount of memory, provides configuration details to
+the driver, etc.).  For direct PCIe attached cards this
+happens as soon as power is applied and normally completes
+well before the OS has even started loading.  However, with
+hotpluggable ports like USB4, the driver needs to wait for
+this to complete before initializing the device.
 
-Signed-off-by: Tim Huang <Tim.Huang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+This normally takes 60-100ms, but could take longer on
+some older boards periodically due to memory training.
+
+Retry for up to a second.  In the non-hotplug case, there
+should be no change in behavior and this should complete
+on the first try.
+
+v2: adjust test criteria
+v3: adjust checks for the masks, only enable on removable devices
+v4: skip bif_fb_en check
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2925
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-@@ -556,8 +556,20 @@ static void amdgpu_mes_queue_init_mqd(st
- 	mqd_prop.hqd_queue_priority = p->hqd_queue_priority;
- 	mqd_prop.hqd_active = false;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -93,6 +93,7 @@
+ MODULE_FIRMWARE(FIRMWARE_IP_DISCOVERY);
  
-+	if (p->queue_type == AMDGPU_RING_TYPE_GFX ||
-+	    p->queue_type == AMDGPU_RING_TYPE_COMPUTE) {
-+		mutex_lock(&adev->srbm_mutex);
-+		amdgpu_gfx_select_me_pipe_q(adev, p->ring->me, p->ring->pipe, 0, 0, 0);
-+	}
+ #define mmRCC_CONFIG_MEMSIZE	0xde3
++#define mmMP0_SMN_C2PMSG_33	0x16061
+ #define mmMM_INDEX		0x0
+ #define mmMM_INDEX_HI		0x6
+ #define mmMM_DATA		0x1
+@@ -231,8 +232,26 @@ static int amdgpu_discovery_read_binary_
+ static int amdgpu_discovery_read_binary_from_mem(struct amdgpu_device *adev,
+ 						 uint8_t *binary)
+ {
+-	uint64_t vram_size = (uint64_t)RREG32(mmRCC_CONFIG_MEMSIZE) << 20;
+-	int ret = 0;
++	uint64_t vram_size;
++	u32 msg;
++	int i, ret = 0;
 +
- 	mqd_mgr->init_mqd(adev, q->mqd_cpu_ptr, &mqd_prop);
- 
-+	if (p->queue_type == AMDGPU_RING_TYPE_GFX ||
-+	    p->queue_type == AMDGPU_RING_TYPE_COMPUTE) {
-+		amdgpu_gfx_select_me_pipe_q(adev, 0, 0, 0, 0, 0);
-+		mutex_unlock(&adev->srbm_mutex);
++	/* It can take up to a second for IFWI init to complete on some dGPUs,
++	 * but generally it should be in the 60-100ms range.  Normally this starts
++	 * as soon as the device gets power so by the time the OS loads this has long
++	 * completed.  However, when a card is hotplugged via e.g., USB4, we need to
++	 * wait for this to complete.  Once the C2PMSG is updated, we can
++	 * continue.
++	 */
++	if (dev_is_removable(&adev->pdev->dev)) {
++		for (i = 0; i < 1000; i++) {
++			msg = RREG32(mmMP0_SMN_C2PMSG_33);
++			if (msg & 0x80000000)
++				break;
++			msleep(1);
++		}
 +	}
-+
- 	amdgpu_bo_unreserve(q->mqd_obj);
- }
++	vram_size = (uint64_t)RREG32(mmRCC_CONFIG_MEMSIZE) << 20;
  
-@@ -993,9 +1005,13 @@ int amdgpu_mes_add_ring(struct amdgpu_de
- 	switch (queue_type) {
- 	case AMDGPU_RING_TYPE_GFX:
- 		ring->funcs = adev->gfx.gfx_ring[0].funcs;
-+		ring->me = adev->gfx.gfx_ring[0].me;
-+		ring->pipe = adev->gfx.gfx_ring[0].pipe;
- 		break;
- 	case AMDGPU_RING_TYPE_COMPUTE:
- 		ring->funcs = adev->gfx.compute_ring[0].funcs;
-+		ring->me = adev->gfx.compute_ring[0].me;
-+		ring->pipe = adev->gfx.compute_ring[0].pipe;
- 		break;
- 	case AMDGPU_RING_TYPE_SDMA:
- 		ring->funcs = adev->sdma.instance[0].ring.funcs;
+ 	if (vram_size) {
+ 		uint64_t pos = vram_size - DISCOVERY_TMR_OFFSET;
 
 
