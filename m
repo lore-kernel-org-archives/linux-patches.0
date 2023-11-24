@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA06364DE;
-	Fri, 24 Nov 2023 18:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CB42D787;
+	Fri, 24 Nov 2023 18:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zspZXxPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B34CC433C7;
-	Fri, 24 Nov 2023 18:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulMSFbhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE5DC433C8;
+	Fri, 24 Nov 2023 18:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851481;
-	bh=CBuvKdgMtF7IEvbOaRTWoKAYAhIhruE39YDchW6h+4U=;
+	s=korg; t=1700851484;
+	bh=LeuySh723+ahPH15xaU1SoDDSzVfZNLUZF9VCrnmRgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zspZXxPrZiR5iyStdBQkctYWtqxXcc9y389mKMwNJIF8WJYknfSVIU8KJehq+tnDI
-	 lYu39FmbX1qwmpagwuYbJBzYUSqaNyzQ3KXFi5mH8Ivs0maZmPhOxFRGlz7W/YJyNV
-	 xbx67Hob7uuyUlYV/I2YhkZwE+bUEpL8qn6Jy8mo=
+	b=ulMSFbhdgjWW23z9sR1I9OU+wc8jPKws0WoLqjlJBN/jnGO/69DXgtT+2F17yJ9jR
+	 i6PRoS8+vbIHuH7WGyw3Jnkw636dS10p+MB4+IkjlRkXMFC8Cnain+Cb7aXTg8xCti
+	 dkM5Ri6sQLFJP92p1wEkn8JwtoSX6KUprmdNNdQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Christoph Lameter <cl@linux.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 441/491] mm: kmem: drop __GFP_NOFAIL when allocating objcg vectors
-Date: Fri, 24 Nov 2023 17:51:17 +0000
-Message-ID: <20231124172037.853328730@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.5 432/491] NFSD: Update nfsd_cache_append() to use xdr_stream
+Date: Fri, 24 Nov 2023 17:51:08 +0000
+Message-ID: <20231124172037.595160560@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,52 +41,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Gushchin <roman.gushchin@linux.dev>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 24948e3b7b12e0031a6edb4f49bbb9fb2ad1e4e9 upstream.
+commit 49cecd8628a9855cd993792a0377559ea32d5e7c upstream.
 
-Objcg vectors attached to slab pages to store slab object ownership
-information are allocated using gfp flags for the original slab
-allocation.  Depending on slab page order and the size of slab objects,
-objcg vector can take several pages.
+When inserting a DRC-cached response into the reply buffer, ensure
+that the reply buffer's xdr_stream is updated properly. Otherwise
+the server will send a garbage response.
 
-If the original allocation was done with the __GFP_NOFAIL flag, it
-triggered a warning in the page allocation code.  Indeed, order > 1 pages
-should not been allocated with the __GFP_NOFAIL flag.
-
-Fix this by simply dropping the __GFP_NOFAIL flag when allocating the
-objcg vector.  It effectively allows to skip the accounting of a single
-slab object under a heavy memory pressure.
-
-An alternative would be to implement the mechanism to fallback to order-0
-allocations for accounting metadata, which is also not perfect because it
-will increase performance penalty and memory footprint of the kernel
-memory accounting under memory pressure.
-
-Link: https://lkml.kernel.org/r/ZUp8ZFGxwmCx4ZFr@P9FQF9L96D.corp.robot.car
-Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
-Reported-by: Christoph Lameter <cl@linux.com>
-Closes: https://lkml.kernel.org/r/6b42243e-f197-600a-5d22-56bd728a5ad8@gentwo.org
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org # v6.3+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/nfscache.c |   21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2868,7 +2868,8 @@ static void commit_charge(struct folio *
-  * Moreover, it should not come from DMA buffer and is not readily
-  * reclaimable. So those GFP bits should be masked off.
-  */
--#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | __GFP_ACCOUNT)
-+#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | \
-+				 __GFP_ACCOUNT | __GFP_NOFAIL)
+--- a/fs/nfsd/nfscache.c
++++ b/fs/nfsd/nfscache.c
+@@ -582,24 +582,17 @@ void nfsd_cache_update(struct svc_rqst *
+ 	return;
+ }
+ 
+-/*
+- * Copy cached reply to current reply buffer. Should always fit.
+- * FIXME as reply is in a page, we should just attach the page, and
+- * keep a refcount....
+- */
+ static int
+ nfsd_cache_append(struct svc_rqst *rqstp, struct kvec *data)
+ {
+-	struct kvec	*vec = &rqstp->rq_res.head[0];
++	__be32 *p;
+ 
+-	if (vec->iov_len + data->iov_len > PAGE_SIZE) {
+-		printk(KERN_WARNING "nfsd: cached reply too large (%zd).\n",
+-				data->iov_len);
+-		return 0;
+-	}
+-	memcpy((char*)vec->iov_base + vec->iov_len, data->iov_base, data->iov_len);
+-	vec->iov_len += data->iov_len;
+-	return 1;
++	p = xdr_reserve_space(&rqstp->rq_res_stream, data->iov_len);
++	if (unlikely(!p))
++		return false;
++	memcpy(p, data->iov_base, data->iov_len);
++	xdr_commit_encode(&rqstp->rq_res_stream);
++	return true;
+ }
  
  /*
-  * mod_objcg_mlstate() may be called with irq enabled, so
 
 
