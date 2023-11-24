@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7637A3A8F3;
-	Fri, 24 Nov 2023 18:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F003F3A8F4;
+	Fri, 24 Nov 2023 18:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHCXpRA6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01648C433C8;
-	Fri, 24 Nov 2023 18:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVoGgJfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBB6C433C8;
+	Fri, 24 Nov 2023 18:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850716;
-	bh=96qB7PTLTrohUNYPqxIIZAl4KQWNCvaZ4OPO9hKGWfc=;
+	s=korg; t=1700850718;
+	bh=AY9MnlDKRJfDVtJfJ2p3hOZRkiOkA2l4ckK3Jag/CEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nHCXpRA67KTvFtDe1NA4w4noRPb8VEerEYMuUFW5ZdK9zZ/n59koKyzltq6D9CVia
-	 G4q/4TXue718uL3KlnVnQSFymYNIcB7K24uk6eBnBo7bPIKQvCKvrheYY+m7a2mCB7
-	 AEor0dFxxnPmZhfPM589JSukj6oemy36puaXD6CU=
+	b=DVoGgJfn8HWko8tyGiiFjlx9UX7QX+n9dGk6FZJbwemr4mNu7OuoB/c1FwVVJBW1U
+	 BXxfzjho7yU2D3/ubmMHmln/d2WoPVj6cq6dvhovMxgCQtarWcjdJk5FKeuEjfU4Lz
+	 8KaWblVt8jnCt2PS/76SoBtwOONmk3U9A68uV3CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 160/491] NFSv4.1: fix handling NFS4ERR_DELAY when testing for session trunking
-Date: Fri, 24 Nov 2023 17:46:36 +0000
-Message-ID: <20231124172029.285502438@linuxfoundation.org>
+Subject: [PATCH 6.5 137/491] gfs2: fix an oops in gfs2_permission
+Date: Fri, 24 Nov 2023 17:46:13 +0000
+Message-ID: <20231124172028.612844547@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,51 +42,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 6bd1a77dc72dea0b0d8b6014f231143984d18f6d ]
+[ Upstream commit 0abd1557e21c617bd13fc18f7725fc6363c05913 ]
 
-Currently when client sends an EXCHANGE_ID for a possible trunked
-connection, for any error that happened, the trunk will be thrown
-out. However, an NFS4ERR_DELAY is a transient error that should be
-retried instead.
+In RCU mode, we might race with gfs2_evict_inode(), which zeroes
+->i_gl.  Freeing of the object it points to is RCU-delayed, so
+if we manage to fetch the pointer before it's been replaced with
+NULL, we are fine.  Check if we'd fetched NULL and treat that
+as "bail out and tell the caller to get out of RCU mode".
 
-Fixes: e818bd085baf ("NFSv4.1 remove xprt from xprt_switch if session trunking test fails")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/gfs2/inode.c | 11 +++++++++--
+ fs/gfs2/super.c |  2 +-
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 5f088e3eeca1d..c710fde58be11 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -8934,6 +8934,7 @@ void nfs4_test_session_trunk(struct rpc_clnt *clnt, struct rpc_xprt *xprt,
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 17c994a0c0d09..117b4b5a03072 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1862,14 +1862,21 @@ int gfs2_permission(struct mnt_idmap *idmap, struct inode *inode,
+ {
+ 	struct gfs2_inode *ip;
+ 	struct gfs2_holder i_gh;
++	struct gfs2_glock *gl;
+ 	int error;
  
- 	sp4_how = (adata->clp->cl_sp4_flags == 0 ? SP4_NONE : SP4_MACH_CRED);
- 
-+try_again:
- 	/* Test connection for session trunking. Async exchange_id call */
- 	task = nfs4_run_exchange_id(adata->clp, adata->cred, sp4_how, xprt);
- 	if (IS_ERR(task))
-@@ -8946,11 +8947,15 @@ void nfs4_test_session_trunk(struct rpc_clnt *clnt, struct rpc_xprt *xprt,
- 
- 	if (status == 0)
- 		rpc_clnt_xprt_switch_add_xprt(clnt, xprt);
--	else if (rpc_clnt_xprt_switch_has_addr(clnt,
-+	else if (status != -NFS4ERR_DELAY && rpc_clnt_xprt_switch_has_addr(clnt,
- 				(struct sockaddr *)&xprt->addr))
- 		rpc_clnt_xprt_switch_remove_xprt(clnt, xprt);
- 
- 	rpc_put_task(task);
-+	if (status == -NFS4ERR_DELAY) {
-+		ssleep(1);
-+		goto try_again;
-+	}
+ 	gfs2_holder_mark_uninitialized(&i_gh);
+ 	ip = GFS2_I(inode);
+-	if (gfs2_glock_is_locked_by_me(ip->i_gl) == NULL) {
++	gl = rcu_dereference(ip->i_gl);
++	if (unlikely(!gl)) {
++		/* inode is getting torn down, must be RCU mode */
++		WARN_ON_ONCE(!(mask & MAY_NOT_BLOCK));
++		return -ECHILD;
++        }
++	if (gfs2_glock_is_locked_by_me(gl) == NULL) {
+ 		if (mask & MAY_NOT_BLOCK)
+ 			return -ECHILD;
+-		error = gfs2_glock_nq_init(ip->i_gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
++		error = gfs2_glock_nq_init(gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
+ 		if (error)
+ 			return error;
+ 	}
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 9f4d5d6549ee6..f98ddb9d19a21 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1558,7 +1558,7 @@ static void gfs2_evict_inode(struct inode *inode)
+ 		wait_on_bit_io(&ip->i_flags, GIF_GLOP_PENDING, TASK_UNINTERRUPTIBLE);
+ 		gfs2_glock_add_to_lru(ip->i_gl);
+ 		gfs2_glock_put_eventually(ip->i_gl);
+-		ip->i_gl = NULL;
++		rcu_assign_pointer(ip->i_gl, NULL);
+ 	}
  }
- EXPORT_SYMBOL_GPL(nfs4_test_session_trunk);
  
 -- 
 2.42.0
