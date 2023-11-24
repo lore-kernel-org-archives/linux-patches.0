@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730732AF00;
-	Fri, 24 Nov 2023 18:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3711639FD4;
+	Fri, 24 Nov 2023 18:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9JDeUzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002B7C433C8;
-	Fri, 24 Nov 2023 18:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aj43nu4y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91ECC433C7;
+	Fri, 24 Nov 2023 18:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849381;
-	bh=WtwxF5/GHATmn08Y/R8I2u1AuPa5f6kPT/ilYjSrLCc=;
+	s=korg; t=1700849384;
+	bh=hvKMTv2zTZf/CAY0L+P1Px2nuJmC8Blso53SCrfFbBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T9JDeUzPLeZ4GFQHEjKsIRdHpqjQ8QQiT1QmpTIAi+r2fIMv/faz4ZN3belf+gx4h
-	 RFkCRqZG3gO/7Ltl7O84+6eAi5rB2zr7i6Kut7YXIrkd090GxyFo2stirk0Uykq8pq
-	 w2FWiTu/wNE68rOIFb1dzp60W42PM/RFCkHC4VxQ=
+	b=Aj43nu4yZi+Rebn+8wVghZp1rzb95O/VIBfvx9/pLQnguyA4T+sTcFmhyXv6qm3g+
+	 B5e/bSX4Blt5wkbDjg3nokd3JtMZG7r2kwMN/lv+jl61G5vjV097rcEu/3I+viu7vt
+	 tx7r5yIsAV6TULbIx1m3KAb6YvVOfUhp6txX0sWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Jean Delvare <jdelvare@suse.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 134/530] i2c: i801: Add support for Intel Birch Stream SoC
-Date: Fri, 24 Nov 2023 17:45:00 +0000
-Message-ID: <20231124172032.169193904@linuxfoundation.org>
+Subject: [PATCH 6.6 135/530] i2c: fix memleak in i2c_new_client_device()
+Date: Fri, 24 Nov 2023 17:45:01 +0000
+Message-ID: <20231124172032.199971188@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,75 +43,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 8c56f9ef25a33e51f09a448d25cf863b61c9658d ]
+[ Upstream commit 6af79f7fe748fe6a3c5c3a63d7f35981a82c2769 ]
 
-Add SMBus PCI ID on Intel Birch Stream SoC.
+Yang Yingliang reported a memleak:
+===
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
+I got memory leak as follows when doing fault injection test:
+
+unreferenced object 0xffff888014aec078 (size 8):
+  comm "xrun", pid 356, jiffies 4294910619 (age 16.332s)
+  hex dump (first 8 bytes):
+    31 2d 30 30 31 63 00 00                          1-001c..
+  backtrace:
+    [<00000000eb56c0a9>] __kmalloc_track_caller+0x1a6/0x300
+    [<000000000b220ea3>] kvasprintf+0xad/0x140
+    [<00000000b83203e5>] kvasprintf_const+0x62/0x190
+    [<000000002a5eab37>] kobject_set_name_vargs+0x56/0x140
+    [<00000000300ac279>] dev_set_name+0xb0/0xe0
+    [<00000000b66ebd6f>] i2c_new_client_device+0x7e4/0x9a0
+
+If device_register() returns error in i2c_new_client_device(),
+the name allocated by i2c_dev_set_name() need be freed. As
+comment of device_register() says, it should use put_device()
+to give up the reference in the error path.
+
+===
+I think this solution is less intrusive and more robust than he
+originally proposed solutions, though.
+
+Reported-by: Yang Yingliang <yangyingliang@huawei.com>
+Closes: http://patchwork.ozlabs.org/project/linux-i2c/patch/20221124085448.3620240-1-yangyingliang@huawei.com/
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/i2c/busses/i2c-i801.rst | 1 +
- drivers/i2c/busses/Kconfig            | 1 +
- drivers/i2c/busses/i2c-i801.c         | 3 +++
- 3 files changed, 5 insertions(+)
+ drivers/i2c/i2c-core-base.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/i2c/busses/i2c-i801.rst b/Documentation/i2c/busses/i2c-i801.rst
-index e76e68ccf7182..10eced6c2e462 100644
---- a/Documentation/i2c/busses/i2c-i801.rst
-+++ b/Documentation/i2c/busses/i2c-i801.rst
-@@ -47,6 +47,7 @@ Supported adapters:
-   * Intel Alder Lake (PCH)
-   * Intel Raptor Lake (PCH)
-   * Intel Meteor Lake (SOC and PCH)
-+  * Intel Birch Stream (SOC)
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index 60746652fd525..7f30bcceebaed 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -931,8 +931,9 @@ int i2c_dev_irq_from_resources(const struct resource *resources,
+ struct i2c_client *
+ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *info)
+ {
+-	struct i2c_client	*client;
+-	int			status;
++	struct i2c_client *client;
++	bool need_put = false;
++	int status;
  
-    Datasheets: Publicly available at the Intel website
+ 	client = kzalloc(sizeof *client, GFP_KERNEL);
+ 	if (!client)
+@@ -970,7 +971,6 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
+ 	client->dev.fwnode = info->fwnode;
  
-diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-index 6644eebedaf3b..97d27e01a6ee2 100644
---- a/drivers/i2c/busses/Kconfig
-+++ b/drivers/i2c/busses/Kconfig
-@@ -158,6 +158,7 @@ config I2C_I801
- 	    Alder Lake (PCH)
- 	    Raptor Lake (PCH)
- 	    Meteor Lake (SOC and PCH)
-+	    Birch Stream (SOC)
+ 	device_enable_async_suspend(&client->dev);
+-	i2c_dev_set_name(adap, client, info);
  
- 	  This driver can also be built as a module.  If so, the module
- 	  will be called i2c-i801.
-diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index 1d855258a45dc..89631fdf6e2fe 100644
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -79,6 +79,7 @@
-  * Meteor Lake-P (SOC)		0x7e22	32	hard	yes	yes	yes
-  * Meteor Lake SoC-S (SOC)	0xae22	32	hard	yes	yes	yes
-  * Meteor Lake PCH-S (PCH)	0x7f23	32	hard	yes	yes	yes
-+ * Birch Stream (SOC)		0x5796	32	hard	yes	yes	yes
-  *
-  * Features supported by this driver:
-  * Software PEC				no
-@@ -231,6 +232,7 @@
- #define PCI_DEVICE_ID_INTEL_JASPER_LAKE_SMBUS		0x4da3
- #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_P_SMBUS		0x51a3
- #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_M_SMBUS		0x54a3
-+#define PCI_DEVICE_ID_INTEL_BIRCH_STREAM_SMBUS		0x5796
- #define PCI_DEVICE_ID_INTEL_BROXTON_SMBUS		0x5ad4
- #define PCI_DEVICE_ID_INTEL_RAPTOR_LAKE_S_SMBUS		0x7a23
- #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_S_SMBUS		0x7aa3
-@@ -1044,6 +1046,7 @@ static const struct pci_device_id i801_ids[] = {
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_P_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_SOC_S_SMBUS,	FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ PCI_DEVICE_DATA(INTEL, METEOR_LAKE_PCH_S_SMBUS,	FEATURES_ICH5 | FEATURE_TCO_CNL) },
-+	{ PCI_DEVICE_DATA(INTEL, BIRCH_STREAM_SMBUS,		FEATURES_ICH5 | FEATURE_TCO_CNL) },
- 	{ 0, }
- };
+ 	if (info->swnode) {
+ 		status = device_add_software_node(&client->dev, info->swnode);
+@@ -982,6 +982,7 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
+ 		}
+ 	}
  
++	i2c_dev_set_name(adap, client, info);
+ 	status = device_register(&client->dev);
+ 	if (status)
+ 		goto out_remove_swnode;
+@@ -993,6 +994,7 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
+ 
+ out_remove_swnode:
+ 	device_remove_software_node(&client->dev);
++	need_put = true;
+ out_err_put_of_node:
+ 	of_node_put(info->of_node);
+ out_err:
+@@ -1000,7 +1002,10 @@ i2c_new_client_device(struct i2c_adapter *adap, struct i2c_board_info const *inf
+ 		"Failed to register i2c client %s at 0x%02x (%d)\n",
+ 		client->name, client->addr, status);
+ out_err_silent:
+-	kfree(client);
++	if (need_put)
++		put_device(&client->dev);
++	else
++		kfree(client);
+ 	return ERR_PTR(status);
+ }
+ EXPORT_SYMBOL_GPL(i2c_new_client_device);
 -- 
 2.42.0
 
