@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E0A339BE;
-	Fri, 24 Nov 2023 19:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC43F33E9;
+	Fri, 24 Nov 2023 19:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFAy74C+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE070C433C8;
-	Fri, 24 Nov 2023 19:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiN+Z8I5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4088EC433C7;
+	Fri, 24 Nov 2023 19:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853646;
-	bh=zJa9qB1a7G2wP4JeKtP57e3PPe8V9rt/wnh4BSgl1Cc=;
+	s=korg; t=1700853648;
+	bh=Gy70Kws/uFsJDXlekRO8q2TMtopFE4ZA14zX/zfJnn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFAy74C+9ZHS/UrZQT6XZl1YYShmZ92pc+fQmRdvpIx+H+M9mVLFlEaGYKA3bNWus
-	 Y0qF+Wl9gefxorH+QdEYEKE0Y4yaoRYyaxBsqvZTL7Y5rJKma18bwRsBV5jcqaMxn5
-	 SmhdROyEjVfA6f12WRynTjEmnqvDBEMJc7Eet1BU=
+	b=qiN+Z8I54yEIWiVba4pBV5DVtrHFuqd7P4o/Er+IOjSDWPyEOcsIbNhPxWDAvtVHw
+	 j9Sg035mDB7dHI65lCfOYAby9cBpgizVVxIoJ67Y9KMxNxdYitRJgAULwM2ihPOdNY
+	 7yCUYVHiWG74GUwMuvHgAe8NaDp5DX4MCXwu6Q78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 264/297] media: lirc: drop trailing space from scancode transmit
-Date: Fri, 24 Nov 2023 17:55:06 +0000
-Message-ID: <20231124172009.389149972@linuxfoundation.org>
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Christoph Lameter <cl@linux.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 273/297] mm: kmem: drop __GFP_NOFAIL when allocating objcg vectors
+Date: Fri, 24 Nov 2023 17:55:15 +0000
+Message-ID: <20231124172009.689480055@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -41,37 +44,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Roman Gushchin <roman.gushchin@linux.dev>
 
-commit c8a489f820179fb12251e262b50303c29de991ac upstream.
+commit 24948e3b7b12e0031a6edb4f49bbb9fb2ad1e4e9 upstream.
 
-When transmitting, infrared drivers expect an odd number of samples; iow
-without a trailing space. No problems have been observed so far, so
-this is just belt and braces.
+Objcg vectors attached to slab pages to store slab object ownership
+information are allocated using gfp flags for the original slab
+allocation.  Depending on slab page order and the size of slab objects,
+objcg vector can take several pages.
 
-Fixes: 9b6192589be7 ("media: lirc: implement scancode sending")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+If the original allocation was done with the __GFP_NOFAIL flag, it
+triggered a warning in the page allocation code.  Indeed, order > 1 pages
+should not been allocated with the __GFP_NOFAIL flag.
+
+Fix this by simply dropping the __GFP_NOFAIL flag when allocating the
+objcg vector.  It effectively allows to skip the accounting of a single
+slab object under a heavy memory pressure.
+
+An alternative would be to implement the mechanism to fallback to order-0
+allocations for accounting metadata, which is also not perfect because it
+will increase performance penalty and memory footprint of the kernel
+memory accounting under memory pressure.
+
+Link: https://lkml.kernel.org/r/ZUp8ZFGxwmCx4ZFr@P9FQF9L96D.corp.robot.car
+Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reported-by: Christoph Lameter <cl@linux.com>
+Closes: https://lkml.kernel.org/r/6b42243e-f197-600a-5d22-56bd728a5ad8@gentwo.org
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/lirc_dev.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ mm/memcontrol.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/rc/lirc_dev.c
-+++ b/drivers/media/rc/lirc_dev.c
-@@ -287,7 +287,11 @@ static ssize_t lirc_transmit(struct file
- 		if (ret < 0)
- 			goto out_kfree_raw;
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2822,7 +2822,8 @@ retry:
+  * Moreover, it should not come from DMA buffer and is not readily
+  * reclaimable. So those GFP bits should be masked off.
+  */
+-#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | __GFP_ACCOUNT)
++#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | \
++				 __GFP_ACCOUNT | __GFP_NOFAIL)
  
--		count = ret;
-+		/* drop trailing space */
-+		if (!(ret % 2))
-+			count = ret - 1;
-+		else
-+			count = ret;
- 
- 		txbuf = kmalloc_array(count, sizeof(unsigned int), GFP_KERNEL);
- 		if (!txbuf) {
+ int memcg_alloc_page_obj_cgroups(struct page *page, struct kmem_cache *s,
+ 				 gfp_t gfp, bool new_page)
 
 
