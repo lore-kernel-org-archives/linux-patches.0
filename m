@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713C52F86B;
-	Fri, 24 Nov 2023 18:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09152F86B;
+	Fri, 24 Nov 2023 18:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1nLAk51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83F3C433C7;
-	Fri, 24 Nov 2023 18:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVubHFDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D157C433C7;
+	Fri, 24 Nov 2023 18:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851339;
-	bh=y72AlVQ3jAyqtcUEp0WVqRyrec+JVjdbQJxXBd/8VB8=;
+	s=korg; t=1700851341;
+	bh=jr+UNF3P172OmENLXdBtlt6yN9/vuqbRn3UDbgLJq0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1nLAk51RBiPThd4zSxcizWzO2tQHt9KQSqlJkC0CDTlEU2b6DwUdlEYVT2fGeJn8
-	 mb+TicN1cwe9ftOl2BtGO2Nxk8259QfTMFheEsQewqgp6XAzn4jz0vyJpJs3JtRbuW
-	 z3MRyvgLZj0SZv+oQCyPQeQm9gMZ9ZhoOwLxVsok=
+	b=TVubHFDI1VMV1vZSr+yEbUHWCEpn3+nHR2ZJ+8/8WHuAE0qiHT/EpCbEqn3ft7Vno
+	 e2MS7gvt4rlnd3vvPz4gF4eA805WsVT+yjDJvHGBHsASQIjzbugAJFL2oxq//vcugj
+	 AZ8CPhUD7FmnNZSGZq3Adb4oDZmuTm67DsM3YWQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>
-Subject: [PATCH 6.5 384/491] xhci: Enable RPM on controllers that support low-power states
-Date: Fri, 24 Nov 2023 17:50:20 +0000
-Message-ID: <20231124172036.138906860@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.5 385/491] fs: add ctime accessors infrastructure
+Date: Fri, 24 Nov 2023 17:50:21 +0000
+Message-ID: <20231124172036.163804599@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,42 +44,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit a5d6264b638efeca35eff72177fd28d149e0764b upstream.
+commit 9b6304c1d53745c300b86f202d0dcff395e2d2db upstream.
 
-Use the low-power states of the underlying platform to enable runtime PM.
-If the platform doesn't support runtime D3, then enabling default RPM will
-result in the controller malfunctioning, as in the case of hotplug devices
-not being detected because of a failed interrupt generation.
+struct timespec64 has unused bits in the tv_nsec field that can be used
+for other purposes. In future patches, we're going to change how the
+inode->i_ctime is accessed in certain inodes in order to make use of
+them. In order to do that safely though, we'll need to eradicate raw
+accesses of the inode->i_ctime field from the kernel.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20231019102924.2797346-16-mathias.nyman@linux.intel.com
-Cc: Oleksandr Natalenko <oleksandr@natalenko.name>
+Add new accessor functions for the ctime that we use to replace them.
+
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Message-Id: <20230705185812.579118-2-jlayton@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/inode.c         |   16 ++++++++++++++++
+ include/linux/fs.h |   45 ++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 60 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index bde43cef8846..95ed9404f6f8 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -695,7 +695,9 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 	/* USB-2 and USB-3 roothubs initialized, allow runtime pm suspend */
- 	pm_runtime_put_noidle(&dev->dev);
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -2499,6 +2499,22 @@ struct timespec64 current_time(struct in
+ EXPORT_SYMBOL(current_time);
  
--	if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
-+	if (pci_choose_state(dev, PMSG_SUSPEND) == PCI_D0)
-+		pm_runtime_forbid(&dev->dev);
-+	else if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
- 		pm_runtime_allow(&dev->dev);
+ /**
++ * inode_set_ctime_current - set the ctime to current_time
++ * @inode: inode
++ *
++ * Set the inode->i_ctime to the current value for the inode. Returns
++ * the current value that was assigned to i_ctime.
++ */
++struct timespec64 inode_set_ctime_current(struct inode *inode)
++{
++	struct timespec64 now = current_time(inode);
++
++	inode_set_ctime(inode, now.tv_sec, now.tv_nsec);
++	return now;
++}
++EXPORT_SYMBOL(inode_set_ctime_current);
++
++/**
+  * in_group_or_capable - check whether caller is CAP_FSETID privileged
+  * @idmap:	idmap of the mount @inode was found from
+  * @inode:	inode to check
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1474,7 +1474,50 @@ static inline bool fsuidgid_has_mapping(
+ 	       kgid_has_mapping(fs_userns, kgid);
+ }
  
- 	dma_set_max_seg_size(&dev->dev, UINT_MAX);
--- 
-2.43.0
-
+-extern struct timespec64 current_time(struct inode *inode);
++struct timespec64 current_time(struct inode *inode);
++struct timespec64 inode_set_ctime_current(struct inode *inode);
++
++/**
++ * inode_get_ctime - fetch the current ctime from the inode
++ * @inode: inode from which to fetch ctime
++ *
++ * Grab the current ctime from the inode and return it.
++ */
++static inline struct timespec64 inode_get_ctime(const struct inode *inode)
++{
++	return inode->i_ctime;
++}
++
++/**
++ * inode_set_ctime_to_ts - set the ctime in the inode
++ * @inode: inode in which to set the ctime
++ * @ts: value to set in the ctime field
++ *
++ * Set the ctime in @inode to @ts
++ */
++static inline struct timespec64 inode_set_ctime_to_ts(struct inode *inode,
++						      struct timespec64 ts)
++{
++	inode->i_ctime = ts;
++	return ts;
++}
++
++/**
++ * inode_set_ctime - set the ctime in the inode
++ * @inode: inode in which to set the ctime
++ * @sec: tv_sec value to set
++ * @nsec: tv_nsec value to set
++ *
++ * Set the ctime in @inode to { @sec, @nsec }
++ */
++static inline struct timespec64 inode_set_ctime(struct inode *inode,
++						time64_t sec, long nsec)
++{
++	struct timespec64 ts = { .tv_sec  = sec,
++				 .tv_nsec = nsec };
++
++	return inode_set_ctime_to_ts(inode, ts);
++}
+ 
+ /*
+  * Snapshotting support.
 
 
