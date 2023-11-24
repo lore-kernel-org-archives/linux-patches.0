@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA28381A2;
-	Fri, 24 Nov 2023 18:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F283307D;
+	Fri, 24 Nov 2023 18:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOTKKY0E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFB1C433C8;
-	Fri, 24 Nov 2023 18:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kttv6G9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60172C433C7;
+	Fri, 24 Nov 2023 18:44:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851439;
-	bh=Mpb8x35Q61RSXbIsIvLNjPstBldXYQuUIh2mJZv5y6o=;
+	s=korg; t=1700851441;
+	bh=gT1ky3v31Is6AAxv5KOUKZX8YWKwS/F105uWEac+WSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOTKKY0EA+JTjAnI/Gn2xZqghcxeMt0io8e+lN58TCOZOAevEwN0R1I7ACP0E0HvM
-	 JWNiPGZ8ininOVXAY4j45qyjW/UV7xDRGshiiNSR0D3TnouKzu27YGI7oxRG2u3H1g
-	 8WcM4sBeM3H0Q1IU8VyZrK5rrfvSnBbBmrZQxj+M=
+	b=kttv6G9hhgFyKvS387JoIIwLQmO4EJbyyIc+YY8qiQDntKaTKQ8EfaKYctkeiON+i
+	 83Ewv4NJVSES5/7KY7aYMVG91Gkb86Z5XgzHU7QgqGdosMIyHuEOysmc9eIkzwzgGs
+	 vtxm0cgb3kQDDT7KDVirogL1msMGmZWXuucWYtbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.5 449/491] media: qcom: camss: Fix pm_domain_on sequence in probe
-Date: Fri, 24 Nov 2023 17:51:25 +0000
-Message-ID: <20231124172038.099560931@linuxfoundation.org>
+Subject: [PATCH 6.5 450/491] media: qcom: camss: Fix vfe_get() error jump
+Date: Fri, 24 Nov 2023 17:51:26 +0000
+Message-ID: <20231124172038.127920185@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,57 +44,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 7405116519ad70b8c7340359bfac8db8279e7ce4 upstream.
+commit 26bda3da00c3edef727a6acb00ed2eb4b22f8723 upstream.
 
-We need to make sure camss_configure_pd() happens before
-camss_register_entities() as the vfe_get() path relies on the pointer
-provided by camss_configure_pd().
+Right now it is possible to do a vfe_get() with the internal reference
+count at 1. If vfe_check_clock_rates() returns non-zero then we will
+leave the reference count as-is and
 
-Fix the ordering sequence in probe to ensure the pointers vfe_get() demands
-are present by the time camss_register_entities() runs.
+run:
+- pm_runtime_put_sync()
+- vfe->ops->pm_domain_off()
 
-In order to facilitate backporting to stable kernels I've moved the
-configure_pd() call pretty early on the probe() function so that
-irrespective of the existence of the old error handling jump labels this
-patch should still apply to -next circa Aug 2023 to v5.13 inclusive.
+skip:
+- camss_disable_clocks()
 
-Fixes: 2f6f8af67203 ("media: camss: Refactor VFE power domain toggling")
+Subsequent vfe_put() calls will when the ref-count is non-zero
+unconditionally run:
+
+- pm_runtime_put_sync()
+- vfe->ops->pm_domain_off()
+- camss_disable_clocks()
+
+vfe_get() should not attempt to roll-back on error when the ref-count is
+non-zero as the upper layers will still do their own vfe_put() operations.
+
+vfe_put() will drop the reference count and do the necessary power
+domain release, the cleanup jumps in vfe_get() should only be run when
+the ref-count is zero.
+
+[   50.095796] CPU: 7 PID: 3075 Comm: cam Not tainted 6.3.2+ #80
+[   50.095798] Hardware name: LENOVO 21BXCTO1WW/21BXCTO1WW, BIOS N3HET82W (1.54 ) 05/26/2023
+[   50.095799] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   50.095802] pc : refcount_warn_saturate+0xf4/0x148
+[   50.095804] lr : refcount_warn_saturate+0xf4/0x148
+[   50.095805] sp : ffff80000c7cb8b0
+[   50.095806] x29: ffff80000c7cb8b0 x28: ffff16ecc0e3fc10 x27: 0000000000000000
+[   50.095810] x26: 0000000000000000 x25: 0000000000020802 x24: 0000000000000000
+[   50.095813] x23: ffff16ecc7360640 x22: 00000000ffffffff x21: 0000000000000005
+[   50.095815] x20: ffff16ed175f4400 x19: ffffb4d9852942a8 x18: ffffffffffffffff
+[   50.095818] x17: ffffb4d9852d4a48 x16: ffffb4d983da5db8 x15: ffff80000c7cb320
+[   50.095821] x14: 0000000000000001 x13: 2e656572662d7265 x12: 7466612d65737520
+[   50.095823] x11: 00000000ffffefff x10: ffffb4d9850cebf0 x9 : ffffb4d9835cf954
+[   50.095826] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000057fa8
+[   50.095829] x5 : ffff16f813fe3d08 x4 : 0000000000000000 x3 : ffff621e8f4d2000
+[   50.095832] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff16ed32119040
+[   50.095835] Call trace:
+[   50.095836]  refcount_warn_saturate+0xf4/0x148
+[   50.095838]  device_link_put_kref+0x84/0xc8
+[   50.095843]  device_link_del+0x38/0x58
+[   50.095846]  vfe_pm_domain_off+0x3c/0x50 [qcom_camss]
+[   50.095860]  vfe_put+0x114/0x140 [qcom_camss]
+[   50.095869]  csid_set_power+0x2c8/0x408 [qcom_camss]
+[   50.095878]  pipeline_pm_power_one+0x164/0x170 [videodev]
+[   50.095896]  pipeline_pm_power+0xc4/0x110 [videodev]
+[   50.095909]  v4l2_pipeline_pm_use+0x5c/0xa0 [videodev]
+[   50.095923]  v4l2_pipeline_pm_get+0x1c/0x30 [videodev]
+[   50.095937]  video_open+0x7c/0x100 [qcom_camss]
+[   50.095945]  v4l2_open+0x84/0x130 [videodev]
+[   50.095960]  chrdev_open+0xc8/0x250
+[   50.095964]  do_dentry_open+0x1bc/0x498
+[   50.095966]  vfs_open+0x34/0x40
+[   50.095968]  path_openat+0xb44/0xf20
+[   50.095971]  do_filp_open+0xa4/0x160
+[   50.095974]  do_sys_openat2+0xc8/0x188
+[   50.095975]  __arm64_sys_openat+0x6c/0xb8
+[   50.095977]  invoke_syscall+0x50/0x128
+[   50.095982]  el0_svc_common.constprop.0+0x4c/0x100
+[   50.095985]  do_el0_svc+0x40/0xa8
+[   50.095988]  el0_svc+0x2c/0x88
+[   50.095991]  el0t_64_sync_handler+0xf4/0x120
+[   50.095994]  el0t_64_sync+0x190/0x198
+[   50.095996] ---[ end trace 0000000000000000 ]---
+
+Fixes: 779096916dae ("media: camss: vfe: Fix runtime PM imbalance on error")
 Cc: stable@vger.kernel.org
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1627,6 +1627,12 @@ static int camss_probe(struct platform_d
- 	if (ret < 0)
- 		goto err_cleanup;
- 
-+	ret = camss_configure_pd(camss);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to configure power domains: %d\n", ret);
-+		goto err_cleanup;
-+	}
-+
- 	ret = camss_init_subdevices(camss);
- 	if (ret < 0)
- 		goto err_cleanup;
-@@ -1679,12 +1685,6 @@ static int camss_probe(struct platform_d
- 		}
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -611,7 +611,7 @@ int vfe_get(struct vfe_device *vfe)
+ 	} else {
+ 		ret = vfe_check_clock_rates(vfe);
+ 		if (ret < 0)
+-			goto error_pm_runtime_get;
++			goto error_pm_domain;
  	}
+ 	vfe->power_count++;
  
--	ret = camss_configure_pd(camss);
--	if (ret < 0) {
--		dev_err(dev, "Failed to configure power domains: %d\n", ret);
--		return ret;
--	}
--
- 	pm_runtime_enable(dev);
- 
- 	return 0;
 
 
