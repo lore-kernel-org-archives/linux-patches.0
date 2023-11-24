@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636EA39FE1;
-	Fri, 24 Nov 2023 18:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C45381BF;
+	Fri, 24 Nov 2023 18:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnnNrWOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3BC0C433C8;
-	Fri, 24 Nov 2023 18:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlH4yi+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630C0C433C7;
+	Fri, 24 Nov 2023 18:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849868;
-	bh=kj7+p2F6ZN9Kq5aWA5TEWHQiBR/fjn9NGTq57FXhACQ=;
+	s=korg; t=1700849870;
+	bh=lHHRnwXPR0Sw011ZhvnwD8IbvpyLIYA0AzqKmc6dwIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bnnNrWOOZFW77nXLi1kmSt4SXE0xq3R1h+IV0TWfRDSXPR9G8WaHoF9MV4GNRNl51
-	 0hvVLfiZkB4RSdQI+OGkT3xrQNYvx+lM3Vp2aeFbjxRSifJybXE+kuMxkaaNduEcOJ
-	 TNW3u9FVaQdAS+WDuJFfXhO5QWLqVnNBOtNix7ns=
+	b=wlH4yi+Wi0h6Oa3WlwEITtlAHRlvIMRQXclkOczYWHtTCYJcji4cYsda9GOFA9jRY
+	 tHHKUjgKQ5l1TJ125qQzQ2ZPS9t+72F7Kiq61vvtexfC9eNivlCJMFr7vqpymniZYm
+	 JH0+pmqdwRR1TSJ1Eur5J0V4J2FnDFQ39XVG9EKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chad Schroeder <CSchroeder@sonifi.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.6 328/530] PCI: Lengthen reset delay for VideoPropulsion Torrent QN16e card
-Date: Fri, 24 Nov 2023 17:48:14 +0000
-Message-ID: <20231124172038.008220761@linuxfoundation.org>
+	Ajay Singh <ajay.kathat@microchip.com>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.6 329/530] wifi: wilc1000: use vmm_table as array in wilc struct
+Date: Fri, 24 Nov 2023 17:48:15 +0000
+Message-ID: <20231124172038.038671192@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -36,71 +38,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Ajay Singh <ajay.kathat@microchip.com>
 
-commit c9260693aa0c1e029ed23693cfd4d7814eee6624 upstream.
+commit 05ac1a198a63ad66bf5ae8b7321407c102d40ef3 upstream.
 
-Commit ac91e6980563 ("PCI: Unify delay handling for reset and resume")
-shortened an unconditional 1 sec delay after a Secondary Bus Reset to 100
-msec for PCIe (per PCIe r6.1 sec 6.6.1).  The 1 sec delay is only required
-for Conventional PCI.
+Enabling KASAN and running some iperf tests raises some memory issues with
+vmm_table:
 
-But it turns out that there are PCIe devices which require a longer delay
-than prescribed before first config space access after reset recovery or
-resume from D3cold:
+BUG: KASAN: slab-out-of-bounds in wilc_wlan_handle_txq+0x6ac/0xdb4
+Write of size 4 at addr c3a61540 by task wlan0-tx/95
 
-Chad reports that a "VideoPropulsion Torrent QN16e" MPEG QAM Modulator
-"raises a PCI system error (PERR), as reported by the IPMI event log, and
-the hardware itself would suffer a catastrophic event, cycling the server"
-unless the longer delay is observed.
+KASAN detects that we are writing data beyond range allocated to vmm_table.
+There is indeed a mismatch between the size passed to allocator in
+wilc_wlan_init, and the range of possible indexes used later: allocation
+size is missing a multiplication by sizeof(u32)
 
-The card is specified to conform to PCIe r1.0 and indeed only supports Gen1
-speed (2.5 GT/s) according to lspci.  PCIe r1.0 sec 7.6 prescribes the same
-100 msec delay as PCIe r6.1 sec 6.6.1:
-
-  To allow components to perform internal initialization, system software
-  must wait for at least 100 ms from the end of a reset (cold/warm/hot)
-  before it is permitted to issue Configuration Requests
-
-The behavior of the Torrent QN16e card thus appears to be a quirk.  Treat
-it as such and lengthen the reset delay for this specific device.
-
-Fixes: ac91e6980563 ("PCI: Unify delay handling for reset and resume")
-Link: https://lore.kernel.org/r/47727e792c7f0282dc144e3ec8ce8eb6e713394e.1695304512.git.lukas@wunner.de
-Reported-by: Chad Schroeder <CSchroeder@sonifi.com>
-Closes: https://lore.kernel.org/linux-pci/DM6PR16MB2844903E34CAB910082DF019B1FAA@DM6PR16MB2844.namprd16.prod.outlook.com/
-Tested-by: Chad Schroeder <CSchroeder@sonifi.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org # v5.4+
+Fixes: 40b717bfcefa ("wifi: wilc1000: fix DMA on stack objects")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ajay Singh <ajay.kathat@microchip.com>
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231017-wilc1000_tx_oops-v3-1-b2155f1f7bee@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/quirks.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/microchip/wilc1000/wlan.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -6211,3 +6211,15 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_I
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_XILINX, 0x5020, of_pci_make_dev_node);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_XILINX, 0x5021, of_pci_make_dev_node);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_REDHAT, 0x0005, of_pci_make_dev_node);
-+
-+/*
-+ * Devices known to require a longer delay before first config space access
-+ * after reset recovery or resume from D3cold:
-+ *
-+ * VideoPropulsion (aka Genroco) Torrent QN16e MPEG QAM Modulator
-+ */
-+static void pci_fixup_d3cold_delay_1sec(struct pci_dev *pdev)
-+{
-+	pdev->d3cold_delay = 1000;
-+}
-+DECLARE_PCI_FIXUP_FINAL(0x5555, 0x0004, pci_fixup_d3cold_delay_1sec);
+--- a/drivers/net/wireless/microchip/wilc1000/wlan.c
++++ b/drivers/net/wireless/microchip/wilc1000/wlan.c
+@@ -1492,7 +1492,7 @@ int wilc_wlan_init(struct net_device *de
+ 	}
+ 
+ 	if (!wilc->vmm_table)
+-		wilc->vmm_table = kzalloc(WILC_VMM_TBL_SIZE, GFP_KERNEL);
++		wilc->vmm_table = kcalloc(WILC_VMM_TBL_SIZE, sizeof(u32), GFP_KERNEL);
+ 
+ 	if (!wilc->vmm_table) {
+ 		ret = -ENOBUFS;
 
 
