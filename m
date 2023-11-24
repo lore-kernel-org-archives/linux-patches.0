@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B041A2EAEA;
-	Fri, 24 Nov 2023 19:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E96F339BE;
+	Fri, 24 Nov 2023 19:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYVYdMSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE54C433C8;
-	Fri, 24 Nov 2023 19:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmjKN7sI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE024C433C8;
+	Fri, 24 Nov 2023 19:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853628;
-	bh=skafKTf0QZFSJiU1UYF/vBUIEDeMbJmkxttrjVLkZHY=;
+	s=korg; t=1700853631;
+	bh=cFPq2Tb+Gz9T3LTRYPmXrLTYjPLEVWnb8VGGOusqXRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYVYdMSUY6pCbRv8rCKbCXUhPFg2Cc2qqChhpFELjEl/djBw6puw6PbZ7X5ohhn4b
-	 qIJIUgLT4Scg74X3UwUu9Qw4vVWd9aHTkjrpsd8/WdaRILYwuPPxk0XcsePgu+fGGJ
-	 N1NSz8d+qtJAKDezKDZ3Zf9iILKlu38KRD07LCdQ=
+	b=mmjKN7sIkBjc4FujxD4FunnLdm9oEHGtsL3IEO9zuS6FwPLB19yRK38rfm0JzFQjr
+	 9gFZsF+c++MzP4UYKkegWHBuVO7+5gNAhAasp2ahdli8d7p+Nu2RVdAEF1NXTLsP/s
+	 qeekM6rp5FgZDxDpyCZWvmIWAX+BkV8rHxvifLlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Mark Brown <broonie@kernel.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 240/297] regmap: Ensure range selector registers are updated after cache sync
-Date: Fri, 24 Nov 2023 17:54:42 +0000
-Message-ID: <20231124172008.594200017@linuxfoundation.org>
+Subject: [PATCH 5.15 241/297] cpufreq: stats: Fix buffer overflow detection in trans_stats()
+Date: Fri, 24 Nov 2023 17:54:43 +0000
+Message-ID: <20231124172008.631120728@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,93 +42,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 0ec7731655de196bc1e4af99e495b38778109d22 ]
+[ Upstream commit ea167a7fc2426f7685c3735e104921c1a20a6d3f ]
 
-When we sync the register cache we do so with the cache bypassed in order
-to avoid overhead from writing the synced values back into the cache. If
-the regmap has ranges and the selector register for those ranges is in a
-register which is cached this has the unfortunate side effect of meaning
-that the physical and cached copies of the selector register can be out of
-sync after a cache sync. The cache will have whatever the selector was when
-the sync started and the hardware will have the selector for the register
-that was synced last.
+Commit 3c0897c180c6 ("cpufreq: Use scnprintf() for avoiding potential
+buffer overflow") switched from snprintf to the more secure scnprintf
+but never updated the exit condition for PAGE_SIZE.
 
-Fix this by rewriting all cached selector registers after every sync,
-ensuring that the hardware and cache have the same content. This will
-result in extra writes that wouldn't otherwise be needed but is simple
-so hopefully robust. We don't read from the hardware since not all
-devices have physical read support.
+As the commit say and as scnprintf document, what scnprintf returns what
+is actually written not counting the '\0' end char. This results in the
+case of len exceeding the size, len set to PAGE_SIZE - 1, as it can be
+written at max PAGE_SIZE - 1 (as '\0' is not counted)
 
-Given that nobody noticed this until now it is likely that we are rarely if
-ever hitting this case.
+Because of len is never set to PAGE_SIZE, the function never break early,
+never prints the warning and never return -EFBIG.
 
-Reported-by: Hector Martin <marcan@marcan.st>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20231026-regmap-fix-selector-sync-v1-1-633ded82770d@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by changing the condition to PAGE_SIZE - 1 to correctly trigger
+the error.
+
+Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
+Fixes: 3c0897c180c6 ("cpufreq: Use scnprintf() for avoiding potential buffer overflow")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/cpufreq/cpufreq_stats.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index 0b517a83c4493..b04e8c90aca20 100644
---- a/drivers/base/regmap/regcache.c
-+++ b/drivers/base/regmap/regcache.c
-@@ -325,6 +325,11 @@ static int regcache_default_sync(struct regmap *map, unsigned int min,
- 	return 0;
- }
+diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
+index 1570d6f3e75d3..6e57df7a2249f 100644
+--- a/drivers/cpufreq/cpufreq_stats.c
++++ b/drivers/cpufreq/cpufreq_stats.c
+@@ -131,25 +131,25 @@ static ssize_t show_trans_table(struct cpufreq_policy *policy, char *buf)
+ 	len += scnprintf(buf + len, PAGE_SIZE - len, "   From  :    To\n");
+ 	len += scnprintf(buf + len, PAGE_SIZE - len, "         : ");
+ 	for (i = 0; i < stats->state_num; i++) {
+-		if (len >= PAGE_SIZE)
++		if (len >= PAGE_SIZE - 1)
+ 			break;
+ 		len += scnprintf(buf + len, PAGE_SIZE - len, "%9u ",
+ 				stats->freq_table[i]);
+ 	}
+-	if (len >= PAGE_SIZE)
+-		return PAGE_SIZE;
++	if (len >= PAGE_SIZE - 1)
++		return PAGE_SIZE - 1;
  
-+static int rbtree_all(const void *key, const struct rb_node *node)
-+{
-+	return 0;
-+}
-+
- /**
-  * regcache_sync - Sync the register cache with the hardware.
-  *
-@@ -342,6 +347,7 @@ int regcache_sync(struct regmap *map)
- 	unsigned int i;
- 	const char *name;
- 	bool bypass;
-+	struct rb_node *node;
+ 	len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
  
- 	if (WARN_ON(map->cache_type == REGCACHE_NONE))
- 		return -EINVAL;
-@@ -386,6 +392,30 @@ int regcache_sync(struct regmap *map)
- 	map->async = false;
- 	map->cache_bypass = bypass;
- 	map->no_sync_defaults = false;
-+
-+	/*
-+	 * If we did any paging with cache bypassed and a cached
-+	 * paging register then the register and cache state might
-+	 * have gone out of sync, force writes of all the paging
-+	 * registers.
-+	 */
-+	rb_for_each(node, 0, &map->range_tree, rbtree_all) {
-+		struct regmap_range_node *this =
-+			rb_entry(node, struct regmap_range_node, node);
-+
-+		/* If there's nothing in the cache there's nothing to sync */
-+		ret = regcache_read(map, this->selector_reg, &i);
-+		if (ret != 0)
-+			continue;
-+
-+		ret = _regmap_write(map, this->selector_reg, i);
-+		if (ret != 0) {
-+			dev_err(map->dev, "Failed to write %x = %x: %d\n",
-+				this->selector_reg, i, ret);
-+			break;
-+		}
-+	}
-+
- 	map->unlock(map->lock_arg);
+ 	for (i = 0; i < stats->state_num; i++) {
+-		if (len >= PAGE_SIZE)
++		if (len >= PAGE_SIZE - 1)
+ 			break;
  
- 	regmap_async_complete(map);
+ 		len += scnprintf(buf + len, PAGE_SIZE - len, "%9u: ",
+ 				stats->freq_table[i]);
+ 
+ 		for (j = 0; j < stats->state_num; j++) {
+-			if (len >= PAGE_SIZE)
++			if (len >= PAGE_SIZE - 1)
+ 				break;
+ 
+ 			if (pending)
+@@ -159,12 +159,12 @@ static ssize_t show_trans_table(struct cpufreq_policy *policy, char *buf)
+ 
+ 			len += scnprintf(buf + len, PAGE_SIZE - len, "%9u ", count);
+ 		}
+-		if (len >= PAGE_SIZE)
++		if (len >= PAGE_SIZE - 1)
+ 			break;
+ 		len += scnprintf(buf + len, PAGE_SIZE - len, "\n");
+ 	}
+ 
+-	if (len >= PAGE_SIZE) {
++	if (len >= PAGE_SIZE - 1) {
+ 		pr_warn_once("cpufreq transition table exceeds PAGE_SIZE. Disabling\n");
+ 		return -EFBIG;
+ 	}
 -- 
 2.42.0
 
