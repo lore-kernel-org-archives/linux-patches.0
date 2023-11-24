@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C859B381D2;
-	Fri, 24 Nov 2023 18:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CB535F15;
+	Fri, 24 Nov 2023 18:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWgMnPyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55458C433C7;
-	Fri, 24 Nov 2023 18:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my9v+Nd/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30C6C433C8;
+	Fri, 24 Nov 2023 18:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851505;
-	bh=SuKdLNOpOUsraIfYgJDRpf6mFOTYFLuDz034GZcql+o=;
+	s=korg; t=1700851508;
+	bh=FhePzjnPPJh8uTVUxMfOShNexoAE8VxaIX2rSyAQAfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWgMnPyg+jblZWV+pwOAPZ6JooBXOj5nmPhGPIqkuXpBmgmRO8aVfR8P6M641LHw0
-	 LxNK/PUZluPyLt/Y/wFoM3EGUf8iuslO+XWBhMwTOpJm9W/wIVGJxqF+VfmdPEY6dq
-	 TxcPQtWgp8cX6/VFoL9v47DTfeFVmb5fla6VmFO4=
+	b=my9v+Nd/Ej3ywDG9fruH8p38Zo68lbaVeJ426Ci9eJrV+GUoajV2EWJ3oA33hmNLk
+	 taphdCoYpyjr+80Kzzw6ajdU8yOWmvTN0i7RyNsk+mCuuRvyJjT9Az2k2jJEGnqUu2
+	 h60Dv40aOYthBKjarUHj9C9oxsEwuEcTED64djM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <Jun.Ma2@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.5 475/491] drm/amd/pm: Fix error of MACO flag setting code
-Date: Fri, 24 Nov 2023 17:51:51 +0000
-Message-ID: <20231124172038.909560494@linuxfoundation.org>
+Subject: [PATCH 6.5 476/491] drm/amdgpu/smu13: drop compute workload workaround
+Date: Fri, 24 Nov 2023 17:51:52 +0000
+Message-ID: <20231124172038.943928437@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,60 +41,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 7f3e6b840fa8b0889d776639310a5dc672c1e9e1 upstream.
+commit 23170863ea0a0965d224342c0eb2ad8303b1f267 upstream.
 
-MACO only works if BACO is supported
+This was fixed in PMFW before launch and is no longer
+required.
 
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    8 ++++----
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    9 +++++----
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   32 +------------------
+ 1 file changed, 2 insertions(+), 30 deletions(-)
 
 --- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
 +++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -343,12 +343,12 @@ static int smu_v13_0_0_check_powerplay_t
- 	if (powerplay_table->platform_caps & SMU_13_0_0_PP_PLATFORM_CAP_HARDWAREDC)
- 		smu->dc_controlled_by_gpio = true;
+@@ -2162,38 +2162,10 @@ static int smu_v13_0_0_set_power_profile
+ 		}
+ 	}
  
--	if (powerplay_table->platform_caps & SMU_13_0_0_PP_PLATFORM_CAP_BACO ||
--	    powerplay_table->platform_caps & SMU_13_0_0_PP_PLATFORM_CAP_MACO)
-+	if (powerplay_table->platform_caps & SMU_13_0_0_PP_PLATFORM_CAP_BACO) {
- 		smu_baco->platform_support = true;
+-	if (smu->power_profile_mode == PP_SMC_POWER_PROFILE_COMPUTE &&
+-		(((smu->adev->pdev->device == 0x744C) && (smu->adev->pdev->revision == 0xC8)) ||
+-		((smu->adev->pdev->device == 0x744C) && (smu->adev->pdev->revision == 0xCC)))) {
+-		ret = smu_cmn_update_table(smu,
+-					   SMU_TABLE_ACTIVITY_MONITOR_COEFF,
+-					   WORKLOAD_PPLIB_COMPUTE_BIT,
+-					   (void *)(&activity_monitor_external),
+-					   false);
+-		if (ret) {
+-			dev_err(smu->adev->dev, "[%s] Failed to get activity monitor!", __func__);
+-			return ret;
+-		}
+-
+-		ret = smu_cmn_update_table(smu,
+-					   SMU_TABLE_ACTIVITY_MONITOR_COEFF,
+-					   WORKLOAD_PPLIB_CUSTOM_BIT,
+-					   (void *)(&activity_monitor_external),
+-					   true);
+-		if (ret) {
+-			dev_err(smu->adev->dev, "[%s] Failed to set activity monitor!", __func__);
+-			return ret;
+-		}
+-
+-		workload_type = smu_cmn_to_asic_specific_index(smu,
+-						       CMN2ASIC_MAPPING_WORKLOAD,
+-						       PP_SMC_POWER_PROFILE_CUSTOM);
+-	} else {
+-		/* conv PP_SMC_POWER_PROFILE* to WORKLOAD_PPLIB_*_BIT */
+-		workload_type = smu_cmn_to_asic_specific_index(smu,
++	/* conv PP_SMC_POWER_PROFILE* to WORKLOAD_PPLIB_*_BIT */
++	workload_type = smu_cmn_to_asic_specific_index(smu,
+ 						       CMN2ASIC_MAPPING_WORKLOAD,
+ 						       smu->power_profile_mode);
+-	}
  
--	if (powerplay_table->platform_caps & SMU_13_0_0_PP_PLATFORM_CAP_MACO)
--		smu_baco->maco_support = true;
-+		if (powerplay_table->platform_caps & SMU_13_0_0_PP_PLATFORM_CAP_MACO)
-+			smu_baco->maco_support = true;
-+	}
- 
- 	/*
- 	 * We are in the transition to a new OD mechanism.
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -333,12 +333,13 @@ static int smu_v13_0_7_check_powerplay_t
- 	if (powerplay_table->platform_caps & SMU_13_0_7_PP_PLATFORM_CAP_HARDWAREDC)
- 		smu->dc_controlled_by_gpio = true;
- 
--	if (powerplay_table->platform_caps & SMU_13_0_7_PP_PLATFORM_CAP_BACO ||
--	    powerplay_table->platform_caps & SMU_13_0_7_PP_PLATFORM_CAP_MACO)
-+	if (powerplay_table->platform_caps & SMU_13_0_7_PP_PLATFORM_CAP_BACO) {
- 		smu_baco->platform_support = true;
- 
--	if (smu_baco->platform_support && (BoardTable->HsrEnabled || BoardTable->VddqOffEnabled))
--		smu_baco->maco_support = true;
-+		if ((powerplay_table->platform_caps & SMU_13_0_7_PP_PLATFORM_CAP_MACO)
-+					&& (BoardTable->HsrEnabled || BoardTable->VddqOffEnabled))
-+			smu_baco->maco_support = true;
-+	}
- 
- #if 0
- 	if (!overdrive_lowerlimits->FeatureCtrlMask ||
+ 	if (workload_type < 0)
+ 		return -EINVAL;
 
 
