@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF1039FF3;
-	Fri, 24 Nov 2023 18:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2832739FF3;
+	Fri, 24 Nov 2023 18:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAbOGM6t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFD9C433C8;
-	Fri, 24 Nov 2023 18:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkWkmV2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A908BC433C9;
+	Fri, 24 Nov 2023 18:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850008;
-	bh=9+cdHLFVFVLGtebQB9U9enHBSoA8TA7cfsDSUPe1sZM=;
+	s=korg; t=1700850011;
+	bh=z32SZn2KwJ6BWhoKwi4o1W0SKLRMuMh6/s7mqrwvlI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAbOGM6tBxLEeWNJLS8tW0no22BMYQ/e3ETZqvAKDZtvpQMjot5PEcYDOvnz3d2Iw
-	 RcJysTJmFmplTtpkRmD1ZgtMd4y+z9WuidCKc+FqEJ+ezmz2rN3Ov/YwDFqjky7BDM
-	 koW2s21FiZx6HoXvbMrQC129Iu7vvC2pyZ0QYIUw=
+	b=dkWkmV2tFdrOX553+w4EnRr10Rl5SfNeeqd7GuabiAaZBj8sNI7jHMyzOYWkfBQfv
+	 V4QhLiZ2yGfUFD/RF/e92xg0p/yuMW+ZOOlE9vJN3Fhyu+RSmRk4uYS3Wc1JNgZsks
+	 8klJxQ3YlL4WwhBgSpO6de4LpnWs86rvjmb+xoEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 374/530] dmaengine: stm32-mdma: correct desc prep when channel running
-Date: Fri, 24 Nov 2023 17:49:00 +0000
-Message-ID: <20231124172039.392833575@linuxfoundation.org>
+	Andreas Steinmetz <anstein99@googlemail.com>,
+	John Johansen <john.johansen@canonical.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 402/530] apparmor: Fix regression in mount mediation
+Date: Fri, 24 Nov 2023 17:49:28 +0000
+Message-ID: <20231124172040.271700318@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,48 +42,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: John Johansen <john.johansen@canonical.com>
 
-commit 03f25d53b145bc2f7ccc82fc04e4482ed734f524 upstream.
+[ Upstream commit 157a3537d6bc28ceb9a11fc8cb67f2152d860146 ]
 
-In case of the prep descriptor while the channel is already running, the
-CCR register value stored into the channel could already have its EN bit
-set.  This would lead to a bad transfer since, at start transfer time,
-enabling the channel while other registers aren't yet properly set.
-To avoid this, ensure to mask the CCR_EN bit when storing the ccr value
-into the mdma channel structure.
+commit 2db154b3ea8e ("vfs: syscall: Add move_mount(2) to move mounts around")
 
-Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: stable@vger.kernel.org
-Tested-by: Alain Volmat <alain.volmat@foss.st.com>
-Link: https://lore.kernel.org/r/20231009082450.452877-1-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+introduced a new move_mount(2) system call and a corresponding new LSM
+security_move_mount hook but did not implement this hook for any
+existing LSM. This creates a regression for AppArmor mediation of
+mount. This patch provides a base mapping of the move_mount syscall to
+the existing mount mediation. In the future we may introduce
+additional mediations around the new mount calls.
+
+Fixes: 2db154b3ea8e ("vfs: syscall: Add move_mount(2) to move mounts around")
+CC: stable@vger.kernel.org
+Reported-by: Andreas Steinmetz <anstein99@googlemail.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/stm32-mdma.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/apparmor/include/mount.h |  7 +++--
+ security/apparmor/lsm.c           | 20 ++++++++++++--
+ security/apparmor/mount.c         | 46 +++++++++++++++++++------------
+ 3 files changed, 51 insertions(+), 22 deletions(-)
 
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -489,7 +489,7 @@ static int stm32_mdma_set_xfer_param(str
- 	src_maxburst = chan->dma_config.src_maxburst;
- 	dst_maxburst = chan->dma_config.dst_maxburst;
+diff --git a/security/apparmor/include/mount.h b/security/apparmor/include/mount.h
+index 10c76f906a653..46834f8281794 100644
+--- a/security/apparmor/include/mount.h
++++ b/security/apparmor/include/mount.h
+@@ -38,9 +38,12 @@ int aa_mount_change_type(const struct cred *subj_cred,
+ 			 struct aa_label *label, const struct path *path,
+ 			 unsigned long flags);
  
--	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
-+	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & ~STM32_MDMA_CCR_EN;
- 	ctcr = stm32_mdma_read(dmadev, STM32_MDMA_CTCR(chan->id));
- 	ctbr = stm32_mdma_read(dmadev, STM32_MDMA_CTBR(chan->id));
++int aa_move_mount_old(const struct cred *subj_cred,
++		      struct aa_label *label, const struct path *path,
++		      const char *old_name);
+ int aa_move_mount(const struct cred *subj_cred,
+-		  struct aa_label *label, const struct path *path,
+-		  const char *old_name);
++		  struct aa_label *label, const struct path *from_path,
++		  const struct path *to_path);
  
-@@ -965,7 +965,7 @@ stm32_mdma_prep_dma_memcpy(struct dma_ch
- 	if (!desc)
- 		return NULL;
+ int aa_new_mount(const struct cred *subj_cred,
+ 		 struct aa_label *label, const char *dev_name,
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index 60f95cc4532a8..6fdab1b5ede5c 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -607,8 +607,8 @@ static int apparmor_sb_mount(const char *dev_name, const struct path *path,
+ 			error = aa_mount_change_type(current_cred(), label,
+ 						     path, flags);
+ 		else if (flags & MS_MOVE)
+-			error = aa_move_mount(current_cred(), label, path,
+-					      dev_name);
++			error = aa_move_mount_old(current_cred(), label, path,
++						  dev_name);
+ 		else
+ 			error = aa_new_mount(current_cred(), label, dev_name,
+ 					     path, type, flags, data);
+@@ -618,6 +618,21 @@ static int apparmor_sb_mount(const char *dev_name, const struct path *path,
+ 	return error;
+ }
  
--	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
-+	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & ~STM32_MDMA_CCR_EN;
- 	ctcr = stm32_mdma_read(dmadev, STM32_MDMA_CTCR(chan->id));
- 	ctbr = stm32_mdma_read(dmadev, STM32_MDMA_CTBR(chan->id));
- 	cbndtr = stm32_mdma_read(dmadev, STM32_MDMA_CBNDTR(chan->id));
++static int apparmor_move_mount(const struct path *from_path,
++			       const struct path *to_path)
++{
++	struct aa_label *label;
++	int error = 0;
++
++	label = __begin_current_label_crit_section();
++	if (!unconfined(label))
++		error = aa_move_mount(current_cred(), label, from_path,
++				      to_path);
++	__end_current_label_crit_section(label);
++
++	return error;
++}
++
+ static int apparmor_sb_umount(struct vfsmount *mnt, int flags)
+ {
+ 	struct aa_label *label;
+@@ -1240,6 +1255,7 @@ static struct security_hook_list apparmor_hooks[] __ro_after_init = {
+ 	LSM_HOOK_INIT(capget, apparmor_capget),
+ 	LSM_HOOK_INIT(capable, apparmor_capable),
+ 
++	LSM_HOOK_INIT(move_mount, apparmor_move_mount),
+ 	LSM_HOOK_INIT(sb_mount, apparmor_sb_mount),
+ 	LSM_HOOK_INIT(sb_umount, apparmor_sb_umount),
+ 	LSM_HOOK_INIT(sb_pivotroot, apparmor_sb_pivotroot),
+diff --git a/security/apparmor/mount.c b/security/apparmor/mount.c
+index 2bb77aacc49ae..f2a114e540079 100644
+--- a/security/apparmor/mount.c
++++ b/security/apparmor/mount.c
+@@ -483,36 +483,46 @@ int aa_mount_change_type(const struct cred *subj_cred,
+ }
+ 
+ int aa_move_mount(const struct cred *subj_cred,
+-		  struct aa_label *label, const struct path *path,
+-		  const char *orig_name)
++		  struct aa_label *label, const struct path *from_path,
++		  const struct path *to_path)
+ {
+ 	struct aa_profile *profile;
+-	char *buffer = NULL, *old_buffer = NULL;
+-	struct path old_path;
++	char *to_buffer = NULL, *from_buffer = NULL;
+ 	int error;
+ 
+ 	AA_BUG(!label);
+-	AA_BUG(!path);
++	AA_BUG(!from_path);
++	AA_BUG(!to_path);
++
++	to_buffer = aa_get_buffer(false);
++	from_buffer = aa_get_buffer(false);
++	error = -ENOMEM;
++	if (!to_buffer || !from_buffer)
++		goto out;
++	error = fn_for_each_confined(label, profile,
++			match_mnt(subj_cred, profile, to_path, to_buffer,
++				  from_path, from_buffer,
++				  NULL, MS_MOVE, NULL, false));
++out:
++	aa_put_buffer(to_buffer);
++	aa_put_buffer(from_buffer);
++
++	return error;
++}
++
++int aa_move_mount_old(const struct cred *subj_cred, struct aa_label *label,
++		      const struct path *path, const char *orig_name)
++{
++	struct path old_path;
++	int error;
+ 
+ 	if (!orig_name || !*orig_name)
+ 		return -EINVAL;
+-
+ 	error = kern_path(orig_name, LOOKUP_FOLLOW, &old_path);
+ 	if (error)
+ 		return error;
+ 
+-	buffer = aa_get_buffer(false);
+-	old_buffer = aa_get_buffer(false);
+-	error = -ENOMEM;
+-	if (!buffer || !old_buffer)
+-		goto out;
+-	error = fn_for_each_confined(label, profile,
+-			match_mnt(subj_cred, profile, path, buffer, &old_path,
+-				  old_buffer,
+-				  NULL, MS_MOVE, NULL, false));
+-out:
+-	aa_put_buffer(buffer);
+-	aa_put_buffer(old_buffer);
++	error = aa_move_mount(subj_cred, label, &old_path, path);
+ 	path_put(&old_path);
+ 
+ 	return error;
+-- 
+2.42.0
+
 
 
