@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C3333E9;
-	Fri, 24 Nov 2023 19:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD5F1A5A4;
+	Fri, 24 Nov 2023 19:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GOudPdwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930CDC433C7;
-	Fri, 24 Nov 2023 19:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zf7qBNB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6308C433C8;
+	Fri, 24 Nov 2023 19:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853725;
-	bh=ECG3q+Gh/h1kOBOVC1enkbOpzFS4t9pvUVrQeMn3b7E=;
+	s=korg; t=1700853728;
+	bh=AIcChaYyCYFY9KMnERvnhChAGT5fVPiUiSHF51himOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GOudPdwH6H9bVEuELstl5AEOxpQLL3e5fhwUmm29bqcIaEb7h/UVeY98NjYcTdJus
-	 4qYAn17HBS6WCDGJCNr1KUhT3NF11bMcSpo1r7Xb3J3AYMNf6oMusUY1zQZy9vDdsa
-	 nheDGQqObnJkaOOQqDPedR3XDDRpX/OndhQUbBf8=
+	b=0zf7qBNBioaSM918+7ylhPG2HhV5kMaa0rUh9hmp1f50Ed0gPFRCdusVyXGPIe6nl
+	 3Y2k3Iq3XZ7ySsnuIDoT/E0ueNP4bFaLpNS5p+lZd8bDZtcjBcbV1SirCCMQcxFCOK
+	 FLysTNrFSS/gFjLJGOI4keXRQ/5XPjVpbePc9OBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 296/297] Input: xpad - add VID for Turtle Beach controllers
-Date: Fri, 24 Nov 2023 17:55:38 +0000
-Message-ID: <20231124172010.457254912@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Saravana Kannan <saravanak@google.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	James Clark <james.clark@arm.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>
+Subject: [PATCH 5.15 297/297] driver core: Release all resources during unbind before updating device links
+Date: Fri, 24 Nov 2023 17:55:39 +0000
+Message-ID: <20231124172010.485979506@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -35,35 +43,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Saravana Kannan <saravanak@google.com>
 
-commit 1999a6b12a3b5c8953fc9ec74863ebc75a1b851d upstream.
+commit 2e84dc37920012b458e9458b19fc4ed33f81bc74 upstream.
 
-This adds support for the Turtle Beach REACT-R and Recon Xbox controllers
+This commit fixes a bug in commit 9ed9895370ae ("driver core: Functional
+dependencies tracking support") where the device link status was
+incorrectly updated in the driver unbind path before all the device's
+resources were released.
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Link: https://lore.kernel.org/r/20230225012147.276489-4-vi@endrift.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 9ed9895370ae ("driver core: Functional dependencies tracking support")
+Cc: stable <stable@kernel.org>
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Closes: https://lore.kernel.org/all/20231014161721.f4iqyroddkcyoefo@pengutronix.de/
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Yang Yingliang <yangyingliang@huawei.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Matti Vaittinen <mazziesaccount@gmail.com>
+Cc: James Clark <james.clark@arm.com>
+Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+Tested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231018013851.3303928-1-saravanak@google.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/dd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -449,6 +449,7 @@ static const struct usb_device_id xpad_t
- 	XPAD_XBOX360_VENDOR(0x0f0d),		/* Hori Controllers */
- 	XPAD_XBOXONE_VENDOR(0x0f0d),		/* Hori Controllers */
- 	XPAD_XBOX360_VENDOR(0x1038),		/* SteelSeries Controllers */
-+	XPAD_XBOXONE_VENDOR(0x10f5),		/* Turtle Beach Controllers */
- 	XPAD_XBOX360_VENDOR(0x11c9),		/* Nacon GC100XF */
- 	XPAD_XBOX360_VENDOR(0x11ff),		/* PXN V900 */
- 	XPAD_XBOX360_VENDOR(0x1209),		/* Ardwiino Controllers */
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1228,8 +1228,6 @@ static void __device_release_driver(stru
+ 		else if (drv->remove)
+ 			drv->remove(dev);
+ 
+-		device_links_driver_cleanup(dev);
+-
+ 		devres_release_all(dev);
+ 		arch_teardown_dma_ops(dev);
+ 		kfree(dev->dma_range_map);
+@@ -1241,6 +1239,8 @@ static void __device_release_driver(stru
+ 		pm_runtime_reinit(dev);
+ 		dev_pm_set_driver_flags(dev, 0);
+ 
++		device_links_driver_cleanup(dev);
++
+ 		klist_remove(&dev->p->knode_driver);
+ 		device_pm_check_callbacks(dev);
+ 		if (dev->bus)
 
 
