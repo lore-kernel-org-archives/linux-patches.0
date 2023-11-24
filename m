@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581FD39FDD;
-	Fri, 24 Nov 2023 18:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023A339FE1;
+	Fri, 24 Nov 2023 18:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZKQyq/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1663C433C8;
-	Fri, 24 Nov 2023 18:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHoo6WD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86243C433CA;
+	Fri, 24 Nov 2023 18:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848804;
-	bh=7uFe/QJ0YzcR5HdAmy3tSKnjFW6SB+Ua75PI87dPjPM=;
+	s=korg; t=1700848806;
+	bh=+Dbz7XtCH9xV/z+fhDkYtRVJPtqaAQant25xsGmUYg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZKQyq/hDMpAhNug3Mmj/a4BYO1DFW+Caudt11Nnv4U96IJPM4TqbbC0fWZ7i2EHs
-	 jtJQkLk57tQ+AbupmlT094ejFxDQA0DRXV7Bgwz9VJX95VPAmCEgK0a+zME3qv8g5V
-	 JoEaCrAfyxYy4iFrgGuZLFEybKUaqSJy6/AL0T4s=
+	b=BHoo6WD91oWhzvpg2Kw42M3IrsSAgxm5ooc9C8Qk6l8jfYr1cCGw19I6HY+GhkwNe
+	 cstPLQMgFIpyM32MI6Lb4GImSExWo/yfRBJKW7/4mteVWbEutUsuo3M7HFSzjVe/VZ
+	 E/DnHI4uIptPQFV5Pacpcrp8Knsg9EiOuMSAETK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 4.19 69/97] s390/cmma: fix initial kernel address space page table walk
-Date: Fri, 24 Nov 2023 17:50:42 +0000
-Message-ID: <20231124171936.711235962@linuxfoundation.org>
+	Nathan Hebert <nhebert@chromium.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 4.19 87/97] media: venus: hfi: fix the check to handle session buffer requirement
+Date: Fri, 24 Nov 2023 17:51:00 +0000
+Message-ID: <20231124171937.442712967@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -43,69 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit 16ba44826a04834d3eeeda4b731c2ea3481062b7 upstream.
+commit b18e36dfd6c935da60a971310374f3dfec3c82e1 upstream.
 
-If the cmma no-dat feature is available the kernel page tables are walked
-to identify and mark all pages which are used for address translation (all
-region, segment, and page tables). In a subsequent loop all other pages are
-marked as "no-dat" pages with the ESSA instruction.
+Buffer requirement, for different buffer type, comes from video firmware.
+While copying these requirements, there is an OOB possibility when the
+payload from firmware is more than expected size. Fix the check to avoid
+the OOB possibility.
 
-This information is visible to the hypervisor, so that the hypervisor can
-optimize purging of guest TLB entries. The initial loop however does not
-cover the complete kernel address space. This can result in pages being
-marked as not being used for dynamic address translation, even though they
-are. In turn guest TLB entries incorrectly may not be purged.
-
-Fix this by adjusting the end address of the kernel address range being
-walked.
-
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Cc: stable@vger.kernel.org
+Fixes: 09c2845e8fe4 ("[media] media: venus: hfi: add Host Firmware Interface (HFI)")
+Reviewed-by: Nathan Hebert <nhebert@chromium.org>
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/page-states.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_msgs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/mm/page-states.c
-+++ b/arch/s390/mm/page-states.c
-@@ -167,15 +167,22 @@ static void mark_kernel_p4d(pgd_t *pgd,
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.c
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+@@ -359,7 +359,7 @@ session_get_prop_buf_req(struct hfi_msg_
+ 		memcpy(&bufreq[idx], buf_req, sizeof(*bufreq));
+ 		idx++;
  
- static void mark_kernel_pgd(void)
- {
--	unsigned long addr, next;
-+	unsigned long addr, next, max_addr;
- 	struct page *page;
- 	pgd_t *pgd;
- 	int i;
+-		if (idx > HFI_BUFFER_TYPE_MAX)
++		if (idx >= HFI_BUFFER_TYPE_MAX)
+ 			return HFI_ERR_SESSION_INVALID_PARAMETER;
  
- 	addr = 0;
-+	/*
-+	 * Figure out maximum virtual address accessible with the
-+	 * kernel ASCE. This is required to keep the page table walker
-+	 * from accessing non-existent entries.
-+	 */
-+	max_addr = (S390_lowcore.kernel_asce.val & _ASCE_TYPE_MASK) >> 2;
-+	max_addr = 1UL << (max_addr * 11 + 31);
- 	pgd = pgd_offset_k(addr);
- 	do {
--		next = pgd_addr_end(addr, MODULES_END);
-+		next = pgd_addr_end(addr, max_addr);
- 		if (pgd_none(*pgd))
- 			continue;
- 		if (!pgd_folded(*pgd)) {
-@@ -184,7 +191,7 @@ static void mark_kernel_pgd(void)
- 				set_bit(PG_arch_1, &page[i].flags);
- 		}
- 		mark_kernel_p4d(pgd, addr, next);
--	} while (pgd++, addr = next, addr != MODULES_END);
-+	} while (pgd++, addr = next, addr != max_addr);
- }
- 
- void __init cmma_init_nodat(void)
+ 		req_bytes -= sizeof(struct hfi_buffer_requirements);
 
 
