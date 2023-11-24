@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177632FC4E;
-	Fri, 24 Nov 2023 18:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCF133CDB;
+	Fri, 24 Nov 2023 18:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3TFRgkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A78FC433C7;
-	Fri, 24 Nov 2023 18:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbPK9G7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1CEC433C9;
+	Fri, 24 Nov 2023 18:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850982;
-	bh=xozVkcaEh7iPhAoLiWEGHAGBJgNMAmTGUepq5Kiux5M=;
+	s=korg; t=1700850985;
+	bh=84Te0S7UXF9kESnNwXFwmmRR1FRajVbkpS1F4h1ykk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F3TFRgkrsJO0yoWcIJLesPHUm9eDMkScYYmM2qjqHJ86J0eX/wDUx9EaEW1tWIew/
-	 mfeQlo93FTOOxu7qoyqvRb6RGBWOmIf8LGCrDe8D1MtpmfMZWQK3IgF5Cz12BSIBcK
-	 cnLrQQIkYy1hoW1RgW5+Ex7rIrqJRS3gDIaTR8iU=
+	b=TbPK9G7GWY31y8zdfWckYnVGlkWD5ZNudOtoJBbu1jxOLr+qLf+HrZ8OOe6ymXL3O
+	 GzLeoUoZ8g9ksj3Cyfbt5BZmERbvTsQgIGf3Sr1MxiyUPJVgU8H2xoAS+jEpPrZLPa
+	 z/RUSEUpg+y6h8TGBqyPLot5slheQXkC/kySmaQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
-	Jakub Acs <acsjakub@amazon.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 266/491] mm/damon/core: avoid divide-by-zero during monitoring results update
-Date: Fri, 24 Nov 2023 17:48:22 +0000
-Message-ID: <20231124172032.560975028@linuxfoundation.org>
+Subject: [PATCH 6.5 267/491] mm/damon/sysfs-schemes: handle tried region directory allocation failure
+Date: Fri, 24 Nov 2023 17:48:23 +0000
+Message-ID: <20231124172032.594582696@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,50 +43,34 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit d35963bfb05877455228ecec6b194f624489f96a upstream.
+commit ae636ae2bbfd9279f5681dbf320d1da817e52b68 upstream.
 
-When monitoring attributes are changed, DAMON updates access rate of the
-monitoring results accordingly.  For that, it divides some values by the
-maximum nr_accesses.  However, due to the type of the related variables,
-simple division-based calculation of the divisor can return zero.  As a
-result, divide-by-zero is possible.  Fix it by using
-damon_max_nr_accesses(), which handles the case.
+DAMON sysfs interface's before_damos_apply callback
+(damon_sysfs_before_damos_apply()), which creates the DAMOS tried regions
+for each DAMOS action applied region, is not handling the allocation
+failure for the sysfs directory data.  As a result, NULL pointer
+derefeence is possible.  Fix it by handling the case.
 
-Link: https://lkml.kernel.org/r/20231019194924.100347-3-sj@kernel.org
-Fixes: 2f5bef5a590b ("mm/damon/core: update monitoring results for new monitoring attributes")
+Link: https://lkml.kernel.org/r/20231106233408.51159-4-sj@kernel.org
+Fixes: f1d13cacabe1 ("mm/damon/sysfs: implement DAMOS tried regions update command")
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Reported-by: Jakub Acs <acsjakub@amazon.de>
-Cc: <stable@vger.kernel.org>	[6.3+]
+Cc: <stable@vger.kernel.org>	[6.2+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |   10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ mm/damon/sysfs-schemes.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -476,20 +476,14 @@ static unsigned int damon_age_for_new_at
- static unsigned int damon_accesses_bp_to_nr_accesses(
- 		unsigned int accesses_bp, struct damon_attrs *attrs)
- {
--	unsigned int max_nr_accesses =
--		attrs->aggr_interval / attrs->sample_interval;
--
--	return accesses_bp * max_nr_accesses / 10000;
-+	return accesses_bp * damon_max_nr_accesses(attrs) / 10000;
- }
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1649,6 +1649,8 @@ static int damon_sysfs_before_damos_appl
  
- /* convert nr_accesses to access ratio in bp (per 10,000) */
- static unsigned int damon_nr_accesses_to_accesses_bp(
- 		unsigned int nr_accesses, struct damon_attrs *attrs)
- {
--	unsigned int max_nr_accesses =
--		attrs->aggr_interval / attrs->sample_interval;
--
--	return nr_accesses * 10000 / max_nr_accesses;
-+	return nr_accesses * 10000 / damon_max_nr_accesses(attrs);
- }
- 
- static unsigned int damon_nr_accesses_for_new_attrs(unsigned int nr_accesses,
+ 	sysfs_regions = sysfs_schemes->schemes_arr[schemes_idx]->tried_regions;
+ 	region = damon_sysfs_scheme_region_alloc(r);
++	if (!region)
++		return 0;
+ 	list_add_tail(&region->list, &sysfs_regions->regions_list);
+ 	sysfs_regions->nr_regions++;
+ 	if (kobject_init_and_add(&region->kobj,
 
 
