@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7B0381DF;
-	Fri, 24 Nov 2023 18:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6E339FEA;
+	Fri, 24 Nov 2023 18:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvGIESGU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBCDC433C8;
-	Fri, 24 Nov 2023 18:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMWzZs1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD20EC433C8;
+	Fri, 24 Nov 2023 18:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848986;
-	bh=lFoqJNl7mQ3O93TWE8fCeY4OFBHE2P7eKHnqwG4RCOc=;
+	s=korg; t=1700848989;
+	bh=65LepJUokzXjhiAXcLUqYEOkoA3FuE/dGLztkOpdCfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvGIESGUQt1R4NOpXTU+srWvAEJwEfLP2nFHqgVc5y3FmD8dtnnaHeZYkUg2U6mAj
-	 zErzRsJrryKCJmnbTfocevKxs7kXxQui6EZbYa/AGceKpAnXfXEGebJf/EyABctyWK
-	 wQ0BhWsisYzMtiooT5H4w+qGj69LN8WWwuRlpFoc=
+	b=TMWzZs1MOoz9QzKwTNzLPJL7eUg8ZASqGnd5CtYUng69UP/sxsA5sCfiJWD+GwyRh
+	 iHs2cD1ZwsHlA4cgmcAnogz1Pv9U+5hyLrp60P1N5AQnYz0Jay5zSTm1luD/gC3jvx
+	 fQ+HXlL9qQY5ctoQeyO2WXRUbkJSfm6LjfFELwFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kemeng Shi <shikemeng@huaweicloud.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 4.14 53/57] ext4: correct offset of gdb backup in non meta_bg group to update_backups
-Date: Fri, 24 Nov 2023 17:51:17 +0000
-Message-ID: <20231124171932.292655930@linuxfoundation.org>
+Subject: [PATCH 4.14 54/57] ext4: correct return value of ext4_convert_meta_bg
+Date: Fri, 24 Nov 2023 17:51:18 +0000
+Message-ID: <20231124171932.337609315@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -44,55 +44,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit 31f13421c004a420c0e9d288859c9ea9259ea0cc upstream.
+commit 48f1551592c54f7d8e2befc72a99ff4e47f7dca0 upstream.
 
-Commit 0aeaa2559d6d5 ("ext4: fix corruption when online resizing a 1K
-bigalloc fs") found that primary superblock's offset in its group is
-not equal to offset of backup superblock in its group when block size
-is 1K and bigalloc is enabled. As group descriptor blocks are right
-after superblock, we can't pass block number of gdb to update_backups
-for the same reason.
-
-The root casue of the issue above is that leading 1K padding block is
-count as data block offset for primary block while backup block has no
-padding block offset in its group.
-
-Remove padding data block count to fix the issue for gdb backups.
-
-For meta_bg case, update_backups treat blk_off as block number, do no
-conversion in this case.
+Avoid to ignore error in "err".
 
 Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Theodore Ts'o <tytso@mit.edu>
-Link: https://lore.kernel.org/r/20230826174712.4059355-2-shikemeng@huaweicloud.com
+Link: https://lore.kernel.org/r/20230826174712.4059355-4-shikemeng@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/resize.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ext4/resize.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 --- a/fs/ext4/resize.c
 +++ b/fs/ext4/resize.c
-@@ -1538,6 +1538,8 @@ exit_journal:
- 		int gdb_num_end = ((group + flex_gd->count - 1) /
- 				   EXT4_DESC_PER_BLOCK(sb));
- 		int meta_bg = ext4_has_feature_meta_bg(sb);
-+		sector_t padding_blocks = meta_bg ? 0 : sbi->s_sbh->b_blocknr -
-+					 ext4_group_first_block_no(sb, 0);
- 		sector_t old_gdb = 0;
+@@ -1912,9 +1912,7 @@ static int ext4_convert_meta_bg(struct s
  
- 		update_backups(sb, sbi->s_sbh->b_blocknr, (char *)es,
-@@ -1549,8 +1551,8 @@ exit_journal:
- 						     gdb_num);
- 			if (old_gdb == gdb_bh->b_blocknr)
- 				continue;
--			update_backups(sb, gdb_bh->b_blocknr, gdb_bh->b_data,
--				       gdb_bh->b_size, meta_bg);
-+			update_backups(sb, gdb_bh->b_blocknr - padding_blocks,
-+				       gdb_bh->b_data, gdb_bh->b_size, meta_bg);
- 			old_gdb = gdb_bh->b_blocknr;
- 		}
- 	}
+ errout:
+ 	ret = ext4_journal_stop(handle);
+-	if (!err)
+-		err = ret;
+-	return ret;
++	return err ? err : ret;
+ 
+ invalid_resize_inode:
+ 	ext4_error(sb, "corrupted/inconsistent resize inode");
 
 
