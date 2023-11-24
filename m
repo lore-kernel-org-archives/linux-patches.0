@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718402F86B;
-	Fri, 24 Nov 2023 18:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492B333E9;
+	Fri, 24 Nov 2023 18:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgRckuPA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AC0C433C8;
-	Fri, 24 Nov 2023 18:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uObAUoGE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7BBC433C8;
+	Fri, 24 Nov 2023 18:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850751;
-	bh=UwV3JfXv/IEXcc29e7We93dIA8gXo0RT4VeQ/ReEvZY=;
+	s=korg; t=1700850753;
+	bh=QFZvCDmsTpKnAHPAzjhycSxoBEtEQjFxE3YlEBS7Srg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgRckuPAIjMdcsOgQ0YLaRxs+OoXUqM4xCVRKr8PBJEue79E6Y+8w8rID6puAhdtK
-	 O4m8pGLTI/uxD0oA/YT2cuZsTnz9oSZy2DBY5o+K/iaOyiBpB1JbuSaEJE0Cze2/5Z
-	 RKTMqBGK+bZBzcC/D/cCskRXqAg6F30g4g7+PFpM=
+	b=uObAUoGEBy/3SK6h2xfrtKZl6Ldg3peYeBpKp0Uo0O6TyKF0dVtiXNKkOUJii4G9L
+	 QTaEjqfkK8LR4AG3auhpMPzaQD1nniuVGMZB1iINwo38qhr9GnWVB8F8f2uzxuppKE
+	 +6RXLBtfxAuiEFBaU0qIzRV5jjUDAiwU7kHOhHOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 175/491] tty: Fix uninit-value access in ppp_sync_receive()
-Date: Fri, 24 Nov 2023 17:46:51 +0000
-Message-ID: <20231124172029.730750059@linuxfoundation.org>
+Subject: [PATCH 6.5 176/491] xen/events: avoid using info_for_irq() in xen_send_IPI_one()
+Date: Fri, 24 Nov 2023 17:46:52 +0000
+Message-ID: <20231124172029.762698456@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,80 +43,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 719639853d88071dfdfd8d9971eca9c283ff314c ]
+[ Upstream commit e64e7c74b99ec9e439abca75f522f4b98f220bd1 ]
 
-KMSAN reported the following uninit-value access issue:
+xen_send_IPI_one() is being used by cpuhp_report_idle_dead() after
+it calls rcu_report_dead(), meaning that any RCU usage by
+xen_send_IPI_one() is a bad idea.
 
-=====================================================
-BUG: KMSAN: uninit-value in ppp_sync_input drivers/net/ppp/ppp_synctty.c:690 [inline]
-BUG: KMSAN: uninit-value in ppp_sync_receive+0xdc9/0xe70 drivers/net/ppp/ppp_synctty.c:334
- ppp_sync_input drivers/net/ppp/ppp_synctty.c:690 [inline]
- ppp_sync_receive+0xdc9/0xe70 drivers/net/ppp/ppp_synctty.c:334
- tiocsti+0x328/0x450 drivers/tty/tty_io.c:2295
- tty_ioctl+0x808/0x1920 drivers/tty/tty_io.c:2694
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:871 [inline]
- __se_sys_ioctl+0x211/0x400 fs/ioctl.c:857
- __x64_sys_ioctl+0x97/0xe0 fs/ioctl.c:857
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+Unfortunately xen_send_IPI_one() is using notify_remote_via_irq()
+today, which is using irq_get_chip_data() via info_for_irq(). And
+irq_get_chip_data() in turn is using a maple-tree lookup requiring
+RCU.
 
-Uninit was created at:
- __alloc_pages+0x75d/0xe80 mm/page_alloc.c:4591
- __alloc_pages_node include/linux/gfp.h:238 [inline]
- alloc_pages_node include/linux/gfp.h:261 [inline]
- __page_frag_cache_refill+0x9a/0x2c0 mm/page_alloc.c:4691
- page_frag_alloc_align+0x91/0x5d0 mm/page_alloc.c:4722
- page_frag_alloc include/linux/gfp.h:322 [inline]
- __netdev_alloc_skb+0x215/0x6d0 net/core/skbuff.c:728
- netdev_alloc_skb include/linux/skbuff.h:3225 [inline]
- dev_alloc_skb include/linux/skbuff.h:3238 [inline]
- ppp_sync_input drivers/net/ppp/ppp_synctty.c:669 [inline]
- ppp_sync_receive+0x237/0xe70 drivers/net/ppp/ppp_synctty.c:334
- tiocsti+0x328/0x450 drivers/tty/tty_io.c:2295
- tty_ioctl+0x808/0x1920 drivers/tty/tty_io.c:2694
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:871 [inline]
- __se_sys_ioctl+0x211/0x400 fs/ioctl.c:857
- __x64_sys_ioctl+0x97/0xe0 fs/ioctl.c:857
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+Avoid this problem by caching the ipi event channels in another
+percpu variable, allowing the use notify_remote_via_evtchn() in
+xen_send_IPI_one().
 
-CPU: 0 PID: 12950 Comm: syz-executor.1 Not tainted 6.6.0-14500-g1c41041124bd #10
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc38 04/01/2014
-=====================================================
-
-ppp_sync_input() checks the first 2 bytes of the data are PPP_ALLSTATIONS
-and PPP_UI. However, if the data length is 1 and the first byte is
-PPP_ALLSTATIONS, an access to an uninitialized value occurs when checking
-PPP_UI. This patch resolves this issue by checking the data length.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 721255b9826b ("genirq: Use a maple tree for interrupt descriptor management")
+Reported-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: David Woodhouse <dwmw@amazon.co.uk>
+Acked-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_synctty.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/events/events_base.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index 18283b7b94bcd..1ac231408398a 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -697,7 +697,7 @@ ppp_sync_input(struct syncppp *ap, const unsigned char *buf,
+diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
+index c803714d0f0d1..5de10d291a1cb 100644
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -164,6 +164,8 @@ static DEFINE_PER_CPU(int [NR_VIRQS], virq_to_irq) = {[0 ... NR_VIRQS-1] = -1};
  
- 	/* strip address/control field if present */
- 	p = skb->data;
--	if (p[0] == PPP_ALLSTATIONS && p[1] == PPP_UI) {
-+	if (skb->len >= 2 && p[0] == PPP_ALLSTATIONS && p[1] == PPP_UI) {
- 		/* chop off address/control */
- 		if (skb->len < 3)
- 			goto err;
+ /* IRQ <-> IPI mapping */
+ static DEFINE_PER_CPU(int [XEN_NR_IPIS], ipi_to_irq) = {[0 ... XEN_NR_IPIS-1] = -1};
++/* Cache for IPI event channels - needed for hot cpu unplug (avoid RCU usage). */
++static DEFINE_PER_CPU(evtchn_port_t [XEN_NR_IPIS], ipi_to_evtchn) = {[0 ... XEN_NR_IPIS-1] = 0};
+ 
+ /* Event channel distribution data */
+ static atomic_t channels_on_cpu[NR_CPUS];
+@@ -366,6 +368,7 @@ static int xen_irq_info_ipi_setup(unsigned cpu,
+ 	info->u.ipi = ipi;
+ 
+ 	per_cpu(ipi_to_irq, cpu)[ipi] = irq;
++	per_cpu(ipi_to_evtchn, cpu)[ipi] = evtchn;
+ 
+ 	return xen_irq_info_common_setup(info, irq, IRQT_IPI, evtchn, 0);
+ }
+@@ -981,6 +984,7 @@ static void __unbind_from_irq(unsigned int irq)
+ 			break;
+ 		case IRQT_IPI:
+ 			per_cpu(ipi_to_irq, cpu)[ipi_from_irq(irq)] = -1;
++			per_cpu(ipi_to_evtchn, cpu)[ipi_from_irq(irq)] = 0;
+ 			break;
+ 		case IRQT_EVTCHN:
+ 			dev = info->u.interdomain;
+@@ -1631,7 +1635,7 @@ EXPORT_SYMBOL_GPL(evtchn_put);
+ 
+ void xen_send_IPI_one(unsigned int cpu, enum ipi_vector vector)
+ {
+-	int irq;
++	evtchn_port_t evtchn;
+ 
+ #ifdef CONFIG_X86
+ 	if (unlikely(vector == XEN_NMI_VECTOR)) {
+@@ -1642,9 +1646,9 @@ void xen_send_IPI_one(unsigned int cpu, enum ipi_vector vector)
+ 		return;
+ 	}
+ #endif
+-	irq = per_cpu(ipi_to_irq, cpu)[vector];
+-	BUG_ON(irq < 0);
+-	notify_remote_via_irq(irq);
++	evtchn = per_cpu(ipi_to_evtchn, cpu)[vector];
++	BUG_ON(evtchn == 0);
++	notify_remote_via_evtchn(evtchn);
+ }
+ 
+ struct evtchn_loop_ctrl {
 -- 
 2.42.0
 
