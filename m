@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142FF34197;
-	Fri, 24 Nov 2023 18:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D6F39FE7;
+	Fri, 24 Nov 2023 18:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOTe6W5r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F44C433C9;
-	Fri, 24 Nov 2023 18:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2pWqj6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EA3C433C8;
+	Fri, 24 Nov 2023 18:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850476;
-	bh=f2y8eXbaTwBxftAKhfqGFTP2Ak8PDoDJ+5a6O1FeBig=;
+	s=korg; t=1700850479;
+	bh=qv2WNmUEP1AUpWjOxlDZqkbanVsnW7r8075aqx0P2pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DOTe6W5rJ/BYgk6UUSjFoiomIi1PeVcUNj8cEecNLOf+k6LD5SF5lGyaPotKe0gyd
-	 0KbGa6DqfXzWCtPVimWM0/pnDEmzAKgOsr/YMut9x5NBouDJWPNRrTudUqyOcPB00k
-	 wZybbKYOXRf6pNDiyjeZriQFVosmcfBPYmYM4Jvc=
+	b=v2pWqj6jn7tjb6h7JHOi9ZBMwcznyaXtrT9GCsgHibfJBupmnRPoM7YVr8DHiM3ge
+	 DyRKjOi+R73PCbwL2FEqdxYfh6fClvZaCQE3xQZSrh4/3kK9ZQrjT6bFKSBwES4FFw
+	 pHPSdQk4LVJMIgMbxuMhVXIkrqPrMhcjewzPmy6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Stanley.Yang" <Stanley.Yang@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ma Ke <make_ruc2021@163.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 065/491] drm/amdgpu: Fix potential null pointer derefernce
-Date: Fri, 24 Nov 2023 17:45:01 +0000
-Message-ID: <20231124172026.608912244@linuxfoundation.org>
+Subject: [PATCH 6.5 066/491] drm/panel: fix a possible null pointer dereference
+Date: Fri, 24 Nov 2023 17:45:02 +0000
+Message-ID: <20231124172026.636762028@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,35 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley.Yang <Stanley.Yang@amd.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-[ Upstream commit 80285ae1ec8717b597b20de38866c29d84d321a1 ]
+[ Upstream commit 924e5814d1f84e6fa5cb19c6eceb69f066225229 ]
 
-The amdgpu_ras_get_context may return NULL if device
-not support ras feature, so add check before using.
+In versatile_panel_get_modes(), the return value of drm_mode_duplicate()
+is assigned to mode, which will lead to a NULL pointer dereference
+on failure of drm_mode_duplicate(). Add a check to avoid npd.
 
-Signed-off-by: Stanley.Yang <Stanley.Yang@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20231007033105.3997998-1-make_ruc2021@163.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231007033105.3997998-1-make_ruc2021@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-arm-versatile.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 8940ee73f2dfe..ecc61a6d13e13 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5399,7 +5399,8 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 	 * Flush RAM to disk so that after reboot
- 	 * the user can read log and see why the system rebooted.
- 	 */
--	if (need_emergency_restart && amdgpu_ras_get_context(adev)->reboot) {
-+	if (need_emergency_restart && amdgpu_ras_get_context(adev) &&
-+		amdgpu_ras_get_context(adev)->reboot) {
- 		DRM_WARN("Emergency reboot.");
+diff --git a/drivers/gpu/drm/panel/panel-arm-versatile.c b/drivers/gpu/drm/panel/panel-arm-versatile.c
+index abb0788843c60..503ecea72c5ea 100644
+--- a/drivers/gpu/drm/panel/panel-arm-versatile.c
++++ b/drivers/gpu/drm/panel/panel-arm-versatile.c
+@@ -267,6 +267,8 @@ static int versatile_panel_get_modes(struct drm_panel *panel,
+ 	connector->display_info.bus_flags = vpanel->panel_type->bus_flags;
  
- 		ksys_sync_helper();
+ 	mode = drm_mode_duplicate(connector->dev, &vpanel->panel_type->mode);
++	if (!mode)
++		return -ENOMEM;
+ 	drm_mode_set_name(mode);
+ 	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
+ 
 -- 
 2.42.0
 
