@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCF939FEF;
-	Fri, 24 Nov 2023 18:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEB939FE8;
+	Fri, 24 Nov 2023 18:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgOJ5fBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B125C433C8;
-	Fri, 24 Nov 2023 18:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuUr1NtX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFFAC433C7;
+	Fri, 24 Nov 2023 18:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849431;
-	bh=3QyKFxPq7HDq8fBI5XNhZhbQUYwPLUznJhLDsLnkhyI=;
+	s=korg; t=1700849434;
+	bh=Zan7lo5URcVmlZJJmbpzUe9oTo9bHt91SshWpNUxCVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgOJ5fBgCMjS08hVLuXR8T8DnlSjpm5gEVS6wyzcHFXEk4b4kThyCoDuTUuxqwidy
-	 AyQZwEV8hjnb2ugwk9tEsZadbetwyUBOWIEC+8OisHRf+xklFyR3S+bNeRH0wN45u/
-	 BkZ+8MLab/+ZY6ZYpJwGsbuABK1lj7OQBTkvIoXI=
+	b=VuUr1NtXD8rrtUyJPxEV88uOdgyXZgBayTlPsxylFHXxUU+gsIN8BC3WrwlrqMmbD
+	 2ZBScE3/TA/FzQ6QsEZceBmrSjFExBQq2K93iesSMU89MuPRods308ZodxIO7Uy9Y+
+	 tEf0iQU3lzxehPCRRklPqmtIpTnDJomCUeOsOHU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	KP Singh <kpsingh@kernel.org>,
-	linux-hardening@vger.kernel.org,
-	kernel test robot <lkp@intel.com>,
-	Bill Wendling <morbo@google.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 178/530] gcc-plugins: randstruct: Only warn about true flexible arrays
-Date: Fri, 24 Nov 2023 17:45:44 +0000
-Message-ID: <20231124172033.496162774@linuxfoundation.org>
+Subject: [PATCH 6.6 179/530] bpf: handle ldimm64 properly in check_cfg()
+Date: Fri, 24 Nov 2023 17:45:45 +0000
+Message-ID: <20231124172033.525849645@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -46,66 +44,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 1ee60356c2dca938362528404af95b8ef3e49b6a ]
+[ Upstream commit 3feb263bb516ee7e1da0acd22b15afbb9a7daa19 ]
 
-The randstruct GCC plugin tried to discover "fake" flexible arrays
-to issue warnings about them in randomized structs. In the future
-LSM overhead reduction series, it would be legal to have a randomized
-struct with a 1-element array, and this should _not_ be treated as a
-flexible array, especially since commit df8fc4e934c1 ("kbuild: Enable
--fstrict-flex-arrays=3"). Disable the 0-sized and 1-element array
-discovery logic in the plugin, but keep the "true" flexible array check.
+ldimm64 instructions are 16-byte long, and so have to be handled
+appropriately in check_cfg(), just like the rest of BPF verifier does.
 
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: linux-hardening@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311021532.iBwuZUZ0-lkp@intel.com/
-Fixes: df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3")
-Reviewed-by: Bill Wendling <morbo@google.com>
-Acked-by: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20231104204334.work.160-kees@kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+This has implications in three places:
+  - when determining next instruction for non-jump instructions;
+  - when determining next instruction for callback address ldimm64
+    instructions (in visit_func_call_insn());
+  - when checking for unreachable instructions, where second half of
+    ldimm64 is expected to be unreachable;
+
+We take this also as an opportunity to report jump into the middle of
+ldimm64. And adjust few test_verifier tests accordingly.
+
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Reported-by: Hao Sun <sunhao.th@gmail.com>
+Fixes: 475fb78fbf48 ("bpf: verifier (add branch/goto checks)")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20231110002638.4168352-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gcc-plugins/randomize_layout_plugin.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ include/linux/bpf.h                           |  8 ++++--
+ kernel/bpf/verifier.c                         | 27 ++++++++++++++-----
+ .../testing/selftests/bpf/verifier/ld_imm64.c |  8 +++---
+ 3 files changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/scripts/gcc-plugins/randomize_layout_plugin.c b/scripts/gcc-plugins/randomize_layout_plugin.c
-index 951b74ba1b242..5e5744b65f8a9 100644
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -273,8 +273,6 @@ static bool is_flexible_array(const_tree field)
- {
- 	const_tree fieldtype;
- 	const_tree typesize;
--	const_tree elemtype;
--	const_tree elemsize;
- 
- 	fieldtype = TREE_TYPE(field);
- 	typesize = TYPE_SIZE(fieldtype);
-@@ -282,20 +280,12 @@ static bool is_flexible_array(const_tree field)
- 	if (TREE_CODE(fieldtype) != ARRAY_TYPE)
- 		return false;
- 
--	elemtype = TREE_TYPE(fieldtype);
--	elemsize = TYPE_SIZE(elemtype);
--
- 	/* size of type is represented in bits */
- 
- 	if (typesize == NULL_TREE && TYPE_DOMAIN(fieldtype) != NULL_TREE &&
- 	    TYPE_MAX_VALUE(TYPE_DOMAIN(fieldtype)) == NULL_TREE)
- 		return true;
- 
--	if (typesize != NULL_TREE &&
--	    (TREE_CONSTANT(typesize) && (!tree_to_uhwi(typesize) ||
--	     tree_to_uhwi(typesize) == tree_to_uhwi(elemsize))))
--		return true;
--
- 	return false;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 76055186d6248..392f581af2cee 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -903,10 +903,14 @@ bpf_ctx_record_field_size(struct bpf_insn_access_aux *aux, u32 size)
+ 	aux->ctx_field_size = size;
  }
  
++static bool bpf_is_ldimm64(const struct bpf_insn *insn)
++{
++	return insn->code == (BPF_LD | BPF_IMM | BPF_DW);
++}
++
+ static inline bool bpf_pseudo_func(const struct bpf_insn *insn)
+ {
+-	return insn->code == (BPF_LD | BPF_IMM | BPF_DW) &&
+-	       insn->src_reg == BPF_PSEUDO_FUNC;
++	return bpf_is_ldimm64(insn) && insn->src_reg == BPF_PSEUDO_FUNC;
+ }
+ 
+ struct bpf_prog_ops {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 6542685d6772a..0b3a2534196e0 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -14787,15 +14787,16 @@ static int visit_func_call_insn(int t, struct bpf_insn *insns,
+ 				struct bpf_verifier_env *env,
+ 				bool visit_callee)
+ {
+-	int ret;
++	int ret, insn_sz;
+ 
+-	ret = push_insn(t, t + 1, FALLTHROUGH, env, false);
++	insn_sz = bpf_is_ldimm64(&insns[t]) ? 2 : 1;
++	ret = push_insn(t, t + insn_sz, FALLTHROUGH, env, false);
+ 	if (ret)
+ 		return ret;
+ 
+-	mark_prune_point(env, t + 1);
++	mark_prune_point(env, t + insn_sz);
+ 	/* when we exit from subprog, we need to record non-linear history */
+-	mark_jmp_point(env, t + 1);
++	mark_jmp_point(env, t + insn_sz);
+ 
+ 	if (visit_callee) {
+ 		mark_prune_point(env, t);
+@@ -14817,15 +14818,17 @@ static int visit_func_call_insn(int t, struct bpf_insn *insns,
+ static int visit_insn(int t, struct bpf_verifier_env *env)
+ {
+ 	struct bpf_insn *insns = env->prog->insnsi, *insn = &insns[t];
+-	int ret, off;
++	int ret, off, insn_sz;
+ 
+ 	if (bpf_pseudo_func(insn))
+ 		return visit_func_call_insn(t, insns, env, true);
+ 
+ 	/* All non-branch instructions have a single fall-through edge. */
+ 	if (BPF_CLASS(insn->code) != BPF_JMP &&
+-	    BPF_CLASS(insn->code) != BPF_JMP32)
+-		return push_insn(t, t + 1, FALLTHROUGH, env, false);
++	    BPF_CLASS(insn->code) != BPF_JMP32) {
++		insn_sz = bpf_is_ldimm64(insn) ? 2 : 1;
++		return push_insn(t, t + insn_sz, FALLTHROUGH, env, false);
++	}
+ 
+ 	switch (BPF_OP(insn->code)) {
+ 	case BPF_EXIT:
+@@ -14944,11 +14947,21 @@ static int check_cfg(struct bpf_verifier_env *env)
+ 	}
+ 
+ 	for (i = 0; i < insn_cnt; i++) {
++		struct bpf_insn *insn = &env->prog->insnsi[i];
++
+ 		if (insn_state[i] != EXPLORED) {
+ 			verbose(env, "unreachable insn %d\n", i);
+ 			ret = -EINVAL;
+ 			goto err_free;
+ 		}
++		if (bpf_is_ldimm64(insn)) {
++			if (insn_state[i + 1] != 0) {
++				verbose(env, "jump into the middle of ldimm64 insn %d\n", i);
++				ret = -EINVAL;
++				goto err_free;
++			}
++			i++; /* skip second half of ldimm64 */
++		}
+ 	}
+ 	ret = 0; /* cfg looks good */
+ 
+diff --git a/tools/testing/selftests/bpf/verifier/ld_imm64.c b/tools/testing/selftests/bpf/verifier/ld_imm64.c
+index f9297900cea6d..78f19c255f20b 100644
+--- a/tools/testing/selftests/bpf/verifier/ld_imm64.c
++++ b/tools/testing/selftests/bpf/verifier/ld_imm64.c
+@@ -9,8 +9,8 @@
+ 	BPF_MOV64_IMM(BPF_REG_0, 2),
+ 	BPF_EXIT_INSN(),
+ 	},
+-	.errstr = "invalid BPF_LD_IMM insn",
+-	.errstr_unpriv = "R1 pointer comparison",
++	.errstr = "jump into the middle of ldimm64 insn 1",
++	.errstr_unpriv = "jump into the middle of ldimm64 insn 1",
+ 	.result = REJECT,
+ },
+ {
+@@ -23,8 +23,8 @@
+ 	BPF_LD_IMM64(BPF_REG_0, 1),
+ 	BPF_EXIT_INSN(),
+ 	},
+-	.errstr = "invalid BPF_LD_IMM insn",
+-	.errstr_unpriv = "R1 pointer comparison",
++	.errstr = "jump into the middle of ldimm64 insn 1",
++	.errstr_unpriv = "jump into the middle of ldimm64 insn 1",
+ 	.result = REJECT,
+ },
+ {
 -- 
 2.42.0
 
