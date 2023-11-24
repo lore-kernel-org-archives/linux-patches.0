@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9C92AF00;
-	Fri, 24 Nov 2023 18:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7793539FDD;
+	Fri, 24 Nov 2023 18:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znmz16kR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C89C433C7;
-	Fri, 24 Nov 2023 18:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Anf7VhTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08487C433C7;
+	Fri, 24 Nov 2023 18:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849494;
-	bh=MwgcsxCKXE+cVdLcz7bXEcfOePcGvF56VVF7SmKOURo=;
+	s=korg; t=1700849496;
+	bh=mWoDm+ymf7VhHM+400ZEP7kKfp+4gQxIXjQqTXeFCsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znmz16kRGvPLHSRu2n3YZ4uv0AKPi/6l4P3HMP403il6dBgMlytyFz8iV94Ju/SkU
-	 J2FT9gV2TgURq4VGRkmgIO3//FT6IC33RTwIw3wmnU3xhEP4WXHVRKo8v+NJv53ibl
-	 UJEF1GFlYaUZZB3yhkc/7UE/137AExedtkLlSw9c=
+	b=Anf7VhTn19EovtspDuUA4fXxD8NQcTlisH8HX3Lk2lULdFBVxdmeObittko7jaDyc
+	 P/WYjJfNYJkrz/AetKNnTA02KvMi/pTec3KPiXPSGJTfAKTH70koGwMePGhE0A5y00
+	 M1ybHdNueiZp/AB7dc7IUkiu7KNFGvtmgfTPy39U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 204/530] net: ethernet: cortina: Fix MTU max setting
-Date: Fri, 24 Nov 2023 17:46:10 +0000
-Message-ID: <20231124172034.280118480@linuxfoundation.org>
+Subject: [PATCH 6.6 187/530] xen/events: avoid using info_for_irq() in xen_send_IPI_one()
+Date: Fri, 24 Nov 2023 17:45:53 +0000
+Message-ID: <20231124172033.763609383@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,89 +43,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit dc6c0bfbaa947dd7976e30e8c29b10c868b6fa42 ]
+[ Upstream commit e64e7c74b99ec9e439abca75f522f4b98f220bd1 ]
 
-The RX max frame size is over 10000 for the Gemini ethernet,
-but the TX max frame size is actually just 2047 (0x7ff after
-checking the datasheet). Reflect this in what we offer to Linux,
-cap the MTU at the TX max frame minus ethernet headers.
+xen_send_IPI_one() is being used by cpuhp_report_idle_dead() after
+it calls rcu_report_dead(), meaning that any RCU usage by
+xen_send_IPI_one() is a bad idea.
 
-We delete the code disabling the hardware checksum for large
-MTUs as netdev->mtu can no longer be larger than
-netdev->max_mtu meaning the if()-clause in gmac_fix_features()
-is never true.
+Unfortunately xen_send_IPI_one() is using notify_remote_via_irq()
+today, which is using irq_get_chip_data() via info_for_irq(). And
+irq_get_chip_data() in turn is using a maple-tree lookup requiring
+RCU.
 
-Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20231109-gemini-largeframe-fix-v4-3-6e611528db08@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Avoid this problem by caching the ipi event channels in another
+percpu variable, allowing the use notify_remote_via_evtchn() in
+xen_send_IPI_one().
+
+Fixes: 721255b9826b ("genirq: Use a maple tree for interrupt descriptor management")
+Reported-by: David Woodhouse <dwmw@amazon.co.uk>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Tested-by: David Woodhouse <dwmw@amazon.co.uk>
+Acked-by: Stefano Stabellini <sstabellini@kernel.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 17 ++++-------------
- drivers/net/ethernet/cortina/gemini.h |  2 +-
- 2 files changed, 5 insertions(+), 14 deletions(-)
+ drivers/xen/events/events_base.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index dbbccef865165..636949737d72f 100644
---- a/drivers/net/ethernet/cortina/gemini.c
-+++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -2000,15 +2000,6 @@ static int gmac_change_mtu(struct net_device *netdev, int new_mtu)
- 	return 0;
+diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
+index 1b2136fe0fa51..2cf0c2b693861 100644
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -164,6 +164,8 @@ static DEFINE_PER_CPU(int [NR_VIRQS], virq_to_irq) = {[0 ... NR_VIRQS-1] = -1};
+ 
+ /* IRQ <-> IPI mapping */
+ static DEFINE_PER_CPU(int [XEN_NR_IPIS], ipi_to_irq) = {[0 ... XEN_NR_IPIS-1] = -1};
++/* Cache for IPI event channels - needed for hot cpu unplug (avoid RCU usage). */
++static DEFINE_PER_CPU(evtchn_port_t [XEN_NR_IPIS], ipi_to_evtchn) = {[0 ... XEN_NR_IPIS-1] = 0};
+ 
+ /* Event channel distribution data */
+ static atomic_t channels_on_cpu[NR_CPUS];
+@@ -366,6 +368,7 @@ static int xen_irq_info_ipi_setup(unsigned cpu,
+ 	info->u.ipi = ipi;
+ 
+ 	per_cpu(ipi_to_irq, cpu)[ipi] = irq;
++	per_cpu(ipi_to_evtchn, cpu)[ipi] = evtchn;
+ 
+ 	return xen_irq_info_common_setup(info, irq, IRQT_IPI, evtchn, 0);
+ }
+@@ -981,6 +984,7 @@ static void __unbind_from_irq(unsigned int irq)
+ 			break;
+ 		case IRQT_IPI:
+ 			per_cpu(ipi_to_irq, cpu)[ipi_from_irq(irq)] = -1;
++			per_cpu(ipi_to_evtchn, cpu)[ipi_from_irq(irq)] = 0;
+ 			break;
+ 		case IRQT_EVTCHN:
+ 			dev = info->u.interdomain;
+@@ -1631,7 +1635,7 @@ EXPORT_SYMBOL_GPL(evtchn_put);
+ 
+ void xen_send_IPI_one(unsigned int cpu, enum ipi_vector vector)
+ {
+-	int irq;
++	evtchn_port_t evtchn;
+ 
+ #ifdef CONFIG_X86
+ 	if (unlikely(vector == XEN_NMI_VECTOR)) {
+@@ -1642,9 +1646,9 @@ void xen_send_IPI_one(unsigned int cpu, enum ipi_vector vector)
+ 		return;
+ 	}
+ #endif
+-	irq = per_cpu(ipi_to_irq, cpu)[vector];
+-	BUG_ON(irq < 0);
+-	notify_remote_via_irq(irq);
++	evtchn = per_cpu(ipi_to_evtchn, cpu)[vector];
++	BUG_ON(evtchn == 0);
++	notify_remote_via_evtchn(evtchn);
  }
  
--static netdev_features_t gmac_fix_features(struct net_device *netdev,
--					   netdev_features_t features)
--{
--	if (netdev->mtu + ETH_HLEN + VLAN_HLEN > MTU_SIZE_BIT_MASK)
--		features &= ~GMAC_OFFLOAD_FEATURES;
--
--	return features;
--}
--
- static int gmac_set_features(struct net_device *netdev,
- 			     netdev_features_t features)
- {
-@@ -2234,7 +2225,6 @@ static const struct net_device_ops gmac_351x_ops = {
- 	.ndo_set_mac_address	= gmac_set_mac_address,
- 	.ndo_get_stats64	= gmac_get_stats64,
- 	.ndo_change_mtu		= gmac_change_mtu,
--	.ndo_fix_features	= gmac_fix_features,
- 	.ndo_set_features	= gmac_set_features,
- };
- 
-@@ -2486,11 +2476,12 @@ static int gemini_ethernet_port_probe(struct platform_device *pdev)
- 
- 	netdev->hw_features = GMAC_OFFLOAD_FEATURES;
- 	netdev->features |= GMAC_OFFLOAD_FEATURES | NETIF_F_GRO;
--	/* We can handle jumbo frames up to 10236 bytes so, let's accept
--	 * payloads of 10236 bytes minus VLAN and ethernet header
-+	/* We can receive jumbo frames up to 10236 bytes but only
-+	 * transmit 2047 bytes so, let's accept payloads of 2047
-+	 * bytes minus VLAN and ethernet header
- 	 */
- 	netdev->min_mtu = ETH_MIN_MTU;
--	netdev->max_mtu = 10236 - VLAN_ETH_HLEN;
-+	netdev->max_mtu = MTU_SIZE_BIT_MASK - VLAN_ETH_HLEN;
- 
- 	port->freeq_refill = 0;
- 	netif_napi_add(netdev, &port->napi, gmac_napi_poll);
-diff --git a/drivers/net/ethernet/cortina/gemini.h b/drivers/net/ethernet/cortina/gemini.h
-index 99efb11557436..24bb989981f23 100644
---- a/drivers/net/ethernet/cortina/gemini.h
-+++ b/drivers/net/ethernet/cortina/gemini.h
-@@ -502,7 +502,7 @@ union gmac_txdesc_3 {
- #define SOF_BIT			0x80000000
- #define EOF_BIT			0x40000000
- #define EOFIE_BIT		BIT(29)
--#define MTU_SIZE_BIT_MASK	0x1fff
-+#define MTU_SIZE_BIT_MASK	0x7ff /* Max MTU 2047 bytes */
- 
- /* GMAC Tx Descriptor */
- struct gmac_txdesc {
+ struct evtchn_loop_ctrl {
 -- 
 2.42.0
 
