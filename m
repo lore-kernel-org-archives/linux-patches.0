@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F4A35EE6;
-	Fri, 24 Nov 2023 19:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E2E2FC4E;
+	Fri, 24 Nov 2023 19:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfBW3qTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669A9C433C7;
-	Fri, 24 Nov 2023 19:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9jhPXDl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2737C433C7;
+	Fri, 24 Nov 2023 19:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853164;
-	bh=GVYbVBeW7d/tuuXGfye7P2JV+0g+qF0ASr5Pan2IJa0=;
+	s=korg; t=1700853167;
+	bh=fb95c/NrKZqftqVarZ9zORsfBAgBX3/jtqlliVlzr08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfBW3qTrAQ2yxSsK64t3KoCMn+9X4YvaIs6+joiOJPqUOE5Kmu4OhGS8lI8f/JZTb
-	 MUQACJVRlWrDkNO8jGiTKTVUzYsti+CEC+9l3fLsF/ffLRetFUA3Ywc9f5RPcw5cdt
-	 mU4z5HskjOmbZEamRkPCBqKao3lus7HamtxKp0+c=
+	b=e9jhPXDl3EAkvFwsOG1eGx8lRi9bIXYLNjeBMBhH86C59epm4NGfTkgNK5RZ68R9W
+	 MJYgfHlfpBRevQcANOzDVglHIUmjSRqTFQvjsZ1z93eeceNO79Wox/+SAe7SbAZj7v
+	 4+715lQ3RXoHdCZQMXJ2ZlM0Of/oNpGlLKpacQII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/297] media: cobalt: Use FIELD_GET() to extract Link Width
-Date: Fri, 24 Nov 2023 17:51:54 +0000
-Message-ID: <20231124172002.768172168@linuxfoundation.org>
+Subject: [PATCH 5.15 081/297] pwm: Fix double shift bug
+Date: Fri, 24 Nov 2023 17:52:03 +0000
+Message-ID: <20231124172003.084113597@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -44,72 +45,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit f301fedbeecfdce91cb898d6fa5e62f269801fee ]
+[ Upstream commit d27abbfd4888d79dd24baf50e774631046ac4732 ]
 
-Use FIELD_GET() to extract PCIe Negotiated and Maximum Link Width fields
-instead of custom masking and shifting.
+These enums are passed to set/test_bit().  The set/test_bit() functions
+take a bit number instead of a shifted value.  Passing a shifted value
+is a double shift bug like doing BIT(BIT(1)).  The double shift bug
+doesn't cause a problem here because we are only checking 0 and 1 but
+if the value was 5 or above then it can lead to a buffer overflow.
 
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cobalt/cobalt-driver.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/linux/pwm.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/cobalt/cobalt-driver.c b/drivers/media/pci/cobalt/cobalt-driver.c
-index 16af58f2f93cc..f9cee061517bd 100644
---- a/drivers/media/pci/cobalt/cobalt-driver.c
-+++ b/drivers/media/pci/cobalt/cobalt-driver.c
-@@ -8,6 +8,7 @@
-  *  All rights reserved.
-  */
+diff --git a/include/linux/pwm.h b/include/linux/pwm.h
+index c7bfa64aeb142..03c42e742dfe7 100644
+--- a/include/linux/pwm.h
++++ b/include/linux/pwm.h
+@@ -44,8 +44,8 @@ struct pwm_args {
+ };
  
-+#include <linux/bitfield.h>
- #include <linux/delay.h>
- #include <media/i2c/adv7604.h>
- #include <media/i2c/adv7842.h>
-@@ -210,17 +211,17 @@ void cobalt_pcie_status_show(struct cobalt *cobalt)
- 	pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &stat);
- 	cobalt_info("PCIe link capability 0x%08x: %s per lane and %u lanes\n",
- 			capa, get_link_speed(capa),
--			(capa & PCI_EXP_LNKCAP_MLW) >> 4);
-+			FIELD_GET(PCI_EXP_LNKCAP_MLW, capa));
- 	cobalt_info("PCIe link control 0x%04x\n", ctrl);
- 	cobalt_info("PCIe link status 0x%04x: %s per lane and %u lanes\n",
- 		    stat, get_link_speed(stat),
--		    (stat & PCI_EXP_LNKSTA_NLW) >> 4);
-+		    FIELD_GET(PCI_EXP_LNKSTA_NLW, stat));
+ enum {
+-	PWMF_REQUESTED = 1 << 0,
+-	PWMF_EXPORTED = 1 << 1,
++	PWMF_REQUESTED = 0,
++	PWMF_EXPORTED = 1,
+ };
  
- 	/* Bus */
- 	pcie_capability_read_dword(pci_bus_dev, PCI_EXP_LNKCAP, &capa);
- 	cobalt_info("PCIe bus link capability 0x%08x: %s per lane and %u lanes\n",
- 			capa, get_link_speed(capa),
--			(capa & PCI_EXP_LNKCAP_MLW) >> 4);
-+			FIELD_GET(PCI_EXP_LNKCAP_MLW, capa));
- 
- 	/* Slot */
- 	pcie_capability_read_dword(pci_dev, PCI_EXP_SLTCAP, &capa);
-@@ -239,7 +240,7 @@ static unsigned pcie_link_get_lanes(struct cobalt *cobalt)
- 	if (!pci_is_pcie(pci_dev))
- 		return 0;
- 	pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &link);
--	return (link & PCI_EXP_LNKSTA_NLW) >> 4;
-+	return FIELD_GET(PCI_EXP_LNKSTA_NLW, link);
- }
- 
- static unsigned pcie_bus_link_get_lanes(struct cobalt *cobalt)
-@@ -250,7 +251,7 @@ static unsigned pcie_bus_link_get_lanes(struct cobalt *cobalt)
- 	if (!pci_is_pcie(pci_dev))
- 		return 0;
- 	pcie_capability_read_dword(pci_dev, PCI_EXP_LNKCAP, &link);
--	return (link & PCI_EXP_LNKCAP_MLW) >> 4;
-+	return FIELD_GET(PCI_EXP_LNKCAP_MLW, link);
- }
- 
- static void msi_config_show(struct cobalt *cobalt, struct pci_dev *pci_dev)
+ /*
 -- 
 2.42.0
 
