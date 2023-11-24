@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A48D364D6;
-	Fri, 24 Nov 2023 18:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84913381D7;
+	Fri, 24 Nov 2023 18:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bp7ctnax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774E1C433C8;
-	Fri, 24 Nov 2023 18:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znxpywom"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBFFC433C7;
+	Fri, 24 Nov 2023 18:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849110;
-	bh=4c9Ca7ggKIM+Ueto+RTAupmQ8JBcMsp7QwP3NuUaedQ=;
+	s=korg; t=1700849113;
+	bh=SRXoOGkms+Vr7Mn+VtmDnBdQyZMs6SHLqwpHmIkL96w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bp7ctnaxu7u7XEWEby0opm0F7Z8Cyf7+C6rRk98Fn6d3DOkmqWyXktzs2T6U4+dy9
-	 7lCJWfL03dXEn07VY492fjnrgIEYj6SatMrUaOR0yt7Nk3fFqArc4otfExpHlZF7cF
-	 UEJhKKZye05GTe1sIjmAgA0JoVYwjrw4qZLJ6Lvw=
+	b=znxpywomY7WTy7WZz2Xm/0V+ZDVthDjNfzv5iDuLmp8EGUMl/zrEo1FZHEDdDZi6Z
+	 Di1+z/mwIXxL5eG042MfZ/QhBVksSNApTj6X7G8QYR/TyTtsV26G+rjOhL4Bl/8RZA
+	 xKRqb2saeWU4cI4vpo/rD3WSKn1nh7p+IEu+xdRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ingo Rohloff <lundril@gmx.de>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/530] net: sfp: add quirk for Fiberstone GPON-ONU-34-20BI
-Date: Fri, 24 Nov 2023 17:43:13 +0000
-Message-ID: <20231124172028.894146015@linuxfoundation.org>
+Subject: [PATCH 6.6 028/530] wifi: mt76: mt7921e: Support MT7992 IP in Xiaomi Redmibook 15 Pro (2023)
+Date: Fri, 24 Nov 2023 17:43:14 +0000
+Message-ID: <20231124172028.925952321@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,40 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Ingo Rohloff <lundril@gmx.de>
 
-[ Upstream commit d387e34fec407f881fdf165b5d7ec128ebff362f ]
+[ Upstream commit fce9c967820a72f600abbf061d7077861685a14d ]
 
-Fiberstone GPON-ONU-34-20B can operate at 2500base-X, but report 1.2GBd
-NRZ in their EEPROM.
+In the Xiaomi Redmibook 15 Pro (2023) laptop I have got, a wifi chip is
+used, which according to its PCI Vendor ID is from "ITTIM Technology".
 
-The module also require the ignore tx fault fixup similar to Huawei MA5671A
-as it gets disabled on error messages with serial redirection enabled.
+This chip works flawlessly with the mt7921e module.  The driver doesn't
+bind to this PCI device, because the Vendor ID from "ITTIM Technology" is
+not recognized.
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Link: https://lore.kernel.org/r/20230919124720.8210-1-ansuelsmth@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This patch adds the PCI Vendor ID from "ITTIM Technology" to the list of
+PCI Vendor IDs and lets the mt7921e driver bind to the mentioned wifi
+chip.
+
+Signed-off-by: Ingo Rohloff <lundril@gmx.de>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/pci.c | 2 ++
+ include/linux/pci_ids.h                         | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 4ecfac2278651..a50038a452507 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -452,6 +452,11 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	// Rollball protocol to talk to the PHY.
- 	SFP_QUIRK_F("FS", "SFP-10G-T", sfp_fixup_fs_10gt),
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+index 3dda84a937175..f04e7095e1810 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+@@ -17,6 +17,8 @@ static const struct pci_device_id mt7921_pci_device_table[] = {
+ 		.driver_data = (kernel_ulong_t)MT7921_FIRMWARE_WM },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MEDIATEK, 0x7922),
+ 		.driver_data = (kernel_ulong_t)MT7922_FIRMWARE_WM },
++	{ PCI_DEVICE(PCI_VENDOR_ID_ITTIM, 0x7922),
++		.driver_data = (kernel_ulong_t)MT7922_FIRMWARE_WM },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MEDIATEK, 0x0608),
+ 		.driver_data = (kernel_ulong_t)MT7921_FIRMWARE_WM },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MEDIATEK, 0x0616),
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 3a8e24e9a93f9..fe4a3589bb3fd 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -180,6 +180,8 @@
+ #define PCI_DEVICE_ID_BERKOM_A4T		0xffa4
+ #define PCI_DEVICE_ID_BERKOM_SCITEL_QUADRO	0xffa8
  
-+	// Fiberstore GPON-ONU-34-20BI can operate at 2500base-X, but report 1.2GBd
-+	// NRZ in their EEPROM
-+	SFP_QUIRK("FS", "GPON-ONU-34-20BI", sfp_quirk_2500basex,
-+		  sfp_fixup_ignore_tx_fault),
++#define PCI_VENDOR_ID_ITTIM		0x0b48
 +
- 	SFP_QUIRK_F("HALNy", "HL-GSFP", sfp_fixup_halny_gsfp),
- 
- 	// HG MXPD-483II-F 2.5G supports 2500Base-X, but incorrectly reports
+ #define PCI_VENDOR_ID_COMPAQ		0x0e11
+ #define PCI_DEVICE_ID_COMPAQ_TOKENRING	0x0508
+ #define PCI_DEVICE_ID_COMPAQ_TACHYON	0xa0fc
 -- 
 2.42.0
 
