@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD34C381C9;
-	Fri, 24 Nov 2023 18:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4764D33090;
+	Fri, 24 Nov 2023 18:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ej6RkYE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C48C433C7;
-	Fri, 24 Nov 2023 18:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKA1FMiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA678C433C8;
+	Fri, 24 Nov 2023 18:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851321;
-	bh=bZB8pI+jz1AI3PmBqxMjmSn7sVrowAYxKnfny7rGdBo=;
+	s=korg; t=1700851324;
+	bh=3Eb6qOdUmDdOXtSLeq7pSnX8E+rT2VmuxqZ/ZWJAGNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ej6RkYE9ZM/RYSs9yIcCylLO66x4aLqGRtP5MQAht6k9p+m4e3NQYBnjSUlsyquvt
-	 4DFyRE3ZRr6cSv12nPH/AZMqdIgYcS0JYIXqDFUwgBuFyeGGUlb1dvPSyvMoCTYGfW
-	 8uCMjyetHICVXMaY1FX//KXmF1AtBKr3iYF8r7Yo=
+	b=SKA1FMiwxVSKMqjePhLYLTkwcm8J2mggC3APG3BiFfeVy3ECFqy3AwAMbnbNbOVlu
+	 YV70ftwLOz6chDLWZckZPmzXQD+r84WvbkHA6H3MMjxau9A21vGbRTy+NGSkQiSvFF
+	 Vg/vwrTU2sHzEr92qQvttgf0DB4wJWwWGgqcgvd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
+	Chandradeep Dey <codesigning@chandradeepdey.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.5 401/491] ALSA: hda/realtek - Add Dell ALC295 to pin fall back table
-Date: Fri, 24 Nov 2023 17:50:37 +0000
-Message-ID: <20231124172036.655262992@linuxfoundation.org>
+Subject: [PATCH 6.5 402/491] ALSA: hda/realtek - Enable internal speaker of ASUS K6500ZC
+Date: Fri, 24 Nov 2023 17:50:38 +0000
+Message-ID: <20231124172036.684366528@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,61 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Chandradeep Dey <codesigning@chandradeepdey.com>
 
-commit 4b21a669ca21ed8f24ef4530b2918be5730114de upstream.
+commit 713f040cd22285fcc506f40a0d259566e6758c3c upstream.
 
-Add ALC295 to pin fall back table.
-Remove 5 pin quirks for Dell ALC295.
-ALC295 was only support MIC2 for external MIC function.
-ALC295 assigned model "ALC269_FIXUP_DELL1_MIC_NO_PRESENCE" for pin
-fall back table.
-It was assigned wrong model. So, let's remove it.
+Apply the already existing quirk chain ALC294_FIXUP_ASUS_SPK to enable
+the internal speaker of ASUS K6500ZC.
 
-Fixes: fbc571290d9f ("ALSA: hda/realtek - Fixed Headphone Mic can't record on Dell platform")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
+Signed-off-by: Chandradeep Dey <codesigning@chandradeepdey.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/7c1998e873834df98d59bd7e0d08c72e@realtek.com
+Link: https://lore.kernel.org/r/NizcVHQ--3-9@chandradeepdey.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10641,22 +10641,6 @@ static const struct snd_hda_pin_quirk al
- 		{0x12, 0x90a60130},
- 		{0x17, 0x90170110},
- 		{0x21, 0x03211020}),
--	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
--		{0x14, 0x90170110},
--		{0x21, 0x04211020}),
--	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
--		{0x14, 0x90170110},
--		{0x21, 0x04211030}),
--	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE,
--		ALC295_STANDARD_PINS,
--		{0x17, 0x21014020},
--		{0x18, 0x21a19030}),
--	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE,
--		ALC295_STANDARD_PINS,
--		{0x17, 0x21014040},
--		{0x18, 0x21a19050}),
--	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL1_MIC_NO_PRESENCE,
--		ALC295_STANDARD_PINS),
- 	SND_HDA_PIN_QUIRK(0x10ec0298, 0x1028, "Dell", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE,
- 		ALC298_STANDARD_PINS,
- 		{0x17, 0x90170110}),
-@@ -10700,6 +10684,9 @@ static const struct snd_hda_pin_quirk al
- 	SND_HDA_PIN_QUIRK(0x10ec0289, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
- 		{0x19, 0x40000000},
- 		{0x1b, 0x40000000}),
-+	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
-+		{0x19, 0x40000000},
-+		{0x1b, 0x40000000}),
- 	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1028, "Dell", ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
- 		{0x19, 0x40000000},
- 		{0x1a, 0x40000000}),
+@@ -9745,6 +9745,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
+ 	SND_PCI_QUIRK(0x1043, 0x115d, "Asus 1015E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x1043, 0x11c0, "ASUS X556UR", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x125e, "ASUS Q524UQK", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
 
 
