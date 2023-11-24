@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D693A8C6;
-	Fri, 24 Nov 2023 18:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CBE33063;
+	Fri, 24 Nov 2023 18:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKsNPaTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2036C433C8;
-	Fri, 24 Nov 2023 18:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuMeMPtt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B75C433C8;
+	Fri, 24 Nov 2023 18:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849970;
-	bh=4JbaNmKtHByQnhM7dPW52IcNtrz7YWvih5ZvXs8Lqcc=;
+	s=korg; t=1700849972;
+	bh=qtfHT8OlkiEl2rGDzdB84gh9ohNPwwDBkBEwLyqMPPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XKsNPaTjh9eQ54OA+jCgo4IoPq4UEIIgsy29Escwwtf7q1LSHFZemuLIgJ18/o3F0
-	 G4iq9Ld9LvxgjXc4J5wMZ90hfw5aU3hkDc1XJBG8vOdUo1j8rEaKc/ejz+DC9wr/jp
-	 FiZdTcC/JJx044hc0ZtEnigdeNC9Gd80/HMpQA5c=
+	b=cuMeMPttVStC88XTQdN1AToY3Rn7to5V4Scl9VO2kJ1CviEYZqjavr+ilvQqle/TT
+	 vqzNeIQlsaHtx81SkfQLvKlqVew0Y+I810Yw31jWZKxHFXxsL4/oaXQzw7QaldCQlC
+	 7j6S1RGkkU6JMYo/mEvFZQ6uTevffDZbkt8ysqSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.6 376/530] s390/mm: add missing arch_set_page_dat() call to gmap allocations
-Date: Fri, 24 Nov 2023 17:49:02 +0000
-Message-ID: <20231124172039.457476291@linuxfoundation.org>
+	Robert Richter <rrichter@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.6 394/530] cxl/port: Fix delete_endpoint() vs parent unregistration race
+Date: Fri, 24 Nov 2023 17:49:20 +0000
+Message-ID: <20231124172040.016067678@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,126 +41,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 1954da4a2b621a3328a63382cae7e5f5e2af502c upstream.
+commit 8d2ad999ca3c64cb08cf6a58d227b9d9e746d708 upstream.
 
-If the cmma no-dat feature is available all pages that are not used for
-dynamic address translation are marked as "no-dat" with the ESSA
-instruction. This information is visible to the hypervisor, so that the
-hypervisor can optimize purging of guest TLB entries. This also means that
-pages which are used for dynamic address translation must not be marked as
-"no-dat", since the hypervisor may then incorrectly not purge guest TLB
-entries.
+The CXL subsystem, at cxl_mem ->probe() time, establishes a lineage of
+ports (struct cxl_port objects) between an endpoint and the root of a
+CXL topology. Each port including the endpoint port is attached to the
+cxl_port driver.
 
-Region, segment, and page tables allocated within the gmap code are
-incorrectly marked as "no-dat", since an explicit call to
-arch_set_page_dat() is missing, which would remove the "no-dat" mark.
+Given that setup, it follows that when either any port in that lineage
+goes through a cxl_port ->remove() event, or the memdev goes through a
+cxl_mem ->remove() event. The hierarchy below the removed port, or the
+entire hierarchy if the memdev is removed needs to come down.
 
-In order to fix this add a new gmap_alloc_crst() function which should
-be used to allocate region and segment tables, and which also calls
-arch_set_page_dat().
+The delete_endpoint() callback is careful to check whether it is being
+called to tear down the hierarchy, or if it is only being called to
+teardown the memdev because an ancestor port is going through
+->remove().
 
-Also add the arch_set_page_dat() call to page_table_alloc_pgste().
+That care needs to take the device_lock() of the endpoint's parent.
+Which requires 2 bugs to be fixed:
 
+1/ A reference on the parent is needed to prevent use-after-free
+   scenarios like this signature:
+
+    BUG: spinlock bad magic on CPU#0, kworker/u56:0/11
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230524-3.fc38 05/24/2023
+    Workqueue: cxl_port detach_memdev [cxl_core]
+    RIP: 0010:spin_bug+0x65/0xa0
+    Call Trace:
+      do_raw_spin_lock+0x69/0xa0
+     __mutex_lock+0x695/0xb80
+     delete_endpoint+0xad/0x150 [cxl_core]
+     devres_release_all+0xb8/0x110
+     device_unbind_cleanup+0xe/0x70
+     device_release_driver_internal+0x1d2/0x210
+     detach_memdev+0x15/0x20 [cxl_core]
+     process_one_work+0x1e3/0x4c0
+     worker_thread+0x1dd/0x3d0
+
+2/ In the case of RCH topologies, the parent device that needs to be
+   locked is not always @port->dev as returned by cxl_mem_find_port(), use
+   endpoint->dev.parent instead.
+
+Fixes: 8dd2bc0f8e02 ("cxl/mem: Add the cxl_mem driver")
 Cc: <stable@vger.kernel.org>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reported-by: Robert Richter <rrichter@amd.com>
+Closes: http://lore.kernel.org/r/20231018171713.1883517-2-rrichter@amd.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/gmap.c    |   24 ++++++++++++++++++------
- arch/s390/mm/pgalloc.c |    1 +
- 2 files changed, 19 insertions(+), 6 deletions(-)
+ drivers/cxl/core/port.c |   34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
---- a/arch/s390/mm/gmap.c
-+++ b/arch/s390/mm/gmap.c
-@@ -21,10 +21,22 @@
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1242,35 +1242,39 @@ static struct device *grandparent(struct
+ 	return NULL;
+ }
  
- #include <asm/pgalloc.h>
- #include <asm/gmap.h>
-+#include <asm/page.h>
- #include <asm/tlb.h>
- 
- #define GMAP_SHADOW_FAKE_TABLE 1ULL
- 
-+static struct page *gmap_alloc_crst(void)
++static struct device *endpoint_host(struct cxl_port *endpoint)
 +{
-+	struct page *page;
++	struct cxl_port *port = to_cxl_port(endpoint->dev.parent);
 +
-+	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
-+	if (!page)
-+		return NULL;
-+	arch_set_page_dat(page, CRST_ALLOC_ORDER);
-+	return page;
++	if (is_cxl_root(port))
++		return port->uport_dev;
++	return &port->dev;
 +}
 +
- /**
-  * gmap_alloc - allocate and initialize a guest address space
-  * @limit: maximum address of the gmap address space
-@@ -67,7 +79,7 @@ static struct gmap *gmap_alloc(unsigned
- 	spin_lock_init(&gmap->guest_table_lock);
- 	spin_lock_init(&gmap->shadow_lock);
- 	refcount_set(&gmap->ref_count, 1);
--	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
-+	page = gmap_alloc_crst();
- 	if (!page)
- 		goto out_free;
- 	page->index = 0;
-@@ -308,7 +320,7 @@ static int gmap_alloc_table(struct gmap
- 	unsigned long *new;
+ static void delete_endpoint(void *data)
+ {
+ 	struct cxl_memdev *cxlmd = data;
+ 	struct cxl_port *endpoint = cxlmd->endpoint;
+-	struct cxl_port *parent_port;
+-	struct device *parent;
++	struct device *host = endpoint_host(endpoint);
  
- 	/* since we dont free the gmap table until gmap_free we can unlock */
--	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
-+	page = gmap_alloc_crst();
- 	if (!page)
- 		return -ENOMEM;
- 	new = page_to_virt(page);
-@@ -1759,7 +1771,7 @@ int gmap_shadow_r2t(struct gmap *sg, uns
- 
- 	BUG_ON(!gmap_is_shadow(sg));
- 	/* Allocate a shadow region second table */
--	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
-+	page = gmap_alloc_crst();
- 	if (!page)
- 		return -ENOMEM;
- 	page->index = r2t & _REGION_ENTRY_ORIGIN;
-@@ -1843,7 +1855,7 @@ int gmap_shadow_r3t(struct gmap *sg, uns
- 
- 	BUG_ON(!gmap_is_shadow(sg));
- 	/* Allocate a shadow region second table */
--	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
-+	page = gmap_alloc_crst();
- 	if (!page)
- 		return -ENOMEM;
- 	page->index = r3t & _REGION_ENTRY_ORIGIN;
-@@ -1927,7 +1939,7 @@ int gmap_shadow_sgt(struct gmap *sg, uns
- 
- 	BUG_ON(!gmap_is_shadow(sg) || (sgt & _REGION3_ENTRY_LARGE));
- 	/* Allocate a shadow segment table */
--	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
-+	page = gmap_alloc_crst();
- 	if (!page)
- 		return -ENOMEM;
- 	page->index = sgt & _REGION_ENTRY_ORIGIN;
-@@ -2855,7 +2867,7 @@ int s390_replace_asce(struct gmap *gmap)
- 	if ((gmap->asce & _ASCE_TYPE_MASK) == _ASCE_TYPE_SEGMENT)
- 		return -EINVAL;
- 
--	page = alloc_pages(GFP_KERNEL_ACCOUNT, CRST_ALLOC_ORDER);
-+	page = gmap_alloc_crst();
- 	if (!page)
- 		return -ENOMEM;
- 	page->index = 0;
---- a/arch/s390/mm/pgalloc.c
-+++ b/arch/s390/mm/pgalloc.c
-@@ -146,6 +146,7 @@ struct page *page_table_alloc_pgste(stru
- 	ptdesc = pagetable_alloc(GFP_KERNEL, 0);
- 	if (ptdesc) {
- 		table = (u64 *)ptdesc_to_virt(ptdesc);
-+		arch_set_page_dat(virt_to_page(table), 0);
- 		memset64(table, _PAGE_INVALID, PTRS_PER_PTE);
- 		memset64(table + PTRS_PER_PTE, 0, PTRS_PER_PTE);
+-	parent_port = cxl_mem_find_port(cxlmd, NULL);
+-	if (!parent_port)
+-		goto out;
+-	parent = &parent_port->dev;
+-
+-	device_lock(parent);
+-	if (parent->driver && !endpoint->dead) {
+-		devm_release_action(parent, cxl_unlink_parent_dport, endpoint);
+-		devm_release_action(parent, cxl_unlink_uport, endpoint);
+-		devm_release_action(parent, unregister_port, endpoint);
++	device_lock(host);
++	if (host->driver && !endpoint->dead) {
++		devm_release_action(host, cxl_unlink_parent_dport, endpoint);
++		devm_release_action(host, cxl_unlink_uport, endpoint);
++		devm_release_action(host, unregister_port, endpoint);
  	}
+ 	cxlmd->endpoint = NULL;
+-	device_unlock(parent);
+-	put_device(parent);
+-out:
++	device_unlock(host);
+ 	put_device(&endpoint->dev);
++	put_device(host);
+ }
+ 
+ int cxl_endpoint_autoremove(struct cxl_memdev *cxlmd, struct cxl_port *endpoint)
+ {
++	struct device *host = endpoint_host(endpoint);
+ 	struct device *dev = &cxlmd->dev;
+ 
++	get_device(host);
+ 	get_device(&endpoint->dev);
+ 	cxlmd->endpoint = endpoint;
+ 	cxlmd->depth = endpoint->depth;
 
 
