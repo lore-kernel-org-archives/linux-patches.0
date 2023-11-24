@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588DB381D4;
-	Fri, 24 Nov 2023 18:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307A43A8C3;
+	Fri, 24 Nov 2023 18:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLXB/UOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF110C433C9;
-	Fri, 24 Nov 2023 18:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHfpKXHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AE1C433CA;
+	Fri, 24 Nov 2023 18:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850202;
-	bh=YwVjVRWSp/d/V6p0uy9SgL+dXozz8xe9oDdttFgRdoE=;
+	s=korg; t=1700850204;
+	bh=xTm4uHLHs0QG9Hw/gV1lBUi3/rpmYCKbLkxKnpuvjtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLXB/UOJynCGFcvmeZ8PJpnrLMqxPeZbSBy8MAXmA4m/GYmaJhCpEd3fHp2t//VwH
-	 JMkeShyjgOxFSs6+B5UCjRMaOh44v2/NgYNxAV5jS9kkN6U9TnHZtz3u/S5yFInkJC
-	 Tfy1pWIMwHi/KzfA42OiOlESh/eqmKA5fWNGRs9Y=
+	b=oHfpKXHqAzTPkisHv+m9FQ+17bAPf0c+da6EnhHd4eCP12/gURycsAr/u1fLfM4he
+	 CS18agM/6KYFxtVKd6x+C2J3bemwMd0mBRutALvp56an5erWr9QEelXQNpSMC8paaR
+	 xFBJw+D9vlZ9rQRsgAeo/dKMiB1SGoUGFaJhFbHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.6 462/530] dm-bufio: fix no-sleep mode
-Date: Fri, 24 Nov 2023 17:50:28 +0000
-Message-ID: <20231124172042.143077590@linuxfoundation.org>
+Subject: [PATCH 6.6 463/530] dm-verity: dont use blocking calls from tasklets
+Date: Fri, 24 Nov 2023 17:50:29 +0000
+Message-ID: <20231124172042.175894257@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,238 +43,173 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 2a695062a5a42aead8c539a344168d4806b3fda2 upstream.
+commit 28f07f2ab4b3a2714f1fefcc58ada4bcc195f806 upstream.
 
-dm-bufio has a no-sleep mode. When activated (with the
-DM_BUFIO_CLIENT_NO_SLEEP flag), the bufio client is read-only and we
-could call dm_bufio_get from tasklets. This is used by dm-verity.
+The commit 5721d4e5a9cd enhanced dm-verity, so that it can verify blocks
+from tasklets rather than from workqueues. This reportedly improves
+performance significantly.
 
-Unfortunately, commit 450e8dee51aa ("dm bufio: improve concurrent IO
-performance") broke this and the kernel would warn that cache_get()
-was calling down_read() from no-sleeping context. The bug can be
-reproduced by using "veritysetup open" with the "--use-tasklets"
-flag.
+However, dm-verity was using the flag CRYPTO_TFM_REQ_MAY_SLEEP from
+tasklets which resulted in warnings about sleeping function being called
+from non-sleeping context.
 
-This commit fixes dm-bufio, so that the tasklet mode works again, by
-expanding use of the 'no_sleep_enabled' static_key to conditionally
-use either a rw_semaphore or rwlock_t (which are colocated in the
-buffer_tree structure using a union).
+BUG: sleeping function called from invalid context at crypto/internal.h:206
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 14, name: ksoftirqd/0
+preempt_count: 100, expected: 0
+RCU nest depth: 0, expected: 0
+CPU: 0 PID: 14 Comm: ksoftirqd/0 Tainted: G        W 6.7.0-rc1 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-2 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x32/0x50
+ __might_resched+0x110/0x160
+ crypto_hash_walk_done+0x54/0xb0
+ shash_ahash_update+0x51/0x60
+ verity_hash_update.isra.0+0x4a/0x130 [dm_verity]
+ verity_verify_io+0x165/0x550 [dm_verity]
+ ? free_unref_page+0xdf/0x170
+ ? psi_group_change+0x113/0x390
+ verity_tasklet+0xd/0x70 [dm_verity]
+ tasklet_action_common.isra.0+0xb3/0xc0
+ __do_softirq+0xaf/0x1ec
+ ? smpboot_thread_fn+0x1d/0x200
+ ? sort_range+0x20/0x20
+ run_ksoftirqd+0x15/0x30
+ smpboot_thread_fn+0xed/0x200
+ kthread+0xdc/0x110
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork+0x28/0x40
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork_asm+0x11/0x20
+ </TASK>
+
+This commit fixes dm-verity so that it doesn't use the flags
+CRYPTO_TFM_REQ_MAY_SLEEP and CRYPTO_TFM_REQ_MAY_BACKLOG from tasklets. The
+crypto API would do GFP_ATOMIC allocation instead, it could return -ENOMEM
+and we catch -ENOMEM in verity_tasklet and requeue the request to the
+workqueue.
 
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org	# v6.4
-Fixes: 450e8dee51aa ("dm bufio: improve concurrent IO performance")
+Cc: stable@vger.kernel.org	# v6.0+
+Fixes: 5721d4e5a9cd ("dm verity: Add optional "try_verify_in_tasklet" feature")
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-bufio.c |   87 +++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 62 insertions(+), 25 deletions(-)
+ drivers/md/dm-verity-fec.c    |    4 ++--
+ drivers/md/dm-verity-target.c |   23 ++++++++++++-----------
+ drivers/md/dm-verity.h        |    2 +-
+ 3 files changed, 15 insertions(+), 14 deletions(-)
 
---- a/drivers/md/dm-bufio.c
-+++ b/drivers/md/dm-bufio.c
-@@ -254,7 +254,7 @@ enum evict_result {
- 
- typedef enum evict_result (*le_predicate)(struct lru_entry *le, void *context);
- 
--static struct lru_entry *lru_evict(struct lru *lru, le_predicate pred, void *context)
-+static struct lru_entry *lru_evict(struct lru *lru, le_predicate pred, void *context, bool no_sleep)
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -185,7 +185,7 @@ static int fec_is_erasure(struct dm_veri
  {
- 	unsigned long tested = 0;
- 	struct list_head *h = lru->cursor;
-@@ -295,7 +295,8 @@ static struct lru_entry *lru_evict(struc
+ 	if (unlikely(verity_hash(v, verity_io_hash_req(v, io),
+ 				 data, 1 << v->data_dev_block_bits,
+-				 verity_io_real_digest(v, io))))
++				 verity_io_real_digest(v, io), true)))
+ 		return 0;
  
- 		h = h->next;
+ 	return memcmp(verity_io_real_digest(v, io), want_digest,
+@@ -386,7 +386,7 @@ static int fec_decode_rsb(struct dm_veri
+ 	/* Always re-validate the corrected block against the expected hash */
+ 	r = verity_hash(v, verity_io_hash_req(v, io), fio->output,
+ 			1 << v->data_dev_block_bits,
+-			verity_io_real_digest(v, io));
++			verity_io_real_digest(v, io), true);
+ 	if (unlikely(r < 0))
+ 		return r;
  
--		cond_resched();
-+		if (!no_sleep)
-+			cond_resched();
- 	}
- 
- 	return NULL;
-@@ -382,7 +383,10 @@ struct dm_buffer {
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -135,20 +135,21 @@ static int verity_hash_update(struct dm_
+  * Wrapper for crypto_ahash_init, which handles verity salting.
   */
- 
- struct buffer_tree {
--	struct rw_semaphore lock;
-+	union {
-+		struct rw_semaphore lock;
-+		rwlock_t spinlock;
-+	} u;
- 	struct rb_root root;
- } ____cacheline_aligned_in_smp;
- 
-@@ -393,9 +397,12 @@ struct dm_buffer_cache {
- 	 * on the locks.
- 	 */
- 	unsigned int num_locks;
-+	bool no_sleep;
- 	struct buffer_tree trees[];
- };
- 
-+static DEFINE_STATIC_KEY_FALSE(no_sleep_enabled);
-+
- static inline unsigned int cache_index(sector_t block, unsigned int num_locks)
+ static int verity_hash_init(struct dm_verity *v, struct ahash_request *req,
+-				struct crypto_wait *wait)
++				struct crypto_wait *wait, bool may_sleep)
  {
- 	return dm_hash_locks_index(block, num_locks);
-@@ -403,22 +410,34 @@ static inline unsigned int cache_index(s
+ 	int r;
  
- static inline void cache_read_lock(struct dm_buffer_cache *bc, sector_t block)
- {
--	down_read(&bc->trees[cache_index(block, bc->num_locks)].lock);
-+	if (static_branch_unlikely(&no_sleep_enabled) && bc->no_sleep)
-+		read_lock_bh(&bc->trees[cache_index(block, bc->num_locks)].u.spinlock);
-+	else
-+		down_read(&bc->trees[cache_index(block, bc->num_locks)].u.lock);
- }
+ 	ahash_request_set_tfm(req, v->tfm);
+-	ahash_request_set_callback(req, CRYPTO_TFM_REQ_MAY_SLEEP |
+-					CRYPTO_TFM_REQ_MAY_BACKLOG,
+-					crypto_req_done, (void *)wait);
++	ahash_request_set_callback(req,
++		may_sleep ? CRYPTO_TFM_REQ_MAY_SLEEP | CRYPTO_TFM_REQ_MAY_BACKLOG : 0,
++		crypto_req_done, (void *)wait);
+ 	crypto_init_wait(wait);
  
- static inline void cache_read_unlock(struct dm_buffer_cache *bc, sector_t block)
- {
--	up_read(&bc->trees[cache_index(block, bc->num_locks)].lock);
-+	if (static_branch_unlikely(&no_sleep_enabled) && bc->no_sleep)
-+		read_unlock_bh(&bc->trees[cache_index(block, bc->num_locks)].u.spinlock);
-+	else
-+		up_read(&bc->trees[cache_index(block, bc->num_locks)].u.lock);
- }
+ 	r = crypto_wait_req(crypto_ahash_init(req), wait);
  
- static inline void cache_write_lock(struct dm_buffer_cache *bc, sector_t block)
- {
--	down_write(&bc->trees[cache_index(block, bc->num_locks)].lock);
-+	if (static_branch_unlikely(&no_sleep_enabled) && bc->no_sleep)
-+		write_lock_bh(&bc->trees[cache_index(block, bc->num_locks)].u.spinlock);
-+	else
-+		down_write(&bc->trees[cache_index(block, bc->num_locks)].u.lock);
- }
- 
- static inline void cache_write_unlock(struct dm_buffer_cache *bc, sector_t block)
- {
--	up_write(&bc->trees[cache_index(block, bc->num_locks)].lock);
-+	if (static_branch_unlikely(&no_sleep_enabled) && bc->no_sleep)
-+		write_unlock_bh(&bc->trees[cache_index(block, bc->num_locks)].u.spinlock);
-+	else
-+		up_write(&bc->trees[cache_index(block, bc->num_locks)].u.lock);
- }
- 
- /*
-@@ -442,18 +461,32 @@ static void lh_init(struct lock_history
- 
- static void __lh_lock(struct lock_history *lh, unsigned int index)
- {
--	if (lh->write)
--		down_write(&lh->cache->trees[index].lock);
--	else
--		down_read(&lh->cache->trees[index].lock);
-+	if (lh->write) {
-+		if (static_branch_unlikely(&no_sleep_enabled) && lh->cache->no_sleep)
-+			write_lock_bh(&lh->cache->trees[index].u.spinlock);
-+		else
-+			down_write(&lh->cache->trees[index].u.lock);
-+	} else {
-+		if (static_branch_unlikely(&no_sleep_enabled) && lh->cache->no_sleep)
-+			read_lock_bh(&lh->cache->trees[index].u.spinlock);
-+		else
-+			down_read(&lh->cache->trees[index].u.lock);
-+	}
- }
- 
- static void __lh_unlock(struct lock_history *lh, unsigned int index)
- {
--	if (lh->write)
--		up_write(&lh->cache->trees[index].lock);
--	else
--		up_read(&lh->cache->trees[index].lock);
-+	if (lh->write) {
-+		if (static_branch_unlikely(&no_sleep_enabled) && lh->cache->no_sleep)
-+			write_unlock_bh(&lh->cache->trees[index].u.spinlock);
-+		else
-+			up_write(&lh->cache->trees[index].u.lock);
-+	} else {
-+		if (static_branch_unlikely(&no_sleep_enabled) && lh->cache->no_sleep)
-+			read_unlock_bh(&lh->cache->trees[index].u.spinlock);
-+		else
-+			up_read(&lh->cache->trees[index].u.lock);
-+	}
- }
- 
- /*
-@@ -502,14 +535,18 @@ static struct dm_buffer *list_to_buffer(
- 	return le_to_buffer(le);
- }
- 
--static void cache_init(struct dm_buffer_cache *bc, unsigned int num_locks)
-+static void cache_init(struct dm_buffer_cache *bc, unsigned int num_locks, bool no_sleep)
- {
- 	unsigned int i;
- 
- 	bc->num_locks = num_locks;
-+	bc->no_sleep = no_sleep;
- 
- 	for (i = 0; i < bc->num_locks; i++) {
--		init_rwsem(&bc->trees[i].lock);
-+		if (no_sleep)
-+			rwlock_init(&bc->trees[i].u.spinlock);
-+		else
-+			init_rwsem(&bc->trees[i].u.lock);
- 		bc->trees[i].root = RB_ROOT;
+ 	if (unlikely(r < 0)) {
+-		DMERR("crypto_ahash_init failed: %d", r);
++		if (r != -ENOMEM)
++			DMERR("crypto_ahash_init failed: %d", r);
+ 		return r;
  	}
  
-@@ -648,7 +685,7 @@ static struct dm_buffer *__cache_evict(s
- 	struct lru_entry *le;
- 	struct dm_buffer *b;
- 
--	le = lru_evict(&bc->lru[list_mode], __evict_pred, &w);
-+	le = lru_evict(&bc->lru[list_mode], __evict_pred, &w, bc->no_sleep);
- 	if (!le)
- 		return NULL;
- 
-@@ -702,7 +739,7 @@ static void __cache_mark_many(struct dm_
- 	struct evict_wrapper w = {.lh = lh, .pred = pred, .context = context};
- 
- 	while (true) {
--		le = lru_evict(&bc->lru[old_mode], __evict_pred, &w);
-+		le = lru_evict(&bc->lru[old_mode], __evict_pred, &w, bc->no_sleep);
- 		if (!le)
- 			break;
- 
-@@ -915,10 +952,11 @@ static void cache_remove_range(struct dm
- {
- 	unsigned int i;
- 
-+	BUG_ON(bc->no_sleep);
- 	for (i = 0; i < bc->num_locks; i++) {
--		down_write(&bc->trees[i].lock);
-+		down_write(&bc->trees[i].u.lock);
- 		__remove_range(bc, &bc->trees[i].root, begin, end, pred, release);
--		up_write(&bc->trees[i].lock);
-+		up_write(&bc->trees[i].u.lock);
- 	}
+@@ -179,12 +180,12 @@ out:
  }
  
-@@ -979,8 +1017,6 @@ struct dm_bufio_client {
- 	struct dm_buffer_cache cache; /* must be last member */
- };
+ int verity_hash(struct dm_verity *v, struct ahash_request *req,
+-		const u8 *data, size_t len, u8 *digest)
++		const u8 *data, size_t len, u8 *digest, bool may_sleep)
+ {
+ 	int r;
+ 	struct crypto_wait wait;
  
--static DEFINE_STATIC_KEY_FALSE(no_sleep_enabled);
--
- /*----------------------------------------------------------------*/
+-	r = verity_hash_init(v, req, &wait);
++	r = verity_hash_init(v, req, &wait, may_sleep);
+ 	if (unlikely(r < 0))
+ 		goto out;
  
- #define dm_bufio_in_request()	(!!current->bio_list)
-@@ -1871,7 +1907,8 @@ static void *new_read(struct dm_bufio_cl
- 	if (need_submit)
- 		submit_io(b, REQ_OP_READ, read_endio);
+@@ -322,7 +323,7 @@ static int verity_verify_level(struct dm
  
--	wait_on_bit_io(&b->state, B_READING, TASK_UNINTERRUPTIBLE);
-+	if (nf != NF_GET)	/* we already tested this condition above */
-+		wait_on_bit_io(&b->state, B_READING, TASK_UNINTERRUPTIBLE);
+ 		r = verity_hash(v, verity_io_hash_req(v, io),
+ 				data, 1 << v->hash_dev_block_bits,
+-				verity_io_real_digest(v, io));
++				verity_io_real_digest(v, io), !io->in_tasklet);
+ 		if (unlikely(r < 0))
+ 			goto release_ret_r;
  
- 	if (b->read_error) {
- 		int error = blk_status_to_errno(b->read_error);
-@@ -2421,7 +2458,7 @@ struct dm_bufio_client *dm_bufio_client_
- 		r = -ENOMEM;
- 		goto bad_client;
- 	}
--	cache_init(&c->cache, num_locks);
-+	cache_init(&c->cache, num_locks, (flags & DM_BUFIO_CLIENT_NO_SLEEP) != 0);
+@@ -556,7 +557,7 @@ static int verity_verify_io(struct dm_ve
+ 			continue;
+ 		}
  
- 	c->bdev = bdev;
- 	c->block_size = block_size;
+-		r = verity_hash_init(v, req, &wait);
++		r = verity_hash_init(v, req, &wait, !io->in_tasklet);
+ 		if (unlikely(r < 0))
+ 			return r;
+ 
+@@ -652,7 +653,7 @@ static void verity_tasklet(unsigned long
+ 
+ 	io->in_tasklet = true;
+ 	err = verity_verify_io(io);
+-	if (err == -EAGAIN) {
++	if (err == -EAGAIN || err == -ENOMEM) {
+ 		/* fallback to retrying with work-queue */
+ 		INIT_WORK(&io->work, verity_work);
+ 		queue_work(io->v->verify_wq, &io->work);
+@@ -1033,7 +1034,7 @@ static int verity_alloc_zero_digest(stru
+ 		goto out;
+ 
+ 	r = verity_hash(v, req, zero_data, 1 << v->data_dev_block_bits,
+-			v->zero_digest);
++			v->zero_digest, true);
+ 
+ out:
+ 	kfree(req);
+--- a/drivers/md/dm-verity.h
++++ b/drivers/md/dm-verity.h
+@@ -128,7 +128,7 @@ extern int verity_for_bv_block(struct dm
+ 					      u8 *data, size_t len));
+ 
+ extern int verity_hash(struct dm_verity *v, struct ahash_request *req,
+-		       const u8 *data, size_t len, u8 *digest);
++		       const u8 *data, size_t len, u8 *digest, bool may_sleep);
+ 
+ extern int verity_hash_for_block(struct dm_verity *v, struct dm_verity_io *io,
+ 				 sector_t block, u8 *digest, bool *is_zero);
 
 
