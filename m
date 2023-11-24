@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60114381D6;
-	Fri, 24 Nov 2023 18:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCDA381D6;
+	Fri, 24 Nov 2023 18:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fzeKgZtE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF82BC433C8;
-	Fri, 24 Nov 2023 18:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+9ma6YU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8BDC433CA;
+	Fri, 24 Nov 2023 18:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849803;
-	bh=vj2gIzuBVjnmVYjQXn75XDcK9hLp6V7LXgKCZlzPwaw=;
+	s=korg; t=1700849805;
+	bh=LgKG+YRYMrXfL8SdVJvV4woMhvetdpeIEIDSRUFBP3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fzeKgZtEQbKlQj2qTHQcqeY7hmTx++uunYtoe/m4lLZhWqP6cR6vc9CRNhSB1KEL/
-	 6G9Cb3FkmUpaVYMj6rrI4jQa+0hN/3xqNXFjdw7I0nRGKliAdgfRSmdRbsH3MC8JbR
-	 wMt/C94roQmhsswaKdYJ81KQe5raKEMdANSCCN54=
+	b=I+9ma6YUjMDz6D6fu69Y6lTNIn28s9QXnchPHQXyLL8bkq7m9JnOCIXpAMnMnl7HB
+	 Dw7u+11OB0t/LXKgNBOl2LixEgtTj9Ptnc4cyz0E8vPWJKAuke+yqLFWwUwCJz/qH5
+	 c2M/qysc5QfbjOd++EWi2cn53KwwYIQu1CNPmxzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.6 302/530] PCI: keystone: Dont discard .remove() callback
-Date: Fri, 24 Nov 2023 17:47:48 +0000
-Message-ID: <20231124172037.233995437@linuxfoundation.org>
+	Carl Huang <quic_cjhuang@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>
+Subject: [PATCH 6.6 293/530] wifi: ath11k: fix gtk offload status event locking
+Date: Fri, 24 Nov 2023 17:47:39 +0000
+Message-ID: <20231124172036.955135495@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -35,56 +37,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 200bddbb3f5202bbce96444fdc416305de14f547 upstream.
+commit 1dea3c0720a146bd7193969f2847ccfed5be2221 upstream.
 
-With CONFIG_PCIE_KEYSTONE=y and ks_pcie_remove() marked with __exit, the
-function is discarded from the driver. In this case a bound device can
-still get unbound, e.g via sysfs. Then no cleanup code is run resulting in
-resource leaks or worse.
+The ath11k active pdevs are protected by RCU but the gtk offload status
+event handling code calling ath11k_mac_get_arvif_by_vdev_id() was not
+marked as a read-side critical section.
 
-The right thing to do is do always have the remove callback available.
-Note that this driver cannot be compiled as a module, so ks_pcie_remove()
-was always discarded before this change and modpost couldn't warn about
-this issue. Furthermore the __ref annotation also prevents a warning.
+Mark the code in question as an RCU read-side critical section to avoid
+any potential use-after-free issues.
 
-Fixes: 0c4ffcfe1fbc ("PCI: keystone: Add TI Keystone PCIe driver")
-Link: https://lore.kernel.org/r/20231001170254.2506508-4-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
+Compile tested only.
+
+Fixes: a16d9b50cfba ("ath11k: support GTK rekey offload")
+Cc: stable@vger.kernel.org      # 5.18
+Cc: Carl Huang <quic_cjhuang@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231019155342.31631-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -1302,7 +1302,7 @@ err_link:
- 	return ret;
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -8619,12 +8619,13 @@ static void ath11k_wmi_gtk_offload_statu
+ 		return;
+ 	}
+ 
++	rcu_read_lock();
++
+ 	arvif = ath11k_mac_get_arvif_by_vdev_id(ab, ev->vdev_id);
+ 	if (!arvif) {
+ 		ath11k_warn(ab, "failed to get arvif for vdev_id:%d\n",
+ 			    ev->vdev_id);
+-		kfree(tb);
+-		return;
++		goto exit;
+ 	}
+ 
+ 	ath11k_dbg(ab, ATH11K_DBG_WMI, "event gtk offload refresh_cnt %d\n",
+@@ -8641,6 +8642,8 @@ static void ath11k_wmi_gtk_offload_statu
+ 
+ 	ieee80211_gtk_rekey_notify(arvif->vif, arvif->bssid,
+ 				   (void *)&replay_ctr_be, GFP_ATOMIC);
++exit:
++	rcu_read_unlock();
+ 
+ 	kfree(tb);
  }
- 
--static int __exit ks_pcie_remove(struct platform_device *pdev)
-+static int ks_pcie_remove(struct platform_device *pdev)
- {
- 	struct keystone_pcie *ks_pcie = platform_get_drvdata(pdev);
- 	struct device_link **link = ks_pcie->link;
-@@ -1320,7 +1320,7 @@ static int __exit ks_pcie_remove(struct
- 
- static struct platform_driver ks_pcie_driver __refdata = {
- 	.probe  = ks_pcie_probe,
--	.remove = __exit_p(ks_pcie_remove),
-+	.remove = ks_pcie_remove,
- 	.driver = {
- 		.name	= "keystone-pcie",
- 		.of_match_table = ks_pcie_of_match,
 
 
