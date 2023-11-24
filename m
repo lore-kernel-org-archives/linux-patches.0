@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB64D2FC21;
-	Fri, 24 Nov 2023 18:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F277628E32;
+	Fri, 24 Nov 2023 18:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4iVR13c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34AEC433C7;
-	Fri, 24 Nov 2023 18:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hr0Boe58"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C1AC433C7;
+	Fri, 24 Nov 2023 18:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851006;
-	bh=b4z57Hf1bCbYDneOQ44oa9VHDmzxUp1U0QUGnU61yQk=;
+	s=korg; t=1700851008;
+	bh=xPWWABLVixDqHXyNJmGgE2oP0vkZTwImkR7EwcuIWQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x4iVR13cKtxYSGOPq0kGEO0eVaKVLQn/hO1E5HirfDExWhngg46kzfQLIUg04XBvr
-	 pqLs3dfUQUny1VkLxhHZzqqjo6HjBJsn0KpDlsWSG4hgfeF6Nmn9AOy0iyvA3Sn+u/
-	 suisntBhXBSXnen4qC59qaZ+0tTDmzkiLxM/4s38=
+	b=Hr0Boe58xu3iNdjtg67KuPqYRN7k31uAUpCWbL62O/pGHR6DFqdV59aGFEuUJ3oGN
+	 b3Bq3jfupkH1w1ncXZbXyVaRi+ADdnZUwuHNwq0bjay7teXilwmCqKzclKRk9rXK3X
+	 15ua0iltPTqngoBIZdexsfboZrAzRz5hKv0eHi+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jirislaby@kernel.org,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>
-Subject: [PATCH 6.5 251/491] tty/sysrq: replace smp_processor_id() with get_cpu()
-Date: Fri, 24 Nov 2023 17:48:07 +0000
-Message-ID: <20231124172032.109894347@linuxfoundation.org>
+	Nicolas Saenz Julienne <nsaenz@amazon.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.5 242/491] KVM: x86: hyper-v: Dont auto-enable stimer on write from user-space
+Date: Fri, 24 Nov 2023 17:47:58 +0000
+Message-ID: <20231124172031.826516063@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,72 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Nicolas Saenz Julienne <nsaenz@amazon.com>
 
-commit dd976a97d15b47656991e185a94ef42a0fa5cfd4 upstream.
+commit d6800af51c76b6dae20e6023bbdc9b3da3ab5121 upstream.
 
-The smp_processor_id() shouldn't be called from preemptible code.
-Instead use get_cpu() and put_cpu() which disables preemption in
-addition to getting the processor id. Enable preemption back after
-calling schedule_work() to make sure that the work gets scheduled on all
-cores other than the current core. We want to avoid a scenario where
-current core's stack trace is printed multiple times and one core's
-stack trace isn't printed because of scheduling of current task.
+Don't apply the stimer's counter side effects when modifying its
+value from user-space, as this may trigger spurious interrupts.
 
-This fixes the following bug:
+For example:
+ - The stimer is configured in auto-enable mode.
+ - The stimer's count is set and the timer enabled.
+ - The stimer expires, an interrupt is injected.
+ - The VM is live migrated.
+ - The stimer config and count are deserialized, auto-enable is ON, the
+   stimer is re-enabled.
+ - The stimer expires right away, and injects an unwarranted interrupt.
 
-[  119.143590] sysrq: Show backtrace of all active CPUs
-[  119.143902] BUG: using smp_processor_id() in preemptible [00000000] code: bash/873
-[  119.144586] caller is debug_smp_processor_id+0x20/0x30
-[  119.144827] CPU: 6 PID: 873 Comm: bash Not tainted 5.10.124-dirty #3
-[  119.144861] Hardware name: QEMU QEMU Virtual Machine, BIOS 2023.05-1 07/22/2023
-[  119.145053] Call trace:
-[  119.145093]  dump_backtrace+0x0/0x1a0
-[  119.145122]  show_stack+0x18/0x70
-[  119.145141]  dump_stack+0xc4/0x11c
-[  119.145159]  check_preemption_disabled+0x100/0x110
-[  119.145175]  debug_smp_processor_id+0x20/0x30
-[  119.145195]  sysrq_handle_showallcpus+0x20/0xc0
-[  119.145211]  __handle_sysrq+0x8c/0x1a0
-[  119.145227]  write_sysrq_trigger+0x94/0x12c
-[  119.145247]  proc_reg_write+0xa8/0xe4
-[  119.145266]  vfs_write+0xec/0x280
-[  119.145282]  ksys_write+0x6c/0x100
-[  119.145298]  __arm64_sys_write+0x20/0x30
-[  119.145315]  el0_svc_common.constprop.0+0x78/0x1e4
-[  119.145332]  do_el0_svc+0x24/0x8c
-[  119.145348]  el0_svc+0x10/0x20
-[  119.145364]  el0_sync_handler+0x134/0x140
-[  119.145381]  el0_sync+0x180/0x1c0
-
-Cc: jirislaby@kernel.org
 Cc: stable@vger.kernel.org
-Fixes: 47cab6a722d4 ("debug lockups: Improve lockup detection, fix generic arch fallback")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/r/20231009162021.3607632-1-usama.anjum@collabora.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1f4b34f825e8 ("kvm/x86: Hyper-V SynIC timers")
+Signed-off-by: Nicolas Saenz Julienne <nsaenz@amazon.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/20231017155101.40677-1-nsaenz@amazon.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/sysrq.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/hyperv.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/sysrq.c
-+++ b/drivers/tty/sysrq.c
-@@ -263,13 +263,14 @@ static void sysrq_handle_showallcpus(int
- 		if (in_hardirq())
- 			regs = get_irq_regs();
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -727,10 +727,12 @@ static int stimer_set_count(struct kvm_v
  
--		pr_info("CPU%d:\n", smp_processor_id());
-+		pr_info("CPU%d:\n", get_cpu());
- 		if (regs)
- 			show_regs(regs);
- 		else
- 			show_stack(NULL, NULL, KERN_INFO);
+ 	stimer_cleanup(stimer);
+ 	stimer->count = count;
+-	if (stimer->count == 0)
+-		stimer->config.enable = 0;
+-	else if (stimer->config.auto_enable)
+-		stimer->config.enable = 1;
++	if (!host) {
++		if (stimer->count == 0)
++			stimer->config.enable = 0;
++		else if (stimer->config.auto_enable)
++			stimer->config.enable = 1;
++	}
  
- 		schedule_work(&sysrq_showallcpus);
-+		put_cpu();
- 	}
- }
- 
+ 	if (stimer->config.enable)
+ 		stimer_mark_pending(stimer, false);
 
 
