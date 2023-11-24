@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032C32C87B;
-	Fri, 24 Nov 2023 18:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D3C33075;
+	Fri, 24 Nov 2023 18:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJnTwbH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370B3C433C9;
-	Fri, 24 Nov 2023 18:54:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6f2pHJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7ACEC433C7;
+	Fri, 24 Nov 2023 18:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852089;
-	bh=qJ5Rp21sSqgFDY9V4E+uO83d06H8R9Sx807V6s8xLGA=;
+	s=korg; t=1700852092;
+	bh=joA3BcLP0Q/WpIZt2rqFrPS2qwfFs6y9MQVTaWUvelo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJnTwbH7GvjVihbowEuR04gHH8MEYVKq5Cmg6vdsOW8Ds6kvSEQPQMsGRlrb0fXkr
-	 LWm/KPDOFZfarJe1x23gUUxCKSZwtyQk490HnycbNPC3y32UZD3Gefy6EQSAvrsQyD
-	 HfDGHEOpR+ypjZP07ONRqWxBGEwAB58qSz8BzRuE=
+	b=k6f2pHJAKCZxPQbN1vkhUGAm0fUnw44KBnqs1tEdaUxxz/uLVu2Y3i2wva8puM2/o
+	 BS+AnqGqecsIbmZBarIRk0pg4ffAwCmplilRZVxswiCLWAE+c1AUAo8zMxoSVDEI6B
+	 YOuHtiQDuoXQAr6+bsypfeHyIz98bg1u8ynTmMko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
-	Jakub Acs <acsjakub@amazon.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 191/372] mm/damon: implement a function for max nr_accesses safe calculation
-Date: Fri, 24 Nov 2023 17:49:38 +0000
-Message-ID: <20231124172016.829418587@linuxfoundation.org>
+Subject: [PATCH 6.1 192/372] mm/damon/sysfs: check error from damon_sysfs_update_target()
+Date: Fri, 24 Nov 2023 17:49:39 +0000
+Message-ID: <20231124172016.860895634@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,70 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit 35f5d94187a6a3a8df2cba54beccca1c2379edb8 upstream.
+commit b4936b544b08ed44949055b92bd25f77759ebafc upstream.
 
-Patch series "avoid divide-by-zero due to max_nr_accesses overflow".
+Patch series "mm/damon/sysfs: fix unhandled return values".
 
-The maximum nr_accesses of given DAMON context can be calculated by
-dividing the aggregation interval by the sampling interval.  Some logics
-in DAMON uses the maximum nr_accesses as a divisor.  Hence, the value
-shouldn't be zero.  Such case is avoided since DAMON avoids setting the
-agregation interval as samller than the sampling interval.  However, since
-nr_accesses is unsigned int while the intervals are unsigned long, the
-maximum nr_accesses could be zero while casting.
-
-Avoid the divide-by-zero by implementing a function that handles the
-corner case (first patch), and replaces the vulnerable direct max
-nr_accesses calculations (remaining patches).
-
-Note that the patches for the replacements are divided for broken commits,
-to make backporting on required tres easier.  Especially, the last patch
-is for a patch that not yet merged into the mainline but in mm tree.
+Some of DAMON sysfs interface code is not handling return values from some
+functions.  As a result, confusing user input handling or NULL-dereference
+is possible.  Check those properly.
 
 
-This patch (of 4):
+This patch (of 3):
 
-The maximum nr_accesses of given DAMON context can be calculated by
-dividing the aggregation interval by the sampling interval.  Some logics
-in DAMON uses the maximum nr_accesses as a divisor.  Hence, the value
-shouldn't be zero.  Such case is avoided since DAMON avoids setting the
-agregation interval as samller than the sampling interval.  However, since
-nr_accesses is unsigned int while the intervals are unsigned long, the
-maximum nr_accesses could be zero while casting.  Implement a function
-that handles the corner case.
+damon_sysfs_update_target() returns error code for failures, but its
+caller, damon_sysfs_set_targets() is ignoring that.  The update function
+seems making no critical change in case of such failures, but the behavior
+will look like DAMON sysfs is silently ignoring or only partially
+accepting the user input.  Fix it.
 
-Note that this commit is not fixing the real issue since this is only
-introducing the safe function that will replaces the problematic
-divisions.  The replacements will be made by followup commits, to make
-backporting on stable series easier.
-
-Link: https://lkml.kernel.org/r/20231019194924.100347-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20231019194924.100347-2-sj@kernel.org
-Fixes: 198f0f4c58b9 ("mm/damon/vaddr,paddr: support pageout prioritization")
+Link: https://lkml.kernel.org/r/20231106233408.51159-1-sj@kernel.org
+Link: https://lkml.kernel.org/r/20231106233408.51159-2-sj@kernel.org
+Fixes: 19467a950b49 ("mm/damon/sysfs: remove requested targets when online-commit inputs")
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Reported-by: Jakub Acs <acsjakub@amazon.de>
-Cc: <stable@vger.kernel.org>	[5.16+]
+Cc: <stable@vger.kernel.org>	[5.19+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ mm/damon/sysfs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -559,6 +559,13 @@ static inline bool damon_target_has_pid(
- 	return ctx->ops.id == DAMON_OPS_VADDR || ctx->ops.id == DAMON_OPS_FVADDR;
- }
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -2241,8 +2241,10 @@ static int damon_sysfs_set_targets(struc
  
-+static inline unsigned int damon_max_nr_accesses(const struct damon_attrs *attrs)
-+{
-+	/* {aggr,sample}_interval are unsigned long, hence could overflow */
-+	return min(attrs->aggr_interval / attrs->sample_interval,
-+			(unsigned long)UINT_MAX);
-+}
-+
- 
- int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
+ 	damon_for_each_target_safe(t, next, ctx) {
+ 		if (i < sysfs_targets->nr) {
+-			damon_sysfs_update_target(t, ctx,
++			err = damon_sysfs_update_target(t, ctx,
+ 					sysfs_targets->targets_arr[i]);
++			if (err)
++				return err;
+ 		} else {
+ 			if (damon_target_has_pid(ctx))
+ 				put_pid(t->pid);
 
 
