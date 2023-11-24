@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609FD33CFD;
-	Fri, 24 Nov 2023 19:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E90364A5;
+	Fri, 24 Nov 2023 19:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sO/vaSj1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB7AC433C8;
-	Fri, 24 Nov 2023 19:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pohgMJ4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526E7C433C7;
+	Fri, 24 Nov 2023 19:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852893;
-	bh=eh6pArXd01v5kDlbBXVtVuEdkCHczbXoe5KI64bvFEw=;
+	s=korg; t=1700852895;
+	bh=c5SuPHt60Ie9gdF/tbLu3W1eqO6NzjNYi1fFZaK7lz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sO/vaSj1u4JDIaWwsZ8NEOs57GZ2oUqzV0PeTQ14sn1AhNB+rDirJUrgUejASN0jY
-	 suo58LlEGNof+ywdZICu3WMAquYBZPOsJubV9oA9EYZ3R0c1Kok5+gkDTxvqZF/EW/
-	 S8eFsxB9UtnFdarLxTdV9m82pNI10l/4PotH00sk=
+	b=pohgMJ4c1SUKDWYnADZejHJohWEG1k5MmUuCiilHKI8Fkc2tnMopcYfdURvB/a7zC
+	 nOHiXSU2flt6SVWnSAG1qFXVhKgEOqy2Ls8UnvpzgPSh45rqqWsKqoVKsfJ9/gI9WQ
+	 X5csWJe4jA8Zwh/YWHB3EZP3UQA9dG3KcLGJvm4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuong Tran <chuong@os.amperecomputing.com>,
-	Tam Nguyen <tamnguyenchi@os.amperecomputing.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.10 164/193] i2c: designware: Disable TX_EMPTY irq while waiting for block length byte
-Date: Fri, 24 Nov 2023 17:54:51 +0000
-Message-ID: <20231124171953.747797948@linuxfoundation.org>
+	Holger Dengler <dengler@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 5.10 165/193] s390/ap: fix AP bus crash on early config change callback invocation
+Date: Fri, 24 Nov 2023 17:54:52 +0000
+Message-ID: <20231124171953.792497336@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -44,69 +42,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit e8183fa10c25c7b3c20670bf2b430ddcc1ee03c0 upstream.
+commit e14aec23025eeb1f2159ba34dbc1458467c4c347 upstream.
 
-During SMBus block data read process, we have seen high interrupt rate
-because of TX_EMPTY irq status while waiting for block length byte (the
-first data byte after the address phase). The interrupt handler does not
-do anything because the internal state is kept as STATUS_WRITE_IN_PROGRESS.
-Hence, we should disable TX_EMPTY IRQ until I2C DesignWare receives
-first data byte from I2C device, then re-enable it to resume SMBus
-transaction.
+Fix kernel crash in AP bus code caused by very early invocation of the
+config change callback function via SCLP.
 
-It takes 0.789 ms for host to receive data length from slave.
-Without the patch, i2c_dw_isr() is called 99 times by TX_EMPTY interrupt.
-And it is none after applying the patch.
+After a fresh IML of the machine the crypto cards are still offline and
+will get switched online only with activation of any LPAR which has the
+card in it's configuration. A crypto card coming online is reported
+to the LPAR via SCLP and the AP bus offers a callback function to get
+this kind of information. However, it may happen that the callback is
+invoked before the AP bus init function is complete. As the callback
+triggers a synchronous AP bus scan, the scan may already run but some
+internal states are not initialized by the AP bus init function resulting
+in a crash like this:
+
+  [   11.635859] Unable to handle kernel pointer dereference in virtual kernel address space
+  [   11.635861] Failing address: 0000000000000000 TEID: 0000000000000887
+  [   11.635862] Fault in home space mode while using kernel ASCE.
+  [   11.635864] AS:00000000894c4007 R3:00000001fece8007 S:00000001fece7800 P:000000000000013d
+  [   11.635879] Oops: 0004 ilc:1 [#1] SMP
+  [   11.635882] Modules linked in:
+  [   11.635884] CPU: 5 PID: 42 Comm: kworker/5:0 Not tainted 6.6.0-rc3-00003-g4dbf7cdc6b42 #12
+  [   11.635886] Hardware name: IBM 3931 A01 751 (LPAR)
+  [   11.635887] Workqueue: events_long ap_scan_bus
+  [   11.635891] Krnl PSW : 0704c00180000000 0000000000000000 (0x0)
+  [   11.635895]            R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:0 PM:0 RI:0 EA:3
+  [   11.635897] Krnl GPRS: 0000000001000a00 0000000000000000 0000000000000006 0000000089591940
+  [   11.635899]            0000000080000000 0000000000000a00 0000000000000000 0000000000000000
+  [   11.635901]            0000000081870c00 0000000089591000 000000008834e4e2 0000000002625a00
+  [   11.635903]            0000000081734200 0000038000913c18 000000008834c6d6 0000038000913ac8
+  [   11.635906] Krnl Code:>0000000000000000: 0000                illegal
+  [   11.635906]            0000000000000002: 0000                illegal
+  [   11.635906]            0000000000000004: 0000                illegal
+  [   11.635906]            0000000000000006: 0000                illegal
+  [   11.635906]            0000000000000008: 0000                illegal
+  [   11.635906]            000000000000000a: 0000                illegal
+  [   11.635906]            000000000000000c: 0000                illegal
+  [   11.635906]            000000000000000e: 0000                illegal
+  [   11.635915] Call Trace:
+  [   11.635916]  [<0000000000000000>] 0x0
+  [   11.635918]  [<000000008834e4e2>] ap_queue_init_state+0x82/0xb8
+  [   11.635921]  [<000000008834ba1c>] ap_scan_domains+0x6fc/0x740
+  [   11.635923]  [<000000008834c092>] ap_scan_adapter+0x632/0x8b0
+  [   11.635925]  [<000000008834c3e4>] ap_scan_bus+0xd4/0x288
+  [   11.635927]  [<00000000879a33ba>] process_one_work+0x19a/0x410
+  [   11.635930] Discipline DIAG cannot be used without z/VM
+  [   11.635930]  [<00000000879a3a2c>] worker_thread+0x3fc/0x560
+  [   11.635933]  [<00000000879aea60>] kthread+0x120/0x128
+  [   11.635936]  [<000000008792afa4>] __ret_from_fork+0x3c/0x58
+  [   11.635938]  [<00000000885ebe62>] ret_from_fork+0xa/0x30
+  [   11.635942] Last Breaking-Event-Address:
+  [   11.635942]  [<000000008834c6d4>] ap_wait+0xcc/0x148
+
+This patch improves the ap_bus_force_rescan() function which is
+invoked by the config change callback by checking if a first
+initial AP bus scan has been done. If not, the force rescan request
+is simple ignored. Anyhow it does not make sense to trigger AP bus
+re-scans even before the very first bus scan is complete.
 
 Cc: stable@vger.kernel.org
-Co-developed-by: Chuong Tran <chuong@os.amperecomputing.com>
-Signed-off-by: Chuong Tran <chuong@os.amperecomputing.com>
-Signed-off-by: Tam Nguyen <tamnguyenchi@os.amperecomputing.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-designware-master.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/s390/crypto/ap_bus.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/i2c/busses/i2c-designware-master.c
-+++ b/drivers/i2c/busses/i2c-designware-master.c
-@@ -362,10 +362,16 @@ i2c_dw_xfer_msg(struct dw_i2c_dev *dev)
+--- a/drivers/s390/crypto/ap_bus.c
++++ b/drivers/s390/crypto/ap_bus.c
+@@ -787,6 +787,10 @@ EXPORT_SYMBOL(ap_driver_unregister);
  
- 		/*
- 		 * Because we don't know the buffer length in the
--		 * I2C_FUNC_SMBUS_BLOCK_DATA case, we can't stop
--		 * the transaction here.
-+		 * I2C_FUNC_SMBUS_BLOCK_DATA case, we can't stop the
-+		 * transaction here. Also disable the TX_EMPTY IRQ
-+		 * while waiting for the data length byte to avoid the
-+		 * bogus interrupts flood.
- 		 */
--		if (buf_len > 0 || flags & I2C_M_RECV_LEN) {
-+		if (flags & I2C_M_RECV_LEN) {
-+			dev->status |= STATUS_WRITE_IN_PROGRESS;
-+			intr_mask &= ~DW_IC_INTR_TX_EMPTY;
-+			break;
-+		} else if (buf_len > 0) {
- 			/* more bytes to be written */
- 			dev->status |= STATUS_WRITE_IN_PROGRESS;
- 			break;
-@@ -401,6 +407,13 @@ i2c_dw_recv_len(struct dw_i2c_dev *dev,
- 	msgs[dev->msg_read_idx].len = len;
- 	msgs[dev->msg_read_idx].flags &= ~I2C_M_RECV_LEN;
- 
-+	/*
-+	 * Received buffer length, re-enable TX_EMPTY interrupt
-+	 * to resume the SMBUS transaction.
-+	 */
-+	regmap_update_bits(dev->map, DW_IC_INTR_MASK, DW_IC_INTR_TX_EMPTY,
-+			   DW_IC_INTR_TX_EMPTY);
+ void ap_bus_force_rescan(void)
+ {
++	/* Only trigger AP bus scans after the initial scan is done */
++	if (atomic64_read(&ap_scan_bus_count) <= 0)
++		return;
 +
- 	return len;
- }
- 
+ 	/* processing a asynchronous bus rescan */
+ 	del_timer(&ap_config_timer);
+ 	queue_work(system_long_wq, &ap_scan_work);
 
 
