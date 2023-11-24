@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838433173F;
-	Fri, 24 Nov 2023 19:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA8A339BE;
+	Fri, 24 Nov 2023 19:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuXxuaDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F76FC433C8;
-	Fri, 24 Nov 2023 19:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZC9Q52I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93647C433C7;
+	Fri, 24 Nov 2023 19:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853518;
-	bh=gaNq3fuSbftEQ2u7MNCWDsca/eWPJN98sJTCZBWztxs=;
+	s=korg; t=1700853520;
+	bh=tRuOBqxXAax/47gngJuEJzrmVe0tjX2+eAz81Hp8lE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuXxuaDHzEigNNkDxVIN7FudNvSkasdrPQnDa6A59zsHKZVlbloYgPxhutVGQglbh
-	 8tXBndQIwWtxZ8gmuw4yoUEM7t+CgYZstKHpjhamkD0Ao0YmXcyB0x336lpcgcmivZ
-	 PX3bH6l79yJnDO8pb0HDmzIg2UsbALjp8WFEnpXM=
+	b=sZC9Q52Itw1G7HCs2iXpzoAtKTvVxUwm2I/LNN5em/8L0V2G8+vEGCsBER72VmYCX
+	 eZxV3m4OaeXzT6KOvkRcd0LqgnJZPlPvCYrqvYRQM34Yws28tgh7DJ81QoOqIGDdxd
+	 lfprzlKHWXW+vMelqA7ZDuetzWJox5HHTQxQpKBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 5.15 221/297] s390/cmma: fix handling of swapper_pg_dir and invalid_pg_dir
-Date: Fri, 24 Nov 2023 17:54:23 +0000
-Message-ID: <20231124172007.942847361@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 222/297] mm/cma: use nth_page() in place of direct struct page manipulation
+Date: Fri, 24 Nov 2023 17:54:24 +0000
+Message-ID: <20231124172007.976479283@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,45 +47,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 84bb41d5df48868055d159d9247b80927f1f70f9 upstream.
+commit 2e7cfe5cd5b6b0b98abf57a3074885979e187c1c upstream.
 
-If the cmma no-dat feature is available the kernel page tables are walked
-to identify and mark all pages which are used for address translation (all
-region, segment, and page tables). In a subsequent loop all other pages are
-marked as "no-dat" pages with the ESSA instruction.
+Patch series "Use nth_page() in place of direct struct page manipulation",
+v3.
 
-This information is visible to the hypervisor, so that the hypervisor can
-optimize purging of guest TLB entries. All pages used for swapper_pg_dir
-and invalid_pg_dir are incorrectly marked as no-dat, which in turn can
-result in incorrect guest TLB flushes.
+On SPARSEMEM without VMEMMAP, struct page is not guaranteed to be
+contiguous, since each memory section's memmap might be allocated
+independently.  hugetlb pages can go beyond a memory section size, thus
+direct struct page manipulation on hugetlb pages/subpages might give wrong
+struct page.  Kernel provides nth_page() to do the manipulation properly.
+Use that whenever code can see hugetlb pages.
 
-Fix this by marking those pages correctly as being used for DAT.
 
+This patch (of 5):
+
+When dealing with hugetlb pages, manipulating struct page pointers
+directly can get to wrong struct page, since struct page is not guaranteed
+to be contiguous on SPARSEMEM without VMEMMAP.  Use nth_page() to handle
+it properly.
+
+Without the fix, page_kasan_tag_reset() could reset wrong page tags,
+causing a wrong kasan result.  No related bug is reported.  The fix
+comes from code inspection.
+
+Link: https://lkml.kernel.org/r/20230913201248.452081-1-zi.yan@sent.com
+Link: https://lkml.kernel.org/r/20230913201248.452081-2-zi.yan@sent.com
+Fixes: 2813b9c02962 ("kasan, mm, arm64: tag non slab memory allocated via pagealloc")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Cc: <stable@vger.kernel.org>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/page-states.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/cma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/mm/page-states.c
-+++ b/arch/s390/mm/page-states.c
-@@ -198,6 +198,12 @@ void __init cmma_init_nodat(void)
- 		return;
- 	/* Mark pages used in kernel page tables */
- 	mark_kernel_pgd();
-+	page = virt_to_page(&swapper_pg_dir);
-+	for (i = 0; i < 4; i++)
-+		set_bit(PG_arch_1, &page[i].flags);
-+	page = virt_to_page(&invalid_pg_dir);
-+	for (i = 0; i < 4; i++)
-+		set_bit(PG_arch_1, &page[i].flags);
+--- a/mm/cma.c
++++ b/mm/cma.c
+@@ -503,7 +503,7 @@ struct page *cma_alloc(struct cma *cma,
+ 	 */
+ 	if (page) {
+ 		for (i = 0; i < count; i++)
+-			page_kasan_tag_reset(page + i);
++			page_kasan_tag_reset(nth_page(page, i));
+ 	}
  
- 	/* Set all kernel pages not used for page tables to stable/no-dat */
- 	for_each_mem_pfn_range(i, MAX_NUMNODES, &start, &end, NULL) {
+ 	if (ret && !no_warn) {
 
 
