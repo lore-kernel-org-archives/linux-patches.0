@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A602939FE1;
-	Fri, 24 Nov 2023 18:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B172511F;
+	Fri, 24 Nov 2023 18:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZ+/Y0GH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31996C433C8;
-	Fri, 24 Nov 2023 18:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvWaWotH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA541C433C7;
+	Fri, 24 Nov 2023 18:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849294;
-	bh=/KSyLKzdQCVDccokQlACuG4wJ50Tzr2y9Mx6QbzmQiA=;
+	s=korg; t=1700849297;
+	bh=pn2J+oB4J5M+3gqQDk9LnnqC3V0s8/KN9O89r8oljRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZ+/Y0GHkzB5w3h0ATE3VclE+WSQdH6JzOM4Ek9k042gPJGHKpN435Y7a9FKDf66l
-	 aoisKxnGLmnClXt1CGb80apRFuFOU8DrGphkOGqOJC2sXy8TxnKnkh1SNOXs0Tt6A6
-	 o0Lyr/erWp50U4lqsP/YSu+DlYyO5pyZa9NTvul0=
+	b=FvWaWotHa+iDtkGXkl/e+bFxBggCQ4QcTV33x+/mcAKmblPuMii6Y6Pt4YTQnRt1k
+	 rrv2P4oDDHvGIzDZO9Y6OFseclM348/cJt3cX43x44wCLcZ89/zqbTVCcts9sjG6rC
+	 QJOjiZ/L9A12kw7TZy2NJK4z8evrTCNRPSbii8oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chang <stanley_chang@realtek.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/530] usb: dwc3: core: configure TX/RX threshold for DWC3_IP
-Date: Fri, 24 Nov 2023 17:44:50 +0000
-Message-ID: <20231124172031.883770840@linuxfoundation.org>
+Subject: [PATCH 6.6 125/530] usb: ucsi: glink: use the connector orientation GPIO to provide switch events
+Date: Fri, 24 Nov 2023 17:44:51 +0000
+Message-ID: <20231124172031.914148904@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,266 +44,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chang <stanley_chang@realtek.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit e72fc8d6a12af7ae8dd1b52cf68ed68569d29f80 ]
+[ Upstream commit c6165ed2f425c273244191930a47c8be23bc51bd ]
 
-In Synopsys's dwc3 data book:
-To avoid underrun and overrun during the burst, in a high-latency bus
-system (like USB), threshold and burst size control is provided through
-GTXTHRCFG and GRXTHRCFG registers.
+On SM8550, the non-altmode orientation is not given anymore within
+altmode events, even with USB SVIDs events.
 
-In Realtek DHC SoC, DWC3 USB 3.0 uses AHB system bus. When dwc3 is
-connected with USB 2.5G Ethernet, there will be overrun problem.
-Therefore, setting TX/RX thresholds can avoid this issue.
+On the other side, the Type-C connector orientation is correctly
+reported by a signal from the PMIC.
 
-Signed-off-by: Stanley Chang <stanley_chang@realtek.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20230912041904.30721-1-stanley_chang@realtek.com
+Take this gpio signal when we detect some Type-C port activity
+to notify any Type-C switches tied to the Type-C port connectors.
+
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231002-topic-sm8550-upstream-type-c-orientation-v2-2-125410d3ff95@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c | 160 +++++++++++++++++++++++++++++++---------
- drivers/usb/dwc3/core.h |  13 ++++
- 2 files changed, 137 insertions(+), 36 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_glink.c | 54 ++++++++++++++++++++++++++++-
+ 1 file changed, 53 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 343d2570189ff..d25490965b27f 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1094,6 +1094,111 @@ static void dwc3_set_power_down_clk_scale(struct dwc3 *dwc)
- 	}
- }
+diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+index bb1854b3311dc..db6e248f82083 100644
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -8,9 +8,13 @@
+ #include <linux/mutex.h>
+ #include <linux/property.h>
+ #include <linux/soc/qcom/pdr.h>
++#include <linux/usb/typec_mux.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/soc/qcom/pmic_glink.h>
+ #include "ucsi.h"
  
-+static void dwc3_config_threshold(struct dwc3 *dwc)
-+{
-+	u32 reg;
-+	u8 rx_thr_num;
-+	u8 rx_maxburst;
-+	u8 tx_thr_num;
-+	u8 tx_maxburst;
++#define PMIC_GLINK_MAX_PORTS	2
 +
-+	/*
-+	 * Must config both number of packets and max burst settings to enable
-+	 * RX and/or TX threshold.
-+	 */
-+	if (!DWC3_IP_IS(DWC3) && dwc->dr_mode == USB_DR_MODE_HOST) {
-+		rx_thr_num = dwc->rx_thr_num_pkt_prd;
-+		rx_maxburst = dwc->rx_max_burst_prd;
-+		tx_thr_num = dwc->tx_thr_num_pkt_prd;
-+		tx_maxburst = dwc->tx_max_burst_prd;
+ #define UCSI_BUF_SIZE                   48
+ 
+ #define MSG_TYPE_REQ_RESP               1
+@@ -52,6 +56,9 @@ struct ucsi_notify_ind_msg {
+ struct pmic_glink_ucsi {
+ 	struct device *dev;
+ 
++	struct gpio_desc *port_orientation[PMIC_GLINK_MAX_PORTS];
++	struct typec_switch *port_switch[PMIC_GLINK_MAX_PORTS];
 +
-+		if (rx_thr_num && rx_maxburst) {
-+			reg = dwc3_readl(dwc->regs, DWC3_GRXTHRCFG);
-+			reg |= DWC31_RXTHRNUMPKTSEL_PRD;
-+
-+			reg &= ~DWC31_RXTHRNUMPKT_PRD(~0);
-+			reg |= DWC31_RXTHRNUMPKT_PRD(rx_thr_num);
-+
-+			reg &= ~DWC31_MAXRXBURSTSIZE_PRD(~0);
-+			reg |= DWC31_MAXRXBURSTSIZE_PRD(rx_maxburst);
-+
-+			dwc3_writel(dwc->regs, DWC3_GRXTHRCFG, reg);
-+		}
-+
-+		if (tx_thr_num && tx_maxburst) {
-+			reg = dwc3_readl(dwc->regs, DWC3_GTXTHRCFG);
-+			reg |= DWC31_TXTHRNUMPKTSEL_PRD;
-+
-+			reg &= ~DWC31_TXTHRNUMPKT_PRD(~0);
-+			reg |= DWC31_TXTHRNUMPKT_PRD(tx_thr_num);
-+
-+			reg &= ~DWC31_MAXTXBURSTSIZE_PRD(~0);
-+			reg |= DWC31_MAXTXBURSTSIZE_PRD(tx_maxburst);
-+
-+			dwc3_writel(dwc->regs, DWC3_GTXTHRCFG, reg);
-+		}
-+	}
-+
-+	rx_thr_num = dwc->rx_thr_num_pkt;
-+	rx_maxburst = dwc->rx_max_burst;
-+	tx_thr_num = dwc->tx_thr_num_pkt;
-+	tx_maxburst = dwc->tx_max_burst;
-+
-+	if (DWC3_IP_IS(DWC3)) {
-+		if (rx_thr_num && rx_maxburst) {
-+			reg = dwc3_readl(dwc->regs, DWC3_GRXTHRCFG);
-+			reg |= DWC3_GRXTHRCFG_PKTCNTSEL;
-+
-+			reg &= ~DWC3_GRXTHRCFG_RXPKTCNT(~0);
-+			reg |= DWC3_GRXTHRCFG_RXPKTCNT(rx_thr_num);
-+
-+			reg &= ~DWC3_GRXTHRCFG_MAXRXBURSTSIZE(~0);
-+			reg |= DWC3_GRXTHRCFG_MAXRXBURSTSIZE(rx_maxburst);
-+
-+			dwc3_writel(dwc->regs, DWC3_GRXTHRCFG, reg);
-+		}
-+
-+		if (tx_thr_num && tx_maxburst) {
-+			reg = dwc3_readl(dwc->regs, DWC3_GTXTHRCFG);
-+			reg |= DWC3_GTXTHRCFG_PKTCNTSEL;
-+
-+			reg &= ~DWC3_GTXTHRCFG_TXPKTCNT(~0);
-+			reg |= DWC3_GTXTHRCFG_TXPKTCNT(tx_thr_num);
-+
-+			reg &= ~DWC3_GTXTHRCFG_MAXTXBURSTSIZE(~0);
-+			reg |= DWC3_GTXTHRCFG_MAXTXBURSTSIZE(tx_maxburst);
-+
-+			dwc3_writel(dwc->regs, DWC3_GTXTHRCFG, reg);
-+		}
-+	} else {
-+		if (rx_thr_num && rx_maxburst) {
-+			reg = dwc3_readl(dwc->regs, DWC3_GRXTHRCFG);
-+			reg |= DWC31_GRXTHRCFG_PKTCNTSEL;
-+
-+			reg &= ~DWC31_GRXTHRCFG_RXPKTCNT(~0);
-+			reg |= DWC31_GRXTHRCFG_RXPKTCNT(rx_thr_num);
-+
-+			reg &= ~DWC31_GRXTHRCFG_MAXRXBURSTSIZE(~0);
-+			reg |= DWC31_GRXTHRCFG_MAXRXBURSTSIZE(rx_maxburst);
-+
-+			dwc3_writel(dwc->regs, DWC3_GRXTHRCFG, reg);
-+		}
-+
-+		if (tx_thr_num && tx_maxburst) {
-+			reg = dwc3_readl(dwc->regs, DWC3_GTXTHRCFG);
-+			reg |= DWC31_GTXTHRCFG_PKTCNTSEL;
-+
-+			reg &= ~DWC31_GTXTHRCFG_TXPKTCNT(~0);
-+			reg |= DWC31_GTXTHRCFG_TXPKTCNT(tx_thr_num);
-+
-+			reg &= ~DWC31_GTXTHRCFG_MAXTXBURSTSIZE(~0);
-+			reg |= DWC31_GTXTHRCFG_MAXTXBURSTSIZE(tx_maxburst);
-+
-+			dwc3_writel(dwc->regs, DWC3_GTXTHRCFG, reg);
-+		}
-+	}
-+}
-+
- /**
-  * dwc3_core_init - Low-level initialization of DWC3 Core
-  * @dwc: Pointer to our controller context structure
-@@ -1246,42 +1351,7 @@ static int dwc3_core_init(struct dwc3 *dwc)
- 		dwc3_writel(dwc->regs, DWC3_GUCTL1, reg);
+ 	struct pmic_glink_client *client;
+ 
+ 	struct ucsi *ucsi;
+@@ -220,8 +227,20 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
  	}
  
--	/*
--	 * Must config both number of packets and max burst settings to enable
--	 * RX and/or TX threshold.
--	 */
--	if (!DWC3_IP_IS(DWC3) && dwc->dr_mode == USB_DR_MODE_HOST) {
--		u8 rx_thr_num = dwc->rx_thr_num_pkt_prd;
--		u8 rx_maxburst = dwc->rx_max_burst_prd;
--		u8 tx_thr_num = dwc->tx_thr_num_pkt_prd;
--		u8 tx_maxburst = dwc->tx_max_burst_prd;
--
--		if (rx_thr_num && rx_maxburst) {
--			reg = dwc3_readl(dwc->regs, DWC3_GRXTHRCFG);
--			reg |= DWC31_RXTHRNUMPKTSEL_PRD;
--
--			reg &= ~DWC31_RXTHRNUMPKT_PRD(~0);
--			reg |= DWC31_RXTHRNUMPKT_PRD(rx_thr_num);
--
--			reg &= ~DWC31_MAXRXBURSTSIZE_PRD(~0);
--			reg |= DWC31_MAXRXBURSTSIZE_PRD(rx_maxburst);
--
--			dwc3_writel(dwc->regs, DWC3_GRXTHRCFG, reg);
--		}
--
--		if (tx_thr_num && tx_maxburst) {
--			reg = dwc3_readl(dwc->regs, DWC3_GTXTHRCFG);
--			reg |= DWC31_TXTHRNUMPKTSEL_PRD;
--
--			reg &= ~DWC31_TXTHRNUMPKT_PRD(~0);
--			reg |= DWC31_TXTHRNUMPKT_PRD(tx_thr_num);
--
--			reg &= ~DWC31_MAXTXBURSTSIZE_PRD(~0);
--			reg |= DWC31_MAXTXBURSTSIZE_PRD(tx_maxburst);
--
--			dwc3_writel(dwc->regs, DWC3_GTXTHRCFG, reg);
--		}
--	}
-+	dwc3_config_threshold(dwc);
- 
- 	return 0;
- 
-@@ -1417,6 +1487,10 @@ static void dwc3_get_properties(struct dwc3 *dwc)
- 	u8			lpm_nyet_threshold;
- 	u8			tx_de_emphasis;
- 	u8			hird_threshold;
-+	u8			rx_thr_num_pkt = 0;
-+	u8			rx_max_burst = 0;
-+	u8			tx_thr_num_pkt = 0;
-+	u8			tx_max_burst = 0;
- 	u8			rx_thr_num_pkt_prd = 0;
- 	u8			rx_max_burst_prd = 0;
- 	u8			tx_thr_num_pkt_prd = 0;
-@@ -1479,6 +1553,14 @@ static void dwc3_get_properties(struct dwc3 *dwc)
- 				"snps,usb2-lpm-disable");
- 	dwc->usb2_gadget_lpm_disable = device_property_read_bool(dev,
- 				"snps,usb2-gadget-lpm-disable");
-+	device_property_read_u8(dev, "snps,rx-thr-num-pkt",
-+				&rx_thr_num_pkt);
-+	device_property_read_u8(dev, "snps,rx-max-burst",
-+				&rx_max_burst);
-+	device_property_read_u8(dev, "snps,tx-thr-num-pkt",
-+				&tx_thr_num_pkt);
-+	device_property_read_u8(dev, "snps,tx-max-burst",
-+				&tx_max_burst);
- 	device_property_read_u8(dev, "snps,rx-thr-num-pkt-prd",
- 				&rx_thr_num_pkt_prd);
- 	device_property_read_u8(dev, "snps,rx-max-burst-prd",
-@@ -1560,6 +1642,12 @@ static void dwc3_get_properties(struct dwc3 *dwc)
- 
- 	dwc->hird_threshold = hird_threshold;
- 
-+	dwc->rx_thr_num_pkt = rx_thr_num_pkt;
-+	dwc->rx_max_burst = rx_max_burst;
+ 	con_num = UCSI_CCI_CONNECTOR(cci);
+-	if (con_num)
++	if (con_num) {
++		if (con_num < PMIC_GLINK_MAX_PORTS &&
++		    ucsi->port_orientation[con_num - 1]) {
++			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
 +
-+	dwc->tx_thr_num_pkt = tx_thr_num_pkt;
-+	dwc->tx_max_burst = tx_max_burst;
++			if (orientation >= 0) {
++				typec_switch_set(ucsi->port_switch[con_num - 1],
++						 orientation ? TYPEC_ORIENTATION_REVERSE
++							     : TYPEC_ORIENTATION_NORMAL);
++			}
++		}
 +
- 	dwc->rx_thr_num_pkt_prd = rx_thr_num_pkt_prd;
- 	dwc->rx_max_burst_prd = rx_max_burst_prd;
+ 		ucsi_connector_change(ucsi->ucsi, con_num);
++	}
  
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index a69ac67d89fe6..6782ec8bfd64c 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -211,6 +211,11 @@
- #define DWC3_GRXTHRCFG_RXPKTCNT(n) (((n) & 0xf) << 24)
- #define DWC3_GRXTHRCFG_PKTCNTSEL BIT(29)
+ 	if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
+ 		ucsi->sync_val = -EBUSY;
+@@ -282,6 +301,7 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+ {
+ 	struct pmic_glink_ucsi *ucsi;
+ 	struct device *dev = &adev->dev;
++	struct fwnode_handle *fwnode;
+ 	int ret;
  
-+/* Global TX Threshold Configuration Register */
-+#define DWC3_GTXTHRCFG_MAXTXBURSTSIZE(n) (((n) & 0xff) << 16)
-+#define DWC3_GTXTHRCFG_TXPKTCNT(n) (((n) & 0xf) << 24)
-+#define DWC3_GTXTHRCFG_PKTCNTSEL BIT(29)
+ 	ucsi = devm_kzalloc(dev, sizeof(*ucsi), GFP_KERNEL);
+@@ -309,6 +329,38 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+ 
+ 	ucsi_set_drvdata(ucsi->ucsi, ucsi);
+ 
++	device_for_each_child_node(dev, fwnode) {
++		struct gpio_desc *desc;
++		u32 port;
 +
- /* Global RX Threshold Configuration Register for DWC_usb31 only */
- #define DWC31_GRXTHRCFG_MAXRXBURSTSIZE(n)	(((n) & 0x1f) << 16)
- #define DWC31_GRXTHRCFG_RXPKTCNT(n)		(((n) & 0x1f) << 21)
-@@ -1045,6 +1050,10 @@ struct dwc3_scratchpad_array {
-  * @test_mode_nr: test feature selector
-  * @lpm_nyet_threshold: LPM NYET response threshold
-  * @hird_threshold: HIRD threshold
-+ * @rx_thr_num_pkt: USB receive packet count
-+ * @rx_max_burst: max USB receive burst size
-+ * @tx_thr_num_pkt: USB transmit packet count
-+ * @tx_max_burst: max USB transmit burst size
-  * @rx_thr_num_pkt_prd: periodic ESS receive packet count
-  * @rx_max_burst_prd: max periodic ESS receive burst size
-  * @tx_thr_num_pkt_prd: periodic ESS transmit packet count
-@@ -1273,6 +1282,10 @@ struct dwc3 {
- 	u8			test_mode_nr;
- 	u8			lpm_nyet_threshold;
- 	u8			hird_threshold;
-+	u8			rx_thr_num_pkt;
-+	u8			rx_max_burst;
-+	u8			tx_thr_num_pkt;
-+	u8			tx_max_burst;
- 	u8			rx_thr_num_pkt_prd;
- 	u8			rx_max_burst_prd;
- 	u8			tx_thr_num_pkt_prd;
++		ret = fwnode_property_read_u32(fwnode, "reg", &port);
++		if (ret < 0) {
++			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
++			return ret;
++		}
++
++		if (port >= PMIC_GLINK_MAX_PORTS) {
++			dev_warn(dev, "invalid connector number, ignoring\n");
++			continue;
++		}
++
++		desc = devm_gpiod_get_index_optional(&adev->dev, "orientation", port, GPIOD_IN);
++
++		/* If GPIO isn't found, continue */
++		if (!desc)
++			continue;
++
++		if (IS_ERR(desc))
++			return dev_err_probe(dev, PTR_ERR(desc),
++					     "unable to acquire orientation gpio\n");
++		ucsi->port_orientation[port] = desc;
++
++		ucsi->port_switch[port] = fwnode_typec_switch_get(fwnode);
++		if (IS_ERR(ucsi->port_switch[port]))
++			return dev_err_probe(dev, PTR_ERR(ucsi->port_switch[port]),
++					"failed to acquire orientation-switch\n");
++	}
++
+ 	ucsi->client = devm_pmic_glink_register_client(dev,
+ 						       PMIC_GLINK_OWNER_USBC,
+ 						       pmic_glink_ucsi_callback,
 -- 
 2.42.0
 
