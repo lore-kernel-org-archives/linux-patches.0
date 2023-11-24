@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FD82C1A2;
-	Fri, 24 Nov 2023 18:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858012E84A;
+	Fri, 24 Nov 2023 18:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uff/gIRw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5749EC433C7;
-	Fri, 24 Nov 2023 18:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBvBFt3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C0BC433C8;
+	Fri, 24 Nov 2023 18:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852369;
-	bh=hG65DkBOfWxRfoFvO+jrYCvIdAxEFbHW0wr1D8HmjxQ=;
+	s=korg; t=1700852372;
+	bh=fYi3gR3V6oRMXkuNqrKmqmlyiPcRnAM3VTFCOERamsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uff/gIRw6EV8TB8WlJ14ftQpUw6YH/USdPKlf+NcL6sPJ/K/BbiWHkQJc1IorD1Cu
-	 w5MYSJ9ZuVBdnmTLvhFWWlV1Dk+c2f4qkHsNbxkwoY8QLM+aFjUVRYlC2uTtNoMaLP
-	 Kj8QcB9Rmpcahx2x4QdZkb2Kha19onfciqASPyLI=
+	b=zBvBFt3EkvrtUVmab3pugmyVMojjq3J3aqA9sfcBBZOqpMHo4IVwWg4R9LgyWjudV
+	 k4zXip6ouKtHJR/eBIcZKwSqD0ZXcSvtzRHjVU2VRgb6lgqBURlLBDN6JIPwDrGKAS
+	 4b8ehLYT0w6HNVmivjLCRBgXDoTBM7+iW1KHslko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Ni <fan.ni@samsung.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jim Harris <jim.harris@samsung.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 303/372] tools/testing/cxl: Define a fixed volatile configuration to parse
-Date: Fri, 24 Nov 2023 17:51:30 +0000
-Message-ID: <20231124172020.528133176@linuxfoundation.org>
+Subject: [PATCH 6.1 304/372] cxl/region: Fix x1 root-decoder granularity calculations
+Date: Fri, 24 Nov 2023 17:51:31 +0000
+Message-ID: <20231124172020.562146518@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -45,291 +42,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Jim Harris <jim.harris@samsung.com>
 
-[ Upstream commit 3d8f7ccaa611a743ae3a1e6f605346993d37c513 ]
+[ Upstream commit 98a04c7aced2b43b3ac4befe216c4eecc7257d4b ]
 
-Take two endpoints attached to the first switch on the first host-bridge
-in the cxl_test topology and define a pre-initialized region. This is a
-x2 interleave underneath a x1 CXL Window.
+Root decoder granularity must match value from CFWMS, which may not
+be the region's granularity for non-interleaved root decoders.
 
-$ modprobe cxl_test
-$ # cxl list -Ru
-{
-  "region":"region3",
-  "resource":"0xf010000000",
-  "size":"512.00 MiB (536.87 MB)",
-  "interleave_ways":2,
-  "interleave_granularity":4096,
-  "decode_state":"commit"
-}
+So when calculating granularities for host bridge decoders, use the
+region's granularity instead of the root decoder's granularity to ensure
+the correct granularities are set for the host bridge decoders and any
+downstream switch decoders.
 
-Tested-by: Fan Ni <fan.ni@samsung.com>
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Link: https://lore.kernel.org/r/167602000547.1924368.11613151863880268868.stgit@dwillia2-xfh.jf.intel.com
+Test configuration is 1 host bridge * 2 switches * 2 endpoints per switch.
+
+Region created with 2048 granularity using following command line:
+
+cxl create-region -m -d decoder0.0 -w 4 mem0 mem2 mem1 mem3 \
+		  -g 2048 -s 2048M
+
+Use "cxl list -PDE | grep granularity" to get a view of the granularity
+set at each level of the topology.
+
+Before this patch:
+        "interleave_granularity":2048,
+        "interleave_granularity":2048,
+    "interleave_granularity":512,
+        "interleave_granularity":2048,
+        "interleave_granularity":2048,
+    "interleave_granularity":512,
+"interleave_granularity":256,
+
+After:
+        "interleave_granularity":2048,
+        "interleave_granularity":2048,
+    "interleave_granularity":4096,
+        "interleave_granularity":2048,
+        "interleave_granularity":2048,
+    "interleave_granularity":4096,
+"interleave_granularity":2048,
+
+Fixes: 27b3f8d13830 ("cxl/region: Program target lists")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jim Harris <jim.harris@samsung.com>
+Link: https://lore.kernel.org/r/169824893473.1403938.16110924262989774582.stgit@bgt-140510-bm03.eng.stellus.in
+[djbw: fixup the prebuilt cxl_test region]
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 98a04c7aced2 ("cxl/region: Fix x1 root-decoder granularity calculations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/core.h      |   3 -
- drivers/cxl/core/hdm.c       |   3 +-
- drivers/cxl/core/port.c      |   2 +
- drivers/cxl/cxl.h            |   2 +
- drivers/cxl/cxlmem.h         |   3 +
- tools/testing/cxl/test/cxl.c | 147 ++++++++++++++++++++++++++++++++---
- 6 files changed, 146 insertions(+), 14 deletions(-)
+ drivers/cxl/core/region.c    | 9 ++++++++-
+ tools/testing/cxl/test/cxl.c | 2 +-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/core.h b/drivers/cxl/core/core.h
-index 8c04672dca563..cbee2340f1bce 100644
---- a/drivers/cxl/core/core.h
-+++ b/drivers/cxl/core/core.h
-@@ -56,9 +56,6 @@ resource_size_t cxl_dpa_size(struct cxl_endpoint_decoder *cxled);
- resource_size_t cxl_dpa_resource_start(struct cxl_endpoint_decoder *cxled);
- extern struct rw_semaphore cxl_dpa_rwsem;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 13b1b18612d3f..ebc1b028555ca 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1012,7 +1012,14 @@ static int cxl_port_setup_targets(struct cxl_port *port,
+ 	}
  
--bool is_switch_decoder(struct device *dev);
--struct cxl_switch_decoder *to_cxl_switch_decoder(struct device *dev);
--
- int cxl_memdev_init(void);
- void cxl_memdev_exit(void);
- void cxl_mbox_init(void);
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index 5aa0726aafe6f..8c1db4e1b816d 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -276,7 +276,7 @@ static int __cxl_dpa_reserve(struct cxl_endpoint_decoder *cxled,
- 	return 0;
- }
- 
--static int devm_cxl_dpa_reserve(struct cxl_endpoint_decoder *cxled,
-+int devm_cxl_dpa_reserve(struct cxl_endpoint_decoder *cxled,
- 				resource_size_t base, resource_size_t len,
- 				resource_size_t skipped)
- {
-@@ -292,6 +292,7 @@ static int devm_cxl_dpa_reserve(struct cxl_endpoint_decoder *cxled,
- 
- 	return devm_add_action_or_reset(&port->dev, cxl_dpa_release, cxled);
- }
-+EXPORT_SYMBOL_NS_GPL(devm_cxl_dpa_reserve, CXL);
- 
- resource_size_t cxl_dpa_size(struct cxl_endpoint_decoder *cxled)
- {
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 585c2b43c7c7f..9de8336d76379 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -455,6 +455,7 @@ bool is_switch_decoder(struct device *dev)
- {
- 	return is_root_decoder(dev) || dev->type == &cxl_decoder_switch_type;
- }
-+EXPORT_SYMBOL_NS_GPL(is_switch_decoder, CXL);
- 
- struct cxl_decoder *to_cxl_decoder(struct device *dev)
- {
-@@ -482,6 +483,7 @@ struct cxl_switch_decoder *to_cxl_switch_decoder(struct device *dev)
- 		return NULL;
- 	return container_of(dev, struct cxl_switch_decoder, cxld.dev);
- }
-+EXPORT_SYMBOL_NS_GPL(to_cxl_switch_decoder, CXL);
- 
- static void cxl_ep_release(struct cxl_ep *ep)
- {
-diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 8787ef1e64047..7750ccb7652db 100644
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -575,8 +575,10 @@ struct cxl_dport *devm_cxl_add_dport(struct cxl_port *port,
- 
- struct cxl_decoder *to_cxl_decoder(struct device *dev);
- struct cxl_root_decoder *to_cxl_root_decoder(struct device *dev);
-+struct cxl_switch_decoder *to_cxl_switch_decoder(struct device *dev);
- struct cxl_endpoint_decoder *to_cxl_endpoint_decoder(struct device *dev);
- bool is_root_decoder(struct device *dev);
-+bool is_switch_decoder(struct device *dev);
- bool is_endpoint_decoder(struct device *dev);
- struct cxl_root_decoder *cxl_root_decoder_alloc(struct cxl_port *port,
- 						unsigned int nr_targets);
-diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
-index 7e50b4e93ee53..b58a5b782e5dc 100644
---- a/drivers/cxl/cxlmem.h
-+++ b/drivers/cxl/cxlmem.h
-@@ -75,6 +75,9 @@ static inline bool is_cxl_endpoint(struct cxl_port *port)
- }
- 
- struct cxl_memdev *devm_cxl_add_memdev(struct cxl_dev_state *cxlds);
-+int devm_cxl_dpa_reserve(struct cxl_endpoint_decoder *cxled,
-+			 resource_size_t base, resource_size_t len,
-+			 resource_size_t skipped);
- 
- static inline struct cxl_ep *cxl_ep_load(struct cxl_port *port,
- 					 struct cxl_memdev *cxlmd)
+ 	if (is_cxl_root(parent_port)) {
+-		parent_ig = cxlrd->cxlsd.cxld.interleave_granularity;
++		/*
++		 * Root decoder IG is always set to value in CFMWS which
++		 * may be different than this region's IG.  We can use the
++		 * region's IG here since interleave_granularity_store()
++		 * does not allow interleaved host-bridges with
++		 * root IG != region IG.
++		 */
++		parent_ig = p->interleave_granularity;
+ 		parent_iw = cxlrd->cxlsd.cxld.interleave_ways;
+ 		/*
+ 		 * For purposes of address bit routing, use power-of-2 math for
 diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
-index 7edce12fd2ce5..c43bb6774f4db 100644
+index c43bb6774f4db..339b31a3319bf 100644
 --- a/tools/testing/cxl/test/cxl.c
 +++ b/tools/testing/cxl/test/cxl.c
-@@ -551,6 +551,142 @@ static int mock_decoder_reset(struct cxl_decoder *cxld)
- 	return 0;
- }
- 
-+static void default_mock_decoder(struct cxl_decoder *cxld)
-+{
-+	cxld->hpa_range = (struct range){
-+		.start = 0,
-+		.end = -1,
-+	};
-+
-+	cxld->interleave_ways = 1;
-+	cxld->interleave_granularity = 256;
-+	cxld->target_type = CXL_DECODER_EXPANDER;
-+	cxld->commit = mock_decoder_commit;
-+	cxld->reset = mock_decoder_reset;
-+}
-+
-+static int first_decoder(struct device *dev, void *data)
-+{
-+	struct cxl_decoder *cxld;
-+
-+	if (!is_switch_decoder(dev))
-+		return 0;
-+	cxld = to_cxl_decoder(dev);
-+	if (cxld->id == 0)
-+		return 1;
-+	return 0;
-+}
-+
-+static void mock_init_hdm_decoder(struct cxl_decoder *cxld)
-+{
-+	struct acpi_cedt_cfmws *window = mock_cfmws[0];
-+	struct platform_device *pdev = NULL;
-+	struct cxl_endpoint_decoder *cxled;
-+	struct cxl_switch_decoder *cxlsd;
-+	struct cxl_port *port, *iter;
-+	const int size = SZ_512M;
-+	struct cxl_memdev *cxlmd;
-+	struct cxl_dport *dport;
-+	struct device *dev;
-+	bool hb0 = false;
-+	u64 base;
-+	int i;
-+
-+	if (is_endpoint_decoder(&cxld->dev)) {
-+		cxled = to_cxl_endpoint_decoder(&cxld->dev);
-+		cxlmd = cxled_to_memdev(cxled);
-+		WARN_ON(!dev_is_platform(cxlmd->dev.parent));
-+		pdev = to_platform_device(cxlmd->dev.parent);
-+
-+		/* check is endpoint is attach to host-bridge0 */
-+		port = cxled_to_port(cxled);
-+		do {
-+			if (port->uport == &cxl_host_bridge[0]->dev) {
-+				hb0 = true;
-+				break;
-+			}
-+			if (is_cxl_port(port->dev.parent))
-+				port = to_cxl_port(port->dev.parent);
-+			else
-+				port = NULL;
-+		} while (port);
-+		port = cxled_to_port(cxled);
-+	}
-+
-+	/*
-+	 * The first decoder on the first 2 devices on the first switch
-+	 * attached to host-bridge0 mock a fake / static RAM region. All
-+	 * other decoders are default disabled. Given the round robin
-+	 * assignment those devices are named cxl_mem.0, and cxl_mem.4.
-+	 *
-+	 * See 'cxl list -BMPu -m cxl_mem.0,cxl_mem.4'
-+	 */
-+	if (!hb0 || pdev->id % 4 || pdev->id > 4 || cxld->id > 0) {
-+		default_mock_decoder(cxld);
-+		return;
-+	}
-+
-+	base = window->base_hpa;
-+	cxld->hpa_range = (struct range) {
-+		.start = base,
-+		.end = base + size - 1,
-+	};
-+
-+	cxld->interleave_ways = 2;
-+	eig_to_granularity(window->granularity, &cxld->interleave_granularity);
-+	cxld->target_type = CXL_DECODER_EXPANDER;
-+	cxld->flags = CXL_DECODER_F_ENABLE;
-+	cxled->state = CXL_DECODER_STATE_AUTO;
-+	port->commit_end = cxld->id;
-+	devm_cxl_dpa_reserve(cxled, 0, size / cxld->interleave_ways, 0);
-+	cxld->commit = mock_decoder_commit;
-+	cxld->reset = mock_decoder_reset;
-+
-+	/*
-+	 * Now that endpoint decoder is set up, walk up the hierarchy
-+	 * and setup the switch and root port decoders targeting @cxlmd.
-+	 */
-+	iter = port;
-+	for (i = 0; i < 2; i++) {
-+		dport = iter->parent_dport;
-+		iter = dport->port;
-+		dev = device_find_child(&iter->dev, NULL, first_decoder);
-+		/*
-+		 * Ancestor ports are guaranteed to be enumerated before
-+		 * @port, and all ports have at least one decoder.
-+		 */
-+		if (WARN_ON(!dev))
-+			continue;
-+		cxlsd = to_cxl_switch_decoder(dev);
-+		if (i == 0) {
-+			/* put cxl_mem.4 second in the decode order */
-+			if (pdev->id == 4)
-+				cxlsd->target[1] = dport;
-+			else
-+				cxlsd->target[0] = dport;
-+		} else
-+			cxlsd->target[0] = dport;
-+		cxld = &cxlsd->cxld;
-+		cxld->target_type = CXL_DECODER_EXPANDER;
-+		cxld->flags = CXL_DECODER_F_ENABLE;
-+		iter->commit_end = 0;
-+		/*
-+		 * Switch targets 2 endpoints, while host bridge targets
-+		 * one root port
-+		 */
-+		if (i == 0)
-+			cxld->interleave_ways = 2;
-+		else
-+			cxld->interleave_ways = 1;
-+		cxld->interleave_granularity = 256;
-+		cxld->hpa_range = (struct range) {
-+			.start = base,
-+			.end = base + size - 1,
-+		};
-+		put_device(dev);
-+	}
-+}
-+
- static int mock_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm)
- {
- 	struct cxl_port *port = cxlhdm->port;
-@@ -596,16 +732,7 @@ static int mock_cxl_enumerate_decoders(struct cxl_hdm *cxlhdm)
- 			cxld = &cxled->cxld;
- 		}
- 
--		cxld->hpa_range = (struct range) {
--			.start = 0,
--			.end = -1,
--		};
--
--		cxld->interleave_ways = min_not_zero(target_count, 1);
--		cxld->interleave_granularity = SZ_4K;
--		cxld->target_type = CXL_DECODER_EXPANDER;
--		cxld->commit = mock_decoder_commit;
--		cxld->reset = mock_decoder_reset;
-+		mock_init_hdm_decoder(cxld);
- 
- 		if (target_count) {
- 			rc = device_for_each_child(port->uport, &ctx,
+@@ -678,7 +678,7 @@ static void mock_init_hdm_decoder(struct cxl_decoder *cxld)
+ 			cxld->interleave_ways = 2;
+ 		else
+ 			cxld->interleave_ways = 1;
+-		cxld->interleave_granularity = 256;
++		cxld->interleave_granularity = 4096;
+ 		cxld->hpa_range = (struct range) {
+ 			.start = base,
+ 			.end = base + size - 1,
 -- 
 2.42.0
 
