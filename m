@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347C3364AE;
-	Fri, 24 Nov 2023 19:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA00C364AE;
+	Fri, 24 Nov 2023 19:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCCemKh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902EEC433C8;
-	Fri, 24 Nov 2023 19:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLaZK3+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A04C433C9;
+	Fri, 24 Nov 2023 19:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853097;
-	bh=MA716UR0BQgRfIcHMK+CH3kXulQRnMykbJgqc5dY+po=;
+	s=korg; t=1700853100;
+	bh=QKf4mUCKEw+2rtJJwxQw9VD1iXDHe/BJiaofKqueXMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PCCemKh3juyl1aRsJukP07DMsO4HZxl49mYn2sB5fD+Z8ennUYNVatkgRAjpMgold
-	 JIe1UJYujqwDALOdT3f/Fwj9qksh9KoKjhl9ejTIBRfDhcLlnyPbxflWASVmplsl6H
-	 +ydv6ezpu7xuc9CDKmDKramuA4XWXBlQO9xlUGno=
+	b=mLaZK3+rra23k9OFi0o+24J7EEH5x+OopnuB4KPhhEAbXlDgJ652eO3srnqy5M/GI
+	 AfXPEwctC/c4lUxVVXe3qRW3HtiLRYvaLH7i01nAFKZg3OBgSa6HYmzK1Ug1QWJva8
+	 03MMStiNhfuZJ3QdyqV9Z8o91FGhZ7B/SMICGlsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aea1ad91e854d0a83e04@syzkaller.appspotmail.com,
-	Manas Ghandat <ghandatmanas@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Pawlowski <bartosz.pawlowski@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/297] jfs: fix array-index-out-of-bounds in dbFindLeaf
-Date: Fri, 24 Nov 2023 17:51:27 +0000
-Message-ID: <20231124172001.719934459@linuxfoundation.org>
+Subject: [PATCH 5.15 054/297] PCI: Extract ATS disabling to a helper function
+Date: Fri, 24 Nov 2023 17:51:36 +0000
+Message-ID: <20231124172002.081376764@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,85 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manas Ghandat <ghandatmanas@gmail.com>
+From: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
 
-[ Upstream commit 22cad8bc1d36547cdae0eef316c47d917ce3147c ]
+[ Upstream commit f18b1137d38c091cc8c16365219f0a1d4a30b3d1 ]
 
-Currently while searching for dmtree_t for sufficient free blocks there
-is an array out of bounds while getting element in tp->dm_stree. To add
-the required check for out of bound we first need to determine the type
-of dmtree. Thus added an extra parameter to dbFindLeaf so that the type
-of tree can be determined and the required check can be applied.
+Introduce quirk_no_ats() helper function to provide a standard way to
+disable ATS capability in PCI quirks.
 
-Reported-by: syzbot+aea1ad91e854d0a83e04@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=aea1ad91e854d0a83e04
-Signed-off-by: Manas Ghandat <ghandatmanas@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230908143606.685930-2-bartosz.pawlowski@intel.com
+Signed-off-by: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/pci/quirks.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 217a673b751ef..5b01026fff9bf 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -87,7 +87,7 @@ static int dbAllocCtl(struct bmap * bmp, s64 nblocks, int l2nb, s64 blkno,
- static int dbExtend(struct inode *ip, s64 blkno, s64 nblocks, s64 addnblocks);
- static int dbFindBits(u32 word, int l2nb);
- static int dbFindCtl(struct bmap * bmp, int l2nb, int level, s64 * blkno);
--static int dbFindLeaf(dmtree_t * tp, int l2nb, int *leafidx);
-+static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl);
- static int dbFreeBits(struct bmap * bmp, struct dmap * dp, s64 blkno,
- 		      int nblocks);
- static int dbFreeDmap(struct bmap * bmp, struct dmap * dp, s64 blkno,
-@@ -1785,7 +1785,7 @@ static int dbFindCtl(struct bmap * bmp, int l2nb, int level, s64 * blkno)
- 		 * dbFindLeaf() returns the index of the leaf at which
- 		 * free space was found.
- 		 */
--		rc = dbFindLeaf((dmtree_t *) dcp, l2nb, &leafidx);
-+		rc = dbFindLeaf((dmtree_t *) dcp, l2nb, &leafidx, true);
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 5955e682c4348..30efa1ee595d3 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5379,6 +5379,12 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0420, quirk_no_ext_tags);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0422, quirk_no_ext_tags);
  
- 		/* release the buffer.
- 		 */
-@@ -2032,7 +2032,7 @@ dbAllocDmapLev(struct bmap * bmp,
- 	 * free space.  if sufficient free space is found, dbFindLeaf()
- 	 * returns the index of the leaf at which free space was found.
- 	 */
--	if (dbFindLeaf((dmtree_t *) & dp->tree, l2nb, &leafidx))
-+	if (dbFindLeaf((dmtree_t *) &dp->tree, l2nb, &leafidx, false))
- 		return -ENOSPC;
- 
- 	if (leafidx < 0)
-@@ -2996,14 +2996,18 @@ static void dbAdjTree(dmtree_t * tp, int leafno, int newval)
-  *	leafidx	- return pointer to be set to the index of the leaf
-  *		  describing at least l2nb free blocks if sufficient
-  *		  free blocks are found.
-+ *	is_ctl	- determines if the tree is of type ctl
-  *
-  * RETURN VALUES:
-  *	0	- success
-  *	-ENOSPC	- insufficient free blocks.
-  */
--static int dbFindLeaf(dmtree_t * tp, int l2nb, int *leafidx)
-+static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- {
- 	int ti, n = 0, k, x = 0;
-+	int max_size;
+ #ifdef CONFIG_PCI_ATS
++static void quirk_no_ats(struct pci_dev *pdev)
++{
++	pci_info(pdev, "disabling ATS\n");
++	pdev->ats_cap = 0;
++}
 +
-+	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
+ /*
+  * Some devices require additional driver setup to enable ATS.  Don't use
+  * ATS for those devices as ATS will be enabled before the driver has had a
+@@ -5392,14 +5398,10 @@ static void quirk_amd_harvest_no_ats(struct pci_dev *pdev)
+ 		    (pdev->subsystem_device == 0xce19 ||
+ 		     pdev->subsystem_device == 0xcc10 ||
+ 		     pdev->subsystem_device == 0xcc08))
+-			goto no_ats;
+-		else
+-			return;
++			quirk_no_ats(pdev);
++	} else {
++		quirk_no_ats(pdev);
+ 	}
+-
+-no_ats:
+-	pci_info(pdev, "disabling ATS\n");
+-	pdev->ats_cap = 0;
+ }
  
- 	/* first check the root of the tree to see if there is
- 	 * sufficient free space.
-@@ -3024,6 +3028,8 @@ static int dbFindLeaf(dmtree_t * tp, int l2nb, int *leafidx)
- 			/* sufficient free space found.  move to the next
- 			 * level (or quit if this is the last level).
- 			 */
-+			if (x + n > max_size)
-+				return -ENOSPC;
- 			if (l2nb <= tp->dmt_stree[x + n])
- 				break;
- 		}
+ /* AMD Stoney platform GPU */
 -- 
 2.42.0
 
