@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD0439FC6;
-	Fri, 24 Nov 2023 18:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C40A381D6;
+	Fri, 24 Nov 2023 18:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbdgbp+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEEEC433C7;
-	Fri, 24 Nov 2023 18:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00Tqnk01"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36F0C433C7;
+	Fri, 24 Nov 2023 18:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849446;
-	bh=2RJUMDGp/35m/6HICiS7PxAqvDjqFNffyeGzCGn6xao=;
+	s=korg; t=1700849449;
+	bh=fg7TPX6hECAfYtRJsgQU8/2C1+sXU5c/CKNfci6Xoe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sbdgbp+u2s5wbTQUdXeFcO4EP2yg4u9/ITKOmsaiRaSf1hlR/ZvwkcNBvFIOEbLBq
-	 WjWCt0IfwYSNyEe8srnWmjuW52QduYL6KIDkPC8kk7RR/BzwyrYjqmDXI6wMTMcywf
-	 kTgyGpEN4WcepVjTccUO8bbUs1xzZI6LtFdX8jbA=
+	b=00Tqnk01uhG8NeYt2GO4d4UMLKYmhQklFrAR5nGenNdyWvVTiyP8nLo1z3VWYRx05
+	 jcVYbL8fb1RiiTQBDmJCQiv8/6ZNizQP+R0Eazt6+HtWk3+hNrcxvGHORYC5kjrPaf
+	 D6vifQ1NRlGmmgEIh2UVfiCTKCrVq4XHaO9thfio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jinghao Jia <jinghao@linux.ibm.com>,
+	Ruowen Qin <ruowenq2@illinois.edu>,
+	Jinghao Jia <jinghao7@illinois.edu>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/530] tty: Fix uninit-value access in ppp_sync_receive()
-Date: Fri, 24 Nov 2023 17:45:50 +0000
-Message-ID: <20231124172033.679243724@linuxfoundation.org>
+Subject: [PATCH 6.6 161/530] samples/bpf: syscall_tp_user: Fix array out-of-bound access
+Date: Fri, 24 Nov 2023 17:45:27 +0000
+Message-ID: <20231124172032.986872869@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,80 +44,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Jinghao Jia <jinghao@linux.ibm.com>
 
-[ Upstream commit 719639853d88071dfdfd8d9971eca9c283ff314c ]
+[ Upstream commit 9220c3ef6fefbf18f24aeedb1142a642b3de0596 ]
 
-KMSAN reported the following uninit-value access issue:
+Commit 06744f24696e ("samples/bpf: Add openat2() enter/exit tracepoint
+to syscall_tp sample") added two more eBPF programs to support the
+openat2() syscall. However, it did not increase the size of the array
+that holds the corresponding bpf_links. This leads to an out-of-bound
+access on that array in the bpf_object__for_each_program loop and could
+corrupt other variables on the stack. On our testing QEMU, it corrupts
+the map1_fds array and causes the sample to fail:
 
-=====================================================
-BUG: KMSAN: uninit-value in ppp_sync_input drivers/net/ppp/ppp_synctty.c:690 [inline]
-BUG: KMSAN: uninit-value in ppp_sync_receive+0xdc9/0xe70 drivers/net/ppp/ppp_synctty.c:334
- ppp_sync_input drivers/net/ppp/ppp_synctty.c:690 [inline]
- ppp_sync_receive+0xdc9/0xe70 drivers/net/ppp/ppp_synctty.c:334
- tiocsti+0x328/0x450 drivers/tty/tty_io.c:2295
- tty_ioctl+0x808/0x1920 drivers/tty/tty_io.c:2694
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:871 [inline]
- __se_sys_ioctl+0x211/0x400 fs/ioctl.c:857
- __x64_sys_ioctl+0x97/0xe0 fs/ioctl.c:857
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+  # ./syscall_tp
+  prog #0: map ids 4 5
+  verify map:4 val: 5
+  map_lookup failed: Bad file descriptor
 
-Uninit was created at:
- __alloc_pages+0x75d/0xe80 mm/page_alloc.c:4591
- __alloc_pages_node include/linux/gfp.h:238 [inline]
- alloc_pages_node include/linux/gfp.h:261 [inline]
- __page_frag_cache_refill+0x9a/0x2c0 mm/page_alloc.c:4691
- page_frag_alloc_align+0x91/0x5d0 mm/page_alloc.c:4722
- page_frag_alloc include/linux/gfp.h:322 [inline]
- __netdev_alloc_skb+0x215/0x6d0 net/core/skbuff.c:728
- netdev_alloc_skb include/linux/skbuff.h:3225 [inline]
- dev_alloc_skb include/linux/skbuff.h:3238 [inline]
- ppp_sync_input drivers/net/ppp/ppp_synctty.c:669 [inline]
- ppp_sync_receive+0x237/0xe70 drivers/net/ppp/ppp_synctty.c:334
- tiocsti+0x328/0x450 drivers/tty/tty_io.c:2295
- tty_ioctl+0x808/0x1920 drivers/tty/tty_io.c:2694
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:871 [inline]
- __se_sys_ioctl+0x211/0x400 fs/ioctl.c:857
- __x64_sys_ioctl+0x97/0xe0 fs/ioctl.c:857
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+Dynamically allocate the array based on the number of programs reported
+by libbpf to prevent similar inconsistencies in the future
 
-CPU: 0 PID: 12950 Comm: syz-executor.1 Not tainted 6.6.0-14500-g1c41041124bd #10
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc38 04/01/2014
-=====================================================
-
-ppp_sync_input() checks the first 2 bytes of the data are PPP_ALLSTATIONS
-and PPP_UI. However, if the data length is 1 and the first byte is
-PPP_ALLSTATIONS, an access to an uninitialized value occurs when checking
-PPP_UI. This patch resolves this issue by checking the data length.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 06744f24696e ("samples/bpf: Add openat2() enter/exit tracepoint to syscall_tp sample")
+Signed-off-by: Jinghao Jia <jinghao@linux.ibm.com>
+Signed-off-by: Ruowen Qin <ruowenq2@illinois.edu>
+Signed-off-by: Jinghao Jia <jinghao7@illinois.edu>
+Link: https://lore.kernel.org/r/20230917214220.637721-4-jinghao7@illinois.edu
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_synctty.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ samples/bpf/syscall_tp_user.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index ebcdffdf4f0e0..ea261a628786b 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -687,7 +687,7 @@ ppp_sync_input(struct syncppp *ap, const u8 *buf, const u8 *flags, int count)
+diff --git a/samples/bpf/syscall_tp_user.c b/samples/bpf/syscall_tp_user.c
+index 18c94c7e8a40e..7a09ac74fac07 100644
+--- a/samples/bpf/syscall_tp_user.c
++++ b/samples/bpf/syscall_tp_user.c
+@@ -48,7 +48,7 @@ static void verify_map(int map_id)
+ static int test(char *filename, int nr_tests)
+ {
+ 	int map0_fds[nr_tests], map1_fds[nr_tests], fd, i, j = 0;
+-	struct bpf_link *links[nr_tests * 4];
++	struct bpf_link **links = NULL;
+ 	struct bpf_object *objs[nr_tests];
+ 	struct bpf_program *prog;
  
- 	/* strip address/control field if present */
- 	p = skb->data;
--	if (p[0] == PPP_ALLSTATIONS && p[1] == PPP_UI) {
-+	if (skb->len >= 2 && p[0] == PPP_ALLSTATIONS && p[1] == PPP_UI) {
- 		/* chop off address/control */
- 		if (skb->len < 3)
- 			goto err;
+@@ -60,6 +60,19 @@ static int test(char *filename, int nr_tests)
+ 			goto cleanup;
+ 		}
+ 
++		/* One-time initialization */
++		if (!links) {
++			int nr_progs = 0;
++
++			bpf_object__for_each_program(prog, objs[i])
++				nr_progs += 1;
++
++			links = calloc(nr_progs * nr_tests, sizeof(struct bpf_link *));
++
++			if (!links)
++				goto cleanup;
++		}
++
+ 		/* load BPF program */
+ 		if (bpf_object__load(objs[i])) {
+ 			fprintf(stderr, "loading BPF object file failed\n");
+@@ -107,8 +120,12 @@ static int test(char *filename, int nr_tests)
+ 	}
+ 
+ cleanup:
+-	for (j--; j >= 0; j--)
+-		bpf_link__destroy(links[j]);
++	if (links) {
++		for (j--; j >= 0; j--)
++			bpf_link__destroy(links[j]);
++
++		free(links);
++	}
+ 
+ 	for (i--; i >= 0; i--)
+ 		bpf_object__close(objs[i]);
 -- 
 2.42.0
 
