@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCAF2E64F;
-	Fri, 24 Nov 2023 19:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5242E64F;
+	Fri, 24 Nov 2023 19:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJeO809G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE737C433C7;
-	Fri, 24 Nov 2023 19:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xI9nlC/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE7FC433C7;
+	Fri, 24 Nov 2023 19:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853187;
-	bh=fLGzfDhG0jRl9Bh2RN9Ww6ufGxLaxIqh2S6WfteR8Ew=;
+	s=korg; t=1700853189;
+	bh=gwG82S8AZ95Ew4Fog1+9KmcOKR45aUY6+MK0Hb/bGQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJeO809Gdi10vyRhAz4Iq75U/1T52ZWMecLPH2bJpxUv/YRyEowgbk3Z4p7gnE8XU
-	 CEi2kqi2WZTPAJnydE3+vrD624NMYJk6e81jafICmGxiTMzEIvFbe5ksG6GrLTRBQQ
-	 xDROJii5fCN2s6VuDU12cwOShjreMUOW8Rx8vTDI=
+	b=xI9nlC/Toqryx37qMp8zKrq2Al6Ohhd77BJCi8Jtsjwi1CSbxL2r1ON2ayojdG389
+	 e0eaB3yKO7OlHE7dkqXbIlGIVN4LD78ZE4gxYYJAcFAyYTGXSI+BN6fcssolR5T3Yb
+	 0o2gMmil4myY4jvA3LqyZ9KmF0yNm3XkXWaps6FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bartosz Golaszewski <brgl@bgdev.pl>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 089/297] gpio: Dont fiddle with irqchips marked as immutable
-Date: Fri, 24 Nov 2023 17:52:11 +0000
-Message-ID: <20231124172003.364278246@linuxfoundation.org>
+Subject: [PATCH 5.15 090/297] gpio: Expose the gpiochip_irq_re[ql]res helpers
+Date: Fri, 24 Nov 2023 17:52:12 +0000
+Message-ID: <20231124172003.397571398@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -45,85 +45,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 6c846d026d490b2383d395bc8e7b06336219667b ]
+[ Upstream commit 704f08753b6dcd0e08c1953af0b2c7f3fac87111 ]
 
-In order to move away from gpiolib messing with the internals of
-unsuspecting irqchips, add a flag by which irqchips advertise
-that they are not to be messed with, and do solemnly swear that
-they correctly call into the gpiolib helpers when required.
-
-Also nudge the users into converting their drivers to the
-new model.
+The GPIO subsystem has a couple of internal helpers to manage
+resources on behalf of the irqchip. Expose them so that GPIO
+drivers can use them directly.
 
 Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 Reviewed-by: Bartosz Golaszewski <brgl@bgdev.pl>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20220419141846.598305-2-maz@kernel.org
+Link: https://lore.kernel.org/r/20220419141846.598305-3-maz@kernel.org
 Stable-dep-of: dc3115e6c5d9 ("hid: cp2112: Fix IRQ shutdown stopping polling for all IRQs on chip")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 7 ++++++-
- include/linux/irq.h    | 2 ++
- kernel/irq/debugfs.c   | 1 +
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpio/gpiolib.c      | 6 ++++--
+ include/linux/gpio/driver.h | 4 ++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index f9fdd117c654c..e572c30a202ad 100644
+index e572c30a202ad..57e726d65904b 100644
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -1483,6 +1483,11 @@ static void gpiochip_set_irq_hooks(struct gpio_chip *gc)
+@@ -1431,19 +1431,21 @@ static int gpiochip_to_irq(struct gpio_chip *gc, unsigned int offset)
+ 	return irq_create_mapping(domain, offset);
+ }
+ 
+-static int gpiochip_irq_reqres(struct irq_data *d)
++int gpiochip_irq_reqres(struct irq_data *d)
  {
- 	struct irq_chip *irqchip = gc->irq.chip;
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
  
-+	if (irqchip->flags & IRQCHIP_IMMUTABLE)
-+		return;
+ 	return gpiochip_reqres_irq(gc, d->hwirq);
+ }
++EXPORT_SYMBOL(gpiochip_irq_reqres);
+ 
+-static void gpiochip_irq_relres(struct irq_data *d)
++void gpiochip_irq_relres(struct irq_data *d)
+ {
+ 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
+ 
+ 	gpiochip_relres_irq(gc, d->hwirq);
+ }
++EXPORT_SYMBOL(gpiochip_irq_relres);
+ 
+ static void gpiochip_irq_mask(struct irq_data *d)
+ {
+diff --git a/include/linux/gpio/driver.h b/include/linux/gpio/driver.h
+index 65df2ce96f0b1..b241fc23ff3a2 100644
+--- a/include/linux/gpio/driver.h
++++ b/include/linux/gpio/driver.h
+@@ -595,6 +595,10 @@ void gpiochip_relres_irq(struct gpio_chip *gc, unsigned int offset);
+ void gpiochip_disable_irq(struct gpio_chip *gc, unsigned int offset);
+ void gpiochip_enable_irq(struct gpio_chip *gc, unsigned int offset);
+ 
++/* irq_data versions of the above */
++int gpiochip_irq_reqres(struct irq_data *data);
++void gpiochip_irq_relres(struct irq_data *data);
 +
-+	chip_warn(gc, "not an immutable chip, please consider fixing it!\n");
-+
- 	if (!irqchip->irq_request_resources &&
- 	    !irqchip->irq_release_resources) {
- 		irqchip->irq_request_resources = gpiochip_irq_reqres;
-@@ -1650,7 +1655,7 @@ static void gpiochip_irqchip_remove(struct gpio_chip *gc)
- 		irq_domain_remove(gc->irq.domain);
- 	}
- 
--	if (irqchip) {
-+	if (irqchip && !(irqchip->flags & IRQCHIP_IMMUTABLE)) {
- 		if (irqchip->irq_request_resources == gpiochip_irq_reqres) {
- 			irqchip->irq_request_resources = NULL;
- 			irqchip->irq_release_resources = NULL;
-diff --git a/include/linux/irq.h b/include/linux/irq.h
-index f9e6449fbbbae..296ef3b7d7afa 100644
---- a/include/linux/irq.h
-+++ b/include/linux/irq.h
-@@ -570,6 +570,7 @@ struct irq_chip {
-  * IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND:  Invokes __enable_irq()/__disable_irq() for wake irqs
-  *                                    in the suspend path if they are in disabled state
-  * IRQCHIP_AFFINITY_PRE_STARTUP:      Default affinity update before startup
-+ * IRQCHIP_IMMUTABLE:		      Don't ever change anything in this chip
-  */
- enum {
- 	IRQCHIP_SET_TYPE_MASKED			= (1 <<  0),
-@@ -583,6 +584,7 @@ enum {
- 	IRQCHIP_SUPPORTS_NMI			= (1 <<  8),
- 	IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND	= (1 <<  9),
- 	IRQCHIP_AFFINITY_PRE_STARTUP		= (1 << 10),
-+	IRQCHIP_IMMUTABLE			= (1 << 11),
- };
- 
- #include <linux/irqdesc.h>
-diff --git a/kernel/irq/debugfs.c b/kernel/irq/debugfs.c
-index e4cff358b437e..7ff52d94b42c0 100644
---- a/kernel/irq/debugfs.c
-+++ b/kernel/irq/debugfs.c
-@@ -58,6 +58,7 @@ static const struct irq_bit_descr irqchip_flags[] = {
- 	BIT_MASK_DESCR(IRQCHIP_SUPPORTS_LEVEL_MSI),
- 	BIT_MASK_DESCR(IRQCHIP_SUPPORTS_NMI),
- 	BIT_MASK_DESCR(IRQCHIP_ENABLE_WAKEUP_ON_SUSPEND),
-+	BIT_MASK_DESCR(IRQCHIP_IMMUTABLE),
- };
- 
- static void
+ /* Line status inquiry for drivers */
+ bool gpiochip_line_is_open_drain(struct gpio_chip *gc, unsigned int offset);
+ bool gpiochip_line_is_open_source(struct gpio_chip *gc, unsigned int offset);
 -- 
 2.42.0
 
