@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F18733CC7;
-	Fri, 24 Nov 2023 18:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE24933CC7;
+	Fri, 24 Nov 2023 18:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBSrahuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D26C433C7;
-	Fri, 24 Nov 2023 18:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPeD48dU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3F7C433C7;
+	Fri, 24 Nov 2023 18:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851608;
-	bh=cUt+FnMJzwzPjbe8ZReWHDMBuKJ2Rg8o2hZ+Vh3ovXE=;
+	s=korg; t=1700851610;
+	bh=A99W1N+nyDsWe5JPHDjXOYMbo8Fv2WzUgHcs9TAAs+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBSrahuX6PhEwGuy53mzd1odAQveNVsQE1J53omd6TnqqqkSea9siEE5pYJOKcNmc
-	 nL5htsVkZPCDMeuQe0AhRFzDKi1hByH6iCHDwEj3XHJL9+iuejqNsnZK1Fkkex22qk
-	 OSs7XMZlBHD4R08dcnnB41QQ9b3JN1YzqGCkIMog=
+	b=iPeD48dUxgHs9b4cN4PL4ctK7L9OTLE2yUTsT9JSMJdzz5cQm5i/mXF2ZaCx1zxSp
+	 AesFo9WB43QwFzlyBgbNwHWUMU2m5300MKoo4SxVV4Sl5fAWFE20fUAUaDNRM9yprs
+	 36z0bm9tao4jexz9sy6qfkByIlAP9lhg9QokOOOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/372] vsock: read from sockets error queue
-Date: Fri, 24 Nov 2023 17:46:50 +0000
-Message-ID: <20231124172011.250649095@linuxfoundation.org>
+Subject: [PATCH 6.1 003/372] perf/core: Bail out early if the request AUX area is out of bound
+Date: Fri, 24 Nov 2023 17:46:30 +0000
+Message-ID: <20231124172010.546160199@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,95 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit 49dbe25adac42d3e06f65d1420946bec65896222 ]
+[ Upstream commit 54aee5f15b83437f23b2b2469bcf21bdd9823916 ]
 
-This adds handling of MSG_ERRQUEUE input flag in receive call. This flag
-is used to read socket's error queue instead of data queue. Possible
-scenario of error queue usage is receiving completions for transmission
-with MSG_ZEROCOPY flag. This patch also adds new defines: 'SOL_VSOCK'
-and 'VSOCK_RECVERR'.
+When perf-record with a large AUX area, e.g 4GB, it fails with:
 
-Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    #perf record -C 0 -m ,4G -e arm_spe_0// -- sleep 1
+    failed to mmap with 12 (Cannot allocate memory)
+
+and it reveals a WARNING with __alloc_pages():
+
+	------------[ cut here ]------------
+	WARNING: CPU: 44 PID: 17573 at mm/page_alloc.c:5568 __alloc_pages+0x1ec/0x248
+	Call trace:
+	 __alloc_pages+0x1ec/0x248
+	 __kmalloc_large_node+0xc0/0x1f8
+	 __kmalloc_node+0x134/0x1e8
+	 rb_alloc_aux+0xe0/0x298
+	 perf_mmap+0x440/0x660
+	 mmap_region+0x308/0x8a8
+	 do_mmap+0x3c0/0x528
+	 vm_mmap_pgoff+0xf4/0x1b8
+	 ksys_mmap_pgoff+0x18c/0x218
+	 __arm64_sys_mmap+0x38/0x58
+	 invoke_syscall+0x50/0x128
+	 el0_svc_common.constprop.0+0x58/0x188
+	 do_el0_svc+0x34/0x50
+	 el0_svc+0x34/0x108
+	 el0t_64_sync_handler+0xb8/0xc0
+	 el0t_64_sync+0x1a4/0x1a8
+
+'rb->aux_pages' allocated by kcalloc() is a pointer array which is used to
+maintains AUX trace pages. The allocated page for this array is physically
+contiguous (and virtually contiguous) with an order of 0..MAX_ORDER. If the
+size of pointer array crosses the limitation set by MAX_ORDER, it reveals a
+WARNING.
+
+So bail out early with -ENOMEM if the request AUX area is out of bound,
+e.g.:
+
+    #perf record -C 0 -m ,4G -e arm_spe_0// -- sleep 1
+    failed to mmap with 12 (Cannot allocate memory)
+
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/socket.h          |  1 +
- include/uapi/linux/vm_sockets.h | 17 +++++++++++++++++
- net/vmw_vsock/af_vsock.c        |  6 ++++++
- 3 files changed, 24 insertions(+)
+ kernel/events/ring_buffer.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/linux/socket.h b/include/linux/socket.h
-index de3701a2a2129..1db29aab8f9c3 100644
---- a/include/linux/socket.h
-+++ b/include/linux/socket.h
-@@ -376,6 +376,7 @@ struct ucred {
- #define SOL_MPTCP	284
- #define SOL_MCTP	285
- #define SOL_SMC		286
-+#define SOL_VSOCK	287
+diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
+index 273a0fe7910a5..45965f13757e4 100644
+--- a/kernel/events/ring_buffer.c
++++ b/kernel/events/ring_buffer.c
+@@ -699,6 +699,12 @@ int rb_alloc_aux(struct perf_buffer *rb, struct perf_event *event,
+ 		watermark = 0;
+ 	}
  
- /* IPX options */
- #define IPX_TYPE	1
-diff --git a/include/uapi/linux/vm_sockets.h b/include/uapi/linux/vm_sockets.h
-index c60ca33eac594..ed07181d4eff9 100644
---- a/include/uapi/linux/vm_sockets.h
-+++ b/include/uapi/linux/vm_sockets.h
-@@ -191,4 +191,21 @@ struct sockaddr_vm {
- 
- #define IOCTL_VM_SOCKETS_GET_LOCAL_CID		_IO(7, 0xb9)
- 
-+/* MSG_ZEROCOPY notifications are encoded in the standard error format,
-+ * sock_extended_err. See Documentation/networking/msg_zerocopy.rst in
-+ * kernel source tree for more details.
-+ */
-+
-+/* 'cmsg_level' field value of 'struct cmsghdr' for notification parsing
-+ * when MSG_ZEROCOPY flag is used on transmissions.
-+ */
-+
-+#define SOL_VSOCK	287
-+
-+/* 'cmsg_type' field value of 'struct cmsghdr' for notification parsing
-+ * when MSG_ZEROCOPY flag is used on transmissions.
-+ */
-+
-+#define VSOCK_RECVERR	1
-+
- #endif /* _UAPI_VM_SOCKETS_H */
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 8360c790a8a01..84471745c0829 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -89,6 +89,7 @@
- #include <linux/types.h>
- #include <linux/bitops.h>
- #include <linux/cred.h>
-+#include <linux/errqueue.h>
- #include <linux/init.h>
- #include <linux/io.h>
- #include <linux/kernel.h>
-@@ -110,6 +111,7 @@
- #include <linux/workqueue.h>
- #include <net/sock.h>
- #include <net/af_vsock.h>
-+#include <uapi/linux/vm_sockets.h>
- 
- static int __vsock_bind(struct sock *sk, struct sockaddr_vm *addr);
- static void vsock_sk_destruct(struct sock *sk);
-@@ -2096,6 +2098,10 @@ vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 	int err;
- 
- 	sk = sock->sk;
-+
-+	if (unlikely(flags & MSG_ERRQUEUE))
-+		return sock_recv_errqueue(sk, msg, len, SOL_VSOCK, VSOCK_RECVERR);
-+
- 	vsk = vsock_sk(sk);
- 	err = 0;
- 
++	/*
++	 * kcalloc_node() is unable to allocate buffer if the size is larger
++	 * than: PAGE_SIZE << MAX_ORDER; directly bail out in this case.
++	 */
++	if (get_order((unsigned long)nr_pages * sizeof(void *)) > MAX_ORDER)
++		return -ENOMEM;
+ 	rb->aux_pages = kcalloc_node(nr_pages, sizeof(void *), GFP_KERNEL,
+ 				     node);
+ 	if (!rb->aux_pages)
 -- 
 2.42.0
 
