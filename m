@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A1D39FFD;
-	Fri, 24 Nov 2023 18:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F85A381D5;
+	Fri, 24 Nov 2023 18:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyKPFohJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B87FC433C8;
-	Fri, 24 Nov 2023 18:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LN/9dbAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15ABC433C8;
+	Fri, 24 Nov 2023 18:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849649;
-	bh=kGA4yeavj1LukDbBJwMHSKOMbbtM3CdPKA3knA+h//E=;
+	s=korg; t=1700849652;
+	bh=34N0RO3lxd1+/vpVfA1FfyiEUDk4UyMBDWxKIBaj6Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SyKPFohJnqi5U3CWVNdEISGO1tRV6etHjgOjP5mtfPTwpTebMmWbqd8KMCtRFeAfR
-	 beKoxcY0rPME3rqiD6VAkvFKZDNfzudIEZOaP4mFhI3WEM/9WCakuNIJCUq+1rKgU4
-	 jj9qMp8MU7vcAceDOfF03OerKBLqI/7x3UeFXQS8=
+	b=LN/9dbADI5B7ExMiL8d6ZeY9cH4X/rg84a0LGFGMS4+8ygfIYAKmdmmM7Oj+oiliY
+	 xbuO5xnsgJtnaE3oVOfvQ5H0m7yy3eYzlRRHl96IFBNaebJaJzwpfWq+rS7xC1hph7
+	 69JPIRZAh8jFKHN+nKjcGr+KoDHwY+BPDEIk8NLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.6 265/530] proc: sysctl: prevent aliased sysctls from getting passed to init
-Date: Fri, 24 Nov 2023 17:47:11 +0000
-Message-ID: <20231124172036.101220387@linuxfoundation.org>
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.6 242/530] powerpc/perf: Fix disabling BHRB and instruction sampling
+Date: Fri, 24 Nov 2023 17:46:48 +0000
+Message-ID: <20231124172035.423970877@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,79 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-commit 8001f49394e353f035306a45bcf504f06fca6355 upstream.
+commit ea142e590aec55ba40c5affb4d49e68c713c63dc upstream.
 
-The code that checks for unknown boot options is unaware of the sysctl
-alias facility, which maps bootparams to sysctl values.  If a user sets
-an old value that has a valid alias, a message about an invalid
-parameter will be printed during boot, and the parameter will get passed
-to init.  Fix by checking for the existence of aliased parameters in the
-unknown boot parameter code.  If an alias exists, don't return an error
-or pass the value to init.
+When the PMU is disabled, MMCRA is not updated to disable BHRB and
+instruction sampling. This can lead to those features remaining enabled,
+which can slow down a real or emulated CPU.
 
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
-Cc: stable@vger.kernel.org
-Fixes: 0a477e1ae21b ("kernel/sysctl: support handling command line aliases")
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Fixes: 1cade527f6e9 ("powerpc/perf: BHRB control to disable BHRB logic when not used")
+Cc: stable@vger.kernel.org # v5.9+
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231018153423.298373-1-npiggin@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c  |    7 +++++++
- include/linux/sysctl.h |    6 ++++++
- init/main.c            |    4 ++++
- 3 files changed, 17 insertions(+)
+ arch/powerpc/perf/core-book3s.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -1592,6 +1592,13 @@ static const char *sysctl_find_alias(cha
- 	return NULL;
- }
+--- a/arch/powerpc/perf/core-book3s.c
++++ b/arch/powerpc/perf/core-book3s.c
+@@ -1371,8 +1371,7 @@ static void power_pmu_disable(struct pmu
+ 		/*
+ 		 * Disable instruction sampling if it was enabled
+ 		 */
+-		if (cpuhw->mmcr.mmcra & MMCRA_SAMPLE_ENABLE)
+-			val &= ~MMCRA_SAMPLE_ENABLE;
++		val &= ~MMCRA_SAMPLE_ENABLE;
  
-+bool sysctl_is_alias(char *param)
-+{
-+	const char *alias = sysctl_find_alias(param);
-+
-+	return alias != NULL;
-+}
-+
- /* Set sysctl value passed on kernel command line. */
- static int process_sysctl_arg(char *param, char *val,
- 			       const char *unused, void *arg)
---- a/include/linux/sysctl.h
-+++ b/include/linux/sysctl.h
-@@ -242,6 +242,7 @@ extern void __register_sysctl_init(const
- extern struct ctl_table_header *register_sysctl_mount_point(const char *path);
- 
- void do_sysctl_args(void);
-+bool sysctl_is_alias(char *param);
- int do_proc_douintvec(struct ctl_table *table, int write,
- 		      void *buffer, size_t *lenp, loff_t *ppos,
- 		      int (*conv)(unsigned long *lvalp,
-@@ -287,6 +288,11 @@ static inline void setup_sysctl_set(stru
- static inline void do_sysctl_args(void)
- {
- }
-+
-+static inline bool sysctl_is_alias(char *param)
-+{
-+	return false;
-+}
- #endif /* CONFIG_SYSCTL */
- 
- int sysctl_max_threads(struct ctl_table *table, int write, void *buffer,
---- a/init/main.c
-+++ b/init/main.c
-@@ -530,6 +530,10 @@ static int __init unknown_bootoption(cha
- {
- 	size_t len = strlen(param);
- 
-+	/* Handle params aliased to sysctls */
-+	if (sysctl_is_alias(param))
-+		return 0;
-+
- 	repair_env_string(param, val);
- 
- 	/* Handle obsolete-style parameters */
+ 		/* Disable BHRB via mmcra (BHRBRD) for p10 */
+ 		if (ppmu->flags & PPMU_ARCH_31)
+@@ -1383,7 +1382,7 @@ static void power_pmu_disable(struct pmu
+ 		 * instruction sampling or BHRB.
+ 		 */
+ 		if (val != mmcra) {
+-			mtspr(SPRN_MMCRA, mmcra);
++			mtspr(SPRN_MMCRA, val);
+ 			mb();
+ 			isync();
+ 		}
 
 
