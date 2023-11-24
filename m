@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C842EAEA;
-	Fri, 24 Nov 2023 19:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D7A2C87B;
+	Fri, 24 Nov 2023 19:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ws2z/jmP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEC7C433C8;
-	Fri, 24 Nov 2023 19:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVLTGD8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E23C433C8;
+	Fri, 24 Nov 2023 19:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853333;
-	bh=kjuY0HURZLHzzcsgCnUU6ZE5SKiVVQhh3LER52wV9ds=;
+	s=korg; t=1700853335;
+	bh=P7hLQjhYFJEYvVjmI7+k+19L+coAfQmtQFOiTbo98y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ws2z/jmP0OsjKFZyyGanyl8mwwp/Y67Sb8AO72nZ8fR8tSJDGrxdnWp8SQWLkM7If
-	 jetHQM2jTN8wA8J8a5v1oDys4uV5Y85Ra2IjqsCNA6FCnTwpbc3/Uv/w15q5Q+tTSK
-	 Dy53Nv/wWhPxDQYNMyPR2DWkP5ZdCyj5DI0IrmKY=
+	b=UVLTGD8DLArhvRrbbHgZ97q6jI8UEiIfQ8/ACC1rvwPpmH2rX2+JxGWJaVZVLUhTv
+	 o8AEJ4jy6uU6VAkIwoGjb6grNEkYCKC5+D+5iNhEJqfzT+yhzYtRXgls1LagYujtVW
+	 z3Oi/Bg6v3EYyN9z0qditpvdMck1SPii2pFytxNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Chandan Babu R <chandanbabu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/297] xfs: dont leak memory when attr fork loading fails
-Date: Fri, 24 Nov 2023 17:53:08 +0000
-Message-ID: <20231124172005.374026163@linuxfoundation.org>
+Subject: [PATCH 5.15 147/297] xfs: fix intermittent hang during quotacheck
+Date: Fri, 24 Nov 2023 17:53:09 +0000
+Message-ID: <20231124172005.405616055@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -46,93 +46,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit c78c2d0903183a41beb90c56a923e30f90fa91b9 ]
+[ Upstream commit f0c2d7d2abca24d19831c99edea458704fac8087 ]
 
-I observed the following evidence of a memory leak while running xfs/399
-from the xfs fsck test suite (edited for brevity):
+Every now and then, I see the following hang during mount time
+quotacheck when running fstests.  Turning on KASAN seems to make it
+happen somewhat more frequently.  I've edited the backtrace for brevity.
 
-XFS (sde): Metadata corruption detected at xfs_attr_shortform_verify_struct.part.0+0x7b/0xb0 [xfs], inode 0x1172 attr fork
-XFS: Assertion failed: ip->i_af.if_u1.if_data == NULL, file: fs/xfs/libxfs/xfs_inode_fork.c, line: 315
+XFS (sdd): Quotacheck needed: Please wait.
+XFS: Assertion failed: bp->b_flags & _XBF_DELWRI_Q, file: fs/xfs/xfs_buf.c, line: 2411
 ------------[ cut here ]------------
-WARNING: CPU: 2 PID: 91635 at fs/xfs/xfs_message.c:104 assfail+0x46/0x4a [xfs]
-CPU: 2 PID: 91635 Comm: xfs_scrub Tainted: G        W         5.19.0-rc7-xfsx #rc7 6e6475eb29fd9dda3181f81b7ca7ff961d277a40
+WARNING: CPU: 0 PID: 1831409 at fs/xfs/xfs_message.c:104 assfail+0x46/0x4a [xfs]
+CPU: 0 PID: 1831409 Comm: mount Tainted: G        W         5.19.0-rc6-xfsx #rc6 09911566947b9f737b036b4af85e399e4b9aef64
 Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
 RIP: 0010:assfail+0x46/0x4a [xfs]
+Code: a0 8f 41 a0 e8 45 fe ff ff 8a 1d 2c 36 10 00 80 fb 01 76 0f 0f b6 f3 48 c7 c7 c0 f0 4f a0 e8 10 f0 02 e1 80 e3 01 74 02 0f 0b <0f> 0b 5b c3 48 8d 45 10 48 89 e2 4c 89 e6 48 89 1c 24 48 89 44 24
+RSP: 0018:ffffc900078c7b30 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff8880099ac000 RCX: 000000007fffffff
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffa0418fa0
+RBP: ffff8880197bc1c0 R08: 0000000000000000 R09: 000000000000000a
+R10: 000000000000000a R11: f000000000000000 R12: ffffc900078c7d20
+R13: 00000000fffffff5 R14: ffffc900078c7d20 R15: 0000000000000000
+FS:  00007f0449903800(0000) GS:ffff88803ec00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005610ada631f0 CR3: 0000000014dd8002 CR4: 00000000001706f0
 Call Trace:
  <TASK>
- xfs_ifork_zap_attr+0x7c/0xb0
- xfs_iformat_attr_fork+0x86/0x110
- xfs_inode_from_disk+0x41d/0x480
- xfs_iget+0x389/0xd70
- xfs_bulkstat_one_int+0x5b/0x540
- xfs_bulkstat_iwalk+0x1e/0x30
- xfs_iwalk_ag_recs+0xd1/0x160
- xfs_iwalk_run_callbacks+0xb9/0x180
- xfs_iwalk_ag+0x1d8/0x2e0
- xfs_iwalk+0x141/0x220
- xfs_bulkstat+0x105/0x180
- xfs_ioc_bulkstat.constprop.0.isra.0+0xc5/0x130
- xfs_file_ioctl+0xa5f/0xef0
- __x64_sys_ioctl+0x82/0xa0
+ xfs_buf_delwri_pushbuf+0x150/0x160 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_qm_flush_one+0xd6/0x130 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_qm_dquot_walk.isra.0+0x109/0x1e0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_qm_quotacheck+0x319/0x490 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_qm_mount_quotas+0x65/0x2c0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_mountfs+0x6b5/0xab0 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ xfs_fs_fill_super+0x781/0x990 [xfs 4561f5b32c9bfb874ec98d58d0719464e1f87368]
+ get_tree_bdev+0x175/0x280
+ vfs_get_tree+0x1a/0x80
+ path_mount+0x6f5/0xaa0
+ __x64_sys_mount+0x103/0x140
  do_syscall_64+0x2b/0x80
  entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-This newly-added assertion checks that there aren't any incore data
-structures hanging off the incore fork when we're trying to reset its
-contents.  From the call trace, it is evident that iget was trying to
-construct an incore inode from the ondisk inode, but the attr fork
-verifier failed and we were trying to undo all the memory allocations
-that we had done earlier.
+I /think/ this can happen if xfs_qm_flush_one is racing with
+xfs_qm_dquot_isolate (i.e. dquot reclaim) when the second function has
+taken the dquot flush lock but xfs_qm_dqflush hasn't yet locked the
+dquot buffer, let alone queued it to the delwri list.  In this case,
+flush_one will fail to get the dquot flush lock, but it can lock the
+incore buffer, but xfs_buf_delwri_pushbuf will then trip over this
+ASSERT, which checks that the buffer isn't on a delwri list.  The hang
+results because the _delwri_submit_buffers ignores non DELWRI_Q buffers,
+which means that xfs_buf_iowait waits forever for an IO that has not yet
+been scheduled.
 
-The three assertions in xfs_ifork_zap_attr check that the caller has
-already called xfs_idestroy_fork, which clearly has not been done here.
-As the zap function then zeroes the pointers, we've effectively leaked
-the memory.
+AFAICT, a reasonable solution here is to detect a dquot buffer that is
+not on a DELWRI list, drop it, and return -EAGAIN to try the flush
+again.  It's not /that/ big of a deal if quotacheck writes the dquot
+buffer repeatedly before we even set QUOTA_CHKD.
 
-The shortest change would have been to insert an extra call to
-xfs_idestroy_fork, but it makes more sense to bundle the _idestroy_fork
-call into _zap_attr, since all other callsites call _idestroy_fork
-immediately prior to calling _zap_attr.  IOWs, it eliminates one way to
-fail.
-
-Note: This change only applies cleanly to 2ed5b09b3e8f, since we just
-reworked the attr fork lifetime.  However, I think this memory leak has
-existed since 0f45a1b20cd8, since the chain xfs_iformat_attr_fork ->
-xfs_iformat_local -> xfs_init_local_fork will allocate
-ifp->if_u1.if_data, but if xfs_ifork_verify_local_attr fails,
-xfs_iformat_attr_fork will free i_afp without freeing any of the stuff
-hanging off i_afp.  The solution for older kernels I think is to add the
-missing call to xfs_idestroy_fork just prior to calling kmem_cache_free.
-
-Found by fuzzing a.sfattr.hdr.totsize = lastbit in xfs/399.
-
-[ backport note: did not include refactoring of xfs_idestroy_fork into
-xfs_ifork_zap_attr, simply added the missing call as suggested in the
-commit for backports ]
-
-Fixes: 2ed5b09b3e8f ("xfs: make inode attribute forks a permanent part of struct xfs_inode")
-Probably-Fixes: 0f45a1b20cd8 ("xfs: improve local fork verification")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_inode_fork.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/xfs/xfs_qm.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_inode_fork.c b/fs/xfs/libxfs/xfs_inode_fork.c
-index 20095233d7bc0..c1f965af8432d 100644
---- a/fs/xfs/libxfs/xfs_inode_fork.c
-+++ b/fs/xfs/libxfs/xfs_inode_fork.c
-@@ -330,6 +330,7 @@ xfs_iformat_attr_fork(
- 	}
+diff --git a/fs/xfs/xfs_qm.c b/fs/xfs/xfs_qm.c
+index 623244650a2f0..792736e29a37a 100644
+--- a/fs/xfs/xfs_qm.c
++++ b/fs/xfs/xfs_qm.c
+@@ -1244,6 +1244,13 @@ xfs_qm_flush_one(
+ 			error = -EINVAL;
+ 			goto out_unlock;
+ 		}
++
++		if (!(bp->b_flags & _XBF_DELWRI_Q)) {
++			error = -EAGAIN;
++			xfs_buf_relse(bp);
++			goto out_unlock;
++		}
++
+ 		xfs_buf_unlock(bp);
  
- 	if (error) {
-+		xfs_idestroy_fork(ip->i_afp);
- 		kmem_cache_free(xfs_ifork_zone, ip->i_afp);
- 		ip->i_afp = NULL;
- 	}
+ 		xfs_buf_delwri_pushbuf(bp, buffer_list);
 -- 
 2.42.0
 
