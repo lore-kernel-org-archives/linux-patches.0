@@ -1,30 +1,213 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9552028DA1
-	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 23:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-User-agent: mu4e 1.10.8; emacs 30.0.50
-From: Sam James <sam@gentoo.org>
-To: sam@gentoo.org,stable@vger.kernel.org
-Cc: djakov@kernel.org,gregkh@linuxfoundation.org,holger@applied-asynchrony.com,konrad.dybcio@linaro.org,mgorny@gentoo.org,patches@lists.linux.dev,sashal@kernel.org,stable@vger.kernel.org
-Subject: Re: [PATCH 5.10 137/191] interconnect: qcom: sc7180: Set ACV
- enable_mask
-In-Reply-To: <87fs10k1ee.fsf@gentoo.org>
-Date: Fri, 24 Nov 2023 23:01:17 +0000
-Organization: Gentoo
-Message-ID: <87wmu6oiwe.fsf@gentoo.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4B528DC3
+	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 23:21:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J+5ZC0h9"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6d7e56f6845so1374321a34.0
+        for <patches@lists.linux.dev>; Fri, 24 Nov 2023 15:21:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700868116; x=1701472916; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OlCPjaAtW62P1imPAMqJ2Iy75N+wtMzBYmO+H1bzrO0=;
+        b=J+5ZC0h9o5hbAy2UbI+b29dFWItz39lJz906CXJmM+yNJ2kyQN8sOW8babRfgoEMfl
+         JzS/TpFs/QucTNgLs0/JX+t3iHI2LAmSLHOK6ApwkPH2OvSBFk4isA3oIWCOpyPbl3VP
+         oznELRDDiuSoAAs/3OGsT0oxLL88BOC4WQUmZTSH4mOrre6iHY10CXVlb5Nt2vss+p51
+         vrEcB/uV/IJlIyYBMjpXLS6J0FaDfRUBn4O1IWbr1iVpbF3W5nD4NESYW+D5jg3QS/lO
+         IALHpSKUvB9av56x512HDkxY0GXZ2KOO6WCeF824Q7dy5WDf64nG3xhFmfj5+7Sxb0bQ
+         Y79g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700868116; x=1701472916;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OlCPjaAtW62P1imPAMqJ2Iy75N+wtMzBYmO+H1bzrO0=;
+        b=NXpNZFL+Uwnp29us2n5znXRQpos/6/I342+3MGvePs/FgHc0Hrva3VTZ19Cf+N5UQV
+         lfUNW6346xUjNyGQd9fOP6wfXvHqJsh8jnJ5wxED870HqfJSLj03X8XfP7b6Rqd8/BWS
+         6jQqDpRfjit8eKomLqxyLAFR/1Arn8j8C0hynKphGU8RgMa9x9UxP4TDiIep6gh3mU5t
+         9dYOrIGLg5L2xgUYshNb84Xc/q64n5S9V9QUOzFUrMmlFXD4HM0zQTpTWRcgIwiJThyA
+         zfY6AkSuKbfT5gq2tZQqj+YwLiB0fX3HN6cnWjFd5M+4NZBeMDETa+3k2SZtquaTCLIr
+         BC8g==
+X-Gm-Message-State: AOJu0YwlWzBgqdjv5xUHTHcw9fQimqqqfFRPueRLfPJ3QYjSfvZS/r8W
+	iusENyZCI+XCSabQ0JjCPx0ZTg==
+X-Google-Smtp-Source: AGHT+IFVf3soPcU1tHWDQrpPYm5yzOD4//vhn47e6wYOjfrUzz8bPsS5nXGhVJhOJX7Oy5J/zJNdHQ==
+X-Received: by 2002:a05:6830:1d47:b0:6d8:a8:b59c with SMTP id p7-20020a0568301d4700b006d800a8b59cmr4982138oth.27.1700868116578;
+        Fri, 24 Nov 2023 15:21:56 -0800 (PST)
+Received: from [192.168.17.16] ([138.84.62.70])
+        by smtp.gmail.com with ESMTPSA id j13-20020a9d7f0d000000b006ce28044207sm647747otq.58.2023.11.24.15.21.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Nov 2023 15:21:56 -0800 (PST)
+Message-ID: <c0a5a523-708b-431c-b212-df1af5ad7bc0@linaro.org>
+Date: Fri, 24 Nov 2023 17:21:53 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 000/297] 5.15.140-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, deller@gmx.de, hca@linux.ibm.com
+References: <20231124172000.087816911@linuxfoundation.org>
+From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
+In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Could a revert be queued for the next 5.10.x please?
+Hello!
 
-thanks,
-sam
+On 24/11/23 11:50 a. m., Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.140 release.
+> There are 297 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 26 Nov 2023 17:19:17 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.140-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+There are problems with PA-RISC:
+
+-----8<-----
+   /builds/linux/drivers/parisc/power.c:201:34: warning: 'struct sys_off_data' declared inside parameter list will not be visible outside of this definition or declaration
+     201 | static int qemu_power_off(struct sys_off_data *data)
+         |                                  ^~~~~~~~~~~~
+   /builds/linux/drivers/parisc/power.c: In function 'qemu_power_off':
+   /builds/linux/drivers/parisc/power.c:204:43: error: invalid use of undefined type 'struct sys_off_data'
+     204 |         gsc_writel(0, (unsigned long) data->cb_data);
+         |                                           ^~
+   /builds/linux/drivers/parisc/power.c: In function 'power_init':
+   /builds/linux/drivers/parisc/power.c:239:17: error: implicit declaration of function 'register_sys_off_handler'; did you mean 'register_restart_handler'? [-Werror=implicit-function-declaration]
+     239 |                 register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~
+         |                 register_restart_handler
+   /builds/linux/drivers/parisc/power.c:239:42: error: 'SYS_OFF_MODE_POWER_OFF' undeclared (first use in this function); did you mean 'SYSTEM_POWER_OFF'?
+     239 |                 register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
+         |                                          ^~~~~~~~~~~~~~~~~~~~~~
+         |                                          SYSTEM_POWER_OFF
+   /builds/linux/drivers/parisc/power.c:239:42: note: each undeclared identifier is reported only once for each function it appears in
+   /builds/linux/drivers/parisc/power.c:239:66: error: 'SYS_OFF_PRIO_DEFAULT' undeclared (first use in this function)
+     239 |                 register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
+         |                                                                  ^~~~~~~~~~~~~~~~~~~~
+   cc1: some warnings being treated as errors
+   make[3]: *** [/builds/linux/scripts/Makefile.build:289: drivers/parisc/power.o] Error 1
+----->8-----
+
+That's allnoconfig with GCC 11; defconfig and tinyconfig fail just like that.
+
+Bisection points to:
+
+   commit 065a7d0b92c0f1ef4160e2129d835eb6093cc675
+   Author: Helge Deller <deller@gmx.de>
+   Date:   Tue Oct 17 22:19:53 2023 +0200
+
+       parisc/power: Add power soft-off when running on qemu
+       
+       commit d0c219472980d15f5cbc5c8aec736848bda3f235 upstream.
+
+
+Then there's this failure on System/390:
+
+-----8<-----
+   /builds/linux/arch/s390/mm/page-states.c: In function 'mark_kernel_pgd':
+   /builds/linux/arch/s390/mm/page-states.c:175:38: error: request for member 'val' in something not a structure or union
+     max_addr = (S390_lowcore.kernel_asce.val & _ASCE_TYPE_MASK) >> 2;
+                                         ^
+   In file included from /builds/linux/arch/s390/include/asm/page.h:186,
+                    from /builds/linux/arch/s390/include/asm/thread_info.h:26,
+                    from /builds/linux/include/linux/thread_info.h:60,
+                    from /builds/linux/arch/s390/include/asm/preempt.h:6,
+                    from /builds/linux/include/linux/preempt.h:78,
+                    from /builds/linux/include/linux/spinlock.h:55,
+                    from /builds/linux/include/linux/mmzone.h:8,
+                    from /builds/linux/include/linux/gfp.h:6,
+                    from /builds/linux/include/linux/mm.h:10,
+                    from /builds/linux/arch/s390/mm/page-states.c:13:
+   /builds/linux/arch/s390/mm/page-states.c: In function 'cmma_init_nodat':
+   /builds/linux/arch/s390/mm/page-states.c:204:23: error: 'invalid_pg_dir' undeclared (first use in this function); did you mean 'is_valid_bugaddr'?
+     page = virt_to_page(&invalid_pg_dir);
+                          ^~~~~~~~~~~~~~
+   /builds/linux/include/asm-generic/memory_model.h:25:40: note: in definition of macro '__pfn_to_page'
+    #define __pfn_to_page(pfn) (vmemmap + (pfn))
+                                           ^~~
+   /builds/linux/arch/s390/include/asm/page.h:176:29: note: in expansion of macro 'phys_to_pfn'
+    #define virt_to_pfn(kaddr) (phys_to_pfn(__pa(kaddr)))
+                                ^~~~~~~~~~~
+   /builds/linux/arch/s390/include/asm/page.h:176:41: note: in expansion of macro '__pa'
+    #define virt_to_pfn(kaddr) (phys_to_pfn(__pa(kaddr)))
+                                            ^~~~
+   /builds/linux/arch/s390/include/asm/page.h:179:41: note: in expansion of macro 'virt_to_pfn'
+    #define virt_to_page(kaddr) pfn_to_page(virt_to_pfn(kaddr))
+                                            ^~~~~~~~~~~
+   /builds/linux/arch/s390/mm/page-states.c:204:9: note: in expansion of macro 'virt_to_page'
+     page = virt_to_page(&invalid_pg_dir);
+            ^~~~~~~~~~~~
+   /builds/linux/arch/s390/mm/page-states.c:204:23: note: each undeclared identifier is reported only once for each function it appears in
+     page = virt_to_page(&invalid_pg_dir);
+                          ^~~~~~~~~~~~~~
+   /builds/linux/include/asm-generic/memory_model.h:25:40: note: in definition of macro '__pfn_to_page'
+    #define __pfn_to_page(pfn) (vmemmap + (pfn))
+                                           ^~~
+   /builds/linux/arch/s390/include/asm/page.h:176:29: note: in expansion of macro 'phys_to_pfn'
+    #define virt_to_pfn(kaddr) (phys_to_pfn(__pa(kaddr)))
+                                ^~~~~~~~~~~
+   /builds/linux/arch/s390/include/asm/page.h:176:41: note: in expansion of macro '__pa'
+    #define virt_to_pfn(kaddr) (phys_to_pfn(__pa(kaddr)))
+                                            ^~~~
+   /builds/linux/arch/s390/include/asm/page.h:179:41: note: in expansion of macro 'virt_to_pfn'
+    #define virt_to_page(kaddr) pfn_to_page(virt_to_pfn(kaddr))
+                                            ^~~~~~~~~~~
+   /builds/linux/arch/s390/mm/page-states.c:204:9: note: in expansion of macro 'virt_to_page'
+     page = virt_to_page(&invalid_pg_dir);
+            ^~~~~~~~~~~~
+   make[3]: *** [/builds/linux/scripts/Makefile.build:289: arch/s390/mm/page-states.o] Error 1
+----->8-----
+
+Bisection in this case points to:
+
+   commit d247caa47712c9cc36f25ec744f3b5dba90c3334
+   Author: Heiko Carstens <hca@linux.ibm.com>
+   Date:   Tue Oct 17 21:07:03 2023 +0200
+
+       s390/cmma: fix initial kernel address space page table walk
+       
+       commit 16ba44826a04834d3eeeda4b731c2ea3481062b7 upstream.
+
+
+Reproducers:
+
+   tuxmake --runtime podman --target-arch parisc --toolchain gcc-11 --kconfig allnoconfig
+
+and
+
+   tuxmake --runtime podman --target-arch s390 --toolchain gcc-8 --kconfig allnoconfig
+
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Greetings!
+
+Daniel Díaz
+daniel.diaz@linaro.org
+
