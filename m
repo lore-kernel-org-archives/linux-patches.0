@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3156533CCA;
-	Fri, 24 Nov 2023 18:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17A52E40E;
+	Fri, 24 Nov 2023 18:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcMom7G2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF096C433C7;
-	Fri, 24 Nov 2023 18:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8PeER3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38339C433C9;
+	Fri, 24 Nov 2023 18:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851096;
-	bh=FxbRszyIjuupPEwPLJylMA61USO0zRPu0WmXmRC1VBE=;
+	s=korg; t=1700851098;
+	bh=nACSeCE47rwIK+3pJIwqQa9PZSaV9itBhuCEVupMRWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QcMom7G2corrqMzl//+SPBwunQ4F9bnSVyUdQCgFs6D0P7Pljde8vVZF/MhQKhBDB
-	 y7LYNLYfm5H4RvPqF1Iz40s3W9ScQFwaap4QMM3CmrwhDvBOGNoUjLOwpRDN96//Ww
-	 t95J2IV3Hk/TqLn9jdWO/POCd096/6cULDyRAW2c=
+	b=j8PeER3O4h9OQwuZPachC2YuRPF/oWEAuTICraBqI9xQgXI6pTvko58k4H+rxhJLc
+	 U6+GQQqYRtQhohwWRYFqAYKAY7hwoAomZPpLdzMTeXt1U6370riSKK6ZtN+zRB9d/E
+	 eB4YyCb2SVYRylPLD3PkKrpdjr6l6w4CgpEk6Mwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Geffon <bgeffon@google.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.5 312/491] PM: hibernate: Clean up sync_read handling in snapshot_write_next()
-Date: Fri, 24 Nov 2023 17:49:08 +0000
-Message-ID: <20231124172033.941830570@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christoph Paasch <cpaasch@apple.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Frederic Weisbecker <frederic@kernel.org>
+Subject: [PATCH 6.5 313/491] rcu: kmemleak: Ignore kmemleak false positives when RCU-freeing objects
+Date: Fri, 24 Nov 2023 17:49:09 +0000
+Message-ID: <20231124172033.974552737@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,67 +44,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Geffon <bgeffon@google.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit d08970df1980476f27936e24d452550f3e9e92e1 upstream.
+commit 5f98fd034ca6fd1ab8c91a3488968a0e9caaabf6 upstream.
 
-In snapshot_write_next(), sync_read is set and unset in three different
-spots unnecessiarly. As a result there is a subtle bug where the first
-page after the meta data has been loaded unconditionally sets sync_read
-to 0. If this first PFN was actually a highmem page, then the returned
-buffer will be the global "buffer," and the page needs to be loaded
-synchronously.
+Since the actual slab freeing is deferred when calling kvfree_rcu(), so
+is the kmemleak_free() callback informing kmemleak of the object
+deletion. From the perspective of the kvfree_rcu() caller, the object is
+freed and it may remove any references to it. Since kmemleak does not
+scan RCU internal data storing the pointer, it will report such objects
+as leaks during the grace period.
 
-That is, I'm not sure we can always assume the following to be safe:
+Tell kmemleak to ignore such objects on the kvfree_call_rcu() path. Note
+that the tiny RCU implementation does not have such issue since the
+objects can be tracked from the rcu_ctrlblk structure.
 
-	handle->buffer = get_buffer(&orig_bm, &ca);
-	handle->sync_read = 0;
-
-Because get_buffer() can call get_highmem_page_buffer() which can
-return 'buffer'.
-
-The easiest way to address this is just set sync_read before
-snapshot_write_next() returns if handle->buffer == buffer.
-
-Signed-off-by: Brian Geffon <bgeffon@google.com>
-Fixes: 8357376d3df2 ("[PATCH] swsusp: Improve handling of highmem")
-Cc: All applicable <stable@vger.kernel.org>
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://lore.kernel.org/all/F903A825-F05F-4B77-A2B5-7356282FBA2C@apple.com/
+Cc: <stable@vger.kernel.org>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/snapshot.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ kernel/rcu/tree.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/kernel/power/snapshot.c
-+++ b/kernel/power/snapshot.c
-@@ -2689,8 +2689,6 @@ int snapshot_write_next(struct snapshot_
- 	if (handle->cur > 1 && handle->cur > nr_meta_pages + nr_copy_pages)
- 		return 0;
- 
--	handle->sync_read = 1;
--
- 	if (!handle->cur) {
- 		if (!buffer)
- 			/* This makes the buffer be freed by swsusp_free() */
-@@ -2726,7 +2724,6 @@ int snapshot_write_next(struct snapshot_
- 			memory_bm_position_reset(&orig_bm);
- 			restore_pblist = NULL;
- 			handle->buffer = get_buffer(&orig_bm, &ca);
--			handle->sync_read = 0;
- 			if (IS_ERR(handle->buffer))
- 				return PTR_ERR(handle->buffer);
- 		}
-@@ -2736,9 +2733,8 @@ int snapshot_write_next(struct snapshot_
- 		handle->buffer = get_buffer(&orig_bm, &ca);
- 		if (IS_ERR(handle->buffer))
- 			return PTR_ERR(handle->buffer);
--		if (handle->buffer != buffer)
--			handle->sync_read = 0;
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -31,6 +31,7 @@
+ #include <linux/bitops.h>
+ #include <linux/export.h>
+ #include <linux/completion.h>
++#include <linux/kmemleak.h>
+ #include <linux/moduleparam.h>
+ #include <linux/panic.h>
+ #include <linux/panic_notifier.h>
+@@ -3397,6 +3398,14 @@ void kvfree_call_rcu(struct rcu_head *he
+ 		success = true;
  	}
-+	handle->sync_read = (handle->buffer == buffer);
- 	handle->cur++;
- 	return PAGE_SIZE;
- }
+ 
++	/*
++	 * The kvfree_rcu() caller considers the pointer freed at this point
++	 * and likely removes any references to it. Since the actual slab
++	 * freeing (and kmemleak_free()) is deferred, tell kmemleak to ignore
++	 * this object (no scanning or false positives reporting).
++	 */
++	kmemleak_ignore(ptr);
++
+ 	// Set timer to drain after KFREE_DRAIN_JIFFIES.
+ 	if (rcu_scheduler_active == RCU_SCHEDULER_RUNNING)
+ 		schedule_delayed_monitor_work(krcp);
 
 
