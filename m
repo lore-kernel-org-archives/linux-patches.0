@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54C035F1A;
-	Fri, 24 Nov 2023 18:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D452E655;
+	Fri, 24 Nov 2023 18:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaL8vRr7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB48C433C8;
-	Fri, 24 Nov 2023 18:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTV/yoFP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEC1C433C8;
+	Fri, 24 Nov 2023 18:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850945;
-	bh=DuBhBT92BxRQflAknpyf8OBA8Wp3yTqVlsvH/+1kDGA=;
+	s=korg; t=1700850948;
+	bh=+ZjUa/eu7g50bJZrP6G9VUgr36lAy7WB8iW4erLnN1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eaL8vRr7L8J8zymH9AwGwzL2A3Zi/FBi4XPQz7W7YZ4Ym051+oClloXfxauKzeE7j
-	 SjgiXvxvMaw6/lRFhdKfuV3Os/MjVPIa+uuWuVvJ3iTsNKG2AwdeIFMU192A7iI7CM
-	 OY4KWRxdmHbF1KkkWUAj3XM1PAWiimyxbPBojNzY=
+	b=oTV/yoFPY1bqANryJNUyF5pcpGBsBG8VEaOjUiYCIrqF3RiW3Pv/f/DTPdzf7+995
+	 Cc5p8Q/YiZPrx4JesdnSnv/OXyoAlKDOnshLDg1pzBErCv4+p/AeqXA7b80DAg1z6o
+	 o7bQu1aLDjszbsELYbs0Rz+FCos/q89vj5XdI8QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Krasavin <pkrasavin@imaqliq.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Rokosov <ddrokosov@salutedevices.com>
-Subject: [PATCH 6.5 252/491] tty: serial: meson: fix hard LOCKUP on crtscts mode
-Date: Fri, 24 Nov 2023 17:48:08 +0000
-Message-ID: <20231124172032.142650220@linuxfoundation.org>
+	David Woodhouse <dwmw@amazon.co.uk>
+Subject: [PATCH 6.5 253/491] hvc/xen: fix console unplug
+Date: Fri, 24 Nov 2023 17:48:09 +0000
+Message-ID: <20231124172032.170274070@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,82 +40,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Krasavin <pkrasavin@imaqliq.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 2a1d728f20edeee7f26dc307ed9df4e0d23947ab upstream.
+commit a30badfd7c13fc8763a9e10c5a12ba7f81515a55 upstream.
 
-There might be hard lockup if we set crtscts mode on port without RTS/CTS configured:
+On unplug of a Xen console, xencons_disconnect_backend() unconditionally
+calls free_irq() via unbind_from_irqhandler(), causing a warning of
+freeing an already-free IRQ:
 
-# stty -F /dev/ttyAML6 crtscts; echo 1 > /dev/ttyAML6; echo 2 > /dev/ttyAML6
-[   95.890386] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-[   95.890857] rcu:     3-...0: (201 ticks this GP) idle=e33c/1/0x4000000000000000 softirq=5844/5846 fqs=4984
-[   95.900212] rcu:     (detected by 2, t=21016 jiffies, g=7753, q=296 ncpus=4)
-[   95.906972] Task dump for CPU 3:
-[   95.910178] task:bash            state:R  running task     stack:0     pid:205   ppid:1      flags:0x00000202
-[   95.920059] Call trace:
-[   95.922485]  __switch_to+0xe4/0x168
-[   95.925951]  0xffffff8003477508
-[   95.974379] watchdog: Watchdog detected hard LOCKUP on cpu 3
-[   95.974424] Modules linked in: 88x2cs(O) rtc_meson_vrtc
+(qemu) device_del con1
+[   32.050919] ------------[ cut here ]------------
+[   32.050942] Trying to free already-free IRQ 33
+[   32.050990] WARNING: CPU: 0 PID: 51 at kernel/irq/manage.c:1895 __free_irq+0x1d4/0x330
 
-Possible solution would be to not allow to setup crtscts on such port.
+It should be using evtchn_put() to tear down the event channel binding,
+and let the Linux IRQ side of it be handled by notifier_del_irq() through
+the HVC code.
 
-Tested on S905X3 based board.
+On which topic... xencons_disconnect_backend() should call hvc_remove()
+*first*, rather than tearing down the event channel and grant mapping
+while they are in use. And then the IRQ is guaranteed to be freed by
+the time it's torn down by evtchn_put().
 
-Fixes: ff7693d079e5 ("ARM: meson: serial: add MesonX SoC on-chip uart driver")
+Since evtchn_put() also closes the actual event channel, avoid calling
+xenbus_free_evtchn() except in the failure path where the IRQ was not
+successfully set up.
+
+However, calling hvc_remove() at the start of xencons_disconnect_backend()
+still isn't early enough. An unplug request is indicated by the backend
+setting its state to XenbusStateClosing, which triggers a notification
+to xencons_backend_changed(), which... does nothing except set its own
+frontend state directly to XenbusStateClosed without *actually* tearing
+down the HVC device or, you know, making sure it isn't actively in use.
+
+So the backend sees the guest frontend set its state to XenbusStateClosed
+and stops servicing the interrupt... and the guest spins for ever in the
+domU_write_console() function waiting for the ring to drain.
+
+Fix that one by calling hvc_remove() from xencons_backend_changed() before
+signalling to the backend that it's OK to proceed with the removal.
+
+Tested with 'dd if=/dev/zero of=/dev/hvc1' while telling Qemu to remove
+the console device.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Krasavin <pkrasavin@imaqliq.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Dmitry Rokosov <ddrokosov@salutedevices.com>
+Link: https://lore.kernel.org/r/20231020161529.355083-4-dwmw2@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/meson_uart.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/tty/hvc/hvc_xen.c |   32 ++++++++++++++++++++++++--------
+ 1 file changed, 24 insertions(+), 8 deletions(-)
 
---- a/drivers/tty/serial/meson_uart.c
-+++ b/drivers/tty/serial/meson_uart.c
-@@ -379,10 +379,14 @@ static void meson_uart_set_termios(struc
- 	else
- 		val |= AML_UART_STOP_BIT_1SB;
- 
--	if (cflags & CRTSCTS)
--		val &= ~AML_UART_TWO_WIRE_EN;
--	else
-+	if (cflags & CRTSCTS) {
-+		if (port->flags & UPF_HARD_FLOW)
-+			val &= ~AML_UART_TWO_WIRE_EN;
-+		else
-+			termios->c_cflag &= ~CRTSCTS;
-+	} else {
- 		val |= AML_UART_TWO_WIRE_EN;
+--- a/drivers/tty/hvc/hvc_xen.c
++++ b/drivers/tty/hvc/hvc_xen.c
+@@ -377,18 +377,21 @@ void xen_console_resume(void)
+ #ifdef CONFIG_HVC_XEN_FRONTEND
+ static void xencons_disconnect_backend(struct xencons_info *info)
+ {
+-	if (info->irq > 0)
+-		unbind_from_irqhandler(info->irq, NULL);
+-	info->irq = 0;
++	if (info->hvc != NULL)
++		hvc_remove(info->hvc);
++	info->hvc = NULL;
++	if (info->irq > 0) {
++		evtchn_put(info->evtchn);
++		info->irq = 0;
++		info->evtchn = 0;
 +	}
++	/* evtchn_put() will also close it so this is only an error path */
+ 	if (info->evtchn > 0)
+ 		xenbus_free_evtchn(info->xbdev, info->evtchn);
+ 	info->evtchn = 0;
+ 	if (info->gntref > 0)
+ 		gnttab_free_grant_references(info->gntref);
+ 	info->gntref = 0;
+-	if (info->hvc != NULL)
+-		hvc_remove(info->hvc);
+-	info->hvc = NULL;
+ }
  
- 	writel(val, port->membase + AML_UART_CONTROL);
+ static void xencons_free(struct xencons_info *info)
+@@ -553,10 +556,23 @@ static void xencons_backend_changed(stru
+ 		if (dev->state == XenbusStateClosed)
+ 			break;
+ 		fallthrough;	/* Missed the backend's CLOSING state */
+-	case XenbusStateClosing:
++	case XenbusStateClosing: {
++		struct xencons_info *info = dev_get_drvdata(&dev->dev);;
++
++		/*
++		 * Don't tear down the evtchn and grant ref before the other
++		 * end has disconnected, but do stop userspace from trying
++		 * to use the device before we allow the backend to close.
++		 */
++		if (info->hvc) {
++			hvc_remove(info->hvc);
++			info->hvc = NULL;
++		}
++
+ 		xenbus_frontend_closed(dev);
+ 		break;
+ 	}
++	}
+ }
  
-@@ -697,6 +701,7 @@ static int meson_uart_probe(struct platf
- 	u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
- 	int ret = 0;
- 	int irq;
-+	bool has_rtscts;
- 
- 	if (pdev->dev.of_node)
- 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
-@@ -724,6 +729,7 @@ static int meson_uart_probe(struct platf
- 		return irq;
- 
- 	of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
-+	has_rtscts = of_property_read_bool(pdev->dev.of_node, "uart-has-rtscts");
- 
- 	if (meson_ports[pdev->id]) {
- 		dev_err(&pdev->dev, "port %d already allocated\n", pdev->id);
-@@ -743,6 +749,8 @@ static int meson_uart_probe(struct platf
- 	port->mapsize = resource_size(res_mem);
- 	port->irq = irq;
- 	port->flags = UPF_BOOT_AUTOCONF | UPF_LOW_LATENCY;
-+	if (has_rtscts)
-+		port->flags |= UPF_HARD_FLOW;
- 	port->has_sysrq = IS_ENABLED(CONFIG_SERIAL_MESON_CONSOLE);
- 	port->dev = &pdev->dev;
- 	port->line = pdev->id;
+ static const struct xenbus_device_id xencons_ids[] = {
+@@ -616,7 +632,7 @@ static int __init xen_hvc_init(void)
+ 		list_del(&info->list);
+ 		spin_unlock_irqrestore(&xencons_lock, flags);
+ 		if (info->irq)
+-			unbind_from_irqhandler(info->irq, NULL);
++			evtchn_put(info->evtchn);
+ 		kfree(info);
+ 		return r;
+ 	}
 
 
