@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C51C2FC21;
-	Fri, 24 Nov 2023 18:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B759835EE6;
+	Fri, 24 Nov 2023 18:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+m2lxZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A609FC433C8;
-	Fri, 24 Nov 2023 18:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIt64ic+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BB8C433C7;
+	Fri, 24 Nov 2023 18:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851066;
-	bh=JvONdaAAWFfnNG0tuAV+5J9+lq1xjd4C/2cHOKF5r/s=;
+	s=korg; t=1700851068;
+	bh=Y+TaBrh35AW57b/D5TKK5X96AhG5y+JSveGPAqwLADs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+m2lxZCKabQjNrv7FsyVOCfI4eBJt8LSU4vfLUe4F4Om4nZYs60IUMW+4Ru6bCo1
-	 8zytEc4ngClOrih4KwNIc6Kz+0fN3A+e+qWln9Hre7v0/Jp0HIxYp42PR03tKFlva+
-	 n7OFpli7M1m3wPpZGW6SWvnu0jzQSMjGB6HE/6oI=
+	b=QIt64ic+uN1OUsF1AVc9jPStxjWcRr5I6Hp6mxWjX+zyudZdnoqNslEEb44pP7Sqx
+	 iSIxFGsirNc4opoybE+1jCf5ly2V4ByhblKq00KaQbNkwyeZhOF9VUyQN6fs1MpTPi
+	 ss4rfuo+8ZhdjczVYdstZ15ovUj2xJ1HFDbd9OMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Carl Huang <quic_cjhuang@quicinc.com>,
 	Johan Hovold <johan+linaro@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>
-Subject: [PATCH 6.5 275/491] wifi: ath11k: fix htt pktlog locking
-Date: Fri, 24 Nov 2023 17:48:31 +0000
-Message-ID: <20231124172032.838662171@linuxfoundation.org>
+Subject: [PATCH 6.5 276/491] wifi: ath11k: fix gtk offload status event locking
+Date: Fri, 24 Nov 2023 17:48:32 +0000
+Message-ID: <20231124172032.871025895@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,50 +45,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 3f77c7d605b29df277d77e9ee75d96e7ad145d2d upstream.
+commit 1dea3c0720a146bd7193969f2847ccfed5be2221 upstream.
 
-The ath11k active pdevs are protected by RCU but the htt pktlog handling
-code calling ath11k_mac_get_ar_by_pdev_id() was not marked as a
-read-side critical section.
+The ath11k active pdevs are protected by RCU but the gtk offload status
+event handling code calling ath11k_mac_get_arvif_by_vdev_id() was not
+marked as a read-side critical section.
 
 Mark the code in question as an RCU read-side critical section to avoid
 any potential use-after-free issues.
 
 Compile tested only.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org      # 5.6
+Fixes: a16d9b50cfba ("ath11k: support GTK rekey offload")
+Cc: stable@vger.kernel.org      # 5.18
+Cc: Carl Huang <quic_cjhuang@quicinc.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231019112521.2071-1-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20231019155342.31631-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/wmi.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -1621,14 +1621,20 @@ static void ath11k_htt_pktlog(struct ath
- 	u8 pdev_id;
- 
- 	pdev_id = FIELD_GET(HTT_T2H_PPDU_STATS_INFO_PDEV_ID, data->hdr);
-+
-+	rcu_read_lock();
-+
- 	ar = ath11k_mac_get_ar_by_pdev_id(ab, pdev_id);
- 	if (!ar) {
- 		ath11k_warn(ab, "invalid pdev id %d on htt pktlog\n", pdev_id);
--		return;
-+		goto out;
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -8619,12 +8619,13 @@ static void ath11k_wmi_gtk_offload_statu
+ 		return;
  	}
  
- 	trace_ath11k_htt_pktlog(ar, data->payload, hdr->size,
- 				ar->ab->pktlog_defs_checksum);
++	rcu_read_lock();
 +
-+out:
-+	rcu_read_unlock();
- }
+ 	arvif = ath11k_mac_get_arvif_by_vdev_id(ab, ev->vdev_id);
+ 	if (!arvif) {
+ 		ath11k_warn(ab, "failed to get arvif for vdev_id:%d\n",
+ 			    ev->vdev_id);
+-		kfree(tb);
+-		return;
++		goto exit;
+ 	}
  
- static void ath11k_htt_backpressure_event_handler(struct ath11k_base *ab,
+ 	ath11k_dbg(ab, ATH11K_DBG_WMI, "event gtk offload refresh_cnt %d\n",
+@@ -8641,6 +8642,8 @@ static void ath11k_wmi_gtk_offload_statu
+ 
+ 	ieee80211_gtk_rekey_notify(arvif->vif, arvif->bssid,
+ 				   (void *)&replay_ctr_be, GFP_ATOMIC);
++exit:
++	rcu_read_unlock();
+ 
+ 	kfree(tb);
+ }
 
 
