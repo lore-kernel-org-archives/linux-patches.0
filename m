@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3D339FFD;
-	Fri, 24 Nov 2023 18:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F1639FE3;
+	Fri, 24 Nov 2023 18:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4Cbtkui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C01C433C8;
-	Fri, 24 Nov 2023 18:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTpKF5U0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D61C433C7;
+	Fri, 24 Nov 2023 18:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849598;
-	bh=H4K0Q6sCfWvzaXmg+GxUm+tw+Ra8SCKKvUb0s6HncNs=;
+	s=korg; t=1700849601;
+	bh=5sjaw4g5o7pXdnTuNYRMM7DYqYAXec3TxJkxV5X1GRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4CbtkuiMGwWNNfDK0r8XwSzF3UdEmu32amniJNbV3h3ZKYYGmewLEUMWiluiDUFG
-	 /Ks3EPDzkfl5m4n8w+03EeIYlyI43w8Ono5WG0CGYhNpFOFA94oK1Ib62JM4rkkv0G
-	 bNmDvk4M11qzRs5gmI5gjnmzSEFVs4XYQuAs6NAY=
+	b=RTpKF5U01swpA7gCzHjXCBe5sQolCxcM6T+4Bkj+ZwhcR4K9nK12CANjgNqe5V+ks
+	 gMib5DgIJaXoYth8EHBt8XTvkP5VvGAHCGJ9yt7EyKXddp0dWMV26J0A/4H8bme72q
+	 0zZLJKES0IgvVMWUQNnL6GT5WNIxLJRPoIYdFa0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	kernel test robot <lkp@intel.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 221/530] net/mlx5e: Dont modify the peer sent-to-vport rules for IPSec offload
-Date: Fri, 24 Nov 2023 17:46:27 +0000
-Message-ID: <20231124172034.784327152@linuxfoundation.org>
+Subject: [PATCH 6.6 212/530] pds_core: fix up some format-truncation complaints
+Date: Fri, 24 Nov 2023 17:46:18 +0000
+Message-ID: <20231124172034.510635168@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,39 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit bdf788cf224f61c20a01c58c00685d394d57887f ]
+[ Upstream commit 7c02f6ae676a954216a192612040f9a0cde3adf7 ]
 
-As IPSec packet offload in switchdev mode is not supported with LAG,
-it's unnecessary to modify those sent-to-vport rules to the peer eswitch.
+Our friendly kernel test robot pointed out a couple of potential
+string truncation issues.  None of which were we worried about,
+but can be relatively easily fixed to quiet the complaints.
 
-Fixes: c6c2bf5db4ea ("net/mlx5e: Support IPsec packet offload for TX in switchdev mode")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-9-saeed@kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310211736.66syyDpp-lkp@intel.com/
+Fixes: 45d76f492938 ("pds_core: set up device and adminq")
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Link: https://lore.kernel.org/r/20231113183257.71110-3-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amd/pds_core/core.h    | 2 +-
+ drivers/net/ethernet/amd/pds_core/dev.c     | 8 ++++++--
+ drivers/net/ethernet/amd/pds_core/devlink.c | 2 +-
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index b296ac52a4397..88236e75fd901 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -984,7 +984,8 @@ mlx5_eswitch_add_send_to_vport_rule(struct mlx5_eswitch *on_esw,
- 	dest.vport.flags |= MLX5_FLOW_DEST_VPORT_VHCA_ID;
- 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
+diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
+index e545fafc48196..b1c1f1007b065 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.h
++++ b/drivers/net/ethernet/amd/pds_core/core.h
+@@ -15,7 +15,7 @@
+ #define PDSC_DRV_DESCRIPTION	"AMD/Pensando Core Driver"
  
--	if (rep->vport == MLX5_VPORT_UPLINK && on_esw->offloads.ft_ipsec_tx_pol) {
-+	if (rep->vport == MLX5_VPORT_UPLINK &&
-+	    on_esw == from_esw && on_esw->offloads.ft_ipsec_tx_pol) {
- 		dest.ft = on_esw->offloads.ft_ipsec_tx_pol;
- 		flow_act.flags = FLOW_ACT_IGNORE_FLOW_LEVEL;
- 		dest.type = MLX5_FLOW_DESTINATION_TYPE_FLOW_TABLE;
+ #define PDSC_WATCHDOG_SECS	5
+-#define PDSC_QUEUE_NAME_MAX_SZ  32
++#define PDSC_QUEUE_NAME_MAX_SZ  16
+ #define PDSC_ADMINQ_MIN_LENGTH	16	/* must be a power of two */
+ #define PDSC_NOTIFYQ_LENGTH	64	/* must be a power of two */
+ #define PDSC_TEARDOWN_RECOVERY	false
+diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
+index f77cd9f5a2fda..eb178728edba9 100644
+--- a/drivers/net/ethernet/amd/pds_core/dev.c
++++ b/drivers/net/ethernet/amd/pds_core/dev.c
+@@ -254,10 +254,14 @@ static int pdsc_identify(struct pdsc *pdsc)
+ 	struct pds_core_drv_identity drv = {};
+ 	size_t sz;
+ 	int err;
++	int n;
+ 
+ 	drv.drv_type = cpu_to_le32(PDS_DRIVER_LINUX);
+-	snprintf(drv.driver_ver_str, sizeof(drv.driver_ver_str),
+-		 "%s %s", PDS_CORE_DRV_NAME, utsname()->release);
++	/* Catching the return quiets a Wformat-truncation complaint */
++	n = snprintf(drv.driver_ver_str, sizeof(drv.driver_ver_str),
++		     "%s %s", PDS_CORE_DRV_NAME, utsname()->release);
++	if (n > sizeof(drv.driver_ver_str))
++		dev_dbg(pdsc->dev, "release name truncated, don't care\n");
+ 
+ 	/* Next let's get some info about the device
+ 	 * We use the devcmd_lock at this level in order to
+diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
+index d9607033bbf21..d2abf32b93fe3 100644
+--- a/drivers/net/ethernet/amd/pds_core/devlink.c
++++ b/drivers/net/ethernet/amd/pds_core/devlink.c
+@@ -104,7 +104,7 @@ int pdsc_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
+ 	struct pds_core_fw_list_info fw_list;
+ 	struct pdsc *pdsc = devlink_priv(dl);
+ 	union pds_core_dev_comp comp;
+-	char buf[16];
++	char buf[32];
+ 	int listlen;
+ 	int err;
+ 	int i;
 -- 
 2.42.0
 
