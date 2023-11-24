@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512B82FC4E;
-	Fri, 24 Nov 2023 18:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9812FC4E;
+	Fri, 24 Nov 2023 18:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlfqS/Ju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D034BC433C8;
-	Fri, 24 Nov 2023 18:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmqOuZ+j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A71DC433C8;
+	Fri, 24 Nov 2023 18:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851836;
-	bh=27RnbItsDWyqIsFQjTCJQR/kcMZ6iMNHExsYnwl0fjo=;
+	s=korg; t=1700851838;
+	bh=yQY8b56RRhSRM4FHOJMe++aH7HDtU8+ccp+xF1GOsdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BlfqS/JuFzN3+DW3o3nyRFMExFNMGsKU7vHbMK0st4Sy20JULZcukmFpaA4yw9xXo
-	 BzwOAmzbLGGBKGlsN5VqXDLDZYPLYDTifwooraC5d1oW2MQwQkHUE2zxUit4AJIoiA
-	 YMIDGl9EO9Ys1GHchVMKYgoL7naOfldeGRKe/GGQ=
+	b=QmqOuZ+jU5N5BATtKlbDEAw49GK+PTXHeDqoa8VBaDxZ6XRG1mDTlKr7rCM8WjVaw
+	 pugtawXAgZGazEX4+7BdinruUeI1z8SB0d3ZBZ057BQbuaBqugZIPs0O7aY5mztkm/
+	 JthZDnPnWyIkAA1Dtm8jFjSuthza/A6AeMIyFrHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/372] kgdb: Flush console before entering kgdb on panic
-Date: Fri, 24 Nov 2023 17:48:14 +0000
-Message-ID: <20231124172014.067905682@linuxfoundation.org>
+Subject: [PATCH 6.1 116/372] sched/core: Optimize in_task() and in_interrupt() a bit
+Date: Fri, 24 Nov 2023 17:48:23 +0000
+Message-ID: <20231124172014.349706533@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,57 +42,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit dd712d3d45807db9fcae28a522deee85c1f2fde6 ]
+[ Upstream commit 87c3a5893e865739ce78aa7192d36011022e0af7 ]
 
-When entering kdb/kgdb on a kernel panic, it was be observed that the
-console isn't flushed before the `kdb` prompt came up. Specifically,
-when using the buddy lockup detector on arm64 and running:
-  echo HARDLOCKUP > /sys/kernel/debug/provoke-crash/DIRECT
+Except on x86, preempt_count is always accessed with READ_ONCE().
+Repeated invocations in macros like irq_count() produce repeated loads.
+These redundant instructions appear in various fast paths. In the one
+shown below, for example, irq_count() is evaluated during kernel entry
+if !tick_nohz_full_cpu(smp_processor_id()).
 
-I could see:
-  [   26.161099] lkdtm: Performing direct entry HARDLOCKUP
-  [   32.499881] watchdog: Watchdog detected hard LOCKUP on cpu 6
-  [   32.552865] Sending NMI from CPU 5 to CPUs 6:
-  [   32.557359] NMI backtrace for cpu 6
-  ... [backtrace for cpu 6] ...
-  [   32.558353] NMI backtrace for cpu 5
-  ... [backtrace for cpu 5] ...
-  [   32.867471] Sending NMI from CPU 5 to CPUs 0-4,7:
-  [   32.872321] NMI backtrace forP cpuANC: Hard LOCKUP
+0001ed0a <irq_enter_rcu>:
+   1ed0a:       4e56 0000       linkw %fp,#0
+   1ed0e:       200f            movel %sp,%d0
+   1ed10:       0280 ffff e000  andil #-8192,%d0
+   1ed16:       2040            moveal %d0,%a0
+   1ed18:       2028 0008       movel %a0@(8),%d0
+   1ed1c:       0680 0001 0000  addil #65536,%d0
+   1ed22:       2140 0008       movel %d0,%a0@(8)
+   1ed26:       082a 0001 000f  btst #1,%a2@(15)
+   1ed2c:       670c            beqs 1ed3a <irq_enter_rcu+0x30>
+   1ed2e:       2028 0008       movel %a0@(8),%d0
+   1ed32:       2028 0008       movel %a0@(8),%d0
+   1ed36:       2028 0008       movel %a0@(8),%d0
+   1ed3a:       4e5e            unlk %fp
+   1ed3c:       4e75            rts
 
-  Entering kdb (current=..., pid 0) on processor 5 due to Keyboard Entry
-  [5]kdb>
+This patch doesn't prevent the pointless btst and beqs instructions
+above, but it does eliminate 2 of the 3 pointless move instructions
+here and elsewhere.
 
-As you can see, backtraces for the other CPUs start printing and get
-interleaved with the kdb PANIC print.
+On x86, preempt_count is per-cpu data and the problem does not arise
+presumably because the compiler is free to optimize more effectively.
 
-Let's replicate the commands to flush the console in the kdb panic
-entry point to avoid this.
+This patch was tested on m68k and x86. I was expecting no changes
+to object code for x86 and mostly that's what I saw. However, there
+were a few places where code generation was perturbed for some reason.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20230822131945.1.I5b460ae8f954e4c4f628a373d6e74713c06dd26f@changeid
-Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+The performance issue addressed here is minor on uniprocessor m68k. I
+got a 0.01% improvement from this patch for a simple "find /sys -false"
+benchmark. For architectures and workloads susceptible to cache line bounce
+the improvement is expected to be larger. The only SMP architecture I have
+is x86, and as x86 unaffected I have not done any further measurements.
+
+Fixes: 15115830c887 ("preempt: Cleanup the macro maze a bit")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/0a403120a682a525e6db2d81d1a3ffcc137c3742.1694756831.git.fthain@linux-m68k.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/debug_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/preempt.h | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/debug/debug_core.c b/kernel/debug/debug_core.c
-index d5e9ccde3ab8e..3a904d8697c8f 100644
---- a/kernel/debug/debug_core.c
-+++ b/kernel/debug/debug_core.c
-@@ -1006,6 +1006,9 @@ void kgdb_panic(const char *msg)
- 	if (panic_timeout)
- 		return;
+diff --git a/include/linux/preempt.h b/include/linux/preempt.h
+index 0df425bf9bd75..8cfcc5d454512 100644
+--- a/include/linux/preempt.h
++++ b/include/linux/preempt.h
+@@ -98,14 +98,21 @@ static __always_inline unsigned char interrupt_context_level(void)
+ 	return level;
+ }
  
-+	debug_locks_off();
-+	console_flush_on_panic(CONSOLE_FLUSH_PENDING);
++/*
++ * These macro definitions avoid redundant invocations of preempt_count()
++ * because such invocations would result in redundant loads given that
++ * preempt_count() is commonly implemented with READ_ONCE().
++ */
 +
- 	if (dbg_kdb_mode)
- 		kdb_printf("PANIC: %s\n", msg);
+ #define nmi_count()	(preempt_count() & NMI_MASK)
+ #define hardirq_count()	(preempt_count() & HARDIRQ_MASK)
+ #ifdef CONFIG_PREEMPT_RT
+ # define softirq_count()	(current->softirq_disable_cnt & SOFTIRQ_MASK)
++# define irq_count()		((preempt_count() & (NMI_MASK | HARDIRQ_MASK)) | softirq_count())
+ #else
+ # define softirq_count()	(preempt_count() & SOFTIRQ_MASK)
++# define irq_count()		(preempt_count() & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_MASK))
+ #endif
+-#define irq_count()	(nmi_count() | hardirq_count() | softirq_count())
  
+ /*
+  * Macros to retrieve the current execution context:
+@@ -118,7 +125,11 @@ static __always_inline unsigned char interrupt_context_level(void)
+ #define in_nmi()		(nmi_count())
+ #define in_hardirq()		(hardirq_count())
+ #define in_serving_softirq()	(softirq_count() & SOFTIRQ_OFFSET)
+-#define in_task()		(!(in_nmi() | in_hardirq() | in_serving_softirq()))
++#ifdef CONFIG_PREEMPT_RT
++# define in_task()		(!((preempt_count() & (NMI_MASK | HARDIRQ_MASK)) | in_serving_softirq()))
++#else
++# define in_task()		(!(preempt_count() & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET)))
++#endif
+ 
+ /*
+  * The following macros are deprecated and should not be used in new code:
 -- 
 2.42.0
 
