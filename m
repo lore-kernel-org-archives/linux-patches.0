@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9BD364C8;
-	Fri, 24 Nov 2023 18:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6379381D6;
+	Fri, 24 Nov 2023 18:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyP6krii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2669C433C8;
-	Fri, 24 Nov 2023 18:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkYx3o2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33386C433C7;
+	Fri, 24 Nov 2023 18:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850627;
-	bh=E8iU4Fzx1Wxfotr8x3jhFZOj+dCi/iY0p7Ks920nZOw=;
+	s=korg; t=1700850629;
+	bh=YiEsDXPFqzeQZCquVBx6NsLw0zxgT1V5VGyCAhHqY60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyP6kriiLdAo4mJmhLjEuaInGMvlKS9I57MvZz21Lq0l0zg+GocEZtJWrDQAY7Joe
-	 CMC1G6yvCdiqlcFbcQTNOOCZVLr7jBY+fT415qoMkguVpNLJU1G+rgKpgFCdKGsjWH
-	 jluxA3ZUzYoNa3EUD/h2rgbTnlygyvpZsfn2TEoM=
+	b=xkYx3o2fPEVltuZs5yLgu7oXHsxUcETvUCfpAoRwoQsZp5sbqHRVmCu58fJCDhEG5
+	 JFkAmTxhmn7XeJgJfqoLXoQBl1fxJ58coX20TjbwOdfKqbeQRiT8QxsMPI5K+Y7rxJ
+	 8xHmuNss/qQmhI9N25dalaLGxOcrF+WeMak5FfWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e441aeeb422763cc5511@syzkaller.appspotmail.com,
-	Marco Elver <elver@google.com>,
+	Su Hui <suhui@nfschina.com>,
 	Dominique Martinet <asmadeus@codewreck.org>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 125/491] 9p/trans_fd: Annotate data-racy writes to file::f_flags
-Date: Fri, 24 Nov 2023 17:46:01 +0000
-Message-ID: <20231124172028.262973834@linuxfoundation.org>
+Subject: [PATCH 6.5 126/491] 9p: v9fs_listxattr: fix %s null argument warning
+Date: Fri, 24 Nov 2023 17:46:02 +0000
+Message-ID: <20231124172028.293063498@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -37,98 +37,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Dominique Martinet <asmadeus@codewreck.org>
 
-[ Upstream commit 355f074609dbf3042900ea9d30fcd2b0c323a365 ]
+[ Upstream commit 9b5c6281838fc84683dd99b47302d81fce399918 ]
 
-syzbot reported:
+W=1 warns about null argument to kprintf:
+In file included from fs/9p/xattr.c:12:
+In function ‘v9fs_xattr_get’,
+    inlined from ‘v9fs_listxattr’ at fs/9p/xattr.c:142:9:
+include/net/9p/9p.h:55:2: error: ‘%s’ directive argument is null
+[-Werror=format-overflow=]
+   55 |  _p9_debug(level, __func__, fmt, ##__VA_ARGS__)
+      |  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
- | BUG: KCSAN: data-race in p9_fd_create / p9_fd_create
- |
- | read-write to 0xffff888130fb3d48 of 4 bytes by task 15599 on cpu 0:
- |  p9_fd_open net/9p/trans_fd.c:842 [inline]
- |  p9_fd_create+0x210/0x250 net/9p/trans_fd.c:1092
- |  p9_client_create+0x595/0xa70 net/9p/client.c:1010
- |  v9fs_session_init+0xf9/0xd90 fs/9p/v9fs.c:410
- |  v9fs_mount+0x69/0x630 fs/9p/vfs_super.c:123
- |  legacy_get_tree+0x74/0xd0 fs/fs_context.c:611
- |  vfs_get_tree+0x51/0x190 fs/super.c:1519
- |  do_new_mount+0x203/0x660 fs/namespace.c:3335
- |  path_mount+0x496/0xb30 fs/namespace.c:3662
- |  do_mount fs/namespace.c:3675 [inline]
- |  __do_sys_mount fs/namespace.c:3884 [inline]
- |  [...]
- |
- | read-write to 0xffff888130fb3d48 of 4 bytes by task 15563 on cpu 1:
- |  p9_fd_open net/9p/trans_fd.c:842 [inline]
- |  p9_fd_create+0x210/0x250 net/9p/trans_fd.c:1092
- |  p9_client_create+0x595/0xa70 net/9p/client.c:1010
- |  v9fs_session_init+0xf9/0xd90 fs/9p/v9fs.c:410
- |  v9fs_mount+0x69/0x630 fs/9p/vfs_super.c:123
- |  legacy_get_tree+0x74/0xd0 fs/fs_context.c:611
- |  vfs_get_tree+0x51/0x190 fs/super.c:1519
- |  do_new_mount+0x203/0x660 fs/namespace.c:3335
- |  path_mount+0x496/0xb30 fs/namespace.c:3662
- |  do_mount fs/namespace.c:3675 [inline]
- |  __do_sys_mount fs/namespace.c:3884 [inline]
- |  [...]
- |
- | value changed: 0x00008002 -> 0x00008802
+Use an empty string instead of :
+ - this is ok 9p-wise because p9pdu_vwritef serializes a null string
+and an empty string the same way (one '0' word for length)
+ - since this degrades the print statements, add new single quotes for
+xattr's name delimter (Old: "file = (null)", new: "file = ''")
 
-Within p9_fd_open(), O_NONBLOCK is added to f_flags of the read and
-write files. This may happen concurrently if e.g. mounting process
-modifies the fd in another thread.
-
-Mark the plain read-modify-writes as intentional data-races, with the
-assumption that the result of executing the accesses concurrently will
-always result in the same result despite the accesses themselves not
-being atomic.
-
-Reported-by: syzbot+e441aeeb422763cc5511@syzkaller.appspotmail.com
-Signed-off-by: Marco Elver <elver@google.com>
-Link: https://lore.kernel.org/r/ZO38mqkS0TYUlpFp@elver.google.com
+Link: https://lore.kernel.org/r/20231008060138.517057-1-suhui@nfschina.com
+Suggested-by: Su Hui <suhui@nfschina.com>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-Message-ID: <20231025103445.1248103-1-asmadeus@codewreck.org>
+Acked-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Message-ID: <20231025103445.1248103-2-asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_fd.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/9p/xattr.c   | 5 +++--
+ net/9p/client.c | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/9p/trans_fd.c b/net/9p/trans_fd.c
-index 00b684616e8d9..9374790f17ce4 100644
---- a/net/9p/trans_fd.c
-+++ b/net/9p/trans_fd.c
-@@ -832,14 +832,21 @@ static int p9_fd_open(struct p9_client *client, int rfd, int wfd)
- 		goto out_free_ts;
- 	if (!(ts->rd->f_mode & FMODE_READ))
- 		goto out_put_rd;
--	/* prevent workers from hanging on IO when fd is a pipe */
--	ts->rd->f_flags |= O_NONBLOCK;
-+	/* Prevent workers from hanging on IO when fd is a pipe.
-+	 * It's technically possible for userspace or concurrent mounts to
-+	 * modify this flag concurrently, which will likely result in a
-+	 * broken filesystem. However, just having bad flags here should
-+	 * not crash the kernel or cause any other sort of bug, so mark this
-+	 * particular data race as intentional so that tooling (like KCSAN)
-+	 * can allow it and detect further problems.
-+	 */
-+	data_race(ts->rd->f_flags |= O_NONBLOCK);
- 	ts->wr = fget(wfd);
- 	if (!ts->wr)
- 		goto out_put_rd;
- 	if (!(ts->wr->f_mode & FMODE_WRITE))
- 		goto out_put_wr;
--	ts->wr->f_flags |= O_NONBLOCK;
-+	data_race(ts->wr->f_flags |= O_NONBLOCK);
+diff --git a/fs/9p/xattr.c b/fs/9p/xattr.c
+index e00cf8109b3f3..3c4572ef3a488 100644
+--- a/fs/9p/xattr.c
++++ b/fs/9p/xattr.c
+@@ -68,7 +68,7 @@ ssize_t v9fs_xattr_get(struct dentry *dentry, const char *name,
+ 	struct p9_fid *fid;
+ 	int ret;
  
- 	client->trans = ts;
- 	client->status = Connected;
+-	p9_debug(P9_DEBUG_VFS, "name = %s value_len = %zu\n",
++	p9_debug(P9_DEBUG_VFS, "name = '%s' value_len = %zu\n",
+ 		 name, buffer_size);
+ 	fid = v9fs_fid_lookup(dentry);
+ 	if (IS_ERR(fid))
+@@ -139,7 +139,8 @@ int v9fs_fid_xattr_set(struct p9_fid *fid, const char *name,
+ 
+ ssize_t v9fs_listxattr(struct dentry *dentry, char *buffer, size_t buffer_size)
+ {
+-	return v9fs_xattr_get(dentry, NULL, buffer, buffer_size);
++	/* Txattrwalk with an empty string lists xattrs instead */
++	return v9fs_xattr_get(dentry, "", buffer, buffer_size);
+ }
+ 
+ static int v9fs_xattr_handler_get(const struct xattr_handler *handler,
+diff --git a/net/9p/client.c b/net/9p/client.c
+index b0e7cb7e1a54a..e265a0ca6bddd 100644
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1981,7 +1981,7 @@ struct p9_fid *p9_client_xattrwalk(struct p9_fid *file_fid,
+ 		goto error;
+ 	}
+ 	p9_debug(P9_DEBUG_9P,
+-		 ">>> TXATTRWALK file_fid %d, attr_fid %d name %s\n",
++		 ">>> TXATTRWALK file_fid %d, attr_fid %d name '%s'\n",
+ 		 file_fid->fid, attr_fid->fid, attr_name);
+ 
+ 	req = p9_client_rpc(clnt, P9_TXATTRWALK, "dds",
 -- 
 2.42.0
 
