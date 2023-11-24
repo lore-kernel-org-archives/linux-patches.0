@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE90B3306F;
-	Fri, 24 Nov 2023 19:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8913306F;
+	Fri, 24 Nov 2023 19:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hq/j9C4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB13C433C8;
-	Fri, 24 Nov 2023 19:03:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoGHUTnN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B13C433C9;
+	Fri, 24 Nov 2023 19:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852593;
-	bh=Iqws20UL6Y/2XTEHTHJ0JfxE63EqtJlwfYu8Xm3ZLp0=;
+	s=korg; t=1700852596;
+	bh=wBeTnbhsg+fWPZRNMHJc6FnM6/0AHufEMEha/GHK8Ug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hq/j9C4wHd/VImu79yb/NVXysePJTGpWBSvSorZPm5UnUe1JqAFTrp/vcLiIhSuNA
-	 ORw59AP23UtVExI8io/yl3JUSZRrWVtjTdQ3AaLUGax4gykXnv8Wvzbud+3E0vYJPp
-	 707J/wOh3XKsS1be/j+rsXhgWMML0yfERfcIiT+4=
+	b=yoGHUTnN0qFTplI6SiPIYoy4/q2z0e4CTER+lsAcUDJf3wOYuM6YX5MdeAgZfzFaB
+	 bdl5T9ZuolEm0iwUrpWf81kRB3evQNiobCXVnfdfUf/IBmUstBCwB69wBtUGTSfFuy
+	 3EJczQcR7G1SitaY4crt79i3wuP0dee2XTUBcIew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Lin <axel.lin@ingics.com>,
-	Boris Brezillon <boris.brezillon@free-electrons.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	syzbot+e27f3dbdab04e43b9f73@syzkaller.appspotmail.com,
+	Rajeshwar R Shinde <coolrrsh@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/193] i2c: sun6i-p2wi: Prevent potential division by zero
-Date: Fri, 24 Nov 2023 17:52:53 +0000
-Message-ID: <20231124171949.107824575@linuxfoundation.org>
+Subject: [PATCH 5.10 047/193] media: gspca: cpia1: shift-out-of-bounds in set_flicker
+Date: Fri, 24 Nov 2023 17:52:54 +0000
+Message-ID: <20231124171949.144828273@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,37 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Axel Lin <axel.lin@ingics.com>
+From: Rajeshwar R Shinde <coolrrsh@gmail.com>
 
-[ Upstream commit 5ac61d26b8baff5b2e5a9f3dc1ef63297e4b53e7 ]
+[ Upstream commit 099be1822d1f095433f4b08af9cc9d6308ec1953 ]
 
-Make sure we don't OOPS in case clock-frequency is set to 0 in a DT. The
-variable set here is later used as a divisor.
+Syzkaller reported the following issue:
+UBSAN: shift-out-of-bounds in drivers/media/usb/gspca/cpia1.c:1031:27
+shift exponent 245 is too large for 32-bit type 'int'
 
-Signed-off-by: Axel Lin <axel.lin@ingics.com>
-Acked-by: Boris Brezillon <boris.brezillon@free-electrons.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+When the value of the variable "sd->params.exposure.gain" exceeds the
+number of bits in an integer, a shift-out-of-bounds error is reported. It
+is triggered because the variable "currentexp" cannot be left-shifted by
+more than the number of bits in an integer. In order to avoid invalid
+range during left-shift, the conditional expression is added.
+
+Reported-by: syzbot+e27f3dbdab04e43b9f73@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/20230818164522.12806-1-coolrrsh@gmail.com
+Link: https://syzkaller.appspot.com/bug?extid=e27f3dbdab04e43b9f73
+Signed-off-by: Rajeshwar R Shinde <coolrrsh@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-sun6i-p2wi.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/usb/gspca/cpia1.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-sun6i-p2wi.c b/drivers/i2c/busses/i2c-sun6i-p2wi.c
-index 2f6f6468214dd..4f7a4f5a1150a 100644
---- a/drivers/i2c/busses/i2c-sun6i-p2wi.c
-+++ b/drivers/i2c/busses/i2c-sun6i-p2wi.c
-@@ -201,6 +201,11 @@ static int p2wi_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/media/usb/gspca/cpia1.c b/drivers/media/usb/gspca/cpia1.c
+index d93d384286c16..de945e13c7c6b 100644
+--- a/drivers/media/usb/gspca/cpia1.c
++++ b/drivers/media/usb/gspca/cpia1.c
+@@ -18,6 +18,7 @@
  
-+	if (clk_freq == 0) {
-+		dev_err(dev, "clock-frequency is set to 0 in DT\n");
-+		return -EINVAL;
-+	}
-+
- 	if (of_get_child_count(np) > 1) {
- 		dev_err(dev, "P2WI only supports one slave device\n");
- 		return -EINVAL;
+ #include <linux/input.h>
+ #include <linux/sched/signal.h>
++#include <linux/bitops.h>
+ 
+ #include "gspca.h"
+ 
+@@ -1027,6 +1028,8 @@ static int set_flicker(struct gspca_dev *gspca_dev, int on, int apply)
+ 			sd->params.exposure.expMode = 2;
+ 			sd->exposure_status = EXPOSURE_NORMAL;
+ 		}
++		if (sd->params.exposure.gain >= BITS_PER_TYPE(currentexp))
++			return -EINVAL;
+ 		currentexp = currentexp << sd->params.exposure.gain;
+ 		sd->params.exposure.gain = 0;
+ 		/* round down current exposure to nearest value */
 -- 
 2.42.0
 
