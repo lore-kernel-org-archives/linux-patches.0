@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C4431740;
-	Fri, 24 Nov 2023 17:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF0331740;
+	Fri, 24 Nov 2023 17:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbI4QbSi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE14DC433C7;
-	Fri, 24 Nov 2023 17:57:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dm8RiZW7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADDDC433C7;
+	Fri, 24 Nov 2023 17:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848622;
-	bh=IOJYussMUa9jSqBbf+lLntf3PD3KYPZT0XDbEAzMFYs=;
+	s=korg; t=1700848624;
+	bh=H9zsiHIOCc3HFofp3C+XMYfwe3uvgv7Rb43myySZSd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbI4QbSiLECniPW+8/gfWNohKkR+BOOCogXNUZu9+J5pMQ5SlkvXCNGJG4L9HpAkI
-	 ZwGG7o47BxG/IwDIseHZG5JmLw+EQXLab3FTSjHKzYuf4z273F9Jhl/E7QTpXhLPQD
-	 cENXO//nqXyuCjHEMD0H1avgi25VSKQu8tSc4Jo4=
+	b=dm8RiZW7QIgsc8uccW72aUbaWP1LHj5KBtOVDN6a8R8MJEkFF7PdvtSGm4RlUu6pH
+	 N3+Gzbef6r5BQnRjmcCYTH4xwkMbEFzDbW8WPFtE/kLvaNDYKh446k27lFMKPRlmE/
+	 Js3lbsc39i0dl5ikuzkPJynJCGXCKsnzveP8+3R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Mario Casquero <mcasquer@redhat.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Rik van Riel <riel@surriel.com>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 05/97] x86/mm: Drop the 4 MB restriction on minimal NUMA node memory size
-Date: Fri, 24 Nov 2023 17:49:38 +0000
-Message-ID: <20231124171934.331669815@linuxfoundation.org>
+Subject: [PATCH 4.19 06/97] wifi: mac80211: dont return unset power in ieee80211_get_tx_power()
+Date: Fri, 24 Nov 2023 17:49:39 +0000
+Message-ID: <20231124171934.367387930@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -48,109 +43,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (IBM) <rppt@kernel.org>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit a1e2b8b36820d8c91275f207e77e91645b7c6836 ]
+[ Upstream commit e160ab85166e77347d0cbe5149045cb25e83937f ]
 
-Qi Zheng reported crashes in a production environment and provided a
-simplified example as a reproducer:
+We can get a UBSAN warning if ieee80211_get_tx_power() returns the
+INT_MIN value mac80211 internally uses for "unset power level".
 
- |  For example, if we use Qemu to start a two NUMA node kernel,
- |  one of the nodes has 2M memory (less than NODE_MIN_SIZE),
- |  and the other node has 2G, then we will encounter the
- |  following panic:
- |
- |    BUG: kernel NULL pointer dereference, address: 0000000000000000
- |    <...>
- |    RIP: 0010:_raw_spin_lock_irqsave+0x22/0x40
- |    <...>
- |    Call Trace:
- |      <TASK>
- |      deactivate_slab()
- |      bootstrap()
- |      kmem_cache_init()
- |      start_kernel()
- |      secondary_startup_64_no_verify()
+ UBSAN: signed-integer-overflow in net/wireless/nl80211.c:3816:5
+ -2147483648 * 100 cannot be represented in type 'int'
+ CPU: 0 PID: 20433 Comm: insmod Tainted: G        WC OE
+ Call Trace:
+  dump_stack+0x74/0x92
+  ubsan_epilogue+0x9/0x50
+  handle_overflow+0x8d/0xd0
+  __ubsan_handle_mul_overflow+0xe/0x10
+  nl80211_send_iface+0x688/0x6b0 [cfg80211]
+  [...]
+  cfg80211_register_wdev+0x78/0xb0 [cfg80211]
+  cfg80211_netdev_notifier_call+0x200/0x620 [cfg80211]
+  [...]
+  ieee80211_if_add+0x60e/0x8f0 [mac80211]
+  ieee80211_register_hw+0xda5/0x1170 [mac80211]
 
-The crashes happen because of inconsistency between the nodemask that
-has nodes with less than 4MB as memoryless, and the actual memory fed
-into the core mm.
+In this case, simply return an error instead, to indicate
+that no data is available.
 
-The commit:
-
-  9391a3f9c7f1 ("[PATCH] x86_64: Clear more state when ignoring empty node in SRAT parsing")
-
-... that introduced minimal size of a NUMA node does not explain why
-a node size cannot be less than 4MB and what boot failures this
-restriction might fix.
-
-Fixes have been submitted to the core MM code to tighten up the
-memory topologies it accepts and to not crash on weird input:
-
-  mm: page_alloc: skip memoryless nodes entirely
-  mm: memory_hotplug: drop memoryless node from fallback lists
-
-Andrew has accepted them into the -mm tree, but there are no
-stable SHA1's yet.
-
-This patch drops the limitation for minimal node size on x86:
-
-  - which works around the crash without the fixes to the core MM.
-  - makes x86 topologies less weird,
-  - removes an arbitrary and undocumented limitation on NUMA topologies.
-
-[ mingo: Improved changelog clarity. ]
-
-Reported-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Rik van Riel <riel@surriel.com>
-Link: https://lore.kernel.org/r/ZS+2qqjEO5/867br@gmail.com
+Cc: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://lore.kernel.org/r/20230203023636.4418-1-pkshih@realtek.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/numa.h | 7 -------
- arch/x86/mm/numa.c          | 7 -------
- 2 files changed, 14 deletions(-)
+ net/mac80211/cfg.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/x86/include/asm/numa.h b/arch/x86/include/asm/numa.h
-index bbfde3d2662f4..4bcd9d0c7bee7 100644
---- a/arch/x86/include/asm/numa.h
-+++ b/arch/x86/include/asm/numa.h
-@@ -11,13 +11,6 @@
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 5659af1bec179..77d8ed184c1c4 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2452,6 +2452,10 @@ static int ieee80211_get_tx_power(struct wiphy *wiphy,
+ 	else
+ 		*dbm = sdata->vif.bss_conf.txpower;
  
- #define NR_NODE_MEMBLKS		(MAX_NUMNODES*2)
- 
--/*
-- * Too small node sizes may confuse the VM badly. Usually they
-- * result from BIOS bugs. So dont recognize nodes as standalone
-- * NUMA entities that have less than this amount of RAM listed:
-- */
--#define NODE_MIN_SIZE (4*1024*1024)
--
- extern int numa_off;
- 
- /*
-diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
-index b4ff063a43712..a830d49341ecc 100644
---- a/arch/x86/mm/numa.c
-+++ b/arch/x86/mm/numa.c
-@@ -585,13 +585,6 @@ static int __init numa_register_memblks(struct numa_meminfo *mi)
- 		if (start >= end)
- 			continue;
- 
--		/*
--		 * Don't confuse VM with a node that doesn't have the
--		 * minimum amount of memory:
--		 */
--		if (end && (end - start) < NODE_MIN_SIZE)
--			continue;
--
- 		alloc_node_data(nid);
- 	}
++	/* INT_MIN indicates no power level was set yet */
++	if (*dbm == INT_MIN)
++		return -EINVAL;
++
+ 	return 0;
+ }
  
 -- 
 2.42.0
