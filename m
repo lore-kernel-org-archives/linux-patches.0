@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B05435F1A;
-	Fri, 24 Nov 2023 18:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8D1364C3;
+	Fri, 24 Nov 2023 18:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7rnMbwP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23BB7C433C7;
-	Fri, 24 Nov 2023 18:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+qGIYdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EB7C433C7;
+	Fri, 24 Nov 2023 18:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851224;
-	bh=bB0FAE2kq1GcTtkKozMfHbm+IINuKsDh5t4b7FeB3Wk=;
+	s=korg; t=1700851226;
+	bh=P+Muma2NpoIB8HNjgiBSj2nvjWsqH3SZsx8X+5TN784=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7rnMbwPHFWvh/Kl9NEdrJnlZZzW7zJQO/9gahENOXwoXxbD9dZforB2eNGqWfLs8
-	 TdP5O8Ckiqoade4vc89gbWmJVX+/ECS3Cly0TVG7CxTxLosgUBxlZgurVZHR7X+HS4
-	 Dmd1IPeXbQmN0T87+qCYO1AFitmx5YEtVVbGfYSM=
+	b=G+qGIYdX58o8PnaNli1nG3ow2h8SVt3Rucp7mV0xS009VMnNUPdtgVudEIaY4lOcY
+	 OzciH6FYn+nhY1HwSVJt4BF3VBrbazZxVco2ny1Mb+FuwPJs0ppQHAaROyFoodTqEC
+	 UI7EG070M/J/h2EKeikjA37giAf21IzVQc1+q62U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Harris <jim.harris@samsung.com>,
+	Robert Richter <rrichter@amd.com>,
 	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.5 363/491] cxl/region: Fix x1 root-decoder granularity calculations
-Date: Fri, 24 Nov 2023 17:49:59 +0000
-Message-ID: <20231124172035.485102348@linuxfoundation.org>
+Subject: [PATCH 6.5 364/491] cxl/port: Fix delete_endpoint() vs parent unregistration race
+Date: Fri, 24 Nov 2023 17:50:00 +0000
+Message-ID: <20231124172035.519047714@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,86 +41,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Harris <jim.harris@samsung.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 98a04c7aced2b43b3ac4befe216c4eecc7257d4b upstream.
+commit 8d2ad999ca3c64cb08cf6a58d227b9d9e746d708 upstream.
 
-Root decoder granularity must match value from CFWMS, which may not
-be the region's granularity for non-interleaved root decoders.
+The CXL subsystem, at cxl_mem ->probe() time, establishes a lineage of
+ports (struct cxl_port objects) between an endpoint and the root of a
+CXL topology. Each port including the endpoint port is attached to the
+cxl_port driver.
 
-So when calculating granularities for host bridge decoders, use the
-region's granularity instead of the root decoder's granularity to ensure
-the correct granularities are set for the host bridge decoders and any
-downstream switch decoders.
+Given that setup, it follows that when either any port in that lineage
+goes through a cxl_port ->remove() event, or the memdev goes through a
+cxl_mem ->remove() event. The hierarchy below the removed port, or the
+entire hierarchy if the memdev is removed needs to come down.
 
-Test configuration is 1 host bridge * 2 switches * 2 endpoints per switch.
+The delete_endpoint() callback is careful to check whether it is being
+called to tear down the hierarchy, or if it is only being called to
+teardown the memdev because an ancestor port is going through
+->remove().
 
-Region created with 2048 granularity using following command line:
+That care needs to take the device_lock() of the endpoint's parent.
+Which requires 2 bugs to be fixed:
 
-cxl create-region -m -d decoder0.0 -w 4 mem0 mem2 mem1 mem3 \
-		  -g 2048 -s 2048M
+1/ A reference on the parent is needed to prevent use-after-free
+   scenarios like this signature:
 
-Use "cxl list -PDE | grep granularity" to get a view of the granularity
-set at each level of the topology.
+    BUG: spinlock bad magic on CPU#0, kworker/u56:0/11
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20230524-3.fc38 05/24/2023
+    Workqueue: cxl_port detach_memdev [cxl_core]
+    RIP: 0010:spin_bug+0x65/0xa0
+    Call Trace:
+      do_raw_spin_lock+0x69/0xa0
+     __mutex_lock+0x695/0xb80
+     delete_endpoint+0xad/0x150 [cxl_core]
+     devres_release_all+0xb8/0x110
+     device_unbind_cleanup+0xe/0x70
+     device_release_driver_internal+0x1d2/0x210
+     detach_memdev+0x15/0x20 [cxl_core]
+     process_one_work+0x1e3/0x4c0
+     worker_thread+0x1dd/0x3d0
 
-Before this patch:
-        "interleave_granularity":2048,
-        "interleave_granularity":2048,
-    "interleave_granularity":512,
-        "interleave_granularity":2048,
-        "interleave_granularity":2048,
-    "interleave_granularity":512,
-"interleave_granularity":256,
+2/ In the case of RCH topologies, the parent device that needs to be
+   locked is not always @port->dev as returned by cxl_mem_find_port(), use
+   endpoint->dev.parent instead.
 
-After:
-        "interleave_granularity":2048,
-        "interleave_granularity":2048,
-    "interleave_granularity":4096,
-        "interleave_granularity":2048,
-        "interleave_granularity":2048,
-    "interleave_granularity":4096,
-"interleave_granularity":2048,
-
-Fixes: 27b3f8d13830 ("cxl/region: Program target lists")
+Fixes: 8dd2bc0f8e02 ("cxl/mem: Add the cxl_mem driver")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Jim Harris <jim.harris@samsung.com>
-Link: https://lore.kernel.org/r/169824893473.1403938.16110924262989774582.stgit@bgt-140510-bm03.eng.stellus.in
-[djbw: fixup the prebuilt cxl_test region]
+Reported-by: Robert Richter <rrichter@amd.com>
+Closes: http://lore.kernel.org/r/20231018171713.1883517-2-rrichter@amd.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/region.c    |    9 ++++++++-
- tools/testing/cxl/test/cxl.c |    2 +-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/cxl/core/port.c |   34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1127,7 +1127,14 @@ static int cxl_port_setup_targets(struct
- 	}
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1242,35 +1242,39 @@ static struct device *grandparent(struct
+ 	return NULL;
+ }
  
- 	if (is_cxl_root(parent_port)) {
--		parent_ig = cxlrd->cxlsd.cxld.interleave_granularity;
-+		/*
-+		 * Root decoder IG is always set to value in CFMWS which
-+		 * may be different than this region's IG.  We can use the
-+		 * region's IG here since interleave_granularity_store()
-+		 * does not allow interleaved host-bridges with
-+		 * root IG != region IG.
-+		 */
-+		parent_ig = p->interleave_granularity;
- 		parent_iw = cxlrd->cxlsd.cxld.interleave_ways;
- 		/*
- 		 * For purposes of address bit routing, use power-of-2 math for
---- a/tools/testing/cxl/test/cxl.c
-+++ b/tools/testing/cxl/test/cxl.c
-@@ -831,7 +831,7 @@ static void mock_init_hdm_decoder(struct
- 			cxld->interleave_ways = 2;
- 		else
- 			cxld->interleave_ways = 1;
--		cxld->interleave_granularity = 256;
-+		cxld->interleave_granularity = 4096;
- 		cxld->hpa_range = (struct range) {
- 			.start = base,
- 			.end = base + size - 1,
++static struct device *endpoint_host(struct cxl_port *endpoint)
++{
++	struct cxl_port *port = to_cxl_port(endpoint->dev.parent);
++
++	if (is_cxl_root(port))
++		return port->uport_dev;
++	return &port->dev;
++}
++
+ static void delete_endpoint(void *data)
+ {
+ 	struct cxl_memdev *cxlmd = data;
+ 	struct cxl_port *endpoint = cxlmd->endpoint;
+-	struct cxl_port *parent_port;
+-	struct device *parent;
++	struct device *host = endpoint_host(endpoint);
+ 
+-	parent_port = cxl_mem_find_port(cxlmd, NULL);
+-	if (!parent_port)
+-		goto out;
+-	parent = &parent_port->dev;
+-
+-	device_lock(parent);
+-	if (parent->driver && !endpoint->dead) {
+-		devm_release_action(parent, cxl_unlink_parent_dport, endpoint);
+-		devm_release_action(parent, cxl_unlink_uport, endpoint);
+-		devm_release_action(parent, unregister_port, endpoint);
++	device_lock(host);
++	if (host->driver && !endpoint->dead) {
++		devm_release_action(host, cxl_unlink_parent_dport, endpoint);
++		devm_release_action(host, cxl_unlink_uport, endpoint);
++		devm_release_action(host, unregister_port, endpoint);
+ 	}
+ 	cxlmd->endpoint = NULL;
+-	device_unlock(parent);
+-	put_device(parent);
+-out:
++	device_unlock(host);
+ 	put_device(&endpoint->dev);
++	put_device(host);
+ }
+ 
+ int cxl_endpoint_autoremove(struct cxl_memdev *cxlmd, struct cxl_port *endpoint)
+ {
++	struct device *host = endpoint_host(endpoint);
+ 	struct device *dev = &cxlmd->dev;
+ 
++	get_device(host);
+ 	get_device(&endpoint->dev);
+ 	cxlmd->endpoint = endpoint;
+ 	cxlmd->depth = endpoint->depth;
 
 
