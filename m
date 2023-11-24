@@ -1,29 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8114633E9;
-	Fri, 24 Nov 2023 18:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00274321AD;
+	Fri, 24 Nov 2023 18:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJ/9OwY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D83C433C7;
-	Fri, 24 Nov 2023 18:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G20r2zKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E81C433C7;
+	Fri, 24 Nov 2023 18:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851174;
-	bh=GnzSjpOj05g0O14IEOg9G4ASmg8wkFDRfPBtgf7H9Ew=;
+	s=korg; t=1700851176;
+	bh=Hy3tHC0Nvr5aVQK8633DSbBm1DsTlCcsq5OOmXeb1N0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJ/9OwY0qO+CVgCiSEXd1TULyKwWYH1mvEYnmSpseNZdnaATUKW6GNbfM1CLupitB
-	 a8Ckx2PB12JCaHuO49YiuaCDdCLyksdR/93/sBgzS/Idz0SOHEeySQgbZmBOKaKOfO
-	 o3TbeIdZo51SGXiBlxgZ0Uem67NTkgvwTKYMl4uc=
+	b=G20r2zKY0eh6S9+zzoUIc4h2LZrfKxf66ASCWI8/N/WPG//nWfwM0FFYgAPE3L61Q
+	 VbbjzsuPCPmIG6gsiqyfXPFoxfWS48mxMy5GD/1R0sgrFixjJD0dx8+oKtNE7PYQDe
+	 q95VrGFfP6yFX2QEMdmCa7TIMVQLAvNyTQbYaogg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	syzbot+b42fe626038981fb7bfa@syzkaller.appspotmail.com
-Subject: [PATCH 6.5 325/491] ima: annotate iint mutex to avoid lockdep false positive warnings
-Date: Fri, 24 Nov 2023 17:49:21 +0000
-Message-ID: <20231124172034.328642280@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Saravana Kannan <saravanak@google.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	James Clark <james.clark@arm.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>
+Subject: [PATCH 6.5 343/491] driver core: Release all resources during unbind before updating device links
+Date: Fri, 24 Nov 2023 17:49:39 +0000
+Message-ID: <20231124172034.881941012@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -36,118 +43,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Saravana Kannan <saravanak@google.com>
 
-commit e044374a8a0a99e46f4e6d6751d3042b6d9cc12e upstream.
+commit 2e84dc37920012b458e9458b19fc4ed33f81bc74 upstream.
 
-It is not clear that IMA should be nested at all, but as long is it
-measures files both on overlayfs and on underlying fs, we need to
-annotate the iint mutex to avoid lockdep false positives related to
-IMA + overlayfs, same as overlayfs annotates the inode mutex.
+This commit fixes a bug in commit 9ed9895370ae ("driver core: Functional
+dependencies tracking support") where the device link status was
+incorrectly updated in the driver unbind path before all the device's
+resources were released.
 
-Reported-and-tested-by: syzbot+b42fe626038981fb7bfa@syzkaller.appspotmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 9ed9895370ae ("driver core: Functional dependencies tracking support")
+Cc: stable <stable@kernel.org>
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Closes: https://lore.kernel.org/all/20231014161721.f4iqyroddkcyoefo@pengutronix.de/
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Yang Yingliang <yangyingliang@huawei.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Matti Vaittinen <mazziesaccount@gmail.com>
+Cc: James Clark <james.clark@arm.com>
+Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+Tested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231018013851.3303928-1-saravanak@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/iint.c |   48 +++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 37 insertions(+), 11 deletions(-)
+ drivers/base/dd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/integrity/iint.c
-+++ b/security/integrity/iint.c
-@@ -66,9 +66,32 @@ struct integrity_iint_cache *integrity_i
- 	return iint;
- }
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1274,8 +1274,8 @@ static void __device_release_driver(stru
+ 		if (dev->bus && dev->bus->dma_cleanup)
+ 			dev->bus->dma_cleanup(dev);
  
--static void iint_free(struct integrity_iint_cache *iint)
-+#define IMA_MAX_NESTING (FILESYSTEM_MAX_STACK_DEPTH+1)
-+
-+/*
-+ * It is not clear that IMA should be nested at all, but as long is it measures
-+ * files both on overlayfs and on underlying fs, we need to annotate the iint
-+ * mutex to avoid lockdep false positives related to IMA + overlayfs.
-+ * See ovl_lockdep_annotate_inode_mutex_key() for more details.
-+ */
-+static inline void iint_lockdep_annotate(struct integrity_iint_cache *iint,
-+					 struct inode *inode)
-+{
-+#ifdef CONFIG_LOCKDEP
-+	static struct lock_class_key iint_mutex_key[IMA_MAX_NESTING];
-+
-+	int depth = inode->i_sb->s_stack_depth;
-+
-+	if (WARN_ON_ONCE(depth < 0 || depth >= IMA_MAX_NESTING))
-+		depth = 0;
-+
-+	lockdep_set_class(&iint->mutex, &iint_mutex_key[depth]);
-+#endif
-+}
-+
-+static void iint_init_always(struct integrity_iint_cache *iint,
-+			     struct inode *inode)
- {
--	kfree(iint->ima_hash);
- 	iint->ima_hash = NULL;
- 	iint->version = 0;
- 	iint->flags = 0UL;
-@@ -80,6 +103,14 @@ static void iint_free(struct integrity_i
- 	iint->ima_creds_status = INTEGRITY_UNKNOWN;
- 	iint->evm_status = INTEGRITY_UNKNOWN;
- 	iint->measured_pcrs = 0;
-+	mutex_init(&iint->mutex);
-+	iint_lockdep_annotate(iint, inode);
-+}
-+
-+static void iint_free(struct integrity_iint_cache *iint)
-+{
-+	kfree(iint->ima_hash);
-+	mutex_destroy(&iint->mutex);
- 	kmem_cache_free(iint_cache, iint);
- }
+-		device_links_driver_cleanup(dev);
+ 		device_unbind_cleanup(dev);
++		device_links_driver_cleanup(dev);
  
-@@ -104,6 +135,8 @@ struct integrity_iint_cache *integrity_i
- 	if (!iint)
- 		return NULL;
- 
-+	iint_init_always(iint, inode);
-+
- 	write_lock(&integrity_iint_lock);
- 
- 	p = &integrity_iint_tree.rb_node;
-@@ -153,25 +186,18 @@ void integrity_inode_free(struct inode *
- 	iint_free(iint);
- }
- 
--static void init_once(void *foo)
-+static void iint_init_once(void *foo)
- {
- 	struct integrity_iint_cache *iint = (struct integrity_iint_cache *) foo;
- 
- 	memset(iint, 0, sizeof(*iint));
--	iint->ima_file_status = INTEGRITY_UNKNOWN;
--	iint->ima_mmap_status = INTEGRITY_UNKNOWN;
--	iint->ima_bprm_status = INTEGRITY_UNKNOWN;
--	iint->ima_read_status = INTEGRITY_UNKNOWN;
--	iint->ima_creds_status = INTEGRITY_UNKNOWN;
--	iint->evm_status = INTEGRITY_UNKNOWN;
--	mutex_init(&iint->mutex);
- }
- 
- static int __init integrity_iintcache_init(void)
- {
- 	iint_cache =
- 	    kmem_cache_create("iint_cache", sizeof(struct integrity_iint_cache),
--			      0, SLAB_PANIC, init_once);
-+			      0, SLAB_PANIC, iint_init_once);
- 	return 0;
- }
- DEFINE_LSM(integrity) = {
+ 		klist_remove(&dev->p->knode_driver);
+ 		device_pm_check_callbacks(dev);
 
 
