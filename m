@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF7B2FC21;
-	Fri, 24 Nov 2023 18:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C5328DBA;
+	Fri, 24 Nov 2023 18:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmaJ5hx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF44C433C7;
-	Fri, 24 Nov 2023 18:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiT4fmjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16549C433C7;
+	Fri, 24 Nov 2023 18:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851735;
-	bh=Ltoi0wEhz11OQCx3KN+CEEaLEcgAN3hQpOUVsovV/ho=;
+	s=korg; t=1700851738;
+	bh=AdXYaTb4Dmvjpy7Pww2o1JLNlM9DZcblr3wFF4pIgNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OmaJ5hx35zDotyqvkrEY7wEDtqEJiWL84ARk/0bl/7n+ZyhLGTKoQ+9GXhgPT8jid
-	 NaaWQ/+NY/SY/k8c/dt/uBQ0Mrx/6nRSgsGEggG+HDFhI1MEcBgqSK0tHmO+MLGjcV
-	 OJikytoTbqo+DKEC+f2F0A+i7tQFh5WXQZi3nHMA=
+	b=fiT4fmjPNMxw0i+I5/JF74cXp7oJio5HCJRCFA0yxfwIUywnRPKTdMziW1FNpQobj
+	 xoz0ZTFWYlEedUizL1EAVV1J5SHK+XsSlO3VSqNLV4cD373Hhglna7en+jaTcdpBBs
+	 1UJWr6CGSpf8X97n2syjBAdxw0aEA0vVN3noSJXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/372] scsi: libfc: Fix potential NULL pointer dereference in fc_lport_ptp_setup()
-Date: Fri, 24 Nov 2023 17:47:41 +0000
-Message-ID: <20231124172012.976425115@linuxfoundation.org>
+Subject: [PATCH 6.1 075/372] PCI: Use FIELD_GET() to extract Link Width
+Date: Fri, 24 Nov 2023 17:47:42 +0000
+Message-ID: <20231124172013.007413441@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -37,47 +37,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 4df105f0ce9f6f30cda4e99f577150d23f0c9c5f ]
+[ Upstream commit d1f9b39da4a5347150246871325190018cda8cb3 ]
 
-fc_lport_ptp_setup() did not check the return value of fc_rport_create()
-which can return NULL and would cause a NULL pointer dereference. Address
-this issue by checking return value of fc_rport_create() and log error
-message on fc_rport_create() failed.
+Use FIELD_GET() to extract PCIe Negotiated and Maximum Link Width fields
+instead of custom masking and shifting.
 
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Link: https://lore.kernel.org/r/20231011130350.819571-1-haowenchao2@huawei.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20230919125648.1920-7-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[bhelgaas: drop duplicate include of <linux/bitfield.h>]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libfc/fc_lport.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pci/pci-sysfs.c | 5 ++---
+ drivers/pci/pci.c       | 5 ++---
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/libfc/fc_lport.c b/drivers/scsi/libfc/fc_lport.c
-index 9c02c9523c4d4..ab06e9aeb613e 100644
---- a/drivers/scsi/libfc/fc_lport.c
-+++ b/drivers/scsi/libfc/fc_lport.c
-@@ -241,6 +241,12 @@ static void fc_lport_ptp_setup(struct fc_lport *lport,
- 	}
- 	mutex_lock(&lport->disc.disc_mutex);
- 	lport->ptp_rdata = fc_rport_create(lport, remote_fid);
-+	if (!lport->ptp_rdata) {
-+		printk(KERN_WARNING "libfc: Failed to setup lport 0x%x\n",
-+			lport->port_id);
-+		mutex_unlock(&lport->disc.disc_mutex);
-+		return;
-+	}
- 	kref_get(&lport->ptp_rdata->kref);
- 	lport->ptp_rdata->ids.port_name = remote_wwpn;
- 	lport->ptp_rdata->ids.node_name = remote_wwnn;
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index dd0d9d9bc5097..6ccd88d1bfa0f 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -12,7 +12,7 @@
+  * Modeled after usb's driverfs.c
+  */
+ 
+-
++#include <linux/bitfield.h>
+ #include <linux/kernel.h>
+ #include <linux/sched.h>
+ #include <linux/pci.h>
+@@ -230,8 +230,7 @@ static ssize_t current_link_width_show(struct device *dev,
+ 	if (err)
+ 		return -EINVAL;
+ 
+-	return sysfs_emit(buf, "%u\n",
+-		(linkstat & PCI_EXP_LNKSTA_NLW) >> PCI_EXP_LNKSTA_NLW_SHIFT);
++	return sysfs_emit(buf, "%u\n", FIELD_GET(PCI_EXP_LNKSTA_NLW, linkstat));
+ }
+ static DEVICE_ATTR_RO(current_link_width);
+ 
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 59b5c017d6c38..4f37885017200 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -6138,8 +6138,7 @@ u32 pcie_bandwidth_available(struct pci_dev *dev, struct pci_dev **limiting_dev,
+ 		pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
+ 
+ 		next_speed = pcie_link_speed[lnksta & PCI_EXP_LNKSTA_CLS];
+-		next_width = (lnksta & PCI_EXP_LNKSTA_NLW) >>
+-			PCI_EXP_LNKSTA_NLW_SHIFT;
++		next_width = FIELD_GET(PCI_EXP_LNKSTA_NLW, lnksta);
+ 
+ 		next_bw = next_width * PCIE_SPEED2MBS_ENC(next_speed);
+ 
+@@ -6211,7 +6210,7 @@ enum pcie_link_width pcie_get_width_cap(struct pci_dev *dev)
+ 
+ 	pcie_capability_read_dword(dev, PCI_EXP_LNKCAP, &lnkcap);
+ 	if (lnkcap)
+-		return (lnkcap & PCI_EXP_LNKCAP_MLW) >> 4;
++		return FIELD_GET(PCI_EXP_LNKCAP_MLW, lnkcap);
+ 
+ 	return PCIE_LNK_WIDTH_UNKNOWN;
+ }
 -- 
 2.42.0
 
