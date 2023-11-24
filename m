@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4BB3307D;
-	Fri, 24 Nov 2023 18:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BAD33CCD;
+	Fri, 24 Nov 2023 18:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMr5TGbM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0E3C433C7;
-	Fri, 24 Nov 2023 18:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Cfkhv/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C580C433C7;
+	Fri, 24 Nov 2023 18:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851419;
-	bh=85zDsVzlZ5k/v9IA6864WHBQYhjnZXO5hq5dEPO9zws=;
+	s=korg; t=1700851421;
+	bh=t+utuZh8L9WEzsagRNWinQWh0PVzqEvT6ycASvPLIJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMr5TGbMlGVy7V2fruIjWkNxrZbNdZ2xGSjPhWSXsh5b908gOzJBsQjtb33jvp/Er
-	 WV2nHBW8AX0kJekh1bMi2kRw9JyEFdEl3nzise3YjdVua5T66MoBZejUD9AAIyJIG9
-	 Rw73mfKz+GOYhE4oFUBTPTWRVnG/7tuyaUBtkWaY=
+	b=0Cfkhv/Z3Zvx5cuI2jGm78r7OpCUttkpTW+ZF/ZLSBZDt+gGQACBfP4fIUZwZ+lsP
+	 c9aCaP7QC5bqTdcVBVkpGPboFcin2DcK/rXmwSaqPKCG2JLRoKemynBzIEb8OhC6F6
+	 /blVPGclpjGF1X+QQf0ltwhKhiXLwryyLJKFs4u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.5 433/491] LoongArch: Mark __percpu functions as always inline
-Date: Fri, 24 Nov 2023 17:51:09 +0000
-Message-ID: <20231124172037.625281162@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.5 442/491] mptcp: deal with large GSO size
+Date: Fri, 24 Nov 2023 17:51:18 +0000
+Message-ID: <20231124172037.886743132@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,104 +44,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 71945968d8b128c955204baa33ec03bdd91bdc26 upstream.
+commit 9fce92f050f448a0d1ddd9083ef967d9930f1e52 upstream.
 
-A recent change to the optimization pipeline in LLVM reveals some
-fragility around the inlining of LoongArch's __percpu functions, which
-manifests as a BUILD_BUG() failure:
+After the blamed commit below, the TCP sockets (and the MPTCP subflows)
+can build egress packets larger than 64K. That exceeds the maximum DSS
+data size, the length being misrepresent on the wire and the stream being
+corrupted, as later observed on the receiver:
 
-  In file included from kernel/sched/build_policy.c:17:
-  In file included from include/linux/sched/cputime.h:5:
-  In file included from include/linux/sched/signal.h:5:
-  In file included from include/linux/rculist.h:11:
-  In file included from include/linux/rcupdate.h:26:
-  In file included from include/linux/irqflags.h:18:
-  arch/loongarch/include/asm/percpu.h:97:3: error: call to '__compiletime_assert_51' declared with 'error' attribute: BUILD_BUG failed
-     97 |                 BUILD_BUG();
-        |                 ^
-  include/linux/build_bug.h:59:21: note: expanded from macro 'BUILD_BUG'
-     59 | #define BUILD_BUG() BUILD_BUG_ON_MSG(1, "BUILD_BUG failed")
-        |                     ^
-  include/linux/build_bug.h:39:37: note: expanded from macro 'BUILD_BUG_ON_MSG'
-     39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
-        |                                     ^
-  include/linux/compiler_types.h:425:2: note: expanded from macro 'compiletime_assert'
-    425 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-        |         ^
-  include/linux/compiler_types.h:413:2: note: expanded from macro '_compiletime_assert'
-    413 |         __compiletime_assert(condition, msg, prefix, suffix)
-        |         ^
-  include/linux/compiler_types.h:406:4: note: expanded from macro '__compiletime_assert'
-    406 |                         prefix ## suffix();                             \
-        |                         ^
-  <scratch space>:86:1: note: expanded from here
-     86 | __compiletime_assert_51
-        | ^
-  1 error generated.
+  WARNING: CPU: 0 PID: 9696 at net/mptcp/protocol.c:705 __mptcp_move_skbs_from_subflow+0x2604/0x26e0
+  CPU: 0 PID: 9696 Comm: syz-executor.7 Not tainted 6.6.0-rc5-gcd8bdf563d46 #45
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+  netlink: 8 bytes leftover after parsing attributes in process `syz-executor.4'.
+  RIP: 0010:__mptcp_move_skbs_from_subflow+0x2604/0x26e0 net/mptcp/protocol.c:705
+  RSP: 0018:ffffc90000006e80 EFLAGS: 00010246
+  RAX: ffffffff83e9f674 RBX: ffff88802f45d870 RCX: ffff888102ad0000
+  netlink: 8 bytes leftover after parsing attributes in process `syz-executor.4'.
+  RDX: 0000000080000303 RSI: 0000000000013908 RDI: 0000000000003908
+  RBP: ffffc90000007110 R08: ffffffff83e9e078 R09: 1ffff1100e548c8a
+  R10: dffffc0000000000 R11: ffffed100e548c8b R12: 0000000000013908
+  R13: dffffc0000000000 R14: 0000000000003908 R15: 000000000031cf29
+  FS:  00007f239c47e700(0000) GS:ffff88811b200000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f239c45cd78 CR3: 000000006a66c006 CR4: 0000000000770ef0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000600
+  PKRU: 55555554
+  Call Trace:
+   <IRQ>
+   mptcp_data_ready+0x263/0xac0 net/mptcp/protocol.c:819
+   subflow_data_ready+0x268/0x6d0 net/mptcp/subflow.c:1409
+   tcp_data_queue+0x21a1/0x7a60 net/ipv4/tcp_input.c:5151
+   tcp_rcv_established+0x950/0x1d90 net/ipv4/tcp_input.c:6098
+   tcp_v6_do_rcv+0x554/0x12f0 net/ipv6/tcp_ipv6.c:1483
+   tcp_v6_rcv+0x2e26/0x3810 net/ipv6/tcp_ipv6.c:1749
+   ip6_protocol_deliver_rcu+0xd6b/0x1ae0 net/ipv6/ip6_input.c:438
+   ip6_input+0x1c5/0x470 net/ipv6/ip6_input.c:483
+   ipv6_rcv+0xef/0x2c0 include/linux/netfilter.h:304
+   __netif_receive_skb+0x1ea/0x6a0 net/core/dev.c:5532
+   process_backlog+0x353/0x660 net/core/dev.c:5974
+   __napi_poll+0xc6/0x5a0 net/core/dev.c:6536
+   net_rx_action+0x6a0/0xfd0 net/core/dev.c:6603
+   __do_softirq+0x184/0x524 kernel/softirq.c:553
+   do_softirq+0xdd/0x130 kernel/softirq.c:454
 
-If these functions are not inlined (which the compiler is free to do
-even with functions marked with the standard 'inline' keyword), the
-BUILD_BUG() in the default case cannot be eliminated since the compiler
-cannot prove it is never used, resulting in a build failure due to the
-error attribute.
+Address the issue explicitly bounding the maximum GSO size to what MPTCP
+actually allows.
 
-Mark these functions as __always_inline to guarantee inlining so that
-the BUILD_BUG() only triggers when the default case genuinely cannot be
-eliminated due to an unexpected size.
-
-Cc:  <stable@vger.kernel.org>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1955
-Fixes: 46859ac8af52 ("LoongArch: Add multi-processor (SMP) support")
-Link: https://github.com/llvm/llvm-project/commit/1a2e77cf9e11dbf56b5720c607313a566eebb16e
-Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/450
+Fixes: 7c4e983c4f3c ("net: allow gso_max_size to exceed 65536")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20231114-upstream-net-20231113-mptcp-misc-fixes-6-7-rc2-v1-1-7b9cd6a7b7f4@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/percpu.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/mptcp/protocol.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/loongarch/include/asm/percpu.h
-+++ b/arch/loongarch/include/asm/percpu.h
-@@ -32,7 +32,7 @@ static inline void set_my_cpu_offset(uns
- #define __my_cpu_offset __my_cpu_offset
- 
- #define PERCPU_OP(op, asm_op, c_op)					\
--static inline unsigned long __percpu_##op(void *ptr,			\
-+static __always_inline unsigned long __percpu_##op(void *ptr,		\
- 			unsigned long val, int size)			\
- {									\
- 	unsigned long ret;						\
-@@ -63,7 +63,7 @@ PERCPU_OP(and, and, &)
- PERCPU_OP(or, or, |)
- #undef PERCPU_OP
- 
--static inline unsigned long __percpu_read(void *ptr, int size)
-+static __always_inline unsigned long __percpu_read(void *ptr, int size)
- {
- 	unsigned long ret;
- 
-@@ -100,7 +100,7 @@ static inline unsigned long __percpu_rea
- 	return ret;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1233,6 +1233,8 @@ static void mptcp_update_infinite_map(st
+ 	mptcp_do_fallback(ssk);
  }
  
--static inline void __percpu_write(void *ptr, unsigned long val, int size)
-+static __always_inline void __percpu_write(void *ptr, unsigned long val, int size)
- {
- 	switch (size) {
- 	case 1:
-@@ -132,8 +132,8 @@ static inline void __percpu_write(void *
- 	}
- }
++#define MPTCP_MAX_GSO_SIZE (GSO_LEGACY_MAX_SIZE - (MAX_TCP_HEADER + 1))
++
+ static int mptcp_sendmsg_frag(struct sock *sk, struct sock *ssk,
+ 			      struct mptcp_data_frag *dfrag,
+ 			      struct mptcp_sendmsg_info *info)
+@@ -1259,6 +1261,8 @@ static int mptcp_sendmsg_frag(struct soc
+ 		return -EAGAIN;
  
--static inline unsigned long __percpu_xchg(void *ptr, unsigned long val,
--						int size)
-+static __always_inline unsigned long __percpu_xchg(void *ptr, unsigned long val,
-+						   int size)
- {
- 	switch (size) {
- 	case 1:
+ 	/* compute send limit */
++	if (unlikely(ssk->sk_gso_max_size > MPTCP_MAX_GSO_SIZE))
++		ssk->sk_gso_max_size = MPTCP_MAX_GSO_SIZE;
+ 	info->mss_now = tcp_send_mss(ssk, &info->size_goal, info->flags);
+ 	copy = info->size_goal;
+ 
 
 
