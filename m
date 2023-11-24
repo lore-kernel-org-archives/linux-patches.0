@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892522EAEA;
-	Fri, 24 Nov 2023 19:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD48364C4;
+	Fri, 24 Nov 2023 19:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhov3/90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBE6C433C8;
-	Fri, 24 Nov 2023 19:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOjhDldM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C088C433C7;
+	Fri, 24 Nov 2023 19:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853960;
-	bh=YGxLKFsbBAn/9P1EV2VrychEc0ciw2xGIJFM23/lla0=;
+	s=korg; t=1700853962;
+	bh=fQlRO3mArWXwInlikiKgSjsKGyT9/CNC3EJlhT/wPQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhov3/90EBxTyN3EUDBRDfYpziAbOCA62ApA25hQKwE8gKDs99d03CEnWUtUKcd6s
-	 XisyoXEtbMXoamfzHrBUQmazFobE6W5ORnCy8px9XXrmErec7nVqfHTXbAJSaijg0Q
-	 wPj3b3ajKQyPG5JNh/eGZz3hUQIfrV2Q6znQdm5w=
+	b=HOjhDldM5lIhTK23DbNKZVM+hqQSkthMabjri+foNd+MG9rXzIYn17BHwWkZ1KXmd
+	 tqfszC5Mx+geqcrKDeN6ae4V132xcdFPUqN6FD/XdMOseDgKYR0WprttQTs3Aj1VXy
+	 hC84LCTixgh8YTUSNbjgDJGM2QUwmTh/mFAtbe7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Nishanth Menon <nm@ti.com>,
-	Benjamin Bara <benjamin.bara@skidata.com>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.4 092/159] kernel/reboot: emergency_restart: Set correct system_state
-Date: Fri, 24 Nov 2023 17:55:09 +0000
-Message-ID: <20231124171945.735422076@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.4 101/159] parisc/pgtable: Do not drop upper 5 address bits of physical address
+Date: Fri, 24 Nov 2023 17:55:18 +0000
+Message-ID: <20231124171946.095435376@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -43,49 +40,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Bara <benjamin.bara@skidata.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 60466c067927abbcaff299845abd4b7069963139 upstream.
+commit 166b0110d1ee53290bd11618df6e3991c117495a upstream.
 
-As the emergency restart does not call kernel_restart_prepare(), the
-system_state stays in SYSTEM_RUNNING.
+When calculating the pfn for the iitlbt/idtlbt instruction, do not
+drop the upper 5 address bits. This doesn't seem to have an effect
+on physical hardware which uses less physical address bits, but in
+qemu the missing bits are visible.
 
-Since bae1d3a05a8b, this hinders i2c_in_atomic_xfer_mode() from becoming
-active, and therefore might lead to avoidable warnings in the restart
-handlers, e.g.:
-
-[   12.667612] WARNING: CPU: 1 PID: 1 at kernel/rcu/tree_plugin.h:318 rcu_note_context_switch+0x33c/0x6b0
-[   12.676926] Voluntary context switch within RCU read-side critical section!
-...
-[   12.742376]  schedule_timeout from wait_for_completion_timeout+0x90/0x114
-[   12.749179]  wait_for_completion_timeout from tegra_i2c_wait_completion+0x40/0x70
-...
-[   12.994527]  atomic_notifier_call_chain from machine_restart+0x34/0x58
-[   13.001050]  machine_restart from panic+0x2a8/0x32c
-
-Avoid these by setting the correct system_state.
-
-Fixes: bae1d3a05a8b ("i2c: core: remove use of in_atomic()")
-Cc: stable@vger.kernel.org # v5.2+
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Tested-by: Nishanth Menon <nm@ti.com>
-Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
-Link: https://lore.kernel.org/r/20230327-tegra-pmic-reboot-v7-1-18699d5dcd76@skidata.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc:  <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/reboot.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/parisc/kernel/entry.S |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/kernel/reboot.c
-+++ b/kernel/reboot.c
-@@ -64,6 +64,7 @@ EXPORT_SYMBOL_GPL(pm_power_off_prepare);
- void emergency_restart(void)
- {
- 	kmsg_dump(KMSG_DUMP_EMERG);
-+	system_state = SYSTEM_RESTART;
- 	machine_emergency_restart();
- }
- EXPORT_SYMBOL_GPL(emergency_restart);
+--- a/arch/parisc/kernel/entry.S
++++ b/arch/parisc/kernel/entry.S
+@@ -511,13 +511,13 @@
+ 	 * to a CPU TLB 4k PFN (4k => 12 bits to shift) */
+ 	#define PAGE_ADD_SHIFT		(PAGE_SHIFT-12)
+ 	#define PAGE_ADD_HUGE_SHIFT	(REAL_HPAGE_SHIFT-12)
++	#define PFN_START_BIT	(63-ASM_PFN_PTE_SHIFT+(63-58)-PAGE_ADD_SHIFT)
+ 
+ 	/* Drop prot bits and convert to page addr for iitlbt and idtlbt */
+ 	.macro		convert_for_tlb_insert20 pte,tmp
+ #ifdef CONFIG_HUGETLB_PAGE
+ 	copy		\pte,\tmp
+-	extrd,u		\tmp,(63-ASM_PFN_PTE_SHIFT)+(63-58)+PAGE_ADD_SHIFT,\
+-				64-PAGE_SHIFT-PAGE_ADD_SHIFT,\pte
++	extrd,u		\tmp,PFN_START_BIT,PFN_START_BIT+1,\pte
+ 
+ 	depdi		_PAGE_SIZE_ENCODING_DEFAULT,63,\
+ 				(63-58)+PAGE_ADD_SHIFT,\pte
+@@ -525,8 +525,7 @@
+ 	depdi		_HUGE_PAGE_SIZE_ENCODING_DEFAULT,63,\
+ 				(63-58)+PAGE_ADD_HUGE_SHIFT,\pte
+ #else /* Huge pages disabled */
+-	extrd,u		\pte,(63-ASM_PFN_PTE_SHIFT)+(63-58)+PAGE_ADD_SHIFT,\
+-				64-PAGE_SHIFT-PAGE_ADD_SHIFT,\pte
++	extrd,u		\pte,PFN_START_BIT,PFN_START_BIT+1,\pte
+ 	depdi		_PAGE_SIZE_ENCODING_DEFAULT,63,\
+ 				(63-58)+PAGE_ADD_SHIFT,\pte
+ #endif
 
 
