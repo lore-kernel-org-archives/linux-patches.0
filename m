@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD92939FF8;
-	Fri, 24 Nov 2023 18:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AED539FE3;
+	Fri, 24 Nov 2023 18:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGgIlvK1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D487C433C8;
-	Fri, 24 Nov 2023 18:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1JLpMVh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3FFC433C7;
+	Fri, 24 Nov 2023 18:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849309;
-	bh=RCWLjTwNdD+7JF4UbqoPCTrHdyylcLeL7FJWqdJhfos=;
+	s=korg; t=1700849312;
+	bh=g6T5mv8+UZs7gsuWsbavYmKnClSI09QiYoyRPj48KO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qGgIlvK1DHGLiRfG3lLtyRZ2P63pIyUqCdKCTnzcUJbp5fzMhNuethmxE2bad2arq
-	 0QpgifjEfAA4wfV/Nv1a5ZWJWsoxH1mYx9EKrwHev2quny77s7pbQUDaiyGSO+7iov
-	 dyFZT2k9x6/57skzEPLVomG0NFAnDlHDj2Z+MfnU=
+	b=U1JLpMVhNcfURUTa631T0UzCNxPhYj2CGcvCyEPG7D+IlEl4UGcivXTvoyRkzU+J5
+	 fKKcK4P281V087QipW/uNoJ2w76UGteC3BoJadTaYWjpS6u/Nyz/yEvi08Pwtly9Mf
+	 B/galllYW2ftoixQE6kTwwEPS43VLgFp2JVU0yc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hardik Gajjar <hgajjar@de.adit-jv.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Pawlowski <bartosz.pawlowski@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/530] usb: gadget: f_ncm: Always set current gadget in ncm_bind()
-Date: Fri, 24 Nov 2023 17:44:56 +0000
-Message-ID: <20231124172032.047789162@linuxfoundation.org>
+Subject: [PATCH 6.6 107/530] PCI: Extract ATS disabling to a helper function
+Date: Fri, 24 Nov 2023 17:44:33 +0000
+Message-ID: <20231124172031.377260169@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,135 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hardik Gajjar <hgajjar@de.adit-jv.com>
+From: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
 
-[ Upstream commit a04224da1f3424b2c607b12a3bd1f0e302fb8231 ]
+[ Upstream commit f18b1137d38c091cc8c16365219f0a1d4a30b3d1 ]
 
-Previously, gadget assignment to the net device occurred exclusively
-during the initial binding attempt.
+Introduce quirk_no_ats() helper function to provide a standard way to
+disable ATS capability in PCI quirks.
 
-Nevertheless, the gadget pointer could change during bind/unbind
-cycles due to various conditions, including the unloading/loading
-of the UDC device driver or the detachment/reconnection of an
-OTG-capable USB hub device.
-
-This patch relocates the gether_set_gadget() function out from
-ncm_opts->bound condition check, ensuring that the correct gadget
-is assigned during each bind request.
-
-The provided logs demonstrate the consistency of ncm_opts throughout
-the power cycle, while the gadget may change.
-
-* OTG hub connected during boot up and assignment of gadget and
-  ncm_opts pointer
-
-[    2.366301] usb 2-1.5: New USB device found, idVendor=2996, idProduct=0105
-[    2.366304] usb 2-1.5: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[    2.366306] usb 2-1.5: Product: H2H Bridge
-[    2.366308] usb 2-1.5: Manufacturer: Aptiv
-[    2.366309] usb 2-1.5: SerialNumber: 13FEB2021
-[    2.427989] usb 2-1.5: New USB device found, VID=2996, PID=0105
-[    2.428959] dabridge 2-1.5:1.0: dabridge 2-4 total endpoints=5, 0000000093a8d681
-[    2.429710] dabridge 2-1.5:1.0: P(0105) D(22.06.22) F(17.3.16) H(1.1) high-speed
-[    2.429714] dabridge 2-1.5:1.0: Hub 2-2 P(0151) V(06.87)
-[    2.429956] dabridge 2-1.5:1.0: All downstream ports in host mode
-
-[    2.430093] gadget 000000003c414d59 ------> gadget pointer
-
-* NCM opts and associated gadget pointer during First ncm_bind
-
-[   34.763929] NCM opts 00000000aa304ac9
-[   34.763930] NCM gadget 000000003c414d59
-
-* OTG capable hub disconnecte or assume driver unload.
-
-[   97.203114] usb 2-1: USB disconnect, device number 2
-[   97.203118] usb 2-1.1: USB disconnect, device number 3
-[   97.209217] usb 2-1.5: USB disconnect, device number 4
-[   97.230990] dabr_udc deleted
-
-* Reconnect the OTG hub or load driver assaign new gadget pointer.
-
-[  111.534035] usb 2-1.1: New USB device found, idVendor=2996, idProduct=0120, bcdDevice= 6.87
-[  111.534038] usb 2-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[  111.534040] usb 2-1.1: Product: Vendor
-[  111.534041] usb 2-1.1: Manufacturer: Aptiv
-[  111.534042] usb 2-1.1: SerialNumber: Superior
-[  111.535175] usb 2-1.1: New USB device found, VID=2996, PID=0120
-[  111.610995] usb 2-1.5: new high-speed USB device number 8 using xhci-hcd
-[  111.630052] usb 2-1.5: New USB device found, idVendor=2996, idProduct=0105, bcdDevice=21.02
-[  111.630055] usb 2-1.5: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[  111.630057] usb 2-1.5: Product: H2H Bridge
-[  111.630058] usb 2-1.5: Manufacturer: Aptiv
-[  111.630059] usb 2-1.5: SerialNumber: 13FEB2021
-[  111.687464] usb 2-1.5: New USB device found, VID=2996, PID=0105
-[  111.690375] dabridge 2-1.5:1.0: dabridge 2-8 total endpoints=5, 000000000d87c961
-[  111.691172] dabridge 2-1.5:1.0: P(0105) D(22.06.22) F(17.3.16) H(1.1) high-speed
-[  111.691176] dabridge 2-1.5:1.0: Hub 2-6 P(0151) V(06.87)
-[  111.691646] dabridge 2-1.5:1.0: All downstream ports in host mode
-
-[  111.692298] gadget 00000000dc72f7a9 --------> new gadget ptr on connect
-
-* NCM opts and associated gadget pointer during second ncm_bind
-
-[  113.271786] NCM opts 00000000aa304ac9 -----> same opts ptr used during first bind
-[  113.271788] NCM gadget 00000000dc72f7a9 ----> however new gaget ptr, that will not set
-                                                 in net_device due to ncm_opts->bound = true
-
-Signed-off-by: Hardik Gajjar <hgajjar@de.adit-jv.com>
-Link: https://lore.kernel.org/r/20231020153324.82794-1-hgajjar@de.adit-jv.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230908143606.685930-2-bartosz.pawlowski@intel.com
+Signed-off-by: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_ncm.c | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ drivers/pci/quirks.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
-index e6ab8cc225ffd..cc0ed29a4adc0 100644
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1410,7 +1410,7 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
- 	struct usb_composite_dev *cdev = c->cdev;
- 	struct f_ncm		*ncm = func_to_ncm(f);
- 	struct usb_string	*us;
--	int			status;
-+	int			status = 0;
- 	struct usb_ep		*ep;
- 	struct f_ncm_opts	*ncm_opts;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 7b62797e242b1..8a8f601b5d693 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5509,6 +5509,12 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0420, quirk_no_ext_tags);
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_SERVERWORKS, 0x0422, quirk_no_ext_tags);
  
-@@ -1428,22 +1428,17 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
- 		f->os_desc_table[0].os_desc = &ncm_opts->ncm_os_desc;
+ #ifdef CONFIG_PCI_ATS
++static void quirk_no_ats(struct pci_dev *pdev)
++{
++	pci_info(pdev, "disabling ATS\n");
++	pdev->ats_cap = 0;
++}
++
+ /*
+  * Some devices require additional driver setup to enable ATS.  Don't use
+  * ATS for those devices as ATS will be enabled before the driver has had a
+@@ -5522,14 +5528,10 @@ static void quirk_amd_harvest_no_ats(struct pci_dev *pdev)
+ 		    (pdev->subsystem_device == 0xce19 ||
+ 		     pdev->subsystem_device == 0xcc10 ||
+ 		     pdev->subsystem_device == 0xcc08))
+-			goto no_ats;
+-		else
+-			return;
++			quirk_no_ats(pdev);
++	} else {
++		quirk_no_ats(pdev);
  	}
+-
+-no_ats:
+-	pci_info(pdev, "disabling ATS\n");
+-	pdev->ats_cap = 0;
+ }
  
--	/*
--	 * in drivers/usb/gadget/configfs.c:configfs_composite_bind()
--	 * configurations are bound in sequence with list_for_each_entry,
--	 * in each configuration its functions are bound in sequence
--	 * with list_for_each_entry, so we assume no race condition
--	 * with regard to ncm_opts->bound access
--	 */
--	if (!ncm_opts->bound) {
--		mutex_lock(&ncm_opts->lock);
--		gether_set_gadget(ncm_opts->net, cdev->gadget);
-+	mutex_lock(&ncm_opts->lock);
-+	gether_set_gadget(ncm_opts->net, cdev->gadget);
-+	if (!ncm_opts->bound)
- 		status = gether_register_netdev(ncm_opts->net);
--		mutex_unlock(&ncm_opts->lock);
--		if (status)
--			goto fail;
--		ncm_opts->bound = true;
--	}
-+	mutex_unlock(&ncm_opts->lock);
-+
-+	if (status)
-+		goto fail;
-+
-+	ncm_opts->bound = true;
-+
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
- 	if (IS_ERR(us)) {
+ /* AMD Stoney platform GPU */
 -- 
 2.42.0
 
