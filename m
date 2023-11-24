@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67A139FEF;
-	Fri, 24 Nov 2023 18:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C8D381D8;
+	Fri, 24 Nov 2023 18:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jF+cbzwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F82C433C7;
-	Fri, 24 Nov 2023 18:01:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/FxW/Td"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73E6C433C7;
+	Fri, 24 Nov 2023 18:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848895;
-	bh=QevucKTsajlNcgpvvNVsT/h5dileO6PDLiR7lUs0M1Q=;
+	s=korg; t=1700848898;
+	bh=TSk75/coV09aZ2mI2VNtt7r/FASKlNWf3m7U3iiLg3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jF+cbzwYBw3jMLnmP3co/OQkN54xww/YffMc/br+UTN419Vaq2JFE6vqo1JlFtLO9
-	 oCZmi3f9C4/3+ewzfB2WNU/BDd/XA3nMOey3s2PscsoTInbBeB+lToLWAOpwy6kU0l
-	 erOGGALgWjr0D6HlRSanAprkoFbXdXBqaqXF4I98=
+	b=S/FxW/Td/zcvbvMYWKWdIjNLW3DH7XgKRrwX56o2xxw58c5xFW3JMYtc21rs3MGmI
+	 XPXdL1bFBCogjUwnIBeNv2koxMqOKWd4R5vIani8C2RC5EP1J0dwoiAybvRCF1qRPR
+	 4cYP/r4vddaRGJ5eJRF3LCoF72lV3cx2VXvn6a/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 07/57] wifi: ath10k: fix clang-specific fortify warning
-Date: Fri, 24 Nov 2023 17:50:31 +0000
-Message-ID: <20231124171930.551362110@linuxfoundation.org>
+Subject: [PATCH 4.14 08/57] net: annotate data-races around sk->sk_dst_pending_confirm
+Date: Fri, 24 Nov 2023 17:50:32 +0000
+Message-ID: <20231124171930.588787682@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -43,60 +42,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cb4c132ebfeac5962f7258ffc831caa0c4dada1a ]
+[ Upstream commit eb44ad4e635132754bfbcb18103f1dcb7058aedd ]
 
-When compiling with clang 16.0.6 and CONFIG_FORTIFY_SOURCE=y, I've
-noticed the following (somewhat confusing due to absence of an actual
-source code location):
+This field can be read or written without socket lock being held.
 
-In file included from drivers/net/wireless/ath/ath10k/debug.c:8:
-In file included from ./include/linux/module.h:13:
-In file included from ./include/linux/stat.h:19:
-In file included from ./include/linux/time.h:60:
-In file included from ./include/linux/time32.h:13:
-In file included from ./include/linux/timex.h:67:
-In file included from ./arch/x86/include/asm/timex.h:5:
-In file included from ./arch/x86/include/asm/processor.h:23:
-In file included from ./arch/x86/include/asm/msr.h:11:
-In file included from ./arch/x86/include/asm/cpumask.h:5:
-In file included from ./include/linux/cpumask.h:12:
-In file included from ./include/linux/bitmap.h:11:
-In file included from ./include/linux/string.h:254:
-./include/linux/fortify-string.h:592:4: warning: call to '__read_overflow2_field'
-declared with 'warning' attribute: detected read beyond size of field (2nd
-parameter); maybe use struct_group()? [-Wattribute-warning]
-                        __read_overflow2_field(q_size_field, size);
+Add annotations to avoid load-store tearing.
 
-The compiler actually complains on 'ath10k_debug_get_et_strings()' where
-fortification logic inteprets call to 'memcpy()' as an attempt to copy
-the whole 'ath10k_gstrings_stats' array from it's first member and so
-issues an overread warning. This warning may be silenced by passing
-an address of the whole array and not the first member to 'memcpy()'.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230829093652.234537-1-dmantipov@yandex.ru
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/sock.h    | 6 +++---
+ net/core/sock.c       | 2 +-
+ net/ipv4/tcp_output.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/debug.c b/drivers/net/wireless/ath/ath10k/debug.c
-index 22003895f8548..591d0b9c0be3c 100644
---- a/drivers/net/wireless/ath/ath10k/debug.c
-+++ b/drivers/net/wireless/ath/ath10k/debug.c
-@@ -1411,7 +1411,7 @@ void ath10k_debug_get_et_strings(struct ieee80211_hw *hw,
- 				 u32 sset, u8 *data)
- {
- 	if (sset == ETH_SS_STATS)
--		memcpy(data, *ath10k_gstrings_stats,
-+		memcpy(data, ath10k_gstrings_stats,
- 		       sizeof(ath10k_gstrings_stats));
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 7b42ddca4decb..f974b548e1199 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1804,7 +1804,7 @@ static inline void dst_negative_advice(struct sock *sk)
+ 		if (ndst != dst) {
+ 			rcu_assign_pointer(sk->sk_dst_cache, ndst);
+ 			sk_tx_queue_clear(sk);
+-			sk->sk_dst_pending_confirm = 0;
++			WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
+ 		}
+ 	}
  }
+@@ -1815,7 +1815,7 @@ __sk_dst_set(struct sock *sk, struct dst_entry *dst)
+ 	struct dst_entry *old_dst;
  
+ 	sk_tx_queue_clear(sk);
+-	sk->sk_dst_pending_confirm = 0;
++	WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
+ 	old_dst = rcu_dereference_protected(sk->sk_dst_cache,
+ 					    lockdep_sock_is_held(sk));
+ 	rcu_assign_pointer(sk->sk_dst_cache, dst);
+@@ -1828,7 +1828,7 @@ sk_dst_set(struct sock *sk, struct dst_entry *dst)
+ 	struct dst_entry *old_dst;
+ 
+ 	sk_tx_queue_clear(sk);
+-	sk->sk_dst_pending_confirm = 0;
++	WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
+ 	old_dst = xchg((__force struct dst_entry **)&sk->sk_dst_cache, dst);
+ 	dst_release(old_dst);
+ }
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 5b9f51a27dc0d..e8b5742d91492 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -534,7 +534,7 @@ struct dst_entry *__sk_dst_check(struct sock *sk, u32 cookie)
+ 
+ 	if (dst && dst->obsolete && dst->ops->check(dst, cookie) == NULL) {
+ 		sk_tx_queue_clear(sk);
+-		sk->sk_dst_pending_confirm = 0;
++		WRITE_ONCE(sk->sk_dst_pending_confirm, 0);
+ 		RCU_INIT_POINTER(sk->sk_dst_cache, NULL);
+ 		dst_release(dst);
+ 		return NULL;
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 8b2d49120ce23..67636017f275a 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -1059,7 +1059,7 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
+ 	skb_set_hash_from_sk(skb, sk);
+ 	refcount_add(skb->truesize, &sk->sk_wmem_alloc);
+ 
+-	skb_set_dst_pending_confirm(skb, sk->sk_dst_pending_confirm);
++	skb_set_dst_pending_confirm(skb, READ_ONCE(sk->sk_dst_pending_confirm));
+ 
+ 	/* Build TCP header and checksum it. */
+ 	th = (struct tcphdr *)skb->data;
 -- 
 2.42.0
 
