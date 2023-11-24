@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F542E858;
-	Fri, 24 Nov 2023 18:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EB133CC2;
+	Fri, 24 Nov 2023 18:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASGZCxA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37257C433C8;
-	Fri, 24 Nov 2023 18:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgE1lr3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B818AC433C7;
+	Fri, 24 Nov 2023 18:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850852;
-	bh=43vR9cnHiLjjKb+bXXo7kl5gnUtFLHDPe/SAdI16qR0=;
+	s=korg; t=1700850855;
+	bh=zNuHRhVGcU5xILSyD69z9eK95+Qba7adji8dWEYqWTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASGZCxA1kZV8JxSlSWcoWW8p+GilaHkCqNu6l8hH3P2Y5ujp8sLJ7xJrUrGGA7fza
-	 9DvI2+omhlY7M6IRm5SXyF0gNCKHt3dWTf/8qg+GWrw2H/l841Wh/HFgOHrmEJsr0w
-	 76rKJbGXnkqXfhCr3aWYq/3OpI5ZbqLFOXeC02K8=
+	b=AgE1lr3TSsSNt7PaIkOkAdg9cI5wlERHHSzEuIDNn0tqlXJ1Z9fgRiD2s+tvVM2Re
+	 IhGcNymj0t08RuXfGqBH4qKN6uDzoYXpKM6v83/CuqWXfg3Vdl4lQdyWWssWPJyIHe
+	 Z7Hz2hvNEaMKYb6vUdu+siFX3DdsEYt04LTgARJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 214/491] net/mlx5e: Check return value of snprintf writing to fw_version buffer
-Date: Fri, 24 Nov 2023 17:47:30 +0000
-Message-ID: <20231124172030.964032335@linuxfoundation.org>
+Subject: [PATCH 6.5 191/491] net: ethernet: cortina: Fix max RX frame define
+Date: Fri, 24 Nov 2023 17:47:07 +0000
+Message-ID: <20231124172030.222976075@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,69 +44,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 41e63c2baa11dc2aa71df5dd27a5bd87d11b6bbb ]
+[ Upstream commit 510e35fb931ffc3b100e5d5ae4595cd3beca9f1a ]
 
-Treat the operation as an error case when the return value is equivalent to
-the size of the name buffer. Failed to write null terminator to the name
-buffer, making the string malformed and should not be used. Provide a
-string with only the firmware version when forming the string with the
-board id fails.
+Enumerator 3 is 1548 bytes according to the datasheet.
+Not 1542.
 
-Without check, will trigger -Wformat-truncation with W=1.
-
-    drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c: In function 'mlx5e_ethtool_get_drvinfo':
-    drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c:49:31: warning: '%.16s' directive output may be truncated writing up to 16 bytes into a region of size between 13 and 22 [-Wformat-truncation=]
-      49 |                  "%d.%d.%04d (%.16s)",
-         |                               ^~~~~
-    drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c:48:9: note: 'snprintf' output between 12 and 37 bytes into a destination of size 32
-      48 |         snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      49 |                  "%d.%d.%04d (%.16s)",
-         |                  ~~~~~~~~~~~~~~~~~~~~~
-      50 |                  fw_rev_maj(mdev), fw_rev_min(mdev), fw_rev_sub(mdev),
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      51 |                  mdev->board_id);
-         |                  ~~~~~~~~~~~~~~~
-
-Fixes: 84e11edb71de ("net/mlx5e: Show board id in ethtool driver information")
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://lore.kernel.org/r/20231109-gemini-largeframe-fix-v4-1-6e611528db08@linaro.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_ethtool.c    | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/cortina/gemini.c | 4 ++--
+ drivers/net/ethernet/cortina/gemini.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 3d2d5d3b59f0b..bd3fabb007c94 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -43,12 +43,17 @@ void mlx5e_ethtool_get_drvinfo(struct mlx5e_priv *priv,
- 			       struct ethtool_drvinfo *drvinfo)
- {
- 	struct mlx5_core_dev *mdev = priv->mdev;
-+	int count;
- 
- 	strscpy(drvinfo->driver, KBUILD_MODNAME, sizeof(drvinfo->driver));
--	snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
--		 "%d.%d.%04d (%.16s)",
--		 fw_rev_maj(mdev), fw_rev_min(mdev), fw_rev_sub(mdev),
--		 mdev->board_id);
-+	count = snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d (%.16s)", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev), mdev->board_id);
-+	if (count == sizeof(drvinfo->fw_version))
-+		snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev));
-+
- 	strscpy(drvinfo->bus_info, dev_name(mdev->device),
- 		sizeof(drvinfo->bus_info));
- }
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 5715b9ab2712e..9fe8d22a26719 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -432,8 +432,8 @@ static const struct gmac_max_framelen gmac_maxlens[] = {
+ 		.val = CONFIG0_MAXLEN_1536,
+ 	},
+ 	{
+-		.max_l3_len = 1542,
+-		.val = CONFIG0_MAXLEN_1542,
++		.max_l3_len = 1548,
++		.val = CONFIG0_MAXLEN_1548,
+ 	},
+ 	{
+ 		.max_l3_len = 9212,
+diff --git a/drivers/net/ethernet/cortina/gemini.h b/drivers/net/ethernet/cortina/gemini.h
+index 9fdf77d5eb374..99efb11557436 100644
+--- a/drivers/net/ethernet/cortina/gemini.h
++++ b/drivers/net/ethernet/cortina/gemini.h
+@@ -787,7 +787,7 @@ union gmac_config0 {
+ #define  CONFIG0_MAXLEN_1536	0
+ #define  CONFIG0_MAXLEN_1518	1
+ #define  CONFIG0_MAXLEN_1522	2
+-#define  CONFIG0_MAXLEN_1542	3
++#define  CONFIG0_MAXLEN_1548	3
+ #define  CONFIG0_MAXLEN_9k	4	/* 9212 */
+ #define  CONFIG0_MAXLEN_10k	5	/* 10236 */
+ #define  CONFIG0_MAXLEN_1518__6	6
 -- 
 2.42.0
 
