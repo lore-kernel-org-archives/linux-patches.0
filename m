@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B069381D7;
-	Fri, 24 Nov 2023 18:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED122381D7;
+	Fri, 24 Nov 2023 18:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8tPzybz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8E8C433C9;
-	Fri, 24 Nov 2023 18:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQK/3mKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EE2C433C7;
+	Fri, 24 Nov 2023 18:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849581;
-	bh=VNcp6vkfpW+xjSUAWKBB92SgJya1djm4KPpvmRyxf6g=;
+	s=korg; t=1700849583;
+	bh=gcgks6QIHkD3rk2bEorLvbYF5TcO+aqrzwUmepWBVgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q8tPzybz1jnjEp/6u2+GeuCheeZussr48UiMDk3gEMlvzoYIvHNkXEgEGrUz0g8sn
-	 oOl1UOV4KxWCfwvQSkcGCwM4wgZAjXz8/tLBlxfC9SK3kxqgzR3ElxQR9GmGmSptuy
-	 L9Kzq3ZkMpqDNU4VQBlePMirgixiKI3uE/WQNFgE=
+	b=JQK/3mKQr6jZmH4ZbvE9tJ+YbV7NrOgO+aLH59a0X/fqNrgJf3OdqS1RPK9c0huZQ
+	 F+QmExmFnvIFbzbLl699rSpmF+icr8SEJRUOorpkS6j6wdXPYPSdRsVWh5vDhipMMx
+	 /Tfi1vaNZpmv0rUL3pY6aBA3wQaqD4tyRVUSq6lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Will Deacon <will@kernel.org>,
-	Besar Wicaksono <bwicaksono@nvidia.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.6 238/530] perf: arm_cspmu: Reject events meant for other PMUs
-Date: Fri, 24 Nov 2023 17:46:44 +0000
-Message-ID: <20231124172035.292895979@linuxfoundation.org>
+	Itamar Gozlan <igozlan@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 215/530] Revert "net/mlx5: DR, Supporting inline WQE when possible"
+Date: Fri, 24 Nov 2023 17:46:21 +0000
+Message-ID: <20231124172034.613108323@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,44 +43,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+From: Itamar Gozlan <igozlan@nvidia.com>
 
-commit 15c7ef7341a2e54cfa12ac502c65d6fd2cce2b62 upstream.
+[ Upstream commit df3aafe501853c92bc9e25b05dcb030fee072962 ]
 
-Coresight PMU driver didn't reject events meant for other PMUs.
-This caused some of the Core PMU events disappearing from
-the output of "perf list". In addition, trying to run e.g.
+This reverts commit 95c337cce0e11d06a715da73e6796ade9216637f.
+The revert is required due to the suspicion it cause some tests
+fail and will be moved to further investigation.
 
-     $ perf stat -e r2 sleep 1
-
-made Coresight PMU driver to handle the event instead of letting
-Core PMU driver to deal with it.
-
-Cc: stable@vger.kernel.org
-Fixes: e37dfd65731d ("perf: arm_cspmu: Add support for ARM CoreSight PMU driver")
-Signed-off-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Besar Wicaksono <bwicaksono@nvidia.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20231103001654.35565-1-ilkka@os.amperecomputing.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 95c337cce0e1 ("net/mlx5: DR, Supporting inline WQE when possible")
+Signed-off-by: Itamar Gozlan <igozlan@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Link: https://lore.kernel.org/r/20231114215846.5902-2-saeed@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_cspmu/arm_cspmu.c |    3 +++
- 1 file changed, 3 insertions(+)
+ .../mellanox/mlx5/core/steering/dr_send.c     | 115 ++----------------
+ 1 file changed, 13 insertions(+), 102 deletions(-)
 
---- a/drivers/perf/arm_cspmu/arm_cspmu.c
-+++ b/drivers/perf/arm_cspmu/arm_cspmu.c
-@@ -635,6 +635,9 @@ static int arm_cspmu_event_init(struct p
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
+index 4e8527a724f50..6fa06ba2d3465 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
+@@ -52,7 +52,6 @@ struct dr_qp_init_attr {
+ 	u32 cqn;
+ 	u32 pdn;
+ 	u32 max_send_wr;
+-	u32 max_send_sge;
+ 	struct mlx5_uars_page *uar;
+ 	u8 isolate_vl_tc:1;
+ };
+@@ -247,37 +246,6 @@ static int dr_poll_cq(struct mlx5dr_cq *dr_cq, int ne)
+ 	return err == CQ_POLL_ERR ? err : npolled;
+ }
  
- 	cspmu = to_arm_cspmu(event->pmu);
+-static int dr_qp_get_args_update_send_wqe_size(struct dr_qp_init_attr *attr)
+-{
+-	return roundup_pow_of_two(sizeof(struct mlx5_wqe_ctrl_seg) +
+-				  sizeof(struct mlx5_wqe_flow_update_ctrl_seg) +
+-				  sizeof(struct mlx5_wqe_header_modify_argument_update_seg));
+-}
+-
+-/* We calculate for specific RC QP with the required functionality */
+-static int dr_qp_calc_rc_send_wqe(struct dr_qp_init_attr *attr)
+-{
+-	int update_arg_size;
+-	int inl_size = 0;
+-	int tot_size;
+-	int size;
+-
+-	update_arg_size = dr_qp_get_args_update_send_wqe_size(attr);
+-
+-	size = sizeof(struct mlx5_wqe_ctrl_seg) +
+-	       sizeof(struct mlx5_wqe_raddr_seg);
+-	inl_size = size + ALIGN(sizeof(struct mlx5_wqe_inline_seg) +
+-				DR_STE_SIZE, 16);
+-
+-	size += attr->max_send_sge * sizeof(struct mlx5_wqe_data_seg);
+-
+-	size = max(size, update_arg_size);
+-
+-	tot_size = max(size, inl_size);
+-
+-	return ALIGN(tot_size, MLX5_SEND_WQE_BB);
+-}
+-
+ static struct mlx5dr_qp *dr_create_rc_qp(struct mlx5_core_dev *mdev,
+ 					 struct dr_qp_init_attr *attr)
+ {
+@@ -285,7 +253,6 @@ static struct mlx5dr_qp *dr_create_rc_qp(struct mlx5_core_dev *mdev,
+ 	u32 temp_qpc[MLX5_ST_SZ_DW(qpc)] = {};
+ 	struct mlx5_wq_param wqp;
+ 	struct mlx5dr_qp *dr_qp;
+-	int wqe_size;
+ 	int inlen;
+ 	void *qpc;
+ 	void *in;
+@@ -365,15 +332,6 @@ static struct mlx5dr_qp *dr_create_rc_qp(struct mlx5_core_dev *mdev,
+ 	if (err)
+ 		goto err_in;
+ 	dr_qp->uar = attr->uar;
+-	wqe_size = dr_qp_calc_rc_send_wqe(attr);
+-	dr_qp->max_inline_data = min(wqe_size -
+-				     (sizeof(struct mlx5_wqe_ctrl_seg) +
+-				      sizeof(struct mlx5_wqe_raddr_seg) +
+-				      sizeof(struct mlx5_wqe_inline_seg)),
+-				     (2 * MLX5_SEND_WQE_BB -
+-				      (sizeof(struct mlx5_wqe_ctrl_seg) +
+-				       sizeof(struct mlx5_wqe_raddr_seg) +
+-				       sizeof(struct mlx5_wqe_inline_seg))));
  
-+	if (event->attr.type != event->pmu->type)
-+		return -ENOENT;
+ 	return dr_qp;
+ 
+@@ -437,48 +395,8 @@ dr_rdma_handle_flow_access_arg_segments(struct mlx5_wqe_ctrl_seg *wq_ctrl,
+ 		MLX5_SEND_WQE_DS;
+ }
+ 
+-static int dr_set_data_inl_seg(struct mlx5dr_qp *dr_qp,
+-			       struct dr_data_seg *data_seg, void *wqe)
+-{
+-	int inline_header_size = sizeof(struct mlx5_wqe_ctrl_seg) +
+-				sizeof(struct mlx5_wqe_raddr_seg) +
+-				sizeof(struct mlx5_wqe_inline_seg);
+-	struct mlx5_wqe_inline_seg *seg;
+-	int left_space;
+-	int inl = 0;
+-	void *addr;
+-	int len;
+-	int idx;
+-
+-	seg = wqe;
+-	wqe += sizeof(*seg);
+-	addr = (void *)(unsigned long)(data_seg->addr);
+-	len  = data_seg->length;
+-	inl += len;
+-	left_space = MLX5_SEND_WQE_BB - inline_header_size;
+-
+-	if (likely(len > left_space)) {
+-		memcpy(wqe, addr, left_space);
+-		len -= left_space;
+-		addr += left_space;
+-		idx = (dr_qp->sq.pc + 1) & (dr_qp->sq.wqe_cnt - 1);
+-		wqe = mlx5_wq_cyc_get_wqe(&dr_qp->wq.sq, idx);
+-	}
+-
+-	memcpy(wqe, addr, len);
+-
+-	if (likely(inl)) {
+-		seg->byte_count = cpu_to_be32(inl | MLX5_INLINE_SEG);
+-		return DIV_ROUND_UP(inl + sizeof(seg->byte_count),
+-				    MLX5_SEND_WQE_DS);
+-	} else {
+-		return 0;
+-	}
+-}
+-
+ static void
+-dr_rdma_handle_icm_write_segments(struct mlx5dr_qp *dr_qp,
+-				  struct mlx5_wqe_ctrl_seg *wq_ctrl,
++dr_rdma_handle_icm_write_segments(struct mlx5_wqe_ctrl_seg *wq_ctrl,
+ 				  u64 remote_addr,
+ 				  u32 rkey,
+ 				  struct dr_data_seg *data_seg,
+@@ -494,17 +412,15 @@ dr_rdma_handle_icm_write_segments(struct mlx5dr_qp *dr_qp,
+ 	wq_raddr->reserved = 0;
+ 
+ 	wq_dseg = (void *)(wq_raddr + 1);
+-	/* WQE ctrl segment + WQE remote addr segment */
+-	*size = (sizeof(*wq_ctrl) + sizeof(*wq_raddr)) / MLX5_SEND_WQE_DS;
+ 
+-	if (data_seg->send_flags & IB_SEND_INLINE) {
+-		*size += dr_set_data_inl_seg(dr_qp, data_seg, wq_dseg);
+-	} else {
+-		wq_dseg->byte_count = cpu_to_be32(data_seg->length);
+-		wq_dseg->lkey = cpu_to_be32(data_seg->lkey);
+-		wq_dseg->addr = cpu_to_be64(data_seg->addr);
+-		*size += sizeof(*wq_dseg) / MLX5_SEND_WQE_DS;  /* WQE data segment */
+-	}
++	wq_dseg->byte_count = cpu_to_be32(data_seg->length);
++	wq_dseg->lkey = cpu_to_be32(data_seg->lkey);
++	wq_dseg->addr = cpu_to_be64(data_seg->addr);
 +
- 	/*
- 	 * Following other "uncore" PMUs, we do not support sampling mode or
- 	 * attach to a task (per-process mode).
++	*size = (sizeof(*wq_ctrl) +    /* WQE ctrl segment */
++		 sizeof(*wq_dseg) +    /* WQE data segment */
++		 sizeof(*wq_raddr)) /  /* WQE remote addr segment */
++		MLX5_SEND_WQE_DS;
+ }
+ 
+ static void dr_set_ctrl_seg(struct mlx5_wqe_ctrl_seg *wq_ctrl,
+@@ -535,7 +451,7 @@ static void dr_rdma_segments(struct mlx5dr_qp *dr_qp, u64 remote_addr,
+ 	switch (opcode) {
+ 	case MLX5_OPCODE_RDMA_READ:
+ 	case MLX5_OPCODE_RDMA_WRITE:
+-		dr_rdma_handle_icm_write_segments(dr_qp, wq_ctrl, remote_addr,
++		dr_rdma_handle_icm_write_segments(wq_ctrl, remote_addr,
+ 						  rkey, data_seg, &size);
+ 		break;
+ 	case MLX5_OPCODE_FLOW_TBL_ACCESS:
+@@ -656,7 +572,7 @@ static void dr_fill_write_args_segs(struct mlx5dr_send_ring *send_ring,
+ 	if (send_ring->pending_wqe % send_ring->signal_th == 0)
+ 		send_info->write.send_flags |= IB_SEND_SIGNALED;
+ 	else
+-		send_info->write.send_flags &= ~IB_SEND_SIGNALED;
++		send_info->write.send_flags = 0;
+ }
+ 
+ static void dr_fill_write_icm_segs(struct mlx5dr_domain *dmn,
+@@ -680,13 +596,9 @@ static void dr_fill_write_icm_segs(struct mlx5dr_domain *dmn,
+ 	}
+ 
+ 	send_ring->pending_wqe++;
+-	if (!send_info->write.lkey)
+-		send_info->write.send_flags |= IB_SEND_INLINE;
+ 
+ 	if (send_ring->pending_wqe % send_ring->signal_th == 0)
+ 		send_info->write.send_flags |= IB_SEND_SIGNALED;
+-	else
+-		send_info->write.send_flags &= ~IB_SEND_SIGNALED;
+ 
+ 	send_ring->pending_wqe++;
+ 	send_info->read.length = send_info->write.length;
+@@ -696,9 +608,9 @@ static void dr_fill_write_icm_segs(struct mlx5dr_domain *dmn,
+ 	send_info->read.lkey = send_ring->sync_mr->mkey;
+ 
+ 	if (send_ring->pending_wqe % send_ring->signal_th == 0)
+-		send_info->read.send_flags |= IB_SEND_SIGNALED;
++		send_info->read.send_flags = IB_SEND_SIGNALED;
+ 	else
+-		send_info->read.send_flags &= ~IB_SEND_SIGNALED;
++		send_info->read.send_flags = 0;
+ }
+ 
+ static void dr_fill_data_segs(struct mlx5dr_domain *dmn,
+@@ -1345,7 +1257,6 @@ int mlx5dr_send_ring_alloc(struct mlx5dr_domain *dmn)
+ 	dmn->send_ring->cq->qp = dmn->send_ring->qp;
+ 
+ 	dmn->info.max_send_wr = QUEUE_SIZE;
+-	init_attr.max_send_sge = 1;
+ 	dmn->info.max_inline_size = min(dmn->send_ring->qp->max_inline_data,
+ 					DR_STE_SIZE);
+ 
+-- 
+2.42.0
+
 
 
