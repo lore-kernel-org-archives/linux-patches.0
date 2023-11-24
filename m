@@ -1,29 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFD534197;
-	Fri, 24 Nov 2023 18:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAF2381D6;
+	Fri, 24 Nov 2023 18:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GuSKCKe3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E8EC433C8;
-	Fri, 24 Nov 2023 18:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTBIhCbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E07C433C8;
+	Fri, 24 Nov 2023 18:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850194;
-	bh=pozgSwTcJud/SywNBFmuIh6Etrn2QODrh3dRe84P+3o=;
+	s=korg; t=1700850197;
+	bh=K4JhJN6LNeMUdrkBh6f5NskHpSSmKibSaOBUvOmqrek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GuSKCKe3I24yavA7PPTn77oQIPKt0E+ITuVSgcqFxBkgg4CAc4IIHRjtScVx+UOK3
-	 GN4l7O54YOQE8454p7mpkw4w52aNrDuFoDE/nMQPwbkQnEyCr3XUqVrXF9yQJvRD6T
-	 22jtbu+9LhrueehRtNitFelWHNU+uFWb09pViL6A=
+	b=RTBIhCbQ9byI8qFM59bU4bPcmjj4liriCnbATnLnGyM/kI43i6fAqHmPtJFl8saA/
+	 wbaSodFnBCRO4s58INY+aJyrcNRic3p+iYAB7sUMkQPTlAiYHwpOShTu1GN2HAp+xP
+	 uE/bKdPZ4uSkxrGYjO9zC3XubkEdxtvlJCXJ73Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 459/530] media: ccs: Correctly initialise try compose rectangle
-Date: Fri, 24 Nov 2023 17:50:25 +0000
-Message-ID: <20231124172042.052339153@linuxfoundation.org>
+	Guillaume Ranquet <granquet@baylibre.com>,
+	Bo-Chen Chen <rex-bc.chen@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Jani Nikula <jani.nikula@intel.com>,
+	Chen-Yu Tsai <wenst@chromium.org>
+Subject: [PATCH 6.6 460/530] drm/mediatek/dp: fix memory leak on ->get_edid callback audio detection
+Date: Fri, 24 Nov 2023 17:50:26 +0000
+Message-ID: <20231124172042.082336579@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,35 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 724ff68e968b19d786870d333f9952bdd6b119cb upstream.
+commit dab12fa8d2bd3868cf2de485ed15a3feef28a13d upstream.
 
-Initialise the try sink compose rectangle size to the sink compose
-rectangle for binner and scaler sub-devices. This was missed due to the
-faulty condition that lead to the compose rectangles to be initialised for
-the pixel array sub-device where it is not relevant.
+The sads returned by drm_edid_to_sad() needs to be freed.
 
-Fixes: ccfc97bdb5ae ("[media] smiapp: Add driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: e71a8ebbe086 ("drm/mediatek: dp: Audio support for MT8195")
+Cc: Guillaume Ranquet <granquet@baylibre.com>
+Cc: Bo-Chen Chen <rex-bc.chen@mediatek.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-mediatek@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: <stable@vger.kernel.org> # v6.1+
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230914155317.2511876-1-jani.nikula@intel.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ccs/ccs-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/media/i2c/ccs/ccs-core.c
-+++ b/drivers/media/i2c/ccs/ccs-core.c
-@@ -3097,7 +3097,7 @@ static int ccs_open(struct v4l2_subdev *
- 		try_fmt->code = sensor->internal_csi_format->code;
- 		try_fmt->field = V4L2_FIELD_NONE;
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -2034,7 +2034,6 @@ static struct edid *mtk_dp_get_edid(stru
+ 	bool enabled = mtk_dp->enabled;
+ 	struct edid *new_edid = NULL;
+ 	struct mtk_dp_audio_cfg *audio_caps = &mtk_dp->info.audio_cur_cfg;
+-	struct cea_sad *sads;
  
--		if (ssd != sensor->pixel_array)
-+		if (ssd == sensor->pixel_array)
- 			continue;
+ 	if (!enabled) {
+ 		drm_atomic_bridge_chain_pre_enable(bridge, connector->state->state);
+@@ -2053,7 +2052,11 @@ static struct edid *mtk_dp_get_edid(stru
+ 	}
  
- 		try_comp = v4l2_subdev_get_try_compose(sd, fh->state, i);
+ 	if (new_edid) {
++		struct cea_sad *sads;
++
+ 		audio_caps->sad_count = drm_edid_to_sad(new_edid, &sads);
++		kfree(sads);
++
+ 		audio_caps->detect_monitor = drm_detect_monitor_audio(new_edid);
+ 	}
+ 
 
 
