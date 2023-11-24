@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691BA39FE9;
-	Fri, 24 Nov 2023 18:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BB939FF7;
+	Fri, 24 Nov 2023 18:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtZLnOqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82AD0C433C8;
-	Fri, 24 Nov 2023 18:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gmj7+6Zr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08603C433C7;
+	Fri, 24 Nov 2023 18:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850055;
-	bh=jHkZKopmUPOHfPMmLj0GfUYSj7ZY/b+9OCdm82SK7ew=;
+	s=korg; t=1700850058;
+	bh=in/ylI53VjtVo2eYAvX74liSBbq5qaB7Cje+bZ7glfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qtZLnOqBImzX6X1VRzKDiBk9P4Lo/sKFCpPap5UuTxh4sub+zlAuI1hQl4srZUafa
-	 dyeG4ps3//oe8apzhh5xOc1ni9eSVrYSjQ0w1dVpjsj9J7TnR1/pBcddWMmC7eeTcw
-	 +EtveICa1FIRJ8BvMqi9ixEaCmMgVUp28LqmKNkY=
+	b=Gmj7+6ZrXr+QZrhmPF44wxQbF7y26HBcKQaFLXZK+hp5kHERDOXMcXswIRblnTz+d
+	 SDfFgvYWiJ4gvraVG4dmxS68ObIe2qmh/JP854lInukHpq2DTwqyDaNxVHc8cL1zFb
+	 qgjXqhXBQiD0tgIpal7R4ZN13A58SvWNONPd0A1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 427/530] cifs: do not reset chan_max if multichannel is not supported at mount
-Date: Fri, 24 Nov 2023 17:49:53 +0000
-Message-ID: <20231124172041.070034151@linuxfoundation.org>
+	Meng Tang <tangmeng@uniontech.com>,
+	Guan Wentao <guanwentao@uniontech.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 404/530] Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE
+Date: Fri, 24 Nov 2023 17:49:30 +0000
+Message-ID: <20231124172040.348785035@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,38 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Guan Wentao <guanwentao@uniontech.com>
 
-commit 6e5e64c9477d58e73cb1a0e83eacad1f8df247cf upstream.
+[ Upstream commit da06ff1f585ea784c79f80e7fab0e0c4ebb49c1c ]
 
-If the mount command has specified multichannel as a mount option,
-but multichannel is found to be unsupported by the server at the time
-of mount, we set chan_max to 1. Which means that the user needs to
-remount the share if the server starts supporting multichannel.
+Add PID/VID 0bda:b85b for Realtek RTL8852BE USB bluetooth part.
+The PID/VID was reported by the patch last year. [1]
+Some SBCs like rockpi 5B A8 module contains the device.
+And it`s founded in website. [2] [3]
 
-This change removes this reset. What it means is that if the user
-specified multichannel or max_channels during mount, and at this
-time, multichannel is not supported, but the server starts supporting
-it at a later point, the client will be capable of scaling out the
-number of channels.
+Here is the device tables in /sys/kernel/debug/usb/devices .
+
+T:  Bus=07 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0bda ProdID=b85b Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Link: https://lore.kernel.org/all/20220420052402.19049-1-tangmeng@uniontech.com/ [1]
+Link: https://forum.radxa.com/t/bluetooth-on-ubuntu/13051/4 [2]
+Link: https://ubuntuforums.org/showthread.php?t=2489527 [3]
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Meng Tang <tangmeng@uniontech.com>
+Signed-off-by: Guan Wentao <guanwentao@uniontech.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/sess.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/sess.c
-+++ b/fs/smb/client/sess.c
-@@ -186,7 +186,6 @@ int cifs_try_adding_channels(struct cifs
- 	}
- 
- 	if (!(server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
--		ses->chan_max = 1;
- 		spin_unlock(&ses->chan_lock);
- 		cifs_server_dbg(VFS, "no multichannel support\n");
- 		return 0;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index e3f11ea2a9fcd..66080fae072f2 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -543,6 +543,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0bda, 0x887b), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0bda, 0xb85b), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3570), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
+-- 
+2.42.0
+
 
 
