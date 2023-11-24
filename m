@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F1639FE3;
-	Fri, 24 Nov 2023 18:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79013A8C2;
+	Fri, 24 Nov 2023 18:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTpKF5U0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D61C433C7;
-	Fri, 24 Nov 2023 18:13:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcXbdK9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621AFC433C8;
+	Fri, 24 Nov 2023 18:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849601;
-	bh=5sjaw4g5o7pXdnTuNYRMM7DYqYAXec3TxJkxV5X1GRs=;
+	s=korg; t=1700849603;
+	bh=6tTzz9hWLEVOduoqE9FzmLedFd/n0o6PtP/3EKjbZ2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTpKF5U01swpA7gCzHjXCBe5sQolCxcM6T+4Bkj+ZwhcR4K9nK12CANjgNqe5V+ks
-	 gMib5DgIJaXoYth8EHBt8XTvkP5VvGAHCGJ9yt7EyKXddp0dWMV26J0A/4H8bme72q
-	 0zZLJKES0IgvVMWUQNnL6GT5WNIxLJRPoIYdFa0Q=
+	b=AcXbdK9RDOISkPrAedjc1YYHa541nv1dSS8Ra3OSkrOAXyzwc/zlrfLmDM7Dg8c8r
+	 ZbQRG9nKU7qVKD2h3mbgE/hQtALBkv39Viu8ID5690i9MbCqsG51ZQqK9ULREGsp6T
+	 ZyM7GjJIF+D9e/JzRkhYrVeee955auTe8Bf7QzqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 212/530] pds_core: fix up some format-truncation complaints
-Date: Fri, 24 Nov 2023 17:46:18 +0000
-Message-ID: <20231124172034.510635168@linuxfoundation.org>
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.6 240/530] media: venus: hfi: add checks to perform sanity on queue pointers
+Date: Fri, 24 Nov 2023 17:46:46 +0000
+Message-ID: <20231124172035.358639471@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,76 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-[ Upstream commit 7c02f6ae676a954216a192612040f9a0cde3adf7 ]
+commit 5e538fce33589da6d7cb2de1445b84d3a8a692f7 upstream.
 
-Our friendly kernel test robot pointed out a couple of potential
-string truncation issues.  None of which were we worried about,
-but can be relatively easily fixed to quiet the complaints.
+Read and write pointers are used to track the packet index in the memory
+shared between video driver and firmware. There is a possibility of OOB
+access if the read or write pointer goes beyond the queue memory size.
+Add checks for the read and write pointer to avoid OOB access.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310211736.66syyDpp-lkp@intel.com/
-Fixes: 45d76f492938 ("pds_core: set up device and adminq")
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Link: https://lore.kernel.org/r/20231113183257.71110-3-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/pds_core/core.h    | 2 +-
- drivers/net/ethernet/amd/pds_core/dev.c     | 8 ++++++--
- drivers/net/ethernet/amd/pds_core/devlink.c | 2 +-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
-index e545fafc48196..b1c1f1007b065 100644
---- a/drivers/net/ethernet/amd/pds_core/core.h
-+++ b/drivers/net/ethernet/amd/pds_core/core.h
-@@ -15,7 +15,7 @@
- #define PDSC_DRV_DESCRIPTION	"AMD/Pensando Core Driver"
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -205,6 +205,11 @@ static int venus_write_queue(struct venu
  
- #define PDSC_WATCHDOG_SECS	5
--#define PDSC_QUEUE_NAME_MAX_SZ  32
-+#define PDSC_QUEUE_NAME_MAX_SZ  16
- #define PDSC_ADMINQ_MIN_LENGTH	16	/* must be a power of two */
- #define PDSC_NOTIFYQ_LENGTH	64	/* must be a power of two */
- #define PDSC_TEARDOWN_RECOVERY	false
-diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
-index f77cd9f5a2fda..eb178728edba9 100644
---- a/drivers/net/ethernet/amd/pds_core/dev.c
-+++ b/drivers/net/ethernet/amd/pds_core/dev.c
-@@ -254,10 +254,14 @@ static int pdsc_identify(struct pdsc *pdsc)
- 	struct pds_core_drv_identity drv = {};
- 	size_t sz;
- 	int err;
-+	int n;
+ 	new_wr_idx = wr_idx + dwords;
+ 	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
++
++	if (wr_ptr < (u32 *)queue->qmem.kva ||
++	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
++		return -EINVAL;
++
+ 	if (new_wr_idx < qsize) {
+ 		memcpy(wr_ptr, packet, dwords << 2);
+ 	} else {
+@@ -272,6 +277,11 @@ static int venus_read_queue(struct venus
+ 	}
  
- 	drv.drv_type = cpu_to_le32(PDS_DRIVER_LINUX);
--	snprintf(drv.driver_ver_str, sizeof(drv.driver_ver_str),
--		 "%s %s", PDS_CORE_DRV_NAME, utsname()->release);
-+	/* Catching the return quiets a Wformat-truncation complaint */
-+	n = snprintf(drv.driver_ver_str, sizeof(drv.driver_ver_str),
-+		     "%s %s", PDS_CORE_DRV_NAME, utsname()->release);
-+	if (n > sizeof(drv.driver_ver_str))
-+		dev_dbg(pdsc->dev, "release name truncated, don't care\n");
- 
- 	/* Next let's get some info about the device
- 	 * We use the devcmd_lock at this level in order to
-diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
-index d9607033bbf21..d2abf32b93fe3 100644
---- a/drivers/net/ethernet/amd/pds_core/devlink.c
-+++ b/drivers/net/ethernet/amd/pds_core/devlink.c
-@@ -104,7 +104,7 @@ int pdsc_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
- 	struct pds_core_fw_list_info fw_list;
- 	struct pdsc *pdsc = devlink_priv(dl);
- 	union pds_core_dev_comp comp;
--	char buf[16];
-+	char buf[32];
- 	int listlen;
- 	int err;
- 	int i;
--- 
-2.42.0
-
+ 	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
++
++	if (rd_ptr < (u32 *)queue->qmem.kva ||
++	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
++		return -EINVAL;
++
+ 	dwords = *rd_ptr >> 2;
+ 	if (!dwords)
+ 		return -EINVAL;
 
 
