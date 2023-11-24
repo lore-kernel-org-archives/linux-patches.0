@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496D833CCA;
-	Fri, 24 Nov 2023 19:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8518364B7;
+	Fri, 24 Nov 2023 19:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpMOwo8r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6A9C433C7;
-	Fri, 24 Nov 2023 19:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wgdgwn5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E089C433C7;
+	Fri, 24 Nov 2023 19:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853397;
-	bh=WRafsSZRAO20hCbzR/dY5tiBIfw3FmMRYKLblL/xdsA=;
+	s=korg; t=1700853399;
+	bh=6T+XFp/QK6q560aREMmq8Lp2nfaEi1P43iLT/Ot0MNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kpMOwo8rXBnLYidF7jQ17xxgColjiaaQ/WLNR3ipIzgCFpkOR4AcWbrzlZQB/ORE/
-	 ODHjYUBAjwSDaTyZpQ5ca9I6bf8FDEql7jFC4eDTLWLmVUHGyNvNeT6j2PUpl7ivbe
-	 VgJQmXT45W8gZWC+wrg7fx40kwb0HTCst3aq/SpI=
+	b=Wgdgwn5KJIiVDv5LsBEf+XqG4ycVhAfNUd1Qe88+Yq886lsWIAMfM1AiPK1B2kHC/
+	 Ap+PpqTCVggXpY4Fb637fOmKQITQj75rQBDD2wcfAhPK1BwwDbph2c87AMNwStXNeU
+	 q+RQ0sKs0Qq3UUJWGPrsuPbKxlDn5B4XQSMlLDTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/297] xfs: Fix unreferenced object reported by kmemleak in xfs_sysfs_init()
-Date: Fri, 24 Nov 2023 17:53:16 +0000
-Message-ID: <20231124172005.653909720@linuxfoundation.org>
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.15 172/297] hvc/xen: fix error path in xen_hvc_init() to always register frontend driver
+Date: Fri, 24 Nov 2023 17:53:34 +0000
+Message-ID: <20231124172006.274696859@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -38,76 +35,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Zetao <lizetao1@huawei.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-[ Upstream commit d08af40340cad0e025d643c3982781a8f99d5032 ]
+commit 2704c9a5593f4a47620c12dad78838ca62b52f48 upstream.
 
-kmemleak reported a sequence of memory leaks, and one of them indicated we
-failed to free a pointer:
-  comm "mount", pid 19610, jiffies 4297086464 (age 60.635s)
-    hex dump (first 8 bytes):
-      73 64 61 00 81 88 ff ff                          sda.....
-    backtrace:
-      [<00000000d77f3e04>] kstrdup_const+0x46/0x70
-      [<00000000e51fa804>] kobject_set_name_vargs+0x2f/0xb0
-      [<00000000247cd595>] kobject_init_and_add+0xb0/0x120
-      [<00000000f9139aaf>] xfs_mountfs+0x367/0xfc0
-      [<00000000250d3caf>] xfs_fs_fill_super+0xa16/0xdc0
-      [<000000008d873d38>] get_tree_bdev+0x256/0x390
-      [<000000004881f3fa>] vfs_get_tree+0x41/0xf0
-      [<000000008291ab52>] path_mount+0x9b3/0xdd0
-      [<0000000022ba8f2d>] __x64_sys_mount+0x190/0x1d0
+The xen_hvc_init() function should always register the frontend driver,
+even when there's no primary console — as there may be secondary consoles.
+(Qemu can always add secondary consoles, but only the toolstack can add
+the primary because it's special.)
 
-As mentioned in kobject_init_and_add() comment, if this function
-returns an error, kobject_put() must be called to properly clean up
-the memory associated with the object. Apparently, xfs_sysfs_init()
-does not follow such a requirement. When kobject_init_and_add()
-returns an error, the space of kobj->kobject.name alloced by
-kstrdup_const() is unfree, which will cause the above stack.
-
-Fix it by adding kobject_put() when kobject_init_and_add returns an
-error.
-
-Fixes: a31b1d3d89e4 ("xfs: add xfs_mount sysfs kobject")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231020161529.355083-3-dwmw2@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_sysfs.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/tty/hvc/hvc_xen.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/xfs/xfs_sysfs.h b/fs/xfs/xfs_sysfs.h
-index 43585850f1546..513095e353a5b 100644
---- a/fs/xfs/xfs_sysfs.h
-+++ b/fs/xfs/xfs_sysfs.h
-@@ -33,10 +33,15 @@ xfs_sysfs_init(
- 	const char		*name)
- {
- 	struct kobject		*parent;
-+	int err;
+--- a/drivers/tty/hvc/hvc_xen.c
++++ b/drivers/tty/hvc/hvc_xen.c
+@@ -603,7 +603,7 @@ static int __init xen_hvc_init(void)
+ 		ops = &dom0_hvc_ops;
+ 		r = xen_initial_domain_console_init();
+ 		if (r < 0)
+-			return r;
++			goto register_fe;
+ 		info = vtermno_to_xencons(HVC_COOKIE);
+ 	} else {
+ 		ops = &domU_hvc_ops;
+@@ -612,7 +612,7 @@ static int __init xen_hvc_init(void)
+ 		else
+ 			r = xen_pv_console_init();
+ 		if (r < 0)
+-			return r;
++			goto register_fe;
  
- 	parent = parent_kobj ? &parent_kobj->kobject : NULL;
- 	init_completion(&kobj->complete);
--	return kobject_init_and_add(&kobj->kobject, ktype, parent, "%s", name);
-+	err = kobject_init_and_add(&kobj->kobject, ktype, parent, "%s", name);
-+	if (err)
-+		kobject_put(&kobj->kobject);
-+
-+	return err;
- }
+ 		info = vtermno_to_xencons(HVC_COOKIE);
+ 		info->irq = bind_evtchn_to_irq_lateeoi(info->evtchn);
+@@ -637,6 +637,7 @@ static int __init xen_hvc_init(void)
+ 	}
  
- static inline void
--- 
-2.42.0
-
+ 	r = 0;
++ register_fe:
+ #ifdef CONFIG_HVC_XEN_FRONTEND
+ 	r = xenbus_register_frontend(&xencons_driver);
+ #endif
 
 
