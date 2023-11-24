@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391FD2EAEA;
-	Fri, 24 Nov 2023 19:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB4E2EAEA;
+	Fri, 24 Nov 2023 19:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJ6qSpUf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B743CC433C7;
-	Fri, 24 Nov 2023 19:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srikiqsz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B290C433C8;
+	Fri, 24 Nov 2023 19:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852765;
-	bh=BSwnJVClrQqr0hbrgfHoQJTMlZjmEYWPeyDVMn9SxFo=;
+	s=korg; t=1700852767;
+	bh=NJYynJBzlz6vtCjfjGK5DAH0ioeYBA+rYcQ4wEW0foo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJ6qSpUfW1/lN2zWyQsspbIsB4GHa4KXWJ7Oc9eV9XjsAILpqPxIRe5D/iQCQ/kvI
-	 N+CeGbYbXic1UhEldMaUt2qGGs3Km2+M9J3YecBlh+rLRND/Tc6Cfo+H/ccy8gL7Y/
-	 kavHPEbcv9HDKEOIUeKAM1Axy8+f4yTb0VH31uuM=
+	b=srikiqszaUxLOMBThKgjzBORVn/CId6UKv2zg6GULFHGOViRBjJuFI8t1cv94d7nX
+	 nAj43ZzE75LYmJmPqcCK0Fnzdhcq1DPapv8kHo84v9KIxfWXJhpp7drjbiM70oJ+PV
+	 brHC1GKyuk/8352GbkcTLxntTFaeYVp15kdmlKtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.10 089/193] media: venus: hfi: add checks to perform sanity on queue pointers
-Date: Fri, 24 Nov 2023 17:53:36 +0000
-Message-ID: <20231124171950.809652122@linuxfoundation.org>
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.10 090/193] powerpc/perf: Fix disabling BHRB and instruction sampling
+Date: Fri, 24 Nov 2023 17:53:37 +0000
+Message-ID: <20231124171950.858824553@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,50 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-commit 5e538fce33589da6d7cb2de1445b84d3a8a692f7 upstream.
+commit ea142e590aec55ba40c5affb4d49e68c713c63dc upstream.
 
-Read and write pointers are used to track the packet index in the memory
-shared between video driver and firmware. There is a possibility of OOB
-access if the read or write pointer goes beyond the queue memory size.
-Add checks for the read and write pointer to avoid OOB access.
+When the PMU is disabled, MMCRA is not updated to disable BHRB and
+instruction sampling. This can lead to those features remaining enabled,
+which can slow down a real or emulated CPU.
 
-Cc: stable@vger.kernel.org
-Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
-Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 1cade527f6e9 ("powerpc/perf: BHRB control to disable BHRB logic when not used")
+Cc: stable@vger.kernel.org # v5.9+
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231018153423.298373-1-npiggin@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/powerpc/perf/core-book3s.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -206,6 +206,11 @@ static int venus_write_queue(struct venu
+--- a/arch/powerpc/perf/core-book3s.c
++++ b/arch/powerpc/perf/core-book3s.c
+@@ -1289,8 +1289,7 @@ static void power_pmu_disable(struct pmu
+ 		/*
+ 		 * Disable instruction sampling if it was enabled
+ 		 */
+-		if (cpuhw->mmcr.mmcra & MMCRA_SAMPLE_ENABLE)
+-			val &= ~MMCRA_SAMPLE_ENABLE;
++		val &= ~MMCRA_SAMPLE_ENABLE;
  
- 	new_wr_idx = wr_idx + dwords;
- 	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
-+
-+	if (wr_ptr < (u32 *)queue->qmem.kva ||
-+	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
-+		return -EINVAL;
-+
- 	if (new_wr_idx < qsize) {
- 		memcpy(wr_ptr, packet, dwords << 2);
- 	} else {
-@@ -273,6 +278,11 @@ static int venus_read_queue(struct venus
- 	}
- 
- 	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
-+
-+	if (rd_ptr < (u32 *)queue->qmem.kva ||
-+	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
-+		return -EINVAL;
-+
- 	dwords = *rd_ptr >> 2;
- 	if (!dwords)
- 		return -EINVAL;
+ 		/* Disable BHRB via mmcra (BHRBRD) for p10 */
+ 		if (ppmu->flags & PPMU_ARCH_31)
+@@ -1301,7 +1300,7 @@ static void power_pmu_disable(struct pmu
+ 		 * instruction sampling or BHRB.
+ 		 */
+ 		if (val != mmcra) {
+-			mtspr(SPRN_MMCRA, mmcra);
++			mtspr(SPRN_MMCRA, val);
+ 			mb();
+ 			isync();
+ 		}
 
 
