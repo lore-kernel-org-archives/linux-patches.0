@@ -1,29 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4841A2E40E;
-	Fri, 24 Nov 2023 18:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A832C2D626;
+	Fri, 24 Nov 2023 18:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0ZDK64C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D2EC433C7;
-	Fri, 24 Nov 2023 18:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUbQ5nGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4182C433C8;
+	Fri, 24 Nov 2023 18:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851261;
-	bh=uM/xI+QnUYTIS7eXNfECArZzYpPBrke2+NaMBk9prtI=;
+	s=korg; t=1700851264;
+	bh=aqMaudOxfcL+aVftteqcVJxCdE3QStICEWx1EnVjECA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y0ZDK64CkeOIdmmNYnEGwhzefAuxICqcDMvxDqtxm22Bt5kjIHnU59NmmqgJbQlMk
-	 pKMj7cnpDtkjW6MntH2uH7mkf1rqn50vKEMQ2tKHlg2ektWZ1wDSwAheXaPIu/mlLR
-	 fTKnBYaM79375STBDFxdGMzQOBpIbBGZfRrwVaBE=
+	b=LUbQ5nGd0Vz/dVs+Z8TxmRc23xHSwRQJ4BTbpG36at9he1ZmFU8Fm9Vm3W5MeowEa
+	 QpC4HB0A/kNSOgzucK8GFFe1L0VXeajXrB+b4p3rQ2Bxg5si29PbawYXHBOfLjf6rC
+	 SfYjs30555mw5nZ27uKzh9fCe+01wbuL7mE15hJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 377/491] torture: Make torture_hrtimeout_ns() take an hrtimer mode parameter
-Date: Fri, 24 Nov 2023 17:50:13 +0000
-Message-ID: <20231124172035.915529968@linuxfoundation.org>
+	Florent Revest <revest@chromium.org>,
+	Alexey Izbyshev <izbyshev@ispras.ru>,
+	David Hildenbrand <david@redhat.com>,
+	Kees Cook <keescook@chromium.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Ayush Jain <ayush.jain3@amd.com>,
+	Greg Thelen <gthelen@google.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Peter Xu <peterx@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Szabolcs Nagy <Szabolcs.Nagy@arm.com>,
+	Topi Miettinen <toiwoton@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.5 353/491] mm: make PR_MDWE_REFUSE_EXEC_GAIN an unsigned long
+Date: Fri, 24 Nov 2023 17:49:49 +0000
+Message-ID: <20231124172035.170441869@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,100 +56,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Florent Revest <revest@chromium.org>
 
-[ Upstream commit a741deac787f0d2d7068638c067db20af9e63752 ]
+commit 0da668333fb07805c2836d5d50e26eda915b24a1 upstream.
 
-The current torture-test sleeps are waiting for a duration, but there
-are situations where it is better to wait for an absolute time, for
-example, when ending a stutter interval.  This commit therefore adds
-an hrtimer mode parameter to torture_hrtimeout_ns().  Why not also the
-other torture_hrtimeout_*() functions?  The theory is that most absolute
-times will be in nanoseconds, especially not (say) jiffies.
+Defining a prctl flag as an int is a footgun because on a 64 bit machine
+and with a variadic implementation of prctl (like in musl and glibc), when
+used directly as a prctl argument, it can get casted to long with garbage
+upper bits which would result in unexpected behaviors.
 
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Stable-dep-of: cca42bd8eb1b ("rcutorture: Fix stuttering races and other issues")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch changes the constant to an unsigned long to eliminate that
+possibilities.  This does not break UAPI.
+
+I think that a stable backport would be "nice to have": to reduce the
+chances that users build binaries that could end up with garbage bits in
+their MDWE prctl arguments.  We are not aware of anyone having yet
+encountered this corner case with MDWE prctls but a backport would reduce
+the likelihood it happens, since this sort of issues has happened with
+other prctls.  But If this is perceived as a backporting burden, I suppose
+we could also live without a stable backport.
+
+Link: https://lkml.kernel.org/r/20230828150858.393570-5-revest@chromium.org
+Fixes: b507808ebce2 ("mm: implement memory-deny-write-execute as a prctl")
+Signed-off-by: Florent Revest <revest@chromium.org>
+Suggested-by: Alexey Izbyshev <izbyshev@ispras.ru>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Ayush Jain <ayush.jain3@amd.com>
+Cc: Greg Thelen <gthelen@google.com>
+Cc: Joey Gouly <joey.gouly@arm.com>
+Cc: KP Singh <kpsingh@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Szabolcs Nagy <Szabolcs.Nagy@arm.com>
+Cc: Topi Miettinen <toiwoton@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/torture.h |  3 ++-
- kernel/torture.c        | 13 +++++++------
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ include/uapi/linux/prctl.h       | 2 +-
+ tools/include/uapi/linux/prctl.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/torture.h b/include/linux/torture.h
-index bb466eec01e42..017f0f710815a 100644
---- a/include/linux/torture.h
-+++ b/include/linux/torture.h
-@@ -81,7 +81,8 @@ static inline void torture_random_init(struct torture_random_state *trsp)
- }
+diff --git a/include/uapi/linux/prctl.h b/include/uapi/linux/prctl.h
+index 3c36aeade991..9a85c69782bd 100644
+--- a/include/uapi/linux/prctl.h
++++ b/include/uapi/linux/prctl.h
+@@ -283,7 +283,7 @@ struct prctl_mm_map {
  
- /* Definitions for high-resolution-timer sleeps. */
--int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, struct torture_random_state *trsp);
-+int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, const enum hrtimer_mode mode,
-+			 struct torture_random_state *trsp);
- int torture_hrtimeout_us(u32 baset_us, u32 fuzzt_ns, struct torture_random_state *trsp);
- int torture_hrtimeout_ms(u32 baset_ms, u32 fuzzt_us, struct torture_random_state *trsp);
- int torture_hrtimeout_jiffies(u32 baset_j, struct torture_random_state *trsp);
-diff --git a/kernel/torture.c b/kernel/torture.c
-index a55cb70b192fc..fd2168058dac8 100644
---- a/kernel/torture.c
-+++ b/kernel/torture.c
-@@ -84,14 +84,15 @@ EXPORT_SYMBOL_GPL(verbose_torout_sleep);
-  * nanosecond random fuzz.  This function and its friends desynchronize
-  * testing from the timer wheel.
-  */
--int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, struct torture_random_state *trsp)
-+int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, const enum hrtimer_mode mode,
-+			 struct torture_random_state *trsp)
- {
- 	ktime_t hto = baset_ns;
+ /* Memory deny write / execute */
+ #define PR_SET_MDWE			65
+-# define PR_MDWE_REFUSE_EXEC_GAIN	1
++# define PR_MDWE_REFUSE_EXEC_GAIN	(1UL << 0)
  
- 	if (trsp)
- 		hto += (torture_random(trsp) >> 3) % fuzzt_ns;
- 	set_current_state(TASK_IDLE);
--	return schedule_hrtimeout(&hto, HRTIMER_MODE_REL);
-+	return schedule_hrtimeout(&hto, mode);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_ns);
+ #define PR_GET_MDWE			66
  
-@@ -103,7 +104,7 @@ int torture_hrtimeout_us(u32 baset_us, u32 fuzzt_ns, struct torture_random_state
- {
- 	ktime_t baset_ns = baset_us * NSEC_PER_USEC;
+diff --git a/tools/include/uapi/linux/prctl.h b/tools/include/uapi/linux/prctl.h
+index 3c36aeade991..9a85c69782bd 100644
+--- a/tools/include/uapi/linux/prctl.h
++++ b/tools/include/uapi/linux/prctl.h
+@@ -283,7 +283,7 @@ struct prctl_mm_map {
  
--	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
-+	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_us);
+ /* Memory deny write / execute */
+ #define PR_SET_MDWE			65
+-# define PR_MDWE_REFUSE_EXEC_GAIN	1
++# define PR_MDWE_REFUSE_EXEC_GAIN	(1UL << 0)
  
-@@ -120,7 +121,7 @@ int torture_hrtimeout_ms(u32 baset_ms, u32 fuzzt_us, struct torture_random_state
- 		fuzzt_ns = (u32)~0U;
- 	else
- 		fuzzt_ns = fuzzt_us * NSEC_PER_USEC;
--	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
-+	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_ms);
- 
-@@ -133,7 +134,7 @@ int torture_hrtimeout_jiffies(u32 baset_j, struct torture_random_state *trsp)
- {
- 	ktime_t baset_ns = jiffies_to_nsecs(baset_j);
- 
--	return torture_hrtimeout_ns(baset_ns, jiffies_to_nsecs(1), trsp);
-+	return torture_hrtimeout_ns(baset_ns, jiffies_to_nsecs(1), HRTIMER_MODE_REL, trsp);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_jiffies);
- 
-@@ -150,7 +151,7 @@ int torture_hrtimeout_s(u32 baset_s, u32 fuzzt_ms, struct torture_random_state *
- 		fuzzt_ns = (u32)~0U;
- 	else
- 		fuzzt_ns = fuzzt_ms * NSEC_PER_MSEC;
--	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
-+	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_s);
+ #define PR_GET_MDWE			66
  
 -- 
-2.42.0
+2.43.0
 
 
 
