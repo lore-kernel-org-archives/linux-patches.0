@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214CD381CE;
-	Fri, 24 Nov 2023 18:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9821939FC6;
+	Fri, 24 Nov 2023 18:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qU+NDwsD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35B3C433C9;
-	Fri, 24 Nov 2023 18:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukcAZFb3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D7CC433C8;
+	Fri, 24 Nov 2023 18:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849004;
-	bh=NYIqaHgHZDdJijlXg5RBMtK2HiGIWerqSDrtg/1k4jA=;
+	s=korg; t=1700849006;
+	bh=IJBAIoNELNpGPY85QYFi8hz9hgMzu3rkvIJ8WG6ubSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qU+NDwsDThopIR/7koxbOIzWwczSal7TbEp/NBqmTybmI1Tv3/hjj8baB5Eh+LQN7
-	 g1QWW/32lekRhDaIuqWXyeEi0iWdY3Ad9wYAOkPVkHp5DaNsyyaa+VifXpnxMjfcLJ
-	 RDBmktkkDguKIz+bBnPZB68k1jB3zNv6i3KnkyUk=
+	b=ukcAZFb3NEOfQGqKAgYppCeOqq4TcUKfcjC76f/yAp6Q+XuHZ7n/5CCZSGjzChEjn
+	 wJ78etcTMjrx7Js6W5DvQmUIUpjjio84mTELWD2PG+q9JT9SN1OEnEl464TuGgp3zE
+	 6EAqN7pHIKzaihfvllFKwEr2MiYZos40p4LGvv08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronald Wahl <ronald.wahl@raritan.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Yong He <alexyonghe@tencent.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Neeraj upadhyay <Neeraj.Upadhyay@amd.com>,
+	Like Xu <likexu@tencent.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/530] clocksource/drivers/timer-atmel-tcb: Fix initialization on SAM9 hardware
-Date: Fri, 24 Nov 2023 17:42:56 +0000
-Message-ID: <20231124172028.405747000@linuxfoundation.org>
+Subject: [PATCH 6.6 011/530] srcu: Only accelerate on enqueue time
+Date: Fri, 24 Nov 2023 17:42:57 +0000
+Message-ID: <20231124172028.436675319@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,53 +45,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Wahl <ronald.wahl@raritan.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 6d3bc4c02d59996d1d3180d8ed409a9d7d5900e0 ]
+[ Upstream commit 8a77f38bcd28d3c22ab7dd8eff3f299d43c00411 ]
 
-On SAM9 hardware two cascaded 16 bit timers are used to form a 32 bit
-high resolution timer that is used as scheduler clock when the kernel
-has been configured that way (CONFIG_ATMEL_CLOCKSOURCE_TCB).
+Acceleration in SRCU happens on enqueue time for each new callback. This
+operation is expected not to fail and therefore any similar attempt
+from other places shouldn't find any remaining callbacks to accelerate.
 
-The driver initially triggers a reset-to-zero of the two timers but this
-reset is only performed on the next rising clock. For the first timer
-this is ok - it will be in the next 60ns (16MHz clock). For the chained
-second timer this will only happen after the first timer overflows, i.e.
-after 2^16 clocks (~4ms with a 16MHz clock). So with other words the
-scheduler clock resets to 0 after the first 2^16 clock cycles.
+Moreover accelerations performed beyond enqueue time are error prone
+because rcu_seq_snap() then may return the snapshot for a new grace
+period that is not going to be started.
 
-It looks like that the scheduler does not like this and behaves wrongly
-over its lifetime, e.g. some tasks are scheduled with a long delay. Why
-that is and if there are additional requirements for this behaviour has
-not been further analysed.
+Remove these dangerous and needless accelerations and introduce instead
+assertions reporting leaking unaccelerated callbacks beyond enqueue
+time.
 
-There is a simple fix for resetting the second timer as well when the
-first timer is reset and this is to set the ATMEL_TC_ASWTRG_SET bit in
-the Channel Mode register (CMR) of the first timer. This will also rise
-the TIOA line (clock input of the second timer) when a software trigger
-respective SYNC is issued.
-
-Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
-Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20231007161803.31342-1-rwahl@gmx.de
+Co-developed-by: Yong He <alexyonghe@tencent.com>
+Signed-off-by: Yong He <alexyonghe@tencent.com>
+Co-developed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Co-developed-by: Neeraj upadhyay <Neeraj.Upadhyay@amd.com>
+Signed-off-by: Neeraj upadhyay <Neeraj.Upadhyay@amd.com>
+Reviewed-by: Like Xu <likexu@tencent.com>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-atmel-tcb.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/rcu/srcutree.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clocksource/timer-atmel-tcb.c b/drivers/clocksource/timer-atmel-tcb.c
-index 27af17c995900..2a90c92a9182a 100644
---- a/drivers/clocksource/timer-atmel-tcb.c
-+++ b/drivers/clocksource/timer-atmel-tcb.c
-@@ -315,6 +315,7 @@ static void __init tcb_setup_dual_chan(struct atmel_tc *tc, int mck_divisor_idx)
- 	writel(mck_divisor_idx			/* likely divide-by-8 */
- 			| ATMEL_TC_WAVE
- 			| ATMEL_TC_WAVESEL_UP		/* free-run */
-+			| ATMEL_TC_ASWTRG_SET		/* TIOA0 rises at software trigger */
- 			| ATMEL_TC_ACPA_SET		/* TIOA0 rises at 0 */
- 			| ATMEL_TC_ACPC_CLEAR,		/* (duty cycle 50%) */
- 			tcaddr + ATMEL_TC_REG(0, CMR));
+diff --git a/kernel/rcu/srcutree.c b/kernel/rcu/srcutree.c
+index 7522517b63b6f..2f770a9a2a13a 100644
+--- a/kernel/rcu/srcutree.c
++++ b/kernel/rcu/srcutree.c
+@@ -782,8 +782,7 @@ static void srcu_gp_start(struct srcu_struct *ssp)
+ 	spin_lock_rcu_node(sdp);  /* Interrupts already disabled. */
+ 	rcu_segcblist_advance(&sdp->srcu_cblist,
+ 			      rcu_seq_current(&ssp->srcu_sup->srcu_gp_seq));
+-	(void)rcu_segcblist_accelerate(&sdp->srcu_cblist,
+-				       rcu_seq_snap(&ssp->srcu_sup->srcu_gp_seq));
++	WARN_ON_ONCE(!rcu_segcblist_segempty(&sdp->srcu_cblist, RCU_NEXT_TAIL));
+ 	spin_unlock_rcu_node(sdp);  /* Interrupts remain disabled. */
+ 	WRITE_ONCE(ssp->srcu_sup->srcu_gp_start, jiffies);
+ 	WRITE_ONCE(ssp->srcu_sup->srcu_n_exp_nodelay, 0);
+@@ -1719,6 +1718,7 @@ static void srcu_invoke_callbacks(struct work_struct *work)
+ 	ssp = sdp->ssp;
+ 	rcu_cblist_init(&ready_cbs);
+ 	spin_lock_irq_rcu_node(sdp);
++	WARN_ON_ONCE(!rcu_segcblist_segempty(&sdp->srcu_cblist, RCU_NEXT_TAIL));
+ 	rcu_segcblist_advance(&sdp->srcu_cblist,
+ 			      rcu_seq_current(&ssp->srcu_sup->srcu_gp_seq));
+ 	if (sdp->srcu_cblist_invoking ||
+@@ -1748,8 +1748,6 @@ static void srcu_invoke_callbacks(struct work_struct *work)
+ 	 */
+ 	spin_lock_irq_rcu_node(sdp);
+ 	rcu_segcblist_add_len(&sdp->srcu_cblist, -len);
+-	(void)rcu_segcblist_accelerate(&sdp->srcu_cblist,
+-				       rcu_seq_snap(&ssp->srcu_sup->srcu_gp_seq));
+ 	sdp->srcu_cblist_invoking = false;
+ 	more = rcu_segcblist_ready_cbs(&sdp->srcu_cblist);
+ 	spin_unlock_irq_rcu_node(sdp);
 -- 
 2.42.0
 
