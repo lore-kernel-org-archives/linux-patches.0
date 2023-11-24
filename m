@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8BB3307D;
-	Fri, 24 Nov 2023 19:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E3A35EE6;
+	Fri, 24 Nov 2023 19:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHK2OtWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE8EC433C8;
-	Fri, 24 Nov 2023 19:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyQkmjW2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71457C433C8;
+	Fri, 24 Nov 2023 19:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853456;
-	bh=Hi+SEuXZCynDGxHJW7NdA+foenydvdT8PbskPOmTyXk=;
+	s=korg; t=1700853458;
+	bh=G36yhpUA7DVYfGYtXlZwm0sVSMjnqNdTNIAJ8h4WmeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHK2OtWHbsr5x6xPQ1qBB4+ev7iLZK1QRPOGpR9H5IRa/v3N6GSb1Ggt9Gu2fuFnC
-	 Y3fZhvy3D5oWTzM9co7ka5dgzRQQknuKDBmPdxkpgk5O+BMbWN7Bek1bIe0iKXOH1O
-	 xyix/QAVa2N421Hh/q/Kg+ijQ6AlHEF1N1ARZ95A=
+	b=MyQkmjW2h2wGnqlSwJAtFcw26rr+zJGdyrQGOmo16zQJ6n38h2KRA2ieZmNvrBSoK
+	 jRvgiIVJtPobjQkl/V7wNX7LgvzJNe0MlvHwoE5fCBCVjdpvyDQ3D4vpkLlo45Xaaq
+	 bX98tdACl3CEf50Vso4JUF4H+u2R8Qc/bmfyutzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 196/297] ACPI: FPDT: properly handle invalid FPDT subtables
-Date: Fri, 24 Nov 2023 17:53:58 +0000
-Message-ID: <20231124172007.071878261@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	syzbot+b42fe626038981fb7bfa@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 197/297] ima: annotate iint mutex to avoid lockdep false positive warnings
+Date: Fri, 24 Nov 2023 17:53:59 +0000
+Message-ID: <20231124172007.102674106@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -41,166 +42,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Khoruzhick <anarsoul@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit a83c68a3bf7c418c9a46693c63c638852b0c1f4e upstream.
+commit e044374a8a0a99e46f4e6d6751d3042b6d9cc12e upstream.
 
-Buggy BIOSes may have invalid FPDT subtables, e.g. on my hardware:
+It is not clear that IMA should be nested at all, but as long is it
+measures files both on overlayfs and on underlying fs, we need to
+annotate the iint mutex to avoid lockdep false positives related to
+IMA + overlayfs, same as overlayfs annotates the inode mutex.
 
-S3PT subtable:
-
-7F20FE30: 53 33 50 54 24 00 00 00-00 00 00 00 00 00 18 01  *S3PT$...........*
-7F20FE40: 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  *................*
-7F20FE50: 00 00 00 00
-
-Here the first record has zero length.
-
-FBPT subtable:
-
-7F20FE50:             46 42 50 54-3C 00 00 00 46 42 50 54  *....FBPT<...FBPT*
-7F20FE60: 02 00 30 02 00 00 00 00-00 00 00 00 00 00 00 00  *..0.............*
-7F20FE70: 2A A6 BC 6E 0B 00 00 00-1A 44 41 70 0B 00 00 00  **..n.....DAp....*
-7F20FE80: 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  *................*
-
-And here FBPT table has FBPT signature repeated instead of the first
-record.
-
-Current code will be looping indefinitely due to zero length records, so
-break out of the loop if record length is zero.
-
-While we are here, add proper handling for fpdt_process_subtable()
-failures.
-
-Fixes: d1eb86e59be0 ("ACPI: tables: introduce support for FPDT table")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
-[ rjw: Comment edit, added empty code lines ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-and-tested-by: syzbot+b42fe626038981fb7bfa@syzkaller.appspotmail.com
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_fpdt.c |   45 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 37 insertions(+), 8 deletions(-)
+ security/integrity/iint.c |   48 +++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 11 deletions(-)
 
---- a/drivers/acpi/acpi_fpdt.c
-+++ b/drivers/acpi/acpi_fpdt.c
-@@ -194,12 +194,19 @@ static int fpdt_process_subtable(u64 add
- 		record_header = (void *)subtable_header + offset;
- 		offset += record_header->length;
- 
-+		if (!record_header->length) {
-+			pr_err(FW_BUG "Zero-length record found in FPTD.\n");
-+			result = -EINVAL;
-+			goto err;
-+		}
-+
- 		switch (record_header->type) {
- 		case RECORD_S3_RESUME:
- 			if (subtable_type != SUBTABLE_S3PT) {
- 				pr_err(FW_BUG "Invalid record %d for subtable %s\n",
- 				     record_header->type, signature);
--				return -EINVAL;
-+				result = -EINVAL;
-+				goto err;
- 			}
- 			if (record_resume) {
- 				pr_err("Duplicate resume performance record found.\n");
-@@ -208,7 +215,7 @@ static int fpdt_process_subtable(u64 add
- 			record_resume = (struct resume_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &resume_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
- 		case RECORD_S3_SUSPEND:
- 			if (subtable_type != SUBTABLE_S3PT) {
-@@ -223,13 +230,14 @@ static int fpdt_process_subtable(u64 add
- 			record_suspend = (struct suspend_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &suspend_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
- 		case RECORD_BOOT:
- 			if (subtable_type != SUBTABLE_FBPT) {
- 				pr_err(FW_BUG "Invalid %d for subtable %s\n",
- 				     record_header->type, signature);
--				return -EINVAL;
-+				result = -EINVAL;
-+				goto err;
- 			}
- 			if (record_boot) {
- 				pr_err("Duplicate boot performance record found.\n");
-@@ -238,7 +246,7 @@ static int fpdt_process_subtable(u64 add
- 			record_boot = (struct boot_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &boot_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
- 
- 		default:
-@@ -247,6 +255,18 @@ static int fpdt_process_subtable(u64 add
- 		}
- 	}
- 	return 0;
-+
-+err:
-+	if (record_boot)
-+		sysfs_remove_group(fpdt_kobj, &boot_attr_group);
-+
-+	if (record_suspend)
-+		sysfs_remove_group(fpdt_kobj, &suspend_attr_group);
-+
-+	if (record_resume)
-+		sysfs_remove_group(fpdt_kobj, &resume_attr_group);
-+
-+	return result;
+--- a/security/integrity/iint.c
++++ b/security/integrity/iint.c
+@@ -66,9 +66,32 @@ struct integrity_iint_cache *integrity_i
+ 	return iint;
  }
  
- static int __init acpi_init_fpdt(void)
-@@ -255,6 +275,7 @@ static int __init acpi_init_fpdt(void)
- 	struct acpi_table_header *header;
- 	struct fpdt_subtable_entry *subtable;
- 	u32 offset = sizeof(*header);
-+	int result;
- 
- 	status = acpi_get_table(ACPI_SIG_FPDT, 0, &header);
- 
-@@ -263,8 +284,8 @@ static int __init acpi_init_fpdt(void)
- 
- 	fpdt_kobj = kobject_create_and_add("fpdt", acpi_kobj);
- 	if (!fpdt_kobj) {
--		acpi_put_table(header);
--		return -ENOMEM;
-+		result = -ENOMEM;
-+		goto err_nomem;
- 	}
- 
- 	while (offset < header->length) {
-@@ -272,8 +293,10 @@ static int __init acpi_init_fpdt(void)
- 		switch (subtable->type) {
- 		case SUBTABLE_FBPT:
- 		case SUBTABLE_S3PT:
--			fpdt_process_subtable(subtable->address,
-+			result = fpdt_process_subtable(subtable->address,
- 					      subtable->type);
-+			if (result)
-+				goto err_subtable;
- 			break;
- 		default:
- 			/* Other types are reserved in ACPI 6.4 spec. */
-@@ -282,6 +305,12 @@ static int __init acpi_init_fpdt(void)
- 		offset += sizeof(*subtable);
- 	}
- 	return 0;
-+err_subtable:
-+	kobject_put(fpdt_kobj);
+-static void iint_free(struct integrity_iint_cache *iint)
++#define IMA_MAX_NESTING (FILESYSTEM_MAX_STACK_DEPTH+1)
 +
-+err_nomem:
-+	acpi_put_table(header);
-+	return result;
++/*
++ * It is not clear that IMA should be nested at all, but as long is it measures
++ * files both on overlayfs and on underlying fs, we need to annotate the iint
++ * mutex to avoid lockdep false positives related to IMA + overlayfs.
++ * See ovl_lockdep_annotate_inode_mutex_key() for more details.
++ */
++static inline void iint_lockdep_annotate(struct integrity_iint_cache *iint,
++					 struct inode *inode)
++{
++#ifdef CONFIG_LOCKDEP
++	static struct lock_class_key iint_mutex_key[IMA_MAX_NESTING];
++
++	int depth = inode->i_sb->s_stack_depth;
++
++	if (WARN_ON_ONCE(depth < 0 || depth >= IMA_MAX_NESTING))
++		depth = 0;
++
++	lockdep_set_class(&iint->mutex, &iint_mutex_key[depth]);
++#endif
++}
++
++static void iint_init_always(struct integrity_iint_cache *iint,
++			     struct inode *inode)
+ {
+-	kfree(iint->ima_hash);
+ 	iint->ima_hash = NULL;
+ 	iint->version = 0;
+ 	iint->flags = 0UL;
+@@ -80,6 +103,14 @@ static void iint_free(struct integrity_i
+ 	iint->ima_creds_status = INTEGRITY_UNKNOWN;
+ 	iint->evm_status = INTEGRITY_UNKNOWN;
+ 	iint->measured_pcrs = 0;
++	mutex_init(&iint->mutex);
++	iint_lockdep_annotate(iint, inode);
++}
++
++static void iint_free(struct integrity_iint_cache *iint)
++{
++	kfree(iint->ima_hash);
++	mutex_destroy(&iint->mutex);
+ 	kmem_cache_free(iint_cache, iint);
  }
  
- fs_initcall(acpi_init_fpdt);
+@@ -112,6 +143,8 @@ struct integrity_iint_cache *integrity_i
+ 	if (!iint)
+ 		return NULL;
+ 
++	iint_init_always(iint, inode);
++
+ 	write_lock(&integrity_iint_lock);
+ 
+ 	p = &integrity_iint_tree.rb_node;
+@@ -161,25 +194,18 @@ void integrity_inode_free(struct inode *
+ 	iint_free(iint);
+ }
+ 
+-static void init_once(void *foo)
++static void iint_init_once(void *foo)
+ {
+ 	struct integrity_iint_cache *iint = (struct integrity_iint_cache *) foo;
+ 
+ 	memset(iint, 0, sizeof(*iint));
+-	iint->ima_file_status = INTEGRITY_UNKNOWN;
+-	iint->ima_mmap_status = INTEGRITY_UNKNOWN;
+-	iint->ima_bprm_status = INTEGRITY_UNKNOWN;
+-	iint->ima_read_status = INTEGRITY_UNKNOWN;
+-	iint->ima_creds_status = INTEGRITY_UNKNOWN;
+-	iint->evm_status = INTEGRITY_UNKNOWN;
+-	mutex_init(&iint->mutex);
+ }
+ 
+ static int __init integrity_iintcache_init(void)
+ {
+ 	iint_cache =
+ 	    kmem_cache_create("iint_cache", sizeof(struct integrity_iint_cache),
+-			      0, SLAB_PANIC, init_once);
++			      0, SLAB_PANIC, iint_init_once);
+ 	return 0;
+ }
+ DEFINE_LSM(integrity) = {
 
 
