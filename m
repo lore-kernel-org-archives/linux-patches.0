@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA150381BF;
-	Fri, 24 Nov 2023 18:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A3A381D4;
+	Fri, 24 Nov 2023 18:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4pb4jZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6205FC433CA;
-	Fri, 24 Nov 2023 18:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvtdnTo3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9E6C433C8;
+	Fri, 24 Nov 2023 18:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850179;
-	bh=tczs+0aVJ4Xxew5NY1zAn9XxJvO8KTDSBNuImTGqwG4=;
+	s=korg; t=1700850182;
+	bh=Of6wbpHlNePnjOT68DtM/I24ykPFBCiguFkR8bYn1dQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z4pb4jZyFFQeNMxSabOaLbV7uib/FgwRDyeZL+22JmE0EkuLM/IBzQHuYzn/SmF93
-	 /NpojSnPrILYUPJrEenIPsQaf9WNZrJ3oI36o3ywmHy4y0r7YWhMFHG8vcbQlWsdVr
-	 zuKLsfKMWOlNtLoh6/BpY76OIfxXCjm3mYoRQKj0=
+	b=AvtdnTo3TGds3UbGWSDdekbMozano7EoWM9QMgJNFADFKH2pTOKQQFrLUVOAN0pAF
+	 3DNtN8Rb9pYfEqgu2NJosy5wECfmEd36yB22TpaIq67rQ5mRWH2tOGychXr9tIf3BY
+	 hpIWvyt0AVaJWaBp4zpIV1sEq+vUIrh2VBeMPwTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Roesch <shr@devkernel.io>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Christoph Lameter <cl@linux.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 476/530] mm: fix for negative counter: nr_file_hugepages
-Date: Fri, 24 Nov 2023 17:50:42 +0000
-Message-ID: <20231124172042.561139974@linuxfoundation.org>
+Subject: [PATCH 6.6 477/530] mm: kmem: drop __GFP_NOFAIL when allocating objcg vectors
+Date: Fri, 24 Nov 2023 17:50:43 +0000
+Message-ID: <20231124172042.594224001@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -46,72 +44,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Roesch <shr@devkernel.io>
+From: Roman Gushchin <roman.gushchin@linux.dev>
 
-commit a48d5bdc877b85201e42cef9c2fdf5378164c23a upstream.
+commit 24948e3b7b12e0031a6edb4f49bbb9fb2ad1e4e9 upstream.
 
-While qualifiying the 6.4 release, the following warning was detected in
-messages:
+Objcg vectors attached to slab pages to store slab object ownership
+information are allocated using gfp flags for the original slab
+allocation.  Depending on slab page order and the size of slab objects,
+objcg vector can take several pages.
 
-vmstat_refresh: nr_file_hugepages -15664
+If the original allocation was done with the __GFP_NOFAIL flag, it
+triggered a warning in the page allocation code.  Indeed, order > 1 pages
+should not been allocated with the __GFP_NOFAIL flag.
 
-The warning is caused by the incorrect updating of the NR_FILE_THPS
-counter in the function split_huge_page_to_list.  The if case is checking
-for folio_test_swapbacked, but the else case is missing the check for
-folio_test_pmd_mappable.  The other functions that manipulate the counter
-like __filemap_add_folio and filemap_unaccount_folio have the
-corresponding check.
+Fix this by simply dropping the __GFP_NOFAIL flag when allocating the
+objcg vector.  It effectively allows to skip the accounting of a single
+slab object under a heavy memory pressure.
 
-I have a test case, which reproduces the problem. It can be found here:
-  https://github.com/sroeschus/testcase/blob/main/vmstat_refresh/madv.c
+An alternative would be to implement the mechanism to fallback to order-0
+allocations for accounting metadata, which is also not perfect because it
+will increase performance penalty and memory footprint of the kernel
+memory accounting under memory pressure.
 
-The test case reproduces on an XFS filesystem. Running the same test
-case on a BTRFS filesystem does not reproduce the problem.
-
-AFAIK version 6.1 until 6.6 are affected by this problem.
-
-[akpm@linux-foundation.org: whitespace fix]
-[shr@devkernel.io: test for folio_test_pmd_mappable()]
-  Link: https://lkml.kernel.org/r/20231108171517.2436103-1-shr@devkernel.io
-Link: https://lkml.kernel.org/r/20231106181918.1091043-1-shr@devkernel.io
-Signed-off-by: Stefan Roesch <shr@devkernel.io>
-Co-debugged-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
+Link: https://lkml.kernel.org/r/ZUp8ZFGxwmCx4ZFr@P9FQF9L96D.corp.robot.car
+Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reported-by: Christoph Lameter <cl@linux.com>
+Closes: https://lkml.kernel.org/r/6b42243e-f197-600a-5d22-56bd728a5ad8@gentwo.org
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ mm/memcontrol.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2737,13 +2737,15 @@ int split_huge_page_to_list(struct page
- 			int nr = folio_nr_pages(folio);
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2864,7 +2864,8 @@ static void commit_charge(struct folio *
+  * Moreover, it should not come from DMA buffer and is not readily
+  * reclaimable. So those GFP bits should be masked off.
+  */
+-#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | __GFP_ACCOUNT)
++#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | \
++				 __GFP_ACCOUNT | __GFP_NOFAIL)
  
- 			xas_split(&xas, folio, folio_order(folio));
--			if (folio_test_swapbacked(folio)) {
--				__lruvec_stat_mod_folio(folio, NR_SHMEM_THPS,
--							-nr);
--			} else {
--				__lruvec_stat_mod_folio(folio, NR_FILE_THPS,
--							-nr);
--				filemap_nr_thps_dec(mapping);
-+			if (folio_test_pmd_mappable(folio)) {
-+				if (folio_test_swapbacked(folio)) {
-+					__lruvec_stat_mod_folio(folio,
-+							NR_SHMEM_THPS, -nr);
-+				} else {
-+					__lruvec_stat_mod_folio(folio,
-+							NR_FILE_THPS, -nr);
-+					filemap_nr_thps_dec(mapping);
-+				}
- 			}
- 		}
- 
+ /*
+  * mod_objcg_mlstate() may be called with irq enabled, so
 
 
