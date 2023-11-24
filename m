@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850372FC36;
-	Fri, 24 Nov 2023 19:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACB2381CC;
+	Fri, 24 Nov 2023 19:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpFhddND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104BEC433C8;
-	Fri, 24 Nov 2023 19:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khaVeO1Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88734C433C7;
+	Fri, 24 Nov 2023 19:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700854084;
-	bh=uFK4aF1vzOTHEIipGUSFMBrqpPN4+M/cNO4IoX/FVgM=;
+	s=korg; t=1700854086;
+	bh=QWWy6jTjw/9Q9wUg5b91DXKacLWShLHHfcmiFeGeZNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dpFhddNDXrxisZG3gIFWxV6eglnOzjo8WYnNOuKUbJkJh8btnEK386Mahlj394bwA
-	 t0MFM98leNHTeuR8qjELvxsGoYhU1MANn7GHerKRBINgdqOXD2Ti4kKm7w7qw3QoKZ
-	 MnSdxcSRhMdIJr+PYR5l1AU/ZRonRyR800nRegSs=
+	b=khaVeO1QW3mUhBmjZ3NPP0dEmB6IFOO+pgbCvWEmCCLqgNTYD73hbDg9bmlw+mha8
+	 aLRTiEqElpyWhQenisIAJTeS2z91nz2CD8RSaH2m5DM4fM3AAvvT0ZNNNudt3KJ2ZF
+	 Gc0yA1gbBpYV8UfnrlRjDILWwNbrpZQS4Z3vL6U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahmoud Adam <mngyadam@amazon.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neilb@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.4 125/159] nfsd: fix file memleak on client_opens_release
-Date: Fri, 24 Nov 2023 17:55:42 +0000
-Message-ID: <20231124171947.033728353@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 126/159] Revert "net: r8169: Disable multicast filter for RTL8168H and RTL8107E"
+Date: Fri, 24 Nov 2023 17:55:43 +0000
+Message-ID: <20231124171947.072996939@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -43,34 +41,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahmoud Adam <mngyadam@amazon.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit bc1b5acb40201a0746d68a7d7cfc141899937f4f upstream.
+commit 6a26310273c323380da21eb23fcfd50e31140913 upstream.
 
-seq_release should be called to free the allocated seq_file
+This reverts commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df.
 
-Cc: stable@vger.kernel.org # v5.3+
-Signed-off-by: Mahmoud Adam <mngyadam@amazon.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
-Reviewed-by: NeilBrown <neilb@suse.de>
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+I couldn't reproduce the reported issue. What I did, based on a pcap
+packet log provided by the reporter:
+- Used same chip version (RTL8168h)
+- Set MAC address to the one used on the reporters system
+- Replayed the EAPOL unicast packet that, according to the reporter,
+  was filtered out by the mc filter.
+The packet was properly received.
+
+Therefore the root cause of the reported issue seems to be somewhere
+else. Disabling mc filtering completely for the most common chip
+version is a quite big hammer. Therefore revert the change and wait
+for further analysis results from the reporter.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -2571,7 +2571,7 @@ static int client_opens_release(struct i
- 
- 	/* XXX: alternatively, we could get/drop in seq start/stop */
- 	drop_client(clp);
--	return 0;
-+	return seq_release(inode, file);
- }
- 
- static const struct file_operations client_states_fops = {
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4292,9 +4292,7 @@ static void rtl_set_rx_mode(struct net_d
+ 		rx_mode &= ~AcceptMulticast;
+ 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
+ 		   dev->flags & IFF_ALLMULTI ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
++		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
+ 		/* accept all multicasts */
+ 	} else if (netdev_mc_empty(dev)) {
+ 		rx_mode &= ~AcceptMulticast;
 
 
