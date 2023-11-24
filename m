@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D243A8C2;
-	Fri, 24 Nov 2023 18:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D79B39FC2;
+	Fri, 24 Nov 2023 18:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ED8huTWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AFA4C433C7;
-	Fri, 24 Nov 2023 18:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/ONzzuv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65E4C433C8;
+	Fri, 24 Nov 2023 18:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849461;
-	bh=ynJO5bnLuwS4t8X6H2+zBtPns0TX91E1UWe35fuDYdU=;
+	s=korg; t=1700849464;
+	bh=0lBOECk9YfEo/1ZE0QrH7Mdehqrj63guZMHZfm7wv0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ED8huTWxF4c116BV54G4bqt4HGkH4G966axRYgV0/yptRTNxOkhVZH1W5Mbj16JI6
-	 92in2RHMJG4RBKxBCvpPBqVPJWYxEFgPgCrzUua5bYZHPXSdhpvvVgxTaulZFPEXpx
-	 HlyIHjuYf0RThg4TTq7Wbxl7QAdBn6o8TEcaot+c=
+	b=W/ONzzuvFxPylMtcGcVDrtPjgHU3/v3L7zATidMkzk1xQH7m6mnwH6BoZuaq+Ls86
+	 j9ykph8Vz5GEEE8+7jWYSlY2tB5XRhpkwwgzJAqaKTn2adkcCmz0k6o/Y0YDvsOQBi
+	 EgHN2RRQJiTLsi4vVCTzA4P0GBn3bPFWxbNtc2CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 166/530] drm/i915/mtl: avoid stringop-overflow warning
-Date: Fri, 24 Nov 2023 17:45:32 +0000
-Message-ID: <20231124172033.130625897@linuxfoundation.org>
+Subject: [PATCH 6.6 167/530] NFSv4.1: fix handling NFS4ERR_DELAY when testing for session trunking
+Date: Fri, 24 Nov 2023 17:45:33 +0000
+Message-ID: <20231124172033.157630853@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,74 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Olga Kornievskaia <kolga@netapp.com>
 
-[ Upstream commit 390001d648ffa027b750b7dceb5d43f4c1d1a39e ]
+[ Upstream commit 6bd1a77dc72dea0b0d8b6014f231143984d18f6d ]
 
-The newly added memset() causes a warning for some reason I could not
-figure out:
+Currently when client sends an EXCHANGE_ID for a possible trunked
+connection, for any error that happened, the trunk will be thrown
+out. However, an NFS4ERR_DELAY is a transient error that should be
+retried instead.
 
-In file included from arch/x86/include/asm/string.h:3,
-                 from drivers/gpu/drm/i915/gt/intel_rc6.c:6:
-In function 'rc6_res_reg_init',
-    inlined from 'intel_rc6_init' at drivers/gpu/drm/i915/gt/intel_rc6.c:610:2:
-arch/x86/include/asm/string_32.h:195:29: error: '__builtin_memset' writing 16 bytes into a region of size 0 overflows the destination [-Werror=stringop-overflow=]
-  195 | #define memset(s, c, count) __builtin_memset(s, c, count)
-      |                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/gpu/drm/i915/gt/intel_rc6.c:584:9: note: in expansion of macro 'memset'
-  584 |         memset(rc6->res_reg, INVALID_MMIO_REG.reg, sizeof(rc6->res_reg));
-      |         ^~~~~~
-In function 'intel_rc6_init':
-
-Change it to an normal initializer and an added memcpy() that does not have
-this problem.
-
-Fixes: 4bb9ca7ee074 ("drm/i915/mtl: C6 residency and C state type for MTL SAMedia")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231016201012.1022812-1-arnd@kernel.org
-(cherry picked from commit 0520b30b219053cd789909bca45b3c486ef3ee09)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: e818bd085baf ("NFSv4.1 remove xprt from xprt_switch if session trunking test fails")
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_rc6.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4proc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
-index 58bb1c55294c9..ccdc1afbf11b5 100644
---- a/drivers/gpu/drm/i915/gt/intel_rc6.c
-+++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
-@@ -584,19 +584,23 @@ static void __intel_rc6_disable(struct intel_rc6 *rc6)
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 5ee283eb9660b..c3ff98eb6177b 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -8934,6 +8934,7 @@ void nfs4_test_session_trunk(struct rpc_clnt *clnt, struct rpc_xprt *xprt,
  
- static void rc6_res_reg_init(struct intel_rc6 *rc6)
- {
--	memset(rc6->res_reg, INVALID_MMIO_REG.reg, sizeof(rc6->res_reg));
-+	i915_reg_t res_reg[INTEL_RC6_RES_MAX] = {
-+		[0 ... INTEL_RC6_RES_MAX - 1] = INVALID_MMIO_REG,
-+	};
+ 	sp4_how = (adata->clp->cl_sp4_flags == 0 ? SP4_NONE : SP4_MACH_CRED);
  
- 	switch (rc6_to_gt(rc6)->type) {
- 	case GT_MEDIA:
--		rc6->res_reg[INTEL_RC6_RES_RC6] = MTL_MEDIA_MC6;
-+		res_reg[INTEL_RC6_RES_RC6] = MTL_MEDIA_MC6;
- 		break;
- 	default:
--		rc6->res_reg[INTEL_RC6_RES_RC6_LOCKED] = GEN6_GT_GFX_RC6_LOCKED;
--		rc6->res_reg[INTEL_RC6_RES_RC6] = GEN6_GT_GFX_RC6;
--		rc6->res_reg[INTEL_RC6_RES_RC6p] = GEN6_GT_GFX_RC6p;
--		rc6->res_reg[INTEL_RC6_RES_RC6pp] = GEN6_GT_GFX_RC6pp;
-+		res_reg[INTEL_RC6_RES_RC6_LOCKED] = GEN6_GT_GFX_RC6_LOCKED;
-+		res_reg[INTEL_RC6_RES_RC6] = GEN6_GT_GFX_RC6;
-+		res_reg[INTEL_RC6_RES_RC6p] = GEN6_GT_GFX_RC6p;
-+		res_reg[INTEL_RC6_RES_RC6pp] = GEN6_GT_GFX_RC6pp;
- 		break;
- 	}
-+
-+	memcpy(rc6->res_reg, res_reg, sizeof(res_reg));
++try_again:
+ 	/* Test connection for session trunking. Async exchange_id call */
+ 	task = nfs4_run_exchange_id(adata->clp, adata->cred, sp4_how, xprt);
+ 	if (IS_ERR(task))
+@@ -8946,11 +8947,15 @@ void nfs4_test_session_trunk(struct rpc_clnt *clnt, struct rpc_xprt *xprt,
+ 
+ 	if (status == 0)
+ 		rpc_clnt_xprt_switch_add_xprt(clnt, xprt);
+-	else if (rpc_clnt_xprt_switch_has_addr(clnt,
++	else if (status != -NFS4ERR_DELAY && rpc_clnt_xprt_switch_has_addr(clnt,
+ 				(struct sockaddr *)&xprt->addr))
+ 		rpc_clnt_xprt_switch_remove_xprt(clnt, xprt);
+ 
+ 	rpc_put_task(task);
++	if (status == -NFS4ERR_DELAY) {
++		ssleep(1);
++		goto try_again;
++	}
  }
+ EXPORT_SYMBOL_GPL(nfs4_test_session_trunk);
  
- void intel_rc6_init(struct intel_rc6 *rc6)
 -- 
 2.42.0
 
