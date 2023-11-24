@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9415A33076;
-	Fri, 24 Nov 2023 18:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09ACC33CC2;
+	Fri, 24 Nov 2023 18:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktYn7yqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22646C433C8;
-	Fri, 24 Nov 2023 18:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nqo19GY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C489C433C8;
+	Fri, 24 Nov 2023 18:58:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852288;
-	bh=IYpiaQ38uRI+fjyTaaQXahJx9wGPb9grW1I13Qq9ubY=;
+	s=korg; t=1700852290;
+	bh=gPQnpx+V1Og/76iatNSWF7CetMLLymjjipACfTR0+Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ktYn7yqmiPv3GlB+/HpwJ4hAqSASONLsc+WL3PFENqaUMNIUfYhLbqLPOi9J2M9Zf
-	 Ldd4kTWiobHsng5CqxYWRyl3GIb8YQ8WBGbKtRAoZj+RRnqyeB1WNa365ZCHHYqA2R
-	 VTTxuCqy0Y8uhwC9/Lh/BYWNJ0SMT+am2DyBLsQQ=
+	b=Nqo19GY/Qw6mHXy6m19U8mqbNTfJHrCIZfzFc0MpBsAYG67VgD30XEWYupFnYdKVO
+	 Dviwl6XfLwVCigC0eR3xbu5oLfcby52AISU95/c6fXQNN8Umbn+++McyRr+cKtt2ry
+	 rtrLhb+GUq7LYH0mkJTYG0XjVEhacuHNVLTg+9+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Gregory Price <gregory.price@memverge.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Fan Ni <fan.ni@samsung.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 295/372] cxl/region: Validate region mode vs decoder mode
-Date: Fri, 24 Nov 2023 17:51:22 +0000
-Message-ID: <20231124172020.264449593@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 272/372] smb: client: fix potential deadlock when releasing mids
+Date: Fri, 24 Nov 2023 17:50:59 +0000
+Message-ID: <20231124172019.530665691@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -47,46 +41,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 1b9b7a6fd618239db47a83da39dff9e725a5865a ]
+commit e6322fd177c6885a21dd4609dc5e5c973d1a2eb7 upstream.
 
-In preparation for a new region mode, do not, for example, allow
-'ram' decoders to be assigned to 'pmem' regions and vice versa.
+All release_mid() callers seem to hold a reference of @mid so there is
+no need to call kref_put(&mid->refcount, __release_mid) under
+@server->mid_lock spinlock.  If they don't, then an use-after-free bug
+would have occurred anyways.
 
-Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Tested-by: Fan Ni <fan.ni@samsung.com>
-Link: https://lore.kernel.org/r/167601995111.1924368.7459128614177994602.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Stable-dep-of: 0718588c7aaa ("cxl/region: Do not try to cleanup after cxl_region_setup_targets() fails")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+By getting rid of such spinlock also fixes a potential deadlock as
+shown below
+
+CPU 0                                CPU 1
+------------------------------------------------------------------
+cifs_demultiplex_thread()            cifs_debug_data_proc_show()
+ release_mid()
+  spin_lock(&server->mid_lock);
+                                     spin_lock(&cifs_tcp_ses_lock)
+				      spin_lock(&server->mid_lock)
+  __release_mid()
+   smb2_find_smb_tcon()
+    spin_lock(&cifs_tcp_ses_lock) *deadlock*
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/region.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/client/cifsproto.h |    7 ++++++-
+ fs/smb/client/smb2misc.c  |    2 +-
+ fs/smb/client/transport.c |   11 +----------
+ 3 files changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 9709bbf773b72..99b0501066e57 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1191,6 +1191,12 @@ static int cxl_region_attach(struct cxl_region *cxlr,
- 	struct cxl_dport *dport;
- 	int i, rc = -ENXIO;
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -79,7 +79,7 @@ extern char *cifs_compose_mount_options(
+ 		const char *fullpath, const struct dfs_info3_param *ref,
+ 		char **devname);
+ extern void delete_mid(struct mid_q_entry *mid);
+-extern void release_mid(struct mid_q_entry *mid);
++void __release_mid(struct kref *refcount);
+ extern void cifs_wake_up_task(struct mid_q_entry *mid);
+ extern int cifs_handle_standard(struct TCP_Server_Info *server,
+ 				struct mid_q_entry *mid);
+@@ -694,4 +694,9 @@ struct super_block *cifs_get_tcon_super(
+ void cifs_put_tcon_super(struct super_block *sb);
+ int cifs_wait_for_server_reconnect(struct TCP_Server_Info *server, bool retry);
  
-+	if (cxled->mode != cxlr->mode) {
-+		dev_dbg(&cxlr->dev, "%s region mode: %d mismatch: %d\n",
-+			dev_name(&cxled->cxld.dev), cxlr->mode, cxled->mode);
-+		return -EINVAL;
-+	}
++static inline void release_mid(struct mid_q_entry *mid)
++{
++	kref_put(&mid->refcount, __release_mid);
++}
 +
- 	if (cxled->mode == CXL_DECODER_DEAD) {
- 		dev_dbg(&cxlr->dev, "%s dead\n", dev_name(&cxled->cxld.dev));
- 		return -ENODEV;
--- 
-2.42.0
-
+ #endif			/* _CIFSPROTO_H */
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -787,7 +787,7 @@ __smb2_handle_cancelled_cmd(struct cifs_
+ {
+ 	struct close_cancelled_open *cancelled;
+ 
+-	cancelled = kzalloc(sizeof(*cancelled), GFP_ATOMIC);
++	cancelled = kzalloc(sizeof(*cancelled), GFP_KERNEL);
+ 	if (!cancelled)
+ 		return -ENOMEM;
+ 
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -76,7 +76,7 @@ alloc_mid(const struct smb_hdr *smb_buff
+ 	return temp;
+ }
+ 
+-static void __release_mid(struct kref *refcount)
++void __release_mid(struct kref *refcount)
+ {
+ 	struct mid_q_entry *midEntry =
+ 			container_of(refcount, struct mid_q_entry, refcount);
+@@ -156,15 +156,6 @@ static void __release_mid(struct kref *r
+ 	mempool_free(midEntry, cifs_mid_poolp);
+ }
+ 
+-void release_mid(struct mid_q_entry *mid)
+-{
+-	struct TCP_Server_Info *server = mid->server;
+-
+-	spin_lock(&server->mid_lock);
+-	kref_put(&mid->refcount, __release_mid);
+-	spin_unlock(&server->mid_lock);
+-}
+-
+ void
+ delete_mid(struct mid_q_entry *mid)
+ {
 
 
