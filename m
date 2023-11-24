@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981F135F04;
-	Fri, 24 Nov 2023 19:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C64E2C1A2;
+	Fri, 24 Nov 2023 19:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYJ7kmrs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267C4C433C8;
-	Fri, 24 Nov 2023 19:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujLxFc0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96115C433C8;
+	Fri, 24 Nov 2023 19:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852915;
-	bh=r7x3sHBz02FHR8lv5Oouxt9c1WSLoV/JCFVOruCvIas=;
+	s=korg; t=1700852917;
+	bh=ww+tk64U5rqGVD/5a4AGtx724b/bTMo1WkGD78RwbEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYJ7kmrsorsr+iYJM7obgBOghtJPKwBfqG8TLU4NbnuX09UD32n07HMI7hfJz0k3u
-	 cpl6hFZ5Jd03chMqNkaNQLdLWzN2hKYRZuI0EPHNkqtmk9Uwv9Zc1SoKpsOHCRY/Yn
-	 E8TNoTAKM2GOb0VaJTGjUl2IilC9IkaDs+4cBkLI=
+	b=ujLxFc0SlLgcn2jSKRX3vXfnsYoJIuI0pRgPNZs0XdPqjPDXuXDQfWqiHoFvKUyyd
+	 18MKETkUdkaA7hG3cz2FhGq33ecVMBhXn/UFJH94LdFOS1ux7dSAmosqzHpXGGL/AQ
+	 yPFKRRqhZHDxrcNYGsrRzRjOMPPM39sIryiBXkeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hilman <khilman@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Colin Ian King <colin.king@canonical.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 148/193] serial: meson: remove redundant initialization of variable id
-Date: Fri, 24 Nov 2023 17:54:35 +0000
-Message-ID: <20231124171953.120844563@linuxfoundation.org>
+	Nicolas Pitre <nico@fluxnic.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.10 139/193] mtd: cfi_cmdset_0001: Byte swap OTP info
+Date: Fri, 24 Nov 2023 17:54:26 +0000
+Message-ID: <20231124171952.758671798@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,48 +42,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.king@canonical.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 021212f5335229ed12e3d31f9b7d30bd3bb66f7d ]
+commit 565fe150624ee77dc63a735cc1b3bff5101f38a3 upstream.
 
-The variable id being initialized with a value that is never read
-and it is being updated later with a new value. The initialization is
-redundant and can be removed. Since id is just being used in a for-loop
-inside a local scope, move the declaration of id to that scope.
+Currently the offset into the device when looking for OTP
+bits can go outside of the address of the MTD NOR devices,
+and if that memory isn't readable, bad things happen
+on the IXP4xx (added prints that illustrate the problem before
+the crash):
 
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
-Addresses-Coverity: ("Unused value")
-Link: https://lore.kernel.org/r/20210426101106.9122-1-colin.king@canonical.com
+cfi_intelext_otp_walk walk OTP on chip 0 start at reg_prot_offset 0x00000100
+ixp4xx_copy_from copy from 0x00000100 to 0xc880dd78
+cfi_intelext_otp_walk walk OTP on chip 0 start at reg_prot_offset 0x12000000
+ixp4xx_copy_from copy from 0x12000000 to 0xc880dd78
+8<--- cut here ---
+Unable to handle kernel paging request at virtual address db000000
+[db000000] *pgd=00000000
+(...)
+
+This happens in this case because the IXP4xx is big endian and
+the 32- and 16-bit fields in the struct cfi_intelext_otpinfo are not
+properly byteswapped. Compare to how the code in read_pri_intelext()
+byteswaps the fields in struct cfi_pri_intelext.
+
+Adding a small byte swapping loop for the OTP in read_pri_intelext()
+and the crash goes away.
+
+The problem went unnoticed for many years until I enabled
+CONFIG_MTD_OTP on the IXP4xx as well, triggering the bug.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicolas Pitre <nico@fluxnic.net>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20231020-mtd-otp-byteswap-v4-1-0d132c06aa9d@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 2a1d728f20ed ("tty: serial: meson: fix hard LOCKUP on crtscts mode")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/meson_uart.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/chips/cfi_cmdset_0001.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/meson_uart.c b/drivers/tty/serial/meson_uart.c
-index 91b7359b79a2f..d06653493f0ef 100644
---- a/drivers/tty/serial/meson_uart.c
-+++ b/drivers/tty/serial/meson_uart.c
-@@ -729,12 +729,13 @@ static int meson_uart_probe(struct platform_device *pdev)
- 	struct resource *res_mem, *res_irq;
- 	struct uart_port *port;
- 	int ret = 0;
--	int id = -1;
+--- a/drivers/mtd/chips/cfi_cmdset_0001.c
++++ b/drivers/mtd/chips/cfi_cmdset_0001.c
+@@ -420,9 +420,25 @@ read_pri_intelext(struct map_info *map,
+ 		extra_size = 0;
  
- 	if (pdev->dev.of_node)
- 		pdev->id = of_alias_get_id(pdev->dev.of_node, "serial");
- 
- 	if (pdev->id < 0) {
-+		int id;
+ 		/* Protection Register info */
+-		if (extp->NumProtectionFields)
++		if (extp->NumProtectionFields) {
++			struct cfi_intelext_otpinfo *otp =
++				(struct cfi_intelext_otpinfo *)&extp->extra[0];
 +
- 		for (id = AML_UART_PORT_OFFSET; id < AML_UART_PORT_NUM; id++) {
- 			if (!meson_ports[id]) {
- 				pdev->id = id;
--- 
-2.42.0
-
+ 			extra_size += (extp->NumProtectionFields - 1) *
+-				      sizeof(struct cfi_intelext_otpinfo);
++				sizeof(struct cfi_intelext_otpinfo);
++
++			if (extp_size >= sizeof(*extp) + extra_size) {
++				int i;
++
++				/* Do some byteswapping if necessary */
++				for (i = 0; i < extp->NumProtectionFields - 1; i++) {
++					otp->ProtRegAddr = le32_to_cpu(otp->ProtRegAddr);
++					otp->FactGroups = le16_to_cpu(otp->FactGroups);
++					otp->UserGroups = le16_to_cpu(otp->UserGroups);
++					otp++;
++				}
++			}
++		}
+ 	}
+ 
+ 	if (extp->MinorVersion >= '1') {
 
 
