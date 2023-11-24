@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FE32511F;
-	Fri, 24 Nov 2023 19:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A483306F;
+	Fri, 24 Nov 2023 19:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRa1KBcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A61C433C7;
-	Fri, 24 Nov 2023 19:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIsRmNZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB42C433C8;
+	Fri, 24 Nov 2023 19:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853666;
-	bh=CAnuQxQ+34Dpp1LTI7yJNO3yyf40rg+QkBKF73meeSs=;
+	s=korg; t=1700853668;
+	bh=S8tNrChh671yrxGLn18UOZDgE0bdtYZvI7pi1fOrUMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRa1KBcENbpalkzXcvY91Mn5+65jfo0N65Qk9W3igWUctHQxQWhLJabdcs2KZ0HOj
-	 Pt3iVI240ctk+dirqWJDx6Gtog4nrhwTzcAV5V/U3l8ETMkHhJJvhGpgZkY8TBWU6v
-	 Mh5jgtzU5gXztKpmYYFBM83lki/1AGVGHwAD7tdA=
+	b=HIsRmNZR6g+7R9bu8WSFNvcJLXRxy83J2KN5K3wACIw9oPHNU4BckfNnOG0xjUVt4
+	 rlRMkylpwh6h97BayGZcAABcquPfG8ch1K8cj8TLZuuDNO9bWvBnu2u3AsXmlomA3u
+	 1UATutsMSwUHU1258jb0zZe0e5B/9++jyQyjA5Sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 280/297] Revert "net: r8169: Disable multicast filter for RTL8168H and RTL8107E"
-Date: Fri, 24 Nov 2023 17:55:22 +0000
-Message-ID: <20231124172009.930192116@linuxfoundation.org>
+	"J. Bruce Fields" <bfields@redhat.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 281/297] ext4: apply umask if ACL support is disabled
+Date: Fri, 24 Nov 2023 17:55:23 +0000
+Message-ID: <20231124172009.957953724@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -41,45 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit 6a26310273c323380da21eb23fcfd50e31140913 upstream.
+commit 484fd6c1de13b336806a967908a927cc0356e312 upstream.
 
-This reverts commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df.
+The function ext4_init_acl() calls posix_acl_create() which is
+responsible for applying the umask.  But without
+CONFIG_EXT4_FS_POSIX_ACL, ext4_init_acl() is an empty inline function,
+and nobody applies the umask.
 
-I couldn't reproduce the reported issue. What I did, based on a pcap
-packet log provided by the reporter:
-- Used same chip version (RTL8168h)
-- Set MAC address to the one used on the reporters system
-- Replayed the EAPOL unicast packet that, according to the reporter,
-  was filtered out by the mc filter.
-The packet was properly received.
+This fixes a bug which causes the umask to be ignored with O_TMPFILE
+on ext4:
 
-Therefore the root cause of the reported issue seems to be somewhere
-else. Disabling mc filtering completely for the most common chip
-version is a quite big hammer. Therefore revert the change and wait
-for further analysis results from the reporter.
+ https://github.com/MusicPlayerDaemon/MPD/issues/558
+ https://bugs.gentoo.org/show_bug.cgi?id=686142#c3
+ https://bugzilla.kernel.org/show_bug.cgi?id=203625
 
+Reviewed-by: "J. Bruce Fields" <bfields@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Link: https://lore.kernel.org/r/20230919081824.1096619-1-max.kellermann@ionos.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/ext4/acl.h |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2553,9 +2553,7 @@ static void rtl_set_rx_mode(struct net_d
- 		rx_mode &= ~AcceptMulticast;
- 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
- 		   dev->flags & IFF_ALLMULTI ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
-+		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
- 		/* accept all multicasts */
- 	} else if (netdev_mc_empty(dev)) {
- 		rx_mode &= ~AcceptMulticast;
+--- a/fs/ext4/acl.h
++++ b/fs/ext4/acl.h
+@@ -68,6 +68,11 @@ extern int ext4_init_acl(handle_t *, str
+ static inline int
+ ext4_init_acl(handle_t *handle, struct inode *inode, struct inode *dir)
+ {
++	/* usually, the umask is applied by posix_acl_create(), but if
++	   ext4 ACL support is disabled at compile time, we need to do
++	   it here, because posix_acl_create() will never be called */
++	inode->i_mode &= ~current_umask();
++
+ 	return 0;
+ }
+ #endif  /* CONFIG_EXT4_FS_POSIX_ACL */
 
 
