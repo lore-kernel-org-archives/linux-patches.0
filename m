@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D56633075;
-	Fri, 24 Nov 2023 18:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2D5339BE;
+	Fri, 24 Nov 2023 18:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2+wXoqb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71B8C433C8;
-	Fri, 24 Nov 2023 18:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPdL7zVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E766C433C7;
+	Fri, 24 Nov 2023 18:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851997;
-	bh=kbk7wqJAQmvSiz9uZdswUWLCCo1P+Ymova+8ECZ3O38=;
+	s=korg; t=1700851999;
+	bh=TiIk50v+mS/pcqel6PKosJ58uxOgz/vIYBFEymVvN+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2+wXoqbJazXFOOWf9KksDhmwCB9jBHPlosCT5Zjg2qW236RcS82M6Ks9VgcAmWWw
-	 3M6rb2vV0uE7RFB1iEw5XBW+horqSJUWw7cKGfmDFJVin7JA+dUnrjmrzaDWtjuOnm
-	 8M5JheOH4yVWI9BgETeGr6LZYHc/hOFaFQaEOgU0=
+	b=WPdL7zVj8aGzyMtf6qeUkgWI58m9S0Q50yaGZ1kVq0zAYUcILr4o0zkEHYruizyc5
+	 Z+CSMND2Rth5rNnZCu21VlG92zzppk4RlA6FYaMfNXHjZO4TsRYcD17JXzFJag9lWd
+	 +lQrxEeB64U3iAEVktpa33yM42EDfceYTfF/ip40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.1 179/372] proc: sysctl: prevent aliased sysctls from getting passed to init
-Date: Fri, 24 Nov 2023 17:49:26 +0000
-Message-ID: <20231124172016.430526927@linuxfoundation.org>
+	jirislaby@kernel.org,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>
+Subject: [PATCH 6.1 180/372] tty/sysrq: replace smp_processor_id() with get_cpu()
+Date: Fri, 24 Nov 2023 17:49:27 +0000
+Message-ID: <20231124172016.465392872@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -41,79 +41,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit 8001f49394e353f035306a45bcf504f06fca6355 upstream.
+commit dd976a97d15b47656991e185a94ef42a0fa5cfd4 upstream.
 
-The code that checks for unknown boot options is unaware of the sysctl
-alias facility, which maps bootparams to sysctl values.  If a user sets
-an old value that has a valid alias, a message about an invalid
-parameter will be printed during boot, and the parameter will get passed
-to init.  Fix by checking for the existence of aliased parameters in the
-unknown boot parameter code.  If an alias exists, don't return an error
-or pass the value to init.
+The smp_processor_id() shouldn't be called from preemptible code.
+Instead use get_cpu() and put_cpu() which disables preemption in
+addition to getting the processor id. Enable preemption back after
+calling schedule_work() to make sure that the work gets scheduled on all
+cores other than the current core. We want to avoid a scenario where
+current core's stack trace is printed multiple times and one core's
+stack trace isn't printed because of scheduling of current task.
 
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+This fixes the following bug:
+
+[  119.143590] sysrq: Show backtrace of all active CPUs
+[  119.143902] BUG: using smp_processor_id() in preemptible [00000000] code: bash/873
+[  119.144586] caller is debug_smp_processor_id+0x20/0x30
+[  119.144827] CPU: 6 PID: 873 Comm: bash Not tainted 5.10.124-dirty #3
+[  119.144861] Hardware name: QEMU QEMU Virtual Machine, BIOS 2023.05-1 07/22/2023
+[  119.145053] Call trace:
+[  119.145093]  dump_backtrace+0x0/0x1a0
+[  119.145122]  show_stack+0x18/0x70
+[  119.145141]  dump_stack+0xc4/0x11c
+[  119.145159]  check_preemption_disabled+0x100/0x110
+[  119.145175]  debug_smp_processor_id+0x20/0x30
+[  119.145195]  sysrq_handle_showallcpus+0x20/0xc0
+[  119.145211]  __handle_sysrq+0x8c/0x1a0
+[  119.145227]  write_sysrq_trigger+0x94/0x12c
+[  119.145247]  proc_reg_write+0xa8/0xe4
+[  119.145266]  vfs_write+0xec/0x280
+[  119.145282]  ksys_write+0x6c/0x100
+[  119.145298]  __arm64_sys_write+0x20/0x30
+[  119.145315]  el0_svc_common.constprop.0+0x78/0x1e4
+[  119.145332]  do_el0_svc+0x24/0x8c
+[  119.145348]  el0_svc+0x10/0x20
+[  119.145364]  el0_sync_handler+0x134/0x140
+[  119.145381]  el0_sync+0x180/0x1c0
+
+Cc: jirislaby@kernel.org
 Cc: stable@vger.kernel.org
-Fixes: 0a477e1ae21b ("kernel/sysctl: support handling command line aliases")
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Fixes: 47cab6a722d4 ("debug lockups: Improve lockup detection, fix generic arch fallback")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/r/20231009162021.3607632-1-usama.anjum@collabora.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c  |    7 +++++++
- include/linux/sysctl.h |    6 ++++++
- init/main.c            |    4 ++++
- 3 files changed, 17 insertions(+)
+ drivers/tty/sysrq.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -1830,6 +1830,13 @@ static const char *sysctl_find_alias(cha
- 	return NULL;
+--- a/drivers/tty/sysrq.c
++++ b/drivers/tty/sysrq.c
+@@ -263,13 +263,14 @@ static void sysrq_handle_showallcpus(int
+ 		if (in_hardirq())
+ 			regs = get_irq_regs();
+ 
+-		pr_info("CPU%d:\n", smp_processor_id());
++		pr_info("CPU%d:\n", get_cpu());
+ 		if (regs)
+ 			show_regs(regs);
+ 		else
+ 			show_stack(NULL, NULL, KERN_INFO);
+ 
+ 		schedule_work(&sysrq_showallcpus);
++		put_cpu();
+ 	}
  }
  
-+bool sysctl_is_alias(char *param)
-+{
-+	const char *alias = sysctl_find_alias(param);
-+
-+	return alias != NULL;
-+}
-+
- /* Set sysctl value passed on kernel command line. */
- static int process_sysctl_arg(char *param, char *val,
- 			       const char *unused, void *arg)
---- a/include/linux/sysctl.h
-+++ b/include/linux/sysctl.h
-@@ -238,6 +238,7 @@ extern void __register_sysctl_init(const
- extern struct ctl_table_header *register_sysctl_mount_point(const char *path);
- 
- void do_sysctl_args(void);
-+bool sysctl_is_alias(char *param);
- int do_proc_douintvec(struct ctl_table *table, int write,
- 		      void *buffer, size_t *lenp, loff_t *ppos,
- 		      int (*conv)(unsigned long *lvalp,
-@@ -301,6 +302,11 @@ static inline void setup_sysctl_set(stru
- static inline void do_sysctl_args(void)
- {
- }
-+
-+static inline bool sysctl_is_alias(char *param)
-+{
-+	return false;
-+}
- #endif /* CONFIG_SYSCTL */
- 
- int sysctl_max_threads(struct ctl_table *table, int write, void *buffer,
---- a/init/main.c
-+++ b/init/main.c
-@@ -533,6 +533,10 @@ static int __init unknown_bootoption(cha
- {
- 	size_t len = strlen(param);
- 
-+	/* Handle params aliased to sysctls */
-+	if (sysctl_is_alias(param))
-+		return 0;
-+
- 	repair_env_string(param, val);
- 
- 	/* Handle obsolete-style parameters */
 
 
