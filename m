@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A883939FE7;
-	Fri, 24 Nov 2023 18:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0CA39FE7;
+	Fri, 24 Nov 2023 18:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfoFOwsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331AAC433C8;
-	Fri, 24 Nov 2023 18:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8q0oklN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9170C433C7;
+	Fri, 24 Nov 2023 18:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850162;
-	bh=gcrab3FxRZUE1bMXbxOOG7Q4PsStyY3p6Es5V0Oqxe0=;
+	s=korg; t=1700850165;
+	bh=ZN7W0qhF+dakTEvls1si1AVAxC0d8SBKO61ri2809q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfoFOwsCLin8iFgql+BVrvZMbGkZTwoONQyvFuKDfQSJpsaYfHSxA75H8uvcMvAW/
-	 EWtA8UO6ADe9X6YILnK+BBWsDVhat+uwypGaLrj7OHERFoimECxCjaahm0N/dFSQ8o
-	 uWXVjIrNHnvE8Hy+z3AHlIYYGN78fbwRej9BlR7k=
+	b=V8q0oklNE2pwnhbW2jLD7Q4Z/x3fAZbL7EUMzBa2mZt+86WiZodAme5Evxb2KzU2v
+	 IascjGLSqxqvfm4t73zMsUEsQVzyo+LgAPSpTkup4Ve49GzuOlm07jQJZZRCfTFa04
+	 fSJvKBtUJfhrb7lCqrUdrBJlRdO6Bg69P8GYWjB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Nam Cao <namcaov@gmail.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.6 470/530] riscv: Using TOOLCHAIN_HAS_ZIHINTPAUSE marco replace zihintpause
-Date: Fri, 24 Nov 2023 17:50:36 +0000
-Message-ID: <20231124172042.379041665@linuxfoundation.org>
+Subject: [PATCH 6.6 471/530] riscv: put interrupt entries into .irqentry.text
+Date: Fri, 24 Nov 2023 17:50:37 +0000
+Message-ID: <20231124172042.409156612@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,39 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minda Chen <minda.chen@starfivetech.com>
+From: Nam Cao <namcaov@gmail.com>
 
-commit dd16ac404a685cce07e67261a94c6225d90ea7ba upstream.
+commit 87615e95f6f9ccd36d4a3905a2d87f91967ea9d2 upstream.
 
-Actually it is a part of Conor's
-commit aae538cd03bc ("riscv: fix detection of toolchain
-Zihintpause support").
-It is looks like a merge issue. Samuel's
-commit 0b1d60d6dd9e ("riscv: Fix build with
-CONFIG_CC_OPTIMIZE_FOR_SIZE=y") do not base on Conor's commit and
-revert to __riscv_zihintpause. So this patch can fix it.
+The interrupt entries are expected to be in the .irqentry.text section.
+For example, for kprobes to work properly, exception code cannot be
+probed; this is ensured by blacklisting addresses in the .irqentry.text
+section.
 
-Signed-off-by: Minda Chen <minda.chen@starfivetech.com>
-Fixes: 3c349eacc559 ("Merge patch "riscv: Fix build with CONFIG_CC_OPTIMIZE_FOR_SIZE=y"")
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230802064215.31111-1-minda.chen@starfivetech.com
+Fixes: 7db91e57a0ac ("RISC-V: Task implementation")
+Signed-off-by: Nam Cao <namcaov@gmail.com>
+Link: https://lore.kernel.org/r/20230821145708.21270-1-namcaov@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/vdso/processor.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/entry.S |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/riscv/include/asm/vdso/processor.h
-+++ b/arch/riscv/include/asm/vdso/processor.h
-@@ -14,7 +14,7 @@ static inline void cpu_relax(void)
- 	__asm__ __volatile__ ("div %0, %0, zero" : "=r" (dummy));
- #endif
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -16,6 +16,8 @@
+ #include <asm/errata_list.h>
+ #include <linux/sizes.h>
  
--#ifdef __riscv_zihintpause
-+#ifdef CONFIG_TOOLCHAIN_HAS_ZIHINTPAUSE
++	.section .irqentry.text, "ax"
++
+ SYM_CODE_START(handle_exception)
  	/*
- 	 * Reduce instruction retirement.
- 	 * This assumes the PC changes.
+ 	 * If coming from userspace, preserve the user thread pointer and load
 
 
