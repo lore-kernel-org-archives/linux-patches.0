@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51D2364A4;
-	Fri, 24 Nov 2023 18:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ADC8364A4;
+	Fri, 24 Nov 2023 18:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIsaniB2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31ECBC433C8;
-	Fri, 24 Nov 2023 18:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2clVlmIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA06AC433C8;
+	Fri, 24 Nov 2023 18:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850209;
-	bh=cQB7akFx4b/I8Ij4L9ZfJhvmwedLQ3mleMLvLOxbz30=;
+	s=korg; t=1700850212;
+	bh=uBOZEW8p4JGchKF2/b4vbHceXGBGzi+H3FnDj4NFwj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIsaniB2evAAaPeegXVq96j7CBIbMWu4fZ1P1VQszUb+aZ/Dc30GBCBs5HzSCW351
-	 omQDPr0W5M4Xb/36SDbWMDHm9/NWTU8IjJJSeCZ5X0Mn3OPrmKeMyW7Mrw1MXAq120
-	 kVu8Ya6/paL/TEgMQBD9HApETi4pA6ElqUwu6CnE=
+	b=2clVlmINNgHeA13dW6cKTCA+nVggCz/RPGVfB1Zv8P+Eev2tF756xDwYfB08r7Ei7
+	 S201Sr5JpI/WkavUZDu4GAN1B1OoCZT5Fb26IhD1m0J5y0+LVoC/FEkxZ9GNSJCaVB
+	 8wvo4w2p1HCx6vswzZLMgflffZvNU6fQdoEEHBDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 465/530] NFSD: Update nfsd_cache_append() to use xdr_stream
-Date: Fri, 24 Nov 2023 17:50:31 +0000
-Message-ID: <20231124172042.232890291@linuxfoundation.org>
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.6 456/530] media: venus: hfi_parser: Add check to keep the number of codecs within range
+Date: Fri, 24 Nov 2023 17:50:22 +0000
+Message-ID: <20231124172041.958945942@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,56 +42,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit 49cecd8628a9855cd993792a0377559ea32d5e7c upstream.
+commit 0768a9dd809ef52440b5df7dce5a1c1c7e97abbd upstream.
 
-When inserting a DRC-cached response into the reply buffer, ensure
-that the reply buffer's xdr_stream is updated properly. Otherwise
-the server will send a garbage response.
+Supported codec bitmask is populated from the payload from venus firmware.
+There is a possible case when all the bits in the codec bitmask is set. In
+such case, core cap for decoder is filled  and MAX_CODEC_NUM is utilized.
+Now while filling the caps for encoder, it can lead to access the caps
+array beyong 32 index. Hence leading to OOB write.
+The fix counts the supported encoder and decoder. If the count is more than
+max, then it skips accessing the caps.
 
-Cc: stable@vger.kernel.org # v6.3+
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: stable@vger.kernel.org
+Fixes: 1a73374a04e5 ("media: venus: hfi_parser: add common capability parser")
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfscache.c |   21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_parser.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/nfsd/nfscache.c
-+++ b/fs/nfsd/nfscache.c
-@@ -640,24 +640,17 @@ void nfsd_cache_update(struct svc_rqst *
- 	return;
- }
+--- a/drivers/media/platform/qcom/venus/hfi_parser.c
++++ b/drivers/media/platform/qcom/venus/hfi_parser.c
+@@ -19,6 +19,9 @@ static void init_codecs(struct venus_cor
+ 	struct hfi_plat_caps *caps = core->caps, *cap;
+ 	unsigned long bit;
  
--/*
-- * Copy cached reply to current reply buffer. Should always fit.
-- * FIXME as reply is in a page, we should just attach the page, and
-- * keep a refcount....
-- */
- static int
- nfsd_cache_append(struct svc_rqst *rqstp, struct kvec *data)
- {
--	struct kvec	*vec = &rqstp->rq_res.head[0];
-+	__be32 *p;
- 
--	if (vec->iov_len + data->iov_len > PAGE_SIZE) {
--		printk(KERN_WARNING "nfsd: cached reply too large (%zd).\n",
--				data->iov_len);
--		return 0;
--	}
--	memcpy((char*)vec->iov_base + vec->iov_len, data->iov_base, data->iov_len);
--	vec->iov_len += data->iov_len;
--	return 1;
-+	p = xdr_reserve_space(&rqstp->rq_res_stream, data->iov_len);
-+	if (unlikely(!p))
-+		return false;
-+	memcpy(p, data->iov_base, data->iov_len);
-+	xdr_commit_encode(&rqstp->rq_res_stream);
-+	return true;
- }
- 
- /*
++	if (hweight_long(core->dec_codecs) + hweight_long(core->enc_codecs) > MAX_CODEC_NUM)
++		return;
++
+ 	for_each_set_bit(bit, &core->dec_codecs, MAX_CODEC_NUM) {
+ 		cap = &caps[core->codecs_count++];
+ 		cap->codec = BIT(bit);
 
 
