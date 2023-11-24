@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2822FC21;
-	Fri, 24 Nov 2023 18:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F54C33CC7;
+	Fri, 24 Nov 2023 18:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0CFot3H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B99C433C7;
-	Fri, 24 Nov 2023 18:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvnHcFwz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888F1C433C8;
+	Fri, 24 Nov 2023 18:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851695;
-	bh=c7G1Ur/rEwc1Rf+hCig2osoNrQRXCXXYyNP/hK1B5Ug=;
+	s=korg; t=1700851697;
+	bh=6Z6DYO3H6Fbn74VXfj/V/4kvbgcWq90Ixc6x95ffgG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L0CFot3HXYn+4nDHEcMfH81BgOYZxRgW4ullnnzDyWgzpjZuh8/gVhkOd9xJvpG1+
-	 vo0amDWlYBNiprc0Lzoqqx/WK7B6RnkBh6ZXswRFzWwemOkaIVwOCzmayY4BBWLfO9
-	 soptGFok4GyHOCDVhLDHnnVZc62Weh5AUiaIIeY8=
+	b=yvnHcFwzKxHv8rRIBZQAxpYPgHZxN4XXWqUPj3DkwxSaWPqikMqT+LCS7WbU3ztkg
+	 6Dhj7CkbD4uVk2SsaM6ofvJopQGjFK+CmGmSZJqv4orOHE5Ej5a5iBXbc5zswnRL+j
+	 j8jpvNbntNM9kRv/+6uMG/y9iL7dEHZQarRSjaxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Qu Huang <qu.huang@linux.dev>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/372] bpf: Ensure proper register state printing for cond jumps
-Date: Fri, 24 Nov 2023 17:46:51 +0000
-Message-ID: <20231124172011.289514567@linuxfoundation.org>
+Subject: [PATCH 6.1 052/372] drm/amdgpu: Fix a null pointer access when the smc_rreg pointer is NULL
+Date: Fri, 24 Nov 2023 17:47:19 +0000
+Message-ID: <20231124172012.214588943@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,110 +42,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Qu Huang <qu.huang@linux.dev>
 
-[ Upstream commit 1a8a315f008a58f54fecb012b928aa6a494435b3 ]
+[ Upstream commit 5104fdf50d326db2c1a994f8b35dcd46e63ae4ad ]
 
-Verifier emits relevant register state involved in any given instruction
-next to it after `;` to the right, if possible. Or, worst case, on the
-separate line repeating instruction index.
+In certain types of chips, such as VEGA20, reading the amdgpu_regs_smc file could result in an abnormal null pointer access when the smc_rreg pointer is NULL. Below are the steps to reproduce this issue and the corresponding exception log:
 
-E.g., a nice and simple case would be:
+1. Navigate to the directory: /sys/kernel/debug/dri/0
+2. Execute command: cat amdgpu_regs_smc
+3. Exception Log::
+[4005007.702554] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[4005007.702562] #PF: supervisor instruction fetch in kernel mode
+[4005007.702567] #PF: error_code(0x0010) - not-present page
+[4005007.702570] PGD 0 P4D 0
+[4005007.702576] Oops: 0010 [#1] SMP NOPTI
+[4005007.702581] CPU: 4 PID: 62563 Comm: cat Tainted: G           OE     5.15.0-43-generic #46-Ubunt       u
+[4005007.702590] RIP: 0010:0x0
+[4005007.702598] Code: Unable to access opcode bytes at RIP 0xffffffffffffffd6.
+[4005007.702600] RSP: 0018:ffffa82b46d27da0 EFLAGS: 00010206
+[4005007.702605] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffa82b46d27e68
+[4005007.702609] RDX: 0000000000000001 RSI: 0000000000000000 RDI: ffff9940656e0000
+[4005007.702612] RBP: ffffa82b46d27dd8 R08: 0000000000000000 R09: ffff994060c07980
+[4005007.702615] R10: 0000000000020000 R11: 0000000000000000 R12: 00007f5e06753000
+[4005007.702618] R13: ffff9940656e0000 R14: ffffa82b46d27e68 R15: 00007f5e06753000
+[4005007.702622] FS:  00007f5e0755b740(0000) GS:ffff99479d300000(0000) knlGS:0000000000000000
+[4005007.702626] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[4005007.702629] CR2: ffffffffffffffd6 CR3: 00000003253fc000 CR4: 00000000003506e0
+[4005007.702633] Call Trace:
+[4005007.702636]  <TASK>
+[4005007.702640]  amdgpu_debugfs_regs_smc_read+0xb0/0x120 [amdgpu]
+[4005007.703002]  full_proxy_read+0x5c/0x80
+[4005007.703011]  vfs_read+0x9f/0x1a0
+[4005007.703019]  ksys_read+0x67/0xe0
+[4005007.703023]  __x64_sys_read+0x19/0x20
+[4005007.703028]  do_syscall_64+0x5c/0xc0
+[4005007.703034]  ? do_user_addr_fault+0x1e3/0x670
+[4005007.703040]  ? exit_to_user_mode_prepare+0x37/0xb0
+[4005007.703047]  ? irqentry_exit_to_user_mode+0x9/0x20
+[4005007.703052]  ? irqentry_exit+0x19/0x30
+[4005007.703057]  ? exc_page_fault+0x89/0x160
+[4005007.703062]  ? asm_exc_page_fault+0x8/0x30
+[4005007.703068]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[4005007.703075] RIP: 0033:0x7f5e07672992
+[4005007.703079] Code: c0 e9 b2 fe ff ff 50 48 8d 3d fa b2 0c 00 e8 c5 1d 02 00 0f 1f 44 00 00 f3 0f        1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 e       c 28 48 89 54 24
+[4005007.703083] RSP: 002b:00007ffe03097898 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[4005007.703088] RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007f5e07672992
+[4005007.703091] RDX: 0000000000020000 RSI: 00007f5e06753000 RDI: 0000000000000003
+[4005007.703094] RBP: 00007f5e06753000 R08: 00007f5e06752010 R09: 00007f5e06752010
+[4005007.703096] R10: 0000000000000022 R11: 0000000000000246 R12: 0000000000022000
+[4005007.703099] R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+[4005007.703105]  </TASK>
+[4005007.703107] Modules linked in: nf_tables libcrc32c nfnetlink algif_hash af_alg binfmt_misc nls_       iso8859_1 ipmi_ssif ast intel_rapl_msr intel_rapl_common drm_vram_helper drm_ttm_helper amd64_edac t       tm edac_mce_amd kvm_amd ccp mac_hid k10temp kvm acpi_ipmi ipmi_si rapl sch_fq_codel ipmi_devintf ipm       i_msghandler msr parport_pc ppdev lp parport mtd pstore_blk efi_pstore ramoops pstore_zone reed_solo       mon ip_tables x_tables autofs4 ib_uverbs ib_core amdgpu(OE) amddrm_ttm_helper(OE) amdttm(OE) iommu_v       2 amd_sched(OE) amdkcl(OE) drm_kms_helper syscopyarea sysfillrect sysimgblt fb_sys_fops cec rc_core        drm igb ahci xhci_pci libahci i2c_piix4 i2c_algo_bit xhci_pci_renesas dca
+[4005007.703184] CR2: 0000000000000000
+[4005007.703188] ---[ end trace ac65a538d240da39 ]---
+[4005007.800865] RIP: 0010:0x0
+[4005007.800871] Code: Unable to access opcode bytes at RIP 0xffffffffffffffd6.
+[4005007.800874] RSP: 0018:ffffa82b46d27da0 EFLAGS: 00010206
+[4005007.800878] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffa82b46d27e68
+[4005007.800881] RDX: 0000000000000001 RSI: 0000000000000000 RDI: ffff9940656e0000
+[4005007.800883] RBP: ffffa82b46d27dd8 R08: 0000000000000000 R09: ffff994060c07980
+[4005007.800886] R10: 0000000000020000 R11: 0000000000000000 R12: 00007f5e06753000
+[4005007.800888] R13: ffff9940656e0000 R14: ffffa82b46d27e68 R15: 00007f5e06753000
+[4005007.800891] FS:  00007f5e0755b740(0000) GS:ffff99479d300000(0000) knlGS:0000000000000000
+[4005007.800895] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[4005007.800898] CR2: ffffffffffffffd6 CR3: 00000003253fc000 CR4: 00000000003506e0
 
-  2: (d5) if r0 s<= 0x0 goto pc+1       ; R0_w=0
-
-But if there is some intervening extra output (e.g., precision
-backtracking log) involved, we are supposed to see the state after the
-precision backtrack log:
-
-  4: (75) if r0 s>= 0x0 goto pc+1
-  mark_precise: frame0: last_idx 4 first_idx 0 subseq_idx -1
-  mark_precise: frame0: regs=r0 stack= before 2: (d5) if r0 s<= 0x0 goto pc+1
-  mark_precise: frame0: regs=r0 stack= before 1: (b7) r0 = 0
-  6: R0_w=0
-
-First off, note that in `6: R0_w=0` instruction index corresponds to the
-next instruction, not to the conditional jump instruction itself, which
-is wrong and we'll get to that.
-
-But besides that, the above is a happy case that does work today. Yet,
-if it so happens that precision backtracking had to traverse some of the
-parent states, this `6: R0_w=0` state output would be missing.
-
-This is due to a quirk of print_verifier_state() routine, which performs
-mark_verifier_state_clean(env) at the end. This marks all registers as
-"non-scratched", which means that subsequent logic to print *relevant*
-registers (that is, "scratched ones") fails and doesn't see anything
-relevant to print and skips the output altogether.
-
-print_verifier_state() is used both to print instruction context, but
-also to print an **entire** verifier state indiscriminately, e.g.,
-during precision backtracking (and in a few other situations, like
-during entering or exiting subprogram).  Which means if we have to print
-entire parent state before getting to printing instruction context
-state, instruction context is marked as clean and is omitted.
-
-Long story short, this is definitely not intentional. So we fix this
-behavior in this patch by teaching print_verifier_state() to clear
-scratch state only if it was used to print instruction state, not the
-parent/callback state. This is determined by print_all option, so if
-it's not set, we don't clear scratch state. This fixes missing
-instruction state for these cases.
-
-As for the mismatched instruction index, we fix that by making sure we
-call print_insn_state() early inside check_cond_jmp_op() before we
-adjusted insn_idx based on jump branch taken logic. And with that we get
-desired correct information:
-
-  9: (16) if w4 == 0x1 goto pc+9
-  mark_precise: frame0: last_idx 9 first_idx 9 subseq_idx -1
-  mark_precise: frame0: parent state regs=r4 stack=: R2_w=1944 R4_rw=P1 R10=fp0
-  mark_precise: frame0: last_idx 8 first_idx 0 subseq_idx 9
-  mark_precise: frame0: regs=r4 stack= before 8: (66) if w4 s> 0x3 goto pc+5
-  mark_precise: frame0: regs=r4 stack= before 7: (b7) r4 = 1
-  9: R4=1
-
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20231011223728.3188086-6-andrii@kernel.org
+Signed-off-by: Qu Huang <qu.huang@linux.dev>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index eb3f52be115d6..7fbc6492fe7b4 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -978,7 +978,8 @@ static void print_verifier_state(struct bpf_verifier_env *env,
- 	if (state->in_async_callback_fn)
- 		verbose(env, " async_cb");
- 	verbose(env, "\n");
--	mark_verifier_state_clean(env);
-+	if (!print_all)
-+		mark_verifier_state_clean(env);
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+index de61a85c4b022..fd796574f87a5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -589,6 +589,9 @@ static ssize_t amdgpu_debugfs_regs_smc_read(struct file *f, char __user *buf,
+ 	ssize_t result = 0;
+ 	int r;
  
- static inline u32 vlog_alignment(u32 pos)
-@@ -10476,6 +10477,8 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 		    !sanitize_speculative_path(env, insn, *insn_idx + 1,
- 					       *insn_idx))
- 			return -EFAULT;
-+		if (env->log.level & BPF_LOG_LEVEL)
-+			print_insn_state(env, this_branch->frame[this_branch->curframe]);
- 		*insn_idx += insn->off;
- 		return 0;
- 	} else if (pred == 0) {
-@@ -10488,6 +10491,8 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 					       *insn_idx + insn->off + 1,
- 					       *insn_idx))
- 			return -EFAULT;
-+		if (env->log.level & BPF_LOG_LEVEL)
-+			print_insn_state(env, this_branch->frame[this_branch->curframe]);
- 		return 0;
- 	}
++	if (!adev->smc_rreg)
++		return -EPERM;
++
+ 	if (size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
+ 
+@@ -645,6 +648,9 @@ static ssize_t amdgpu_debugfs_regs_smc_write(struct file *f, const char __user *
+ 	ssize_t result = 0;
+ 	int r;
+ 
++	if (!adev->smc_wreg)
++		return -EPERM;
++
+ 	if (size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
  
 -- 
 2.42.0
