@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CEF1A5A4;
-	Fri, 24 Nov 2023 19:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067B13173F;
+	Fri, 24 Nov 2023 19:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXLA/BN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1397CC433C7;
-	Fri, 24 Nov 2023 19:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjirQ9kz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87AA5C433C7;
+	Fri, 24 Nov 2023 19:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853588;
-	bh=p4i51Mk+f2CDNSLS1HR3nVIGW3kQf25WieVs8+QQ254=;
+	s=korg; t=1700853590;
+	bh=ryqwDfMu/NX4dy2JbKL1AdyDfdXc5DaFeODroALTKq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXLA/BN/7ocJk4rSNLy8JGgngfV/5CJj9y5Qut643KWDxhI/nQ2TTen+8oTXNxKjo
-	 WBHLUqJSUbo0MuIBwS1iru0VQZnxSW47CEuogEBCUn+ttYuUmhjqd9J5zGeHBIB56D
-	 DIVdYCbX3GhLWBthyE5XRwrJ5IWS/8x9EQHCePbc=
+	b=ZjirQ9kzPStjDI/I0L2j8oE1JKUvJOEl+wMhAPeeHwkPLke4PyyG6tKGWX62nFijm
+	 lhaKSh3fzHxrDG0I3L8k4tlkZi6+V67sd73g8H6YiE3jy43/y0XNvdFOdSKx6kz/fR
+	 JWxJB2S/iSsaz5wIo7LuuAiYlJflUUpN9quFYC48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Viswanathan <quic_viswanat@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alexey Kardashevskiy <aik@ozlabs.ru>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 249/297] arm64: dts: qcom: ipq6018: Fix tcsr_mutex register size
-Date: Fri, 24 Nov 2023 17:54:51 +0000
-Message-ID: <20231124172008.895541797@linuxfoundation.org>
+Subject: [PATCH 5.15 250/297] powerpc/pseries/ddw: simplify enable_ddw()
+Date: Fri, 24 Nov 2023 17:54:52 +0000
+Message-ID: <20231124172008.932733130@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,43 +42,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+From: Alexey Kardashevskiy <aik@ozlabs.ru>
 
-[ Upstream commit 72fc3d58b87b0d622039c6299b89024fbb7b420f ]
+[ Upstream commit fb4ee2b30cd09e95524640149e4ee0d7f22c3e7b ]
 
-IPQ6018's TCSR Mutex HW lock register has 32 locks of size 4KB each.
-Total size of the TCSR Mutex registers is 128KB.
+This drops rather useless ddw_enabled flag as direct_mapping implies
+it anyway.
 
-Fix size of the tcsr_mutex hwlock register to 0x20000.
+While at this, fix indents in enable_ddw().
 
-Changes in v2:
- - Drop change to remove qcom,ipq6018-tcsr-mutex compatible string
- - Added Fixes and stable tags
+This should not cause any behavioral change.
 
-Cc: stable@vger.kernel.org
-Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
-Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230905095535.1263113-2-quic_viswanat@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Alexey Kardashevskiy <aik@ozlabs.ru>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20211108040320.3857636-3-aik@ozlabs.ru
+Stable-dep-of: 3bf983e4e93c ("powerpc/pseries/iommu: enable_ddw incorrectly returns direct mapping for SR-IOV device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/iommu.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 43339557d7e5a..dde6fde10f8d3 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -249,7 +249,7 @@
+diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
+index ec5d84b4958c5..aa5f8074e9b10 100644
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -1241,7 +1241,6 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 	u32 ddw_avail[DDW_APPLICABLE_SIZE];
+ 	struct dma_win *window;
+ 	struct property *win64;
+-	bool ddw_enabled = false;
+ 	struct failed_ddw_pdn *fpdn;
+ 	bool default_win_removed = false, direct_mapping = false;
+ 	bool pmem_present;
+@@ -1256,7 +1255,6 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
  
- 		tcsr_mutex: hwlock@1905000 {
- 			compatible = "qcom,ipq6018-tcsr-mutex", "qcom,tcsr-mutex";
--			reg = <0x0 0x01905000 0x0 0x1000>;
-+			reg = <0x0 0x01905000 0x0 0x20000>;
- 			#hwlock-cells = <1>;
- 		};
+ 	if (find_existing_ddw(pdn, &dev->dev.archdata.dma_offset, &len)) {
+ 		direct_mapping = (len >= max_ram_len);
+-		ddw_enabled = true;
+ 		goto out_unlock;
+ 	}
  
+@@ -1411,8 +1409,8 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 			dev_info(&dev->dev, "failed to map DMA window for %pOF: %d\n",
+ 				 dn, ret);
+ 
+-		/* Make sure to clean DDW if any TCE was set*/
+-		clean_dma_window(pdn, win64->value);
++			/* Make sure to clean DDW if any TCE was set*/
++			clean_dma_window(pdn, win64->value);
+ 			goto out_del_list;
+ 		}
+ 	} else {
+@@ -1459,7 +1457,6 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 	spin_unlock(&dma_win_list_lock);
+ 
+ 	dev->dev.archdata.dma_offset = win_addr;
+-	ddw_enabled = true;
+ 	goto out_unlock;
+ 
+ out_del_list:
+@@ -1495,10 +1492,10 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn)
+ 	 * as RAM, then we failed to create a window to cover persistent
+ 	 * memory and need to set the DMA limit.
+ 	 */
+-	if (pmem_present && ddw_enabled && direct_mapping && len == max_ram_len)
++	if (pmem_present && direct_mapping && len == max_ram_len)
+ 		dev->dev.bus_dma_limit = dev->dev.archdata.dma_offset + (1ULL << len);
+ 
+-    return ddw_enabled && direct_mapping;
++	return direct_mapping;
+ }
+ 
+ static void pci_dma_dev_setup_pSeriesLP(struct pci_dev *dev)
 -- 
 2.42.0
 
