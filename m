@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1658B381DE;
-	Fri, 24 Nov 2023 18:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8677B381DE;
+	Fri, 24 Nov 2023 18:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yHIWOh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CC1C433C8;
-	Fri, 24 Nov 2023 18:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cK2FMuFP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F14C433C7;
+	Fri, 24 Nov 2023 18:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850221;
-	bh=TydxBKjBjoSAWspLKRZ1WCwpF18EoxJd0Na/FjXruEk=;
+	s=korg; t=1700850224;
+	bh=TlG8bvJHBzXu2xg3/vcdT4FzejEXdRKDlx0BGG0+wKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0yHIWOh3g0IvVaYY1lZPc6Mh2F/QtNdvcpmKGkzinzn1p30yn/2+C8Mld5PvV3JAw
-	 zRkxBr7IpBVs7Q9l1gq3GfxPFPeMr7hKhuRhG9hm8ETsC/9XyPXXDJ29uX+khJQhtB
-	 VEDNFze2gThP7ydNRUuY2fHeSGOplHUGHnUbVzQA=
+	b=cK2FMuFPjDQbKgRxhdaYOIUf2XDqO+uWYhoGlmAoAQgOhJUrpyDkWT+9S9mnyHzh/
+	 TCCMAjoUCDmaEDA9MN9boWgmqP5LFrtBE/b5dqcfrUG8kBw8qx6WikhiG2JY2dLmn5
+	 746Pl8G77En/wYuGDycNNn1iWXC0VvONfLp9M+4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 494/530] Revert "net: r8169: Disable multicast filter for RTL8168H and RTL8107E"
-Date: Fri, 24 Nov 2023 17:51:00 +0000
-Message-ID: <20231124172043.179683528@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.6 495/530] ext4: fix race between writepages and remount
+Date: Fri, 24 Nov 2023 17:51:01 +0000
+Message-ID: <20231124172043.214026294@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,45 +42,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 6a26310273c323380da21eb23fcfd50e31140913 upstream.
+commit 745f17a4166e79315e4b7f33ce89d03e75a76983 upstream.
 
-This reverts commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df.
+We got a WARNING in ext4_add_complete_io:
+==================================================================
+ WARNING: at fs/ext4/page-io.c:231 ext4_put_io_end_defer+0x182/0x250
+ CPU: 10 PID: 77 Comm: ksoftirqd/10 Tainted: 6.3.0-rc2 #85
+ RIP: 0010:ext4_put_io_end_defer+0x182/0x250 [ext4]
+ [...]
+ Call Trace:
+  <TASK>
+  ext4_end_bio+0xa8/0x240 [ext4]
+  bio_endio+0x195/0x310
+  blk_update_request+0x184/0x770
+  scsi_end_request+0x2f/0x240
+  scsi_io_completion+0x75/0x450
+  scsi_finish_command+0xef/0x160
+  scsi_complete+0xa3/0x180
+  blk_complete_reqs+0x60/0x80
+  blk_done_softirq+0x25/0x40
+  __do_softirq+0x119/0x4c8
+  run_ksoftirqd+0x42/0x70
+  smpboot_thread_fn+0x136/0x3c0
+  kthread+0x140/0x1a0
+  ret_from_fork+0x2c/0x50
+==================================================================
 
-I couldn't reproduce the reported issue. What I did, based on a pcap
-packet log provided by the reporter:
-- Used same chip version (RTL8168h)
-- Set MAC address to the one used on the reporters system
-- Replayed the EAPOL unicast packet that, according to the reporter,
-  was filtered out by the mc filter.
-The packet was properly received.
+Above issue may happen as follows:
 
-Therefore the root cause of the reported issue seems to be somewhere
-else. Disabling mc filtering completely for the most common chip
-version is a quite big hammer. Therefore revert the change and wait
-for further analysis results from the reporter.
+            cpu1                        cpu2
+----------------------------|----------------------------
+mount -o dioread_lock
+ext4_writepages
+ ext4_do_writepages
+  *if (ext4_should_dioread_nolock(inode))*
+    // rsv_blocks is not assigned here
+                                 mount -o remount,dioread_nolock
+  ext4_journal_start_with_reserve
+   __ext4_journal_start
+    __ext4_journal_start_sb
+     jbd2__journal_start
+      *if (rsv_blocks)*
+        // h_rsv_handle is not initialized here
+  mpage_map_and_submit_extent
+    mpage_map_one_extent
+      dioread_nolock = ext4_should_dioread_nolock(inode)
+      if (dioread_nolock && (map->m_flags & EXT4_MAP_UNWRITTEN))
+        mpd->io_submit.io_end->handle = handle->h_rsv_handle
+        ext4_set_io_unwritten_flag
+          io_end->flag |= EXT4_IO_END_UNWRITTEN
+      // now io_end->handle is NULL but has EXT4_IO_END_UNWRITTEN flag
 
+scsi_finish_command
+ scsi_io_completion
+  scsi_io_completion_action
+   scsi_end_request
+    blk_update_request
+     req_bio_endio
+      bio_endio
+       bio->bi_end_io  > ext4_end_bio
+        ext4_put_io_end_defer
+	 ext4_add_complete_io
+	  // trigger WARN_ON(!io_end->handle && sbi->s_journal);
+
+The immediate cause of this problem is that ext4_should_dioread_nolock()
+function returns inconsistent values in the ext4_do_writepages() and
+mpage_map_one_extent(). There are four conditions in this function that
+can be changed at mount time to cause this problem. These four conditions
+can be divided into two categories:
+
+    (1) journal_data and EXT4_EXTENTS_FL, which can be changed by ioctl
+    (2) DELALLOC and DIOREAD_NOLOCK, which can be changed by remount
+
+The two in the first category have been fixed by commit c8585c6fcaf2
+("ext4: fix races between changing inode journal mode and ext4_writepages")
+and commit cb85f4d23f79 ("ext4: fix race between writepages and enabling
+EXT4_EXTENTS_FL") respectively.
+
+Two cases in the other category have not yet been fixed, and the above
+issue is caused by this situation. We refer to the fix for the first
+category, when applying options during remount, we grab s_writepages_rwsem
+to avoid racing with writepages ops to trigger this problem.
+
+Fixes: 6b523df4fb5a ("ext4: use transaction reservation for extent conversion in ext4_end_io")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230524072538.2883391-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/ext4/ext4.h  |    3 ++-
+ fs/ext4/super.c |   14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2599,9 +2599,7 @@ static void rtl_set_rx_mode(struct net_d
- 		rx_mode &= ~AcceptMulticast;
- 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
- 		   dev->flags & IFF_ALLMULTI ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
-+		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
- 		/* accept all multicasts */
- 	} else if (netdev_mc_empty(dev)) {
- 		rx_mode &= ~AcceptMulticast;
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -1676,7 +1676,8 @@ struct ext4_sb_info {
+ 
+ 	/*
+ 	 * Barrier between writepages ops and changing any inode's JOURNAL_DATA
+-	 * or EXTENTS flag.
++	 * or EXTENTS flag or between writepages ops and changing DELALLOC or
++	 * DIOREAD_NOLOCK mount options on remount.
+ 	 */
+ 	struct percpu_rw_semaphore s_writepages_rwsem;
+ 	struct dax_device *s_daxdev;
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6443,6 +6443,7 @@ static int __ext4_remount(struct fs_cont
+ 	struct ext4_mount_options old_opts;
+ 	ext4_group_t g;
+ 	int err = 0;
++	int alloc_ctx;
+ #ifdef CONFIG_QUOTA
+ 	int enable_quota = 0;
+ 	int i, j;
+@@ -6483,7 +6484,16 @@ static int __ext4_remount(struct fs_cont
+ 
+ 	}
+ 
++	/*
++	 * Changing the DIOREAD_NOLOCK or DELALLOC mount options may cause
++	 * two calls to ext4_should_dioread_nolock() to return inconsistent
++	 * values, triggering WARN_ON in ext4_add_complete_io(). we grab
++	 * here s_writepages_rwsem to avoid race between writepages ops and
++	 * remount.
++	 */
++	alloc_ctx = ext4_writepages_down_write(sb);
+ 	ext4_apply_options(fc, sb);
++	ext4_writepages_up_write(sb, alloc_ctx);
+ 
+ 	if ((old_opts.s_mount_opt & EXT4_MOUNT_JOURNAL_CHECKSUM) ^
+ 	    test_opt(sb, JOURNAL_CHECKSUM)) {
+@@ -6701,6 +6711,8 @@ restore_opts:
+ 	if (sb_rdonly(sb) && !(old_sb_flags & SB_RDONLY) &&
+ 	    sb_any_quota_suspended(sb))
+ 		dquot_resume(sb, -1);
++
++	alloc_ctx = ext4_writepages_down_write(sb);
+ 	sb->s_flags = old_sb_flags;
+ 	sbi->s_mount_opt = old_opts.s_mount_opt;
+ 	sbi->s_mount_opt2 = old_opts.s_mount_opt2;
+@@ -6709,6 +6721,8 @@ restore_opts:
+ 	sbi->s_commit_interval = old_opts.s_commit_interval;
+ 	sbi->s_min_batch_time = old_opts.s_min_batch_time;
+ 	sbi->s_max_batch_time = old_opts.s_max_batch_time;
++	ext4_writepages_up_write(sb, alloc_ctx);
++
+ 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->s_system_blks)
+ 		ext4_release_system_zone(sb);
+ #ifdef CONFIG_QUOTA
 
 
