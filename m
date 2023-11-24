@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F1339FF3;
-	Fri, 24 Nov 2023 18:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061DF364A4;
+	Fri, 24 Nov 2023 18:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REGqsprK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BABC433C7;
-	Fri, 24 Nov 2023 18:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhssoSpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DFAC433C8;
+	Fri, 24 Nov 2023 18:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850515;
-	bh=yE5B8yCvIt1XI1w2XWgeF6pZC27zI3dnO10NDFLaFOk=;
+	s=korg; t=1700850517;
+	bh=E4TcAmtiEaB2OMEXi01neIVkTq56wehyYJjYDUtveOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=REGqsprKEKfaC1rqQfN4brZyvuZvbSG5QRjE7t+TiGLtpo+HZT7p62deZVOEMqOAr
-	 mNAGYhdZpoPF0CMBPEDPGc2oJSG0dm4PVTeIlq2bmkS1TDcZ1oTFoVfogjxnlghho6
-	 /awk/GKeZh4e9djDLdbr6CM/ggV9mlMocxqwFvJQ=
+	b=jhssoSpSSTBJqaIT+mC++b/gbCW+1pRyf3RGG+d17dgLAe1XzWf7bqlBwERveJXKx
+	 eDmax+3mddga0NCLjWR6kK9cKmlXZRx9dvowoGhc2y5XH3N6Xm//4unGKqFvyGGPx0
+	 PJh8y2/78Rl0HOVMQ+1G8pbdL1w5jnxLhzEamYuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jun Lei <jun.lei@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 055/491] drm/amd: Update `update_pcie_parameters` functions to use uint8_t arguments
-Date: Fri, 24 Nov 2023 17:44:51 +0000
-Message-ID: <20231124172026.333353104@linuxfoundation.org>
+Subject: [PATCH 6.5 056/491] drm/amd/display: use full update for clip size increase of large plane source
+Date: Fri, 24 Nov 2023 17:44:52 +0000
+Message-ID: <20231124172026.356563232@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -37,128 +39,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Wenjing Liu <wenjing.liu@amd.com>
 
-[ Upstream commit 7752ccf85b929a22e658ec145283e8f31232f4bb ]
+[ Upstream commit 05b78277ef0efc1deebc8a22384fffec29a3676e ]
 
-The matching values for `pcie_gen_cap` and `pcie_width_cap` when
-fetched from powerplay tables are 1 byte, so narrow the arguments
-to match to ensure min() and max() comparisons without casts.
+[why]
+Clip size increase will increase viewport, which could cause us to
+switch  to MPC combine.
+If we skip full update, we are not able to change to MPC combine in
+fast update. This will cause corruption showing on the video plane.
 
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
+[how]
+treat clip size increase of a surface larger than 5k as a full update.
+
+Reviewed-by: Jun Lei <jun.lei@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Wenjing Liu <wenjing.liu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c               | 2 +-
- drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h           | 2 +-
- drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h            | 4 ++--
- drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c         | 4 ++--
- drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c | 8 ++++----
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c          | 4 ++--
- 6 files changed, 12 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 12 ++++++++++--
+ drivers/gpu/drm/amd/display/dc/dc.h      |  5 +++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-index 222af2fae7458..16c03771c1239 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -1232,7 +1232,7 @@ static int smu_smc_hw_setup(struct smu_context *smu)
- {
- 	struct smu_feature *feature = &smu->smu_feature;
- 	struct amdgpu_device *adev = smu->adev;
--	uint32_t pcie_gen = 0, pcie_width = 0;
-+	uint8_t pcie_gen = 0, pcie_width = 0;
- 	uint64_t features_supported;
- 	int ret = 0;
- 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h b/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-index 6e2069dcb6b9d..d1d7713b97794 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-@@ -856,7 +856,7 @@ struct pptable_funcs {
- 	 * &pcie_gen_cap: Maximum allowed PCIe generation.
- 	 * &pcie_width_cap: Maximum allowed PCIe width.
- 	 */
--	int (*update_pcie_parameters)(struct smu_context *smu, uint32_t pcie_gen_cap, uint32_t pcie_width_cap);
-+	int (*update_pcie_parameters)(struct smu_context *smu, uint8_t pcie_gen_cap, uint8_t pcie_width_cap);
- 
- 	/**
- 	 * @i2c_init: Initialize i2c.
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-index 355c156d871af..cc02f979e9e98 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-@@ -296,8 +296,8 @@ int smu_v13_0_get_pptable_from_firmware(struct smu_context *smu,
- 					uint32_t pptable_id);
- 
- int smu_v13_0_update_pcie_parameters(struct smu_context *smu,
--				     uint32_t pcie_gen_cap,
--				     uint32_t pcie_width_cap);
-+				     uint8_t pcie_gen_cap,
-+				     uint8_t pcie_width_cap);
- 
- #endif
- #endif
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-index 95f6d821bacbc..addaa69119b8e 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-@@ -2375,8 +2375,8 @@ static int navi10_get_power_limit(struct smu_context *smu,
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 93e6265e58509..b386f3b0fd428 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -993,7 +993,8 @@ static bool dc_construct(struct dc *dc,
+ 	/* set i2c speed if not done by the respective dcnxxx__resource.c */
+ 	if (dc->caps.i2c_speed_in_khz_hdcp == 0)
+ 		dc->caps.i2c_speed_in_khz_hdcp = dc->caps.i2c_speed_in_khz;
+-
++	if (dc->caps.max_optimizable_video_width == 0)
++		dc->caps.max_optimizable_video_width = 5120;
+ 	dc->clk_mgr = dc_clk_mgr_create(dc->ctx, dc->res_pool->pp_smu, dc->res_pool->dccg);
+ 	if (!dc->clk_mgr)
+ 		goto fail;
+@@ -2430,6 +2431,7 @@ static enum surface_update_type get_plane_info_update_type(const struct dc_surfa
  }
  
- static int navi10_update_pcie_parameters(struct smu_context *smu,
--				     uint32_t pcie_gen_cap,
--				     uint32_t pcie_width_cap)
-+					 uint8_t pcie_gen_cap,
-+					 uint8_t pcie_width_cap)
+ static enum surface_update_type get_scaling_info_update_type(
++		const struct dc *dc,
+ 		const struct dc_surface_update *u)
  {
- 	struct smu_11_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
- 	PPTable_t *pptable = smu->smu_table.driver_pptable;
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-index 9119b0df2419f..9a5f3d31e7780 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -2084,14 +2084,14 @@ static int sienna_cichlid_display_disable_memory_clock_switch(struct smu_context
- #define MAX(a, b)	((a) > (b) ? (a) : (b))
+ 	union surface_update_flags *update_flags = &u->surface->update_flags;
+@@ -2464,6 +2466,12 @@ static enum surface_update_type get_scaling_info_update_type(
+ 			update_flags->bits.clock_change = 1;
+ 	}
  
- static int sienna_cichlid_update_pcie_parameters(struct smu_context *smu,
--					 uint32_t pcie_gen_cap,
--					 uint32_t pcie_width_cap)
-+						 uint8_t pcie_gen_cap,
-+						 uint8_t pcie_width_cap)
- {
- 	struct smu_11_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
- 	struct smu_11_0_pcie_table *pcie_table = &dpm_context->dpm_tables.pcie_table;
- 	uint8_t *table_member1, *table_member2;
--	uint32_t min_gen_speed, max_gen_speed;
--	uint32_t min_lane_width, max_lane_width;
-+	uint8_t min_gen_speed, max_gen_speed;
-+	uint8_t min_lane_width, max_lane_width;
- 	uint32_t smu_pcie_arg;
- 	int ret, i;
++	if (u->scaling_info->src_rect.width > dc->caps.max_optimizable_video_width &&
++		(u->scaling_info->clip_rect.width > u->surface->clip_rect.width ||
++		 u->scaling_info->clip_rect.height > u->surface->clip_rect.height))
++		 /* Changing clip size of a large surface may result in MPC slice count change */
++		update_flags->bits.bandwidth_change = 1;
++
+ 	if (u->scaling_info->src_rect.x != u->surface->src_rect.x
+ 			|| u->scaling_info->src_rect.y != u->surface->src_rect.y
+ 			|| u->scaling_info->clip_rect.x != u->surface->clip_rect.x
+@@ -2501,7 +2509,7 @@ static enum surface_update_type det_surface_update(const struct dc *dc,
+ 	type = get_plane_info_update_type(u);
+ 	elevate_update_type(&overall_type, type);
  
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-index 9b62b45ebb7f0..4fa94f583b87c 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-@@ -2426,8 +2426,8 @@ int smu_v13_0_mode1_reset(struct smu_context *smu)
- }
+-	type = get_scaling_info_update_type(u);
++	type = get_scaling_info_update_type(dc, u);
+ 	elevate_update_type(&overall_type, type);
  
- int smu_v13_0_update_pcie_parameters(struct smu_context *smu,
--				     uint32_t pcie_gen_cap,
--				     uint32_t pcie_width_cap)
-+				     uint8_t pcie_gen_cap,
-+				     uint8_t pcie_width_cap)
- {
- 	struct smu_13_0_dpm_context *dpm_context = smu->smu_dpm.dpm_context;
- 	struct smu_13_0_pcie_table *pcie_table =
+ 	if (u->flip_addr) {
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 81258392d44a1..dc0e0af616506 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -229,6 +229,11 @@ struct dc_caps {
+ 	uint32_t dmdata_alloc_size;
+ 	unsigned int max_cursor_size;
+ 	unsigned int max_video_width;
++	/*
++	 * max video plane width that can be safely assumed to be always
++	 * supported by single DPP pipe.
++	 */
++	unsigned int max_optimizable_video_width;
+ 	unsigned int min_horizontal_blanking_period;
+ 	int linear_pitch_alignment;
+ 	bool dcc_const_color;
 -- 
 2.42.0
 
