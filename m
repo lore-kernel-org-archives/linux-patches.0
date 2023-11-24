@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F003F3A8F4;
-	Fri, 24 Nov 2023 18:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E4F381DE;
+	Fri, 24 Nov 2023 18:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVoGgJfn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBB6C433C8;
-	Fri, 24 Nov 2023 18:31:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbTgSBZw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA264C433C7;
+	Fri, 24 Nov 2023 18:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850718;
-	bh=AY9MnlDKRJfDVtJfJ2p3hOZRkiOkA2l4ckK3Jag/CEE=;
+	s=korg; t=1700850721;
+	bh=vWMUhm7IJkNrBM40mMpRa4eeKdNugRS8JaM7oaxnGbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVoGgJfn8HWko8tyGiiFjlx9UX7QX+n9dGk6FZJbwemr4mNu7OuoB/c1FwVVJBW1U
-	 BXxfzjho7yU2D3/ubmMHmln/d2WoPVj6cq6dvhovMxgCQtarWcjdJk5FKeuEjfU4Lz
-	 8KaWblVt8jnCt2PS/76SoBtwOONmk3U9A68uV3CY=
+	b=JbTgSBZwUI1RGWfq0CJ+fxI5BRaEW8wIxYFfSaNRkIu+PQ3f72dM0lDGDEGWTDlTw
+	 sASIgD6zJAq2CZMeLG/YwkIsN+KkW/LpuzJzNFghbJi7XFaSlP9w47NsXnKRfPNeoS
+	 9lWQrsSoDXFGc4h2/gg4nMr8/YEuqTZuYssEgrco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 137/491] gfs2: fix an oops in gfs2_permission
-Date: Fri, 24 Nov 2023 17:46:13 +0000
-Message-ID: <20231124172028.612844547@linuxfoundation.org>
+Subject: [PATCH 6.5 138/491] media: cobalt: Use FIELD_GET() to extract Link Width
+Date: Fri, 24 Nov 2023 17:46:14 +0000
+Message-ID: <20231124172028.640365106@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -36,71 +37,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 0abd1557e21c617bd13fc18f7725fc6363c05913 ]
+[ Upstream commit f301fedbeecfdce91cb898d6fa5e62f269801fee ]
 
-In RCU mode, we might race with gfs2_evict_inode(), which zeroes
-->i_gl.  Freeing of the object it points to is RCU-delayed, so
-if we manage to fetch the pointer before it's been replaced with
-NULL, we are fine.  Check if we'd fetched NULL and treat that
-as "bail out and tell the caller to get out of RCU mode".
+Use FIELD_GET() to extract PCIe Negotiated and Maximum Link Width fields
+instead of custom masking and shifting.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 11 +++++++++--
- fs/gfs2/super.c |  2 +-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/media/pci/cobalt/cobalt-driver.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 17c994a0c0d09..117b4b5a03072 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -1862,14 +1862,21 @@ int gfs2_permission(struct mnt_idmap *idmap, struct inode *inode,
- {
- 	struct gfs2_inode *ip;
- 	struct gfs2_holder i_gh;
-+	struct gfs2_glock *gl;
- 	int error;
+diff --git a/drivers/media/pci/cobalt/cobalt-driver.c b/drivers/media/pci/cobalt/cobalt-driver.c
+index 74edcc76d12f4..6e1a0614e6d06 100644
+--- a/drivers/media/pci/cobalt/cobalt-driver.c
++++ b/drivers/media/pci/cobalt/cobalt-driver.c
+@@ -8,6 +8,7 @@
+  *  All rights reserved.
+  */
  
- 	gfs2_holder_mark_uninitialized(&i_gh);
- 	ip = GFS2_I(inode);
--	if (gfs2_glock_is_locked_by_me(ip->i_gl) == NULL) {
-+	gl = rcu_dereference(ip->i_gl);
-+	if (unlikely(!gl)) {
-+		/* inode is getting torn down, must be RCU mode */
-+		WARN_ON_ONCE(!(mask & MAY_NOT_BLOCK));
-+		return -ECHILD;
-+        }
-+	if (gfs2_glock_is_locked_by_me(gl) == NULL) {
- 		if (mask & MAY_NOT_BLOCK)
- 			return -ECHILD;
--		error = gfs2_glock_nq_init(ip->i_gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
-+		error = gfs2_glock_nq_init(gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
- 		if (error)
- 			return error;
- 	}
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 9f4d5d6549ee6..f98ddb9d19a21 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1558,7 +1558,7 @@ static void gfs2_evict_inode(struct inode *inode)
- 		wait_on_bit_io(&ip->i_flags, GIF_GLOP_PENDING, TASK_UNINTERRUPTIBLE);
- 		gfs2_glock_add_to_lru(ip->i_gl);
- 		gfs2_glock_put_eventually(ip->i_gl);
--		ip->i_gl = NULL;
-+		rcu_assign_pointer(ip->i_gl, NULL);
- 	}
++#include <linux/bitfield.h>
+ #include <linux/delay.h>
+ #include <media/i2c/adv7604.h>
+ #include <media/i2c/adv7842.h>
+@@ -210,17 +211,17 @@ void cobalt_pcie_status_show(struct cobalt *cobalt)
+ 	pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &stat);
+ 	cobalt_info("PCIe link capability 0x%08x: %s per lane and %u lanes\n",
+ 			capa, get_link_speed(capa),
+-			(capa & PCI_EXP_LNKCAP_MLW) >> 4);
++			FIELD_GET(PCI_EXP_LNKCAP_MLW, capa));
+ 	cobalt_info("PCIe link control 0x%04x\n", ctrl);
+ 	cobalt_info("PCIe link status 0x%04x: %s per lane and %u lanes\n",
+ 		    stat, get_link_speed(stat),
+-		    (stat & PCI_EXP_LNKSTA_NLW) >> 4);
++		    FIELD_GET(PCI_EXP_LNKSTA_NLW, stat));
+ 
+ 	/* Bus */
+ 	pcie_capability_read_dword(pci_bus_dev, PCI_EXP_LNKCAP, &capa);
+ 	cobalt_info("PCIe bus link capability 0x%08x: %s per lane and %u lanes\n",
+ 			capa, get_link_speed(capa),
+-			(capa & PCI_EXP_LNKCAP_MLW) >> 4);
++			FIELD_GET(PCI_EXP_LNKCAP_MLW, capa));
+ 
+ 	/* Slot */
+ 	pcie_capability_read_dword(pci_dev, PCI_EXP_SLTCAP, &capa);
+@@ -239,7 +240,7 @@ static unsigned pcie_link_get_lanes(struct cobalt *cobalt)
+ 	if (!pci_is_pcie(pci_dev))
+ 		return 0;
+ 	pcie_capability_read_word(pci_dev, PCI_EXP_LNKSTA, &link);
+-	return (link & PCI_EXP_LNKSTA_NLW) >> 4;
++	return FIELD_GET(PCI_EXP_LNKSTA_NLW, link);
  }
  
+ static unsigned pcie_bus_link_get_lanes(struct cobalt *cobalt)
+@@ -250,7 +251,7 @@ static unsigned pcie_bus_link_get_lanes(struct cobalt *cobalt)
+ 	if (!pci_is_pcie(pci_dev))
+ 		return 0;
+ 	pcie_capability_read_dword(pci_dev, PCI_EXP_LNKCAP, &link);
+-	return (link & PCI_EXP_LNKCAP_MLW) >> 4;
++	return FIELD_GET(PCI_EXP_LNKCAP_MLW, link);
+ }
+ 
+ static void msi_config_show(struct cobalt *cobalt, struct pci_dev *pci_dev)
 -- 
 2.42.0
 
