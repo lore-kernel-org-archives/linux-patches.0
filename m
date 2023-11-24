@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8518364B7;
-	Fri, 24 Nov 2023 19:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1F4364B7;
+	Fri, 24 Nov 2023 19:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wgdgwn5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E089C433C7;
-	Fri, 24 Nov 2023 19:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmgbVN79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC98DC433C7;
+	Fri, 24 Nov 2023 19:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853399;
-	bh=6T+XFp/QK6q560aREMmq8Lp2nfaEi1P43iLT/Ot0MNo=;
+	s=korg; t=1700853402;
+	bh=d3HwKFFgrIitV2XOh2vrfSFaajqBYkHwjeIsGb/vsl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wgdgwn5KJIiVDv5LsBEf+XqG4ycVhAfNUd1Qe88+Yq886lsWIAMfM1AiPK1B2kHC/
-	 Ap+PpqTCVggXpY4Fb637fOmKQITQj75rQBDD2wcfAhPK1BwwDbph2c87AMNwStXNeU
-	 q+RQ0sKs0Qq3UUJWGPrsuPbKxlDn5B4XQSMlLDTM=
+	b=EmgbVN79K4Ki2OibLSFUT7PUWu5NGHzUqTKp3Go4ww4H6fprgj+aIaNPOl4yK/RBy
+	 S7wI1+Ogt+1jrZ/tXBgvL2kLVcq2hpVXv7GZNW6C/tU4dlyqj2uWqXd88O2xGY9ItB
+	 T2XXNAC9su7LooQJeCNzAtXtjy3cbiq30+doNxwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Woodhouse <dwmw@amazon.co.uk>,
 	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 172/297] hvc/xen: fix error path in xen_hvc_init() to always register frontend driver
-Date: Fri, 24 Nov 2023 17:53:34 +0000
-Message-ID: <20231124172006.274696859@linuxfoundation.org>
+Subject: [PATCH 5.15 173/297] hvc/xen: fix event channel handling for secondary consoles
+Date: Fri, 24 Nov 2023 17:53:35 +0000
+Message-ID: <20231124172006.306711390@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -44,49 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 2704c9a5593f4a47620c12dad78838ca62b52f48 upstream.
+commit ef5dd8ec88ac11e8e353164407d55b73c988b369 upstream.
 
-The xen_hvc_init() function should always register the frontend driver,
-even when there's no primary console — as there may be secondary consoles.
-(Qemu can always add secondary consoles, but only the toolstack can add
-the primary because it's special.)
+The xencons_connect_backend() function allocates a local interdomain
+event channel with xenbus_alloc_evtchn(), then calls
+bind_interdomain_evtchn_to_irq_lateeoi() to bind to that port# on the
+*remote* domain.
 
+That doesn't work very well:
+
+(qemu) device_add xen-console,id=con1,chardev=pty0
+[   44.323872] xenconsole console-1: 2 xenbus_dev_probe on device/console/1
+[   44.323995] xenconsole: probe of console-1 failed with error -2
+
+Fix it to use bind_evtchn_to_irq_lateeoi(), which does the right thing
+by just binding that *local* event channel to an irq. The backend will
+do the interdomain binding.
+
+This didn't affect the primary console because the setup for that is
+special — the toolstack allocates the guest event channel and the guest
+discovers it with HVMOP_get_param.
+
+Fixes: fe415186b43d ("xen/console: harden hvc_xen against event channel storms")
 Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 Reviewed-by: Juergen Gross <jgross@suse.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231020161529.355083-3-dwmw2@infradead.org
+Link: https://lore.kernel.org/r/20231020161529.355083-2-dwmw2@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/hvc/hvc_xen.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/tty/hvc/hvc_xen.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/tty/hvc/hvc_xen.c
 +++ b/drivers/tty/hvc/hvc_xen.c
-@@ -603,7 +603,7 @@ static int __init xen_hvc_init(void)
- 		ops = &dom0_hvc_ops;
- 		r = xen_initial_domain_console_init();
- 		if (r < 0)
--			return r;
-+			goto register_fe;
- 		info = vtermno_to_xencons(HVC_COOKIE);
- 	} else {
- 		ops = &domU_hvc_ops;
-@@ -612,7 +612,7 @@ static int __init xen_hvc_init(void)
- 		else
- 			r = xen_pv_console_init();
- 		if (r < 0)
--			return r;
-+			goto register_fe;
- 
- 		info = vtermno_to_xencons(HVC_COOKIE);
- 		info->irq = bind_evtchn_to_irq_lateeoi(info->evtchn);
-@@ -637,6 +637,7 @@ static int __init xen_hvc_init(void)
- 	}
- 
- 	r = 0;
-+ register_fe:
- #ifdef CONFIG_HVC_XEN_FRONTEND
- 	r = xenbus_register_frontend(&xencons_driver);
- #endif
+@@ -436,7 +436,7 @@ static int xencons_connect_backend(struc
+ 	if (ret)
+ 		return ret;
+ 	info->evtchn = evtchn;
+-	irq = bind_interdomain_evtchn_to_irq_lateeoi(dev, evtchn);
++	irq = bind_evtchn_to_irq_lateeoi(evtchn);
+ 	if (irq < 0)
+ 		return irq;
+ 	info->irq = irq;
 
 
