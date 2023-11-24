@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BAC39FF3;
-	Fri, 24 Nov 2023 18:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395D939FF3;
+	Fri, 24 Nov 2023 18:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZ5LDdui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E642C433C8;
-	Fri, 24 Nov 2023 18:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4KVxw02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC0B7C433C7;
+	Fri, 24 Nov 2023 18:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849785;
-	bh=UmQ3mUOKZAViuyYWh4G89dIH94Hi/dkO0TC0Q1RPVns=;
+	s=korg; t=1700849788;
+	bh=ErFQJTbdNQTw2a+im3VzS2SAIIE0LhXDfY9TzBw5alc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cZ5LDduitr5wmbIMTfY/d4WslYF59D0tiafnT/I3m7uJmPxsiZEqWgk8d0W0Bm86d
-	 d4CtB+hrQVYKKxNCybYn7WYR3ps2vMSt84OIjHBYdhdHRlTG165YAxCZJEQrRgHf8C
-	 QOyo2tgsqNH0NDzEpXbZqA0ybTX9I9sck6JbKQvk=
+	b=n4KVxw02ISnqpMGLMsua2exyw/Xv5i1cDBialNxQ/apsDPE/4WAgUFQ2WJPJniSN0
+	 3HngTwRFCPsLeBccD9+yM4lgcg0edK0dksLsjqOZvfQH/7l0FsGEuleWGB4CntqFQa
+	 zUWmfyrJN/r3l5G967HpkMzLwhamtGICdiABRuZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 319/530] ksmbd: handle malformed smb1 message
-Date: Fri, 24 Nov 2023 17:48:05 +0000
-Message-ID: <20231124172037.751775275@linuxfoundation.org>
+	Rong Chen <rong.chen@amlogic.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 296/530] mmc: meson-gx: Remove setting of CMD_CFG_ERROR
+Date: Fri, 24 Nov 2023 17:47:42 +0000
+Message-ID: <20231124172037.047476072@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,47 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Rong Chen <rong.chen@amlogic.com>
 
-commit 5a5409d90bd05f87fe5623a749ccfbf3f7c7d400 upstream.
+commit 57925e16c9f7d18012bcf45bfa658f92c087981a upstream.
 
-If set_smb1_rsp_status() is not implemented, It will cause NULL pointer
-dereferece error when client send malformed smb1 message.
-This patch add set_smb1_rsp_status() to ignore malformed smb1 message.
+For the t7 and older SoC families, the CMD_CFG_ERROR has no effect.
+Starting from SoC family C3, setting this bit without SG LINK data
+address will cause the controller to generate an IRQ and stop working.
 
+To fix it, don't set the bit CMD_CFG_ERROR anymore.
+
+Fixes: 18f92bc02f17 ("mmc: meson-gx: make sure the descriptor is stopped on errors")
+Signed-off-by: Rong Chen <rong.chen@amlogic.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
 Cc: stable@vger.kernel.org
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lore.kernel.org/r/20231026073156.2868310-1-rong.chen@amlogic.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb_common.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/mmc/host/meson-gx-mmc.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/smb/server/smb_common.c
-+++ b/fs/smb/server/smb_common.c
-@@ -366,11 +366,22 @@ static int smb1_allocate_rsp_buf(struct
- 	return 0;
- }
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -801,7 +801,6 @@ static void meson_mmc_start_cmd(struct m
  
-+/**
-+ * set_smb1_rsp_status() - set error type in smb response header
-+ * @work:	smb work containing smb response header
-+ * @err:	error code to set in response
-+ */
-+static void set_smb1_rsp_status(struct ksmbd_work *work, __le32 err)
-+{
-+	work->send_no_response = 1;
-+}
-+
- static struct smb_version_ops smb1_server_ops = {
- 	.get_cmd_val = get_smb1_cmd_val,
- 	.init_rsp_hdr = init_smb1_rsp_hdr,
- 	.allocate_rsp_buf = smb1_allocate_rsp_buf,
- 	.check_user_session = smb1_check_user_session,
-+	.set_rsp_status = set_smb1_rsp_status,
- };
+ 	cmd_cfg |= FIELD_PREP(CMD_CFG_CMD_INDEX_MASK, cmd->opcode);
+ 	cmd_cfg |= CMD_CFG_OWNER;  /* owned by CPU */
+-	cmd_cfg |= CMD_CFG_ERROR; /* stop in case of error */
  
- static int smb1_negotiate(struct ksmbd_work *work)
+ 	meson_mmc_set_response_bits(cmd, &cmd_cfg);
+ 
 
 
