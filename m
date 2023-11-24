@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344F2321AD;
-	Fri, 24 Nov 2023 18:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA223339BE;
+	Fri, 24 Nov 2023 18:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg2SArnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5ACFC433C8;
-	Fri, 24 Nov 2023 18:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKLBxK7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A6A0C433C8;
+	Fri, 24 Nov 2023 18:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852200;
-	bh=8OqGQl9eTafoqRnhkitWuLzcHomRgwkFOPTHa/Vemvg=;
+	s=korg; t=1700852202;
+	bh=TOgFeR0o+1KnFl2FE2mYpepbkCN01NTJRm97a2Uy9F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rg2SArnlaX+I6rFh+7YmmjOFDrMvA4S+agzWDqm+X3Mi2FACw7Rl11/AXBC4MrsZW
-	 ZRhoCNzOBbw3LNGHQ7Cl54CdY1ULe6joQll5C8CqdMt6VcfCnM91ZiwF7Zo9NmUOam
-	 y+cjaHEmC3+NNaNgF/FWsy/+AKqMU+J0Su8m3K3g=
+	b=TKLBxK7cBwLSZTPVjej9BTovCi9eV7Q5DheU5GjH1p4PEYGgmmiRuJ3AsStwq6hFR
+	 BNDfabe9gmh73ypqpklQ7i1yr/wOs+1BdrjL9G4tQ4DBRdUctU/TWavMlvxV+tiXxW
+	 cbOI8cUGjP0UmaY3cdM5j8uYZZEqYrnI8MpAmr8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 260/372] i3c: master: svc: fix ibi may not return mandatory data byte
-Date: Fri, 24 Nov 2023 17:50:47 +0000
-Message-ID: <20231124172019.155198570@linuxfoundation.org>
+Subject: [PATCH 6.1 261/372] i3c: master: svc: fix check wrong status register in irq handler
+Date: Fri, 24 Nov 2023 17:50:48 +0000
+Message-ID: <20231124172019.192145786@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,50 +44,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Li <Frank.Li@nxp.com>
 
-commit c85e209b799f12d18a90ae6353b997b1bb1274a5 upstream.
+commit 225d5ef048c4ed01a475c95d94833bd7dd61072d upstream.
 
-MSTATUS[RXPEND] is only updated after the data transfer cycle started. This
-creates an issue when the I3C clock is slow, and the CPU is running fast
-enough that MSTATUS[RXPEND] may not be updated when the code reaches
-checking point. As a result, mandatory data can be missed.
-
-Add a wait for MSTATUS[COMPLETE] to ensure that all mandatory data is
-already in FIFO. It also works without mandatory data.
+svc_i3c_master_irq_handler() wrongly checks register SVC_I3C_MINTMASKED. It
+should be SVC_I3C_MSTATUS.
 
 Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
 Cc:  <stable@vger.kernel.org>
 Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231023161658.3890811-4-Frank.Li@nxp.com
+Link: https://lore.kernel.org/r/20231023161658.3890811-5-Frank.Li@nxp.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/i3c/master/svc-i3c-master.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/i3c/master/svc-i3c-master.c
 +++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -325,6 +325,7 @@ static int svc_i3c_master_handle_ibi(str
- 	struct i3c_ibi_slot *slot;
- 	unsigned int count;
- 	u32 mdatactrl;
-+	int ret, val;
- 	u8 *buf;
+@@ -469,7 +469,7 @@ reenable_ibis:
+ static irqreturn_t svc_i3c_master_irq_handler(int irq, void *dev_id)
+ {
+ 	struct svc_i3c_master *master = (struct svc_i3c_master *)dev_id;
+-	u32 active = readl(master->regs + SVC_I3C_MINTMASKED);
++	u32 active = readl(master->regs + SVC_I3C_MSTATUS);
  
- 	slot = i3c_generic_ibi_get_free_slot(data->ibi_pool);
-@@ -334,6 +335,13 @@ static int svc_i3c_master_handle_ibi(str
- 	slot->len = 0;
- 	buf = slot->data;
- 
-+	ret = readl_relaxed_poll_timeout(master->regs + SVC_I3C_MSTATUS, val,
-+						SVC_I3C_MSTATUS_COMPLETE(val), 0, 1000);
-+	if (ret) {
-+		dev_err(master->dev, "Timeout when polling for COMPLETE\n");
-+		return ret;
-+	}
-+
- 	while (SVC_I3C_MSTATUS_RXPEND(readl(master->regs + SVC_I3C_MSTATUS))  &&
- 	       slot->len < SVC_I3C_FIFO_SIZE) {
- 		mdatactrl = readl(master->regs + SVC_I3C_MDATACTRL);
+ 	if (!SVC_I3C_MSTATUS_SLVSTART(active))
+ 		return IRQ_NONE;
 
 
