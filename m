@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0D03307D;
-	Fri, 24 Nov 2023 19:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473222511F;
+	Fri, 24 Nov 2023 19:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbpDlpzq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5A7C433C8;
-	Fri, 24 Nov 2023 19:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGkLV2E1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5B7C433C8;
+	Fri, 24 Nov 2023 19:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853912;
-	bh=blWI7U3x/ZW7XsOSI3kERFFg5Cy8vRRY/A5xMqBCy90=;
+	s=korg; t=1700853915;
+	bh=iyotg125tUxstXksPW0AQItthxo6a//oT32rcyrqFHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbpDlpzqQ8GUMqoK0I3YG32QKwxZkU/YDIzE0oo//WkTtStQ1Tv7jfujMsm6JRRKC
-	 9nBQYuZf6JHk4/vK2VUlRCGVVNDGiL/VcLKtb2+5F/Del9Z8SJ/xU0fC2psEoHEcVj
-	 Jv5pqpVilbh2ed2sBZfc1y07c2H2xw8Z/UAXvtC4=
+	b=wGkLV2E1DY2Psvt7Sc0mobCQJGaLF1HI1Wkctsif/e18S58v7wmXvExvOS8CpngTG
+	 i54JD6aW7hdevpNXZZoZ6MM8zSyhoBkmakjygI+CLhK7sLlNTVbdABxhgCevmIjzz2
+	 2/iw5Uep6EFaHOe0nT+DuxZWNPtTNCiUgQ7fzlQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 5.4 081/159] PCI: keystone: Dont discard .remove() callback
-Date: Fri, 24 Nov 2023 17:54:58 +0000
-Message-ID: <20231124171945.310624713@linuxfoundation.org>
+Subject: [PATCH 5.4 082/159] PCI: keystone: Dont discard .probe() callback
+Date: Fri, 24 Nov 2023 17:54:59 +0000
+Message-ID: <20231124171945.342993055@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -44,20 +44,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 200bddbb3f5202bbce96444fdc416305de14f547 upstream.
+commit 7994db905c0fd692cf04c527585f08a91b560144 upstream.
 
-With CONFIG_PCIE_KEYSTONE=y and ks_pcie_remove() marked with __exit, the
-function is discarded from the driver. In this case a bound device can
-still get unbound, e.g via sysfs. Then no cleanup code is run resulting in
-resource leaks or worse.
+The __init annotation makes the ks_pcie_probe() function disappear after
+booting completes. However a device can also be bound later. In that case,
+we try to call ks_pcie_probe(), but the backing memory is likely already
+overwritten.
 
-The right thing to do is do always have the remove callback available.
-Note that this driver cannot be compiled as a module, so ks_pcie_remove()
-was always discarded before this change and modpost couldn't warn about
-this issue. Furthermore the __ref annotation also prevents a warning.
+The right thing to do is do always have the probe callback available.  Note
+that the (wrong) __refdata annotation prevented this issue to be noticed by
+modpost.
 
 Fixes: 0c4ffcfe1fbc ("PCI: keystone: Add TI Keystone PCIe driver")
-Link: https://lore.kernel.org/r/20231001170254.2506508-4-u.kleine-koenig@pengutronix.de
+Link: https://lore.kernel.org/r/20231001170254.2506508-5-u.kleine-koenig@pengutronix.de
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
@@ -68,23 +67,23 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/pci/controller/dwc/pci-keystone.c
 +++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -1407,7 +1407,7 @@ err_link:
- 	return ret;
+@@ -1181,7 +1181,7 @@ static const struct of_device_id ks_pcie
+ 	{ },
+ };
+ 
+-static int __init ks_pcie_probe(struct platform_device *pdev)
++static int ks_pcie_probe(struct platform_device *pdev)
+ {
+ 	const struct dw_pcie_host_ops *host_ops;
+ 	const struct dw_pcie_ep_ops *ep_ops;
+@@ -1423,7 +1423,7 @@ static int ks_pcie_remove(struct platfor
+ 	return 0;
  }
  
--static int __exit ks_pcie_remove(struct platform_device *pdev)
-+static int ks_pcie_remove(struct platform_device *pdev)
- {
- 	struct keystone_pcie *ks_pcie = platform_get_drvdata(pdev);
- 	struct device_link **link = ks_pcie->link;
-@@ -1425,7 +1425,7 @@ static int __exit ks_pcie_remove(struct
- 
- static struct platform_driver ks_pcie_driver __refdata = {
+-static struct platform_driver ks_pcie_driver __refdata = {
++static struct platform_driver ks_pcie_driver = {
  	.probe  = ks_pcie_probe,
--	.remove = __exit_p(ks_pcie_remove),
-+	.remove = ks_pcie_remove,
+ 	.remove = ks_pcie_remove,
  	.driver = {
- 		.name	= "keystone-pcie",
- 		.of_match_table = of_match_ptr(ks_pcie_of_match),
 
 
