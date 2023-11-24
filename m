@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA761364AE;
-	Fri, 24 Nov 2023 18:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386F722F1D;
+	Fri, 24 Nov 2023 18:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNojXMno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C62C433C7;
-	Fri, 24 Nov 2023 18:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJ8uB50O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6710C433C7;
+	Fri, 24 Nov 2023 18:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851620;
-	bh=jREKcJJrFHp7PluBQhyhd2J/UmGjhHxRoTP3r3huE/A=;
+	s=korg; t=1700851623;
+	bh=m7Q2FuRhFWFdPtbUldofFpC3KAnGboFFeIyRvoRZsw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNojXMnolvflxAyrSbBD9qfnQ4+Hhn0QBwk1vpCK56HdzALQnQFRKpY3G8KKKa7os
-	 VPE+91TsjSKqyAB9PAB9MJs12CUGHSmCE9Bk1JZY0va8VTA+FwmafhOO/U1yhFlrq2
-	 8YdVN+9XW4t/sQmmteZ7+efT1bYikpsmjd8IpphE=
+	b=BJ8uB50OKrYLSaI6eApBi44ZSEtyEqXQ8NreTGfjYwuUwjqnwNGsAOCpSzG0InLWB
+	 trqF1VT2bWxDalJBubYj+u361pW4Ghtl5C7DAGoKPjGCxGm5uw2nhGjOn+NBkPsfrN
+	 uLRbjgsmLHOag1TOqJsy5RiQllsaviiszvHVcJcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/372] clocksource/drivers/timer-imx-gpt: Fix potential memory leak
-Date: Fri, 24 Nov 2023 17:46:34 +0000
-Message-ID: <20231124172010.681777602@linuxfoundation.org>
+Subject: [PATCH 6.1 008/372] clocksource/drivers/timer-atmel-tcb: Fix initialization on SAM9 hardware
+Date: Fri, 24 Nov 2023 17:46:35 +0000
+Message-ID: <20231124172010.713338061@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,64 +43,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacky Bai <ping.bai@nxp.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-[ Upstream commit 8051a993ce222a5158bccc6ac22ace9253dd71cb ]
+[ Upstream commit 6d3bc4c02d59996d1d3180d8ed409a9d7d5900e0 ]
 
-Fix coverity Issue CID 250382:  Resource leak (RESOURCE_LEAK).
-Add kfree when error return.
+On SAM9 hardware two cascaded 16 bit timers are used to form a 32 bit
+high resolution timer that is used as scheduler clock when the kernel
+has been configured that way (CONFIG_ATMEL_CLOCKSOURCE_TCB).
 
-Signed-off-by: Jacky Bai <ping.bai@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
+The driver initially triggers a reset-to-zero of the two timers but this
+reset is only performed on the next rising clock. For the first timer
+this is ok - it will be in the next 60ns (16MHz clock). For the chained
+second timer this will only happen after the first timer overflows, i.e.
+after 2^16 clocks (~4ms with a 16MHz clock). So with other words the
+scheduler clock resets to 0 after the first 2^16 clock cycles.
+
+It looks like that the scheduler does not like this and behaves wrongly
+over its lifetime, e.g. some tasks are scheduled with a long delay. Why
+that is and if there are additional requirements for this behaviour has
+not been further analysed.
+
+There is a simple fix for resetting the second timer as well when the
+first timer is reset and this is to set the ATMEL_TC_ASWTRG_SET bit in
+the Channel Mode register (CMR) of the first timer. This will also rise
+the TIOA line (clock input of the second timer) when a software trigger
+respective SYNC is issued.
+
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20231009083922.1942971-1-ping.bai@nxp.com
+Link: https://lore.kernel.org/r/20231007161803.31342-1-rwahl@gmx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-imx-gpt.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/clocksource/timer-atmel-tcb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clocksource/timer-imx-gpt.c b/drivers/clocksource/timer-imx-gpt.c
-index 7b2c70f2f353b..fabff69e52e58 100644
---- a/drivers/clocksource/timer-imx-gpt.c
-+++ b/drivers/clocksource/timer-imx-gpt.c
-@@ -454,12 +454,16 @@ static int __init mxc_timer_init_dt(struct device_node *np,  enum imx_gpt_type t
- 		return -ENOMEM;
- 
- 	imxtm->base = of_iomap(np, 0);
--	if (!imxtm->base)
--		return -ENXIO;
-+	if (!imxtm->base) {
-+		ret = -ENXIO;
-+		goto err_kfree;
-+	}
- 
- 	imxtm->irq = irq_of_parse_and_map(np, 0);
--	if (imxtm->irq <= 0)
--		return -EINVAL;
-+	if (imxtm->irq <= 0) {
-+		ret = -EINVAL;
-+		goto err_kfree;
-+	}
- 
- 	imxtm->clk_ipg = of_clk_get_by_name(np, "ipg");
- 
-@@ -472,11 +476,15 @@ static int __init mxc_timer_init_dt(struct device_node *np,  enum imx_gpt_type t
- 
- 	ret = _mxc_timer_init(imxtm);
- 	if (ret)
--		return ret;
-+		goto err_kfree;
- 
- 	initialized = 1;
- 
- 	return 0;
-+
-+err_kfree:
-+	kfree(imxtm);
-+	return ret;
- }
- 
- static int __init imx1_timer_init_dt(struct device_node *np)
+diff --git a/drivers/clocksource/timer-atmel-tcb.c b/drivers/clocksource/timer-atmel-tcb.c
+index 27af17c995900..2a90c92a9182a 100644
+--- a/drivers/clocksource/timer-atmel-tcb.c
++++ b/drivers/clocksource/timer-atmel-tcb.c
+@@ -315,6 +315,7 @@ static void __init tcb_setup_dual_chan(struct atmel_tc *tc, int mck_divisor_idx)
+ 	writel(mck_divisor_idx			/* likely divide-by-8 */
+ 			| ATMEL_TC_WAVE
+ 			| ATMEL_TC_WAVESEL_UP		/* free-run */
++			| ATMEL_TC_ASWTRG_SET		/* TIOA0 rises at software trigger */
+ 			| ATMEL_TC_ACPA_SET		/* TIOA0 rises at 0 */
+ 			| ATMEL_TC_ACPC_CLEAR,		/* (duty cycle 50%) */
+ 			tcaddr + ATMEL_TC_REG(0, CMR));
 -- 
 2.42.0
 
