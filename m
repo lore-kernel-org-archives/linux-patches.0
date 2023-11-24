@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DF42EAEA;
-	Fri, 24 Nov 2023 18:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C041C37170;
+	Fri, 24 Nov 2023 18:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZtWMKSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64E2C433C8;
-	Fri, 24 Nov 2023 18:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1mnPs/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F50AC433C7;
+	Fri, 24 Nov 2023 18:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850885;
-	bh=gHSrw0UDyPnqTFLddK0ARoO+cbaqqpTLQ+AdxAlIkmA=;
+	s=korg; t=1700850887;
+	bh=AQlF/LcFjdnHI/M6+7vnGH+yCK0qMTzsHmgr5R9Gm/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZZtWMKSU+VBMo1fdytGjGtAs4FgLZVPRRK5s8j+hnFPsgS3ySX1D9AzYeMz2A0OdB
-	 /SYBcDUXio/uQxNganE9/oF++GiyALqWAeI3RHPCFJQgiI6Dx7y57JEqh0JQWGOICk
-	 GHD+78EFhLcsnB8jzbWgGk+aDdHDy8nddoIQQguc=
+	b=f1mnPs/cKH4PVLkmKDazz5yz8oxPEs9gxtyrzFWWQnE7Aqlwl5z9Z2Ov7KxARssSO
+	 +qvSgVIJfJQUDGdWYRVv5DziI4mqnCIOMRLbtmXB80I5Mahg84+vWKpqTCzu5lhhgO
+	 sLQKL8Zp+JFwGTsCy96BIuw2Vt/I93iHsEsKpTI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 6.5 228/491] perf intel-pt: Fix async branch flags
-Date: Fri, 24 Nov 2023 17:47:44 +0000
-Message-ID: <20231124172031.409367419@linuxfoundation.org>
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.5 229/491] powerpc/perf: Fix disabling BHRB and instruction sampling
+Date: Fri, 24 Nov 2023 17:47:45 +0000
+Message-ID: <20231124172031.441443398@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,37 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-commit f2d87895cbc4af80649850dcf5da36de6b2ed3dd upstream.
+commit ea142e590aec55ba40c5affb4d49e68c713c63dc upstream.
 
-Ensure PERF_IP_FLAG_ASYNC is set always for asynchronous branches (i.e.
-interrupts etc).
+When the PMU is disabled, MMCRA is not updated to disable BHRB and
+instruction sampling. This can lead to those features remaining enabled,
+which can slow down a real or emulated CPU.
 
-Fixes: 90e457f7be08 ("perf tools: Add Intel PT support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20230928072953.19369-1-adrian.hunter@intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 1cade527f6e9 ("powerpc/perf: BHRB control to disable BHRB logic when not used")
+Cc: stable@vger.kernel.org # v5.9+
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231018153423.298373-1-npiggin@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/intel-pt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/perf/core-book3s.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/tools/perf/util/intel-pt.c
-+++ b/tools/perf/util/intel-pt.c
-@@ -1512,9 +1512,11 @@ static void intel_pt_sample_flags(struct
- 	} else if (ptq->state->flags & INTEL_PT_ASYNC) {
- 		if (!ptq->state->to_ip)
- 			ptq->flags = PERF_IP_FLAG_BRANCH |
-+				     PERF_IP_FLAG_ASYNC |
- 				     PERF_IP_FLAG_TRACE_END;
- 		else if (ptq->state->from_nr && !ptq->state->to_nr)
- 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
-+				     PERF_IP_FLAG_ASYNC |
- 				     PERF_IP_FLAG_VMEXIT;
- 		else
- 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
+--- a/arch/powerpc/perf/core-book3s.c
++++ b/arch/powerpc/perf/core-book3s.c
+@@ -1371,8 +1371,7 @@ static void power_pmu_disable(struct pmu
+ 		/*
+ 		 * Disable instruction sampling if it was enabled
+ 		 */
+-		if (cpuhw->mmcr.mmcra & MMCRA_SAMPLE_ENABLE)
+-			val &= ~MMCRA_SAMPLE_ENABLE;
++		val &= ~MMCRA_SAMPLE_ENABLE;
+ 
+ 		/* Disable BHRB via mmcra (BHRBRD) for p10 */
+ 		if (ppmu->flags & PPMU_ARCH_31)
+@@ -1383,7 +1382,7 @@ static void power_pmu_disable(struct pmu
+ 		 * instruction sampling or BHRB.
+ 		 */
+ 		if (val != mmcra) {
+-			mtspr(SPRN_MMCRA, mmcra);
++			mtspr(SPRN_MMCRA, val);
+ 			mb();
+ 			isync();
+ 		}
 
 
