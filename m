@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C17B35F04;
-	Fri, 24 Nov 2023 19:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84672C1A2;
+	Fri, 24 Nov 2023 19:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFigrIr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AFE1C433CA;
-	Fri, 24 Nov 2023 19:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GYZFGkv9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14CFFC4339A;
+	Fri, 24 Nov 2023 19:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853017;
-	bh=dUBC/5vXS1b5HO6lKGnVUv2WQ/425Q4Zg7sVVdUo9rU=;
+	s=korg; t=1700853020;
+	bh=KRD8+RxrWfWDN84VF9jlQB0JseSq+DGBMs4X6PIaorA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFigrIr0T4TuIak8NAlwJM9a2gnpc+N/7DjyDjcJqKZIzN8j3DfZYH9kQy+X2Ze+E
-	 Ksr79PMi2lmCOVuDwgv//ltMjGDQCeRXN6H/XjA8DrSgjQsLV2FY4Hr55ATB8lnq7a
-	 Ed+I5Uqes6LzsVBiuJ5hGOtfhxOzckR8tYV9Mi/E=
+	b=GYZFGkv9hyko4Vrwo0GGntFRUTeqZjNx8UO53NPIAKaiWeIOSb15bS/lZFb8HiufY
+	 wB3s+HNbEvNL0iDJiLmSv1aLzDA9y+U+La45OIEMRV/7qDhhxUCDr0SVq05SdWJN2M
+	 EWP0dQ6AHQdiPakxJFycEeK2CjjUV3xS4SaoBUas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sieng-Piaw Liew <liew.s.piaw@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 009/297] atl1c: Work around the DMA RX overflow issue
-Date: Fri, 24 Nov 2023 17:50:51 +0000
-Message-ID: <20231124172000.436422714@linuxfoundation.org>
+Subject: [PATCH 5.15 010/297] bpf: Detect IP == ksym.end as part of BPF program
+Date: Fri, 24 Nov 2023 17:50:52 +0000
+Message-ID: <20231124172000.472646943@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,171 +42,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sieng-Piaw Liew <liew.s.piaw@gmail.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 86565682e9053e5deb128193ea9e88531bbae9cf ]
+[ Upstream commit 66d9111f3517f85ef2af0337ece02683ce0faf21 ]
 
-This is based on alx driver commit 881d0327db37 ("net: alx: Work around
-the DMA RX overflow issue").
+Now that bpf_throw kfunc is the first such call instruction that has
+noreturn semantics within the verifier, this also kicks in dead code
+elimination in unprecedented ways. For one, any instruction following
+a bpf_throw call will never be marked as seen. Moreover, if a callchain
+ends up throwing, any instructions after the call instruction to the
+eventually throwing subprog in callers will also never be marked as
+seen.
 
-The alx and atl1c drivers had RX overflow error which was why a custom
-allocator was created to avoid certain addresses. The simpler workaround
-then created for alx driver, but not for atl1c due to lack of tester.
+The tempting way to fix this would be to emit extra 'int3' instructions
+which bump the jited_len of a program, and ensure that during runtime
+when a program throws, we can discover its boundaries even if the call
+instruction to bpf_throw (or to subprogs that always throw) is emitted
+as the final instruction in the program.
 
-Instead of using a custom allocator, check the allocated skb address and
-use skb_reserve() to move away from problematic 0x...fc0 address.
+An example of such a program would be this:
 
-Tested on AR8131 on Acer 4540.
+do_something():
+	...
+	r0 = 0
+	exit
 
-Signed-off-by: Sieng-Piaw Liew <liew.s.piaw@gmail.com>
-Link: https://lore.kernel.org/r/20230912010711.12036-1-liew.s.piaw@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+foo():
+	r1 = 0
+	call bpf_throw
+	r0 = 0
+	exit
+
+bar(cond):
+	if r1 != 0 goto pc+2
+	call do_something
+	exit
+	call foo
+	r0 = 0  // Never seen by verifier
+	exit	//
+
+main(ctx):
+	r1 = ...
+	call bar
+	r0 = 0
+	exit
+
+Here, if we do end up throwing, the stacktrace would be the following:
+
+bpf_throw
+foo
+bar
+main
+
+In bar, the final instruction emitted will be the call to foo, as such,
+the return address will be the subsequent instruction (which the JIT
+emits as int3 on x86). This will end up lying outside the jited_len of
+the program, thus, when unwinding, we will fail to discover the return
+address as belonging to any program and end up in a panic due to the
+unreliable stack unwinding of BPF programs that we never expect.
+
+To remedy this case, make bpf_prog_ksym_find treat IP == ksym.end as
+part of the BPF program, so that is_bpf_text_address returns true when
+such a case occurs, and we are able to unwind reliably when the final
+instruction ends up being a call instruction.
+
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20230912233214.1518551-12-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/atl1c/atl1c.h    |  3 -
- .../net/ethernet/atheros/atl1c/atl1c_main.c   | 67 +++++--------------
- 2 files changed, 16 insertions(+), 54 deletions(-)
+ kernel/bpf/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c.h b/drivers/net/ethernet/atheros/atl1c/atl1c.h
-index 43d821fe7a542..63ba64dbb7310 100644
---- a/drivers/net/ethernet/atheros/atl1c/atl1c.h
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c.h
-@@ -504,15 +504,12 @@ struct atl1c_rrd_ring {
- 	u16 next_to_use;
- 	u16 next_to_clean;
- 	struct napi_struct napi;
--	struct page *rx_page;
--	unsigned int rx_page_offset;
- };
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index f7c27c1cc593b..36c2896ee45f4 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -605,7 +605,11 @@ static __always_inline int bpf_tree_comp(void *key, struct latch_tree_node *n)
  
- /* board specific private data structure */
- struct atl1c_adapter {
- 	struct net_device   *netdev;
- 	struct pci_dev      *pdev;
--	unsigned int	    rx_frag_size;
- 	struct atl1c_hw        hw;
- 	struct atl1c_hw_stats  hw_stats;
- 	struct mii_if_info  mii;    /* MII interface info */
-diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-index dad21b4fbc0bc..c6f621c0ca836 100644
---- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-@@ -493,15 +493,10 @@ static int atl1c_set_mac_addr(struct net_device *netdev, void *p)
- static void atl1c_set_rxbufsize(struct atl1c_adapter *adapter,
- 				struct net_device *dev)
- {
--	unsigned int head_size;
- 	int mtu = dev->mtu;
+ 	if (val < ksym->start)
+ 		return -1;
+-	if (val >= ksym->end)
++	/* Ensure that we detect return addresses as part of the program, when
++	 * the final instruction is a call for a program part of the stack
++	 * trace. Therefore, do val > ksym->end instead of val >= ksym->end.
++	 */
++	if (val > ksym->end)
+ 		return  1;
  
- 	adapter->rx_buffer_len = mtu > AT_RX_BUF_SIZE ?
- 		roundup(mtu + ETH_HLEN + ETH_FCS_LEN + VLAN_HLEN, 8) : AT_RX_BUF_SIZE;
--
--	head_size = SKB_DATA_ALIGN(adapter->rx_buffer_len + NET_SKB_PAD + NET_IP_ALIGN) +
--		    SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
--	adapter->rx_frag_size = roundup_pow_of_two(head_size);
- }
- 
- static netdev_features_t atl1c_fix_features(struct net_device *netdev,
-@@ -974,7 +969,6 @@ static void atl1c_init_ring_ptrs(struct atl1c_adapter *adapter)
- static void atl1c_free_ring_resources(struct atl1c_adapter *adapter)
- {
- 	struct pci_dev *pdev = adapter->pdev;
--	int i;
- 
- 	dma_free_coherent(&pdev->dev, adapter->ring_header.size,
- 			  adapter->ring_header.desc, adapter->ring_header.dma);
-@@ -987,12 +981,6 @@ static void atl1c_free_ring_resources(struct atl1c_adapter *adapter)
- 		kfree(adapter->tpd_ring[0].buffer_info);
- 		adapter->tpd_ring[0].buffer_info = NULL;
- 	}
--	for (i = 0; i < adapter->rx_queue_count; ++i) {
--		if (adapter->rrd_ring[i].rx_page) {
--			put_page(adapter->rrd_ring[i].rx_page);
--			adapter->rrd_ring[i].rx_page = NULL;
--		}
--	}
- }
- 
- /**
-@@ -1764,48 +1752,11 @@ static inline void atl1c_rx_checksum(struct atl1c_adapter *adapter,
- 	skb_checksum_none_assert(skb);
- }
- 
--static struct sk_buff *atl1c_alloc_skb(struct atl1c_adapter *adapter,
--				       u32 queue, bool napi_mode)
--{
--	struct atl1c_rrd_ring *rrd_ring = &adapter->rrd_ring[queue];
--	struct sk_buff *skb;
--	struct page *page;
--
--	if (adapter->rx_frag_size > PAGE_SIZE) {
--		if (likely(napi_mode))
--			return napi_alloc_skb(&rrd_ring->napi,
--					      adapter->rx_buffer_len);
--		else
--			return netdev_alloc_skb_ip_align(adapter->netdev,
--							 adapter->rx_buffer_len);
--	}
--
--	page = rrd_ring->rx_page;
--	if (!page) {
--		page = alloc_page(GFP_ATOMIC);
--		if (unlikely(!page))
--			return NULL;
--		rrd_ring->rx_page = page;
--		rrd_ring->rx_page_offset = 0;
--	}
--
--	skb = build_skb(page_address(page) + rrd_ring->rx_page_offset,
--			adapter->rx_frag_size);
--	if (likely(skb)) {
--		skb_reserve(skb, NET_SKB_PAD + NET_IP_ALIGN);
--		rrd_ring->rx_page_offset += adapter->rx_frag_size;
--		if (rrd_ring->rx_page_offset >= PAGE_SIZE)
--			rrd_ring->rx_page = NULL;
--		else
--			get_page(page);
--	}
--	return skb;
--}
--
- static int atl1c_alloc_rx_buffer(struct atl1c_adapter *adapter, u32 queue,
- 				 bool napi_mode)
- {
- 	struct atl1c_rfd_ring *rfd_ring = &adapter->rfd_ring[queue];
-+	struct atl1c_rrd_ring *rrd_ring = &adapter->rrd_ring[queue];
- 	struct pci_dev *pdev = adapter->pdev;
- 	struct atl1c_buffer *buffer_info, *next_info;
- 	struct sk_buff *skb;
-@@ -1824,13 +1775,27 @@ static int atl1c_alloc_rx_buffer(struct atl1c_adapter *adapter, u32 queue,
- 	while (next_info->flags & ATL1C_BUFFER_FREE) {
- 		rfd_desc = ATL1C_RFD_DESC(rfd_ring, rfd_next_to_use);
- 
--		skb = atl1c_alloc_skb(adapter, queue, napi_mode);
-+		/* When DMA RX address is set to something like
-+		 * 0x....fc0, it will be very likely to cause DMA
-+		 * RFD overflow issue.
-+		 *
-+		 * To work around it, we apply rx skb with 64 bytes
-+		 * longer space, and offset the address whenever
-+		 * 0x....fc0 is detected.
-+		 */
-+		if (likely(napi_mode))
-+			skb = napi_alloc_skb(&rrd_ring->napi, adapter->rx_buffer_len + 64);
-+		else
-+			skb = netdev_alloc_skb(adapter->netdev, adapter->rx_buffer_len + 64);
- 		if (unlikely(!skb)) {
- 			if (netif_msg_rx_err(adapter))
- 				dev_warn(&pdev->dev, "alloc rx buffer failed\n");
- 			break;
- 		}
- 
-+		if (((unsigned long)skb->data & 0xfff) == 0xfc0)
-+			skb_reserve(skb, 64);
-+
- 		/*
- 		 * Make buffer alignment 2 beyond a 16 byte boundary
- 		 * this will result in a 16 byte aligned IP header after
+ 	return 0;
 -- 
 2.42.0
 
