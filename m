@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46882FC4E;
-	Fri, 24 Nov 2023 18:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CD133CCC;
+	Fri, 24 Nov 2023 18:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWX2obvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E500C433CA;
-	Fri, 24 Nov 2023 18:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsTUIUXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50C9C433C7;
+	Fri, 24 Nov 2023 18:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851356;
-	bh=ohIAFUXW+5qNKa53mYHRUpkBGi3pvcTqZ2Cvf68aDfM=;
+	s=korg; t=1700851359;
+	bh=X9fkc6ARHTgKABZq/O8xwnFstdGp4nQ6WLk9X2trSUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lWX2obvfQu22T/lk2Kv6zuLtpqj93/vVW9yM/njWbFUbXC10eBvZvc1eWAG/lJgzC
-	 5msrtdukBrMmphvyFDPB2D38/u2R4EUsEmjAnUmntcZOEx+1BPcTpCD+iduFsegcnN
-	 2u5Tk2mYZsZdbJycI0OBcFlQWz73l0FlkKtHVC5k=
+	b=PsTUIUXxUm+qpVWkSHVmVOPN1beZSA/XdkQ8IUpV8o9Ly57GnsTiq8LEBEwJQMOfi
+	 cBnxSS3YVp+Gk6dz3ncaqTzFVu7hbcj2ZmtUTbVkbUpwYusQZUEaq3Q1DV6u/at3/T
+	 5r/DTQeOLd2jZmjfrpWBTL/WjkAcfrdTrWfiNVuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.5 416/491] i2c: i801: fix potential race in i801_block_transaction_byte_by_byte
-Date: Fri, 24 Nov 2023 17:50:52 +0000
-Message-ID: <20231124172037.107654779@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.5 417/491] f2fs: do not return EFSCORRUPTED, but try to run online repair
+Date: Fri, 24 Nov 2023 17:50:53 +0000
+Message-ID: <20231124172037.135398915@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,66 +40,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit f78ca48a8ba9cdec96e8839351e49eec3233b177 upstream.
+commit 50a472bbc79ff9d5a88be8019a60e936cadf9f13 upstream.
 
-Currently we set SMBHSTCNT_LAST_BYTE only after the host has started
-receiving the last byte. If we get e.g. preempted before setting
-SMBHSTCNT_LAST_BYTE, the host may be finished with receiving the byte
-before SMBHSTCNT_LAST_BYTE is set.
-Therefore change the code to set SMBHSTCNT_LAST_BYTE before writing
-SMBHSTSTS_BYTE_DONE for the byte before the last byte. Now the code
-is also consistent with what we do in i801_isr_byte_done().
+If we return the error, there's no way to recover the status as of now, since
+fsck does not fix the xattr boundary issue.
 
-Reported-by: Jean Delvare <jdelvare@suse.com>
-Closes: https://lore.kernel.org/linux-i2c/20230828152747.09444625@endymion.delvare/
 Cc: stable@vger.kernel.org
-Acked-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-i801.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ fs/f2fs/node.c  |    4 +++-
+ fs/f2fs/xattr.c |   20 +++++++++++++-------
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -681,15 +681,11 @@ static int i801_block_transaction_byte_b
- 		return result ? priv->status : -ETIMEDOUT;
- 	}
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -2751,7 +2751,9 @@ recover_xnid:
+ 	f2fs_update_inode_page(inode);
  
--	for (i = 1; i <= len; i++) {
--		if (i == len && read_write == I2C_SMBUS_READ)
--			smbcmd |= SMBHSTCNT_LAST_BYTE;
--		outb_p(smbcmd, SMBHSTCNT(priv));
--
--		if (i == 1)
--			outb_p(inb(SMBHSTCNT(priv)) | SMBHSTCNT_START,
--			       SMBHSTCNT(priv));
-+	if (len == 1 && read_write == I2C_SMBUS_READ)
-+		smbcmd |= SMBHSTCNT_LAST_BYTE;
-+	outb_p(smbcmd | SMBHSTCNT_START, SMBHSTCNT(priv));
+ 	/* 3: update and set xattr node page dirty */
+-	memcpy(F2FS_NODE(xpage), F2FS_NODE(page), VALID_XATTR_BLOCK_SIZE);
++	if (page)
++		memcpy(F2FS_NODE(xpage), F2FS_NODE(page),
++				VALID_XATTR_BLOCK_SIZE);
  
-+	for (i = 1; i <= len; i++) {
- 		status = i801_wait_byte_done(priv);
- 		if (status)
- 			return status;
-@@ -712,9 +708,12 @@ static int i801_block_transaction_byte_b
- 			data->block[0] = len;
+ 	set_page_dirty(xpage);
+ 	f2fs_put_page(xpage, 1);
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -364,10 +364,10 @@ static int lookup_all_xattrs(struct inod
+ 
+ 	*xe = __find_xattr(cur_addr, last_txattr_addr, NULL, index, len, name);
+ 	if (!*xe) {
+-		f2fs_err(F2FS_I_SB(inode), "inode (%lu) has corrupted xattr",
++		f2fs_err(F2FS_I_SB(inode), "lookup inode (%lu) has corrupted xattr",
+ 								inode->i_ino);
+ 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
+-		err = -EFSCORRUPTED;
++		err = -ENODATA;
+ 		f2fs_handle_error(F2FS_I_SB(inode),
+ 					ERROR_CORRUPTED_XATTR);
+ 		goto out;
+@@ -584,13 +584,12 @@ ssize_t f2fs_listxattr(struct dentry *de
+ 
+ 		if ((void *)(entry) + sizeof(__u32) > last_base_addr ||
+ 			(void *)XATTR_NEXT_ENTRY(entry) > last_base_addr) {
+-			f2fs_err(F2FS_I_SB(inode), "inode (%lu) has corrupted xattr",
++			f2fs_err(F2FS_I_SB(inode), "list inode (%lu) has corrupted xattr",
+ 						inode->i_ino);
+ 			set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
+-			error = -EFSCORRUPTED;
+ 			f2fs_handle_error(F2FS_I_SB(inode),
+ 						ERROR_CORRUPTED_XATTR);
+-			goto cleanup;
++			break;
  		}
  
--		/* Retrieve/store value in SMBBLKDAT */
--		if (read_write == I2C_SMBUS_READ)
-+		if (read_write == I2C_SMBUS_READ) {
- 			data->block[i] = inb_p(SMBBLKDAT(priv));
-+			if (i == len - 1)
-+				outb_p(smbcmd | SMBHSTCNT_LAST_BYTE, SMBHSTCNT(priv));
-+		}
-+
- 		if (read_write == I2C_SMBUS_WRITE && i+1 <= len)
- 			outb_p(data->block[i+1], SMBBLKDAT(priv));
+ 		if (!prefix)
+@@ -650,7 +649,7 @@ static int __f2fs_setxattr(struct inode
  
+ 	if (size > MAX_VALUE_LEN(inode))
+ 		return -E2BIG;
+-
++retry:
+ 	error = read_all_xattrs(inode, ipage, &base_addr);
+ 	if (error)
+ 		return error;
+@@ -660,7 +659,14 @@ static int __f2fs_setxattr(struct inode
+ 	/* find entry with wanted name. */
+ 	here = __find_xattr(base_addr, last_base_addr, NULL, index, len, name);
+ 	if (!here) {
+-		f2fs_err(F2FS_I_SB(inode), "inode (%lu) has corrupted xattr",
++		if (!F2FS_I(inode)->i_xattr_nid) {
++			f2fs_notice(F2FS_I_SB(inode),
++				"recover xattr in inode (%lu)", inode->i_ino);
++			f2fs_recover_xattr_data(inode, NULL);
++			kfree(base_addr);
++			goto retry;
++		}
++		f2fs_err(F2FS_I_SB(inode), "set inode (%lu) has corrupted xattr",
+ 								inode->i_ino);
+ 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_FSCK);
+ 		error = -EFSCORRUPTED;
 
 
