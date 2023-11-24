@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A53539FE3;
-	Fri, 24 Nov 2023 18:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A5939FE8;
+	Fri, 24 Nov 2023 18:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jnle9EBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDB1C433C8;
-	Fri, 24 Nov 2023 18:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfKM84Py"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DA2C433CB;
+	Fri, 24 Nov 2023 18:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848918;
-	bh=ZC0f9JhKpDQIa0CzcK7Rbjq0M97u5aSuAGnZczjXNFw=;
+	s=korg; t=1700848920;
+	bh=Ka500qMB0Ejb2pN+kXBy9C8OqQGx24eyJkgYnKO57ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jnle9EBXttDN7ZViqfD836Hfbffs9ZQZvnex0DDO8IOsZfgsclbqa0rHFEuNIwzw5
-	 QK3LKdYqJ0jZZzMrta3RPK5I3Zw5YslJ7QeemBt1Mqwi6NrV5RAVIgDv7CVFEm9hWz
-	 Tr00+KuEjRKWaPJHix6QJ4Yrh4L9kcWBhPB9F+ss=
+	b=cfKM84PyMMqpK48E0nsB6j4x8CndenW6P/CUghvETIqY1tcNBhu8b324SShqZKBAu
+	 aXzSfzFB0ySRU39PTFYHWO+sv4o42uWCiBi2BviH1aElO1x5JPknfZ4nD/TUu2jswZ
+	 nz6DoZPAcFEvNhk9I9/rxS03fljfm7W/P2f8d474=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.14 34/57] parisc/power: Add power soft-off when running on qemu
-Date: Fri, 24 Nov 2023 17:50:58 +0000
-Message-ID: <20231124171931.541939993@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.14 35/57] mmc: vub300: fix an error code
+Date: Fri, 24 Nov 2023 17:50:59 +0000
+Message-ID: <20231124171931.587780261@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -40,48 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit d0c219472980d15f5cbc5c8aec736848bda3f235 upstream.
+commit b44f9da81783fda72632ef9b0d05ea3f3ca447a5 upstream.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # v6.0+
+This error path should return -EINVAL instead of success.
+
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/0769d30c-ad80-421b-bf5d-7d6f5d85604e@moroto.mountain
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/power.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/mmc/host/vub300.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/parisc/power.c
-+++ b/drivers/parisc/power.c
-@@ -193,6 +193,14 @@ static struct notifier_block parisc_pani
- 	.priority	= INT_MAX,
- };
- 
-+/* qemu soft power-off function */
-+static int qemu_power_off(struct sys_off_data *data)
-+{
-+	/* this turns the system off via SeaBIOS */
-+	*(int *)data->cb_data = 0;
-+	pdc_soft_power_button(1);
-+	return NOTIFY_DONE;
-+}
- 
- static int __init power_init(void)
- {
-@@ -222,7 +230,13 @@ static int __init power_init(void)
- 				soft_power_reg);
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2321,6 +2321,7 @@ static int vub300_probe(struct usb_inter
+ 		vub300->read_only =
+ 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 	} else {
++		retval = -EINVAL;
+ 		goto error5;
  	}
- 
--	power_task = kthread_run(kpowerswd, (void*)soft_power_reg, KTHREAD_NAME);
-+	power_task = NULL;
-+	if (running_on_qemu && soft_power_reg)
-+		register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
-+					qemu_power_off, (void *)soft_power_reg);
-+	else
-+		power_task = kthread_run(kpowerswd, (void*)soft_power_reg,
-+					KTHREAD_NAME);
- 	if (IS_ERR(power_task)) {
- 		printk(KERN_ERR DRIVER_NAME ": thread creation failed.  Driver not loaded.\n");
- 		pdc_soft_power_button(0);
+ 	usb_set_intfdata(interface, vub300);
 
 
