@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E09C22F1D;
-	Fri, 24 Nov 2023 18:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5BD22F1D;
+	Fri, 24 Nov 2023 18:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tplcu21H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32DAFC433C7;
-	Fri, 24 Nov 2023 18:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3A6v4Wh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EF8C433C8;
+	Fri, 24 Nov 2023 18:50:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851848;
-	bh=PANjxE2k8IudLThlALmK7JCH2erSFLg+6g+hvOk2M9o=;
+	s=korg; t=1700851850;
+	bh=Qn8UPmX6RoqPcIH71tzNBz8Ucu4X91ZU08vtZ3F8m0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tplcu21HGId4WtbTWjz0jT7u8zIDpKRSHcJHNVLVgenFWDBG3XZ+QGewl9zGFH1wQ
-	 KOIKGqFON90GsLsDRALsGtxpnKUX0NYRDwylzewjEE9JhkPScS2rWudfUWvfax2JZw
-	 8Kz/iwArp6CRH3da2K4OeiGhCD+o1WaqcRPsoE4o=
+	b=G3A6v4WhBNrRvbIJnq1bd4rklgKgVZzj85QvojXXGYbpmHo0gnNG8PL/1LOk5+74A
+	 YW1UCuSJu3QvDL2TkKhMN9oNwsG+8W5ac5VvdvZf5OD6Gz9zz+iyYUCwuafgd4aky0
+	 pAUUeWKSIPGegWKlpMPcryrTC+3dZwWb9qXHY/7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/372] NFSv4.1: fix handling NFS4ERR_DELAY when testing for session trunking
-Date: Fri, 24 Nov 2023 17:48:27 +0000
-Message-ID: <20231124172014.483519726@linuxfoundation.org>
+Subject: [PATCH 6.1 121/372] SUNRPC: Add an IS_ERR() check back to where it was
+Date: Fri, 24 Nov 2023 17:48:28 +0000
+Message-ID: <20231124172014.511200242@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,52 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 6bd1a77dc72dea0b0d8b6014f231143984d18f6d ]
+[ Upstream commit 4f3ed837186fc0d2722ba8d2457a594322e9c2ef ]
 
-Currently when client sends an EXCHANGE_ID for a possible trunked
-connection, for any error that happened, the trunk will be thrown
-out. However, an NFS4ERR_DELAY is a transient error that should be
-retried instead.
+This IS_ERR() check was deleted during in a cleanup because, at the time,
+the rpcb_call_async() function could not return an error pointer.  That
+changed in commit 25cf32ad5dba ("SUNRPC: Handle allocation failure in
+rpc_new_task()") and now it can return an error pointer.  Put the check
+back.
 
-Fixes: e818bd085baf ("NFSv4.1 remove xprt from xprt_switch if session trunking test fails")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+A related revert was done in commit 13bd90141804 ("Revert "SUNRPC:
+Remove unreachable error condition"").
+
+Fixes: 037e910b52b0 ("SUNRPC: Remove unreachable error condition in rpcb_getport_async()")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/sunrpc/rpcb_clnt.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 5cf53def987e5..4058861c72123 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -8939,6 +8939,7 @@ void nfs4_test_session_trunk(struct rpc_clnt *clnt, struct rpc_xprt *xprt,
+diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
+index 5a8e6d46809ae..82afb56695f8d 100644
+--- a/net/sunrpc/rpcb_clnt.c
++++ b/net/sunrpc/rpcb_clnt.c
+@@ -746,6 +746,10 @@ void rpcb_getport_async(struct rpc_task *task)
  
- 	sp4_how = (adata->clp->cl_sp4_flags == 0 ? SP4_NONE : SP4_MACH_CRED);
- 
-+try_again:
- 	/* Test connection for session trunking. Async exchange_id call */
- 	task = nfs4_run_exchange_id(adata->clp, adata->cred, sp4_how, xprt);
- 	if (IS_ERR(task))
-@@ -8951,11 +8952,15 @@ void nfs4_test_session_trunk(struct rpc_clnt *clnt, struct rpc_xprt *xprt,
- 
- 	if (status == 0)
- 		rpc_clnt_xprt_switch_add_xprt(clnt, xprt);
--	else if (rpc_clnt_xprt_switch_has_addr(clnt,
-+	else if (status != -NFS4ERR_DELAY && rpc_clnt_xprt_switch_has_addr(clnt,
- 				(struct sockaddr *)&xprt->addr))
- 		rpc_clnt_xprt_switch_remove_xprt(clnt, xprt);
- 
- 	rpc_put_task(task);
-+	if (status == -NFS4ERR_DELAY) {
-+		ssleep(1);
-+		goto try_again;
+ 	child = rpcb_call_async(rpcb_clnt, map, proc);
+ 	rpc_release_client(rpcb_clnt);
++	if (IS_ERR(child)) {
++		/* rpcb_map_release() has freed the arguments */
++		return;
 +	}
- }
- EXPORT_SYMBOL_GPL(nfs4_test_session_trunk);
  
+ 	xprt->stat.bind_count++;
+ 	rpc_put_task(child);
 -- 
 2.42.0
 
