@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFC028DA1;
-	Fri, 24 Nov 2023 18:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CD939FEF;
+	Fri, 24 Nov 2023 18:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGRRaP2k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20331C433C8;
-	Fri, 24 Nov 2023 18:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXDPa/aM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9074BC433C7;
+	Fri, 24 Nov 2023 18:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849456;
-	bh=+Q9tpDc46q0tfSrhNf5RE8ZB1TNRFonQ38VptLRQJwM=;
+	s=korg; t=1700849458;
+	bh=8nY95ApDnNhGyBxjNszLhYcpsFjfzZQa3oougXNL5PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGRRaP2kbWehB9EfXv7FehILrt2PM6ZW1uAsOk6q4asameIERLn0pQYJgfXYJLCkD
-	 YO3P787RY1NOaTEDPqCrsIyrZjq5McOF9y8z8kvfKvdw9RuKreNy6XxnFE9qklkvWU
-	 N0sHglPJ106bxeXA1l7xZtRVKVY7UOW2wMm07X7k=
+	b=IXDPa/aMuP9qEx+HcZEzfuMFjSYkg2vQRXvlQVazf1soAqkwn0ae02auoQxm1UAGw
+	 i1cSR4Lj5k8c/7HL5DG5x+8R09SlYaPBugEN75augIZmQnxzBCmcIE0a4cLSZoY6kQ
+	 W+zVRZbVNzyrW8UM1lJSebhDwCFXO5dL0VWgSDSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yi Yang <yiyang13@huawei.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 164/530] mtd: rawnand: intel: check return value of devm_kasprintf()
-Date: Fri, 24 Nov 2023 17:45:30 +0000
-Message-ID: <20231124172033.070975533@linuxfoundation.org>
+Subject: [PATCH 6.6 165/530] mtd: rawnand: meson: check return value of devm_kasprintf()
+Date: Fri, 24 Nov 2023 17:45:31 +0000
+Message-ID: <20231124172033.100829887@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,49 +44,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit 74ac5b5e2375f1e8ef797ac7770887e9969f2516 ]
+[ Upstream commit 5a985960a4dd041c21dbe9956958c1633d2da706 ]
 
 devm_kasprintf() returns a pointer to dynamically allocated memory
 which can be NULL upon failure. Ensure the allocation was successful by
 checking the pointer validity.
 
-Fixes: 0b1039f016e8 ("mtd: rawnand: Add NAND controller support on Intel LGM SoC")
+Fixes: 1e4d3ba66888 ("mtd: rawnand: meson: fix the clock")
 Signed-off-by: Yi Yang <yiyang13@huawei.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20231019065537.318391-1-yiyang13@huawei.com
+Link: https://lore.kernel.org/linux-mtd/20231019065548.318443-1-yiyang13@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/intel-nand-controller.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mtd/nand/raw/meson_nand.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/intel-nand-controller.c b/drivers/mtd/nand/raw/intel-nand-controller.c
-index cb5d88f42297b..f0ad2308f6d50 100644
---- a/drivers/mtd/nand/raw/intel-nand-controller.c
-+++ b/drivers/mtd/nand/raw/intel-nand-controller.c
-@@ -619,6 +619,11 @@ static int ebu_nand_probe(struct platform_device *pdev)
- 	ebu_host->cs_num = cs;
- 
- 	resname = devm_kasprintf(dev, GFP_KERNEL, "nand_cs%d", cs);
-+	if (!resname) {
-+		ret = -ENOMEM;
-+		goto err_of_node_put;
-+	}
+diff --git a/drivers/mtd/nand/raw/meson_nand.c b/drivers/mtd/nand/raw/meson_nand.c
+index 25e3c1cb605e7..a506e658d4624 100644
+--- a/drivers/mtd/nand/raw/meson_nand.c
++++ b/drivers/mtd/nand/raw/meson_nand.c
+@@ -1134,6 +1134,9 @@ static int meson_nfc_clk_init(struct meson_nfc *nfc)
+ 	init.name = devm_kasprintf(nfc->dev,
+ 				   GFP_KERNEL, "%s#div",
+ 				   dev_name(nfc->dev));
++	if (!init.name)
++		return -ENOMEM;
 +
- 	ebu_host->cs[cs].chipaddr = devm_platform_ioremap_resource_byname(pdev,
- 									  resname);
- 	if (IS_ERR(ebu_host->cs[cs].chipaddr)) {
-@@ -649,6 +654,11 @@ static int ebu_nand_probe(struct platform_device *pdev)
- 	}
- 
- 	resname = devm_kasprintf(dev, GFP_KERNEL, "addr_sel%d", cs);
-+	if (!resname) {
-+		ret = -ENOMEM;
-+		goto err_cleanup_dma;
-+	}
-+
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, resname);
- 	if (!res) {
- 		ret = -EINVAL;
+ 	init.ops = &clk_divider_ops;
+ 	nfc_divider_parent_data[0].fw_name = "device";
+ 	init.parent_data = nfc_divider_parent_data;
 -- 
 2.42.0
 
