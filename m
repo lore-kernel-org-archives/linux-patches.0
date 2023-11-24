@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71C4364C1;
-	Fri, 24 Nov 2023 18:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9F033E9;
+	Fri, 24 Nov 2023 18:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5ohiF2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76659C433C7;
-	Fri, 24 Nov 2023 18:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nH+niHJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02496C433C8;
+	Fri, 24 Nov 2023 18:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851308;
-	bh=QbCeaqEHEfUdSRCU4KCzTqEmTV+Ir/dt36bl57sg1vc=;
+	s=korg; t=1700851311;
+	bh=UnTVa3ZU1f81BifdHpMaIe0C317AonhaVP+cZWcZeT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N5ohiF2FytzYDGZufXiORtCjEzlZ4wcdSGdrMrr39z15ONgXrqYmV6TBjz8P2Mgrf
-	 sCpmzVcWQUk8CtL0Vp/9sWrM+LfuU68qeVtCABNJdHwryjgJ3zBCIxhTAGhwXMKhtQ
-	 2p9/kFdjbNTjEjxka913617eCrQpjETSrRkC9eW4=
+	b=nH+niHJJSD5XLYGlKJOkg5h/mmnnDhtJtPQzfzDmFp/Yooy4mhKv5aYZRsbRvhGlJ
+	 euFFU9VNADFZ3/0VUPH6qEjX4ef7Txslq12W9DBS4tO2XQFzsYyhYfm04JF7X8cAcS
+	 M1w8nXam8cmjVAuQypaizUiJL5czrFXCC8aA9LhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.5 397/491] xfs: recovery should not clear di_flushiter unconditionally
-Date: Fri, 24 Nov 2023 17:50:33 +0000
-Message-ID: <20231124172036.535750801@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 380/491] mm/hugetlb: use nth_page() in place of direct struct page manipulation
+Date: Fri, 24 Nov 2023 17:50:16 +0000
+Message-ID: <20231124172036.012256609@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,80 +48,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Zi Yan <ziy@nvidia.com>
 
-commit 7930d9e103700cde15833638855b750715c12091 upstream.
+[ Upstream commit 426056efe835cf4864ccf4c328fe3af9146fc539 ]
 
-Because on v3 inodes, di_flushiter doesn't exist. It overlaps with
-zero padding in the inode, except when NREXT64=1 configurations are
-in use and the zero padding is no longer padding but holds the 64
-bit extent counter.
+When dealing with hugetlb pages, manipulating struct page pointers
+directly can get to wrong struct page, since struct page is not guaranteed
+to be contiguous on SPARSEMEM without VMEMMAP.  Use nth_page() to handle
+it properly.
 
-This manifests obviously on big endian platforms (e.g. s390) because
-the log dinode is in host order and the overlap is the LSBs of the
-extent count field. It is not noticed on little endian machines
-because the overlap is at the MSB end of the extent count field and
-we need to get more than 2^^48 extents in the inode before it
-manifests. i.e. the heat death of the universe will occur before we
-see the problem in little endian machines.
+A wrong or non-existing page might be tried to be grabbed, either
+leading to a non freeable page or kernel memory access errors.  No bug
+is reported.  It comes from code inspection.
 
-This is a zero-day issue for NREXT64=1 configuraitons on big endian
-machines. Fix it by only clearing di_flushiter on v2 inodes during
-recovery.
-
-Fixes: 9b7d16e34bbe ("xfs: Introduce XFS_DIFLAG2_NREXT64 and associated helpers")
-cc: stable@kernel.org # 5.19+
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20230913201248.452081-3-zi.yan@sent.com
+Fixes: 57a196a58421 ("hugetlb: simplify hugetlb handling in follow_page_mask")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_inode_item_recover.c |   32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ mm/hugetlb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_inode_item_recover.c
-+++ b/fs/xfs/xfs_inode_item_recover.c
-@@ -369,24 +369,26 @@ xlog_recover_inode_commit_pass2(
- 	 * superblock flag to determine whether we need to look at di_flushiter
- 	 * to skip replay when the on disk inode is newer than the log one
- 	 */
--	if (!xfs_has_v3inodes(mp) &&
--	    ldip->di_flushiter < be16_to_cpu(dip->di_flushiter)) {
--		/*
--		 * Deal with the wrap case, DI_MAX_FLUSH is less
--		 * than smaller numbers
--		 */
--		if (be16_to_cpu(dip->di_flushiter) == DI_MAX_FLUSH &&
--		    ldip->di_flushiter < (DI_MAX_FLUSH >> 1)) {
--			/* do nothing */
--		} else {
--			trace_xfs_log_recover_inode_skip(log, in_f);
--			error = 0;
--			goto out_release;
-+	if (!xfs_has_v3inodes(mp)) {
-+		if (ldip->di_flushiter < be16_to_cpu(dip->di_flushiter)) {
-+			/*
-+			 * Deal with the wrap case, DI_MAX_FLUSH is less
-+			 * than smaller numbers
-+			 */
-+			if (be16_to_cpu(dip->di_flushiter) == DI_MAX_FLUSH &&
-+			    ldip->di_flushiter < (DI_MAX_FLUSH >> 1)) {
-+				/* do nothing */
-+			} else {
-+				trace_xfs_log_recover_inode_skip(log, in_f);
-+				error = 0;
-+				goto out_release;
-+			}
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index d231f23088a77..9951fb7412cc7 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -6546,7 +6546,7 @@ struct page *hugetlb_follow_page_mask(struct vm_area_struct *vma,
+ 			}
  		}
-+
-+		/* Take the opportunity to reset the flush iteration count */
-+		ldip->di_flushiter = 0;
- 	}
  
--	/* Take the opportunity to reset the flush iteration count */
--	ldip->di_flushiter = 0;
+-		page += ((address & ~huge_page_mask(h)) >> PAGE_SHIFT);
++		page = nth_page(page, ((address & ~huge_page_mask(h)) >> PAGE_SHIFT));
  
- 	if (unlikely(S_ISREG(ldip->di_mode))) {
- 		if ((ldip->di_format != XFS_DINODE_FMT_EXTENTS) &&
+ 		/*
+ 		 * Note that page may be a sub-page, and with vmemmap
+-- 
+2.42.0
+
 
 
