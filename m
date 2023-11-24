@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EF3381D5;
-	Fri, 24 Nov 2023 18:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3962511F;
+	Fri, 24 Nov 2023 18:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eanGLc/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFFBC433C7;
-	Fri, 24 Nov 2023 18:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItLIBzAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19C56C433C8;
+	Fri, 24 Nov 2023 18:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849389;
-	bh=qE+hBTiLPzKI73MGkulH5Q6d8KRZHfcuDtCFKmJbrjc=;
+	s=korg; t=1700849391;
+	bh=YOBY5/CPiikW9dUY79NAW1qrJErLZsJ/5+ol6i4R3dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eanGLc/rOszAvLSFw090XX5MOO2v9imWucQ+ttC3HM+TVlEmw5tEwozXWpOR1ceRp
-	 BYBO68BJFbX4CgHgNXdhRAFE3kNzeMgV1l7g3AQ34U0ZnjElVoQomxd96ixGfLhEEq
-	 W3M9lRdWMqPJiLE29R6nPcUAzIzL7xw0odcsVPAE=
+	b=ItLIBzAc+vhVsi/IOdR1lj6COHtLK7yQJZVPjlxXg1y98VuijDYP4OH8V4QBrR8Yw
+	 baJD+PQi2lIZiXhr3t+E4wvEy4YO9c1jBQwjtnll+72WjWAVAd6jf3tEchB1mglTXH
+	 JevaJavZ1um+vPzf7ZU2NPOTpBnnwGqW/ex6FLCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhenwei pi <pizhenwei@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 137/530] virtio-blk: fix implicit overflow on virtio_max_dma_size
-Date: Fri, 24 Nov 2023 17:45:03 +0000
-Message-ID: <20231124172032.262579752@linuxfoundation.org>
+Subject: [PATCH 6.6 138/530] i3c: master: mipi-i3c-hci: Fix a kernel panic for accessing DAT_data.
+Date: Fri, 24 Nov 2023 17:45:04 +0000
+Message-ID: <20231124172032.291224058@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,47 +42,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhenwei pi <pizhenwei@bytedance.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit fafb51a67fb883eb2dde352539df939a251851be ]
+[ Upstream commit b53e9758a31c683fc8615df930262192ed5f034b ]
 
-The following codes have an implicit conversion from size_t to u32:
-(u32)max_size = (size_t)virtio_max_dma_size(vdev);
+The `i3c_master_bus_init` function may attach the I2C devices before the
+I3C bus initialization. In this flow, the DAT `alloc_entry`` will be used
+before the DAT `init`. Additionally, if the `i3c_master_bus_init` fails,
+the DAT `cleanup` will execute before the device is detached, which will
+execue DAT `free_entry` function. The above scenario can cause the driver
+to use DAT_data when it is NULL.
 
-This may lead overflow, Ex (size_t)4G -> (u32)0. Once
-virtio_max_dma_size() has a larger size than U32_MAX, use U32_MAX
-instead.
-
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Message-Id: <20230904061045.510460-1-pizhenwei@bytedance.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Link: https://lore.kernel.org/r/20231023080237.560936-1-billy_tsai@aspeedtech.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i3c/master/mipi-i3c-hci/dat_v1.c | 29 ++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 1fe011676d070..4a4b9bad551e8 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1313,6 +1313,7 @@ static int virtblk_probe(struct virtio_device *vdev)
- 	u16 min_io_size;
- 	u8 physical_block_exp, alignment_offset;
- 	unsigned int queue_depth;
-+	size_t max_dma_size;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dat_v1.c b/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
+index 97bb49ff5b53b..47b9b4d4ed3fc 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
+@@ -64,15 +64,17 @@ static int hci_dat_v1_init(struct i3c_hci *hci)
+ 		return -EOPNOTSUPP;
+ 	}
  
- 	if (!vdev->config->get) {
- 		dev_err(&vdev->dev, "%s failure: config access disabled\n",
-@@ -1411,7 +1412,8 @@ static int virtblk_probe(struct virtio_device *vdev)
- 	/* No real sector limit. */
- 	blk_queue_max_hw_sectors(q, UINT_MAX);
+-	/* use a bitmap for faster free slot search */
+-	hci->DAT_data = bitmap_zalloc(hci->DAT_entries, GFP_KERNEL);
+-	if (!hci->DAT_data)
+-		return -ENOMEM;
+-
+-	/* clear them */
+-	for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
+-		dat_w0_write(dat_idx, 0);
+-		dat_w1_write(dat_idx, 0);
++	if (!hci->DAT_data) {
++		/* use a bitmap for faster free slot search */
++		hci->DAT_data = bitmap_zalloc(hci->DAT_entries, GFP_KERNEL);
++		if (!hci->DAT_data)
++			return -ENOMEM;
++
++		/* clear them */
++		for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
++			dat_w0_write(dat_idx, 0);
++			dat_w1_write(dat_idx, 0);
++		}
+ 	}
  
--	max_size = virtio_max_dma_size(vdev);
-+	max_dma_size = virtio_max_dma_size(vdev);
-+	max_size = max_dma_size > U32_MAX ? U32_MAX : max_dma_size;
+ 	return 0;
+@@ -87,7 +89,13 @@ static void hci_dat_v1_cleanup(struct i3c_hci *hci)
+ static int hci_dat_v1_alloc_entry(struct i3c_hci *hci)
+ {
+ 	unsigned int dat_idx;
++	int ret;
  
- 	/* Host can optionally specify maximum segment size and number of
- 	 * segments. */
++	if (!hci->DAT_data) {
++		ret = hci_dat_v1_init(hci);
++		if (ret)
++			return ret;
++	}
+ 	dat_idx = find_first_zero_bit(hci->DAT_data, hci->DAT_entries);
+ 	if (dat_idx >= hci->DAT_entries)
+ 		return -ENOENT;
+@@ -103,7 +111,8 @@ static void hci_dat_v1_free_entry(struct i3c_hci *hci, unsigned int dat_idx)
+ {
+ 	dat_w0_write(dat_idx, 0);
+ 	dat_w1_write(dat_idx, 0);
+-	__clear_bit(dat_idx, hci->DAT_data);
++	if (hci->DAT_data)
++		__clear_bit(dat_idx, hci->DAT_data);
+ }
+ 
+ static void hci_dat_v1_set_dynamic_addr(struct i3c_hci *hci,
 -- 
 2.42.0
 
