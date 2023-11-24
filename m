@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F21A35EE6;
-	Fri, 24 Nov 2023 19:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F7F321AD;
+	Fri, 24 Nov 2023 19:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUcAZX9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC34C433C7;
-	Fri, 24 Nov 2023 19:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0OxMufi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BCCC433C8;
+	Fri, 24 Nov 2023 19:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853756;
-	bh=uWXugTsMzPqDt1eAXU/XeQ8FRkaJBRD8dwwVCEPNCSI=;
+	s=korg; t=1700853758;
+	bh=TZ7ewmt9NL0d8+C815cWjDIDZ4YQH6fQ1iynY+C5LDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUcAZX9K/pLjEMJfuDcb0MjQhH13xzSt7DtgWbbDIKNChDfwzISf5EliXyEgZDsWV
-	 KgPNgse4bYzKPHJZdG22xk0yOkc547aaHMBm53DkbEIqnxNUVrg2zsXI8ndD7ZAJVe
-	 qzsDleUNtf/7+gZI9Gt0hGxVPdFnac0OttEn7YkI=
+	b=R0OxMufifTUlcPDOlBuliYBNIDC/gAS0aKIqEDYtEFq7S0E6RNKh/+z6TZbcQseAR
+	 Rbbcuu3MWuW8KajnFVtgU6yaI7TrxUlgolJFjLtv939Zi7foItkKO7o7/nS3Gv7UNg
+	 WtFFozzpGNXEQMNRzifaM0VNt10QimuO4YHIJ06k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	zhujun2 <zhujun2@cmss.chinamobile.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 010/159] net: annotate data-races around sk->sk_tx_queue_mapping
-Date: Fri, 24 Nov 2023 17:53:47 +0000
-Message-ID: <20231124171942.337647084@linuxfoundation.org>
+Subject: [PATCH 5.4 019/159] selftests/efivarfs: create-read: fix a resource leak
+Date: Fri, 24 Nov 2023 17:53:56 +0000
+Message-ID: <20231124171942.664102386@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -42,63 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: zhujun2 <zhujun2@cmss.chinamobile.com>
 
-[ Upstream commit 0bb4d124d34044179b42a769a0c76f389ae973b6 ]
+[ Upstream commit 3f6f8a8c5e11a9b384a36df4f40f0c9a653b6975 ]
 
-This field can be read or written without socket lock being held.
+The opened file should be closed in main(), otherwise resource
+leak will occur that this problem was discovered by code reading
 
-Add annotations to avoid load-store tearing.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: zhujun2 <zhujun2@cmss.chinamobile.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ tools/testing/selftests/efivarfs/create-read.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index f73ef7087a187..b021c8912e2cf 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1782,21 +1782,33 @@ static inline void sk_tx_queue_set(struct sock *sk, int tx_queue)
- 	/* sk_tx_queue_mapping accept only upto a 16-bit value */
- 	if (WARN_ON_ONCE((unsigned short)tx_queue >= USHRT_MAX))
- 		return;
--	sk->sk_tx_queue_mapping = tx_queue;
-+	/* Paired with READ_ONCE() in sk_tx_queue_get() and
-+	 * other WRITE_ONCE() because socket lock might be not held.
-+	 */
-+	WRITE_ONCE(sk->sk_tx_queue_mapping, tx_queue);
+diff --git a/tools/testing/selftests/efivarfs/create-read.c b/tools/testing/selftests/efivarfs/create-read.c
+index 9674a19396a32..7bc7af4eb2c17 100644
+--- a/tools/testing/selftests/efivarfs/create-read.c
++++ b/tools/testing/selftests/efivarfs/create-read.c
+@@ -32,8 +32,10 @@ int main(int argc, char **argv)
+ 	rc = read(fd, buf, sizeof(buf));
+ 	if (rc != 0) {
+ 		fprintf(stderr, "Reading a new var should return EOF\n");
++		close(fd);
+ 		return EXIT_FAILURE;
+ 	}
+ 
++	close(fd);
+ 	return EXIT_SUCCESS;
  }
- 
- #define NO_QUEUE_MAPPING	USHRT_MAX
- 
- static inline void sk_tx_queue_clear(struct sock *sk)
- {
--	sk->sk_tx_queue_mapping = NO_QUEUE_MAPPING;
-+	/* Paired with READ_ONCE() in sk_tx_queue_get() and
-+	 * other WRITE_ONCE() because socket lock might be not held.
-+	 */
-+	WRITE_ONCE(sk->sk_tx_queue_mapping, NO_QUEUE_MAPPING);
- }
- 
- static inline int sk_tx_queue_get(const struct sock *sk)
- {
--	if (sk && sk->sk_tx_queue_mapping != NO_QUEUE_MAPPING)
--		return sk->sk_tx_queue_mapping;
-+	if (sk) {
-+		/* Paired with WRITE_ONCE() in sk_tx_queue_clear()
-+		 * and sk_tx_queue_set().
-+		 */
-+		int val = READ_ONCE(sk->sk_tx_queue_mapping);
- 
-+		if (val != NO_QUEUE_MAPPING)
-+			return val;
-+	}
- 	return -1;
- }
- 
 -- 
 2.42.0
 
