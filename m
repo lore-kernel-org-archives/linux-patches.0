@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5852E381CE;
-	Fri, 24 Nov 2023 18:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E6A39FD7;
+	Fri, 24 Nov 2023 18:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Av02cR2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1BEC433C7;
-	Fri, 24 Nov 2023 18:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4AbkK7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C52FC433C9;
+	Fri, 24 Nov 2023 18:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848974;
-	bh=Iuwqu5UIJyef99FDnC3HUjpJMASKHrR6UyV3wH62vfI=;
+	s=korg; t=1700848976;
+	bh=bVOf6ykizHlY6kILmv25sHkMooZkYK5vkudQxpSOXyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Av02cR2trfq5SLSungUWN8lz0sQKVP+oeei9k5V8gbpgXGqLgM34oNVgrii5b2cz5
-	 RGb4G7OKv016CMLLQVOcWgK6+lBibN3sJS7izEIF4bqeSaZAlvh2Q993Kks/pVDr4G
-	 ykQnqr1+TpAaDSbRxhIeckgnAOu/m8n7tEzJrsH0=
+	b=X4AbkK7Ve7bxjYJxj/KMKJNODdHbzSjo2KwU2clCB/ab9fMhtXxSuju/g5gb4Arcd
+	 kYDHWEUW/E90hQZVDUqs5WLNoOaa1F8BvjBOdlV3cwnc+dLMPa29DCcyPInFJ+YyH+
+	 U8/tX0pbgCAgeUxbD8mWCItqosEsY3ys+AwABcm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Yang <yiyang13@huawei.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 21/57] tty: vcc: Add check for kstrdup() in vcc_probe()
-Date: Fri, 24 Nov 2023 17:50:45 +0000
-Message-ID: <20231124171931.048954029@linuxfoundation.org>
+	Jean Delvare <jdelvare@suse.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 4.14 49/57] i2c: i801: fix potential race in i801_block_transaction_byte_by_byte
+Date: Fri, 24 Nov 2023 17:51:13 +0000
+Message-ID: <20231124171932.125003539@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -42,76 +44,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Yang <yiyang13@huawei.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit d81ffb87aaa75f842cd7aa57091810353755b3e6 ]
+commit f78ca48a8ba9cdec96e8839351e49eec3233b177 upstream.
 
-Add check for the return value of kstrdup() and return the error, if it
-fails in order to avoid NULL pointer dereference.
+Currently we set SMBHSTCNT_LAST_BYTE only after the host has started
+receiving the last byte. If we get e.g. preempted before setting
+SMBHSTCNT_LAST_BYTE, the host may be finished with receiving the byte
+before SMBHSTCNT_LAST_BYTE is set.
+Therefore change the code to set SMBHSTCNT_LAST_BYTE before writing
+SMBHSTSTS_BYTE_DONE for the byte before the last byte. Now the code
+is also consistent with what we do in i801_isr_byte_done().
 
-Signed-off-by: Yi Yang <yiyang13@huawei.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20230904035220.48164-1-yiyang13@huawei.com
+Reported-by: Jean Delvare <jdelvare@suse.com>
+Closes: https://lore.kernel.org/linux-i2c/20230828152747.09444625@endymion.delvare/
+Cc: stable@vger.kernel.org
+Acked-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vcc.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-i801.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/tty/vcc.c b/drivers/tty/vcc.c
-index 4e795353192bc..67f528cf1056d 100644
---- a/drivers/tty/vcc.c
-+++ b/drivers/tty/vcc.c
-@@ -594,18 +594,22 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 		return -ENOMEM;
- 
- 	name = kstrdup(dev_name(&vdev->dev), GFP_KERNEL);
-+	if (!name) {
-+		rv = -ENOMEM;
-+		goto free_port;
-+	}
- 
- 	rv = vio_driver_init(&port->vio, vdev, VDEV_CONSOLE_CON, vcc_versions,
- 			     ARRAY_SIZE(vcc_versions), NULL, name);
- 	if (rv)
--		goto free_port;
-+		goto free_name;
- 
- 	port->vio.debug = vcc_dbg_vio;
- 	vcc_ldc_cfg.debug = vcc_dbg_ldc;
- 
- 	rv = vio_ldc_alloc(&port->vio, &vcc_ldc_cfg, port);
- 	if (rv)
--		goto free_port;
-+		goto free_name;
- 
- 	spin_lock_init(&port->lock);
- 
-@@ -639,6 +643,11 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 		goto unreg_tty;
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -707,15 +707,11 @@ static int i801_block_transaction_byte_b
+ 		return i801_check_post(priv, status);
  	}
- 	port->domain = kstrdup(domain, GFP_KERNEL);
-+	if (!port->domain) {
-+		rv = -ENOMEM;
-+		goto unreg_tty;
-+	}
+ 
+-	for (i = 1; i <= len; i++) {
+-		if (i == len && read_write == I2C_SMBUS_READ)
+-			smbcmd |= SMBHSTCNT_LAST_BYTE;
+-		outb_p(smbcmd, SMBHSTCNT(priv));
+-
+-		if (i == 1)
+-			outb_p(inb(SMBHSTCNT(priv)) | SMBHSTCNT_START,
+-			       SMBHSTCNT(priv));
++	if (len == 1 && read_write == I2C_SMBUS_READ)
++		smbcmd |= SMBHSTCNT_LAST_BYTE;
++	outb_p(smbcmd | SMBHSTCNT_START, SMBHSTCNT(priv));
+ 
++	for (i = 1; i <= len; i++) {
+ 		status = i801_wait_byte_done(priv);
+ 		if (status)
+ 			goto exit;
+@@ -738,9 +734,12 @@ static int i801_block_transaction_byte_b
+ 			data->block[0] = len;
+ 		}
+ 
+-		/* Retrieve/store value in SMBBLKDAT */
+-		if (read_write == I2C_SMBUS_READ)
++		if (read_write == I2C_SMBUS_READ) {
+ 			data->block[i] = inb_p(SMBBLKDAT(priv));
++			if (i == len - 1)
++				outb_p(smbcmd | SMBHSTCNT_LAST_BYTE, SMBHSTCNT(priv));
++		}
 +
+ 		if (read_write == I2C_SMBUS_WRITE && i+1 <= len)
+ 			outb_p(data->block[i+1], SMBBLKDAT(priv));
  
- 	mdesc_release(hp);
- 
-@@ -673,8 +682,9 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
- 	vcc_table_remove(port->index);
- free_ldc:
- 	vio_ldc_free(&port->vio);
--free_port:
-+free_name:
- 	kfree(name);
-+free_port:
- 	kfree(port);
- 
- 	return rv;
--- 
-2.42.0
-
 
 
