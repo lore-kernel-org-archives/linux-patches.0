@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76FA39FE8;
-	Fri, 24 Nov 2023 18:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451EC364C8;
+	Fri, 24 Nov 2023 18:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8hJht1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFD7C433C9;
-	Fri, 24 Nov 2023 18:25:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sASQKU8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5874C433C8;
+	Fri, 24 Nov 2023 18:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850311;
-	bh=I9KQOrqbMHtvI0q9XLtJi+k06K16zzKo+ME1O7rMai0=;
+	s=korg; t=1700850314;
+	bh=ordvGzcocT0N1+Gur1feZtsJYU7USsy1Zc7XC8bLI8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8hJht1vC0e50/ScPbfnFiPRGNpbaqUFHT2KgyXFOuid37Di/BvsRaoJbsmlPhbrI
-	 wT9KxzoOtZ0SZrGz9Rrt5AdHopFuqRpJTDMIlcg92TbptPb9ZEniFjck4dq6HwelaB
-	 EzGEB3BgQsJ3iJ1OHLYWclu68tyqTiJ4d+9rFMnw=
+	b=sASQKU8qtl/z8aXBQ/VJAyXMApGhVvu8QuIlb8RLACv0ka7N42Me/foWp57OK0d+v
+	 ovl2BiG13N8sJPysrsqhSTQoUAXrH8P7gQPAR7MESVGE897hc+B2JGG2/RT/3R0FQ+
+	 WmzQelaV8J111L51ZpgrMXSAIwN0vcIIbNu4L6WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 512/530] drm/i915: Bump GLK CDCLK frequency when driving multiple pipes
-Date: Fri, 24 Nov 2023 17:51:18 +0000
-Message-ID: <20231124172043.751113913@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Lewis Huang <lewis.huang@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.6 530/530] drm/amd/display: Change the DMCUB mailbox memory location from FB to inbox
+Date: Fri, 24 Nov 2023 17:51:36 +0000
+Message-ID: <20231124172044.332994947@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -35,66 +39,214 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Lewis Huang <lewis.huang@amd.com>
 
-commit 0cb89cd42fd22bbdec0b046c48f35775f5b88bdb upstream.
+commit 5911d02cac70d7fb52009fbd37423e63f8f6f9bc upstream.
 
-On GLK CDCLK frequency needs to be at least 2*96 MHz when accessing
-the audio hardware. Currently we bump the CDCLK frequency up
-temporarily (if not high enough already) whenever audio hardware
-is being accessed, and drop it back down afterwards.
+[WHY]
+Flush command sent to DMCUB spends more time for execution on
+a dGPU than on an APU. This causes cursor lag when using high
+refresh rate mouses.
 
-With a single active pipe this works just fine as we can switch
-between all the valid CDCLK frequencies by changing the cd2x
-divider, which doesn't require a full modeset. However with
-multiple active pipes the cd2x divider trick no longer works,
-and thus we end up blinking all displays off and back on.
+[HOW]
+1. Change the DMCUB mailbox memory location from FB to inbox.
+2. Only change windows memory to inbox.
 
-To avoid this let's just bump the CDCLK frequency to >=2*96MHz
-whenever multiple pipes are active. The downside is slightly
-higher power consumption, but that seems like an acceptable
-tradeoff. With a single active pipe we can stick to the current
-more optiomal (from power comsumption POV) behaviour.
-
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/9599
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231031160800.18371-1-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 451eaa1a614c911f5a51078dcb68022874e4cb12)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Lewis Huang <lewis.huang@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_cdclk.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   13 ++++----
+ drivers/gpu/drm/amd/display/dmub/dmub_srv.h       |   22 +++++++++------
+ drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c   |   32 ++++++++++++++++------
+ 3 files changed, 45 insertions(+), 22 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_cdclk.c
-+++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
-@@ -2688,6 +2688,18 @@ static int intel_compute_min_cdclk(struc
- 	for_each_pipe(dev_priv, pipe)
- 		min_cdclk = max(cdclk_state->min_cdclk[pipe], min_cdclk);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2084,7 +2084,7 @@ static int dm_dmub_sw_init(struct amdgpu
+ 	struct dmub_srv_create_params create_params;
+ 	struct dmub_srv_region_params region_params;
+ 	struct dmub_srv_region_info region_info;
+-	struct dmub_srv_fb_params fb_params;
++	struct dmub_srv_memory_params memory_params;
+ 	struct dmub_srv_fb_info *fb_info;
+ 	struct dmub_srv *dmub_srv;
+ 	const struct dmcub_firmware_header_v1_0 *hdr;
+@@ -2184,6 +2184,7 @@ static int dm_dmub_sw_init(struct amdgpu
+ 		adev->dm.dmub_fw->data +
+ 		le32_to_cpu(hdr->header.ucode_array_offset_bytes) +
+ 		PSP_HEADER_BYTES;
++	region_params.is_mailbox_in_inbox = false;
  
-+	/*
-+	 * Avoid glk_force_audio_cdclk() causing excessive screen
-+	 * blinking when multiple pipes are active by making sure
-+	 * CDCLK frequency is always high enough for audio. With a
-+	 * single active pipe we can always change CDCLK frequency
-+	 * by changing the cd2x divider (see glk_cdclk_table[]) and
-+	 * thus a full modeset won't be needed then.
-+	 */
-+	if (IS_GEMINILAKE(dev_priv) && cdclk_state->active_pipes &&
-+	    !is_power_of_2(cdclk_state->active_pipes))
-+		min_cdclk = max(2 * 96000, min_cdclk);
+ 	status = dmub_srv_calc_region_info(dmub_srv, &region_params,
+ 					   &region_info);
+@@ -2207,10 +2208,10 @@ static int dm_dmub_sw_init(struct amdgpu
+ 		return r;
+ 
+ 	/* Rebase the regions on the framebuffer address. */
+-	memset(&fb_params, 0, sizeof(fb_params));
+-	fb_params.cpu_addr = adev->dm.dmub_bo_cpu_addr;
+-	fb_params.gpu_addr = adev->dm.dmub_bo_gpu_addr;
+-	fb_params.region_info = &region_info;
++	memset(&memory_params, 0, sizeof(memory_params));
++	memory_params.cpu_fb_addr = adev->dm.dmub_bo_cpu_addr;
++	memory_params.gpu_fb_addr = adev->dm.dmub_bo_gpu_addr;
++	memory_params.region_info = &region_info;
+ 
+ 	adev->dm.dmub_fb_info =
+ 		kzalloc(sizeof(*adev->dm.dmub_fb_info), GFP_KERNEL);
+@@ -2222,7 +2223,7 @@ static int dm_dmub_sw_init(struct amdgpu
+ 		return -ENOMEM;
+ 	}
+ 
+-	status = dmub_srv_calc_fb_info(dmub_srv, &fb_params, fb_info);
++	status = dmub_srv_calc_mem_info(dmub_srv, &memory_params, fb_info);
+ 	if (status != DMUB_STATUS_OK) {
+ 		DRM_ERROR("Error calculating DMUB FB info: %d\n", status);
+ 		return -EINVAL;
+--- a/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
++++ b/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
+@@ -186,6 +186,7 @@ struct dmub_srv_region_params {
+ 	uint32_t vbios_size;
+ 	const uint8_t *fw_inst_const;
+ 	const uint8_t *fw_bss_data;
++	bool is_mailbox_in_inbox;
+ };
+ 
+ /**
+@@ -205,20 +206,25 @@ struct dmub_srv_region_params {
+  */
+ struct dmub_srv_region_info {
+ 	uint32_t fb_size;
++	uint32_t inbox_size;
+ 	uint8_t num_regions;
+ 	struct dmub_region regions[DMUB_WINDOW_TOTAL];
+ };
+ 
+ /**
+- * struct dmub_srv_fb_params - parameters used for driver fb setup
++ * struct dmub_srv_memory_params - parameters used for driver fb setup
+  * @region_info: region info calculated by dmub service
+- * @cpu_addr: base cpu address for the framebuffer
+- * @gpu_addr: base gpu virtual address for the framebuffer
++ * @cpu_fb_addr: base cpu address for the framebuffer
++ * @cpu_inbox_addr: base cpu address for the gart
++ * @gpu_fb_addr: base gpu virtual address for the framebuffer
++ * @gpu_inbox_addr: base gpu virtual address for the gart
+  */
+-struct dmub_srv_fb_params {
++struct dmub_srv_memory_params {
+ 	const struct dmub_srv_region_info *region_info;
+-	void *cpu_addr;
+-	uint64_t gpu_addr;
++	void *cpu_fb_addr;
++	void *cpu_inbox_addr;
++	uint64_t gpu_fb_addr;
++	uint64_t gpu_inbox_addr;
+ };
+ 
+ /**
+@@ -546,8 +552,8 @@ dmub_srv_calc_region_info(struct dmub_sr
+  *   DMUB_STATUS_OK - success
+  *   DMUB_STATUS_INVALID - unspecified error
+  */
+-enum dmub_status dmub_srv_calc_fb_info(struct dmub_srv *dmub,
+-				       const struct dmub_srv_fb_params *params,
++enum dmub_status dmub_srv_calc_mem_info(struct dmub_srv *dmub,
++				       const struct dmub_srv_memory_params *params,
+ 				       struct dmub_srv_fb_info *out);
+ 
+ /**
+--- a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
++++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
+@@ -386,7 +386,7 @@ dmub_srv_calc_region_info(struct dmub_sr
+ 	uint32_t fw_state_size = DMUB_FW_STATE_SIZE;
+ 	uint32_t trace_buffer_size = DMUB_TRACE_BUFFER_SIZE;
+ 	uint32_t scratch_mem_size = DMUB_SCRATCH_MEM_SIZE;
+-
++	uint32_t previous_top = 0;
+ 	if (!dmub->sw_init)
+ 		return DMUB_STATUS_INVALID;
+ 
+@@ -411,8 +411,15 @@ dmub_srv_calc_region_info(struct dmub_sr
+ 	bios->base = dmub_align(stack->top, 256);
+ 	bios->top = bios->base + params->vbios_size;
+ 
+-	mail->base = dmub_align(bios->top, 256);
+-	mail->top = mail->base + DMUB_MAILBOX_SIZE;
++	if (params->is_mailbox_in_inbox) {
++		mail->base = 0;
++		mail->top = mail->base + DMUB_MAILBOX_SIZE;
++		previous_top = bios->top;
++	} else {
++		mail->base = dmub_align(bios->top, 256);
++		mail->top = mail->base + DMUB_MAILBOX_SIZE;
++		previous_top = mail->top;
++	}
+ 
+ 	fw_info = dmub_get_fw_meta_info(params);
+ 
+@@ -431,7 +438,7 @@ dmub_srv_calc_region_info(struct dmub_sr
+ 			dmub->fw_version = fw_info->fw_version;
+ 	}
+ 
+-	trace_buff->base = dmub_align(mail->top, 256);
++	trace_buff->base = dmub_align(previous_top, 256);
+ 	trace_buff->top = trace_buff->base + dmub_align(trace_buffer_size, 64);
+ 
+ 	fw_state->base = dmub_align(trace_buff->top, 256);
+@@ -442,11 +449,14 @@ dmub_srv_calc_region_info(struct dmub_sr
+ 
+ 	out->fb_size = dmub_align(scratch_mem->top, 4096);
+ 
++	if (params->is_mailbox_in_inbox)
++		out->inbox_size = dmub_align(mail->top, 4096);
 +
- 	if (min_cdclk > dev_priv->display.cdclk.max_cdclk_freq) {
- 		drm_dbg_kms(&dev_priv->drm,
- 			    "required cdclk (%d kHz) exceeds max (%d kHz)\n",
+ 	return DMUB_STATUS_OK;
+ }
+ 
+-enum dmub_status dmub_srv_calc_fb_info(struct dmub_srv *dmub,
+-				       const struct dmub_srv_fb_params *params,
++enum dmub_status dmub_srv_calc_mem_info(struct dmub_srv *dmub,
++				       const struct dmub_srv_memory_params *params,
+ 				       struct dmub_srv_fb_info *out)
+ {
+ 	uint8_t *cpu_base;
+@@ -461,8 +471,8 @@ enum dmub_status dmub_srv_calc_fb_info(s
+ 	if (params->region_info->num_regions != DMUB_NUM_WINDOWS)
+ 		return DMUB_STATUS_INVALID;
+ 
+-	cpu_base = (uint8_t *)params->cpu_addr;
+-	gpu_base = params->gpu_addr;
++	cpu_base = (uint8_t *)params->cpu_fb_addr;
++	gpu_base = params->gpu_fb_addr;
+ 
+ 	for (i = 0; i < DMUB_NUM_WINDOWS; ++i) {
+ 		const struct dmub_region *reg =
+@@ -470,6 +480,12 @@ enum dmub_status dmub_srv_calc_fb_info(s
+ 
+ 		out->fb[i].cpu_addr = cpu_base + reg->base;
+ 		out->fb[i].gpu_addr = gpu_base + reg->base;
++
++		if (i == DMUB_WINDOW_4_MAILBOX && params->cpu_inbox_addr != 0) {
++			out->fb[i].cpu_addr = (uint8_t *)params->cpu_inbox_addr + reg->base;
++			out->fb[i].gpu_addr = params->gpu_inbox_addr + reg->base;
++		}
++
+ 		out->fb[i].size = reg->top - reg->base;
+ 	}
+ 
 
 
