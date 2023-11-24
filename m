@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F4C3A8EA;
-	Fri, 24 Nov 2023 18:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23723A8F6;
+	Fri, 24 Nov 2023 18:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onGPEkJj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34A5C433C7;
-	Fri, 24 Nov 2023 18:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ex+F0jVh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7E3C433C8;
+	Fri, 24 Nov 2023 18:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850602;
-	bh=aFtxSo4rMEJdFE2AcQXk6t6ZnkXJKCQ/sXTNpOK270A=;
+	s=korg; t=1700850604;
+	bh=OSfG7nzydJBeAIWBjmX6V/H/7yad3o98iJaOQxrJuBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=onGPEkJjz0c6LyNpLonNxJuGYjFAqoMzZEqFdH7q42RDl1uKFstPfarYk6THyRXrA
-	 RvvUJhYL0miY5P445/ByHOlJSZil3sL4760N6+TaGPu7oiGSSCTk4bmDYxpsvBaNr+
-	 CRdNjX6PP7cs8oFloT17R/3dU25Zaoh490g1WWck=
+	b=Ex+F0jVh3x+gbGR6tRoZ6vBcO4RNY0mwgb5WhR+Lx/r2bWrVM9pHKW0pyOHNK7tne
+	 MbQDfANzu8wLe+lxU2dScxDX2Ku47OeUtBEo+8W/gC8yU63b1mTBPjIApNxZxr7uC7
+	 HVRM1W67YsdmAB6Cue/mgKqK6bSGNPp2RE9DOFUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhujun2 <zhujun2@cmss.chinamobile.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 077/491] selftests/efivarfs: create-read: fix a resource leak
-Date: Fri, 24 Nov 2023 17:45:13 +0000
-Message-ID: <20231124172026.941460108@linuxfoundation.org>
+Subject: [PATCH 6.5 108/491] crypto: hisilicon/qm - prevent soft lockup in receive loop
+Date: Fri, 24 Nov 2023 17:45:44 +0000
+Message-ID: <20231124172027.799799793@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,35 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhujun2 <zhujun2@cmss.chinamobile.com>
+From: Longfang Liu <liulongfang@huawei.com>
 
-[ Upstream commit 3f6f8a8c5e11a9b384a36df4f40f0c9a653b6975 ]
+[ Upstream commit 33fc506d2ac514be1072499a263c3bff8c7c95a0 ]
 
-The opened file should be closed in main(), otherwise resource
-leak will occur that this problem was discovered by code reading
+In the scenario where the accelerator business is fully loaded.
+When the workqueue receiving messages and performing callback
+processing, there are a large number of messages that need to be
+received, and there are continuously messages that have been
+processed and need to be received.
+This will cause the receive loop here to be locked for a long time.
+This scenario will cause watchdog timeout problems on OS with kernel
+preemption turned off.
 
-Signed-off-by: zhujun2 <zhujun2@cmss.chinamobile.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+The error logs:
+watchdog: BUG: soft lockup - CPU#23 stuck for 23s! [kworker/u262:1:1407]
+[ 1461.978428][   C23] Call trace:
+[ 1461.981890][   C23]  complete+0x8c/0xf0
+[ 1461.986031][   C23]  kcryptd_async_done+0x154/0x1f4 [dm_crypt]
+[ 1461.992154][   C23]  sec_skcipher_callback+0x7c/0xf4 [hisi_sec2]
+[ 1461.998446][   C23]  sec_req_cb+0x104/0x1f4 [hisi_sec2]
+[ 1462.003950][   C23]  qm_poll_req_cb+0xcc/0x150 [hisi_qm]
+[ 1462.009531][   C23]  qm_work_process+0x60/0xc0 [hisi_qm]
+[ 1462.015101][   C23]  process_one_work+0x1c4/0x470
+[ 1462.020052][   C23]  worker_thread+0x150/0x3c4
+[ 1462.024735][   C23]  kthread+0x108/0x13c
+[ 1462.028889][   C23]  ret_from_fork+0x10/0x18
+
+Therefore, it is necessary to add an actively scheduled operation in the
+while loop to prevent this problem.
+After adding it, no matter whether the OS turns on or off the kernel
+preemption function. Neither will cause watchdog timeout issues.
+
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/efivarfs/create-read.c | 2 ++
+ drivers/crypto/hisilicon/qm.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/efivarfs/create-read.c b/tools/testing/selftests/efivarfs/create-read.c
-index 9674a19396a32..7bc7af4eb2c17 100644
---- a/tools/testing/selftests/efivarfs/create-read.c
-+++ b/tools/testing/selftests/efivarfs/create-read.c
-@@ -32,8 +32,10 @@ int main(int argc, char **argv)
- 	rc = read(fd, buf, sizeof(buf));
- 	if (rc != 0) {
- 		fprintf(stderr, "Reading a new var should return EOF\n");
-+		close(fd);
- 		return EXIT_FAILURE;
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index ba4852744c052..2aec118ba6775 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -845,6 +845,8 @@ static void qm_poll_req_cb(struct hisi_qp *qp)
+ 		qm_db(qm, qp->qp_id, QM_DOORBELL_CMD_CQ,
+ 		      qp->qp_status.cq_head, 0);
+ 		atomic_dec(&qp->qp_status.used);
++
++		cond_resched();
  	}
  
-+	close(fd);
- 	return EXIT_SUCCESS;
- }
+ 	/* set c_flag */
 -- 
 2.42.0
 
