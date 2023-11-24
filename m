@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C5039FD9;
-	Fri, 24 Nov 2023 18:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B069381D7;
+	Fri, 24 Nov 2023 18:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ogjUYH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DFAC433C7;
-	Fri, 24 Nov 2023 18:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8tPzybz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8E8C433C9;
+	Fri, 24 Nov 2023 18:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849578;
-	bh=PPxmiGde53q7KpD3JjjHbta8U+5CjOQ68eYervnT4Bc=;
+	s=korg; t=1700849581;
+	bh=VNcp6vkfpW+xjSUAWKBB92SgJya1djm4KPpvmRyxf6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ogjUYH1iTteHKtHueXwDP78R7bgVqyC2mMqP5pkzv3tBSYuDfh5ePnd669MY5LCA
-	 Y3oLlxHfFRCzYG0W8zyBH1M6YgrkuvOt0UyapwiI9YIL753BRvjm1rlRf/kOJDMt9z
-	 Ys7c2EXDgR+fvbj2wezmvsRZ6XsGKXAXyXtoPzfA=
+	b=Q8tPzybz1jnjEp/6u2+GeuCheeZussr48UiMDk3gEMlvzoYIvHNkXEgEGrUz0g8sn
+	 oOl1UOV4KxWCfwvQSkcGCwM4wgZAjXz8/tLBlxfC9SK3kxqgzR3ElxQR9GmGmSptuy
+	 L9Kzq3ZkMpqDNU4VQBlePMirgixiKI3uE/WQNFgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 237/530] i915/perf: Fix NULL deref bugs with drm_dbg() calls
-Date: Fri, 24 Nov 2023 17:46:43 +0000
-Message-ID: <20231124172035.266264998@linuxfoundation.org>
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Will Deacon <will@kernel.org>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.6 238/530] perf: arm_cspmu: Reject events meant for other PMUs
+Date: Fri, 24 Nov 2023 17:46:44 +0000
+Message-ID: <20231124172035.292895979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,71 +45,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Ilkka Koskinen <ilkka@os.amperecomputing.com>
 
-commit 471aa951bf1206d3c10d0daa67005b8e4db4ff83 upstream.
+commit 15c7ef7341a2e54cfa12ac502c65d6fd2cce2b62 upstream.
 
-When i915 perf interface is not available dereferencing it will lead to
-NULL dereferences.
+Coresight PMU driver didn't reject events meant for other PMUs.
+This caused some of the Core PMU events disappearing from
+the output of "perf list". In addition, trying to run e.g.
 
-As returning -ENOTSUPP is pretty clear return when perf interface is not
-available.
+     $ perf stat -e r2 sleep 1
 
-Fixes: 2fec539112e8 ("i915/perf: Replace DRM_DEBUG with driver specific drm_dbg call")
-Suggested-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Cc: <stable@vger.kernel.org> # v6.0+
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231027172822.2753059-1-harshit.m.mogalapalli@oracle.com
-[tursulin: added stable tag]
-(cherry picked from commit 36f27350ff745bd228ab04d7845dfbffc177a889)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+made Coresight PMU driver to handle the event instead of letting
+Core PMU driver to deal with it.
+
+Cc: stable@vger.kernel.org
+Fixes: e37dfd65731d ("perf: arm_cspmu: Add support for ARM CoreSight PMU driver")
+Signed-off-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Besar Wicaksono <bwicaksono@nvidia.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20231103001654.35565-1-ilkka@os.amperecomputing.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_perf.c |   15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ drivers/perf/arm_cspmu/arm_cspmu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/i915/i915_perf.c
-+++ b/drivers/gpu/drm/i915/i915_perf.c
-@@ -4286,11 +4286,8 @@ int i915_perf_open_ioctl(struct drm_devi
- 	u32 known_open_flags;
- 	int ret;
+--- a/drivers/perf/arm_cspmu/arm_cspmu.c
++++ b/drivers/perf/arm_cspmu/arm_cspmu.c
+@@ -635,6 +635,9 @@ static int arm_cspmu_event_init(struct p
  
--	if (!perf->i915) {
--		drm_dbg(&perf->i915->drm,
--			"i915 perf interface not available for this system\n");
-+	if (!perf->i915)
- 		return -ENOTSUPP;
--	}
+ 	cspmu = to_arm_cspmu(event->pmu);
  
- 	known_open_flags = I915_PERF_FLAG_FD_CLOEXEC |
- 			   I915_PERF_FLAG_FD_NONBLOCK |
-@@ -4666,11 +4663,8 @@ int i915_perf_add_config_ioctl(struct dr
- 	struct i915_oa_reg *regs;
- 	int err, id;
- 
--	if (!perf->i915) {
--		drm_dbg(&perf->i915->drm,
--			"i915 perf interface not available for this system\n");
-+	if (!perf->i915)
- 		return -ENOTSUPP;
--	}
- 
- 	if (!perf->metrics_kobj) {
- 		drm_dbg(&perf->i915->drm,
-@@ -4832,11 +4826,8 @@ int i915_perf_remove_config_ioctl(struct
- 	struct i915_oa_config *oa_config;
- 	int ret;
- 
--	if (!perf->i915) {
--		drm_dbg(&perf->i915->drm,
--			"i915 perf interface not available for this system\n");
-+	if (!perf->i915)
- 		return -ENOTSUPP;
--	}
- 
- 	if (i915_perf_stream_paranoid && !perfmon_capable()) {
- 		drm_dbg(&perf->i915->drm,
++	if (event->attr.type != event->pmu->type)
++		return -ENOENT;
++
+ 	/*
+ 	 * Following other "uncore" PMUs, we do not support sampling mode or
+ 	 * attach to a task (per-process mode).
 
 
