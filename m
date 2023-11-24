@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82453A8C6;
-	Fri, 24 Nov 2023 18:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EC933CDB;
+	Fri, 24 Nov 2023 18:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3L5bD2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AD3C433C8;
-	Fri, 24 Nov 2023 18:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="st9aRLV/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF014C433C7;
+	Fri, 24 Nov 2023 18:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850784;
-	bh=ksfFhcyhzqvEJ69QUyjLf8ji6St9ygaLRIIM9AFY2ZQ=;
+	s=korg; t=1700850787;
+	bh=SPf6GyP5Vf469+nMSeU1GWc3K42ioHK1fjWfG6ihwE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3L5bD2TTX87Qf4954zkaxwbGIarEm2DhDp40zq/D3VxJCA0+53C+xlMYQOUZAZeS
-	 ZN1FeCwY9Z2Ga8ejggBy5gQeEf+Z/9zABtgnIqmyzlkwWk5kR2o9xeMwS1tkrjAD6P
-	 NDeOfr20XgBNAlwM/aoY8lgRXKnLq4Sy+Inx4sGw=
+	b=st9aRLV/7KI4XvaHiPkIlM1iq/wHyyB+qBKUuuRtz79w9tIAg1Z7iRzYdqqmfyhgQ
+	 2vxJIQIAyqCoCwLK2H1z3e2m2WO2UDVXMymC0ZKd+VjE7EfnDWaKsgsrz2aYerHNun
+	 eYqkvHa/xEpZ4O6ddmByZqfOZrYLZrfX/BdZl5+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Evan Green <evan@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 187/491] xen/events: fix delayed eoi list handling
-Date: Fri, 24 Nov 2023 17:47:03 +0000
-Message-ID: <20231124172030.096972952@linuxfoundation.org>
+Subject: [PATCH 6.5 164/491] RISC-V: hwprobe: Fix vDSO SIGSEGV
+Date: Fri, 24 Nov 2023 17:46:40 +0000
+Message-ID: <20231124172029.402671589@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,45 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-[ Upstream commit 47d970204054f859f35a2237baa75c2d84fcf436 ]
+[ Upstream commit e1c05b3bf80f829ced464bdca90f1dfa96e8d251 ]
 
-When delaying eoi handling of events, the related elements are queued
-into the percpu lateeoi list. In case the list isn't empty, the
-elements should be sorted by the time when eoi handling is to happen.
+A hwprobe pair key is signed, but the hwprobe vDSO function was
+only checking that the upper bound was valid. In order to help
+avoid this type of problem in the future, and in anticipation of
+this check becoming more complicated with sparse keys, introduce
+and use a "key is valid" predicate function for the check.
 
-Unfortunately a new element will never be queued at the start of the
-list, even if it has a handling time lower than all other list
-elements.
-
-Fix that by handling that case the same way as for an empty list.
-
-Fixes: e99502f76271 ("xen/events: defer eoi in case of excessive number of events")
-Reported-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: aa5af0aa90ba ("RISC-V: Add hwprobe vDSO function and data")
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Evan Green <evan@rivosinc.com>
+Link: https://lore.kernel.org/r/20231010165101.14942-2-ajones@ventanamicro.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/events/events_base.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/hwprobe.h | 5 +++++
+ arch/riscv/kernel/vdso/hwprobe.c | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
-index 5de10d291a1cb..87482b3428bf6 100644
---- a/drivers/xen/events/events_base.c
-+++ b/drivers/xen/events/events_base.c
-@@ -604,7 +604,9 @@ static void lateeoi_list_add(struct irq_info *info)
+diff --git a/arch/riscv/include/asm/hwprobe.h b/arch/riscv/include/asm/hwprobe.h
+index 78936f4ff5133..7cad513538d8d 100644
+--- a/arch/riscv/include/asm/hwprobe.h
++++ b/arch/riscv/include/asm/hwprobe.h
+@@ -10,4 +10,9 @@
  
- 	spin_lock_irqsave(&eoi->eoi_list_lock, flags);
+ #define RISCV_HWPROBE_MAX_KEY 5
  
--	if (list_empty(&eoi->eoi_list)) {
-+	elem = list_first_entry_or_null(&eoi->eoi_list, struct irq_info,
-+					eoi_list);
-+	if (!elem || info->eoi_time < elem->eoi_time) {
- 		list_add(&info->eoi_list, &eoi->eoi_list);
- 		mod_delayed_work_on(info->eoi_cpu, system_wq,
- 				    &eoi->delayed, delay);
++static inline bool riscv_hwprobe_key_is_valid(__s64 key)
++{
++	return key >= 0 && key <= RISCV_HWPROBE_MAX_KEY;
++}
++
+ #endif
+diff --git a/arch/riscv/kernel/vdso/hwprobe.c b/arch/riscv/kernel/vdso/hwprobe.c
+index d40bec6ac0786..cadf725ef7983 100644
+--- a/arch/riscv/kernel/vdso/hwprobe.c
++++ b/arch/riscv/kernel/vdso/hwprobe.c
+@@ -37,7 +37,7 @@ int __vdso_riscv_hwprobe(struct riscv_hwprobe *pairs, size_t pair_count,
+ 
+ 	/* This is something we can handle, fill out the pairs. */
+ 	while (p < end) {
+-		if (p->key <= RISCV_HWPROBE_MAX_KEY) {
++		if (riscv_hwprobe_key_is_valid(p->key)) {
+ 			p->value = avd->all_cpu_hwprobe_values[p->key];
+ 
+ 		} else {
 -- 
 2.42.0
 
