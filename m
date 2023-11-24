@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A498439FC3;
-	Fri, 24 Nov 2023 18:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398AE39FC3;
+	Fri, 24 Nov 2023 18:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6jriY+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDBDC433C8;
-	Fri, 24 Nov 2023 18:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fatcLgkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92ACC433C7;
+	Fri, 24 Nov 2023 18:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849770;
-	bh=nB9cyhiwwgH5vMXWQcOqx3VAtZrOQlwIP84GMCW+bpA=;
+	s=korg; t=1700849773;
+	bh=F81TUhiXx8Fy8/WKzxeSReiaqzrOIYVQmd3DYr4Ax14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6jriY+DTOiaLeg08FRK3AfOSOui6LDtHYL+UU+OO25AjPyZkohjyeaxpeuxwnheZ
-	 XiHiGrwcQZaVRFfBO500kd0srzsQLoZPUrriPFk/idM4T3J3xmHVr4QpAmMcjqEipQ
-	 Q6ZifV+QIBXGfrzoad/MjXTmB67FG3YFgnZcNNAY=
+	b=fatcLgkXm2zicQZpWPOdqLIMP7XqjSU1Mzg/5P3gweuoKZbh8Ih1heNMXmeZ1d4ni
+	 OCKrcnzR07P9hV3a+sM42pFRfY3zRiR99BI3qndWU0h4Pu7K20RAED/MsOi3qYwmca
+	 Y/ivKC5zGR8I9QxogmKorBttGSYPducfuZQp836s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kees Cook <keescook@chromium.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
 	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.6 313/530] clk: socfpga: Fix undefined behavior bug in struct stratix10_clock_data
-Date: Fri, 24 Nov 2023 17:47:59 +0000
-Message-ID: <20231124172037.564834426@linuxfoundation.org>
+Subject: [PATCH 6.6 314/530] clk: visconti: Fix undefined behavior bug in struct visconti_pll_provider
+Date: Fri, 24 Nov 2023 17:48:00 +0000
+Message-ID: <20231124172037.596425233@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,7 +45,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit d761bb01c85b22d5b44abe283eb89019693f6595 upstream.
+commit 5ad1e217a2b23aa046b241183bd9452d259d70d0 upstream.
 
 `struct clk_hw_onecell_data` is a flexible structure, which means that
 it contains flexible-array member at the bottom, in this case array
@@ -57,94 +58,94 @@ include/linux/clk-provider.h:
 1383 };
 
 This could potentially lead to an overwrite of the objects following
-`clk_data` in `struct stratix10_clock_data`, in this case
-`void __iomem *base;` at run-time:
+`clk_data` in `struct visconti_pll_provider`, in this case
+`struct device_node *node;`, at run-time:
 
-drivers/clk/socfpga/stratix10-clk.h:
-  9 struct stratix10_clock_data {
- 10         struct clk_hw_onecell_data      clk_data;
- 11         void __iomem            *base;
- 12 };
+drivers/clk/visconti/pll.h:
+ 16 struct visconti_pll_provider {
+ 17         void __iomem *reg_base;
+ 18         struct clk_hw_onecell_data clk_data;
+ 19         struct device_node *node;
+ 20 };
 
-There are currently three different places where memory is allocated for
-`struct stratix10_clock_data`, including the flex-array `hws` in
-`struct clk_hw_onecell_data`:
+Notice that a total of 56 bytes are allocated for flexible-array `hws`
+at line 328. See below:
 
-drivers/clk/socfpga/clk-agilex.c:
-469         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
-470                                 num_clks), GFP_KERNEL);
+include/dt-bindings/clock/toshiba,tmpv770x.h:
+ 14 #define TMPV770X_NR_PLL		7
 
-drivers/clk/socfpga/clk-agilex.c:
-509         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
-510                                 num_clks), GFP_KERNEL);
+drivers/clk/visconti/pll-tmpv770x.c:
+ 69 ctx = visconti_init_pll(np, reg_base, TMPV770X_NR_PLL);
 
-drivers/clk/socfpga/clk-s10.c:
-400         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
-401                                                  num_clks), GFP_KERNEL);
-
-I'll use just one of them to describe the issue. See below.
-
-Notice that a total of 440 bytes are allocated for flexible-array member
-`hws` at line 469:
-
-include/dt-bindings/clock/agilex-clock.h:
- 70 #define AGILEX_NUM_CLKS	55
-
-drivers/clk/socfpga/clk-agilex.c:
-459         struct stratix10_clock_data *clk_data;
-460         void __iomem *base;
+drivers/clk/visconti/pll.c:
+321 struct visconti_pll_provider * __init visconti_init_pll(struct device_node *np,
+322                                                         void __iomem *base,
+323                                                         unsigned long nr_plls)
+324 {
+325         struct visconti_pll_provider *ctx;
 ...
-466
-467         num_clks = AGILEX_NUM_CLKS;
-468
-469         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
-470                                 num_clks), GFP_KERNEL);
+328         ctx = kzalloc(struct_size(ctx, clk_data.hws, nr_plls), GFP_KERNEL);
 
-`struct_size(clk_data, clk_data.hws, num_clks)`	above translates to
-sizeof(struct stratix10_clock_data) + sizeof(struct clk_hw *) * 55 ==
-16 + 8 * 55 == 16 + 440
-		    ^^^
-		     |
-	allocated bytes for flex-array `hws`
+`struct_size(ctx, clk_data.hws, nr_plls)` above translates to
+sizeof(struct visconti_pll_provider) + sizeof(struct clk_hw *) * 7 ==
+24 + 8 * 7 == 24 + 56
+		  ^^^^
+		   |
+	allocated bytes for flex array `hws`
 
-474         for (i = 0; i < num_clks; i++)
-475                 clk_data->clk_data.hws[i] = ERR_PTR(-ENOENT);
-476
-477         clk_data->base = base;
+$ pahole -C visconti_pll_provider drivers/clk/visconti/pll.o
+struct visconti_pll_provider {
+	void *                     reg_base;             /*     0     8 */
+	struct clk_hw_onecell_data clk_data;             /*     8     8 */
+	struct device_node *       node;                 /*    16     8 */
 
-and then some data is written into both `hws` and `base` objects.
+	/* size: 24, cachelines: 1, members: 3 */
+	/* last cacheline: 24 bytes */
+};
 
-Fix this by placing the declaration of object `clk_data` at the end of
-`struct stratix10_clock_data`. Also, add a comment to make it clear
-that this object must always be last in the structure.
+And then, after the allocation, some data is written into all members
+of `struct visconti_pll_provider`:
+
+332         for (i = 0; i < nr_plls; ++i)
+333                 ctx->clk_data.hws[i] = ERR_PTR(-ENOENT);
+334
+335         ctx->node = np;
+336         ctx->reg_base = base;
+337         ctx->clk_data.num = nr_plls;
+
+Fix all these by placing the declaration of object `clk_data` at the
+end of `struct visconti_pll_provider`. Also, add a comment to make it
+clear that this object must always be last in the structure, and
+prevent this bug from being introduced again in the future.
 
 -Wflex-array-member-not-at-end is coming in GCC-14, and we are getting
 ready to enable it globally.
 
-Fixes: ba7e258425ac ("clk: socfpga: Convert to s10/agilex/n5x to use clk_hw")
+Fixes: b4cbe606dc36 ("clk: visconti: Add support common clock driver and reset driver")
 Cc: stable@vger.kernel.org
 Reviewed-by: Kees Cook <keescook@chromium.org>
+Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
 Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/1da736106d8e0806aeafa6e471a13ced490eae22.1698117815.git.gustavoars@kernel.org
+Link: https://lore.kernel.org/r/57a831d94ee2b3889b11525d4ad500356f89576f.1697492890.git.gustavoars@kernel.org
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/socfpga/stratix10-clk.h |    4 +++-
+ drivers/clk/visconti/pll.h |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/clk/socfpga/stratix10-clk.h
-+++ b/drivers/clk/socfpga/stratix10-clk.h
-@@ -7,8 +7,10 @@
- #define	__STRATIX10_CLK_H
+--- a/drivers/clk/visconti/pll.h
++++ b/drivers/clk/visconti/pll.h
+@@ -15,8 +15,10 @@
  
- struct stratix10_clock_data {
--	struct clk_hw_onecell_data	clk_data;
- 	void __iomem		*base;
+ struct visconti_pll_provider {
+ 	void __iomem *reg_base;
+-	struct clk_hw_onecell_data clk_data;
+ 	struct device_node *node;
 +
 +	/* Must be last */
-+	struct clk_hw_onecell_data	clk_data;
++	struct clk_hw_onecell_data clk_data;
  };
  
- struct stratix10_pll_clock {
+ #define VISCONTI_PLL_RATE(_rate, _dacen, _dsmen, \
 
 
