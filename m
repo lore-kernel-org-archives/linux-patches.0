@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF40381CE;
-	Fri, 24 Nov 2023 18:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5138D381D5;
+	Fri, 24 Nov 2023 18:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvfPkNli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A1AC433C8;
-	Fri, 24 Nov 2023 18:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHwJ7JaW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0933C433C7;
+	Fri, 24 Nov 2023 18:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849085;
-	bh=SzG2PpsFWZXyokyPkPqa0oNqQ6Vfllt8dcALKlqHXtI=;
+	s=korg; t=1700849088;
+	bh=3+41kBJMe0iX+W961H7owUbYeV5kyWynbi5L9P/Wvj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvfPkNliij9vXMLSOFBG639x6BA6tw/FCEtEMF2xFooSDrwVfYBdjPUDM09XvNKaL
-	 oDuke1pcn7ru24ZYrfveXr8ni5qGEZjhyqOqYPmlCpPy4X1EAmUrS2IWnj6sAPJmJ5
-	 OrzLSOAuBW/8Gp0aC1OApoJ0I3WnwYfVJfdzubJw=
+	b=KHwJ7JaWcGQ/STsxcvxUUvEU7kpFouPfbPOz5RYwbAKpHkAq5CNj4xY6h31ZH8Eiv
+	 7yfxOHBgmWASAqi2cPx0vsk2xNHrUeiUFP9tjYTKXj+tkq4B+9V/FSytmOV7y5nW5u
+	 gtkI+S6aoSquDiNfzm0rFKNGxLB59aUKDh/SRKGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/530] gpiolib: acpi: Add a ignore interrupt quirk for Peaq C1010
-Date: Fri, 24 Nov 2023 17:43:28 +0000
-Message-ID: <20231124172029.337201079@linuxfoundation.org>
+Subject: [PATCH 6.6 025/530] wifi: ath12k: fix possible out-of-bound write in ath12k_wmi_ext_hal_reg_caps()
+Date: Fri, 24 Nov 2023 17:43:11 +0000
+Message-ID: <20231124172028.838686095@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,70 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 6cc64f6173751d212c9833bde39e856b4f585a3e ]
+[ Upstream commit b302dce3d9edea5b93d1902a541684a967f3c63c ]
 
-On the Peaq C1010 2-in-1 INT33FC:00 pin 3 is connected to
-a "dolby" button. At the ACPI level an _AEI event-handler
-is connected which sets an ACPI variable to 1 on both
-edges. This variable can be polled + cleared to 0 using WMI.
+reg_cap.phy_id is extracted from WMI event and could be an unexpected value
+in case some errors happen. As a result out-of-bound write may occur to
+soc->hal_reg_cap. Fix it by validating reg_cap.phy_id before using it.
 
-Since the variable is set on both edges the WMI interface is pretty
-useless even when polling. So instead of writing a custom WMI
-driver for this the x86-android-tablets code instantiates
-a gpio-keys platform device for the "dolby" button.
+This is found during code review.
 
-Add an ignore_interrupt quirk for INT33FC:00 pin 3 on the Peaq C1010,
-so that it is not seen as busy when the gpio-keys driver requests it.
+Compile tested only.
 
-Note this replaces a hack in x86-android-tablets where it would
-call acpi_gpiochip_free_interrupts() on the INT33FC:00 GPIO
-controller. acpi_gpiochip_free_interrupts() is considered private
-(internal) gpiolib API so x86-android-tablets should stop using it.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20230909141816.58358-3-hdegoede@redhat.com
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230830020716.5420-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-acpi.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/net/wireless/ath/ath12k/wmi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
-index 51e41676de0b8..5d04720107ef5 100644
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1655,6 +1655,26 @@ static const struct dmi_system_id gpiolib_acpi_quirks[] __initconst = {
- 			.ignore_wake = "SYNA1202:00@16",
- 		},
- 	},
-+	{
-+		/*
-+		 * On the Peaq C1010 2-in-1 INT33FC:00 pin 3 is connected to
-+		 * a "dolby" button. At the ACPI level an _AEI event-handler
-+		 * is connected which sets an ACPI variable to 1 on both
-+		 * edges. This variable can be polled + cleared to 0 using
-+		 * WMI. But since the variable is set on both edges the WMI
-+		 * interface is pretty useless even when polling.
-+		 * So instead the x86-android-tablets code instantiates
-+		 * a gpio-keys platform device for it.
-+		 * Ignore the _AEI handler for the pin, so that it is not busy.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "PEAQ"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "PEAQ PMM C1010 MD99187"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_interrupt = "INT33FC:00@3",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
- 
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index ef0f3cf35cfd1..bddf4571d50c1 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -3876,6 +3876,12 @@ static int ath12k_wmi_ext_hal_reg_caps(struct ath12k_base *soc,
+ 			ath12k_warn(soc, "failed to extract reg cap %d\n", i);
+ 			return ret;
+ 		}
++
++		if (reg_cap.phy_id >= MAX_RADIOS) {
++			ath12k_warn(soc, "unexpected phy id %u\n", reg_cap.phy_id);
++			return -EINVAL;
++		}
++
+ 		soc->hal_reg_cap[reg_cap.phy_id] = reg_cap;
+ 	}
+ 	return 0;
 -- 
 2.42.0
 
