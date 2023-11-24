@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEB13173F;
-	Fri, 24 Nov 2023 19:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8D533CFD;
+	Fri, 24 Nov 2023 19:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkNFfL4U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC29C433C7;
-	Fri, 24 Nov 2023 19:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELc/Qw9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC15C433C7;
+	Fri, 24 Nov 2023 19:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852683;
-	bh=s+359obzTTAFDHLsTkQqg2JMY09aw8gMbWh27FCtu1w=;
+	s=korg; t=1700852685;
+	bh=xv94Dc1oknTzI7INhSYiwf3aUFDWJZda8HaQos2zDH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkNFfL4UyucPYFR50axGiNsMIJZoC007kT/yRHtOV4E498gDBGAyRYDoX/ywRv7gh
-	 wWbuZDBmfjekQyuL4tXpCH4+RZdQUurqXKr6BilBwTlcqwtYzBEL5/rHcYn3IOYRYh
-	 CDDcatdYWAf89nZ8iLii2dpfuo8O6VhKlhi0+0xA=
+	b=ELc/Qw9YSDk9Z7RNpsab3ZrLDWTxGEqPOL82nyVT8VUYoxYkkEt8yvwGK8r+/mSYG
+	 kKTGwezjyLKBWgdBvoOxoSCSfXfq2EAe8kQpL2P4TQR1nFtuhM+hssrTV29DbMmZzE
+	 slo3iF6Om7l79sYwWfZyaVvfgZA1WX30xwZBchAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baruch Siach <baruch@tkos.co.il>,
-	Serge Semin <fancer.lancer@gmail.com>,
+	Cruz Zhao <cruzzhao@linux.alibaba.com>,
+	Tianchen Ding <dtcccc@linux.alibaba.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/193] net: stmmac: fix rx budget limit check
-Date: Fri, 24 Nov 2023 17:53:28 +0000
-Message-ID: <20231124171950.474266414@linuxfoundation.org>
+Subject: [PATCH 5.10 082/193] net/mlx5e: fix double free of encap_header
+Date: Fri, 24 Nov 2023 17:53:29 +0000
+Message-ID: <20231124171950.514675598@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,44 +46,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baruch Siach <baruch@tkos.co.il>
+From: Dust Li <dust.li@linux.alibaba.com>
 
-[ Upstream commit fa02de9e75889915b554eda1964a631fd019973b ]
+[ Upstream commit 6f9b1a0731662648949a1c0587f6acb3b7f8acf1 ]
 
-The while loop condition verifies 'count < limit'. Neither value change
-before the 'count >= limit' check. As is this check is dead code. But
-code inspection reveals a code path that modifies 'count' and then goto
-'drain_data' and back to 'read_again'. So there is a need to verify
-count value sanity after 'read_again'.
+When mlx5_packet_reformat_alloc() fails, the encap_header allocated in
+mlx5e_tc_tun_create_header_ipv4{6} will be released within it. However,
+e->encap_header is already set to the previously freed encap_header
+before mlx5_packet_reformat_alloc(). As a result, the later
+mlx5e_encap_put() will free e->encap_header again, causing a double free
+issue.
 
-Move 'read_again' up to fix the count limit check.
+mlx5e_encap_put()
+    --> mlx5e_encap_dealloc()
+        --> kfree(e->encap_header)
 
-Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
-Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/r/d9486296c3b6b12ab3a0515fcd47d56447a07bfc.1699897370.git.baruch@tkos.co.il
+This happens when cmd: MLX5_CMD_OP_ALLOC_PACKET_REFORMAT_CONTEXT fail.
+
+This patch fix it by not setting e->encap_header until
+mlx5_packet_reformat_alloc() success.
+
+Fixes: d589e785baf5e ("net/mlx5e: Allow concurrent creation of encap entries")
+Reported-by: Cruz Zhao <cruzzhao@linux.alibaba.com>
+Reported-by: Tianchen Ding <dtcccc@linux.alibaba.com>
+Signed-off-by: Dust Li <dust.li@linux.alibaba.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 83e9a4d019c16..59a07a01e80ca 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3858,10 +3858,10 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 			len = 0;
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+index 90930e54b6f28..05bcd69994eca 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun.c
+@@ -267,9 +267,6 @@ int mlx5e_tc_tun_create_header_ipv4(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto destroy_neigh_entry;
  
-+read_again:
- 		if (count >= limit)
- 			break;
+-	e->encap_size = ipv4_encap_size;
+-	e->encap_header = encap_header;
+-
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+@@ -286,6 +283,8 @@ int mlx5e_tc_tun_create_header_ipv4(struct mlx5e_priv *priv,
+ 		goto destroy_neigh_entry;
+ 	}
  
--read_again:
- 		buf1_len = 0;
- 		buf2_len = 0;
- 		entry = next_entry;
++	e->encap_size = ipv4_encap_size;
++	e->encap_header = encap_header;
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(out_dev));
+ 	mlx5e_route_lookup_ipv4_put(route_dev, n);
+@@ -431,9 +430,6 @@ int mlx5e_tc_tun_create_header_ipv6(struct mlx5e_priv *priv,
+ 	if (err)
+ 		goto destroy_neigh_entry;
+ 
+-	e->encap_size = ipv6_encap_size;
+-	e->encap_header = encap_header;
+-
+ 	if (!(nud_state & NUD_VALID)) {
+ 		neigh_event_send(n, NULL);
+ 		/* the encap entry will be made valid on neigh update event
+@@ -451,6 +447,8 @@ int mlx5e_tc_tun_create_header_ipv6(struct mlx5e_priv *priv,
+ 		goto destroy_neigh_entry;
+ 	}
+ 
++	e->encap_size = ipv6_encap_size;
++	e->encap_header = encap_header;
+ 	e->flags |= MLX5_ENCAP_ENTRY_VALID;
+ 	mlx5e_rep_queue_neigh_stats_work(netdev_priv(out_dev));
+ 	mlx5e_route_lookup_ipv6_put(route_dev, n);
 -- 
 2.42.0
 
