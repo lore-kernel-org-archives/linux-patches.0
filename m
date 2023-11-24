@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D77939FD7;
-	Fri, 24 Nov 2023 18:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE6F39FD7;
+	Fri, 24 Nov 2023 18:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HsGnSN1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B33C433C8;
-	Fri, 24 Nov 2023 18:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5b/z/8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9069C433CA;
+	Fri, 24 Nov 2023 18:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849279;
-	bh=QFoD8webE3Rj3bqcVvz1Rti/RI3nMtPfl/eJwFzS5Ow=;
+	s=korg; t=1700849282;
+	bh=e5SXLtvDt2gU02bqhyDR4bk6hdOd1cWdW+P2GZ3fPIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HsGnSN1EpMoS2/gMnfKN2xdV64wy7PKdPaNKDVflnKqOgJEcbGBXaljBlhgS595e/
-	 YKaIfEEbNcFm3dwP8/p9FI2IO7+4u6TsmlV9x5AsLHv4B4y/LdWbUDoI7i9aR+A98H
-	 WPL12e9hZzJRfM7G6evoflU+1qDYrw/ESJF5fHLk=
+	b=g5b/z/8lEgUInaXakVYEfGwGoQrMdU0OEs7kE6ygX6jnqYSeSAZNdNA+wqnxrQJEq
+	 ExIpYLYWBuYlb18M/SLAnLBwfHJtLEPmKSYH3n3V7hsUy9hC3nIrRsKEZ9A14W2AcZ
+	 u60oehUd87I9Z2OBaJQ/H8QoCE+0bFWJiC0Dj7FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Yi Yang <yiyang13@huawei.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/530] thunderbolt: Apply USB 3.x bandwidth quirk only in software connection manager
-Date: Fri, 24 Nov 2023 17:44:45 +0000
-Message-ID: <20231124172031.737031072@linuxfoundation.org>
+Subject: [PATCH 6.6 120/530] tty: vcc: Add check for kstrdup() in vcc_probe()
+Date: Fri, 24 Nov 2023 17:44:46 +0000
+Message-ID: <20231124172031.764467597@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,33 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Yi Yang <yiyang13@huawei.com>
 
-[ Upstream commit 0c35ac18256942e66d8dab6ca049185812e60c69 ]
+[ Upstream commit d81ffb87aaa75f842cd7aa57091810353755b3e6 ]
 
-This is not needed when firmware connection manager is run so limit this
-to software connection manager.
+Add check for the return value of kstrdup() and return the error, if it
+fails in order to avoid NULL pointer dereference.
 
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Yi Yang <yiyang13@huawei.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20230904035220.48164-1-yiyang13@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/quirks.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/vcc.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thunderbolt/quirks.c b/drivers/thunderbolt/quirks.c
-index 488138a28ae13..e6bfa63b40aee 100644
---- a/drivers/thunderbolt/quirks.c
-+++ b/drivers/thunderbolt/quirks.c
-@@ -31,6 +31,9 @@ static void quirk_usb3_maximum_bandwidth(struct tb_switch *sw)
- {
- 	struct tb_port *port;
+diff --git a/drivers/tty/vcc.c b/drivers/tty/vcc.c
+index a39ed981bfd3e..5b625f20233b4 100644
+--- a/drivers/tty/vcc.c
++++ b/drivers/tty/vcc.c
+@@ -579,18 +579,22 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 		return -ENOMEM;
  
-+	if (tb_switch_is_icm(sw))
-+		return;
+ 	name = kstrdup(dev_name(&vdev->dev), GFP_KERNEL);
++	if (!name) {
++		rv = -ENOMEM;
++		goto free_port;
++	}
+ 
+ 	rv = vio_driver_init(&port->vio, vdev, VDEV_CONSOLE_CON, vcc_versions,
+ 			     ARRAY_SIZE(vcc_versions), NULL, name);
+ 	if (rv)
+-		goto free_port;
++		goto free_name;
+ 
+ 	port->vio.debug = vcc_dbg_vio;
+ 	vcc_ldc_cfg.debug = vcc_dbg_ldc;
+ 
+ 	rv = vio_ldc_alloc(&port->vio, &vcc_ldc_cfg, port);
+ 	if (rv)
+-		goto free_port;
++		goto free_name;
+ 
+ 	spin_lock_init(&port->lock);
+ 
+@@ -624,6 +628,11 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 		goto unreg_tty;
+ 	}
+ 	port->domain = kstrdup(domain, GFP_KERNEL);
++	if (!port->domain) {
++		rv = -ENOMEM;
++		goto unreg_tty;
++	}
 +
- 	tb_switch_for_each_port(sw, port) {
- 		if (!tb_port_is_usb3_down(port))
- 			continue;
+ 
+ 	mdesc_release(hp);
+ 
+@@ -653,8 +662,9 @@ static int vcc_probe(struct vio_dev *vdev, const struct vio_device_id *id)
+ 	vcc_table_remove(port->index);
+ free_ldc:
+ 	vio_ldc_free(&port->vio);
+-free_port:
++free_name:
+ 	kfree(name);
++free_port:
+ 	kfree(port);
+ 
+ 	return rv;
 -- 
 2.42.0
 
