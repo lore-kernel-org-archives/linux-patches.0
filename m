@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73932E658;
-	Fri, 24 Nov 2023 18:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6ADA2C85B;
+	Fri, 24 Nov 2023 18:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQa5liVi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 777CCC433C8;
-	Fri, 24 Nov 2023 18:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgUPmt7n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B12FC433C7;
+	Fri, 24 Nov 2023 18:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850874;
-	bh=b/j3iQNLoBsde/Ut3IMIsVnPPGPV32KS6ZRIS/DJp9I=;
+	s=korg; t=1700850877;
+	bh=+FVhdxu2tl+foZPJFehkpuLJFqDUodOe60Jjuh7PjRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQa5liVi6yWb/MoqRsyfeuIegwDvyaaKDc5YqrwbZCoP/wEMLSDiRiXls+xLDvBD8
-	 W5eB0S9Sl3g70fIJySOwEZsPVljEM29wM4Gp87zUZ13IfuAl1w1WUvHSIh6WdnvaKd
-	 VfAT2xKaiTClFJRmDp+Ecii5bDSRRP1kBE+dZCYI=
+	b=kgUPmt7n3sHsIFGkWqYLW6a3rqRpSt1NfRou/bW4LdejJ704iGlTIyB2A+N4MoYFp
+	 ZIOMUQTjOZ6YisSQ2xttaZL7avxX24nMKIaBETkM9EvleK65R/POrpqjDK16pwbr2Z
+	 +JWic+8iGRAReUs7kQyLCLBkMS7Ta9BrC6X6I4lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 216/491] net: sched: do not offload flows with a helper in act_ct
-Date: Fri, 24 Nov 2023 17:47:32 +0000
-Message-ID: <20231124172031.027357977@linuxfoundation.org>
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Will Deacon <will@kernel.org>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.5 225/491] perf: arm_cspmu: Reject events meant for other PMUs
+Date: Fri, 24 Nov 2023 17:47:41 +0000
+Message-ID: <20231124172031.317850145@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,90 +45,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Ilkka Koskinen <ilkka@os.amperecomputing.com>
 
-[ Upstream commit 7cd5af0e937a197295f3aa3721031f0fbae49cff ]
+commit 15c7ef7341a2e54cfa12ac502c65d6fd2cce2b62 upstream.
 
-There is no hardware supporting ct helper offload. However, prior to this
-patch, a flower filter with a helper in the ct action can be successfully
-set into the HW, for example (eth1 is a bnxt NIC):
+Coresight PMU driver didn't reject events meant for other PMUs.
+This caused some of the Core PMU events disappearing from
+the output of "perf list". In addition, trying to run e.g.
 
-  # tc qdisc add dev eth1 ingress_block 22 ingress
-  # tc filter add block 22 proto ip flower skip_sw ip_proto tcp \
-    dst_port 21 ct_state -trk action ct helper ipv4-tcp-ftp
-  # tc filter show dev eth1 ingress
+     $ perf stat -e r2 sleep 1
 
-    filter block 22 protocol ip pref 49152 flower chain 0 handle 0x1
-      eth_type ipv4
-      ip_proto tcp
-      dst_port 21
-      ct_state -trk
-      skip_sw
-      in_hw in_hw_count 1   <----
-        action order 1: ct zone 0 helper ipv4-tcp-ftp pipe
-         index 2 ref 1 bind 1
-        used_hw_stats delayed
+made Coresight PMU driver to handle the event instead of letting
+Core PMU driver to deal with it.
 
-This might cause the flower filter not to work as expected in the HW.
-
-This patch avoids this problem by simply returning -EOPNOTSUPP in
-tcf_ct_offload_act_setup() to not allow to offload flows with a helper
-in act_ct.
-
-Fixes: a21b06e73191 ("net: sched: add helper support in act_ct")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/f8685ec7702c4a448a1371a8b34b43217b583b9d.1699898008.git.lucien.xin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: e37dfd65731d ("perf: arm_cspmu: Add support for ARM CoreSight PMU driver")
+Signed-off-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Besar Wicaksono <bwicaksono@nvidia.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20231103001654.35565-1-ilkka@os.amperecomputing.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tc_act/tc_ct.h | 9 +++++++++
- net/sched/act_ct.c         | 3 +++
- 2 files changed, 12 insertions(+)
+ drivers/perf/arm_cspmu/arm_cspmu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/tc_act/tc_ct.h b/include/net/tc_act/tc_ct.h
-index b24ea2d9400ba..1dc2f827d0bcf 100644
---- a/include/net/tc_act/tc_ct.h
-+++ b/include/net/tc_act/tc_ct.h
-@@ -57,6 +57,11 @@ static inline struct nf_flowtable *tcf_ct_ft(const struct tc_action *a)
- 	return to_ct_params(a)->nf_ft;
- }
+--- a/drivers/perf/arm_cspmu/arm_cspmu.c
++++ b/drivers/perf/arm_cspmu/arm_cspmu.c
+@@ -635,6 +635,9 @@ static int arm_cspmu_event_init(struct p
  
-+static inline struct nf_conntrack_helper *tcf_ct_helper(const struct tc_action *a)
-+{
-+	return to_ct_params(a)->helper;
-+}
+ 	cspmu = to_arm_cspmu(event->pmu);
+ 
++	if (event->attr.type != event->pmu->type)
++		return -ENOENT;
 +
- #else
- static inline uint16_t tcf_ct_zone(const struct tc_action *a) { return 0; }
- static inline int tcf_ct_action(const struct tc_action *a) { return 0; }
-@@ -64,6 +69,10 @@ static inline struct nf_flowtable *tcf_ct_ft(const struct tc_action *a)
- {
- 	return NULL;
- }
-+static inline struct nf_conntrack_helper *tcf_ct_helper(const struct tc_action *a)
-+{
-+	return NULL;
-+}
- #endif /* CONFIG_NF_CONNTRACK */
- 
- #if IS_ENABLED(CONFIG_NET_ACT_CT)
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index d131750663c3c..ea05d0b2df68a 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -1534,6 +1534,9 @@ static int tcf_ct_offload_act_setup(struct tc_action *act, void *entry_data,
- 	if (bind) {
- 		struct flow_action_entry *entry = entry_data;
- 
-+		if (tcf_ct_helper(act))
-+			return -EOPNOTSUPP;
-+
- 		entry->id = FLOW_ACTION_CT;
- 		entry->ct.action = tcf_ct_action(act);
- 		entry->ct.zone = tcf_ct_zone(act);
--- 
-2.42.0
-
+ 	/*
+ 	 * Following other "uncore" PMUs, we do not support sampling mode or
+ 	 * attach to a task (per-process mode).
 
 
