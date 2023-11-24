@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC182C1A2;
-	Fri, 24 Nov 2023 19:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E722C31748;
+	Fri, 24 Nov 2023 19:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7GLgsKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD1AC433C8;
-	Fri, 24 Nov 2023 19:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9mCzJBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73200C433C7;
+	Fri, 24 Nov 2023 19:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853466;
-	bh=XcFltiS4pW+gSXNI8HIh7/cYixNmj/qc5EYVZfWBUnw=;
+	s=korg; t=1700853468;
+	bh=pM3buYN1fntY/gahh4JT9J1jkYz6zT4Cz1n2XeLr2J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7GLgsKOYigncl795hiKzLcVcz47MgCH82p7xbd7RZZe2aJOATNDsIe8iKxxv6xYO
-	 69nXZ75MSPNSMdrekPCCYhi3PWlb1SMN+Ss3Q2OlGWBcisgZBYVHP5JPVBiUgQnx3o
-	 TvOhMFLEwkIxGCiIumGoZCNswT4WBaog1Co6bfXE=
+	b=D9mCzJBpjqDAKujz+wDOxXUZHYHETETYGWA/EAB86tekhQdODkUibtvQKhfB3utgF
+	 In37znVovTEo3KxpemUEvVPtNU5b5LznvYYw0pmCwbQn6T685DzXMNPU3PqNC6/6n/
+	 SGxUxtU4Ngms5Xie5hmYLPF7KhMj/+FXws7UxjPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>
-Subject: [PATCH 5.15 200/297] wifi: ath11k: fix dfs radar event locking
-Date: Fri, 24 Nov 2023 17:54:02 +0000
-Message-ID: <20231124172007.206285210@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 183/297] mmc: vub300: fix an error code
+Date: Fri, 24 Nov 2023 17:53:45 +0000
+Message-ID: <20231124172006.635460981@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,49 +41,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 3b6c14833165f689cc5928574ebafe52bbce5f1e upstream.
+commit b44f9da81783fda72632ef9b0d05ea3f3ca447a5 upstream.
 
-The ath11k active pdevs are protected by RCU but the DFS radar event
-handling code calling ath11k_mac_get_ar_by_pdev_id() was not marked as a
-read-side critical section.
+This error path should return -EINVAL instead of success.
 
-Mark the code in question as an RCU read-side critical section to avoid
-any potential use-after-free issues.
-
-Compile tested only.
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Cc: stable@vger.kernel.org      # 5.6
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231019153115.26401-3-johan+linaro@kernel.org
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/0769d30c-ad80-421b-bf5d-7d6f5d85604e@moroto.mountain
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/mmc/host/vub300.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -6809,6 +6809,8 @@ ath11k_wmi_pdev_dfs_radar_detected_event
- 		   ev->detector_id, ev->segment_id, ev->timestamp, ev->is_chirp,
- 		   ev->freq_offset, ev->sidx);
- 
-+	rcu_read_lock();
-+
- 	ar = ath11k_mac_get_ar_by_pdev_id(ab, ev->pdev_id);
- 
- 	if (!ar) {
-@@ -6826,6 +6828,8 @@ ath11k_wmi_pdev_dfs_radar_detected_event
- 		ieee80211_radar_detected(ar->hw);
- 
- exit:
-+	rcu_read_unlock();
-+
- 	kfree(tb);
- }
- 
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2311,6 +2311,7 @@ static int vub300_probe(struct usb_inter
+ 		vub300->read_only =
+ 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 	} else {
++		retval = -EINVAL;
+ 		goto error5;
+ 	}
+ 	usb_set_intfdata(interface, vub300);
 
 
