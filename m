@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB5B33CCA;
-	Fri, 24 Nov 2023 19:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADC02E64F;
+	Fri, 24 Nov 2023 19:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4u+TLKg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C72AC433CA;
-	Fri, 24 Nov 2023 19:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvEf2Tb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4EDC433C7;
+	Fri, 24 Nov 2023 19:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853510;
-	bh=Ec47Oyq2wElovwshFO8jpng6tFfN0HCLHSH3D0C8/Wc=;
+	s=korg; t=1700853513;
+	bh=lfCytAHpiMV8Qq/PLthPQbQ/vadw5ktca3nuYWGGub8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4u+TLKgjE6chf2ciSSlEepgNcGOf6vL86JQTJSbNL4UEaKoVnyzVwAGfaPERbFho
-	 kyC0XyiyY+5bmw0Hz9fvLZMY86i+jSnn5k2MnkI3qZWWl6dNnQvxuXetYdPoLqs92P
-	 2q/417/jnUTIwLGs53paz/0jIokw9PSZhHC+MnFs=
+	b=MvEf2Tb1mTIz2MPm6tys4VhhHNJ+qrSf2Ubz79H4aGXSWWhHYdxTFEafiSWDLH8io
+	 ssWPjYPFUQ8uk4isbB6y5UZKSoPq3E6vn0X/8mfmKhN0yHwKT9nsrjH/qNtvPMs1xN
+	 S475pFSY/ixypjnBGUhFmKH6aQRSMWLawc7r/gJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 5.15 210/297] selftests/resctrl: Reduce failures due to outliers in MBA/MBM tests
-Date: Fri, 24 Nov 2023 17:54:12 +0000
-Message-ID: <20231124172007.566110144@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 5.15 219/297] s390/cmma: fix initial kernel address space page table walk
+Date: Fri, 24 Nov 2023 17:54:21 +0000
+Message-ID: <20231124172007.880061372@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -37,71 +37,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit ef43c30858754d99373a63dff33280a9969b49bc upstream.
+commit 16ba44826a04834d3eeeda4b731c2ea3481062b7 upstream.
 
-The initial value of 5% chosen for the maximum allowed percentage
-difference between resctrl mbm value and IMC mbm value in
+If the cmma no-dat feature is available the kernel page tables are walked
+to identify and mark all pages which are used for address translation (all
+region, segment, and page tables). In a subsequent loop all other pages are
+marked as "no-dat" pages with the ESSA instruction.
 
-commit 06bd03a57f8c ("selftests/resctrl: Fix MBA/MBM results reporting
-       format") was "randomly chosen value" (as admitted by the changelog).
+This information is visible to the hypervisor, so that the hypervisor can
+optimize purging of guest TLB entries. The initial loop however does not
+cover the complete kernel address space. This can result in pages being
+marked as not being used for dynamic address translation, even though they
+are. In turn guest TLB entries incorrectly may not be purged.
 
-When running tests in our lab across a large number platforms, 5%
-difference upper bound for success seems a bit on the low side for the
-MBA and MBM tests. Some platforms produce outliers that are slightly
-above that, typically 6-7%, which leads MBA/MBM test frequently
-failing.
+Fix this by adjusting the end address of the kernel address range being
+walked.
 
-Replace the "randomly chosen value" with a success bound that is based
-on those measurements across large number of platforms by relaxing the
-MBA/MBM success bound to 8%. The relaxed bound removes the failures due
-the frequent outliers.
-
-Fixed commit description style error during merge:
-Shuah Khan <skhan@linuxfoundation.org>
-
-Fixes: 06bd03a57f8c ("selftests/resctrl: Fix MBA/MBM results reporting format")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/resctrl/mba_test.c |    2 +-
- tools/testing/selftests/resctrl/mbm_test.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/mm/page-states.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/resctrl/mba_test.c
-+++ b/tools/testing/selftests/resctrl/mba_test.c
-@@ -12,7 +12,7 @@
+--- a/arch/s390/mm/page-states.c
++++ b/arch/s390/mm/page-states.c
+@@ -161,15 +161,22 @@ static void mark_kernel_p4d(pgd_t *pgd,
  
- #define RESULT_FILE_NAME	"result_mba"
- #define NUM_OF_RUNS		5
--#define MAX_DIFF_PERCENT	5
-+#define MAX_DIFF_PERCENT	8
- #define ALLOCATION_MAX		100
- #define ALLOCATION_MIN		10
- #define ALLOCATION_STEP		10
---- a/tools/testing/selftests/resctrl/mbm_test.c
-+++ b/tools/testing/selftests/resctrl/mbm_test.c
-@@ -11,7 +11,7 @@
- #include "resctrl.h"
+ static void mark_kernel_pgd(void)
+ {
+-	unsigned long addr, next;
++	unsigned long addr, next, max_addr;
+ 	struct page *page;
+ 	pgd_t *pgd;
+ 	int i;
  
- #define RESULT_FILE_NAME	"result_mbm"
--#define MAX_DIFF_PERCENT	5
-+#define MAX_DIFF_PERCENT	8
- #define NUM_OF_RUNS		5
+ 	addr = 0;
++	/*
++	 * Figure out maximum virtual address accessible with the
++	 * kernel ASCE. This is required to keep the page table walker
++	 * from accessing non-existent entries.
++	 */
++	max_addr = (S390_lowcore.kernel_asce.val & _ASCE_TYPE_MASK) >> 2;
++	max_addr = 1UL << (max_addr * 11 + 31);
+ 	pgd = pgd_offset_k(addr);
+ 	do {
+-		next = pgd_addr_end(addr, MODULES_END);
++		next = pgd_addr_end(addr, max_addr);
+ 		if (pgd_none(*pgd))
+ 			continue;
+ 		if (!pgd_folded(*pgd)) {
+@@ -178,7 +185,7 @@ static void mark_kernel_pgd(void)
+ 				set_bit(PG_arch_1, &page[i].flags);
+ 		}
+ 		mark_kernel_p4d(pgd, addr, next);
+-	} while (pgd++, addr = next, addr != MODULES_END);
++	} while (pgd++, addr = next, addr != max_addr);
+ }
  
- static int
+ void __init cmma_init_nodat(void)
 
 
