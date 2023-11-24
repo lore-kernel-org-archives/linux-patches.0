@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF87364A5;
-	Fri, 24 Nov 2023 18:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FC335F04;
+	Fri, 24 Nov 2023 18:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cs5rnPxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9803C433C8;
-	Fri, 24 Nov 2023 18:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAVGtTJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D755C433C7;
+	Fri, 24 Nov 2023 18:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852072;
-	bh=x3PWbFwlPr75Z8LWmeEa2s+xWvIYBcpgLJ/bci8YAvs=;
+	s=korg; t=1700852074;
+	bh=8RKcNt9kYUxLGm5yUt/uFTpN+0vpDPIq4ZAlvxMD2kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cs5rnPxPFpSCVqOl/VhHpH/gl46Bf+R6G56D/qoaanEuiuFsZg/5HS9ilD8xyf83/
-	 s66lXVVWtQzIdXYOCtS3rMgRqPQn79mVDqsUcAxOzoyJCKy4cTZXMaNJYFNB5vU9A4
-	 0NcxOckc/Rw/BcLbl8qyYrybLt3Gv8YIJXVWqOa4=
+	b=wAVGtTJdiB+5gPGl2yGEZOGvbhaD46Kmwxf+CN1tecOa8MPlHloYgRHaU/V1I2rk9
+	 w3EnkosFUQvld76goePEiBJcXomd6wtiFwgufChWNa9hWMgHEaWkCI7CCIjGoiX+0L
+	 EGr/fLV1LRZ47/vVo9b6ZK9LxQLSoq+GdjQ0RTKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 6.1 208/372] clk: socfpga: Fix undefined behavior bug in struct stratix10_clock_data
-Date: Fri, 24 Nov 2023 17:49:55 +0000
-Message-ID: <20231124172017.398843344@linuxfoundation.org>
+	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 209/372] clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
+Date: Fri, 24 Nov 2023 17:49:56 +0000
+Message-ID: <20231124172017.433501644@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -36,115 +35,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 
-commit d761bb01c85b22d5b44abe283eb89019693f6595 upstream.
+commit e641a070137dd959932c7c222e000d9d941167a2 upstream.
 
-`struct clk_hw_onecell_data` is a flexible structure, which means that
-it contains flexible-array member at the bottom, in this case array
-`hws`:
+GPLL, NSS crypto PLL clock rates are fixed and shouldn't be scaled based
+on the request from dependent clocks. Doing so will result in the
+unexpected behaviour. So drop the CLK_SET_RATE_PARENT flag from the PLL
+clocks.
 
-include/linux/clk-provider.h:
-1380 struct clk_hw_onecell_data {
-1381         unsigned int num;
-1382         struct clk_hw *hws[] __counted_by(num);
-1383 };
-
-This could potentially lead to an overwrite of the objects following
-`clk_data` in `struct stratix10_clock_data`, in this case
-`void __iomem *base;` at run-time:
-
-drivers/clk/socfpga/stratix10-clk.h:
-  9 struct stratix10_clock_data {
- 10         struct clk_hw_onecell_data      clk_data;
- 11         void __iomem            *base;
- 12 };
-
-There are currently three different places where memory is allocated for
-`struct stratix10_clock_data`, including the flex-array `hws` in
-`struct clk_hw_onecell_data`:
-
-drivers/clk/socfpga/clk-agilex.c:
-469         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
-470                                 num_clks), GFP_KERNEL);
-
-drivers/clk/socfpga/clk-agilex.c:
-509         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
-510                                 num_clks), GFP_KERNEL);
-
-drivers/clk/socfpga/clk-s10.c:
-400         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
-401                                                  num_clks), GFP_KERNEL);
-
-I'll use just one of them to describe the issue. See below.
-
-Notice that a total of 440 bytes are allocated for flexible-array member
-`hws` at line 469:
-
-include/dt-bindings/clock/agilex-clock.h:
- 70 #define AGILEX_NUM_CLKS	55
-
-drivers/clk/socfpga/clk-agilex.c:
-459         struct stratix10_clock_data *clk_data;
-460         void __iomem *base;
-...
-466
-467         num_clks = AGILEX_NUM_CLKS;
-468
-469         clk_data = devm_kzalloc(dev, struct_size(clk_data, clk_data.hws,
-470                                 num_clks), GFP_KERNEL);
-
-`struct_size(clk_data, clk_data.hws, num_clks)`	above translates to
-sizeof(struct stratix10_clock_data) + sizeof(struct clk_hw *) * 55 ==
-16 + 8 * 55 == 16 + 440
-		    ^^^
-		     |
-	allocated bytes for flex-array `hws`
-
-474         for (i = 0; i < num_clks; i++)
-475                 clk_data->clk_data.hws[i] = ERR_PTR(-ENOENT);
-476
-477         clk_data->base = base;
-
-and then some data is written into both `hws` and `base` objects.
-
-Fix this by placing the declaration of object `clk_data` at the end of
-`struct stratix10_clock_data`. Also, add a comment to make it clear
-that this object must always be last in the structure.
-
--Wflex-array-member-not-at-end is coming in GCC-14, and we are getting
-ready to enable it globally.
-
-Fixes: ba7e258425ac ("clk: socfpga: Convert to s10/agilex/n5x to use clk_hw")
 Cc: stable@vger.kernel.org
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/1da736106d8e0806aeafa6e471a13ced490eae22.1698117815.git.gustavoars@kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: b8e7e519625f ("clk: qcom: ipq8074: add remaining PLL’s")
+Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Link: https://lore.kernel.org/r/20230913-gpll_cleanup-v2-1-c8ceb1a37680@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/socfpga/stratix10-clk.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-ipq8074.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/drivers/clk/socfpga/stratix10-clk.h
-+++ b/drivers/clk/socfpga/stratix10-clk.h
-@@ -7,8 +7,10 @@
- #define	__STRATIX10_CLK_H
- 
- struct stratix10_clock_data {
--	struct clk_hw_onecell_data	clk_data;
- 	void __iomem		*base;
-+
-+	/* Must be last */
-+	struct clk_hw_onecell_data	clk_data;
+--- a/drivers/clk/qcom/gcc-ipq8074.c
++++ b/drivers/clk/qcom/gcc-ipq8074.c
+@@ -419,7 +419,6 @@ static struct clk_fixed_factor gpll0_out
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_fixed_factor_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
  };
  
- struct stratix10_pll_clock {
+@@ -466,7 +465,6 @@ static struct clk_alpha_pll_postdiv gpll
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 
+@@ -499,7 +497,6 @@ static struct clk_alpha_pll_postdiv gpll
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 
+@@ -533,7 +530,6 @@ static struct clk_alpha_pll_postdiv gpll
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 
+@@ -547,7 +543,6 @@ static struct clk_fixed_factor gpll6_out
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_fixed_factor_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 
+@@ -612,7 +607,6 @@ static struct clk_alpha_pll_postdiv nss_
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 
 
 
