@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD30439FE7;
-	Fri, 24 Nov 2023 18:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3474F39FFD;
+	Fri, 24 Nov 2023 18:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQjg45T1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3360EC433C8;
-	Fri, 24 Nov 2023 18:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DY1j1mLm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56D8C433C7;
+	Fri, 24 Nov 2023 18:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850214;
-	bh=NTm957E8fhrZajQa3m/I5VLqWAAEWS+hvZNpswwA4zA=;
+	s=korg; t=1700850217;
+	bh=PB9hdkv7rWnofLIuExT/3pHKzvIQ1WVSjs3kF4Bvtyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQjg45T1/ALM1iNnolbSdGLoK8mpqmP6YbpoMctLs76TIdpHLoxSRiyDoXAeuWx/k
-	 1ReYFYR83fJvI+WZac/IqQNLIhPxEK1B3hckWFoYv0a33ZdDUgzo1Y7T4LMnWLwWZp
-	 GmYADyrhlrK7iR7JO4BpV/QPSIhGlokooFPuZ8mk=
+	b=DY1j1mLm6XDCGVCIGyqVDImrR/nfQeegJRBTZf1XnbSQNQ+H5cNADUJuvno/edWQy
+	 301HvdsK4dezBGu1uzdl7v4c+INpGnnlUJa03k5wppp1a2xIYRPRCvHyeF3vKjnb6p
+	 cUa8xrLpNM5cA+HA8O1h6238cmq0crgZHsy4NfD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChunHao Lin <hau@realtek.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 483/530] r8169: add handling DASH when DASH is disabled
-Date: Fri, 24 Nov 2023 17:50:49 +0000
-Message-ID: <20231124172042.794711042@linuxfoundation.org>
+	Andrey Konovalov <andrey.konovalov@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.6 492/530] media: qcom: camss: Fix csid-gen2 for test pattern generator
+Date: Fri, 24 Nov 2023 17:50:58 +0000
+Message-ID: <20231124172043.097726236@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,134 +43,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChunHao Lin <hau@realtek.com>
+From: Andrey Konovalov <andrey.konovalov@linaro.org>
 
-commit 0ab0c45d8aaea5192328bfa6989673aceafc767c upstream.
+commit 87889f1b7ea40d2544b49c62092e6ef2792dced7 upstream.
 
-For devices that support DASH, even DASH is disabled, there may still
-exist a default firmware that will influence device behavior.
-So driver needs to handle DASH for devices that support DASH, no
-matter the DASH status is.
+In the current driver csid Test Pattern Generator (TPG) doesn't work.
+This change:
+- fixes writing frame width and height values into CSID_TPG_DT_n_CFG_0
+- fixes the shift by one between test_pattern control value and the
+  actual pattern.
+- drops fixed VC of 0x0a which testing showed prohibited some test
+  patterns in the CSID to produce output.
+So that TPG starts working, but with the below limitations:
+- only test_pattern=9 works as it should
+- test_pattern=8 and test_pattern=7 produce black frame (all zeroes)
+- the rest of test_pattern's don't work (yavta doesn't get the data)
+- regardless of the CFA pattern set by 'media-ctl -V' the actual pixel
+  order is always the same (RGGB for any RAW8 or RAW10P format in
+  4608x2592 resolution).
 
-This patch also prepares for "fix network lost after resume on DASH
-systems".
+Tested with:
 
-Fixes: ee7a1beb9759 ("r8169:call "rtl8168_driver_start" "rtl8168_driver_stop" only when hardware dash function is enabled")
+RAW10P format, VC0:
+ media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4608x2592 field:none]'
+ media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4608x2592 field:none]'
+ media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+ v4l2-ctl -d /dev/v4l-subdev6 -c test_pattern=9
+ yavta -B capture-mplane --capture=3 -n 3 -f SRGGB10P -s 4608x2592 /dev/video0
+
+RAW10P format, VC1:
+ media-ctl -V '"msm_csid0":2[fmt:SRGGB10/4608x2592 field:none]'
+ media-ctl -V '"msm_vfe0_rdi1":0[fmt:SRGGB10/4608x2592 field:none]'
+ media-ctl -l '"msm_csid0":2->"msm_vfe0_rdi1":0[1]'
+ v4l2-ctl -d /dev/v4l-subdev6 -c test_pattern=9
+ yavta -B capture-mplane --capture=3 -n 3 -f SRGGB10P -s 4608x2592 /dev/video1
+
+RAW8 format, VC0:
+ media-ctl --reset
+ media-ctl -V '"msm_csid0":0[fmt:SRGGB8/4608x2592 field:none]'
+ media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB8/4608x2592 field:none]'
+ media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+ yavta -B capture-mplane --capture=3 -n 3 -f SRGGB8 -s 4608x2592 /dev/video0
+
+Fixes: eebe6d00e9bf ("media: camss: Add support for CSID hardware version Titan 170")
 Cc: stable@vger.kernel.org
-Signed-off-by: ChunHao Lin <hau@realtek.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/20231109173400.4573-2-hau@realtek.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c |   36 ++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 11 deletions(-)
+ drivers/media/platform/qcom/camss/camss-csid-gen2.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -624,6 +624,7 @@ struct rtl8169_private {
+--- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
++++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
+@@ -355,9 +355,6 @@ static void __csid_configure_stream(stru
+ 		u8 dt_id = vc;
  
- 	unsigned supports_gmii:1;
- 	unsigned aspm_manageable:1;
-+	unsigned dash_enabled:1;
- 	dma_addr_t counters_phys_addr;
- 	struct rtl8169_counters *counters;
- 	struct rtl8169_tc_offsets tc_offset;
-@@ -1253,14 +1254,26 @@ static bool r8168ep_check_dash(struct rt
- 	return r8168ep_ocp_read(tp, 0x128) & BIT(0);
- }
+ 		if (tg->enabled) {
+-			/* Config Test Generator */
+-			vc = 0xa;
+-
+ 			/* configure one DT, infinite frames */
+ 			val = vc << TPG_VC_CFG0_VC_NUM;
+ 			val |= INTELEAVING_MODE_ONE_SHOT << TPG_VC_CFG0_LINE_INTERLEAVING_MODE;
+@@ -370,14 +367,14 @@ static void __csid_configure_stream(stru
  
--static enum rtl_dash_type rtl_check_dash(struct rtl8169_private *tp)
-+static bool rtl_dash_is_enabled(struct rtl8169_private *tp)
-+{
-+	switch (tp->dash_type) {
-+	case RTL_DASH_DP:
-+		return r8168dp_check_dash(tp);
-+	case RTL_DASH_EP:
-+		return r8168ep_check_dash(tp);
-+	default:
-+		return false;
-+	}
-+}
-+
-+static enum rtl_dash_type rtl_get_dash_type(struct rtl8169_private *tp)
- {
- 	switch (tp->mac_version) {
- 	case RTL_GIGA_MAC_VER_28:
- 	case RTL_GIGA_MAC_VER_31:
--		return r8168dp_check_dash(tp) ? RTL_DASH_DP : RTL_DASH_NONE;
-+		return RTL_DASH_DP;
- 	case RTL_GIGA_MAC_VER_51 ... RTL_GIGA_MAC_VER_53:
--		return r8168ep_check_dash(tp) ? RTL_DASH_EP : RTL_DASH_NONE;
-+		return RTL_DASH_EP;
- 	default:
- 		return RTL_DASH_NONE;
- 	}
-@@ -1453,7 +1466,7 @@ static void __rtl8169_set_wol(struct rtl
+ 			writel_relaxed(0x12345678, csid->base + CSID_TPG_LFSR_SEED);
  
- 	device_set_wakeup_enable(tp_to_dev(tp), wolopts);
+-			val = input_format->height & 0x1fff << TPG_DT_n_CFG_0_FRAME_HEIGHT;
+-			val |= input_format->width & 0x1fff << TPG_DT_n_CFG_0_FRAME_WIDTH;
++			val = (input_format->height & 0x1fff) << TPG_DT_n_CFG_0_FRAME_HEIGHT;
++			val |= (input_format->width & 0x1fff) << TPG_DT_n_CFG_0_FRAME_WIDTH;
+ 			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_0(0));
  
--	if (tp->dash_type == RTL_DASH_NONE) {
-+	if (!tp->dash_enabled) {
- 		rtl_set_d3_pll_down(tp, !wolopts);
- 		tp->dev->wol_enabled = wolopts ? 1 : 0;
- 	}
-@@ -2512,7 +2525,7 @@ static void rtl_wol_enable_rx(struct rtl
+ 			val = format->data_type << TPG_DT_n_CFG_1_DATA_TYPE;
+ 			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_1(0));
  
- static void rtl_prepare_power_down(struct rtl8169_private *tp)
- {
--	if (tp->dash_type != RTL_DASH_NONE)
-+	if (tp->dash_enabled)
- 		return;
- 
- 	if (tp->mac_version == RTL_GIGA_MAC_VER_32 ||
-@@ -4875,7 +4888,7 @@ static int rtl8169_runtime_idle(struct d
- {
- 	struct rtl8169_private *tp = dev_get_drvdata(device);
- 
--	if (tp->dash_type != RTL_DASH_NONE)
-+	if (tp->dash_enabled)
- 		return -EBUSY;
- 
- 	if (!netif_running(tp->dev) || !netif_carrier_ok(tp->dev))
-@@ -4901,8 +4914,7 @@ static void rtl_shutdown(struct pci_dev
- 	/* Restore original MAC address */
- 	rtl_rar_set(tp, tp->dev->perm_addr);
- 
--	if (system_state == SYSTEM_POWER_OFF &&
--	    tp->dash_type == RTL_DASH_NONE) {
-+	if (system_state == SYSTEM_POWER_OFF && !tp->dash_enabled) {
- 		pci_wake_from_d3(pdev, tp->saved_wolopts);
- 		pci_set_power_state(pdev, PCI_D3hot);
- 	}
-@@ -5260,7 +5272,8 @@ static int rtl_init_one(struct pci_dev *
- 		rc = pci_disable_link_state(pdev, PCIE_LINK_STATE_L1);
- 	tp->aspm_manageable = !rc;
- 
--	tp->dash_type = rtl_check_dash(tp);
-+	tp->dash_type = rtl_get_dash_type(tp);
-+	tp->dash_enabled = rtl_dash_is_enabled(tp);
- 
- 	tp->cp_cmd = RTL_R16(tp, CPlusCmd) & CPCMD_MASK;
- 
-@@ -5331,7 +5344,7 @@ static int rtl_init_one(struct pci_dev *
- 	/* configure chip for default features */
- 	rtl8169_set_features(dev, dev->features);
- 
--	if (tp->dash_type == RTL_DASH_NONE) {
-+	if (!tp->dash_enabled) {
- 		rtl_set_d3_pll_down(tp, true);
- 	} else {
- 		rtl_set_d3_pll_down(tp, false);
-@@ -5371,7 +5384,8 @@ static int rtl_init_one(struct pci_dev *
- 			    "ok" : "ko");
- 
- 	if (tp->dash_type != RTL_DASH_NONE) {
--		netdev_info(dev, "DASH enabled\n");
-+		netdev_info(dev, "DASH %s\n",
-+			    tp->dash_enabled ? "enabled" : "disabled");
- 		rtl8168_driver_start(tp);
- 	}
- 
+-			val = tg->mode << TPG_DT_n_CFG_2_PAYLOAD_MODE;
++			val = (tg->mode - 1) << TPG_DT_n_CFG_2_PAYLOAD_MODE;
+ 			val |= 0xBE << TPG_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD;
+ 			val |= format->decode_format << TPG_DT_n_CFG_2_ENCODE_FORMAT;
+ 			writel_relaxed(val, csid->base + CSID_TPG_DT_n_CFG_2(0));
 
 
