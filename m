@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7503A2E858;
-	Fri, 24 Nov 2023 18:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E7A339BE;
+	Fri, 24 Nov 2023 18:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKy0Cdlx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D0CC433C7;
-	Fri, 24 Nov 2023 18:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nes/L+ZN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BBFC433C7;
+	Fri, 24 Nov 2023 18:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851743;
-	bh=1YXZjzEedHA0d9oGj9rSyyyNZJJt21oH1pKnLPjURtw=;
+	s=korg; t=1700851745;
+	bh=AuTHNQJArfiePYyiUZ711FXIlCR24TqLtKVnlcx3Il0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKy0Cdlxd0nNCfzRIbDL2zeuRxR6MfC9zRNlm+uMcaGQh4SuZg8bu+Vze9bgmTEMW
-	 AtXiEkEzXVmUqB5dEDJmJya1WX9434JcgR/fVo0LHPHeiQ8DP4tZDibR7jAE5X8yqh
-	 OP7j8uPei6Mj10hyFXJlqvWWPnVaIrZ1U+e0F/p0=
+	b=nes/L+ZNKTkMFAJA4DyQYVEwprVMp3a/OzQ1z5STvZfUn5le91VTeFPXZ5mmtC7tt
+	 42ektKTQwHTqWOhyjUzeEQ8UDMIkbcKslFeehdjvWwUHtKwzm1scumw21+qxxBckVY
+	 JMjRsQl5jorBhJZNlY/ii6pBmVePya2Nbh/cGvp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Pawlowski <bartosz.pawlowski@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	zhujun2 <zhujun2@cmss.chinamobile.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/372] PCI: Disable ATS for specific Intel IPU E2000 devices
-Date: Fri, 24 Nov 2023 17:47:44 +0000
-Message-ID: <20231124172013.085987316@linuxfoundation.org>
+Subject: [PATCH 6.1 054/372] selftests/efivarfs: create-read: fix a resource leak
+Date: Fri, 24 Nov 2023 17:47:21 +0000
+Message-ID: <20231124172012.281251725@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -44,58 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
+From: zhujun2 <zhujun2@cmss.chinamobile.com>
 
-[ Upstream commit a18615b1cfc04f00548c60eb9a77e0ce56e848fd ]
+[ Upstream commit 3f6f8a8c5e11a9b384a36df4f40f0c9a653b6975 ]
 
-Due to a hardware issue in A and B steppings of Intel IPU E2000, it expects
-wrong endianness in ATS invalidation message body. This problem can lead to
-outdated translations being returned as valid and finally cause system
-instability.
+The opened file should be closed in main(), otherwise resource
+leak will occur that this problem was discovered by code reading
 
-To prevent such issues, add quirk_intel_e2000_no_ats() to disable ATS for
-vulnerable IPU E2000 devices.
-
-Link: https://lore.kernel.org/r/20230908143606.685930-3-bartosz.pawlowski@intel.com
-Signed-off-by: Bartosz Pawlowski <bartosz.pawlowski@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Signed-off-by: zhujun2 <zhujun2@cmss.chinamobile.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ tools/testing/selftests/efivarfs/create-read.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index d16e0f356042b..48389785d9247 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -5449,6 +5449,25 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x7347, quirk_amd_harvest_no_ats);
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x734f, quirk_amd_harvest_no_ats);
- /* AMD Raven platform iGPU */
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x15d8, quirk_amd_harvest_no_ats);
-+
-+/*
-+ * Intel IPU E2000 revisions before C0 implement incorrect endianness
-+ * in ATS Invalidate Request message body. Disable ATS for those devices.
-+ */
-+static void quirk_intel_e2000_no_ats(struct pci_dev *pdev)
-+{
-+	if (pdev->revision < 0x20)
-+		quirk_no_ats(pdev);
-+}
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1451, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1452, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1453, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1454, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1455, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1457, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x1459, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x145a, quirk_intel_e2000_no_ats);
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_INTEL, 0x145c, quirk_intel_e2000_no_ats);
- #endif /* CONFIG_PCI_ATS */
+diff --git a/tools/testing/selftests/efivarfs/create-read.c b/tools/testing/selftests/efivarfs/create-read.c
+index 9674a19396a32..7bc7af4eb2c17 100644
+--- a/tools/testing/selftests/efivarfs/create-read.c
++++ b/tools/testing/selftests/efivarfs/create-read.c
+@@ -32,8 +32,10 @@ int main(int argc, char **argv)
+ 	rc = read(fd, buf, sizeof(buf));
+ 	if (rc != 0) {
+ 		fprintf(stderr, "Reading a new var should return EOF\n");
++		close(fd);
+ 		return EXIT_FAILURE;
+ 	}
  
- /* Freescale PCIe doesn't support MSI in RC mode */
++	close(fd);
+ 	return EXIT_SUCCESS;
+ }
 -- 
 2.42.0
 
