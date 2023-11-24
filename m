@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0385C2FC21;
-	Fri, 24 Nov 2023 18:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C12C33075;
+	Fri, 24 Nov 2023 18:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQw9auah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A5AC433C7;
-	Fri, 24 Nov 2023 18:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlclaWje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A54C433C7;
+	Fri, 24 Nov 2023 18:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851231;
-	bh=OgVQL+a4r7aP591mIDbumP5Z94PKZo9zi3Ym5lLGbBw=;
+	s=korg; t=1700851234;
+	bh=oZBDgy+384IfvhR5QuMMVinnlTq0cR9C/jYn+hvL6gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WQw9auahKU0HRNfPWVAs0IuWiE/lcQgjrg5pwvh2tRIrb5WQlCIlWS7So3uxQN90i
-	 yXM3SxjcpvKGJg+7gcHtxo0DfneEX7Lrp5ViD9Yb7w4OQhp7+ABOrt3Ru3aOldwJ0A
-	 5vdIdXzj56Pwx0MPaz84npVaOXl9t23D12h2qxcs=
+	b=KlclaWje0OQxnb6Cj3D7uqlDdy1L0BAzXCJq95ai3WEqJuQiKx6uC8oHIEXhi27b1
+	 zjrJxc3BaJlLoLoKAxsIRGNpf7tos3+0RsEZqPLu5OF9EDLDNdqQ/jhE07K+SEtQyG
+	 tOlV+y7ZNVnJ5VdVLxbBeJACL2xjAbXoFTvN0e44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Pengfei Li <pengfei.li_1@nxp.com>,
+	Emil Kronborg <emil.kronborg@protonmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 366/491] pmdomain: amlogic: Fix mask for the second NNA mem PD domain
-Date: Fri, 24 Nov 2023 17:50:02 +0000
-Message-ID: <20231124172035.572871341@linuxfoundation.org>
+Subject: [PATCH 6.5 367/491] pmdomain: imx: Make imx pgc power domain also set the fwnode
+Date: Fri, 24 Nov 2023 17:50:03 +0000
+Message-ID: <20231124172035.606560597@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,38 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+From: Pengfei Li <pengfei.li_1@nxp.com>
 
-[ Upstream commit b131329b9bfbd1b4c0c5e088cb0c6ec03a12930f ]
+[ Upstream commit 374de39d38f97b0e58cfee88da590b2d056ccf7f ]
 
-Without this change, the NPU hangs when the 8th NN core is used.
+Currently, The imx pgc power domain doesn't set the fwnode
+pointer, which results in supply regulator device can't get
+consumer imx pgc power domain device from fwnode when creating
+a link.
 
-It matches what the out-of-tree driver does.
+This causes the driver core to instead try to create a link
+between the parent gpc device of imx pgc power domain device and
+supply regulator device. However, at this point, the gpc device
+has already been bound, and the link creation will fail. So adding
+the fwnode pointer to the imx pgc power domain device will fix
+this issue.
 
-Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Fixes: 9a217b7e8953 ("soc: amlogic: meson-pwrc: Add NNA power domain for A311D")
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Pengfei Li <pengfei.li_1@nxp.com>
+Tested-by: Emil Kronborg <emil.kronborg@protonmail.com>
+Fixes: 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231016080205.41982-2-tomeu@tomeuvizoso.net
+Link: https://lore.kernel.org/r/20231020185949.537083-1-pengfei.li_1@nxp.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/amlogic/meson-ee-pwrc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/imx/gpc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/amlogic/meson-ee-pwrc.c b/drivers/soc/amlogic/meson-ee-pwrc.c
-index f54acffc83f9f..f2b24361c8cac 100644
---- a/drivers/soc/amlogic/meson-ee-pwrc.c
-+++ b/drivers/soc/amlogic/meson-ee-pwrc.c
-@@ -229,7 +229,7 @@ static struct meson_ee_pwrc_mem_domain sm1_pwrc_mem_audio[] = {
+diff --git a/drivers/soc/imx/gpc.c b/drivers/soc/imx/gpc.c
+index 90a8b2c0676ff..419ed15cc10c4 100644
+--- a/drivers/soc/imx/gpc.c
++++ b/drivers/soc/imx/gpc.c
+@@ -498,6 +498,7 @@ static int imx_gpc_probe(struct platform_device *pdev)
  
- static struct meson_ee_pwrc_mem_domain g12a_pwrc_mem_nna[] = {
- 	{ G12A_HHI_NANOQ_MEM_PD_REG0, GENMASK(31, 0) },
--	{ G12A_HHI_NANOQ_MEM_PD_REG1, GENMASK(23, 0) },
-+	{ G12A_HHI_NANOQ_MEM_PD_REG1, GENMASK(31, 0) },
- };
+ 			pd_pdev->dev.parent = &pdev->dev;
+ 			pd_pdev->dev.of_node = np;
++			pd_pdev->dev.fwnode = of_fwnode_handle(np);
  
- #define VPU_PD(__name, __top_pd, __mem, __is_pwr_off, __resets, __clks)	\
+ 			ret = platform_device_add(pd_pdev);
+ 			if (ret) {
 -- 
 2.42.0
 
