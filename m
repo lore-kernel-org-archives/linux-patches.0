@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7180381A2;
-	Fri, 24 Nov 2023 18:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CDFB364A6;
+	Fri, 24 Nov 2023 18:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tabg6/IH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760E9C433C7;
-	Fri, 24 Nov 2023 18:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Smuo/ooN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED536C433C7;
+	Fri, 24 Nov 2023 18:44:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851476;
-	bh=na/ovnYjpo7dLGhavaHWxbo86Is6MsP/ed0yHvmrKDs=;
+	s=korg; t=1700851479;
+	bh=vwKXWe9kQRXx6rsBP5pzF3V8SZlViIcUYez7p8JI4sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tabg6/IHNvqxFxTtiNnpYSqnLUhmKkzrQBUNGh0aWeerrAM/W8N1RVNEKb24YE79l
-	 J5gPtuwwVhUtfkCJGMAJJ2UhyRrRURYCatGm/hKt4jPtQARg0Oc1XlpJ4SPzrTOb8Y
-	 tj1jGl5RV+TYBLWXeNMSt7xFNlY3UTtwL82j36KE=
+	b=Smuo/ooNMi/H4mIe0gyJUKAwjEUVpn6Eej8SYGy5jg1Uywfo811tBvmRS2yJ3RTNz
+	 iw8NEfNmKS7KK9CBzPPugVpy30zEbLB76d8YwJm33Noyza1L4nSWd+oVqYN714oi73
+	 8vBL7hVoW1g6oDvGPtzsQnjJeQPLmcWCCzydvYYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Shih <victor.shih@genesyslogic.com.tw>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.5 439/491] mmc: sdhci-pci-gli: A workaround to allow GL9750 to enter ASPM L1.2
-Date: Fri, 24 Nov 2023 17:51:15 +0000
-Message-ID: <20231124172037.800210909@linuxfoundation.org>
+	Stefan Roesch <shr@devkernel.io>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Rik van Riel <riel@surriel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.5 440/491] mm: fix for negative counter: nr_file_hugepages
+Date: Fri, 24 Nov 2023 17:51:16 +0000
+Message-ID: <20231124172037.824544007@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,60 +46,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Shih <victor.shih@genesyslogic.com.tw>
+From: Stefan Roesch <shr@devkernel.io>
 
-commit d7133797e9e1b72fd89237f68cb36d745599ed86 upstream.
+commit a48d5bdc877b85201e42cef9c2fdf5378164c23a upstream.
 
-When GL9750 enters ASPM L1 sub-states, it will stay at L1.1 and will not
-enter L1.2. The workaround is to toggle PM state to allow GL9750 to enter
-ASPM L1.2.
+While qualifiying the 6.4 release, the following warning was detected in
+messages:
 
-Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
-Link: https://lore.kernel.org/r/20230912091710.7797-1-victorshihgli@gmail.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+vmstat_refresh: nr_file_hugepages -15664
+
+The warning is caused by the incorrect updating of the NR_FILE_THPS
+counter in the function split_huge_page_to_list.  The if case is checking
+for folio_test_swapbacked, but the else case is missing the check for
+folio_test_pmd_mappable.  The other functions that manipulate the counter
+like __filemap_add_folio and filemap_unaccount_folio have the
+corresponding check.
+
+I have a test case, which reproduces the problem. It can be found here:
+  https://github.com/sroeschus/testcase/blob/main/vmstat_refresh/madv.c
+
+The test case reproduces on an XFS filesystem. Running the same test
+case on a BTRFS filesystem does not reproduce the problem.
+
+AFAIK version 6.1 until 6.6 are affected by this problem.
+
+[akpm@linux-foundation.org: whitespace fix]
+[shr@devkernel.io: test for folio_test_pmd_mappable()]
+  Link: https://lkml.kernel.org/r/20231108171517.2436103-1-shr@devkernel.io
+Link: https://lkml.kernel.org/r/20231106181918.1091043-1-shr@devkernel.io
+Signed-off-by: Stefan Roesch <shr@devkernel.io>
+Co-debugged-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Yang Shi <shy828301@gmail.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mm/huge_memory.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -25,6 +25,9 @@
- #define   GLI_9750_WT_EN_ON	    0x1
- #define   GLI_9750_WT_EN_OFF	    0x0
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2759,13 +2759,15 @@ int split_huge_page_to_list(struct page
+ 			int nr = folio_nr_pages(folio);
  
-+#define PCI_GLI_9750_PM_CTRL	0xFC
-+#define   PCI_GLI_9750_PM_STATE	  GENMASK(1, 0)
-+
- #define SDHCI_GLI_9750_CFG2          0x848
- #define   SDHCI_GLI_9750_CFG2_L1DLY    GENMASK(28, 24)
- #define   GLI_9750_CFG2_L1DLY_VALUE    0x1F
-@@ -539,8 +542,12 @@ static void sdhci_gl9750_set_clock(struc
- 
- static void gl9750_hw_setting(struct sdhci_host *host)
- {
-+	struct sdhci_pci_slot *slot = sdhci_priv(host);
-+	struct pci_dev *pdev;
- 	u32 value;
- 
-+	pdev = slot->chip->pdev;
-+
- 	gl9750_wt_on(host);
- 
- 	value = sdhci_readl(host, SDHCI_GLI_9750_CFG2);
-@@ -550,6 +557,13 @@ static void gl9750_hw_setting(struct sdh
- 			    GLI_9750_CFG2_L1DLY_VALUE);
- 	sdhci_writel(host, value, SDHCI_GLI_9750_CFG2);
- 
-+	/* toggle PM state to allow GL9750 to enter ASPM L1.2 */
-+	pci_read_config_dword(pdev, PCI_GLI_9750_PM_CTRL, &value);
-+	value |= PCI_GLI_9750_PM_STATE;
-+	pci_write_config_dword(pdev, PCI_GLI_9750_PM_CTRL, value);
-+	value &= ~PCI_GLI_9750_PM_STATE;
-+	pci_write_config_dword(pdev, PCI_GLI_9750_PM_CTRL, value);
-+
- 	gl9750_wt_off(host);
- }
+ 			xas_split(&xas, folio, folio_order(folio));
+-			if (folio_test_swapbacked(folio)) {
+-				__lruvec_stat_mod_folio(folio, NR_SHMEM_THPS,
+-							-nr);
+-			} else {
+-				__lruvec_stat_mod_folio(folio, NR_FILE_THPS,
+-							-nr);
+-				filemap_nr_thps_dec(mapping);
++			if (folio_test_pmd_mappable(folio)) {
++				if (folio_test_swapbacked(folio)) {
++					__lruvec_stat_mod_folio(folio,
++							NR_SHMEM_THPS, -nr);
++				} else {
++					__lruvec_stat_mod_folio(folio,
++							NR_FILE_THPS, -nr);
++					filemap_nr_thps_dec(mapping);
++				}
+ 			}
+ 		}
  
 
 
