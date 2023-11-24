@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E2E381D6;
-	Fri, 24 Nov 2023 18:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E466934197;
+	Fri, 24 Nov 2023 18:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5bAMKsu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DD9C433C9;
-	Fri, 24 Nov 2023 18:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYMLsYSn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A53FC433C8;
+	Fri, 24 Nov 2023 18:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850107;
-	bh=KuBSiNbIox6jFS1QfiWuGjs5JXTS2x1rMZCoDAVrHBo=;
+	s=korg; t=1700850110;
+	bh=J7mdSlqIefEalFEbKuYN39CyYZdxViSusIqRi9wQIQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5bAMKsuy7n1Cl+oaBkqmtf+L27F03hkjct354H8LKOZuXLDRms9j1PBoiqLZWNDy
-	 YVVY0j1xYwgFb7x+ce7Hj+RscWPts8uov8I6yuaOEHEQYuryWUNBu4DTUSVxZ4dtG4
-	 xmKCBDmBUCqT3MZF/lQVGM9A+OoO0gj2MWHXms2I=
+	b=BYMLsYSnvo/LHXR741cPj9bfA0PMGPJFWLQGoiQ13y6c88fm5lYzpQ9X0VxGYjs2+
+	 2xTtTN2Q/WStXBLqZj1faXstP+UT2V3b+7bAtWTvjDhtAI0ZMaIfAcgn1Zto3ZRFn2
+	 RZTfLGcNItXP4mMbtDp6XdGGu0t7WBUWS+6yO3Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.6 430/530] xfs: recovery should not clear di_flushiter unconditionally
-Date: Fri, 24 Nov 2023 17:49:56 +0000
-Message-ID: <20231124172041.168091053@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 6.6 448/530] gfs2: dont withdraw if init_threads() got interrupted
+Date: Fri, 24 Nov 2023 17:50:14 +0000
+Message-ID: <20231124172041.728654135@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,80 +41,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit 7930d9e103700cde15833638855b750715c12091 upstream.
+commit 0cdc6f44e9fdc2d20d720145bf99a39f611f6d61 upstream.
 
-Because on v3 inodes, di_flushiter doesn't exist. It overlaps with
-zero padding in the inode, except when NREXT64=1 configurations are
-in use and the zero padding is no longer padding but holds the 64
-bit extent counter.
+In gfs2_fill_super(), when mounting a gfs2 filesystem is interrupted,
+kthread_create() can return -EINTR.  When that happens, we roll back
+what has already been done and abort the mount.
 
-This manifests obviously on big endian platforms (e.g. s390) because
-the log dinode is in host order and the overlap is the LSBs of the
-extent count field. It is not noticed on little endian machines
-because the overlap is at the MSB end of the extent count field and
-we need to get more than 2^^48 extents in the inode before it
-manifests. i.e. the heat death of the universe will occur before we
-see the problem in little endian machines.
+Since commit 62dd0f98a0e5 ("gfs2: Flag a withdraw if init_threads()
+fails), we are calling gfs2_withdraw_delayed() in gfs2_fill_super();
+first via gfs2_make_fs_rw(), then directly.  But gfs2_withdraw_delayed()
+only marks the filesystem as withdrawing and relies on a caller further
+up the stack to do the actual withdraw, which doesn't exist in the
+gfs2_fill_super() case.  Because the filesystem is marked as withdrawing
+/ withdrawn, function gfs2_lm_unmount() doesn't release the dlm
+lockspace, so when we try to mount that filesystem again, we get:
 
-This is a zero-day issue for NREXT64=1 configuraitons on big endian
-machines. Fix it by only clearing di_flushiter on v2 inodes during
-recovery.
+    gfs2: fsid=gohan:gohan0: Trying to join cluster "lock_dlm", "gohan:gohan0"
+    gfs2: fsid=gohan:gohan0: dlm_new_lockspace error -17
 
-Fixes: 9b7d16e34bbe ("xfs: Introduce XFS_DIFLAG2_NREXT64 and associated helpers")
-cc: stable@kernel.org # 5.19+
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Since commit b77b4a4815a9 ("gfs2: Rework freeze / thaw logic"), the
+deadlock this gfs2_withdraw_delayed() call was supposed to work around
+cannot occur anymore because freeze_go_callback() won't take the
+sb->s_umount semaphore unconditionally anymore, so we can get rid of the
+gfs2_withdraw_delayed() in gfs2_fill_super() entirely.
+
+Reported-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: stable@vger.kernel.org # v6.5+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode_item_recover.c |   32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ fs/gfs2/ops_fstype.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/fs/xfs/xfs_inode_item_recover.c
-+++ b/fs/xfs/xfs_inode_item_recover.c
-@@ -369,24 +369,26 @@ xlog_recover_inode_commit_pass2(
- 	 * superblock flag to determine whether we need to look at di_flushiter
- 	 * to skip replay when the on disk inode is newer than the log one
- 	 */
--	if (!xfs_has_v3inodes(mp) &&
--	    ldip->di_flushiter < be16_to_cpu(dip->di_flushiter)) {
--		/*
--		 * Deal with the wrap case, DI_MAX_FLUSH is less
--		 * than smaller numbers
--		 */
--		if (be16_to_cpu(dip->di_flushiter) == DI_MAX_FLUSH &&
--		    ldip->di_flushiter < (DI_MAX_FLUSH >> 1)) {
--			/* do nothing */
--		} else {
--			trace_xfs_log_recover_inode_skip(log, in_f);
--			error = 0;
--			goto out_release;
-+	if (!xfs_has_v3inodes(mp)) {
-+		if (ldip->di_flushiter < be16_to_cpu(dip->di_flushiter)) {
-+			/*
-+			 * Deal with the wrap case, DI_MAX_FLUSH is less
-+			 * than smaller numbers
-+			 */
-+			if (be16_to_cpu(dip->di_flushiter) == DI_MAX_FLUSH &&
-+			    ldip->di_flushiter < (DI_MAX_FLUSH >> 1)) {
-+				/* do nothing */
-+			} else {
-+				trace_xfs_log_recover_inode_skip(log, in_f);
-+				error = 0;
-+				goto out_release;
-+			}
- 		}
-+
-+		/* Take the opportunity to reset the flush iteration count */
-+		ldip->di_flushiter = 0;
+--- a/fs/gfs2/ops_fstype.c
++++ b/fs/gfs2/ops_fstype.c
+@@ -1281,10 +1281,8 @@ static int gfs2_fill_super(struct super_
+ 
+ 	if (!sb_rdonly(sb)) {
+ 		error = init_threads(sdp);
+-		if (error) {
+-			gfs2_withdraw_delayed(sdp);
++		if (error)
+ 			goto fail_per_node;
+-		}
  	}
  
--	/* Take the opportunity to reset the flush iteration count */
--	ldip->di_flushiter = 0;
- 
- 	if (unlikely(S_ISREG(ldip->di_mode))) {
- 		if ((ldip->di_format != XFS_DINODE_FMT_EXTENTS) &&
+ 	error = gfs2_freeze_lock_shared(sdp);
 
 
