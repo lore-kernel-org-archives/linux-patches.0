@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F45935EE6;
-	Fri, 24 Nov 2023 19:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453D835EE6;
+	Fri, 24 Nov 2023 19:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ0wQgvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D542AC433C9;
-	Fri, 24 Nov 2023 19:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiA+BhXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFECC433CA;
+	Fri, 24 Nov 2023 19:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853476;
-	bh=TsG4MFf+e71QS8Lto60vpXPYaSMfd4gysJVn/S2Sjx0=;
+	s=korg; t=1700853478;
+	bh=OaGzjRVdD/ucJVreJaU6FQFPRhLZOSc8gnihJ/M66Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJ0wQgvNokkzRA3mOVFFjjq8UAdWPVmDO7sWCTkylbI/rwzg5F0LK4zmTy0Kfo2hX
-	 uztab2lK/6H6G/sWJuiniAnxSS6J2kuBMjk77o3zk9rMCsideke2NtT3zHPNMrXVcH
-	 f0o8RbixmzXxBAVoTfBn3fUYNPLOjxdjxBoIl4oY=
+	b=fiA+BhXRgnyO8tPHvJgTtUS4MGClHS65uC7qtmND0T8L637ZoWZdu9i9p5fvsLEko
+	 cAcBWmh1Le5oc7/ZieZkBNhH9ikiNwmHwUAqbGSoClKuWVXVv7unkYPRWiGstxdTQX
+	 DCT6HxpY51GpG3C5wqBlm39HvTcfoLpmfcC1P6gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 203/297] genirq/generic_chip: Make irq_remove_generic_chip() irqdomain aware
-Date: Fri, 24 Nov 2023 17:54:05 +0000
-Message-ID: <20231124172007.314539292@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.15 204/297] KEYS: trusted: Rollback init_trusted() consistently
+Date: Fri, 24 Nov 2023 17:54:06 +0000
+Message-ID: <20231124172007.349711062@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -41,82 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Jarkko Sakkinen <jarkko@kernel.org>
 
-commit 5e7afb2eb7b2a7c81e9f608cbdf74a07606fd1b5 upstream.
+commit 31de287345f41bbfaec36a5c8cbdba035cf76442 upstream.
 
-irq_remove_generic_chip() calculates the Linux interrupt number for removing the
-handler and interrupt chip based on gc::irq_base as a linear function of
-the bit positions of set bits in the @msk argument.
+Do bind neither static calls nor trusted_key_exit() before a successful
+init, in order to maintain a consistent state. In addition, depart the
+init_trusted() in the case of a real error (i.e. getting back something
+else than -ENODEV).
 
-When the generic chip is present in an irq domain, i.e. created with a call
-to irq_alloc_domain_generic_chips(), gc::irq_base contains not the base
-Linux interrupt number.  It contains the base hardware interrupt for this
-chip. It is set to 0 for the first chip in the domain, 0 + N for the next
-chip, where $N is the number of hardware interrupts per chip.
-
-That means the Linux interrupt number cannot be calculated based on
-gc::irq_base for irqdomain based chips without a domain map lookup, which
-is currently missing.
-
-Rework the code to take the irqdomain case into account and calculate the
-Linux interrupt number by a irqdomain lookup of the domain specific
-hardware interrupt number.
-
-[ tglx: Massage changelog. Reshuffle the logic and add a proper comment. ]
-
-Fixes: cfefd21e693d ("genirq: Add chip suspend and resume callbacks")
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231024150335.322282-1-herve.codina@bootlin.com
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Closes: https://lore.kernel.org/linux-integrity/CAHk-=whOPoLaWM8S8GgoOPT7a2+nMH5h3TLKtn=R_3w4R1_Uvg@mail.gmail.com/
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: 5d0682be3189 ("KEYS: trusted: Add generic trusted keys framework")
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/generic-chip.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ security/keys/trusted-keys/trusted_core.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/kernel/irq/generic-chip.c
-+++ b/kernel/irq/generic-chip.c
-@@ -541,21 +541,34 @@ EXPORT_SYMBOL_GPL(irq_setup_alt_chip);
- void irq_remove_generic_chip(struct irq_chip_generic *gc, u32 msk,
- 			     unsigned int clr, unsigned int set)
- {
--	unsigned int i = gc->irq_base;
-+	unsigned int i, virq;
+--- a/security/keys/trusted-keys/trusted_core.c
++++ b/security/keys/trusted-keys/trusted_core.c
+@@ -354,17 +354,17 @@ static int __init init_trusted(void)
+ 		if (!get_random)
+ 			get_random = kernel_get_random;
  
- 	raw_spin_lock(&gc_lock);
- 	list_del(&gc->list);
- 	raw_spin_unlock(&gc_lock);
- 
--	for (; msk; msk >>= 1, i++) {
-+	for (i = 0; msk; msk >>= 1, i++) {
- 		if (!(msk & 0x01))
- 			continue;
- 
-+		/*
-+		 * Interrupt domain based chips store the base hardware
-+		 * interrupt number in gc::irq_base. Otherwise gc::irq_base
-+		 * contains the base Linux interrupt number.
-+		 */
-+		if (gc->domain) {
-+			virq = irq_find_mapping(gc->domain, gc->irq_base + i);
-+			if (!virq)
-+				continue;
-+		} else {
-+			virq = gc->irq_base + i;
+-		static_call_update(trusted_key_seal,
+-				   trusted_key_sources[i].ops->seal);
+-		static_call_update(trusted_key_unseal,
+-				   trusted_key_sources[i].ops->unseal);
+-		static_call_update(trusted_key_get_random,
+-				   get_random);
+-		trusted_key_exit = trusted_key_sources[i].ops->exit;
+-		migratable = trusted_key_sources[i].ops->migratable;
+-
+ 		ret = trusted_key_sources[i].ops->init();
+-		if (!ret)
++		if (!ret) {
++			static_call_update(trusted_key_seal, trusted_key_sources[i].ops->seal);
++			static_call_update(trusted_key_unseal, trusted_key_sources[i].ops->unseal);
++			static_call_update(trusted_key_get_random, get_random);
++
++			trusted_key_exit = trusted_key_sources[i].ops->exit;
++			migratable = trusted_key_sources[i].ops->migratable;
 +		}
 +
- 		/* Remove handler first. That will mask the irq line */
--		irq_set_handler(i, NULL);
--		irq_set_chip(i, &no_irq_chip);
--		irq_set_chip_data(i, NULL);
--		irq_modify_status(i, clr, set);
-+		irq_set_handler(virq, NULL);
-+		irq_set_chip(virq, &no_irq_chip);
-+		irq_set_chip_data(virq, NULL);
-+		irq_modify_status(virq, clr, set);
++		if (!ret || ret != -ENODEV)
+ 			break;
  	}
- }
- EXPORT_SYMBOL_GPL(irq_remove_generic_chip);
+ 
 
 
