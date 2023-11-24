@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D552321AD;
-	Fri, 24 Nov 2023 18:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE59C2E64F;
+	Fri, 24 Nov 2023 18:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZXVwdSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB487C433C8;
-	Fri, 24 Nov 2023 18:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14yBsQCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C501C433C7;
+	Fri, 24 Nov 2023 18:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851916;
-	bh=F4KHUDjs2eVo5lz2FOUB3Ia64SmVPte3nHL6vrOpa4c=;
+	s=korg; t=1700851918;
+	bh=C4I6Yp/1XaOnvQEqCXdgsIWiRiH1+8faOKJxWDLzT2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZXVwdSFzERuYA9LturAJLGttrcuoS4XkEtShjRKkHoWXJeoErrEvjJIdAgAPquMd
-	 jsw1jd1jSYJcbFscfS7Bh5y2Kkb8iDf4bg2tAA64FYwu0Z88EnJlt89B8jvXUk6hIC
-	 TZ5ssysoU+6Rj3EFkxkbQmp8YPoZGwkAB5L+ZiH0=
+	b=14yBsQCu9s2ItsxQtsi1GO9V3IDOOexKKx2GDL3qxiPBGI84zxjWMghEGZzMXGM8s
+	 /R/vG9/Jhv1Vi9ots/75fD/LBGWIn5KCQLblMG4nB6PPkALOAxWF1MABc8B1wdV5px
+	 Mej5UULnwxcQFvreGqUOK1rPfM3TH0+NVi+FNGsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/372] netfilter: nf_tables: fix pointer math issue in nft_byteorder_eval()
-Date: Fri, 24 Nov 2023 17:48:54 +0000
-Message-ID: <20231124172015.379448167@linuxfoundation.org>
+Subject: [PATCH 6.1 148/372] net: stmmac: fix rx budget limit check
+Date: Fri, 24 Nov 2023 17:48:55 +0000
+Message-ID: <20231124172015.415397449@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,89 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Baruch Siach <baruch@tkos.co.il>
 
-[ Upstream commit c301f0981fdd3fd1ffac6836b423c4d7a8e0eb63 ]
+[ Upstream commit fa02de9e75889915b554eda1964a631fd019973b ]
 
-The problem is in nft_byteorder_eval() where we are iterating through a
-loop and writing to dst[0], dst[1], dst[2] and so on...  On each
-iteration we are writing 8 bytes.  But dst[] is an array of u32 so each
-element only has space for 4 bytes.  That means that every iteration
-overwrites part of the previous element.
+The while loop condition verifies 'count < limit'. Neither value change
+before the 'count >= limit' check. As is this check is dead code. But
+code inspection reveals a code path that modifies 'count' and then goto
+'drain_data' and back to 'read_again'. So there is a need to verify
+count value sanity after 'read_again'.
 
-I spotted this bug while reviewing commit caf3ef7468f7 ("netfilter:
-nf_tables: prevent OOB access in nft_byteorder_eval") which is a related
-issue.  I think that the reason we have not detected this bug in testing
-is that most of time we only write one element.
+Move 'read_again' up to fix the count limit check.
 
-Fixes: ce1e7989d989 ("netfilter: nft_byteorder: provide 64bit le/be conversion")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
+Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Link: https://lore.kernel.org/r/d9486296c3b6b12ab3a0515fcd47d56447a07bfc.1699897370.git.baruch@tkos.co.il
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h | 4 ++--
- net/netfilter/nft_byteorder.c     | 5 +++--
- net/netfilter/nft_meta.c          | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index d1f81a6d7773b..c726da3b7d68a 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -177,9 +177,9 @@ static inline __be32 nft_reg_load_be32(const u32 *sreg)
- 	return *(__force __be32 *)sreg;
- }
- 
--static inline void nft_reg_store64(u32 *dreg, u64 val)
-+static inline void nft_reg_store64(u64 *dreg, u64 val)
- {
--	put_unaligned(val, (u64 *)dreg);
-+	put_unaligned(val, dreg);
- }
- 
- static inline u64 nft_reg_load64(const u32 *sreg)
-diff --git a/net/netfilter/nft_byteorder.c b/net/netfilter/nft_byteorder.c
-index 2e2eb2cb17bc7..605178133d9eb 100644
---- a/net/netfilter/nft_byteorder.c
-+++ b/net/netfilter/nft_byteorder.c
-@@ -38,13 +38,14 @@ void nft_byteorder_eval(const struct nft_expr *expr,
- 
- 	switch (priv->size) {
- 	case 8: {
-+		u64 *dst64 = (void *)dst;
- 		u64 src64;
- 
- 		switch (priv->op) {
- 		case NFT_BYTEORDER_NTOH:
- 			for (i = 0; i < priv->len / 8; i++) {
- 				src64 = nft_reg_load64(&src[i]);
--				nft_reg_store64(&dst[i],
-+				nft_reg_store64(&dst64[i],
- 						be64_to_cpu((__force __be64)src64));
- 			}
- 			break;
-@@ -52,7 +53,7 @@ void nft_byteorder_eval(const struct nft_expr *expr,
- 			for (i = 0; i < priv->len / 8; i++) {
- 				src64 = (__force __u64)
- 					cpu_to_be64(nft_reg_load64(&src[i]));
--				nft_reg_store64(&dst[i], src64);
-+				nft_reg_store64(&dst64[i], src64);
- 			}
- 			break;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 1559a4dafd413..ab49cbf8801c7 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5233,10 +5233,10 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 			len = 0;
  		}
-diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
-index 55d2d49c34259..6e83321926229 100644
---- a/net/netfilter/nft_meta.c
-+++ b/net/netfilter/nft_meta.c
-@@ -63,7 +63,7 @@ nft_meta_get_eval_time(enum nft_meta_keys key,
- {
- 	switch (key) {
- 	case NFT_META_TIME_NS:
--		nft_reg_store64(dest, ktime_get_real_ns());
-+		nft_reg_store64((u64 *)dest, ktime_get_real_ns());
- 		break;
- 	case NFT_META_TIME_DAY:
- 		nft_reg_store8(dest, nft_meta_weekday());
+ 
++read_again:
+ 		if (count >= limit)
+ 			break;
+ 
+-read_again:
+ 		buf1_len = 0;
+ 		buf2_len = 0;
+ 		entry = next_entry;
 -- 
 2.42.0
 
