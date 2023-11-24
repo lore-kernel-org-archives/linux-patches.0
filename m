@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EA62FC4E;
-	Fri, 24 Nov 2023 18:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199EB2EAEA;
+	Fri, 24 Nov 2023 18:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AL+fNGlE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296ECC433C8;
-	Fri, 24 Nov 2023 18:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB6quEXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F47C433C8;
+	Fri, 24 Nov 2023 18:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851793;
-	bh=a1XVaQwH3lRfu2hjtTj+piRq0+KS0DYrHM2Eqicc02w=;
+	s=korg; t=1700851795;
+	bh=UjV4PI3TjYjVQoreCLzbEPdDbodn+SckswbRjdno2i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AL+fNGlEmo69ZONjRNwxRewE9kdgOmAWn4OrmLoDZ4EgVETV3pIRZVfPEHCWj7C/C
-	 TNSI2zVXpDVPNj6Wotp9mBjTSQGiTinmT8+5J4sP8sCURYniF/CDi11t8pya+SB02V
-	 3NTU8xypkUbrmCarsp3TgbZkJc3tlFyVcuts0aqQ=
+	b=JB6quEXcsR6Uc8sCgNvw/BzaVM0A+jGlPQu1gXGT/Pggo1cxNH35MGFZ1ai7AhwpQ
+	 +REkTNSj60vEjy7YWBrlA9qs1bxu2zeI7Uo2OYl699tybah9vmHdTUrX0Gw9fqtYGs
+	 6iqaQRoe0rdU6dV6OVEKKyAni5QKkgJO3jbzFf2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/372] ASoC: Intel: soc-acpi-cht: Add Lenovo Yoga Tab 3 Pro YT3-X90 quirk
-Date: Fri, 24 Nov 2023 17:47:47 +0000
-Message-ID: <20231124172013.184337918@linuxfoundation.org>
+Subject: [PATCH 6.1 098/372] i3c: master: mipi-i3c-hci: Fix a kernel panic for accessing DAT_data.
+Date: Fri, 24 Nov 2023 17:48:05 +0000
+Message-ID: <20231124172013.788648811@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,88 +42,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 2cb54788393134d8174ee594002baae3ce52c61e ]
+[ Upstream commit b53e9758a31c683fc8615df930262192ed5f034b ]
 
-The Lenovo Yoga Tab 3 Pro YT3-X90 x86 tablet, which ships with Android with
-a custom kernel as factory OS, does not list the used WM5102 codec inside
-its DSDT.
+The `i3c_master_bus_init` function may attach the I2C devices before the
+I3C bus initialization. In this flow, the DAT `alloc_entry`` will be used
+before the DAT `init`. Additionally, if the `i3c_master_bus_init` fails,
+the DAT `cleanup` will execute before the device is detached, which will
+execue DAT `free_entry` function. The above scenario can cause the driver
+to use DAT_data when it is NULL.
 
-Workaround this with a new snd_soc_acpi_intel_baytrail_machines[] entry
-which matches on the SST id instead of the codec id like nocodec does,
-combined with using a machine_quirk callback which returns NULL on
-other machines to skip the new entry on other machines.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231021211534.114991-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Link: https://lore.kernel.org/r/20231023080237.560936-1-billy_tsai@aspeedtech.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/common/soc-acpi-intel-cht-match.c   | 43 +++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ drivers/i3c/master/mipi-i3c-hci/dat_v1.c | 29 ++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-cht-match.c b/sound/soc/intel/common/soc-acpi-intel-cht-match.c
-index cdcbf04b8832f..5e2ec60e2954b 100644
---- a/sound/soc/intel/common/soc-acpi-intel-cht-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-cht-match.c
-@@ -75,6 +75,39 @@ static struct snd_soc_acpi_mach *cht_ess8316_quirk(void *arg)
- 	return arg;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dat_v1.c b/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
+index 97bb49ff5b53b..47b9b4d4ed3fc 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dat_v1.c
+@@ -64,15 +64,17 @@ static int hci_dat_v1_init(struct i3c_hci *hci)
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+-	/* use a bitmap for faster free slot search */
+-	hci->DAT_data = bitmap_zalloc(hci->DAT_entries, GFP_KERNEL);
+-	if (!hci->DAT_data)
+-		return -ENOMEM;
+-
+-	/* clear them */
+-	for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
+-		dat_w0_write(dat_idx, 0);
+-		dat_w1_write(dat_idx, 0);
++	if (!hci->DAT_data) {
++		/* use a bitmap for faster free slot search */
++		hci->DAT_data = bitmap_zalloc(hci->DAT_entries, GFP_KERNEL);
++		if (!hci->DAT_data)
++			return -ENOMEM;
++
++		/* clear them */
++		for (dat_idx = 0; dat_idx < hci->DAT_entries; dat_idx++) {
++			dat_w0_write(dat_idx, 0);
++			dat_w1_write(dat_idx, 0);
++		}
+ 	}
+ 
+ 	return 0;
+@@ -87,7 +89,13 @@ static void hci_dat_v1_cleanup(struct i3c_hci *hci)
+ static int hci_dat_v1_alloc_entry(struct i3c_hci *hci)
+ {
+ 	unsigned int dat_idx;
++	int ret;
+ 
++	if (!hci->DAT_data) {
++		ret = hci_dat_v1_init(hci);
++		if (ret)
++			return ret;
++	}
+ 	dat_idx = find_first_zero_bit(hci->DAT_data, hci->DAT_entries);
+ 	if (dat_idx >= hci->DAT_entries)
+ 		return -ENOENT;
+@@ -103,7 +111,8 @@ static void hci_dat_v1_free_entry(struct i3c_hci *hci, unsigned int dat_idx)
+ {
+ 	dat_w0_write(dat_idx, 0);
+ 	dat_w1_write(dat_idx, 0);
+-	__clear_bit(dat_idx, hci->DAT_data);
++	if (hci->DAT_data)
++		__clear_bit(dat_idx, hci->DAT_data);
  }
  
-+/*
-+ * The Lenovo Yoga Tab 3 Pro YT3-X90, with Android factory OS has a buggy DSDT
-+ * with the coded not being listed at all.
-+ */
-+static const struct dmi_system_id lenovo_yoga_tab3_x90[] = {
-+	{
-+		/* Lenovo Yoga Tab 3 Pro YT3-X90, codec missing from DSDT */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
-+			DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
-+		},
-+	},
-+	{ }
-+};
-+
-+static struct snd_soc_acpi_mach cht_lenovo_yoga_tab3_x90_mach = {
-+	.id = "10WM5102",
-+	.drv_name = "bytcr_wm5102",
-+	.fw_filename = "intel/fw_sst_22a8.bin",
-+	.board = "bytcr_wm5102",
-+	.sof_tplg_filename = "sof-cht-wm5102.tplg",
-+};
-+
-+static struct snd_soc_acpi_mach *lenovo_yt3_x90_quirk(void *arg)
-+{
-+	if (dmi_check_system(lenovo_yoga_tab3_x90))
-+		return &cht_lenovo_yoga_tab3_x90_mach;
-+
-+	/* Skip wildcard match snd_soc_acpi_intel_cherrytrail_machines[] entry */
-+	return NULL;
-+}
-+
- static const struct snd_soc_acpi_codecs rt5640_comp_ids = {
- 	.num_codecs = 2,
- 	.codecs = { "10EC5640", "10EC3276" },
-@@ -175,6 +208,16 @@ struct snd_soc_acpi_mach  snd_soc_acpi_intel_cherrytrail_machines[] = {
- 		.drv_name = "sof_pcm512x",
- 		.sof_tplg_filename = "sof-cht-src-50khz-pcm512x.tplg",
- 	},
-+	/*
-+	 * Special case for the Lenovo Yoga Tab 3 Pro YT3-X90 where the DSDT
-+	 * misses the codec. Match on the SST id instead, lenovo_yt3_x90_quirk()
-+	 * will return a YT3 specific mach or NULL when called on other hw,
-+	 * skipping this entry.
-+	 */
-+	{
-+		.id = "808622A8",
-+		.machine_quirk = lenovo_yt3_x90_quirk,
-+	},
- 
- #if IS_ENABLED(CONFIG_SND_SOC_INTEL_BYT_CHT_NOCODEC_MACH)
- 	/*
+ static void hci_dat_v1_set_dynamic_addr(struct i3c_hci *hci,
 -- 
 2.42.0
 
