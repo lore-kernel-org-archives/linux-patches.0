@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606272C87B;
-	Fri, 24 Nov 2023 18:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB80528DBB;
+	Fri, 24 Nov 2023 18:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iuj2wS+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF687C433C7;
-	Fri, 24 Nov 2023 18:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGpi6V6V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B757C433C8;
+	Fri, 24 Nov 2023 18:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851863;
-	bh=1yXC0iduGIcGdKVwec7KWgQiUlKDlZ1DzOXO/xrcenQ=;
+	s=korg; t=1700851865;
+	bh=PsVuzbH8evEjcyOL6DCxPD3GGMLUMhVPOy6q5fbkPCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iuj2wS+0jdMKfSjgoMFgJaLcpufPSoB1ozTYuerGOd/rSqJVIvd4IJTMOwgqiVcou
-	 8ojFuDbLjLP8OQDoySgr5KMIYTcliP1XSZaUXNswUhZ+WxNqCtJlrn+915rdUdseJC
-	 0UUmmyLqyno5XIExAT0qzqFUdwM04+dSebLKMACY=
+	b=jGpi6V6Vvf5eHA3QRXjE6dppf+BkInogzGQWbu+nxe55WotOkM748GRKM7fnC70/x
+	 RzYDClTJ7kOUG1NP4fkUGuxZcaJQPvmR7s6c+CnrdkeV2NjGMCvPnXDoPwpDNaJXZ+
+	 tsXn0Bq4kJuyyLjkejkLmXuuzzOf0YTJMlb0euYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Philipp Stanner <pstanner@redhat.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Stanislav Fomichev <sdf@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/372] i2c: dev: copy userspace array safely
-Date: Fri, 24 Nov 2023 17:48:15 +0000
-Message-ID: <20231124172014.103178835@linuxfoundation.org>
+Subject: [PATCH 6.1 126/372] net: set SOCK_RCU_FREE before inserting socket into hashtable
+Date: Fri, 24 Nov 2023 17:48:33 +0000
+Message-ID: <20231124172014.676738479@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,38 +44,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <pstanner@redhat.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit cc9c54232f04aef3a5d7f64a0ece7df00f1aaa3d ]
+[ Upstream commit 871019b22d1bcc9fab2d1feba1b9a564acbb6e99 ]
 
-i2c-dev.c utilizes memdup_user() to copy a userspace array. This is done
-without an overflow check.
+We've started to see the following kernel traces:
 
-Use the new wrapper memdup_array_user() to copy the array more safely.
+ WARNING: CPU: 83 PID: 0 at net/core/filter.c:6641 sk_lookup+0x1bd/0x1d0
 
-Suggested-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Philipp Stanner <pstanner@redhat.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+ Call Trace:
+  <IRQ>
+  __bpf_skc_lookup+0x10d/0x120
+  bpf_sk_lookup+0x48/0xd0
+  bpf_sk_lookup_tcp+0x19/0x20
+  bpf_prog_<redacted>+0x37c/0x16a3
+  cls_bpf_classify+0x205/0x2e0
+  tcf_classify+0x92/0x160
+  __netif_receive_skb_core+0xe52/0xf10
+  __netif_receive_skb_list_core+0x96/0x2b0
+  napi_complete_done+0x7b5/0xb70
+  <redacted>_poll+0x94/0xb0
+  net_rx_action+0x163/0x1d70
+  __do_softirq+0xdc/0x32e
+  asm_call_irq_on_stack+0x12/0x20
+  </IRQ>
+  do_softirq_own_stack+0x36/0x50
+  do_softirq+0x44/0x70
+
+__inet_hash can race with lockless (rcu) readers on the other cpus:
+
+  __inet_hash
+    __sk_nulls_add_node_rcu
+    <- (bpf triggers here)
+    sock_set_flag(SOCK_RCU_FREE)
+
+Let's move the SOCK_RCU_FREE part up a bit, before we are inserting
+the socket into hashtables. Note, that the race is really harmless;
+the bpf callers are handling this situation (where listener socket
+doesn't have SOCK_RCU_FREE set) correctly, so the only
+annoyance is a WARN_ONCE.
+
+More details from Eric regarding SOCK_RCU_FREE timeline:
+
+Commit 3b24d854cb35 ("tcp/dccp: do not touch listener sk_refcnt under
+synflood") added SOCK_RCU_FREE. At that time, the precise location of
+sock_set_flag(sk, SOCK_RCU_FREE) did not matter, because the thread calling
+__inet_hash() owns a reference on sk. SOCK_RCU_FREE was only tested
+at dismantle time.
+
+Commit 6acc9b432e67 ("bpf: Add helper to retrieve socket in BPF")
+started checking SOCK_RCU_FREE _after_ the lookup to infer whether
+the refcount has been taken care of.
+
+Fixes: 6acc9b432e67 ("bpf: Add helper to retrieve socket in BPF")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/inet_hashtables.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
-index ab0adaa130dae..dd35f341b16fd 100644
---- a/drivers/i2c/i2c-dev.c
-+++ b/drivers/i2c/i2c-dev.c
-@@ -450,8 +450,8 @@ static long i2cdev_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
- 		if (rdwr_arg.nmsgs > I2C_RDWR_IOCTL_MAX_MSGS)
- 			return -EINVAL;
- 
--		rdwr_pa = memdup_user(rdwr_arg.msgs,
--				      rdwr_arg.nmsgs * sizeof(struct i2c_msg));
-+		rdwr_pa = memdup_array_user(rdwr_arg.msgs,
-+					    rdwr_arg.nmsgs, sizeof(struct i2c_msg));
- 		if (IS_ERR(rdwr_pa))
- 			return PTR_ERR(rdwr_pa);
- 
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 62d9472ac8bca..f2ed2aed08ab3 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -731,12 +731,12 @@ int __inet_hash(struct sock *sk, struct sock *osk)
+ 		if (err)
+ 			goto unlock;
+ 	}
++	sock_set_flag(sk, SOCK_RCU_FREE);
+ 	if (IS_ENABLED(CONFIG_IPV6) && sk->sk_reuseport &&
+ 		sk->sk_family == AF_INET6)
+ 		__sk_nulls_add_node_tail_rcu(sk, &ilb2->nulls_head);
+ 	else
+ 		__sk_nulls_add_node_rcu(sk, &ilb2->nulls_head);
+-	sock_set_flag(sk, SOCK_RCU_FREE);
+ 	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
+ unlock:
+ 	spin_unlock(&ilb2->lock);
 -- 
 2.42.0
 
