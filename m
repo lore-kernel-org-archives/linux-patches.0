@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F89D2E64F;
-	Fri, 24 Nov 2023 18:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE44D321AD;
+	Fri, 24 Nov 2023 18:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2ouFZ64"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12CDC433C7;
-	Fri, 24 Nov 2023 18:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOEjbZOz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCF7C433C7;
+	Fri, 24 Nov 2023 18:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851906;
-	bh=9Jz5+IdppV3m48BQC0KQPftBrnI78OHQANqdZCBsgJc=;
+	s=korg; t=1700851908;
+	bh=eYj+4T6LWVhC4Uee+scTGpypBhbGhNQZKprHs8FU+MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V2ouFZ64ALKen/VO2KiyZxyyp33DZuulzN8ODx99XYRhFGJNCHe9ZgUBNjszD8fD5
-	 gx+IBXNBd1/aqJbkzWsJ2nKJA3WQXPYNMQ15hCFQR7hiqxeuuX8yBJllV5Alj+8qdV
-	 jnRQw3elIhvlfO8Z2TBohDqo1bITSXEFOl6o+3wk=
+	b=wOEjbZOz37vAW6vh9Dhdh+LymcrgRRTuIpYt2GYZGyvQ79qHPyDw7Prglw8/Hvib/
+	 QtkJC9NuisGfhzCW/eHwZQ01jurQHYlgFmO0ZT7WuIItVcQ5DmORu49W1Lhbl7AMuB
+	 iQzvpXH2fKTpteg+81s/0GQitTCE+u77k1PN3My0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrew Lunn <andrew@lunn.ch>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/372] net: ethernet: cortina: Handle large frames
-Date: Fri, 24 Nov 2023 17:48:50 +0000
-Message-ID: <20231124172015.255959264@linuxfoundation.org>
+Subject: [PATCH 6.1 144/372] net: ethernet: cortina: Fix MTU max setting
+Date: Fri, 24 Nov 2023 17:48:51 +0000
+Message-ID: <20231124172015.283249761@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -45,107 +46,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit d4d0c5b4d279bfe3585fbd806efefd3e51c82afa ]
+[ Upstream commit dc6c0bfbaa947dd7976e30e8c29b10c868b6fa42 ]
 
-The Gemini ethernet controller provides hardware checksumming
-for frames up to 1514 bytes including ethernet headers but not
-FCS.
+The RX max frame size is over 10000 for the Gemini ethernet,
+but the TX max frame size is actually just 2047 (0x7ff after
+checking the datasheet). Reflect this in what we offer to Linux,
+cap the MTU at the TX max frame minus ethernet headers.
 
-If we start sending bigger frames (after first bumping up the MTU
-on both interfaces sending and receiving the frames), truncated
-packets start to appear on the target such as in this tcpdump
-resulting from ping -s 1474:
-
-23:34:17.241983 14:d6:4d:a8:3c:4f (oui Unknown) > bc:ae:c5:6b:a8:3d (oui Unknown),
-ethertype IPv4 (0x0800), length 1514: truncated-ip - 2 bytes missing!
-(tos 0x0, ttl 64, id 32653, offset 0, flags [DF], proto ICMP (1), length 1502)
-OpenWrt.lan > Fecusia: ICMP echo request, id 1672, seq 50, length 1482
-
-If we bypass the hardware checksumming and provide a software
-fallback, everything starts working fine up to the max TX MTU
-of 2047 bytes, for example ping -s2000 192.168.1.2:
-
-00:44:29.587598 bc:ae:c5:6b:a8:3d (oui Unknown) > 14:d6:4d:a8:3c:4f (oui Unknown),
-ethertype IPv4 (0x0800), length 2042:
-(tos 0x0, ttl 64, id 51828, offset 0, flags [none], proto ICMP (1), length 2028)
-Fecusia > OpenWrt.lan: ICMP echo reply, id 1683, seq 4, length 2008
-
-The bit enabling to bypass hardware checksum (or any of the
-"TSS" bits) are undocumented in the hardware reference manual.
-The entire hardware checksum unit appears undocumented. The
-conclusion that we need to use the "bypass" bit was found by
-trial-and-error.
-
-Since no hardware checksum will happen, we slot in a software
-checksum fallback.
-
-Check for the condition where we need to compute checksum on the
-skb with either hardware or software using == CHECKSUM_PARTIAL instead
-of != CHECKSUM_NONE which is an incomplete check according to
-<linux/skbuff.h>.
-
-On the D-Link DIR-685 router this fixes a bug on the conduit
-interface to the RTL8366RB DSA switch: as the switch needs to add
-space for its tag it increases the MTU on the conduit interface
-to 1504 and that means that when the router sends packages
-of 1500 bytes these get an extra 4 bytes of DSA tag and the
-transfer fails because of the erroneous hardware checksumming,
-affecting such basic functionality as the LuCI web interface.
+We delete the code disabling the hardware checksum for large
+MTUs as netdev->mtu can no longer be larger than
+netdev->max_mtu meaning the if()-clause in gmac_fix_features()
+is never true.
 
 Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20231109-gemini-largeframe-fix-v4-2-6e611528db08@linaro.org
+Link: https://lore.kernel.org/r/20231109-gemini-largeframe-fix-v4-3-6e611528db08@linaro.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 17 ++++-------------
+ drivers/net/ethernet/cortina/gemini.h |  2 +-
+ 2 files changed, 5 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 15a0a39cc33c1..7b27d75a34ce7 100644
+index 7b27d75a34ce7..7c0b0bc033c9c 100644
 --- a/drivers/net/ethernet/cortina/gemini.c
 +++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -1145,6 +1145,7 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
- 	dma_addr_t mapping;
- 	unsigned short mtu;
- 	void *buffer;
-+	int ret;
+@@ -2000,15 +2000,6 @@ static int gmac_change_mtu(struct net_device *netdev, int new_mtu)
+ 	return 0;
+ }
  
- 	mtu  = ETH_HLEN;
- 	mtu += netdev->mtu;
-@@ -1159,9 +1160,30 @@ static int gmac_map_tx_bufs(struct net_device *netdev, struct sk_buff *skb,
- 		word3 |= mtu;
- 	}
+-static netdev_features_t gmac_fix_features(struct net_device *netdev,
+-					   netdev_features_t features)
+-{
+-	if (netdev->mtu + ETH_HLEN + VLAN_HLEN > MTU_SIZE_BIT_MASK)
+-		features &= ~GMAC_OFFLOAD_FEATURES;
+-
+-	return features;
+-}
+-
+ static int gmac_set_features(struct net_device *netdev,
+ 			     netdev_features_t features)
+ {
+@@ -2234,7 +2225,6 @@ static const struct net_device_ops gmac_351x_ops = {
+ 	.ndo_set_mac_address	= gmac_set_mac_address,
+ 	.ndo_get_stats64	= gmac_get_stats64,
+ 	.ndo_change_mtu		= gmac_change_mtu,
+-	.ndo_fix_features	= gmac_fix_features,
+ 	.ndo_set_features	= gmac_set_features,
+ };
  
--	if (skb->ip_summed != CHECKSUM_NONE) {
-+	if (skb->len >= ETH_FRAME_LEN) {
-+		/* Hardware offloaded checksumming isn't working on frames
-+		 * bigger than 1514 bytes. A hypothesis about this is that the
-+		 * checksum buffer is only 1518 bytes, so when the frames get
-+		 * bigger they get truncated, or the last few bytes get
-+		 * overwritten by the FCS.
-+		 *
-+		 * Just use software checksumming and bypass on bigger frames.
-+		 */
-+		if (skb->ip_summed == CHECKSUM_PARTIAL) {
-+			ret = skb_checksum_help(skb);
-+			if (ret)
-+				return ret;
-+		}
-+		word1 |= TSS_BYPASS_BIT;
-+	} else if (skb->ip_summed == CHECKSUM_PARTIAL) {
- 		int tcp = 0;
+@@ -2486,11 +2476,12 @@ static int gemini_ethernet_port_probe(struct platform_device *pdev)
  
-+		/* We do not switch off the checksumming on non TCP/UDP
-+		 * frames: as is shown from tests, the checksumming engine
-+		 * is smart enough to see that a frame is not actually TCP
-+		 * or UDP and then just pass it through without any changes
-+		 * to the frame.
-+		 */
- 		if (skb->protocol == htons(ETH_P_IP)) {
- 			word1 |= TSS_IP_CHKSUM_BIT;
- 			tcp = ip_hdr(skb)->protocol == IPPROTO_TCP;
+ 	netdev->hw_features = GMAC_OFFLOAD_FEATURES;
+ 	netdev->features |= GMAC_OFFLOAD_FEATURES | NETIF_F_GRO;
+-	/* We can handle jumbo frames up to 10236 bytes so, let's accept
+-	 * payloads of 10236 bytes minus VLAN and ethernet header
++	/* We can receive jumbo frames up to 10236 bytes but only
++	 * transmit 2047 bytes so, let's accept payloads of 2047
++	 * bytes minus VLAN and ethernet header
+ 	 */
+ 	netdev->min_mtu = ETH_MIN_MTU;
+-	netdev->max_mtu = 10236 - VLAN_ETH_HLEN;
++	netdev->max_mtu = MTU_SIZE_BIT_MASK - VLAN_ETH_HLEN;
+ 
+ 	port->freeq_refill = 0;
+ 	netif_napi_add(netdev, &port->napi, gmac_napi_poll);
+diff --git a/drivers/net/ethernet/cortina/gemini.h b/drivers/net/ethernet/cortina/gemini.h
+index 99efb11557436..24bb989981f23 100644
+--- a/drivers/net/ethernet/cortina/gemini.h
++++ b/drivers/net/ethernet/cortina/gemini.h
+@@ -502,7 +502,7 @@ union gmac_txdesc_3 {
+ #define SOF_BIT			0x80000000
+ #define EOF_BIT			0x40000000
+ #define EOFIE_BIT		BIT(29)
+-#define MTU_SIZE_BIT_MASK	0x1fff
++#define MTU_SIZE_BIT_MASK	0x7ff /* Max MTU 2047 bytes */
+ 
+ /* GMAC Tx Descriptor */
+ struct gmac_txdesc {
 -- 
 2.42.0
 
