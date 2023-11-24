@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E0C2D626;
-	Fri, 24 Nov 2023 18:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FCB35F04;
+	Fri, 24 Nov 2023 18:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJhAtd0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50A4C433C7;
-	Fri, 24 Nov 2023 18:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/9Eh+FP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D438C433C8;
+	Fri, 24 Nov 2023 18:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850968;
-	bh=xaVHe1WLfk0eAu9T4O8eVIIqGbTlC2EFW0BmhS3g6ho=;
+	s=korg; t=1700850970;
+	bh=BhwG92GQGWmQgsWj5KjmwN4UrHuWGj5ySaRSn37Rl8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJhAtd0WfleXkeZ4rpnuao9L4pcEqiRHm9HRwQHSSeH8sybLVOakDM6Sm7b/qANIo
-	 uncgspgJD48u1W0eGnhu8n1WDqhqMNxfd/1CNPEyKXCax8tmwGs/ruINw6AG7rnkTK
-	 IoieRgnsKY/V20J6wV+Zal/tWam3LGSFh5+fCwgc=
+	b=z/9Eh+FP5sRoa+vbA+RtU5J7DYWKfyLAGaJyzQPEd8OcJzSCRm1WHfsTdxGS8ykib
+	 rxIC3xdt2yvWSxlObqiH19l8p3dZ10g32+mbVb+f0NRSdNjqbvvThenfS5//IazAb5
+	 LM3RpfGIC2Wu5xgHe/joGNIzgPrwxPcv7cpHkGX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.5 261/491] fbdev: stifb: Make the STI next font pointer a 32-bit signed offset
-Date: Fri, 24 Nov 2023 17:48:17 +0000
-Message-ID: <20231124172032.405547852@linuxfoundation.org>
+	Tao Su <tao1.su@linux.intel.com>,
+	Yi Lai <yi1.lai@intel.com>,
+	Chao Gao <chao.gao@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.5 244/491] KVM: x86: Clear bit12 of ICR after APIC-write VM-exit
+Date: Fri, 24 Nov 2023 17:48:00 +0000
+Message-ID: <20231124172031.892219187@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -40,34 +43,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Tao Su <tao1.su@linux.intel.com>
 
-commit 8a32aa17c1cd48df1ddaa78e45abcb8c7a2220d6 upstream.
+commit 629d3698f6958ee6f8131ea324af794f973b12ac upstream.
 
-The pointer to the next STI font is actually a signed 32-bit
-offset. With this change the 64-bit kernel will correctly subract
-the (signed 32-bit) offset instead of adding a (unsigned 32-bit)
-offset. It has no effect on 32-bit kernels.
+When IPI virtualization is enabled, a WARN is triggered if bit12 of ICR
+MSR is set after APIC-write VM-exit. The reason is kvm_apic_send_ipi()
+thinks the APIC_ICR_BUSY bit should be cleared because KVM has no delay,
+but kvm_apic_write_nodecode() doesn't clear the APIC_ICR_BUSY bit.
 
-This fixes the stifb driver with a 64-bit kernel on qemu.
+Under the x2APIC section, regarding ICR, the SDM says:
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+  It remains readable only to aid in debugging; however, software should
+  not assume the value returned by reading the ICR is the last written
+  value.
+
+I.e. the guest is allowed to set bit 12.  However, the SDM also gives KVM
+free reign to do whatever it wants with the bit, so long as KVM's behavior
+doesn't confuse userspace or break KVM's ABI.
+
+Clear bit 12 so that it reads back as '0'. This approach is safer than
+"do nothing" and is consistent with the case where IPI virtualization is
+disabled or not supported, i.e.,
+
+  handle_fastpath_set_x2apic_icr_irqoff() -> kvm_x2apic_icr_write()
+
+Opportunistically replace the TODO with a comment calling out that eating
+the write is likely faster than a conditional branch around the busy bit.
+
+Link: https://lore.kernel.org/all/ZPj6iF0Q7iynn62p@google.com/
+Fixes: 5413bcba7ed5 ("KVM: x86: Add support for vICR APIC-write VM-Exits in x2APIC mode")
 Cc: stable@vger.kernel.org
+Signed-off-by: Tao Su <tao1.su@linux.intel.com>
+Tested-by: Yi Lai <yi1.lai@intel.com>
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Link: https://lore.kernel.org/r/20230914055504.151365-1-tao1.su@linux.intel.com
+[sean: tweak changelog, replace TODO with comment, drop local "val"]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/video/sticore.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/lapic.c |   26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
---- a/include/video/sticore.h
-+++ b/include/video/sticore.h
-@@ -232,7 +232,7 @@ struct sti_rom_font {
- 	 u8 height;
- 	 u8 font_type;		/* language type */
- 	 u8 bytes_per_char;
--	u32 next_font;
-+	s32 next_font;		/* note: signed int */
- 	 u8 underline_height;
- 	 u8 underline_pos;
- 	 u8 res008[2];
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2423,22 +2423,22 @@ EXPORT_SYMBOL_GPL(kvm_lapic_set_eoi);
+ void kvm_apic_write_nodecode(struct kvm_vcpu *vcpu, u32 offset)
+ {
+ 	struct kvm_lapic *apic = vcpu->arch.apic;
+-	u64 val;
+ 
+ 	/*
+-	 * ICR is a single 64-bit register when x2APIC is enabled.  For legacy
+-	 * xAPIC, ICR writes need to go down the common (slightly slower) path
+-	 * to get the upper half from ICR2.
++	 * ICR is a single 64-bit register when x2APIC is enabled, all others
++	 * registers hold 32-bit values.  For legacy xAPIC, ICR writes need to
++	 * go down the common path to get the upper half from ICR2.
++	 *
++	 * Note, using the write helpers may incur an unnecessary write to the
++	 * virtual APIC state, but KVM needs to conditionally modify the value
++	 * in certain cases, e.g. to clear the ICR busy bit.  The cost of extra
++	 * conditional branches is likely a wash relative to the cost of the
++	 * maybe-unecessary write, and both are in the noise anyways.
+ 	 */
+-	if (apic_x2apic_mode(apic) && offset == APIC_ICR) {
+-		val = kvm_lapic_get_reg64(apic, APIC_ICR);
+-		kvm_apic_send_ipi(apic, (u32)val, (u32)(val >> 32));
+-		trace_kvm_apic_write(APIC_ICR, val);
+-	} else {
+-		/* TODO: optimize to just emulate side effect w/o one more write */
+-		val = kvm_lapic_get_reg(apic, offset);
+-		kvm_lapic_reg_write(apic, offset, (u32)val);
+-	}
++	if (apic_x2apic_mode(apic) && offset == APIC_ICR)
++		kvm_x2apic_icr_write(apic, kvm_lapic_get_reg64(apic, APIC_ICR));
++	else
++		kvm_lapic_reg_write(apic, offset, kvm_lapic_get_reg(apic, offset));
+ }
+ EXPORT_SYMBOL_GPL(kvm_apic_write_nodecode);
+ 
 
 
