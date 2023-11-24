@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862C633075;
-	Fri, 24 Nov 2023 18:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10AD33CC2;
+	Fri, 24 Nov 2023 18:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RyekIfVm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FB9C433C9;
-	Fri, 24 Nov 2023 18:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhYjARS7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF43C433C8;
+	Fri, 24 Nov 2023 18:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852122;
-	bh=WAsrME7wAHph/AQWOJDWJ1hfbeQqyKhxVnaDHP9Oml0=;
+	s=korg; t=1700852124;
+	bh=T7KjMSi+nN0EqmmjwTIuDVO9HdE4mqbzvCt73XeUKzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RyekIfVmFeaOfftLwOk/BPzI1IJVSTNgDug/Tx5JyWE+zfcY6OcLmMgl+vOn1tJ3y
-	 Nv6fJXUEtOI7RyM/gh9d5/1/bqv84hPaUcVmN1ht23u8FHuNjSvYMEhTCCmPZlnVTk
-	 F7jq2NCst5IJ0aPIyKMKn3Xx7g425MMridrLe4G4=
+	b=OhYjARS7rk8WORWfbz7Ghni57bb9pbjEuvpplFCMXlH1kK+2W7dxEa6SWYGoclZdn
+	 ibaT8EcLlQir9sTzq/so9GtgvJ0bAOEdZ0Q7E2X8ND5eGtGb6uv//0JREyUi8imalT
+	 7A9O81OLEiLtosb71EYuQhUZwu+RfcE01jHD8Yhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 229/372] ACPI: FPDT: properly handle invalid FPDT subtables
-Date: Fri, 24 Nov 2023 17:50:16 +0000
-Message-ID: <20231124172018.128631770@linuxfoundation.org>
+	Vignesh Viswanathan <quic_viswanat@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 230/372] arm64: dts: qcom: ipq6018: Fix tcsr_mutex register size
+Date: Fri, 24 Nov 2023 17:50:17 +0000
+Message-ID: <20231124172018.171853523@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -41,166 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Khoruzhick <anarsoul@gmail.com>
+From: Vignesh Viswanathan <quic_viswanat@quicinc.com>
 
-commit a83c68a3bf7c418c9a46693c63c638852b0c1f4e upstream.
+commit 72fc3d58b87b0d622039c6299b89024fbb7b420f upstream.
 
-Buggy BIOSes may have invalid FPDT subtables, e.g. on my hardware:
+IPQ6018's TCSR Mutex HW lock register has 32 locks of size 4KB each.
+Total size of the TCSR Mutex registers is 128KB.
 
-S3PT subtable:
+Fix size of the tcsr_mutex hwlock register to 0x20000.
 
-7F20FE30: 53 33 50 54 24 00 00 00-00 00 00 00 00 00 18 01  *S3PT$...........*
-7F20FE40: 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  *................*
-7F20FE50: 00 00 00 00
+Changes in v2:
+ - Drop change to remove qcom,ipq6018-tcsr-mutex compatible string
+ - Added Fixes and stable tags
 
-Here the first record has zero length.
-
-FBPT subtable:
-
-7F20FE50:             46 42 50 54-3C 00 00 00 46 42 50 54  *....FBPT<...FBPT*
-7F20FE60: 02 00 30 02 00 00 00 00-00 00 00 00 00 00 00 00  *..0.............*
-7F20FE70: 2A A6 BC 6E 0B 00 00 00-1A 44 41 70 0B 00 00 00  **..n.....DAp....*
-7F20FE80: 00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00  *................*
-
-And here FBPT table has FBPT signature repeated instead of the first
-record.
-
-Current code will be looping indefinitely due to zero length records, so
-break out of the loop if record length is zero.
-
-While we are here, add proper handling for fpdt_process_subtable()
-failures.
-
-Fixes: d1eb86e59be0 ("ACPI: tables: introduce support for FPDT table")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
-[ rjw: Comment edit, added empty code lines ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
+Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230905095535.1263113-2-quic_viswanat@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_fpdt.c |   45 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 37 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/acpi/acpi_fpdt.c
-+++ b/drivers/acpi/acpi_fpdt.c
-@@ -194,12 +194,19 @@ static int fpdt_process_subtable(u64 add
- 		record_header = (void *)subtable_header + offset;
- 		offset += record_header->length;
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -248,7 +248,7 @@
  
-+		if (!record_header->length) {
-+			pr_err(FW_BUG "Zero-length record found in FPTD.\n");
-+			result = -EINVAL;
-+			goto err;
-+		}
-+
- 		switch (record_header->type) {
- 		case RECORD_S3_RESUME:
- 			if (subtable_type != SUBTABLE_S3PT) {
- 				pr_err(FW_BUG "Invalid record %d for subtable %s\n",
- 				     record_header->type, signature);
--				return -EINVAL;
-+				result = -EINVAL;
-+				goto err;
- 			}
- 			if (record_resume) {
- 				pr_err("Duplicate resume performance record found.\n");
-@@ -208,7 +215,7 @@ static int fpdt_process_subtable(u64 add
- 			record_resume = (struct resume_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &resume_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
- 		case RECORD_S3_SUSPEND:
- 			if (subtable_type != SUBTABLE_S3PT) {
-@@ -223,13 +230,14 @@ static int fpdt_process_subtable(u64 add
- 			record_suspend = (struct suspend_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &suspend_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
- 		case RECORD_BOOT:
- 			if (subtable_type != SUBTABLE_FBPT) {
- 				pr_err(FW_BUG "Invalid %d for subtable %s\n",
- 				     record_header->type, signature);
--				return -EINVAL;
-+				result = -EINVAL;
-+				goto err;
- 			}
- 			if (record_boot) {
- 				pr_err("Duplicate boot performance record found.\n");
-@@ -238,7 +246,7 @@ static int fpdt_process_subtable(u64 add
- 			record_boot = (struct boot_performance_record *)record_header;
- 			result = sysfs_create_group(fpdt_kobj, &boot_attr_group);
- 			if (result)
--				return result;
-+				goto err;
- 			break;
+ 		tcsr_mutex: hwlock@1905000 {
+ 			compatible = "qcom,ipq6018-tcsr-mutex", "qcom,tcsr-mutex";
+-			reg = <0x0 0x01905000 0x0 0x1000>;
++			reg = <0x0 0x01905000 0x0 0x20000>;
+ 			#hwlock-cells = <1>;
+ 		};
  
- 		default:
-@@ -247,6 +255,18 @@ static int fpdt_process_subtable(u64 add
- 		}
- 	}
- 	return 0;
-+
-+err:
-+	if (record_boot)
-+		sysfs_remove_group(fpdt_kobj, &boot_attr_group);
-+
-+	if (record_suspend)
-+		sysfs_remove_group(fpdt_kobj, &suspend_attr_group);
-+
-+	if (record_resume)
-+		sysfs_remove_group(fpdt_kobj, &resume_attr_group);
-+
-+	return result;
- }
- 
- static int __init acpi_init_fpdt(void)
-@@ -255,6 +275,7 @@ static int __init acpi_init_fpdt(void)
- 	struct acpi_table_header *header;
- 	struct fpdt_subtable_entry *subtable;
- 	u32 offset = sizeof(*header);
-+	int result;
- 
- 	status = acpi_get_table(ACPI_SIG_FPDT, 0, &header);
- 
-@@ -263,8 +284,8 @@ static int __init acpi_init_fpdt(void)
- 
- 	fpdt_kobj = kobject_create_and_add("fpdt", acpi_kobj);
- 	if (!fpdt_kobj) {
--		acpi_put_table(header);
--		return -ENOMEM;
-+		result = -ENOMEM;
-+		goto err_nomem;
- 	}
- 
- 	while (offset < header->length) {
-@@ -272,8 +293,10 @@ static int __init acpi_init_fpdt(void)
- 		switch (subtable->type) {
- 		case SUBTABLE_FBPT:
- 		case SUBTABLE_S3PT:
--			fpdt_process_subtable(subtable->address,
-+			result = fpdt_process_subtable(subtable->address,
- 					      subtable->type);
-+			if (result)
-+				goto err_subtable;
- 			break;
- 		default:
- 			/* Other types are reserved in ACPI 6.4 spec. */
-@@ -282,6 +305,12 @@ static int __init acpi_init_fpdt(void)
- 		offset += sizeof(*subtable);
- 	}
- 	return 0;
-+err_subtable:
-+	kobject_put(fpdt_kobj);
-+
-+err_nomem:
-+	acpi_put_table(header);
-+	return result;
- }
- 
- fs_initcall(acpi_init_fpdt);
 
 
