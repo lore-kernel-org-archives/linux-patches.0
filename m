@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8232939FC2;
-	Fri, 24 Nov 2023 18:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0920E39FF3;
+	Fri, 24 Nov 2023 18:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqcRlt6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097BCC433C8;
-	Fri, 24 Nov 2023 18:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhfJrAKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A285C433C7;
+	Fri, 24 Nov 2023 18:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849506;
-	bh=NFnreIiakvkJvlTPmh0eNCU/cO8ZJyv5XEitglfJ+MM=;
+	s=korg; t=1700849508;
+	bh=illLDD02cuYXzmgaevRBuBVvRF9Kf3lhFVrQuyqZChA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqcRlt6zlaWEsEMQVBQIhwoNOj+8E+h10oh5lzBWTQ+ftA49XaX3XL6VfknOMsURJ
-	 V5PN4zmc7P0nAnP6ssx9LX1QSVxeyRidno8516wy6f+5nAZEgveKJCxsXIENJMeOR8
-	 Ot5RxTzku2jl2D1JIy0rwNph/4XSohZBN6aiZ4hE=
+	b=NhfJrAKRONdeI2mryTrgxzLlwmALxst1bSQ4VfuejZ0OnM+y4nGzbajrb3SBK00eb
+	 kUxqmC+QETbAa1h+zmnFROjDcVPqguL4tyEjTi4WJljCjU3bBKeISrjeDSiI7MwWAo
+	 NAfTZ/fAxJs4J1eCOAfw2f5voMHIBcti8q5lMJdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 208/530] netfilter: nf_tables: bogus ENOENT when destroying element which does not exist
-Date: Fri, 24 Nov 2023 17:46:14 +0000
-Message-ID: <20231124172034.394432837@linuxfoundation.org>
+Subject: [PATCH 6.6 209/530] net: stmmac: fix rx budget limit check
+Date: Fri, 24 Nov 2023 17:46:15 +0000
+Message-ID: <20231124172034.425917767@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -41,44 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Baruch Siach <baruch@tkos.co.il>
 
-[ Upstream commit a7d5a955bfa854ac6b0c53aaf933394b4e6139e4 ]
+[ Upstream commit fa02de9e75889915b554eda1964a631fd019973b ]
 
-destroy element command bogusly reports ENOENT in case a set element
-does not exist. ENOENT errors are skipped, however, err is still set
-and propagated to userspace.
+The while loop condition verifies 'count < limit'. Neither value change
+before the 'count >= limit' check. As is this check is dead code. But
+code inspection reveals a code path that modifies 'count' and then goto
+'drain_data' and back to 'read_again'. So there is a need to verify
+count value sanity after 'read_again'.
 
- # nft destroy element ip raw BLACKLIST { 1.2.3.4 }
- Error: Could not process rule: No such file or directory
- destroy element ip raw BLACKLIST { 1.2.3.4 }
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Move 'read_again' up to fix the count limit check.
 
-Fixes: f80a612dd77c ("netfilter: nf_tables: add support to destroy operation")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ec222003bd94 ("net: stmmac: Prepare to add Split Header support")
+Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Link: https://lore.kernel.org/r/d9486296c3b6b12ab3a0515fcd47d56447a07bfc.1699897370.git.baruch@tkos.co.il
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 3bf428a188ccf..3807c6c1181fd 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -7205,10 +7205,11 @@ static int nf_tables_delsetelem(struct sk_buff *skb,
- 
- 		if (err < 0) {
- 			NL_SET_BAD_ATTR(extack, attr);
--			break;
-+			return err;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 5801f4d50f951..53358015fbe5c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5302,10 +5302,10 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 			len = 0;
  		}
- 	}
--	return err;
-+
-+	return 0;
- }
  
- /*
++read_again:
+ 		if (count >= limit)
+ 			break;
+ 
+-read_again:
+ 		buf1_len = 0;
+ 		buf2_len = 0;
+ 		entry = next_entry;
 -- 
 2.42.0
 
