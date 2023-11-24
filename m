@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0720A3306F;
-	Fri, 24 Nov 2023 19:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892522EAEA;
+	Fri, 24 Nov 2023 19:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imuHVrYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87669C433C7;
-	Fri, 24 Nov 2023 19:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhov3/90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBE6C433C8;
+	Fri, 24 Nov 2023 19:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853957;
-	bh=OM555tjCqex584ZvxIzSM+6m0MRyzM2Sz3ZDD+4j1kY=;
+	s=korg; t=1700853960;
+	bh=YGxLKFsbBAn/9P1EV2VrychEc0ciw2xGIJFM23/lla0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imuHVrYYtTl9YITFQJoUF0PA9LdMNE6I8mrbI5bvRR62VoaY7I92Y4Se/uDbY3wUr
-	 jxF5NoeN1RB9H6DXlaTwWfDF+ZnCj/ehoaGFtsRAg+C0l7iOvaOcRNCAb0Khia9o5Z
-	 Xw4sE/2lo41zhZlJbjtSnW6CBfIr57YmAOBalrMk=
+	b=nhov3/90EBxTyN3EUDBRDfYpziAbOCA62ApA25hQKwE8gKDs99d03CEnWUtUKcd6s
+	 XisyoXEtbMXoamfzHrBUQmazFobE6W5ORnCy8px9XXrmErec7nVqfHTXbAJSaijg0Q
+	 wPj3b3ajKQyPG5JNh/eGZz3hUQIfrV2Q6znQdm5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 064/159] macvlan: Dont propagate promisc change to lower dev in passthru
-Date: Fri, 24 Nov 2023 17:54:41 +0000
-Message-ID: <20231124171944.606795871@linuxfoundation.org>
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Nishanth Menon <nm@ti.com>,
+	Benjamin Bara <benjamin.bara@skidata.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.4 092/159] kernel/reboot: emergency_restart: Set correct system_state
+Date: Fri, 24 Nov 2023 17:55:09 +0000
+Message-ID: <20231124171945.735422076@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -44,61 +43,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Benjamin Bara <benjamin.bara@skidata.com>
 
-[ Upstream commit 7e1caeace0418381f36b3aa8403dfd82fc57fc53 ]
+commit 60466c067927abbcaff299845abd4b7069963139 upstream.
 
-Macvlan device in passthru mode sets its lower device promiscuous mode
-according to its MACVLAN_FLAG_NOPROMISC flag instead of synchronizing it to
-its own promiscuity setting. However, macvlan_change_rx_flags() function
-doesn't check the mode before propagating such changes to the lower device
-which can cause net_device->promiscuity counter overflow as illustrated by
-reproduction example [0] and resulting dmesg log [1]. Fix the issue by
-first verifying the mode in macvlan_change_rx_flags() function before
-propagating promiscuous mode change to the lower device.
+As the emergency restart does not call kernel_restart_prepare(), the
+system_state stays in SYSTEM_RUNNING.
 
-[0]:
-ip link add macvlan1 link enp8s0f0 type macvlan mode passthru
-ip link set macvlan1 promisc on
-ip l set dev macvlan1 up
-ip link set macvlan1 promisc off
-ip l set dev macvlan1 down
-ip l set dev macvlan1 up
+Since bae1d3a05a8b, this hinders i2c_in_atomic_xfer_mode() from becoming
+active, and therefore might lead to avoidable warnings in the restart
+handlers, e.g.:
 
-[1]:
-[ 5156.281724] macvlan1: entered promiscuous mode
-[ 5156.285467] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
-[ 5156.287639] macvlan1: left promiscuous mode
-[ 5156.288339] mlx5_core 0000:08:00.0 enp8s0f0: left promiscuous mode
-[ 5156.290907] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
-[ 5156.317197] mlx5_core 0000:08:00.0 enp8s0f0: promiscuity touches roof, set promiscuity failed. promiscuity feature of device might be broken.
+[   12.667612] WARNING: CPU: 1 PID: 1 at kernel/rcu/tree_plugin.h:318 rcu_note_context_switch+0x33c/0x6b0
+[   12.676926] Voluntary context switch within RCU read-side critical section!
+...
+[   12.742376]  schedule_timeout from wait_for_completion_timeout+0x90/0x114
+[   12.749179]  wait_for_completion_timeout from tegra_i2c_wait_completion+0x40/0x70
+...
+[   12.994527]  atomic_notifier_call_chain from machine_restart+0x34/0x58
+[   13.001050]  machine_restart from panic+0x2a8/0x32c
 
-Fixes: efdbd2b30caa ("macvlan: Propagate promiscuity setting to lower devices.")
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20231114175915.1649154-1-vladbu@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Avoid these by setting the correct system_state.
+
+Fixes: bae1d3a05a8b ("i2c: core: remove use of in_atomic()")
+Cc: stable@vger.kernel.org # v5.2+
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Tested-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
+Link: https://lore.kernel.org/r/20230327-tegra-pmic-reboot-v7-1-18699d5dcd76@skidata.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macvlan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/reboot.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index 545d181453504..46398b06676c0 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -765,7 +765,7 @@ static void macvlan_change_rx_flags(struct net_device *dev, int change)
- 	if (dev->flags & IFF_UP) {
- 		if (change & IFF_ALLMULTI)
- 			dev_set_allmulti(lowerdev, dev->flags & IFF_ALLMULTI ? 1 : -1);
--		if (change & IFF_PROMISC)
-+		if (!macvlan_passthru(vlan->port) && change & IFF_PROMISC)
- 			dev_set_promiscuity(lowerdev,
- 					    dev->flags & IFF_PROMISC ? 1 : -1);
- 
--- 
-2.42.0
-
+--- a/kernel/reboot.c
++++ b/kernel/reboot.c
+@@ -64,6 +64,7 @@ EXPORT_SYMBOL_GPL(pm_power_off_prepare);
+ void emergency_restart(void)
+ {
+ 	kmsg_dump(KMSG_DUMP_EMERG);
++	system_state = SYSTEM_RESTART;
+ 	machine_emergency_restart();
+ }
+ EXPORT_SYMBOL_GPL(emergency_restart);
 
 
