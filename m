@@ -1,33 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BC02E84A;
-	Fri, 24 Nov 2023 19:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBB02E84A;
+	Fri, 24 Nov 2023 19:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moX/hiVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CB2C433C7;
-	Fri, 24 Nov 2023 19:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7aqIAZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180DCC433C7;
+	Fri, 24 Nov 2023 19:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852439;
-	bh=sWNBlw66RBrVwGboL5Delp2Ae+2kWAj7xv3Hh7N8kCQ=;
+	s=korg; t=1700852441;
+	bh=IYiTgBZCIQ4urWrEoiZflc24qhP94zYvIAaY9oZy5A8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moX/hiVyEnxTXmFbreLlvXFwZCq193R/v4WMdZ+RYd8syHKXm5cYfLvjX4peTnE44
-	 AwxIyE2ew0awbCoFJ924jA+yjUdeRAnwBMBJRpfGVF/6xzmdvO2GwH5i126S5I8/d4
-	 TGICPxiXd8bGqCSjBMzRJpCR77eVEh8663yXg0p0=
+	b=k7aqIAZTslou2TcgbuGAT8/w/E7AF7BE13c9D1qM0hh0+HPPxtpMt5kUup0zdbYqH
+	 4wt3QSRcTXmEgNXiMBQ+sUH/ZMG3705pTGbo+g1vC1f3TLcGN1QXHbqo8BzB5ZJ94W
+	 Qr7AZqcy8ikFLt39HnC8OPbBr5/CZBxo0Bj1C3iQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Roesch <shr@devkernel.io>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Rik van Riel <riel@surriel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 333/372] mm: fix for negative counter: nr_file_hugepages
-Date: Fri, 24 Nov 2023 17:52:00 +0000
-Message-ID: <20231124172021.485474957@linuxfoundation.org>
+	Guillaume Ranquet <granquet@baylibre.com>,
+	Bo-Chen Chen <rex-bc.chen@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Jani Nikula <jani.nikula@intel.com>,
+	Chen-Yu Tsai <wenst@chromium.org>
+Subject: [PATCH 6.1 324/372] drm/mediatek/dp: fix memory leak on ->get_edid callback audio detection
+Date: Fri, 24 Nov 2023 17:51:51 +0000
+Message-ID: <20231124172021.182820979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -46,72 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Roesch <shr@devkernel.io>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit a48d5bdc877b85201e42cef9c2fdf5378164c23a upstream.
+commit dab12fa8d2bd3868cf2de485ed15a3feef28a13d upstream.
 
-While qualifiying the 6.4 release, the following warning was detected in
-messages:
+The sads returned by drm_edid_to_sad() needs to be freed.
 
-vmstat_refresh: nr_file_hugepages -15664
-
-The warning is caused by the incorrect updating of the NR_FILE_THPS
-counter in the function split_huge_page_to_list.  The if case is checking
-for folio_test_swapbacked, but the else case is missing the check for
-folio_test_pmd_mappable.  The other functions that manipulate the counter
-like __filemap_add_folio and filemap_unaccount_folio have the
-corresponding check.
-
-I have a test case, which reproduces the problem. It can be found here:
-  https://github.com/sroeschus/testcase/blob/main/vmstat_refresh/madv.c
-
-The test case reproduces on an XFS filesystem. Running the same test
-case on a BTRFS filesystem does not reproduce the problem.
-
-AFAIK version 6.1 until 6.6 are affected by this problem.
-
-[akpm@linux-foundation.org: whitespace fix]
-[shr@devkernel.io: test for folio_test_pmd_mappable()]
-  Link: https://lkml.kernel.org/r/20231108171517.2436103-1-shr@devkernel.io
-Link: https://lkml.kernel.org/r/20231106181918.1091043-1-shr@devkernel.io
-Signed-off-by: Stefan Roesch <shr@devkernel.io>
-Co-debugged-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e71a8ebbe086 ("drm/mediatek: dp: Audio support for MT8195")
+Cc: Guillaume Ranquet <granquet@baylibre.com>
+Cc: Bo-Chen Chen <rex-bc.chen@mediatek.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-mediatek@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: <stable@vger.kernel.org> # v6.1+
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230914155317.2511876-1-jani.nikula@intel.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2757,13 +2757,15 @@ int split_huge_page_to_list(struct page
- 			int nr = folio_nr_pages(folio);
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -1983,7 +1983,6 @@ static struct edid *mtk_dp_get_edid(stru
+ 	bool enabled = mtk_dp->enabled;
+ 	struct edid *new_edid = NULL;
+ 	struct mtk_dp_audio_cfg *audio_caps = &mtk_dp->info.audio_cur_cfg;
+-	struct cea_sad *sads;
  
- 			xas_split(&xas, folio, folio_order(folio));
--			if (folio_test_swapbacked(folio)) {
--				__lruvec_stat_mod_folio(folio, NR_SHMEM_THPS,
--							-nr);
--			} else {
--				__lruvec_stat_mod_folio(folio, NR_FILE_THPS,
--							-nr);
--				filemap_nr_thps_dec(mapping);
-+			if (folio_test_pmd_mappable(folio)) {
-+				if (folio_test_swapbacked(folio)) {
-+					__lruvec_stat_mod_folio(folio,
-+							NR_SHMEM_THPS, -nr);
-+				} else {
-+					__lruvec_stat_mod_folio(folio,
-+							NR_FILE_THPS, -nr);
-+					filemap_nr_thps_dec(mapping);
-+				}
- 			}
- 		}
+ 	if (!enabled) {
+ 		drm_bridge_chain_pre_enable(bridge);
+@@ -2010,7 +2009,11 @@ static struct edid *mtk_dp_get_edid(stru
+ 	}
+ 
+ 	if (new_edid) {
++		struct cea_sad *sads;
++
+ 		audio_caps->sad_count = drm_edid_to_sad(new_edid, &sads);
++		kfree(sads);
++
+ 		audio_caps->detect_monitor = drm_detect_monitor_audio(new_edid);
+ 	}
  
 
 
