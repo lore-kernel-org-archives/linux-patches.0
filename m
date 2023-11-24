@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EB23307D;
-	Fri, 24 Nov 2023 19:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E0E3306F;
+	Fri, 24 Nov 2023 19:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLBPf5HU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A66C433C7;
-	Fri, 24 Nov 2023 19:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgP5AcNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D961C433C8;
+	Fri, 24 Nov 2023 19:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853985;
-	bh=drAZr0RIM0M8T3eJJFjagyRE87LYCbCeuqcvcOzMUUE=;
+	s=korg; t=1700853987;
+	bh=j+SNEb98YV/4mJ2364vQygyQgzDbYp4htj0pKLZJcZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLBPf5HUuK3P+gu4AN6zDcD6yAc/+d64VQsc8mLeGiV3UqZe/xetY0IAFa6CKYV+G
-	 +l0Qr+Ex/8eZuR4B1Y48WGpgAO+hlfQpDD2lQgAiI9EsWgoNJdRQZmr1kcsdNjGMif
-	 9pRfS8e9EKXpTJQVaqxhk7xP9+Q4S+pmcmgXoCA8=
+	b=LgP5AcNpmRyETHUg/KPUKm+cQishNT09ZZteAcMTGqF6eZh8KYNto763/9s4DQ3UY
+	 SrMfcW7extZ2NvVtbzZQZHAqVqtk/ov/LQLCu9FRqVngAoK+GM56Eiy6dySlGEjuKZ
+	 ZZQvNxz30z//lOJk5+v052/CB7VqRG31MsxKScRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Michaud <alainm@chromium.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/159] Bluetooth: btusb: Add flag to define wideband speech capability
-Date: Fri, 24 Nov 2023 17:55:27 +0000
-Message-ID: <20231124171946.463376956@linuxfoundation.org>
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
+	Benjamin Bara <benjamin.bara@skidata.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.4 093/159] i2c: core: Run atomic i2c xfer when !preemptible
+Date: Fri, 24 Nov 2023 17:55:10 +0000
+Message-ID: <20231124171945.777059854@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -42,65 +44,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Michaud <alainm@chromium.org>
+From: Benjamin Bara <benjamin.bara@skidata.com>
 
-[ Upstream commit 3e4e3f73b9f4944ebd8100dbe107f2325aa79c6d ]
+commit aa49c90894d06e18a1ee7c095edbd2f37c232d02 upstream.
 
-This change adds a new flag to define a controller's wideband speech
-capability.  This is required since no reliable over HCI mechanism
-exists to query the controller and driver's compatibility with
-wideband speech.
+Since bae1d3a05a8b, i2c transfers are non-atomic if preemption is
+disabled. However, non-atomic i2c transfers require preemption (e.g. in
+wait_for_completion() while waiting for the DMA).
 
-Signed-off-by: Alain Michaud <alainm@chromium.org>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Stable-dep-of: da06ff1f585e ("Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+panic() calls preempt_disable_notrace() before calling
+emergency_restart(). Therefore, if an i2c device is used for the
+restart, the xfer should be atomic. This avoids warnings like:
+
+[   12.667612] WARNING: CPU: 1 PID: 1 at kernel/rcu/tree_plugin.h:318 rcu_note_context_switch+0x33c/0x6b0
+[   12.676926] Voluntary context switch within RCU read-side critical section!
+...
+[   12.742376]  schedule_timeout from wait_for_completion_timeout+0x90/0x114
+[   12.749179]  wait_for_completion_timeout from tegra_i2c_wait_completion+0x40/0x70
+...
+[   12.994527]  atomic_notifier_call_chain from machine_restart+0x34/0x58
+[   13.001050]  machine_restart from panic+0x2a8/0x32c
+
+Use !preemptible() instead, which is basically the same check as
+pre-v5.2.
+
+Fixes: bae1d3a05a8b ("i2c: core: remove use of in_atomic()")
+Cc: stable@vger.kernel.org # v5.2+
+Suggested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Acked-by: Wolfram Sang <wsa@kernel.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Tested-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
+Link: https://lore.kernel.org/r/20230327-tegra-pmic-reboot-v7-2-18699d5dcd76@skidata.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/i2c/i2c-core.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 79f77315854f4..c42324ae8eeff 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -57,6 +57,7 @@ static struct usb_driver btusb_driver;
- #define BTUSB_IFNUM_2		0x80000
- #define BTUSB_CW6622		0x100000
- #define BTUSB_MEDIATEK		0x200000
-+#define BTUSB_WIDEBAND_SPEECH	0x400000
+--- a/drivers/i2c/i2c-core.h
++++ b/drivers/i2c/i2c-core.h
+@@ -29,7 +29,7 @@ int i2c_dev_irq_from_resources(const str
+  */
+ static inline bool i2c_in_atomic_xfer_mode(void)
+ {
+-	return system_state > SYSTEM_RUNNING && irqs_disabled();
++	return system_state > SYSTEM_RUNNING && !preemptible();
+ }
  
- static const struct usb_device_id btusb_table[] = {
- 	/* Generic Bluetooth USB device */
-@@ -332,15 +333,21 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x1286, 0x204e), .driver_info = BTUSB_MARVELL },
- 
- 	/* Intel Bluetooth devices */
--	{ USB_DEVICE(0x8087, 0x0025), .driver_info = BTUSB_INTEL_NEW },
--	{ USB_DEVICE(0x8087, 0x0026), .driver_info = BTUSB_INTEL_NEW },
--	{ USB_DEVICE(0x8087, 0x0029), .driver_info = BTUSB_INTEL_NEW },
-+	{ USB_DEVICE(0x8087, 0x0025), .driver_info = BTUSB_INTEL_NEW |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x8087, 0x0026), .driver_info = BTUSB_INTEL_NEW |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x8087, 0x0029), .driver_info = BTUSB_INTEL_NEW |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x8087, 0x07da), .driver_info = BTUSB_CSR },
- 	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL },
- 	{ USB_DEVICE(0x8087, 0x0a2a), .driver_info = BTUSB_INTEL },
--	{ USB_DEVICE(0x8087, 0x0a2b), .driver_info = BTUSB_INTEL_NEW },
--	{ USB_DEVICE(0x8087, 0x0aa7), .driver_info = BTUSB_INTEL },
--	{ USB_DEVICE(0x8087, 0x0aaa), .driver_info = BTUSB_INTEL_NEW },
-+	{ USB_DEVICE(0x8087, 0x0a2b), .driver_info = BTUSB_INTEL_NEW |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x8087, 0x0aa7), .driver_info = BTUSB_INTEL |
-+						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x8087, 0x0aaa), .driver_info = BTUSB_INTEL_NEW |
-+						     BTUSB_WIDEBAND_SPEECH },
- 
- 	/* Other Intel Bluetooth devices */
- 	{ USB_VENDOR_AND_INTERFACE_INFO(0x8087, 0xe0, 0x01, 0x01),
--- 
-2.42.0
-
+ static inline int __i2c_lock_bus_helper(struct i2c_adapter *adap)
 
 
