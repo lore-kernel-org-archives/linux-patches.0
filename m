@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F40B33076;
-	Fri, 24 Nov 2023 19:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970EA35F04;
+	Fri, 24 Nov 2023 19:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2xt5aHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7ADC433C7;
-	Fri, 24 Nov 2023 19:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2nrMGtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A58C433C8;
+	Fri, 24 Nov 2023 19:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852950;
-	bh=ySgF5rFmRN9XwkeoL6lfTTlMb15xETAgxtjpTIoBp9w=;
+	s=korg; t=1700852952;
+	bh=D6mAYZneYMA5QejgN4mgqe1l6DNaOsYjVd/RoETVmHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2xt5aHZ8uABJ+tNc2m+OSv4GyF6VymwjhFRVSRceVkPeh88NTjWbIXhO5Ny20/sO
-	 k76LxbZgvgcM9t950I42Cc3CrEcwfqhYcixsPQB141e1QKd2jhFcfhbDsbCItCQ9B9
-	 of6X07Bmxb7b4oAqA1OfL3saTL5mNtbl5WRNYkuk=
+	b=w2nrMGtQqK2tQO2MhUKOpur4ivb0TEFpRA82MYiXF1u5Zau9XEMlRYlCkqHwTxR5b
+	 DcnDv//5VPfGWKt/QB24QiO0rPwc7sojKtmPqm6t+lK+lG1879jE+ckb2SNWA6mfb6
+	 UnMPjEMvGaN6AIvj6m46qU3EYKYXgwW3LWvqXXHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Lewis Huang <lewis.huang@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 5.10 187/193] drm/amd/display: Change the DMCUB mailbox memory location from FB to inbox
-Date: Fri, 24 Nov 2023 17:55:14 +0000
-Message-ID: <20231124171954.670219878@linuxfoundation.org>
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
+	He Gao <hegao@google.com>
+Subject: [PATCH 5.10 188/193] io_uring/fdinfo: lock SQ thread while retrieving thread cpu/pid
+Date: Fri, 24 Nov 2023 17:55:15 +0000
+Message-ID: <20231124171954.709375244@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -45,208 +42,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lewis Huang <lewis.huang@amd.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 5911d02cac70d7fb52009fbd37423e63f8f6f9bc upstream.
+commit 7644b1a1c9a7ae8ab99175989bfc8676055edb46 upstream.
 
-[WHY]
-Flush command sent to DMCUB spends more time for execution on
-a dGPU than on an APU. This causes cursor lag when using high
-refresh rate mouses.
+We could race with SQ thread exit, and if we do, we'll hit a NULL pointer
+dereference when the thread is cleared. Grab the SQPOLL data lock before
+attempting to get the task cpu and pid for fdinfo, this ensures we have a
+stable view of it.
 
-[HOW]
-1. Change the DMCUB mailbox memory location from FB to inbox.
-2. Only change windows memory to inbox.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Lewis Huang <lewis.huang@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218032
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: He Gao <hegao@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   13 ++++----
- drivers/gpu/drm/amd/display/dmub/dmub_srv.h       |   22 +++++++++------
- drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c   |   32 ++++++++++++++++------
- 3 files changed, 45 insertions(+), 22 deletions(-)
+ io_uring/io_uring.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1293,7 +1293,7 @@ static int dm_dmub_sw_init(struct amdgpu
- 	struct dmub_srv_create_params create_params;
- 	struct dmub_srv_region_params region_params;
- 	struct dmub_srv_region_info region_info;
--	struct dmub_srv_fb_params fb_params;
-+	struct dmub_srv_memory_params memory_params;
- 	struct dmub_srv_fb_info *fb_info;
- 	struct dmub_srv *dmub_srv;
- 	const struct dmcub_firmware_header_v1_0 *hdr;
-@@ -1389,6 +1389,7 @@ static int dm_dmub_sw_init(struct amdgpu
- 		adev->dm.dmub_fw->data +
- 		le32_to_cpu(hdr->header.ucode_array_offset_bytes) +
- 		PSP_HEADER_BYTES;
-+	region_params.is_mailbox_in_inbox = false;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -10238,7 +10238,7 @@ static int io_uring_show_cred(struct seq
  
- 	status = dmub_srv_calc_region_info(dmub_srv, &region_params,
- 					   &region_info);
-@@ -1410,10 +1411,10 @@ static int dm_dmub_sw_init(struct amdgpu
- 		return r;
- 
- 	/* Rebase the regions on the framebuffer address. */
--	memset(&fb_params, 0, sizeof(fb_params));
--	fb_params.cpu_addr = adev->dm.dmub_bo_cpu_addr;
--	fb_params.gpu_addr = adev->dm.dmub_bo_gpu_addr;
--	fb_params.region_info = &region_info;
-+	memset(&memory_params, 0, sizeof(memory_params));
-+	memory_params.cpu_fb_addr = adev->dm.dmub_bo_cpu_addr;
-+	memory_params.gpu_fb_addr = adev->dm.dmub_bo_gpu_addr;
-+	memory_params.region_info = &region_info;
- 
- 	adev->dm.dmub_fb_info =
- 		kzalloc(sizeof(*adev->dm.dmub_fb_info), GFP_KERNEL);
-@@ -1425,7 +1426,7 @@ static int dm_dmub_sw_init(struct amdgpu
- 		return -ENOMEM;
- 	}
- 
--	status = dmub_srv_calc_fb_info(dmub_srv, &fb_params, fb_info);
-+	status = dmub_srv_calc_mem_info(dmub_srv, &memory_params, fb_info);
- 	if (status != DMUB_STATUS_OK) {
- 		DRM_ERROR("Error calculating DMUB FB info: %d\n", status);
- 		return -EINVAL;
---- a/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
-+++ b/drivers/gpu/drm/amd/display/dmub/dmub_srv.h
-@@ -152,6 +152,7 @@ struct dmub_srv_region_params {
- 	uint32_t vbios_size;
- 	const uint8_t *fw_inst_const;
- 	const uint8_t *fw_bss_data;
-+	bool is_mailbox_in_inbox;
- };
- 
- /**
-@@ -171,20 +172,25 @@ struct dmub_srv_region_params {
-  */
- struct dmub_srv_region_info {
- 	uint32_t fb_size;
-+	uint32_t inbox_size;
- 	uint8_t num_regions;
- 	struct dmub_region regions[DMUB_WINDOW_TOTAL];
- };
- 
- /**
-- * struct dmub_srv_fb_params - parameters used for driver fb setup
-+ * struct dmub_srv_memory_params - parameters used for driver fb setup
-  * @region_info: region info calculated by dmub service
-- * @cpu_addr: base cpu address for the framebuffer
-- * @gpu_addr: base gpu virtual address for the framebuffer
-+ * @cpu_fb_addr: base cpu address for the framebuffer
-+ * @cpu_inbox_addr: base cpu address for the gart
-+ * @gpu_fb_addr: base gpu virtual address for the framebuffer
-+ * @gpu_inbox_addr: base gpu virtual address for the gart
-  */
--struct dmub_srv_fb_params {
-+struct dmub_srv_memory_params {
- 	const struct dmub_srv_region_info *region_info;
--	void *cpu_addr;
--	uint64_t gpu_addr;
-+	void *cpu_fb_addr;
-+	void *cpu_inbox_addr;
-+	uint64_t gpu_fb_addr;
-+	uint64_t gpu_inbox_addr;
- };
- 
- /**
-@@ -398,8 +404,8 @@ dmub_srv_calc_region_info(struct dmub_sr
-  *   DMUB_STATUS_OK - success
-  *   DMUB_STATUS_INVALID - unspecified error
-  */
--enum dmub_status dmub_srv_calc_fb_info(struct dmub_srv *dmub,
--				       const struct dmub_srv_fb_params *params,
-+enum dmub_status dmub_srv_calc_mem_info(struct dmub_srv *dmub,
-+				       const struct dmub_srv_memory_params *params,
- 				       struct dmub_srv_fb_info *out);
- 
- /**
---- a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-@@ -250,7 +250,7 @@ dmub_srv_calc_region_info(struct dmub_sr
- 	uint32_t fw_state_size = DMUB_FW_STATE_SIZE;
- 	uint32_t trace_buffer_size = DMUB_TRACE_BUFFER_SIZE;
- 	uint32_t scratch_mem_size = DMUB_SCRATCH_MEM_SIZE;
--
-+	uint32_t previous_top = 0;
- 	if (!dmub->sw_init)
- 		return DMUB_STATUS_INVALID;
- 
-@@ -275,8 +275,15 @@ dmub_srv_calc_region_info(struct dmub_sr
- 	bios->base = dmub_align(stack->top, 256);
- 	bios->top = bios->base + params->vbios_size;
- 
--	mail->base = dmub_align(bios->top, 256);
--	mail->top = mail->base + DMUB_MAILBOX_SIZE;
-+	if (params->is_mailbox_in_inbox) {
-+		mail->base = 0;
-+		mail->top = mail->base + DMUB_MAILBOX_SIZE;
-+		previous_top = bios->top;
-+	} else {
-+		mail->base = dmub_align(bios->top, 256);
-+		mail->top = mail->base + DMUB_MAILBOX_SIZE;
-+		previous_top = mail->top;
-+	}
- 
- 	fw_info = dmub_get_fw_meta_info(params);
- 
-@@ -295,7 +302,7 @@ dmub_srv_calc_region_info(struct dmub_sr
- 			dmub->fw_version = fw_info->fw_version;
- 	}
- 
--	trace_buff->base = dmub_align(mail->top, 256);
-+	trace_buff->base = dmub_align(previous_top, 256);
- 	trace_buff->top = trace_buff->base + dmub_align(trace_buffer_size, 64);
- 
- 	fw_state->base = dmub_align(trace_buff->top, 256);
-@@ -306,11 +313,14 @@ dmub_srv_calc_region_info(struct dmub_sr
- 
- 	out->fb_size = dmub_align(scratch_mem->top, 4096);
- 
-+	if (params->is_mailbox_in_inbox)
-+		out->inbox_size = dmub_align(mail->top, 4096);
-+
- 	return DMUB_STATUS_OK;
- }
- 
--enum dmub_status dmub_srv_calc_fb_info(struct dmub_srv *dmub,
--				       const struct dmub_srv_fb_params *params,
-+enum dmub_status dmub_srv_calc_mem_info(struct dmub_srv *dmub,
-+				       const struct dmub_srv_memory_params *params,
- 				       struct dmub_srv_fb_info *out)
+ static void __io_uring_show_fdinfo(struct io_ring_ctx *ctx, struct seq_file *m)
  {
- 	uint8_t *cpu_base;
-@@ -325,8 +335,8 @@ enum dmub_status dmub_srv_calc_fb_info(s
- 	if (params->region_info->num_regions != DMUB_NUM_WINDOWS)
- 		return DMUB_STATUS_INVALID;
+-	struct io_sq_data *sq = NULL;
++	int sq_pid = -1, sq_cpu = -1;
+ 	bool has_lock;
+ 	int i;
  
--	cpu_base = (uint8_t *)params->cpu_addr;
--	gpu_base = params->gpu_addr;
-+	cpu_base = (uint8_t *)params->cpu_fb_addr;
-+	gpu_base = params->gpu_fb_addr;
+@@ -10251,13 +10251,19 @@ static void __io_uring_show_fdinfo(struc
+ 	has_lock = mutex_trylock(&ctx->uring_lock);
  
- 	for (i = 0; i < DMUB_NUM_WINDOWS; ++i) {
- 		const struct dmub_region *reg =
-@@ -334,6 +344,12 @@ enum dmub_status dmub_srv_calc_fb_info(s
- 
- 		out->fb[i].cpu_addr = cpu_base + reg->base;
- 		out->fb[i].gpu_addr = gpu_base + reg->base;
+ 	if (has_lock && (ctx->flags & IORING_SETUP_SQPOLL)) {
+-		sq = ctx->sq_data;
+-		if (!sq->thread)
+-			sq = NULL;
++		struct io_sq_data *sq = ctx->sq_data;
 +
-+		if (i == DMUB_WINDOW_4_MAILBOX && params->cpu_inbox_addr != 0) {
-+			out->fb[i].cpu_addr = (uint8_t *)params->cpu_inbox_addr + reg->base;
-+			out->fb[i].gpu_addr = params->gpu_inbox_addr + reg->base;
++		if (mutex_trylock(&sq->lock)) {
++			if (sq->thread) {
++				sq_pid = task_pid_nr(sq->thread);
++				sq_cpu = task_cpu(sq->thread);
++			}
++			mutex_unlock(&sq->lock);
 +		}
-+
- 		out->fb[i].size = reg->top - reg->base;
  	}
  
+-	seq_printf(m, "SqThread:\t%d\n", sq ? task_pid_nr(sq->thread) : -1);
+-	seq_printf(m, "SqThreadCpu:\t%d\n", sq ? task_cpu(sq->thread) : -1);
++	seq_printf(m, "SqThread:\t%d\n", sq_pid);
++	seq_printf(m, "SqThreadCpu:\t%d\n", sq_cpu);
+ 	seq_printf(m, "UserFiles:\t%u\n", ctx->nr_user_files);
+ 	for (i = 0; has_lock && i < ctx->nr_user_files; i++) {
+ 		struct file *f = io_file_from_index(ctx, i);
 
 
