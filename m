@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590CA39FF2;
-	Fri, 24 Nov 2023 18:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CFF39FE3;
+	Fri, 24 Nov 2023 18:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vx6LLZR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB583C433C7;
-	Fri, 24 Nov 2023 18:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f70hEfdF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C86C433C7;
+	Fri, 24 Nov 2023 18:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848953;
-	bh=b3vA1wVwQMel1d0KmcJ4dOLGlKCkC/LRcPUnON2ER58=;
+	s=korg; t=1700848955;
+	bh=Gl/wVKn6jMigxL7WVZXwBIgysZHmfg2eQbcKeKYYLXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vx6LLZR98hQtt0nEKyK1rTU7k1ALmoxUTGVQtA4PEIwEyBPMBFkUm61dYgoqVkmbh
-	 crxjFTaPcOltFPc7K3soF472lxzKZNrbSsgGRZpVbAG7Idb4+itjuHc99NtZRUW8Pu
-	 Fa8rtHe8gs42S3LSU9/U2eKjPdBQIIkn3Kum+Oys=
+	b=f70hEfdFFW4347N2uVQrVegv5Fs5t/O/ama5hjXwjq71RpwcS19i3SrLjrjXnoZQl
+	 oPTTAC3lc62trcaP5DfODhf0smuV1Pq4sctbeI3wV9VNp6zL+Zrz5CDhX8GxdgrWAR
+	 YclldoYFDauIrzI6yOqUTzFsb23/Qoyhf+eP83yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinhyung Kang <s47.kang@samsung.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.14 47/57] ALSA: info: Fix potential deadlock at disconnection
-Date: Fri, 24 Nov 2023 17:51:11 +0000
-Message-ID: <20231124171932.060668415@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 24/57] media: vivid: avoid integer overflow
+Date: Fri, 24 Nov 2023 17:50:48 +0000
+Message-ID: <20231124171931.162090183@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -42,121 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit c7a60651953359f98dbf24b43e1bf561e1573ed4 upstream.
+[ Upstream commit 4567ebf8e8f9546b373e78e3b7d584cc30b62028 ]
 
-As reported recently, ALSA core info helper may cause a deadlock at
-the forced device disconnection during the procfs operation.
+Fixes these compiler warnings:
 
-The proc_remove() (that is called from the snd_card_disconnect()
-helper) has a synchronization of the pending procfs accesses via
-wait_for_completion().  Meanwhile, ALSA procfs helper takes the global
-mutex_lock(&info_mutex) at both the proc_open callback and
-snd_card_info_disconnect() helper.  Since the proc_open can't finish
-due to the mutex lock, wait_for_completion() never returns, either,
-hence it deadlocks.
+drivers/media/test-drivers/vivid/vivid-rds-gen.c: In function 'vivid_rds_gen_fill':
+drivers/media/test-drivers/vivid/vivid-rds-gen.c:147:56: warning: '.' directive output may be truncated writing 1 byte into a region of size between 0 and 3 [-Wformat-truncation=]
+  147 |         snprintf(rds->psname, sizeof(rds->psname), "%6d.%1d",
+      |                                                        ^
+drivers/media/test-drivers/vivid/vivid-rds-gen.c:147:52: note: directive argument in the range [0, 9]
+  147 |         snprintf(rds->psname, sizeof(rds->psname), "%6d.%1d",
+      |                                                    ^~~~~~~~~
+drivers/media/test-drivers/vivid/vivid-rds-gen.c:147:9: note: 'snprintf' output between 9 and 12 bytes into a destination of size 9
+  147 |         snprintf(rds->psname, sizeof(rds->psname), "%6d.%1d",
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  148 |                  freq / 16, ((freq & 0xf) * 10) / 16);
+      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	TASK#1				TASK#2
-	proc_reg_open()
-	  takes use_pde()
-	snd_info_text_entry_open()
-					snd_card_disconnect()
-					snd_info_card_disconnect()
-					  takes mutex_lock(&info_mutex)
-					proc_remove()
-					wait_for_completion(unused_pde)
-					  ... waiting task#1 closes
-	mutex_lock(&info_mutex)
-		=> DEADLOCK
-
-This patch is a workaround for avoiding the deadlock scenario above.
-
-The basic strategy is to move proc_remove() call outside the mutex
-lock.  proc_remove() can work gracefully without extra locking, and it
-can delete the tree recursively alone.  So, we call proc_remove() at
-snd_info_card_disconnection() at first, then delete the rest resources
-recursively within the info_mutex lock.
-
-After the change, the function snd_info_disconnect() doesn't do
-disconnection by itself any longer, but it merely clears the procfs
-pointer.  So rename the function to snd_info_clear_entries() for
-avoiding confusion.
-
-The similar change is applied to snd_info_free_entry(), too.  Since
-the proc_remove() is called only conditionally with the non-NULL
-entry->p, it's skipped after the snd_info_clear_entries() call.
-
-Reported-by: Shinhyung Kang <s47.kang@samsung.com>
-Closes: https://lore.kernel.org/r/664457955.21699345385931.JavaMail.epsvc@epcpadp4
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231109141954.4283-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/info.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/media/platform/vivid/vivid-rds-gen.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/core/info.c
-+++ b/sound/core/info.c
-@@ -72,7 +72,7 @@ struct snd_info_private_data {
- };
- 
- static int snd_info_version_init(void);
--static void snd_info_disconnect(struct snd_info_entry *entry);
-+static void snd_info_clear_entries(struct snd_info_entry *entry);
- 
- /*
- 
-@@ -598,11 +598,16 @@ void snd_info_card_disconnect(struct snd
- {
- 	if (!card)
- 		return;
--	mutex_lock(&info_mutex);
-+
- 	proc_remove(card->proc_root_link);
--	card->proc_root_link = NULL;
- 	if (card->proc_root)
--		snd_info_disconnect(card->proc_root);
-+		proc_remove(card->proc_root->p);
-+
-+	mutex_lock(&info_mutex);
-+	if (card->proc_root)
-+		snd_info_clear_entries(card->proc_root);
-+	card->proc_root_link = NULL;
-+	card->proc_root = NULL;
- 	mutex_unlock(&info_mutex);
- }
- 
-@@ -776,15 +781,14 @@ struct snd_info_entry *snd_info_create_c
- }
- EXPORT_SYMBOL(snd_info_create_card_entry);
- 
--static void snd_info_disconnect(struct snd_info_entry *entry)
-+static void snd_info_clear_entries(struct snd_info_entry *entry)
- {
- 	struct snd_info_entry *p;
- 
- 	if (!entry->p)
- 		return;
- 	list_for_each_entry(p, &entry->children, list)
--		snd_info_disconnect(p);
--	proc_remove(entry->p);
-+		snd_info_clear_entries(p);
- 	entry->p = NULL;
- }
- 
-@@ -801,8 +805,9 @@ void snd_info_free_entry(struct snd_info
- 	if (!entry)
- 		return;
- 	if (entry->p) {
-+		proc_remove(entry->p);
- 		mutex_lock(&info_mutex);
--		snd_info_disconnect(entry);
-+		snd_info_clear_entries(entry);
- 		mutex_unlock(&info_mutex);
- 	}
- 
+diff --git a/drivers/media/platform/vivid/vivid-rds-gen.c b/drivers/media/platform/vivid/vivid-rds-gen.c
+index 53c7777dc0019..d2b014336f9c4 100644
+--- a/drivers/media/platform/vivid/vivid-rds-gen.c
++++ b/drivers/media/platform/vivid/vivid-rds-gen.c
+@@ -157,7 +157,7 @@ void vivid_rds_gen_fill(struct vivid_rds_gen *rds, unsigned freq,
+ 	rds->ta = alt;
+ 	rds->ms = true;
+ 	snprintf(rds->psname, sizeof(rds->psname), "%6d.%1d",
+-		 freq / 16, ((freq & 0xf) * 10) / 16);
++		 (freq / 16) % 1000000, (((freq & 0xf) * 10) / 16) % 10);
+ 	if (alt)
+ 		strlcpy(rds->radiotext,
+ 			" The Radio Data System can switch between different Radio Texts ",
+-- 
+2.42.0
+
 
 
