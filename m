@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD1E28387;
-	Fri, 24 Nov 2023 18:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA502FC4E;
+	Fri, 24 Nov 2023 18:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDTEwuot"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFF4C433C7;
-	Fri, 24 Nov 2023 18:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2LWPHH6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EF5C433C9;
+	Fri, 24 Nov 2023 18:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850880;
-	bh=iNEpDT5mAOuixS0MP2jRQqUUv1ILjM/q+B4OD3xVQls=;
+	s=korg; t=1700850882;
+	bh=2iEVDouW3ACwyzv5rPogKeCZHumARSgfMvXenM0BGJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDTEwuotm7mlyLyoMFmI2JYJAfxtuNWIoOJ3nTmI15ATx/WMEdT+JcHRlUTf/1hO9
-	 Lskh60KFLL/qHjsceRrRizZ8YuPA5t/o2H2+RfyNLHTiZD8KQa4ZVDRvlFjZbq7rs0
-	 Q4l0gqJB9+qUap4GUkFiV+8CsGxsDowGRnOKJKQE=
+	b=N2LWPHH6v6y5aABjEHvGsJRtEj4mOL2mB4bOKEvty9gDQGPIvMCOLURvLRzsBlPC6
+	 8ZDGoLsjgi7dvGx9/SUJvDh0DJT7j7fwcrnbpwo/n87aFj8Rt3w7AYK1lS+wrtXxay
+	 kCW71wc3hxrxwNW0GQzEOniHYLTEC/Yo+noI8Szg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.5 226/491] drivers: perf: Check find_first_bit() return value
-Date: Fri, 24 Nov 2023 17:47:42 +0000
-Message-ID: <20231124172031.348496611@linuxfoundation.org>
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.5 227/491] media: venus: hfi: add checks to perform sanity on queue pointers
+Date: Fri, 24 Nov 2023 17:47:43 +0000
+Message-ID: <20231124172031.381504469@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,67 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit c6e316ac05532febb0c966fa9b55f5258ed037be upstream.
+commit 5e538fce33589da6d7cb2de1445b84d3a8a692f7 upstream.
 
-We must check the return value of find_first_bit() before using the
-return value as an index array since it happens to overflow the array
-and then panic:
+Read and write pointers are used to track the packet index in the memory
+shared between video driver and firmware. There is a possibility of OOB
+access if the read or write pointer goes beyond the queue memory size.
+Add checks for the read and write pointer to avoid OOB access.
 
-[  107.318430] Kernel BUG [#1]
-[  107.319434] CPU: 3 PID: 1238 Comm: kill Tainted: G            E      6.6.0-rc6ubuntu-defconfig #2
-[  107.319465] Hardware name: riscv-virtio,qemu (DT)
-[  107.319551] epc : pmu_sbi_ovf_handler+0x3a4/0x3ae
-[  107.319840]  ra : pmu_sbi_ovf_handler+0x52/0x3ae
-[  107.319868] epc : ffffffff80a0a77c ra : ffffffff80a0a42a sp : ffffaf83fecda350
-[  107.319884]  gp : ffffffff823961a8 tp : ffffaf8083db1dc0 t0 : ffffaf83fecda480
-[  107.319899]  t1 : ffffffff80cafe62 t2 : 000000000000ff00 s0 : ffffaf83fecda520
-[  107.319921]  s1 : ffffaf83fecda380 a0 : 00000018fca29df0 a1 : ffffffffffffffff
-[  107.319936]  a2 : 0000000001073734 a3 : 0000000000000004 a4 : 0000000000000000
-[  107.319951]  a5 : 0000000000000040 a6 : 000000001d1c8774 a7 : 0000000000504d55
-[  107.319965]  s2 : ffffffff82451f10 s3 : ffffffff82724e70 s4 : 000000000000003f
-[  107.319980]  s5 : 0000000000000011 s6 : ffffaf8083db27c0 s7 : 0000000000000000
-[  107.319995]  s8 : 0000000000000001 s9 : 00007fffb45d6558 s10: 00007fffb45d81a0
-[  107.320009]  s11: ffffaf7ffff60000 t3 : 0000000000000004 t4 : 0000000000000000
-[  107.320023]  t5 : ffffaf7f80000000 t6 : ffffaf8000000000
-[  107.320037] status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
-[  107.320081] [<ffffffff80a0a77c>] pmu_sbi_ovf_handler+0x3a4/0x3ae
-[  107.320112] [<ffffffff800b42d0>] handle_percpu_devid_irq+0x9e/0x1a0
-[  107.320131] [<ffffffff800ad92c>] generic_handle_domain_irq+0x28/0x36
-[  107.320148] [<ffffffff8065f9f8>] riscv_intc_irq+0x36/0x4e
-[  107.320166] [<ffffffff80caf4a0>] handle_riscv_irq+0x54/0x86
-[  107.320189] [<ffffffff80cb0036>] do_irq+0x64/0x96
-[  107.320271] Code: 85a6 855e b097 ff7f 80e7 9220 b709 9002 4501 bbd9 (9002) 6097
-[  107.320585] ---[ end trace 0000000000000000 ]---
-[  107.320704] Kernel panic - not syncing: Fatal exception in interrupt
-[  107.320775] SMP: stopping secondary CPUs
-[  107.321219] Kernel Offset: 0x0 from 0xffffffff80000000
-[  107.333051] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
-
-Fixes: 4905ec2fb7e6 ("RISC-V: Add sscofpmf extension support")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20231109082128.40777-1-alexghiti@rivosinc.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/riscv_pmu_sbi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/platform/qcom/venus/hfi_venus.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -629,6 +629,11 @@ static irqreturn_t pmu_sbi_ovf_handler(i
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -205,6 +205,11 @@ static int venus_write_queue(struct venu
  
- 	/* Firmware counter don't support overflow yet */
- 	fidx = find_first_bit(cpu_hw_evt->used_hw_ctrs, RISCV_MAX_COUNTERS);
-+	if (fidx == RISCV_MAX_COUNTERS) {
-+		csr_clear(CSR_SIP, BIT(riscv_pmu_irq_num));
-+		return IRQ_NONE;
-+	}
+ 	new_wr_idx = wr_idx + dwords;
+ 	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
 +
- 	event = cpu_hw_evt->events[fidx];
- 	if (!event) {
- 		csr_clear(CSR_SIP, BIT(riscv_pmu_irq_num));
++	if (wr_ptr < (u32 *)queue->qmem.kva ||
++	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
++		return -EINVAL;
++
+ 	if (new_wr_idx < qsize) {
+ 		memcpy(wr_ptr, packet, dwords << 2);
+ 	} else {
+@@ -272,6 +277,11 @@ static int venus_read_queue(struct venus
+ 	}
+ 
+ 	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
++
++	if (rd_ptr < (u32 *)queue->qmem.kva ||
++	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
++		return -EINVAL;
++
+ 	dwords = *rd_ptr >> 2;
+ 	if (!dwords)
+ 		return -EINVAL;
 
 
