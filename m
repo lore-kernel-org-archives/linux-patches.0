@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5159E39FE3;
-	Fri, 24 Nov 2023 18:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEFB31740;
+	Fri, 24 Nov 2023 18:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqrl97WL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39D0C433C7;
-	Fri, 24 Nov 2023 18:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8vN9rjA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B5BC433C8;
+	Fri, 24 Nov 2023 18:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849662;
-	bh=y5L0h772cZC3OCGdu7RuD0vH8cPpA7AJ5y+eHE85LUI=;
+	s=korg; t=1700849664;
+	bh=ycDklFN8j2mQeJx8zpagb1kuDffXBuGoLPGU+++dEcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sqrl97WLjQNDl/R7DRlLKXLw4wEJ0M9rYX9VJCRw4wK3nXoTlzBtJ5wiIAjr825IG
-	 dw9qGtuL65SScpxuLj0/zhyC8FNeYH5MqMWl2Sp7qFI/LZvJ2znmq9LAXhuL3Z7P+q
-	 ktU/foUD93rA2oGRJ0QWZbmclyBK/2oiMXooWqPA=
+	b=F8vN9rjABd46cG/vJhYR1LkLxHRkedjmW7LpQLWqKNH3vXewUURj7VihsyHJjIRCl
+	 G1JR6qvhPq/p8JuEfReemr7Iyfd9Q/H8VkcDPeybv9UBrbLRbyr9ADqXvdyfHgOh22
+	 GKEh53ALFQ4xp30t+tD0l4+3uffFqRZWN1RqHSuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Mahmoud <mmahmoud@redhat.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Tao Lyu <tao.lyu@epfl.ch>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 246/530] bpf: Fix precision tracking for BPF_ALU | BPF_TO_BE | BPF_END
-Date: Fri, 24 Nov 2023 17:46:52 +0000
-Message-ID: <20231124172035.542906837@linuxfoundation.org>
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 247/530] scsi: mpt3sas: Fix loop logic
+Date: Fri, 24 Nov 2023 17:46:53 +0000
+Message-ID: <20231124172035.571626494@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -39,64 +35,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-commit 291d044fd51f8484066300ee42afecf8c8db7b3a upstream.
+commit 3c978492c333f0c08248a8d51cecbe5eb5f617c9 upstream.
 
-BPF_END and BPF_NEG has a different specification for the source bit in
-the opcode compared to other ALU/ALU64 instructions, and is either
-reserved or use to specify the byte swap endianness. In both cases the
-source bit does not encode source operand location, and src_reg is a
-reserved field.
+The retry loop continues to iterate until the count reaches 30, even after
+receiving the correct value. Exit loop when a non-zero value is read.
 
-backtrack_insn() currently does not differentiate BPF_END and BPF_NEG
-from other ALU/ALU64 instructions, which leads to r0 being incorrectly
-marked as precise when processing BPF_ALU | BPF_TO_BE | BPF_END
-instructions. This commit teaches backtrack_insn() to correctly mark
-precision for such case.
-
-While precise tracking of BPF_NEG and other BPF_END instructions are
-correct and does not need fixing, this commit opt to process all BPF_NEG
-and BPF_END instructions within the same if-clause to better align with
-current convention used in the verifier (e.g. check_alu_op).
-
-Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
+Fixes: 4ca10f3e3174 ("scsi: mpt3sas: Perform additional retries if doorbell read returns 0")
 Cc: stable@vger.kernel.org
-Reported-by: Mohamed Mahmoud <mmahmoud@redhat.com>
-Closes: https://lore.kernel.org/r/87jzrrwptf.fsf@toke.dk
-Tested-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Tao Lyu <tao.lyu@epfl.ch>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://lore.kernel.org/r/20231102053913.12004-2-shung-hsi.yu@suse.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20231020105849.6350-1-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3444,7 +3444,12 @@ static int backtrack_insn(struct bpf_ver
- 	if (class == BPF_ALU || class == BPF_ALU64) {
- 		if (!bt_is_reg_set(bt, dreg))
- 			return 0;
--		if (opcode == BPF_MOV) {
-+		if (opcode == BPF_END || opcode == BPF_NEG) {
-+			/* sreg is reserved and unused
-+			 * dreg still need precision before this insn
-+			 */
-+			return 0;
-+		} else if (opcode == BPF_MOV) {
- 			if (BPF_SRC(insn->code) == BPF_X) {
- 				/* dreg = sreg or dreg = (s8, s16, s32)sreg
- 				 * dreg needs precision after this insn
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -223,8 +223,8 @@ _base_readl_ext_retry(const void __iomem
+ 
+ 	for (i = 0 ; i < 30 ; i++) {
+ 		ret_val = readl(addr);
+-		if (ret_val == 0)
+-			continue;
++		if (ret_val != 0)
++			break;
+ 	}
+ 
+ 	return ret_val;
 
 
