@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831F939FDD;
-	Fri, 24 Nov 2023 18:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0798A2F86B;
+	Fri, 24 Nov 2023 18:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJGd3ot8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EF7C433CA;
-	Fri, 24 Nov 2023 18:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGYaiqhX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897ACC433C8;
+	Fri, 24 Nov 2023 18:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850422;
-	bh=ls03DfXnozRpWI0VMU26s5oh9cPOL+q41IMZhvV1wWU=;
+	s=korg; t=1700850424;
+	bh=aoT5pi7flXv8JxGj9e4h+wsYLugVoI/T6YDw5NLWPWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJGd3ot8+fOwWv/O9+2QF6ok1hL+OiNhTbPeeDHiJN8KoBflxh3nkuz8By8rF8DTr
-	 LtQWCJ4bn6HsfZncq/hJshNFyx2FpWnBh7I2QdYUx4qopb/X0XPxQbzxXgMGhkHaf+
-	 AY1cL8J3foW0t9FW7wBnzeCSnpOEgz4ljJdc4EGY=
+	b=IGYaiqhXY3G52tTU9hoAcKfFLA5ZFRAfsorQUu8/afo1HV0DHInmsCXSHwqlDH7Kl
+	 SRYpCT8E8qhhmnrnWrNdMB2S2+VqATlkwUIdPbZ3NsJUnKjgnCQmJ4UoSnZTzDmng1
+	 7ENZuk8JoO5jzLaxuNh8vhnM9w2k9HWNxlGddFTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 025/491] wifi: ath12k: fix possible out-of-bound write in ath12k_wmi_ext_hal_reg_caps()
-Date: Fri, 24 Nov 2023 17:44:21 +0000
-Message-ID: <20231124172025.447006046@linuxfoundation.org>
+Subject: [PATCH 6.5 043/491] of: address: Fix address translation when address-size is greater than 2
+Date: Fri, 24 Nov 2023 17:44:39 +0000
+Message-ID: <20231124172025.981859290@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,44 +42,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit b302dce3d9edea5b93d1902a541684a967f3c63c ]
+[ Upstream commit 42604f8eb7ba04b589375049cc76282dad4677d2 ]
 
-reg_cap.phy_id is extracted from WMI event and could be an unexpected value
-in case some errors happen. As a result out-of-bound write may occur to
-soc->hal_reg_cap. Fix it by validating reg_cap.phy_id before using it.
+With the recent addition of of_pci_prop_ranges() in commit 407d1a51921e
+("PCI: Create device tree node for bridge"), the ranges property can
+have a 3 cells child address, a 3 cells parent address and a 2 cells
+child size.
 
-This is found during code review.
+A range item property for a PCI device is filled as follow:
+  <BAR_nbr> 0 0 <phys.hi> <phys.mid> <phys.low> <BAR_sizeh> <BAR_sizel>
+  <-- Child --> <-- Parent (PCI definition) --> <- BAR size (64bit) -->
 
-Compile tested only.
+This allow to translate BAR addresses from the DT. For instance:
+pci@0,0 {
+  #address-cells = <0x03>;
+  #size-cells = <0x02>;
+  device_type = "pci";
+  compatible = "pci11ab,100", "pciclass,060400", "pciclass,0604";
+  ranges = <0x82000000 0x00 0xe8000000
+            0x82000000 0x00 0xe8000000
+	    0x00 0x4400000>;
+  ...
+  dev@0,0 {
+    #address-cells = <0x03>;
+    #size-cells = <0x02>;
+    compatible = "pci1055,9660", "pciclass,020000", "pciclass,0200";
+    /* Translations for BAR0 to BAR5 */
+    ranges = <0x00 0x00 0x00 0x82010000 0x00 0xe8000000 0x00 0x2000000
+              0x01 0x00 0x00 0x82010000 0x00 0xea000000 0x00 0x1000000
+              0x02 0x00 0x00 0x82010000 0x00 0xeb000000 0x00 0x800000
+              0x03 0x00 0x00 0x82010000 0x00 0xeb800000 0x00 0x800000
+              0x04 0x00 0x00 0x82010000 0x00 0xec000000 0x00 0x20000
+              0x05 0x00 0x00 0x82010000 0x00 0xec020000 0x00 0x2000>;
+    ...
+    pci-ep-bus@0 {
+      #address-cells = <0x01>;
+      #size-cells = <0x01>;
+      compatible = "simple-bus";
+      /* Translate 0xe2000000 to BAR0 and 0xe0000000 to BAR1 */
+      ranges = <0xe2000000 0x00 0x00 0x00 0x2000000
+                0xe0000000 0x01 0x00 0x00 0x1000000>;
+      ...
+    };
+  };
+};
 
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230830020716.5420-1-quic_bqiang@quicinc.com
+During the translation process, the "default-flags" map() function is
+used to select the matching item in the ranges table and determine the
+address offset from this matching item.
+This map() function simply calls of_read_number() and when address-size
+is greater than 2, the map() function skips the extra high address part
+(ie part over 64bit). This lead to a wrong matching item and a wrong
+offset computation.
+Also during the translation itself, the extra high part related to the
+parent address is not present in the translated address.
+
+Fix the "default-flags" map() and translate() in order to take into
+account the child extra high address part in map() and the parent extra
+high address part in translate() and so having a correct address
+translation for ranges patterns such as the one given in the example
+above.
+
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://lore.kernel.org/r/20231017110221.189299-2-herve.codina@bootlin.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/of/address.c | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index eebc5a65ce3b4..416b22fa53ebf 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -3799,6 +3799,12 @@ static int ath12k_wmi_ext_hal_reg_caps(struct ath12k_base *soc,
- 			ath12k_warn(soc, "failed to extract reg cap %d\n", i);
- 			return ret;
- 		}
+diff --git a/drivers/of/address.c b/drivers/of/address.c
+index e692809ff8227..3219c51777507 100644
+--- a/drivers/of/address.c
++++ b/drivers/of/address.c
+@@ -100,6 +100,32 @@ static unsigned int of_bus_default_get_flags(const __be32 *addr)
+ 	return IORESOURCE_MEM;
+ }
+ 
++static u64 of_bus_default_flags_map(__be32 *addr, const __be32 *range, int na,
++				    int ns, int pna)
++{
++	u64 cp, s, da;
 +
-+		if (reg_cap.phy_id >= MAX_RADIOS) {
-+			ath12k_warn(soc, "unexpected phy id %u\n", reg_cap.phy_id);
-+			return -EINVAL;
-+		}
++	/* Check that flags match */
++	if (*addr != *range)
++		return OF_BAD_ADDR;
 +
- 		soc->hal_reg_cap[reg_cap.phy_id] = reg_cap;
- 	}
- 	return 0;
++	/* Read address values, skipping high cell */
++	cp = of_read_number(range + 1, na - 1);
++	s  = of_read_number(range + na + pna, ns);
++	da = of_read_number(addr + 1, na - 1);
++
++	pr_debug("default flags map, cp=%llx, s=%llx, da=%llx\n", cp, s, da);
++
++	if (da < cp || da >= (cp + s))
++		return OF_BAD_ADDR;
++	return da - cp;
++}
++
++static int of_bus_default_flags_translate(__be32 *addr, u64 offset, int na)
++{
++	/* Keep "flags" part (high cell) in translated address */
++	return of_bus_default_translate(addr + 1, offset, na - 1);
++}
+ 
+ #ifdef CONFIG_PCI
+ static unsigned int of_bus_pci_get_flags(const __be32 *addr)
+@@ -374,8 +400,8 @@ static struct of_bus of_busses[] = {
+ 		.addresses = "reg",
+ 		.match = of_bus_default_flags_match,
+ 		.count_cells = of_bus_default_count_cells,
+-		.map = of_bus_default_map,
+-		.translate = of_bus_default_translate,
++		.map = of_bus_default_flags_map,
++		.translate = of_bus_default_flags_translate,
+ 		.has_flags = true,
+ 		.get_flags = of_bus_default_flags_get_flags,
+ 	},
 -- 
 2.42.0
 
