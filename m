@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37E835F04;
-	Fri, 24 Nov 2023 18:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA7528DA1;
+	Fri, 24 Nov 2023 18:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eo9zZLKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B4AC433C8;
-	Fri, 24 Nov 2023 18:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvH9i6ez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD56C433C8;
+	Fri, 24 Nov 2023 18:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850960;
-	bh=Gp9sHQxM8e43PLWRSglQdxf9T1xLIXIRryjn1Ql+b38=;
+	s=korg; t=1700850963;
+	bh=otLju7ysGNI5ABhakR3zClhNj/+Mk4q0XuA0Q2qyj/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eo9zZLKAiZOjTlvhgbpasDTZyMoNsxRX3GHVByPjDJ6XbICrrXeHOfeuIw7+wYgTV
-	 07LX3iMkstGi0wxIDRgOhRBB0Qean24TNkSmBCbqGCyR/HbfJLnZesV1fnTIQbzRhm
-	 SwsVWtkuaPvV+X3LZO8kTJRQmEbZPUWOeVb2GsdY=
+	b=qvH9i6ezNmyIM2O57ax8s68wjPN6CqvK+y3PyiAfBapQ/HkAinOpphmSBPMDjvfos
+	 ajpCkgfNXqmAecoiN07f+pZlUmk9w09SbBuSAIv8yECupyfmP+OQaMBZoOhapHq66d
+	 uVfMTccaNJhwt0Hq3JaXbrAlmdnwwAB1rX90CchU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.5 258/491] mm/damon/sysfs: update monitoring target regions for online input commit
-Date: Fri, 24 Nov 2023 17:48:14 +0000
-Message-ID: <20231124172032.321755561@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 6.5 259/491] watchdog: move softlockup_panic back to early_param
+Date: Fri, 24 Nov 2023 17:48:15 +0000
+Message-ID: <20231124172032.350347535@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,103 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit 9732336006764e2ee61225387e3c70eae9139035 upstream.
+commit 8b793bcda61f6c3ed4f5b2ded7530ef6749580cb upstream.
 
-When user input is committed online, DAMON sysfs interface is ignoring the
-user input for the monitoring target regions.  Such request is valid and
-useful for fixed monitoring target regions-based monitoring ops like
-'paddr' or 'fvaddr'.
+Setting softlockup_panic from do_sysctl_args() causes it to take effect
+later in boot.  The lockup detector is enabled before SMP is brought
+online, but do_sysctl_args runs afterwards.  If a user wants to set
+softlockup_panic on boot and have it trigger should a softlockup occur
+during onlining of the non-boot processors, they could do this prior to
+commit f117955a2255 ("kernel/watchdog.c: convert {soft/hard}lockup boot
+parameters to sysctl aliases").  However, after this commit the value
+of softlockup_panic is set too late to be of help for this type of
+problem.  Restore the prior behavior.
 
-Update the region boundaries as user specified, too.  Note that the
-monitoring results of the regions that overlap between the latest
-monitoring target regions and the new target regions are preserved.
-
-Treat empty monitoring target regions user request as a request to just
-make no change to the monitoring target regions.  Otherwise, users should
-set the monitoring target regions same to current one for every online
-input commit, and it could be challenging for dynamic monitoring target
-regions update DAMON ops like 'vaddr'.  If the user really need to remove
-all monitoring target regions, they can simply remove the target and then
-create the target again with empty target regions.
-
-Link: https://lkml.kernel.org/r/20231031170131.46972-1-sj@kernel.org
-Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.19+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Cc: stable@vger.kernel.org
+Fixes: f117955a2255 ("kernel/watchdog.c: convert {soft/hard}lockup boot parameters to sysctl aliases")
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |   47 ++++++++++++++++++++++++++++++-----------------
- 1 file changed, 30 insertions(+), 17 deletions(-)
+ fs/proc/proc_sysctl.c |    1 -
+ kernel/watchdog.c     |    7 +++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1144,34 +1144,47 @@ destroy_targets_out:
- 	return err;
- }
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -1574,7 +1574,6 @@ static const struct sysctl_alias sysctl_
+ 	{"hung_task_panic",			"kernel.hung_task_panic" },
+ 	{"numa_zonelist_order",			"vm.numa_zonelist_order" },
+ 	{"softlockup_all_cpu_backtrace",	"kernel.softlockup_all_cpu_backtrace" },
+-	{"softlockup_panic",			"kernel.softlockup_panic" },
+ 	{ }
+ };
  
--static int damon_sysfs_update_target(struct damon_target *target,
--		struct damon_ctx *ctx,
--		struct damon_sysfs_target *sys_target)
-+static int damon_sysfs_update_target_pid(struct damon_target *target, int pid)
- {
--	struct pid *pid;
--	struct damon_region *r, *next;
--
--	if (!damon_target_has_pid(ctx))
--		return 0;
-+	struct pid *pid_new;
+--- a/kernel/watchdog.c
++++ b/kernel/watchdog.c
+@@ -283,6 +283,13 @@ static DEFINE_PER_CPU(struct hrtimer, wa
+ static DEFINE_PER_CPU(bool, softlockup_touch_sync);
+ static unsigned long soft_lockup_nmi_warn;
  
--	pid = find_get_pid(sys_target->pid);
--	if (!pid)
-+	pid_new = find_get_pid(pid);
-+	if (!pid_new)
- 		return -EINVAL;
- 
--	/* no change to the target */
--	if (pid == target->pid) {
--		put_pid(pid);
-+	if (pid_new == target->pid) {
-+		put_pid(pid_new);
- 		return 0;
- 	}
- 
--	/* remove old monitoring results and update the target's pid */
--	damon_for_each_region_safe(r, next, target)
--		damon_destroy_region(r, target);
- 	put_pid(target->pid);
--	target->pid = pid;
-+	target->pid = pid_new;
- 	return 0;
- }
- 
-+static int damon_sysfs_update_target(struct damon_target *target,
-+		struct damon_ctx *ctx,
-+		struct damon_sysfs_target *sys_target)
++static int __init softlockup_panic_setup(char *str)
 +{
-+	int err;
-+
-+	if (damon_target_has_pid(ctx)) {
-+		err = damon_sysfs_update_target_pid(target, sys_target->pid);
-+		if (err)
-+			return err;
-+	}
-+
-+	/*
-+	 * Do monitoring target region boundary update only if one or more
-+	 * regions are set by the user.  This is for keeping current monitoring
-+	 * target results and range easier, especially for dynamic monitoring
-+	 * target regions update ops like 'vaddr'.
-+	 */
-+	if (sys_target->regions->nr)
-+		err = damon_sysfs_set_regions(target, sys_target->regions);
-+	return err;
++	softlockup_panic = simple_strtoul(str, NULL, 0);
++	return 1;
 +}
++__setup("softlockup_panic=", softlockup_panic_setup);
 +
- static int damon_sysfs_set_targets(struct damon_ctx *ctx,
- 		struct damon_sysfs_targets *sysfs_targets)
+ static int __init nowatchdog_setup(char *str)
  {
+ 	watchdog_user_enabled = 0;
 
 
