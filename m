@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2B239FE1;
-	Fri, 24 Nov 2023 18:12:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68F939FE1;
+	Fri, 24 Nov 2023 18:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWSJiED8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84D2C433C8;
-	Fri, 24 Nov 2023 18:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mryd9X6X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6C9C433C9;
+	Fri, 24 Nov 2023 18:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849556;
-	bh=K9xm/Z2vcMAhsaqwcnfagHvC+4p0E/W2G5B1IHpYAH4=;
+	s=korg; t=1700849558;
+	bh=xSDFlCbknwvxfWar98FiD9YWlWBj141tAdZywRfOOOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWSJiED8DCSzlbhHhr39uDddgKJMTLGmekW5xHfHplU3JCpdzrc++WLwC8Ndt0xVM
-	 iChnp3mzCU507WuammUNpaDJ99YsxxKRZuOB8Lke5hjN6AgD1IlzSqGMyr7iUU0m/W
-	 XCqh+HPtCR4x8Wgd2fko4S0PKlu0+qymAoyDFGtg=
+	b=mryd9X6X4ZueC22SJhPMqWDlPHuXyw0yrg8t6wxbiQOHSkhoKQ+wryvQhAKzoD5kD
+	 kswhNOL4fwuv/BAJ1Rp2GalmV2TSFQgrzvGxi/a4LtItu08oH6dWHFNweOrcERGRhw
+	 kLPewzfOWRTsLyuNeCANZFjJbNRRa12ttyGK2Wvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 229/530] net: sched: do not offload flows with a helper in act_ct
-Date: Fri, 24 Nov 2023 17:46:35 +0000
-Message-ID: <20231124172035.021875559@linuxfoundation.org>
+Subject: [PATCH 6.6 230/530] macvlan: Dont propagate promisc change to lower dev in passthru
+Date: Fri, 24 Nov 2023 17:46:36 +0000
+Message-ID: <20231124172035.049053487@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,88 +44,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 7cd5af0e937a197295f3aa3721031f0fbae49cff ]
+[ Upstream commit 7e1caeace0418381f36b3aa8403dfd82fc57fc53 ]
 
-There is no hardware supporting ct helper offload. However, prior to this
-patch, a flower filter with a helper in the ct action can be successfully
-set into the HW, for example (eth1 is a bnxt NIC):
+Macvlan device in passthru mode sets its lower device promiscuous mode
+according to its MACVLAN_FLAG_NOPROMISC flag instead of synchronizing it to
+its own promiscuity setting. However, macvlan_change_rx_flags() function
+doesn't check the mode before propagating such changes to the lower device
+which can cause net_device->promiscuity counter overflow as illustrated by
+reproduction example [0] and resulting dmesg log [1]. Fix the issue by
+first verifying the mode in macvlan_change_rx_flags() function before
+propagating promiscuous mode change to the lower device.
 
-  # tc qdisc add dev eth1 ingress_block 22 ingress
-  # tc filter add block 22 proto ip flower skip_sw ip_proto tcp \
-    dst_port 21 ct_state -trk action ct helper ipv4-tcp-ftp
-  # tc filter show dev eth1 ingress
+[0]:
+ip link add macvlan1 link enp8s0f0 type macvlan mode passthru
+ip link set macvlan1 promisc on
+ip l set dev macvlan1 up
+ip link set macvlan1 promisc off
+ip l set dev macvlan1 down
+ip l set dev macvlan1 up
 
-    filter block 22 protocol ip pref 49152 flower chain 0 handle 0x1
-      eth_type ipv4
-      ip_proto tcp
-      dst_port 21
-      ct_state -trk
-      skip_sw
-      in_hw in_hw_count 1   <----
-        action order 1: ct zone 0 helper ipv4-tcp-ftp pipe
-         index 2 ref 1 bind 1
-        used_hw_stats delayed
+[1]:
+[ 5156.281724] macvlan1: entered promiscuous mode
+[ 5156.285467] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
+[ 5156.287639] macvlan1: left promiscuous mode
+[ 5156.288339] mlx5_core 0000:08:00.0 enp8s0f0: left promiscuous mode
+[ 5156.290907] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
+[ 5156.317197] mlx5_core 0000:08:00.0 enp8s0f0: promiscuity touches roof, set promiscuity failed. promiscuity feature of device might be broken.
 
-This might cause the flower filter not to work as expected in the HW.
-
-This patch avoids this problem by simply returning -EOPNOTSUPP in
-tcf_ct_offload_act_setup() to not allow to offload flows with a helper
-in act_ct.
-
-Fixes: a21b06e73191 ("net: sched: add helper support in act_ct")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://lore.kernel.org/r/f8685ec7702c4a448a1371a8b34b43217b583b9d.1699898008.git.lucien.xin@gmail.com
+Fixes: efdbd2b30caa ("macvlan: Propagate promiscuity setting to lower devices.")
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20231114175915.1649154-1-vladbu@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tc_act/tc_ct.h | 9 +++++++++
- net/sched/act_ct.c         | 3 +++
- 2 files changed, 12 insertions(+)
+ drivers/net/macvlan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/tc_act/tc_ct.h b/include/net/tc_act/tc_ct.h
-index b24ea2d9400ba..1dc2f827d0bcf 100644
---- a/include/net/tc_act/tc_ct.h
-+++ b/include/net/tc_act/tc_ct.h
-@@ -57,6 +57,11 @@ static inline struct nf_flowtable *tcf_ct_ft(const struct tc_action *a)
- 	return to_ct_params(a)->nf_ft;
- }
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index 02bd201bc7e58..c8da94af4161a 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -780,7 +780,7 @@ static void macvlan_change_rx_flags(struct net_device *dev, int change)
+ 	if (dev->flags & IFF_UP) {
+ 		if (change & IFF_ALLMULTI)
+ 			dev_set_allmulti(lowerdev, dev->flags & IFF_ALLMULTI ? 1 : -1);
+-		if (change & IFF_PROMISC)
++		if (!macvlan_passthru(vlan->port) && change & IFF_PROMISC)
+ 			dev_set_promiscuity(lowerdev,
+ 					    dev->flags & IFF_PROMISC ? 1 : -1);
  
-+static inline struct nf_conntrack_helper *tcf_ct_helper(const struct tc_action *a)
-+{
-+	return to_ct_params(a)->helper;
-+}
-+
- #else
- static inline uint16_t tcf_ct_zone(const struct tc_action *a) { return 0; }
- static inline int tcf_ct_action(const struct tc_action *a) { return 0; }
-@@ -64,6 +69,10 @@ static inline struct nf_flowtable *tcf_ct_ft(const struct tc_action *a)
- {
- 	return NULL;
- }
-+static inline struct nf_conntrack_helper *tcf_ct_helper(const struct tc_action *a)
-+{
-+	return NULL;
-+}
- #endif /* CONFIG_NF_CONNTRACK */
- 
- #if IS_ENABLED(CONFIG_NET_ACT_CT)
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index 3922d825ef2d8..6dcc4585576e8 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -1535,6 +1535,9 @@ static int tcf_ct_offload_act_setup(struct tc_action *act, void *entry_data,
- 	if (bind) {
- 		struct flow_action_entry *entry = entry_data;
- 
-+		if (tcf_ct_helper(act))
-+			return -EOPNOTSUPP;
-+
- 		entry->id = FLOW_ACTION_CT;
- 		entry->ct.action = tcf_ct_action(act);
- 		entry->ct.zone = tcf_ct_zone(act);
 -- 
 2.42.0
 
