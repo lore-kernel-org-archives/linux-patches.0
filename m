@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CAE39FF7;
-	Fri, 24 Nov 2023 18:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144F034197;
+	Fri, 24 Nov 2023 18:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i2pN8NrB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071E0C433C8;
-	Fri, 24 Nov 2023 18:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7cFXLq2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929CAC433C8;
+	Fri, 24 Nov 2023 18:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850063;
-	bh=IKe/G64n//hUczacjlBuOYU6biHHV2mU6+dXu4AufOs=;
+	s=korg; t=1700850065;
+	bh=GdQUkidxrA8xNVvD0S9c8OE+HScrJm2+LBZB9KPEeJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2pN8NrBZsPJlvwrNJBglC/p+kGI7ZSMPalhXu3Flb3ACR1tRPjLGQxL+Vqyf1ETo
-	 vM0cOFHjJc0QasTUibogoHGqPCrDaVx2UJIT9gQxHsgjsaGAT0SZq8+l5mrlM6QXIy
-	 sowXeHyfQ2m/xVjyAAOg6UUBoTd9Px2owHaLvyiY=
+	b=r7cFXLq20ZGhzwQAcW6NlRn3iMVbRYc36Q15/9y2/iaqJ4MLOzzXq3HbfQOJLhIaH
+	 H1aANk5PY2RSyFAIV+zjWICv/xNDo1kQp5Qqrreit4n94Zq6ncu5KG6ZUlr8LqxAvw
+	 VKoKN5hGqQGXxjotr2P7trNTkvhXZju+OO3XX0bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 406/530] torture: Make torture_hrtimeout_ns() take an hrtimer mode parameter
-Date: Fri, 24 Nov 2023 17:49:32 +0000
-Message-ID: <20231124172040.417688694@linuxfoundation.org>
+Subject: [PATCH 6.6 407/530] rcutorture: Fix stuttering races and other issues
+Date: Fri, 24 Nov 2023 17:49:33 +0000
+Message-ID: <20231124172040.447373281@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,98 +43,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-[ Upstream commit a741deac787f0d2d7068638c067db20af9e63752 ]
+[ Upstream commit cca42bd8eb1b54a4c9bbf48c79d120e66619a3e4 ]
 
-The current torture-test sleeps are waiting for a duration, but there
-are situations where it is better to wait for an absolute time, for
-example, when ending a stutter interval.  This commit therefore adds
-an hrtimer mode parameter to torture_hrtimeout_ns().  Why not also the
-other torture_hrtimeout_*() functions?  The theory is that most absolute
-times will be in nanoseconds, especially not (say) jiffies.
+The stuttering code isn't functioning as expected. Ideally, it should
+pause the torture threads for a designated period before resuming. Yet,
+it fails to halt the test for the correct duration. Additionally, a race
+condition exists, potentially causing the stuttering code to pause for
+an extended period if the 'spt' variable is non-zero due to the stutter
+orchestration thread's inadequate CPU time.
 
+Moreover, over-stuttering can hinder RCU's progress on TREE07 kernels.
+This happens as the stuttering code may run within a softirq due to RCU
+callbacks. Consequently, ksoftirqd keeps a CPU busy for several seconds,
+thus obstructing RCU's progress. This situation triggers a warning
+message in the logs:
+
+[ 2169.481783] rcu_torture_writer: rtort_pipe_count: 9
+
+This warning suggests that an RCU torture object, although invisible to
+RCU readers, couldn't make it past the pipe array and be freed -- a
+strong indication that there weren't enough grace periods during the
+stutter interval.
+
+To address these issues, this patch sets the "stutter end" time to an
+absolute point in the future set by the main stutter thread. This is
+then used for waiting in stutter_wait(). While the stutter thread still
+defines this absolute time, the waiters' waiting logic doesn't rely on
+the stutter thread receiving sufficient CPU time to halt the stuttering
+as the halting is now self-controlled.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Stable-dep-of: cca42bd8eb1b ("rcutorture: Fix stuttering races and other issues")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/torture.h |  3 ++-
- kernel/torture.c        | 13 +++++++------
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ kernel/torture.c | 45 ++++++++++++---------------------------------
+ 1 file changed, 12 insertions(+), 33 deletions(-)
 
-diff --git a/include/linux/torture.h b/include/linux/torture.h
-index bb466eec01e42..017f0f710815a 100644
---- a/include/linux/torture.h
-+++ b/include/linux/torture.h
-@@ -81,7 +81,8 @@ static inline void torture_random_init(struct torture_random_state *trsp)
- }
- 
- /* Definitions for high-resolution-timer sleeps. */
--int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, struct torture_random_state *trsp);
-+int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, const enum hrtimer_mode mode,
-+			 struct torture_random_state *trsp);
- int torture_hrtimeout_us(u32 baset_us, u32 fuzzt_ns, struct torture_random_state *trsp);
- int torture_hrtimeout_ms(u32 baset_ms, u32 fuzzt_us, struct torture_random_state *trsp);
- int torture_hrtimeout_jiffies(u32 baset_j, struct torture_random_state *trsp);
 diff --git a/kernel/torture.c b/kernel/torture.c
-index b28b05bbef027..e851b8e9390b3 100644
+index e851b8e9390b3..c7b475883b9a8 100644
 --- a/kernel/torture.c
 +++ b/kernel/torture.c
-@@ -87,14 +87,15 @@ EXPORT_SYMBOL_GPL(verbose_torout_sleep);
-  * nanosecond random fuzz.  This function and its friends desynchronize
-  * testing from the timer wheel.
+@@ -721,7 +721,7 @@ static void torture_shutdown_cleanup(void)
+  * suddenly applied to or removed from the system.
   */
--int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, struct torture_random_state *trsp)
-+int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, const enum hrtimer_mode mode,
-+			 struct torture_random_state *trsp)
+ static struct task_struct *stutter_task;
+-static int stutter_pause_test;
++static ktime_t stutter_till_abs_time;
+ static int stutter;
+ static int stutter_gap;
+ 
+@@ -731,30 +731,16 @@ static int stutter_gap;
+  */
+ bool stutter_wait(const char *title)
  {
- 	ktime_t hto = baset_ns;
+-	unsigned int i = 0;
+ 	bool ret = false;
+-	int spt;
++	ktime_t till_ns;
  
- 	if (trsp)
- 		hto += torture_random(trsp) % fuzzt_ns;
- 	set_current_state(TASK_IDLE);
--	return schedule_hrtimeout(&hto, HRTIMER_MODE_REL);
-+	return schedule_hrtimeout(&hto, mode);
+ 	cond_resched_tasks_rcu_qs();
+-	spt = READ_ONCE(stutter_pause_test);
+-	for (; spt; spt = READ_ONCE(stutter_pause_test)) {
+-		if (!ret && !rt_task(current)) {
+-			sched_set_normal(current, MAX_NICE);
+-			ret = true;
+-		}
+-		if (spt == 1) {
+-			torture_hrtimeout_jiffies(1, NULL);
+-		} else if (spt == 2) {
+-			while (READ_ONCE(stutter_pause_test)) {
+-				if (!(i++ & 0xffff))
+-					torture_hrtimeout_us(10, 0, NULL);
+-				cond_resched();
+-			}
+-		} else {
+-			torture_hrtimeout_jiffies(round_jiffies_relative(HZ), NULL);
+-		}
+-		torture_shutdown_absorb(title);
++	till_ns = READ_ONCE(stutter_till_abs_time);
++	if (till_ns && ktime_before(ktime_get(), till_ns)) {
++		torture_hrtimeout_ns(till_ns, 0, HRTIMER_MODE_ABS, NULL);
++		ret = true;
+ 	}
++	torture_shutdown_absorb(title);
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_ns);
- 
-@@ -106,7 +107,7 @@ int torture_hrtimeout_us(u32 baset_us, u32 fuzzt_ns, struct torture_random_state
+ EXPORT_SYMBOL_GPL(stutter_wait);
+@@ -765,23 +751,16 @@ EXPORT_SYMBOL_GPL(stutter_wait);
+  */
+ static int torture_stutter(void *arg)
  {
- 	ktime_t baset_ns = baset_us * NSEC_PER_USEC;
+-	DEFINE_TORTURE_RANDOM(rand);
+-	int wtime;
++	ktime_t till_ns;
  
--	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
-+	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_us);
- 
-@@ -123,7 +124,7 @@ int torture_hrtimeout_ms(u32 baset_ms, u32 fuzzt_us, struct torture_random_state
- 		fuzzt_ns = (u32)~0U;
- 	else
- 		fuzzt_ns = fuzzt_us * NSEC_PER_USEC;
--	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
-+	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_ms);
- 
-@@ -136,7 +137,7 @@ int torture_hrtimeout_jiffies(u32 baset_j, struct torture_random_state *trsp)
- {
- 	ktime_t baset_ns = jiffies_to_nsecs(baset_j);
- 
--	return torture_hrtimeout_ns(baset_ns, jiffies_to_nsecs(1), trsp);
-+	return torture_hrtimeout_ns(baset_ns, jiffies_to_nsecs(1), HRTIMER_MODE_REL, trsp);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_jiffies);
- 
-@@ -153,7 +154,7 @@ int torture_hrtimeout_s(u32 baset_s, u32 fuzzt_ms, struct torture_random_state *
- 		fuzzt_ns = (u32)~0U;
- 	else
- 		fuzzt_ns = fuzzt_ms * NSEC_PER_MSEC;
--	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, trsp);
-+	return torture_hrtimeout_ns(baset_ns, fuzzt_ns, HRTIMER_MODE_REL, trsp);
- }
- EXPORT_SYMBOL_GPL(torture_hrtimeout_s);
- 
+ 	VERBOSE_TOROUT_STRING("torture_stutter task started");
+ 	do {
+ 		if (!torture_must_stop() && stutter > 1) {
+-			wtime = stutter;
+-			if (stutter > 2) {
+-				WRITE_ONCE(stutter_pause_test, 1);
+-				wtime = stutter - 3;
+-				torture_hrtimeout_jiffies(wtime, &rand);
+-				wtime = 2;
+-			}
+-			WRITE_ONCE(stutter_pause_test, 2);
+-			torture_hrtimeout_jiffies(wtime, NULL);
++			till_ns = ktime_add_ns(ktime_get(),
++					       jiffies_to_nsecs(stutter));
++			WRITE_ONCE(stutter_till_abs_time, till_ns);
++			torture_hrtimeout_jiffies(stutter - 1, NULL);
+ 		}
+-		WRITE_ONCE(stutter_pause_test, 0);
+ 		if (!torture_must_stop())
+ 			torture_hrtimeout_jiffies(stutter_gap, NULL);
+ 		torture_shutdown_absorb("torture_stutter");
 -- 
 2.42.0
 
