@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5803739FD9;
-	Fri, 24 Nov 2023 18:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ADB39FE1;
+	Fri, 24 Nov 2023 18:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wZi1HgwN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AEAEC433C7;
-	Fri, 24 Nov 2023 18:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oVEQuB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CCBC433C7;
+	Fri, 24 Nov 2023 18:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849533;
-	bh=umujtV0txZCrbd9Cf5KY5GwtRbgvZnX1Oqj2a4OyKZs=;
+	s=korg; t=1700849536;
+	bh=gdcn/jkC7CrVqg/RtbQFZuSUgYIIgXIGinpeildFrS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZi1HgwNQglLUMvCrDgWXFgbppf/rtODH9MBG0PrzXEnIjHqiJcYTPRLmsNJ6GUul
-	 9ufWzFNbqQslqn8BqPzftMeS/Ak27PK0tmELAQNi5RONpp+9XboZuzM4gvSQ9YSVXM
-	 cfpRnrWGrgKU4+u2/wsru+gnDjc4GTIrQGQl/wPU=
+	b=1oVEQuB86mPPwlyh49rZgUQhC2MHJ1gRHM9hdAYIGf7+H0V1YYoIoBy4TkBFG+3Gb
+	 /nzDb/2P7z41yEnEWl1NGP1hzT/oVXS0PmZ19a7lE2PRJC7AapabjLAhYfH8TwcwIQ
+	 5jjrs/sYKSTr4kNOP9KXxkdVDM2a9ggN2/pkUyQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ziwei Xiao <ziweixiao@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/530] net: ti: icssg-prueth: Add missing icss_iep_put to error path
-Date: Fri, 24 Nov 2023 17:45:51 +0000
-Message-ID: <20231124172033.707074563@linuxfoundation.org>
+Subject: [PATCH 6.6 213/530] gve: Fixes for napi_poll when budget is 0
+Date: Fri, 24 Nov 2023 17:46:19 +0000
+Message-ID: <20231124172034.548112014@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,54 +42,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+From: Ziwei Xiao <ziweixiao@google.com>
 
-[ Upstream commit e409d7346648c9acff84c3cc8d291767ee2d5326 ]
+[ Upstream commit 278a370c1766060d2144d6cf0b06c101e1043b6d ]
 
-Analogously to prueth_remove, just also taking care for NULL'ing the
-iep pointers.
+Netpoll will explicilty pass the polling call with a budget of 0 to
+indicate it's clearing the Tx path only. For the gve_rx_poll and
+gve_xdp_poll, they were mistakenly taking the 0 budget as the indication
+to do all the work. Add check to avoid the rx path and xdp path being
+called when budget is 0. And also avoid napi_complete_done being called
+when budget is 0 for netpoll.
 
-Fixes: 186734c15886 ("net: ti: icssg-prueth: add packet timestamping and ptp support")
-Fixes: 443a2367ba3c ("net: ti: icssg-prueth: am65x SR2.0 add 10M full duplex support")
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: MD Danish Anwar <danishanwar@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f5cedc84a30d ("gve: Add transmit and receive support")
+Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
+Link: https://lore.kernel.org/r/20231114004144.2022268-1-ziweixiao@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_prueth.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/google/gve/gve_main.c | 8 +++++++-
+ drivers/net/ethernet/google/gve/gve_rx.c   | 4 ----
+ drivers/net/ethernet/google/gve/gve_tx.c   | 4 ----
+ 3 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-index 4914d0ef58e9b..71d3001ec1ef8 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-@@ -2092,10 +2092,7 @@ static int prueth_probe(struct platform_device *pdev)
- 	prueth->iep1 = icss_iep_get_idx(np, 1);
- 	if (IS_ERR(prueth->iep1)) {
- 		ret = dev_err_probe(dev, PTR_ERR(prueth->iep1), "iep1 get failed\n");
--		icss_iep_put(prueth->iep0);
--		prueth->iep0 = NULL;
--		prueth->iep1 = NULL;
--		goto free_pool;
-+		goto put_iep0;
+diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
+index 83b09dcfafc4f..5703240474e5b 100644
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -254,10 +254,13 @@ static int gve_napi_poll(struct napi_struct *napi, int budget)
+ 	if (block->tx) {
+ 		if (block->tx->q_num < priv->tx_cfg.num_queues)
+ 			reschedule |= gve_tx_poll(block, budget);
+-		else
++		else if (budget)
+ 			reschedule |= gve_xdp_poll(block, budget);
  	}
  
- 	if (prueth->pdata.quirk_10m_link_issue) {
-@@ -2185,6 +2182,12 @@ static int prueth_probe(struct platform_device *pdev)
- exit_iep:
- 	if (prueth->pdata.quirk_10m_link_issue)
- 		icss_iep_exit_fw(prueth->iep1);
-+	icss_iep_put(prueth->iep1);
++	if (!budget)
++		return 0;
 +
-+put_iep0:
-+	icss_iep_put(prueth->iep0);
-+	prueth->iep0 = NULL;
-+	prueth->iep1 = NULL;
+ 	if (block->rx) {
+ 		work_done = gve_rx_poll(block, budget);
+ 		reschedule |= work_done == budget;
+@@ -298,6 +301,9 @@ static int gve_napi_poll_dqo(struct napi_struct *napi, int budget)
+ 	if (block->tx)
+ 		reschedule |= gve_tx_poll_dqo(block, /*do_clean=*/true);
  
- free_pool:
- 	gen_pool_free(prueth->sram_pool,
++	if (!budget)
++		return 0;
++
+ 	if (block->rx) {
+ 		work_done = gve_rx_poll_dqo(block, budget);
+ 		reschedule |= work_done == budget;
+diff --git a/drivers/net/ethernet/google/gve/gve_rx.c b/drivers/net/ethernet/google/gve/gve_rx.c
+index e84a066aa1a40..73655347902d2 100644
+--- a/drivers/net/ethernet/google/gve/gve_rx.c
++++ b/drivers/net/ethernet/google/gve/gve_rx.c
+@@ -1007,10 +1007,6 @@ int gve_rx_poll(struct gve_notify_block *block, int budget)
+ 
+ 	feat = block->napi.dev->features;
+ 
+-	/* If budget is 0, do all the work */
+-	if (budget == 0)
+-		budget = INT_MAX;
+-
+ 	if (budget > 0)
+ 		work_done = gve_clean_rx_done(rx, budget, feat);
+ 
+diff --git a/drivers/net/ethernet/google/gve/gve_tx.c b/drivers/net/ethernet/google/gve/gve_tx.c
+index 6957a865cff37..9f6ffc4a54f0b 100644
+--- a/drivers/net/ethernet/google/gve/gve_tx.c
++++ b/drivers/net/ethernet/google/gve/gve_tx.c
+@@ -925,10 +925,6 @@ bool gve_xdp_poll(struct gve_notify_block *block, int budget)
+ 	bool repoll;
+ 	u32 to_do;
+ 
+-	/* If budget is 0, do all the work */
+-	if (budget == 0)
+-		budget = INT_MAX;
+-
+ 	/* Find out how much work there is to be done */
+ 	nic_done = gve_tx_load_event_counter(priv, tx);
+ 	to_do = min_t(u32, (nic_done - tx->done), budget);
 -- 
 2.42.0
 
