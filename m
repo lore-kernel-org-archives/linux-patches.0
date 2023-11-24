@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FEC2D626;
-	Fri, 24 Nov 2023 18:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CC933CCA;
+	Fri, 24 Nov 2023 18:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkCYHznE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C43C433C8;
-	Fri, 24 Nov 2023 18:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKVaEW+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538ACC433C7;
+	Fri, 24 Nov 2023 18:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851184;
-	bh=CcYG9MN9FDu8WnpezJf1m9fdkmZIlFT+KjTFx0EWyxU=;
+	s=korg; t=1700851186;
+	bh=lSjgilWe5E14n4gJtcvbdIjQftUJ0mldVDEWyuCYEJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkCYHznEzGObjPgB0khvSpAsLJjhL7mW3FOVJ8ydeMaj/kjQ79KXt9kOe5laPm/Vt
-	 ltAU4i+tJnBzrpeBM4ZTEo8rEFk++u3i0vwUo/3dOld8DIJe3kymAuRSsRZCElpx47
-	 T48jFf+fJdpdgmN4KaHMCKHYFnEP23orUKPmYFXQ=
+	b=vKVaEW+iByrbcx/AbaNpwkDpWl79On6IVmTc8EtedFHXVE6+9pUklpLRE3aUuoYov
+	 O86Xw+C5DU5GC9STJeZr293YYxpOcVQIvmQW3tIKvB+dtuKaRj0uaXtHk4I5ldCZ0h
+	 PPvcUlN1+YRc+9UoPSpJorsxpyxOMnddPuk0vfU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.5 346/491] dmaengine: stm32-mdma: correct desc prep when channel running
-Date: Fri, 24 Nov 2023 17:49:42 +0000
-Message-ID: <20231124172034.961769545@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.5 347/491] s390/mm: add missing arch_set_page_dat() call to vmem_crst_alloc()
+Date: Fri, 24 Nov 2023 17:49:43 +0000
+Message-ID: <20231124172034.992847317@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,48 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 03f25d53b145bc2f7ccc82fc04e4482ed734f524 upstream.
+commit 09cda0a400519b1541591c506e54c9c48e3101bf upstream.
 
-In case of the prep descriptor while the channel is already running, the
-CCR register value stored into the channel could already have its EN bit
-set.  This would lead to a bad transfer since, at start transfer time,
-enabling the channel while other registers aren't yet properly set.
-To avoid this, ensure to mask the CCR_EN bit when storing the ccr value
-into the mdma channel structure.
+If the cmma no-dat feature is available all pages that are not used for
+dynamic address translation are marked as "no-dat" with the ESSA
+instruction. This information is visible to the hypervisor, so that the
+hypervisor can optimize purging of guest TLB entries. This also means that
+pages which are used for dynamic address translation must not be marked as
+"no-dat", since the hypervisor may then incorrectly not purge guest TLB
+entries.
 
-Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: stable@vger.kernel.org
-Tested-by: Alain Volmat <alain.volmat@foss.st.com>
-Link: https://lore.kernel.org/r/20231009082450.452877-1-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Region and segment tables allocated via vmem_crst_alloc() are incorrectly
+marked as "no-dat", as soon as slab_is_available() returns true.
+
+Such tables are allocated e.g. when kernel page tables are split, memory is
+hotplugged, or a DCSS segment is loaded.
+
+Fix this by adding the missing arch_set_page_dat() call.
+
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32-mdma.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/mm/vmem.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/stm32-mdma.c
-+++ b/drivers/dma/stm32-mdma.c
-@@ -490,7 +490,7 @@ static int stm32_mdma_set_xfer_param(str
- 	src_maxburst = chan->dma_config.src_maxburst;
- 	dst_maxburst = chan->dma_config.dst_maxburst;
+--- a/arch/s390/mm/vmem.c
++++ b/arch/s390/mm/vmem.c
+@@ -13,6 +13,7 @@
+ #include <linux/hugetlb.h>
+ #include <linux/slab.h>
+ #include <linux/sort.h>
++#include <asm/page-states.h>
+ #include <asm/cacheflush.h>
+ #include <asm/nospec-branch.h>
+ #include <asm/pgalloc.h>
+@@ -46,8 +47,11 @@ void *vmem_crst_alloc(unsigned long val)
+ 	unsigned long *table;
  
--	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
-+	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & ~STM32_MDMA_CCR_EN;
- 	ctcr = stm32_mdma_read(dmadev, STM32_MDMA_CTCR(chan->id));
- 	ctbr = stm32_mdma_read(dmadev, STM32_MDMA_CTBR(chan->id));
+ 	table = vmem_alloc_pages(CRST_ALLOC_ORDER);
+-	if (table)
+-		crst_table_init(table, val);
++	if (!table)
++		return NULL;
++	crst_table_init(table, val);
++	if (slab_is_available())
++		arch_set_page_dat(virt_to_page(table), CRST_ALLOC_ORDER);
+ 	return table;
+ }
  
-@@ -966,7 +966,7 @@ stm32_mdma_prep_dma_memcpy(struct dma_ch
- 	if (!desc)
- 		return NULL;
- 
--	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
-+	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & ~STM32_MDMA_CCR_EN;
- 	ctcr = stm32_mdma_read(dmadev, STM32_MDMA_CTCR(chan->id));
- 	ctbr = stm32_mdma_read(dmadev, STM32_MDMA_CTBR(chan->id));
- 	cbndtr = stm32_mdma_read(dmadev, STM32_MDMA_CBNDTR(chan->id));
 
 
