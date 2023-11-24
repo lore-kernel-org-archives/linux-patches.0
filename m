@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6835381D6;
-	Fri, 24 Nov 2023 18:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8F939FC6;
+	Fri, 24 Nov 2023 18:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjejUvRe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69336C433C8;
-	Fri, 24 Nov 2023 18:07:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lna1LAC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A96C433C8;
+	Fri, 24 Nov 2023 18:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849241;
-	bh=AmeGTX/2XoFOOzb4iWOGrfqkZO12j117C/Qp/rO7YvQ=;
+	s=korg; t=1700849244;
+	bh=5Pw+i6BzgJuc4wqU89sHVZrAsoxzKxwBSUy3CnNWkJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjejUvReM4n0x7+mkgcM9zc8pwv3B4sbyJ9+CFp27glluMT32XoKq+5Jz/qwu+noJ
-	 pzIGquHrFeH3YKF4ztzPlO7Xjs1LfShtvwJhUjoUaGMafVm9tGfZQnEX6ThCVwCdN0
-	 WhXzrJbGBgED8o2ZaPr4TNDZ6AGbyAn1UyOLM7XQ=
+	b=Lna1LAC/lHrwma8hIyoNVh26i3twEP3MfrwEAjhRSPtGmHM+/WnqQs13xy668DOcf
+	 k2Yul1EXN+XYmxv14b7Lm2kPDbgSmXIfWqpJPikBNq1OgmB64ekbD90XFkaTe5OKcw
+	 NkDsKSqJLx4MB1c8/9liiFgqqFYIyrSRIFtO85/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Laurentiu Tudor <laurentiu.tudor@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/530] atm: iphase: Do PCI error checks on own line
-Date: Fri, 24 Nov 2023 17:44:29 +0000
-Message-ID: <20231124172031.255011253@linuxfoundation.org>
+Subject: [PATCH 6.6 080/530] arm64: dts: ls208xa: use a pseudo-bus to constrain usb dma size
+Date: Fri, 24 Nov 2023 17:44:06 +0000
+Message-ID: <20231124172030.513890990@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -36,70 +36,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Laurentiu Tudor <laurentiu.tudor@nxp.com>
 
-[ Upstream commit c28742447ca9879b52fbaf022ad844f0ffcd749c ]
+[ Upstream commit b39d5016456871a88f5cd141914a5043591b46f3 ]
 
-In get_esi() PCI errors are checked inside line-split "if" conditions (in
-addition to the file not following the coding style). To make the code in
-get_esi() more readable, fix the coding style and use the usual error
-handling pattern with a separate variable.
+Wrap the usb controllers in an intermediate simple-bus and use it to
+constrain the dma address size of these usb controllers to the 40b
+that they generate toward the interconnect. This is required because
+the SoC uses 48b address sizes and this mismatch would lead to smmu
+context faults [1] because the usb generates 40b addresses while the
+smmu page tables are populated with 48b wide addresses.
 
-In addition, initialization of 'error' variable at declaration is not
-needed.
+[1]
+xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
+xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 1
+xhci-hcd xhci-hcd.0.auto: hcc params 0x0220f66d hci version 0x100 quirks 0x0000000002000010
+xhci-hcd xhci-hcd.0.auto: irq 108, io mem 0x03100000
+xhci-hcd xhci-hcd.0.auto: xHCI Host Controller
+xhci-hcd xhci-hcd.0.auto: new USB bus registered, assigned bus number 2
+xhci-hcd xhci-hcd.0.auto: Host supports USB 3.0 SuperSpeed
+arm-smmu 5000000.iommu: Unhandled context fault: fsr=0x402, iova=0xffffffb000, fsynr=0x0, cbfrsynra=0xc01, cb=3
 
-No functional changes intended.
-
-Link: https://lore.kernel.org/r/20230911125354.25501-4-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Laurentiu Tudor <laurentiu.tudor@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/atm/iphase.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ .../arm64/boot/dts/freescale/fsl-ls208xa.dtsi | 46 +++++++++++--------
+ 1 file changed, 27 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/atm/iphase.c b/drivers/atm/iphase.c
-index 3241486869530..9bba8f280a4d4 100644
---- a/drivers/atm/iphase.c
-+++ b/drivers/atm/iphase.c
-@@ -2291,19 +2291,21 @@ static int get_esi(struct atm_dev *dev)
- static int reset_sar(struct atm_dev *dev)  
- {  
- 	IADEV *iadev;  
--	int i, error = 1;  
-+	int i, error;
- 	unsigned int pci[64];  
- 	  
- 	iadev = INPH_IA_DEV(dev);  
--	for(i=0; i<64; i++)  
--	  if ((error = pci_read_config_dword(iadev->pci,  
--				i*4, &pci[i])) != PCIBIOS_SUCCESSFUL)  
--  	      return error;  
-+	for (i = 0; i < 64; i++) {
-+		error = pci_read_config_dword(iadev->pci, i * 4, &pci[i]);
-+		if (error != PCIBIOS_SUCCESSFUL)
-+			return error;
-+	}
- 	writel(0, iadev->reg+IPHASE5575_EXT_RESET);  
--	for(i=0; i<64; i++)  
--	  if ((error = pci_write_config_dword(iadev->pci,  
--					i*4, pci[i])) != PCIBIOS_SUCCESSFUL)  
--	    return error;  
-+	for (i = 0; i < 64; i++) {
-+		error = pci_write_config_dword(iadev->pci, i * 4, pci[i]);
-+		if (error != PCIBIOS_SUCCESSFUL)
-+			return error;
-+	}
- 	udelay(5);  
- 	return 0;  
- }  
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi b/arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi
+index d2f5345d05600..717288bbdb8b6 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-ls208xa.dtsi
+@@ -1186,26 +1186,34 @@
+ 			dma-coherent;
+ 		};
+ 
+-		usb0: usb@3100000 {
+-			status = "disabled";
+-			compatible = "snps,dwc3";
+-			reg = <0x0 0x3100000 0x0 0x10000>;
+-			interrupts = <0 80 0x4>; /* Level high type */
+-			dr_mode = "host";
+-			snps,quirk-frame-length-adjustment = <0x20>;
+-			snps,dis_rxdet_inp3_quirk;
+-			snps,incr-burst-type-adjustment = <1>, <4>, <8>, <16>;
+-		};
++		bus: bus {
++			#address-cells = <2>;
++			#size-cells = <2>;
++			compatible = "simple-bus";
++			ranges;
++			dma-ranges = <0x0 0x0 0x0 0x0 0x100 0x00000000>;
++
++			usb0: usb@3100000 {
++				compatible = "snps,dwc3";
++				reg = <0x0 0x3100000 0x0 0x10000>;
++				interrupts = <0 80 0x4>; /* Level high type */
++				dr_mode = "host";
++				snps,quirk-frame-length-adjustment = <0x20>;
++				snps,dis_rxdet_inp3_quirk;
++				snps,incr-burst-type-adjustment = <1>, <4>, <8>, <16>;
++				status = "disabled";
++			};
+ 
+-		usb1: usb@3110000 {
+-			status = "disabled";
+-			compatible = "snps,dwc3";
+-			reg = <0x0 0x3110000 0x0 0x10000>;
+-			interrupts = <0 81 0x4>; /* Level high type */
+-			dr_mode = "host";
+-			snps,quirk-frame-length-adjustment = <0x20>;
+-			snps,dis_rxdet_inp3_quirk;
+-			snps,incr-burst-type-adjustment = <1>, <4>, <8>, <16>;
++			usb1: usb@3110000 {
++				compatible = "snps,dwc3";
++				reg = <0x0 0x3110000 0x0 0x10000>;
++				interrupts = <0 81 0x4>; /* Level high type */
++				dr_mode = "host";
++				snps,quirk-frame-length-adjustment = <0x20>;
++				snps,dis_rxdet_inp3_quirk;
++				snps,incr-burst-type-adjustment = <1>, <4>, <8>, <16>;
++				status = "disabled";
++			};
+ 		};
+ 
+ 		ccn@4000000 {
 -- 
 2.42.0
 
