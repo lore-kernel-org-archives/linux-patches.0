@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA7528DA1;
-	Fri, 24 Nov 2023 18:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5A91A5A4;
+	Fri, 24 Nov 2023 18:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvH9i6ez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD56C433C8;
-	Fri, 24 Nov 2023 18:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P515aNdd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487CDC433C9;
+	Fri, 24 Nov 2023 18:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850963;
-	bh=otLju7ysGNI5ABhakR3zClhNj/+Mk4q0XuA0Q2qyj/U=;
+	s=korg; t=1700850965;
+	bh=WCAXu3pHUwT66qwx+dJpQT9DhkTcC/rEc6FKF74NHg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvH9i6ezNmyIM2O57ax8s68wjPN6CqvK+y3PyiAfBapQ/HkAinOpphmSBPMDjvfos
-	 ajpCkgfNXqmAecoiN07f+pZlUmk9w09SbBuSAIv8yECupyfmP+OQaMBZoOhapHq66d
-	 uVfMTccaNJhwt0Hq3JaXbrAlmdnwwAB1rX90CchU=
+	b=P515aNddvOIkkTi5bMvBrgdRDLWCUwH0ksOF/XcJ1+DSVAgCyphOQgHu2GdPhDxRr
+	 Uzu5vslh6Un2otWLVOYRzMO3tAPSLsDIeQROFdQYwpP1Q4gzUfozt1Y+6emojiBcDK
+	 Z5iVIGIo/oBL36D0n0Wikmn1bz6EZkhBucBRdIBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.5 259/491] watchdog: move softlockup_panic back to early_param
-Date: Fri, 24 Nov 2023 17:48:15 +0000
-Message-ID: <20231124172032.350347535@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.5 260/491] iommufd: Fix missing update of domains_itree after splitting iopt_area
+Date: Fri, 24 Nov 2023 17:48:16 +0000
+Message-ID: <20231124172032.377211476@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,55 +41,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 8b793bcda61f6c3ed4f5b2ded7530ef6749580cb upstream.
+commit e7250ab7ca4998fe026f2149805b03e09dc32498 upstream.
 
-Setting softlockup_panic from do_sysctl_args() causes it to take effect
-later in boot.  The lockup detector is enabled before SMP is brought
-online, but do_sysctl_args runs afterwards.  If a user wants to set
-softlockup_panic on boot and have it trigger should a softlockup occur
-during onlining of the non-boot processors, they could do this prior to
-commit f117955a2255 ("kernel/watchdog.c: convert {soft/hard}lockup boot
-parameters to sysctl aliases").  However, after this commit the value
-of softlockup_panic is set too late to be of help for this type of
-problem.  Restore the prior behavior.
+In iopt_area_split(), if the original iopt_area has filled a domain and is
+linked to domains_itree, pages_nodes have to be properly
+reinserted. Otherwise the domains_itree becomes corrupted and we will UAF.
 
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Fixes: 51fe6141f0f6 ("iommufd: Data structure to provide IOVA to PFN mapping")
+Link: https://lore.kernel.org/r/20231027162941.2864615-2-den@valinux.co.jp
 Cc: stable@vger.kernel.org
-Fixes: f117955a2255 ("kernel/watchdog.c: convert {soft/hard}lockup boot parameters to sysctl aliases")
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c |    1 -
- kernel/watchdog.c     |    7 +++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/iommu/iommufd/io_pagetable.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -1574,7 +1574,6 @@ static const struct sysctl_alias sysctl_
- 	{"hung_task_panic",			"kernel.hung_task_panic" },
- 	{"numa_zonelist_order",			"vm.numa_zonelist_order" },
- 	{"softlockup_all_cpu_backtrace",	"kernel.softlockup_all_cpu_backtrace" },
--	{"softlockup_panic",			"kernel.softlockup_panic" },
- 	{ }
- };
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -1060,6 +1060,16 @@ static int iopt_area_split(struct iopt_a
+ 	if (WARN_ON(rc))
+ 		goto err_remove_lhs;
  
---- a/kernel/watchdog.c
-+++ b/kernel/watchdog.c
-@@ -283,6 +283,13 @@ static DEFINE_PER_CPU(struct hrtimer, wa
- static DEFINE_PER_CPU(bool, softlockup_touch_sync);
- static unsigned long soft_lockup_nmi_warn;
- 
-+static int __init softlockup_panic_setup(char *str)
-+{
-+	softlockup_panic = simple_strtoul(str, NULL, 0);
-+	return 1;
-+}
-+__setup("softlockup_panic=", softlockup_panic_setup);
++	/*
++	 * If the original area has filled a domain, domains_itree has to be
++	 * updated.
++	 */
++	if (area->storage_domain) {
++		interval_tree_remove(&area->pages_node, &pages->domains_itree);
++		interval_tree_insert(&lhs->pages_node, &pages->domains_itree);
++		interval_tree_insert(&rhs->pages_node, &pages->domains_itree);
++	}
 +
- static int __init nowatchdog_setup(char *str)
- {
- 	watchdog_user_enabled = 0;
+ 	lhs->storage_domain = area->storage_domain;
+ 	lhs->pages = area->pages;
+ 	rhs->storage_domain = area->storage_domain;
 
 
