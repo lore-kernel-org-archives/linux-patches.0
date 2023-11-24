@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CEE33E9;
-	Fri, 24 Nov 2023 18:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA55364A0;
+	Fri, 24 Nov 2023 18:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXOof2ZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3011FC433C7;
-	Fri, 24 Nov 2023 18:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXLd+Q5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0C1C433C8;
+	Fri, 24 Nov 2023 18:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851521;
-	bh=eaiACMf7YlAw3qnGcPTLDxsE4JgDA5uOGuZZiC2oHfI=;
+	s=korg; t=1700851523;
+	bh=5o458WdnwgpMytmLDXVQWSiiY+lLhw3H/y3c/rxAjds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXOof2ZK4+YiP4+cMXRZrki+t5jygG3K5Cv2O4S2WijoHd+ds5LZoEUnv/CDScc1U
-	 2A/e4Fu+KfNjY5jvIqmyRn8uJU8zJh9eVxWncA2AyaXhPUDtwUCcXPsKrVqIo6HVqd
-	 brpfSefZraym4Ncca4wO1ichN7R8O1CSEjY6rxB4=
+	b=gXLd+Q5kygOxNRbRoqzNDuW7U6tVhUQ6pEj87+usd+dVzXym7hydv/1Ja/ue8cmtL
+	 CYGk2rhO05I+LcBVA8Ll/SMq7zepzZ+vyhAJUHr03IKqHitjSi4zqF69JUHP8BDd9e
+	 ypzt0oBXKX/pBBv3fgDvYgJ1tMLLfUqPAUSSEkBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.5 480/491] drm/amdgpu: dont use ATRM for external devices
-Date: Fri, 24 Nov 2023 17:51:56 +0000
-Message-ID: <20231124172039.057339109@linuxfoundation.org>
+Subject: [PATCH 6.5 481/491] drm/amdgpu: fix error handling in amdgpu_vm_init
+Date: Fri, 24 Nov 2023 17:51:57 +0000
+Message-ID: <20231124172039.087165100@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -35,54 +35,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 432e664e7c98c243fab4c3c95bd463bea3aeed28 upstream.
+commit 8473bfdcb5b1a32fd05629c4535ccacd73bc5567 upstream.
 
-The ATRM ACPI method is for fetching the dGPU vbios rom
-image on laptops and all-in-one systems.  It should not be
-used for external add in cards.  If the dGPU is thunderbolt
-connected, don't try ATRM.
+When clearing the root PD fails we need to properly release it again.
 
-v2: pci_is_thunderbolt_attached only works for Intel.  Use
-    pdev->external_facing instead.
-v3: dev_is_removable() seems to be what we want
-
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2925
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-@@ -29,6 +29,7 @@
- #include "amdgpu.h"
- #include "atom.h"
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2129,7 +2129,8 @@ long amdgpu_vm_wait_idle(struct amdgpu_v
+  * Returns:
+  * 0 for success, error for failure.
+  */
+-int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm, int32_t xcp_id)
++int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm,
++		   int32_t xcp_id)
+ {
+ 	struct amdgpu_bo *root_bo;
+ 	struct amdgpu_bo_vm *root;
+@@ -2148,6 +2149,7 @@ int amdgpu_vm_init(struct amdgpu_device
+ 	INIT_LIST_HEAD(&vm->done);
+ 	INIT_LIST_HEAD(&vm->pt_freed);
+ 	INIT_WORK(&vm->pt_free_work, amdgpu_vm_pt_free_work);
++	INIT_KFIFO(vm->faults);
  
-+#include <linux/device.h>
- #include <linux/pci.h>
- #include <linux/slab.h>
- #include <linux/acpi.h>
-@@ -287,6 +288,10 @@ static bool amdgpu_atrm_get_bios(struct
- 	if (adev->flags & AMD_IS_APU)
- 		return false;
- 
-+	/* ATRM is for on-platform devices only */
-+	if (dev_is_removable(&adev->pdev->dev))
-+		return false;
+ 	r = amdgpu_vm_init_entities(adev, vm);
+ 	if (r)
+@@ -2182,34 +2184,33 @@ int amdgpu_vm_init(struct amdgpu_device
+ 				false, &root, xcp_id);
+ 	if (r)
+ 		goto error_free_delayed;
+-	root_bo = &root->bo;
 +
- 	while ((pdev = pci_get_class(PCI_CLASS_DISPLAY_VGA << 8, pdev)) != NULL) {
- 		dhandle = ACPI_HANDLE(&pdev->dev);
- 		if (!dhandle)
++	root_bo = amdgpu_bo_ref(&root->bo);
+ 	r = amdgpu_bo_reserve(root_bo, true);
+-	if (r)
+-		goto error_free_root;
++	if (r) {
++		amdgpu_bo_unref(&root->shadow);
++		amdgpu_bo_unref(&root_bo);
++		goto error_free_delayed;
++	}
+ 
++	amdgpu_vm_bo_base_init(&vm->root, vm, root_bo);
+ 	r = dma_resv_reserve_fences(root_bo->tbo.base.resv, 1);
+ 	if (r)
+-		goto error_unreserve;
+-
+-	amdgpu_vm_bo_base_init(&vm->root, vm, root_bo);
++		goto error_free_root;
+ 
+ 	r = amdgpu_vm_pt_clear(adev, vm, root, false);
+ 	if (r)
+-		goto error_unreserve;
++		goto error_free_root;
+ 
+ 	amdgpu_bo_unreserve(vm->root.bo);
+-
+-	INIT_KFIFO(vm->faults);
++	amdgpu_bo_unref(&root_bo);
+ 
+ 	return 0;
+ 
+-error_unreserve:
+-	amdgpu_bo_unreserve(vm->root.bo);
+-
+ error_free_root:
+-	amdgpu_bo_unref(&root->shadow);
++	amdgpu_vm_pt_free_root(adev, vm);
++	amdgpu_bo_unreserve(vm->root.bo);
+ 	amdgpu_bo_unref(&root_bo);
+-	vm->root.bo = NULL;
+ 
+ error_free_delayed:
+ 	dma_fence_put(vm->last_tlb_flush);
 
 
