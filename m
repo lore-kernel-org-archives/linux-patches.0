@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B327031748;
-	Fri, 24 Nov 2023 19:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A50339BE;
+	Fri, 24 Nov 2023 19:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXSr1y5N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12EF5C433C8;
-	Fri, 24 Nov 2023 19:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwE6M5K3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84FE5C433C9;
+	Fri, 24 Nov 2023 19:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853870;
-	bh=4RPMb0zQAwtATBLdpowhXs60qfOn51X4D+oTl89reJE=;
+	s=korg; t=1700853872;
+	bh=T4KP2FqDJFju4xG9c+RUIMvYYmHL5NM4klNbAJgwegA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aXSr1y5NXr4G6MqosJxR0XdJMETrr//YEzhBh6FXVrvPv2y1ppGNvrXVaRku8uRZ2
-	 UjnIXfc/h6BcDPy6GNM9MACVN+f4YC/snsSv3adBTBfXzFkkNMMioZCSukIUt6kF4b
-	 WzkxteF9TH/zSUuHw6I7d4W3gBhcKv+pEfn00ly0=
+	b=CwE6M5K3Nb7ICjXk5q6Bg6q+MO1Y9q19Kh6slAqezrvGoIUNwFpnecsGulr1kD7qv
+	 Dnpy42ZMi1OD0cy/OR2j7iczaxdgYetZmLEiBGCxIqS3MdUPl1NAf5Do1ueiJKlche
+	 7GJl48m3jKwUHqVvKdTUHjgM4JFPyuUI0rRyZsro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 063/159] net/mlx5e: Check return value of snprintf writing to fw_version buffer for representors
-Date: Fri, 24 Nov 2023 17:54:40 +0000
-Message-ID: <20231124171944.560921705@linuxfoundation.org>
+Subject: [PATCH 5.4 040/159] kgdb: Flush console before entering kgdb on panic
+Date: Fri, 24 Nov 2023 17:54:17 +0000
+Message-ID: <20231124171943.593667673@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -44,71 +42,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 1b2bd0c0264febcd8d47209079a6671c38e6558b ]
+[ Upstream commit dd712d3d45807db9fcae28a522deee85c1f2fde6 ]
 
-Treat the operation as an error case when the return value is equivalent to
-the size of the name buffer. Failed to write null terminator to the name
-buffer, making the string malformed and should not be used. Provide a
-string with only the firmware version when forming the string with the
-board id fails. This logic for representors is identical to normal flow
-with ethtool.
+When entering kdb/kgdb on a kernel panic, it was be observed that the
+console isn't flushed before the `kdb` prompt came up. Specifically,
+when using the buddy lockup detector on arm64 and running:
+  echo HARDLOCKUP > /sys/kernel/debug/provoke-crash/DIRECT
 
-Without check, will trigger -Wformat-truncation with W=1.
+I could see:
+  [   26.161099] lkdtm: Performing direct entry HARDLOCKUP
+  [   32.499881] watchdog: Watchdog detected hard LOCKUP on cpu 6
+  [   32.552865] Sending NMI from CPU 5 to CPUs 6:
+  [   32.557359] NMI backtrace for cpu 6
+  ... [backtrace for cpu 6] ...
+  [   32.558353] NMI backtrace for cpu 5
+  ... [backtrace for cpu 5] ...
+  [   32.867471] Sending NMI from CPU 5 to CPUs 0-4,7:
+  [   32.872321] NMI backtrace forP cpuANC: Hard LOCKUP
 
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c: In function 'mlx5e_rep_get_drvinfo':
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:78:31: warning: '%.16s' directive output may be truncated writing up to 16 bytes into a region of size between 13 and 22 [-Wformat-truncation=]
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                               ^~~~~
-    drivers/net/ethernet/mellanox/mlx5/core/en_rep.c:77:9: note: 'snprintf' output between 12 and 37 bytes into a destination of size 32
-      77 |         snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      78 |                  "%d.%d.%04d (%.16s)",
-         |                  ~~~~~~~~~~~~~~~~~~~~~
-      79 |                  fw_rev_maj(mdev), fw_rev_min(mdev),
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      80 |                  fw_rev_sub(mdev), mdev->board_id);
-         |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Entering kdb (current=..., pid 0) on processor 5 due to Keyboard Entry
+  [5]kdb>
 
-Fixes: cf83c8fdcd47 ("net/mlx5e: Add missing ethtool driver info for representors")
-Link: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6d4ab2e97dcfbcd748ae71761a9d8e5e41cc732c
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Link: https://lore.kernel.org/r/20231114215846.5902-16-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As you can see, backtraces for the other CPUs start printing and get
+interleaved with the kdb PANIC print.
+
+Let's replicate the commands to flush the console in the kdb panic
+entry point to avoid this.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230822131945.1.I5b460ae8f954e4c4f628a373d6e74713c06dd26f@changeid
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rep.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ kernel/debug/debug_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-index e150d9fbd2ce1..ed37cc7c9ae00 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
-@@ -71,13 +71,17 @@ static void mlx5e_rep_get_drvinfo(struct net_device *dev,
- {
- 	struct mlx5e_priv *priv = netdev_priv(dev);
- 	struct mlx5_core_dev *mdev = priv->mdev;
-+	int count;
+diff --git a/kernel/debug/debug_core.c b/kernel/debug/debug_core.c
+index f88611fadb195..1ab2e97034868 100644
+--- a/kernel/debug/debug_core.c
++++ b/kernel/debug/debug_core.c
+@@ -945,6 +945,9 @@ void kgdb_panic(const char *msg)
+ 	if (panic_timeout)
+ 		return;
  
- 	strlcpy(drvinfo->driver, mlx5e_rep_driver_name,
- 		sizeof(drvinfo->driver));
--	snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
--		 "%d.%d.%04d (%.16s)",
--		 fw_rev_maj(mdev), fw_rev_min(mdev),
--		 fw_rev_sub(mdev), mdev->board_id);
-+	count = snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d (%.16s)", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev), mdev->board_id);
-+	if (count == sizeof(drvinfo->fw_version))
-+		snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
-+			 "%d.%d.%04d", fw_rev_maj(mdev),
-+			 fw_rev_min(mdev), fw_rev_sub(mdev));
- }
++	debug_locks_off();
++	console_flush_on_panic(CONSOLE_FLUSH_PENDING);
++
+ 	if (dbg_kdb_mode)
+ 		kdb_printf("PANIC: %s\n", msg);
  
- static void mlx5e_uplink_rep_get_drvinfo(struct net_device *dev,
 -- 
 2.42.0
 
