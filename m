@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1017E39FE8;
-	Fri, 24 Nov 2023 18:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E7D381D5;
+	Fri, 24 Nov 2023 18:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tAxd9Hfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED81C433BF;
-	Fri, 24 Nov 2023 18:04:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0nq/WX/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D0CC433C8;
+	Fri, 24 Nov 2023 18:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849064;
-	bh=sZyzFkSvB/BMguxjWDdlmcLJH4/GEjoLTAAfh5eKwB4=;
+	s=korg; t=1700849067;
+	bh=9Vt7ryxJMahXrL8ZQpEfGy/Qr8n0QYdY4+EFZaO/5z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tAxd9HfeCIefdOnEVUuuodkUQVIx48oG89O7d/8nexRuOKjaJCo3aLtkrKUSnlBVa
-	 a/jZZeIJBZKsb5J5isqu2FLigvOs97nCS/icPlBmve1Wk/i+lV033rsaBavDvyzKdC
-	 +YPQGCJEjiqDjOaMtQb9M+EjLDsrC/D+LubVhgyU=
+	b=e0nq/WX/9qINiUDvRfVvbegUZtWA+qV1JkkjoTdosi4z/xfZnp3YxCUeTMOAtw9AP
+	 cr0G06d9AzLR8/gqyQyFo7Wt3qjBV3Yq5TnAlUvc7ne9R4TsGmCrdpt5KygrpM0x31
+	 w8zXYCPNbjQPDMlXuJQP0/i6tjpUsCNujQtyfSp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/530] net: sfp: add quirk for FSs 2.5G copper SFP
-Date: Fri, 24 Nov 2023 17:43:20 +0000
-Message-ID: <20231124172029.100227459@linuxfoundation.org>
+Subject: [PATCH 6.6 035/530] vsock: read from sockets error queue
+Date: Fri, 24 Nov 2023 17:43:21 +0000
+Message-ID: <20231124172029.127584917@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,37 +43,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit e27aca3760c08b7b05aea71068bd609aa93e7b35 ]
+[ Upstream commit 49dbe25adac42d3e06f65d1420946bec65896222 ]
 
-Add a quirk for a copper SFP that identifies itself as "FS" "SFP-2.5G-T".
-This module's PHY is inaccessible, and can only run at 2500base-X with the
-host without negotiation. Add a quirk to enable the 2500base-X interface mode
-with 2500base-T support and disable auto negotiation.
+This adds handling of MSG_ERRQUEUE input flag in receive call. This flag
+is used to read socket's error queue instead of data queue. Possible
+scenario of error queue usage is receiving completions for transmission
+with MSG_ZEROCOPY flag. This patch also adds new defines: 'SOL_VSOCK'
+and 'VSOCK_RECVERR'.
 
-Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
-Link: https://lore.kernel.org/r/20230925080059.266240-1-Raju.Lakkaraju@microchip.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/socket.h          |  1 +
+ include/uapi/linux/vm_sockets.h | 17 +++++++++++++++++
+ net/vmw_vsock/af_vsock.c        |  6 ++++++
+ 3 files changed, 24 insertions(+)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index a50038a452507..3679a43f4eb02 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -468,6 +468,9 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
- 		  sfp_fixup_ignore_tx_fault),
+diff --git a/include/linux/socket.h b/include/linux/socket.h
+index 39b74d83c7c4a..cfcb7e2c3813f 100644
+--- a/include/linux/socket.h
++++ b/include/linux/socket.h
+@@ -383,6 +383,7 @@ struct ucred {
+ #define SOL_MPTCP	284
+ #define SOL_MCTP	285
+ #define SOL_SMC		286
++#define SOL_VSOCK	287
  
-+	// FS 2.5G Base-T
-+	SFP_QUIRK_M("FS", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
+ /* IPX options */
+ #define IPX_TYPE	1
+diff --git a/include/uapi/linux/vm_sockets.h b/include/uapi/linux/vm_sockets.h
+index c60ca33eac594..ed07181d4eff9 100644
+--- a/include/uapi/linux/vm_sockets.h
++++ b/include/uapi/linux/vm_sockets.h
+@@ -191,4 +191,21 @@ struct sockaddr_vm {
+ 
+ #define IOCTL_VM_SOCKETS_GET_LOCAL_CID		_IO(7, 0xb9)
+ 
++/* MSG_ZEROCOPY notifications are encoded in the standard error format,
++ * sock_extended_err. See Documentation/networking/msg_zerocopy.rst in
++ * kernel source tree for more details.
++ */
 +
- 	// Lantech 8330-262D-E can operate at 2500base-X, but incorrectly report
- 	// 2500MBd NRZ in their EEPROM
- 	SFP_QUIRK_M("Lantech", "8330-262D-E", sfp_quirk_2500basex),
++/* 'cmsg_level' field value of 'struct cmsghdr' for notification parsing
++ * when MSG_ZEROCOPY flag is used on transmissions.
++ */
++
++#define SOL_VSOCK	287
++
++/* 'cmsg_type' field value of 'struct cmsghdr' for notification parsing
++ * when MSG_ZEROCOPY flag is used on transmissions.
++ */
++
++#define VSOCK_RECVERR	1
++
+ #endif /* _UAPI_VM_SOCKETS_H */
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 020cf17ab7e47..ccd8cefeea7ba 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -89,6 +89,7 @@
+ #include <linux/types.h>
+ #include <linux/bitops.h>
+ #include <linux/cred.h>
++#include <linux/errqueue.h>
+ #include <linux/init.h>
+ #include <linux/io.h>
+ #include <linux/kernel.h>
+@@ -110,6 +111,7 @@
+ #include <linux/workqueue.h>
+ #include <net/sock.h>
+ #include <net/af_vsock.h>
++#include <uapi/linux/vm_sockets.h>
+ 
+ static int __vsock_bind(struct sock *sk, struct sockaddr_vm *addr);
+ static void vsock_sk_destruct(struct sock *sk);
+@@ -2134,6 +2136,10 @@ vsock_connectible_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 	int err;
+ 
+ 	sk = sock->sk;
++
++	if (unlikely(flags & MSG_ERRQUEUE))
++		return sock_recv_errqueue(sk, msg, len, SOL_VSOCK, VSOCK_RECVERR);
++
+ 	vsk = vsock_sk(sk);
+ 	err = 0;
+ 
 -- 
 2.42.0
 
