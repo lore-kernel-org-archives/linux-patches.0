@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7224F381D6;
-	Fri, 24 Nov 2023 18:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE62381DE;
+	Fri, 24 Nov 2023 18:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9Mno/QG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25D3C433C8;
-	Fri, 24 Nov 2023 18:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1YimJxL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3CEC433C8;
+	Fri, 24 Nov 2023 18:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850043;
-	bh=wPPcd8H8PcFxAabzvwSFysCMkFn9nu7rMtuQEOVXvrg=;
+	s=korg; t=1700850045;
+	bh=htycuGr/04OVQnSLWfIFypMnDoqxx1B98Be/g8x7u5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9Mno/QGuo3rZXcuroZL1bXwV4SIHbxcWEC5H5VVMNIpl7CiIxURqECDZJRBGXlRZ
-	 bWXw2atHcHBj0qzcjT2O90et1YoqNuiI6wpgxdZMubjkdOfMaZVc0cafGHR7/Hguo7
-	 xu8rqbcNOQOPTf0lCKImANF8RarVfoEMbl2+gGF4=
+	b=n1YimJxLh7v70iq4oW570ZoP06pSPh556pUah2mjQ61GJy7Y0rbX8cbjYkS/Zhkcb
+	 gzEPP/WnRAjuKKw4PCDGSJRFvjj4WBOjECEONHVrRXyra6xI6Ds9tVwTCizrSILMrq
+	 CZ9Rmf3c8e475VEnpctniImaqpMSSKIu1L4zZ58A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 422/530] smb: client: fix use-after-free in smb2_query_info_compound()
-Date: Fri, 24 Nov 2023 17:49:48 +0000
-Message-ID: <20231124172040.910570953@linuxfoundation.org>
+Subject: [PATCH 6.6 423/530] smb: client: fix potential deadlock when releasing mids
+Date: Fri, 24 Nov 2023 17:49:49 +0000
+Message-ID: <20231124172040.940067092@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,280 +43,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-commit 5c86919455c1edec99ebd3338ad213b59271a71b upstream.
+commit e6322fd177c6885a21dd4609dc5e5c973d1a2eb7 upstream.
 
-The following UAF was triggered when running fstests generic/072 with
-KASAN enabled against Windows Server 2022 and mount options
-'multichannel,max_channels=2,vers=3.1.1,mfsymlinks,noperm'
+All release_mid() callers seem to hold a reference of @mid so there is
+no need to call kref_put(&mid->refcount, __release_mid) under
+@server->mid_lock spinlock.  If they don't, then an use-after-free bug
+would have occurred anyways.
 
-  BUG: KASAN: slab-use-after-free in smb2_query_info_compound+0x423/0x6d0 [cifs]
-  Read of size 8 at addr ffff888014941048 by task xfs_io/27534
+By getting rid of such spinlock also fixes a potential deadlock as
+shown below
 
-  CPU: 0 PID: 27534 Comm: xfs_io Not tainted 6.6.0-rc7 #1
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-  rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-  Call Trace:
-   dump_stack_lvl+0x4a/0x80
-   print_report+0xcf/0x650
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? __phys_addr+0x46/0x90
-   kasan_report+0xda/0x110
-   ? smb2_query_info_compound+0x423/0x6d0 [cifs]
-   ? smb2_query_info_compound+0x423/0x6d0 [cifs]
-   smb2_query_info_compound+0x423/0x6d0 [cifs]
-   ? __pfx_smb2_query_info_compound+0x10/0x10 [cifs]
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? __stack_depot_save+0x39/0x480
-   ? kasan_save_stack+0x33/0x60
-   ? kasan_set_track+0x25/0x30
-   ? ____kasan_slab_free+0x126/0x170
-   smb2_queryfs+0xc2/0x2c0 [cifs]
-   ? __pfx_smb2_queryfs+0x10/0x10 [cifs]
-   ? __pfx___lock_acquire+0x10/0x10
-   smb311_queryfs+0x210/0x220 [cifs]
-   ? __pfx_smb311_queryfs+0x10/0x10 [cifs]
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? __lock_acquire+0x480/0x26c0
-   ? lock_release+0x1ed/0x640
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? do_raw_spin_unlock+0x9b/0x100
-   cifs_statfs+0x18c/0x4b0 [cifs]
-   statfs_by_dentry+0x9b/0xf0
-   fd_statfs+0x4e/0xb0
-   __do_sys_fstatfs+0x7f/0xe0
-   ? __pfx___do_sys_fstatfs+0x10/0x10
-   ? srso_alias_return_thunk+0x5/0x7f
-   ? lockdep_hardirqs_on_prepare+0x136/0x200
-   ? srso_alias_return_thunk+0x5/0x7f
-   do_syscall_64+0x3f/0x90
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-  Allocated by task 27534:
-   kasan_save_stack+0x33/0x60
-   kasan_set_track+0x25/0x30
-   __kasan_kmalloc+0x8f/0xa0
-   open_cached_dir+0x71b/0x1240 [cifs]
-   smb2_query_info_compound+0x5c3/0x6d0 [cifs]
-   smb2_queryfs+0xc2/0x2c0 [cifs]
-   smb311_queryfs+0x210/0x220 [cifs]
-   cifs_statfs+0x18c/0x4b0 [cifs]
-   statfs_by_dentry+0x9b/0xf0
-   fd_statfs+0x4e/0xb0
-   __do_sys_fstatfs+0x7f/0xe0
-   do_syscall_64+0x3f/0x90
-   entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-  Freed by task 27534:
-   kasan_save_stack+0x33/0x60
-   kasan_set_track+0x25/0x30
-   kasan_save_free_info+0x2b/0x50
-   ____kasan_slab_free+0x126/0x170
-   slab_free_freelist_hook+0xd0/0x1e0
-   __kmem_cache_free+0x9d/0x1b0
-   open_cached_dir+0xff5/0x1240 [cifs]
-   smb2_query_info_compound+0x5c3/0x6d0 [cifs]
-   smb2_queryfs+0xc2/0x2c0 [cifs]
-
-This is a race between open_cached_dir() and cached_dir_lease_break()
-where the cache entry for the open directory handle receives a lease
-break while creating it.  And before returning from open_cached_dir(),
-we put the last reference of the new @cfid because of
-!@cfid->has_lease.
-
-Besides the UAF, while running xfstests a lot of missed lease breaks
-have been noticed in tests that run several concurrent statfs(2) calls
-on those cached fids
-
-  CIFS: VFS: \\w22-root1.gandalf.test No task to wake, unknown frame...
-  CIFS: VFS: \\w22-root1.gandalf.test Cmd: 18 Err: 0x0 Flags: 0x1...
-  CIFS: VFS: \\w22-root1.gandalf.test smb buf 00000000715bfe83 len 108
-  CIFS: VFS: Dump pending requests:
-  CIFS: VFS: \\w22-root1.gandalf.test No task to wake, unknown frame...
-  CIFS: VFS: \\w22-root1.gandalf.test Cmd: 18 Err: 0x0 Flags: 0x1...
-  CIFS: VFS: \\w22-root1.gandalf.test smb buf 000000005aa7316e len 108
-  ...
-
-To fix both, in open_cached_dir() ensure that @cfid->has_lease is set
-right before sending out compounded request so that any potential
-lease break will be get processed by demultiplex thread while we're
-still caching @cfid.  And, if open failed for some reason, re-check
-@cfid->has_lease to decide whether or not put lease reference.
+CPU 0                                CPU 1
+------------------------------------------------------------------
+cifs_demultiplex_thread()            cifs_debug_data_proc_show()
+ release_mid()
+  spin_lock(&server->mid_lock);
+                                     spin_lock(&cifs_tcp_ses_lock)
+				      spin_lock(&server->mid_lock)
+  __release_mid()
+   smb2_find_smb_tcon()
+    spin_lock(&cifs_tcp_ses_lock) *deadlock*
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.c |   84 ++++++++++++++++++++++++++-------------------
- 1 file changed, 49 insertions(+), 35 deletions(-)
+ fs/smb/client/cifsproto.h |    7 ++++++-
+ fs/smb/client/smb2misc.c  |    2 +-
+ fs/smb/client/transport.c |   11 +----------
+ 3 files changed, 8 insertions(+), 12 deletions(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -32,7 +32,7 @@ static struct cached_fid *find_or_create
- 			 * fully cached or it may be in the process of
- 			 * being deleted due to a lease break.
- 			 */
--			if (!cfid->has_lease) {
-+			if (!cfid->time || !cfid->has_lease) {
- 				spin_unlock(&cfids->cfid_list_lock);
- 				return NULL;
- 			}
-@@ -193,10 +193,20 @@ int open_cached_dir(unsigned int xid, st
- 	npath = path_no_prefix(cifs_sb, path);
- 	if (IS_ERR(npath)) {
- 		rc = PTR_ERR(npath);
--		kfree(utf16_path);
--		return rc;
-+		goto out;
- 	}
- 
-+	if (!npath[0]) {
-+		dentry = dget(cifs_sb->root);
-+	} else {
-+		dentry = path_to_dentry(cifs_sb, npath);
-+		if (IS_ERR(dentry)) {
-+			rc = -ENOENT;
-+			goto out;
-+		}
-+	}
-+	cfid->dentry = dentry;
-+
- 	/*
- 	 * We do not hold the lock for the open because in case
- 	 * SMB2_open needs to reconnect.
-@@ -249,6 +259,15 @@ int open_cached_dir(unsigned int xid, st
- 
- 	smb2_set_related(&rqst[1]);
- 
-+	/*
-+	 * Set @cfid->has_lease to true before sending out compounded request so
-+	 * its lease reference can be put in cached_dir_lease_break() due to a
-+	 * potential lease break right after the request is sent or while @cfid
-+	 * is still being cached.  Concurrent processes won't be to use it yet
-+	 * due to @cfid->time being zero.
-+	 */
-+	cfid->has_lease = true;
-+
- 	rc = compound_send_recv(xid, ses, server,
- 				flags, 2, rqst,
- 				resp_buftype, rsp_iov);
-@@ -263,6 +282,8 @@ int open_cached_dir(unsigned int xid, st
- 	cfid->tcon = tcon;
- 	cfid->is_open = true;
- 
-+	spin_lock(&cfids->cfid_list_lock);
-+
- 	o_rsp = (struct smb2_create_rsp *)rsp_iov[0].iov_base;
- 	oparms.fid->persistent_fid = o_rsp->PersistentFileId;
- 	oparms.fid->volatile_fid = o_rsp->VolatileFileId;
-@@ -270,18 +291,25 @@ int open_cached_dir(unsigned int xid, st
- 	oparms.fid->mid = le64_to_cpu(o_rsp->hdr.MessageId);
- #endif /* CIFS_DEBUG2 */
- 
--	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE)
-+	rc = -EINVAL;
-+	if (o_rsp->OplockLevel != SMB2_OPLOCK_LEVEL_LEASE) {
-+		spin_unlock(&cfids->cfid_list_lock);
- 		goto oshr_free;
-+	}
- 
- 	smb2_parse_contexts(server, o_rsp,
- 			    &oparms.fid->epoch,
- 			    oparms.fid->lease_key, &oplock,
- 			    NULL, NULL);
--	if (!(oplock & SMB2_LEASE_READ_CACHING_HE))
-+	if (!(oplock & SMB2_LEASE_READ_CACHING_HE)) {
-+		spin_unlock(&cfids->cfid_list_lock);
- 		goto oshr_free;
-+	}
- 	qi_rsp = (struct smb2_query_info_rsp *)rsp_iov[1].iov_base;
--	if (le32_to_cpu(qi_rsp->OutputBufferLength) < sizeof(struct smb2_file_all_info))
-+	if (le32_to_cpu(qi_rsp->OutputBufferLength) < sizeof(struct smb2_file_all_info)) {
-+		spin_unlock(&cfids->cfid_list_lock);
- 		goto oshr_free;
-+	}
- 	if (!smb2_validate_and_copy_iov(
- 				le16_to_cpu(qi_rsp->OutputBufferOffset),
- 				sizeof(struct smb2_file_all_info),
-@@ -289,37 +317,24 @@ int open_cached_dir(unsigned int xid, st
- 				(char *)&cfid->file_all_info))
- 		cfid->file_all_info_is_valid = true;
- 
--	if (!npath[0])
--		dentry = dget(cifs_sb->root);
--	else {
--		dentry = path_to_dentry(cifs_sb, npath);
--		if (IS_ERR(dentry)) {
--			rc = -ENOENT;
--			goto oshr_free;
--		}
--	}
--	spin_lock(&cfids->cfid_list_lock);
--	cfid->dentry = dentry;
- 	cfid->time = jiffies;
--	cfid->has_lease = true;
- 	spin_unlock(&cfids->cfid_list_lock);
-+	/* At this point the directory handle is fully cached */
-+	rc = 0;
- 
- oshr_free:
--	kfree(utf16_path);
- 	SMB2_open_free(&rqst[0]);
- 	SMB2_query_info_free(&rqst[1]);
- 	free_rsp_buf(resp_buftype[0], rsp_iov[0].iov_base);
- 	free_rsp_buf(resp_buftype[1], rsp_iov[1].iov_base);
--	spin_lock(&cfids->cfid_list_lock);
--	if (!cfid->has_lease) {
--		if (rc) {
--			if (cfid->on_list) {
--				list_del(&cfid->entry);
--				cfid->on_list = false;
--				cfids->num_entries--;
--			}
--			rc = -ENOENT;
--		} else {
-+	if (rc) {
-+		spin_lock(&cfids->cfid_list_lock);
-+		if (cfid->on_list) {
-+			list_del(&cfid->entry);
-+			cfid->on_list = false;
-+			cfids->num_entries--;
-+		}
-+		if (cfid->has_lease) {
- 			/*
- 			 * We are guaranteed to have two references at this
- 			 * point. One for the caller and one for a potential
-@@ -327,25 +342,24 @@ oshr_free:
- 			 * will be closed when the caller closes the cached
- 			 * handle.
- 			 */
-+			cfid->has_lease = false;
- 			spin_unlock(&cfids->cfid_list_lock);
- 			kref_put(&cfid->refcount, smb2_close_cached_fid);
- 			goto out;
- 		}
-+		spin_unlock(&cfids->cfid_list_lock);
- 	}
--	spin_unlock(&cfids->cfid_list_lock);
-+out:
- 	if (rc) {
- 		if (cfid->is_open)
- 			SMB2_close(0, cfid->tcon, cfid->fid.persistent_fid,
- 				   cfid->fid.volatile_fid);
- 		free_cached_dir(cfid);
--		cfid = NULL;
--	}
--out:
--	if (rc == 0) {
-+	} else {
- 		*ret_cfid = cfid;
- 		atomic_inc(&tcon->num_remote_opens);
- 	}
--
-+	kfree(utf16_path);
- 	return rc;
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -81,7 +81,7 @@ extern char *cifs_build_path_to_root(str
+ extern char *build_wildcard_path_from_dentry(struct dentry *direntry);
+ char *cifs_build_devname(char *nodename, const char *prepath);
+ extern void delete_mid(struct mid_q_entry *mid);
+-extern void release_mid(struct mid_q_entry *mid);
++void __release_mid(struct kref *refcount);
+ extern void cifs_wake_up_task(struct mid_q_entry *mid);
+ extern int cifs_handle_standard(struct TCP_Server_Info *server,
+ 				struct mid_q_entry *mid);
+@@ -740,4 +740,9 @@ static inline bool dfs_src_pathname_equa
+ 	return true;
  }
  
++static inline void release_mid(struct mid_q_entry *mid)
++{
++	kref_put(&mid->refcount, __release_mid);
++}
++
+ #endif			/* _CIFSPROTO_H */
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -787,7 +787,7 @@ __smb2_handle_cancelled_cmd(struct cifs_
+ {
+ 	struct close_cancelled_open *cancelled;
+ 
+-	cancelled = kzalloc(sizeof(*cancelled), GFP_ATOMIC);
++	cancelled = kzalloc(sizeof(*cancelled), GFP_KERNEL);
+ 	if (!cancelled)
+ 		return -ENOMEM;
+ 
+--- a/fs/smb/client/transport.c
++++ b/fs/smb/client/transport.c
+@@ -76,7 +76,7 @@ alloc_mid(const struct smb_hdr *smb_buff
+ 	return temp;
+ }
+ 
+-static void __release_mid(struct kref *refcount)
++void __release_mid(struct kref *refcount)
+ {
+ 	struct mid_q_entry *midEntry =
+ 			container_of(refcount, struct mid_q_entry, refcount);
+@@ -156,15 +156,6 @@ static void __release_mid(struct kref *r
+ 	mempool_free(midEntry, cifs_mid_poolp);
+ }
+ 
+-void release_mid(struct mid_q_entry *mid)
+-{
+-	struct TCP_Server_Info *server = mid->server;
+-
+-	spin_lock(&server->mid_lock);
+-	kref_put(&mid->refcount, __release_mid);
+-	spin_unlock(&server->mid_lock);
+-}
+-
+ void
+ delete_mid(struct mid_q_entry *mid)
+ {
 
 
