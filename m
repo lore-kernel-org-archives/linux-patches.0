@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F14364B7;
-	Fri, 24 Nov 2023 19:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5772C1A2;
+	Fri, 24 Nov 2023 19:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/lE27eD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38D1C433C8;
-	Fri, 24 Nov 2023 19:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxbY99OC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B217C433C7;
+	Fri, 24 Nov 2023 19:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853938;
-	bh=AJAmr2oXj78+zsQMGh2jubGWHbFpuCKRhQIxrIzt3hI=;
+	s=korg; t=1700853940;
+	bh=k3ADtOA2VyNGZ0oFEWOTpOEKNbIh0q9ItQNKbcNecg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/lE27eD2m7/cEDJv137/lePi3YcOHAfjZeAxv5Jiw0f7vWWw8uVrzwCmG6GmgYLG
-	 CbD3HDxgiGEJiGXYZsrNUYomGKFROLd+8u+wwIX9oTDCHH4qfwvIIb4paCHECVTQBI
-	 fTm8ynuAtGYHWqUDwU2QfAMve7R95rYJYS3Mnh30=
+	b=GxbY99OCSssaPVQJZlCnkSj7kaaMM7ewqvsUswygoAT5v/sIPBrlSNlvfz22q3RN0
+	 hppA1z6R9CEUYQwGjkVy5W/LpOrSa88WEmnyTyuCVWjTKxcICDP22S8omas6Ke/UBG
+	 PLOht1o1ZQtyIsJAM6bh21rJmIxmRNIsthkWQm8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 090/159] jbd2: fix potential data lost in recovering journal raced with synchronizing fs bdev
-Date: Fri, 24 Nov 2023 17:55:07 +0000
-Message-ID: <20231124171945.652501989@linuxfoundation.org>
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.4 067/159] media: venus: hfi: add checks to perform sanity on queue pointers
+Date: Fri, 24 Nov 2023 17:54:44 +0000
+Message-ID: <20231124171944.746033428@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -43,94 +42,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
 
-commit 61187fce8600e8ef90e601be84f9d0f3222c1206 upstream.
+commit 5e538fce33589da6d7cb2de1445b84d3a8a692f7 upstream.
 
-JBD2 makes sure journal data is fallen on fs device by sync_blockdev(),
-however, other process could intercept the EIO information from bdev's
-mapping, which leads journal recovering successful even EIO occurs during
-data written back to fs device.
+Read and write pointers are used to track the packet index in the memory
+shared between video driver and firmware. There is a possibility of OOB
+access if the read or write pointer goes beyond the queue memory size.
+Add checks for the read and write pointer to avoid OOB access.
 
-We found this problem in our product, iscsi + multipath is chosen for block
-device of ext4. Unstable network may trigger kpartx to rescan partitions in
-device mapper layer. Detailed process is shown as following:
-
-  mount          kpartx          irq
-jbd2_journal_recover
- do_one_pass
-  memcpy(nbh->b_data, obh->b_data) // copy data to fs dev from journal
-  mark_buffer_dirty // mark bh dirty
-         vfs_read
-	  generic_file_read_iter // dio
-	   filemap_write_and_wait_range
-	    __filemap_fdatawrite_range
-	     do_writepages
-	      block_write_full_folio
-	       submit_bh_wbc
-	            >>  EIO occurs in disk  <<
-	                     end_buffer_async_write
-			      mark_buffer_write_io_error
-			       mapping_set_error
-			        set_bit(AS_EIO, &mapping->flags) // set!
-	    filemap_check_errors
-	     test_and_clear_bit(AS_EIO, &mapping->flags) // clear!
- err2 = sync_blockdev
-  filemap_write_and_wait
-   filemap_check_errors
-    test_and_clear_bit(AS_EIO, &mapping->flags) // false
- err2 = 0
-
-Filesystem is mounted successfully even data from journal is failed written
-into disk, and ext4/ocfs2 could become corrupted.
-
-Fix it by comparing the wb_err state in fs block device before recovering
-and after recovering.
-
-A reproducer can be found in the kernel bugzilla referenced below.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217888
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230919012525.1783108-1-chengzhihao1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: d96d3f30c0f2 ("[media] media: venus: hfi: add Venus HFI files")
+Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jbd2/recovery.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/platform/qcom/venus/hfi_venus.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/jbd2/recovery.c
-+++ b/fs/jbd2/recovery.c
-@@ -247,6 +247,8 @@ int jbd2_journal_recover(journal_t *jour
- 	journal_superblock_t *	sb;
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -206,6 +206,11 @@ static int venus_write_queue(struct venu
  
- 	struct recovery_info	info;
-+	errseq_t		wb_err;
-+	struct address_space	*mapping;
- 
- 	memset(&info, 0, sizeof(info));
- 	sb = journal->j_superblock;
-@@ -264,6 +266,9 @@ int jbd2_journal_recover(journal_t *jour
- 		return 0;
+ 	new_wr_idx = wr_idx + dwords;
+ 	wr_ptr = (u32 *)(queue->qmem.kva + (wr_idx << 2));
++
++	if (wr_ptr < (u32 *)queue->qmem.kva ||
++	    wr_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*wr_ptr)))
++		return -EINVAL;
++
+ 	if (new_wr_idx < qsize) {
+ 		memcpy(wr_ptr, packet, dwords << 2);
+ 	} else {
+@@ -273,6 +278,11 @@ static int venus_read_queue(struct venus
  	}
  
-+	wb_err = 0;
-+	mapping = journal->j_fs_dev->bd_inode->i_mapping;
-+	errseq_check_and_advance(&mapping->wb_err, &wb_err);
- 	err = do_one_pass(journal, &info, PASS_SCAN);
- 	if (!err)
- 		err = do_one_pass(journal, &info, PASS_REVOKE);
-@@ -284,6 +289,9 @@ int jbd2_journal_recover(journal_t *jour
- 	err2 = sync_blockdev(journal->j_fs_dev);
- 	if (!err)
- 		err = err2;
-+	err2 = errseq_check_and_advance(&mapping->wb_err, &wb_err);
-+	if (!err)
-+		err = err2;
- 	/* Make sure all replayed data is on permanent storage */
- 	if (journal->j_flags & JBD2_BARRIER) {
- 		err2 = blkdev_issue_flush(journal->j_fs_dev, GFP_KERNEL, NULL);
+ 	rd_ptr = (u32 *)(queue->qmem.kva + (rd_idx << 2));
++
++	if (rd_ptr < (u32 *)queue->qmem.kva ||
++	    rd_ptr > (u32 *)(queue->qmem.kva + queue->qmem.size - sizeof(*rd_ptr)))
++		return -EINVAL;
++
+ 	dwords = *rd_ptr >> 2;
+ 	if (!dwords)
+ 		return -EINVAL;
 
 
