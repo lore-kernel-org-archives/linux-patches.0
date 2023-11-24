@@ -1,35 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026D22FC4E;
-	Fri, 24 Nov 2023 18:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AF92D787;
+	Fri, 24 Nov 2023 18:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KaJRF5RQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85476C433C8;
-	Fri, 24 Nov 2023 18:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sf1adV/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3667C433C8;
+	Fri, 24 Nov 2023 18:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851251;
-	bh=gBSRHvzzNXDxt/WLVhQSxGZzuOMinhYdHjaktU0LC1w=;
+	s=korg; t=1700851254;
+	bh=fP4AmtSQSVpgiXc7Fmzl34G1Jzz3kEZVVaaYyw/qbgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KaJRF5RQxeYoBFQ2N5zXjLL+jHOw6adk4rB0H2PfKCehZJqS6tU1BjkvFYIFCqnyQ
-	 SGEHDKR56da8gIf4n5mrDTDaQ7fYVEywfnK0lS6FDQQEOWHHWQDgdtt9MqUoZXyNjv
-	 aFNfQGozdrg6mGVlkcWNOEf9GY7NofBBKbSsVe3A=
+	b=sf1adV/r9PwkWJaR3br522QbRb3C4QtnP2SAmyQ7hJ9mVc7AtVSWhpDkC26PrBBaA
+	 LmDdkG9gb7vdh9PhXnH6rYCPdTyb5CkjWTe1L+Ua5+x6udvjxLQqrFGvaeDZqJ6Dpv
+	 1Gbs2TuWhIjd8swk+Oy/0CSOvxtzectfOnjapI4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Paul E. McKenney" <paulmck@kernel.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Josh Triplett <josh@joshtriplett.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
 	Juri Lelli <juri.lelli@redhat.com>,
 	Valentin Schneider <vschneid@redhat.com>,
 	kernel-team@android.com,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	John Stultz <jstultz@google.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 373/491] torture: Add a kthread-creation callback to _torture_create_kthread()
-Date: Fri, 24 Nov 2023 17:50:09 +0000
-Message-ID: <20231124172035.787391972@linuxfoundation.org>
+Subject: [PATCH 6.5 374/491] torture: Add lock_torture writer_fifo module parameter
+Date: Fri, 24 Nov 2023 17:50:10 +0000
+Message-ID: <20231124172035.822803455@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -48,77 +49,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Dietmar Eggemann <dietmar.eggemann@arm.com>
 
-[ Upstream commit 67d5404d274376890d6d095a10e6565854918f8e ]
+[ Upstream commit 5d248bb39fe1388943acb6510f8f48fa5570e0ec ]
 
-This commit adds a kthread-creation callback to the
-_torture_create_kthread() function, which allows callers of a new
-torture_create_kthread_cb() macro to specify a function to be invoked
-after the kthread is created but before it is awakened for the first time.
+This commit adds a module parameter that causes the locktorture writer
+to run at real-time priority.
 
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
+To use it:
+insmod /lib/modules/torture.ko random_shuffle=1
+insmod /lib/modules/locktorture.ko torture_type=mutex_lock rt_boost=1 rt_boost_factor=50 nested_locks=3 writer_fifo=1
+													^^^^^^^^^^^^^
+
+A predecessor to this patch has been helpful to uncover issues with the
+proxy-execution series.
+
+[ paulmck: Remove locktorture-specific code from kernel/torture.c. ]
+
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
 Cc: Josh Triplett <josh@joshtriplett.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>
 Cc: Juri Lelli <juri.lelli@redhat.com>
 Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
 Cc: kernel-team@android.com
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Acked-by: John Stultz <jstultz@google.com>
+Signed-off-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+[jstultz: Include header change to build, reword commit message]
+Signed-off-by: John Stultz <jstultz@google.com>
+Acked-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Stable-dep-of: cca42bd8eb1b ("rcutorture: Fix stuttering races and other issues")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/torture.h | 7 +++++--
- kernel/torture.c        | 6 +++++-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt |  4 ++++
+ kernel/locking/locktorture.c                    | 12 +++++++-----
+ kernel/torture.c                                |  3 ++-
+ 3 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/torture.h b/include/linux/torture.h
-index 7038104463e48..bb466eec01e42 100644
---- a/include/linux/torture.h
-+++ b/include/linux/torture.h
-@@ -108,12 +108,15 @@ bool torture_must_stop(void);
- bool torture_must_stop_irq(void);
- void torture_kthread_stopping(char *title);
- int _torture_create_kthread(int (*fn)(void *arg), void *arg, char *s, char *m,
--			     char *f, struct task_struct **tp);
-+			     char *f, struct task_struct **tp, void (*cbf)(struct task_struct *tp));
- void _torture_stop_kthread(char *m, struct task_struct **tp);
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index b951b4c2808f1..5711129686d10 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -2938,6 +2938,10 @@
+ 	locktorture.torture_type= [KNL]
+ 			Specify the locking implementation to test.
  
- #define torture_create_kthread(n, arg, tp) \
- 	_torture_create_kthread(n, (arg), #n, "Creating " #n " task", \
--				"Failed to create " #n, &(tp))
-+				"Failed to create " #n, &(tp), NULL)
-+#define torture_create_kthread_cb(n, arg, tp, cbf) \
-+	_torture_create_kthread(n, (arg), #n, "Creating " #n " task", \
-+				"Failed to create " #n, &(tp), cbf)
- #define torture_stop_kthread(n, tp) \
- 	_torture_stop_kthread("Stopping " #n " task", &(tp))
++	locktorture.writer_fifo= [KNL]
++			Run the write-side locktorture kthreads at
++			sched_set_fifo() real-time priority.
++
+ 	locktorture.verbose= [KNL]
+ 			Enable additional printk() statements.
+ 
+diff --git a/kernel/locking/locktorture.c b/kernel/locking/locktorture.c
+index 949d3deae5062..270c7f80ce84c 100644
+--- a/kernel/locking/locktorture.c
++++ b/kernel/locking/locktorture.c
+@@ -45,6 +45,7 @@ torture_param(int, stutter, 5, "Number of jiffies to run/halt test, 0=disable");
+ torture_param(int, rt_boost, 2,
+ 		   "Do periodic rt-boost. 0=Disable, 1=Only for rt_mutex, 2=For all lock types.");
+ torture_param(int, rt_boost_factor, 50, "A factor determining how often rt-boost happens.");
++torture_param(int, writer_fifo, 0, "Run writers at sched_set_fifo() priority");
+ torture_param(int, verbose, 1, "Enable verbose debugging printk()s");
+ torture_param(int, nested_locks, 0, "Number of nested locks (max = 8)");
+ /* Going much higher trips "BUG: MAX_LOCKDEP_CHAIN_HLOCKS too low!" errors */
+@@ -809,7 +810,8 @@ static int lock_torture_writer(void *arg)
+ 	bool skip_main_lock;
+ 
+ 	VERBOSE_TOROUT_STRING("lock_torture_writer task started");
+-	set_user_nice(current, MAX_NICE);
++	if (!rt_task(current))
++		set_user_nice(current, MAX_NICE);
+ 
+ 	do {
+ 		if ((torture_random(&rand) & 0xfffff) == 0)
+@@ -1015,8 +1017,7 @@ static void lock_torture_cleanup(void)
+ 
+ 	if (writer_tasks) {
+ 		for (i = 0; i < cxt.nrealwriters_stress; i++)
+-			torture_stop_kthread(lock_torture_writer,
+-					     writer_tasks[i]);
++			torture_stop_kthread(lock_torture_writer, writer_tasks[i]);
+ 		kfree(writer_tasks);
+ 		writer_tasks = NULL;
+ 	}
+@@ -1244,8 +1245,9 @@ static int __init lock_torture_init(void)
+ 			goto create_reader;
+ 
+ 		/* Create writer. */
+-		firsterr = torture_create_kthread(lock_torture_writer, &cxt.lwsa[i],
+-						  writer_tasks[i]);
++		firsterr = torture_create_kthread_cb(lock_torture_writer, &cxt.lwsa[i],
++						     writer_tasks[i],
++						     writer_fifo ? sched_set_fifo : NULL);
+ 		if (torture_init_error(firsterr))
+ 			goto unwind;
  
 diff --git a/kernel/torture.c b/kernel/torture.c
-index 1a0519b836ac9..1da48f3816f61 100644
+index 1da48f3816f61..e06b03e987c9f 100644
 --- a/kernel/torture.c
 +++ b/kernel/torture.c
-@@ -926,7 +926,7 @@ EXPORT_SYMBOL_GPL(torture_kthread_stopping);
-  * it starts, you will need to open-code your own.
-  */
- int _torture_create_kthread(int (*fn)(void *arg), void *arg, char *s, char *m,
--			    char *f, struct task_struct **tp)
-+			    char *f, struct task_struct **tp, void (*cbf)(struct task_struct *tp))
- {
- 	int ret = 0;
+@@ -37,6 +37,7 @@
+ #include <linux/ktime.h>
+ #include <asm/byteorder.h>
+ #include <linux/torture.h>
++#include <linux/sched/rt.h>
+ #include "rcu/rcu.h"
  
-@@ -938,6 +938,10 @@ int _torture_create_kthread(int (*fn)(void *arg), void *arg, char *s, char *m,
- 		*tp = NULL;
- 		return ret;
- 	}
-+
-+	if (cbf)
-+		cbf(*tp);
-+
- 	wake_up_process(*tp);  // Process is sleeping, so ordering provided.
- 	torture_shuffle_task_register(*tp);
- 	return ret;
+ MODULE_LICENSE("GPL");
+@@ -728,7 +729,7 @@ bool stutter_wait(const char *title)
+ 	cond_resched_tasks_rcu_qs();
+ 	spt = READ_ONCE(stutter_pause_test);
+ 	for (; spt; spt = READ_ONCE(stutter_pause_test)) {
+-		if (!ret) {
++		if (!ret && !rt_task(current)) {
+ 			sched_set_normal(current, MAX_NICE);
+ 			ret = true;
+ 		}
 -- 
 2.42.0
 
