@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906CC31748;
-	Fri, 24 Nov 2023 19:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C42731748;
+	Fri, 24 Nov 2023 19:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVRM6pmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E186C433C8;
-	Fri, 24 Nov 2023 19:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXcJhvfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F95DC433C9;
+	Fri, 24 Nov 2023 19:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852705;
-	bh=+ebP5VOWkZRRjJRl8FfjEXpPEgTXYM85cwuP6G44xKw=;
+	s=korg; t=1700852708;
+	bh=no4XfktE5HS4LiRBuijGHbtDnggERP7tDEukzhgRnH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVRM6pmR/gUWrZREakkD/DV9GxhaU6DoSx2zTAmABvn87sfQOnBu40EsLQQVWqid3
-	 HnSrjzywncZxJtOykluxJI4qvUtMUkN+3b71nLJaTt87FGyFqLzQYLt9PoF1AABMKr
-	 fZgl/e1+vf/twwQQINPgviM77KoLXKRtyBD2e/Ag=
+	b=tXcJhvfKAVrPXOIaG4Zh7V2pFXUxe7/BoqSWJAHHovFcvPr1zra4d9r+tC50A4T7Y
+	 lYBfxe2akg6sY2tYG+cQpNCdhPFTGpcGFbAqgboa2CnaROD15mm1ajn6Y2nDo1qTtS
+	 CINDOcatF2byk+0WJ1z8Ahj0cAB26ENFZ8f0y+7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	felix <fuzhen5@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	syzbot+3e5130844b0c0e2b4948@syzkaller.appspotmail.com,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/193] SUNRPC: Fix RPC client cleaned up the freed pipefs dentries
-Date: Fri, 24 Nov 2023 17:53:13 +0000
-Message-ID: <20231124171949.878460109@linuxfoundation.org>
+Subject: [PATCH 5.10 067/193] gfs2: Silence "suspicious RCU usage in gfs2_permission" warning
+Date: Fri, 24 Nov 2023 17:53:14 +0000
+Message-ID: <20231124171949.920705976@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,119 +42,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: felix <fuzhen5@huawei.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit bfca5fb4e97c46503ddfc582335917b0cc228264 ]
+[ Upstream commit 074d7306a4fe22fcac0b53f699f92757ab1cee99 ]
 
-RPC client pipefs dentries cleanup is in separated rpc_remove_pipedir()
-workqueue,which takes care about pipefs superblock locking.
-In some special scenarios, when kernel frees the pipefs sb of the
-current client and immediately alloctes a new pipefs sb,
-rpc_remove_pipedir function would misjudge the existence of pipefs
-sb which is not the one it used to hold. As a result,
-the rpc_remove_pipedir would clean the released freed pipefs dentries.
+Commit 0abd1557e21c added rcu_dereference() for dereferencing ip->i_gl
+in gfs2_permission.  This now causes lockdep to complain when
+gfs2_permission is called in non-RCU context:
 
-To fix this issue, rpc_remove_pipedir should check whether the
-current pipefs sb is consistent with the original pipefs sb.
+    WARNING: suspicious RCU usage in gfs2_permission
 
-This error can be catched by KASAN:
-=========================================================
-[  250.497700] BUG: KASAN: slab-use-after-free in dget_parent+0x195/0x200
-[  250.498315] Read of size 4 at addr ffff88800a2ab804 by task kworker/0:18/106503
-[  250.500549] Workqueue: events rpc_free_client_work
-[  250.501001] Call Trace:
-[  250.502880]  kasan_report+0xb6/0xf0
-[  250.503209]  ? dget_parent+0x195/0x200
-[  250.503561]  dget_parent+0x195/0x200
-[  250.503897]  ? __pfx_rpc_clntdir_depopulate+0x10/0x10
-[  250.504384]  rpc_rmdir_depopulate+0x1b/0x90
-[  250.504781]  rpc_remove_client_dir+0xf5/0x150
-[  250.505195]  rpc_free_client_work+0xe4/0x230
-[  250.505598]  process_one_work+0x8ee/0x13b0
-...
-[   22.039056] Allocated by task 244:
-[   22.039390]  kasan_save_stack+0x22/0x50
-[   22.039758]  kasan_set_track+0x25/0x30
-[   22.040109]  __kasan_slab_alloc+0x59/0x70
-[   22.040487]  kmem_cache_alloc_lru+0xf0/0x240
-[   22.040889]  __d_alloc+0x31/0x8e0
-[   22.041207]  d_alloc+0x44/0x1f0
-[   22.041514]  __rpc_lookup_create_exclusive+0x11c/0x140
-[   22.041987]  rpc_mkdir_populate.constprop.0+0x5f/0x110
-[   22.042459]  rpc_create_client_dir+0x34/0x150
-[   22.042874]  rpc_setup_pipedir_sb+0x102/0x1c0
-[   22.043284]  rpc_client_register+0x136/0x4e0
-[   22.043689]  rpc_new_client+0x911/0x1020
-[   22.044057]  rpc_create_xprt+0xcb/0x370
-[   22.044417]  rpc_create+0x36b/0x6c0
-...
-[   22.049524] Freed by task 0:
-[   22.049803]  kasan_save_stack+0x22/0x50
-[   22.050165]  kasan_set_track+0x25/0x30
-[   22.050520]  kasan_save_free_info+0x2b/0x50
-[   22.050921]  __kasan_slab_free+0x10e/0x1a0
-[   22.051306]  kmem_cache_free+0xa5/0x390
-[   22.051667]  rcu_core+0x62c/0x1930
-[   22.051995]  __do_softirq+0x165/0x52a
-[   22.052347]
-[   22.052503] Last potentially related work creation:
-[   22.052952]  kasan_save_stack+0x22/0x50
-[   22.053313]  __kasan_record_aux_stack+0x8e/0xa0
-[   22.053739]  __call_rcu_common.constprop.0+0x6b/0x8b0
-[   22.054209]  dentry_free+0xb2/0x140
-[   22.054540]  __dentry_kill+0x3be/0x540
-[   22.054900]  shrink_dentry_list+0x199/0x510
-[   22.055293]  shrink_dcache_parent+0x190/0x240
-[   22.055703]  do_one_tree+0x11/0x40
-[   22.056028]  shrink_dcache_for_umount+0x61/0x140
-[   22.056461]  generic_shutdown_super+0x70/0x590
-[   22.056879]  kill_anon_super+0x3a/0x60
-[   22.057234]  rpc_kill_sb+0x121/0x200
+Switch to rcu_dereference_check() and check for the MAY_NOT_BLOCK flag
+to shut up lockdep when we know that dereferencing ip->i_gl is safe.
 
-Fixes: 0157d021d23a ("SUNRPC: handle RPC client pipefs dentries by network namespace aware routines")
-Signed-off-by: felix <fuzhen5@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 0abd1557e21c ("gfs2: fix an oops in gfs2_permission")
+Reported-by: syzbot+3e5130844b0c0e2b4948@syzkaller.appspotmail.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/clnt.h | 1 +
- net/sunrpc/clnt.c           | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ fs/gfs2/inode.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/sunrpc/clnt.h b/include/linux/sunrpc/clnt.h
-index 02e7a5863d289..41ed614e69209 100644
---- a/include/linux/sunrpc/clnt.h
-+++ b/include/linux/sunrpc/clnt.h
-@@ -79,6 +79,7 @@ struct rpc_clnt {
- 		struct work_struct	cl_work;
- 	};
- 	const struct cred	*cl_cred;
-+	struct super_block *pipefs_sb;
- };
+diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
+index 963dc72e7155f..d75d56d9ea0ca 100644
+--- a/fs/gfs2/inode.c
++++ b/fs/gfs2/inode.c
+@@ -1835,6 +1835,7 @@ static const char *gfs2_get_link(struct dentry *dentry,
  
- /*
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index da34b23a66dbd..360a3bcd91fe1 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -109,7 +109,8 @@ static void rpc_clnt_remove_pipedir(struct rpc_clnt *clnt)
- 
- 	pipefs_sb = rpc_get_sb_net(net);
- 	if (pipefs_sb) {
--		__rpc_clnt_remove_pipedir(clnt);
-+		if (pipefs_sb == clnt->pipefs_sb)
-+			__rpc_clnt_remove_pipedir(clnt);
- 		rpc_put_sb_net(net);
- 	}
- }
-@@ -149,6 +150,8 @@ rpc_setup_pipedir(struct super_block *pipefs_sb, struct rpc_clnt *clnt)
+ int gfs2_permission(struct inode *inode, int mask)
  {
- 	struct dentry *dentry;
++	int may_not_block = mask & MAY_NOT_BLOCK;
+ 	struct gfs2_inode *ip;
+ 	struct gfs2_holder i_gh;
+ 	struct gfs2_glock *gl;
+@@ -1842,14 +1843,14 @@ int gfs2_permission(struct inode *inode, int mask)
  
-+	clnt->pipefs_sb = pipefs_sb;
-+
- 	if (clnt->cl_program->pipe_dir_name != NULL) {
- 		dentry = rpc_setup_pipedir_sb(pipefs_sb, clnt);
- 		if (IS_ERR(dentry))
+ 	gfs2_holder_mark_uninitialized(&i_gh);
+ 	ip = GFS2_I(inode);
+-	gl = rcu_dereference(ip->i_gl);
++	gl = rcu_dereference_check(ip->i_gl, !may_not_block);
+ 	if (unlikely(!gl)) {
+ 		/* inode is getting torn down, must be RCU mode */
+-		WARN_ON_ONCE(!(mask & MAY_NOT_BLOCK));
++		WARN_ON_ONCE(!may_not_block);
+ 		return -ECHILD;
+         }
+ 	if (gfs2_glock_is_locked_by_me(gl) == NULL) {
+-		if (mask & MAY_NOT_BLOCK)
++		if (may_not_block)
+ 			return -ECHILD;
+ 		error = gfs2_glock_nq_init(gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
+ 		if (error)
 -- 
 2.42.0
 
