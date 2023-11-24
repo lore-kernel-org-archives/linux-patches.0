@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AE339FE1;
-	Fri, 24 Nov 2023 18:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97FE39FE8;
+	Fri, 24 Nov 2023 18:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KeplUDi3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3F8C433C8;
-	Fri, 24 Nov 2023 18:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebUVkfnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741A2C433C8;
+	Fri, 24 Nov 2023 18:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849264;
-	bh=DZfFuVuBh58XD7aRaoqSG2fekZJ4WdnxghNz4Gby3Yc=;
+	s=korg; t=1700849266;
+	bh=9RhFDLPGqjz9NKvLMFWBJnua7zLSNdbvwsN5uQXLVN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KeplUDi3BhFIPcD7Zc4ROdxAt2Uz4I7FDSR7bQinpUHKJPIb5zVcwzcrZSrHMXmt2
-	 ecb1a2UhzOqmCq1jqVI+D/46VimdinfxBgRIzpknA8rxlTJMEH9CVNNQofkzkRyUIv
-	 J5ahEk9AKrE+zKivT5ID7o5UgOyBMl3gqvyqS2qU=
+	b=ebUVkfnPrIlg3IMQEqVswcT6mQDdxDmAoBQpmPQ+xsI24TucnuG5k2ifYd+ja2d5k
+	 N7jlxZnG8FH+TvE52yQuFZD15phl4nt6TSSQzP9z1JkzHQhMqeDyGG1tyl0P6q4oQk
+	 2goaFS6EZgzSKsc9f+Nm2sVG0WVuYiRFE/tUUB68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Longfang Liu <liulongfang@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/530] scsi: libfc: Fix potential NULL pointer dereference in fc_lport_ptp_setup()
-Date: Fri, 24 Nov 2023 17:44:31 +0000
-Message-ID: <20231124172031.327024270@linuxfoundation.org>
+Subject: [PATCH 6.6 114/530] crypto: hisilicon/qm - prevent soft lockup in receive loop
+Date: Fri, 24 Nov 2023 17:44:40 +0000
+Message-ID: <20231124172031.582106472@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,41 +42,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: Longfang Liu <liulongfang@huawei.com>
 
-[ Upstream commit 4df105f0ce9f6f30cda4e99f577150d23f0c9c5f ]
+[ Upstream commit 33fc506d2ac514be1072499a263c3bff8c7c95a0 ]
 
-fc_lport_ptp_setup() did not check the return value of fc_rport_create()
-which can return NULL and would cause a NULL pointer dereference. Address
-this issue by checking return value of fc_rport_create() and log error
-message on fc_rport_create() failed.
+In the scenario where the accelerator business is fully loaded.
+When the workqueue receiving messages and performing callback
+processing, there are a large number of messages that need to be
+received, and there are continuously messages that have been
+processed and need to be received.
+This will cause the receive loop here to be locked for a long time.
+This scenario will cause watchdog timeout problems on OS with kernel
+preemption turned off.
 
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Link: https://lore.kernel.org/r/20231011130350.819571-1-haowenchao2@huawei.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+The error logs:
+watchdog: BUG: soft lockup - CPU#23 stuck for 23s! [kworker/u262:1:1407]
+[ 1461.978428][   C23] Call trace:
+[ 1461.981890][   C23]  complete+0x8c/0xf0
+[ 1461.986031][   C23]  kcryptd_async_done+0x154/0x1f4 [dm_crypt]
+[ 1461.992154][   C23]  sec_skcipher_callback+0x7c/0xf4 [hisi_sec2]
+[ 1461.998446][   C23]  sec_req_cb+0x104/0x1f4 [hisi_sec2]
+[ 1462.003950][   C23]  qm_poll_req_cb+0xcc/0x150 [hisi_qm]
+[ 1462.009531][   C23]  qm_work_process+0x60/0xc0 [hisi_qm]
+[ 1462.015101][   C23]  process_one_work+0x1c4/0x470
+[ 1462.020052][   C23]  worker_thread+0x150/0x3c4
+[ 1462.024735][   C23]  kthread+0x108/0x13c
+[ 1462.028889][   C23]  ret_from_fork+0x10/0x18
+
+Therefore, it is necessary to add an actively scheduled operation in the
+while loop to prevent this problem.
+After adding it, no matter whether the OS turns on or off the kernel
+preemption function. Neither will cause watchdog timeout issues.
+
+Signed-off-by: Longfang Liu <liulongfang@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libfc/fc_lport.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/crypto/hisilicon/qm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/libfc/fc_lport.c b/drivers/scsi/libfc/fc_lport.c
-index 9c02c9523c4d4..ab06e9aeb613e 100644
---- a/drivers/scsi/libfc/fc_lport.c
-+++ b/drivers/scsi/libfc/fc_lport.c
-@@ -241,6 +241,12 @@ static void fc_lport_ptp_setup(struct fc_lport *lport,
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index 1638c0a7df310..193b0b3a77cda 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -847,6 +847,8 @@ static void qm_poll_req_cb(struct hisi_qp *qp)
+ 		qm_db(qm, qp->qp_id, QM_DOORBELL_CMD_CQ,
+ 		      qp->qp_status.cq_head, 0);
+ 		atomic_dec(&qp->qp_status.used);
++
++		cond_resched();
  	}
- 	mutex_lock(&lport->disc.disc_mutex);
- 	lport->ptp_rdata = fc_rport_create(lport, remote_fid);
-+	if (!lport->ptp_rdata) {
-+		printk(KERN_WARNING "libfc: Failed to setup lport 0x%x\n",
-+			lport->port_id);
-+		mutex_unlock(&lport->disc.disc_mutex);
-+		return;
-+	}
- 	kref_get(&lport->ptp_rdata->kref);
- 	lport->ptp_rdata->ids.port_name = remote_wwpn;
- 	lport->ptp_rdata->ids.node_name = remote_wwnn;
+ 
+ 	/* set c_flag */
 -- 
 2.42.0
 
