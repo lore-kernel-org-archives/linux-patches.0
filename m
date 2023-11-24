@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DD235F04;
-	Fri, 24 Nov 2023 18:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E88D2EAEA;
+	Fri, 24 Nov 2023 18:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F50pDGcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B630C433C7;
-	Fri, 24 Nov 2023 18:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEJ/cwKd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061B8C433C8;
+	Fri, 24 Nov 2023 18:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852374;
-	bh=kPpax8QicMhKp6TH51toOVSBhd5VyLrNsAyGL6sh/eE=;
+	s=korg; t=1700852377;
+	bh=/OxRqtQDiY84py3QbPsb8nT2kv8u+SDeWY5ztXFzHq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F50pDGcE/AncFz+LvpFC8qG6yF2Csq1Cg1H50izYGqyWq6qn8oGSPCinhbMRIKc7V
-	 hg4qVuQ0DK03HUGfEuE/W/qgiVK/n9VJDZVf/4u1c1iTBqRQyVB41YcL9BRwT6Yyc0
-	 PO77HoOKNpyDntwJz0/rfQ9y4RmfapHhXq7Y8tjk=
+	b=DEJ/cwKdftjhcbhIiiJRaPfD6rc/0t6mnLhaXIJiqvOUnL7Vqy77gUn/mbQ4H7B0i
+	 2X+LhOAEQ2xd4tOG25BMNka7+j6lOh+yBDSuVUNrCOBeSsI2EPVmzbnVAofvCSgLm6
+	 7Mo6nHbAyYWXfBUWbT1TJvL+zQwZDRwejPShHBTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johnathan Mantey <johnathanx.mantey@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 305/372] Revert ncsi: Propagate carrier gain/loss events to the NCSI controller
-Date: Fri, 24 Nov 2023 17:51:32 +0000
-Message-ID: <20231124172020.587630238@linuxfoundation.org>
+	Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 296/372] cxl/region: Cleanup target list on attach error
+Date: Fri, 24 Nov 2023 17:51:23 +0000
+Message-ID: <20231124172020.295869644@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,46 +45,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 9e2e7efbbbff69d8340abb56d375dd79d1f5770f upstream.
+[ Upstream commit 86987c766276acf1289700cd38bd6d5b5a167fea ]
 
-This reverts commit 3780bb29311eccb7a1c9641032a112eed237f7e3.
+Jonathan noticed that the target list setup is not unwound completely
+upon error. Undo all the setup in the 'err_decrement:' exit path.
 
-The cited commit introduced unwanted behavior.
-
-The intent for the commit was to be able to detect carrier loss/gain
-for just the NIC connected to the BMC. The unwanted effect is a
-carrier loss for auxiliary paths also causes the BMC to lose
-carrier. The BMC never regains carrier despite the secondary NIC
-regaining a link.
-
-This change, when merged, needs to be backported to stable kernels.
-5.4-stable, 5.10-stable, 5.15-stable, 6.1-stable, 6.5-stable
-
-Fixes: 3780bb29311e ("ncsi: Propagate carrier gain/loss events to the NCSI controller")
-CC: stable@vger.kernel.org
-Signed-off-by: Johnathan Mantey <johnathanx.mantey@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 27b3f8d13830 ("cxl/region: Program target lists")
+Reported-by: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+Link: http://lore.kernel.org/r/20230208123031.00006990@Huawei.com
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Vishal Verma <vishal.l.verma@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/167601996980.1924368.390423634911157277.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Stable-dep-of: 0718588c7aaa ("cxl/region: Do not try to cleanup after cxl_region_setup_targets() fails")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-aen.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/cxl/core/region.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ncsi/ncsi-aen.c
-+++ b/net/ncsi/ncsi-aen.c
-@@ -89,11 +89,6 @@ static int ncsi_aen_handler_lsc(struct n
- 	if ((had_link == has_link) || chained)
- 		return 0;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 99b0501066e57..bd1c511bba987 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1317,6 +1317,8 @@ static int cxl_region_attach(struct cxl_region *cxlr,
  
--	if (had_link)
--		netif_carrier_off(ndp->ndev.dev);
--	else
--		netif_carrier_on(ndp->ndev.dev);
--
- 	if (!ndp->multi_package && !nc->package->multi_channel) {
- 		if (had_link) {
- 			ndp->flags |= NCSI_DEV_RESHUFFLE;
+ err_decrement:
+ 	p->nr_targets--;
++	cxled->pos = -1;
++	p->targets[pos] = NULL;
+ err:
+ 	for (iter = ep_port; !is_cxl_root(iter);
+ 	     iter = to_cxl_port(iter->dev.parent))
+-- 
+2.42.0
+
 
 
