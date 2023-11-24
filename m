@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8FA35EE6;
-	Fri, 24 Nov 2023 19:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CB735EE6;
+	Fri, 24 Nov 2023 19:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGTGoX+a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6F3C433C8;
-	Fri, 24 Nov 2023 19:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CN6ne35/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86831C433C8;
+	Fri, 24 Nov 2023 19:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853229;
-	bh=M45B7eriLNTv0XeoFN0a9UK4Pg76UoJcZrH2aFgn7EM=;
+	s=korg; t=1700853231;
+	bh=5Ujtm6Xon2sNUkzsgMWjCl8RWsdzq8MXS1I25iVbytc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XGTGoX+ahab81fAZth8BnHjcmLw9aJdRmHuSo9wiO3Rab8ZdGry3MRYj72M6IZByM
-	 Ie6MgrwMYCQ27UyRwL3+aDCNvx/V/Gna/MYVx4z2dns1cw1Td6FIqqQupUqVdTmRAQ
-	 HZmCR0NnwHlFDhli6QP05idQq8RAVpChcZ/aVuok=
+	b=CN6ne35/7ue7ZzjcrGbg5/vERN0jWnXYgv9FtH67ewfsDjsMpQixqVRJyR2kBgrr4
+	 drVvJ0jcynZMU6njZUvXOfc2+8pTAbab6sKJ8XkiVuLMtvi4F6tLqzylX1Kzlhp0me
+	 BPpmbTlrIvhaRcPs2GxYqgOR1B5uj5hH5AYboOfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Martin KaFai Lau <kafai@fb.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/297] gfs2: fix an oops in gfs2_permission
-Date: Fri, 24 Nov 2023 17:51:53 +0000
-Message-ID: <20231124172002.731519662@linuxfoundation.org>
+Subject: [PATCH 5.15 099/297] net: inet: Open code inet_hash2 and inet_unhash2
+Date: Fri, 24 Nov 2023 17:52:21 +0000
+Message-ID: <20231124172003.724929298@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,65 +43,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Martin KaFai Lau <kafai@fb.com>
 
-[ Upstream commit 0abd1557e21c617bd13fc18f7725fc6363c05913 ]
+[ Upstream commit e8d0059000b20c4745c5b6a713f6adb269cff8ff ]
 
-In RCU mode, we might race with gfs2_evict_inode(), which zeroes
-->i_gl.  Freeing of the object it points to is RCU-delayed, so
-if we manage to fetch the pointer before it's been replaced with
-NULL, we are fine.  Check if we'd fetched NULL and treat that
-as "bail out and tell the caller to get out of RCU mode".
+This patch folds lhash2 related functions into __inet_hash and
+inet_unhash.  This will make the removal of the listening_hash
+in a latter patch easier to review.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+First, this patch folds inet_hash2 into __inet_hash.
+
+For unhash, the current call sequence is like
+inet_unhash() => __inet_unhash() => inet_unhash2().
+The specific testing cases in __inet_unhash() are mostly related
+to TCP_LISTEN sk and its caller inet_unhash() already has
+the TCP_LISTEN test, so this patch folds both __inet_unhash() and
+inet_unhash2() into inet_unhash().
+
+Note that all listening_hash users also have lhash2 initialized,
+so the !h->lhash2 check is no longer needed.
+
+Signed-off-by: Martin KaFai Lau <kafai@fb.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 871019b22d1b ("net: set SOCK_RCU_FREE before inserting socket into hashtable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/inode.c | 11 +++++++++--
- fs/gfs2/super.c |  2 +-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ net/ipv4/inet_hashtables.c | 88 ++++++++++++++------------------------
+ 1 file changed, 33 insertions(+), 55 deletions(-)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 97ee17843b4d0..682418d9c8e72 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -1850,14 +1850,21 @@ int gfs2_permission(struct user_namespace *mnt_userns, struct inode *inode,
- {
- 	struct gfs2_inode *ip;
- 	struct gfs2_holder i_gh;
-+	struct gfs2_glock *gl;
- 	int error;
- 
- 	gfs2_holder_mark_uninitialized(&i_gh);
- 	ip = GFS2_I(inode);
--	if (gfs2_glock_is_locked_by_me(ip->i_gl) == NULL) {
-+	gl = rcu_dereference(ip->i_gl);
-+	if (unlikely(!gl)) {
-+		/* inode is getting torn down, must be RCU mode */
-+		WARN_ON_ONCE(!(mask & MAY_NOT_BLOCK));
-+		return -ECHILD;
-+        }
-+	if (gfs2_glock_is_locked_by_me(gl) == NULL) {
- 		if (mask & MAY_NOT_BLOCK)
- 			return -ECHILD;
--		error = gfs2_glock_nq_init(ip->i_gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
-+		error = gfs2_glock_nq_init(gl, LM_ST_SHARED, LM_FLAG_ANY, &i_gh);
- 		if (error)
- 			return error;
- 	}
-diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
-index 51b44da4a0d64..268651ac9fc84 100644
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -1436,7 +1436,7 @@ static void gfs2_evict_inode(struct inode *inode)
- 		wait_on_bit_io(&ip->i_flags, GIF_GLOP_PENDING, TASK_UNINTERRUPTIBLE);
- 		gfs2_glock_add_to_lru(ip->i_gl);
- 		gfs2_glock_put_eventually(ip->i_gl);
--		ip->i_gl = NULL;
-+		rcu_assign_pointer(ip->i_gl, NULL);
- 	}
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 8e0451248fc05..637d806090b00 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -193,40 +193,6 @@ inet_lhash2_bucket_sk(struct inet_hashinfo *h, struct sock *sk)
+ 	return inet_lhash2_bucket(h, hash);
  }
  
+-static void inet_hash2(struct inet_hashinfo *h, struct sock *sk)
+-{
+-	struct inet_listen_hashbucket *ilb2;
+-
+-	if (!h->lhash2)
+-		return;
+-
+-	ilb2 = inet_lhash2_bucket_sk(h, sk);
+-
+-	spin_lock(&ilb2->lock);
+-	if (sk->sk_reuseport && sk->sk_family == AF_INET6)
+-		hlist_add_tail_rcu(&inet_csk(sk)->icsk_listen_portaddr_node,
+-				   &ilb2->head);
+-	else
+-		hlist_add_head_rcu(&inet_csk(sk)->icsk_listen_portaddr_node,
+-				   &ilb2->head);
+-	spin_unlock(&ilb2->lock);
+-}
+-
+-static void inet_unhash2(struct inet_hashinfo *h, struct sock *sk)
+-{
+-	struct inet_listen_hashbucket *ilb2;
+-
+-	if (!h->lhash2 ||
+-	    WARN_ON_ONCE(hlist_unhashed(&inet_csk(sk)->icsk_listen_portaddr_node)))
+-		return;
+-
+-	ilb2 = inet_lhash2_bucket_sk(h, sk);
+-
+-	spin_lock(&ilb2->lock);
+-	hlist_del_init_rcu(&inet_csk(sk)->icsk_listen_portaddr_node);
+-	spin_unlock(&ilb2->lock);
+-}
+-
+ static inline int compute_score(struct sock *sk, struct net *net,
+ 				const unsigned short hnum, const __be32 daddr,
+ 				const int dif, const int sdif)
+@@ -626,6 +592,7 @@ static int inet_reuseport_add_sock(struct sock *sk,
+ int __inet_hash(struct sock *sk, struct sock *osk)
+ {
+ 	struct inet_hashinfo *hashinfo = sk->sk_prot->h.hashinfo;
++	struct inet_listen_hashbucket *ilb2;
+ 	struct inet_listen_hashbucket *ilb;
+ 	int err = 0;
+ 
+@@ -637,22 +604,29 @@ int __inet_hash(struct sock *sk, struct sock *osk)
+ 	}
+ 	WARN_ON(!sk_unhashed(sk));
+ 	ilb = &hashinfo->listening_hash[inet_sk_listen_hashfn(sk)];
++	ilb2 = inet_lhash2_bucket_sk(hashinfo, sk);
+ 
+ 	spin_lock(&ilb->lock);
++	spin_lock(&ilb2->lock);
+ 	if (sk->sk_reuseport) {
+ 		err = inet_reuseport_add_sock(sk, ilb);
+ 		if (err)
+ 			goto unlock;
+ 	}
+ 	if (IS_ENABLED(CONFIG_IPV6) && sk->sk_reuseport &&
+-		sk->sk_family == AF_INET6)
++		sk->sk_family == AF_INET6) {
++		hlist_add_tail_rcu(&inet_csk(sk)->icsk_listen_portaddr_node,
++				   &ilb2->head);
+ 		__sk_nulls_add_node_tail_rcu(sk, &ilb->nulls_head);
+-	else
++	} else {
++		hlist_add_head_rcu(&inet_csk(sk)->icsk_listen_portaddr_node,
++				   &ilb2->head);
+ 		__sk_nulls_add_node_rcu(sk, &ilb->nulls_head);
+-	inet_hash2(hashinfo, sk);
++	}
+ 	sock_set_flag(sk, SOCK_RCU_FREE);
+ 	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
+ unlock:
++	spin_unlock(&ilb2->lock);
+ 	spin_unlock(&ilb->lock);
+ 
+ 	return err;
+@@ -670,22 +644,6 @@ int inet_hash(struct sock *sk)
+ }
+ EXPORT_SYMBOL_GPL(inet_hash);
+ 
+-static void __inet_unhash(struct sock *sk, struct inet_listen_hashbucket *ilb)
+-{
+-	if (sk_unhashed(sk))
+-		return;
+-
+-	if (rcu_access_pointer(sk->sk_reuseport_cb))
+-		reuseport_stop_listen_sock(sk);
+-	if (ilb) {
+-		struct inet_hashinfo *hashinfo = sk->sk_prot->h.hashinfo;
+-
+-		inet_unhash2(hashinfo, sk);
+-	}
+-	__sk_nulls_del_node_init_rcu(sk);
+-	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+-}
+-
+ void inet_unhash(struct sock *sk)
+ {
+ 	struct inet_hashinfo *hashinfo = sk->sk_prot->h.hashinfo;
+@@ -694,20 +652,40 @@ void inet_unhash(struct sock *sk)
+ 		return;
+ 
+ 	if (sk->sk_state == TCP_LISTEN) {
++		struct inet_listen_hashbucket *ilb2;
+ 		struct inet_listen_hashbucket *ilb;
+ 
+ 		ilb = &hashinfo->listening_hash[inet_sk_listen_hashfn(sk)];
++		ilb2 = inet_lhash2_bucket_sk(hashinfo, sk);
+ 		/* Don't disable bottom halves while acquiring the lock to
+ 		 * avoid circular locking dependency on PREEMPT_RT.
+ 		 */
+ 		spin_lock(&ilb->lock);
+-		__inet_unhash(sk, ilb);
++		spin_lock(&ilb2->lock);
++		if (sk_unhashed(sk)) {
++			spin_unlock(&ilb2->lock);
++			spin_unlock(&ilb->lock);
++			return;
++		}
++
++		if (rcu_access_pointer(sk->sk_reuseport_cb))
++			reuseport_stop_listen_sock(sk);
++
++		hlist_del_init_rcu(&inet_csk(sk)->icsk_listen_portaddr_node);
++		__sk_nulls_del_node_init_rcu(sk);
++		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
++		spin_unlock(&ilb2->lock);
+ 		spin_unlock(&ilb->lock);
+ 	} else {
+ 		spinlock_t *lock = inet_ehash_lockp(hashinfo, sk->sk_hash);
+ 
+ 		spin_lock_bh(lock);
+-		__inet_unhash(sk, NULL);
++		if (sk_unhashed(sk)) {
++			spin_unlock_bh(lock);
++			return;
++		}
++		__sk_nulls_del_node_init_rcu(sk);
++		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+ 		spin_unlock_bh(lock);
+ 	}
+ }
 -- 
 2.42.0
 
