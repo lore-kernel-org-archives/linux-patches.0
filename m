@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2F7381D8;
-	Fri, 24 Nov 2023 18:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D9339FE3;
+	Fri, 24 Nov 2023 18:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDXOCWtC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C1EC433C8;
-	Fri, 24 Nov 2023 18:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNJVwHgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5684C433C8;
+	Fri, 24 Nov 2023 18:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849324;
-	bh=I5ADFXzvpWWWxgLGzfH/YOQMXmHnIDrBFns0Gv2FZ10=;
+	s=korg; t=1700849328;
+	bh=Jck3wZcXVkWCZ1m3JcJmkSq0BGYLgQsb3Fx/P7wU9To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kDXOCWtCCr8NQvkg66lP2WP5Bpe0zK087iKdahlH1AIrFdxVP9EaXPNvDINP4sm6f
-	 PLBD5zl7SMsIIcONbI+/6LaIvv/AyvI1V7MsrbEBcQp0birOVUq8M7ZBoDccxDwvYd
-	 gr5QF4Hd29tfQc8+I8WTdD8BbAs6gcQNyAds8MO4=
+	b=NNJVwHgplAaaldCjXyVCQ/DsOJJ+ZBygIUc8u2+ASgZKVD5l1VlQV3sCl1vf7lfaz
+	 DvNcovRTt5oMKmKkh3JWV+fx0q3NDvijfwKRxubW2VqDD31qSgk3xYHY6Zu7FIpUt7
+	 9+18Y3g9NGWVWk8igLgT4bL2MmFyRtIpdP6tXGzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 112/530] PCI: Use FIELD_GET() in Sapphire RX 5600 XT Pulse quirk
-Date: Fri, 24 Nov 2023 17:44:38 +0000
-Message-ID: <20231124172031.526940402@linuxfoundation.org>
+Subject: [PATCH 6.6 113/530] ASoC: Intel: soc-acpi-cht: Add Lenovo Yoga Tab 3 Pro YT3-X90 quirk
+Date: Fri, 24 Nov 2023 17:44:39 +0000
+Message-ID: <20231124172031.551000297@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -39,59 +36,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 04e82fa5951ca66495d7b05665eff673aa3852b4 ]
+[ Upstream commit 2cb54788393134d8174ee594002baae3ce52c61e ]
 
-Use FIELD_GET() to remove dependences on the field position, i.e., the
-shift value.  No functional change intended.
+The Lenovo Yoga Tab 3 Pro YT3-X90 x86 tablet, which ships with Android with
+a custom kernel as factory OS, does not list the used WM5102 codec inside
+its DSDT.
 
-Separate because this isn't as trivial as the other FIELD_GET() changes.
+Workaround this with a new snd_soc_acpi_intel_baytrail_machines[] entry
+which matches on the SST id instead of the codec id like nocodec does,
+combined with using a machine_quirk callback which returns NULL on
+other machines to skip the new entry on other machines.
 
-See 907830b0fc9e ("PCI: Add a REBAR size quirk for Sapphire RX 5600 XT
-Pulse")
-
-Link: https://lore.kernel.org/r/20231010204436.1000644-3-helgaas@kernel.org
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Cc: Nirmoy Das <nirmoy.das@amd.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231021211534.114991-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../intel/common/soc-acpi-intel-cht-match.c   | 43 +++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index ec43ebfc24a5d..a607f277ccf10 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -3755,14 +3755,14 @@ u32 pci_rebar_get_possible_sizes(struct pci_dev *pdev, int bar)
- 		return 0;
- 
- 	pci_read_config_dword(pdev, pos + PCI_REBAR_CAP, &cap);
--	cap &= PCI_REBAR_CAP_SIZES;
-+	cap = FIELD_GET(PCI_REBAR_CAP_SIZES, cap);
- 
- 	/* Sapphire RX 5600 XT Pulse has an invalid cap dword for BAR 0 */
- 	if (pdev->vendor == PCI_VENDOR_ID_ATI && pdev->device == 0x731f &&
--	    bar == 0 && cap == 0x7000)
--		cap = 0x3f000;
-+	    bar == 0 && cap == 0x700)
-+		return 0x3f00;
- 
--	return cap >> 4;
-+	return cap;
+diff --git a/sound/soc/intel/common/soc-acpi-intel-cht-match.c b/sound/soc/intel/common/soc-acpi-intel-cht-match.c
+index cdcbf04b8832f..5e2ec60e2954b 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-cht-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-cht-match.c
+@@ -75,6 +75,39 @@ static struct snd_soc_acpi_mach *cht_ess8316_quirk(void *arg)
+ 	return arg;
  }
- EXPORT_SYMBOL(pci_rebar_get_possible_sizes);
  
++/*
++ * The Lenovo Yoga Tab 3 Pro YT3-X90, with Android factory OS has a buggy DSDT
++ * with the coded not being listed at all.
++ */
++static const struct dmi_system_id lenovo_yoga_tab3_x90[] = {
++	{
++		/* Lenovo Yoga Tab 3 Pro YT3-X90, codec missing from DSDT */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "Blade3-10A-001"),
++		},
++	},
++	{ }
++};
++
++static struct snd_soc_acpi_mach cht_lenovo_yoga_tab3_x90_mach = {
++	.id = "10WM5102",
++	.drv_name = "bytcr_wm5102",
++	.fw_filename = "intel/fw_sst_22a8.bin",
++	.board = "bytcr_wm5102",
++	.sof_tplg_filename = "sof-cht-wm5102.tplg",
++};
++
++static struct snd_soc_acpi_mach *lenovo_yt3_x90_quirk(void *arg)
++{
++	if (dmi_check_system(lenovo_yoga_tab3_x90))
++		return &cht_lenovo_yoga_tab3_x90_mach;
++
++	/* Skip wildcard match snd_soc_acpi_intel_cherrytrail_machines[] entry */
++	return NULL;
++}
++
+ static const struct snd_soc_acpi_codecs rt5640_comp_ids = {
+ 	.num_codecs = 2,
+ 	.codecs = { "10EC5640", "10EC3276" },
+@@ -175,6 +208,16 @@ struct snd_soc_acpi_mach  snd_soc_acpi_intel_cherrytrail_machines[] = {
+ 		.drv_name = "sof_pcm512x",
+ 		.sof_tplg_filename = "sof-cht-src-50khz-pcm512x.tplg",
+ 	},
++	/*
++	 * Special case for the Lenovo Yoga Tab 3 Pro YT3-X90 where the DSDT
++	 * misses the codec. Match on the SST id instead, lenovo_yt3_x90_quirk()
++	 * will return a YT3 specific mach or NULL when called on other hw,
++	 * skipping this entry.
++	 */
++	{
++		.id = "808622A8",
++		.machine_quirk = lenovo_yt3_x90_quirk,
++	},
+ 
+ #if IS_ENABLED(CONFIG_SND_SOC_INTEL_BYT_CHT_NOCODEC_MACH)
+ 	/*
 -- 
 2.42.0
 
