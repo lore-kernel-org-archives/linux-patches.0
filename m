@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F81439FDA;
-	Fri, 24 Nov 2023 17:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6157381D8;
+	Fri, 24 Nov 2023 17:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03Q+Xdv1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6707FC433C7;
-	Fri, 24 Nov 2023 17:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqOGsFaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F80C433C8;
+	Fri, 24 Nov 2023 17:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848772;
-	bh=QrzWItsO+qBle6NAM/i/jtjraDx9IR2mrAPzT5kJ5A0=;
+	s=korg; t=1700848775;
+	bh=T+t1B0eJMqPTE3uhWyBrmHgnRfUFxAYxO1SlFELHWig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03Q+Xdv1Leoye4oe0LDOuBSiVLvjPgR5Ow2SsyKz/H+pmzWdg79MMXZYedSZ84geH
-	 eQuQP5ByP5kWITbu3GGvBs0iCfV8t/IYLQ0+/fuTn7meX9JTSppSPI8gSDemAEchC6
-	 RYxqn0GnbARBlIPRfROZQSeUqVBoz3W0sg/U1kpM=
+	b=OqOGsFawhHv784a5j5LDogsB01ilgNh5gigx0N6rX/YRh+Trfau/lYjgeiU4iPGGO
+	 qNdbObRhku5hIxSDLOI8RE1hoBuj/+/4Vy/BGVMKSLTU3ivyGsd/L8KaX1CgQiYH4D
+	 oyvqranyzdn4TXK87x4ggSWYBekV/5BdLf78JHII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6177e1f90d92583bcc58@syzkaller.appspotmail.com,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 40/97] ppp: limit MRU to 64K
-Date: Fri, 24 Nov 2023 17:50:13 +0000
-Message-ID: <20231124171935.644084176@linuxfoundation.org>
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 4.19 68/97] dmaengine: stm32-mdma: correct desc prep when channel running
+Date: Fri, 24 Nov 2023 17:50:41 +0000
+Message-ID: <20231124171936.675877767@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -44,76 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Alain Volmat <alain.volmat@foss.st.com>
 
-[ Upstream commit c0a2a1b0d631fc460d830f52d06211838874d655 ]
+commit 03f25d53b145bc2f7ccc82fc04e4482ed734f524 upstream.
 
-ppp_sync_ioctl allows setting device MRU, but does not sanity check
-this input.
+In case of the prep descriptor while the channel is already running, the
+CCR register value stored into the channel could already have its EN bit
+set.  This would lead to a bad transfer since, at start transfer time,
+enabling the channel while other registers aren't yet properly set.
+To avoid this, ensure to mask the CCR_EN bit when storing the ccr value
+into the mdma channel structure.
 
-Limit to a sane upper bound of 64KB.
-
-No implementation I could find generates larger than 64KB frames.
-RFC 2823 mentions an upper bound of PPP over SDL of 64KB based on the
-16-bit length field. Other protocols will be smaller, such as PPPoE
-(9KB jumbo frame) and PPPoA (18190 maximum CPCS-SDU size, RFC 2364).
-PPTP and L2TP encapsulate in IP.
-
-Syzbot managed to trigger alloc warning in __alloc_pages:
-
-	if (WARN_ON_ONCE_GFP(order > MAX_ORDER, gfp))
-
-    WARNING: CPU: 1 PID: 37 at mm/page_alloc.c:4544 __alloc_pages+0x3ab/0x4a0 mm/page_alloc.c:4544
-
-    __alloc_skb+0x12b/0x330 net/core/skbuff.c:651
-    __netdev_alloc_skb+0x72/0x3f0 net/core/skbuff.c:715
-    netdev_alloc_skb include/linux/skbuff.h:3225 [inline]
-    dev_alloc_skb include/linux/skbuff.h:3238 [inline]
-    ppp_sync_input drivers/net/ppp/ppp_synctty.c:669 [inline]
-    ppp_sync_receive+0xff/0x680 drivers/net/ppp/ppp_synctty.c:334
-    tty_ldisc_receive_buf+0x14c/0x180 drivers/tty/tty_buffer.c:390
-    tty_port_default_receive_buf+0x70/0xb0 drivers/tty/tty_port.c:37
-    receive_buf drivers/tty/tty_buffer.c:444 [inline]
-    flush_to_ldisc+0x261/0x780 drivers/tty/tty_buffer.c:494
-    process_one_work+0x884/0x15c0 kernel/workqueue.c:2630
-
-With call
-
-    ioctl$PPPIOCSMRU1(r1, 0x40047452, &(0x7f0000000100)=0x5e6417a8)
-
-Similar code exists in other drivers that implement ppp_channel_ops
-ioctl PPPIOCSMRU. Those might also be in scope. Notably excluded from
-this are pppol2tp_ioctl and pppoe_ioctl.
-
-This code goes back to the start of git history.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+6177e1f90d92583bcc58@syzkaller.appspotmail.com
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a4ffb13c8946 ("dmaengine: Add STM32 MDMA driver")
+Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Cc: stable@vger.kernel.org
+Tested-by: Alain Volmat <alain.volmat@foss.st.com>
+Link: https://lore.kernel.org/r/20231009082450.452877-1-amelie.delaunay@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ppp/ppp_synctty.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma/stm32-mdma.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index e0de8b32df46a..7a1b903d3fb89 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -467,6 +467,10 @@ ppp_sync_ioctl(struct ppp_channel *chan, unsigned int cmd, unsigned long arg)
- 	case PPPIOCSMRU:
- 		if (get_user(val, (int __user *) argp))
- 			break;
-+		if (val > U16_MAX) {
-+			err = -EINVAL;
-+			break;
-+		}
- 		if (val < PPP_MRU)
- 			val = PPP_MRU;
- 		ap->mru = val;
--- 
-2.42.0
-
+--- a/drivers/dma/stm32-mdma.c
++++ b/drivers/dma/stm32-mdma.c
+@@ -520,7 +520,7 @@ static int stm32_mdma_set_xfer_param(str
+ 	src_maxburst = chan->dma_config.src_maxburst;
+ 	dst_maxburst = chan->dma_config.dst_maxburst;
+ 
+-	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
++	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & ~STM32_MDMA_CCR_EN;
+ 	ctcr = stm32_mdma_read(dmadev, STM32_MDMA_CTCR(chan->id));
+ 	ctbr = stm32_mdma_read(dmadev, STM32_MDMA_CTBR(chan->id));
+ 
+@@ -948,7 +948,7 @@ stm32_mdma_prep_dma_memcpy(struct dma_ch
+ 	if (!desc)
+ 		return NULL;
+ 
+-	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id));
++	ccr = stm32_mdma_read(dmadev, STM32_MDMA_CCR(chan->id)) & ~STM32_MDMA_CCR_EN;
+ 	ctcr = stm32_mdma_read(dmadev, STM32_MDMA_CTCR(chan->id));
+ 	ctbr = stm32_mdma_read(dmadev, STM32_MDMA_CTBR(chan->id));
+ 	cbndtr = stm32_mdma_read(dmadev, STM32_MDMA_CBNDTR(chan->id));
 
 
