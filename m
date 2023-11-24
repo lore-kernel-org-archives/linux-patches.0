@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFF439FE3;
-	Fri, 24 Nov 2023 18:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561AD381D7;
+	Fri, 24 Nov 2023 18:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hxk6mDe7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E805C433C8;
-	Fri, 24 Nov 2023 18:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHzwhuTv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C29BC433C7;
+	Fri, 24 Nov 2023 18:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849521;
-	bh=dongECOhnVMWpOFypc4kwRrPp8OfIPUwxSs1NLlIbsY=;
+	s=korg; t=1700849523;
+	bh=m3CEQzDXTplOg4fhUZuw/e6WzN+4lVdRfwUrB0+GEzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hxk6mDe7vbGlmujRXmPfp92yc/6PEiWj3yT/UL7mWekkWM/sFw+jkKtsji+iuiXZw
-	 mtyoiAgiDi/qs4Em4OH8dCKoTmKrbrs91jAiHyihpcPOtp5icO6JGAKh1mPc0lbNma
-	 TGjdQVQlS/nkYHUhgmalpH5p5Kd+Argq991AnzaI=
+	b=vHzwhuTvqLNzoSIq31rbNC9ItU0/L1lCg5sE6tdC5UrknM33xjQ6MdTpy6m5N1KAq
+	 UJemiXL+5fJA9OvoJxv3225rH2U9V+UaUu4omsNJb+Ck6LglBiXtEq1AatgBcSiOsH
+	 IjM7p3VEnQqKxxJC7jpj8wVY0b2hZQb4oNljrdEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
+	Yonglong Liu <liuyonglong@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 190/530] net: hns3: fix incorrect capability bit display for copper port
-Date: Fri, 24 Nov 2023 17:45:56 +0000
-Message-ID: <20231124172033.845714524@linuxfoundation.org>
+Subject: [PATCH 6.6 191/530] net: hns3: fix out-of-bounds access may occur when coalesce info is read via debugfs
+Date: Fri, 24 Nov 2023 17:45:57 +0000
+Message-ID: <20231124172033.882565838@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,36 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 75b247b57d8b71bcb679e4cb37d0db104848806c ]
+[ Upstream commit 53aba458f23846112c0d44239580ff59bc5c36c3 ]
 
-Currently, the FEC capability bit is default set for device version V2.
-It's incorrect for the copper port. Eventhough it doesn't make the nic
-work abnormal, but the capability information display in debugfs may
-confuse user. So clear it when driver get the port type inforamtion.
+The hns3 driver define an array of string to show the coalesce
+info, but if the kernel adds a new mode or a new state,
+out-of-bounds access may occur when coalesce info is read via
+debugfs, this patch fix the problem.
 
-Fixes: 433ccce83504 ("net: hns3: use FEC capability queried from firmware")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Fixes: c99fead7cb07 ("net: hns3: add debugfs support for interrupt coalesce")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index a884e8f7e947b..af8a3e6429a75 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -11664,6 +11664,7 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
- 		goto err_msi_irq_uninit;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+index b8508533878be..4f385a18d288e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+@@ -500,11 +500,14 @@ static void hns3_get_coal_info(struct hns3_enet_tqp_vector *tqp_vector,
+ 	}
  
- 	if (hdev->hw.mac.media_type == HNAE3_MEDIA_TYPE_COPPER) {
-+		clear_bit(HNAE3_DEV_SUPPORT_FEC_B, ae_dev->caps);
- 		if (hnae3_dev_phy_imp_supported(hdev))
- 			ret = hclge_update_tp_port_info(hdev);
- 		else
+ 	sprintf(result[j++], "%d", i);
+-	sprintf(result[j++], "%s", dim_state_str[dim->state]);
++	sprintf(result[j++], "%s", dim->state < ARRAY_SIZE(dim_state_str) ?
++		dim_state_str[dim->state] : "unknown");
+ 	sprintf(result[j++], "%u", dim->profile_ix);
+-	sprintf(result[j++], "%s", dim_cqe_mode_str[dim->mode]);
++	sprintf(result[j++], "%s", dim->mode < ARRAY_SIZE(dim_cqe_mode_str) ?
++		dim_cqe_mode_str[dim->mode] : "unknown");
+ 	sprintf(result[j++], "%s",
+-		dim_tune_stat_str[dim->tune_state]);
++		dim->tune_state < ARRAY_SIZE(dim_tune_stat_str) ?
++		dim_tune_stat_str[dim->tune_state] : "unknown");
+ 	sprintf(result[j++], "%u", dim->steps_left);
+ 	sprintf(result[j++], "%u", dim->steps_right);
+ 	sprintf(result[j++], "%u", dim->tired);
 -- 
 2.42.0
 
