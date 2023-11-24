@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E4F35EE6;
-	Fri, 24 Nov 2023 19:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F14364B7;
+	Fri, 24 Nov 2023 19:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1910JOLS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD33C433C8;
-	Fri, 24 Nov 2023 19:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/lE27eD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38D1C433C8;
+	Fri, 24 Nov 2023 19:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853935;
-	bh=5Z9aXwaOI5cgt/+7fWJLUQqCGU13CVLXT6Ubn3vDJJQ=;
+	s=korg; t=1700853938;
+	bh=AJAmr2oXj78+zsQMGh2jubGWHbFpuCKRhQIxrIzt3hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1910JOLSObdfYwLa257P1GzBB8Sv++ZfN9NJlr/RzyBB1aftGWSUsjT15SP/CTkny
-	 E326EV1zZjLCsFT0OTqDFUhe5OKWWuMTt0dLZ6/FaII8gWrQFa+fqxrbCkrIol9NLA
-	 JwqDpFw6PFx98gE0rO5SewTJPt3hK3TtAUPmbLFY=
+	b=g/lE27eD2m7/cEDJv137/lePi3YcOHAfjZeAxv5Jiw0f7vWWw8uVrzwCmG6GmgYLG
+	 CbD3HDxgiGEJiGXYZsrNUYomGKFROLd+8u+wwIX9oTDCHH4qfwvIIb4paCHECVTQBI
+	 fTm8ynuAtGYHWqUDwU2QfAMve7R95rYJYS3Mnh30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 089/159] btrfs: dont arbitrarily slow down delalloc if were committing
-Date: Fri, 24 Nov 2023 17:55:06 +0000
-Message-ID: <20231124171945.618962428@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 090/159] jbd2: fix potential data lost in recovering journal raced with synchronizing fs bdev
+Date: Fri, 24 Nov 2023 17:55:07 +0000
+Message-ID: <20231124171945.652501989@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -41,38 +43,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit 11aeb97b45ad2e0040cbb2a589bc403152526345 upstream.
+commit 61187fce8600e8ef90e601be84f9d0f3222c1206 upstream.
 
-We have a random schedule_timeout() if the current transaction is
-committing, which seems to be a holdover from the original delalloc
-reservation code.
+JBD2 makes sure journal data is fallen on fs device by sync_blockdev(),
+however, other process could intercept the EIO information from bdev's
+mapping, which leads journal recovering successful even EIO occurs during
+data written back to fs device.
 
-Remove this, we have the proper flushing stuff, we shouldn't be hoping
-for random timing things to make everything work.  This just induces
-latency for no reason.
+We found this problem in our product, iscsi + multipath is chosen for block
+device of ext4. Unstable network may trigger kpartx to rescan partitions in
+device mapper layer. Detailed process is shown as following:
 
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  mount          kpartx          irq
+jbd2_journal_recover
+ do_one_pass
+  memcpy(nbh->b_data, obh->b_data) // copy data to fs dev from journal
+  mark_buffer_dirty // mark bh dirty
+         vfs_read
+	  generic_file_read_iter // dio
+	   filemap_write_and_wait_range
+	    __filemap_fdatawrite_range
+	     do_writepages
+	      block_write_full_folio
+	       submit_bh_wbc
+	            >>  EIO occurs in disk  <<
+	                     end_buffer_async_write
+			      mark_buffer_write_io_error
+			       mapping_set_error
+			        set_bit(AS_EIO, &mapping->flags) // set!
+	    filemap_check_errors
+	     test_and_clear_bit(AS_EIO, &mapping->flags) // clear!
+ err2 = sync_blockdev
+  filemap_write_and_wait
+   filemap_check_errors
+    test_and_clear_bit(AS_EIO, &mapping->flags) // false
+ err2 = 0
+
+Filesystem is mounted successfully even data from journal is failed written
+into disk, and ext4/ocfs2 could become corrupted.
+
+Fix it by comparing the wb_err state in fs block device before recovering
+and after recovering.
+
+A reproducer can be found in the kernel bugzilla referenced below.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217888
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230919012525.1783108-1-chengzhihao1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/delalloc-space.c |    3 ---
- 1 file changed, 3 deletions(-)
+ fs/jbd2/recovery.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/btrfs/delalloc-space.c
-+++ b/fs/btrfs/delalloc-space.c
-@@ -324,9 +324,6 @@ int btrfs_delalloc_reserve_metadata(stru
- 	} else {
- 		if (current->journal_info)
- 			flush = BTRFS_RESERVE_FLUSH_LIMIT;
--
--		if (btrfs_transaction_in_commit(fs_info))
--			schedule_timeout(1);
+--- a/fs/jbd2/recovery.c
++++ b/fs/jbd2/recovery.c
+@@ -247,6 +247,8 @@ int jbd2_journal_recover(journal_t *jour
+ 	journal_superblock_t *	sb;
+ 
+ 	struct recovery_info	info;
++	errseq_t		wb_err;
++	struct address_space	*mapping;
+ 
+ 	memset(&info, 0, sizeof(info));
+ 	sb = journal->j_superblock;
+@@ -264,6 +266,9 @@ int jbd2_journal_recover(journal_t *jour
+ 		return 0;
  	}
  
- 	if (delalloc_lock)
++	wb_err = 0;
++	mapping = journal->j_fs_dev->bd_inode->i_mapping;
++	errseq_check_and_advance(&mapping->wb_err, &wb_err);
+ 	err = do_one_pass(journal, &info, PASS_SCAN);
+ 	if (!err)
+ 		err = do_one_pass(journal, &info, PASS_REVOKE);
+@@ -284,6 +289,9 @@ int jbd2_journal_recover(journal_t *jour
+ 	err2 = sync_blockdev(journal->j_fs_dev);
+ 	if (!err)
+ 		err = err2;
++	err2 = errseq_check_and_advance(&mapping->wb_err, &wb_err);
++	if (!err)
++		err = err2;
+ 	/* Make sure all replayed data is on permanent storage */
+ 	if (journal->j_flags & JBD2_BARRIER) {
+ 		err2 = blkdev_issue_flush(journal->j_fs_dev, GFP_KERNEL, NULL);
 
 
