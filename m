@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A5939FE8;
-	Fri, 24 Nov 2023 18:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E652C1BA;
+	Fri, 24 Nov 2023 18:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfKM84Py"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DA2C433CB;
-	Fri, 24 Nov 2023 18:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhxS66qn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E359AC433C7;
+	Fri, 24 Nov 2023 18:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848920;
-	bh=Ka500qMB0Ejb2pN+kXBy9C8OqQGx24eyJkgYnKO57ew=;
+	s=korg; t=1700848923;
+	bh=mmUSu7YYW8ut1DmeeYx+ObNe/JcWwznBCc+UMHOPngI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cfKM84PyMMqpK48E0nsB6j4x8CndenW6P/CUghvETIqY1tcNBhu8b324SShqZKBAu
-	 aXzSfzFB0ySRU39PTFYHWO+sv4o42uWCiBi2BviH1aElO1x5JPknfZ4nD/TUu2jswZ
-	 nz6DoZPAcFEvNhk9I9/rxS03fljfm7W/P2f8d474=
+	b=qhxS66qnZPtHncFSyiagrNRGM4Uupz722A8/yFGbb2gUtTe8O7/rB3D017EZHZqbq
+	 dR8QRilW0Q1qOg82Hxv8ZHFta0j8P+LPmV9jipKBbwIHPIjs3e2kQ7UeSNRdn0y0hS
+	 NURckOMdhj3Fz7j/G4WUqdR8636CdMSEU0I45pqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.14 35/57] mmc: vub300: fix an error code
-Date: Fri, 24 Nov 2023 17:50:59 +0000
-Message-ID: <20231124171931.587780261@linuxfoundation.org>
+	Brian Geffon <bgeffon@google.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 4.14 36/57] PM: hibernate: Use __get_safe_page() rather than touching the list
+Date: Fri, 24 Nov 2023 17:51:00 +0000
+Message-ID: <20231124171931.631807106@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171930.281665051@linuxfoundation.org>
 References: <20231124171930.281665051@linuxfoundation.org>
@@ -41,31 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Brian Geffon <bgeffon@google.com>
 
-commit b44f9da81783fda72632ef9b0d05ea3f3ca447a5 upstream.
+commit f0c7183008b41e92fa676406d87f18773724b48b upstream.
 
-This error path should return -EINVAL instead of success.
+We found at least one situation where the safe pages list was empty and
+get_buffer() would gladly try to use a NULL pointer.
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/0769d30c-ad80-421b-bf5d-7d6f5d85604e@moroto.mountain
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Brian Geffon <bgeffon@google.com>
+Fixes: 8357376d3df2 ("[PATCH] swsusp: Improve handling of highmem")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/power/snapshot.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2321,6 +2321,7 @@ static int vub300_probe(struct usb_inter
- 		vub300->read_only =
- 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
+--- a/kernel/power/snapshot.c
++++ b/kernel/power/snapshot.c
+@@ -2377,8 +2377,9 @@ static void *get_highmem_page_buffer(str
+ 		pbe->copy_page = tmp;
  	} else {
-+		retval = -EINVAL;
- 		goto error5;
+ 		/* Copy of the page will be stored in normal memory */
+-		kaddr = safe_pages_list;
+-		safe_pages_list = safe_pages_list->next;
++		kaddr = __get_safe_page(ca->gfp_mask);
++		if (!kaddr)
++			return ERR_PTR(-ENOMEM);
+ 		pbe->copy_page = virt_to_page(kaddr);
  	}
- 	usb_set_intfdata(interface, vub300);
+ 	pbe->next = highmem_pblist;
+@@ -2558,8 +2559,9 @@ static void *get_buffer(struct memory_bi
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 	pbe->orig_address = page_address(page);
+-	pbe->address = safe_pages_list;
+-	safe_pages_list = safe_pages_list->next;
++	pbe->address = __get_safe_page(ca->gfp_mask);
++	if (!pbe->address)
++		return ERR_PTR(-ENOMEM);
+ 	pbe->next = restore_pblist;
+ 	restore_pblist = pbe;
+ 	return pbe->address;
 
 
