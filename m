@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E4339FF3;
-	Fri, 24 Nov 2023 18:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A099839FF7;
+	Fri, 24 Nov 2023 18:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13Oo0YKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E84FC433C8;
-	Fri, 24 Nov 2023 18:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzK8i1f0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B185C433C7;
+	Fri, 24 Nov 2023 18:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849498;
-	bh=rxm7dD9rmXf5YfH0Wjn1PztAeDlTDSJyRGeuhsV2PvY=;
+	s=korg; t=1700849501;
+	bh=6RIhxoOZSxrpegN/b0rlC58wO+QTrUQZ4BWsfwI+epg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13Oo0YKtjDQQf0ESD7DxY/7/y5EDPf1f9NQMe9JxRr1IcZSnhjQAM8RCpRRJdb8Zq
-	 Tfx7n3nVJyOv3Ketcy9fgg4HVCXYPZgdCzNofzfrli717OGSsZtEG0dJjBN+6zRmaD
-	 ha+71h/gv9Zc8roNamKQIRwYOok+T5gR8H9/7/zs=
+	b=ZzK8i1f05pOMkNNxKquu/2P3JDutoxOOSVLBBry4pOyi9p86hN87hNUkvH4pjbsCi
+	 1XTg7zLL7ijKiAKH6aM95yp37e1n8toFNg6JmebM9y7ZS7km1VgMJVL3ESiFVto+48
+	 0yko//AcQ3oQxZPPZXHhpQcJ3hUojjBWB45t4AK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Rao Shoaib <rao.shoaib@oracle.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+7a2d546fa43e49315ed3@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 205/530] af_unix: fix use-after-free in unix_stream_read_actor()
-Date: Fri, 24 Nov 2023 17:46:11 +0000
-Message-ID: <20231124172034.306582342@linuxfoundation.org>
+	k2ci <kernel-bot@kylinos.cn>,
+	Linkui Xiao <xiaolinkui@kylinos.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 206/530] netfilter: nf_conntrack_bridge: initialize err to 0
+Date: Fri, 24 Nov 2023 17:46:12 +0000
+Message-ID: <20231124172034.334442902@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -44,217 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Linkui Xiao <xiaolinkui@kylinos.cn>
 
-[ Upstream commit 4b7b492615cf3017190f55444f7016812b66611d ]
+[ Upstream commit a44af08e3d4d7566eeea98d7a29fe06e7b9de944 ]
 
-syzbot reported the following crash [1]
+K2CI reported a problem:
 
-After releasing unix socket lock, u->oob_skb can be changed
-by another thread. We must temporarily increase skb refcount
-to make sure this other thread will not free the skb under us.
+	consume_skb(skb);
+	return err;
+[nf_br_ip_fragment() error]  uninitialized symbol 'err'.
 
-[1]
+err is not initialized, because returning 0 is expected, initialize err
+to 0.
 
-BUG: KASAN: slab-use-after-free in unix_stream_read_actor+0xa7/0xc0 net/unix/af_unix.c:2866
-Read of size 4 at addr ffff88801f3b9cc4 by task syz-executor107/5297
-
-CPU: 1 PID: 5297 Comm: syz-executor107 Not tainted 6.6.0-syzkaller-15910-gb8e3a87a627b #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/09/2023
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xd9/0x1b0 lib/dump_stack.c:106
-print_address_description mm/kasan/report.c:364 [inline]
-print_report+0xc4/0x620 mm/kasan/report.c:475
-kasan_report+0xda/0x110 mm/kasan/report.c:588
-unix_stream_read_actor+0xa7/0xc0 net/unix/af_unix.c:2866
-unix_stream_recv_urg net/unix/af_unix.c:2587 [inline]
-unix_stream_read_generic+0x19a5/0x2480 net/unix/af_unix.c:2666
-unix_stream_recvmsg+0x189/0x1b0 net/unix/af_unix.c:2903
-sock_recvmsg_nosec net/socket.c:1044 [inline]
-sock_recvmsg+0xe2/0x170 net/socket.c:1066
-____sys_recvmsg+0x21f/0x5c0 net/socket.c:2803
-___sys_recvmsg+0x115/0x1a0 net/socket.c:2845
-__sys_recvmsg+0x114/0x1e0 net/socket.c:2875
-do_syscall_x64 arch/x86/entry/common.c:51 [inline]
-do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
-entry_SYSCALL_64_after_hwframe+0x63/0x6b
-RIP: 0033:0x7fc67492c559
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 51 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fc6748ab228 EFLAGS: 00000246 ORIG_RAX: 000000000000002f
-RAX: ffffffffffffffda RBX: 000000000000001c RCX: 00007fc67492c559
-RDX: 0000000040010083 RSI: 0000000020000140 RDI: 0000000000000004
-RBP: 00007fc6749b6348 R08: 00007fc6748ab6c0 R09: 00007fc6748ab6c0
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007fc6749b6340
-R13: 00007fc6749b634c R14: 00007ffe9fac52a0 R15: 00007ffe9fac5388
-</TASK>
-
-Allocated by task 5295:
-kasan_save_stack+0x33/0x50 mm/kasan/common.c:45
-kasan_set_track+0x25/0x30 mm/kasan/common.c:52
-__kasan_slab_alloc+0x81/0x90 mm/kasan/common.c:328
-kasan_slab_alloc include/linux/kasan.h:188 [inline]
-slab_post_alloc_hook mm/slab.h:763 [inline]
-slab_alloc_node mm/slub.c:3478 [inline]
-kmem_cache_alloc_node+0x180/0x3c0 mm/slub.c:3523
-__alloc_skb+0x287/0x330 net/core/skbuff.c:641
-alloc_skb include/linux/skbuff.h:1286 [inline]
-alloc_skb_with_frags+0xe4/0x710 net/core/skbuff.c:6331
-sock_alloc_send_pskb+0x7e4/0x970 net/core/sock.c:2780
-sock_alloc_send_skb include/net/sock.h:1884 [inline]
-queue_oob net/unix/af_unix.c:2147 [inline]
-unix_stream_sendmsg+0xb5f/0x10a0 net/unix/af_unix.c:2301
-sock_sendmsg_nosec net/socket.c:730 [inline]
-__sock_sendmsg+0xd5/0x180 net/socket.c:745
-____sys_sendmsg+0x6ac/0x940 net/socket.c:2584
-___sys_sendmsg+0x135/0x1d0 net/socket.c:2638
-__sys_sendmsg+0x117/0x1e0 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:51 [inline]
-do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
-entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Freed by task 5295:
-kasan_save_stack+0x33/0x50 mm/kasan/common.c:45
-kasan_set_track+0x25/0x30 mm/kasan/common.c:52
-kasan_save_free_info+0x2b/0x40 mm/kasan/generic.c:522
-____kasan_slab_free mm/kasan/common.c:236 [inline]
-____kasan_slab_free+0x15b/0x1b0 mm/kasan/common.c:200
-kasan_slab_free include/linux/kasan.h:164 [inline]
-slab_free_hook mm/slub.c:1800 [inline]
-slab_free_freelist_hook+0x114/0x1e0 mm/slub.c:1826
-slab_free mm/slub.c:3809 [inline]
-kmem_cache_free+0xf8/0x340 mm/slub.c:3831
-kfree_skbmem+0xef/0x1b0 net/core/skbuff.c:1015
-__kfree_skb net/core/skbuff.c:1073 [inline]
-consume_skb net/core/skbuff.c:1288 [inline]
-consume_skb+0xdf/0x170 net/core/skbuff.c:1282
-queue_oob net/unix/af_unix.c:2178 [inline]
-unix_stream_sendmsg+0xd49/0x10a0 net/unix/af_unix.c:2301
-sock_sendmsg_nosec net/socket.c:730 [inline]
-__sock_sendmsg+0xd5/0x180 net/socket.c:745
-____sys_sendmsg+0x6ac/0x940 net/socket.c:2584
-___sys_sendmsg+0x135/0x1d0 net/socket.c:2638
-__sys_sendmsg+0x117/0x1e0 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:51 [inline]
-do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
-entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-The buggy address belongs to the object at ffff88801f3b9c80
-which belongs to the cache skbuff_head_cache of size 240
-The buggy address is located 68 bytes inside of
-freed 240-byte region [ffff88801f3b9c80, ffff88801f3b9d70)
-
-The buggy address belongs to the physical page:
-page:ffffea00007cee40 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1f3b9
-flags: 0xfff00000000800(slab|node=0|zone=1|lastcpupid=0x7ff)
-page_type: 0xffffffff()
-raw: 00fff00000000800 ffff888142a60640 dead000000000122 0000000000000000
-raw: 0000000000000000 00000000000c000c 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0x12cc0(GFP_KERNEL|__GFP_NOWARN|__GFP_NORETRY), pid 5299, tgid 5283 (syz-executor107), ts 103803840339, free_ts 103600093431
-set_page_owner include/linux/page_owner.h:31 [inline]
-post_alloc_hook+0x2cf/0x340 mm/page_alloc.c:1537
-prep_new_page mm/page_alloc.c:1544 [inline]
-get_page_from_freelist+0xa25/0x36c0 mm/page_alloc.c:3312
-__alloc_pages+0x1d0/0x4a0 mm/page_alloc.c:4568
-alloc_pages_mpol+0x258/0x5f0 mm/mempolicy.c:2133
-alloc_slab_page mm/slub.c:1870 [inline]
-allocate_slab+0x251/0x380 mm/slub.c:2017
-new_slab mm/slub.c:2070 [inline]
-___slab_alloc+0x8c7/0x1580 mm/slub.c:3223
-__slab_alloc.constprop.0+0x56/0xa0 mm/slub.c:3322
-__slab_alloc_node mm/slub.c:3375 [inline]
-slab_alloc_node mm/slub.c:3468 [inline]
-kmem_cache_alloc_node+0x132/0x3c0 mm/slub.c:3523
-__alloc_skb+0x287/0x330 net/core/skbuff.c:641
-alloc_skb include/linux/skbuff.h:1286 [inline]
-alloc_skb_with_frags+0xe4/0x710 net/core/skbuff.c:6331
-sock_alloc_send_pskb+0x7e4/0x970 net/core/sock.c:2780
-sock_alloc_send_skb include/net/sock.h:1884 [inline]
-queue_oob net/unix/af_unix.c:2147 [inline]
-unix_stream_sendmsg+0xb5f/0x10a0 net/unix/af_unix.c:2301
-sock_sendmsg_nosec net/socket.c:730 [inline]
-__sock_sendmsg+0xd5/0x180 net/socket.c:745
-____sys_sendmsg+0x6ac/0x940 net/socket.c:2584
-___sys_sendmsg+0x135/0x1d0 net/socket.c:2638
-__sys_sendmsg+0x117/0x1e0 net/socket.c:2667
-page last free stack trace:
-reset_page_owner include/linux/page_owner.h:24 [inline]
-free_pages_prepare mm/page_alloc.c:1137 [inline]
-free_unref_page_prepare+0x4f8/0xa90 mm/page_alloc.c:2347
-free_unref_page+0x33/0x3b0 mm/page_alloc.c:2487
-__unfreeze_partials+0x21d/0x240 mm/slub.c:2655
-qlink_free mm/kasan/quarantine.c:168 [inline]
-qlist_free_all+0x6a/0x170 mm/kasan/quarantine.c:187
-kasan_quarantine_reduce+0x18e/0x1d0 mm/kasan/quarantine.c:294
-__kasan_slab_alloc+0x65/0x90 mm/kasan/common.c:305
-kasan_slab_alloc include/linux/kasan.h:188 [inline]
-slab_post_alloc_hook mm/slab.h:763 [inline]
-slab_alloc_node mm/slub.c:3478 [inline]
-slab_alloc mm/slub.c:3486 [inline]
-__kmem_cache_alloc_lru mm/slub.c:3493 [inline]
-kmem_cache_alloc+0x15d/0x380 mm/slub.c:3502
-vm_area_dup+0x21/0x2f0 kernel/fork.c:500
-__split_vma+0x17d/0x1070 mm/mmap.c:2365
-split_vma mm/mmap.c:2437 [inline]
-vma_modify+0x25d/0x450 mm/mmap.c:2472
-vma_modify_flags include/linux/mm.h:3271 [inline]
-mprotect_fixup+0x228/0xc80 mm/mprotect.c:635
-do_mprotect_pkey+0x852/0xd60 mm/mprotect.c:809
-__do_sys_mprotect mm/mprotect.c:830 [inline]
-__se_sys_mprotect mm/mprotect.c:827 [inline]
-__x64_sys_mprotect+0x78/0xb0 mm/mprotect.c:827
-do_syscall_x64 arch/x86/entry/common.c:51 [inline]
-do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
-entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Memory state around the buggy address:
-ffff88801f3b9b80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-ffff88801f3b9c00: fb fb fb fb fb fb fc fc fc fc fc fc fc fc fc fc
->ffff88801f3b9c80: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-^
-ffff88801f3b9d00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fc fc
-ffff88801f3b9d80: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
-
-Fixes: 876c14ad014d ("af_unix: fix holding spinlock in oob handling")
-Reported-and-tested-by: syzbot+7a2d546fa43e49315ed3@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Rao Shoaib <rao.shoaib@oracle.com>
-Reviewed-by: Rao shoaib <rao.shoaib@oracle.com>
-Link: https://lore.kernel.org/r/20231113134938.168151-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
+Reported-by: k2ci <kernel-bot@kylinos.cn>
+Signed-off-by: Linkui Xiao <xiaolinkui@kylinos.cn>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/bridge/netfilter/nf_conntrack_bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 3e8a04a136688..3e6eeacb13aec 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2553,15 +2553,16 @@ static int unix_stream_recv_urg(struct unix_stream_read_state *state)
+diff --git a/net/bridge/netfilter/nf_conntrack_bridge.c b/net/bridge/netfilter/nf_conntrack_bridge.c
+index 71056ee847736..0fcf357ea7ad3 100644
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -37,7 +37,7 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
+ 	ktime_t tstamp = skb->tstamp;
+ 	struct ip_frag_state state;
+ 	struct iphdr *iph;
+-	int err;
++	int err = 0;
  
- 	if (!(state->flags & MSG_PEEK))
- 		WRITE_ONCE(u->oob_skb, NULL);
--
-+	else
-+		skb_get(oob_skb);
- 	unix_state_unlock(sk);
- 
- 	chunk = state->recv_actor(oob_skb, 0, chunk, state);
- 
--	if (!(state->flags & MSG_PEEK)) {
-+	if (!(state->flags & MSG_PEEK))
- 		UNIXCB(oob_skb).consumed += 1;
--		kfree_skb(oob_skb);
--	}
-+
-+	consume_skb(oob_skb);
- 
- 	mutex_unlock(&u->iolock);
- 
+ 	/* for offloaded checksums cleanup checksum before fragmentation */
+ 	if (skb->ip_summed == CHECKSUM_PARTIAL &&
 -- 
 2.42.0
 
