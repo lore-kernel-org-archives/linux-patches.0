@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B387F39FEA;
-	Fri, 24 Nov 2023 18:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C3739FD4;
+	Fri, 24 Nov 2023 18:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOUSMiQB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AA2C433C7;
-	Fri, 24 Nov 2023 18:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1O1dfBmk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2CBC433C7;
+	Fri, 24 Nov 2023 18:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849173;
-	bh=od/MtIl6MPnYxuMl3RRtXFNobVvQZMNhR9Mn+xuL1ns=;
+	s=korg; t=1700849176;
+	bh=XK6r3pfZa+V2I7Pg5tv84jqaMsXkYAwNtMAOXsuGKzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VOUSMiQBuOsvEmNVs8ATyUzYDx4sjw0QRzDvZe+qNgkUxqUo20zT7mL+aKepoFT8l
-	 qBfnZP/DfeCFgqSWnftVK6f23jGkyYsTa7NVVBgm71XNzc/iFOXL2dVoznUS4eajRY
-	 ckd+OnE4Jt0A0EkVtDfSOVJ2toIGmd8dwNbrAdgQ=
+	b=1O1dfBmkg640SSi0OLnKBap8SebvzzeL9ZVUOo9bdberKtPNCqU7M4s2Txe2hoW9e
+	 x/CG8bt0r9moYx90yuF7FAcnLi5+8chSxOBiIDEGmbfVkODbxgsjjfedB4oVH+LY1+
+	 uRBSVr/xnnxZ09kda5PHjMKdASzyJNwc3EEd//54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Samson Tam <samson.tam@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/530] drm/amd/display: fix num_ways overflow error
-Date: Fri, 24 Nov 2023 17:44:02 +0000
-Message-ID: <20231124172030.386014519@linuxfoundation.org>
+Subject: [PATCH 6.6 053/530] md: dont rely on mddev->pers to be set in mddev_suspend()
+Date: Fri, 24 Nov 2023 17:43:39 +0000
+Message-ID: <20231124172029.673614806@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,62 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samson Tam <samson.tam@amd.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 79f3f1b66753b3a3a269d73676bf50987921f267 ]
+[ Upstream commit b721e7885eb242aa2459ee66bb42ceef1bcf0f0c ]
 
-[Why]
-Helper function calculates num_ways using 32-bit.  But is
- returned as 8-bit.  If num_ways exceeds 8-bit, then it
- reports back the incorrect num_ways and erroneously
- uses MALL when it should not
+'active_io' used to be initialized while the array is running, and
+'mddev->pers' is set while the array is running as well. Hence caller
+must hold 'reconfig_mutex' and guarantee 'mddev->pers' is set before
+calling mddev_suspend().
 
-[How]
-Make returned value 32-bit and convert after it checks
- against caps.cache_num_ways, which is under 8-bit
+Now that 'active_io' is initialized when mddev is allocated, such
+restriction doesn't exist anymore. In the meantime, follow up patches
+will refactor mddev_suspend(), hence add checking for 'mddev->pers' to
+prevent null-ptr-deref.
 
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Roman Li <roman.li@amd.com>
-Signed-off-by: Samson Tam <samson.tam@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230825030956.1527023-4-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/md/md.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-index 018376146d977..be59e1c02f8aa 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -214,7 +214,7 @@ static bool dcn32_check_no_memory_request_for_cab(struct dc *dc)
- static uint32_t dcn32_calculate_cab_allocation(struct dc *dc, struct dc_state *ctx)
- {
- 	int i;
--	uint8_t num_ways = 0;
-+	uint32_t num_ways = 0;
- 	uint32_t mall_ss_size_bytes = 0;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index a104a025084dc..9247e55c7eafc 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -449,7 +449,7 @@ void mddev_suspend(struct mddev *mddev)
+ 	set_bit(MD_ALLOW_SB_UPDATE, &mddev->flags);
+ 	percpu_ref_kill(&mddev->active_io);
  
- 	mall_ss_size_bytes = ctx->bw_ctx.bw.dcn.mall_ss_size_bytes;
-@@ -244,7 +244,8 @@ static uint32_t dcn32_calculate_cab_allocation(struct dc *dc, struct dc_state *c
- bool dcn32_apply_idle_power_optimizations(struct dc *dc, bool enable)
- {
- 	union dmub_rb_cmd cmd;
--	uint8_t ways, i;
-+	uint8_t i;
-+	uint32_t ways;
- 	int j;
- 	bool mall_ss_unsupported = false;
- 	struct dc_plane_state *plane = NULL;
-@@ -304,7 +305,7 @@ bool dcn32_apply_idle_power_optimizations(struct dc *dc, bool enable)
- 				cmd.cab.header.type = DMUB_CMD__CAB_FOR_SS;
- 				cmd.cab.header.sub_type = DMUB_CMD__CAB_DCN_SS_FIT_IN_CAB;
- 				cmd.cab.header.payload_bytes = sizeof(cmd.cab) - sizeof(cmd.cab.header);
--				cmd.cab.cab_alloc_ways = ways;
-+				cmd.cab.cab_alloc_ways = (uint8_t)ways;
+-	if (mddev->pers->prepare_suspend)
++	if (mddev->pers && mddev->pers->prepare_suspend)
+ 		mddev->pers->prepare_suspend(mddev);
  
- 				dm_execute_dmub_cmd(dc->ctx, &cmd, DM_DMUB_WAIT_TYPE_NO_WAIT);
- 
+ 	wait_event(mddev->sb_wait, percpu_ref_is_zero(&mddev->active_io));
 -- 
 2.42.0
 
