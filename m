@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BD639FF8;
-	Fri, 24 Nov 2023 18:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D87339FFD;
+	Fri, 24 Nov 2023 18:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWCeUrL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F2BC433C8;
-	Fri, 24 Nov 2023 18:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qy3kNOn1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8150EC433C7;
+	Fri, 24 Nov 2023 18:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850073;
-	bh=kgkagFCmEYnAyWfmjpB0XJedXgxjMHBC590Mdx/ZT90=;
+	s=korg; t=1700850076;
+	bh=Kqq60lF9OdO7+laxspRZ8Wjqt2vwrzDREB6thzHK1fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWCeUrL5HL39HqBndWJC+p/AMzKl9q55YUGVUDAn3Lqo3ol2rEAja351rgqnBsYHf
-	 zbdIt0p6O1HpERYPhgJoBF6qwylc2ZaLxj6Xfn8V6kr/wz3qlW/2IW6DFoJXrHkDh2
-	 VVJJWBNyrnjupx/5zsiBKZBrUuQQtwL/H4HSrQIk=
+	b=Qy3kNOn1FlstRCtLKzadcyX3+0E/gWcT2gR6sG6GEhtE+rN4WfEqh1JHqNNHPPhug
+	 M4MKuFdPBn+KS8Zzu6kuQfB/3sOMtdqz9koKsX1ggghM+HsMUjcLRjJXBpx74TdmTu
+	 C3AxkF/uyz0CMBO6MlDMHtZqkmAhRJsq2v/q2t54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	"Wieczor-Retman, Maciej" <maciej.wieczor-retman@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 410/530] selftests/resctrl: Make benchmark command const and build it with pointers
-Date: Fri, 24 Nov 2023 17:49:36 +0000
-Message-ID: <20231124172040.530716542@linuxfoundation.org>
+Subject: [PATCH 6.6 401/530] apparmor: pass cred through to audit info.
+Date: Fri, 24 Nov 2023 17:49:27 +0000
+Message-ID: <20231124172040.234942754@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -39,294 +36,1937 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit e33cb5702a9f287d829b0e9e6abe57f6a4aba6d2 ]
+[ Upstream commit 90c436a64a6e20482a9a613c47eb4af2e8a5328e ]
 
-Benchmark command is used in multiple tests so it should not be
-mutated by the tests but CMT test alters span argument. Due to the
-order of tests (CMT test runs last), mutating the span argument in CMT
-test does not trigger any real problems currently.
+The cred is needed to properly audit some messages, and will be needed
+in the future for uid conditional mediation. So pass it through to
+where the apparmor_audit_data struct gets defined.
 
-Mark benchmark_cmd strings as const and setup the benchmark command
-using pointers. Because the benchmark command becomes const, the input
-arguments can be used directly. Besides being simpler, using the input
-arguments directly also removes the internal size restriction.
-
-CMT test has to create a copy of the benchmark command before altering
-the benchmark command.
-
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
-Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: "Wieczor-Retman, Maciej" <maciej.wieczor-retman@intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Stable-dep-of: 3aff51464455 ("selftests/resctrl: Extend signal handler coverage to unmount on receiving signal")
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+Stable-dep-of: 157a3537d6bc ("apparmor: Fix regression in mount mediation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/cmt_test.c    | 25 +++++++++---
- tools/testing/selftests/resctrl/mba_test.c    |  2 +-
- tools/testing/selftests/resctrl/mbm_test.c    |  2 +-
- tools/testing/selftests/resctrl/resctrl.h     | 10 +++--
- .../testing/selftests/resctrl/resctrl_tests.c | 39 ++++++++-----------
- tools/testing/selftests/resctrl/resctrl_val.c | 10 ++++-
- 6 files changed, 53 insertions(+), 35 deletions(-)
+ security/apparmor/apparmorfs.c         |  11 ++-
+ security/apparmor/capability.c         |   5 +-
+ security/apparmor/domain.c             |  97 +++++++++++-------
+ security/apparmor/file.c               | 131 +++++++++++++++++--------
+ security/apparmor/include/audit.h      |   1 +
+ security/apparmor/include/capability.h |   3 +-
+ security/apparmor/include/file.h       |  17 ++--
+ security/apparmor/include/ipc.h        |   4 +-
+ security/apparmor/include/mount.h      |  21 ++--
+ security/apparmor/include/net.h        |   6 +-
+ security/apparmor/include/policy.h     |   9 +-
+ security/apparmor/include/resource.h   |   3 +-
+ security/apparmor/include/task.h       |   3 +-
+ security/apparmor/ipc.c                |  14 ++-
+ security/apparmor/lsm.c                |  85 +++++++++-------
+ security/apparmor/mount.c              |  85 ++++++++++------
+ security/apparmor/net.c                |  17 ++--
+ security/apparmor/policy.c             |  33 ++++---
+ security/apparmor/resource.c           |  23 +++--
+ security/apparmor/task.c               |  31 +++---
+ 20 files changed, 388 insertions(+), 211 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/cmt_test.c b/tools/testing/selftests/resctrl/cmt_test.c
-index 33dbe51e77122..50bdbce9fba95 100644
---- a/tools/testing/selftests/resctrl/cmt_test.c
-+++ b/tools/testing/selftests/resctrl/cmt_test.c
-@@ -68,14 +68,17 @@ void cmt_test_cleanup(void)
- 	remove(RESULT_FILE_NAME);
- }
+diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
+index bd6a910f65282..261cef4c622fb 100644
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -423,7 +423,7 @@ static ssize_t policy_update(u32 mask, const char __user *buf, size_t size,
+ 	/* high level check about policy management - fine grained in
+ 	 * below after unpack
+ 	 */
+-	error = aa_may_manage_policy(label, ns, mask);
++	error = aa_may_manage_policy(current_cred(), label, ns, mask);
+ 	if (error)
+ 		goto end_section;
  
--int cmt_resctrl_val(int cpu_no, int n, char **benchmark_cmd)
-+int cmt_resctrl_val(int cpu_no, int n, const char * const *benchmark_cmd)
- {
-+	const char * const *cmd = benchmark_cmd;
-+	const char *new_cmd[BENCHMARK_ARGS];
- 	unsigned long cache_size = 0;
- 	unsigned long long_mask;
-+	char *span_str = NULL;
- 	char cbm_mask[256];
- 	int count_of_bits;
- 	size_t span;
--	int ret;
-+	int ret, i;
- 
- 	ret = get_cbm_mask("L3", cbm_mask);
- 	if (ret)
-@@ -108,12 +111,23 @@ int cmt_resctrl_val(int cpu_no, int n, char **benchmark_cmd)
- 	};
- 
- 	span = cache_size * n / count_of_bits;
--	if (strcmp(benchmark_cmd[0], "fill_buf") == 0)
--		sprintf(benchmark_cmd[1], "%zu", span);
-+
-+	if (strcmp(cmd[0], "fill_buf") == 0) {
-+		/* Duplicate the command to be able to replace span in it */
-+		for (i = 0; benchmark_cmd[i]; i++)
-+			new_cmd[i] = benchmark_cmd[i];
-+		new_cmd[i] = NULL;
-+
-+		ret = asprintf(&span_str, "%zu", span);
-+		if (ret < 0)
-+			return -1;
-+		new_cmd[1] = span_str;
-+		cmd = new_cmd;
-+	}
- 
- 	remove(RESULT_FILE_NAME);
- 
--	ret = resctrl_val(benchmark_cmd, &param);
-+	ret = resctrl_val(cmd, &param);
- 	if (ret)
+@@ -486,7 +486,8 @@ static ssize_t profile_remove(struct file *f, const char __user *buf,
+ 	/* high level check about policy management - fine grained in
+ 	 * below after unpack
+ 	 */
+-	error = aa_may_manage_policy(label, ns, AA_MAY_REMOVE_POLICY);
++	error = aa_may_manage_policy(current_cred(), label, ns,
++				     AA_MAY_REMOVE_POLICY);
+ 	if (error)
  		goto out;
  
-@@ -121,6 +135,7 @@ int cmt_resctrl_val(int cpu_no, int n, char **benchmark_cmd)
+@@ -1805,7 +1806,8 @@ static int ns_mkdir_op(struct mnt_idmap *idmap, struct inode *dir,
+ 	int error;
+ 
+ 	label = begin_current_label_crit_section();
+-	error = aa_may_manage_policy(label, NULL, AA_MAY_LOAD_POLICY);
++	error = aa_may_manage_policy(current_cred(), label, NULL,
++				     AA_MAY_LOAD_POLICY);
+ 	end_current_label_crit_section(label);
+ 	if (error)
+ 		return error;
+@@ -1854,7 +1856,8 @@ static int ns_rmdir_op(struct inode *dir, struct dentry *dentry)
+ 	int error;
+ 
+ 	label = begin_current_label_crit_section();
+-	error = aa_may_manage_policy(label, NULL, AA_MAY_LOAD_POLICY);
++	error = aa_may_manage_policy(current_cred(), label, NULL,
++				     AA_MAY_LOAD_POLICY);
+ 	end_current_label_crit_section(label);
+ 	if (error)
+ 		return error;
+diff --git a/security/apparmor/capability.c b/security/apparmor/capability.c
+index 58490cca035da..2fb6a2ea0b998 100644
+--- a/security/apparmor/capability.c
++++ b/security/apparmor/capability.c
+@@ -140,6 +140,7 @@ static int profile_capable(struct aa_profile *profile, int cap,
+ 
+ /**
+  * aa_capable - test permission to use capability
++ * @subj_cread: cred we are testing capability against
+  * @label: label being tested for capability (NOT NULL)
+  * @cap: capability to be tested
+  * @opts: CAP_OPT_NOAUDIT bit determines whether audit record is generated
+@@ -148,12 +149,14 @@ static int profile_capable(struct aa_profile *profile, int cap,
+  *
+  * Returns: 0 on success, or else an error code.
+  */
+-int aa_capable(struct aa_label *label, int cap, unsigned int opts)
++int aa_capable(const struct cred *subj_cred, struct aa_label *label,
++	       int cap, unsigned int opts)
+ {
+ 	struct aa_profile *profile;
+ 	int error = 0;
+ 	DEFINE_AUDIT_DATA(ad, LSM_AUDIT_DATA_CAP, AA_CLASS_CAP, OP_CAPABLE);
+ 
++	ad.subj_cred = subj_cred;
+ 	ad.common.u.cap = cap;
+ 	error = fn_for_each_confined(label, profile,
+ 			profile_capable(profile, cap, opts, &ad));
+diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
+index f3715cda59c52..543105cf7e334 100644
+--- a/security/apparmor/domain.c
++++ b/security/apparmor/domain.c
+@@ -31,6 +31,7 @@
+ 
+ /**
+  * may_change_ptraced_domain - check if can change profile on ptraced task
++ * @cred: cred of task changing domain
+  * @to_label: profile to change to  (NOT NULL)
+  * @info: message if there is an error
+  *
+@@ -39,28 +40,34 @@
+  *
+  * Returns: %0 or error if change not allowed
+  */
+-static int may_change_ptraced_domain(struct aa_label *to_label,
++static int may_change_ptraced_domain(const struct cred *to_cred,
++				     struct aa_label *to_label,
+ 				     const char **info)
+ {
+ 	struct task_struct *tracer;
+ 	struct aa_label *tracerl = NULL;
++	const struct cred *tracer_cred = NULL;
++
+ 	int error = 0;
+ 
+ 	rcu_read_lock();
+ 	tracer = ptrace_parent(current);
+-	if (tracer)
++	if (tracer) {
+ 		/* released below */
+ 		tracerl = aa_get_task_label(tracer);
+-
++		tracer_cred = get_task_cred(tracer);
++	}
+ 	/* not ptraced */
+ 	if (!tracer || unconfined(tracerl))
+ 		goto out;
+ 
+-	error = aa_may_ptrace(tracerl, to_label, PTRACE_MODE_ATTACH);
++	error = aa_may_ptrace(tracer_cred, tracerl, to_cred, to_label,
++			      PTRACE_MODE_ATTACH);
  
  out:
- 	cmt_test_cleanup();
-+	free(span_str);
+ 	rcu_read_unlock();
+ 	aa_put_label(tracerl);
++	put_cred(tracer_cred);
  
- 	return ret;
- }
-diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
-index c5c0588779d2b..d3bf4368341ec 100644
---- a/tools/testing/selftests/resctrl/mba_test.c
-+++ b/tools/testing/selftests/resctrl/mba_test.c
-@@ -141,7 +141,7 @@ void mba_test_cleanup(void)
- 	remove(RESULT_FILE_NAME);
+ 	if (error)
+ 		*info = "ptrace prevents transition";
+@@ -619,7 +626,8 @@ static struct aa_label *x_to_label(struct aa_profile *profile,
+ 	return new;
  }
  
--int mba_schemata_change(int cpu_no, char **benchmark_cmd)
-+int mba_schemata_change(int cpu_no, const char * const *benchmark_cmd)
- {
- 	struct resctrl_val_param param = {
- 		.resctrl_val	= MBA_STR,
-diff --git a/tools/testing/selftests/resctrl/mbm_test.c b/tools/testing/selftests/resctrl/mbm_test.c
-index 445aea1c64e83..d3c0d30c676a7 100644
---- a/tools/testing/selftests/resctrl/mbm_test.c
-+++ b/tools/testing/selftests/resctrl/mbm_test.c
-@@ -109,7 +109,7 @@ void mbm_test_cleanup(void)
- 	remove(RESULT_FILE_NAME);
- }
- 
--int mbm_bw_change(int cpu_no, char **benchmark_cmd)
-+int mbm_bw_change(int cpu_no, const char * const *benchmark_cmd)
- {
- 	struct resctrl_val_param param = {
- 		.resctrl_val	= MBM_STR,
-diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
-index d33452fde5b94..8578a8b4e1459 100644
---- a/tools/testing/selftests/resctrl/resctrl.h
-+++ b/tools/testing/selftests/resctrl/resctrl.h
-@@ -33,6 +33,8 @@
- 
- #define END_OF_TESTS	1
- 
-+#define BENCHMARK_ARGS		64
-+
- #define DEFAULT_SPAN		(250 * MB)
- 
- #define PARENT_EXIT(err_msg)			\
-@@ -92,11 +94,11 @@ int write_bm_pid_to_resctrl(pid_t bm_pid, char *ctrlgrp, char *mongrp,
- int perf_event_open(struct perf_event_attr *hw_event, pid_t pid, int cpu,
- 		    int group_fd, unsigned long flags);
- int run_fill_buf(size_t span, int memflush, int op, bool once);
--int resctrl_val(char **benchmark_cmd, struct resctrl_val_param *param);
--int mbm_bw_change(int cpu_no, char **benchmark_cmd);
-+int resctrl_val(const char * const *benchmark_cmd, struct resctrl_val_param *param);
-+int mbm_bw_change(int cpu_no, const char * const *benchmark_cmd);
- void tests_cleanup(void);
- void mbm_test_cleanup(void);
--int mba_schemata_change(int cpu_no, char **benchmark_cmd);
-+int mba_schemata_change(int cpu_no, const char * const *benchmark_cmd);
- void mba_test_cleanup(void);
- int get_cbm_mask(char *cache_type, char *cbm_mask);
- int get_cache_size(int cpu_no, char *cache_type, unsigned long *cache_size);
-@@ -106,7 +108,7 @@ void signal_handler_unregister(void);
- int cat_val(struct resctrl_val_param *param, size_t span);
- void cat_test_cleanup(void);
- int cat_perf_miss_val(int cpu_no, int no_of_bits, char *cache_type);
--int cmt_resctrl_val(int cpu_no, int n, char **benchmark_cmd);
-+int cmt_resctrl_val(int cpu_no, int n, const char * const *benchmark_cmd);
- unsigned int count_bits(unsigned long n);
- void cmt_test_cleanup(void);
- int get_core_sibling(int cpu_no);
-diff --git a/tools/testing/selftests/resctrl/resctrl_tests.c b/tools/testing/selftests/resctrl/resctrl_tests.c
-index 1826b674ea300..1ac22c6d8ce8f 100644
---- a/tools/testing/selftests/resctrl/resctrl_tests.c
-+++ b/tools/testing/selftests/resctrl/resctrl_tests.c
-@@ -10,9 +10,6 @@
-  */
- #include "resctrl.h"
- 
--#define BENCHMARK_ARGS		64
--#define BENCHMARK_ARG_SIZE	64
--
- static int detect_vendor(void)
- {
- 	FILE *inf = fopen("/proc/cpuinfo", "r");
-@@ -70,7 +67,7 @@ void tests_cleanup(void)
- 	cat_test_cleanup();
- }
- 
--static void run_mbm_test(char **benchmark_cmd, int cpu_no)
-+static void run_mbm_test(const char * const *benchmark_cmd, int cpu_no)
- {
- 	int res;
- 
-@@ -98,7 +95,7 @@ static void run_mbm_test(char **benchmark_cmd, int cpu_no)
- 	umount_resctrlfs();
- }
- 
--static void run_mba_test(char **benchmark_cmd, int cpu_no)
-+static void run_mba_test(const char * const *benchmark_cmd, int cpu_no)
- {
- 	int res;
- 
-@@ -124,7 +121,7 @@ static void run_mba_test(char **benchmark_cmd, int cpu_no)
- 	umount_resctrlfs();
- }
- 
--static void run_cmt_test(char **benchmark_cmd, int cpu_no)
-+static void run_cmt_test(const char * const *benchmark_cmd, int cpu_no)
- {
- 	int res;
- 
-@@ -178,11 +175,12 @@ static void run_cat_test(int cpu_no, int no_of_bits)
- int main(int argc, char **argv)
- {
- 	bool has_ben = false, mbm_test = true, mba_test = true, cmt_test = true;
--	char benchmark_cmd_area[BENCHMARK_ARGS][BENCHMARK_ARG_SIZE];
- 	int c, cpu_no = 1, argc_new = argc, i, no_of_bits = 0;
--	char *benchmark_cmd[BENCHMARK_ARGS];
-+	const char *benchmark_cmd[BENCHMARK_ARGS];
- 	int ben_ind, ben_count, tests = 0;
-+	char *span_str = NULL;
- 	bool cat_test = true;
-+	int ret;
- 
- 	for (i = 0; i < argc; i++) {
- 		if (strcmp(argv[i], "-b") == 0) {
-@@ -262,23 +260,19 @@ int main(int argc, char **argv)
- 			ksft_exit_fail_msg("Too long benchmark command.\n");
- 
- 		/* Extract benchmark command from command line. */
--		for (i = ben_ind; i < argc; i++) {
--			benchmark_cmd[i - ben_ind] = benchmark_cmd_area[i];
--			if (strlen(argv[i]) >= BENCHMARK_ARG_SIZE)
--				ksft_exit_fail_msg("Too long benchmark command argument.\n");
--			sprintf(benchmark_cmd[i - ben_ind], "%s", argv[i]);
--		}
-+		for (i = 0; i < argc - ben_ind; i++)
-+			benchmark_cmd[i] = argv[i + ben_ind];
- 		benchmark_cmd[ben_count] = NULL;
- 	} else {
- 		/* If no benchmark is given by "-b" argument, use fill_buf. */
--		for (i = 0; i < 5; i++)
--			benchmark_cmd[i] = benchmark_cmd_area[i];
--
--		strcpy(benchmark_cmd[0], "fill_buf");
--		sprintf(benchmark_cmd[1], "%u", DEFAULT_SPAN);
--		strcpy(benchmark_cmd[2], "1");
--		strcpy(benchmark_cmd[3], "0");
--		strcpy(benchmark_cmd[4], "false");
-+		benchmark_cmd[0] = "fill_buf";
-+		ret = asprintf(&span_str, "%u", DEFAULT_SPAN);
-+		if (ret < 0)
-+			ksft_exit_fail_msg("Out of memory!\n");
-+		benchmark_cmd[1] = span_str;
-+		benchmark_cmd[2] = "1";
-+		benchmark_cmd[3] = "0";
-+		benchmark_cmd[4] = "false";
- 		benchmark_cmd[5] = NULL;
+-static struct aa_label *profile_transition(struct aa_profile *profile,
++static struct aa_label *profile_transition(const struct cred *subj_cred,
++					   struct aa_profile *profile,
+ 					   const struct linux_binprm *bprm,
+ 					   char *buffer, struct path_cond *cond,
+ 					   bool *secure_exec)
+@@ -709,7 +717,8 @@ static struct aa_label *profile_transition(struct aa_profile *profile,
  	}
  
-@@ -304,5 +298,6 @@ int main(int argc, char **argv)
- 	if (cat_test)
- 		run_cat_test(cpu_no, no_of_bits);
- 
-+	free(span_str);
- 	ksft_finished();
+ audit:
+-	aa_audit_file(profile, &perms, OP_EXEC, MAY_EXEC, name, target, new,
++	aa_audit_file(subj_cred, profile, &perms, OP_EXEC, MAY_EXEC, name,
++		      target, new,
+ 		      cond->uid, info, error);
+ 	if (!new || nonewprivs) {
+ 		aa_put_label(new);
+@@ -719,7 +728,8 @@ static struct aa_label *profile_transition(struct aa_profile *profile,
+ 	return new;
  }
-diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-index ee07e0943f583..01bbe11a89834 100644
---- a/tools/testing/selftests/resctrl/resctrl_val.c
-+++ b/tools/testing/selftests/resctrl/resctrl_val.c
-@@ -629,7 +629,7 @@ measure_vals(struct resctrl_val_param *param, unsigned long *bw_resc_start)
-  *
-  * Return:		0 on success. non-zero on failure.
-  */
--int resctrl_val(char **benchmark_cmd, struct resctrl_val_param *param)
-+int resctrl_val(const char * const *benchmark_cmd, struct resctrl_val_param *param)
+ 
+-static int profile_onexec(struct aa_profile *profile, struct aa_label *onexec,
++static int profile_onexec(const struct cred *subj_cred,
++			  struct aa_profile *profile, struct aa_label *onexec,
+ 			  bool stack, const struct linux_binprm *bprm,
+ 			  char *buffer, struct path_cond *cond,
+ 			  bool *secure_exec)
+@@ -787,13 +797,15 @@ static int profile_onexec(struct aa_profile *profile, struct aa_label *onexec,
+ 	}
+ 
+ audit:
+-	return aa_audit_file(profile, &perms, OP_EXEC, AA_MAY_ONEXEC, xname,
++	return aa_audit_file(subj_cred, profile, &perms, OP_EXEC,
++			     AA_MAY_ONEXEC, xname,
+ 			     NULL, onexec, cond->uid, info, error);
+ }
+ 
+ /* ensure none ns domain transitions are correctly applied with onexec */
+ 
+-static struct aa_label *handle_onexec(struct aa_label *label,
++static struct aa_label *handle_onexec(const struct cred *subj_cred,
++				      struct aa_label *label,
+ 				      struct aa_label *onexec, bool stack,
+ 				      const struct linux_binprm *bprm,
+ 				      char *buffer, struct path_cond *cond,
+@@ -810,26 +822,28 @@ static struct aa_label *handle_onexec(struct aa_label *label,
+ 
+ 	if (!stack) {
+ 		error = fn_for_each_in_ns(label, profile,
+-				profile_onexec(profile, onexec, stack,
++				profile_onexec(subj_cred, profile, onexec, stack,
+ 					       bprm, buffer, cond, unsafe));
+ 		if (error)
+ 			return ERR_PTR(error);
+ 		new = fn_label_build_in_ns(label, profile, GFP_KERNEL,
+ 				aa_get_newest_label(onexec),
+-				profile_transition(profile, bprm, buffer,
++				profile_transition(subj_cred, profile, bprm,
++						   buffer,
+ 						   cond, unsafe));
+ 
+ 	} else {
+ 		/* TODO: determine how much we want to loosen this */
+ 		error = fn_for_each_in_ns(label, profile,
+-				profile_onexec(profile, onexec, stack, bprm,
++				profile_onexec(subj_cred, profile, onexec, stack, bprm,
+ 					       buffer, cond, unsafe));
+ 		if (error)
+ 			return ERR_PTR(error);
+ 		new = fn_label_build_in_ns(label, profile, GFP_KERNEL,
+ 				aa_label_merge(&profile->label, onexec,
+ 					       GFP_KERNEL),
+-				profile_transition(profile, bprm, buffer,
++				profile_transition(subj_cred, profile, bprm,
++						   buffer,
+ 						   cond, unsafe));
+ 	}
+ 
+@@ -838,7 +852,8 @@ static struct aa_label *handle_onexec(struct aa_label *label,
+ 
+ 	/* TODO: get rid of GLOBAL_ROOT_UID */
+ 	error = fn_for_each_in_ns(label, profile,
+-			aa_audit_file(profile, &nullperms, OP_CHANGE_ONEXEC,
++			aa_audit_file(subj_cred, profile, &nullperms,
++				      OP_CHANGE_ONEXEC,
+ 				      AA_MAY_ONEXEC, bprm->filename, NULL,
+ 				      onexec, GLOBAL_ROOT_UID,
+ 				      "failed to build target label", -ENOMEM));
+@@ -857,6 +872,7 @@ int apparmor_bprm_creds_for_exec(struct linux_binprm *bprm)
  {
- 	char *resctrl_val = param->resctrl_val;
- 	unsigned long bw_resc_start = 0;
-@@ -710,7 +710,13 @@ int resctrl_val(char **benchmark_cmd, struct resctrl_val_param *param)
- 	if (ret)
+ 	struct aa_task_ctx *ctx;
+ 	struct aa_label *label, *new = NULL;
++	const struct cred *subj_cred;
+ 	struct aa_profile *profile;
+ 	char *buffer = NULL;
+ 	const char *info = NULL;
+@@ -869,6 +885,7 @@ int apparmor_bprm_creds_for_exec(struct linux_binprm *bprm)
+ 		file_inode(bprm->file)->i_mode
+ 	};
+ 
++	subj_cred = current_cred();
+ 	ctx = task_ctx(current);
+ 	AA_BUG(!cred_label(bprm->cred));
+ 	AA_BUG(!ctx);
+@@ -895,11 +912,12 @@ int apparmor_bprm_creds_for_exec(struct linux_binprm *bprm)
+ 
+ 	/* Test for onexec first as onexec override other x transitions. */
+ 	if (ctx->onexec)
+-		new = handle_onexec(label, ctx->onexec, ctx->token,
++		new = handle_onexec(subj_cred, label, ctx->onexec, ctx->token,
+ 				    bprm, buffer, &cond, &unsafe);
+ 	else
+ 		new = fn_label_build(label, profile, GFP_KERNEL,
+-				profile_transition(profile, bprm, buffer,
++				profile_transition(subj_cred, profile, bprm,
++						   buffer,
+ 						   &cond, &unsafe));
+ 
+ 	AA_BUG(!new);
+@@ -934,7 +952,7 @@ int apparmor_bprm_creds_for_exec(struct linux_binprm *bprm)
+ 
+ 	if (bprm->unsafe & (LSM_UNSAFE_PTRACE)) {
+ 		/* TODO: test needs to be profile of label to new */
+-		error = may_change_ptraced_domain(new, &info);
++		error = may_change_ptraced_domain(bprm->cred, new, &info);
+ 		if (error)
+ 			goto audit;
+ 	}
+@@ -971,7 +989,8 @@ int apparmor_bprm_creds_for_exec(struct linux_binprm *bprm)
+ 
+ audit:
+ 	error = fn_for_each(label, profile,
+-			aa_audit_file(profile, &nullperms, OP_EXEC, MAY_EXEC,
++			aa_audit_file(current_cred(), profile, &nullperms,
++				      OP_EXEC, MAY_EXEC,
+ 				      bprm->filename, NULL, new,
+ 				      vfsuid_into_kuid(vfsuid), info, error));
+ 	aa_put_label(new);
+@@ -987,7 +1006,8 @@ int apparmor_bprm_creds_for_exec(struct linux_binprm *bprm)
+  *
+  * Returns: label for hat transition OR ERR_PTR.  Does NOT return NULL
+  */
+-static struct aa_label *build_change_hat(struct aa_profile *profile,
++static struct aa_label *build_change_hat(const struct cred *subj_cred,
++					 struct aa_profile *profile,
+ 					 const char *name, bool sibling)
+ {
+ 	struct aa_profile *root, *hat = NULL;
+@@ -1019,7 +1039,8 @@ static struct aa_label *build_change_hat(struct aa_profile *profile,
+ 	aa_put_profile(root);
+ 
+ audit:
+-	aa_audit_file(profile, &nullperms, OP_CHANGE_HAT, AA_MAY_CHANGEHAT,
++	aa_audit_file(subj_cred, profile, &nullperms, OP_CHANGE_HAT,
++		      AA_MAY_CHANGEHAT,
+ 		      name, hat ? hat->base.hname : NULL,
+ 		      hat ? &hat->label : NULL, GLOBAL_ROOT_UID, info,
+ 		      error);
+@@ -1035,7 +1056,8 @@ static struct aa_label *build_change_hat(struct aa_profile *profile,
+  *
+  * Returns: label for hat transition or ERR_PTR. Does not return NULL
+  */
+-static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
++static struct aa_label *change_hat(const struct cred *subj_cred,
++				   struct aa_label *label, const char *hats[],
+ 				   int count, int flags)
+ {
+ 	struct aa_profile *profile, *root, *hat = NULL;
+@@ -1111,7 +1133,8 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 		 */
+ 		/* TODO: get rid of GLOBAL_ROOT_UID */
+ 		if (count > 1 || COMPLAIN_MODE(profile)) {
+-			aa_audit_file(profile, &nullperms, OP_CHANGE_HAT,
++			aa_audit_file(subj_cred, profile, &nullperms,
++				      OP_CHANGE_HAT,
+ 				      AA_MAY_CHANGEHAT, name, NULL, NULL,
+ 				      GLOBAL_ROOT_UID, info, error);
+ 		}
+@@ -1120,7 +1143,8 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+ 
+ build:
+ 	new = fn_label_build_in_ns(label, profile, GFP_KERNEL,
+-				   build_change_hat(profile, name, sibling),
++				   build_change_hat(subj_cred, profile, name,
++						    sibling),
+ 				   aa_get_label(&profile->label));
+ 	if (!new) {
+ 		info = "label build failed";
+@@ -1150,7 +1174,7 @@ static struct aa_label *change_hat(struct aa_label *label, const char *hats[],
+  */
+ int aa_change_hat(const char *hats[], int count, u64 token, int flags)
+ {
+-	const struct cred *cred;
++	const struct cred *subj_cred;
+ 	struct aa_task_ctx *ctx = task_ctx(current);
+ 	struct aa_label *label, *previous, *new = NULL, *target = NULL;
+ 	struct aa_profile *profile;
+@@ -1159,8 +1183,8 @@ int aa_change_hat(const char *hats[], int count, u64 token, int flags)
+ 	int error = 0;
+ 
+ 	/* released below */
+-	cred = get_current_cred();
+-	label = aa_get_newest_cred_label(cred);
++	subj_cred = get_current_cred();
++	label = aa_get_newest_cred_label(subj_cred);
+ 	previous = aa_get_newest_label(ctx->previous);
+ 
+ 	/*
+@@ -1180,7 +1204,7 @@ int aa_change_hat(const char *hats[], int count, u64 token, int flags)
+ 	}
+ 
+ 	if (count) {
+-		new = change_hat(label, hats, count, flags);
++		new = change_hat(subj_cred, label, hats, count, flags);
+ 		AA_BUG(!new);
+ 		if (IS_ERR(new)) {
+ 			error = PTR_ERR(new);
+@@ -1189,7 +1213,8 @@ int aa_change_hat(const char *hats[], int count, u64 token, int flags)
+ 			goto out;
+ 		}
+ 
+-		error = may_change_ptraced_domain(new, &info);
++		/* target cred is the same as current except new label */
++		error = may_change_ptraced_domain(subj_cred, new, &info);
+ 		if (error)
+ 			goto fail;
+ 
+@@ -1242,7 +1267,7 @@ int aa_change_hat(const char *hats[], int count, u64 token, int flags)
+ 	aa_put_label(new);
+ 	aa_put_label(previous);
+ 	aa_put_label(label);
+-	put_cred(cred);
++	put_cred(subj_cred);
+ 
+ 	return error;
+ 
+@@ -1252,7 +1277,7 @@ int aa_change_hat(const char *hats[], int count, u64 token, int flags)
+ 
+ fail:
+ 	fn_for_each_in_ns(label, profile,
+-		aa_audit_file(profile, &perms, OP_CHANGE_HAT,
++		aa_audit_file(subj_cred, profile, &perms, OP_CHANGE_HAT,
+ 			      AA_MAY_CHANGEHAT, NULL, NULL, target,
+ 			      GLOBAL_ROOT_UID, info, error));
+ 
+@@ -1261,6 +1286,7 @@ int aa_change_hat(const char *hats[], int count, u64 token, int flags)
+ 
+ 
+ static int change_profile_perms_wrapper(const char *op, const char *name,
++					const struct cred *subj_cred,
+ 					struct aa_profile *profile,
+ 					struct aa_label *target, bool stack,
+ 					u32 request, struct aa_perms *perms)
+@@ -1275,7 +1301,8 @@ static int change_profile_perms_wrapper(const char *op, const char *name,
+ 					     rules->file.start[AA_CLASS_FILE],
+ 					     perms);
+ 	if (error)
+-		error = aa_audit_file(profile, perms, op, request, name,
++		error = aa_audit_file(subj_cred, profile, perms, op, request,
++				      name,
+ 				      NULL, target, GLOBAL_ROOT_UID, info,
+ 				      error);
+ 
+@@ -1304,6 +1331,7 @@ int aa_change_profile(const char *fqname, int flags)
+ 	const char *auditname = fqname;		/* retain leading & if stack */
+ 	bool stack = flags & AA_CHANGE_STACK;
+ 	struct aa_task_ctx *ctx = task_ctx(current);
++	const struct cred *subj_cred = get_current_cred();
+ 	int error = 0;
+ 	char *op;
+ 	u32 request;
+@@ -1381,6 +1409,7 @@ int aa_change_profile(const char *fqname, int flags)
+ 	 */
+ 	error = fn_for_each_in_ns(label, profile,
+ 			change_profile_perms_wrapper(op, auditname,
++						     subj_cred,
+ 						     profile, target, stack,
+ 						     request, &perms));
+ 	if (error)
+@@ -1391,7 +1420,7 @@ int aa_change_profile(const char *fqname, int flags)
+ 
+ check:
+ 	/* check if tracing task is allowed to trace target domain */
+-	error = may_change_ptraced_domain(target, &info);
++	error = may_change_ptraced_domain(subj_cred, target, &info);
+ 	if (error && !fn_for_each_in_ns(label, profile,
+ 					COMPLAIN_MODE(profile)))
+ 		goto audit;
+@@ -1451,7 +1480,8 @@ int aa_change_profile(const char *fqname, int flags)
+ 
+ audit:
+ 	error = fn_for_each_in_ns(label, profile,
+-			aa_audit_file(profile, &perms, op, request, auditname,
++			aa_audit_file(subj_cred,
++				      profile, &perms, op, request, auditname,
+ 				      NULL, new ? new : target,
+ 				      GLOBAL_ROOT_UID, info, error));
+ 
+@@ -1459,6 +1489,7 @@ int aa_change_profile(const char *fqname, int flags)
+ 	aa_put_label(new);
+ 	aa_put_label(target);
+ 	aa_put_label(label);
++	put_cred(subj_cred);
+ 
+ 	return error;
+ }
+diff --git a/security/apparmor/file.c b/security/apparmor/file.c
+index 5bfa70a972071..6fd21324a097f 100644
+--- a/security/apparmor/file.c
++++ b/security/apparmor/file.c
+@@ -45,7 +45,7 @@ static void file_audit_cb(struct audit_buffer *ab, void *va)
+ {
+ 	struct common_audit_data *sa = va;
+ 	struct apparmor_audit_data *ad = aad(sa);
+-	kuid_t fsuid = current_fsuid();
++	kuid_t fsuid = ad->subj_cred ? ad->subj_cred->fsuid : current_fsuid();
+ 	char str[10];
+ 
+ 	if (ad->request & AA_AUDIT_FILE_MASK) {
+@@ -77,6 +77,7 @@ static void file_audit_cb(struct audit_buffer *ab, void *va)
+ 
+ /**
+  * aa_audit_file - handle the auditing of file operations
++ * @subj_cred: cred of the subject
+  * @profile: the profile being enforced  (NOT NULL)
+  * @perms: the permissions computed for the request (NOT NULL)
+  * @op: operation being mediated
+@@ -90,7 +91,8 @@ static void file_audit_cb(struct audit_buffer *ab, void *va)
+  *
+  * Returns: %0 or error on failure
+  */
+-int aa_audit_file(struct aa_profile *profile, struct aa_perms *perms,
++int aa_audit_file(const struct cred *subj_cred,
++		  struct aa_profile *profile, struct aa_perms *perms,
+ 		  const char *op, u32 request, const char *name,
+ 		  const char *target, struct aa_label *tlabel,
+ 		  kuid_t ouid, const char *info, int error)
+@@ -98,6 +100,7 @@ int aa_audit_file(struct aa_profile *profile, struct aa_perms *perms,
+ 	int type = AUDIT_APPARMOR_AUTO;
+ 	DEFINE_AUDIT_DATA(ad, LSM_AUDIT_DATA_TASK, AA_CLASS_FILE, op);
+ 
++	ad.subj_cred = subj_cred;
+ 	ad.request = request;
+ 	ad.name = name;
+ 	ad.fs.target = target;
+@@ -141,7 +144,21 @@ int aa_audit_file(struct aa_profile *profile, struct aa_perms *perms,
+ 	return aa_audit(type, profile, &ad, file_audit_cb);
+ }
+ 
+-static int path_name(const char *op, struct aa_label *label,
++/**
++ * is_deleted - test if a file has been completely unlinked
++ * @dentry: dentry of file to test for deletion  (NOT NULL)
++ *
++ * Returns: true if deleted else false
++ */
++static inline bool is_deleted(struct dentry *dentry)
++{
++	if (d_unlinked(dentry) && d_backing_inode(dentry)->i_nlink == 0)
++		return true;
++	return false;
++}
++
++static int path_name(const char *op, const struct cred *subj_cred,
++		     struct aa_label *label,
+ 		     const struct path *path, int flags, char *buffer,
+ 		     const char **name, struct path_cond *cond, u32 request)
+ {
+@@ -153,7 +170,8 @@ static int path_name(const char *op, struct aa_label *label,
+ 			     labels_profile(label)->disconnected);
+ 	if (error) {
+ 		fn_for_each_confined(label, profile,
+-			aa_audit_file(profile, &nullperms, op, request, *name,
++			aa_audit_file(subj_cred,
++				      profile, &nullperms, op, request, *name,
+ 				      NULL, NULL, cond->uid, info, error));
+ 		return error;
+ 	}
+@@ -207,9 +225,9 @@ aa_state_t aa_str_perms(struct aa_policydb *file_rules, aa_state_t start,
+ 	return state;
+ }
+ 
+-static int __aa_path_perm(const char *op, struct aa_profile *profile,
+-			  const char *name, u32 request,
+-			  struct path_cond *cond, int flags,
++static int __aa_path_perm(const char *op, const struct cred *subj_cred,
++			  struct aa_profile *profile, const char *name,
++			  u32 request, struct path_cond *cond, int flags,
+ 			  struct aa_perms *perms)
+ {
+ 	struct aa_ruleset *rules = list_first_entry(&profile->rules,
+@@ -222,12 +240,14 @@ static int __aa_path_perm(const char *op, struct aa_profile *profile,
+ 		     name, cond, perms);
+ 	if (request & ~perms->allow)
+ 		e = -EACCES;
+-	return aa_audit_file(profile, perms, op, request, name, NULL, NULL,
++	return aa_audit_file(subj_cred,
++			     profile, perms, op, request, name, NULL, NULL,
+ 			     cond->uid, NULL, e);
+ }
+ 
+ 
+-static int profile_path_perm(const char *op, struct aa_profile *profile,
++static int profile_path_perm(const char *op, const struct cred *subj_cred,
++			     struct aa_profile *profile,
+ 			     const struct path *path, char *buffer, u32 request,
+ 			     struct path_cond *cond, int flags,
+ 			     struct aa_perms *perms)
+@@ -238,18 +258,19 @@ static int profile_path_perm(const char *op, struct aa_profile *profile,
+ 	if (profile_unconfined(profile))
+ 		return 0;
+ 
+-	error = path_name(op, &profile->label, path,
++	error = path_name(op, subj_cred, &profile->label, path,
+ 			  flags | profile->path_flags, buffer, &name, cond,
+ 			  request);
+ 	if (error)
+ 		return error;
+-	return __aa_path_perm(op, profile, name, request, cond, flags,
+-			      perms);
++	return __aa_path_perm(op, subj_cred, profile, name, request, cond,
++			      flags, perms);
+ }
+ 
+ /**
+  * aa_path_perm - do permissions check & audit for @path
+  * @op: operation being checked
++ * @subj_cred: subject cred
+  * @label: profile being enforced  (NOT NULL)
+  * @path: path to check permissions of  (NOT NULL)
+  * @flags: any additional path flags beyond what the profile specifies
+@@ -258,7 +279,8 @@ static int profile_path_perm(const char *op, struct aa_profile *profile,
+  *
+  * Returns: %0 else error if access denied or other error
+  */
+-int aa_path_perm(const char *op, struct aa_label *label,
++int aa_path_perm(const char *op, const struct cred *subj_cred,
++		 struct aa_label *label,
+ 		 const struct path *path, int flags, u32 request,
+ 		 struct path_cond *cond)
+ {
+@@ -273,8 +295,8 @@ int aa_path_perm(const char *op, struct aa_label *label,
+ 	if (!buffer)
+ 		return -ENOMEM;
+ 	error = fn_for_each_confined(label, profile,
+-			profile_path_perm(op, profile, path, buffer, request,
+-					  cond, flags, &perms));
++			profile_path_perm(op, subj_cred, profile, path, buffer,
++					  request, cond, flags, &perms));
+ 
+ 	aa_put_buffer(buffer);
+ 
+@@ -301,7 +323,8 @@ static inline bool xindex_is_subset(u32 link, u32 target)
+ 	return true;
+ }
+ 
+-static int profile_path_link(struct aa_profile *profile,
++static int profile_path_link(const struct cred *subj_cred,
++			     struct aa_profile *profile,
+ 			     const struct path *link, char *buffer,
+ 			     const struct path *target, char *buffer2,
+ 			     struct path_cond *cond)
+@@ -315,13 +338,15 @@ static int profile_path_link(struct aa_profile *profile,
+ 	aa_state_t state;
+ 	int error;
+ 
+-	error = path_name(OP_LINK, &profile->label, link, profile->path_flags,
++	error = path_name(OP_LINK, subj_cred, &profile->label, link,
++			  profile->path_flags,
+ 			  buffer, &lname, cond, AA_MAY_LINK);
+ 	if (error)
+ 		goto audit;
+ 
+ 	/* buffer2 freed below, tname is pointer in buffer2 */
+-	error = path_name(OP_LINK, &profile->label, target, profile->path_flags,
++	error = path_name(OP_LINK, subj_cred, &profile->label, target,
++			  profile->path_flags,
+ 			  buffer2, &tname, cond, AA_MAY_LINK);
+ 	if (error)
+ 		goto audit;
+@@ -381,12 +406,14 @@ static int profile_path_link(struct aa_profile *profile,
+ 	error = 0;
+ 
+ audit:
+-	return aa_audit_file(profile, &lperms, OP_LINK, request, lname, tname,
++	return aa_audit_file(subj_cred,
++			     profile, &lperms, OP_LINK, request, lname, tname,
+ 			     NULL, cond->uid, info, error);
+ }
+ 
+ /**
+  * aa_path_link - Handle hard link permission check
++ * @subj_cred: subject cred
+  * @label: the label being enforced  (NOT NULL)
+  * @old_dentry: the target dentry  (NOT NULL)
+  * @new_dir: directory the new link will be created in  (NOT NULL)
+@@ -403,7 +430,8 @@ static int profile_path_link(struct aa_profile *profile,
+  *
+  * Returns: %0 if allowed else error
+  */
+-int aa_path_link(struct aa_label *label, struct dentry *old_dentry,
++int aa_path_link(const struct cred *subj_cred,
++		 struct aa_label *label, struct dentry *old_dentry,
+ 		 const struct path *new_dir, struct dentry *new_dentry)
+ {
+ 	struct path link = { .mnt = new_dir->mnt, .dentry = new_dentry };
+@@ -424,8 +452,8 @@ int aa_path_link(struct aa_label *label, struct dentry *old_dentry,
  		goto out;
  
--	value.sival_ptr = benchmark_cmd;
-+	/*
-+	 * The cast removes constness but nothing mutates benchmark_cmd within
-+	 * the context of this process. At the receiving process, it becomes
-+	 * argv, which is mutable, on exec() but that's after fork() so it
-+	 * doesn't matter for the process running the tests.
-+	 */
-+	value.sival_ptr = (void *)benchmark_cmd;
+ 	error = fn_for_each_confined(label, profile,
+-			profile_path_link(profile, &link, buffer, &target,
+-					  buffer2, &cond));
++			profile_path_link(subj_cred, profile, &link, buffer,
++					  &target, buffer2, &cond));
+ out:
+ 	aa_put_buffer(buffer);
+ 	aa_put_buffer(buffer2);
+@@ -453,7 +481,8 @@ static void update_file_ctx(struct aa_file_ctx *fctx, struct aa_label *label,
+ 	spin_unlock(&fctx->lock);
+ }
  
- 	/* Taskset benchmark to specified cpu */
- 	ret = taskset_benchmark(bm_pid, param->cpu_no);
+-static int __file_path_perm(const char *op, struct aa_label *label,
++static int __file_path_perm(const char *op, const struct cred *subj_cred,
++			    struct aa_label *label,
+ 			    struct aa_label *flabel, struct file *file,
+ 			    u32 request, u32 denied, bool in_atomic)
+ {
+@@ -480,7 +509,8 @@ static int __file_path_perm(const char *op, struct aa_label *label,
+ 
+ 	/* check every profile in task label not in current cache */
+ 	error = fn_for_each_not_in_set(flabel, label, profile,
+-			profile_path_perm(op, profile, &file->f_path, buffer,
++			profile_path_perm(op, subj_cred, profile,
++					  &file->f_path, buffer,
+ 					  request, &cond, flags, &perms));
+ 	if (denied && !error) {
+ 		/*
+@@ -493,12 +523,14 @@ static int __file_path_perm(const char *op, struct aa_label *label,
+ 		 */
+ 		if (label == flabel)
+ 			error = fn_for_each(label, profile,
+-				profile_path_perm(op, profile, &file->f_path,
++				profile_path_perm(op, subj_cred,
++						  profile, &file->f_path,
+ 						  buffer, request, &cond, flags,
+ 						  &perms));
+ 		else
+ 			error = fn_for_each_not_in_set(label, flabel, profile,
+-				profile_path_perm(op, profile, &file->f_path,
++				profile_path_perm(op, subj_cred,
++						  profile, &file->f_path,
+ 						  buffer, request, &cond, flags,
+ 						  &perms));
+ 	}
+@@ -510,7 +542,8 @@ static int __file_path_perm(const char *op, struct aa_label *label,
+ 	return error;
+ }
+ 
+-static int __file_sock_perm(const char *op, struct aa_label *label,
++static int __file_sock_perm(const char *op, const struct cred *subj_cred,
++			    struct aa_label *label,
+ 			    struct aa_label *flabel, struct file *file,
+ 			    u32 request, u32 denied)
+ {
+@@ -524,11 +557,12 @@ static int __file_sock_perm(const char *op, struct aa_label *label,
+ 		return 0;
+ 
+ 	/* TODO: improve to skip profiles cached in flabel */
+-	error = aa_sock_file_perm(label, op, request, sock);
++	error = aa_sock_file_perm(subj_cred, label, op, request, sock);
+ 	if (denied) {
+ 		/* TODO: improve to skip profiles checked above */
+ 		/* check every profile in file label to is cached */
+-		last_error(error, aa_sock_file_perm(flabel, op, request, sock));
++		last_error(error, aa_sock_file_perm(subj_cred, flabel, op,
++						    request, sock));
+ 	}
+ 	if (!error)
+ 		update_file_ctx(file_ctx(file), label, request);
+@@ -539,6 +573,7 @@ static int __file_sock_perm(const char *op, struct aa_label *label,
+ /**
+  * aa_file_perm - do permission revalidation check & audit for @file
+  * @op: operation being checked
++ * @subj_cred: subject cred
+  * @label: label being enforced   (NOT NULL)
+  * @file: file to revalidate access permissions on  (NOT NULL)
+  * @request: requested permissions
+@@ -546,7 +581,8 @@ static int __file_sock_perm(const char *op, struct aa_label *label,
+  *
+  * Returns: %0 if access allowed else error
+  */
+-int aa_file_perm(const char *op, struct aa_label *label, struct file *file,
++int aa_file_perm(const char *op, const struct cred *subj_cred,
++		 struct aa_label *label, struct file *file,
+ 		 u32 request, bool in_atomic)
+ {
+ 	struct aa_file_ctx *fctx;
+@@ -582,19 +618,19 @@ int aa_file_perm(const char *op, struct aa_label *label, struct file *file,
+ 	/* TODO: label cross check */
+ 
+ 	if (file->f_path.mnt && path_mediated_fs(file->f_path.dentry))
+-		error = __file_path_perm(op, label, flabel, file, request,
+-					 denied, in_atomic);
++		error = __file_path_perm(op, subj_cred, label, flabel, file,
++					 request, denied, in_atomic);
+ 
+ 	else if (S_ISSOCK(file_inode(file)->i_mode))
+-		error = __file_sock_perm(op, label, flabel, file, request,
+-					 denied);
++		error = __file_sock_perm(op, subj_cred, label, flabel, file,
++					 request, denied);
+ 	aa_put_label(flabel);
+ 
+ done:
+ 	return error;
+ }
+ 
+-static void revalidate_tty(struct aa_label *label)
++static void revalidate_tty(const struct cred *subj_cred, struct aa_label *label)
+ {
+ 	struct tty_struct *tty;
+ 	int drop_tty = 0;
+@@ -612,8 +648,8 @@ static void revalidate_tty(struct aa_label *label)
+ 					     struct tty_file_private, list);
+ 		file = file_priv->file;
+ 
+-		if (aa_file_perm(OP_INHERIT, label, file, MAY_READ | MAY_WRITE,
+-				 IN_ATOMIC))
++		if (aa_file_perm(OP_INHERIT, subj_cred, label, file,
++				 MAY_READ | MAY_WRITE, IN_ATOMIC))
+ 			drop_tty = 1;
+ 	}
+ 	spin_unlock(&tty->files_lock);
+@@ -623,12 +659,17 @@ static void revalidate_tty(struct aa_label *label)
+ 		no_tty();
+ }
+ 
++struct cred_label {
++	const struct cred *cred;
++	struct aa_label *label;
++};
++
+ static int match_file(const void *p, struct file *file, unsigned int fd)
+ {
+-	struct aa_label *label = (struct aa_label *)p;
++	struct cred_label *cl = (struct cred_label *)p;
+ 
+-	if (aa_file_perm(OP_INHERIT, label, file, aa_map_file_to_perms(file),
+-			 IN_ATOMIC))
++	if (aa_file_perm(OP_INHERIT, cl->cred, cl->label, file,
++			 aa_map_file_to_perms(file), IN_ATOMIC))
+ 		return fd + 1;
+ 	return 0;
+ }
+@@ -638,13 +679,17 @@ static int match_file(const void *p, struct file *file, unsigned int fd)
+ void aa_inherit_files(const struct cred *cred, struct files_struct *files)
+ {
+ 	struct aa_label *label = aa_get_newest_cred_label(cred);
++	struct cred_label cl = {
++		.cred = cred,
++		.label = label,
++	};
+ 	struct file *devnull = NULL;
+ 	unsigned int n;
+ 
+-	revalidate_tty(label);
++	revalidate_tty(cred, label);
+ 
+ 	/* Revalidate access to inherited open files. */
+-	n = iterate_fd(files, 0, match_file, label);
++	n = iterate_fd(files, 0, match_file, &cl);
+ 	if (!n) /* none found? */
+ 		goto out;
+ 
+@@ -654,7 +699,7 @@ void aa_inherit_files(const struct cred *cred, struct files_struct *files)
+ 	/* replace all the matching ones with this */
+ 	do {
+ 		replace_fd(n - 1, devnull, 0);
+-	} while ((n = iterate_fd(files, n, match_file, label)) != 0);
++	} while ((n = iterate_fd(files, n, match_file, &cl)) != 0);
+ 	if (devnull)
+ 		fput(devnull);
+ out:
+diff --git a/security/apparmor/include/audit.h b/security/apparmor/include/audit.h
+index 096f0a04af87f..42d701fec5a6d 100644
+--- a/security/apparmor/include/audit.h
++++ b/security/apparmor/include/audit.h
+@@ -109,6 +109,7 @@ struct apparmor_audit_data {
+ 	int type;
+ 	u16 class;
+ 	const char *op;
++	const struct cred *subj_cred;
+ 	struct aa_label *subj_label;
+ 	const char *name;
+ 	const char *info;
+diff --git a/security/apparmor/include/capability.h b/security/apparmor/include/capability.h
+index d420e2d10b31b..d6dcc604ec0cc 100644
+--- a/security/apparmor/include/capability.h
++++ b/security/apparmor/include/capability.h
+@@ -36,7 +36,8 @@ struct aa_caps {
+ 
+ extern struct aa_sfs_entry aa_sfs_entry_caps[];
+ 
+-int aa_capable(struct aa_label *label, int cap, unsigned int opts);
++int aa_capable(const struct cred *subj_cred, struct aa_label *label,
++	       int cap, unsigned int opts);
+ 
+ static inline void aa_free_cap_rules(struct aa_caps *caps)
+ {
+diff --git a/security/apparmor/include/file.h b/security/apparmor/include/file.h
+index 5be620af33ba0..64dc6d1a7a05c 100644
+--- a/security/apparmor/include/file.h
++++ b/security/apparmor/include/file.h
+@@ -108,7 +108,8 @@ struct path_cond {
+ 
+ #define COMBINED_PERM_MASK(X) ((X).allow | (X).audit | (X).quiet | (X).kill)
+ 
+-int aa_audit_file(struct aa_profile *profile, struct aa_perms *perms,
++int aa_audit_file(const struct cred *cred,
++		  struct aa_profile *profile, struct aa_perms *perms,
+ 		  const char *op, u32 request, const char *name,
+ 		  const char *target, struct aa_label *tlabel, kuid_t ouid,
+ 		  const char *info, int error);
+@@ -119,14 +120,16 @@ aa_state_t aa_str_perms(struct aa_policydb *file_rules, aa_state_t start,
+ 			const char *name, struct path_cond *cond,
+ 			struct aa_perms *perms);
+ 
+-int aa_path_perm(const char *op, struct aa_label *label,
+-		 const struct path *path, int flags, u32 request,
+-		 struct path_cond *cond);
++int aa_path_perm(const char *op, const struct cred *subj_cred,
++		 struct aa_label *label, const struct path *path,
++		 int flags, u32 request, struct path_cond *cond);
+ 
+-int aa_path_link(struct aa_label *label, struct dentry *old_dentry,
+-		 const struct path *new_dir, struct dentry *new_dentry);
++int aa_path_link(const struct cred *subj_cred, struct aa_label *label,
++		 struct dentry *old_dentry, const struct path *new_dir,
++		 struct dentry *new_dentry);
+ 
+-int aa_file_perm(const char *op, struct aa_label *label, struct file *file,
++int aa_file_perm(const char *op, const struct cred *subj_cred,
++		 struct aa_label *label, struct file *file,
+ 		 u32 request, bool in_atomic);
+ 
+ void aa_inherit_files(const struct cred *cred, struct files_struct *files);
+diff --git a/security/apparmor/include/ipc.h b/security/apparmor/include/ipc.h
+index a1ac6ffb95e9c..74d17052f76bc 100644
+--- a/security/apparmor/include/ipc.h
++++ b/security/apparmor/include/ipc.h
+@@ -13,6 +13,8 @@
+ 
+ #include <linux/sched.h>
+ 
+-int aa_may_signal(struct aa_label *sender, struct aa_label *target, int sig);
++int aa_may_signal(const struct cred *subj_cred, struct aa_label *sender,
++		  const struct cred *target_cred, struct aa_label *target,
++		  int sig);
+ 
+ #endif /* __AA_IPC_H */
+diff --git a/security/apparmor/include/mount.h b/security/apparmor/include/mount.h
+index a710683b24965..10c76f906a653 100644
+--- a/security/apparmor/include/mount.h
++++ b/security/apparmor/include/mount.h
+@@ -25,26 +25,33 @@
+ 
+ #define AA_MS_IGNORE_MASK (MS_KERNMOUNT | MS_NOSEC | MS_ACTIVE | MS_BORN)
+ 
+-int aa_remount(struct aa_label *label, const struct path *path,
++int aa_remount(const struct cred *subj_cred,
++	       struct aa_label *label, const struct path *path,
+ 	       unsigned long flags, void *data);
+ 
+-int aa_bind_mount(struct aa_label *label, const struct path *path,
++int aa_bind_mount(const struct cred *subj_cred,
++		  struct aa_label *label, const struct path *path,
+ 		  const char *old_name, unsigned long flags);
+ 
+ 
+-int aa_mount_change_type(struct aa_label *label, const struct path *path,
++int aa_mount_change_type(const struct cred *subj_cred,
++			 struct aa_label *label, const struct path *path,
+ 			 unsigned long flags);
+ 
+-int aa_move_mount(struct aa_label *label, const struct path *path,
++int aa_move_mount(const struct cred *subj_cred,
++		  struct aa_label *label, const struct path *path,
+ 		  const char *old_name);
+ 
+-int aa_new_mount(struct aa_label *label, const char *dev_name,
++int aa_new_mount(const struct cred *subj_cred,
++		 struct aa_label *label, const char *dev_name,
+ 		 const struct path *path, const char *type, unsigned long flags,
+ 		 void *data);
+ 
+-int aa_umount(struct aa_label *label, struct vfsmount *mnt, int flags);
++int aa_umount(const struct cred *subj_cred,
++	      struct aa_label *label, struct vfsmount *mnt, int flags);
+ 
+-int aa_pivotroot(struct aa_label *label, const struct path *old_path,
++int aa_pivotroot(const struct cred *subj_cred,
++		 struct aa_label *label, const struct path *old_path,
+ 		 const struct path *new_path);
+ 
+ #endif /* __AA_MOUNT_H */
+diff --git a/security/apparmor/include/net.h b/security/apparmor/include/net.h
+index a336e57864e89..aa8515af677f0 100644
+--- a/security/apparmor/include/net.h
++++ b/security/apparmor/include/net.h
+@@ -93,7 +93,8 @@ void audit_net_cb(struct audit_buffer *ab, void *va);
+ int aa_profile_af_perm(struct aa_profile *profile,
+ 		       struct apparmor_audit_data *ad,
+ 		       u32 request, u16 family, int type);
+-int aa_af_perm(struct aa_label *label, const char *op, u32 request, u16 family,
++int aa_af_perm(const struct cred *subj_cred, struct aa_label *label,
++	       const char *op, u32 request, u16 family,
+ 	       int type, int protocol);
+ static inline int aa_profile_af_sk_perm(struct aa_profile *profile,
+ 					struct apparmor_audit_data *ad,
+@@ -105,7 +106,8 @@ static inline int aa_profile_af_sk_perm(struct aa_profile *profile,
+ }
+ int aa_sk_perm(const char *op, u32 request, struct sock *sk);
+ 
+-int aa_sock_file_perm(struct aa_label *label, const char *op, u32 request,
++int aa_sock_file_perm(const struct cred *subj_cred, struct aa_label *label,
++		      const char *op, u32 request,
+ 		      struct socket *sock);
+ 
+ int apparmor_secmark_check(struct aa_label *label, char *op, u32 request,
+diff --git a/security/apparmor/include/policy.h b/security/apparmor/include/policy.h
+index 545f791cabdae..fa15a5c7febb8 100644
+--- a/security/apparmor/include/policy.h
++++ b/security/apparmor/include/policy.h
+@@ -370,9 +370,12 @@ static inline int AUDIT_MODE(struct aa_profile *profile)
+ 	return profile->audit;
+ }
+ 
+-bool aa_policy_view_capable(struct aa_label *label, struct aa_ns *ns);
+-bool aa_policy_admin_capable(struct aa_label *label, struct aa_ns *ns);
+-int aa_may_manage_policy(struct aa_label *label, struct aa_ns *ns,
++bool aa_policy_view_capable(const struct cred *subj_cred,
++			    struct aa_label *label, struct aa_ns *ns);
++bool aa_policy_admin_capable(const struct cred *subj_cred,
++			     struct aa_label *label, struct aa_ns *ns);
++int aa_may_manage_policy(const struct cred *subj_cred,
++			 struct aa_label *label, struct aa_ns *ns,
+ 			 u32 mask);
+ bool aa_current_policy_view_capable(struct aa_ns *ns);
+ bool aa_current_policy_admin_capable(struct aa_ns *ns);
+diff --git a/security/apparmor/include/resource.h b/security/apparmor/include/resource.h
+index 961d85d328ea9..ad2c0da8e64fc 100644
+--- a/security/apparmor/include/resource.h
++++ b/security/apparmor/include/resource.h
+@@ -33,7 +33,8 @@ struct aa_rlimit {
+ extern struct aa_sfs_entry aa_sfs_entry_rlimit[];
+ 
+ int aa_map_resource(int resource);
+-int aa_task_setrlimit(struct aa_label *label, struct task_struct *task,
++int aa_task_setrlimit(const struct cred *subj_cred, struct aa_label *label,
++		      struct task_struct *task,
+ 		      unsigned int resource, struct rlimit *new_rlim);
+ 
+ void __aa_transition_rlimits(struct aa_label *old, struct aa_label *new);
+diff --git a/security/apparmor/include/task.h b/security/apparmor/include/task.h
+index 13437d62c70f4..29ba55107b7d6 100644
+--- a/security/apparmor/include/task.h
++++ b/security/apparmor/include/task.h
+@@ -91,7 +91,8 @@ static inline void aa_clear_task_ctx_trans(struct aa_task_ctx *ctx)
+ 	"segv usr2 pipe alrm term stkflt chld cont stop stp ttin ttou urg " \
+ 	"xcpu xfsz vtalrm prof winch io pwr sys emt lost"
+ 
+-int aa_may_ptrace(struct aa_label *tracer, struct aa_label *tracee,
++int aa_may_ptrace(const struct cred *tracer_cred, struct aa_label *tracer,
++		  const struct cred *tracee_cred, struct aa_label *tracee,
+ 		  u32 request);
+ 
+ 
+diff --git a/security/apparmor/ipc.c b/security/apparmor/ipc.c
+index fd8306399b820..c0d0dbd7b4c4b 100644
+--- a/security/apparmor/ipc.c
++++ b/security/apparmor/ipc.c
+@@ -75,7 +75,8 @@ static void audit_signal_cb(struct audit_buffer *ab, void *va)
+ 			FLAGS_NONE, GFP_ATOMIC);
+ }
+ 
+-static int profile_signal_perm(struct aa_profile *profile,
++static int profile_signal_perm(const struct cred *cred,
++			       struct aa_profile *profile,
+ 			       struct aa_label *peer, u32 request,
+ 			       struct apparmor_audit_data *ad)
+ {
+@@ -88,6 +89,7 @@ static int profile_signal_perm(struct aa_profile *profile,
+ 	    !ANY_RULE_MEDIATES(&profile->rules, AA_CLASS_SIGNAL))
+ 		return 0;
+ 
++	ad->subj_cred = cred;
+ 	ad->peer = peer;
+ 	/* TODO: secondary cache check <profile, profile, perm> */
+ 	state = aa_dfa_next(rules->policy.dfa,
+@@ -98,7 +100,9 @@ static int profile_signal_perm(struct aa_profile *profile,
+ 	return aa_check_perms(profile, &perms, request, ad, audit_signal_cb);
+ }
+ 
+-int aa_may_signal(struct aa_label *sender, struct aa_label *target, int sig)
++int aa_may_signal(const struct cred *subj_cred, struct aa_label *sender,
++		  const struct cred *target_cred, struct aa_label *target,
++		  int sig)
+ {
+ 	struct aa_profile *profile;
+ 	DEFINE_AUDIT_DATA(ad, LSM_AUDIT_DATA_NONE, AA_CLASS_SIGNAL, OP_SIGNAL);
+@@ -106,6 +110,8 @@ int aa_may_signal(struct aa_label *sender, struct aa_label *target, int sig)
+ 	ad.signal = map_signal_num(sig);
+ 	ad.unmappedsig = sig;
+ 	return xcheck_labels(sender, target, profile,
+-			profile_signal_perm(profile, target, MAY_WRITE, &ad),
+-			profile_signal_perm(profile, sender, MAY_READ, &ad));
++			     profile_signal_perm(subj_cred, profile, target,
++						 MAY_WRITE, &ad),
++			     profile_signal_perm(target_cred, profile, sender,
++						 MAY_READ, &ad));
+ }
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index 359fbfbb4a66e..60f95cc4532a8 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -116,15 +116,17 @@ static int apparmor_ptrace_access_check(struct task_struct *child,
+ 					unsigned int mode)
+ {
+ 	struct aa_label *tracer, *tracee;
++	const struct cred *cred;
+ 	int error;
+ 
++	cred = get_task_cred(child);
++	tracee = cred_label(cred);	/* ref count on cred */
+ 	tracer = __begin_current_label_crit_section();
+-	tracee = aa_get_task_label(child);
+-	error = aa_may_ptrace(tracer, tracee,
++	error = aa_may_ptrace(current_cred(), tracer, cred, tracee,
+ 			(mode & PTRACE_MODE_READ) ? AA_PTRACE_READ
+ 						  : AA_PTRACE_TRACE);
+-	aa_put_label(tracee);
+ 	__end_current_label_crit_section(tracer);
++	put_cred(cred);
+ 
+ 	return error;
+ }
+@@ -132,12 +134,15 @@ static int apparmor_ptrace_access_check(struct task_struct *child,
+ static int apparmor_ptrace_traceme(struct task_struct *parent)
+ {
+ 	struct aa_label *tracer, *tracee;
++	const struct cred *cred;
+ 	int error;
+ 
+ 	tracee = __begin_current_label_crit_section();
+-	tracer = aa_get_task_label(parent);
+-	error = aa_may_ptrace(tracer, tracee, AA_PTRACE_TRACE);
+-	aa_put_label(tracer);
++	cred = get_task_cred(parent);
++	tracer = cred_label(cred);	/* ref count on cred */
++	error = aa_may_ptrace(cred, tracer, current_cred(), tracee,
++			      AA_PTRACE_TRACE);
++	put_cred(cred);
+ 	__end_current_label_crit_section(tracee);
+ 
+ 	return error;
+@@ -188,7 +193,7 @@ static int apparmor_capable(const struct cred *cred, struct user_namespace *ns,
+ 
+ 	label = aa_get_newest_cred_label(cred);
+ 	if (!unconfined(label))
+-		error = aa_capable(label, cap, opts);
++		error = aa_capable(cred, label, cap, opts);
+ 	aa_put_label(label);
+ 
+ 	return error;
+@@ -211,7 +216,8 @@ static int common_perm(const char *op, const struct path *path, u32 mask,
+ 
+ 	label = __begin_current_label_crit_section();
+ 	if (!unconfined(label))
+-		error = aa_path_perm(op, label, path, 0, mask, cond);
++		error = aa_path_perm(op, current_cred(), label, path, 0, mask,
++				     cond);
+ 	__end_current_label_crit_section(label);
+ 
+ 	return error;
+@@ -357,7 +363,8 @@ static int apparmor_path_link(struct dentry *old_dentry, const struct path *new_
+ 
+ 	label = begin_current_label_crit_section();
+ 	if (!unconfined(label))
+-		error = aa_path_link(label, old_dentry, new_dir, new_dentry);
++		error = aa_path_link(current_cred(), label, old_dentry, new_dir,
++				     new_dentry);
+ 	end_current_label_crit_section(label);
+ 
+ 	return error;
+@@ -396,23 +403,27 @@ static int apparmor_path_rename(const struct path *old_dir, struct dentry *old_d
+ 			vfsuid = i_uid_into_vfsuid(idmap, d_backing_inode(old_dentry));
+ 			cond_exchange.uid = vfsuid_into_kuid(vfsuid);
+ 
+-			error = aa_path_perm(OP_RENAME_SRC, label, &new_path, 0,
++			error = aa_path_perm(OP_RENAME_SRC, current_cred(),
++					     label, &new_path, 0,
+ 					     MAY_READ | AA_MAY_GETATTR | MAY_WRITE |
+ 					     AA_MAY_SETATTR | AA_MAY_DELETE,
+ 					     &cond_exchange);
+ 			if (!error)
+-				error = aa_path_perm(OP_RENAME_DEST, label, &old_path,
++				error = aa_path_perm(OP_RENAME_DEST, current_cred(),
++						     label, &old_path,
+ 						     0, MAY_WRITE | AA_MAY_SETATTR |
+ 						     AA_MAY_CREATE, &cond_exchange);
+ 		}
+ 
+ 		if (!error)
+-			error = aa_path_perm(OP_RENAME_SRC, label, &old_path, 0,
++			error = aa_path_perm(OP_RENAME_SRC, current_cred(),
++					     label, &old_path, 0,
+ 					     MAY_READ | AA_MAY_GETATTR | MAY_WRITE |
+ 					     AA_MAY_SETATTR | AA_MAY_DELETE,
+ 					     &cond);
+ 		if (!error)
+-			error = aa_path_perm(OP_RENAME_DEST, label, &new_path,
++			error = aa_path_perm(OP_RENAME_DEST, current_cred(),
++					     label, &new_path,
+ 					     0, MAY_WRITE | AA_MAY_SETATTR |
+ 					     AA_MAY_CREATE, &cond);
+ 
+@@ -467,7 +478,8 @@ static int apparmor_file_open(struct file *file)
+ 		vfsuid = i_uid_into_vfsuid(idmap, inode);
+ 		cond.uid = vfsuid_into_kuid(vfsuid);
+ 
+-		error = aa_path_perm(OP_OPEN, label, &file->f_path, 0,
++		error = aa_path_perm(OP_OPEN, file->f_cred,
++				     label, &file->f_path, 0,
+ 				     aa_map_file_to_perms(file), &cond);
+ 		/* todo cache full allowed permissions set and state */
+ 		fctx->allow = aa_map_file_to_perms(file);
+@@ -507,7 +519,7 @@ static int common_file_perm(const char *op, struct file *file, u32 mask,
+ 		return -EACCES;
+ 
+ 	label = __begin_current_label_crit_section();
+-	error = aa_file_perm(op, label, file, mask, in_atomic);
++	error = aa_file_perm(op, current_cred(), label, file, mask, in_atomic);
+ 	__end_current_label_crit_section(label);
+ 
+ 	return error;
+@@ -585,17 +597,21 @@ static int apparmor_sb_mount(const char *dev_name, const struct path *path,
+ 	label = __begin_current_label_crit_section();
+ 	if (!unconfined(label)) {
+ 		if (flags & MS_REMOUNT)
+-			error = aa_remount(label, path, flags, data);
++			error = aa_remount(current_cred(), label, path, flags,
++					   data);
+ 		else if (flags & MS_BIND)
+-			error = aa_bind_mount(label, path, dev_name, flags);
++			error = aa_bind_mount(current_cred(), label, path,
++					      dev_name, flags);
+ 		else if (flags & (MS_SHARED | MS_PRIVATE | MS_SLAVE |
+ 				  MS_UNBINDABLE))
+-			error = aa_mount_change_type(label, path, flags);
++			error = aa_mount_change_type(current_cred(), label,
++						     path, flags);
+ 		else if (flags & MS_MOVE)
+-			error = aa_move_mount(label, path, dev_name);
++			error = aa_move_mount(current_cred(), label, path,
++					      dev_name);
+ 		else
+-			error = aa_new_mount(label, dev_name, path, type,
+-					     flags, data);
++			error = aa_new_mount(current_cred(), label, dev_name,
++					     path, type, flags, data);
+ 	}
+ 	__end_current_label_crit_section(label);
+ 
+@@ -609,7 +625,7 @@ static int apparmor_sb_umount(struct vfsmount *mnt, int flags)
+ 
+ 	label = __begin_current_label_crit_section();
+ 	if (!unconfined(label))
+-		error = aa_umount(label, mnt, flags);
++		error = aa_umount(current_cred(), label, mnt, flags);
+ 	__end_current_label_crit_section(label);
+ 
+ 	return error;
+@@ -623,7 +639,7 @@ static int apparmor_sb_pivotroot(const struct path *old_path,
+ 
+ 	label = aa_get_current_label();
+ 	if (!unconfined(label))
+-		error = aa_pivotroot(label, old_path, new_path);
++		error = aa_pivotroot(current_cred(), label, old_path, new_path);
+ 	aa_put_label(label);
+ 
+ 	return error;
+@@ -785,7 +801,8 @@ static int apparmor_task_setrlimit(struct task_struct *task,
+ 	int error = 0;
+ 
+ 	if (!unconfined(label))
+-		error = aa_task_setrlimit(label, task, resource, new_rlim);
++		error = aa_task_setrlimit(current_cred(), label, task,
++					  resource, new_rlim);
+ 	__end_current_label_crit_section(label);
+ 
+ 	return error;
+@@ -794,26 +811,27 @@ static int apparmor_task_setrlimit(struct task_struct *task,
+ static int apparmor_task_kill(struct task_struct *target, struct kernel_siginfo *info,
+ 			      int sig, const struct cred *cred)
+ {
++	const struct cred *tc;
+ 	struct aa_label *cl, *tl;
+ 	int error;
+ 
++	tc = get_task_cred(target);
++	tl = aa_get_newest_cred_label(tc);
+ 	if (cred) {
+ 		/*
+ 		 * Dealing with USB IO specific behavior
+ 		 */
+ 		cl = aa_get_newest_cred_label(cred);
+-		tl = aa_get_task_label(target);
+-		error = aa_may_signal(cl, tl, sig);
++		error = aa_may_signal(cred, cl, tc, tl, sig);
+ 		aa_put_label(cl);
+-		aa_put_label(tl);
+ 		return error;
++	} else {
++		cl = __begin_current_label_crit_section();
++		error = aa_may_signal(current_cred(), cl, tc, tl, sig);
++		__end_current_label_crit_section(cl);
+ 	}
+-
+-	cl = __begin_current_label_crit_section();
+-	tl = aa_get_task_label(target);
+-	error = aa_may_signal(cl, tl, sig);
+ 	aa_put_label(tl);
+-	__end_current_label_crit_section(cl);
++	put_cred(tc);
+ 
+ 	return error;
+ }
+@@ -879,7 +897,8 @@ static int apparmor_socket_create(int family, int type, int protocol, int kern)
+ 	if (!(kern || unconfined(label)))
+ 		error = af_select(family,
+ 				  create_perm(label, family, type, protocol),
+-				  aa_af_perm(label, OP_CREATE, AA_MAY_CREATE,
++				  aa_af_perm(current_cred(), label,
++					     OP_CREATE, AA_MAY_CREATE,
+ 					     family, type, protocol));
+ 	end_current_label_crit_section(label);
+ 
+diff --git a/security/apparmor/mount.c b/security/apparmor/mount.c
+index 3830bceff9c8b..2bb77aacc49ae 100644
+--- a/security/apparmor/mount.c
++++ b/security/apparmor/mount.c
+@@ -113,6 +113,7 @@ static void audit_cb(struct audit_buffer *ab, void *va)
+ 
+ /**
+  * audit_mount - handle the auditing of mount operations
++ * @subj_cred: cred of the subject
+  * @profile: the profile being enforced  (NOT NULL)
+  * @op: operation being mediated (NOT NULL)
+  * @name: name of object being mediated (MAYBE NULL)
+@@ -128,7 +129,8 @@ static void audit_cb(struct audit_buffer *ab, void *va)
+  *
+  * Returns: %0 or error on failure
+  */
+-static int audit_mount(struct aa_profile *profile, const char *op,
++static int audit_mount(const struct cred *subj_cred,
++		       struct aa_profile *profile, const char *op,
+ 		       const char *name, const char *src_name,
+ 		       const char *type, const char *trans,
+ 		       unsigned long flags, const void *data, u32 request,
+@@ -166,6 +168,7 @@ static int audit_mount(struct aa_profile *profile, const char *op,
+ 			return error;
+ 	}
+ 
++	ad.subj_cred = subj_cred;
+ 	ad.name = name;
+ 	ad.mnt.src_name = src_name;
+ 	ad.mnt.type = type;
+@@ -284,6 +287,7 @@ static int path_flags(struct aa_profile *profile, const struct path *path)
+ 
+ /**
+  * match_mnt_path_str - handle path matching for mount
++ * @subj_cred: cred of confined subject
+  * @profile: the confining profile
+  * @mntpath: for the mntpnt (NOT NULL)
+  * @buffer: buffer to be used to lookup mntpath
+@@ -296,7 +300,8 @@ static int path_flags(struct aa_profile *profile, const struct path *path)
+  *
+  * Returns: 0 on success else error
+  */
+-static int match_mnt_path_str(struct aa_profile *profile,
++static int match_mnt_path_str(const struct cred *subj_cred,
++			      struct aa_profile *profile,
+ 			      const struct path *mntpath, char *buffer,
+ 			      const char *devname, const char *type,
+ 			      unsigned long flags, void *data, bool binary,
+@@ -337,12 +342,14 @@ static int match_mnt_path_str(struct aa_profile *profile,
+ 	error = 0;
+ 
+ audit:
+-	return audit_mount(profile, OP_MOUNT, mntpnt, devname, type, NULL,
++	return audit_mount(subj_cred, profile, OP_MOUNT, mntpnt, devname,
++			   type, NULL,
+ 			   flags, data, AA_MAY_MOUNT, &perms, info, error);
+ }
+ 
+ /**
+  * match_mnt - handle path matching for mount
++ * @subj_cred: cred of the subject
+  * @profile: the confining profile
+  * @path: for the mntpnt (NOT NULL)
+  * @buffer: buffer to be used to lookup mntpath
+@@ -355,7 +362,8 @@ static int match_mnt_path_str(struct aa_profile *profile,
+  *
+  * Returns: 0 on success else error
+  */
+-static int match_mnt(struct aa_profile *profile, const struct path *path,
++static int match_mnt(const struct cred *subj_cred,
++		     struct aa_profile *profile, const struct path *path,
+ 		     char *buffer, const struct path *devpath, char *devbuffer,
+ 		     const char *type, unsigned long flags, void *data,
+ 		     bool binary)
+@@ -379,11 +387,12 @@ static int match_mnt(struct aa_profile *profile, const struct path *path,
+ 			devname = ERR_PTR(error);
+ 	}
+ 
+-	return match_mnt_path_str(profile, path, buffer, devname, type, flags,
+-				  data, binary, info);
++	return match_mnt_path_str(subj_cred, profile, path, buffer, devname,
++				  type, flags, data, binary, info);
+ }
+ 
+-int aa_remount(struct aa_label *label, const struct path *path,
++int aa_remount(const struct cred *subj_cred,
++	       struct aa_label *label, const struct path *path,
+ 	       unsigned long flags, void *data)
+ {
+ 	struct aa_profile *profile;
+@@ -400,14 +409,16 @@ int aa_remount(struct aa_label *label, const struct path *path,
+ 	if (!buffer)
+ 		return -ENOMEM;
+ 	error = fn_for_each_confined(label, profile,
+-			match_mnt(profile, path, buffer, NULL, NULL, NULL,
++			match_mnt(subj_cred, profile, path, buffer, NULL,
++				  NULL, NULL,
+ 				  flags, data, binary));
+ 	aa_put_buffer(buffer);
+ 
+ 	return error;
+ }
+ 
+-int aa_bind_mount(struct aa_label *label, const struct path *path,
++int aa_bind_mount(const struct cred *subj_cred,
++		  struct aa_label *label, const struct path *path,
+ 		  const char *dev_name, unsigned long flags)
+ {
+ 	struct aa_profile *profile;
+@@ -434,8 +445,8 @@ int aa_bind_mount(struct aa_label *label, const struct path *path,
+ 		goto out;
+ 
+ 	error = fn_for_each_confined(label, profile,
+-			match_mnt(profile, path, buffer, &old_path, old_buffer,
+-				  NULL, flags, NULL, false));
++			match_mnt(subj_cred, profile, path, buffer, &old_path,
++				  old_buffer, NULL, flags, NULL, false));
+ out:
+ 	aa_put_buffer(buffer);
+ 	aa_put_buffer(old_buffer);
+@@ -444,7 +455,8 @@ int aa_bind_mount(struct aa_label *label, const struct path *path,
+ 	return error;
+ }
+ 
+-int aa_mount_change_type(struct aa_label *label, const struct path *path,
++int aa_mount_change_type(const struct cred *subj_cred,
++			 struct aa_label *label, const struct path *path,
+ 			 unsigned long flags)
+ {
+ 	struct aa_profile *profile;
+@@ -462,14 +474,16 @@ int aa_mount_change_type(struct aa_label *label, const struct path *path,
+ 	if (!buffer)
+ 		return -ENOMEM;
+ 	error = fn_for_each_confined(label, profile,
+-			match_mnt(profile, path, buffer, NULL, NULL, NULL,
++			match_mnt(subj_cred, profile, path, buffer, NULL,
++				  NULL, NULL,
+ 				  flags, NULL, false));
+ 	aa_put_buffer(buffer);
+ 
+ 	return error;
+ }
+ 
+-int aa_move_mount(struct aa_label *label, const struct path *path,
++int aa_move_mount(const struct cred *subj_cred,
++		  struct aa_label *label, const struct path *path,
+ 		  const char *orig_name)
+ {
+ 	struct aa_profile *profile;
+@@ -493,7 +507,8 @@ int aa_move_mount(struct aa_label *label, const struct path *path,
+ 	if (!buffer || !old_buffer)
+ 		goto out;
+ 	error = fn_for_each_confined(label, profile,
+-			match_mnt(profile, path, buffer, &old_path, old_buffer,
++			match_mnt(subj_cred, profile, path, buffer, &old_path,
++				  old_buffer,
+ 				  NULL, MS_MOVE, NULL, false));
+ out:
+ 	aa_put_buffer(buffer);
+@@ -503,9 +518,9 @@ int aa_move_mount(struct aa_label *label, const struct path *path,
+ 	return error;
+ }
+ 
+-int aa_new_mount(struct aa_label *label, const char *dev_name,
+-		 const struct path *path, const char *type, unsigned long flags,
+-		 void *data)
++int aa_new_mount(const struct cred *subj_cred, struct aa_label *label,
++		 const char *dev_name, const struct path *path,
++		 const char *type, unsigned long flags, void *data)
+ {
+ 	struct aa_profile *profile;
+ 	char *buffer = NULL, *dev_buffer = NULL;
+@@ -550,12 +565,14 @@ int aa_new_mount(struct aa_label *label, const char *dev_name,
+ 			goto out;
+ 		}
+ 		error = fn_for_each_confined(label, profile,
+-			match_mnt(profile, path, buffer, dev_path, dev_buffer,
++				match_mnt(subj_cred, profile, path, buffer,
++					  dev_path, dev_buffer,
+ 				  type, flags, data, binary));
+ 	} else {
+ 		error = fn_for_each_confined(label, profile,
+-			match_mnt_path_str(profile, path, buffer, dev_name,
+-					   type, flags, data, binary, NULL));
++				match_mnt_path_str(subj_cred, profile, path,
++					buffer, dev_name,
++					type, flags, data, binary, NULL));
+ 	}
+ 
+ out:
+@@ -567,7 +584,8 @@ int aa_new_mount(struct aa_label *label, const char *dev_name,
+ 	return error;
+ }
+ 
+-static int profile_umount(struct aa_profile *profile, const struct path *path,
++static int profile_umount(const struct cred *subj_cred,
++			  struct aa_profile *profile, const struct path *path,
+ 			  char *buffer)
+ {
+ 	struct aa_ruleset *rules = list_first_entry(&profile->rules,
+@@ -596,11 +614,13 @@ static int profile_umount(struct aa_profile *profile, const struct path *path,
+ 		error = -EACCES;
+ 
+ audit:
+-	return audit_mount(profile, OP_UMOUNT, name, NULL, NULL, NULL, 0, NULL,
++	return audit_mount(subj_cred, profile, OP_UMOUNT, name, NULL, NULL,
++			   NULL, 0, NULL,
+ 			   AA_MAY_UMOUNT, &perms, info, error);
+ }
+ 
+-int aa_umount(struct aa_label *label, struct vfsmount *mnt, int flags)
++int aa_umount(const struct cred *subj_cred, struct aa_label *label,
++	      struct vfsmount *mnt, int flags)
+ {
+ 	struct aa_profile *profile;
+ 	char *buffer = NULL;
+@@ -615,7 +635,7 @@ int aa_umount(struct aa_label *label, struct vfsmount *mnt, int flags)
+ 		return -ENOMEM;
+ 
+ 	error = fn_for_each_confined(label, profile,
+-			profile_umount(profile, &path, buffer));
++			profile_umount(subj_cred, profile, &path, buffer));
+ 	aa_put_buffer(buffer);
+ 
+ 	return error;
+@@ -625,7 +645,8 @@ int aa_umount(struct aa_label *label, struct vfsmount *mnt, int flags)
+  *
+  * Returns: label for transition or ERR_PTR. Does not return NULL
+  */
+-static struct aa_label *build_pivotroot(struct aa_profile *profile,
++static struct aa_label *build_pivotroot(const struct cred *subj_cred,
++					struct aa_profile *profile,
+ 					const struct path *new_path,
+ 					char *new_buffer,
+ 					const struct path *old_path,
+@@ -670,7 +691,8 @@ static struct aa_label *build_pivotroot(struct aa_profile *profile,
+ 		error = 0;
+ 
+ audit:
+-	error = audit_mount(profile, OP_PIVOTROOT, new_name, old_name,
++	error = audit_mount(subj_cred, profile, OP_PIVOTROOT, new_name,
++			    old_name,
+ 			    NULL, trans_name, 0, NULL, AA_MAY_PIVOTROOT,
+ 			    &perms, info, error);
+ 	if (error)
+@@ -679,7 +701,8 @@ static struct aa_label *build_pivotroot(struct aa_profile *profile,
+ 	return aa_get_newest_label(&profile->label);
+ }
+ 
+-int aa_pivotroot(struct aa_label *label, const struct path *old_path,
++int aa_pivotroot(const struct cred *subj_cred, struct aa_label *label,
++		 const struct path *old_path,
+ 		 const struct path *new_path)
+ {
+ 	struct aa_profile *profile;
+@@ -697,7 +720,8 @@ int aa_pivotroot(struct aa_label *label, const struct path *old_path,
+ 	if (!old_buffer || !new_buffer)
+ 		goto out;
+ 	target = fn_label_build(label, profile, GFP_KERNEL,
+-			build_pivotroot(profile, new_path, new_buffer,
++			build_pivotroot(subj_cred, profile, new_path,
++					new_buffer,
+ 					old_path, old_buffer));
+ 	if (!target) {
+ 		info = "label build failed";
+@@ -723,7 +747,8 @@ int aa_pivotroot(struct aa_label *label, const struct path *old_path,
+ fail:
+ 	/* TODO: add back in auditing of new_name and old_name */
+ 	error = fn_for_each(label, profile,
+-			audit_mount(profile, OP_PIVOTROOT, NULL /*new_name */,
++			audit_mount(subj_cred, profile, OP_PIVOTROOT,
++				    NULL /*new_name */,
+ 				    NULL /* old_name */,
+ 				    NULL, NULL,
+ 				    0, NULL, AA_MAY_PIVOTROOT, &nullperms, info,
+diff --git a/security/apparmor/net.c b/security/apparmor/net.c
+index 5e50f80e35db0..704c171232ab4 100644
+--- a/security/apparmor/net.c
++++ b/security/apparmor/net.c
+@@ -135,8 +135,8 @@ int aa_profile_af_perm(struct aa_profile *profile,
+ 	return aa_check_perms(profile, &perms, request, ad, audit_net_cb);
+ }
+ 
+-int aa_af_perm(struct aa_label *label, const char *op, u32 request, u16 family,
+-	       int type, int protocol)
++int aa_af_perm(const struct cred *subj_cred, struct aa_label *label,
++	       const char *op, u32 request, u16 family, int type, int protocol)
+ {
+ 	struct aa_profile *profile;
+ 	DEFINE_AUDIT_NET(ad, op, NULL, family, type, protocol);
+@@ -146,7 +146,9 @@ int aa_af_perm(struct aa_label *label, const char *op, u32 request, u16 family,
+ 					   type));
+ }
+ 
+-static int aa_label_sk_perm(struct aa_label *label, const char *op, u32 request,
++static int aa_label_sk_perm(const struct cred *subj_cred,
++			    struct aa_label *label,
++			    const char *op, u32 request,
+ 			    struct sock *sk)
+ {
+ 	struct aa_sk_ctx *ctx = SK_CTX(sk);
+@@ -159,6 +161,7 @@ static int aa_label_sk_perm(struct aa_label *label, const char *op, u32 request,
+ 		struct aa_profile *profile;
+ 		DEFINE_AUDIT_SK(ad, op, sk);
+ 
++		ad.subj_cred = subj_cred;
+ 		error = fn_for_each_confined(label, profile,
+ 			    aa_profile_af_sk_perm(profile, &ad, request, sk));
+ 	}
+@@ -176,21 +179,21 @@ int aa_sk_perm(const char *op, u32 request, struct sock *sk)
+ 
+ 	/* TODO: switch to begin_current_label ???? */
+ 	label = begin_current_label_crit_section();
+-	error = aa_label_sk_perm(label, op, request, sk);
++	error = aa_label_sk_perm(current_cred(), label, op, request, sk);
+ 	end_current_label_crit_section(label);
+ 
+ 	return error;
+ }
+ 
+ 
+-int aa_sock_file_perm(struct aa_label *label, const char *op, u32 request,
+-		      struct socket *sock)
++int aa_sock_file_perm(const struct cred *subj_cred, struct aa_label *label,
++		      const char *op, u32 request, struct socket *sock)
+ {
+ 	AA_BUG(!label);
+ 	AA_BUG(!sock);
+ 	AA_BUG(!sock->sk);
+ 
+-	return aa_label_sk_perm(label, op, request, sock->sk);
++	return aa_label_sk_perm(subj_cred, label, op, request, sock->sk);
+ }
+ 
+ #ifdef CONFIG_NETWORK_SECMARK
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index e5f1ef83b0fda..8a07793ce1032 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -762,21 +762,23 @@ static int audit_policy(struct aa_label *subj_label, const char *op,
+ /* don't call out to other LSMs in the stack for apparmor policy admin
+  * permissions
+  */
+-static int policy_ns_capable(struct aa_label *label,
++static int policy_ns_capable(const struct cred *subj_cred,
++			     struct aa_label *label,
+ 			     struct user_namespace *userns, int cap)
+ {
+ 	int err;
+ 
+ 	/* check for MAC_ADMIN cap in cred */
+-	err = cap_capable(current_cred(), userns, cap, CAP_OPT_NONE);
++	err = cap_capable(subj_cred, userns, cap, CAP_OPT_NONE);
+ 	if (!err)
+-		err = aa_capable(label, cap, CAP_OPT_NONE);
++		err = aa_capable(subj_cred, label, cap, CAP_OPT_NONE);
+ 
+ 	return err;
+ }
+ 
+ /**
+  * aa_policy_view_capable - check if viewing policy in at @ns is allowed
++ * @subj_cred: cred of subject
+  * @label: label that is trying to view policy in ns
+  * @ns: namespace being viewed by @label (may be NULL if @label's ns)
+  *
+@@ -785,9 +787,10 @@ static int policy_ns_capable(struct aa_label *label,
+  * If @ns is NULL then the namespace being viewed is assumed to be the
+  * tasks current namespace.
+  */
+-bool aa_policy_view_capable(struct aa_label *label, struct aa_ns *ns)
++bool aa_policy_view_capable(const struct cred *subj_cred,
++			     struct aa_label *label, struct aa_ns *ns)
+ {
+-	struct user_namespace *user_ns = current_user_ns();
++	struct user_namespace *user_ns = subj_cred->user_ns;
+ 	struct aa_ns *view_ns = labels_view(label);
+ 	bool root_in_user_ns = uid_eq(current_euid(), make_kuid(user_ns, 0)) ||
+ 			       in_egroup_p(make_kgid(user_ns, 0));
+@@ -804,15 +807,17 @@ bool aa_policy_view_capable(struct aa_label *label, struct aa_ns *ns)
+ 	return response;
+ }
+ 
+-bool aa_policy_admin_capable(struct aa_label *label, struct aa_ns *ns)
++bool aa_policy_admin_capable(const struct cred *subj_cred,
++			     struct aa_label *label, struct aa_ns *ns)
+ {
+-	struct user_namespace *user_ns = current_user_ns();
+-	bool capable = policy_ns_capable(label, user_ns, CAP_MAC_ADMIN) == 0;
++	struct user_namespace *user_ns = subj_cred->user_ns;
++	bool capable = policy_ns_capable(subj_cred, label, user_ns,
++					 CAP_MAC_ADMIN) == 0;
+ 
+ 	AA_DEBUG("cap_mac_admin? %d\n", capable);
+ 	AA_DEBUG("policy locked? %d\n", aa_g_lock_policy);
+ 
+-	return aa_policy_view_capable(label, ns) && capable &&
++	return aa_policy_view_capable(subj_cred, label, ns) && capable &&
+ 		!aa_g_lock_policy;
+ }
+ 
+@@ -822,7 +827,7 @@ bool aa_current_policy_view_capable(struct aa_ns *ns)
+ 	bool res;
+ 
+ 	label = __begin_current_label_crit_section();
+-	res = aa_policy_view_capable(label, ns);
++	res = aa_policy_view_capable(current_cred(), label, ns);
+ 	__end_current_label_crit_section(label);
+ 
+ 	return res;
+@@ -834,7 +839,7 @@ bool aa_current_policy_admin_capable(struct aa_ns *ns)
+ 	bool res;
+ 
+ 	label = __begin_current_label_crit_section();
+-	res = aa_policy_admin_capable(label, ns);
++	res = aa_policy_admin_capable(current_cred(), label, ns);
+ 	__end_current_label_crit_section(label);
+ 
+ 	return res;
+@@ -842,13 +847,15 @@ bool aa_current_policy_admin_capable(struct aa_ns *ns)
+ 
+ /**
+  * aa_may_manage_policy - can the current task manage policy
++ * @subj_cred; subjects cred
+  * @label: label to check if it can manage policy
+  * @ns: namespace being managed by @label (may be NULL if @label's ns)
+  * @mask: contains the policy manipulation operation being done
+  *
+  * Returns: 0 if the task is allowed to manipulate policy else error
+  */
+-int aa_may_manage_policy(struct aa_label *label, struct aa_ns *ns, u32 mask)
++int aa_may_manage_policy(const struct cred *subj_cred, struct aa_label *label,
++			 struct aa_ns *ns, u32 mask)
+ {
+ 	const char *op;
+ 
+@@ -864,7 +871,7 @@ int aa_may_manage_policy(struct aa_label *label, struct aa_ns *ns, u32 mask)
+ 		return audit_policy(label, op, NULL, NULL, "policy_locked",
+ 				    -EACCES);
+ 
+-	if (!aa_policy_admin_capable(label, ns))
++	if (!aa_policy_admin_capable(subj_cred, label, ns))
+ 		return audit_policy(label, op, NULL, NULL, "not policy admin",
+ 				    -EACCES);
+ 
+diff --git a/security/apparmor/resource.c b/security/apparmor/resource.c
+index 73ba26c646a5e..dcc94c3153d51 100644
+--- a/security/apparmor/resource.c
++++ b/security/apparmor/resource.c
+@@ -43,6 +43,7 @@ static void audit_cb(struct audit_buffer *ab, void *va)
+ 
+ /**
+  * audit_resource - audit setting resource limit
++ * @subj_cred: cred setting the resource
+  * @profile: profile being enforced  (NOT NULL)
+  * @resource: rlimit being auditing
+  * @value: value being set
+@@ -52,13 +53,15 @@ static void audit_cb(struct audit_buffer *ab, void *va)
+  *
+  * Returns: 0 or ad->error else other error code on failure
+  */
+-static int audit_resource(struct aa_profile *profile, unsigned int resource,
++static int audit_resource(const struct cred *subj_cred,
++			  struct aa_profile *profile, unsigned int resource,
+ 			  unsigned long value, struct aa_label *peer,
+ 			  const char *info, int error)
+ {
+ 	DEFINE_AUDIT_DATA(ad, LSM_AUDIT_DATA_NONE, AA_CLASS_RLIMITS,
+ 			  OP_SETRLIMIT);
+ 
++	ad.subj_cred = subj_cred;
+ 	ad.rlim.rlim = resource;
+ 	ad.rlim.max = value;
+ 	ad.peer = peer;
+@@ -82,7 +85,8 @@ int aa_map_resource(int resource)
+ 	return rlim_map[resource];
+ }
+ 
+-static int profile_setrlimit(struct aa_profile *profile, unsigned int resource,
++static int profile_setrlimit(const struct cred *subj_cred,
++			     struct aa_profile *profile, unsigned int resource,
+ 			     struct rlimit *new_rlim)
+ {
+ 	struct aa_ruleset *rules = list_first_entry(&profile->rules,
+@@ -92,12 +96,13 @@ static int profile_setrlimit(struct aa_profile *profile, unsigned int resource,
+ 	if (rules->rlimits.mask & (1 << resource) && new_rlim->rlim_max >
+ 	    rules->rlimits.limits[resource].rlim_max)
+ 		e = -EACCES;
+-	return audit_resource(profile, resource, new_rlim->rlim_max, NULL, NULL,
+-			      e);
++	return audit_resource(subj_cred, profile, resource, new_rlim->rlim_max,
++			      NULL, NULL, e);
+ }
+ 
+ /**
+  * aa_task_setrlimit - test permission to set an rlimit
++ * @subj_cred: cred setting the limit
+  * @label: label confining the task  (NOT NULL)
+  * @task: task the resource is being set on
+  * @resource: the resource being set
+@@ -107,7 +112,8 @@ static int profile_setrlimit(struct aa_profile *profile, unsigned int resource,
+  *
+  * Returns: 0 or error code if setting resource failed
+  */
+-int aa_task_setrlimit(struct aa_label *label, struct task_struct *task,
++int aa_task_setrlimit(const struct cred *subj_cred, struct aa_label *label,
++		      struct task_struct *task,
+ 		      unsigned int resource, struct rlimit *new_rlim)
+ {
+ 	struct aa_profile *profile;
+@@ -126,14 +132,15 @@ int aa_task_setrlimit(struct aa_label *label, struct task_struct *task,
+ 	 */
+ 
+ 	if (label != peer &&
+-	    aa_capable(label, CAP_SYS_RESOURCE, CAP_OPT_NOAUDIT) != 0)
++	    aa_capable(subj_cred, label, CAP_SYS_RESOURCE, CAP_OPT_NOAUDIT) != 0)
+ 		error = fn_for_each(label, profile,
+-				audit_resource(profile, resource,
++				audit_resource(subj_cred, profile, resource,
+ 					       new_rlim->rlim_max, peer,
+ 					       "cap_sys_resource", -EACCES));
+ 	else
+ 		error = fn_for_each_confined(label, profile,
+-				profile_setrlimit(profile, resource, new_rlim));
++				profile_setrlimit(subj_cred, profile, resource,
++						  new_rlim));
+ 	aa_put_label(peer);
+ 
+ 	return error;
+diff --git a/security/apparmor/task.c b/security/apparmor/task.c
+index 79850e8321420..0d7af707cccdd 100644
+--- a/security/apparmor/task.c
++++ b/security/apparmor/task.c
+@@ -226,14 +226,16 @@ static void audit_ptrace_cb(struct audit_buffer *ab, void *va)
+ 
+ /* assumes check for RULE_MEDIATES is already done */
+ /* TODO: conditionals */
+-static int profile_ptrace_perm(struct aa_profile *profile,
+-			     struct aa_label *peer, u32 request,
+-			     struct apparmor_audit_data *ad)
++static int profile_ptrace_perm(const struct cred *cred,
++			       struct aa_profile *profile,
++			       struct aa_label *peer, u32 request,
++			       struct apparmor_audit_data *ad)
+ {
+ 	struct aa_ruleset *rules = list_first_entry(&profile->rules,
+ 						    typeof(*rules), list);
+ 	struct aa_perms perms = { };
+ 
++	ad->subj_cred = cred;
+ 	ad->peer = peer;
+ 	aa_profile_match_label(profile, rules, peer, AA_CLASS_PTRACE, request,
+ 			       &perms);
+@@ -241,7 +243,8 @@ static int profile_ptrace_perm(struct aa_profile *profile,
+ 	return aa_check_perms(profile, &perms, request, ad, audit_ptrace_cb);
+ }
+ 
+-static int profile_tracee_perm(struct aa_profile *tracee,
++static int profile_tracee_perm(const struct cred *cred,
++			       struct aa_profile *tracee,
+ 			       struct aa_label *tracer, u32 request,
+ 			       struct apparmor_audit_data *ad)
+ {
+@@ -249,10 +252,11 @@ static int profile_tracee_perm(struct aa_profile *tracee,
+ 	    !ANY_RULE_MEDIATES(&tracee->rules, AA_CLASS_PTRACE))
+ 		return 0;
+ 
+-	return profile_ptrace_perm(tracee, tracer, request, ad);
++	return profile_ptrace_perm(cred, tracee, tracer, request, ad);
+ }
+ 
+-static int profile_tracer_perm(struct aa_profile *tracer,
++static int profile_tracer_perm(const struct cred *cred,
++			       struct aa_profile *tracer,
+ 			       struct aa_label *tracee, u32 request,
+ 			       struct apparmor_audit_data *ad)
+ {
+@@ -260,7 +264,7 @@ static int profile_tracer_perm(struct aa_profile *tracer,
+ 		return 0;
+ 
+ 	if (ANY_RULE_MEDIATES(&tracer->rules, AA_CLASS_PTRACE))
+-		return profile_ptrace_perm(tracer, tracee, request, ad);
++		return profile_ptrace_perm(cred, tracer, tracee, request, ad);
+ 
+ 	/* profile uses the old style capability check for ptrace */
+ 	if (&tracer->label == tracee)
+@@ -269,8 +273,8 @@ static int profile_tracer_perm(struct aa_profile *tracer,
+ 	ad->subj_label = &tracer->label;
+ 	ad->peer = tracee;
+ 	ad->request = 0;
+-	ad->error = aa_capable(&tracer->label, CAP_SYS_PTRACE,
+-				    CAP_OPT_NONE);
++	ad->error = aa_capable(cred, &tracer->label, CAP_SYS_PTRACE,
++			       CAP_OPT_NONE);
+ 
+ 	return aa_audit(AUDIT_APPARMOR_AUTO, tracer, ad, audit_ptrace_cb);
+ }
+@@ -283,7 +287,8 @@ static int profile_tracer_perm(struct aa_profile *tracer,
+  *
+  * Returns: %0 else error code if permission denied or error
+  */
+-int aa_may_ptrace(struct aa_label *tracer, struct aa_label *tracee,
++int aa_may_ptrace(const struct cred *tracer_cred, struct aa_label *tracer,
++		  const struct cred *tracee_cred, struct aa_label *tracee,
+ 		  u32 request)
+ {
+ 	struct aa_profile *profile;
+@@ -291,6 +296,8 @@ int aa_may_ptrace(struct aa_label *tracer, struct aa_label *tracee,
+ 	DEFINE_AUDIT_DATA(sa, LSM_AUDIT_DATA_NONE, AA_CLASS_PTRACE, OP_PTRACE);
+ 
+ 	return xcheck_labels(tracer, tracee, profile,
+-			profile_tracer_perm(profile, tracee, request, &sa),
+-			profile_tracee_perm(profile, tracer, xrequest, &sa));
++			profile_tracer_perm(tracer_cred, profile, tracee,
++					    request, &sa),
++			profile_tracee_perm(tracee_cred, profile, tracer,
++					    xrequest, &sa));
+ }
 -- 
 2.42.0
 
