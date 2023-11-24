@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA15C381DF;
-	Fri, 24 Nov 2023 18:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1A5381D7;
+	Fri, 24 Nov 2023 18:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7WghDHy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4F1C433C7;
-	Fri, 24 Nov 2023 18:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7k6v7pn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A5AC433C7;
+	Fri, 24 Nov 2023 18:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849436;
-	bh=oDGTkbBH6Mw3zEzNed5xOHq15R5a1e93wepHCjp8ltA=;
+	s=korg; t=1700849439;
+	bh=u3BNKGYDqlWzhp7vYxaS6Xwn0myrdHVNnL1mnGbKRnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7WghDHyDC0EjTbzHoszhv2j0oPAZ4DRJSp2RV36+xWOytUCoT0I605tAPL+oukiX
-	 O6L+9ZMKiiUQUJwiXizht1LsUlA8JS45jtrZ9mYNT3XsuxeuWEhJ3sgJ4pS331vdJw
-	 F0BfcPKZHAiyfghrvO/xauoYIp+ZjVqJLQe8Q4Qs=
+	b=B7k6v7pn3xvXvhCIMJjskEjDth2bdw8d+oEXPSFj9nx3FZRulfpuV1c+p5+LdKPWU
+	 8/W/v8LUyI4d2MYV+Y/U2UDczWPlKtmj5hxeRQ8Sbi20ectuuzXaV2/T8aLG/rEPh/
+	 zgqk00ced6Sbfw5AlwpiUJoH4Ys7rXxWWODUs6P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 180/530] bpf: fix precision backtracking instruction iteration
-Date: Fri, 24 Nov 2023 17:45:46 +0000
-Message-ID: <20231124172033.554177312@linuxfoundation.org>
+Subject: [PATCH 6.6 181/530] bpf: fix control-flow graph checking in privileged mode
+Date: Fri, 24 Nov 2023 17:45:47 +0000
+Message-ID: <20231124172033.579760516@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,86 +45,192 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 4bb7ea946a370707315ab774432963ce47291946 ]
+[ Upstream commit 10e14e9652bf9e8104151bfd9200433083deae3d ]
 
-Fix an edge case in __mark_chain_precision() which prematurely stops
-backtracking instructions in a state if it happens that state's first
-and last instruction indexes are the same. This situations doesn't
-necessarily mean that there were no instructions simulated in a state,
-but rather that we starting from the instruction, jumped around a bit,
-and then ended up at the same instruction before checkpointing or
-marking precision.
+When BPF program is verified in privileged mode, BPF verifier allows
+bounded loops. This means that from CFG point of view there are
+definitely some back-edges. Original commit adjusted check_cfg() logic
+to not detect back-edges in control flow graph if they are resulting
+from conditional jumps, which the idea that subsequent full BPF
+verification process will determine whether such loops are bounded or
+not, and either accept or reject the BPF program. At least that's my
+reading of the intent.
 
-To distinguish between these two possible situations, we need to consult
-jump history. If it's empty or contain a single record "bridging" parent
-state and first instruction of processed state, then we indeed
-backtracked all instructions in this state. But if history is not empty,
-we are definitely not done yet.
+Unfortunately, the implementation of this idea doesn't work correctly in
+all possible situations. Conditional jump might not result in immediate
+back-edge, but just a few unconditional instructions later we can arrive
+at back-edge. In such situations check_cfg() would reject BPF program
+even in privileged mode, despite it might be bounded loop. Next patch
+adds one simple program demonstrating such scenario.
 
-Move this logic inside get_prev_insn_idx() to contain it more nicely.
-Use -ENOENT return code to denote "we are out of instructions"
-situation.
+To keep things simple, instead of trying to detect back edges in
+privileged mode, just assume every back edge is valid and let subsequent
+BPF verification prove or reject bounded loops.
 
-This bug was exposed by verifier_loop1.c's bounded_recursion subtest, once
-the next fix in this patch set is applied.
+Note a few test changes. For unknown reason, we have a few tests that
+are specified to detect a back-edge in a privileged mode, but looking at
+their code it seems like the right outcome is passing check_cfg() and
+letting subsequent verification to make a decision about bounded or not
+bounded looping.
 
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
+Bounded recursion case is also interesting. The example should pass, as
+recursion is limited to just a few levels and so we never reach maximum
+number of nested frames and never exhaust maximum stack depth. But the
+way that max stack depth logic works today it falsely detects this as
+exceeding max nested frame count. This patch series doesn't attempt to
+fix this orthogonal problem, so we just adjust expected verifier failure.
+
+Suggested-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 2589726d12a1 ("bpf: introduce bounded loops")
+Reported-by: Hao Sun <sunhao.th@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231110002638.4168352-3-andrii@kernel.org
+Link: https://lore.kernel.org/r/20231110061412.2995786-1-andrii@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ kernel/bpf/verifier.c                         | 23 +++++++------------
+ .../selftests/bpf/progs/verifier_loops1.c     |  9 +++++---
+ tools/testing/selftests/bpf/verifier/calls.c  |  6 ++---
+ 3 files changed, 17 insertions(+), 21 deletions(-)
 
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 0b3a2534196e0..a35e9b52280b2 100644
+index a35e9b52280b2..3e6bc21d6b17c 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -3201,12 +3201,29 @@ static int push_jmp_history(struct bpf_verifier_env *env,
- 
- /* Backtrack one insn at a time. If idx is not at the top of recorded
-  * history then previous instruction came from straight line execution.
-+ * Return -ENOENT if we exhausted all instructions within given state.
-+ *
-+ * It's legal to have a bit of a looping with the same starting and ending
-+ * insn index within the same state, e.g.: 3->4->5->3, so just because current
-+ * instruction index is the same as state's first_idx doesn't mean we are
-+ * done. If there is still some jump history left, we should keep going. We
-+ * need to take into account that we might have a jump history between given
-+ * state's parent and itself, due to checkpointing. In this case, we'll have
-+ * history entry recording a jump from last instruction of parent state and
-+ * first instruction of given state.
+@@ -14751,8 +14751,7 @@ enum {
+  * w - next instruction
+  * e - edge
   */
- static int get_prev_insn_idx(struct bpf_verifier_state *st, int i,
- 			     u32 *history)
+-static int push_insn(int t, int w, int e, struct bpf_verifier_env *env,
+-		     bool loop_ok)
++static int push_insn(int t, int w, int e, struct bpf_verifier_env *env)
  {
- 	u32 cnt = *history;
+ 	int *insn_stack = env->cfg.insn_stack;
+ 	int *insn_state = env->cfg.insn_state;
+@@ -14784,7 +14783,7 @@ static int push_insn(int t, int w, int e, struct bpf_verifier_env *env,
+ 		insn_stack[env->cfg.cur_stack++] = w;
+ 		return KEEP_EXPLORING;
+ 	} else if ((insn_state[w] & 0xF0) == DISCOVERED) {
+-		if (loop_ok && env->bpf_capable)
++		if (env->bpf_capable)
+ 			return DONE_EXPLORING;
+ 		verbose_linfo(env, t, "%d: ", t);
+ 		verbose_linfo(env, w, "%d: ", w);
+@@ -14807,7 +14806,7 @@ static int visit_func_call_insn(int t, struct bpf_insn *insns,
+ 	int ret, insn_sz;
  
-+	if (i == st->first_insn_idx) {
-+		if (cnt == 0)
-+			return -ENOENT;
-+		if (cnt == 1 && st->jmp_history[0].idx == i)
-+			return -ENOENT;
-+	}
-+
- 	if (cnt && st->jmp_history[cnt - 1].idx == i) {
- 		i = st->jmp_history[cnt - 1].prev_idx;
- 		(*history)--;
-@@ -4081,10 +4098,10 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
- 				 * Nothing to be tracked further in the parent state.
- 				 */
- 				return 0;
--			if (i == first_idx)
--				break;
- 			subseq_idx = i;
- 			i = get_prev_insn_idx(st, i, &history);
-+			if (i == -ENOENT)
-+				break;
- 			if (i >= env->prog->len) {
- 				/* This can happen if backtracking reached insn 0
- 				 * and there are still reg_mask or stack_mask
+ 	insn_sz = bpf_is_ldimm64(&insns[t]) ? 2 : 1;
+-	ret = push_insn(t, t + insn_sz, FALLTHROUGH, env, false);
++	ret = push_insn(t, t + insn_sz, FALLTHROUGH, env);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -14817,12 +14816,7 @@ static int visit_func_call_insn(int t, struct bpf_insn *insns,
+ 
+ 	if (visit_callee) {
+ 		mark_prune_point(env, t);
+-		ret = push_insn(t, t + insns[t].imm + 1, BRANCH, env,
+-				/* It's ok to allow recursion from CFG point of
+-				 * view. __check_func_call() will do the actual
+-				 * check.
+-				 */
+-				bpf_pseudo_func(insns + t));
++		ret = push_insn(t, t + insns[t].imm + 1, BRANCH, env);
+ 	}
+ 	return ret;
+ }
+@@ -14844,7 +14838,7 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
+ 	if (BPF_CLASS(insn->code) != BPF_JMP &&
+ 	    BPF_CLASS(insn->code) != BPF_JMP32) {
+ 		insn_sz = bpf_is_ldimm64(insn) ? 2 : 1;
+-		return push_insn(t, t + insn_sz, FALLTHROUGH, env, false);
++		return push_insn(t, t + insn_sz, FALLTHROUGH, env);
+ 	}
+ 
+ 	switch (BPF_OP(insn->code)) {
+@@ -14891,8 +14885,7 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
+ 			off = insn->imm;
+ 
+ 		/* unconditional jump with single edge */
+-		ret = push_insn(t, t + off + 1, FALLTHROUGH, env,
+-				true);
++		ret = push_insn(t, t + off + 1, FALLTHROUGH, env);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -14905,11 +14898,11 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
+ 		/* conditional jump with two edges */
+ 		mark_prune_point(env, t);
+ 
+-		ret = push_insn(t, t + 1, FALLTHROUGH, env, true);
++		ret = push_insn(t, t + 1, FALLTHROUGH, env);
+ 		if (ret)
+ 			return ret;
+ 
+-		return push_insn(t, t + insn->off + 1, BRANCH, env, true);
++		return push_insn(t, t + insn->off + 1, BRANCH, env);
+ 	}
+ }
+ 
+diff --git a/tools/testing/selftests/bpf/progs/verifier_loops1.c b/tools/testing/selftests/bpf/progs/verifier_loops1.c
+index 5bc86af80a9ad..71735dbf33d4f 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_loops1.c
++++ b/tools/testing/selftests/bpf/progs/verifier_loops1.c
+@@ -75,9 +75,10 @@ l0_%=:	r0 += 1;					\
+ "	::: __clobber_all);
+ }
+ 
+-SEC("tracepoint")
++SEC("socket")
+ __description("bounded loop, start in the middle")
+-__failure __msg("back-edge")
++__success
++__failure_unpriv __msg_unpriv("back-edge")
+ __naked void loop_start_in_the_middle(void)
+ {
+ 	asm volatile ("					\
+@@ -136,7 +137,9 @@ l0_%=:	exit;						\
+ 
+ SEC("tracepoint")
+ __description("bounded recursion")
+-__failure __msg("back-edge")
++__failure
++/* verifier limitation in detecting max stack depth */
++__msg("the call stack of 8 frames is too deep !")
+ __naked void bounded_recursion(void)
+ {
+ 	asm volatile ("					\
+diff --git a/tools/testing/selftests/bpf/verifier/calls.c b/tools/testing/selftests/bpf/verifier/calls.c
+index 1bdf2b43e49ea..3d5cd51071f04 100644
+--- a/tools/testing/selftests/bpf/verifier/calls.c
++++ b/tools/testing/selftests/bpf/verifier/calls.c
+@@ -442,7 +442,7 @@
+ 	BPF_EXIT_INSN(),
+ 	},
+ 	.prog_type = BPF_PROG_TYPE_TRACEPOINT,
+-	.errstr = "back-edge from insn 0 to 0",
++	.errstr = "the call stack of 9 frames is too deep",
+ 	.result = REJECT,
+ },
+ {
+@@ -799,7 +799,7 @@
+ 	BPF_EXIT_INSN(),
+ 	},
+ 	.prog_type = BPF_PROG_TYPE_TRACEPOINT,
+-	.errstr = "back-edge",
++	.errstr = "the call stack of 9 frames is too deep",
+ 	.result = REJECT,
+ },
+ {
+@@ -811,7 +811,7 @@
+ 	BPF_EXIT_INSN(),
+ 	},
+ 	.prog_type = BPF_PROG_TYPE_TRACEPOINT,
+-	.errstr = "back-edge",
++	.errstr = "the call stack of 9 frames is too deep",
+ 	.result = REJECT,
+ },
+ {
 -- 
 2.42.0
 
