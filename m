@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3666C39FE8;
-	Fri, 24 Nov 2023 18:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF00639FE8;
+	Fri, 24 Nov 2023 18:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iuhnUIV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9894C433C8;
-	Fri, 24 Nov 2023 18:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGF1q+z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A5CC433C8;
+	Fri, 24 Nov 2023 18:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850239;
-	bh=5zdF4irmGPE37smHCvGZqfLVihFiL1EDM+rQVLymLZ4=;
+	s=korg; t=1700850241;
+	bh=40IH3/1VpBYL3DfqR0SWUNquOdLPVH47hTPxj1X3NzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0iuhnUIVUqc80OcGTloFxlCy48Bg9bpMGg/JgdU9TwWluEq0x8CWd+Xx5jjSzcyu5
-	 j7IRrXZ68wWt4MyFGogExHZnmZFqSa8x1pfJq2XRRyboiZbtMeTPRXd9S1lviV1UaC
-	 Q5cF2WenFx6uG+8CkSZCDySnR+6JpwkfU4UyTiug=
+	b=hGF1q+z6QZbDrLABMbV3RGmvpLnAE1XG94MPBQqpBJ+HSzsUM9E1ER0dYyQT0CHAc
+	 VVsNSbpfaukw/BF5gUWNuWW55CzroyRbt186B08B2K5CMfFb54HVj+MqMeizJZj3ck
+	 NZn59PEwEjk/JvqYYlv8dtx6tMJ3JrXHlrBzPDiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.6 501/530] ext4: correct return value of ext4_convert_meta_bg
-Date: Fri, 24 Nov 2023 17:51:07 +0000
-Message-ID: <20231124172043.405449384@linuxfoundation.org>
+	Victor Shih <victor.shih@genesyslogic.com.tw>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Kai-Heng Feng <kai.heng.geng@canonical.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 484/530] mmc: sdhci-pci-gli: GL9750: Mask the replay timer timeout of AER
+Date: Fri, 24 Nov 2023 17:50:50 +0000
+Message-ID: <20231124172042.823683386@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,33 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Victor Shih <victor.shih@genesyslogic.com.tw>
 
-commit 48f1551592c54f7d8e2befc72a99ff4e47f7dca0 upstream.
+commit 015c9cbcf0ad709079117d27c2094a46e0eadcdb upstream.
 
-Avoid to ignore error in "err".
+Due to a flaw in the hardware design, the GL9750 replay timer frequently
+times out when ASPM is enabled. As a result, the warning messages will
+often appear in the system log when the system accesses the GL9750
+PCI config. Therefore, the replay timer timeout must be masked.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Link: https://lore.kernel.org/r/20230826174712.4059355-4-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fixes: d7133797e9e1 ("mmc: sdhci-pci-gli: A workaround to allow GL9750 to enter ASPM L1.2")
+Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Kai-Heng Feng <kai.heng.geng@canonical.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231107095741.8832-2-victorshihgli@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/resize.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/mmc/host/sdhci-pci-gli.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -1982,9 +1982,7 @@ static int ext4_convert_meta_bg(struct s
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -28,6 +28,9 @@
+ #define PCI_GLI_9750_PM_CTRL	0xFC
+ #define   PCI_GLI_9750_PM_STATE	  GENMASK(1, 0)
  
- errout:
- 	ret = ext4_journal_stop(handle);
--	if (!err)
--		err = ret;
--	return ret;
-+	return err ? err : ret;
++#define PCI_GLI_9750_CORRERR_MASK				0x214
++#define   PCI_GLI_9750_CORRERR_MASK_REPLAY_TIMER_TIMEOUT	  BIT(12)
++
+ #define SDHCI_GLI_9750_CFG2          0x848
+ #define   SDHCI_GLI_9750_CFG2_L1DLY    GENMASK(28, 24)
+ #define   GLI_9750_CFG2_L1DLY_VALUE    0x1F
+@@ -564,6 +567,11 @@ static void gl9750_hw_setting(struct sdh
+ 	value &= ~PCI_GLI_9750_PM_STATE;
+ 	pci_write_config_dword(pdev, PCI_GLI_9750_PM_CTRL, value);
  
- invalid_resize_inode:
- 	ext4_error(sb, "corrupted/inconsistent resize inode");
++	/* mask the replay timer timeout of AER */
++	pci_read_config_dword(pdev, PCI_GLI_9750_CORRERR_MASK, &value);
++	value |= PCI_GLI_9750_CORRERR_MASK_REPLAY_TIMER_TIMEOUT;
++	pci_write_config_dword(pdev, PCI_GLI_9750_CORRERR_MASK, value);
++
+ 	gl9750_wt_off(host);
+ }
+ 
 
 
