@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D892D28DBB;
-	Fri, 24 Nov 2023 19:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F75114F7B;
+	Fri, 24 Nov 2023 19:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJP+EM8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64349C433C8;
-	Fri, 24 Nov 2023 19:12:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZV2EtSQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA0BC433C8;
+	Fri, 24 Nov 2023 19:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853174;
-	bh=bI0km5Q1zOK/UAt95hT6DEbSPaHQ6GTcNlUFGCNHY6o=;
+	s=korg; t=1700853177;
+	bh=fGSxKsdrjVCCCFowP+xBcVtWgt8zeXuVV+dtwiYxsKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJP+EM8IH2zH7SW+ShdGLereRUaUsDLnn6aXurohX7mCT5NXrcrhy3GInG/zfkW5O
-	 9YNv3mg3ZhFj7ZjfkT9Sxgx88o8Zx1FtU3we0qx8hAhY+Dki75AO7uyB9PdcqXrFzh
-	 CuEmsFRE/L1XgI5TdbGd6FmX+I8QrSpuQrNO5Syk=
+	b=PZV2EtSQMFz43hO060glfOWp1Lkuafc7QTjxR+RKiNS0MP90MSI3xvce6ks/+r971
+	 K4vqUHduOfeouTKCckh59tuth/AQYBHwJ6w9QfgcrbMsXkcgFmC5qDX4pwhrQDovWY
+	 24pkgKmkWbeDR3NIqbd6U7T8FrXB+acysLVFb+vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/297] tracing/perf: Add interrupt_context_level() helper
-Date: Fri, 24 Nov 2023 17:52:06 +0000
-Message-ID: <20231124172003.190133820@linuxfoundation.org>
+Subject: [PATCH 5.15 085/297] sched/core: Optimize in_task() and in_interrupt() a bit
+Date: Fri, 24 Nov 2023 17:52:07 +0000
+Message-ID: <20231124172003.226684981@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -41,115 +42,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (VMware) <rostedt@goodmis.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 91ebe8bcbff9d2ff21303e73bf7434f39a98b255 ]
+[ Upstream commit 87c3a5893e865739ce78aa7192d36011022e0af7 ]
 
-Now that there are three different instances of doing the addition trick
-to the preempt_count() and NMI_MASK, HARDIRQ_MASK and SOFTIRQ_OFFSET
-macros, it deserves a helper function defined in the preempt.h header.
+Except on x86, preempt_count is always accessed with READ_ONCE().
+Repeated invocations in macros like irq_count() produce repeated loads.
+These redundant instructions appear in various fast paths. In the one
+shown below, for example, irq_count() is evaluated during kernel entry
+if !tick_nohz_full_cpu(smp_processor_id()).
 
-Add the interrupt_context_level() helper and replace the three instances
-that do that logic with it.
+0001ed0a <irq_enter_rcu>:
+   1ed0a:       4e56 0000       linkw %fp,#0
+   1ed0e:       200f            movel %sp,%d0
+   1ed10:       0280 ffff e000  andil #-8192,%d0
+   1ed16:       2040            moveal %d0,%a0
+   1ed18:       2028 0008       movel %a0@(8),%d0
+   1ed1c:       0680 0001 0000  addil #65536,%d0
+   1ed22:       2140 0008       movel %d0,%a0@(8)
+   1ed26:       082a 0001 000f  btst #1,%a2@(15)
+   1ed2c:       670c            beqs 1ed3a <irq_enter_rcu+0x30>
+   1ed2e:       2028 0008       movel %a0@(8),%d0
+   1ed32:       2028 0008       movel %a0@(8),%d0
+   1ed36:       2028 0008       movel %a0@(8),%d0
+   1ed3a:       4e5e            unlk %fp
+   1ed3c:       4e75            rts
 
-Link: https://lore.kernel.org/all/20211015142541.4badd8a9@gandalf.local.home/
+This patch doesn't prevent the pointless btst and beqs instructions
+above, but it does eliminate 2 of the 3 pointless move instructions
+here and elsewhere.
 
-Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Stable-dep-of: 87c3a5893e86 ("sched/core: Optimize in_task() and in_interrupt() a bit")
+On x86, preempt_count is per-cpu data and the problem does not arise
+presumably because the compiler is free to optimize more effectively.
+
+This patch was tested on m68k and x86. I was expecting no changes
+to object code for x86 and mostly that's what I saw. However, there
+were a few places where code generation was perturbed for some reason.
+
+The performance issue addressed here is minor on uniprocessor m68k. I
+got a 0.01% improvement from this patch for a simple "find /sys -false"
+benchmark. For architectures and workloads susceptible to cache line bounce
+the improvement is expected to be larger. The only SMP architecture I have
+is x86, and as x86 unaffected I have not done any further measurements.
+
+Fixes: 15115830c887 ("preempt: Cleanup the macro maze a bit")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/0a403120a682a525e6db2d81d1a3ffcc137c3742.1694756831.git.fthain@linux-m68k.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/preempt.h         | 21 +++++++++++++++++++++
- include/linux/trace_recursion.h |  7 +------
- kernel/events/internal.h        |  7 +------
- kernel/trace/ring_buffer.c      |  7 +------
- 4 files changed, 24 insertions(+), 18 deletions(-)
+ include/linux/preempt.h | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/include/linux/preempt.h b/include/linux/preempt.h
-index 4d244e295e855..b32e3dabe28bd 100644
+index b32e3dabe28bd..9c4534a69a8f7 100644
 --- a/include/linux/preempt.h
 +++ b/include/linux/preempt.h
-@@ -77,6 +77,27 @@
- /* preempt_count() and related functions, depends on PREEMPT_NEED_RESCHED */
- #include <asm/preempt.h>
+@@ -98,14 +98,21 @@ static __always_inline unsigned char interrupt_context_level(void)
+ 	return level;
+ }
  
-+/**
-+ * interrupt_context_level - return interrupt context level
-+ *
-+ * Returns the current interrupt context level.
-+ *  0 - normal context
-+ *  1 - softirq context
-+ *  2 - hardirq context
-+ *  3 - NMI context
++/*
++ * These macro definitions avoid redundant invocations of preempt_count()
++ * because such invocations would result in redundant loads given that
++ * preempt_count() is commonly implemented with READ_ONCE().
 + */
-+static __always_inline unsigned char interrupt_context_level(void)
-+{
-+	unsigned long pc = preempt_count();
-+	unsigned char level = 0;
-+
-+	level += !!(pc & (NMI_MASK));
-+	level += !!(pc & (NMI_MASK | HARDIRQ_MASK));
-+	level += !!(pc & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET));
-+
-+	return level;
-+}
 +
  #define nmi_count()	(preempt_count() & NMI_MASK)
  #define hardirq_count()	(preempt_count() & HARDIRQ_MASK)
  #ifdef CONFIG_PREEMPT_RT
-diff --git a/include/linux/trace_recursion.h b/include/linux/trace_recursion.h
-index 00acd7dca7a7d..816d7a0d2aad6 100644
---- a/include/linux/trace_recursion.h
-+++ b/include/linux/trace_recursion.h
-@@ -116,12 +116,7 @@ enum {
+ # define softirq_count()	(current->softirq_disable_cnt & SOFTIRQ_MASK)
++# define irq_count()		((preempt_count() & (NMI_MASK | HARDIRQ_MASK)) | softirq_count())
+ #else
+ # define softirq_count()	(preempt_count() & SOFTIRQ_MASK)
++# define irq_count()		(preempt_count() & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_MASK))
+ #endif
+-#define irq_count()	(nmi_count() | hardirq_count() | softirq_count())
  
- static __always_inline int trace_get_context_bit(void)
- {
--	unsigned long pc = preempt_count();
--	unsigned char bit = 0;
--
--	bit += !!(pc & (NMI_MASK));
--	bit += !!(pc & (NMI_MASK | HARDIRQ_MASK));
--	bit += !!(pc & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET));
-+	unsigned char bit = interrupt_context_level();
+ /*
+  * Macros to retrieve the current execution context:
+@@ -118,7 +125,11 @@ static __always_inline unsigned char interrupt_context_level(void)
+ #define in_nmi()		(nmi_count())
+ #define in_hardirq()		(hardirq_count())
+ #define in_serving_softirq()	(softirq_count() & SOFTIRQ_OFFSET)
+-#define in_task()		(!(in_nmi() | in_hardirq() | in_serving_softirq()))
++#ifdef CONFIG_PREEMPT_RT
++# define in_task()		(!((preempt_count() & (NMI_MASK | HARDIRQ_MASK)) | in_serving_softirq()))
++#else
++# define in_task()		(!(preempt_count() & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET)))
++#endif
  
- 	return TRACE_CTX_NORMAL - bit;
- }
-diff --git a/kernel/events/internal.h b/kernel/events/internal.h
-index aa23ffdaf819f..5150d5f84c033 100644
---- a/kernel/events/internal.h
-+++ b/kernel/events/internal.h
-@@ -210,12 +210,7 @@ DEFINE_OUTPUT_COPY(__output_copy_user, arch_perf_out_copy_user)
- 
- static inline int get_recursion_context(int *recursion)
- {
--	unsigned int pc = preempt_count();
--	unsigned char rctx = 0;
--
--	rctx += !!(pc & (NMI_MASK));
--	rctx += !!(pc & (NMI_MASK | HARDIRQ_MASK));
--	rctx += !!(pc & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET));
-+	unsigned char rctx = interrupt_context_level();
- 
- 	if (recursion[rctx])
- 		return -1;
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index c3c9960c9f27b..a930a9d7d834d 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -3249,12 +3249,7 @@ static __always_inline int
- trace_recursive_lock(struct ring_buffer_per_cpu *cpu_buffer)
- {
- 	unsigned int val = cpu_buffer->current_context;
--	unsigned long pc = preempt_count();
--	int bit = 0;
--
--	bit += !!(pc & (NMI_MASK));
--	bit += !!(pc & (NMI_MASK | HARDIRQ_MASK));
--	bit += !!(pc & (NMI_MASK | HARDIRQ_MASK | SOFTIRQ_OFFSET));
-+	int bit = interrupt_context_level();
- 
- 	bit = RB_CTX_NORMAL - bit;
- 
+ /*
+  * The following macros are deprecated and should not be used in new code:
 -- 
 2.42.0
 
