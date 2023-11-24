@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1242FC21;
-	Fri, 24 Nov 2023 19:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3F42C85B;
+	Fri, 24 Nov 2023 19:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh/4QftN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5DEC433CA;
-	Fri, 24 Nov 2023 19:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gpsgn2Aw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E40C433C7;
+	Fri, 24 Nov 2023 19:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852601;
-	bh=EWl7XlDs4H+QElvXn0/D66M9ZGojuMtYlOctJ/DLVK0=;
+	s=korg; t=1700852603;
+	bh=wBGqqlpEUEdyVu5SIN6tmtHfm9p51kev+ANpjKKMeFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fh/4QftNCQ6S+1mXcwH08H0IglaTQo2c3i4E6JjUK4Hva/cNuah87SJ6b3ewAsH4L
-	 hV53Jbu+do3HQDsdGrHs9wFcbFrtIviOLvfGEliQKZgR8sOr3xjsQ5bxlmz1/mSjI0
-	 3W8EHdfWiAx6UWILi0DWQxfcDNufCxcjcOZOJiIw=
+	b=Gpsgn2AwQxdc8UhHcyg66PUVbCn/PCdINA8teLT/uxkwS+lEZS0+TgXJ0iVhISqJI
+	 ZSdC2AXoPr8vTg+ZDMTLHrfQ7mZ9l0RTC+M/zGxIexm46krdzXSCF9t/iMu7yATRVl
+	 fNj3JN83FaITF7PMUf61Mvutze+SXu6wjJx7cacg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Peterson <rpeterso@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	syzbot+aea1ad91e854d0a83e04@syzkaller.appspotmail.com,
+	Manas Ghandat <ghandatmanas@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/193] gfs2: ignore negated quota changes
-Date: Fri, 24 Nov 2023 17:52:56 +0000
-Message-ID: <20231124171949.230989252@linuxfoundation.org>
+Subject: [PATCH 5.10 032/193] jfs: fix array-index-out-of-bounds in dbFindLeaf
+Date: Fri, 24 Nov 2023 17:52:39 +0000
+Message-ID: <20231124171948.483537397@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,89 +43,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Manas Ghandat <ghandatmanas@gmail.com>
 
-[ Upstream commit 4c6a08125f2249531ec01783a5f4317d7342add5 ]
+[ Upstream commit 22cad8bc1d36547cdae0eef316c47d917ce3147c ]
 
-When lots of quota changes are made, there may be cases in which an
-inode's quota information is increased and then decreased, such as when
-blocks are added to a file, then deleted from it. If the timing is
-right, function do_qc can add pending quota changes to a transaction,
-then later, another call to do_qc can negate those changes, resulting
-in a net gain of 0. The quota_change information is recorded in the qc
-buffer (and qd element of the inode as well). The buffer is added to the
-transaction by the first call to do_qc, but a subsequent call changes
-the value from non-zero back to zero. At that point it's too late to
-remove the buffer_head from the transaction. Later, when the quota sync
-code is called, the zero-change qd element is discovered and flagged as
-an assert warning. If the fs is mounted with errors=panic, the kernel
-will panic.
+Currently while searching for dmtree_t for sufficient free blocks there
+is an array out of bounds while getting element in tp->dm_stree. To add
+the required check for out of bound we first need to determine the type
+of dmtree. Thus added an extra parameter to dbFindLeaf so that the type
+of tree can be determined and the required check can be applied.
 
-This is usually seen when files are truncated and the quota changes are
-negated by punch_hole/truncate which uses gfs2_quota_hold and
-gfs2_quota_unhold rather than block allocations that use gfs2_quota_lock
-and gfs2_quota_unlock which automatically do quota sync.
-
-This patch solves the problem by adding a check to qd_check_sync such
-that net-zero quota changes already added to the transaction are no
-longer deemed necessary to be synced, and skipped.
-
-In this case references are taken for the qd and the slot from do_qc
-so those need to be put. The normal sequence of events for a normal
-non-zero quota change is as follows:
-
-gfs2_quota_change
-   do_qc
-      qd_hold
-      slot_hold
-
-Later, when the changes are to be synced:
-
-gfs2_quota_sync
-   qd_fish
-      qd_check_sync
-         gets qd ref via lockref_get_not_dead
-   do_sync
-      do_qc(QC_SYNC)
-         qd_put
-	    lockref_put_or_lock
-   qd_unlock
-      qd_put
-         lockref_put_or_lock
-
-In the net-zero change case, we add a check to qd_check_sync so it puts
-the qd and slot references acquired in gfs2_quota_change and skip the
-unneeded sync.
-
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Reported-by: syzbot+aea1ad91e854d0a83e04@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=aea1ad91e854d0a83e04
+Signed-off-by: Manas Ghandat <ghandatmanas@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/jfs/jfs_dmap.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index ad953ecb58532..8c226aa286336 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -431,6 +431,17 @@ static int qd_check_sync(struct gfs2_sbd *sdp, struct gfs2_quota_data *qd,
- 	    (sync_gen && (qd->qd_sync_gen >= *sync_gen)))
- 		return 0;
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 2ccb52371ceb5..72eb5ed54c2ab 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -87,7 +87,7 @@ static int dbAllocCtl(struct bmap * bmp, s64 nblocks, int l2nb, s64 blkno,
+ static int dbExtend(struct inode *ip, s64 blkno, s64 nblocks, s64 addnblocks);
+ static int dbFindBits(u32 word, int l2nb);
+ static int dbFindCtl(struct bmap * bmp, int l2nb, int level, s64 * blkno);
+-static int dbFindLeaf(dmtree_t * tp, int l2nb, int *leafidx);
++static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl);
+ static int dbFreeBits(struct bmap * bmp, struct dmap * dp, s64 blkno,
+ 		      int nblocks);
+ static int dbFreeDmap(struct bmap * bmp, struct dmap * dp, s64 blkno,
+@@ -1785,7 +1785,7 @@ static int dbFindCtl(struct bmap * bmp, int l2nb, int level, s64 * blkno)
+ 		 * dbFindLeaf() returns the index of the leaf at which
+ 		 * free space was found.
+ 		 */
+-		rc = dbFindLeaf((dmtree_t *) dcp, l2nb, &leafidx);
++		rc = dbFindLeaf((dmtree_t *) dcp, l2nb, &leafidx, true);
  
-+	/*
-+	 * If qd_change is 0 it means a pending quota change was negated.
-+	 * We should not sync it, but we still have a qd reference and slot
-+	 * reference taken by gfs2_quota_change -> do_qc that need to be put.
-+	 */
-+	if (!qd->qd_change && test_and_clear_bit(QDF_CHANGE, &qd->qd_flags)) {
-+		slot_put(qd);
-+		qd_put(qd);
-+		return 0;
-+	}
+ 		/* release the buffer.
+ 		 */
+@@ -2032,7 +2032,7 @@ dbAllocDmapLev(struct bmap * bmp,
+ 	 * free space.  if sufficient free space is found, dbFindLeaf()
+ 	 * returns the index of the leaf at which free space was found.
+ 	 */
+-	if (dbFindLeaf((dmtree_t *) & dp->tree, l2nb, &leafidx))
++	if (dbFindLeaf((dmtree_t *) &dp->tree, l2nb, &leafidx, false))
+ 		return -ENOSPC;
+ 
+ 	if (leafidx < 0)
+@@ -2992,14 +2992,18 @@ static void dbAdjTree(dmtree_t * tp, int leafno, int newval)
+  *	leafidx	- return pointer to be set to the index of the leaf
+  *		  describing at least l2nb free blocks if sufficient
+  *		  free blocks are found.
++ *	is_ctl	- determines if the tree is of type ctl
+  *
+  * RETURN VALUES:
+  *	0	- success
+  *	-ENOSPC	- insufficient free blocks.
+  */
+-static int dbFindLeaf(dmtree_t * tp, int l2nb, int *leafidx)
++static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
+ {
+ 	int ti, n = 0, k, x = 0;
++	int max_size;
 +
- 	if (!lockref_get_not_dead(&qd->qd_lockref))
- 		return 0;
++	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
  
+ 	/* first check the root of the tree to see if there is
+ 	 * sufficient free space.
+@@ -3020,6 +3024,8 @@ static int dbFindLeaf(dmtree_t * tp, int l2nb, int *leafidx)
+ 			/* sufficient free space found.  move to the next
+ 			 * level (or quit if this is the last level).
+ 			 */
++			if (x + n > max_size)
++				return -ENOSPC;
+ 			if (l2nb <= tp->dmt_stree[x + n])
+ 				break;
+ 		}
 -- 
 2.42.0
 
