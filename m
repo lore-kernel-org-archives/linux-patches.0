@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9B32E655;
-	Fri, 24 Nov 2023 18:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD3231759;
+	Fri, 24 Nov 2023 18:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/wsA0cM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C4DC433C7;
-	Fri, 24 Nov 2023 18:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nCmKMRi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA981C433C8;
+	Fri, 24 Nov 2023 18:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850903;
-	bh=8tiTggMb3brTZ1Y1TV+P9Rboi1yQHGKUzxyRyqO046M=;
+	s=korg; t=1700850906;
+	bh=UdTcHTMYnFBLrZ+KmEABt0W/L7LOyKCGoC4N1wLr3Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/wsA0cM6UNiAev4Ge8XE1L73GPygYBQHtcLmNmrdY7yGa7+37O4nai5ldFiDhR0d
-	 eCK1+SQCHHeyykQYc53OLnxv+DefJdJAOPZFFYlqWcgmm//AgQdEWnhXuZUI4bAFML
-	 +ctzC7+M+xShH2dZDk1yFdqqjLWmyNy9IPN1/q28=
+	b=nCmKMRi7e4BA6qkGkgNSrHAuHOXcK5XkRGNGvACa+nAPjn+EirKSJnXiCp36GN6Cs
+	 3EakDUrgLwIytBblu/6vkj2yKU+rQIoYkS2a+YTFxMPU80ECbCbR7WGUPUnKcrhT5j
+	 M4WFQpwocUC0os1vXxz5j41vZ5w+gop7pNGNmQTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 217/491] macvlan: Dont propagate promisc change to lower dev in passthru
-Date: Fri, 24 Nov 2023 17:47:33 +0000
-Message-ID: <20231124172031.062217664@linuxfoundation.org>
+	Can Guo <quic_cang@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.5 235/491] scsi: ufs: qcom: Update PHY settings only when scaling to higher gears
+Date: Fri, 24 Nov 2023 17:47:51 +0000
+Message-ID: <20231124172031.618085160@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -44,61 +42,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 7e1caeace0418381f36b3aa8403dfd82fc57fc53 ]
+commit fc88ca19ad0989dc0e4d4b126d5d0ba91f6cb616 upstream.
 
-Macvlan device in passthru mode sets its lower device promiscuous mode
-according to its MACVLAN_FLAG_NOPROMISC flag instead of synchronizing it to
-its own promiscuity setting. However, macvlan_change_rx_flags() function
-doesn't check the mode before propagating such changes to the lower device
-which can cause net_device->promiscuity counter overflow as illustrated by
-reproduction example [0] and resulting dmesg log [1]. Fix the issue by
-first verifying the mode in macvlan_change_rx_flags() function before
-propagating promiscuous mode change to the lower device.
+The "hs_gear" variable is used to program the PHY settings (submode) during
+ufs_qcom_power_up_sequence(). Currently, it is being updated every time the
+agreed gear changes. Due to this, if the gear got downscaled before suspend
+(runtime/system), then while resuming, the PHY settings for the lower gear
+will be applied first and later when scaling to max gear with REINIT, the
+PHY settings for the max gear will be applied.
 
-[0]:
-ip link add macvlan1 link enp8s0f0 type macvlan mode passthru
-ip link set macvlan1 promisc on
-ip l set dev macvlan1 up
-ip link set macvlan1 promisc off
-ip l set dev macvlan1 down
-ip l set dev macvlan1 up
+This adds a latency while resuming and also really not needed as the PHY
+gear settings are backwards compatible i.e., we can continue using the PHY
+settings for max gear with lower gear speed.
 
-[1]:
-[ 5156.281724] macvlan1: entered promiscuous mode
-[ 5156.285467] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
-[ 5156.287639] macvlan1: left promiscuous mode
-[ 5156.288339] mlx5_core 0000:08:00.0 enp8s0f0: left promiscuous mode
-[ 5156.290907] mlx5_core 0000:08:00.0 enp8s0f0: entered promiscuous mode
-[ 5156.317197] mlx5_core 0000:08:00.0 enp8s0f0: promiscuity touches roof, set promiscuity failed. promiscuity feature of device might be broken.
+So let's update the "hs_gear" variable _only_ when the agreed gear is
+greater than the current one. This guarantees that the PHY settings will be
+changed only during probe time and fatal error condition.
 
-Fixes: efdbd2b30caa ("macvlan: Propagate promiscuity setting to lower devices.")
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20231114175915.1649154-1-vladbu@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Due to this, UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH can now be skipped
+when the PM operation is in progress.
+
+Cc: stable@vger.kernel.org
+Fixes: 96a7141da332 ("scsi: ufs: core: Add support for reinitializing the UFS device")
+Reported-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20230908145329.154024-1-manivannan.sadhasivam@linaro.org
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
+Tested-by: Can Guo <quic_cang@quicinc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macvlan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c   |    3 ++-
+ drivers/ufs/host/ufs-qcom.c |    9 +++++++--
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index ed908165a8b4e..347f288350619 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -780,7 +780,7 @@ static void macvlan_change_rx_flags(struct net_device *dev, int change)
- 	if (dev->flags & IFF_UP) {
- 		if (change & IFF_ALLMULTI)
- 			dev_set_allmulti(lowerdev, dev->flags & IFF_ALLMULTI ? 1 : -1);
--		if (change & IFF_PROMISC)
-+		if (!macvlan_passthru(vlan->port) && change & IFF_PROMISC)
- 			dev_set_promiscuity(lowerdev,
- 					    dev->flags & IFF_PROMISC ? 1 : -1);
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -8798,7 +8798,8 @@ static int ufshcd_probe_hba(struct ufs_h
+ 	if (ret)
+ 		goto out;
  
--- 
-2.42.0
-
+-	if (hba->quirks & UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH) {
++	if (!hba->pm_op_in_progress &&
++	    (hba->quirks & UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH)) {
+ 		/* Reset the device and controller before doing reinit */
+ 		ufshcd_device_reset(hba);
+ 		ufshcd_hba_stop(hba);
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -820,8 +820,13 @@ static int ufs_qcom_pwr_change_notify(st
+ 			return ret;
+ 		}
+ 
+-		/* Use the agreed gear */
+-		host->hs_gear = dev_req_params->gear_tx;
++		/*
++		 * Update hs_gear only when the gears are scaled to a higher value. This is because,
++		 * the PHY gear settings are backwards compatible and we only need to change the PHY
++		 * settings while scaling to higher gears.
++		 */
++		if (dev_req_params->gear_tx > host->hs_gear)
++			host->hs_gear = dev_req_params->gear_tx;
+ 
+ 		/* enable the device ref clock before changing to HS mode */
+ 		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
 
 
