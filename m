@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBE93306F;
-	Fri, 24 Nov 2023 19:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A91339BE;
+	Fri, 24 Nov 2023 19:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OylRdCr+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E90FC433C7;
-	Fri, 24 Nov 2023 19:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDV3NZMy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2420FC433C7;
+	Fri, 24 Nov 2023 19:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853887;
-	bh=vrtNZdD8aw3d0oHKibPgniMa4uOqsYU2ei0BC6Ao9O0=;
+	s=korg; t=1700853890;
+	bh=Uaz7ZKZ3Hdk0VeIBiPe5/vKHluz42YxKAgktwbruVB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OylRdCr+A2DBye6JIhHpu2q11kQT/y1ZQnFV6oRxHd0DLWFjY1fORoKizATWKDyzS
-	 cbXCM/DJx9jgP1ssNZuiuJk63lIkCeqEkUF4wX/vzTIt8AP06lNQPozzSskSZXCTae
-	 pw3LQSrXSDG8x0UjhLX0GzXC8G+bkvVweojnrDX0=
+	b=LDV3NZMy53LJh0P+bRj+sKOv0DxJBlz8Ra5veeMh5uUbQTQcKg+mO3lSopitrELzJ
+	 MtN4GHVXvY9weR3WVmoGH7PQ3CnvUmuvE+TVKMe6FNvVmMDdBQDWouFXr4eKbsnnNq
+	 5lPZf2swjUDRaCk1d6f7drBk9Aetu4WnUUxOUTD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Bob Peterson <rpeterso@redhat.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 046/159] NFSv4.1: fix SP4_MACH_CRED protection for pnfs IO
-Date: Fri, 24 Nov 2023 17:54:23 +0000
-Message-ID: <20231124171943.860825066@linuxfoundation.org>
+Subject: [PATCH 5.4 037/159] gfs2: ignore negated quota changes
+Date: Fri, 24 Nov 2023 17:54:14 +0000
+Message-ID: <20231124171943.450802522@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
 References: <20231124171941.909624388@linuxfoundation.org>
@@ -42,46 +42,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Bob Peterson <rpeterso@redhat.com>
 
-[ Upstream commit 5cc7688bae7f0757c39c1d3dfdd827b724061067 ]
+[ Upstream commit 4c6a08125f2249531ec01783a5f4317d7342add5 ]
 
-If the client is doing pnfs IO and Kerberos is configured and EXCHANGEID
-successfully negotiated SP4_MACH_CRED and WRITE/COMMIT are on the
-list of state protected operations, then we need to make sure to
-choose the DS's rpc_client structure instead of the MDS's one.
+When lots of quota changes are made, there may be cases in which an
+inode's quota information is increased and then decreased, such as when
+blocks are added to a file, then deleted from it. If the timing is
+right, function do_qc can add pending quota changes to a transaction,
+then later, another call to do_qc can negate those changes, resulting
+in a net gain of 0. The quota_change information is recorded in the qc
+buffer (and qd element of the inode as well). The buffer is added to the
+transaction by the first call to do_qc, but a subsequent call changes
+the value from non-zero back to zero. At that point it's too late to
+remove the buffer_head from the transaction. Later, when the quota sync
+code is called, the zero-change qd element is discovered and flagged as
+an assert warning. If the fs is mounted with errors=panic, the kernel
+will panic.
 
-Fixes: fb91fb0ee7b2 ("NFS: Move call to nfs4_state_protect_write() to nfs4_write_setup()")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+This is usually seen when files are truncated and the quota changes are
+negated by punch_hole/truncate which uses gfs2_quota_hold and
+gfs2_quota_unhold rather than block allocations that use gfs2_quota_lock
+and gfs2_quota_unlock which automatically do quota sync.
+
+This patch solves the problem by adding a check to qd_check_sync such
+that net-zero quota changes already added to the transaction are no
+longer deemed necessary to be synced, and skipped.
+
+In this case references are taken for the qd and the slot from do_qc
+so those need to be put. The normal sequence of events for a normal
+non-zero quota change is as follows:
+
+gfs2_quota_change
+   do_qc
+      qd_hold
+      slot_hold
+
+Later, when the changes are to be synced:
+
+gfs2_quota_sync
+   qd_fish
+      qd_check_sync
+         gets qd ref via lockref_get_not_dead
+   do_sync
+      do_qc(QC_SYNC)
+         qd_put
+	    lockref_put_or_lock
+   qd_unlock
+      qd_put
+         lockref_put_or_lock
+
+In the net-zero change case, we add a check to qd_check_sync so it puts
+the qd and slot references acquired in gfs2_quota_change and skip the
+unneeded sync.
+
+Signed-off-by: Bob Peterson <rpeterso@redhat.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/gfs2/quota.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index c41d149626047..b7529656b4307 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -5369,7 +5369,7 @@ static void nfs4_proc_write_setup(struct nfs_pgio_header *hdr,
+diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
+index cbee745169b8f..ce3d65787e016 100644
+--- a/fs/gfs2/quota.c
++++ b/fs/gfs2/quota.c
+@@ -431,6 +431,17 @@ static int qd_check_sync(struct gfs2_sbd *sdp, struct gfs2_quota_data *qd,
+ 	    (sync_gen && (qd->qd_sync_gen >= *sync_gen)))
+ 		return 0;
  
- 	msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_WRITE];
- 	nfs4_init_sequence(&hdr->args.seq_args, &hdr->res.seq_res, 0, 0);
--	nfs4_state_protect_write(server->nfs_client, clnt, msg, hdr);
-+	nfs4_state_protect_write(hdr->ds_clp ? hdr->ds_clp : server->nfs_client, clnt, msg, hdr);
- }
++	/*
++	 * If qd_change is 0 it means a pending quota change was negated.
++	 * We should not sync it, but we still have a qd reference and slot
++	 * reference taken by gfs2_quota_change -> do_qc that need to be put.
++	 */
++	if (!qd->qd_change && test_and_clear_bit(QDF_CHANGE, &qd->qd_flags)) {
++		slot_put(qd);
++		qd_put(qd);
++		return 0;
++	}
++
+ 	if (!lockref_get_not_dead(&qd->qd_lockref))
+ 		return 0;
  
- static void nfs4_proc_commit_rpc_prepare(struct rpc_task *task, struct nfs_commit_data *data)
-@@ -5410,7 +5410,8 @@ static void nfs4_proc_commit_setup(struct nfs_commit_data *data, struct rpc_mess
- 	data->res.server = server;
- 	msg->rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_COMMIT];
- 	nfs4_init_sequence(&data->args.seq_args, &data->res.seq_res, 1, 0);
--	nfs4_state_protect(server->nfs_client, NFS_SP4_MACH_CRED_COMMIT, clnt, msg);
-+	nfs4_state_protect(data->ds_clp ? data->ds_clp : server->nfs_client,
-+			NFS_SP4_MACH_CRED_COMMIT, clnt, msg);
- }
- 
- static int _nfs4_proc_commit(struct file *dst, struct nfs_commitargs *args,
 -- 
 2.42.0
 
