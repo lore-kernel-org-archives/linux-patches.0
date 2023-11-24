@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54ADF33CC2;
-	Fri, 24 Nov 2023 19:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE31C2511F;
+	Fri, 24 Nov 2023 19:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKzsug5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDE1C433C7;
-	Fri, 24 Nov 2023 19:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duNvJd1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D545C433C7;
+	Fri, 24 Nov 2023 19:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853706;
-	bh=Sn+Rp2v0vHS2eRpAohv0BGw2uhIlufiP+i3mMfFUDMw=;
+	s=korg; t=1700853708;
+	bh=8RDQ3P+pPAN9YhDC4hfDmZysWVJGSYP2mGyv6qSGMJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKzsug5Ogj/al4JckL2kKqpz1GwDShGaOO8hu3rv5NjvcRdxt0ch04122+fZ1yew1
-	 t2tQ8BiffInNY8kjMXj5GdegMOdQaDjin8wlq1Y4hqM8isDcBzoFi7Jboz3Mf/oxQQ
-	 Tf+8bzscur9X9nQRm8rpuLZIDd/TooeSgFQ+RM8o=
+	b=duNvJd1BHtqPAnUBjAEfci83+7rxk/daTdG1XupvGzkQl1Eyhv1MfAQVnJDEd3N8P
+	 fhvdKa5TowQbYJOxADIgpEgI5SC3cOtAMPS1Ye2nZFUpfqsEtr7/23AhBIbzxYptXU
+	 bZhaB3eTK7zCquVbjdgV48h66wJgnCtwxQq1Wx2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcaov@gmail.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 271/297] riscv: kprobes: allow writing to x0
-Date: Fri, 24 Nov 2023 17:55:13 +0000
-Message-ID: <20231124172009.629141967@linuxfoundation.org>
+	Victor Shih <victor.shih@genesyslogic.com.tw>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 272/297] mmc: sdhci-pci-gli: A workaround to allow GL9750 to enter ASPM L1.2
+Date: Fri, 24 Nov 2023 17:55:14 +0000
+Message-ID: <20231124172009.656398242@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,43 +41,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcaov@gmail.com>
+From: Victor Shih <victor.shih@genesyslogic.com.tw>
 
-commit 8cb22bec142624d21bc85ff96b7bad10b6220e6a upstream.
+commit d7133797e9e1b72fd89237f68cb36d745599ed86 upstream.
 
-Instructions can write to x0, so we should simulate these instructions
-normally.
+When GL9750 enters ASPM L1 sub-states, it will stay at L1.1 and will not
+enter L1.2. The workaround is to toggle PM state to allow GL9750 to enter
+ASPM L1.2.
 
-Currently, the kernel hangs if an instruction who writes to x0 is
-simulated.
-
-Fixes: c22b0bcb1dd0 ("riscv: Add kprobes supported")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nam Cao <namcaov@gmail.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Acked-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230829182500.61875-1-namcaov@gmail.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Victor Shih <victor.shih@genesyslogic.com.tw>
+Link: https://lore.kernel.org/r/20230912091710.7797-1-victorshihgli@gmail.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/probes/simulate-insn.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-gli.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/arch/riscv/kernel/probes/simulate-insn.c b/arch/riscv/kernel/probes/simulate-insn.c
-index d3099d67816d..6c166029079c 100644
---- a/arch/riscv/kernel/probes/simulate-insn.c
-+++ b/arch/riscv/kernel/probes/simulate-insn.c
-@@ -24,7 +24,7 @@ static inline bool rv_insn_reg_set_val(struct pt_regs *regs, u32 index,
- 				       unsigned long val)
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -23,6 +23,9 @@
+ #define   GLI_9750_WT_EN_ON	    0x1
+ #define   GLI_9750_WT_EN_OFF	    0x0
+ 
++#define PCI_GLI_9750_PM_CTRL	0xFC
++#define   PCI_GLI_9750_PM_STATE	  GENMASK(1, 0)
++
+ #define SDHCI_GLI_9750_CFG2          0x848
+ #define   SDHCI_GLI_9750_CFG2_L1DLY    GENMASK(28, 24)
+ #define   GLI_9750_CFG2_L1DLY_VALUE    0x1F
+@@ -421,8 +424,12 @@ static void sdhci_gl9750_set_clock(struc
+ 
+ static void gl9750_hw_setting(struct sdhci_host *host)
  {
- 	if (index == 0)
--		return false;
-+		return true;
- 	else if (index <= 31)
- 		*((unsigned long *)regs + index) = val;
- 	else
--- 
-2.43.0
-
++	struct sdhci_pci_slot *slot = sdhci_priv(host);
++	struct pci_dev *pdev;
+ 	u32 value;
+ 
++	pdev = slot->chip->pdev;
++
+ 	gl9750_wt_on(host);
+ 
+ 	value = sdhci_readl(host, SDHCI_GLI_9750_CFG2);
+@@ -432,6 +439,13 @@ static void gl9750_hw_setting(struct sdh
+ 			    GLI_9750_CFG2_L1DLY_VALUE);
+ 	sdhci_writel(host, value, SDHCI_GLI_9750_CFG2);
+ 
++	/* toggle PM state to allow GL9750 to enter ASPM L1.2 */
++	pci_read_config_dword(pdev, PCI_GLI_9750_PM_CTRL, &value);
++	value |= PCI_GLI_9750_PM_STATE;
++	pci_write_config_dword(pdev, PCI_GLI_9750_PM_CTRL, value);
++	value &= ~PCI_GLI_9750_PM_STATE;
++	pci_write_config_dword(pdev, PCI_GLI_9750_PM_CTRL, value);
++
+ 	gl9750_wt_off(host);
+ }
+ 
 
 
