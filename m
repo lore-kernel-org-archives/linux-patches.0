@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6A72C87B;
-	Fri, 24 Nov 2023 18:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D1B31748;
+	Fri, 24 Nov 2023 18:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sK2xgdNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A158C433C8;
-	Fri, 24 Nov 2023 18:49:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOGRBWzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CD5C433C8;
+	Fri, 24 Nov 2023 18:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851760;
-	bh=6qsOkFpSKFEaDv9xJgVQmY/SDV9dnEnhijH6RFsQVq0=;
+	s=korg; t=1700851763;
+	bh=pQ8SJVbfbCGKeBumPR2PDqkOFPnm9ntafABTv3xAdNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sK2xgdNBOlVyMUfi/VH+Lsn9DgBIsQJdTcOKrd+3urDzrvBclky+5vUHZWEIhScti
-	 PKAWSQV3hZ3eX6uG43bb2kKER+vWZGimQFbb1339fIVex5Qwg0o6VzfjHYqz0l1jaD
-	 aIEcyjqGdzqm3KxBPOqAaUWSXyZO+89IbLrGjMmo=
+	b=cOGRBWzxpFRd6c+B84d+DQwfiuNn5apJRooY6u4hUpYkriafPOuVfBtNIieKhK77J
+	 i8GcJIHAxUF5NI7nE3bkCNGENsqL/HlWJ3KbJPB1P18N5nklqWeTD9KAWB86Js5zWi
+	 sYJJV+8P7Er/Snjgg7YRQIQr7qNC7hmOiexzOBeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Dean Luick <dean.luick@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jesse Zhang <jesse.zhang@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/372] RDMA/hfi1: Use FIELD_GET() to extract Link Width
-Date: Fri, 24 Nov 2023 17:47:27 +0000
-Message-ID: <20231124172012.490359841@linuxfoundation.org>
+Subject: [PATCH 6.1 051/372] drm/amdkfd: Fix shift out-of-bounds issue
+Date: Fri, 24 Nov 2023 17:47:18 +0000
+Message-ID: <20231124172012.183536781@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -38,65 +38,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jesse Zhang <jesse.zhang@amd.com>
 
-[ Upstream commit 8bf7187d978610b9e327a3d92728c8864a575ebd ]
+[ Upstream commit 282c1d793076c2edac6c3db51b7e8ed2b41d60a5 ]
 
-Use FIELD_GET() to extract PCIe Negotiated Link Width field instead of
-custom masking and shifting, and remove extract_width() which only
-wraps that FIELD_GET().
+[  567.613292] shift exponent 255 is too large for 64-bit type 'long unsigned int'
+[  567.614498] CPU: 5 PID: 238 Comm: kworker/5:1 Tainted: G           OE      6.2.0-34-generic #34~22.04.1-Ubuntu
+[  567.614502] Hardware name: AMD Splinter/Splinter-RPL, BIOS WS43927N_871 09/25/2023
+[  567.614504] Workqueue: events send_exception_work_handler [amdgpu]
+[  567.614748] Call Trace:
+[  567.614750]  <TASK>
+[  567.614753]  dump_stack_lvl+0x48/0x70
+[  567.614761]  dump_stack+0x10/0x20
+[  567.614763]  __ubsan_handle_shift_out_of_bounds+0x156/0x310
+[  567.614769]  ? srso_alias_return_thunk+0x5/0x7f
+[  567.614773]  ? update_sd_lb_stats.constprop.0+0xf2/0x3c0
+[  567.614780]  svm_range_split_by_granularity.cold+0x2b/0x34 [amdgpu]
+[  567.615047]  ? srso_alias_return_thunk+0x5/0x7f
+[  567.615052]  svm_migrate_to_ram+0x185/0x4d0 [amdgpu]
+[  567.615286]  do_swap_page+0x7b6/0xa30
+[  567.615291]  ? srso_alias_return_thunk+0x5/0x7f
+[  567.615294]  ? __free_pages+0x119/0x130
+[  567.615299]  handle_pte_fault+0x227/0x280
+[  567.615303]  __handle_mm_fault+0x3c0/0x720
+[  567.615311]  handle_mm_fault+0x119/0x330
+[  567.615314]  ? lock_mm_and_find_vma+0x44/0x250
+[  567.615318]  do_user_addr_fault+0x1a9/0x640
+[  567.615323]  exc_page_fault+0x81/0x1b0
+[  567.615328]  asm_exc_page_fault+0x27/0x30
+[  567.615332] RIP: 0010:__get_user_8+0x1c/0x30
 
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230919125648.1920-2-ilpo.jarvinen@linux.intel.com
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Dean Luick <dean.luick@cornelisnetworks.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Suggested-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/pcie.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/pcie.c b/drivers/infiniband/hw/hfi1/pcie.c
-index a0802332c8cb3..5395cf56fbd90 100644
---- a/drivers/infiniband/hw/hfi1/pcie.c
-+++ b/drivers/infiniband/hw/hfi1/pcie.c
-@@ -3,6 +3,7 @@
-  * Copyright(c) 2015 - 2019 Intel Corporation.
-  */
- 
-+#include <linux/bitfield.h>
- #include <linux/pci.h>
- #include <linux/io.h>
- #include <linux/delay.h>
-@@ -212,12 +213,6 @@ static u32 extract_speed(u16 linkstat)
- 	return speed;
- }
- 
--/* return the PCIe link speed from the given link status */
--static u32 extract_width(u16 linkstat)
--{
--	return (linkstat & PCI_EXP_LNKSTA_NLW) >> PCI_EXP_LNKSTA_NLW_SHIFT;
--}
--
- /* read the link status and set dd->{lbus_width,lbus_speed,lbus_info} */
- static void update_lbus_info(struct hfi1_devdata *dd)
- {
-@@ -230,7 +225,7 @@ static void update_lbus_info(struct hfi1_devdata *dd)
- 		return;
- 	}
- 
--	dd->lbus_width = extract_width(linkstat);
-+	dd->lbus_width = FIELD_GET(PCI_EXP_LNKSTA_NLW, linkstat);
- 	dd->lbus_speed = extract_speed(linkstat);
- 	snprintf(dd->lbus_info, sizeof(dd->lbus_info),
- 		 "PCIe,%uMHz,x%u", dd->lbus_speed, dd->lbus_width);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 6281d370bb448..208812512d8a8 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -764,7 +764,7 @@ svm_range_apply_attrs(struct kfd_process *p, struct svm_range *prange,
+ 			prange->flags &= ~attrs[i].value;
+ 			break;
+ 		case KFD_IOCTL_SVM_ATTR_GRANULARITY:
+-			prange->granularity = attrs[i].value;
++			prange->granularity = min_t(uint32_t, attrs[i].value, 0x3F);
+ 			break;
+ 		default:
+ 			WARN_ONCE(1, "svm_range_check_attrs wasn't called?");
 -- 
 2.42.0
 
