@@ -1,77 +1,81 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7252C86B
-	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 22:06:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BA72E3E1
+	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 22:12:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="EQLq442U";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="zZvS0vzu"
-Date: Fri, 24 Nov 2023 23:06:17 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1700863581;
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Fz9r82Vf"
+Received: from relay3-d.mail.gandi.net (unknown [IPv6:2001:4b98:dc4:8::223])
+	by mslow1.mail.gandi.net (Postfix) with ESMTP id 05A71C61B3
+	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 21:53:49 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id DAFC960005;
+	Fri, 24 Nov 2023 21:53:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1700862822;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=lYWKtxRcU5OtvShV9MVXedkqLwLEiA10wruWu5tg6y4=;
-	b=EQLq442UGtTT/DnnjDkqTXlQiiNsR0bBnLFgSJiH2fVNkQreIt7BSV6qYVrer6J4bFdSB8
-	Ouo9K1qlIDcGyZqGlFc30ktEUE071Oe2AVo5bfuCeb98WCu7sjqYNCh5bDu9emE7KDdSAy
-	PwyF1c0zQlTPmNxgy5d1o/hqUJIpnURqDhQBgaTlY7GbAP3V5XeX/O4fu1F6fn5FUl5bhY
-	KSyOZKnts6gH18nyV+tcky1ApazGKbfsCVBLhVLMIXeNxIa9cvnSv1gMaOe5k/m9cC9rJH
-	4NXUGiuMOV2WWewEi6m0kA5oWaAZZy5khnfKGO/peMmYGno/exJGZpXfDaik1g==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1700863581;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lYWKtxRcU5OtvShV9MVXedkqLwLEiA10wruWu5tg6y4=;
-	b=zZvS0vzuzH+La0XV7q4a47WiYqqYw+neRHd0ZuEDS44yCC/aafCpv44B1tZgS6raa+X66X
-	XtPGt/29k30/xRDQ==
-From: Nam Cao <namcao@linutronix.de>
+	bh=U8GWGjxo96HXmWS7PO87y6ARDdmPBxtxKcgnDG4Hw+A=;
+	b=Fz9r82Vf5ZnHoHcgqJMhKABKNDPf/JCTgC8tyxotQ4x1ZwaTVwQWthPwR7qCRctLv2RaeM
+	qCrvvWIF1GV9ec43x1rsZ1I7SubcJI6CRa6H6W37G7H2sMpWTmxt5l7XRy9DXP/xqwGiUo
+	eXoNGQHZaO+UzU/GOZWdO8ZWQnAxvjC/MhQd0iAGh/SB1miuY0xk3zLJmw/SZmkCGTJO+z
+	FZCtO/PGwTy/+jh92TPOaWWB7VKIDl0GWe8rfnP4A8dwv6DGgdgdHr4iPUCpmZQlhinTCz
+	LdGmDTKb0d/jvFbI2tI7bYi9IkKOwlPiCJCYhTVUL6IOMPnsHsGFFtrlvpLJDQ==
+Date: Fri, 24 Nov 2023 22:53:41 +0100
+From: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org
-Subject: Re: [PATCH 6.5 000/491] 6.5.13-rc1 review
-Message-ID: <20231124220617.l5Rx1XH4@linutronix.de>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, =?UTF-8?B?Q2zDqW1l?=
+ =?UTF-8?B?bnQgTMOpZ2Vy?= <clement.leger@bootlin.com>, Lizhi Hou
+ <lizhi.hou@amd.com>, Rob Herring <robh@kernel.org>, Sasha Levin
+ <sashal@kernel.org>
+Subject: Re: [PATCH 6.5 369/491] of: dynamic: Add interfaces for creating
+ device node dynamically
+Message-ID: <20231124225341.3288322f@windsurf>
+In-Reply-To: <20231124172035.663205241@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
+	<20231124172035.663205241@linuxfoundation.org>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: thomas.petazzoni@bootlin.com
 
-On Fri, Nov 24, 2023 at 05:43:56PM +0000, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.5.13 release.
-> There are 491 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 26 Nov 2023 17:19:17 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.5.13-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.5.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hello,
 
-Noticed no problem with qemu-system-riscv64:
+On Fri, 24 Nov 2023 17:50:05 +0000
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-Tested-by: Nam Cao <namcao@linutronix.de>
+> 6.5-stable review patch.  If anyone has any objections, please let me kno=
+w.
 
-Best regards,
-Nam
+Isn't it quite strange to take this patch, which is clearly a feature
+patch, into a stable branch?
+
+> Signed-off-by: Cl=C3=A9ment L=C3=A9ger <clement.leger@bootlin.com>
+> Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+> Link: https://lore.kernel.org/r/1692120000-46900-2-git-send-email-lizhi.h=
+ou@amd.com
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> Stable-dep-of: c9260693aa0c ("PCI: Lengthen reset delay for VideoPropulsi=
+on Torrent QN16e card")
+
+This looks very odd. I don't see how c9260693aa0c (which is the trivial
+addition of a PCIe fixup) can have a dependency on this complex patch
+that allows to create device nodes in the Device Tree dynamically.
+
+Am I missing something obvious here?
+
+Thomas
+--=20
+Thomas Petazzoni, co-owner and CEO, Bootlin
+Embedded Linux and Kernel engineering and training
+https://bootlin.com
