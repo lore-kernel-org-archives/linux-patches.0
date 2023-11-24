@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFE1364C8;
-	Fri, 24 Nov 2023 18:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F01B381D6;
+	Fri, 24 Nov 2023 18:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwOR6Ra8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC6CC433C7;
-	Fri, 24 Nov 2023 18:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIxdbuwo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0ACBC433C8;
+	Fri, 24 Nov 2023 18:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850127;
-	bh=aeEgqOuvBfNr4qf5fJgBHrBgfynP+WzsHIAjqPt8II4=;
+	s=korg; t=1700850130;
+	bh=uME3Lep8DPwOngC8IJEy9/zv2axO1YOp43F0htJESbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwOR6Ra8upKEAW+ZuXL/dWAG1C3YcojqJ295TqPoWoZCXBeyh3/RTczzMlboKolRv
-	 hE6ytFg+a8UjnY7XSnDfoGRfrtAJLr3nqhKqELWOUitR9xKBWEecFcowenu/PhLKez
-	 y7colJk9WjFWu55saDp07sZQAnHQWe5djLZXm6Xw=
+	b=HIxdbuwoP4VtrV7/R1zpB6hLQ4AvAyF8owq2cTbEn0XEV0DgxRRYC1Cuxt2HGZgY+
+	 KtT/gGlnTn7t8fJlypF9TBFnTzobgk0YhCzYfJtR+ffvQ2g+yVs5+e/siejJJ3dLMe
+	 9SMF5iZ8Kn0GD6LFLLKvdwPUko94f9iOAIi5LJFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Ferner <joe.m.ferner@gmail.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 455/530] media: sharp: fix sharp encoding
-Date: Fri, 24 Nov 2023 17:50:21 +0000
-Message-ID: <20231124172041.931640596@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 431/530] btrfs: zoned: wait for data BG to be finished on direct IO allocation
+Date: Fri, 24 Nov 2023 17:49:57 +0000
+Message-ID: <20231124172041.195064733@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,48 +43,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit 4f7efc71891462ab7606da7039f480d7c1584a13 upstream.
+commit 776a838f1fa95670c1c1cf7109a898090b473fa3 upstream.
 
-The Sharp protocol[1] encoding has incorrect timings for bit space.
+Running the fio command below on a ZNS device results in "Resource
+temporarily unavailable" error.
 
-[1] https://www.sbprojects.net/knowledge/ir/sharp.php
+  $ sudo fio --name=w --directory=/mnt --filesize=1GB --bs=16MB --numjobs=16 \
+        --rw=write --ioengine=libaio --iodepth=128 --direct=1
 
-Fixes: d35afc5fe097 ("[media] rc: ir-sharp-decoder: Add encode capability")
-Cc: stable@vger.kernel.org
-Reported-by: Joe Ferner <joe.m.ferner@gmail.com>
-Closes: https://sourceforge.net/p/lirc/mailman/message/38604507/
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+  fio: io_u error on file /mnt/w.2.0: Resource temporarily unavailable: write offset=117440512, buflen=16777216
+  fio: io_u error on file /mnt/w.2.0: Resource temporarily unavailable: write offset=134217728, buflen=16777216
+  ...
+
+This happens because -EAGAIN error returned from btrfs_reserve_extent()
+called from btrfs_new_extent_direct() is spilling over to the userland.
+
+btrfs_reserve_extent() returns -EAGAIN when there is no active zone
+available. Then, the caller should wait for some other on-going IO to
+finish a zone and retry the allocation.
+
+This logic is already implemented for buffered write in cow_file_range(),
+but it is missing for the direct IO counterpart. Implement the same logic
+for it.
+
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Fixes: 2ce543f47843 ("btrfs: zoned: wait until zone is finished when allocation didn't progress")
+CC: stable@vger.kernel.org # 6.1+
+Tested-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/ir-sharp-decoder.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/btrfs/inode.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/media/rc/ir-sharp-decoder.c
-+++ b/drivers/media/rc/ir-sharp-decoder.c
-@@ -15,7 +15,9 @@
- #define SHARP_UNIT		40  /* us */
- #define SHARP_BIT_PULSE		(8    * SHARP_UNIT) /* 320us */
- #define SHARP_BIT_0_PERIOD	(25   * SHARP_UNIT) /* 1ms (680us space) */
--#define SHARP_BIT_1_PERIOD	(50   * SHARP_UNIT) /* 2ms (1680ms space) */
-+#define SHARP_BIT_1_PERIOD	(50   * SHARP_UNIT) /* 2ms (1680us space) */
-+#define SHARP_BIT_0_SPACE	(17   * SHARP_UNIT) /* 680us space */
-+#define SHARP_BIT_1_SPACE	(42   * SHARP_UNIT) /* 1680us space */
- #define SHARP_ECHO_SPACE	(1000 * SHARP_UNIT) /* 40 ms */
- #define SHARP_TRAILER_SPACE	(125  * SHARP_UNIT) /* 5 ms (even longer) */
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -6974,8 +6974,15 @@ static struct extent_map *btrfs_new_exte
+ 	int ret;
  
-@@ -168,8 +170,8 @@ static const struct ir_raw_timings_pd ir
- 	.header_pulse  = 0,
- 	.header_space  = 0,
- 	.bit_pulse     = SHARP_BIT_PULSE,
--	.bit_space[0]  = SHARP_BIT_0_PERIOD,
--	.bit_space[1]  = SHARP_BIT_1_PERIOD,
-+	.bit_space[0]  = SHARP_BIT_0_SPACE,
-+	.bit_space[1]  = SHARP_BIT_1_SPACE,
- 	.trailer_pulse = SHARP_BIT_PULSE,
- 	.trailer_space = SHARP_ECHO_SPACE,
- 	.msb_first     = 1,
+ 	alloc_hint = get_extent_allocation_hint(inode, start, len);
++again:
+ 	ret = btrfs_reserve_extent(root, len, len, fs_info->sectorsize,
+ 				   0, alloc_hint, &ins, 1, 1);
++	if (ret == -EAGAIN) {
++		ASSERT(btrfs_is_zoned(fs_info));
++		wait_on_bit_io(&inode->root->fs_info->flags, BTRFS_FS_NEED_ZONE_FINISH,
++			       TASK_UNINTERRUPTIBLE);
++		goto again;
++	}
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
 
 
