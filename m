@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A48A39FC6;
-	Fri, 24 Nov 2023 18:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8311E2C1BA;
+	Fri, 24 Nov 2023 18:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xsAl8O4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0C3C433C7;
-	Fri, 24 Nov 2023 18:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWBYtBMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAE6C433C7;
+	Fri, 24 Nov 2023 18:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849008;
-	bh=ZGG7Kx7GgWzz/TMCpsdiJmoEYg/LMtuO4tcyQJNxTv4=;
+	s=korg; t=1700849011;
+	bh=hqyjrShliavggBY9CZQMqxqqWjxv/Nx1UaYG2u3MeDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xsAl8O4spBa3mS0TCmlURP37laSunDt/h9Zfned25MgpwMVaKbzG7XNn/CXDq+tw2
-	 MS5AJp1nH8kOHFRX6yGAjGOSfDUmn5TXlgtYVHwrWXs9tqdMyXoE/7rAbu74rgB6w6
-	 1bOa5XIojxp0KBGaBnVGa1mK5nUJKg2SWLTP9B30=
+	b=VWBYtBMPePAXGlkuWf6Z2C/5YBI9SJRwdbVpDxMk7GO/7Iv6g97TbAF464ONpMtXO
+	 MwcWrajIUQ1E8G4rFJrv5MFDDZtyaS+AZs5R4eqVXMP3kdtH5t9zTIGaTAPCmdM/xB
+	 GaL9NnKCcWhM45Jy8e42mHPCva+DT2dzt81ELO5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Imran Khan <imran.f.khan@oracle.com>,
-	Leonardo Bras <leobras@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Juergen Gross <jgross@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ran Xiaokai <ran.xiaokai@zte.com.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 012/530] smp,csd: Throw an error if a CSD lock is stuck for too long
-Date: Fri, 24 Nov 2023 17:42:58 +0000
-Message-ID: <20231124172028.466994109@linuxfoundation.org>
+Subject: [PATCH 6.6 013/530] cpu/hotplug: Dont offline the last non-isolated CPU
+Date: Fri, 24 Nov 2023 17:42:59 +0000
+Message-ID: <20231124172028.497011868@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -49,103 +42,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Ran Xiaokai <ran.xiaokai@zte.com.cn>
 
-[ Upstream commit 94b3f0b5af2c7af69e3d6e0cdd9b0ea535f22186 ]
+[ Upstream commit 38685e2a0476127db766f81b1c06019ddc4c9ffa ]
 
-The CSD lock seems to get stuck in 2 "modes". When it gets stuck
-temporarily, it usually gets released in a few seconds, and sometimes
-up to one or two minutes.
+If a system has isolated CPUs via the "isolcpus=" command line parameter,
+then an attempt to offline the last housekeeping CPU will result in a
+WARN_ON() when rebuilding the scheduler domains and a subsequent panic due
+to and unhandled empty CPU mas in partition_sched_domains_locked().
 
-If the CSD lock stays stuck for more than several minutes, it never
-seems to get unstuck, and gradually more and more things in the system
-end up also getting stuck.
+cpuset_hotplug_workfn()
+  rebuild_sched_domains_locked()
+    ndoms = generate_sched_domains(&doms, &attr);
+      cpumask_and(doms[0], top_cpuset.effective_cpus, housekeeping_cpumask(HK_FLAG_DOMAIN));
 
-In the latter case, we should just give up, so the system can dump out
-a little more information about what went wrong, and, with panic_on_oops
-and a kdump kernel loaded, dump a whole bunch more information about what
-might have gone wrong.  In addition, there is an smp.panic_on_ipistall
-kernel boot parameter that by default retains the old behavior, but when
-set enables the panic after the CSD lock has been stuck for more than
-the specified number of milliseconds, as in 300,000 for five minutes.
+Thus results in an empty CPU mask which triggers the warning and then the
+subsequent crash:
 
-[ paulmck: Apply Imran Khan feedback. ]
-[ paulmck: Apply Leonardo Bras feedback. ]
+WARNING: CPU: 4 PID: 80 at kernel/sched/topology.c:2366 build_sched_domains+0x120c/0x1408
+Call trace:
+ build_sched_domains+0x120c/0x1408
+ partition_sched_domains_locked+0x234/0x880
+ rebuild_sched_domains_locked+0x37c/0x798
+ rebuild_sched_domains+0x30/0x58
+ cpuset_hotplug_workfn+0x2a8/0x930
 
-Link: https://lore.kernel.org/lkml/bc7cc8b0-f587-4451-8bcd-0daae627bcc7@paulmck-laptop/
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Imran Khan <imran.f.khan@oracle.com>
-Reviewed-by: Leonardo Bras <leobras@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Juergen Gross <jgross@suse.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Randy Dunlap <rdunlap@infradead.org>
+Unable to handle kernel paging request at virtual address fffe80027ab37080
+ partition_sched_domains_locked+0x318/0x880
+ rebuild_sched_domains_locked+0x37c/0x798
+
+Aside of the resulting crash, it does not make any sense to offline the last
+last housekeeping CPU.
+
+Prevent this by masking out the non-housekeeping CPUs when selecting a
+target CPU for initiating the CPU unplug operation via the work queue.
+
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/202310171709530660462@zte.com.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |  7 +++++++
- kernel/smp.c                                    | 13 ++++++++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ kernel/cpu.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 0a1731a0f0ef3..41644336e3587 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -5858,6 +5858,13 @@
- 			This feature may be more efficiently disabled
- 			using the csdlock_debug- kernel parameter.
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index 1a189da3bdac5..303cb0591b4b1 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -1523,11 +1523,14 @@ static int cpu_down_maps_locked(unsigned int cpu, enum cpuhp_state target)
+ 	/*
+ 	 * Ensure that the control task does not run on the to be offlined
+ 	 * CPU to prevent a deadlock against cfs_b->period_timer.
++	 * Also keep at least one housekeeping cpu onlined to avoid generating
++	 * an empty sched_domain span.
+ 	 */
+-	cpu = cpumask_any_but(cpu_online_mask, cpu);
+-	if (cpu >= nr_cpu_ids)
+-		return -EBUSY;
+-	return work_on_cpu(cpu, __cpu_down_maps_locked, &work);
++	for_each_cpu_and(cpu, cpu_online_mask, housekeeping_cpumask(HK_TYPE_DOMAIN)) {
++		if (cpu != work.cpu)
++			return work_on_cpu(cpu, __cpu_down_maps_locked, &work);
++	}
++	return -EBUSY;
+ }
  
-+	smp.panic_on_ipistall= [KNL]
-+			If a csd_lock_timeout extends for more than
-+			the specified number of milliseconds, panic the
-+			system.  By default, let CSD-lock acquisition
-+			take as long as they take.  Specifying 300,000
-+			for this value provides a 5-minute timeout.
-+
- 	smsc-ircc2.nopnp	[HW] Don't use PNP to discover SMC devices
- 	smsc-ircc2.ircc_cfg=	[HW] Device configuration I/O port
- 	smsc-ircc2.ircc_sir=	[HW] SIR base I/O port
-diff --git a/kernel/smp.c b/kernel/smp.c
-index 8455a53465af8..695eb13a276d2 100644
---- a/kernel/smp.c
-+++ b/kernel/smp.c
-@@ -170,6 +170,8 @@ static DEFINE_PER_CPU(void *, cur_csd_info);
- 
- static ulong csd_lock_timeout = 5000;  /* CSD lock timeout in milliseconds. */
- module_param(csd_lock_timeout, ulong, 0444);
-+static int panic_on_ipistall;  /* CSD panic timeout in milliseconds, 300000 for five minutes. */
-+module_param(panic_on_ipistall, int, 0444);
- 
- static atomic_t csd_bug_count = ATOMIC_INIT(0);
- 
-@@ -230,6 +232,7 @@ static bool csd_lock_wait_toolong(struct __call_single_data *csd, u64 ts0, u64 *
- 	}
- 
- 	ts2 = sched_clock();
-+	/* How long since we last checked for a stuck CSD lock.*/
- 	ts_delta = ts2 - *ts1;
- 	if (likely(ts_delta <= csd_lock_timeout_ns || csd_lock_timeout_ns == 0))
- 		return false;
-@@ -243,9 +246,17 @@ static bool csd_lock_wait_toolong(struct __call_single_data *csd, u64 ts0, u64 *
- 	else
- 		cpux = cpu;
- 	cpu_cur_csd = smp_load_acquire(&per_cpu(cur_csd, cpux)); /* Before func and info. */
-+	/* How long since this CSD lock was stuck. */
-+	ts_delta = ts2 - ts0;
- 	pr_alert("csd: %s non-responsive CSD lock (#%d) on CPU#%d, waiting %llu ns for CPU#%02d %pS(%ps).\n",
--		 firsttime ? "Detected" : "Continued", *bug_id, raw_smp_processor_id(), ts2 - ts0,
-+		 firsttime ? "Detected" : "Continued", *bug_id, raw_smp_processor_id(), ts_delta,
- 		 cpu, csd->func, csd->info);
-+	/*
-+	 * If the CSD lock is still stuck after 5 minutes, it is unlikely
-+	 * to become unstuck. Use a signed comparison to avoid triggering
-+	 * on underflows when the TSC is out of sync between sockets.
-+	 */
-+	BUG_ON(panic_on_ipistall > 0 && (s64)ts_delta > ((s64)panic_on_ipistall * NSEC_PER_MSEC));
- 	if (cpu_cur_csd && csd != cpu_cur_csd) {
- 		pr_alert("\tcsd: CSD lock (#%d) handling prior %pS(%ps) request.\n",
- 			 *bug_id, READ_ONCE(per_cpu(cur_csd_func, cpux)),
+ static int cpu_down(unsigned int cpu, enum cpuhp_state target)
 -- 
 2.42.0
 
