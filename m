@@ -1,38 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1093535F1A;
-	Fri, 24 Nov 2023 19:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797FF364AE;
+	Fri, 24 Nov 2023 19:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2sDVxVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF2AC433C7;
-	Fri, 24 Nov 2023 19:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRNAc20T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099BFC433C7;
+	Fri, 24 Nov 2023 19:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853092;
-	bh=2preVVLmc79Avz25PlMDNicynkPB3l+CkMHBLqOIksM=;
+	s=korg; t=1700853095;
+	bh=wJW1jU1f3TDf0bUWOkciCyJ1azzp/lRpaaDTi2e9hrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2sDVxVPR1Mzjy2u4uQkyMcMjbKk/hXbYPS9IHFSiRbGA0K9hKmPPYEX3oai07WVw
-	 IizIzw4wM4Pp+hvmlMX+PaoeZsDhQuicaZP9gSJGEanxxkf93+FnavMahEDgaDBjM6
-	 jfWszGeN1E9Ump9UbGko5K8jOKlbVZOwk2tewsLI=
+	b=sRNAc20TgrPBUXb2rhyYR8EgLdsKOCzkVdeOUmBUedgTnQAHIxXlKbfpwN74RGcMR
+	 abSXfTnLg7o+B4PLf1CIj3gYTyjaaqlRfzyKZNJ2VgybiyAYWYwJOpTsnbHhhMQLzy
+	 2I6nKFBAyRnnzk+0hohqHzvY8edLmpj0Behbn0XM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <khsieh@codeaurora.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Stephen Boyd <swboyd@chromium.org>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Jani Nikula <jani.nikula@intel.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	ZhengHan Wang <wzhmmmmm@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/297] drm/msm/dp: skip validity check for DP CTS EDID checksum
-Date: Fri, 24 Nov 2023 17:51:08 +0000
-Message-ID: <20231124172001.017741271@linuxfoundation.org>
+Subject: [PATCH 5.15 017/297] Bluetooth: Fix double free in hci_conn_cleanup
+Date: Fri, 24 Nov 2023 17:50:59 +0000
+Message-ID: <20231124172000.697477044@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -51,77 +42,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: ZhengHan Wang <wzhmmmmm@gmail.com>
 
-[ Upstream commit a251c9d8e30833b260101edb9383b176ee2b7cb1 ]
+[ Upstream commit a85fb91e3d728bdfc80833167e8162cce8bc7004 ]
 
-The DP CTS test for EDID last block checksum expects the checksum for
-the last block, invalid or not. Skip the validity check.
+syzbot reports a slab use-after-free in hci_conn_hash_flush [1].
+After releasing an object using hci_conn_del_sysfs in the
+hci_conn_cleanup function, releasing the same object again
+using the hci_dev_put and hci_conn_put functions causes a double free.
+Here's a simplified flow:
 
-For the most part (*), the EDIDs returned by drm_get_edid() will be
-valid anyway, and there's the CTS workaround to get the checksum for
-completely invalid EDIDs. See commit 7948fe12d47a ("drm/msm/dp: return
-correct edid checksum after corrupted edid checksum read").
+hci_conn_del_sysfs:
+  hci_dev_put
+    put_device
+      kobject_put
+        kref_put
+          kobject_release
+            kobject_cleanup
+              kfree_const
+                kfree(name)
 
-This lets us remove one user of drm_edid_block_valid() with hopes the
-function can be removed altogether in the future.
+hci_dev_put:
+  ...
+    kfree(name)
 
-(*) drm_get_edid() ignores checksum errors on CTA extensions.
+hci_conn_put:
+  put_device
+    ...
+      kfree(name)
 
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/555361/
-Link: https://lore.kernel.org/r/20230901142034.580802-1-jani.nikula@intel.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This patch drop the hci_dev_put and hci_conn_put function
+call in hci_conn_cleanup function, because the object is
+freed in hci_conn_del_sysfs function.
+
+This patch also fixes the refcounting in hci_conn_add_sysfs() and
+hci_conn_del_sysfs() to take into account device_add() failures.
+
+This fixes CVE-2023-28464.
+
+Link: https://syzkaller.appspot.com/bug?id=1bb51491ca5df96a5f724899d1dbb87afda61419 [1]
+
+Signed-off-by: ZhengHan Wang <wzhmmmmm@gmail.com>
+Co-developed-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_panel.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+ net/bluetooth/hci_conn.c  |  6 ++----
+ net/bluetooth/hci_sysfs.c | 23 ++++++++++++-----------
+ 2 files changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 62b742e701d2c..f9d31069f4848 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -263,26 +263,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 5f1e388c2b951..ce538dbe89d13 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -135,13 +135,11 @@ static void hci_conn_cleanup(struct hci_conn *conn)
+ 			hdev->notify(hdev, HCI_NOTIFY_CONN_DEL);
+ 	}
  
- static u8 dp_panel_get_edid_checksum(struct edid *edid)
- {
--	struct edid *last_block;
--	u8 *raw_edid;
--	bool is_edid_corrupt = false;
-+	edid += edid->extensions;
+-	hci_conn_del_sysfs(conn);
+-
+ 	debugfs_remove_recursive(conn->debugfs);
  
--	if (!edid) {
--		DRM_ERROR("invalid edid input\n");
--		return 0;
--	}
--
--	raw_edid = (u8 *)edid;
--	raw_edid += (edid->extensions * EDID_LENGTH);
--	last_block = (struct edid *)raw_edid;
--
--	/* block type extension */
--	drm_edid_block_valid(raw_edid, 1, false, &is_edid_corrupt);
--	if (!is_edid_corrupt)
--		return last_block->checksum;
--
--	DRM_ERROR("Invalid block, no checksum\n");
--	return 0;
-+	return edid->checksum;
+-	hci_dev_put(hdev);
++	hci_conn_del_sysfs(conn);
+ 
+-	hci_conn_put(conn);
++	hci_dev_put(hdev);
  }
  
- void dp_panel_handle_sink_request(struct dp_panel *dp_panel)
+ static void le_scan_cleanup(struct work_struct *work)
+diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
+index 08542dfc2dc53..633b82d542728 100644
+--- a/net/bluetooth/hci_sysfs.c
++++ b/net/bluetooth/hci_sysfs.c
+@@ -33,7 +33,7 @@ void hci_conn_init_sysfs(struct hci_conn *conn)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+ 
+-	BT_DBG("conn %p", conn);
++	bt_dev_dbg(hdev, "conn %p", conn);
+ 
+ 	conn->dev.type = &bt_link;
+ 	conn->dev.class = bt_class;
+@@ -46,27 +46,30 @@ void hci_conn_add_sysfs(struct hci_conn *conn)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+ 
+-	BT_DBG("conn %p", conn);
++	bt_dev_dbg(hdev, "conn %p", conn);
+ 
+ 	if (device_is_registered(&conn->dev))
+ 		return;
+ 
+ 	dev_set_name(&conn->dev, "%s:%d", hdev->name, conn->handle);
+ 
+-	if (device_add(&conn->dev) < 0) {
++	if (device_add(&conn->dev) < 0)
+ 		bt_dev_err(hdev, "failed to register connection device");
+-		return;
+-	}
+-
+-	hci_dev_hold(hdev);
+ }
+ 
+ void hci_conn_del_sysfs(struct hci_conn *conn)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+ 
+-	if (!device_is_registered(&conn->dev))
++	bt_dev_dbg(hdev, "conn %p", conn);
++
++	if (!device_is_registered(&conn->dev)) {
++		/* If device_add() has *not* succeeded, use *only* put_device()
++		 * to drop the reference count.
++		 */
++		put_device(&conn->dev);
+ 		return;
++	}
+ 
+ 	while (1) {
+ 		struct device *dev;
+@@ -78,9 +81,7 @@ void hci_conn_del_sysfs(struct hci_conn *conn)
+ 		put_device(dev);
+ 	}
+ 
+-	device_del(&conn->dev);
+-
+-	hci_dev_put(hdev);
++	device_unregister(&conn->dev);
+ }
+ 
+ static void bt_host_release(struct device *dev)
 -- 
 2.42.0
 
