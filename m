@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E8D364BA;
-	Fri, 24 Nov 2023 18:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C827728DA1;
+	Fri, 24 Nov 2023 18:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eP6IomKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA71C433C8;
-	Fri, 24 Nov 2023 18:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYymoM8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5489AC433C8;
+	Fri, 24 Nov 2023 18:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850776;
-	bh=bEHF3ocl+48JJ7JCnqjV8KbqENnJ8jXrGTjWt7zDyYo=;
+	s=korg; t=1700850779;
+	bh=yNaGIkdgzUuwFcRm99v63Uel2eTwIywDy5Udws/PSXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eP6IomKxBG28DlMZnTViEmxVJWSDL+wJ9aRWPieuib4OgOY/myAGAoxIRTTBoghYR
-	 hD7Do5c5AKcvlKa76ihP0rv2U0dWwqJ8MQ7SdAPMteBEj1Q+umxTCOrheh+4YLphxs
-	 2WmOemBWKyxD9d8EPLIgsQVwFUYE+pG0dMPng/Wo=
+	b=cYymoM8k7bBRCStPOWTs+qwqn+4aXD1ulUlX3WoUyPVRMd1lqkEgnYwNTZzXOtJTn
+	 i7xVfouMLc/JflTjX6e9g7IQ7sHhTucBs5ldOQ1S3ENOqsW/m7zaymmLrUFqL7fBMP
+	 /yEZsKgEFwUMOjvupYsxnVM8ogKloqiLYfZBe3I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Simon Horman <horms@kernel.org>,
+	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Paulo Da Silva <Paulo.DaSilva@kyberna.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 184/491] tipc: Fix kernel-infoleak due to uninitialized TLV value
-Date: Fri, 24 Nov 2023 17:47:00 +0000
-Message-ID: <20231124172030.013030545@linuxfoundation.org>
+Subject: [PATCH 6.5 185/491] net: mvneta: fix calls to page_pool_get_stats
+Date: Fri, 24 Nov 2023 17:47:01 +0000
+Message-ID: <20231124172030.040550692@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,111 +44,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Sven Auhagen <sven.auhagen@voleatech.de>
 
-[ Upstream commit fb317eb23b5ee4c37b0656a9a52a3db58d9dd072 ]
+[ Upstream commit ca8add922f9c7f6e2e3c71039da8e0dcc64b87ed ]
 
-KMSAN reported the following kernel-infoleak issue:
+Calling page_pool_get_stats in the mvneta driver without checks
+leads to kernel crashes.
+First the page pool is only available if the bm is not used.
+The page pool is also not allocated when the port is stopped.
+It can also be not allocated in case of errors.
 
-=====================================================
-BUG: KMSAN: kernel-infoleak in instrument_copy_to_user include/linux/instrumented.h:114 [inline]
-BUG: KMSAN: kernel-infoleak in copy_to_user_iter lib/iov_iter.c:24 [inline]
-BUG: KMSAN: kernel-infoleak in iterate_ubuf include/linux/iov_iter.h:29 [inline]
-BUG: KMSAN: kernel-infoleak in iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
-BUG: KMSAN: kernel-infoleak in iterate_and_advance include/linux/iov_iter.h:271 [inline]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x4ec/0x2bc0 lib/iov_iter.c:186
- instrument_copy_to_user include/linux/instrumented.h:114 [inline]
- copy_to_user_iter lib/iov_iter.c:24 [inline]
- iterate_ubuf include/linux/iov_iter.h:29 [inline]
- iterate_and_advance2 include/linux/iov_iter.h:245 [inline]
- iterate_and_advance include/linux/iov_iter.h:271 [inline]
- _copy_to_iter+0x4ec/0x2bc0 lib/iov_iter.c:186
- copy_to_iter include/linux/uio.h:197 [inline]
- simple_copy_to_iter net/core/datagram.c:532 [inline]
- __skb_datagram_iter.5+0x148/0xe30 net/core/datagram.c:420
- skb_copy_datagram_iter+0x52/0x210 net/core/datagram.c:546
- skb_copy_datagram_msg include/linux/skbuff.h:3960 [inline]
- netlink_recvmsg+0x43d/0x1630 net/netlink/af_netlink.c:1967
- sock_recvmsg_nosec net/socket.c:1044 [inline]
- sock_recvmsg net/socket.c:1066 [inline]
- __sys_recvfrom+0x476/0x860 net/socket.c:2246
- __do_sys_recvfrom net/socket.c:2264 [inline]
- __se_sys_recvfrom net/socket.c:2260 [inline]
- __x64_sys_recvfrom+0x130/0x200 net/socket.c:2260
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+The current implementation leads to the following crash calling
+ethstats on a port that is down or when calling it at the wrong moment:
 
-Uninit was created at:
- slab_post_alloc_hook+0x103/0x9e0 mm/slab.h:768
- slab_alloc_node mm/slub.c:3478 [inline]
- kmem_cache_alloc_node+0x5f7/0xb50 mm/slub.c:3523
- kmalloc_reserve+0x13c/0x4a0 net/core/skbuff.c:560
- __alloc_skb+0x2fd/0x770 net/core/skbuff.c:651
- alloc_skb include/linux/skbuff.h:1286 [inline]
- tipc_tlv_alloc net/tipc/netlink_compat.c:156 [inline]
- tipc_get_err_tlv+0x90/0x5d0 net/tipc/netlink_compat.c:170
- tipc_nl_compat_recv+0x1042/0x15d0 net/tipc/netlink_compat.c:1324
- genl_family_rcv_msg_doit net/netlink/genetlink.c:972 [inline]
- genl_family_rcv_msg net/netlink/genetlink.c:1052 [inline]
- genl_rcv_msg+0x1220/0x12c0 net/netlink/genetlink.c:1067
- netlink_rcv_skb+0x4a4/0x6a0 net/netlink/af_netlink.c:2545
- genl_rcv+0x41/0x60 net/netlink/genetlink.c:1076
- netlink_unicast_kernel net/netlink/af_netlink.c:1342 [inline]
- netlink_unicast+0xf4b/0x1230 net/netlink/af_netlink.c:1368
- netlink_sendmsg+0x1242/0x1420 net/netlink/af_netlink.c:1910
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x997/0xd60 net/socket.c:2588
- ___sys_sendmsg+0x271/0x3b0 net/socket.c:2642
- __sys_sendmsg net/socket.c:2671 [inline]
- __do_sys_sendmsg net/socket.c:2680 [inline]
- __se_sys_sendmsg net/socket.c:2678 [inline]
- __x64_sys_sendmsg+0x2fa/0x4a0 net/socket.c:2678
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+ble to handle kernel NULL pointer dereference at virtual address 00000070
+[00000070] *pgd=00000000
+Internal error: Oops: 5 [#1] SMP ARM
+Hardware name: Marvell Armada 380/385 (Device Tree)
+PC is at page_pool_get_stats+0x18/0x1cc
+LR is at mvneta_ethtool_get_stats+0xa0/0xe0 [mvneta]
+pc : [<c0b413cc>]    lr : [<bf0a98d8>]    psr: a0000013
+sp : f1439d48  ip : f1439dc0  fp : 0000001d
+r10: 00000100  r9 : c4816b80  r8 : f0d75150
+r7 : bf0b400c  r6 : c238f000  r5 : 00000000  r4 : f1439d68
+r3 : c2091040  r2 : ffffffd8  r1 : f1439d68  r0 : 00000000
+Flags: NzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+Control: 10c5387d  Table: 066b004a  DAC: 00000051
+Register r0 information: NULL pointer
+Register r1 information: 2-page vmalloc region starting at 0xf1438000 allocated at kernel_clone+0x9c/0x390
+Register r2 information: non-paged memory
+Register r3 information: slab kmalloc-2k start c2091000 pointer offset 64 size 2048
+Register r4 information: 2-page vmalloc region starting at 0xf1438000 allocated at kernel_clone+0x9c/0x390
+Register r5 information: NULL pointer
+Register r6 information: slab kmalloc-cg-4k start c238f000 pointer offset 0 size 4096
+Register r7 information: 15-page vmalloc region starting at 0xbf0a8000 allocated at load_module+0xa30/0x219c
+Register r8 information: 1-page vmalloc region starting at 0xf0d75000 allocated at ethtool_get_stats+0x138/0x208
+Register r9 information: slab task_struct start c4816b80 pointer offset 0
+Register r10 information: non-paged memory
+Register r11 information: non-paged memory
+Register r12 information: 2-page vmalloc region starting at 0xf1438000 allocated at kernel_clone+0x9c/0x390
+Process snmpd (pid: 733, stack limit = 0x38de3a88)
+Stack: (0xf1439d48 to 0xf143a000)
+9d40:                   000000c0 00000001 c238f000 bf0b400c f0d75150 c4816b80
+9d60: 00000100 bf0a98d8 00000000 00000000 00000000 00000000 00000000 00000000
+9d80: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+9da0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+9dc0: 00000dc0 5335509c 00000035 c238f000 bf0b2214 01067f50 f0d75000 c0b9b9c8
+9de0: 0000001d 00000035 c2212094 5335509c c4816b80 c238f000 c5ad6e00 01067f50
+9e00: c1b0be80 c4816b80 00014813 c0b9d7f0 00000000 00000000 0000001d 0000001d
+9e20: 00000000 00001200 00000000 00000000 c216ed90 c73943b8 00000000 00000000
+9e40: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+9e60: 00000000 c0ad9034 00000000 00000000 00000000 00000000 00000000 00000000
+9e80: 00000000 00000000 00000000 5335509c c1b0be80 f1439ee4 00008946 c1b0be80
+9ea0: 01067f50 f1439ee3 00000000 00000046 b6d77ae0 c0b383f0 00008946 becc83e8
+9ec0: c1b0be80 00000051 0000000b c68ca480 c7172d00 c0ad8ff0 f1439ee3 cf600e40
+9ee0: 01600e40 32687465 00000000 00000000 00000000 01067f50 00000000 00000000
+9f00: 00000000 5335509c 00008946 00008946 00000000 c68ca480 becc83e8 c05e2de0
+9f20: f1439fb0 c03002f0 00000006 5ac3c35a c4816b80 00000006 b6d77ae0 c030caf0
+9f40: c4817350 00000014 f1439e1c 0000000c 00000000 00000051 01000000 00000014
+9f60: 00003fec f1439edc 00000001 c0372abc b6d77ae0 c0372abc cf600e40 5335509c
+9f80: c21e6800 01015c9c 0000000b 00008946 00000036 c03002f0 c4816b80 00000036
+9fa0: b6d77ae0 c03000c0 01015c9c 0000000b 0000000b 00008946 becc83e8 00000000
+9fc0: 01015c9c 0000000b 00008946 00000036 00000035 010678a0 b6d797ec b6d77ae0
+9fe0: b6dbf738 becc838c b6d186d7 b6baa858 40000030 0000000b 00000000 00000000
+ page_pool_get_stats from mvneta_ethtool_get_stats+0xa0/0xe0 [mvneta]
+ mvneta_ethtool_get_stats [mvneta] from ethtool_get_stats+0x154/0x208
+ ethtool_get_stats from dev_ethtool+0xf48/0x2480
+ dev_ethtool from dev_ioctl+0x538/0x63c
+ dev_ioctl from sock_ioctl+0x49c/0x53c
+ sock_ioctl from sys_ioctl+0x134/0xbd8
+ sys_ioctl from ret_fast_syscall+0x0/0x1c
+Exception stack(0xf1439fa8 to 0xf1439ff0)
+9fa0:                   01015c9c 0000000b 0000000b 00008946 becc83e8 00000000
+9fc0: 01015c9c 0000000b 00008946 00000036 00000035 010678a0 b6d797ec b6d77ae0
+9fe0: b6dbf738 becc838c b6d186d7 b6baa858
+Code: e28dd004 e1a05000 e2514000 0a00006a (e5902070)
 
-Bytes 34-35 of 36 are uninitialized
-Memory access of size 36 starts at ffff88802d464a00
-Data copied to user address 00007ff55033c0a0
+This commit adds the proper checks before calling page_pool_get_stats.
 
-CPU: 0 PID: 30322 Comm: syz-executor.0 Not tainted 6.6.0-14500-g1c41041124bd #10
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc38 04/01/2014
-=====================================================
-
-tipc_add_tlv() puts TLV descriptor and value onto `skb`. This size is
-calculated with TLV_SPACE() macro. It adds the size of struct tlv_desc and
-the length of TLV value passed as an argument, and aligns the result to a
-multiple of TLV_ALIGNTO, i.e., a multiple of 4 bytes.
-
-If the size of struct tlv_desc plus the length of TLV value is not aligned,
-the current implementation leaves the remaining bytes uninitialized. This
-is the cause of the above kernel-infoleak issue.
-
-This patch resolves this issue by clearing data up to an aligned size.
-
-Fixes: d0796d1ef63d ("tipc: convert legacy nl bearer dump to nl compat")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: b3fc79225f05 ("net: mvneta: add support for page_pool_get_stats")
+Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Reported-by: Paulo Da Silva <Paulo.DaSilva@kyberna.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/netlink_compat.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/marvell/mvneta.c | 28 +++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/net/tipc/netlink_compat.c b/net/tipc/netlink_compat.c
-index 9b47c84092319..42d9586365ae3 100644
---- a/net/tipc/netlink_compat.c
-+++ b/net/tipc/netlink_compat.c
-@@ -102,6 +102,7 @@ static int tipc_add_tlv(struct sk_buff *skb, u16 type, void *data, u16 len)
- 		return -EMSGSIZE;
+diff --git a/drivers/net/ethernet/marvell/mvneta.c b/drivers/net/ethernet/marvell/mvneta.c
+index acf4f6ba73a6f..f4692a8726b1c 100644
+--- a/drivers/net/ethernet/marvell/mvneta.c
++++ b/drivers/net/ethernet/marvell/mvneta.c
+@@ -4790,14 +4790,17 @@ static void mvneta_ethtool_get_strings(struct net_device *netdev, u32 sset,
+ 				       u8 *data)
+ {
+ 	if (sset == ETH_SS_STATS) {
++		struct mvneta_port *pp = netdev_priv(netdev);
+ 		int i;
  
- 	skb_put(skb, TLV_SPACE(len));
-+	memset(tlv, 0, TLV_SPACE(len));
- 	tlv->tlv_type = htons(type);
- 	tlv->tlv_len = htons(TLV_LENGTH(len));
- 	if (len && data)
+ 		for (i = 0; i < ARRAY_SIZE(mvneta_statistics); i++)
+ 			memcpy(data + i * ETH_GSTRING_LEN,
+ 			       mvneta_statistics[i].name, ETH_GSTRING_LEN);
+ 
+-		data += ETH_GSTRING_LEN * ARRAY_SIZE(mvneta_statistics);
+-		page_pool_ethtool_stats_get_strings(data);
++		if (!pp->bm_priv) {
++			data += ETH_GSTRING_LEN * ARRAY_SIZE(mvneta_statistics);
++			page_pool_ethtool_stats_get_strings(data);
++		}
+ 	}
+ }
+ 
+@@ -4915,8 +4918,10 @@ static void mvneta_ethtool_pp_stats(struct mvneta_port *pp, u64 *data)
+ 	struct page_pool_stats stats = {};
+ 	int i;
+ 
+-	for (i = 0; i < rxq_number; i++)
+-		page_pool_get_stats(pp->rxqs[i].page_pool, &stats);
++	for (i = 0; i < rxq_number; i++) {
++		if (pp->rxqs[i].page_pool)
++			page_pool_get_stats(pp->rxqs[i].page_pool, &stats);
++	}
+ 
+ 	page_pool_ethtool_stats_get(data, &stats);
+ }
+@@ -4932,14 +4937,21 @@ static void mvneta_ethtool_get_stats(struct net_device *dev,
+ 	for (i = 0; i < ARRAY_SIZE(mvneta_statistics); i++)
+ 		*data++ = pp->ethtool_stats[i];
+ 
+-	mvneta_ethtool_pp_stats(pp, data);
++	if (!pp->bm_priv)
++		mvneta_ethtool_pp_stats(pp, data);
+ }
+ 
+ static int mvneta_ethtool_get_sset_count(struct net_device *dev, int sset)
+ {
+-	if (sset == ETH_SS_STATS)
+-		return ARRAY_SIZE(mvneta_statistics) +
+-		       page_pool_ethtool_stats_get_count();
++	if (sset == ETH_SS_STATS) {
++		int count = ARRAY_SIZE(mvneta_statistics);
++		struct mvneta_port *pp = netdev_priv(dev);
++
++		if (!pp->bm_priv)
++			count += page_pool_ethtool_stats_get_count();
++
++		return count;
++	}
+ 
+ 	return -EOPNOTSUPP;
+ }
 -- 
 2.42.0
 
