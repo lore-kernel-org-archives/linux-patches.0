@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C041C37170;
-	Fri, 24 Nov 2023 18:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3441C341AE;
+	Fri, 24 Nov 2023 18:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1mnPs/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F50AC433C7;
-	Fri, 24 Nov 2023 18:34:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKyfzVzg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69D3C433C8;
+	Fri, 24 Nov 2023 18:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850887;
-	bh=AQlF/LcFjdnHI/M6+7vnGH+yCK0qMTzsHmgr5R9Gm/A=;
+	s=korg; t=1700850890;
+	bh=wCADJHrJaPj3lzd2veSsOdKLCbtsnW2Io/TaTEtDy4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f1mnPs/cKH4PVLkmKDazz5yz8oxPEs9gxtyrzFWWQnE7Aqlwl5z9Z2Ov7KxARssSO
-	 +qvSgVIJfJQUDGdWYRVv5DziI4mqnCIOMRLbtmXB80I5Mahg84+vWKpqTCzu5lhhgO
-	 sLQKL8Zp+JFwGTsCy96BIuw2Vt/I93iHsEsKpTI4=
+	b=lKyfzVzgDNGlRjx6lQ9JHhINb7i5jv+s272m6FmSX3amM/9Yl7yLQ6nYrDSDAs/DK
+	 g95XsCuFmruNe6CqBD0xrA6he8JBrcfcGew6L6B+Ni4Cy/X04OkKQt6CSog+lvR/9h
+	 fgUGBMpeepulcJc9X4hwz7Q2kYrCpRBNP90KVNww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.5 229/491] powerpc/perf: Fix disabling BHRB and instruction sampling
-Date: Fri, 24 Nov 2023 17:47:45 +0000
-Message-ID: <20231124172031.441443398@linuxfoundation.org>
+	linux-hardening@vger.kernel.org,
+	Lukas Loidolt <e1634039@student.tuwien.ac.at>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.5 230/491] randstruct: Fix gcc-plugin performance mode to stay in group
+Date: Fri, 24 Nov 2023 17:47:46 +0000
+Message-ID: <20231124172031.467754103@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,44 +42,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit ea142e590aec55ba40c5affb4d49e68c713c63dc upstream.
+commit 381fdb73d1e2a48244de7260550e453d1003bb8e upstream.
 
-When the PMU is disabled, MMCRA is not updated to disable BHRB and
-instruction sampling. This can lead to those features remaining enabled,
-which can slow down a real or emulated CPU.
+The performance mode of the gcc-plugin randstruct was shuffling struct
+members outside of the cache-line groups. Limit the range to the
+specified group indexes.
 
-Fixes: 1cade527f6e9 ("powerpc/perf: BHRB control to disable BHRB logic when not used")
-Cc: stable@vger.kernel.org # v5.9+
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231018153423.298373-1-npiggin@gmail.com
+Cc: linux-hardening@vger.kernel.org
+Cc: stable@vger.kernel.org
+Reported-by: Lukas Loidolt <e1634039@student.tuwien.ac.at>
+Closes: https://lore.kernel.org/all/f3ca77f0-e414-4065-83a5-ae4c4d25545d@student.tuwien.ac.at
+Fixes: 313dd1b62921 ("gcc-plugins: Add the randstruct plugin")
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/perf/core-book3s.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ scripts/gcc-plugins/randomize_layout_plugin.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/arch/powerpc/perf/core-book3s.c
-+++ b/arch/powerpc/perf/core-book3s.c
-@@ -1371,8 +1371,7 @@ static void power_pmu_disable(struct pmu
- 		/*
- 		 * Disable instruction sampling if it was enabled
- 		 */
--		if (cpuhw->mmcr.mmcra & MMCRA_SAMPLE_ENABLE)
--			val &= ~MMCRA_SAMPLE_ENABLE;
-+		val &= ~MMCRA_SAMPLE_ENABLE;
+--- a/scripts/gcc-plugins/randomize_layout_plugin.c
++++ b/scripts/gcc-plugins/randomize_layout_plugin.c
+@@ -191,12 +191,14 @@ static void partition_struct(tree *field
  
- 		/* Disable BHRB via mmcra (BHRBRD) for p10 */
- 		if (ppmu->flags & PPMU_ARCH_31)
-@@ -1383,7 +1382,7 @@ static void power_pmu_disable(struct pmu
- 		 * instruction sampling or BHRB.
- 		 */
- 		if (val != mmcra) {
--			mtspr(SPRN_MMCRA, mmcra);
-+			mtspr(SPRN_MMCRA, val);
- 			mb();
- 			isync();
- 		}
+ static void performance_shuffle(tree *newtree, unsigned long length, ranctx *prng_state)
+ {
+-	unsigned long i, x;
++	unsigned long i, x, index;
+ 	struct partition_group size_group[length];
+ 	unsigned long num_groups = 0;
+ 	unsigned long randnum;
+ 
+ 	partition_struct(newtree, length, (struct partition_group *)&size_group, &num_groups);
++
++	/* FIXME: this group shuffle is currently a no-op. */
+ 	for (i = num_groups - 1; i > 0; i--) {
+ 		struct partition_group tmp;
+ 		randnum = ranval(prng_state) % (i + 1);
+@@ -206,11 +208,14 @@ static void performance_shuffle(tree *ne
+ 	}
+ 
+ 	for (x = 0; x < num_groups; x++) {
+-		for (i = size_group[x].start + size_group[x].length - 1; i > size_group[x].start; i--) {
++		for (index = size_group[x].length - 1; index > 0; index--) {
+ 			tree tmp;
++
++			i = size_group[x].start + index;
+ 			if (DECL_BIT_FIELD_TYPE(newtree[i]))
+ 				continue;
+-			randnum = ranval(prng_state) % (i + 1);
++			randnum = ranval(prng_state) % (index + 1);
++			randnum += size_group[x].start;
+ 			// we could handle this case differently if desired
+ 			if (DECL_BIT_FIELD_TYPE(newtree[randnum]))
+ 				continue;
 
 
