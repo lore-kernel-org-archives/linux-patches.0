@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB32C33CCA;
-	Fri, 24 Nov 2023 18:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A3433CCA;
+	Fri, 24 Nov 2023 18:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flwQ6nfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54F68C433C7;
-	Fri, 24 Nov 2023 18:46:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZINLJiSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EBBC433C7;
+	Fri, 24 Nov 2023 18:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851595;
-	bh=7Dyg30axeMO83oQoR09UWIo0Eq9YMIyNLZp5Hs+Robg=;
+	s=korg; t=1700851598;
+	bh=oDgtQWijoQJedI2dGKqS1wvXJPHXq2AtBBU0yjXitKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flwQ6nfex73RpQs2ZH1TnYMjAJA/FpE0b1LYgrlyWF3HXoeRmXSFmDv6v3kXtpM/o
-	 y3js3UgFulgwTWQAVWCBYzM/m5hpfZDSr4iiUcKHv50637z4IMZ7E5Yh1jxtQDzi/n
-	 zub1ctVcpSi+eiR5phoGHWS3Xbjto48tka1lMZUs=
+	b=ZINLJiSvBbE4fi0TUIC1GVvrl6A3ffzPVdE45oDGIKw+P46iYJmZDBQNQbb2t/Hqw
+	 omwZvQycIsjyFHSUbB9oWLC9Fo9v2+pLICtivnJpNdt0duYK36WoB+oB52SD8ki7qk
+	 EPlHHnagW7kQNhTWmNO13p/yySeOcO1pboLHLxeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Kent Overstreet <kent.overstreet@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/372] wifi: ath10k: fix clang-specific fortify warning
-Date: Fri, 24 Nov 2023 17:46:46 +0000
-Message-ID: <20231124172011.112528201@linuxfoundation.org>
+Subject: [PATCH 6.1 002/372] lib/generic-radix-tree.c: Dont overflow in peek()
+Date: Fri, 24 Nov 2023 17:46:29 +0000
+Message-ID: <20231124172010.514046367@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,60 +41,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Kent Overstreet <kent.overstreet@gmail.com>
 
-[ Upstream commit cb4c132ebfeac5962f7258ffc831caa0c4dada1a ]
+[ Upstream commit 9492261ff2460252cf2d8de89cdf854c7e2b28a0 ]
 
-When compiling with clang 16.0.6 and CONFIG_FORTIFY_SOURCE=y, I've
-noticed the following (somewhat confusing due to absence of an actual
-source code location):
+When we started spreading new inode numbers throughout most of the 64
+bit inode space, that triggered some corner case bugs, in particular
+some integer overflows related to the radix tree code. Oops.
 
-In file included from drivers/net/wireless/ath/ath10k/debug.c:8:
-In file included from ./include/linux/module.h:13:
-In file included from ./include/linux/stat.h:19:
-In file included from ./include/linux/time.h:60:
-In file included from ./include/linux/time32.h:13:
-In file included from ./include/linux/timex.h:67:
-In file included from ./arch/x86/include/asm/timex.h:5:
-In file included from ./arch/x86/include/asm/processor.h:23:
-In file included from ./arch/x86/include/asm/msr.h:11:
-In file included from ./arch/x86/include/asm/cpumask.h:5:
-In file included from ./include/linux/cpumask.h:12:
-In file included from ./include/linux/bitmap.h:11:
-In file included from ./include/linux/string.h:254:
-./include/linux/fortify-string.h:592:4: warning: call to '__read_overflow2_field'
-declared with 'warning' attribute: detected read beyond size of field (2nd
-parameter); maybe use struct_group()? [-Wattribute-warning]
-                        __read_overflow2_field(q_size_field, size);
-
-The compiler actually complains on 'ath10k_debug_get_et_strings()' where
-fortification logic inteprets call to 'memcpy()' as an attempt to copy
-the whole 'ath10k_gstrings_stats' array from it's first member and so
-issues an overread warning. This warning may be silenced by passing
-an address of the whole array and not the first member to 'memcpy()'.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230829093652.234537-1-dmantipov@yandex.ru
+Signed-off-by: Kent Overstreet <kent.overstreet@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/generic-radix-tree.h |  7 +++++++
+ lib/generic-radix-tree.c           | 17 ++++++++++++++---
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/debug.c b/drivers/net/wireless/ath/ath10k/debug.c
-index c861e66ef6bc5..41f387e15dcd0 100644
---- a/drivers/net/wireless/ath/ath10k/debug.c
-+++ b/drivers/net/wireless/ath/ath10k/debug.c
-@@ -1139,7 +1139,7 @@ void ath10k_debug_get_et_strings(struct ieee80211_hw *hw,
- 				 u32 sset, u8 *data)
- {
- 	if (sset == ETH_SS_STATS)
--		memcpy(data, *ath10k_gstrings_stats,
-+		memcpy(data, ath10k_gstrings_stats,
- 		       sizeof(ath10k_gstrings_stats));
- }
+diff --git a/include/linux/generic-radix-tree.h b/include/linux/generic-radix-tree.h
+index 107613f7d7920..f6cd0f909d9fb 100644
+--- a/include/linux/generic-radix-tree.h
++++ b/include/linux/generic-radix-tree.h
+@@ -38,6 +38,7 @@
  
+ #include <asm/page.h>
+ #include <linux/bug.h>
++#include <linux/limits.h>
+ #include <linux/log2.h>
+ #include <linux/math.h>
+ #include <linux/types.h>
+@@ -184,6 +185,12 @@ void *__genradix_iter_peek(struct genradix_iter *, struct __genradix *, size_t);
+ static inline void __genradix_iter_advance(struct genradix_iter *iter,
+ 					   size_t obj_size)
+ {
++	if (iter->offset + obj_size < iter->offset) {
++		iter->offset	= SIZE_MAX;
++		iter->pos	= SIZE_MAX;
++		return;
++	}
++
+ 	iter->offset += obj_size;
+ 
+ 	if (!is_power_of_2(obj_size) &&
+diff --git a/lib/generic-radix-tree.c b/lib/generic-radix-tree.c
+index f25eb111c0516..7dfa88282b006 100644
+--- a/lib/generic-radix-tree.c
++++ b/lib/generic-radix-tree.c
+@@ -166,6 +166,10 @@ void *__genradix_iter_peek(struct genradix_iter *iter,
+ 	struct genradix_root *r;
+ 	struct genradix_node *n;
+ 	unsigned level, i;
++
++	if (iter->offset == SIZE_MAX)
++		return NULL;
++
+ restart:
+ 	r = READ_ONCE(radix->root);
+ 	if (!r)
+@@ -184,10 +188,17 @@ void *__genradix_iter_peek(struct genradix_iter *iter,
+ 			(GENRADIX_ARY - 1);
+ 
+ 		while (!n->children[i]) {
++			size_t objs_per_ptr = genradix_depth_size(level);
++
++			if (iter->offset + objs_per_ptr < iter->offset) {
++				iter->offset	= SIZE_MAX;
++				iter->pos	= SIZE_MAX;
++				return NULL;
++			}
++
+ 			i++;
+-			iter->offset = round_down(iter->offset +
+-					   genradix_depth_size(level),
+-					   genradix_depth_size(level));
++			iter->offset = round_down(iter->offset + objs_per_ptr,
++						  objs_per_ptr);
+ 			iter->pos = (iter->offset >> PAGE_SHIFT) *
+ 				objs_per_page;
+ 			if (i == GENRADIX_ARY)
 -- 
 2.42.0
 
