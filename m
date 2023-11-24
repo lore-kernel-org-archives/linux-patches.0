@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC43F33E9;
-	Fri, 24 Nov 2023 19:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B61663A1;
+	Fri, 24 Nov 2023 19:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiN+Z8I5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4088EC433C7;
-	Fri, 24 Nov 2023 19:20:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NH8XVU4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A23C433C7;
+	Fri, 24 Nov 2023 19:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853648;
-	bh=Gy70Kws/uFsJDXlekRO8q2TMtopFE4ZA14zX/zfJnn4=;
+	s=korg; t=1700853651;
+	bh=hyiRjlM/QfQTfsiX/5HuGnewKZnYMoJM0GfbONutnkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qiN+Z8I54yEIWiVba4pBV5DVtrHFuqd7P4o/Er+IOjSDWPyEOcsIbNhPxWDAvtVHw
-	 j9Sg035mDB7dHI65lCfOYAby9cBpgizVVxIoJ67Y9KMxNxdYitRJgAULwM2ihPOdNY
-	 7yCUYVHiWG74GUwMuvHgAe8NaDp5DX4MCXwu6Q78=
+	b=NH8XVU4rS+QJIw2JwoR7kiF4+D+/Fuqsv9nXSsjCSq9+6aVAk/TuF4bEi+ZvOZF2Z
+	 yOcKNReFxdvoo1Z79R+GtZXrKIf+b1pXA3AoXMn7dys3XCEc6p6pS/FDXJfvDSDlpI
+	 sy66c77EH6r8XHb0gCtssfgUzmyglnqTq5bLi818=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Christoph Lameter <cl@linux.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 273/297] mm: kmem: drop __GFP_NOFAIL when allocating objcg vectors
-Date: Fri, 24 Nov 2023 17:55:15 +0000
-Message-ID: <20231124172009.689480055@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	ChunHao Lin <hau@realtek.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 274/297] r8169: fix network lost after resume on DASH systems
+Date: Fri, 24 Nov 2023 17:55:16 +0000
+Message-ID: <20231124172009.723817889@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -44,52 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Gushchin <roman.gushchin@linux.dev>
+From: ChunHao Lin <hau@realtek.com>
 
-commit 24948e3b7b12e0031a6edb4f49bbb9fb2ad1e4e9 upstream.
+commit 868c3b95afef4883bfb66c9397482da6840b5baf upstream.
 
-Objcg vectors attached to slab pages to store slab object ownership
-information are allocated using gfp flags for the original slab
-allocation.  Depending on slab page order and the size of slab objects,
-objcg vector can take several pages.
+Device that support DASH may be reseted or powered off during suspend.
+So driver needs to handle DASH during system suspend and resume. Or
+DASH firmware will influence device behavior and causes network lost.
 
-If the original allocation was done with the __GFP_NOFAIL flag, it
-triggered a warning in the page allocation code.  Indeed, order > 1 pages
-should not been allocated with the __GFP_NOFAIL flag.
-
-Fix this by simply dropping the __GFP_NOFAIL flag when allocating the
-objcg vector.  It effectively allows to skip the accounting of a single
-slab object under a heavy memory pressure.
-
-An alternative would be to implement the mechanism to fallback to order-0
-allocations for accounting metadata, which is also not perfect because it
-will increase performance penalty and memory footprint of the kernel
-memory accounting under memory pressure.
-
-Link: https://lkml.kernel.org/r/ZUp8ZFGxwmCx4ZFr@P9FQF9L96D.corp.robot.car
-Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
-Reported-by: Christoph Lameter <cl@linux.com>
-Closes: https://lkml.kernel.org/r/6b42243e-f197-600a-5d22-56bd728a5ad8@gentwo.org
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b646d90053f8 ("r8169: magic.")
+Cc: stable@vger.kernel.org
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: ChunHao Lin <hau@realtek.com>
+Link: https://lore.kernel.org/r/20231109173400.4573-3-hau@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2822,7 +2822,8 @@ retry:
-  * Moreover, it should not come from DMA buffer and is not readily
-  * reclaimable. So those GFP bits should be masked off.
-  */
--#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | __GFP_ACCOUNT)
-+#define OBJCGS_CLEAR_MASK	(__GFP_DMA | __GFP_RECLAIMABLE | \
-+				 __GFP_ACCOUNT | __GFP_NOFAIL)
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4714,10 +4714,16 @@ static void rtl8169_down(struct rtl8169_
+ 	rtl8169_cleanup(tp, true);
  
- int memcg_alloc_page_obj_cgroups(struct page *page, struct kmem_cache *s,
- 				 gfp_t gfp, bool new_page)
+ 	rtl_prepare_power_down(tp);
++
++	if (tp->dash_type != RTL_DASH_NONE)
++		rtl8168_driver_stop(tp);
+ }
+ 
+ static void rtl8169_up(struct rtl8169_private *tp)
+ {
++	if (tp->dash_type != RTL_DASH_NONE)
++		rtl8168_driver_start(tp);
++
+ 	pci_set_master(tp->pci_dev);
+ 	phy_init_hw(tp->phydev);
+ 	phy_resume(tp->phydev);
 
 
