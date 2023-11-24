@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A7A33CFD;
-	Fri, 24 Nov 2023 18:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D721364BA;
+	Fri, 24 Nov 2023 18:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEK1MwgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209DEC433C7;
-	Fri, 24 Nov 2023 18:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYe6hCy2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CF1C433C7;
+	Fri, 24 Nov 2023 18:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851128;
-	bh=/9NtLMxSmP5aOZCEz1Omff4lVqAzguxFe9bLP/CuFGg=;
+	s=korg; t=1700851130;
+	bh=gSjgBrteNljjN8p8PpKpjvxz4vvb5fPUBbBnrn6t2QM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEK1MwgBKv2PQBCyBZRIUUqskhdE2yEdt30inw09ufbo/iZ5lHpGmly99m/ZIlwQy
-	 ffjt1rMKYahwlvfI2N7yJdp1e4n1ARSEuoYftn/Z39Zxcp4kvVPqs6SzfkGhBUCMS5
-	 YRt9QU4eIJRCHIccDw8voKvlvlKoCsBxfm79bU/I=
+	b=qYe6hCy2V6g71sHhgTLNr/lV9DxS06GCy7zvdpapaphR9XOBQxvjaLmbq42Nu68V4
+	 acLxzTyZYOXClPQ262uTCH9bIikQ9EWyKvOtK7Y3leteDddEbDlcMisoX++qKY3zWU
+	 pGLHej0wxQx07DYe4YfMFZa0H+aZYfMD+UNI/kFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Nitin Yadav <n-yadav@ti.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.5 300/491] mmc: vub300: fix an error code
-Date: Fri, 24 Nov 2023 17:48:56 +0000
-Message-ID: <20231124172033.590070938@linuxfoundation.org>
+Subject: [PATCH 6.5 301/491] mmc: sdhci_am654: fix start loop index for TAP value parsing
+Date: Fri, 24 Nov 2023 17:48:57 +0000
+Message-ID: <20231124172033.619706391@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -41,31 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Nitin Yadav <n-yadav@ti.com>
 
-commit b44f9da81783fda72632ef9b0d05ea3f3ca447a5 upstream.
+commit 71956d0cb56c1e5f9feeb4819db87a076418e930 upstream.
 
-This error path should return -EINVAL instead of success.
+ti,otap-del-sel-legacy/ti,itap-del-sel-legacy passed from DT
+are currently ignored for all SD/MMC and eMMC modes. Fix this
+by making start loop index to MMC_TIMING_LEGACY.
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 8ee5fc0e0b3b ("mmc: sdhci_am654: Update OTAPDLY writes")
+Signed-off-by: Nitin Yadav <n-yadav@ti.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/0769d30c-ad80-421b-bf5d-7d6f5d85604e@moroto.mountain
+Link: https://lore.kernel.org/r/20231026061458.1116276-1-n-yadav@ti.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci_am654.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2309,6 +2309,7 @@ static int vub300_probe(struct usb_inter
- 		vub300->read_only =
- 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
- 	} else {
-+		retval = -EINVAL;
- 		goto error5;
+--- a/drivers/mmc/host/sdhci_am654.c
++++ b/drivers/mmc/host/sdhci_am654.c
+@@ -598,7 +598,7 @@ static int sdhci_am654_get_otap_delay(st
+ 		return 0;
  	}
- 	usb_set_intfdata(interface, vub300);
+ 
+-	for (i = MMC_TIMING_MMC_HS; i <= MMC_TIMING_MMC_HS400; i++) {
++	for (i = MMC_TIMING_LEGACY; i <= MMC_TIMING_MMC_HS400; i++) {
+ 
+ 		ret = device_property_read_u32(dev, td[i].otap_binding,
+ 					       &sdhci_am654->otap_del_sel[i]);
 
 
