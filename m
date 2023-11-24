@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E346033CCA;
-	Fri, 24 Nov 2023 19:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639422E853;
+	Fri, 24 Nov 2023 19:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZMy9Tz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71706C433C8;
-	Fri, 24 Nov 2023 19:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zrw8gWUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2F4C433C8;
+	Fri, 24 Nov 2023 19:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853730;
-	bh=V3Z6FD9/rTvBtK47Z3bpq4e5ruJ+BNbMjZoK5lZyacA=;
+	s=korg; t=1700853733;
+	bh=E2LFyLBrR+Mtc0ZdtrX07ZE6esTgNQdcAccg5w4GYss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZMy9Tz1cFjE7zucoc0aWmOED8ifwtfZ2yv7z+2fx0ckJ5reltyJpXv7PX207u8jJ
-	 9SYDrph2Ek8pY6NIhh4jWf7ANhSSb25DhHTx/KF6tU1KyH2fyHl7K29ucp++UCvwc9
-	 LBcslpjDCrpdnJ1bUGrmWey07sbGjSQkJB6s6pkM=
+	b=Zrw8gWUt6AWkOAWvT07umzEu9ndhdaPZ+7o+m7qim3ceFgyEAr701z/qE9qPuUes+
+	 WdZIrAL+hkoYXwg6O6gp1BLZ+K05AYMdLKpjszCYQZRHSqyVue+Ig7CTstFuFvfAgc
+	 jnV6m40qYPQCVrnlZpbIu5hPu0kkmWRxYC+G19zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 290/297] drm/amdgpu: dont use ATRM for external devices
-Date: Fri, 24 Nov 2023 17:55:32 +0000
-Message-ID: <20231124172010.262664906@linuxfoundation.org>
+	John Stultz <jstultz@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 001/159] locking/ww_mutex/test: Fix potential workqueue corruption
+Date: Fri, 24 Nov 2023 17:53:38 +0000
+Message-ID: <20231124171941.971185677@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
-References: <20231124172000.087816911@linuxfoundation.org>
+In-Reply-To: <20231124171941.909624388@linuxfoundation.org>
+References: <20231124171941.909624388@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,52 +38,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: John Stultz <jstultz@google.com>
 
-commit 432e664e7c98c243fab4c3c95bd463bea3aeed28 upstream.
+[ Upstream commit bccdd808902f8c677317cec47c306e42b93b849e ]
 
-The ATRM ACPI method is for fetching the dGPU vbios rom
-image on laptops and all-in-one systems.  It should not be
-used for external add in cards.  If the dGPU is thunderbolt
-connected, don't try ATRM.
+In some cases running with the test-ww_mutex code, I was seeing
+odd behavior where sometimes it seemed flush_workqueue was
+returning before all the work threads were finished.
 
-v2: pci_is_thunderbolt_attached only works for Intel.  Use
-    pdev->external_facing instead.
-v3: dev_is_removable() seems to be what we want
+Often this would cause strange crashes as the mutexes would be
+freed while they were being used.
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2925
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Looking at the code, there is a lifetime problem as the
+controlling thread that spawns the work allocates the
+"struct stress" structures that are passed to the workqueue
+threads. Then when the workqueue threads are finished,
+they free the stress struct that was passed to them.
+
+Unfortunately the workqueue work_struct node is in the stress
+struct. Which means the work_struct is freed before the work
+thread returns and while flush_workqueue is waiting.
+
+It seems like a better idea to have the controlling thread
+both allocate and free the stress structures, so that we can
+be sure we don't corrupt the workqueue by freeing the structure
+prematurely.
+
+So this patch reworks the test to do so, and with this change
+I no longer see the early flush_workqueue returns.
+
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230922043616.19282-3-jstultz@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/locking/test-ww_mutex.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-@@ -29,6 +29,7 @@
- #include "amdgpu.h"
- #include "atom.h"
+diff --git a/kernel/locking/test-ww_mutex.c b/kernel/locking/test-ww_mutex.c
+index 3e82f449b4ff7..da36997d8742c 100644
+--- a/kernel/locking/test-ww_mutex.c
++++ b/kernel/locking/test-ww_mutex.c
+@@ -426,7 +426,6 @@ static void stress_inorder_work(struct work_struct *work)
+ 	} while (!time_after(jiffies, stress->timeout));
  
-+#include <linux/device.h>
- #include <linux/pci.h>
- #include <linux/slab.h>
- #include <linux/acpi.h>
-@@ -289,6 +290,10 @@ static bool amdgpu_atrm_get_bios(struct
- 	if (adev->flags & AMD_IS_APU)
- 		return false;
+ 	kfree(order);
+-	kfree(stress);
+ }
  
-+	/* ATRM is for on-platform devices only */
-+	if (dev_is_removable(&adev->pdev->dev))
-+		return false;
+ struct reorder_lock {
+@@ -491,7 +490,6 @@ static void stress_reorder_work(struct work_struct *work)
+ 	list_for_each_entry_safe(ll, ln, &locks, link)
+ 		kfree(ll);
+ 	kfree(order);
+-	kfree(stress);
+ }
+ 
+ static void stress_one_work(struct work_struct *work)
+@@ -512,8 +510,6 @@ static void stress_one_work(struct work_struct *work)
+ 			break;
+ 		}
+ 	} while (!time_after(jiffies, stress->timeout));
+-
+-	kfree(stress);
+ }
+ 
+ #define STRESS_INORDER BIT(0)
+@@ -524,15 +520,24 @@ static void stress_one_work(struct work_struct *work)
+ static int stress(int nlocks, int nthreads, unsigned int flags)
+ {
+ 	struct ww_mutex *locks;
+-	int n;
++	struct stress *stress_array;
++	int n, count;
+ 
+ 	locks = kmalloc_array(nlocks, sizeof(*locks), GFP_KERNEL);
+ 	if (!locks)
+ 		return -ENOMEM;
+ 
++	stress_array = kmalloc_array(nthreads, sizeof(*stress_array),
++				     GFP_KERNEL);
++	if (!stress_array) {
++		kfree(locks);
++		return -ENOMEM;
++	}
 +
- 	while ((pdev = pci_get_class(PCI_CLASS_DISPLAY_VGA << 8, pdev)) != NULL) {
- 		dhandle = ACPI_HANDLE(&pdev->dev);
- 		if (!dhandle)
+ 	for (n = 0; n < nlocks; n++)
+ 		ww_mutex_init(&locks[n], &ww_class);
+ 
++	count = 0;
+ 	for (n = 0; nthreads; n++) {
+ 		struct stress *stress;
+ 		void (*fn)(struct work_struct *work);
+@@ -556,9 +561,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
+ 		if (!fn)
+ 			continue;
+ 
+-		stress = kmalloc(sizeof(*stress), GFP_KERNEL);
+-		if (!stress)
+-			break;
++		stress = &stress_array[count++];
+ 
+ 		INIT_WORK(&stress->work, fn);
+ 		stress->locks = locks;
+@@ -573,6 +576,7 @@ static int stress(int nlocks, int nthreads, unsigned int flags)
+ 
+ 	for (n = 0; n < nlocks; n++)
+ 		ww_mutex_destroy(&locks[n]);
++	kfree(stress_array);
+ 	kfree(locks);
+ 
+ 	return 0;
+-- 
+2.42.0
+
 
 
