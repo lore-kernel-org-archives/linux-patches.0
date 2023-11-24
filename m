@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBA9364BE;
-	Fri, 24 Nov 2023 18:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A0C2E858;
+	Fri, 24 Nov 2023 18:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMZf//vr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34EBC433C7;
-	Fri, 24 Nov 2023 18:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxcQAK+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEF3C433C7;
+	Fri, 24 Nov 2023 18:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851469;
-	bh=Est5VorBytlVhOloTF49J6eRVkp6aOsyMNLFFZunLUc=;
+	s=korg; t=1700851471;
+	bh=f4ex3pxoo854+heOjJv9eHcf/0zCUuR3uPMNCXTe+7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMZf//vr9+c47FiophIUIfIaPtjZeHOHPiNmOXABwJtvWmQPsXcP0FRg9gs6M8oeM
-	 TuYLl5QvlI23Ndu3v+bK9Ov4SLgP0KDxAQrwNyA944FPcFlKyl0u1gPZa3NpdSyxJ5
-	 buCKRndZmWPErEOhyrSIt/4c62LVVyWB5RjBo1n4=
+	b=rxcQAK+5mCgsGkdnU/awpaheMi0i0cylrA2UWL3yyIFFGj8/36EHWvR9wDwgMyJCB
+	 9Zry2oGcN2J87jMfd3nSLhWgCXkGeSDQ03b8VdCVlGseLfiOPdsR/N163jTHd1llnq
+	 c6hCSJbNSckejrdHVd7GFxrAC7TvGv9mXc7Qclz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Song Shuai <suagrfillet@gmail.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.5 436/491] riscv: mm: Update the comment of CONFIG_PAGE_OFFSET
-Date: Fri, 24 Nov 2023 17:51:12 +0000
-Message-ID: <20231124172037.708116571@linuxfoundation.org>
+Subject: [PATCH 6.5 437/491] riscv: correct pt_level name via pgtable_l5/4_enabled
+Date: Fri, 24 Nov 2023 17:51:13 +0000
+Message-ID: <20231124172037.737225017@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -43,33 +44,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Song Shuai <suagrfillet@gmail.com>
 
-commit 559fe94a449cba5b50a7cffea60474b385598c00 upstream.
+commit e59e5e2754bf983fc58ad18f99b5eec01f1a0745 upstream.
 
-Since the commit 011f09d12052 set sv57 as default for CONFIG_64BIT,
-the comment of CONFIG_PAGE_OFFSET should be updated too.
+The pt_level uses CONFIG_PGTABLE_LEVELS to display page table names.
+But if page mode is downgraded from kernel cmdline or restricted by
+the hardware in 64BIT, it will give a wrong name.
 
-Fixes: 011f09d12052 ("riscv: mm: Set sv57 on defaultly")
+Like, using no4lvl for sv39, ptdump named the 1G-mapping as "PUD"
+that should be "PGD":
+
+0xffffffd840000000-0xffffffd900000000    0x00000000c0000000         3G PUD     D A G . . W R V
+
+So select "P4D/PUD" or "PGD" via pgtable_l5/4_enabled to correct it.
+
+Fixes: e8a62cc26ddf ("riscv: Implement sv48 support")
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Song Shuai <suagrfillet@gmail.com>
-Link: https://lore.kernel.org/r/20230809031023.3575407-1-songshuaishuai@tinylab.org
+Link: https://lore.kernel.org/r/20230712115740.943324-1-suagrfillet@gmail.com
 Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230830044129.11481-3-palmer@rivosinc.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/page.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/mm/ptdump.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/riscv/include/asm/page.h
-+++ b/arch/riscv/include/asm/page.h
-@@ -33,8 +33,8 @@
- #define PAGE_OFFSET		_AC(CONFIG_PAGE_OFFSET, UL)
- #endif
- /*
-- * By default, CONFIG_PAGE_OFFSET value corresponds to SV48 address space so
-- * define the PAGE_OFFSET value for SV39.
-+ * By default, CONFIG_PAGE_OFFSET value corresponds to SV57 address space so
-+ * define the PAGE_OFFSET value for SV48 and SV39.
-  */
- #define PAGE_OFFSET_L4		_AC(0xffffaf8000000000, UL)
- #define PAGE_OFFSET_L3		_AC(0xffffffd800000000, UL)
+--- a/arch/riscv/mm/ptdump.c
++++ b/arch/riscv/mm/ptdump.c
+@@ -384,6 +384,9 @@ static int __init ptdump_init(void)
+ 
+ 	kernel_ptd_info.base_addr = KERN_VIRT_START;
+ 
++	pg_level[1].name = pgtable_l5_enabled ? "P4D" : "PGD";
++	pg_level[2].name = pgtable_l4_enabled ? "PUD" : "PGD";
++
+ 	for (i = 0; i < ARRAY_SIZE(pg_level); i++)
+ 		for (j = 0; j < ARRAY_SIZE(pte_bits); j++)
+ 			pg_level[i].mask |= pte_bits[j].mask;
 
 
