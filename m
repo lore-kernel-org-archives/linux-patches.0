@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23DA33E9;
-	Fri, 24 Nov 2023 18:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FB93A8C3;
+	Fri, 24 Nov 2023 18:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5do4TBr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D513C433C7;
-	Fri, 24 Nov 2023 18:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh4O97wt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A5BC433C7;
+	Fri, 24 Nov 2023 18:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850619;
-	bh=OEgZpvJ2P1IadqKeti0AS30rS5JQBc9IG/heAW9KeaQ=;
+	s=korg; t=1700850622;
+	bh=V86Mz79jzXKpNUHj1yeyYxQzdtaHnIXJZ2w5VGA3EaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5do4TBrCkLIp/zcCwiqJhGagt15nmM54J6btlF5sJIAx+7k9q3XZf/DTBAiOFWGI
-	 A1p8Uexd7I661BCxbebtKLc9UOjp4T7xuFjEpj/FhE3qirKVnrk1WmCgO6P/Wx7GZH
-	 p/Q/vCCMGdrERQytX2qTkMWW3KiyCU2o6cKhL5dg=
+	b=Fh4O97wt/O02WYcjYKjF5EK6n1QCLavuD31HvD5SGepgmSyWukALh1F3wTj2yenbP
+	 bC5QmL2qWq4cPAuuPiM+XlfRdbHcN/Kx1m9+hdQ8646Wyjw7EEmXsipd6fX60vf4Gf
+	 rxKCLI2dMjUXwvxuoZPtD/l5Kjl9ZoGuRwgtBcys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 122/491] f2fs: fix error handling of __get_node_page
-Date: Fri, 24 Nov 2023 17:45:58 +0000
-Message-ID: <20231124172028.183809533@linuxfoundation.org>
+Subject: [PATCH 6.5 123/491] usb: host: xhci: Avoid XHCI resume delay if SSUSB device is not present
+Date: Fri, 24 Nov 2023 17:45:59 +0000
+Message-ID: <20231124172028.209889549@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,34 +42,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-[ Upstream commit 9b4c8dd99fe48721410741651d426015e03a4b7a ]
+[ Upstream commit 6add6dd345cb754ce18ff992c7264cabf31e59f6 ]
 
-Use f2fs_handle_error to record inconsistent node block error
-and return -EFSCORRUPTED instead of -EINVAL.
+There is a 120ms delay implemented for allowing the XHCI host controller to
+detect a U3 wakeup pulse.  The intention is to wait for the device to retry
+the wakeup event if the USB3 PORTSC doesn't reflect the RESUME link status
+by the time it is checked.  As per the USB3 specification:
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+  tU3WakeupRetryDelay ("Table 7-12. LTSSM State Transition Timeouts")
+
+This would allow the XHCI resume sequence to determine if the root hub
+needs to be also resumed.  However, in case there is no device connected,
+or if there is only a HSUSB device connected, this delay would still affect
+the overall resume timing.
+
+Since this delay is solely for detecting U3 wake events (USB3 specific)
+then ignore this delay for the disconnected case and the HSUSB connected
+only case.
+
+[skip helper function, rename usb3_connected variable -Mathias ]
+
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20231019102924.2797346-20-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 248764badcde8..ed963c56ac32a 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1467,7 +1467,8 @@ static struct page *__get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid,
- 			  ofs_of_node(page), cpver_of_node(page),
- 			  next_blkaddr_of_node(page));
- 	set_sbi_flag(sbi, SBI_NEED_FSCK);
--	err = -EINVAL;
-+	f2fs_handle_error(sbi, ERROR_INCONSISTENT_FOOTER);
-+	err = -EFSCORRUPTED;
- out_err:
- 	ClearPageUptodate(page);
- out_put_err:
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index fae994f679d45..82aab2f9adbb8 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -968,6 +968,7 @@ int xhci_resume(struct xhci_hcd *xhci, pm_message_t msg)
+ 	int			retval = 0;
+ 	bool			comp_timer_running = false;
+ 	bool			pending_portevent = false;
++	bool			suspended_usb3_devs = false;
+ 	bool			reinit_xhc = false;
+ 
+ 	if (!hcd->state)
+@@ -1115,10 +1116,17 @@ int xhci_resume(struct xhci_hcd *xhci, pm_message_t msg)
+ 		/*
+ 		 * Resume roothubs only if there are pending events.
+ 		 * USB 3 devices resend U3 LFPS wake after a 100ms delay if
+-		 * the first wake signalling failed, give it that chance.
++		 * the first wake signalling failed, give it that chance if
++		 * there are suspended USB 3 devices.
+ 		 */
++		if (xhci->usb3_rhub.bus_state.suspended_ports ||
++		    xhci->usb3_rhub.bus_state.bus_suspended)
++			suspended_usb3_devs = true;
++
+ 		pending_portevent = xhci_pending_portevent(xhci);
+-		if (!pending_portevent && msg.event == PM_EVENT_AUTO_RESUME) {
++
++		if (suspended_usb3_devs && !pending_portevent &&
++		    msg.event == PM_EVENT_AUTO_RESUME) {
+ 			msleep(120);
+ 			pending_portevent = xhci_pending_portevent(xhci);
+ 		}
 -- 
 2.42.0
 
