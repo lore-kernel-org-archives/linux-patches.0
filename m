@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEB939FE8;
-	Fri, 24 Nov 2023 18:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA15C381DF;
+	Fri, 24 Nov 2023 18:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VuUr1NtX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFFAC433C7;
-	Fri, 24 Nov 2023 18:10:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7WghDHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4F1C433C7;
+	Fri, 24 Nov 2023 18:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849434;
-	bh=Zan7lo5URcVmlZJJmbpzUe9oTo9bHt91SshWpNUxCVo=;
+	s=korg; t=1700849436;
+	bh=oDGTkbBH6Mw3zEzNed5xOHq15R5a1e93wepHCjp8ltA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuUr1NtXD8rrtUyJPxEV88uOdgyXZgBayTlPsxylFHXxUU+gsIN8BC3WrwlrqMmbD
-	 2ZBScE3/TA/FzQ6QsEZceBmrSjFExBQq2K93iesSMU89MuPRods308ZodxIO7Uy9Y+
-	 tEf0iQU3lzxehPCRRklPqmtIpTnDJomCUeOsOHU0=
+	b=i7WghDHyDC0EjTbzHoszhv2j0oPAZ4DRJSp2RV36+xWOytUCoT0I605tAPL+oukiX
+	 O6L+9ZMKiiUQUJwiXizht1LsUlA8JS45jtrZ9mYNT3XsuxeuWEhJ3sgJ4pS331vdJw
+	 F0BfcPKZHAiyfghrvO/xauoYIp+ZjVqJLQe8Q4Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Hao Sun <sunhao.th@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/530] bpf: handle ldimm64 properly in check_cfg()
-Date: Fri, 24 Nov 2023 17:45:45 +0000
-Message-ID: <20231124172033.525849645@linuxfoundation.org>
+Subject: [PATCH 6.6 180/530] bpf: fix precision backtracking instruction iteration
+Date: Fri, 24 Nov 2023 17:45:46 +0000
+Message-ID: <20231124172033.554177312@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -46,149 +45,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 3feb263bb516ee7e1da0acd22b15afbb9a7daa19 ]
+[ Upstream commit 4bb7ea946a370707315ab774432963ce47291946 ]
 
-ldimm64 instructions are 16-byte long, and so have to be handled
-appropriately in check_cfg(), just like the rest of BPF verifier does.
+Fix an edge case in __mark_chain_precision() which prematurely stops
+backtracking instructions in a state if it happens that state's first
+and last instruction indexes are the same. This situations doesn't
+necessarily mean that there were no instructions simulated in a state,
+but rather that we starting from the instruction, jumped around a bit,
+and then ended up at the same instruction before checkpointing or
+marking precision.
 
-This has implications in three places:
-  - when determining next instruction for non-jump instructions;
-  - when determining next instruction for callback address ldimm64
-    instructions (in visit_func_call_insn());
-  - when checking for unreachable instructions, where second half of
-    ldimm64 is expected to be unreachable;
+To distinguish between these two possible situations, we need to consult
+jump history. If it's empty or contain a single record "bridging" parent
+state and first instruction of processed state, then we indeed
+backtracked all instructions in this state. But if history is not empty,
+we are definitely not done yet.
 
-We take this also as an opportunity to report jump into the middle of
-ldimm64. And adjust few test_verifier tests accordingly.
+Move this logic inside get_prev_insn_idx() to contain it more nicely.
+Use -ENOENT return code to denote "we are out of instructions"
+situation.
+
+This bug was exposed by verifier_loop1.c's bounded_recursion subtest, once
+the next fix in this patch set is applied.
 
 Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Reported-by: Hao Sun <sunhao.th@gmail.com>
-Fixes: 475fb78fbf48 ("bpf: verifier (add branch/goto checks)")
+Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20231110002638.4168352-2-andrii@kernel.org
+Link: https://lore.kernel.org/r/20231110002638.4168352-3-andrii@kernel.org
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h                           |  8 ++++--
- kernel/bpf/verifier.c                         | 27 ++++++++++++++-----
- .../testing/selftests/bpf/verifier/ld_imm64.c |  8 +++---
- 3 files changed, 30 insertions(+), 13 deletions(-)
+ kernel/bpf/verifier.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 76055186d6248..392f581af2cee 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -903,10 +903,14 @@ bpf_ctx_record_field_size(struct bpf_insn_access_aux *aux, u32 size)
- 	aux->ctx_field_size = size;
- }
- 
-+static bool bpf_is_ldimm64(const struct bpf_insn *insn)
-+{
-+	return insn->code == (BPF_LD | BPF_IMM | BPF_DW);
-+}
-+
- static inline bool bpf_pseudo_func(const struct bpf_insn *insn)
- {
--	return insn->code == (BPF_LD | BPF_IMM | BPF_DW) &&
--	       insn->src_reg == BPF_PSEUDO_FUNC;
-+	return bpf_is_ldimm64(insn) && insn->src_reg == BPF_PSEUDO_FUNC;
- }
- 
- struct bpf_prog_ops {
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 6542685d6772a..0b3a2534196e0 100644
+index 0b3a2534196e0..a35e9b52280b2 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -14787,15 +14787,16 @@ static int visit_func_call_insn(int t, struct bpf_insn *insns,
- 				struct bpf_verifier_env *env,
- 				bool visit_callee)
+@@ -3201,12 +3201,29 @@ static int push_jmp_history(struct bpf_verifier_env *env,
+ 
+ /* Backtrack one insn at a time. If idx is not at the top of recorded
+  * history then previous instruction came from straight line execution.
++ * Return -ENOENT if we exhausted all instructions within given state.
++ *
++ * It's legal to have a bit of a looping with the same starting and ending
++ * insn index within the same state, e.g.: 3->4->5->3, so just because current
++ * instruction index is the same as state's first_idx doesn't mean we are
++ * done. If there is still some jump history left, we should keep going. We
++ * need to take into account that we might have a jump history between given
++ * state's parent and itself, due to checkpointing. In this case, we'll have
++ * history entry recording a jump from last instruction of parent state and
++ * first instruction of given state.
+  */
+ static int get_prev_insn_idx(struct bpf_verifier_state *st, int i,
+ 			     u32 *history)
  {
--	int ret;
-+	int ret, insn_sz;
+ 	u32 cnt = *history;
  
--	ret = push_insn(t, t + 1, FALLTHROUGH, env, false);
-+	insn_sz = bpf_is_ldimm64(&insns[t]) ? 2 : 1;
-+	ret = push_insn(t, t + insn_sz, FALLTHROUGH, env, false);
- 	if (ret)
- 		return ret;
- 
--	mark_prune_point(env, t + 1);
-+	mark_prune_point(env, t + insn_sz);
- 	/* when we exit from subprog, we need to record non-linear history */
--	mark_jmp_point(env, t + 1);
-+	mark_jmp_point(env, t + insn_sz);
- 
- 	if (visit_callee) {
- 		mark_prune_point(env, t);
-@@ -14817,15 +14818,17 @@ static int visit_func_call_insn(int t, struct bpf_insn *insns,
- static int visit_insn(int t, struct bpf_verifier_env *env)
- {
- 	struct bpf_insn *insns = env->prog->insnsi, *insn = &insns[t];
--	int ret, off;
-+	int ret, off, insn_sz;
- 
- 	if (bpf_pseudo_func(insn))
- 		return visit_func_call_insn(t, insns, env, true);
- 
- 	/* All non-branch instructions have a single fall-through edge. */
- 	if (BPF_CLASS(insn->code) != BPF_JMP &&
--	    BPF_CLASS(insn->code) != BPF_JMP32)
--		return push_insn(t, t + 1, FALLTHROUGH, env, false);
-+	    BPF_CLASS(insn->code) != BPF_JMP32) {
-+		insn_sz = bpf_is_ldimm64(insn) ? 2 : 1;
-+		return push_insn(t, t + insn_sz, FALLTHROUGH, env, false);
++	if (i == st->first_insn_idx) {
++		if (cnt == 0)
++			return -ENOENT;
++		if (cnt == 1 && st->jmp_history[0].idx == i)
++			return -ENOENT;
 +	}
- 
- 	switch (BPF_OP(insn->code)) {
- 	case BPF_EXIT:
-@@ -14944,11 +14947,21 @@ static int check_cfg(struct bpf_verifier_env *env)
- 	}
- 
- 	for (i = 0; i < insn_cnt; i++) {
-+		struct bpf_insn *insn = &env->prog->insnsi[i];
 +
- 		if (insn_state[i] != EXPLORED) {
- 			verbose(env, "unreachable insn %d\n", i);
- 			ret = -EINVAL;
- 			goto err_free;
- 		}
-+		if (bpf_is_ldimm64(insn)) {
-+			if (insn_state[i + 1] != 0) {
-+				verbose(env, "jump into the middle of ldimm64 insn %d\n", i);
-+				ret = -EINVAL;
-+				goto err_free;
-+			}
-+			i++; /* skip second half of ldimm64 */
-+		}
- 	}
- 	ret = 0; /* cfg looks good */
- 
-diff --git a/tools/testing/selftests/bpf/verifier/ld_imm64.c b/tools/testing/selftests/bpf/verifier/ld_imm64.c
-index f9297900cea6d..78f19c255f20b 100644
---- a/tools/testing/selftests/bpf/verifier/ld_imm64.c
-+++ b/tools/testing/selftests/bpf/verifier/ld_imm64.c
-@@ -9,8 +9,8 @@
- 	BPF_MOV64_IMM(BPF_REG_0, 2),
- 	BPF_EXIT_INSN(),
- 	},
--	.errstr = "invalid BPF_LD_IMM insn",
--	.errstr_unpriv = "R1 pointer comparison",
-+	.errstr = "jump into the middle of ldimm64 insn 1",
-+	.errstr_unpriv = "jump into the middle of ldimm64 insn 1",
- 	.result = REJECT,
- },
- {
-@@ -23,8 +23,8 @@
- 	BPF_LD_IMM64(BPF_REG_0, 1),
- 	BPF_EXIT_INSN(),
- 	},
--	.errstr = "invalid BPF_LD_IMM insn",
--	.errstr_unpriv = "R1 pointer comparison",
-+	.errstr = "jump into the middle of ldimm64 insn 1",
-+	.errstr_unpriv = "jump into the middle of ldimm64 insn 1",
- 	.result = REJECT,
- },
- {
+ 	if (cnt && st->jmp_history[cnt - 1].idx == i) {
+ 		i = st->jmp_history[cnt - 1].prev_idx;
+ 		(*history)--;
+@@ -4081,10 +4098,10 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
+ 				 * Nothing to be tracked further in the parent state.
+ 				 */
+ 				return 0;
+-			if (i == first_idx)
+-				break;
+ 			subseq_idx = i;
+ 			i = get_prev_insn_idx(st, i, &history);
++			if (i == -ENOENT)
++				break;
+ 			if (i >= env->prog->len) {
+ 				/* This can happen if backtracking reached insn 0
+ 				 * and there are still reg_mask or stack_mask
 -- 
 2.42.0
 
