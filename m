@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F33B39FDD;
-	Fri, 24 Nov 2023 18:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EF539FDD;
+	Fri, 24 Nov 2023 18:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIiTBbVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6ABC433C7;
-	Fri, 24 Nov 2023 18:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rw5rF2GT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA35C433C7;
+	Fri, 24 Nov 2023 18:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849123;
-	bh=eZAghahEyEbr5TLOctdl7aM5gWb25B4zAeFu3jhi7zQ=;
+	s=korg; t=1700849125;
+	bh=JBecCt/QIIbQy7wzSmETHLOmx/eOebnsuUSwGhdupSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIiTBbVXx/wI8ZSrO6A8+yhzaBXofwIcx7HgfmAdnyXkKBUAlI/OEssHNz5as6gx1
-	 w3AQpqAqsihGJxPo6zoq36Vl0/K4fpZzRTpFiOWs9sgBDeCKwS2SqIgdzcwjUj7t+e
-	 xBp4olZX9g3Ug3LRzvs59IPMseSeKqnOjjCylRkM=
+	b=rw5rF2GTc3UEriFVf9buoakAA0Yseabsa0hPyEoz0aMn8lHdCe099PmqamKKBnpQv
+	 ccJ0VjwxxLncVHDK6DD8N19d4N2/PEzoPDt6gL2AHipcQmZMmQ9d4c5wbqeUz0pHSW
+	 IsT4PSwGHcum5VkFErTR48pWAMrqdmy4jbiexh+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/530] wifi: ath12k: mhi: fix potential memory leak in ath12k_mhi_register()
-Date: Fri, 24 Nov 2023 17:43:18 +0000
-Message-ID: <20231124172029.040858492@linuxfoundation.org>
+Subject: [PATCH 6.6 023/530] wifi: ath12k: fix possible out-of-bound read in ath12k_htt_pull_ppdu_stats()
+Date: Fri, 24 Nov 2023 17:43:09 +0000
+Message-ID: <20231124172028.784676276@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -42,58 +43,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 47c27aa7ded4b8ead19b3487cc42a6185b762903 ]
+[ Upstream commit 1bc44a505a229bb1dd4957e11aa594edeea3690e ]
 
-mhi_alloc_controller() allocates a memory space for mhi_ctrl. When some
-errors occur, mhi_ctrl should be freed by mhi_free_controller() and set
-ab_pci->mhi_ctrl = NULL.
+len is extracted from HTT message and could be an unexpected value in
+case errors happen, so add validation before using to avoid possible
+out-of-bound read in the following message iteration and parsing.
 
-We can fix it by calling mhi_free_controller() when the failure happens
-and set ab_pci->mhi_ctrl = NULL in all of the places where we call
-mhi_free_controller().
+The same issue also applies to ppdu_info->ppdu_stats.common.num_users,
+so validate it before using too.
 
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
+These are found during code review.
+
+Compile test only.
+
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230922021036.3604157-1-make_ruc2021@163.com
+Link: https://lore.kernel.org/r/20230901015602.45112-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mhi.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mhi.c b/drivers/net/wireless/ath/ath12k/mhi.c
-index 42f1140baa4fe..f83d3e09ae366 100644
---- a/drivers/net/wireless/ath/ath12k/mhi.c
-+++ b/drivers/net/wireless/ath/ath12k/mhi.c
-@@ -370,8 +370,7 @@ int ath12k_mhi_register(struct ath12k_pci *ab_pci)
- 	ret = ath12k_mhi_get_msi(ab_pci);
- 	if (ret) {
- 		ath12k_err(ab, "failed to get msi for mhi\n");
--		mhi_free_controller(mhi_ctrl);
--		return ret;
-+		goto free_controller;
- 	}
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 690a0107f0d68..e1c84fc974608 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -1555,6 +1555,13 @@ static int ath12k_htt_pull_ppdu_stats(struct ath12k_base *ab,
  
- 	mhi_ctrl->iova_start = 0;
-@@ -388,11 +387,15 @@ int ath12k_mhi_register(struct ath12k_pci *ab_pci)
- 	ret = mhi_register_controller(mhi_ctrl, ab->hw_params->mhi_config);
- 	if (ret) {
- 		ath12k_err(ab, "failed to register to mhi bus, err = %d\n", ret);
--		mhi_free_controller(mhi_ctrl);
--		return ret;
-+		goto free_controller;
- 	}
- 
- 	return 0;
+ 	msg = (struct ath12k_htt_ppdu_stats_msg *)skb->data;
+ 	len = le32_get_bits(msg->info, HTT_T2H_PPDU_STATS_INFO_PAYLOAD_SIZE);
++	if (len > (skb->len - struct_size(msg, data, 0))) {
++		ath12k_warn(ab,
++			    "HTT PPDU STATS event has unexpected payload size %u, should be smaller than %u\n",
++			    len, skb->len);
++		return -EINVAL;
++	}
 +
-+free_controller:
-+	mhi_free_controller(mhi_ctrl);
-+	ab_pci->mhi_ctrl = NULL;
-+	return ret;
- }
+ 	pdev_id = le32_get_bits(msg->info, HTT_T2H_PPDU_STATS_INFO_PDEV_ID);
+ 	ppdu_id = le32_to_cpu(msg->ppdu_id);
  
- void ath12k_mhi_unregister(struct ath12k_pci *ab_pci)
+@@ -1583,6 +1590,16 @@ static int ath12k_htt_pull_ppdu_stats(struct ath12k_base *ab,
+ 		goto exit;
+ 	}
+ 
++	if (ppdu_info->ppdu_stats.common.num_users >= HTT_PPDU_STATS_MAX_USERS) {
++		spin_unlock_bh(&ar->data_lock);
++		ath12k_warn(ab,
++			    "HTT PPDU STATS event has unexpected num_users %u, should be smaller than %u\n",
++			    ppdu_info->ppdu_stats.common.num_users,
++			    HTT_PPDU_STATS_MAX_USERS);
++		ret = -EINVAL;
++		goto exit;
++	}
++
+ 	/* back up data rate tlv for all peers */
+ 	if (ppdu_info->frame_type == HTT_STATS_PPDU_FTYPE_DATA &&
+ 	    (ppdu_info->tlv_bitmap & (1 << HTT_PPDU_STATS_TAG_USR_COMMON)) &&
 -- 
 2.42.0
 
