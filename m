@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AF92D787;
-	Fri, 24 Nov 2023 18:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1208833CFB;
+	Fri, 24 Nov 2023 18:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sf1adV/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3667C433C8;
-	Fri, 24 Nov 2023 18:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfx4d0oV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D00C433C7;
+	Fri, 24 Nov 2023 18:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851254;
-	bh=fP4AmtSQSVpgiXc7Fmzl34G1Jzz3kEZVVaaYyw/qbgU=;
+	s=korg; t=1700851256;
+	bh=xOzFa5DV11m4JbM6euWUvptTL1fOXZ5HZwAtmdE2/Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sf1adV/r9PwkWJaR3br522QbRb3C4QtnP2SAmyQ7hJ9mVc7AtVSWhpDkC26PrBBaA
-	 LmDdkG9gb7vdh9PhXnH6rYCPdTyb5CkjWTe1L+Ua5+x6udvjxLQqrFGvaeDZqJ6Dpv
-	 1Gbs2TuWhIjd8swk+Oy/0CSOvxtzectfOnjapI4o=
+	b=dfx4d0oVPckUP6IE6WvyO37FQY+Y4Vo05RgvYM2KOWm9N7FUXYIVHCIM9zdv7noxf
+	 dA0Rudxk/9xXY9yTNM+ZDvGzv4oKBpVUjMiZXocPMgjaQrqpA/XHcchuCBqrM7WTdh
+	 JwDovLtk27/cDlPtDUPFCyKzow5+tBObIqMsp8NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Paul E. McKenney" <paulmck@kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Valentin Schneider <vschneid@redhat.com>,
-	kernel-team@android.com,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	John Stultz <jstultz@google.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 374/491] torture: Add lock_torture writer_fifo module parameter
-Date: Fri, 24 Nov 2023 17:50:10 +0000
-Message-ID: <20231124172035.822803455@linuxfoundation.org>
+Subject: [PATCH 6.5 375/491] torture: Make torture_hrtimeout_*() use TASK_IDLE
+Date: Fri, 24 Nov 2023 17:50:11 +0000
+Message-ID: <20231124172035.862782124@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -49,122 +41,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dietmar Eggemann <dietmar.eggemann@arm.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 5d248bb39fe1388943acb6510f8f48fa5570e0ec ]
+[ Upstream commit 872948c665f50a1446e8a34b1ed57bb0b3a9ca4a ]
 
-This commit adds a module parameter that causes the locktorture writer
-to run at real-time priority.
+Given that it is expected that more code will use torture_hrtimeout_*(),
+including for longer timeouts, make it use TASK_IDLE instead of
+TASK_UNINTERRUPTIBLE.
 
-To use it:
-insmod /lib/modules/torture.ko random_shuffle=1
-insmod /lib/modules/locktorture.ko torture_type=mutex_lock rt_boost=1 rt_boost_factor=50 nested_locks=3 writer_fifo=1
-													^^^^^^^^^^^^^
-
-A predecessor to this patch has been helpful to uncover issues with the
-proxy-execution series.
-
-[ paulmck: Remove locktorture-specific code from kernel/torture.c. ]
-
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Josh Triplett <josh@joshtriplett.org>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: kernel-team@android.com
-Signed-off-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-[jstultz: Include header change to build, reword commit message]
-Signed-off-by: John Stultz <jstultz@google.com>
-Acked-by: Davidlohr Bueso <dave@stgolabs.net>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Stable-dep-of: cca42bd8eb1b ("rcutorture: Fix stuttering races and other issues")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |  4 ++++
- kernel/locking/locktorture.c                    | 12 +++++++-----
- kernel/torture.c                                |  3 ++-
- 3 files changed, 13 insertions(+), 6 deletions(-)
+ kernel/torture.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index b951b4c2808f1..5711129686d10 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -2938,6 +2938,10 @@
- 	locktorture.torture_type= [KNL]
- 			Specify the locking implementation to test.
- 
-+	locktorture.writer_fifo= [KNL]
-+			Run the write-side locktorture kthreads at
-+			sched_set_fifo() real-time priority.
-+
- 	locktorture.verbose= [KNL]
- 			Enable additional printk() statements.
- 
-diff --git a/kernel/locking/locktorture.c b/kernel/locking/locktorture.c
-index 949d3deae5062..270c7f80ce84c 100644
---- a/kernel/locking/locktorture.c
-+++ b/kernel/locking/locktorture.c
-@@ -45,6 +45,7 @@ torture_param(int, stutter, 5, "Number of jiffies to run/halt test, 0=disable");
- torture_param(int, rt_boost, 2,
- 		   "Do periodic rt-boost. 0=Disable, 1=Only for rt_mutex, 2=For all lock types.");
- torture_param(int, rt_boost_factor, 50, "A factor determining how often rt-boost happens.");
-+torture_param(int, writer_fifo, 0, "Run writers at sched_set_fifo() priority");
- torture_param(int, verbose, 1, "Enable verbose debugging printk()s");
- torture_param(int, nested_locks, 0, "Number of nested locks (max = 8)");
- /* Going much higher trips "BUG: MAX_LOCKDEP_CHAIN_HLOCKS too low!" errors */
-@@ -809,7 +810,8 @@ static int lock_torture_writer(void *arg)
- 	bool skip_main_lock;
- 
- 	VERBOSE_TOROUT_STRING("lock_torture_writer task started");
--	set_user_nice(current, MAX_NICE);
-+	if (!rt_task(current))
-+		set_user_nice(current, MAX_NICE);
- 
- 	do {
- 		if ((torture_random(&rand) & 0xfffff) == 0)
-@@ -1015,8 +1017,7 @@ static void lock_torture_cleanup(void)
- 
- 	if (writer_tasks) {
- 		for (i = 0; i < cxt.nrealwriters_stress; i++)
--			torture_stop_kthread(lock_torture_writer,
--					     writer_tasks[i]);
-+			torture_stop_kthread(lock_torture_writer, writer_tasks[i]);
- 		kfree(writer_tasks);
- 		writer_tasks = NULL;
- 	}
-@@ -1244,8 +1245,9 @@ static int __init lock_torture_init(void)
- 			goto create_reader;
- 
- 		/* Create writer. */
--		firsterr = torture_create_kthread(lock_torture_writer, &cxt.lwsa[i],
--						  writer_tasks[i]);
-+		firsterr = torture_create_kthread_cb(lock_torture_writer, &cxt.lwsa[i],
-+						     writer_tasks[i],
-+						     writer_fifo ? sched_set_fifo : NULL);
- 		if (torture_init_error(firsterr))
- 			goto unwind;
- 
 diff --git a/kernel/torture.c b/kernel/torture.c
-index 1da48f3816f61..e06b03e987c9f 100644
+index e06b03e987c9f..4a2e0512f9197 100644
 --- a/kernel/torture.c
 +++ b/kernel/torture.c
-@@ -37,6 +37,7 @@
- #include <linux/ktime.h>
- #include <asm/byteorder.h>
- #include <linux/torture.h>
-+#include <linux/sched/rt.h>
- #include "rcu/rcu.h"
+@@ -90,7 +90,7 @@ int torture_hrtimeout_ns(ktime_t baset_ns, u32 fuzzt_ns, struct torture_random_s
  
- MODULE_LICENSE("GPL");
-@@ -728,7 +729,7 @@ bool stutter_wait(const char *title)
- 	cond_resched_tasks_rcu_qs();
- 	spt = READ_ONCE(stutter_pause_test);
- 	for (; spt; spt = READ_ONCE(stutter_pause_test)) {
--		if (!ret) {
-+		if (!ret && !rt_task(current)) {
- 			sched_set_normal(current, MAX_NICE);
- 			ret = true;
- 		}
+ 	if (trsp)
+ 		hto += (torture_random(trsp) >> 3) % fuzzt_ns;
+-	set_current_state(TASK_UNINTERRUPTIBLE);
++	set_current_state(TASK_IDLE);
+ 	return schedule_hrtimeout(&hto, HRTIMER_MODE_REL);
+ }
+ EXPORT_SYMBOL_GPL(torture_hrtimeout_ns);
 -- 
 2.42.0
 
