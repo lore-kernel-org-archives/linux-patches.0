@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB813173F;
-	Fri, 24 Nov 2023 19:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271843173F;
+	Fri, 24 Nov 2023 19:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCHX/FXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B90C433C8;
-	Fri, 24 Nov 2023 19:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBm7YZbj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A533CC433C8;
+	Fri, 24 Nov 2023 19:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853404;
-	bh=NcFqDPo/ApuM8+8kYu5M6a9zcgfGuIg1cMhNlzt7SoE=;
+	s=korg; t=1700853407;
+	bh=1lQ3cxbEbLGYBK+kRNcQuVYUfNJV+LkH2EsQ8GbyTJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCHX/FXJW4U9+tDOSR82enkkE9nXFEPGGjIB1j8yFQ+EH0QLuBd83OBWREacCUjyv
-	 d8xQHPeDIqk7YuaxS1EWpypEdMfqBilG9PNORNCNopceJEt7y8JmZiKIHWv7AmBB3k
-	 hNCw5dRqyTsAR8vn8q4VZoyyvfoxqBAmlwhu+5zs=
+	b=BBm7YZbja899356ZjIyQall4bCnwI57kLgXmCgsD661g4cADuwbIb8G8gU7ObUfpZ
+	 /4yT+di4Rlx4J4V/Cq1ZzrVF/VK2Rq/cFPL76Iu7/MfK6qu/eRqdPW+vS8ty2PIsgK
+	 NgbZICw9iMeTw2IcozWkcCLIKlQOBnngowalVYbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 5.15 174/297] PCI/sysfs: Protect drivers D3cold preference from user space
-Date: Fri, 24 Nov 2023 17:53:36 +0000
-Message-ID: <20231124172006.343898217@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.15 175/297] watchdog: move softlockup_panic back to early_param
+Date: Fri, 24 Nov 2023 17:53:37 +0000
+Message-ID: <20231124172006.379962897@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,69 +41,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-commit 70b70a4307cccebe91388337b1c85735ce4de6ff upstream.
+commit 8b793bcda61f6c3ed4f5b2ded7530ef6749580cb upstream.
 
-struct pci_dev contains two flags which govern whether the device may
-suspend to D3cold:
+Setting softlockup_panic from do_sysctl_args() causes it to take effect
+later in boot.  The lockup detector is enabled before SMP is brought
+online, but do_sysctl_args runs afterwards.  If a user wants to set
+softlockup_panic on boot and have it trigger should a softlockup occur
+during onlining of the non-boot processors, they could do this prior to
+commit f117955a2255 ("kernel/watchdog.c: convert {soft/hard}lockup boot
+parameters to sysctl aliases").  However, after this commit the value
+of softlockup_panic is set too late to be of help for this type of
+problem.  Restore the prior behavior.
 
-* no_d3cold provides an opt-out for drivers (e.g. if a device is known
-  to not wake from D3cold)
-
-* d3cold_allowed provides an opt-out for user space (default is true,
-  user space may set to false)
-
-Since commit 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend"),
-the user space setting overwrites the driver setting.  Essentially user
-space is trusted to know better than the driver whether D3cold is
-working.
-
-That feels unsafe and wrong.  Assume that the change was introduced
-inadvertently and do not overwrite no_d3cold when d3cold_allowed is
-modified.  Instead, consider d3cold_allowed in addition to no_d3cold
-when choosing a suspend state for the device.
-
-That way, user space may opt out of D3cold if the driver hasn't, but it
-may no longer force an opt in if the driver has opted out.
-
-Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
-Link: https://lore.kernel.org/r/b8a7f4af2b73f6b506ad8ddee59d747cbf834606.1695025365.git.lukas@wunner.de
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: stable@vger.kernel.org	# v4.8+
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Cc: stable@vger.kernel.org
+Fixes: f117955a2255 ("kernel/watchdog.c: convert {soft/hard}lockup boot parameters to sysctl aliases")
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-acpi.c  |    2 +-
- drivers/pci/pci-sysfs.c |    5 +----
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ fs/proc/proc_sysctl.c |    1 -
+ kernel/watchdog.c     |    7 +++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -910,7 +910,7 @@ static pci_power_t acpi_pci_choose_state
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -1765,7 +1765,6 @@ static const struct sysctl_alias sysctl_
+ 	{"hung_task_panic",			"kernel.hung_task_panic" },
+ 	{"numa_zonelist_order",			"vm.numa_zonelist_order" },
+ 	{"softlockup_all_cpu_backtrace",	"kernel.softlockup_all_cpu_backtrace" },
+-	{"softlockup_panic",			"kernel.softlockup_panic" },
+ 	{ }
+ };
+ 
+--- a/kernel/watchdog.c
++++ b/kernel/watchdog.c
+@@ -183,6 +183,13 @@ static DEFINE_PER_CPU(unsigned long, hrt
+ static DEFINE_PER_CPU(unsigned long, hrtimer_interrupts_saved);
+ static unsigned long soft_lockup_nmi_warn;
+ 
++static int __init softlockup_panic_setup(char *str)
++{
++	softlockup_panic = simple_strtoul(str, NULL, 0);
++	return 1;
++}
++__setup("softlockup_panic=", softlockup_panic_setup);
++
+ static int __init nowatchdog_setup(char *str)
  {
- 	int acpi_state, d_max;
- 
--	if (pdev->no_d3cold)
-+	if (pdev->no_d3cold || !pdev->d3cold_allowed)
- 		d_max = ACPI_STATE_D3_HOT;
- 	else
- 		d_max = ACPI_STATE_D3_COLD;
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -508,10 +508,7 @@ static ssize_t d3cold_allowed_store(stru
- 		return -EINVAL;
- 
- 	pdev->d3cold_allowed = !!val;
--	if (pdev->d3cold_allowed)
--		pci_d3cold_enable(pdev);
--	else
--		pci_d3cold_disable(pdev);
-+	pci_bridge_d3_update(pdev);
- 
- 	pm_runtime_resume(dev);
- 
+ 	watchdog_user_enabled = 0;
 
 
