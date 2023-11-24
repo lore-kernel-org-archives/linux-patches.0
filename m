@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED7B33CC2;
-	Fri, 24 Nov 2023 18:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621822EAEA;
+	Fri, 24 Nov 2023 18:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJ/wYmqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A21BC433C7;
-	Fri, 24 Nov 2023 18:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjKuxclg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CD6C433CA;
+	Fri, 24 Nov 2023 18:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852389;
-	bh=IzwoVa6TI8/pPW8gxiH36syM73Qnh3Ezxlv/881zTVY=;
+	s=korg; t=1700852392;
+	bh=NZN8tu2jM3yddF5nJ2F4d8yUKLnYnqQOijZreO4F9I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJ/wYmquBiPilGMrx8Xs4lLYsttwEccpCG/objx8hBCH4QXv76TFlvCvWx0vpwxeN
-	 BdTrqkQCLKYYLlDZ7iwjjZk3+lBzBISM5/f1rH01oVgM49n16FwecPxEMdWxHbNpVD
-	 LgHkiKresBSqiCe7amoPE4UZm/YWRKC/4zHh38/c=
+	b=IjKuxclgr5WvIZPzS/WmeNA86lqGmpOASm+la8sxNvOS0Y807syL1EC5VDQyjeAZI
+	 G45lcG7k2unyexRaoyYvq82srpKzLv4v/EkrPIXxt0gabhjqXyr5gHEgmH9rW0jZgm
+	 ZUcllOaOOvwM7A+8nCqsWAc1bXMy5XyKaPBpZTYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Matthieu Baerts <matttbe@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	ChunHao Lin <hau@realtek.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 337/372] mptcp: fix setsockopt(IP_TOS) subflow locking
-Date: Fri, 24 Nov 2023 17:52:04 +0000
-Message-ID: <20231124172021.624375166@linuxfoundation.org>
+Subject: [PATCH 6.1 338/372] r8169: fix network lost after resume on DASH systems
+Date: Fri, 24 Nov 2023 17:52:05 +0000
+Message-ID: <20231124172021.654526443@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -43,42 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: ChunHao Lin <hau@realtek.com>
 
-commit 7679d34f97b7a09fd565f5729f79fd61b7c55329 upstream.
+commit 868c3b95afef4883bfb66c9397482da6840b5baf upstream.
 
-The MPTCP implementation of the IP_TOS socket option uses the lockless
-variant of the TOS manipulation helper and does not hold such lock at
-the helper invocation time.
+Device that support DASH may be reseted or powered off during suspend.
+So driver needs to handle DASH during system suspend and resume. Or
+DASH firmware will influence device behavior and causes network lost.
 
-Add the required locking.
-
-Fixes: ffcacff87cd6 ("mptcp: Support for IP_TOS for MPTCP setsockopt()")
+Fixes: b646d90053f8 ("r8169: magic.")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/457
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20231114-upstream-net-20231113-mptcp-misc-fixes-6-7-rc2-v1-4-7b9cd6a7b7f4@kernel.org
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: ChunHao Lin <hau@realtek.com>
+Link: https://lore.kernel.org/r/20231109173400.4573-3-hau@realtek.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -735,8 +735,11 @@ static int mptcp_setsockopt_v4_set_tos(s
- 	val = inet_sk(sk)->tos;
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
-+		bool slow;
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4613,10 +4613,16 @@ static void rtl8169_down(struct rtl8169_
+ 	rtl8169_cleanup(tp);
+ 	rtl_disable_exit_l1(tp);
+ 	rtl_prepare_power_down(tp);
++
++	if (tp->dash_type != RTL_DASH_NONE)
++		rtl8168_driver_stop(tp);
+ }
  
-+		slow = lock_sock_fast(ssk);
- 		__ip_sock_set_tos(ssk, val);
-+		unlock_sock_fast(ssk, slow);
- 	}
- 	release_sock(sk);
- 
+ static void rtl8169_up(struct rtl8169_private *tp)
+ {
++	if (tp->dash_type != RTL_DASH_NONE)
++		rtl8168_driver_start(tp);
++
+ 	pci_set_master(tp->pci_dev);
+ 	phy_init_hw(tp->phydev);
+ 	phy_resume(tp->phydev);
 
 
