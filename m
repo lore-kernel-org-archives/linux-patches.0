@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D79B364C8;
-	Fri, 24 Nov 2023 18:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F593A8EA;
+	Fri, 24 Nov 2023 18:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hzmu+A5o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98ECC433C7;
-	Fri, 24 Nov 2023 18:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKPLzcJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCE9C433C8;
+	Fri, 24 Nov 2023 18:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850699;
-	bh=kYujM92RtGt1HxCeuuzu2XGHeaAxrXGMrdPGgbQccks=;
+	s=korg; t=1700850701;
+	bh=EkXSuWQU0H9ZED3aif/5qLynFoYqnnM1X5BwHP7e5J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hzmu+A5olD0hanJ4QARuMG6WNVc+mfzITqEk8KRttwL8VhOjCFA5OxCIppeqNxueg
-	 m2OdwrwIhSJHrJ1qC5IGeWY2TWNcIgytHKyDNa6O5a1ljHnuzoHWEN3mwBIF2t5bLP
-	 /qltcMYoIDZGbaAawC9Bv1BCC33upHVU5qGFXQSA=
+	b=jKPLzcJ/3WsjbZr/ON1FOs8FANHXC05SIdpBMThPNEgE7INj099/drXt70UmwLD5P
+	 s5igVZaMfs/vRXTyRGHZXiroVG8fyfLZpq2ZMv8cBi3xfl9wPotlJRIjkO5oPpAz1G
+	 niT6Xf3OkNOSQnHC33uFEMQ3OiLkP/oQBiFjnYVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Peterson <rpeterso@redhat.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Jinghao Jia <jinghao@linux.ibm.com>,
+	Ruowen Qin <ruowenq2@illinois.edu>,
+	Jinghao Jia <jinghao7@illinois.edu>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 136/491] gfs2: ignore negated quota changes
-Date: Fri, 24 Nov 2023 17:46:12 +0000
-Message-ID: <20231124172028.584208922@linuxfoundation.org>
+Subject: [PATCH 6.5 154/491] samples/bpf: syscall_tp_user: Fix array out-of-bound access
+Date: Fri, 24 Nov 2023 17:46:30 +0000
+Message-ID: <20231124172029.102558433@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,89 +44,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bob Peterson <rpeterso@redhat.com>
+From: Jinghao Jia <jinghao@linux.ibm.com>
 
-[ Upstream commit 4c6a08125f2249531ec01783a5f4317d7342add5 ]
+[ Upstream commit 9220c3ef6fefbf18f24aeedb1142a642b3de0596 ]
 
-When lots of quota changes are made, there may be cases in which an
-inode's quota information is increased and then decreased, such as when
-blocks are added to a file, then deleted from it. If the timing is
-right, function do_qc can add pending quota changes to a transaction,
-then later, another call to do_qc can negate those changes, resulting
-in a net gain of 0. The quota_change information is recorded in the qc
-buffer (and qd element of the inode as well). The buffer is added to the
-transaction by the first call to do_qc, but a subsequent call changes
-the value from non-zero back to zero. At that point it's too late to
-remove the buffer_head from the transaction. Later, when the quota sync
-code is called, the zero-change qd element is discovered and flagged as
-an assert warning. If the fs is mounted with errors=panic, the kernel
-will panic.
+Commit 06744f24696e ("samples/bpf: Add openat2() enter/exit tracepoint
+to syscall_tp sample") added two more eBPF programs to support the
+openat2() syscall. However, it did not increase the size of the array
+that holds the corresponding bpf_links. This leads to an out-of-bound
+access on that array in the bpf_object__for_each_program loop and could
+corrupt other variables on the stack. On our testing QEMU, it corrupts
+the map1_fds array and causes the sample to fail:
 
-This is usually seen when files are truncated and the quota changes are
-negated by punch_hole/truncate which uses gfs2_quota_hold and
-gfs2_quota_unhold rather than block allocations that use gfs2_quota_lock
-and gfs2_quota_unlock which automatically do quota sync.
+  # ./syscall_tp
+  prog #0: map ids 4 5
+  verify map:4 val: 5
+  map_lookup failed: Bad file descriptor
 
-This patch solves the problem by adding a check to qd_check_sync such
-that net-zero quota changes already added to the transaction are no
-longer deemed necessary to be synced, and skipped.
+Dynamically allocate the array based on the number of programs reported
+by libbpf to prevent similar inconsistencies in the future
 
-In this case references are taken for the qd and the slot from do_qc
-so those need to be put. The normal sequence of events for a normal
-non-zero quota change is as follows:
-
-gfs2_quota_change
-   do_qc
-      qd_hold
-      slot_hold
-
-Later, when the changes are to be synced:
-
-gfs2_quota_sync
-   qd_fish
-      qd_check_sync
-         gets qd ref via lockref_get_not_dead
-   do_sync
-      do_qc(QC_SYNC)
-         qd_put
-	    lockref_put_or_lock
-   qd_unlock
-      qd_put
-         lockref_put_or_lock
-
-In the net-zero change case, we add a check to qd_check_sync so it puts
-the qd and slot references acquired in gfs2_quota_change and skip the
-unneeded sync.
-
-Signed-off-by: Bob Peterson <rpeterso@redhat.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 06744f24696e ("samples/bpf: Add openat2() enter/exit tracepoint to syscall_tp sample")
+Signed-off-by: Jinghao Jia <jinghao@linux.ibm.com>
+Signed-off-by: Ruowen Qin <ruowenq2@illinois.edu>
+Signed-off-by: Jinghao Jia <jinghao7@illinois.edu>
+Link: https://lore.kernel.org/r/20230917214220.637721-4-jinghao7@illinois.edu
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ samples/bpf/syscall_tp_user.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index 704192b736050..ccecb79eeaf8e 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -441,6 +441,17 @@ static int qd_check_sync(struct gfs2_sbd *sdp, struct gfs2_quota_data *qd,
- 	    (sync_gen && (qd->qd_sync_gen >= *sync_gen)))
- 		return 0;
+diff --git a/samples/bpf/syscall_tp_user.c b/samples/bpf/syscall_tp_user.c
+index 18c94c7e8a40e..7a09ac74fac07 100644
+--- a/samples/bpf/syscall_tp_user.c
++++ b/samples/bpf/syscall_tp_user.c
+@@ -48,7 +48,7 @@ static void verify_map(int map_id)
+ static int test(char *filename, int nr_tests)
+ {
+ 	int map0_fds[nr_tests], map1_fds[nr_tests], fd, i, j = 0;
+-	struct bpf_link *links[nr_tests * 4];
++	struct bpf_link **links = NULL;
+ 	struct bpf_object *objs[nr_tests];
+ 	struct bpf_program *prog;
  
-+	/*
-+	 * If qd_change is 0 it means a pending quota change was negated.
-+	 * We should not sync it, but we still have a qd reference and slot
-+	 * reference taken by gfs2_quota_change -> do_qc that need to be put.
-+	 */
-+	if (!qd->qd_change && test_and_clear_bit(QDF_CHANGE, &qd->qd_flags)) {
-+		slot_put(qd);
-+		qd_put(qd);
-+		return 0;
-+	}
+@@ -60,6 +60,19 @@ static int test(char *filename, int nr_tests)
+ 			goto cleanup;
+ 		}
+ 
++		/* One-time initialization */
++		if (!links) {
++			int nr_progs = 0;
 +
- 	if (!lockref_get_not_dead(&qd->qd_lockref))
- 		return 0;
++			bpf_object__for_each_program(prog, objs[i])
++				nr_progs += 1;
++
++			links = calloc(nr_progs * nr_tests, sizeof(struct bpf_link *));
++
++			if (!links)
++				goto cleanup;
++		}
++
+ 		/* load BPF program */
+ 		if (bpf_object__load(objs[i])) {
+ 			fprintf(stderr, "loading BPF object file failed\n");
+@@ -107,8 +120,12 @@ static int test(char *filename, int nr_tests)
+ 	}
  
+ cleanup:
+-	for (j--; j >= 0; j--)
+-		bpf_link__destroy(links[j]);
++	if (links) {
++		for (j--; j >= 0; j--)
++			bpf_link__destroy(links[j]);
++
++		free(links);
++	}
+ 
+ 	for (i--; i >= 0; i--)
+ 		bpf_object__close(objs[i]);
 -- 
 2.42.0
 
