@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2C835F04;
-	Fri, 24 Nov 2023 19:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A1A35F04;
+	Fri, 24 Nov 2023 19:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpDxcUVs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD475C433C8;
-	Fri, 24 Nov 2023 19:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYqQU5ah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC77C433C8;
+	Fri, 24 Nov 2023 19:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853125;
-	bh=4kyuHHCs59xrCvLwvXXkj4RKts1e3Zwlg19sGOrb2aw=;
+	s=korg; t=1700853127;
+	bh=Rf9UO1FTpXLldgPwS65MyYHFoXtIoKRclquYCvOV7Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WpDxcUVsquRGCVILCEpwyX3h5KILhzbdJD3MbEmrZvFHURW2F5N8ZyhAcrRis/4Io
-	 Ng+8gidz0rQLYdz2EEwicEzGUm3uCXkvXWnlvk1eS/cHpYIITl1i5VfxtKrbTaZz4m
-	 KSlYWctWAbIbRLxYPow7oNhsPGiD8jyVaBfet3i4=
+	b=tYqQU5ahSgK2YLp5n8zfEcQhIkU9aV2xXCr0PBMxGFLfZGbmCEahlWKKWLwqONxbo
+	 EEA3eqWmDMVk/ooRcQTN4kWkCvWx6H3uSNVMMkZoKldXlDsbwcE/sEzsORxl5HVV5F
+	 Gs50e2MO9ziwPspFxmBS0f+TAiWMQ2x6vryTeHo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+79d792676d8ac050949f@syzkaller.appspotmail.com,
-	Manas Ghandat <ghandatmanas@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/297] jfs: fix array-index-out-of-bounds in diAlloc
-Date: Fri, 24 Nov 2023 17:51:28 +0000
-Message-ID: <20231124172001.755054437@linuxfoundation.org>
+Subject: [PATCH 5.15 064/297] i3c: mipi-i3c-hci: Fix out of bounds access in hci_dma_irq_handler
+Date: Fri, 24 Nov 2023 17:51:46 +0000
+Message-ID: <20231124172002.480918788@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -43,46 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manas Ghandat <ghandatmanas@gmail.com>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit 05d9ea1ceb62a55af6727a69269a4fd310edf483 ]
+[ Upstream commit 45a832f989e520095429589d5b01b0c65da9b574 ]
 
-Currently there is not check against the agno of the iag while
-allocating new inodes to avoid fragmentation problem. Added the check
-which is required.
+Do not loop over ring headers in hci_dma_irq_handler() that are not
+allocated and enabled in hci_dma_init(). Otherwise out of bounds access
+will occur from rings->headers[i] access when i >= number of allocated
+ring headers.
 
-Reported-by: syzbot+79d792676d8ac050949f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=79d792676d8ac050949f
-Signed-off-by: Manas Ghandat <ghandatmanas@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20230921055704.1087277-5-jarkko.nikula@linux.intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_imap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index 4899663996d81..6ed2e1d4c894f 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -1320,7 +1320,7 @@ diInitInode(struct inode *ip, int iagno, int ino, int extno, struct iag * iagp)
- int diAlloc(struct inode *pip, bool dir, struct inode *ip)
- {
- 	int rc, ino, iagno, addext, extno, bitno, sword;
--	int nwords, rem, i, agno;
-+	int nwords, rem, i, agno, dn_numag;
- 	u32 mask, inosmap, extsmap;
- 	struct inode *ipimap;
- 	struct metapage *mp;
-@@ -1356,6 +1356,9 @@ int diAlloc(struct inode *pip, bool dir, struct inode *ip)
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index af873a9be0507..dd2dc00399600 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -734,7 +734,7 @@ static bool hci_dma_irq_handler(struct i3c_hci *hci, unsigned int mask)
+ 	unsigned int i;
+ 	bool handled = false;
  
- 	/* get the ag number of this iag */
- 	agno = BLKTOAG(JFS_IP(pip)->agstart, JFS_SBI(pip->i_sb));
-+	dn_numag = JFS_SBI(pip->i_sb)->bmap->db_numag;
-+	if (agno < 0 || agno > dn_numag)
-+		return -EIO;
+-	for (i = 0; mask && i < 8; i++) {
++	for (i = 0; mask && i < rings->total; i++) {
+ 		struct hci_rh_data *rh;
+ 		u32 status;
  
- 	if (atomic_read(&JFS_SBI(pip->i_sb)->bmap->db_active[agno])) {
- 		/*
 -- 
 2.42.0
 
