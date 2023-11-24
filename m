@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED9439FE3;
-	Fri, 24 Nov 2023 18:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE22C33CFD;
+	Fri, 24 Nov 2023 18:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnEI175c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB009C433C7;
-	Fri, 24 Nov 2023 18:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faZzly5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BAC8C433C9;
+	Fri, 24 Nov 2023 18:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850384;
-	bh=qjEugjxdST+Bc2IDZ3kSlcmNfMp4wRIFmfOVe4p5m1k=;
+	s=korg; t=1700850386;
+	bh=KO9VmKGpgWUo8OoolKNkIayRw54i0mOAStWbsLn1yZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnEI175ctn8DcycHksh5zeMtAAo+H/XnTd5yIOJXiTGMHUtV26jgFgQASoKvB85QZ
-	 Xzz91+mAzkRWB81ODkrUZYZ+hz8aLNPA31dPDy0h/lkWRrxLwkjfIrg6c/7wNbotrc
-	 qgB0KuBBHyacQy2fFryD3PYD2pra/gwoXBJmI9QY=
+	b=faZzly5GMKT9DNcjepNBc/yEhEkdU8QNkTQ6kC3+OadWwSRLEKM4Y0+YfGiwWPjuX
+	 jZfiug1Wk1R7EOLJE0JPj557utiPEd/5PEkTIp5JF3VMiup6TEmbjZwHk/06jiUo+E
+	 cSUrtdG/YxWM/DnM6XwBprsiHmnxbivxHlKMFC7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	David Laight <David.Laight@aculab.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 007/491] srcu: Fix srcu_struct node grpmask overflow on 64-bit systems
-Date: Fri, 24 Nov 2023 17:44:03 +0000
-Message-ID: <20231124172024.892564462@linuxfoundation.org>
+Subject: [PATCH 6.5 008/491] selftests/lkdtm: Disable CONFIG_UBSAN_TRAP in test config
+Date: Fri, 24 Nov 2023 17:44:04 +0000
+Message-ID: <20231124172024.926578507@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -40,70 +36,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-[ Upstream commit d8d5b7bf6f2105883bbd91bbd4d5b67e4e3dff71 ]
+[ Upstream commit cf77bf698887c3b9ebed76dea492b07a3c2c7632 ]
 
-The value of a bitwise expression 1 << (cpu - sdp->mynode->grplo)
-is subject to overflow due to a failure to cast operands to a larger
-data type before performing the bitwise operation.
+The lkdtm selftest config fragment enables CONFIG_UBSAN_TRAP to make the
+ARRAY_BOUNDS test kill the calling process when an out-of-bound access
+is detected by UBSAN. However, after this [1] commit, UBSAN is triggered
+under many new scenarios that weren't detected before, such as in struct
+definitions with fixed-size trailing arrays used as flexible arrays. As
+a result, CONFIG_UBSAN_TRAP=y has become a very aggressive option to
+enable except for specific situations.
 
-The maximum result of this subtraction is defined by the RCU_FANOUT_LEAF
-Kconfig option, which on 64-bit systems defaults to 16 (resulting in a
-maximum shift of 15), but which can be set up as high as 64 (resulting
-in a maximum shift of 63).  A value of 31 can result in sign extension,
-resulting in 0xffffffff80000000 instead of the desired 0x80000000.
-A value of 32 or greater triggers undefined behavior per the C standard.
+`make kselftest-merge` applies CONFIG_UBSAN_TRAP=y to the kernel config
+for all selftests, which makes many of them fail because of system hangs
+during boot.
 
-This bug has not been known to cause issues because almost all kernels
-take the default CONFIG_RCU_FANOUT_LEAF=16.  Furthermore, as long as a
-given compiler gives a deterministic non-zero result for 1<<N for N>=32,
-the code correctly invokes all SRCU callbacks, albeit wasting CPU time
-along the way.
+This change removes the config option from the lkdtm kselftest and
+configures the ARRAY_BOUNDS test to look for UBSAN reports rather than
+relying on the calling process being killed.
 
-This commit therefore substitutes the correct 1UL for the buggy 1.
+[1] commit 2d47c6956ab3 ("ubsan: Tighten UBSAN_BOUNDS on GCC")'
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Cc: David Laight <David.Laight@aculab.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230802063252.1917997-1-ricardo.canuelo@collabora.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/srcutree.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/lkdtm/config    | 1 -
+ tools/testing/selftests/lkdtm/tests.txt | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/rcu/srcutree.c b/kernel/rcu/srcutree.c
-index c6481032d42be..7522517b63b6f 100644
---- a/kernel/rcu/srcutree.c
-+++ b/kernel/rcu/srcutree.c
-@@ -223,7 +223,7 @@ static bool init_srcu_struct_nodes(struct srcu_struct *ssp, gfp_t gfp_flags)
- 				snp->grplo = cpu;
- 			snp->grphi = cpu;
- 		}
--		sdp->grpmask = 1 << (cpu - sdp->mynode->grplo);
-+		sdp->grpmask = 1UL << (cpu - sdp->mynode->grplo);
- 	}
- 	smp_store_release(&ssp->srcu_sup->srcu_size_state, SRCU_SIZE_WAIT_BARRIER);
- 	return true;
-@@ -833,7 +833,7 @@ static void srcu_schedule_cbs_snp(struct srcu_struct *ssp, struct srcu_node *snp
- 	int cpu;
- 
- 	for (cpu = snp->grplo; cpu <= snp->grphi; cpu++) {
--		if (!(mask & (1 << (cpu - snp->grplo))))
-+		if (!(mask & (1UL << (cpu - snp->grplo))))
- 			continue;
- 		srcu_schedule_cbs_sdp(per_cpu_ptr(ssp->sda, cpu), delay);
- 	}
+diff --git a/tools/testing/selftests/lkdtm/config b/tools/testing/selftests/lkdtm/config
+index 5d52f64dfb430..7afe05e8c4d79 100644
+--- a/tools/testing/selftests/lkdtm/config
++++ b/tools/testing/selftests/lkdtm/config
+@@ -9,7 +9,6 @@ CONFIG_INIT_ON_FREE_DEFAULT_ON=y
+ CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y
+ CONFIG_UBSAN=y
+ CONFIG_UBSAN_BOUNDS=y
+-CONFIG_UBSAN_TRAP=y
+ CONFIG_STACKPROTECTOR_STRONG=y
+ CONFIG_SLUB_DEBUG=y
+ CONFIG_SLUB_DEBUG_ON=y
+diff --git a/tools/testing/selftests/lkdtm/tests.txt b/tools/testing/selftests/lkdtm/tests.txt
+index 607b8d7e3ea34..2f3a1b96da6e3 100644
+--- a/tools/testing/selftests/lkdtm/tests.txt
++++ b/tools/testing/selftests/lkdtm/tests.txt
+@@ -7,7 +7,7 @@ EXCEPTION
+ #EXHAUST_STACK Corrupts memory on failure
+ #CORRUPT_STACK Crashes entire system on success
+ #CORRUPT_STACK_STRONG Crashes entire system on success
+-ARRAY_BOUNDS
++ARRAY_BOUNDS call trace:|UBSAN: array-index-out-of-bounds
+ CORRUPT_LIST_ADD list_add corruption
+ CORRUPT_LIST_DEL list_del corruption
+ STACK_GUARD_PAGE_LEADING
 -- 
 2.42.0
 
