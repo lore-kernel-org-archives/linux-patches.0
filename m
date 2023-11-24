@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D3D39FF7;
-	Fri, 24 Nov 2023 18:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9906A39FEA;
+	Fri, 24 Nov 2023 18:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tw0kAvLu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B87C433C8;
-	Fri, 24 Nov 2023 18:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAShc26i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDFDC433C8;
+	Fri, 24 Nov 2023 18:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849750;
-	bh=bIyMd4Lp7H2RMcnWhpvzhFIaDjMWxlGwDdLCkM6YzL8=;
+	s=korg; t=1700849753;
+	bh=z0tIe70DQcj/c0QevsCLPrJ76QhZdU8cUSPXBVQC7fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tw0kAvLuWBrAJ7M9VY9EUBkwGuFIOm18mOw8hOt8kmZpPLYqqnuxUkZAXYNTE/zrL
-	 9FyXN0D2UZQM8DxpahVBg8RjV8JCA/KYAYUcTXbHJ0YChCvIRp3/P3ZxXmg/ml13G3
-	 AUH7KarjnJv08GHX7dJtKZQErqOgKAKQaE8/KLKw=
+	b=cAShc26iJ6AR/EVtkL6M6qetbgzz0SaKEYg7BapafKTi6RsAMkDnMCm7Zpi+tDsbB
+	 DXTmpsJylQl0BGe+e1fXUvtISx9WjyDLEk/wh0rllr/KKoyiWndJWEAL+E5Dwup/eq
+	 h/dVN0RiUCLNM5nc6WRI4bLLDIUeYibv1NkbsL1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maria Yu <quic_aiquny@quicinc.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.6 306/530] arm64: module: Fix PLT counting when CONFIG_RANDOMIZE_BASE=n
-Date: Fri, 24 Nov 2023 17:47:52 +0000
-Message-ID: <20231124172037.351452196@linuxfoundation.org>
+	Pengfei Li <pengfei.li_1@nxp.com>,
+	Emil Kronborg <emil.kronborg@protonmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 307/530] pmdomain: imx: Make imx pgc power domain also set the fwnode
+Date: Fri, 24 Nov 2023 17:47:53 +0000
+Message-ID: <20231124172037.378894276@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -43,67 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maria Yu <quic_aiquny@quicinc.com>
+From: Pengfei Li <pengfei.li_1@nxp.com>
 
-commit d35686444fc80950c731e33a2f6ad4a55822be9b upstream.
+commit 374de39d38f97b0e58cfee88da590b2d056ccf7f upstream.
 
-The counting of module PLTs has been broken when CONFIG_RANDOMIZE_BASE=n
-since commit:
+Currently, The imx pgc power domain doesn't set the fwnode
+pointer, which results in supply regulator device can't get
+consumer imx pgc power domain device from fwnode when creating
+a link.
 
-  3e35d303ab7d22c4 ("arm64: module: rework module VA range selection")
+This causes the driver core to instead try to create a link
+between the parent gpc device of imx pgc power domain device and
+supply regulator device. However, at this point, the gpc device
+has already been bound, and the link creation will fail. So adding
+the fwnode pointer to the imx pgc power domain device will fix
+this issue.
 
-Prior to that commit, when CONFIG_RANDOMIZE_BASE=n, the kernel image and
-all modules were placed within a 128M region, and no PLTs were necessary
-for B or BL. Hence count_plts() and partition_branch_plt_relas() skipped
-handling B and BL when CONFIG_RANDOMIZE_BASE=n.
-
-After that commit, modules can be placed anywhere within a 2G window
-regardless of CONFIG_RANDOMIZE_BASE, and hence PLTs may be necessary for
-B and BL even when CONFIG_RANDOMIZE_BASE=n. Unfortunately that commit
-failed to update count_plts() and partition_branch_plt_relas()
-accordingly.
-
-Due to this, module_emit_plt_entry() may fail if an insufficient number
-of PLT entries have been reserved, resulting in modules failing to load
-with -ENOEXEC.
-
-Fix this by counting PLTs regardless of CONFIG_RANDOMIZE_BASE in
-count_plts() and partition_branch_plt_relas().
-
-Fixes: 3e35d303ab7d ("arm64: module: rework module VA range selection")
-Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-Cc: <stable@vger.kernel.org> # 6.5.x
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Fixes: 3e35d303ab7d ("arm64: module: rework module VA range selection")
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20231024010954.6768-1-quic_aiquny@quicinc.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Pengfei Li <pengfei.li_1@nxp.com>
+Tested-by: Emil Kronborg <emil.kronborg@protonmail.com>
+Fixes: 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231020185949.537083-1-pengfei.li_1@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/module-plts.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/pmdomain/imx/gpc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/kernel/module-plts.c
-+++ b/arch/arm64/kernel/module-plts.c
-@@ -167,9 +167,6 @@ static unsigned int count_plts(Elf64_Sym
- 		switch (ELF64_R_TYPE(rela[i].r_info)) {
- 		case R_AARCH64_JUMP26:
- 		case R_AARCH64_CALL26:
--			if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
--				break;
--
- 			/*
- 			 * We only have to consider branch targets that resolve
- 			 * to symbols that are defined in a different section.
-@@ -269,9 +266,6 @@ static int partition_branch_plt_relas(El
- {
- 	int i = 0, j = numrels - 1;
+--- a/drivers/pmdomain/imx/gpc.c
++++ b/drivers/pmdomain/imx/gpc.c
+@@ -498,6 +498,7 @@ static int imx_gpc_probe(struct platform
  
--	if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
--		return 0;
--
- 	while (i < j) {
- 		if (branch_rela_needs_plt(syms, &rela[i], dstidx))
- 			i++;
+ 			pd_pdev->dev.parent = &pdev->dev;
+ 			pd_pdev->dev.of_node = np;
++			pd_pdev->dev.fwnode = of_fwnode_handle(np);
+ 
+ 			ret = platform_device_add(pd_pdev);
+ 			if (ret) {
 
 
