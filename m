@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D40528DBB;
-	Fri, 24 Nov 2023 19:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF72828DBB;
+	Fri, 24 Nov 2023 19:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0dUwK4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF352C433C8;
-	Fri, 24 Nov 2023 19:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae4Rt/cO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C5CC433C7;
+	Fri, 24 Nov 2023 19:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852511;
-	bh=tsBQnpPYU8zCYEvJkHf74Pfd/PNuo/p3mKrRN/tv3uU=;
+	s=korg; t=1700852513;
+	bh=/pHVw2JIg/Vtn5yag3DPXPde7fspUB3yn3B3QTpwmoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m0dUwK4MoTMLIj9djTAWHdJHPTDpzZ5jsPE8wSU+4Sfaa4pjx2BLLiCkZ3scpcDAc
-	 MLWTe+Cxk+qhBNKWfSAjb0ynOafOvXmOMerWavy4aCQ2Qvd4ZBeT+FyPRWOqxyJrfG
-	 phXJnUt9n96IWUS6C4HEk0+k3/yWNU7puRGVMmIs=
+	b=Ae4Rt/cO4R0CZz8xd45UFUHEmpKI8DcYtHz0sc+6vTXYaJ76qTqLPU3uQQO6C3w6K
+	 LnbnYNUo4vmZiCHdMx0Wqcc4jNn2D3rrEHtdKAGaFP18SBGlKEGdtPdSFctt+0Gjz7
+	 NnDYT0ISuFy5OYDYp7+n8xtKZGVCqejJv0CnvNbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	youwan Wang <wangyouwan@126.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/193] wifi: ath10k: Dont touch the CE interrupt registers after power up
-Date: Fri, 24 Nov 2023 17:52:20 +0000
-Message-ID: <20231124171947.699026457@linuxfoundation.org>
+Subject: [PATCH 5.10 014/193] Bluetooth: btusb: Add date->evt_skb is NULL check
+Date: Fri, 24 Nov 2023 17:52:21 +0000
+Message-ID: <20231124171947.737352607@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -42,120 +42,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: youwan Wang <wangyouwan@126.com>
 
-[ Upstream commit 170c75d43a77dc937c58f07ecf847ba1b42ab74e ]
+[ Upstream commit 624820f7c8826dd010e8b1963303c145f99816e9 ]
 
-As talked about in commit d66d24ac300c ("ath10k: Keep track of which
-interrupts fired, don't poll them"), if we access the copy engine
-register at a bad time then ath10k can go boom. However, it's not
-necessarily easy to know when it's safe to access them.
+fix crash because of null pointers
 
-The ChromeOS test labs saw a crash that looked like this at
-shutdown/reboot time (on a chromeos-5.15 kernel, but likely the
-problem could also reproduce upstream):
+[ 6104.969662] BUG: kernel NULL pointer dereference, address: 00000000000000c8
+[ 6104.969667] #PF: supervisor read access in kernel mode
+[ 6104.969668] #PF: error_code(0x0000) - not-present page
+[ 6104.969670] PGD 0 P4D 0
+[ 6104.969673] Oops: 0000 [#1] SMP NOPTI
+[ 6104.969684] RIP: 0010:btusb_mtk_hci_wmt_sync+0x144/0x220 [btusb]
+[ 6104.969688] RSP: 0018:ffffb8d681533d48 EFLAGS: 00010246
+[ 6104.969689] RAX: 0000000000000000 RBX: ffff8ad560bb2000 RCX: 0000000000000006
+[ 6104.969691] RDX: 0000000000000000 RSI: ffffb8d681533d08 RDI: 0000000000000000
+[ 6104.969692] RBP: ffffb8d681533d70 R08: 0000000000000001 R09: 0000000000000001
+[ 6104.969694] R10: 0000000000000001 R11: 00000000fa83b2da R12: ffff8ad461d1d7c0
+[ 6104.969695] R13: 0000000000000000 R14: ffff8ad459618c18 R15: ffffb8d681533d90
+[ 6104.969697] FS:  00007f5a1cab9d40(0000) GS:ffff8ad578200000(0000) knlGS:00000
+[ 6104.969699] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 6104.969700] CR2: 00000000000000c8 CR3: 000000018620c001 CR4: 0000000000760ef0
+[ 6104.969701] PKRU: 55555554
+[ 6104.969702] Call Trace:
+[ 6104.969708]  btusb_mtk_shutdown+0x44/0x80 [btusb]
+[ 6104.969732]  hci_dev_do_close+0x470/0x5c0 [bluetooth]
+[ 6104.969748]  hci_rfkill_set_block+0x56/0xa0 [bluetooth]
+[ 6104.969753]  rfkill_set_block+0x92/0x160
+[ 6104.969755]  rfkill_fop_write+0x136/0x1e0
+[ 6104.969759]  __vfs_write+0x18/0x40
+[ 6104.969761]  vfs_write+0xdf/0x1c0
+[ 6104.969763]  ksys_write+0xb1/0xe0
+[ 6104.969765]  __x64_sys_write+0x1a/0x20
+[ 6104.969769]  do_syscall_64+0x51/0x180
+[ 6104.969771]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[ 6104.969773] RIP: 0033:0x7f5a21f18fef
+[ 6104.9] RSP: 002b:00007ffeefe39010 EFLAGS: 00000293 ORIG_RAX: 0000000000000001
+[ 6104.969780] RAX: ffffffffffffffda RBX: 000055c10a7560a0 RCX: 00007f5a21f18fef
+[ 6104.969781] RDX: 0000000000000008 RSI: 00007ffeefe39060 RDI: 0000000000000012
+[ 6104.969782] RBP: 00007ffeefe39060 R08: 0000000000000000 R09: 0000000000000017
+[ 6104.969784] R10: 00007ffeefe38d97 R11: 0000000000000293 R12: 0000000000000002
+[ 6104.969785] R13: 00007ffeefe39220 R14: 00007ffeefe391a0 R15: 000055c10a72acf0
 
-Internal error: synchronous external abort: 96000010 [#1] PREEMPT SMP
-...
-CPU: 4 PID: 6168 Comm: reboot Not tainted 5.15.111-lockdep-19350-g1d624fe6758f #1 010b9b233ab055c27c6dc88efb0be2f4e9e86f51
-Hardware name: Google Kingoftown (DT)
-...
-pc : ath10k_snoc_read32+0x50/0x74 [ath10k_snoc]
-lr : ath10k_snoc_read32+0x24/0x74 [ath10k_snoc]
-...
-Call trace:
-ath10k_snoc_read32+0x50/0x74 [ath10k_snoc ...]
-ath10k_ce_disable_interrupt+0x190/0x65c [ath10k_core ...]
-ath10k_ce_disable_interrupts+0x8c/0x120 [ath10k_core ...]
-ath10k_snoc_hif_stop+0x78/0x660 [ath10k_snoc ...]
-ath10k_core_stop+0x13c/0x1ec [ath10k_core ...]
-ath10k_halt+0x398/0x5b0 [ath10k_core ...]
-ath10k_stop+0xfc/0x1a8 [ath10k_core ...]
-drv_stop+0x148/0x6b4 [mac80211 ...]
-ieee80211_stop_device+0x70/0x80 [mac80211 ...]
-ieee80211_do_stop+0x10d8/0x15b0 [mac80211 ...]
-ieee80211_stop+0x144/0x1a0 [mac80211 ...]
-__dev_close_many+0x1e8/0x2c0
-dev_close_many+0x198/0x33c
-dev_close+0x140/0x210
-cfg80211_shutdown_all_interfaces+0xc8/0x1e0 [cfg80211 ...]
-ieee80211_remove_interfaces+0x118/0x5c4 [mac80211 ...]
-ieee80211_unregister_hw+0x64/0x1f4 [mac80211 ...]
-ath10k_mac_unregister+0x4c/0xf0 [ath10k_core ...]
-ath10k_core_unregister+0x80/0xb0 [ath10k_core ...]
-ath10k_snoc_free_resources+0xb8/0x1ec [ath10k_snoc ...]
-ath10k_snoc_shutdown+0x98/0xd0 [ath10k_snoc ...]
-platform_shutdown+0x7c/0xa0
-device_shutdown+0x3e0/0x58c
-kernel_restart_prepare+0x68/0xa0
-kernel_restart+0x28/0x7c
-
-Though there's no known way to reproduce the problem, it makes sense
-that it would be the same issue where we're trying to access copy
-engine registers when it's not allowed.
-
-Let's fix this by changing how we "disable" the interrupts. Instead of
-tweaking the copy engine registers we'll just use disable_irq() and
-enable_irq(). Then we'll configure the interrupts once at power up
-time.
-
-Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.2.2.c10-00754-QCAHLSWMTPL-1
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230630151842.1.If764ede23c4e09a43a842771c2ddf99608f25f8e@changeid
+Signed-off-by: youwan Wang <wangyouwan@126.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/snoc.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btusb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
-index 4870a3dab0ded..f7ee1032b1729 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.c
-+++ b/drivers/net/wireless/ath/ath10k/snoc.c
-@@ -827,12 +827,20 @@ static void ath10k_snoc_hif_get_default_pipe(struct ath10k *ar,
- 
- static inline void ath10k_snoc_irq_disable(struct ath10k *ar)
- {
--	ath10k_ce_disable_interrupts(ar);
-+	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
-+	int id;
-+
-+	for (id = 0; id < CE_COUNT_MAX; id++)
-+		disable_irq(ar_snoc->ce_irqs[id].irq_line);
- }
- 
- static inline void ath10k_snoc_irq_enable(struct ath10k *ar)
- {
--	ath10k_ce_enable_interrupts(ar);
-+	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
-+	int id;
-+
-+	for (id = 0; id < CE_COUNT_MAX; id++)
-+		enable_irq(ar_snoc->ce_irqs[id].irq_line);
- }
- 
- static void ath10k_snoc_rx_pipe_cleanup(struct ath10k_snoc_pipe *snoc_pipe)
-@@ -1048,6 +1056,8 @@ static int ath10k_snoc_hif_power_up(struct ath10k *ar,
- 		goto err_free_rri;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index f99d190770204..cc210fb790d89 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3095,6 +3095,9 @@ static int btusb_mtk_hci_wmt_sync(struct hci_dev *hdev,
+ 		goto err_free_wc;
  	}
  
-+	ath10k_ce_enable_interrupts(ar);
++	if (data->evt_skb == NULL)
++		goto err_free_wc;
 +
- 	return 0;
- 
- err_free_rri:
-@@ -1209,8 +1219,8 @@ static int ath10k_snoc_request_irq(struct ath10k *ar)
- 
- 	for (id = 0; id < CE_COUNT_MAX; id++) {
- 		ret = request_irq(ar_snoc->ce_irqs[id].irq_line,
--				  ath10k_snoc_per_engine_handler, 0,
--				  ce_name[id], ar);
-+				  ath10k_snoc_per_engine_handler,
-+				  IRQF_NO_AUTOEN, ce_name[id], ar);
- 		if (ret) {
- 			ath10k_err(ar,
- 				   "failed to register IRQ handler for CE %d: %d\n",
+ 	/* Parse and handle the return WMT event */
+ 	wmt_evt = (struct btmtk_hci_wmt_evt *)data->evt_skb->data;
+ 	if (wmt_evt->whdr.op != hdr->op) {
 -- 
 2.42.0
 
