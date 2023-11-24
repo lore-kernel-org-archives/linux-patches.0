@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696AF2E40E;
-	Fri, 24 Nov 2023 18:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA362E858;
+	Fri, 24 Nov 2023 18:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGF4C/9/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC85AC433C8;
-	Fri, 24 Nov 2023 18:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4G8TmmD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772B8C433C8;
+	Fri, 24 Nov 2023 18:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851873;
-	bh=yBMgT48CpPInHKHxLExHUO2V5gsAyNAcgbbSkwRGGmo=;
+	s=korg; t=1700851875;
+	bh=FaPB5TBZwooKc2bVFWkHP3Mx3n6kaHNzMxSPWm/DpGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qGF4C/9/43ZRZQcYeP93PKOAhcqNzvBOKVwgK8lDapc8jFSuAUWCXOo6Rh5lr35Qh
-	 WrWGpTRbHu2SM1HIRCJooUR5FVZtHrX4z4yTJMUUdp8qPb3wSnUoWHwTI6GACOuuLJ
-	 s3p9G3way6VvqlqNNoVkX6IBY81x7GFeeIxMOX/E=
+	b=d4G8TmmDFsqxxFaPlgw6kYLC4kWJkH/eYiHXPBI3xp/20ME3AbnnNbPZgX9HsXCtR
+	 dho/Vt+ist0mICX5lFyvF1TEmGbt06kNa2l35rZ7k2XQt3vT4p1QQwkBn9F1Og673Z
+	 v+AQs4dl17eMIMxzcXIR/9ZmN8f97PUkKTNTZfms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
+	Yonglong Liu <liuyonglong@huawei.com>,
 	Jijie Shao <shaojijie@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/372] net: hns3: fix add VLAN fail issue
-Date: Fri, 24 Nov 2023 17:48:36 +0000
-Message-ID: <20231124172014.780487819@linuxfoundation.org>
+Subject: [PATCH 6.1 130/372] net: hns3: add barrier in vf mailbox reply process
+Date: Fri, 24 Nov 2023 17:48:37 +0000
+Message-ID: <20231124172014.809212655@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -37,194 +37,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 472a2ff63efb30234cbf6b2cdaf8117f21b4f8bc ]
+[ Upstream commit ac92c0a9a0603fb448e60f38e63302e4eebb8035 ]
 
-The hclge_sync_vlan_filter is called in periodic task,
-trying to remove VLAN from vlan_del_fail_bmap. It can
-be concurrence with VLAN adding operation from user.
-So once user failed to delete a VLAN id, and add it
-again soon, it may be removed by the periodic task,
-which may cause the software configuration being
-inconsistent with hardware. So add mutex handling
-to avoid this.
+In hclgevf_mbx_handler() and hclgevf_get_mbx_resp() functions,
+there is a typical store-store and load-load scenario between
+received_resp and additional_info. This patch adds barrier
+to fix the problem.
 
-     user                        hns3 driver
-
-                                           periodic task
-                                                │
-  add vlan 10 ───── hns3_vlan_rx_add_vid        │
-       │             (suppose success)          │
-       │                                        │
-  del vlan 10 ─────  hns3_vlan_rx_kill_vid      │
-       │           (suppose fail,add to         │
-       │             vlan_del_fail_bmap)        │
-       │                                        │
-  add vlan 10 ───── hns3_vlan_rx_add_vid        │
-                     (suppose success)          │
-                                       foreach vlan_del_fail_bmp
-                                            del vlan 10
-
-Fixes: fe4144d47eef ("net: hns3: sync VLAN filter entries when kill VLAN ID failed")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Fixes: 4671042f1ef0 ("net: hns3: add match_id to check mailbox response from PF to VF")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 28 +++++++++++++------
- .../hisilicon/hns3/hns3vf/hclgevf_main.c      | 11 ++++++--
- 2 files changed, 29 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 3e1d202d60ce1..51998a4d732d3 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -10132,8 +10132,6 @@ static void hclge_rm_vport_vlan_table(struct hclge_vport *vport, u16 vlan_id,
- 	struct hclge_vport_vlan_cfg *vlan, *tmp;
- 	struct hclge_dev *hdev = vport->back;
- 
--	mutex_lock(&hdev->vport_lock);
--
- 	list_for_each_entry_safe(vlan, tmp, &vport->vlan_list, node) {
- 		if (vlan->vlan_id == vlan_id) {
- 			if (is_write_tbl && vlan->hd_tbl_status)
-@@ -10148,8 +10146,6 @@ static void hclge_rm_vport_vlan_table(struct hclge_vport *vport, u16 vlan_id,
- 			break;
- 		}
- 	}
--
--	mutex_unlock(&hdev->vport_lock);
- }
- 
- void hclge_rm_vport_all_vlan_table(struct hclge_vport *vport, bool is_del_list)
-@@ -10558,11 +10554,16 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
- 	 * handle mailbox. Just record the vlan id, and remove it after
- 	 * reset finished.
- 	 */
-+	mutex_lock(&hdev->vport_lock);
- 	if ((test_bit(HCLGE_STATE_RST_HANDLING, &hdev->state) ||
- 	     test_bit(HCLGE_STATE_RST_FAIL, &hdev->state)) && is_kill) {
- 		set_bit(vlan_id, vport->vlan_del_fail_bmap);
-+		mutex_unlock(&hdev->vport_lock);
- 		return -EBUSY;
-+	} else if (!is_kill && test_bit(vlan_id, vport->vlan_del_fail_bmap)) {
-+		clear_bit(vlan_id, vport->vlan_del_fail_bmap);
- 	}
-+	mutex_unlock(&hdev->vport_lock);
- 
- 	/* when port base vlan enabled, we use port base vlan as the vlan
- 	 * filter entry. In this case, we don't update vlan filter table
-@@ -10577,17 +10578,22 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c
+index bbf7b14079de3..85c2a634c8f96 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_mbx.c
+@@ -63,6 +63,9 @@ static int hclgevf_get_mbx_resp(struct hclgevf_dev *hdev, u16 code0, u16 code1,
+ 		i++;
  	}
  
- 	if (!ret) {
--		if (!is_kill)
-+		if (!is_kill) {
- 			hclge_add_vport_vlan_table(vport, vlan_id,
- 						   writen_to_tbl);
--		else if (is_kill && vlan_id != 0)
-+		} else if (is_kill && vlan_id != 0) {
-+			mutex_lock(&hdev->vport_lock);
- 			hclge_rm_vport_vlan_table(vport, vlan_id, false);
-+			mutex_unlock(&hdev->vport_lock);
-+		}
- 	} else if (is_kill) {
- 		/* when remove hw vlan filter failed, record the vlan id,
- 		 * and try to remove it from hw later, to be consistence
- 		 * with stack
- 		 */
-+		mutex_lock(&hdev->vport_lock);
- 		set_bit(vlan_id, vport->vlan_del_fail_bmap);
-+		mutex_unlock(&hdev->vport_lock);
- 	}
- 
- 	hclge_set_vport_vlan_fltr_change(vport);
-@@ -10627,6 +10633,7 @@ static void hclge_sync_vlan_filter(struct hclge_dev *hdev)
- 	int i, ret, sync_cnt = 0;
- 	u16 vlan_id;
- 
-+	mutex_lock(&hdev->vport_lock);
- 	/* start from vport 1 for PF is always alive */
- 	for (i = 0; i < hdev->num_alloc_vport; i++) {
- 		struct hclge_vport *vport = &hdev->vport[i];
-@@ -10637,21 +10644,26 @@ static void hclge_sync_vlan_filter(struct hclge_dev *hdev)
- 			ret = hclge_set_vlan_filter_hw(hdev, htons(ETH_P_8021Q),
- 						       vport->vport_id, vlan_id,
- 						       true);
--			if (ret && ret != -EINVAL)
-+			if (ret && ret != -EINVAL) {
-+				mutex_unlock(&hdev->vport_lock);
- 				return;
-+			}
- 
- 			clear_bit(vlan_id, vport->vlan_del_fail_bmap);
- 			hclge_rm_vport_vlan_table(vport, vlan_id, false);
- 			hclge_set_vport_vlan_fltr_change(vport);
- 
- 			sync_cnt++;
--			if (sync_cnt >= HCLGE_MAX_SYNC_COUNT)
-+			if (sync_cnt >= HCLGE_MAX_SYNC_COUNT) {
-+				mutex_unlock(&hdev->vport_lock);
- 				return;
-+			}
- 
- 			vlan_id = find_first_bit(vport->vlan_del_fail_bmap,
- 						 VLAN_N_VID);
- 		}
- 	}
-+	mutex_unlock(&hdev->vport_lock);
- 
- 	hclge_sync_vlan_fltr_state(hdev);
- }
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 72cf5145e15a2..90ceec730d5bd 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -1258,6 +1258,8 @@ static int hclgevf_set_vlan_filter(struct hnae3_handle *handle,
- 	     test_bit(HCLGEVF_STATE_RST_FAIL, &hdev->state)) && is_kill) {
- 		set_bit(vlan_id, hdev->vlan_del_fail_bmap);
- 		return -EBUSY;
-+	} else if (!is_kill && test_bit(vlan_id, hdev->vlan_del_fail_bmap)) {
-+		clear_bit(vlan_id, hdev->vlan_del_fail_bmap);
- 	}
- 
- 	hclgevf_build_send_msg(&send_msg, HCLGE_MBX_SET_VLAN,
-@@ -1285,20 +1287,25 @@ static void hclgevf_sync_vlan_filter(struct hclgevf_dev *hdev)
- 	int ret, sync_cnt = 0;
- 	u16 vlan_id;
- 
-+	if (bitmap_empty(hdev->vlan_del_fail_bmap, VLAN_N_VID))
-+		return;
++	/* ensure additional_info will be seen after received_resp */
++	smp_rmb();
 +
-+	rtnl_lock();
- 	vlan_id = find_first_bit(hdev->vlan_del_fail_bmap, VLAN_N_VID);
- 	while (vlan_id != VLAN_N_VID) {
- 		ret = hclgevf_set_vlan_filter(handle, htons(ETH_P_8021Q),
- 					      vlan_id, true);
- 		if (ret)
--			return;
-+			break;
- 
- 		clear_bit(vlan_id, hdev->vlan_del_fail_bmap);
- 		sync_cnt++;
- 		if (sync_cnt >= HCLGEVF_MAX_SYNC_COUNT)
--			return;
-+			break;
- 
- 		vlan_id = find_first_bit(hdev->vlan_del_fail_bmap, VLAN_N_VID);
- 	}
-+	rtnl_unlock();
- }
- 
- static int hclgevf_en_hw_strip_rxvtag(struct hnae3_handle *handle, bool enable)
+ 	if (i >= HCLGEVF_MAX_TRY_TIMES) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"VF could not get mbx(%u,%u) resp(=%d) from PF in %d tries\n",
+@@ -178,6 +181,10 @@ static void hclgevf_handle_mbx_response(struct hclgevf_dev *hdev,
+ 	resp->resp_status = hclgevf_resp_to_errno(resp_status);
+ 	memcpy(resp->additional_info, req->msg.resp_data,
+ 	       HCLGE_MBX_MAX_RESP_DATA_SIZE * sizeof(u8));
++
++	/* ensure additional_info will be seen before setting received_resp */
++	smp_wmb();
++
+ 	if (match_id) {
+ 		/* If match_id is not zero, it means PF support match_id.
+ 		 * if the match_id is right, VF get the right response, or
 -- 
 2.42.0
 
