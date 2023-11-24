@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F33B3173F;
-	Fri, 24 Nov 2023 19:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE433173F;
+	Fri, 24 Nov 2023 19:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwDE1oUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE9DC433C7;
-	Fri, 24 Nov 2023 19:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0C9OuoWb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58C91C433C7;
+	Fri, 24 Nov 2023 19:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852404;
-	bh=Iu87LDloXmwFNhB/AHL1WwmkJ5grUVoEsa5uXHK9WJA=;
+	s=korg; t=1700852406;
+	bh=9aaM8ZTP2meUjiRH8SZxI745bOUJJahZ0dzbYfrtswU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwDE1oUBSrgy4Og0s5EtJrLTZOPUCYplZ8ctCbY46eKUe8PCebJiCtjr8OZ7Jj/yu
-	 XDm8MHfKgeicN4PPQulTfEq66wOOjxMfhvMDgKsF05siMIx3VGpRWCV1gV/4nbvpUG
-	 TJ8UV+jMJ9tJKPkLAExJXP3oWQdwktix6wyn6+/k=
+	b=0C9OuoWbZP17/cjpo05UasjkRfc2cfWr2RnTYeFM4KuR6yt9Hb4JaPEJ75QaM9zey
+	 P2EN54O3WFSaHzYI9edKZqvM60Qng/4H24kbAOLVGprBqrzJTRPmFznTvYqCckAGng
+	 5QJwNx2iX2UL9OxzzteQr5MZlz8iL3r1CISIlcx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 343/372] media: qcom: camss: Fix VFE-17x vfe_disable_output()
-Date: Fri, 24 Nov 2023 17:52:10 +0000
-Message-ID: <20231124172021.802460254@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.1 326/372] dm-verity: dont use blocking calls from tasklets
+Date: Fri, 24 Nov 2023 17:51:53 +0000
+Message-ID: <20231124172021.250519758@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -41,91 +41,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 3143ad282fc08bf995ee73e32a9e40c527bf265d upstream.
+commit 28f07f2ab4b3a2714f1fefcc58ada4bcc195f806 upstream.
 
-There are two problems with the current vfe_disable_output() routine.
+The commit 5721d4e5a9cd enhanced dm-verity, so that it can verify blocks
+from tasklets rather than from workqueues. This reportedly improves
+performance significantly.
 
-Firstly we rightly use a spinlock to protect output->gen2.active_num
-everywhere except for in the IDLE timeout path of vfe_disable_output().
-Even if that is not racy "in practice" somehow it is by happenstance not
-by design.
+However, dm-verity was using the flag CRYPTO_TFM_REQ_MAY_SLEEP from
+tasklets which resulted in warnings about sleeping function being called
+from non-sleeping context.
 
-Secondly we do not get consistent behaviour from this routine. On
-sc8280xp 50% of the time I get "VFE idle timeout - resetting". In this
-case the subsequent capture will succeed. The other 50% of the time, we
-don't hit the idle timeout, never do the VFE reset and subsequent
-captures stall indefinitely.
+BUG: sleeping function called from invalid context at crypto/internal.h:206
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 14, name: ksoftirqd/0
+preempt_count: 100, expected: 0
+RCU nest depth: 0, expected: 0
+CPU: 0 PID: 14 Comm: ksoftirqd/0 Tainted: G        W 6.7.0-rc1 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-2 04/01/2014
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x32/0x50
+ __might_resched+0x110/0x160
+ crypto_hash_walk_done+0x54/0xb0
+ shash_ahash_update+0x51/0x60
+ verity_hash_update.isra.0+0x4a/0x130 [dm_verity]
+ verity_verify_io+0x165/0x550 [dm_verity]
+ ? free_unref_page+0xdf/0x170
+ ? psi_group_change+0x113/0x390
+ verity_tasklet+0xd/0x70 [dm_verity]
+ tasklet_action_common.isra.0+0xb3/0xc0
+ __do_softirq+0xaf/0x1ec
+ ? smpboot_thread_fn+0x1d/0x200
+ ? sort_range+0x20/0x20
+ run_ksoftirqd+0x15/0x30
+ smpboot_thread_fn+0xed/0x200
+ kthread+0xdc/0x110
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork+0x28/0x40
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork_asm+0x11/0x20
+ </TASK>
 
-Rewrite the vfe_disable_output() routine to
+This commit fixes dm-verity so that it doesn't use the flags
+CRYPTO_TFM_REQ_MAY_SLEEP and CRYPTO_TFM_REQ_MAY_BACKLOG from tasklets. The
+crypto API would do GFP_ATOMIC allocation instead, it could return -ENOMEM
+and we catch -ENOMEM in verity_tasklet and requeue the request to the
+workqueue.
 
-- Quiesce write masters with vfe_wm_stop()
-- Set active_num = 0
-
-remembering to hold the spinlock when we do so followed by
-
-- Reset the VFE
-
-Testing on sc8280xp and sdm845 shows this to be a valid fix.
-
-Fixes: 7319cdf189bb ("media: camss: Add support for VFE hardware version Titan 170")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org	# v6.0+
+Fixes: 5721d4e5a9cd ("dm verity: Add optional "try_verify_in_tasklet" feature")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe-170.c |   22 +++-------------------
- 1 file changed, 3 insertions(+), 19 deletions(-)
+ drivers/md/dm-verity-fec.c    |    4 ++--
+ drivers/md/dm-verity-target.c |   23 ++++++++++++-----------
+ drivers/md/dm-verity.h        |    2 +-
+ 3 files changed, 15 insertions(+), 14 deletions(-)
 
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -7,7 +7,6 @@
-  * Copyright (C) 2020-2021 Linaro Ltd.
-  */
- 
--#include <linux/delay.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
-@@ -494,35 +493,20 @@ static int vfe_enable_output(struct vfe_
- 	return 0;
- }
- 
--static int vfe_disable_output(struct vfe_line *line)
-+static void vfe_disable_output(struct vfe_line *line)
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -185,7 +185,7 @@ static int fec_is_erasure(struct dm_veri
  {
- 	struct vfe_device *vfe = to_vfe(line);
- 	struct vfe_output *output = &line->output;
- 	unsigned long flags;
- 	unsigned int i;
--	bool done;
--	int timeout = 0;
--
--	do {
--		spin_lock_irqsave(&vfe->output_lock, flags);
--		done = !output->gen2.active_num;
--		spin_unlock_irqrestore(&vfe->output_lock, flags);
--		usleep_range(10000, 20000);
--
--		if (timeout++ == 100) {
--			dev_err(vfe->camss->dev, "VFE idle timeout - resetting\n");
--			vfe_reset(vfe);
--			output->gen2.active_num = 0;
--			return 0;
--		}
--	} while (!done);
+ 	if (unlikely(verity_hash(v, verity_io_hash_req(v, io),
+ 				 data, 1 << v->data_dev_block_bits,
+-				 verity_io_real_digest(v, io))))
++				 verity_io_real_digest(v, io), true)))
+ 		return 0;
  
- 	spin_lock_irqsave(&vfe->output_lock, flags);
- 	for (i = 0; i < output->wm_num; i++)
- 		vfe_wm_stop(vfe, output->wm_idx[i]);
-+	output->gen2.active_num = 0;
- 	spin_unlock_irqrestore(&vfe->output_lock, flags);
+ 	return memcmp(verity_io_real_digest(v, io), want_digest,
+@@ -386,7 +386,7 @@ static int fec_decode_rsb(struct dm_veri
+ 	/* Always re-validate the corrected block against the expected hash */
+ 	r = verity_hash(v, verity_io_hash_req(v, io), fio->output,
+ 			1 << v->data_dev_block_bits,
+-			verity_io_real_digest(v, io));
++			verity_io_real_digest(v, io), true);
+ 	if (unlikely(r < 0))
+ 		return r;
  
--	return 0;
-+	vfe_reset(vfe);
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -132,20 +132,21 @@ static int verity_hash_update(struct dm_
+  * Wrapper for crypto_ahash_init, which handles verity salting.
+  */
+ static int verity_hash_init(struct dm_verity *v, struct ahash_request *req,
+-				struct crypto_wait *wait)
++				struct crypto_wait *wait, bool may_sleep)
+ {
+ 	int r;
+ 
+ 	ahash_request_set_tfm(req, v->tfm);
+-	ahash_request_set_callback(req, CRYPTO_TFM_REQ_MAY_SLEEP |
+-					CRYPTO_TFM_REQ_MAY_BACKLOG,
+-					crypto_req_done, (void *)wait);
++	ahash_request_set_callback(req,
++		may_sleep ? CRYPTO_TFM_REQ_MAY_SLEEP | CRYPTO_TFM_REQ_MAY_BACKLOG : 0,
++		crypto_req_done, (void *)wait);
+ 	crypto_init_wait(wait);
+ 
+ 	r = crypto_wait_req(crypto_ahash_init(req), wait);
+ 
+ 	if (unlikely(r < 0)) {
+-		DMERR("crypto_ahash_init failed: %d", r);
++		if (r != -ENOMEM)
++			DMERR("crypto_ahash_init failed: %d", r);
+ 		return r;
+ 	}
+ 
+@@ -176,12 +177,12 @@ out:
  }
  
- /*
+ int verity_hash(struct dm_verity *v, struct ahash_request *req,
+-		const u8 *data, size_t len, u8 *digest)
++		const u8 *data, size_t len, u8 *digest, bool may_sleep)
+ {
+ 	int r;
+ 	struct crypto_wait wait;
+ 
+-	r = verity_hash_init(v, req, &wait);
++	r = verity_hash_init(v, req, &wait, may_sleep);
+ 	if (unlikely(r < 0))
+ 		goto out;
+ 
+@@ -317,7 +318,7 @@ static int verity_verify_level(struct dm
+ 
+ 		r = verity_hash(v, verity_io_hash_req(v, io),
+ 				data, 1 << v->hash_dev_block_bits,
+-				verity_io_real_digest(v, io));
++				verity_io_real_digest(v, io), !io->in_tasklet);
+ 		if (unlikely(r < 0))
+ 			goto release_ret_r;
+ 
+@@ -548,7 +549,7 @@ static int verity_verify_io(struct dm_ve
+ 			continue;
+ 		}
+ 
+-		r = verity_hash_init(v, req, &wait);
++		r = verity_hash_init(v, req, &wait, !io->in_tasklet);
+ 		if (unlikely(r < 0))
+ 			return r;
+ 
+@@ -641,7 +642,7 @@ static void verity_tasklet(unsigned long
+ 
+ 	io->in_tasklet = true;
+ 	err = verity_verify_io(io);
+-	if (err == -EAGAIN) {
++	if (err == -EAGAIN || err == -ENOMEM) {
+ 		/* fallback to retrying with work-queue */
+ 		INIT_WORK(&io->work, verity_work);
+ 		queue_work(io->v->verify_wq, &io->work);
+@@ -1018,7 +1019,7 @@ static int verity_alloc_zero_digest(stru
+ 		goto out;
+ 
+ 	r = verity_hash(v, req, zero_data, 1 << v->data_dev_block_bits,
+-			v->zero_digest);
++			v->zero_digest, true);
+ 
+ out:
+ 	kfree(req);
+--- a/drivers/md/dm-verity.h
++++ b/drivers/md/dm-verity.h
+@@ -128,7 +128,7 @@ extern int verity_for_bv_block(struct dm
+ 					      u8 *data, size_t len));
+ 
+ extern int verity_hash(struct dm_verity *v, struct ahash_request *req,
+-		       const u8 *data, size_t len, u8 *digest);
++		       const u8 *data, size_t len, u8 *digest, bool may_sleep);
+ 
+ extern int verity_hash_for_block(struct dm_verity *v, struct dm_verity_io *io,
+ 				 sector_t block, u8 *digest, bool *is_zero);
 
 
