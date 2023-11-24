@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD17931748;
-	Fri, 24 Nov 2023 18:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512B82FC4E;
+	Fri, 24 Nov 2023 18:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMIRae+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598B3C433C7;
-	Fri, 24 Nov 2023 18:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlfqS/Ju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D034BC433C8;
+	Fri, 24 Nov 2023 18:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851833;
-	bh=9VlqoIBOZbEp29Xc3meXqH1QhsNsy6alLmg+oRRiA1o=;
+	s=korg; t=1700851836;
+	bh=27RnbItsDWyqIsFQjTCJQR/kcMZ6iMNHExsYnwl0fjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMIRae+YJEiBioJpjPOKsH7zCwz59p8ksHvfkb0wJCFquwCgSFIXTwOMp/H1R1zz+
-	 YbZcsQmQBAW1VPtzVMvLOoSNAJadfLHw3v/pBlqVs4HsqW858kPv73W4hdK1kMsZzA
-	 UTkHTnjoRXWCJpaNc+OBHRI7QBMzJVFZRA3vWUbA=
+	b=BlfqS/JuFzN3+DW3o3nyRFMExFNMGsKU7vHbMK0st4Sy20JULZcukmFpaA4yw9xXo
+	 BzwOAmzbLGGBKGlsN5VqXDLDZYPLYDTifwooraC5d1oW2MQwQkHUE2zxUit4AJIoiA
+	 YMIDGl9EO9Ys1GHchVMKYgoL7naOfldeGRKe/GGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/372] misc: pci_endpoint_test: Add Device ID for R-Car S4-8 PCIe controller
-Date: Fri, 24 Nov 2023 17:47:45 +0000
-Message-ID: <20231124172013.119657873@linuxfoundation.org>
+Subject: [PATCH 6.1 107/372] kgdb: Flush console before entering kgdb on panic
+Date: Fri, 24 Nov 2023 17:48:14 +0000
+Message-ID: <20231124172014.067905682@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -37,51 +36,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 6c4b39937f4e65688ea294725ae432b2565821ff ]
+[ Upstream commit dd712d3d45807db9fcae28a522deee85c1f2fde6 ]
 
-Add Renesas R8A779F0 in pci_device_id table so that pci-epf-test
-can be used for testing PCIe EP on R-Car S4-8.
+When entering kdb/kgdb on a kernel panic, it was be observed that the
+console isn't flushed before the `kdb` prompt came up. Specifically,
+when using the buddy lockup detector on arm64 and running:
+  echo HARDLOCKUP > /sys/kernel/debug/provoke-crash/DIRECT
 
-Link: https://lore.kernel.org/linux-pci/20231018085631.1121289-16-yoshihiro.shimoda.uh@renesas.com
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+I could see:
+  [   26.161099] lkdtm: Performing direct entry HARDLOCKUP
+  [   32.499881] watchdog: Watchdog detected hard LOCKUP on cpu 6
+  [   32.552865] Sending NMI from CPU 5 to CPUs 6:
+  [   32.557359] NMI backtrace for cpu 6
+  ... [backtrace for cpu 6] ...
+  [   32.558353] NMI backtrace for cpu 5
+  ... [backtrace for cpu 5] ...
+  [   32.867471] Sending NMI from CPU 5 to CPUs 0-4,7:
+  [   32.872321] NMI backtrace forP cpuANC: Hard LOCKUP
+
+  Entering kdb (current=..., pid 0) on processor 5 due to Keyboard Entry
+  [5]kdb>
+
+As you can see, backtraces for the other CPUs start printing and get
+interleaved with the kdb PANIC print.
+
+Let's replicate the commands to flush the console in the kdb panic
+entry point to avoid this.
+
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230822131945.1.I5b460ae8f954e4c4f628a373d6e74713c06dd26f@changeid
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/pci_endpoint_test.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/debug/debug_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
-index 55dc16d8f6adb..18059a12d4e18 100644
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -81,6 +81,7 @@
- #define PCI_DEVICE_ID_RENESAS_R8A774B1		0x002b
- #define PCI_DEVICE_ID_RENESAS_R8A774C0		0x002d
- #define PCI_DEVICE_ID_RENESAS_R8A774E1		0x0025
-+#define PCI_DEVICE_ID_RENESAS_R8A779F0		0x0031
+diff --git a/kernel/debug/debug_core.c b/kernel/debug/debug_core.c
+index d5e9ccde3ab8e..3a904d8697c8f 100644
+--- a/kernel/debug/debug_core.c
++++ b/kernel/debug/debug_core.c
+@@ -1006,6 +1006,9 @@ void kgdb_panic(const char *msg)
+ 	if (panic_timeout)
+ 		return;
  
- static DEFINE_IDA(pci_endpoint_test_ida);
++	debug_locks_off();
++	console_flush_on_panic(CONSOLE_FLUSH_PENDING);
++
+ 	if (dbg_kdb_mode)
+ 		kdb_printf("PANIC: %s\n", msg);
  
-@@ -996,6 +997,9 @@ static const struct pci_device_id pci_endpoint_test_tbl[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, PCI_DEVICE_ID_RENESAS_R8A774B1),},
- 	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, PCI_DEVICE_ID_RENESAS_R8A774C0),},
- 	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, PCI_DEVICE_ID_RENESAS_R8A774E1),},
-+	{ PCI_DEVICE(PCI_VENDOR_ID_RENESAS, PCI_DEVICE_ID_RENESAS_R8A779F0),
-+	  .driver_data = (kernel_ulong_t)&default_data,
-+	},
- 	{ PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_J721E),
- 	  .driver_data = (kernel_ulong_t)&j721e_data,
- 	},
 -- 
 2.42.0
 
