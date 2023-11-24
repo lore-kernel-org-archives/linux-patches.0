@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4CB2EAEA;
-	Fri, 24 Nov 2023 19:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BA434189;
+	Fri, 24 Nov 2023 19:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ir+oOl+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C15C433C7;
-	Fri, 24 Nov 2023 19:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQc3b0LH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC8CC433C8;
+	Fri, 24 Nov 2023 19:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852640;
-	bh=gtfPxiH8c3lVoU7a/jaJF3NFNXbDgUAHs9qjLgfWbIM=;
+	s=korg; t=1700852643;
+	bh=3yLj1Ew0IYC6SdI7tqMLEWkH85LUTO8uPadn8aNsa8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ir+oOl+YlHLdFxevcj49hI9IAtSHK1jdiszuQT1Z3k1ZcZ/BPT+hnndZVaYH3unb
-	 jVd6SJWTtgC1oB+bmNx4eatMrsKpoHnBeqgfq0q6m6lfX5BRlXWste4MvOefjMRD9f
-	 tt7EgmJvm1+l0n4RQJSEHwUingVwAirHc+GvmwtM=
+	b=PQc3b0LHPCbOO+ceZ28MBRaokpwfmmK4iMGnroyGIxULXJjezu1L8o+Yv0PaofIqF
+	 H1UKuayVSQnO1mdjHJhZR9b0pqve62AhPxQmjTLRmtwH8tpakNc3QurdE+dhtwoppm
+	 9JlSr5nDFdGiP83+3Posb1RmvpjITlCj/JG+OjNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao2@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+debee9ab7ae2b34b0307@syzkaller.appspotmail.com,
+	Juntong Deng <juntong.deng@outlook.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 039/193] scsi: libfc: Fix potential NULL pointer dereference in fc_lport_ptp_setup()
-Date: Fri, 24 Nov 2023 17:52:46 +0000
-Message-ID: <20231124171948.796952297@linuxfoundation.org>
+Subject: [PATCH 5.10 030/193] fs/jfs: Add check for negative db_l2nbperpage
+Date: Fri, 24 Nov 2023 17:52:37 +0000
+Message-ID: <20231124171948.400768169@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
 References: <20231124171947.127438872@linuxfoundation.org>
@@ -43,41 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Hao <haowenchao2@huawei.com>
+From: Juntong Deng <juntong.deng@outlook.com>
 
-[ Upstream commit 4df105f0ce9f6f30cda4e99f577150d23f0c9c5f ]
+[ Upstream commit 525b861a008143048535011f3816d407940f4bfa ]
 
-fc_lport_ptp_setup() did not check the return value of fc_rport_create()
-which can return NULL and would cause a NULL pointer dereference. Address
-this issue by checking return value of fc_rport_create() and log error
-message on fc_rport_create() failed.
+l2nbperpage is log2(number of blks per page), and the minimum legal
+value should be 0, not negative.
 
-Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
-Link: https://lore.kernel.org/r/20231011130350.819571-1-haowenchao2@huawei.com
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+In the case of l2nbperpage being negative, an error will occur
+when subsequently used as shift exponent.
+
+Syzbot reported this bug:
+
+UBSAN: shift-out-of-bounds in fs/jfs/jfs_dmap.c:799:12
+shift exponent -16777216 is negative
+
+Reported-by: syzbot+debee9ab7ae2b34b0307@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=debee9ab7ae2b34b0307
+Signed-off-by: Juntong Deng <juntong.deng@outlook.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libfc/fc_lport.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/jfs/jfs_dmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/libfc/fc_lport.c b/drivers/scsi/libfc/fc_lport.c
-index abb14b206be04..82b8477c7d737 100644
---- a/drivers/scsi/libfc/fc_lport.c
-+++ b/drivers/scsi/libfc/fc_lport.c
-@@ -238,6 +238,12 @@ static void fc_lport_ptp_setup(struct fc_lport *lport,
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index a9c078fc2302a..06dda2c7a6e24 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -180,7 +180,8 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
+ 
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
+-	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) {
++	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE ||
++		bmp->db_l2nbperpage < 0) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
  	}
- 	mutex_lock(&lport->disc.disc_mutex);
- 	lport->ptp_rdata = fc_rport_create(lport, remote_fid);
-+	if (!lport->ptp_rdata) {
-+		printk(KERN_WARNING "libfc: Failed to setup lport 0x%x\n",
-+			lport->port_id);
-+		mutex_unlock(&lport->disc.disc_mutex);
-+		return;
-+	}
- 	kref_get(&lport->ptp_rdata->kref);
- 	lport->ptp_rdata->ids.port_name = remote_wwpn;
- 	lport->ptp_rdata->ids.node_name = remote_wwnn;
 -- 
 2.42.0
 
