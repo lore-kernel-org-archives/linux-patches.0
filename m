@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D33381DE;
-	Fri, 24 Nov 2023 18:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CD8381D7;
+	Fri, 24 Nov 2023 18:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQ6n2AWx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2E5C433C8;
-	Fri, 24 Nov 2023 18:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oe+tV3SD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E0DC433C7;
+	Fri, 24 Nov 2023 18:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849214;
-	bh=gw7NaLsa9vlsUkE1p9nmQ2OBWkDvZCyQPyB6C6oQ3Dw=;
+	s=korg; t=1700849217;
+	bh=JnsulCCusb3LO/p1AzxJLeJnb4q6iKoyGnqvP3S+Iek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qQ6n2AWxNw1fvmMLF9DMuN/dNoRt8noJpcGTvkWXqdBXtPSDCfOMO3gNu9vSaB2X/
-	 vdbnQRls8qRrsZt7OffvtVvSk1VnEMrCpeF2p94R57HdExNOhFXV227luBbGSAeyWk
-	 X883WKceA+70HqDALxQlAyi4yU95WQsPQd2e/6g0=
+	b=oe+tV3SDvliDdf+dkmJebKh3pS2GNiZF5W/HwFIh/eJbQlJstqVK4iE8hVPnVR71g
+	 q/+P2+xGu9CEFXXQFJS7kIIStXEmWGUrbTqcnOs7h3ZO2lCp4G0fRsAbIXT+TsveuQ
+	 l6t2Lm0zAyMC0SIUzGAdJKO8DW1N50Tig1G2hV5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+debee9ab7ae2b34b0307@syzkaller.appspotmail.com,
+	syzbot+38e876a8aa44b7115c76@syzkaller.appspotmail.com,
 	Juntong Deng <juntong.deng@outlook.com>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/530] fs/jfs: Add check for negative db_l2nbperpage
-Date: Fri, 24 Nov 2023 17:44:19 +0000
-Message-ID: <20231124172030.928933307@linuxfoundation.org>
+Subject: [PATCH 6.6 094/530] fs/jfs: Add validity check for db_maxag and db_agpref
+Date: Fri, 24 Nov 2023 17:44:20 +0000
+Message-ID: <20231124172030.964280782@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -45,42 +45,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Juntong Deng <juntong.deng@outlook.com>
 
-[ Upstream commit 525b861a008143048535011f3816d407940f4bfa ]
+[ Upstream commit 64933ab7b04881c6c18b21ff206c12278341c72e ]
 
-l2nbperpage is log2(number of blks per page), and the minimum legal
-value should be 0, not negative.
+Both db_maxag and db_agpref are used as the index of the
+db_agfree array, but there is currently no validity check for
+db_maxag and db_agpref, which can lead to errors.
 
-In the case of l2nbperpage being negative, an error will occur
-when subsequently used as shift exponent.
+The following is related bug reported by Syzbot:
 
-Syzbot reported this bug:
+UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dmap.c:639:20
+index 7936 is out of range for type 'atomic_t[128]'
 
-UBSAN: shift-out-of-bounds in fs/jfs/jfs_dmap.c:799:12
-shift exponent -16777216 is negative
+Add checking that the values of db_maxag and db_agpref are valid
+indexes for the db_agfree array.
 
-Reported-by: syzbot+debee9ab7ae2b34b0307@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=debee9ab7ae2b34b0307
+Reported-by: syzbot+38e876a8aa44b7115c76@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=38e876a8aa44b7115c76
 Signed-off-by: Juntong Deng <juntong.deng@outlook.com>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 88afd108c2dd2..3a1842348112d 100644
+index 3a1842348112d..4d59373f9e6c9 100644
 --- a/fs/jfs/jfs_dmap.c
 +++ b/fs/jfs/jfs_dmap.c
-@@ -180,7 +180,8 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_nfree = le64_to_cpu(dbmp_le->dn_nfree);
- 
- 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
--	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE) {
-+	if (bmp->db_l2nbperpage > L2PSIZE - L2MINBLOCKSIZE ||
-+		bmp->db_l2nbperpage < 0) {
- 		err = -EINVAL;
- 		goto err_release_metapage;
- 	}
+@@ -195,6 +195,12 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
+ 	bmp->db_maxag = le32_to_cpu(dbmp_le->dn_maxag);
+ 	bmp->db_agpref = le32_to_cpu(dbmp_le->dn_agpref);
++	if (bmp->db_maxag >= MAXAG || bmp->db_maxag < 0 ||
++		bmp->db_agpref >= MAXAG || bmp->db_agpref < 0) {
++		err = -EINVAL;
++		goto err_release_metapage;
++	}
++
+ 	bmp->db_aglevel = le32_to_cpu(dbmp_le->dn_aglevel);
+ 	bmp->db_agheight = le32_to_cpu(dbmp_le->dn_agheight);
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
 -- 
 2.42.0
 
