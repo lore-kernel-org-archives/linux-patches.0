@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1713418E;
-	Fri, 24 Nov 2023 19:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593183418E;
+	Fri, 24 Nov 2023 19:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObStHEiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51447C433C7;
-	Fri, 24 Nov 2023 19:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXFYfwyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C854AC433C8;
+	Fri, 24 Nov 2023 19:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700853276;
-	bh=hGMa2jJcvb1Veb/ww+alhaeetR7Ku0UJzpG9AWn2jso=;
+	s=korg; t=1700853279;
+	bh=RTdzdOqYkYUhLVsDS6XqnAT6kdFMgjZGHFOFYIYJq3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ObStHEiOFBpnLj8tvB0mBid63URY+StB8m0sps56wHiJ1BnAcUYv75IhnYy1frazd
-	 JOVpRbvXDK4Wwv4mhuZymOBGMah3kP3kF6tYW2rhXFiRKtnFE3khHtc3HmrxKU3gsP
-	 bDcN6mBvdu09WCOSBGbm2WgClKGrCIZDiYh9c20k=
+	b=kXFYfwyo6Ts3d4LdcnKukIRiJxcRDfw6QZcaW6p1D8cb+hoBbQc90KVCW8Fq5W+ZY
+	 IGdMwHEVlV1aD19s6YHijdsH6idkV8G13WYuGS0Dy5LqgRQdU2x7RvhZ20hOc1H9+i
+	 K3x/c3q5+vXpzNvBD6OK+cO+Zqk8voExEXbZzIgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Stanislav Fomichev <sdf@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 124/297] netfilter: nf_tables: fix pointer math issue in nft_byteorder_eval()
-Date: Fri, 24 Nov 2023 17:52:46 +0000
-Message-ID: <20231124172004.643455328@linuxfoundation.org>
+Subject: [PATCH 5.15 101/297] net: set SOCK_RCU_FREE before inserting socket into hashtable
+Date: Fri, 24 Nov 2023 17:52:23 +0000
+Message-ID: <20231124172003.794195510@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
 References: <20231124172000.087816911@linuxfoundation.org>
@@ -42,89 +44,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit c301f0981fdd3fd1ffac6836b423c4d7a8e0eb63 ]
+[ Upstream commit 871019b22d1bcc9fab2d1feba1b9a564acbb6e99 ]
 
-The problem is in nft_byteorder_eval() where we are iterating through a
-loop and writing to dst[0], dst[1], dst[2] and so on...  On each
-iteration we are writing 8 bytes.  But dst[] is an array of u32 so each
-element only has space for 4 bytes.  That means that every iteration
-overwrites part of the previous element.
+We've started to see the following kernel traces:
 
-I spotted this bug while reviewing commit caf3ef7468f7 ("netfilter:
-nf_tables: prevent OOB access in nft_byteorder_eval") which is a related
-issue.  I think that the reason we have not detected this bug in testing
-is that most of time we only write one element.
+ WARNING: CPU: 83 PID: 0 at net/core/filter.c:6641 sk_lookup+0x1bd/0x1d0
 
-Fixes: ce1e7989d989 ("netfilter: nft_byteorder: provide 64bit le/be conversion")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+ Call Trace:
+  <IRQ>
+  __bpf_skc_lookup+0x10d/0x120
+  bpf_sk_lookup+0x48/0xd0
+  bpf_sk_lookup_tcp+0x19/0x20
+  bpf_prog_<redacted>+0x37c/0x16a3
+  cls_bpf_classify+0x205/0x2e0
+  tcf_classify+0x92/0x160
+  __netif_receive_skb_core+0xe52/0xf10
+  __netif_receive_skb_list_core+0x96/0x2b0
+  napi_complete_done+0x7b5/0xb70
+  <redacted>_poll+0x94/0xb0
+  net_rx_action+0x163/0x1d70
+  __do_softirq+0xdc/0x32e
+  asm_call_irq_on_stack+0x12/0x20
+  </IRQ>
+  do_softirq_own_stack+0x36/0x50
+  do_softirq+0x44/0x70
+
+__inet_hash can race with lockless (rcu) readers on the other cpus:
+
+  __inet_hash
+    __sk_nulls_add_node_rcu
+    <- (bpf triggers here)
+    sock_set_flag(SOCK_RCU_FREE)
+
+Let's move the SOCK_RCU_FREE part up a bit, before we are inserting
+the socket into hashtables. Note, that the race is really harmless;
+the bpf callers are handling this situation (where listener socket
+doesn't have SOCK_RCU_FREE set) correctly, so the only
+annoyance is a WARN_ONCE.
+
+More details from Eric regarding SOCK_RCU_FREE timeline:
+
+Commit 3b24d854cb35 ("tcp/dccp: do not touch listener sk_refcnt under
+synflood") added SOCK_RCU_FREE. At that time, the precise location of
+sock_set_flag(sk, SOCK_RCU_FREE) did not matter, because the thread calling
+__inet_hash() owns a reference on sk. SOCK_RCU_FREE was only tested
+at dismantle time.
+
+Commit 6acc9b432e67 ("bpf: Add helper to retrieve socket in BPF")
+started checking SOCK_RCU_FREE _after_ the lookup to infer whether
+the refcount has been taken care of.
+
+Fixes: 6acc9b432e67 ("bpf: Add helper to retrieve socket in BPF")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h | 4 ++--
- net/netfilter/nft_byteorder.c     | 5 +++--
- net/netfilter/nft_meta.c          | 2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ net/ipv4/inet_hashtables.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index df91b9f422551..8e9c5bc1a9e69 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -164,9 +164,9 @@ static inline __be32 nft_reg_load_be32(const u32 *sreg)
- 	return *(__force __be32 *)sreg;
- }
- 
--static inline void nft_reg_store64(u32 *dreg, u64 val)
-+static inline void nft_reg_store64(u64 *dreg, u64 val)
- {
--	put_unaligned(val, (u64 *)dreg);
-+	put_unaligned(val, dreg);
- }
- 
- static inline u64 nft_reg_load64(const u32 *sreg)
-diff --git a/net/netfilter/nft_byteorder.c b/net/netfilter/nft_byteorder.c
-index d3e1467e576fb..adf208b7929fd 100644
---- a/net/netfilter/nft_byteorder.c
-+++ b/net/netfilter/nft_byteorder.c
-@@ -38,13 +38,14 @@ void nft_byteorder_eval(const struct nft_expr *expr,
- 
- 	switch (priv->size) {
- 	case 8: {
-+		u64 *dst64 = (void *)dst;
- 		u64 src64;
- 
- 		switch (priv->op) {
- 		case NFT_BYTEORDER_NTOH:
- 			for (i = 0; i < priv->len / 8; i++) {
- 				src64 = nft_reg_load64(&src[i]);
--				nft_reg_store64(&dst[i],
-+				nft_reg_store64(&dst64[i],
- 						be64_to_cpu((__force __be64)src64));
- 			}
- 			break;
-@@ -52,7 +53,7 @@ void nft_byteorder_eval(const struct nft_expr *expr,
- 			for (i = 0; i < priv->len / 8; i++) {
- 				src64 = (__force __u64)
- 					cpu_to_be64(nft_reg_load64(&src[i]));
--				nft_reg_store64(&dst[i], src64);
-+				nft_reg_store64(&dst64[i], src64);
- 			}
- 			break;
- 		}
-diff --git a/net/netfilter/nft_meta.c b/net/netfilter/nft_meta.c
-index 14412f69a34e8..35aba304a25b9 100644
---- a/net/netfilter/nft_meta.c
-+++ b/net/netfilter/nft_meta.c
-@@ -63,7 +63,7 @@ nft_meta_get_eval_time(enum nft_meta_keys key,
- {
- 	switch (key) {
- 	case NFT_META_TIME_NS:
--		nft_reg_store64(dest, ktime_get_real_ns());
-+		nft_reg_store64((u64 *)dest, ktime_get_real_ns());
- 		break;
- 	case NFT_META_TIME_DAY:
- 		nft_reg_store8(dest, nft_meta_weekday());
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index a673f4ec1b429..b4e0120af9c2b 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -609,12 +609,12 @@ int __inet_hash(struct sock *sk, struct sock *osk)
+ 		if (err)
+ 			goto unlock;
+ 	}
++	sock_set_flag(sk, SOCK_RCU_FREE);
+ 	if (IS_ENABLED(CONFIG_IPV6) && sk->sk_reuseport &&
+ 		sk->sk_family == AF_INET6)
+ 		__sk_nulls_add_node_tail_rcu(sk, &ilb2->nulls_head);
+ 	else
+ 		__sk_nulls_add_node_rcu(sk, &ilb2->nulls_head);
+-	sock_set_flag(sk, SOCK_RCU_FREE);
+ 	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
+ unlock:
+ 	spin_unlock(&ilb2->lock);
 -- 
 2.42.0
 
