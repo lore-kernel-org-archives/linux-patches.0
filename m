@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCB8381D6;
-	Fri, 24 Nov 2023 17:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A0839FD0;
+	Fri, 24 Nov 2023 17:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vg6fx3ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E81C433C8;
-	Fri, 24 Nov 2023 17:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WiTOgL/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C11C433C7;
+	Fri, 24 Nov 2023 17:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700848718;
-	bh=9aSdQCyxRmVcKk6udsuCnppC0YFpS+fLhAQOC5VGrAc=;
+	s=korg; t=1700848720;
+	bh=LeEsibanNtpcv2le2piUY1ttFp+4gHNOhYNStsaiYG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vg6fx3aerOdfkJyEkiM1oetDQ2948py1DhSNAGypFZ/iWOMcZ0ZAEHdNf/l21bxGV
-	 cDdvr0BmwPW6IA2Y+A7Z+wEjq9lFCgVnjYaIey4U9/Va9Vb3+GFV3Gww+THDeJ+H6P
-	 qD4REIhekZoQ9CQktUs/nFbxg3j+dbeJMZ2/25i4=
+	b=WiTOgL/boz8qwHmQ9qxqHKKr5lizj4HNgvXOiSwEsOYsUdvYFZscwKJD1jxyerole
+	 HGQRIHbcMQkjPo4gX5ftLqe7KqoVqbITysptw//yRK7FAdsLYbMQKwQXHVh6PZjAXy
+	 dd/5E8aTKe5g8iJRgq1vRHCFdAkxrfigKHKKPKCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 4.19 54/97] PCI/sysfs: Protect drivers D3cold preference from user space
-Date: Fri, 24 Nov 2023 17:50:27 +0000
-Message-ID: <20231124171936.166602528@linuxfoundation.org>
+	Rong Chen <rong.chen@amlogic.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 55/97] mmc: meson-gx: Remove setting of CMD_CFG_ERROR
+Date: Fri, 24 Nov 2023 17:50:28 +0000
+Message-ID: <20231124171936.201599920@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124171934.122298957@linuxfoundation.org>
 References: <20231124171934.122298957@linuxfoundation.org>
@@ -43,69 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Rong Chen <rong.chen@amlogic.com>
 
-commit 70b70a4307cccebe91388337b1c85735ce4de6ff upstream.
+commit 57925e16c9f7d18012bcf45bfa658f92c087981a upstream.
 
-struct pci_dev contains two flags which govern whether the device may
-suspend to D3cold:
+For the t7 and older SoC families, the CMD_CFG_ERROR has no effect.
+Starting from SoC family C3, setting this bit without SG LINK data
+address will cause the controller to generate an IRQ and stop working.
 
-* no_d3cold provides an opt-out for drivers (e.g. if a device is known
-  to not wake from D3cold)
+To fix it, don't set the bit CMD_CFG_ERROR anymore.
 
-* d3cold_allowed provides an opt-out for user space (default is true,
-  user space may set to false)
-
-Since commit 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend"),
-the user space setting overwrites the driver setting.  Essentially user
-space is trusted to know better than the driver whether D3cold is
-working.
-
-That feels unsafe and wrong.  Assume that the change was introduced
-inadvertently and do not overwrite no_d3cold when d3cold_allowed is
-modified.  Instead, consider d3cold_allowed in addition to no_d3cold
-when choosing a suspend state for the device.
-
-That way, user space may opt out of D3cold if the driver hasn't, but it
-may no longer force an opt in if the driver has opted out.
-
-Fixes: 9d26d3a8f1b0 ("PCI: Put PCIe ports into D3 during suspend")
-Link: https://lore.kernel.org/r/b8a7f4af2b73f6b506ad8ddee59d747cbf834606.1695025365.git.lukas@wunner.de
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Cc: stable@vger.kernel.org	# v4.8+
+Fixes: 18f92bc02f17 ("mmc: meson-gx: make sure the descriptor is stopped on errors")
+Signed-off-by: Rong Chen <rong.chen@amlogic.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231026073156.2868310-1-rong.chen@amlogic.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-acpi.c  |    2 +-
- drivers/pci/pci-sysfs.c |    5 +----
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ drivers/mmc/host/meson-gx-mmc.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/pci/pci-acpi.c
-+++ b/drivers/pci/pci-acpi.c
-@@ -496,7 +496,7 @@ static pci_power_t acpi_pci_choose_state
- {
- 	int acpi_state, d_max;
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -931,7 +931,6 @@ static void meson_mmc_start_cmd(struct m
  
--	if (pdev->no_d3cold)
-+	if (pdev->no_d3cold || !pdev->d3cold_allowed)
- 		d_max = ACPI_STATE_D3_HOT;
- 	else
- 		d_max = ACPI_STATE_D3_COLD;
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -519,10 +519,7 @@ static ssize_t d3cold_allowed_store(stru
- 		return -EINVAL;
+ 	cmd_cfg |= FIELD_PREP(CMD_CFG_CMD_INDEX_MASK, cmd->opcode);
+ 	cmd_cfg |= CMD_CFG_OWNER;  /* owned by CPU */
+-	cmd_cfg |= CMD_CFG_ERROR; /* stop in case of error */
  
- 	pdev->d3cold_allowed = !!val;
--	if (pdev->d3cold_allowed)
--		pci_d3cold_enable(pdev);
--	else
--		pci_d3cold_disable(pdev);
-+	pci_bridge_d3_update(pdev);
- 
- 	pm_runtime_resume(dev);
+ 	meson_mmc_set_response_bits(cmd, &cmd_cfg);
  
 
 
