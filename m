@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC06321AD;
-	Fri, 24 Nov 2023 18:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E64433E9;
+	Fri, 24 Nov 2023 18:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDEcnT8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A3DC433C7;
-	Fri, 24 Nov 2023 18:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNaBvuUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A91BC433C8;
+	Fri, 24 Nov 2023 18:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850921;
-	bh=OWNNPsI3j9xXi6YBaCD5nAp/E953/AjJo00TMqjHxmg=;
+	s=korg; t=1700850923;
+	bh=Ncr3+oEUc+MfUSCsS/t7k0+n/eVdE2oar6ZR4Pwj+kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDEcnT8YkCW/snA7I77amFz0tZVWes+7uBPUBlCTgiPpKTQ4o65WrWSYbI/CkL4MN
-	 02RuWfzD1VOGCJYdzdqHMZRKnE3hN+LUkT6zlhdaRvIrMcshterQtu+Q4OstDkQldM
-	 j1jECo56+Qp/P8SjFrnQbLDWd1P3FTr8AQsrpOBk=
+	b=JNaBvuUp/yNsU46kT5dpSG6Xj4btC/jXMngZZ3UMMjAvisMTyrAIwDBPAkomnwv0v
+	 fy7IMafHE3Wp8T9AWyxib81tS/LQbCpS3lACO3j8WnJB65K2quDujiuDCuWJHeF9dx
+	 6+hDvwCK0BL1bAmqZ7FxLd0C6Y+MVNVbJCOd2NLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Wen <puwen@hygon.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.5 241/491] x86/cpu/hygon: Fix the CPU topology evaluation for real
-Date: Fri, 24 Nov 2023 17:47:57 +0000
-Message-ID: <20231124172031.801067101@linuxfoundation.org>
+	Zhang Rui <rui.zhang@intel.com>,
+	Len Brown <len.brown@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.5 218/491] tools/power/turbostat: Fix a knl bug
+Date: Fri, 24 Nov 2023 17:47:34 +0000
+Message-ID: <20231124172031.093499201@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
 References: <20231124172024.664207345@linuxfoundation.org>
@@ -42,42 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Wen <puwen@hygon.cn>
+From: Zhang Rui <rui.zhang@intel.com>
 
-commit ee545b94d39a00c93dc98b1dbcbcf731d2eadeb4 upstream.
+[ Upstream commit 137f01b3529d292a68d22e9681e2f903c768f790 ]
 
-Hygon processors with a model ID > 3 have CPUID leaf 0xB correctly
-populated and don't need the fixed package ID shift workaround. The fixup
-is also incorrect when running in a guest.
+MSR_KNL_CORE_C6_RESIDENCY should be evaluated only if
+1. this is KNL platform
+AND
+2. need to get C6 residency or need to calculate C1 residency
 
-Fixes: e0ceeae708ce ("x86/CPU/hygon: Fix phys_proc_id calculation logic for multi-die processors")
-Signed-off-by: Pu Wen <puwen@hygon.cn>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/tencent_594804A808BD93A4EBF50A994F228E3A7F07@qq.com
-Link: https://lore.kernel.org/r/20230814085112.089607918@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix the broken logic introduced by commit 1e9042b9c8d4 ("tools/power
+turbostat: Fix CPU%C1 display value").
+
+Fixes: 1e9042b9c8d4 ("tools/power turbostat: Fix CPU%C1 display value")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/hygon.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/power/x86/turbostat/turbostat.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/hygon.c
-+++ b/arch/x86/kernel/cpu/hygon.c
-@@ -86,8 +86,12 @@ static void hygon_get_topology(struct cp
- 		if (!err)
- 			c->x86_coreid_bits = get_count_order(c->x86_max_cores);
- 
--		/* Socket ID is ApicId[6] for these processors. */
--		c->phys_proc_id = c->apicid >> APICID_SOCKET_ID_BIT;
-+		/*
-+		 * Socket ID is ApicId[6] for the processors with model <= 0x3
-+		 * when running on host.
-+		 */
-+		if (!boot_cpu_has(X86_FEATURE_HYPERVISOR) && c->x86_model <= 0x3)
-+			c->phys_proc_id = c->apicid >> APICID_SOCKET_ID_BIT;
- 
- 		cacheinfo_hygon_init_llc_id(c, cpu);
- 	} else if (cpu_has(c, X86_FEATURE_NODEID_MSR)) {
+diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
+index 8a36ba5df9f90..a938699ca2419 100644
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -2180,7 +2180,7 @@ int get_counters(struct thread_data *t, struct core_data *c, struct pkg_data *p)
+ 	if ((DO_BIC(BIC_CPU_c6) || soft_c1_residency_display(BIC_CPU_c6)) && !do_knl_cstates) {
+ 		if (get_msr(cpu, MSR_CORE_C6_RESIDENCY, &c->c6))
+ 			return -7;
+-	} else if (do_knl_cstates || soft_c1_residency_display(BIC_CPU_c6)) {
++	} else if (do_knl_cstates && soft_c1_residency_display(BIC_CPU_c6)) {
+ 		if (get_msr(cpu, MSR_KNL_CORE_C6_RESIDENCY, &c->c6))
+ 			return -7;
+ 	}
+-- 
+2.42.0
+
 
 
