@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF1C39FC6;
-	Fri, 24 Nov 2023 18:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6835381D6;
+	Fri, 24 Nov 2023 18:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4Y+mlND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F17C433C7;
-	Fri, 24 Nov 2023 18:07:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjejUvRe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69336C433C8;
+	Fri, 24 Nov 2023 18:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849239;
-	bh=rMlPqBrvQHbqh58bnkGEpNdhU/ehTjGCl8aTtLTE3Qc=;
+	s=korg; t=1700849241;
+	bh=AmeGTX/2XoFOOzb4iWOGrfqkZO12j117C/Qp/rO7YvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4Y+mlND1Kzka53RAhqtK7N2h9Vi5G+SDbmKsOseqGsh07XvqqB2IaBQ9y2Y0Sef5
-	 kFoHxYUsIS46dqp8ABodt5Rxqyh06HKg9a2NZ9wIqf+wiPeVMMwOZgLVUb36/D+Qhb
-	 agQpI64YbjgxgMy2uT/XGAUqD7Ux+mPerm7jeNHU=
+	b=XjejUvReM4n0x7+mkgcM9zc8pwv3B4sbyJ9+CFp27glluMT32XoKq+5Jz/qwu+noJ
+	 pzIGquHrFeH3YKF4ztzPlO7Xjs1LfShtvwJhUjoUaGMafVm9tGfZQnEX6ThCVwCdN0
+	 WhXzrJbGBgED8o2ZaPr4TNDZ6AGbyAn1UyOLM7XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/530] PCI: mvebu: Use FIELD_PREP() with Link Width
-Date: Fri, 24 Nov 2023 17:44:28 +0000
-Message-ID: <20231124172031.223720609@linuxfoundation.org>
+Subject: [PATCH 6.6 103/530] atm: iphase: Do PCI error checks on own line
+Date: Fri, 24 Nov 2023 17:44:29 +0000
+Message-ID: <20231124172031.255011253@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
 References: <20231124172028.107505484@linuxfoundation.org>
@@ -46,35 +45,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 408599ec561ad5862cda4f107626009f6fa97a74 ]
+[ Upstream commit c28742447ca9879b52fbaf022ad844f0ffcd749c ]
 
-mvebu_pcie_setup_hw() setups the Maximum Link Width field in the Link
-Capabilities registers using an open-coded variant of FIELD_PREP() with
-a literal in shift. Improve readability by using
-FIELD_PREP(PCI_EXP_LNKCAP_MLW, ...).
+In get_esi() PCI errors are checked inside line-split "if" conditions (in
+addition to the file not following the coding style). To make the code in
+get_esi() more readable, fix the coding style and use the usual error
+handling pattern with a separate variable.
 
-Link: https://lore.kernel.org/r/20230919125648.1920-6-ilpo.jarvinen@linux.intel.com
+In addition, initialization of 'error' variable at declaration is not
+needed.
+
+No functional changes intended.
+
+Link: https://lore.kernel.org/r/20230911125354.25501-4-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-mvebu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/atm/iphase.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pci/controller/pci-mvebu.c b/drivers/pci/controller/pci-mvebu.c
-index 60810a1fbfb75..29fe09c99e7d9 100644
---- a/drivers/pci/controller/pci-mvebu.c
-+++ b/drivers/pci/controller/pci-mvebu.c
-@@ -264,7 +264,7 @@ static void mvebu_pcie_setup_hw(struct mvebu_pcie_port *port)
- 	 */
- 	lnkcap = mvebu_readl(port, PCIE_CAP_PCIEXP + PCI_EXP_LNKCAP);
- 	lnkcap &= ~PCI_EXP_LNKCAP_MLW;
--	lnkcap |= (port->is_x4 ? 4 : 1) << 4;
-+	lnkcap |= FIELD_PREP(PCI_EXP_LNKCAP_MLW, port->is_x4 ? 4 : 1);
- 	mvebu_writel(port, lnkcap, PCIE_CAP_PCIEXP + PCI_EXP_LNKCAP);
- 
- 	/* Disable Root Bridge I/O space, memory space and bus mastering. */
+diff --git a/drivers/atm/iphase.c b/drivers/atm/iphase.c
+index 3241486869530..9bba8f280a4d4 100644
+--- a/drivers/atm/iphase.c
++++ b/drivers/atm/iphase.c
+@@ -2291,19 +2291,21 @@ static int get_esi(struct atm_dev *dev)
+ static int reset_sar(struct atm_dev *dev)  
+ {  
+ 	IADEV *iadev;  
+-	int i, error = 1;  
++	int i, error;
+ 	unsigned int pci[64];  
+ 	  
+ 	iadev = INPH_IA_DEV(dev);  
+-	for(i=0; i<64; i++)  
+-	  if ((error = pci_read_config_dword(iadev->pci,  
+-				i*4, &pci[i])) != PCIBIOS_SUCCESSFUL)  
+-  	      return error;  
++	for (i = 0; i < 64; i++) {
++		error = pci_read_config_dword(iadev->pci, i * 4, &pci[i]);
++		if (error != PCIBIOS_SUCCESSFUL)
++			return error;
++	}
+ 	writel(0, iadev->reg+IPHASE5575_EXT_RESET);  
+-	for(i=0; i<64; i++)  
+-	  if ((error = pci_write_config_dword(iadev->pci,  
+-					i*4, pci[i])) != PCIBIOS_SUCCESSFUL)  
+-	    return error;  
++	for (i = 0; i < 64; i++) {
++		error = pci_write_config_dword(iadev->pci, i * 4, pci[i]);
++		if (error != PCIBIOS_SUCCESSFUL)
++			return error;
++	}
+ 	udelay(5);  
+ 	return 0;  
+ }  
 -- 
 2.42.0
 
