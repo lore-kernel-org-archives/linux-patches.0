@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5497E321AD;
-	Fri, 24 Nov 2023 18:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22766339BE;
+	Fri, 24 Nov 2023 18:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgxLann+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53F0C433C7;
-	Fri, 24 Nov 2023 18:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MU0SxoEg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535BAC433C7;
+	Fri, 24 Nov 2023 18:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700851982;
-	bh=mVWq3oO+VMtQq/YAFYZJ1v638Y0sD+mYIIIiTXumfFE=;
+	s=korg; t=1700851984;
+	bh=Lf+lBjyyZUKJK+lLRNjayLHA58G+j+mpab8Nrz+CbXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgxLann+wHDjKOA2jMZGKRZUDp9chooXBuPFilaCeLVZNqrM104QLKypfN2/Lhpn4
-	 Cqylt0MGALbKKmL5pAk0g4C9tE4uzioDlzcIBrjjwJRlwcVqA4FA8oEXbPAuMrIEuC
-	 Pb+c4Hqvta1nTDcx0+XHu9ZBeOH3xjovx2410pxk=
+	b=MU0SxoEgi2FjiTWiqh9PG8T9aW1BZvjYfbmFNmeWuBaiXdGTbAsVy9CVzYdVmgSbH
+	 MxoPwGui0C4HZRHEFReigDatFE4y4nCYLIHmiphwUcOonkl78Hw/G8+tqBSj8AGjKU
+	 31jzpQ2GrnLrjKFH6RyMBXVjWL1awtxIEzTdLafk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Wen <puwen@hygon.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.1 173/372] x86/cpu/hygon: Fix the CPU topology evaluation for real
-Date: Fri, 24 Nov 2023 17:49:20 +0000
-Message-ID: <20231124172016.243654483@linuxfoundation.org>
+	Nicolas Saenz Julienne <nsaenz@amazon.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 174/372] KVM: x86: hyper-v: Dont auto-enable stimer on write from user-space
+Date: Fri, 24 Nov 2023 17:49:21 +0000
+Message-ID: <20231124172016.272335355@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
 References: <20231124172010.413667921@linuxfoundation.org>
@@ -42,42 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Wen <puwen@hygon.cn>
+From: Nicolas Saenz Julienne <nsaenz@amazon.com>
 
-commit ee545b94d39a00c93dc98b1dbcbcf731d2eadeb4 upstream.
+commit d6800af51c76b6dae20e6023bbdc9b3da3ab5121 upstream.
 
-Hygon processors with a model ID > 3 have CPUID leaf 0xB correctly
-populated and don't need the fixed package ID shift workaround. The fixup
-is also incorrect when running in a guest.
+Don't apply the stimer's counter side effects when modifying its
+value from user-space, as this may trigger spurious interrupts.
 
-Fixes: e0ceeae708ce ("x86/CPU/hygon: Fix phys_proc_id calculation logic for multi-die processors")
-Signed-off-by: Pu Wen <puwen@hygon.cn>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/tencent_594804A808BD93A4EBF50A994F228E3A7F07@qq.com
-Link: https://lore.kernel.org/r/20230814085112.089607918@linutronix.de
+For example:
+ - The stimer is configured in auto-enable mode.
+ - The stimer's count is set and the timer enabled.
+ - The stimer expires, an interrupt is injected.
+ - The VM is live migrated.
+ - The stimer config and count are deserialized, auto-enable is ON, the
+   stimer is re-enabled.
+ - The stimer expires right away, and injects an unwarranted interrupt.
+
+Cc: stable@vger.kernel.org
+Fixes: 1f4b34f825e8 ("kvm/x86: Hyper-V SynIC timers")
+Signed-off-by: Nicolas Saenz Julienne <nsaenz@amazon.com>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/20231017155101.40677-1-nsaenz@amazon.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/hygon.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/kvm/hyperv.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/hygon.c
-+++ b/arch/x86/kernel/cpu/hygon.c
-@@ -86,8 +86,12 @@ static void hygon_get_topology(struct cp
- 		if (!err)
- 			c->x86_coreid_bits = get_count_order(c->x86_max_cores);
+--- a/arch/x86/kvm/hyperv.c
++++ b/arch/x86/kvm/hyperv.c
+@@ -705,10 +705,12 @@ static int stimer_set_count(struct kvm_v
  
--		/* Socket ID is ApicId[6] for these processors. */
--		c->phys_proc_id = c->apicid >> APICID_SOCKET_ID_BIT;
-+		/*
-+		 * Socket ID is ApicId[6] for the processors with model <= 0x3
-+		 * when running on host.
-+		 */
-+		if (!boot_cpu_has(X86_FEATURE_HYPERVISOR) && c->x86_model <= 0x3)
-+			c->phys_proc_id = c->apicid >> APICID_SOCKET_ID_BIT;
+ 	stimer_cleanup(stimer);
+ 	stimer->count = count;
+-	if (stimer->count == 0)
+-		stimer->config.enable = 0;
+-	else if (stimer->config.auto_enable)
+-		stimer->config.enable = 1;
++	if (!host) {
++		if (stimer->count == 0)
++			stimer->config.enable = 0;
++		else if (stimer->config.auto_enable)
++			stimer->config.enable = 1;
++	}
  
- 		cacheinfo_hygon_init_llc_id(c, cpu);
- 	} else if (cpu_has(c, X86_FEATURE_NODEID_MSR)) {
+ 	if (stimer->config.enable)
+ 		stimer_mark_pending(stimer, false);
 
 
