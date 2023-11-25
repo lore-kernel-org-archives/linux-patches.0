@@ -1,101 +1,71 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E84810A03
-	for <patches@lists.linux.dev>; Sat, 25 Nov 2023 12:34:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C536AA4;
+	Sat, 25 Nov 2023 15:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ikeue01p"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1cfa5840db3so10547635ad.2
-        for <patches@lists.linux.dev>; Sat, 25 Nov 2023 04:34:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700915655; x=1701520455; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=07knrX4pVFE0iOcmmvEQbY06HxioBNIgSOZlMbJ9JQM=;
-        b=ikeue01pSKL0n8fyJbfh4qW3iO3QtmXMg51eclrgzOVGsI1xk3Oh5Rbmdd9hkTuQtb
-         xZr8k7tfNd7txzNwdfTXzeBaiq/Ro9YAQBSsRO7aJBaaGuCCXpjoIdILyqgmff7BILT2
-         HEBhER/0EpoCu7Q+U1gFFZRHWHO5t4JspSYAHA4S5ZELhytQIvphyEUycyrhAIILpuqa
-         QERgdR4ZNzddQVIuH5IkPzG92Yk1cyfmDP2oPI13Q2eiKdoun1K+xvKOvb2tFieGk7CE
-         /fzgD7N4LgoKonc+eZEl8zqy+8rG+qeSdw8J3auqPF3tVCV9WEJqiC6fd9iHlq1KWdg1
-         illA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700915655; x=1701520455;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=07knrX4pVFE0iOcmmvEQbY06HxioBNIgSOZlMbJ9JQM=;
-        b=LoJaKBaNKYQt0JbdfYDloGQexTUk+1IL52IlExr5SNyNLwB6LO1Zkip4N8LYTtIxJq
-         VllHaTa24uDJxkKUejm3yhncqWI87K1fIwNBPnzr+YtwyL3R9C3m3Vo60bzlYomJQAcp
-         J01LWgFNYbuNQyVLM09SRFuGbYIupXna+44DdKoaT4W4ti6rqdhkHrE5C9Zl5bWDq16I
-         LuxM7REZifDki16ZivOgMN1SGCB80V8g0PcCNRJz6fffASqRlFMfX9R3saS8tdCyb2k2
-         cVyv0yDpiIYPfy534Y+HcNj8xqWemJ0XMUWPeBHtr9B7ywRNf31pfWpJRdcUqBGkKZOA
-         EOKQ==
-X-Gm-Message-State: AOJu0YyYSR9vrwwFck5Zd1myyJ8Hyzmc71/lZ6TDGrBUdo//HZFDSTUd
-	+hJwjDsZZfGo5SHxLTXrK4E=
-X-Google-Smtp-Source: AGHT+IFSYXWSODIoCE4XcmiZvqVb1mjna/JEsLe922nb/2SDAE+e19R3bI850BIxAfSpI9cV9TV4QQ==
-X-Received: by 2002:a17:902:e887:b0:1cf:689e:5811 with SMTP id w7-20020a170902e88700b001cf689e5811mr7873263plg.18.1700915655399;
-        Sat, 25 Nov 2023 04:34:15 -0800 (PST)
-Received: from archie.me ([103.131.18.64])
-        by smtp.gmail.com with ESMTPSA id h19-20020a170902f7d300b001ca4cc783b6sm4826080plw.36.2023.11.25.04.34.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Nov 2023 04:34:13 -0800 (PST)
-Received: by archie.me (Postfix, from userid 1000)
-	id CDD1410205C47; Sat, 25 Nov 2023 19:34:10 +0700 (WIB)
-Date: Sat, 25 Nov 2023 19:34:10 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Subject: Re: [PATCH 6.6 000/530] 6.6.3-rc1 review
-Message-ID: <ZWHpwvYUQ3l1Dwv1@archie.me>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5vXejIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F89C433C8;
+	Sat, 25 Nov 2023 15:21:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1700925666;
+	bh=AAMGg9IjgxzajNoJUcm5ZgK9JUFUKnSkVI/XtASRMGw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=B5vXejIYH92bgfGCBFRVaILaobTlbYY4EkozG+AlPkSFfs9iZb040S1W4G0hunL1A
+	 9VS+rko6ZlshSBkH54Te4E1CM3WnG5hTmpLFvKv74GOeXUxXG360ORtF0K7i6ceyZz
+	 QDpIB+9apLPlhejmAAUbkIsRRC1WTDQD/OY/oqxs=
+Date: Sat, 25 Nov 2023 15:21:02 +0000
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Philippe Perrot <philippe@perrot-net.fr>,
+	"Geoffrey D. Bennett" <g@b4.vu>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 088/530] ALSA: scarlett2: Move USB IDs out from
+ device_info struct
+Message-ID: <2023112551-scorn-attire-9424@gregkh>
 References: <20231124172028.107505484@linuxfoundation.org>
+ <20231124172030.757235707@linuxfoundation.org>
+ <87leampakb.wl-tiwai@suse.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3UlSeso7lPb9eNYa"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
+In-Reply-To: <87leampakb.wl-tiwai@suse.de>
 
+On Sat, Nov 25, 2023 at 08:16:20AM +0100, Takashi Iwai wrote:
+> On Fri, 24 Nov 2023 18:44:14 +0100,
+> Greg Kroah-Hartman wrote:
+> > 
+> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Geoffrey D. Bennett <g@b4.vu>
+> > 
+> > [ Upstream commit d98cc489029dba4d99714c2e8ec4f5ba249f6851 ]
+> > 
+> > By moving the USB IDs from the device_info struct into
+> > scarlett2_devices[], that will allow for devices with different
+> > USB IDs to share the same device_info.
+> > 
+> > Tested-by: Philippe Perrot <philippe@perrot-net.fr>
+> > Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+> > Link: https://lore.kernel.org/r/8263368e8d49e6fcebc709817bd82ab79b404468.1694705811.git.g@b4.vu
+> > Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> 
+> As already mentioned at
+>   http://lore.kernel.org/r/87edgkpiig.wl-tiwai@suse.de
+> this patch makes little sense as a stable update.  It's a part of the
+> code rewrite series, and no real fix.  Better to drop for avoid
+> confusions.
+> 
+> Ditto for 6.5 and older kernels.
 
---3UlSeso7lPb9eNYa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Now dropped form all queues, thanks.
 
-On Fri, Nov 24, 2023 at 05:42:46PM +0000, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.3 release.
-> There are 530 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-
-Successfully compiled and installed bindeb-pkgs on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
-
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---3UlSeso7lPb9eNYa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZWHpvgAKCRD2uYlJVVFO
-o3BGAP9E4lmr3Mn5TH36iNQYs/endw9utiAxgj75ukuKNytFUAD/WROePuv9jQO2
-zSPxguvXD3tmTRHDpSpdX1kSpOAgJAU=
-=z1ZP
------END PGP SIGNATURE-----
-
---3UlSeso7lPb9eNYa--
+greg k-h
