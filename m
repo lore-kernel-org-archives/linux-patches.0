@@ -1,14 +1,14 @@
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62532FE3B
-	for <patches@lists.linux.dev>; Sat, 25 Nov 2023 20:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86E830650
+	for <patches@lists.linux.dev>; Sat, 25 Nov 2023 20:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 78AA91C0071; Sat, 25 Nov 2023 21:10:28 +0100 (CET)
-Date: Sat, 25 Nov 2023 21:10:27 +0100
+	id 41B021C0071; Sat, 25 Nov 2023 21:12:13 +0100 (CET)
+Date: Sat, 25 Nov 2023 21:12:12 +0100
 From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -18,9 +18,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 4.14 00/53] 4.14.331-rc2 review
-Message-ID: <ZWJUs9+/4k8Y917w@duo.ucw.cz>
-References: <20231125163059.878143365@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/369] 6.1.64-rc2 review
+Message-ID: <ZWJVHAKO+gG1m4IK@duo.ucw.cz>
+References: <20231125163140.940904812@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -28,44 +28,45 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="qIpgssQlnTJDsaW1"
+	protocol="application/pgp-signature"; boundary="lHxKV5NX0J6s7iPK"
 Content-Disposition: inline
-In-Reply-To: <20231125163059.878143365@linuxfoundation.org>
+In-Reply-To: <20231125163140.940904812@linuxfoundation.org>
 
 
---qIpgssQlnTJDsaW1
+--lHxKV5NX0J6s7iPK
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 Hi!
 
-> This is the start of the stable review cycle for the 4.14.331 release.
-> There are 53 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.64 release.
+> There are 369 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
 CIP testing did not find any problems here:
 
 https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-4.14.y
+6.1.y
 
 Tested-by: Pavel Machek (CIP) <pavel@denx.de>
 
 Best regards,
                                                                 Pavel
+
 --=20
 DENX Software Engineering GmbH,        Managing Director: Erika Unter
 HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
---qIpgssQlnTJDsaW1
+--lHxKV5NX0J6s7iPK
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZWJUswAKCRAw5/Bqldv6
-8lMgAKCU5yW6LuSzwjX+gnKkz+Lz2cCVmwCeL/fpyPtt6R63MSiqISwQwdohp0A=
-=kS8K
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZWJVHAAKCRAw5/Bqldv6
+8pHnAJsGru2Gfi+Iurv4Jl5DSxvrwxh2qACfRy0xcKYbjldUl23hyc7V3PH0SXQ=
+=UiPh
 -----END PGP SIGNATURE-----
 
---qIpgssQlnTJDsaW1--
+--lHxKV5NX0J6s7iPK--
