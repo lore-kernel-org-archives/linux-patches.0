@@ -1,49 +1,49 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216425395
-	for <patches@lists.linux.dev>; Sat, 25 Nov 2023 20:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630C42D05C
+	for <patches@lists.linux.dev>; Sat, 25 Nov 2023 20:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lVw490Lv"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-77d6f853ba0so232424185a.0
-        for <patches@lists.linux.dev>; Sat, 25 Nov 2023 12:36:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qng296qn"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5c8c8f731aaso29759047b3.0
+        for <patches@lists.linux.dev>; Sat, 25 Nov 2023 12:39:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700944597; x=1701549397; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1700944790; x=1701549590; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
         bh=5qPMscAxfrhn9DPLtNY+N8AyucDJ0tYyfK6kHFzT3Rg=;
-        b=lVw490LvpvRQ8CbrHZ/zr0S0+w5Ixmtz5O/V6bRHPDtJsbRosLF6KeO07Ubwg0R5rU
-         kCWATOw4xzYCiyHuFN/gMsoIoSPfekmTmxnD+GEWdtzWMPjU31up5Dku3JD5xfNqgfbN
-         +gtffVT7rei7xKQ5mNKuV1BqgamuiB7NFHO7j02ZzH1uijdXra7RpUG12mIiNFIzhpkh
-         FlSa93yjIwkCBJbLIEVifOeJBVRibiGyr7cWbznEv/878gZaEsP4CuW2rjCXt0stZrMK
-         XPDTUG98ypVr8dPHX6rQNKoHUiFXldf8IVepy+G/Q3gWHvuhXu+9HYGiJSTrZmrJ5F4K
-         lrdg==
+        b=Qng296qnoayD0HcDdZIj5mU83Px785HM1ZrMAIFbg3Wk/cOSmPjfObSsnCWjGJkWoc
+         hFPW830HCpVThmY9N48lnUiRqtkWYkuM+PwLANGtMbV+Zp9DEqBZZM3KFsH8LO+4psYD
+         noydP2+8qXenZstduQcyL9Dzu3CM5INuBHr28um0ZFetvheKqdpr0Ut9mkdoKtHBW4Ra
+         nPTmGJgSLq5Um5rO91cqU03m504VZNuA/8eJHTrDhZ2KtmkrjdA8nMwZICVDUApVGWBB
+         aHw8ZSXBXre+DdD/WQPczPvrJECPPRRuPSyg3N91IeUnhWTRYRyJ8Zjy81zuRroG+3/0
+         zCGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700944597; x=1701549397;
+        d=1e100.net; s=20230601; t=1700944790; x=1701549590;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=5qPMscAxfrhn9DPLtNY+N8AyucDJ0tYyfK6kHFzT3Rg=;
-        b=eO+qBROdpTuCc+LZHN7TFEd4RNDSdutcqF+7TGfxL6P59XiNqqxH1CQsyHcuafrAsj
-         x3hmMj3dBrZI8XCghc0BpXVqmVPC7DdwZvcq/B6W1D3ljyh9RO2rDPBhCstZql/2IHMW
-         88ES0BX7UhXQ5cfohbtTe6T7haI6Le5uV/uK8AnpCGCzq8JHn0ex9S0tlaDHnVdVg0/J
-         BAXO/eoVATmdf0uto9m5qeozPcrupQfwh7xIhm+DF/G8yHf3Juf5pnaqh65Kf7tnpsrU
-         HiM0uiqqKadqdCzRljs7wq+rBMk/CSA/OSVNG33KqBznLm+es6VSXrE7D08IPcuSa0KR
-         6wWA==
-X-Gm-Message-State: AOJu0YzCjaQKR8dCjaMtjldt+5h2YykrvcEFWBFDSna+wD0blHV5MKvN
-	LOH5VVvj/1rMYiFovj00irI=
-X-Google-Smtp-Source: AGHT+IFa1sqEgpr+HftDc29s9m0aEEdRErOBIF6/W0OKkyuYYFEf17sMpkzBYTTDLsQ51+5hXE2+RA==
-X-Received: by 2002:a05:620a:199e:b0:77d:7ace:4a6 with SMTP id bm30-20020a05620a199e00b0077d7ace04a6mr12151385qkb.2.1700944596884;
-        Sat, 25 Nov 2023 12:36:36 -0800 (PST)
+        b=QE7Ok9+QP/ijZnETV5obTX9pUDnmPi5N1SsovaNxty+6+QTKhc78nOYP7ElFdr9yRL
+         7y5JMEvv8mf26NIyDrCeDL1OHBD6jaArbjkKToyVyFw6rygSBVb2QoxetciES8+Hro3A
+         v69jVEbjjFqLzc0nvowX2CVwS8iA2spYW3s81JIniZTdSqxEwihytZmXD9zuL2Qo4Cia
+         luCYrXwBKKdKWll75gCoSGvWPEV1UfwlvMQ40Z6AyLQPozER1EV+4MrtTqGUQe7yZPpp
+         A8ICg29pipKhd3BiwgH7yfdkPv0XLgkT+AS275p6VnMR+cMAoONz+EQeSe3e9p0YPiXo
+         6Y1g==
+X-Gm-Message-State: AOJu0YwpCLHEMPvgnpTlntv56uSVTiREOA1mAi83sD4jyJp/tF9qg9BN
+	4rGfBvQ99YZ4VVrUlQgfVK8=
+X-Google-Smtp-Source: AGHT+IGNgiQRtB97CxewwvWCgvGpV7ih4K0u0KcZRf0g/lsS/ZzgfqRLY4bh7BssZ+LLRISI5f2weA==
+X-Received: by 2002:a25:428c:0:b0:d9a:4ae7:ba2c with SMTP id p134-20020a25428c000000b00d9a4ae7ba2cmr6324952yba.22.1700944790233;
+        Sat, 25 Nov 2023 12:39:50 -0800 (PST)
 Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
-        by smtp.gmail.com with ESMTPSA id jm8-20020ad45ec8000000b0067a2c103711sm780335qvb.25.2023.11.25.12.36.34
+        by smtp.gmail.com with ESMTPSA id mz1-20020a0562142d0100b0067a156e1738sm1866237qvb.74.2023.11.25.12.39.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 12:36:36 -0800 (PST)
-Message-ID: <100ee93e-2047-4d88-887b-df22ec6a7da3@gmail.com>
-Date: Sat, 25 Nov 2023 12:36:33 -0800
+        Sat, 25 Nov 2023 12:39:49 -0800 (PST)
+Message-ID: <daefa489-1cee-44e3-888c-bb0a8d462f07@gmail.com>
+Date: Sat, 25 Nov 2023 12:39:47 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
