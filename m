@@ -1,49 +1,49 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FF83C38
-	for <patches@lists.linux.dev>; Sat, 25 Nov 2023 20:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EDB30CFD
+	for <patches@lists.linux.dev>; Sat, 25 Nov 2023 21:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gVF3i12H"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6bd32d1a040so2886928b3a.3
-        for <patches@lists.linux.dev>; Sat, 25 Nov 2023 12:51:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FP/xZVuf"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-41e1974783cso14864741cf.3
+        for <patches@lists.linux.dev>; Sat, 25 Nov 2023 13:06:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700945473; x=1701550273; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1700946362; x=1701551162; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1HfTndWAOF2ASGrBDAhzARjJpnCtt5nEiOLnAyhmB8Q=;
-        b=gVF3i12H1ZFPOZLswnprJu6L5h6ecA3Nv4gcrEUA7qfAsTVzRFUCg8Ymd5r8bypVFk
-         1q0rBERvxjKiBRE7jJftTaeSL+8TwYzxIspoRUPQcLAn/6G6LzgDTnO9HkMwsIU2xY4s
-         8DzWuBOcSs7dcuuPRhebTfSkgwKpBGkIVYE2TUXEZf3Pr5Q5OaePA4uT3HF54Nzscpe6
-         5HgFiDzk8rrU9ODJo9wRdluLkFKGOa9Kbw66qAy8sGroAKTlgwVA/fv/ws2C6Bir0tzm
-         7ntQd/4DTSTjpB/U/oJgjxsIiX5m5otBcW1oKl4oUyI9qj0simXMen5hoIhB0UUqbzmT
-         8iiA==
+        bh=LZbBxLer2TaUb3SAODO6feYXAIgcP022yvElUvp2SuQ=;
+        b=FP/xZVufb1Kt9RHTR2RnnvEz+UyLlET6/llSstWENkpaH3iw9i4tPv366N2zDRozpW
+         /g5lVUYO3MZ3PfPKBc0Vc3KU4yM5dRebIfixplGvSCpCpzvgFgUlYs/4Y4v3vQei2UbY
+         WsKjCVZiMOOl2WEvpVwzjpYRIxdNcHGYDVj9E79rZ4Dh5phxuc3hUxk8sC0fREGuV24a
+         cKcL4nM1748SaDBjUOD4OFAdiMKU7s6Nuotzyy1l+rth/dwFuAv59oMRkLXPyAHBWvZ2
+         L6oUmTUCUfVPp09eZ7/NHJ+eZ/lYdQGYakgKUj2jCaTkMLa1a9yabf4Ztig405ZwP62G
+         cr6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700945473; x=1701550273;
+        d=1e100.net; s=20230601; t=1700946362; x=1701551162;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1HfTndWAOF2ASGrBDAhzARjJpnCtt5nEiOLnAyhmB8Q=;
-        b=CcfoxpgCCuIkt4APtA2OvySbG0kJRqkE8S5IAtgn1cFw792mmJY1W4STzi7S3BC8BA
-         kt59l2oYPYbvvpZ8e5xlCdggdyF+e8nYruakJA848monBolTpf3TmT3VUTXEJYHszVJd
-         hk7qk/eZqmoGWZqWyave7370DlKP8WvSS7OFJ2d3LYjNln9pGTzu5gl0YHtbY+78BBdL
-         mDVzfY4gTs2I03KiZ9BsLKOgwwZ+MhTRZT9mKy5qTLTcVjZ83ftJO2VGSyQd8AigDE69
-         6WgVpAR+rTQeUAzFpi2zfJV+FEuNCPT6ykNFwnQChDNZDjrsfIqnnintudr8b1/QJ/GV
-         HFZA==
-X-Gm-Message-State: AOJu0Yxx144PNbXJr1o8NEUMUegVPkrT6qblpYEbn7/ImEY0RVJcwSnI
-	spCCwbny5yVkRxAb0U3JAjQ=
-X-Google-Smtp-Source: AGHT+IFI9B9KNtJpf3hgeh9vi4NW28yEkTwJmZRa6/WYH8eT8T6d3Pop6tCKD2hM0tA4rhyhgO4NxQ==
-X-Received: by 2002:a05:6a00:1307:b0:6cc:7d6:2f77 with SMTP id j7-20020a056a00130700b006cc07d62f77mr2593078pfu.14.1700945472927;
-        Sat, 25 Nov 2023 12:51:12 -0800 (PST)
+        bh=LZbBxLer2TaUb3SAODO6feYXAIgcP022yvElUvp2SuQ=;
+        b=P8hPAEiuoS4ENzI9KPgYCEN9aemf2zaZaMSC/tCMgGcYUPkFtPsjWFizTOXXpbsoQi
+         YP3PIx9GGRFaxCBfn7swjeAYVXPEh0M0LXptFwDYYkhGP0b5uUJ30C4Y1sy3Qs0AmGdQ
+         k0+T7hYmprBCCBFMWnbKJVrVTqaMAaie0dXyVuLtehpK7S3Xntj4Ixm/4lJt4uaQPeso
+         PncFn9nF2c3Psv/qXxAo/3Qcp1OeTSn5yzZWF1nm9HS3SBsLtxwmSfdSnhf6HNlI1WMW
+         KpzYFlC88vfO8bIZwFQbGMu7y2DbOScjFF1iSUETLf5+V9LmUb8i/eIFyg8e2+v0Sj3Y
+         VopA==
+X-Gm-Message-State: AOJu0Yy5gC7p9/ebmHy96MrN8D+EAIOq+ejAJe2DlMI86rzfSaCmpSa3
+	55d5p3uLJ43d1BnI73Hxw44=
+X-Google-Smtp-Source: AGHT+IEpDW0+YDOSJJUHw6Y7QVmqcD/IeoIdkvs8gKo6mRtQaLoDR6FzAjr/PgR5Me3D4ThwpNvaCQ==
+X-Received: by 2002:ac8:70d9:0:b0:423:a492:6eff with SMTP id g25-20020ac870d9000000b00423a4926effmr2733359qtp.48.1700946362711;
+        Sat, 25 Nov 2023 13:06:02 -0800 (PST)
 Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
-        by smtp.gmail.com with ESMTPSA id g6-20020aa78746000000b0068be3489b0dsm4857155pfo.172.2023.11.25.12.51.11
+        by smtp.gmail.com with ESMTPSA id i10-20020ac860ca000000b004199c98f87dsm2452483qtm.74.2023.11.25.13.06.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 12:51:12 -0800 (PST)
-Message-ID: <b3542a2d-71f8-41b8-a5c2-2765102e241e@gmail.com>
-Date: Sat, 25 Nov 2023 12:51:11 -0800
+        Sat, 25 Nov 2023 13:06:02 -0800 (PST)
+Message-ID: <4cabafe9-b7e9-4ec4-8cc8-10b8515de4a3@gmail.com>
+Date: Sat, 25 Nov 2023 13:05:59 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,7 +51,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/153] 5.4.262-rc3 review
+Subject: Re: [PATCH 5.15 000/293] 5.15.140-rc2 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -60,7 +60,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
  conor@kernel.org, allen.lkml@gmail.com
-References: <20231125194331.369464812@linuxfoundation.org>
+References: <20231125163129.530624368@linuxfoundation.org>
 From: Florian Fainelli <f.fainelli@gmail.com>
 Autocrypt: addr=f.fainelli@gmail.com; keydata=
  xsDiBEjPuBIRBACW9MxSJU9fvEOCTnRNqG/13rAGsj+vJqontvoDSNxRgmafP8d3nesnqPyR
@@ -95,25 +95,25 @@ Autocrypt: addr=f.fainelli@gmail.com; keydata=
  y5arMQorqTFWlEOgRA8OP47L9knl9i4xuR0euV6DChDrguup2aJVU8JPBBgRAgAPAhsMBQJU
  X9LxBQkeXB3fAAoJEGFXmRW1Y3YOj4UAn3nrFLPZekMeqX5aD/aq/dsbXSfyAKC45Go0YyxV
  HGuUuzv+GKZ6nsysJw==
-In-Reply-To: <20231125194331.369464812@linuxfoundation.org>
+In-Reply-To: <20231125163129.530624368@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 11/25/2023 11:45 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.262 release.
-> There are 153 patches in this series, all will be posted as a response
+On 11/25/2023 8:33 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.140 release.
+> There are 293 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Mon, 27 Nov 2023 19:43:06 +0000.
+> Responses should be made by Mon, 27 Nov 2023 16:30:48 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.262-rc3.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.140-rc2.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 > 
 > thanks,
