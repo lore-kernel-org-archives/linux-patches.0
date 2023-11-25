@@ -1,49 +1,49 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4B528DC3
-	for <patches@lists.linux.dev>; Fri, 24 Nov 2023 23:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E3610EA
+	for <patches@lists.linux.dev>; Sat, 25 Nov 2023 05:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J+5ZC0h9"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6d7e56f6845so1374321a34.0
-        for <patches@lists.linux.dev>; Fri, 24 Nov 2023 15:21:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OBbe1J+q"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3b85d0148e0so117662b6e.0
+        for <patches@lists.linux.dev>; Fri, 24 Nov 2023 21:45:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700868116; x=1701472916; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1700891113; x=1701495913; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OlCPjaAtW62P1imPAMqJ2Iy75N+wtMzBYmO+H1bzrO0=;
-        b=J+5ZC0h9o5hbAy2UbI+b29dFWItz39lJz906CXJmM+yNJ2kyQN8sOW8babRfgoEMfl
-         JzS/TpFs/QucTNgLs0/JX+t3iHI2LAmSLHOK6ApwkPH2OvSBFk4isA3oIWCOpyPbl3VP
-         oznELRDDiuSoAAs/3OGsT0oxLL88BOC4WQUmZTSH4mOrre6iHY10CXVlb5Nt2vss+p51
-         vrEcB/uV/IJlIyYBMjpXLS6J0FaDfRUBn4O1IWbr1iVpbF3W5nD4NESYW+D5jg3QS/lO
-         IALHpSKUvB9av56x512HDkxY0GXZ2KOO6WCeF824Q7dy5WDf64nG3xhFmfj5+7Sxb0bQ
-         Y79g==
+        bh=9YtcVT0tO/faU6pBapwW4pF/eOnwAU4GwA3kQ7ou57Q=;
+        b=OBbe1J+qZ/gj9A9YQ4R3r8jsof/gRnhwQajgK5BnmbOUpj4Cqnbd2caFQwwzGkNNkf
+         kZ1XkD57a80VD8YceRJwfNC6S09JJk/OKQ43m8Llz1q94o69kQ562bvBB7/D5yhHYDNE
+         9zYuy65ABY0g3ww4YngovyzDAC8OOnxZef7/gJ/DnZKg7GcbIHXSdxp24JsrKdqPH1dd
+         Ch8lWzahDZdPyHkweUeoCat2lzNfz4/howheobCfp7OaM4uMkpdCBWJ4pWB1xFVsFUf8
+         EYRfP7Qf2UixnPybPyCDs5yZQor69mDCXCNWeK4380yTgsZXuwsfz9pdcEK21Ch6WCXA
+         8w1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700868116; x=1701472916;
+        d=1e100.net; s=20230601; t=1700891113; x=1701495913;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OlCPjaAtW62P1imPAMqJ2Iy75N+wtMzBYmO+H1bzrO0=;
-        b=NXpNZFL+Uwnp29us2n5znXRQpos/6/I342+3MGvePs/FgHc0Hrva3VTZ19Cf+N5UQV
-         lfUNW6346xUjNyGQd9fOP6wfXvHqJsh8jnJ5wxED870HqfJSLj03X8XfP7b6Rqd8/BWS
-         6jQqDpRfjit8eKomLqxyLAFR/1Arn8j8C0hynKphGU8RgMa9x9UxP4TDiIep6gh3mU5t
-         9dYOrIGLg5L2xgUYshNb84Xc/q64n5S9V9QUOzFUrMmlFXD4HM0zQTpTWRcgIwiJThyA
-         zfY6AkSuKbfT5gq2tZQqj+YwLiB0fX3HN6cnWjFd5M+4NZBeMDETa+3k2SZtquaTCLIr
-         BC8g==
-X-Gm-Message-State: AOJu0YwlWzBgqdjv5xUHTHcw9fQimqqqfFRPueRLfPJ3QYjSfvZS/r8W
-	iusENyZCI+XCSabQ0JjCPx0ZTg==
-X-Google-Smtp-Source: AGHT+IFVf3soPcU1tHWDQrpPYm5yzOD4//vhn47e6wYOjfrUzz8bPsS5nXGhVJhOJX7Oy5J/zJNdHQ==
-X-Received: by 2002:a05:6830:1d47:b0:6d8:a8:b59c with SMTP id p7-20020a0568301d4700b006d800a8b59cmr4982138oth.27.1700868116578;
-        Fri, 24 Nov 2023 15:21:56 -0800 (PST)
+        bh=9YtcVT0tO/faU6pBapwW4pF/eOnwAU4GwA3kQ7ou57Q=;
+        b=Cf2n8bOcQBw6gGIsemxox6Ry6yAZ/KeHyAbx7zLjVG9rtBc1i8PAG8NLtefqpG3kb+
+         8xF07PkN39ihHKdiEFPC+T9ATCHOA/RUBDdsPHXkj0n9PJR3DQqIhUgb+4N2xZX72FNJ
+         RjjmZi/KqI5MwGc8rzeeVNO1GcALJBwhzXux78kRB2aaNfPT839fqoab8y95Efi8Oz7O
+         y3wwK8gEiujTPBB8rLPkgT93xeaoN1jUYHcjiIQwu7ZLg0N3f1n02sAwSEOQFnakS6hK
+         udy4AAFYBppL/A86CTdozHJ/tryYtmWGRFWs8D4jXjAPn3YwSl1Tk0a6+dr5T8P/KCoW
+         oD5w==
+X-Gm-Message-State: AOJu0YyArRI1iUUykBo/xAaQDKgfyqh8xsVGqDxm7Uj23ZwDpIT+Fezp
+	taksqHagghxrj41kbsqToQceZPAVBKwFkimOoCy2j4hR
+X-Google-Smtp-Source: AGHT+IF8hKgzamcS6ks5XPNrfLtxKvTT7kP1+08AKQ7V7ZC2VsynTR7rqVJLUmxGjFzLY3gdcJkZOw==
+X-Received: by 2002:a05:6808:2111:b0:3b8:3826:6dcd with SMTP id r17-20020a056808211100b003b838266dcdmr727299oiw.25.1700891113007;
+        Fri, 24 Nov 2023 21:45:13 -0800 (PST)
 Received: from [192.168.17.16] ([138.84.62.70])
-        by smtp.gmail.com with ESMTPSA id j13-20020a9d7f0d000000b006ce28044207sm647747otq.58.2023.11.24.15.21.54
+        by smtp.gmail.com with ESMTPSA id bc10-20020a056808170a00b003b85ad8e75asm163754oib.6.2023.11.24.21.45.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Nov 2023 15:21:56 -0800 (PST)
-Message-ID: <c0a5a523-708b-431c-b212-df1af5ad7bc0@linaro.org>
-Date: Fri, 24 Nov 2023 17:21:53 -0600
+        Fri, 24 Nov 2023 21:45:12 -0800 (PST)
+Message-ID: <81a11ebe-ea47-4e21-b5eb-536b1a723168@linaro.org>
+Date: Fri, 24 Nov 2023 23:45:09 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,7 +59,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, deller@gmx.de, hca@linux.ibm.com
+ rwarsow@gmx.de, conor@kernel.org, jack@suse.cz, chrubis@suse.cz
 References: <20231124172000.087816911@linuxfoundation.org>
 From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
 In-Reply-To: <20231124172000.087816911@linuxfoundation.org>
@@ -87,122 +87,65 @@ On 24/11/23 11:50 a. m., Greg Kroah-Hartman wrote:
 > 
 > greg k-h
 
-There are problems with PA-RISC:
+We are noticing a regression with ltp-syscalls' preadv03:
 
 -----8<-----
-   /builds/linux/drivers/parisc/power.c:201:34: warning: 'struct sys_off_data' declared inside parameter list will not be visible outside of this definition or declaration
-     201 | static int qemu_power_off(struct sys_off_data *data)
-         |                                  ^~~~~~~~~~~~
-   /builds/linux/drivers/parisc/power.c: In function 'qemu_power_off':
-   /builds/linux/drivers/parisc/power.c:204:43: error: invalid use of undefined type 'struct sys_off_data'
-     204 |         gsc_writel(0, (unsigned long) data->cb_data);
-         |                                           ^~
-   /builds/linux/drivers/parisc/power.c: In function 'power_init':
-   /builds/linux/drivers/parisc/power.c:239:17: error: implicit declaration of function 'register_sys_off_handler'; did you mean 'register_restart_handler'? [-Werror=implicit-function-declaration]
-     239 |                 register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
-         |                 ^~~~~~~~~~~~~~~~~~~~~~~~
-         |                 register_restart_handler
-   /builds/linux/drivers/parisc/power.c:239:42: error: 'SYS_OFF_MODE_POWER_OFF' undeclared (first use in this function); did you mean 'SYSTEM_POWER_OFF'?
-     239 |                 register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
-         |                                          ^~~~~~~~~~~~~~~~~~~~~~
-         |                                          SYSTEM_POWER_OFF
-   /builds/linux/drivers/parisc/power.c:239:42: note: each undeclared identifier is reported only once for each function it appears in
-   /builds/linux/drivers/parisc/power.c:239:66: error: 'SYS_OFF_PRIO_DEFAULT' undeclared (first use in this function)
-     239 |                 register_sys_off_handler(SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_DEFAULT,
-         |                                                                  ^~~~~~~~~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
-   make[3]: *** [/builds/linux/scripts/Makefile.build:289: drivers/parisc/power.o] Error 1
+   preadv03 preadv03
+   preadv03_64 preadv03_64
+   preadv03.c:102: TINFO: Using block size 512
+   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'a' expectedly
+   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'a' expectedly
+   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'b' expectedly
+   preadv03.c:102: TINFO: Using block size 512
+   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
+   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
+   preadv03.c:66: TFAIL: preadv(O_DIRECT) read 0 bytes, expected 512
+   preadv03.c:102: TINFO: Using block size 512
+   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
+   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
+   preadv03.c:66: TFAIL: preadv(O_DIRECT) read 0 bytes, expected 512
+   preadv03.c:102: TINFO: Using block size 512
+   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'a' expectedly
+   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'a' expectedly
+   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'b' expectedly
+   preadv03.c:102: TINFO: Using block size 512
+   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
+   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
+   preadv03.c:66: TFAIL: preadv(O_DIRECT) read 0 bytes, expected 512
+   preadv03.c:102: TINFO: Using block size 512
+   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
+   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
+   preadv03.c:66: TFAIL: preadv(O_DIRECT) read 0 bytes, expected 512
 ----->8-----
 
-That's allnoconfig with GCC 11; defconfig and tinyconfig fail just like that.
+This is seen in the following environments:
+* dragonboard-845c
+* juno-64k_page_size
+* qemu-arm64
+* qemu-armv7
+* qemu-i386
+* qemu-x86_64
+* x86_64-clang
 
-Bisection points to:
+and on the following RC's:
+* v5.10.202-rc1
+* v5.15.140-rc1
+* v6.1.64-rc1
 
-   commit 065a7d0b92c0f1ef4160e2129d835eb6093cc675
-   Author: Helge Deller <deller@gmx.de>
-   Date:   Tue Oct 17 22:19:53 2023 +0200
+(Note that the list might not be complete, because some branches failed to execute completely due to build issues reported elsewhere.)
 
-       parisc/power: Add power soft-off when running on qemu
+Bisection in linux-5.15.y pointed to:
+
+   commit db85c7fff122c14bc5755e47b51fbfafae660235
+   Author: Jan Kara <jack@suse.cz>
+   Date:   Fri Oct 13 14:13:50 2023 +0200
+
+       ext4: properly sync file size update after O_SYNC direct IO
        
-       commit d0c219472980d15f5cbc5c8aec736848bda3f235 upstream.
+       commit 91562895f8030cb9a0470b1db49de79346a69f91 upstream.
 
 
-Then there's this failure on System/390:
-
------8<-----
-   /builds/linux/arch/s390/mm/page-states.c: In function 'mark_kernel_pgd':
-   /builds/linux/arch/s390/mm/page-states.c:175:38: error: request for member 'val' in something not a structure or union
-     max_addr = (S390_lowcore.kernel_asce.val & _ASCE_TYPE_MASK) >> 2;
-                                         ^
-   In file included from /builds/linux/arch/s390/include/asm/page.h:186,
-                    from /builds/linux/arch/s390/include/asm/thread_info.h:26,
-                    from /builds/linux/include/linux/thread_info.h:60,
-                    from /builds/linux/arch/s390/include/asm/preempt.h:6,
-                    from /builds/linux/include/linux/preempt.h:78,
-                    from /builds/linux/include/linux/spinlock.h:55,
-                    from /builds/linux/include/linux/mmzone.h:8,
-                    from /builds/linux/include/linux/gfp.h:6,
-                    from /builds/linux/include/linux/mm.h:10,
-                    from /builds/linux/arch/s390/mm/page-states.c:13:
-   /builds/linux/arch/s390/mm/page-states.c: In function 'cmma_init_nodat':
-   /builds/linux/arch/s390/mm/page-states.c:204:23: error: 'invalid_pg_dir' undeclared (first use in this function); did you mean 'is_valid_bugaddr'?
-     page = virt_to_page(&invalid_pg_dir);
-                          ^~~~~~~~~~~~~~
-   /builds/linux/include/asm-generic/memory_model.h:25:40: note: in definition of macro '__pfn_to_page'
-    #define __pfn_to_page(pfn) (vmemmap + (pfn))
-                                           ^~~
-   /builds/linux/arch/s390/include/asm/page.h:176:29: note: in expansion of macro 'phys_to_pfn'
-    #define virt_to_pfn(kaddr) (phys_to_pfn(__pa(kaddr)))
-                                ^~~~~~~~~~~
-   /builds/linux/arch/s390/include/asm/page.h:176:41: note: in expansion of macro '__pa'
-    #define virt_to_pfn(kaddr) (phys_to_pfn(__pa(kaddr)))
-                                            ^~~~
-   /builds/linux/arch/s390/include/asm/page.h:179:41: note: in expansion of macro 'virt_to_pfn'
-    #define virt_to_page(kaddr) pfn_to_page(virt_to_pfn(kaddr))
-                                            ^~~~~~~~~~~
-   /builds/linux/arch/s390/mm/page-states.c:204:9: note: in expansion of macro 'virt_to_page'
-     page = virt_to_page(&invalid_pg_dir);
-            ^~~~~~~~~~~~
-   /builds/linux/arch/s390/mm/page-states.c:204:23: note: each undeclared identifier is reported only once for each function it appears in
-     page = virt_to_page(&invalid_pg_dir);
-                          ^~~~~~~~~~~~~~
-   /builds/linux/include/asm-generic/memory_model.h:25:40: note: in definition of macro '__pfn_to_page'
-    #define __pfn_to_page(pfn) (vmemmap + (pfn))
-                                           ^~~
-   /builds/linux/arch/s390/include/asm/page.h:176:29: note: in expansion of macro 'phys_to_pfn'
-    #define virt_to_pfn(kaddr) (phys_to_pfn(__pa(kaddr)))
-                                ^~~~~~~~~~~
-   /builds/linux/arch/s390/include/asm/page.h:176:41: note: in expansion of macro '__pa'
-    #define virt_to_pfn(kaddr) (phys_to_pfn(__pa(kaddr)))
-                                            ^~~~
-   /builds/linux/arch/s390/include/asm/page.h:179:41: note: in expansion of macro 'virt_to_pfn'
-    #define virt_to_page(kaddr) pfn_to_page(virt_to_pfn(kaddr))
-                                            ^~~~~~~~~~~
-   /builds/linux/arch/s390/mm/page-states.c:204:9: note: in expansion of macro 'virt_to_page'
-     page = virt_to_page(&invalid_pg_dir);
-            ^~~~~~~~~~~~
-   make[3]: *** [/builds/linux/scripts/Makefile.build:289: arch/s390/mm/page-states.o] Error 1
------>8-----
-
-Bisection in this case points to:
-
-   commit d247caa47712c9cc36f25ec744f3b5dba90c3334
-   Author: Heiko Carstens <hca@linux.ibm.com>
-   Date:   Tue Oct 17 21:07:03 2023 +0200
-
-       s390/cmma: fix initial kernel address space page table walk
-       
-       commit 16ba44826a04834d3eeeda4b731c2ea3481062b7 upstream.
-
-
-Reproducers:
-
-   tuxmake --runtime podman --target-arch parisc --toolchain gcc-11 --kconfig allnoconfig
-
-and
-
-   tuxmake --runtime podman --target-arch s390 --toolchain gcc-8 --kconfig allnoconfig
-
+Reverting that commit made the test pass.
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
