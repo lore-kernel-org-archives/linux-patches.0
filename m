@@ -1,115 +1,67 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416EE8C13;
-	Sun, 26 Nov 2023 17:18:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJ4ABdhB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E4AC43397;
-	Sun, 26 Nov 2023 17:17:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701019081;
-	bh=S1rxjj0ESxUQzaZf4mvKvtonM50f7ppBicV8LL1QEoM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJ4ABdhBo2AWdaOhMojW/g2ZYtsaM3uUhOi6JKlQsQ+X28mVz1zqZ1XRU3CKhqKZ+
-	 hcziyev+KzCeIHB48Kt/hRwb7NJRCGjbDhqWqW/azPbuUX0komscHQj3sNe8l0vnD6
-	 1V9o8TuN/vwP0P1NsrsR++qe8OGxOOOS5eVz/vB42sGoEjjGOwBlIeLcT0GjjKAFGl
-	 Yx7Q0mbPbTWXPZKs1/nNwpDh5TsdBXyDaeVLnkPhPnSlOMOkyPDDJOLQg+8pCtVj9v
-	 3rgfqIRAzmibaNerpsi4cPC87bkjQGIijRF5uIidrA1YLM5CZjkexWgMR0j8BhWmGI
-	 lInwAGI71sojg==
-From: SeongJae Park <sj@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CB910A14
+	for <patches@lists.linux.dev>; Sun, 26 Nov 2023 18:22:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 7D74F1C006B; Sun, 26 Nov 2023 19:22:01 +0100 (CET)
+Date: Sun, 26 Nov 2023 19:22:01 +0100
+From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/525] 6.6.3-rc4 review
-Date: Sun, 26 Nov 2023 17:17:58 +0000
-Message-Id: <20231126171758.109371-1-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231126154418.032283745@linuxfoundation.org>
-References: 
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.1 000/366] 6.1.64-rc4 review
+Message-ID: <ZWOMyQ+fcB0fWy8u@duo.ucw.cz>
+References: <20231126154359.953633996@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="z8OSEfWVUhviPDEb"
+Content-Disposition: inline
+In-Reply-To: <20231126154359.953633996@linuxfoundation.org>
 
-Hello,
 
-On 2023-11-26T15:46:18+00:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+--z8OSEfWVUhviPDEb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This is the start of the stable review cycle for the 6.6.3 release.
-> There are 525 patches in this series, all will be posted as a response
+Hi!
+
+> This is the start of the stable review cycle for the 6.1.64 release.
+> There are 366 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Tue, 28 Nov 2023 15:43:06 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.3-rc4.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+CIP tests are still okay. I guess your scripts will pick up Tested-by:
+flags from previous versions? If not I can resend the emails...
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Best regards,
+								Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 0f3bc3a11114 ("Linux 6.6.3-rc4")
+--z8OSEfWVUhviPDEb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-SJ
+-----BEGIN PGP SIGNATURE-----
 
-[...]
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZWOMyAAKCRAw5/Bqldv6
+8lpSAKCMxEe+T5GADIoytnqxd7j7oayZ7QCcDSXdO0ZzT7TI9HC28UHq7m4jPTU=
+=EYTI
+-----END PGP SIGNATURE-----
 
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+--z8OSEfWVUhviPDEb--
