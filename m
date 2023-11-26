@@ -1,51 +1,51 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85316D51A
-	for <patches@lists.linux.dev>; Sun, 26 Nov 2023 16:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83463D51A
+	for <patches@lists.linux.dev>; Sun, 26 Nov 2023 16:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+S7ILHq"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1cfbce92362so4682655ad.1
-        for <patches@lists.linux.dev>; Sun, 26 Nov 2023 08:22:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cim8eSJB"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6cd85d370c9so287181b3a.3
+        for <patches@lists.linux.dev>; Sun, 26 Nov 2023 08:25:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701015729; x=1701620529; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1701015900; x=1701620700; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=bKssKqbCvmwkXHRPOYKhiZ3Dh4+rJ6NK+z9DXZeYZ3Y=;
-        b=F+S7ILHq4tA+YFIeLH4etbhlpNVuSK/YRrE3jusqjcza4C8HrOShSGvt0Ce4FT9LxS
-         UJM7Pap6PYBWKF2NdZScqlcpfIAjMpWvmiQ60Z+COwAW81ik3J782OiR0bwwFkvcicBn
-         YwBhfgB3Xmydvxb6WTSdgYFVG7KyP234nQ94eUtwaMthK6DgkEGExUz7VE+TeLptX9xE
-         eP3JokIZVbljETHqvRnWN4hRdAqMRPjF3sqo5O8pDlWD1SZYxwAFgbhgy1YLSymAZkBC
-         RtzzaHYYfK68i2XlvVZ5IV04K/LzwLObsk0KyotAbadeYSYWXNn8SQqaePYNWsoFM0h7
-         j52w==
+        bh=WvIB/yJLUMiZHfcnxTO1H2RtJsdrVkNpq1xmHlG3eDc=;
+        b=Cim8eSJBNOD/5rN+OErQWz3aro2SsERHTkryvUeBUD/3Jk8xaKx9UsZ2LI749u2/7B
+         JQhWxr4XKvqNaUYugFj6bayOkVeP0lROsqn/stuvcw/2Urume1BvcmRgVFTP+t2UNxw5
+         RGuIfKXCy/SagXaqkHGZhrV9i7XoghQIGt9HAgtQhMRnQPa21TW3nkPwRQO3GEA8sH51
+         rSIvsJ8QUr5ILrBzxrbp/2Dr85FILh2kbNRuAb70dKYHbh2wW/A5lM+BUCMXbpCVjl3Y
+         FAQke7guHhKjMZcaUEcS+E9T2Yupb2eo1TOUCh/VQTwrBsx+/vCb8aVkZyMwOaS8GiXN
+         e9vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701015729; x=1701620529;
+        d=1e100.net; s=20230601; t=1701015900; x=1701620700;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bKssKqbCvmwkXHRPOYKhiZ3Dh4+rJ6NK+z9DXZeYZ3Y=;
-        b=oSp6ulA/hE3Md50umMkke7SkNveCMCMMTXBU4+yA9KZL+35S7a4evvrAE2zNyEnLB5
-         3TX8QsUq+4KmGbQ+sNouvMLokeTEvCHAmubGiOrJh/qo6KUyXvjLjO0yC7xqaQv5VQwO
-         rheTG36zJVZtmPRDG6UgFXNN+yIMCd+nEbCi3h28W9XWF9GnDNa7FZFzXpo8yxumi34W
-         K2cJ16cqX5W7r6iYBBlOudK1mzHRipoRZPBDRJ9jh7XcC5cCpSGMTzPZmvkRVhvNtd0u
-         QZxm1NL0PFV/hL2IOipA18MThG3fLyrNxa3tXx9AnvDKRpQ7bHoEnvqWTF1ckbt7mGv0
-         fIeg==
-X-Gm-Message-State: AOJu0YzBoBVXNb/5bb4LpANySwpjN0Uokc28a45tJ8tpGXCKf9ZEYzCW
-	fduQQ/qWJN6eXDwJ0MrDuko=
-X-Google-Smtp-Source: AGHT+IEp0e4hGVMDRODcZodH/GXW9x88GFfE7wswD2oTgLnJg5UXDbMa6Dy/dVeLxHhcOh0HlkkKlg==
-X-Received: by 2002:a17:902:c40d:b0:1cf:59ad:9637 with SMTP id k13-20020a170902c40d00b001cf59ad9637mr18179954plk.22.1701015728607;
-        Sun, 26 Nov 2023 08:22:08 -0800 (PST)
+        bh=WvIB/yJLUMiZHfcnxTO1H2RtJsdrVkNpq1xmHlG3eDc=;
+        b=JtJe8TPGfTBtLKEA3K6tCcGBcCc6Fhc5NqwpI1DhPqpH+vUas2Xd0V41uZB5vd7Lvx
+         7wv+bOwPZihYnWu3l6RWr08SuIGOJ1LCKnrNDdgK8KEaSTxVgDEWSCVAsmFQawHUd2do
+         +PLMg4xssjdFAsSFWKXnIPecdzOmoT9+SG3sc2/rt+7/BhhaSw5PqBiAnmp/yp7h17I0
+         +VR9uYh+BJbKa9bpPjDf0ua6QcMgA1lr33l90QP8mK1H1ABdv0uX65PKWmG4O592UH6g
+         H6I0VcJPejRTurC9btTvzwyPXus8V+roOVLIuxqgBbIpp0fz1CAxcRxNZhnwZ1lbJZ0p
+         we7A==
+X-Gm-Message-State: AOJu0YwHG46Iec4s8/cgif+8CL9bmzREh+meS1UpMOvPfqnv9ed9svqE
+	dG3I099vnHIqdoUIBRkx9vw=
+X-Google-Smtp-Source: AGHT+IFB5U7VBdn+zI8TQ4OJYTxGteSOogbzCF58dGy2wBrqg3tjKc694SWa2sL7+CjWeUWZskX/hw==
+X-Received: by 2002:a05:6a20:8403:b0:18b:a011:f955 with SMTP id c3-20020a056a20840300b0018ba011f955mr9563141pzd.60.1701015899688;
+        Sun, 26 Nov 2023 08:24:59 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id l18-20020a170902d35200b001cf838dadbesm6563024plk.56.2023.11.26.08.22.06
+        by smtp.gmail.com with ESMTPSA id a22-20020a63d216000000b005bdd8dcfe19sm6232427pgg.10.2023.11.26.08.24.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Nov 2023 08:22:07 -0800 (PST)
+        Sun, 26 Nov 2023 08:24:59 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <05678c48-bac1-4f17-99f8-21b566c17a6e@roeck-us.net>
-Date: Sun, 26 Nov 2023 08:22:06 -0800
+Message-ID: <3632c7da-24ba-4259-a590-5c46f899d43f@roeck-us.net>
+Date: Sun, 26 Nov 2023 08:24:57 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,7 +53,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/187] 5.10.202-rc3 review
+Subject: Re: [PATCH 5.15 000/292] 5.15.140-rc3 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
@@ -61,7 +61,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-References: <20231126154335.643804657@linuxfoundation.org>
+References: <20231126154348.824037389@linuxfoundation.org>
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
@@ -106,13 +106,13 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20231126154335.643804657@linuxfoundation.org>
+In-Reply-To: <20231126154348.824037389@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 11/26/23 07:46, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.202 release.
-> There are 187 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.15.140 release.
+> There are 292 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -120,15 +120,15 @@ On 11/26/23 07:46, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 
-A quick check with -rc3 shows for arm:allmodconfig and arm64:allmodconfig:
+For v5.15.139-293-g0dd3c4f0979f (-rc3), powerpc:defconfig:
 
-   CC [M]  drivers/interconnect/qcom/sc7180.o
-drivers/interconnect/qcom/sc7180.c:158:10: error: 'struct qcom_icc_bcm' has no member named 'enable_mask'
-   158 |         .enable_mask = BIT(3),
-       |          ^~~~~~~~~~~
+arch/powerpc/platforms/pseries/iommu.c: In function 'find_existing_ddw':
+arch/powerpc/platforms/pseries/iommu.c:908:49: error: 'struct dma_win' has no member named 'direct'
+   908 |                         *direct_mapping = window->direct;
 
-Inherited from the previous release. Introduced with commit 362f0241dbe9
-("interconnect: qcom: sc7180: Set ACV enable_mask").
+
+git blame points to commit 19bed3228b3aa ("powerpc/pseries/iommu: enable_ddw
+incorrectly returns direct mapping for SR-IOV device").
 
 Guenter
 
