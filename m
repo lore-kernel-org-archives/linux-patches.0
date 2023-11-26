@@ -1,51 +1,51 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E7A8C13
-	for <patches@lists.linux.dev>; Sun, 26 Nov 2023 18:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F1212E51
+	for <patches@lists.linux.dev>; Sun, 26 Nov 2023 18:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUNF4Yeb"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-53fa455cd94so2120099a12.2
-        for <patches@lists.linux.dev>; Sun, 26 Nov 2023 10:23:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGa1a8iR"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6c431b91b2aso2596891b3a.1
+        for <patches@lists.linux.dev>; Sun, 26 Nov 2023 10:33:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701023007; x=1701627807; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1701023599; x=1701628399; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=x8F6qrmUPSBt/CJhsZZHdLkXZGN0xPhZDe9EzedoL24=;
-        b=KUNF4YebKbA3oqrrEODLsZb/juqA/FxL+aD//F9w1QSYSKy1wOsxcDCQMbDaad7vn1
-         Dr3WoSc97L324yaV/rbrXK7+o1mbJJ5GT5SwF/hTsggfnX0Kdk0g0e0FZCEb5RcN2ZKA
-         1rMK5EAD9jlCnYCLZrY2284cvQ+Qn57e4vt+nOzKXdXnFYo0TDhr0jqa9dnBzLHuGiw4
-         MIfZuMUZobcPqx4VYhC/U7T1k0FlI+68mrQ0sDP+6R4upWGje7vOYcwU22MNZ/zMHpIw
-         BfrSinVt9cIebdIODRn1ZzltobwA1959n37JKtPyonJ9f2SR1HtWo9F55De8AQAZ4GMt
-         xc6g==
+        bh=ZVmDhjOXqhvKgFkEdvXLesWKtT+5+6HRJ1ntux/QoPo=;
+        b=bGa1a8iRxAPBebqNfSgH9kXIB7mQ58fRqbZzoySwFEdUidYSDiSlo5tAoAbHUYWAtY
+         V6l190rB1VnorbPDWdhw1QoZMr9jbfjdLddt7ziOGvt0ANXTZ0Nywei9kclGDTlG13xy
+         Fcqhq4oRL5UvieHK6rqIB+v/2tcw/jcKaMI3PuwvGu+Fbvoqb+tk7sY2+0DR8/ZVwTKo
+         YepQagxHfJL4rOmYjrPeOvhIRCE7nhhsHlLndEHK9untEzDlEIv/+UI1JyAV+oLWP7/k
+         tvU4eXWf93nM3j34YHsb4J93rPFebmOpxRej397IHXOqvKfNWO2lEXEHWChV2eNnDz8X
+         /oCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701023007; x=1701627807;
+        d=1e100.net; s=20230601; t=1701023599; x=1701628399;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=x8F6qrmUPSBt/CJhsZZHdLkXZGN0xPhZDe9EzedoL24=;
-        b=cLTizKjW4cF13ruFDaBU+gxcsuTq2nQ1GK2d0mDmKiPayXIR2D8+lct5Fu6Du1Q6rC
-         SQezzW0uIvaOms0G26lMa4in/H1fSuQJ+bW4IDIZOuffy5FoSUwkeSW5R2Mbmf7jAr0H
-         QajbXoibVvqPDcWc6ORXR/JonH5yLOp+/m6h18gO5yg7EsHydf3IDTdJznyaWzPOgsLS
-         daWM9RgY3fYhUTUwokn7jQMek92ILjJSOWSfFODTHeFilZyYqepARXu5VsA7SkbI2wZ/
-         5B5wk3vdDlU+JD3/2mvGTASHkI/AwVMHbuK2/hJfvnFK5aPqy2N5xfkoQjbpA+tHwQE0
-         zRsA==
-X-Gm-Message-State: AOJu0YzVdho5ore+J2WSw4SU33AmJOIcNPPntMb5GKlU6dJ626LllJkf
-	f/o4Cvku5hI1PkA8XZrRRyc=
-X-Google-Smtp-Source: AGHT+IF1603DpESp/eBHLrrSl4XQCz1I0u6NAb6fww1o8yrFC+u9nGVbsjVEJYmmJsBejKxcjGqixw==
-X-Received: by 2002:a05:6a20:1445:b0:18c:5c04:5564 with SMTP id a5-20020a056a20144500b0018c5c045564mr3310140pzi.60.1701023007344;
-        Sun, 26 Nov 2023 10:23:27 -0800 (PST)
+        bh=ZVmDhjOXqhvKgFkEdvXLesWKtT+5+6HRJ1ntux/QoPo=;
+        b=uGzKMt6DCLLyNydY9YN555J5uwcvOdqynki81Ytq7VEl4IQjF7KB1rP8meS1hHVy3q
+         XcvDitOfRDegCQTMcBLfOaAAOBb3NeQGmgR+J1loGsfitw42M2i29FX9aRhpgdEmXRPK
+         lXOmmF+Ip+gT8eO0UVqUnJKNGC+4UXeNCRJV1a6kCBoRhatcWA18FEazW2CO02EuiR0+
+         NB755DRzQKGwEmux3ez1UWiPp70M3Kgmme5pOedXmzAkbttMJIMXPnsCUMCFzrnOdgve
+         fosnb7NvLkP5EzOHQfJ+U/d1N6QAe0cybVK01BhRmxmlL9lxDpkAHHHOfZQZ01zT4nP0
+         /D9g==
+X-Gm-Message-State: AOJu0Yyr4a6ZP6QDm3zgU6E7i5FbvNouGiDpMjr21syAz2Ri3mzy8x8E
+	i2HsrweJv4V6iKXxY3HHvdw=
+X-Google-Smtp-Source: AGHT+IEdVS1JbMFlp6ZZQNruwQlaMMngzWg7HnKoKlQvgn+RUYQwxgW3PasscTn0Hqru5nfHWniQhA==
+X-Received: by 2002:a05:6a20:d70a:b0:18a:e7cf:7be with SMTP id iz10-20020a056a20d70a00b0018ae7cf07bemr8470281pzb.52.1701023598811;
+        Sun, 26 Nov 2023 10:33:18 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 29-20020a63145d000000b005c259cef481sm6394039pgu.59.2023.11.26.10.23.25
+        by smtp.gmail.com with ESMTPSA id a7-20020a656407000000b005b83bc255fbsm5484576pgv.71.2023.11.26.10.33.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Nov 2023 10:23:26 -0800 (PST)
+        Sun, 26 Nov 2023 10:33:18 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <76363981-1f2a-47c2-b1b1-ae039844e936@roeck-us.net>
-Date: Sun, 26 Nov 2023 10:23:24 -0800
+Message-ID: <09f33739-9bf6-4ff8-895d-92d3567c3cb9@roeck-us.net>
+Date: Sun, 26 Nov 2023 10:33:16 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,15 +53,16 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/187] 5.10.202-rc3 review
+Subject: Re: [PATCH 4.14 00/53] 4.14.331-rc2 review
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
  patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-References: <20231126154335.643804657@linuxfoundation.org>
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ allen.lkml@gmail.com, Helge Deller <deller@gmx.de>
+References: <20231125163059.878143365@linuxfoundation.org>
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
@@ -106,35 +107,49 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20231126154335.643804657@linuxfoundation.org>
+In-Reply-To: <20231125163059.878143365@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 11/26/23 07:46, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.202 release.
-> There are 187 patches in this series, all will be posted as a response
+On 11/25/23 08:32, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.331 release.
+> There are 53 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Tue, 28 Nov 2023 15:43:06 +0000.
+> Responses should be made by Mon, 27 Nov 2023 16:30:48 +0000.
 > Anything received after that time might be too late.
 > 
 
-For v5.10.201-188-g2f84e268b78b (5.10.202-rc3):
+Building parisc64:generic-64bit_defconfig ... failed
+--------------
+Error log:
+hppa64-linux-ld: arch/parisc/kernel/head.o: in function `$iodc_panic':
+(.head.text+0x64): undefined reference to `init_stack'
+hppa64-linux-ld: (.head.text+0x68): undefined reference to `init_stack'
+make[1]: *** [Makefile:1049: vmlinux] Error 1
+make: *** [Makefile:153: sub-make] Error 2
 
-s390:defconfig, s390:allmodconfig, s390:debug_defconfig:
+Bisect log:
 
-drivers/s390/crypto/ap_bus.c: In function 'ap_bus_force_rescan':
-drivers/s390/crypto/ap_bus.c:791:28: error: 'ap_scan_bus_count' undeclared
+# bad: [39ca2c4cec46e5ef545815f62be91cba998b8927] Linux 4.14.331-rc2
+# good: [bfa43eeca4797e58975ba8c54057c1f29bf20534] Linux 4.14.330
+git bisect start 'HEAD' 'v4.14.330'
+# good: [5bc5bf29b42fb16faa4407f9c01f05dadb397f2f] media: venus: hfi: add checks to perform sanity on queue pointers
+git bisect good 5bc5bf29b42fb16faa4407f9c01f05dadb397f2f
+# good: [2e1d20a37188fbca246de24800f3fb0e9ab8d233] mcb: fix error handling for different scenarios when parsing
+git bisect good 2e1d20a37188fbca246de24800f3fb0e9ab8d233
+# bad: [6c59b6c8a0be15fa1db3d07ffcad481aa507f8be] media: venus: hfi: fix the check to handle session buffer requirement
+git bisect bad 6c59b6c8a0be15fa1db3d07ffcad481aa507f8be
+# bad: [581615c5d0e31e0033e3458e248c6e3646b5ab13] ALSA: info: Fix potential deadlock at disconnection
+git bisect bad 581615c5d0e31e0033e3458e248c6e3646b5ab13
+# bad: [af3526c44f86f56af5963e8ed6dc77fc1e76ccc5] parisc/pgtable: Do not drop upper 5 address bits of physical address
+git bisect bad af3526c44f86f56af5963e8ed6dc77fc1e76ccc5
+# bad: [6eddd5699c407a706d8e914e0c88934c4e1b6e27] parisc: Prevent booting 64-bit kernels on PA1.x machines
+git bisect bad 6eddd5699c407a706d8e914e0c88934c4e1b6e27
+# first bad commit: [6eddd5699c407a706d8e914e0c88934c4e1b6e27] parisc: Prevent booting 64-bit kernels on PA1.x machines
 
-$ git grep ap_scan_bus_count
-drivers/s390/crypto/ap_bus.c:   if (atomic64_read(&ap_scan_bus_count) <= 0)
-$ git blame drivers/s390/crypto/ap_bus.c |& grep ap_scan_bus_count
-467f51fb3ab6e (Harald Freudenberger 2023-10-23 09:57:10 +0200  791) 	if (atomic64_read(&ap_scan_bus_count) <= 0)
-
-which is:
-
-467f51fb3ab6 s390/ap: fix AP bus crash on early config change callback invocation
+FWIW, the offending patch is tagged "Cc:  <stable@vger.kernel.org> # v6.0+"
 
 Guenter
 
