@@ -1,102 +1,115 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9776820312
-	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 19:50:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5123EA74
+	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 19:55:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="V6P7jNl1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701114629; x=1732650629;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=FOWlBJuI1QWETMszMwBkYk25m1g8XF0ebe/+lRpK/Yg=;
-  b=V6P7jNl1fDdXYWrUx2nZA+moqV8492eObxqR7/VWYf35QOzet/L5zGEv
-   kkWkhdarG8ud88KWEqjU8q3l91PrMeWVqTfCJoHNlrI/0RSucmRXk8Xve
-   B6iS5CMGu1q2Ah0zb4jxjMK/f/MJZFBBjkd44/vuuwtMxnkZ9Y4e/OF34
-   8oNEqNsbmR5benk52jAaK6+uFLYmk1VgpBk665HgDPjkSIKAfV2PrWdCN
-   6P04ZH7rkI+JvDKWmyRNDs5caN5gV0GcCqn46Gg8GXnfgEinNRRxv+r5z
-   7MWsNTqogDxNZ25pQcDGsewRQvOqUKh4x7lRYsnfv667KlXeuhbz945A1
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10907"; a="389930692"
-X-IronPort-AV: E=Sophos;i="6.04,231,1695711600"; 
-   d="scan'208";a="389930692"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2023 11:50:28 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10907"; a="744669420"
-X-IronPort-AV: E=Sophos;i="6.04,231,1695711600"; 
-   d="scan'208";a="744669420"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2023 11:50:28 -0800
-Date: Mon, 27 Nov 2023 11:50:26 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
-	x86@kernel.org, linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
-Message-ID: <ZWTzAujHdrJ950F3@agluck-desk3>
-References: <20230929181626.210782-1-tony.luck@intel.com>
- <20231004183623.17067-1-tony.luck@intel.com>
- <20231004183623.17067-3-tony.luck@intel.com>
- <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
- <ZTa37L2nlnbok8dz@agluck-desk3>
- <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
- <ZVPu/hX9b7lUkrBY@agluck-desk3>
- <20231121115448.GCZVyaiNkNvb4t2NxB@fat_crate.local>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M7Qltrsr"
+Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-462a1a2717aso1579073137.1
+        for <patches@lists.linux.dev>; Mon, 27 Nov 2023 11:55:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701114940; x=1701719740; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/TMOaAh1xttulN4HpcJfcDREcNIucjhookb0crER2fo=;
+        b=M7Qltrsr6DnFyt/wAzuAryNNY9boCUiTgHBYWq9gdZl0b3kpGFRl8el1yeMUOmZfPk
+         bzk/bcO6jdvxSEKrNEIpC4z9eoyR1RrpCD5JkYHTYXxgtQhNbjKMGdF95cOLAABl3Dau
+         DxLsFoYxGIzvBSoJdROcu3EKMq8Q6+kwdFN8WyKyOwLc8gCrzomQAvBp6LtybAPFUXWA
+         F1AyMuGu7PFBLbKM9bSt0ERU7+Qt5vM93WPnoT/Zq7P/J1oOxl6Mw0iG+ErYhgWs0kiO
+         vVIkx0gLAOoRTYdpEQo0LOT+i1t8m5NKDI7AGa2UQEQVRrCxtYiXpKSPXF5j8eEKdLC0
+         IaBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701114940; x=1701719740;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/TMOaAh1xttulN4HpcJfcDREcNIucjhookb0crER2fo=;
+        b=hcv6lvzEe/+pgMULFMwadT+IHZK2I82TmSAx0baMueanCX5tX9/rSNx9UsRarJYSPF
+         hCkwmh68B0eV1QvzjjKKHsaK0MgZKNpFNdTF9r7EyM1Ph18+51wDT17DmEJiDMXPAyuM
+         3nBw9t4uNJC75T5HK/TQe4S1h2bYdPnpprggCYTcHsGQgDCVYb7nMyrXtNwwnDJFPJus
+         Z7XLLEnrlJhI/9m+AGVZGqmpjTPT6C0fe4wBRdoTeciFMN1D5slJqXUO0Q1QZ3fqfil6
+         pXA4QIaAzVOdyrBm8DvzbPWpSdqwnWdjfXHwG4sQBhOXqIZbA6smu98Ie42nHUQNW3q+
+         RdhQ==
+X-Gm-Message-State: AOJu0Yw9PUGFTLRcU+W6m/MmQu0kfPtWEmet0uNZqUZtRIrqgmJxXISl
+	UTMYzMBcLChPiHs1pg1G0LozgP4R6iN4tUmBNE61Yw==
+X-Google-Smtp-Source: AGHT+IF1mAFvOGAvsDg4pZ0R8M8hiRKSHtJN0pBMxbewTkFnpMlzKn4GXJ7+GoqmrN8fTu0r7ShP9hBxdVV81qBlWn8=
+X-Received: by 2002:a67:fb03:0:b0:462:d592:b078 with SMTP id
+ d3-20020a67fb03000000b00462d592b078mr12137866vsr.32.1701114940428; Mon, 27
+ Nov 2023 11:55:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231121115448.GCZVyaiNkNvb4t2NxB@fat_crate.local>
+References: <20231126154329.848261327@linuxfoundation.org>
+In-Reply-To: <20231126154329.848261327@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 28 Nov 2023 01:25:29 +0530
+Message-ID: <CA+G9fYudTmZ+t84YLfe2wTXxORpTFBp8p9S=NYVOMretu-VSyg@mail.gmail.com>
+Subject: Re: [PATCH 5.4 000/152] 5.4.262-rc4 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 21, 2023 at 12:54:48PM +0100, Borislav Petkov wrote:
-> On Tue, Nov 14, 2023 at 02:04:46PM -0800, Tony Luck wrote:
-> > Whichever of the timer and the CMCI happens first will run. Second to
-> > arrive will pend the interrupt and be handled when interrupts are
-> > enabled as the first completes.
-> 
-> So I still don't like the timer calling machine_check_poll() and
-> cmci_mc_poll_banks() doing the same without any proper synchronization
-> between the two.
+On Sun, 26 Nov 2023 at 21:16, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.4.262 release.
+> There are 152 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 28 Nov 2023 15:43:06 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.4.262-rc4.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-But it isn't doing the same thing.  The timer calls:
+[my two cents]
+[May not be a great idea to test latest clang on older kernels]
 
-	machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
+Following kernel warning noticed on stable-rc linux-5.4.y with
+clang-17 for arm64 defconfig.
 
-and cmci_mc_poll_banks() calls:
+> Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+>     PCI: keystone: Don't discard .probe() callback
+>
+> Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+>     PCI: keystone: Don't discard .remove() callback
 
-	machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
+WARNING: vmlinux.o(.text+0x4e2a80): Section mismatch in reference from the
+ function ks_pcie_probe() to the function .init.text:ks_pcie_add_pcie_port(=
+)
+The function ks_pcie_probe() references
+the function __init ks_pcie_add_pcie_port().
+This is often because ks_pcie_probe lacks a __init
+annotation or the annotation of ks_pcie_add_pcie_port is wrong.
 
-A bank is either in the bitmap of banks to poll from the timer,
-or in one of the per-cpu bitmaps of banks "owned" by that CPU to
-be checked when a CMCI occurs. But it can't be in both.
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> Yes, when you get a CMCI interrupt, you poll and do the call the storm
-> code. Now what happens if the polling runs from softirq context and you
-> get a CMCI interrupt at exactly the same time. I.e., is
-> machine_check_poll() reentrant and audited properly?
+Link:
+ - https://storage.tuxsuite.com/public/linaro/lkft/builds/2YlCuygCpZ8wNd4DS=
+0txeyTovV4/
 
-So nothing bad happens. If Linux was polling some set of banks from
-the timer and is interrupted by CMCI, the interrupt will check some
-disjoint set of banks. All the history tracking code is done per-bank,
-so there is no overlap.
-
-> I hope I'm making more sense.
-
-Yes. Totally making sense. I was under the mistaken impression that
-the mce timers used TIMER_IRQSAFE and the nested CMCI while processing
-a timed poll couldn't happen. So I learned something here too.
-
-I'll think of some comment to add to the history tracking code
-to summarize this thread.
-
--Tony
+--
+Linaro LKFT
+https://lkft.linaro.org
