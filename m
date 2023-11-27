@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA301EA90;
-	Mon, 27 Nov 2023 12:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB90CDDC7;
+	Mon, 27 Nov 2023 12:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weGFaxme"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AA6C433C8;
-	Mon, 27 Nov 2023 12:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1unsdqfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10A4C433C7;
+	Mon, 27 Nov 2023 12:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701088854;
-	bh=mFCKdLu7hgFSzZlU35GDqQpUtEwbIPeo0aA8OfG/OPw=;
+	s=korg; t=1701088958;
+	bh=aaKzm9i45LO58fVj2NpSXP+hjRQ7QKMZXrEwp83qEB4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=weGFaxmed+deLIEa5XZKOW4yn8VKLnfzzdkR1+ohhDrJiC4GHE8qz4V4Inl+vu+qd
-	 nvgVRzE37EnS4hRtAUIqYZERZfzkbNsDcNBdksT37I+PY/LVfGSfCRik10BlCbNZT3
-	 Zc6JV1Ds2HIQsrowDy+aCHZWmb0Us7LgReQVwoJU=
-Date: Mon, 27 Nov 2023 12:40:51 +0000
+	b=1unsdqfov2BkJ1pGOY10t3XNL0cFdCiYdAEURB5PGMJFoLfjIwXgexbkHns54Cvvc
+	 2rOTHTymcJxnZzl3qiEbMsOaievkSvjVWl1UnnG49StDWSXLvEHnLsdX1GZfhG6lYj
+	 mzJPnr7n3DvyaUZGl01TN0pyCRRvjT5fQ8CndaRs=
+Date: Mon, 27 Nov 2023 12:42:35 +0000
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Guenter Roeck <linux@roeck-us.net>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -24,10 +24,10 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
 	allen.lkml@gmail.com
-Subject: Re: [PATCH 5.10 000/187] 5.10.202-rc3 review
-Message-ID: <2023112745-spree-require-c3a6@gregkh>
-References: <20231126154335.643804657@linuxfoundation.org>
- <76363981-1f2a-47c2-b1b1-ae039844e936@roeck-us.net>
+Subject: Re: [PATCH 5.15 000/292] 5.15.140-rc3 review
+Message-ID: <2023112722-delicacy-arrange-59bd@gregkh>
+References: <20231126154348.824037389@linuxfoundation.org>
+ <3632c7da-24ba-4259-a590-5c46f899d43f@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,12 +36,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <76363981-1f2a-47c2-b1b1-ae039844e936@roeck-us.net>
+In-Reply-To: <3632c7da-24ba-4259-a590-5c46f899d43f@roeck-us.net>
 
-On Sun, Nov 26, 2023 at 10:23:24AM -0800, Guenter Roeck wrote:
+On Sun, Nov 26, 2023 at 08:24:57AM -0800, Guenter Roeck wrote:
 > On 11/26/23 07:46, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.10.202 release.
-> > There are 187 patches in this series, all will be posted as a response
+> > This is the start of the stable review cycle for the 5.15.140 release.
+> > There are 292 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
 > > 
@@ -49,22 +49,18 @@ On Sun, Nov 26, 2023 at 10:23:24AM -0800, Guenter Roeck wrote:
 > > Anything received after that time might be too late.
 > > 
 > 
-> For v5.10.201-188-g2f84e268b78b (5.10.202-rc3):
+> For v5.15.139-293-g0dd3c4f0979f (-rc3), powerpc:defconfig:
 > 
-> s390:defconfig, s390:allmodconfig, s390:debug_defconfig:
+> arch/powerpc/platforms/pseries/iommu.c: In function 'find_existing_ddw':
+> arch/powerpc/platforms/pseries/iommu.c:908:49: error: 'struct dma_win' has no member named 'direct'
+>   908 |                         *direct_mapping = window->direct;
 > 
-> drivers/s390/crypto/ap_bus.c: In function 'ap_bus_force_rescan':
-> drivers/s390/crypto/ap_bus.c:791:28: error: 'ap_scan_bus_count' undeclared
 > 
-> $ git grep ap_scan_bus_count
-> drivers/s390/crypto/ap_bus.c:   if (atomic64_read(&ap_scan_bus_count) <= 0)
-> $ git blame drivers/s390/crypto/ap_bus.c |& grep ap_scan_bus_count
-> 467f51fb3ab6e (Harald Freudenberger 2023-10-23 09:57:10 +0200  791) 	if (atomic64_read(&ap_scan_bus_count) <= 0)
-> 
-> which is:
-> 
-> 467f51fb3ab6 s390/ap: fix AP bus crash on early config change callback invocation
+> git blame points to commit 19bed3228b3aa ("powerpc/pseries/iommu: enable_ddw
+> incorrectly returns direct mapping for SR-IOV device").
 
-Now dropped, thanks.
+Ugh, forgot to drop this one from 5.15.y, now done.
+
+thanks,
 
 greg k-h
