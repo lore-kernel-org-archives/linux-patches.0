@@ -1,177 +1,160 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2046.outbound.protection.outlook.com [40.107.92.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CFB2F51
-	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 23:40:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAC23C46E
+	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 23:49:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rew0cp8d"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dMIwyeo+GrB2jimioY41tzKn2Mna68fVlmFiSCKYWjYD/MkCS8IX25OwUJg2PZUpHu5fJuzEYGbvtoES/7R61XXyKU5E54K5RF3V6sbnsIOgyt49iQl6PwvRfgeUPJPhL0cxtZXVBbjbedAUVTNSPT42J2Zq1HmZq6e4IVJ6mR/MYQGAnBx7Pa8mQNUUf9r9jLFLul+EMFgJQ3pEjRnoO6wATmsgrTmSsnF8/5jyzjbz9hHKSlGJblN23QJghvtYvjxw2tx71K5A/rYlajAyyZeWQsF590o3PQ8Ed6A7cwAF8TFenXaA9j/VasYUkz4zyDumPet4XS7IsCOSHqDYqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mw8mK4Q+2Cs4UNcaBF6dcAp1wy7UIyOTOlTmwbG33C8=;
- b=VlpQh9bCQ0nDIEAqr2AJuMpTaS/7xxjVeT/vd/NsInKZXSVGfidL3XlRG35d21sC/UQ9zLBE+yCk0HTmdtrz5bq851ImiObLLT4Y2L7fnge9llBqPWNhPN3kXJfym5CSaNqGggQopeRh5JUCpuLXvvgOMu/jklZQFU4bnQNE0jKh6eDUagY7F48MV3sY4LqeTEve54CY2I5ys1sQo0MaDqB7j/T/KyL8GzlmHzRh4DQI4z4YFfdfIIpIC3YoT+2rEthiTP4NY31EhQ6i97eDuyQIqpkP2hPJWRuWSPxgTf3f02kvgS7rfucVZLwyqljIK42u3V2yZe+6ffdyirJMOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mw8mK4Q+2Cs4UNcaBF6dcAp1wy7UIyOTOlTmwbG33C8=;
- b=rew0cp8dfjDbwkkUS8f6vQtv3XxhlEUPxdyA6352takFr/5L5WTcbY5zaMgXErxg1+43OxWokTTJyzJwPwvuDspoUEJ3vjHfG+9dTVBuFZNY2U+OxJhS0N0f7pwWF7AAjoawd5TxziQX/fhtGW2G3a74aHfWSNEtXT/ByxQO9wIjkrUoKIGLmRNjFp0bGxbODaKwpDO5LKkumQx8fhcTC8637JAViPqZqQ6j8VgWxAhR6R7KR1bOv276VmECVggCELq56MhbZmgzybvZKtQF+8JWEf9rBkGphljZ2iyHRm80cJrwfbMtAEG/53qgzAsWswEfbw+hjalmf+h/O0AjvQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
- CH3PR12MB8510.namprd12.prod.outlook.com (2603:10b6:610:15b::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7025.29; Mon, 27 Nov
- 2023 23:40:05 +0000
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::fb84:50ef:dbb8:1ebb]) by CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::fb84:50ef:dbb8:1ebb%4]) with mapi id 15.20.7025.022; Mon, 27 Nov 2023
- 23:40:04 +0000
-Message-ID: <fd70197d-27de-4e93-bd89-69d12428b664@nvidia.com>
-Date: Mon, 27 Nov 2023 23:39:58 +0000
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/292] 5.15.140-rc3 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, linux-tegra@vger.kernel.org,
- stable@vger.kernel.org
-References: <20231126154348.824037389@linuxfoundation.org>
- <9b0099cd-37d2-4f19-a6bf-6f1c82338093@drhqmail202.nvidia.com>
-From: Jon Hunter <jonathanh@nvidia.com>
-In-Reply-To: <9b0099cd-37d2-4f19-a6bf-6f1c82338093@drhqmail202.nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0346.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:18d::9) To CO6PR12MB5444.namprd12.prod.outlook.com
- (2603:10b6:5:35e::8)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="oHrHzQ/x"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-285a64dcf3eso1719537a91.1
+        for <patches@lists.linux.dev>; Mon, 27 Nov 2023 15:49:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1701128989; x=1701733789; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wBWO3qiHF6ynp4gh0IQevir8rNrrtCuaI4IulQnqpxU=;
+        b=oHrHzQ/xu2J2XkWIdlHZBxmOBZg86j+clyySXGi1AokEu8M0hK2y58Bg/PPRDnz5gR
+         Y+KFasCIu/QCwUxwaY8MF4rPjVlDi/MqpEobTx+maHfcO2H7XaNrOAbyupfW0Xgushw3
+         279A+Cp/A1cwb70aQfRzh9MXbti9NOqHtFtKM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701128989; x=1701733789;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wBWO3qiHF6ynp4gh0IQevir8rNrrtCuaI4IulQnqpxU=;
+        b=lvzDaNvu7M5E3TDIL0nqsb1DVVoyfiiYfHLAaiUGGdteGAHltzR9/eFKpkmD+pakrt
+         /D0qew28E+U9IiO/X7BCrIdmFsysPI8bYnT3NXnGtN5wb54CWRHnUvJPq11EiTRfoifY
+         Av5c4FCoK5ZY1QNmGzL0WVqhXn0hG6wsz2LskrIBILiY6Ia+A+MRo3UUvzXUiX56+GqQ
+         Ra4Zh5kLvDmt9dUqI39/7PxqCW6A0cPAyNSfkiK33NDk0yNqyRBzc1VAjAnj+3oUfeC1
+         5LQSVOAMJ9SSr7EDJP1ZIg/Lh85zHR1gQ2NXkLB4pd2tBd9bfqanVesrgMgfpF0UXfRZ
+         ow3g==
+X-Gm-Message-State: AOJu0YynnygDuCyCZ8MXHtO/J2dSdbZFqOT0yfg8UDMFC0C/ClB8PUZP
+	cfTfojqF9TEFUjwTA9qFAA7Yhg==
+X-Google-Smtp-Source: AGHT+IFiK1TL6iRqDxnEarhUDv5XQ6c1bUCpPYgE2MBOLdZUHwEMQYstZPZ9fZDxk9Gf4SGi+drnNQ==
+X-Received: by 2002:a17:90b:3807:b0:285:e16c:fb0a with SMTP id mq7-20020a17090b380700b00285e16cfb0amr3227082pjb.4.1701128988683;
+        Mon, 27 Nov 2023 15:49:48 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:11a:201:6438:b5d1:198e:8bb0])
+        by smtp.gmail.com with ESMTPSA id cu20-20020a17090afa9400b00282ecb631a9sm7860556pjb.25.2023.11.27.15.49.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Nov 2023 15:49:48 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Kees Cook <keescook@chromium.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Arnd Bergmann <arnd@arndb.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: [PATCH] lkdtm: Add kfence read after free crash type
+Date: Mon, 27 Nov 2023 15:49:45 -0800
+Message-ID: <20231127234946.2514120-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.43.0.rc1.413.gea7ed67945-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|CH3PR12MB8510:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2adaac1b-baa0-464c-25a9-08dbefa22e79
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	lYWoFL6OyKBybEbEJN6PGpN7utTh89eA9Kc/IXOZqHMbzpe4ynB5c9IC5Dj9m+3ZzCkKAARfrApbXVrVJp0cLxWq1FKRY/rIX0RrhONBMnnvcd8fFiLtsCEG5EK45sfnhnZ3mUlZh8doYNrnf2RQMHFo5cQcNkxD1bybG+oLxK301JnE55t/xhqDXyLVkKUhEe06AO4+X/mn2x7/3wdhEauRi1KHdizpBp9OCl5W9CzxKZOxhqpfyckS0yBHPZ7qrAUYMnYEbhflHeUeZ8+7STj3kVx1jekx5iatcCnEJFN9RmD+YGSPCboJXu9P7/R/AYSik+b5+17hT8Qfi57y9a9Ik4ZeCaaOUpCo4xFGBDm2mpo27da5yUijSWXGjhFyQF1ZCxiepbgX4euLGfBgx0t7ChG966R2HIFAiGB5ykcRUqyoU4zoqlmnjvaYKRrYQ3cvwTHl731H/KjBdCGiKvrvHZR4tqV7ZYUmi4zrBtyPqEsWqQlLhuww1kJe0c94t5m2r5zVvMaHmJGSWuwTwNERM5ZNKOa/gaQ/yOJldmDDnJ8iR+kWusMNeFtYaf15JQy2zc+aOUs0gaSgUW6E+ZpvlYQ7rzmjAIMOc8rNl+1M8sL/Z2n1CtwD2i7+h9NHdUKzCRRDiJEoinrtRYJjt2QVt7POI6cAENVodiYwTcxqbFfr1r/sosLJAY6ayhLapqqzrTObMv/Vj4NCbOsv8Vyh5aVRCwEHit8Lyk0WHK8=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(39860400002)(136003)(376002)(366004)(396003)(230922051799003)(230173577357003)(230273577357003)(1800799012)(186009)(64100799003)(451199024)(38100700002)(41300700001)(36756003)(31686004)(2906002)(83380400001)(7416002)(5660300002)(86362001)(2616005)(6512007)(53546011)(6506007)(6666004)(8676002)(8936002)(31696002)(4326008)(478600001)(966005)(6486002)(66946007)(316002)(66476007)(66556008)(6916009)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Nk9abTNoa29MRElDUXlaMkg5RElrbm1ZNGhQYW5kck1mMTZuUFpKck1MZUhN?=
- =?utf-8?B?OEdGWjFROTZXWmdJckVKQkprVzZHTnV4OHpjSTZmNVozakNhajI4NGpxSnZ6?=
- =?utf-8?B?bmpDbkRYanU5Nk40TS9tWUtDS3VFT29qVE5DQ3k2QklsNkl5WWxDNWdWUXVk?=
- =?utf-8?B?UkNKemY1K1J2OHYvTnEzTmlaMHJXOERqQmhkeEVIN1VpVExhdG51a3BPdE8v?=
- =?utf-8?B?dWZhemhYT1ZUNFRYSUpXNU9OUUdxck0vWVZ1SDd0YmlMOEtLV3BQa1YzR0NR?=
- =?utf-8?B?aGMvWHZpd01NOWJzT3k0NnNsWWRUUGMzOWJmUldZREhscFlkTm5KMVRUbXU1?=
- =?utf-8?B?OXpaR0hkNkozeStRU2JLT0kzdkdDMWJ6eDExdFRxbUd1VlRGa0toWnBxUGpw?=
- =?utf-8?B?dGpFMzk0WCs5dzJxRnJyWFZGKzdrMVZvT3R2M2s0bGNSNkFsOFFBTnF5ZkNl?=
- =?utf-8?B?RE9CWlZYNENremUwRWZ5RUJWa2Vub0lCczlQOFpaeWM5bVc0N3VaRkVDdEg0?=
- =?utf-8?B?YzdzZkVIb21TdkM4L2dzRy9wUjIzVzRITWdNaTJwck05RjF0eTlJQTdxTWtM?=
- =?utf-8?B?Uk1SQ3RoVko4elUxbDdYN2dPZzkxdTJTQm5qNjJ5OThCa0JORkdrQzc1cjI2?=
- =?utf-8?B?bWpVOTNsUWk4MnJzVFV2aGNHSXJLNVZtMllQcDVWUERET01Ldyt0bzVGRlYx?=
- =?utf-8?B?RTc1YnIvdUVESUsrMlp3RFFrYWZmYWkveWJkanpjZVpSZUhtMkdJeEY2YlRJ?=
- =?utf-8?B?ZjFPdno2NTFRSElDbUNETGdkbktERkV1MHZPa3ZXZEZRNVRVVHZTVE1aem0r?=
- =?utf-8?B?ZG9DZ3lyUURrTGh3d3gwU0xHMjBiZWp4ZVZURU1ybnU1YUx5dFR3WG1qcVR4?=
- =?utf-8?B?NjRTSG0rb3B2YndONWNzQlZ0SmZXWjh1WmgvaFc5Y2NabmdRL1NZUy9OV1Fo?=
- =?utf-8?B?MEIyNWNaemxzY2crbVZDSjF5MmJrNUwxTjY1WmtTcnZjbVZaWGtpYko3UE4v?=
- =?utf-8?B?bFFvdmVQb3BtRlBRbkpQL0ZvNTA3SmNGeUp3a0dBaUdaUG1UWk4xQ1lqRFd3?=
- =?utf-8?B?YkUxdXVDZ2F6SE5kK1hWdmRkdTZjUjY0Y3RiU1I4Q1hvZmZmV3kyNC9IUEo3?=
- =?utf-8?B?azBHZ0VIZFd3Mml6Ukd5VUtDUFc3ZHVmTUREbjd1eW8ybjNLQWR2Yk1TZzRw?=
- =?utf-8?B?eFFjNCtnWnRzL1R3VG5ZeFZkUFAvMmt3MStZbDZBUkNqak5zeGNOREFOaEZj?=
- =?utf-8?B?NGdwNkNSVzVRV1JxenM5MlFNTGR6LzdiLzNQSXNEa1BLdWo1M2pDYWlCdkRz?=
- =?utf-8?B?R24wVVQrV1VsMEF3bHdUZmhLMjdmNEpTYWt2K1BkRWVTdjRqV0N3c1VKQTN4?=
- =?utf-8?B?OTNqMUtxcUlJV2FWMHdYWDB4KzhNbFNQMEtGTUg3cjdvaHdJbG9IQml6d1N6?=
- =?utf-8?B?MWNMNDluUTBqeXgyb2lKZktJbEFFamNRSkx6TEFJSVNzNFJaempNVTgvemlV?=
- =?utf-8?B?UVlHNHRtdERxRTlZb0R3dHNXWFNUVFFhT0Joc3p4UFN4Sjh2OWNBMWJXQnhi?=
- =?utf-8?B?ZDNWc1FHQ0hOTmtzVUI0UWJuQkJLRGVrclBEVW1BaVR0NDBzWXJjWVU3S0pD?=
- =?utf-8?B?VUkxM0xRaEw3c1h2MjNKZGJHMUQvSlFyNDRDc2w1ZjZDdFZBVkZGVDg0TkQw?=
- =?utf-8?B?ZDNwNGhEdU14T1JFbXl4VnlsdDRoSnFiVHZkdjI1b0N2eGtZdGE3U0J5YVZJ?=
- =?utf-8?B?MTRtekhEY0tWTDlsWExCY0I5STF1NnAveFJ2YXpad3hKUld2aURCZnFUSUFn?=
- =?utf-8?B?UHR4cUtsZkNiYmZOdHlWV1REWVdhQnQ1RVFSMVA1YTh2WDErQW1pZWs1QWdL?=
- =?utf-8?B?S2MzR29ETzVaNXh6ZDBTWHpLeHpnOHNRM2FTa01oU0gwcGd1eWtpc2RoV3NJ?=
- =?utf-8?B?eUpqSEZILzdxUDVETWYxUTF3eTJvbCtub2pFZEthK21VcjFRV1QwMDRVd003?=
- =?utf-8?B?ZlRiTFVTaFBKOG1IdzlvMU50NldBd3FiekZ2UkcwSXJIaHRVNTVVQXlqTUI5?=
- =?utf-8?B?ZVpqSDRjeHdWZytZYTREbVNhQ2paVVdDTUtEQXUzSnJJQTRSY2Q2T1ZiRkFk?=
- =?utf-8?B?UEJEcGtSYkdSRUdqL1MyQlEzc29kaHNieXRkS2ZtWC8vbzdKUzFXWUltbHNy?=
- =?utf-8?B?OXJxWkk0dXZmZmZKbjk4RjBWa0t6a1JtL1lOUyt6NHZ6RkhBMjQ0OTNSbFZB?=
- =?utf-8?B?NUwxUm1zUER2d2xOTHFlN0ZZN1BBPT0=?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2adaac1b-baa0-464c-25a9-08dbefa22e79
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2023 23:40:04.8968
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lR6TLfJm7ionEKhJuqxENPWDGDlh+K0Y439dvAt75vcCkRKeAThot49VTa2DXy6Qe3G0qHGEodPGoT3I8woXiQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8510
+Content-Transfer-Encoding: 8bit
 
+Add the ability to allocate memory from kfence and trigger a read after
+free on that memory to validate that kfence is working properly. This is
+used by ChromeOS integration tests to validate that kfence errors can be
+collected on user devices and parsed properly.
 
-On 27/11/2023 23:27, Jon Hunter wrote:
-> On Sun, 26 Nov 2023 15:46:45 +0000, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 5.15.140 release.
->> There are 292 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Tue, 28 Nov 2023 15:43:06 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.140-rc3.gz
->> or in the git tree and branch at:
->> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
-> 
-> Failures detected for Tegra ...
-> 
-> Test results for stable-v5.15:
->      10 builds:	10 pass, 0 fail
->      26 boots:	26 pass, 0 fail
->      94 tests:	93 pass, 1 fail
-> 
-> Linux version:	5.15.140-rc3-g659e62181100
-> Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
->                  tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
->                  tegra20-ventana, tegra210-p2371-2180,
->                  tegra210-p3450-0000, tegra30-cardhu-a04
-> 
-> Test failures:	tegra194-p2972-0000: boot.py
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/misc/lkdtm/heap.c | 64 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-
-This is the same failure I see with v5.10.y, that new warnings are 
-observed on Tegra due to commit "gpio: Don't fiddle with irqchips marked 
-as immutable" ...
-
-  WARNING KERN gpio gpiochip0: (max77620-gpio): not an immutable chip, 
-please consider fixing it!
-  WARNING KERN gpio gpiochip1: (tegra194-gpio): not an immutable chip, 
-please consider fixing it!
-  WARNING KERN gpio gpiochip2: (tegra194-gpio-aon): not an immutable 
-chip, please consider fixing it!
-
-Jon
-
+diff --git a/drivers/misc/lkdtm/heap.c b/drivers/misc/lkdtm/heap.c
+index 0ce4cbf6abda..608872bcc7e0 100644
+--- a/drivers/misc/lkdtm/heap.c
++++ b/drivers/misc/lkdtm/heap.c
+@@ -4,6 +4,7 @@
+  * page allocation and slab allocations.
+  */
+ #include "lkdtm.h"
++#include <linux/kfence.h>
+ #include <linux/slab.h>
+ #include <linux/vmalloc.h>
+ #include <linux/sched.h>
+@@ -132,6 +133,66 @@ static void lkdtm_READ_AFTER_FREE(void)
+ 	kfree(val);
+ }
+ 
++#if IS_ENABLED(CONFIG_KFENCE)
++static void lkdtm_KFENCE_READ_AFTER_FREE(void)
++{
++	int *base, val, saw;
++	unsigned long timeout, resched_after;
++	size_t len = 1024;
++	/*
++	 * The slub allocator will use the either the first word or
++	 * the middle of the allocation to store the free pointer,
++	 * depending on configurations. Store in the second word to
++	 * avoid running into the freelist.
++	 */
++	size_t offset = sizeof(*base);
++
++	/*
++	 * 100x the sample interval should be more than enough to ensure we get
++	 * a KFENCE allocation eventually.
++	 */
++	timeout = jiffies + msecs_to_jiffies(100 * kfence_sample_interval);
++	/*
++	 * Especially for non-preemption kernels, ensure the allocation-gate
++	 * timer can catch up: after @resched_after, every failed allocation
++	 * attempt yields, to ensure the allocation-gate timer is scheduled.
++	 */
++	resched_after = jiffies + msecs_to_jiffies(kfence_sample_interval);
++	do {
++		base = kmalloc(len, GFP_KERNEL);
++		if (!base) {
++			pr_err("FAIL: Unable to allocate kfence memory!\n");
++			return;
++		}
++
++		if (is_kfence_address(base)) {
++			val = 0x12345678;
++			base[offset] = val;
++			pr_info("Value in memory before free: %x\n", base[offset]);
++
++			kfree(base);
++
++			pr_info("Attempting bad read from freed memory\n");
++			saw = base[offset];
++			if (saw != val) {
++				/* Good! Poisoning happened, so declare a win. */
++				pr_info("Memory correctly poisoned (%x)\n", saw);
++			} else {
++				pr_err("FAIL: Memory was not poisoned!\n");
++				pr_expected_config_param(CONFIG_INIT_ON_FREE_DEFAULT_ON, "init_on_free");
++			}
++			return;
++		}
++
++		kfree(base);
++		if (time_after(jiffies, resched_after))
++			cond_resched();
++	} while (time_before(jiffies, timeout));
++
++	pr_err("FAIL: kfence memory never allocated!\n");
++}
++#endif
++
+ static void lkdtm_WRITE_BUDDY_AFTER_FREE(void)
+ {
+ 	unsigned long p = __get_free_page(GFP_KERNEL);
+@@ -327,6 +388,9 @@ static struct crashtype crashtypes[] = {
+ 	CRASHTYPE(VMALLOC_LINEAR_OVERFLOW),
+ 	CRASHTYPE(WRITE_AFTER_FREE),
+ 	CRASHTYPE(READ_AFTER_FREE),
++#if IS_ENABLED(CONFIG_KFENCE)
++	CRASHTYPE(KFENCE_READ_AFTER_FREE),
++#endif
+ 	CRASHTYPE(WRITE_BUDDY_AFTER_FREE),
+ 	CRASHTYPE(READ_BUDDY_AFTER_FREE),
+ 	CRASHTYPE(SLAB_INIT_ON_ALLOC),
 -- 
-nvpublic
+https://chromeos.dev
+
