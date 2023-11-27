@@ -1,58 +1,53 @@
-Received: from mail-oi1-f195.google.com (mail-oi1-f195.google.com [209.85.167.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8DA1CF96
-	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 19:36:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9776820312
+	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 19:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="Z4uRCyMc"
-Received: by mail-oi1-f195.google.com with SMTP id 5614622812f47-3b2ec9a79bdso3141508b6e.3
-        for <patches@lists.linux.dev>; Mon, 27 Nov 2023 11:36:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1701113775; x=1701718575; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s1IRooEsUin5INdOJVJKOU/vU4IncgxmhANWRJafAQM=;
-        b=Z4uRCyMcsClJt6bXYkaRFqb2vqE1VXvRAnvoB1Y5cHe/i6NWQXrPXRF/3/NcBW5vKm
-         8agMeD9BjDv6V/LHlAQ1OxF/sqaImphoFsV/KDoO67ueLXz7Q1LcRVU0+jJov6I9sPlv
-         A7Par/HEeDDbSS3jb/KbQy5RDaaRPH88uCnzY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701113775; x=1701718575;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s1IRooEsUin5INdOJVJKOU/vU4IncgxmhANWRJafAQM=;
-        b=ATetDCtt+nZMk4I70nWP0WvjUvBieE/wyp/SRHXYDh+vx4fpOeU9YEhZoQGDKZhmoY
-         kBedKDHvKPxBiuCicfOboGTgGgVXzm9N/tU5Crc7BQR74xsmIt4ZBh8wnzArk6KVjVg/
-         XPSlkLyX5HzSpz/QSqZQzzn3SGAsgkFB23C/XFx6W+oZ1YTK23JHcF1mrKL1cIUXAQJp
-         nkThGM1mgr0NW7czkiQON21egTZtYqGY2PGyCk4/tgrfRJenp3I/wS2Acd+vjG736YZA
-         Bp5fttZnpFWwEu6yuhZ31P/2LIDqzOsH5YZyjmPLUxFAeS29RLjxmwEjyCyfCpdp499V
-         1TaQ==
-X-Gm-Message-State: AOJu0YyQ/re4ruAcejWBqd7i91Kc7HqFKjOg3Hsg+HYwfPxCiG+kVVRI
-	zAsWLhnKKAeHxovolePKo++H6A==
-X-Google-Smtp-Source: AGHT+IEJ3WupWcdW8AN5qBBpFtWvb9iXJuzI4F91nYX9vpETnliJBN68Mz4orAkz85eSDwTlP02vkQ==
-X-Received: by 2002:a05:6870:6c0b:b0:1f9:571e:f80f with SMTP id na11-20020a0568706c0b00b001f9571ef80fmr19132032oab.13.1701113775612;
-        Mon, 27 Nov 2023 11:36:15 -0800 (PST)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id m2-20020a9d6ac2000000b006d81feaab3dsm521897otq.69.2023.11.27.11.36.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Nov 2023 11:36:14 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Mon, 27 Nov 2023 13:36:13 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.6 000/525] 6.6.3-rc4 review
-Message-ID: <ZWTvrVH5kSM-o5zE@fedora64.linuxtx.org>
-References: <20231126154418.032283745@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="V6P7jNl1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701114629; x=1732650629;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=FOWlBJuI1QWETMszMwBkYk25m1g8XF0ebe/+lRpK/Yg=;
+  b=V6P7jNl1fDdXYWrUx2nZA+moqV8492eObxqR7/VWYf35QOzet/L5zGEv
+   kkWkhdarG8ud88KWEqjU8q3l91PrMeWVqTfCJoHNlrI/0RSucmRXk8Xve
+   B6iS5CMGu1q2Ah0zb4jxjMK/f/MJZFBBjkd44/vuuwtMxnkZ9Y4e/OF34
+   8oNEqNsbmR5benk52jAaK6+uFLYmk1VgpBk665HgDPjkSIKAfV2PrWdCN
+   6P04ZH7rkI+JvDKWmyRNDs5caN5gV0GcCqn46Gg8GXnfgEinNRRxv+r5z
+   7MWsNTqogDxNZ25pQcDGsewRQvOqUKh4x7lRYsnfv667KlXeuhbz945A1
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10907"; a="389930692"
+X-IronPort-AV: E=Sophos;i="6.04,231,1695711600"; 
+   d="scan'208";a="389930692"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2023 11:50:28 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10907"; a="744669420"
+X-IronPort-AV: E=Sophos;i="6.04,231,1695711600"; 
+   d="scan'208";a="744669420"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2023 11:50:28 -0800
+Date: Mon, 27 Nov 2023 11:50:26 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
+	x86@kernel.org, linux-edac@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+Message-ID: <ZWTzAujHdrJ950F3@agluck-desk3>
+References: <20230929181626.210782-1-tony.luck@intel.com>
+ <20231004183623.17067-1-tony.luck@intel.com>
+ <20231004183623.17067-3-tony.luck@intel.com>
+ <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
+ <ZTa37L2nlnbok8dz@agluck-desk3>
+ <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
+ <ZVPu/hX9b7lUkrBY@agluck-desk3>
+ <20231121115448.GCZVyaiNkNvb4t2NxB@fat_crate.local>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,28 +56,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231126154418.032283745@linuxfoundation.org>
+In-Reply-To: <20231121115448.GCZVyaiNkNvb4t2NxB@fat_crate.local>
 
-On Sun, Nov 26, 2023 at 03:46:18PM +0000, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.3 release.
-> There are 525 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Nov 21, 2023 at 12:54:48PM +0100, Borislav Petkov wrote:
+> On Tue, Nov 14, 2023 at 02:04:46PM -0800, Tony Luck wrote:
+> > Whichever of the timer and the CMCI happens first will run. Second to
+> > arrive will pend the interrupt and be handled when interrupts are
+> > enabled as the first completes.
 > 
-> Responses should be made by Tue, 28 Nov 2023 15:43:06 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.3-rc4.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> So I still don't like the timer calling machine_check_poll() and
+> cmci_mc_poll_banks() doing the same without any proper synchronization
+> between the two.
 
-Tested rc4 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+But it isn't doing the same thing.  The timer calls:
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+	machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
+
+and cmci_mc_poll_banks() calls:
+
+	machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
+
+A bank is either in the bitmap of banks to poll from the timer,
+or in one of the per-cpu bitmaps of banks "owned" by that CPU to
+be checked when a CMCI occurs. But it can't be in both.
+
+> Yes, when you get a CMCI interrupt, you poll and do the call the storm
+> code. Now what happens if the polling runs from softirq context and you
+> get a CMCI interrupt at exactly the same time. I.e., is
+> machine_check_poll() reentrant and audited properly?
+
+So nothing bad happens. If Linux was polling some set of banks from
+the timer and is interrupted by CMCI, the interrupt will check some
+disjoint set of banks. All the history tracking code is done per-bank,
+so there is no overlap.
+
+> I hope I'm making more sense.
+
+Yes. Totally making sense. I was under the mistaken impression that
+the mce timers used TIMER_IRQSAFE and the nested CMCI while processing
+a timed poll couldn't happen. So I learned something here too.
+
+I'll think of some comment to add to the history tracking code
+to summarize this thread.
+
+-Tony
