@@ -1,104 +1,138 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2045.outbound.protection.outlook.com [40.107.243.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86F33DBA4
-	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 21:25:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 527621C0050; Mon, 27 Nov 2023 22:25:47 +0100 (CET)
-Date: Mon, 27 Nov 2023 22:25:46 +0100
-From: Pavel Machek <pavel@denx.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905A22DF91
+	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 23:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dWpHsOmE"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SYsIuH/7h/x4VqDhgaSDEgKLN53+4LA25fQriKi5QZj8zweiZGfWAEXmgyj1NTojctQzkZSgXi3SiQhrEUNkLHWxUBQbSlXwUW4mXgxnLtyL5Dg5qNjms29Wc7OcRtlfDsIKijUH0CMvY/GVB1m4DnAEuBxPBjaiSS0ZzBpyHKm+P6tgKH8VE8DjmWzMIMB2LlrgVVt/bANAYT4dPeElr8v7S4qzduvoIxTAosxyf4Qa5VZa05hxRxqV6cfaFZb+W09a1cRFJ6xpFgEHMucPgSrqdhZ+JESVyIL6lhMonVs35i5839rF8NtV0UvqGqh9ykc9xMYiQ/dRYdrfyX+6gA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=toDNEojqCwYKaBezF4SPFk/3zXU7pcj1AfpWDCipQdE=;
+ b=jp0h0Vb80R189Uwwm0gsGMAK9TEOhV4okYpryByx0UUsMM4DzyyGuAx5/37ICBMOYub8EJm1jSPt+/9N0kctjF8RFRPTFl/nsfMApEqO5vojMBGOhtC/EvgIs6stO7KEw0+RV0rnOEggIM8GeO+FNKKFJND5KCfmw3ivZDXKfV32x+zkEwZvPFWci7RjlrI8E53qBekoVnYZDiSPdDULJGmAG6FDW1P7LDRYmowjAIc3fleaZQuFULuh49K6pZ/YZvZXY6dbLcAsUGezIb6jHF5FZEZp/Xg1iwuoBHFZaDDNMuaLDPpE7bE0qaD43HI+IxTuJdCJua0hfU6jyoN7VQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=toDNEojqCwYKaBezF4SPFk/3zXU7pcj1AfpWDCipQdE=;
+ b=dWpHsOmEHX06LRt7xYTTwtKwNsvz3ae45mpstJI42zOMbZncDjdPbIDaeqyZuUyijce8y8gG0YuSHwrSjdCquufyoZbmWplBFbfU/BIn3Fte3RBWFRee6t6rNJIhwiV/niQTkuRPTDURO0HM5Th/5xm1mobUBs4F1q7QunR887PdUFMdXnTgKW6YHchhGrjOceJZTXX7gzt4qFe7ylhfz6NLTzcHKyiw3BwGTBAbaTS9x9rCsD1BfQNnA/ISlcMZxC6l/g7K0jeqTKVbsQczzrj1T1XwBkdWpsxbmq0es0sVGIbK/DOmCr1BhGMiCSg7fSnRtRjqHvcddXk6189Svg==
+Received: from DM6PR02CA0047.namprd02.prod.outlook.com (2603:10b6:5:177::24)
+ by DS7PR12MB6357.namprd12.prod.outlook.com (2603:10b6:8:96::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7025.27; Mon, 27 Nov
+ 2023 23:26:09 +0000
+Received: from DS2PEPF00003443.namprd04.prod.outlook.com
+ (2603:10b6:5:177:cafe::78) by DM6PR02CA0047.outlook.office365.com
+ (2603:10b6:5:177::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7025.29 via Frontend
+ Transport; Mon, 27 Nov 2023 23:26:09 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ DS2PEPF00003443.mail.protection.outlook.com (10.167.17.70) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7046.17 via Frontend Transport; Mon, 27 Nov 2023 23:26:09 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Nov
+ 2023 15:25:58 -0800
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 27 Nov
+ 2023 15:25:58 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
+ Transport; Mon, 27 Nov 2023 15:25:58 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, maz@kernel.org,
-	andy.shevchenko@gmail.com, brgl@bgdev.pl, wangyouwan@126.com,
-	jani.nikula@intel.com, rf@opensource.cirrus.com,
-	ilpo.jarvinen@linux.intel.com, dan.carpenter@linaro.org
-Subject: Re: [PATCH 5.10 000/187] 5.10.202-rc3 review
-Message-ID: <ZWUJWhOkbHlwC2YB@duo.ucw.cz>
-References: <20231126154335.643804657@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 4.14 00/53] 4.14.331-rc2 review
+In-Reply-To: <20231125163059.878143365@linuxfoundation.org>
+References: <20231125163059.878143365@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="MlZhcRN/f5z9Ed9v"
-Content-Disposition: inline
-In-Reply-To: <20231126154335.643804657@linuxfoundation.org>
+Message-ID: <73bf759c-1802-40b0-a85c-f7afd574640e@rnnvmail205.nvidia.com>
+Date: Mon, 27 Nov 2023 15:25:58 -0800
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PEPF00003443:EE_|DS7PR12MB6357:EE_
+X-MS-Office365-Filtering-Correlation-Id: d078ef3b-0de5-48e7-45ae-08dbefa03cc6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	u0v4p7650EFWla0xuStpMofrOoS09e2ZVX2/FhcEM3ce5n+Ga7r3eou57/PTMjGX+XaORUzwdjl6owLnwIOJ7HnlUJfATv7p1rMI+3hcQpP4M2bVIL/hoC7MDJV+1PWFsKZxGeumROUf+SMi4mXEyLpkpKCRupJ3MCc3yatB1piYSO6N/W7xiwCBeW7w7sMYHb7FBtZLri+V3wyBJJqZb4Q0KiDP7MF2/EnuE1YJY6cAQMmy81S6ZAgWf/Ax8FZtLDlaCCKVRJfrgKy93soIHGbYYkqNVPLMiIHHsIgTKRklG/uDAb9Z773l3ct3uRCPKUBdM9GMi3l0MMnuZtZUKGtjbV8xSmTSmopL6MKsMn3uLNNLqAaatX9nYN7f/BdyOV6J9ufKp3Nh/7KV/gBKlvfFYWBk5xfPW+qWWbq7AK/xdg65mSJrQiOBTx4inY43DyCkTIHTjhJO6OzJuzNaxepVEYUAhV9FXyjqYmg8vuBIP8zTBN8Pt5mbYal53ciHjRZSF5DaI3C3NtjIyuogqEsPZEhGKPqnGqwGffXqJm7r/su5aCsIe8hXEq1OtErniU5/gMP1sxtxV171B0RnGRH+4oOtBG1j16xG1VaFm0K99SwdYjV9jp63e3FovX8lM9JWhGVP7xHED0QxnuFuIUJ5BI3m4bhhGms0OWPwh2mDWl7jmmTNwweB8RMgecjXUKtBPXzY4L7TcGVuupAqoxkuWVul9X5y62DFC4wfUgZ38vq+TeFJ+ExXQsfpUk2cqYx1POn2md/i8WrOBRVHW7rDFkKtTfLCTC7XXBeUEiM=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(346002)(39860400002)(396003)(136003)(376002)(230922051799003)(451199024)(64100799003)(186009)(82310400011)(1800799012)(40470700004)(46966006)(36840700001)(40460700003)(26005)(426003)(336012)(82740400003)(8676002)(8936002)(4326008)(5660300002)(7416002)(86362001)(31696002)(478600001)(966005)(6916009)(316002)(70586007)(70206006)(54906003)(36860700001)(47076005)(7636003)(356005)(31686004)(41300700001)(40480700001)(2906002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2023 23:26:09.4927
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d078ef3b-0de5-48e7-45ae-08dbefa03cc6
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS2PEPF00003443.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6357
 
-
---MlZhcRN/f5z9Ed9v
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 5.10.202 release.
-> There are 187 patches in this series, all will be posted as a response
+On Sat, 25 Nov 2023 16:32:43 +0000, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.331 release.
+> There are 53 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Mon, 27 Nov 2023 16:30:48 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.331-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-> Marc Zyngier <maz@kernel.org>
->     gpio: Don't fiddle with irqchips marked as immutable
+All tests passing for Tegra ...
 
-This is attempt to move people to new API, which will cause warning
-for existing users. "chip_warn(gc, "not an immutable chip, please
-consider fixing it!\n");". It is marked as dependency of another
-patch, but I'm not sure we should be doing this in stable.
+Test results for stable-v4.14:
+    10 builds:	10 pass, 0 fail
+    16 boots:	16 pass, 0 fail
+    32 tests:	32 pass, 0 fail
 
-> youwan Wang <wangyouwan@126.com>
->     Bluetooth: btusb: Add date->evt_skb is NULL check
+Linux version:	4.14.331-rc2-g0957336c00be
+Boards tested:	tegra124-jetson-tk1, tegra20-ventana,
+                tegra210-p2371-2180, tegra30-cardhu-a04
 
-Could someone double check this? If we hit the null check, we'll be
-returning success, but it sounds like an error case.
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-> Jani Nikula <jani.nikula@intel.com>
->     drm/msm/dp: skip validity check for DP CTS EDID checksum
-
-This is preparation for future cleanup, do we need it?
-
-> Richard Fitzgerald <rf@opensource.cirrus.com>
->     ASoC: soc-card: Add storage for PCI SSID
-
-This adds infrastructure for white/blacklisting, but I don't see an
-user of that in 5.10 (or 6.1).
-
-> Ilpo J=E4rvinen <ilpo.jarvinen@linux.intel.com>
->     media: cobalt: Use FIELD_GET() to extract Link Width
-
-Cleanup, but not a bugfix.
-
-> Dan Carpenter <dan.carpenter@linaro.org>
->     SUNRPC: Add an IS_ERR() check back to where it was
-
-According to changelog, this is only needed with commit 25cf32ad5dba
-("SUNRPC: Handle allocation failure in rpc_new_task()") in tree, and
-we don't have that in 5.10.
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---MlZhcRN/f5z9Ed9v
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZWUJWgAKCRAw5/Bqldv6
-8ni0AJsG3BKGQDCyibkUdDgmaa+Dmzg2wQCgoo/JMYlIky7pfMEfwLJp+v8F6Sc=
-=3dfj
------END PGP SIGNATURE-----
-
---MlZhcRN/f5z9Ed9v--
+Jon
