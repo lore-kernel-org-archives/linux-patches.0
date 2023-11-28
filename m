@@ -1,52 +1,57 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAC23C46E
-	for <patches@lists.linux.dev>; Mon, 27 Nov 2023 23:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DE237B
+	for <patches@lists.linux.dev>; Tue, 28 Nov 2023 00:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="oHrHzQ/x"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-285a64dcf3eso1719537a91.1
-        for <patches@lists.linux.dev>; Mon, 27 Nov 2023 15:49:49 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="OQ+d1Pak"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1ce28faa92dso37136405ad.2
+        for <patches@lists.linux.dev>; Mon, 27 Nov 2023 16:20:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1701128989; x=1701733789; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1701130854; x=1701735654; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wBWO3qiHF6ynp4gh0IQevir8rNrrtCuaI4IulQnqpxU=;
-        b=oHrHzQ/xu2J2XkWIdlHZBxmOBZg86j+clyySXGi1AokEu8M0hK2y58Bg/PPRDnz5gR
-         Y+KFasCIu/QCwUxwaY8MF4rPjVlDi/MqpEobTx+maHfcO2H7XaNrOAbyupfW0Xgushw3
-         279A+Cp/A1cwb70aQfRzh9MXbti9NOqHtFtKM=
+        bh=b9LcCMDmTSdehjuq3j0tEJnIQIb6+TDJYhvhvJwU+wo=;
+        b=OQ+d1PakwY6Tx8o3qKhPKMVuLj4xGnhrsnDhM6UIoIwCo4UghrBBCU8DNfbvbiHpwc
+         53FRXtd98DYRt/J6dCjX3GR1f20ymMG3AljS5VtO6EprPwUt++IgveB+GxsL0jIClXKB
+         8efyYJps21GEGdtxZkxHFhOp1QDn6dQfizcnE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701128989; x=1701733789;
+        d=1e100.net; s=20230601; t=1701130854; x=1701735654;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wBWO3qiHF6ynp4gh0IQevir8rNrrtCuaI4IulQnqpxU=;
-        b=lvzDaNvu7M5E3TDIL0nqsb1DVVoyfiiYfHLAaiUGGdteGAHltzR9/eFKpkmD+pakrt
-         /D0qew28E+U9IiO/X7BCrIdmFsysPI8bYnT3NXnGtN5wb54CWRHnUvJPq11EiTRfoifY
-         Av5c4FCoK5ZY1QNmGzL0WVqhXn0hG6wsz2LskrIBILiY6Ia+A+MRo3UUvzXUiX56+GqQ
-         Ra4Zh5kLvDmt9dUqI39/7PxqCW6A0cPAyNSfkiK33NDk0yNqyRBzc1VAjAnj+3oUfeC1
-         5LQSVOAMJ9SSr7EDJP1ZIg/Lh85zHR1gQ2NXkLB4pd2tBd9bfqanVesrgMgfpF0UXfRZ
-         ow3g==
-X-Gm-Message-State: AOJu0YynnygDuCyCZ8MXHtO/J2dSdbZFqOT0yfg8UDMFC0C/ClB8PUZP
-	cfTfojqF9TEFUjwTA9qFAA7Yhg==
-X-Google-Smtp-Source: AGHT+IFiK1TL6iRqDxnEarhUDv5XQ6c1bUCpPYgE2MBOLdZUHwEMQYstZPZ9fZDxk9Gf4SGi+drnNQ==
-X-Received: by 2002:a17:90b:3807:b0:285:e16c:fb0a with SMTP id mq7-20020a17090b380700b00285e16cfb0amr3227082pjb.4.1701128988683;
-        Mon, 27 Nov 2023 15:49:48 -0800 (PST)
+        bh=b9LcCMDmTSdehjuq3j0tEJnIQIb6+TDJYhvhvJwU+wo=;
+        b=VIRuvMB/n4xy4AZNGYQtfr6b/Xd25DBC5bMOMtDcySSDXwzhf+gDIGPUnoLoD1s4aj
+         91nbZPR02XTlexZwXQPSmLmRIzuKrs+DUORZxxm3HYOaAKyda3HSOrCk7Psx83W0dyPn
+         Dj6iNAZJwrGFBVhEBbYs0jI93yXbuOChw+2h+IS+7y7h0f4KuRdTomEHRB2g4v2yt3IU
+         rPD9MZpgJK0U2Ick/T0iB05wGP8osXNVCUc+N8JGPF2DKuf9T4CjYuzP7jvyX/NKZ2ap
+         zzUus5FOI9O/m88r4Yj9Kb7JV4JGbKDQGGIZmM4NZyiIOleLZob+hdUpZg68/32meuml
+         8wQA==
+X-Gm-Message-State: AOJu0Yx2yyriDKemus6/ht1qjJLO83/J+uqL6CWfPeDY8jUmSTklPoPM
+	kfh+G2EGxlmYr1nta0HDBLTuPw==
+X-Google-Smtp-Source: AGHT+IGFzSIOfg8sKm6Au/0ACHEqu0Oge23/jZd49oSPNDz1XcwfEzxfUkI9Gck94hxyHvZcKR6OQQ==
+X-Received: by 2002:a17:902:d303:b0:1cc:2f70:4865 with SMTP id b3-20020a170902d30300b001cc2f704865mr12921138plc.26.1701130854419;
+        Mon, 27 Nov 2023 16:20:54 -0800 (PST)
 Received: from smtp.gmail.com ([2620:15c:11a:201:6438:b5d1:198e:8bb0])
-        by smtp.gmail.com with ESMTPSA id cu20-20020a17090afa9400b00282ecb631a9sm7860556pjb.25.2023.11.27.15.49.47
+        by smtp.gmail.com with ESMTPSA id c5-20020a170902d90500b001c60c3f9508sm8878786plz.230.2023.11.27.16.20.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Nov 2023 15:49:48 -0800 (PST)
+        Mon, 27 Nov 2023 16:20:54 -0800 (PST)
 From: Stephen Boyd <swboyd@chromium.org>
-To: Kees Cook <keescook@chromium.org>
+To: Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH] lkdtm: Add kfence read after free crash type
-Date: Mon, 27 Nov 2023 15:49:45 -0800
-Message-ID: <20231127234946.2514120-1-swboyd@chromium.org>
+	devicetree@vger.kernel.org,
+	Alexandre TORGUE <alexandre.torgue@foss.st.com>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH] dt-bindings: arm: qcom: Fix html link
+Date: Mon, 27 Nov 2023 16:20:51 -0800
+Message-ID: <20231128002052.2520402-1-swboyd@chromium.org>
 X-Mailer: git-send-email 2.43.0.rc1.413.gea7ed67945-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -56,105 +61,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the ability to allocate memory from kfence and trigger a read after
-free on that memory to validate that kfence is working properly. This is
-used by ChromeOS integration tests to validate that kfence errors can be
-collected on user devices and parsed properly.
+This link got broken by commit e790a4ce5290 ("arm: docs: Move Arm
+documentation to Documentation/arch/") when the doc moved from arm/ to
+arch/arm/. Fix the link so that it can continue to be followed.
 
+Fixes: e790a4ce5290 ("arm: docs: Move Arm documentation to Documentation/arch/")
+Cc: Alexandre TORGUE <alexandre.torgue@foss.st.com>
+Cc: Yanteng Si <siyanteng@loongson.cn>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Douglas Anderson <dianders@chromium.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/misc/lkdtm/heap.c | 64 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/lkdtm/heap.c b/drivers/misc/lkdtm/heap.c
-index 0ce4cbf6abda..608872bcc7e0 100644
---- a/drivers/misc/lkdtm/heap.c
-+++ b/drivers/misc/lkdtm/heap.c
-@@ -4,6 +4,7 @@
-  * page allocation and slab allocations.
-  */
- #include "lkdtm.h"
-+#include <linux/kfence.h>
- #include <linux/slab.h>
- #include <linux/vmalloc.h>
- #include <linux/sched.h>
-@@ -132,6 +133,66 @@ static void lkdtm_READ_AFTER_FREE(void)
- 	kfree(val);
- }
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 7f80f48a0954..8a6466d1fc4e 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -138,7 +138,7 @@ description: |
+   There are many devices in the list below that run the standard ChromeOS
+   bootloader setup and use the open source depthcharge bootloader to boot the
+   OS. These devices do not use the scheme described above. For details, see:
+-  https://docs.kernel.org/arm/google/chromebook-boot-flow.html
++  https://docs.kernel.org/arch/arm/google/chromebook-boot-flow.html
  
-+#if IS_ENABLED(CONFIG_KFENCE)
-+static void lkdtm_KFENCE_READ_AFTER_FREE(void)
-+{
-+	int *base, val, saw;
-+	unsigned long timeout, resched_after;
-+	size_t len = 1024;
-+	/*
-+	 * The slub allocator will use the either the first word or
-+	 * the middle of the allocation to store the free pointer,
-+	 * depending on configurations. Store in the second word to
-+	 * avoid running into the freelist.
-+	 */
-+	size_t offset = sizeof(*base);
-+
-+	/*
-+	 * 100x the sample interval should be more than enough to ensure we get
-+	 * a KFENCE allocation eventually.
-+	 */
-+	timeout = jiffies + msecs_to_jiffies(100 * kfence_sample_interval);
-+	/*
-+	 * Especially for non-preemption kernels, ensure the allocation-gate
-+	 * timer can catch up: after @resched_after, every failed allocation
-+	 * attempt yields, to ensure the allocation-gate timer is scheduled.
-+	 */
-+	resched_after = jiffies + msecs_to_jiffies(kfence_sample_interval);
-+	do {
-+		base = kmalloc(len, GFP_KERNEL);
-+		if (!base) {
-+			pr_err("FAIL: Unable to allocate kfence memory!\n");
-+			return;
-+		}
-+
-+		if (is_kfence_address(base)) {
-+			val = 0x12345678;
-+			base[offset] = val;
-+			pr_info("Value in memory before free: %x\n", base[offset]);
-+
-+			kfree(base);
-+
-+			pr_info("Attempting bad read from freed memory\n");
-+			saw = base[offset];
-+			if (saw != val) {
-+				/* Good! Poisoning happened, so declare a win. */
-+				pr_info("Memory correctly poisoned (%x)\n", saw);
-+			} else {
-+				pr_err("FAIL: Memory was not poisoned!\n");
-+				pr_expected_config_param(CONFIG_INIT_ON_FREE_DEFAULT_ON, "init_on_free");
-+			}
-+			return;
-+		}
-+
-+		kfree(base);
-+		if (time_after(jiffies, resched_after))
-+			cond_resched();
-+	} while (time_before(jiffies, timeout));
-+
-+	pr_err("FAIL: kfence memory never allocated!\n");
-+}
-+#endif
-+
- static void lkdtm_WRITE_BUDDY_AFTER_FREE(void)
- {
- 	unsigned long p = __get_free_page(GFP_KERNEL);
-@@ -327,6 +388,9 @@ static struct crashtype crashtypes[] = {
- 	CRASHTYPE(VMALLOC_LINEAR_OVERFLOW),
- 	CRASHTYPE(WRITE_AFTER_FREE),
- 	CRASHTYPE(READ_AFTER_FREE),
-+#if IS_ENABLED(CONFIG_KFENCE)
-+	CRASHTYPE(KFENCE_READ_AFTER_FREE),
-+#endif
- 	CRASHTYPE(WRITE_BUDDY_AFTER_FREE),
- 	CRASHTYPE(READ_BUDDY_AFTER_FREE),
- 	CRASHTYPE(SLAB_INIT_ON_ALLOC),
+ properties:
+   $nodename:
+
+base-commit: b85ea95d086471afb4ad062012a4d73cd328fa86
 -- 
 https://chromeos.dev
 
