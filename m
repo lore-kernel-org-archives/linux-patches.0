@@ -1,255 +1,86 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AED44412
-	for <patches@lists.linux.dev>; Tue, 28 Nov 2023 17:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887C73D0DC
+	for <patches@lists.linux.dev>; Tue, 28 Nov 2023 20:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="ab6DbNmg";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="aqjk3GPt"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 799691F898;
-	Tue, 28 Nov 2023 17:37:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1701193062; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=a+i5r2yvkp2KHtyBUrIaJjpJl5CnUbwkzKW05rea7ko=;
-	b=ab6DbNmgVBMW3eV//yivo3/keAC9735txBK7u92TwnRnmTmKewU8dQr3MiwQ5B1RauIJY/
-	08xL76q52zCBsRiJR4EqPWrQplbxo5VCmpSi7CVBddDz22aC4gLeeaHc/6a330SYuNKYVM
-	jU4dWX2/KZHlzCVT58tpWu//PQKaAVQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1701193062;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=a+i5r2yvkp2KHtyBUrIaJjpJl5CnUbwkzKW05rea7ko=;
-	b=aqjk3GPtzHIzOIwcRoG0lszJaX1TyWWg0ZKXlPB4e5/pWtknVgriH2HvR7OOzl/5Pf/Ffa
-	MBmXNwlrPx0WJHCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5B3B41343E;
-	Tue, 28 Nov 2023 17:37:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id VaO3FWYlZmWAdwAAD6G6ig
-	(envelope-from <vbabka@suse.cz>); Tue, 28 Nov 2023 17:37:42 +0000
-Message-ID: <077e8e97-e88f-0b8e-2788-4031458be090@suse.cz>
-Date: Tue, 28 Nov 2023 18:37:41 +0100
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="G3a+savF"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-50bbef0e5d5so1205932e87.1
+        for <patches@lists.linux.dev>; Tue, 28 Nov 2023 12:26:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1701203214; x=1701808014; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5e/cA2xc7eDKmbypo6Z8SLywnOUPp9h8bqqyEEbG2Ow=;
+        b=G3a+savF6btaDtJCFzie9v9amJToNFhIYcMeC42feFJHY0woEnJHUngF2xKEyS1JO+
+         U2Ydcjnbj1s5iCPwTrpWXrRc1Zj/DOy9E6rFY1Jr/WVYDL6kerXwD7llZbf8w7dHtIow
+         8yPeq8ZKbvos0e0EkU1AY6rR2ymuYPQx0/P7Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701203214; x=1701808014;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5e/cA2xc7eDKmbypo6Z8SLywnOUPp9h8bqqyEEbG2Ow=;
+        b=XCG5WzfwvxQMc7xarniW8mEucx4aDNSHk9kC5PXy+56TT8DBF0zk1ZOpYu9d5o2aQo
+         xzvEdsEj2OwUIWkdRxmtIjzSj0MaFxVJlVQQVe3eZkSYrFvS3OucJfZ/pB1OrMmPCVLd
+         1eNW5aRnYP38ACQBKe/uPV9YQ1CgvF6QSeEVqnOSORUwylLTvwn6+AhuGmlMpGI2Tmvp
+         /GoVyInagU5oTgt3pxmjLjhEocKt6pIc1arKsu8NeJOeXaZen13y8yVXPPnAwSmGhgvQ
+         Ad4pRjXEE1wG4qZshyOvkm2zXPWubPibfUOBZYqt/f3xwzNtN4Y10iGLZ1HiU1l06iux
+         HQPg==
+X-Gm-Message-State: AOJu0YzpOJSuuRhDmyd1FMsL7fG+qdRJq5GrkDJE+KL8ygQdmvjuRRGC
+	BhoxNWJIREtiufdn3AQv/YPbm+RxrfBedH5J/Azsig==
+X-Google-Smtp-Source: AGHT+IHPo1Uzv9EVtilCouzElyVLqdgaW4ild4G1hYIMDOJYzDiORoqPIa0lrdy3P4ThtYYFo/T7JY6HIy/vgT0G6QA=
+X-Received: by 2002:a2e:b523:0:b0:2c9:8f6b:3d9a with SMTP id
+ z3-20020a2eb523000000b002c98f6b3d9amr9371511ljm.16.1701203214015; Tue, 28 Nov
+ 2023 12:26:54 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 28 Nov 2023 12:26:53 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [RFC v2 2/7] mm, slub: add opt-in slub_percpu_array
-Content-Language: en-US
-To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Matthew Wilcox <willy@infradead.org>, Suren Baghdasaryan
- <surenb@google.com>, Christoph Lameter <cl@linux.com>,
- David Rientjes <rientjes@google.com>, Pekka Enberg <penberg@kernel.org>,
- Joonsoo Kim <iamjoonsoo.kim@lge.com>,
- Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20230810163627.6206-9-vbabka@suse.cz>
- <20230810163627.6206-11-vbabka@suse.cz>
- <CAB=+i9TSMVURktFvr7sAt4T2BdaUvsWFapAjTZNtk0AKS01O9A@mail.gmail.com>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <CAB=+i9TSMVURktFvr7sAt4T2BdaUvsWFapAjTZNtk0AKS01O9A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Flag: NO
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	 ARC_NA(0.00)[];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 MID_RHS_MATCH_FROM(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 TAGGED_RCPT(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 BAYES_HAM(-3.00)[100.00%];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 NEURAL_HAM_SHORT(-0.20)[-1.000];
-	 RCPT_COUNT_TWELVE(0.00)[12];
-	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:email];
-	 FREEMAIL_TO(0.00)[gmail.com];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 RCVD_TLS_ALL(0.00)[];
-	 SUSPICIOUS_RECIPS(1.50)[]
-X-Spam-Score: -2.80
+In-Reply-To: <0ea669ad-9a33-40e0-b4df-aa2b2a1b92de@linaro.org>
+References: <20231128002052.2520402-1-swboyd@chromium.org> <0ea669ad-9a33-40e0-b4df-aa2b2a1b92de@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 28 Nov 2023 12:26:53 -0800
+Message-ID: <CAE-0n50My=0FZ044b2beaB2cHpC6MxYtsEKsVou=80yO2iERYg@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: arm: qcom: Fix html link
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	devicetree@vger.kernel.org, Alexandre TORGUE <alexandre.torgue@foss.st.com>, 
+	Yanteng Si <siyanteng@loongson.cn>, Jonathan Corbet <corbet@lwn.net>, 
+	Bjorn Andersson <andersson@kernel.org>, Douglas Anderson <dianders@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 8/21/23 16:57, Hyeonggon Yoo wrote:
-> Hi,
-> 
-> On Fri, Aug 11, 2023 at 1:36 AM Vlastimil Babka <vbabka@suse.cz> wrote:
+Quoting Krzysztof Kozlowski (2023-11-27 23:46:53)
+> On 28/11/2023 01:20, Stephen Boyd wrote:
+> > This link got broken by commit e790a4ce5290 ("arm: docs: Move Arm
+> > documentation to Documentation/arch/") when the doc moved from arm/ to
+> > arch/arm/. Fix the link so that it can continue to be followed.
+> >
+> > Fixes: e790a4ce5290 ("arm: docs: Move Arm documentation to Documentation/arch/")
+> > Cc: Alexandre TORGUE <alexandre.torgue@foss.st.com>
+> > Cc: Yanteng Si <siyanteng@loongson.cn>
+> > Cc: Jonathan Corbet <corbet@lwn.net>
+> > Cc: Bjorn Andersson <andersson@kernel.org>
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >  Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> This should go via Qcom, but you did not Cc msm mailing list.
+>
 
-Oops, looks like I forgot reply, sorry (preparing v3 now).
-
->>
->> kmem_cache_setup_percpu_array() will allocate a per-cpu array for
->> caching alloc/free objects of given size for the cache. The cache
->> has to be created with SLAB_NO_MERGE flag.
->>
->> The array is filled by freeing. When empty for alloc or full for
->> freeing, it's simply bypassed by the operation, there's currently no
->> batch freeing/allocations.
->>
->> The locking is copied from the page allocator's pcplists, based on
->> embedded spin locks. Interrupts are not disabled, only preemption (cpu
->> migration on RT). Trylock is attempted to avoid deadlock due to
->> an intnerrupt, trylock failure means the array is bypassed.
-> 
-> nit: s/intnerrupt/interrupt/
-
-Thanks.
-
-> 
->>  /*
->>   * Inlined fastpath so that allocation functions (kmalloc, kmem_cache_alloc)
->>   * have the fastpath folded into their functions. So no function call
->> @@ -3465,7 +3564,11 @@ static __fastpath_inline void *slab_alloc_node(struct kmem_cache *s, struct list
->>         if (unlikely(object))
->>                 goto out;
->>
->> -       object = __slab_alloc_node(s, gfpflags, node, addr, orig_size);
->> +       if (s->cpu_array)
->> +               object = alloc_from_pca(s);
->> +
->> +       if (!object)
->> +               object = __slab_alloc_node(s, gfpflags, node, addr, orig_size);
->>
->>         maybe_wipe_obj_freeptr(s, object);
->>         init = slab_want_init_on_alloc(gfpflags, s);
->> @@ -3715,6 +3818,34 @@ static void __slab_free(struct kmem_cache *s, struct slab *slab,
->>         discard_slab(s, slab);
->>  }
-> 
->>  #ifndef CONFIG_SLUB_TINY
->>  /*
->>   * Fastpath with forced inlining to produce a kfree and kmem_cache_free that
->> @@ -3740,6 +3871,11 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
->>         unsigned long tid;
->>         void **freelist;
->>
->> +       if (s->cpu_array && cnt == 1) {
->> +               if (free_to_pca(s, head))
->> +                       return;
->> +       }
->> +
->>  redo:
->>         /*
->>          * Determine the currently cpus per cpu slab.
->> @@ -3793,6 +3929,11 @@ static void do_slab_free(struct kmem_cache *s,
->>  {
->>         void *tail_obj = tail ? : head;
->>
->> +       if (s->cpu_array && cnt == 1) {
->> +               if (free_to_pca(s, head))
->> +                       return;
->> +       }
->> +
->>         __slab_free(s, slab, head, tail_obj, cnt, addr);
->>  }
->>  #endif /* CONFIG_SLUB_TINY */
-> 
-> Is this functionality needed for SLUB_TINY?
-
-Due to the prefill semantics, I think it has to be be even in TINY, or we
-risk running out of memory reserves. Also later I want to investigate
-extending this approach for supporting allocations in very constrained
-contexts (NMI) so e.g. bpf doesn't have to reimplement the slab allocator,
-and that would also not be good to limit to !SLUB_TINY.
-
->> @@ -4060,6 +4201,45 @@ int kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
->>  }
->>  EXPORT_SYMBOL(kmem_cache_alloc_bulk);
->>
->> +int kmem_cache_prefill_percpu_array(struct kmem_cache *s, unsigned int count,
->> +               gfp_t gfp)
->> +{
->> +       struct slub_percpu_array *pca;
->> +       void *objects[32];
->> +       unsigned int used;
->> +       unsigned int allocated;
->> +
->> +       if (!s->cpu_array)
->> +               return -EINVAL;
->> +
->> +       /* racy but we don't care */
->> +       pca = raw_cpu_ptr(s->cpu_array);
->> +
->> +       used = READ_ONCE(pca->used);
-> 
-> Hmm for the prefill to be meaningful,
-> remote allocation should be possible, right?
-
-Remote in what sense?
-
-> Otherwise it only prefills for the CPU that requested it.
-
-If there's a cpu migration between the prefill and usage, it might run out
-of the cached array, but assumption is to be rare enough to become an issue.
-
->> +       if (used >= count)
->> +               return 0;
->> +
->> +       if (pca->count < count)
->> +               return -EINVAL;
->> +
->> +       count -= used;
->> +
->> +       /* TODO fix later */
->> +       if (count > 32)
->> +               count = 32;
->> +
->> +       for (int i = 0; i < count; i++)
->> +               objects[i] = NULL;
->> +       allocated = kmem_cache_alloc_bulk(s, gfp, count, &objects[0]);
->> +
->> +       for (int i = 0; i < count; i++) {
->> +               if (objects[i]) {
->> +                       kmem_cache_free(s, objects[i]);
->> +               }
->> +       }
-> 
-> nit: why not
-> 
-> for (int i = 0; i < allocated; i++) {
->     kmem_cache_free(s, objects[i]);
-> }
-> 
-> and skip objects[i] = NULL
-> 
-
-This is rewritten significantly in v3 so I think it doesn't apply anymore.
-
->> +       return allocated;
->> +}
-> 
-> And a question:
-> Does SLUB still need to maintain per-cpu partial slab lists even when
-> an opt-in percpu array is used?
-
-Good question :) didn't investigate it yet. We can, once this settles.
-
-Thanks.
+Ok. I was hoping to go through DT tree but am also fine sending it
+through qcom.
