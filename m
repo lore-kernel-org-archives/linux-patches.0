@@ -1,73 +1,78 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8195B4438A
-	for <patches@lists.linux.dev>; Tue, 28 Nov 2023 21:01:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id EC1771C0050; Tue, 28 Nov 2023 22:01:49 +0100 (CET)
-Date: Tue, 28 Nov 2023 22:01:49 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E685026F;
+	Tue, 28 Nov 2023 21:10:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKqTfH/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8ADC4166B;
+	Tue, 28 Nov 2023 21:10:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1701205805;
+	bh=Tk8vqq2f+B+POOBODD8vnVMKQofy9qJFCjtMT7FlNR0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iKqTfH/0fZ7PC6Ri15G7qxwxShqEPIZQDuTVp/GlILYShPIZniktNnsy3bTCem8by
+	 5u6sGPvGGlHbQJqrPSW36t9Wzmi1+fwKCxe3eeG9m+baqy6bQUW2HCYAFd8uUAINDK
+	 KSJ9Kewp9jr5eeDbVzVkZJ1swj9On/D5TeLbLbrg=
+Date: Tue, 28 Nov 2023 21:10:03 +0000
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Pavel Machek <pavel@denx.de>
+Cc: Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	LKML <linux-kernel@vger.kernel.org>, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, stanley_chang@realtek.com
-Subject: Re: [PATCH 6.1 000/366] 6.1.64-rc4 review
-Message-ID: <ZWZVPaIt3EGsDLj7@duo.ucw.cz>
-References: <20231126154359.953633996@linuxfoundation.org>
+	conor@kernel.org, allen.lkml@gmail.com, alexander.deucher@amd.com,
+	mario.limonciello@amd.com, zhujun2@cmss.chinamobile.com,
+	sashal@kernel.org, skhan@linuxfoundation.org, bhelgaas@google.com
+Subject: Re: [PATCH 4.14 00/53] 4.14.331-rc2 review
+Message-ID: <2023112844-sesame-overdrawn-5853@gregkh>
+References: <20231125163059.878143365@linuxfoundation.org>
+ <ZWUBaYipygLMkfjz@duo.ucw.cz>
+ <f4a7634-3d34-af29-36ca-6f3439b4ce9@linux.intel.com>
+ <ZWZQCJtD7kmX9iRO@duo.ucw.cz>
+ <2023112818-browse-floss-eb6f@gregkh>
+ <ZWZSKgxjSRcA/qUK@duo.ucw.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="RzAbNghvS/rgMX0P"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20231126154359.953633996@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZWZSKgxjSRcA/qUK@duo.ucw.cz>
 
+On Tue, Nov 28, 2023 at 09:48:42PM +0100, Pavel Machek wrote:
+> Hi!
+> 
+> > > > > > Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+> > > > > >     RDMA/hfi1: Use FIELD_GET() to extract Link Width
+> > > > > 
+> > > > > This is a good cleanup, but not a bugfix.
+> > > > > 
+> > > > > > Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+> > > > > >     atm: iphase: Do PCI error checks on own line
+> > > > > 
+> > > > > Just a cleanup, not sure why it was picked for stable.
+> > > > 
+> > > > Just an additional bit of information, there have been quite many cleanups 
+> > > > from me which have recently gotten the stable notification for some 
+> > > > mysterious reason. When I had tens of them in my inbox and for various 
+> > > > kernel versions, I immediately stopped caring to stop it from happening.
+> > > > 
+> > > > AFAIK, I've not marked those for stable inclusion so I've no idea what
+> > > > got them included.
+> > > 
+> > > Fixes tag can do it. Plus, "AUTOSEL" robot does it randomly, with no
+> > > human oversight :-(.
+> > 
+> > the autosel bot has lots of oversight.
+> 
+> Can you describe how that oversight works?
 
---RzAbNghvS/rgMX0P
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 6.1.64 release.
-> There are 366 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-> Stanley Chang <stanley_chang@realtek.com>
->     usb: dwc3: core: configure TX/RX threshold for DWC3_IP
-
-This adds properties such as "snps,rx-thr-num-pkt",
-"snps,tx-thr-num-pkt". They are not documented anywhere, and they are
-not used in 6.1 tree. DTS checkers may eventually find the
-inconsistencies, and this will cause warnings, so it may be good to
-revert this.
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---RzAbNghvS/rgMX0P
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZWZVPQAKCRAw5/Bqldv6
-8o4QAKClYXQc2EPmalB52hJlRmqzIOGuLQCeJxy9LQgQImFvh2NPluUrHvt+20Y=
-=vavJ
------END PGP SIGNATURE-----
-
---RzAbNghvS/rgMX0P--
+There have been many papers and presentations about it, no need for me
+to say it all here again...
