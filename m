@@ -1,55 +1,61 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F1A37B
-	for <patches@lists.linux.dev>; Tue, 28 Nov 2023 00:42:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CD5ED3
+	for <patches@lists.linux.dev>; Tue, 28 Nov 2023 02:49:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="evhprX2L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701132123; x=1732668123;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3VfU9NwhaNjLoj9hTq3TLLG+FPVaZX89uWfoXGqjeb8=;
-  b=evhprX2L20vxQey8za4eyWxz5yy/359HRsNAVPVOcS+/IRjRWVF9Ikj6
-   eVoVtzSMwYSXmn8vOoO9OrrxTOksJvoS3UGbrpXt5s9GbXTLyXIHz3YJa
-   TQC/eNKRG1lTYF6i/Ww7eU66lN7lmprzRCdfU5lH91818uLN37+P7tb5a
-   ojsI4BgDQF327QUsTEnfS3fbXmZ1FDLVNUcBPHSlArns3H/hDcbgWJzC9
-   oUFTmp6CnRYPQMgrLtPkWOzMaddZ+zk2BA1ULynwHuxx07svlO1iA8cKX
-   1sVMWDFJGjMYTrDnWueT0Y5QqJGBeJ4ZPU709fzaOP4mRfaOSgSH1jKqS
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10907"; a="389976672"
-X-IronPort-AV: E=Sophos;i="6.04,232,1695711600"; 
-   d="scan'208";a="389976672"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2023 16:42:02 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10907"; a="834483743"
-X-IronPort-AV: E=Sophos;i="6.04,232,1695711600"; 
-   d="scan'208";a="834483743"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2023 16:42:03 -0800
-Date: Mon, 27 Nov 2023 16:42:02 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
-	Smita.KoralahalliChannabasappa@amd.com, dave.hansen@linux.intel.com,
-	x86@kernel.org, linux-edac@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
-Message-ID: <ZWU3WkmUMz3Wk9wT@agluck-desk3>
-References: <20230929181626.210782-1-tony.luck@intel.com>
- <20231004183623.17067-1-tony.luck@intel.com>
- <20231004183623.17067-3-tony.luck@intel.com>
- <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
- <ZTa37L2nlnbok8dz@agluck-desk3>
- <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
- <ZVPu/hX9b7lUkrBY@agluck-desk3>
- <20231121115448.GCZVyaiNkNvb4t2NxB@fat_crate.local>
- <ZWTzAujHdrJ950F3@agluck-desk3>
- <ZWT4pAJ6g0i78wec@agluck-desk3>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JxdrGiIv"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3b2e330033fso3135975b6e.3
+        for <patches@lists.linux.dev>; Mon, 27 Nov 2023 18:49:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701139744; x=1701744544; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YGzzlldCIGpuhAuCxitruslxNscpW2jyqRqhKkOYFIk=;
+        b=JxdrGiIvADvvNoYUj35cEoFb/TzrG3PxtxUZ/gp+HTwjHCjjgzAHqQySJl3p/IvWUJ
+         2KLNeMz+ahcSkn3/ehE34V2+9xNLzdgE25M8q83NOktNRZ9IV+3p0iLF+YFxvSqJQY9T
+         zqHS5O4Z4xiz/FPtoDK1/IIGPezZkL4RUu5I6vwTu325xE7JokZVDXPDtr4qqzqfrmWf
+         Ws6YIri7+ZW2p/CrGzZfeI+xQ1TPS9Sy8DSwKLBLp3l69cPjOesYRT0+5HcXW1pyCTRG
+         N0RByFQDU/B65pGSkNGihq48UVw6WthG049v5KoGsQMCLMU2mRhudMDZ2yvKDP0qXsHe
+         bjcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701139744; x=1701744544;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YGzzlldCIGpuhAuCxitruslxNscpW2jyqRqhKkOYFIk=;
+        b=jHIWyIX85hKQ9GVitPRI1ad/4JfaQ6gx+ve/G1SIXNAwVe8Z7FjGoQ/JczvnrAKSvb
+         KQGSp1hibEOcd3m8WBf+QAhU6sL7m9CAY67VpWJA1/ZXIAe+eS7chXoC/zp3hDjMEXQR
+         008RpEjF8Rd+MNSBCHDQJuzyK2hA9/XCSinLYs5AVdTuUpzPr1IZpJqKeBfTrMxBqWJe
+         F8I7093Y8yl29tADrR3lzD1BjQvrmWV6rU3rAGd0SpjcBGVk14l3WXe+USb2NpI7TKOf
+         sPfUdrJcV3egnr3ltjeTZsHYoXBT0+pXwkm4yv+GxPXwXJ4C1WxBvc605Krssibu2ZZO
+         z2Ww==
+X-Gm-Message-State: AOJu0YyKs+aMjNhmzuCbBDuKUut84vLAu3XTCH9o2/kyRVLtckl14WBt
+	+2imfZtlegNM7XJnKHrZNkw=
+X-Google-Smtp-Source: AGHT+IG4l4bS6v+dvbF1ZzsJcK8uzNWexFCn5ZnNgR3hhozpbgaFS8HVLeM0QcTYSw8hPF0wSKzYjQ==
+X-Received: by 2002:a54:4885:0:b0:3b8:402c:7072 with SMTP id r5-20020a544885000000b003b8402c7072mr17322832oic.25.1701139744530;
+        Mon, 27 Nov 2023 18:49:04 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id m6-20020a0568080f0600b003b8459f2ec5sm1689951oiw.55.2023.11.27.18.49.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Nov 2023 18:49:03 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 27 Nov 2023 18:49:02 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: Re: [PATCH 4.14 00/53] 4.14.331-rc2 review
+Message-ID: <59fb7a4c-1a68-425c-9f47-f0c1cf09921a@roeck-us.net>
+References: <20231125163059.878143365@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,25 +64,25 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZWT4pAJ6g0i78wec@agluck-desk3>
+In-Reply-To: <20231125163059.878143365@linuxfoundation.org>
 
-On Mon, Nov 27, 2023 at 12:14:28PM -0800, Tony Luck wrote:
-> On Mon, Nov 27, 2023 at 11:50:26AM -0800, Tony Luck wrote:
-> > On Tue, Nov 21, 2023 at 12:54:48PM +0100, Borislav Petkov wrote:
-> > > On Tue, Nov 14, 2023 at 02:04:46PM -0800, Tony Luck wrote:
-> > But it isn't doing the same thing.  The timer calls:
-> > 
-> > 	machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
-> > 
-> > and cmci_mc_poll_banks() calls:
-> > 
-> > 	machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
-
-        machine_check_poll(0, this_cpu_ptr(&mce_banks_owned));
-
+On Sat, Nov 25, 2023 at 04:32:43PM +0000, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.331 release.
+> There are 53 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Bah ... I've cut & pasted the same thing ... but I think there
-> are separate bit maps ... maybe I'm wrong. Will go back and
-> look again.
+> Responses should be made by Mon, 27 Nov 2023 16:30:48 +0000.
+> Anything received after that time might be too late.
 > 
-> -Tony
+
+For v4.14.330-54-g0957336c00be:
+
+Build results:
+	total: 139 pass: 139 fail: 0
+Qemu test results:
+	total: 440 pass: 440 fail: 0
+
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+
+Guenter
