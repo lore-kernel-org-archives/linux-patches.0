@@ -1,86 +1,156 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2041.outbound.protection.outlook.com [40.107.92.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F7856765
-	for <patches@lists.linux.dev>; Tue, 28 Nov 2023 13:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012A15D4BC
+	for <patches@lists.linux.dev>; Tue, 28 Nov 2023 15:32:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i5E5wbeQ"
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-4af8f20034cso1742466e0c.3
-        for <patches@lists.linux.dev>; Tue, 28 Nov 2023 05:25:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701177915; x=1701782715; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NZrP9a46FvVK83LWUKH5z9MFb7/rqu3GX5jpGe7sb8o=;
-        b=i5E5wbeQB3aF1qqb7AST2R6TXjo3WLZbzxuMSODOIgR3CkcUaHhLpLLYcGOM76Fq2H
-         paqmmkQqjCCaDbWHQ4V8N4bSNrhnq4iGjgfEou02tB/NhSlH3RX2P/+dyKxPC+zrwSIy
-         noQpxTf+fuWSFoffNGBwJyxOs6o94e6MQ4swhoc5xg7GkI/RsBDCTjxly6HW5H+ehHlJ
-         3pDz8IGWS5CwioIUlgLjAntKMq0/Cc0ijdDAPcYF3Jkm2mvq1crQ1O693C444Q8UUegz
-         nnuP1lckSB37QgdJRfuueGX4pyzHVvDVCh/lAZmMSYni2mVSu5KRcOSNWNL6OMQ24ONK
-         gX+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701177915; x=1701782715;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NZrP9a46FvVK83LWUKH5z9MFb7/rqu3GX5jpGe7sb8o=;
-        b=kSmgOykDse5CFDBnv/2tUtj6LxXVAu4XdNh9sqlMTTsxeFx/MPW94ZeVY8FFZhO68z
-         kQaZcLxKyx6aBJlnqLGaerpHhLNYKl6PFzxNXf1oKRw9GGduvr4Xn4dsay5W+JUWW0xx
-         Z38Wkiehpi7h8T9c7yxyOWpASdiCegX/qBJnTCWIfEgWph6QzItHvY/525kERkfY4g6t
-         4T0x2zXLi9Fe4qUyjQ/iE8dbkSv4YjVT652cKr7mjZOnIg1FGdy+69/IgKL3C3eaoDQN
-         oZWbxK4M1IhXCI2Dm28+Z1LKopU8xmj3tlAoe0ztINhuQmY0Nle0KWlYE/TWMJRjBRFK
-         y3hw==
-X-Gm-Message-State: AOJu0Yy82dHWn71boXPwts4Tg1Y1gexBWjZ8WoYlksBBEMBSqqFmbnet
-	44BJJEOVC7N1ndlwPzlMrY4WGLqEHAv+k8neJRA=
-X-Google-Smtp-Source: AGHT+IGfF5ufbqwsLkM7y/tE9HdjIvjY0fJ1ryH/bxiCfeHLeH6bnf/4/F7mDu7k06N+J0PK6TetzL1xv38Qkya7qfg=
-X-Received: by 2002:a1f:4ac2:0:b0:495:febd:9187 with SMTP id
- x185-20020a1f4ac2000000b00495febd9187mr12281525vka.0.1701177915131; Tue, 28
- Nov 2023 05:25:15 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="E+ula4Nv"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cXLV28lfN6NmYCf0xXqZQpBnq7dn1/0CIxRsB7Ma+qxjhsf3qme0yUkJTSC2X9EIUMefFHjsogYQlgm1vYc2+qTUX4SHL8iYPTEzkRUxnrvvnpkuEH39mrruazDTTlEdK3wxc74wDWbwrfyzFktVSwDpoLejW8Y+SI1YTZlIjpGrEO1lJBr5E9DJHBT7HedguQYpqKV5y6u89QEU9ouCgR/E7nQEQxelyLjUk/yjXHRknOq3xSn6eL2N6n9JXDPYESML1oYundBQlOrNj+yv0aykFUWONOJQosd1KDNQjH0cFVtvMDyBWFRZHBUvUAuppdXvCgHYM5z8ylxzgBUzow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sB2e4M8QACtP5WLdv5mq79IxX3VIbmeBUEG6yKMzcgM=;
+ b=EyZfexGF3LuIsj08UrQjb0ST4iEbJqE0YfOAOpMYjqbGc8/u1AKCm++3oL/88W40FRV+50kuskw6AAUbK7yiJRiYWuaSUggE1HJGhgv8OCP9MDQWzn+w/NUOE/E+brgYBEDwl62LlLeWQyY/KzXAfwpNXu0o2DBr6TaV5VSmMccg2jH0qCbJ48bUZc68j/u6/admbseTFWm7ARMLu8a9e43cAiDlUKy3gXMtX/jdMp8EghyUqsCvLA+ec3spZjqKBjH9yc4qEPd0jCKKwYJ9kZLCr6Aj7fRuHFAb2WReB9yTIAw80DD+EYSbgTfuRt34paWFdlGbFtQnuUCY1gINGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sB2e4M8QACtP5WLdv5mq79IxX3VIbmeBUEG6yKMzcgM=;
+ b=E+ula4NvEB0H498vs6YPBMZAzoF6S8QBzOewJ7/osSqWT2aIiw7BPp+8yYq5RiJQlvCxDvCQaP1aNUy/85p8SqAeoLLTqIAKDzjxgYw4xpiB7NIYr9kaFWApmx1E2KomITtSGCcnzPvPSl5UzJF+aXEocKyHQudN7PYYwN4g2DI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3108.namprd12.prod.outlook.com (2603:10b6:408:40::20)
+ by BL1PR12MB5030.namprd12.prod.outlook.com (2603:10b6:208:313::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7025.28; Tue, 28 Nov
+ 2023 15:32:10 +0000
+Received: from BN8PR12MB3108.namprd12.prod.outlook.com
+ ([fe80::a9cf:f8b8:27bd:74d0]) by BN8PR12MB3108.namprd12.prod.outlook.com
+ ([fe80::a9cf:f8b8:27bd:74d0%3]) with mapi id 15.20.7046.015; Tue, 28 Nov 2023
+ 15:32:10 +0000
+Message-ID: <addebe1d-c08a-434e-9146-b6c10418a9d2@amd.com>
+Date: Tue, 28 Nov 2023 10:32:08 -0500
+User-Agent: Mozilla Thunderbird
+Cc: yazen.ghannam@amd.com, Smita.KoralahalliChannabasappa@amd.com,
+ dave.hansen@linux.intel.com, x86@kernel.org, linux-edac@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v9 2/3] x86/mce: Add per-bank CMCI storm mitigation
+Content-Language: en-US
+To: Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>
+References: <20230929181626.210782-1-tony.luck@intel.com>
+ <20231004183623.17067-1-tony.luck@intel.com>
+ <20231004183623.17067-3-tony.luck@intel.com>
+ <20231019151211.GHZTFHS3osBIL1IJbF@fat_crate.local>
+ <ZTa37L2nlnbok8dz@agluck-desk3>
+ <20231114192324.GAZVPJLGZmfJBS181/@fat_crate.local>
+ <ZVPu/hX9b7lUkrBY@agluck-desk3>
+ <20231121115448.GCZVyaiNkNvb4t2NxB@fat_crate.local>
+ <ZWTzAujHdrJ950F3@agluck-desk3> <ZWT4pAJ6g0i78wec@agluck-desk3>
+ <ZWU3WkmUMz3Wk9wT@agluck-desk3>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
+In-Reply-To: <ZWU3WkmUMz3Wk9wT@agluck-desk3>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BN9PR03CA0440.namprd03.prod.outlook.com
+ (2603:10b6:408:113::25) To BN8PR12MB3108.namprd12.prod.outlook.com
+ (2603:10b6:408:40::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231126154359.953633996@linuxfoundation.org>
-In-Reply-To: <20231126154359.953633996@linuxfoundation.org>
-From: Allen <allen.lkml@gmail.com>
-Date: Tue, 28 Nov 2023 05:25:03 -0800
-Message-ID: <CAOMdWSKic3ZvWRsTW4Lo5WWLtS-RFNH0cKKth-WbzZw_5rZM+Q@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/366] 6.1.64-rc4 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3108:EE_|BL1PR12MB5030:EE_
+X-MS-Office365-Filtering-Correlation-Id: 81c8d6ed-a32f-48ee-5b03-08dbf027300e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	hh6c7TyXGL44uU1iVwwEQ1X1K2gmYDItTe9WCSgVEOn0qlW9wHVsLCYY/QseUUFKHB8nPFthoTl4BuB4z1ZYv4K97/hkYzFueKTrD4vWaXntfh+toy1Dr4CBaiAvrF+OLbF/g+R6MvQstyBFigCQ4UofcfHosbF7DqNeZpW7JUE/hD8fxjsxMYuF9+m7BNkL6OJv3DLfiIqYFJjd6X0e3XOpD0NqSnqjlXp8mFEYDNKgnHIOmYFXAyi4/2uSft0yc+Sv08fZIll602hZGb85WjoKtl7X6V4BeP6kWY4XvXdyTn4aN16rEaqIpalL00e6v7yUXVs25xrymQ+5Gel9aMz0AV49CR7penuL7REW07nXYKEiz1b0fxcj9j2x5Nm/MACNF5bc5xen/Wz6jqyvi1melPVU8ftHcVrp5fA8UxGtwdubBwQf+8uY5WrILoGRQcRdSvhL/beR0TBXqg+DHqlaTTv0FcdVC1orBjxCQlU0PQoQoWcNgT7/Tvn1VU1oWJwM/A18DMSFNHY8p0+BoJIFFfuct4WdaN+V0i0v8UVcrny5n25c4hkkC1kBvUcwYaubVOCxOtXQIsL0NKIVi5PsJE4euv4gEPOdJVoUO5Tqe8p9q2l6nqEf73RxbuOn3w+b4dPmpDSsRQjZ+TRzlw==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3108.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(39860400002)(396003)(376002)(136003)(346002)(230922051799003)(186009)(64100799003)(451199024)(1800799012)(2616005)(8936002)(6506007)(6512007)(66946007)(4326008)(8676002)(478600001)(44832011)(5660300002)(15650500001)(31696002)(86362001)(6486002)(110136005)(66556008)(316002)(53546011)(66476007)(38100700002)(26005)(83380400001)(31686004)(41300700001)(2906002)(4744005)(36756003)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?azJpM21SRUtCWmdIdkdZTUZUSGEvWitrbEFOODR5elFVR0t0VGMzaGc0YndW?=
+ =?utf-8?B?c2RDTWdiSDc4NG90bk5vYWtCVU01MDFpb3RxUWpMbXZJU0R5b0xWR3VRR2ti?=
+ =?utf-8?B?VGkxZDhZb05rcDVzUU5aWlNuMmNiaWtZNVFDZDVTSEpLN0o2eDg2UHZJdnVj?=
+ =?utf-8?B?R1NQbjBDWEJVSTBDT25RVGk2eWlkUmg3NWUxUVF1MXMyMnkvUnkyam9lekVO?=
+ =?utf-8?B?T01EcUZFSlpmcit4TVJybzEzenFaYlROeGtRZEg1aEdKaXl5SkRKMVNQV1h2?=
+ =?utf-8?B?R3o3NU4wOXF4QjR2TjhYdnlQKytwTWx4QzlzaUMyRjJ0TytKcFpSbXpkeDFF?=
+ =?utf-8?B?NU5JRlNRZXd1azJScGU2blVHYmhrVnpvTDZtc2JoRE9XRmZNejh1OFVsKzQ4?=
+ =?utf-8?B?TFllVFN3RXBUZVlWUGVpd1FNemZwRitzbGtyU2ZGYll2ZFgwb3p6ZjV4WjJJ?=
+ =?utf-8?B?TTRZWldTbFQwV0s5Z25YbXlodEh1ZUR1dmU5T2hwcmFrTjFWYTY4eFJPb2ti?=
+ =?utf-8?B?WkFVVnJVaU5GRnUyRDNNQ3ZsNmtmWkkwMXNuTnF5Qm9jNk9DRlR3ZWpCNnBO?=
+ =?utf-8?B?enI0WFZBQkUrUjVNMTFKdFN2OFNRTUh0TWwvRlFXTStXVUZ3TU1pYndxMnNI?=
+ =?utf-8?B?aEpVOGMwR2Izb3NzalBXTnBOQlJZQ0RzdGp4TkF4VXdvdm5zR3RYa2FIYjFF?=
+ =?utf-8?B?QUFrSkFqbDVjemgvWDlUeXhrdmZuWXBKVmkrTllXOEx6aHhPTjBIRkNucTFk?=
+ =?utf-8?B?dWhMQUtRNE02bElaYmtjeW9MZWY0dXphakRzYzVPUjEzcWtlektRZlhrYUJZ?=
+ =?utf-8?B?RGJZUnNxckp4SzdvUkJ5eVMvL3M3emovWnEvR1g5OGhGbExhbzBOYUl1R1F1?=
+ =?utf-8?B?WWtOWXBPYjRsd2tNeDBrM0JZY3R4NnljVktKVXhScENmWWRCSy9MbnBrOXNz?=
+ =?utf-8?B?dmxENmdlRFBOQlpkTHU1dFE5QTJoeE9COGE5SS9qUlhsbUZ3KysvRXZCVWNG?=
+ =?utf-8?B?eG41dS9JaVJ5N3ZZL0IzdVN5ZFJ0M09uQVFoVk9vNUNHYmRjZDhkbU9KcXl3?=
+ =?utf-8?B?dW5MZ2p1Smw1TUVMUTdBSEFYQmg1ekQ3b1FENTlhUFU0Yy9NczZDWjRBQ0Zp?=
+ =?utf-8?B?UmpnTjdaTlMrQXI1RDVLTWVCNGhaUzhBbW85NXlvSmkwS1l6U3VkcmY5OVYw?=
+ =?utf-8?B?QmloaFpjZHJtS05CTVdweG1LRC9IWEpQZVNHamRDbWhRSkgrcVh1OTAwVHVq?=
+ =?utf-8?B?ZG1hNzdUVkRjSDg3cUVja0M0b1lTdkNZRWo4YkRqWjkzZmp3QkpzTXNldzdS?=
+ =?utf-8?B?cFArcHV5UlZnTW5RZEtUV1lJRTRjTlpHTzN3S3VseC9tajBKSldjR2NvYllo?=
+ =?utf-8?B?ekNFV0EyTEFuTUhsWjJKN2IxTTAvaW1zQlppaTI4bEZSM05kY2RoZWdVNHl3?=
+ =?utf-8?B?Z2VCUmhtQjloc3dDR3E3d0RsOHUrNHRleCtDcWtRWndMRDdBNUFZOEc2ekZr?=
+ =?utf-8?B?ZFF3aDdWajZqMm1RdnhjYi94VWVpcklGNTYzQUR3TC9rRTROS2s2VFJjbmJr?=
+ =?utf-8?B?N25zTHdVNmFyRVlteVBCTlkxYkRNV1RpNUFPMnk5WUt1Lzc3azd4cEpKSEt6?=
+ =?utf-8?B?WmxIMlJKajFmMW0veDRNUHhWZWRPaEwxbE5zS3VjMTVZYXcvdTA4eThkWW03?=
+ =?utf-8?B?WngrZGtwK3RCZi9Qb3lQS3RjWDhqS09lSkZoUmdyaU5jNExVYkhsZVg3Wjdk?=
+ =?utf-8?B?cURCaGwyeTVOemRjWUxldkhBVG1pZlpiTEVrYnNuNFl5dGlJS2ZYdWk5UlA0?=
+ =?utf-8?B?WGQ4bU9ac3RSbjc0R21xemZpZWxvRGF6TisrYjNOZ05vZjgxVEpqTW1qNEtV?=
+ =?utf-8?B?OW9ZZmpWcEVNdFNlUzZYSCtYQjE2K0hMdTFreW9NZEpPcXBNa3ZQTW1KdHpq?=
+ =?utf-8?B?MGQrL29JRXNJeGFoOWN0cFBiejJwYzE2UHFsYlBwcVNYREQ3b1RRNWN0L3B1?=
+ =?utf-8?B?c2RnKzUydkN1UEtvbGVQUnZTZGhpVk1Wd294TFkyUGF1YXB2MHhVTjlMVVZM?=
+ =?utf-8?B?Z1E3ZmxZWFhmYTRvRFFTdnQ0L1FmVmloQTRvZjVlZFF2ZXpuLzk2UksvTmNB?=
+ =?utf-8?Q?+b8350ErmcvcqMbB2ys+tluYi?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 81c8d6ed-a32f-48ee-5b03-08dbf027300e
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3108.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Nov 2023 15:32:10.4776
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: F81mPL2qVXqTHusNj07gmQQjrn5MyEvfE6dmR9KhrgX5lFFknwQKHqI06C5LsHKchj8qqsukXgXGjMApgCcpWQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5030
 
-> This is the start of the stable review cycle for the 6.1.64 release.
-> There are 366 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Tue, 28 Nov 2023 15:43:06 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.64-rc4.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+On 11/27/2023 7:42 PM, Tony Luck wrote:
+> On Mon, Nov 27, 2023 at 12:14:28PM -0800, Tony Luck wrote:
+>> On Mon, Nov 27, 2023 at 11:50:26AM -0800, Tony Luck wrote:
+>>> On Tue, Nov 21, 2023 at 12:54:48PM +0100, Borislav Petkov wrote:
+>>>> On Tue, Nov 14, 2023 at 02:04:46PM -0800, Tony Luck wrote:
+>>> But it isn't doing the same thing.  The timer calls:
+>>>
+>>> 	machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
+>>>
+>>> and cmci_mc_poll_banks() calls:
+>>>
+>>> 	machine_check_poll(0, this_cpu_ptr(&mce_poll_banks));
+> 
+>          machine_check_poll(0, this_cpu_ptr(&mce_banks_owned));
+> 
+>>
+>> Bah ... I've cut & pasted the same thing ... but I think there
+>> are separate bit maps ... maybe I'm wrong. Will go back and
+>> look again.
+>>
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+This mutually exclusive behavior is not enforced on AMD systems. A bank 
+can be polled and signaled using hardware interrupts.
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+I've been thinking to change this in order to save polling cycles. Now 
+it seems there's another reason. :)
 
-Thanks.
+Thanks,
+Yazen
+
