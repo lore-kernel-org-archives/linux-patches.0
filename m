@@ -1,54 +1,54 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78236D308
-	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 06:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3587DDBF
+	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 06:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--moritzf.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="00uqWIrC"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-5d29c50d337so744417b3.3
-        for <patches@lists.linux.dev>; Tue, 28 Nov 2023 22:09:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pqm5v/z+"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-da2b8af7e89so7447190276.1
+        for <patches@lists.linux.dev>; Tue, 28 Nov 2023 22:18:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1701238147; x=1701842947; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1701238707; x=1701843507; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KtrAPaslMvSrZFznq3cpY4nyS514mOCdxUhLK1bsTtI=;
-        b=00uqWIrCQl5GmYJO3GSjIbcVF/XpjLfkNMo5oJnzPQI65r2y2G++5nNZKpRhxxNg4v
-         W/NKiy5dAFe1s5LSWjY/UsL4VRnn72H4L3R7ieQ7GuOu79UJsXpwycY3yk8vWMdVn1p0
-         /77K9Ca4YV2sM7GD5RmV7wEUg6J2dWFCbI4fNDPBBiXgE1QgIicAniMyfdyuUgoWgf8k
-         p9a5nFa1DnnaYdbVRnjzn7fk6RodYrjuZ0866YdxZLHvSM0Dw8cc3Ofyo164PzvJc/hv
-         EYcVbtbxE21pj3db4PYDJ6FnCjTTrkQY8qnpyVPkY0Mb8peZTG8E00XJt42Y2zyYnvVj
-         G8uw==
+        bh=8J4qMZXxn7dMNLyiBgKsZSJFUlenzauaBGTwqmqEkBs=;
+        b=pqm5v/z+NTP5elPNkwkc6Ym4xu9AqcFYVei2SsIXPc5z+p2U0HHH0yUNDhj+yIkw8B
+         f/MTZGh9PpGaglo8TX7ecFM17C2nPeJzoMtlKzsbhibgVp3vJSLQqORyjn+5Xk9vqANF
+         C5mKtunvSqxxTNlbmTFC3XP7dukV/+k6g9/yvFQ4cPymWj0SSMEh4lEEYjRmBWjvDLfT
+         6Al54PQuyu5uBdZZbp5c9+XBcr8W9KpyjfY6VGg/3B/+H9gcih3YYZYqWbqIe1pcuXj4
+         y9kGY2Ip9IwDBCXjrkXhuIem7X4LyR1h/UFmQv5D1pbaCsJ2ki9bEJX6dEx/NXEqUrVd
+         Ft6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701238147; x=1701842947;
+        d=1e100.net; s=20230601; t=1701238707; x=1701843507;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KtrAPaslMvSrZFznq3cpY4nyS514mOCdxUhLK1bsTtI=;
-        b=cu6M0DnOjxhK3LSLc/jVP5IISDSoc5wl/04XG6p0TXiNOcavaXJvyFYLzKTSTVqDa7
-         J/31qv0bbE6v02YBV1hazyOr8etQcv6nDKZNPUL8VUgyrbz74lBOHb0JveZq4/uMukUQ
-         I78TkWOBG3UMG7lFCxfDzoAhbj7NauXBYizUW2L5VmsaFS9/WFycYTGDp49+cOa3/DFn
-         F8yu2T4WnKqTa8n7HUqkbuQ3mHTge9yAR/qqhjdRJFnll7Ve2Y8nwHfGdN1KtUTKXs0w
-         lRONtjBNaRAJHhoGizw44n3G4yEDCi+bpwNc5GD+zT25bm7XrnucjqG0ycbGE/FIRlV2
-         497A==
-X-Gm-Message-State: AOJu0Ywh3hrjscIIraPEIKKGUo+7iI+RXnQxcCWblTI4zga85Mrve27K
-	DbNGyPUdqg49oX1gLwTCSJ9br41tjhsV
-X-Google-Smtp-Source: AGHT+IErKpR33sSuZDb458AGzbTTTl+rmkeUZNxvoUYyius6/ySrcsirHg/Fcs0NR9CFHutX0EyL3PHfE3h2
+        bh=8J4qMZXxn7dMNLyiBgKsZSJFUlenzauaBGTwqmqEkBs=;
+        b=hbFzZH71RsiElzOkAGaZss5/cuXIXm7omIZOIVzirfn2lmZt6U4NgkKhNJWqrdwm2Q
+         2xXKvEA9fYNfajLDJd/id8Fv2lgjxNbvn7geqVOFN3BBWDCsyZ/tP31Fwxj3ZacwWuKW
+         y6PSrRkV7gYvTPbk6kwNXsJRogfDladFud0q8sbaHlwtY/wcBaJL0PEqERAOGPZOuv0M
+         TibOwQoZ75KHj9x6TWyN3Q3stIur1U+cI4qIglIDqCRnPgHUHGdozapTPaoYQAGVgDzw
+         YFJflZHvkjX8IjZ+Soeq8xwwajg3hqhEm6r4+K3H8Ij20JZ9vLInTwRhfDXR4Kd74rEk
+         XwMw==
+X-Gm-Message-State: AOJu0Yx1oXtV7Koi9AXRqPBJ3p6w1BFbV8gy1xJc9tcr03igS4T4oyU8
+	fSpNTsx0WMoCQ76826eyz524LC64cXAC
+X-Google-Smtp-Source: AGHT+IFcUygGdfS95PQxvEDzLlpossLvNyVov+P9EiIyJqoPwhfNYT1rdzAgRP7ca8iJPDCSOmBZ7cELCldp
 X-Received: from morats.c.googlers.com ([fda3:e722:ac3:cc00:14:4d90:c0a8:d9e])
- (user=moritzf job=sendgmr) by 2002:a25:3741:0:b0:db5:2a4:aef1 with SMTP id
- e62-20020a253741000000b00db502a4aef1mr107973yba.13.1701238147290; Tue, 28 Nov
- 2023 22:09:07 -0800 (PST)
-Date: Wed, 29 Nov 2023 06:09:06 +0000
-In-Reply-To: <7-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+ (user=moritzf job=sendgmr) by 2002:a25:d287:0:b0:db3:8b00:22eb with SMTP id
+ j129-20020a25d287000000b00db38b0022ebmr482941ybg.6.1701238706756; Tue, 28 Nov
+ 2023 22:18:26 -0800 (PST)
+Date: Wed, 29 Nov 2023 06:18:25 +0000
+In-Reply-To: <9-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <0-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com> <7-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
-Message-ID: <20231129060906.qti7uztsk2u7ehlp@google.com>
-Subject: Re: [PATCH 07/10] acpi: Do not return struct iommu_ops from acpi_iommu_configure_id()
+References: <0-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com> <9-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+Message-ID: <20231129061825.altvhmgltws2bvhh@google.com>
+Subject: Re: [PATCH 09/10] ACPI: IORT: Cast from ULL to phys_addr_t
 From: Moritz Fischer <moritzf@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: David Airlie <airlied@gmail.com>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
@@ -79,112 +79,60 @@ Cc: David Airlie <airlied@gmail.com>, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
 	Rob Herring <robh@kernel.org>, Thierry Reding <thierry.reding@gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 
-On Tue, Nov 28, 2023 at 08:48:03PM -0400, Jason Gunthorpe wrote:
-> Nothing needs this pointer. Return a normal error code with the usual
-> IOMMU semantic that ENODEV means 'there is no IOMMU driver'.
+On Tue, Nov 28, 2023 at 08:48:05PM -0400, Jason Gunthorpe wrote:
+> gcc on i386 (when compile testing) warns:
 
-> Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-> Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
-> Tested-by: Hector Martin <marcan@marcan.st>
+This is a weird test. The Makefile for drivers/acpi/arm64 is conditional
+on CONFIG_ARM64. How does this happen?
+
+> 8->8
+obj-$(CONFIG_ARM64)		+= arm64/
+> 8->8
+
+
+>   drivers/acpi/arm64/iort.c:2014:18: warning: implicit conversion  
+> from 'unsigned long long' to 'phys_addr_t' (aka 'unsigned int') changes  
+> value from 18446744073709551615 to 4294967295 [-Wconstant-conversion]
+>                             local_limit =  
+> DMA_BIT_MASK(ncomp->memory_address_limit);
+
+> Because DMA_BIT_MASK returns a large ULL constant. Explicitly truncate it
+> to phys_addr_t.
+
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->   drivers/acpi/scan.c | 29 +++++++++++++++++------------
->   1 file changed, 17 insertions(+), 12 deletions(-)
+>   drivers/acpi/arm64/iort.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 
-> diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-> index 444a0b3c72f2d8..340ba720c72129 100644
-> --- a/drivers/acpi/scan.c
-> +++ b/drivers/acpi/scan.c
-> @@ -1562,8 +1562,7 @@ static inline const struct iommu_ops  
-> *acpi_iommu_fwspec_ops(struct device *dev)
->   	return fwspec ? fwspec->ops : NULL;
->   }
+> diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
+> index 6496ff5a6ba20d..bdaf9256870d92 100644
+> --- a/drivers/acpi/arm64/iort.c
+> +++ b/drivers/acpi/arm64/iort.c
+> @@ -2011,7 +2011,8 @@ phys_addr_t __init  
+> acpi_iort_dma_get_max_cpu_address(void)
 
-> -static const struct iommu_ops *acpi_iommu_configure_id(struct device  
-> *dev,
-> -						       const u32 *id_in)
-> +static int acpi_iommu_configure_id(struct device *dev, const u32 *id_in)
->   {
->   	int err;
->   	const struct iommu_ops *ops;
-> @@ -1577,7 +1576,7 @@ static const struct iommu_ops  
-> *acpi_iommu_configure_id(struct device *dev,
->   	ops = acpi_iommu_fwspec_ops(dev);
->   	if (ops) {
->   		mutex_unlock(&iommu_probe_device_lock);
-> -		return ops;
-> +		return 0;
->   	}
+>   		case ACPI_IORT_NODE_NAMED_COMPONENT:
+>   			ncomp = (struct acpi_iort_named_component *)node->node_data;
+> -			local_limit = DMA_BIT_MASK(ncomp->memory_address_limit);
+> +			local_limit = (phys_addr_t)DMA_BIT_MASK(
+> +				ncomp->memory_address_limit);
+>   			limit = min_not_zero(limit, local_limit);
+>   			break;
 
->   	err = iort_iommu_configure_id(dev, id_in);
-> @@ -1594,12 +1593,14 @@ static const struct iommu_ops  
-> *acpi_iommu_configure_id(struct device *dev,
+> @@ -2020,7 +2021,8 @@ phys_addr_t __init  
+> acpi_iort_dma_get_max_cpu_address(void)
+>   				break;
 
->   	/* Ignore all other errors apart from EPROBE_DEFER */
->   	if (err == -EPROBE_DEFER) {
-> -		return ERR_PTR(err);
-> +		return err;
->   	} else if (err) {
->   		dev_dbg(dev, "Adding to IOMMU failed: %d\n", err);
-> -		return NULL;
-> +		return -ENODEV;
->   	}
-> -	return acpi_iommu_fwspec_ops(dev);
-> +	if (!acpi_iommu_fwspec_ops(dev))
-> +		return -ENODEV;
-> +	return 0;
->   }
-
->   #else /* !CONFIG_IOMMU_API */
-> @@ -1611,10 +1612,9 @@ int acpi_iommu_fwspec_init(struct device *dev, u32  
-> id,
->   	return -ENODEV;
->   }
-
-> -static const struct iommu_ops *acpi_iommu_configure_id(struct device  
-> *dev,
-> -						       const u32 *id_in)
-> +static int acpi_iommu_configure_id(struct device *dev, const u32 *id_in)
->   {
-> -	return NULL;
-> +	return -ENODEV;
->   }
-
->   #endif /* !CONFIG_IOMMU_API */
-> @@ -1628,7 +1628,7 @@ static const struct iommu_ops  
-> *acpi_iommu_configure_id(struct device *dev,
->   int acpi_dma_configure_id(struct device *dev, enum dev_dma_attr attr,
->   			  const u32 *input_id)
->   {
-> -	const struct iommu_ops *iommu;
-> +	int ret;
-
->   	if (attr == DEV_DMA_NOT_SUPPORTED) {
->   		set_dma_ops(dev, &dma_dummy_ops);
-> @@ -1637,10 +1637,15 @@ int acpi_dma_configure_id(struct device *dev,  
-> enum dev_dma_attr attr,
-
->   	acpi_arch_dma_setup(dev);
-
-> -	iommu = acpi_iommu_configure_id(dev, input_id);
-> -	if (PTR_ERR(iommu) == -EPROBE_DEFER)
-> +	ret = acpi_iommu_configure_id(dev, input_id);
-> +	if (ret == -EPROBE_DEFER)
->   		return -EPROBE_DEFER;
-
-> +	/*
-> +	 * Historically this routine doesn't fail driver probing due to errors
-> +	 * in acpi_iommu_configure_id()
-> +	 */
-> +
->   	arch_setup_dma_ops(dev, 0, U64_MAX, attr == DEV_DMA_COHERENT);
-
->   	return 0;
+>   			rc = (struct acpi_iort_root_complex *)node->node_data;
+> -			local_limit = DMA_BIT_MASK(rc->memory_address_limit);
+> +			local_limit = (phys_addr_t)DMA_BIT_MASK(
+> +				rc->memory_address_limit);
+>   			limit = min_not_zero(limit, local_limit);
+>   			break;
+>   		}
 > --
 > 2.42.0
 
-
-Reviewed-by: Moritz Fischer <moritzf@google.com>
 
 Cheers,
 Moritz
