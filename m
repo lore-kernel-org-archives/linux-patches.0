@@ -1,54 +1,54 @@
 Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5B279FC
-	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 06:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F6A7F
+	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 06:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--moritzf.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="g/WXNnI5"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-5cd2100f467so84302767b3.1
-        for <patches@lists.linux.dev>; Tue, 28 Nov 2023 22:05:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="b8cNswe6"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-5ce16bc121aso68692527b3.1
+        for <patches@lists.linux.dev>; Tue, 28 Nov 2023 22:06:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1701237903; x=1701842703; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1701237965; x=1701842765; darn=lists.linux.dev;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WO7CXB1mNGxZSEafQP2SArLxdW3co4lj0A5pbLIXeXc=;
-        b=g/WXNnI5m0ozgPadS0lsfb0KW1aXqDaVgNW85UOUZrSnH+T5luPnjYds4vEAMsHA/9
-         TAXkCNgGdgokG3AQWsuu1bku6ht9L4kueVHPk8ut26vs7MpIpdyn975Q096Vu7h6GUlY
-         i7HfDgZB9StO8AALtYEV8wqNwqKtBMngXyGD8Tnnio6uBlyqKAtaEK0EocscDoC6quaP
-         hzZ7I/2c8GKcre54YAdxBalmiFH/G5KG7y5K/emH1x9Rg1hGrM6qKWIklZ7P2fq16Qg0
-         9HpK7lq7cYngwPm04CuG2sK4D4Hud7tI0YUn1P9nl/CxTIJpQon5lctvw3P4JWcodVca
-         ug1g==
+        bh=BFBgGZHgdrEFpnu/cpKOcJzser1reIBdXzg/6fniV64=;
+        b=b8cNswe6D8J/WSUbZ1kgPadgwzVJgU9Jon5LbHO+qPSnLwSxy5p05kBOCblPxJteSf
+         22B3PgegSycl0BY7+ZqugMQfs0mrJsI02FqY206Oniy2LNviTP+UrCVrrYsS2KyZh+af
+         LWl6FMeWlm6t589ag0KD4FDfJmR2gP114o1P4iRywnyIK/joaQ+4HWkiBWXu5iNtb7tY
+         z3+lLirAUSQfQk/3OLddGwFmASiUcgdKstEM49y696DHYFVxOtRTivU4JT/8ujeWpdEO
+         nl3GKKFXw18OrA1cQepGrJ/jBtnPbwavzc7JbhJ9GbF5tVed0vxzxzFl+qDgWN2pMIfA
+         c3FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701237903; x=1701842703;
+        d=1e100.net; s=20230601; t=1701237965; x=1701842765;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WO7CXB1mNGxZSEafQP2SArLxdW3co4lj0A5pbLIXeXc=;
-        b=Q5+S/mVA+zd6voEkgUgSAoDjL3SCLodjw0EXgZopitgwvzWnENLELy7F8Vf+UoQUwq
-         Ec2lxav307deGNIAEqlPuo83cTtamPyk7EpljO9/zZL1a4yME5byiHBpJTVvxTbDSIwr
-         HaJ3ezz1l442MUm88NloFKJtSdjJD0rk3DdCLg2TNgMLO+q5NxmySfvJ9gaEYEmfI0tG
-         eUtLS8iC4/d0Ar54yvnaC0qdO2I9saALk8/cVXgFaCh2c6/5f8dVaCXR1m/jmJw4u1xF
-         TfVYUl5ohVwnElPyZIlw22u98x+f11T129KCESq9NnAB3w50aJX8PmYbfMfUgUibYQjk
-         82xg==
-X-Gm-Message-State: AOJu0YzHFDriIpxfO1qj0cs3Y7SpM7Pyqrs0IVHZ3UK37c+F7qvFnooB
-	pVKNeUb4GxzMQtJxD+DY7Iw/xui/2DrY
-X-Google-Smtp-Source: AGHT+IHL7hgboFJ1jDI8fHK0ttAzMEfTsQjA7vmjwBnF03SxrfXdHuhYyFsTgeIfr3cTonrW5FaGXfJVhISd
+        bh=BFBgGZHgdrEFpnu/cpKOcJzser1reIBdXzg/6fniV64=;
+        b=pbWLIou006um64/UMRpEhjbitAhdHLMYQSSqr+UIjX/DMyf+m22sbSTLXDtH0MLArp
+         0TUM3CWvxnQhWGrW4lKWQWC9BgKkdjrdxlhVrP3IOEgwNUixGcppMsxgrf+azd4NUSWe
+         NzYVS271QcTH92ajV3I651dITH4S7+vXzcEB6upzlNTKeXEe4cw/1D54MFSuxKhv6vhS
+         XG4oBM87vuZkuSObcsdNLlGGcXFt0+mt5yX/h3vrMeh0SlHUtMCR+fGvA8elkqtPxf/7
+         dnnE8UV35Wlfiby8n3olffQxkHWn3qri4S46fdV4sbONaIaSaJU6jsiBg0WsCEGExOEq
+         9wFw==
+X-Gm-Message-State: AOJu0YyylzDqhCszV/9Y5LA0W83rqRRR9W3mIRAkSbjl04MEjZHOxVOl
+	/7LyiR5m7NwdaeICoIHa/tix+xWecDuk
+X-Google-Smtp-Source: AGHT+IG4ZcbE3hB8V6+vKX0zxYUr0OpHfbf/WNlvcGBdlOoo8eTYBCxtpp+7m/8KdVPZTHDTWhORx94znMfW
 X-Received: from morats.c.googlers.com ([fda3:e722:ac3:cc00:14:4d90:c0a8:d9e])
- (user=moritzf job=sendgmr) by 2002:a05:690c:903:b0:59b:eb63:4beb with SMTP id
- cb3-20020a05690c090300b0059beb634bebmr584543ywb.7.1701237903050; Tue, 28 Nov
- 2023 22:05:03 -0800 (PST)
-Date: Wed, 29 Nov 2023 06:04:59 +0000
-In-Reply-To: <3-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+ (user=moritzf job=sendgmr) by 2002:a25:c044:0:b0:db5:1f69:704e with SMTP id
+ c65-20020a25c044000000b00db51f69704emr38263ybf.1.1701237964651; Tue, 28 Nov
+ 2023 22:06:04 -0800 (PST)
+Date: Wed, 29 Nov 2023 06:06:03 +0000
+In-Reply-To: <4-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <0-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com> <3-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
-Message-ID: <20231129060459.gcunam3msksainng@google.com>
-Subject: Re: [PATCH 03/10] iommu/of: Use -ENODEV consistently in of_iommu_configure()
+References: <0-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com> <4-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+Message-ID: <20231129060603.hxtmbsefxurxnwkh@google.com>
+Subject: Re: [PATCH 04/10] iommu: Mark dev_iommu_get() with lockdep
 From: Moritz Fischer <moritzf@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: David Airlie <airlied@gmail.com>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
@@ -79,128 +79,37 @@ Cc: David Airlie <airlied@gmail.com>, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
 	Rob Herring <robh@kernel.org>, Thierry Reding <thierry.reding@gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 
-On Tue, Nov 28, 2023 at 08:47:59PM -0400, Jason Gunthorpe wrote:
-> Instead of returning 1 and trying to handle positive error codes just
-> stick to the convention of returning -ENODEV. Remove references to ops
-> from of_iommu_configure(), a NULL ops will already generate an error code.
-
-> There is no reason to check dev->bus, if err=0 at this point then the
-> called configure functions thought there was an iommu and we should try to
-> probe it. Remove it.
+On Tue, Nov 28, 2023 at 08:48:00PM -0400, Jason Gunthorpe wrote:
+> Allocation of dev->iommu must be done under the
+> iommu_probe_device_lock. Mark this with lockdep to discourage future
+> mistakes.
 
 > Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
 > Tested-by: Hector Martin <marcan@marcan.st>
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->   drivers/iommu/of_iommu.c | 49 ++++++++++++----------------------------
->   1 file changed, 15 insertions(+), 34 deletions(-)
+>   drivers/iommu/iommu.c | 2 ++
+>   1 file changed, 2 insertions(+)
 
-> diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
-> index c6510d7e7b241b..164317bfb8a81f 100644
-> --- a/drivers/iommu/of_iommu.c
-> +++ b/drivers/iommu/of_iommu.c
-> @@ -17,8 +17,6 @@
->   #include <linux/slab.h>
->   #include <linux/fsl/mc.h>
-
-> -#define NO_IOMMU	1
-> -
->   static int of_iommu_xlate(struct device *dev,
->   			  struct of_phandle_args *iommu_spec)
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 0d25468d53a68a..4323b6276e977f 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -334,6 +334,8 @@ static struct dev_iommu *dev_iommu_get(struct device  
+> *dev)
 >   {
-> @@ -29,7 +27,7 @@ static int of_iommu_xlate(struct device *dev,
->   	ops = iommu_ops_from_fwnode(fwnode);
->   	if ((ops && !ops->of_xlate) ||
->   	    !of_device_is_available(iommu_spec->np))
-> -		return NO_IOMMU;
-> +		return -ENODEV;
+>   	struct dev_iommu *param = dev->iommu;
 
->   	ret = iommu_fwspec_init(dev, &iommu_spec->np->fwnode, ops);
->   	if (ret)
-> @@ -61,7 +59,7 @@ static int of_iommu_configure_dev_id(struct device_node  
-> *master_np,
->   			 "iommu-map-mask", &iommu_spec.np,
->   			 iommu_spec.args);
->   	if (err)
-> -		return err == -ENODEV ? NO_IOMMU : err;
-> +		return err;
-
->   	err = of_iommu_xlate(dev, &iommu_spec);
->   	of_node_put(iommu_spec.np);
-> @@ -72,7 +70,7 @@ static int of_iommu_configure_dev(struct device_node  
-> *master_np,
->   				  struct device *dev)
->   {
->   	struct of_phandle_args iommu_spec;
-> -	int err = NO_IOMMU, idx = 0;
-> +	int err = -ENODEV, idx = 0;
-
->   	while (!of_parse_phandle_with_args(master_np, "iommus",
->   					   "#iommu-cells",
-> @@ -117,9 +115,8 @@ static int of_iommu_configure_device(struct  
-> device_node *master_np,
->   int of_iommu_configure(struct device *dev, struct device_node *master_np,
->   		       const u32 *id)
->   {
-> -	const struct iommu_ops *ops = NULL;
->   	struct iommu_fwspec *fwspec;
-> -	int err = NO_IOMMU;
-> +	int err;
-
->   	if (!master_np)
->   		return -ENODEV;
-> @@ -153,37 +150,21 @@ int of_iommu_configure(struct device *dev, struct  
-> device_node *master_np,
->   	} else {
->   		err = of_iommu_configure_device(master_np, dev, id);
->   	}
-> -
-> -	/*
-> -	 * Two success conditions can be represented by non-negative err here:
-> -	 * >0 : there is no IOMMU, or one was unavailable for non-fatal reasons
-> -	 *  0 : we found an IOMMU, and dev->fwspec is initialised appropriately
-> -	 * <0 : any actual error
-> -	 */
-> -	if (!err) {
-> -		/* The fwspec pointer changed, read it again */
-> -		fwspec = dev_iommu_fwspec_get(dev);
-> -		ops    = fwspec->ops;
-> -	}
->   	mutex_unlock(&iommu_probe_device_lock);
-
-> -	/*
-> -	 * If we have reason to believe the IOMMU driver missed the initial
-> -	 * probe for dev, replay it to get things in order.
-> -	 */
-> -	if (!err && dev->bus)
-> -		err = iommu_probe_device(dev);
-> -
-> -	/* Ignore all other errors apart from EPROBE_DEFER */
-> -	if (err < 0) {
-> -		if (err == -EPROBE_DEFER)
-> -			return err;
-> -		dev_dbg(dev, "Adding to IOMMU failed: %pe\n", ERR_PTR(err));
-> +	if (err == -ENODEV || err == -EPROBE_DEFER)
->   		return err;
-> -	}
-> -	if (!ops)
-> -		return -ENODEV;
-> +	if (err)
-> +		goto err_log;
+> +	lockdep_assert_held(&iommu_probe_device_lock);
 > +
-> +	err = iommu_probe_device(dev);
-> +	if (err)
-> +		goto err_log;
->   	return 0;
-> +
-> +err_log:
-> +	dev_dbg(dev, "Adding to IOMMU failed: %pe\n", ERR_PTR(err));
-> +	return err;
->   }
+>   	if (param)
+>   		return param;
 
->   static enum iommu_resv_type __maybe_unused
 > --
 > 2.42.0
 
 
 Reviewed-by: Moritz Fischer <moritzf@google.com>
+
+Cheers,
+Moritz
