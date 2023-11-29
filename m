@@ -1,108 +1,168 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1893E1B296;
-	Wed, 29 Nov 2023 17:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KeBk4Xyg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDB2C433C7;
-	Wed, 29 Nov 2023 17:45:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701279937;
-	bh=KIKFPp9BUhkaU/2v9P9pMinmYm10lPKZw6CRfN0EZXc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KeBk4XygSV3H0Is1ff9twMb+Vvnsb+6+M0b40/ajSzkslItd2N+/xFslXdoPIxyPt
-	 7Hb2LdvV+cUc+utmT8UXA+hFN97KoFCgk5tZvcsbKxbw4f3Ybmd9Fh5857EGaBghHW
-	 G4T/giZZD88DarE3ZLYNYr3IuZB6XQDObaTajLo9qVz9LwZ88Qcl0b3Pf0+YwW787Q
-	 qXz67vU/Bfl9lhgbrgnCE0tpKC3+6jrUns53wktIfF0SYRQVkbusQdzqAYjwJap2jH
-	 2SUnH7BPId3PoDLHiVajSo0tsKYMlNyQoSNIj6zwfkk5bCXQl27axRVNYytWYSlUuZ
-	 tbw2WyRqN6QHg==
-Date: Wed, 29 Nov 2023 12:45:35 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: Pavel Machek <pavel@denx.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	LKML <linux-kernel@vger.kernel.org>, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, alexander.deucher@amd.com,
-	mario.limonciello@amd.com, zhujun2@cmss.chinamobile.com,
-	skhan@linuxfoundation.org, bhelgaas@google.com
-Subject: Re: [PATCH 4.14 00/53] 4.14.331-rc2 review
-Message-ID: <ZWd4v-7Qnc2gde5L@sashalap>
-References: <20231125163059.878143365@linuxfoundation.org>
- <ZWUBaYipygLMkfjz@duo.ucw.cz>
- <f4a7634-3d34-af29-36ca-6f3439b4ce9@linux.intel.com>
- <ZWZQCJtD7kmX9iRO@duo.ucw.cz>
- <2023112818-browse-floss-eb6f@gregkh>
- <ZWZSKgxjSRcA/qUK@duo.ucw.cz>
- <2023112844-sesame-overdrawn-5853@gregkh>
- <ZWb9vGuZck1sGBIN@duo.ucw.cz>
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B42D58AD1;
+	Wed, 29 Nov 2023 17:58:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 176F1143D;
+	Wed, 29 Nov 2023 09:59:05 -0800 (PST)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1ABB43F5A1;
+	Wed, 29 Nov 2023 09:58:10 -0800 (PST)
+Message-ID: <788519ac-9ad7-459c-a57d-bfe1ec96db3e@arm.com>
+Date: Wed, 29 Nov 2023 17:58:08 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZWb9vGuZck1sGBIN@duo.ucw.cz>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/10] iommu: Replace iommu_device_lock with
+ iommu_probe_device_lock
+Content-Language: en-GB
+To: Jason Gunthorpe <jgg@nvidia.com>, David Airlie <airlied@gmail.com>,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
+ asahi@lists.linux.dev, Catalin Marinas <catalin.marinas@arm.com>,
+ Danilo Krummrich <dakr@redhat.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Dexuan Cui <decui@microsoft.com>, devicetree@vger.kernel.org,
+ dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ David Woodhouse <dwmw2@infradead.org>, Frank Rowand
+ <frowand.list@gmail.com>, Hanjun Guo <guohanjun@huawei.com>,
+ Haiyang Zhang <haiyangz@microsoft.com>, iommu@lists.linux.dev,
+ Jon Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+ Karol Herbst <kherbst@redhat.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ "K. Y. Srinivasan" <kys@microsoft.com>,
+ Laxman Dewangan <ldewangan@nvidia.com>, Len Brown <lenb@kernel.org>,
+ linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-hyperv@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-riscv@lists.infradead.org, linux-snps-arc@lists.infradead.org,
+ linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, Lyude Paul <lyude@redhat.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, nouveau@lists.freedesktop.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley
+ <paul.walmsley@sifive.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Sven Peter <sven@svenpeter.dev>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Vineet Gupta <vgupta@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>, Christoph Hellwig <hch@lst.de>,
+ Jerry Snitselaar <jsnitsel@redhat.com>, Hector Martin <marcan@marcan.st>,
+ Moritz Fischer <mdf@kernel.org>, patches@lists.linux.dev,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Rob Herring <robh@kernel.org>, Thierry Reding <thierry.reding@gmail.com>
+References: <6-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <6-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 29, 2023 at 10:00:44AM +0100, Pavel Machek wrote:
->On Tue 2023-11-28 21:10:03, Greg Kroah-Hartman wrote:
->> On Tue, Nov 28, 2023 at 09:48:42PM +0100, Pavel Machek wrote:
->> > Hi!
->> >
->> > > > > > > Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
->> > > > > > >     RDMA/hfi1: Use FIELD_GET() to extract Link Width
->> > > > > >
->> > > > > > This is a good cleanup, but not a bugfix.
->> > > > > >
->> > > > > > > Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
->> > > > > > >     atm: iphase: Do PCI error checks on own line
->> > > > > >
->> > > > > > Just a cleanup, not sure why it was picked for stable.
->> > > > >
->> > > > > Just an additional bit of information, there have been quite many cleanups
->> > > > > from me which have recently gotten the stable notification for some
->> > > > > mysterious reason. When I had tens of them in my inbox and for various
->> > > > > kernel versions, I immediately stopped caring to stop it from happening.
->> > > > >
->> > > > > AFAIK, I've not marked those for stable inclusion so I've no idea what
->> > > > > got them included.
->> > > >
->> > > > Fixes tag can do it. Plus, "AUTOSEL" robot does it randomly, with no
->> > > > human oversight :-(.
->> > >
->> > > the autosel bot has lots of oversight.
->> >
->> > Can you describe how that oversight works?
->>
->> There have been many papers and presentations about it, no need for me
->> to say it all here again...
->
->Give a pointer.
->
->And explain why AUTOSEL is full of cleanups, as noticed by Ilpo, me
->and others. AFAICT Sasha does not hand-check patches picked by
->AUTOSEL, simply spams the mailing lists, and hopes that maintainers
->will react. And they won't, because they don't understand the
+On 29/11/2023 12:48 am, Jason Gunthorpe wrote:
+> The iommu_device_lock protects the iommu_device_list which is only read by
+> iommu_ops_from_fwnode().
+> 
+> This is now always called under the iommu_probe_device_lock, so we don't
+> need to double lock the linked list. Use the iommu_probe_device_lock on
+> the write side too.
 
-Awesome feedback, thanks.
+Please no, iommu_probe_device_lock() is a hack and we need to remove the 
+*reason* it exists at all. And IMO just because iommu_present() is 
+deprecated doesn't justify making it look utterly nonsensical - in no 
+way does that have any relationship with probe_device, much less need to 
+serialise against it!
 
->implications, and simply ignore the spam. Or they will, and Sasha
->simply ignores the reply.
-
-Incorrect, I just gotten tired of litigating this with *you*.
-
-How about this: instead of complaining about work you get for free, try
-doing it yourself and send us a list of patches that should go into the
--stable tree during the next merge window. Deal?
-
--- 
 Thanks,
-Sasha
+Robin.
+
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/iommu/iommu.c | 30 +++++++++++++-----------------
+>   1 file changed, 13 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+> index 08f29a1dfcd5f8..9557c2ec08d915 100644
+> --- a/drivers/iommu/iommu.c
+> +++ b/drivers/iommu/iommu.c
+> @@ -146,7 +146,6 @@ struct iommu_group_attribute iommu_group_attr_##_name =		\
+>   	container_of(_kobj, struct iommu_group, kobj)
+>   
+>   static LIST_HEAD(iommu_device_list);
+> -static DEFINE_SPINLOCK(iommu_device_lock);
+>   
+>   static const struct bus_type * const iommu_buses[] = {
+>   	&platform_bus_type,
+> @@ -262,9 +261,9 @@ int iommu_device_register(struct iommu_device *iommu,
+>   	if (hwdev)
+>   		iommu->fwnode = dev_fwnode(hwdev);
+>   
+> -	spin_lock(&iommu_device_lock);
+> +	mutex_lock(&iommu_probe_device_lock);
+>   	list_add_tail(&iommu->list, &iommu_device_list);
+> -	spin_unlock(&iommu_device_lock);
+> +	mutex_unlock(&iommu_probe_device_lock);
+>   
+>   	for (int i = 0; i < ARRAY_SIZE(iommu_buses) && !err; i++)
+>   		err = bus_iommu_probe(iommu_buses[i]);
+> @@ -279,9 +278,9 @@ void iommu_device_unregister(struct iommu_device *iommu)
+>   	for (int i = 0; i < ARRAY_SIZE(iommu_buses); i++)
+>   		bus_for_each_dev(iommu_buses[i], NULL, iommu, remove_iommu_group);
+>   
+> -	spin_lock(&iommu_device_lock);
+> +	mutex_lock(&iommu_probe_device_lock);
+>   	list_del(&iommu->list);
+> -	spin_unlock(&iommu_device_lock);
+> +	mutex_unlock(&iommu_probe_device_lock);
+>   
+>   	/* Pairs with the alloc in generic_single_device_group() */
+>   	iommu_group_put(iommu->singleton_group);
+> @@ -316,9 +315,9 @@ int iommu_device_register_bus(struct iommu_device *iommu,
+>   	if (err)
+>   		return err;
+>   
+> -	spin_lock(&iommu_device_lock);
+> +	mutex_lock(&iommu_probe_device_lock);
+>   	list_add_tail(&iommu->list, &iommu_device_list);
+> -	spin_unlock(&iommu_device_lock);
+> +	mutex_unlock(&iommu_probe_device_lock);
+>   
+>   	err = bus_iommu_probe(bus);
+>   	if (err) {
+> @@ -2033,9 +2032,9 @@ bool iommu_present(const struct bus_type *bus)
+>   
+>   	for (int i = 0; i < ARRAY_SIZE(iommu_buses); i++) {
+>   		if (iommu_buses[i] == bus) {
+> -			spin_lock(&iommu_device_lock);
+> +			mutex_lock(&iommu_probe_device_lock);
+>   			ret = !list_empty(&iommu_device_list);
+> -			spin_unlock(&iommu_device_lock);
+> +			mutex_unlock(&iommu_probe_device_lock);
+>   		}
+>   	}
+>   	return ret;
+> @@ -2980,17 +2979,14 @@ EXPORT_SYMBOL_GPL(iommu_default_passthrough);
+>   
+>   const struct iommu_ops *iommu_ops_from_fwnode(struct fwnode_handle *fwnode)
+>   {
+> -	const struct iommu_ops *ops = NULL;
+>   	struct iommu_device *iommu;
+>   
+> -	spin_lock(&iommu_device_lock);
+> +	lockdep_assert_held(&iommu_probe_device_lock);
+> +
+>   	list_for_each_entry(iommu, &iommu_device_list, list)
+> -		if (iommu->fwnode == fwnode) {
+> -			ops = iommu->ops;
+> -			break;
+> -		}
+> -	spin_unlock(&iommu_device_lock);
+> -	return ops;
+> +		if (iommu->fwnode == fwnode)
+> +			return iommu->ops;
+> +	return NULL;
+>   }
+>   
+>   int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode,
