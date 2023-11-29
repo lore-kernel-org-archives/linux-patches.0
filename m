@@ -1,186 +1,106 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779192B9CA
-	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 21:44:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CC24CB3A;
+	Wed, 29 Nov 2023 22:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lTAd3QVv"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1cff3a03d8eso2501645ad.2
-        for <patches@lists.linux.dev>; Wed, 29 Nov 2023 13:44:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1701294256; x=1701899056; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oaAuMlegGKyvqGQjlfSP0WNWjaMX9AyKOGu0wZi1ey8=;
-        b=lTAd3QVvXAsqpGRk5cVy8tmdCGhFJypXSTVlzvXrLEEaVEZVKc7UmHJSGfp4J1tdDC
-         LQV3JABaUTOhNaENtChCfx1ocEVJR8B5k3DYp1NLMC7EjDD/PtASsxcx9PXBkbl0tLXn
-         W932nmNU37luwlvlffunfSHRBP+Hb3OO7pYfE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701294256; x=1701899056;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oaAuMlegGKyvqGQjlfSP0WNWjaMX9AyKOGu0wZi1ey8=;
-        b=AfRrbuzHOHjJ5Hm0t5yD9V5FBBhnC5ZVd6kOsZ9hclbN8vKPU/kyg9mxGRCZEmSW9x
-         2WZWDcUIxTUibZrcfIl5bp3GldkMlsdyDgKss0euFeCs6uTulICAdtC+E/iYg4+OVxfD
-         EdTUlXzRsfY4vl7fHuEMCtcNUxmSvJGPyiHeUUXkOLIRrHau86hAC/yZ8y+OesSM2/0U
-         dMbqo9L5Etyd71dsfvr6QNj/4qGytQjhDyXI8N/R6JekETp0rdE55nbXFpKzcUgl3cbO
-         9CYUqacQH8P3wkBDCJyxqqYEhJdzs5jDpOwThuKnpnstB3RmsmNQ3LHbT70nUq2ojnwN
-         /zOg==
-X-Gm-Message-State: AOJu0YwdD6VBj//0pyvlkaNo3yMBz+mNGlL1fxjnmt8p/cGRs8XLfvY2
-	5/07rZ3Tc98S6D4NCCYQUMPclg==
-X-Google-Smtp-Source: AGHT+IGw9mcglXCfEIiIcMH/2PCnFrfP/7r764D4go315sp7mNqaJGFq+jVTw5facnm9yzjHe+0sZA==
-X-Received: by 2002:a17:903:249:b0:1ce:64fb:e507 with SMTP id j9-20020a170903024900b001ce64fbe507mr23901888plh.27.1701294255812;
-        Wed, 29 Nov 2023 13:44:15 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:11a:201:d538:51cb:f23a:b78c])
-        by smtp.gmail.com with ESMTPSA id n10-20020a170902d2ca00b001cfcbeceacesm6793162plc.117.2023.11.29.13.44.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 13:44:15 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Kees Cook <keescook@chromium.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Alexander Potapenko <glider@google.com>,
-	Marco Elver <elver@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	kasan-dev@googlegroups.com
-Subject: [PATCH v2] lkdtm: Add kfence read after free crash type
-Date: Wed, 29 Nov 2023 13:44:04 -0800
-Message-ID: <20231129214413.3156334-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.43.0.rc1.413.gea7ed67945-goog
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FJ0ns3++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD26C433C8;
+	Wed, 29 Nov 2023 22:17:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701296277;
+	bh=74LhTABn8Ubk9ieFOEy4R2tqnyjhM65THl7KF6XezcQ=;
+	h=From:Subject:Date:To:Cc:From;
+	b=FJ0ns3++bDvTJv2QiKG6+uBAGDj1tXwgdo3WbTd4SdVxCjJi7UVchGzodADzaa7zL
+	 LUu6tWED79+8CBYqJ5UD7q0HanJKxzxY8HMVO9l+ik19WiPEiDtf5OBsJV3wLfZlxD
+	 16ers0Gu6hariCkPLzBbsV1TCkhYADvrRZwF59ymqqDMNU97v1Rwm34qbGfxYxLZ/a
+	 kuhquA0M97bLojh/onnhvWUP95sqZMy/J9PbBio/B2j2g+shje0G7SsDLiP1Ky5K9y
+	 Ol93UO8LzebkG8Y7akzg84Esa1dsfnX6W7Z51VPsiWx8MkilGZTQ9WDMMVuZjlF/Ok
+	 EsETNx2TdLMZw==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH v3 0/3] x86: Support llvm-objdump in instruction decoder
+ selftest
+Date: Wed, 29 Nov 2023 15:17:40 -0700
+Message-Id: <20231129-objdump-reformat-llvm-v3-0-0d855e79314d@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIS4Z2UC/zXMQQ6CMBCF4auYWTukLYjgynsYFwUGqOlQMgViJ
+ NzdxsTln5f37RBJHEW4nXYQ2lx0YUqRn0/QjnYaCF2XGowyudamxtC8upVnFOqDsF3Q+43RdFf
+ d1H2hbGsgfec0u/fPfTxT9xIYl1HI/jWjE6dqVegqM1VRXkrUGC2v5D+0kNwHts5nbWA4ji8mU
+ LRXpwAAAA==
+To: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
+ dave.hansen@linux.intel.com
+Cc: x86@kernel.org, ndesaulniers@google.com, keescook@chromium.org, 
+ samuelzeter@gmail.com, mhiramat@kernel.org, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2017; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=74LhTABn8Ubk9ieFOEy4R2tqnyjhM65THl7KF6XezcQ=;
+ b=kA0DAAoWHWsmkXHAGpYByyZiAGVnuJOiilSy2BoDFgBjpMRKBBqEOrK2JR4ehGkacCdsQefA5
+ 4h1BAAWCgAdFiEEe+MlxzExnM0B2MqSHWsmkXHAGpYFAmVnuJMACgkQHWsmkXHAGpY5KgEA+tGu
+ d7E0XT4d9u36JifpCqz/Z+T+oT12r4IJf1pZ4gAA/0V71W427HPPA9xFQ30j4g8lyxtM8KmvfNr
+ ETl+co/cI
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Add the ability to allocate memory from kfence and trigger a read after
-free on that memory to validate that kfence is working properly. This is
-used by ChromeOS integration tests to validate that kfence errors can be
-collected on user devices and parsed properly.
+I have taken up this series from Sam to try and drive this forward.
 
-Cc: Alexander Potapenko <glider@google.com>
-Acked-by: Marco Elver <elver@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: <kasan-dev@googlegroups.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Currently, the instruction decoder selftest does not work with
+llvm-objdump because chkobjdump.awk is GNU binutils specific.
+chkobjdump.awk can be eliminated altogether because the minimum
+supported version of GNU binutils has been bumped to 2.25.
+
+However, with chkobjdump.awk removed, the selftest does not actually
+work properly with llvm-objdump:
+
+  $ make -skj"$(nproc)" LLVM=1 defconfig
+  $ scripts/config -e X86_DECODER_SELFTEST
+  $ make -skj"$(nproc)" LLVM=1 olddefconfig bzImage
+  ...
+  arch/x86/tools/insn_decoder_test: warning: objdump says 0 bytes, but insn_get_length() says 2
+  ...
+
+Upon inspection it turned out llvm-objdump was formatting its output
+differently, which caused objdump_reformat.awk to incorrectly output its
+values.
+
+After fixing that bug, a second one was seen where the instruction
+"wait" was incorrectly matched with "fwait", which again caused
+insn_decoder_test to fail.
+
+Changes in v3:
+- Further commit message and cover letter formatting and improvements.
+- Add patch 3, which is the ultimate catalyst for the first two changes
+- Link to v2: https://lore.kernel.org/r/20221112090418.284656-1-samuelzeter@gmail.com/
+
+Changes in v2:
+- Coding style commit message amendments
+- Link to v1: https://lore.kernel.org/r/20220106023606.283953-1-samuelzeter@gmail.com/
+
 ---
+Nathan Chancellor (1):
+      x86/tools: Remove chkobjdump.awk
 
-Changes from v1 (https://lore.kernel.org/r/20231127234946.2514120-1-swboyd@chromium.org):
- * Removed ifdefs so code is always available but fails without kfence
+Samuel Zeter (2):
+      x86/tools: objdump_reformat.awk: Ensure regex matches fwait
+      x86/tools: objdump_reformat.awk: Allow for spaces
 
- drivers/misc/lkdtm/heap.c | 60 +++++++++++++++++++++++++++++++++++++++
- include/linux/kfence.h    |  2 ++
- 2 files changed, 62 insertions(+)
+ arch/x86/tools/Makefile             |  2 +-
+ arch/x86/tools/chkobjdump.awk       | 34 ----------------------------------
+ arch/x86/tools/objdump_reformat.awk |  4 ++--
+ 3 files changed, 3 insertions(+), 37 deletions(-)
+---
+base-commit: 2cc14f52aeb78ce3f29677c2de1f06c0e91471ab
+change-id: 20231129-objdump-reformat-llvm-2d71b9f40ac2
 
-diff --git a/drivers/misc/lkdtm/heap.c b/drivers/misc/lkdtm/heap.c
-index 0ce4cbf6abda..4f467d3972a6 100644
---- a/drivers/misc/lkdtm/heap.c
-+++ b/drivers/misc/lkdtm/heap.c
-@@ -4,6 +4,7 @@
-  * page allocation and slab allocations.
-  */
- #include "lkdtm.h"
-+#include <linux/kfence.h>
- #include <linux/slab.h>
- #include <linux/vmalloc.h>
- #include <linux/sched.h>
-@@ -132,6 +133,64 @@ static void lkdtm_READ_AFTER_FREE(void)
- 	kfree(val);
- }
- 
-+static void lkdtm_KFENCE_READ_AFTER_FREE(void)
-+{
-+	int *base, val, saw;
-+	unsigned long timeout, resched_after;
-+	size_t len = 1024;
-+	/*
-+	 * The slub allocator will use the either the first word or
-+	 * the middle of the allocation to store the free pointer,
-+	 * depending on configurations. Store in the second word to
-+	 * avoid running into the freelist.
-+	 */
-+	size_t offset = sizeof(*base);
-+
-+	/*
-+	 * 100x the sample interval should be more than enough to ensure we get
-+	 * a KFENCE allocation eventually.
-+	 */
-+	timeout = jiffies + msecs_to_jiffies(100 * kfence_sample_interval);
-+	/*
-+	 * Especially for non-preemption kernels, ensure the allocation-gate
-+	 * timer can catch up: after @resched_after, every failed allocation
-+	 * attempt yields, to ensure the allocation-gate timer is scheduled.
-+	 */
-+	resched_after = jiffies + msecs_to_jiffies(kfence_sample_interval);
-+	do {
-+		base = kmalloc(len, GFP_KERNEL);
-+		if (!base) {
-+			pr_err("FAIL: Unable to allocate kfence memory!\n");
-+			return;
-+		}
-+
-+		if (is_kfence_address(base)) {
-+			val = 0x12345678;
-+			base[offset] = val;
-+			pr_info("Value in memory before free: %x\n", base[offset]);
-+
-+			kfree(base);
-+
-+			pr_info("Attempting bad read from freed memory\n");
-+			saw = base[offset];
-+			if (saw != val) {
-+				/* Good! Poisoning happened, so declare a win. */
-+				pr_info("Memory correctly poisoned (%x)\n", saw);
-+			} else {
-+				pr_err("FAIL: Memory was not poisoned!\n");
-+				pr_expected_config_param(CONFIG_INIT_ON_FREE_DEFAULT_ON, "init_on_free");
-+			}
-+			return;
-+		}
-+
-+		kfree(base);
-+		if (time_after(jiffies, resched_after))
-+			cond_resched();
-+	} while (time_before(jiffies, timeout));
-+
-+	pr_err("FAIL: kfence memory never allocated!\n");
-+}
-+
- static void lkdtm_WRITE_BUDDY_AFTER_FREE(void)
- {
- 	unsigned long p = __get_free_page(GFP_KERNEL);
-@@ -327,6 +386,7 @@ static struct crashtype crashtypes[] = {
- 	CRASHTYPE(VMALLOC_LINEAR_OVERFLOW),
- 	CRASHTYPE(WRITE_AFTER_FREE),
- 	CRASHTYPE(READ_AFTER_FREE),
-+	CRASHTYPE(KFENCE_READ_AFTER_FREE),
- 	CRASHTYPE(WRITE_BUDDY_AFTER_FREE),
- 	CRASHTYPE(READ_BUDDY_AFTER_FREE),
- 	CRASHTYPE(SLAB_INIT_ON_ALLOC),
-diff --git a/include/linux/kfence.h b/include/linux/kfence.h
-index 401af4757514..88100cc9caba 100644
---- a/include/linux/kfence.h
-+++ b/include/linux/kfence.h
-@@ -223,6 +223,8 @@ bool __kfence_obj_info(struct kmem_obj_info *kpp, void *object, struct slab *sla
- 
- #else /* CONFIG_KFENCE */
- 
-+#define kfence_sample_interval	(0)
-+
- static inline bool is_kfence_address(const void *addr) { return false; }
- static inline void kfence_alloc_pool_and_metadata(void) { }
- static inline void kfence_init(void) { }
-
-base-commit: b85ea95d086471afb4ad062012a4d73cd328fa86
+Best regards,
 -- 
-https://chromeos.dev
+Nathan Chancellor <nathan@kernel.org>
 
