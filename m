@@ -1,170 +1,148 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0067CED0;
-	Wed, 29 Nov 2023 12:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B7LzFukE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E359C433C8;
-	Wed, 29 Nov 2023 12:55:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701262523;
-	bh=EjcKHBcdIRPeS1Jr3Xl1RByJy2jdZRnaeHgtLca5xvw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=B7LzFukE5dLDnjFimKjS9MzsDlyjw2TystsfEqKZQoF3X0ypDR27ShYPrtl8a4hDA
-	 NJpjxQGGyxZWEsXW8iuNcZhKohbcA/aqSnTm0M4FaNA2iGO+NYSrUn6Py4Nri/ePlp
-	 6q+xpqSCX/D4UrdrxiaqNtzCTiHavix0EiBQCRhmLqMpgR0ZYgs/JzAEoWb+9i5JTB
-	 Oe+1+75v5eXMmJzgFHrdDl81TfuAg+2NbIX93el81U7iGTeg6IV4SGN5q4PuHW91Kd
-	 ubXJDdo+ZPM5cWSGL7AsbHeYdmv+aYCsKzrJkAOks6DDY5k/SnNe6msZhjyp96wYb4
-	 GEiHLnbD5cmcA==
-Date: Wed, 29 Nov 2023 13:55:04 +0100
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: David Airlie <airlied@gmail.com>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Danilo Krummrich <dakr@redhat.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Dexuan Cui <decui@microsoft.com>, devicetree@vger.kernel.org,
-	dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	David Woodhouse <dwmw2@infradead.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>, iommu@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
-	Karol Herbst <kherbst@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>, Len Brown <lenb@kernel.org>,
-	linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-hyperv@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-snps-arc@lists.infradead.org,
-	linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-	Lyude Paul <lyude@redhat.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	nouveau@lists.freedesktop.org, Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Vineet Gupta <vgupta@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>, Christoph Hellwig <hch@lst.de>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Hector Martin <marcan@marcan.st>, Moritz Fischer <mdf@kernel.org>,
-	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Rob Herring <robh@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: Re: [PATCH 10/10] ACPI: IORT: Allow COMPILE_TEST of IORT
-Message-ID: <ZWc0qPWzNWPkL8vt@lpieralisi>
-References: <0-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
- <10-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ED42114
+	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 13:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id A3BCF210DF;
+	Wed, 29 Nov 2023 13:25:32 +0000 (UTC)
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 861A113637;
+	Wed, 29 Nov 2023 13:25:32 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id 47hXIMw7Z2XlRAAAD6G6ig
+	(envelope-from <vbabka@suse.cz>); Wed, 29 Nov 2023 13:25:32 +0000
+Message-ID: <e0647e65-d348-35a0-bc5a-66d1ad02ea53@suse.cz>
+Date: Wed, 29 Nov 2023 14:25:32 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <10-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [RFC v2 2/7] mm, slub: add opt-in slub_percpu_array
+Content-Language: en-US
+To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+ Matthew Wilcox <willy@infradead.org>, Suren Baghdasaryan
+ <surenb@google.com>, Christoph Lameter <cl@linux.com>,
+ David Rientjes <rientjes@google.com>, Pekka Enberg <penberg@kernel.org>,
+ Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <20230810163627.6206-9-vbabka@suse.cz>
+ <20230810163627.6206-11-vbabka@suse.cz>
+ <CAB=+i9TSMVURktFvr7sAt4T2BdaUvsWFapAjTZNtk0AKS01O9A@mail.gmail.com>
+ <077e8e97-e88f-0b8e-2788-4031458be090@suse.cz>
+ <CAB=+i9SQBhYBjOSHDeqgJJ5YARqZCS3oUUutzr4m+2V+ZvySpg@mail.gmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
+In-Reply-To: <CAB=+i9SQBhYBjOSHDeqgJJ5YARqZCS3oUUutzr4m+2V+ZvySpg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: +++++++++++
+X-Spam-Score: 11.63
+X-Rspamd-Server: rspamd1
+Authentication-Results: smtp-out1.suse.de;
+	dkim=none;
+	spf=softfail (smtp-out1.suse.de: 2a07:de40:b281:104:10:150:64:97 is neither permitted nor denied by domain of vbabka@suse.cz) smtp.mailfrom=vbabka@suse.cz;
+	dmarc=none
+X-Rspamd-Queue-Id: A3BCF210DF
+X-Spam-Flag: NO
+X-Spam-Level: ***********
+X-Spamd-Result: default: False [11.63 / 50.00];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 ARC_NA(0.00)[];
+	 MID_RHS_MATCH_FROM(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 TAGGED_RCPT(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 DMARC_NA(1.20)[suse.cz];
+	 R_SPF_SOFTFAIL(4.60)[~all];
+	 SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 MX_GOOD(-0.01)[];
+	 NEURAL_HAM_SHORT(-0.05)[-0.257];
+	 RCPT_COUNT_TWELVE(0.00)[12];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:email];
+	 NEURAL_SPAM_LONG(2.29)[0.655];
+	 FREEMAIL_TO(0.00)[gmail.com];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 R_DKIM_NA(2.20)[];
+	 MIME_TRACE(0.00)[0:+];
+	 RCVD_TLS_ALL(0.00)[];
+	 SUSPICIOUS_RECIPS(1.50)[]
 
-On Tue, Nov 28, 2023 at 08:48:06PM -0400, Jason Gunthorpe wrote:
-> The arm-smmu driver can COMPILE_TEST on x86, so expand this to also
-> enable the IORT code so it can be COMPILE_TEST'd too.
+On 11/29/23 01:46, Hyeonggon Yoo wrote:
+> On Wed, Nov 29, 2023 at 2:37 AM Vlastimil Babka <vbabka@suse.cz> wrote:
 > 
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/acpi/Kconfig        | 2 --
->  drivers/acpi/Makefile       | 2 +-
->  drivers/acpi/arm64/Kconfig  | 1 +
->  drivers/acpi/arm64/Makefile | 2 +-
->  drivers/iommu/Kconfig       | 1 +
->  5 files changed, 4 insertions(+), 4 deletions(-)
+>> >> @@ -4060,6 +4201,45 @@ int kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
+>> >>  }
+>> >>  EXPORT_SYMBOL(kmem_cache_alloc_bulk);
+>> >>
+>> >> +int kmem_cache_prefill_percpu_array(struct kmem_cache *s, unsigned int count,
+>> >> +               gfp_t gfp)
+>> >> +{
+>> >> +       struct slub_percpu_array *pca;
+>> >> +       void *objects[32];
+>> >> +       unsigned int used;
+>> >> +       unsigned int allocated;
+>> >> +
+>> >> +       if (!s->cpu_array)
+>> >> +               return -EINVAL;
+>> >> +
+>> >> +       /* racy but we don't care */
+>> >> +       pca = raw_cpu_ptr(s->cpu_array);
+>> >> +
+>> >> +       used = READ_ONCE(pca->used);
+>> >
+>> > Hmm for the prefill to be meaningful,
+>> > remote allocation should be possible, right?
+>>
+>> Remote in what sense?
 > 
-> diff --git a/drivers/acpi/Kconfig b/drivers/acpi/Kconfig
-> index f819e760ff195a..3b7f77b227d13a 100644
-> --- a/drivers/acpi/Kconfig
-> +++ b/drivers/acpi/Kconfig
-> @@ -541,9 +541,7 @@ config ACPI_PFRUT
->  	  To compile the drivers as modules, choose M here:
->  	  the modules will be called pfr_update and pfr_telemetry.
->  
-> -if ARM64
->  source "drivers/acpi/arm64/Kconfig"
-> -endif
->  
->  config ACPI_PPTT
->  	bool
-> diff --git a/drivers/acpi/Makefile b/drivers/acpi/Makefile
-> index eaa09bf52f1760..4e77ae37b80726 100644
-> --- a/drivers/acpi/Makefile
-> +++ b/drivers/acpi/Makefile
-> @@ -127,7 +127,7 @@ obj-y				+= pmic/
->  video-objs			+= acpi_video.o video_detect.o
->  obj-y				+= dptf/
->  
-> -obj-$(CONFIG_ARM64)		+= arm64/
-> +obj-y				+= arm64/
->  
->  obj-$(CONFIG_ACPI_VIOT)		+= viot.o
->  
-> diff --git a/drivers/acpi/arm64/Kconfig b/drivers/acpi/arm64/Kconfig
-> index b3ed6212244c1e..537d49d8ace69e 100644
-> --- a/drivers/acpi/arm64/Kconfig
-> +++ b/drivers/acpi/arm64/Kconfig
-> @@ -11,6 +11,7 @@ config ACPI_GTDT
->  
->  config ACPI_AGDI
->  	bool "Arm Generic Diagnostic Dump and Reset Device Interface"
-> +	depends on ARM64
->  	depends on ARM_SDE_INTERFACE
->  	help
->  	  Arm Generic Diagnostic Dump and Reset Device Interface (AGDI) is
-> diff --git a/drivers/acpi/arm64/Makefile b/drivers/acpi/arm64/Makefile
-> index 143debc1ba4a9d..71d0e635599390 100644
-> --- a/drivers/acpi/arm64/Makefile
-> +++ b/drivers/acpi/arm64/Makefile
-> @@ -4,4 +4,4 @@ obj-$(CONFIG_ACPI_IORT) 	+= iort.o
->  obj-$(CONFIG_ACPI_GTDT) 	+= gtdt.o
->  obj-$(CONFIG_ACPI_APMT) 	+= apmt.o
->  obj-$(CONFIG_ARM_AMBA)		+= amba.o
-> -obj-y				+= dma.o init.o
-> +obj-$(CONFIG_ARM64)		+= dma.o init.o
-> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> index 7673bb82945b6c..309378e76a9bc9 100644
-> --- a/drivers/iommu/Kconfig
-> +++ b/drivers/iommu/Kconfig
-> @@ -318,6 +318,7 @@ config ARM_SMMU
->  	select IOMMU_API
->  	select IOMMU_IO_PGTABLE_LPAE
->  	select ARM_DMA_USE_IOMMU if ARM
-> +	select ACPI_IORT if ACPI
->  	help
->  	  Support for implementations of the ARM System MMU architecture
->  	  versions 1 and 2.
-> -- 
+> TL;DR) What I wanted to ask was:
+> "How pre-filling a number of objects works when the pre-filled objects
+> are not shared between CPUs"
+> 
+> IIUC the prefill is opportunistically filling the array so (hopefully)
+> expecting there are
+> some objects filled in it.
 
-I don't think it should be done this way. Is the goal compile testing
-IORT code ? If so, why are we forcing it through the SMMU (only because
-it can be compile tested while eg SMMUv3 driver can't ?) menu entry ?
+Yes.
 
-This looks a bit artificial (and it is unclear from the Kconfig
-file why only that driver selects IORT, it looks like eg the SMMUv3
-does not have the same dependency - there is also the SMMUv3 perf
-driver to consider).
+> Let's say CPU X calls kmem_cache_prefill_percpu_array(32) and all 32
+> objects are filled into CPU X's array.
+> But if CPU Y can't allocate from CPU X's array (which I referred to as
+> "remote allocation"), the semantics differ from
+> the maple tree's perspective because preallocated objects were shared
+> between CPUs before, but now it's not?
 
-Maybe we can move IORT code into drivers/acpi and add a silent config
-option there with a dependency on ARM64 || COMPILE_TEST.
+The assumption is that the operation will prefill on CPU X and then consume
+it also on X, because shortly after prefill it will enter some restricted
+context (i.e. spin_lock_irqsave or whatnot) that prevents it from migrating.
+That's not guaranteed of course, but migration in a bad moment and
+subsequent depleted array should be rare enough that we'll just handle it in
+the slow paths, and if it results in dipping into reserves, it won't be too
+disruptive.
 
-Don't know but at least it is clearer. As for the benefits of compile
-testing IORT code - yes the previous patch is a warning to fix but
-I am not so sure about the actual benefits.
+> Thanks!
+> 
+> --
+> Hyeonggon
 
-Thanks,
-Lorenzo
