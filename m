@@ -1,38 +1,38 @@
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2079.outbound.protection.outlook.com [40.107.92.79])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2041.outbound.protection.outlook.com [40.107.92.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCDB259C;
-	Wed, 29 Nov 2023 00:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AE517F6;
+	Wed, 29 Nov 2023 00:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="F31DiXX8"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="JgkNRDr6"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZsytXaBqcEx16zVcZnHPS4Zhvb3AayZWzyi2+09E6frV+OcPxU9xAkBgHeKWlPBNlHSKF+6qeeXwGXajaxh5dF5HdPRIArraLFXKBnKHi2kAIYQl4hVla+FnNUTyyFPMfmnvLyhgFtMI9pwez1voLritO8OlbucheIMwzl4sXzs0t8ENrQt8qz9Msk4dcECOBtNvi4etwJFSSYxdm1zK4BHCyv0l6EyK2uW535JXxSA9lM2s7g+bFS+wwkse92aHhzyeCvJ/7S8uEs28friDpZ5WuZRNOanbSMgyQ04Nju7CLiByTYVOXPuF/aTJuJyodNHatChD+MybJwnEseSz7w==
+ b=J33HMkSpQ7i7/AxS6Pbyrs71jeA2jwm7ZGPUUz2WvOEi2Wk0GTfMzgVO3jTA5Bz630ltjvcmQudKFW1UGcmbza4inh+R/X3zw+50vWo2EwE7XQkYJfs2Utiuk0ulp6iVy/dmqVTcjNvPbolrJ5OZ5VTz66FpVdeHxPJjuv0sYRReucBmFUCHEx89/Iwd714bD/UK8CnAlPYJ9WZ0aeaFj2HDGgc7yW/FYm/LrdBICogIEiYdk9fFhgiRRZCBDz9SylKCTLPbqccBhRj7UlFB5NLurTBO5LJePUHLG0B+HuoxucB4iN6CGnc1OpvEqbiLZePH6ytmDRUOZ3IrIxC8vQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eH8tDjGmvUkY/WqUCt3YsgaaKAlismXB1uYZuT5uIZQ=;
- b=aEaQLIYQ2xK9z6jAOTblk8bi1M8gOnGaU/GHXAkOSxJsXPfSGLcdvItsfwFt8etKjfH7MN/bKs8dz9+UWW0/sdVqCa++xL4ljdyMBWPwsV6840mjcwY7XzV/Jp3zAT8cigaH4Hh5eGINIc+IPqUbGQgR43cCFWZcub6lkVb/n6+3RA307EasrmBQgmili56p+QMbT9lqLasVa5iM1bfSbxpJPN0IAgjXTLreELTypiKoZBF4/4q9zBFxr15eBHvjvCn4zeYuDWtahW8dg1r9IgBWudAP8Fyt9I869mXeDdS/mheEXqZLCUuIhcwxl+8Tp3sK4yw/6dJFTMtEyxVJVQ==
+ bh=pbHT1+KFV/20F8vmmdzKEO7JcLCcujqYnzeQLPyDRVw=;
+ b=HMKeTbMVHyW0zWbkSrmDqGboHLhDpEqzCo9SL6VVPeF058pU9+HKxBEkfPfSSIL50uVYKDQwPK3XpynEgbQYkYmc0zbpuPNLGfiz/CcXSNqb96kYkr8nLxdrzed8J/C/rI+VL5rueOcpM9m0Q6q5bkKKUPNVay0DEVtzt58VFVCDQnSSwyDeZIzybI7XKL//TDNYVBuuKQQHNqH7ov6J1gDLc/fgqVtgl8Mo+hUleCrFiCSAdKflBNsFCKKuU4/Tdhlo52QEUXPO8Aq17zvmKDI4gnjNX53dL92rK3Yu9s47/rLNNXZBBaTRNqAE+jp2gzcCWIGbekJCh77r4LycPw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eH8tDjGmvUkY/WqUCt3YsgaaKAlismXB1uYZuT5uIZQ=;
- b=F31DiXX8J2qqzbKKHFZHTZErloXdqCL6uue8F7G5+yT8jtRmOnJifMosEmXqSaTXG+cpFRrZoFYsAYmFbFndE3IaaYHYQZNtyAzle/zfgkur0Uqpp71TbKW23IaDr7k5tTLW4CZj+Y0NTO7rBXJa0HeP2LijDD0RgQocjGQ7iCYs0sWXIsFpLosNohSDMYu5PwpOQbeuwFgSnw/L/68P8UXBUWbcHueJj0T8JbQm1+pbZATg+xUQS4dzwLqUcwwIiV+MgTcHUn1Z/IPt3S0oUolsuomALC5UNMbS6o5d4sNDMZfi3+5ERkhm4rrFRJTygpJ3ZoJMQ/RnBQrXSW39eA==
+ bh=pbHT1+KFV/20F8vmmdzKEO7JcLCcujqYnzeQLPyDRVw=;
+ b=JgkNRDr6k9+tsxYJDbWo6ZCaUPZIz6bVajc/YtK49ElYS1zQk33Ay/n3ZEMmkBo54ehv0998WtaPOlCoSQ62KBS/tRLXINSRbygliVcbH5oyXru9grMsc+q5arP9gVzhTSmHC7CKMrYGQlvulEFFltnozl9q4qORP6r6fb8RULX/zQoB5Amw+zsy0/S8JnoYfbABxy6jU+j19NFBn+sYE1O9OfSayJ0ik2YTGx4oZbD25qi6gRCrbZadmF870kg7wtv0nkHcDRaGYhIWXuACu1Eqznor4pw9tNe2hSAgpzUjtpXyDvf8fOZiMaaWN14QxS0i+g+cByOVYCWRLc8e6Q==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
  by MW5PR12MB5649.namprd12.prod.outlook.com (2603:10b6:303:19d::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.22; Wed, 29 Nov
- 2023 00:48:12 +0000
+ 2023 00:48:13 +0000
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com
  ([fe80::60d4:c1e3:e1aa:8f93]) by LV2PR12MB5869.namprd12.prod.outlook.com
  ([fe80::60d4:c1e3:e1aa:8f93%4]) with mapi id 15.20.7025.022; Wed, 29 Nov 2023
- 00:48:12 +0000
+ 00:48:13 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: David Airlie <airlied@gmail.com>,
 	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
@@ -91,15 +91,15 @@ Cc: Lu Baolu <baolu.lu@linux.intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Rob Herring <robh@kernel.org>,
 	Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 10/10] ACPI: IORT: Allow COMPILE_TEST of IORT
-Date: Tue, 28 Nov 2023 20:48:06 -0400
-Message-ID: <10-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+Subject: [PATCH 08/10] iommu/tegra: Use tegra_dev_iommu_get_stream_id() in the remaining places
+Date: Tue, 28 Nov 2023 20:48:04 -0400
+Message-ID: <8-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
 In-Reply-To: <0-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SA9P223CA0022.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:806:26::27) To LV2PR12MB5869.namprd12.prod.outlook.com
+X-ClientProxiedBy: SN6PR05CA0032.namprd05.prod.outlook.com
+ (2603:10b6:805:de::45) To LV2PR12MB5869.namprd12.prod.outlook.com
  (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -109,129 +109,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|MW5PR12MB5649:EE_
-X-MS-Office365-Filtering-Correlation-Id: 20a43a15-015e-42b5-e00b-08dbf074db78
+X-MS-Office365-Filtering-Correlation-Id: f4a02ace-b9c1-4f95-28db-08dbf074dba2
 X-LD-Processed: 43083d15-7273-40c1-b7db-39efd9ccc17a,ExtAddr
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	sfyePDuXbQpivM4GgUNxLSUDKfV946alWGd0hI2n+rpIrNB+3/j/3zBB93NCwPRqllydZ6s3EPhIOQAvu0il6gt747jv9zfRwNe2F6K+sLefTwlKl8eK0qDxUSi//Sx8NGdpqCdvrmCGKsFfZ9efYgDRrgyoQt+oxZKyJonSmMRpVnEZNqMmXruMUwpCd6VldvUMMTEe6q7xzxfaUW3RckcyqZdwCfHHI0PJu1uWfj+HCeXGTqrrUdINYSwBOHN65U+6QKlBpjzfLMLq77srcAL1yk3uZQvWftAiSf/vv97MCAmCOYxGl+caSwdf3DIxj0ErSwETifhy8vxBCS+E69fnqY/WIDJwcxpER4tszS3ayGTovyO6WGAwSSmwkHyGY4Qa0JjupUxt4uu5s6xsCkT7vY17EGzO2pYF5Evj//VPyEJFmByrpwREJLe3MPR8sd7wc1A80FhfKj5MVncE8XH/3u0U9DWFNunYb/dZAurN09u3c2NkunRKYARRqGvuEE0JaeZngIcix5hD9VRq+ffOx0gi/55JhJuJzBOVw5wDkAODAgy6tOc0RqBuADuG+6Dj7UAUqrXGN7IgvI3K1u8uVB96D1KrD3AUbUajURs=
+	9tBTgllR6ysaDCa8nB1NjgjCaR7f+sYWEV1hsuQS7cj8OdNUjpS3NWNGXHEymzzH+uWYZNq7nyfvg1Sj/fn2rq49uU0ggc3SvVhR2UHbC9TxAbDh/p/3MHcC5g3fBYF8VZJ22sOYaWKpEkGLSNXlPUkevc26nEL5eJUvtMzx1PfCSdRzWdPL/V3vAe68qUyO6H7ph9i/kH7Zo2bvXJxL1eL1T8GdIR8+QXjQzui0dkTnAyBteKOolg8wPREEErSi+LCXbdmLUe8n86G9+12ZrzcjVNQFF17J9j3wmlQIyEmty5EosimrK71FMgT6SuPJUQMBkeXWnbIEPdooG9tZC0v9lwDhSZBdr4SRgH1TfwDysCLT3P6WXqmaJUip0l8BYNAI9SbJlgpJy6Bb2IvoaWdVL5XwMzH85l+3iC2zjFQjf65xjolLDO5If470hEaiwLyeiEHP/UZpKwKzDtTldb5koAneDSvaiIVePIuSIaPrRWWEgVhGKedKKXBQ7IEVifqnYQWs6zY+6SjwTCdlS6FYY0+M0dQxx95ph2l7qhaFdyMmZDlaiVMB45uzIIaP/QxmmNS3r5kI2T9EgDTJa0BIGvJmsuvPK1a8k230NJ5yIZerdqydy8e/rqo/i/V9
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(39860400002)(396003)(366004)(376002)(346002)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(5660300002)(7416002)(7366002)(7406005)(41300700001)(4326008)(8936002)(8676002)(2906002)(110136005)(316002)(66556008)(66476007)(54906003)(66946007)(2616005)(921008)(6486002)(478600001)(36756003)(6512007)(6506007)(26005)(6666004)(83380400001)(86362001)(38100700002);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(39860400002)(396003)(366004)(376002)(346002)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(5660300002)(7416002)(7366002)(7406005)(41300700001)(4326008)(8936002)(8676002)(2906002)(110136005)(316002)(66556008)(66476007)(54906003)(66946007)(2616005)(921008)(6486002)(478600001)(36756003)(6512007)(6506007)(66574015)(26005)(6666004)(83380400001)(86362001)(38100700002)(4216001);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?UNYheQyrasSXpcpCfTUQaMtUs0mW6dFUk1bWLYTCnkPpP1S0bWCCjqumkRKd?=
- =?us-ascii?Q?iC9+AHjWdZzDQqy+3MdwLX1LbDScSZmNXnFjltT2pXbrXzFEUz8FB8kcBIqc?=
- =?us-ascii?Q?TgbL9HQoW321eihXHodmuwOVY1gNvKFn27NBBKsYVeWCxprj8LHmN/NKKvfV?=
- =?us-ascii?Q?8OA53XejEyvQqQBPt99HAn61ZhT2Ajv7Uie+kJ32eMKGwn/5icwu2rdyxlOG?=
- =?us-ascii?Q?Z53TCr85bJcAPLv0kNbxBnacotlcfTPEPeXMzGUsoE5t/Jhtxf8PumC2UH1a?=
- =?us-ascii?Q?YAZ24tgv/MPvTxxgPb3hBbQ35Iz1iYLSk9TbIljShLqvZmwZy+JnEAAlXE68?=
- =?us-ascii?Q?t1w66msf4GkGBxaAhPdy/K2GNhaOmwZgeO9/NUrSF1wk3tx89Y41XvzAefaa?=
- =?us-ascii?Q?1iUGKV0kopWp9iTgZqFOYEZr27XwpzpNOy9xBtt8uq+2T3cV81FHNbTtwMEn?=
- =?us-ascii?Q?93odYwqOUyUUvOe39IVnAcleYcZz75cZZ+vN6gJWFaZ+RHbQ5tzGhrunEVXT?=
- =?us-ascii?Q?zRXYGXO0TYkFCfYpnnc5QB7bSH8zZ3PKeafPIxIaDWMMQv0DMLY+PL9OMwpm?=
- =?us-ascii?Q?RJWr0Jg18rry/TgTyUOAQhik+iGqA2IcicKNXojGrGgjfZLzrr+f+D6VV1o9?=
- =?us-ascii?Q?JvZE75QLj1PTXtwTSqOGhePFl7HXcSODJfULwweKq5fbkHQ6q+hntYEx/4Fc?=
- =?us-ascii?Q?zb0MiJ9w1zL9bMsm/QUtbh7Jv20N7S+5sp1p4n05848HDISWHjS+9iL2s3mY?=
- =?us-ascii?Q?lCQiDX70k2nN8USM1TKsOHiO3jGpLSXwLHKYBSJF8mz6h07McxuWndpRWhId?=
- =?us-ascii?Q?vUm5E5ySn1DnJxQxtM+s30JRXCpBPVzv/FLNGuUM0WJTC7oTAGk+hTbwzMKS?=
- =?us-ascii?Q?dJFM9QBBerNjYCa3T7Q1RAdWLargJAlGrNHUQjkYWkr8xV4Qt8c/42cL9k4Y?=
- =?us-ascii?Q?9DxVo/ao5etyYU4VkFT+f6u94cmmF1hK3ISdCL89zLoaH0QmZSrfzMsYF2sG?=
- =?us-ascii?Q?UcFAom7F+hEFd8iJAgGnh9pUjI+wua2EyBfbwP7jliGi48T6YFFqJiRntTNW?=
- =?us-ascii?Q?E8QDLJP5M06AevL93EkCZa7IUWlgQz/es+y5dpZFylpeQ4LculrKC8pphqh1?=
- =?us-ascii?Q?qnJOrgOSa0gDdbAIVr64jhofH/WC5+tvKoEOGr4JBj4JinnZACzdlhw1LiiJ?=
- =?us-ascii?Q?yNegq1Ti9KTKIRKeGgYxkmPyV/R40SRvVCXzUJQzOu2lNUjBlxLICqa5d4A1?=
- =?us-ascii?Q?iDCOqXxqx5zrUCF+4osncWumF0P9VXkaXV2koAeToihb6kFOTERI2ZMJJERb?=
- =?us-ascii?Q?A/oF0KOLZuno2bY/p+83/VeZ8YAMiJs9ZboiQ3TYY+UrOYuNWordO1zzjIIl?=
- =?us-ascii?Q?2eyWVBVZMphne4ZXmCiGa6bvsddyz98GdODAIWVJZTNyRxkahU0o/Q5wM1pB?=
- =?us-ascii?Q?3c+2/ZDDQG5LFpYrSgOeiRL+kRrFiyha970ppgNxtpqBXx9Om762Zj78V9Gt?=
- =?us-ascii?Q?fqH5E/+xs0jicG4KXoYL4c0ydiV6l7kEqmz1EV8WUNWCvcVtP7yk4D+e68Vx?=
- =?us-ascii?Q?dbaMzRUnf1NpxR5sCW/ExxZ2KOkfWs9gUS4QWlV+?=
+	=?us-ascii?Q?ssokdyrtSXQsVnEiFm5yztlgDbavoBr3t7MYHnZX7QUBgrV6jZw4oHN6mZqM?=
+ =?us-ascii?Q?Y6DzmNgPHvj1X/MnhftVKwjGialq/HU/qmnb70sFtKpFvm3mpG75a0eXX955?=
+ =?us-ascii?Q?+6vz/vqweBA66OBjrvCoUoN2tZ7hmbSHOtFbI8QuLiuc9gGgyP2tHmcpqQrI?=
+ =?us-ascii?Q?TdNY+yVkC4z6FMV9eH9z37pgEk30+f/gB2tiosGv0GFRTVboqmKFhJahFaWu?=
+ =?us-ascii?Q?ditUeUL2OdUb4LZ1Q/6wU8DIiajuFs6YdfUFaHCBPyuk8JhDOFLd/+trSsJ3?=
+ =?us-ascii?Q?lh7wIM/kKfK4qMcoA0NcirHFnATrAcaH4TpETAGgJCCXsSeZv4Vsl8VGQsP3?=
+ =?us-ascii?Q?NImwYsteJcBgM9kqDxhXzMlziGeM9BtObktyeM2mEBxReLYTsAXAfTjw2McT?=
+ =?us-ascii?Q?9GWD6DS7jqcWgL+QD5NTXSUb91wYBsRGbyVrfLzNc6kFPG1LFl7cCjZJv3RV?=
+ =?us-ascii?Q?5TBeWNpMQfMWdBIAhA62+6t0t+7qXT/n8qTL4SpHaijv+M2bg/r/RlQp6giG?=
+ =?us-ascii?Q?gLfphG8edGkASDvHQzHlQQGXnLFL0hEVL2mfcRatjE/T0wV03tHQ+frfFeD7?=
+ =?us-ascii?Q?UMWqV4ovWFB8gXNsar51F6SGQ2CaOTAisZlStpTGb8Yn1OA96CgeO8gcIhRk?=
+ =?us-ascii?Q?c3YQQNd6d9C8k1w7hMZ5go1ogkOwUi5xDW2bxqUDeClOVgg7MXRtyj//N5aK?=
+ =?us-ascii?Q?PkCWFoiEqAi8hDuaAmTxX/jsOm0vZdftM5XBCGxesoXdbEpeP+MNhzNVo6qE?=
+ =?us-ascii?Q?cT+8TfptkpnQ9c03A+uxjZN850BOYZbtsOtY6Jhn8uxP0B3BM18BeZ6aAtey?=
+ =?us-ascii?Q?uVTKiXL++/AYmahYOGzp1+VM3ZvsasEfJG7cT0nRVHCxLy2aJzE1E/ay3OcB?=
+ =?us-ascii?Q?9EUeJ1Kz+E4JgM05erMI6vJ3fIufG2CGh6TaOb/nMG7P2qVMlUmm8pUm7gMc?=
+ =?us-ascii?Q?j/BSFC4hCLm5m2tGq6DyT+5JtYMNjBw0I6dZsim3qzJNanpQOx1WJ/Uju4f5?=
+ =?us-ascii?Q?M/02pmV2vH8If4pg2dWXZCu+M9aNFK6NTE019tcVDZmhQqBDUkppP12ktzlj?=
+ =?us-ascii?Q?lPOS1hIJMtTu18uqc4w7zConjRYDW7rqFQWjz1py4ytBcMF7G4vYcjueW6St?=
+ =?us-ascii?Q?wUjrQMpjSnvB40kOe1IjBfvBdBFfuCbFkMhTToh212ewBvmbgj89F1kNewb4?=
+ =?us-ascii?Q?3LEAJcWiTwoBI5Z/tEcSfP7LtjvXXq0PElDuFallZtZuU2GbYw7mXA2WfKCw?=
+ =?us-ascii?Q?sz9ybiPy4dXk1Rrja5TSwwyDqCi8uiFXkgk7BjRkkox3ADyntIJyIOgyrr8e?=
+ =?us-ascii?Q?6EhGUKawu55/VDFnq7pEI1s5eSXe6OyPTgoS5rnm9MAOsDEBHEMApPJg7/bD?=
+ =?us-ascii?Q?2zf4Cxp6IL1Op/0a/nVo8gXFLU1OcZgAF3xGnIDbmKjF99QCcisLYYqvvO9j?=
+ =?us-ascii?Q?FX8Jgf/FsACJMGd4sRlW3Xyzz0BQ8gRnYiEBM2yWKqkkm9SCRPSBnB1rX0ud?=
+ =?us-ascii?Q?64fJsfnGEUQxyPL7XRtMkCbvISPYAnrvFe7D+Ix+LbKEG7Dd/hzSDbU5eS69?=
+ =?us-ascii?Q?GhQ7MHMuoXGp0sPlUy8cOiitHop/WSCFvMgmn8St?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 20a43a15-015e-42b5-e00b-08dbf074db78
+X-MS-Exchange-CrossTenant-Network-Message-Id: f4a02ace-b9c1-4f95-28db-08dbf074dba2
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Nov 2023 00:48:09.3393
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Nov 2023 00:48:09.5696
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aglFzULK+XmqsoZKcrZ9ubmCg+LHORgBHdMuQg4VAhNMC/DOMeDwcNrzcZcKmdom
+X-MS-Exchange-CrossTenant-UserPrincipalName: wKdhvK8dSwRgwkccyIgkuLRak3eWVI9irOmPi1IrcAmKPdmM/LP7AlGWRiWY1FFb
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5649
 
-The arm-smmu driver can COMPILE_TEST on x86, so expand this to also
-enable the IORT code so it can be COMPILE_TEST'd too.
+This API was defined to formalize the access to internal iommu details on
+some Tegra SOCs, but a few callers got missed. Add them.
 
+The helper already masks by 0xFFFF so remove this code from the callers.
+
+Suggested-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/acpi/Kconfig        | 2 --
- drivers/acpi/Makefile       | 2 +-
- drivers/acpi/arm64/Kconfig  | 1 +
- drivers/acpi/arm64/Makefile | 2 +-
- drivers/iommu/Kconfig       | 1 +
- 5 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/dma/tegra186-gpc-dma.c                  |  8 +++-----
+ drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c |  7 ++-----
+ drivers/memory/tegra/tegra186.c                 | 12 ++++++------
+ 3 files changed, 11 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/acpi/Kconfig b/drivers/acpi/Kconfig
-index f819e760ff195a..3b7f77b227d13a 100644
---- a/drivers/acpi/Kconfig
-+++ b/drivers/acpi/Kconfig
-@@ -541,9 +541,7 @@ config ACPI_PFRUT
- 	  To compile the drivers as modules, choose M here:
- 	  the modules will be called pfr_update and pfr_telemetry.
+diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dma.c
+index fa4d4142a68a21..88547a23825b18 100644
+--- a/drivers/dma/tegra186-gpc-dma.c
++++ b/drivers/dma/tegra186-gpc-dma.c
+@@ -1348,8 +1348,8 @@ static int tegra_dma_program_sid(struct tegra_dma_channel *tdc, int stream_id)
+ static int tegra_dma_probe(struct platform_device *pdev)
+ {
+ 	const struct tegra_dma_chip_data *cdata = NULL;
+-	struct iommu_fwspec *iommu_spec;
+-	unsigned int stream_id, i;
++	unsigned int i;
++	u32 stream_id;
+ 	struct tegra_dma *tdma;
+ 	int ret;
  
--if ARM64
- source "drivers/acpi/arm64/Kconfig"
--endif
+@@ -1378,12 +1378,10 @@ static int tegra_dma_probe(struct platform_device *pdev)
  
- config ACPI_PPTT
- 	bool
-diff --git a/drivers/acpi/Makefile b/drivers/acpi/Makefile
-index eaa09bf52f1760..4e77ae37b80726 100644
---- a/drivers/acpi/Makefile
-+++ b/drivers/acpi/Makefile
-@@ -127,7 +127,7 @@ obj-y				+= pmic/
- video-objs			+= acpi_video.o video_detect.o
- obj-y				+= dptf/
+ 	tdma->dma_dev.dev = &pdev->dev;
  
--obj-$(CONFIG_ARM64)		+= arm64/
-+obj-y				+= arm64/
+-	iommu_spec = dev_iommu_fwspec_get(&pdev->dev);
+-	if (!iommu_spec) {
++	if (!tegra_dev_iommu_get_stream_id(&pdev->dev, &stream_id)) {
+ 		dev_err(&pdev->dev, "Missing iommu stream-id\n");
+ 		return -EINVAL;
+ 	}
+-	stream_id = iommu_spec->ids[0] & 0xffff;
  
- obj-$(CONFIG_ACPI_VIOT)		+= viot.o
+ 	ret = device_property_read_u32(&pdev->dev, "dma-channel-mask",
+ 				       &tdma->chan_mask);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c b/drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c
+index e7e8fdf3adab7a..b40fd1dbb21617 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c
+@@ -28,16 +28,13 @@ static void
+ gp10b_ltc_init(struct nvkm_ltc *ltc)
+ {
+ 	struct nvkm_device *device = ltc->subdev.device;
+-	struct iommu_fwspec *spec;
++	u32 sid;
  
-diff --git a/drivers/acpi/arm64/Kconfig b/drivers/acpi/arm64/Kconfig
-index b3ed6212244c1e..537d49d8ace69e 100644
---- a/drivers/acpi/arm64/Kconfig
-+++ b/drivers/acpi/arm64/Kconfig
-@@ -11,6 +11,7 @@ config ACPI_GTDT
+ 	nvkm_wr32(device, 0x17e27c, ltc->ltc_nr);
+ 	nvkm_wr32(device, 0x17e000, ltc->ltc_nr);
+ 	nvkm_wr32(device, 0x100800, ltc->ltc_nr);
  
- config ACPI_AGDI
- 	bool "Arm Generic Diagnostic Dump and Reset Device Interface"
-+	depends on ARM64
- 	depends on ARM_SDE_INTERFACE
- 	help
- 	  Arm Generic Diagnostic Dump and Reset Device Interface (AGDI) is
-diff --git a/drivers/acpi/arm64/Makefile b/drivers/acpi/arm64/Makefile
-index 143debc1ba4a9d..71d0e635599390 100644
---- a/drivers/acpi/arm64/Makefile
-+++ b/drivers/acpi/arm64/Makefile
-@@ -4,4 +4,4 @@ obj-$(CONFIG_ACPI_IORT) 	+= iort.o
- obj-$(CONFIG_ACPI_GTDT) 	+= gtdt.o
- obj-$(CONFIG_ACPI_APMT) 	+= apmt.o
- obj-$(CONFIG_ARM_AMBA)		+= amba.o
--obj-y				+= dma.o init.o
-+obj-$(CONFIG_ARM64)		+= dma.o init.o
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index 7673bb82945b6c..309378e76a9bc9 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -318,6 +318,7 @@ config ARM_SMMU
- 	select IOMMU_API
- 	select IOMMU_IO_PGTABLE_LPAE
- 	select ARM_DMA_USE_IOMMU if ARM
-+	select ACPI_IORT if ACPI
- 	help
- 	  Support for implementations of the ARM System MMU architecture
- 	  versions 1 and 2.
+-	spec = dev_iommu_fwspec_get(device->dev);
+-	if (spec) {
+-		u32 sid = spec->ids[0] & 0xffff;
+-
++	if (tegra_dev_iommu_get_stream_id(device->dev, &sid)) {
+ 		/* stream ID */
+ 		nvkm_wr32(device, 0x160000, sid << 2);
+ 	}
+diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
+index 533f85a4b2bdb7..3e4fbe94dd666e 100644
+--- a/drivers/memory/tegra/tegra186.c
++++ b/drivers/memory/tegra/tegra186.c
+@@ -111,21 +111,21 @@ static void tegra186_mc_client_sid_override(struct tegra_mc *mc,
+ static int tegra186_mc_probe_device(struct tegra_mc *mc, struct device *dev)
+ {
+ #if IS_ENABLED(CONFIG_IOMMU_API)
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+ 	struct of_phandle_args args;
+ 	unsigned int i, index = 0;
++	u32 sid;
+ 
++	WARN_ON(!tegra_dev_iommu_get_stream_id(dev, &sid));
+ 	while (!of_parse_phandle_with_args(dev->of_node, "interconnects", "#interconnect-cells",
+ 					   index, &args)) {
+ 		if (args.np == mc->dev->of_node && args.args_count != 0) {
+ 			for (i = 0; i < mc->soc->num_clients; i++) {
+ 				const struct tegra_mc_client *client = &mc->soc->clients[i];
+ 
+-				if (client->id == args.args[0]) {
+-					u32 sid = fwspec->ids[0] & MC_SID_STREAMID_OVERRIDE_MASK;
+-
+-					tegra186_mc_client_sid_override(mc, client, sid);
+-				}
++				if (client->id == args.args[0])
++					tegra186_mc_client_sid_override(
++						mc, client,
++						sid & MC_SID_STREAMID_OVERRIDE_MASK);
+ 			}
+ 		}
+ 
 -- 
 2.42.0
 
