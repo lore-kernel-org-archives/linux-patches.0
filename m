@@ -1,104 +1,103 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B151FC2
-	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 03:04:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0695221;
+	Wed, 29 Nov 2023 03:09:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="CA8+FK/E"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6c4eb5fda3cso6158016b3a.2
-        for <patches@lists.linux.dev>; Tue, 28 Nov 2023 19:04:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1701227086; x=1701831886; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tJGxAu392s/bORKdAjJBrcSJ8FzTjUlfAs3pgZbxfG8=;
-        b=CA8+FK/EsoOmQM38CVDf5z0rwKYYp69mVx3UzB6LyxTdpjekgaAuj+FzL3Qm37zF/h
-         Hilqg/CffS2E5dEEoB/f2MezgeJnwkmEegOWg+1t8QkHYUBAa1huGxINS4z5QuLCIrQO
-         iBImsLFMLAzeKXlstUhcxyAxSnvTDgynZgwDI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701227086; x=1701831886;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tJGxAu392s/bORKdAjJBrcSJ8FzTjUlfAs3pgZbxfG8=;
-        b=Wh1Glp9ygx2r9OXkHTjS+V4Pv/2+z/wJGZFv5S7EHNe5j2OeCowimjTpBaP/ASvMZH
-         X4YO5NmAznM2ORBISm4MOpx1IKuyLIGo3iZ63pjrXjE7vOkmcV3EBEGm1eBoe65jH6Z3
-         8QuCSRrEL2XU2VQbQ/oizInpFzTQIO9acyMd4PdKdjj15Lzl7pqeySNiksm6C91R9+YB
-         T4jLlq6IXBHahzkYPhndmgerMaepeHtZT9sW2znnY9/F5FpYuPeG2qCUU+mVL3xMNk89
-         pgtC4o4inI1SfH13Pmlm1QTi9NAdDvjLFmO8NRRh+9iMD3BGOfrAhEcObCaD5xxQgYWE
-         +2qQ==
-X-Gm-Message-State: AOJu0YzDyx7pq2eGHPd5IgxKZKcgH5OsUqRWRE5Tz1R6hIJDLd8NynC4
-	b+zdXeiBBmLlV4sl7W4n9eruKA==
-X-Google-Smtp-Source: AGHT+IGygOdS0FDYG0MeUfrKyvdo448ZeERsKbGVJU3tooOdVfsvGLB+9h5K3ZINX8K1tfa6iwgshw==
-X-Received: by 2002:a05:6a00:10d2:b0:6cb:4bd5:a4c5 with SMTP id d18-20020a056a0010d200b006cb4bd5a4c5mr20961101pfu.9.1701227085930;
-        Tue, 28 Nov 2023 19:04:45 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:11a:201:d7b2:b65d:af69:8a53])
-        by smtp.gmail.com with ESMTPSA id u12-20020a056a00098c00b006cd88728572sm4847426pfg.211.2023.11.28.19.04.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 19:04:45 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Rob Herring <robh+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	Alexandre TORGUE <alexandre.torgue@foss.st.com>,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Douglas Anderson <dianders@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2] dt-bindings: arm: qcom: Fix html link
-Date: Tue, 28 Nov 2023 19:04:41 -0800
-Message-ID: <20231129030443.2753833-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.43.0.rc1.413.gea7ed67945-goog
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aEPPtdvN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701227371; x=1732763371;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=0uRT7eby29KrVItGuX/TtqLsIa8b48zVBs2iq6+uLQA=;
+  b=aEPPtdvNddUsSeI4EDrcpbZuwbIpH12e/DmeeY3C62V1so82duFj7lcw
+   6BPVNfVUF5+RRth8yVRGJ0sP6h5GsmXFp247m+NKdbMGgyIK2dq5vTA7k
+   XL4t8BukLmYA271uGzJ0qoDcv3TnCh56L2sLsdmECx+mnVzCggvFBfjad
+   +i5fMYGhdYzbMjFin6N2DVFCHg+wDVM9jk/1k20TQMvT6xCeSGL0Nsb1d
+   lkiHVTx7U7xoHSuTUGd2lByk1i6XVYlbdEckQQxVHjYxoIntWPM6yL6Q7
+   t8woleWLzNAoB7CwrFQggaZv9n16hP06qMF37+RqtMVoxlvcfZLXv11cY
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="383475883"
+X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
+   d="scan'208";a="383475883"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 19:09:30 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="834859498"
+X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
+   d="scan'208";a="834859498"
+Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.254.211.119]) ([10.254.211.119])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 19:09:17 -0800
+Message-ID: <d42fb7b6-58ad-435d-ab11-985d5dd154c2@linux.intel.com>
+Date: Wed, 29 Nov 2023 11:09:14 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Cc: baolu.lu@linux.intel.com, Christoph Hellwig <hch@lst.de>,
+ Jerry Snitselaar <jsnitsel@redhat.com>, Hector Martin <marcan@marcan.st>,
+ Moritz Fischer <mdf@kernel.org>, patches@lists.linux.dev,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Rob Herring <robh@kernel.org>, Thierry Reding <thierry.reding@gmail.com>
+Subject: Re: [PATCH 02/10] iommmu/of: Do not return struct iommu_ops from
+ of_iommu_configure()
+To: Jason Gunthorpe <jgg@nvidia.com>, David Airlie <airlied@gmail.com>,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
+ asahi@lists.linux.dev, Catalin Marinas <catalin.marinas@arm.com>,
+ Danilo Krummrich <dakr@redhat.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Dexuan Cui <decui@microsoft.com>, devicetree@vger.kernel.org,
+ dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ David Woodhouse <dwmw2@infradead.org>, Frank Rowand
+ <frowand.list@gmail.com>, Hanjun Guo <guohanjun@huawei.com>,
+ Haiyang Zhang <haiyangz@microsoft.com>, iommu@lists.linux.dev,
+ Jon Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+ Karol Herbst <kherbst@redhat.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ "K. Y. Srinivasan" <kys@microsoft.com>,
+ Laxman Dewangan <ldewangan@nvidia.com>, Len Brown <lenb@kernel.org>,
+ linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-hyperv@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-riscv@lists.infradead.org, linux-snps-arc@lists.infradead.org,
+ linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, Lyude Paul <lyude@redhat.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, nouveau@lists.freedesktop.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley
+ <paul.walmsley@sifive.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+ Sudeep Holla <sudeep.holla@arm.com>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Sven Peter <sven@svenpeter.dev>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Vineet Gupta <vgupta@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>
+References: <2-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <2-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This link got broken by commit e790a4ce5290 ("arm: docs: Move Arm
-documentation to Documentation/arch/") when the doc moved from arm/ to
-arch/arm/. Fix the link so that it can continue to be followed.
+On 2023/11/29 8:47, Jason Gunthorpe wrote:
+> Nothing needs this pointer. Return a normal error code with the usual
+> IOMMU semantic that ENODEV means 'there is no IOMMU driver'.
+> 
+> Reviewed-by: Jerry Snitselaar<jsnitsel@redhat.com>
+> Acked-by: Rob Herring<robh@kernel.org>
+> Tested-by: Hector Martin<marcan@marcan.st>
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+> ---
+>   drivers/iommu/of_iommu.c | 31 +++++++++++++++++++------------
+>   drivers/of/device.c      | 22 +++++++++++++++-------
+>   include/linux/of_iommu.h | 13 ++++++-------
+>   3 files changed, 40 insertions(+), 26 deletions(-)
 
-Fixes: e790a4ce5290 ("arm: docs: Move Arm documentation to Documentation/arch/")
-Cc: Alexandre TORGUE <alexandre.torgue@foss.st.com>
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 
-Please land this through qcom tree.
-
-Changes from v1 (https://lore.kernel.org/r/20231128002052.2520402-1-swboyd@chromium.org):
- * Pick up tags
-
- Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 7f80f48a0954..8a6466d1fc4e 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -138,7 +138,7 @@ description: |
-   There are many devices in the list below that run the standard ChromeOS
-   bootloader setup and use the open source depthcharge bootloader to boot the
-   OS. These devices do not use the scheme described above. For details, see:
--  https://docs.kernel.org/arm/google/chromebook-boot-flow.html
-+  https://docs.kernel.org/arch/arm/google/chromebook-boot-flow.html
- 
- properties:
-   $nodename:
-
-base-commit: b85ea95d086471afb4ad062012a4d73cd328fa86
--- 
-https://chromeos.dev
-
+Best regards,
+baolu
