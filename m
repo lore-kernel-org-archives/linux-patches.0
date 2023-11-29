@@ -1,38 +1,38 @@
 Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0695221;
-	Wed, 29 Nov 2023 03:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD01E4405;
+	Wed, 29 Nov 2023 03:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aEPPtdvN"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WqFOC3G4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701227371; x=1732763371;
+  t=1701227410; x=1732763410;
   h=message-id:date:mime-version:cc:subject:to:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=0uRT7eby29KrVItGuX/TtqLsIa8b48zVBs2iq6+uLQA=;
-  b=aEPPtdvNddUsSeI4EDrcpbZuwbIpH12e/DmeeY3C62V1so82duFj7lcw
-   6BPVNfVUF5+RRth8yVRGJ0sP6h5GsmXFp247m+NKdbMGgyIK2dq5vTA7k
-   XL4t8BukLmYA271uGzJ0qoDcv3TnCh56L2sLsdmECx+mnVzCggvFBfjad
-   +i5fMYGhdYzbMjFin6N2DVFCHg+wDVM9jk/1k20TQMvT6xCeSGL0Nsb1d
-   lkiHVTx7U7xoHSuTUGd2lByk1i6XVYlbdEckQQxVHjYxoIntWPM6yL6Q7
-   t8woleWLzNAoB7CwrFQggaZv9n16hP06qMF37+RqtMVoxlvcfZLXv11cY
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="383475883"
+  bh=/oHCgdh4MFWTPl52b3Uz+kSnxHOlCRQcvvMII2RxnKA=;
+  b=WqFOC3G40IYDYdHpfbb6QgSzjcladzfw99HNtCyeqP1Dy2DXwTDngSed
+   KCBzghVKfB7GRDLH2vmwyOeZq38sJ9+CY8WKXuk+81n7NZMWe1dwXr2sk
+   bcnL2xv05FN+hEQI+QE6nvhm52yBamukHu0/FLwvdDa8j2tWFwhs1Fg0L
+   2bUc0MICCLQIdfpwN80OCpUoAm/wNlBO+blVMjyjbOIkHYtJ2vDrIPz5v
+   Ys9ShVDvd54WqsWv5CsMX/cBqPgGbP+2N3JGK1WFDkdsFi0D3NM2oxP5B
+   +L8zIqK70jfZUqyQi4def5ZGRKXGTK1g3XyCyt8OuqF3JXHMKCcDiLjMt
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="383475964"
 X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
-   d="scan'208";a="383475883"
+   d="scan'208";a="383475964"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 19:09:30 -0800
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 19:10:08 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="834859498"
+X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="834859717"
 X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
-   d="scan'208";a="834859498"
+   d="scan'208";a="834859717"
 Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.254.211.119]) ([10.254.211.119])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 19:09:17 -0800
-Message-ID: <d42fb7b6-58ad-435d-ab11-985d5dd154c2@linux.intel.com>
-Date: Wed, 29 Nov 2023 11:09:14 +0800
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 19:09:55 -0800
+Message-ID: <01c92fc2-40b0-43a8-b7c2-6f7f7b05b4a7@linux.intel.com>
+Date: Wed, 29 Nov 2023 11:09:55 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,8 +45,9 @@ Cc: baolu.lu@linux.intel.com, Christoph Hellwig <hch@lst.de>,
  Moritz Fischer <mdf@kernel.org>, patches@lists.linux.dev,
  "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
  Rob Herring <robh@kernel.org>, Thierry Reding <thierry.reding@gmail.com>
-Subject: Re: [PATCH 02/10] iommmu/of: Do not return struct iommu_ops from
- of_iommu_configure()
+Subject: Re: [PATCH 07/10] acpi: Do not return struct iommu_ops from
+ acpi_iommu_configure_id()
+Content-Language: en-US
 To: Jason Gunthorpe <jgg@nvidia.com>, David Airlie <airlied@gmail.com>,
  Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
  asahi@lists.linux.dev, Catalin Marinas <catalin.marinas@arm.com>,
@@ -76,26 +77,23 @@ To: Jason Gunthorpe <jgg@nvidia.com>, David Airlie <airlied@gmail.com>,
  Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
  Vineet Gupta <vgupta@kernel.org>, Vinod Koul <vkoul@kernel.org>,
  Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>
-References: <2-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
-Content-Language: en-US
+References: <7-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <2-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+In-Reply-To: <7-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2023/11/29 8:47, Jason Gunthorpe wrote:
+On 2023/11/29 8:48, Jason Gunthorpe wrote:
 > Nothing needs this pointer. Return a normal error code with the usual
 > IOMMU semantic that ENODEV means 'there is no IOMMU driver'.
 > 
+> Acked-by: Rafael J. Wysocki<rafael.j.wysocki@intel.com>
 > Reviewed-by: Jerry Snitselaar<jsnitsel@redhat.com>
-> Acked-by: Rob Herring<robh@kernel.org>
 > Tested-by: Hector Martin<marcan@marcan.st>
 > Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 > ---
->   drivers/iommu/of_iommu.c | 31 +++++++++++++++++++------------
->   drivers/of/device.c      | 22 +++++++++++++++-------
->   include/linux/of_iommu.h | 13 ++++++-------
->   3 files changed, 40 insertions(+), 26 deletions(-)
+>   drivers/acpi/scan.c | 29 +++++++++++++++++------------
+>   1 file changed, 17 insertions(+), 12 deletions(-)
 
 Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
 
