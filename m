@@ -1,148 +1,237 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ED42114
-	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 13:25:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id A3BCF210DF;
-	Wed, 29 Nov 2023 13:25:32 +0000 (UTC)
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 861A113637;
-	Wed, 29 Nov 2023 13:25:32 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 47hXIMw7Z2XlRAAAD6G6ig
-	(envelope-from <vbabka@suse.cz>); Wed, 29 Nov 2023 13:25:32 +0000
-Message-ID: <e0647e65-d348-35a0-bc5a-66d1ad02ea53@suse.cz>
-Date: Wed, 29 Nov 2023 14:25:32 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF6E3A8EE;
+	Wed, 29 Nov 2023 16:23:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HbXC+4Su"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2c8880f14eeso88619391fa.3;
+        Wed, 29 Nov 2023 08:23:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701274997; x=1701879797; darn=lists.linux.dev;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BE4DN2NIJid+M8TUF/vMVc9hXeYzBXdHSi7xojD4wk4=;
+        b=HbXC+4SuhJxcKg1S7uZAPWIPZNNL9iv6jRGY4HeQ40++zv1zXlridOAJvZgvmZCI4s
+         k7Yb4q0nw4oiEdy683Wn7v0XHDW9YEp1YI+BKlT+v+XZEhZIv1fxUmNl3hB61sXPt2jn
+         uoDIrgpRsHAQhqAjniyH6I1pp1BFPsJwpgb4jKLYt3+6auij+GmGZfjLX4iz7WysU71P
+         wdiGt9vS6AplviU5laQOnbW/0nVEfNl0uApirj9M0VTb34dUdLjJgheP7iCQaTA9EuSA
+         HpV7UPmvHfagJiSt9JKwcXqV77mu0EVuKqfeTUaz+1alhYCFS7SkcD6sgY8Br2MmFg1t
+         /ljg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701274997; x=1701879797;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BE4DN2NIJid+M8TUF/vMVc9hXeYzBXdHSi7xojD4wk4=;
+        b=Ecc8w5vc6gaRMACGCTu5zLssmUFjEBqNpekShRpLkvwu+li3zxumjX8l6lJ44A72kR
+         Ub79ut1y/ouAezv8ngCh9h87SQ40SerTGBG+hIT9tAQ7CMifsQWA3rGvPoZE7dcHKWT2
+         zEfvsKqe/da74vSnVkiymJT9e0ixvIjFvMQYYQaLBBPS083nN/wKZq7fROBSNqoDUaKg
+         wvy99lLjLj6o34cM3/sDsPcYPqFhuWZx3Bw7elw9BYs1ue2vTw46eIG/IA7bBoIgRJbJ
+         rPorZ2+s+aklvE8qGVFnddvAQPRksYblHAx2AOQNpHRoq/YVnaVQ54at4XV2wtbZp8xs
+         r8wQ==
+X-Gm-Message-State: AOJu0YzKZNdKRT7XtPlcKoD6fcAMtsfw4tZLw5wQEATGubLrApWhrl9F
+	oft0n8PJF7HJCAkFen4UZuQ=
+X-Google-Smtp-Source: AGHT+IFpkXFRA9JtjkMulyQU+vE6lllIuj8DaTvHOgPc7kkDjVJCH1EZdgBzk/x+Nxw/nDpm1ZgC3Q==
+X-Received: by 2002:a2e:9557:0:b0:2c9:b623:ddf1 with SMTP id t23-20020a2e9557000000b002c9b623ddf1mr3708530ljh.51.1701274997225;
+        Wed, 29 Nov 2023 08:23:17 -0800 (PST)
+Received: from orome.fritz.box (p200300e41f0fa600f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f0f:a600:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id n16-20020a05600c501000b00407b93d8085sm2743768wmr.27.2023.11.29.08.23.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Nov 2023 08:23:16 -0800 (PST)
+Date: Wed, 29 Nov 2023 17:23:13 +0100
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Airlie <airlied@gmail.com>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Albert Ou <aou@eecs.berkeley.edu>, asahi@lists.linux.dev,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Danilo Krummrich <dakr@redhat.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Dexuan Cui <decui@microsoft.com>, devicetree@vger.kernel.org,
+	dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	David Woodhouse <dwmw2@infradead.org>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>, iommu@lists.linux.dev,
+	Jon Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+	Karol Herbst <kherbst@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Laxman Dewangan <ldewangan@nvidia.com>, Len Brown <lenb@kernel.org>,
+	linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-hyperv@vger.kernel.org, linux-mips@vger.kernel.org,
+	linux-riscv@lists.infradead.org, linux-snps-arc@lists.infradead.org,
+	linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Lyude Paul <lyude@redhat.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	nouveau@lists.freedesktop.org, Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Sven Peter <sven@svenpeter.dev>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Vineet Gupta <vgupta@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>, Christoph Hellwig <hch@lst.de>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Hector Martin <marcan@marcan.st>, Moritz Fischer <mdf@kernel.org>,
+	patches@lists.linux.dev,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH 08/10] iommu/tegra: Use tegra_dev_iommu_get_stream_id()
+ in the remaining places
+Message-ID: <ZWdlcboM4Xzs38NI@orome.fritz.box>
+References: <0-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+ <8-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [RFC v2 2/7] mm, slub: add opt-in slub_percpu_array
-Content-Language: en-US
-To: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>,
- Matthew Wilcox <willy@infradead.org>, Suren Baghdasaryan
- <surenb@google.com>, Christoph Lameter <cl@linux.com>,
- David Rientjes <rientjes@google.com>, Pekka Enberg <penberg@kernel.org>,
- Joonsoo Kim <iamjoonsoo.kim@lge.com>,
- Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20230810163627.6206-9-vbabka@suse.cz>
- <20230810163627.6206-11-vbabka@suse.cz>
- <CAB=+i9TSMVURktFvr7sAt4T2BdaUvsWFapAjTZNtk0AKS01O9A@mail.gmail.com>
- <077e8e97-e88f-0b8e-2788-4031458be090@suse.cz>
- <CAB=+i9SQBhYBjOSHDeqgJJ5YARqZCS3oUUutzr4m+2V+ZvySpg@mail.gmail.com>
-From: Vlastimil Babka <vbabka@suse.cz>
-In-Reply-To: <CAB=+i9SQBhYBjOSHDeqgJJ5YARqZCS3oUUutzr4m+2V+ZvySpg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: +++++++++++
-X-Spam-Score: 11.63
-X-Rspamd-Server: rspamd1
-Authentication-Results: smtp-out1.suse.de;
-	dkim=none;
-	spf=softfail (smtp-out1.suse.de: 2a07:de40:b281:104:10:150:64:97 is neither permitted nor denied by domain of vbabka@suse.cz) smtp.mailfrom=vbabka@suse.cz;
-	dmarc=none
-X-Rspamd-Queue-Id: A3BCF210DF
-X-Spam-Flag: NO
-X-Spam-Level: ***********
-X-Spamd-Result: default: False [11.63 / 50.00];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 ARC_NA(0.00)[];
-	 MID_RHS_MATCH_FROM(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 TAGGED_RCPT(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 DMARC_NA(1.20)[suse.cz];
-	 R_SPF_SOFTFAIL(4.60)[~all];
-	 SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 MX_GOOD(-0.01)[];
-	 NEURAL_HAM_SHORT(-0.05)[-0.257];
-	 RCPT_COUNT_TWELVE(0.00)[12];
-	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.cz:email];
-	 NEURAL_SPAM_LONG(2.29)[0.655];
-	 FREEMAIL_TO(0.00)[gmail.com];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 R_DKIM_NA(2.20)[];
-	 MIME_TRACE(0.00)[0:+];
-	 RCVD_TLS_ALL(0.00)[];
-	 SUSPICIOUS_RECIPS(1.50)[]
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="OR6CuieIvqboqm08"
+Content-Disposition: inline
+In-Reply-To: <8-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-On 11/29/23 01:46, Hyeonggon Yoo wrote:
-> On Wed, Nov 29, 2023 at 2:37 AM Vlastimil Babka <vbabka@suse.cz> wrote:
-> 
->> >> @@ -4060,6 +4201,45 @@ int kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
->> >>  }
->> >>  EXPORT_SYMBOL(kmem_cache_alloc_bulk);
->> >>
->> >> +int kmem_cache_prefill_percpu_array(struct kmem_cache *s, unsigned int count,
->> >> +               gfp_t gfp)
->> >> +{
->> >> +       struct slub_percpu_array *pca;
->> >> +       void *objects[32];
->> >> +       unsigned int used;
->> >> +       unsigned int allocated;
->> >> +
->> >> +       if (!s->cpu_array)
->> >> +               return -EINVAL;
->> >> +
->> >> +       /* racy but we don't care */
->> >> +       pca = raw_cpu_ptr(s->cpu_array);
->> >> +
->> >> +       used = READ_ONCE(pca->used);
->> >
->> > Hmm for the prefill to be meaningful,
->> > remote allocation should be possible, right?
->>
->> Remote in what sense?
-> 
-> TL;DR) What I wanted to ask was:
-> "How pre-filling a number of objects works when the pre-filled objects
-> are not shared between CPUs"
-> 
-> IIUC the prefill is opportunistically filling the array so (hopefully)
-> expecting there are
-> some objects filled in it.
 
-Yes.
+--OR6CuieIvqboqm08
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Let's say CPU X calls kmem_cache_prefill_percpu_array(32) and all 32
-> objects are filled into CPU X's array.
-> But if CPU Y can't allocate from CPU X's array (which I referred to as
-> "remote allocation"), the semantics differ from
-> the maple tree's perspective because preallocated objects were shared
-> between CPUs before, but now it's not?
+On Tue, Nov 28, 2023 at 08:48:04PM -0400, Jason Gunthorpe wrote:
+> This API was defined to formalize the access to internal iommu details on
+> some Tegra SOCs, but a few callers got missed. Add them.
+>=20
+> The helper already masks by 0xFFFF so remove this code from the callers.
+>=20
+> Suggested-by: Thierry Reding <thierry.reding@gmail.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/dma/tegra186-gpc-dma.c                  |  8 +++-----
+>  drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c |  7 ++-----
+>  drivers/memory/tegra/tegra186.c                 | 12 ++++++------
+>  3 files changed, 11 insertions(+), 16 deletions(-)
+>=20
+> diff --git a/drivers/dma/tegra186-gpc-dma.c b/drivers/dma/tegra186-gpc-dm=
+a.c
+> index fa4d4142a68a21..88547a23825b18 100644
+> --- a/drivers/dma/tegra186-gpc-dma.c
+> +++ b/drivers/dma/tegra186-gpc-dma.c
+> @@ -1348,8 +1348,8 @@ static int tegra_dma_program_sid(struct tegra_dma_c=
+hannel *tdc, int stream_id)
+>  static int tegra_dma_probe(struct platform_device *pdev)
+>  {
+>  	const struct tegra_dma_chip_data *cdata =3D NULL;
+> -	struct iommu_fwspec *iommu_spec;
+> -	unsigned int stream_id, i;
+> +	unsigned int i;
+> +	u32 stream_id;
+>  	struct tegra_dma *tdma;
+>  	int ret;
+> =20
+> @@ -1378,12 +1378,10 @@ static int tegra_dma_probe(struct platform_device=
+ *pdev)
+> =20
+>  	tdma->dma_dev.dev =3D &pdev->dev;
+> =20
+> -	iommu_spec =3D dev_iommu_fwspec_get(&pdev->dev);
+> -	if (!iommu_spec) {
+> +	if (!tegra_dev_iommu_get_stream_id(&pdev->dev, &stream_id)) {
+>  		dev_err(&pdev->dev, "Missing iommu stream-id\n");
+>  		return -EINVAL;
+>  	}
+> -	stream_id =3D iommu_spec->ids[0] & 0xffff;
+> =20
+>  	ret =3D device_property_read_u32(&pdev->dev, "dma-channel-mask",
+>  				       &tdma->chan_mask);
+> diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c b/drivers/gp=
+u/drm/nouveau/nvkm/subdev/ltc/gp10b.c
+> index e7e8fdf3adab7a..b40fd1dbb21617 100644
+> --- a/drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c
+> +++ b/drivers/gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c
+> @@ -28,16 +28,13 @@ static void
+>  gp10b_ltc_init(struct nvkm_ltc *ltc)
+>  {
+>  	struct nvkm_device *device =3D ltc->subdev.device;
+> -	struct iommu_fwspec *spec;
+> +	u32 sid;
+> =20
+>  	nvkm_wr32(device, 0x17e27c, ltc->ltc_nr);
+>  	nvkm_wr32(device, 0x17e000, ltc->ltc_nr);
+>  	nvkm_wr32(device, 0x100800, ltc->ltc_nr);
+> =20
+> -	spec =3D dev_iommu_fwspec_get(device->dev);
+> -	if (spec) {
+> -		u32 sid =3D spec->ids[0] & 0xffff;
+> -
+> +	if (tegra_dev_iommu_get_stream_id(device->dev, &sid)) {
+>  		/* stream ID */
+>  		nvkm_wr32(device, 0x160000, sid << 2);
 
-The assumption is that the operation will prefill on CPU X and then consume
-it also on X, because shortly after prefill it will enter some restricted
-context (i.e. spin_lock_irqsave or whatnot) that prevents it from migrating.
-That's not guaranteed of course, but migration in a bad moment and
-subsequent depleted array should be rare enough that we'll just handle it in
-the slow paths, and if it results in dipping into reserves, it won't be too
-disruptive.
+We could probably also remove the comment now since the function and
+variable names make it obvious what's being written here.
 
-> Thanks!
-> 
-> --
-> Hyeonggon
+>  	}
+> diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra=
+186.c
+> index 533f85a4b2bdb7..3e4fbe94dd666e 100644
+> --- a/drivers/memory/tegra/tegra186.c
+> +++ b/drivers/memory/tegra/tegra186.c
+> @@ -111,21 +111,21 @@ static void tegra186_mc_client_sid_override(struct =
+tegra_mc *mc,
+>  static int tegra186_mc_probe_device(struct tegra_mc *mc, struct device *=
+dev)
+>  {
+>  #if IS_ENABLED(CONFIG_IOMMU_API)
+> -	struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
+>  	struct of_phandle_args args;
+>  	unsigned int i, index =3D 0;
+> +	u32 sid;
+> =20
+> +	WARN_ON(!tegra_dev_iommu_get_stream_id(dev, &sid));
 
+I know the code previously didn't check for any errors, but we may want
+to do so now. If tegra_dev_iommu_get_stream_id() ever fails we may end
+up writing some undefined value into the override register.
+
+I'm also unsure if WARN_ON() is appropriate here. I vaguely recall that
+->probe_device() was called for all devices on the bus and not all of
+them may have been associated with the IOMMU. Not all of them may in
+fact access memory in the first place.
+
+Perhaps I'm misremembering and the IOMMU core now takes care of only
+calling this when fwspec is indeed valid?
+
+Thierry
+
+--OR6CuieIvqboqm08
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmVnZW8ACgkQ3SOs138+
+s6H3xA/+PnJPzNAATgGeEaxpY8VPfo7h0kY98vc1QYnUCiV46yzQPUq+/nVkkq24
+ybBtQ8hr0vl4ZxtflekHYxb0WsXO560ODmmckXEYPWRfVyxckFz+CRyvDx+zxyxJ
+d/TtD8p0l6DGFlZGume2h/cDafF5+3td2JEJ2vEfu0tMmRLIFC7L+Pj2IB4/Fz21
+2M6M6T0Al7obecinfW9jzg00G20RybQSrdPq+H9z3BNhOXGKy+1fjIzCsnr4H0gD
+kE4WooU9uLbMdpEYYZ8idqC1OieIr6p2IF802/4/TAvWHreHlH7uPcDRry8rxkwQ
+j0CAwBlcvLLtLj2pw7kYgxMpXwahgXSuhxX42CXDWsUUW4mxiZkvG0o8Cv2EGtSD
+emTIMrC3w1R2MSemI8+RQdOHhOnTNC0sADGo9EyurPrYC9TzwqTOPI35kNqJ8ZAw
+zCmhDKieZM9dxlOdFrpC+eLz8eVEjo5oV+OchMT6k8nw7TkD6dGHBOJlDhQeJNWZ
+tZBnlBamoEmlD5Kz/Oe90S47MnYtx8EX7o9bpEV6/ZO13P+F07rasP3l6hCJuybO
+c2YAeCxY8cuwHLnIJZTm3hR7UU9PQwPn4utolLuSqaXkL5wSdVr+1eZyTye25W0J
+CSzMCL3SkMgfKaZ7L6ptSRFtOWxiH6943ahvYpDBXlgEp/R9aVg=
+=ORi/
+-----END PGP SIGNATURE-----
+
+--OR6CuieIvqboqm08--
