@@ -1,108 +1,190 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394CD481C4;
-	Tue, 28 Nov 2023 23:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2C8195
+	for <patches@lists.linux.dev>; Wed, 29 Nov 2023 00:46:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8OY25HX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E808C433C8;
-	Tue, 28 Nov 2023 23:55:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701215758;
-	bh=nG35m4Vhxm9XNz4uNcrivh81CH8gXfwdbwOCLLaDjvc=;
-	h=From:Date:Subject:To:Cc:From;
-	b=H8OY25HXkY/+389x+INNuMR+qeYUfXBigl+TQ7yAxhaZCU2brkK4nogY/bpNaednx
-	 eyA8WkmW9/XasYQRRbV6/fe0ZtW7HhsdUDbnsUvXTGsCwaEa3fJqMJ+qFsagq+T5gp
-	 lGcZpOVRCfS+Umh3ydNyuzYAycGIBI+GWma7AcfXrkFXHdfR0ytlq57gbopfowsNOf
-	 b3p+enhLs9ZST689HKcd26/WSI4vLmFCtTevslR76NUgCqL5kWh5navmy875BjRrxt
-	 RSu0jCUVT9ZozQjrpLxS64m+XTeE6Ihup65O7D1z+27s9hnWdWjyASyJdXX1msEOyS
-	 rG5QV+USiLINw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 28 Nov 2023 16:55:43 -0700
-Subject: [PATCH] buffer: Add cast in grow_buffers() to avoid a
- multiplication libcall
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eEeEAZmX"
+Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-4af8f20034cso1952026e0c.3
+        for <patches@lists.linux.dev>; Tue, 28 Nov 2023 16:46:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701218811; x=1701823611; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+oDh1aIguEdHpwRt07bECjWeSQzO3Fxi6hNx6EgBsZw=;
+        b=eEeEAZmXzxs5EYJnAIjqykpexrLc9GAEj/O+xtiXjsjFCJwUlAqHvPtGRTv2yQIKxA
+         rolnMxtk3A23AwcyHlwmRynf395P+SO2dwPuiLV/W5xuphlV+GWFi+8cbgG4/QmdLj6A
+         8f2UbrC9SBlkSb3D5ppCjqzSuzgWOahI3YMnNuj4e0cosUobr5mJlBmjicSJ5xjU3vIX
+         HLfNOci76/9KZiJZHHSFIKTRqahEDZyhUgv5uRt8X0esk/pDXTCgyFmZ+MqnJcgZVpAF
+         qRejeQTUW+zP3XF9RTpK+bHzhJ6G4u5T7gF3fgs72XyzDRIxYsF3wRDSdIxRlBaplW5N
+         SE+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701218811; x=1701823611;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+oDh1aIguEdHpwRt07bECjWeSQzO3Fxi6hNx6EgBsZw=;
+        b=Mb6b9JJBMvZohPNPE3MHhzzb11NeR4wbO30HPluNyfRUDs1jNCHRWmV//7ieAfjFZR
+         v4MyZU/BxZ2D1nVgVXWkABUmh5SNDWd790wTK0fvoSGua3JjV5slMjg+nA93jDEVwIk2
+         MIUmqCOIO3B33i+ALTpKct7NDFAlGgrWTx7urGbJ/eUC80/r+Kjh6cmYR37G10lnfnxb
+         lYG+yK2eW8JsY8SWl0AzmL3o2f7yencn918HL8GeqJzjFxtUcpvchfoZR7uD2P/amsP1
+         dEy+/rR7NHC0Vuw0fO0exI7F2XCfkcuT2Ae8iYpYholCiUrKiy3kZaQRmx3cOb8a6aEd
+         79oA==
+X-Gm-Message-State: AOJu0YwG3KHyoqG4JUWz/i/aX/LB4cXrr5joique+Obi7xtuMjGp2d5n
+	MuI3kNlDVw6/jGoA0xIKY7kuaRScD2c9DhTndcg=
+X-Google-Smtp-Source: AGHT+IEk8yTd8eI4EdeyKZW6reXCMwZOddixQRa28CFP3qyfYrswVX53unzj5ErXKXftiuXmRwb92oAWzv7HWxQq7w0=
+X-Received: by 2002:a1f:f8cf:0:b0:4b2:777a:a860 with SMTP id
+ w198-20020a1ff8cf000000b004b2777aa860mr3478556vkh.13.1701218810686; Tue, 28
+ Nov 2023 16:46:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231128-avoid-muloti4-grow_buffers-v1-1-bc3d0f0ec483@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAP59ZmUC/x3MSwqDMBAA0KvIrDtgxijqVYoUrRMdUCOT+gHx7
- g0u3+ZdEFiFA9TJBcq7BPFLhHkl8B3bZWCUPhoopcwYKrHdvfQ4b5P/icVB/fHpNudYA+ZFYSm
- 1LrdUQQxWZSfnk7+b+/4DPVXPLWwAAAA=
-To: akpm@linux-foundation.org
-Cc: willy@infradead.org, ndesaulniers@google.com, 
- linux-fsdevel@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Naresh Kamboju <naresh.kamboju@linaro.org>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2587; i=nathan@kernel.org;
- h=from:subject:message-id; bh=nG35m4Vhxm9XNz4uNcrivh81CH8gXfwdbwOCLLaDjvc=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKlpdXztleunX9qzhVOy9p1PwwUxDZcIfr4gH47l9UYWy
- au1A+U7SlkYxLgYZMUUWaofqx43NJxzlvHGqUkwc1iZQIYwcHEKwEQcZzL8FTQ6/lwk/XxE19F7
- 888s45repZ9x9tWDORZ/2feuuL5yoiIjw8xI/6QEJVeNr7IKusv42E9tfqIae+iJtXvb2SqjmPg
- fnAA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20230810163627.6206-9-vbabka@suse.cz> <20230810163627.6206-11-vbabka@suse.cz>
+ <CAB=+i9TSMVURktFvr7sAt4T2BdaUvsWFapAjTZNtk0AKS01O9A@mail.gmail.com> <077e8e97-e88f-0b8e-2788-4031458be090@suse.cz>
+In-Reply-To: <077e8e97-e88f-0b8e-2788-4031458be090@suse.cz>
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Date: Wed, 29 Nov 2023 09:46:38 +0900
+Message-ID: <CAB=+i9SQBhYBjOSHDeqgJJ5YARqZCS3oUUutzr4m+2V+ZvySpg@mail.gmail.com>
+Subject: Re: [RFC v2 2/7] mm, slub: add opt-in slub_percpu_array
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>, Matthew Wilcox <willy@infradead.org>, 
+	Suren Baghdasaryan <surenb@google.com>, Christoph Lameter <cl@linux.com>, David Rientjes <rientjes@google.com>, 
+	Pekka Enberg <penberg@kernel.org>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, 
+	Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When building with clang after commit 697607935295 ("buffer: fix
-grow_buffers() for block size > PAGE_SIZE"), there is an error at link
-time due to the generation of a 128-bit multiplication libcall:
+On Wed, Nov 29, 2023 at 2:37=E2=80=AFAM Vlastimil Babka <vbabka@suse.cz> wr=
+ote:
+>
+> On 8/21/23 16:57, Hyeonggon Yoo wrote:
+> > Hi,
+> >
+> > On Fri, Aug 11, 2023 at 1:36=E2=80=AFAM Vlastimil Babka <vbabka@suse.cz=
+> wrote:
+>
+> Oops, looks like I forgot reply, sorry (preparing v3 now).
 
-  ld.lld: error: undefined symbol: __muloti4
-  >>> referenced by buffer.c:0 (fs/buffer.c:0)
-  >>>               fs/buffer.o:(bdev_getblk) in archive vmlinux.a
+It's fine, you were busy removing SLAB :)
+thanks for replying.
 
-Due to the width mismatch between the factors and the sign mismatch
-between the factors and the result, clang generates IR that performs
-this overflow check with 65-bit signed multiplication and LLVM does not
-improve on it during optimization, so the 65-bit multiplication is
-extended to 128-bit during legalization, resulting in the libcall on
-most targets.
+> >
+> >>  /*
+> >>   * Inlined fastpath so that allocation functions (kmalloc, kmem_cache=
+_alloc)
+> >>   * have the fastpath folded into their functions. So no function call
+> >> @@ -3465,7 +3564,11 @@ static __fastpath_inline void *slab_alloc_node(=
+struct kmem_cache *s, struct list
+> >>         if (unlikely(object))
+> >>                 goto out;
+> >>
+> >> -       object =3D __slab_alloc_node(s, gfpflags, node, addr, orig_siz=
+e);
+> >> +       if (s->cpu_array)
+> >> +               object =3D alloc_from_pca(s);
+> >> +
+> >> +       if (!object)
+> >> +               object =3D __slab_alloc_node(s, gfpflags, node, addr, =
+orig_size);
+> >>
+> >>         maybe_wipe_obj_freeptr(s, object);
+> >>         init =3D slab_want_init_on_alloc(gfpflags, s);
+> >> @@ -3715,6 +3818,34 @@ static void __slab_free(struct kmem_cache *s, s=
+truct slab *slab,
+> >>         discard_slab(s, slab);
+> >>  }
+> >
+> >>  #ifndef CONFIG_SLUB_TINY
+> >>  /*
+> >>   * Fastpath with forced inlining to produce a kfree and kmem_cache_fr=
+ee that
+> >> @@ -3740,6 +3871,11 @@ static __always_inline void do_slab_free(struct=
+ kmem_cache *s,
+> >>         unsigned long tid;
+> >>         void **freelist;
+> >>
+> >> +       if (s->cpu_array && cnt =3D=3D 1) {
+> >> +               if (free_to_pca(s, head))
+> >> +                       return;
+> >> +       }
+> >> +
+> >>  redo:
+> >>         /*
+> >>          * Determine the currently cpus per cpu slab.
+> >> @@ -3793,6 +3929,11 @@ static void do_slab_free(struct kmem_cache *s,
+> >>  {
+> >>         void *tail_obj =3D tail ? : head;
+> >>
+> >> +       if (s->cpu_array && cnt =3D=3D 1) {
+> >> +               if (free_to_pca(s, head))
+> >> +                       return;
+> >> +       }
+> >> +
+> >>         __slab_free(s, slab, head, tail_obj, cnt, addr);
+> >>  }
+> >>  #endif /* CONFIG_SLUB_TINY */
+> >
+> > Is this functionality needed for SLUB_TINY?
+>
+> Due to the prefill semantics, I think it has to be be even in TINY, or we
+> risk running out of memory reserves. Also later I want to investigate
+> extending this approach for supporting allocations in very constrained
+> contexts (NMI) so e.g. bpf doesn't have to reimplement the slab allocator=
+,
+> and that would also not be good to limit to !SLUB_TINY.
 
-To avoid the initial situation that causes clang to generate the
-problematic IR, cast size (which is an 'unsigned int') to the same
-type/width as block (which is currently a 'u64'/'unsigned long long').
-GCC appears to already do this internally because there is no binary
-difference with the cast for arm, arm64, riscv, or x86_64.
+I've got the point, thanks for the explanation!
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1958
-Link: https://github.com/llvm/llvm-project/issues/38013
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Closes: https://lore.kernel.org/CA+G9fYuA_PTd7R2NsBvtNb7qjwp4avHpCmWi4=OmY4jndDcQYA@mail.gmail.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-I am aware the hash in the commit message is not stable due to being on
-the mm-unstable branch but I figured I would write the commit message as
-if it would be standalone, in case this should not be squashed into the
-original change. I did not add a comment to the source around this
-workaround but I can if so desired.
----
- fs/buffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> >> @@ -4060,6 +4201,45 @@ int kmem_cache_alloc_bulk(struct kmem_cache *s,=
+ gfp_t flags, size_t size,
+> >>  }
+> >>  EXPORT_SYMBOL(kmem_cache_alloc_bulk);
+> >>
+> >> +int kmem_cache_prefill_percpu_array(struct kmem_cache *s, unsigned in=
+t count,
+> >> +               gfp_t gfp)
+> >> +{
+> >> +       struct slub_percpu_array *pca;
+> >> +       void *objects[32];
+> >> +       unsigned int used;
+> >> +       unsigned int allocated;
+> >> +
+> >> +       if (!s->cpu_array)
+> >> +               return -EINVAL;
+> >> +
+> >> +       /* racy but we don't care */
+> >> +       pca =3D raw_cpu_ptr(s->cpu_array);
+> >> +
+> >> +       used =3D READ_ONCE(pca->used);
+> >
+> > Hmm for the prefill to be meaningful,
+> > remote allocation should be possible, right?
+>
+> Remote in what sense?
 
-diff --git a/fs/buffer.c b/fs/buffer.c
-index 4eb44ccdc6be..3a8c8322ed28 100644
---- a/fs/buffer.c
-+++ b/fs/buffer.c
-@@ -1091,7 +1091,7 @@ static bool grow_buffers(struct block_device *bdev, sector_t block,
- 	 * Check for a block which lies outside our maximum possible
- 	 * pagecache index.
- 	 */
--	if (check_mul_overflow(block, size, &pos) || pos > MAX_LFS_FILESIZE) {
-+	if (check_mul_overflow(block, (sector_t)size, &pos) || pos > MAX_LFS_FILESIZE) {
- 		printk(KERN_ERR "%s: requested out-of-range block %llu for device %pg\n",
- 			__func__, (unsigned long long)block,
- 			bdev);
+TL;DR) What I wanted to ask was:
+"How pre-filling a number of objects works when the pre-filled objects
+are not shared between CPUs"
 
----
-base-commit: 5cdba94229e58a39ca389ad99763af29e6b0c5a5
-change-id: 20231128-avoid-muloti4-grow_buffers-5664204f5429
+IIUC the prefill is opportunistically filling the array so (hopefully)
+expecting there are
+some objects filled in it.
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+Let's say CPU X calls kmem_cache_prefill_percpu_array(32) and all 32
+objects are filled into CPU X's array.
+But if CPU Y can't allocate from CPU X's array (which I referred to as
+"remote allocation"), the semantics differ from
+the maple tree's perspective because preallocated objects were shared
+between CPUs before, but now it's not?
 
+Thanks!
+
+--
+Hyeonggon
