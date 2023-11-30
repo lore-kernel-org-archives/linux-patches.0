@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE187A2D;
-	Thu, 30 Nov 2023 16:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744A554F96;
+	Thu, 30 Nov 2023 16:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddj2kJva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADF4C433C8;
-	Thu, 30 Nov 2023 16:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVZalI2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F04C433C7;
+	Thu, 30 Nov 2023 16:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361948;
-	bh=Fru3sbe8iQwTUz2L98WrgKSYYDNd7Lug1kNhx6ZDwUw=;
+	s=korg; t=1701361951;
+	bh=AaJO6iKlKbO1oRmuIkVeAMn4tpDyFD+hAhJDpdOA8Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddj2kJvataWAdynIArFSY7s98HTwyr81a5ECAXk5UzzBZrfk9h6Thm9FEbIXdKmbQ
-	 5q0i/x+aLUA5xIgibkjaWD6Xnagt0+bqfT5FMPGm5ibCMtO8oEvamGgQfDeKWJdJib
-	 xVr0sYnm0AdtpAjAYGCuZCQa8HvSjr8/9US/h+x0=
+	b=AVZalI2ywgKLI1NpPQHcElL+KEztbEwDERrDUfh9U3m55TLtb5FoF9RRoAt0G7SUt
+	 Yt885FxZOTF1jbPDPhUReU/dg0iXPgLgqrwJLw4qjLVIU5vaOJVPPAjYYvDQEELsyv
+	 HbiEUfxEIesFS4xFBlXmPOcCsYygjjWL3G+e0+j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 08/69] octeontx2-pf: Fix memory leak during interface down
-Date: Thu, 30 Nov 2023 16:22:05 +0000
-Message-ID: <20231130162133.342678327@linuxfoundation.org>
+Subject: [PATCH 5.15 09/69] ata: pata_isapnp: Add missing error check for devm_ioport_map()
+Date: Thu, 30 Nov 2023 16:22:06 +0000
+Message-ID: <20231130162133.380387378@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -43,35 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 5f228d7c8a539714c1e9b7e7534f76bb7979f268 ]
+[ Upstream commit a6925165ea82b7765269ddd8dcad57c731aa00de ]
 
-During 'ifconfig <netdev> down' one RSS memory was not getting freed.
-This patch fixes the same.
+Add missing error return check for devm_ioport_map() and return the
+error if this function call fails.
 
-Fixes: 81a4362016e7 ("octeontx2-pf: Add RSS multi group support")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0d5ff566779f ("libata: convert to iomap")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ata/pata_isapnp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index a718d42daeb5e..8cb4b16ffad77 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1838,6 +1838,8 @@ int otx2_stop(struct net_device *netdev)
- 	/* Clear RSS enable flag */
- 	rss = &pf->hw.rss_info;
- 	rss->enable = false;
-+	if (!netif_is_rxfh_configured(netdev))
-+		kfree(rss->rss_ctx[DEFAULT_RSS_CONTEXT_GROUP]);
- 
- 	/* Cleanup Queue IRQ */
- 	vec = pci_irq_vector(pf->pdev,
+diff --git a/drivers/ata/pata_isapnp.c b/drivers/ata/pata_isapnp.c
+index 43bb224430d3c..8892931ea8676 100644
+--- a/drivers/ata/pata_isapnp.c
++++ b/drivers/ata/pata_isapnp.c
+@@ -82,6 +82,9 @@ static int isapnp_init_one(struct pnp_dev *idev, const struct pnp_device_id *dev
+ 	if (pnp_port_valid(idev, 1)) {
+ 		ctl_addr = devm_ioport_map(&idev->dev,
+ 					   pnp_port_start(idev, 1), 1);
++		if (!ctl_addr)
++			return -ENOMEM;
++
+ 		ap->ioaddr.altstatus_addr = ctl_addr;
+ 		ap->ioaddr.ctl_addr = ctl_addr;
+ 		ap->ops = &isapnp_port_ops;
 -- 
 2.42.0
 
