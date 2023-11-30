@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61160495C2;
-	Thu, 30 Nov 2023 16:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4C7495C2;
+	Thu, 30 Nov 2023 16:24:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQzsCsiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D96C433C8;
-	Thu, 30 Nov 2023 16:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rauwlF/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E85C433C7;
+	Thu, 30 Nov 2023 16:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361438;
-	bh=YzaIDP0EVhHq/C8F8+UVDXvrFw42wJQrjNlu+mwohb8=;
+	s=korg; t=1701361440;
+	bh=Ht0W2Mhwf9kWOdLGfT+BL3CNekNiWvgtM9xnXk6xO+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQzsCsiF5gPmW0LBjfZHVpaftPm9vNaUHi/fuIjzngjHyfUJgBhvVIjMWcPicvs6h
-	 ciQRDYvoECcg9/pE0ealjHiPMYtjNCbP0cwXmnjU+KWXm0djpjmMefNKAP9M28HvnU
-	 r7P2sECkAVRxK4LIAK/GeR+GpI2AcYl0MKWhmCS0=
+	b=rauwlF/5PqmHVsa5BCmr9rO/zrv1wpa5m/l7t4TcR7VZTyYVO8BrRMag6jWf11JXR
+	 6sWWILxtWAcjyJYegDTgcOYh+BB31rw6oKdkIbn59SOLydHhNrDGwtVe9EfPoKCWi1
+	 aUcuC7UlCG18pDlE5uULBERSZKUIXMkHLBYFpr6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Ani Sinha <anisinha@redhat.com>,
+	Shradha Gupta <Shradhagupta@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/112] drm/i915: do not clean GT table on error path
-Date: Thu, 30 Nov 2023 16:21:09 +0000
-Message-ID: <20231130162141.029506287@linuxfoundation.org>
+Subject: [PATCH 6.6 004/112] hv/hv_kvp_daemon: Some small fixes for handling NM keyfiles
+Date: Thu, 30 Nov 2023 16:20:51 +0000
+Message-ID: <20231130162140.460845742@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -45,98 +45,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+From: Ani Sinha <anisinha@redhat.com>
 
-[ Upstream commit 0561794b6b642b84b879bf97061c4b4fa692839e ]
+[ Upstream commit c3803203bc5ec910a3eb06172cf6fb368e0e4390 ]
 
-The only task of intel_gt_release_all is to zero gt table. Calling
-it on error path prevents intel_gt_driver_late_release_all (called from
-i915_driver_late_release) to cleanup GTs, causing leakage.
-After i915_driver_late_release GT array is not used anymore so
-it does not need cleaning at all.
+Some small fixes:
+ - lets make sure we are not adding ipv4 addresses in ipv6 section in
+   keyfile and vice versa.
+ - ADDR_FAMILY_IPV6 is a bit in addr_family. Test that bit instead of
+   checking the whole value of addr_family.
+ - Some trivial fixes in hv_set_ifconfig.sh.
 
-Sample leak report:
+These fixes are proposed after doing some internal testing at Red Hat.
 
-BUG i915_request (...): Objects remaining in i915_request on __kmem_cache_shutdown()
-...
-Object 0xffff888113420040 @offset=64
-Allocated in __i915_request_create+0x75/0x610 [i915] age=18339 cpu=1 pid=1454
- kmem_cache_alloc+0x25b/0x270
- __i915_request_create+0x75/0x610 [i915]
- i915_request_create+0x109/0x290 [i915]
- __engines_record_defaults+0xca/0x440 [i915]
- intel_gt_init+0x275/0x430 [i915]
- i915_gem_init+0x135/0x2c0 [i915]
- i915_driver_probe+0x8d1/0xdc0 [i915]
-
-v2: removed whole intel_gt_release_all
-
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8489
-Fixes: bec68cc9ea42 ("drm/i915: Prepare for multiple GTs")
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231115-dont_clean_gt_on_error_path-v2-1-54250125470a@intel.com
-(cherry picked from commit e899505533852bf1da133f2f4c9a9655ff77f7e5)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+CC: Shradha Gupta <shradhagupta@linux.microsoft.com>
+CC: Saurabh Sengar <ssengar@linux.microsoft.com>
+Fixes: 42999c904612 ("hv/hv_kvp_daemon:Support for keyfile based connection profile")
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Shradha Gupta <Shradhagupta@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20231016133122.2419537-1-anisinha@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt.c | 11 -----------
- drivers/gpu/drm/i915/i915_driver.c |  4 +---
- 2 files changed, 1 insertion(+), 14 deletions(-)
+ tools/hv/hv_kvp_daemon.c    | 20 ++++++++++++--------
+ tools/hv/hv_set_ifconfig.sh |  4 ++--
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt.c b/drivers/gpu/drm/i915/gt/intel_gt.c
-index 449f0b7fc8434..95631e8f39e7b 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt.c
-@@ -967,8 +967,6 @@ int intel_gt_probe_all(struct drm_i915_private *i915)
+diff --git a/tools/hv/hv_kvp_daemon.c b/tools/hv/hv_kvp_daemon.c
+index 264eeb9c46a9f..318e2dad27e04 100644
+--- a/tools/hv/hv_kvp_daemon.c
++++ b/tools/hv/hv_kvp_daemon.c
+@@ -1421,7 +1421,7 @@ static int kvp_set_ip_info(char *if_name, struct hv_kvp_ipaddr_value *new_val)
+ 	if (error)
+ 		goto setval_error;
  
- err:
- 	i915_probe_error(i915, "Failed to initialize %s! (%d)\n", gtdef->name, ret);
--	intel_gt_release_all(i915);
+-	if (new_val->addr_family == ADDR_FAMILY_IPV6) {
++	if (new_val->addr_family & ADDR_FAMILY_IPV6) {
+ 		error = fprintf(nmfile, "\n[ipv6]\n");
+ 		if (error < 0)
+ 			goto setval_error;
+@@ -1455,14 +1455,18 @@ static int kvp_set_ip_info(char *if_name, struct hv_kvp_ipaddr_value *new_val)
+ 	if (error < 0)
+ 		goto setval_error;
+ 
+-	error = fprintf(nmfile, "gateway=%s\n", (char *)new_val->gate_way);
+-	if (error < 0)
+-		goto setval_error;
 -
- 	return ret;
- }
+-	error = fprintf(nmfile, "dns=%s\n", (char *)new_val->dns_addr);
+-	if (error < 0)
+-		goto setval_error;
++	/* we do not want ipv4 addresses in ipv6 section and vice versa */
++	if (is_ipv6 != is_ipv4((char *)new_val->gate_way)) {
++		error = fprintf(nmfile, "gateway=%s\n", (char *)new_val->gate_way);
++		if (error < 0)
++			goto setval_error;
++	}
  
-@@ -987,15 +985,6 @@ int intel_gt_tiles_init(struct drm_i915_private *i915)
- 	return 0;
- }
++	if (is_ipv6 != is_ipv4((char *)new_val->dns_addr)) {
++		error = fprintf(nmfile, "dns=%s\n", (char *)new_val->dns_addr);
++		if (error < 0)
++			goto setval_error;
++	}
+ 	fclose(nmfile);
+ 	fclose(ifcfg_file);
  
--void intel_gt_release_all(struct drm_i915_private *i915)
--{
--	struct intel_gt *gt;
--	unsigned int id;
--
--	for_each_gt(gt, i915, id)
--		i915->gt[id] = NULL;
--}
--
- void intel_gt_info_print(const struct intel_gt_info *info,
- 			 struct drm_printer *p)
- {
-diff --git a/drivers/gpu/drm/i915/i915_driver.c b/drivers/gpu/drm/i915/i915_driver.c
-index ec4d26b3c17cc..8dc5f85b7747b 100644
---- a/drivers/gpu/drm/i915/i915_driver.c
-+++ b/drivers/gpu/drm/i915/i915_driver.c
-@@ -777,7 +777,7 @@ int i915_driver_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	ret = i915_driver_mmio_probe(i915);
- 	if (ret < 0)
--		goto out_tiles_cleanup;
-+		goto out_runtime_pm_put;
- 
- 	ret = i915_driver_hw_probe(i915);
- 	if (ret < 0)
-@@ -837,8 +837,6 @@ int i915_driver_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	i915_ggtt_driver_late_release(i915);
- out_cleanup_mmio:
- 	i915_driver_mmio_release(i915);
--out_tiles_cleanup:
--	intel_gt_release_all(i915);
- out_runtime_pm_put:
- 	enable_rpm_wakeref_asserts(&i915->runtime_pm);
- 	i915_driver_late_release(i915);
+diff --git a/tools/hv/hv_set_ifconfig.sh b/tools/hv/hv_set_ifconfig.sh
+index ae5a7a8249a20..440a91b35823b 100755
+--- a/tools/hv/hv_set_ifconfig.sh
++++ b/tools/hv/hv_set_ifconfig.sh
+@@ -53,7 +53,7 @@
+ #                       or "manual" if no boot-time protocol should be used)
+ #
+ # address1=ipaddr1/plen
+-# address=ipaddr2/plen
++# address2=ipaddr2/plen
+ #
+ # gateway=gateway1;gateway2
+ #
+@@ -61,7 +61,7 @@
+ #
+ # [ipv6]
+ # address1=ipaddr1/plen
+-# address2=ipaddr1/plen
++# address2=ipaddr2/plen
+ #
+ # gateway=gateway1;gateway2
+ #
 -- 
 2.42.0
 
