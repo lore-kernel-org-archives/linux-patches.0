@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19C3495C2;
-	Thu, 30 Nov 2023 16:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4F9495C2;
+	Thu, 30 Nov 2023 16:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukR/qywP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B87CC433C7;
-	Thu, 30 Nov 2023 16:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSofC64H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7C3C433C8;
+	Thu, 30 Nov 2023 16:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361413;
-	bh=Aqf+vWjiWYpd+68Zia4UaT4U4Tft1vJ5bXbCqGfeONA=;
+	s=korg; t=1701361416;
+	bh=GBb0VEGWpUIKnhfE0evzIhobLSZiQK3BH5gXXKx+Irg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukR/qywP+Uh9E6DAALcvYTKnglbcVi7DEf/Ea+sgg9ZN90oR08Biux3KX0JXsO376
-	 Hlm0880TeO7eJEuCRO8f9q1498Ngq046pXLPw3hukPl1RkCRGSOPW85Nog2J5uhAU8
-	 uuVD+lzqBHaZAOnHUSfsVTBREgeu+QOrFvISkoyM=
+	b=xSofC64HPXmJvMRu2ipmvGIVX0CQmmeaNCA2rL0nN7zSqKmvTIJQAqTG/adJA7a78
+	 8tlAXOeCbXaepAoPNCtUcGKg3Wm8gP5nxmMDXQiVIGmo366yj8HMIztkYDk0VsbK66
+	 qtM0bqwzHGk0Bm2DwMa2/gaXAaHQTQ/S1ApIBEsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changhui Zhong <czhong@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/112] blk-cgroup: avoid to warn !rcu_read_lock_held() in blkg_lookup()
-Date: Thu, 30 Nov 2023 16:21:00 +0000
-Message-ID: <20231130162140.742841691@linuxfoundation.org>
+Subject: [PATCH 6.6 014/112] drm/panel: auo,b101uan08.3: Fine tune the panel power sequence
+Date: Thu, 30 Nov 2023 16:21:01 +0000
+Message-ID: <20231130162140.771200563@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -43,40 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>
 
-[ Upstream commit 35a99d6557cacbc177314735342f77a2dda41872 ]
+[ Upstream commit 6965809e526917b73c8f9178173184dcf13cec4b ]
 
-So far, all callers either holds spin lock or rcu read explicitly, and
-most of the caller has added WARN_ON_ONCE(!rcu_read_lock_held()) or
-lockdep_assert_held(&disk->queue->queue_lock).
+For "auo,b101uan08.3" this panel, it is stipulated in the panel spec that
+MIPI needs to keep the LP11 state before the lcm_reset pin is pulled high.
 
-Remove WARN_ON_ONCE(!rcu_read_lock_held()) from blkg_lookup() for
-killing the false positive warning from blkg_conf_prep().
-
-Reported-by: Changhui Zhong <czhong@redhat.com>
-Fixes: 83462a6c971c ("blkcg: Drop unnecessary RCU read [un]locks from blkg_conf_prep/finish()")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20231117023527.3188627-3-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 56ad624b4cb5 ("drm/panel: support for auo, b101uan08.3 wuxga dsi video mode panel")
+Signed-off-by: Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231114044205.613421-1-xuxinxiong@huaqin.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.h | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
-index 624c03c8fe64e..fd482439afbc9 100644
---- a/block/blk-cgroup.h
-+++ b/block/blk-cgroup.h
-@@ -249,8 +249,6 @@ static inline struct blkcg_gq *blkg_lookup(struct blkcg *blkcg,
- {
- 	struct blkcg_gq *blkg;
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index c9087f474cbc5..980b10244d4e6 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -2049,6 +2049,7 @@ static const struct panel_desc auo_b101uan08_3_desc = {
+ 	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
+ 		      MIPI_DSI_MODE_LPM,
+ 	.init_cmds = auo_b101uan08_3_init_cmd,
++	.lp11_before_reset = true,
+ };
  
--	WARN_ON_ONCE(!rcu_read_lock_held());
--
- 	if (blkcg == &blkcg_root)
- 		return q->root_blkg;
- 
+ static const struct drm_display_mode boe_tv105wum_nw0_default_mode = {
 -- 
 2.42.0
 
