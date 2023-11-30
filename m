@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D8C54BFC;
-	Thu, 30 Nov 2023 16:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA4554BFC;
+	Thu, 30 Nov 2023 16:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oxq8fLXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC2BC433C8;
-	Thu, 30 Nov 2023 16:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="py8g+Uvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE6AC433C7;
+	Thu, 30 Nov 2023 16:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361408;
-	bh=GZ35uInGPlwnxS+tzCMXBMqlaPNr58mSRYX/o4ao3ek=;
+	s=korg; t=1701361411;
+	bh=Jq1hwdVz/OBMeQEAjJ5eQhCNHUeJXqFpXMSlD0uWl+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oxq8fLXrj/GyIGHpMzsqwF4izdZ2lq90jkPmoonOONpjefyC4QGzK6Br3Z8uTCPpn
-	 YmswAi4JkbsLRsZSFe5TgqyNCyrmAHBU9QaLSp7om3+9I4dzwNyov1gVWTJ3yI/yJC
-	 F6jhYE7VYgQePXsUjLd6QWuJfSnH0YhS9Zi4TYUg=
+	b=py8g+Uvf1qTHmaSsftCLie8c3WNhPO7BN+JA7af5NqezvnFkTGqbtI2X36ZrhASw6
+	 zlCTFJ8OrSKyuam7wmc7bRtW8Mc27LllCEfUhNF9MwUBUrFcPjKagP7jEkNMupOc/f
+	 e3DSwtcjyzZiJmpUwFtRSRgBiaDw8WgYW1m/TbjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Markus Suvanto <markus.suvanto@gmail.com>,
 	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/112] afs: Fix afs_server_list to be cleaned up with RCU
-Date: Thu, 30 Nov 2023 16:20:58 +0000
-Message-ID: <20231130162140.675239451@linuxfoundation.org>
+Subject: [PATCH 6.6 012/112] afs: Make error on cell lookup failure consistent with OpenAFS
+Date: Thu, 30 Nov 2023 16:20:59 +0000
+Message-ID: <20231130162140.708916778@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -45,46 +47,43 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit e6bace7313d61e31f2b16fa3d774fd8cb3cb869e ]
+[ Upstream commit 2a4ca1b4b77850544408595e2433f5d7811a9daa ]
 
-afs_server_list is accessed with the rcu_read_lock() held from
-volume->servers, so it needs to be cleaned up correctly.
+When kafs tries to look up a cell in the DNS or the local config, it will
+translate a lookup failure into EDESTADDRREQ whereas OpenAFS translates it
+into ENOENT.  Applications such as West expect the latter behaviour and
+fail if they see the former.
 
-Fix this by using kfree_rcu() instead of kfree().
+This can be seen by trying to mount an unknown cell:
 
-Fixes: 8a070a964877 ("afs: Detect cell aliases 1 - Cells with root volumes")
+   # mount -t afs %example.com:cell.root /mnt
+   mount: /mnt: mount(2) system call failed: Destination address required.
+
+Fixes: 4d673da14533 ("afs: Support the AFS dynamic root")
+Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216637
 Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/internal.h    | 1 +
- fs/afs/server_list.c | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ fs/afs/dynroot.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index da73b97e19a9a..5041eae64423a 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -553,6 +553,7 @@ struct afs_server_entry {
- };
+diff --git a/fs/afs/dynroot.c b/fs/afs/dynroot.c
+index 95bcbd7654d1b..8081d68004d05 100644
+--- a/fs/afs/dynroot.c
++++ b/fs/afs/dynroot.c
+@@ -132,8 +132,8 @@ static int afs_probe_cell_name(struct dentry *dentry)
  
- struct afs_server_list {
-+	struct rcu_head		rcu;
- 	afs_volid_t		vids[AFS_MAXTYPES]; /* Volume IDs */
- 	refcount_t		usage;
- 	unsigned char		nr_servers;
-diff --git a/fs/afs/server_list.c b/fs/afs/server_list.c
-index ed9056703505f..b59896b1de0af 100644
---- a/fs/afs/server_list.c
-+++ b/fs/afs/server_list.c
-@@ -17,7 +17,7 @@ void afs_put_serverlist(struct afs_net *net, struct afs_server_list *slist)
- 		for (i = 0; i < slist->nr_servers; i++)
- 			afs_unuse_server(net, slist->servers[i].server,
- 					 afs_server_trace_put_slist);
--		kfree(slist);
-+		kfree_rcu(slist, rcu);
- 	}
+ 	ret = dns_query(net->net, "afsdb", name, len, "srv=1",
+ 			NULL, NULL, false);
+-	if (ret == -ENODATA)
+-		ret = -EDESTADDRREQ;
++	if (ret == -ENODATA || ret == -ENOKEY)
++		ret = -ENOENT;
+ 	return ret;
  }
  
 -- 
