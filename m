@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B078454F92;
-	Thu, 30 Nov 2023 16:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A30B54F87;
+	Thu, 30 Nov 2023 16:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSSteSBp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DEABC433C7;
-	Thu, 30 Nov 2023 16:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bXlzr8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CA0C433C8;
+	Thu, 30 Nov 2023 16:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361642;
-	bh=oR0sA8FhegUltbQwChRn8PUwK7glbkKbxQioHIaiEyE=;
+	s=korg; t=1701361645;
+	bh=jNkK2vXHkzK7FmYBQ2s14zLcsnKvooSxWHzfWKglV8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WSSteSBptDUmbEbDv3Rv57u2urY4Mk3ElhQPXQ7YqmJ/qYWhhOjVYRyYQISCIzCG7
-	 NDHnEi+lfmYsbD9bFCKrFLj+PPhhbEU4lXZoVS8wSY5t6Al53+JGyvSzCXyIenfGUN
-	 mvu3RVLAroXAcslKXJnxOw0wzLb2quUGw80udeFU=
+	b=0bXlzr8G3HvQWv21BiAu6Dc1141OerlAMtPEnGI59FTkAXCiwLc25HolBzxQtlVQ5
+	 bNDGa1RO2YGLQKjZ8uZZ1BJid3oPiJKsJmZu+B2nXKAn9e8ZhWlqlHWo7UpiH4YfEG
+	 tqWZ9SN2TNR0aqItuYLYq4VVrLEdyKJXHOE/rzZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.6 102/112] usb: cdnsp: Fix deadlock issue during using NCM gadget
-Date: Thu, 30 Nov 2023 16:22:29 +0000
-Message-ID: <20231130162143.532011805@linuxfoundation.org>
+	Yangyu Chen <cyy@cyyself.name>,
+	Asuna Yang <SpriteOvO@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 080/112] USB: serial: option: add Luat Air72*U series products
+Date: Thu, 30 Nov 2023 16:22:07 +0000
+Message-ID: <20231130162142.858726556@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -41,67 +42,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Asuna Yang <spriteovo@gmail.com>
 
-commit 58f2fcb3a845fcbbad2f3196bb37d744e0506250 upstream.
+commit da90e45d5afc4da2de7cd3ea7943d0f1baa47cc2 upstream.
 
-The interrupt service routine registered for the gadget is a primary
-handler which mask the interrupt source and a threaded handler which
-handles the source of the interrupt. Since the threaded handler is
-voluntary threaded, the IRQ-core does not disable bottom halves before
-invoke the handler like it does for the forced-threaded handler.
+Update the USB serial option driver support for Luat Air72*U series
+products.
 
-Due to changes in networking it became visible that a network gadget's
-completions handler may schedule a softirq which remains unprocessed.
-The gadget's completion handler is usually invoked either in hard-IRQ or
-soft-IRQ context. In this context it is enough to just raise the softirq
-because the softirq itself will be handled once that context is left.
-In the case of the voluntary threaded handler, there is nothing that
-will process pending softirqs. Which means it remain queued until
-another random interrupt (on this CPU) fires and handles it on its exit
-path or another thread locks and unlocks a lock with the bh suffix.
-Worst case is that the CPU goes idle and the NOHZ complains about
-unhandled softirqs.
+ID 1782:4e00 Spreadtrum Communications Inc. UNISOC-8910
 
-Disable bottom halves before acquiring the lock (and disabling
-interrupts) and enable them after dropping the lock. This ensures that
-any pending softirqs will handled right away.
+T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 13 Spd=480 MxCh= 0
+D: Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs= 1
+P: Vendor=1782 ProdID=4e00 Rev=00.00
+S: Manufacturer=UNISOC
+S: Product=UNISOC-8910
+C: #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=400mA
+I: If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
+E: Ad=82(I) Atr=03(Int.) MxPS= 8 Ivl=4096ms
+I: If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E: Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I: If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-cc: stable@vger.kernel.org
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20231108093125.224963-1-pawell@cadence.com
+If#= 2: AT
+If#= 3: PPP + AT
+If#= 4: Debug
+
+Co-developed-by: Yangyu Chen <cyy@cyyself.name>
+Signed-off-by: Yangyu Chen <cyy@cyyself.name>
+Signed-off-by: Asuna Yang <SpriteOvO@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdnsp-ring.c |    3 +++
+ drivers/usb/serial/option.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -1529,6 +1529,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
- 	unsigned long flags;
- 	int counter = 0;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -609,6 +609,8 @@ static void option_instat_callback(struc
+ #define UNISOC_VENDOR_ID			0x1782
+ /* TOZED LT70-C based on UNISOC SL8563 uses UNISOC's vendor ID */
+ #define TOZED_PRODUCT_LT70C			0x4055
++/* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
++#define LUAT_PRODUCT_AIR720U			0x4e00
  
-+	local_bh_disable();
- 	spin_lock_irqsave(&pdev->lock, flags);
+ /* Device flags */
  
- 	if (pdev->cdnsp_state & (CDNSP_STATE_HALTED | CDNSP_STATE_DYING)) {
-@@ -1541,6 +1542,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
- 			cdnsp_died(pdev);
- 
- 		spin_unlock_irqrestore(&pdev->lock, flags);
-+		local_bh_enable();
- 		return IRQ_HANDLED;
- 	}
- 
-@@ -1557,6 +1559,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
- 	cdnsp_update_erst_dequeue(pdev, event_ring_deq, 1);
- 
- 	spin_unlock_irqrestore(&pdev->lock, flags);
-+	local_bh_enable();
- 
- 	return IRQ_HANDLED;
- }
+@@ -2271,6 +2273,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
