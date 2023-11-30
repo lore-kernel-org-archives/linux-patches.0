@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46796495C2;
-	Thu, 30 Nov 2023 16:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2111495C2;
+	Thu, 30 Nov 2023 16:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m35cE4IT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDC7C433C8;
-	Thu, 30 Nov 2023 16:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcPwZz3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BB6C433C7;
+	Thu, 30 Nov 2023 16:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361458;
-	bh=k2Cm/IPnXbA9R8WpV9CzDanWqKzLIsyl4TAo/iY6rRo=;
+	s=korg; t=1701361461;
+	bh=mnLdTYIh0yYlKg0IQFsdooYIsDNyvU3GkHnPOVUeKEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m35cE4IT7ttSbzGYBkP+SOekvb6q2FRwDRoyHW9wRRCAcovC/ETc4V9/bm8uliP9c
-	 A1MReGouze6VL+prbTuIAroKiWi5gJDqRN+FkX4f6FSN+op8BAd40N9EYkYNvc7MPR
-	 FaY6wQCqUivSCALRjK657YrcdyJ/ARediqsk9Br4=
+	b=JcPwZz3/yxe8t5hOP7MggyzOswSbH+Uc1nFzZx/pk34AGVzJy4pJjrNfqhOzHiNvd
+	 ye51u/1i4GPHR9aXNTv//A9IdFvVYW4inX+Lp4rlck9aFMSdqLE4NlvUbjSWAZFbxN
+	 uWmbC7fOrmws+9gpJnJSQdfwTI0Ik2zlcwYCvz7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-nfs@vger.kernel.org,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 001/112] NFSD: Fix "start of NFS reply" pointer passed to nfsd_cache_update()
-Date: Thu, 30 Nov 2023 16:20:48 +0000
-Message-ID: <20231130162140.352754616@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 024/112] block: update the stable_writes flag in bdev_add
+Date: Thu, 30 Nov 2023 16:21:11 +0000
+Message-ID: <20231130162141.086403021@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,66 +44,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 1caf5f61dd8430ae5a0b4538afe4953ce7517cbb ]
+[ Upstream commit 1898efcdbed32bb1c67269c985a50bab0dbc9493 ]
 
-The "statp + 1" pointer that is passed to nfsd_cache_update() is
-supposed to point to the start of the egress NFS Reply header. In
-fact, it does point there for AUTH_SYS and RPCSEC_GSS_KRB5 requests.
+Propagate the per-queue stable_write flags into each bdev inode in bdev_add.
+This makes sure devices that require stable writes have it set for I/O
+on the block device node as well.
 
-But both krb5i and krb5p add fields between the RPC header's
-accept_stat field and the start of the NFS Reply header. In those
-cases, "statp + 1" points at the extra fields instead of the Reply.
-The result is that nfsd_cache_update() caches what looks to the
-client like garbage.
+Note that this doesn't cover the case of a flag changing on a live device
+yet.  We should handle that as well, but I plan to cover it as part of a
+more general rework of how changing runtime paramters on block devices
+works.
 
-A connection break can occur for a number of reasons, but the most
-common reason when using krb5i/p is a GSS sequence number window
-underrun. When an underrun is detected, the server is obliged to
-drop the RPC and the connection to force a retransmit with a fresh
-GSS sequence number. The client presents the same XID, it hits in
-the server's DRC, and the server returns the garbage cache entry.
-
-The "statp + 1" argument has been used since the oldest changeset
-in the kernel history repo, so it has been in nfsd_dispatch()
-literally since before history began. The problem arose only when
-the server-side GSS implementation was added twenty years ago.
-
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1cb039f3dc16 ("bdi: replace BDI_CAP_STABLE_WRITES with a queue and a sb flag")
+Reported-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20231025141020.192413-3-hch@lst.de
+Tested-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ block/bdev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -988,6 +988,7 @@ int nfsd_dispatch(struct svc_rqst *rqstp
- 	const struct svc_procedure *proc = rqstp->rq_procinfo;
- 	__be32 *statp = rqstp->rq_accept_statp;
- 	struct nfsd_cacherep *rp;
-+	__be32 *nfs_reply;
+diff --git a/block/bdev.c b/block/bdev.c
+index f3b13aa1b7d42..04dba25b0019e 100644
+--- a/block/bdev.c
++++ b/block/bdev.c
+@@ -425,6 +425,8 @@ void bdev_set_nr_sectors(struct block_device *bdev, sector_t sectors)
  
- 	/*
- 	 * Give the xdr decoder a chance to change this if it wants
-@@ -1008,6 +1009,7 @@ int nfsd_dispatch(struct svc_rqst *rqstp
- 		goto out_dropit;
- 	}
- 
-+	nfs_reply = xdr_inline_decode(&rqstp->rq_res_stream, 0);
- 	*statp = proc->pc_func(rqstp);
- 	if (test_bit(RQ_DROPME, &rqstp->rq_flags))
- 		goto out_update_drop;
-@@ -1015,7 +1017,7 @@ int nfsd_dispatch(struct svc_rqst *rqstp
- 	if (!proc->pc_encode(rqstp, &rqstp->rq_res_stream))
- 		goto out_encode_err;
- 
--	nfsd_cache_update(rqstp, rp, rqstp->rq_cachetype, statp + 1);
-+	nfsd_cache_update(rqstp, rp, rqstp->rq_cachetype, nfs_reply);
- out_cached_reply:
- 	return 1;
- 
+ void bdev_add(struct block_device *bdev, dev_t dev)
+ {
++	if (bdev_stable_writes(bdev))
++		mapping_set_stable_writes(bdev->bd_inode->i_mapping);
+ 	bdev->bd_dev = dev;
+ 	bdev->bd_inode->i_rdev = dev;
+ 	bdev->bd_inode->i_ino = dev;
+-- 
+2.42.0
+
 
 
