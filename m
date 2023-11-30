@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A1148CEB;
-	Thu, 30 Nov 2023 16:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B6C55762;
+	Thu, 30 Nov 2023 16:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hg39lY6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE93C433C7;
-	Thu, 30 Nov 2023 16:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFbwHgyb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F96C433C8;
+	Thu, 30 Nov 2023 16:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361933;
-	bh=OBz1Mn8BCiPO/yoxUeDJQ5d5WY8Xx8Y+zBwksNFsZnw=;
+	s=korg; t=1701361936;
+	bh=N7JAx6i0yauVK+9SQ/NjITlUc5ErfgirHep5xDrfxfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hg39lY6uSAo1bFYZ685mVbUWRyVE99dNkmLZvO5vkORtCrjIa1aCg8Tshoqz46OjE
-	 7WlZ+V2MMZmp9lpF161FDX9V3shrVi3gzw6GKYp/VOGbaIkzqDF8r2P8r5qxD4PnYO
-	 L29lQYAWNjIFbjPzZcLPovcU16VG/CJ6kBKTn100=
+	b=IFbwHgybtvD4jJlUs54POSNCzOIBToTsh//pA6EjT3pFds0Sq+ydsX9xI0Si+qU77
+	 YE7p5FWheYnlmvvvH5M8nyP5v7NfgoDa+XhiLGFxGzliWDfuofrAbJf9mKWJoT7zHa
+	 7mSDqB0cmf4VaR2QbhB0LMdUsWl8FMqfJRm1hNnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shuijing Li <shuijing.li@mediatek.com>,
+	Xinlei Lee <xinlei.lee@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 20/69] amd-xgbe: propagate the correct speed and duplex status
-Date: Thu, 30 Nov 2023 16:22:17 +0000
-Message-ID: <20231130162133.742308857@linuxfoundation.org>
+Subject: [PATCH 5.15 03/69] drm/panel: boe-tv101wum-nl6: Fine tune the panel power sequence
+Date: Thu, 30 Nov 2023 16:22:00 +0000
+Message-ID: <20231130162133.159160028@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -44,49 +44,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Shuijing Li <shuijing.li@mediatek.com>
 
-[ Upstream commit 7a2323ac24a50311f64a3a9b54ed5bef5821ecae ]
+[ Upstream commit 812562b8d881ce6d33fed8052b3a10b718430fb5 ]
 
-xgbe_get_link_ksettings() does not propagate correct speed and duplex
-information to ethtool during cable unplug. Due to which ethtool reports
-incorrect values for speed and duplex.
+For "boe,tv105wum-nw0" this special panel, it is stipulated in
+the panel spec that MIPI needs to keep the LP11 state before
+the lcm_reset pin is pulled high.
 
-Address this by propagating correct information.
-
-Fixes: 7c12aa08779c ("amd-xgbe: Move the PHY support into amd-xgbe")
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Shuijing Li <shuijing.li@mediatek.com>
+Signed-off-by: Xinlei Lee <xinlei.lee@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230515094955.15982-3-shuijing.li@mediatek.com
+Stable-dep-of: 6965809e5269 ("drm/panel: auo,b101uan08.3: Fine tune the panel power sequence")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-index bafc51c34e0be..5bb7b2210b811 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-@@ -314,10 +314,15 @@ static int xgbe_get_link_ksettings(struct net_device *netdev,
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index db9d0b86d5428..3229e5eabbd21 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -36,6 +36,7 @@ struct panel_desc {
+ 	const struct panel_init_cmd *init_cmds;
+ 	unsigned int lanes;
+ 	bool discharge_on_disable;
++	bool lp11_before_reset;
+ };
  
- 	cmd->base.phy_address = pdata->phy.address;
+ struct boe_panel {
+@@ -551,6 +552,10 @@ static int boe_panel_prepare(struct drm_panel *panel)
  
--	cmd->base.autoneg = pdata->phy.autoneg;
--	cmd->base.speed = pdata->phy.speed;
--	cmd->base.duplex = pdata->phy.duplex;
-+	if (netif_carrier_ok(netdev)) {
-+		cmd->base.speed = pdata->phy.speed;
-+		cmd->base.duplex = pdata->phy.duplex;
-+	} else {
-+		cmd->base.speed = SPEED_UNKNOWN;
-+		cmd->base.duplex = DUPLEX_UNKNOWN;
+ 	usleep_range(5000, 10000);
+ 
++	if (boe->desc->lp11_before_reset) {
++		mipi_dsi_dcs_nop(boe->dsi);
++		usleep_range(1000, 2000);
 +	}
+ 	gpiod_set_value(boe->enable_gpio, 1);
+ 	usleep_range(1000, 2000);
+ 	gpiod_set_value(boe->enable_gpio, 0);
+@@ -719,6 +724,7 @@ static const struct panel_desc boe_tv105wum_nw0_desc = {
+ 	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
+ 		      MIPI_DSI_MODE_LPM,
+ 	.init_cmds = boe_init_cmd,
++	.lp11_before_reset = true,
+ };
  
-+	cmd->base.autoneg = pdata->phy.autoneg;
- 	cmd->base.port = PORT_NONE;
- 
- 	XGBE_LM_COPY(cmd, supported, lks, supported);
+ static int boe_panel_get_modes(struct drm_panel *panel,
 -- 
 2.42.0
 
