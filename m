@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC2C524C2;
-	Thu, 30 Nov 2023 16:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED8D524C2;
+	Thu, 30 Nov 2023 16:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwklZWe0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8C0C433C7;
-	Thu, 30 Nov 2023 16:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXrd+9tF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14931C433C7;
+	Thu, 30 Nov 2023 16:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361684;
-	bh=oND7KgGhtcyv93cQ81I4QW8PE3KC4bkoLMkQ+4ls9bc=;
+	s=korg; t=1701361687;
+	bh=WYd4b+0b0rZwoVSdldZSl5/+7F8GZ9E5HhrOlYwpNps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwklZWe0c6PoxoTyGsVRvEjg6LfzSGDIT5a4QHVyj+HUnvyEOnNS5sqU0PNbzCR/v
-	 7RfmSgb8AnRCTly69YYvOXqHM1Bb8MAXcPyifYMAj4MjOL13BC6VVRXKj82JrKBMc0
-	 LxlLomRw7uUZnz4UqWJAhIKftHa2rdtaRQoUjO3s=
+	b=cXrd+9tFt7HFpycXDvAM1FRSeGbIDZ2FX6T2JcpyCuHvwAwqlrDJDMK7BjHRc7Krj
+	 k5dPye4JGNa1na5rmVwnxXAcRxZp0OsyB9aex73KJfASAjWWEEZMXymoWkcNT3nOZ5
+	 fWr6DdZbsLt22LUmY2tjNrQ67VgFfI6GlWyJjANI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 6.6 112/112] USB: dwc3: qcom: fix wakeup after probe deferral
-Date: Thu, 30 Nov 2023 16:22:39 +0000
-Message-ID: <20231130162143.831208091@linuxfoundation.org>
+	Victor Fragoso <victorffs@hotmail.com>,
+	Lars Melin <larsm17@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 103/112] USB: serial: option: add Fibocom L7xx modules
+Date: Thu, 30 Nov 2023 16:22:30 +0000
+Message-ID: <20231130162143.560753270@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -41,70 +42,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Victor Fragoso <victorffs@hotmail.com>
 
-commit 41f5a0973259db9e4e3c9963d36505f80107d1a0 upstream.
+commit e389fe8b68137344562fb6e4d53d8a89ef6212dd upstream.
 
-The Qualcomm glue driver is overriding the interrupt trigger types
-defined by firmware when requesting the wakeup interrupts during probe.
+Add support for Fibocom L716-EU module series.
 
-This can lead to a failure to map the DP/DM wakeup interrupts after a
-probe deferral as the firmware defined trigger types do not match the
-type used for the initial mapping:
+L716-EU is a Fibocom module based on ZTE's V3E/V3T chipset.
 
-	irq: type mismatch, failed to map hwirq-14 for interrupt-controller@b220000!
-	irq: type mismatch, failed to map hwirq-15 for interrupt-controller@b220000!
+Device creates multiple interfaces when connected to PC as follows:
+ - Network Interface: ECM or RNDIS (set by FW or AT Command)
+ - ttyUSB0: AT port
+ - ttyUSB1: Modem port
+ - ttyUSB2: AT2 port
+ - ttyUSB3: Trace port for log information
+ - ADB: ADB port for debugging. ("Driver=usbfs" when ADB server enabled)
 
-Fix this by not overriding the firmware provided trigger types when
-requesting the wakeup interrupts.
+Here are the outputs of lsusb and usb-devices:
+$ ls /dev/ttyUSB*
+/dev/ttyUSB0  /dev/ttyUSB1  /dev/ttyUSB2  /dev/ttyUSB3
 
-Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-Cc: stable@vger.kernel.org      # 4.18
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20231120161607.7405-3-johan+linaro@kernel.org
+usb-devices:
+L716-EU (ECM mode):
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 51 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0001 Rev= 1.00
+S:  Manufacturer=Fibocom,Incorporated
+S:  Product=Fibocom Mobile Boardband
+S:  SerialNumber=1234567890ABCDEF
+C:* #Ifs= 7 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=87(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+L716-EU (RNDIS mode):
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 49 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0001 Rev= 1.00
+S:  Manufacturer=Fibocom,Incorporated
+S:  Product=Fibocom Mobile Boardband
+S:  SerialNumber=1234567890ABCDEF
+C:* #Ifs= 7 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=02 Prot=ff Driver=rndis_host
+E:  Ad=87(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Victor Fragoso <victorffs@hotmail.com>
+Reviewed-by: Lars Melin <larsm17@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -549,7 +549,7 @@ static int dwc3_qcom_setup_irq(struct pl
- 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					"qcom_dwc3 HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "hs_phy_irq failed: %d\n", ret);
-@@ -564,7 +564,7 @@ static int dwc3_qcom_setup_irq(struct pl
- 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					"qcom_dwc3 DP_HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
-@@ -579,7 +579,7 @@ static int dwc3_qcom_setup_irq(struct pl
- 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					"qcom_dwc3 DM_HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
-@@ -594,7 +594,7 @@ static int dwc3_qcom_setup_irq(struct pl
- 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					"qcom_dwc3 SS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2251,6 +2251,7 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1782, 0x4d11, 0xff) },			/* Fibocom L610 (ECM/RNDIS mode) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0001, 0xff, 0xff, 0xff) },	/* Fibocom L716-EU (ECM/RNDIS mode) */
+ 	{ USB_DEVICE(0x2cb7, 0x0104),						/* Fibocom NL678 series */
+ 	  .driver_info = RSVD(4) | RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0105, 0xff),			/* Fibocom NL678 series */
 
 
