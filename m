@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B9E54F87;
-	Thu, 30 Nov 2023 16:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBC0524C2;
+	Thu, 30 Nov 2023 16:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rU8fyZ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AB1C433C8;
-	Thu, 30 Nov 2023 16:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0u8PKtz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65065C433C8;
+	Thu, 30 Nov 2023 16:28:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361721;
-	bh=HZnNybWZboq8ui578CNlEkl8PGyewW2wWggpmUXsfgc=;
+	s=korg; t=1701361723;
+	bh=UMi+JtAGivaPX6ttX8MgboiPqsSbguOF3H+PqMWMDh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rU8fyZ8ha/4dUWqVQNpojrC3+dcPnVClggIcMj7059sC2pMGfugTaA8qziMQFhWh
-	 lpjJT0rfDCZN+6eJ5xTdPpZD5Xf9yl13e8KyZ1J4stl5hFzSoreKe8TCyLRMbvbfMi
-	 uYYMX4QFr6tBdcKsE/HqsH0lR55anvJtlFGvFwk4=
+	b=C0u8PKtzv11S+VV1Y0haPN1TtkXc+nfOrl8wHWAhcEOx/sc1YUgyxBcIV6mPjFw3Z
+	 FqJ1DCyB9Yj+pWTcw4+4cMKBdLS/Ne3pINJe4gJv7hW0W+HFI1CWcvsFDTQsPGIdza
+	 JmLWT1MPazOFwBQwtU7Seg3LhTj95WEUy1SG5wcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuijing Li <shuijing.li@mediatek.com>,
-	Xinlei Lee <xinlei.lee@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/82] drm/panel: boe-tv101wum-nl6: Fine tune the panel power sequence
-Date: Thu, 30 Nov 2023 16:21:34 +0000
-Message-ID: <20231130162136.088364988@linuxfoundation.org>
+Subject: [PATCH 6.1 04/82] drm/panel: auo,b101uan08.3: Fine tune the panel power sequence
+Date: Thu, 30 Nov 2023 16:21:35 +0000
+Message-ID: <20231130162136.113274440@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -44,56 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuijing Li <shuijing.li@mediatek.com>
+From: Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>
 
-[ Upstream commit 812562b8d881ce6d33fed8052b3a10b718430fb5 ]
+[ Upstream commit 6965809e526917b73c8f9178173184dcf13cec4b ]
 
-For "boe,tv105wum-nw0" this special panel, it is stipulated in
-the panel spec that MIPI needs to keep the LP11 state before
-the lcm_reset pin is pulled high.
+For "auo,b101uan08.3" this panel, it is stipulated in the panel spec that
+MIPI needs to keep the LP11 state before the lcm_reset pin is pulled high.
 
-Signed-off-by: Shuijing Li <shuijing.li@mediatek.com>
-Signed-off-by: Xinlei Lee <xinlei.lee@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230515094955.15982-3-shuijing.li@mediatek.com
-Stable-dep-of: 6965809e5269 ("drm/panel: auo,b101uan08.3: Fine tune the panel power sequence")
+Fixes: 56ad624b4cb5 ("drm/panel: support for auo, b101uan08.3 wuxga dsi video mode panel")
+Signed-off-by: Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231114044205.613421-1-xuxinxiong@huaqin.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-index c924f1124ebca..733e28a2536a4 100644
+index 733e28a2536a4..1c008bd9102ff 100644
 --- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
 +++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-@@ -36,6 +36,7 @@ struct panel_desc {
- 	const struct panel_init_cmd *init_cmds;
- 	unsigned int lanes;
- 	bool discharge_on_disable;
-+	bool lp11_before_reset;
- };
- 
- struct boe_panel {
-@@ -1269,6 +1270,10 @@ static int boe_panel_prepare(struct drm_panel *panel)
- 
- 	usleep_range(10000, 11000);
- 
-+	if (boe->desc->lp11_before_reset) {
-+		mipi_dsi_dcs_nop(boe->dsi);
-+		usleep_range(1000, 2000);
-+	}
- 	gpiod_set_value(boe->enable_gpio, 1);
- 	usleep_range(1000, 2000);
- 	gpiod_set_value(boe->enable_gpio, 0);
-@@ -1495,6 +1500,7 @@ static const struct panel_desc boe_tv105wum_nw0_desc = {
+@@ -1473,6 +1473,7 @@ static const struct panel_desc auo_b101uan08_3_desc = {
  	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
  		      MIPI_DSI_MODE_LPM,
- 	.init_cmds = boe_init_cmd,
+ 	.init_cmds = auo_b101uan08_3_init_cmd,
 +	.lp11_before_reset = true,
  };
  
- static int boe_panel_get_modes(struct drm_panel *panel,
+ static const struct drm_display_mode boe_tv105wum_nw0_default_mode = {
 -- 
 2.42.0
 
