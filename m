@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035D754FBF;
-	Thu, 30 Nov 2023 16:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7312A54F9C;
+	Thu, 30 Nov 2023 16:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1If5j8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395C9C433C8;
-	Thu, 30 Nov 2023 16:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJ4/UEk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35E3C433C8;
+	Thu, 30 Nov 2023 16:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361905;
-	bh=31xIXyZc/NlyjtpbvORBFARyCcqy6qiJ1xVRaePsV0E=;
+	s=korg; t=1701361908;
+	bh=D2FBmdqzKLwJA67Fyv6msNKZ8gjftjkA7h7e2vbxCSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y1If5j8lWMKfaeprvuRt75N3E9i04Ds+WFva7menWzRZwGgE+Is4LwpLJ24lQeHPD
-	 ISS6aIW3E4sYtUNO6P9wXxqsRNmtp5b1w76bJgv51Tl/e127CgO704S9KrtHrrKCwF
-	 27Hy5VsaCbyTlsmj0ECPX4aPLfqmGV6vrEUGbb/g=
+	b=yJ4/UEk/jfvBhvy0rWFccCf0xdp3VWzPATD1krDJvR3KL0JLOw/jmP9CQc7q2d0bt
+	 KK/R6ASI1BMngUz5f68EoFZC5xA//0p1Q3wj+IRFv2SMsHP08mCbYNkT/6IthcMkLI
+	 y2EIXWT3JdTvCNjx71OsTGp09MjDjIxoNO0VY9xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Christopher Obbard <chris.obbard@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/69] drm/rockchip: vop: Fix color for RGB888/BGR888 format on VOP full
-Date: Thu, 30 Nov 2023 16:22:07 +0000
-Message-ID: <20231130162133.417222719@linuxfoundation.org>
+Subject: [PATCH 5.15 11/69] HID: core: store the unique system identifier in hid_device
+Date: Thu, 30 Nov 2023 16:22:08 +0000
+Message-ID: <20231130162133.448814354@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -44,74 +41,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 
-[ Upstream commit bb0a05acd6121ff0e810b44fdc24dbdfaa46b642 ]
+[ Upstream commit 1e839143d674603b0bbbc4c513bca35404967dbc ]
 
-Use of DRM_FORMAT_RGB888 and DRM_FORMAT_BGR888 on e.g. RK3288, RK3328
-and RK3399 result in wrong colors being displayed.
+This unique identifier is currently used only for ensuring uniqueness in
+sysfs. However, this could be handful for userspace to refer to a specific
+hid_device by this id.
 
-The issue can be observed using modetest:
+2 use cases are in my mind: LEDs (and their naming convention), and
+HID-BPF.
 
-  modetest -s <connector_id>@<crtc_id>:1920x1080-60@RG24
-  modetest -s <connector_id>@<crtc_id>:1920x1080-60@BG24
-
-Vendor 4.4 kernel apply an inverted rb swap for these formats on VOP
-full framework (IP version 3.x) compared to VOP little framework (2.x).
-
-Fix colors by applying different rb swap for VOP full framework (3.x)
-and VOP little framework (2.x) similar to vendor 4.4 kernel.
-
-Fixes: 85a359f25388 ("drm/rockchip: Add BGR formats to VOP")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Tested-by: Diederik de Haas <didi.debian@cknow.org>
-Reviewed-by: Christopher Obbard <chris.obbard@collabora.com>
-Tested-by: Christopher Obbard <chris.obbard@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231026191500.2994225-1-jonas@kwiboo.se
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Link: https://lore.kernel.org/r/20220902132938.2409206-9-benjamin.tissoires@redhat.com
+Stable-dep-of: fc43e9c857b7 ("HID: fix HID device resource race between HID core and debugging support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/hid/hid-core.c | 4 +++-
+ include/linux/hid.h    | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index e53b1ecbd7bc0..c7106f1165466 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -249,14 +249,22 @@ static inline void vop_cfg_done(struct vop *vop)
- 	VOP_REG_SET(vop, common, cfg_done, 1);
- }
- 
--static bool has_rb_swapped(uint32_t format)
-+static bool has_rb_swapped(uint32_t version, uint32_t format)
- {
- 	switch (format) {
- 	case DRM_FORMAT_XBGR8888:
- 	case DRM_FORMAT_ABGR8888:
--	case DRM_FORMAT_BGR888:
- 	case DRM_FORMAT_BGR565:
- 		return true;
-+	/*
-+	 * full framework (IP version 3.x) only need rb swapped for RGB888 and
-+	 * little framework (IP version 2.x) only need rb swapped for BGR888,
-+	 * check for 3.x to also only rb swap BGR888 for unknown vop version
-+	 */
-+	case DRM_FORMAT_RGB888:
-+		return VOP_MAJOR(version) == 3;
-+	case DRM_FORMAT_BGR888:
-+		return VOP_MAJOR(version) != 3;
- 	default:
- 		return false;
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index d941023c56289..35046adf1294e 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2442,10 +2442,12 @@ int hid_add_device(struct hid_device *hdev)
+ 			hid_warn(hdev, "bad device descriptor (%d)\n", ret);
  	}
-@@ -998,7 +1006,7 @@ static void vop_plane_atomic_update(struct drm_plane *plane,
- 	VOP_WIN_SET(vop, win, dsp_info, dsp_info);
- 	VOP_WIN_SET(vop, win, dsp_st, dsp_st);
  
--	rb_swap = has_rb_swapped(fb->format->format);
-+	rb_swap = has_rb_swapped(vop->data->version, fb->format->format);
- 	VOP_WIN_SET(vop, win, rb_swap, rb_swap);
++	hdev->id = atomic_inc_return(&id);
++
+ 	/* XXX hack, any other cleaner solution after the driver core
+ 	 * is converted to allow more than 20 bytes as the device name? */
+ 	dev_set_name(&hdev->dev, "%04X:%04X:%04X.%04X", hdev->bus,
+-		     hdev->vendor, hdev->product, atomic_inc_return(&id));
++		     hdev->vendor, hdev->product, hdev->id);
  
- 	/*
+ 	hid_debug_register(hdev, dev_name(&hdev->dev));
+ 	ret = device_add(&hdev->dev);
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index c3478e396829e..4fa40d2e821f2 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -630,6 +630,8 @@ struct hid_device {							/* device report descriptor */
+ 	struct list_head debug_list;
+ 	spinlock_t  debug_list_lock;
+ 	wait_queue_head_t debug_wait;
++
++	unsigned int id;						/* system unique id */
+ };
+ 
+ #define to_hid_device(pdev) \
 -- 
 2.42.0
 
