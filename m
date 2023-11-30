@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F3A524C2;
-	Thu, 30 Nov 2023 16:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5E2524C2;
+	Thu, 30 Nov 2023 16:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EESeyZJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1116C433C7;
-	Thu, 30 Nov 2023 16:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTV6jmom"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB09C433C8;
+	Thu, 30 Nov 2023 16:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361578;
-	bh=FUUxMssgfH9mChtN3HZ2T6DRfqLki6P9dx6HE4v1i6M=;
+	s=korg; t=1701361580;
+	bh=R8xY++RzCAIkXTxovKDV8vBHT2U9neViZN8nahLlEOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EESeyZJs7wwpSVrm4FAob0QEW4CQcdn3Rg4L18dD6Pexyms/GMCDWZLVpSabdLy5g
-	 n5EnC6ZyyWbxqSMwrBSQ7ZQKwK9GUJznoRi2PmD3A4ycRSC4SEZ2C3GQ/8qtrL9kD7
-	 r46HV8sLNSvujzAyycDFGcpXYFzKBofd+aEzIC7A=
+	b=ZTV6jmommkUCyAXFnd5SMs6Bp3zRdg+JIAr+M9Cqrtyyoi4LButAQRcwYLaiLROvN
+	 KCnWDaLE4L2D47biaGvJFw0+O3bolY2rOnRmT8yYibxMM5qzhrdtYvZERrM/j0hImF
+	 mW2Ii8KiixKkoYZDYd8XtBWnMTi38GN+/cD9SF3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alon Zahavi <zahavi.alon@gmail.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Lee Jones <lee@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/112] nvmet: nul-terminate the NQNs passed in the connect command
-Date: Thu, 30 Nov 2023 16:21:40 +0000
-Message-ID: <20231130162142.009772119@linuxfoundation.org>
+Subject: [PATCH 6.6 054/112] USB: dwc3: qcom: fix resource leaks on probe deferral
+Date: Thu, 30 Nov 2023 16:21:41 +0000
+Message-ID: <20231130162142.037602271@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -44,46 +44,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 1c22e0295a5eb571c27b53c7371f95699ef705ff ]
+[ Upstream commit 51392a1879ff06dc21b68aef4825f6ef68a7be42 ]
 
-The host and subsystem NQNs are passed in the connect command payload and
-interpreted as nul-terminated strings.  Ensure they actually are
-nul-terminated before using them.
+The driver needs to deregister and free the newly allocated dwc3 core
+platform device on ACPI probe errors (e.g. probe deferral) and on driver
+unbind but instead it leaked those resources while erroneously dropping
+a reference to the parent platform device which is still in use.
 
-Fixes: a07b4970f464 "nvmet: add a generic NVMe target")
-Reported-by: Alon Zahavi <zahavi.alon@gmail.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+For OF probing the driver takes a reference to the dwc3 core platform
+device which has also always been leaked.
+
+Fix the broken ACPI tear down and make sure to drop the dwc3 core
+reference for both OF and ACPI.
+
+Fixes: 8fd95da2cfb5 ("usb: dwc3: qcom: Release the correct resources in dwc3_qcom_remove()")
+Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Cc: stable@vger.kernel.org      # 4.18
+Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Lee Jones <lee@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20231117173650.21161-2-johan+linaro@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 9cf87666fc6e ("USB: dwc3: qcom: fix ACPI platform device leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/dwc3/dwc3-qcom.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
-index 43b5bd8bb6a52..d8da840a1c0ed 100644
---- a/drivers/nvme/target/fabrics-cmd.c
-+++ b/drivers/nvme/target/fabrics-cmd.c
-@@ -244,6 +244,8 @@ static void nvmet_execute_admin_connect(struct nvmet_req *req)
- 		goto out;
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 3de43df6bbe81..00c3021b43ce7 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -758,6 +758,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
+ 	if (!qcom->dwc3) {
+ 		ret = -ENODEV;
+ 		dev_err(dev, "failed to get dwc3 platform device\n");
++		of_platform_depopulate(dev);
  	}
  
-+	d->subsysnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
-+	d->hostnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
- 	status = nvmet_alloc_ctrl(d->subsysnqn, d->hostnqn, req,
- 				  le32_to_cpu(c->kato), &ctrl);
- 	if (status)
-@@ -313,6 +315,8 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
- 		goto out;
+ node_put:
+@@ -899,7 +900,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 
+ 	if (ret) {
+ 		dev_err(dev, "failed to register DWC3 Core, err=%d\n", ret);
+-		goto depopulate;
++		goto clk_disable;
  	}
  
-+	d->subsysnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
-+	d->hostnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
- 	ctrl = nvmet_ctrl_find_get(d->subsysnqn, d->hostnqn,
- 				   le16_to_cpu(d->cntlid), req);
- 	if (!ctrl) {
+ 	ret = dwc3_qcom_interconnect_init(qcom);
+@@ -934,7 +935,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 	if (np)
+ 		of_platform_depopulate(&pdev->dev);
+ 	else
+-		platform_device_put(pdev);
++		platform_device_del(qcom->dwc3);
++	platform_device_put(qcom->dwc3);
+ clk_disable:
+ 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+ 		clk_disable_unprepare(qcom->clks[i]);
+@@ -957,7 +959,8 @@ static void dwc3_qcom_remove(struct platform_device *pdev)
+ 	if (np)
+ 		of_platform_depopulate(&pdev->dev);
+ 	else
+-		platform_device_put(pdev);
++		platform_device_del(qcom->dwc3);
++	platform_device_put(qcom->dwc3);
+ 
+ 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+ 		clk_disable_unprepare(qcom->clks[i]);
 -- 
 2.42.0
 
