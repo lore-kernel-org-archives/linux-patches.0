@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA5310EF;
-	Thu, 30 Nov 2023 16:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F0854F96;
+	Thu, 30 Nov 2023 16:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToxcOYYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA20C433C8;
-	Thu, 30 Nov 2023 16:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrnGekIq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D72FC433C8;
+	Thu, 30 Nov 2023 16:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701362026;
-	bh=gnjNtl5k6w+LXcUOzVrBFgDabOBy9UTrqlGIdUi0ku0=;
+	s=korg; t=1701362029;
+	bh=p2oQLXMWab32OW/2e2S3krIwSAIdXTr9X/s3enOzUac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToxcOYYGoLo85i1Ap2ozYlhhUK7n6JopaH06aNvusOtQY3Jp0DFEV5Kv7rTgHoV32
-	 DLqqLTY3LLrORfjwCuiYCFELDWtQCzrkuTHG3ZpY7/p8tCrgCohRAti6QeJoSKkE+T
-	 b4C3dh4nSuOdQuZfcCD4P/xrm3BB+PHHQakt/aOo=
+	b=lrnGekIqf53ttLNvx/1Ka1ikXN/nz13+BdIdbJvI4BUb0djiSoXwneBm0ZELQaoTe
+	 Xy+1h+9pjm/BNmt+xcmuBn4M37SJyAjzkK3AgdLyNmlyRpRr4pm+ZmCuuYgpC0Ft31
+	 NQW51wxibEt3RwQjPjvzV28KoxE3XbkeF0NocI7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 58/69] bcache: fixup lock c->root error
-Date: Thu, 30 Nov 2023 16:22:55 +0000
-Message-ID: <20231130162134.962040542@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.15 59/69] usb: cdnsp: Fix deadlock issue during using NCM gadget
+Date: Thu, 30 Nov 2023 16:22:56 +0000
+Message-ID: <20231130162134.998237060@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -36,184 +35,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit e34820f984512b433ee1fc291417e60c47d56727 upstream.
+commit 58f2fcb3a845fcbbad2f3196bb37d744e0506250 upstream.
 
-We had a problem with io hung because it was waiting for c->root to
-release the lock.
+The interrupt service routine registered for the gadget is a primary
+handler which mask the interrupt source and a threaded handler which
+handles the source of the interrupt. Since the threaded handler is
+voluntary threaded, the IRQ-core does not disable bottom halves before
+invoke the handler like it does for the forced-threaded handler.
 
-crash> cache_set.root -l cache_set.list ffffa03fde4c0050
-  root = 0xffff802ef454c800
-crash> btree -o 0xffff802ef454c800 | grep rw_semaphore
-  [ffff802ef454c858] struct rw_semaphore lock;
-crash> struct rw_semaphore ffff802ef454c858
-struct rw_semaphore {
-  count = {
-    counter = -4294967297
-  },
-  wait_list = {
-    next = 0xffff00006786fc28,
-    prev = 0xffff00005d0efac8
-  },
-  wait_lock = {
-    raw_lock = {
-      {
-        val = {
-          counter = 0
-        },
-        {
-          locked = 0 '\000',
-          pending = 0 '\000'
-        },
-        {
-          locked_pending = 0,
-          tail = 0
-        }
-      }
-    }
-  },
-  osq = {
-    tail = {
-      counter = 0
-    }
-  },
-  owner = 0xffffa03fdc586603
-}
+Due to changes in networking it became visible that a network gadget's
+completions handler may schedule a softirq which remains unprocessed.
+The gadget's completion handler is usually invoked either in hard-IRQ or
+soft-IRQ context. In this context it is enough to just raise the softirq
+because the softirq itself will be handled once that context is left.
+In the case of the voluntary threaded handler, there is nothing that
+will process pending softirqs. Which means it remain queued until
+another random interrupt (on this CPU) fires and handles it on its exit
+path or another thread locks and unlocks a lock with the bh suffix.
+Worst case is that the CPU goes idle and the NOHZ complains about
+unhandled softirqs.
 
-The "counter = -4294967297" means that lock count is -1 and a write lock
-is being attempted. Then, we found that there is a btree with a counter
-of 1 in btree_cache_freeable.
+Disable bottom halves before acquiring the lock (and disabling
+interrupts) and enable them after dropping the lock. This ensures that
+any pending softirqs will handled right away.
 
-crash> cache_set -l cache_set.list ffffa03fde4c0050 -o|grep btree_cache
-  [ffffa03fde4c1140] struct list_head btree_cache;
-  [ffffa03fde4c1150] struct list_head btree_cache_freeable;
-  [ffffa03fde4c1160] struct list_head btree_cache_freed;
-  [ffffa03fde4c1170] unsigned int btree_cache_used;
-  [ffffa03fde4c1178] wait_queue_head_t btree_cache_wait;
-  [ffffa03fde4c1190] struct task_struct *btree_cache_alloc_lock;
-crash> list -H ffffa03fde4c1140|wc -l
-973
-crash> list -H ffffa03fde4c1150|wc -l
-1123
-crash> cache_set.btree_cache_used -l cache_set.list ffffa03fde4c0050
-  btree_cache_used = 2097
-crash> list -s btree -l btree.list -H ffffa03fde4c1140|grep -E -A2 "^  lock = {" > btree_cache.txt
-crash> list -s btree -l btree.list -H ffffa03fde4c1150|grep -E -A2 "^  lock = {" > btree_cache_freeable.txt
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# pwd
-/var/crash/127.0.0.1-2023-08-04-16:40:28
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# cat btree_cache.txt|grep counter|grep -v "counter = 0"
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# cat btree_cache_freeable.txt|grep counter|grep -v "counter = 0"
-      counter = 1
-
-We found that this is a bug in bch_sectors_dirty_init() when locking c->root:
-    (1). Thread X has locked c->root(A) write.
-    (2). Thread Y failed to lock c->root(A), waiting for the lock(c->root A).
-    (3). Thread X bch_btree_set_root() changes c->root from A to B.
-    (4). Thread X releases the lock(c->root A).
-    (5). Thread Y successfully locks c->root(A).
-    (6). Thread Y releases the lock(c->root B).
-
-        down_write locked ---(1)----------------------┐
-                |                                     |
-                |   down_read waiting ---(2)----┐     |
-                |           |               ┌-------------┐ ┌-------------┐
-        bch_btree_set_root ===(3)========>> | c->root   A | | c->root   B |
-                |           |               └-------------┘ └-------------┘
-            up_write ---(4)---------------------┘     |            |
-                            |                         |            |
-                    down_read locked ---(5)-----------┘            |
-                            |                                      |
-                        up_read ---(6)-----------------------------┘
-
-Since c->root may change, the correct steps to lock c->root should be
-the same as bch_root_usage(), compare after locking.
-
-static unsigned int bch_root_usage(struct cache_set *c)
-{
-        unsigned int bytes = 0;
-        struct bkey *k;
-        struct btree *b;
-        struct btree_iter iter;
-
-        goto lock_root;
-
-        do {
-                rw_unlock(false, b);
-lock_root:
-                b = c->root;
-                rw_lock(false, b, b->level);
-        } while (b != c->root);
-
-        for_each_key_filter(&b->keys, k, &iter, bch_ptr_bad)
-                bytes += bkey_bytes(k);
-
-        rw_unlock(false, b);
-
-        return (bytes * 100) / btree_bytes(c);
-}
-
-Fixes: b144e45fc576 ("bcache: make bch_sectors_dirty_init() to be multithreaded")
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20231120052503.6122-7-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+cc: stable@vger.kernel.org
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20231108093125.224963-1-pawell@cadence.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/writeback.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/usb/cdns3/cdnsp-ring.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/md/bcache/writeback.c
-+++ b/drivers/md/bcache/writeback.c
-@@ -967,14 +967,22 @@ static int bch_btre_dirty_init_thread_nr
- void bch_sectors_dirty_init(struct bcache_device *d)
- {
- 	int i;
-+	struct btree *b = NULL;
- 	struct bkey *k = NULL;
- 	struct btree_iter iter;
- 	struct sectors_dirty_init op;
- 	struct cache_set *c = d->c;
- 	struct bch_dirty_init_state state;
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -1522,6 +1522,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
+ 	unsigned long flags;
+ 	int counter = 0;
  
-+retry_lock:
-+	b = c->root;
-+	rw_lock(0, b, b->level);
-+	if (b != c->root) {
-+		rw_unlock(0, b);
-+		goto retry_lock;
-+	}
-+
- 	/* Just count root keys if no leaf node */
--	rw_lock(0, c->root, c->root->level);
- 	if (c->root->level == 0) {
- 		bch_btree_op_init(&op.op, -1);
- 		op.inode = d->id;
-@@ -987,7 +995,7 @@ void bch_sectors_dirty_init(struct bcach
- 			sectors_dirty_init_fn(&op.op, c->root, k);
- 		}
++	local_bh_disable();
+ 	spin_lock_irqsave(&pdev->lock, flags);
  
--		rw_unlock(0, c->root);
-+		rw_unlock(0, b);
- 		return;
+ 	if (pdev->cdnsp_state & (CDNSP_STATE_HALTED | CDNSP_STATE_DYING)) {
+@@ -1534,6 +1535,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
+ 			cdnsp_died(pdev);
+ 
+ 		spin_unlock_irqrestore(&pdev->lock, flags);
++		local_bh_enable();
+ 		return IRQ_HANDLED;
  	}
  
-@@ -1024,7 +1032,7 @@ void bch_sectors_dirty_init(struct bcach
- out:
- 	/* Must wait for all threads to stop. */
- 	wait_event(state.wait, atomic_read(&state.started) == 0);
--	rw_unlock(0, c->root);
-+	rw_unlock(0, b);
- }
+@@ -1550,6 +1552,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
+ 	cdnsp_update_erst_dequeue(pdev, event_ring_deq, 1);
  
- void bch_cached_dev_writeback_init(struct cached_dev *dc)
+ 	spin_unlock_irqrestore(&pdev->lock, flags);
++	local_bh_enable();
+ 
+ 	return IRQ_HANDLED;
+ }
 
 
