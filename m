@@ -1,205 +1,103 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0365FEE3
-	for <patches@lists.linux.dev>; Thu, 30 Nov 2023 22:43:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D365813C;
+	Thu, 30 Nov 2023 22:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="boGAoV3c"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701384201; x=1732920201;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ul6wDHt3NtaWD+zCoELgS9GAvRpyrDS6easDGhJqmco=;
-  b=boGAoV3cmGpgzUFfrBKozh46zGrw4qN6Mfwka0TGGCg4c40p8vQb2696
-   K09919cJy9yvodQhrXlRrxTn0AmsSXgiZAJCMPHH4h+4uaZ0q/tCOW1Lm
-   2xruReaKNsWRnsVtMH5UdorJjc4a09oWrkRmnbQGzM+HsM0dYF7/y2K/1
-   cZnWAiaKSi0dzYrFjYHq1ZPg1MgbsVCZlTMKb0hs6EcYiyJHmy16oM6Fb
-   B1uws/ifkieEywnoa0O7T3V7MpwY+UPgYi4XkIqb7qRrx4ZZxKfWq2W3N
-   /3FgO9BINSCh2j/G/0wH2WC+FuSaVMxHLuMtMf315zKNrdDUrd8otJ3Dn
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10910"; a="378432531"
-X-IronPort-AV: E=Sophos;i="6.04,240,1695711600"; 
-   d="scan'208";a="378432531"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2023 14:43:20 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10910"; a="835555500"
-X-IronPort-AV: E=Sophos;i="6.04,240,1695711600"; 
-   d="scan'208";a="835555500"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2023 14:43:20 -0800
-Date: Thu, 30 Nov 2023 14:43:19 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fam Zheng <fam@euphon.net>, Fenghua Yu <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, patches@lists.linux.dev,
-	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
-Subject: Re: [PATCH v12 7/8] x86/resctrl: Sub NUMA Cluster detection and
- enable
-Message-ID: <ZWkQBwwtSae4nGgH@agluck-desk3>
-References: <20231109230915.73600-1-tony.luck@intel.com>
- <20231130003418.89964-1-tony.luck@intel.com>
- <20231130003418.89964-8-tony.luck@intel.com>
- <ZWjOBw0Ygyw226Cc@dell>
- <ZWj3NdI/qLNOgyg0@agluck-desk3>
- <1c1a16a5-f235-4179-9d0f-1556e11d9c11@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DtsswBaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2715C433C8;
+	Thu, 30 Nov 2023 22:58:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701385104;
+	bh=XqkrEfHSvL03T9YszMrafbMZPhJ0Eme0dXKmNb5Basg=;
+	h=From:Subject:Date:To:Cc:From;
+	b=DtsswBaXK8I7eINNJKSYa1lWi2RRlKT5e8rAffQrZAngLWR8XQXJSsfBp5FoA4vaY
+	 XlQPP5YAwN74nN/d2h44NaEOm0eRUElV23slNXLI6PQwsgHBTmq6KEwe9jkPpdooTy
+	 zz8Bxwfnrrl8fiKKcYjtgNmOskD+QZuqek0BVt9+yEY3B51XeMY9dRyAlkpNWTWpoR
+	 oAKUdM0JX0+81YPWcAGIhhbwNtC4ifbU/VBf+EjPjDvCZIYtBgfu3+f111bG+5TOo+
+	 w8ZuIPocnnh3TRyYI94v8K0LWiMNuX53VFv9mMRBeOWbAh9tqQzTlzPxah462mQ19R
+	 r3+LjQvYesKNA==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 00/19] hexagon: Fix up instances of -Wmissing-prototypes
+Date: Thu, 30 Nov 2023 15:58:13 -0700
+Message-Id: <20231130-hexagon-missing-prototypes-v1-0-5c34714afe9e@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1c1a16a5-f235-4179-9d0f-1556e11d9c11@intel.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIUTaWUC/x3MQQqDMBAF0KvIrDuQaKroVYoLsb/JLJqEjIgi3
+ r2hy7d5FymKQGlqLirYRSXFCvtoaA1L9GB5V1Nr2s7aznDAsfgU+SuqEj3nkra0nRnKPczTOjf
+ 0IwaqQS74yPHPX/N9/wCD4M05bAAAAA==
+To: bcain@quicinc.com, akpm@linux-foundation.org, arnd@arndb.de
+Cc: linux-hexagon@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2553; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=XqkrEfHSvL03T9YszMrafbMZPhJ0Eme0dXKmNb5Basg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKmZwr2i4d3ySgsj2Xi1b/HJWh123qAclNw+8/PVtTrcO
+ vFtf5s7SlkYxLgYZMUUWaofqx43NJxzlvHGqUkwc1iZQIYwcHEKwESO1TD8Tz61sixT+ZuzZV3h
+ iXNzFr+8vtQurKC/+sTliQu/7pWe58rI8IX72mrvS4XTzorNq7tQZBc5qXjjhvlO3/6+4y56q8Y
+ wlxMA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Thu, Nov 30, 2023 at 01:47:10PM -0800, Reinette Chatre wrote:
-> Hi Tony,
-> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> > index 3293ab4c58b0..85f8a1b3feaf 100644
-> > --- a/arch/x86/kernel/cpu/resctrl/core.c
-> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> > @@ -1056,12 +1056,13 @@ static __init int snc_get_config(void)
-> >  	unsigned long *node_caches;
-> >  	int mem_only_nodes = 0;
-> >  	int cpu, node, ret;
-> > +	int cache_id;
-> >  	int num_l3_caches;
-> 
-> Please do maintain reverse fir order.
+Hi all,
 
-Fixed.
+This series fixes all the instances of -Wmissing-prototypes in
+arch/hexagon, now that it is enabled globally in a default build. I hope
+most of the patches will be uncontroversial but please let me know
+otherwise. This survives ARCH=hexagon defconfig and allmodconfig with
+LLVM 17.0.6.
 
-> 
-> >  
-> >  	if (!x86_match_cpu(snc_cpu_ids))
-> >  		return 1;
-> 
-> I understand and welcome this change as motivated by robustness. Apart
-> from that, with this being a model specific feature for this particular
-> group of systems, it it not clear to me in which scenarios this could
-> run on a system where a present CPU does not have access to L3 cache.
+This is based on Arnd's asm-generic-prototypes branch but it applies
+cleanly to 6.7-rc3 as well, in case Andrew wants to take it (as far as
+I remember, he has handled Hexagon patches for me in the past).
 
-Agreed that on these systems there should always be an L3 cache. Should
-I drop the check for "-1"?
+---
+Nathan Chancellor (19):
+      hexagon: uaccess: Remove clear_user_hexagon()
+      hexagon: mm: Mark paging_init() as static
+      hexagon: mm: Include asm/setup.h for setup_arch_memory()'s prototype
+      hexagon: smp: Mark handle_ipi() and start_secondary() as static
+      hexagon: vm_fault: Mark do_page_fault() as static
+      hexagon: vm_fault: Include asm/vm_fault.h for prototypes
+      hexagon: vm_tlb: Include asm/tlbflush.h for prototypes
+      hexagon: time: Include asm/time.h for prototypes
+      hexagon: time: Mark time_init_deferred() as static
+      hexagon: time: Include asm/delay.h for prototypes
+      hexagon: signal: Switch to SYSCALL_DEFINE0 for sys_rt_sigreturn()
+      hexagon: reset: Include linux/reboot.h for prototypes
+      hexagon: process: Include linux/cpu.h for arch_cpu_idle() prototype
+      hexagon: process: Add internal prototype for do_work_pending()
+      hexagon: vdso: Include asm/elf.h for arch_setup_additional_pages() prototype
+      hexagon: vm_events: Remove unused dummy_handler()
+      hexagon: irq: Add prototype for arch_do_IRQ()
+      hexagon: traps: Remove sys_syscall()
+      hexagon: traps: Add internal prototypes for functions only called from asm
 
-> >  
-> > -	node_caches = bitmap_zalloc(nr_node_ids, GFP_KERNEL);
-> > +	node_caches = bitmap_zalloc(num_online_cpus(), GFP_KERNEL);
-> 
-> Please do take care to take new bitmap size into account in all
-> places. From what I can tell there is a later bitmap_weight() call that
-> still uses nr_node_ids as size.
+ arch/hexagon/include/asm/irq.h  |  3 +++
+ arch/hexagon/kernel/process.c   |  2 ++
+ arch/hexagon/kernel/reset.c     |  1 +
+ arch/hexagon/kernel/signal.c    |  2 +-
+ arch/hexagon/kernel/smp.c       |  4 ++--
+ arch/hexagon/kernel/time.c      |  4 +++-
+ arch/hexagon/kernel/traps.c     | 11 ++++-------
+ arch/hexagon/kernel/vdso.c      |  1 +
+ arch/hexagon/kernel/vm_events.c |  7 -------
+ arch/hexagon/mm/init.c          |  3 ++-
+ arch/hexagon/mm/uaccess.c       |  8 --------
+ arch/hexagon/mm/vm_fault.c      |  3 ++-
+ arch/hexagon/mm/vm_tlb.c        |  1 +
+ 13 files changed, 22 insertions(+), 28 deletions(-)
+---
+base-commit: 6479f0df0b7b7e977357e524bdd2eb3aeb4fd085
+change-id: 20231130-hexagon-missing-prototypes-6e05144769e7
 
-Oops. I was also using num_online_cpus() before cpus_read_lock(), so
-things could theoretically change before the bitmap_weight() call.
-I switched to using num_present_cpus() in both places.
-
-> >  	if (!node_caches)
-> >  		return 1;
-> >  
-> > @@ -1072,10 +1073,13 @@ static __init int snc_get_config(void)
-> >  
-> >  	for_each_node(node) {
-> >  		cpu = cpumask_first(cpumask_of_node(node));
-> > -		if (cpu < nr_cpu_ids)
-> > -			set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
-> > -		else
-> > +		if (cpu < nr_cpu_ids) {
-> > +			cache_id = get_cpu_cacheinfo_id(cpu, 3);
-> > +			if (cache_id != -1)
-> > +				set_bit(cache_id, node_caches);
-> > +		} else {
-> >  			mem_only_nodes++;
-> > +		}
-> >  	}
-> >  	cpus_read_unlock();
-> >  
-> 
-> Could this code be made even more robust by checking the computed
-> snc_nodes_per_l3_cache against the limited actually possible values?
-> Forcing it to 1 if something went wrong?
-
-Added a couple of extra sanity checks. See updated incremental patch
-below.
-
--Tony
-
-
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 3293ab4c58b0..3684c6bf8224 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -1057,11 +1057,12 @@ static __init int snc_get_config(void)
- 	int mem_only_nodes = 0;
- 	int cpu, node, ret;
- 	int num_l3_caches;
-+	int cache_id;
- 
- 	if (!x86_match_cpu(snc_cpu_ids))
- 		return 1;
- 
--	node_caches = bitmap_zalloc(nr_node_ids, GFP_KERNEL);
-+	node_caches = bitmap_zalloc(num_present_cpus(), GFP_KERNEL);
- 	if (!node_caches)
- 		return 1;
- 
-@@ -1072,23 +1073,39 @@ static __init int snc_get_config(void)
- 
- 	for_each_node(node) {
- 		cpu = cpumask_first(cpumask_of_node(node));
--		if (cpu < nr_cpu_ids)
--			set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
--		else
-+		if (cpu < nr_cpu_ids) {
-+			cache_id = get_cpu_cacheinfo_id(cpu, 3);
-+			if (cache_id != -1)
-+				set_bit(cache_id, node_caches);
-+		} else {
- 			mem_only_nodes++;
-+		}
- 	}
- 	cpus_read_unlock();
- 
--	num_l3_caches = bitmap_weight(node_caches, nr_node_ids);
-+	num_l3_caches = bitmap_weight(node_caches, num_present_cpus());
- 	kfree(node_caches);
- 
- 	if (!num_l3_caches)
- 		return 1;
- 
-+	/* sanity check #1: Number of CPU nodes must be multiple of num_l3_caches */
-+	if ((nr_node_ids - mem_only_nodes) % num_l3_caches)
-+		return 1;
-+
- 	ret = (nr_node_ids - mem_only_nodes) / num_l3_caches;
- 
--	if (ret > 1)
-+	/* sanity check #2: Only valid results are 1, 2, 4 */
-+	switch (ret) {
-+	case 1:
-+		break;
-+	case 2:
-+	case 4:
- 		rdt_resources_all[RDT_RESOURCE_L3].r_resctrl.mon_scope = RESCTRL_NODE;
-+		break;
-+	default:
-+		return 1;
-+	}
- 
- 	return ret;
- }
+Best regards,
 -- 
-2.41.0
+Nathan Chancellor <nathan@kernel.org>
 
