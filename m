@@ -1,43 +1,43 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFFA39845;
-	Thu, 30 Nov 2023 13:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD9A2E3E0;
+	Thu, 30 Nov 2023 13:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6d815062598so175097a34.0;
-        Thu, 30 Nov 2023 05:22:17 -0800 (PST)
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-58d9a0ead0cso180403eaf.0;
+        Thu, 30 Nov 2023 05:23:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701350536; x=1701955336;
+        d=1e100.net; s=20230601; t=1701350594; x=1701955394;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=z3Ac1OsQ/0PufFzAKJvogoNK3ZXux9UUeIIWbEpuj4w=;
-        b=I4rwTzvhjsecp/lTp9r4WTTDsoruVsWfWoCpspo3/erFHs4RN6ryIZfREShJ3fRSwD
-         AmTXIEIdJUarTUm+Hx8zG7OOt+YNqXVJCncu5KlfOpJp3ccrtSl4ujhoPpay8Az8uIos
-         6nG/PdHRAnkfW6kuUfmPpO7oIFG7YHK1QI3pAtC4X2j3SXPR2e4FkiuGuiIboJweBXa8
-         iMPdZ4hz18FuGLFWP04cz6xDscMojt9cyfRMLfVFiBXrCxMl5KkP6LLiRLnNfryM52+T
-         qC62qS2SIU/X4qNbDxIhTJrpQSeFCTzVs+xzYHFMfneU4vXMlORgKB95LkVaTN2eE895
-         Pszw==
-X-Gm-Message-State: AOJu0YyV5bLqZR8sHhzKwHHc+U8BsIHxiT+eRGLw85kGnd7f3hRuKte6
-	VgGtHNPT+e/1bu8d1kGvIENGIsVagYaJmh2Fw+E=
-X-Google-Smtp-Source: AGHT+IE2dl3Xx9eJWjdmY/6S7l+LmkTasy79qgcO017bYrhvGpUKiq9ghaOZGXLyHzSGuDtnofjD5ts7oxP8wmkedE8=
-X-Received: by 2002:a4a:eb86:0:b0:58d:5302:5b18 with SMTP id
- d6-20020a4aeb86000000b0058d53025b18mr17772925ooj.1.1701350536438; Thu, 30 Nov
- 2023 05:22:16 -0800 (PST)
+        bh=mJ4HfSjmHmp/z8LKb9u0O3izJUOjiP9hVgtxT/yNmWw=;
+        b=sEmsHJFNd5IFjzaggrOR1X8J+p4K1A0vTMfzISPifRGXRqlY5rtSh9KVyWq/plmExK
+         7ajzohTg122xygvSSbw7bzQHiE4/Gc12CljXXEw1rPYYlLTwFbo7mo2K1sjlQ84k7LM4
+         KzcxpRdksCUe1phZQ1zeOkG3V1Y8N+MKyDxceDO63+KgP+ptbAvfMOLCM9I1a4lm2oxx
+         QFaCBhmTy+tLl8CYh15Bs2iUzc+c+KUPQj+bUyiIBEei35tFtykHW5ts77Y6O2FyOZ38
+         5sdR7Jrt7hi+wE3UmU7+M0B6i9K34pTSK2+wrDIM9J5l7NIsR0XY3zJ/trK5BqFMztpQ
+         xgZQ==
+X-Gm-Message-State: AOJu0Yyht1HwDeC1QkqUYmIAamSMMBv6uramjGUmaHpdfZNQNOX0Yph4
+	CWU3SHcAXYLJOrmb83eqk29RL2RpSktzZMy7KiM=
+X-Google-Smtp-Source: AGHT+IHz57RxLZa4J1YxA2XttUwodX0GdXV5ylkhZb4Oyz6eVI2ERRPlDmHL2wK9GIJ4wc86qAKgBv8QpHj+lMuC3ss=
+X-Received: by 2002:a4a:e702:0:b0:58d:e73a:eb79 with SMTP id
+ y2-20020a4ae702000000b0058de73aeb79mr2180906oou.0.1701350593894; Thu, 30 Nov
+ 2023 05:23:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com> <2-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
-In-Reply-To: <2-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
+References: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com> <4-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
+In-Reply-To: <4-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 30 Nov 2023 14:22:05 +0100
-Message-ID: <CAJZ5v0gEGFk9P8H25GJ827LkCb=G=QsRqN6SPbh9J7zS+BhQ0w@mail.gmail.com>
-Subject: Re: [PATCH 02/30] ACPI: VIOT: Make a viot_iommu_for_each_id()
+Date: Thu, 30 Nov 2023 14:23:02 +0100
+Message-ID: <CAJZ5v0jZYy=hSn0hVV_dBw7rqY4NwcTn6ODo_-g_EVkzcnMBsQ@mail.gmail.com>
+Subject: Re: [PATCH 04/30] ACPI: IORT: Remove fwspec from the reserved region code
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: acpica-devel@lists.linux.dev, Andy Gross <agross@kernel.org>, 
 	Alim Akhtar <alim.akhtar@samsung.com>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
@@ -69,175 +69,310 @@ Cc: acpica-devel@lists.linux.dev, Andy Gross <agross@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 30, 2023 at 2:11=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
+On Thu, Nov 30, 2023 at 2:10=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
 ote:
 >
-> Similar to of_iommu_for_each_id() this parses the VIOT ACPI description
-> and invokes a function over each entry in the table.
+> iort_iommu_get_resv_regions() needs access to the parsed id array that is
+> currently stored in the iommu_fwspec.
 >
-> Have viot_iommu_configure() use the new function to call
-> viot_dev_iommu_init().
+> Instead of getting this from the fwspec inside the iort code have the
+> caller pass it in.
 >
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
 Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
 > ---
->  drivers/acpi/viot.c       | 54 +++++++++++++++++++++++----------------
->  include/linux/acpi_viot.h | 11 ++++++++
->  2 files changed, 43 insertions(+), 22 deletions(-)
+>  drivers/acpi/arm64/iort.c | 88 ++++++++++++++++++++++++---------------
+>  drivers/iommu/dma-iommu.c |  7 +++-
+>  include/linux/acpi_iort.h |  8 +++-
+>  3 files changed, 65 insertions(+), 38 deletions(-)
 >
-> diff --git a/drivers/acpi/viot.c b/drivers/acpi/viot.c
-> index c8025921c129b2..7ab35ef05c84e0 100644
-> --- a/drivers/acpi/viot.c
-> +++ b/drivers/acpi/viot.c
-> @@ -25,13 +25,6 @@
->  #include <linux/pci.h>
->  #include <linux/platform_device.h>
->
-> -struct viot_iommu {
-> -       /* Node offset within the table */
-> -       unsigned int                    offset;
-> -       struct fwnode_handle            *fwnode;
-> -       struct list_head                list;
-> -};
-> -
->  struct viot_endpoint {
->         union {
->                 /* PCI range */
-> @@ -304,10 +297,10 @@ void __init acpi_viot_init(void)
->         acpi_put_table(hdr);
+> diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
+> index 5c9b4c23f96a87..93e30f2f5004f0 100644
+> --- a/drivers/acpi/arm64/iort.c
+> +++ b/drivers/acpi/arm64/iort.c
+> @@ -946,11 +946,19 @@ static u32 *iort_rmr_alloc_sids(u32 *sids, u32 coun=
+t, u32 id_start,
+>         return new_sids;
 >  }
 >
-> -static int viot_dev_iommu_init(struct device *dev, struct viot_iommu *vi=
-ommu,
-> -                              u32 epid)
-> +static int viot_dev_iommu_init(struct viot_iommu *viommu, u32 epid, void=
- *info)
->  {
->         const struct iommu_ops *ops;
-> +       struct device *dev =3D info;
->
->         if (!viommu)
->                 return -ENODEV;
-> @@ -324,11 +317,17 @@ static int viot_dev_iommu_init(struct device *dev, =
-struct viot_iommu *viommu,
->         return acpi_iommu_fwspec_init(dev, epid, viommu->fwnode, ops);
->  }
->
-> -static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, voi=
-d *data)
-> +struct viot_pci_iommu_alias_info {
+> -static bool iort_rmr_has_dev(struct device *dev, u32 id_start,
+> +struct iort_resv_args {
 > +       struct device *dev;
-> +       viot_for_each_fn fn;
-> +       void *info;
+> +       struct list_head *head;
+> +       struct fwnode_handle *iommu_fwnode;
+> +       const u32 *fw_ids;
+> +       unsigned int fw_num_ids;
 > +};
 > +
-> +static int __for_each_pci_alias(struct pci_dev *pdev, u16 dev_id, void *=
-data)
+> +static bool iort_rmr_has_dev(struct iort_resv_args *args, u32 id_start,
+>                              u32 id_count)
 >  {
->         u32 epid;
->         struct viot_endpoint *ep;
-> -       struct device *aliased_dev =3D data;
-> +       struct viot_pci_iommu_alias_info *info =3D data;
->         u32 domain_nr =3D pci_domain_nr(pdev->bus);
+> +       struct device *dev =3D args->dev;
+>         int i;
+> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
 >
->         list_for_each_entry(ep, &viot_pci_ranges, list) {
-> @@ -339,14 +338,14 @@ static int viot_pci_dev_iommu_init(struct pci_dev *=
-pdev, u16 dev_id, void *data)
->                         epid =3D ((domain_nr - ep->segment_start) << 16) =
-+
->                                 dev_id - ep->bdf_start + ep->endpoint_id;
+>         /*
+>          * Make sure the kernel has preserved the boot firmware PCIe
+> @@ -965,18 +973,18 @@ static bool iort_rmr_has_dev(struct device *dev, u3=
+2 id_start,
+>                         return false;
+>         }
 >
-> -                       return viot_dev_iommu_init(aliased_dev, ep->viomm=
-u,
-> -                                                  epid);
-> +                       return info->fn(ep->viommu, epid, info->info);
+> -       for (i =3D 0; i < fwspec->num_ids; i++) {
+> -               if (fwspec->ids[i] >=3D id_start &&
+> -                   fwspec->ids[i] <=3D id_start + id_count)
+> +       for (i =3D 0; i < args->fw_num_ids; i++) {
+> +               if (args->fw_ids[i] >=3D id_start &&
+> +                   args->fw_ids[i] <=3D id_start + id_count)
+>                         return true;
+>         }
+>
+>         return false;
+>  }
+>
+> -static void iort_node_get_rmr_info(struct acpi_iort_node *node,
+> -                                  struct acpi_iort_node *iommu,
+> -                                  struct device *dev, struct list_head *=
+head)
+> +static void iort_node_get_rmr_info(struct iort_resv_args *args,
+> +                                  struct acpi_iort_node *node,
+> +                                  struct acpi_iort_node *iommu)
+>  {
+>         struct acpi_iort_node *smmu =3D NULL;
+>         struct acpi_iort_rmr *rmr;
+> @@ -1013,8 +1021,8 @@ static void iort_node_get_rmr_info(struct acpi_iort=
+_node *node,
+>                         continue;
+>
+>                 /* If dev is valid, check RMR node corresponds to the dev=
+ SID */
+> -               if (dev && !iort_rmr_has_dev(dev, map->output_base,
+> -                                            map->id_count))
+> +               if (args->dev &&
+> +                   !iort_rmr_has_dev(args, map->output_base, map->id_cou=
+nt))
+>                         continue;
+>
+>                 /* Retrieve SIDs associated with the Node. */
+> @@ -1029,12 +1037,12 @@ static void iort_node_get_rmr_info(struct acpi_io=
+rt_node *node,
+>         if (!sids)
+>                 return;
+>
+> -       iort_get_rmrs(node, smmu, sids, num_sids, head);
+> +       iort_get_rmrs(node, smmu, sids, num_sids, args->head);
+>         kfree(sids);
+>  }
+>
+> -static void iort_find_rmrs(struct acpi_iort_node *iommu, struct device *=
+dev,
+> -                          struct list_head *head)
+> +static void iort_find_rmrs(struct iort_resv_args *args,
+> +                          struct acpi_iort_node *iommu)
+>  {
+>         struct acpi_table_iort *iort;
+>         struct acpi_iort_node *iort_node, *iort_end;
+> @@ -1057,7 +1065,7 @@ static void iort_find_rmrs(struct acpi_iort_node *i=
+ommu, struct device *dev,
+>                         return;
+>
+>                 if (iort_node->type =3D=3D ACPI_IORT_NODE_RMR)
+> -                       iort_node_get_rmr_info(iort_node, iommu, dev, hea=
+d);
+> +                       iort_node_get_rmr_info(args, iort_node, iommu);
+>
+>                 iort_node =3D ACPI_ADD_PTR(struct acpi_iort_node, iort_no=
+de,
+>                                          iort_node->length);
+> @@ -1069,25 +1077,23 @@ static void iort_find_rmrs(struct acpi_iort_node =
+*iommu, struct device *dev,
+>   * If dev is NULL, the function populates all the RMRs associated with t=
+he
+>   * given IOMMU.
+>   */
+> -static void iort_iommu_rmr_get_resv_regions(struct fwnode_handle *iommu_=
+fwnode,
+> -                                           struct device *dev,
+> -                                           struct list_head *head)
+> +static void iort_iommu_rmr_get_resv_regions(struct iort_resv_args *args)
+>  {
+>         struct acpi_iort_node *iommu;
+>
+> -       iommu =3D iort_get_iort_node(iommu_fwnode);
+> +       iommu =3D iort_get_iort_node(args->iommu_fwnode);
+>         if (!iommu)
+>                 return;
+>
+> -       iort_find_rmrs(iommu, dev, head);
+> +       iort_find_rmrs(args, iommu);
+>  }
+>
+> -static struct acpi_iort_node *iort_get_msi_resv_iommu(struct device *dev=
+)
+> +static struct acpi_iort_node *
+> +iort_get_msi_resv_iommu(struct iort_resv_args *args)
+>  {
+>         struct acpi_iort_node *iommu;
+> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
+>
+> -       iommu =3D iort_get_iort_node(fwspec->iommu_fwnode);
+> +       iommu =3D iort_get_iort_node(args->iommu_fwnode);
+>
+>         if (iommu && (iommu->type =3D=3D ACPI_IORT_NODE_SMMU_V3)) {
+>                 struct acpi_iort_smmu_v3 *smmu;
+> @@ -1105,15 +1111,13 @@ static struct acpi_iort_node *iort_get_msi_resv_i=
+ommu(struct device *dev)
+>   * The ITS interrupt translation spaces (ITS_base + SZ_64K, SZ_64K)
+>   * associated with the device are the HW MSI reserved regions.
+>   */
+> -static void iort_iommu_msi_get_resv_regions(struct device *dev,
+> -                                           struct list_head *head)
+> +static void iort_iommu_msi_get_resv_regions(struct iort_resv_args *args)
+>  {
+> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
+>         struct acpi_iort_its_group *its;
+>         struct acpi_iort_node *iommu_node, *its_node =3D NULL;
+>         int i;
+>
+> -       iommu_node =3D iort_get_msi_resv_iommu(dev);
+> +       iommu_node =3D iort_get_msi_resv_iommu(args);
+>         if (!iommu_node)
+>                 return;
+>
+> @@ -1126,9 +1130,9 @@ static void iort_iommu_msi_get_resv_regions(struct =
+device *dev,
+>          * a given PCI or named component may map IDs to.
+>          */
+>
+> -       for (i =3D 0; i < fwspec->num_ids; i++) {
+> +       for (i =3D 0; i < args->fw_num_ids; i++) {
+>                 its_node =3D iort_node_map_id(iommu_node,
+> -                                       fwspec->ids[i],
+> +                                       args->fw_ids[i],
+>                                         NULL, IORT_MSI_TYPE);
+>                 if (its_node)
+>                         break;
+> @@ -1151,7 +1155,7 @@ static void iort_iommu_msi_get_resv_regions(struct =
+device *dev,
+>                                                          prot, IOMMU_RESV=
+_MSI,
+>                                                          GFP_KERNEL);
+>                         if (region)
+> -                               list_add_tail(&region->list, head);
+> +                               list_add_tail(&region->list, args->head);
 >                 }
 >         }
->         return -ENODEV;
 >  }
->
-> -static int viot_mmio_dev_iommu_init(struct platform_device *pdev)
-> +static int __for_each_platform(struct platform_device *pdev,
-> +                              viot_for_each_fn fn, void *info)
->  {
->         struct resource *mem;
->         struct viot_endpoint *ep;
-> @@ -357,12 +356,28 @@ static int viot_mmio_dev_iommu_init(struct platform=
-_device *pdev)
->
->         list_for_each_entry(ep, &viot_mmio_endpoints, list) {
->                 if (ep->address =3D=3D mem->start)
-> -                       return viot_dev_iommu_init(&pdev->dev, ep->viommu=
-,
-> -                                                  ep->endpoint_id);
-> +                       return fn(ep->viommu, ep->endpoint_id, info);
->         }
->         return -ENODEV;
->  }
->
-> +int viot_iommu_for_each_id(struct device *dev, viot_for_each_fn fn, void=
- *info)
-> +{
-> +       if (dev_is_pci(dev)) {
-> +               struct viot_pci_iommu_alias_info pci_info =3D {
-> +                       .dev =3D dev,
-> +                       .fn =3D fn,
-> +                       .info =3D info,
-> +               };
-> +               return pci_for_each_dma_alias(to_pci_dev(dev),
-> +                                             __for_each_pci_alias, &pci_=
-info);
-> +       }
-> +
-> +       if (dev_is_platform(dev))
-> +               return __for_each_platform(to_platform_device(dev), fn, i=
-nfo);
-> +       return -ENODEV;
-> +}
-> +
->  /**
->   * viot_iommu_configure - Setup IOMMU ops for an endpoint described by V=
-IOT
->   * @dev: the endpoint
-> @@ -371,10 +386,5 @@ static int viot_mmio_dev_iommu_init(struct platform_=
-device *pdev)
+> @@ -1160,13 +1164,24 @@ static void iort_iommu_msi_get_resv_regions(struc=
+t device *dev,
+>   * iort_iommu_get_resv_regions - Generic helper to retrieve reserved reg=
+ions.
+>   * @dev: Device from iommu_get_resv_regions()
+>   * @head: Reserved region list from iommu_get_resv_regions()
+> + * @iommu_fwnode: fwnode that describes the iommu connection for the dev=
+ice
+> + * @fw_ids: Parsed IDs
+> + * @fw_num_ids: Length of fw_ids
 >   */
->  int viot_iommu_configure(struct device *dev)
+> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
+ead)
+> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
+ead,
+> +                                struct fwnode_handle *iommu_fwnode,
+> +                                const u32 *fw_ids, unsigned int fw_num_i=
+ds)
 >  {
-> -       if (dev_is_pci(dev))
-> -               return pci_for_each_dma_alias(to_pci_dev(dev),
-> -                                             viot_pci_dev_iommu_init, de=
-v);
-> -       else if (dev_is_platform(dev))
-> -               return viot_mmio_dev_iommu_init(to_platform_device(dev));
-> -       return -ENODEV;
-> +       return viot_iommu_for_each_id(dev, viot_dev_iommu_init, dev);
+> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
+> +       struct iort_resv_args args =3D {
+> +               .dev =3D dev,
+> +               .head =3D head,
+> +               .iommu_fwnode =3D iommu_fwnode,
+> +               .fw_ids =3D fw_ids,
+> +               .fw_num_ids =3D fw_num_ids,
+> +       };
+>
+> -       iort_iommu_msi_get_resv_regions(dev, head);
+> -       iort_iommu_rmr_get_resv_regions(fwspec->iommu_fwnode, dev, head);
+> +       iort_iommu_msi_get_resv_regions(&args);
+> +       iort_iommu_rmr_get_resv_regions(&args);
 >  }
-> diff --git a/include/linux/acpi_viot.h b/include/linux/acpi_viot.h
-> index a5a12243156377..fce4eefcae4aad 100644
-> --- a/include/linux/acpi_viot.h
-> +++ b/include/linux/acpi_viot.h
-> @@ -5,6 +5,17 @@
 >
->  #include <linux/acpi.h>
+>  /**
+> @@ -1178,7 +1193,12 @@ void iort_iommu_get_resv_regions(struct device *de=
+v, struct list_head *head)
+>  void iort_get_rmr_sids(struct fwnode_handle *iommu_fwnode,
+>                        struct list_head *head)
+>  {
+> -       iort_iommu_rmr_get_resv_regions(iommu_fwnode, NULL, head);
+> +       struct iort_resv_args args =3D {
+> +               .head =3D head,
+> +               .iommu_fwnode =3D iommu_fwnode,
+> +       };
+> +
+> +       iort_iommu_rmr_get_resv_regions(&args);
+>  }
+>  EXPORT_SYMBOL_GPL(iort_get_rmr_sids);
 >
-> +struct viot_iommu {
-> +       /* Node offset within the table */
-> +       unsigned int                    offset;
-> +       struct fwnode_handle            *fwnode;
-> +       struct list_head                list;
-> +};
-> +
-> +typedef int (*viot_for_each_fn)(struct viot_iommu *viommu, u32 epid,
-> +                               void *info);
-> +int viot_iommu_for_each_id(struct device *dev, viot_for_each_fn fn, void=
- *info);
-> +
->  #ifdef CONFIG_ACPI_VIOT
->  void __init acpi_viot_early_init(void);
->  void __init acpi_viot_init(void);
+> diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+> index 85163a83df2f68..d644b0502ef48e 100644
+> --- a/drivers/iommu/dma-iommu.c
+> +++ b/drivers/iommu/dma-iommu.c
+> @@ -468,9 +468,12 @@ void iommu_put_dma_cookie(struct iommu_domain *domai=
+n)
+>   */
+>  void iommu_dma_get_resv_regions(struct device *dev, struct list_head *li=
+st)
+>  {
+> +       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
+>
+> -       if (!is_of_node(dev_iommu_fwspec_get(dev)->iommu_fwnode))
+> -               iort_iommu_get_resv_regions(dev, list);
+> +       if (!is_of_node(fwspec->iommu_fwnode)) {
+> +               iort_iommu_get_resv_regions(dev, list, fwspec->iommu_fwno=
+de,
+> +                                           fwspec->ids, fwspec->num_ids)=
+;
+> +       }
+>
+>         if (dev->of_node)
+>                 of_iommu_get_resv_regions(dev, list);
+> diff --git a/include/linux/acpi_iort.h b/include/linux/acpi_iort.h
+> index 5423abff9b6b09..13f0cefb930693 100644
+> --- a/include/linux/acpi_iort.h
+> +++ b/include/linux/acpi_iort.h
+> @@ -53,7 +53,9 @@ void iort_put_rmr_sids(struct fwnode_handle *iommu_fwno=
+de,
+>  /* IOMMU interface */
+>  int iort_dma_get_ranges(struct device *dev, u64 *size);
+>  int iort_iommu_configure_id(struct device *dev, const u32 *id_in);
+> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
+ead);
+> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
+ead,
+> +                                struct fwnode_handle *iommu_fwnode,
+> +                                const u32 *fw_ids, unsigned int fw_num_i=
+ds);
+>  phys_addr_t acpi_iort_dma_get_max_cpu_address(void);
+>  #else
+>  static inline u32 iort_msi_map_id(struct device *dev, u32 id)
+> @@ -72,7 +74,9 @@ static inline int iort_dma_get_ranges(struct device *de=
+v, u64 *size)
+>  static inline int iort_iommu_configure_id(struct device *dev, const u32 =
+*id_in)
+>  { return -ENODEV; }
+>  static inline
+> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
+ead)
+> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
+ead,
+> +                                struct fwnode_handle *iommu_fwnode,
+> +                                const u32 *fw_ids, unsigned int fw_num_i=
+ds)
+>  { }
+>
+>  static inline phys_addr_t acpi_iort_dma_get_max_cpu_address(void)
 > --
 > 2.42.0
 >
