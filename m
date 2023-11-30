@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336DC3D382;
-	Thu, 30 Nov 2023 16:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9DA11C9B;
+	Thu, 30 Nov 2023 16:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jV/6Dy6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2228C433C8;
-	Thu, 30 Nov 2023 16:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhImjuTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C047C433C8;
+	Thu, 30 Nov 2023 16:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361926;
-	bh=ZrZsXEvmlpBjWqCZLIy4sk29ZpurCzK5+AIi4XiTf8U=;
+	s=korg; t=1701361928;
+	bh=Gfr9K9C3G7bv8yhxrKYvazmYcWzxkDLr6zCarPTOjGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jV/6Dy6z2u5fifhKlVWyhYoC/rRlTHysoA3SMkDA02/tXvie4+XleEuPq1z+VNZ+G
-	 PikUz/dnBU+8wqAg1/xaRJGeeFJPGqzxgQReRQKjDqq7Eaxe/t4bxIURcrlISyve+s
-	 TfKrBaA8Xt46LyYpcE8hxOq47B9kbN0iREBWvkgU=
+	b=FhImjuTHrhSdN4ige1opta3ZYNjPQCyVQVW3nq+JBGW00uyuGwIRYoJSWJj3Eqo9z
+	 Ia89NwOWRAFDV0S6NB3+E47tEiLUMX2mCGFWpPL/MDAYSRhoHL4Wk3+LFTAZu9ov8J
+	 N1iuVcIDD6wy3Q6+J5jW2SeSgKSkZ33i2bAILwWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/69] amd-xgbe: handle corner-case during sfp hotplug
-Date: Thu, 30 Nov 2023 16:22:15 +0000
-Message-ID: <20231130162133.683194140@linuxfoundation.org>
+Subject: [PATCH 5.15 19/69] amd-xgbe: handle the corner-case during tx completion
+Date: Thu, 30 Nov 2023 16:22:16 +0000
+Message-ID: <20231130162133.716196356@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -46,51 +46,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 676ec53844cbdf2f47e68a076cdff7f0ec6cbe3f ]
+[ Upstream commit 7121205d5330c6a3cb3379348886d47c77b78d06 ]
 
-Force the mode change for SFI in Fixed PHY configurations. Fixed PHY
-configurations needs PLL to be enabled while doing mode set. When the
-SFP module isn't connected during boot, driver assumes AN is ON and
-attempts auto-negotiation. However, if the connected SFP comes up in
-Fixed PHY configuration the link will not come up as PLL isn't enabled
-while the initial mode set command is issued. So, force the mode change
-for SFI in Fixed PHY configuration to fix link issues.
+The existing implementation uses software logic to accumulate tx
+completions until the specified time (1ms) is met and then poll them.
+However, there exists a tiny gap which leads to a race between
+resetting and checking the tx_activate flag. Due to this the tx
+completions are not reported to upper layer and tx queue timeout
+kicks-in restarting the device.
 
-Fixes: e57f7a3feaef ("amd-xgbe: Prepare for working with more than one type of phy")
+To address this, introduce a tx cleanup mechanism as part of the
+periodic maintenance process.
+
+Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
 Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
 Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index ca7372369b3e6..60be836b294bb 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -1178,7 +1178,19 @@ static int xgbe_phy_config_fixed(struct xgbe_prv_data *pdata)
- 	if (pdata->phy.duplex != DUPLEX_FULL)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+index 555db1871ec9f..8d823bc147001 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+@@ -682,10 +682,24 @@ static void xgbe_service(struct work_struct *work)
+ static void xgbe_service_timer(struct timer_list *t)
+ {
+ 	struct xgbe_prv_data *pdata = from_timer(pdata, t, service_timer);
++	struct xgbe_channel *channel;
++	unsigned int i;
  
--	xgbe_set_mode(pdata, mode);
-+	/* Force the mode change for SFI in Fixed PHY config.
-+	 * Fixed PHY configs needs PLL to be enabled while doing mode set.
-+	 * When the SFP module isn't connected during boot, driver assumes
-+	 * AN is ON and attempts autonegotiation. However, if the connected
-+	 * SFP comes up in Fixed PHY config, the link will not come up as
-+	 * PLL isn't enabled while the initial mode set command is issued.
-+	 * So, force the mode change for SFI in Fixed PHY configuration to
-+	 * fix link issues.
-+	 */
-+	if (mode == XGBE_MODE_SFI)
-+		xgbe_change_mode(pdata, mode);
-+	else
-+		xgbe_set_mode(pdata, mode);
+ 	queue_work(pdata->dev_workqueue, &pdata->service_work);
  
- 	return 0;
+ 	mod_timer(&pdata->service_timer, jiffies + HZ);
++
++	if (!pdata->tx_usecs)
++		return;
++
++	for (i = 0; i < pdata->channel_count; i++) {
++		channel = pdata->channel[i];
++		if (!channel->tx_ring || channel->tx_timer_active)
++			break;
++		channel->tx_timer_active = 1;
++		mod_timer(&channel->tx_timer,
++			  jiffies + usecs_to_jiffies(pdata->tx_usecs));
++	}
  }
+ 
+ static void xgbe_init_timers(struct xgbe_prv_data *pdata)
 -- 
 2.42.0
 
