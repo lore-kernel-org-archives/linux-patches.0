@@ -1,27 +1,27 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2067.outbound.protection.outlook.com [40.107.243.67])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2057.outbound.protection.outlook.com [40.107.243.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5832E403;
-	Thu, 30 Nov 2023 01:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488BE2F86F;
+	Thu, 30 Nov 2023 01:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BjmT8lbX"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ZMogeSyr"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ka5+Tn0dtGD82doSLCdRzFAdZU+soCknlkmhpYprPjL/OEtXbLG43HRLzmLKkr86KdFd4lZ16IQm3mc908D2W7OUdSfCIWrg2xjtXemm56kaGKyct8QoRV6MNBE+Lkn//JGELyOgxoMcLTyZHXd8Jj6AV2Jm01O2opSey2ZeZ0+1McByqH8JPhpe3Auv1ufuu7X20oBZKsrz+sANhDt553M+BkaMB9wguQBxHF07TI1GxJfIZ2seqCWPfa+OXOQqD5gM9nOYuPodYuDiBNV2WZWMC+2ztS42sEKCWqCuEKGEcn7SLYuhabPGHG0Unl0c2Tx0hx8Q+SSIimQdjnsevg==
+ b=DFiLaMzjGL4xIELbk/3RnaadF7Tfu+iR9VKXWTKEAZ2F4ja/LfZ4GKjSJXZOo4IpXkFjmMkFAkd3cy2bChiCBonNSGFhXtDuJRyPRqzdGlZ+aAqxwRCy53iNBmi6rGWuBIMVnFO0SkdOD68iJHRYhA7wrZbpbwsXFU8r7C9CEHJWk6LWyG+3Q5pUgjaCTBTpSsSwoonItEClzOTo5kAWy8390o9KOHgxh3mWO27guITry31ANIFLHGZQKUUX6uEt84z+RAMIPDVc4NunFbYAASpygbrWG9woLFBq6BecMicXCjCuX+6MOw279GRS76AVF5ag/j9n2oyLiSd6TMqbHg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DWZ926ZLNg56KWjCc5bGDycCVGjrN5wZd1+rheKLVFg=;
- b=OC/gfjy7SmizxL5B+/qJlDZkBscnLWQJM8R1l85aeCrEQsEzkOSg3/CrHa4UbLSsvnDQlrAEKLaEWDkWZEToSD7VbLxsskvdvVWZ+IRZc8e6ZRg7e57mmXNShuGbo5ofD7JvEkkYU2sPru4Bgdh+c1298GWmJ+tk3KpSxyJy2e8jMGB7H6QQlnQaN5Zo5rGIFQVZETzEKBwy6avzhzPec9culajVcwnnvmUtLLfheF3Ebqu+PNm/IChmwu5E8bPWdsj6oECRe1YS1ChmYMHL6nHDlUfEz9Xe22sZdYXxN1JhZbSidmEAqtXx2vrqop6E99pOjUSClW3UGjnHrZraew==
+ bh=cmT9sPIBC3zysKQfnRxRs9D8QedigHbyG5FAziwg6D8=;
+ b=eVAvxlujyys66sXmYOzrRr2jGzvDJ6zo/9AnBODykRvLM9MfsxjMXSHNtehLYidXTq417ZbS2fGXyQuCeqZkKp0Dfxi8Kdzcax3CNm3rmR2Q0GoN2et5ZfsSxkxq35BfAnFreZsSjDGjFNfo7kMJ6ka6nM/yRMjRjS4t98hHIbCc+1V7P2losR4bDaad5Hp88/f3oVCuA3K6BFdMXwh4nDUqLC7/rhoO2vsnc0B2eMWYUu0p6vA8YqynS5NyrcbHG7bg5T+4gUTE9kCjHfFf1Y8oUYTpJPtAWk95MjBTNr4RdJ4oJTOzrm7HHZaEKlFUl7gXhC/mnPmCv+aNu9ErUw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DWZ926ZLNg56KWjCc5bGDycCVGjrN5wZd1+rheKLVFg=;
- b=BjmT8lbXwnW6JZmFNYNAVEUqwi/eLtYmxKMIapa0cwURuUJa6Z70jxreC7lR9XxwdoljYcubePkyb3R0rhMfX/b9vGzcCNN7Vcav6tuQYd8x/UBEvuE2DohQCvsSI/iydQXQb9TLClZqlaLJJGsjRQuRv60Lm/in1VUWlv59XdyrePUxNn7ymqhnLjUzr2tiiAgZU7e745OS2irqIeyxTLfhPAhjjhyWmXs3oP+xQPOyGVWq37tglWPlKZp8Hwm5gLpCe3p6LR7oBx7lhkR5JTo5MOKATnsHwl1nRGlJxCb76EiQKJUCJnxiQUafxx8EvXtI9V0MjyKmgvzspPyV8Q==
+ bh=cmT9sPIBC3zysKQfnRxRs9D8QedigHbyG5FAziwg6D8=;
+ b=ZMogeSyrHSb0hQo0F0XwNRHvcxtaitvVGc6td5a+tfeWbdR2ZeIvH2CbNy6j0xUfCqjMBvlPI8YPtw11U56YuMYIYe60a2eU0OYmPfNA+8yg844RJjKPzcq40ecM89e2ZE6v6Fe9EWfqxIFuMzMxPS7KH0LGQhGf/H2plldfHJTv3dwr1+IxoJGNqW4RthYy7FDZKWDN+Ketg/tEDE4jiMLI1j2Kc4YjRMdixA78x6W+ed7nsFWdxoqHzC28JPxK2HgT4i0xUoZqOfW0/a3HZVsIrtpbFAN2hboLMU/9id0K7jjaD7L8kem+W8Mi6Zh/Vi5wusRGuk7dwGHl2Ik9eg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
@@ -87,15 +87,15 @@ To: acpica-devel@lists.linux.dev,
 	Chunyan Zhang <zhang.lyra@gmail.com>
 Cc: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
 	patches@lists.linux.dev
-Subject: [PATCH 13/30] iommu/dart: Move to iommu_of_xlate()
-Date: Wed, 29 Nov 2023 21:10:20 -0400
-Message-ID: <13-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
+Subject: [PATCH 21/30] iommu/mtk_v1: Move to iommu_fw_alloc_per_device_ids()
+Date: Wed, 29 Nov 2023 21:10:28 -0400
+Message-ID: <21-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 In-Reply-To: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SA1P222CA0145.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:806:3c2::29) To LV2PR12MB5869.namprd12.prod.outlook.com
+X-ClientProxiedBy: SN7P222CA0016.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:124::16) To LV2PR12MB5869.namprd12.prod.outlook.com
  (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -105,194 +105,348 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|PH0PR12MB5484:EE_
-X-MS-Office365-Filtering-Correlation-Id: 675f93e3-a2ba-4189-b362-08dbf1412c35
+X-MS-Office365-Filtering-Correlation-Id: 4c71b8dc-de76-4503-8d14-08dbf1412c30
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	PUAlnaI1V8lrqpJYdE+Z5UsVLxDGEt2eWMKw+SPfsu4wisFzlUhqybEK/ow+wJEhdQIneYbkL+7dH9e3M8SZEp5lb/G2Vw6HlIme/Yjow8R6tJRFi0IjHgy1vveoFIycYwkBVZwC3cLHS+lq47XNr/J/p8oZCNvQdK/CA8ZROqFj+KWhzkxeRVfpy93W6zfBtPckOvInRr5L8JnAaalosUGGyxf2V/ptxZkqQR9rDhS7xl5QPa8L/NTiNa4e5kY0+mVIRWhPqNENune8K6f2wUMmFRMtsVOnmrVmKOlsw4x+ILRZ2KGl+RbkEBlKi6M0i0RqCCCXVvsmGElptVU2J5UDFORw0uFD67dbQKsSbm3uATaqAxeo4lD1xzQTvifDD3veT10lHTUKclaojUG6nLOmrb/uo3Gt+BESHpsxzDadonEjgAGtETRQ8/yaU+sNxYgrZKIM3SkuFaCz6h6tqD3Vvu6fOrCMcV6KFQOCdKC5dUQ8DVL0UjH3kepHGLlRYeV7mwnrxNWhe7iz0+doMmm7kcvi39Xs7ZmnN9FxR41OIT1c/kNG46PhH8zktTgxZZpdxvnOs1GuRSz5tnnT8eT5Rz8tL8iupGSV7nPHxt7j1SCffFfg1DFEfeoBP6NjEOdRAJZc90qSgeHw5h7QOg==
+	a6a2zUzjdjhRFCvzaWHAMi0z+IrR0x1ELp0Z/kqamgLbcrGLNLm5x+99P9dFvMlK5kyCHp4CSZOvcBHxJdGwqlmBgR57ITxcianUOMXJKfIuA0lQbdzxme/r8bblr/xIPN9DujxMJ5dOF0xsGqxI1nqmLToNPmI7h8iyrAxcbtRVKtogWNzMK3H6KeXbaUQaOPWKg+Q9ud1hGMibZNWu3MBXNqWXW3nn/Z7BX6qb2YTwdO9k+2k0KvyOcboo/+QydAuhFeCocGAd1IzlDsIGrUa/oOUwPb7WV4PDE/MP9h2+DyOWc50COWmQ2W6Gq5YxJmSJ3EuNANDMSepEtuZ8+M6Cx6FrR4Y0QS5jL9rsQMtpJM+/ZpRfsfNIeZpq2Tl9yzhXEhrL5JuCuppthJd62lc8SI3BEWMaVf2f6+cahOa4hAYZeIHOen527AEZCDtP91W133xAsGEU5aAWGJowK6YsqRG5Btbstn4foLy7QVHmwUJsE+qSe825JAjZM5Kxu7/8P3EeGeg2W+cw51TgrWmD4lU2km61jCaCzrUYx9hhcwJESZS54FQthWWT5dB5nawp7c+Z/pg5YFOnwrE8AtbrqRxmFOR6214NVjNqwF/Gvp5fk1yG5jxOl6YDt+tIzSpx9/tRdQM5tnWqsUX+WQ==
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(346002)(136003)(396003)(39860400002)(376002)(230922051799003)(451199024)(1800799012)(186009)(64100799003)(1191002)(8936002)(110136005)(8676002)(316002)(66556008)(4326008)(86362001)(66476007)(6486002)(478600001)(66946007)(41300700001)(36756003)(921008)(7416002)(7366002)(2906002)(7406005)(5660300002)(38100700002)(2616005)(6512007)(6506007)(6666004)(83380400001)(26005)(202311291699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?wYKUGMVw4jTZK9TpVBIlYxZXJsO5zzGTUYhbPmpelFOwHr8icXkROHVlpj5n?=
- =?us-ascii?Q?8xxnJuZHz0o9Y4McQ3bEwIl2fGTleFmlreiZ/vf7pqUYhSj/8zt6k2pgvcAp?=
- =?us-ascii?Q?A6iF88hiWjbrWwd+ESPRo+SrtahSogrBWxyVSbHm42G1eCH8dWRjkdG9wrMz?=
- =?us-ascii?Q?bFE5T2QpvWwBoTEgdnQaC6fASJaxHTNydtWVcZ+FowjAwY4tWvzan27Sd9/l?=
- =?us-ascii?Q?fc7KmDImc+bKm3wRaetPHrleO0CJQhLrM73SHp024RI8AJxFZ92amlKTktHJ?=
- =?us-ascii?Q?TYwZ88LSALxaUJJC3eDWwdwx6cDzH6AqJtg8/OgulO3T3MBq/fHb1ajeHft1?=
- =?us-ascii?Q?+2YihVnWM47fZ+WyQD+TtAkIOIf6fz334fYF9Im4vCGt6fjwp2v2QXLGBbgg?=
- =?us-ascii?Q?TO4PCb/cojUakfec9VQLOo4QG03fbZ4vg3/ugFbj5qgZDTJrz4HiApfaE5oG?=
- =?us-ascii?Q?DQ8BZ9xY88D1DBRPAMOasCoRSXXYNz0k8l81jgBUTkefS0r4DIBqQQ0FRtDo?=
- =?us-ascii?Q?O+jF8AUgcQBLpgiFweNmJr94qXFmKl5SySWi1XBF6WhSNa2ZIOG6aKuG7KUq?=
- =?us-ascii?Q?APM8fV8SUfLHihTj6xkCUGT/YGrz1f+M/27E4senglfWKBIizYdvm6tY4a1w?=
- =?us-ascii?Q?OUTK+fYeix6+11tIXp2DvY5qjCXrKSfTvsA3+qKDr1GFXsHa92nnwabqoQpO?=
- =?us-ascii?Q?Y7TmuMqUD8z5+XmM325AR4QpGwriOiB2Q62kK3o/L/VG19o4amhDQQzd/jzc?=
- =?us-ascii?Q?lbJxJQdZkOvtujpkraGRfwCLgb1NFlLhyGl2LMs6foNv3ZFDvBXgGZ0aYS7u?=
- =?us-ascii?Q?wXZvwLa4PDM8NMlkOO3jh8EPohP0wZdQVgPCDu7xQBgtSsPWrup86XOSEK2x?=
- =?us-ascii?Q?HOgdxm8m+zJGFh/40sCvlow76JtLygZflyH1qb4G7KldqGD7D0g1u/JR9+cz?=
- =?us-ascii?Q?6WHqVrQzEZxWmk5KMAOJ5WzfxOfSXqfjzQ17OLymF1Xg4SeW7w7YOXqfFY7X?=
- =?us-ascii?Q?v/Pi1MLB2NNZroriYSEHx+HgZyYr2oixB01n2eLeffMHuWF0afQz4ok5l2gx?=
- =?us-ascii?Q?kqNVCHXSxHS7mu/7b7jLuMq41Rf2ie7nOYqr+P5j6mQELuSo2pWf0YhiyHnF?=
- =?us-ascii?Q?vHliBDRKs2H91VexVw7h2UMAHxHRl/N0twxk07EqCT1j7objPVMAHglvwUpv?=
- =?us-ascii?Q?78UV36QGHRcC/lE+1iVllZOD7xNKxQsCwQ+MI9Gxl5yaGRrhTyzUswzihWaA?=
- =?us-ascii?Q?DdM15/i98pB5B+BsDxYVC7UZFfDseebYDztILvt7aBCIcO3WhRkqsDS1TcBa?=
- =?us-ascii?Q?jNZaU1mZWnKHdcmtN0IX3FuF2AibZbWkVDJ4Ly9vFTF4tYmc8djT1TyoeaDx?=
- =?us-ascii?Q?YplG9XVQHpTXMvsNop/iMxsbSRHanm/nSaEALTphAqitiqxNASbRpOOtcvgx?=
- =?us-ascii?Q?3+/7fp7BIouXZhUr7N/ZO4E8KuhH0jMh2+E4jipLMu3o5iylv8XolkznNXcJ?=
- =?us-ascii?Q?4Cid2fTynpl+VdUVecnAfJkYmh4an9rOUAPsgADwhSpy0JtuKEgsDh4PMtqZ?=
- =?us-ascii?Q?P1w/vWCYt1t4duwuE7LxA9WzdDo4waGLWcxs6wG6?=
+	=?us-ascii?Q?jhN5h5ieux9M+dWgHi4UApksQ0EusFtgK1UZAIVELUXyDe1tP3dmpPES4iuN?=
+ =?us-ascii?Q?EvcD7oGuslGk3KrvnSaJCkv6kEfwhJYthX/LLhVXPbbiuDIK1AM9RlvncOpl?=
+ =?us-ascii?Q?NHHYq0x9JVWmtbt7hmkdt2JP95C7cXwW9YT661iQzw01fn67su7f/7Xun81K?=
+ =?us-ascii?Q?f06jlu9QoM/ye3xEKzq/aYk1S/S5QbAtGMViHyHERD18mwJPbJHcWuy/7YjU?=
+ =?us-ascii?Q?tKvLtpsbl+F3PMxKx8IxdIqCq+RhIODlP3ijl44ZdiSnQqpUSYBu2iT3/LJs?=
+ =?us-ascii?Q?d0MQWCmqylOk+CLU595VM5rrFLr63dFpKNW8lFMy6J8frFO0JXN2xds6XhzQ?=
+ =?us-ascii?Q?JLet8pv/58BGRVbflDGTjT1iek2RW8rCxIInt4prGmWDmO/X1aglW85M4532?=
+ =?us-ascii?Q?vIV2rLLvBkf3G3NtlRVq+UGMWAaawrGDT4vIj4Q7yMaMC+/ys+NpSzXxAVcM?=
+ =?us-ascii?Q?9Y3qtJqwfWHhywVFbxVkXl5WgkEjmTYD3tWAcNzrknntLJ9l69zicZtxW0h3?=
+ =?us-ascii?Q?KAYwXsNGunfQ4FquPbl116mnX5mfBcv75v3Gp/PJbQ5PpZiezZ60sHby2c8K?=
+ =?us-ascii?Q?lGIsGHLMAFIFQcOCybgJ+JOYh0JfMikj+JfRSCWJ6MRkSioFecUL4rlEPTXI?=
+ =?us-ascii?Q?Onbg+kitAJzH46wl8/Kd9/kafU0711KDF9s88vwf2/WH7Kk5mUNIwLatGsDr?=
+ =?us-ascii?Q?UM4aXisW0+Tr1KJbGsSw8Yodl63iXm9DLFHD/QmND+fmY0sSCsRzKoF1fMBX?=
+ =?us-ascii?Q?8tIOY1tUp/rUYS0U2iz+4vffh5ZWW/qby01V0crlZ0gIeKyfBwy+sJVT1GyW?=
+ =?us-ascii?Q?+SwgoGH0zc2xTwwyI7pBJZqTuYOIYzfbb3dVovXdBhZYoCIy0inujeL7ONBd?=
+ =?us-ascii?Q?cGE28mX4Rb4Z4hBgHIg1/1w2ZXam0kHeBlOM9i9k+Pl4lXI2UW9DCJinybbe?=
+ =?us-ascii?Q?j5Akjq6jwypN6dr4d9qZLGNPiEYyCyN+fjKac1DrF/o493sKT660HuuwOgpQ?=
+ =?us-ascii?Q?tTRNcFwG90rZJokbWk5N5yEiNtYeWW/xiZ1W8fnWjWSgK4fI/CYj3QfnU6jI?=
+ =?us-ascii?Q?2hkQkehnXVUcgbpAwmu/JV9tAm/SAoJoW7gEU5pc2QI0qQvGof0mC9fW3RyH?=
+ =?us-ascii?Q?Zv/L9Yvh080++5wnPDy7lpYL8kGfgWuYFTpGuPaF8vfzIJKxn+y9u/4P+oZ2?=
+ =?us-ascii?Q?l8ZBCamzvAp6j/QHJZAr4vnvAsfS/glOSBqfEAwWKnsT588lx96k21xrDidW?=
+ =?us-ascii?Q?fHkOUOYB+lBSp/OwEshB/0cKpEut51cABZOkrc0Xe1/4BF7K4+kxphRQf8Gg?=
+ =?us-ascii?Q?UmnG7O78hVUrY9lzIYTbBYnuoYou45bhFSWCt1HQFc3mXVN4bIBlO48ZeYSp?=
+ =?us-ascii?Q?x/tN8zhkbmPuuGz9hWECWou098OEUm8kvfm+VLUsKlNraHLBM+1gHbfTGhXe?=
+ =?us-ascii?Q?4v6nvBCeGzat9Cs4C9EEMGSk8h8YLzjVJVSTLNWNQUPG9PRXzPYyq8DZSkCI?=
+ =?us-ascii?Q?+Py/qWvZJBOpk5BTE//wxfHS/sdGqxbDo1mYDFD1F8d4KAB/wOoGeVlXKFGT?=
+ =?us-ascii?Q?UUWdBOY9wnu7+fmf2KgHTGbzhphf2dAl7FVq07Z9?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 675f93e3-a2ba-4189-b362-08dbf1412c35
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c71b8dc-de76-4503-8d14-08dbf1412c30
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:42.0795
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:42.1282
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: N4Y176JW/ot07qm4b/KpOoXLIROVYY8OkNl8DDPa1VZAbJe+cFFsKswX/8e6EebI
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1lrE0VFQK0CIwfE+Q2VPQVeLKyz3T+ah96t1DC1KIqTlf0zqIzfcMYfwD3xMmls2
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB5484
 
-dart supports multiple instances with multiple IDs per instance. It loads
-the FW data into a pre-allocated 2d array inside it's per-device data.
+mtk_v1 supports a single iommu instance with multiple ids.
 
-Switch over by allocating the per-device data at the top of
-probe then calling iommu_of_xlate() to fill in the 2d array. The iommu
-instance is located by the core code and container_of() gets to the dart
-version.
+It open codes the fwspec parse inside the driver, remove all of this and
+just call iommu_of_get_single_iommu() to do the same parsing. Using
+iommu_of_allow_bus_probe() so this continues to work at bus probe time.
 
-Solve a few issues:
+Introduce a per-device data to store the iommu and ids list. Allocate and
+initialize it with iommu_fw_alloc_per_device_ids(). Fold
+mtk_iommu_v1_create_mapping() into mtk_iommu_v1_probe_device() as it is
+done only once per device.
 
- - A bus probe was failing by accident because the of_xlate not being
-   called left a NULL cfg in the priv, and other code tended to free the
-   dev->iommu. iommu_of_xlate() will fail bus probe directly
+Fix the error handling so we don't leak mappings on error paths.
 
- - Missing validation that the node in the iommus instance is actually
-   pointing at this driver
+Convert the rest of the funcs from calling dev_iommu_fwspec_get() to using
+the per-device data and remove all use of fwspec.
 
- - Don't leak the cfg. It is allocated during probe, freed on probe
-   failure, and freed in release_device() on probe success. Previously it
-   would allocate it in of_xlate and leak it in some possible error flows.
+Convert the places using dev_iommu_priv_get() to use the per-device data
+not the iommu.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/apple-dart.c | 58 +++++++++++++++++++++-----------------
- 1 file changed, 32 insertions(+), 26 deletions(-)
+ drivers/iommu/mtk_iommu_v1.c | 162 +++++++++++++++--------------------
+ 1 file changed, 67 insertions(+), 95 deletions(-)
 
-diff --git a/drivers/iommu/apple-dart.c b/drivers/iommu/apple-dart.c
-index bb0e5a4577fc03..b796c68ae45ad8 100644
---- a/drivers/iommu/apple-dart.c
-+++ b/drivers/iommu/apple-dart.c
-@@ -268,10 +268,10 @@ struct apple_dart_domain {
+diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
+index 25b41222abaec1..82f500a1ad74e9 100644
+--- a/drivers/iommu/mtk_iommu_v1.c
++++ b/drivers/iommu/mtk_iommu_v1.c
+@@ -16,6 +16,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/iommu.h>
++#include <linux/iommu-driver.h>
+ #include <linux/iopoll.h>
+ #include <linux/list.h>
+ #include <linux/module.h>
+@@ -108,6 +109,12 @@ struct mtk_iommu_v1_data {
+ 	struct mtk_iommu_v1_suspend_reg	reg;
  };
  
- /*
-- * This structure is attached to devices with dev_iommu_priv_set() on of_xlate
-- * and contains a list of streams bound to this device.
-- * So far the worst case seen is a single device with two streams
-- * from different darts, such that this simple static array is enough.
-+ * This structure is attached to devices with dev_iommu_priv_set() on
-+ * probe_device and contains a list of streams bound to this device. So far the
-+ * worst case seen is a single device with two streams from different darts,
-+ * such that this simple static array is enough.
-  *
-  * @streams: streams for this device
-  */
-@@ -295,6 +295,9 @@ struct apple_dart_master_cfg {
- static struct platform_driver apple_dart_driver;
- static const struct iommu_ops apple_dart_iommu_ops;
- 
-+static int apple_dart_of_xlate(struct iommu_device *iommu,
-+			       struct of_phandle_args *args, void *priv);
++struct mtk_iommu_v1_device {
++	struct mtk_iommu_v1_data *iommu;
++	unsigned int num_ids;
++	u32 ids[] __counted_by(num_ids);
++};
 +
- static struct apple_dart_domain *to_dart_domain(struct iommu_domain *dom)
+ struct mtk_iommu_v1_domain {
+ 	spinlock_t			pgtlock; /* lock for page table */
+ 	struct iommu_domain		domain;
+@@ -232,14 +239,14 @@ static irqreturn_t mtk_iommu_v1_isr(int irq, void *dev_id)
+ static void mtk_iommu_v1_config(struct mtk_iommu_v1_data *data,
+ 				struct device *dev, bool enable)
  {
- 	return container_of(dom, struct apple_dart_domain, domain);
-@@ -721,21 +724,34 @@ static struct iommu_domain apple_dart_blocked_domain = {
- 	.ops = &apple_dart_blocked_ops,
- };
- 
--static struct iommu_device *apple_dart_probe_device(struct device *dev)
-+static struct iommu_device *
-+apple_dart_probe_device(struct iommu_probe_info *pinf)
- {
--	struct apple_dart_master_cfg *cfg = dev_iommu_priv_get(dev);
-+	struct device *dev = pinf->dev;
-+	struct apple_dart_master_cfg *cfg;
- 	struct apple_dart_stream_map *stream_map;
-+	int ret;
++	struct mtk_iommu_v1_device *mdev = dev_iommu_priv_get(dev);
+ 	struct mtk_smi_larb_iommu    *larb_mmu;
+ 	unsigned int                 larbid, portid;
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
  	int i;
  
-+	cfg = kzalloc(sizeof(*cfg), GFP_KERNEL);
- 	if (!cfg)
--		return ERR_PTR(-ENODEV);
-+		return ERR_PTR(-ENOMEM);
-+	ret = iommu_of_xlate(pinf, &apple_dart_iommu_ops, 1,
-+			     &apple_dart_of_xlate, cfg);
-+	if (ret)
-+		goto err_free;
+-	for (i = 0; i < fwspec->num_ids; ++i) {
+-		larbid = mt2701_m4u_to_larb(fwspec->ids[i]);
+-		portid = mt2701_m4u_to_port(fwspec->ids[i]);
++	for (i = 0; i < mdev->num_ids; ++i) {
++		larbid = mt2701_m4u_to_larb(mdev->ids[i]);
++		portid = mt2701_m4u_to_port(mdev->ids[i]);
+ 		larb_mmu = &data->larb_imu[larbid];
  
- 	for_each_stream_map(i, cfg, stream_map)
- 		device_link_add(
- 			dev, stream_map->dart->dev,
- 			DL_FLAG_PM_RUNTIME | DL_FLAG_AUTOREMOVE_SUPPLIER);
+ 		dev_dbg(dev, "%s iommu port: %d\n",
+@@ -293,7 +300,8 @@ static void mtk_iommu_v1_domain_free(struct iommu_domain *domain)
  
-+	dev_iommu_priv_set(dev, cfg);
- 	return &cfg->stream_maps[0].dart->iommu;
+ static int mtk_iommu_v1_attach_device(struct iommu_domain *domain, struct device *dev)
+ {
+-	struct mtk_iommu_v1_data *data = dev_iommu_priv_get(dev);
++	struct mtk_iommu_v1_device *mdev = dev_iommu_priv_get(dev);
++	struct mtk_iommu_v1_data *data = mdev->iommu;
+ 	struct mtk_iommu_v1_domain *dom = to_mtk_domain(domain);
+ 	struct dma_iommu_mapping *mtk_mapping;
+ 	int ret;
+@@ -319,7 +327,8 @@ static int mtk_iommu_v1_attach_device(struct iommu_domain *domain, struct device
+ static int mtk_iommu_v1_identity_attach(struct iommu_domain *identity_domain,
+ 					struct device *dev)
+ {
+-	struct mtk_iommu_v1_data *data = dev_iommu_priv_get(dev);
++	struct mtk_iommu_v1_device *mdev = dev_iommu_priv_get(dev);
++	struct mtk_iommu_v1_data *data = mdev->iommu;
+ 
+ 	mtk_iommu_v1_config(data, dev, false);
+ 	return 0;
+@@ -394,128 +403,91 @@ static phys_addr_t mtk_iommu_v1_iova_to_phys(struct iommu_domain *domain, dma_ad
+ 
+ static const struct iommu_ops mtk_iommu_v1_ops;
+ 
+-/*
+- * MTK generation one iommu HW only support one iommu domain, and all the client
+- * sharing the same iova address space.
+- */
+-static int mtk_iommu_v1_create_mapping(struct device *dev, struct of_phandle_args *args)
++static struct iommu_device *
++mtk_iommu_v1_probe_device(struct iommu_probe_info *pinf)
+ {
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+-	struct mtk_iommu_v1_data *data;
+-	struct platform_device *m4updev;
+ 	struct dma_iommu_mapping *mtk_mapping;
++	struct mtk_iommu_v1_device *mdev;
++	struct device *dev = pinf->dev;
++	struct mtk_iommu_v1_data *data;
++	int idx, larbid, larbidx;
++	struct device_link *link;
++	struct device *larbdev;
+ 	int ret;
+ 
+-	if (args->args_count != 1) {
+-		dev_err(dev, "invalid #iommu-cells(%d) property for IOMMU\n",
+-			args->args_count);
+-		return -EINVAL;
+-	}
++	iommu_of_allow_bus_probe(pinf);
++	data = iommu_of_get_single_iommu(pinf, &mtk_iommu_v1_ops, 1,
++					 struct mtk_iommu_v1_data, iommu);
++	if (IS_ERR(data))
++		return ERR_CAST(data);
+ 
+-	if (!fwspec) {
+-		ret = iommu_fwspec_init(dev, &args->np->fwnode, &mtk_iommu_v1_ops);
+-		if (ret)
+-			return ret;
+-		fwspec = dev_iommu_fwspec_get(dev);
+-	} else if (dev_iommu_fwspec_get(dev)->ops != &mtk_iommu_v1_ops) {
+-		return -EINVAL;
+-	}
++	mdev = iommu_fw_alloc_per_device_ids(pinf, mdev);
++	if (IS_ERR(mdev))
++		return ERR_CAST(mdev);
++	mdev->iommu = data;
+ 
+-	if (!dev_iommu_priv_get(dev)) {
+-		/* Get the m4u device */
+-		m4updev = of_find_device_by_node(args->np);
+-		if (WARN_ON(!m4updev))
+-			return -EINVAL;
+-
+-		dev_iommu_priv_set(dev, platform_get_drvdata(m4updev));
+-	}
+-
+-	ret = iommu_fwspec_add_ids(dev, args->args, 1);
+-	if (ret)
+-		return ret;
+-
+-	data = dev_iommu_priv_get(dev);
++	/*
++	 * MTK generation one iommu HW only support one iommu domain, and all
++	 * the client sharing the same iova address space.
++	 */
+ 	mtk_mapping = data->mapping;
+ 	if (!mtk_mapping) {
+ 		/* MTK iommu support 4GB iova address space. */
+ 		mtk_mapping = arm_iommu_create_mapping(&platform_bus_type,
+ 						0, 1ULL << 32);
+-		if (IS_ERR(mtk_mapping))
+-			return PTR_ERR(mtk_mapping);
++		if (IS_ERR(mtk_mapping)) {
++			ret = PTR_ERR(mtk_mapping);
++			goto err_free;
++		}
+ 
+ 		data->mapping = mtk_mapping;
+ 	}
+ 
+-	return 0;
+-}
+-
+-static struct iommu_device *mtk_iommu_v1_probe_device(struct device *dev)
+-{
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+-	struct of_phandle_args iommu_spec;
+-	struct mtk_iommu_v1_data *data;
+-	int err, idx = 0, larbid, larbidx;
+-	struct device_link *link;
+-	struct device *larbdev;
+-
+-	/*
+-	 * In the deferred case, free the existed fwspec.
+-	 * Always initialize the fwspec internally.
+-	 */
+-	if (fwspec) {
+-		iommu_fwspec_free(dev);
+-		fwspec = dev_iommu_fwspec_get(dev);
+-	}
+-
+-	while (!of_parse_phandle_with_args(dev->of_node, "iommus",
+-					   "#iommu-cells",
+-					   idx, &iommu_spec)) {
+-
+-		err = mtk_iommu_v1_create_mapping(dev, &iommu_spec);
+-		of_node_put(iommu_spec.np);
+-		if (err)
+-			return ERR_PTR(err);
+-
+-		/* dev->iommu_fwspec might have changed */
+-		fwspec = dev_iommu_fwspec_get(dev);
+-		idx++;
+-	}
+-
+-	data = dev_iommu_priv_get(dev);
+-
+ 	/* Link the consumer device with the smi-larb device(supplier) */
+-	larbid = mt2701_m4u_to_larb(fwspec->ids[0]);
+-	if (larbid >= MT2701_LARB_NR_MAX)
+-		return ERR_PTR(-EINVAL);
++	larbid = mt2701_m4u_to_larb(mdev->ids[0]);
++	if (larbid >= MT2701_LARB_NR_MAX) {
++		ret = -EINVAL;
++		goto err_mapping;
++	}
+ 
+-	for (idx = 1; idx < fwspec->num_ids; idx++) {
+-		larbidx = mt2701_m4u_to_larb(fwspec->ids[idx]);
++	for (idx = 1; idx < mdev->num_ids; idx++) {
++		larbidx = mt2701_m4u_to_larb(mdev->ids[idx]);
+ 		if (larbid != larbidx) {
+ 			dev_err(dev, "Can only use one larb. Fail@larb%d-%d.\n",
+ 				larbid, larbidx);
+-			return ERR_PTR(-EINVAL);
++			ret = -EINVAL;
++			goto err_mapping;
+ 		}
+ 	}
+ 
+ 	larbdev = data->larb_imu[larbid].dev;
+-	if (!larbdev)
+-		return ERR_PTR(-EINVAL);
++	if (!larbdev) {
++		ret = -EINVAL;
++		goto err_mapping;
++	}
+ 
+ 	link = device_link_add(dev, larbdev,
+ 			       DL_FLAG_PM_RUNTIME | DL_FLAG_STATELESS);
+ 	if (!link)
+ 		dev_err(dev, "Unable to link %s\n", dev_name(larbdev));
+ 
++	dev_iommu_priv_set(pinf->dev, mdev);
+ 	return &data->iommu;
 +
++err_mapping:
++	arm_iommu_release_mapping(mtk_mapping);
 +err_free:
-+	kfree(cfg);
++	kfree(mdev);
 +	return ERR_PTR(ret);
  }
  
- static void apple_dart_release_device(struct device *dev)
-@@ -778,25 +794,15 @@ static void apple_dart_domain_free(struct iommu_domain *domain)
- 	kfree(dart_domain);
+ static void mtk_iommu_v1_probe_finalize(struct device *dev)
+ {
++	struct mtk_iommu_v1_device *mdev = dev_iommu_priv_get(dev);
++	struct mtk_iommu_v1_data *data = mdev->iommu;
+ 	struct dma_iommu_mapping *mtk_mapping;
+-	struct mtk_iommu_v1_data *data;
+ 	int err;
+ 
+-	data        = dev_iommu_priv_get(dev);
+ 	mtk_mapping = data->mapping;
+ 
+ 	err = arm_iommu_attach_device(dev, mtk_mapping);
+@@ -525,15 +497,15 @@ static void mtk_iommu_v1_probe_finalize(struct device *dev)
+ 
+ static void mtk_iommu_v1_release_device(struct device *dev)
+ {
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+-	struct mtk_iommu_v1_data *data;
++	struct mtk_iommu_v1_device *mdev = dev_iommu_priv_get(dev);
++	struct mtk_iommu_v1_data *data = mdev->iommu;
+ 	struct device *larbdev;
+ 	unsigned int larbid;
+ 
+-	data = dev_iommu_priv_get(dev);
+-	larbid = mt2701_m4u_to_larb(fwspec->ids[0]);
++	larbid = mt2701_m4u_to_larb(mdev->ids[0]);
+ 	larbdev = data->larb_imu[larbid].dev;
+ 	device_link_remove(dev, larbdev);
++	kfree(mdev);
  }
  
--static int apple_dart_of_xlate(struct device *dev, struct of_phandle_args *args)
-+static int apple_dart_of_xlate(struct iommu_device *iommu,
-+			       struct of_phandle_args *args, void *priv)
- {
--	struct apple_dart_master_cfg *cfg = dev_iommu_priv_get(dev);
--	struct platform_device *iommu_pdev = of_find_device_by_node(args->np);
--	struct apple_dart *dart = platform_get_drvdata(iommu_pdev);
--	struct apple_dart *cfg_dart;
--	int i, sid;
-+	struct apple_dart *dart = container_of(iommu, struct apple_dart, iommu);
-+	struct apple_dart_master_cfg *cfg = priv;
-+	struct apple_dart *cfg_dart = cfg->stream_maps[0].dart;
-+	int sid = args->args[0];
-+	int i;
- 
--	if (args->args_count != 1)
--		return -EINVAL;
--	sid = args->args[0];
--
--	if (!cfg)
--		cfg = kzalloc(sizeof(*cfg), GFP_KERNEL);
--	if (!cfg)
--		return -ENOMEM;
--	dev_iommu_priv_set(dev, cfg);
--
--	cfg_dart = cfg->stream_maps[0].dart;
- 	if (cfg_dart) {
- 		if (cfg_dart->supports_bypass != dart->supports_bypass)
- 			return -EINVAL;
-@@ -978,10 +984,10 @@ static const struct iommu_ops apple_dart_iommu_ops = {
- 	.identity_domain = &apple_dart_identity_domain,
- 	.blocked_domain = &apple_dart_blocked_domain,
- 	.domain_alloc_paging = apple_dart_domain_alloc_paging,
--	.probe_device = apple_dart_probe_device,
-+	.probe_device_pinf = apple_dart_probe_device,
- 	.release_device = apple_dart_release_device,
- 	.device_group = apple_dart_device_group,
--	.of_xlate = apple_dart_of_xlate,
-+	.of_xlate = iommu_dummy_of_xlate,
- 	.def_domain_type = apple_dart_def_domain_type,
- 	.get_resv_regions = apple_dart_get_resv_regions,
- 	.pgsize_bitmap = -1UL, /* Restricted during dart probe */
+ static int mtk_iommu_v1_hw_init(const struct mtk_iommu_v1_data *data)
+@@ -580,7 +552,7 @@ static int mtk_iommu_v1_hw_init(const struct mtk_iommu_v1_data *data)
+ static const struct iommu_ops mtk_iommu_v1_ops = {
+ 	.identity_domain = &mtk_iommu_v1_identity_domain,
+ 	.domain_alloc_paging = mtk_iommu_v1_domain_alloc_paging,
+-	.probe_device	= mtk_iommu_v1_probe_device,
++	.probe_device_pinf = mtk_iommu_v1_probe_device,
+ 	.probe_finalize = mtk_iommu_v1_probe_finalize,
+ 	.release_device	= mtk_iommu_v1_release_device,
+ 	.device_group	= generic_device_group,
 -- 
 2.42.0
 
