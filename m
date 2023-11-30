@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7983482CA;
-	Thu, 30 Nov 2023 16:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5673B51C3E;
+	Thu, 30 Nov 2023 16:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp50UWG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37DF6C433C8;
-	Thu, 30 Nov 2023 16:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A0m3bMyG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FAFC433C8;
+	Thu, 30 Nov 2023 16:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701362019;
-	bh=ExFHY2FXn0X5BPVSnzqeBBlzVOj7AddfdHQBlrxNHi8=;
+	s=korg; t=1701362022;
+	bh=3jZpCcGps+RnQl5thUcQ/EfkAL+KaKnT/tDquP7aHqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tp50UWG1F8173BWdnNqUE5ZUC+cSQRFJdE5HXTjTe/kLxxxAsVXn3H4whbuSBJ0OJ
-	 H3m/CN1vYQ1o4zdlp0l5UN1ADNoqXvpOZufFKie5Syl/DXeJXiz9BCOdp2nCZvFo8E
-	 gh4AIPH/lLjRV94rEsXjTwVTmdPUlm1lw2kUVs+Y=
+	b=A0m3bMyGjkN/R0eQv9mOT+BnaL79MV6zvUqCBm0VlAJ45nh1LJRt9hInNEhJSYFH2
+	 UIOodI4puPtu7TN6wVouZbTugmEh6BLpm1fchUi1sPrwkioifhAnWsbhXPpCo7CBpL
+	 JkP5c+qnIWonbfAZYPw1+em3L+T0lpwkSv9be4mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milen Mitkov <quic_mmitkov@quicinc.com>,
-	Robert Foss <robert.foss@linaro.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/69] media: camss: sm8250: Virtual channels for CSID
-Date: Thu, 30 Nov 2023 16:22:27 +0000
-Message-ID: <20231130162134.066628777@linuxfoundation.org>
+Subject: [PATCH 5.15 21/69] net: axienet: Fix check for partial TX checksum
+Date: Thu, 30 Nov 2023 16:22:18 +0000
+Message-ID: <20231130162133.774455034@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -44,305 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milen Mitkov <quic_mmitkov@quicinc.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit 3c4ed72a16bc6733cda9c65048af74a2e8eaa0eb ]
+[ Upstream commit fd0413bbf8b11f56e8aa842783b0deda0dfe2926 ]
 
-CSID hardware on SM8250 can demux up to 4 simultaneous streams
-based on virtual channel (vc) or datatype (dt).
-The CSID subdevice entity now has 4 source ports that can be
-enabled/disabled and thus can control which virtual channels
-are enabled. Datatype demuxing not tested.
+Due to a typo, the code checked the RX checksum feature in the TX path.
 
-In order to keep a valid internal state of the subdevice,
-implicit format propagation from the sink to the source pads
-has been preserved. However, the format on each source pad
-can be different and in that case it must be configured explicitly.
-
-CSID's s_stream is called when any stream is started or stopped.
-It will call configure_streams() that will rewrite IRQ settings to HW.
-When multiple streams are running simultaneously there is an issue
-when writing IRQ settings for one stream while another is still
-running, thus avoid re-writing settings if they were not changed
-in link setup, or by fully powering off the CSID hardware.
-
-Signed-off-by: Milen Mitkov <quic_mmitkov@quicinc.com>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Acked-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: e655d1ae9703 ("media: qcom: camss: Fix set CSI2_RX_CFG1_VC_MODE when VC is greater than 3")
+Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/20231122004219.3504219-1-samuel.holland@sifive.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/qcom/camss/camss-csid-170.c      | 54 ++++++++++++-------
- .../media/platform/qcom/camss/camss-csid.c    | 44 ++++++++++-----
- .../media/platform/qcom/camss/camss-csid.h    | 11 +++-
- 3 files changed, 74 insertions(+), 35 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid-170.c b/drivers/media/platform/qcom/camss/camss-csid-170.c
-index c234b8d67bc59..7ccf0c11a1a21 100644
---- a/drivers/media/platform/qcom/camss/camss-csid-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-170.c
-@@ -327,13 +327,14 @@ static const struct csid_format csid_formats[] = {
- 	},
- };
- 
--static void csid_configure_stream(struct csid_device *csid, u8 enable)
-+static void __csid_configure_stream(struct csid_device *csid, u8 enable, u8 vc)
- {
- 	struct csid_testgen_config *tg = &csid->testgen;
- 	u32 val;
- 	u32 phy_sel = 0;
- 	u8 lane_cnt = csid->phy.lane_cnt;
--	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_SRC];
-+	/* Source pads matching RDI channels on hardware. Pad 1 -> RDI0, Pad 2 -> RDI1, etc. */
-+	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
- 	const struct csid_format *format = csid_get_fmt_entry(csid->formats, csid->nformats,
- 							      input_format->code);
- 
-@@ -344,8 +345,7 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
- 		phy_sel = csid->phy.csiphy_id;
- 
- 	if (enable) {
--		u8 vc = 0; /* Virtual Channel 0 */
--		u8 dt_id = vc * 4;
-+		u8 dt_id = vc;
- 
- 		if (tg->enabled) {
- 			/* Config Test Generator */
-@@ -388,42 +388,42 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
- 		val |= format->data_type << RDI_CFG0_DATA_TYPE;
- 		val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
- 		val |= dt_id << RDI_CFG0_DT_ID;
--		writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_CFG0(vc));
- 
- 		/* CSID_TIMESTAMP_STB_POST_IRQ */
- 		val = 2 << RDI_CFG1_TIMESTAMP_STB_SEL;
--		writel_relaxed(val, csid->base + CSID_RDI_CFG1(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_CFG1(vc));
- 
- 		val = 1;
--		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(vc));
- 
- 		val = 0;
--		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_FRM_DROP_PATTERN(vc));
- 
- 		val = 1;
--		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(vc));
- 
- 		val = 0;
--		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(vc));
- 
- 		val = 1;
--		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PERIOD(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PERIOD(vc));
- 
- 		val = 0;
--		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PATTERN(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_RPP_PIX_DROP_PATTERN(vc));
- 
- 		val = 1;
--		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PERIOD(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PERIOD(vc));
- 
- 		val = 0;
--		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PATTERN(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_RPP_LINE_DROP_PATTERN(vc));
- 
- 		val = 0;
--		writel_relaxed(val, csid->base + CSID_RDI_CTRL(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_CTRL(vc));
- 
--		val = readl_relaxed(csid->base + CSID_RDI_CFG0(0));
-+		val = readl_relaxed(csid->base + CSID_RDI_CFG0(vc));
- 		val |=  1 << RDI_CFG0_ENABLE;
--		writel_relaxed(val, csid->base + CSID_RDI_CFG0(0));
-+		writel_relaxed(val, csid->base + CSID_RDI_CFG0(vc));
- 	}
- 
- 	if (tg->enabled) {
-@@ -449,7 +449,16 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
- 		val = HALT_CMD_RESUME_AT_FRAME_BOUNDARY << RDI_CTRL_HALT_CMD;
- 	else
- 		val = HALT_CMD_HALT_AT_FRAME_BOUNDARY << RDI_CTRL_HALT_CMD;
--	writel_relaxed(val, csid->base + CSID_RDI_CTRL(0));
-+	writel_relaxed(val, csid->base + CSID_RDI_CTRL(vc));
-+}
-+
-+static void csid_configure_stream(struct csid_device *csid, u8 enable)
-+{
-+	u8 i;
-+	/* Loop through all enabled VCs and configure stream for each */
-+	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
-+		if (csid->phy.en_vc & BIT(i))
-+			__csid_configure_stream(csid, enable, i);
- }
- 
- static int csid_configure_testgen_pattern(struct csid_device *csid, s32 val)
-@@ -495,6 +504,7 @@ static irqreturn_t csid_isr(int irq, void *dev)
- 	struct csid_device *csid = dev;
- 	u32 val;
- 	u8 reset_done;
-+	int i;
- 
- 	val = readl_relaxed(csid->base + CSID_TOP_IRQ_STATUS);
- 	writel_relaxed(val, csid->base + CSID_TOP_IRQ_CLEAR);
-@@ -503,8 +513,12 @@ static irqreturn_t csid_isr(int irq, void *dev)
- 	val = readl_relaxed(csid->base + CSID_CSI2_RX_IRQ_STATUS);
- 	writel_relaxed(val, csid->base + CSID_CSI2_RX_IRQ_CLEAR);
- 
--	val = readl_relaxed(csid->base + CSID_CSI2_RDIN_IRQ_STATUS(0));
--	writel_relaxed(val, csid->base + CSID_CSI2_RDIN_IRQ_CLEAR(0));
-+	/* Read and clear IRQ status for each enabled RDI channel */
-+	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
-+		if (csid->phy.en_vc & BIT(i)) {
-+			val = readl_relaxed(csid->base + CSID_CSI2_RDIN_IRQ_STATUS(i));
-+			writel_relaxed(val, csid->base + CSID_CSI2_RDIN_IRQ_CLEAR(i));
-+		}
- 
- 	val = 1 << IRQ_CMD_CLEAR;
- 	writel_relaxed(val, csid->base + CSID_IRQ_CMD);
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index a1637b78568b2..2a294587ec9d9 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -180,6 +180,8 @@ static int csid_set_power(struct v4l2_subdev *sd, int on)
- 			return ret;
- 		}
- 
-+		csid->phy.need_vc_update = true;
-+
- 		enable_irq(csid->irq);
- 
- 		ret = csid->ops->reset(csid);
-@@ -229,7 +231,10 @@ static int csid_set_stream(struct v4l2_subdev *sd, int enable)
- 			return -ENOLINK;
- 	}
- 
--	csid->ops->configure_stream(csid, enable);
-+	if (csid->phy.need_vc_update) {
-+		csid->ops->configure_stream(csid, enable);
-+		csid->phy.need_vc_update = false;
-+	}
- 
- 	return 0;
- }
-@@ -440,6 +445,7 @@ static int csid_set_format(struct v4l2_subdev *sd,
- {
- 	struct csid_device *csid = v4l2_get_subdevdata(sd);
- 	struct v4l2_mbus_framefmt *format;
-+	int i;
- 
- 	format = __csid_get_format(csid, sd_state, fmt->pad, fmt->which);
- 	if (format == NULL)
-@@ -448,14 +454,14 @@ static int csid_set_format(struct v4l2_subdev *sd,
- 	csid_try_format(csid, sd_state, fmt->pad, &fmt->format, fmt->which);
- 	*format = fmt->format;
- 
--	/* Propagate the format from sink to source */
-+	/* Propagate the format from sink to source pads */
- 	if (fmt->pad == MSM_CSID_PAD_SINK) {
--		format = __csid_get_format(csid, sd_state, MSM_CSID_PAD_SRC,
--					   fmt->which);
-+		for (i = MSM_CSID_PAD_FIRST_SRC; i < MSM_CSID_PADS_NUM; ++i) {
-+			format = __csid_get_format(csid, sd_state, i, fmt->which);
- 
--		*format = fmt->format;
--		csid_try_format(csid, sd_state, MSM_CSID_PAD_SRC, format,
--				fmt->which);
-+			*format = fmt->format;
-+			csid_try_format(csid, sd_state, i, format, fmt->which);
-+		}
- 	}
- 
- 	return 0;
-@@ -695,7 +701,6 @@ static int csid_link_setup(struct media_entity *entity,
- 		struct csid_device *csid;
- 		struct csiphy_device *csiphy;
- 		struct csiphy_lanes_cfg *lane_cfg;
--		struct v4l2_subdev_format format = { 0 };
- 
- 		sd = media_entity_to_v4l2_subdev(entity);
- 		csid = v4l2_get_subdevdata(sd);
-@@ -718,11 +723,22 @@ static int csid_link_setup(struct media_entity *entity,
- 		lane_cfg = &csiphy->cfg.csi2->lane_cfg;
- 		csid->phy.lane_cnt = lane_cfg->num_data;
- 		csid->phy.lane_assign = csid_get_lane_assign(lane_cfg);
-+	}
-+	/* Decide which virtual channels to enable based on which source pads are enabled */
-+	if (local->flags & MEDIA_PAD_FL_SOURCE) {
-+		struct v4l2_subdev *sd = media_entity_to_v4l2_subdev(entity);
-+		struct csid_device *csid = v4l2_get_subdevdata(sd);
-+		struct device *dev = csid->camss->dev;
-+
-+		if (flags & MEDIA_LNK_FL_ENABLED)
-+			csid->phy.en_vc |= BIT(local->index - 1);
-+		else
-+			csid->phy.en_vc &= ~BIT(local->index - 1);
- 
--		/* Reset format on source pad to sink pad format */
--		format.pad = MSM_CSID_PAD_SRC;
--		format.which = V4L2_SUBDEV_FORMAT_ACTIVE;
--		csid_set_format(&csid->subdev, NULL, &format);
-+		csid->phy.need_vc_update = true;
-+
-+		dev_dbg(dev, "%s: Enabled CSID virtual channels mask 0x%x\n",
-+			__func__, csid->phy.en_vc);
- 	}
- 
- 	return 0;
-@@ -773,6 +789,7 @@ int msm_csid_register_entity(struct csid_device *csid,
- 	struct v4l2_subdev *sd = &csid->subdev;
- 	struct media_pad *pads = csid->pads;
- 	struct device *dev = csid->camss->dev;
-+	int i;
- 	int ret;
- 
- 	v4l2_subdev_init(sd, &csid_v4l2_ops);
-@@ -809,7 +826,8 @@ int msm_csid_register_entity(struct csid_device *csid,
- 	}
- 
- 	pads[MSM_CSID_PAD_SINK].flags = MEDIA_PAD_FL_SINK;
--	pads[MSM_CSID_PAD_SRC].flags = MEDIA_PAD_FL_SOURCE;
-+	for (i = MSM_CSID_PAD_FIRST_SRC; i < MSM_CSID_PADS_NUM; ++i)
-+		pads[i].flags = MEDIA_PAD_FL_SOURCE;
- 
- 	sd->entity.function = MEDIA_ENT_F_PROC_VIDEO_PIXEL_FORMATTER;
- 	sd->entity.ops = &csid_media_ops;
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-index 814ebc7c29d65..6b5485fe18332 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.h
-+++ b/drivers/media/platform/qcom/camss/camss-csid.h
-@@ -19,8 +19,13 @@
- #include <media/v4l2-subdev.h>
- 
- #define MSM_CSID_PAD_SINK 0
--#define MSM_CSID_PAD_SRC 1
--#define MSM_CSID_PADS_NUM 2
-+#define MSM_CSID_PAD_FIRST_SRC 1
-+#define MSM_CSID_PADS_NUM 5
-+
-+#define MSM_CSID_PAD_SRC (MSM_CSID_PAD_FIRST_SRC)
-+
-+/* CSID hardware can demultiplex up to 4 outputs */
-+#define MSM_CSID_MAX_SRC_STREAMS	4
- 
- #define DATA_TYPE_EMBEDDED_DATA_8BIT	0x12
- #define DATA_TYPE_YUV420_8BIT		0x18
-@@ -81,6 +86,8 @@ struct csid_phy_config {
- 	u8 csiphy_id;
- 	u8 lane_cnt;
- 	u32 lane_assign;
-+	u32 en_vc;
-+	u8 need_vc_update;
- };
- 
- struct csid_device;
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index e7f6c29b8dd82..63f33126d02fe 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -763,7 +763,7 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 		if (lp->features & XAE_FEATURE_FULL_TX_CSUM) {
+ 			/* Tx Full Checksum Offload Enabled */
+ 			cur_p->app0 |= 2;
+-		} else if (lp->features & XAE_FEATURE_PARTIAL_RX_CSUM) {
++		} else if (lp->features & XAE_FEATURE_PARTIAL_TX_CSUM) {
+ 			csum_start_off = skb_transport_offset(skb);
+ 			csum_index_off = csum_start_off + skb->csum_offset;
+ 			/* Tx Partial Checksum Offload Enabled */
 -- 
 2.42.0
 
