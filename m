@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484FF495C2;
-	Thu, 30 Nov 2023 16:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DAA495C2;
+	Thu, 30 Nov 2023 16:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPvqTUmS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC379C433C7;
-	Thu, 30 Nov 2023 16:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHYrVvcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33700C433C8;
+	Thu, 30 Nov 2023 16:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361443;
-	bh=jACWWqZERdsQbHx5eO5eDFceQRVhas3Ap48Tw8iIY4c=;
+	s=korg; t=1701361445;
+	bh=zrw24OEakGJPrVYJ6C58IcSlYLLE+G+SagM2UEEYyUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DPvqTUmS76iSdMcseEZj4Zc+VdRtHEomQsyVlNADs6fgHTd5MpGWzogqHU9qJsGV1
-	 jh92yBpdlTPSr9+u8zCo18D3kUo49ADRotpV1nf1+FPd5N6oAtsFP0H+9z9g+M+w+H
-	 dX9zv3mc1Hf1pCN5lixkXRlheRnCmQi6xQGnt6jQ=
+	b=vHYrVvcjzJJ+zojwkjqcAw3Jtytn00anIM9VHGFdZq2sRZTajRhv8XRZLZIkPLiWv
+	 a+o8vfCxxW0C3Ni5NFVpvT9Ai1P4wCnfjxjtU1JEjzYFlg7w5J2Y/Niewxf7AYIAOG
+	 KzRgfKeJoEjzwVf9H8ABCXOCaQOG2Cwks3SSBluI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Wu <wuyun.abel@bytedance.com>,
+	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Shrikanth Hegde <sshegde@linux.vnet.ibm.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/112] sched/eevdf: Fix vruntime adjustment on reweight
-Date: Thu, 30 Nov 2023 16:20:52 +0000
-Message-ID: <20231130162140.493657992@linuxfoundation.org>
+Subject: [PATCH 6.6 006/112] sched/fair: Fix the decision for load balance
+Date: Thu, 30 Nov 2023 16:20:53 +0000
+Message-ID: <20231130162140.520284934@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,228 +45,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Wu <wuyun.abel@bytedance.com>
+From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 
-[ Upstream commit eab03c23c2a162085b13200d7942fc5a00b5ccc8 ]
+[ Upstream commit 6d7e4782bcf549221b4ccfffec2cf4d1a473f1a3 ]
 
-vruntime of the (on_rq && !0-lag) entity needs to be adjusted when
-it gets re-weighted, and the calculations can be simplified based
-on the fact that re-weight won't change the w-average of all the
-entities. Please check the proofs in comments.
+should_we_balance is called for the decision to do load-balancing.
+When sched ticks invoke this function, only one CPU should return
+true. However, in the current code, two CPUs can return true. The
+following situation, where b means busy and i means idle, is an
+example, because CPU 0 and CPU 2 return true.
 
-But adjusting vruntime can also cause position change in RB-tree
-hence require re-queue to fix up which might be costly. This might
-be avoided by deferring adjustment to the time the entity actually
-leaves tree (dequeue/pick), but that will negatively affect task
-selection and probably not good enough either.
+        [0, 1] [2, 3]
+         b  b   i  b
 
-Fixes: 147f3efaa241 ("sched/fair: Implement an EEVDF-like scheduling policy")
-Signed-off-by: Abel Wu <wuyun.abel@bytedance.com>
+This fix checks if there exists an idle CPU with busy sibling(s)
+after looking for a CPU on an idle core. If some idle CPUs with busy
+siblings are found, just the first one should do load-balancing.
+
+Fixes: b1bfeab9b002 ("sched/fair: Consider the idle state of the whole core for load balance")
+Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20231107090510.71322-2-wuyun.abel@bytedance.com
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Shrikanth Hegde <sshegde@linux.vnet.ibm.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20231031133821.1570861-1-keisuke.nishimura@inria.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 151 +++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 128 insertions(+), 23 deletions(-)
+ kernel/sched/fair.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 1795f6fe991f3..0351320148177 100644
+index 0351320148177..fa9fff0f9620d 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -3626,41 +3626,140 @@ static inline void
- dequeue_load_avg(struct cfs_rq *cfs_rq, struct sched_entity *se) { }
- #endif
+@@ -11121,12 +11121,16 @@ static int should_we_balance(struct lb_env *env)
+ 			continue;
+ 		}
  
-+static void reweight_eevdf(struct cfs_rq *cfs_rq, struct sched_entity *se,
-+			   unsigned long weight)
-+{
-+	unsigned long old_weight = se->load.weight;
-+	u64 avruntime = avg_vruntime(cfs_rq);
-+	s64 vlag, vslice;
-+
-+	/*
-+	 * VRUNTIME
-+	 * ========
-+	 *
-+	 * COROLLARY #1: The virtual runtime of the entity needs to be
-+	 * adjusted if re-weight at !0-lag point.
-+	 *
-+	 * Proof: For contradiction assume this is not true, so we can
-+	 * re-weight without changing vruntime at !0-lag point.
-+	 *
-+	 *             Weight	VRuntime   Avg-VRuntime
-+	 *     before    w          v            V
-+	 *      after    w'         v'           V'
-+	 *
-+	 * Since lag needs to be preserved through re-weight:
-+	 *
-+	 *	lag = (V - v)*w = (V'- v')*w', where v = v'
-+	 *	==>	V' = (V - v)*w/w' + v		(1)
-+	 *
-+	 * Let W be the total weight of the entities before reweight,
-+	 * since V' is the new weighted average of entities:
-+	 *
-+	 *	V' = (WV + w'v - wv) / (W + w' - w)	(2)
-+	 *
-+	 * by using (1) & (2) we obtain:
-+	 *
-+	 *	(WV + w'v - wv) / (W + w' - w) = (V - v)*w/w' + v
-+	 *	==> (WV-Wv+Wv+w'v-wv)/(W+w'-w) = (V - v)*w/w' + v
-+	 *	==> (WV - Wv)/(W + w' - w) + v = (V - v)*w/w' + v
-+	 *	==>	(V - v)*W/(W + w' - w) = (V - v)*w/w' (3)
-+	 *
-+	 * Since we are doing at !0-lag point which means V != v, we
-+	 * can simplify (3):
-+	 *
-+	 *	==>	W / (W + w' - w) = w / w'
-+	 *	==>	Ww' = Ww + ww' - ww
-+	 *	==>	W * (w' - w) = w * (w' - w)
-+	 *	==>	W = w	(re-weight indicates w' != w)
-+	 *
-+	 * So the cfs_rq contains only one entity, hence vruntime of
-+	 * the entity @v should always equal to the cfs_rq's weighted
-+	 * average vruntime @V, which means we will always re-weight
-+	 * at 0-lag point, thus breach assumption. Proof completed.
-+	 *
-+	 *
-+	 * COROLLARY #2: Re-weight does NOT affect weighted average
-+	 * vruntime of all the entities.
-+	 *
-+	 * Proof: According to corollary #1, Eq. (1) should be:
-+	 *
-+	 *	(V - v)*w = (V' - v')*w'
-+	 *	==>    v' = V' - (V - v)*w/w'		(4)
-+	 *
-+	 * According to the weighted average formula, we have:
-+	 *
-+	 *	V' = (WV - wv + w'v') / (W - w + w')
-+	 *	   = (WV - wv + w'(V' - (V - v)w/w')) / (W - w + w')
-+	 *	   = (WV - wv + w'V' - Vw + wv) / (W - w + w')
-+	 *	   = (WV + w'V' - Vw) / (W - w + w')
-+	 *
-+	 *	==>  V'*(W - w + w') = WV + w'V' - Vw
-+	 *	==>	V' * (W - w) = (W - w) * V	(5)
-+	 *
-+	 * If the entity is the only one in the cfs_rq, then reweight
-+	 * always occurs at 0-lag point, so V won't change. Or else
-+	 * there are other entities, hence W != w, then Eq. (5) turns
-+	 * into V' = V. So V won't change in either case, proof done.
-+	 *
-+	 *
-+	 * So according to corollary #1 & #2, the effect of re-weight
-+	 * on vruntime should be:
-+	 *
-+	 *	v' = V' - (V - v) * w / w'		(4)
-+	 *	   = V  - (V - v) * w / w'
-+	 *	   = V  - vl * w / w'
-+	 *	   = V  - vl'
-+	 */
-+	if (avruntime != se->vruntime) {
-+		vlag = (s64)(avruntime - se->vruntime);
-+		vlag = div_s64(vlag * old_weight, weight);
-+		se->vruntime = avruntime - vlag;
-+	}
-+
-+	/*
-+	 * DEADLINE
-+	 * ========
-+	 *
-+	 * When the weight changes, the virtual time slope changes and
-+	 * we should adjust the relative virtual deadline accordingly.
-+	 *
-+	 *	d' = v' + (d - v)*w/w'
-+	 *	   = V' - (V - v)*w/w' + (d - v)*w/w'
-+	 *	   = V  - (V - v)*w/w' + (d - v)*w/w'
-+	 *	   = V  + (d - V)*w/w'
-+	 */
-+	vslice = (s64)(se->deadline - avruntime);
-+	vslice = div_s64(vslice * old_weight, weight);
-+	se->deadline = avruntime + vslice;
-+}
-+
- static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
- 			    unsigned long weight)
- {
--	unsigned long old_weight = se->load.weight;
-+	bool curr = cfs_rq->curr == se;
- 
- 	if (se->on_rq) {
- 		/* commit outstanding execution time */
--		if (cfs_rq->curr == se)
-+		if (curr)
- 			update_curr(cfs_rq);
- 		else
--			avg_vruntime_sub(cfs_rq, se);
-+			__dequeue_entity(cfs_rq, se);
- 		update_load_sub(&cfs_rq->load, se->load.weight);
- 	}
- 	dequeue_load_avg(cfs_rq, se);
- 
--	update_load_set(&se->load, weight);
--
- 	if (!se->on_rq) {
- 		/*
- 		 * Because we keep se->vlag = V - v_i, while: lag_i = w_i*(V - v_i),
- 		 * we need to scale se->vlag when w_i changes.
- 		 */
--		se->vlag = div_s64(se->vlag * old_weight, weight);
-+		se->vlag = div_s64(se->vlag * se->load.weight, weight);
- 	} else {
--		s64 deadline = se->deadline - se->vruntime;
--		/*
--		 * When the weight changes, the virtual time slope changes and
--		 * we should adjust the relative virtual deadline accordingly.
--		 */
--		deadline = div_s64(deadline * old_weight, weight);
--		se->deadline = se->vruntime + deadline;
--		if (se != cfs_rq->curr)
--			min_deadline_cb_propagate(&se->run_node, NULL);
-+		reweight_eevdf(cfs_rq, se, weight);
+-		/* Are we the first idle CPU? */
++		/*
++		 * Are we the first idle core in a non-SMT domain or higher,
++		 * or the first idle CPU in a SMT domain?
++		 */
+ 		return cpu == env->dst_cpu;
  	}
  
-+	update_load_set(&se->load, weight);
-+
- #ifdef CONFIG_SMP
- 	do {
- 		u32 divider = get_pelt_divider(&se->avg);
-@@ -3672,8 +3771,17 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
- 	enqueue_load_avg(cfs_rq, se);
- 	if (se->on_rq) {
- 		update_load_add(&cfs_rq->load, se->load.weight);
--		if (cfs_rq->curr != se)
--			avg_vruntime_add(cfs_rq, se);
-+		if (!curr) {
-+			/*
-+			 * The entity's vruntime has been adjusted, so let's check
-+			 * whether the rq-wide min_vruntime needs updated too. Since
-+			 * the calculations above require stable min_vruntime rather
-+			 * than up-to-date one, we do the update at the end of the
-+			 * reweight process.
-+			 */
-+			__enqueue_entity(cfs_rq, se);
-+			update_min_vruntime(cfs_rq);
-+		}
- 	}
- }
+-	if (idle_smt == env->dst_cpu)
+-		return true;
++	/* Are we the first idle CPU with busy siblings? */
++	if (idle_smt != -1)
++		return idle_smt == env->dst_cpu;
  
-@@ -3817,14 +3925,11 @@ static void update_cfs_group(struct sched_entity *se)
- 
- #ifndef CONFIG_SMP
- 	shares = READ_ONCE(gcfs_rq->tg->shares);
--
--	if (likely(se->load.weight == shares))
--		return;
- #else
--	shares   = calc_group_shares(gcfs_rq);
-+	shares = calc_group_shares(gcfs_rq);
- #endif
--
--	reweight_entity(cfs_rq_of(se), se, shares);
-+	if (unlikely(se->load.weight != shares))
-+		reweight_entity(cfs_rq_of(se), se, shares);
- }
- 
- #else /* CONFIG_FAIR_GROUP_SCHED */
+ 	/* Are we the first CPU of this group ? */
+ 	return group_balance_cpu(sg) == env->dst_cpu;
 -- 
 2.42.0
 
