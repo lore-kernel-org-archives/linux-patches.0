@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA883D382;
-	Thu, 30 Nov 2023 16:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9F3495D9;
+	Thu, 30 Nov 2023 16:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2y3lcJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DE8C433C8;
-	Thu, 30 Nov 2023 16:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5ROVyuZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5B5C433C7;
+	Thu, 30 Nov 2023 16:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361941;
-	bh=1osSwHthi+SM9O6yiy/I6LhLoEfFnxfweyGDJ0xwZu0=;
+	s=korg; t=1701361943;
+	bh=UDI7jv+LPp09F/5pCD/Y83bXYhh9uxwSMN36ZPpL0U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2y3lcJqw1TYzXBvxBfbj+J37ElTUso48ZWNnMKpp0UouRh5tggK3e8M/7q0B92D1
-	 xZt0CrLKWduDdLuFvZ08xXwIZAZjzvusci/9IZp649akb4NXsRqSesmvciwbLmSGPa
-	 +yZ5GhOMm+QxeWf9B0rsZ8W0a1S1e4WhwWvIw14o=
+	b=k5ROVyuZwiYiGGpsPxdA8sD6yBGoxmtmHFy2wrnF2f4/hK4eUyo3HejFnSISrcA+u
+	 L7TsqcNENNMO0u0vS18V5f8WkQnBMafAuc3JzexZK/vZKQea870dDqN5dK+6uCJBOa
+	 wCejCrVTHmDSTLP92sAK0VpoAlHGIWiCBNu3J3Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marek Vasut <marex@denx.de>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/69] drm/panel: simple: Fix Innolux G101ICE-L01 bus flags
-Date: Thu, 30 Nov 2023 16:22:02 +0000
-Message-ID: <20231130162133.235046108@linuxfoundation.org>
+Subject: [PATCH 5.15 06/69] drm/panel: simple: Fix Innolux G101ICE-L01 timings
+Date: Thu, 30 Nov 2023 16:22:03 +0000
+Message-ID: <20231130162133.270202756@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -44,30 +44,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 06fc41b09cfbc02977acd9189473593a37d82d9b ]
+[ Upstream commit 3f9a91b6c00e655d27bd785dcda1742dbdc31bda ]
 
-Add missing .bus_flags = DRM_BUS_FLAG_DE_HIGH to this panel description,
-ones which match both the datasheet and the panel display_timing flags .
+The Innolux G101ICE-L01 datasheet [1] page 17 table
+6.1 INPUT SIGNAL TIMING SPECIFICATIONS
+indicates that maximum vertical blanking time is 40 lines.
+Currently the driver uses 29 lines.
+
+Fix it, and since this panel is a DE panel, adjust the timings
+to make them less hostile to controllers which cannot do 1 px
+HSA/VSA, distribute the delays evenly between all three parts.
+
+[1] https://www.data-modul.com/sites/default/files/products/G101ICE-L01-C2-specification-12042389.pdf
 
 Fixes: 1e29b840af9f ("drm/panel: simple: Add Innolux G101ICE-L01 panel")
 Signed-off-by: Marek Vasut <marex@denx.de>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231008223315.279215-1-marex@denx.de
+Link: https://patchwork.freedesktop.org/patch/msgid/20231008223256.279196-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panel/panel-simple.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index e58eb93e9bc9e..28d1e661f99b1 100644
+index 28d1e661f99b1..d9f1675c348e5 100644
 --- a/drivers/gpu/drm/panel/panel-simple.c
 +++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -2555,6 +2555,7 @@ static const struct panel_desc innolux_g101ice_l01 = {
- 		.disable = 200,
- 	},
- 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
- 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+@@ -2532,13 +2532,13 @@ static const struct panel_desc innolux_g070y2_l01 = {
+ static const struct display_timing innolux_g101ice_l01_timing = {
+ 	.pixelclock = { 60400000, 71100000, 74700000 },
+ 	.hactive = { 1280, 1280, 1280 },
+-	.hfront_porch = { 41, 80, 100 },
+-	.hback_porch = { 40, 79, 99 },
+-	.hsync_len = { 1, 1, 1 },
++	.hfront_porch = { 30, 60, 70 },
++	.hback_porch = { 30, 60, 70 },
++	.hsync_len = { 22, 40, 60 },
+ 	.vactive = { 800, 800, 800 },
+-	.vfront_porch = { 5, 11, 14 },
+-	.vback_porch = { 4, 11, 14 },
+-	.vsync_len = { 1, 1, 1 },
++	.vfront_porch = { 3, 8, 14 },
++	.vback_porch = { 3, 8, 14 },
++	.vsync_len = { 4, 7, 12 },
+ 	.flags = DISPLAY_FLAGS_DE_HIGH,
  };
  
 -- 
