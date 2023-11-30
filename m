@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6D2524C2;
-	Thu, 30 Nov 2023 16:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A4D524C2;
+	Thu, 30 Nov 2023 16:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0I0KIV6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A208DC433C7;
-	Thu, 30 Nov 2023 16:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSeWeS2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF81C433C8;
+	Thu, 30 Nov 2023 16:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361675;
-	bh=TXumOZhwtLQl3rtjQie7EEO09ubzYDQTB975yEpilN8=;
+	s=korg; t=1701361677;
+	bh=4iGIhksDdHMRpBKKK+cdWmjwrJhRhz5u8DuQGAUIen0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H0I0KIV6ZSjI8luugtuSmHZt5ALa9kQQC4qulGvfXUW95slRsQ/72JnCie0fm4ek2
-	 VKveN+5132vnM1TLb+cf4TA3Yn1BuQ5uL9Pn7eUAKMzpMwoV+33C9sc4XnjLXTDHgF
-	 bdLkVNYB1z8ORPGGllH2h/L+n23QMFXQwyUJe5Jo=
+	b=tSeWeS2EP8SYsQaDV0xxydpdLoOVwDr0HcZs6xMEwXnSSE1TRaU0fzc6Qgubkmdq0
+	 pw9EZuV8psnEeKu37Ucwtx0B0zHHsZzstLQYFfYy6BEY21SJDRxhvBtIbMpuYm/EoV
+	 imeXId0jF2fZ2cTszqsLHlgb5NnSo9T/HG1c0Hp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Ivan Ivanov <ivan.ivanov@suse.com>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 108/112] USB: dwc2: write HCINT with INTMASK applied
-Date: Thu, 30 Nov 2023 16:22:35 +0000
-Message-ID: <20231130162143.708901024@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 109/112] usb: dwc3: Fix default mode initialization
+Date: Thu, 30 Nov 2023 16:22:36 +0000
+Message-ID: <20231130162143.740492138@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -43,80 +42,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 0583bc776ca5b5a3f5752869fc31cf7322df2b35 upstream.
+commit 10d510abd096d620b9fda2dd3e0047c5efc4ad2b upstream.
 
-dwc2_hc_n_intr() writes back INTMASK as read but evaluates it
-with intmask applied. In stress testing this causes spurious
-interrupts like this:
+The default mode, configurable by DT, shall be set before usb role switch
+driver is registered. Otherwise there is a race between default mode
+and mode set by usb role switch driver.
 
-[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 7 - ChHltd set, but reason is unknown
-[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 0 - ChHltd set, but reason is unknown
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 4 - ChHltd set, but reason is unknown
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_update_urb_state_abn(): trimming xfer length
-
-Applying INTMASK prevents this. The issue exists in all versions of the
-driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Tested-by: Ivan Ivanov <ivan.ivanov@suse.com>
-Tested-by: Andrea della Porta <andrea.porta@suse.com>
-Link: https://lore.kernel.org/r/20231115144514.15248-1-oneukum@suse.com
+Fixes: 98ed256a4dbad ("usb: dwc3: Add support for role-switch-default-mode binding")
 Cc: stable <stable@kernel.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20231025095110.2405281-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/hcd_intr.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/usb/dwc3/drd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc2/hcd_intr.c
-+++ b/drivers/usb/dwc2/hcd_intr.c
-@@ -2015,15 +2015,17 @@ static void dwc2_hc_n_intr(struct dwc2_h
- {
- 	struct dwc2_qtd *qtd;
- 	struct dwc2_host_chan *chan;
--	u32 hcint, hcintmsk;
-+	u32 hcint, hcintraw, hcintmsk;
+--- a/drivers/usb/dwc3/drd.c
++++ b/drivers/usb/dwc3/drd.c
+@@ -505,6 +505,7 @@ static int dwc3_setup_role_switch(struct
+ 		dwc->role_switch_default_mode = USB_DR_MODE_PERIPHERAL;
+ 		mode = DWC3_GCTL_PRTCAP_DEVICE;
+ 	}
++	dwc3_set_mode(dwc, mode);
  
- 	chan = hsotg->hc_ptr_array[chnum];
- 
--	hcint = dwc2_readl(hsotg, HCINT(chnum));
-+	hcintraw = dwc2_readl(hsotg, HCINT(chnum));
- 	hcintmsk = dwc2_readl(hsotg, HCINTMSK(chnum));
-+	hcint = hcintraw & hcintmsk;
-+	dwc2_writel(hsotg, hcint, HCINT(chnum));
-+
- 	if (!chan) {
- 		dev_err(hsotg->dev, "## hc_ptr_array for channel is NULL ##\n");
--		dwc2_writel(hsotg, hcint, HCINT(chnum));
- 		return;
+ 	dwc3_role_switch.fwnode = dev_fwnode(dwc->dev);
+ 	dwc3_role_switch.set = dwc3_usb_role_switch_set;
+@@ -526,7 +527,6 @@ static int dwc3_setup_role_switch(struct
+ 		}
  	}
  
-@@ -2032,11 +2034,9 @@ static void dwc2_hc_n_intr(struct dwc2_h
- 			 chnum);
- 		dev_vdbg(hsotg->dev,
- 			 "  hcint 0x%08x, hcintmsk 0x%08x, hcint&hcintmsk 0x%08x\n",
--			 hcint, hcintmsk, hcint & hcintmsk);
-+			 hcintraw, hcintmsk, hcint);
- 	}
- 
--	dwc2_writel(hsotg, hcint, HCINT(chnum));
--
- 	/*
- 	 * If we got an interrupt after someone called
- 	 * dwc2_hcd_endpoint_disable() we don't want to crash below
-@@ -2046,8 +2046,7 @@ static void dwc2_hc_n_intr(struct dwc2_h
- 		return;
- 	}
- 
--	chan->hcint = hcint;
--	hcint &= hcintmsk;
-+	chan->hcint = hcintraw;
- 
- 	/*
- 	 * If the channel was halted due to a dequeue, the qtd list might
+-	dwc3_set_mode(dwc, mode);
+ 	return 0;
+ }
+ #else
 
 
