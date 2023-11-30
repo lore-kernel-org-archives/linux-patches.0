@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31494777A;
-	Thu, 30 Nov 2023 16:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4584878B;
+	Thu, 30 Nov 2023 16:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLzbRBra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40888C433C8;
-	Thu, 30 Nov 2023 16:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfxdHttZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC13C433C7;
+	Thu, 30 Nov 2023 16:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361872;
-	bh=Cd4N5hrCa+u6eVMI3dWReon6Qf0hCiXul8acyPm2Kgc=;
+	s=korg; t=1701361875;
+	bh=8zv/ePYMsZBPK+3VweulX0mtgoCR/DUSiaLfkbSFKj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLzbRBradL3siuJNnMk83BWUr88obLZvSM+sjglkcSeL94XqmF2PxV2uqwkS6WAgo
-	 +lroithSw5+PaMSnQnSUmk5+BDbEFzuhJBllKn1DMPZuRNadGHQKx8Gq8xvHjWo5Nm
-	 p9ygrwbGdlkk76rYXWhHi19pS69khnL+HHqy6E78=
+	b=EfxdHttZlhvjzpyMrl93CTRmyXiKBfHS+U7ust1Y4yQIl0sXTi0U3vOp0AKZ6zRAj
+	 Bk912G8AIaBRBpRjPsmGFnVAk2EtZ9BAecfM29UiHRnM9n4HwcR23u/p13vOQkWVW/
+	 cd27aK27OiCQ2JvZdECuFxpv7BZVKJeavCjx1IzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 47/82] ext4: use pre-allocated es in __es_remove_extent()
-Date: Thu, 30 Nov 2023 16:22:18 +0000
-Message-ID: <20231130162137.464666932@linuxfoundation.org>
+	Puliang Lu <puliang.lu@fibocom.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 74/82] USB: serial: option: fix FM101R-GL defines
+Date: Thu, 30 Nov 2023 16:22:45 +0000
+Message-ID: <20231130162138.336069050@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -43,127 +41,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Puliang Lu <puliang.lu@fibocom.com>
 
-[ Upstream commit bda3efaf774fb687c2b7a555aaec3006b14a8857 ]
+commit a1092619dd28ac0fcf23016160a2fdccd98ef935 upstream.
 
-When splitting extent, if the second extent can not be dropped, we return
--ENOMEM and use GFP_NOFAIL to preallocate an extent_status outside of
-i_es_lock and pass it to __es_remove_extent() to be used as the second
-extent. This ensures that __es_remove_extent() is executed successfully,
-thus ensuring consistency in the extent status tree. If the second extent
-is not undroppable, we simply drop it and return 0. Then retry is no longer
-necessary, remove it.
+Modify the definition of the two Fibocom FM101R-GL PID macros, which had
+their PIDs switched.
 
-Now, __es_remove_extent() will always remove what it should, maybe more.
+The correct PIDs are:
 
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230424033846.4732-6-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 8e387c89e96b ("ext4: make sure allocate pending entry not fail")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+- VID:PID 413C:8213, FM101R-GL ESIM are laptop M.2 cards (with
+  MBIM interfaces for Linux)
+
+- VID:PID 413C:8215, FM101R-GL are laptop M.2 cards (with
+  MBIM interface for Linux)
+
+0x8213: mbim, tty
+0x8215: mbim, tty
+
+Signed-off-by: Puliang Lu <puliang.lu@fibocom.com>
+Fixes: 52480e1f1a25 ("USB: serial: option: add Fibocom to DELL custom modem FM101R-GL")
+Link: https://lore.kernel.org/lkml/TYZPR02MB508845BAD7936A62A105CE5D89DFA@TYZPR02MB5088.apcprd02.prod.outlook.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents_status.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/usb/serial/option.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index e459a0c2d71ef..682f5e4ce2d00 100644
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -147,7 +147,8 @@ static struct kmem_cache *ext4_pending_cachep;
- static int __es_insert_extent(struct inode *inode, struct extent_status *newes,
- 			      struct extent_status *prealloc);
- static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
--			      ext4_lblk_t end, int *reserved);
-+			      ext4_lblk_t end, int *reserved,
-+			      struct extent_status *prealloc);
- static int es_reclaim_extents(struct ext4_inode_info *ei, int *nr_to_scan);
- static int __es_shrink(struct ext4_sb_info *sbi, int nr_to_scan,
- 		       struct ext4_inode_info *locked_ei);
-@@ -869,7 +870,7 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
- 	ext4_es_insert_extent_check(inode, &newes);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -203,8 +203,8 @@ static void option_instat_callback(struc
+ #define DELL_PRODUCT_5829E_ESIM			0x81e4
+ #define DELL_PRODUCT_5829E			0x81e6
  
- 	write_lock(&EXT4_I(inode)->i_es_lock);
--	err = __es_remove_extent(inode, lblk, end, NULL);
-+	err = __es_remove_extent(inode, lblk, end, NULL, NULL);
- 	if (err != 0)
- 		goto error;
- retry:
-@@ -1313,6 +1314,7 @@ static unsigned int get_rsvd(struct inode *inode, ext4_lblk_t end,
-  * @lblk - first block in range
-  * @end - last block in range
-  * @reserved - number of cluster reservations released
-+ * @prealloc - pre-allocated es to avoid memory allocation failures
-  *
-  * If @reserved is not NULL and delayed allocation is enabled, counts
-  * block/cluster reservations freed by removing range and if bigalloc
-@@ -1320,7 +1322,8 @@ static unsigned int get_rsvd(struct inode *inode, ext4_lblk_t end,
-  * error code on failure.
-  */
- static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
--			      ext4_lblk_t end, int *reserved)
-+			      ext4_lblk_t end, int *reserved,
-+			      struct extent_status *prealloc)
- {
- 	struct ext4_es_tree *tree = &EXT4_I(inode)->i_es_tree;
- 	struct rb_node *node;
-@@ -1328,14 +1331,12 @@ static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
- 	struct extent_status orig_es;
- 	ext4_lblk_t len1, len2;
- 	ext4_fsblk_t block;
--	int err;
-+	int err = 0;
- 	bool count_reserved = true;
- 	struct rsvd_count rc;
+-#define DELL_PRODUCT_FM101R			0x8213
+-#define DELL_PRODUCT_FM101R_ESIM		0x8215
++#define DELL_PRODUCT_FM101R_ESIM		0x8213
++#define DELL_PRODUCT_FM101R			0x8215
  
- 	if (reserved == NULL || !test_opt(inode->i_sb, DELALLOC))
- 		count_reserved = false;
--retry:
--	err = 0;
- 
- 	es = __es_tree_search(&tree->root, lblk);
- 	if (!es)
-@@ -1369,14 +1370,13 @@ static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
- 					orig_es.es_len - len2;
- 			ext4_es_store_pblock_status(&newes, block,
- 						    ext4_es_status(&orig_es));
--			err = __es_insert_extent(inode, &newes, NULL);
-+			err = __es_insert_extent(inode, &newes, prealloc);
- 			if (err) {
-+				if (!ext4_es_must_keep(&newes))
-+					return 0;
-+
- 				es->es_lblk = orig_es.es_lblk;
- 				es->es_len = orig_es.es_len;
--				if ((err == -ENOMEM) &&
--				    __es_shrink(EXT4_SB(inode->i_sb),
--							128, EXT4_I(inode)))
--					goto retry;
- 				goto out;
- 			}
- 		} else {
-@@ -1476,7 +1476,7 @@ int ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
- 	 * is reclaimed.
- 	 */
- 	write_lock(&EXT4_I(inode)->i_es_lock);
--	err = __es_remove_extent(inode, lblk, end, &reserved);
-+	err = __es_remove_extent(inode, lblk, end, &reserved, NULL);
- 	write_unlock(&EXT4_I(inode)->i_es_lock);
- 	ext4_es_print_tree(inode);
- 	ext4_da_release_space(inode, reserved);
-@@ -2021,7 +2021,7 @@ int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
- 
- 	write_lock(&EXT4_I(inode)->i_es_lock);
- 
--	err = __es_remove_extent(inode, lblk, lblk, NULL);
-+	err = __es_remove_extent(inode, lblk, lblk, NULL, NULL);
- 	if (err != 0)
- 		goto error;
- retry:
--- 
-2.42.0
-
+ #define KYOCERA_VENDOR_ID			0x0c88
+ #define KYOCERA_PRODUCT_KPC650			0x17da
 
 
