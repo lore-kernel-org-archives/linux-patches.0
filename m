@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEF3524C2;
-	Thu, 30 Nov 2023 16:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F87495C2;
+	Thu, 30 Nov 2023 16:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Evr6Kf77"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC46C433C7;
-	Thu, 30 Nov 2023 16:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cF6HHehn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840E1C433C7;
+	Thu, 30 Nov 2023 16:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361779;
-	bh=Ccoaa0wrnaceK2DCAsTNaLM+hfi8rFNbDo55+UKd874=;
+	s=korg; t=1701361781;
+	bh=I8z1OLCECh7HR1Q0k8wbpFmk63llfWn5PIYUSwfZtI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Evr6Kf77SQJomlwNH6y4AH5vMQkiFoko0KH97lb+ufcqGwznJ68Yli7oCvUfkb2pv
-	 5sCvH99L4dbiLnSJoKdz1WAlVkgdsg0NKmqsS05a2rL0AVNHoVXWfyj3MeE4YJ1j01
-	 iYzNQCzRtkQdh7Cbm2aE28Ablg7JeruoNe8ri5q8=
+	b=cF6HHehnn9A9kF90dfmYAj4+rrNHuCOYASF9qA+H66P5obP816DzutpW0SP08E2He
+	 Wvic58SY/7hHYhfIPLYpuPO4A1Ik3UF+5qndSq7YL8YdJIvn35O1KVCDDNUsWYoeQE
+	 QXLIXm0HUc/PsasOjB3SBizf+/6Rfea/4DJaEOFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 43/82] media: qcom: camss: Fix genpd cleanup
-Date: Thu, 30 Nov 2023 16:22:14 +0000
-Message-ID: <20231130162137.322866205@linuxfoundation.org>
+Subject: [PATCH 6.1 44/82] ext4: add a new helper to check if es must be kept
+Date: Thu, 30 Nov 2023 16:22:15 +0000
+Message-ID: <20231130162137.354910984@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -42,111 +43,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit f69791c39745e64621216fe8919cb73c0065002b ]
+[ Upstream commit 9649eb18c6288f514cacffdd699d5cd999c2f8f6 ]
 
-Right now we never release the power-domains properly on the error path.
-Add a routine to be reused for this purpose and appropriate jumps in
-probe() to run that routine where necessary.
+In the extent status tree, we have extents which we can just drop without
+issues and extents we must not drop - this depends on the extent's status
+- currently ext4_es_is_delayed() extents must stay, others may be dropped.
 
-Fixes: 2f6f8af67203 ("media: camss: Refactor VFE power domain toggling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+A helper function is added to help determine if the current extent can
+be dropped, although only ext4_es_is_delayed() extents cannot be dropped
+currently.
+
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230424033846.4732-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 8e387c89e96b ("ext4: make sure allocate pending entry not fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss.c | 35 ++++++++++++++---------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ fs/ext4/extents_status.c | 34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index f490ad2266960..a30461de3e844 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -1538,6 +1538,20 @@ static int camss_icc_get(struct camss *camss)
- 	return 0;
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index b57e497679ef9..c9ab439b29f56 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -448,6 +448,19 @@ static void ext4_es_list_del(struct inode *inode)
+ 	spin_unlock(&sbi->s_es_lock);
  }
  
-+static void camss_genpd_cleanup(struct camss *camss)
++/*
++ * Returns true if we cannot fail to allocate memory for this extent_status
++ * entry and cannot reclaim it until its status changes.
++ */
++static inline bool ext4_es_must_keep(struct extent_status *es)
 +{
-+	int i;
++	/* fiemap, bigalloc, and seek_data/hole need to use it. */
++	if (ext4_es_is_delayed(es))
++		return true;
 +
-+	if (camss->genpd_num == 1)
-+		return;
-+
-+	if (camss->genpd_num > camss->vfe_num)
-+		device_link_del(camss->genpd_link[camss->genpd_num - 1]);
-+
-+	for (i = 0; i < camss->genpd_num; i++)
-+		dev_pm_domain_detach(camss->genpd[i], true);
++	return false;
 +}
 +
- /*
-  * camss_probe - Probe CAMSS platform device
-  * @pdev: Pointer to CAMSS platform device
-@@ -1625,11 +1639,11 @@ static int camss_probe(struct platform_device *pdev)
+ static struct extent_status *
+ ext4_es_alloc_extent(struct inode *inode, ext4_lblk_t lblk, ext4_lblk_t len,
+ 		     ext4_fsblk_t pblk)
+@@ -460,10 +473,8 @@ ext4_es_alloc_extent(struct inode *inode, ext4_lblk_t lblk, ext4_lblk_t len,
+ 	es->es_len = len;
+ 	es->es_pblk = pblk;
  
- 	ret = camss_init_subdevices(camss);
- 	if (ret < 0)
--		return ret;
-+		goto err_genpd_cleanup;
+-	/*
+-	 * We don't count delayed extent because we never try to reclaim them
+-	 */
+-	if (!ext4_es_is_delayed(es)) {
++	/* We never try to reclaim a must kept extent, so we don't count it. */
++	if (!ext4_es_must_keep(es)) {
+ 		if (!EXT4_I(inode)->i_es_shk_nr++)
+ 			ext4_es_list_add(inode);
+ 		percpu_counter_inc(&EXT4_SB(inode->i_sb)->
+@@ -481,8 +492,8 @@ static void ext4_es_free_extent(struct inode *inode, struct extent_status *es)
+ 	EXT4_I(inode)->i_es_all_nr--;
+ 	percpu_counter_dec(&EXT4_SB(inode->i_sb)->s_es_stats.es_stats_all_cnt);
  
- 	ret = dma_set_mask_and_coherent(dev, 0xffffffff);
- 	if (ret)
--		return ret;
-+		goto err_genpd_cleanup;
+-	/* Decrease the shrink counter when this es is not delayed */
+-	if (!ext4_es_is_delayed(es)) {
++	/* Decrease the shrink counter when we can reclaim the extent. */
++	if (!ext4_es_must_keep(es)) {
+ 		BUG_ON(EXT4_I(inode)->i_es_shk_nr == 0);
+ 		if (!--EXT4_I(inode)->i_es_shk_nr)
+ 			ext4_es_list_del(inode);
+@@ -853,7 +864,7 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
+ 	if (err == -ENOMEM && __es_shrink(EXT4_SB(inode->i_sb),
+ 					  128, EXT4_I(inode)))
+ 		goto retry;
+-	if (err == -ENOMEM && !ext4_es_is_delayed(&newes))
++	if (err == -ENOMEM && !ext4_es_must_keep(&newes))
+ 		err = 0;
  
- 	camss->media_dev.dev = camss->dev;
- 	strscpy(camss->media_dev.model, "Qualcomm Camera Subsystem",
-@@ -1641,7 +1655,7 @@ static int camss_probe(struct platform_device *pdev)
- 	ret = v4l2_device_register(camss->dev, &camss->v4l2_dev);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to register V4L2 device: %d\n", ret);
--		return ret;
-+		goto err_genpd_cleanup;
- 	}
+ 	if (sbi->s_cluster_ratio > 1 && test_opt(inode->i_sb, DELALLOC) &&
+@@ -1704,11 +1715,8 @@ static int es_do_reclaim_extents(struct ext4_inode_info *ei, ext4_lblk_t end,
  
- 	v4l2_async_nf_init(&camss->notifier);
-@@ -1692,28 +1706,19 @@ static int camss_probe(struct platform_device *pdev)
- err_v4l2_device_unregister:
- 	v4l2_device_unregister(&camss->v4l2_dev);
- 	v4l2_async_nf_cleanup(&camss->notifier);
-+err_genpd_cleanup:
-+	camss_genpd_cleanup(camss);
- 
- 	return ret;
- }
- 
- void camss_delete(struct camss *camss)
- {
--	int i;
--
- 	v4l2_device_unregister(&camss->v4l2_dev);
- 	media_device_unregister(&camss->media_dev);
- 	media_device_cleanup(&camss->media_dev);
- 
- 	pm_runtime_disable(camss->dev);
--
--	if (camss->genpd_num == 1)
--		return;
--
--	if (camss->genpd_num > camss->vfe_num)
--		device_link_del(camss->genpd_link[camss->genpd_num - 1]);
--
--	for (i = 0; i < camss->genpd_num; i++)
--		dev_pm_domain_detach(camss->genpd[i], true);
- }
- 
- /*
-@@ -1732,6 +1737,8 @@ static void camss_remove(struct platform_device *pdev)
- 
- 	if (atomic_read(&camss->ref_count) == 0)
- 		camss_delete(camss);
+ 		(*nr_to_scan)--;
+ 		node = rb_next(&es->rb_node);
+-		/*
+-		 * We can't reclaim delayed extent from status tree because
+-		 * fiemap, bigallic, and seek_data/hole need to use it.
+-		 */
+-		if (ext4_es_is_delayed(es))
 +
-+	camss_genpd_cleanup(camss);
- }
- 
- static const struct of_device_id camss_dt_match[] = {
++		if (ext4_es_must_keep(es))
+ 			goto next;
+ 		if (ext4_es_is_referenced(es)) {
+ 			ext4_es_clear_referenced(es);
+@@ -1772,7 +1780,7 @@ void ext4_clear_inode_es(struct inode *inode)
+ 	while (node) {
+ 		es = rb_entry(node, struct extent_status, rb_node);
+ 		node = rb_next(node);
+-		if (!ext4_es_is_delayed(es)) {
++		if (!ext4_es_must_keep(es)) {
+ 			rb_erase(&es->rb_node, &tree->root);
+ 			ext4_es_free_extent(inode, es);
+ 		}
 -- 
 2.42.0
 
