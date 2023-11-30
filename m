@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C133351002;
-	Thu, 30 Nov 2023 16:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23ED3D382;
+	Thu, 30 Nov 2023 16:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nIuC1EqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3FBC433C8;
-	Thu, 30 Nov 2023 16:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNDFzmAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF8FC433C8;
+	Thu, 30 Nov 2023 16:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701362052;
-	bh=kcEaNCkot7MYRlZocFXvXyCL0zxl5laKFruyChgDqZk=;
+	s=korg; t=1701362054;
+	bh=nbKkw+r3tU4cOq13jqZEkEfDgsgBeoWOaq9Jh2VZ7lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nIuC1EqDw2EFnGWvHE5jkuZ0JD9VQyY+2uMV+bMENltPjYXAusAGAjQvo9dySxgAc
-	 QE07xIv4Hu1PpwbP4Sj0V4GlLGuXp+oxHPNiQEhr3z8YcJz5WdYpFDWJyX/YngcPHE
-	 W/WDhQu9qOBtzP4CzPg1Aic/VRamzMahfYkVJh2M=
+	b=FNDFzmAdPFD37XAVSss/VBBiTGVmfdrOB9tavs1dDKXZhwakVGaIs/nZe7g18GFMG
+	 AE8U5vyjSjn60GbejscZ776zDgNmmV2T/Q9XRT8rdba849tOOqCSTv+pK6qMCSEOcg
+	 bmCECAeKXge9ZOW3OiQHZfvivoHj2SnaDpfsje/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 50/69] s390/dasd: protect device queue against concurrent access
-Date: Thu, 30 Nov 2023 16:22:47 +0000
-Message-ID: <20231130162134.722700241@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 5.15 68/69] USB: dwc3: qcom: fix wakeup after probe deferral
+Date: Thu, 30 Nov 2023 16:23:05 +0000
+Message-ID: <20231130162135.306795243@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -36,73 +35,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Höppner <hoeppner@linux.ibm.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit db46cd1e0426f52999d50fa72cfa97fa39952885 upstream.
+commit 41f5a0973259db9e4e3c9963d36505f80107d1a0 upstream.
 
-In dasd_profile_start() the amount of requests on the device queue are
-counted. The access to the device queue is unprotected against
-concurrent access. With a lot of parallel I/O, especially with alias
-devices enabled, the device queue can change while dasd_profile_start()
-is accessing the queue. In the worst case this leads to a kernel panic
-due to incorrect pointer accesses.
+The Qualcomm glue driver is overriding the interrupt trigger types
+defined by firmware when requesting the wakeup interrupts during probe.
 
-Fix this by taking the device lock before accessing the queue and
-counting the requests. Additionally the check for a valid profile data
-pointer can be done earlier to avoid unnecessary locking in a hot path.
+This can lead to a failure to map the DP/DM wakeup interrupts after a
+probe deferral as the firmware defined trigger types do not match the
+type used for the initial mapping:
 
-Cc:  <stable@vger.kernel.org>
-Fixes: 4fa52aa7a82f ("[S390] dasd: add enhanced DASD statistics interface")
-Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
-Signed-off-by: Jan Höppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://lore.kernel.org/r/20231025132437.1223363-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+	irq: type mismatch, failed to map hwirq-14 for interrupt-controller@b220000!
+	irq: type mismatch, failed to map hwirq-15 for interrupt-controller@b220000!
+
+Fix this by not overriding the firmware provided trigger types when
+requesting the wakeup interrupts.
+
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Cc: stable@vger.kernel.org      # 4.18
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20231120161607.7405-3-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/usb/dwc3/dwc3-qcom.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -697,18 +697,20 @@ static void dasd_profile_start(struct da
- 	 * we count each request only once.
- 	 */
- 	device = cqr->startdev;
--	if (device->profile.data) {
--		counter = 1; /* request is not yet queued on the start device */
--		list_for_each(l, &device->ccw_queue)
--			if (++counter >= 31)
--				break;
--	}
-+	if (!device->profile.data)
-+		return;
-+
-+	spin_lock(get_ccwdev_lock(device->cdev));
-+	counter = 1; /* request is not yet queued on the start device */
-+	list_for_each(l, &device->ccw_queue)
-+		if (++counter >= 31)
-+			break;
-+	spin_unlock(get_ccwdev_lock(device->cdev));
-+
- 	spin_lock(&device->profile.lock);
--	if (device->profile.data) {
--		device->profile.data->dasd_io_nr_req[counter]++;
--		if (rq_data_dir(req) == READ)
--			device->profile.data->dasd_read_nr_req[counter]++;
--	}
-+	device->profile.data->dasd_io_nr_req[counter]++;
-+	if (rq_data_dir(req) == READ)
-+		device->profile.data->dasd_read_nr_req[counter]++;
- 	spin_unlock(&device->profile.lock);
- }
- 
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -492,7 +492,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "hs_phy_irq failed: %d\n", ret);
+@@ -507,7 +507,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 DP_HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
+@@ -522,7 +522,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 DM_HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
+@@ -537,7 +537,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 SS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
 
 
