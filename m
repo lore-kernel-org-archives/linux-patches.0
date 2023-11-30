@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE43254F9C;
-	Thu, 30 Nov 2023 16:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717CE495D9;
+	Thu, 30 Nov 2023 16:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XT2ItjVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B746C433C8;
-	Thu, 30 Nov 2023 16:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="texp8yrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA377C433C8;
+	Thu, 30 Nov 2023 16:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361986;
-	bh=huTe7z2b8kG8LAU8M6FeLNK236e0RPea+jp1RWQfc8g=;
+	s=korg; t=1701361989;
+	bh=/ktQrckJrDWcgfDwta6JMoKXEnq/ebQAv4POd/ypDAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XT2ItjVyHYdfTS3JYW0pNfSHMujWIBBIYP803l8+wJzYwQOH60bV4dkp911xQXm/g
-	 MyBMXuR8WhLC1no8Q6hZl04F6wdy+Of6mzQGkJ6e5jRgWaLenT4MUzeLrK5oVWHeN+
-	 cHhHqcEkZzXxE7fB93zIgu5lKoHJMWdYH9x2dKY0=
+	b=texp8yrMtnVuSkPvg4zuXb3i5lNR2bTwT/1AQ/7FelntdE8r42HH/D4CH12Yd2oZU
+	 Qjk0kogPpwJ6x7yc9TNJndCfvnjKZi3CplEBMaw7YcmNqT09taiCZ92leuK0VJc7iN
+	 xFdQMYfvyC01uAx1Wv10E5KqgEJuyLsrE9s/Iw4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	stable@kernel.org,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 41/69] ext4: make sure allocate pending entry not fail
-Date: Thu, 30 Nov 2023 16:22:38 +0000
-Message-ID: <20231130162134.431214209@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Francis Laniel <flaniel@linux.microsoft.com>
+Subject: [PATCH 5.15 42/69] tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols
+Date: Thu, 30 Nov 2023 16:22:39 +0000
+Message-ID: <20231130162134.460514886@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -44,305 +41,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Francis Laniel <flaniel@linux.microsoft.com>
 
-[ Upstream commit 8e387c89e96b9543a339f84043cf9df15fed2632 ]
+commit b022f0c7e404887a7c5229788fc99eff9f9a80d5 upstream.
 
-__insert_pending() allocate memory in atomic context, so the allocation
-could fail, but we are not handling that failure now. It could lead
-ext4_es_remove_extent() to get wrong reserved clusters, and the global
-data blocks reservation count will be incorrect. The same to
-extents_status entry preallocation, preallocate pending entry out of the
-i_es_lock with __GFP_NOFAIL, make sure __insert_pending() and
-__revise_pending() always succeeds.
+When a kprobe is attached to a function that's name is not unique (is
+static and shares the name with other functions in the kernel), the
+kprobe is attached to the first function it finds. This is a bug as the
+function that it is attaching to is not necessarily the one that the
+user wants to attach to.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230824092619.1327976-3-yi.zhang@huaweicloud.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Instead of blindly picking a function to attach to what is ambiguous,
+error with EADDRNOTAVAIL to let the user know that this function is not
+unique, and that the user must use another unique function with an
+address offset to get to the function they want to attach to.
+
+Link: https://lore.kernel.org/all/20231020104250.9537-2-flaniel@linux.microsoft.com/
+
+Cc: stable@vger.kernel.org
+Fixes: 413d37d1eb69 ("tracing: Add kprobe-based event tracer")
+Suggested-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Francis Laniel <flaniel@linux.microsoft.com>
+Link: https://lore.kernel.org/lkml/20230819101105.b0c104ae4494a7d1f2eea742@kernel.org/
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents_status.c | 123 ++++++++++++++++++++++++++++-----------
- 1 file changed, 89 insertions(+), 34 deletions(-)
+ kernel/trace/trace_kprobe.c |   74 ++++++++++++++++++++++++++++++++++++++++++++
+ kernel/trace/trace_probe.h  |    1 
+ 2 files changed, 75 insertions(+)
 
-diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index 6c55ab427e650..cccbdfd49a86b 100644
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -152,8 +152,9 @@ static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
- static int es_reclaim_extents(struct ext4_inode_info *ei, int *nr_to_scan);
- static int __es_shrink(struct ext4_sb_info *sbi, int nr_to_scan,
- 		       struct ext4_inode_info *locked_ei);
--static void __revise_pending(struct inode *inode, ext4_lblk_t lblk,
--			     ext4_lblk_t len);
-+static int __revise_pending(struct inode *inode, ext4_lblk_t lblk,
-+			    ext4_lblk_t len,
-+			    struct pending_reservation **prealloc);
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -708,6 +708,36 @@ static struct notifier_block trace_kprob
+ 	.priority = 1	/* Invoked after kprobe module callback */
+ };
  
- int __init ext4_init_es(void)
- {
-@@ -450,6 +451,19 @@ static void ext4_es_list_del(struct inode *inode)
- 	spin_unlock(&sbi->s_es_lock);
- }
- 
-+static inline struct pending_reservation *__alloc_pending(bool nofail)
++struct count_symbols_struct {
++	const char *func_name;
++	unsigned int count;
++};
++
++static int count_symbols(void *data, const char *name, struct module *unused0,
++			 unsigned long unused1)
 +{
-+	if (!nofail)
-+		return kmem_cache_alloc(ext4_pending_cachep, GFP_ATOMIC);
++	struct count_symbols_struct *args = data;
 +
-+	return kmem_cache_zalloc(ext4_pending_cachep, GFP_KERNEL | __GFP_NOFAIL);
-+}
-+
-+static inline void __free_pending(struct pending_reservation *pr)
-+{
-+	kmem_cache_free(ext4_pending_cachep, pr);
-+}
-+
- /*
-  * Returns true if we cannot fail to allocate memory for this extent_status
-  * entry and cannot reclaim it until its status changes.
-@@ -841,11 +855,12 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
- {
- 	struct extent_status newes;
- 	ext4_lblk_t end = lblk + len - 1;
--	int err1 = 0;
--	int err2 = 0;
-+	int err1 = 0, err2 = 0, err3 = 0;
- 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
- 	struct extent_status *es1 = NULL;
- 	struct extent_status *es2 = NULL;
-+	struct pending_reservation *pr = NULL;
-+	bool revise_pending = false;
- 
- 	if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
- 		return 0;
-@@ -873,11 +888,17 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
- 
- 	ext4_es_insert_extent_check(inode, &newes);
- 
-+	revise_pending = sbi->s_cluster_ratio > 1 &&
-+			 test_opt(inode->i_sb, DELALLOC) &&
-+			 (status & (EXTENT_STATUS_WRITTEN |
-+				    EXTENT_STATUS_UNWRITTEN));
- retry:
- 	if (err1 && !es1)
- 		es1 = __es_alloc_extent(true);
- 	if ((err1 || err2) && !es2)
- 		es2 = __es_alloc_extent(true);
-+	if ((err1 || err2 || err3) && revise_pending && !pr)
-+		pr = __alloc_pending(true);
- 	write_lock(&EXT4_I(inode)->i_es_lock);
- 
- 	err1 = __es_remove_extent(inode, lblk, end, NULL, es1);
-@@ -902,13 +923,18 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
- 		es2 = NULL;
- 	}
- 
--	if (sbi->s_cluster_ratio > 1 && test_opt(inode->i_sb, DELALLOC) &&
--	    (status & EXTENT_STATUS_WRITTEN ||
--	     status & EXTENT_STATUS_UNWRITTEN))
--		__revise_pending(inode, lblk, len);
-+	if (revise_pending) {
-+		err3 = __revise_pending(inode, lblk, len, &pr);
-+		if (err3 != 0)
-+			goto error;
-+		if (pr) {
-+			__free_pending(pr);
-+			pr = NULL;
-+		}
-+	}
- error:
- 	write_unlock(&EXT4_I(inode)->i_es_lock);
--	if (err1 || err2)
-+	if (err1 || err2 || err3)
- 		goto retry;
- 
- 	ext4_es_print_tree(inode);
-@@ -1316,7 +1342,7 @@ static unsigned int get_rsvd(struct inode *inode, ext4_lblk_t end,
- 				rc->ndelonly--;
- 				node = rb_next(&pr->rb_node);
- 				rb_erase(&pr->rb_node, &tree->root);
--				kmem_cache_free(ext4_pending_cachep, pr);
-+				__free_pending(pr);
- 				if (!node)
- 					break;
- 				pr = rb_entry(node, struct pending_reservation,
-@@ -1913,11 +1939,13 @@ static struct pending_reservation *__get_pending(struct inode *inode,
-  *
-  * @inode - file containing the cluster
-  * @lblk - logical block in the cluster to be added
-+ * @prealloc - preallocated pending entry
-  *
-  * Returns 0 on successful insertion and -ENOMEM on failure.  If the
-  * pending reservation is already in the set, returns successfully.
-  */
--static int __insert_pending(struct inode *inode, ext4_lblk_t lblk)
-+static int __insert_pending(struct inode *inode, ext4_lblk_t lblk,
-+			    struct pending_reservation **prealloc)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
- 	struct ext4_pending_tree *tree = &EXT4_I(inode)->i_pending_tree;
-@@ -1943,10 +1971,15 @@ static int __insert_pending(struct inode *inode, ext4_lblk_t lblk)
- 		}
- 	}
- 
--	pr = kmem_cache_alloc(ext4_pending_cachep, GFP_ATOMIC);
--	if (pr == NULL) {
--		ret = -ENOMEM;
--		goto out;
-+	if (likely(*prealloc == NULL)) {
-+		pr = __alloc_pending(false);
-+		if (!pr) {
-+			ret = -ENOMEM;
-+			goto out;
-+		}
-+	} else {
-+		pr = *prealloc;
-+		*prealloc = NULL;
- 	}
- 	pr->lclu = lclu;
- 
-@@ -1976,7 +2009,7 @@ static void __remove_pending(struct inode *inode, ext4_lblk_t lblk)
- 	if (pr != NULL) {
- 		tree = &EXT4_I(inode)->i_pending_tree;
- 		rb_erase(&pr->rb_node, &tree->root);
--		kmem_cache_free(ext4_pending_cachep, pr);
-+		__free_pending(pr);
- 	}
- }
- 
-@@ -2037,10 +2070,10 @@ int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
- 				 bool allocated)
- {
- 	struct extent_status newes;
--	int err1 = 0;
--	int err2 = 0;
-+	int err1 = 0, err2 = 0, err3 = 0;
- 	struct extent_status *es1 = NULL;
- 	struct extent_status *es2 = NULL;
-+	struct pending_reservation *pr = NULL;
- 
- 	if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
- 		return 0;
-@@ -2060,6 +2093,8 @@ int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
- 		es1 = __es_alloc_extent(true);
- 	if ((err1 || err2) && !es2)
- 		es2 = __es_alloc_extent(true);
-+	if ((err1 || err2 || err3) && allocated && !pr)
-+		pr = __alloc_pending(true);
- 	write_lock(&EXT4_I(inode)->i_es_lock);
- 
- 	err1 = __es_remove_extent(inode, lblk, lblk, NULL, es1);
-@@ -2082,11 +2117,18 @@ int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
- 		es2 = NULL;
- 	}
- 
--	if (allocated)
--		__insert_pending(inode, lblk);
-+	if (allocated) {
-+		err3 = __insert_pending(inode, lblk, &pr);
-+		if (err3 != 0)
-+			goto error;
-+		if (pr) {
-+			__free_pending(pr);
-+			pr = NULL;
-+		}
-+	}
- error:
- 	write_unlock(&EXT4_I(inode)->i_es_lock);
--	if (err1 || err2)
-+	if (err1 || err2 || err3)
- 		goto retry;
- 
- 	ext4_es_print_tree(inode);
-@@ -2192,21 +2234,24 @@ unsigned int ext4_es_delayed_clu(struct inode *inode, ext4_lblk_t lblk,
-  * @inode - file containing the range
-  * @lblk - logical block defining the start of range
-  * @len  - length of range in blocks
-+ * @prealloc - preallocated pending entry
-  *
-  * Used after a newly allocated extent is added to the extents status tree.
-  * Requires that the extents in the range have either written or unwritten
-  * status.  Must be called while holding i_es_lock.
-  */
--static void __revise_pending(struct inode *inode, ext4_lblk_t lblk,
--			     ext4_lblk_t len)
-+static int __revise_pending(struct inode *inode, ext4_lblk_t lblk,
-+			    ext4_lblk_t len,
-+			    struct pending_reservation **prealloc)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
- 	ext4_lblk_t end = lblk + len - 1;
- 	ext4_lblk_t first, last;
- 	bool f_del = false, l_del = false;
-+	int ret = 0;
- 
- 	if (len == 0)
--		return;
++	if (strcmp(args->func_name, name))
 +		return 0;
- 
++
++	args->count++;
++
++	return 0;
++}
++
++static unsigned int number_of_same_symbols(char *func_name)
++{
++	struct count_symbols_struct args = {
++		.func_name = func_name,
++		.count = 0,
++	};
++
++	kallsyms_on_each_symbol(count_symbols, &args);
++
++	return args.count;
++}
++
+ static int __trace_kprobe_create(int argc, const char *argv[])
+ {
  	/*
- 	 * Two cases - block range within single cluster and block range
-@@ -2227,7 +2272,9 @@ static void __revise_pending(struct inode *inode, ext4_lblk_t lblk,
- 			f_del = __es_scan_range(inode, &ext4_es_is_delonly,
- 						first, lblk - 1);
- 		if (f_del) {
--			__insert_pending(inode, first);
-+			ret = __insert_pending(inode, first, prealloc);
-+			if (ret < 0)
-+				goto out;
- 		} else {
- 			last = EXT4_LBLK_CMASK(sbi, end) +
- 			       sbi->s_cluster_ratio - 1;
-@@ -2235,9 +2282,11 @@ static void __revise_pending(struct inode *inode, ext4_lblk_t lblk,
- 				l_del = __es_scan_range(inode,
- 							&ext4_es_is_delonly,
- 							end + 1, last);
--			if (l_del)
--				__insert_pending(inode, last);
--			else
-+			if (l_del) {
-+				ret = __insert_pending(inode, last, prealloc);
-+				if (ret < 0)
-+					goto out;
-+			} else
- 				__remove_pending(inode, last);
+@@ -836,6 +866,31 @@ static int __trace_kprobe_create(int arg
  		}
- 	} else {
-@@ -2245,18 +2294,24 @@ static void __revise_pending(struct inode *inode, ext4_lblk_t lblk,
- 		if (first != lblk)
- 			f_del = __es_scan_range(inode, &ext4_es_is_delonly,
- 						first, lblk - 1);
--		if (f_del)
--			__insert_pending(inode, first);
--		else
-+		if (f_del) {
-+			ret = __insert_pending(inode, first, prealloc);
-+			if (ret < 0)
-+				goto out;
-+		} else
- 			__remove_pending(inode, first);
- 
- 		last = EXT4_LBLK_CMASK(sbi, end) + sbi->s_cluster_ratio - 1;
- 		if (last != end)
- 			l_del = __es_scan_range(inode, &ext4_es_is_delonly,
- 						end + 1, last);
--		if (l_del)
--			__insert_pending(inode, last);
--		else
-+		if (l_del) {
-+			ret = __insert_pending(inode, last, prealloc);
-+			if (ret < 0)
-+				goto out;
-+		} else
- 			__remove_pending(inode, last);
  	}
-+out:
-+	return ret;
+ 
++	if (symbol && !strchr(symbol, ':')) {
++		unsigned int count;
++
++		count = number_of_same_symbols(symbol);
++		if (count > 1) {
++			/*
++			 * Users should use ADDR to remove the ambiguity of
++			 * using KSYM only.
++			 */
++			trace_probe_log_err(0, NON_UNIQ_SYMBOL);
++			ret = -EADDRNOTAVAIL;
++
++			goto error;
++		} else if (count == 0) {
++			/*
++			 * We can return ENOENT earlier than when register the
++			 * kprobe.
++			 */
++			trace_probe_log_err(0, BAD_PROBE_ADDR);
++			ret = -ENOENT;
++
++			goto error;
++		}
++	}
++
+ 	trace_probe_log_set_index(0);
+ 	if (event) {
+ 		ret = traceprobe_parse_event_name(&event, &group, buf,
+@@ -1755,6 +1810,7 @@ static int unregister_kprobe_event(struc
  }
--- 
-2.42.0
-
+ 
+ #ifdef CONFIG_PERF_EVENTS
++
+ /* create a trace_kprobe, but don't add it to global lists */
+ struct trace_event_call *
+ create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
+@@ -1765,6 +1821,24 @@ create_local_trace_kprobe(char *func, vo
+ 	int ret;
+ 	char *event;
+ 
++	if (func) {
++		unsigned int count;
++
++		count = number_of_same_symbols(func);
++		if (count > 1)
++			/*
++			 * Users should use addr to remove the ambiguity of
++			 * using func only.
++			 */
++			return ERR_PTR(-EADDRNOTAVAIL);
++		else if (count == 0)
++			/*
++			 * We can return ENOENT earlier than when register the
++			 * kprobe.
++			 */
++			return ERR_PTR(-ENOENT);
++	}
++
+ 	/*
+ 	 * local trace_kprobes are not added to dyn_event, so they are never
+ 	 * searched in find_trace_kprobe(). Therefore, there is no concern of
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -405,6 +405,7 @@ extern int traceprobe_define_arg_fields(
+ 	C(BAD_MAXACT,		"Invalid maxactive number"),		\
+ 	C(MAXACT_TOO_BIG,	"Maxactive is too big"),		\
+ 	C(BAD_PROBE_ADDR,	"Invalid probed address or symbol"),	\
++	C(NON_UNIQ_SYMBOL,	"The symbol is not unique"),		\
+ 	C(BAD_RETPROBE,		"Retprobe address must be an function entry"), \
+ 	C(BAD_ADDR_SUFFIX,	"Invalid probed address suffix"), \
+ 	C(NO_GROUP_NAME,	"Group name is not specified"),		\
 
 
