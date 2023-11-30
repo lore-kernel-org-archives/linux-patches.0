@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2212555764;
-	Thu, 30 Nov 2023 16:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9846210EF;
+	Thu, 30 Nov 2023 16:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTc7/Fyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2C0C433CA;
-	Thu, 30 Nov 2023 16:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQ6WLk/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24627C433C9;
+	Thu, 30 Nov 2023 16:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361800;
-	bh=2Gym+/cFzD0aUqm4v+qVoeEGdjB8T+frJ68KET32meY=;
+	s=korg; t=1701361802;
+	bh=lQIopKvzCp3/zERFyBaVdzkYgE+wFZSjX2r4hmEhV4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTc7/FybbacW9rGbM9VyL7cCyQx0uhDFG9g4DjtipttIxwCZQ7RgK5x16+tXPaW5e
-	 p6bpy0U/SAt5we/EAiQmyxcJYb58uIq3pOIBS135yorTzS5Jj16x1vDC4ELYc+7p7/
-	 TUEuy5LeCM+Wo2522Wrby8o2qzURnUSXiU0Cx/yo=
+	b=pQ6WLk/cE7B33g1wr8edCx9FYZCirdwerdHImOXMLnlJUkr6jDOYeSvwu1q/8bhHD
+	 qgrdjgnEcqjGcv13JWzHIFD26WL6qjOi8/m9WHmV4ddYevXMLywZEl3rR0FH9byKHQ
+	 Xxw+rTqIiX8vU+Jjbf9DoCN6F+HAvZ5xkjtrnUEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alon Zahavi <zahavi.alon@gmail.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 27/82] i40e: Fix adding unsupported cloud filters
-Date: Thu, 30 Nov 2023 16:21:58 +0000
-Message-ID: <20231130162136.820309487@linuxfoundation.org>
+Subject: [PATCH 6.1 28/82] nvmet: nul-terminate the NQNs passed in the connect command
+Date: Thu, 30 Nov 2023 16:21:59 +0000
+Message-ID: <20231130162136.848378674@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -45,77 +44,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 4e20655e503e3a478cd1682bf25e3202dd823da8 ]
+[ Upstream commit 1c22e0295a5eb571c27b53c7371f95699ef705ff ]
 
-If a VF tries to add unsupported cloud filter through virtchnl
-then i40e_add_del_cloud_filter(_big_buf) returns -ENOTSUPP but
-this error code is stored in 'ret' instead of 'aq_ret' that
-is used as error code sent back to VF. In this scenario where
-one of the mentioned functions fails the value of 'aq_ret'
-is zero so the VF will incorrectly receive a 'success'.
+The host and subsystem NQNs are passed in the connect command payload and
+interpreted as nul-terminated strings.  Ensure they actually are
+nul-terminated before using them.
 
-Use 'aq_ret' to store return value and remove 'ret' local
-variable. Additionally fix the issue when filter allocation
-fails, in this case no notification is sent back to the VF.
-
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20231121211338.3348677-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a07b4970f464 "nvmet: add a generic NVMe target")
+Reported-by: Alon Zahavi <zahavi.alon@gmail.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/i40e/i40e_virtchnl_pf.c   | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/nvme/target/fabrics-cmd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index fb87912b47617..cb925baf72ce0 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3774,7 +3774,7 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 	struct i40e_pf *pf = vf->pf;
- 	struct i40e_vsi *vsi = NULL;
- 	int aq_ret = 0;
--	int i, ret;
-+	int i;
- 
- 	if (!i40e_sync_vf_state(vf, I40E_VF_STATE_ACTIVE)) {
- 		aq_ret = I40E_ERR_PARAM;
-@@ -3798,8 +3798,10 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index 43b5bd8bb6a52..d8da840a1c0ed 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -244,6 +244,8 @@ static void nvmet_execute_admin_connect(struct nvmet_req *req)
+ 		goto out;
  	}
  
- 	cfilter = kzalloc(sizeof(*cfilter), GFP_KERNEL);
--	if (!cfilter)
--		return -ENOMEM;
-+	if (!cfilter) {
-+		aq_ret = -ENOMEM;
-+		goto err_out;
-+	}
- 
- 	/* parse destination mac address */
- 	for (i = 0; i < ETH_ALEN; i++)
-@@ -3847,13 +3849,13 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 
- 	/* Adding cloud filter programmed as TC filter */
- 	if (tcf.dst_port)
--		ret = i40e_add_del_cloud_filter_big_buf(vsi, cfilter, true);
-+		aq_ret = i40e_add_del_cloud_filter_big_buf(vsi, cfilter, true);
- 	else
--		ret = i40e_add_del_cloud_filter(vsi, cfilter, true);
--	if (ret) {
-+		aq_ret = i40e_add_del_cloud_filter(vsi, cfilter, true);
-+	if (aq_ret) {
- 		dev_err(&pf->pdev->dev,
- 			"VF %d: Failed to add cloud filter, err %pe aq_err %s\n",
--			vf->vf_id, ERR_PTR(ret),
-+			vf->vf_id, ERR_PTR(aq_ret),
- 			i40e_aq_str(&pf->hw, pf->hw.aq.asq_last_status));
- 		goto err_free;
++	d->subsysnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
++	d->hostnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
+ 	status = nvmet_alloc_ctrl(d->subsysnqn, d->hostnqn, req,
+ 				  le32_to_cpu(c->kato), &ctrl);
+ 	if (status)
+@@ -313,6 +315,8 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
+ 		goto out;
  	}
+ 
++	d->subsysnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
++	d->hostnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
+ 	ctrl = nvmet_ctrl_find_get(d->subsysnqn, d->hostnqn,
+ 				   le16_to_cpu(d->cntlid), req);
+ 	if (!ctrl) {
 -- 
 2.42.0
 
