@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1004878B;
-	Thu, 30 Nov 2023 16:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F0F482DC;
+	Thu, 30 Nov 2023 16:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yy3gkJrX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE37CC433C8;
-	Thu, 30 Nov 2023 16:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMeUASrZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4450FC433C8;
+	Thu, 30 Nov 2023 16:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361898;
-	bh=L8kqfVHqCRlotTapj0I1gMnBGu5+AOCIe3jWn2TAmWY=;
+	s=korg; t=1701361900;
+	bh=WqSgLy81nbyWwA9PHXiM2u4DocweRC7FAdUa0scZ2tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yy3gkJrX4Jzwi97HemhOeoEV7OV3ZOz1v2pHD564I5jBV8MJw2dKBWgFU7CHO4tbP
-	 hlDG6Pr3+ocutXVx/iyjkbLlb52/uZdW7p5LvnDRtlFL/ip3EmQ1717ELH8aWh5t6f
-	 YKohjXvvxwcL1k8D9y6RPFyfFWPSw4kQGjApnQPg=
+	b=SMeUASrZovS481utr48LK1bGXtJq4fNrVj6auGKQzNaY/T6y8CuSxo69ghnhr+UYx
+	 PXwEOycRZxfQ4z/3LIdhQqyXNVQhCFvZFnwz3Hp9HGHBi6bRfIae2IuVi37S6/HV6k
+	 k2IG9uiHW1EtVpcHzKlLBQ+nutPmN/25dq6pfyNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 82/82] io_uring: fix off-by one bvec index
-Date: Thu, 30 Nov 2023 16:22:53 +0000
-Message-ID: <20231130162138.585659057@linuxfoundation.org>
+	Victor Fragoso <victorffs@hotmail.com>,
+	Lars Melin <larsm17@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 73/82] USB: serial: option: add Fibocom L7xx modules
+Date: Thu, 30 Nov 2023 16:22:44 +0000
+Message-ID: <20231130162138.298079114@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -41,35 +42,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Victor Fragoso <victorffs@hotmail.com>
 
-commit d6fef34ee4d102be448146f24caf96d7b4a05401 upstream.
+commit e389fe8b68137344562fb6e4d53d8a89ef6212dd upstream.
 
-If the offset equals the bv_len of the first registered bvec, then the
-request does not include any of that first bvec. Skip it so that drivers
-don't have to deal with a zero length bvec, which was observed to break
-NVMe's PRP list creation.
+Add support for Fibocom L716-EU module series.
 
+L716-EU is a Fibocom module based on ZTE's V3E/V3T chipset.
+
+Device creates multiple interfaces when connected to PC as follows:
+ - Network Interface: ECM or RNDIS (set by FW or AT Command)
+ - ttyUSB0: AT port
+ - ttyUSB1: Modem port
+ - ttyUSB2: AT2 port
+ - ttyUSB3: Trace port for log information
+ - ADB: ADB port for debugging. ("Driver=usbfs" when ADB server enabled)
+
+Here are the outputs of lsusb and usb-devices:
+$ ls /dev/ttyUSB*
+/dev/ttyUSB0  /dev/ttyUSB1  /dev/ttyUSB2  /dev/ttyUSB3
+
+usb-devices:
+L716-EU (ECM mode):
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 51 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0001 Rev= 1.00
+S:  Manufacturer=Fibocom,Incorporated
+S:  Product=Fibocom Mobile Boardband
+S:  SerialNumber=1234567890ABCDEF
+C:* #Ifs= 7 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=87(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+L716-EU (RNDIS mode):
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 49 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0001 Rev= 1.00
+S:  Manufacturer=Fibocom,Incorporated
+S:  Product=Fibocom Mobile Boardband
+S:  SerialNumber=1234567890ABCDEF
+C:* #Ifs= 7 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=02 Prot=ff Driver=rndis_host
+E:  Ad=87(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Victor Fragoso <victorffs@hotmail.com>
+Reviewed-by: Lars Melin <larsm17@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: bd11b3a391e3 ("io_uring: don't use iov_iter_advance() for fixed buffers")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Link: https://lore.kernel.org/r/20231120221831.2646460-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rsrc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -1351,7 +1351,7 @@ int io_import_fixed(int ddir, struct iov
- 		 */
- 		const struct bio_vec *bvec = imu->bvec;
- 
--		if (offset <= bvec->bv_len) {
-+		if (offset < bvec->bv_len) {
- 			iov_iter_advance(iter, offset);
- 		} else {
- 			unsigned long seg_skip;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2251,6 +2251,7 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1782, 0x4d11, 0xff) },			/* Fibocom L610 (ECM/RNDIS mode) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0001, 0xff, 0xff, 0xff) },	/* Fibocom L716-EU (ECM/RNDIS mode) */
+ 	{ USB_DEVICE(0x2cb7, 0x0104),						/* Fibocom NL678 series */
+ 	  .driver_info = RSVD(4) | RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0105, 0xff),			/* Fibocom NL678 series */
 
 
