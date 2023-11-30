@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B697A54FB3;
-	Thu, 30 Nov 2023 16:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DE53AC1A;
+	Thu, 30 Nov 2023 16:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2wJXVM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41BD7C433C8;
-	Thu, 30 Nov 2023 16:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/L1mnBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AB9C433C8;
+	Thu, 30 Nov 2023 16:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361966;
-	bh=Do77JOO6rkqHD9xB+AhezuViaKV/6kbmVxKGEezNgEM=;
+	s=korg; t=1701361969;
+	bh=x012mOz1QZByT4Ue2uWYp5koHOLxgGMogXhyqDp7hDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2wJXVM79mdmxbjAOoly2w/Nc77G8Z6a8AbzG6vM4/AN57TvZUdsmLnsbnWFJwP/a
-	 k+Il3wJxO9FoRXS+Ot+TSlDCfYrtmkCpkonKNoIUWH1DGChRe8PP6q+DVc0y8+5ZP0
-	 rTEJUHLM2wx4+2FeAxVY0zk9tApy+sKARxyladKI=
+	b=L/L1mnBykV7Q8qPK/u00kt4/W0oiwdHvzVsmQeiZd2OcsR8gsqquuBO3pfwuKkr9a
+	 gdYC/hEVzp5GWAeQNO/V/lHf0qq/IW3sPLCzB1jJVXbyjsQwOEElNvxrroC49A4o2v
+	 fYC9AHyCVJjEiKdpgJCEhOPcI4TtP/WI5c7LdB2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 34/69] ext4: factor out __es_alloc_extent() and __es_free_extent()
-Date: Thu, 30 Nov 2023 16:22:31 +0000
-Message-ID: <20231130162134.196982688@linuxfoundation.org>
+Subject: [PATCH 5.15 35/69] ext4: use pre-allocated es in __es_insert_extent()
+Date: Thu, 30 Nov 2023 16:22:32 +0000
+Message-ID: <20231130162134.227431718@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -45,96 +45,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 73a2f033656be11298912201ad50615307b4477a ]
+[ Upstream commit 95f0b320339a977cf69872eac107122bf536775d ]
 
-Factor out __es_alloc_extent() and __es_free_extent(), which only allocate
-and free extent_status in these two helpers.
+Pass a extent_status pointer prealloc to __es_insert_extent(). If the
+pointer is non-null, it is used directly when a new extent_status is
+needed to avoid memory allocation failures.
 
-The ext4_es_alloc_extent() function is split into __es_alloc_extent()
-and ext4_es_init_extent(). In __es_alloc_extent() we allocate memory using
-GFP_KERNEL | __GFP_NOFAIL | __GFP_ZERO if the memory allocation cannot
-fail, otherwise we use GFP_ATOMIC. and the ext4_es_init_extent() is used to
-initialize extent_status and update related variables after a successful
-allocation.
-
-This is to prepare for the use of pre-allocated extent_status later.
-
+Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230424033846.4732-4-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20230424033846.4732-5-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: 8e387c89e96b ("ext4: make sure allocate pending entry not fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents_status.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ fs/ext4/extents_status.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index cf6a21baddbc4..012033db41062 100644
+index 012033db41062..0d810ce7580d1 100644
 --- a/fs/ext4/extents_status.c
 +++ b/fs/ext4/extents_status.c
-@@ -461,14 +461,17 @@ static inline bool ext4_es_must_keep(struct extent_status *es)
- 	return false;
- }
+@@ -144,7 +144,8 @@
+ static struct kmem_cache *ext4_es_cachep;
+ static struct kmem_cache *ext4_pending_cachep;
  
--static struct extent_status *
--ext4_es_alloc_extent(struct inode *inode, ext4_lblk_t lblk, ext4_lblk_t len,
--		     ext4_fsblk_t pblk)
-+static inline struct extent_status *__es_alloc_extent(bool nofail)
-+{
-+	if (!nofail)
-+		return kmem_cache_alloc(ext4_es_cachep, GFP_ATOMIC);
-+
-+	return kmem_cache_zalloc(ext4_es_cachep, GFP_KERNEL | __GFP_NOFAIL);
-+}
-+
-+static void ext4_es_init_extent(struct inode *inode, struct extent_status *es,
-+		ext4_lblk_t lblk, ext4_lblk_t len, ext4_fsblk_t pblk)
+-static int __es_insert_extent(struct inode *inode, struct extent_status *newes);
++static int __es_insert_extent(struct inode *inode, struct extent_status *newes,
++			      struct extent_status *prealloc);
+ static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
+ 			      ext4_lblk_t end, int *reserved);
+ static int es_reclaim_extents(struct ext4_inode_info *ei, int *nr_to_scan);
+@@ -769,7 +770,8 @@ static inline void ext4_es_insert_extent_check(struct inode *inode,
+ }
+ #endif
+ 
+-static int __es_insert_extent(struct inode *inode, struct extent_status *newes)
++static int __es_insert_extent(struct inode *inode, struct extent_status *newes,
++			      struct extent_status *prealloc)
  {
--	struct extent_status *es;
--	es = kmem_cache_alloc(ext4_es_cachep, GFP_ATOMIC);
--	if (es == NULL)
--		return NULL;
- 	es->es_lblk = lblk;
- 	es->es_len = len;
- 	es->es_pblk = pblk;
-@@ -483,8 +486,11 @@ ext4_es_alloc_extent(struct inode *inode, ext4_lblk_t lblk, ext4_lblk_t len,
- 
- 	EXT4_I(inode)->i_es_all_nr++;
- 	percpu_counter_inc(&EXT4_SB(inode->i_sb)->s_es_stats.es_stats_all_cnt);
-+}
- 
--	return es;
-+static inline void __es_free_extent(struct extent_status *es)
-+{
-+	kmem_cache_free(ext4_es_cachep, es);
- }
- 
- static void ext4_es_free_extent(struct inode *inode, struct extent_status *es)
-@@ -501,7 +507,7 @@ static void ext4_es_free_extent(struct inode *inode, struct extent_status *es)
- 					s_es_stats.es_stats_shk_cnt);
- 	}
- 
--	kmem_cache_free(ext4_es_cachep, es);
-+	__es_free_extent(es);
- }
- 
- /*
-@@ -803,10 +809,12 @@ static int __es_insert_extent(struct inode *inode, struct extent_status *newes)
+ 	struct ext4_es_tree *tree = &EXT4_I(inode)->i_es_tree;
+ 	struct rb_node **p = &tree->root.rb_node;
+@@ -809,7 +811,10 @@ static int __es_insert_extent(struct inode *inode, struct extent_status *newes)
  		}
  	}
  
--	es = ext4_es_alloc_extent(inode, newes->es_lblk, newes->es_len,
--				  newes->es_pblk);
-+	es = __es_alloc_extent(false);
+-	es = __es_alloc_extent(false);
++	if (prealloc)
++		es = prealloc;
++	else
++		es = __es_alloc_extent(false);
  	if (!es)
  		return -ENOMEM;
-+	ext4_es_init_extent(inode, es, newes->es_lblk, newes->es_len,
-+			    newes->es_pblk);
-+
- 	rb_link_node(&es->rb_node, parent, p);
- 	rb_insert_color(&es->rb_node, &tree->root);
+ 	ext4_es_init_extent(inode, es, newes->es_lblk, newes->es_len,
+@@ -869,7 +874,7 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
+ 	if (err != 0)
+ 		goto error;
+ retry:
+-	err = __es_insert_extent(inode, &newes);
++	err = __es_insert_extent(inode, &newes, NULL);
+ 	if (err == -ENOMEM && __es_shrink(EXT4_SB(inode->i_sb),
+ 					  128, EXT4_I(inode)))
+ 		goto retry;
+@@ -919,7 +924,7 @@ void ext4_es_cache_extent(struct inode *inode, ext4_lblk_t lblk,
  
+ 	es = __es_tree_search(&EXT4_I(inode)->i_es_tree.root, lblk);
+ 	if (!es || es->es_lblk > end)
+-		__es_insert_extent(inode, &newes);
++		__es_insert_extent(inode, &newes, NULL);
+ 	write_unlock(&EXT4_I(inode)->i_es_lock);
+ }
+ 
+@@ -1365,7 +1370,7 @@ static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
+ 					orig_es.es_len - len2;
+ 			ext4_es_store_pblock_status(&newes, block,
+ 						    ext4_es_status(&orig_es));
+-			err = __es_insert_extent(inode, &newes);
++			err = __es_insert_extent(inode, &newes, NULL);
+ 			if (err) {
+ 				es->es_lblk = orig_es.es_lblk;
+ 				es->es_len = orig_es.es_len;
+@@ -2020,7 +2025,7 @@ int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
+ 	if (err != 0)
+ 		goto error;
+ retry:
+-	err = __es_insert_extent(inode, &newes);
++	err = __es_insert_extent(inode, &newes, NULL);
+ 	if (err == -ENOMEM && __es_shrink(EXT4_SB(inode->i_sb),
+ 					  128, EXT4_I(inode)))
+ 		goto retry;
 -- 
 2.42.0
 
