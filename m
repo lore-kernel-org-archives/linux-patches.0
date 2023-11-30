@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545CA54F92;
-	Thu, 30 Nov 2023 16:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB9E524C2;
+	Thu, 30 Nov 2023 16:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiWUKR/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8317DC433C7;
-	Thu, 30 Nov 2023 16:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCSkfLug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D24C433C8;
+	Thu, 30 Nov 2023 16:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361567;
-	bh=hM4/mw5qk4pLh9lwoCR1T+XBb+1j3wpLUEu5f1F5XUQ=;
+	s=korg; t=1701361570;
+	bh=9LXHDuM6zzw0I3lLLHbalF+ft4vUXMn+5cHwQxfCcD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kiWUKR/OZ+d+FTSNd8/lO1+yAlH57pok7XEXXiBoDESZIVDZ9TEgBWxeqpqorNfM2
-	 NnUmhE+iXiYEDXdMfbu9lyBqW6+OEVocRRDg/3gqu8NW9uRIUGdpbnddhPQ1ZlmDAB
-	 lNga2VhXa8Fhneqk9Hq32oEzIb1p6xUybCi4QRus=
+	b=sCSkfLugr8Ay9/KXuv0PYe6z0T9JVupV1s5KU3qGXK4qjv4F0+rB+OdEkB+PJZmrO
+	 U3HwGsDdE2qDaFkjDgmO/4xzBjmxRyJ3VTLqw6Hnb5RHcFEU7KDUrO1JYC8qW8tR4F
+	 l8NBU0efCsagLbjWRuA0E54nXuD4xL9t/k2qJuTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Mirabile <cmirabil@redhat.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 073/112] io_uring/fs: consider link->flags when getting path for LINKAT
-Date: Thu, 30 Nov 2023 16:22:00 +0000
-Message-ID: <20231130162142.647231728@linuxfoundation.org>
+Subject: [PATCH 6.6 074/112] s390/dasd: protect device queue against concurrent access
+Date: Thu, 30 Nov 2023 16:22:01 +0000
+Message-ID: <20231130162142.679539360@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -35,41 +36,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Mirabile <cmirabil@redhat.com>
+From: Jan Höppner <hoeppner@linux.ibm.com>
 
-commit 8479063f1fbee201a8739130e816cc331b675838 upstream.
+commit db46cd1e0426f52999d50fa72cfa97fa39952885 upstream.
 
-In order for `AT_EMPTY_PATH` to work as expected, the fact
-that the user wants that behavior needs to make it to `getname_flags`
-or it will return ENOENT.
+In dasd_profile_start() the amount of requests on the device queue are
+counted. The access to the device queue is unprotected against
+concurrent access. With a lot of parallel I/O, especially with alias
+devices enabled, the device queue can change while dasd_profile_start()
+is accessing the queue. In the worst case this leads to a kernel panic
+due to incorrect pointer accesses.
 
-Fixes: cf30da90bc3a ("io_uring: add support for IORING_OP_LINKAT")
+Fix this by taking the device lock before accessing the queue and
+counting the requests. Additionally the check for a valid profile data
+pointer can be done earlier to avoid unnecessary locking in a hot path.
+
 Cc:  <stable@vger.kernel.org>
-Link: https://github.com/axboe/liburing/issues/995
-Signed-off-by: Charles Mirabile <cmirabil@redhat.com>
-Link: https://lore.kernel.org/r/20231120105545.1209530-1-cmirabil@redhat.com
+Fixes: 4fa52aa7a82f ("[S390] dasd: add enhanced DASD statistics interface")
+Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
+Signed-off-by: Jan Höppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://lore.kernel.org/r/20231025132437.1223363-3-sth@linux.ibm.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/fs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/block/dasd.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/io_uring/fs.c
-+++ b/io_uring/fs.c
-@@ -254,7 +254,7 @@ int io_linkat_prep(struct io_kiocb *req,
- 	newf = u64_to_user_ptr(READ_ONCE(sqe->addr2));
- 	lnk->flags = READ_ONCE(sqe->hardlink_flags);
- 
--	lnk->oldpath = getname(oldf);
-+	lnk->oldpath = getname_uflags(oldf, lnk->flags);
- 	if (IS_ERR(lnk->oldpath))
- 		return PTR_ERR(lnk->oldpath);
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -674,18 +674,20 @@ static void dasd_profile_start(struct da
+ 	 * we count each request only once.
+ 	 */
+ 	device = cqr->startdev;
+-	if (device->profile.data) {
+-		counter = 1; /* request is not yet queued on the start device */
+-		list_for_each(l, &device->ccw_queue)
+-			if (++counter >= 31)
+-				break;
+-	}
++	if (!device->profile.data)
++		return;
++
++	spin_lock(get_ccwdev_lock(device->cdev));
++	counter = 1; /* request is not yet queued on the start device */
++	list_for_each(l, &device->ccw_queue)
++		if (++counter >= 31)
++			break;
++	spin_unlock(get_ccwdev_lock(device->cdev));
++
+ 	spin_lock(&device->profile.lock);
+-	if (device->profile.data) {
+-		device->profile.data->dasd_io_nr_req[counter]++;
+-		if (rq_data_dir(req) == READ)
+-			device->profile.data->dasd_read_nr_req[counter]++;
+-	}
++	device->profile.data->dasd_io_nr_req[counter]++;
++	if (rq_data_dir(req) == READ)
++		device->profile.data->dasd_read_nr_req[counter]++;
+ 	spin_unlock(&device->profile.lock);
+ }
  
 
 
