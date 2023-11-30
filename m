@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E04F4777A;
-	Thu, 30 Nov 2023 16:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F277D495D9;
+	Thu, 30 Nov 2023 16:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UDwBEJB7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2D6C433C7;
-	Thu, 30 Nov 2023 16:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLFJZ0pd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B897C433C8;
+	Thu, 30 Nov 2023 16:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361808;
-	bh=xNrqfoYJCDDNcyEFU0VA5ieyoacvYM/zHwkXLI1213s=;
+	s=korg; t=1701361810;
+	bh=S7kuL67gLEnZ5PM2MiunJ0iFfY5rtwSH1AzFWHaH7No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UDwBEJB78iCaAAoW8GZGdrSup6uf1LPB1/pEMZ5ggnNQOcWZNLSfbZgJ9zUN3FtKL
-	 g3bNrUw7yzGWkXQV4iGlB8pbYrqmVP7nxPMDNhQwOIDnpHho1ViE99nGhsTc5BU6Dg
-	 8d/pePD2t7m4UAR5LspfTkh56owWuCXndLSIA/fQ=
+	b=FLFJZ0pd9OJk2QChkIksmklyP9LPvrlfY+G35Iad7MCf4OIgUzb5ehGKxQmTsR79t
+	 W0X/IjpprLIw8HiLtEAVZMCpHGO6Cc1I3YVAp9x2ZXKRVhcCnghATCRpOU2BOfVq93
+	 74iBo6wlLJKolUZzv69E6Ony2BsiovQaNcO/dTB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 20/82] amd-xgbe: propagate the correct speed and duplex status
-Date: Thu, 30 Nov 2023 16:21:51 +0000
-Message-ID: <20231130162136.597071608@linuxfoundation.org>
+Subject: [PATCH 6.1 48/82] ext4: using nofail preallocation in ext4_es_remove_extent()
+Date: Thu, 30 Nov 2023 16:22:19 +0000
+Message-ID: <20231130162137.492748540@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -44,49 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 7a2323ac24a50311f64a3a9b54ed5bef5821ecae ]
+[ Upstream commit e9fe2b882bd5b26b987c9ba110c2222796f72af5 ]
 
-xgbe_get_link_ksettings() does not propagate correct speed and duplex
-information to ethtool during cable unplug. Due to which ethtool reports
-incorrect values for speed and duplex.
+If __es_remove_extent() returns an error it means that when splitting
+extent, allocating an extent that must be kept failed, where returning
+an error directly would cause the extent tree to be inconsistent. So we
+use GFP_NOFAIL to pre-allocate an extent_status and pass it to
+__es_remove_extent() to avoid this problem.
 
-Address this by propagating correct information.
+In addition, since the allocated memory is outside the i_es_lock, the
+extent_status tree may change and the pre-allocated extent_status is
+no longer needed, so we release the pre-allocated extent_status when
+es->es_len is not initialized.
 
-Fixes: 7c12aa08779c ("amd-xgbe: Move the PHY support into amd-xgbe")
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230424033846.4732-7-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 8e387c89e96b ("ext4: make sure allocate pending entry not fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/ext4/extents_status.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-index 6e83ff59172a3..32fab5e772462 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-@@ -314,10 +314,15 @@ static int xgbe_get_link_ksettings(struct net_device *netdev,
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index 682f5e4ce2d00..cb8241adda929 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -1456,6 +1456,7 @@ int ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
+ 	ext4_lblk_t end;
+ 	int err = 0;
+ 	int reserved = 0;
++	struct extent_status *es = NULL;
  
- 	cmd->base.phy_address = pdata->phy.address;
+ 	if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
+ 		return 0;
+@@ -1470,17 +1471,25 @@ int ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
+ 	end = lblk + len - 1;
+ 	BUG_ON(end < lblk);
  
--	cmd->base.autoneg = pdata->phy.autoneg;
--	cmd->base.speed = pdata->phy.speed;
--	cmd->base.duplex = pdata->phy.duplex;
-+	if (netif_carrier_ok(netdev)) {
-+		cmd->base.speed = pdata->phy.speed;
-+		cmd->base.duplex = pdata->phy.duplex;
-+	} else {
-+		cmd->base.speed = SPEED_UNKNOWN;
-+		cmd->base.duplex = DUPLEX_UNKNOWN;
-+	}
++retry:
++	if (err && !es)
++		es = __es_alloc_extent(true);
+ 	/*
+ 	 * ext4_clear_inode() depends on us taking i_es_lock unconditionally
+ 	 * so that we are sure __es_shrink() is done with the inode before it
+ 	 * is reclaimed.
+ 	 */
+ 	write_lock(&EXT4_I(inode)->i_es_lock);
+-	err = __es_remove_extent(inode, lblk, end, &reserved, NULL);
++	err = __es_remove_extent(inode, lblk, end, &reserved, es);
++	if (es && !es->es_len)
++		__es_free_extent(es);
+ 	write_unlock(&EXT4_I(inode)->i_es_lock);
++	if (err)
++		goto retry;
++
+ 	ext4_es_print_tree(inode);
+ 	ext4_da_release_space(inode, reserved);
+-	return err;
++	return 0;
+ }
  
-+	cmd->base.autoneg = pdata->phy.autoneg;
- 	cmd->base.port = PORT_NONE;
- 
- 	XGBE_LM_COPY(cmd, supported, lks, supported);
+ static int __es_shrink(struct ext4_sb_info *sbi, int nr_to_scan,
 -- 
 2.42.0
 
