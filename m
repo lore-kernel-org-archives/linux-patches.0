@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9C3524C2;
-	Thu, 30 Nov 2023 16:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D89524C2;
+	Thu, 30 Nov 2023 16:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3Oj5zBp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4DBC433C7;
-	Thu, 30 Nov 2023 16:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UP2bhqJd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C68C433C9;
+	Thu, 30 Nov 2023 16:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361518;
-	bh=0zivWa7QqOBdwUNEoylSVCsOK/c/tasWvZTROKCi8pA=;
+	s=korg; t=1701361520;
+	bh=+mqRmpZoPOJ+etfTeBnZnm8BxtOUnmJlYNrI56dmL9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3Oj5zBpwCfjTWYg/wt1xQR08y3rvztfneWmm9VFA7iW4iFPH0MjkBzEs5dikuvxt
-	 OmrHM7rWYj6GpA3P4Q8e/Sbq4uLvEI3lngZvD0KWKWmqBPAlx3Ec223eK+8gXG0xBD
-	 PJPLv/LMT8uz1zO7CcTsX4+jt6yJfrd9waaA2W/c=
+	b=UP2bhqJdjhC2O80ROTWs+dhW9oKPqGbkyyD/W/tLG8Rx/6yyeD9PDb6m7Qlp7vaqW
+	 7TgNdfQPQxyCepD9A32yiyW58zZOC13eLL59H3wkC7NFiiJRBELnv0qsB6yS02n1Js
+	 7cV0B6QQgddwKjiuA4J+VrftiVEKBDVN5+3n5Vqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youlun Zhang <zhangyoulun@bytedance.com>,
-	Peilin Ye <peilin.ye@bytedance.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/112] bpf: Fix devs rx stats for bpf_redirect_peer traffic
-Date: Thu, 30 Nov 2023 16:21:17 +0000
-Message-ID: <20231130162141.272536055@linuxfoundation.org>
+Subject: [PATCH 6.6 031/112] accel/ivpu: Do not initialize parameters on power up
+Date: Thu, 30 Nov 2023 16:21:18 +0000
+Message-ID: <20231130162141.304683769@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -45,70 +42,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peilin Ye <peilin.ye@bytedance.com>
+From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 
-[ Upstream commit 024ee930cb3c9ae49e4266aee89cfde0ebb407e1 ]
+[ Upstream commit f956bf2080862cfc97412e1eaa08689bc9838d20 ]
 
-Traffic redirected by bpf_redirect_peer() (used by recent CNIs like Cilium)
-is not accounted for in the RX stats of supported devices (that is, veth
-and netkit), confusing user space metrics collectors such as cAdvisor [0],
-as reported by Youlun.
+Initialize HW specific parameters only once. We do not have to do this
+on every power_up (performed during initialization and on resume). Move
+corresponding code to ->info_init()
 
-Fix it by calling dev_sw_netstats_rx_add() in skb_do_redirect(), to update
-RX traffic counters. Devices that support ndo_get_peer_dev _must_ use the
-@tstats per-CPU counters (instead of @lstats, or @dstats).
-
-To make this more fool-proof, error out when ndo_get_peer_dev is set but
-@tstats are not selected.
-
-  [0] Specifically, the "container_network_receive_{byte,packet}s_total"
-      counters are affected.
-
-Fixes: 9aa1206e8f48 ("bpf: Add redirect_peer helper")
-Reported-by: Youlun Zhang <zhangyoulun@bytedance.com>
-Signed-off-by: Peilin Ye <peilin.ye@bytedance.com>
-Co-developed-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20231114004220.6495-6-daniel@iogearbox.net
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231020104501.697763-6-stanislaw.gruszka@linux.intel.com
+Stable-dep-of: 3f7c0634926d ("accel/ivpu/37xx: Fix hangs related to MMIO reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c    | 8 ++++++++
- net/core/filter.c | 1 +
- 2 files changed, 9 insertions(+)
+ drivers/accel/ivpu/ivpu_hw_37xx.c | 8 ++++----
+ drivers/accel/ivpu/ivpu_hw_40xx.c | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 37444c8e22054..9bf90b2a75b6a 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10054,6 +10054,14 @@ static int netdev_do_alloc_pcpu_stats(struct net_device *dev)
- {
- 	void __percpu *v;
+diff --git a/drivers/accel/ivpu/ivpu_hw_37xx.c b/drivers/accel/ivpu/ivpu_hw_37xx.c
+index 18be8b98e9a8b..cb9f0196e3ddf 100644
+--- a/drivers/accel/ivpu/ivpu_hw_37xx.c
++++ b/drivers/accel/ivpu/ivpu_hw_37xx.c
+@@ -625,6 +625,10 @@ static int ivpu_hw_37xx_info_init(struct ivpu_device *vdev)
+ 	ivpu_hw_init_range(&hw->ranges.shave, 0x180000000, SZ_2G);
+ 	ivpu_hw_init_range(&hw->ranges.dma,   0x200000000, SZ_8G);
  
-+	/* Drivers implementing ndo_get_peer_dev must support tstat
-+	 * accounting, so that skb_do_redirect() can bump the dev's
-+	 * RX stats upon network namespace switch.
-+	 */
-+	if (dev->netdev_ops->ndo_get_peer_dev &&
-+	    dev->pcpu_stat_type != NETDEV_PCPU_STAT_TSTATS)
-+		return -EOPNOTSUPP;
++	ivpu_hw_read_platform(vdev);
++	ivpu_hw_wa_init(vdev);
++	ivpu_hw_timeouts_init(vdev);
 +
- 	switch (dev->pcpu_stat_type) {
- 	case NETDEV_PCPU_STAT_NONE:
- 		return 0;
-diff --git a/net/core/filter.c b/net/core/filter.c
-index a094694899c99..b149a165c405c 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2489,6 +2489,7 @@ int skb_do_redirect(struct sk_buff *skb)
- 			     net_eq(net, dev_net(dev))))
- 			goto out_drop;
- 		skb->dev = dev;
-+		dev_sw_netstats_rx_add(dev, skb->len);
- 		return -EAGAIN;
+ 	return 0;
+ }
+ 
+@@ -681,10 +685,6 @@ static int ivpu_hw_37xx_power_up(struct ivpu_device *vdev)
+ {
+ 	int ret;
+ 
+-	ivpu_hw_read_platform(vdev);
+-	ivpu_hw_wa_init(vdev);
+-	ivpu_hw_timeouts_init(vdev);
+-
+ 	ret = ivpu_hw_37xx_reset(vdev);
+ 	if (ret)
+ 		ivpu_warn(vdev, "Failed to reset HW: %d\n", ret);
+diff --git a/drivers/accel/ivpu/ivpu_hw_40xx.c b/drivers/accel/ivpu/ivpu_hw_40xx.c
+index 85171a408363f..7c3ff25232a2c 100644
+--- a/drivers/accel/ivpu/ivpu_hw_40xx.c
++++ b/drivers/accel/ivpu/ivpu_hw_40xx.c
+@@ -728,6 +728,10 @@ static int ivpu_hw_40xx_info_init(struct ivpu_device *vdev)
+ 	ivpu_hw_init_range(&vdev->hw->ranges.shave,  0x80000000 + SZ_256M, SZ_2G - SZ_256M);
+ 	ivpu_hw_init_range(&vdev->hw->ranges.dma,   0x200000000, SZ_8G);
+ 
++	ivpu_hw_read_platform(vdev);
++	ivpu_hw_wa_init(vdev);
++	ivpu_hw_timeouts_init(vdev);
++
+ 	return 0;
+ }
+ 
+@@ -819,10 +823,6 @@ static int ivpu_hw_40xx_power_up(struct ivpu_device *vdev)
+ 		return ret;
  	}
- 	return flags & BPF_F_NEIGH ?
+ 
+-	ivpu_hw_read_platform(vdev);
+-	ivpu_hw_wa_init(vdev);
+-	ivpu_hw_timeouts_init(vdev);
+-
+ 	ret = ivpu_hw_40xx_d0i3_disable(vdev);
+ 	if (ret)
+ 		ivpu_warn(vdev, "Failed to disable D0I3: %d\n", ret);
 -- 
 2.42.0
 
