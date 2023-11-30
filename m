@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA28524C2;
-	Thu, 30 Nov 2023 16:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B35524C2;
+	Thu, 30 Nov 2023 16:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wy4iIgb/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E543C433C7;
-	Thu, 30 Nov 2023 16:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SImB3qNh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9D8C433C7;
+	Thu, 30 Nov 2023 16:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361692;
-	bh=g0OdPbiujeXRvEvPpK+lU/3VySkgDeR8copQBOFSrx0=;
+	s=korg; t=1701361695;
+	bh=5Ci63mv+N+99T7KW0Bn874rANUVexUMOfF2OsG0PEFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wy4iIgb/rjmJlKk71xm0dLfkAc4ipK/X6bAIgKSWkHkEO87fVbDjsUfF49m0ATxYD
-	 E9Ijrf+cayIiWBxhRbZPNyV9cpPeUig1oaypSxYslUIKHBvFOjEqs4kyvL2Q+TSL5F
-	 ERgUP1ZJSKPU9/TuWY2jIqCD+fOFf0L/5O5NicVg=
+	b=SImB3qNh8Ts8Baa2zclGmdpGUEWZMYwMol1HmxiZmjjUhZChSyVFsnqCMUtYKF0vf
+	 08Hh/+wKvuWJqOtG0CMjLzpMRZFV5VaJYvVERVtAm6aTlt9Q8rPTbhl60ZovcSjSmV
+	 t6FwDitAuORGHh3/D59uhxbcVIpBgGShCAIXm+Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Diederik de Haas <didi.debian@cknow.org>,
+	Christopher Obbard <chris.obbard@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/82] drm/i915: do not clean GT table on error path
-Date: Thu, 30 Nov 2023 16:21:41 +0000
-Message-ID: <20231130162136.290856282@linuxfoundation.org>
+Subject: [PATCH 6.1 11/82] drm/rockchip: vop: Fix color for RGB888/BGR888 format on VOP full
+Date: Thu, 30 Nov 2023 16:21:42 +0000
+Message-ID: <20231130162136.320470411@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -45,98 +44,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 0561794b6b642b84b879bf97061c4b4fa692839e ]
+[ Upstream commit bb0a05acd6121ff0e810b44fdc24dbdfaa46b642 ]
 
-The only task of intel_gt_release_all is to zero gt table. Calling
-it on error path prevents intel_gt_driver_late_release_all (called from
-i915_driver_late_release) to cleanup GTs, causing leakage.
-After i915_driver_late_release GT array is not used anymore so
-it does not need cleaning at all.
+Use of DRM_FORMAT_RGB888 and DRM_FORMAT_BGR888 on e.g. RK3288, RK3328
+and RK3399 result in wrong colors being displayed.
 
-Sample leak report:
+The issue can be observed using modetest:
 
-BUG i915_request (...): Objects remaining in i915_request on __kmem_cache_shutdown()
-...
-Object 0xffff888113420040 @offset=64
-Allocated in __i915_request_create+0x75/0x610 [i915] age=18339 cpu=1 pid=1454
- kmem_cache_alloc+0x25b/0x270
- __i915_request_create+0x75/0x610 [i915]
- i915_request_create+0x109/0x290 [i915]
- __engines_record_defaults+0xca/0x440 [i915]
- intel_gt_init+0x275/0x430 [i915]
- i915_gem_init+0x135/0x2c0 [i915]
- i915_driver_probe+0x8d1/0xdc0 [i915]
+  modetest -s <connector_id>@<crtc_id>:1920x1080-60@RG24
+  modetest -s <connector_id>@<crtc_id>:1920x1080-60@BG24
 
-v2: removed whole intel_gt_release_all
+Vendor 4.4 kernel apply an inverted rb swap for these formats on VOP
+full framework (IP version 3.x) compared to VOP little framework (2.x).
 
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8489
-Fixes: bec68cc9ea42 ("drm/i915: Prepare for multiple GTs")
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231115-dont_clean_gt_on_error_path-v2-1-54250125470a@intel.com
-(cherry picked from commit e899505533852bf1da133f2f4c9a9655ff77f7e5)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fix colors by applying different rb swap for VOP full framework (3.x)
+and VOP little framework (2.x) similar to vendor 4.4 kernel.
+
+Fixes: 85a359f25388 ("drm/rockchip: Add BGR formats to VOP")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Tested-by: Diederik de Haas <didi.debian@cknow.org>
+Reviewed-by: Christopher Obbard <chris.obbard@collabora.com>
+Tested-by: Christopher Obbard <chris.obbard@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231026191500.2994225-1-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt.c | 11 -----------
- drivers/gpu/drm/i915/i915_driver.c |  4 +---
- 2 files changed, 1 insertion(+), 14 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt.c b/drivers/gpu/drm/i915/gt/intel_gt.c
-index d12ec092e62df..91a005c46b107 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt.c
-@@ -903,8 +903,6 @@ int intel_gt_probe_all(struct drm_i915_private *i915)
- 
- err:
- 	i915_probe_error(i915, "Failed to initialize %s! (%d)\n", gtdef->name, ret);
--	intel_gt_release_all(i915);
--
- 	return ret;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index ae8c532f7fc84..632ab8941eb44 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -248,14 +248,22 @@ static inline void vop_cfg_done(struct vop *vop)
+ 	VOP_REG_SET(vop, common, cfg_done, 1);
  }
  
-@@ -923,15 +921,6 @@ int intel_gt_tiles_init(struct drm_i915_private *i915)
- 	return 0;
- }
- 
--void intel_gt_release_all(struct drm_i915_private *i915)
--{
--	struct intel_gt *gt;
--	unsigned int id;
--
--	for_each_gt(gt, i915, id)
--		i915->gt[id] = NULL;
--}
--
- void intel_gt_info_print(const struct intel_gt_info *info,
- 			 struct drm_printer *p)
+-static bool has_rb_swapped(uint32_t format)
++static bool has_rb_swapped(uint32_t version, uint32_t format)
  {
-diff --git a/drivers/gpu/drm/i915/i915_driver.c b/drivers/gpu/drm/i915/i915_driver.c
-index 75a93951fe429..be0ebed2a360f 100644
---- a/drivers/gpu/drm/i915/i915_driver.c
-+++ b/drivers/gpu/drm/i915/i915_driver.c
-@@ -901,7 +901,7 @@ int i915_driver_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	switch (format) {
+ 	case DRM_FORMAT_XBGR8888:
+ 	case DRM_FORMAT_ABGR8888:
+-	case DRM_FORMAT_BGR888:
+ 	case DRM_FORMAT_BGR565:
+ 		return true;
++	/*
++	 * full framework (IP version 3.x) only need rb swapped for RGB888 and
++	 * little framework (IP version 2.x) only need rb swapped for BGR888,
++	 * check for 3.x to also only rb swap BGR888 for unknown vop version
++	 */
++	case DRM_FORMAT_RGB888:
++		return VOP_MAJOR(version) == 3;
++	case DRM_FORMAT_BGR888:
++		return VOP_MAJOR(version) != 3;
+ 	default:
+ 		return false;
+ 	}
+@@ -1017,7 +1025,7 @@ static void vop_plane_atomic_update(struct drm_plane *plane,
+ 	VOP_WIN_SET(vop, win, dsp_info, dsp_info);
+ 	VOP_WIN_SET(vop, win, dsp_st, dsp_st);
  
- 	ret = i915_driver_mmio_probe(i915);
- 	if (ret < 0)
--		goto out_tiles_cleanup;
-+		goto out_runtime_pm_put;
+-	rb_swap = has_rb_swapped(fb->format->format);
++	rb_swap = has_rb_swapped(vop->data->version, fb->format->format);
+ 	VOP_WIN_SET(vop, win, rb_swap, rb_swap);
  
- 	ret = i915_driver_hw_probe(i915);
- 	if (ret < 0)
-@@ -959,8 +959,6 @@ int i915_driver_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	i915_ggtt_driver_late_release(i915);
- out_cleanup_mmio:
- 	i915_driver_mmio_release(i915);
--out_tiles_cleanup:
--	intel_gt_release_all(i915);
- out_runtime_pm_put:
- 	enable_rpm_wakeref_asserts(&i915->runtime_pm);
- 	i915_driver_late_release(i915);
+ 	/*
 -- 
 2.42.0
 
