@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C887F54F87;
-	Thu, 30 Nov 2023 16:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341F154F92;
+	Thu, 30 Nov 2023 16:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1zJbTLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CB7C433C9;
-	Thu, 30 Nov 2023 16:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjxRz4XH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55B6C433C8;
+	Thu, 30 Nov 2023 16:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361647;
-	bh=lDFNM8NpnSjL4G+SJtbf5IzPSsShLXaNPfX7tfdQ34k=;
+	s=korg; t=1701361650;
+	bh=jQrM7E+O+PHHLrJr3Bjs2x+o+xcwd/CQzoWgCoHdtlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1zJbTLrJ9jEdvIqETaPPb1s3fZxCITNqhN8ITiEFrVKXBfQNIZglnLnyq3lIePqi
-	 XFRfv6Fp56FDJmb+SPE8kBpJ5aXA5kIsACavKE14lItT09Dn+8maN/j+tf4JsAp747
-	 D4gYIZONtjpYEIGd1F2Kgb65MfcdcMrwb4NCxVu0=
+	b=tjxRz4XHfNh4bqwasjXwxhMcD3buAzSxXIB5tx5B9qem53khQN93WS1U53q+svFxj
+	 FAHWr8cfToYEtO5OqIo+msx96u8luqV/ky2YoHh31JfY16ZcLERYiQG0ckGmjRtSwk
+	 Yxq9Ko5eBP99VojHhkdLZKwGPkqkbuxfrk+uJa/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Hasemeyer <markhas@chromium.org>,
-	Sanket Goswami <Sanket.Goswami@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 081/112] platform/x86/amd/pmc: adjust getting DRAM size behavior
-Date: Thu, 30 Nov 2023 16:22:08 +0000
-Message-ID: <20231130162142.891002508@linuxfoundation.org>
+Subject: [PATCH 6.6 082/112] platform/x86: ideapad-laptop: Set max_brightness before using it
+Date: Thu, 30 Nov 2023 16:22:09 +0000
+Message-ID: <20231130162142.920857227@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -45,97 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 
-commit c6ea14d557343cd3af6c6be2f5a78c98bdb281bb upstream.
+commit 7a3c36eef9a5d13b16aa954da54224c9c6bed339 upstream.
 
-amd_pmc_get_dram_size() is used to get the DRAM size information. But
-in the current code, mailbox command to get the DRAM size info is sent
-based on the values of dev->major and dev->minor.
+max_brightness is used in ideapad_kbd_bl_brightness_get() before it's set,
+causing ideapad_kbd_bl_brightness_get() to return -EINVAL sometimes.
 
-But dev->major and dev->minor will have either junk or zero assigned to
-them until at least once a call to amd_pmc_get_smu_version() is made
-which ideally populates dev->major and dev->minor.
-
-However, adding a amd_pmc_get_smu_version() call to
-amd_pmc_get_dram_size() has a downside of elevating the boot times.
-
-After talking to the PMFW team, it's understood that the "get dram
-size" mbox command would only be supported on specific platforms (like
-Mendocino) and not all. So, adjust getting DRAM size behavior such
-that,
-
-- if running on Rembrandt or Mendocino and the underlying PMFW knows
-how to execute the "get dram size" command it shall give the custom
-dram size.
-
-- if the underlying FW does not report the dram size, we just proceed
-further and assign the default dram size.
-
-The simplest way to address this is to remove amd_pmc_get_dram_size()
-function and directly call the "get dram size" command in the
-amd_pmc_s2d_init().
-
-Reported-by: Mark Hasemeyer <markhas@chromium.org>
-Fixes: be8325fb3d8c ("platform/x86/amd: pmc: Get STB DRAM size from PMFW")
+Fixes: ecaa1867b524 ("platform/x86: ideapad-laptop: Add support for keyboard backlights using KBLC ACPI symbol")
+Signed-off-by: Stuart Hayhurst <stuart.a.hayhurst@gmail.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20231116170121.3372222-1-Shyam-sundar.S-k@amd.com
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20231114114055.6220-2-stuart.a.hayhurst@gmail.com
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmc/pmc.c |   31 ++-----------------------------
- 1 file changed, 2 insertions(+), 29 deletions(-)
+ drivers/platform/x86/ideapad-laptop.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -912,33 +912,6 @@ static const struct pci_device_id pmc_pc
- 	{ }
- };
+diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
+index ac037540acfc..88eefccb6ed2 100644
+--- a/drivers/platform/x86/ideapad-laptop.c
++++ b/drivers/platform/x86/ideapad-laptop.c
+@@ -1425,18 +1425,17 @@ static int ideapad_kbd_bl_init(struct ideapad_private *priv)
+ 	if (WARN_ON(priv->kbd_bl.initialized))
+ 		return -EEXIST;
  
--static int amd_pmc_get_dram_size(struct amd_pmc_dev *dev)
--{
--	int ret;
+-	brightness = ideapad_kbd_bl_brightness_get(priv);
+-	if (brightness < 0)
+-		return brightness;
 -
--	switch (dev->cpu_id) {
--	case AMD_CPU_ID_YC:
--		if (!(dev->major > 90 || (dev->major == 90 && dev->minor > 39))) {
--			ret = -EINVAL;
--			goto err_dram_size;
--		}
--		break;
--	default:
--		ret = -EINVAL;
--		goto err_dram_size;
--	}
+-	priv->kbd_bl.last_brightness = brightness;
 -
--	ret = amd_pmc_send_cmd(dev, S2D_DRAM_SIZE, &dev->dram_size, dev->s2d_msg_id, true);
--	if (ret || !dev->dram_size)
--		goto err_dram_size;
--
--	return 0;
--
--err_dram_size:
--	dev_err(dev->dev, "DRAM size command not supported for this platform\n");
--	return ret;
--}
--
- static int amd_pmc_s2d_init(struct amd_pmc_dev *dev)
- {
- 	u32 phys_addr_low, phys_addr_hi;
-@@ -957,8 +930,8 @@ static int amd_pmc_s2d_init(struct amd_p
- 		return -EIO;
+ 	if (ideapad_kbd_bl_check_tristate(priv->kbd_bl.type)) {
+ 		priv->kbd_bl.led.max_brightness = 2;
+ 	} else {
+ 		priv->kbd_bl.led.max_brightness = 1;
+ 	}
  
- 	/* Get DRAM size */
--	ret = amd_pmc_get_dram_size(dev);
--	if (ret)
-+	ret = amd_pmc_send_cmd(dev, S2D_DRAM_SIZE, &dev->dram_size, dev->s2d_msg_id, true);
-+	if (ret || !dev->dram_size)
- 		dev->dram_size = S2D_TELEMETRY_DRAMBYTES_MAX;
- 
- 	/* Get STB DRAM address */
++	brightness = ideapad_kbd_bl_brightness_get(priv);
++	if (brightness < 0)
++		return brightness;
++
++	priv->kbd_bl.last_brightness = brightness;
+ 	priv->kbd_bl.led.name                    = "platform::" LED_FUNCTION_KBD_BACKLIGHT;
+ 	priv->kbd_bl.led.brightness_get          = ideapad_kbd_bl_led_cdev_brightness_get;
+ 	priv->kbd_bl.led.brightness_set_blocking = ideapad_kbd_bl_led_cdev_brightness_set;
+-- 
+2.43.0
+
 
 
