@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B453A524C2;
-	Thu, 30 Nov 2023 16:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480CB54F9C;
+	Thu, 30 Nov 2023 16:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNBLkl6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 458C2C433C8;
-	Thu, 30 Nov 2023 16:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWbHOi1L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E67C433CA;
+	Thu, 30 Nov 2023 16:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361662;
-	bh=UhC1S0xmO5+Z3kwieVvlG5vWXxuF9Vxs+mi1SnJVbn4=;
+	s=korg; t=1701361665;
+	bh=gzSdboy5AsHc2rCyr4lJ37CJtWFhIQV1+ABHZGbfyJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNBLkl6NidS5QKYgB/S+Jzy2JEcMkUdTmbOBQi01oBbt6lMU4YTGxBzFBohmM8n04
-	 iduCJ/iwqOiHZafH5UYuUeiV8zojKVr0ZpoTXVrVimLj9FJ8R9fiUkstTV4gY0TUwB
-	 36HAyXmxILNIl311vAQsblZ7spScdiAglDEgiNFw=
+	b=TWbHOi1LzNiuK6AJSLsTL59kO9wsLN4HmduyUacJr9vfDIoQe6m33UxFJ2jEvUO7p
+	 pd9qA41pUsD1N91Vm8RW8H+rZyIquIcRVRyW3EITrh+ySDRfolk4winXgWuUcnNCIr
+	 YBI9im2pK8gVW2SLU6cJfmi4+GYvUENlKf7oataI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 077/112] platform/x86: hp-bioscfg: Fix error handling in hp_add_other_attributes()
-Date: Thu, 30 Nov 2023 16:22:04 +0000
-Message-ID: <20231130162142.770192701@linuxfoundation.org>
+	Puliang Lu <puliang.lu@fibocom.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 104/112] USB: serial: option: fix FM101R-GL defines
+Date: Thu, 30 Nov 2023 16:22:31 +0000
+Message-ID: <20231130162143.590852509@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -37,79 +35,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Puliang Lu <puliang.lu@fibocom.com>
 
-commit f40f939917b2b4cbf18450096c0ce1c58ed59fae upstream.
+commit a1092619dd28ac0fcf23016160a2fdccd98ef935 upstream.
 
-'attr_name_kobj' is allocated using kzalloc, but on all the error paths
-it is not freed, hence we have a memory leak.
+Modify the definition of the two Fibocom FM101R-GL PID macros, which had
+their PIDs switched.
 
-Fix the error path before kobject_init_and_add() by adding kfree().
+The correct PIDs are:
 
-kobject_put() must be always called after passing the object to
-kobject_init_and_add(). Only the error path which is immediately next
-to kobject_init_and_add() calls kobject_put() and not any other error
-path after it.
+- VID:PID 413C:8213, FM101R-GL ESIM are laptop M.2 cards (with
+  MBIM interfaces for Linux)
 
-Fix the error handling after kobject_init_and_add() by moving the
-kobject_put() into the goto label err_other_attr_init that is already
-used by all the error paths after kobject_init_and_add().
+- VID:PID 413C:8215, FM101R-GL are laptop M.2 cards (with
+  MBIM interface for Linux)
 
-Fixes: a34fc329b189 ("platform/x86: hp-bioscfg: bioscfg")
-Cc: stable@vger.kernel.org # 6.6.x: c5dbf0416000: platform/x86: hp-bioscfg: Simplify return check in hp_add_other_attributes()
-Cc: stable@vger.kernel.org # 6.6.x: 5736aa9537c9: platform/x86: hp-bioscfg: move mutex_lock() down in hp_add_other_attributes()
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202309201412.on0VXJGo-lkp@intel.com/
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-[ij: Added the stable dep tags]
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20231113200742.3593548-3-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+0x8213: mbim, tty
+0x8215: mbim, tty
+
+Signed-off-by: Puliang Lu <puliang.lu@fibocom.com>
+Fixes: 52480e1f1a25 ("USB: serial: option: add Fibocom to DELL custom modem FM101R-GL")
+Link: https://lore.kernel.org/lkml/TYZPR02MB508845BAD7936A62A105CE5D89DFA@TYZPR02MB5088.apcprd02.prod.outlook.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/serial/option.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-index a3599498c4e8..6ddca857cc4d 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
-@@ -613,14 +613,14 @@ static int hp_add_other_attributes(int attr_type)
- 	default:
- 		pr_err("Error: Unknown attr_type: %d\n", attr_type);
- 		ret = -EINVAL;
--		goto err_other_attr_init;
-+		kfree(attr_name_kobj);
-+		goto unlock_drv_mutex;
- 	}
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -203,8 +203,8 @@ static void option_instat_callback(struc
+ #define DELL_PRODUCT_5829E_ESIM			0x81e4
+ #define DELL_PRODUCT_5829E			0x81e6
  
- 	ret = kobject_init_and_add(attr_name_kobj, &attr_name_ktype,
- 				   NULL, "%s", attr_name);
- 	if (ret) {
- 		pr_err("Error encountered [%d]\n", ret);
--		kobject_put(attr_name_kobj);
- 		goto err_other_attr_init;
- 	}
+-#define DELL_PRODUCT_FM101R			0x8213
+-#define DELL_PRODUCT_FM101R_ESIM		0x8215
++#define DELL_PRODUCT_FM101R_ESIM		0x8213
++#define DELL_PRODUCT_FM101R			0x8215
  
-@@ -645,6 +645,8 @@ static int hp_add_other_attributes(int attr_type)
- 	return 0;
- 
- err_other_attr_init:
-+	kobject_put(attr_name_kobj);
-+unlock_drv_mutex:
- 	mutex_unlock(&bioscfg_drv.mutex);
- 	kfree(obj);
- 	return ret;
--- 
-2.43.0
-
+ #define KYOCERA_VENDOR_ID			0x0c88
+ #define KYOCERA_PRODUCT_KPC650			0x17da
 
 
