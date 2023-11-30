@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E78454BFB;
-	Thu, 30 Nov 2023 16:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80A054BFB;
+	Thu, 30 Nov 2023 16:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDVpQ7/5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDAFC433C8;
-	Thu, 30 Nov 2023 16:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAsTgQgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4417FC433C8;
+	Thu, 30 Nov 2023 16:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361749;
-	bh=v3+ryIPVD/LD0+PpTbZgpl5e3ECFRvcHLTNEHD7re38=;
+	s=korg; t=1701361751;
+	bh=gJrLfLi5Bsbci6Yd8Q4dIjwy8ewnbPmDLCFVnOUZa2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDVpQ7/5Bdf1zHDfQFw37iP2FvxE/1G0MjOKqXH8qug7IN+5lBD73MGBB2N4mtkND
-	 yhjSg7pas1YqyYW28YLtsUmFN7u2+cwW6TgGaURltZfZzqpreQ1xV44Sq+KR2lO5tb
-	 KhNUls56zgZqSwy3HjyuLr5i++Op2pRS+/2i5+Zg=
+	b=cAsTgQgDePSGIGKn3tSUSf0dZGCe5qa/PMF8jfzWlCmKjB+kTwMhntYDD3RMyR7V+
+	 +/mUBmkfnUKT1BcVBUvp7uBtI8X73qwxLACOCSrvccDE/JnMTaHUZZlbGQw7u8uz8A
+	 5Nnvpyt2SYip7sqQQMlUSAoAbTJICRA0CndO0sro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Germano Percossi <germano.percossi@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 32/82] cifs: minor cleanup of some headers
-Date: Thu, 30 Nov 2023 16:22:03 +0000
-Message-ID: <20231130162136.976462300@linuxfoundation.org>
+Subject: [PATCH 6.1 33/82] smb3: allow dumping session and tcon id to improve stats analysis and debugging
+Date: Thu, 30 Nov 2023 16:22:04 +0000
+Message-ID: <20231130162137.007961310@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -45,97 +44,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit c19204cbd65c12fdcd34fb8f5d645007238ed5cd ]
+[ Upstream commit de4eceab578ead12a71e5b5588a57e142bbe8ceb ]
 
-checkpatch showed formatting problems with extra spaces,
-and extra semicolon and some missing blank lines in some
-cifs headers.
+When multiple mounts are to the same share from the same client it was not
+possible to determine which section of /proc/fs/cifs/Stats (and DebugData)
+correspond to that mount.  In some recent examples this turned out to  be
+a significant problem when trying to analyze performance data - since
+there are many cases where unless we know the tree id and session id we
+can't figure out which stats (e.g. number of SMB3.1.1 requests by type,
+the total time they take, which is slowest, how many fail etc.) apply to
+which mount. The only existing loosely related ioctl CIFS_IOC_GET_MNT_INFO
+does not return the information needed to uniquely identify which tcon
+is which mount although it does return various flags and device info.
 
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Reviewed-by: Germano Percossi <germano.percossi@gmail.com>
+Add a cifs.ko ioctl CIFS_IOC_GET_TCON_INFO (0x800ccf0c) to return tid,
+session id, tree connect count.
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: de4eceab578e ("smb3: allow dumping session and tcon id to improve stats analysis and debugging")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifs_ioctl.h | 2 +-
- fs/smb/client/cifsfs.h     | 4 ++--
- fs/smb/client/cifsglob.h   | 7 +++++--
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ fs/smb/client/cifs_ioctl.h |  6 ++++++
+ fs/smb/client/ioctl.c      | 25 +++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
 diff --git a/fs/smb/client/cifs_ioctl.h b/fs/smb/client/cifs_ioctl.h
-index d86d78d5bfdc1..332588e77c311 100644
+index 332588e77c311..26327442e383b 100644
 --- a/fs/smb/client/cifs_ioctl.h
 +++ b/fs/smb/client/cifs_ioctl.h
-@@ -108,7 +108,7 @@ struct smb3_notify_info {
+@@ -26,6 +26,11 @@ struct smb_mnt_fs_info {
+ 	__u64   cifs_posix_caps;
+ } __packed;
+ 
++struct smb_mnt_tcon_info {
++	__u32	tid;
++	__u64	session_id;
++} __packed;
++
+ struct smb_snapshot_array {
+ 	__u32	number_of_snapshots;
+ 	__u32	number_of_snapshots_returned;
+@@ -108,6 +113,7 @@ struct smb3_notify_info {
  #define CIFS_IOC_NOTIFY _IOW(CIFS_IOCTL_MAGIC, 9, struct smb3_notify)
  #define CIFS_DUMP_FULL_KEY _IOWR(CIFS_IOCTL_MAGIC, 10, struct smb3_full_key_debug_info)
  #define CIFS_IOC_NOTIFY_INFO _IOWR(CIFS_IOCTL_MAGIC, 11, struct smb3_notify_info)
--#define CIFS_IOC_SHUTDOWN _IOR ('X', 125, __u32)
-+#define CIFS_IOC_SHUTDOWN _IOR('X', 125, __u32)
++#define CIFS_IOC_GET_TCON_INFO _IOR(CIFS_IOCTL_MAGIC, 12, struct smb_mnt_tcon_info)
+ #define CIFS_IOC_SHUTDOWN _IOR('X', 125, __u32)
  
  /*
-  * Flags for going down operation
-diff --git a/fs/smb/client/cifsfs.h b/fs/smb/client/cifsfs.h
-index b6c38896fb2db..a1d8791c4fcd2 100644
---- a/fs/smb/client/cifsfs.h
-+++ b/fs/smb/client/cifsfs.h
-@@ -105,8 +105,8 @@ extern int cifs_lock(struct file *, int, struct file_lock *);
- extern int cifs_fsync(struct file *, loff_t, loff_t, int);
- extern int cifs_strict_fsync(struct file *, loff_t, loff_t, int);
- extern int cifs_flush(struct file *, fl_owner_t id);
--extern int cifs_file_mmap(struct file * , struct vm_area_struct *);
--extern int cifs_file_strict_mmap(struct file * , struct vm_area_struct *);
-+extern int cifs_file_mmap(struct file *file, struct vm_area_struct *vma);
-+extern int cifs_file_strict_mmap(struct file *file, struct vm_area_struct *vma);
- extern const struct file_operations cifs_dir_ops;
- extern int cifs_dir_open(struct inode *inode, struct file *file);
- extern int cifs_readdir(struct file *file, struct dir_context *ctx);
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 39602f39aea8f..6c8a55608c9bd 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -788,6 +788,7 @@ static inline unsigned int
- in_flight(struct TCP_Server_Info *server)
- {
- 	unsigned int num;
+diff --git a/fs/smb/client/ioctl.c b/fs/smb/client/ioctl.c
+index 6419ec47c2a85..ae9905e2b9d4a 100644
+--- a/fs/smb/client/ioctl.c
++++ b/fs/smb/client/ioctl.c
+@@ -117,6 +117,20 @@ static long cifs_ioctl_copychunk(unsigned int xid, struct file *dst_file,
+ 	return rc;
+ }
+ 
++static long smb_mnt_get_tcon_info(struct cifs_tcon *tcon, void __user *arg)
++{
++	int rc = 0;
++	struct smb_mnt_tcon_info tcon_inf;
 +
- 	spin_lock(&server->req_lock);
- 	num = server->in_flight;
- 	spin_unlock(&server->req_lock);
-@@ -798,6 +799,7 @@ static inline bool
- has_credits(struct TCP_Server_Info *server, int *credits, int num_credits)
- {
- 	int num;
++	tcon_inf.tid = tcon->tid;
++	tcon_inf.session_id = tcon->ses->Suid;
 +
- 	spin_lock(&server->req_lock);
- 	num = *credits;
- 	spin_unlock(&server->req_lock);
-@@ -991,7 +993,7 @@ struct cifs_ses {
- 	struct TCP_Server_Info *server;	/* pointer to server info */
- 	int ses_count;		/* reference counter */
- 	enum ses_status_enum ses_status;  /* updates protected by cifs_tcp_ses_lock */
--	unsigned overrideSecFlg;  /* if non-zero override global sec flags */
-+	unsigned int overrideSecFlg; /* if non-zero override global sec flags */
- 	char *serverOS;		/* name of operating system underlying server */
- 	char *serverNOS;	/* name of network operating system of server */
- 	char *serverDomain;	/* security realm of server */
-@@ -1347,7 +1349,7 @@ struct cifsFileInfo {
- 	__u32 pid;		/* process id who opened file */
- 	struct cifs_fid fid;	/* file id from remote */
- 	struct list_head rlist; /* reconnect list */
--	/* BB add lock scope info here if needed */ ;
-+	/* BB add lock scope info here if needed */
- 	/* lock scope id (0 if none) */
- 	struct dentry *dentry;
- 	struct tcon_link *tlink;
-@@ -1735,6 +1737,7 @@ static inline void free_dfs_info_array(struct dfs_info3_param *param,
- 				       int number_of_items)
- {
- 	int i;
++	if (copy_to_user(arg, &tcon_inf, sizeof(struct smb_mnt_tcon_info)))
++		rc = -EFAULT;
 +
- 	if ((number_of_items == 0) || (param == NULL))
- 		return;
- 	for (i = 0; i < number_of_items; i++) {
++	return rc;
++}
++
+ static long smb_mnt_get_fsinfo(unsigned int xid, struct cifs_tcon *tcon,
+ 				void __user *arg)
+ {
+@@ -410,6 +424,17 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
+ 			tcon = tlink_tcon(pSMBFile->tlink);
+ 			rc = smb_mnt_get_fsinfo(xid, tcon, (void __user *)arg);
+ 			break;
++		case CIFS_IOC_GET_TCON_INFO:
++			cifs_sb = CIFS_SB(inode->i_sb);
++			tlink = cifs_sb_tlink(cifs_sb);
++			if (IS_ERR(tlink)) {
++				rc = PTR_ERR(tlink);
++				break;
++			}
++			tcon = tlink_tcon(tlink);
++			rc = smb_mnt_get_tcon_info(tcon, (void __user *)arg);
++			cifs_put_tlink(tlink);
++			break;
+ 		case CIFS_ENUMERATE_SNAPSHOTS:
+ 			if (pSMBFile == NULL)
+ 				break;
 -- 
 2.42.0
 
