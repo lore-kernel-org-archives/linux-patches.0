@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB03482CB;
-	Thu, 30 Nov 2023 16:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC56B482CB;
+	Thu, 30 Nov 2023 16:25:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdC2HZuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8B7C433C7;
-	Thu, 30 Nov 2023 16:24:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqqE8Mi2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C04BC433C8;
+	Thu, 30 Nov 2023 16:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361498;
-	bh=q8YEab1jaU7sw/H76vmcmWtmwN4kMCmxz804ReXbZ8g=;
+	s=korg; t=1701361500;
+	bh=n80YUGbDRzkDDoYch5h4QL72YFOCe+YPrpd+SFSasWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JdC2HZuEhLz0A/QBws37B1Az3AJPbf8iNh3VsgEzJoX+SJ81auHjopRXDFyAVmQbb
-	 T3QCTnJ3qHFb5EAJB82tvdGkftBqYR4shh6pJ8UQzSWDbMEB7blmPyUSXNSA2HTGDO
-	 l9AzbaS0WGGrFIUsw5GZoVwUPQzEuFOVY5g3UOzs=
+	b=WqqE8Mi2764Z+Pl9dXBvp07aaSSxZsr3/8fIG/M9LNSE1rhSTaaE2/tCk4ecTN09k
+	 BGw1p2ysEdKUNBzXnr65n05TD0zR7kLovd74zQB6ZXODuteiQGK/EC38Zq5zjRFMVT
+	 KtkGEOJw4aecnAJ/bN/Gn+fb7xk8Y9pd0Lz0XydI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Ivan Vecera <ivecera@redhat.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Bogdan Marcynkov <bmarcynk@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/112] i40e: Fix adding unsupported cloud filters
-Date: Thu, 30 Nov 2023 16:21:33 +0000
-Message-ID: <20231130162141.770594090@linuxfoundation.org>
+Subject: [PATCH 6.6 047/112] vsock/test: fix SEQPACKET message bounds test
+Date: Thu, 30 Nov 2023 16:21:34 +0000
+Message-ID: <20231130162141.807131212@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -45,77 +44,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit 4e20655e503e3a478cd1682bf25e3202dd823da8 ]
+[ Upstream commit f0863888f6cfef33e3117dccfe94fa78edf76be4 ]
 
-If a VF tries to add unsupported cloud filter through virtchnl
-then i40e_add_del_cloud_filter(_big_buf) returns -ENOTSUPP but
-this error code is stored in 'ret' instead of 'aq_ret' that
-is used as error code sent back to VF. In this scenario where
-one of the mentioned functions fails the value of 'aq_ret'
-is zero so the VF will incorrectly receive a 'success'.
+Tune message length calculation to make this test work on machines
+where 'getpagesize()' returns >32KB. Now maximum message length is not
+hardcoded (on machines above it was smaller than 'getpagesize()' return
+value, thus we get negative value and test fails), but calculated at
+runtime and always bigger than 'getpagesize()' result. Reproduced on
+aarch64 with 64KB page size.
 
-Use 'aq_ret' to store return value and remove 'ret' local
-variable. Additionally fix the issue when filter allocation
-fails, in this case no notification is sent back to the VF.
-
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20231121211338.3348677-1-anthony.l.nguyen@intel.com
+Fixes: 5c338112e48a ("test/vsock: rework message bounds test")
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Reported-by: Bogdan Marcynkov <bmarcynk@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://lore.kernel.org/r/20231121211642.163474-1-avkrasnov@salutedevices.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/i40e/i40e_virtchnl_pf.c   | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ tools/testing/vsock/vsock_test.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index d3d6415553ed6..4441b00297f47 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3842,7 +3842,7 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 	struct i40e_pf *pf = vf->pf;
- 	struct i40e_vsi *vsi = NULL;
- 	int aq_ret = 0;
--	int i, ret;
-+	int i;
+diff --git a/tools/testing/vsock/vsock_test.c b/tools/testing/vsock/vsock_test.c
+index 90718c2fd4ea9..5dc7767039f6f 100644
+--- a/tools/testing/vsock/vsock_test.c
++++ b/tools/testing/vsock/vsock_test.c
+@@ -392,11 +392,12 @@ static void test_stream_msg_peek_server(const struct test_opts *opts)
+ }
  
- 	if (!i40e_sync_vf_state(vf, I40E_VF_STATE_ACTIVE)) {
- 		aq_ret = -EINVAL;
-@@ -3866,8 +3866,10 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 	}
+ #define SOCK_BUF_SIZE (2 * 1024 * 1024)
+-#define MAX_MSG_SIZE (32 * 1024)
++#define MAX_MSG_PAGES 4
  
- 	cfilter = kzalloc(sizeof(*cfilter), GFP_KERNEL);
--	if (!cfilter)
--		return -ENOMEM;
-+	if (!cfilter) {
-+		aq_ret = -ENOMEM;
-+		goto err_out;
+ static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
+ {
+ 	unsigned long curr_hash;
++	size_t max_msg_size;
+ 	int page_size;
+ 	int msg_count;
+ 	int fd;
+@@ -412,7 +413,8 @@ static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
+ 
+ 	curr_hash = 0;
+ 	page_size = getpagesize();
+-	msg_count = SOCK_BUF_SIZE / MAX_MSG_SIZE;
++	max_msg_size = MAX_MSG_PAGES * page_size;
++	msg_count = SOCK_BUF_SIZE / max_msg_size;
+ 
+ 	for (int i = 0; i < msg_count; i++) {
+ 		ssize_t send_size;
+@@ -423,7 +425,7 @@ static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
+ 		/* Use "small" buffers and "big" buffers. */
+ 		if (i & 1)
+ 			buf_size = page_size +
+-					(rand() % (MAX_MSG_SIZE - page_size));
++					(rand() % (max_msg_size - page_size));
+ 		else
+ 			buf_size = 1 + (rand() % page_size);
+ 
+@@ -479,7 +481,6 @@ static void test_seqpacket_msg_bounds_server(const struct test_opts *opts)
+ 	unsigned long remote_hash;
+ 	unsigned long curr_hash;
+ 	int fd;
+-	char buf[MAX_MSG_SIZE];
+ 	struct msghdr msg = {0};
+ 	struct iovec iov = {0};
+ 
+@@ -507,8 +508,13 @@ static void test_seqpacket_msg_bounds_server(const struct test_opts *opts)
+ 	control_writeln("SRVREADY");
+ 	/* Wait, until peer sends whole data. */
+ 	control_expectln("SENDDONE");
+-	iov.iov_base = buf;
+-	iov.iov_len = sizeof(buf);
++	iov.iov_len = MAX_MSG_PAGES * getpagesize();
++	iov.iov_base = malloc(iov.iov_len);
++	if (!iov.iov_base) {
++		perror("malloc");
++		exit(EXIT_FAILURE);
 +	}
++
+ 	msg.msg_iov = &iov;
+ 	msg.msg_iovlen = 1;
  
- 	/* parse destination mac address */
- 	for (i = 0; i < ETH_ALEN; i++)
-@@ -3915,13 +3917,13 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 
- 	/* Adding cloud filter programmed as TC filter */
- 	if (tcf.dst_port)
--		ret = i40e_add_del_cloud_filter_big_buf(vsi, cfilter, true);
-+		aq_ret = i40e_add_del_cloud_filter_big_buf(vsi, cfilter, true);
- 	else
--		ret = i40e_add_del_cloud_filter(vsi, cfilter, true);
--	if (ret) {
-+		aq_ret = i40e_add_del_cloud_filter(vsi, cfilter, true);
-+	if (aq_ret) {
- 		dev_err(&pf->pdev->dev,
- 			"VF %d: Failed to add cloud filter, err %pe aq_err %s\n",
--			vf->vf_id, ERR_PTR(ret),
-+			vf->vf_id, ERR_PTR(aq_ret),
- 			i40e_aq_str(&pf->hw, pf->hw.aq.asq_last_status));
- 		goto err_free;
+@@ -533,6 +539,7 @@ static void test_seqpacket_msg_bounds_server(const struct test_opts *opts)
+ 		curr_hash += hash_djb2(msg.msg_iov[0].iov_base, recv_size);
  	}
+ 
++	free(iov.iov_base);
+ 	close(fd);
+ 	remote_hash = control_readulong();
+ 
 -- 
 2.42.0
 
