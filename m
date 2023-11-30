@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DAA495C2;
-	Thu, 30 Nov 2023 16:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D92495C2;
+	Thu, 30 Nov 2023 16:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHYrVvcj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33700C433C8;
-	Thu, 30 Nov 2023 16:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHd7S+OX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B42CC433C8;
+	Thu, 30 Nov 2023 16:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361445;
-	bh=zrw24OEakGJPrVYJ6C58IcSlYLLE+G+SagM2UEEYyUU=;
+	s=korg; t=1701361448;
+	bh=IjWk9tETeq2kFz3c0IMBPvMGYKeH0uzQOzqHHDfpTZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHYrVvcjzJJ+zojwkjqcAw3Jtytn00anIM9VHGFdZq2sRZTajRhv8XRZLZIkPLiWv
-	 a+o8vfCxxW0C3Ni5NFVpvT9Ai1P4wCnfjxjtU1JEjzYFlg7w5J2Y/Niewxf7AYIAOG
-	 KzRgfKeJoEjzwVf9H8ABCXOCaQOG2Cwks3SSBluI=
+	b=uHd7S+OXSce5W54Xbhuad0LqpVk98kZads9oDjxFqjv+N9lpH1BdmkhkAhHfw4sld
+	 oYLvaz6/grhLpIK8kbbuVQrQBvtT+WtqAsYamNowIUd+IoKiUVijm8UpkKzS5XcFJp
+	 TUz1E60hBQd0f6ELlWeHZYSvstkzV2VnCSWPW2HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Chen Yu <yu.c.chen@intel.com>,
-	Shrikanth Hegde <sshegde@linux.vnet.ibm.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/112] sched/fair: Fix the decision for load balance
-Date: Thu, 30 Nov 2023 16:20:53 +0000
-Message-ID: <20231130162140.520284934@linuxfoundation.org>
+Subject: [PATCH 6.6 007/112] drm/msm/dsi: use the correct VREG_CTRL_1 value for 4nm cphy
+Date: Thu, 30 Nov 2023 16:20:54 +0000
+Message-ID: <20231130162140.551424229@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -45,59 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 6d7e4782bcf549221b4ccfffec2cf4d1a473f1a3 ]
+[ Upstream commit b3e0f94d15700ac8e8c1c2355834f5d5c753c41d ]
 
-should_we_balance is called for the decision to do load-balancing.
-When sched ticks invoke this function, only one CPU should return
-true. However, in the current code, two CPUs can return true. The
-following situation, where b means busy and i means idle, is an
-example, because CPU 0 and CPU 2 return true.
+Use the same value as the downstream driver. This change is needed for CPHY
+mode to work correctly.
 
-        [0, 1] [2, 3]
-         b  b   i  b
-
-This fix checks if there exists an idle CPU with busy sibling(s)
-after looking for a CPU on an idle core. If some idle CPUs with busy
-siblings are found, just the first one should do load-balancing.
-
-Fixes: b1bfeab9b002 ("sched/fair: Consider the idle state of the whole core for load balance")
-Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Reviewed-by: Shrikanth Hegde <sshegde@linux.vnet.ibm.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lkml.kernel.org/r/20231031133821.1570861-1-keisuke.nishimura@inria.fr
+Fixes: 8b034e677111 ("drm/msm/dsi: add support for DSI-PHY on SM8550")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/566987/
+Link: https://lore.kernel.org/r/20231110000216.29979-1-jonathan@marek.ca
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 0351320148177..fa9fff0f9620d 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -11121,12 +11121,16 @@ static int should_we_balance(struct lb_env *env)
- 			continue;
- 		}
- 
--		/* Are we the first idle CPU? */
-+		/*
-+		 * Are we the first idle core in a non-SMT domain or higher,
-+		 * or the first idle CPU in a SMT domain?
-+		 */
- 		return cpu == env->dst_cpu;
- 	}
- 
--	if (idle_smt == env->dst_cpu)
--		return true;
-+	/* Are we the first idle CPU with busy siblings? */
-+	if (idle_smt != -1)
-+		return idle_smt == env->dst_cpu;
- 
- 	/* Are we the first CPU of this group ? */
- 	return group_balance_cpu(sg) == env->dst_cpu;
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index 3b1ed02f644d2..89a6344bc8653 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -918,7 +918,7 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
+ 	if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+ 		if (phy->cphy_mode) {
+ 			vreg_ctrl_0 = 0x45;
+-			vreg_ctrl_1 = 0x45;
++			vreg_ctrl_1 = 0x41;
+ 			glbl_rescode_top_ctrl = 0x00;
+ 			glbl_rescode_bot_ctrl = 0x00;
+ 		} else {
 -- 
 2.42.0
 
