@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB180495C2;
-	Thu, 30 Nov 2023 16:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDBD495C2;
+	Thu, 30 Nov 2023 16:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bka6KDPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56311C433C8;
-	Thu, 30 Nov 2023 16:29:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZI9UULR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7B5C433C8;
+	Thu, 30 Nov 2023 16:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361789;
-	bh=AR49ktfzQOLtWTowj4va7AO56EZEiyDxlWfpYvXN8ac=;
+	s=korg; t=1701361792;
+	bh=mXXN+JaRNEvgtgKFZpXEkE/ABZf3HmqlBYf/O50qRe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bka6KDPYCvdLKLVFLs2JRCn6I+QSxnh+6doDxVb+wEIW410ozl6xGKQ5vIYj5J+wx
-	 Ft/EhKkBhbRl1jWmvavS9dfVP43LT8dtxz8bcM2w5SAU7WpZwBPc9WF2PMfEUvpiB4
-	 GAhmarjEsWX6W2CYp03S8Z0oAQqJileLsf7mjMtA=
+	b=LZI9UULRvVjX6h72Vt+KW+jIwgI3+wpu2nsUI6uqVPVsFfEJcS0iyQ6QX5jgkZciT
+	 hw7Vic/rifTG6K8EsxjH/uTpDo17OAcsUi0CaqcJq3NR1n+NLl5gM3DJGs2QhFeMEB
+	 8yH3WDibpwISttFWKV4VgzPefiXS43IftbxjvZd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Marco Elver <elver@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 23/82] afs: Fix file locking on R/O volumes to operate in local mode
-Date: Thu, 30 Nov 2023 16:21:54 +0000
-Message-ID: <20231130162136.688113394@linuxfoundation.org>
+Subject: [PATCH 6.1 24/82] mm,kfence: decouple kfence from page granularity mapping judgement
+Date: Thu, 30 Nov 2023 16:21:55 +0000
+Message-ID: <20231130162136.718156306@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -43,42 +45,216 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Zhenhua Huang <quic_zhenhuah@quicinc.com>
 
-[ Upstream commit b590eb41be766c5a63acc7e8896a042f7a4e8293 ]
+[ Upstream commit bfa7965b33ab79fc3b2f8adc14704075fe2416cd ]
 
-AFS doesn't really do locking on R/O volumes as fileservers don't maintain
-state with each other and thus a lock on a R/O volume file on one
-fileserver will not be be visible to someone looking at the same file on
-another fileserver.
+Kfence only needs its pool to be mapped as page granularity, if it is
+inited early. Previous judgement was a bit over protected. From [1], Mark
+suggested to "just map the KFENCE region a page granularity". So I
+decouple it from judgement and do page granularity mapping for kfence
+pool only. Need to be noticed that late init of kfence pool still requires
+page granularity mapping.
 
-Further, the server may return an error if you try it.
+Page granularity mapping in theory cost more(2M per 1GB) memory on arm64
+platform. Like what I've tested on QEMU(emulated 1GB RAM) with
+gki_defconfig, also turning off rodata protection:
+Before:
+[root@liebao ]# cat /proc/meminfo
+MemTotal:         999484 kB
+After:
+[root@liebao ]# cat /proc/meminfo
+MemTotal:        1001480 kB
 
-Fix this by doing what other AFS clients do and handle filelocking on R/O
-volume files entirely within the client and don't touch the server.
+To implement this, also relocate the kfence pool allocation before the
+linear mapping setting up, arm64_kfence_alloc_pool is to allocate phys
+addr, __kfence_pool is to be set after linear mapping set up.
 
-Fixes: 6c6c1d63c243 ("afs: Provide mount-time configurable byte-range file locking emulation")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
+LINK: [1] https://lore.kernel.org/linux-arm-kernel/Y+IsdrvDNILA59UN@FVFF77S0Q05N/
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: Marco Elver <elver@google.com>
+Link: https://lore.kernel.org/r/1679066974-690-1-git-send-email-quic_zhenhuah@quicinc.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Stable-dep-of: acfa60dbe038 ("arm64: mm: Fix "rodata=on" when CONFIG_RODATA_FULL_DEFAULT_ENABLED=y")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/super.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/include/asm/kfence.h | 10 ++++++
+ arch/arm64/mm/mmu.c             | 61 +++++++++++++++++++++++++++++++++
+ arch/arm64/mm/pageattr.c        |  7 ++--
+ mm/kfence/core.c                |  4 +++
+ 4 files changed, 80 insertions(+), 2 deletions(-)
 
-diff --git a/fs/afs/super.c b/fs/afs/super.c
-index 95d713074dc81..e95fb4cb4fcd2 100644
---- a/fs/afs/super.c
-+++ b/fs/afs/super.c
-@@ -407,6 +407,8 @@ static int afs_validate_fc(struct fs_context *fc)
- 			return PTR_ERR(volume);
+diff --git a/arch/arm64/include/asm/kfence.h b/arch/arm64/include/asm/kfence.h
+index aa855c6a0ae6f..a81937fae9f6d 100644
+--- a/arch/arm64/include/asm/kfence.h
++++ b/arch/arm64/include/asm/kfence.h
+@@ -19,4 +19,14 @@ static inline bool kfence_protect_page(unsigned long addr, bool protect)
+ 	return true;
+ }
  
- 		ctx->volume = volume;
-+		if (volume->type != AFSVL_RWVOL)
-+			ctx->flock_mode = afs_flock_mode_local;
++#ifdef CONFIG_KFENCE
++extern bool kfence_early_init;
++static inline bool arm64_kfence_can_set_direct_map(void)
++{
++	return !kfence_early_init;
++}
++#else /* CONFIG_KFENCE */
++static inline bool arm64_kfence_can_set_direct_map(void) { return false; }
++#endif /* CONFIG_KFENCE */
++
+ #endif /* __ASM_KFENCE_H */
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index 9a7c389651540..4b302dbf78e96 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -24,6 +24,7 @@
+ #include <linux/mm.h>
+ #include <linux/vmalloc.h>
+ #include <linux/set_memory.h>
++#include <linux/kfence.h>
+ 
+ #include <asm/barrier.h>
+ #include <asm/cputype.h>
+@@ -38,6 +39,7 @@
+ #include <asm/ptdump.h>
+ #include <asm/tlbflush.h>
+ #include <asm/pgalloc.h>
++#include <asm/kfence.h>
+ 
+ #define NO_BLOCK_MAPPINGS	BIT(0)
+ #define NO_CONT_MAPPINGS	BIT(1)
+@@ -521,12 +523,67 @@ static int __init enable_crash_mem_map(char *arg)
+ }
+ early_param("crashkernel", enable_crash_mem_map);
+ 
++#ifdef CONFIG_KFENCE
++
++bool __ro_after_init kfence_early_init = !!CONFIG_KFENCE_SAMPLE_INTERVAL;
++
++/* early_param() will be parsed before map_mem() below. */
++static int __init parse_kfence_early_init(char *arg)
++{
++	int val;
++
++	if (get_option(&arg, &val))
++		kfence_early_init = !!val;
++	return 0;
++}
++early_param("kfence.sample_interval", parse_kfence_early_init);
++
++static phys_addr_t __init arm64_kfence_alloc_pool(void)
++{
++	phys_addr_t kfence_pool;
++
++	if (!kfence_early_init)
++		return 0;
++
++	kfence_pool = memblock_phys_alloc(KFENCE_POOL_SIZE, PAGE_SIZE);
++	if (!kfence_pool) {
++		pr_err("failed to allocate kfence pool\n");
++		kfence_early_init = false;
++		return 0;
++	}
++
++	/* Temporarily mark as NOMAP. */
++	memblock_mark_nomap(kfence_pool, KFENCE_POOL_SIZE);
++
++	return kfence_pool;
++}
++
++static void __init arm64_kfence_map_pool(phys_addr_t kfence_pool, pgd_t *pgdp)
++{
++	if (!kfence_pool)
++		return;
++
++	/* KFENCE pool needs page-level mapping. */
++	__map_memblock(pgdp, kfence_pool, kfence_pool + KFENCE_POOL_SIZE,
++			pgprot_tagged(PAGE_KERNEL),
++			NO_BLOCK_MAPPINGS | NO_CONT_MAPPINGS);
++	memblock_clear_nomap(kfence_pool, KFENCE_POOL_SIZE);
++	__kfence_pool = phys_to_virt(kfence_pool);
++}
++#else /* CONFIG_KFENCE */
++
++static inline phys_addr_t arm64_kfence_alloc_pool(void) { return 0; }
++static inline void arm64_kfence_map_pool(phys_addr_t kfence_pool, pgd_t *pgdp) { }
++
++#endif /* CONFIG_KFENCE */
++
+ static void __init map_mem(pgd_t *pgdp)
+ {
+ 	static const u64 direct_map_end = _PAGE_END(VA_BITS_MIN);
+ 	phys_addr_t kernel_start = __pa_symbol(_stext);
+ 	phys_addr_t kernel_end = __pa_symbol(__init_begin);
+ 	phys_addr_t start, end;
++	phys_addr_t early_kfence_pool;
+ 	int flags = NO_EXEC_MAPPINGS;
+ 	u64 i;
+ 
+@@ -539,6 +596,8 @@ static void __init map_mem(pgd_t *pgdp)
+ 	 */
+ 	BUILD_BUG_ON(pgd_index(direct_map_end - 1) == pgd_index(direct_map_end));
+ 
++	early_kfence_pool = arm64_kfence_alloc_pool();
++
+ 	if (can_set_direct_map())
+ 		flags |= NO_BLOCK_MAPPINGS | NO_CONT_MAPPINGS;
+ 
+@@ -604,6 +663,8 @@ static void __init map_mem(pgd_t *pgdp)
+ 		}
  	}
+ #endif
++
++	arm64_kfence_map_pool(early_kfence_pool, pgdp);
+ }
  
- 	return 0;
+ void mark_rodata_ro(void)
+diff --git a/arch/arm64/mm/pageattr.c b/arch/arm64/mm/pageattr.c
+index 5922178d7a064..47f532e13d532 100644
+--- a/arch/arm64/mm/pageattr.c
++++ b/arch/arm64/mm/pageattr.c
+@@ -11,6 +11,7 @@
+ #include <asm/cacheflush.h>
+ #include <asm/set_memory.h>
+ #include <asm/tlbflush.h>
++#include <asm/kfence.h>
+ 
+ struct page_change_data {
+ 	pgprot_t set_mask;
+@@ -22,12 +23,14 @@ bool rodata_full __ro_after_init = IS_ENABLED(CONFIG_RODATA_FULL_DEFAULT_ENABLED
+ bool can_set_direct_map(void)
+ {
+ 	/*
+-	 * rodata_full, DEBUG_PAGEALLOC and KFENCE require linear map to be
++	 * rodata_full and DEBUG_PAGEALLOC require linear map to be
+ 	 * mapped at page granularity, so that it is possible to
+ 	 * protect/unprotect single pages.
++	 *
++	 * KFENCE pool requires page-granular mapping if initialized late.
+ 	 */
+ 	return (rodata_enabled && rodata_full) || debug_pagealloc_enabled() ||
+-		IS_ENABLED(CONFIG_KFENCE);
++		arm64_kfence_can_set_direct_map();
+ }
+ 
+ static int change_page_range(pte_t *ptep, unsigned long addr, void *data)
+diff --git a/mm/kfence/core.c b/mm/kfence/core.c
+index a477b7fb8aa33..c597cfebb0e86 100644
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -828,6 +828,10 @@ void __init kfence_alloc_pool(void)
+ 	if (!kfence_sample_interval)
+ 		return;
+ 
++	/* if the pool has already been initialized by arch, skip the below. */
++	if (__kfence_pool)
++		return;
++
+ 	__kfence_pool = memblock_alloc(KFENCE_POOL_SIZE, PAGE_SIZE);
+ 
+ 	if (!__kfence_pool)
 -- 
 2.42.0
 
