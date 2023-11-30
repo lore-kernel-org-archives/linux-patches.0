@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C4482CA;
-	Thu, 30 Nov 2023 16:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4367751C3E;
+	Thu, 30 Nov 2023 16:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QjfLS5Hx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F9EC433C8;
-	Thu, 30 Nov 2023 16:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKzHFm7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4147C433C8;
+	Thu, 30 Nov 2023 16:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361852;
-	bh=oWVdYbn9gvG90DeaHZ56JIFbclHb3d7dRpaFILZOlDA=;
+	s=korg; t=1701361855;
+	bh=idUiVwcq4wAroLGPB3ZBN57DKHdBvDbaPdguXxjejx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QjfLS5HxKvcPvCnob4IDkcoT7QFNNtTDGjj4IgzVL1TOAFP6qLATKQoO8SWqWllKX
-	 of6aLzDgRPtwA7YBRuv9zM+HdW5owVgTRu38wOoKcC++rjQLDLSTOQBKkZM3VBb/bM
-	 9UEij7czWAc6aDYFviPa7LrYYIcDP4fRyeqTFFJU=
+	b=qKzHFm7XbZIPwQNmG+crzgAUqw479Y9oztjELUbFryih45ry55bBpOi8/O2LyzVAo
+	 j3O+F9/biu4v7x2PIGoq6yk1x8TuQ2JjnAWTZUnFTCrTahUxQitIs4lPGSNYiqB7/v
+	 yZgWjCeYwQaEdthy5vJqXp4eKI6AGfFzdiji9p9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Laszczak <pawell@cadence.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.1 72/82] usb: cdnsp: Fix deadlock issue during using NCM gadget
-Date: Thu, 30 Nov 2023 16:22:43 +0000
-Message-ID: <20231130162138.265368899@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 50/82] ext4: using nofail preallocation in ext4_es_insert_extent()
+Date: Thu, 30 Nov 2023 16:22:21 +0000
+Message-ID: <20231130162137.561801290@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -41,67 +43,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 58f2fcb3a845fcbbad2f3196bb37d744e0506250 upstream.
+[ Upstream commit 2a69c450083db164596c75c0f5b4d9c4c0e18eba ]
 
-The interrupt service routine registered for the gadget is a primary
-handler which mask the interrupt source and a threaded handler which
-handles the source of the interrupt. Since the threaded handler is
-voluntary threaded, the IRQ-core does not disable bottom halves before
-invoke the handler like it does for the forced-threaded handler.
+Similar to in ext4_es_insert_delayed_block(), we use preallocations that
+do not fail to avoid inconsistencies, but we do not care about es that are
+not must be kept, and we return 0 even if such es memory allocation fails.
 
-Due to changes in networking it became visible that a network gadget's
-completions handler may schedule a softirq which remains unprocessed.
-The gadget's completion handler is usually invoked either in hard-IRQ or
-soft-IRQ context. In this context it is enough to just raise the softirq
-because the softirq itself will be handled once that context is left.
-In the case of the voluntary threaded handler, there is nothing that
-will process pending softirqs. Which means it remain queued until
-another random interrupt (on this CPU) fires and handles it on its exit
-path or another thread locks and unlocks a lock with the bh suffix.
-Worst case is that the CPU goes idle and the NOHZ complains about
-unhandled softirqs.
-
-Disable bottom halves before acquiring the lock (and disabling
-interrupts) and enable them after dropping the lock. This ensures that
-any pending softirqs will handled right away.
-
-cc: stable@vger.kernel.org
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20231108093125.224963-1-pawell@cadence.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230424033846.4732-9-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 8e387c89e96b ("ext4: make sure allocate pending entry not fail")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdnsp-ring.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/extents_status.c | 38 ++++++++++++++++++++++++++------------
+ 1 file changed, 26 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -1522,6 +1522,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
- 	unsigned long flags;
- 	int counter = 0;
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index e382fe1788f1e..934c14f9edb9f 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -840,8 +840,11 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
+ {
+ 	struct extent_status newes;
+ 	ext4_lblk_t end = lblk + len - 1;
+-	int err = 0;
++	int err1 = 0;
++	int err2 = 0;
+ 	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
++	struct extent_status *es1 = NULL;
++	struct extent_status *es2 = NULL;
  
-+	local_bh_disable();
- 	spin_lock_irqsave(&pdev->lock, flags);
+ 	if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
+ 		return 0;
+@@ -869,29 +872,40 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
  
- 	if (pdev->cdnsp_state & (CDNSP_STATE_HALTED | CDNSP_STATE_DYING)) {
-@@ -1534,6 +1535,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
- 			cdnsp_died(pdev);
+ 	ext4_es_insert_extent_check(inode, &newes);
  
- 		spin_unlock_irqrestore(&pdev->lock, flags);
-+		local_bh_enable();
- 		return IRQ_HANDLED;
- 	}
++retry:
++	if (err1 && !es1)
++		es1 = __es_alloc_extent(true);
++	if ((err1 || err2) && !es2)
++		es2 = __es_alloc_extent(true);
+ 	write_lock(&EXT4_I(inode)->i_es_lock);
+-	err = __es_remove_extent(inode, lblk, end, NULL, NULL);
+-	if (err != 0)
++
++	err1 = __es_remove_extent(inode, lblk, end, NULL, es1);
++	if (err1 != 0)
++		goto error;
++
++	err2 = __es_insert_extent(inode, &newes, es2);
++	if (err2 == -ENOMEM && !ext4_es_must_keep(&newes))
++		err2 = 0;
++	if (err2 != 0)
+ 		goto error;
+-retry:
+-	err = __es_insert_extent(inode, &newes, NULL);
+-	if (err == -ENOMEM && __es_shrink(EXT4_SB(inode->i_sb),
+-					  128, EXT4_I(inode)))
+-		goto retry;
+-	if (err == -ENOMEM && !ext4_es_must_keep(&newes))
+-		err = 0;
  
-@@ -1550,6 +1552,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
- 	cdnsp_update_erst_dequeue(pdev, event_ring_deq, 1);
+ 	if (sbi->s_cluster_ratio > 1 && test_opt(inode->i_sb, DELALLOC) &&
+ 	    (status & EXTENT_STATUS_WRITTEN ||
+ 	     status & EXTENT_STATUS_UNWRITTEN))
+ 		__revise_pending(inode, lblk, len);
  
- 	spin_unlock_irqrestore(&pdev->lock, flags);
-+	local_bh_enable();
++	/* es is pre-allocated but not used, free it. */
++	if (es1 && !es1->es_len)
++		__es_free_extent(es1);
++	if (es2 && !es2->es_len)
++		__es_free_extent(es2);
+ error:
+ 	write_unlock(&EXT4_I(inode)->i_es_lock);
++	if (err1 || err2)
++		goto retry;
  
- 	return IRQ_HANDLED;
+ 	ext4_es_print_tree(inode);
+-
+-	return err;
++	return 0;
  }
+ 
+ /*
+-- 
+2.42.0
+
 
 
