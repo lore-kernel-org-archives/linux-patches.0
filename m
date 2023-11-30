@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D21482CB;
-	Thu, 30 Nov 2023 16:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEB4482CB;
+	Thu, 30 Nov 2023 16:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suBV0b9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC4AC433C7;
-	Thu, 30 Nov 2023 16:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIWdfwNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC36C433C7;
+	Thu, 30 Nov 2023 16:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361505;
-	bh=uO6V2ww+c6b6CAmUe7cm7442rxOlBOAE5/zb4BpKMTo=;
+	s=korg; t=1701361508;
+	bh=Ftqq3xfrtkvh+Np2U7j6uckka0ex5meDiOcjP/mFZmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suBV0b9NT2gcPzCq8tFqBAa+wzDoDoZUS/u5lWqQzPLo2ZZiyZs3ochedzU7UWgwy
-	 QpboqE1dIR1DED30IGGJwwCJDSmXi9IJEaEdTJjyG4d0hVA+u/8epjsuffhgUZFBE3
-	 feVfPURzxUNjwBkzPa4Zjv96cqxcKJOCXvwRa9jY=
+	b=zIWdfwNjFHiuXf8nxEfkBoumXTDlf8/c0nITRhYH+zqwQKXyEhQUZS/o7GNyrsXlE
+	 3LvoTY3oenWh0Dz29vcHVr5pQGmgNXEqIgjyaItWW/a2hRaW8MsdFY728Rb9aIvob+
+	 /9WDiI2Jwht70O+dE+kCh1Qz0pbMEkVFc4OxaDVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Elder <elder@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Diederik de Haas <didi.debian@cknow.org>,
+	Christopher Obbard <chris.obbard@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/112] net: ipa: fix one GSI register field width
-Date: Thu, 30 Nov 2023 16:21:36 +0000
-Message-ID: <20231130162141.875592999@linuxfoundation.org>
+Subject: [PATCH 6.6 026/112] drm/rockchip: vop: Fix color for RGB888/BGR888 format on VOP full
+Date: Thu, 30 Nov 2023 16:21:13 +0000
+Message-ID: <20231130162141.146196913@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,35 +44,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Elder <elder@linaro.org>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 37f0205538baf70beb57cdcb6c7d14aa13257926 ]
+[ Upstream commit bb0a05acd6121ff0e810b44fdc24dbdfaa46b642 ]
 
-The width of the R_LENGTH field of the EV_CH_E_CNTXT_1 GSI register
-is 24 bits (not 20 bits) starting with IPA v5.0.  Fix this.
+Use of DRM_FORMAT_RGB888 and DRM_FORMAT_BGR888 on e.g. RK3288, RK3328
+and RK3399 result in wrong colors being displayed.
 
-Fixes: faf0678ec8a0 ("net: ipa: add IPA v5.0 GSI register definitions")
-Signed-off-by: Alex Elder <elder@linaro.org>
-Link: https://lore.kernel.org/r/20231122231708.896632-1-elder@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The issue can be observed using modetest:
+
+  modetest -s <connector_id>@<crtc_id>:1920x1080-60@RG24
+  modetest -s <connector_id>@<crtc_id>:1920x1080-60@BG24
+
+Vendor 4.4 kernel apply an inverted rb swap for these formats on VOP
+full framework (IP version 3.x) compared to VOP little framework (2.x).
+
+Fix colors by applying different rb swap for VOP full framework (3.x)
+and VOP little framework (2.x) similar to vendor 4.4 kernel.
+
+Fixes: 85a359f25388 ("drm/rockchip: Add BGR formats to VOP")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Tested-by: Diederik de Haas <didi.debian@cknow.org>
+Reviewed-by: Christopher Obbard <chris.obbard@collabora.com>
+Tested-by: Christopher Obbard <chris.obbard@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231026191500.2994225-1-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/reg/gsi_reg-v5.0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ipa/reg/gsi_reg-v5.0.c b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-index d7b81a36d673b..145eb0bd096d6 100644
---- a/drivers/net/ipa/reg/gsi_reg-v5.0.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-@@ -78,7 +78,7 @@ REG_STRIDE_FIELDS(EV_CH_E_CNTXT_0, ev_ch_e_cntxt_0,
- 		  0x0001c000 + 0x12000 * GSI_EE_AP, 0x80);
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index 41cd12d5f2fa2..4b338cb89d32d 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -247,14 +247,22 @@ static inline void vop_cfg_done(struct vop *vop)
+ 	VOP_REG_SET(vop, common, cfg_done, 1);
+ }
  
- static const u32 reg_ev_ch_e_cntxt_1_fmask[] = {
--	[R_LENGTH]					= GENMASK(19, 0),
-+	[R_LENGTH]					= GENMASK(23, 0),
- };
+-static bool has_rb_swapped(uint32_t format)
++static bool has_rb_swapped(uint32_t version, uint32_t format)
+ {
+ 	switch (format) {
+ 	case DRM_FORMAT_XBGR8888:
+ 	case DRM_FORMAT_ABGR8888:
+-	case DRM_FORMAT_BGR888:
+ 	case DRM_FORMAT_BGR565:
+ 		return true;
++	/*
++	 * full framework (IP version 3.x) only need rb swapped for RGB888 and
++	 * little framework (IP version 2.x) only need rb swapped for BGR888,
++	 * check for 3.x to also only rb swap BGR888 for unknown vop version
++	 */
++	case DRM_FORMAT_RGB888:
++		return VOP_MAJOR(version) == 3;
++	case DRM_FORMAT_BGR888:
++		return VOP_MAJOR(version) != 3;
+ 	default:
+ 		return false;
+ 	}
+@@ -1013,7 +1021,7 @@ static void vop_plane_atomic_update(struct drm_plane *plane,
+ 	VOP_WIN_SET(vop, win, dsp_info, dsp_info);
+ 	VOP_WIN_SET(vop, win, dsp_st, dsp_st);
  
- REG_STRIDE_FIELDS(EV_CH_E_CNTXT_1, ev_ch_e_cntxt_1,
+-	rb_swap = has_rb_swapped(fb->format->format);
++	rb_swap = has_rb_swapped(vop->data->version, fb->format->format);
+ 	VOP_WIN_SET(vop, win, rb_swap, rb_swap);
+ 
+ 	/*
 -- 
 2.42.0
 
