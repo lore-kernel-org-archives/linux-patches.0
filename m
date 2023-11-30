@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D166524C2;
-	Thu, 30 Nov 2023 16:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E9C54F98;
+	Thu, 30 Nov 2023 16:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yy8e9QLp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF1CC433C8;
-	Thu, 30 Nov 2023 16:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thSyCQTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFBCC433C8;
+	Thu, 30 Nov 2023 16:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361716;
-	bh=hHfgOx0DzUPZI80xeNOtXxtfZxolzUuuzF4iMFNfXLo=;
+	s=korg; t=1701361718;
+	bh=xSB05A5xO2bK6qAWEvbhTZz1Njho0Ioc4rfVo8rweCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yy8e9QLpg38en6C3VuKPrHSFWo4ti/41a3yYWnAbh0XoMuO19se4NGUm06u7p4Hbz
-	 U7CVGMJFNTetssHq/W4YgaT6BB2SteHUnmuC6ljnQBBLi5XErj9xsGsBe05TXFhf8W
-	 LmVKN5oOQQ07fK+qF6wtwYCYRxyhfIS9Q40tpz3I=
+	b=thSyCQToJ+fWpaHTchStT4+uXiGeIzasTaKk+DHzHKNtXrjs5qOk9FFYGiRYNWRa9
+	 mg++viNKumAAZ7VgAVn380d5yVhwFfP7BPjSKJtL6oeOsZV2Lf1m7Lk4jPTrCgeJyW
+	 VgA9qMxko8vB/ZhUVZonree48+Pzs5WGxGJNgiJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/82] amd-xgbe: handle the corner-case during tx completion
-Date: Thu, 30 Nov 2023 16:21:50 +0000
-Message-ID: <20231130162136.565604487@linuxfoundation.org>
+Subject: [PATCH 6.1 02/82] afs: Make error on cell lookup failure consistent with OpenAFS
+Date: Thu, 30 Nov 2023 16:21:33 +0000
+Message-ID: <20231130162136.060387518@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -44,59 +45,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 7121205d5330c6a3cb3379348886d47c77b78d06 ]
+[ Upstream commit 2a4ca1b4b77850544408595e2433f5d7811a9daa ]
 
-The existing implementation uses software logic to accumulate tx
-completions until the specified time (1ms) is met and then poll them.
-However, there exists a tiny gap which leads to a race between
-resetting and checking the tx_activate flag. Due to this the tx
-completions are not reported to upper layer and tx queue timeout
-kicks-in restarting the device.
+When kafs tries to look up a cell in the DNS or the local config, it will
+translate a lookup failure into EDESTADDRREQ whereas OpenAFS translates it
+into ENOENT.  Applications such as West expect the latter behaviour and
+fail if they see the former.
 
-To address this, introduce a tx cleanup mechanism as part of the
-periodic maintenance process.
+This can be seen by trying to mount an unknown cell:
 
-Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+   # mount -t afs %example.com:cell.root /mnt
+   mount: /mnt: mount(2) system call failed: Destination address required.
+
+Fixes: 4d673da14533 ("afs: Support the AFS dynamic root")
+Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216637
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/afs/dynroot.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index 614c0278419bc..6b73648b37793 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -682,10 +682,24 @@ static void xgbe_service(struct work_struct *work)
- static void xgbe_service_timer(struct timer_list *t)
- {
- 	struct xgbe_prv_data *pdata = from_timer(pdata, t, service_timer);
-+	struct xgbe_channel *channel;
-+	unsigned int i;
+diff --git a/fs/afs/dynroot.c b/fs/afs/dynroot.c
+index d7d9402ff7182..91e804c70dd0a 100644
+--- a/fs/afs/dynroot.c
++++ b/fs/afs/dynroot.c
+@@ -132,8 +132,8 @@ static int afs_probe_cell_name(struct dentry *dentry)
  
- 	queue_work(pdata->dev_workqueue, &pdata->service_work);
- 
- 	mod_timer(&pdata->service_timer, jiffies + HZ);
-+
-+	if (!pdata->tx_usecs)
-+		return;
-+
-+	for (i = 0; i < pdata->channel_count; i++) {
-+		channel = pdata->channel[i];
-+		if (!channel->tx_ring || channel->tx_timer_active)
-+			break;
-+		channel->tx_timer_active = 1;
-+		mod_timer(&channel->tx_timer,
-+			  jiffies + usecs_to_jiffies(pdata->tx_usecs));
-+	}
+ 	ret = dns_query(net->net, "afsdb", name, len, "srv=1",
+ 			NULL, NULL, false);
+-	if (ret == -ENODATA)
+-		ret = -EDESTADDRREQ;
++	if (ret == -ENODATA || ret == -ENOKEY)
++		ret = -ENOENT;
+ 	return ret;
  }
  
- static void xgbe_init_timers(struct xgbe_prv_data *pdata)
 -- 
 2.42.0
 
