@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D89524C2;
-	Thu, 30 Nov 2023 16:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98978524C2;
+	Thu, 30 Nov 2023 16:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UP2bhqJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C68C433C9;
-	Thu, 30 Nov 2023 16:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlMw9hXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AD3C433C8;
+	Thu, 30 Nov 2023 16:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361520;
-	bh=+mqRmpZoPOJ+etfTeBnZnm8BxtOUnmJlYNrI56dmL9k=;
+	s=korg; t=1701361523;
+	bh=rqlLDcuWrna/vDUSmQgElKQlrm+pmWb0g5J1XphmLrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UP2bhqJdjhC2O80ROTWs+dhW9oKPqGbkyyD/W/tLG8Rx/6yyeD9PDb6m7Qlp7vaqW
-	 7TgNdfQPQxyCepD9A32yiyW58zZOC13eLL59H3wkC7NFiiJRBELnv0qsB6yS02n1Js
-	 7cV0B6QQgddwKjiuA4J+VrftiVEKBDVN5+3n5Vqo=
+	b=IlMw9hXRYkoV7LCHzSOTs5fKeOXjWNOMzNu/wuM2csSbmy11S/UeM4ZvAjVDfGHPu
+	 re3pSh4BnxcEvFkX0Yc33L312RAkZ4GZkDX/2LC1r7okzBiyyUXiZdfjFnADXEZXdR
+	 LLzjD/z+SlnHyNYGsf6/T5iivQCIwvycx/ezm7Rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
 	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/112] accel/ivpu: Do not initialize parameters on power up
-Date: Thu, 30 Nov 2023 16:21:18 +0000
-Message-ID: <20231130162141.304683769@linuxfoundation.org>
+Subject: [PATCH 6.6 032/112] accel/ivpu/37xx: Fix hangs related to MMIO reset
+Date: Thu, 30 Nov 2023 16:21:19 +0000
+Message-ID: <20231130162141.337328480@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,76 +42,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-[ Upstream commit f956bf2080862cfc97412e1eaa08689bc9838d20 ]
+[ Upstream commit 3f7c0634926daf48cd2f6db6c1197a1047074088 ]
 
-Initialize HW specific parameters only once. We do not have to do this
-on every power_up (performed during initialization and on resume). Move
-corresponding code to ->info_init()
+There is no need to call MMIO reset using VPU_37XX_BUTTRESS_VPU_IP_RESET
+register. IP will be reset by FLR or by entering d0i3. Also IP reset
+during power_up is not needed as the VPU is already in reset.
 
+Removing MMIO reset improves stability as it a partial device reset
+that is not safe in some corner cases.
+
+This change also brings back ivpu_boot_pwr_domain_disable() that
+helps to properly power down VPU when it is hung by a buggy workload.
+
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Fixes: 828d63042aec ("accel/ivpu: Don't enter d0i3 during FLR")
 Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231020104501.697763-6-stanislaw.gruszka@linux.intel.com
-Stable-dep-of: 3f7c0634926d ("accel/ivpu/37xx: Fix hangs related to MMIO reset")
+Link: https://patchwork.freedesktop.org/patch/msgid/20231115111004.1304092-1-jacek.lawrynowicz@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_hw_37xx.c | 8 ++++----
- drivers/accel/ivpu/ivpu_hw_40xx.c | 8 ++++----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/accel/ivpu/ivpu_hw_37xx.c | 46 +++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 24 deletions(-)
 
 diff --git a/drivers/accel/ivpu/ivpu_hw_37xx.c b/drivers/accel/ivpu/ivpu_hw_37xx.c
-index 18be8b98e9a8b..cb9f0196e3ddf 100644
+index cb9f0196e3ddf..b8010c07eec17 100644
 --- a/drivers/accel/ivpu/ivpu_hw_37xx.c
 +++ b/drivers/accel/ivpu/ivpu_hw_37xx.c
-@@ -625,6 +625,10 @@ static int ivpu_hw_37xx_info_init(struct ivpu_device *vdev)
- 	ivpu_hw_init_range(&hw->ranges.shave, 0x180000000, SZ_2G);
- 	ivpu_hw_init_range(&hw->ranges.dma,   0x200000000, SZ_8G);
- 
-+	ivpu_hw_read_platform(vdev);
-+	ivpu_hw_wa_init(vdev);
-+	ivpu_hw_timeouts_init(vdev);
-+
- 	return 0;
+@@ -536,6 +536,16 @@ static int ivpu_boot_pwr_domain_enable(struct ivpu_device *vdev)
+ 	return ret;
  }
  
-@@ -681,10 +685,6 @@ static int ivpu_hw_37xx_power_up(struct ivpu_device *vdev)
++static int ivpu_boot_pwr_domain_disable(struct ivpu_device *vdev)
++{
++	ivpu_boot_dpu_active_drive(vdev, false);
++	ivpu_boot_pwr_island_isolation_drive(vdev, true);
++	ivpu_boot_pwr_island_trickle_drive(vdev, false);
++	ivpu_boot_pwr_island_drive(vdev, false);
++
++	return ivpu_boot_wait_for_pwr_island_status(vdev, 0x0);
++}
++
+ static void ivpu_boot_no_snoop_enable(struct ivpu_device *vdev)
+ {
+ 	u32 val = REGV_RD32(VPU_37XX_HOST_IF_TCU_PTW_OVERRIDES);
+@@ -634,25 +644,17 @@ static int ivpu_hw_37xx_info_init(struct ivpu_device *vdev)
+ 
+ static int ivpu_hw_37xx_reset(struct ivpu_device *vdev)
+ {
+-	int ret;
+-	u32 val;
+-
+-	if (IVPU_WA(punit_disabled))
+-		return 0;
++	int ret = 0;
+ 
+-	ret = REGB_POLL_FLD(VPU_37XX_BUTTRESS_VPU_IP_RESET, TRIGGER, 0, TIMEOUT_US);
+-	if (ret) {
+-		ivpu_err(vdev, "Timed out waiting for TRIGGER bit\n");
+-		return ret;
++	if (ivpu_boot_pwr_domain_disable(vdev)) {
++		ivpu_err(vdev, "Failed to disable power domain\n");
++		ret = -EIO;
+ 	}
+ 
+-	val = REGB_RD32(VPU_37XX_BUTTRESS_VPU_IP_RESET);
+-	val = REG_SET_FLD(VPU_37XX_BUTTRESS_VPU_IP_RESET, TRIGGER, val);
+-	REGB_WR32(VPU_37XX_BUTTRESS_VPU_IP_RESET, val);
+-
+-	ret = REGB_POLL_FLD(VPU_37XX_BUTTRESS_VPU_IP_RESET, TRIGGER, 0, TIMEOUT_US);
+-	if (ret)
+-		ivpu_err(vdev, "Timed out waiting for RESET completion\n");
++	if (ivpu_pll_disable(vdev)) {
++		ivpu_err(vdev, "Failed to disable PLL\n");
++		ret = -EIO;
++	}
+ 
+ 	return ret;
+ }
+@@ -685,10 +687,6 @@ static int ivpu_hw_37xx_power_up(struct ivpu_device *vdev)
  {
  	int ret;
  
--	ivpu_hw_read_platform(vdev);
--	ivpu_hw_wa_init(vdev);
--	ivpu_hw_timeouts_init(vdev);
+-	ret = ivpu_hw_37xx_reset(vdev);
+-	if (ret)
+-		ivpu_warn(vdev, "Failed to reset HW: %d\n", ret);
 -
- 	ret = ivpu_hw_37xx_reset(vdev);
- 	if (ret)
- 		ivpu_warn(vdev, "Failed to reset HW: %d\n", ret);
-diff --git a/drivers/accel/ivpu/ivpu_hw_40xx.c b/drivers/accel/ivpu/ivpu_hw_40xx.c
-index 85171a408363f..7c3ff25232a2c 100644
---- a/drivers/accel/ivpu/ivpu_hw_40xx.c
-+++ b/drivers/accel/ivpu/ivpu_hw_40xx.c
-@@ -728,6 +728,10 @@ static int ivpu_hw_40xx_info_init(struct ivpu_device *vdev)
- 	ivpu_hw_init_range(&vdev->hw->ranges.shave,  0x80000000 + SZ_256M, SZ_2G - SZ_256M);
- 	ivpu_hw_init_range(&vdev->hw->ranges.dma,   0x200000000, SZ_8G);
- 
-+	ivpu_hw_read_platform(vdev);
-+	ivpu_hw_wa_init(vdev);
-+	ivpu_hw_timeouts_init(vdev);
-+
- 	return 0;
- }
- 
-@@ -819,10 +823,6 @@ static int ivpu_hw_40xx_power_up(struct ivpu_device *vdev)
- 		return ret;
- 	}
- 
--	ivpu_hw_read_platform(vdev);
--	ivpu_hw_wa_init(vdev);
--	ivpu_hw_timeouts_init(vdev);
--
- 	ret = ivpu_hw_40xx_d0i3_disable(vdev);
+ 	ret = ivpu_hw_37xx_d0i3_disable(vdev);
  	if (ret)
  		ivpu_warn(vdev, "Failed to disable D0I3: %d\n", ret);
+@@ -756,11 +754,11 @@ static int ivpu_hw_37xx_power_down(struct ivpu_device *vdev)
+ {
+ 	int ret = 0;
+ 
+-	if (!ivpu_hw_37xx_is_idle(vdev) && ivpu_hw_37xx_reset(vdev))
+-		ivpu_err(vdev, "Failed to reset the VPU\n");
++	if (!ivpu_hw_37xx_is_idle(vdev))
++		ivpu_warn(vdev, "VPU not idle during power down\n");
+ 
+-	if (ivpu_pll_disable(vdev)) {
+-		ivpu_err(vdev, "Failed to disable PLL\n");
++	if (ivpu_hw_37xx_reset(vdev)) {
++		ivpu_err(vdev, "Failed to reset VPU\n");
+ 		ret = -EIO;
+ 	}
+ 
 -- 
 2.42.0
 
