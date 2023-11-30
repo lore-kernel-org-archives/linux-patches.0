@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2981A51C3E;
-	Thu, 30 Nov 2023 16:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC5248CEB;
+	Thu, 30 Nov 2023 16:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxkxKBox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D43C433C7;
-	Thu, 30 Nov 2023 16:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McZSdyfb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AD0C433C7;
+	Thu, 30 Nov 2023 16:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361996;
-	bh=YHAg/3VwwGFCia5KNnLb+/JUPJNPYSlPVWyq7QhspRE=;
+	s=korg; t=1701361999;
+	bh=C8tiWsBtU6p0b//zVUwmDWb0i/QaOgDNJLkvC1Jz4XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxkxKBoxrEhi0JtFZ9mBl/3Gzwxydf+dXTmXgtu9HGVvRVmwe8tFwehT5lTx57irS
-	 XHobOWnpzoZIDh7f5L//nYMiYiFIj7OgycVetDryXEBEKt7jbdS0d8EIzBqNOebq+v
-	 MtmUmMtSLBRMyhJIGSwe9ctz7YDYw1Wq1LyvbH80=
+	b=McZSdyfbKLgCY9yaKxukFUHhPkq+aHMH1RGcETf78F+/rrOBT8R2Tb3iAukb7Y8LM
+	 ksgAPqg9jEhuDdMaUXXuUq0xA1QDgBJcabryCZu3USMZFXmPKRsiWWosOhYFQSHFym
+	 e4vl7TcWR29lJEZ8Kuf221OJh1ZoE/SB5kUureqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 45/69] swiotlb-xen: provide the "max_mapping_size" method
-Date: Thu, 30 Nov 2023 16:22:42 +0000
-Message-ID: <20231130162134.551737865@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Coly Li <colyli@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 46/69] bcache: replace a mistaken IS_ERR() by IS_ERR_OR_NULL() in btree_gc_coalesce()
+Date: Thu, 30 Nov 2023 16:22:43 +0000
+Message-ID: <20231130162134.580965743@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -39,57 +36,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Coly Li <colyli@suse.de>
 
-commit bff2a2d453a1b683378b4508b86b84389f551a00 upstream.
+commit f72f4312d4388376fc8a1f6cf37cb21a0d41758b upstream.
 
-There's a bug that when using the XEN hypervisor with bios with large
-multi-page bio vectors on NVMe, the kernel deadlocks [1].
+Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
+node allocations") do the following change inside btree_gc_coalesce(),
 
-The deadlocks are caused by inability to map a large bio vector -
-dma_map_sgtable always returns an error, this gets propagated to the block
-layer as BLK_STS_RESOURCE and the block layer retries the request
-indefinitely.
+31 @@ -1340,7 +1340,7 @@ static int btree_gc_coalesce(
+32         memset(new_nodes, 0, sizeof(new_nodes));
+33         closure_init_stack(&cl);
+34
+35 -       while (nodes < GC_MERGE_NODES && !IS_ERR_OR_NULL(r[nodes].b))
+36 +       while (nodes < GC_MERGE_NODES && !IS_ERR(r[nodes].b))
+37                 keys += r[nodes++].keys;
+38
+39         blocks = btree_default_blocks(b->c) * 2 / 3;
 
-XEN uses the swiotlb framework to map discontiguous pages into contiguous
-runs that are submitted to the PCIe device. The swiotlb framework has a
-limitation on the length of a mapping - this needs to be announced with
-the max_mapping_size method to make sure that the hardware drivers do not
-create larger mappings.
+At line 35 the original r[nodes].b is not always allocatored from
+__bch_btree_node_alloc(), and possibly initialized as NULL pointer by
+caller of btree_gc_coalesce(). Therefore the change at line 36 is not
+correct.
 
-Without max_mapping_size, the NVMe block driver would create large
-mappings that overrun the maximum mapping size.
+This patch replaces the mistaken IS_ERR() by IS_ERR_OR_NULL() to avoid
+potential issue.
 
-Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Link: https://lore.kernel.org/stable/ZTNH0qtmint%2FzLJZ@mail-itl/ [1]
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Acked-by: Stefano Stabellini <sstabellini@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/151bef41-e817-aea9-675-a35fdac4ed@redhat.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
+Cc:  <stable@vger.kernel.org> # 6.5+
+Cc: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Coly Li <colyli@suse.de>
+Link: https://lore.kernel.org/r/20231120052503.6122-9-colyli@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/swiotlb-xen.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/bcache/btree.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/xen/swiotlb-xen.c
-+++ b/drivers/xen/swiotlb-xen.c
-@@ -564,4 +564,5 @@ const struct dma_map_ops xen_swiotlb_dma
- 	.get_sgtable = dma_common_get_sgtable,
- 	.alloc_pages = dma_common_alloc_pages,
- 	.free_pages = dma_common_free_pages,
-+	.max_mapping_size = swiotlb_max_mapping_size,
- };
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -1342,7 +1342,7 @@ static int btree_gc_coalesce(struct btre
+ 	memset(new_nodes, 0, sizeof(new_nodes));
+ 	closure_init_stack(&cl);
+ 
+-	while (nodes < GC_MERGE_NODES && !IS_ERR(r[nodes].b))
++	while (nodes < GC_MERGE_NODES && !IS_ERR_OR_NULL(r[nodes].b))
+ 		keys += r[nodes++].keys;
+ 
+ 	blocks = btree_default_blocks(b->c) * 2 / 3;
 
 
