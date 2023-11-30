@@ -1,29 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29F2524C2;
-	Thu, 30 Nov 2023 16:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6C3524C2;
+	Thu, 30 Nov 2023 16:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4aRrI3j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AACFC433C7;
-	Thu, 30 Nov 2023 16:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWzG3h5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B87C433C7;
+	Thu, 30 Nov 2023 16:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361585;
-	bh=1/ikv5T14WaQyUEqkDw52CGgHuSGzmMgVkEFdRPTJBw=;
+	s=korg; t=1701361588;
+	bh=QHZ9SJgHIxTk9xkQEpZwuXnl8ZFfFa6D4tUc9RgWTsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4aRrI3jxF46LNbVYoK3EVHKiANsvs8LVoD/mCDFNj1PlwgJ7bdYeVmRsWCusZOy1
-	 Nt47VfHzXGYnLhTgQAcs+ElERyYVikI7qwAOuJYOXabQl9XjaQV2/jZXitjT+pT/8w
-	 yS6jQj6HCloEeDu55vUcPJ1YuFP0pNQhsX7FAAJ4=
+	b=QWzG3h5VfyMA3RsRR3LqLLImHl7Ywc5Ibhls9yVEB8FecvH5qKmw3kijXyhpPZW7x
+	 LEziWQPLrLAMYHHA/bQOUjeWNAtrX2QkL8oEDzryIGJSWkA96PPIjyHI7uQgcmRHXL
+	 8dXlCPVt9Ebw79Kt3Nq33yiVW3fXfTyRB0aUNU+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Florent Revest <revest@chromium.org>,
+	Kees Cook <keescook@chromium.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Alexey Izbyshev <izbyshev@ispras.ru>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Ayush Jain <ayush.jain3@amd.com>,
+	David Hildenbrand <david@redhat.com>,
+	Greg Thelen <gthelen@google.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Peter Xu <peterx@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Szabolcs Nagy <Szabolcs.Nagy@arm.com>,
+	Topi Miettinen <toiwoton@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/112] lockdep: Fix block chain corruption
-Date: Thu, 30 Nov 2023 16:21:43 +0000
-Message-ID: <20231130162142.104036462@linuxfoundation.org>
+Subject: [PATCH 6.6 057/112] mm: add a NO_INHERIT flag to the PR_SET_MDWE prctl
+Date: Thu, 30 Nov 2023 16:21:44 +0000
+Message-ID: <20231130162142.139727926@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,50 +57,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Florent Revest <revest@chromium.org>
 
-[ Upstream commit bca4104b00fec60be330cd32818dd5c70db3d469 ]
+[ Upstream commit 24e41bf8a6b424c76c5902fb999e9eca61bdf83d ]
 
-Kent reported an occasional KASAN splat in lockdep. Mark then noted:
+This extends the current PR_SET_MDWE prctl arg with a bit to indicate that
+the process doesn't want MDWE protection to propagate to children.
 
-> I suspect the dodgy access is to chain_block_buckets[-1], which hits the last 4
-> bytes of the redzone and gets (incorrectly/misleadingly) attributed to
-> nr_large_chain_blocks.
+To implement this no-inherit mode, the tag in current->mm->flags must be
+absent from MMF_INIT_MASK.  This means that the encoding for "MDWE but
+without inherit" is different in the prctl than in the mm flags.  This
+leads to a bit of bit-mangling in the prctl implementation.
 
-That would mean @size == 0, at which point size_to_bucket() returns -1
-and the above happens.
-
-alloc_chain_hlocks() has 'size - req', for the first with the
-precondition 'size >= rq', which allows the 0.
-
-This code is trying to split a block, del_chain_block() takes what we
-need, and add_chain_block() puts back the remainder, except in the
-above case the remainder is 0 sized and things go sideways.
-
-Fixes: 810507fe6fd5 ("locking/lockdep: Reuse freed chain_hlocks entries")
-Reported-by: Kent Overstreet <kent.overstreet@linux.dev>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Kent Overstreet <kent.overstreet@linux.dev>
-Link: https://lkml.kernel.org/r/20231121114126.GH8262@noisy.programming.kicks-ass.net
+Link: https://lkml.kernel.org/r/20230828150858.393570-6-revest@chromium.org
+Signed-off-by: Florent Revest <revest@chromium.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Alexey Izbyshev <izbyshev@ispras.ru>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Ayush Jain <ayush.jain3@amd.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Greg Thelen <gthelen@google.com>
+Cc: Joey Gouly <joey.gouly@arm.com>
+Cc: KP Singh <kpsingh@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Szabolcs Nagy <Szabolcs.Nagy@arm.com>
+Cc: Topi Miettinen <toiwoton@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 793838138c15 ("prctl: Disable prctl(PR_SET_MDWE) on parisc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/lockdep.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/sched/coredump.h   | 10 ++++++++++
+ include/uapi/linux/prctl.h       |  1 +
+ kernel/fork.c                    |  2 +-
+ kernel/sys.c                     | 32 ++++++++++++++++++++++++++------
+ tools/include/uapi/linux/prctl.h |  1 +
+ 5 files changed, 39 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index e85b5ad3e2069..151bd3de59363 100644
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -3497,7 +3497,8 @@ static int alloc_chain_hlocks(int req)
- 		size = chain_block_size(curr);
- 		if (likely(size >= req)) {
- 			del_chain_block(0, size, chain_block_next(curr));
--			add_chain_block(curr + req, size - req);
-+			if (size > req)
-+				add_chain_block(curr + req, size - req);
- 			return curr;
- 		}
- 	}
+diff --git a/include/linux/sched/coredump.h b/include/linux/sched/coredump.h
+index 0ee96ea7a0e90..1b37fa8fc723d 100644
+--- a/include/linux/sched/coredump.h
++++ b/include/linux/sched/coredump.h
+@@ -91,4 +91,14 @@ static inline int get_dumpable(struct mm_struct *mm)
+ 				 MMF_DISABLE_THP_MASK | MMF_HAS_MDWE_MASK)
+ 
+ #define MMF_VM_MERGE_ANY	29
++#define MMF_HAS_MDWE_NO_INHERIT	30
++
++static inline unsigned long mmf_init_flags(unsigned long flags)
++{
++	if (flags & (1UL << MMF_HAS_MDWE_NO_INHERIT))
++		flags &= ~((1UL << MMF_HAS_MDWE) |
++			   (1UL << MMF_HAS_MDWE_NO_INHERIT));
++	return flags & MMF_INIT_MASK;
++}
++
+ #endif /* _LINUX_SCHED_COREDUMP_H */
+diff --git a/include/uapi/linux/prctl.h b/include/uapi/linux/prctl.h
+index 9a85c69782bdd..370ed14b1ae09 100644
+--- a/include/uapi/linux/prctl.h
++++ b/include/uapi/linux/prctl.h
+@@ -284,6 +284,7 @@ struct prctl_mm_map {
+ /* Memory deny write / execute */
+ #define PR_SET_MDWE			65
+ # define PR_MDWE_REFUSE_EXEC_GAIN	(1UL << 0)
++# define PR_MDWE_NO_INHERIT		(1UL << 1)
+ 
+ #define PR_GET_MDWE			66
+ 
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 3b6d20dfb9a85..177ce7438db6b 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1288,7 +1288,7 @@ static struct mm_struct *mm_init(struct mm_struct *mm, struct task_struct *p,
+ 	hugetlb_count_init(mm);
+ 
+ 	if (current->mm) {
+-		mm->flags = current->mm->flags & MMF_INIT_MASK;
++		mm->flags = mmf_init_flags(current->mm->flags);
+ 		mm->def_flags = current->mm->def_flags & VM_INIT_DEF_MASK;
+ 	} else {
+ 		mm->flags = default_dump_filter;
+diff --git a/kernel/sys.c b/kernel/sys.c
+index 2410e3999ebe5..4a8073c1b2558 100644
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -2368,19 +2368,41 @@ static int prctl_set_vma(unsigned long opt, unsigned long start,
+ }
+ #endif /* CONFIG_ANON_VMA_NAME */
+ 
++static inline unsigned long get_current_mdwe(void)
++{
++	unsigned long ret = 0;
++
++	if (test_bit(MMF_HAS_MDWE, &current->mm->flags))
++		ret |= PR_MDWE_REFUSE_EXEC_GAIN;
++	if (test_bit(MMF_HAS_MDWE_NO_INHERIT, &current->mm->flags))
++		ret |= PR_MDWE_NO_INHERIT;
++
++	return ret;
++}
++
+ static inline int prctl_set_mdwe(unsigned long bits, unsigned long arg3,
+ 				 unsigned long arg4, unsigned long arg5)
+ {
++	unsigned long current_bits;
++
+ 	if (arg3 || arg4 || arg5)
+ 		return -EINVAL;
+ 
+-	if (bits & ~(PR_MDWE_REFUSE_EXEC_GAIN))
++	if (bits & ~(PR_MDWE_REFUSE_EXEC_GAIN | PR_MDWE_NO_INHERIT))
++		return -EINVAL;
++
++	/* NO_INHERIT only makes sense with REFUSE_EXEC_GAIN */
++	if (bits & PR_MDWE_NO_INHERIT && !(bits & PR_MDWE_REFUSE_EXEC_GAIN))
+ 		return -EINVAL;
+ 
++	current_bits = get_current_mdwe();
++	if (current_bits && current_bits != bits)
++		return -EPERM; /* Cannot unset the flags */
++
++	if (bits & PR_MDWE_NO_INHERIT)
++		set_bit(MMF_HAS_MDWE_NO_INHERIT, &current->mm->flags);
+ 	if (bits & PR_MDWE_REFUSE_EXEC_GAIN)
+ 		set_bit(MMF_HAS_MDWE, &current->mm->flags);
+-	else if (test_bit(MMF_HAS_MDWE, &current->mm->flags))
+-		return -EPERM; /* Cannot unset the flag */
+ 
+ 	return 0;
+ }
+@@ -2390,9 +2412,7 @@ static inline int prctl_get_mdwe(unsigned long arg2, unsigned long arg3,
+ {
+ 	if (arg2 || arg3 || arg4 || arg5)
+ 		return -EINVAL;
+-
+-	return test_bit(MMF_HAS_MDWE, &current->mm->flags) ?
+-		PR_MDWE_REFUSE_EXEC_GAIN : 0;
++	return get_current_mdwe();
+ }
+ 
+ static int prctl_get_auxv(void __user *addr, unsigned long len)
+diff --git a/tools/include/uapi/linux/prctl.h b/tools/include/uapi/linux/prctl.h
+index 9a85c69782bdd..370ed14b1ae09 100644
+--- a/tools/include/uapi/linux/prctl.h
++++ b/tools/include/uapi/linux/prctl.h
+@@ -284,6 +284,7 @@ struct prctl_mm_map {
+ /* Memory deny write / execute */
+ #define PR_SET_MDWE			65
+ # define PR_MDWE_REFUSE_EXEC_GAIN	(1UL << 0)
++# define PR_MDWE_NO_INHERIT		(1UL << 1)
+ 
+ #define PR_GET_MDWE			66
+ 
 -- 
 2.42.0
 
