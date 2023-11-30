@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371AD54F93;
-	Thu, 30 Nov 2023 16:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B650754FAF;
+	Thu, 30 Nov 2023 16:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uP66cMgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52170C433C7;
-	Thu, 30 Nov 2023 16:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlXzxcHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D515AC433C7;
+	Thu, 30 Nov 2023 16:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361542;
-	bh=KBf3ckFH8ZZdbhJFP2ziQdIn7EjeCpKZg3OLh74OB9I=;
+	s=korg; t=1701361545;
+	bh=YATGxVbVP/1ud/xjQviJFtgArN09l7loZPy0aSPJIRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uP66cMgpkzD9pkSU5JOK89Gd0VTwBkJ5YMJoApwI/hAkWsz+KkodCm6WnGe7PgdSZ
-	 q5RZhltvwtI+14a8Fa5Stkf1wI6ZbDBld97nFL3SUDU8EMI95nYTvktU65+rbdZ4xe
-	 w0MNpyZdttR6f9GjTIcnWoVo/xTa25XO+7pWAVUQ=
+	b=hlXzxcHPpB0/FQDbLcO8TF8Yuz/xgUYVwXTyIjwndK936qieX11VaydlzZg9gEbuZ
+	 PqDT8X/0U2JhwGIPVbUN8xYKwI2y1XqDVO0W3YzgKE9l41obSOne8Ly0nbF6FWoKsJ
+	 TQmbf+fwH+cggaPqQVb5dG1T9XdAptLVJ8Bhykww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 064/112] ACPI: processor_idle: use raw_safe_halt() in acpi_idle_play_dead()
-Date: Thu, 30 Nov 2023 16:21:51 +0000
-Message-ID: <20231130162142.352058541@linuxfoundation.org>
+Subject: [PATCH 6.6 065/112] ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CVA
+Date: Thu, 30 Nov 2023 16:21:52 +0000
+Message-ID: <20231130162142.384687175@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,46 +41,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 9bb69ba4c177dccaa1f5b5cbdf80b67813328348 upstream.
+commit bd911485294a6f0596e4592ed442438015cffc8a upstream.
 
-Xen HVM guests were observed taking triple-faults when attempting to
-online a previously offlined vCPU.
+Like various other ASUS ExpertBook-s, the ASUS ExpertBook B1402CVA
+has an ACPI DSDT table that describes IRQ 1 as ActiveLow while
+the kernel overrides it to EdgeHigh.
 
-Investigation showed that the fault was coming from a failing call
-to lockdep_assert_irqs_disabled(), in load_current_idt() which was
-too early in the CPU bringup to actually catch the exception and
-report the failure cleanly.
+This prevents the keyboard from working. To fix this issue, add this laptop
+to the skip_override_table so that the kernel does not override IRQ 1.
 
-This was a false positive, caused by acpi_idle_play_dead() setting
-the per-cpu hardirqs_enabled flag by calling safe_halt(). Switch it
-to use raw_safe_halt() instead, which doesn't do so.
-
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: 6.6+ <stable@vger.kernel.org> # 6.6+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218114
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/processor_idle.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/resource.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index 3a34a8c425fe..55437f5e0c3a 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -592,7 +592,7 @@ static int acpi_idle_play_dead(struct cpuidle_device *dev, int index)
- 	while (1) {
- 
- 		if (cx->entry_method == ACPI_CSTATE_HALT)
--			safe_halt();
-+			raw_safe_halt();
- 		else if (cx->entry_method == ACPI_CSTATE_SYSTEMIO) {
- 			io_idle(cx->address);
- 		} else
--- 
-2.43.0
-
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -447,6 +447,13 @@ static const struct dmi_system_id asus_l
+ 		},
+ 	},
+ 	{
++		/* Asus ExpertBook B1402CVA */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "B1402CVA"),
++		},
++	},
++	{
+ 		.ident = "Asus ExpertBook B1502CBA",
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
 
 
