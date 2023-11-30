@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B223E61FA9;
-	Thu, 30 Nov 2023 22:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FA761FA9;
+	Thu, 30 Nov 2023 22:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EM07ojKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2FBC433C9;
-	Thu, 30 Nov 2023 22:58:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bQZSRUIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7210DC433C7;
+	Thu, 30 Nov 2023 22:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1701385109;
-	bh=GNdAEOCip3i8vg7nOoBtjnTsPMJcCPD+RgVTLmzP9xM=;
+	bh=EC0vuuAeHJPjllPHnkv7z61/UfDvwZPVMPYM0xDi5IU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=EM07ojKP+3FsPmxu7V3i4rAxnkJgTs4dCkWCiSTYAVlbzem0IOIc74n/SuQxd58x4
-	 IGOj+cwOaieYEE/meeGD4e1T2jK2/M1OSZpdZZHRbVvZbpDHdtD8FfZhgGRynpAgzi
-	 YgL4FpSFXn5tMBm3Da/BAexPOYbt2oM7letsrUrLkgwo8kXf0BNsDfgGDl0MBFbfKt
-	 ELLvqgU7MT2Z/SkLl6WO/R6oVbMUwePzdUWkWfwWR39ZHriOnQRpFidgZl9pSmi+fr
-	 XeVRJF2K5+1wdzExXpK4vi6jdT+ErIk5Akjrso/q+AFZ4na8/LPycLC+CD+LXk6cRf
-	 TeSpfsDJPfflA==
+	b=bQZSRUIs4anOPHMaabqoE/10r3k17N228JMxPymOei2d63jdzOVIlZBlBvwr2+Ktk
+	 ej4lYyDW9130DVUAzvXvNTYB3a980UDhZiVXyrhYQKU6giG/GVY5XT3bN840+PfX4Q
+	 6hAYQS+3Ghodw464etBi/lBQAMTEPzR63gRokDD6i5PcwQ8Fr6IoG3fwc6KC8Qd/BB
+	 x0L5pC+AGSZ1HYEq6AZb43czVhVgtk5eem3gNpSqB4LEJdEGx2/MaWyz/fdE25Y3kU
+	 PdggElkR4LRM6LVIe6Ri8MKj7oS5Ims9RTsRY1/Wjt0ubu/GRxbdDKtftegqeIHwn4
+	 ewYJPDCbOXFZw==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 30 Nov 2023 15:58:22 -0700
-Subject: [PATCH 09/19] hexagon: time: Mark time_init_deferred() as static
+Date: Thu, 30 Nov 2023 15:58:23 -0700
+Subject: [PATCH 10/19] hexagon: time: Include asm/delay.h for prototypes
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -28,53 +28,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231130-hexagon-missing-prototypes-v1-9-5c34714afe9e@kernel.org>
+Message-Id: <20231130-hexagon-missing-prototypes-v1-10-5c34714afe9e@kernel.org>
 References: <20231130-hexagon-missing-prototypes-v1-0-5c34714afe9e@kernel.org>
 In-Reply-To: <20231130-hexagon-missing-prototypes-v1-0-5c34714afe9e@kernel.org>
 To: bcain@quicinc.com, akpm@linux-foundation.org, arnd@arndb.de
 Cc: linux-hexagon@vger.kernel.org, llvm@lists.linux.dev, 
  patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1250; i=nathan@kernel.org;
- h=from:subject:message-id; bh=GNdAEOCip3i8vg7nOoBtjnTsPMJcCPD+RgVTLmzP9xM=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKmZwn3tB7qn1FzLm2WnkZzKMn/av+Y6ZUbFUBaeqCtcj
- 1KeOk3oKGVhEONikBVTZKl+rHrc0HDOWcYbpybBzGFlAhnCwMUpABP5VcXw3+XIYcbWQJO7h5ac
- 17P3fMVyVXy5+wqLEOPzGv1ZMzceesDIsMKUr/hAxrNk+Y3z7m54udHZsi5KXObRUbdIDXGm7i3
- SvAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1342; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=EC0vuuAeHJPjllPHnkv7z61/UfDvwZPVMPYM0xDi5IU=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKmZwn1WzKpRx4IzFzZsFfvf2HRnoVG4XK1U4JSmrXN2d
+ cSr9kd2lLIwiHExyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgIkcW8jwPygm8bbbVk0bxm4X
+ 39yAQy+bP3vPjD9mv+tTwzn7qaX3HzIynD/VFXTlfqL9R8b3me/bmX+ncstKiMYZHnD0L5ne42P
+ EBgA=
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Clang warns:
+Clang warns about missing prototypes that are declared in this header:
 
-  arch/hexagon/kernel/time.c:163:13: warning: no previous prototype for function 'time_init_deferred' [-Wmissing-prototypes]
-    163 | void __init time_init_deferred(void)
-        |             ^
-  arch/hexagon/kernel/time.c:163:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-    163 | void __init time_init_deferred(void)
+  arch/hexagon/kernel/time.c:209:6: warning: no previous prototype for function '__delay' [-Wmissing-prototypes]
+    209 | void __delay(unsigned long cycles)
+        |      ^
+  arch/hexagon/kernel/time.c:209:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+    209 | void __delay(unsigned long cycles)
+        | ^
+        | static
+  arch/hexagon/kernel/time.c:224:6: warning: no previous prototype for function '__udelay' [-Wmissing-prototypes]
+    224 | void __udelay(unsigned long usecs)
+        |      ^
+  arch/hexagon/kernel/time.c:224:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+    224 | void __udelay(unsigned long usecs)
         | ^
         | static
 
-This function is not used outside of this translation unit so mark it as
-static to resolve the warning.
-
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- arch/hexagon/kernel/time.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/hexagon/kernel/time.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/arch/hexagon/kernel/time.c b/arch/hexagon/kernel/time.c
-index 59f00bf54fe9..f04dbe4f8a4c 100644
+index f04dbe4f8a4c..f0f207e2a694 100644
 --- a/arch/hexagon/kernel/time.c
 +++ b/arch/hexagon/kernel/time.c
-@@ -161,7 +161,7 @@ static irqreturn_t timer_interrupt(int irq, void *devid)
-  * This runs just before the delay loop is calibrated, and
-  * is used for delay calibration.
-  */
--void __init time_init_deferred(void)
-+static void __init time_init_deferred(void)
- {
- 	struct resource *resource = NULL;
- 	struct clock_event_device *ce_dev = &hexagon_clockevent_dev;
+@@ -17,6 +17,7 @@
+ #include <linux/of_irq.h>
+ #include <linux/module.h>
+ 
++#include <asm/delay.h>
+ #include <asm/hexagon_vm.h>
+ #include <asm/time.h>
+ 
 
 -- 
 2.43.0
