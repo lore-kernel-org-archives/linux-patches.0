@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E4D54F9B;
-	Thu, 30 Nov 2023 16:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EC954BE9;
+	Thu, 30 Nov 2023 16:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HzVtkgm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E58C433C8;
-	Thu, 30 Nov 2023 16:34:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7XlQMIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5297EC433CA;
+	Thu, 30 Nov 2023 16:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701362067;
-	bh=shYSt+BtU/mIQznMEx+d9n6ASBMTGfPZdlonTXW2F8c=;
+	s=korg; t=1701362069;
+	bh=LhwdA09/0/Rtn3FwEy1pY7Np4U12wpzlYy8U8aflmIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1HzVtkgmNq+t9F41aMUzs8FS3LNp4WxQxVKOT6JS4ybJMAuCfYOtF2Sdg5HFO/1U5
-	 iRbVLVaYmY/Qg3IjQfBhr9fg4d+BWgu03pgdqBps2G5EHxkBQ9L2Nlzcl0LqP43eig
-	 sr3BpmbVEJP8pHXVKYNQR5ZVRErT+YaeX3ZtxgPE=
+	b=u7XlQMILooUNiCUbJ+RdY78HO1vy1YsnbqZ1lEJKS1O9Equ2hHbZTwd77eR11Iu8n
+	 G0x0hJsHqg3j6/YWzewISMmnw3T6lGTKVWmozDxQ7DVAffG1SP8WZbQDCzy2uTiD8/
+	 keOlkaal2Oqq4EcL6iYbF6wjqRoSDG+d+vK0GqA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 54/69] dm-delay: fix a race between delay_presuspend and delay_bio
-Date: Thu, 30 Nov 2023 16:22:51 +0000
-Message-ID: <20231130162134.836619848@linuxfoundation.org>
+	Coly Li <colyli@suse.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 55/69] bcache: check return value from btree_node_alloc_replacement()
+Date: Thu, 30 Nov 2023 16:22:52 +0000
+Message-ID: <20231130162134.870379130@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -42,98 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Coly Li <colyli@suse.de>
 
-[ Upstream commit 6fc45b6ed921dc00dfb264dc08c7d67ee63d2656 ]
+commit 777967e7e9f6f5f3e153abffb562bffaf4430d26 upstream.
 
-In delay_presuspend, we set the atomic variable may_delay and then stop
-the timer and flush pending bios. The intention here is to prevent the
-delay target from re-arming the timer again.
+In btree_gc_rewrite_node(), pointer 'n' is not checked after it returns
+from btree_gc_rewrite_node(). There is potential possibility that 'n' is
+a non NULL ERR_PTR(), referencing such error code is not permitted in
+following code. Therefore a return value checking is necessary after 'n'
+is back from btree_node_alloc_replacement().
 
-However, this test is racy. Suppose that one thread goes to delay_bio,
-sees that dc->may_delay is one and proceeds; now, another thread executes
-delay_presuspend, it sets dc->may_delay to zero, deletes the timer and
-flushes pending bios. Then, the first thread continues and adds the bio to
-delayed->list despite the fact that dc->may_delay is false.
-
-Fix this bug by changing may_delay's type from atomic_t to bool and
-only access it while holding the delayed_bios_lock mutex. Note that we
-don't have to grab the mutex in delay_resume because there are no bios
-in flight at this point.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Coly Li <colyli@suse.de>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc:  <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231120052503.6122-3-colyli@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-delay.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/md/bcache/btree.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
-index 59e51d285b0e5..238028056d0cc 100644
---- a/drivers/md/dm-delay.c
-+++ b/drivers/md/dm-delay.c
-@@ -30,7 +30,7 @@ struct delay_c {
- 	struct workqueue_struct *kdelayd_wq;
- 	struct work_struct flush_expired_bios;
- 	struct list_head delayed_bios;
--	atomic_t may_delay;
-+	bool may_delay;
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -1506,6 +1506,8 @@ static int btree_gc_rewrite_node(struct
+ 		return 0;
  
- 	struct delay_class read;
- 	struct delay_class write;
-@@ -191,7 +191,7 @@ static int delay_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	INIT_WORK(&dc->flush_expired_bios, flush_expired_bios);
- 	INIT_LIST_HEAD(&dc->delayed_bios);
- 	mutex_init(&dc->timer_lock);
--	atomic_set(&dc->may_delay, 1);
-+	dc->may_delay = true;
- 	dc->argc = argc;
+ 	n = btree_node_alloc_replacement(replace, NULL);
++	if (IS_ERR(n))
++		return 0;
  
- 	ret = delay_class_ctr(ti, &dc->read, argv);
-@@ -245,7 +245,7 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
- 	struct dm_delay_info *delayed;
- 	unsigned long expires = 0;
- 
--	if (!c->delay || !atomic_read(&dc->may_delay))
-+	if (!c->delay)
- 		return DM_MAPIO_REMAPPED;
- 
- 	delayed = dm_per_bio_data(bio, sizeof(struct dm_delay_info));
-@@ -254,6 +254,10 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
- 	delayed->expires = expires = jiffies + msecs_to_jiffies(c->delay);
- 
- 	mutex_lock(&delayed_bios_lock);
-+	if (unlikely(!dc->may_delay)) {
-+		mutex_unlock(&delayed_bios_lock);
-+		return DM_MAPIO_REMAPPED;
-+	}
- 	c->ops++;
- 	list_add_tail(&delayed->list, &dc->delayed_bios);
- 	mutex_unlock(&delayed_bios_lock);
-@@ -267,7 +271,10 @@ static void delay_presuspend(struct dm_target *ti)
- {
- 	struct delay_c *dc = ti->private;
- 
--	atomic_set(&dc->may_delay, 0);
-+	mutex_lock(&delayed_bios_lock);
-+	dc->may_delay = false;
-+	mutex_unlock(&delayed_bios_lock);
-+
- 	del_timer_sync(&dc->delay_timer);
- 	flush_bios(flush_delayed_bios(dc, 1));
- }
-@@ -276,7 +283,7 @@ static void delay_resume(struct dm_target *ti)
- {
- 	struct delay_c *dc = ti->private;
- 
--	atomic_set(&dc->may_delay, 1);
-+	dc->may_delay = true;
- }
- 
- static int delay_map(struct dm_target *ti, struct bio *bio)
--- 
-2.42.0
-
+ 	/* recheck reserve after allocating replacement node */
+ 	if (btree_check_reserve(b, NULL)) {
 
 
