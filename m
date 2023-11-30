@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EC954BE9;
-	Thu, 30 Nov 2023 16:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BE154F9C;
+	Thu, 30 Nov 2023 16:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7XlQMIL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5297EC433CA;
-	Thu, 30 Nov 2023 16:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTvRWl/6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0F7C433C8;
+	Thu, 30 Nov 2023 16:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701362069;
-	bh=LhwdA09/0/Rtn3FwEy1pY7Np4U12wpzlYy8U8aflmIs=;
+	s=korg; t=1701362072;
+	bh=kwQatxU4HNgrZaFt5932clxZzT/9haK0MQ+jQIpKW48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7XlQMILooUNiCUbJ+RdY78HO1vy1YsnbqZ1lEJKS1O9Equ2hHbZTwd77eR11Iu8n
-	 G0x0hJsHqg3j6/YWzewISMmnw3T6lGTKVWmozDxQ7DVAffG1SP8WZbQDCzy2uTiD8/
-	 keOlkaal2Oqq4EcL6iYbF6wjqRoSDG+d+vK0GqA8=
+	b=eTvRWl/6H8IfsUfKtYz1OXab1a46WuWad8hbRKwig3Xyt4pL4U9n35hpd7fFZiZzn
+	 Oy4LszBu4g+UDHGywQsPHX9p0qnAEctmGli0bLuIcnoixnZn/SOStaQMToZiNw7i4l
+	 ddgk/1won/4bGDxbeLTP17d1ydX3E57zGhTEPGPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Rand Deeb <rand.sec96@gmail.com>,
 	Coly Li <colyli@suse.de>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 55/69] bcache: check return value from btree_node_alloc_replacement()
-Date: Thu, 30 Nov 2023 16:22:52 +0000
-Message-ID: <20231130162134.870379130@linuxfoundation.org>
+Subject: [PATCH 5.15 56/69] bcache: prevent potential division by zero error
+Date: Thu, 30 Nov 2023 16:22:53 +0000
+Message-ID: <20231130162134.903139043@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -42,36 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Coly Li <colyli@suse.de>
+From: Rand Deeb <rand.sec96@gmail.com>
 
-commit 777967e7e9f6f5f3e153abffb562bffaf4430d26 upstream.
+commit 2c7f497ac274a14330208b18f6f734000868ebf9 upstream.
 
-In btree_gc_rewrite_node(), pointer 'n' is not checked after it returns
-from btree_gc_rewrite_node(). There is potential possibility that 'n' is
-a non NULL ERR_PTR(), referencing such error code is not permitted in
-following code. Therefore a return value checking is necessary after 'n'
-is back from btree_node_alloc_replacement().
+In SHOW(), the variable 'n' is of type 'size_t.' While there is a
+conditional check to verify that 'n' is not equal to zero before
+executing the 'do_div' macro, concerns arise regarding potential
+division by zero error in 64-bit environments.
 
-Signed-off-by: Coly Li <colyli@suse.de>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+The concern arises when 'n' is 64 bits in size, greater than zero, and
+the lower 32 bits of it are zeros. In such cases, the conditional check
+passes because 'n' is non-zero, but the 'do_div' macro casts 'n' to
+'uint32_t,' effectively truncating it to its lower 32 bits.
+Consequently, the 'n' value becomes zero.
+
+To fix this potential division by zero error and ensure precise
+division handling, this commit replaces the 'do_div' macro with
+div64_u64(). div64_u64() is designed to work with 64-bit operands,
+guaranteeing that division is performed correctly.
+
+This change enhances the robustness of the code, ensuring that division
+operations yield accurate results in all scenarios, eliminating the
+possibility of division by zero, and improving compatibility across
+different 64-bit environments.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
 Cc:  <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231120052503.6122-3-colyli@suse.de
+Signed-off-by: Coly Li <colyli@suse.de>
+Link: https://lore.kernel.org/r/20231120052503.6122-5-colyli@suse.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/btree.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/bcache/sysfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1506,6 +1506,8 @@ static int btree_gc_rewrite_node(struct
- 		return 0;
+--- a/drivers/md/bcache/sysfs.c
++++ b/drivers/md/bcache/sysfs.c
+@@ -1099,7 +1099,7 @@ SHOW(__bch_cache)
+ 			sum += INITIAL_PRIO - cached[i];
  
- 	n = btree_node_alloc_replacement(replace, NULL);
-+	if (IS_ERR(n))
-+		return 0;
+ 		if (n)
+-			do_div(sum, n);
++			sum = div64_u64(sum, n);
  
- 	/* recheck reserve after allocating replacement node */
- 	if (btree_check_reserve(b, NULL)) {
+ 		for (i = 0; i < ARRAY_SIZE(q); i++)
+ 			q[i] = INITIAL_PRIO - cached[n * (i + 1) /
 
 
