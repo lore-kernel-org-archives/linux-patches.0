@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B6F482CA;
-	Thu, 30 Nov 2023 16:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14BC482CA;
+	Thu, 30 Nov 2023 16:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWMoyVsr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C597AC433C7;
-	Thu, 30 Nov 2023 16:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyL9q2cr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8ACC433C8;
+	Thu, 30 Nov 2023 16:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361882;
-	bh=L1MPuxY6DHpFj6I0nX96GgVW+zRh4EGyZVkHJHA7TKM=;
+	s=korg; t=1701361884;
+	bh=ldd32EmYqaUrDZ83TLjtx3wmnJ+N3yexkAbcRriETUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yWMoyVsrzRWeI/cfzacjn3nkP4sX8mOzT1xIr8/I2WtUYf25urvRFd+A+C+jwLgz9
-	 TuPkiL3sHs+SM34Udq7/O2q8wBWa9BWRt6I7ChwlY8V/wTUjmRajd5cUKUvrLT2GFD
-	 23ZRqcIX83TKYSrikqSdlG85m7EwY5VNpXI/knMg=
+	b=fyL9q2crntFFUQHWVzwrGTey2g1OCU4emzsU6m+6hdziE7nUHBrI6Y6WRJt4NA4mC
+	 jpwOk90U1P/tsqbYybns+Zi2EKpjkiUEFCxX3hr3aACu4K8hHuwa9rEeuOPUTwr75G
+	 z0T2tI0b5P/6nWwnPS0DGFnx5B080ue3m6nHTZVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogeus <heikki.krogerus@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 76/82] usb: typec: tcpm: Skip hard reset when in error recovery
-Date: Thu, 30 Nov 2023 16:22:47 +0000
-Message-ID: <20231130162138.405662356@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Ivan Ivanov <ivan.ivanov@suse.com>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 77/82] USB: dwc2: write HCINT with INTMASK applied
+Date: Thu, 30 Nov 2023 16:22:48 +0000
+Message-ID: <20231130162138.436962235@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -42,57 +43,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit a6fe37f428c19dd164c2111157d4a1029bd853aa upstream.
+commit 0583bc776ca5b5a3f5752869fc31cf7322df2b35 upstream.
 
-Hard reset queued prior to error recovery (or) received during
-error recovery will make TCPM to prematurely exit error recovery
-sequence. Ignore hard resets received during error recovery (or)
-port reset sequence.
+dwc2_hc_n_intr() writes back INTMASK as read but evaluates it
+with intmask applied. In stress testing this causes spurious
+interrupts like this:
 
-```
-[46505.459688] state change SNK_READY -> ERROR_RECOVERY [rev3 NONE_AMS]
-[46505.459706] state change ERROR_RECOVERY -> PORT_RESET [rev3 NONE_AMS]
-[46505.460433] disable vbus discharge ret:0
-[46505.461226] Setting usb_comm capable false
-[46505.467244] Setting voltage/current limit 0 mV 0 mA
-[46505.467262] polarity 0
-[46505.470695] Requesting mux state 0, usb-role 0, orientation 0
-[46505.475621] cc:=0
-[46505.476012] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev3 NONE_AMS]
-[46505.476020] Received hard reset
-[46505.476024] state change PORT_RESET -> HARD_RESET_START [rev3 HARD_RESET]
-```
+[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 7 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 0 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 4 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_update_urb_state_abn(): trimming xfer length
 
-Cc: stable@vger.kernel.org
-Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogeus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20231101021909.2962679-1-badhri@google.com
+Applying INTMASK prevents this. The issue exists in all versions of the
+driver.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Tested-by: Ivan Ivanov <ivan.ivanov@suse.com>
+Tested-by: Andrea della Porta <andrea.porta@suse.com>
+Link: https://lore.kernel.org/r/20231115144514.15248-1-oneukum@suse.com
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/dwc2/hcd_intr.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -5426,6 +5426,15 @@ static void _tcpm_pd_hard_reset(struct t
- 	if (port->bist_request == BDO_MODE_TESTDATA && port->tcpc->set_bist_data)
- 		port->tcpc->set_bist_data(port->tcpc, false);
+--- a/drivers/usb/dwc2/hcd_intr.c
++++ b/drivers/usb/dwc2/hcd_intr.c
+@@ -2015,15 +2015,17 @@ static void dwc2_hc_n_intr(struct dwc2_h
+ {
+ 	struct dwc2_qtd *qtd;
+ 	struct dwc2_host_chan *chan;
+-	u32 hcint, hcintmsk;
++	u32 hcint, hcintraw, hcintmsk;
  
-+	switch (port->state) {
-+	case ERROR_RECOVERY:
-+	case PORT_RESET:
-+	case PORT_RESET_WAIT_OFF:
-+		return;
-+	default:
-+		break;
-+	}
+ 	chan = hsotg->hc_ptr_array[chnum];
+ 
+-	hcint = dwc2_readl(hsotg, HCINT(chnum));
++	hcintraw = dwc2_readl(hsotg, HCINT(chnum));
+ 	hcintmsk = dwc2_readl(hsotg, HCINTMSK(chnum));
++	hcint = hcintraw & hcintmsk;
++	dwc2_writel(hsotg, hcint, HCINT(chnum));
 +
- 	if (port->ams != NONE_AMS)
- 		port->ams = NONE_AMS;
- 	if (port->hard_reset_count < PD_N_HARD_RESET_COUNT)
+ 	if (!chan) {
+ 		dev_err(hsotg->dev, "## hc_ptr_array for channel is NULL ##\n");
+-		dwc2_writel(hsotg, hcint, HCINT(chnum));
+ 		return;
+ 	}
+ 
+@@ -2032,11 +2034,9 @@ static void dwc2_hc_n_intr(struct dwc2_h
+ 			 chnum);
+ 		dev_vdbg(hsotg->dev,
+ 			 "  hcint 0x%08x, hcintmsk 0x%08x, hcint&hcintmsk 0x%08x\n",
+-			 hcint, hcintmsk, hcint & hcintmsk);
++			 hcintraw, hcintmsk, hcint);
+ 	}
+ 
+-	dwc2_writel(hsotg, hcint, HCINT(chnum));
+-
+ 	/*
+ 	 * If we got an interrupt after someone called
+ 	 * dwc2_hcd_endpoint_disable() we don't want to crash below
+@@ -2046,8 +2046,7 @@ static void dwc2_hc_n_intr(struct dwc2_h
+ 		return;
+ 	}
+ 
+-	chan->hcint = hcint;
+-	hcint &= hcintmsk;
++	chan->hcint = hcintraw;
+ 
+ 	/*
+ 	 * If the channel was halted due to a dequeue, the qtd list might
 
 
