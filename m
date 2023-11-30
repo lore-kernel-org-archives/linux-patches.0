@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BBE54F9C;
-	Thu, 30 Nov 2023 16:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BD154F93;
+	Thu, 30 Nov 2023 16:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EECdpbZj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7553C433C7;
-	Thu, 30 Nov 2023 16:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih5hJW9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44022C433C8;
+	Thu, 30 Nov 2023 16:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361635;
-	bh=4jVBThqkr+DzV/EbFuvIX3607Xpf8wkX/iW+Du0ZJM4=;
+	s=korg; t=1701361637;
+	bh=n1iI7QZjOXlSBMYafIXom3N2vOcnFTSaQTPPieQEYOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EECdpbZj91JTFQXay+sx7W/w4Nmb5nnCPM32A0RuhB2iPWCJS4UDMGmQZf6yJiIol
-	 xU0eTEGPAsKyF8+Shp8izEa9Y/DZj0V/eyR7NRNlSWO/qbvtNgCc4Hu0C0vx76Efme
-	 7cDbvLWOAFM9xHpgk0hUTVIP3p4YxWkO04HBjJmM=
+	b=ih5hJW9OEHF4AaHZlGk3JfWxVyMshgh2cpapmq9I4sul1ByDuxqq4kyr5OIHeVBED
+	 RClcCppBIvNISXlkvmHSmlN0UuFO3VAF0tswP6K08wjaLhLNYIR0D1nquE8nBB0Jcf
+	 IjSDdEilmrHPOPnTEu0ITUxkxfh7agJwjH4SaH7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 099/112] bcache: fixup lock c->root error
-Date: Thu, 30 Nov 2023 16:22:26 +0000
-Message-ID: <20231130162143.449481009@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>,
+	Stanley Chang <stanley_chang@realtek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Subject: [PATCH 6.6 100/112] USB: xhci-plat: fix legacy PHY double init
+Date: Thu, 30 Nov 2023 16:22:27 +0000
+Message-ID: <20231130162143.476052654@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -36,184 +37,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit e34820f984512b433ee1fc291417e60c47d56727 upstream.
+commit 16b7e0cccb243033de4406ffb4d892365041a1e7 upstream.
 
-We had a problem with io hung because it was waiting for c->root to
-release the lock.
+Commits 7b8ef22ea547 ("usb: xhci: plat: Add USB phy support") and
+9134c1fd0503 ("usb: xhci: plat: Add USB 3.0 phy support") added support
+for looking up legacy PHYs from the sysdev devicetree node and
+initialising them.
 
-crash> cache_set.root -l cache_set.list ffffa03fde4c0050
-  root = 0xffff802ef454c800
-crash> btree -o 0xffff802ef454c800 | grep rw_semaphore
-  [ffff802ef454c858] struct rw_semaphore lock;
-crash> struct rw_semaphore ffff802ef454c858
-struct rw_semaphore {
-  count = {
-    counter = -4294967297
-  },
-  wait_list = {
-    next = 0xffff00006786fc28,
-    prev = 0xffff00005d0efac8
-  },
-  wait_lock = {
-    raw_lock = {
-      {
-        val = {
-          counter = 0
-        },
-        {
-          locked = 0 '\000',
-          pending = 0 '\000'
-        },
-        {
-          locked_pending = 0,
-          tail = 0
-        }
-      }
-    }
-  },
-  osq = {
-    tail = {
-      counter = 0
-    }
-  },
-  owner = 0xffffa03fdc586603
-}
+This broke drivers such as dwc3 which manages PHYs themself as the PHYs
+would now be initialised twice, something which specifically can lead to
+resources being left enabled during suspend (e.g. with the
+usb_phy_generic PHY driver).
 
-The "counter = -4294967297" means that lock count is -1 and a write lock
-is being attempted. Then, we found that there is a btree with a counter
-of 1 in btree_cache_freeable.
+As the dwc3 driver uses driver-name matching for the xhci platform
+device, fix this by only looking up and initialising PHYs for devices
+that have been matched using OF.
 
-crash> cache_set -l cache_set.list ffffa03fde4c0050 -o|grep btree_cache
-  [ffffa03fde4c1140] struct list_head btree_cache;
-  [ffffa03fde4c1150] struct list_head btree_cache_freeable;
-  [ffffa03fde4c1160] struct list_head btree_cache_freed;
-  [ffffa03fde4c1170] unsigned int btree_cache_used;
-  [ffffa03fde4c1178] wait_queue_head_t btree_cache_wait;
-  [ffffa03fde4c1190] struct task_struct *btree_cache_alloc_lock;
-crash> list -H ffffa03fde4c1140|wc -l
-973
-crash> list -H ffffa03fde4c1150|wc -l
-1123
-crash> cache_set.btree_cache_used -l cache_set.list ffffa03fde4c0050
-  btree_cache_used = 2097
-crash> list -s btree -l btree.list -H ffffa03fde4c1140|grep -E -A2 "^  lock = {" > btree_cache.txt
-crash> list -s btree -l btree.list -H ffffa03fde4c1150|grep -E -A2 "^  lock = {" > btree_cache_freeable.txt
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# pwd
-/var/crash/127.0.0.1-2023-08-04-16:40:28
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# cat btree_cache.txt|grep counter|grep -v "counter = 0"
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# cat btree_cache_freeable.txt|grep counter|grep -v "counter = 0"
-      counter = 1
+Note that checking that the platform device has a devicetree node would
+currently be sufficient, but that could lead to subtle breakages in case
+anyone ever tries to reuse an ancestor's node.
 
-We found that this is a bug in bch_sectors_dirty_init() when locking c->root:
-    (1). Thread X has locked c->root(A) write.
-    (2). Thread Y failed to lock c->root(A), waiting for the lock(c->root A).
-    (3). Thread X bch_btree_set_root() changes c->root from A to B.
-    (4). Thread X releases the lock(c->root A).
-    (5). Thread Y successfully locks c->root(A).
-    (6). Thread Y releases the lock(c->root B).
-
-        down_write locked ---(1)----------------------┐
-                |                                     |
-                |   down_read waiting ---(2)----┐     |
-                |           |               ┌-------------┐ ┌-------------┐
-        bch_btree_set_root ===(3)========>> | c->root   A | | c->root   B |
-                |           |               └-------------┘ └-------------┘
-            up_write ---(4)---------------------┘     |            |
-                            |                         |            |
-                    down_read locked ---(5)-----------┘            |
-                            |                                      |
-                        up_read ---(6)-----------------------------┘
-
-Since c->root may change, the correct steps to lock c->root should be
-the same as bch_root_usage(), compare after locking.
-
-static unsigned int bch_root_usage(struct cache_set *c)
-{
-        unsigned int bytes = 0;
-        struct bkey *k;
-        struct btree *b;
-        struct btree_iter iter;
-
-        goto lock_root;
-
-        do {
-                rw_unlock(false, b);
-lock_root:
-                b = c->root;
-                rw_lock(false, b, b->level);
-        } while (b != c->root);
-
-        for_each_key_filter(&b->keys, k, &iter, bch_ptr_bad)
-                bytes += bkey_bytes(k);
-
-        rw_unlock(false, b);
-
-        return (bytes * 100) / btree_bytes(c);
-}
-
-Fixes: b144e45fc576 ("bcache: make bch_sectors_dirty_init() to be multithreaded")
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20231120052503.6122-7-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 7b8ef22ea547 ("usb: xhci: plat: Add USB phy support")
+Fixes: 9134c1fd0503 ("usb: xhci: plat: Add USB 3.0 phy support")
+Cc: stable@vger.kernel.org      # 4.1
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Stanley Chang <stanley_chang@realtek.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Tested-by: Stanley Chang <stanley_chang@realtek.com>
+Link: https://lore.kernel.org/r/20231103164323.14294-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/writeback.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-plat.c |   50 +++++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 20 deletions(-)
 
---- a/drivers/md/bcache/writeback.c
-+++ b/drivers/md/bcache/writeback.c
-@@ -977,14 +977,22 @@ static int bch_btre_dirty_init_thread_nr
- void bch_sectors_dirty_init(struct bcache_device *d)
- {
- 	int i;
-+	struct btree *b = NULL;
- 	struct bkey *k = NULL;
- 	struct btree_iter iter;
- 	struct sectors_dirty_init op;
- 	struct cache_set *c = d->c;
- 	struct bch_dirty_init_state state;
+--- a/drivers/usb/host/xhci-plat.c
++++ b/drivers/usb/host/xhci-plat.c
+@@ -13,6 +13,7 @@
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ #include <linux/of.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/usb/phy.h>
+ #include <linux/slab.h>
+@@ -148,7 +149,7 @@ int xhci_plat_probe(struct platform_devi
+ 	int			ret;
+ 	int			irq;
+ 	struct xhci_plat_priv	*priv = NULL;
+-
++	bool			of_match;
  
-+retry_lock:
-+	b = c->root;
-+	rw_lock(0, b, b->level);
-+	if (b != c->root) {
-+		rw_unlock(0, b);
-+		goto retry_lock;
-+	}
-+
- 	/* Just count root keys if no leaf node */
--	rw_lock(0, c->root, c->root->level);
- 	if (c->root->level == 0) {
- 		bch_btree_op_init(&op.op, -1);
- 		op.inode = d->id;
-@@ -997,7 +1005,7 @@ void bch_sectors_dirty_init(struct bcach
- 			sectors_dirty_init_fn(&op.op, c->root, k);
- 		}
- 
--		rw_unlock(0, c->root);
-+		rw_unlock(0, b);
- 		return;
+ 	if (usb_disabled())
+ 		return -ENODEV;
+@@ -253,16 +254,23 @@ int xhci_plat_probe(struct platform_devi
+ 					 &xhci->imod_interval);
  	}
  
-@@ -1034,7 +1042,7 @@ void bch_sectors_dirty_init(struct bcach
- out:
- 	/* Must wait for all threads to stop. */
- 	wait_event(state.wait, atomic_read(&state.started) == 0);
--	rw_unlock(0, c->root);
-+	rw_unlock(0, b);
- }
+-	hcd->usb_phy = devm_usb_get_phy_by_phandle(sysdev, "usb-phy", 0);
+-	if (IS_ERR(hcd->usb_phy)) {
+-		ret = PTR_ERR(hcd->usb_phy);
+-		if (ret == -EPROBE_DEFER)
+-			goto disable_clk;
+-		hcd->usb_phy = NULL;
+-	} else {
+-		ret = usb_phy_init(hcd->usb_phy);
+-		if (ret)
+-			goto disable_clk;
++	/*
++	 * Drivers such as dwc3 manages PHYs themself (and rely on driver name
++	 * matching for the xhci platform device).
++	 */
++	of_match = of_match_device(pdev->dev.driver->of_match_table, &pdev->dev);
++	if (of_match) {
++		hcd->usb_phy = devm_usb_get_phy_by_phandle(sysdev, "usb-phy", 0);
++		if (IS_ERR(hcd->usb_phy)) {
++			ret = PTR_ERR(hcd->usb_phy);
++			if (ret == -EPROBE_DEFER)
++				goto disable_clk;
++			hcd->usb_phy = NULL;
++		} else {
++			ret = usb_phy_init(hcd->usb_phy);
++			if (ret)
++				goto disable_clk;
++		}
+ 	}
  
- void bch_cached_dev_writeback_init(struct cached_dev *dc)
+ 	hcd->tpl_support = of_usb_host_tpl_support(sysdev->of_node);
+@@ -285,15 +293,17 @@ int xhci_plat_probe(struct platform_devi
+ 			goto dealloc_usb2_hcd;
+ 		}
+ 
+-		xhci->shared_hcd->usb_phy = devm_usb_get_phy_by_phandle(sysdev,
+-			    "usb-phy", 1);
+-		if (IS_ERR(xhci->shared_hcd->usb_phy)) {
+-			xhci->shared_hcd->usb_phy = NULL;
+-		} else {
+-			ret = usb_phy_init(xhci->shared_hcd->usb_phy);
+-			if (ret)
+-				dev_err(sysdev, "%s init usb3phy fail (ret=%d)\n",
+-					    __func__, ret);
++		if (of_match) {
++			xhci->shared_hcd->usb_phy = devm_usb_get_phy_by_phandle(sysdev,
++										"usb-phy", 1);
++			if (IS_ERR(xhci->shared_hcd->usb_phy)) {
++				xhci->shared_hcd->usb_phy = NULL;
++			} else {
++				ret = usb_phy_init(xhci->shared_hcd->usb_phy);
++				if (ret)
++					dev_err(sysdev, "%s init usb3phy fail (ret=%d)\n",
++						__func__, ret);
++			}
+ 		}
+ 
+ 		xhci->shared_hcd->tpl_support = hcd->tpl_support;
 
 
