@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD99D495C2;
-	Thu, 30 Nov 2023 16:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4297854F92;
+	Thu, 30 Nov 2023 16:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6HPZUeg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47750C433C9;
-	Thu, 30 Nov 2023 16:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6wUbSw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF96CC433C7;
+	Thu, 30 Nov 2023 16:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361617;
-	bh=YvQIlXQMDrC42T5Iph5eJsBQDpWheHmYeCZ9CgBibtk=;
+	s=korg; t=1701361620;
+	bh=S9hhEKLbo03EWnKdbU3sq4ZWpx/3ijUBWf3ICokNlD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q6HPZUegunR668XNVaApYbM/betout+cLtcGD4s7p0thYS7O4J4sGtrLO7FyI7BhY
-	 Pu+qAUFycR1mYFqWvMME2mLy7/XgAV0be1edCb0BTVqDBiCz3LlJSzy559t/JPnXjU
-	 KtDqmWP2SJyBZ2IJqY/DdYJB2gZS47FATx+Db1bU=
+	b=M6wUbSw4wtXnjOP155x5YMcKmgBI4YBrDmFcDEz7zo3HR+vfpyaZ/g2hW2H99dIg9
+	 YkCjclX+X8/fjeDqjEOuorGMDgHmMdfkfXdF9AVRwdt/gmX8NzFZH0376/FeQYQKBL
+	 mzpfeB1SiSuzFzxcN0hXkC3kRfHphz1qGw2Hj5jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/112] ALSA: hda/realtek: Add quirks for ASUS 2024 Zenbooks
-Date: Thu, 30 Nov 2023 16:22:20 +0000
-Message-ID: <20231130162143.277497831@linuxfoundation.org>
+Subject: [PATCH 6.6 094/112] dm-delay: fix a race between delay_presuspend and delay_bio
+Date: Thu, 30 Nov 2023 16:22:21 +0000
+Message-ID: <20231130162143.310348748@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,45 +42,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 61cbc08fdb04fd445458b0f4cba7e6929afdfaef ]
+[ Upstream commit 6fc45b6ed921dc00dfb264dc08c7d67ee63d2656 ]
 
-These ASUS Zenbook laptops use Realtek HDA codec combined with
-2xCS35L41 Amplifiers using SPI or I2C with External Boost or
-Internal Boost.
+In delay_presuspend, we set the atomic variable may_delay and then stop
+the timer and flush pending bios. The intention here is to prevent the
+delay target from re-arming the timer again.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231115162116.494968-2-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+However, this test is racy. Suppose that one thread goes to delay_bio,
+sees that dc->may_delay is one and proceeds; now, another thread executes
+delay_presuspend, it sets dc->may_delay to zero, deletes the timer and
+flushes pending bios. Then, the first thread continues and adds the bio to
+delayed->list despite the fact that dc->may_delay is false.
+
+Fix this bug by changing may_delay's type from atomic_t to bool and
+only access it while holding the delayed_bios_lock mutex. Note that we
+don't have to grab the mutex in delay_resume because there are no bios
+in flight at this point.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/md/dm-delay.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 60e99389bcdcd..87bc1d2f8a432 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9869,13 +9869,17 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x19e1, "ASUS UX581LV", ALC295_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1a13, "Asus G73Jw", ALC269_FIXUP_ASUS_G73JW),
- 	SND_PCI_QUIRK(0x1043, 0x1a30, "ASUS X705UD", ALC256_FIXUP_ASUS_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x1a63, "ASUS UX3405MA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1a83, "ASUS UM5302LA", ALC294_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1a8f, "ASUS UX582ZS", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1b11, "ASUS UX431DA", ALC294_FIXUP_ASUS_COEF_1B),
- 	SND_PCI_QUIRK(0x1043, 0x1b13, "Asus U41SV", ALC269_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x1043, 0x1b93, "ASUS G614JVR/JIR", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1bbd, "ASUS Z550MA", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1043, 0x1c03, "ASUS UM3406HA", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1c23, "Asus X55U", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x1043, 0x1c33, "ASUS UX5304MA", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x1c43, "ASUS UX8406MA", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1c62, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
- 	SND_PCI_QUIRK(0x1043, 0x1c92, "ASUS ROG Strix G15", ALC285_FIXUP_ASUS_G533Z_PINS),
- 	SND_PCI_QUIRK(0x1043, 0x1c9f, "ASUS G614JI", ALC285_FIXUP_ASUS_HEADSET_MIC),
+diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
+index 7433525e59856..3726fae3006e3 100644
+--- a/drivers/md/dm-delay.c
++++ b/drivers/md/dm-delay.c
+@@ -31,7 +31,7 @@ struct delay_c {
+ 	struct workqueue_struct *kdelayd_wq;
+ 	struct work_struct flush_expired_bios;
+ 	struct list_head delayed_bios;
+-	atomic_t may_delay;
++	bool may_delay;
+ 
+ 	struct delay_class read;
+ 	struct delay_class write;
+@@ -192,7 +192,7 @@ static int delay_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 	INIT_WORK(&dc->flush_expired_bios, flush_expired_bios);
+ 	INIT_LIST_HEAD(&dc->delayed_bios);
+ 	mutex_init(&dc->timer_lock);
+-	atomic_set(&dc->may_delay, 1);
++	dc->may_delay = true;
+ 	dc->argc = argc;
+ 
+ 	ret = delay_class_ctr(ti, &dc->read, argv);
+@@ -247,7 +247,7 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
+ 	struct dm_delay_info *delayed;
+ 	unsigned long expires = 0;
+ 
+-	if (!c->delay || !atomic_read(&dc->may_delay))
++	if (!c->delay)
+ 		return DM_MAPIO_REMAPPED;
+ 
+ 	delayed = dm_per_bio_data(bio, sizeof(struct dm_delay_info));
+@@ -256,6 +256,10 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
+ 	delayed->expires = expires = jiffies + msecs_to_jiffies(c->delay);
+ 
+ 	mutex_lock(&delayed_bios_lock);
++	if (unlikely(!dc->may_delay)) {
++		mutex_unlock(&delayed_bios_lock);
++		return DM_MAPIO_REMAPPED;
++	}
+ 	c->ops++;
+ 	list_add_tail(&delayed->list, &dc->delayed_bios);
+ 	mutex_unlock(&delayed_bios_lock);
+@@ -269,7 +273,10 @@ static void delay_presuspend(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
+ 
+-	atomic_set(&dc->may_delay, 0);
++	mutex_lock(&delayed_bios_lock);
++	dc->may_delay = false;
++	mutex_unlock(&delayed_bios_lock);
++
+ 	del_timer_sync(&dc->delay_timer);
+ 	flush_bios(flush_delayed_bios(dc, 1));
+ }
+@@ -278,7 +285,7 @@ static void delay_resume(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
+ 
+-	atomic_set(&dc->may_delay, 1);
++	dc->may_delay = true;
+ }
+ 
+ static int delay_map(struct dm_target *ti, struct bio *bio)
 -- 
 2.42.0
 
