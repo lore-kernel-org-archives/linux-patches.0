@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411AC524C2;
-	Thu, 30 Nov 2023 16:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA81524C2;
+	Thu, 30 Nov 2023 16:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtK18fxT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2608C433C8;
-	Thu, 30 Nov 2023 16:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvY5QQVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC99C433C8;
+	Thu, 30 Nov 2023 16:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361706;
-	bh=Vdmvgo2HQyCcTUQybCGcVhmb5pr/S41fFYOU21SgTOc=;
+	s=korg; t=1701361708;
+	bh=FjBBk0oU7geutwCUnVn1BcHiVtHbqUDsMgtsrjnB/gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtK18fxTzb9ctFKyUQ7gBNV1GUm+mH/MyxRNqJXck4fggRBo3IrHYY2kQD3BRC1Zo
-	 qp25Xrcj8YDcB7QWeP28qallNzWhKQo6xYmCD8bHpIwoVhp+U7DMpE+j36zeGVKqzw
-	 BB7bbUja4Zf2goTULj5cZV/EN9yaYwokOZRY6qWs=
+	b=lvY5QQVjJwDigrutR+0yg7vFaLdIuKegHVO9bBeMusRRnAK4vQy4qW08q02IKZAut
+	 AandBeWyrfDaGhvWPv28icZGQcnoRyYKE4+71xxhY4k0ArnqoY9GLkMtonGDrjXoMB
+	 bU0oebcvYFIkvnLV0q0FZ9CgJJHgasFcU6QhnQwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Stefano Stabellini <stefano.stabellini@amd.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 15/82] net/smc: avoid data corruption caused by decline
-Date: Thu, 30 Nov 2023 16:21:46 +0000
-Message-ID: <20231130162136.442149494@linuxfoundation.org>
+Subject: [PATCH 6.1 16/82] arm/xen: fix xen_vcpu_info allocation alignment
+Date: Thu, 30 Nov 2023 16:21:47 +0000
+Message-ID: <20231130162136.469230614@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -38,97 +36,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: D. Wythe <alibuda@linux.alibaba.com>
+From: Stefano Stabellini <sstabellini@kernel.org>
 
-[ Upstream commit e6d71b437abc2f249e3b6a1ae1a7228e09c6e563 ]
+[ Upstream commit 7bf9a6b46549852a37e6d07e52c601c3c706b562 ]
 
-We found a data corruption issue during testing of SMC-R on Redis
-applications.
+xen_vcpu_info is a percpu area than needs to be mapped by Xen.
+Currently, it could cross a page boundary resulting in Xen being unable
+to map it:
 
-The benchmark has a low probability of reporting a strange error as
-shown below.
+[    0.567318] kernel BUG at arch/arm64/xen/../../arm/xen/enlighten.c:164!
+[    0.574002] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
 
-"Error: Protocol error, got "\xe2" as reply type byte"
+Fix the issue by using __alloc_percpu and requesting alignment for the
+memory allocation.
 
-Finally, we found that the retrieved error data was as follows:
+Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
 
-0xE2 0xD4 0xC3 0xD9 0x04 0x00 0x2C 0x20 0xA6 0x56 0x00 0x16 0x3E 0x0C
-0xCB 0x04 0x02 0x01 0x00 0x00 0x20 0x00 0x00 0x00 0x00 0x00 0x00 0x00
-0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0xE2
-
-It is quite obvious that this is a SMC DECLINE message, which means that
-the applications received SMC protocol message.
-We found that this was caused by the following situations:
-
-client                  server
-        ¦  clc proposal
-        ------------->
-        ¦  clc accept
-        <-------------
-        ¦  clc confirm
-        ------------->
-wait llc confirm
-			send llc confirm
-        ¦failed llc confirm
-        ¦   x------
-(after 2s)timeout
-                        wait llc confirm rsp
-
-wait decline
-
-(after 1s) timeout
-                        (after 2s) timeout
-        ¦   decline
-        -------------->
-        ¦   decline
-        <--------------
-
-As a result, a decline message was sent in the implementation, and this
-message was read from TCP by the already-fallback connection.
-
-This patch double the client timeout as 2x of the server value,
-With this simple change, the Decline messages should never cross or
-collide (during Confirm link timeout).
-
-This issue requires an immediate solution, since the protocol updates
-involve a more long-term solution.
-
-Fixes: 0fb0b02bd6fd ("net/smc: adapt SMC client code to use the LLC flow")
-Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/alpine.DEB.2.22.394.2311221501340.2053963@ubuntu-linux-20-04-desktop
+Fixes: 24d5373dda7c ("arm/xen: Use alloc_percpu rather than __alloc_percpu")
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm/xen/enlighten.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index d676119984c09..b6609527dff62 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -585,8 +585,12 @@ static int smcr_clnt_conf_first_link(struct smc_sock *smc)
- 	struct smc_llc_qentry *qentry;
- 	int rc;
+diff --git a/arch/arm/xen/enlighten.c b/arch/arm/xen/enlighten.c
+index b647306eb1608..d12fdb9c05a89 100644
+--- a/arch/arm/xen/enlighten.c
++++ b/arch/arm/xen/enlighten.c
+@@ -484,7 +484,8 @@ static int __init xen_guest_init(void)
+ 	 * for secondary CPUs as they are brought up.
+ 	 * For uniformity we use VCPUOP_register_vcpu_info even on cpu0.
+ 	 */
+-	xen_vcpu_info = alloc_percpu(struct vcpu_info);
++	xen_vcpu_info = __alloc_percpu(sizeof(struct vcpu_info),
++				       1 << fls(sizeof(struct vcpu_info) - 1));
+ 	if (xen_vcpu_info == NULL)
+ 		return -ENOMEM;
  
--	/* receive CONFIRM LINK request from server over RoCE fabric */
--	qentry = smc_llc_wait(link->lgr, NULL, SMC_LLC_WAIT_TIME,
-+	/* Receive CONFIRM LINK request from server over RoCE fabric.
-+	 * Increasing the client's timeout by twice as much as the server's
-+	 * timeout by default can temporarily avoid decline messages of
-+	 * both sides crossing or colliding
-+	 */
-+	qentry = smc_llc_wait(link->lgr, NULL, 2 * SMC_LLC_WAIT_TIME,
- 			      SMC_LLC_CONFIRM_LINK);
- 	if (!qentry) {
- 		struct smc_clc_msg_decline dclc;
 -- 
 2.42.0
 
