@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF2E524D2;
-	Thu, 30 Nov 2023 16:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E4D54F9B;
+	Thu, 30 Nov 2023 16:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuIkjhB+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1EDC433C8;
-	Thu, 30 Nov 2023 16:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HzVtkgm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E58C433C8;
+	Thu, 30 Nov 2023 16:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701362064;
-	bh=reoQCcrKWNcA/f1zrXoK80ly1kHp8F8xjq7b2XpycpY=;
+	s=korg; t=1701362067;
+	bh=shYSt+BtU/mIQznMEx+d9n6ASBMTGfPZdlonTXW2F8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PuIkjhB+2JLPp4vqGP8CRhSNlPiYyr+or0i6mYlbxD9WSlusabCDsA8P0fT+iw90b
-	 GVBvz/0frVFu2u2fqFL4GQzOAFZCWY+NJ/5oYeYtkjr3F2XGghoLsdJoIxsYO4OMyu
-	 8AOCzTcCufsx9bx2YVdf5J/vMBoPO1nCTFlUamDE=
+	b=1HzVtkgmNq+t9F41aMUzs8FS3LNp4WxQxVKOT6JS4ybJMAuCfYOtF2Sdg5HFO/1U5
+	 iRbVLVaYmY/Qg3IjQfBhr9fg4d+BWgu03pgdqBps2G5EHxkBQ9L2Nlzcl0LqP43eig
+	 sr3BpmbVEJP8pHXVKYNQR5ZVRErT+YaeX3ZtxgPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Dexuan Cui <decui@microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 53/69] hv_netvsc: Mark VF as slave before exposing it to user-mode
-Date: Thu, 30 Nov 2023 16:22:50 +0000
-Message-ID: <20231130162134.804130162@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 54/69] dm-delay: fix a race between delay_presuspend and delay_bio
+Date: Thu, 30 Nov 2023 16:22:51 +0000
+Message-ID: <20231130162134.836619848@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162133.035359406@linuxfoundation.org>
 References: <20231130162133.035359406@linuxfoundation.org>
@@ -44,95 +42,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit c807d6cd089d2f4951baa838081ec5ae3e2360f8 upstream.
+[ Upstream commit 6fc45b6ed921dc00dfb264dc08c7d67ee63d2656 ]
 
-When a VF is being exposed form the kernel, it should be marked as "slave"
-before exposing to the user-mode. The VF is not usable without netvsc
-running as master. The user-mode should never see a VF without the "slave"
-flag.
+In delay_presuspend, we set the atomic variable may_delay and then stop
+the timer and flush pending bios. The intention here is to prevent the
+delay target from re-arming the timer again.
 
-This commit moves the code of setting the slave flag to the time before
-VF is exposed to user-mode.
+However, this test is racy. Suppose that one thread goes to delay_bio,
+sees that dc->may_delay is one and proceeds; now, another thread executes
+delay_presuspend, it sets dc->may_delay to zero, deletes the timer and
+flushes pending bios. Then, the first thread continues and adds the bio to
+delayed->list despite the fact that dc->may_delay is false.
 
+Fix this bug by changing may_delay's type from atomic_t to bool and
+only access it while holding the delayed_bios_lock mutex. Note that we
+don't have to grab the mutex in delay_resume because there are no bios
+in flight at this point.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: 0c195567a8f6 ("netvsc: transparent VF management")
-Signed-off-by: Long Li <longli@microsoft.com>
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Acked-by: Stephen Hemminger <stephen@networkplumber.org>
-Acked-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/netvsc_drv.c |   32 +++++++++++++++++++++++---------
- 1 file changed, 23 insertions(+), 9 deletions(-)
+ drivers/md/dm-delay.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2227,9 +2227,6 @@ static int netvsc_vf_join(struct net_dev
- 		goto upper_link_failed;
- 	}
+diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
+index 59e51d285b0e5..238028056d0cc 100644
+--- a/drivers/md/dm-delay.c
++++ b/drivers/md/dm-delay.c
+@@ -30,7 +30,7 @@ struct delay_c {
+ 	struct workqueue_struct *kdelayd_wq;
+ 	struct work_struct flush_expired_bios;
+ 	struct list_head delayed_bios;
+-	atomic_t may_delay;
++	bool may_delay;
  
--	/* set slave flag before open to prevent IPv6 addrconf */
--	vf_netdev->flags |= IFF_SLAVE;
--
- 	schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
+ 	struct delay_class read;
+ 	struct delay_class write;
+@@ -191,7 +191,7 @@ static int delay_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 	INIT_WORK(&dc->flush_expired_bios, flush_expired_bios);
+ 	INIT_LIST_HEAD(&dc->delayed_bios);
+ 	mutex_init(&dc->timer_lock);
+-	atomic_set(&dc->may_delay, 1);
++	dc->may_delay = true;
+ 	dc->argc = argc;
  
- 	call_netdevice_notifiers(NETDEV_JOIN, vf_netdev);
-@@ -2336,16 +2333,18 @@ static struct net_device *get_netvsc_bys
+ 	ret = delay_class_ctr(ti, &dc->read, argv);
+@@ -245,7 +245,7 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
+ 	struct dm_delay_info *delayed;
+ 	unsigned long expires = 0;
  
- 	}
+-	if (!c->delay || !atomic_read(&dc->may_delay))
++	if (!c->delay)
+ 		return DM_MAPIO_REMAPPED;
  
--	/* Fallback path to check synthetic vf with
--	 * help of mac addr
-+	/* Fallback path to check synthetic vf with help of mac addr.
-+	 * Because this function can be called before vf_netdev is
-+	 * initialized (NETDEV_POST_INIT) when its perm_addr has not been copied
-+	 * from dev_addr, also try to match to its dev_addr.
-+	 * Note: On Hyper-V and Azure, it's not possible to set a MAC address
-+	 * on a VF that matches to the MAC of a unrelated NETVSC device.
- 	 */
- 	list_for_each_entry(ndev_ctx, &netvsc_dev_list, list) {
- 		ndev = hv_get_drvdata(ndev_ctx->device_ctx);
--		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr)) {
--			netdev_notice(vf_netdev,
--				      "falling back to mac addr based matching\n");
-+		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr) ||
-+		    ether_addr_equal(vf_netdev->dev_addr, ndev->perm_addr))
- 			return ndev;
--		}
- 	}
+ 	delayed = dm_per_bio_data(bio, sizeof(struct dm_delay_info));
+@@ -254,6 +254,10 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
+ 	delayed->expires = expires = jiffies + msecs_to_jiffies(c->delay);
  
- 	netdev_notice(vf_netdev,
-@@ -2353,6 +2352,19 @@ static struct net_device *get_netvsc_bys
- 	return NULL;
+ 	mutex_lock(&delayed_bios_lock);
++	if (unlikely(!dc->may_delay)) {
++		mutex_unlock(&delayed_bios_lock);
++		return DM_MAPIO_REMAPPED;
++	}
+ 	c->ops++;
+ 	list_add_tail(&delayed->list, &dc->delayed_bios);
+ 	mutex_unlock(&delayed_bios_lock);
+@@ -267,7 +271,10 @@ static void delay_presuspend(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
+ 
+-	atomic_set(&dc->may_delay, 0);
++	mutex_lock(&delayed_bios_lock);
++	dc->may_delay = false;
++	mutex_unlock(&delayed_bios_lock);
++
+ 	del_timer_sync(&dc->delay_timer);
+ 	flush_bios(flush_delayed_bios(dc, 1));
+ }
+@@ -276,7 +283,7 @@ static void delay_resume(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
+ 
+-	atomic_set(&dc->may_delay, 1);
++	dc->may_delay = true;
  }
  
-+static int netvsc_prepare_bonding(struct net_device *vf_netdev)
-+{
-+	struct net_device *ndev;
-+
-+	ndev = get_netvsc_byslot(vf_netdev);
-+	if (!ndev)
-+		return NOTIFY_DONE;
-+
-+	/* set slave flag before open to prevent IPv6 addrconf */
-+	vf_netdev->flags |= IFF_SLAVE;
-+	return NOTIFY_DONE;
-+}
-+
- static int netvsc_register_vf(struct net_device *vf_netdev)
- {
- 	struct net_device_context *net_device_ctx;
-@@ -2772,6 +2784,8 @@ static int netvsc_netdev_event(struct no
- 		return NOTIFY_DONE;
- 
- 	switch (event) {
-+	case NETDEV_POST_INIT:
-+		return netvsc_prepare_bonding(event_dev);
- 	case NETDEV_REGISTER:
- 		return netvsc_register_vf(event_dev);
- 	case NETDEV_UNREGISTER:
+ static int delay_map(struct dm_target *ti, struct bio *bio)
+-- 
+2.42.0
+
 
 
