@@ -1,127 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAAE61FA9;
-	Thu, 30 Nov 2023 22:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96AA54666
+	for <patches@lists.linux.dev>; Thu, 30 Nov 2023 23:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dGqdtrnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF3FC433CA;
-	Thu, 30 Nov 2023 22:58:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701385114;
-	bh=6B3WBsqOa3ticox48HEDLj1h+F7k8TzJ0v5X9n+J3X0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=dGqdtrnz/Ljn+/A+OGBlIfKO4Iw6LCmVI0B1823ixDHGdY0FdSdZIRq9myq8MqOBW
-	 6R1XFv+ILTi0uqBZgG8cDtIYh4B5mnT+5IJHVXeSsHGefrry19lkujYZ3Y9idAQHp9
-	 Zh4ZS6nvYWeqKv8Tu8+rv9JM40H2XX5MqUb+a18vwKV9R1/S/aR+3jZFLyI6lTybv/
-	 QiMA4p/R+1MJs/S3eZUesFMX21qXGujaHC2GsZba1xKESJzR/ojZTSd7H297dihGxb
-	 uIR2qzaSAhra7S1fCo613sC87njnf9PRnezouqt1QlqA+eIPSkk5C079vPX6htQlwV
-	 GKNzdZi/id98Q==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 30 Nov 2023 15:58:32 -0700
-Subject: [PATCH 19/19] hexagon: traps: Add internal prototypes for
- functions only called from asm
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="2gSGAms5"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-285afc7d53aso1466091a91.0
+        for <patches@lists.linux.dev>; Thu, 30 Nov 2023 15:01:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1701385270; x=1701990070; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S1cVYcm/OeSo6BOhKq2FohPdg3opafKLsK7d+uEW++g=;
+        b=2gSGAms5IQ55t0t9/4L7Bd19Wx82tb2xAcO2pDZ2KXlVMNoPPUumGVZ/MuUR4DIfsh
+         yYQkUqDLQrR11Qm7ffdCQf14DfozoF58+W4b5ELhbhaXSloHVpWcEAMD2Q5KM16CHlgB
+         31kpmvD6zdRIJVIEme7QXZu4m6taqJZQ+NgmbvghjHUqr6OMDCimQ69hMYvyTuZZYkos
+         jbgmIDUtLQZ7zk31WL6RZPjCfacJFsrqn8LM5kIfk1BIGhDqAV1FN+ATLhtsSBuoNOAV
+         Pf9e3WWDELzfj/iCDTpweqNZo6IwQIDLEVGN7XqhIo8jc8gS5ylUMfv1kgBDnhAJsoGt
+         zrDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701385270; x=1701990070;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S1cVYcm/OeSo6BOhKq2FohPdg3opafKLsK7d+uEW++g=;
+        b=voFQiNXPZ470Gd6tTKdexyoDs6LQcs9e7Ev7+zAF/AkHCOPwnZTsjbqQBzSlNJD25P
+         2H4BcphCLKx1/foI1rs4lpPdQgvDMh34ucwq1Rd3RACJSDor9nW7phN870+9t/fIZdBN
+         SIYgq5QrYVWwbfpPGM2Q8kPtvSewG7IvSnOuQH1jzneWkMRlKucHbOE80tep4H4H3yiB
+         feV+sY5AKaxRxOp1XmqN5ZVaGLW8yIa4+yByC2kBDfQQNWsoaVSZuUG6HzK27UAePs8a
+         pAUrT3anzB+BtoUJb4MSCs4Kc1QqLaUF3VJxgIpT5T8BG6G5KSkY6xXoCLwFwalJ2amp
+         7cHw==
+X-Gm-Message-State: AOJu0Ywof7736g8s41eq/y372HyfOMGaERhXYYgXXg5OjZuhMbctNz5z
+	vUqjxRpPR16LDbUf3iFwqIn1Vl5TTIV6jkhcvl7PYQ==
+X-Google-Smtp-Source: AGHT+IEdrStr8HreR71H8RgH+eVepHBA/3COgP49K7ESslFvasx7ODg2jWp1x8fYZmT0haRhQ9m/vFdzQPvWb1TtQsQ=
+X-Received: by 2002:a17:90a:1dd:b0:285:9940:1bac with SMTP id
+ 29-20020a17090a01dd00b0028599401bacmr22407438pjd.2.1701385270090; Thu, 30 Nov
+ 2023 15:01:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231130-hexagon-missing-prototypes-v1-19-5c34714afe9e@kernel.org>
-References: <20231130-hexagon-missing-prototypes-v1-0-5c34714afe9e@kernel.org>
-In-Reply-To: <20231130-hexagon-missing-prototypes-v1-0-5c34714afe9e@kernel.org>
-To: bcain@quicinc.com, akpm@linux-foundation.org, arnd@arndb.de
-Cc: linux-hexagon@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2978; i=nathan@kernel.org;
- h=from:subject:message-id; bh=6B3WBsqOa3ticox48HEDLj1h+F7k8TzJ0v5X9n+J3X0=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKmZwv1b2AoPm936+lOmQ6xgWvH+7l/RqQpfzY+H9PPv9
- LcPWOPeUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACbid5qR4dvrLWtnr78dkvqM
- TW3h3Ysffn/49HDeyr8/zidGvFnLci+akeFPRPsJx3saCxsqRFxMGYyOHGtWPvDLp2KD+/W/Fkc
- emHACAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20231130162140.298098091@linuxfoundation.org>
+In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Fri, 1 Dec 2023 08:00:59 +0900
+Message-ID: <CAKL4bV5f+0Pbc5wLab96mqHfhHxv2rKDh+yiz196cSSvw9TU+w@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/112] 6.6.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Clang warns:
+Hi Greg
 
-  arch/hexagon/kernel/traps.c:284:6: warning: no previous prototype for function 'do_genex' [-Wmissing-prototypes]
-    284 | void do_genex(struct pt_regs *regs)
-        |      ^
-  arch/hexagon/kernel/traps.c:284:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-    284 | void do_genex(struct pt_regs *regs)
-        | ^
-        | static
-  arch/hexagon/kernel/traps.c:341:6: warning: no previous prototype for function 'do_trap0' [-Wmissing-prototypes]
-    341 | void do_trap0(struct pt_regs *regs)
-        |      ^
-  arch/hexagon/kernel/traps.c:341:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-    341 | void do_trap0(struct pt_regs *regs)
-        | ^
-        | static
-  arch/hexagon/kernel/traps.c:418:6: warning: no previous prototype for function 'do_machcheck' [-Wmissing-prototypes]
-    418 | void do_machcheck(struct pt_regs *regs)
-        |      ^
-  arch/hexagon/kernel/traps.c:418:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-    418 | void do_machcheck(struct pt_regs *regs)
-        | ^
-        | static
-  arch/hexagon/kernel/traps.c:428:6: warning: no previous prototype for function 'do_debug_exception' [-Wmissing-prototypes]
-    428 | void do_debug_exception(struct pt_regs *regs)
-        |      ^
-  arch/hexagon/kernel/traps.c:428:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-    428 | void do_debug_exception(struct pt_regs *regs)
-        | ^
-        | static
+On Fri, Dec 1, 2023 at 1:23=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.4 release.
+> There are 112 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 02 Dec 2023 16:21:18 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.4-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-These functions are only called from assembly or this translation unit,
-so just add prototypes right above the definitions to silence the
-warnings.
+6.6.4-rc1 tested.
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/hexagon/kernel/traps.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-diff --git a/arch/hexagon/kernel/traps.c b/arch/hexagon/kernel/traps.c
-index 3f6ff43cb514..75e062722d28 100644
---- a/arch/hexagon/kernel/traps.c
-+++ b/arch/hexagon/kernel/traps.c
-@@ -281,6 +281,7 @@ static void cache_error(struct pt_regs *regs)
- /*
-  * General exception handler
-  */
-+void do_genex(struct pt_regs *regs);
- void do_genex(struct pt_regs *regs)
- {
- 	/*
-@@ -331,6 +332,7 @@ void do_genex(struct pt_regs *regs)
- 	}
- }
- 
-+void do_trap0(struct pt_regs *regs);
- void do_trap0(struct pt_regs *regs)
- {
- 	syscall_fn syscall;
-@@ -408,6 +410,7 @@ void do_trap0(struct pt_regs *regs)
- /*
-  * Machine check exception handler
-  */
-+void do_machcheck(struct pt_regs *regs);
- void do_machcheck(struct pt_regs *regs)
- {
- 	/* Halt and catch fire */
-@@ -418,6 +421,7 @@ void do_machcheck(struct pt_regs *regs)
-  * Treat this like the old 0xdb trap.
-  */
- 
-+void do_debug_exception(struct pt_regs *regs);
- void do_debug_exception(struct pt_regs *regs)
- {
- 	regs->hvmer.vmest &= ~HVM_VMEST_CAUSE_MSK;
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
--- 
-2.43.0
+Thanks
 
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
