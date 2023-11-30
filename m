@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B59482CB;
-	Thu, 30 Nov 2023 16:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371AD54F93;
+	Thu, 30 Nov 2023 16:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8pX884O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114A7C433C9;
-	Thu, 30 Nov 2023 16:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uP66cMgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52170C433C7;
+	Thu, 30 Nov 2023 16:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361539;
-	bh=i43QYNS5OHqQRJ2JK66P4B/mioa7czyut2Fk5eK2SNo=;
+	s=korg; t=1701361542;
+	bh=KBf3ckFH8ZZdbhJFP2ziQdIn7EjeCpKZg3OLh74OB9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n8pX884OLOno6eMh0eVoMWDmDvZG00ZHsnb7BE6WBKuEsZUkL72R2UvfgwWTvTXnj
-	 RjC2bxLKhkHQrP6fQmH5uJX0nbxKwh4T/WG6VLDNgxNN3sDtkBakhoaA0hs5x1KxaS
-	 h0CR2h/jkKgUAEKGADepixQiVf51N7oTAg3ActPs=
+	b=uP66cMgpkzD9pkSU5JOK89Gd0VTwBkJ5YMJoApwI/hAkWsz+KkodCm6WnGe7PgdSZ
+	 q5RZhltvwtI+14a8Fa5Stkf1wI6ZbDBld97nFL3SUDU8EMI95nYTvktU65+rbdZ4xe
+	 w0MNpyZdttR6f9GjTIcnWoVo/xTa25XO+7pWAVUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Owen T. Heisler" <writer@owenh.net>,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 063/112] ACPI: video: Use acpi_device_fix_up_power_children()
-Date: Thu, 30 Nov 2023 16:21:50 +0000
-Message-ID: <20231130162142.320627123@linuxfoundation.org>
+Subject: [PATCH 6.6 064/112] ACPI: processor_idle: use raw_safe_halt() in acpi_idle_play_dead()
+Date: Thu, 30 Nov 2023 16:21:51 +0000
+Message-ID: <20231130162142.352058541@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -43,52 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit c93695494606326d7fd72b46a2a657139ccb0dec upstream.
+commit 9bb69ba4c177dccaa1f5b5cbdf80b67813328348 upstream.
 
-Commit 89c290ea7589 ("ACPI: video: Put ACPI video and its child devices
-into D0 on boot") introduced calling acpi_device_fix_up_power_extended()
-on the video card for which the ACPI video bus is the companion device.
+Xen HVM guests were observed taking triple-faults when attempting to
+online a previously offlined vCPU.
 
-This unnecessarily touches the power-state of the GPU itself, while
-the issue it tries to address only requires calling _PS0 on the child
-devices.
+Investigation showed that the fault was coming from a failing call
+to lockdep_assert_irqs_disabled(), in load_current_idt() which was
+too early in the CPU bringup to actually catch the exception and
+report the failure cleanly.
 
-Touching the power-state of the GPU itself is causing suspend / resume
-issues on e.g. a Lenovo ThinkPad W530.
+This was a false positive, caused by acpi_idle_play_dead() setting
+the per-cpu hardirqs_enabled flag by calling safe_halt(). Switch it
+to use raw_safe_halt() instead, which doesn't do so.
 
-Instead use acpi_device_fix_up_power_children(), which only touches
-the child devices, to fix this.
-
-Fixes: 89c290ea7589 ("ACPI: video: Put ACPI video and its child devices into D0 on boot")
-Reported-by: Owen T. Heisler <writer@owenh.net>
-Closes: https://lore.kernel.org/regressions/9f36fb06-64c4-4264-aaeb-4e1289e764c4@owenh.net/
-Closes: https://gitlab.freedesktop.org/drm/nouveau/-/issues/273
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218124
-Tested-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Tested-by: Owen T. Heisler <writer@owenh.net>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: 6.6+ <stable@vger.kernel.org> # 6.6+
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_video.c | 2 +-
+ drivers/acpi/processor_idle.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
-index 0b7a01f38b65..d321ca7160d9 100644
---- a/drivers/acpi/acpi_video.c
-+++ b/drivers/acpi/acpi_video.c
-@@ -2031,7 +2031,7 @@ static int acpi_video_bus_add(struct acpi_device *device)
- 	 * HP ZBook Fury 16 G10 requires ACPI video's child devices have _PS0
- 	 * evaluated to have functional panel brightness control.
- 	 */
--	acpi_device_fix_up_power_extended(device);
-+	acpi_device_fix_up_power_children(device);
+diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
+index 3a34a8c425fe..55437f5e0c3a 100644
+--- a/drivers/acpi/processor_idle.c
++++ b/drivers/acpi/processor_idle.c
+@@ -592,7 +592,7 @@ static int acpi_idle_play_dead(struct cpuidle_device *dev, int index)
+ 	while (1) {
  
- 	pr_info("%s [%s] (multi-head: %s  rom: %s  post: %s)\n",
- 	       ACPI_VIDEO_DEVICE_NAME, acpi_device_bid(device),
+ 		if (cx->entry_method == ACPI_CSTATE_HALT)
+-			safe_halt();
++			raw_safe_halt();
+ 		else if (cx->entry_method == ACPI_CSTATE_SYSTEMIO) {
+ 			io_idle(cx->address);
+ 		} else
 -- 
 2.43.0
 
