@@ -1,378 +1,154 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD9A2E3E0;
-	Thu, 30 Nov 2023 13:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D77148CF0;
+	Thu, 30 Nov 2023 14:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-58d9a0ead0cso180403eaf.0;
-        Thu, 30 Nov 2023 05:23:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701350594; x=1701955394;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mJ4HfSjmHmp/z8LKb9u0O3izJUOjiP9hVgtxT/yNmWw=;
-        b=sEmsHJFNd5IFjzaggrOR1X8J+p4K1A0vTMfzISPifRGXRqlY5rtSh9KVyWq/plmExK
-         7ajzohTg122xygvSSbw7bzQHiE4/Gc12CljXXEw1rPYYlLTwFbo7mo2K1sjlQ84k7LM4
-         KzcxpRdksCUe1phZQ1zeOkG3V1Y8N+MKyDxceDO63+KgP+ptbAvfMOLCM9I1a4lm2oxx
-         QFaCBhmTy+tLl8CYh15Bs2iUzc+c+KUPQj+bUyiIBEei35tFtykHW5ts77Y6O2FyOZ38
-         5sdR7Jrt7hi+wE3UmU7+M0B6i9K34pTSK2+wrDIM9J5l7NIsR0XY3zJ/trK5BqFMztpQ
-         xgZQ==
-X-Gm-Message-State: AOJu0Yyht1HwDeC1QkqUYmIAamSMMBv6uramjGUmaHpdfZNQNOX0Yph4
-	CWU3SHcAXYLJOrmb83eqk29RL2RpSktzZMy7KiM=
-X-Google-Smtp-Source: AGHT+IHz57RxLZa4J1YxA2XttUwodX0GdXV5ylkhZb4Oyz6eVI2ERRPlDmHL2wK9GIJ4wc86qAKgBv8QpHj+lMuC3ss=
-X-Received: by 2002:a4a:e702:0:b0:58d:e73a:eb79 with SMTP id
- y2-20020a4ae702000000b0058de73aeb79mr2180906oou.0.1701350593894; Thu, 30 Nov
- 2023 05:23:13 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 168201042;
+	Thu, 30 Nov 2023 06:11:43 -0800 (PST)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 107D53F5A1;
+	Thu, 30 Nov 2023 06:10:49 -0800 (PST)
+Message-ID: <2e0f0aac-6287-45d1-ae96-6549c15a8418@arm.com>
+Date: Thu, 30 Nov 2023 14:10:48 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com> <4-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
-In-Reply-To: <4-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 30 Nov 2023 14:23:02 +0100
-Message-ID: <CAJZ5v0jZYy=hSn0hVV_dBw7rqY4NwcTn6ODo_-g_EVkzcnMBsQ@mail.gmail.com>
-Subject: Re: [PATCH 04/30] ACPI: IORT: Remove fwspec from the reserved region code
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, Andy Gross <agross@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
-	Bjorn Andersson <andersson@kernel.org>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, asahi@lists.linux.dev, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, devicetree@vger.kernel.org, 
-	Frank Rowand <frowand.list@gmail.com>, Hanjun Guo <guohanjun@huawei.com>, 
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev, 
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>, 
-	Kees Cook <keescook@chromium.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Len Brown <lenb@kernel.org>, 
-	linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Hector Martin <marcan@marcan.st>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, Orson Zhai <orsonzhai@gmail.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Rob Clark <robdclark@gmail.com>, 
-	Robert Moore <robert.moore@intel.com>, Rob Herring <robh+dt@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Sven Peter <sven@svenpeter.dev>, 
-	Thierry Reding <thierry.reding@gmail.com>, Krishna Reddy <vdumpa@nvidia.com>, 
-	virtualization@lists.linux.dev, Chen-Yu Tsai <wens@csie.org>, 
-	Will Deacon <will@kernel.org>, Yong Wu <yong.wu@mediatek.com>, 
-	Chunyan Zhang <zhang.lyra@gmail.com>, =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/10] ACPI: IORT: Allow COMPILE_TEST of IORT
+Content-Language: en-GB
+To: Jason Gunthorpe <jgg@nvidia.com>, David Airlie <airlied@gmail.com>,
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, Albert Ou <aou@eecs.berkeley.edu>,
+ asahi@lists.linux.dev, Catalin Marinas <catalin.marinas@arm.com>,
+ Danilo Krummrich <dakr@redhat.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Dexuan Cui <decui@microsoft.com>, devicetree@vger.kernel.org,
+ dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ David Woodhouse <dwmw2@infradead.org>, Frank Rowand
+ <frowand.list@gmail.com>, Hanjun Guo <guohanjun@huawei.com>,
+ Haiyang Zhang <haiyangz@microsoft.com>, iommu@lists.linux.dev,
+ Jon Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>,
+ Karol Herbst <kherbst@redhat.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ "K. Y. Srinivasan" <kys@microsoft.com>,
+ Laxman Dewangan <ldewangan@nvidia.com>, Len Brown <lenb@kernel.org>,
+ linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-hyperv@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-riscv@lists.infradead.org, linux-snps-arc@lists.infradead.org,
+ linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, Lyude Paul <lyude@redhat.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, nouveau@lists.freedesktop.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley
+ <paul.walmsley@sifive.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+ Sven Peter <sven@svenpeter.dev>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Vineet Gupta <vgupta@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Wei Liu <wei.liu@kernel.org>, Will Deacon <will@kernel.org>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>, Christoph Hellwig <hch@lst.de>,
+ Jerry Snitselaar <jsnitsel@redhat.com>, Hector Martin <marcan@marcan.st>,
+ Moritz Fischer <mdf@kernel.org>, patches@lists.linux.dev,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Rob Herring <robh@kernel.org>, Thierry Reding <thierry.reding@gmail.com>
+References: <10-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <10-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 30, 2023 at 2:10=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
-ote:
->
-> iort_iommu_get_resv_regions() needs access to the parsed id array that is
-> currently stored in the iommu_fwspec.
->
-> Instead of getting this from the fwspec inside the iort code have the
-> caller pass it in.
->
+On 29/11/2023 12:48 am, Jason Gunthorpe wrote:
+> The arm-smmu driver can COMPILE_TEST on x86, so expand this to also
+> enable the IORT code so it can be COMPILE_TEST'd too.
+> 
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-
 > ---
->  drivers/acpi/arm64/iort.c | 88 ++++++++++++++++++++++++---------------
->  drivers/iommu/dma-iommu.c |  7 +++-
->  include/linux/acpi_iort.h |  8 +++-
->  3 files changed, 65 insertions(+), 38 deletions(-)
->
-> diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-> index 5c9b4c23f96a87..93e30f2f5004f0 100644
-> --- a/drivers/acpi/arm64/iort.c
-> +++ b/drivers/acpi/arm64/iort.c
-> @@ -946,11 +946,19 @@ static u32 *iort_rmr_alloc_sids(u32 *sids, u32 coun=
-t, u32 id_start,
->         return new_sids;
->  }
->
-> -static bool iort_rmr_has_dev(struct device *dev, u32 id_start,
-> +struct iort_resv_args {
-> +       struct device *dev;
-> +       struct list_head *head;
-> +       struct fwnode_handle *iommu_fwnode;
-> +       const u32 *fw_ids;
-> +       unsigned int fw_num_ids;
-> +};
-> +
-> +static bool iort_rmr_has_dev(struct iort_resv_args *args, u32 id_start,
->                              u32 id_count)
->  {
-> +       struct device *dev =3D args->dev;
->         int i;
-> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
->
->         /*
->          * Make sure the kernel has preserved the boot firmware PCIe
-> @@ -965,18 +973,18 @@ static bool iort_rmr_has_dev(struct device *dev, u3=
-2 id_start,
->                         return false;
->         }
->
-> -       for (i =3D 0; i < fwspec->num_ids; i++) {
-> -               if (fwspec->ids[i] >=3D id_start &&
-> -                   fwspec->ids[i] <=3D id_start + id_count)
-> +       for (i =3D 0; i < args->fw_num_ids; i++) {
-> +               if (args->fw_ids[i] >=3D id_start &&
-> +                   args->fw_ids[i] <=3D id_start + id_count)
->                         return true;
->         }
->
->         return false;
->  }
->
-> -static void iort_node_get_rmr_info(struct acpi_iort_node *node,
-> -                                  struct acpi_iort_node *iommu,
-> -                                  struct device *dev, struct list_head *=
-head)
-> +static void iort_node_get_rmr_info(struct iort_resv_args *args,
-> +                                  struct acpi_iort_node *node,
-> +                                  struct acpi_iort_node *iommu)
->  {
->         struct acpi_iort_node *smmu =3D NULL;
->         struct acpi_iort_rmr *rmr;
-> @@ -1013,8 +1021,8 @@ static void iort_node_get_rmr_info(struct acpi_iort=
-_node *node,
->                         continue;
->
->                 /* If dev is valid, check RMR node corresponds to the dev=
- SID */
-> -               if (dev && !iort_rmr_has_dev(dev, map->output_base,
-> -                                            map->id_count))
-> +               if (args->dev &&
-> +                   !iort_rmr_has_dev(args, map->output_base, map->id_cou=
-nt))
->                         continue;
->
->                 /* Retrieve SIDs associated with the Node. */
-> @@ -1029,12 +1037,12 @@ static void iort_node_get_rmr_info(struct acpi_io=
-rt_node *node,
->         if (!sids)
->                 return;
->
-> -       iort_get_rmrs(node, smmu, sids, num_sids, head);
-> +       iort_get_rmrs(node, smmu, sids, num_sids, args->head);
->         kfree(sids);
->  }
->
-> -static void iort_find_rmrs(struct acpi_iort_node *iommu, struct device *=
-dev,
-> -                          struct list_head *head)
-> +static void iort_find_rmrs(struct iort_resv_args *args,
-> +                          struct acpi_iort_node *iommu)
->  {
->         struct acpi_table_iort *iort;
->         struct acpi_iort_node *iort_node, *iort_end;
-> @@ -1057,7 +1065,7 @@ static void iort_find_rmrs(struct acpi_iort_node *i=
-ommu, struct device *dev,
->                         return;
->
->                 if (iort_node->type =3D=3D ACPI_IORT_NODE_RMR)
-> -                       iort_node_get_rmr_info(iort_node, iommu, dev, hea=
-d);
-> +                       iort_node_get_rmr_info(args, iort_node, iommu);
->
->                 iort_node =3D ACPI_ADD_PTR(struct acpi_iort_node, iort_no=
-de,
->                                          iort_node->length);
-> @@ -1069,25 +1077,23 @@ static void iort_find_rmrs(struct acpi_iort_node =
-*iommu, struct device *dev,
->   * If dev is NULL, the function populates all the RMRs associated with t=
-he
->   * given IOMMU.
->   */
-> -static void iort_iommu_rmr_get_resv_regions(struct fwnode_handle *iommu_=
-fwnode,
-> -                                           struct device *dev,
-> -                                           struct list_head *head)
-> +static void iort_iommu_rmr_get_resv_regions(struct iort_resv_args *args)
->  {
->         struct acpi_iort_node *iommu;
->
-> -       iommu =3D iort_get_iort_node(iommu_fwnode);
-> +       iommu =3D iort_get_iort_node(args->iommu_fwnode);
->         if (!iommu)
->                 return;
->
-> -       iort_find_rmrs(iommu, dev, head);
-> +       iort_find_rmrs(args, iommu);
->  }
->
-> -static struct acpi_iort_node *iort_get_msi_resv_iommu(struct device *dev=
-)
-> +static struct acpi_iort_node *
-> +iort_get_msi_resv_iommu(struct iort_resv_args *args)
->  {
->         struct acpi_iort_node *iommu;
-> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
->
-> -       iommu =3D iort_get_iort_node(fwspec->iommu_fwnode);
-> +       iommu =3D iort_get_iort_node(args->iommu_fwnode);
->
->         if (iommu && (iommu->type =3D=3D ACPI_IORT_NODE_SMMU_V3)) {
->                 struct acpi_iort_smmu_v3 *smmu;
-> @@ -1105,15 +1111,13 @@ static struct acpi_iort_node *iort_get_msi_resv_i=
-ommu(struct device *dev)
->   * The ITS interrupt translation spaces (ITS_base + SZ_64K, SZ_64K)
->   * associated with the device are the HW MSI reserved regions.
->   */
-> -static void iort_iommu_msi_get_resv_regions(struct device *dev,
-> -                                           struct list_head *head)
-> +static void iort_iommu_msi_get_resv_regions(struct iort_resv_args *args)
->  {
-> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
->         struct acpi_iort_its_group *its;
->         struct acpi_iort_node *iommu_node, *its_node =3D NULL;
->         int i;
->
-> -       iommu_node =3D iort_get_msi_resv_iommu(dev);
-> +       iommu_node =3D iort_get_msi_resv_iommu(args);
->         if (!iommu_node)
->                 return;
->
-> @@ -1126,9 +1130,9 @@ static void iort_iommu_msi_get_resv_regions(struct =
-device *dev,
->          * a given PCI or named component may map IDs to.
->          */
->
-> -       for (i =3D 0; i < fwspec->num_ids; i++) {
-> +       for (i =3D 0; i < args->fw_num_ids; i++) {
->                 its_node =3D iort_node_map_id(iommu_node,
-> -                                       fwspec->ids[i],
-> +                                       args->fw_ids[i],
->                                         NULL, IORT_MSI_TYPE);
->                 if (its_node)
->                         break;
-> @@ -1151,7 +1155,7 @@ static void iort_iommu_msi_get_resv_regions(struct =
-device *dev,
->                                                          prot, IOMMU_RESV=
-_MSI,
->                                                          GFP_KERNEL);
->                         if (region)
-> -                               list_add_tail(&region->list, head);
-> +                               list_add_tail(&region->list, args->head);
->                 }
->         }
->  }
-> @@ -1160,13 +1164,24 @@ static void iort_iommu_msi_get_resv_regions(struc=
-t device *dev,
->   * iort_iommu_get_resv_regions - Generic helper to retrieve reserved reg=
-ions.
->   * @dev: Device from iommu_get_resv_regions()
->   * @head: Reserved region list from iommu_get_resv_regions()
-> + * @iommu_fwnode: fwnode that describes the iommu connection for the dev=
-ice
-> + * @fw_ids: Parsed IDs
-> + * @fw_num_ids: Length of fw_ids
->   */
-> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead)
-> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead,
-> +                                struct fwnode_handle *iommu_fwnode,
-> +                                const u32 *fw_ids, unsigned int fw_num_i=
-ds)
->  {
-> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
-> +       struct iort_resv_args args =3D {
-> +               .dev =3D dev,
-> +               .head =3D head,
-> +               .iommu_fwnode =3D iommu_fwnode,
-> +               .fw_ids =3D fw_ids,
-> +               .fw_num_ids =3D fw_num_ids,
-> +       };
->
-> -       iort_iommu_msi_get_resv_regions(dev, head);
-> -       iort_iommu_rmr_get_resv_regions(fwspec->iommu_fwnode, dev, head);
-> +       iort_iommu_msi_get_resv_regions(&args);
-> +       iort_iommu_rmr_get_resv_regions(&args);
->  }
->
->  /**
-> @@ -1178,7 +1193,12 @@ void iort_iommu_get_resv_regions(struct device *de=
-v, struct list_head *head)
->  void iort_get_rmr_sids(struct fwnode_handle *iommu_fwnode,
->                        struct list_head *head)
->  {
-> -       iort_iommu_rmr_get_resv_regions(iommu_fwnode, NULL, head);
-> +       struct iort_resv_args args =3D {
-> +               .head =3D head,
-> +               .iommu_fwnode =3D iommu_fwnode,
-> +       };
-> +
-> +       iort_iommu_rmr_get_resv_regions(&args);
->  }
->  EXPORT_SYMBOL_GPL(iort_get_rmr_sids);
->
-> diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-> index 85163a83df2f68..d644b0502ef48e 100644
-> --- a/drivers/iommu/dma-iommu.c
-> +++ b/drivers/iommu/dma-iommu.c
-> @@ -468,9 +468,12 @@ void iommu_put_dma_cookie(struct iommu_domain *domai=
-n)
->   */
->  void iommu_dma_get_resv_regions(struct device *dev, struct list_head *li=
-st)
->  {
-> +       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
->
-> -       if (!is_of_node(dev_iommu_fwspec_get(dev)->iommu_fwnode))
-> -               iort_iommu_get_resv_regions(dev, list);
-> +       if (!is_of_node(fwspec->iommu_fwnode)) {
-> +               iort_iommu_get_resv_regions(dev, list, fwspec->iommu_fwno=
-de,
-> +                                           fwspec->ids, fwspec->num_ids)=
-;
-> +       }
->
->         if (dev->of_node)
->                 of_iommu_get_resv_regions(dev, list);
-> diff --git a/include/linux/acpi_iort.h b/include/linux/acpi_iort.h
-> index 5423abff9b6b09..13f0cefb930693 100644
-> --- a/include/linux/acpi_iort.h
-> +++ b/include/linux/acpi_iort.h
-> @@ -53,7 +53,9 @@ void iort_put_rmr_sids(struct fwnode_handle *iommu_fwno=
-de,
->  /* IOMMU interface */
->  int iort_dma_get_ranges(struct device *dev, u64 *size);
->  int iort_iommu_configure_id(struct device *dev, const u32 *id_in);
-> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead);
-> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead,
-> +                                struct fwnode_handle *iommu_fwnode,
-> +                                const u32 *fw_ids, unsigned int fw_num_i=
-ds);
->  phys_addr_t acpi_iort_dma_get_max_cpu_address(void);
->  #else
->  static inline u32 iort_msi_map_id(struct device *dev, u32 id)
-> @@ -72,7 +74,9 @@ static inline int iort_dma_get_ranges(struct device *de=
-v, u64 *size)
->  static inline int iort_iommu_configure_id(struct device *dev, const u32 =
-*id_in)
->  { return -ENODEV; }
->  static inline
-> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead)
-> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead,
-> +                                struct fwnode_handle *iommu_fwnode,
-> +                                const u32 *fw_ids, unsigned int fw_num_i=
-ds)
->  { }
->
->  static inline phys_addr_t acpi_iort_dma_get_max_cpu_address(void)
-> --
-> 2.42.0
->
+>   drivers/acpi/Kconfig        | 2 --
+>   drivers/acpi/Makefile       | 2 +-
+>   drivers/acpi/arm64/Kconfig  | 1 +
+>   drivers/acpi/arm64/Makefile | 2 +-
+>   drivers/iommu/Kconfig       | 1 +
+>   5 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/acpi/Kconfig b/drivers/acpi/Kconfig
+> index f819e760ff195a..3b7f77b227d13a 100644
+> --- a/drivers/acpi/Kconfig
+> +++ b/drivers/acpi/Kconfig
+> @@ -541,9 +541,7 @@ config ACPI_PFRUT
+>   	  To compile the drivers as modules, choose M here:
+>   	  the modules will be called pfr_update and pfr_telemetry.
+>   
+> -if ARM64
+>   source "drivers/acpi/arm64/Kconfig"
+> -endif
+>   
+>   config ACPI_PPTT
+>   	bool
+> diff --git a/drivers/acpi/Makefile b/drivers/acpi/Makefile
+> index eaa09bf52f1760..4e77ae37b80726 100644
+> --- a/drivers/acpi/Makefile
+> +++ b/drivers/acpi/Makefile
+> @@ -127,7 +127,7 @@ obj-y				+= pmic/
+>   video-objs			+= acpi_video.o video_detect.o
+>   obj-y				+= dptf/
+>   
+> -obj-$(CONFIG_ARM64)		+= arm64/
+> +obj-y				+= arm64/
+>   
+>   obj-$(CONFIG_ACPI_VIOT)		+= viot.o
+>   
+> diff --git a/drivers/acpi/arm64/Kconfig b/drivers/acpi/arm64/Kconfig
+> index b3ed6212244c1e..537d49d8ace69e 100644
+> --- a/drivers/acpi/arm64/Kconfig
+> +++ b/drivers/acpi/arm64/Kconfig
+> @@ -11,6 +11,7 @@ config ACPI_GTDT
+>   
+>   config ACPI_AGDI
+>   	bool "Arm Generic Diagnostic Dump and Reset Device Interface"
+> +	depends on ARM64
+>   	depends on ARM_SDE_INTERFACE
+>   	help
+>   	  Arm Generic Diagnostic Dump and Reset Device Interface (AGDI) is
+> diff --git a/drivers/acpi/arm64/Makefile b/drivers/acpi/arm64/Makefile
+> index 143debc1ba4a9d..71d0e635599390 100644
+> --- a/drivers/acpi/arm64/Makefile
+> +++ b/drivers/acpi/arm64/Makefile
+> @@ -4,4 +4,4 @@ obj-$(CONFIG_ACPI_IORT) 	+= iort.o
+>   obj-$(CONFIG_ACPI_GTDT) 	+= gtdt.o
+>   obj-$(CONFIG_ACPI_APMT) 	+= apmt.o
+>   obj-$(CONFIG_ARM_AMBA)		+= amba.o
+> -obj-y				+= dma.o init.o
+> +obj-$(CONFIG_ARM64)		+= dma.o init.o
+> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> index 7673bb82945b6c..309378e76a9bc9 100644
+> --- a/drivers/iommu/Kconfig
+> +++ b/drivers/iommu/Kconfig
+> @@ -318,6 +318,7 @@ config ARM_SMMU
+>   	select IOMMU_API
+>   	select IOMMU_IO_PGTABLE_LPAE
+>   	select ARM_DMA_USE_IOMMU if ARM
+> +	select ACPI_IORT if ACPI
+
+This is incomplete. If you want the driver to be responsible for 
+enabling its own probing mechanisms then you need to select OF and ACPI 
+too. And all the other drivers which probe from IORT should surely also 
+select ACPI_IORT, and thus ACPI as well. And maybe the PCI core should 
+as well because there are general properties of PCI host bridges and 
+devices described in there?
+
+But of course that's clearly backwards nonsense, because drivers do not 
+and should not do that, so this change is not appropriate either. The 
+IORT code may not be *functionally* arm64-specific, but logically it 
+very much is - it serves a specification which is tied to the Arm 
+architecture and describes Arm-architecture-specific concepts, within 
+the wider context of ACPI on Arm itself only supporting AArch64, and not 
+AArch32. It's also not like it's driver code that someone might use as 
+an example and copy to a similar driver which could then run on 
+different architectures where a latent theoretical bug becomes real. 
+There's really no practical value to be had from compile-testing IORT.
+
+Thanks,
+Robin.
