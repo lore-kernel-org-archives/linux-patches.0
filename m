@@ -1,27 +1,27 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2048.outbound.protection.outlook.com [40.107.243.48])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2067.outbound.protection.outlook.com [40.107.243.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917A62B9CE;
-	Thu, 30 Nov 2023 01:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5832E403;
+	Thu, 30 Nov 2023 01:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="doEttS/l"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BjmT8lbX"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HORhBOqFrxfTFHe3FuDPVTyBPEWQkdsesYUlMZPPB/PV1+nha7Sx3tZqUEDwqK/RyTn/VvDUfNXbMh4O2Y3MS4q3HAb+CLMQhrGuHubL3GLcAreTh1+iE/3CIrje6cyH65XJ3zvhfE2rKmstu179fGH5CmPzXEhE3Z/3/slbLpTpaz1SyCuD3RThDLXOV8Uwg8i1QYl2jztVJIpSfHMb8Q93HpPF5y0x6FrXqypHabLyDWRPTgWsV6MdDqMuLJolcN9j/nHHZCnMBQ99LNLxvm3RJthe36g9B3XrnJiVBGEfyTveNU2GI3Abx2gqZrhLfk9pcxuPZlOMSU0d3lRlWA==
+ b=ka5+Tn0dtGD82doSLCdRzFAdZU+soCknlkmhpYprPjL/OEtXbLG43HRLzmLKkr86KdFd4lZ16IQm3mc908D2W7OUdSfCIWrg2xjtXemm56kaGKyct8QoRV6MNBE+Lkn//JGELyOgxoMcLTyZHXd8Jj6AV2Jm01O2opSey2ZeZ0+1McByqH8JPhpe3Auv1ufuu7X20oBZKsrz+sANhDt553M+BkaMB9wguQBxHF07TI1GxJfIZ2seqCWPfa+OXOQqD5gM9nOYuPodYuDiBNV2WZWMC+2ztS42sEKCWqCuEKGEcn7SLYuhabPGHG0Unl0c2Tx0hx8Q+SSIimQdjnsevg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1otHA+LIL3W1WZMWhBTV+rqHH68xzfh1OFbgeJsyAew=;
- b=dIzx2Ow2yuwP8iT0OWYVSHQEpkPqxbjqRm2Cn0wg3J13QvBEAJjFA2iaXJK15n612Gm+EMQRd3TY13xWecpUctJHJUm+M+H8o1WjVa1twVae21ulKjyqsm7L8Mf78R0r5+DYnVyypPYpxoEXXRdeEREiHSUnPSt6wapzXeeAcfTrdp77z0m04b1tR5B6kMNrExIYgrHlzz/8ifB892SmyyakxdlK+3IbrnmqoCvmBsB7uSgxZL/4VXV5Rvz5ktR4bcq/ynEMl2LT83B9yRRJ3uzd5B0QCXKs0h4397I4mFfdRk+W8aTXizj+Q9NTqHIhANvbifhfuR0U696EDoMtEw==
+ bh=DWZ926ZLNg56KWjCc5bGDycCVGjrN5wZd1+rheKLVFg=;
+ b=OC/gfjy7SmizxL5B+/qJlDZkBscnLWQJM8R1l85aeCrEQsEzkOSg3/CrHa4UbLSsvnDQlrAEKLaEWDkWZEToSD7VbLxsskvdvVWZ+IRZc8e6ZRg7e57mmXNShuGbo5ofD7JvEkkYU2sPru4Bgdh+c1298GWmJ+tk3KpSxyJy2e8jMGB7H6QQlnQaN5Zo5rGIFQVZETzEKBwy6avzhzPec9culajVcwnnvmUtLLfheF3Ebqu+PNm/IChmwu5E8bPWdsj6oECRe1YS1ChmYMHL6nHDlUfEz9Xe22sZdYXxN1JhZbSidmEAqtXx2vrqop6E99pOjUSClW3UGjnHrZraew==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1otHA+LIL3W1WZMWhBTV+rqHH68xzfh1OFbgeJsyAew=;
- b=doEttS/lS7F+WQ093rXr+f1jzMGxAYZ/ZFHsN0NuBff5/S67oZASEaVROX1bTDHL2faxMu9E/W7Fcl7wXUzFw7b0vR8RPM1NimFG94/Qcyo/5TT6PBsvKylYx3MaypZOrZGa0BPQ/MAa9VBM/UErjL4SQtc5fOQ6CpqWlIyjtEbSsQC84neUevIH1P5AaG6wDmplLuAjGbSM363ruUoNCanwqpxK7M67qrfp48EhTwmSrFWklUMvxNJUvG3wgD9UMz9zsxA8f/W4vVQcpbvENRDHvYKW8bY0y7HIqhbF/k1N6290ZmqjZWf+3BsFhWuBv8kmrBp23yNggPQbsA6EkQ==
+ bh=DWZ926ZLNg56KWjCc5bGDycCVGjrN5wZd1+rheKLVFg=;
+ b=BjmT8lbXwnW6JZmFNYNAVEUqwi/eLtYmxKMIapa0cwURuUJa6Z70jxreC7lR9XxwdoljYcubePkyb3R0rhMfX/b9vGzcCNN7Vcav6tuQYd8x/UBEvuE2DohQCvsSI/iydQXQb9TLClZqlaLJJGsjRQuRv60Lm/in1VUWlv59XdyrePUxNn7ymqhnLjUzr2tiiAgZU7e745OS2irqIeyxTLfhPAhjjhyWmXs3oP+xQPOyGVWq37tglWPlKZp8Hwm5gLpCe3p6LR7oBx7lhkR5JTo5MOKATnsHwl1nRGlJxCb76EiQKJUCJnxiQUafxx8EvXtI9V0MjyKmgvzspPyV8Q==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
@@ -87,15 +87,15 @@ To: acpica-devel@lists.linux.dev,
 	Chunyan Zhang <zhang.lyra@gmail.com>
 Cc: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
 	patches@lists.linux.dev
-Subject: [PATCH 02/30] ACPI: VIOT: Make a viot_iommu_for_each_id()
-Date: Wed, 29 Nov 2023 21:10:09 -0400
-Message-ID: <2-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
+Subject: [PATCH 13/30] iommu/dart: Move to iommu_of_xlate()
+Date: Wed, 29 Nov 2023 21:10:20 -0400
+Message-ID: <13-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 In-Reply-To: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SN6PR08CA0011.namprd08.prod.outlook.com
- (2603:10b6:805:66::24) To LV2PR12MB5869.namprd12.prod.outlook.com
+X-ClientProxiedBy: SA1P222CA0145.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:3c2::29) To LV2PR12MB5869.namprd12.prod.outlook.com
  (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -105,201 +105,194 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|PH0PR12MB5484:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3b7c2a46-bde1-43ba-de9f-08dbf1412c2b
+X-MS-Office365-Filtering-Correlation-Id: 675f93e3-a2ba-4189-b362-08dbf1412c35
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	2i71bxGKun33R1DeXVHUpr3CXstj44PRyf0JQC09JOqxra+4rpqi5V/a+/WNw06/dj83EGkjEtD9uRBPznXeSDDkNdiSHgywYfHFohfJfP5b4rz7XPeQjq9TcVX9mDGt1dEHDjb0iasrFInbtiy7uLqrvF3BfAh/nQqbR5aEWR/lmLQoDZEiu3TUE8unhP/ke6+ROgtIBc/402OUrVaT5sn4QOgTnOAOctotEwEkLjyyh3IjWXYFRh+aBAV/94KDX6IUP8AGOGvnVOvMSmj8UWwnH6bZFKZcCddZBBxbb11988ipr7g7OlpVTCplEPjQj2GAyLjdL26mzDwDi7+FqE1dYFb7uZmb0cgcf0Nmd9dcI9FZOjs/qlRwk+m0CQ0XlMVu2WvTh9o4YVkntL2HGmFrNPEK01LJc0rtP/hUGEgdVJuqdhLr6akwU3miEWqKf5QGHKUhvRYdLUBNhVbblfanJ0na3Z/TL4VY9SLfFNvfR6z0I29DRgxucRw+JF1oP8gv1fBVfNUFRWM8qHkySEglkzkqh8mV/m0sg929hf/Rux4IUzNyRAuu4q+WRIzPGBGmIYbFwvAm6le49EmunEZVWerPmJYb+CGZZBkheEqksA/whO/VlZDCoH+wheChpCp9NkzpFNPFDAIG8aJgQaKelX7TxfkNz45ZEVkrcGo=
+	PUAlnaI1V8lrqpJYdE+Z5UsVLxDGEt2eWMKw+SPfsu4wisFzlUhqybEK/ow+wJEhdQIneYbkL+7dH9e3M8SZEp5lb/G2Vw6HlIme/Yjow8R6tJRFi0IjHgy1vveoFIycYwkBVZwC3cLHS+lq47XNr/J/p8oZCNvQdK/CA8ZROqFj+KWhzkxeRVfpy93W6zfBtPckOvInRr5L8JnAaalosUGGyxf2V/ptxZkqQR9rDhS7xl5QPa8L/NTiNa4e5kY0+mVIRWhPqNENune8K6f2wUMmFRMtsVOnmrVmKOlsw4x+ILRZ2KGl+RbkEBlKi6M0i0RqCCCXVvsmGElptVU2J5UDFORw0uFD67dbQKsSbm3uATaqAxeo4lD1xzQTvifDD3veT10lHTUKclaojUG6nLOmrb/uo3Gt+BESHpsxzDadonEjgAGtETRQ8/yaU+sNxYgrZKIM3SkuFaCz6h6tqD3Vvu6fOrCMcV6KFQOCdKC5dUQ8DVL0UjH3kepHGLlRYeV7mwnrxNWhe7iz0+doMmm7kcvi39Xs7ZmnN9FxR41OIT1c/kNG46PhH8zktTgxZZpdxvnOs1GuRSz5tnnT8eT5Rz8tL8iupGSV7nPHxt7j1SCffFfg1DFEfeoBP6NjEOdRAJZc90qSgeHw5h7QOg==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(346002)(136003)(396003)(39860400002)(376002)(230922051799003)(451199024)(1800799012)(186009)(64100799003)(1191002)(8936002)(110136005)(8676002)(316002)(66556008)(4326008)(86362001)(66476007)(6486002)(478600001)(66946007)(41300700001)(36756003)(921008)(7416002)(7366002)(2906002)(7406005)(5660300002)(38100700002)(2616005)(6512007)(6506007)(6666004)(83380400001)(26005)(202311291699003)(4216001);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(346002)(136003)(396003)(39860400002)(376002)(230922051799003)(451199024)(1800799012)(186009)(64100799003)(1191002)(8936002)(110136005)(8676002)(316002)(66556008)(4326008)(86362001)(66476007)(6486002)(478600001)(66946007)(41300700001)(36756003)(921008)(7416002)(7366002)(2906002)(7406005)(5660300002)(38100700002)(2616005)(6512007)(6506007)(6666004)(83380400001)(26005)(202311291699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?o93vOzgPifG1P4VbkFhWTGFFahkhlARUTrm73NWNXsXUnTuxLZ6yq8GJaBMt?=
- =?us-ascii?Q?RGwqFGsGLuWRFp2q4YQM+9D6gQ2MePrzhiz3/gU5Tz7/NS2z6BpVbDiAE96w?=
- =?us-ascii?Q?35u0Or/eXUXm7Xzcm66fLtslM1UNp/ABFr1THw/JegH0NWolq9xqMS/B9eKU?=
- =?us-ascii?Q?vF42pJnrTnWuXpMPEh/0ho4iEbriw+9e97QbTc7u9ChjUxcuyWqjOsaNUWM7?=
- =?us-ascii?Q?QkDTq6renXotM9hzoq8AYz079eSg/zH3WlZxVmGM9Q8pTWPOoU7JmBQUMBgb?=
- =?us-ascii?Q?9ScqzzwZEDu8Jb+sOTGlw5v0/SGatkYAof4EaHSJRcLg10NyzoGR5/BxOtZD?=
- =?us-ascii?Q?t5AhVtdK29nbvqsA9/b1YaVDJB+crL7vk9KHdCW5MsJ9BxDv8DBnX7phfHXt?=
- =?us-ascii?Q?U/CP+v8bwACV1XYaqxLdnvrhqHGZeoQjFdTnRZQ9T1AUVFybd0E7i6ZOyPyT?=
- =?us-ascii?Q?Z/lEh9Eww4cvKsifl0XR9CITk+a2HNLdoQoCZXiyddBKcgzN5Fk3TAN1uAnC?=
- =?us-ascii?Q?ZLr/+imCvCuj+GYyja5AMJODWY23umKFYSXk1+k9P2S3E4vWYZ94ORdethA5?=
- =?us-ascii?Q?gzpFfcwui0/4PH8ZV065Ab7oxpqMLEoEMEnM9fVFiwEKLXiBnMZKCBGatPCF?=
- =?us-ascii?Q?iHo5DwA+/dZzYuC79TNgGZV2sdYy8DM9L2HYn8qbFGtwkGfrXOr+6yeMyVrd?=
- =?us-ascii?Q?4RP2ZcgQn1Xos4hD09ifvRxnlNFlfLVTHfcARbXWOKB+58PNw67IoAfRCyJi?=
- =?us-ascii?Q?paIjfyYlP89rG7CAzERtn3z/Zawhmxz+rzvGQ74acndrk5d8IKMcQWk2xBiX?=
- =?us-ascii?Q?RMNQLsfTvGfYfswXq5Eu3m85TH75mJpP6g4me/zdldZWhhnNg0zyBY+PgSd5?=
- =?us-ascii?Q?sMErvND4/es1Mfs5LcrawXiZgf+eGoDU8/e9tekzm9nOLsGPIMnNi3ToMJm8?=
- =?us-ascii?Q?qO1f/LvCu3NM0jAYkwQngplTWjNLO9M+ntuwb3gIGIok4S5qFVjuyorrRSls?=
- =?us-ascii?Q?VeXH++qLaQH1K9ECUvEWvl5wInCKkuVlknqJSXTzpi+BMmQRb0jPIX7Kh4u8?=
- =?us-ascii?Q?6A1cBehBlgFKUSYguRzYsIdXOnl8ZoYgm3YEzhxikhb+z5Q2L5ym33IWUAN7?=
- =?us-ascii?Q?8djx5V7kye2dMNgxdEQ2fDn1ilL0+hzS6iCS4h4wCHOkAogroJvChs/vYvEF?=
- =?us-ascii?Q?osBnG4/9YwZ0D6NcdyPBGV3OgKjxGSG0F8ka1V7wNuImt6rDWS+6o7BOz74Q?=
- =?us-ascii?Q?7kpmKCjTUANR+WtMC8pgtquDAa2sA72tJoDK3u4QNN/4wWok5W4iwD4KbFUP?=
- =?us-ascii?Q?olUV0qqSQAB8+v2fZBNRwpwohOJO/CKMXug58RFtgNjr78jkLMLFFf2k34bc?=
- =?us-ascii?Q?zjUkiG637PQFFk0Di7IA7p8VWD2Yoadii1L+fg/yoDNZKQftOFxt8d+6yMGO?=
- =?us-ascii?Q?FeVLUoXg7W7pfWz8UghOhbZw+BwvmmNayRhwoKZx9VvkzeifYv5vOL7UxN7y?=
- =?us-ascii?Q?kuTl/OFazFw4QI4R9nCU5aDUSB2IjT2XfOsHZEPfShSoSsAv4nhyziF9zCGB?=
- =?us-ascii?Q?M7GJztsQySxonQWwzySNF2zDj+GDqo1w+/1oVIOb?=
+	=?us-ascii?Q?wYKUGMVw4jTZK9TpVBIlYxZXJsO5zzGTUYhbPmpelFOwHr8icXkROHVlpj5n?=
+ =?us-ascii?Q?8xxnJuZHz0o9Y4McQ3bEwIl2fGTleFmlreiZ/vf7pqUYhSj/8zt6k2pgvcAp?=
+ =?us-ascii?Q?A6iF88hiWjbrWwd+ESPRo+SrtahSogrBWxyVSbHm42G1eCH8dWRjkdG9wrMz?=
+ =?us-ascii?Q?bFE5T2QpvWwBoTEgdnQaC6fASJaxHTNydtWVcZ+FowjAwY4tWvzan27Sd9/l?=
+ =?us-ascii?Q?fc7KmDImc+bKm3wRaetPHrleO0CJQhLrM73SHp024RI8AJxFZ92amlKTktHJ?=
+ =?us-ascii?Q?TYwZ88LSALxaUJJC3eDWwdwx6cDzH6AqJtg8/OgulO3T3MBq/fHb1ajeHft1?=
+ =?us-ascii?Q?+2YihVnWM47fZ+WyQD+TtAkIOIf6fz334fYF9Im4vCGt6fjwp2v2QXLGBbgg?=
+ =?us-ascii?Q?TO4PCb/cojUakfec9VQLOo4QG03fbZ4vg3/ugFbj5qgZDTJrz4HiApfaE5oG?=
+ =?us-ascii?Q?DQ8BZ9xY88D1DBRPAMOasCoRSXXYNz0k8l81jgBUTkefS0r4DIBqQQ0FRtDo?=
+ =?us-ascii?Q?O+jF8AUgcQBLpgiFweNmJr94qXFmKl5SySWi1XBF6WhSNa2ZIOG6aKuG7KUq?=
+ =?us-ascii?Q?APM8fV8SUfLHihTj6xkCUGT/YGrz1f+M/27E4senglfWKBIizYdvm6tY4a1w?=
+ =?us-ascii?Q?OUTK+fYeix6+11tIXp2DvY5qjCXrKSfTvsA3+qKDr1GFXsHa92nnwabqoQpO?=
+ =?us-ascii?Q?Y7TmuMqUD8z5+XmM325AR4QpGwriOiB2Q62kK3o/L/VG19o4amhDQQzd/jzc?=
+ =?us-ascii?Q?lbJxJQdZkOvtujpkraGRfwCLgb1NFlLhyGl2LMs6foNv3ZFDvBXgGZ0aYS7u?=
+ =?us-ascii?Q?wXZvwLa4PDM8NMlkOO3jh8EPohP0wZdQVgPCDu7xQBgtSsPWrup86XOSEK2x?=
+ =?us-ascii?Q?HOgdxm8m+zJGFh/40sCvlow76JtLygZflyH1qb4G7KldqGD7D0g1u/JR9+cz?=
+ =?us-ascii?Q?6WHqVrQzEZxWmk5KMAOJ5WzfxOfSXqfjzQ17OLymF1Xg4SeW7w7YOXqfFY7X?=
+ =?us-ascii?Q?v/Pi1MLB2NNZroriYSEHx+HgZyYr2oixB01n2eLeffMHuWF0afQz4ok5l2gx?=
+ =?us-ascii?Q?kqNVCHXSxHS7mu/7b7jLuMq41Rf2ie7nOYqr+P5j6mQELuSo2pWf0YhiyHnF?=
+ =?us-ascii?Q?vHliBDRKs2H91VexVw7h2UMAHxHRl/N0twxk07EqCT1j7objPVMAHglvwUpv?=
+ =?us-ascii?Q?78UV36QGHRcC/lE+1iVllZOD7xNKxQsCwQ+MI9Gxl5yaGRrhTyzUswzihWaA?=
+ =?us-ascii?Q?DdM15/i98pB5B+BsDxYVC7UZFfDseebYDztILvt7aBCIcO3WhRkqsDS1TcBa?=
+ =?us-ascii?Q?jNZaU1mZWnKHdcmtN0IX3FuF2AibZbWkVDJ4Ly9vFTF4tYmc8djT1TyoeaDx?=
+ =?us-ascii?Q?YplG9XVQHpTXMvsNop/iMxsbSRHanm/nSaEALTphAqitiqxNASbRpOOtcvgx?=
+ =?us-ascii?Q?3+/7fp7BIouXZhUr7N/ZO4E8KuhH0jMh2+E4jipLMu3o5iylv8XolkznNXcJ?=
+ =?us-ascii?Q?4Cid2fTynpl+VdUVecnAfJkYmh4an9rOUAPsgADwhSpy0JtuKEgsDh4PMtqZ?=
+ =?us-ascii?Q?P1w/vWCYt1t4duwuE7LxA9WzdDo4waGLWcxs6wG6?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3b7c2a46-bde1-43ba-de9f-08dbf1412c2b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 675f93e3-a2ba-4189-b362-08dbf1412c35
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:42.0115
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:42.0795
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rKRdU3xUv0YfjqjwVjOiGYZpIlTC16NPNlmHBn1LiMBDSU/VmIXb/gDGNS0ISUvI
+X-MS-Exchange-CrossTenant-UserPrincipalName: N4Y176JW/ot07qm4b/KpOoXLIROVYY8OkNl8DDPa1VZAbJe+cFFsKswX/8e6EebI
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB5484
 
-Similar to of_iommu_for_each_id() this parses the VIOT ACPI description
-and invokes a function over each entry in the table.
+dart supports multiple instances with multiple IDs per instance. It loads
+the FW data into a pre-allocated 2d array inside it's per-device data.
 
-Have viot_iommu_configure() use the new function to call
-viot_dev_iommu_init().
+Switch over by allocating the per-device data at the top of
+probe then calling iommu_of_xlate() to fill in the 2d array. The iommu
+instance is located by the core code and container_of() gets to the dart
+version.
+
+Solve a few issues:
+
+ - A bus probe was failing by accident because the of_xlate not being
+   called left a NULL cfg in the priv, and other code tended to free the
+   dev->iommu. iommu_of_xlate() will fail bus probe directly
+
+ - Missing validation that the node in the iommus instance is actually
+   pointing at this driver
+
+ - Don't leak the cfg. It is allocated during probe, freed on probe
+   failure, and freed in release_device() on probe success. Previously it
+   would allocate it in of_xlate and leak it in some possible error flows.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/acpi/viot.c       | 54 +++++++++++++++++++++++----------------
- include/linux/acpi_viot.h | 11 ++++++++
- 2 files changed, 43 insertions(+), 22 deletions(-)
+ drivers/iommu/apple-dart.c | 58 +++++++++++++++++++++-----------------
+ 1 file changed, 32 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/acpi/viot.c b/drivers/acpi/viot.c
-index c8025921c129b2..7ab35ef05c84e0 100644
---- a/drivers/acpi/viot.c
-+++ b/drivers/acpi/viot.c
-@@ -25,13 +25,6 @@
- #include <linux/pci.h>
- #include <linux/platform_device.h>
+diff --git a/drivers/iommu/apple-dart.c b/drivers/iommu/apple-dart.c
+index bb0e5a4577fc03..b796c68ae45ad8 100644
+--- a/drivers/iommu/apple-dart.c
++++ b/drivers/iommu/apple-dart.c
+@@ -268,10 +268,10 @@ struct apple_dart_domain {
+ };
  
--struct viot_iommu {
--	/* Node offset within the table */
--	unsigned int			offset;
--	struct fwnode_handle		*fwnode;
--	struct list_head		list;
--};
--
- struct viot_endpoint {
- 	union {
- 		/* PCI range */
-@@ -304,10 +297,10 @@ void __init acpi_viot_init(void)
- 	acpi_put_table(hdr);
- }
- 
--static int viot_dev_iommu_init(struct device *dev, struct viot_iommu *viommu,
--			       u32 epid)
-+static int viot_dev_iommu_init(struct viot_iommu *viommu, u32 epid, void *info)
- {
- 	const struct iommu_ops *ops;
-+	struct device *dev = info;
- 
- 	if (!viommu)
- 		return -ENODEV;
-@@ -324,11 +317,17 @@ static int viot_dev_iommu_init(struct device *dev, struct viot_iommu *viommu,
- 	return acpi_iommu_fwspec_init(dev, epid, viommu->fwnode, ops);
- }
- 
--static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, void *data)
-+struct viot_pci_iommu_alias_info {
-+	struct device *dev;
-+	viot_for_each_fn fn;
-+	void *info;
-+};
-+
-+static int __for_each_pci_alias(struct pci_dev *pdev, u16 dev_id, void *data)
- {
- 	u32 epid;
- 	struct viot_endpoint *ep;
--	struct device *aliased_dev = data;
-+	struct viot_pci_iommu_alias_info *info = data;
- 	u32 domain_nr = pci_domain_nr(pdev->bus);
- 
- 	list_for_each_entry(ep, &viot_pci_ranges, list) {
-@@ -339,14 +338,14 @@ static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, void *data)
- 			epid = ((domain_nr - ep->segment_start) << 16) +
- 				dev_id - ep->bdf_start + ep->endpoint_id;
- 
--			return viot_dev_iommu_init(aliased_dev, ep->viommu,
--						   epid);
-+			return info->fn(ep->viommu, epid, info->info);
- 		}
- 	}
- 	return -ENODEV;
- }
- 
--static int viot_mmio_dev_iommu_init(struct platform_device *pdev)
-+static int __for_each_platform(struct platform_device *pdev,
-+			       viot_for_each_fn fn, void *info)
- {
- 	struct resource *mem;
- 	struct viot_endpoint *ep;
-@@ -357,12 +356,28 @@ static int viot_mmio_dev_iommu_init(struct platform_device *pdev)
- 
- 	list_for_each_entry(ep, &viot_mmio_endpoints, list) {
- 		if (ep->address == mem->start)
--			return viot_dev_iommu_init(&pdev->dev, ep->viommu,
--						   ep->endpoint_id);
-+			return fn(ep->viommu, ep->endpoint_id, info);
- 	}
- 	return -ENODEV;
- }
- 
-+int viot_iommu_for_each_id(struct device *dev, viot_for_each_fn fn, void *info)
-+{
-+	if (dev_is_pci(dev)) {
-+		struct viot_pci_iommu_alias_info pci_info = {
-+			.dev = dev,
-+			.fn = fn,
-+			.info = info,
-+		};
-+		return pci_for_each_dma_alias(to_pci_dev(dev),
-+					      __for_each_pci_alias, &pci_info);
-+	}
-+
-+	if (dev_is_platform(dev))
-+		return __for_each_platform(to_platform_device(dev), fn, info);
-+	return -ENODEV;
-+}
-+
- /**
-  * viot_iommu_configure - Setup IOMMU ops for an endpoint described by VIOT
-  * @dev: the endpoint
-@@ -371,10 +386,5 @@ static int viot_mmio_dev_iommu_init(struct platform_device *pdev)
+ /*
+- * This structure is attached to devices with dev_iommu_priv_set() on of_xlate
+- * and contains a list of streams bound to this device.
+- * So far the worst case seen is a single device with two streams
+- * from different darts, such that this simple static array is enough.
++ * This structure is attached to devices with dev_iommu_priv_set() on
++ * probe_device and contains a list of streams bound to this device. So far the
++ * worst case seen is a single device with two streams from different darts,
++ * such that this simple static array is enough.
+  *
+  * @streams: streams for this device
   */
- int viot_iommu_configure(struct device *dev)
+@@ -295,6 +295,9 @@ struct apple_dart_master_cfg {
+ static struct platform_driver apple_dart_driver;
+ static const struct iommu_ops apple_dart_iommu_ops;
+ 
++static int apple_dart_of_xlate(struct iommu_device *iommu,
++			       struct of_phandle_args *args, void *priv);
++
+ static struct apple_dart_domain *to_dart_domain(struct iommu_domain *dom)
  {
--	if (dev_is_pci(dev))
--		return pci_for_each_dma_alias(to_pci_dev(dev),
--					      viot_pci_dev_iommu_init, dev);
--	else if (dev_is_platform(dev))
--		return viot_mmio_dev_iommu_init(to_platform_device(dev));
--	return -ENODEV;
-+	return viot_iommu_for_each_id(dev, viot_dev_iommu_init, dev);
+ 	return container_of(dom, struct apple_dart_domain, domain);
+@@ -721,21 +724,34 @@ static struct iommu_domain apple_dart_blocked_domain = {
+ 	.ops = &apple_dart_blocked_ops,
+ };
+ 
+-static struct iommu_device *apple_dart_probe_device(struct device *dev)
++static struct iommu_device *
++apple_dart_probe_device(struct iommu_probe_info *pinf)
+ {
+-	struct apple_dart_master_cfg *cfg = dev_iommu_priv_get(dev);
++	struct device *dev = pinf->dev;
++	struct apple_dart_master_cfg *cfg;
+ 	struct apple_dart_stream_map *stream_map;
++	int ret;
+ 	int i;
+ 
++	cfg = kzalloc(sizeof(*cfg), GFP_KERNEL);
+ 	if (!cfg)
+-		return ERR_PTR(-ENODEV);
++		return ERR_PTR(-ENOMEM);
++	ret = iommu_of_xlate(pinf, &apple_dart_iommu_ops, 1,
++			     &apple_dart_of_xlate, cfg);
++	if (ret)
++		goto err_free;
+ 
+ 	for_each_stream_map(i, cfg, stream_map)
+ 		device_link_add(
+ 			dev, stream_map->dart->dev,
+ 			DL_FLAG_PM_RUNTIME | DL_FLAG_AUTOREMOVE_SUPPLIER);
+ 
++	dev_iommu_priv_set(dev, cfg);
+ 	return &cfg->stream_maps[0].dart->iommu;
++
++err_free:
++	kfree(cfg);
++	return ERR_PTR(ret);
  }
-diff --git a/include/linux/acpi_viot.h b/include/linux/acpi_viot.h
-index a5a12243156377..fce4eefcae4aad 100644
---- a/include/linux/acpi_viot.h
-+++ b/include/linux/acpi_viot.h
-@@ -5,6 +5,17 @@
  
- #include <linux/acpi.h>
+ static void apple_dart_release_device(struct device *dev)
+@@ -778,25 +794,15 @@ static void apple_dart_domain_free(struct iommu_domain *domain)
+ 	kfree(dart_domain);
+ }
  
-+struct viot_iommu {
-+	/* Node offset within the table */
-+	unsigned int			offset;
-+	struct fwnode_handle		*fwnode;
-+	struct list_head		list;
-+};
-+
-+typedef int (*viot_for_each_fn)(struct viot_iommu *viommu, u32 epid,
-+				void *info);
-+int viot_iommu_for_each_id(struct device *dev, viot_for_each_fn fn, void *info);
-+
- #ifdef CONFIG_ACPI_VIOT
- void __init acpi_viot_early_init(void);
- void __init acpi_viot_init(void);
+-static int apple_dart_of_xlate(struct device *dev, struct of_phandle_args *args)
++static int apple_dart_of_xlate(struct iommu_device *iommu,
++			       struct of_phandle_args *args, void *priv)
+ {
+-	struct apple_dart_master_cfg *cfg = dev_iommu_priv_get(dev);
+-	struct platform_device *iommu_pdev = of_find_device_by_node(args->np);
+-	struct apple_dart *dart = platform_get_drvdata(iommu_pdev);
+-	struct apple_dart *cfg_dart;
+-	int i, sid;
++	struct apple_dart *dart = container_of(iommu, struct apple_dart, iommu);
++	struct apple_dart_master_cfg *cfg = priv;
++	struct apple_dart *cfg_dart = cfg->stream_maps[0].dart;
++	int sid = args->args[0];
++	int i;
+ 
+-	if (args->args_count != 1)
+-		return -EINVAL;
+-	sid = args->args[0];
+-
+-	if (!cfg)
+-		cfg = kzalloc(sizeof(*cfg), GFP_KERNEL);
+-	if (!cfg)
+-		return -ENOMEM;
+-	dev_iommu_priv_set(dev, cfg);
+-
+-	cfg_dart = cfg->stream_maps[0].dart;
+ 	if (cfg_dart) {
+ 		if (cfg_dart->supports_bypass != dart->supports_bypass)
+ 			return -EINVAL;
+@@ -978,10 +984,10 @@ static const struct iommu_ops apple_dart_iommu_ops = {
+ 	.identity_domain = &apple_dart_identity_domain,
+ 	.blocked_domain = &apple_dart_blocked_domain,
+ 	.domain_alloc_paging = apple_dart_domain_alloc_paging,
+-	.probe_device = apple_dart_probe_device,
++	.probe_device_pinf = apple_dart_probe_device,
+ 	.release_device = apple_dart_release_device,
+ 	.device_group = apple_dart_device_group,
+-	.of_xlate = apple_dart_of_xlate,
++	.of_xlate = iommu_dummy_of_xlate,
+ 	.def_domain_type = apple_dart_def_domain_type,
+ 	.get_resv_regions = apple_dart_get_resv_regions,
+ 	.pgsize_bitmap = -1UL, /* Restricted during dart probe */
 -- 
 2.42.0
 
