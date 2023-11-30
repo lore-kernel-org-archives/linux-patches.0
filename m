@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EB4495C2;
-	Thu, 30 Nov 2023 16:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E9B495C2;
+	Thu, 30 Nov 2023 16:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OlWxHsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC11C433C8;
-	Thu, 30 Nov 2023 16:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRrUWL1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C80C433C8;
+	Thu, 30 Nov 2023 16:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361483;
-	bh=0hL5HU/GhR7gOlOG/8unorEWPiXJ/3plwU3+Agf+RHY=;
+	s=korg; t=1701361486;
+	bh=WLLTOS11P4/pAefPXYGiksEe2Jgu/wxOZivXQeX0Ajw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2OlWxHsbUqQRDM4DzH9Auej0cZOz9pHDIwow8+rzxX/apKpLbJpfhOeJjK/oCoUV9
-	 EROUlZXKoBw29B38KXQP0UHKKOK2hzO06HuU7ez6SeBu+DCerwT6lHZF8wlQIhVJcj
-	 6P+Prv8Yg7FgcnLMmWgSwuDttOvmsPKymbIbehQI=
+	b=DRrUWL1F+0dNlP8WZjjqnqUQqeNxyRzWxBniA+phrQbLcKc15T16VeZw6kn9ic0Xw
+	 i1kzflfHPHnGVuI2gPSEPf19i14pPcokRQ2bv6x51Wrofml5bzNU7o7LbSEfjDnyiZ
+	 ccb1paoVIlXJaHEKgh+Bs5uWYSomLusHzi36pWIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/112] octeontx2-pf: Fix ntuple rule creation to direct packet to VF with higher Rx queue than its PF
-Date: Thu, 30 Nov 2023 16:21:28 +0000
-Message-ID: <20231130162141.622394760@linuxfoundation.org>
+Subject: [PATCH 6.6 042/112] net: veth: fix ethtool stats reporting
+Date: Thu, 30 Nov 2023 16:21:29 +0000
+Message-ID: <20231130162141.649037414@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -44,76 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 4aa1d8f89b10cdc25a231dabf808d8935e0b137a ]
+[ Upstream commit 818ad9cc90d4a7165caaee7e32800c50d0564ec3 ]
 
-It is possible to add a ntuple rule which would like to direct packet to
-a VF whose number of queues are greater/less than its PF's queue numbers.
-For example a PF can have 2 Rx queues but a VF created on that PF can have
-8 Rx queues. As of today, ntuple rule will reject rule because it is
-checking the requested queue number against PF's number of Rx queues.
-As a part of this fix if the action of a ntuple rule is to move a packet
-to a VF's queue then the check is removed. Also, a debug information is
-printed to aware user that it is user's responsibility to cross check if
-the requested queue number on that VF is a valid one.
+Fix a possible misalignment between page_pool stats and tx xdp_stats
+reported in veth_get_ethtool_stats routine.
+The issue can be reproduced configuring the veth pair with the
+following tx/rx queues:
 
-Fixes: f0a1913f8a6f ("octeontx2-pf: Add support for ethtool ntuple filters")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20231121165624.3664182-1-sumang@marvell.com
+$ip link add v0 numtxqueues 2 numrxqueues 4 type veth peer name v1 \
+ numtxqueues 1 numrxqueues 1
+
+and loading a simple XDP program on v0 that just returns XDP_PASS.
+In this case on v0 the page_pool stats overwrites tx xdp_stats for queue 1.
+Fix the issue incrementing pp_idx of dev->real_num_tx_queues * VETH_TQ_STATS_LEN
+since we always report xdp_stats for all tx queues in ethtool.
+
+Fixes: 4fc418053ec7 ("net: veth: add page_pool stats")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://lore.kernel.org/r/c5b5d0485016836448453f12846c7c4ab75b094a.1700593593.git.lorenzo@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/nic/otx2_flows.c        | 20 ++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/net/veth.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-index 4762dbea64a12..97a71e9b85637 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
-@@ -1088,6 +1088,7 @@ int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
- 	struct ethhdr *eth_hdr;
- 	bool new = false;
- 	int err = 0;
-+	u64 vf_num;
- 	u32 ring;
- 
- 	if (!flow_cfg->max_flows) {
-@@ -1100,7 +1101,21 @@ int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
- 	if (!(pfvf->flags & OTX2_FLAG_NTUPLE_SUPPORT))
- 		return -ENOMEM;
- 
--	if (ring >= pfvf->hw.rx_queues && fsp->ring_cookie != RX_CLS_FLOW_DISC)
-+	/* Number of queues on a VF can be greater or less than
-+	 * the PF's queue. Hence no need to check for the
-+	 * queue count. Hence no need to check queue count if PF
-+	 * is installing for its VF. Below is the expected vf_num value
-+	 * based on the ethtool commands.
-+	 *
-+	 * e.g.
-+	 * 1. ethtool -U <netdev> ... action -1  ==> vf_num:255
-+	 * 2. ethtool -U <netdev> ... action <queue_num>  ==> vf_num:0
-+	 * 3. ethtool -U <netdev> ... vf <vf_idx> queue <queue_num>  ==>
-+	 *    vf_num:vf_idx+1
-+	 */
-+	vf_num = ethtool_get_flow_spec_ring_vf(fsp->ring_cookie);
-+	if (!is_otx2_vf(pfvf->pcifunc) && !vf_num &&
-+	    ring >= pfvf->hw.rx_queues && fsp->ring_cookie != RX_CLS_FLOW_DISC)
- 		return -EINVAL;
- 
- 	if (fsp->location >= otx2_get_maxflows(flow_cfg))
-@@ -1182,6 +1197,9 @@ int otx2_add_flow(struct otx2_nic *pfvf, struct ethtool_rxnfc *nfc)
- 		flow_cfg->nr_flows++;
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 0ee5d1e0759fb..af326b91506eb 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -236,8 +236,8 @@ static void veth_get_ethtool_stats(struct net_device *dev,
+ 				data[tx_idx + j] += *(u64 *)(base + offset);
+ 			}
+ 		} while (u64_stats_fetch_retry(&rq_stats->syncp, start));
+-		pp_idx = tx_idx + VETH_TQ_STATS_LEN;
  	}
++	pp_idx = idx + dev->real_num_tx_queues * VETH_TQ_STATS_LEN;
  
-+	if (flow->is_vf)
-+		netdev_info(pfvf->netdev,
-+			    "Make sure that VF's queue number is within its queue limit\n");
- 	return 0;
- }
- 
+ page_pool_stats:
+ 	veth_get_page_pool_stats(dev, &data[pp_idx]);
 -- 
 2.42.0
 
