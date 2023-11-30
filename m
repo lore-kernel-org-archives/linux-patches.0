@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2729E524C2;
-	Thu, 30 Nov 2023 16:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0904524C2;
+	Thu, 30 Nov 2023 16:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jT1epUCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA820C433C7;
-	Thu, 30 Nov 2023 16:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFMPBN6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F11FC433C8;
+	Thu, 30 Nov 2023 16:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361670;
-	bh=JnXcdVlFU7SQbQQlm5BtNGTEVWSW6SRsLjK+U3SbKKc=;
+	s=korg; t=1701361672;
+	bh=aXHARWxhx8CGbeuMeuTR84aNy1RzXFye1h769zQg9Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jT1epUCe3e7UuudVsMC6S5AvhB9ufBYMjrqLILfP182QzJQ0qsiVBS7unm9pBt9pj
-	 orRhEjlQL1cBZcVfs94is3/ozivCLLobjYuGyoP1itgFxoLL+T60f8rmtjao0UCUq9
-	 SNaRTdrGsPXn2FZOCNxCg7XSYvxFXlUTFwzKIguM=
+	b=xFMPBN6dY5J0HLD8GRit1WpZPNLQGvFz6Q8+vh0Kefe8+llT6p/xbv35Xr6e4cqw5
+	 yPw+2P7aqjUujHfS/La2rgYwyN8KX7scgdg2IwGHc7ezXaL5DGvthN55pvMEJZY+k6
+	 UENSLVX55Mglo/2btjbaxk/Dd5NzsuhjAvTwfr1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Badhri Jagan Sridharan <badhri@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Will McVicker <willmcvicker@google.com>
-Subject: [PATCH 6.6 106/112] usb: typec: tcpm: Fix sink caps op current check
-Date: Thu, 30 Nov 2023 16:22:33 +0000
-Message-ID: <20231130162143.654678478@linuxfoundation.org>
+	Heikki Krogeus <heikki.krogerus@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 107/112] usb: typec: tcpm: Skip hard reset when in error recovery
+Date: Thu, 30 Nov 2023 16:22:34 +0000
+Message-ID: <20231130162143.682964096@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -45,61 +44,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit 187fb003c57c964ea61ac9fbfe41abf3ca9973eb upstream.
+commit a6fe37f428c19dd164c2111157d4a1029bd853aa upstream.
 
-TCPM checks for sink caps operational current even when PD is disabled.
-This incorrectly sets tcpm_set_charge() when PD is disabled.
-Check for sink caps only when PD is enabled.
+Hard reset queued prior to error recovery (or) received during
+error recovery will make TCPM to prematurely exit error recovery
+sequence. Ignore hard resets received during error recovery (or)
+port reset sequence.
 
-[   97.572342] Start toggling
-[   97.578949] CC1: 0 -> 0, CC2: 0 -> 0 [state TOGGLING, polarity 0, disconnected]
-[   99.571648] CC1: 0 -> 0, CC2: 0 -> 4 [state TOGGLING, polarity 0, connected]
-[   99.571658] state change TOGGLING -> SNK_ATTACH_WAIT [rev3 NONE_AMS]
-[   99.571673] pending state change SNK_ATTACH_WAIT -> SNK_DEBOUNCED @ 170 ms [rev3 NONE_AMS]
-[   99.741778] state change SNK_ATTACH_WAIT -> SNK_DEBOUNCED [delayed 170 ms]
-[   99.789283] CC1: 0 -> 0, CC2: 4 -> 5 [state SNK_DEBOUNCED, polarity 0, connected]
-[   99.789306] state change SNK_DEBOUNCED -> SNK_DEBOUNCED [rev3 NONE_AMS]
-[   99.903584] VBUS on
-[   99.903591] state change SNK_DEBOUNCED -> SNK_ATTACHED [rev3 NONE_AMS]
-[   99.903600] polarity 1
-[   99.910155] enable vbus discharge ret:0
-[   99.910160] Requesting mux state 1, usb-role 2, orientation 2
-[   99.946791] state change SNK_ATTACHED -> SNK_STARTUP [rev3 NONE_AMS]
-[   99.946798] state change SNK_STARTUP -> SNK_DISCOVERY [rev3 NONE_AMS]
-[   99.946800] Setting voltage/current limit 5000 mV 500 mA
-[   99.946803] vbus=0 charge:=1
-[  100.027139] state change SNK_DISCOVERY -> SNK_READY [rev3 NONE_AMS]
-[  100.027145] Setting voltage/current limit 5000 mV 3000 mA
-[  100.466830] VBUS on
+```
+[46505.459688] state change SNK_READY -> ERROR_RECOVERY [rev3 NONE_AMS]
+[46505.459706] state change ERROR_RECOVERY -> PORT_RESET [rev3 NONE_AMS]
+[46505.460433] disable vbus discharge ret:0
+[46505.461226] Setting usb_comm capable false
+[46505.467244] Setting voltage/current limit 0 mV 0 mA
+[46505.467262] polarity 0
+[46505.470695] Requesting mux state 0, usb-role 0, orientation 0
+[46505.475621] cc:=0
+[46505.476012] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev3 NONE_AMS]
+[46505.476020] Received hard reset
+[46505.476024] state change PORT_RESET -> HARD_RESET_START [rev3 HARD_RESET]
+```
 
 Cc: stable@vger.kernel.org
-Fixes: 803b1c8a0cea ("usb: typec: tcpm: not sink vbus if operational current is 0mA")
+Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
 Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Acked-by: Heikki Krogeus <heikki.krogerus@linux.intel.com>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Tested-by: Will McVicker <willmcvicker@google.com>
-Link: https://lore.kernel.org/r/20231101012845.2701348-1-badhri@google.com
+Link: https://lore.kernel.org/r/20231101021909.2962679-1-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/typec/tcpm/tcpm.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index b386102f7a3a..bfb6f9481e87 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -4273,7 +4273,8 @@ static void run_state_machine(struct tcpm_port *port)
- 				current_lim = PD_P_SNK_STDBY_MW / 5;
- 			tcpm_set_current_limit(port, current_lim, 5000);
- 			/* Not sink vbus if operational current is 0mA */
--			tcpm_set_charge(port, !!pdo_max_current(port->snk_pdo[0]));
-+			tcpm_set_charge(port, !port->pd_supported ||
-+					pdo_max_current(port->snk_pdo[0]));
+@@ -5392,6 +5392,15 @@ static void _tcpm_pd_hard_reset(struct t
+ 	if (port->bist_request == BDO_MODE_TESTDATA && port->tcpc->set_bist_data)
+ 		port->tcpc->set_bist_data(port->tcpc, false);
  
- 			if (!port->pd_supported)
- 				tcpm_set_state(port, SNK_READY, 0);
--- 
-2.43.0
-
++	switch (port->state) {
++	case ERROR_RECOVERY:
++	case PORT_RESET:
++	case PORT_RESET_WAIT_OFF:
++		return;
++	default:
++		break;
++	}
++
+ 	if (port->ams != NONE_AMS)
+ 		port->ams = NONE_AMS;
+ 	if (port->hard_reset_count < PD_N_HARD_RESET_COUNT)
 
 
