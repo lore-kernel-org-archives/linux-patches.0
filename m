@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148EF54F9B;
-	Thu, 30 Nov 2023 16:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0CE54FBA;
+	Thu, 30 Nov 2023 16:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1df17WEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159D2C433C7;
-	Thu, 30 Nov 2023 16:30:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbLavROt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DED8C433C9;
+	Thu, 30 Nov 2023 16:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361835;
-	bh=l3+3dh4DZC9+MOAwdhXpGRiuMY8n0fsoNnrlm/NILeA=;
+	s=korg; t=1701361837;
+	bh=qrf0ZpiaGTGXx/mtAdwF6pudhGCWKPbOaTT+lDRLdGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1df17WEbQKPhOkAIILECWG0plINadg7q65ZoQzzh52hKLhd466Gza5TXXnXkPAnqg
-	 zAnwjb1bqcywgz1mwv747XYbD4gqI/q9lx+PHjniARdLqtNS0JuUsMtDDfWtt5e7Uq
-	 vg7UT01/Jpukl9lImkDFnY9Y85BZswI8h5Zml/30=
+	b=nbLavROtC3Zqyne85/MmyHf5rlSQVPrVXXuggqD0VVetqowKz63DHoLusxgEYJxuY
+	 I3Gucf8q1H5zb0vpp4czwYeK64tvSXSMR7ZuQiikDiEzZ4vwOq8QGTiRgIPJ7mvNwL
+	 o/B1wNx4pMhsUJT20aSpepiJ3wJn2Rb3YfBol0EE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Dexuan Cui <decui@microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 66/82] hv_netvsc: Mark VF as slave before exposing it to user-mode
-Date: Thu, 30 Nov 2023 16:22:37 +0000
-Message-ID: <20231130162138.078531300@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 49/82] ext4: using nofail preallocation in ext4_es_insert_delayed_block()
+Date: Thu, 30 Nov 2023 16:22:20 +0000
+Message-ID: <20231130162137.525695815@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
 References: <20231130162135.977485944@linuxfoundation.org>
@@ -44,95 +43,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit c807d6cd089d2f4951baa838081ec5ae3e2360f8 upstream.
+[ Upstream commit 4a2d98447b37bcb68a7f06a1078edcb4f7e6ce7e ]
 
-When a VF is being exposed form the kernel, it should be marked as "slave"
-before exposing to the user-mode. The VF is not usable without netvsc
-running as master. The user-mode should never see a VF without the "slave"
-flag.
+Similar to in ext4_es_remove_extent(), we use a no-fail preallocation
+to avoid inconsistencies, except that here we may have to preallocate
+two extent_status.
 
-This commit moves the code of setting the slave flag to the time before
-VF is exposed to user-mode.
-
-Cc: stable@vger.kernel.org
-Fixes: 0c195567a8f6 ("netvsc: transparent VF management")
-Signed-off-by: Long Li <longli@microsoft.com>
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Acked-by: Stephen Hemminger <stephen@networkplumber.org>
-Acked-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230424033846.4732-8-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 8e387c89e96b ("ext4: make sure allocate pending entry not fail")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/netvsc_drv.c |   32 +++++++++++++++++++++++---------
- 1 file changed, 23 insertions(+), 9 deletions(-)
+ fs/ext4/extents_status.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2204,9 +2204,6 @@ static int netvsc_vf_join(struct net_dev
- 		goto upper_link_failed;
- 	}
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index cb8241adda929..e382fe1788f1e 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -2013,7 +2013,10 @@ int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
+ 				 bool allocated)
+ {
+ 	struct extent_status newes;
+-	int err = 0;
++	int err1 = 0;
++	int err2 = 0;
++	struct extent_status *es1 = NULL;
++	struct extent_status *es2 = NULL;
  
--	/* set slave flag before open to prevent IPv6 addrconf */
--	vf_netdev->flags |= IFF_SLAVE;
+ 	if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
+ 		return 0;
+@@ -2028,29 +2031,37 @@ int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
+ 
+ 	ext4_es_insert_extent_check(inode, &newes);
+ 
++retry:
++	if (err1 && !es1)
++		es1 = __es_alloc_extent(true);
++	if ((err1 || err2) && !es2)
++		es2 = __es_alloc_extent(true);
+ 	write_lock(&EXT4_I(inode)->i_es_lock);
+ 
+-	err = __es_remove_extent(inode, lblk, lblk, NULL, NULL);
+-	if (err != 0)
++	err1 = __es_remove_extent(inode, lblk, lblk, NULL, es1);
++	if (err1 != 0)
+ 		goto error;
+-retry:
+-	err = __es_insert_extent(inode, &newes, NULL);
+-	if (err == -ENOMEM && __es_shrink(EXT4_SB(inode->i_sb),
+-					  128, EXT4_I(inode)))
+-		goto retry;
+-	if (err != 0)
++
++	err2 = __es_insert_extent(inode, &newes, es2);
++	if (err2 != 0)
+ 		goto error;
+ 
+ 	if (allocated)
+ 		__insert_pending(inode, lblk);
+ 
++	/* es is pre-allocated but not used, free it. */
++	if (es1 && !es1->es_len)
++		__es_free_extent(es1);
++	if (es2 && !es2->es_len)
++		__es_free_extent(es2);
+ error:
+ 	write_unlock(&EXT4_I(inode)->i_es_lock);
++	if (err1 || err2)
++		goto retry;
+ 
+ 	ext4_es_print_tree(inode);
+ 	ext4_print_pending_tree(inode);
 -
- 	schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
- 
- 	call_netdevice_notifiers(NETDEV_JOIN, vf_netdev);
-@@ -2313,16 +2310,18 @@ static struct net_device *get_netvsc_bys
- 
- 	}
- 
--	/* Fallback path to check synthetic vf with
--	 * help of mac addr
-+	/* Fallback path to check synthetic vf with help of mac addr.
-+	 * Because this function can be called before vf_netdev is
-+	 * initialized (NETDEV_POST_INIT) when its perm_addr has not been copied
-+	 * from dev_addr, also try to match to its dev_addr.
-+	 * Note: On Hyper-V and Azure, it's not possible to set a MAC address
-+	 * on a VF that matches to the MAC of a unrelated NETVSC device.
- 	 */
- 	list_for_each_entry(ndev_ctx, &netvsc_dev_list, list) {
- 		ndev = hv_get_drvdata(ndev_ctx->device_ctx);
--		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr)) {
--			netdev_notice(vf_netdev,
--				      "falling back to mac addr based matching\n");
-+		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr) ||
-+		    ether_addr_equal(vf_netdev->dev_addr, ndev->perm_addr))
- 			return ndev;
--		}
- 	}
- 
- 	netdev_notice(vf_netdev,
-@@ -2330,6 +2329,19 @@ static struct net_device *get_netvsc_bys
- 	return NULL;
+-	return err;
++	return 0;
  }
  
-+static int netvsc_prepare_bonding(struct net_device *vf_netdev)
-+{
-+	struct net_device *ndev;
-+
-+	ndev = get_netvsc_byslot(vf_netdev);
-+	if (!ndev)
-+		return NOTIFY_DONE;
-+
-+	/* set slave flag before open to prevent IPv6 addrconf */
-+	vf_netdev->flags |= IFF_SLAVE;
-+	return NOTIFY_DONE;
-+}
-+
- static int netvsc_register_vf(struct net_device *vf_netdev)
- {
- 	struct net_device_context *net_device_ctx;
-@@ -2754,6 +2766,8 @@ static int netvsc_netdev_event(struct no
- 		return NOTIFY_DONE;
- 
- 	switch (event) {
-+	case NETDEV_POST_INIT:
-+		return netvsc_prepare_bonding(event_dev);
- 	case NETDEV_REGISTER:
- 		return netvsc_register_vf(event_dev);
- 	case NETDEV_UNREGISTER:
+ /*
+-- 
+2.42.0
+
 
 
