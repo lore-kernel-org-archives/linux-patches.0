@@ -1,38 +1,38 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2048.outbound.protection.outlook.com [40.107.243.48])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2067.outbound.protection.outlook.com [40.107.243.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C6622068;
-	Thu, 30 Nov 2023 01:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0109A2031D;
+	Thu, 30 Nov 2023 01:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qUzNgBO+"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="INXWqdqc"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=USTuXHmK9Yve50+rPdo4WGbIIiOmphE+Th3lmWyNB9fKIhzYZWaqYFffCAKvhey4k0suO1/Idem4tgdD7VLTDmwdvj/K/Zc/4tLUigtwcd/y43+e9yjqdo4+gq6kkdvTUzeeeezN1gGv8RjeKrBuEajHJ58NmDHQ5SL4aE+nBNvbCzPQ17fSjXCFnA9jzpsDcTPoo13NOS2IfBwp0YuRIP3kCbLBonQzJHStxg+EvYwANjuCpQ19Fj1Lve/qr2B5rha4EpMGMsQW0UTNdqt+21oD/uYL0UeZTV1ELRu/SqA04J+s//h8oAWCF6zlsJ32yWB5YdDyvvuuFULnpv+jVA==
+ b=MdI03JHoSpNb6wfkhxmvINBZ5QE3A1X7JT0qNXTCqxTSnw9/G5qjD1TxxRyE8cnk0mU4W05J9+24jseiY0nLbPcz226Z/UXgtcHZUUll7xgF9HMqiBw4Ns8weogdaYbAMFZj3bRt4nIjxx7+c5A14sRbSytt9kP/7LoL/2HZRDMv/j5aOtxz19rPmXjRlZ1MdJqvqna8vUS+FMRpBkwzjrJjPKe5XdvIx6YmHaIuYoUSL8WlhhGY4bHqn9zxuygVF/l+JOXg8QMem/w3QkdSFj0GGnDAKa0bKDDPkhyYL/cSj8XgGzVKrQ9TqXX5dFEeA/Xd1Z8cHQyJuz3Cjrlx1A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fVSr9+bQP69hK+Giq+u9FoxDlVZiQRDX7oYqcWOEYLw=;
- b=RfuNUbceIX+fMVB/97Y19iu5ygkF5v5OMMyjLkYVPv5zAbbswGJRtbcXLJy0plggwoR1ofaMwXZZBbMi92MIFIwnqDSwVZeEuAdmcpxYkEM09pf2RrpySoQuJhU4gEcpvzLb/P8X6Lcqy9Oz3/rKO3Y6JyvxApgwD8sMxvBBDDTeZhEgEkpBtmu81IKCeh37YcvfEeJiZAnPchRuMpcMqFIZjVvQNotpwQ4ZCIfo1Fe9Wmr+tT+Qpg95EQR+cqu95s5lZnYmqSUAfvOXS357aNJ6byWmJx9pDWVE9LjaEUdauRPkyJxRO1APrSqErSYWGkG3PeDCWQt2dmqwfTuF6Q==
+ bh=mNc0i8b19f67qGg7jaCMO7gIkmzVDan6cC8FlSSYH2o=;
+ b=PVFYPcyxvDMzXhe1i/g0aqirYRrbXjl7/xMmKcK3yWNwrjaHQMe/Q9MvRBUnMrR9lKrMwHW/z4pgj2ikNbQGZUGtQKz2SdJM8aX3ZZz8yXJgWf0RHx7LnDbviOQwHIslqon/FK5+CC9qhj5DtjNVrZVpsJQ2kBSmvfkY2Z8KTXsdbUcrQZQlrwevWAC/GT2PMMUmFUr5VsIsAFyrhQVJM4wnyQqrd1Le5RD/wXslCDWrrPVwoiP0BPFMRIzqtfnQYVwoKI1WoKG1TxvQtB3/JI53UGmYDhKi9ETC/DqnrPx8kmE0xFB57LvGprjMnImIJRjiRt6+IFX6OaJtEKleaQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fVSr9+bQP69hK+Giq+u9FoxDlVZiQRDX7oYqcWOEYLw=;
- b=qUzNgBO+o7gXJ1qy8tdR1rnxs4iyg4ZBn7GmWgXmnhP2WMGfJYK2NhgvSm0AqDPuPGbX0Sz5PaeGEPeRutml62wF92HXfVT5nHA5PR+PyULp44S6ER4d+8rPBwch4KPdxum5ITHjapFNaGS1B37+PTulaGnE55N0Gqe5d3GaMn7x6kk9YlrWzo8K4djwWMdoAnLrwOhaP+JXIvAA7kOPv7BBpcZaugR0CbkUbnPdRrocg8Ve5qmkw+ZiVrtd6aFprMs4hkf5zryIBTpp9+FLmSMxxa6cA016W9FY5KlhE+N38icGnuda3TAsLuG29RtNRjmGcAYHiizAiHlJ3JjU5A==
+ bh=mNc0i8b19f67qGg7jaCMO7gIkmzVDan6cC8FlSSYH2o=;
+ b=INXWqdqclBICUJjjXFuMPgFLO24Al4fug/47pDUXnE+dt1EFdrhWsovH259yZyK99z8XSxR4I1TkDubuSn4KmxnLbYUuSqkFYH0U6lNYIGg1A4wJErBXg8VA0c3CFT4XSnTEepmicUaBzj37Xa1J+JY1UfIH4R3tFnSskHMB/uHbAIQIkfSKEZ4W1Fka1eEqpHqjfb+3D1FPWxUb5jnMrjrEHYByhvZDEAhvLmGD+wIXq0Ofr0EXtTb80ygvF75xkmQ8oAZa/O01ND5rfMm/3Pb2LnZ2tn57AAJUt33N6cPKlEq936U3CUKjiPmBatbxI9D1yj7RWPYqM1tC2rR8jA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
  by PH0PR12MB5484.namprd12.prod.outlook.com (2603:10b6:510:eb::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.24; Thu, 30 Nov
- 2023 01:10:50 +0000
+ 2023 01:10:48 +0000
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com
  ([fe80::60d4:c1e3:e1aa:8f93]) by LV2PR12MB5869.namprd12.prod.outlook.com
  ([fe80::60d4:c1e3:e1aa:8f93%4]) with mapi id 15.20.7046.015; Thu, 30 Nov 2023
- 01:10:50 +0000
+ 01:10:48 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: acpica-devel@lists.linux.dev,
 	Andy Gross <agross@kernel.org>,
@@ -87,15 +87,15 @@ To: acpica-devel@lists.linux.dev,
 	Chunyan Zhang <zhang.lyra@gmail.com>
 Cc: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
 	patches@lists.linux.dev
-Subject: [PATCH 22/30] iommu/qcom: Move to iommu_fw_alloc_per_device_ids()
-Date: Wed, 29 Nov 2023 21:10:29 -0400
-Message-ID: <22-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
+Subject: [PATCH 19/30] iommu/mtk: Move to iommu_fw_alloc_per_device_ids()
+Date: Wed, 29 Nov 2023 21:10:26 -0400
+Message-ID: <19-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 In-Reply-To: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SN1PR12CA0110.namprd12.prod.outlook.com
- (2603:10b6:802:21::45) To LV2PR12MB5869.namprd12.prod.outlook.com
+X-ClientProxiedBy: SN7P222CA0004.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:124::18) To LV2PR12MB5869.namprd12.prod.outlook.com
  (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -105,427 +105,351 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|PH0PR12MB5484:EE_
-X-MS-Office365-Filtering-Correlation-Id: 724c4ab5-7a07-4e75-5bae-08dbf1412b96
+X-MS-Office365-Filtering-Correlation-Id: 9d3c6e54-176d-498f-da95-08dbf1412b79
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	O+TTURoAd06a5nhc1hEqPMI3UF8xNQp/QEVs/OUUBk0iMdto60WmWpf0sfwLRxPgM1BswcDjOFzMZx/5EE0DCvqWUNUGIP7cP+8bGBieThqSlPuA7qKb3DdTBxPgZzWsZ2ad4o0usd2s0iGKLXdw6Duqld/uNibwRtS10IRhkVxe8pgTKJ6pThePbAAEHB0fEYNbAWAlFKa9O1+jrjKeYWMvt4cxZeW0Z8fuoV3BmuRIYGYy+YNxYJs3vp2iJsmrKj5gm5hVv8/yMhSH/6OteNodtVk5QWub0hg2h5ZAZv+h+jh0GrLCYG5ZKTs6g2rB/1Lxc/+enNHqRU7Q8EOiF9+Gz7Q9LJ4MzLcH+7lI6NuuK8pK0V0pytzM1220Y0lkDfjhkEfVl9KVlKDTJVozKo2kF6vsiKI1Ge9F2dNdGYQULwTsrwWExe4do2X2vmy96DkOrRTU88xIqPrYguEMepRXMes+ZNJFZxi6uvTl14mdPgjlnA20EWX4kSQ4Ju8Z+JCotFAx7NmaYU48A3HT4bImxGGSX3ucqu1HrY7cLGw2POV7xR26GUCGvUy+AbU0+LGp+FdyU432yfHwR+G2oWxy5QQqEPD1HvuDmcdEKqEdH8TSnDlyUCBdWo1xi40I6gAo8qPCbXlrfA7NClCCsw==
+	EXY2ttH4pyhsm2YJc/WuQ+XxNnXTnWaCedP+qxpCDaXJuBY7Tnu6X3q/091tlNCC51kpIbTaV+RhcD0QTjd9Wn31YcPOcpLPqPFZ2idU9CL24yyyLpMxYkxNIjqawWiQJfWFzsKlC+0cStc9n7I7OFBViRdl7j3L1TFzbKltsBS0yN3nwdpzkDFkOR05+zo2V+9kWqmk/tCTPetycKAUMb+k6uoVs9HIMiMJnWGBkSDm3Q3+0fmyD4y8Q5osfIPiOzvEcY54fo5SEd2EYrKtrH6/UQTsTvtQjKzYbxcRf25toMrpwSgvung13rUy657rXuy0YLCCYOqwM5naOAf2Jgj1ldhmcWLjtLHIlh0yTZHOn6XofOzXdv+yN3yrzfuh3i0mpY6r4tLI4zw4r3Ca3RGIPRgR/k7/r4H7OZg65TMBsx1j08VyZ/t1ELExLLCG4FjJylPecIfH1Fw/QgRxmNm/GfUEHUNx6kdmAprvP2NNKtH4UFpchmT01d40+nEaxXlXfgjRvHiAIYliKu5HY4ilGKQjFyaRMlTbAowRCHO6L/TGuwqvf9MVkygm9SGIpxqzS6RoXFCRcSdAkIxOBYZNfwf6swBYZnf/H4Znb/SQhHLfreFkaiYHM7vKzKx0Kt6GxYsj2RdD1xCZpQoMrg==
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(346002)(136003)(396003)(39860400002)(376002)(230922051799003)(451199024)(1800799012)(186009)(64100799003)(1191002)(8936002)(110136005)(8676002)(316002)(66556008)(4326008)(86362001)(66476007)(6486002)(478600001)(66946007)(41300700001)(36756003)(921008)(30864003)(7416002)(7366002)(2906002)(7406005)(5660300002)(38100700002)(2616005)(6512007)(6506007)(6666004)(83380400001)(26005)(202311291699003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?vEIPybqBLOiEuo3wsynDBlSBXaFbdYbgJaHD2oWwfj+LAKucVu0ZJpP3YhRq?=
- =?us-ascii?Q?X0PGwcQOcTzO5ihXrB46zlTwSqguYit90dUKLwjVdoOuNPzhYAipOMOb+4Lm?=
- =?us-ascii?Q?bE0pnGXxEQ7sSmcBHtNYr/wSFjYvmXSSpY/CPvf+pIaJqcWB0MRWc8Ma+og2?=
- =?us-ascii?Q?CipW+bze01eNmWb2JZOqUCMNh9CPFRwj1xsIHzSzGcZ84ssKj4GRrUaKkTAW?=
- =?us-ascii?Q?/mdOvwdX8PmdvTffsjNZqJJe5bJA5vjCSupEE6aHODwB5JLf9A1v4t7Xo17o?=
- =?us-ascii?Q?M2GFVMZQw3Bpvrcj+0CNIeukF+KDsWsCTTNb+iFBg2UbKoOl1gDNqjkt+VJu?=
- =?us-ascii?Q?jaOWwaD5xtiA2Ud56vA1e7aXFU/+NDM/DvCmhRweJ2FV3B6UQVoPPqBG5Fhp?=
- =?us-ascii?Q?2sUygZqUVZ1HWIW3/UE/JhYvhRB943UGO3GrfWleyY/qmCBLKc5tI08eukC3?=
- =?us-ascii?Q?hPpxiWKs3umDUHQeIM4VZvSOzOXVDEm/gNGFBtCGRoGOcF29Ozfx3dqFL80z?=
- =?us-ascii?Q?w/Qic4xYFBR0qUdA+uS/RL62GwEO0wU5WwJRfyj9d5kY5+o3wIPp0c0+xTJg?=
- =?us-ascii?Q?pbJ9L7HMdoruiBRaQos9Bmi0pE9TQbANrJ8i0sEZ0smGeiKKKLNOrzPT5mQk?=
- =?us-ascii?Q?tpEXGyacpSS+uqiCr0sAITBBn9oWYVZgdejrnDodhliZ6qWn0cyBKp0huiJs?=
- =?us-ascii?Q?wQclonOJV9Gr7Swx8QvXH1TC9WCO8KWOC6R+Qe52ZBq+LI47S92ccuchTKTq?=
- =?us-ascii?Q?ORKcf+l8GkZRDKUv9sSs1NsTtvOU4k/M48X2txz3i5Ertm2YS/GOi99/Rzzu?=
- =?us-ascii?Q?6FFjMNHV2R5amjd+AaRYTM7VEdwpqrU6aD5xRbsJMHKJZj/CKHf6yYKeCMRL?=
- =?us-ascii?Q?SfSb/X5cLern8NsVvR8eLxy/WZx5vbo3SfjUFqah8S2sjf7D0qRBcUwnKf0i?=
- =?us-ascii?Q?Ih+dwPV+pUhtcqjIflfYC9NhKKBqBl1g2Y2AGIqXnWdYzQVvkor7o5kj/h9h?=
- =?us-ascii?Q?czJC1QlS7xSm2F9GUIaCy4AxLlqtc9Pz3nE9EiULD/Ppe+bXceBRf6GHnvuT?=
- =?us-ascii?Q?d+bxm23VJ8UYRwouOsQyzhEN3CRgHc1ipRERxmhyUn77WAI+HtusSeofn3ki?=
- =?us-ascii?Q?RcKiEnKqMSWiwdLl7f5xbhi7n1CudL5CiuvGhn5DQMGlgZ+8kBqw/bzF2Ggt?=
- =?us-ascii?Q?V3uCe9V7V2U1HjZvgNblTMReqd/QlWVc+AfPaONwwXLSKdKR8Y8Iwxk/Ag8G?=
- =?us-ascii?Q?kYOODVGlRFrITOj4h7G56UM8K6oqkpuxIso+bQO6CuIowpCLZnnSgUb6H5O/?=
- =?us-ascii?Q?uXaBlpPQb/9QKo8qw/C3FB/Q6oQ4BDa6DQTOQ8oFWfvLVTDHoCxeIFWqDVIQ?=
- =?us-ascii?Q?BNBGymISE3KF2l4w3lfMWhfyzIiH8A6oB3Ml4V5SE4OeEJyWFvETCMvJQZmg?=
- =?us-ascii?Q?GSfp90tVOPQvuMLPIk5XA6scj++xIh2Y3wj9TY7cqgEmSfWlM6B9MaOkItm/?=
- =?us-ascii?Q?PIbls66OU8DWYA1+WVwMevvxeDZ/fwpURfbyjeqfadUKrdMV+E+9i5l8M7SL?=
- =?us-ascii?Q?rznQxtKTDoqjeyh2iEKdjK5Q2Csv0oqrHtMYzXp5?=
+	=?us-ascii?Q?m/tpZQKcluujheAqzGnsfhypUuiVioZwVqtFoS6Q8reZVg9Zvx1h+ck+rqme?=
+ =?us-ascii?Q?/IFQXOPfDArHdTxbN5Qka4omTa/liI0RQTbxtrQiH9h7KjMpn7Q46tLjqL35?=
+ =?us-ascii?Q?V3QoIp2OVmHeX0zUV0lexS7xuwH3jodV6j2wBf7Y48ARZEwHR1ndObPARt5D?=
+ =?us-ascii?Q?voqLcEV7proUdCQtWgXqoOuAN96KOifHDPX0jbMx3I+ee5idllzMTlQaHzEC?=
+ =?us-ascii?Q?bJbWzQBzcEQoDKGeSiTYBhbwXHkQNm0jJu36TucLgk88rpLncdj9/IzvnAaF?=
+ =?us-ascii?Q?T+NMTTAdg/2RJfNLJjO0giloleI05kNDngZ6sCxTVY5csnFPwX0l5c0Jr3KD?=
+ =?us-ascii?Q?PUy7YUx85Jzq9G9FjhZ8L2b0u09ZXt8BXwGEl556I8ca5BVcfdfE7gGWxe3J?=
+ =?us-ascii?Q?lgVorbhV2kG0hxDsYVzs7eUIhQPaXfMmq+dQzi3yI6Pz+1cDEoAVONG9/Mkb?=
+ =?us-ascii?Q?JEkGIyUJCjBKcwDl3WC6/CmONsaCpzcLgyam+GYbKDJ/Xwz4Wdxl039/i+X+?=
+ =?us-ascii?Q?BgP5u6YndVo58649BClQx9i8jDfTlpqTLEF5pwJA1mA5g7XUgziOga06oymn?=
+ =?us-ascii?Q?UbybEPCiOxyMIQG256kegwt/x2YyfEQSFBqDxsSZZ+O9mBrH5VBrZRfPks57?=
+ =?us-ascii?Q?jb4n57JK39llHLHGjpAbrI9L/HthwY7Gwi+S7P5Qfzgg5kZnNxYZ3PD/fPUp?=
+ =?us-ascii?Q?Cvv/shtva1wsV0e3W1W56v/9hMbwyL8x42Zru8/y2qlavaP9Aqgs9eETqasD?=
+ =?us-ascii?Q?hcRVFFShTGN9rRcTlYD6UnzLaTOcOeASXFQ01RsjJn3h+CbKXlH+RqXA2Jtr?=
+ =?us-ascii?Q?dIBPGVi5AqpyT12aC5q+9ce1P0WnNkreDaawWIs8cuKjv5oXMpq0D9j8eYlo?=
+ =?us-ascii?Q?dJwq0SetltIwuMbX3cPJo+1zZRm972yo7JHsj0B0CjvSl/uE1F8yNXC/vMSn?=
+ =?us-ascii?Q?mC6Ko9d3eZ4nwuYX/1sH0r4pYs2mghmt3QPuCS5RT6SK16tBaifBr4MC7sQq?=
+ =?us-ascii?Q?tF9KvcUb0EAzw5n8JsSg4Dfs6zX4I2VUD5fDfgXVK4tXAAobuS/ZH8JjDzwr?=
+ =?us-ascii?Q?ss/KYsy24HniPbN/sqR0VOK/jmN0P1mDhCWO3zIW5LVilY1ZelPqQ1KIU54p?=
+ =?us-ascii?Q?eTMiDpzZ5JkyBKwRTU0KM3eh9KRdWrLXhDi6qNDxn40E60HtuMDaNP4dQbwt?=
+ =?us-ascii?Q?27NbK87+MrR8cCM+WG8xgjhNjZ2ZhJnZBaOz4QcIVSKcIhxaoKMtQQNiL4eE?=
+ =?us-ascii?Q?LSvLc/8YnE6y7dSlR4Uzdpz2PTIX64jy/X/8VxI7M+O92spUPjKEmuZQ2Il1?=
+ =?us-ascii?Q?4f/jeP6239QQ8iehu+v/KIqtdWsVezVpdY6FpREB4866WE2I7QkWAuVWR9S3?=
+ =?us-ascii?Q?JTUOeU9FLEAcTyPdfkctEpfcnelFPTpwr6wgOHgrMqzj22KRo3JYJbzuAZBc?=
+ =?us-ascii?Q?NufjsPruG6rg4K8rp5GM0Vhvv44yOhYagbJlhlVJ1CwSFipPCtf5KOupaqaw?=
+ =?us-ascii?Q?558DhHJIdqLQNEN9DGppCNN30Oi6DwHjpSPoEJl17j6/twzaVcaH9jPaGYfP?=
+ =?us-ascii?Q?7goRcjFeKuBAqkSUooyq1SO+J5Rv7WWdj2YW4DOQ?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 724c4ab5-7a07-4e75-5bae-08dbf1412b96
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d3c6e54-176d-498f-da95-08dbf1412b79
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:41.1568
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:40.9319
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iHNY0/XFKudzaiQDGPMOffWaW/5YTl7Yg2HEy+dh2h1S10ihP0NQa7LaOTuM9PsT
+X-MS-Exchange-CrossTenant-UserPrincipalName: 5iQCpGHG8rrK0heO2B4CQgapUNp1ZK85FyWiYHYC54oG2yQrFPC3AxQeYD/nYFkY
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB5484
 
-qcom supports a single iommu instance with multiple ids.
+mtk was doing a lot of stuff under of_xlate, and it looked kind of like it
+might support multi-instances. But the dt files don't do that, and the
+driver has no way to keep track of which instance the ids are for.
+
+Enforce single instance with iommu_of_get_single_iommu().
 
 Introduce a per-device data to store the iommu and ids list. Allocate and
 initialize it with iommu_fw_alloc_per_device_ids(). Remove
-qcom_iommu_of_xlate().
-
-This already was checking that all instances are the same, it is now done
-in common code.
+mtk_iommu_of_xlate().
 
 Convert the rest of the funcs from calling dev_iommu_fwspec_get() to using
-the per-device data and remove all use of fwspec. Store the per-dev data
-in the qcom_iommu_domain instead of the iommu and fwspec pointers.
+the per-device data and remove all use of fwspec.
 
-Convert the places using dev_iommu_priv_get() to use the per-device data
+Covnert the places using dev_iommu_priv_get() to use the per-device data
 not the iommu.
-
-Remove to_iommu().
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 161 ++++++++++++------------
- 1 file changed, 81 insertions(+), 80 deletions(-)
+ drivers/iommu/mtk_iommu.c | 116 ++++++++++++++++++++------------------
+ 1 file changed, 62 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 33f3c870086cea..4baca45df99971 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -17,6 +17,7 @@
- #include <linux/io-64-nonatomic-hi-lo.h>
- #include <linux/io-pgtable.h>
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 7abe9e85a57063..477171e83eaa6e 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -13,6 +13,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
  #include <linux/iommu.h>
 +#include <linux/iommu-driver.h>
  #include <linux/iopoll.h>
- #include <linux/kconfig.h>
- #include <linux/init.h>
-@@ -54,6 +55,12 @@ struct qcom_iommu_dev {
- 	struct qcom_iommu_ctx	*ctxs[];   /* indexed by asid */
+ #include <linux/io-pgtable.h>
+ #include <linux/list.h>
+@@ -277,6 +278,12 @@ struct mtk_iommu_data {
+ 	struct mtk_smi_larb_iommu	larb_imu[MTK_LARB_NR_MAX];
  };
  
-+struct qcom_iommu_master {
-+	struct qcom_iommu_dev *iommu;
++struct mtk_iommu_device {
++	struct mtk_iommu_data *iommu;
 +	unsigned int num_ids;
 +	u32 ids[] __counted_by(num_ids);
 +};
 +
- struct qcom_iommu_ctx {
- 	struct device		*dev;
- 	void __iomem		*base;
-@@ -68,8 +75,7 @@ struct qcom_iommu_domain {
- 	spinlock_t		 pgtbl_lock;
- 	struct mutex		 init_mutex; /* Protects iommu pointer */
- 	struct iommu_domain	 domain;
--	struct qcom_iommu_dev	*iommu;
--	struct iommu_fwspec	*fwspec;
-+	struct qcom_iommu_master *master;
- };
- 
- static struct qcom_iommu_domain *to_qcom_iommu_domain(struct iommu_domain *dom)
-@@ -81,7 +87,7 @@ static const struct iommu_ops qcom_iommu_ops;
- 
- static struct qcom_iommu_ctx * to_ctx(struct qcom_iommu_domain *d, unsigned asid)
+ struct mtk_iommu_domain {
+ 	struct io_pgtable_cfg		cfg;
+ 	struct io_pgtable_ops		*iop;
+@@ -526,14 +533,14 @@ static irqreturn_t mtk_iommu_isr(int irq, void *dev_id)
+ static unsigned int mtk_iommu_get_bank_id(struct device *dev,
+ 					  const struct mtk_iommu_plat_data *plat_data)
  {
--	struct qcom_iommu_dev *qcom_iommu = d->iommu;
-+	struct qcom_iommu_dev *qcom_iommu = d->master->iommu;
- 	if (!qcom_iommu)
- 		return NULL;
- 	return qcom_iommu->ctxs[asid];
-@@ -114,11 +120,11 @@ iommu_readq(struct qcom_iommu_ctx *ctx, unsigned reg)
- static void qcom_iommu_tlb_sync(void *cookie)
- {
- 	struct qcom_iommu_domain *qcom_domain = cookie;
--	struct iommu_fwspec *fwspec = qcom_domain->fwspec;
-+	struct qcom_iommu_master *master = qcom_domain->master;
- 	unsigned i;
- 
--	for (i = 0; i < fwspec->num_ids; i++) {
--		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, fwspec->ids[i]);
-+	for (i = 0; i < master->num_ids; i++) {
-+		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, master->ids[i]);
- 		unsigned int val, ret;
- 
- 		iommu_writel(ctx, ARM_SMMU_CB_TLBSYNC, 0);
-@@ -133,11 +139,11 @@ static void qcom_iommu_tlb_sync(void *cookie)
- static void qcom_iommu_tlb_inv_context(void *cookie)
- {
- 	struct qcom_iommu_domain *qcom_domain = cookie;
--	struct iommu_fwspec *fwspec = qcom_domain->fwspec;
-+	struct qcom_iommu_master *master = qcom_domain->master;
- 	unsigned i;
- 
--	for (i = 0; i < fwspec->num_ids; i++) {
--		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, fwspec->ids[i]);
-+	for (i = 0; i < master->num_ids; i++) {
-+		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, master->ids[i]);
- 		iommu_writel(ctx, ARM_SMMU_CB_S1_TLBIASID, ctx->asid);
- 	}
- 
-@@ -148,13 +154,13 @@ static void qcom_iommu_tlb_inv_range_nosync(unsigned long iova, size_t size,
- 					    size_t granule, bool leaf, void *cookie)
- {
- 	struct qcom_iommu_domain *qcom_domain = cookie;
--	struct iommu_fwspec *fwspec = qcom_domain->fwspec;
-+	struct qcom_iommu_master *master = qcom_domain->master;
- 	unsigned i, reg;
- 
- 	reg = leaf ? ARM_SMMU_CB_S1_TLBIVAL : ARM_SMMU_CB_S1_TLBIVA;
- 
--	for (i = 0; i < fwspec->num_ids; i++) {
--		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, fwspec->ids[i]);
-+	for (i = 0; i < master->num_ids; i++) {
-+		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, master->ids[i]);
- 		size_t s = size;
- 
- 		iova = (iova >> 12) << 12;
-@@ -218,14 +224,14 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 				  struct device *dev)
- {
- 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
 -	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-+	struct qcom_iommu_master *master = dev_iommu_priv_get(dev);
- 	struct io_pgtable_ops *pgtbl_ops;
- 	struct io_pgtable_cfg pgtbl_cfg;
- 	int i, ret = 0;
- 	u32 reg;
++	struct mtk_iommu_device *mtkdev = dev_iommu_priv_get(dev);
+ 	unsigned int i, portmsk = 0, bankid = 0;
  
- 	mutex_lock(&qcom_domain->init_mutex);
--	if (qcom_domain->iommu)
-+	if (qcom_domain->master)
- 		goto out_unlock;
+ 	if (plat_data->banks_num == 1)
+ 		return bankid;
  
- 	pgtbl_cfg = (struct io_pgtable_cfg) {
-@@ -236,8 +242,7 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 		.iommu_dev	= qcom_iommu->dev,
- 	};
+-	for (i = 0; i < fwspec->num_ids; i++)
+-		portmsk |= BIT(MTK_M4U_TO_PORT(fwspec->ids[i]));
++	for (i = 0; i < mtkdev->num_ids; i++)
++		portmsk |= BIT(MTK_M4U_TO_PORT(mtkdev->ids[i]));
  
--	qcom_domain->iommu = qcom_iommu;
--	qcom_domain->fwspec = fwspec;
-+	qcom_domain->master = master;
- 
- 	pgtbl_ops = alloc_io_pgtable_ops(ARM_32_LPAE_S1, &pgtbl_cfg, qcom_domain);
- 	if (!pgtbl_ops) {
-@@ -251,8 +256,8 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 	domain->geometry.aperture_end = (1ULL << pgtbl_cfg.ias) - 1;
- 	domain->geometry.force_aperture = true;
- 
--	for (i = 0; i < fwspec->num_ids; i++) {
--		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, fwspec->ids[i]);
-+	for (i = 0; i < master->num_ids; i++) {
-+		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, master->ids[i]);
- 
- 		if (!ctx->secure_init) {
- 			ret = qcom_scm_restore_sec_cfg(qcom_iommu->sec_id, ctx->asid);
-@@ -316,7 +321,7 @@ static int qcom_iommu_init_domain(struct iommu_domain *domain,
- 	return 0;
- 
- out_clear_iommu:
--	qcom_domain->iommu = NULL;
-+	qcom_domain->master = NULL;
- out_unlock:
- 	mutex_unlock(&qcom_domain->init_mutex);
- 	return ret;
-@@ -345,16 +350,16 @@ static void qcom_iommu_domain_free(struct iommu_domain *domain)
+ 	for (i = 0; i < plat_data->banks_num && i < MTK_IOMMU_BANK_MAX; i++) {
+ 		if (!plat_data->banks_enable[i])
+@@ -550,7 +557,7 @@ static unsigned int mtk_iommu_get_bank_id(struct device *dev,
+ static int mtk_iommu_get_iova_region_id(struct device *dev,
+ 					const struct mtk_iommu_plat_data *plat_data)
  {
- 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
++	struct mtk_iommu_device *mtkdev = dev_iommu_priv_get(dev);
+ 	unsigned int portidmsk = 0, larbid;
+ 	const u32 *rgn_larb_msk;
+ 	int i;
+@@ -558,9 +565,9 @@ static int mtk_iommu_get_iova_region_id(struct device *dev,
+ 	if (plat_data->iova_region_nr == 1)
+ 		return 0;
  
--	if (qcom_domain->iommu) {
-+	if (qcom_domain->master) {
- 		/*
- 		 * NOTE: unmap can be called after client device is powered
- 		 * off, for example, with GPUs or anything involving dma-buf.
- 		 * So we cannot rely on the device_link.  Make sure the IOMMU
- 		 * is on to avoid unclocked accesses in the TLB inv path:
- 		 */
--		pm_runtime_get_sync(qcom_domain->iommu->dev);
-+		pm_runtime_get_sync(qcom_domain->master->iommu->dev);
- 		free_io_pgtable_ops(qcom_domain->pgtbl_ops);
--		pm_runtime_put_sync(qcom_domain->iommu->dev);
-+		pm_runtime_put_sync(qcom_domain->master->iommu->dev);
+-	larbid = MTK_M4U_TO_LARB(fwspec->ids[0]);
+-	for (i = 0; i < fwspec->num_ids; i++)
+-		portidmsk |= BIT(MTK_M4U_TO_PORT(fwspec->ids[i]));
++	larbid = MTK_M4U_TO_LARB(mtkdev->ids[0]);
++	for (i = 0; i < mtkdev->num_ids; i++)
++		portidmsk |= BIT(MTK_M4U_TO_PORT(mtkdev->ids[i]));
+ 
+ 	for (i = 0; i < plat_data->iova_region_nr; i++) {
+ 		rgn_larb_msk = plat_data->iova_region_larb_msk[i];
+@@ -579,22 +586,22 @@ static int mtk_iommu_get_iova_region_id(struct device *dev,
+ static int mtk_iommu_config(struct mtk_iommu_data *data, struct device *dev,
+ 			    bool enable, unsigned int regionid)
+ {
++	struct mtk_iommu_device *mtkdev = dev_iommu_priv_get(dev);
+ 	struct mtk_smi_larb_iommu    *larb_mmu;
+ 	unsigned int                 larbid, portid;
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+ 	const struct mtk_iommu_iova_region *region;
+ 	unsigned long portid_msk = 0;
+ 	struct arm_smccc_res res;
+ 	int i, ret = 0;
+ 
+-	for (i = 0; i < fwspec->num_ids; ++i) {
+-		portid = MTK_M4U_TO_PORT(fwspec->ids[i]);
++	for (i = 0; i < mtkdev->num_ids; ++i) {
++		portid = MTK_M4U_TO_PORT(mtkdev->ids[i]);
+ 		portid_msk |= BIT(portid);
  	}
  
- 	kfree(qcom_domain);
-@@ -362,7 +367,8 @@ static void qcom_iommu_domain_free(struct iommu_domain *domain)
+ 	if (MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM)) {
+ 		/* All ports should be in the same larb. just use 0 here */
+-		larbid = MTK_M4U_TO_LARB(fwspec->ids[0]);
++		larbid = MTK_M4U_TO_LARB(mtkdev->ids[0]);
+ 		larb_mmu = &data->larb_imu[larbid];
+ 		region = data->plat_data->iova_region + regionid;
  
- static int qcom_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
+@@ -618,7 +625,7 @@ static int mtk_iommu_config(struct mtk_iommu_data *data, struct device *dev,
+ 		} else {
+ 			/* PCI dev has only one output id, enable the next writing bit for PCIe */
+ 			if (dev_is_pci(dev)) {
+-				if (fwspec->num_ids != 1) {
++				if (mtkdev->num_ids != 1) {
+ 					dev_err(dev, "PCI dev can only have one port.\n");
+ 					return -ENODEV;
+ 				}
+@@ -708,7 +715,9 @@ static void mtk_iommu_domain_free(struct iommu_domain *domain)
+ static int mtk_iommu_attach_device(struct iommu_domain *domain,
+ 				   struct device *dev)
  {
--	struct qcom_iommu_dev *qcom_iommu = dev_iommu_priv_get(dev);
-+	struct qcom_iommu_master *master = dev_iommu_priv_get(dev);
-+	struct qcom_iommu_dev *qcom_iommu = master->iommu;
- 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
- 	int ret;
- 
-@@ -382,7 +388,7 @@ static int qcom_iommu_attach_dev(struct iommu_domain *domain, struct device *dev
- 	 * Sanity check the domain. We don't support domains across
- 	 * different IOMMUs.
- 	 */
--	if (qcom_domain->iommu != qcom_iommu)
-+	if (qcom_domain->master->iommu != qcom_iommu)
- 		return -EINVAL;
- 
- 	return 0;
-@@ -393,20 +399,20 @@ static int qcom_iommu_identity_attach(struct iommu_domain *identity_domain,
+-	struct mtk_iommu_data *data = dev_iommu_priv_get(dev), *frstdata;
++	struct mtk_iommu_device *mtkdev = dev_iommu_priv_get(dev);
++	struct mtk_iommu_data *data = mtkdev->iommu;
++	struct mtk_iommu_data *frstdata;
+ 	struct mtk_iommu_domain *dom = to_mtk_domain(domain);
+ 	struct list_head *hw_list = data->hw_list;
+ 	struct device *m4udev = data->dev;
+@@ -777,12 +786,12 @@ static int mtk_iommu_identity_attach(struct iommu_domain *identity_domain,
+ 				     struct device *dev)
  {
  	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
- 	struct qcom_iommu_domain *qcom_domain;
--	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
--	struct qcom_iommu_dev *qcom_iommu = dev_iommu_priv_get(dev);
-+	struct qcom_iommu_master *master = dev_iommu_priv_get(dev);
-+	struct qcom_iommu_dev *qcom_iommu = master->iommu;
- 	unsigned int i;
+-	struct mtk_iommu_data *data = dev_iommu_priv_get(dev);
++	struct mtk_iommu_device *mtkdev = dev_iommu_priv_get(dev);
  
  	if (domain == identity_domain || !domain)
  		return 0;
  
- 	qcom_domain = to_qcom_iommu_domain(domain);
--	if (WARN_ON(!qcom_domain->iommu))
-+	if (WARN_ON(!qcom_domain->master))
- 		return -EINVAL;
- 
- 	pm_runtime_get_sync(qcom_iommu->dev);
--	for (i = 0; i < fwspec->num_ids; i++) {
--		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, fwspec->ids[i]);
-+	for (i = 0; i < master->num_ids; i++) {
-+		struct qcom_iommu_ctx *ctx = to_ctx(qcom_domain, master->ids[i]);
- 
- 		/* Disable the context bank: */
- 		iommu_writel(ctx, ARM_SMMU_CB_SCTLR, 0);
-@@ -461,11 +467,11 @@ static size_t qcom_iommu_unmap(struct iommu_domain *domain, unsigned long iova,
- 	 * cannot rely on the device_link.  Make sure the IOMMU is on to
- 	 * avoid unclocked accesses in the TLB inv path:
- 	 */
--	pm_runtime_get_sync(qcom_domain->iommu->dev);
-+	pm_runtime_get_sync(qcom_domain->master->iommu->dev);
- 	spin_lock_irqsave(&qcom_domain->pgtbl_lock, flags);
- 	ret = ops->unmap_pages(ops, iova, pgsize, pgcount, gather);
- 	spin_unlock_irqrestore(&qcom_domain->pgtbl_lock, flags);
--	pm_runtime_put_sync(qcom_domain->iommu->dev);
-+	pm_runtime_put_sync(qcom_domain->master->iommu->dev);
- 
- 	return ret;
- }
-@@ -478,9 +484,9 @@ static void qcom_iommu_flush_iotlb_all(struct iommu_domain *domain)
- 	if (!qcom_domain->pgtbl_ops)
- 		return;
- 
--	pm_runtime_get_sync(qcom_domain->iommu->dev);
-+	pm_runtime_get_sync(qcom_domain->master->iommu->dev);
- 	qcom_iommu_tlb_sync(pgtable->cookie);
--	pm_runtime_put_sync(qcom_domain->iommu->dev);
-+	pm_runtime_put_sync(qcom_domain->master->iommu->dev);
+-	mtk_iommu_config(data, dev, false, 0);
++	mtk_iommu_config(mtkdev->iommu, dev, false, 0);
+ 	return 0;
  }
  
- static void qcom_iommu_iotlb_sync(struct iommu_domain *domain,
-@@ -523,13 +529,38 @@ static bool qcom_iommu_capable(struct device *dev, enum iommu_cap cap)
- 	}
+@@ -860,14 +869,28 @@ static phys_addr_t mtk_iommu_iova_to_phys(struct iommu_domain *domain,
+ 	return pa;
  }
  
--static struct iommu_device *qcom_iommu_probe_device(struct device *dev)
+-static struct iommu_device *mtk_iommu_probe_device(struct device *dev)
 +static struct iommu_device *
-+qcom_iommu_probe_device(struct iommu_probe_info *pinf)
++mtk_iommu_probe_device(struct iommu_probe_info *pinf)
  {
--	struct qcom_iommu_dev *qcom_iommu = dev_iommu_priv_get(dev);
-+	struct qcom_iommu_dev *qcom_iommu;
-+	struct qcom_iommu_master *master;
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+-	struct mtk_iommu_data *data = dev_iommu_priv_get(dev);
++	struct mtk_iommu_device *mtkdev;
 +	struct device *dev = pinf->dev;
++	struct mtk_iommu_data *data;
  	struct device_link *link;
-+	int ret;
-+	int i;
+ 	struct device *larbdev;
+ 	unsigned int larbid, larbidx, i;
  
--	if (!qcom_iommu)
--		return ERR_PTR(-ENODEV);
-+	qcom_iommu = iommu_of_get_single_iommu(pinf, &qcom_iommu_ops, 1,
-+					       struct qcom_iommu_dev, iommu);
-+	if (IS_ERR(qcom_iommu))
-+		return ERR_CAST(qcom_iommu);
++	data = iommu_of_get_single_iommu(pinf, &mtk_iommu_ops, 1,
++					 struct mtk_iommu_data, iommu);
++	if (IS_ERR(data))
++		return ERR_CAST(data);
 +
-+	master = iommu_fw_alloc_per_device_ids(pinf, master);
-+	if (IS_ERR(master))
-+		return ERR_CAST(master);
++	mtkdev = iommu_fw_alloc_per_device_ids(pinf, mtkdev);
++	if (IS_ERR(mtkdev))
++		return ERR_CAST(mtkdev);
++	mtkdev->iommu = data;
 +
-+	for (i = 0; i != master->num_ids; i++) {
-+		u32 asid = master->ids[i];
++	dev_iommu_priv_set(dev, mtkdev);
 +
-+		/*
-+		 * Make sure the asid specified in dt is valid, so we don't have
-+		 * to sanity check this elsewhere:
-+		 */
-+		if (WARN_ON(asid > qcom_iommu->max_asid) ||
-+		    WARN_ON(qcom_iommu->ctxs[asid] == NULL)) {
-+			ret = -EINVAL;
-+			goto err_free;
-+		}
-+	}
+ 	if (!MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM))
+ 		return &data->iommu;
  
- 	/*
- 	 * Establish the link between iommu and master, so that the
-@@ -540,63 +571,33 @@ static struct iommu_device *qcom_iommu_probe_device(struct device *dev)
- 	if (!link) {
- 		dev_err(qcom_iommu->dev, "Unable to create device link between %s and %s\n",
- 			dev_name(qcom_iommu->dev), dev_name(dev));
--		return ERR_PTR(-ENODEV);
-+		ret = -ENODEV;
-+		goto err_free;
+@@ -876,42 +899,46 @@ static struct iommu_device *mtk_iommu_probe_device(struct device *dev)
+ 	 * The device that connects with each a larb is a independent HW.
+ 	 * All the ports in each a device should be in the same larbs.
+ 	 */
+-	larbid = MTK_M4U_TO_LARB(fwspec->ids[0]);
++	larbid = MTK_M4U_TO_LARB(mtkdev->ids[0]);
+ 	if (larbid >= MTK_LARB_NR_MAX)
+-		return ERR_PTR(-EINVAL);
++		goto err_out;
+ 
+-	for (i = 1; i < fwspec->num_ids; i++) {
+-		larbidx = MTK_M4U_TO_LARB(fwspec->ids[i]);
++	for (i = 1; i < mtkdev->num_ids; i++) {
++		larbidx = MTK_M4U_TO_LARB(mtkdev->ids[i]);
+ 		if (larbid != larbidx) {
+ 			dev_err(dev, "Can only use one larb. Fail@larb%d-%d.\n",
+ 				larbid, larbidx);
+-			return ERR_PTR(-EINVAL);
++			goto err_out;
+ 		}
  	}
+ 	larbdev = data->larb_imu[larbid].dev;
+ 	if (!larbdev)
+-		return ERR_PTR(-EINVAL);
++		goto err_out;
  
-+	dev_iommu_priv_set(dev, master);
- 	return &qcom_iommu->iommu;
+ 	link = device_link_add(dev, larbdev,
+ 			       DL_FLAG_PM_RUNTIME | DL_FLAG_STATELESS);
+ 	if (!link)
+ 		dev_err(dev, "Unable to link %s\n", dev_name(larbdev));
+ 	return &data->iommu;
 +
-+err_free:
-+	kfree(master);
-+	return ERR_PTR(ret);
++err_out:
++	kfree(mtkdev);
++	return ERR_PTR(-EINVAL);
  }
  
--static int qcom_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
-+static void qcom_iommu_release_device(struct device *dev)
+ static void mtk_iommu_release_device(struct device *dev)
  {
--	struct qcom_iommu_dev *qcom_iommu;
--	struct platform_device *iommu_pdev;
--	unsigned asid = args->args[0];
-+	struct qcom_iommu_master *master = dev_iommu_priv_get(dev);
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+-	struct mtk_iommu_data *data;
++	struct mtk_iommu_device *mtkdev = dev_iommu_priv_get(dev);
++	struct mtk_iommu_data *data = mtkdev->iommu;
+ 	struct device *larbdev;
+ 	unsigned int larbid;
  
+-	data = dev_iommu_priv_get(dev);
+ 	if (MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM)) {
+-		larbid = MTK_M4U_TO_LARB(fwspec->ids[0]);
++		larbid = MTK_M4U_TO_LARB(mtkdev->ids[0]);
+ 		larbdev = data->larb_imu[larbid].dev;
+ 		device_link_remove(dev, larbdev);
+ 	}
++	kfree(mtkdev);
+ }
+ 
+ static int mtk_iommu_get_group_id(struct device *dev, const struct mtk_iommu_plat_data *plat_data)
+@@ -931,7 +958,9 @@ static int mtk_iommu_get_group_id(struct device *dev, const struct mtk_iommu_pla
+ 
+ static struct iommu_group *mtk_iommu_device_group(struct device *dev)
+ {
+-	struct mtk_iommu_data *c_data = dev_iommu_priv_get(dev), *data;
++	struct mtk_iommu_device *mtkdev = dev_iommu_priv_get(dev);
++	struct mtk_iommu_data *c_data = mtkdev->iommu;
++	struct mtk_iommu_data *data;
+ 	struct list_head *hw_list = c_data->hw_list;
+ 	struct iommu_group *group;
+ 	int groupid;
+@@ -957,32 +986,11 @@ static struct iommu_group *mtk_iommu_device_group(struct device *dev)
+ 	return group;
+ }
+ 
+-static int mtk_iommu_of_xlate(struct device *dev, struct of_phandle_args *args)
+-{
+-	struct platform_device *m4updev;
+-
 -	if (args->args_count != 1) {
--		dev_err(dev, "incorrect number of iommu params found for %s "
--			"(found %d, expected 1)\n",
--			args->np->full_name, args->args_count);
--		return -EINVAL;
--	}
--
--	iommu_pdev = of_find_device_by_node(args->np);
--	if (WARN_ON(!iommu_pdev))
--		return -EINVAL;
--
--	qcom_iommu = platform_get_drvdata(iommu_pdev);
--
--	/* make sure the asid specified in dt is valid, so we don't have
--	 * to sanity check this elsewhere:
--	 */
--	if (WARN_ON(asid > qcom_iommu->max_asid) ||
--	    WARN_ON(qcom_iommu->ctxs[asid] == NULL)) {
--		put_device(&iommu_pdev->dev);
+-		dev_err(dev, "invalid #iommu-cells(%d) property for IOMMU\n",
+-			args->args_count);
 -		return -EINVAL;
 -	}
 -
 -	if (!dev_iommu_priv_get(dev)) {
--		dev_iommu_priv_set(dev, qcom_iommu);
--	} else {
--		/* make sure devices iommus dt node isn't referring to
--		 * multiple different iommu devices.  Multiple context
--		 * banks are ok, but multiple devices are not:
--		 */
--		if (WARN_ON(qcom_iommu != dev_iommu_priv_get(dev))) {
--			put_device(&iommu_pdev->dev);
+-		/* Get the m4u device */
+-		m4updev = of_find_device_by_node(args->np);
+-		if (WARN_ON(!m4updev))
 -			return -EINVAL;
--		}
+-
+-		dev_iommu_priv_set(dev, platform_get_drvdata(m4updev));
 -	}
 -
--	return iommu_fwspec_add_ids(dev, &asid, 1);
-+	kfree(master);
- }
- 
- static const struct iommu_ops qcom_iommu_ops = {
- 	.identity_domain = &qcom_iommu_identity_domain,
- 	.capable	= qcom_iommu_capable,
- 	.domain_alloc_paging = qcom_iommu_domain_alloc_paging,
--	.probe_device	= qcom_iommu_probe_device,
-+	.probe_device_pinf = qcom_iommu_probe_device,
-+	.release_device = qcom_iommu_release_device,
- 	.device_group	= generic_device_group,
--	.of_xlate	= qcom_iommu_of_xlate,
-+	.of_xlate	= iommu_dummy_of_xlate,
+-	return iommu_fwspec_add_ids(dev, args->args, 1);
+-}
+-
+ static void mtk_iommu_get_resv_regions(struct device *dev,
+ 				       struct list_head *head)
+ {
+-	struct mtk_iommu_data *data = dev_iommu_priv_get(dev);
++	struct mtk_iommu_device *mtkdev = dev_iommu_priv_get(dev);
++	struct mtk_iommu_data *data = mtkdev->iommu;
+ 	unsigned int regionid = mtk_iommu_get_iova_region_id(dev, data->plat_data), i;
+ 	const struct mtk_iommu_iova_region *resv, *curdom;
+ 	struct iommu_resv_region *region;
+@@ -1012,10 +1020,10 @@ static void mtk_iommu_get_resv_regions(struct device *dev,
+ static const struct iommu_ops mtk_iommu_ops = {
+ 	.identity_domain = &mtk_iommu_identity_domain,
+ 	.domain_alloc_paging = mtk_iommu_domain_alloc_paging,
+-	.probe_device	= mtk_iommu_probe_device,
++	.probe_device_pinf = mtk_iommu_probe_device,
+ 	.release_device	= mtk_iommu_release_device,
+ 	.device_group	= mtk_iommu_device_group,
+-	.of_xlate	= mtk_iommu_of_xlate,
++	.of_xlate = iommu_dummy_of_xlate,
+ 	.get_resv_regions = mtk_iommu_get_resv_regions,
  	.pgsize_bitmap	= SZ_4K | SZ_64K | SZ_1M | SZ_16M,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
- 		.attach_dev	= qcom_iommu_attach_dev,
+ 	.owner		= THIS_MODULE,
 -- 
 2.42.0
 
