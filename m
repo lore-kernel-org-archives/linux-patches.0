@@ -1,44 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6C3524C2;
-	Thu, 30 Nov 2023 16:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FE3524C2;
+	Thu, 30 Nov 2023 16:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWzG3h5V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B87C433C7;
-	Thu, 30 Nov 2023 16:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkMjekU2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95993C433CA;
+	Thu, 30 Nov 2023 16:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361588;
-	bh=QHZ9SJgHIxTk9xkQEpZwuXnl8ZFfFa6D4tUc9RgWTsc=;
+	s=korg; t=1701361590;
+	bh=vqEbHMjsuL3oPbU/8iUjEWJWz/dxURkF0hc/7c6CM7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWzG3h5VfyMA3RsRR3LqLLImHl7Ywc5Ibhls9yVEB8FecvH5qKmw3kijXyhpPZW7x
-	 LEziWQPLrLAMYHHA/bQOUjeWNAtrX2QkL8oEDzryIGJSWkA96PPIjyHI7uQgcmRHXL
-	 8dXlCPVt9Ebw79Kt3Nq33yiVW3fXfTyRB0aUNU+Y=
+	b=wkMjekU2L5yi7R/tYbS7MBkgscAYTl8H4qpBNtsFVlblcB8nbGsV8yJE15AL06HRm
+	 vNdwLeLJKJY7O5eN7VLbX3Staxz58/NRbUnVZRyMdGVpDYstmgPDWl+UQzols5kSV3
+	 tzzMXZUBhps1CIzm+17bsf5joR9kSyC5ZGvZdj24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	Kees Cook <keescook@chromium.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Alexey Izbyshev <izbyshev@ispras.ru>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Ayush Jain <ayush.jain3@amd.com>,
-	David Hildenbrand <david@redhat.com>,
-	Greg Thelen <gthelen@google.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Peter Xu <peterx@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Szabolcs Nagy <Szabolcs.Nagy@arm.com>,
-	Topi Miettinen <toiwoton@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/112] mm: add a NO_INHERIT flag to the PR_SET_MDWE prctl
-Date: Thu, 30 Nov 2023 16:21:44 +0000
-Message-ID: <20231130162142.139727926@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Sam James <sam@gentoo.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.6 058/112] prctl: Disable prctl(PR_SET_MDWE) on parisc
+Date: Thu, 30 Nov 2023 16:21:45 +0000
+Message-ID: <20231130162142.169133531@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -57,162 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florent Revest <revest@chromium.org>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 24e41bf8a6b424c76c5902fb999e9eca61bdf83d ]
+[ Upstream commit 793838138c157d4c49f4fb744b170747e3dabf58 ]
 
-This extends the current PR_SET_MDWE prctl arg with a bit to indicate that
-the process doesn't want MDWE protection to propagate to children.
+systemd-254 tries to use prctl(PR_SET_MDWE) for it's MemoryDenyWriteExecute
+functionality, but fails on parisc which still needs executable stacks in
+certain combinations of gcc/glibc/kernel.
 
-To implement this no-inherit mode, the tag in current->mm->flags must be
-absent from MMF_INIT_MASK.  This means that the encoding for "MDWE but
-without inherit" is different in the prctl than in the mm flags.  This
-leads to a bit of bit-mangling in the prctl implementation.
+Disable prctl(PR_SET_MDWE) by returning -EINVAL for now on parisc, until
+userspace has catched up.
 
-Link: https://lkml.kernel.org/r/20230828150858.393570-6-revest@chromium.org
-Signed-off-by: Florent Revest <revest@chromium.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Alexey Izbyshev <izbyshev@ispras.ru>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Ayush Jain <ayush.jain3@amd.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Greg Thelen <gthelen@google.com>
-Cc: Joey Gouly <joey.gouly@arm.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Szabolcs Nagy <Szabolcs.Nagy@arm.com>
-Cc: Topi Miettinen <toiwoton@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 793838138c15 ("prctl: Disable prctl(PR_SET_MDWE) on parisc")
+Signed-off-by: Helge Deller <deller@gmx.de>
+Co-developed-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Sam James <sam@gentoo.org>
+Closes: https://github.com/systemd/systemd/issues/29775
+Tested-by: Sam James <sam@gentoo.org>
+Link: https://lore.kernel.org/all/875y2jro9a.fsf@gentoo.org/
+Cc: <stable@vger.kernel.org> # v6.3+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/coredump.h   | 10 ++++++++++
- include/uapi/linux/prctl.h       |  1 +
- kernel/fork.c                    |  2 +-
- kernel/sys.c                     | 32 ++++++++++++++++++++++++++------
- tools/include/uapi/linux/prctl.h |  1 +
- 5 files changed, 39 insertions(+), 7 deletions(-)
+ kernel/sys.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/sched/coredump.h b/include/linux/sched/coredump.h
-index 0ee96ea7a0e90..1b37fa8fc723d 100644
---- a/include/linux/sched/coredump.h
-+++ b/include/linux/sched/coredump.h
-@@ -91,4 +91,14 @@ static inline int get_dumpable(struct mm_struct *mm)
- 				 MMF_DISABLE_THP_MASK | MMF_HAS_MDWE_MASK)
- 
- #define MMF_VM_MERGE_ANY	29
-+#define MMF_HAS_MDWE_NO_INHERIT	30
-+
-+static inline unsigned long mmf_init_flags(unsigned long flags)
-+{
-+	if (flags & (1UL << MMF_HAS_MDWE_NO_INHERIT))
-+		flags &= ~((1UL << MMF_HAS_MDWE) |
-+			   (1UL << MMF_HAS_MDWE_NO_INHERIT));
-+	return flags & MMF_INIT_MASK;
-+}
-+
- #endif /* _LINUX_SCHED_COREDUMP_H */
-diff --git a/include/uapi/linux/prctl.h b/include/uapi/linux/prctl.h
-index 9a85c69782bdd..370ed14b1ae09 100644
---- a/include/uapi/linux/prctl.h
-+++ b/include/uapi/linux/prctl.h
-@@ -284,6 +284,7 @@ struct prctl_mm_map {
- /* Memory deny write / execute */
- #define PR_SET_MDWE			65
- # define PR_MDWE_REFUSE_EXEC_GAIN	(1UL << 0)
-+# define PR_MDWE_NO_INHERIT		(1UL << 1)
- 
- #define PR_GET_MDWE			66
- 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 3b6d20dfb9a85..177ce7438db6b 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1288,7 +1288,7 @@ static struct mm_struct *mm_init(struct mm_struct *mm, struct task_struct *p,
- 	hugetlb_count_init(mm);
- 
- 	if (current->mm) {
--		mm->flags = current->mm->flags & MMF_INIT_MASK;
-+		mm->flags = mmf_init_flags(current->mm->flags);
- 		mm->def_flags = current->mm->def_flags & VM_INIT_DEF_MASK;
- 	} else {
- 		mm->flags = default_dump_filter;
 diff --git a/kernel/sys.c b/kernel/sys.c
-index 2410e3999ebe5..4a8073c1b2558 100644
+index 4a8073c1b2558..7a4ae6d5aecd5 100644
 --- a/kernel/sys.c
 +++ b/kernel/sys.c
-@@ -2368,19 +2368,41 @@ static int prctl_set_vma(unsigned long opt, unsigned long start,
- }
- #endif /* CONFIG_ANON_VMA_NAME */
- 
-+static inline unsigned long get_current_mdwe(void)
-+{
-+	unsigned long ret = 0;
-+
-+	if (test_bit(MMF_HAS_MDWE, &current->mm->flags))
-+		ret |= PR_MDWE_REFUSE_EXEC_GAIN;
-+	if (test_bit(MMF_HAS_MDWE_NO_INHERIT, &current->mm->flags))
-+		ret |= PR_MDWE_NO_INHERIT;
-+
-+	return ret;
-+}
-+
- static inline int prctl_set_mdwe(unsigned long bits, unsigned long arg3,
- 				 unsigned long arg4, unsigned long arg5)
- {
-+	unsigned long current_bits;
-+
- 	if (arg3 || arg4 || arg5)
+@@ -2395,6 +2395,10 @@ static inline int prctl_set_mdwe(unsigned long bits, unsigned long arg3,
+ 	if (bits & PR_MDWE_NO_INHERIT && !(bits & PR_MDWE_REFUSE_EXEC_GAIN))
  		return -EINVAL;
  
--	if (bits & ~(PR_MDWE_REFUSE_EXEC_GAIN))
-+	if (bits & ~(PR_MDWE_REFUSE_EXEC_GAIN | PR_MDWE_NO_INHERIT))
++	/* PARISC cannot allow mdwe as it needs writable stacks */
++	if (IS_ENABLED(CONFIG_PARISC))
 +		return -EINVAL;
 +
-+	/* NO_INHERIT only makes sense with REFUSE_EXEC_GAIN */
-+	if (bits & PR_MDWE_NO_INHERIT && !(bits & PR_MDWE_REFUSE_EXEC_GAIN))
- 		return -EINVAL;
- 
-+	current_bits = get_current_mdwe();
-+	if (current_bits && current_bits != bits)
-+		return -EPERM; /* Cannot unset the flags */
-+
-+	if (bits & PR_MDWE_NO_INHERIT)
-+		set_bit(MMF_HAS_MDWE_NO_INHERIT, &current->mm->flags);
- 	if (bits & PR_MDWE_REFUSE_EXEC_GAIN)
- 		set_bit(MMF_HAS_MDWE, &current->mm->flags);
--	else if (test_bit(MMF_HAS_MDWE, &current->mm->flags))
--		return -EPERM; /* Cannot unset the flag */
- 
- 	return 0;
- }
-@@ -2390,9 +2412,7 @@ static inline int prctl_get_mdwe(unsigned long arg2, unsigned long arg3,
- {
- 	if (arg2 || arg3 || arg4 || arg5)
- 		return -EINVAL;
--
--	return test_bit(MMF_HAS_MDWE, &current->mm->flags) ?
--		PR_MDWE_REFUSE_EXEC_GAIN : 0;
-+	return get_current_mdwe();
- }
- 
- static int prctl_get_auxv(void __user *addr, unsigned long len)
-diff --git a/tools/include/uapi/linux/prctl.h b/tools/include/uapi/linux/prctl.h
-index 9a85c69782bdd..370ed14b1ae09 100644
---- a/tools/include/uapi/linux/prctl.h
-+++ b/tools/include/uapi/linux/prctl.h
-@@ -284,6 +284,7 @@ struct prctl_mm_map {
- /* Memory deny write / execute */
- #define PR_SET_MDWE			65
- # define PR_MDWE_REFUSE_EXEC_GAIN	(1UL << 0)
-+# define PR_MDWE_NO_INHERIT		(1UL << 1)
- 
- #define PR_GET_MDWE			66
- 
+ 	current_bits = get_current_mdwe();
+ 	if (current_bits && current_bits != bits)
+ 		return -EPERM; /* Cannot unset the flags */
 -- 
 2.42.0
 
