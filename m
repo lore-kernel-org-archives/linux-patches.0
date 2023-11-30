@@ -1,27 +1,27 @@
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2074.outbound.protection.outlook.com [40.107.100.74])
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2077.outbound.protection.outlook.com [40.107.100.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEC580F;
-	Thu, 30 Nov 2023 01:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A2917CA;
+	Thu, 30 Nov 2023 01:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Wd3GQfKU"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FCgE9t3o"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Z5DU661SRsmHA8CiOKQdRZ8DbqSu8OFEE48kOA0RmlerWUfsoDXE4Y1joDpaacFrU6oNTdY2nCTJK89W/CZ8vH9Q6Ly8AxR0pFqRf3zQNKM/1h5Nn9wGNuRQEI4QQ72l/oNnAN/BHiUsKRfQc7vk+uRCiMVyhGfY94+Xu1alXjoSpik/KoHPdPR9AGFzVTYj1WEcwEO+GcJNyQlxghvu8iyETHaQ+SszAJL2xu8B2x0Yy4JZ6Okec1cdNo/fIyA2wij6pvorVhnRU2cQI7AFZkchjOMpXkXNGS/l9mFhP+mAn5w2gMAMZEgzkKfNOPf6fR+N8B1ZL8nAncATf4ubaQ==
+ b=HgdG6WMU5tRyo+pu8hMHlBvB63s+Qf82sgIF5JKsUmypHk2HTVBtV12ItkQbz8+kN4n2ItL81qChoZ9tvxNS6mMvzpevjf48abgUAzCsFTu5BbSrIUW5+NkKPD+GXuDj6te/PCpVVoRbdOj1gQDJJPo+HhOq1m1g5NJxj37KrxfiGyMl4e6A8Tzfgpk6s9wLSyG8ay5xqtb8crQSeWHS8UqDWzEcCb9vBBK0nQEOXCHaLbLs3/q+vR5VpVDaRnGGhgj2hqVmZL3QNUxSeJZsAYafDYHtHukWpJ+6M06sCJkXAFqmMuhbAWKbI52vXc/dzpS3/I6znk8l9etMdNF0ow==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=S1/2RwZb1BvcKrWpjq41xk6R0wcBobygbj+9IidcnE8=;
- b=Agd/dlrnkFVoUeVayIt9ibYudFujJ5s2Kj4hTuKT1d0gPI1h32WyOi7zFfhRJIFQ27Vtu3YlX1z0RCimsbH5Sz62fzeA2b7/RmSjT2chrxICujq6mQfF4mrBZOaXlHoywtxxTCOxlpXzHy/Exj2/7k8Ppb5gpCYaLVJ5efAwQMl7RheN+cYXqRlYtY8Hc+WvgOowWb3m4bDGbWW0Mvy4QARQc+TysrE3dgmnoB2eNINK9P0/jsZDayBiFuWEjY0B3I1mYMrLDtt7omW68VedFZzoSuwFz1JUWBp5SU22O5IMd1FFkpL9EyBDpZs9aEnaX2YjGNIDAot0rq+mnBkM2w==
+ bh=Em3umxu+TrgBsDrHGwW96pPsBzA9rtgyJQRI8gBte78=;
+ b=lULuIsxwC5byjV71CeEwJzenNNsw8IF/Woi1hMHCO0kyFMd5pwAXCZJYX4eAUitTSAEDXc3fCeLSqhFgEF4pWScioUWpGbNB1JkeS+sjYM2Ms9c2K0RUz7aLaD8lm5PvD6OQA7rHVTq5etYYnSfboIaH3yrd7sL1ns5wCbNBummU0v8qK5VZ8NSO8cplW2NYszN6zP6O4XiNjdTk2Z6N30b7l+6LxTPXttzhCXCdT6vHuyWOhiDkBifMzb0EDc/ugpMK/JLXlTLdTKvW62o9UbI7ofzV5WtEep9XPWoSCl3UWG1HEqWKoLDMOI+TIqHLeGZcpceer5JzE776P3A/mQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=S1/2RwZb1BvcKrWpjq41xk6R0wcBobygbj+9IidcnE8=;
- b=Wd3GQfKUtdMv1PJC8DKrRfs1e1pu+1GrORDA9mw/Xe/WjUmrRFKlPjsn1CrCx+g73L4uWk9ZJRpMClkXk0lJFRuCa5ZlbBRJZFbBO001T28yQsXTqUYF7Z9wr0v66t6vKDf1sleW5b/vmbpgXG4LdU30EpuWv5+qLI1H3OkOeakQd3sA+8NN86eVYHny5ylOVA3PUjlhGK24/viXa76WZAB9SQM/VhnuYL0yCl2hjsHGZtWZnbZd6lirHoRnDOIvgM3O0yDZS3qNFp1r4TgDjbwvCN8dHhxZC28VFu+hSjEWjQYbBhDTYf2hvL4BzfbWWdMJ+ymvvf279JY7Pkor7w==
+ bh=Em3umxu+TrgBsDrHGwW96pPsBzA9rtgyJQRI8gBte78=;
+ b=FCgE9t3oSP+BSi+R9rMlOousaMLCXfKCzdml/A0zH0wwGGzu1RBLGHwiG/Zlce904THeVhNTL5bJd+kc8XIp1baJ18FW0WhrWMTcdr6ghET9HbMxvrNlZkFcr5/5dXgc9oKmNQ+BQVjyHETX9JZ6lME+gFiP4DALyNDSIIgW9vEEl9YkfUYSEke+ZIKW8+o/DGbnI0U8lzKSI94W1pqVcPV5TrVbNvjkoHJytldV52yfi34l7kYecc1JuMFuzi+/OGaUTplgc7tkYP1qrzeuAxs3FWVOIIrWIp2iez5yfZmgP38BVfHAQF2+KEWNtJNSx1hbiwlc/5DtM3kUlNjVdA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
@@ -87,15 +87,15 @@ To: acpica-devel@lists.linux.dev,
 	Chunyan Zhang <zhang.lyra@gmail.com>
 Cc: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
 	patches@lists.linux.dev
-Subject: [PATCH 04/30] ACPI: IORT: Remove fwspec from the reserved region code
-Date: Wed, 29 Nov 2023 21:10:11 -0400
-Message-ID: <4-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
+Subject: [PATCH 15/30] iommu/msm: Move to iommu_of_xlate()
+Date: Wed, 29 Nov 2023 21:10:22 -0400
+Message-ID: <15-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 In-Reply-To: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SN7PR04CA0162.namprd04.prod.outlook.com
- (2603:10b6:806:125::17) To LV2PR12MB5869.namprd12.prod.outlook.com
+X-ClientProxiedBy: SN7P222CA0011.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:806:124::32) To LV2PR12MB5869.namprd12.prod.outlook.com
  (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -105,314 +105,233 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|DS0PR12MB7607:EE_
-X-MS-Office365-Filtering-Correlation-Id: 799948c1-d494-4ba0-9962-08dbf1412a25
+X-MS-Office365-Filtering-Correlation-Id: 1221a765-a291-4493-44d5-08dbf1412a2f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	HOwkopNGa0CBJ1OiokLpJXaWRObisYdz9OliU1tDVjJR2EnhrrKcMvn/tZ83zBYOOidiSi8ak9+LyDk0jrjNScorLATqTch+cK3eZEvCvHa9OJoe5YHgi5ryCfuHinCcJG8s5XKJSBolN6DMZl5JG3dM9HvzzfGFcFAZs6iV5V+QD3MdcEzrkWle7chIpMx3D3uJG33V1z2xUdcxzRxOA6bBKQRvTzJUJRCZ10g1HuL5tIFYzqGdsCv+MezcXMViedA2D2f/dkVQqD7s+QElsnFAS3QsMbsnhLcbguhk7k9fziOPCgn3B/kqidMU2YZorqB95rHis9lRV1uCshslD8buIhDwtYviVktRpgsJZgXGW89iPbJi7GEFipUARuQVyBUqisXCxncXwRVW8RhjpJkret/3sHfo76HuN+mj9HfKQa+rccIWWT9NqG3fhFuklkM9i6H+ysP2p047dM/5L5W+fGt+KDLyRY/eLHbTPYiBv/jZ6Esvw4h+gwP8dK7Qq1uEu1WtSXjrEorgJpM+ZiKsrE+FD1KMABgO+J7O5sg5CvDJAA7uCirdJRXqOL6qOiXaF8q0zMBZMUx6YMbFoI5tdk3RhlBthpaxCd53dhMdIssQl62wLdeMF8zQqr/zMgPYaZUM2YzPfbRig3Hcw2QxVxeWSr0HzzwrHGkMjk8=
+	vQUJtwMzpKbiN/x6qAz49eIAv7c4i7aj6n6Pu5q5HuPH6JQwvAkMQ4YOyUtO+evP23+MtCFsnqTCJmevSMU2vye73fyePNX4hcirTy+MclDVS2gPVSKoZq/Y6qq9tJV1eLw2yS5tqbYbaCSFLGMeUUF72Yj/rAocm28MfWejlYBm5pD295oTWbRfyCpe68qWcSRCt3DZa2/N9KjXN7yttsxwjH7pVbM63fQ19I9FzPlfOtQQB/dR8UJZNpZUbECfxw+yJf1jI9DayzACXacfbTEN6gdr1GSDNlvD5bry/RgjQIhnIaGKBIdbNjx3iZmYX24n1twbs2W49h1YgYNya+Z1nTPkLNnUbbLbcAC7OCjpJhWuU9S1P+BoypMV7mr8+jmVvwxzbR6DQ0eaaFfkBeY8lHQSyVOZsuPyxuK4AjAdpL4z1saB7YATBqaGP+etW1guvs0yVGXbgsniv4NEiWq9wiN21r3ySGCLn7weriOlgsYjtC6J619iNbIMbMURHBkPhO60dsmvmyL3kk8mXc9mQi4OJI+nXyCyRsFMGnn4T564hiI+PNY7UaidL4lQj7Ko/To/r9Pf4QGNKzseCnErRiLfUke4/rJx3lGR0Pg/TsfxepBhxmZMz9JY5//DnrZJSPdeTKXlcK9rOfhV5w==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(39860400002)(346002)(136003)(366004)(376002)(230922051799003)(186009)(451199024)(64100799003)(1800799012)(38100700002)(202311291699003)(83380400001)(1191002)(5660300002)(110136005)(2906002)(86362001)(4326008)(8676002)(8936002)(66556008)(7366002)(7406005)(7416002)(66476007)(66946007)(6486002)(478600001)(6666004)(316002)(36756003)(6506007)(41300700001)(6512007)(921008)(26005)(2616005)(4216001);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(39860400002)(346002)(136003)(366004)(376002)(230922051799003)(186009)(451199024)(64100799003)(1800799012)(38100700002)(202311291699003)(83380400001)(66899024)(1191002)(5660300002)(110136005)(2906002)(86362001)(4326008)(8676002)(8936002)(66556008)(7366002)(7406005)(7416002)(66476007)(66946007)(6486002)(478600001)(6666004)(316002)(36756003)(6506007)(41300700001)(6512007)(921008)(26005)(2616005);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?2mhjeIC9kP2zwjJ3vrYUZ3jAaoHBX2IY3xBPl32LW6cQIx4sFAdbPZhmnG4F?=
- =?us-ascii?Q?uurHu6p3/dvANUAkZDtE0qDPN/ou7YhPs2tsbok7mpuaXMcMfO0M7bPh2A1f?=
- =?us-ascii?Q?z3T9E6fJegXZa+VGcrfhLiKA+jZ1fvOie0oeI24UrywXgLEvy9hKFky4Lgxo?=
- =?us-ascii?Q?vLqk+BfisoJ6k/bwUbt8HNn8j7mcwjVMqBLC1Mw2z8zYA5HeoThE2HMrRqb/?=
- =?us-ascii?Q?kYRYE/nGY5+VghO/EJ/FyJ1PUmgPonmaL+Hng6hRhEZEshsd4k+BCVryJtnl?=
- =?us-ascii?Q?rqQdQbNzqZ9+k/6kHfBir1tuwTV/Y1xQs6tqFRKw7LZCv9U1i3jqtRW+Fj0A?=
- =?us-ascii?Q?CuaX5q9QkXG47MKP1qC2Hd0IBYb8lXYczGiWDp3Jq8LQHe7DhOvMJtZX3Iml?=
- =?us-ascii?Q?fvrqcjIMhjx1LrFK/DIafD+7Wd/YRY/uaYyVFQseOvBsoPapUNoa1Qj5O3KE?=
- =?us-ascii?Q?LLC6x4avNE2/HIR2EXaav1KvNkU7c7gCrEmnoVeEdbxzKHbLv2VjJCbP22IT?=
- =?us-ascii?Q?97ChwhkZUSYdvOw34KlafoIMGRDv85ONLD9vAuF7pfIRBwvTDqjeMmwES+rE?=
- =?us-ascii?Q?AmUMyzlwieNm4DCpX1Ea8yKKkbJlz0CriJQwsfFTncnBtlHLna74Vk4+u5xt?=
- =?us-ascii?Q?pvX64DJLMgg1XAVJ0JORy92xnyC7+UkgX19i6PYaWlkKhcxq4QGf4hYC7nzZ?=
- =?us-ascii?Q?1oS5Pp5GEwMmkp2GEjFNs3cgFawMlWAWCZ2iwkHfGy44qxaptAZWc07/kMbm?=
- =?us-ascii?Q?FqEbkAHPYFkpyCJKmPv7tYsAiPJJ3tErJIbT00MvmLZ48jtfiYiAtnwqDBEe?=
- =?us-ascii?Q?4FqQQSryvmb/5E8mHCbXWNWQNPJp87DNTCX2ve0mvEp/VytaRQSrgaMhcPV5?=
- =?us-ascii?Q?D6Hqc9HCNLyJpmeUyT7r8K3k6F/Mh7qpYaCn4mgiEQ3wjzWctJHnLEdT8iQC?=
- =?us-ascii?Q?DYmV3QIDp492oWMRyl7u082Jr4tU6fBOgtBHUb5YVoAMOUEpieV+cf3sfB4c?=
- =?us-ascii?Q?/yyw3i51kX/t8PkwNrgBGoaLtgXID4g/XFV2q2WpS3rUAe12l2QBr7rz0uSC?=
- =?us-ascii?Q?02jcAA+C/NwqWcsyIAT4p39aYlDAgnkJA/CJqy39gJoye6JJdN8oVmTjamQp?=
- =?us-ascii?Q?XfouVPGCX5WnC9DbXNl7QyhY2OEZCPW2q/ybiZmpni6jiwMqKaCA9vqgFVSo?=
- =?us-ascii?Q?K/hD0MWCZCgUsUN5SdiTLxjc6j31/FUortrzLHg+K/8kiAnxrLpb0c3vdxVn?=
- =?us-ascii?Q?J4QDTj3fJJnO4ItGF7nZOKRV0jPbsWbWGfB4BKXmbdE5K6KJ+y2eKtHJcIz3?=
- =?us-ascii?Q?mq12uyq5AstKy6Ci2Xw7V37Bdq2e4kufxiE7s7cFf7YC8E0/8S5hll+U/9KA?=
- =?us-ascii?Q?XsWsCQFhIg33RhYxdEnQz5IYeHc6PrmbffrrQfqoMz3SXtyAKT9Wy0DHKmD6?=
- =?us-ascii?Q?a74EDs4xwTpZa95ZgScZVVRXkoJt/ocLubU9iM7yTus6mwV4jn1kKEI9pyad?=
- =?us-ascii?Q?9Wcb4vjV02TEj6LJ5wNQ3Te0SKYbTb4hapAl3cCabqW5+WgszKOoMDPTKI9N?=
- =?us-ascii?Q?V+v3CMATwO3SJvm8uXDPHDgRo5qRDg6XL5qKBYxI?=
+	=?us-ascii?Q?1z9nljq3YwhKkQLW7r3lOZa1VrRpPUzgK/sQ/NLsmZ6cz1YyPenNRkYNj9zN?=
+ =?us-ascii?Q?lv0gXvhlYdLXbYMga9l/G/YHnsl6JTWWIm9t901St/UCxH7nMldMQ4Q1eMEh?=
+ =?us-ascii?Q?rJ4JJwva6khYeZvuK04jo2WMMIiVoPuVwL8d6Gdpg9u4SKNQKNyFp86DCp3q?=
+ =?us-ascii?Q?hNMNi4/4UrHAAoUJ/0EcN6mALgTdxpg5TO6OfUEd/1UzPmpHc1zYeHq5bdpV?=
+ =?us-ascii?Q?1nqoJNZ61R6afR001Mk/X7s/RGX7C14VQpWNLxmXE60Yd8VxMw6VP6afSNRL?=
+ =?us-ascii?Q?ZJ5byuEtzb7/Tv3/W0r+xqVXIuEGG3QHprZlLQ9SIvZ0Zz9Qxez28Ht/6vJ0?=
+ =?us-ascii?Q?9BgB/ZNq/nP3toe3hAS36YhUqUorIzC7yVqX57Iv4Garf1jExDRdrVopFo+t?=
+ =?us-ascii?Q?R+wJQYOjR7dnX11kBzLjGmry2V6dne8gD1Ep5KZ4HP/N8eWQUcr8y7sc/CUU?=
+ =?us-ascii?Q?hXg6kD3xy2BaNz4F7eBo8iMvhx7KJvLEnnCi4jQxmCKBGuHAGptklUCYNiKm?=
+ =?us-ascii?Q?gwxfIqD17vWEladGstNOx2R3SYH/N7dPEOz/an3Y6AqSKXApdvn5UyLvfCb2?=
+ =?us-ascii?Q?L+kW+b1NHARcyEzvIn++nI7OMtiPZd1Kv6uM3PEaBI69iw4AgyUMDOOkCRgW?=
+ =?us-ascii?Q?/ftxPeMmiD9b7uXY6WTXYinzlllwJ26vADhMyok+9WNjr3MjCa2jJNx6V09+?=
+ =?us-ascii?Q?I8AU7MW5n3HrmrZACDKsY98MPIMmqzXOWgnSikXUdbklFtmp2xytgU0dl0RL?=
+ =?us-ascii?Q?2butV5+wiBXJAaqnb1VlmkuddjJxmfGl+Ekvuif14QM7ckoI9xdDJ3InZv74?=
+ =?us-ascii?Q?3jsVRIx5EAdT6dKtJKyWX/lYlXj34o9Cy8L5dBEM3zH627aPrquR0h4qoLTu?=
+ =?us-ascii?Q?1Anmt9GorLpQrMQHyENKP3CSgJA3Pwvo72bONp8qv31V2t40yKSp+J56anqj?=
+ =?us-ascii?Q?HUGlCT1NmvNZrJbGXrvbWTYZ46FwTRukrjnkMvyaAGUEdl1LCLuCnVcspUhA?=
+ =?us-ascii?Q?GeeFciIo9f0ZGduiWxDpIFj9Zde3PR5rLPw3WyNEnBYxw+iGk+6VvDeVuKH+?=
+ =?us-ascii?Q?0qEr/nd1rkpYYY2tQxmIC/ez7gEZWE/cSlLXYQsDyQNWWor47uLQgf7GW650?=
+ =?us-ascii?Q?itfZt1FQuAPYDpVnXN0L2Lb23JzROuPUlEkskiIYm00sj+zPwa5Yf8ram3LA?=
+ =?us-ascii?Q?oRVsqd9SlYPBpaYd73Q6WT/ygGNwgxl9WiMKq54BCseYDsTFybnk+TrI4ghb?=
+ =?us-ascii?Q?8TC790M1qvr6fuocc2Hv7Qb8lfrsVFHGccUX45u+rRULoJMY0B+9cH//zQSO?=
+ =?us-ascii?Q?9lC0vPn9eX0S2WMvsBTFhfcWHn6DOID1pZwFeXhG8nWA6jwS/T13pRwZcyuu?=
+ =?us-ascii?Q?ZxRZGstIvLDKZu3GoGWKo4CKgtsonET9ob0wUW46vthBU4bqr6XF6R+50Qjm?=
+ =?us-ascii?Q?3pVCRaGHGhqzvD9xTJnwQEXlBrqtITyWX4ow+E9RXpQ4pf7FVEiw7LbaQd5J?=
+ =?us-ascii?Q?Wvg/85pi6mSrTN5W7T5FxlfQ0Jl3e9oW3vAJW33VKD3AeWI80tNgZZWgdo9p?=
+ =?us-ascii?Q?Ap4uAXroDOaXm3xunMz3XzcXBVDe8MeXhsf74tAt?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 799948c1-d494-4ba0-9962-08dbf1412a25
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1221a765-a291-4493-44d5-08dbf1412a2f
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:38.8211
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:38.8409
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xmL1HXjHi6e5JgKpBsPqhhRc8AtQttGvFiUIYyPn2GmuaV9VgchKVr2DtiYJqBGB
+X-MS-Exchange-CrossTenant-UserPrincipalName: qqKM7lR3SnpMu9gDv/MPVPNew9e4qSPTtWyAIv1UdK05CNjfSVrsO84rY1P+1Sa2
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7607
 
-iort_iommu_get_resv_regions() needs access to the parsed id array that is
-currently stored in the iommu_fwspec.
+It is confusing what this driver is doing. The insert_iommu_master(),
+especially the list_empty(), doesn't make a lot of sense.
 
-Instead of getting this from the fwspec inside the iort code have the
-caller pass it in.
+Based on the dtsi this supports an iommu instance that has exactly one
+device attached it. However each device may be connected to multiple
+instances with multiple stream ids. The iommus list must be sorted by
+instance or it will not parse correctly.
+
+Ideally this driver would work more like dart where each master allocates
+memory for dev_iommu_priv and records a list of the all the iommus and
+stream ids in that struct. That is too big of a change for this patch.
+
+Keep things basically the same, but rely on the core code to discover the
+iommu_device and stop confusingly using dev_iommu_priv to join SIDs into
+the same master when processing the assumed-to-be-sorted iommus list.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/acpi/arm64/iort.c | 88 ++++++++++++++++++++++++---------------
- drivers/iommu/dma-iommu.c |  7 +++-
- include/linux/acpi_iort.h |  8 +++-
- 3 files changed, 65 insertions(+), 38 deletions(-)
+ drivers/iommu/msm_iommu.c | 93 ++++++++++++++++-----------------------
+ 1 file changed, 37 insertions(+), 56 deletions(-)
 
-diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-index 5c9b4c23f96a87..93e30f2f5004f0 100644
---- a/drivers/acpi/arm64/iort.c
-+++ b/drivers/acpi/arm64/iort.c
-@@ -946,11 +946,19 @@ static u32 *iort_rmr_alloc_sids(u32 *sids, u32 count, u32 id_start,
- 	return new_sids;
- }
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index f86af9815d6f98..6f21eec857c7d7 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -16,6 +16,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/slab.h>
+ #include <linux/iommu.h>
++#include <linux/iommu-driver.h>
+ #include <linux/clk.h>
+ #include <linux/err.h>
  
--static bool iort_rmr_has_dev(struct device *dev, u32 id_start,
-+struct iort_resv_args {
+@@ -37,6 +38,15 @@ static DEFINE_SPINLOCK(msm_iommu_lock);
+ static LIST_HEAD(qcom_iommu_devices);
+ static struct iommu_ops msm_iommu_ops;
+ 
++struct msm_xlate_args {
 +	struct device *dev;
-+	struct list_head *head;
-+	struct fwnode_handle *iommu_fwnode;
-+	const u32 *fw_ids;
-+	unsigned int fw_num_ids;
++	struct msm_iommu_ctx_dev *master;
++	struct msm_iommu_dev *iommu;
 +};
 +
-+static bool iort_rmr_has_dev(struct iort_resv_args *args, u32 id_start,
- 			     u32 id_count)
- {
-+	struct device *dev = args->dev;
- 	int i;
--	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 
- 	/*
- 	 * Make sure the kernel has preserved the boot firmware PCIe
-@@ -965,18 +973,18 @@ static bool iort_rmr_has_dev(struct device *dev, u32 id_start,
- 			return false;
- 	}
- 
--	for (i = 0; i < fwspec->num_ids; i++) {
--		if (fwspec->ids[i] >= id_start &&
--		    fwspec->ids[i] <= id_start + id_count)
-+	for (i = 0; i < args->fw_num_ids; i++) {
-+		if (args->fw_ids[i] >= id_start &&
-+		    args->fw_ids[i] <= id_start + id_count)
- 			return true;
- 	}
- 
- 	return false;
- }
- 
--static void iort_node_get_rmr_info(struct acpi_iort_node *node,
--				   struct acpi_iort_node *iommu,
--				   struct device *dev, struct list_head *head)
-+static void iort_node_get_rmr_info(struct iort_resv_args *args,
-+				   struct acpi_iort_node *node,
-+				   struct acpi_iort_node *iommu)
- {
- 	struct acpi_iort_node *smmu = NULL;
- 	struct acpi_iort_rmr *rmr;
-@@ -1013,8 +1021,8 @@ static void iort_node_get_rmr_info(struct acpi_iort_node *node,
- 			continue;
- 
- 		/* If dev is valid, check RMR node corresponds to the dev SID */
--		if (dev && !iort_rmr_has_dev(dev, map->output_base,
--					     map->id_count))
-+		if (args->dev &&
-+		    !iort_rmr_has_dev(args, map->output_base, map->id_count))
- 			continue;
- 
- 		/* Retrieve SIDs associated with the Node. */
-@@ -1029,12 +1037,12 @@ static void iort_node_get_rmr_info(struct acpi_iort_node *node,
- 	if (!sids)
- 		return;
- 
--	iort_get_rmrs(node, smmu, sids, num_sids, head);
-+	iort_get_rmrs(node, smmu, sids, num_sids, args->head);
- 	kfree(sids);
- }
- 
--static void iort_find_rmrs(struct acpi_iort_node *iommu, struct device *dev,
--			   struct list_head *head)
-+static void iort_find_rmrs(struct iort_resv_args *args,
-+			   struct acpi_iort_node *iommu)
- {
- 	struct acpi_table_iort *iort;
- 	struct acpi_iort_node *iort_node, *iort_end;
-@@ -1057,7 +1065,7 @@ static void iort_find_rmrs(struct acpi_iort_node *iommu, struct device *dev,
- 			return;
- 
- 		if (iort_node->type == ACPI_IORT_NODE_RMR)
--			iort_node_get_rmr_info(iort_node, iommu, dev, head);
-+			iort_node_get_rmr_info(args, iort_node, iommu);
- 
- 		iort_node = ACPI_ADD_PTR(struct acpi_iort_node, iort_node,
- 					 iort_node->length);
-@@ -1069,25 +1077,23 @@ static void iort_find_rmrs(struct acpi_iort_node *iommu, struct device *dev,
-  * If dev is NULL, the function populates all the RMRs associated with the
-  * given IOMMU.
-  */
--static void iort_iommu_rmr_get_resv_regions(struct fwnode_handle *iommu_fwnode,
--					    struct device *dev,
--					    struct list_head *head)
-+static void iort_iommu_rmr_get_resv_regions(struct iort_resv_args *args)
- {
- 	struct acpi_iort_node *iommu;
- 
--	iommu = iort_get_iort_node(iommu_fwnode);
-+	iommu = iort_get_iort_node(args->iommu_fwnode);
- 	if (!iommu)
- 		return;
- 
--	iort_find_rmrs(iommu, dev, head);
-+	iort_find_rmrs(args, iommu);
- }
- 
--static struct acpi_iort_node *iort_get_msi_resv_iommu(struct device *dev)
-+static struct acpi_iort_node *
-+iort_get_msi_resv_iommu(struct iort_resv_args *args)
- {
- 	struct acpi_iort_node *iommu;
--	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 
--	iommu = iort_get_iort_node(fwspec->iommu_fwnode);
-+	iommu = iort_get_iort_node(args->iommu_fwnode);
- 
- 	if (iommu && (iommu->type == ACPI_IORT_NODE_SMMU_V3)) {
- 		struct acpi_iort_smmu_v3 *smmu;
-@@ -1105,15 +1111,13 @@ static struct acpi_iort_node *iort_get_msi_resv_iommu(struct device *dev)
-  * The ITS interrupt translation spaces (ITS_base + SZ_64K, SZ_64K)
-  * associated with the device are the HW MSI reserved regions.
-  */
--static void iort_iommu_msi_get_resv_regions(struct device *dev,
--					    struct list_head *head)
-+static void iort_iommu_msi_get_resv_regions(struct iort_resv_args *args)
- {
--	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
- 	struct acpi_iort_its_group *its;
- 	struct acpi_iort_node *iommu_node, *its_node = NULL;
- 	int i;
- 
--	iommu_node = iort_get_msi_resv_iommu(dev);
-+	iommu_node = iort_get_msi_resv_iommu(args);
- 	if (!iommu_node)
- 		return;
- 
-@@ -1126,9 +1130,9 @@ static void iort_iommu_msi_get_resv_regions(struct device *dev,
- 	 * a given PCI or named component may map IDs to.
- 	 */
- 
--	for (i = 0; i < fwspec->num_ids; i++) {
-+	for (i = 0; i < args->fw_num_ids; i++) {
- 		its_node = iort_node_map_id(iommu_node,
--					fwspec->ids[i],
-+					args->fw_ids[i],
- 					NULL, IORT_MSI_TYPE);
- 		if (its_node)
- 			break;
-@@ -1151,7 +1155,7 @@ static void iort_iommu_msi_get_resv_regions(struct device *dev,
- 							 prot, IOMMU_RESV_MSI,
- 							 GFP_KERNEL);
- 			if (region)
--				list_add_tail(&region->list, head);
-+				list_add_tail(&region->list, args->head);
- 		}
- 	}
- }
-@@ -1160,13 +1164,24 @@ static void iort_iommu_msi_get_resv_regions(struct device *dev,
-  * iort_iommu_get_resv_regions - Generic helper to retrieve reserved regions.
-  * @dev: Device from iommu_get_resv_regions()
-  * @head: Reserved region list from iommu_get_resv_regions()
-+ * @iommu_fwnode: fwnode that describes the iommu connection for the device
-+ * @fw_ids: Parsed IDs
-+ * @fw_num_ids: Length of fw_ids
-  */
--void iort_iommu_get_resv_regions(struct device *dev, struct list_head *head)
-+void iort_iommu_get_resv_regions(struct device *dev, struct list_head *head,
-+				 struct fwnode_handle *iommu_fwnode,
-+				 const u32 *fw_ids, unsigned int fw_num_ids)
- {
--	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
-+	struct iort_resv_args args = {
-+		.dev = dev,
-+		.head = head,
-+		.iommu_fwnode = iommu_fwnode,
-+		.fw_ids = fw_ids,
-+		.fw_num_ids = fw_num_ids,
-+	};
- 
--	iort_iommu_msi_get_resv_regions(dev, head);
--	iort_iommu_rmr_get_resv_regions(fwspec->iommu_fwnode, dev, head);
-+	iort_iommu_msi_get_resv_regions(&args);
-+	iort_iommu_rmr_get_resv_regions(&args);
- }
- 
- /**
-@@ -1178,7 +1193,12 @@ void iort_iommu_get_resv_regions(struct device *dev, struct list_head *head)
- void iort_get_rmr_sids(struct fwnode_handle *iommu_fwnode,
- 		       struct list_head *head)
- {
--	iort_iommu_rmr_get_resv_regions(iommu_fwnode, NULL, head);
-+	struct iort_resv_args args = {
-+		.head = head,
-+		.iommu_fwnode = iommu_fwnode,
-+	};
++static int msm_iommu_of_xlate(struct iommu_device *core_iommu,
++			      struct of_phandle_args *args, void *priv);
 +
-+	iort_iommu_rmr_get_resv_regions(&args);
+ struct msm_priv {
+ 	struct list_head list_attached;
+ 	struct iommu_domain domain;
+@@ -357,38 +367,17 @@ static int msm_iommu_domain_config(struct msm_priv *priv)
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(iort_get_rmr_sids);
  
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 85163a83df2f68..d644b0502ef48e 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -468,9 +468,12 @@ void iommu_put_dma_cookie(struct iommu_domain *domain)
-  */
- void iommu_dma_get_resv_regions(struct device *dev, struct list_head *list)
+-/* Must be called under msm_iommu_lock */
+-static struct msm_iommu_dev *find_iommu_for_dev(struct device *dev)
++static struct iommu_device *
++msm_iommu_probe_device(struct iommu_probe_info *pinf)
  {
-+	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+-	struct msm_iommu_dev *iommu, *ret = NULL;
+-	struct msm_iommu_ctx_dev *master;
++	struct msm_xlate_args args = { .dev = pinf->dev };
++	int ret;
  
--	if (!is_of_node(dev_iommu_fwspec_get(dev)->iommu_fwnode))
--		iort_iommu_get_resv_regions(dev, list);
-+	if (!is_of_node(fwspec->iommu_fwnode)) {
-+		iort_iommu_get_resv_regions(dev, list, fwspec->iommu_fwnode,
-+					    fwspec->ids, fwspec->num_ids);
-+	}
+-	list_for_each_entry(iommu, &qcom_iommu_devices, dev_node) {
+-		master = list_first_entry(&iommu->ctx_list,
+-					  struct msm_iommu_ctx_dev,
+-					  list);
+-		if (master->of_node == dev->of_node) {
+-			ret = iommu;
+-			break;
+-		}
+-	}
+-
+-	return ret;
+-}
+-
+-static struct iommu_device *msm_iommu_probe_device(struct device *dev)
+-{
+-	struct msm_iommu_dev *iommu;
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&msm_iommu_lock, flags);
+-	iommu = find_iommu_for_dev(dev);
+-	spin_unlock_irqrestore(&msm_iommu_lock, flags);
+-
+-	if (!iommu)
+-		return ERR_PTR(-ENODEV);
+-
+-	return &iommu->iommu;
++	ret = iommu_of_xlate(pinf, &msm_iommu_ops, -1, &msm_iommu_of_xlate,
++			     &args);
++	if (ret)
++		return ERR_PTR(ret);
++	return &args.iommu->iommu;
+ }
  
- 	if (dev->of_node)
- 		of_iommu_get_resv_regions(dev, list);
-diff --git a/include/linux/acpi_iort.h b/include/linux/acpi_iort.h
-index 5423abff9b6b09..13f0cefb930693 100644
---- a/include/linux/acpi_iort.h
-+++ b/include/linux/acpi_iort.h
-@@ -53,7 +53,9 @@ void iort_put_rmr_sids(struct fwnode_handle *iommu_fwnode,
- /* IOMMU interface */
- int iort_dma_get_ranges(struct device *dev, u64 *size);
- int iort_iommu_configure_id(struct device *dev, const u32 *id_in);
--void iort_iommu_get_resv_regions(struct device *dev, struct list_head *head);
-+void iort_iommu_get_resv_regions(struct device *dev, struct list_head *head,
-+				 struct fwnode_handle *iommu_fwnode,
-+				 const u32 *fw_ids, unsigned int fw_num_ids);
- phys_addr_t acpi_iort_dma_get_max_cpu_address(void);
- #else
- static inline u32 iort_msi_map_id(struct device *dev, u32 id)
-@@ -72,7 +74,9 @@ static inline int iort_dma_get_ranges(struct device *dev, u64 *size)
- static inline int iort_iommu_configure_id(struct device *dev, const u32 *id_in)
- { return -ENODEV; }
- static inline
--void iort_iommu_get_resv_regions(struct device *dev, struct list_head *head)
-+void iort_iommu_get_resv_regions(struct device *dev, struct list_head *head,
-+				 struct fwnode_handle *iommu_fwnode,
-+				 const u32 *fw_ids, unsigned int fw_num_ids)
- { }
+ static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
+@@ -596,22 +585,26 @@ static void print_ctx_regs(void __iomem *base, int ctx)
+ 	       GET_SCTLR(base, ctx), GET_ACTLR(base, ctx));
+ }
  
- static inline phys_addr_t acpi_iort_dma_get_max_cpu_address(void)
+-static int insert_iommu_master(struct device *dev,
+-				struct msm_iommu_dev **iommu,
+-				struct of_phandle_args *spec)
++static int insert_iommu_master(struct msm_xlate_args *args,
++			       struct msm_iommu_dev *iommu,
++			       struct of_phandle_args *spec)
+ {
+-	struct msm_iommu_ctx_dev *master = dev_iommu_priv_get(dev);
++	struct msm_iommu_ctx_dev *master = args->master;
++	struct device *dev = args->dev;
+ 	int sid;
+ 
+-	if (list_empty(&(*iommu)->ctx_list)) {
++	if (!args->iommu)
++		args->iommu = iommu;
++
++	if (list_empty(&iommu->ctx_list)) {
+ 		master = kzalloc(sizeof(*master), GFP_ATOMIC);
+ 		if (!master) {
+ 			dev_err(dev, "Failed to allocate iommu_master\n");
+ 			return -ENOMEM;
+ 		}
+ 		master->of_node = dev->of_node;
+-		list_add(&master->list, &(*iommu)->ctx_list);
+-		dev_iommu_priv_set(dev, master);
++		list_add(&master->list, &iommu->ctx_list);
++		args->master = master;
+ 	}
+ 
+ 	for (sid = 0; sid < master->num_mids; sid++)
+@@ -625,28 +618,16 @@ static int insert_iommu_master(struct device *dev,
+ 	return 0;
+ }
+ 
+-static int qcom_iommu_of_xlate(struct device *dev,
+-			       struct of_phandle_args *spec)
++static int msm_iommu_of_xlate(struct iommu_device *core_iommu,
++			      struct of_phandle_args *args, void *priv)
+ {
+-	struct msm_iommu_dev *iommu = NULL, *iter;
++	struct msm_iommu_dev *iommu =
++		container_of(core_iommu, struct msm_iommu_dev, iommu);
+ 	unsigned long flags;
+ 	int ret = 0;
+ 
+ 	spin_lock_irqsave(&msm_iommu_lock, flags);
+-	list_for_each_entry(iter, &qcom_iommu_devices, dev_node) {
+-		if (iter->dev->of_node == spec->np) {
+-			iommu = iter;
+-			break;
+-		}
+-	}
+-
+-	if (!iommu) {
+-		ret = -ENODEV;
+-		goto fail;
+-	}
+-
+-	ret = insert_iommu_master(dev, &iommu, spec);
+-fail:
++	ret = insert_iommu_master(priv, iommu, args);
+ 	spin_unlock_irqrestore(&msm_iommu_lock, flags);
+ 
+ 	return ret;
+@@ -690,10 +671,10 @@ irqreturn_t msm_iommu_fault_handler(int irq, void *dev_id)
+ static struct iommu_ops msm_iommu_ops = {
+ 	.identity_domain = &msm_iommu_identity_domain,
+ 	.domain_alloc_paging = msm_iommu_domain_alloc_paging,
+-	.probe_device = msm_iommu_probe_device,
++	.probe_device_pinf = msm_iommu_probe_device,
+ 	.device_group = generic_device_group,
+ 	.pgsize_bitmap = MSM_IOMMU_PGSIZES,
+-	.of_xlate = qcom_iommu_of_xlate,
++	.of_xlate = iommu_dummy_of_xlate,
+ 	.default_domain_ops = &(const struct iommu_domain_ops) {
+ 		.attach_dev	= msm_iommu_attach_dev,
+ 		.map_pages	= msm_iommu_map,
 -- 
 2.42.0
 
