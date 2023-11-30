@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4768854F87;
-	Thu, 30 Nov 2023 16:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B078454F92;
+	Thu, 30 Nov 2023 16:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZYnJVs6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C192FC433C7;
-	Thu, 30 Nov 2023 16:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSSteSBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DEABC433C7;
+	Thu, 30 Nov 2023 16:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361640;
-	bh=xPR8Jc881NDfofc5/Io/fosGbjq+2h2gKUsFXpNch9U=;
+	s=korg; t=1701361642;
+	bh=oR0sA8FhegUltbQwChRn8PUwK7glbkKbxQioHIaiEyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZYnJVs6hLQQr0e3Hpr7uzvTYaCueY2DRwehQXZCfBTJev4rpG1o9Gyyzp0mCK+wZ
-	 6QfizS4Rs0V/fhTHs70TcXI0AMCviHb7WD+/xyIKuN/WxdhRd8dedzCHhaoQyhWilY
-	 EMS6B0mimqketDJWEi/qYBQwh5TW7EovKHDjPSrA=
+	b=WSSteSBptDUmbEbDv3Rv57u2urY4Mk3ElhQPXQ7YqmJ/qYWhhOjVYRyYQISCIzCG7
+	 NDHnEi+lfmYsbD9bFCKrFLj+PPhhbEU4lXZoVS8wSY5t6Al53+JGyvSzCXyIenfGUN
+	 mvu3RVLAroXAcslKXJnxOw0wzLb2quUGw80udeFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Neronin <niklas.neronin@linux.intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.6 101/112] usb: config: fix iteration issue in usb_get_bos_descriptor()
-Date: Thu, 30 Nov 2023 16:22:28 +0000
-Message-ID: <20231130162143.505967882@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.6 102/112] usb: cdnsp: Fix deadlock issue during using NCM gadget
+Date: Thu, 30 Nov 2023 16:22:29 +0000
+Message-ID: <20231130162143.532011805@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,51 +41,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Neronin <niklas.neronin@linux.intel.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit 974bba5c118f4c2baf00de0356e3e4f7928b4cbc upstream.
+commit 58f2fcb3a845fcbbad2f3196bb37d744e0506250 upstream.
 
-The BOS descriptor defines a root descriptor and is the base descriptor for
-accessing a family of related descriptors.
+The interrupt service routine registered for the gadget is a primary
+handler which mask the interrupt source and a threaded handler which
+handles the source of the interrupt. Since the threaded handler is
+voluntary threaded, the IRQ-core does not disable bottom halves before
+invoke the handler like it does for the forced-threaded handler.
 
-Function 'usb_get_bos_descriptor()' encounters an iteration issue when
-skipping the 'USB_DT_DEVICE_CAPABILITY' descriptor type. This results in
-the same descriptor being read repeatedly.
+Due to changes in networking it became visible that a network gadget's
+completions handler may schedule a softirq which remains unprocessed.
+The gadget's completion handler is usually invoked either in hard-IRQ or
+soft-IRQ context. In this context it is enough to just raise the softirq
+because the softirq itself will be handled once that context is left.
+In the case of the voluntary threaded handler, there is nothing that
+will process pending softirqs. Which means it remain queued until
+another random interrupt (on this CPU) fires and handles it on its exit
+path or another thread locks and unlocks a lock with the bh suffix.
+Worst case is that the CPU goes idle and the NOHZ complains about
+unhandled softirqs.
 
-To address this issue, a 'goto' statement is introduced to ensure that the
-pointer and the amount read is updated correctly. This ensures that the
-function iterates to the next descriptor instead of reading the same
-descriptor repeatedly.
+Disable bottom halves before acquiring the lock (and disabling
+interrupts) and enable them after dropping the lock. This ensures that
+any pending softirqs will handled right away.
 
-Cc: stable@vger.kernel.org
-Fixes: 3dd550a2d365 ("USB: usbcore: Fix slab-out-of-bounds bug during device reset")
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20231115121325.471454-1-niklas.neronin@linux.intel.com
+cc: stable@vger.kernel.org
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20231108093125.224963-1-pawell@cadence.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/config.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/cdnsp-ring.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -1047,7 +1047,7 @@ int usb_get_bos_descriptor(struct usb_de
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -1529,6 +1529,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
+ 	unsigned long flags;
+ 	int counter = 0;
  
- 		if (cap->bDescriptorType != USB_DT_DEVICE_CAPABILITY) {
- 			dev_notice(ddev, "descriptor type invalid, skip\n");
--			continue;
-+			goto skip_to_next_descriptor;
- 		}
++	local_bh_disable();
+ 	spin_lock_irqsave(&pdev->lock, flags);
  
- 		switch (cap_type) {
-@@ -1078,6 +1078,7 @@ int usb_get_bos_descriptor(struct usb_de
- 			break;
- 		}
+ 	if (pdev->cdnsp_state & (CDNSP_STATE_HALTED | CDNSP_STATE_DYING)) {
+@@ -1541,6 +1542,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
+ 			cdnsp_died(pdev);
  
-+skip_to_next_descriptor:
- 		total_len -= length;
- 		buffer += length;
+ 		spin_unlock_irqrestore(&pdev->lock, flags);
++		local_bh_enable();
+ 		return IRQ_HANDLED;
  	}
+ 
+@@ -1557,6 +1559,7 @@ irqreturn_t cdnsp_thread_irq_handler(int
+ 	cdnsp_update_erst_dequeue(pdev, event_ring_deq, 1);
+ 
+ 	spin_unlock_irqrestore(&pdev->lock, flags);
++	local_bh_enable();
+ 
+ 	return IRQ_HANDLED;
+ }
 
 
