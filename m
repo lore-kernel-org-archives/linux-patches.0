@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EAB54FA8;
-	Thu, 30 Nov 2023 16:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882CF524D9;
+	Thu, 30 Nov 2023 16:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaTiRhKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920D7C433C7;
-	Thu, 30 Nov 2023 16:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YexFp3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14282C433C9;
+	Thu, 30 Nov 2023 16:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701361552;
-	bh=kag4vTvai0VnroRLRSRf9ysfCxrqkUO5n8gx5S86zUY=;
+	s=korg; t=1701361555;
+	bh=pE+ReHPQs3nTpp6tDpGPoNb5wiAjdwdy4IoTsncR/NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AaTiRhKqWXRE4WS+PXk9WsW8XvkNfD3PxIrwrHth9Pj4FPUgrk9ZX+LU4V3vuwMqL
-	 Kp5tKi6fhCKUp7udOUa/5eY+wiY3yA3sLOdZCmG7BbDRK3cFoL9aW2q5dcZOU5+GUq
-	 KtC/h8QI6npqZ3GnSZ+sqV5XPrwLQixir+czLDig=
+	b=0YexFp3HjM8QSXE7LeEdL+mXEFqloTJIwZ/5HkDNDLiGDf/LKISmkYhcZ7NXuquqH
+	 NYsGVG8mo+kqB3pnIPodhLLcVxHkoqF8VK9kpD9iVPhalpSQAFVSTEgDIhi8/060zz
+	 bA2qBz1yuwunNAc6+3/0eVQLfn2gCTMqQlzHx8EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+40d43509a099ea756317@syzkaller.appspotmail.com,
-	Jann Horn <jannh@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 068/112] tls: fix NULL deref on tls_sw_splice_eof() with empty record
-Date: Thu, 30 Nov 2023 16:21:55 +0000
-Message-ID: <20231130162142.481412522@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 069/112] io_uring: fix off-by one bvec index
+Date: Thu, 30 Nov 2023 16:21:56 +0000
+Message-ID: <20231130162142.512333209@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
 References: <20231130162140.298098091@linuxfoundation.org>
@@ -42,56 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Keith Busch <kbusch@kernel.org>
 
-commit 53f2cb491b500897a619ff6abd72f565933760f0 upstream.
+commit d6fef34ee4d102be448146f24caf96d7b4a05401 upstream.
 
-syzkaller discovered that if tls_sw_splice_eof() is executed as part of
-sendfile() when the plaintext/ciphertext sk_msg are empty, the send path
-gets confused because the empty ciphertext buffer does not have enough
-space for the encryption overhead. This causes tls_push_record() to go on
-the `split = true` path (which is only supposed to be used when interacting
-with an attached BPF program), and then get further confused and hit the
-tls_merge_open_record() path, which then assumes that there must be at
-least one populated buffer element, leading to a NULL deref.
+If the offset equals the bv_len of the first registered bvec, then the
+request does not include any of that first bvec. Skip it so that drivers
+don't have to deal with a zero length bvec, which was observed to break
+NVMe's PRP list creation.
 
-It is possible to have empty plaintext/ciphertext buffers if we previously
-bailed from tls_sw_sendmsg_locked() via the tls_trim_both_msgs() path.
-tls_sw_push_pending_record() already handles this case correctly; let's do
-the same check in tls_sw_splice_eof().
-
-Fixes: df720d288dbb ("tls/sw: Use splice_eof() to flush")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+40d43509a099ea756317@syzkaller.appspotmail.com
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20231122214447.675768-1-jannh@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bd11b3a391e3 ("io_uring: don't use iov_iter_advance() for fixed buffers")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://lore.kernel.org/r/20231120221831.2646460-1-kbusch@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ io_uring/rsrc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index a78e8e722409..316f76187962 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1232,11 +1232,14 @@ void tls_sw_splice_eof(struct socket *sock)
- 	lock_sock(sk);
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -1261,7 +1261,7 @@ int io_import_fixed(int ddir, struct iov
+ 		 */
+ 		const struct bio_vec *bvec = imu->bvec;
  
- retry:
-+	/* same checks as in tls_sw_push_pending_record() */
- 	rec = ctx->open_rec;
- 	if (!rec)
- 		goto unlock;
- 
- 	msg_pl = &rec->msg_plaintext;
-+	if (msg_pl->sg.size == 0)
-+		goto unlock;
- 
- 	/* Check the BPF advisor and perform transmission. */
- 	ret = bpf_exec_tx_verdict(msg_pl, sk, false, TLS_RECORD_TYPE_DATA,
--- 
-2.43.0
-
+-		if (offset <= bvec->bv_len) {
++		if (offset < bvec->bv_len) {
+ 			/*
+ 			 * Note, huge pages buffers consists of one large
+ 			 * bvec entry and should always go this way. The other
 
 
