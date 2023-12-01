@@ -1,210 +1,335 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C001BDC7
-	for <patches@lists.linux.dev>; Fri,  1 Dec 2023 20:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8052B59B40
+	for <patches@lists.linux.dev>; Fri,  1 Dec 2023 21:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EYC718hv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e6A12g7D"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701463529; x=1732999529;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=yG0Y48woFZNswGTmBBWmxBZc/W1//0MjI/GiuILqv6k=;
-  b=EYC718hv1rugfCcnKoczcZu27jVK0XsMYg8VZDwBK33p9qRlYwsGp3F5
-   0OobgrRzOmI4hAHR8hwPrZN95VS3sAb8r31dE1m6cg6HwNxnLPg+ac0X6
-   DB+bwOANfLg7Jo19qbOwddR5w8Vzjo5wdPJD6gwtrVW+hiFpDncUWfMB2
-   zkfH8v4uz+YpvxUSyhlo1IfEj35mn2hsotcjpbiETgkOTq6nQjQBNyge1
-   tngAXCrW03R/Gy4GrQF7vvm3O1Bm2/6WYSgTH3iUlYbd9e6DYyNE2iGm9
-   cHp1U82KxrZWOXt08RhsQfO3zqTptX7qCFXZ6Nac504DHdcNbTLUl6sLG
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10911"; a="431739"
+  t=1701467267; x=1733003267;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=7qGZLOVX0lRzoXgrjU5Lf+xhYula8oqkMn+WAagOJ54=;
+  b=e6A12g7DmimSBmFZmV2kfb5ARvYyQYGD75AQVbfIWcVBzPaPwBmjfCtB
+   d09/xDCEN21GXNfyDExw8ev3H2Xlbvxg4ZJSdzs+5RiKy2Mo365qtd5uy
+   gPNa7gibFSLIe1sopQQ79DJd1/19J3s9m7y85+3F+arwdfiaCDQRZEEUD
+   utLXSgjFcuxm4ZqEoR+FMgqtzc6rxIF2I9ZRjRsQmGnFupt5gXLpWQGm9
+   b2qH/qqnNRdIQZwRgE3K0MdY5Rk6mmadBV1Is0hfHvdKnXE7klAE57A6L
+   mqsl+pr6hFA5L3SjBB2eXlw3030GXGpVA9F9e65F11Xrcjk7g1SpfgL7R
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10911"; a="6843259"
 X-IronPort-AV: E=Sophos;i="6.04,242,1695711600"; 
-   d="scan'208";a="431739"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2023 12:45:28 -0800
+   d="scan'208";a="6843259"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2023 13:47:45 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10911"; a="1101411470"
 X-IronPort-AV: E=Sophos;i="6.04,242,1695711600"; 
-   d="scan'208";a="1101411470"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2023 12:45:27 -0800
-Date: Fri, 1 Dec 2023 12:45:26 -0800
+   d="scan'208";a="17904739"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2023 13:47:45 -0800
 From: Tony Luck <tony.luck@intel.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
+To: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
 	Peter Newman <peternewman@google.com>,
 	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	James Morse <james.morse@arm.com>,
 	Jamie Iles <quic_jiles@quicinc.com>,
 	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v4] x86/resctrl: Add mount option to pick total MBM event
-Message-ID: <ZWpF5m4mIeZdK8kv@agluck-desk3>
-References: <20231026200214.16017-1-tony.luck@intel.com>
- <20231128231439.81691-1-tony.luck@intel.com>
- <95a21b05-1838-4098-854f-f60f82f26f5f@intel.com>
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v5] x86/resctrl: Add event choices for mba_MBps
+Date: Fri,  1 Dec 2023 13:47:37 -0800
+Message-ID: <20231201214737.104444-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20231128231439.81691-1-tony.luck@intel.com>
+References: <20231128231439.81691-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <95a21b05-1838-4098-854f-f60f82f26f5f@intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Nov 29, 2023 at 03:48:37PM -0800, Reinette Chatre wrote:
-> Hi Tony,
-> 
-> On 11/28/2023 3:14 PM, Tony Luck wrote:
-> > Add a "total" mount option to be used in conjunction with "mba_MBps"
-> > to request use of the total memory bandwidth event as the feedback
-> > input to the control loop.
-> 
-> "total" is very generic. It is also not clear to me why users
-> would need to use two mount options. What if the new mount option
-> is "mba_MBps_total" instead, without user needing to also provide
-> "mba_MBps"? 
+The MBA Software Controller(mba_sc) is a feedback loop that uses
+measurements of local memory bandwidth to adjust MBA throttling levels to
+keep workloads in a resctrl group within a target bandwidth set in the
+schemata file.
 
-I wasn't attached to "total". I tried to change the type of the existing
-"mba_MBps" option to fsparam_string_emtpy() in the hope that existing users
-would be able to keep using "mba_MBps", and users who want to use total
-bandwidth could use "mba_MBps=total". But that type requires the "="
-in the string provided by the user for the "empty" case.
+But on Intel systems the memory bandwidth monitoring events are
+independently enumerated. It is possible for a system to support
+total memory bandwidth monitoring, but not support local bandwidth
+monitoring. On such a system a user could not enable mba_sc mode.
+Users will see this highly unhelpful error message from mount:
 
-So now I'm experimenting with adding a new option:
+ # mount -t resctrl -o mba_MBps resctrl /sys/fs/resctrl
+ mount: /sys/fs/resctrl: wrong fs type, bad option, bad superblock on
+ resctrl, missing codepage or helper program, or other error.
+ dmesg(1) may have more information after failed mount system call.
 
-	fsparam_string("mba_MBps_event", Opt_mba_mbps_event)
+dmesg(1) does not provide any additional information.
 
-so a user would specify "mba_MBps_event=total" instead of "mba_MBps".
-My code also allow for "mba_MBps_event=local" if a user want to ensure
-they use the local bandwidth event (failing the mount if it is not
-available).
+Add a new mount option "mba_MBps_event=[local|total]" that allows
+a user to specify which monitoring event to use. Also modify the
+existing "mba_MBps" option to switch to total bandwidth monitoring
+if local monitoring is not available.
 
-Existing code using the legacy "mba_MBps" option will get local by
-default, failing over to total if needed.
+Update the once-per-second polling code to use the chosen event (local
+or total memory bandwidth).
 
-> > 
-> > Also fall back to using the total event if the local event is not
-> > supported by the CPU.
-> > 
-> > Update the once-per-second polling code to use the event (local
-> > or total memory bandwidth).
-> 
-> Please take care to describe why this change is needed, not just
-> what it does. This is required by x86. For confirmation:
-> https://lore.kernel.org/lkml/20231009172517.GRZSQ3fT05LGgpcW35@fat_crate.local/
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ Documentation/arch/x86/resctrl.rst     |  7 +++-
+ include/linux/resctrl.h                |  2 ++
+ arch/x86/kernel/cpu/resctrl/internal.h |  3 +-
+ arch/x86/kernel/cpu/resctrl/monitor.c  | 21 ++++++-----
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 48 ++++++++++++++++++++------
+ 5 files changed, 58 insertions(+), 23 deletions(-)
 
-Yes. I had some justification in earlier versions, but lost it along the
-way. I will include in next version.
-
-> > 
-> > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > ---
-> > 
-> > Changes since v3:
-> > 
-> > Reinette suggested that users might like the option to use the total
-> > memory bandwidth event. I tried out some code to make the event runtime
-> > selectable via a r/w file in the resctrl/info directories. But that
-> > got complicated because of the amount of state that needs to be updated
-> > when switching events. Since there isn't a firm use case for user
-> > selectable event, this latest version falls back to the far simpler
-> > case of using a mount option.
-> 
-> (I did not realize that that discussion was over.)
-
-I'd like to avoid too much feature creep in this series. I'd like to
-finish solving the original problem (systems without local bandwidth
-monitoring should have a way to use total bandwidth) before tackling
-additional issues in a separate patch series. Taking on a simple way
-for users to request total bandwidth isn't much extra code. Making
-it possible to switch events at runtime isn't. Fixing the corner cases
-where the feedback loop may get stuck is also a separate issue.
-
-> > 
-> >  Documentation/arch/x86/resctrl.rst     |  3 +++
-> >  arch/x86/kernel/cpu/resctrl/internal.h |  3 +++
-> >  arch/x86/kernel/cpu/resctrl/monitor.c  | 20 +++++++++-----------
-> >  arch/x86/kernel/cpu/resctrl/rdtgroup.c | 15 ++++++++++++++-
-> >  4 files changed, 29 insertions(+), 12 deletions(-)
-> > 
-> > diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-> > index a6279df64a9d..29c3e7137eb8 100644
-> > --- a/Documentation/arch/x86/resctrl.rst
-> > +++ b/Documentation/arch/x86/resctrl.rst
-> > @@ -46,6 +46,9 @@ mount options are:
-> >  "mba_MBps":
-> >  	Enable the MBA Software Controller(mba_sc) to specify MBA
-> >  	bandwidth in MBps
-> > +"total":
-> > +	Use total instead of local memory bandwidth to drive the
-> > +	MBA Software Controller
-> >  "debug":
-> >  	Make debug files accessible. Available debug files are annotated with
-> >  	"Available only with debug option".
-> > diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> > index a4f1aa15f0a2..f98fc9adc2da 100644
-> > --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> > +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> > @@ -59,6 +59,7 @@ struct rdt_fs_context {
-> >  	bool				enable_cdpl2;
-> >  	bool				enable_cdpl3;
-> >  	bool				enable_mba_mbps;
-> > +	bool				use_mbm_total;
-> >  	bool				enable_debug;
-> >  };
-> 
-> Why did you choose new member to not follow existing custom of having
-> an enable_ prefix?
-
-That does look awful. Next version will do this:
-
--       bool                            enable_mba_mbps;
-+       bool                            enable_mba_mbps_local;
-+       bool                            enable_mba_mbps_total;
-
-> 
-> >  
-> > @@ -428,6 +429,8 @@ extern struct rdt_hw_resource rdt_resources_all[];
-> >  extern struct rdtgroup rdtgroup_default;
-> >  DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
-> >  
-> > +extern enum resctrl_event_id mba_mbps_evt_id;
-> > +
-> 
-> This global seems unnecessary. struct resctrl_membw.mba_sc indicates if
-> the software controller is enabled. Creating this global fragments
-> related information.
-
-Global is now gone.
-
-> One option could be to change the type of struct resctrl_membw.mba_sc to
-> enum resctrl_event_id. I assume that 0 would never be a valid event ID and
-> can thus be used to know if the software controller is disabled. If this
-> is done then enum resctrl_event_id's documentation should be updated
-> with this assumption/usage.
-
-But I'm not fond of this overloading the meaning of resctrl_membw.mba_sc
-by making that assumption that "0" will never be a valid event.
-
-I've left the mba_sc field as a boolean that indicates enabled and added
-a new field for the event:
-
+diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
+index a6279df64a9d..f06cb189911a 100644
+--- a/Documentation/arch/x86/resctrl.rst
++++ b/Documentation/arch/x86/resctrl.rst
+@@ -45,7 +45,12 @@ mount options are:
+ 	Enable code/data prioritization in L2 cache allocations.
+ "mba_MBps":
+ 	Enable the MBA Software Controller(mba_sc) to specify MBA
+-	bandwidth in MBps
++	bandwidth in MBps. Defaults to using MBM local bandwidth,
++	but will use total bandwidth on systems that do not support
++	local bandwidth monitoring.
++"mba_MBps_event=[local|total]":
++	Enable the MBA Software Controller(mba_sc) with a specific
++	MBM event as input to the feedback loop.
+ "debug":
+ 	Make debug files accessible. Available debug files are annotated with
+ 	"Available only with debug option".
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 66942d7fba7f..1feb3b2e64fa 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -129,6 +129,7 @@ enum membw_throttle_mode {
+  * @throttle_mode:	Bandwidth throttling mode when threads request
+  *			different memory bandwidths
+  * @mba_sc:		True if MBA software controller(mba_sc) is enabled
++ * @mba_mbps_event:	Event (local or total) for mba_sc
+  * @mb_map:		Mapping of memory B/W percentage to memory B/W delay
+  */
+ struct resctrl_membw {
 @@ -138,6 +139,7 @@ struct resctrl_membw {
-        bool                            arch_needs_linear;
-        enum membw_throttle_mode        throttle_mode;
-        bool                            mba_sc;
-+       enum resctrl_event_id           mba_mbps_event;
-        u32                             *mb_map;
+ 	bool				arch_needs_linear;
+ 	enum membw_throttle_mode	throttle_mode;
+ 	bool				mba_sc;
++	enum resctrl_event_id		mba_mbps_event;
+ 	u32				*mb_map;
  };
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index a4f1aa15f0a2..8b9b8f664324 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -58,7 +58,8 @@ struct rdt_fs_context {
+ 	struct kernfs_fs_context	kfc;
+ 	bool				enable_cdpl2;
+ 	bool				enable_cdpl3;
+-	bool				enable_mba_mbps;
++	bool				enable_mba_mbps_local;
++	bool				enable_mba_mbps_total;
+ 	bool				enable_debug;
+ };
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index f136ac046851..d9e590f1cbc3 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -431,9 +431,10 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
+  */
+ static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
+ {
+-	struct mbm_state *m = &rr->d->mbm_local[rmid];
+ 	u64 cur_bw, bytes, cur_bytes;
++	struct mbm_state *m;
+ 
++	m = get_mbm_state(rr->d, rmid, rr->evtid);
+ 	cur_bytes = rr->val;
+ 	bytes = cur_bytes - m->prev_bw_bytes;
+ 	m->prev_bw_bytes = cur_bytes;
+@@ -521,19 +522,21 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 	u32 closid, rmid, cur_msr_val, new_msr_val;
+ 	struct mbm_state *pmbm_data, *cmbm_data;
+ 	u32 cur_bw, delta_bw, user_bw;
++	enum resctrl_event_id evt_id;
+ 	struct rdt_resource *r_mba;
+ 	struct rdt_domain *dom_mba;
+ 	struct list_head *head;
+ 	struct rdtgroup *entry;
+ 
+-	if (!is_mbm_local_enabled())
++	if (!is_mbm_enabled())
+ 		return;
+ 
+ 	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
++	evt_id = r_mba->membw.mba_mbps_event;
+ 
+ 	closid = rgrp->closid;
+ 	rmid = rgrp->mon.rmid;
+-	pmbm_data = &dom_mbm->mbm_local[rmid];
++	pmbm_data = get_mbm_state(dom_mbm, rmid, evt_id);
+ 
+ 	dom_mba = get_domain_from_cpu(smp_processor_id(), r_mba);
+ 	if (!dom_mba) {
+@@ -553,7 +556,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 	 */
+ 	head = &rgrp->mon.crdtgrp_list;
+ 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+-		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
++		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, evt_id);
+ 		cur_bw += cmbm_data->prev_bw;
+ 		delta_bw += cmbm_data->delta_bw;
+ 	}
+@@ -616,18 +619,14 @@ static void mbm_update(struct rdt_resource *r, struct rdt_domain *d, int rmid)
+ 		rr.evtid = QOS_L3_MBM_TOTAL_EVENT_ID;
+ 		rr.val = 0;
+ 		__mon_event_count(rmid, &rr);
++		if (is_mba_sc(NULL) && rr.evtid == r->membw.mba_mbps_event)
++			mbm_bw_count(rmid, &rr);
+ 	}
+ 	if (is_mbm_local_enabled()) {
+ 		rr.evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
+ 		rr.val = 0;
+ 		__mon_event_count(rmid, &rr);
+-
+-		/*
+-		 * Call the MBA software controller only for the
+-		 * control groups and when user has enabled
+-		 * the software controller explicitly.
+-		 */
+-		if (is_mba_sc(NULL))
++		if (is_mba_sc(NULL) && rr.evtid == r->membw.mba_mbps_event)
+ 			mbm_bw_count(rmid, &rr);
+ 	}
+ }
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 69a1de92384a..79141d33d5b4 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2294,7 +2294,7 @@ static bool supports_mba_mbps(void)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+ 
+-	return (is_mbm_local_enabled() &&
++	return (is_mbm_enabled() &&
+ 		r->alloc_capable && is_mba_linear());
+ }
+ 
+@@ -2302,7 +2302,7 @@ static bool supports_mba_mbps(void)
+  * Enable or disable the MBA software controller
+  * which helps user specify bandwidth in MBps.
+  */
+-static int set_mba_sc(bool mba_sc)
++static int set_mba_sc(bool mba_sc, enum resctrl_event_id mba_mbps_event)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+ 	u32 num_closid = resctrl_arch_get_num_closid(r);
+@@ -2313,6 +2313,7 @@ static int set_mba_sc(bool mba_sc)
+ 		return -EINVAL;
+ 
+ 	r->membw.mba_sc = mba_sc;
++	r->membw.mba_mbps_event = mba_mbps_event;
+ 
+ 	list_for_each_entry(d, &r->domains, list) {
+ 		for (i = 0; i < num_closid; i++)
+@@ -2445,13 +2446,14 @@ static void rdt_disable_ctx(void)
+ {
+ 	resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L3, false);
+ 	resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L2, false);
+-	set_mba_sc(false);
++	set_mba_sc(false, QOS_L3_MBM_LOCAL_EVENT_ID);
+ 
+ 	resctrl_debug = false;
+ }
+ 
+ static int rdt_enable_ctx(struct rdt_fs_context *ctx)
+ {
++	enum resctrl_event_id mba_mbps_event;
+ 	int ret = 0;
+ 
+ 	if (ctx->enable_cdpl2) {
+@@ -2466,8 +2468,12 @@ static int rdt_enable_ctx(struct rdt_fs_context *ctx)
+ 			goto out_cdpl2;
+ 	}
+ 
+-	if (ctx->enable_mba_mbps) {
+-		ret = set_mba_sc(true);
++	if (ctx->enable_mba_mbps_local || ctx->enable_mba_mbps_total) {
++		if (ctx->enable_mba_mbps_total)
++			mba_mbps_event = QOS_L3_MBM_TOTAL_EVENT_ID;
++		else
++			mba_mbps_event = QOS_L3_MBM_LOCAL_EVENT_ID;
++		ret = set_mba_sc(true, mba_mbps_event);
+ 		if (ret)
+ 			goto out_cdpl3;
+ 	}
+@@ -2683,15 +2689,17 @@ enum rdt_param {
+ 	Opt_cdp,
+ 	Opt_cdpl2,
+ 	Opt_mba_mbps,
++	Opt_mba_mbps_event,
+ 	Opt_debug,
+ 	nr__rdt_params
+ };
+ 
+ static const struct fs_parameter_spec rdt_fs_parameters[] = {
+-	fsparam_flag("cdp",		Opt_cdp),
+-	fsparam_flag("cdpl2",		Opt_cdpl2),
+-	fsparam_flag("mba_MBps",	Opt_mba_mbps),
+-	fsparam_flag("debug",		Opt_debug),
++	fsparam_flag("cdp",			Opt_cdp),
++	fsparam_flag("cdpl2",			Opt_cdpl2),
++	fsparam_flag("mba_MBps",		Opt_mba_mbps),
++	fsparam_string("mba_MBps_event",	Opt_mba_mbps_event),
++	fsparam_flag("debug",			Opt_debug),
+ 	{}
+ };
+ 
+@@ -2715,7 +2723,27 @@ static int rdt_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 	case Opt_mba_mbps:
+ 		if (!supports_mba_mbps())
+ 			return -EINVAL;
+-		ctx->enable_mba_mbps = true;
++		if (is_mbm_local_enabled())
++			ctx->enable_mba_mbps_local = true;
++		else if (is_mbm_total_enabled())
++			ctx->enable_mba_mbps_total = true;
++		else
++			return -EINVAL;
++		return 0;
++	case Opt_mba_mbps_event:
++		if (!supports_mba_mbps())
++			return -EINVAL;
++		if (!strcmp("local", param->string)) {
++			if (!is_mbm_local_enabled())
++				return -EINVAL;
++			ctx->enable_mba_mbps_local = true;
++		} else if (!strcmp("total", param->string)) {
++			if (!is_mbm_total_enabled())
++				return -EINVAL;
++			ctx->enable_mba_mbps_total = true;
++		} else {
++			return -EINVAL;
++		}
+ 		return 0;
+ 	case Opt_debug:
+ 		ctx->enable_debug = true;
+-- 
+2.41.0
 
-New version will be posted soon.
-
--Tony
