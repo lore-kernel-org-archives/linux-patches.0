@@ -1,94 +1,225 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E811A21A19
-	for <patches@lists.linux.dev>; Fri,  1 Dec 2023 13:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3492722318
+	for <patches@lists.linux.dev>; Fri,  1 Dec 2023 13:41:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="o82Ss+R9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1701436948; x=1732972948;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=SFiMiObX9ZGFEyE4h8oReM51+m2Od7/qLb1KYhjjjLg=;
-  b=o82Ss+R9h9t0PlA+0HiCKrg3L2kgFPpa3XMtMK3GthztDhWC3VkKLyg8
-   zyWEQrnycfzQhYnPkNRMM0lnXBXvIDybBOHYqOaOoG3AXqjSw4BgEpEii
-   erqbjPdOVjxV3VLJzNPkyorx14aAGxJ/s6/3ijhulIqDQ1s5VM4JrXCzP
-   7Hgss9968GvOr815+bWL96UhsdAcD02xXZvUuV4IgMjjlfz9ge12xeTpm
-   6JvkgUKHEIer7PNQdbejrfsavmVcPjoYMkVI+T7aJPb0yctcXIuf97Jbc
-   RPAT0ZU/eLXccMLLSpsJ9lWRYmPvDtxCrJfAR/aFcCUDZ+okpR3KRjt/J
-   A==;
-X-CSE-ConnectionGUID: h4Jrgyr3T9i1kHEvfFr0NQ==
-X-CSE-MsgGUID: QYF4eAE9TJCZvZov9yd8ew==
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=Sophos;i="6.04,241,1695711600"; 
-   d="asc'?scan'208";a="179742437"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 01 Dec 2023 06:22:22 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Fri, 1 Dec 2023 06:22:00 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex03.mchp-main.com (10.10.85.151)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Fri, 1 Dec 2023 06:21:57 -0700
-Date: Fri, 1 Dec 2023 13:21:28 +0000
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>,
-	<allen.lkml@gmail.com>
-Subject: Re: [PATCH 6.6 000/112] 6.6.4-rc1 review
-Message-ID: <20231201-prize-deck-be172f77a4bb@wendy>
-References: <20231130162140.298098091@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kfG+Gc7u"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4645ee89eb3so545523137.1
+        for <patches@lists.linux.dev>; Fri, 01 Dec 2023 05:41:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701438111; x=1702042911; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ud4MQNG0kpdoUboL30yQ6RvJpvRhcnzA03rhefBPilQ=;
+        b=kfG+Gc7uWLEbr0XzU5oUinU+Ls+1ETNUbQok7wWSuOTglcfAlN6Xz8oEU3wNrdk7+X
+         0r/7Ccv+dOyYnhZkM7o49XXplDTShRawh43pIAshRbNQ6k3tT3vmbaAoBmjFZUjdNruU
+         4DfUJlWV3TRpllrrbgvxzcu5xay6ZQsxYA14bYc5j1IgNqvBnolDHyJOFN/veGPG+gse
+         6jtRTw+gz2SnWXOX5glLaqq7BxQ097pF3hi69nRv9ipDu4VzderC4r24waDCEvwqBHwd
+         tdiGyLUHV5qf0v41a8V25JTlO1uAeTgDNaf9c1UfUSscQAP61GUMdWoUb2kMBKj/vFA8
+         afow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701438111; x=1702042911;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ud4MQNG0kpdoUboL30yQ6RvJpvRhcnzA03rhefBPilQ=;
+        b=hSBYLT9zmn1onByFcyOxEDPQiUyw2AvAe03yOP/DlXz6RXHoVhVbF9CBuvSEMIi+r5
+         b89Z7OuHASDDBRt/eyw1Jl9D5XNu/7EiYwTKs3EdT/8nFa9lWmSMQhcMTTGVhzBL/d0u
+         LgHXvykp/Uprxx+1Q51V/c/4cZp9scHGKowqNMHQ9kggh7d46KLuk3n1me/aUar9Kr7J
+         Dfsc83DJXZt9DwZNNeo8WcZ+k8DLtIoBuGfAP/0X8krDi8bycU0X164TgKwNIza9bBnK
+         gbs5VvSXl4/bfnsodf1fSCAAZ4XbtGklv/2r4l6Q9XVbf+gQTfOri9C8QiC0GbYrvHi4
+         WQcQ==
+X-Gm-Message-State: AOJu0YxKvyx1EKPjsHoIGQFRAybgO9uoqOJPmWxg4KLXtdRAFcwlNV4E
+	cSKlGPfDgVAntRNgYbxtU1u8kA4JNJR5py9fwMtdYA==
+X-Google-Smtp-Source: AGHT+IEicy1qN87mEQef8NwvPqnYXdc2XJLVSSrclbSdSp2zf38QwwS0ohzKVUpQcnIM6g1p6MjherBnXenZzLzpYH0=
+X-Received: by 2002:a05:6102:2a75:b0:464:5ca3:3655 with SMTP id
+ hp21-20020a0561022a7500b004645ca33655mr4493569vsb.15.1701438110964; Fri, 01
+ Dec 2023 05:41:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="CGVL03bvG34QNHYM"
-Content-Disposition: inline
-In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
+References: <20231130162135.977485944@linuxfoundation.org>
+In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 1 Dec 2023 19:11:39 +0530
+Message-ID: <CA+G9fYvBUtFAid4ZK=XQtxM8AvUXuFwOrGV_UqCGnnvT9sNG=A@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/82] 6.1.65-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
---CGVL03bvG34QNHYM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Nov 30, 2023 at 04:20:47PM +0000, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.4 release.
-> There are 112 patches in this series, all will be posted as a response
+On Thu, 30 Nov 2023 at 21:59, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.65 release.
+> There are 82 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+>
 > Responses should be made by Sat, 02 Dec 2023 16:21:18 +0000.
 > Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.65-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-Cheers,
-Conor.
+Results from Linaro's test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
---CGVL03bvG34QNHYM
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
------BEGIN PGP SIGNATURE-----
+## Build
+* kernel: 6.1.65-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.1.y
+* git commit: 49ac60b65ef717d2d74b3b83ca97b61a011557de
+* git describe: v6.1.64-83-g49ac60b65ef7
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.64-83-g49ac60b65ef7
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZWnd2AAKCRB4tDGHoIJi
-0uO2AQDgaoRRvbNVU+L0vVmYKaIMArJIz6JH3K0QDUdd7M77KwD+O2iYvcBIwEeb
-zZl1lG7BTtD04V/w8ec46x9ppu093wc=
-=vWEC
------END PGP SIGNATURE-----
+## Test Regressions (compared to v6.1.64)
 
---CGVL03bvG34QNHYM--
+## Metric Regressions (compared to v6.1.64)
+
+## Test Fixes (compared to v6.1.64)
+
+## Metric Fixes (compared to v6.1.64)
+
+## Test result summary
+total: 134263, pass: 113838, fail: 2710, skip: 17581, xfail: 134
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 150 passed, 1 failed
+* arm64: 52 total, 51 passed, 1 failed
+* i386: 39 total, 39 passed, 0 failed
+* mips: 26 total, 26 passed, 0 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 36 total, 36 passed, 0 failed
+* riscv: 15 total, 15 passed, 0 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 46 total, 46 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+
+--
+Linaro LKFT
+https://lkft.linaro.org
