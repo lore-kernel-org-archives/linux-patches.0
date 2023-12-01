@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66037EC;
-	Fri,  1 Dec 2023 00:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCEA10E5;
+	Fri,  1 Dec 2023 00:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sP7uaHMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C706DC433C7;
-	Fri,  1 Dec 2023 00:22:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R3dvR+S3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8E7C433C9;
+	Fri,  1 Dec 2023 00:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701390155;
-	bh=0sskqPdOiwxsrAXv+xHq1vHKwLqnoYarlJMhWh98XH0=;
+	s=k20201202; t=1701390156;
+	bh=YPAX26SibxM0r5jIa/vln0jhsLYmjgGexdEYLWlDgpI=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=sP7uaHMoi08ja3mz/UZitvk+/DOMuNLB6jKBtzo6aeYWawwxlL79r8ZB9eJRQfd7g
-	 jbVlgh28gx9uP0hz/Os8CD9x6rROgCqLQ+4jgc++2Ya+KqvmeURcrsT62eZHzcS+++
-	 U45bkECmX3TAgBRLj7T8PNf3act1RWDSuL28WIobneazbaQSXvqZxdXzixpjlL3meN
-	 TpTRyGf4vkRiJlBYKAQuzYq1JAsGLTRQRp5oWWOOSRtODRCuet3YrUIbPWfRLLi6ie
-	 uOgAJLZiEIT0Eauj1OKFs32ckd7z35wJMCVS3AoUhu1H8C7w0AHYmxCIZPqgLDe+of
-	 476YQdSFckJ0w==
+	b=R3dvR+S3gROwubVWtsYVh/+xFSRXfk66OlQ7YIUOFmebT88Pg9ulSW57azAb6z9NK
+	 zLZBl3ea60wZQaOy+iXYa6Y9eSO49RvQiXhdzs722mdI8PVQwSOBTmWY6Ea5bc9eAo
+	 E6nZ4e4vAYDAKjC/UWdrrHBDCrPfeizkIFhcSehTnxw5d/6yhKyCWvdOWRWCu7LjdI
+	 KHNOvfOjUjp1hpm28phDHeU/9ZT8Nl616J5B4/2gy6DN9dOn+kiLDesNyuwqKfZKgP
+	 c7euftU+GFEh1jF5Tke4SHYz0Xy1laDzK4A/etRBwLJQo60JM1yyLbKV4lzPJGkUyl
+	 9kNkDv7BsMlYA==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 30 Nov 2023 17:22:32 -0700
-Subject: [PATCH 1/2] s390/dasd: Remove dasd_stats_generic_show()
+Date: Thu, 30 Nov 2023 17:22:33 -0700
+Subject: [PATCH 2/2] s390/traps: Only define is_valid_bugaddr() under
+ CONFIG_GENERIC_BUG
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -28,60 +29,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231130-s390-missing-prototypes-v1-1-799d3cf07fb7@kernel.org>
+Message-Id: <20231130-s390-missing-prototypes-v1-2-799d3cf07fb7@kernel.org>
 References: <20231130-s390-missing-prototypes-v1-0-799d3cf07fb7@kernel.org>
 In-Reply-To: <20231130-s390-missing-prototypes-v1-0-799d3cf07fb7@kernel.org>
 To: akpm@linux-foundation.org, hca@linux.ibm.com, gor@linux.ibm.com, 
  agordeev@linux.ibm.com
 Cc: borntraeger@linux.ibm.com, svens@linux.ibm.com, 
  linux-s390@vger.kernel.org, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>, sth@linux.ibm.com, 
- hoeppner@linux.ibm.com
+ Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1228; i=nathan@kernel.org;
- h=from:subject:message-id; bh=0sskqPdOiwxsrAXv+xHq1vHKwLqnoYarlJMhWh98XH0=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKmZ6p5xbL1fhVft8Nv269TyP93XpFyyn93bqdfnyej2Y
- 0nhrcu7O0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEWssZ/vCrGdwxVg+4Ilzb
- mCOm94zbVo091ufrrSzDZ9cFjSZ92cHI8MHuenlcQm1SX4+Y3O7XLok1T9dMM/T2rhLWrHKo7JD
- iBAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1168; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=YPAX26SibxM0r5jIa/vln0jhsLYmjgGexdEYLWlDgpI=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKmZ6p5m6R7xqy5skBH7vdzsUYXtlcpZTadb/qVs2vrjW
+ 3ZTyK6ijlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjARp2kM/+umPHsX8NyyLs3O
+ f/8FX5Vn2xtdp9S2/jjBNFU+ectJg3pGhulWqZf+fIx3bIsTLZr4ckL2lIlXdwu7qhZz+TBe3Ol
+ 6nR0A
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-With CONFIG_DASD_PROFILE=n, there is a warning that
-dasd_stats_generic_show() is missing a prototype:
+When building with -Wmissing-prototypes without CONFIG_GENERIC_BUG,
+there is a warning about a missing prototype for is_valid_bugaddr():
 
-  drivers/s390/block/dasd.c:1109:5: warning: no previous prototype for 'dasd_stats_generic_show' [-Wmissing-prototypes]
-   1109 | int dasd_stats_generic_show(struct seq_file *m, void *v)
-        |     ^~~~~~~~~~~~~~~~~~~~~~~
+  arch/s390/kernel/traps.c:46:5: warning: no previous prototype for 'is_valid_bugaddr' [-Wmissing-prototypes]
+     46 | int is_valid_bugaddr(unsigned long addr)
+        |     ^~~~~~~~~~~~~~~~
 
-This function has been unused since its introduction in
-commit 4fa52aa7a82f ("[S390] dasd: add enhanced DASD statistics
-interface"), remove it to clear up the warning.
+The prototype is only declared with CONFIG_GENERIC_BUG, so only define
+the function under the same condition to clear up the warning, which
+matches other architectures.
 
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
-Cc: sth@linux.ibm.com
-Cc: hoeppner@linux.ibm.com
----
- drivers/s390/block/dasd.c | 6 ------
- 1 file changed, 6 deletions(-)
+ arch/s390/kernel/traps.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
-index 833cfab7d877..7327e81352e9 100644
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -1106,12 +1106,6 @@ static void dasd_statistics_removeroot(void)
- 	return;
+diff --git a/arch/s390/kernel/traps.c b/arch/s390/kernel/traps.c
+index 1d2aa448d103..cc3e3a01dfa5 100644
+--- a/arch/s390/kernel/traps.c
++++ b/arch/s390/kernel/traps.c
+@@ -43,10 +43,12 @@ static inline void __user *get_trap_ip(struct pt_regs *regs)
+ 	return (void __user *) (address - (regs->int_code >> 16));
  }
  
--int dasd_stats_generic_show(struct seq_file *m, void *v)
--{
--	seq_puts(m, "Statistics are not activated in this kernel\n");
--	return 0;
--}
--
- static void dasd_profile_init(struct dasd_profile *profile,
- 			      struct dentry *base_dentry)
++#ifdef CONFIG_GENERIC_BUG
+ int is_valid_bugaddr(unsigned long addr)
+ {
+ 	return 1;
+ }
++#endif
+ 
+ void do_report_trap(struct pt_regs *regs, int si_signo, int si_code, char *str)
  {
 
 -- 
