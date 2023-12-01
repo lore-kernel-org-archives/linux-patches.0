@@ -1,335 +1,197 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8052B59B40
-	for <patches@lists.linux.dev>; Fri,  1 Dec 2023 21:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0727D59B40;
+	Fri,  1 Dec 2023 21:50:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e6A12g7D"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701467267; x=1733003267;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=7qGZLOVX0lRzoXgrjU5Lf+xhYula8oqkMn+WAagOJ54=;
-  b=e6A12g7DmimSBmFZmV2kfb5ARvYyQYGD75AQVbfIWcVBzPaPwBmjfCtB
-   d09/xDCEN21GXNfyDExw8ev3H2Xlbvxg4ZJSdzs+5RiKy2Mo365qtd5uy
-   gPNa7gibFSLIe1sopQQ79DJd1/19J3s9m7y85+3F+arwdfiaCDQRZEEUD
-   utLXSgjFcuxm4ZqEoR+FMgqtzc6rxIF2I9ZRjRsQmGnFupt5gXLpWQGm9
-   b2qH/qqnNRdIQZwRgE3K0MdY5Rk6mmadBV1Is0hfHvdKnXE7klAE57A6L
-   mqsl+pr6hFA5L3SjBB2eXlw3030GXGpVA9F9e65F11Xrcjk7g1SpfgL7R
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10911"; a="6843259"
-X-IronPort-AV: E=Sophos;i="6.04,242,1695711600"; 
-   d="scan'208";a="6843259"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2023 13:47:45 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.04,242,1695711600"; 
-   d="scan'208";a="17904739"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2023 13:47:45 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v5] x86/resctrl: Add event choices for mba_MBps
-Date: Fri,  1 Dec 2023 13:47:37 -0800
-Message-ID: <20231201214737.104444-1-tony.luck@intel.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231128231439.81691-1-tony.luck@intel.com>
-References: <20231128231439.81691-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yh2Wmz+g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473EFC433C7;
+	Fri,  1 Dec 2023 21:50:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701467423;
+	bh=hgErs2+9xOlVRFEfSS/n+GlJFVfTFeYoDoNHhlzozhg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Yh2Wmz+gpth1ZQrAI0doYusBzWe95tdpg796Ky8XrsvmWIYI7KXNGBgDUKdW4UFiX
+	 1Mx585IDy/UpO7h6uc1gIVEZNXBXYUXm1m6QiEcKpNL0JeTcwOufXIhAZRgukKlFTQ
+	 SJd98FwYZ2dLmZ5bX+p6C2QBhLFjIGU4+nlMZ63s3D0kC68pvXNKZyb0ytAcS61uU7
+	 HFJ0nc+G871ltG+rL7chOiaC2nNi74gVGUffiXiGlT6iTfG75XswO0TmRPG560fP22
+	 N2wo838PhF86ugFhzb2HME3z/6Y+N+STRQ+KtsgbPwOATC2vwoqLAcwn4lzVkOhrqz
+	 V8zAcn0BI5JYw==
+Date: Fri, 1 Dec 2023 14:50:21 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Fangrui Song <maskray@google.com>
+Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	conor@kernel.org, ndesaulniers@google.com,
+	linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 2/2] riscv: Restrict DWARF5 when building with LLVM to
+ known working versions
+Message-ID: <20231201215021.GA2579712@dev-arch.thelio-3990X>
+References: <20231129-riscv-restrict-dwarf5-llvm-v1-0-ec0d368fb538@kernel.org>
+ <20231129-riscv-restrict-dwarf5-llvm-v1-2-ec0d368fb538@kernel.org>
+ <CAFP8O3JscgacLPX-_pc2J0uhqk=ehtxSNStzo7PwewPSuXkxiw@mail.gmail.com>
+ <20231201194858.GA290910@dev-arch.thelio-3990X>
+ <CAFP8O3+uta+GQO7dpeNLe0OMFnX-tdEyvHREEu1ThjA3nFtTkQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFP8O3+uta+GQO7dpeNLe0OMFnX-tdEyvHREEu1ThjA3nFtTkQ@mail.gmail.com>
 
-The MBA Software Controller(mba_sc) is a feedback loop that uses
-measurements of local memory bandwidth to adjust MBA throttling levels to
-keep workloads in a resctrl group within a target bandwidth set in the
-schemata file.
+On Fri, Dec 01, 2023 at 12:12:26PM -0800, Fangrui Song wrote:
+> On Fri, Dec 1, 2023 at 11:49 AM Nathan Chancellor <nathan@kernel.org> wrote:
+> >
+> > On Thu, Nov 30, 2023 at 08:16:41AM -0800, Fangrui Song wrote:
+> > > On Wed, Nov 29, 2023 at 3:30 PM Nathan Chancellor <nathan@kernel.org> wrote:
+> > > >
+> > > > LLVM prior to 18.0.0 would generate incorrect debug info for DWARF5 due
+> > > > to linker relaxation, which was worked around in clang by defaulting
+> > > > RISC-V to DWARF4 [1]. Unfortunately, this workaround does not work for
+> > > > the kernel because the DWARF version can be independently changed from
+> > > > the default in Kconfig.
+> > > >
+> > > > Do not allow DWARF5 to be selected for RISC-V when using linker
+> > > > relaxation (ld.lld >= 15.0.0) and a version of LLVM that does not have
+> > > > the fixes (the integrated assembler [2] and ld.lld [3] < 18.0.0)
+> > > > necessary to generate the correct debug info.
+> > > >
+> > > > Link: https://github.com/llvm/llvm-project/commit/bbc0f99f3bc96f1db16f649fc21dd18e5b0918f6 [1]
+> > > > Link: https://github.com/llvm/llvm-project/commit/1df5ea29b43690b6622db2cad7b745607ca4de6a [2]
+> > > > Link: https://github.com/llvm/llvm-project/commit/7ffabb61a5569444b5ac9322e22e5471cc5e4a77 [3]
+> > > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > > > ---
+> > > >  arch/riscv/Kconfig | 9 +++++++++
+> > > >  lib/Kconfig.debug  | 1 +
+> > > >  2 files changed, 10 insertions(+)
+> > > >
+> > > > diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+> > > > index 72be1d8122a3..81b473cb47b0 100644
+> > > > --- a/arch/riscv/Kconfig
+> > > > +++ b/arch/riscv/Kconfig
+> > > > @@ -186,6 +186,15 @@ config RISCV_USE_LINKER_RELAXATION
+> > > >         # https://github.com/llvm/llvm-project/commit/6611d58f5bbcbec77262d392e2923e1d680f6985
+> > > >         depends on !LD_IS_LLD || LLD_VERSION >= 150000
+> > > >
+> > > > +# https://github.com/llvm/llvm-project/commit/bbc0f99f3bc96f1db16f649fc21dd18e5b0918f6
+> > > > +config ARCH_HAS_BROKEN_DWARF5
+> > > > +       def_bool y
+> > > > +       depends on RISCV_USE_LINKER_RELAXATION
+> > > > +       # https://github.com/llvm/llvm-project/commit/1df5ea29b43690b6622db2cad7b745607ca4de6a
+> > > > +       depends on AS_IS_LLVM && AS_VERSION < 180000
+> > > > +       # https://github.com/llvm/llvm-project/commit/7ffabb61a5569444b5ac9322e22e5471cc5e4a77
+> > > > +       depends on LD_IS_LLD && LLD_VERSION < 180000
+> > > > +
+> > > >  config ARCH_MMAP_RND_BITS_MIN
+> > > >         default 18 if 64BIT
+> > > >         default 8
+> > > > diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+> > > > index cc7d53d9dc01..a0ebce05a368 100644
+> > > > --- a/lib/Kconfig.debug
+> > > > +++ b/lib/Kconfig.debug
+> > > > @@ -282,6 +282,7 @@ config DEBUG_INFO_DWARF4
+> > > >  config DEBUG_INFO_DWARF5
+> > > >         bool "Generate DWARF Version 5 debuginfo"
+> > > >         select DEBUG_INFO
+> > > > +       depends on !ARCH_HAS_BROKEN_DWARF5
+> > > >         depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
+> > > >         help
+> > > >           Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
+> > > >
+> > > > --
+> > > > 2.43.0
+> > > >
+> > >
+> > > A comment and "depends on" condition introduced by commit
+> > > 0a6de78cff600cb991f2a1b7ed376935871796a0 "lib/Kconfig.debug: Add check
+> > > for non-constant .{s,u}leb128 support to DWARF5"
+> > > can now be refined.
+> > >
+> > > > ib/Kconfig.debug
+> > > > (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
+> > >
+> > > AS_VERSION can now be 24100.
+> >
+> > That will impact all architectures that use GNU as, even though the
+> > issue was really only seen on RISC-V. It probably doesn't matter since
+> > most architectures work with the integrated assembler and that is what
+> > we tell people to use but I think the current check will continue to
+> > work.
+> 
+> Agreed.
+> 
+>     depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION
+> >= 23502 && AS_HAS_NON_CONST_LEB128)
+> 
+> is enabled for GCC. The long condition chain is for Clang. Given
+> Clang's behavior, we can simplify this to
+> 
+>     depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU &&
+> AS_HAS_NON_CONST_LEB128)
 
-But on Intel systems the memory bandwidth monitoring events are
-independently enumerated. It is possible for a system to support
-total memory bandwidth monitoring, but not support local bandwidth
-monitoring. On such a system a user could not enable mba_sc mode.
-Users will see this highly unhelpful error message from mount:
+I think we still need the version check due to
+https://sourceware.org/bugzilla/show_bug.cgi?id=25611, which was added
+in commit 98cd6f521f10 ("Kconfig: allow explicit opt in to DWARF v5").
 
- # mount -t resctrl -o mba_MBps resctrl /sys/fs/resctrl
- mount: /sys/fs/resctrl: wrong fs type, bad option, bad superblock on
- resctrl, missing codepage or helper program, or other error.
- dmesg(1) may have more information after failed mount system call.
+> This will still work even after R_LARCH_{ADD,SUB}_ULEB128 support is
+> added to llvm-project.
+> This condition matches HAVE_AS_LEB128 in GCC in spirit.
+> 
+> > Alternatively, I could do something like this but it is quite ugly and
+> > verbose :/
+> >
+> > diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
+> > index a0ebce05a368..aea0ef5a5d1f 100644
+> > --- a/lib/Kconfig.debug
+> > +++ b/lib/Kconfig.debug
+> > @@ -231,11 +231,6 @@ config DEBUG_INFO
+> >           in the "Debug information" choice below, indicating that debug
+> >           information will be generated for build targets.
+> >
+> > -# Clang is known to generate .{s,u}leb128 with symbol deltas with DWARF5, which
+> > -# some targets may not support: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
+> > -config AS_HAS_NON_CONST_LEB128
+> > -       def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
+> > -
+> 
+> Consider keeping this config, but just reword the comment.
 
-dmesg(1) does not provide any additional information.
+Do you have a suggestion for how it should be reworded? I am struggling
+to come up with something that conveys additional information in a
+succinct manner.
 
-Add a new mount option "mba_MBps_event=[local|total]" that allows
-a user to specify which monitoring event to use. Also modify the
-existing "mba_MBps" option to switch to total bandwidth monitoring
-if local monitoring is not available.
+> >  choice
+> >         prompt "Debug information"
+> >         depends on DEBUG_KERNEL
+> > @@ -258,7 +253,7 @@ config DEBUG_INFO_NONE
+> >  config DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
+> >         bool "Rely on the toolchain's implicit default DWARF version"
+> >         select DEBUG_INFO
+> > -       depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 140000 || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
+> > +       depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 140000 || (AS_IS_GNU && ((!RISCV && AS_VERSION >= 23502) || (RISCV && AS_VERSION >= 24100)))
+> 
+> The RISCV condition would cause additional churn when LoongArch
+> ULEB128 support is added.
 
-Update the once-per-second polling code to use the chosen event (local
-or total memory bandwidth).
+Ah, I did not realize that LoongArch would have the same issue. This is
+definitely not the right way to go for that then.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/arch/x86/resctrl.rst     |  7 +++-
- include/linux/resctrl.h                |  2 ++
- arch/x86/kernel/cpu/resctrl/internal.h |  3 +-
- arch/x86/kernel/cpu/resctrl/monitor.c  | 21 ++++++-----
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 48 ++++++++++++++++++++------
- 5 files changed, 58 insertions(+), 23 deletions(-)
+> >         help
+> >           The implicit default version of DWARF debug info produced by a
+> >           toolchain changes over time.
+> > @@ -283,7 +278,7 @@ config DEBUG_INFO_DWARF5
+> >         bool "Generate DWARF Version 5 debuginfo"
+> >         select DEBUG_INFO
+> >         depends on !ARCH_HAS_BROKEN_DWARF5
+> > -       depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
+> > +       depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && ((!RISCV && AS_VERSION >= 23502) || (RISCV && AS_VERSION >= 24100)))
+> >         help
+> >           Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
+> >           5.0+ accepts the -gdwarf-5 flag but only had partial support for some
 
-diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-index a6279df64a9d..f06cb189911a 100644
---- a/Documentation/arch/x86/resctrl.rst
-+++ b/Documentation/arch/x86/resctrl.rst
-@@ -45,7 +45,12 @@ mount options are:
- 	Enable code/data prioritization in L2 cache allocations.
- "mba_MBps":
- 	Enable the MBA Software Controller(mba_sc) to specify MBA
--	bandwidth in MBps
-+	bandwidth in MBps. Defaults to using MBM local bandwidth,
-+	but will use total bandwidth on systems that do not support
-+	local bandwidth monitoring.
-+"mba_MBps_event=[local|total]":
-+	Enable the MBA Software Controller(mba_sc) with a specific
-+	MBM event as input to the feedback loop.
- "debug":
- 	Make debug files accessible. Available debug files are annotated with
- 	"Available only with debug option".
-diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 66942d7fba7f..1feb3b2e64fa 100644
---- a/include/linux/resctrl.h
-+++ b/include/linux/resctrl.h
-@@ -129,6 +129,7 @@ enum membw_throttle_mode {
-  * @throttle_mode:	Bandwidth throttling mode when threads request
-  *			different memory bandwidths
-  * @mba_sc:		True if MBA software controller(mba_sc) is enabled
-+ * @mba_mbps_event:	Event (local or total) for mba_sc
-  * @mb_map:		Mapping of memory B/W percentage to memory B/W delay
-  */
- struct resctrl_membw {
-@@ -138,6 +139,7 @@ struct resctrl_membw {
- 	bool				arch_needs_linear;
- 	enum membw_throttle_mode	throttle_mode;
- 	bool				mba_sc;
-+	enum resctrl_event_id		mba_mbps_event;
- 	u32				*mb_map;
- };
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index a4f1aa15f0a2..8b9b8f664324 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -58,7 +58,8 @@ struct rdt_fs_context {
- 	struct kernfs_fs_context	kfc;
- 	bool				enable_cdpl2;
- 	bool				enable_cdpl3;
--	bool				enable_mba_mbps;
-+	bool				enable_mba_mbps_local;
-+	bool				enable_mba_mbps_total;
- 	bool				enable_debug;
- };
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index f136ac046851..d9e590f1cbc3 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -431,9 +431,10 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
-  */
- static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
- {
--	struct mbm_state *m = &rr->d->mbm_local[rmid];
- 	u64 cur_bw, bytes, cur_bytes;
-+	struct mbm_state *m;
- 
-+	m = get_mbm_state(rr->d, rmid, rr->evtid);
- 	cur_bytes = rr->val;
- 	bytes = cur_bytes - m->prev_bw_bytes;
- 	m->prev_bw_bytes = cur_bytes;
-@@ -521,19 +522,21 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
- 	u32 closid, rmid, cur_msr_val, new_msr_val;
- 	struct mbm_state *pmbm_data, *cmbm_data;
- 	u32 cur_bw, delta_bw, user_bw;
-+	enum resctrl_event_id evt_id;
- 	struct rdt_resource *r_mba;
- 	struct rdt_domain *dom_mba;
- 	struct list_head *head;
- 	struct rdtgroup *entry;
- 
--	if (!is_mbm_local_enabled())
-+	if (!is_mbm_enabled())
- 		return;
- 
- 	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
-+	evt_id = r_mba->membw.mba_mbps_event;
- 
- 	closid = rgrp->closid;
- 	rmid = rgrp->mon.rmid;
--	pmbm_data = &dom_mbm->mbm_local[rmid];
-+	pmbm_data = get_mbm_state(dom_mbm, rmid, evt_id);
- 
- 	dom_mba = get_domain_from_cpu(smp_processor_id(), r_mba);
- 	if (!dom_mba) {
-@@ -553,7 +556,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
- 	 */
- 	head = &rgrp->mon.crdtgrp_list;
- 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
--		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
-+		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, evt_id);
- 		cur_bw += cmbm_data->prev_bw;
- 		delta_bw += cmbm_data->delta_bw;
- 	}
-@@ -616,18 +619,14 @@ static void mbm_update(struct rdt_resource *r, struct rdt_domain *d, int rmid)
- 		rr.evtid = QOS_L3_MBM_TOTAL_EVENT_ID;
- 		rr.val = 0;
- 		__mon_event_count(rmid, &rr);
-+		if (is_mba_sc(NULL) && rr.evtid == r->membw.mba_mbps_event)
-+			mbm_bw_count(rmid, &rr);
- 	}
- 	if (is_mbm_local_enabled()) {
- 		rr.evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
- 		rr.val = 0;
- 		__mon_event_count(rmid, &rr);
--
--		/*
--		 * Call the MBA software controller only for the
--		 * control groups and when user has enabled
--		 * the software controller explicitly.
--		 */
--		if (is_mba_sc(NULL))
-+		if (is_mba_sc(NULL) && rr.evtid == r->membw.mba_mbps_event)
- 			mbm_bw_count(rmid, &rr);
- 	}
- }
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index 69a1de92384a..79141d33d5b4 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -2294,7 +2294,7 @@ static bool supports_mba_mbps(void)
- {
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
- 
--	return (is_mbm_local_enabled() &&
-+	return (is_mbm_enabled() &&
- 		r->alloc_capable && is_mba_linear());
- }
- 
-@@ -2302,7 +2302,7 @@ static bool supports_mba_mbps(void)
-  * Enable or disable the MBA software controller
-  * which helps user specify bandwidth in MBps.
-  */
--static int set_mba_sc(bool mba_sc)
-+static int set_mba_sc(bool mba_sc, enum resctrl_event_id mba_mbps_event)
- {
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
- 	u32 num_closid = resctrl_arch_get_num_closid(r);
-@@ -2313,6 +2313,7 @@ static int set_mba_sc(bool mba_sc)
- 		return -EINVAL;
- 
- 	r->membw.mba_sc = mba_sc;
-+	r->membw.mba_mbps_event = mba_mbps_event;
- 
- 	list_for_each_entry(d, &r->domains, list) {
- 		for (i = 0; i < num_closid; i++)
-@@ -2445,13 +2446,14 @@ static void rdt_disable_ctx(void)
- {
- 	resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L3, false);
- 	resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L2, false);
--	set_mba_sc(false);
-+	set_mba_sc(false, QOS_L3_MBM_LOCAL_EVENT_ID);
- 
- 	resctrl_debug = false;
- }
- 
- static int rdt_enable_ctx(struct rdt_fs_context *ctx)
- {
-+	enum resctrl_event_id mba_mbps_event;
- 	int ret = 0;
- 
- 	if (ctx->enable_cdpl2) {
-@@ -2466,8 +2468,12 @@ static int rdt_enable_ctx(struct rdt_fs_context *ctx)
- 			goto out_cdpl2;
- 	}
- 
--	if (ctx->enable_mba_mbps) {
--		ret = set_mba_sc(true);
-+	if (ctx->enable_mba_mbps_local || ctx->enable_mba_mbps_total) {
-+		if (ctx->enable_mba_mbps_total)
-+			mba_mbps_event = QOS_L3_MBM_TOTAL_EVENT_ID;
-+		else
-+			mba_mbps_event = QOS_L3_MBM_LOCAL_EVENT_ID;
-+		ret = set_mba_sc(true, mba_mbps_event);
- 		if (ret)
- 			goto out_cdpl3;
- 	}
-@@ -2683,15 +2689,17 @@ enum rdt_param {
- 	Opt_cdp,
- 	Opt_cdpl2,
- 	Opt_mba_mbps,
-+	Opt_mba_mbps_event,
- 	Opt_debug,
- 	nr__rdt_params
- };
- 
- static const struct fs_parameter_spec rdt_fs_parameters[] = {
--	fsparam_flag("cdp",		Opt_cdp),
--	fsparam_flag("cdpl2",		Opt_cdpl2),
--	fsparam_flag("mba_MBps",	Opt_mba_mbps),
--	fsparam_flag("debug",		Opt_debug),
-+	fsparam_flag("cdp",			Opt_cdp),
-+	fsparam_flag("cdpl2",			Opt_cdpl2),
-+	fsparam_flag("mba_MBps",		Opt_mba_mbps),
-+	fsparam_string("mba_MBps_event",	Opt_mba_mbps_event),
-+	fsparam_flag("debug",			Opt_debug),
- 	{}
- };
- 
-@@ -2715,7 +2723,27 @@ static int rdt_parse_param(struct fs_context *fc, struct fs_parameter *param)
- 	case Opt_mba_mbps:
- 		if (!supports_mba_mbps())
- 			return -EINVAL;
--		ctx->enable_mba_mbps = true;
-+		if (is_mbm_local_enabled())
-+			ctx->enable_mba_mbps_local = true;
-+		else if (is_mbm_total_enabled())
-+			ctx->enable_mba_mbps_total = true;
-+		else
-+			return -EINVAL;
-+		return 0;
-+	case Opt_mba_mbps_event:
-+		if (!supports_mba_mbps())
-+			return -EINVAL;
-+		if (!strcmp("local", param->string)) {
-+			if (!is_mbm_local_enabled())
-+				return -EINVAL;
-+			ctx->enable_mba_mbps_local = true;
-+		} else if (!strcmp("total", param->string)) {
-+			if (!is_mbm_total_enabled())
-+				return -EINVAL;
-+			ctx->enable_mba_mbps_total = true;
-+		} else {
-+			return -EINVAL;
-+		}
- 		return 0;
- 	case Opt_debug:
- 		ctx->enable_debug = true;
--- 
-2.41.0
-
+Cheers,
+Nathan
