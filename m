@@ -1,55 +1,54 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A612574E
-	for <patches@lists.linux.dev>; Fri,  1 Dec 2023 13:15:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heitbaum.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heitbaum.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E811A21A19
+	for <patches@lists.linux.dev>; Fri,  1 Dec 2023 13:22:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=heitbaum.com header.i=@heitbaum.com header.b="OgPUB4h6"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1cfae5ca719so4430395ad.0
-        for <patches@lists.linux.dev>; Fri, 01 Dec 2023 05:15:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1701436506; x=1702041306; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gvg9SzsVyrg1+cSkW8ZTDbtaOZGy4u7v+r+pXKw+7Dc=;
-        b=OgPUB4h6mBc+p6hPTem/8I3Um+lcIK+WiamhuKbhf/ls8MtF9gcDAAKsn1/AlAyOwN
-         lQ619Nd58KcqXRMRi3XNm1eZ4smhRX7MY5NDDQGNIccpf42yDE4s8MZvgBraqw8oue+F
-         VuIOW2ocZmh0/J9s6HDEwLyv5Vsk+P8y8TPTQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701436506; x=1702041306;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gvg9SzsVyrg1+cSkW8ZTDbtaOZGy4u7v+r+pXKw+7Dc=;
-        b=vCaAawsVtlyjz0pfoFcxafFz5ZuehTdl1oJPO5IDTvmGG3okX3UnlDCat+OAOu/XoE
-         1NdU4+CVbuDz6r4sc26qBIf2C5ZrVPq8W0wlwyrPeUk7tWo7mYrZEFqqSU1pu8FC6R4V
-         wnc4gCit2LyCYTqXG0fQ4nbliyjKosH/VyxAbAI4/2+5IQAas5WU6MNLVWfzM9WtT43n
-         C1L61IsPzsW/VNMdaaRPdHFW129g5F2pAowPcwh3jA05O/OBo5+u1XFN/kFCn5c9HGU/
-         HXJuP+H24Xd2vtt1CYnjPiiSl3S4qziZqIYO7Wi2WuzWH7/lToLiMHsoN2BkJ1l7zdx4
-         tt0w==
-X-Gm-Message-State: AOJu0YztChqDwsl9QfQrYrGRvhOwnJCJyVPsPK9XI9Ivb9RzvGLIlokN
-	h7N+fx7z0vhZjIcHvk5tajeA6Q==
-X-Google-Smtp-Source: AGHT+IGkj80lTOlpVv7cLv0ty3QcpEA/UEzBSdkHRwLlyy2C0DVPD4e+YQqHJcf5zZY1pKqlA911HQ==
-X-Received: by 2002:a17:902:aa02:b0:1cf:fe32:634a with SMTP id be2-20020a170902aa0200b001cffe32634amr11199468plb.43.1701436506057;
-        Fri, 01 Dec 2023 05:15:06 -0800 (PST)
-Received: from 8bdb44144243 ([122.199.31.3])
-        by smtp.gmail.com with ESMTPSA id iw1-20020a170903044100b001cf59ad964asm1575312plb.140.2023.12.01.05.14.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Dec 2023 05:15:05 -0800 (PST)
-Date: Fri, 1 Dec 2023 13:14:55 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
+	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="o82Ss+R9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1701436948; x=1732972948;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=SFiMiObX9ZGFEyE4h8oReM51+m2Od7/qLb1KYhjjjLg=;
+  b=o82Ss+R9h9t0PlA+0HiCKrg3L2kgFPpa3XMtMK3GthztDhWC3VkKLyg8
+   zyWEQrnycfzQhYnPkNRMM0lnXBXvIDybBOHYqOaOoG3AXqjSw4BgEpEii
+   erqbjPdOVjxV3VLJzNPkyorx14aAGxJ/s6/3ijhulIqDQ1s5VM4JrXCzP
+   7Hgss9968GvOr815+bWL96UhsdAcD02xXZvUuV4IgMjjlfz9ge12xeTpm
+   6JvkgUKHEIer7PNQdbejrfsavmVcPjoYMkVI+T7aJPb0yctcXIuf97Jbc
+   RPAT0ZU/eLXccMLLSpsJ9lWRYmPvDtxCrJfAR/aFcCUDZ+okpR3KRjt/J
+   A==;
+X-CSE-ConnectionGUID: h4Jrgyr3T9i1kHEvfFr0NQ==
+X-CSE-MsgGUID: QYF4eAE9TJCZvZov9yd8ew==
+X-ThreatScanner-Verdict: Negative
+X-IronPort-AV: E=Sophos;i="6.04,241,1695711600"; 
+   d="asc'?scan'208";a="179742437"
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa6.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 01 Dec 2023 06:22:22 -0700
+Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Fri, 1 Dec 2023 06:22:00 -0700
+Received: from wendy (10.10.85.11) by chn-vm-ex03.mchp-main.com (10.10.85.151)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
+ Transport; Fri, 1 Dec 2023 06:21:57 -0700
+Date: Fri, 1 Dec 2023 13:21:28 +0000
+From: Conor Dooley <conor.dooley@microchip.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>, <conor@kernel.org>,
+	<allen.lkml@gmail.com>
 Subject: Re: [PATCH 6.6 000/112] 6.6.4-rc1 review
-Message-ID: <ZWncT50EfYHdJS0x@8bdb44144243>
+Message-ID: <20231201-prize-deck-be172f77a4bb@wendy>
 References: <20231130162140.298098091@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -57,39 +56,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="CGVL03bvG34QNHYM"
 Content-Disposition: inline
 In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
+
+--CGVL03bvG34QNHYM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
 On Thu, Nov 30, 2023 at 04:20:47PM +0000, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.6.4 release.
 > There are 112 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>=20
 > Responses should be made by Sat, 02 Dec 2023 16:21:18 +0000.
 > Anything received after that time might be too late.
 
-Hi Greg,
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-6.6.4-rc1 tested.
+Cheers,
+Conor.
 
-Run tested on:
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+--CGVL03bvG34QNHYM
+Content-Type: application/pgp-signature; name="signature.asc"
 
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- Allwinner H6
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
+-----BEGIN PGP SIGNATURE-----
 
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZWnd2AAKCRB4tDGHoIJi
+0uO2AQDgaoRRvbNVU+L0vVmYKaIMArJIz6JH3K0QDUdd7M77KwD+O2iYvcBIwEeb
+zZl1lG7BTtD04V/w8ec46x9ppu093wc=
+=vWEC
+-----END PGP SIGNATURE-----
+
+--CGVL03bvG34QNHYM--
