@@ -1,196 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2056.outbound.protection.outlook.com [40.107.96.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA061BDC4;
-	Fri,  1 Dec 2023 09:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B230208A8
+	for <patches@lists.linux.dev>; Fri,  1 Dec 2023 10:52:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRgA1lB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBF5C433C7;
-	Fri,  1 Dec 2023 09:44:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701423857;
-	bh=/HU7YYYGlZOsppIXzdMtY/s2vvadGzpqVvlRTqQ1tNs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kRgA1lB/6Lju+B52wsCua6IXa1rYnyzl++bAVlQqFX00OSzp/bLNu/zmaDzi98rWL
-	 7zQq9+389a1W/UOEBznahHlZk/D//5GXVRqOsxKHYGDgIajs9ElL7A69baYPFKt3Q5
-	 uDnOGD736Fdmf6hYIzKjRZRfVSzqJ9+RkNXmnUu0=
-Date: Fri, 1 Dec 2023 09:44:15 +0000
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Francis Laniel <flaniel@linux.microsoft.com>
-Cc: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH 5.15 00/69] 5.15.141-rc1 review
-Message-ID: <2023120155-mascot-scope-7bc6@gregkh>
-References: <20231130162133.035359406@linuxfoundation.org>
- <CAEUSe78tYPTFuauB7cxZzvAeMhzB_25Q8DqLUfF7Nro9WsUhNw@mail.gmail.com>
- <2023120134-sabotage-handset-0b0d@gregkh>
- <4879383.31r3eYUQgx@pwmachine>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="S7vfVjMS"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=icOhYIxCNGSExK2jTq2CrxlwpmcNe2eOHF1c2gkTIk0J4MJCzkAr3sOXEwZOhjPbPVRNRejYx2vYJf2Mf/yRjKvREkn9FcVy5tL/OCHFWT6r/Zh1AYVnRf1g2lkun3cjpQq7v4jmvqh9ZMW0vhV5qCPHDDgGY1SST6J9ozgmtiZIkWPjdUNSKEO2ikTL/5LCuny4DVc7GEzMQKiu7q6C20WaWFZdkmzeuye/N24uiSNoidGXp1A8i8p22N4hZuJwWUQVGE7LWcvByZi6feh7Q/gNeA0iFc1J+M8u95XQ0MGdvB2O8UX46oPA4ITWSJPCjxA8kSYXtfAIUQSJ5iaPvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Qxwnx8yJvQ42owbUT+bzn8sAP7Ypk8qMNFPW5aE14/M=;
+ b=nM0L+jfuIQc2k6oZiWWW65bp/NMnjyi4EjG0b3xMo/6e94JJWZYE0TpZBtdBYuhn8Kq7p3IANX9M4lR5FpVwPxwrX0KFBfziFloIEfqLHIkIt6b1CcZMBRqhJ3zA9QSyb0xIN9zybKrk8QhL5MLIbXgfAn1ZqBmPb5Z6SLQ3rm2RgepEyLz8X50yvgDxWQFHHY9c8xWHbHipyiqBHqga+Ex31PqReKfELDmLTL2E8ox8eLl5qpBA3MEfpC7IGlkoiDvqjjOqFpsZt+Ck3uLRA+th+//Cjb87AXjJERIr3jzXRjFkjFHBd1E/nXyYHNIj2+lWrbZ1/wdZzWDk3JhAyQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Qxwnx8yJvQ42owbUT+bzn8sAP7Ypk8qMNFPW5aE14/M=;
+ b=S7vfVjMSrV8NLV82VqW8oe9zL16vTU0er7+zkgJYAYlE80mZwaydzKczlCakZaWFt7TBgQBYyUhJ0Ko4GWlc/DAFps2GToRdJsO4x9fEsOwZQ7zjjGh6ygdEGLz8ntRppQkHpfMHdIlh37hDgti3C/xwU0lh5tAg8KlBSnrV6TpS4En5tX6Lh5Tg9wHjGysPAby5vulKkgRRDKs1yCIZiqMTgtiTsbjC9I/s+5vemIu5FM5PoZoJmzaKSygmDPwZvQjyFQSA05SR0Pi/j8U1JVseCpdAdIVtshnm2hDh0VcF3SMmZY3bnatvKDL3SYKlE+ls+KHAwiWqW+aEW8F+sw==
+Received: from BN0PR04CA0113.namprd04.prod.outlook.com (2603:10b6:408:ec::28)
+ by PH7PR12MB6668.namprd12.prod.outlook.com (2603:10b6:510:1aa::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.27; Fri, 1 Dec
+ 2023 10:52:52 +0000
+Received: from SN1PEPF000252A3.namprd05.prod.outlook.com
+ (2603:10b6:408:ec:cafe::80) by BN0PR04CA0113.outlook.office365.com
+ (2603:10b6:408:ec::28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.26 via Frontend
+ Transport; Fri, 1 Dec 2023 10:52:52 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SN1PEPF000252A3.mail.protection.outlook.com (10.167.242.10) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7046.17 via Frontend Transport; Fri, 1 Dec 2023 10:52:51 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Fri, 1 Dec 2023
+ 02:52:50 -0800
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Fri, 1 Dec 2023 02:52:50 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
+ Transport; Fri, 1 Dec 2023 02:52:50 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.15 00/68] 5.15.141-rc2 review
+In-Reply-To: <20231201082345.123842367@linuxfoundation.org>
+References: <20231201082345.123842367@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4879383.31r3eYUQgx@pwmachine>
+Message-ID: <a7a3ed3b-26c5-4c30-b5b9-3949ffbd4e54@drhqmail203.nvidia.com>
+Date: Fri, 1 Dec 2023 02:52:50 -0800
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF000252A3:EE_|PH7PR12MB6668:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5f9bc0f4-1f81-48a4-0c07-08dbf25baa93
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	YGqgVWmV26cs2Q6QITZZfZFRm/85GMX4iRM8nQPt8AMXXW6/PRrPVxotT/CZ8BOD0RRNvWpuZIhjVnnbrw4Wuft77JZsmMzqc4xTYY2njPcr0GFkxgsavyJYV7GFjsZmiPfqxCS7AGBu+qS6MehwhrXFXsrpUtfT+Xvcx/Ab651oRTE1AdMDG+zDW03ifonBxrH9uaMjjveH+BYuZebwSVptlnDSKTe0G1AvdSMgD+9M8gWAHYzMcYPeke4X1MGVOQP5IB+Pu1aW2qpGbY8eGbN6RuFxDjbgY5qnTA7ga53b7yqn0rH9TOn1CklFoRpTo5sfPdSrFsoTprZAilLV+gzTmI4GWQe4hQYyUxAuMD3BY8QAfHv9rLFEj5sSzKiv0O67PLbn+BtuHXcdn57Sb3l0/olBjuPXFSzam3mlrS8GECQHMsDmI6F3ChJiwtokHMMJjDxYY7DadVU8KpF2/hxUVMcoR1wD8Q5fLr9AWiATyr9ZKn0F8AIvXj+VinJiaYTmUHES0wOYT3dI4UBrG35DqNgMg159D6HfuzaCxN29YkaZ5LzMBmY2JTyrNQ0iKCWVn5pFJLVYdKOTS+yl+ZdDRGRXCCu24HkUBx2fsh0I9LuSwHSGZmhtoGiV8EAjP0h5CvjAI6imBJ3JT12cZ4nTeAVGnlyqHwor3J1DSi4eQ57jiQZPZ9lq285/9cz5rbA8sIV04bTprXEfNwOTbeu7nA0S/Q9C3qi6FtqDeEnwWlZ4jIKjLyJzOvlKRebfU8AnDlU915ONuvfqz55PMIthJB/XD7Z+XERZM10BEy0=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(136003)(346002)(39860400002)(396003)(376002)(230922051799003)(451199024)(64100799003)(1800799012)(82310400011)(186009)(36840700001)(40470700004)(46966006)(82740400003)(356005)(7636003)(7416002)(36860700001)(5660300002)(40460700003)(2906002)(41300700001)(86362001)(31696002)(54906003)(8676002)(966005)(478600001)(4326008)(8936002)(26005)(426003)(6916009)(336012)(316002)(40480700001)(31686004)(70586007)(70206006)(47076005);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Dec 2023 10:52:51.9516
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f9bc0f4-1f81-48a4-0c07-08dbf25baa93
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SN1PEPF000252A3.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6668
 
-On Fri, Dec 01, 2023 at 10:35:33AM +0100, Francis Laniel wrote:
-> Hi!
+On Fri, 01 Dec 2023 08:25:54 +0000, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.141 release.
+> There are 68 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Le vendredi 1 décembre 2023, 09:21:33 CET Greg Kroah-Hartman a écrit :
-> > On Thu, Nov 30, 2023 at 12:11:31PM -0600, Daniel Díaz wrote:
-> > > Hello!
-> > > 
-> > > On Thu, 30 Nov 2023 at 11:44, Guenter Roeck <linux@roeck-us.net> wrote:
-> > > > On 11/30/23 09:21, Daniel Díaz wrote:
-> > > > > Hello!
-> > > > > 
-> > > > > Lots of failures everywhere:
-> > > > > * clang-17-lkftconfig                 arm64
-> > > > > * clang-17-lkftconfig                 arm64
-> > > > > * clang-17-lkftconfig                 arm64
-> > > > > * clang-lkftconfig                    arm64
-> > > > > * clang-lkftconfig                    arm
-> > > > > * clang-lkftconfig                    i386
-> > > > > * clang-lkftconfig                    x86_64
-> > > > > * gcc-12-lkftconfig                   arm64
-> > > > > * gcc-12-lkftconfig                   arm
-> > > > > * gcc-12-lkftconfig                   i386
-> > > > > * gcc-12-lkftconfig                   x86_64
-> > > > > * gcc-12-lkftconfig-64k_page_size     arm64
-> > > > > * gcc-12-lkftconfig-64k_page_size     arm64
-> > > > > * gcc-12-lkftconfig-armv8_features    arm64
-> > > > > * gcc-12-lkftconfig-debug             arm64
-> > > > > * gcc-12-lkftconfig-debug             arm64
-> > > > > * gcc-12-lkftconfig-debug             arm
-> > > > > * gcc-12-lkftconfig-debug             i386
-> > > > > * gcc-12-lkftconfig-debug             x86_64
-> > > > > * gcc-12-lkftconfig-debug-kmemleak    arm64
-> > > > > * gcc-12-lkftconfig-debug-kmemleak    arm
-> > > > > * gcc-12-lkftconfig-debug-kmemleak    i386
-> > > > > * gcc-12-lkftconfig-debug-kmemleak    x86_64
-> > > > > * gcc-12-lkftconfig-devicetree        arm64
-> > > > > * gcc-12-lkftconfig-kasan             arm64
-> > > > > * gcc-12-lkftconfig-kasan             arm64
-> > > > > * gcc-12-lkftconfig-kasan             x86_64
-> > > > > * gcc-12-lkftconfig-kselftest         arm64
-> > > > > * gcc-12-lkftconfig-kselftest-kernel  arm64
-> > > > > * gcc-12-lkftconfig-kselftest-kernel  arm
-> > > > > * gcc-12-lkftconfig-kselftest-kernel  i386
-> > > > > * gcc-12-lkftconfig-kunit             arm64
-> > > > > * gcc-12-lkftconfig-kunit             arm64
-> > > > > * gcc-12-lkftconfig-kunit             arm
-> > > > > * gcc-12-lkftconfig-kunit             i386
-> > > > > * gcc-12-lkftconfig-kunit             x86_64
-> > > > > * gcc-12-lkftconfig-libgpiod          arm64
-> > > > > * gcc-12-lkftconfig-libgpiod          arm
-> > > > > * gcc-12-lkftconfig-libgpiod          i386
-> > > > > * gcc-12-lkftconfig-libgpiod          x86_64
-> > > > > * gcc-12-lkftconfig-perf              arm64
-> > > > > * gcc-12-lkftconfig-perf-kernel       arm64
-> > > > > * gcc-12-lkftconfig-perf-kernel       arm
-> > > > > * gcc-12-lkftconfig-perf-kernel       i386
-> > > > > * gcc-12-lkftconfig-perf-kernel       x86_64
-> > > > > * gcc-12-lkftconfig-rcutorture        arm64
-> > > > > * gcc-12-lkftconfig-rcutorture        arm64
-> > > > > * gcc-12-lkftconfig-rcutorture        arm
-> > > > > * gcc-12-lkftconfig-rcutorture        i386
-> > > > > * gcc-12-lkftconfig-rcutorture        x86_64
-> > > > > 
-> > > > > It's essentially this:
-> > > > > 
-> > > > > -----8<-----
-> > > > > 
-> > > > >    make --silent --keep-going --jobs=8
-> > > > > 
-> > > > > O=/home/tuxbuild/.cache/tuxmake/builds/1/build ARCH=x86_64 SRCARCH=x86
-> > > > > CROSS_COMPILE=x86_64-linux-gnu- 'CC=sccache x86_64-linux-gnu-gcc'
-> > > > > 'HOSTCC=sccache gcc'
-> > > > > 
-> > > > >    arch/x86/kernel/smp.o: warning: objtool: sysvec_reboot()+0x51:
-> > > > > unreachable instruction
-> > > > > 
-> > > > >    x86_64-linux-gnu-ld: kernel/trace/trace_kprobe.o: in function
-> > > > > 
-> > > > > `__trace_kprobe_create':
-> > > > >    trace_kprobe.c:(.text+0x2f39): undefined reference to
-> > > > > 
-> > > > > `kallsyms_on_each_symbol'
-> > > > > 
-> > > > >    x86_64-linux-gnu-ld: kernel/trace/trace_kprobe.o: in function
-> > > > > 
-> > > > > `create_local_trace_kprobe':
-> > > > >    trace_kprobe.c:(.text+0x384b): undefined reference to
-> > > > > 
-> > > > > `kallsyms_on_each_symbol'
-> > > > > 
-> > > > >    make[1]: *** [/builds/linux/Makefile:1227: vmlinux] Error 1
-> > > > >    make[1]: Target '__all' not remade because of errors.
-> > > > >    make: *** [Makefile:226: __sub-make] Error 2
-> > > > >    make: Target '__all' not remade because of errors.
-> > > > > 
-> > > > > ----->8-----
-> > > > > 
-> > > > > It only affects 5.15. Bisection in progress.
-> > > > 
-> > > > I guess it will point to
-> > > > 
-> > > > >> Francis Laniel <flaniel@linux.microsoft.com>
-> > > > >> 
-> > > > >>      tracing/kprobes: Return EADDRNOTAVAIL when func matches several
-> > > > >>      symbols
-> > > 
-> > > It sure did!:
-> > >   commit 7b4375c36a4c0e1b4b97ccbcdd427db5a460e04f
-> > >   Author: Francis Laniel <flaniel@linux.microsoft.com>
-> > >   Date:   Fri Oct 20 13:42:49 2023 +0300
-> > >   
-> > >       tracing/kprobes: Return EADDRNOTAVAIL when func matches several
-> > >       symbols
-> > >       
-> > >       commit b022f0c7e404887a7c5229788fc99eff9f9a80d5 upstream.
-> > > 
-> > > Reverting that commit made the build pass again.
-> > 
-> > {sigh}
-> > 
-> > Francis, I think this is the second or third time this has happened with
-> > the attempt to get this patch merged.  I'm going to go drop it from all
-> > of the pending stable queues again, and please, if you wish to have it
-> > applied in the future, I am going to have to see some proof it was
-> > actually tested on the architectures that it keeps breaking.
+> Responses should be made by Sun, 03 Dec 2023 08:23:33 +0000.
+> Anything received after that time might be too late.
 > 
-> Sorry for the disagreement, for this one, I had to add the CONFIG_LIVEPATCH to 
-> then be able to call kallsyms_on_each_symbol(), as on 5.15, this function is 
-> within a ifdef guard [1].
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.141-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 > 
-> I suppose you do not want to add CONFIG_LIVEPATCH to default config, so I will 
-> try to find a way for this specific kernel!
+> thanks,
+> 
+> greg k-h
 
-It doesn't matter about any "default config", you can not break the
-build of any config.
+All tests passing for Tegra ...
 
-> Did you get problems only for 5.15 kernel? Or others too?
+Test results for stable-v5.15:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    102 tests:	102 pass, 0 fail
 
-I don't know, but for obvious reasons if it is not working in 5.15.y, we
-can't take it in older kernels as that would be a regression when people
-move to a newer one.
+Linux version:	5.15.141-rc2-gc66b1a8641b0
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-> In the second case, can you please link me the problems and I will polish 
-> everything.
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-Please take some time with a cross-compiler on the above listed
-architectures and configurations to verify your changes do not break
-anything again.
-
-thanks,
-
-greg k-h
+Jon
