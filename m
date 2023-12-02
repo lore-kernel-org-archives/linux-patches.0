@@ -1,22 +1,22 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A78BA31;
-	Sat,  2 Dec 2023 00:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B47817EF;
+	Sat,  2 Dec 2023 00:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d7F0gYoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4038C433C8;
-	Sat,  2 Dec 2023 00:40:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MmVF1NpK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702EDC433C7;
+	Sat,  2 Dec 2023 00:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701477612;
-	bh=JAT/1n7S31Qi9ta5zOkJzWjF1kM8UujOOAJ7I+rNqqA=;
+	s=k20201202; t=1701477664;
+	bh=rISLER/E+7fKsH5Uo4QvBPenL8iXEwDiTGCD2NOxQh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7F0gYoK2cK24Y5b8aV5NyWfZ/U81hDCKJbQ6The7TLz3GC2yg/JUVyxVzVSRQgQp
-	 aTHzW4s4/M+Jn6OVI5bvphAAKFziInYfvzizlZ2kxyLMLDkxVCk6gMZ5J9dfC9+cHH
-	 0dWJx8Rz3vkqZv1D8AIwI4mXI35+f/n9XvshN6vAYJtE0yDjuD5ZiIhG+cKXu6Gy3N
-	 9qPWgYew5dm4nvsCr0ueWcb4zOdUpLEC9f4y7klxaRdw+jhORvxcXctIIwy7YYK2yx
-	 KJ8rLIl8MrCrAhkJ53bTLk4I2iLsnymA2F4o3N+biCkUcR96McHFt52GmFvoaYbXzU
-	 Rv3Ja4qmAnIqw==
+	b=MmVF1NpKxJ4IAy858mP04qtAtHq31qtlgBQlVJRy8oNJKaVHeFHS8gXyJ9GrlKOrt
+	 9uNEPXMEPWLWsOXypOdEh4R98WKaEAnzHfU7fggDmMCsQF11z+UJ1S3kBEcUqQ2ifi
+	 F0fTD5kBgQiYC+K3koX9oJnYs7ZwyL4p/StqMhUMm9Q72yRG7QF0cvaLea201cDvwz
+	 CzMLnrIA6cMJku6po6wLni+qGhoGt3t7IGI90sgAflKsp3YC5bCJ/07Z/g3FLIVp90
+	 63p8taypJCOWpjQ9NBdLKPuYUQcwhz0Go+eFw3fBTdGcqv6LYZz3syp3S4DBqVvVmh
+	 uCt7S+ECm1ZEA==
 From: SeongJae Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org,
@@ -38,11 +38,11 @@ Cc: stable@vger.kernel.org,
 	allen.lkml@gmail.com,
 	damon@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.1 00/82] 6.1.65-rc1 review
-Date: Sat,  2 Dec 2023 00:40:09 +0000
-Message-Id: <20231202004009.46340-1-sj@kernel.org>
+Subject: Re: [PATCH 5.15 00/68] 5.15.141-rc2 review
+Date: Sat,  2 Dec 2023 00:41:01 +0000
+Message-Id: <20231202004101.46385-1-sj@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231130162135.977485944@linuxfoundation.org>
+In-Reply-To: <20231201082345.123842367@linuxfoundation.org>
 References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -54,20 +54,20 @@ Content-Transfer-Encoding: 8bit
 
 Hello,
 
-On 2023-11-30T16:21:31+00:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On 2023-12-01T08:25:54+00:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.1.65 release.
-> There are 82 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.15.141 release.
+> There are 68 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Sat, 02 Dec 2023 16:21:18 +0000.
+> Responses should be made by Sun, 03 Dec 2023 08:23:33 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.65-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.141-rc2.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 
 This rc kernel passes DAMON functionality test[1] on my test machine.
@@ -77,7 +77,7 @@ kernel from linux-stable-rc tree[2].
 Tested-by: SeongJae Park <sj@kernel.org>
 
 [1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 49ac60b65ef7 ("Linux 6.1.65-rc1")
+[2] c66b1a8641b0 ("Linux 5.15.141-rc2")
 
 Thanks,
 SJ
@@ -87,12 +87,6 @@ SJ
 ---
 
 ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: sysfs.sh
 ok 1 selftests: damon-tests: kunit.sh
 ok 2 selftests: damon-tests: huge_count_read_write.sh
 ok 3 selftests: damon-tests: buffer_overflow.sh
