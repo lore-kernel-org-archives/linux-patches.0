@@ -1,270 +1,128 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5A9BE66
-	for <patches@lists.linux.dev>; Sat,  2 Dec 2023 04:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68342BA22
+	for <patches@lists.linux.dev>; Sat,  2 Dec 2023 04:54:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="TrfwzsAF"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40b367a0a12so16525e9.1
-        for <patches@lists.linux.dev>; Fri, 01 Dec 2023 20:31:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FX7CFxpS"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-58cf894544cso1719794eaf.3
+        for <patches@lists.linux.dev>; Fri, 01 Dec 2023 20:54:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1701491486; x=1702096286; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xVvA+XfxaSXw1LOLOxF27ECPqWwPbIuTdt5pxpSTVtI=;
-        b=TrfwzsAFF8gm5b6YhJJ2bGAuAyx/LFdn8yrauTprQp5q6czBeMkBPLsodG4GK6/Hzs
-         Rzr3Gs39vz3kb6KxEIiv/sQAV1dBwdqFp3iv3SkFwyN1hlJdDcmlrtKZO/oPC2fFCjks
-         dABYxShycQqFNPSECtMxgT39tGug+C8ar6qzEd1CWBLwSO7bicObW4rr37H5N9QgITAG
-         jlTrmlXwVpsXO7yYFDL90M13OkPaG1pXW5Tq4MtQuGhtQZvGZE9g1fqt8ViUijbamGs8
-         mJRaF3sdVy7DH5U18gjfvhe3u5UUshXPO2ZdApzHdlr/4ZrGPL8WidoIIvjoofOOzkdo
-         K03w==
+        d=gmail.com; s=20230601; t=1701492868; x=1702097668; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/kwlqPdYSWvGTvKHmz2WpV9uT0BnUEbpN/aebbaZq0A=;
+        b=FX7CFxpSlJUsIUnLISA01Mo4MpJvWOB8IIH5rcYXcVlEYwxcBhtJpyTNxzryUbBLOK
+         yYvbo/SjY6PPZUW4IgX5MC/+KTKX/LpaOYnF4egK40tj8CsHhlcZF2DDYvYR5rUwtTWA
+         DmVGncXPPFjMaoNzP9Qx/iPTUfkJAz9BmdZ27CEO/ynknSpUNaCldO/lWwk9s+bQ9FI1
+         iBL+DxVyXTnpF3lB2jUE1FfNlq2DzksYiz7d4c/N+U7OaleQk25KUHxSaK7hqOg0YEDl
+         7DDYjR4xkXsPh69wGk7pAiLG5XOwauBbw50V/cti3R7BEMbukiDBX/vOz1SEHYCnxLfH
+         2i7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701491486; x=1702096286;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xVvA+XfxaSXw1LOLOxF27ECPqWwPbIuTdt5pxpSTVtI=;
-        b=uOjaCOAD3OQAF5911r422I6kEpk1OroNsnB+AudLE/cnegEQJHzjBdN4NAvG8xKG83
-         uX75QYIDBQYB0zCIFh7Z+ZexuIfBxx/+ez1cqsRRQ87oI4MVqgbStsrSVGAynkGbpUvA
-         WdEMPdoIW9w+kLdYjN1qv07CsZMsgVbhCoarag85THpo5EflgBiweN596C9b3O8n74Da
-         c0P4E3cZXlGXNPI8eUh9qnEyawnzeXKXlGg5RG8xJ7npMAiZ6m7odjv1qOvpSp0aDO62
-         2vf2h9Vt/0KBRnObzSuDvaannpDHbc37Ps4PRdg7srcIhzuWTC7dBUIs1caUiDcZzolx
-         R6YA==
-X-Gm-Message-State: AOJu0YxjgJxw3b5By4/bSfXXXvmVtd+ss+QrumqhCOQMNKe0kVAwidJC
-	mhQ7ti2+b6C6gYLHNmnpqN3Kcc9l3VI4hCpNUilc0g==
-X-Google-Smtp-Source: AGHT+IGZhXPrV5zZD7MMITUMl+i1J2MAf+VqQ3LbjimMEmYuYS/1QgCXy9TruE5THgAQQOMpOJkXklaVozBLg9DISgk=
-X-Received: by 2002:a05:600c:35d2:b0:40a:4c7d:f300 with SMTP id
- r18-20020a05600c35d200b0040a4c7df300mr314571wmq.6.1701491486245; Fri, 01 Dec
- 2023 20:31:26 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701492868; x=1702097668;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/kwlqPdYSWvGTvKHmz2WpV9uT0BnUEbpN/aebbaZq0A=;
+        b=SiHhn2EORjJktyP6ole7+icl8brF0K/6oI4LCeLlw02J2lpbhMvAPNl1iwrrEONmYd
+         PpBEeTNt96QDeTOVWo40aQlTlUx16IMRm8lXzP8ciYntjw/L8elDUO2PmtPlr5JA9Hje
+         ebCY0M6q6ltSfavsCGWj5PDx8p6nNBVccv3Qv18ujEk8PBW5Ig7Aa0vslAc0VV9Tz1cy
+         D5FEGMbKJHR+RfzAZwGmN1LfWv5VsXxHSGvy3JA2QSV2JQGwQJkOg+26M6Ovmvl6ouRd
+         op+7HqXRCzAABvxM+HaD3T4Ridc1RRdNmEcqugf0KngDaCxwE9v+gniVGMq2mcpkzmdb
+         Su2w==
+X-Gm-Message-State: AOJu0YxhleQEG+AWcJUs7FoRQpVeyBMzkvrVhM3ZCVcsHX4hZMuWHtdj
+	6vK7a3eb998MOfWITOREWm4=
+X-Google-Smtp-Source: AGHT+IEsV+h2RR95EuzPXtYJxgRwQjiz2wZtPq0RE+CF+iDP7dDZ+Q+TFeKqS5PzzZXQ/4Yr+xf+Sg==
+X-Received: by 2002:a05:6358:f653:b0:170:17eb:b51 with SMTP id ky19-20020a056358f65300b0017017eb0b51mr454151rwb.59.1701492868218;
+        Fri, 01 Dec 2023 20:54:28 -0800 (PST)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id g34-20020a635662000000b005c19c586cb7sm3874124pgm.33.2023.12.01.20.54.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Dec 2023 20:54:27 -0800 (PST)
+Message-ID: <cdcb7913-c939-4218-ad79-0a7568db22b5@gmail.com>
+Date: Fri, 1 Dec 2023 20:54:25 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231129-riscv-restrict-dwarf5-llvm-v1-0-ec0d368fb538@kernel.org>
- <20231129-riscv-restrict-dwarf5-llvm-v1-2-ec0d368fb538@kernel.org>
- <CAFP8O3JscgacLPX-_pc2J0uhqk=ehtxSNStzo7PwewPSuXkxiw@mail.gmail.com>
- <20231201194858.GA290910@dev-arch.thelio-3990X> <CAFP8O3+uta+GQO7dpeNLe0OMFnX-tdEyvHREEu1ThjA3nFtTkQ@mail.gmail.com>
- <20231201215021.GA2579712@dev-arch.thelio-3990X>
-In-Reply-To: <20231201215021.GA2579712@dev-arch.thelio-3990X>
-From: Fangrui Song <maskray@google.com>
-Date: Fri, 1 Dec 2023 20:31:12 -0800
-Message-ID: <CAFP8O3LJPqPVxcRzi_Qxvu_w8w76BXmfWv8YnsK+bMvqXb701Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] riscv: Restrict DWARF5 when building with LLVM to
- known working versions
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	conor@kernel.org, ndesaulniers@google.com, linux-riscv@lists.infradead.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Dec 1, 2023 at 1:50=E2=80=AFPM Nathan Chancellor <nathan@kernel.org=
-> wrote:
->
-> On Fri, Dec 01, 2023 at 12:12:26PM -0800, Fangrui Song wrote:
-> > On Fri, Dec 1, 2023 at 11:49=E2=80=AFAM Nathan Chancellor <nathan@kerne=
-l.org> wrote:
-> > >
-> > > On Thu, Nov 30, 2023 at 08:16:41AM -0800, Fangrui Song wrote:
-> > > > On Wed, Nov 29, 2023 at 3:30=E2=80=AFPM Nathan Chancellor <nathan@k=
-ernel.org> wrote:
-> > > > >
-> > > > > LLVM prior to 18.0.0 would generate incorrect debug info for DWAR=
-F5 due
-> > > > > to linker relaxation, which was worked around in clang by default=
-ing
-> > > > > RISC-V to DWARF4 [1]. Unfortunately, this workaround does not wor=
-k for
-> > > > > the kernel because the DWARF version can be independently changed=
- from
-> > > > > the default in Kconfig.
-> > > > >
-> > > > > Do not allow DWARF5 to be selected for RISC-V when using linker
-> > > > > relaxation (ld.lld >=3D 15.0.0) and a version of LLVM that does n=
-ot have
-> > > > > the fixes (the integrated assembler [2] and ld.lld [3] < 18.0.0)
-> > > > > necessary to generate the correct debug info.
-> > > > >
-> > > > > Link: https://github.com/llvm/llvm-project/commit/bbc0f99f3bc96f1=
-db16f649fc21dd18e5b0918f6 [1]
-> > > > > Link: https://github.com/llvm/llvm-project/commit/1df5ea29b43690b=
-6622db2cad7b745607ca4de6a [2]
-> > > > > Link: https://github.com/llvm/llvm-project/commit/7ffabb61a556944=
-4b5ac9322e22e5471cc5e4a77 [3]
-> > > > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > > > > ---
-> > > > >  arch/riscv/Kconfig | 9 +++++++++
-> > > > >  lib/Kconfig.debug  | 1 +
-> > > > >  2 files changed, 10 insertions(+)
-> > > > >
-> > > > > diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-> > > > > index 72be1d8122a3..81b473cb47b0 100644
-> > > > > --- a/arch/riscv/Kconfig
-> > > > > +++ b/arch/riscv/Kconfig
-> > > > > @@ -186,6 +186,15 @@ config RISCV_USE_LINKER_RELAXATION
-> > > > >         # https://github.com/llvm/llvm-project/commit/6611d58f5bb=
-cbec77262d392e2923e1d680f6985
-> > > > >         depends on !LD_IS_LLD || LLD_VERSION >=3D 150000
-> > > > >
-> > > > > +# https://github.com/llvm/llvm-project/commit/bbc0f99f3bc96f1db1=
-6f649fc21dd18e5b0918f6
-> > > > > +config ARCH_HAS_BROKEN_DWARF5
-> > > > > +       def_bool y
-> > > > > +       depends on RISCV_USE_LINKER_RELAXATION
-> > > > > +       # https://github.com/llvm/llvm-project/commit/1df5ea29b43=
-690b6622db2cad7b745607ca4de6a
-> > > > > +       depends on AS_IS_LLVM && AS_VERSION < 180000
-> > > > > +       # https://github.com/llvm/llvm-project/commit/7ffabb61a55=
-69444b5ac9322e22e5471cc5e4a77
-> > > > > +       depends on LD_IS_LLD && LLD_VERSION < 180000
-> > > > > +
-> > > > >  config ARCH_MMAP_RND_BITS_MIN
-> > > > >         default 18 if 64BIT
-> > > > >         default 8
-> > > > > diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> > > > > index cc7d53d9dc01..a0ebce05a368 100644
-> > > > > --- a/lib/Kconfig.debug
-> > > > > +++ b/lib/Kconfig.debug
-> > > > > @@ -282,6 +282,7 @@ config DEBUG_INFO_DWARF4
-> > > > >  config DEBUG_INFO_DWARF5
-> > > > >         bool "Generate DWARF Version 5 debuginfo"
-> > > > >         select DEBUG_INFO
-> > > > > +       depends on !ARCH_HAS_BROKEN_DWARF5
-> > > > >         depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS=
-_VERSION >=3D 23502 && AS_HAS_NON_CONST_LEB128)
-> > > > >         help
-> > > > >           Generate DWARF v5 debug info. Requires binutils 2.35.2,=
- gcc 5.0+ (gcc
-> > > > >
-> > > > > --
-> > > > > 2.43.0
-> > > > >
-> > > >
-> > > > A comment and "depends on" condition introduced by commit
-> > > > 0a6de78cff600cb991f2a1b7ed376935871796a0 "lib/Kconfig.debug: Add ch=
-eck
-> > > > for non-constant .{s,u}leb128 support to DWARF5"
-> > > > can now be refined.
-> > > >
-> > > > > ib/Kconfig.debug
-> > > > > (AS_IS_GNU && AS_VERSION >=3D 23502 && AS_HAS_NON_CONST_LEB128)
-> > > >
-> > > > AS_VERSION can now be 24100.
-> > >
-> > > That will impact all architectures that use GNU as, even though the
-> > > issue was really only seen on RISC-V. It probably doesn't matter sinc=
-e
-> > > most architectures work with the integrated assembler and that is wha=
-t
-> > > we tell people to use but I think the current check will continue to
-> > > work.
-> >
-> > Agreed.
-> >
-> >     depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION
-> > >=3D 23502 && AS_HAS_NON_CONST_LEB128)
-> >
-> > is enabled for GCC. The long condition chain is for Clang. Given
-> > Clang's behavior, we can simplify this to
-> >
-> >     depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU &&
-> > AS_HAS_NON_CONST_LEB128)
->
-> I think we still need the version check due to
-> https://sourceware.org/bugzilla/show_bug.cgi?id=3D25611, which was added
-> in commit 98cd6f521f10 ("Kconfig: allow explicit opt in to DWARF v5").
-
-I see...
-
-> > This will still work even after R_LARCH_{ADD,SUB}_ULEB128 support is
-> > added to llvm-project.
-> > This condition matches HAVE_AS_LEB128 in GCC in spirit.
-> >
-> > > Alternatively, I could do something like this but it is quite ugly an=
-d
-> > > verbose :/
-> > >
-> > > diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> > > index a0ebce05a368..aea0ef5a5d1f 100644
-> > > --- a/lib/Kconfig.debug
-> > > +++ b/lib/Kconfig.debug
-> > > @@ -231,11 +231,6 @@ config DEBUG_INFO
-> > >           in the "Debug information" choice below, indicating that de=
-bug
-> > >           information will be generated for build targets.
-> > >
-> > > -# Clang is known to generate .{s,u}leb128 with symbol deltas with DW=
-ARF5, which
-> > > -# some targets may not support: https://sourceware.org/bugzilla/show=
-_bug.cgi?id=3D27215
-> > > -config AS_HAS_NON_CONST_LEB128
-> > > -       def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Le=
-xpr_start3:\n.Lexpr_end4:)
-> > > -
-> >
-> > Consider keeping this config, but just reword the comment.
->
-> Do you have a suggestion for how it should be reworded? I am struggling
-> to come up with something that conveys additional information in a
-> succinct manner.
-
-Perhaps: Clang generates .uleb128 with label differences for DWARF v5,
-a feature that older binutils ports, utilizing RISC-V style linker
-relaxation, do not support.
-
-(Signed LEB128 is used by DWARF as well, but it is encoded directly
-into DW_OP_fbreg/DW_LNS_advance_line/etc, and explicit .sleb128
-directives are not emitted)
-(In assemblers, "label difference" is a more common term.)
-(People working on DWARF tend to prefer DWARF v5 to DWARF5, when the
-full "DWARF version 5" feels too verbose.)
-
-> > >  choice
-> > >         prompt "Debug information"
-> > >         depends on DEBUG_KERNEL
-> > > @@ -258,7 +253,7 @@ config DEBUG_INFO_NONE
-> > >  config DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
-> > >         bool "Rely on the toolchain's implicit default DWARF version"
-> > >         select DEBUG_INFO
-> > > -       depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 1400=
-00 || (AS_IS_GNU && AS_VERSION >=3D 23502 && AS_HAS_NON_CONST_LEB128)
-> > > +       depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 1400=
-00 || (AS_IS_GNU && ((!RISCV && AS_VERSION >=3D 23502) || (RISCV && AS_VERS=
-ION >=3D 24100)))
-> >
-> > The RISCV condition would cause additional churn when LoongArch
-> > ULEB128 support is added.
->
-> Ah, I did not realize that LoongArch would have the same issue. This is
-> definitely not the right way to go for that then.
->
-> > >         help
-> > >           The implicit default version of DWARF debug info produced b=
-y a
-> > >           toolchain changes over time.
-> > > @@ -283,7 +278,7 @@ config DEBUG_INFO_DWARF5
-> > >         bool "Generate DWARF Version 5 debuginfo"
-> > >         select DEBUG_INFO
-> > >         depends on !ARCH_HAS_BROKEN_DWARF5
-> > > -       depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VER=
-SION >=3D 23502 && AS_HAS_NON_CONST_LEB128)
-> > > +       depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && ((!RIS=
-CV && AS_VERSION >=3D 23502) || (RISCV && AS_VERSION >=3D 24100)))
-> > >         help
-> > >           Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc=
- 5.0+ (gcc
-> > >           5.0+ accepts the -gdwarf-5 flag but only had partial suppor=
-t for some
->
-> Cheers,
-> Nathan
->
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 00/68] 5.15.141-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com
+References: <20231201082345.123842367@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+ HGuUuzv+GKZ6nsysJw==
+In-Reply-To: <20231201082345.123842367@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---=20
-=E5=AE=8B=E6=96=B9=E7=9D=BF
+
+On 12/1/2023 12:25 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.141 release.
+> There are 68 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 03 Dec 2023 08:23:33 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.141-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
