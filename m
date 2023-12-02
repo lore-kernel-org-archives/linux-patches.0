@@ -1,97 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5B017D2;
-	Fri,  1 Dec 2023 23:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78651FA2;
+	Sat,  2 Dec 2023 00:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaPocXJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70A3C433C9;
-	Fri,  1 Dec 2023 23:04:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701471900;
-	bh=8QM9HT8onEgqQAddB8/SA3iCORef5quAS35T+XsDQRs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TaPocXJMVe5qtUJSPlh/Z3bfVfmippRoj18kOiQe5GTipg6nooHM35LWW5rZoxJ9f
-	 neh3nMj12wovWs1Pc5X11kTcwaeNu8A6hKZZgKgK4pDa2rH1REtHMO15GDQDBAvy9R
-	 wPCgBf+kLJAqpnZpgWqakzhTz58Cbe9AscZKZYsk=
-Date: Sat, 2 Dec 2023 00:04:57 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
-Cc: Francis Laniel <flaniel@linux.microsoft.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com, Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH 5.15 00/69] 5.15.141-rc1 review
-Message-ID: <2023120223-diagnosis-niece-3932@gregkh>
-References: <20231130162133.035359406@linuxfoundation.org>
- <CAEUSe78tYPTFuauB7cxZzvAeMhzB_25Q8DqLUfF7Nro9WsUhNw@mail.gmail.com>
- <2023120134-sabotage-handset-0b0d@gregkh>
- <4879383.31r3eYUQgx@pwmachine>
- <2023120155-mascot-scope-7bc6@gregkh>
- <4cf40ef6-058f-4472-88c9-3dc735175c85@linaro.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FnQQrULV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA1FC433C9;
+	Sat,  2 Dec 2023 00:39:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701477548;
+	bh=iPaECh64/Sa4iA/As7XpVk06Txhu7bfpO1bKNa8FbFs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=FnQQrULVgMY1RxhFuRIDxSmyYneycJC43FqKx15L/oivnLcvU7d3JI3Lzcz91Ndzq
+	 UPnCaOjwzEdCWwD5xSKVSoSiq19eG9nzqqQIqtRLA+ZnXsa477IzYsMnawSs6OZu41
+	 /ZkuOKXrPYhj8poTSzbc3XQcS8e9yEtJ+VwGkO7welcGw+VIfwLP7usHPmZROmAfle
+	 tD0taEM8GqlJ48/bvinlTM2x5aM/0x9chparkf/dmN9f7IANk+ePo1kmxJas6ZSgDn
+	 7DLZUqNs5RDTyzzNUfl3CxQyZifKP3lfUsbQND6nr9IIBpXIxIfD6ffkPt+sWR/9OD
+	 S8Y0KFrEWP3bA==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 6.6 000/112] 6.6.4-rc1 review
+Date: Sat,  2 Dec 2023 00:39:05 +0000
+Message-Id: <20231202003905.46296-1-sj@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231130162140.298098091@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4cf40ef6-058f-4472-88c9-3dc735175c85@linaro.org>
 
-On Fri, Dec 01, 2023 at 08:34:26AM -0600, Daniel Díaz wrote:
-> Hello!
+Hello,
+
+On 2023-11-30T16:20:47+00:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 6.6.4 release.
+> There are 112 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> On 01/12/23 3:44 a. m., Greg Kroah-Hartman wrote:
-> > Please take some time with a cross-compiler on the above listed
-> > architectures and configurations to verify your changes do not break
-> > anything again.
+> Responses should be made by Sat, 02 Dec 2023 16:21:18 +0000.
+> Anything received after that time might be too late.
 > 
-> It failed in more architectures than we initially reported. FWIW, this error can be easily reproduced this way:
-> 
->   tuxmake --runtime podman --target-arch arm     --toolchain gcc-8  --kconfig imx_v4_v5_defconfig
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 
-Fails for me:
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
 
-$ ~/.local/bin/tuxmake  --runtime podman --target-arch arm     --toolchain gcc-8  --kconfig imx_v4_v5_defconfig 
-Traceback (most recent call last):
-  File "/home/gregkh/.local/bin/tuxmake", line 8, in <module>
-    sys.exit(main())
-             ^^^^^^
-  File "/home/gregkh/.local/pipx/venvs/tuxmake/lib/python3.11/site-packages/tuxmake/cli.py", line 170, in main
-    build.run()
-  File "/home/gregkh/.local/pipx/venvs/tuxmake/lib/python3.11/site-packages/tuxmake/build.py", line 652, in run
-    self.prepare()
-  File "/home/gregkh/.local/pipx/venvs/tuxmake/lib/python3.11/site-packages/tuxmake/build.py", line 318, in prepare
-    self.runtime.prepare()
-  File "/home/gregkh/.local/pipx/venvs/tuxmake/lib/python3.11/site-packages/tuxmake/runtime.py", line 423, in prepare
-    self.prepare_image()
-  File "/home/gregkh/.local/pipx/venvs/tuxmake/lib/python3.11/site-packages/tuxmake/runtime.py", line 443, in prepare_image
-    do_pull()
-  File "/home/gregkh/.local/pipx/venvs/tuxmake/lib/python3.11/site-packages/tuxmake/utils.py", line 36, in retry_wrapper
-    ret = func(*args, **kwargs)
-          ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/gregkh/.local/pipx/venvs/tuxmake/lib/python3.11/site-packages/tuxmake/runtime.py", line 441, in do_pull
-    subprocess.check_call(pull)
-  File "/usr/lib/python3.11/subprocess.py", line 408, in check_call
-    retcode = call(*popenargs, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 389, in call
-    with Popen(*popenargs, **kwargs) as p:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.11/subprocess.py", line 1026, in __init__
-    self._execute_child(args, executable, preexec_fn, close_fds,
-  File "/usr/lib/python3.11/subprocess.py", line 1950, in _execute_child
-    raise child_exception_type(errno_num, err_msg, err_filename)
-FileNotFoundError: [Errno 2] No such file or directory: 'podman'
+Tested-by: SeongJae Park <sj@kernel.org>
 
-Are you sure that's the right command line to use?  :)
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] 6ed60a9257c1 ("Linux 6.6.4-rc1")
 
-thanks,
+Thanks,
+SJ
 
-greg k-h
+[...]
+
+---
+
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 2 selftests: damon: debugfs_schemes.sh
+ok 3 selftests: damon: debugfs_target_ids.sh
+ok 4 selftests: damon: debugfs_empty_targets.sh
+ok 5 selftests: damon: debugfs_huge_count_read_write.sh
+ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
+ok 7 selftests: damon: debugfs_rm_non_contexts.sh
+ok 8 selftests: damon: sysfs.sh
+ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
+ok 10 selftests: damon: reclaim.sh
+ok 11 selftests: damon: lru_sort.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
