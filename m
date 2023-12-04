@@ -1,39 +1,53 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105751DDD7;
-	Mon,  4 Dec 2023 23:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFF92F878
+	for <patches@lists.linux.dev>; Mon,  4 Dec 2023 23:25:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bNvG9d52"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B00C433C7;
-	Mon,  4 Dec 2023 23:11:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701731517;
-	bh=DVXCZ9jpOAnNg7LJEUeeMDB9ZjLGevPMDsIyu7d5WpQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bNvG9d527lXukIxR9+gLXuTRtcZ3LR1hX2B3aNpA7rsRtLbhjqerlUJqsy/CtL3nI
-	 DV9uuBfDQGd3TsZ5jgfL9uVmWQ/LEuoIl5Bvi3YFPD6uBoSg2njjtQPrzENhVc0/aL
-	 1PYLH1+nRyRY98F5llMANneXs5tqpN/pSD2oWFma3NQYi+LKKL+xqBmzKOeID/JiSh
-	 G/Eexl0vTWn7OZdUAlf+F4x58PjrDMnwV60SmD2zzTdiM32tNACPy5C2XJssIetlqM
-	 M+u4biG2quLP3Z/9NIBBcJ2VThXSLB8KWbpQoYGT51jEVSQ1qYgDJctD7YlVNd3TiD
-	 U3Bz9P6gsHB+g==
-Date: Mon, 4 Dec 2023 16:11:55 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Fangrui Song <maskray@google.com>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
-	conor@kernel.org, ndesaulniers@google.com,
-	linux-riscv@lists.infradead.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 2/2] riscv: Restrict DWARF5 when building with LLVM to
- known working versions
-Message-ID: <20231204231155.GA3560411@dev-arch.thelio-3990X>
-References: <20231129-riscv-restrict-dwarf5-llvm-v1-0-ec0d368fb538@kernel.org>
- <20231129-riscv-restrict-dwarf5-llvm-v1-2-ec0d368fb538@kernel.org>
- <CAFP8O3JscgacLPX-_pc2J0uhqk=ehtxSNStzo7PwewPSuXkxiw@mail.gmail.com>
- <20231201194858.GA290910@dev-arch.thelio-3990X>
- <CAFP8O3+uta+GQO7dpeNLe0OMFnX-tdEyvHREEu1ThjA3nFtTkQ@mail.gmail.com>
- <20231201215021.GA2579712@dev-arch.thelio-3990X>
- <CAFP8O3LJPqPVxcRzi_Qxvu_w8w76BXmfWv8YnsK+bMvqXb701Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BmkiEVWd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701732327; x=1733268327;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Rea7cSztxOU/Tn6j4cuH2tcjGKjYfBJMSKRByJlHmUs=;
+  b=BmkiEVWdCFSnV6+YT8CxRdhBnGVjrY8pG4HhQT67N0ifLn+lN0RIfUjY
+   0cN7OPnNKaecDWWGxiT5gG9S6l7BwHe8DcdP5fgYrcGhjg3KICX2Oa/L2
+   QpKIAMK1vvfw7UuKIP1VqyLNuSU/jQ/4BEb8W78wJ8IL5vhzKyCMT9jNo
+   YAOd5ImhFm+SQVtGsQysI6QegRPKPMNAq19Dt9K4ShACdcSlJRFG9vtgE
+   2ARi/s8zEEWybPwybzPlQN5vjSHaqWQUZ6RupWib+uKT3MyamzqthYotU
+   Ncr5LhJDWwaUGshwAwc0UcFjmK8VLy67bJrccih4u69V0Epie9At7rqrE
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="397714458"
+X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
+   d="scan'208";a="397714458"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 15:25:24 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="1018011391"
+X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
+   d="scan'208";a="1018011391"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 15:25:24 -0800
+Date: Mon, 4 Dec 2023 15:25:22 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>, Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v13 0/8] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <ZW5f4iiNaaPqndKt@agluck-desk3>
+References: <20231130003418.89964-1-tony.luck@intel.com>
+ <20231204185357.120501-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,62 +56,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAFP8O3LJPqPVxcRzi_Qxvu_w8w76BXmfWv8YnsK+bMvqXb701Q@mail.gmail.com>
+In-Reply-To: <20231204185357.120501-1-tony.luck@intel.com>
 
-On Fri, Dec 01, 2023 at 08:31:12PM -0800, Fangrui Song wrote:
-> Perhaps: Clang generates .uleb128 with label differences for DWARF v5,
-> a feature that older binutils ports, utilizing RISC-V style linker
-> relaxation, do not support.
+On Mon, Dec 04, 2023 at 10:53:49AM -0800, Tony Luck wrote:
+
+Boris: I've collected "Reviewed-by:" from Reinette for all patches. Babu
+sent a Tested-by for the series, and Reviewed-by for each patch just
+now.
+
+So it's ready to got into your to-be-reviewed queue.
+
+Thanks
+
+-Tony
+
+> The Sub-NUMA cluster feature on some Intel processors partitions the CPUs
+> that share an L3 cache into two or more sets. This plays havoc with the
+> Resource Director Technology (RDT) monitoring features.  Prior to this
+> patch Intel has advised that SNC and RDT are incompatible.
 > 
-> (Signed LEB128 is used by DWARF as well, but it is encoded directly
-> into DW_OP_fbreg/DW_LNS_advance_line/etc, and explicit .sleb128
-> directives are not emitted)
-> (In assemblers, "label difference" is a more common term.)
-> (People working on DWARF tend to prefer DWARF v5 to DWARF5, when the
-> full "DWARF version 5" feels too verbose.)
-
-Thanks, does this diff seem reasonable to you? I'd like to keep the
-issue link as a paper trail and I figured that we might as well make the
-configuration name slightly more accurate with that additional
-information. I will send it as a separate patch in v2 tomorrow if so in
-order to give people a chance to further chime in on the series.
-
-Cheers,
-Nathan
-
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index a0ebce05a368..76c2cc697573 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -231,9 +231,10 @@ config DEBUG_INFO
- 	  in the "Debug information" choice below, indicating that debug
- 	  information will be generated for build targets.
- 
--# Clang is known to generate .{s,u}leb128 with symbol deltas with DWARF5, which
--# some targets may not support: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
--config AS_HAS_NON_CONST_LEB128
-+# Clang generates .uleb128 with label differences for DWARF v5, a feature that
-+# older binutils ports do not support when utilizing RISC-V style linker
-+# relaxation: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
-+config AS_HAS_NON_CONST_ULEB128
- 	def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
- 
- choice
-@@ -258,7 +259,7 @@ config DEBUG_INFO_NONE
- config DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
- 	bool "Rely on the toolchain's implicit default DWARF version"
- 	select DEBUG_INFO
--	depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 140000 || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
-+	depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 140000 || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_ULEB128)
- 	help
- 	  The implicit default version of DWARF debug info produced by a
- 	  toolchain changes over time.
-@@ -283,7 +284,7 @@ config DEBUG_INFO_DWARF5
- 	bool "Generate DWARF Version 5 debuginfo"
- 	select DEBUG_INFO
- 	depends on !ARCH_HAS_BROKEN_DWARF5
--	depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
-+	depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_ULEB128)
- 	help
- 	  Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
- 	  5.0+ accepts the -gdwarf-5 flag but only had partial support for some
+> Some of these CPU support an MSR that can partition the RMID counters in
+> the same way. This allows monitoring features to be used. With the caveat
+> that users must be aware that Linux may migrate tasks more frequently
+> between SNC nodes than between "regular" NUMA nodes, so reading counters
+> from all SNC nodes may be needed to get a complete picture of activity
+> for tasks.
+> 
+> Cache and memory bandwidth allocation features continue to operate at
+> the scope of the L3 cache.
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> 
+> Changes since v12:
+> 
+> All:
+> 	Reinette - put commit tags in right order for TIP (Tested-by before
+> 	Reviewed-by)
+> 
+> Patch 7:
+> 	Fam Zheng - Check for -1 return from get_cpu_cacheinfo_id() and
+> 	increase size of bitmap tracking # of L3 instances.
+> 	Reinette - Add extra sanity checks. Note that this patch has
+> 	some additional tweaks beyond the e-mail discussion.
+> 		1) "3" is a valid return in addition to 1, 2, 4
+> 		2) Added a warning if the sanity checks fail that
+> 		prints number of CPU nodes and number of L3 cache
+> 		instances that were found.
+> 
+> Patch 8:
+> 	Babu - Fix grammar with an additional comma.
+> 
+> 
+> Tony Luck (8):
+>   x86/resctrl: Prepare for new domain scope
+>   x86/resctrl: Prepare to split rdt_domain structure
+>   x86/resctrl: Prepare for different scope for control/monitor
+>     operations
+>   x86/resctrl: Split the rdt_domain and rdt_hw_domain structures
+>   x86/resctrl: Add node-scope to the options for feature scope
+>   x86/resctrl: Introduce snc_nodes_per_l3_cache
+>   x86/resctrl: Sub NUMA Cluster detection and enable
+>   x86/resctrl: Update documentation with Sub-NUMA cluster changes
+> 
+>  Documentation/arch/x86/resctrl.rst        |  25 +-
+>  include/linux/resctrl.h                   |  85 +++--
+>  arch/x86/include/asm/msr-index.h          |   1 +
+>  arch/x86/kernel/cpu/resctrl/internal.h    |  66 ++--
+>  arch/x86/kernel/cpu/resctrl/core.c        | 433 +++++++++++++++++-----
+>  arch/x86/kernel/cpu/resctrl/ctrlmondata.c |  58 +--
+>  arch/x86/kernel/cpu/resctrl/monitor.c     |  68 ++--
+>  arch/x86/kernel/cpu/resctrl/pseudo_lock.c |  26 +-
+>  arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 149 ++++----
+>  9 files changed, 629 insertions(+), 282 deletions(-)
+> 
+> 
+> base-commit: 2cc14f52aeb78ce3f29677c2de1f06c0e91471ab
+> -- 
+> 2.41.0
+> 
