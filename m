@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589A36FB0;
-	Tue,  5 Dec 2023 03:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A546FB0;
+	Tue,  5 Dec 2023 03:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17E6zUjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B92C433C8;
-	Tue,  5 Dec 2023 03:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwsYjSBg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64920C433C8;
+	Tue,  5 Dec 2023 03:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747926;
-	bh=FmPj6coFaOCT1uWlbrsFWIYCRaF+XKBjxQmpPHdOJv8=;
+	s=korg; t=1701747929;
+	bh=A40534VbAQ26Ns0GdnX9Ccihcr7rLI6g1gz3TE9sU6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17E6zUjo26+dVPApnzz1P0DmFlDkZuijCyZXELstekpUmuekR+OqdjWCeqZtmMU2o
-	 wpnD4PC9GMuB7JLgsbYdVgewbaJIL16AKcFxysjO2axbTdbEQ2q1gUi/NsNobkWAz7
-	 f0E22Ul3/1nkNxWeWdff5R00FFOIYF+TBSIZTMck=
+	b=QwsYjSBgFYtl2LDaHgeH6EtWYCv2vcuxme/gxp8YFx/AKTsgUhEfute48Y8a+aI21
+	 IK0kXNCBRkeUedZxvVLMM9fYYagh9fd8lbb5pmM2o19rfxEp4rxCOk/ONtEWmYrk+V
+	 PjjOiFFB/+0GXVEsqIqqwhtBqzeP6FKBEPkY3ml0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 5.4 49/94] USB: dwc3: qcom: fix wakeup after probe deferral
-Date: Tue,  5 Dec 2023 12:17:17 +0900
-Message-ID: <20231205031525.608238492@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 50/94] io_uring: fix off-by one bvec index
+Date: Tue,  5 Dec 2023 12:17:18 +0900
+Message-ID: <20231205031525.658842662@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -41,70 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Keith Busch <kbusch@kernel.org>
 
-commit 41f5a0973259db9e4e3c9963d36505f80107d1a0 upstream.
+commit d6fef34ee4d102be448146f24caf96d7b4a05401 upstream.
 
-The Qualcomm glue driver is overriding the interrupt trigger types
-defined by firmware when requesting the wakeup interrupts during probe.
+If the offset equals the bv_len of the first registered bvec, then the
+request does not include any of that first bvec. Skip it so that drivers
+don't have to deal with a zero length bvec, which was observed to break
+NVMe's PRP list creation.
 
-This can lead to a failure to map the DP/DM wakeup interrupts after a
-probe deferral as the firmware defined trigger types do not match the
-type used for the initial mapping:
-
-	irq: type mismatch, failed to map hwirq-14 for interrupt-controller@b220000!
-	irq: type mismatch, failed to map hwirq-15 for interrupt-controller@b220000!
-
-Fix this by not overriding the firmware provided trigger types when
-requesting the wakeup interrupts.
-
-Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-Cc: stable@vger.kernel.org      # 4.18
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20231120161607.7405-3-johan+linaro@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: bd11b3a391e3 ("io_uring: don't use iov_iter_advance() for fixed buffers")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://lore.kernel.org/r/20231120221831.2646460-1-kbusch@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/io_uring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -361,7 +361,7 @@ static int dwc3_qcom_setup_irq(struct pl
- 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					"qcom_dwc3 HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "hs_phy_irq failed: %d\n", ret);
-@@ -376,7 +376,7 @@ static int dwc3_qcom_setup_irq(struct pl
- 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					"qcom_dwc3 DP_HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
-@@ -391,7 +391,7 @@ static int dwc3_qcom_setup_irq(struct pl
- 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					"qcom_dwc3 DM_HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
-@@ -406,7 +406,7 @@ static int dwc3_qcom_setup_irq(struct pl
- 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-+					IRQF_ONESHOT,
- 					"qcom_dwc3 SS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
+--- a/fs/io_uring.c
++++ b/fs/io_uring.c
+@@ -1256,7 +1256,7 @@ static int io_import_fixed(struct io_rin
+ 		 */
+ 		const struct bio_vec *bvec = imu->bvec;
+ 
+-		if (offset <= bvec->bv_len) {
++		if (offset < bvec->bv_len) {
+ 			iov_iter_advance(iter, offset);
+ 		} else {
+ 			unsigned long seg_skip;
 
 
