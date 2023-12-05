@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7FE6FB1;
-	Tue,  5 Dec 2023 03:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECB56FB1;
+	Tue,  5 Dec 2023 03:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WavEWzml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC2BC433C7;
-	Tue,  5 Dec 2023 03:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRC8UQtx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E54C433C7;
+	Tue,  5 Dec 2023 03:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747325;
-	bh=N0f77KYhWH6ZKrz2zARSOL1qw1IHqEujbAat7Gjv0ZA=;
+	s=korg; t=1701747328;
+	bh=ELeAC9dwp0fn0NV0EHzawrqEeAncT3IHQk8JnYBSCYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WavEWzmldcdIKvgFopKAK7HwPRZh0UQBekkR/6fKfdvKj5hIu3jNaPHTBRo0nNfAb
-	 VpGxn8Ih9gfrR2xCOND254xLFEYzmGQ4YZj3VMn9oEYHGe2e6f8N7qpRw8pUpx6ucR
-	 oHS+2h+YDtd6Isp+fXsyw6/C7WFBjVA1k5N1+6xQ=
+	b=CRC8UQtxmaHEXajkdvrmsKoFiYhoRqmuc05Pt1iSPjyIltGNa71Zh3MyjLSN/9zaj
+	 h/LsePrJhfFwPc4HPZHxakdDt8rofRIe5d5VpfNDgzwAIiRFtw9xow2Sgwb0UXvweJ
+	 DFvYkjgoMCZvVfABKR71lj34zM6HX6uUM9W31MPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 009/135] Revert "net: r8169: Disable multicast filter for RTL8168H and RTL8107E"
-Date: Tue,  5 Dec 2023 12:15:30 +0900
-Message-ID: <20231205031531.072676829@linuxfoundation.org>
+Subject: [PATCH 5.10 010/135] afs: Fix afs_server_list to be cleaned up with RCU
+Date: Tue,  5 Dec 2023 12:15:31 +0900
+Message-ID: <20231205031531.135587971@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,49 +43,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 6a26310273c323380da21eb23fcfd50e31140913 upstream.
+[ Upstream commit e6bace7313d61e31f2b16fa3d774fd8cb3cb869e ]
 
-This reverts commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df.
+afs_server_list is accessed with the rcu_read_lock() held from
+volume->servers, so it needs to be cleaned up correctly.
 
-I couldn't reproduce the reported issue. What I did, based on a pcap
-packet log provided by the reporter:
-- Used same chip version (RTL8168h)
-- Set MAC address to the one used on the reporters system
-- Replayed the EAPOL unicast packet that, according to the reporter,
-  was filtered out by the mc filter.
-The packet was properly received.
+Fix this by using kfree_rcu() instead of kfree().
 
-Therefore the root cause of the reported issue seems to be somewhere
-else. Disabling mc filtering completely for the most common chip
-version is a quite big hammer. Therefore revert the change and wait
-for further analysis results from the reporter.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8a070a964877 ("afs: Detect cell aliases 1 - Cells with root volumes")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/afs/internal.h    | 1 +
+ fs/afs/server_list.c | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 6e0fe77d1019c..ab6af1f1ad5bb 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2581,9 +2581,7 @@ static void rtl_set_rx_mode(struct net_device *dev)
- 		rx_mode &= ~AcceptMulticast;
- 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
- 		   dev->flags & IFF_ALLMULTI ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
-+		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
- 		/* accept all multicasts */
- 	} else if (netdev_mc_empty(dev)) {
- 		rx_mode &= ~AcceptMulticast;
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index 637cbe549397c..31c7a562147c2 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -546,6 +546,7 @@ struct afs_server_entry {
+ };
+ 
+ struct afs_server_list {
++	struct rcu_head		rcu;
+ 	afs_volid_t		vids[AFS_MAXTYPES]; /* Volume IDs */
+ 	refcount_t		usage;
+ 	unsigned char		nr_servers;
+diff --git a/fs/afs/server_list.c b/fs/afs/server_list.c
+index ed9056703505f..b59896b1de0af 100644
+--- a/fs/afs/server_list.c
++++ b/fs/afs/server_list.c
+@@ -17,7 +17,7 @@ void afs_put_serverlist(struct afs_net *net, struct afs_server_list *slist)
+ 		for (i = 0; i < slist->nr_servers; i++)
+ 			afs_unuse_server(net, slist->servers[i].server,
+ 					 afs_server_trace_put_slist);
+-		kfree(slist);
++		kfree_rcu(slist, rcu);
+ 	}
+ }
+ 
 -- 
 2.42.0
 
