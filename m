@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F04A6AA0;
-	Tue,  5 Dec 2023 03:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0E26AA0;
+	Tue,  5 Dec 2023 03:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdULReEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E65C433C8;
-	Tue,  5 Dec 2023 03:20:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayxy4AFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C3CC433C7;
+	Tue,  5 Dec 2023 03:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746423;
-	bh=kROJZ4DEvX4VfUg4A6dkCzvrKlqDI9GjjTTjiuo3YI0=;
+	s=korg; t=1701746426;
+	bh=cro1T1Mu5sIqxCijRJAO7PnLliLrXWopztxriZw4Igs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdULReEhr35Y2ifAAwvPO0gxu9RfFyGp8adzKSb1imFBuc3GyAspipgrEFNGlu6m+
-	 kK2Bqcw3kaWGr8sbxbl0evbfPSe7UlxWDZ7AwUNSRthnQlJvNTXFj7Fif0wJndOZIH
-	 Xnb8Den0RvgSjBoicv55HIAmQmHf48KMooAoDhAM=
+	b=ayxy4AFzCYGHx4tBk8hOLnKOdM3xP6wZ1y7agB4pxFha58JLS4YNaOcZaYU6J9gBm
+	 RsGoqSD8JZQwS9giTEdxgAL5pJxaeOVvuwhfQSfBHHIjYl/FwkmO7ALFXKxEwRRzIl
+	 uqx5hJ6ixOcdAbCCLesprdDqZ+W96isL8muY1d24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 019/134] ALSA: hda/realtek: Headset Mic VREF to 100%
-Date: Tue,  5 Dec 2023 12:14:51 +0900
-Message-ID: <20231205031536.560719189@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.com>,
+	Shyam Prasad N <nspmangalore@gmail.com>,
+	Rohith Surabattula <rohiths.msft@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	linux-mm@kvack.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 002/134] cifs: Fix FALLOC_FL_ZERO_RANGE by setting i_size if EOF moved
+Date: Tue,  5 Dec 2023 12:14:34 +0900
+Message-ID: <20231205031535.347165085@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -41,52 +47,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: David Howells <dhowells@redhat.com>
 
-commit baaacbff64d9f34b64f294431966d035aeadb81c upstream.
+commit 83d5518b124dfd605f10a68128482c839a239f9d upstream.
 
-This platform need to set Mic VREF to 100%.
+Fix the cifs filesystem implementations of FALLOC_FL_ZERO_RANGE, in
+smb3_zero_range(), to set i_size after extending the file on the server.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/0916af40f08a4348a3298a9a59e6967e@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 72c419d9b073 ("cifs: fix smb3_zero_range so it can expand the file-size when required")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Howells <dhowells@redhat.com>
+Acked-by: Paulo Alcantara <pc@manguebit.com>
+cc: Shyam Prasad N <nspmangalore@gmail.com>
+cc: Rohith Surabattula <rohiths.msft@gmail.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-cifs@vger.kernel.org
+cc: linux-mm@kvack.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/smb/client/smb2ops.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -1986,6 +1986,7 @@ enum {
- 	ALC887_FIXUP_ASUS_AUDIO,
- 	ALC887_FIXUP_ASUS_HMIC,
- 	ALCS1200A_FIXUP_MIC_VREF,
-+	ALC888VD_FIXUP_MIC_100VREF,
- };
- 
- static void alc889_fixup_coef(struct hda_codec *codec,
-@@ -2539,6 +2540,13 @@ static const struct hda_fixup alc882_fix
- 			{}
- 		}
- 	},
-+	[ALC888VD_FIXUP_MIC_100VREF] = {
-+		.type = HDA_FIXUP_PINCTLS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x18, PIN_VREF100 }, /* headset mic */
-+			{}
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3305,6 +3305,7 @@ static long smb3_zero_range(struct file
+ 	struct inode *inode = file_inode(file);
+ 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
+ 	struct cifsFileInfo *cfile = file->private_data;
++	unsigned long long new_size;
+ 	long rc;
+ 	unsigned int xid;
+ 	__le64 eof;
+@@ -3335,10 +3336,15 @@ static long smb3_zero_range(struct file
+ 	/*
+ 	 * do we also need to change the size of the file?
+ 	 */
+-	if (keep_size == false && i_size_read(inode) < offset + len) {
+-		eof = cpu_to_le64(offset + len);
++	new_size = offset + len;
++	if (keep_size == false && (unsigned long long)i_size_read(inode) < new_size) {
++		eof = cpu_to_le64(new_size);
+ 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
+ 				  cfile->fid.volatile_fid, cfile->pid, &eof);
++		if (rc >= 0) {
++			truncate_setsize(inode, new_size);
++			fscache_resize_cookie(cifs_inode_cookie(inode), new_size);
 +		}
-+	},
- };
+ 	}
  
- static const struct snd_pci_quirk alc882_fixup_tbl[] = {
-@@ -2608,6 +2616,7 @@ static const struct snd_pci_quirk alc882
- 	SND_PCI_QUIRK(0x106b, 0x4a00, "Macbook 5,2", ALC889_FIXUP_MBA11_VREF),
- 
- 	SND_PCI_QUIRK(0x1071, 0x8258, "Evesham Voyaeger", ALC882_FIXUP_EAPD),
-+	SND_PCI_QUIRK(0x10ec, 0x12d8, "iBase Elo Touch", ALC888VD_FIXUP_MIC_100VREF),
- 	SND_PCI_QUIRK(0x13fe, 0x1009, "Advantech MIT-W101", ALC886_FIXUP_EAPD),
- 	SND_PCI_QUIRK(0x1458, 0xa002, "Gigabyte EP45-DS3/Z87X-UD3H", ALC889_FIXUP_FRONT_HP_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1458, 0xa0b8, "Gigabyte AZ370-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
+  zero_range_exit:
 
 
