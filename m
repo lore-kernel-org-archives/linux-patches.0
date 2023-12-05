@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741596FB0;
-	Tue,  5 Dec 2023 03:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A106FB0;
+	Tue,  5 Dec 2023 03:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtrnrrMF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A93C433C8;
-	Tue,  5 Dec 2023 03:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+8lo3Co"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04C7C433C8;
+	Tue,  5 Dec 2023 03:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747960;
-	bh=M3P6jRhdKQCi69zlhfntJv1UoZIxaNklvPjnky1Ws9c=;
+	s=korg; t=1701747963;
+	bh=tNK0gOlORZxIckMb03UbHQeJ7toTh6kpv9zvnTr1xB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtrnrrMFX7AuWPO1mCWw0hzy86NclOcQPyHqVjPASZt9L25mDeiITefVZG5Dnqfrg
-	 VneD4oBRvPydf14KKswsOg4sNXZ0sify+F0n93zzFFckiDsgf6vXTYy5S2AObX9a16
-	 iQVzpalCjw6t/VklLEweMFqtynvltf6Av9k7rqLk=
+	b=D+8lo3CoqyOWFz8ia4WGJq7BzKkAW8+IZpFogtDG3rZNd+0YXJzXFeBKUjiKBL4sA
+	 ycIazJJHdeWwOGzv81IileyQCPqoy8CaaShKmluZZR6DaMObzvIABktKNNRMWzPrP/
+	 uH2OfMSHrPx/y31qvc1eqALztBohpwvwsUWYDVBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Coly Li <colyli@suse.de>,
-	Markus Weippert <markus@gekmihesg.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.4 61/94] bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
-Date: Tue,  5 Dec 2023 12:17:29 +0900
-Message-ID: <20231205031526.244874925@linuxfoundation.org>
+	Timothy Pearson <tpearson@raptorengineering.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.4 62/94] powerpc: Dont clobber f0/vs0 during fp|altivec register save
+Date: Tue,  5 Dec 2023 12:17:30 +0900
+Message-ID: <20231205031526.299881923@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -43,72 +42,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Weippert <markus@gekmihesg.de>
+From: Timothy Pearson <tpearson@raptorengineering.com>
 
-commit bb6cc253861bd5a7cf8439e2118659696df9619f upstream.
+commit 5e1d824f9a283cbf90f25241b66d1f69adb3835b upstream.
 
-Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
-node allocations") replaced IS_ERR_OR_NULL by IS_ERR. This leads to a
-NULL pointer dereference.
+During floating point and vector save to thread data f0/vs0 are
+clobbered by the FPSCR/VSCR store routine. This has been obvserved to
+lead to userspace register corruption and application data corruption
+with io-uring.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000080
-Call Trace:
- ? __die_body.cold+0x1a/0x1f
- ? page_fault_oops+0xd2/0x2b0
- ? exc_page_fault+0x70/0x170
- ? asm_exc_page_fault+0x22/0x30
- ? btree_node_free+0xf/0x160 [bcache]
- ? up_write+0x32/0x60
- btree_gc_coalesce+0x2aa/0x890 [bcache]
- ? bch_extent_bad+0x70/0x170 [bcache]
- btree_gc_recurse+0x130/0x390 [bcache]
- ? btree_gc_mark_node+0x72/0x230 [bcache]
- bch_btree_gc+0x5da/0x600 [bcache]
- ? cpuusage_read+0x10/0x10
- ? bch_btree_gc+0x600/0x600 [bcache]
- bch_gc_thread+0x135/0x180 [bcache]
+Fix it by restoring f0/vs0 after FPSCR/VSCR store has completed for
+all the FP, altivec, VMX register save paths.
 
-The relevant code starts with:
+Tested under QEMU in kvm mode, running on a Talos II workstation with
+dual POWER9 DD2.2 CPUs.
 
-    new_nodes[0] = NULL;
+Additional detail (mpe):
 
-    for (i = 0; i < nodes; i++) {
-        if (__bch_keylist_realloc(&keylist, bkey_u64s(&r[i].b->key)))
-            goto out_nocoalesce;
-    // ...
-out_nocoalesce:
-    // ...
-    for (i = 0; i < nodes; i++)
-        if (!IS_ERR(new_nodes[i])) {  // IS_ERR_OR_NULL before
-028ddcac477b
-            btree_node_free(new_nodes[i]);  // new_nodes[0] is NULL
-            rw_unlock(true, new_nodes[i]);
-        }
+Typically save_fpu() is called from __giveup_fpu() which saves the FP
+regs and also *turns off FP* in the tasks MSR, meaning the kernel will
+reload the FP regs from the thread struct before letting the task use FP
+again. So in that case save_fpu() is free to clobber f0 because the FP
+regs no longer hold live values for the task.
 
-This patch replaces IS_ERR() by IS_ERR_OR_NULL() to fix this.
+There is another case though, which is the path via:
+  sys_clone()
+    ...
+    copy_process()
+      dup_task_struct()
+        arch_dup_task_struct()
+          flush_all_to_thread()
+            save_all()
 
-Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
-Link: https://lore.kernel.org/all/3DF4A87A-2AC1-4893-AE5F-E921478419A9@suse.de/
-Cc: stable@vger.kernel.org
-Cc: Zheng Wang <zyytlz.wz@163.com>
-Cc: Coly Li <colyli@suse.de>
-Signed-off-by: Markus Weippert <markus@gekmihesg.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+That path saves the FP regs but leaves them live. That's meant as an
+optimisation for a process that's using FP/VSX and then calls fork(),
+leaving the regs live means the parent process doesn't have to take a
+fault after the fork to get its FP regs back. The optimisation was added
+in commit 8792468da5e1 ("powerpc: Add the ability to save FPU without
+giving it up").
+
+That path does clobber f0, but f0 is volatile across function calls,
+and typically programs reach copy_process() from userspace via a syscall
+wrapper function. So in normal usage f0 being clobbered across a
+syscall doesn't cause visible data corruption.
+
+But there is now a new path, because io-uring can call copy_process()
+via create_io_thread() from the signal handling path. That's OK if the
+signal is handled as part of syscall return, but it's not OK if the
+signal is handled due to some other interrupt.
+
+That path is:
+
+interrupt_return_srr_user()
+  interrupt_exit_user_prepare()
+    interrupt_exit_user_prepare_main()
+      do_notify_resume()
+        get_signal()
+          task_work_run()
+            create_worker_cb()
+              create_io_worker()
+                copy_process()
+                  dup_task_struct()
+                    arch_dup_task_struct()
+                      flush_all_to_thread()
+                        save_all()
+                          if (tsk->thread.regs->msr & MSR_FP)
+                            save_fpu()
+                            # f0 is clobbered and potentially live in userspace
+
+Note the above discussion applies equally to save_altivec().
+
+Fixes: 8792468da5e1 ("powerpc: Add the ability to save FPU without giving it up")
+Cc: stable@vger.kernel.org # v4.6+
+Closes: https://lore.kernel.org/all/480932026.45576726.1699374859845.JavaMail.zimbra@raptorengineeringinc.com/
+Closes: https://lore.kernel.org/linuxppc-dev/480221078.47953493.1700206777956.JavaMail.zimbra@raptorengineeringinc.com/
+Tested-by: Timothy Pearson <tpearson@raptorengineering.com>
+Tested-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
+[mpe: Reword change log to describe exact path of corruption & other minor tweaks]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/1921539696.48534988.1700407082933.JavaMail.zimbra@raptorengineeringinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/btree.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/fpu.S    |   13 +++++++++++++
+ arch/powerpc/kernel/vector.S |    2 ++
+ 2 files changed, 15 insertions(+)
 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1538,7 +1538,7 @@ out_nocoalesce:
- 	bch_keylist_free(&keylist);
+--- a/arch/powerpc/kernel/fpu.S
++++ b/arch/powerpc/kernel/fpu.S
+@@ -24,6 +24,15 @@
+ #include <asm/feature-fixups.h>
  
- 	for (i = 0; i < nodes; i++)
--		if (!IS_ERR(new_nodes[i])) {
-+		if (!IS_ERR_OR_NULL(new_nodes[i])) {
- 			btree_node_free(new_nodes[i]);
- 			rw_unlock(true, new_nodes[i]);
- 		}
+ #ifdef CONFIG_VSX
++#define __REST_1FPVSR(n,c,base)						\
++BEGIN_FTR_SECTION							\
++	b	2f;							\
++END_FTR_SECTION_IFSET(CPU_FTR_VSX);					\
++	REST_FPR(n,base);						\
++	b	3f;							\
++2:	REST_VSR(n,c,base);						\
++3:
++
+ #define __REST_32FPVSRS(n,c,base)					\
+ BEGIN_FTR_SECTION							\
+ 	b	2f;							\
+@@ -42,9 +51,11 @@ END_FTR_SECTION_IFSET(CPU_FTR_VSX);
+ 2:	SAVE_32VSRS(n,c,base);						\
+ 3:
+ #else
++#define __REST_1FPVSR(n,b,base)		REST_FPR(n, base)
+ #define __REST_32FPVSRS(n,b,base)	REST_32FPRS(n, base)
+ #define __SAVE_32FPVSRS(n,b,base)	SAVE_32FPRS(n, base)
+ #endif
++#define REST_1FPVSR(n,c,base)   __REST_1FPVSR(n,__REG_##c,__REG_##base)
+ #define REST_32FPVSRS(n,c,base) __REST_32FPVSRS(n,__REG_##c,__REG_##base)
+ #define SAVE_32FPVSRS(n,c,base) __SAVE_32FPVSRS(n,__REG_##c,__REG_##base)
+ 
+@@ -68,6 +79,7 @@ _GLOBAL(store_fp_state)
+ 	SAVE_32FPVSRS(0, R4, R3)
+ 	mffs	fr0
+ 	stfd	fr0,FPSTATE_FPSCR(r3)
++	REST_1FPVSR(0, R4, R3)
+ 	blr
+ EXPORT_SYMBOL(store_fp_state)
+ 
+@@ -132,6 +144,7 @@ _GLOBAL(save_fpu)
+ 2:	SAVE_32FPVSRS(0, R4, R6)
+ 	mffs	fr0
+ 	stfd	fr0,FPSTATE_FPSCR(r6)
++	REST_1FPVSR(0, R4, R6)
+ 	blr
+ 
+ /*
+--- a/arch/powerpc/kernel/vector.S
++++ b/arch/powerpc/kernel/vector.S
+@@ -32,6 +32,7 @@ _GLOBAL(store_vr_state)
+ 	mfvscr	v0
+ 	li	r4, VRSTATE_VSCR
+ 	stvx	v0, r4, r3
++	lvx	v0, 0, r3
+ 	blr
+ EXPORT_SYMBOL(store_vr_state)
+ 
+@@ -102,6 +103,7 @@ _GLOBAL(save_altivec)
+ 	mfvscr	v0
+ 	li	r4,VRSTATE_VSCR
+ 	stvx	v0,r4,r7
++	lvx	v0,0,r7
+ 	blr
+ 
+ #ifdef CONFIG_VSX
 
 
