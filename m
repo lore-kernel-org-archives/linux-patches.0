@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0E76AC2;
-	Tue,  5 Dec 2023 03:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1D26AA0;
+	Tue,  5 Dec 2023 03:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7frYhh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CC6C433C7;
-	Tue,  5 Dec 2023 03:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGKUNDqN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30529C433C8;
+	Tue,  5 Dec 2023 03:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746309;
-	bh=aB6wAR4Ot6F+a0DHgTe5AvzifXwzJZrk7ujd/DJgekc=;
+	s=korg; t=1701746312;
+	bh=U02+spzQUIFtKekhsg6GhsQArr4AOkkjk743FEOXI0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7frYhh3CgrdxzTLOdi2WJSuJnkQMV4gu0AwqtHoMpyC8aVEvddpYao0Q6qFi3FXK
-	 ULk1vnbU7rldrE/YI0TMLbvqDNLB1NHAV1wsezpG7mKja1hRsPeaR2SPqYauSgHl2m
-	 x6fu3X4TlIBQWlejLL2K9nDKUyL1Q74M0SMTxlto=
+	b=LGKUNDqNFyAaXyy1H9DcJoe9tyxewrAZ5qSI2SgpoExRyqCXZCAnR0yiTyhoXwBTr
+	 f2kIR7kAvzDEJlaf0WJYoXP2Z4KS4RsETXHpTXtSbIiZe/+yPznKUREJJ0IXakWsOs
+	 uxQBZXCTem/nVYVHHBIsMIpzI7u2uaynpT/Kx3RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Christopher Obbard <chris.obbard@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 04/30] drm/rockchip: vop: Fix color for RGB888/BGR888 format on VOP full
-Date: Tue,  5 Dec 2023 12:16:11 +0900
-Message-ID: <20231205031511.756970896@linuxfoundation.org>
+Subject: [PATCH 4.14 05/30] ipv4: Correct/silence an endian warning in __ip_do_redirect
+Date: Tue,  5 Dec 2023 12:16:12 +0900
+Message-ID: <20231205031511.809764378@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031511.476698159@linuxfoundation.org>
 References: <20231205031511.476698159@linuxfoundation.org>
@@ -44,74 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit bb0a05acd6121ff0e810b44fdc24dbdfaa46b642 ]
+[ Upstream commit c0e2926266af3b5acf28df0a8fc6e4d90effe0bb ]
 
-Use of DRM_FORMAT_RGB888 and DRM_FORMAT_BGR888 on e.g. RK3288, RK3328
-and RK3399 result in wrong colors being displayed.
+net/ipv4/route.c:783:46: warning: incorrect type in argument 2 (different base types)
+net/ipv4/route.c:783:46:    expected unsigned int [usertype] key
+net/ipv4/route.c:783:46:    got restricted __be32 [usertype] new_gw
 
-The issue can be observed using modetest:
-
-  modetest -s <connector_id>@<crtc_id>:1920x1080-60@RG24
-  modetest -s <connector_id>@<crtc_id>:1920x1080-60@BG24
-
-Vendor 4.4 kernel apply an inverted rb swap for these formats on VOP
-full framework (IP version 3.x) compared to VOP little framework (2.x).
-
-Fix colors by applying different rb swap for VOP full framework (3.x)
-and VOP little framework (2.x) similar to vendor 4.4 kernel.
-
-Fixes: 85a359f25388 ("drm/rockchip: Add BGR formats to VOP")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Tested-by: Diederik de Haas <didi.debian@cknow.org>
-Reviewed-by: Christopher Obbard <chris.obbard@collabora.com>
-Tested-by: Christopher Obbard <chris.obbard@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231026191500.2994225-1-jonas@kwiboo.se
+Fixes: 969447f226b4 ("ipv4: use new_gw for redirect neigh lookup")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Link: https://lore.kernel.org/r/20231119141759.420477-1-chentao@kylinos.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ net/ipv4/route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index 3f32be1a682e5..9302233b55035 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -202,14 +202,22 @@ static inline void vop_cfg_done(struct vop *vop)
- 	VOP_REG_SET(vop, common, cfg_done, 1);
- }
- 
--static bool has_rb_swapped(uint32_t format)
-+static bool has_rb_swapped(uint32_t version, uint32_t format)
- {
- 	switch (format) {
- 	case DRM_FORMAT_XBGR8888:
- 	case DRM_FORMAT_ABGR8888:
--	case DRM_FORMAT_BGR888:
- 	case DRM_FORMAT_BGR565:
- 		return true;
-+	/*
-+	 * full framework (IP version 3.x) only need rb swapped for RGB888 and
-+	 * little framework (IP version 2.x) only need rb swapped for BGR888,
-+	 * check for 3.x to also only rb swap BGR888 for unknown vop version
-+	 */
-+	case DRM_FORMAT_RGB888:
-+		return VOP_MAJOR(version) == 3;
-+	case DRM_FORMAT_BGR888:
-+		return VOP_MAJOR(version) != 3;
- 	default:
- 		return false;
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 4a6f4ef369d05..239b54c03a657 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -806,7 +806,7 @@ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flow
+ 			goto reject_redirect;
  	}
-@@ -786,7 +794,7 @@ static void vop_plane_atomic_update(struct drm_plane *plane,
- 	VOP_WIN_SET(vop, win, dsp_info, dsp_info);
- 	VOP_WIN_SET(vop, win, dsp_st, dsp_st);
  
--	rb_swap = has_rb_swapped(fb->format->format);
-+	rb_swap = has_rb_swapped(vop->data->version, fb->format->format);
- 	VOP_WIN_SET(vop, win, rb_swap, rb_swap);
- 
- 	if (is_alpha_support(fb->format->format)) {
+-	n = __ipv4_neigh_lookup(rt->dst.dev, new_gw);
++	n = __ipv4_neigh_lookup(rt->dst.dev, (__force u32)new_gw);
+ 	if (!n)
+ 		n = neigh_create(&arp_tbl, &new_gw, rt->dst.dev);
+ 	if (!IS_ERR(n)) {
 -- 
 2.42.0
 
