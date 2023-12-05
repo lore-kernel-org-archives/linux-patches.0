@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883DC6AA0;
-	Tue,  5 Dec 2023 03:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637186AA0;
+	Tue,  5 Dec 2023 03:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrZJzXJH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB983C433C7;
-	Tue,  5 Dec 2023 03:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZG0ZmXP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDD2C433C8;
+	Tue,  5 Dec 2023 03:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746368;
-	bh=CvvTKmTR3AvjnNA/X5fh7m4ByBq1++oAdO2eFJrK9x0=;
+	s=korg; t=1701746371;
+	bh=yShgrrSQzAINEGmpu8bfGaYsU339wZjTpVN0mDWkowA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrZJzXJH9n0fVQRbUyEJUMQ4AOpngeaA32I7HUxIFTmeIYe6dBY4ifyhMgTgMBzml
-	 UaZNVsFQRX38VPT3g7K+cypaUOT0YaxQuAh+ggbhG4/NaVf/uYobNqjUSiFXJ1yGjO
-	 8z0JMrHxJiOf2YUz/9TlvlRwQnZDqU/sCqdgFPNg=
+	b=ZG0ZmXP3g7CK4NxXFfCjUUJ+AASFoD1VgyMfpwLIuGsx1VqTpOgi1jrkWX0bZqW9i
+	 ZbnNd4G6UIgYhlLvl9r6Nb6dv4MFlHQs2H9dhvSyf9KusMKOoemzKDqDSncuEr6j0i
+	 Kq5Mo4sfWxx8JBgIh+RhMB4YpMbJ9W2X2ltDuqqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangyu Chen <cyy@cyyself.name>,
-	Asuna Yang <SpriteOvO@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.14 13/30] USB: serial: option: add Luat Air72*U series products
-Date: Tue,  5 Dec 2023 12:16:20 +0900
-Message-ID: <20231205031512.280850958@linuxfoundation.org>
+	Coly Li <colyli@suse.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 4.14 14/30] bcache: check return value from btree_node_alloc_replacement()
+Date: Tue,  5 Dec 2023 12:16:21 +0900
+Message-ID: <20231205031512.344244798@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031511.476698159@linuxfoundation.org>
 References: <20231205031511.476698159@linuxfoundation.org>
@@ -42,68 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asuna Yang <spriteovo@gmail.com>
+From: Coly Li <colyli@suse.de>
 
-commit da90e45d5afc4da2de7cd3ea7943d0f1baa47cc2 upstream.
+commit 777967e7e9f6f5f3e153abffb562bffaf4430d26 upstream.
 
-Update the USB serial option driver support for Luat Air72*U series
-products.
+In btree_gc_rewrite_node(), pointer 'n' is not checked after it returns
+from btree_gc_rewrite_node(). There is potential possibility that 'n' is
+a non NULL ERR_PTR(), referencing such error code is not permitted in
+following code. Therefore a return value checking is necessary after 'n'
+is back from btree_node_alloc_replacement().
 
-ID 1782:4e00 Spreadtrum Communications Inc. UNISOC-8910
-
-T: Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 13 Spd=480 MxCh= 0
-D: Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs= 1
-P: Vendor=1782 ProdID=4e00 Rev=00.00
-S: Manufacturer=UNISOC
-S: Product=UNISOC-8910
-C: #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=400mA
-I: If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E: Ad=82(I) Atr=03(Int.) MxPS= 8 Ivl=4096ms
-I: If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E: Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I: If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-If#= 2: AT
-If#= 3: PPP + AT
-If#= 4: Debug
-
-Co-developed-by: Yangyu Chen <cyy@cyyself.name>
-Signed-off-by: Yangyu Chen <cyy@cyyself.name>
-Signed-off-by: Asuna Yang <SpriteOvO@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Coly Li <colyli@suse.de>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc:  <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231120052503.6122-3-colyli@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/bcache/btree.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -612,6 +612,8 @@ static void option_instat_callback(struc
- #define UNISOC_VENDOR_ID			0x1782
- /* TOZED LT70-C based on UNISOC SL8563 uses UNISOC's vendor ID */
- #define TOZED_PRODUCT_LT70C			0x4055
-+/* Luat Air72*U series based on UNISOC UIS8910 uses UNISOC's vendor ID */
-+#define LUAT_PRODUCT_AIR720U			0x4e00
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -1483,6 +1483,8 @@ static int btree_gc_rewrite_node(struct
+ 		return 0;
  
- /* Device flags */
+ 	n = btree_node_alloc_replacement(replace, NULL);
++	if (IS_ERR(n))
++		return 0;
  
-@@ -2273,6 +2275,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
+ 	/* recheck reserve after allocating replacement node */
+ 	if (btree_check_reserve(b, NULL)) {
 
 
