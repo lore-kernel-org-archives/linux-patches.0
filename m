@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990E36FB1;
-	Tue,  5 Dec 2023 03:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE1C6FB1;
+	Tue,  5 Dec 2023 03:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORCPmKvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0FB2C433C8;
-	Tue,  5 Dec 2023 03:40:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ic+PcFeW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9503FC433CB;
+	Tue,  5 Dec 2023 03:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747654;
-	bh=bGB1ekzZiYsZuGhUErcDfzyKDd05YitN7EuWfw5x8ug=;
+	s=korg; t=1701747656;
+	bh=FEyueEP9TCLPi+ffm2JfBA1+Idg87C9lo5LFwSH8J4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORCPmKvNUp7yYM8IsxzQzbYzGGMi6miv5W+8uEYe2d/S+Hq8uYvVMDnftNcZnaHeK
-	 67qM85jXZYp41C+OJO/9zlcBSOBbb44RALiPAu/yoNco8gU0mPoU3jcZeCGWzIkH9q
-	 VDAL/orN47uhEHtO/wuQnUt2oGduRImP/RGMbq14=
+	b=ic+PcFeWHewRfc4HOz43+wBqIbHnPXc++RvFHYBawlISL71TFo4bHAHpeCjcUg0cC
+	 XVS8NavXw3bpacOEhiPavZRO07iCHVnEbIcOSJvHEZNnW8Lk6IWR05JcCgma4NOhOP
+	 CSF7nwKWfuwmmavMpTAcHPKhrBZfJ3T4OBsIcvQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 19/67] btrfs: add dmesg output for first mount and last unmount of a filesystem
-Date: Tue,  5 Dec 2023 12:17:04 +0900
-Message-ID: <20231205031520.885660901@linuxfoundation.org>
+	Bragatheswaran Manickavel <bragathemanick0908@gmail.com>,
+	David Sterba <dsterba@suse.com>,
+	syzbot+d66de4cbf532749df35f@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 20/67] btrfs: ref-verify: fix memory leaks in btrfs_ref_tree_mod()
+Date: Tue,  5 Dec 2023 12:17:05 +0900
+Message-ID: <20231205031520.934704996@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -42,74 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Bragatheswaran Manickavel <bragathemanick0908@gmail.com>
 
-commit 2db313205f8b96eea467691917138d646bb50aef upstream.
+commit f91192cd68591c6b037da345bc9fcd5e50540358 upstream.
 
-There is a feature request to add dmesg output when unmounting a btrfs.
-There are several alternative methods to do the same thing, but with
-their own problems:
+In btrfs_ref_tree_mod(), when !parent 're' was allocated through
+kmalloc(). In the following code, if an error occurs, the execution will
+be redirected to 'out' or 'out_unlock' and the function will be exited.
+However, on some of the paths, 're' are not deallocated and may lead to
+memory leaks.
 
-- Use eBPF to watch btrfs_put_super()/open_ctree()
-  Not end user friendly, they have to dip their head into the source
-  code.
+For example: lookup_block_entry() for 'be' returns NULL, the out label
+will be invoked. During that flow ref and 'ra' are freed but not 're',
+which can potentially lead to a memory leak.
 
-- Watch for directory /sys/fs/<uuid>/
-  This is way more simple, but still requires some simple device -> uuid
-  lookups.  And a script needs to use inotify to watch /sys/fs/.
-
-Compared to all these, directly outputting the information into dmesg
-would be the most simple one, with both device and UUID included.
-
-And since we're here, also add the output when mounting a filesystem for
-the first time for parity. A more fine grained monitoring of subvolume
-mounts should be done by another layer, like audit.
-
-Now mounting a btrfs with all default mkfs options would look like this:
-
-  [81.906566] BTRFS info (device dm-8): first mount of filesystem 633b5c16-afe3-4b79-b195-138fe145e4f2
-  [81.907494] BTRFS info (device dm-8): using crc32c (crc32c-intel) checksum algorithm
-  [81.908258] BTRFS info (device dm-8): using free space tree
-  [81.912644] BTRFS info (device dm-8): auto enabling async discard
-  [81.913277] BTRFS info (device dm-8): checking UUID tree
-  [91.668256] BTRFS info (device dm-8): last unmount of filesystem 633b5c16-afe3-4b79-b195-138fe145e4f2
-
-CC: stable@vger.kernel.org # 5.4+
-Link: https://github.com/kdave/btrfs-progs/issues/689
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+CC: stable@vger.kernel.org # 5.10+
+Reported-and-tested-by: syzbot+d66de4cbf532749df35f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d66de4cbf532749df35f
+Signed-off-by: Bragatheswaran Manickavel <bragathemanick0908@gmail.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
-[ update changelog ]
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c |    1 +
- fs/btrfs/super.c   |    5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ fs/btrfs/ref-verify.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3204,6 +3204,7 @@ int __cold open_ctree(struct super_block
- 		goto fail_alloc;
- 	}
+--- a/fs/btrfs/ref-verify.c
++++ b/fs/btrfs/ref-verify.c
+@@ -788,6 +788,7 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
+ 			dump_ref_action(fs_info, ra);
+ 			kfree(ref);
+ 			kfree(ra);
++			kfree(re);
+ 			goto out_unlock;
+ 		} else if (be->num_refs == 0) {
+ 			btrfs_err(fs_info,
+@@ -797,6 +798,7 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
+ 			dump_ref_action(fs_info, ra);
+ 			kfree(ref);
+ 			kfree(ra);
++			kfree(re);
+ 			goto out_unlock;
+ 		}
  
-+	btrfs_info(fs_info, "first mount of filesystem %pU", disk_super->fsid);
- 	/*
- 	 * Verify the type first, if that or the checksum value are
- 	 * corrupted, we'll find out
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -337,7 +337,10 @@ void __btrfs_panic(struct btrfs_fs_info
- 
- static void btrfs_put_super(struct super_block *sb)
- {
--	close_ctree(btrfs_sb(sb));
-+	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
-+
-+	btrfs_info(fs_info, "last unmount of filesystem %pU", fs_info->fs_devices->fsid);
-+	close_ctree(fs_info);
- }
- 
- enum {
 
 
