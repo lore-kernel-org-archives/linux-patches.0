@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3598BF8;
-	Tue,  5 Dec 2023 03:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410366FB1;
+	Tue,  5 Dec 2023 03:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNOZ1VpJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83774C433C8;
-	Tue,  5 Dec 2023 03:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2YB+qm7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B96C433C8;
+	Tue,  5 Dec 2023 03:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747544;
-	bh=4tmy0UcTiu7RhmAbr3mUxvfKPfBq46XvPtwxd5kQVFE=;
+	s=korg; t=1701747547;
+	bh=ejp4YllPo/7Ki7ZnKaFgX9IxhEt78Hd64yZlAWIF8sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNOZ1VpJtbjFZ8vJzLXIhotgaF9oBC4jV7E4fkB03Sqdd+BLHvTjhf2VxWRER4o8m
-	 P8DYk2wl1TBRINcTYtniBXv7qeNdAI3eQabXzTYcZD6zHcYb2TIUjvC0uBXL9RDpiU
-	 vsa0qgbBUjgWh10sC3+Pjxq9ZcQ2PBx3RO6Fpn6A=
+	b=f2YB+qm7k0wLYTaJKJMVzoF435yQXDHyR4TDoSqxp+EDl7bBQ1A5xXJlQAuOCJSzp
+	 MnnUymSMtDafqxASfIWa3QQ/OcMXtfnS/F792rtAkeP1TTbO3TatUmPX3+tVzrbzoV
+	 sXB0SUem3slmR975Fh3bBoqclLpp1JcKAFIASTKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Neronin <niklas.neronin@linux.intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/135] usb: config: fix iteration issue in usb_get_bos_descriptor()
-Date: Tue,  5 Dec 2023 12:16:52 +0900
-Message-ID: <20231205031536.356287376@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Bruno Haible <bruno@clisp.org>
+Subject: [PATCH 5.10 082/135] parisc: Drop the HP-UX ENOSYM and EREMOTERELEASE error codes
+Date: Tue,  5 Dec 2023 12:16:43 +0900
+Message-ID: <20231205031535.684334026@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -43,57 +41,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Neronin <niklas.neronin@linux.intel.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 974bba5c118f4c2baf00de0356e3e4f7928b4cbc ]
+commit e5f3e299a2b1e9c3ece24a38adfc089aef307e8a upstream.
 
-The BOS descriptor defines a root descriptor and is the base descriptor for
-accessing a family of related descriptors.
+Those return codes are only defined for the parisc architecture and
+are leftovers from when we wanted to be HP-UX compatible.
 
-Function 'usb_get_bos_descriptor()' encounters an iteration issue when
-skipping the 'USB_DT_DEVICE_CAPABILITY' descriptor type. This results in
-the same descriptor being read repeatedly.
+They are not returned by any Linux kernel syscall but do trigger
+problems with the glibc strerrorname_np() and strerror() functions as
+reported in glibc issue #31080.
 
-To address this issue, a 'goto' statement is introduced to ensure that the
-pointer and the amount read is updated correctly. This ensures that the
-function iterates to the next descriptor instead of reading the same
-descriptor repeatedly.
+There is no need to keep them, so simply remove them.
 
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: Bruno Haible <bruno@clisp.org>
+Closes: https://sourceware.org/bugzilla/show_bug.cgi?id=31080
 Cc: stable@vger.kernel.org
-Fixes: 3dd550a2d365 ("USB: usbcore: Fix slab-out-of-bounds bug during device reset")
-Signed-off-by: Niklas Neronin <niklas.neronin@linux.intel.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20231115121325.471454-1-niklas.neronin@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/config.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/parisc/include/uapi/asm/errno.h       |    2 --
+ lib/errname.c                              |    6 ------
+ tools/arch/parisc/include/uapi/asm/errno.h |    2 --
+ 3 files changed, 10 deletions(-)
 
-diff --git a/drivers/usb/core/config.c b/drivers/usb/core/config.c
-index 1e40e63d301bd..2f8a1225b6976 100644
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -1047,7 +1047,7 @@ int usb_get_bos_descriptor(struct usb_device *dev)
+--- a/arch/parisc/include/uapi/asm/errno.h
++++ b/arch/parisc/include/uapi/asm/errno.h
+@@ -75,7 +75,6 @@
  
- 		if (cap->bDescriptorType != USB_DT_DEVICE_CAPABILITY) {
- 			dev_notice(ddev, "descriptor type invalid, skip\n");
--			continue;
-+			goto skip_to_next_descriptor;
- 		}
+ /* We now return you to your regularly scheduled HPUX. */
  
- 		switch (cap_type) {
-@@ -1080,6 +1080,7 @@ int usb_get_bos_descriptor(struct usb_device *dev)
- 			break;
- 		}
+-#define ENOSYM		215	/* symbol does not exist in executable */
+ #define	ENOTSOCK	216	/* Socket operation on non-socket */
+ #define	EDESTADDRREQ	217	/* Destination address required */
+ #define	EMSGSIZE	218	/* Message too long */
+@@ -101,7 +100,6 @@
+ #define	ETIMEDOUT	238	/* Connection timed out */
+ #define	ECONNREFUSED	239	/* Connection refused */
+ #define	EREFUSED	ECONNREFUSED	/* for HP's NFS apparently */
+-#define	EREMOTERELEASE	240	/* Remote peer released connection */
+ #define	EHOSTDOWN	241	/* Host is down */
+ #define	EHOSTUNREACH	242	/* No route to host */
  
-+skip_to_next_descriptor:
- 		total_len -= length;
- 		buffer += length;
- 	}
--- 
-2.42.0
-
+--- a/lib/errname.c
++++ b/lib/errname.c
+@@ -110,9 +110,6 @@ static const char *names_0[] = {
+ 	E(ENOSPC),
+ 	E(ENOSR),
+ 	E(ENOSTR),
+-#ifdef ENOSYM
+-	E(ENOSYM),
+-#endif
+ 	E(ENOSYS),
+ 	E(ENOTBLK),
+ 	E(ENOTCONN),
+@@ -143,9 +140,6 @@ static const char *names_0[] = {
+ #endif
+ 	E(EREMOTE),
+ 	E(EREMOTEIO),
+-#ifdef EREMOTERELEASE
+-	E(EREMOTERELEASE),
+-#endif
+ 	E(ERESTART),
+ 	E(ERFKILL),
+ 	E(EROFS),
+--- a/tools/arch/parisc/include/uapi/asm/errno.h
++++ b/tools/arch/parisc/include/uapi/asm/errno.h
+@@ -75,7 +75,6 @@
+ 
+ /* We now return you to your regularly scheduled HPUX. */
+ 
+-#define ENOSYM		215	/* symbol does not exist in executable */
+ #define	ENOTSOCK	216	/* Socket operation on non-socket */
+ #define	EDESTADDRREQ	217	/* Destination address required */
+ #define	EMSGSIZE	218	/* Message too long */
+@@ -101,7 +100,6 @@
+ #define	ETIMEDOUT	238	/* Connection timed out */
+ #define	ECONNREFUSED	239	/* Connection refused */
+ #define	EREFUSED	ECONNREFUSED	/* for HP's NFS apparently */
+-#define	EREMOTERELEASE	240	/* Remote peer released connection */
+ #define	EHOSTDOWN	241	/* Host is down */
+ #define	EHOSTUNREACH	242	/* No route to host */
+ 
 
 
