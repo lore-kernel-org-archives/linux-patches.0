@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD7C6FB1;
-	Tue,  5 Dec 2023 03:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90CF6FB1;
+	Tue,  5 Dec 2023 03:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUhL+1uF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E2C433C7;
-	Tue,  5 Dec 2023 03:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+BRo0Pa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683E4C433C7;
+	Tue,  5 Dec 2023 03:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747578;
-	bh=SyDpMO2RPRM+5UMXpjwebO61239p3BUmwVarygIi0p0=;
+	s=korg; t=1701747580;
+	bh=a98O+MzXfTIis7bIA8EGJ5DSU7yM1xKEi79VwgVGDaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wUhL+1uFct7PeK0rDLiKg05jBLJE+eYYlK0fb0EKe+iq8jUxz7p1tGrezLKlXq1Lm
-	 0mhC6zOd9XDvAnpM4EsGQlO30l7Noy4k3Lnp08NG6/jAs81v4WER1WMNgq501pKRBM
-	 0wmCEoMVFzmqyGeohduddP6Se9kGlZDey0aeGhnk=
+	b=o+BRo0PaGcLVgoDx9qw2z2ed21A8XPgEAqRGiOGxvd75D1gNbETpI6Tco/glJisVY
+	 m9bNYJpL96It+Ys4KWn9GcBTI2LAVbtNlGq8iw841Gk2p2RCLsbz7tV2GFVPcptjkh
+	 CbCrkbqp4zcDrgdvJGGT3SRP8YWxdhFZXXwP/mXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Mark Hasemeyer <markhas@chromium.org>,
+	Curtis Malainey <cujomalainey@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/135] mmc: cqhci: Warn of halt or task clear failure
-Date: Tue,  5 Dec 2023 12:17:28 +0900
-Message-ID: <20231205031538.906396307@linuxfoundation.org>
+Subject: [PATCH 5.10 110/135] ASoC: SOF: sof-pci-dev: Fix community key quirk detection
+Date: Tue,  5 Dec 2023 12:17:11 +0900
+Message-ID: <20231205031537.708974161@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -43,50 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Mark Hasemeyer <markhas@chromium.org>
 
-[ Upstream commit 35597bdb04ec27ef3b1cea007dc69f8ff5df75a5 ]
+[ Upstream commit 7dd692217b861a8292ff8ac2c9d4458538fd6b96 ]
 
-A correctly operating controller should successfully halt and clear tasks.
-Failure may result in errors elsewhere, so promote messages from debug to
-warnings.
+Some Chromebooks do not populate the product family DMI value resulting
+in firmware load failures.
 
-Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
+Add another quirk detection entry that looks for "Google" in the BIOS
+version. Theoretically, PRODUCT_FAMILY could be replaced with
+BIOS_VERSION, but it is left as a quirk to be conservative.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Link: https://lore.kernel.org/r/20231103084720.6886-6-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Mark Hasemeyer <markhas@chromium.org>
+Acked-by: Curtis Malainey <cujomalainey@chromium.org>
+Link: https://lore.kernel.org/r/20231020145953.v1.1.Iaf5702dc3f8af0fd2f81a22ba2da1a5e15b3604c@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/cqhci.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/sof/sof-pci-dev.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
-index a0a9cb6e2a150..7bccd6494cd93 100644
---- a/drivers/mmc/host/cqhci.c
-+++ b/drivers/mmc/host/cqhci.c
-@@ -890,8 +890,8 @@ static bool cqhci_clear_all_tasks(struct mmc_host *mmc, unsigned int timeout)
- 	ret = cqhci_tasks_cleared(cq_host);
+diff --git a/sound/soc/sof/sof-pci-dev.c b/sound/soc/sof/sof-pci-dev.c
+index 42e1a62789bc6..ade292a61ed6d 100644
+--- a/sound/soc/sof/sof-pci-dev.c
++++ b/sound/soc/sof/sof-pci-dev.c
+@@ -96,6 +96,13 @@ static const struct dmi_system_id community_key_platforms[] = {
+ 			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google"),
+ 		}
+ 	},
++	{
++		.ident = "Google firmware",
++		.callback = chromebook_use_community_key,
++		.matches = {
++			DMI_MATCH(DMI_BIOS_VERSION, "Google"),
++		}
++	},
+ 	{},
+ };
  
- 	if (!ret)
--		pr_debug("%s: cqhci: Failed to clear tasks\n",
--			 mmc_hostname(mmc));
-+		pr_warn("%s: cqhci: Failed to clear tasks\n",
-+			mmc_hostname(mmc));
- 
- 	return ret;
- }
-@@ -924,7 +924,7 @@ static bool cqhci_halt(struct mmc_host *mmc, unsigned int timeout)
- 	ret = cqhci_halted(cq_host);
- 
- 	if (!ret)
--		pr_debug("%s: cqhci: Failed to halt\n", mmc_hostname(mmc));
-+		pr_warn("%s: cqhci: Failed to halt\n", mmc_hostname(mmc));
- 
- 	return ret;
- }
 -- 
 2.42.0
 
