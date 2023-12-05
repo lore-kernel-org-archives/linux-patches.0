@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124556FB0;
-	Tue,  5 Dec 2023 03:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50916FB0;
+	Tue,  5 Dec 2023 03:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwUi8kXQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5E2C433C7;
-	Tue,  5 Dec 2023 03:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXWO+mnD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A32C433C8;
+	Tue,  5 Dec 2023 03:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747881;
-	bh=D6laREYGgLF22t1NU6VtBREv7S0nzVRwgLarPZk9cCk=;
+	s=korg; t=1701747884;
+	bh=Q9Lti7OJnIYE+Q+A1jJPnFFwp7C4C3CxNdQsLRzyFKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwUi8kXQ7JAgBWJe+NraTQdnxL4iTXSF6Q9kMQwMgOr5jepAaRAobbrrt+JhcqixR
-	 AJoCvgelZJ+/4WlAyFCvK+gA553PY130ptOF0pA2B9ftvUphkda50X9ovp5OfnucBj
-	 YpjLAVNS3b1wcqqISLYoPx2XRhu9tRm5RJT3+aao=
+	b=oXWO+mnDAukl/rvJiC4kSp48ebr07gvSTl4wiNKX5w+mf6oUcX4YJ5XF1Fhxe8Mpu
+	 ibXfHwHtlVApgmWddZXpmsY7VE7GLJaHe9Wx9A3a+gqBJdelTQc8BsFqyUmvyCct1x
+	 C0PKGpfiE83xynr74H6rSIWZZAKu05OSJi6PvdBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 15/94] amd-xgbe: handle the corner-case during tx completion
-Date: Tue,  5 Dec 2023 12:16:43 +0900
-Message-ID: <20231205031523.746262792@linuxfoundation.org>
+	Andrew Murray <andrew.murray@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Zenghui Yu <yuzenghui@huawei.com>
+Subject: [PATCH 5.4 33/94] KVM: arm64: limit PMU version to PMUv3 for ARMv8.1
+Date: Tue,  5 Dec 2023 12:17:01 +0900
+Message-ID: <20231205031524.756126004@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -44,61 +44,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Andrew Murray <andrew.murray@arm.com>
 
-[ Upstream commit 7121205d5330c6a3cb3379348886d47c77b78d06 ]
+commit c854188ea01062f5a5fd7f05658feb1863774eaa upstream.
 
-The existing implementation uses software logic to accumulate tx
-completions until the specified time (1ms) is met and then poll them.
-However, there exists a tiny gap which leads to a race between
-resetting and checking the tx_activate flag. Due to this the tx
-completions are not reported to upper layer and tx queue timeout
-kicks-in restarting the device.
+We currently expose the PMU version of the host to the guest via
+emulation of the DFR0_EL1 and AA64DFR0_EL1 debug feature registers.
+However many of the features offered beyond PMUv3 for 8.1 are not
+supported in KVM. Examples of this include support for the PMMIR
+registers (added in PMUv3 for ARMv8.4) and 64-bit event counters
+added in (PMUv3 for ARMv8.5).
 
-To address this, introduce a tx cleanup mechanism as part of the
-periodic maintenance process.
+Let's trap the Debug Feature Registers in order to limit
+PMUVer/PerfMon in the Debug Feature Registers to PMUv3 for ARMv8.1
+to avoid unexpected behaviour.
 
-Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Both ID_AA64DFR0.PMUVer and ID_DFR0.PerfMon follow the "Alternative ID
+scheme used for the Performance Monitors Extension version" where 0xF
+means an IMPLEMENTATION DEFINED PMU is implemented, and values 0x0-0xE
+are treated as with an unsigned field (with 0x0 meaning no PMU is
+present). As we don't expect to expose an IMPLEMENTATION DEFINED PMU,
+and our cap is below 0xF, we can treat these fields as unsigned when
+applying the cap.
+
+Signed-off-by: Andrew Murray <andrew.murray@arm.com>
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+[Mark: make field names consistent, use perfmon cap]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/include/asm/sysreg.h |    6 ++++++
+ arch/arm64/kvm/sys_regs.c       |   10 ++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index 7f705483c1c57..504fbd43be7da 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -682,10 +682,24 @@ static void xgbe_service(struct work_struct *work)
- static void xgbe_service_timer(struct timer_list *t)
- {
- 	struct xgbe_prv_data *pdata = from_timer(pdata, t, service_timer);
-+	struct xgbe_channel *channel;
-+	unsigned int i;
+--- a/arch/arm64/include/asm/sysreg.h
++++ b/arch/arm64/include/asm/sysreg.h
+@@ -697,6 +697,12 @@
+ #define ID_AA64DFR0_TRACEVER_SHIFT	4
+ #define ID_AA64DFR0_DEBUGVER_SHIFT	0
  
- 	queue_work(pdata->dev_workqueue, &pdata->service_work);
- 
- 	mod_timer(&pdata->service_timer, jiffies + HZ);
++#define ID_AA64DFR0_PMUVER_8_1		0x4
 +
-+	if (!pdata->tx_usecs)
-+		return;
++#define ID_DFR0_PERFMON_SHIFT		24
 +
-+	for (i = 0; i < pdata->channel_count; i++) {
-+		channel = pdata->channel[i];
-+		if (!channel->tx_ring || channel->tx_timer_active)
-+			break;
-+		channel->tx_timer_active = 1;
-+		mod_timer(&channel->tx_timer,
-+			  jiffies + usecs_to_jiffies(pdata->tx_usecs));
-+	}
- }
++#define ID_DFR0_PERFMON_8_1		0x4
++
+ #define ID_ISAR5_RDM_SHIFT		24
+ #define ID_ISAR5_CRC32_SHIFT		16
+ #define ID_ISAR5_SHA2_SHIFT		12
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -1089,6 +1089,16 @@ static u64 read_id_reg(const struct kvm_
+ 			 (0xfUL << ID_AA64ISAR1_API_SHIFT) |
+ 			 (0xfUL << ID_AA64ISAR1_GPA_SHIFT) |
+ 			 (0xfUL << ID_AA64ISAR1_GPI_SHIFT));
++	} else if (id == SYS_ID_AA64DFR0_EL1) {
++		/* Limit guests to PMUv3 for ARMv8.1 */
++		val = cpuid_feature_cap_perfmon_field(val,
++						ID_AA64DFR0_PMUVER_SHIFT,
++						ID_AA64DFR0_PMUVER_8_1);
++	} else if (id == SYS_ID_DFR0_EL1) {
++		/* Limit guests to PMUv3 for ARMv8.1 */
++		val = cpuid_feature_cap_perfmon_field(val,
++						ID_DFR0_PERFMON_SHIFT,
++						ID_DFR0_PERFMON_8_1);
+ 	}
  
- static void xgbe_init_timers(struct xgbe_prv_data *pdata)
--- 
-2.42.0
-
+ 	return val;
 
 
