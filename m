@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536AD6FAF;
-	Tue,  5 Dec 2023 03:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269F86FAF;
+	Tue,  5 Dec 2023 03:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9dbueIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B75C433C7;
-	Tue,  5 Dec 2023 03:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQBSrWbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95908C433C7;
+	Tue,  5 Dec 2023 03:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746884;
-	bh=OLMcxAH3F3oxeZY7ftIBC5Fg1EbOhVgSn0jbdH6Y6sM=;
+	s=korg; t=1701746887;
+	bh=ge3ezNGkyCvnwKUYIsmlQB7nu1WErq+LsY8ZXXvl25k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9dbueIcE+weQ/KuE/b8boTWrGjPeXedAsgnX+hLg/bxiIZROn5GcFPeUQ/asbWZm
-	 pC5zLHaBKWAYpVunfX51G/tUSnqndsKP/hO71smf1Dz0We7lnERHz3G6OwgklSKZUF
-	 UWBwoCPkdedLIgJflCsfaFif9/0dqpAfb3zdnqRM=
+	b=XQBSrWbmRW3kFA//4zyinw/VyaPnoTfwW5fot7bHXEA57cyQ8cqD4MZ0LESG3kjBf
+	 Tk5/RpWm8DpSoHAbx1qWFOCx50pX//LyYSedKUrNbBbLvpeuO/Rm9tdnaQ0Dc65Zwg
+	 hT6nLi0iu/u8+mp7GhuJe2M3Mk2amf3BK2oIAGz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Agarwal <ajayagarwal@google.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 55/71] PCI/ASPM: Disable only ASPM_STATE_L1 when driver disables L1
-Date: Tue,  5 Dec 2023 12:16:53 +0900
-Message-ID: <20231205031521.083189312@linuxfoundation.org>
+Subject: [PATCH 4.19 56/71] Revert "PCI/ASPM: Disable only ASPM_STATE_L1 when driver, disables L1"
+Date: Tue,  5 Dec 2023 12:16:54 +0900
+Message-ID: <20231205031521.132882208@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -43,42 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ajay Agarwal <ajayagarwal@google.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit fb097dcd5a28c0a2325632405c76a66777a6bed9 ]
+[ Upstream commit 3cb4f534bac010258b2688395c2f13459a932be9 ]
 
-Previously pci_disable_link_state(PCIE_LINK_STATE_L1) disabled L1SS as well
-as L1.  This is unnecessary since pcie_config_aspm_link() takes care that
-L1SS is not enabled if L1 is disabled.
+This reverts commit fb097dcd5a28c0a2325632405c76a66777a6bed9.
 
-Disable only ASPM_STATE_L1 when the caller disables L1.  No functional
-changes intended.
+After fb097dcd5a28 ("PCI/ASPM: Disable only ASPM_STATE_L1 when driver
+disables L1"), disabling L1 via pci_disable_link_state(PCIE_LINK_STATE_L1),
+then enabling one substate, e.g., L1.1, via sysfs actually enables *all*
+the substates.
 
-This is consistent with aspm_attr_store_common(), which disables only L1,
-not L1SS, when L1 is disabled via the sysfs "l1_aspm" file.
+For example, r8169 disables L1 because of hardware issues on a number of
+systems, which implicitly disables the L1.1 and L1.2 substates.
 
-[bhelgaas: commit log]
-Link: https://lore.kernel.org/r/20230504111301.229358-2-ajayagarwal@google.com
-Signed-off-by: Ajay Agarwal <ajayagarwal@google.com>
+On some systems, L1 and L1.1 work fine, but L1.2 causes missed rx packets.
+Enabling L1.1 via the sysfs "aspm_l1_1" attribute unexpectedly enables L1.2
+as well as L1.1.
+
+After fb097dcd5a28, pci_disable_link_state(PCIE_LINK_STATE_L1) adds only
+ASPM_L1 (but not any of the L1.x substates) to the "aspm_disable" mask:
+
+  --- Before fb097dcd5a28
+  +++ After fb097dcd5a28
+
+  # r8169 disables L1:
+    pci_disable_link_state(PCIE_LINK_STATE_L1)
+  -   disable |= ASPM_L1 | ASPM_L1_1 | ASPM_L1_2 | ...  # disable L1, L1.x
+  +   disable |= ASPM_L1                                # disable L1 only
+
+  # write "1" to sysfs "aspm_l1_1" attribute:
+    l1_1_aspm
+      aspm_attr_store_common(state = ASPM_L1_1)
+        disable &= ~ASPM_L1_1              # enable L1.1
+        if (state & (ASPM_L1_1 | ...))     # if enabling any substate
+          disable &= ~ASPM_L1              # enable L1
+
+  # final state:
+  - disable = ASPM_L1_2 | ...              # L1, L1.1 enabled; L1.2 disabled
+  + disable = 0                            # L1, L1.1, L1.2 all enabled
+
+Enabling an L1.x substate removes the substate and L1 from the
+"aspm_disable" mask.  After fb097dcd5a28, the substates were not added to
+the mask when disabling L1, so enabling one substate implicitly enables all
+of them.
+
+Revert fb097dcd5a28 so enabling one substate doesn't enable the others.
+
+Link: https://lore.kernel.org/r/c75931ac-7208-4200-9ca1-821629cf5e28@gmail.com
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+[bhelgaas: work through example in commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Stable-dep-of: 3cb4f534bac0 ("Revert "PCI/ASPM: Disable only ASPM_STATE_L1 when driver, disables L1"")
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aspm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/pci/pcie/aspm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-index 8f934c88dcd76..8db6a9084a12a 100644
+index 8db6a9084a12a..8f934c88dcd76 100644
 --- a/drivers/pci/pcie/aspm.c
 +++ b/drivers/pci/pcie/aspm.c
-@@ -1110,8 +1110,7 @@ static int __pci_disable_link_state(struct pci_dev *pdev, int state, bool sem)
+@@ -1110,7 +1110,8 @@ static int __pci_disable_link_state(struct pci_dev *pdev, int state, bool sem)
  	if (state & PCIE_LINK_STATE_L0S)
  		link->aspm_disable |= ASPM_STATE_L0S;
  	if (state & PCIE_LINK_STATE_L1)
--		/* L1 PM substates require L1 */
--		link->aspm_disable |= ASPM_STATE_L1 | ASPM_STATE_L1SS;
-+		link->aspm_disable |= ASPM_STATE_L1;
+-		link->aspm_disable |= ASPM_STATE_L1;
++		/* L1 PM substates require L1 */
++		link->aspm_disable |= ASPM_STATE_L1 | ASPM_STATE_L1SS;
  	if (state & PCIE_LINK_STATE_L1_1)
  		link->aspm_disable |= ASPM_STATE_L1_1;
  	if (state & PCIE_LINK_STATE_L1_2)
