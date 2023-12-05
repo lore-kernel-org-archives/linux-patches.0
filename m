@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D84D6FB0;
-	Tue,  5 Dec 2023 03:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754496FB1;
+	Tue,  5 Dec 2023 03:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7xaK/Nn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7643FC433C9;
-	Tue,  5 Dec 2023 03:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TV+8A9Ff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35B8C433C8;
+	Tue,  5 Dec 2023 03:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746601;
-	bh=JXtjOiipBcbhFyN/A9hbRTrbrYOERNA8ei9fdGFzk7s=;
+	s=korg; t=1701746604;
+	bh=0AagSZOtqiX6HY3uJFNduHEFXa5IC+rVPRi3pwkKAqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7xaK/Nn1sMe3TFJir4ne1N2wiBbfMxi7EJDSh4LOKKFwh6vXDcO0aleZyGieLRoV
-	 sBOR7kQs6X0BtmPe3J4KLsU3+5BVU2Hdts+xuMauMkK5kNyzZiN/9CmsonSxeMo/oO
-	 x74P9TOOovzFoqfRKELHwgvIcjdJsPou9t8lNNPY=
+	b=TV+8A9Ffo45zz7RrkV3dHlptzWXGamAFor2Kw4T63UQPYFW+ZN1bb02pQ/RxNduzT
+	 y7vda+jSjgPfo9SoTUdjAtI7ywoPpNkLLnXXfuFU1B+9DqnEVH52poyDeBSzwxWaWv
+	 dSjKd/a9Ic+VrjxFf33l2wzF9idTnc05YFOwXOqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/134] net: rswitch: Fix type of ret in rswitch_start_xmit()
-Date: Tue,  5 Dec 2023 12:15:51 +0900
-Message-ID: <20231205031540.489749197@linuxfoundation.org>
+Subject: [PATCH 6.6 088/134] dpaa2-eth: recycle the RX buffer only after all processing done
+Date: Tue,  5 Dec 2023 12:16:00 +0900
+Message-ID: <20231205031541.017874574@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -43,36 +42,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 109b25d13e0054337860d44841b990d11b32d262 ]
+[ Upstream commit beb1930f966d1517921488bd5d64147f58f79abf ]
 
-The type of ret in rswitch_start_xmit() should be netdev_tx_t. So,
-fix it.
+The blamed commit added support for Rx copybreak. This meant that for
+certain frame sizes, a new skb was allocated and the initial data buffer
+was recycled. Instead of waiting to recycle the Rx buffer only after all
+processing was done on it (like accessing the parse results or timestamp
+information), the code path just went ahead and re-used the buffer right
+away.
 
-Fixes: 3590918b5d07 ("net: ethernet: renesas: Add support for "Ethernet Switch"")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+This sometimes lead to corrupted HW and SW annotation areas.
+Fix this by delaying the moment when the buffer is recycled.
+
+Fixes: 50f826999a80 ("dpaa2-eth: add rx copybreak support")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/rswitch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
-index 0fc0b6bea7530..898f22aa796e2 100644
---- a/drivers/net/ethernet/renesas/rswitch.c
-+++ b/drivers/net/ethernet/renesas/rswitch.c
-@@ -1501,8 +1501,8 @@ static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *nd
- {
- 	struct rswitch_device *rdev = netdev_priv(ndev);
- 	struct rswitch_gwca_queue *gq = rdev->tx_queue;
-+	netdev_tx_t ret = NETDEV_TX_OK;
- 	struct rswitch_ext_desc *desc;
--	int ret = NETDEV_TX_OK;
- 	dma_addr_t dma_addr;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index 774377db0b4bd..888509cf1f210 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -516,8 +516,6 @@ struct sk_buff *dpaa2_eth_alloc_skb(struct dpaa2_eth_priv *priv,
  
- 	if (rswitch_get_num_cur_queues(gq) >= gq->ring_size - 1) {
+ 	memcpy(skb->data, fd_vaddr + fd_offset, fd_length);
+ 
+-	dpaa2_eth_recycle_buf(priv, ch, dpaa2_fd_get_addr(fd));
+-
+ 	return skb;
+ }
+ 
+@@ -589,6 +587,7 @@ void dpaa2_eth_rx(struct dpaa2_eth_priv *priv,
+ 	struct rtnl_link_stats64 *percpu_stats;
+ 	struct dpaa2_eth_drv_stats *percpu_extras;
+ 	struct device *dev = priv->net_dev->dev.parent;
++	bool recycle_rx_buf = false;
+ 	void *buf_data;
+ 	u32 xdp_act;
+ 
+@@ -618,6 +617,8 @@ void dpaa2_eth_rx(struct dpaa2_eth_priv *priv,
+ 			dma_unmap_page(dev, addr, priv->rx_buf_size,
+ 				       DMA_BIDIRECTIONAL);
+ 			skb = dpaa2_eth_build_linear_skb(ch, fd, vaddr);
++		} else {
++			recycle_rx_buf = true;
+ 		}
+ 	} else if (fd_format == dpaa2_fd_sg) {
+ 		WARN_ON(priv->xdp_prog);
+@@ -637,6 +638,9 @@ void dpaa2_eth_rx(struct dpaa2_eth_priv *priv,
+ 		goto err_build_skb;
+ 
+ 	dpaa2_eth_receive_skb(priv, ch, fd, vaddr, fq, percpu_stats, skb);
++
++	if (recycle_rx_buf)
++		dpaa2_eth_recycle_buf(priv, ch, dpaa2_fd_get_addr(fd));
+ 	return;
+ 
+ err_build_skb:
 -- 
 2.42.0
 
