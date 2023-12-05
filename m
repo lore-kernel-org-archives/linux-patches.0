@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014D06FB0;
-	Tue,  5 Dec 2023 03:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589A36FB0;
+	Tue,  5 Dec 2023 03:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow7GSmbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D86C433C7;
-	Tue,  5 Dec 2023 03:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17E6zUjo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B92C433C8;
+	Tue,  5 Dec 2023 03:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747923;
-	bh=VhYsoqb2HILVVJqW2uPmqzIDf9Jfc9iPKrR/tW3yzY4=;
+	s=korg; t=1701747926;
+	bh=FmPj6coFaOCT1uWlbrsFWIYCRaF+XKBjxQmpPHdOJv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ow7GSmbG2LtzUZ9tQYHjCaPLPfsTiizyskiXkAfHn0TXWwxFRhbw/HQHNwdHuSKCG
-	 jFmhhcmx2w9sY20SN0Uk3jAtwH7xxcuTDTNt6qfnT3v3nADgtBJALutNc8wJmsyKdE
-	 yKeuLsD1j0qNUL4+AbjVFOblftXNcU5SZIQPBXBk=
+	b=17E6zUjo26+dVPApnzz1P0DmFlDkZuijCyZXELstekpUmuekR+OqdjWCeqZtmMU2o
+	 wpnD4PC9GMuB7JLgsbYdVgewbaJIL16AKcFxysjO2axbTdbEQ2q1gUi/NsNobkWAz7
+	 f0E22Ul3/1nkNxWeWdff5R00FFOIYF+TBSIZTMck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 40/94] dm-delay: fix a race between delay_presuspend and delay_bio
-Date: Tue,  5 Dec 2023 12:17:08 +0900
-Message-ID: <20231205031525.131354964@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 5.4 49/94] USB: dwc3: qcom: fix wakeup after probe deferral
+Date: Tue,  5 Dec 2023 12:17:17 +0900
+Message-ID: <20231205031525.608238492@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -42,98 +41,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 6fc45b6ed921dc00dfb264dc08c7d67ee63d2656 ]
+commit 41f5a0973259db9e4e3c9963d36505f80107d1a0 upstream.
 
-In delay_presuspend, we set the atomic variable may_delay and then stop
-the timer and flush pending bios. The intention here is to prevent the
-delay target from re-arming the timer again.
+The Qualcomm glue driver is overriding the interrupt trigger types
+defined by firmware when requesting the wakeup interrupts during probe.
 
-However, this test is racy. Suppose that one thread goes to delay_bio,
-sees that dc->may_delay is one and proceeds; now, another thread executes
-delay_presuspend, it sets dc->may_delay to zero, deletes the timer and
-flushes pending bios. Then, the first thread continues and adds the bio to
-delayed->list despite the fact that dc->may_delay is false.
+This can lead to a failure to map the DP/DM wakeup interrupts after a
+probe deferral as the firmware defined trigger types do not match the
+type used for the initial mapping:
 
-Fix this bug by changing may_delay's type from atomic_t to bool and
-only access it while holding the delayed_bios_lock mutex. Note that we
-don't have to grab the mutex in delay_resume because there are no bios
-in flight at this point.
+	irq: type mismatch, failed to map hwirq-14 for interrupt-controller@b220000!
+	irq: type mismatch, failed to map hwirq-15 for interrupt-controller@b220000!
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by not overriding the firmware provided trigger types when
+requesting the wakeup interrupts.
+
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Cc: stable@vger.kernel.org      # 4.18
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20231120161607.7405-3-johan+linaro@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-delay.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/dwc3-qcom.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
-index f496213f8b675..7c0e7c662e07f 100644
---- a/drivers/md/dm-delay.c
-+++ b/drivers/md/dm-delay.c
-@@ -30,7 +30,7 @@ struct delay_c {
- 	struct workqueue_struct *kdelayd_wq;
- 	struct work_struct flush_expired_bios;
- 	struct list_head delayed_bios;
--	atomic_t may_delay;
-+	bool may_delay;
- 
- 	struct delay_class read;
- 	struct delay_class write;
-@@ -191,7 +191,7 @@ static int delay_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	INIT_WORK(&dc->flush_expired_bios, flush_expired_bios);
- 	INIT_LIST_HEAD(&dc->delayed_bios);
- 	mutex_init(&dc->timer_lock);
--	atomic_set(&dc->may_delay, 1);
-+	dc->may_delay = true;
- 	dc->argc = argc;
- 
- 	ret = delay_class_ctr(ti, &dc->read, argv);
-@@ -245,7 +245,7 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
- 	struct dm_delay_info *delayed;
- 	unsigned long expires = 0;
- 
--	if (!c->delay || !atomic_read(&dc->may_delay))
-+	if (!c->delay)
- 		return DM_MAPIO_REMAPPED;
- 
- 	delayed = dm_per_bio_data(bio, sizeof(struct dm_delay_info));
-@@ -254,6 +254,10 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
- 	delayed->expires = expires = jiffies + msecs_to_jiffies(c->delay);
- 
- 	mutex_lock(&delayed_bios_lock);
-+	if (unlikely(!dc->may_delay)) {
-+		mutex_unlock(&delayed_bios_lock);
-+		return DM_MAPIO_REMAPPED;
-+	}
- 	c->ops++;
- 	list_add_tail(&delayed->list, &dc->delayed_bios);
- 	mutex_unlock(&delayed_bios_lock);
-@@ -267,7 +271,10 @@ static void delay_presuspend(struct dm_target *ti)
- {
- 	struct delay_c *dc = ti->private;
- 
--	atomic_set(&dc->may_delay, 0);
-+	mutex_lock(&delayed_bios_lock);
-+	dc->may_delay = false;
-+	mutex_unlock(&delayed_bios_lock);
-+
- 	del_timer_sync(&dc->delay_timer);
- 	flush_bios(flush_delayed_bios(dc, 1));
- }
-@@ -276,7 +283,7 @@ static void delay_resume(struct dm_target *ti)
- {
- 	struct delay_c *dc = ti->private;
- 
--	atomic_set(&dc->may_delay, 1);
-+	dc->may_delay = true;
- }
- 
- static int delay_map(struct dm_target *ti, struct bio *bio)
--- 
-2.42.0
-
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -361,7 +361,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "hs_phy_irq failed: %d\n", ret);
+@@ -376,7 +376,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 DP_HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
+@@ -391,7 +391,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 DM_HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
+@@ -406,7 +406,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 SS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
 
 
