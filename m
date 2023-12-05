@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605EA6FB1;
-	Tue,  5 Dec 2023 03:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9FD6FB1;
+	Tue,  5 Dec 2023 03:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P58qMkc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C1DC433C7;
-	Tue,  5 Dec 2023 03:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rm30FERu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE61C433C7;
+	Tue,  5 Dec 2023 03:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747463;
-	bh=eToqS1r2zF80+15yV03juJlT8qgqY3YzZPJLQcNMbME=;
+	s=korg; t=1701747466;
+	bh=SKWzxhslpkLqs3iSNlDdaNb1GuVrU/A0YJ8a6WNK2KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P58qMkc2AIK601J59UeKC3Rt4oqhuxH2oTcHlBh+GKwA++yD0qSF94ZgSeSygBTYJ
-	 uV/o4kiz3PCcZhvnyJQov1kIahFBxi9Gzo6DSD0rt1Ls2y/Dm2vtDnZv2ISigtKavx
-	 AtfvyC0c3AqStkGn/zJuOylqeMjulStl72NQg+5M=
+	b=rm30FERuVP5Ed1KKPCRqBpl3mXoGMZRhjL10xiUfVonMQideNbTQsT4MkXxPMUsEz
+	 G8/KNr9ET3sM0TTEV7vnsnRlY4bU2ypo9UA4cCsw6+u1BI0EJ1afM94ElQyEwCL1AJ
+	 hMixsTXs/JqYjSQT+WAEFdLlXRuMy9gb9IV6SfNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 061/135] bcache: fixup lock c->root error
-Date: Tue,  5 Dec 2023 12:16:22 +0900
-Message-ID: <20231205031534.269449617@linuxfoundation.org>
+	Victor Fragoso <victorffs@hotmail.com>,
+	Lars Melin <larsm17@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 062/135] USB: serial: option: add Fibocom L7xx modules
+Date: Tue,  5 Dec 2023 12:16:23 +0900
+Message-ID: <20231205031534.321995016@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -36,184 +36,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+From: Victor Fragoso <victorffs@hotmail.com>
 
-commit e34820f984512b433ee1fc291417e60c47d56727 upstream.
+commit e389fe8b68137344562fb6e4d53d8a89ef6212dd upstream.
 
-We had a problem with io hung because it was waiting for c->root to
-release the lock.
+Add support for Fibocom L716-EU module series.
 
-crash> cache_set.root -l cache_set.list ffffa03fde4c0050
-  root = 0xffff802ef454c800
-crash> btree -o 0xffff802ef454c800 | grep rw_semaphore
-  [ffff802ef454c858] struct rw_semaphore lock;
-crash> struct rw_semaphore ffff802ef454c858
-struct rw_semaphore {
-  count = {
-    counter = -4294967297
-  },
-  wait_list = {
-    next = 0xffff00006786fc28,
-    prev = 0xffff00005d0efac8
-  },
-  wait_lock = {
-    raw_lock = {
-      {
-        val = {
-          counter = 0
-        },
-        {
-          locked = 0 '\000',
-          pending = 0 '\000'
-        },
-        {
-          locked_pending = 0,
-          tail = 0
-        }
-      }
-    }
-  },
-  osq = {
-    tail = {
-      counter = 0
-    }
-  },
-  owner = 0xffffa03fdc586603
-}
+L716-EU is a Fibocom module based on ZTE's V3E/V3T chipset.
 
-The "counter = -4294967297" means that lock count is -1 and a write lock
-is being attempted. Then, we found that there is a btree with a counter
-of 1 in btree_cache_freeable.
+Device creates multiple interfaces when connected to PC as follows:
+ - Network Interface: ECM or RNDIS (set by FW or AT Command)
+ - ttyUSB0: AT port
+ - ttyUSB1: Modem port
+ - ttyUSB2: AT2 port
+ - ttyUSB3: Trace port for log information
+ - ADB: ADB port for debugging. ("Driver=usbfs" when ADB server enabled)
 
-crash> cache_set -l cache_set.list ffffa03fde4c0050 -o|grep btree_cache
-  [ffffa03fde4c1140] struct list_head btree_cache;
-  [ffffa03fde4c1150] struct list_head btree_cache_freeable;
-  [ffffa03fde4c1160] struct list_head btree_cache_freed;
-  [ffffa03fde4c1170] unsigned int btree_cache_used;
-  [ffffa03fde4c1178] wait_queue_head_t btree_cache_wait;
-  [ffffa03fde4c1190] struct task_struct *btree_cache_alloc_lock;
-crash> list -H ffffa03fde4c1140|wc -l
-973
-crash> list -H ffffa03fde4c1150|wc -l
-1123
-crash> cache_set.btree_cache_used -l cache_set.list ffffa03fde4c0050
-  btree_cache_used = 2097
-crash> list -s btree -l btree.list -H ffffa03fde4c1140|grep -E -A2 "^  lock = {" > btree_cache.txt
-crash> list -s btree -l btree.list -H ffffa03fde4c1150|grep -E -A2 "^  lock = {" > btree_cache_freeable.txt
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# pwd
-/var/crash/127.0.0.1-2023-08-04-16:40:28
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# cat btree_cache.txt|grep counter|grep -v "counter = 0"
-[root@node-3 127.0.0.1-2023-08-04-16:40:28]# cat btree_cache_freeable.txt|grep counter|grep -v "counter = 0"
-      counter = 1
+Here are the outputs of lsusb and usb-devices:
+$ ls /dev/ttyUSB*
+/dev/ttyUSB0  /dev/ttyUSB1  /dev/ttyUSB2  /dev/ttyUSB3
 
-We found that this is a bug in bch_sectors_dirty_init() when locking c->root:
-    (1). Thread X has locked c->root(A) write.
-    (2). Thread Y failed to lock c->root(A), waiting for the lock(c->root A).
-    (3). Thread X bch_btree_set_root() changes c->root from A to B.
-    (4). Thread X releases the lock(c->root A).
-    (5). Thread Y successfully locks c->root(A).
-    (6). Thread Y releases the lock(c->root B).
+usb-devices:
+L716-EU (ECM mode):
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 51 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0001 Rev= 1.00
+S:  Manufacturer=Fibocom,Incorporated
+S:  Product=Fibocom Mobile Boardband
+S:  SerialNumber=1234567890ABCDEF
+C:* #Ifs= 7 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=87(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-        down_write locked ---(1)----------------------┐
-                |                                     |
-                |   down_read waiting ---(2)----┐     |
-                |           |               ┌-------------┐ ┌-------------┐
-        bch_btree_set_root ===(3)========>> | c->root   A | | c->root   B |
-                |           |               └-------------┘ └-------------┘
-            up_write ---(4)---------------------┘     |            |
-                            |                         |            |
-                    down_read locked ---(5)-----------┘            |
-                            |                                      |
-                        up_read ---(6)-----------------------------┘
+L716-EU (RNDIS mode):
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 49 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0001 Rev= 1.00
+S:  Manufacturer=Fibocom,Incorporated
+S:  Product=Fibocom Mobile Boardband
+S:  SerialNumber=1234567890ABCDEF
+C:* #Ifs= 7 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=02 Prot=ff Driver=rndis_host
+E:  Ad=87(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Since c->root may change, the correct steps to lock c->root should be
-the same as bch_root_usage(), compare after locking.
-
-static unsigned int bch_root_usage(struct cache_set *c)
-{
-        unsigned int bytes = 0;
-        struct bkey *k;
-        struct btree *b;
-        struct btree_iter iter;
-
-        goto lock_root;
-
-        do {
-                rw_unlock(false, b);
-lock_root:
-                b = c->root;
-                rw_lock(false, b, b->level);
-        } while (b != c->root);
-
-        for_each_key_filter(&b->keys, k, &iter, bch_ptr_bad)
-                bytes += bkey_bytes(k);
-
-        rw_unlock(false, b);
-
-        return (bytes * 100) / btree_bytes(c);
-}
-
-Fixes: b144e45fc576 ("bcache: make bch_sectors_dirty_init() to be multithreaded")
-Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20231120052503.6122-7-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Victor Fragoso <victorffs@hotmail.com>
+Reviewed-by: Lars Melin <larsm17@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/writeback.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/bcache/writeback.c
-+++ b/drivers/md/bcache/writeback.c
-@@ -921,14 +921,22 @@ static int bch_btre_dirty_init_thread_nr
- void bch_sectors_dirty_init(struct bcache_device *d)
- {
- 	int i;
-+	struct btree *b = NULL;
- 	struct bkey *k = NULL;
- 	struct btree_iter iter;
- 	struct sectors_dirty_init op;
- 	struct cache_set *c = d->c;
- 	struct bch_dirty_init_state state;
- 
-+retry_lock:
-+	b = c->root;
-+	rw_lock(0, b, b->level);
-+	if (b != c->root) {
-+		rw_unlock(0, b);
-+		goto retry_lock;
-+	}
-+
- 	/* Just count root keys if no leaf node */
--	rw_lock(0, c->root, c->root->level);
- 	if (c->root->level == 0) {
- 		bch_btree_op_init(&op.op, -1);
- 		op.inode = d->id;
-@@ -941,7 +949,7 @@ void bch_sectors_dirty_init(struct bcach
- 			sectors_dirty_init_fn(&op.op, c->root, k);
- 		}
- 
--		rw_unlock(0, c->root);
-+		rw_unlock(0, b);
- 		return;
- 	}
- 
-@@ -978,7 +986,7 @@ void bch_sectors_dirty_init(struct bcach
- out:
- 	/* Must wait for all threads to stop. */
- 	wait_event(state.wait, atomic_read(&state.started) == 0);
--	rw_unlock(0, c->root);
-+	rw_unlock(0, b);
- }
- 
- void bch_cached_dev_writeback_init(struct cached_dev *dc)
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2251,6 +2251,7 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(4) | RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE(0x1782, 0x4d10) },						/* Fibocom L610 (AT mode) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x1782, 0x4d11, 0xff) },			/* Fibocom L610 (ECM/RNDIS mode) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0001, 0xff, 0xff, 0xff) },	/* Fibocom L716-EU (ECM/RNDIS mode) */
+ 	{ USB_DEVICE(0x2cb7, 0x0104),						/* Fibocom NL678 series */
+ 	  .driver_info = RSVD(4) | RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0105, 0xff),			/* Fibocom NL678 series */
 
 
