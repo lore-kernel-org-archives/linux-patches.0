@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8826A6FB1;
-	Tue,  5 Dec 2023 03:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203C66FB1;
+	Tue,  5 Dec 2023 03:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqxaZV7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D0DC433C8;
-	Tue,  5 Dec 2023 03:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcyYIq7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D254C433C8;
+	Tue,  5 Dec 2023 03:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747572;
-	bh=jxIekVJqdBf+DfodXQFledhsdAmu+qnk640N4xnk6Zs=;
+	s=korg; t=1701747575;
+	bh=0h21m91AwlxJXVsMQpqlx0Euvpcegt7pCDkeibc4gLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqxaZV7aPwTcie+dn1+/g8MZs5exOoxpAsUsvGYp1bgevreXsY1Z6JclTl2LKqTQ+
-	 N3wrvitn4rTcMWBVep12FOk78dAr36M4MbYYWlvsQZyKrsy7e9HTz3qeHGH7kVqfpp
-	 T3YV3XJbPw9Ag8YbF/F1zSeqg9FVritysI1vsmA4=
+	b=WcyYIq7i6CuZwmqJc10/FH0zxQz8WnvS/8hsDYsRizDXLdtsMfeo8V2XGkK3gKyAE
+	 zc5LuehqulJ92GT6o2dq3wXuMA0qjMvjVsOJTggacDbCIxOHN3cd8vtwNV25QP4j5C
+	 WwaNZOumSMVlWIMpawwZQwv0wsGND9NL0h8f9EmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
-	Marek Vasut <marex@denx.de>,
-	Fabio Estevam <festevam@denx.de>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 125/135] cpufreq: imx6q: Dont disable 792 Mhz OPP unnecessarily
-Date: Tue,  5 Dec 2023 12:17:26 +0900
-Message-ID: <20231205031538.791131591@linuxfoundation.org>
+Subject: [PATCH 5.10 126/135] mmc: cqhci: Increase recovery halt timeout
+Date: Tue,  5 Dec 2023 12:17:27 +0900
+Message-ID: <20231205031538.840823797@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -44,47 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 2e4e0984c7d696cc74cf2fd7e7f62997f0e9ebe6 ]
+[ Upstream commit b578d5d18e929aa7c007a98cce32657145dde219 ]
 
-For a 900MHz i.MX6ULL CPU the 792MHz OPP is disabled. There is no
-convincing reason to disable this OPP. If a CPU can run at 900MHz,
-it should also be able to cope with 792MHz. Looking at the voltage
-level of 792MHz in [1] (page 24, table 10. "Operating Ranges") the
-current defined OPP is above the minimum. So the voltage level
-shouldn't be a problem. However in [2] (page 24, table 10.
-"Operating Ranges"), it is not mentioned that 792MHz OPP isn't
-allowed. Change it to only disable 792MHz OPP for i.MX6ULL types
-below 792 MHz.
+Failing to halt complicates the recovery. Additionally, unless the card or
+controller are stuck, which is expected to be very rare, then the halt
+should succeed, so it is better to wait. Set a large timeout.
 
-[1] https://www.nxp.com/docs/en/data-sheet/IMX6ULLIEC.pdf
-[2] https://www.nxp.com/docs/en/data-sheet/IMX6ULLCEC.pdf
-
-Fixes: 0aa9abd4c212 ("cpufreq: imx6q: check speed grades for i.MX6ULL")
-Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Fabio Estevam <festevam@denx.de>
-[ Viresh: Edited subject ]
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-3-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/imx6q-cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/cqhci.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
-index cc874d0c4395a..00f7ad7466680 100644
---- a/drivers/cpufreq/imx6q-cpufreq.c
-+++ b/drivers/cpufreq/imx6q-cpufreq.c
-@@ -327,7 +327,7 @@ static int imx6ul_opp_check_speed_grading(struct device *dev)
- 			imx6x_disable_freq_in_opp(dev, 696000000);
+diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
+index 7ba4f714106f9..a0a9cb6e2a150 100644
+--- a/drivers/mmc/host/cqhci.c
++++ b/drivers/mmc/host/cqhci.c
+@@ -932,10 +932,10 @@ static bool cqhci_halt(struct mmc_host *mmc, unsigned int timeout)
+ /*
+  * After halting we expect to be able to use the command line. We interpret the
+  * failure to halt to mean the data lines might still be in use (and the upper
+- * layers will need to send a STOP command), so we set the timeout based on a
+- * generous command timeout.
++ * layers will need to send a STOP command), however failing to halt complicates
++ * the recovery, so set a timeout that would reasonably allow I/O to complete.
+  */
+-#define CQHCI_START_HALT_TIMEOUT	5
++#define CQHCI_START_HALT_TIMEOUT	500
  
- 	if (of_machine_is_compatible("fsl,imx6ull")) {
--		if (val != OCOTP_CFG3_6ULL_SPEED_792MHZ)
-+		if (val < OCOTP_CFG3_6ULL_SPEED_792MHZ)
- 			imx6x_disable_freq_in_opp(dev, 792000000);
- 
- 		if (val != OCOTP_CFG3_6ULL_SPEED_900MHZ)
+ static void cqhci_recovery_start(struct mmc_host *mmc)
+ {
 -- 
 2.42.0
 
