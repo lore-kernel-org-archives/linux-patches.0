@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB51C79F2;
-	Tue,  5 Dec 2023 03:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD926FB1;
+	Tue,  5 Dec 2023 03:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujmM+UUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E49FC433C8;
-	Tue,  5 Dec 2023 03:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s814t1VN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5710C433C8;
+	Tue,  5 Dec 2023 03:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747055;
-	bh=SNiEg76vUvc8zRbYpkk1jDir3xkz+CvjcJk4AoHbeQY=;
+	s=korg; t=1701747058;
+	bh=wOyAdh+KIi95PX04PQxrcDqLBHbHETr0dSCrXznoonY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujmM+UUn8drWX29pKwaWYn9H9PPc4A1OHFE7lbiciEBv6ufuuOAUnKKD8EZJy/9YI
-	 8N9fVI7Wm0cpvF9+6X77Afl0gHjEODSVmZxY7qpFTLeW4X6Bd4qgBk9I0yfiqq4zZh
-	 9Ms+wJP+F5YzHaiCQHXMbqAPHHROhZLgYl+V4pSA=
+	b=s814t1VNlZNu0FVfIXpbt1esdoOcrDvMjd7NTms1QnZXSlg3ygdoYqoJUUtPlA98F
+	 yD9pk0b6n+EQ2BI31Of/H1NQVOb/5sC086iDit7wLt+ccxVWX6lO3hoYNaqgkpikrr
+	 WFQn/ycKyg4pGSvTLbKWDgAKaCwJNKrLB6am0P1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 018/107] scsi: sd: Fix system start for ATA devices
-Date: Tue,  5 Dec 2023 12:15:53 +0900
-Message-ID: <20231205031532.774958069@linuxfoundation.org>
+	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@chromium.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 009/107] mmc: cqhci: Fix task clearing in CQE error recovery
+Date: Tue,  5 Dec 2023 12:15:44 +0900
+Message-ID: <20231205031532.131212208@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -35,93 +37,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit b09d7f8fd50f6e93cbadd8d27fde178f745b42a1 upstream.
+commit 1de1b77982e1a1df9707cb11f9b1789e6b8919d4 upstream.
 
-It is not always possible to keep a device in the runtime suspended state
-when a system level suspend/resume cycle is executed. E.g. for ATA devices
-connected to AHCI adapters, system resume resets the ATA ports, which
-causes connected devices to spin up. In such case, a runtime suspended disk
-will incorrectly be seen with a suspended runtime state because the device
-is not resumed by sd_resume_system(). The power state seen by the user is
-different than the actual device physical power state.
+If a task completion notification (TCN) is received when there is no
+outstanding task, the cqhci driver issues a "spurious TCN" warning. This
+was observed to happen right after CQE error recovery.
 
-Fix this issue by introducing the struct scsi_device flag
-force_runtime_start_on_system_start. When set, this flag causes
-sd_resume_system() to request a runtime resume operation for runtime
-suspended devices. This results in the user seeing the device runtime_state
-as active after a system resume, thus correctly reflecting the device
-physical power state.
+When an error interrupt is received the driver runs recovery logic.
+It halts the controller, clears all pending tasks, and then re-enables
+it. On some platforms, like Intel Jasper Lake, a stale task completion
+event was observed, regardless of the CQHCI_CLEAR_ALL_TASKS bit being set.
 
-Fixes: 9131bff6a9f1 ("scsi: core: pm: Only runtime resume if necessary")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20231120225631.37938-3-dlemoal@kernel.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This results in either:
+a) Spurious TC completion event for an empty slot.
+b) Corrupted data being passed up the stack, as a result of premature
+   completion for a newly added task.
+
+Rather than add a quirk for affected controllers, ensure tasks are cleared
+by toggling CQHCI_ENABLE, which would happen anyway if
+cqhci_clear_all_tasks() timed out. This is simpler and should be safe and
+effective for all controllers.
+
+Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
+Cc: stable@vger.kernel.org
+Reported-by: Kornel Dulęba <korneld@chromium.org>
+Tested-by: Kornel Dulęba <korneld@chromium.org>
+Co-developed-by: Kornel Dulęba <korneld@chromium.org>
+Signed-off-by: Kornel Dulęba <korneld@chromium.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-7-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c  |    5 +++++
- drivers/scsi/sd.c          |    9 ++++++++-
- include/scsi/scsi_device.h |    6 ++++++
- 3 files changed, 19 insertions(+), 1 deletion(-)
+ drivers/mmc/host/cqhci-core.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1086,9 +1086,14 @@ int ata_scsi_dev_config(struct scsi_devi
- 		 * Ask the sd driver to issue START STOP UNIT on runtime suspend
- 		 * and resume and shutdown only. For system level suspend/resume,
- 		 * devices power state is handled directly by libata EH.
-+		 * Given that disks are always spun up on system resume, also
-+		 * make sure that the sd driver forces runtime suspended disks
-+		 * to be resumed to correctly reflect the power state of the
-+		 * device.
- 		 */
- 		sdev->manage_runtime_start_stop = 1;
- 		sdev->manage_shutdown = 1;
-+		sdev->force_runtime_start_on_system_start = 1;
- 	}
+--- a/drivers/mmc/host/cqhci-core.c
++++ b/drivers/mmc/host/cqhci-core.c
+@@ -1075,28 +1075,28 @@ static void cqhci_recovery_finish(struct
  
+ 	ok = cqhci_halt(mmc, CQHCI_FINISH_HALT_TIMEOUT);
+ 
+-	if (!cqhci_clear_all_tasks(mmc, CQHCI_CLEAR_TIMEOUT))
+-		ok = false;
+-
  	/*
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3834,8 +3834,15 @@ static int sd_resume(struct device *dev,
- 
- static int sd_resume_system(struct device *dev)
- {
--	if (pm_runtime_suspended(dev))
-+	if (pm_runtime_suspended(dev)) {
-+		struct scsi_disk *sdkp = dev_get_drvdata(dev);
-+		struct scsi_device *sdp = sdkp ? sdkp->device : NULL;
-+
-+		if (sdp && sdp->force_runtime_start_on_system_start)
-+			pm_request_resume(dev);
-+
- 		return 0;
-+	}
- 
- 	return sd_resume(dev, false);
- }
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -181,6 +181,12 @@ struct scsi_device {
+ 	 * The specification contradicts itself, by saying that tasks cannot be
+ 	 * cleared if CQHCI does not halt, but if CQHCI does not halt, it should
+ 	 * be disabled/re-enabled, but not to disable before clearing tasks.
+ 	 * Have a go anyway.
  	 */
- 	unsigned manage_shutdown:1;
- 
-+	/*
-+	 * If set and if the device is runtime suspended, ask the high-level
-+	 * device driver (sd) to force a runtime resume of the device.
-+	 */
-+	unsigned force_runtime_start_on_system_start:1;
+-	if (!ok) {
+-		pr_debug("%s: cqhci: disable / re-enable\n", mmc_hostname(mmc));
+-		cqcfg = cqhci_readl(cq_host, CQHCI_CFG);
+-		cqcfg &= ~CQHCI_ENABLE;
+-		cqhci_writel(cq_host, cqcfg, CQHCI_CFG);
+-		cqcfg |= CQHCI_ENABLE;
+-		cqhci_writel(cq_host, cqcfg, CQHCI_CFG);
+-		/* Be sure that there are no tasks */
+-		ok = cqhci_halt(mmc, CQHCI_FINISH_HALT_TIMEOUT);
+-		if (!cqhci_clear_all_tasks(mmc, CQHCI_CLEAR_TIMEOUT))
+-			ok = false;
+-		WARN_ON(!ok);
+-	}
++	if (!cqhci_clear_all_tasks(mmc, CQHCI_CLEAR_TIMEOUT))
++		ok = false;
 +
- 	unsigned removable:1;
- 	unsigned changed:1;	/* Data invalid due to media change */
- 	unsigned busy:1;	/* Used to prevent races */
++	/* Disable to make sure tasks really are cleared */
++	cqcfg = cqhci_readl(cq_host, CQHCI_CFG);
++	cqcfg &= ~CQHCI_ENABLE;
++	cqhci_writel(cq_host, cqcfg, CQHCI_CFG);
++
++	cqcfg = cqhci_readl(cq_host, CQHCI_CFG);
++	cqcfg |= CQHCI_ENABLE;
++	cqhci_writel(cq_host, cqcfg, CQHCI_CFG);
++
++	cqhci_halt(mmc, CQHCI_FINISH_HALT_TIMEOUT);
++
++	if (!ok)
++		cqhci_clear_all_tasks(mmc, CQHCI_CLEAR_TIMEOUT);
+ 
+ 	cqhci_recover_mrqs(cq_host);
+ 
 
 
