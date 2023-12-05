@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6176FAF;
-	Tue,  5 Dec 2023 03:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29AE6FAF;
+	Tue,  5 Dec 2023 03:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0HChaKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D27C433C8;
-	Tue,  5 Dec 2023 03:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ai5DL7ES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA49C433C7;
+	Tue,  5 Dec 2023 03:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746924;
-	bh=+1MUob8ygWwmnx118yVM1SsXO/lHvoOkHDCT6nAfndc=;
+	s=korg; t=1701746927;
+	bh=iGoTvwglZ4CWR80tLoNFph45mZV/jvxNk9DHT7oEU/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c0HChaKYW9pUQldlf+5pQQ/54mtYrykPyhcRA1Fxa14yF1SjEEd5lZmISmxgB0Sed
-	 BTlHe0SW5tXeS4eGvARFiQ0mvRL0eToBQqC5izuKhJdQ3wm3grkx7Lfq1X1GqyDg7z
-	 UCw5aPBKUCp+qfuPIiuK1KmQm9boq9DEwdO5BFJ0=
+	b=ai5DL7ES+xX6F2b3q+49Od1cqioEvSRar2DteJSkA9RtiYFs+ExhwKaUrrzFP0X7c
+	 DbiPXX6x4BTGGL7QjXw/uuh4d7BKeX7gi7e1sAFZtxhziCxdoLljxr/i+dJDm4PkuZ
+	 bw//6lT4xjHEVG/L2xbcuhCJbhsMxATXOfOTfPKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	David Sterba <dsterba@suse.com>,
-	syzbot+12e098239d20385264d3@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 44/71] btrfs: send: ensure send_fd is writable
-Date: Tue,  5 Dec 2023 12:16:42 +0900
-Message-ID: <20231205031520.385739861@linuxfoundation.org>
+	Chris Toledanes <chris.toledanes@hp.com>,
+	Carl Ng <carl.ng@hp.com>,
+	Max Nguyen <maxwell.nguyen@hp.com>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 4.19 45/71] Input: xpad - add HyperX Clutch Gladiate Support
+Date: Tue,  5 Dec 2023 12:16:43 +0900
+Message-ID: <20231205031520.438100199@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -42,44 +44,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Max Nguyen <maxwell.nguyen@hp.com>
 
-commit 0ac1d13a55eb37d398b63e6ff6db4a09a2c9128c upstream.
+commit e28a0974d749e5105d77233c0a84d35c37da047e upstream.
 
-kernel_write() requires the caller to ensure that the file is writable.
-Let's do that directly after looking up the ->send_fd.
+Add HyperX controller support to xpad_device and xpad_table.
 
-We don't need a separate bailout path because the "out" path already
-does fput() if ->send_filp is non-NULL.
-
-This has no security impact for two reasons:
-
- - the ioctl requires CAP_SYS_ADMIN
- - __kernel_write() bails out on read-only files - but only since 5.8,
-   see commit a01ac27be472 ("fs: check FMODE_WRITE in __kernel_write")
-
-Reported-and-tested-by: syzbot+12e098239d20385264d3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=12e098239d20385264d3
-Fixes: 31db9f7c23fb ("Btrfs: introduce BTRFS_IOC_SEND for btrfs send/receive")
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Suggested-by: Chris Toledanes <chris.toledanes@hp.com>
+Reviewed-by: Carl Ng <carl.ng@hp.com>
+Signed-off-by: Max Nguyen <maxwell.nguyen@hp.com>
+Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Link: https://lore.kernel.org/r/20230906231514.4291-1-hphyperxdev@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -6860,7 +6860,7 @@ long btrfs_ioctl_send(struct file *mnt_f
- 	sctx->flags = arg->flags;
- 
- 	sctx->send_filp = fget(arg->send_fd);
--	if (!sctx->send_filp) {
-+	if (!sctx->send_filp || !(sctx->send_filp->f_mode & FMODE_WRITE)) {
- 		ret = -EBADF;
- 		goto out;
- 	}
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -133,6 +133,7 @@ static const struct xpad_device {
+ 	{ 0x044f, 0x0f07, "Thrustmaster, Inc. Controller", 0, XTYPE_XBOX },
+ 	{ 0x044f, 0x0f10, "Thrustmaster Modena GT Wheel", 0, XTYPE_XBOX },
+ 	{ 0x044f, 0xb326, "Thrustmaster Gamepad GP XID", 0, XTYPE_XBOX360 },
++	{ 0x03f0, 0x0495, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },
+ 	{ 0x045e, 0x0202, "Microsoft X-Box pad v1 (US)", 0, XTYPE_XBOX },
+ 	{ 0x045e, 0x0285, "Microsoft X-Box pad (Japan)", 0, XTYPE_XBOX },
+ 	{ 0x045e, 0x0287, "Microsoft Xbox Controller S", 0, XTYPE_XBOX },
+@@ -445,6 +446,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x0079),		/* GPD Win 2 Controller */
+ 	XPAD_XBOX360_VENDOR(0x03eb),		/* Wooting Keyboards (Legacy) */
+ 	XPAD_XBOX360_VENDOR(0x044f),		/* Thrustmaster X-Box 360 controllers */
++	XPAD_XBOXONE_VENDOR(0x03f0),		/* HP HyperX Xbox One Controllers */
+ 	XPAD_XBOX360_VENDOR(0x045e),		/* Microsoft X-Box 360 controllers */
+ 	XPAD_XBOXONE_VENDOR(0x045e),		/* Microsoft X-Box One controllers */
+ 	XPAD_XBOX360_VENDOR(0x046d),		/* Logitech X-Box 360 style controllers */
 
 
