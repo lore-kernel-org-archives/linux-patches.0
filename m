@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136EA6FB0;
-	Tue,  5 Dec 2023 03:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB778F62;
+	Tue,  5 Dec 2023 03:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnHhBi4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88451C433C7;
-	Tue,  5 Dec 2023 03:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pa043cfj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F48C433C9;
+	Tue,  5 Dec 2023 03:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747726;
-	bh=OS+j+7vb9i02LQowL4PS1xFmhKuv/3PBh0mYZJ354Ak=;
+	s=korg; t=1701747729;
+	bh=fmXIySt2xnOhb+G3GXTokZB5I/SpmrDy08j+J9MHt5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnHhBi4d3MHW/yW4RUcoD2A5OXlBVUpavRKHJRFffi/HAx2yUNs/ga8sNKuPrnOJj
-	 DXti6H+B0WFvJvaN6pEwz11QNtId8kwqAfMJs61djNvPv7e2K80ZFJRz5j4k3p15+E
-	 iPhBgTWWHeky7p4Kx60ImbMdPny5KXr5qe0g95bA=
+	b=pa043cfjwrB+n6tvpfLx3cOjHlpq2hti32NoD6lzxytDbwanQVxAuEzEWJK6q6wri
+	 aywpi2RV3IT+Vic02mRQfWdD7qCpsAmbRx4wNhHjcC4VdkgutVE7m84VtmxKE/Ewez
+	 SCNSMSkEqI6kRE/fEWaEBIfk6y1e4Xugr733xFZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 46/67] net: ravb: Stop DMA in case of failures on ravb_open()
-Date: Tue,  5 Dec 2023 12:17:31 +0900
-Message-ID: <20231205031522.477517069@linuxfoundation.org>
+Subject: [PATCH 5.15 47/67] perf intel-pt: Fix async branch flags
+Date: Tue,  5 Dec 2023 12:17:32 +0900
+Message-ID: <20231205031522.535920939@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -43,35 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit eac16a733427ba0de2449ffc7bd3da32ddb65cb7 ]
+[ Upstream commit f2d87895cbc4af80649850dcf5da36de6b2ed3dd ]
 
-In case ravb_phy_start() returns with error the settings applied in
-ravb_dmac_init() are not reverted (e.g. config mode). For this call
-ravb_stop_dma() on failure path of ravb_open().
+Ensure PERF_IP_FLAG_ASYNC is set always for asynchronous branches (i.e.
+interrupts etc).
 
-Fixes: a0d2f20650e8 ("Renesas Ethernet AVB PTP clock driver")
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 90e457f7be08 ("perf tools: Add Intel PT support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20230928072953.19369-1-adrian.hunter@intel.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/intel-pt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 5cdc7bc63e267..1212a9b4822b3 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1472,6 +1472,7 @@ static int ravb_open(struct net_device *ndev)
- 	/* Stop PTP Clock driver */
- 	if (info->gptp)
- 		ravb_ptp_stop(ndev);
-+	ravb_stop_dma(ndev);
- out_free_irq_mgmta:
- 	if (!info->multi_irqs)
- 		goto out_free_irq;
+diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
+index 7a2ce387079e3..805bad9364e94 100644
+--- a/tools/perf/util/intel-pt.c
++++ b/tools/perf/util/intel-pt.c
+@@ -1346,9 +1346,11 @@ static void intel_pt_sample_flags(struct intel_pt_queue *ptq)
+ 	} else if (ptq->state->flags & INTEL_PT_ASYNC) {
+ 		if (!ptq->state->to_ip)
+ 			ptq->flags = PERF_IP_FLAG_BRANCH |
++				     PERF_IP_FLAG_ASYNC |
+ 				     PERF_IP_FLAG_TRACE_END;
+ 		else if (ptq->state->from_nr && !ptq->state->to_nr)
+ 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
++				     PERF_IP_FLAG_ASYNC |
+ 				     PERF_IP_FLAG_VMEXIT;
+ 		else
+ 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
 -- 
 2.42.0
 
