@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1568BF8;
-	Tue,  5 Dec 2023 03:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C8379F2;
+	Tue,  5 Dec 2023 03:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zA9OzBzi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0CEC433C8;
-	Tue,  5 Dec 2023 03:41:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8mj8QtU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF0EC433C7;
+	Tue,  5 Dec 2023 03:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747670;
-	bh=bzPUwTFNLv9O0uDSPloC+E+TNp3YeSNnQ63SGgXBpBA=;
+	s=korg; t=1701747673;
+	bh=Jd8pz4VSHjIewZv9Gha4slNuXD1WFx5XVcCIaJ+U3vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zA9OzBzisFnRqvhU3zh3oExFwwMuTjXFNuxYs8bNEGIdVRI5ApQsLYxNaeJslOkIA
-	 v0ZvGJgi5NxwqRDsGcxhhqcPNHbd3RhKx2G4DUVxEMyefGLZjrVZq7bWDC3PXJUGSQ
-	 H5ngbIAeYJhir8IR9Gz9OwdX5+Qr8hgzH+Sosoxc=
+	b=P8mj8QtU2tLbJTJkkMAF971Klt5APp9N2TojGZkCT0eTKpBJzoOo/cG0/BsgDMhol
+	 0LTHSaIougQE141Dct8Dls2nGV32IYIt6sakhnGkI8MZ9baR6AjbZljoIUdfHmBCm/
+	 C7W/smNrdj134gP7nI322nVsO1801qNGyPgCDs1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shuang Li <shuali@redhat.com>,
 	Xin Long <lucien.xin@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Olivier Matz <olivier.matz@6wind.com>
-Subject: [PATCH 5.15 25/67] vlan: introduce vlan_dev_free_egress_priority
-Date: Tue,  5 Dec 2023 12:17:10 +0900
-Message-ID: <20231205031521.240733406@linuxfoundation.org>
+Subject: [PATCH 5.15 26/67] vlan: move dev_put into vlan_dev_uninit
+Date: Tue,  5 Dec 2023 12:17:11 +0900
+Message-ID: <20231205031521.311405664@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -44,80 +45,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Xin Long <lucien.xin@gmail.com>
 
-commit 37aa50c539bcbcc01767e515bd170787fcfc0f33 upstream.
+commit d6ff94afd90b0ce8d1715f8ef77d4347d7a7f2c0 upstream.
 
-This patch is to introduce vlan_dev_free_egress_priority() to
-free egress priority for vlan dev, and keep vlan_dev_uninit()
-static as .ndo_uninit. It makes the code more clear and safer
-when adding new code in vlan_dev_uninit() in the future.
+Shuang Li reported an QinQ issue by simply doing:
 
+  # ip link add dummy0 type dummy
+  # ip link add link dummy0 name dummy0.1 type vlan id 1
+  # ip link add link dummy0.1 name dummy0.1.2 type vlan id 2
+  # rmmod 8021q
+
+ unregister_netdevice: waiting for dummy0.1 to become free. Usage count = 1
+
+When rmmods 8021q, all vlan devs are deleted from their real_dev's vlan grp
+and added into list_kill by unregister_vlan_dev(). dummy0.1 is unregistered
+before dummy0.1.2, as it's using for_each_netdev() in __rtnl_kill_links().
+
+When unregisters dummy0.1, dummy0.1.2 is not unregistered in the event of
+NETDEV_UNREGISTER, as it's been deleted from dummy0.1's vlan grp. However,
+due to dummy0.1.2 still holding dummy0.1, dummy0.1 will keep waiting in
+netdev_wait_allrefs(), while dummy0.1.2 will never get unregistered and
+release dummy0.1, as it delays dev_put until calling dev->priv_destructor,
+vlan_dev_free().
+
+This issue was introduced by Commit 563bcbae3ba2 ("net: vlan: fix a UAF in
+vlan_dev_real_dev()"), and this patch is to fix it by moving dev_put() into
+vlan_dev_uninit(), which is called after NETDEV_UNREGISTER event but before
+netdev_wait_allrefs().
+
+Fixes: 563bcbae3ba2 ("net: vlan: fix a UAF in vlan_dev_real_dev()")
+Reported-by: Shuang Li <shuali@redhat.com>
 Signed-off-by: Xin Long <lucien.xin@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Olivier Matz <olivier.matz@6wind.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/8021q/vlan.h         |    2 +-
- net/8021q/vlan_dev.c     |    7 ++++++-
- net/8021q/vlan_netlink.c |    7 ++++---
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ net/8021q/vlan_dev.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/8021q/vlan.h
-+++ b/net/8021q/vlan.h
-@@ -129,6 +129,7 @@ void vlan_dev_set_ingress_priority(const
- 				   u32 skb_prio, u16 vlan_prio);
- int vlan_dev_set_egress_priority(const struct net_device *dev,
- 				 u32 skb_prio, u16 vlan_prio);
-+void vlan_dev_free_egress_priority(const struct net_device *dev);
- int vlan_dev_change_flags(const struct net_device *dev, u32 flag, u32 mask);
- void vlan_dev_get_realdev_name(const struct net_device *dev, char *result,
- 			       size_t size);
-@@ -139,7 +140,6 @@ int vlan_check_real_dev(struct net_devic
- void vlan_setup(struct net_device *dev);
- int register_vlan_dev(struct net_device *dev, struct netlink_ext_ack *extack);
- void unregister_vlan_dev(struct net_device *dev, struct list_head *head);
--void vlan_dev_uninit(struct net_device *dev);
- bool vlan_dev_inherit_address(struct net_device *dev,
- 			      struct net_device *real_dev);
- 
 --- a/net/8021q/vlan_dev.c
 +++ b/net/8021q/vlan_dev.c
-@@ -622,7 +622,7 @@ static int vlan_dev_init(struct net_devi
- }
+@@ -638,7 +638,12 @@ void vlan_dev_free_egress_priority(const
  
- /* Note: this function might be called multiple times for the same device. */
--void vlan_dev_uninit(struct net_device *dev)
-+void vlan_dev_free_egress_priority(const struct net_device *dev)
+ static void vlan_dev_uninit(struct net_device *dev)
  {
- 	struct vlan_priority_tci_mapping *pm;
- 	struct vlan_dev_priv *vlan = vlan_dev_priv(dev);
-@@ -636,6 +636,11 @@ void vlan_dev_uninit(struct net_device *
- 	}
- }
- 
-+static void vlan_dev_uninit(struct net_device *dev)
-+{
-+	vlan_dev_free_egress_priority(dev);
-+}
++	struct vlan_dev_priv *vlan = vlan_dev_priv(dev);
 +
- static netdev_features_t vlan_dev_fix_features(struct net_device *dev,
- 	netdev_features_t features)
- {
---- a/net/8021q/vlan_netlink.c
-+++ b/net/8021q/vlan_netlink.c
-@@ -183,10 +183,11 @@ static int vlan_newlink(struct net *src_
- 		return -EINVAL;
- 
- 	err = vlan_changelink(dev, tb, data, extack);
--	if (!err)
--		err = register_vlan_dev(dev, extack);
- 	if (err)
--		vlan_dev_uninit(dev);
-+		return err;
-+	err = register_vlan_dev(dev, extack);
-+	if (err)
-+		vlan_dev_free_egress_priority(dev);
- 	return err;
+ 	vlan_dev_free_egress_priority(dev);
++
++	/* Get rid of the vlan's reference to real_dev */
++	dev_put(vlan->real_dev);
  }
  
+ static netdev_features_t vlan_dev_fix_features(struct net_device *dev,
+@@ -851,9 +856,6 @@ static void vlan_dev_free(struct net_dev
+ 
+ 	free_percpu(vlan->vlan_pcpu_stats);
+ 	vlan->vlan_pcpu_stats = NULL;
+-
+-	/* Get rid of the vlan's reference to real_dev */
+-	dev_put(vlan->real_dev);
+ }
+ 
+ void vlan_setup(struct net_device *dev)
 
 
