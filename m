@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E242611E;
-	Tue,  5 Dec 2023 03:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEE06AC2;
+	Tue,  5 Dec 2023 03:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBSCOR8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA60EC433C8;
-	Tue,  5 Dec 2023 03:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1i73OmV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC84C433C8;
+	Tue,  5 Dec 2023 03:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747808;
-	bh=5ILx7Noz2asW9dui3i6grXZzi0yvFdlY+PwCD4YVWuk=;
+	s=korg; t=1701747811;
+	bh=k0ixwN+1mCeSbVL74Em1ZHXXVsA4CwWHwirVy0Jjbgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBSCOR8c0dbZbxa1F0TQZBhaOFcBucXpv+wNjbALQEqFp1QeXPmjE8mZGCJD+6Xkt
-	 iv8Gu2TIhoL4NwrlMv9nRAPcSDB0NgJu+bm2B1sn4zVtpHNPJJGbD2gGXScuMwGxKW
-	 yi7pV73IVbb9KG+vHGRYl09ggZjW/0+lCjGgcQ3A=
+	b=B1i73OmVyBcikSOyzadpdaeEQieUN4HVpN7nBwStdVKxcG8e1PujyVA2eHvTW8KWG
+	 ojVNJpkUqDuo7qgr0Mrt5sDo/HPDtZAVYpJCPWtg/dEy6JOvp0m0OyfivddrQ6jCOD
+	 nNjHUO9jiY+y+3D2AjH1k8WkMkmK7uRTk+nP4/Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Chen <free122448@hotmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 67/67] r8169: fix deadlock on RTL8125 in jumbo mtu mode
-Date: Tue,  5 Dec 2023 12:17:52 +0900
-Message-ID: <20231205031523.740417191@linuxfoundation.org>
+Subject: [PATCH 5.15 60/67] cpufreq: imx6q: dont warn for disabling a non-existing frequency
+Date: Tue,  5 Dec 2023 12:17:45 +0900
+Message-ID: <20231205031523.340768521@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -43,58 +42,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
-[ Upstream commit 59d395ed606d8df14615712b0cdcdadb2d962175 ]
+[ Upstream commit 11a3b0ac33d95aa84be426e801f800997262a225 ]
 
-The original change results in a deadlock if jumbo mtu mode is used.
-Reason is that the phydev lock is held when rtl_reset_work() is called
-here, and rtl_jumbo_config() calls phy_start_aneg() which also tries
-to acquire the phydev lock. Fix this by calling rtl_reset_work()
-asynchronously.
+It is confusing if a warning is given for disabling a non-existent
+frequency of the operating performance points (OPP). In this case
+the function dev_pm_opp_disable() returns -ENODEV. Check the return
+value and avoid the output of a warning in this case. Avoid code
+duplication by using a separate function.
 
-Fixes: 621735f59064 ("r8169: fix rare issue with broken rx after link-down on RTL8125")
-Reported-by: Ian Chen <free122448@hotmail.com>
-Tested-by: Ian Chen <free122448@hotmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/caf6a487-ef8c-4570-88f9-f47a659faf33@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+[ Viresh : Updated commit subject ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: 2e4e0984c7d6 ("cpufreq: imx6q: Don't disable 792 Mhz OPP unnecessarily")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/cpufreq/imx6q-cpufreq.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index c640896f7b7e2..d2fbd169f25b9 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -588,6 +588,7 @@ struct rtl8169_tc_offsets {
- enum rtl_flag {
- 	RTL_FLAG_TASK_ENABLED = 0,
- 	RTL_FLAG_TASK_RESET_PENDING,
-+	RTL_FLAG_TASK_RESET_NO_QUEUE_WAKE,
- 	RTL_FLAG_TASK_TX_TIMEOUT,
- 	RTL_FLAG_MAX
+diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
+index 90beb26ed34e9..37d30fa2df5fa 100644
+--- a/drivers/cpufreq/imx6q-cpufreq.c
++++ b/drivers/cpufreq/imx6q-cpufreq.c
+@@ -209,6 +209,14 @@ static struct cpufreq_driver imx6q_cpufreq_driver = {
+ 	.suspend = cpufreq_generic_suspend,
  };
-@@ -4646,6 +4647,8 @@ static void rtl_task(struct work_struct *work)
- reset:
- 		rtl_reset_work(tp);
- 		netif_wake_queue(tp->dev);
-+	} else if (test_and_clear_bit(RTL_FLAG_TASK_RESET_NO_QUEUE_WAKE, tp->wk.flags)) {
-+		rtl_reset_work(tp);
- 	}
- out_unlock:
- 	rtnl_unlock();
-@@ -4679,7 +4682,7 @@ static void r8169_phylink_handler(struct net_device *ndev)
- 	} else {
- 		/* In few cases rx is broken after link-down otherwise */
- 		if (rtl_is_8125(tp))
--			rtl_reset_work(tp);
-+			rtl_schedule_task(tp, RTL_FLAG_TASK_RESET_NO_QUEUE_WAKE);
- 		pm_runtime_idle(d);
+ 
++static void imx6x_disable_freq_in_opp(struct device *dev, unsigned long freq)
++{
++	int ret = dev_pm_opp_disable(dev, freq);
++
++	if (ret < 0 && ret != -ENODEV)
++		dev_warn(dev, "failed to disable %ldMHz OPP\n", freq / 1000000);
++}
++
+ #define OCOTP_CFG3			0x440
+ #define OCOTP_CFG3_SPEED_SHIFT		16
+ #define OCOTP_CFG3_SPEED_1P2GHZ		0x3
+@@ -254,17 +262,15 @@ static int imx6q_opp_check_speed_grading(struct device *dev)
+ 	val &= 0x3;
+ 
+ 	if (val < OCOTP_CFG3_SPEED_996MHZ)
+-		if (dev_pm_opp_disable(dev, 996000000))
+-			dev_warn(dev, "failed to disable 996MHz OPP\n");
++		imx6x_disable_freq_in_opp(dev, 996000000);
+ 
+ 	if (of_machine_is_compatible("fsl,imx6q") ||
+ 	    of_machine_is_compatible("fsl,imx6qp")) {
+ 		if (val != OCOTP_CFG3_SPEED_852MHZ)
+-			if (dev_pm_opp_disable(dev, 852000000))
+-				dev_warn(dev, "failed to disable 852MHz OPP\n");
++			imx6x_disable_freq_in_opp(dev, 852000000);
++
+ 		if (val != OCOTP_CFG3_SPEED_1P2GHZ)
+-			if (dev_pm_opp_disable(dev, 1200000000))
+-				dev_warn(dev, "failed to disable 1.2GHz OPP\n");
++			imx6x_disable_freq_in_opp(dev, 1200000000);
  	}
  
+ 	return 0;
+@@ -316,20 +322,16 @@ static int imx6ul_opp_check_speed_grading(struct device *dev)
+ 	val >>= OCOTP_CFG3_SPEED_SHIFT;
+ 	val &= 0x3;
+ 
+-	if (of_machine_is_compatible("fsl,imx6ul")) {
++	if (of_machine_is_compatible("fsl,imx6ul"))
+ 		if (val != OCOTP_CFG3_6UL_SPEED_696MHZ)
+-			if (dev_pm_opp_disable(dev, 696000000))
+-				dev_warn(dev, "failed to disable 696MHz OPP\n");
+-	}
++			imx6x_disable_freq_in_opp(dev, 696000000);
+ 
+ 	if (of_machine_is_compatible("fsl,imx6ull")) {
+ 		if (val != OCOTP_CFG3_6ULL_SPEED_792MHZ)
+-			if (dev_pm_opp_disable(dev, 792000000))
+-				dev_warn(dev, "failed to disable 792MHz OPP\n");
++			imx6x_disable_freq_in_opp(dev, 792000000);
+ 
+ 		if (val != OCOTP_CFG3_6ULL_SPEED_900MHZ)
+-			if (dev_pm_opp_disable(dev, 900000000))
+-				dev_warn(dev, "failed to disable 900MHz OPP\n");
++			imx6x_disable_freq_in_opp(dev, 900000000);
+ 	}
+ 
+ 	return ret;
 -- 
 2.42.0
 
