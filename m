@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F7BC8D2;
-	Tue,  5 Dec 2023 03:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB216FB0;
+	Tue,  5 Dec 2023 03:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKBQjzLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17256C433C8;
-	Tue,  5 Dec 2023 03:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLTHsCqP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7B0C433C7;
+	Tue,  5 Dec 2023 03:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701748048;
-	bh=r5lq4aqLbOFhTAO9bYgGwr0SOmvCCAKg1ZcShSaqPoI=;
+	s=korg; t=1701748051;
+	bh=TSgKRs2JP3c/RhwtGXws5iVBZENgD9nUIjeEYnBMJLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKBQjzLxNug8RmB+AzMFY4CvO70Dx5hmCSkguhA4DXMYFkM7mkz9TI9uMB0uG8SbF
-	 Z/ziXBWryVV4QN1CkINcJ6VYB3e0TR1HuSPwx+B2Pnx/Wyd0ZeBpbXrK4bWkEXJqxD
-	 5iXOYMoQzpMuDs6yyK+A56wgy/5m/sfm8n6zYs3g=
+	b=SLTHsCqPmVeymHAkth7W1fXKMApqP42Bv1/WwXSVssa4LNQu3boHVkQBhhdtFxUld
+	 WvwEl2Bd1ULJOhZPlSQjSpiYWQkOrO10Lunw1d+/oNUMkGjgmulFijCM6bH76VVKyI
+	 R5syaw1KXI02NL1C/9H8TzfRGy/wnXwUxrHkG5H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Furong Xu <0x1207@gmail.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 69/94] net: stmmac: xgmac: Disable FPE MMC interrupts
-Date: Tue,  5 Dec 2023 12:17:37 +0900
-Message-ID: <20231205031526.703895162@linuxfoundation.org>
+Subject: [PATCH 5.4 70/94] ravb: Fix races between ravb_tx_timeout_work() and net related ops
+Date: Tue,  5 Dec 2023 12:17:38 +0900
+Message-ID: <20231205031526.753318380@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -45,52 +43,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Furong Xu <0x1207@gmail.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit e54d628a2721bfbb002c19f6e8ca6746cec7640f ]
+[ Upstream commit 9870257a0a338cd8d6c1cddab74e703f490f6779 ]
 
-Commit aeb18dd07692 ("net: stmmac: xgmac: Disable MMC interrupts
-by default") tries to disable MMC interrupts to avoid a storm of
-unhandled interrupts, but leaves the FPE(Frame Preemption) MMC
-interrupts enabled, FPE MMC interrupts can cause the same problem.
-Now we mask FPE TX and RX interrupts to disable all MMC interrupts.
+Fix races between ravb_tx_timeout_work() and functions of net_device_ops
+and ethtool_ops by using rtnl_trylock() and rtnl_unlock(). Note that
+since ravb_close() is under the rtnl lock and calls cancel_work_sync(),
+ravb_tx_timeout_work() should calls rtnl_trylock(). Otherwise, a deadlock
+may happen in ravb_tx_timeout_work() like below:
 
-Fixes: aeb18dd07692 ("net: stmmac: xgmac: Disable MMC interrupts by default")
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Signed-off-by: Furong Xu <0x1207@gmail.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://lore.kernel.org/r/20231125060126.2328690-1-0x1207@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+CPU0			CPU1
+			ravb_tx_timeout()
+			schedule_work()
+...
+__dev_close_many()
+// Under rtnl lock
+ravb_close()
+cancel_work_sync()
+// Waiting
+			ravb_tx_timeout_work()
+			rtnl_lock()
+			// This is possible to cause a deadlock
+
+If rtnl_trylock() fails, rescheduling the work with sleep for 1 msec.
+
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Link: https://lore.kernel.org/r/20231127122420.3706751-1-yoshihiro.shimoda.uh@renesas.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/mmc_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/renesas/ravb_main.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/mmc_core.c b/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
-index 252cf48c58166..5b9f344fdd32a 100644
---- a/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
-@@ -170,8 +170,10 @@
- #define MMC_XGMAC_RX_DISCARD_OCT_GB	0x1b4
- #define MMC_XGMAC_RX_ALIGN_ERR_PKT	0x1bc
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 367da05ddb1e7..765e55b489dbf 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -1435,6 +1435,12 @@ static void ravb_tx_timeout_work(struct work_struct *work)
+ 	struct net_device *ndev = priv->ndev;
+ 	int error;
  
-+#define MMC_XGMAC_TX_FPE_INTR_MASK	0x204
- #define MMC_XGMAC_TX_FPE_FRAG		0x208
- #define MMC_XGMAC_TX_HOLD_REQ		0x20c
-+#define MMC_XGMAC_RX_FPE_INTR_MASK	0x224
- #define MMC_XGMAC_RX_PKT_ASSEMBLY_ERR	0x228
- #define MMC_XGMAC_RX_PKT_SMD_ERR	0x22c
- #define MMC_XGMAC_RX_PKT_ASSEMBLY_OK	0x230
-@@ -336,6 +338,8 @@ static void dwxgmac_mmc_intr_all_mask(void __iomem *mmcaddr)
- {
- 	writel(0x0, mmcaddr + MMC_RX_INTR_MASK);
- 	writel(0x0, mmcaddr + MMC_TX_INTR_MASK);
-+	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_TX_FPE_INTR_MASK);
-+	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_RX_FPE_INTR_MASK);
- 	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_RX_IPC_INTR_MASK);
++	if (!rtnl_trylock()) {
++		usleep_range(1000, 2000);
++		schedule_work(&priv->work);
++		return;
++	}
++
+ 	netif_tx_stop_all_queues(ndev);
+ 
+ 	/* Stop PTP Clock driver */
+@@ -1467,7 +1473,7 @@ static void ravb_tx_timeout_work(struct work_struct *work)
+ 		 */
+ 		netdev_err(ndev, "%s: ravb_dmac_init() failed, error %d\n",
+ 			   __func__, error);
+-		return;
++		goto out_unlock;
+ 	}
+ 	ravb_emac_init(ndev);
+ 
+@@ -1477,6 +1483,9 @@ static void ravb_tx_timeout_work(struct work_struct *work)
+ 		ravb_ptp_init(ndev, priv->pdev);
+ 
+ 	netif_tx_start_all_queues(ndev);
++
++out_unlock:
++	rtnl_unlock();
  }
  
+ /* Packet transmit function for Ethernet AVB */
 -- 
 2.42.0
 
