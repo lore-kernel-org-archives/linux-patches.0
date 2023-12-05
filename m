@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D446FB1;
-	Tue,  5 Dec 2023 03:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4C179F2;
+	Tue,  5 Dec 2023 03:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogTMG7fg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF2DC433C8;
-	Tue,  5 Dec 2023 03:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L7TcrUO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B25C433C7;
+	Tue,  5 Dec 2023 03:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747225;
-	bh=Uih5b77dMlVtDoRZ7w9gFV3cl75tnJUnaBIpGrd+hf4=;
+	s=korg; t=1701747228;
+	bh=4scH1hXB4A3J5AuiA2otUnJoZaxR+TUA3HLZfj6DqdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogTMG7fgPzhMWXX9DjebCOduLbEhoqv+5aq3nRBYGfod2HuVCPf90tvz4AqQHmM7Y
-	 slF82YVhQ3f3ZtJ/j37Mb34090EZdUJtMjmdEOF837+nsxAh93LCJgQHiaMkK3JAF8
-	 weB3IAQGzVa75dSviZyI/Rjf0WIrbynPLvF7Fesw=
+	b=0L7TcrUOu4RyFA1v1CmBkxjES/SOg68cPQMKQV+1MN2wJi9Xx79oev6iOt0uB3XUA
+	 oFVidIScSACods+sJYhJwWd8EzuEfI18kCzZ49QWWRiNxhDsleUCj6MjkFwMEukMNW
+	 n3SCuSO7jCKPursZ540bXRZEZfRsiGNAnTvKyJ6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.con>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/107] x86/xen: fix percpu vcpu_info allocation
-Date: Tue,  5 Dec 2023 12:17:21 +0900
-Message-ID: <20231205031538.425386402@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Koichiro Den <den@valinux.co.jp>
+Subject: [PATCH 6.1 107/107] x86/apic/msi: Fix misconfigured non-maskable MSI quirk
+Date: Tue,  5 Dec 2023 12:17:22 +0900
+Message-ID: <20231205031538.489495377@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -42,71 +41,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit db2832309a82b9acc4b8cc33a1831d36507ec13e ]
+commit b56ebe7c896dc78b5865ec2c4b1dae3c93537517 upstream.
 
-Today the percpu struct vcpu_info is allocated via DEFINE_PER_CPU(),
-meaning that it could cross a page boundary. In this case registering
-it with the hypervisor will fail, resulting in a panic().
+commit ef8dd01538ea ("genirq/msi: Make interrupt allocation less
+convoluted"), reworked the code so that the x86 specific quirk for affinity
+setting of non-maskable PCI/MSI interrupts is not longer activated if
+necessary.
 
-This can easily be fixed by using DEFINE_PER_CPU_ALIGNED() instead,
-as struct vcpu_info is guaranteed to have a size of 64 bytes, matching
-the cache line size of x86 64-bit processors (Xen doesn't support
-32-bit processors).
+This could be solved by restoring the original logic in the core MSI code,
+but after a deeper analysis it turned out that the quirk flag is not
+required at all.
 
-Fixes: 5ead97c84fa7 ("xen: Core Xen implementation")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.con>
-Link: https://lore.kernel.org/r/20231124074852.25161-1-jgross@suse.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The quirk is only required when the PCI/MSI device cannot mask the MSI
+interrupts, which in turn also prevents reservation mode from being enabled
+for the affected interrupt.
+
+This allows ot remove the NOMASK quirk bit completely as msi_set_affinity()
+can instead check whether reservation mode is enabled for the interrupt,
+which gives exactly the same answer.
+
+Even in the momentary non-existing case that the reservation mode would be
+not set for a maskable MSI interrupt this would not cause any harm as it
+just would cause msi_set_affinity() to go needlessly through the
+functionaly equivalent slow path, which works perfectly fine with maskable
+interrupts as well.
+
+Rework msi_set_affinity() to query the reservation mode and remove all
+NOMASK quirk logic from the core code.
+
+[ tglx: Massaged changelog ]
+
+Fixes: ef8dd01538ea ("genirq/msi: Make interrupt allocation less convoluted")
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231026032036.2462428-1-den@valinux.co.jp
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/enlighten.c | 6 +++++-
- arch/x86/xen/xen-ops.h   | 2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/kernel/apic/msi.c |    8 +++-----
+ include/linux/irq.h        |   24 +++---------------------
+ kernel/irq/debugfs.c       |    1 -
+ kernel/irq/msi.c           |   12 +-----------
+ 4 files changed, 7 insertions(+), 38 deletions(-)
 
-diff --git a/arch/x86/xen/enlighten.c b/arch/x86/xen/enlighten.c
-index 0337392a31214..3c61bb98c10e2 100644
---- a/arch/x86/xen/enlighten.c
-+++ b/arch/x86/xen/enlighten.c
-@@ -33,9 +33,12 @@ EXPORT_SYMBOL_GPL(hypercall_page);
-  * and xen_vcpu_setup for details. By default it points to share_info->vcpu_info
-  * but during boot it is switched to point to xen_vcpu_info.
-  * The pointer is used in xen_evtchn_do_upcall to acknowledge pending events.
-+ * Make sure that xen_vcpu_info doesn't cross a page boundary by making it
-+ * cache-line aligned (the struct is guaranteed to have a size of 64 bytes,
-+ * which matches the cache line size of 64-bit x86 processors).
-  */
- DEFINE_PER_CPU(struct vcpu_info *, xen_vcpu);
--DEFINE_PER_CPU(struct vcpu_info, xen_vcpu_info);
-+DEFINE_PER_CPU_ALIGNED(struct vcpu_info, xen_vcpu_info);
+--- a/arch/x86/kernel/apic/msi.c
++++ b/arch/x86/kernel/apic/msi.c
+@@ -55,14 +55,14 @@ msi_set_affinity(struct irq_data *irqd,
+ 	 * caused by the non-atomic update of the address/data pair.
+ 	 *
+ 	 * Direct update is possible when:
+-	 * - The MSI is maskable (remapped MSI does not use this code path)).
+-	 *   The quirk bit is not set in this case.
++	 * - The MSI is maskable (remapped MSI does not use this code path).
++	 *   The reservation mode bit is set in this case.
+ 	 * - The new vector is the same as the old vector
+ 	 * - The old vector is MANAGED_IRQ_SHUTDOWN_VECTOR (interrupt starts up)
+ 	 * - The interrupt is not yet started up
+ 	 * - The new destination CPU is the same as the old destination CPU
+ 	 */
+-	if (!irqd_msi_nomask_quirk(irqd) ||
++	if (!irqd_can_reserve(irqd) ||
+ 	    cfg->vector == old_cfg.vector ||
+ 	    old_cfg.vector == MANAGED_IRQ_SHUTDOWN_VECTOR ||
+ 	    !irqd_is_started(irqd) ||
+@@ -202,8 +202,6 @@ struct irq_domain * __init native_create
+ 	if (!d) {
+ 		irq_domain_free_fwnode(fn);
+ 		pr_warn("Failed to initialize PCI-MSI irqdomain.\n");
+-	} else {
+-		d->flags |= IRQ_DOMAIN_MSI_NOMASK_QUIRK;
+ 	}
+ 	return d;
+ }
+--- a/include/linux/irq.h
++++ b/include/linux/irq.h
+@@ -215,8 +215,6 @@ struct irq_data {
+  * IRQD_SINGLE_TARGET		- IRQ allows only a single affinity target
+  * IRQD_DEFAULT_TRIGGER_SET	- Expected trigger already been set
+  * IRQD_CAN_RESERVE		- Can use reservation mode
+- * IRQD_MSI_NOMASK_QUIRK	- Non-maskable MSI quirk for affinity change
+- *				  required
+  * IRQD_HANDLE_ENFORCE_IRQCTX	- Enforce that handle_irq_*() is only invoked
+  *				  from actual interrupt context.
+  * IRQD_AFFINITY_ON_ACTIVATE	- Affinity is set on activation. Don't call
+@@ -245,10 +243,9 @@ enum {
+ 	IRQD_SINGLE_TARGET		= (1 << 24),
+ 	IRQD_DEFAULT_TRIGGER_SET	= (1 << 25),
+ 	IRQD_CAN_RESERVE		= (1 << 26),
+-	IRQD_MSI_NOMASK_QUIRK		= (1 << 27),
+-	IRQD_HANDLE_ENFORCE_IRQCTX	= (1 << 28),
+-	IRQD_AFFINITY_ON_ACTIVATE	= (1 << 29),
+-	IRQD_IRQ_ENABLED_ON_SUSPEND	= (1 << 30),
++	IRQD_HANDLE_ENFORCE_IRQCTX	= (1 << 27),
++	IRQD_AFFINITY_ON_ACTIVATE	= (1 << 28),
++	IRQD_IRQ_ENABLED_ON_SUSPEND	= (1 << 29),
+ };
  
- /* Linux <-> Xen vCPU id mapping */
- DEFINE_PER_CPU(uint32_t, xen_vcpu_id);
-@@ -160,6 +163,7 @@ void xen_vcpu_setup(int cpu)
- 	int err;
- 	struct vcpu_info *vcpup;
+ #define __irqd_to_state(d) ACCESS_PRIVATE((d)->common, state_use_accessors)
+@@ -423,21 +420,6 @@ static inline bool irqd_can_reserve(stru
+ 	return __irqd_to_state(d) & IRQD_CAN_RESERVE;
+ }
  
-+	BUILD_BUG_ON(sizeof(*vcpup) > SMP_CACHE_BYTES);
- 	BUG_ON(HYPERVISOR_shared_info == &xen_dummy_shared_info);
+-static inline void irqd_set_msi_nomask_quirk(struct irq_data *d)
+-{
+-	__irqd_to_state(d) |= IRQD_MSI_NOMASK_QUIRK;
+-}
+-
+-static inline void irqd_clr_msi_nomask_quirk(struct irq_data *d)
+-{
+-	__irqd_to_state(d) &= ~IRQD_MSI_NOMASK_QUIRK;
+-}
+-
+-static inline bool irqd_msi_nomask_quirk(struct irq_data *d)
+-{
+-	return __irqd_to_state(d) & IRQD_MSI_NOMASK_QUIRK;
+-}
+-
+ static inline void irqd_set_affinity_on_activate(struct irq_data *d)
+ {
+ 	__irqd_to_state(d) |= IRQD_AFFINITY_ON_ACTIVATE;
+--- a/kernel/irq/debugfs.c
++++ b/kernel/irq/debugfs.c
+@@ -121,7 +121,6 @@ static const struct irq_bit_descr irqdat
+ 	BIT_MASK_DESCR(IRQD_AFFINITY_ON_ACTIVATE),
+ 	BIT_MASK_DESCR(IRQD_MANAGED_SHUTDOWN),
+ 	BIT_MASK_DESCR(IRQD_CAN_RESERVE),
+-	BIT_MASK_DESCR(IRQD_MSI_NOMASK_QUIRK),
  
- 	/*
-diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
-index a10903785a338..b2b2f4315b78d 100644
---- a/arch/x86/xen/xen-ops.h
-+++ b/arch/x86/xen/xen-ops.h
-@@ -21,7 +21,7 @@ extern void *xen_initial_gdt;
- struct trap_info;
- void xen_copy_trap_info(struct trap_info *traps);
+ 	BIT_MASK_DESCR(IRQD_FORWARDED_TO_VCPU),
  
--DECLARE_PER_CPU(struct vcpu_info, xen_vcpu_info);
-+DECLARE_PER_CPU_ALIGNED(struct vcpu_info, xen_vcpu_info);
- DECLARE_PER_CPU(unsigned long, xen_cr3);
- DECLARE_PER_CPU(unsigned long, xen_current_cr3);
+--- a/kernel/irq/msi.c
++++ b/kernel/irq/msi.c
+@@ -807,7 +807,6 @@ static int msi_handle_pci_fail(struct ir
  
--- 
-2.42.0
-
+ #define VIRQ_CAN_RESERVE	0x01
+ #define VIRQ_ACTIVATE		0x02
+-#define VIRQ_NOMASK_QUIRK	0x04
+ 
+ static int msi_init_virq(struct irq_domain *domain, int virq, unsigned int vflags)
+ {
+@@ -816,8 +815,6 @@ static int msi_init_virq(struct irq_doma
+ 
+ 	if (!(vflags & VIRQ_CAN_RESERVE)) {
+ 		irqd_clr_can_reserve(irqd);
+-		if (vflags & VIRQ_NOMASK_QUIRK)
+-			irqd_set_msi_nomask_quirk(irqd);
+ 
+ 		/*
+ 		 * If the interrupt is managed but no CPU is available to
+@@ -877,15 +874,8 @@ int __msi_domain_alloc_irqs(struct irq_d
+ 	 * Interrupt can use a reserved vector and will not occupy
+ 	 * a real device vector until the interrupt is requested.
+ 	 */
+-	if (msi_check_reservation_mode(domain, info, dev)) {
++	if (msi_check_reservation_mode(domain, info, dev))
+ 		vflags |= VIRQ_CAN_RESERVE;
+-		/*
+-		 * MSI affinity setting requires a special quirk (X86) when
+-		 * reservation mode is active.
+-		 */
+-		if (domain->flags & IRQ_DOMAIN_MSI_NOMASK_QUIRK)
+-			vflags |= VIRQ_NOMASK_QUIRK;
+-	}
+ 
+ 	msi_for_each_desc(desc, dev, MSI_DESC_NOTASSOCIATED) {
+ 		ops->set_desc(&arg, desc);
 
 
