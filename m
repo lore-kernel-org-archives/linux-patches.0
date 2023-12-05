@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A0D6FB1;
-	Tue,  5 Dec 2023 03:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A236FB1;
+	Tue,  5 Dec 2023 03:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgHGFhZw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AA6C433C8;
-	Tue,  5 Dec 2023 03:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VecWDdAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41361C433C8;
+	Tue,  5 Dec 2023 03:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747457;
-	bh=tfUbMcPM7B8uZtUUHBIEBWHVkrH8LKCceTeAU1os+g8=;
+	s=korg; t=1701747460;
+	bh=4sHaoHso/KzU/TG+9ULdmlXrOGZE+gc8NPtr7kweVWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HgHGFhZw+e13wUxVTj+V9/pHvfKtJM4rZARNc8X65rd0pnFAiCfbIqhGiW3+kuUUz
-	 bpoDfgSllV1byuenx8wIFg0YNJ2+oVf+ohHMwrTEVKH85MaBGwb5MUhBOMKk9cjycX
-	 J3siIt/PleVLygRveXU/aCEJ2OjnM8gaj3Yn3rhk=
+	b=VecWDdAFJjxa4f1CSfkYJzqS6VHUV44gE5un3wHrM3o+JsVL7YkXff0ZwA20dwHml
+	 4x4WMjSj5KT84fo0W+mGax9cHdckSxM9o2OarMK+EO6CaLEwkF29tvzJfrEhMOdi4h
+	 FF+ecCuTiOqANUtLy2EHc05linPBLQngejSVgqMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
+	Mingzhe Zou <mingzhe.zou@easystack.cn>,
 	Coly Li <colyli@suse.de>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 059/135] bcache: prevent potential division by zero error
-Date: Tue,  5 Dec 2023 12:16:20 +0900
-Message-ID: <20231205031534.161861259@linuxfoundation.org>
+Subject: [PATCH 5.10 060/135] bcache: fixup init dirty data errors
+Date: Tue,  5 Dec 2023 12:16:21 +0900
+Message-ID: <20231205031534.213813798@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,53 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Mingzhe Zou <mingzhe.zou@easystack.cn>
 
-commit 2c7f497ac274a14330208b18f6f734000868ebf9 upstream.
+commit 7cc47e64d3d69786a2711a4767e26b26ba63d7ed upstream.
 
-In SHOW(), the variable 'n' is of type 'size_t.' While there is a
-conditional check to verify that 'n' is not equal to zero before
-executing the 'do_div' macro, concerns arise regarding potential
-division by zero error in 64-bit environments.
+We found that after long run, the dirty_data of the bcache device
+will have errors. This error cannot be eliminated unless re-register.
 
-The concern arises when 'n' is 64 bits in size, greater than zero, and
-the lower 32 bits of it are zeros. In such cases, the conditional check
-passes because 'n' is non-zero, but the 'do_div' macro casts 'n' to
-'uint32_t,' effectively truncating it to its lower 32 bits.
-Consequently, the 'n' value becomes zero.
+We also found that reattach after detach, this error can accumulate.
 
-To fix this potential division by zero error and ensure precise
-division handling, this commit replaces the 'do_div' macro with
-div64_u64(). div64_u64() is designed to work with 64-bit operands,
-guaranteeing that division is performed correctly.
+In bch_sectors_dirty_init(), all inode <= d->id keys will be recounted
+again. This is wrong, we only need to count the keys of the current
+device.
 
-This change enhances the robustness of the code, ensuring that division
-operations yield accurate results in all scenarios, eliminating the
-possibility of division by zero, and improving compatibility across
-different 64-bit environments.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
+Fixes: b144e45fc576 ("bcache: make bch_sectors_dirty_init() to be multithreaded")
+Signed-off-by: Mingzhe Zou <mingzhe.zou@easystack.cn>
 Cc:  <stable@vger.kernel.org>
 Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20231120052503.6122-5-colyli@suse.de
+Link: https://lore.kernel.org/r/20231120052503.6122-6-colyli@suse.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/sysfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/bcache/writeback.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/md/bcache/sysfs.c
-+++ b/drivers/md/bcache/sysfs.c
-@@ -1078,7 +1078,7 @@ SHOW(__bch_cache)
- 			sum += INITIAL_PRIO - cached[i];
+--- a/drivers/md/bcache/writeback.c
++++ b/drivers/md/bcache/writeback.c
+@@ -935,8 +935,11 @@ void bch_sectors_dirty_init(struct bcach
+ 		op.count = 0;
  
- 		if (n)
--			do_div(sum, n);
-+			sum = div64_u64(sum, n);
+ 		for_each_key_filter(&c->root->keys,
+-				    k, &iter, bch_ptr_invalid)
++				    k, &iter, bch_ptr_invalid) {
++			if (KEY_INODE(k) != op.inode)
++				continue;
+ 			sectors_dirty_init_fn(&op.op, c->root, k);
++		}
  
- 		for (i = 0; i < ARRAY_SIZE(q); i++)
- 			q[i] = INITIAL_PRIO - cached[n * (i + 1) /
+ 		rw_unlock(0, c->root);
+ 		return;
 
 
