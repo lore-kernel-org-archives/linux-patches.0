@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81956FB8;
-	Tue,  5 Dec 2023 03:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F024437;
+	Tue,  5 Dec 2023 03:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwjZvARt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E52DC433C8;
-	Tue,  5 Dec 2023 03:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sr+sMHvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A31C433C8;
+	Tue,  5 Dec 2023 03:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746812;
-	bh=n+wx1ZyJIcLPndo7k7agml+vjpHmpZQ2A3XgiI1u3NA=;
+	s=korg; t=1701746815;
+	bh=WhhmZaM/OWf7ncFbZrTi1fmzkRMS4NC5cYWKwxg6e/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwjZvARtP6QOMeILZrbA/WVnWl3mE/PaTFt9KdcXauo97GJ4TL6qZLOvmiPJ1QFPW
-	 JUsobVzYJ2lH9uRj/6ww5cJMzXZzVNaW5b7gjVi2kXEtnVXyHk7C6eatRSRrm0mOBv
-	 KWvk1j83vfGx7Kj85I4gXlsDwZQjGE6zxdtFI86A=
+	b=sr+sMHvUUif0+ur8krI224nCrONjT+jvk7XmaWmJw5t5ksqwn07HC6vWD+THyM7vQ
+	 EMlgg9q/dzhB9rD7fi4X0/qzPEPpW6qYDkN/aOohEEnPsFf/UKI/Kix/TR3ymFEbt/
+	 OLajnoKhcAW0HpiLTP2NawXDL1xrd9atgzLRbCqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Ivan Ivanov <ivan.ivanov@suse.com>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 4.19 30/71] USB: dwc2: write HCINT with INTMASK applied
-Date: Tue,  5 Dec 2023 12:16:28 +0900
-Message-ID: <20231205031519.606056604@linuxfoundation.org>
+	Zubin Mithra <zsm@chromium.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 4.19 31/71] usb: dwc3: set the dma max_seg_size
+Date: Tue,  5 Dec 2023 12:16:29 +0900
+Message-ID: <20231205031519.651066010@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -43,80 +42,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 0583bc776ca5b5a3f5752869fc31cf7322df2b35 upstream.
+commit 8bbae288a85abed6a1cf7d185d8b9dc2f5dcb12c upstream.
 
-dwc2_hc_n_intr() writes back INTMASK as read but evaluates it
-with intmask applied. In stress testing this causes spurious
-interrupts like this:
+Allow devices to have dma operations beyond 4K, and avoid warnings such
+as:
 
-[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 7 - ChHltd set, but reason is unknown
-[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 0 - ChHltd set, but reason is unknown
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 4 - ChHltd set, but reason is unknown
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
-[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_update_urb_state_abn(): trimming xfer length
+DMA-API: dwc3 a600000.usb: mapping sg segment longer than device claims to support [len=86016] [max=65536]
 
-Applying INTMASK prevents this. The issue exists in all versions of the
-driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Tested-by: Ivan Ivanov <ivan.ivanov@suse.com>
-Tested-by: Andrea della Porta <andrea.porta@suse.com>
-Link: https://lore.kernel.org/r/20231115144514.15248-1-oneukum@suse.com
-Cc: stable <stable@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
+Reported-by: Zubin Mithra <zsm@chromium.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20231026-dwc3-v2-1-1d4fd5c3e067@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/hcd_intr.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/usb/dwc3/core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/dwc2/hcd_intr.c
-+++ b/drivers/usb/dwc2/hcd_intr.c
-@@ -2045,15 +2045,17 @@ static void dwc2_hc_n_intr(struct dwc2_h
- {
- 	struct dwc2_qtd *qtd;
- 	struct dwc2_host_chan *chan;
--	u32 hcint, hcintmsk;
-+	u32 hcint, hcintraw, hcintmsk;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1530,6 +1530,8 @@ static int dwc3_probe(struct platform_de
  
- 	chan = hsotg->hc_ptr_array[chnum];
+ 	pm_runtime_put(dev);
  
--	hcint = dwc2_readl(hsotg, HCINT(chnum));
-+	hcintraw = dwc2_readl(hsotg, HCINT(chnum));
- 	hcintmsk = dwc2_readl(hsotg, HCINTMSK(chnum));
-+	hcint = hcintraw & hcintmsk;
-+	dwc2_writel(hsotg, hcint, HCINT(chnum));
++	dma_set_max_seg_size(dev, UINT_MAX);
 +
- 	if (!chan) {
- 		dev_err(hsotg->dev, "## hc_ptr_array for channel is NULL ##\n");
--		dwc2_writel(hsotg, hcint, HCINT(chnum));
- 		return;
- 	}
+ 	return 0;
  
-@@ -2062,11 +2064,9 @@ static void dwc2_hc_n_intr(struct dwc2_h
- 			 chnum);
- 		dev_vdbg(hsotg->dev,
- 			 "  hcint 0x%08x, hcintmsk 0x%08x, hcint&hcintmsk 0x%08x\n",
--			 hcint, hcintmsk, hcint & hcintmsk);
-+			 hcintraw, hcintmsk, hcint);
- 	}
- 
--	dwc2_writel(hsotg, hcint, HCINT(chnum));
--
- 	/*
- 	 * If we got an interrupt after someone called
- 	 * dwc2_hcd_endpoint_disable() we don't want to crash below
-@@ -2076,8 +2076,7 @@ static void dwc2_hc_n_intr(struct dwc2_h
- 		return;
- 	}
- 
--	chan->hcint = hcint;
--	hcint &= hcintmsk;
-+	chan->hcint = hcintraw;
- 
- 	/*
- 	 * If the channel was halted due to a dequeue, the qtd list might
+ err5:
 
 
