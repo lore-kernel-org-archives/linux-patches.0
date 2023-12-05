@@ -1,128 +1,89 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4296DCE6
-	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 20:59:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00CD6E58D
+	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 21:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fZeJrCr7"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-589d4033e84so3676468eaf.1
-        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 12:59:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VLNYmURz"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-46491d5b814so837403137.0
+        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 13:14:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701809972; x=1702414772; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=GoTAKWoISW3fQAGzQLAL5LAT88Q1n5cNUMG6gJC0Nbw=;
-        b=fZeJrCr7jKnXCR2YVrX2YddNjua1B8wXDjaiauUYNIPSp79OjlYUGvR+DF/9RrfKvp
-         vMAIkmNL7//AfKMi55aZzznh8hWN2BpNELTm5V4BJwv7ogLi39lCVEXN9iIyUZ553PVT
-         EpVjefLx1A5S9rU+Wk65qimJf5hRqYVH1kk2r1ap4L1vbCQDt5ZHOz8Pmyj98mUhXYbz
-         DfZ8MTg3lBdlp078R/jKjFkvZOpRB5DLN68az4prVZdGNA1Loy1ou0NLBdJKY7KIlmRu
-         zUbVgjDwxQExtYudJaeC+vW+qZNcQZwX1FmlI02oH9ME1XAUShOyeHFC9Kiy0dw5EFAY
-         vgdg==
+        d=gmail.com; s=20230601; t=1701810876; x=1702415676; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=o/ZBnlG/4O4Nf+VPlwuFFktfrixZ06nlRki7xqoRblk=;
+        b=VLNYmURzKaxOE+AIfyTIeeDQ9wX9Z5HFo1Q0Jn2EKEracIOsZgyg72xINe/lLUi4dn
+         FrTpavFIOMZRXWWZTXG+AdgwVbagZtD3JsJnGQdQqi4gYtysYpTvskORypcNYW7RWJu6
+         WXJA+od5m35T6+GVz2V/R1f7OUTik7uN/hHLqHpID/79SP1m8TMR+VKGFz0ra6DhATRU
+         2iai3oHibKux47MOb2KEd5uT1hO234kCBj6HN9ACIcd/gZbHlw4+a/xK2/A++Faj8jd3
+         ujqtjmEHVU+BwqpS4Wkqf1p2GG2YtHa7b0kj42er8HUeQeTc21YJ+gFMaaALhO4W5JJz
+         Vl9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701809972; x=1702414772;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1701810876; x=1702415676;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=GoTAKWoISW3fQAGzQLAL5LAT88Q1n5cNUMG6gJC0Nbw=;
-        b=Ds0q460LTC/txtBqqb423VUgmsYeDOBjp3qoBu14sL1oJjwPe6a9HW7xz5kK2/q+FE
-         Z5LQjkRo7Q7+WfHETkoaq+bF5vysUjf6TgnKWKjOq6OYiTXSOaSZ6Pnamlc+AWPIXJE7
-         /9BvQgcVtiCs6NkCYOA6n752a3W5b6e2FyIja4aeSi2aGEksM0p5mUcLyAh+VMKQRu9P
-         ZZcMit32YASMd+JXZP+LBKQiKQDx5vNe+vn/CHhuDellRQszhTJXUeMNWyJGCodCXwoW
-         X2JL5lI53UP4jVLr3Y+/68LZDwjalVDBIZWvjUVoC2ucJmr/RJSMGy5Fu1lwH4xPA31f
-         rrnQ==
-X-Gm-Message-State: AOJu0Ywwv7NnTr+qRBxlIdpkTfj463itZOo2zKjtCdVsewrySdA0X2u7
-	PN7TuIAgGcPhq+qGnvW/xhE=
-X-Google-Smtp-Source: AGHT+IE4b1qjVfCnofvLbEN71Hm58ovXB+Bp2nSxmcCZOaG5DfnsqRoTdVRKS5eP0qE3NHA5D+LCuA==
-X-Received: by 2002:a05:6870:41c8:b0:1fa:efdc:b497 with SMTP id z8-20020a05687041c800b001faefdcb497mr7367246oac.46.1701809972352;
-        Tue, 05 Dec 2023 12:59:32 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id lg22-20020a0568700b9600b001fa1db68eecsm1547354oab.4.2023.12.05.12.59.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Dec 2023 12:59:32 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <fea6f7af-2d88-4d39-aa47-30f2dedb1fac@roeck-us.net>
-Date: Tue, 5 Dec 2023 12:59:30 -0800
+        bh=o/ZBnlG/4O4Nf+VPlwuFFktfrixZ06nlRki7xqoRblk=;
+        b=MdrpAuiydJ8UDqz/A3yD9xmjoKuV3fJTekpaHwddQvAyRsNEnN57S4LiwTs3hXX6Dc
+         vPfoi2nkDD4CiaIVn65gatjz2q8pmG2m2AIuwkg3nH3XKcOsyBxKG+8FEVASE5FUphza
+         lWroJ98b5Z8gE1G/BRJsWUda3WzDe3r1jJjxi5KiboKuc8uZYPMdxbobI+iWnJuR7abN
+         mbTUaZkcrK7HskOpOV24uXzxNh4nh+R+FOQ06RO7ZW+reiKngSMVzJ3ZvSKqHGpSLtRt
+         ZmBAhK9npv0g7neGksEzN9u1mfCaVl6rViMDEVmCwcznsXf3FeYOBnArskXFdPH06rcU
+         Ytwg==
+X-Gm-Message-State: AOJu0YwyURIkzs9eettYF/wO/kZcuSgowcdvaVCAbs1WX8ouxoXgIAc2
+	nDjJxXBL1mP8NsoOQXmGxWXNTlBbCuZEdNhTz1g=
+X-Google-Smtp-Source: AGHT+IH+UdlfWyVlMgyHnqKWo2m141tgyAR3pqlIW+VX4wUkEZ6lSV2rACyt+JSRvaT0kg2N03iEUaTiYpgOSsOODxA=
+X-Received: by 2002:a05:6102:284d:b0:464:55d4:b41f with SMTP id
+ az13-20020a056102284d00b0046455d4b41fmr3539942vsb.0.1701810876415; Tue, 05
+ Dec 2023 13:14:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] drm/bridge: Return NULL instead of plain 0 in
- drm_dp_hpd_bridge_register() stub
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>, dmitry.baryshkov@linaro.org
-Cc: heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
- neil.armstrong@linaro.org, bryan.odonoghue@linaro.org,
- linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org,
- patches@lists.linux.dev, kernel test robot <lkp@intel.com>
-References: <20231205-drm_aux_bridge-fixes-v1-0-d242a0ae9df4@kernel.org>
- <20231205-drm_aux_bridge-fixes-v1-3-d242a0ae9df4@kernel.org>
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20231205-drm_aux_bridge-fixes-v1-3-d242a0ae9df4@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20231205031519.853779502@linuxfoundation.org>
+In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
+From: Allen <allen.lkml@gmail.com>
+Date: Tue, 5 Dec 2023 13:14:25 -0800
+Message-ID: <CAOMdWSJRR+iqqUD4iVuxV0mL45CJ10zSrTo5YXn+_f2bd09ezA@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/67] 5.15.142-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 12/5/23 12:13, Nathan Chancellor wrote:
-> sparse complains:
-> 
->    drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c: note: in included file:
->    include/drm/bridge/aux-bridge.h:29:16: sparse: sparse: Using plain integer as NULL pointer
-> 
-> Return NULL to clear up the warning.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202312060025.BdeqZrWx-lkp@intel.com/
-> Fixes: e560518a6c2e ("drm/bridge: implement generic DP HPD bridge")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>
+> This is the start of the stable review cycle for the 5.15.142 release.
+> There are 67 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.142-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
+Perf builds fine too.
+
+Tested-by: Allen Pais <apais@linux.microsoft.com>
+
+Thanks.
