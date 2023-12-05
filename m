@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE996FB1;
-	Tue,  5 Dec 2023 03:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E603E6FB1;
+	Tue,  5 Dec 2023 03:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdPhShPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D59BC433C7;
-	Tue,  5 Dec 2023 03:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2V0JlWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4C7C433C8;
+	Tue,  5 Dec 2023 03:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747040;
-	bh=ctRONOS0brVrOLzY/0bDIWf//tlJ622M5u7DTIk9Kjg=;
+	s=korg; t=1701747042;
+	bh=sDa17mk0IBF4vOqplpiwO3Y2Z2MPBEVNtOhBIXs5uTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdPhShPRlu6c8r7n8aLfSb/P2MLbc0kx/GKn/EZGiXSfrGAn/DK0+4yJpp+40LjQQ
-	 9p9oOt8PXdL72oScvk1BrLzn4JKIO9jpuxTPsSR2AG/Ik/GtWACGItgw1UVX2DQJG3
-	 Bi+hfbVZE2UiyLWtKbVbjTquMklI6PPOgOi7s6y8=
+	b=P2V0JlWVB7Mlz85KmI/hhkAXt3MbuOh9WKRrKch1ynUhdLgz80ta7WJP2REecbw3I
+	 tMDFWz87HBiE8CA4yZLztMMpoxt1/JKaifBzlkIiqYO9A5hRcNpMqRNJE6V/gFqGlj
+	 ruW3ecjU5a70fwcpJSQxMLIL56WjAf/yq991A/9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 012/107] mmc: block: Be sure to wait while busy in CQE error recovery
-Date: Tue,  5 Dec 2023 12:15:47 +0900
-Message-ID: <20231205031532.356996598@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 013/107] ALSA: hda: Disable power-save on KONTRON SinglePC
+Date: Tue,  5 Dec 2023 12:15:48 +0900
+Message-ID: <20231205031532.436242824@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -43,36 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit c616696a902987352426fdaeec1b0b3240949e6b upstream.
+commit a337c355719c42a6c5b67e985ad753590ed844fb upstream.
 
-STOP command does not guarantee to wait while busy, but subsequent command
-MMC_CMDQ_TASK_MGMT to discard the queue will fail if the card is busy, so
-be sure to wait by employing mmc_poll_for_busy().
+It's been reported that the runtime PM on KONTRON SinglePC (PCI SSID
+1734:1232) caused a stall of playback after a bunch of invocations.
+(FWIW, this looks like an timing issue, and the stall happens rather
+on the controller side.)
 
-Fixes: 72a5af554df8 ("mmc: core: Add support for handling CQE requests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://lore.kernel.org/r/20231103084720.6886-4-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+As a workaround, disable the default power-save on this platform.
+
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231130151321.9813-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/core.c |    2 ++
+ sound/pci/hda/hda_intel.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -554,6 +554,8 @@ int mmc_cqe_recovery(struct mmc_host *ho
- 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
- 	mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
- 
-+	mmc_poll_for_busy(host->card, MMC_CQE_RECOVERY_TIMEOUT, true, MMC_BUSY_IO);
-+
- 	memset(&cmd, 0, sizeof(cmd));
- 	cmd.opcode       = MMC_CMDQ_TASK_MGMT;
- 	cmd.arg          = 1; /* Discard entire queue */
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2215,6 +2215,8 @@ static const struct snd_pci_quirk power_
+ 	SND_PCI_QUIRK(0x17aa, 0x36a7, "Lenovo C50 All in one", 0),
+ 	/* https://bugs.launchpad.net/bugs/1821663 */
+ 	SND_PCI_QUIRK(0x1631, 0xe017, "Packard Bell NEC IMEDIA 5204", 0),
++	/* KONTRON SinglePC may cause a stall at runtime resume */
++	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
+ 	{}
+ };
+ #endif /* CONFIG_PM */
 
 
