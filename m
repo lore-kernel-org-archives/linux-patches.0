@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809F86FB1;
-	Tue,  5 Dec 2023 03:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774F26FB1;
+	Tue,  5 Dec 2023 03:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pETi0Pwh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2081C433C7;
-	Tue,  5 Dec 2023 03:37:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U68Z1I6U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC53EC433C8;
+	Tue,  5 Dec 2023 03:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747477;
-	bh=rfunqlQNTEclCpCjlf2CYB6Oo1lGWy4XGWkwfzurkUM=;
+	s=korg; t=1701747480;
+	bh=MnAMQH2QvfThO7l+D/3xCTGiogtNskcnXJb+v0ithfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pETi0Pwhe+WzBLyQt4c8SpPSGKqRBOba5UTET4D39wfoFJb0CEvEHSHAQ1H0Xi9WV
-	 fXvh4ZISmmsLCmjnSwH20JO2FznCu37MNXRi/qOcY8VA3MIbMmhuuxO8Pc7jwHMrBw
-	 zBR+vf6b6/ZpM3Wm4+ldraxY2CFpFaAEVjGJAPts=
+	b=U68Z1I6UVOiN0GpMNXPYljk/9+lTSbqbSkokDvjUKq0tyG0WBW572lNeecBER3onm
+	 evBLvHBRZBuSdmFq9nYIeO0ygiWWBzfzPp8Ft84Jw5IkjTjJCHljrK7m5tXuw1WXKc
+	 buEMa2iAWTCc3sQtHnzoqabzK72aYO3Y4FCIFUyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 083/135] btrfs: add dmesg output for first mount and last unmount of a filesystem
-Date: Tue,  5 Dec 2023 12:16:44 +0900
-Message-ID: <20231205031535.753420088@linuxfoundation.org>
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 092/135] ipv4: igmp: fix refcnt uaf issue when receiving igmp query packet
+Date: Tue,  5 Dec 2023 12:16:53 +0900
+Message-ID: <20231205031536.426626218@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,74 +44,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-commit 2db313205f8b96eea467691917138d646bb50aef upstream.
+[ Upstream commit e2b706c691905fe78468c361aaabc719d0a496f1 ]
 
-There is a feature request to add dmesg output when unmounting a btrfs.
-There are several alternative methods to do the same thing, but with
-their own problems:
+When I perform the following test operations:
+1.ip link add br0 type bridge
+2.brctl addif br0 eth0
+3.ip addr add 239.0.0.1/32 dev eth0
+4.ip addr add 239.0.0.1/32 dev br0
+5.ip addr add 224.0.0.1/32 dev br0
+6.while ((1))
+    do
+        ifconfig br0 up
+        ifconfig br0 down
+    done
+7.send IGMPv2 query packets to port eth0 continuously. For example,
+./mausezahn ethX -c 0 "01 00 5e 00 00 01 00 72 19 88 aa 02 08 00 45 00 00
+1c 00 01 00 00 01 02 0e 7f c0 a8 0a b7 e0 00 00 01 11 64 ee 9b 00 00 00 00"
 
-- Use eBPF to watch btrfs_put_super()/open_ctree()
-  Not end user friendly, they have to dip their head into the source
-  code.
+The preceding tests may trigger the refcnt uaf issue of the mc list. The
+stack is as follows:
+	refcount_t: addition on 0; use-after-free.
+	WARNING: CPU: 21 PID: 144 at lib/refcount.c:25 refcount_warn_saturate (lib/refcount.c:25)
+	CPU: 21 PID: 144 Comm: ksoftirqd/21 Kdump: loaded Not tainted 6.7.0-rc1-next-20231117-dirty #80
+	Hardware name: Red Hat KVM, BIOS 0.5.1 01/01/2011
+	RIP: 0010:refcount_warn_saturate (lib/refcount.c:25)
+	RSP: 0018:ffffb68f00657910 EFLAGS: 00010286
+	RAX: 0000000000000000 RBX: ffff8a00c3bf96c0 RCX: ffff8a07b6160908
+	RDX: 00000000ffffffd8 RSI: 0000000000000027 RDI: ffff8a07b6160900
+	RBP: ffff8a00cba36862 R08: 0000000000000000 R09: 00000000ffff7fff
+	R10: ffffb68f006577c0 R11: ffffffffb0fdcdc8 R12: ffff8a00c3bf9680
+	R13: ffff8a00c3bf96f0 R14: 0000000000000000 R15: ffff8a00d8766e00
+	FS:  0000000000000000(0000) GS:ffff8a07b6140000(0000) knlGS:0000000000000000
+	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+	CR2: 000055f10b520b28 CR3: 000000039741a000 CR4: 00000000000006f0
+	Call Trace:
+	<TASK>
+	igmp_heard_query (net/ipv4/igmp.c:1068)
+	igmp_rcv (net/ipv4/igmp.c:1132)
+	ip_protocol_deliver_rcu (net/ipv4/ip_input.c:205)
+	ip_local_deliver_finish (net/ipv4/ip_input.c:234)
+	__netif_receive_skb_one_core (net/core/dev.c:5529)
+	netif_receive_skb_internal (net/core/dev.c:5729)
+	netif_receive_skb (net/core/dev.c:5788)
+	br_handle_frame_finish (net/bridge/br_input.c:216)
+	nf_hook_bridge_pre (net/bridge/br_input.c:294)
+	__netif_receive_skb_core (net/core/dev.c:5423)
+	__netif_receive_skb_list_core (net/core/dev.c:5606)
+	__netif_receive_skb_list (net/core/dev.c:5674)
+	netif_receive_skb_list_internal (net/core/dev.c:5764)
+	napi_gro_receive (net/core/gro.c:609)
+	e1000_clean_rx_irq (drivers/net/ethernet/intel/e1000/e1000_main.c:4467)
+	e1000_clean (drivers/net/ethernet/intel/e1000/e1000_main.c:3805)
+	__napi_poll (net/core/dev.c:6533)
+	net_rx_action (net/core/dev.c:6735)
+	__do_softirq (kernel/softirq.c:554)
+	run_ksoftirqd (kernel/softirq.c:913)
+	smpboot_thread_fn (kernel/smpboot.c:164)
+	kthread (kernel/kthread.c:388)
+	ret_from_fork (arch/x86/kernel/process.c:153)
+	ret_from_fork_asm (arch/x86/entry/entry_64.S:250)
+	</TASK>
 
-- Watch for directory /sys/fs/<uuid>/
-  This is way more simple, but still requires some simple device -> uuid
-  lookups.  And a script needs to use inotify to watch /sys/fs/.
+The root causes are as follows:
+Thread A					Thread B
+...						netif_receive_skb
+br_dev_stop					...
+    br_multicast_leave_snoopers			...
+        __ip_mc_dec_group			...
+            __igmp_group_dropped		igmp_rcv
+                igmp_stop_timer			    igmp_heard_query         //ref = 1
+                ip_ma_put			        igmp_mod_timer
+                    refcount_dec_and_test	            igmp_start_timer //ref = 0
+			...                                     refcount_inc //ref increases from 0
+When the device receives an IGMPv2 Query message, it starts the timer
+immediately, regardless of whether the device is running. If the device is
+down and has left the multicast group, it will cause the mc list refcount
+uaf issue.
 
-Compared to all these, directly outputting the information into dmesg
-would be the most simple one, with both device and UUID included.
-
-And since we're here, also add the output when mounting a filesystem for
-the first time for parity. A more fine grained monitoring of subvolume
-mounts should be done by another layer, like audit.
-
-Now mounting a btrfs with all default mkfs options would look like this:
-
-  [81.906566] BTRFS info (device dm-8): first mount of filesystem 633b5c16-afe3-4b79-b195-138fe145e4f2
-  [81.907494] BTRFS info (device dm-8): using crc32c (crc32c-intel) checksum algorithm
-  [81.908258] BTRFS info (device dm-8): using free space tree
-  [81.912644] BTRFS info (device dm-8): auto enabling async discard
-  [81.913277] BTRFS info (device dm-8): checking UUID tree
-  [91.668256] BTRFS info (device dm-8): last unmount of filesystem 633b5c16-afe3-4b79-b195-138fe145e4f2
-
-CC: stable@vger.kernel.org # 5.4+
-Link: https://github.com/kdave/btrfs-progs/issues/689
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-[ update changelog ]
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c |    1 +
- fs/btrfs/super.c   |    5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ net/ipv4/igmp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -2972,6 +2972,7 @@ int __cold open_ctree(struct super_block
- 		goto fail_alloc;
- 	}
+diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
+index 4cffdb9795ded..cb55fede03c04 100644
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -216,8 +216,10 @@ static void igmp_start_timer(struct ip_mc_list *im, int max_delay)
+ 	int tv = prandom_u32() % max_delay;
  
-+	btrfs_info(fs_info, "first mount of filesystem %pU", disk_super->fsid);
- 	/*
- 	 * Verify the type first, if that or the checksum value are
- 	 * corrupted, we'll find out
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -318,7 +318,10 @@ void __btrfs_panic(struct btrfs_fs_info
- 
- static void btrfs_put_super(struct super_block *sb)
- {
--	close_ctree(btrfs_sb(sb));
-+	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
-+
-+	btrfs_info(fs_info, "last unmount of filesystem %pU", fs_info->fs_devices->fsid);
-+	close_ctree(fs_info);
+ 	im->tm_running = 1;
+-	if (!mod_timer(&im->timer, jiffies+tv+2))
+-		refcount_inc(&im->refcnt);
++	if (refcount_inc_not_zero(&im->refcnt)) {
++		if (mod_timer(&im->timer, jiffies + tv + 2))
++			ip_ma_put(im);
++	}
  }
  
- enum {
+ static void igmp_gq_start_timer(struct in_device *in_dev)
+-- 
+2.42.0
+
 
 
