@@ -1,49 +1,49 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C23B6FCDA
-	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 22:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439DC6FCD7
+	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 22:11:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uFOnysxF"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ca0715f0faso36171071fa.0
-        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 14:04:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iICc08TT"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-423d8761eeeso959771cf.2
+        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 14:11:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701813872; x=1702418672; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1701814261; x=1702419061; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YcEMEJf4lCydMrLOTT6eApwWgWe19yXNqzmuvh+QqWY=;
-        b=uFOnysxFr5QNXGUH7CYcVu9uVsZQ9/TGfv0vAUlck5JKRatB6IL4j2rzRULsoRLRWg
-         YNDWu3ZQEcJsxjypityUIG9fxMWAy7P7ZtlbbpfgejM3GGsgciekwmFNjDjfWY/0IvzJ
-         KFJ6dqKzFl+iBqyTPEIW/+ZTSvpEqt+xq6MknuvWtKQbb9hhiK/nzx9tzD8PoSlj5UK5
-         hvPyOasUMHVChFpBgnVZITd4Qh11FBwbuqkCq31MJ9DJkeyxdZ7wZ5SVcIJywWxdDg+m
-         jtQUznGsPZAsC/8fTvyHTDYNdRWdjQGo4KOV8RuTEbDvwkqOWvzMqTrYNyiDze2F8Tb/
-         L90w==
+        bh=hiHYrWLVsQ4xi96qKilwHGdyOD8NQ+GmXlpe3R+oL10=;
+        b=iICc08TTb/bQzXnnKwIy4WlrCOZB2c8FEzWW4rg6F0dS31LaOxBflkAMM14dye4c3K
+         wC3rbN+I9URyT+EAvJ+SblGhcMuvHbMrqnp9dWWBR79dS6USKh4V3RPt/72+bLsVlnz+
+         v9EY3NEX8ViMJw1Cnb5E2uV/GKWbN0CdAgxxzNGihBDSFloYbgB5eFT5fR1VOaNKOsl5
+         zxQYj66hYN4WuiaPqqiwXXy+RmAz8a4/5RbpOsVUpZPt3idl/5oCTT4Z4vpTu44qIyPp
+         MSI+/e1cceQMBTaR/XjdKyZSQUcxAT/gON+mk6CenPOcJrdf8cxgIrgLo6yL+aQl8ZuL
+         b9Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701813872; x=1702418672;
+        d=1e100.net; s=20230601; t=1701814261; x=1702419061;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YcEMEJf4lCydMrLOTT6eApwWgWe19yXNqzmuvh+QqWY=;
-        b=SYMtfDvMpnQhSMPgWE2m6XBodIRmFD9W+Rgsu65DwPT0w21vlXpyDsTaQlSJ9wEINp
-         LHr94VpkFeRXDvwbR5PKRERIbmkZwhNYhJrEIK20CV0UE4qkm51erw3fM6ZDMrX9TEVw
-         3GBfKnOpxRs/XAcCdjc+gwE4V/JiyUvWnbTndvESYiN1Eex28xRRB2+30XOQdnf2pv6U
-         JveNVKwWQiQ8htl/8uulOa3SbKMs/4k1aVm4X1mGnFUvfo3YRs0uve7GN6EEoBvm56G8
-         PFmVnT/kllceMkeQfw78iD9PljUlrAiYKutM+vgX/S8c3yO/ugqilbaeqTjTEaqlWatp
-         e60w==
-X-Gm-Message-State: AOJu0YyEHvvDYbc2uP3U+TAolOekHsAKZZiQxLv01URVgkwJuH3UmdCk
-	9aWeQy3yEYL75Gz57lGoXlvnuQ==
-X-Google-Smtp-Source: AGHT+IELJFW4CRavNSvWmbv6+vTpGPUZn67DcntqLGgQXhIS4H64Z9uxXCZut3JO674Qxj6E0JTCBg==
-X-Received: by 2002:a2e:b742:0:b0:2ca:20f7:531b with SMTP id k2-20020a2eb742000000b002ca20f7531bmr22788ljo.51.1701813872482;
-        Tue, 05 Dec 2023 14:04:32 -0800 (PST)
-Received: from ?IPV6:2001:1c06:2302:5600:366d:ca8f:f3af:381? (2001-1c06-2302-5600-366d-ca8f-f3af-0381.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:366d:ca8f:f3af:381])
-        by smtp.gmail.com with ESMTPSA id hq3-20020a1709073f0300b00a1cc1be1158sm1159684ejc.165.2023.12.05.14.04.30
+        bh=hiHYrWLVsQ4xi96qKilwHGdyOD8NQ+GmXlpe3R+oL10=;
+        b=bhm6JgwDIbcWgbeGssfZYIzhIEYTTEP9uBjFZ9gRTCCxFDy42uS+8+2KdYYryh57EU
+         Vs0K1Bfdv7SqKUbjpJ077tVmEpUkT0knlCyRHvCq2rpeU8TIPcJawKymOr7EBTqzj/Ro
+         0yGq7FjxN2SjaysshndiVFGDjYheQg7fhVwvMwpo7Wn7TwtUIWLGjHGMxE7OXjhimHj8
+         EUvqZt4tW2BgpRTEX2KBAm2imf5+N4p8kPNHc2eUMxBt1LT1k/TOc/+LtUyEPzV0AAex
+         vLwClIOMa4s4ev4HPN/zf9eOdJhQIuZR0D4uPR2L9OKzf7x0rxXMtRkuywL8rTNFzlKr
+         +Cfg==
+X-Gm-Message-State: AOJu0Yy5aHhqBmhzV/UlZ027MyG+rohCDy0p57TyWmuyq3IjR3K1hNZ8
+	nX/sW8CPXDBhKwJ8Phfp/ks=
+X-Google-Smtp-Source: AGHT+IF+mdfV+A5byHRDJyw7Fl1+njvyzE+4VwQsv0XG5ecPxbVjutByKhU53pJtzwDxC5jgIepBKQ==
+X-Received: by 2002:ad4:4090:0:b0:67a:a721:ec23 with SMTP id l16-20020ad44090000000b0067aa721ec23mr2012694qvp.103.1701814261044;
+        Tue, 05 Dec 2023 14:11:01 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id bv14-20020a05622a0a0e00b00425406b64a1sm3709864qtb.24.2023.12.05.14.10.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Dec 2023 14:04:31 -0800 (PST)
-Message-ID: <bc0bbe57-1739-4338-abfb-bd7011dc904b@linaro.org>
-Date: Tue, 5 Dec 2023 23:04:31 +0100
+        Tue, 05 Dec 2023 14:11:00 -0800 (PST)
+Message-ID: <ee7deb44-a48d-4a91-a137-3c7d2ff95246@gmail.com>
+Date: Tue, 5 Dec 2023 14:10:55 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,52 +51,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] drm/bridge: Return NULL instead of plain 0 in
- drm_dp_hpd_bridge_register() stub
+Subject: Re: [PATCH 5.15 00/64] 5.15.142-rc2 review
 Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>, dmitry.baryshkov@linaro.org
-Cc: heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
- linux@roeck-us.net, neil.armstrong@linaro.org, linux-usb@vger.kernel.org,
- dri-devel@lists.freedesktop.org, patches@lists.linux.dev,
- kernel test robot <lkp@intel.com>
-References: <20231205-drm_aux_bridge-fixes-v1-0-d242a0ae9df4@kernel.org>
- <20231205-drm_aux_bridge-fixes-v1-3-d242a0ae9df4@kernel.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20231205-drm_aux_bridge-fixes-v1-3-d242a0ae9df4@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com
+References: <20231205183238.954685317@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20231205183238.954685317@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 05/12/2023 21:13, Nathan Chancellor wrote:
-> sparse complains:
+On 12/5/23 11:22, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.142 release.
+> There are 64 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->    drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c: note: in included file:
->    include/drm/bridge/aux-bridge.h:29:16: sparse: sparse: Using plain integer as NULL pointer
+> Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
+> Anything received after that time might be too late.
 > 
-> Return NULL to clear up the warning.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.142-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 > 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202312060025.BdeqZrWx-lkp@intel.com/
-> Fixes: e560518a6c2e ("drm/bridge: implement generic DP HPD bridge")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->   include/drm/bridge/aux-bridge.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> thanks,
 > 
-> diff --git a/include/drm/bridge/aux-bridge.h b/include/drm/bridge/aux-bridge.h
-> index 66249ff0858e..c4c423e97f06 100644
-> --- a/include/drm/bridge/aux-bridge.h
-> +++ b/include/drm/bridge/aux-bridge.h
-> @@ -26,7 +26,7 @@ void drm_aux_hpd_bridge_notify(struct device *dev, enum drm_connector_status sta
->   static inline struct device *drm_dp_hpd_bridge_register(struct device *parent,
->   							struct device_node *np)
->   {
-> -	return 0;
-> +	return NULL;
->   }
->   
->   static inline void drm_aux_hpd_bridge_notify(struct device *dev, enum drm_connector_status status)
-> 
+> greg k-h
 
-Nice
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
+
