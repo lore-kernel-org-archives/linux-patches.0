@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AACF6FB1;
-	Tue,  5 Dec 2023 03:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7FE6FB1;
+	Tue,  5 Dec 2023 03:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7tltTyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6D2C433C8;
-	Tue,  5 Dec 2023 03:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WavEWzml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC2BC433C7;
+	Tue,  5 Dec 2023 03:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747323;
-	bh=Xq1KzS7NqMlojecLd4LTg9eMoBYZ6YsZh6fMv8wvows=;
+	s=korg; t=1701747325;
+	bh=N0f77KYhWH6ZKrz2zARSOL1qw1IHqEujbAat7Gjv0ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7tltTySNHPAmcQPiidBGVClv2HA5z/ksLt+1K4ujDFo0PAtU36q4JTqPzXbrbP91
-	 1mK3BIuKelmx1VkkjTe4h8Bs+8r4W58vO/e+qsPEOu5UbLsrVyTCjoKd1YLadYMu5y
-	 IPHwUu/vJ+uQBw/MYGp6UJnfNbU82dIG64L0TcH8=
+	b=WavEWzmldcdIKvgFopKAK7HwPRZh0UQBekkR/6fKfdvKj5hIu3jNaPHTBRo0nNfAb
+	 VpGxn8Ih9gfrR2xCOND254xLFEYzmGQ4YZj3VMn9oEYHGe2e6f8N7qpRw8pUpx6ucR
+	 oHS+2h+YDtd6Isp+fXsyw6/C7WFBjVA1k5N1+6xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/135] s390/ap: fix AP bus crash on early config change callback invocation
-Date: Tue,  5 Dec 2023 12:15:29 +0900
-Message-ID: <20231205031531.015397461@linuxfoundation.org>
+Subject: [PATCH 5.10 009/135] Revert "net: r8169: Disable multicast filter for RTL8168H and RTL8107E"
+Date: Tue,  5 Dec 2023 12:15:30 +0900
+Message-ID: <20231205031531.072676829@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -43,92 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit e14aec23025eeb1f2159ba34dbc1458467c4c347 upstream.
+commit 6a26310273c323380da21eb23fcfd50e31140913 upstream.
 
-Fix kernel crash in AP bus code caused by very early invocation of the
-config change callback function via SCLP.
+This reverts commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df.
 
-After a fresh IML of the machine the crypto cards are still offline and
-will get switched online only with activation of any LPAR which has the
-card in it's configuration. A crypto card coming online is reported
-to the LPAR via SCLP and the AP bus offers a callback function to get
-this kind of information. However, it may happen that the callback is
-invoked before the AP bus init function is complete. As the callback
-triggers a synchronous AP bus scan, the scan may already run but some
-internal states are not initialized by the AP bus init function resulting
-in a crash like this:
+I couldn't reproduce the reported issue. What I did, based on a pcap
+packet log provided by the reporter:
+- Used same chip version (RTL8168h)
+- Set MAC address to the one used on the reporters system
+- Replayed the EAPOL unicast packet that, according to the reporter,
+  was filtered out by the mc filter.
+The packet was properly received.
 
-  [   11.635859] Unable to handle kernel pointer dereference in virtual kernel address space
-  [   11.635861] Failing address: 0000000000000000 TEID: 0000000000000887
-  [   11.635862] Fault in home space mode while using kernel ASCE.
-  [   11.635864] AS:00000000894c4007 R3:00000001fece8007 S:00000001fece7800 P:000000000000013d
-  [   11.635879] Oops: 0004 ilc:1 [#1] SMP
-  [   11.635882] Modules linked in:
-  [   11.635884] CPU: 5 PID: 42 Comm: kworker/5:0 Not tainted 6.6.0-rc3-00003-g4dbf7cdc6b42 #12
-  [   11.635886] Hardware name: IBM 3931 A01 751 (LPAR)
-  [   11.635887] Workqueue: events_long ap_scan_bus
-  [   11.635891] Krnl PSW : 0704c00180000000 0000000000000000 (0x0)
-  [   11.635895]            R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:0 PM:0 RI:0 EA:3
-  [   11.635897] Krnl GPRS: 0000000001000a00 0000000000000000 0000000000000006 0000000089591940
-  [   11.635899]            0000000080000000 0000000000000a00 0000000000000000 0000000000000000
-  [   11.635901]            0000000081870c00 0000000089591000 000000008834e4e2 0000000002625a00
-  [   11.635903]            0000000081734200 0000038000913c18 000000008834c6d6 0000038000913ac8
-  [   11.635906] Krnl Code:>0000000000000000: 0000                illegal
-  [   11.635906]            0000000000000002: 0000                illegal
-  [   11.635906]            0000000000000004: 0000                illegal
-  [   11.635906]            0000000000000006: 0000                illegal
-  [   11.635906]            0000000000000008: 0000                illegal
-  [   11.635906]            000000000000000a: 0000                illegal
-  [   11.635906]            000000000000000c: 0000                illegal
-  [   11.635906]            000000000000000e: 0000                illegal
-  [   11.635915] Call Trace:
-  [   11.635916]  [<0000000000000000>] 0x0
-  [   11.635918]  [<000000008834e4e2>] ap_queue_init_state+0x82/0xb8
-  [   11.635921]  [<000000008834ba1c>] ap_scan_domains+0x6fc/0x740
-  [   11.635923]  [<000000008834c092>] ap_scan_adapter+0x632/0x8b0
-  [   11.635925]  [<000000008834c3e4>] ap_scan_bus+0xd4/0x288
-  [   11.635927]  [<00000000879a33ba>] process_one_work+0x19a/0x410
-  [   11.635930] Discipline DIAG cannot be used without z/VM
-  [   11.635930]  [<00000000879a3a2c>] worker_thread+0x3fc/0x560
-  [   11.635933]  [<00000000879aea60>] kthread+0x120/0x128
-  [   11.635936]  [<000000008792afa4>] __ret_from_fork+0x3c/0x58
-  [   11.635938]  [<00000000885ebe62>] ret_from_fork+0xa/0x30
-  [   11.635942] Last Breaking-Event-Address:
-  [   11.635942]  [<000000008834c6d4>] ap_wait+0xcc/0x148
-
-This patch improves the ap_bus_force_rescan() function which is
-invoked by the config change callback by checking if a first
-initial AP bus scan has been done. If not, the force rescan request
-is simple ignored. Anyhow it does not make sense to trigger AP bus
-re-scans even before the very first bus scan is complete.
+Therefore the root cause of the reported issue seems to be somewhere
+else. Disabling mc filtering completely for the most common chip
+version is a quite big hammer. Therefore revert the change and wait
+for further analysis results from the reporter.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/ap_bus.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/s390/crypto/ap_bus.c b/drivers/s390/crypto/ap_bus.c
-index c00a288a4eca2..602438a8c2a26 100644
---- a/drivers/s390/crypto/ap_bus.c
-+++ b/drivers/s390/crypto/ap_bus.c
-@@ -787,6 +787,10 @@ EXPORT_SYMBOL(ap_driver_unregister);
- 
- void ap_bus_force_rescan(void)
- {
-+	/* Only trigger AP bus scans after the initial scan is done */
-+	if (atomic64_read(&ap_scan_bus_count) <= 0)
-+		return;
-+
- 	/* processing a asynchronous bus rescan */
- 	del_timer(&ap_config_timer);
- 	queue_work(system_long_wq, &ap_scan_work);
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 6e0fe77d1019c..ab6af1f1ad5bb 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -2581,9 +2581,7 @@ static void rtl_set_rx_mode(struct net_device *dev)
+ 		rx_mode &= ~AcceptMulticast;
+ 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
+ 		   dev->flags & IFF_ALLMULTI ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
+-		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
++		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
+ 		/* accept all multicasts */
+ 	} else if (netdev_mc_empty(dev)) {
+ 		rx_mode &= ~AcceptMulticast;
 -- 
 2.42.0
 
