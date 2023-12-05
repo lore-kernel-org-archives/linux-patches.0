@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DF4A59;
-	Tue,  5 Dec 2023 03:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88947A59;
+	Tue,  5 Dec 2023 03:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do6Kev0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C84C433C7;
-	Tue,  5 Dec 2023 03:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4rkvnYj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BEDC433C7;
+	Tue,  5 Dec 2023 03:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747496;
-	bh=fysSgXQJbRmXrxSY8aQDmTwAwzXzfoHYsrcjWeVuiMQ=;
+	s=korg; t=1701747499;
+	bh=a3zpXwb9lojhctuj9nDzHbGJcDFZ6dvw2JsSDi8UGVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Do6Kev0YL6OHFCmDgtbpMK3EKEw4/mj5SZOYcnqlJ6CK2UWCPE2Wa9yE6r8qDYvMN
-	 q7nuYNYQ2kKt0PzfIXvluw+jmgbvccZLIRNYzEKs7lKvQMsD+a0SWurEXnOWH/PXC2
-	 H3+tJeJASbrEdN1I4yemzMnG/cbhjhOFiPOCSe8k=
+	b=W4rkvnYj1t/TqVwkJ0cmJsmkGKboMM89EQOHRihh8WT6epXIGZaSoNdj205nnuMxE
+	 MZh8Xp63LxMcQr6AQ1hELkYNhAsY5A6SpJFOj/3X80peT0C3GWrHdx4y3nfb0t5RP3
+	 WCxgAsWiI9/i2+uaeBQPIfvusXU77JygY82rcxhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-	Lai Jiangshan <jiangshanlai@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 098/135] Revert "workqueue: remove unused cancel_work()"
-Date: Tue,  5 Dec 2023 12:16:59 +0900
-Message-ID: <20231205031536.851621539@linuxfoundation.org>
+Subject: [PATCH 5.10 099/135] r8169: prevent potential deadlock in rtl8169_close
+Date: Tue,  5 Dec 2023 12:17:00 +0900
+Message-ID: <20231205031536.917928012@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -39,66 +36,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrey Grodzovsky <andrey.grodzovsky@amd.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 73b4b53276a1d6290cd4f47dbbc885b6e6e59ac6 ]
+[ Upstream commit 91d3d149978ba7b238198dd80e4b823756aa7cfa ]
 
-This reverts commit 6417250d3f894e66a68ba1cd93676143f2376a6f.
+ndo_stop() is RTNL-protected by net core, and the worker function takes
+RTNL as well. Therefore we will deadlock when trying to execute a
+pending work synchronously. To fix this execute any pending work
+asynchronously. This will do no harm because netif_running() is false
+in ndo_stop(), and therefore the work function is effectively a no-op.
+However we have to ensure that no task is running or pending after
+rtl_remove_one(), therefore add a call to cancel_work_sync().
 
-amdpgu need this function in order to prematurly stop pending
-reset works when another reset work already in progress.
-
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@amd.com>
-Reviewed-by: Lai Jiangshan<jiangshanlai@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 91d3d149978b ("r8169: prevent potential deadlock in rtl8169_close")
+Fixes: abe5fc42f9ce ("r8169: use RTNL to protect critical sections")
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/12395867-1d17-4cac-aa7d-c691938fcddf@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/workqueue.h | 1 +
- kernel/workqueue.c        | 9 +++++++++
- 2 files changed, 10 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
-index 460c58fa011ae..0383fac637e19 100644
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -460,6 +460,7 @@ extern int schedule_on_each_cpu(work_func_t func);
- int execute_in_process_context(work_func_t fn, struct execute_work *);
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index ab6af1f1ad5bb..d33720f68c679 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4769,7 +4769,7 @@ static int rtl8169_close(struct net_device *dev)
+ 	rtl8169_down(tp);
+ 	rtl8169_rx_clear(tp);
  
- extern bool flush_work(struct work_struct *work);
-+extern bool cancel_work(struct work_struct *work);
- extern bool cancel_work_sync(struct work_struct *work);
+-	cancel_work_sync(&tp->wk.work);
++	cancel_work(&tp->wk.work);
  
- extern bool flush_delayed_work(struct delayed_work *dwork);
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 37d01e44d4837..63140e4dd5dfc 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -3240,6 +3240,15 @@ static bool __cancel_work(struct work_struct *work, bool is_dwork)
- 	return ret;
- }
+ 	free_irq(pci_irq_vector(pdev, 0), tp);
  
-+/*
-+ * See cancel_delayed_work()
-+ */
-+bool cancel_work(struct work_struct *work)
-+{
-+	return __cancel_work(work, false);
-+}
-+EXPORT_SYMBOL(cancel_work);
+@@ -5035,6 +5035,8 @@ static void rtl_remove_one(struct pci_dev *pdev)
+ 	if (pci_dev_run_wake(pdev))
+ 		pm_runtime_get_noresume(&pdev->dev);
+ 
++	cancel_work_sync(&tp->wk.work);
 +
- /**
-  * cancel_delayed_work - cancel a delayed work
-  * @dwork: delayed_work to cancel
+ 	unregister_netdev(tp->dev);
+ 
+ 	if (r8168_check_dash(tp))
 -- 
 2.42.0
 
