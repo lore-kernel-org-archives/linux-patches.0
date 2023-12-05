@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B4A6AA0;
-	Tue,  5 Dec 2023 03:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E86D6AA0;
+	Tue,  5 Dec 2023 03:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwOFlPbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68ECBC433C7;
-	Tue,  5 Dec 2023 03:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pehiq8IR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5414C433C8;
+	Tue,  5 Dec 2023 03:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746568;
-	bh=ri4YeSWR7w/MLtUayKh5SPeIA56egAnBT10No+XStbM=;
+	s=korg; t=1701746571;
+	bh=EIrEGwjW9CvhSIU1xPlQQe0ajt2XIGzwdoWYDOYbnfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwOFlPbAdR4PlROxGhhzo9ZktZd2EEvjSing0clGqkso4R4PCybHJ271tGdmMbk6l
-	 ulSpJkkLx39MrrHM4TFTM7b/ecF/KgCC8nhQ/0PNaCK6t61ItfJC47IQkEZAC9vAZR
-	 1baQ5kD/pUHiEykCpiUVcB/dU/06vcs1LjnQKuh4=
+	b=pehiq8IRZfBp3GGM6K17xPCdNKowt80jelksPIgI9eriBfQkWnZ8iU1b5PE1raItf
+	 Ts+ll1I6P7hxUEl3INvEBL7r7bV8Nk+2xQ6YLYE9mVu1KpDWwXWFl5FHZztNyZKOAM
+	 FVQsYsOCAx/t7PSMph4FOchPz0VRQxwBrpT2fK7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 073/134] io_uring/kbuf: recycle freed mapped buffer ring entries
-Date: Tue,  5 Dec 2023 12:15:45 +0900
-Message-ID: <20231205031540.128968428@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 074/134] wifi: cfg80211: fix CQM for non-range use
+Date: Tue,  5 Dec 2023 12:15:46 +0900
+Message-ID: <20231205031540.189275884@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -40,142 +40,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit b10b73c102a2eab91e1cd62a03d6446f1dfecc64 upstream.
+commit 7e7efdda6adb385fbdfd6f819d76bc68c923c394 upstream.
 
-Right now we stash any potentially mmap'ed provided ring buffer range
-for freeing at release time, regardless of when they get unregistered.
-Since we're keeping track of these ranges anyway, keep track of their
-registration state as well, and use that to recycle ranges when
-appropriate rather than always allocate new ones.
+My prior race fix here broke CQM when ranges aren't used, as
+the reporting worker now requires the cqm_config to be set in
+the wdev, but isn't set when there's no range configured.
 
-The lookup is a basic scan of entries, checking for the best matching
-free entry.
+Rather than continuing to special-case the range version, set
+the cqm_config always and configure accordingly, also tracking
+if range was used or not to be able to clear the configuration
+appropriately with the same API, which was actually not right
+if both were implemented by a driver for some reason, as is
+the case with mac80211 (though there the implementations are
+equivalent so it doesn't matter.)
 
-Fixes: c392cbecd8ec ("io_uring/kbuf: defer release of mapped buffer rings")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Also, the original multiple-RSSI commit lost checking for the
+callback, so might have potentially crashed if a driver had
+neither implementation, and userspace tried to use it despite
+not being advertised as supported.
+
+Cc: stable@vger.kernel.org
+Fixes: 4a4b8169501b ("cfg80211: Accept multiple RSSI thresholds for CQM")
+Fixes: 37c20b2effe9 ("wifi: cfg80211: fix cqm_config access race")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |   77 ++++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 66 insertions(+), 11 deletions(-)
+ net/wireless/core.h    |    1 
+ net/wireless/nl80211.c |   50 ++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 32 insertions(+), 19 deletions(-)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -44,6 +44,8 @@ static struct io_buffer_list *__io_buffe
- struct io_buf_free {
- 	struct hlist_node		list;
- 	void				*mem;
-+	size_t				size;
-+	int				inuse;
+--- a/net/wireless/core.h
++++ b/net/wireless/core.h
+@@ -299,6 +299,7 @@ struct cfg80211_cqm_config {
+ 	u32 rssi_hyst;
+ 	s32 last_rssi_event_value;
+ 	enum nl80211_cqm_rssi_threshold_event last_rssi_event_type;
++	bool use_range_api;
+ 	int n_rssi_thresholds;
+ 	s32 rssi_thresholds[] __counted_by(n_rssi_thresholds);
  };
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -12824,10 +12824,6 @@ static int cfg80211_cqm_rssi_update(stru
+ 	int i, n, low_index;
+ 	int err;
  
- static inline struct io_buffer_list *io_buffer_get_list(struct io_ring_ctx *ctx,
-@@ -231,6 +233,24 @@ static __cold int io_init_bl_list(struct
- 	return 0;
- }
- 
-+/*
-+ * Mark the given mapped range as free for reuse
-+ */
-+static void io_kbuf_mark_free(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
-+{
-+	struct io_buf_free *ibf;
-+
-+	hlist_for_each_entry(ibf, &ctx->io_buf_list, list) {
-+		if (bl->buf_ring == ibf->mem) {
-+			ibf->inuse = 0;
-+			return;
-+		}
-+	}
-+
-+	/* can't happen... */
-+	WARN_ON_ONCE(1);
-+}
-+
- static int __io_remove_buffers(struct io_ring_ctx *ctx,
- 			       struct io_buffer_list *bl, unsigned nbufs)
- {
-@@ -247,6 +267,7 @@ static int __io_remove_buffers(struct io
- 			 * io_kbuf_list_free() will free the page(s) at
- 			 * ->release() time.
- 			 */
-+			io_kbuf_mark_free(ctx, bl);
- 			bl->buf_ring = NULL;
- 			bl->is_mmap = 0;
- 		} else if (bl->buf_nr_pages) {
-@@ -560,6 +581,34 @@ error_unpin:
- 	return -EINVAL;
- }
- 
-+/*
-+ * See if we have a suitable region that we can reuse, rather than allocate
-+ * both a new io_buf_free and mem region again. We leave it on the list as
-+ * even a reused entry will need freeing at ring release.
-+ */
-+static struct io_buf_free *io_lookup_buf_free_entry(struct io_ring_ctx *ctx,
-+						    size_t ring_size)
-+{
-+	struct io_buf_free *ibf, *best = NULL;
-+	size_t best_dist;
-+
-+	hlist_for_each_entry(ibf, &ctx->io_buf_list, list) {
-+		size_t dist;
-+
-+		if (ibf->inuse || ibf->size < ring_size)
-+			continue;
-+		dist = ibf->size - ring_size;
-+		if (!best || dist < best_dist) {
-+			best = ibf;
-+			if (!dist)
-+				break;
-+			best_dist = dist;
-+		}
-+	}
-+
-+	return best;
-+}
-+
- static int io_alloc_pbuf_ring(struct io_ring_ctx *ctx,
- 			      struct io_uring_buf_reg *reg,
- 			      struct io_buffer_list *bl)
-@@ -569,20 +618,26 @@ static int io_alloc_pbuf_ring(struct io_
- 	void *ptr;
- 
- 	ring_size = reg->ring_entries * sizeof(struct io_uring_buf_ring);
--	ptr = io_mem_alloc(ring_size);
--	if (!ptr)
--		return -ENOMEM;
- 
--	/* Allocate and store deferred free entry */
--	ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
-+	/* Reuse existing entry, if we can */
-+	ibf = io_lookup_buf_free_entry(ctx, ring_size);
- 	if (!ibf) {
--		io_mem_free(ptr);
--		return -ENOMEM;
-+		ptr = io_mem_alloc(ring_size);
-+		if (!ptr)
-+			return -ENOMEM;
-+
-+		/* Allocate and store deferred free entry */
-+		ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
-+		if (!ibf) {
-+			io_mem_free(ptr);
-+			return -ENOMEM;
-+		}
-+		ibf->mem = ptr;
-+		ibf->size = ring_size;
-+		hlist_add_head(&ibf->list, &ctx->io_buf_list);
- 	}
--	ibf->mem = ptr;
--	hlist_add_head(&ibf->list, &ctx->io_buf_list);
+-	/* RSSI reporting disabled? */
+-	if (!cqm_config)
+-		return rdev_set_cqm_rssi_range_config(rdev, dev, 0, 0);
 -
--	bl->buf_ring = ptr;
-+	ibf->inuse = 1;
-+	bl->buf_ring = ibf->mem;
- 	bl->is_mapped = 1;
- 	bl->is_mmap = 1;
- 	return 0;
+ 	/*
+ 	 * Obtain current RSSI value if possible, if not and no RSSI threshold
+ 	 * event has been received yet, we should receive an event after a
+@@ -12902,18 +12898,6 @@ static int nl80211_set_cqm_rssi(struct g
+ 	    wdev->iftype != NL80211_IFTYPE_P2P_CLIENT)
+ 		return -EOPNOTSUPP;
+ 
+-	if (n_thresholds <= 1 && rdev->ops->set_cqm_rssi_config) {
+-		if (n_thresholds == 0 || thresholds[0] == 0) /* Disabling */
+-			return rdev_set_cqm_rssi_config(rdev, dev, 0, 0);
+-
+-		return rdev_set_cqm_rssi_config(rdev, dev,
+-						thresholds[0], hysteresis);
+-	}
+-
+-	if (!wiphy_ext_feature_isset(&rdev->wiphy,
+-				     NL80211_EXT_FEATURE_CQM_RSSI_LIST))
+-		return -EOPNOTSUPP;
+-
+ 	if (n_thresholds == 1 && thresholds[0] == 0) /* Disabling */
+ 		n_thresholds = 0;
+ 
+@@ -12921,6 +12905,20 @@ static int nl80211_set_cqm_rssi(struct g
+ 	old = rcu_dereference_protected(wdev->cqm_config,
+ 					lockdep_is_held(&wdev->mtx));
+ 
++	/* if already disabled just succeed */
++	if (!n_thresholds && !old)
++		return 0;
++
++	if (n_thresholds > 1) {
++		if (!wiphy_ext_feature_isset(&rdev->wiphy,
++					     NL80211_EXT_FEATURE_CQM_RSSI_LIST) ||
++		    !rdev->ops->set_cqm_rssi_range_config)
++			return -EOPNOTSUPP;
++	} else {
++		if (!rdev->ops->set_cqm_rssi_config)
++			return -EOPNOTSUPP;
++	}
++
+ 	if (n_thresholds) {
+ 		cqm_config = kzalloc(struct_size(cqm_config, rssi_thresholds,
+ 						 n_thresholds),
+@@ -12935,13 +12933,26 @@ static int nl80211_set_cqm_rssi(struct g
+ 		memcpy(cqm_config->rssi_thresholds, thresholds,
+ 		       flex_array_size(cqm_config, rssi_thresholds,
+ 				       n_thresholds));
++		cqm_config->use_range_api = n_thresholds > 1 ||
++					    !rdev->ops->set_cqm_rssi_config;
+ 
+ 		rcu_assign_pointer(wdev->cqm_config, cqm_config);
++
++		if (cqm_config->use_range_api)
++			err = cfg80211_cqm_rssi_update(rdev, dev, cqm_config);
++		else
++			err = rdev_set_cqm_rssi_config(rdev, dev,
++						       thresholds[0],
++						       hysteresis);
+ 	} else {
+ 		RCU_INIT_POINTER(wdev->cqm_config, NULL);
++		/* if enabled as range also disable via range */
++		if (old->use_range_api)
++			err = rdev_set_cqm_rssi_range_config(rdev, dev, 0, 0);
++		else
++			err = rdev_set_cqm_rssi_config(rdev, dev, 0, 0);
+ 	}
+ 
+-	err = cfg80211_cqm_rssi_update(rdev, dev, cqm_config);
+ 	if (err) {
+ 		rcu_assign_pointer(wdev->cqm_config, old);
+ 		kfree_rcu(cqm_config, rcu_head);
+@@ -19131,10 +19142,11 @@ void cfg80211_cqm_rssi_notify_work(struc
+ 	wdev_lock(wdev);
+ 	cqm_config = rcu_dereference_protected(wdev->cqm_config,
+ 					       lockdep_is_held(&wdev->mtx));
+-	if (!wdev->cqm_config)
++	if (!cqm_config)
+ 		goto unlock;
+ 
+-	cfg80211_cqm_rssi_update(rdev, wdev->netdev, cqm_config);
++	if (cqm_config->use_range_api)
++		cfg80211_cqm_rssi_update(rdev, wdev->netdev, cqm_config);
+ 
+ 	rssi_level = cqm_config->last_rssi_event_value;
+ 	rssi_event = cqm_config->last_rssi_event_type;
 
 
