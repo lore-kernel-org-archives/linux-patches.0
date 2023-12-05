@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293CD6FB1;
-	Tue,  5 Dec 2023 03:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943D66FB1;
+	Tue,  5 Dec 2023 03:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5iP57Tt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FDDC433C7;
-	Tue,  5 Dec 2023 03:33:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pz4l4h9N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA6DC433C8;
+	Tue,  5 Dec 2023 03:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747218;
-	bh=LRgqrEcPEr+78UTqC11IoE/fLC5lPF62E0o9wkk7hkw=;
+	s=korg; t=1701747220;
+	bh=7aZqJopJDDcroIyECQnZxjtunXP4pM4M8I7q4ujqswI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5iP57TtQ7K4A1RNCAwJAh2qnH03UYpwuVItQAnToT56Q/+6J6wJPftiPx1mn3ymD
-	 ZEYAmnOldf6iaP68RAXrTpsFPI8SStjq5ndClNmI7fzIrgNgwv81eZ0jc3n5pmWdeX
-	 Ro4aMOSywGQ13TOsrIlxjqqCe7bwxKpLXAhXfMUM=
+	b=pz4l4h9N7RtebcQysibMCdipk/A/a5SxbVS6vOhTysJ4yeuO6DSpk8Zk9iTL2NnkU
+	 79ZLPsHoiNB/tISr0IbPiz5chYn77u6AH3nLgQASdELqgm+PSfhBsnwRN2ZCViYZRK
+	 IUYuceDvNfUHAImdgVg6q93TUmfPOTVCAzBiuunQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Chen <free122448@hotmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/107] r8169: fix deadlock on RTL8125 in jumbo mtu mode
-Date: Tue,  5 Dec 2023 12:17:18 +0900
-Message-ID: <20231205031538.213032083@linuxfoundation.org>
+Subject: [PATCH 6.1 104/107] xen: Allow platform PCI interrupt to be shared
+Date: Tue,  5 Dec 2023 12:17:19 +0900
+Message-ID: <20231205031538.283030123@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -43,58 +42,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-[ Upstream commit 59d395ed606d8df14615712b0cdcdadb2d962175 ]
+[ Upstream commit 3e8cd711c3da6c3d724076048038cd666bdbb2b5 ]
 
-The original change results in a deadlock if jumbo mtu mode is used.
-Reason is that the phydev lock is held when rtl_reset_work() is called
-here, and rtl_jumbo_config() calls phy_start_aneg() which also tries
-to acquire the phydev lock. Fix this by calling rtl_reset_work()
-asynchronously.
+When we don't use the per-CPU vector callback, we ask Xen to deliver event
+channel interrupts as INTx on the PCI platform device. As such, it can be
+shared with INTx on other PCI devices.
 
-Fixes: 621735f59064 ("r8169: fix rare issue with broken rx after link-down on RTL8125")
-Reported-by: Ian Chen <free122448@hotmail.com>
-Tested-by: Ian Chen <free122448@hotmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/caf6a487-ef8c-4570-88f9-f47a659faf33@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Set IRQF_SHARED, and make it return IRQ_HANDLED or IRQ_NONE according to
+whether the evtchn_upcall_pending flag was actually set. Now I can share
+the interrupt:
+
+ 11:         82          0   IO-APIC  11-fasteoi   xen-platform-pci, ens4
+
+Drop the IRQF_TRIGGER_RISING. It has no effect when the IRQ is shared,
+and besides, the only effect it was having even beforehand was to trigger
+a debug message in both I/OAPIC and legacy PIC cases:
+
+[    0.915441] genirq: No set_type function for IRQ 11 (IO-APIC)
+[    0.951939] genirq: No set_type function for IRQ 11 (XT-PIC)
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/f9a29a68d05668a3636dd09acd94d970269eaec6.camel@infradead.org
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: db2832309a82 ("x86/xen: fix percpu vcpu_info allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/xen/events/events_base.c | 9 ++++++---
+ drivers/xen/platform-pci.c       | 5 ++---
+ include/xen/events.h             | 2 +-
+ 3 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 7cb09ba14533c..abfa375b08878 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -576,6 +576,7 @@ struct rtl8169_tc_offsets {
- enum rtl_flag {
- 	RTL_FLAG_TASK_ENABLED = 0,
- 	RTL_FLAG_TASK_RESET_PENDING,
-+	RTL_FLAG_TASK_RESET_NO_QUEUE_WAKE,
- 	RTL_FLAG_TASK_TX_TIMEOUT,
- 	RTL_FLAG_MAX
- };
-@@ -4559,6 +4560,8 @@ static void rtl_task(struct work_struct *work)
- reset:
- 		rtl_reset_work(tp);
- 		netif_wake_queue(tp->dev);
-+	} else if (test_and_clear_bit(RTL_FLAG_TASK_RESET_NO_QUEUE_WAKE, tp->wk.flags)) {
-+		rtl_reset_work(tp);
- 	}
- out_unlock:
- 	rtnl_unlock();
-@@ -4592,7 +4595,7 @@ static void r8169_phylink_handler(struct net_device *ndev)
- 	} else {
- 		/* In few cases rx is broken after link-down otherwise */
- 		if (rtl_is_8125(tp))
--			rtl_reset_work(tp);
-+			rtl_schedule_task(tp, RTL_FLAG_TASK_RESET_NO_QUEUE_WAKE);
- 		pm_runtime_idle(d);
- 	}
+diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
+index af9115d648092..014a83d016f59 100644
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -1710,9 +1710,10 @@ void handle_irq_for_port(evtchn_port_t port, struct evtchn_loop_ctrl *ctrl)
+ 	generic_handle_irq(irq);
+ }
  
+-static void __xen_evtchn_do_upcall(void)
++static int __xen_evtchn_do_upcall(void)
+ {
+ 	struct vcpu_info *vcpu_info = __this_cpu_read(xen_vcpu);
++	int ret = vcpu_info->evtchn_upcall_pending ? IRQ_HANDLED : IRQ_NONE;
+ 	int cpu = smp_processor_id();
+ 	struct evtchn_loop_ctrl ctrl = { 0 };
+ 
+@@ -1744,6 +1745,8 @@ static void __xen_evtchn_do_upcall(void)
+ 	 * above.
+ 	 */
+ 	__this_cpu_inc(irq_epoch);
++
++	return ret;
+ }
+ 
+ void xen_evtchn_do_upcall(struct pt_regs *regs)
+@@ -1758,9 +1761,9 @@ void xen_evtchn_do_upcall(struct pt_regs *regs)
+ 	set_irq_regs(old_regs);
+ }
+ 
+-void xen_hvm_evtchn_do_upcall(void)
++int xen_hvm_evtchn_do_upcall(void)
+ {
+-	__xen_evtchn_do_upcall();
++	return __xen_evtchn_do_upcall();
+ }
+ EXPORT_SYMBOL_GPL(xen_hvm_evtchn_do_upcall);
+ 
+diff --git a/drivers/xen/platform-pci.c b/drivers/xen/platform-pci.c
+index cd07e3fed0faf..fcc8191315723 100644
+--- a/drivers/xen/platform-pci.c
++++ b/drivers/xen/platform-pci.c
+@@ -64,14 +64,13 @@ static uint64_t get_callback_via(struct pci_dev *pdev)
+ 
+ static irqreturn_t do_hvm_evtchn_intr(int irq, void *dev_id)
+ {
+-	xen_hvm_evtchn_do_upcall();
+-	return IRQ_HANDLED;
++	return xen_hvm_evtchn_do_upcall();
+ }
+ 
+ static int xen_allocate_irq(struct pci_dev *pdev)
+ {
+ 	return request_irq(pdev->irq, do_hvm_evtchn_intr,
+-			IRQF_NOBALANCING | IRQF_TRIGGER_RISING,
++			IRQF_NOBALANCING | IRQF_SHARED,
+ 			"xen-platform-pci", pdev);
+ }
+ 
+diff --git a/include/xen/events.h b/include/xen/events.h
+index 344081e71584b..44c2855c76d1f 100644
+--- a/include/xen/events.h
++++ b/include/xen/events.h
+@@ -107,7 +107,7 @@ evtchn_port_t evtchn_from_irq(unsigned irq);
+ 
+ int xen_set_callback_via(uint64_t via);
+ void xen_evtchn_do_upcall(struct pt_regs *regs);
+-void xen_hvm_evtchn_do_upcall(void);
++int xen_hvm_evtchn_do_upcall(void);
+ 
+ /* Bind a pirq for a physical interrupt to an irq. */
+ int xen_bind_pirq_gsi_to_irq(unsigned gsi,
 -- 
 2.42.0
 
