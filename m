@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C967F6FB1;
-	Tue,  5 Dec 2023 03:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C95079E3;
+	Tue,  5 Dec 2023 03:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSuaJ+T1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60076C433C8;
-	Tue,  5 Dec 2023 03:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eUcMtFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C88C433C8;
+	Tue,  5 Dec 2023 03:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747062;
-	bh=KBqWGTB2qp1jgdoT/SWfVg5+M/NwWgnLZPgqJ3hSvTs=;
+	s=korg; t=1701747065;
+	bh=xCkSG9mU6kO1F/ac7YovhySDZQuaIsXguzyID6BR19A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSuaJ+T1LjVJj5inhUnG3Kdw6LzgLcmuUbNd0WflhrYwieLu+c1dEoq5x9m5AMYD8
-	 tY2NEotkNeT4o/RjWNkBjV5Nwo14JKeQ49pD0YRfuGAuBeQjWvbrw2CrtV5BqBNrh9
-	 rqzpjd2Wgk5bT9VpecYIbuLP+FZdO6Jt5w/Zuz9c=
+	b=2eUcMtFbO15adYP0P1dL/B1gUEep2EmZOlT0CS6vyHpoFh2+gqW1GX4vXqLMVogJC
+	 f4OaP1GkGqH7TJY0Rrq+pHqJMn1L2AjysOr/OhNwc29OSzriISnZ21OVV5DYCthCDF
+	 42iaaIWiuHV4Cj3jlaVbs9bfBWPAMOEs8BNvK/gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bragatheswaran Manickavel <bragathemanick0908@gmail.com>,
-	David Sterba <dsterba@suse.com>,
-	syzbot+d66de4cbf532749df35f@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 045/107] btrfs: ref-verify: fix memory leaks in btrfs_ref_tree_mod()
-Date: Tue,  5 Dec 2023 12:16:20 +0900
-Message-ID: <20231205031534.159156135@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 046/107] btrfs: fix off-by-one when checking chunk map includes logical address
+Date: Tue,  5 Dec 2023 12:16:21 +0900
+Message-ID: <20231205031534.216003897@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -42,48 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bragatheswaran Manickavel <bragathemanick0908@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit f91192cd68591c6b037da345bc9fcd5e50540358 upstream.
+commit 5fba5a571858ce2d787fdaf55814e42725bfa895 upstream.
 
-In btrfs_ref_tree_mod(), when !parent 're' was allocated through
-kmalloc(). In the following code, if an error occurs, the execution will
-be redirected to 'out' or 'out_unlock' and the function will be exited.
-However, on some of the paths, 're' are not deallocated and may lead to
-memory leaks.
+At btrfs_get_chunk_map() we get the extent map for the chunk that contains
+the given logical address stored in the 'logical' argument. Then we do
+sanity checks to verify the extent map contains the logical address. One
+of these checks verifies if the extent map covers a range with an end
+offset behind the target logical address - however this check has an
+off-by-one error since it will consider an extent map whose start offset
+plus its length matches the target logical address as inclusive, while
+the fact is that the last byte it covers is behind the target logical
+address (by 1).
 
-For example: lookup_block_entry() for 'be' returns NULL, the out label
-will be invoked. During that flow ref and 'ra' are freed but not 're',
-which can potentially lead to a memory leak.
+So fix this condition by using '<=' rather than '<' when comparing the
+extent map's "start + length" against the target logical address.
 
-CC: stable@vger.kernel.org # 5.10+
-Reported-and-tested-by: syzbot+d66de4cbf532749df35f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d66de4cbf532749df35f
-Signed-off-by: Bragatheswaran Manickavel <bragathemanick0908@gmail.com>
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ref-verify.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/volumes.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/ref-verify.c
-+++ b/fs/btrfs/ref-verify.c
-@@ -788,6 +788,7 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
- 			dump_ref_action(fs_info, ra);
- 			kfree(ref);
- 			kfree(ra);
-+			kfree(re);
- 			goto out_unlock;
- 		} else if (be->num_refs == 0) {
- 			btrfs_err(fs_info,
-@@ -797,6 +798,7 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
- 			dump_ref_action(fs_info, ra);
- 			kfree(ref);
- 			kfree(ra);
-+			kfree(re);
- 			goto out_unlock;
- 		}
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -3079,7 +3079,7 @@ struct extent_map *btrfs_get_chunk_map(s
+ 		return ERR_PTR(-EINVAL);
+ 	}
  
+-	if (em->start > logical || em->start + em->len < logical) {
++	if (em->start > logical || em->start + em->len <= logical) {
+ 		btrfs_crit(fs_info,
+ 			   "found a bad mapping, wanted %llu-%llu, found %llu-%llu",
+ 			   logical, length, em->start, em->start + em->len);
 
 
