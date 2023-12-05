@@ -1,29 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3526AA0;
-	Tue,  5 Dec 2023 03:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1586AA0;
+	Tue,  5 Dec 2023 03:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hm0Osm5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E722C433C7;
-	Tue,  5 Dec 2023 03:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBdoNfNY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AECBC433C8;
+	Tue,  5 Dec 2023 03:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746361;
-	bh=IqgIXXxG0HxxTXDjSKXVU4YWAmhy4/6/5Av3ruLcVVI=;
+	s=korg; t=1701746364;
+	bh=vjwo2T6ygTRtrIdyngj3W5pKhzc3a9Eo+xmExYZoSZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hm0Osm5F2bEdtuKlY/UUIWcpqBSf6MnaYKtmZmvhDv44VXdnQpOG2TKnz//fwroP3
-	 /SyY1qAHttNP1cfog/+clKd0bZs3S+RE/3xmfa/dOCMR2WEk7TjQggDBIVFfMUKWWR
-	 wtwhp0WjEQ64Cah706adSj0Z/OhJleE9vFRNjhns=
+	b=cBdoNfNYqOhmW5e+Yg/Yi8sJ1zt4VvLyglRirMh6iW3PSf8L/rnghLrTto18PKh11
+	 wKEaVbRhEC6H3lyczYzIJqX5EYRHEaYuepnpjT9AD24/2WKM4aBTt7ftfMtmp+rN1I
+	 iIlLwELwnPzxaywsy/9XhS9NnCbJZ+DeUZPZhl0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 4.14 12/30] s390/dasd: protect device queue against concurrent access
-Date: Tue,  5 Dec 2023 12:16:19 +0900
-Message-ID: <20231205031512.224380166@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Saravana Kannan <saravanak@google.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	James Clark <james.clark@arm.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>
+Subject: [PATCH 4.14 30/30] driver core: Release all resources during unbind before updating device links
+Date: Tue,  5 Dec 2023 12:16:37 +0900
+Message-ID: <20231205031513.296826070@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031511.476698159@linuxfoundation.org>
 References: <20231205031511.476698159@linuxfoundation.org>
@@ -43,66 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Höppner <hoeppner@linux.ibm.com>
+From: Saravana Kannan <saravanak@google.com>
 
-commit db46cd1e0426f52999d50fa72cfa97fa39952885 upstream.
+commit 2e84dc37920012b458e9458b19fc4ed33f81bc74 upstream.
 
-In dasd_profile_start() the amount of requests on the device queue are
-counted. The access to the device queue is unprotected against
-concurrent access. With a lot of parallel I/O, especially with alias
-devices enabled, the device queue can change while dasd_profile_start()
-is accessing the queue. In the worst case this leads to a kernel panic
-due to incorrect pointer accesses.
+This commit fixes a bug in commit 9ed9895370ae ("driver core: Functional
+dependencies tracking support") where the device link status was
+incorrectly updated in the driver unbind path before all the device's
+resources were released.
 
-Fix this by taking the device lock before accessing the queue and
-counting the requests. Additionally the check for a valid profile data
-pointer can be done earlier to avoid unnecessary locking in a hot path.
-
-Cc:  <stable@vger.kernel.org>
-Fixes: 4fa52aa7a82f ("[S390] dasd: add enhanced DASD statistics interface")
-Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
-Signed-off-by: Jan Höppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://lore.kernel.org/r/20231025132437.1223363-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 9ed9895370ae ("driver core: Functional dependencies tracking support")
+Cc: stable <stable@kernel.org>
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Closes: https://lore.kernel.org/all/20231014161721.f4iqyroddkcyoefo@pengutronix.de/
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Cc: Thierry Reding <thierry.reding@gmail.com>
+Cc: Yang Yingliang <yangyingliang@huawei.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Matti Vaittinen <mazziesaccount@gmail.com>
+Cc: James Clark <james.clark@arm.com>
+Acked-by: "Rafael J. Wysocki" <rafael@kernel.org>
+Tested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231018013851.3303928-1-saravanak@google.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd.c |   24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/base/dd.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -721,18 +721,20 @@ static void dasd_profile_start(struct da
- 	 * we count each request only once.
- 	 */
- 	device = cqr->startdev;
--	if (device->profile.data) {
--		counter = 1; /* request is not yet queued on the start device */
--		list_for_each(l, &device->ccw_queue)
--			if (++counter >= 31)
--				break;
--	}
-+	if (!device->profile.data)
-+		return;
-+
-+	spin_lock(get_ccwdev_lock(device->cdev));
-+	counter = 1; /* request is not yet queued on the start device */
-+	list_for_each(l, &device->ccw_queue)
-+		if (++counter >= 31)
-+			break;
-+	spin_unlock(get_ccwdev_lock(device->cdev));
-+
- 	spin_lock(&device->profile.lock);
--	if (device->profile.data) {
--		device->profile.data->dasd_io_nr_req[counter]++;
--		if (rq_data_dir(req) == READ)
--			device->profile.data->dasd_read_nr_req[counter]++;
--	}
-+	device->profile.data->dasd_io_nr_req[counter]++;
-+	if (rq_data_dir(req) == READ)
-+		device->profile.data->dasd_read_nr_req[counter]++;
- 	spin_unlock(&device->profile.lock);
- }
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -869,8 +869,6 @@ static void __device_release_driver(stru
+ 		else if (drv->remove)
+ 			drv->remove(dev);
  
+-		device_links_driver_cleanup(dev);
+-
+ 		devres_release_all(dev);
+ 		dma_deconfigure(dev);
+ 		dev->driver = NULL;
+@@ -879,6 +877,8 @@ static void __device_release_driver(stru
+ 			dev->pm_domain->dismiss(dev);
+ 		pm_runtime_reinit(dev);
+ 
++		device_links_driver_cleanup(dev);
++
+ 		klist_remove(&dev->p->knode_driver);
+ 		device_pm_check_callbacks(dev);
+ 		if (dev->bus)
 
 
