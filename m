@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDBA6FB0;
-	Tue,  5 Dec 2023 03:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE946FB0;
+	Tue,  5 Dec 2023 03:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VpcqrbVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717E3C433C7;
-	Tue,  5 Dec 2023 03:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdXZSZFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DBAC433C8;
+	Tue,  5 Dec 2023 03:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747914;
-	bh=r2Omb+yOna2xZMaDK6QbfSO5kFfVXJY8oTDfHhT/fm4=;
+	s=korg; t=1701747917;
+	bh=n8CstkhU6HB2EGidkZxyCVMWm8Bf21DmYKaCH1dh95g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VpcqrbVo/zC2vGDRwA2fSoNp6E+/0ETAu6oIkc3Jyj9nYWPiOhWczgHWz7JXlRIYS
-	 y8om5/1PVivfqpX5MW2INiKnM0PTfWWWOLycUsA8Cykak0N9Gzmbr6g+ghcSf71gI1
-	 LeR6i/WpBct01uWeFKIE1rlIs32GkwfmbK9JG+Xw=
+	b=KdXZSZFCr4lIQqaVcWMCS5EOAfcCFecDnB37F7kEsGS8vU4tqeaMFOhEpZJirsghe
+	 b6lUL/ue+5KOEgU9E+CSbRnA1jm8dBxRTI9rfysrLfWfcs+xQ8Gkq3QL4xch2yxtCg
+	 hwVl4Zd5E3W8mdQD7eACpfFvhZ0NTn2fndEDXp9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alon Zahavi <zahavi.alon@gmail.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 21/94] nvmet: nul-terminate the NQNs passed in the connect command
-Date: Tue,  5 Dec 2023 12:16:49 +0900
-Message-ID: <20231205031524.090834080@linuxfoundation.org>
+Subject: [PATCH 5.4 22/94] MIPS: KVM: Fix a build warning about variable set but not used
+Date: Tue,  5 Dec 2023 12:16:50 +0900
+Message-ID: <20231205031524.159179849@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -38,52 +38,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 1c22e0295a5eb571c27b53c7371f95699ef705ff ]
+[ Upstream commit 83767a67e7b6a0291cde5681ec7e3708f3f8f877 ]
 
-The host and subsystem NQNs are passed in the connect command payload and
-interpreted as nul-terminated strings.  Ensure they actually are
-nul-terminated before using them.
+After commit 411740f5422a ("KVM: MIPS/MMU: Implement KVM_CAP_SYNC_MMU")
+old_pte is no longer used in kvm_mips_map_page(). So remove it to fix a
+build warning about variable set but not used:
 
-Fixes: a07b4970f464 "nvmet: add a generic NVMe target")
-Reported-by: Alon Zahavi <zahavi.alon@gmail.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+   arch/mips/kvm/mmu.c: In function 'kvm_mips_map_page':
+>> arch/mips/kvm/mmu.c:701:29: warning: variable 'old_pte' set but not used [-Wunused-but-set-variable]
+     701 |         pte_t *ptep, entry, old_pte;
+         |                             ^~~~~~~
+
+Cc: stable@vger.kernel.org
+Fixes: 411740f5422a960 ("KVM: MIPS/MMU: Implement KVM_CAP_SYNC_MMU")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310070530.aARZCSfh-lkp@intel.com/
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/mips/kvm/mmu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
-index 58544f9bbc20c..d4036508f32a7 100644
---- a/drivers/nvme/target/fabrics-cmd.c
-+++ b/drivers/nvme/target/fabrics-cmd.c
-@@ -182,6 +182,8 @@ static void nvmet_execute_admin_connect(struct nvmet_req *req)
- 		goto out;
- 	}
+diff --git a/arch/mips/kvm/mmu.c b/arch/mips/kvm/mmu.c
+index 97f63a84aa51f..8a5f666d34c81 100644
+--- a/arch/mips/kvm/mmu.c
++++ b/arch/mips/kvm/mmu.c
+@@ -693,7 +693,7 @@ static int kvm_mips_map_page(struct kvm_vcpu *vcpu, unsigned long gpa,
+ 	gfn_t gfn = gpa >> PAGE_SHIFT;
+ 	int srcu_idx, err;
+ 	kvm_pfn_t pfn;
+-	pte_t *ptep, entry, old_pte;
++	pte_t *ptep, entry;
+ 	bool writeable;
+ 	unsigned long prot_bits;
+ 	unsigned long mmu_seq;
+@@ -766,7 +766,6 @@ static int kvm_mips_map_page(struct kvm_vcpu *vcpu, unsigned long gpa,
+ 	entry = pfn_pte(pfn, __pgprot(prot_bits));
  
-+	d->subsysnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
-+	d->hostnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
- 	status = nvmet_alloc_ctrl(d->subsysnqn, d->hostnqn, req,
- 				  le32_to_cpu(c->kato), &ctrl);
- 	if (status) {
-@@ -237,6 +239,8 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
- 		goto out;
- 	}
+ 	/* Write the PTE */
+-	old_pte = *ptep;
+ 	set_pte(ptep, entry);
  
-+	d->subsysnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
-+	d->hostnqn[NVMF_NQN_FIELD_LEN - 1] = '\0';
- 	ctrl = nvmet_ctrl_find_get(d->subsysnqn, d->hostnqn,
- 				   le16_to_cpu(d->cntlid), req);
- 	if (!ctrl) {
+ 	err = 0;
 -- 
 2.42.0
 
