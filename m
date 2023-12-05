@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105426FB1;
-	Tue,  5 Dec 2023 03:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817976FB1;
+	Tue,  5 Dec 2023 03:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAU0buOT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2CCC433C7;
-	Tue,  5 Dec 2023 03:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ymz/Hp8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030CEC433C7;
+	Tue,  5 Dec 2023 03:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747150;
-	bh=bUs2yl1M0i/THoQs5l2tF82p/MRzJKl0JzfuLo7Lx8Y=;
+	s=korg; t=1701747153;
+	bh=jw0Q4P4JoOIUchNLTNRY5tNTFPYeYN3d229IIrzXwQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GAU0buOTuL2lBzWBujrl05iMQW5Ve3gfCW9mZC10k2mHT1M4my9OMQXLJfOT1ebsR
-	 jYY21nZG2qc/cpc89D1BpKwiF80vEB7bOVl4NV3+idae8milKYwTKqeQjdWE5/2gwO
-	 DhQU2K8DoaDy37a75qZAI27aU/Vodz7/dJtX8BhM=
+	b=Ymz/Hp8EVXKtjokbCxdIXS6tu7q+YSIZLB8ap9OkDD9icoHiY01Vl5AKl0G/8n1tm
+	 KkWTdxlr6bwlYmvFo6fdNnO8BEo5lSxgAGKrmDduSHeXcJ5ZZ0rijZKKpxffNQsxpT
+	 qMge6TsDQ3bhIjSHQ3+1lbOwuegywH5AZ/1M3cLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Haitao Shan <hshan@google.com>,
+	Chad Schroeder <CSchroeder@sonifi.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/107] KVM: x86: Fix lapic timer interrupt lost after loading a snapshot.
-Date: Tue,  5 Dec 2023 12:16:53 +0900
-Message-ID: <20231205031536.401909337@linuxfoundation.org>
+Subject: [PATCH 6.1 079/107] PCI: Lengthen reset delay for VideoPropulsion Torrent QN16e card
+Date: Tue,  5 Dec 2023 12:16:54 +0900
+Message-ID: <20231205031536.483834491@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -42,126 +43,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haitao Shan <hshan@google.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 9cfec6d097c607e36199cf0cfbb8cf5acbd8e9b2 ]
+[ Upstream commit c9260693aa0c1e029ed23693cfd4d7814eee6624 ]
 
-When running android emulator (which is based on QEMU 2.12) on
-certain Intel hosts with kernel version 6.3-rc1 or above, guest
-will freeze after loading a snapshot. This is almost 100%
-reproducible. By default, the android emulator will use snapshot
-to speed up the next launching of the same android guest. So
-this breaks the android emulator badly.
+Commit ac91e6980563 ("PCI: Unify delay handling for reset and resume")
+shortened an unconditional 1 sec delay after a Secondary Bus Reset to 100
+msec for PCIe (per PCIe r6.1 sec 6.6.1).  The 1 sec delay is only required
+for Conventional PCI.
 
-I tested QEMU 8.0.4 from Debian 12 with an Ubuntu 22.04 guest by
-running command "loadvm" after "savevm". The same issue is
-observed. At the same time, none of our AMD platforms is impacted.
-More experiments show that loading the KVM module with
-"enable_apicv=false" can workaround it.
+But it turns out that there are PCIe devices which require a longer delay
+than prescribed before first config space access after reset recovery or
+resume from D3cold:
 
-The issue started to show up after commit 8e6ed96cdd50 ("KVM: x86:
-fire timer when it is migrated and expired, and in oneshot mode").
-However, as is pointed out by Sean Christopherson, it is introduced
-by commit 967235d32032 ("KVM: vmx: clear pending interrupts on
-KVM_SET_LAPIC"). commit 8e6ed96cdd50 ("KVM: x86: fire timer when
-it is migrated and expired, and in oneshot mode") just makes it
-easier to hit the issue.
+Chad reports that a "VideoPropulsion Torrent QN16e" MPEG QAM Modulator
+"raises a PCI system error (PERR), as reported by the IPMI event log, and
+the hardware itself would suffer a catastrophic event, cycling the server"
+unless the longer delay is observed.
 
-Having both commits, the oneshot lapic timer gets fired immediately
-inside the KVM_SET_LAPIC call when loading the snapshot. On Intel
-platforms with APIC virtualization and posted interrupt processing,
-this eventually leads to setting the corresponding PIR bit. However,
-the whole PIR bits get cleared later in the same KVM_SET_LAPIC call
-by apicv_post_state_restore. This leads to timer interrupt lost.
+The card is specified to conform to PCIe r1.0 and indeed only supports Gen1
+speed (2.5 GT/s) according to lspci.  PCIe r1.0 sec 7.6 prescribes the same
+100 msec delay as PCIe r6.1 sec 6.6.1:
 
-The fix is to move vmx_apicv_post_state_restore to the beginning of
-the KVM_SET_LAPIC call and rename to vmx_apicv_pre_state_restore.
-What vmx_apicv_post_state_restore does is actually clearing any
-former apicv state and this behavior is more suitable to carry out
-in the beginning.
+  To allow components to perform internal initialization, system software
+  must wait for at least 100 ms from the end of a reset (cold/warm/hot)
+  before it is permitted to issue Configuration Requests
 
-Fixes: 967235d32032 ("KVM: vmx: clear pending interrupts on KVM_SET_LAPIC")
-Cc: stable@vger.kernel.org
-Suggested-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Haitao Shan <hshan@google.com>
-Link: https://lore.kernel.org/r/20230913000215.478387-1-hshan@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+The behavior of the Torrent QN16e card thus appears to be a quirk.  Treat
+it as such and lengthen the reset delay for this specific device.
+
+Fixes: ac91e6980563 ("PCI: Unify delay handling for reset and resume")
+Link: https://lore.kernel.org/r/47727e792c7f0282dc144e3ec8ce8eb6e713394e.1695304512.git.lukas@wunner.de
+Reported-by: Chad Schroeder <CSchroeder@sonifi.com>
+Closes: https://lore.kernel.org/linux-pci/DM6PR16MB2844903E34CAB910082DF019B1FAA@DM6PR16MB2844.namprd16.prod.outlook.com/
+Tested-by: Chad Schroeder <CSchroeder@sonifi.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org # v5.4+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm-x86-ops.h | 1 +
- arch/x86/include/asm/kvm_host.h    | 1 +
- arch/x86/kvm/lapic.c               | 4 ++++
- arch/x86/kvm/vmx/vmx.c             | 4 ++--
- 4 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/pci/quirks.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/arch/x86/include/asm/kvm-x86-ops.h b/arch/x86/include/asm/kvm-x86-ops.h
-index 2c6698aa218b1..abc07d0045897 100644
---- a/arch/x86/include/asm/kvm-x86-ops.h
-+++ b/arch/x86/include/asm/kvm-x86-ops.h
-@@ -106,6 +106,7 @@ KVM_X86_OP_OPTIONAL(vcpu_blocking)
- KVM_X86_OP_OPTIONAL(vcpu_unblocking)
- KVM_X86_OP_OPTIONAL(pi_update_irte)
- KVM_X86_OP_OPTIONAL(pi_start_assignment)
-+KVM_X86_OP_OPTIONAL(apicv_pre_state_restore)
- KVM_X86_OP_OPTIONAL(apicv_post_state_restore)
- KVM_X86_OP_OPTIONAL_RET0(dy_apicv_has_pending_interrupt)
- KVM_X86_OP_OPTIONAL(set_hv_timer)
-diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-index c1dcaa3d2d6eb..dfcdcafe3a2cd 100644
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1603,6 +1603,7 @@ struct kvm_x86_ops {
- 	int (*pi_update_irte)(struct kvm *kvm, unsigned int host_irq,
- 			      uint32_t guest_irq, bool set);
- 	void (*pi_start_assignment)(struct kvm *kvm);
-+	void (*apicv_pre_state_restore)(struct kvm_vcpu *vcpu);
- 	void (*apicv_post_state_restore)(struct kvm_vcpu *vcpu);
- 	bool (*dy_apicv_has_pending_interrupt)(struct kvm_vcpu *vcpu);
- 
-diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
-index 4dba0a84ba2f3..edcf45e312b99 100644
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2446,6 +2446,8 @@ void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
- 	u64 msr_val;
- 	int i;
- 
-+	static_call_cond(kvm_x86_apicv_pre_state_restore)(vcpu);
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 48389785d9247..c132839d99dc8 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -6058,3 +6058,15 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a2d, dpc_log_size);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a2f, dpc_log_size);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9a31, dpc_log_size);
+ #endif
 +
- 	if (!init_event) {
- 		msr_val = APIC_DEFAULT_PHYS_BASE | MSR_IA32_APICBASE_ENABLE;
- 		if (kvm_vcpu_is_reset_bsp(vcpu))
-@@ -2757,6 +2759,8 @@ int kvm_apic_set_state(struct kvm_vcpu *vcpu, struct kvm_lapic_state *s)
- 	struct kvm_lapic *apic = vcpu->arch.apic;
- 	int r;
- 
-+	static_call_cond(kvm_x86_apicv_pre_state_restore)(vcpu);
-+
- 	kvm_lapic_set_base(vcpu, vcpu->arch.apic_base);
- 	/* set SPIV separately to get count of SW disabled APICs right */
- 	apic_set_spiv(apic, *((u32 *)(s->regs + APIC_SPIV)));
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 31a10d774df6d..98d732b9418f1 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6799,7 +6799,7 @@ static void vmx_load_eoi_exitmap(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap)
- 	vmcs_write64(EOI_EXIT_BITMAP3, eoi_exit_bitmap[3]);
- }
- 
--static void vmx_apicv_post_state_restore(struct kvm_vcpu *vcpu)
-+static void vmx_apicv_pre_state_restore(struct kvm_vcpu *vcpu)
- {
- 	struct vcpu_vmx *vmx = to_vmx(vcpu);
- 
-@@ -8172,7 +8172,7 @@ static struct kvm_x86_ops vmx_x86_ops __initdata = {
- 	.set_apic_access_page_addr = vmx_set_apic_access_page_addr,
- 	.refresh_apicv_exec_ctrl = vmx_refresh_apicv_exec_ctrl,
- 	.load_eoi_exitmap = vmx_load_eoi_exitmap,
--	.apicv_post_state_restore = vmx_apicv_post_state_restore,
-+	.apicv_pre_state_restore = vmx_apicv_pre_state_restore,
- 	.check_apicv_inhibit_reasons = vmx_check_apicv_inhibit_reasons,
- 	.hwapic_irr_update = vmx_hwapic_irr_update,
- 	.hwapic_isr_update = vmx_hwapic_isr_update,
++/*
++ * Devices known to require a longer delay before first config space access
++ * after reset recovery or resume from D3cold:
++ *
++ * VideoPropulsion (aka Genroco) Torrent QN16e MPEG QAM Modulator
++ */
++static void pci_fixup_d3cold_delay_1sec(struct pci_dev *pdev)
++{
++	pdev->d3cold_delay = 1000;
++}
++DECLARE_PCI_FIXUP_FINAL(0x5555, 0x0004, pci_fixup_d3cold_delay_1sec);
 -- 
 2.42.0
 
