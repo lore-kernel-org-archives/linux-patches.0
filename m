@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09496FAF;
-	Tue,  5 Dec 2023 03:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380646FAF;
+	Tue,  5 Dec 2023 03:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wif4Utfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1401BC433C8;
-	Tue,  5 Dec 2023 03:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjKMHa5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A01C433C8;
+	Tue,  5 Dec 2023 03:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747011;
-	bh=45b+mT60Si3a/ccbqbaRFVK1PCEgrKSkjVWodhVIb7A=;
+	s=korg; t=1701747014;
+	bh=d3eo62pc3i9hZ+yzjO3OP/xNHGuBkb/n/MXQB09vteo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wif4UtfmnqiTYv/k2DjFEzEYpT0+lxsOddhyu9sEW9AVtQuXnU30/RmnmmVsoP18L
-	 6J9s3cmrZs+kfE4oYirz/pzL8XKH+a2UuPVzxx0IMBnA7+glcxKtodY/YGFiBnMh5z
-	 gN157BSdll+PftGzZX8quIU4REJ1DHiPF76KDWtw=
+	b=yjKMHa5Nykb3SGbpeAyKSyvDMWTxgVZRuAYZMnK4sXBYtTcMPKJcRWC6MpENMldLX
+	 LeH11OSKN4ntVomycQZ+08cqHqRNdauUSurU1paJTTzKVzS2iCsJS88WVOdbhU7y2u
+	 i6gV4t/LG3+wnWTbplgObZBbG+6Azzwnf9maPUus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wu Bo <bo.wu@vivo.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 026/107] dm verity: initialize fec io before freeing it
-Date: Tue,  5 Dec 2023 12:16:01 +0900
-Message-ID: <20231205031533.238593545@linuxfoundation.org>
+Subject: [PATCH 6.1 027/107] dm verity: dont perform FEC for failed readahead IO
+Date: Tue,  5 Dec 2023 12:16:02 +0900
+Message-ID: <20231205031533.286023082@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -44,55 +44,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Wu Bo <bo.wu@vivo.com>
 
-commit 7be05bdfb4efc1396f7692562c7161e2b9f595f1 upstream.
+commit 0193e3966ceeeef69e235975918b287ab093082b upstream.
 
-If BIO error, verity_end_io() can call verity_finish_io() before
-verity_fec_init_io(). Therefore, fec_io->rs is not initialized and
-may crash when doing memory freeing in verity_fec_finish_io().
+We found an issue under Android OTA scenario that many BIOs have to do
+FEC where the data under dm-verity is 100% complete and no corruption.
 
-Crash call stack:
- die+0x90/0x2b8
- __do_kernel_fault+0x260/0x298
- do_bad_area+0x2c/0xdc
- do_translation_fault+0x3c/0x54
- do_mem_abort+0x54/0x118
- el1_abort+0x38/0x5c
- el1h_64_sync_handler+0x50/0x90
- el1h_64_sync+0x64/0x6c
- free_rs+0x18/0xac
- fec_rs_free+0x10/0x24
- mempool_free+0x58/0x148
- verity_fec_finish_io+0x4c/0xb0
- verity_end_io+0xb8/0x150
+Android OTA has many dm-block layers, from upper to lower:
+dm-verity
+dm-snapshot
+dm-origin & dm-cow
+dm-linear
+ufs
 
-Cc: stable@vger.kernel.org      # v6.0+
-Fixes: 5721d4e5a9cd ("dm verity: Add optional "try_verify_in_tasklet" feature")
+DM tables have to change 2 times during Android OTA merging process.
+When doing table change, the dm-snapshot will be suspended for a while.
+During this interval, many readahead IOs are submitted to dm_verity
+from filesystem. Then the kverity works are busy doing FEC process
+which cost too much time to finish dm-verity IO. This causes needless
+delay which feels like system is hung.
+
+After adding debugging it was found that each readahead IO needed
+around 10s to finish when this situation occurred. This is due to IO
+amplification:
+
+dm-snapshot suspend
+erofs_readahead     // 300+ io is submitted
+	dm_submit_bio (dm_verity)
+		dm_submit_bio (dm_snapshot)
+		bio return EIO
+		bio got nothing, it's empty
+	verity_end_io
+	verity_verify_io
+	forloop range(0, io->n_blocks)    // each io->nblocks ~= 20
+		verity_fec_decode
+		fec_decode_rsb
+		fec_read_bufs
+		forloop range(0, v->fec->rsn) // v->fec->rsn = 253
+			new_read
+			submit_bio (dm_snapshot)
+		end loop
+	end loop
+dm-snapshot resume
+
+Readahead BIOs get nothing while dm-snapshot is suspended, so all of
+them will cause verity's FEC.
+Each readahead BIO needs to verify ~20 (io->nblocks) blocks.
+Each block needs to do FEC, and every block needs to do 253
+(v->fec->rsn) reads.
+So during the suspend interval(~200ms), 300 readahead BIOs trigger
+~1518000 (300*20*253) IOs to dm-snapshot.
+
+As readahead IO is not required by userspace, and to fix this issue,
+it is best to pass readahead errors to upper layer to handle it.
+
+Cc: stable@vger.kernel.org
+Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
 Signed-off-by: Wu Bo <bo.wu@vivo.com>
 Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-verity-target.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/md/dm-verity-target.c
 +++ b/drivers/md/dm-verity-target.c
-@@ -631,7 +631,6 @@ static void verity_work(struct work_stru
+@@ -656,7 +656,9 @@ static void verity_end_io(struct bio *bi
+ 	struct dm_verity_io *io = bio->bi_private;
  
- 	io->in_tasklet = false;
- 
--	verity_fec_init_io(io);
- 	verity_finish_io(io, errno_to_blk_status(verity_verify_io(io)));
- }
- 
-@@ -779,6 +778,8 @@ static int verity_map(struct dm_target *
- 	bio->bi_private = io;
- 	io->iter = bio->bi_iter;
- 
-+	verity_fec_init_io(io);
-+
- 	verity_submit_prefetch(v, io);
- 
- 	submit_bio_noacct(bio);
+ 	if (bio->bi_status &&
+-	    (!verity_fec_is_enabled(io->v) || verity_is_system_shutting_down())) {
++	    (!verity_fec_is_enabled(io->v) ||
++	     verity_is_system_shutting_down() ||
++	     (bio->bi_opf & REQ_RAHEAD))) {
+ 		verity_finish_io(io, bio->bi_status);
+ 		return;
+ 	}
 
 
