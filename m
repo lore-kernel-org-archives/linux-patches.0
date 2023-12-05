@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521BA6FB0;
-	Tue,  5 Dec 2023 03:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7566FB0;
+	Tue,  5 Dec 2023 03:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0jujFNN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B90CC433C8;
-	Tue,  5 Dec 2023 03:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sv7B4sZE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A276C433C8;
+	Tue,  5 Dec 2023 03:45:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747897;
-	bh=QkPh4cB8bIThR758c67QVkm2syfqc6eeVWJ5XHYVXok=;
+	s=korg; t=1701747900;
+	bh=L6cNEjVuvHdmzdLOFRxWIjc5O/O+jDuQhybQEtQj3iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w0jujFNNNAsh2uWJjL8gXOwVOttlKD1vwYha8Zkknn2CjQR1XE1EPfG7Qi/2R5Ir4
-	 p4Y9SaAm1JkF8wraERqNV98Xj/AuHyi4zhp5tPtZSxFhSTZReOdyGQod5rvKS+z1qo
-	 /Du+TUhinh+1lcilEWdxROiIS12b0THdFIDGDEYg=
+	b=Sv7B4sZEDDPVLYpjPNcXP5DHm5M84sJZMZpw9etEdj9gRydJjN/INRdxSMPJDs0z0
+	 sbhYwqiDg4UuycOoT9f/umqiGEWcbiuExu711m8xH7/B+v6F0eFhMAUTeqq7FdLRgf
+	 h4ErkuO/WLJB+HUyYRbXsIp5xZ9mAM8XbmZSgwAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dexuan Cui <decui@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
 	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 38/94] hv_netvsc: Fix race of register_netdevice_notifier and VF register
-Date: Tue,  5 Dec 2023 12:17:06 +0900
-Message-ID: <20231205031525.017376267@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 16/94] amd-xgbe: propagate the correct speed and duplex status
+Date: Tue,  5 Dec 2023 12:16:44 +0900
+Message-ID: <20231205031523.796367309@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -43,49 +44,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-commit 85520856466ed6bc3b1ccb013cddac70ceb437db upstream.
+[ Upstream commit 7a2323ac24a50311f64a3a9b54ed5bef5821ecae ]
 
-If VF NIC is registered earlier, NETDEV_REGISTER event is replayed,
-but NETDEV_POST_INIT is not.
+xgbe_get_link_ksettings() does not propagate correct speed and duplex
+information to ethtool during cable unplug. Due to which ethtool reports
+incorrect values for speed and duplex.
 
-Move register_netdevice_notifier() earlier, so the call back
-function is set before probing.
+Address this by propagating correct information.
 
-Cc: stable@vger.kernel.org
-Fixes: e04e7a7bbd4b ("hv_netvsc: Fix a deadlock by getting rtnl lock earlier in netvsc_probe()")
-Reported-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Fixes: 7c12aa08779c ("amd-xgbe: Move the PHY support into amd-xgbe")
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
 Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/netvsc_drv.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2528,12 +2528,17 @@ static int __init netvsc_drv_init(void)
- 	}
- 	netvsc_ring_bytes = ring_size * PAGE_SIZE;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
+index a880f10e3e703..d74f45ce06864 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
+@@ -314,10 +314,15 @@ static int xgbe_get_link_ksettings(struct net_device *netdev,
  
-+	register_netdevice_notifier(&netvsc_netdev_notifier);
-+
- 	ret = vmbus_driver_register(&netvsc_drv);
- 	if (ret)
--		return ret;
-+		goto err_vmbus_reg;
+ 	cmd->base.phy_address = pdata->phy.address;
  
--	register_netdevice_notifier(&netvsc_netdev_notifier);
- 	return 0;
-+
-+err_vmbus_reg:
-+	unregister_netdevice_notifier(&netvsc_netdev_notifier);
-+	return ret;
- }
+-	cmd->base.autoneg = pdata->phy.autoneg;
+-	cmd->base.speed = pdata->phy.speed;
+-	cmd->base.duplex = pdata->phy.duplex;
++	if (netif_carrier_ok(netdev)) {
++		cmd->base.speed = pdata->phy.speed;
++		cmd->base.duplex = pdata->phy.duplex;
++	} else {
++		cmd->base.speed = SPEED_UNKNOWN;
++		cmd->base.duplex = DUPLEX_UNKNOWN;
++	}
  
- MODULE_LICENSE("GPL");
++	cmd->base.autoneg = pdata->phy.autoneg;
+ 	cmd->base.port = PORT_NONE;
+ 
+ 	XGBE_LM_COPY(cmd, supported, lks, supported);
+-- 
+2.42.0
+
 
 
