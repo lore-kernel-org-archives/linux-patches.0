@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E50E6FAF;
-	Tue,  5 Dec 2023 03:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81956FB8;
+	Tue,  5 Dec 2023 03:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFlx+Dv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE10C433C7;
-	Tue,  5 Dec 2023 03:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwjZvARt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E52DC433C8;
+	Tue,  5 Dec 2023 03:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746809;
-	bh=bgq/90WBjnPA+ezBznGLCJrtPimZi6YtgBDoc8FqbzQ=;
+	s=korg; t=1701746812;
+	bh=n+wx1ZyJIcLPndo7k7agml+vjpHmpZQ2A3XgiI1u3NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFlx+Dv9q+IteQa5rh3KuMjFihPje928Jemp6L3KWcQmqxNGUFE9eGVHcmtOcjTBd
-	 PyaEIAg5Ow1V0cB3vNaLrx/U5CO/7MP/fSkgSi5Qy7Ov0jk0Gsmrz+37DJzR37XF4q
-	 69+c7RU7XDXs6urwgPWMsiLVpc5++K0TPnwfTa9w=
+	b=UwjZvARtP6QOMeILZrbA/WVnWl3mE/PaTFt9KdcXauo97GJ4TL6qZLOvmiPJ1QFPW
+	 JUsobVzYJ2lH9uRj/6ww5cJMzXZzVNaW5b7gjVi2kXEtnVXyHk7C6eatRSRrm0mOBv
+	 KWvk1j83vfGx7Kj85I4gXlsDwZQjGE6zxdtFI86A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Lech Perczak <lech.perczak@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 29/71] USB: serial: option: dont claim interface 4 for ZTE MF290
-Date: Tue,  5 Dec 2023 12:16:27 +0900
-Message-ID: <20231205031519.549584076@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Ivan Ivanov <ivan.ivanov@suse.com>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 4.19 30/71] USB: dwc2: write HCINT with INTMASK applied
+Date: Tue,  5 Dec 2023 12:16:28 +0900
+Message-ID: <20231205031519.606056604@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -36,69 +37,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lech Perczak <lech.perczak@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 8771127e25d6c20d458ad27cf32f7fcfc1755e05 upstream.
+commit 0583bc776ca5b5a3f5752869fc31cf7322df2b35 upstream.
 
-Interface 4 is used by for QMI interface in stock firmware of MF28D, the
-router which uses MF290 modem. Free the interface up, to rebind it to
-qmi_wwan driver.
-The proper configuration is:
+dwc2_hc_n_intr() writes back INTMASK as read but evaluates it
+with intmask applied. In stress testing this causes spurious
+interrupts like this:
 
-Interface mapping is:
-0: QCDM, 1: (unknown), 2: AT (PCUI), 2: AT (Modem), 4: QMI
+[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 7 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 0 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 4 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_update_urb_state_abn(): trimming xfer length
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  4 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=19d2 ProdID=0189 Rev= 0.00
-S:  Manufacturer=ZTE, Incorporated
-S:  Product=ZTE LTE Technologies MSM
-C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
+Applying INTMASK prevents this. The issue exists in all versions of the
+driver.
 
-Cc: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Lech Perczak <lech.perczak@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Tested-by: Ivan Ivanov <ivan.ivanov@suse.com>
+Tested-by: Andrea della Porta <andrea.porta@suse.com>
+Link: https://lore.kernel.org/r/20231115144514.15248-1-oneukum@suse.com
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/dwc2/hcd_intr.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1548,7 +1548,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(ZTE_VENDOR_ID, 0x0165, 0xff, 0xff, 0xff) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(ZTE_VENDOR_ID, 0x0167, 0xff, 0xff, 0xff),
- 	  .driver_info = RSVD(4) },
--	{ USB_DEVICE_AND_INTERFACE_INFO(ZTE_VENDOR_ID, 0x0189, 0xff, 0xff, 0xff) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(ZTE_VENDOR_ID, 0x0189, 0xff, 0xff, 0xff),
-+	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(ZTE_VENDOR_ID, 0x0191, 0xff, 0xff, 0xff), /* ZTE EuFi890 */
- 	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(ZTE_VENDOR_ID, 0x0196, 0xff, 0xff, 0xff) },
+--- a/drivers/usb/dwc2/hcd_intr.c
++++ b/drivers/usb/dwc2/hcd_intr.c
+@@ -2045,15 +2045,17 @@ static void dwc2_hc_n_intr(struct dwc2_h
+ {
+ 	struct dwc2_qtd *qtd;
+ 	struct dwc2_host_chan *chan;
+-	u32 hcint, hcintmsk;
++	u32 hcint, hcintraw, hcintmsk;
+ 
+ 	chan = hsotg->hc_ptr_array[chnum];
+ 
+-	hcint = dwc2_readl(hsotg, HCINT(chnum));
++	hcintraw = dwc2_readl(hsotg, HCINT(chnum));
+ 	hcintmsk = dwc2_readl(hsotg, HCINTMSK(chnum));
++	hcint = hcintraw & hcintmsk;
++	dwc2_writel(hsotg, hcint, HCINT(chnum));
++
+ 	if (!chan) {
+ 		dev_err(hsotg->dev, "## hc_ptr_array for channel is NULL ##\n");
+-		dwc2_writel(hsotg, hcint, HCINT(chnum));
+ 		return;
+ 	}
+ 
+@@ -2062,11 +2064,9 @@ static void dwc2_hc_n_intr(struct dwc2_h
+ 			 chnum);
+ 		dev_vdbg(hsotg->dev,
+ 			 "  hcint 0x%08x, hcintmsk 0x%08x, hcint&hcintmsk 0x%08x\n",
+-			 hcint, hcintmsk, hcint & hcintmsk);
++			 hcintraw, hcintmsk, hcint);
+ 	}
+ 
+-	dwc2_writel(hsotg, hcint, HCINT(chnum));
+-
+ 	/*
+ 	 * If we got an interrupt after someone called
+ 	 * dwc2_hcd_endpoint_disable() we don't want to crash below
+@@ -2076,8 +2076,7 @@ static void dwc2_hc_n_intr(struct dwc2_h
+ 		return;
+ 	}
+ 
+-	chan->hcint = hcint;
+-	hcint &= hcintmsk;
++	chan->hcint = hcintraw;
+ 
+ 	/*
+ 	 * If the channel was halted due to a dequeue, the qtd list might
 
 
