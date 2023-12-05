@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251826AC2;
-	Tue,  5 Dec 2023 03:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0380D6AC2;
+	Tue,  5 Dec 2023 03:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwFC3k4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4A6C433C7;
-	Tue,  5 Dec 2023 03:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3rFQHn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F720C433C8;
+	Tue,  5 Dec 2023 03:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747828;
-	bh=WR6ST2i9gj/8dC6zIlkQ6wK/zyZnwphdOlV9MViKbWY=;
+	s=korg; t=1701747830;
+	bh=z9pWUbwYU4Vu1rIjelc+T1c2KFAh05O9Y20FWGV4aqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LwFC3k4fI7tnu+llTxm71iPUU+7jWQDgcnHbx2UwKP/rHQumGqfRuMWEVLfeJS0h6
-	 yob33ZfFUooPXdlfyteNZw5zGsC0TY9l7o5IN/BblHcuqApX1CURWD2UfdQH4T0rDI
-	 dgMkiOUgHnG4VfkA1Skm1jK6KXDTqytpLYep9UN4=
+	b=Y3rFQHn46JjrFialJr9YGWlgfSHq9c/11gHExF6lTj0OAWBSjHjAYWLRotEi1hu9/
+	 sqfDQHbSlJ7YLupnbeLKoPHPNX87ybAxShSeMxoSMVgmpgnm9/LXHUrSeb41xlgNY5
+	 aGesbiPU7Au6LYllWGiLyx3w9nedKlxZY9gIaRyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 5.4 03/94] PCI: keystone: Drop __init from ks_pcie_add_pcie_{ep,port}()
-Date: Tue,  5 Dec 2023 12:16:31 +0900
-Message-ID: <20231205031523.046964241@linuxfoundation.org>
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 04/94] afs: Make error on cell lookup failure consistent with OpenAFS
+Date: Tue,  5 Dec 2023 12:16:32 +0900
+Message-ID: <20231205031523.103588046@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -36,76 +39,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-This commit has no upstream equivalent.
+[ Upstream commit 2a4ca1b4b77850544408595e2433f5d7811a9daa ]
 
-After commit 012dba0ab814 ("PCI: keystone: Don't discard .probe()
-callback") in 5.4.262, there are two modpost warnings when building with
-clang:
+When kafs tries to look up a cell in the DNS or the local config, it will
+translate a lookup failure into EDESTADDRREQ whereas OpenAFS translates it
+into ENOENT.  Applications such as West expect the latter behaviour and
+fail if they see the former.
 
-  WARNING: modpost: vmlinux.o(.text+0x5aa6dc): Section mismatch in reference from the function ks_pcie_probe() to the function .init.text:ks_pcie_add_pcie_port()
-  The function ks_pcie_probe() references
-  the function __init ks_pcie_add_pcie_port().
-  This is often because ks_pcie_probe lacks a __init
-  annotation or the annotation of ks_pcie_add_pcie_port is wrong.
+This can be seen by trying to mount an unknown cell:
 
-  WARNING: modpost: vmlinux.o(.text+0x5aa6f4): Section mismatch in reference from the function ks_pcie_probe() to the function .init.text:ks_pcie_add_pcie_ep()
-  The function ks_pcie_probe() references
-  the function __init ks_pcie_add_pcie_ep().
-  This is often because ks_pcie_probe lacks a __init
-  annotation or the annotation of ks_pcie_add_pcie_ep is wrong.
+   # mount -t afs %example.com:cell.root /mnt
+   mount: /mnt: mount(2) system call failed: Destination address required.
 
-ks_pcie_add_pcie_ep() was removed in upstream commit a0fd361db8e5 ("PCI:
-dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common
-code") and ks_pcie_add_pcie_port() was removed in upstream
-commit 60f5b73fa0f2 ("PCI: dwc: Remove unnecessary wrappers around
-dw_pcie_host_init()"), both of which happened before upstream
-commit 7994db905c0f ("PCI: keystone: Don't discard .probe() callback").
-
-As neither of these removal changes are really suitable for stable, just
-remove __init from these functions in stable, as it is no longer a
-correct annotation after dropping __init from ks_pcie_probe().
-
-Fixes: 012dba0ab814 ("PCI: keystone: Don't discard .probe() callback")
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4d673da14533 ("afs: Support the AFS dynamic root")
+Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216637
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/afs/dynroot.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -861,8 +861,8 @@ static irqreturn_t ks_pcie_err_irq_handl
- 	return ks_pcie_handle_error_irq(ks_pcie);
+diff --git a/fs/afs/dynroot.c b/fs/afs/dynroot.c
+index f07e53ab808e3..45007d96a402d 100644
+--- a/fs/afs/dynroot.c
++++ b/fs/afs/dynroot.c
+@@ -38,8 +38,8 @@ static int afs_probe_cell_name(struct dentry *dentry)
+ 
+ 	ret = dns_query(net->net, "afsdb", name, len, "srv=1",
+ 			NULL, NULL, false);
+-	if (ret == -ENODATA)
+-		ret = -EDESTADDRREQ;
++	if (ret == -ENODATA || ret == -ENOKEY)
++		ret = -ENOENT;
+ 	return ret;
  }
  
--static int __init ks_pcie_add_pcie_port(struct keystone_pcie *ks_pcie,
--					struct platform_device *pdev)
-+static int ks_pcie_add_pcie_port(struct keystone_pcie *ks_pcie,
-+				 struct platform_device *pdev)
- {
- 	struct dw_pcie *pci = ks_pcie->pci;
- 	struct pcie_port *pp = &pci->pp;
-@@ -992,8 +992,8 @@ static const struct dw_pcie_ep_ops ks_pc
- 	.get_features = &ks_pcie_am654_get_features,
- };
- 
--static int __init ks_pcie_add_pcie_ep(struct keystone_pcie *ks_pcie,
--				      struct platform_device *pdev)
-+static int ks_pcie_add_pcie_ep(struct keystone_pcie *ks_pcie,
-+			       struct platform_device *pdev)
- {
- 	int ret;
- 	struct dw_pcie_ep *ep;
+-- 
+2.42.0
+
 
 
