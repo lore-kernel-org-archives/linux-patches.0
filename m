@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9B36FB1;
-	Tue,  5 Dec 2023 03:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A026FB1;
+	Tue,  5 Dec 2023 03:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2x4pEbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB44BC433C7;
-	Tue,  5 Dec 2023 03:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XietLxaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1565C433C7;
+	Tue,  5 Dec 2023 03:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747595;
-	bh=poGj8d6OUbhwu63U9UjosNbbe1fIaD7qh+jdx2nY/Jo=;
+	s=korg; t=1701747598;
+	bh=K4VEgA+wH1h97t4BWGmdLdof3O8F8Zkt8V1xL66G/4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2x4pEbrTBMQVrPvPkyltsC3e2hUCYoFma//uu0MPujH//N/gVEb6NT6rs146Awpq
-	 w4SR8K8ceUElrgkw2MUqZa7vmgxCaGN4QEgxfYob4s2Q+Dv47OuQmgX+SLx4fSx2qq
-	 QFgvyAM6+VOZUJFRHfyZceclh2BtZW/HT6Efc18g=
+	b=XietLxaVuSHUYyNMhPniIxhjAE16oXhl/tuad+LKLJ3fj954T0k+Cpb0nrGkwkPpb
+	 ISM1auEU7fTfnKMavlxXXkNUj4z9lLY3DK7iMVaMqcErGq4xPBJE78nuluCPg2iT1k
+	 H+fnUP+NBD2gPxUi70mnC+4vtEf6G3pUkKgde5qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Chen <wenchao.chen@unisoc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 132/135] mmc: sdhci-sprd: Fix vqmmc not shutting down after the card was pulled
-Date: Tue,  5 Dec 2023 12:17:33 +0900
-Message-ID: <20231205031539.185681075@linuxfoundation.org>
+Subject: [PATCH 5.10 133/135] r8169: disable ASPM in case of tx timeout
+Date: Tue,  5 Dec 2023 12:17:34 +0900
+Message-ID: <20231205031539.248327243@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,91 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Chen <wenchao.chen@unisoc.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 477865af60b2117ceaa1d558e03559108c15c78c ]
+[ Upstream commit 80c0576ef179311f624bc450fede30a89afe9792 ]
 
-With cat regulator_summary, we found that vqmmc was not shutting
-down after the card was pulled.
+There are still single reports of systems where ASPM incompatibilities
+cause tx timeouts. It's not clear whom to blame, so let's disable
+ASPM in case of a tx timeout.
 
-cat /sys/kernel/debug/regulator/regulator_summary
-1.before fix
-1)Insert SD card
- vddsdio		1    1  0 unknown  3500mV 0mA  1200mV  3750mV
-    71100000.mmc-vqmmc  1                         0mA  3500mV  3600mV
+v2:
+- add one-time warning for informing the user
 
-2)Pull out the SD card
- vddsdio                1    1  0 unknown  3500mV 0mA  1200mV  3750mV
-    71100000.mmc-vqmmc  1                         0mA  3500mV  3600mV
-
-2.after fix
-1)Insert SD cardt
- vddsdio                1    1  0 unknown  3500mV 0mA  1200mV  3750mV
-    71100000.mmc-vqmmc  1                         0mA  3500mV  3600mV
-
-2)Pull out the SD card
- vddsdio		0    1  0 unknown  3500mV 0mA  1200mV  3750mV
-    71100000.mmc-vqmmc  0                         0mA  3500mV  3600mV
-
-Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
-Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231115083406.7368-1-wenchao.chen@unisoc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/92369a92-dc32-4529-0509-11459ba0e391@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 59d395ed606d ("r8169: fix deadlock on RTL8125 in jumbo mtu mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-sprd.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/sdhci-sprd.c b/drivers/mmc/host/sdhci-sprd.c
-index 540ebccaa9a35..d8e412bbb93bf 100644
---- a/drivers/mmc/host/sdhci-sprd.c
-+++ b/drivers/mmc/host/sdhci-sprd.c
-@@ -392,12 +392,33 @@ static void sdhci_sprd_request_done(struct sdhci_host *host,
- 	mmc_request_done(host->mmc, mrq);
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index d33720f68c679..759fc7a08960d 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -582,6 +582,7 @@ struct rtl8169_tc_offsets {
+ enum rtl_flag {
+ 	RTL_FLAG_TASK_ENABLED = 0,
+ 	RTL_FLAG_TASK_RESET_PENDING,
++	RTL_FLAG_TASK_TX_TIMEOUT,
+ 	RTL_FLAG_MAX
+ };
+ 
+@@ -4036,7 +4037,7 @@ static void rtl8169_tx_timeout(struct net_device *dev, unsigned int txqueue)
+ {
+ 	struct rtl8169_private *tp = netdev_priv(dev);
+ 
+-	rtl_schedule_task(tp, RTL_FLAG_TASK_RESET_PENDING);
++	rtl_schedule_task(tp, RTL_FLAG_TASK_TX_TIMEOUT);
  }
  
-+static void sdhci_sprd_set_power(struct sdhci_host *host, unsigned char mode,
-+				 unsigned short vdd)
-+{
-+	struct mmc_host *mmc = host->mmc;
-+
-+	switch (mode) {
-+	case MMC_POWER_OFF:
-+		mmc_regulator_set_ocr(host->mmc, mmc->supply.vmmc, 0);
-+
-+		mmc_regulator_disable_vqmmc(mmc);
-+		break;
-+	case MMC_POWER_ON:
-+		mmc_regulator_enable_vqmmc(mmc);
-+		break;
-+	case MMC_POWER_UP:
-+		mmc_regulator_set_ocr(host->mmc, mmc->supply.vmmc, vdd);
-+		break;
-+	}
-+}
-+
- static struct sdhci_ops sdhci_sprd_ops = {
- 	.read_l = sdhci_sprd_readl,
- 	.write_l = sdhci_sprd_writel,
- 	.write_w = sdhci_sprd_writew,
- 	.write_b = sdhci_sprd_writeb,
- 	.set_clock = sdhci_sprd_set_clock,
-+	.set_power = sdhci_sprd_set_power,
- 	.get_max_clock = sdhci_sprd_get_max_clock,
- 	.get_min_clock = sdhci_sprd_get_min_clock,
- 	.set_bus_width = sdhci_set_bus_width,
-@@ -663,6 +684,10 @@ static int sdhci_sprd_probe(struct platform_device *pdev)
- 	host->caps1 &= ~(SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_SDR104 |
- 			 SDHCI_SUPPORT_DDR50);
+ static int rtl8169_tx_map(struct rtl8169_private *tp, const u32 *opts, u32 len,
+@@ -4656,6 +4657,7 @@ static void rtl_task(struct work_struct *work)
+ {
+ 	struct rtl8169_private *tp =
+ 		container_of(work, struct rtl8169_private, wk.work);
++	int ret;
  
-+	ret = mmc_regulator_get_supply(host->mmc);
-+	if (ret)
-+		goto pm_runtime_disable;
+ 	rtnl_lock();
+ 
+@@ -4663,7 +4665,17 @@ static void rtl_task(struct work_struct *work)
+ 	    !test_bit(RTL_FLAG_TASK_ENABLED, tp->wk.flags))
+ 		goto out_unlock;
+ 
++	if (test_and_clear_bit(RTL_FLAG_TASK_TX_TIMEOUT, tp->wk.flags)) {
++		/* ASPM compatibility issues are a typical reason for tx timeouts */
++		ret = pci_disable_link_state(tp->pci_dev, PCIE_LINK_STATE_L1 |
++							  PCIE_LINK_STATE_L0S);
++		if (!ret)
++			netdev_warn_once(tp->dev, "ASPM disabled on Tx timeout\n");
++		goto reset;
++	}
 +
- 	ret = sdhci_setup_host(host);
- 	if (ret)
- 		goto pm_runtime_disable;
+ 	if (test_and_clear_bit(RTL_FLAG_TASK_RESET_PENDING, tp->wk.flags)) {
++reset:
+ 		rtl_reset_work(tp);
+ 		netif_wake_queue(tp->dev);
+ 	}
 -- 
 2.42.0
 
