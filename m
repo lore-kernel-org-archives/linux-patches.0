@@ -1,115 +1,240 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED376928A;
-	Tue,  5 Dec 2023 17:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEFF68B61
+	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 17:41:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jc6Whyum"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93551C433C8;
-	Tue,  5 Dec 2023 17:10:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701796244;
-	bh=GgzzhyH290H2q+P52NcGVfWo7s+qOx2fxx/N5ZUov8s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jc6WhyumGJ8yUjAgnrzz+u3QHRHqAHpcnP1+DFQObBSD7wMWaRh8zB05uxHvTM985
-	 xRaBhBr2Le95eY16lcUIf5WDg99rmEgKDpwRSLmCrzGrNvRwQX44bj2MnuFqRrmomH
-	 8mcp8FxPvB6Qce2mNLTkmg0aAGbyxpe49/LFd3uO3fkjEAg9Tja3nbO66/wbaCfUmX
-	 cAZ2E2UDOyBi7sqwb56vcmVDfKy6pjaGemMcO+npp93z7Xa7ciGPjlUPYIt/qloIDi
-	 GQ69VA0UrsE2cqKx0Svc9iMBpxSODcjC1mE4EdgbKdzpCWwKgNN8T2PyXIQPZaGo7Z
-	 fuJo6EhAdJATw==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/134] 6.6.5-rc1 review
-Date: Tue,  5 Dec 2023 17:10:41 +0000
-Message-Id: <20231205171041.2242-1-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
-References: 
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="z5hUqOWL"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-77dcf6330f3so246385785a.0
+        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 09:41:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701798088; x=1702402888; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dlsdvKux8KBjo1yORhCzPi/wYEemn58vl14vutNt5b8=;
+        b=z5hUqOWLsAL2exB4Gg2OvlNuv4SFy+akmpvWzWl7GOp/etovJSc48d3N/3zLjVVpMp
+         pxL0bnq75WVMF1Q3VeSBCH+lTOHzunW0GICAhGx+YXCJ4pbzo2oozgiqAcT/6l9IgrrJ
+         Y9OyYLDeiiAZiJw/YSV5S1aH/LpcjcU8yLO5k011zOg3tPOnIp9F7UjdaC0HORJPsBu0
+         1q67XZiqzKYRz6TDh29+jQNsG4Ou7Vf6b5chRL9EIjr6/nme75WFhAn+A1NiilcHLoc1
+         ZPvTa8o2p32uKh39cp2Ahp1tpkvlormU5qRP3g08zr6uFoPAm2g0Qbg2/pm6rg2OC9k/
+         UTpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701798088; x=1702402888;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dlsdvKux8KBjo1yORhCzPi/wYEemn58vl14vutNt5b8=;
+        b=gT0JTANtdrFii+zLadO+KUpNkwJQgQfDxBQZVCwKyTqbTp243uyzeKV8yRzchg/QsH
+         hM39/GTm9XnuqkIPlPEQ16154JH7u1kAVDWYNERVAULonJ+bf+glCFIY3EMB5nftBMiI
+         SQICM8Hlh+dH9/4jdlFH4BAzAc1ftQhJDCU02VjuDZ7mgD51bQFtTzK+ckcptWwXb0I8
+         56BkEbLNrmzJyIL7B7/6J98CiceQtBuJcgtL+B2k/z5YqXK8N/tqdpLdbxK+nAxIQjiy
+         5Ba1S+Ivo3tU3I2fhhF6j1rliWBIu/uC+eTuu3QSVdGrGL67xA4Z5zfuamh+XQF7aFMh
+         ly7Q==
+X-Gm-Message-State: AOJu0Yyd53Tl4tqNqo2BWQjJPophKoTnBNjFgsYtzyL5bPlCBEQUPTYc
+	sK+UOV2QsbdLJQU72xina78+K4uGfgwxyQEubgj6lQ==
+X-Google-Smtp-Source: AGHT+IFxKRofhiHifghODSTOLmVOMB2G7Zc0olaleLmeblEItlygcVU8ag+EwNQUW29QQ8ODXdmcuIsP04W3EjkQWXg=
+X-Received: by 2002:a05:620a:888f:b0:77d:795c:71f8 with SMTP id
+ qk15-20020a05620a888f00b0077d795c71f8mr1229948qkn.19.1701798088473; Tue, 05
+ Dec 2023 09:41:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20231205031535.163661217@linuxfoundation.org>
+In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 5 Dec 2023 23:11:16 +0530
+Message-ID: <CA+G9fYsezgwb2W8ngoKELKxR7rxrOCzpxzixY3CojKrZSLkJ2g@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/134] 6.6.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
-
-On 2023-12-05T12:14:32+09:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
+On Tue, 5 Dec 2023 at 08:51, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.6.5 release.
 > There are 134 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.5-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.5-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
 > and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] b0b05ccdd77d ("Linux 6.6.5-rc1")
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Thanks,
-SJ
+NOTE:
+x86_64: gcc-8-allmodconfig: FAILED
+ - https://lore.kernel.org/stable/CA+G9fYuL_-Q67t+Y7ST5taYv1XkkoJegH2zBvw_Z=
+UOhF9QRiOg@mail.gmail.com/
+ - https://lore.kernel.org/r/202311301016.84D0010@keescook
 
-[...]
+## Build
+* kernel: 6.6.5-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.6.y
+* git commit: b0b05ccdd77dde3d5f44e6849679a2af2f3af0e2
+* git describe: v6.6.4-135-gb0b05ccdd77d
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.4=
+-135-gb0b05ccdd77d
 
----
+## Test Regressions (compared to v6.6.4)
 
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+## Metric Regressions (compared to v6.6.4)
+
+## Test Fixes (compared to v6.6.4)
+
+## Metric Fixes (compared to v6.6.4)
+
+## Test result summary
+total: 144804, pass: 124361, fail: 2511, skip: 17803, xfail: 129
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 145 total, 124 passed, 21 failed
+* arm64: 52 total, 44 passed, 8 failed
+* i386: 41 total, 40 passed, 1 failed
+* mips: 26 total, 26 passed, 0 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 36 total, 36 passed, 0 failed
+* riscv: 25 total, 25 passed, 0 failed
+* s390: 13 total, 13 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 46 total, 45 passed, 1 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+
+--
+Linaro LKFT
+https://lkft.linaro.org
