@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A396FAF;
-	Tue,  5 Dec 2023 03:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AF96FAF;
+	Tue,  5 Dec 2023 03:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9L7uhYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00F8C433C8;
-	Tue,  5 Dec 2023 03:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFTEl7xB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9216C433C7;
+	Tue,  5 Dec 2023 03:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746665;
-	bh=kGJ/+iLwMamoXF196i58rfUizj0vRppOtVceG85amr0=;
+	s=korg; t=1701746668;
+	bh=QHSyFHGtWuFY3kuECALoyK/2i2eJnyKD0Ax0caaQEhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9L7uhYCVJbisSgqpKiGIrAue1N9fBRVP8N8P+C2UrJ6wxTzheVruWrYahchnwCCt
-	 OfT9FUcEdV7UX6PNI0L57s+xF4IvmlhjEugnaTUPGvhMHuv1L3H7xNi16UejOA/A7t
-	 mbMLoGJt8FldB1GiUP48y8rcBzYBKLgpeObP0aEg=
+	b=hFTEl7xBRV9VQhyLp3Xff6U3EVBtSJlgBcWDHwUEeCDjhd1SAk8r3NK+bOlb8q9Vt
+	 +WmC1yqq50RQWKQqAe/KbRs8TZS+B8teNzmjUHXdnPoXaytDCrR4pHOE/dg/7lVwkl
+	 yhMfcTChzGurKIWmaR1N9xh+Dw1xg9fxuhi6iopg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Ungerer <gerg@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/134] net: dsa: mv88e6xxx: fix marvell 6350 probe crash
-Date: Tue,  5 Dec 2023 12:15:58 +0900
-Message-ID: <20231205031540.912575429@linuxfoundation.org>
+Subject: [PATCH 6.6 087/134] dpaa2-eth: increase the needed headroom to account for alignment
+Date: Tue,  5 Dec 2023 12:15:59 +0900
+Message-ID: <20231205031540.967460368@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -43,75 +42,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Ungerer <gerg@kernel.org>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit a524eabcd72d28425d9db242cf375d0389d74eba ]
+[ Upstream commit f422abe3f23d483cf01f386819f26fb3fe0dbb2b ]
 
-As of commit b92143d4420f ("net: dsa: mv88e6xxx: add infrastructure for
-phylink_pcs") probing of a Marvell 88e6350 switch causes a NULL pointer
-de-reference like this example:
+Increase the needed headroom to account for a 64 byte alignment
+restriction which, with this patch, we make mandatory on the Tx path.
+The case in which the amount of headroom needed is not available is
+already handled by the driver which instead sends a S/G frame with the
+first buffer only holding the SW and HW annotation areas.
 
-    ...
-    mv88e6085 d0072004.mdio-mii:11: switch 0x3710 detected: Marvell 88E6350, revision 2
-    8<--- cut here ---
-    Unable to handle kernel NULL pointer dereference at virtual address 00000000 when read
-    [00000000] *pgd=00000000
-    Internal error: Oops: 5 [#1] ARM
-    Modules linked in:
-    CPU: 0 PID: 8 Comm: kworker/u2:0 Not tainted 6.7.0-rc2-dirty #26
-    Hardware name: Marvell Armada 370/XP (Device Tree)
-    Workqueue: events_unbound deferred_probe_work_func
-    PC is at mv88e6xxx_port_setup+0x1c/0x44
-    LR is at dsa_port_devlink_setup+0x74/0x154
-    pc : [<c057ea24>]    lr : [<c0819598>]    psr: a0000013
-    sp : c184fce0  ip : c542b8f4  fp : 00000000
-    r10: 00000001  r9 : c542a540  r8 : c542bc00
-    r7 : c542b838  r6 : c5244580  r5 : 00000005  r4 : c5244580
-    r3 : 00000000  r2 : c542b840  r1 : 00000005  r0 : c1a02040
-    ...
+Without this patch, we can empirically see data corruption happening
+between Tx and Tx confirmation which sometimes leads to the SW
+annotation area being overwritten.
 
-The Marvell 6350 switch has no SERDES interface and so has no
-corresponding pcs_ops defined for it. But during probing a call is made
-to mv88e6xxx_port_setup() which unconditionally expects pcs_ops to exist -
-though the presence of the pcs_ops->pcs_init function is optional.
+Since this is an old IP where the hardware team cannot help to
+understand the underlying behavior, we make the Tx alignment mandatory
+for all frames to avoid the crash on Tx conf. Also, remove the comment
+that suggested that this is just an optimization.
 
-Modify code to check for pcs_ops first, before checking for and calling
-pcs_ops->pcs_init. Modify checking and use of pcs_ops->pcs_teardown
-which may potentially suffer the same problem.
+This patch also sets the needed_headroom net device field to the usual
+value that the driver would need on the Tx path:
+	- 64 bytes for the software annotation area
+	- 64 bytes to account for a 64 byte aligned buffer address
 
-Fixes: b92143d4420f ("net: dsa: mv88e6xxx: add infrastructure for phylink_pcs")
-Signed-off-by: Greg Ungerer <gerg@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Fixes: 6e2387e8f19e ("staging: fsl-dpaa2/eth: Add Freescale DPAA2 Ethernet driver")
+Closes: https://lore.kernel.org/netdev/aa784d0c-85eb-4e5d-968b-c8f74fa86be6@gin.de/
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 8 ++++----
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 6d7256ea477a1..dc7f9b99f409f 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3892,7 +3892,8 @@ static int mv88e6xxx_port_setup(struct dsa_switch *ds, int port)
- 	struct mv88e6xxx_chip *chip = ds->priv;
- 	int err;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index 15bab41cee48d..774377db0b4bd 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -1073,14 +1073,12 @@ static int dpaa2_eth_build_single_fd(struct dpaa2_eth_priv *priv,
+ 	dma_addr_t addr;
  
--	if (chip->info->ops->pcs_ops->pcs_init) {
-+	if (chip->info->ops->pcs_ops &&
-+	    chip->info->ops->pcs_ops->pcs_init) {
- 		err = chip->info->ops->pcs_ops->pcs_init(chip, port);
- 		if (err)
- 			return err;
-@@ -3907,7 +3908,8 @@ static void mv88e6xxx_port_teardown(struct dsa_switch *ds, int port)
+ 	buffer_start = skb->data - dpaa2_eth_needed_headroom(skb);
+-
+-	/* If there's enough room to align the FD address, do it.
+-	 * It will help hardware optimize accesses.
+-	 */
+ 	aligned_start = PTR_ALIGN(buffer_start - DPAA2_ETH_TX_BUF_ALIGN,
+ 				  DPAA2_ETH_TX_BUF_ALIGN);
+ 	if (aligned_start >= skb->head)
+ 		buffer_start = aligned_start;
++	else
++		return -ENOMEM;
  
- 	mv88e6xxx_teardown_devlink_regions_port(ds, port);
+ 	/* Store a backpointer to the skb at the beginning of the buffer
+ 	 * (in the private data area) such that we can release it
+@@ -4967,6 +4965,8 @@ static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
+ 	if (err)
+ 		goto err_dl_port_add;
  
--	if (chip->info->ops->pcs_ops->pcs_teardown)
-+	if (chip->info->ops->pcs_ops &&
-+	    chip->info->ops->pcs_ops->pcs_teardown)
- 		chip->info->ops->pcs_ops->pcs_teardown(chip, port);
- }
++	net_dev->needed_headroom = DPAA2_ETH_SWA_SIZE + DPAA2_ETH_TX_BUF_ALIGN;
++
+ 	err = register_netdev(net_dev);
+ 	if (err < 0) {
+ 		dev_err(dev, "register_netdev() failed\n");
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
+index bfb6c96c3b2f0..834cba8c3a416 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
+@@ -740,7 +740,7 @@ static inline bool dpaa2_eth_rx_pause_enabled(u64 link_options)
  
+ static inline unsigned int dpaa2_eth_needed_headroom(struct sk_buff *skb)
+ {
+-	unsigned int headroom = DPAA2_ETH_SWA_SIZE;
++	unsigned int headroom = DPAA2_ETH_SWA_SIZE + DPAA2_ETH_TX_BUF_ALIGN;
+ 
+ 	/* If we don't have an skb (e.g. XDP buffer), we only need space for
+ 	 * the software annotation area
 -- 
 2.42.0
 
