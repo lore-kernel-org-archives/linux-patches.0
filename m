@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5D56FB0;
-	Tue,  5 Dec 2023 03:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C026F6FB0;
+	Tue,  5 Dec 2023 03:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqQqJbDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C516DC433C8;
-	Tue,  5 Dec 2023 03:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2szcuUV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F7AC433C8;
+	Tue,  5 Dec 2023 03:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701748002;
-	bh=3/kDhxJDYH7X8RLj8urmtrr0fOdSIttTebvFLN4QNQo=;
+	s=korg; t=1701748004;
+	bh=lekGiE/gapQG01GMk0Yyl8Q8hRzQcbgjEfWRet+M2qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqQqJbDfgrwKHWmMW9J2aK3zxMfXzuEWy0hxkW6BX3K7U/6HA/NsfeFPhqRNCoVg9
-	 lQ95TcHHij4PxRw6t9A6m+0p7VdEKzJVIxWbsWg1iLhNQzr2jj4qhKLTpjgtGJ/nYx
-	 JB5/WII+imB2dmzOIAfXV/KWxt7CJcqDXZcgSwA8=
+	b=2szcuUV6lFrmEsAoPWw+76t05UoFejGcZvMbvBLOHqlLpnoDyU18AqNvFfmSH6u7S
+	 MARB92ivuwnbXcobwHKicC7w16fRZ+uBsf2wwAIsi97zu9AV+eGFzh+k3KFnfohQRd
+	 Rp17cCjjB97NJK6oZAcQSz8iyjhqdMoYLgEM2MKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 77/94] s390/cmma: fix detection of DAT pages
-Date: Tue,  5 Dec 2023 12:17:45 +0900
-Message-ID: <20231205031527.117489238@linuxfoundation.org>
+Subject: [PATCH 5.4 78/94] mtd: cfi_cmdset_0001: Support the absence of protection registers
+Date: Tue,  5 Dec 2023 12:17:46 +0900
+Message-ID: <20231205031527.169129248@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -37,71 +38,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-[ Upstream commit 44d93045247661acbd50b1629e62f415f2747577 ]
+[ Upstream commit b359ed5184aebf9d987e54abc5dae7ac03ed29ae ]
 
-If the cmma no-dat feature is available the kernel page tables are walked
-to identify and mark all pages which are used for address translation (all
-region, segment, and page tables). In a subsequent loop all other pages are
-marked as "no-dat" pages with the ESSA instruction.
+The flash controller implemented by the Arm Base platform behaves like
+the Intel StrataFlash J3 device, but omits several features. In
+particular it doesn't implement a protection register, so "Number of
+Protection register fields" in the Primary Vendor-Specific Extended
+Query, is 0.
 
-This information is visible to the hypervisor, so that the hypervisor can
-optimize purging of guest TLB entries. The initial loop however is
-incorrect: only the first three of the four pages which belong to segment
-and region tables will be marked as being used for DAT. The last page is
-incorrectly marked as no-dat.
+The Intel StrataFlash J3 datasheet only lists 1 as a valid value for
+NumProtectionFields. It describes the field as:
 
-This can result in incorrect guest TLB flushes.
+	"Number of Protection register fields in JEDEC ID space.
+	“00h,” indicates that 256 protection bytes are available"
 
-Fix this by simply marking all four pages.
+While a value of 0 may arguably not be architecturally valid, the
+driver's current behavior is certainly wrong: if NumProtectionFields is
+0, read_pri_intelext() adds a negative value to the unsigned extra_size,
+and ends up in an infinite loop.
 
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fix it by ignoring a NumProtectionFields of 0.
+
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+Tested-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Stable-dep-of: 565fe150624e ("mtd: cfi_cmdset_0001: Byte swap OTP info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/page-states.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mtd/chips/cfi_cmdset_0001.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/arch/s390/mm/page-states.c b/arch/s390/mm/page-states.c
-index 10d81deef330f..bef7e07da98ef 100644
---- a/arch/s390/mm/page-states.c
-+++ b/arch/s390/mm/page-states.c
-@@ -131,7 +131,7 @@ static void mark_kernel_pud(p4d_t *p4d, unsigned long addr, unsigned long end)
- 			continue;
- 		if (!pud_folded(*pud)) {
- 			page = phys_to_page(pud_val(*pud));
--			for (i = 0; i < 3; i++)
-+			for (i = 0; i < 4; i++)
- 				set_bit(PG_arch_1, &page[i].flags);
- 		}
- 		mark_kernel_pmd(pud, addr, next);
-@@ -152,7 +152,7 @@ static void mark_kernel_p4d(pgd_t *pgd, unsigned long addr, unsigned long end)
- 			continue;
- 		if (!p4d_folded(*p4d)) {
- 			page = phys_to_page(p4d_val(*p4d));
--			for (i = 0; i < 3; i++)
-+			for (i = 0; i < 4; i++)
- 				set_bit(PG_arch_1, &page[i].flags);
- 		}
- 		mark_kernel_pud(p4d, addr, next);
-@@ -174,7 +174,7 @@ static void mark_kernel_pgd(void)
- 			continue;
- 		if (!pgd_folded(*pgd)) {
- 			page = phys_to_page(pgd_val(*pgd));
--			for (i = 0; i < 3; i++)
-+			for (i = 0; i < 4; i++)
- 				set_bit(PG_arch_1, &page[i].flags);
- 		}
- 		mark_kernel_p4d(pgd, addr, next);
+diff --git a/drivers/mtd/chips/cfi_cmdset_0001.c b/drivers/mtd/chips/cfi_cmdset_0001.c
+index 79a53cb8507b6..1d77687b67169 100644
+--- a/drivers/mtd/chips/cfi_cmdset_0001.c
++++ b/drivers/mtd/chips/cfi_cmdset_0001.c
+@@ -420,8 +420,9 @@ read_pri_intelext(struct map_info *map, __u16 adr)
+ 		extra_size = 0;
+ 
+ 		/* Protection Register info */
+-		extra_size += (extp->NumProtectionFields - 1) *
+-			      sizeof(struct cfi_intelext_otpinfo);
++		if (extp->NumProtectionFields)
++			extra_size += (extp->NumProtectionFields - 1) *
++				      sizeof(struct cfi_intelext_otpinfo);
+ 	}
+ 
+ 	if (extp->MinorVersion >= '1') {
+@@ -695,14 +696,16 @@ static int cfi_intelext_partition_fixup(struct mtd_info *mtd,
+ 	 */
+ 	if (extp && extp->MajorVersion == '1' && extp->MinorVersion >= '3'
+ 	    && extp->FeatureSupport & (1 << 9)) {
++		int offs = 0;
+ 		struct cfi_private *newcfi;
+ 		struct flchip *chip;
+ 		struct flchip_shared *shared;
+-		int offs, numregions, numparts, partshift, numvirtchips, i, j;
++		int numregions, numparts, partshift, numvirtchips, i, j;
+ 
+ 		/* Protection Register info */
+-		offs = (extp->NumProtectionFields - 1) *
+-		       sizeof(struct cfi_intelext_otpinfo);
++		if (extp->NumProtectionFields)
++			offs = (extp->NumProtectionFields - 1) *
++			       sizeof(struct cfi_intelext_otpinfo);
+ 
+ 		/* Burst Read info */
+ 		offs += extp->extra[offs+1]+2;
 -- 
 2.42.0
 
