@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397D96FB1;
-	Tue,  5 Dec 2023 03:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E711B6FB1;
+	Tue,  5 Dec 2023 03:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1V6YSXs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B5CC433C8;
-	Tue,  5 Dec 2023 03:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hr/HEod2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C66C433C8;
+	Tue,  5 Dec 2023 03:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747412;
-	bh=ZkiuVZxtuoWuCaiPVBOJueyJAtBiuetaWwNkW1hhFp0=;
+	s=korg; t=1701747414;
+	bh=/lZL6EGW7SqVb9s70SWXIaqNzvIdCRjXBxZJ0Ik788c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f1V6YSXs8hrQq2CukL5VBPgCxZy2mll5bxRqZUeVlSIxYNN8J7PbDbIXhcF8f+oB0
-	 4G7BLcRvF1CZaaFzgL5LBOIcfGlcHgCpGNXzlU+a9W7pE9vsqAh39bAOBBB5rX8tJJ
-	 U5oJEjq2iqhHyiBIZghc1akC35jh69Yl4SsxqvB8=
+	b=hr/HEod22lnpdIbhGOfwhn4Ss5cApXnjTYBzqHaiK6g/p1KR7QqRMyKrOT28Nkq0L
+	 6/CDoEBOH9ghnd7+7rnzxe3BZ4ZMn6wslk7GV8MOG853xYLe7ajDka/di4f3s2Ue3G
+	 kXpRRvJ0J6eEKfzgIEKvadddsmDFiv4rzCdWY/Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zubin Mithra <zsm@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.10 067/135] usb: dwc3: set the dma max_seg_size
-Date: Tue,  5 Dec 2023 12:16:28 +0900
-Message-ID: <20231205031534.656116220@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 5.10 068/135] USB: dwc3: qcom: fix wakeup after probe deferral
+Date: Tue,  5 Dec 2023 12:16:29 +0900
+Message-ID: <20231205031534.731040752@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,36 +41,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 8bbae288a85abed6a1cf7d185d8b9dc2f5dcb12c upstream.
+commit 41f5a0973259db9e4e3c9963d36505f80107d1a0 upstream.
 
-Allow devices to have dma operations beyond 4K, and avoid warnings such
-as:
+The Qualcomm glue driver is overriding the interrupt trigger types
+defined by firmware when requesting the wakeup interrupts during probe.
 
-DMA-API: dwc3 a600000.usb: mapping sg segment longer than device claims to support [len=86016] [max=65536]
+This can lead to a failure to map the DP/DM wakeup interrupts after a
+probe deferral as the firmware defined trigger types do not match the
+type used for the initial mapping:
 
-Cc: stable@vger.kernel.org
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Reported-by: Zubin Mithra <zsm@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20231026-dwc3-v2-1-1d4fd5c3e067@chromium.org
+	irq: type mismatch, failed to map hwirq-14 for interrupt-controller@b220000!
+	irq: type mismatch, failed to map hwirq-15 for interrupt-controller@b220000!
+
+Fix this by not overriding the firmware provided trigger types when
+requesting the wakeup interrupts.
+
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Cc: stable@vger.kernel.org      # 4.18
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20231120161607.7405-3-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc3/dwc3-qcom.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1627,6 +1627,8 @@ static int dwc3_probe(struct platform_de
- 
- 	pm_runtime_put(dev);
- 
-+	dma_set_max_seg_size(dev, UINT_MAX);
-+
- 	return 0;
- 
- err5:
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -492,7 +492,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "hs_phy_irq failed: %d\n", ret);
+@@ -507,7 +507,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 DP_HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
+@@ -522,7 +522,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 DM_HS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
+@@ -537,7 +537,7 @@ static int dwc3_qcom_setup_irq(struct pl
+ 		irq_set_status_flags(irq, IRQ_NOAUTOEN);
+ 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
+ 					qcom_dwc3_resume_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
++					IRQF_ONESHOT,
+ 					"qcom_dwc3 SS", qcom);
+ 		if (ret) {
+ 			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
 
 
