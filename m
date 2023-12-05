@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0356D1CE;
-	Tue,  5 Dec 2023 19:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C64C6D1CE;
+	Tue,  5 Dec 2023 19:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAx4dtHl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6947AC433C7;
-	Tue,  5 Dec 2023 19:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzJKYXn8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3E8C433C9;
+	Tue,  5 Dec 2023 19:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701804132;
-	bh=m4JCb/yKb6n09zVh4sYV4pbNNQapkuetbcSA63bkdnE=;
+	s=korg; t=1701804138;
+	bh=I4KFbvwPa673IsSGQUlCMXZDudL62CC6fMUSocRZA2Q=;
 	h=From:To:Cc:Subject:Date:From;
-	b=fAx4dtHlfCdb+iocn79zd0zzswbrqX9Sl9vX296xqN9nnW6p+bytEbGj5hVMAoPMP
-	 6rcfivrcQ+aPv+r9WNrC/CD4PqeaaW7LJ9Ij2Uey2N18/f76R8aXWw3P3eKcNTQ8IZ
-	 scFFk+Spwwioj8ingJ64zsOAnIG1Jhy9w1ovJFeQ=
+	b=bzJKYXn8DESc9naj/jsA00yZGhUp0Dhz55uxz9ogQO8KuRX5Br7clvjxRJYhgGCBY
+	 TxA6zEsXQUub993CucJzsaylhnYB0sjkbtAshcurV4ZlwenxHxtc28EUFY/y6D5YJu
+	 A0wZv5uddnZPA+nHF07kuBVHIbetSpf0DoRPDzso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	rwarsow@gmx.de,
 	conor@kernel.org,
 	allen.lkml@gmail.com
-Subject: [PATCH 4.19 00/63] 4.19.301-rc2 review
-Date: Wed,  6 Dec 2023 04:22:09 +0900
-Message-ID: <20231205183236.587197010@linuxfoundation.org>
+Subject: [PATCH 5.4 00/90] 5.4.263-rc3 review
+Date: Wed,  6 Dec 2023 04:22:16 +0900
+Message-ID: <20231205183241.636315882@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -46,17 +46,17 @@ MIME-Version: 1.0
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.301-rc2.gz
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.263-rc3.gz
 X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Branch: linux-5.4.y
 X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.19.301-rc2
+X-KernelTest-Version: 5.4.263-rc3
 X-KernelTest-Deadline: 2023-12-07T18:32+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.19.301 release.
-There are 63 patches in this series, all will be posted as a response
+This is the start of the stable review cycle for the 5.4.263 release.
+There are 90 patches in this series, all will be posted as a response
 to this one.  If anyone has any issues with these being applied, please
 let me know.
 
@@ -64,9 +64,9 @@ Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
 Anything received after that time might be too late.
 
 The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.301-rc2.gz
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.263-rc3.gz
 or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 and the diffstat can be found below.
 
 thanks,
@@ -77,7 +77,7 @@ greg k-h
 Pseudo-Shortlog of commits:
 
 Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.19.301-rc2
+    Linux 5.4.263-rc3
 
 Adrian Hunter <adrian.hunter@intel.com>
     mmc: block: Retry commands in CQE error recovery
@@ -99,6 +99,18 @@ Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
 Christoph Niedermaier <cniedermaier@dh-electronics.com>
     cpufreq: imx6q: don't warn for disabling a non-existing frequency
+
+Quinn Tran <qutran@marvell.com>
+    scsi: qla2xxx: Fix system crash due to bad pointer access
+
+Bart Van Assche <bvanassche@acm.org>
+    scsi: qla2xxx: Use scsi_cmd_to_rq() instead of scsi_cmnd.request
+
+Bart Van Assche <bvanassche@acm.org>
+    scsi: core: Introduce the scsi_cmd_to_rq() function
+
+Bart Van Assche <bvanassche@acm.org>
+    scsi: qla2xxx: Simplify the code for aborting SCSI commands
 
 Mimi Zohar <zohar@linux.ibm.com>
     ima: detect changes to the backing overlay file
@@ -130,8 +142,14 @@ Steve French <stfrench@microsoft.com>
 Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
     net: ravb: Start TX queues after HW initialization succeeded
 
+Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+    net: ravb: Use pm_runtime_resume_and_get()
+
 Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
     ravb: Fix races between ravb_tx_timeout_work() and net related ops
+
+Furong Xu <0x1207@gmail.com>
+    net: stmmac: xgmac: Disable FPE MMC interrupts
 
 Zhengchao Shao <shaozhengchao@huawei.com>
     ipv4: igmp: fix refcnt uaf issue when receiving igmp query packet
@@ -139,11 +157,17 @@ Zhengchao Shao <shaozhengchao@huawei.com>
 Max Nguyen <maxwell.nguyen@hp.com>
     Input: xpad - add HyperX Clutch Gladiate Support
 
+Filipe Manana <fdmanana@suse.com>
+    btrfs: make error messages more clear when getting a chunk map
+
 Jann Horn <jannh@google.com>
     btrfs: send: ensure send_fd is writable
 
 Filipe Manana <fdmanana@suse.com>
     btrfs: fix off-by-one when checking chunk map includes logical address
+
+Qu Wenruo <wqu@suse.com>
+    btrfs: add dmesg output for first mount and last unmount of a filesystem
 
 Timothy Pearson <tpearson@raptorengineering.com>
     powerpc: Don't clobber f0/vs0 during fp|altivec register save
@@ -156,6 +180,9 @@ Wu Bo <bo.wu@vivo.com>
 
 Mikulas Patocka <mpatocka@redhat.com>
     dm-verity: align struct dm_verity_fec_io properly
+
+Kailang Yang <kailang@realtek.com>
+    ALSA: hda/realtek: Add supported ALC257 for ChromeOS
 
 Kailang Yang <kailang@realtek.com>
     ALSA: hda/realtek: Headset Mic VREF to 100%
@@ -172,8 +199,14 @@ Yang Yingliang <yangyingliang@huawei.com>
 Maria Yu <quic_aiquny@quicinc.com>
     pinctrl: avoid reload of p state in list iteration
 
+Keith Busch <kbusch@kernel.org>
+    io_uring: fix off-by one bvec index
+
 Johan Hovold <johan+linaro@kernel.org>
     USB: dwc3: qcom: fix wakeup after probe deferral
+
+Johan Hovold <johan+linaro@kernel.org>
+    USB: dwc3: qcom: fix resource leaks on probe deferral
 
 Ricardo Ribalda <ribalda@chromium.org>
     usb: dwc3: set the dma max_seg_size
@@ -214,8 +247,8 @@ Jan Höppner <hoeppner@linux.ibm.com>
 Coly Li <colyli@suse.de>
     bcache: replace a mistaken IS_ERR() by IS_ERR_OR_NULL() in btree_gc_coalesce()
 
-Claire Lin <claire.lin@broadcom.com>
-    mtd: rawnand: brcmnand: Fix ecc chunk calculation for erased page bitfips
+Hans de Goede <hdegoede@redhat.com>
+    ACPI: resource: Skip IRQ override on ASUS ExpertBook B1402CVA
 
 Andrew Murray <andrew.murray@arm.com>
     KVM: arm64: limit PMU version to PMUv3 for ARMv8.1
@@ -223,8 +256,47 @@ Andrew Murray <andrew.murray@arm.com>
 Andrew Murray <andrew.murray@arm.com>
     arm64: cpufeature: Extract capped perfmon fields
 
+Zhang Yi <yi.zhang@huawei.com>
+    ext4: make sure allocate pending entry not fail
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: fix slab-use-after-free in ext4_es_insert_extent()
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: using nofail preallocation in ext4_es_insert_extent()
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: using nofail preallocation in ext4_es_insert_delayed_block()
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: using nofail preallocation in ext4_es_remove_extent()
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: use pre-allocated es in __es_remove_extent()
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: use pre-allocated es in __es_insert_extent()
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: factor out __es_alloc_extent() and __es_free_extent()
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: add a new helper to check if es must be kept
+
 Huacai Chen <chenhuacai@loongson.cn>
     MIPS: KVM: Fix a build warning about variable set but not used
+
+Christoph Hellwig <hch@lst.de>
+    nvmet: nul-terminate the NQNs passed in the connect command
+
+Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
+    nvmet: remove unnecessary ctrl parameter
+
+David Howells <dhowells@redhat.com>
+    afs: Fix file locking on R/O volumes to operate in local mode
+
+David Howells <dhowells@redhat.com>
+    afs: Return ENOENT if no cell DNS record can be found
 
 Samuel Holland <samuel.holland@sifive.com>
     net: axienet: Fix check for partial TX checksum
@@ -262,6 +334,15 @@ Chen Ni <nichen@iscas.ac.cn>
 Marek Vasut <marex@denx.de>
     drm/panel: simple: Fix Innolux G101ICE-L01 timings
 
+Marek Vasut <marex@denx.de>
+    drm/panel: simple: Fix Innolux G101ICE-L01 bus flags
+
+David Howells <dhowells@redhat.com>
+    afs: Make error on cell lookup failure consistent with OpenAFS
+
+Nathan Chancellor <nathan@kernel.org>
+    PCI: keystone: Drop __init from ks_pcie_add_pcie_{ep,port}()
+
 Christopher Bednarz <christopher.n.bednarz@intel.com>
     RDMA/irdma: Prevent zero-length STAG registration
 
@@ -273,67 +354,83 @@ Saravana Kannan <saravanak@google.com>
 
 Diffstat:
 
- Makefile                                          |  4 +-
- arch/arm/xen/enlighten.c                          |  3 +-
- arch/arm64/include/asm/cpufeature.h               | 23 +++++++++++
- arch/arm64/include/asm/sysreg.h                   |  6 +++
- arch/arm64/kvm/sys_regs.c                         | 10 +++++
- arch/mips/kvm/mmu.c                               |  3 +-
- arch/powerpc/kernel/fpu.S                         | 13 ++++++
- arch/powerpc/kernel/vector.S                      |  2 +
- arch/s390/mm/page-states.c                        | 14 +++----
- drivers/ata/pata_isapnp.c                         |  3 ++
- drivers/base/dd.c                                 |  4 +-
- drivers/cpufreq/imx6q-cpufreq.c                   | 32 ++++++++-------
- drivers/firewire/core-device.c                    | 11 ++----
- drivers/gpu/drm/panel/panel-simple.c              | 12 +++---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c       | 14 +++++--
- drivers/hid/hid-core.c                            | 16 ++++++--
- drivers/hid/hid-debug.c                           |  3 ++
- drivers/infiniband/hw/i40iw/i40iw_ctrl.c          |  6 +++
- drivers/infiniband/hw/i40iw/i40iw_type.h          |  2 +
- drivers/infiniband/hw/i40iw/i40iw_verbs.c         | 10 ++++-
- drivers/input/joystick/xpad.c                     |  2 +
- drivers/md/bcache/btree.c                         |  6 ++-
- drivers/md/bcache/sysfs.c                         |  2 +-
- drivers/md/dm-delay.c                             | 17 +++++---
- drivers/md/dm-verity-fec.c                        |  3 +-
- drivers/md/dm-verity-target.c                     |  4 +-
- drivers/md/dm-verity.h                            |  6 ---
- drivers/mmc/core/block.c                          |  2 +
- drivers/mmc/core/core.c                           | 15 ++++---
- drivers/mmc/host/cqhci.c                          | 44 ++++++++++-----------
- drivers/mtd/chips/cfi_cmdset_0001.c               | 29 +++++++++++---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c          |  5 ++-
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c          | 14 +++++++
- drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c      | 11 ++++--
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c         | 14 ++++++-
- drivers/net/ethernet/renesas/ravb_main.c          | 15 +++++--
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c |  2 +-
- drivers/net/hyperv/netvsc_drv.c                   | 41 +++++++++++++------
- drivers/net/usb/ax88179_178a.c                    |  4 +-
- drivers/pinctrl/core.c                            |  6 +--
- drivers/s390/block/dasd.c                         | 24 ++++++------
- drivers/usb/dwc2/hcd_intr.c                       | 15 ++++---
- drivers/usb/dwc3/core.c                           |  2 +
- drivers/usb/dwc3/dwc3-qcom.c                      |  8 ++--
- drivers/usb/serial/option.c                       | 11 ++++--
- drivers/video/fbdev/sticore.h                     |  2 +-
- fs/btrfs/send.c                                   |  2 +-
- fs/btrfs/volumes.c                                |  2 +-
- fs/cifs/cifsfs.c                                  |  1 +
- fs/overlayfs/super.c                              |  5 ++-
- fs/sync.c                                         |  3 +-
- include/linux/fs.h                                |  2 +
- include/linux/hid.h                               |  5 +++
- net/ipv4/igmp.c                                   |  6 ++-
- net/ipv4/route.c                                  |  2 +-
- security/integrity/iint.c                         | 48 +++++++++++++++++------
- security/integrity/ima/ima_api.c                  |  5 +++
- security/integrity/ima/ima_main.c                 | 16 +++++++-
- security/integrity/integrity.h                    |  2 +
- sound/pci/hda/hda_intel.c                         |  2 +
- sound/pci/hda/patch_realtek.c                     |  9 +++++
- 61 files changed, 434 insertions(+), 171 deletions(-)
+ Makefile                                          |   4 +-
+ arch/arm/xen/enlighten.c                          |   3 +-
+ arch/arm64/include/asm/cpufeature.h               |  23 ++
+ arch/arm64/include/asm/sysreg.h                   |   6 +
+ arch/arm64/kvm/sys_regs.c                         |  10 +
+ arch/mips/kvm/mmu.c                               |   3 +-
+ arch/powerpc/kernel/fpu.S                         |  13 +
+ arch/powerpc/kernel/vector.S                      |   2 +
+ arch/s390/mm/page-states.c                        |  14 +-
+ drivers/acpi/resource.c                           |   7 +
+ drivers/ata/pata_isapnp.c                         |   3 +
+ drivers/base/dd.c                                 |   4 +-
+ drivers/cpufreq/imx6q-cpufreq.c                   |  32 +--
+ drivers/firewire/core-device.c                    |  11 +-
+ drivers/gpu/drm/panel/panel-simple.c              |  13 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c       |  14 +-
+ drivers/hid/hid-core.c                            |  16 +-
+ drivers/hid/hid-debug.c                           |   3 +
+ drivers/infiniband/hw/i40iw/i40iw_ctrl.c          |   6 +
+ drivers/infiniband/hw/i40iw/i40iw_type.h          |   2 +
+ drivers/infiniband/hw/i40iw/i40iw_verbs.c         |  10 +-
+ drivers/input/joystick/xpad.c                     |   2 +
+ drivers/md/bcache/btree.c                         |   6 +-
+ drivers/md/bcache/sysfs.c                         |   2 +-
+ drivers/md/dm-delay.c                             |  17 +-
+ drivers/md/dm-verity-fec.c                        |   3 +-
+ drivers/md/dm-verity-target.c                     |   4 +-
+ drivers/md/dm-verity.h                            |   6 -
+ drivers/mmc/core/block.c                          |   2 +
+ drivers/mmc/core/core.c                           |  15 +-
+ drivers/mmc/host/cqhci.c                          |  44 ++--
+ drivers/mtd/chips/cfi_cmdset_0001.c               |  29 +-
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c          |  14 +
+ drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c      |  11 +-
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c         |  14 +-
+ drivers/net/ethernet/renesas/ravb_main.c          |  20 +-
+ drivers/net/ethernet/stmicro/stmmac/mmc_core.c    |   4 +
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c |   2 +-
+ drivers/net/hyperv/netvsc_drv.c                   |  41 ++-
+ drivers/net/usb/ax88179_178a.c                    |   4 +-
+ drivers/nvme/target/core.c                        |  21 +-
+ drivers/nvme/target/fabrics-cmd.c                 |  15 +-
+ drivers/nvme/target/nvmet.h                       |   5 +-
+ drivers/pci/controller/dwc/pci-keystone.c         |   8 +-
+ drivers/pinctrl/core.c                            |   6 +-
+ drivers/s390/block/dasd.c                         |  24 +-
+ drivers/scsi/qla2xxx/qla_def.h                    |   3 -
+ drivers/scsi/qla2xxx/qla_isr.c                    |   5 -
+ drivers/scsi/qla2xxx/qla_os.c                     |  39 +--
+ drivers/usb/dwc2/hcd_intr.c                       |  15 +-
+ drivers/usb/dwc3/core.c                           |   2 +
+ drivers/usb/dwc3/dwc3-qcom.c                      |  17 +-
+ drivers/usb/serial/option.c                       |  11 +-
+ drivers/video/fbdev/sticore.h                     |   2 +-
+ fs/afs/dynroot.c                                  |   4 +-
+ fs/afs/super.c                                    |   2 +
+ fs/afs/vl_rotate.c                                |  10 +
+ fs/btrfs/disk-io.c                                |   1 +
+ fs/btrfs/send.c                                   |   2 +-
+ fs/btrfs/super.c                                  |   5 +-
+ fs/btrfs/volumes.c                                |   9 +-
+ fs/cifs/cifsfs.c                                  |   1 +
+ fs/ext4/extents_status.c                          | 306 +++++++++++++++-------
+ fs/io_uring.c                                     |   2 +-
+ fs/overlayfs/super.c                              |   5 +-
+ fs/sync.c                                         |   3 +-
+ include/linux/fs.h                                |   2 +
+ include/linux/hid.h                               |   5 +
+ include/scsi/scsi_cmnd.h                          |   6 +
+ net/ipv4/igmp.c                                   |   6 +-
+ net/ipv4/route.c                                  |   2 +-
+ security/integrity/iint.c                         |  48 +++-
+ security/integrity/ima/ima_api.c                  |   5 +
+ security/integrity/ima/ima_main.c                 |  16 +-
+ security/integrity/integrity.h                    |   2 +
+ sound/pci/hda/hda_intel.c                         |   2 +
+ sound/pci/hda/patch_realtek.c                     |  12 +
+ 77 files changed, 753 insertions(+), 315 deletions(-)
 
 
