@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572FE611E;
-	Tue,  5 Dec 2023 03:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFF36FB0;
+	Tue,  5 Dec 2023 03:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nBAx1kEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E29E4C433C8;
-	Tue,  5 Dec 2023 03:45:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pW3M8YKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9644CC433C8;
+	Tue,  5 Dec 2023 03:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747947;
-	bh=bX8ZVDaKfYc4nt2jcnSeZzUEIZ5A68H+jUaAMs7Cjic=;
+	s=korg; t=1701747949;
+	bh=ja5yise8wsvC0U8bgAxX22NGDwiR47NSVEn4e87I6xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBAx1kEVorGinbA7rl0+uObv9OflhR0hEmvJSCFhvpm1OvjDyNHjMU9g9+FzTPUTe
-	 HONRqsCvSW0bmYQ9Yu9gA2P8ta93VuVT++rMEdqkxy4ic6Kvi1Ni2GNk48m2Uirlnf
-	 1ogYyW2AlMHL6rkoNmseBCX4t87z9Al+I4lQ5beE=
+	b=pW3M8YKR4kbjnRRt42cV13h4YO+fysYbXhjet+CBWGcTasUw9tU/3udBPLoNh48Fx
+	 ddBXH/i5BwpmSsc6oMuo7jq8bYKs9XO7PCZLDkvoKZ8VTDv2GH4aTjBonZUiP0immp
+	 k/6aXwrbyILzPVD/j2DORzzxPHAEeZhgY0LxvyrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 57/94] ALSA: hda/realtek: Headset Mic VREF to 100%
-Date: Tue,  5 Dec 2023 12:17:25 +0900
-Message-ID: <20231205031526.023869797@linuxfoundation.org>
+Subject: [PATCH 5.4 58/94] ALSA: hda/realtek: Add supported ALC257 for ChromeOS
+Date: Tue,  5 Dec 2023 12:17:26 +0900
+Message-ID: <20231205031526.081205098@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -43,50 +43,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Kailang Yang <kailang@realtek.com>
 
-commit baaacbff64d9f34b64f294431966d035aeadb81c upstream.
+commit cae2bdb579ecc9d4219c58a7d3fde1958118dc1d upstream.
 
-This platform need to set Mic VREF to 100%.
+ChromeOS want to support ALC257.
+Add codec ID to some relation function.
 
 Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/0916af40f08a4348a3298a9a59e6967e@realtek.com
+Link: https://lore.kernel.org/r/99a88a7dbdb045fd9d934abeb6cec15f@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/pci/hda/patch_realtek.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -1935,6 +1935,7 @@ enum {
- 	ALC887_FIXUP_ASUS_AUDIO,
- 	ALC887_FIXUP_ASUS_HMIC,
- 	ALCS1200A_FIXUP_MIC_VREF,
-+	ALC888VD_FIXUP_MIC_100VREF,
- };
- 
- static void alc889_fixup_coef(struct hda_codec *codec,
-@@ -2488,6 +2489,13 @@ static const struct hda_fixup alc882_fix
- 			{}
- 		}
- 	},
-+	[ALC888VD_FIXUP_MIC_100VREF] = {
-+		.type = HDA_FIXUP_PINCTLS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x18, PIN_VREF100 }, /* headset mic */
-+			{}
-+		}
-+	},
- };
- 
- static const struct snd_pci_quirk alc882_fixup_tbl[] = {
-@@ -2557,6 +2565,7 @@ static const struct snd_pci_quirk alc882
- 	SND_PCI_QUIRK(0x106b, 0x4a00, "Macbook 5,2", ALC889_FIXUP_MBA11_VREF),
- 
- 	SND_PCI_QUIRK(0x1071, 0x8258, "Evesham Voyaeger", ALC882_FIXUP_EAPD),
-+	SND_PCI_QUIRK(0x10ec, 0x12d8, "iBase Elo Touch", ALC888VD_FIXUP_MIC_100VREF),
- 	SND_PCI_QUIRK(0x13fe, 0x1009, "Advantech MIT-W101", ALC886_FIXUP_EAPD),
- 	SND_PCI_QUIRK(0x1458, 0xa002, "Gigabyte EP45-DS3/Z87X-UD3H", ALC889_FIXUP_FRONT_HP_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1458, 0xa0b8, "Gigabyte AZ370-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
+@@ -3207,6 +3207,7 @@ static void alc_disable_headset_jack_key
+ 	case 0x10ec0230:
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 		alc_write_coef_idx(codec, 0x48, 0x0);
+ 		alc_update_coef_idx(codec, 0x49, 0x0045, 0x0);
+@@ -3236,6 +3237,7 @@ static void alc_enable_headset_jack_key(
+ 	case 0x10ec0230:
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 		alc_write_coef_idx(codec, 0x48, 0xd011);
+ 		alc_update_coef_idx(codec, 0x49, 0x007f, 0x0045);
+@@ -6185,6 +6187,7 @@ static void alc_combo_jack_hp_jd_restart
+ 	case 0x10ec0236:
+ 	case 0x10ec0255:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 		alc_update_coef_idx(codec, 0x1b, 0x8000, 1 << 15); /* Reset HP JD */
+ 		alc_update_coef_idx(codec, 0x1b, 0x8000, 0 << 15);
 
 
