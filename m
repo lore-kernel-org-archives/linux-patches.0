@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C8379F2;
-	Tue,  5 Dec 2023 03:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E493E6FB1;
+	Tue,  5 Dec 2023 03:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8mj8QtU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF0EC433C7;
-	Tue,  5 Dec 2023 03:41:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJKZVlbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E55DC433C8;
+	Tue,  5 Dec 2023 03:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747673;
-	bh=Jd8pz4VSHjIewZv9Gha4slNuXD1WFx5XVcCIaJ+U3vw=;
+	s=korg; t=1701747675;
+	bh=CInULwP4ompDdbQ4oA7t0rartTsQQIrxHOeVw+gge3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P8mj8QtU2tLbJTJkkMAF971Klt5APp9N2TojGZkCT0eTKpBJzoOo/cG0/BsgDMhol
-	 0LTHSaIougQE141Dct8Dls2nGV32IYIt6sakhnGkI8MZ9baR6AjbZljoIUdfHmBCm/
-	 C7W/smNrdj134gP7nI322nVsO1801qNGyPgCDs1g=
+	b=GJKZVlbBNimN4Kjv590ykYpI8wYAKMPUrGgBtVIBZoLX/EHNOk9SeNqnzlosERSCd
+	 8BMbgCU+OMfqtAVZnLqWtvfuY+VCX37LF5SdhkdSxUMB2w3H1CmYpkw0BzTWP2goUk
+	 MtD0SQYkLfIhi2wbCOYzIPN82Hk024ggl/UDjQBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Olivier Matz <olivier.matz@6wind.com>
-Subject: [PATCH 5.15 26/67] vlan: move dev_put into vlan_dev_uninit
-Date: Tue,  5 Dec 2023 12:17:11 +0900
-Message-ID: <20231205031521.311405664@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 09/67] mmc: block: Be sure to wait while busy in CQE error recovery
+Date: Tue,  5 Dec 2023 12:16:54 +0900
+Message-ID: <20231205031520.352299771@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -43,69 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit d6ff94afd90b0ce8d1715f8ef77d4347d7a7f2c0 upstream.
+commit c616696a902987352426fdaeec1b0b3240949e6b upstream.
 
-Shuang Li reported an QinQ issue by simply doing:
+STOP command does not guarantee to wait while busy, but subsequent command
+MMC_CMDQ_TASK_MGMT to discard the queue will fail if the card is busy, so
+be sure to wait by employing mmc_poll_for_busy().
 
-  # ip link add dummy0 type dummy
-  # ip link add link dummy0 name dummy0.1 type vlan id 1
-  # ip link add link dummy0.1 name dummy0.1.2 type vlan id 2
-  # rmmod 8021q
-
- unregister_netdevice: waiting for dummy0.1 to become free. Usage count = 1
-
-When rmmods 8021q, all vlan devs are deleted from their real_dev's vlan grp
-and added into list_kill by unregister_vlan_dev(). dummy0.1 is unregistered
-before dummy0.1.2, as it's using for_each_netdev() in __rtnl_kill_links().
-
-When unregisters dummy0.1, dummy0.1.2 is not unregistered in the event of
-NETDEV_UNREGISTER, as it's been deleted from dummy0.1's vlan grp. However,
-due to dummy0.1.2 still holding dummy0.1, dummy0.1 will keep waiting in
-netdev_wait_allrefs(), while dummy0.1.2 will never get unregistered and
-release dummy0.1, as it delays dev_put until calling dev->priv_destructor,
-vlan_dev_free().
-
-This issue was introduced by Commit 563bcbae3ba2 ("net: vlan: fix a UAF in
-vlan_dev_real_dev()"), and this patch is to fix it by moving dev_put() into
-vlan_dev_uninit(), which is called after NETDEV_UNREGISTER event but before
-netdev_wait_allrefs().
-
-Fixes: 563bcbae3ba2 ("net: vlan: fix a UAF in vlan_dev_real_dev()")
-Reported-by: Shuang Li <shuali@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Olivier Matz <olivier.matz@6wind.com>
+Fixes: 72a5af554df8 ("mmc: core: Add support for handling CQE requests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-4-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/8021q/vlan_dev.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mmc/core/core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -638,7 +638,12 @@ void vlan_dev_free_egress_priority(const
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -554,6 +554,8 @@ int mmc_cqe_recovery(struct mmc_host *ho
+ 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
+ 	mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
  
- static void vlan_dev_uninit(struct net_device *dev)
- {
-+	struct vlan_dev_priv *vlan = vlan_dev_priv(dev);
++	mmc_poll_for_busy(host->card, MMC_CQE_RECOVERY_TIMEOUT, true, MMC_BUSY_IO);
 +
- 	vlan_dev_free_egress_priority(dev);
-+
-+	/* Get rid of the vlan's reference to real_dev */
-+	dev_put(vlan->real_dev);
- }
- 
- static netdev_features_t vlan_dev_fix_features(struct net_device *dev,
-@@ -851,9 +856,6 @@ static void vlan_dev_free(struct net_dev
- 
- 	free_percpu(vlan->vlan_pcpu_stats);
- 	vlan->vlan_pcpu_stats = NULL;
--
--	/* Get rid of the vlan's reference to real_dev */
--	dev_put(vlan->real_dev);
- }
- 
- void vlan_setup(struct net_device *dev)
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.opcode       = MMC_CMDQ_TASK_MGMT;
+ 	cmd.arg          = 1; /* Discard entire queue */
 
 
