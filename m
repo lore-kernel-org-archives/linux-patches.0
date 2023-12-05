@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD286FAF;
-	Tue,  5 Dec 2023 03:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A287A6FB1;
+	Tue,  5 Dec 2023 03:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="koh5wYm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84C3C433C7;
-	Tue,  5 Dec 2023 03:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSaArJsZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FEDC433C7;
+	Tue,  5 Dec 2023 03:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746672;
-	bh=Aqb+xfPy+KINU4C+LMe4SeW2ZvmfCryZWn1vr6ugkFM=;
+	s=korg; t=1701746675;
+	bh=9v6+D6gmnJgN0YWm+Q9LtqLz+RkRwnEEWTytvr2b17g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koh5wYm0WkhyXAG5tIQgePCoeEVETv+jbDWG0bmQNTTHW70zC5EpQm7OCYEd481S5
-	 IfySY8RcpSpxo2aR9qmFSWVLBDvUXTVZKqLo8zlWH+m/jMTMPxzfRCuXAuVfCGPCAm
-	 3ILXqILpeIBhicsYdn+tZeYTxTWcjZKNkc7J3UVA=
+	b=OSaArJsZAaUgabg0JMkXjfyLQe7zyHbYwfWkFn+oYgXofgTZl34XhKfMfkCb3VokL
+	 oHx9CHNNC3IEeK054zaHj41mW3ebJ+ZhIKZdTfvZatji3JncEE0YrsDzC8DnlHEDwc
+	 LvS2sBb+m8G/O+mucGs91Cxm6+1xsceqSI8rHPhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Swapnil Patel <swapnil.patel@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Agustin Gutierrez <agustin.gutierrez@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 106/134] net: ravb: Check return value of reset_control_deassert()
-Date: Tue,  5 Dec 2023 12:16:18 +0900
-Message-ID: <20231205031542.168140899@linuxfoundation.org>
+Subject: [PATCH 6.6 115/134] drm/amd/display: Remove power sequencing check
+Date: Tue,  5 Dec 2023 12:16:27 +0900
+Message-ID: <20231205031542.775971687@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -44,57 +45,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Agustin Gutierrez <agustin.gutierrez@amd.com>
 
-[ Upstream commit d8eb6ea4b302e7ff78535c205510e359ac10a0bd ]
+[ Upstream commit b0399e22ada096435de3e3e73899aa8bc026820d ]
 
-reset_control_deassert() could return an error. Some devices cannot work
-if reset signal de-assert operation fails. To avoid this check the return
-code of reset_control_deassert() in ravb_probe() and take proper action.
+[Why]
+	Some ASICs keep backlight powered on after dpms off
+	command has been issued.
 
-Along with it, the free_netdev() call from the error path was moved after
-reset_control_assert() on its own label (out_free_netdev) to free
-netdev in case reset_control_deassert() fails.
+[How]
+	The check for no edp power sequencing was never going to pass.
+	The value is never changed from what it is set by design.
 
-Fixes: 0d13a1a464a0 ("ravb: Add reset support")
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org # 6.1+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2765
+Reviewed-by: Swapnil Patel <swapnil.patel@amd.com>
+Acked-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Agustin Gutierrez <agustin.gutierrez@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index de12c02c55cbc..f76ccb543838c 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2654,7 +2654,10 @@ static int ravb_probe(struct platform_device *pdev)
- 	ndev->features = info->net_features;
- 	ndev->hw_features = info->net_hw_features;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index 28cb1f5a504d1..a17a06eb7762b 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -1930,8 +1930,7 @@ static void disable_link_dp(struct dc_link *link,
+ 	dp_disable_link_phy(link, link_res, signal);
  
--	reset_control_deassert(rstc);
-+	error = reset_control_deassert(rstc);
-+	if (error)
-+		goto out_free_netdev;
-+
- 	pm_runtime_enable(&pdev->dev);
- 	pm_runtime_get_sync(&pdev->dev);
- 
-@@ -2881,11 +2884,11 @@ static int ravb_probe(struct platform_device *pdev)
- out_disable_refclk:
- 	clk_disable_unprepare(priv->refclk);
- out_release:
--	free_netdev(ndev);
--
- 	pm_runtime_put(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	reset_control_assert(rstc);
-+out_free_netdev:
-+	free_netdev(ndev);
- 	return error;
- }
+ 	if (link->connector_signal == SIGNAL_TYPE_EDP) {
+-		if (!link->dc->config.edp_no_power_sequencing &&
+-			!link->skip_implict_edp_power_control)
++		if (!link->skip_implict_edp_power_control)
+ 			link->dc->hwss.edp_power_control(link, false);
+ 	}
  
 -- 
 2.42.0
