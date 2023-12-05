@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E826FB0;
-	Tue,  5 Dec 2023 03:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014D06FB0;
+	Tue,  5 Dec 2023 03:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7CxoPUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABA0C433C9;
-	Tue,  5 Dec 2023 03:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow7GSmbG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D86C433C7;
+	Tue,  5 Dec 2023 03:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747920;
-	bh=ayVCdF7N9TwfFq+9T4hSVJFAKJDqktbEgU5a8gImUEI=;
+	s=korg; t=1701747923;
+	bh=VhYsoqb2HILVVJqW2uPmqzIDf9Jfc9iPKrR/tW3yzY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7CxoPUhN+5ytVMA5uhMTq9DTjBmCmYukfndNihteRr1nZ+x72b4iQKPAjMpiVRt2
-	 b6Tb6dMeQBIz8ZfXouVWz2maf1r1t3Tt2tIRdUlU8ZckKuipMJ/UmVSFYuFjr0U4ms
-	 wO7Z8p0osq5/BuqQuJesZi+Fk3Nu46zc37kqNaXo=
+	b=Ow7GSmbG2LtzUZ9tQYHjCaPLPfsTiizyskiXkAfHn0TXWwxFRhbw/HQHNwdHuSKCG
+	 jFmhhcmx2w9sY20SN0Uk3jAtwH7xxcuTDTNt6qfnT3v3nADgtBJALutNc8wJmsyKdE
+	 yKeuLsD1j0qNUL4+AbjVFOblftXNcU5SZIQPBXBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Stabellini <stefano.stabellini@amd.com>,
-	Juergen Gross <jgross@suse.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 13/94] arm/xen: fix xen_vcpu_info allocation alignment
-Date: Tue,  5 Dec 2023 12:16:41 +0900
-Message-ID: <20231205031523.642263490@linuxfoundation.org>
+Subject: [PATCH 5.4 40/94] dm-delay: fix a race between delay_presuspend and delay_bio
+Date: Tue,  5 Dec 2023 12:17:08 +0900
+Message-ID: <20231205031525.131354964@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -42,45 +42,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Stabellini <sstabellini@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 7bf9a6b46549852a37e6d07e52c601c3c706b562 ]
+[ Upstream commit 6fc45b6ed921dc00dfb264dc08c7d67ee63d2656 ]
 
-xen_vcpu_info is a percpu area than needs to be mapped by Xen.
-Currently, it could cross a page boundary resulting in Xen being unable
-to map it:
+In delay_presuspend, we set the atomic variable may_delay and then stop
+the timer and flush pending bios. The intention here is to prevent the
+delay target from re-arming the timer again.
 
-[    0.567318] kernel BUG at arch/arm64/xen/../../arm/xen/enlighten.c:164!
-[    0.574002] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+However, this test is racy. Suppose that one thread goes to delay_bio,
+sees that dc->may_delay is one and proceeds; now, another thread executes
+delay_presuspend, it sets dc->may_delay to zero, deletes the timer and
+flushes pending bios. Then, the first thread continues and adds the bio to
+delayed->list despite the fact that dc->may_delay is false.
 
-Fix the issue by using __alloc_percpu and requesting alignment for the
-memory allocation.
+Fix this bug by changing may_delay's type from atomic_t to bool and
+only access it while holding the delayed_bios_lock mutex. Note that we
+don't have to grab the mutex in delay_resume because there are no bios
+in flight at this point.
 
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-
-Link: https://lore.kernel.org/r/alpine.DEB.2.22.394.2311221501340.2053963@ubuntu-linux-20-04-desktop
-Fixes: 24d5373dda7c ("arm/xen: Use alloc_percpu rather than __alloc_percpu")
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/xen/enlighten.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-delay.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/xen/enlighten.c b/arch/arm/xen/enlighten.c
-index 57dfc13b27529..c4d1cac0fe32d 100644
---- a/arch/arm/xen/enlighten.c
-+++ b/arch/arm/xen/enlighten.c
-@@ -354,7 +354,8 @@ static int __init xen_guest_init(void)
- 	 * for secondary CPUs as they are brought up.
- 	 * For uniformity we use VCPUOP_register_vcpu_info even on cpu0.
- 	 */
--	xen_vcpu_info = alloc_percpu(struct vcpu_info);
-+	xen_vcpu_info = __alloc_percpu(sizeof(struct vcpu_info),
-+				       1 << fls(sizeof(struct vcpu_info) - 1));
- 	if (xen_vcpu_info == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
+index f496213f8b675..7c0e7c662e07f 100644
+--- a/drivers/md/dm-delay.c
++++ b/drivers/md/dm-delay.c
+@@ -30,7 +30,7 @@ struct delay_c {
+ 	struct workqueue_struct *kdelayd_wq;
+ 	struct work_struct flush_expired_bios;
+ 	struct list_head delayed_bios;
+-	atomic_t may_delay;
++	bool may_delay;
  
+ 	struct delay_class read;
+ 	struct delay_class write;
+@@ -191,7 +191,7 @@ static int delay_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 	INIT_WORK(&dc->flush_expired_bios, flush_expired_bios);
+ 	INIT_LIST_HEAD(&dc->delayed_bios);
+ 	mutex_init(&dc->timer_lock);
+-	atomic_set(&dc->may_delay, 1);
++	dc->may_delay = true;
+ 	dc->argc = argc;
+ 
+ 	ret = delay_class_ctr(ti, &dc->read, argv);
+@@ -245,7 +245,7 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
+ 	struct dm_delay_info *delayed;
+ 	unsigned long expires = 0;
+ 
+-	if (!c->delay || !atomic_read(&dc->may_delay))
++	if (!c->delay)
+ 		return DM_MAPIO_REMAPPED;
+ 
+ 	delayed = dm_per_bio_data(bio, sizeof(struct dm_delay_info));
+@@ -254,6 +254,10 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
+ 	delayed->expires = expires = jiffies + msecs_to_jiffies(c->delay);
+ 
+ 	mutex_lock(&delayed_bios_lock);
++	if (unlikely(!dc->may_delay)) {
++		mutex_unlock(&delayed_bios_lock);
++		return DM_MAPIO_REMAPPED;
++	}
+ 	c->ops++;
+ 	list_add_tail(&delayed->list, &dc->delayed_bios);
+ 	mutex_unlock(&delayed_bios_lock);
+@@ -267,7 +271,10 @@ static void delay_presuspend(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
+ 
+-	atomic_set(&dc->may_delay, 0);
++	mutex_lock(&delayed_bios_lock);
++	dc->may_delay = false;
++	mutex_unlock(&delayed_bios_lock);
++
+ 	del_timer_sync(&dc->delay_timer);
+ 	flush_bios(flush_delayed_bios(dc, 1));
+ }
+@@ -276,7 +283,7 @@ static void delay_resume(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
+ 
+-	atomic_set(&dc->may_delay, 1);
++	dc->may_delay = true;
+ }
+ 
+ static int delay_map(struct dm_target *ti, struct bio *bio)
 -- 
 2.42.0
 
