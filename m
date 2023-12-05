@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671016FB1;
-	Tue,  5 Dec 2023 03:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917BAC2EB;
+	Tue,  5 Dec 2023 03:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGkYUBSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB763C433C8;
-	Tue,  5 Dec 2023 03:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEi8tsIQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CD5C433C7;
+	Tue,  5 Dec 2023 03:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747972;
-	bh=lx6KNRpyi5pQZowc4EGw9rM2pLNyXCdhuchXJGiay5w=;
+	s=korg; t=1701747976;
+	bh=2tTNiOP9uTwG+o9vX9oWn6Kf0nGFur6zwYWjaSoCQBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGkYUBSAJaOf/8N2onCQBZEa2UoU0hzcg47LOpbr8UNv/XtAmHX3a4Jti+YjTdfTP
-	 pma+dAnEtPSSsLIicPNINXdvNN49UCw3aLY8CElXmFPVRVYdsqhU6OpN8QIcqXm9cm
-	 ow60UbVGwXxmAWaGNwBdAMR57RCsJ25qKD5S9X28=
+	b=EEi8tsIQMjA3+rt0sk9U7HzBhrHBZKpO8lQF1jkqjQUqv3efMu310awwZSbU0O85W
+	 p9eHa1ztotXb8B4DgvdmAvYL4dOqRSTdZUiBIaYo7ru7HXrUf8+VuS0/ciNV/f24o9
+	 pBhrY1KGIGxS9TxXA6j5987K0PottXYvEssS0DlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	David Sterba <dsterba@suse.com>,
-	syzbot+12e098239d20385264d3@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 65/94] btrfs: send: ensure send_fd is writable
-Date: Tue,  5 Dec 2023 12:17:33 +0900
-Message-ID: <20231205031526.485711136@linuxfoundation.org>
+	Rand Deeb <rand.sec96@gmail.com>,
+	Coly Li <colyli@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 42/94] bcache: prevent potential division by zero error
+Date: Tue,  5 Dec 2023 12:17:10 +0900
+Message-ID: <20231205031525.234647801@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -42,44 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Rand Deeb <rand.sec96@gmail.com>
 
-commit 0ac1d13a55eb37d398b63e6ff6db4a09a2c9128c upstream.
+commit 2c7f497ac274a14330208b18f6f734000868ebf9 upstream.
 
-kernel_write() requires the caller to ensure that the file is writable.
-Let's do that directly after looking up the ->send_fd.
+In SHOW(), the variable 'n' is of type 'size_t.' While there is a
+conditional check to verify that 'n' is not equal to zero before
+executing the 'do_div' macro, concerns arise regarding potential
+division by zero error in 64-bit environments.
 
-We don't need a separate bailout path because the "out" path already
-does fput() if ->send_filp is non-NULL.
+The concern arises when 'n' is 64 bits in size, greater than zero, and
+the lower 32 bits of it are zeros. In such cases, the conditional check
+passes because 'n' is non-zero, but the 'do_div' macro casts 'n' to
+'uint32_t,' effectively truncating it to its lower 32 bits.
+Consequently, the 'n' value becomes zero.
 
-This has no security impact for two reasons:
+To fix this potential division by zero error and ensure precise
+division handling, this commit replaces the 'do_div' macro with
+div64_u64(). div64_u64() is designed to work with 64-bit operands,
+guaranteeing that division is performed correctly.
 
- - the ioctl requires CAP_SYS_ADMIN
- - __kernel_write() bails out on read-only files - but only since 5.8,
-   see commit a01ac27be472 ("fs: check FMODE_WRITE in __kernel_write")
+This change enhances the robustness of the code, ensuring that division
+operations yield accurate results in all scenarios, eliminating the
+possibility of division by zero, and improving compatibility across
+different 64-bit environments.
 
-Reported-and-tested-by: syzbot+12e098239d20385264d3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=12e098239d20385264d3
-Fixes: 31db9f7c23fb ("Btrfs: introduce BTRFS_IOC_SEND for btrfs send/receive")
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Coly Li <colyli@suse.de>
+Link: https://lore.kernel.org/r/20231120052503.6122-5-colyli@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/send.c |    2 +-
+ drivers/md/bcache/sysfs.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -7381,7 +7381,7 @@ long btrfs_ioctl_send(struct file *mnt_f
- 	sctx->flags = arg->flags;
+--- a/drivers/md/bcache/sysfs.c
++++ b/drivers/md/bcache/sysfs.c
+@@ -1057,7 +1057,7 @@ SHOW(__bch_cache)
+ 			sum += INITIAL_PRIO - cached[i];
  
- 	sctx->send_filp = fget(arg->send_fd);
--	if (!sctx->send_filp) {
-+	if (!sctx->send_filp || !(sctx->send_filp->f_mode & FMODE_WRITE)) {
- 		ret = -EBADF;
- 		goto out;
- 	}
+ 		if (n)
+-			do_div(sum, n);
++			sum = div64_u64(sum, n);
+ 
+ 		for (i = 0; i < ARRAY_SIZE(q); i++)
+ 			q[i] = INITIAL_PRIO - cached[n * (i + 1) /
 
 
