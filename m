@@ -1,207 +1,101 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0CA5B1F7
-	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 12:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078C25C8E8
+	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 12:33:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="MbZbntuh";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="/yERIUnx"
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [10.150.64.98])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id A75501FB92;
-	Tue,  5 Dec 2023 12:21:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1701778882; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QLKfBbW7xxWM4CsEXWIqWY4fdOEzjqiwq5r4FFnDjsM=;
-	b=MbZbntuhGu0PcmxsNvhrDm1Nl7eikwyCVH+1Z+L5uy5XKseEEJdbyn9hHhmfdKUbFX4KoP
-	azeEpfd8Of8wjIDKG+FD+GnRsNuZaqN8Cue+sYvQZEQb8acBRnCFmqyplxlrepANjk4LPe
-	ICPNoPkBG2oNhka9IhggAro+CzEJPBw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1701778882;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=QLKfBbW7xxWM4CsEXWIqWY4fdOEzjqiwq5r4FFnDjsM=;
-	b=/yERIUnxMviXTF8/0KvBEBx/xUijvqixL1zYDc2+TVi5saHdiMB15w9WqfqA/LQWm/M8bw
-	MCQKgvBBhY+GkXDA==
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id 91709138FF;
-	Tue,  5 Dec 2023 12:21:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
-	by imap2.dmz-prg2.suse.org with ESMTPSA
-	id HWN7I8IVb2XNXAAAn2gu4w
-	(envelope-from <jack@suse.cz>); Tue, 05 Dec 2023 12:21:22 +0000
-Received: by quack3.suse.cz (Postfix, from userid 1000)
-	id 11DADA07DB; Tue,  5 Dec 2023 13:21:22 +0100 (CET)
-Date: Tue, 5 Dec 2023 13:21:22 +0100
-From: Jan Kara <jack@suse.cz>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jan Kara <jack@suse.cz>,
-	Daniel =?utf-8?B?RMOtYXo=?= <daniel.diaz@linaro.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, chrubis@suse.cz, linux-ext4@vger.kernel.org,
-	Ted Tso <tytso@mit.edu>
-Subject: ext4 data corruption in 6.1 stable tree (was Re: [PATCH 5.15
- 000/297] 5.15.140-rc1 review)
-Message-ID: <20231205122122.dfhhoaswsfscuhc3@quack3>
-References: <20231124172000.087816911@linuxfoundation.org>
- <81a11ebe-ea47-4e21-b5eb-536b1a723168@linaro.org>
- <20231127155557.xv5ljrdxcfcigjfa@quack3>
- <CAEUSe7_PUdRgJpY36jZxy84CbNX5TTnynqU8derf0ZBSDtUOqw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="ZCuiR87h"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-286e05d9408so439482a91.1
+        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 04:33:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1701779598; x=1702384398; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BEIoNxF1mrTxn6HSnGvsWW6Lj8x4H49yQ7QLKLr4Log=;
+        b=ZCuiR87hjtaDB/tzhqP4Jhw6I8g/PfRGKW8HXajqXkXKeqxkr/HFNBtqzEPEqN+51k
+         vqR4zXU3OrgHBm1Il1NYUh8MQWWrL9Wa4bzjtkhNiPzRI8jIcNlfbt9iBkPMBiGF4Jfh
+         ZYaUVY/jDI/pLHfjAZnX3/Rq6nUXA11g38STLQ0Hlrrw49+qgeYxhdEkiYVb6bbH9edI
+         M0AlGnd1PxGITCO/+AaYioCfgXI9QA66zVBd3KHa5gKRrx/yerDfjFGiEeueBnXa3YaV
+         EStg4edSKFSvXLvKW6oyvp6P3TIFsj6I6TwxLh6X5H71dspPGEkxfLJklOlln9M68m8Y
+         1wsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701779598; x=1702384398;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BEIoNxF1mrTxn6HSnGvsWW6Lj8x4H49yQ7QLKLr4Log=;
+        b=ehG+5Z5rzZMpQ0Qsyg4IavmWx33ZtLdYrF5nXMYAqXmwHMkLUYGOMj+qdaH3FxSJvZ
+         qnO7rxJp+M0HKPjy5HofGUuCvJF6Efww+2gdNt+O5g5Sf/S4z2j8oaARyOgQE88N5Zed
+         Iut4Odne6GM3Z9g7cDBBTb5p/F/5bgvXVFN4dRRbkC5KzzyKpNp3X/07Si2B/2Hplx4S
+         jzO/dCI8Jb2YGbIucVs7QHKeY+KUqCtztpYuNqfPPbs85CfU++ZeWQSj3nx5b2elAZ1G
+         4nq47fiQm66xZdZ9h4jtvSBPmzpfJual/rGaUzsq86NnFY8d6vrBZmCsbti8HTLJzr2H
+         esHA==
+X-Gm-Message-State: AOJu0YwJzHHve0PEEnXO4ama6poAliXmgE02nAP+bY2djM1Mh8MVPD1Y
+	yz135fm2Z9hnfRU1/V87vWcMisq0LCvTw77uoPk/jw==
+X-Google-Smtp-Source: AGHT+IFmxCGot2OM6nlx0JyueWaxvb9J9j2G+CNFzUEiV92bxkdPmAFtiCPtGPO2TgeTJq20Tc7gU4GzYbn/pv7Fc7o=
+X-Received: by 2002:a17:90b:3ec5:b0:286:6cc0:62a2 with SMTP id
+ rm5-20020a17090b3ec500b002866cc062a2mr1346799pjb.33.1701779598021; Tue, 05
+ Dec 2023 04:33:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEUSe7_PUdRgJpY36jZxy84CbNX5TTnynqU8derf0ZBSDtUOqw@mail.gmail.com>
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spam-Level: 
-X-Spam-Score: -2.10
-X-Spamd-Result: default: False [-2.10 / 50.00];
-	 ARC_NA(0.00)[];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 BAYES_HAM(-3.00)[100.00%];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
-	 TAGGED_RCPT(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 RCPT_COUNT_TWELVE(0.00)[22];
-	 DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:url,suse.cz:email];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 MID_RHS_NOT_FQDN(0.50)[];
-	 FREEMAIL_CC(0.00)[suse.cz,linaro.org,vger.kernel.org,lists.linux.dev,linux-foundation.org,roeck-us.net,kernel.org,kernelci.org,lists.linaro.org,denx.de,nvidia.com,gmail.com,sladewatkins.net,gmx.de,mit.edu];
-	 RCVD_TLS_ALL(0.00)[];
-	 SUSPICIOUS_RECIPS(1.50)[]
-X-Spam-Flag: NO
+References: <20231205031535.163661217@linuxfoundation.org>
+In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 5 Dec 2023 21:33:06 +0900
+Message-ID: <CAKL4bV4WEwo8bnVJcvAQEOx4yF5kcDtm_apaX6gwtRHPgM6J1Q@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/134] 6.6.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello!
+Hi Greg
 
-On Mon 27-11-23 11:32:12, Daniel Díaz wrote:
-> On Mon, 27 Nov 2023 at 09:56, Jan Kara <jack@suse.cz> wrote:
-> > On Fri 24-11-23 23:45:09, Daniel Díaz wrote:
-> > > On 24/11/23 11:50 a. m., Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 5.15.140 release.
-> > > > There are 297 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Sun, 26 Nov 2023 17:19:17 +0000.
-> > > > Anything received after that time might be too late.
-> > > >
-> > > > The whole patch series can be found in one patch at:
-> > > >     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.140-rc1.gz
-> > > > or in the git tree and branch at:
-> > > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > > and the diffstat can be found below.
-> > > >
-> > > > thanks,
-> > > >
-> > > > greg k-h
-> > >
-> > > We are noticing a regression with ltp-syscalls' preadv03:
-> >
-> > Thanks for report!
-> >
-> > > -----8<-----
-> > >   preadv03 preadv03
-> > >   preadv03_64 preadv03_64
-> > >   preadv03.c:102: TINFO: Using block size 512
-> > >   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'a' expectedly
-> > >   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'a' expectedly
-> > >   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'b' expectedly
-> > >   preadv03.c:102: TINFO: Using block size 512
-> > >   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
-> > >   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
-> > >   preadv03.c:66: TFAIL: preadv(O_DIRECT) read 0 bytes, expected 512
-> > >   preadv03.c:102: TINFO: Using block size 512
-> > >   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
-> > >   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
-> > >   preadv03.c:66: TFAIL: preadv(O_DIRECT) read 0 bytes, expected 512
-> > >   preadv03.c:102: TINFO: Using block size 512
-> > >   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'a' expectedly
-> > >   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'a' expectedly
-> > >   preadv03.c:87: TPASS: preadv(O_DIRECT) read 512 bytes successfully with content 'b' expectedly
-> > >   preadv03.c:102: TINFO: Using block size 512
-> > >   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
-> > >   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
-> > >   preadv03.c:66: TFAIL: preadv(O_DIRECT) read 0 bytes, expected 512
-> > >   preadv03.c:102: TINFO: Using block size 512
-> > >   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
-> > >   preadv03.c:77: TFAIL: Buffer wrong at 0 have 62 expected 61
-> > >   preadv03.c:66: TFAIL: preadv(O_DIRECT) read 0 bytes, expected 512
-> > > ----->8-----
-> > >
-> > > This is seen in the following environments:
-> > > * dragonboard-845c
-> > > * juno-64k_page_size
-> > > * qemu-arm64
-> > > * qemu-armv7
-> > > * qemu-i386
-> > > * qemu-x86_64
-> > > * x86_64-clang
-> > >
-> > > and on the following RC's:
-> > > * v5.10.202-rc1
-> > > * v5.15.140-rc1
-> > > * v6.1.64-rc1
-> >
-> > Hum, even in 6.1? That's odd. Can you please test whether current upstream
-> > vanilla kernel works for you with this test? Thanks!
-> 
-> Yes, this is working for us on mainline and next:
->   https://qa-reports.linaro.org/lkft/linux-mainline-master/tests/ltp-syscalls/preadv03
->   https://qa-reports.linaro.org/lkft/linux-next-master/tests/ltp-syscalls/preadv03
-> c.fr. 6.1:
->   https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/tests/ltp-syscalls/preadv03
-> 
-> Greetings!
+On Tue, Dec 5, 2023 at 12:21=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.5 release.
+> There are 134 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.5-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-So I've got back to this and the failure is a subtle interaction between
-iomap code and ext4 code. In particular that fact that commit 936e114a245b6
-("iomap: update ki_pos a little later in iomap_dio_complete") is not in
-stable causes that file position is not updated after direct IO write and
-thus we direct IO writes are ending in wrong locations effectively
-corrupting data. The subtle detail is that before this commit if ->end_io
-handler returns non-zero value (which the new ext4 ->end_io handler does),
-file pos doesn't get updated, after this commit it doesn't get updated only
-if the return value is < 0.
+6.6.5-rc1 tested.
 
-The commit got merged in 6.5-rc1 so all stable kernels that have
-91562895f803 ("ext4: properly sync file size update after O_SYNC direct
-IO") before 6.5 are corrupting data - I've noticed at least 6.1 is still
-carrying the problematic commit. Greg, please take out the commit from all
-stable kernels before 6.5 as soon as possible, we'll figure out proper
-backport once user data are not being corrupted anymore. Thanks!
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-								Honza
--- 
-Jan Kara <jack@suse.com>
-SUSE Labs, CR
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
