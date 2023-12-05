@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262DB6AC2;
-	Tue,  5 Dec 2023 03:43:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDA46AC2;
+	Tue,  5 Dec 2023 03:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jd/k5HRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4C6C433C8;
-	Tue,  5 Dec 2023 03:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rL76gpU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29117C433C7;
+	Tue,  5 Dec 2023 03:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747836;
-	bh=za8bCmGyZellGYpb7qbNNR1BXMlcqnal4XsfKQqgj+o=;
+	s=korg; t=1701747838;
+	bh=cSbwLlxh30DcphPvcArqtytdizblQkmmbdKhQiaCRy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jd/k5HRtdPnze4n7oEG1jtPGDEPjCBg+eNSyIuaVsYmHA3MlXLF5ee6SZNlKtHVkL
-	 YAc/OSXfLZ07Ro9W+03MulpOr4dMk8w/ArjhEtMijhzljEBQeYCU4+vQNOyA4Uicwm
-	 vB+BjEokAFAaG/TGtxEiAeBKjJ8A/B48ueAl2iv0=
+	b=0rL76gpUndeAG2wjXYKl47ylan2AUt0mj8WrXT1/2FUXa1C+PEm04tIBTeFimabYg
+	 vcy9m6xuVeM1SWT9UP4uZL26UtDVSoctzoZKDvqNt5u9BK8uMa7dK0ZgXw35sPsEuB
+	 x91b4S8AFxP/lTjMJn9QeDp7g+T1UeBQbo2CC000=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 06/94] drm/panel: simple: Fix Innolux G101ICE-L01 timings
-Date: Tue,  5 Dec 2023 12:16:34 +0900
-Message-ID: <20231205031523.230536747@linuxfoundation.org>
+Subject: [PATCH 5.4 07/94] ata: pata_isapnp: Add missing error check for devm_ioport_map()
+Date: Tue,  5 Dec 2023 12:16:35 +0900
+Message-ID: <20231205031523.276078340@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -42,54 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 3f9a91b6c00e655d27bd785dcda1742dbdc31bda ]
+[ Upstream commit a6925165ea82b7765269ddd8dcad57c731aa00de ]
 
-The Innolux G101ICE-L01 datasheet [1] page 17 table
-6.1 INPUT SIGNAL TIMING SPECIFICATIONS
-indicates that maximum vertical blanking time is 40 lines.
-Currently the driver uses 29 lines.
+Add missing error return check for devm_ioport_map() and return the
+error if this function call fails.
 
-Fix it, and since this panel is a DE panel, adjust the timings
-to make them less hostile to controllers which cannot do 1 px
-HSA/VSA, distribute the delays evenly between all three parts.
-
-[1] https://www.data-modul.com/sites/default/files/products/G101ICE-L01-C2-specification-12042389.pdf
-
-Fixes: 1e29b840af9f ("drm/panel: simple: Add Innolux G101ICE-L01 panel")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231008223256.279196-1-marex@denx.de
+Fixes: 0d5ff566779f ("libata: convert to iomap")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/ata/pata_isapnp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 5c3cc8bec2311..fd8b16dcf13e7 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -1647,13 +1647,13 @@ static const struct panel_desc innolux_g070y2_l01 = {
- static const struct display_timing innolux_g101ice_l01_timing = {
- 	.pixelclock = { 60400000, 71100000, 74700000 },
- 	.hactive = { 1280, 1280, 1280 },
--	.hfront_porch = { 41, 80, 100 },
--	.hback_porch = { 40, 79, 99 },
--	.hsync_len = { 1, 1, 1 },
-+	.hfront_porch = { 30, 60, 70 },
-+	.hback_porch = { 30, 60, 70 },
-+	.hsync_len = { 22, 40, 60 },
- 	.vactive = { 800, 800, 800 },
--	.vfront_porch = { 5, 11, 14 },
--	.vback_porch = { 4, 11, 14 },
--	.vsync_len = { 1, 1, 1 },
-+	.vfront_porch = { 3, 8, 14 },
-+	.vback_porch = { 3, 8, 14 },
-+	.vsync_len = { 4, 7, 12 },
- 	.flags = DISPLAY_FLAGS_DE_HIGH,
- };
- 
+diff --git a/drivers/ata/pata_isapnp.c b/drivers/ata/pata_isapnp.c
+index 43bb224430d3c..8892931ea8676 100644
+--- a/drivers/ata/pata_isapnp.c
++++ b/drivers/ata/pata_isapnp.c
+@@ -82,6 +82,9 @@ static int isapnp_init_one(struct pnp_dev *idev, const struct pnp_device_id *dev
+ 	if (pnp_port_valid(idev, 1)) {
+ 		ctl_addr = devm_ioport_map(&idev->dev,
+ 					   pnp_port_start(idev, 1), 1);
++		if (!ctl_addr)
++			return -ENOMEM;
++
+ 		ap->ioaddr.altstatus_addr = ctl_addr;
+ 		ap->ioaddr.ctl_addr = ctl_addr;
+ 		ap->ops = &isapnp_port_ops;
 -- 
 2.42.0
 
