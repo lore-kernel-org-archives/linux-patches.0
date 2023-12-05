@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1EA6AA0;
-	Tue,  5 Dec 2023 03:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6066AA0;
+	Tue,  5 Dec 2023 03:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5yRJJ/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5C5C433C8;
-	Tue,  5 Dec 2023 03:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdQguTXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63081C433C8;
+	Tue,  5 Dec 2023 03:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746454;
-	bh=rMfW0jI2AtAlx54wtX7DANMWrBWMM7Fu8CwL5xI0B+U=;
+	s=korg; t=1701746457;
+	bh=JRptZeS1dxXHEfFXBSbbsWnzCH6iQgGW9Z0GD1D5USg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w5yRJJ/gWx2Pb84JpsdnN4b/c/nc+HG+KU0ojJCBAM4onyrYXOcQqlUpfmH2pvZ/4
-	 k+nGEy7xfUhwm/Q9LqhZ425FFE8C/jWLAyeyb1RmviVRxvysTmz+xqNJE7GyGYK1tY
-	 An90lKdry1z8KJWJGGODLKOnX68ty797xXTYOUyU=
+	b=kdQguTXIPywZ8fjJp4oN2x47KSIB0HYHuUygr8kdVzB4A4BkZ1FZON/6nkMVLeXip
+	 QTDGh3HxwPIt1y/F6cF/mlr7OTX7v0T/L4VqvIIj6E7PJ2m+UVJBs5aY1qQNSap3G9
+	 cK9LSlhFZRixwjaaZTJqeFgorFs7l9jVwE1ATBjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 006/134] ksmbd: fix possible deadlock in smb2_open
-Date: Tue,  5 Dec 2023 12:14:38 +0900
-Message-ID: <20231205031535.620028931@linuxfoundation.org>
+	Maria Yu <quic_aiquny@quicinc.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.6 007/134] pinctrl: avoid reload of p state in list iteration
+Date: Tue,  5 Dec 2023 12:14:39 +0900
+Message-ID: <20231205031535.704001828@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -42,475 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Maria Yu <quic_aiquny@quicinc.com>
 
-commit 864fb5d3716303a045c3ffb397f651bfd37bfb36 upstream.
+commit 4198a9b571065978632276264e01d71d68000ac5 upstream.
 
-[ 8743.393379] ======================================================
-[ 8743.393385] WARNING: possible circular locking dependency detected
-[ 8743.393391] 6.4.0-rc1+ #11 Tainted: G           OE
-[ 8743.393397] ------------------------------------------------------
-[ 8743.393402] kworker/0:2/12921 is trying to acquire lock:
-[ 8743.393408] ffff888127a14460 (sb_writers#8){.+.+}-{0:0}, at: ksmbd_vfs_setxattr+0x3d/0xd0 [ksmbd]
-[ 8743.393510]
-               but task is already holding lock:
-[ 8743.393515] ffff8880360d97f0 (&type->i_mutex_dir_key#6/1){+.+.}-{3:3}, at: ksmbd_vfs_kern_path_locked+0x181/0x670 [ksmbd]
-[ 8743.393618]
-               which lock already depends on the new lock.
+When in the list_for_each_entry iteration, reload of p->state->settings
+with a local setting from old_state will turn the list iteration into an
+infinite loop.
 
-[ 8743.393623]
-               the existing dependency chain (in reverse order) is:
-[ 8743.393628]
-               -> #1 (&type->i_mutex_dir_key#6/1){+.+.}-{3:3}:
-[ 8743.393648]        down_write_nested+0x9a/0x1b0
-[ 8743.393660]        filename_create+0x128/0x270
-[ 8743.393670]        do_mkdirat+0xab/0x1f0
-[ 8743.393680]        __x64_sys_mkdir+0x47/0x60
-[ 8743.393690]        do_syscall_64+0x5d/0x90
-[ 8743.393701]        entry_SYSCALL_64_after_hwframe+0x72/0xdc
-[ 8743.393711]
-               -> #0 (sb_writers#8){.+.+}-{0:0}:
-[ 8743.393728]        __lock_acquire+0x2201/0x3b80
-[ 8743.393737]        lock_acquire+0x18f/0x440
-[ 8743.393746]        mnt_want_write+0x5f/0x240
-[ 8743.393755]        ksmbd_vfs_setxattr+0x3d/0xd0 [ksmbd]
-[ 8743.393839]        ksmbd_vfs_set_dos_attrib_xattr+0xcc/0x110 [ksmbd]
-[ 8743.393924]        compat_ksmbd_vfs_set_dos_attrib_xattr+0x39/0x50 [ksmbd]
-[ 8743.394010]        smb2_open+0x3432/0x3cc0 [ksmbd]
-[ 8743.394099]        handle_ksmbd_work+0x2c9/0x7b0 [ksmbd]
-[ 8743.394187]        process_one_work+0x65a/0xb30
-[ 8743.394198]        worker_thread+0x2cf/0x700
-[ 8743.394209]        kthread+0x1ad/0x1f0
-[ 8743.394218]        ret_from_fork+0x29/0x50
+The typical symptom when the issue happens, will be a printk message like:
 
-This patch add mnt_want_write() above parent inode lock and remove
-nested mnt_want_write calls in smb2_open().
+  "not freeing pin xx (xxx) as part of deactivating group xxx - it is
+already used for some other setting".
 
-Fixes: 40b268d384a2 ("ksmbd: add mnt_want_write to ksmbd vfs functions")
-Cc: stable@vger.kernel.org
-Reported-by: Marios Makassikis <mmakassikis@freebox.fr>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This is a compiler-dependent problem, one instance occurred using Clang
+version 10.0 on the arm64 architecture with linux version 4.19.
+
+Fixes: 6e5e959dde0d ("pinctrl: API changes to support multiple states per device")
+Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+Cc:  <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231115102824.23727-1-quic_aiquny@quicinc.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   47 +++++++++++++++------------------
- fs/smb/server/smbacl.c  |    7 ++--
- fs/smb/server/smbacl.h  |    2 -
- fs/smb/server/vfs.c     |   68 ++++++++++++++++++++++++++++--------------------
- fs/smb/server/vfs.h     |   10 ++++---
- 5 files changed, 75 insertions(+), 59 deletions(-)
+ drivers/pinctrl/core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2380,7 +2380,8 @@ static int smb2_set_ea(struct smb2_ea_in
- 			rc = 0;
- 		} else {
- 			rc = ksmbd_vfs_setxattr(idmap, path, attr_name, value,
--						le16_to_cpu(eabuf->EaValueLength), 0);
-+						le16_to_cpu(eabuf->EaValueLength),
-+						0, true);
- 			if (rc < 0) {
- 				ksmbd_debug(SMB,
- 					    "ksmbd_vfs_setxattr is failed(%d)\n",
-@@ -2443,7 +2444,7 @@ static noinline int smb2_set_stream_name
- 		return -EBADF;
- 	}
- 
--	rc = ksmbd_vfs_setxattr(idmap, path, xattr_stream_name, NULL, 0, 0);
-+	rc = ksmbd_vfs_setxattr(idmap, path, xattr_stream_name, NULL, 0, 0, false);
- 	if (rc < 0)
- 		pr_err("Failed to store XATTR stream name :%d\n", rc);
- 	return 0;
-@@ -2518,7 +2519,7 @@ static void smb2_new_xattrs(struct ksmbd
- 	da.flags = XATTR_DOSINFO_ATTRIB | XATTR_DOSINFO_CREATE_TIME |
- 		XATTR_DOSINFO_ITIME;
- 
--	rc = ksmbd_vfs_set_dos_attrib_xattr(mnt_idmap(path->mnt), path, &da);
-+	rc = ksmbd_vfs_set_dos_attrib_xattr(mnt_idmap(path->mnt), path, &da, false);
- 	if (rc)
- 		ksmbd_debug(SMB, "failed to store file attribute into xattr\n");
- }
-@@ -2608,7 +2609,7 @@ static int smb2_create_sd_buffer(struct
- 	    sizeof(struct create_sd_buf_req))
- 		return -EINVAL;
- 	return set_info_sec(work->conn, work->tcon, path, &sd_buf->ntsd,
--			    le32_to_cpu(sd_buf->ccontext.DataLength), true);
-+			    le32_to_cpu(sd_buf->ccontext.DataLength), true, false);
- }
- 
- static void ksmbd_acls_fattr(struct smb_fattr *fattr,
-@@ -3152,7 +3153,8 @@ int smb2_open(struct ksmbd_work *work)
- 								    idmap,
- 								    &path,
- 								    pntsd,
--								    pntsd_size);
-+								    pntsd_size,
-+								    false);
- 					kfree(pntsd);
- 					if (rc)
- 						pr_err("failed to store ntacl in xattr : %d\n",
-@@ -3228,12 +3230,6 @@ int smb2_open(struct ksmbd_work *work)
- 	if (req->CreateOptions & FILE_DELETE_ON_CLOSE_LE)
- 		ksmbd_fd_set_delete_on_close(fp, file_info);
- 
--	if (need_truncate) {
--		rc = smb2_create_truncate(&path);
--		if (rc)
--			goto err_out;
--	}
--
- 	if (req->CreateContextsOffset) {
- 		struct create_alloc_size_req *az_req;
- 
-@@ -3398,11 +3394,12 @@ int smb2_open(struct ksmbd_work *work)
- 	}
- 
- err_out:
--	if (file_present || created) {
--		inode_unlock(d_inode(parent_path.dentry));
--		path_put(&path);
--		path_put(&parent_path);
--	}
-+	if (file_present || created)
-+		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
-+
-+	if (fp && need_truncate)
-+		rc = smb2_create_truncate(&fp->filp->f_path);
-+
- 	ksmbd_revert_fsids(work);
- err_out1:
- 	if (!rc) {
-@@ -5537,7 +5534,7 @@ static int smb2_rename(struct ksmbd_work
- 		rc = ksmbd_vfs_setxattr(file_mnt_idmap(fp->filp),
- 					&fp->filp->f_path,
- 					xattr_stream_name,
--					NULL, 0, 0);
-+					NULL, 0, 0, true);
- 		if (rc < 0) {
- 			pr_err("failed to store stream name in xattr: %d\n",
- 			       rc);
-@@ -5630,11 +5627,9 @@ static int smb2_create_link(struct ksmbd
- 	if (rc)
- 		rc = -EINVAL;
- out:
--	if (file_present) {
--		inode_unlock(d_inode(parent_path.dentry));
--		path_put(&path);
--		path_put(&parent_path);
--	}
-+	if (file_present)
-+		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
-+
- 	if (!IS_ERR(link_name))
- 		kfree(link_name);
- 	kfree(pathname);
-@@ -5701,7 +5696,8 @@ static int set_file_basic_info(struct ks
- 		da.flags = XATTR_DOSINFO_ATTRIB | XATTR_DOSINFO_CREATE_TIME |
- 			XATTR_DOSINFO_ITIME;
- 
--		rc = ksmbd_vfs_set_dos_attrib_xattr(idmap, &filp->f_path, &da);
-+		rc = ksmbd_vfs_set_dos_attrib_xattr(idmap, &filp->f_path, &da,
-+				true);
- 		if (rc)
- 			ksmbd_debug(SMB,
- 				    "failed to restore file attribute in EA\n");
-@@ -6013,7 +6009,7 @@ static int smb2_set_info_sec(struct ksmb
- 	fp->saccess |= FILE_SHARE_DELETE_LE;
- 
- 	return set_info_sec(fp->conn, fp->tcon, &fp->filp->f_path, pntsd,
--			buf_len, false);
-+			buf_len, false, true);
- }
- 
- /**
-@@ -7582,7 +7578,8 @@ static inline int fsctl_set_sparse(struc
- 
- 		da.attr = le32_to_cpu(fp->f_ci->m_fattr);
- 		ret = ksmbd_vfs_set_dos_attrib_xattr(idmap,
--						     &fp->filp->f_path, &da);
-+						     &fp->filp->f_path,
-+						     &da, true);
- 		if (ret)
- 			fp->f_ci->m_fattr = old_fattr;
- 	}
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1185,7 +1185,7 @@ pass:
- 			pntsd_size += sizeof(struct smb_acl) + nt_size;
- 		}
- 
--		ksmbd_vfs_set_sd_xattr(conn, idmap, path, pntsd, pntsd_size);
-+		ksmbd_vfs_set_sd_xattr(conn, idmap, path, pntsd, pntsd_size, false);
- 		kfree(pntsd);
- 	}
- 
-@@ -1377,7 +1377,7 @@ err_out:
- 
- int set_info_sec(struct ksmbd_conn *conn, struct ksmbd_tree_connect *tcon,
- 		 const struct path *path, struct smb_ntsd *pntsd, int ntsd_len,
--		 bool type_check)
-+		 bool type_check, bool get_write)
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1253,17 +1253,17 @@ static void pinctrl_link_add(struct pinc
+ static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
  {
- 	int rc;
- 	struct smb_fattr fattr = {{0}};
-@@ -1437,7 +1437,8 @@ int set_info_sec(struct ksmbd_conn *conn
- 	if (test_share_config_flag(tcon->share_conf, KSMBD_SHARE_FLAG_ACL_XATTR)) {
- 		/* Update WinACL in xattr */
- 		ksmbd_vfs_remove_sd_xattrs(idmap, path);
--		ksmbd_vfs_set_sd_xattr(conn, idmap, path, pntsd, ntsd_len);
-+		ksmbd_vfs_set_sd_xattr(conn, idmap, path, pntsd, ntsd_len,
-+				get_write);
- 	}
+ 	struct pinctrl_setting *setting, *setting2;
+-	struct pinctrl_state *old_state = p->state;
++	struct pinctrl_state *old_state = READ_ONCE(p->state);
+ 	int ret;
  
- out:
---- a/fs/smb/server/smbacl.h
-+++ b/fs/smb/server/smbacl.h
-@@ -207,7 +207,7 @@ int smb_check_perm_dacl(struct ksmbd_con
- 			__le32 *pdaccess, int uid);
- int set_info_sec(struct ksmbd_conn *conn, struct ksmbd_tree_connect *tcon,
- 		 const struct path *path, struct smb_ntsd *pntsd, int ntsd_len,
--		 bool type_check);
-+		 bool type_check, bool get_write);
- void id_to_sid(unsigned int cid, uint sidtype, struct smb_sid *ssid);
- void ksmbd_init_domain(u32 *sub_auth);
- 
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -97,6 +97,13 @@ static int ksmbd_vfs_path_lookup_locked(
- 		return -ENOENT;
- 	}
- 
-+	err = mnt_want_write(parent_path->mnt);
-+	if (err) {
-+		path_put(parent_path);
-+		putname(filename);
-+		return -ENOENT;
-+	}
-+
- 	inode_lock_nested(parent_path->dentry->d_inode, I_MUTEX_PARENT);
- 	d = lookup_one_qstr_excl(&last, parent_path->dentry, 0);
- 	if (IS_ERR(d))
-@@ -123,6 +130,7 @@ static int ksmbd_vfs_path_lookup_locked(
- 
- err_out:
- 	inode_unlock(d_inode(parent_path->dentry));
-+	mnt_drop_write(parent_path->mnt);
- 	path_put(parent_path);
- 	putname(filename);
- 	return -ENOENT;
-@@ -451,7 +459,8 @@ static int ksmbd_vfs_stream_write(struct
- 				 fp->stream.name,
- 				 (void *)stream_buf,
- 				 size,
--				 0);
-+				 0,
-+				 true);
- 	if (err < 0)
- 		goto out;
- 
-@@ -593,10 +602,6 @@ int ksmbd_vfs_remove_file(struct ksmbd_w
- 		goto out_err;
- 	}
- 
--	err = mnt_want_write(path->mnt);
--	if (err)
--		goto out_err;
--
- 	idmap = mnt_idmap(path->mnt);
- 	if (S_ISDIR(d_inode(path->dentry)->i_mode)) {
- 		err = vfs_rmdir(idmap, d_inode(parent), path->dentry);
-@@ -607,7 +612,6 @@ int ksmbd_vfs_remove_file(struct ksmbd_w
- 		if (err)
- 			ksmbd_debug(VFS, "unlink failed, err %d\n", err);
- 	}
--	mnt_drop_write(path->mnt);
- 
- out_err:
- 	ksmbd_revert_fsids(work);
-@@ -907,18 +911,22 @@ ssize_t ksmbd_vfs_getxattr(struct mnt_id
-  * @attr_value:	xattr value to set
-  * @attr_size:	size of xattr value
-  * @flags:	destination buffer length
-+ * @get_write:	get write access to a mount
-  *
-  * Return:	0 on success, otherwise error
-  */
- int ksmbd_vfs_setxattr(struct mnt_idmap *idmap,
- 		       const struct path *path, const char *attr_name,
--		       void *attr_value, size_t attr_size, int flags)
-+		       void *attr_value, size_t attr_size, int flags,
-+		       bool get_write)
- {
- 	int err;
- 
--	err = mnt_want_write(path->mnt);
--	if (err)
--		return err;
-+	if (get_write == true) {
-+		err = mnt_want_write(path->mnt);
-+		if (err)
-+			return err;
-+	}
- 
- 	err = vfs_setxattr(idmap,
- 			   path->dentry,
-@@ -928,7 +936,8 @@ int ksmbd_vfs_setxattr(struct mnt_idmap
- 			   flags);
- 	if (err)
- 		ksmbd_debug(VFS, "setxattr failed, err %d\n", err);
--	mnt_drop_write(path->mnt);
-+	if (get_write == true)
-+		mnt_drop_write(path->mnt);
- 	return err;
- }
- 
-@@ -1251,6 +1260,13 @@ out1:
- 	}
- 
- 	if (!err) {
-+		err = mnt_want_write(parent_path->mnt);
-+		if (err) {
-+			path_put(path);
-+			path_put(parent_path);
-+			return err;
-+		}
-+
- 		err = ksmbd_vfs_lock_parent(parent_path->dentry, path->dentry);
- 		if (err) {
- 			path_put(path);
-@@ -1260,6 +1276,14 @@ out1:
- 	return err;
- }
- 
-+void ksmbd_vfs_kern_path_unlock(struct path *parent_path, struct path *path)
-+{
-+	inode_unlock(d_inode(parent_path->dentry));
-+	mnt_drop_write(parent_path->mnt);
-+	path_put(path);
-+	path_put(parent_path);
-+}
-+
- struct dentry *ksmbd_vfs_kern_path_create(struct ksmbd_work *work,
- 					  const char *name,
- 					  unsigned int flags,
-@@ -1414,7 +1438,8 @@ out:
- int ksmbd_vfs_set_sd_xattr(struct ksmbd_conn *conn,
- 			   struct mnt_idmap *idmap,
- 			   const struct path *path,
--			   struct smb_ntsd *pntsd, int len)
-+			   struct smb_ntsd *pntsd, int len,
-+			   bool get_write)
- {
- 	int rc;
- 	struct ndr sd_ndr = {0}, acl_ndr = {0};
-@@ -1474,7 +1499,7 @@ int ksmbd_vfs_set_sd_xattr(struct ksmbd_
- 
- 	rc = ksmbd_vfs_setxattr(idmap, path,
- 				XATTR_NAME_SD, sd_ndr.data,
--				sd_ndr.offset, 0);
-+				sd_ndr.offset, 0, get_write);
- 	if (rc < 0)
- 		pr_err("Failed to store XATTR ntacl :%d\n", rc);
- 
-@@ -1563,7 +1588,8 @@ free_n_data:
- 
- int ksmbd_vfs_set_dos_attrib_xattr(struct mnt_idmap *idmap,
- 				   const struct path *path,
--				   struct xattr_dos_attrib *da)
-+				   struct xattr_dos_attrib *da,
-+				   bool get_write)
- {
- 	struct ndr n;
- 	int err;
-@@ -1573,7 +1599,7 @@ int ksmbd_vfs_set_dos_attrib_xattr(struc
- 		return err;
- 
- 	err = ksmbd_vfs_setxattr(idmap, path, XATTR_NAME_DOS_ATTRIBUTE,
--				 (void *)n.data, n.offset, 0);
-+				 (void *)n.data, n.offset, 0, get_write);
- 	if (err)
- 		ksmbd_debug(SMB, "failed to store dos attribute in xattr\n");
- 	kfree(n.data);
-@@ -1845,10 +1871,6 @@ int ksmbd_vfs_set_init_posix_acl(struct
- 	}
- 	posix_state_to_acl(&acl_state, acls->a_entries);
- 
--	rc = mnt_want_write(path->mnt);
--	if (rc)
--		goto out_err;
--
- 	rc = set_posix_acl(idmap, dentry, ACL_TYPE_ACCESS, acls);
- 	if (rc < 0)
- 		ksmbd_debug(SMB, "Set posix acl(ACL_TYPE_ACCESS) failed, rc : %d\n",
-@@ -1860,9 +1882,7 @@ int ksmbd_vfs_set_init_posix_acl(struct
- 			ksmbd_debug(SMB, "Set posix acl(ACL_TYPE_DEFAULT) failed, rc : %d\n",
- 				    rc);
- 	}
--	mnt_drop_write(path->mnt);
- 
--out_err:
- 	free_acl_state(&acl_state);
- 	posix_acl_release(acls);
- 	return rc;
-@@ -1892,10 +1912,6 @@ int ksmbd_vfs_inherit_posix_acl(struct m
- 		}
- 	}
- 
--	rc = mnt_want_write(path->mnt);
--	if (rc)
--		goto out_err;
--
- 	rc = set_posix_acl(idmap, dentry, ACL_TYPE_ACCESS, acls);
- 	if (rc < 0)
- 		ksmbd_debug(SMB, "Set posix acl(ACL_TYPE_ACCESS) failed, rc : %d\n",
-@@ -1907,9 +1923,7 @@ int ksmbd_vfs_inherit_posix_acl(struct m
- 			ksmbd_debug(SMB, "Set posix acl(ACL_TYPE_DEFAULT) failed, rc : %d\n",
- 				    rc);
- 	}
--	mnt_drop_write(path->mnt);
- 
--out_err:
- 	posix_acl_release(acls);
- 	return rc;
- }
---- a/fs/smb/server/vfs.h
-+++ b/fs/smb/server/vfs.h
-@@ -109,7 +109,8 @@ ssize_t ksmbd_vfs_casexattr_len(struct m
- 				int attr_name_len);
- int ksmbd_vfs_setxattr(struct mnt_idmap *idmap,
- 		       const struct path *path, const char *attr_name,
--		       void *attr_value, size_t attr_size, int flags);
-+		       void *attr_value, size_t attr_size, int flags,
-+		       bool get_write);
- int ksmbd_vfs_xattr_stream_name(char *stream_name, char **xattr_stream_name,
- 				size_t *xattr_stream_name_size, int s_type);
- int ksmbd_vfs_remove_xattr(struct mnt_idmap *idmap,
-@@ -117,6 +118,7 @@ int ksmbd_vfs_remove_xattr(struct mnt_id
- int ksmbd_vfs_kern_path_locked(struct ksmbd_work *work, char *name,
- 			       unsigned int flags, struct path *parent_path,
- 			       struct path *path, bool caseless);
-+void ksmbd_vfs_kern_path_unlock(struct path *parent_path, struct path *path);
- struct dentry *ksmbd_vfs_kern_path_create(struct ksmbd_work *work,
- 					  const char *name,
- 					  unsigned int flags,
-@@ -144,14 +146,16 @@ int ksmbd_vfs_remove_sd_xattrs(struct mn
- int ksmbd_vfs_set_sd_xattr(struct ksmbd_conn *conn,
- 			   struct mnt_idmap *idmap,
- 			   const struct path *path,
--			   struct smb_ntsd *pntsd, int len);
-+			   struct smb_ntsd *pntsd, int len,
-+			   bool get_write);
- int ksmbd_vfs_get_sd_xattr(struct ksmbd_conn *conn,
- 			   struct mnt_idmap *idmap,
- 			   struct dentry *dentry,
- 			   struct smb_ntsd **pntsd);
- int ksmbd_vfs_set_dos_attrib_xattr(struct mnt_idmap *idmap,
- 				   const struct path *path,
--				   struct xattr_dos_attrib *da);
-+				   struct xattr_dos_attrib *da,
-+				   bool get_write);
- int ksmbd_vfs_get_dos_attrib_xattr(struct mnt_idmap *idmap,
- 				   struct dentry *dentry,
- 				   struct xattr_dos_attrib *da);
+-	if (p->state) {
++	if (old_state) {
+ 		/*
+ 		 * For each pinmux setting in the old state, forget SW's record
+ 		 * of mux owner for that pingroup. Any pingroups which are
+ 		 * still owned by the new state will be re-acquired by the call
+ 		 * to pinmux_enable_setting() in the loop below.
+ 		 */
+-		list_for_each_entry(setting, &p->state->settings, node) {
++		list_for_each_entry(setting, &old_state->settings, node) {
+ 			if (setting->type != PIN_MAP_TYPE_MUX_GROUP)
+ 				continue;
+ 			pinmux_disable_setting(setting);
 
 
