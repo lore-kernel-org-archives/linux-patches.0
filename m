@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A190B6FB1;
-	Tue,  5 Dec 2023 03:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2938BF7;
+	Tue,  5 Dec 2023 03:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ro1DiGmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E78C433C9;
-	Tue,  5 Dec 2023 03:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdJn7OqD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90C8C433C7;
+	Tue,  5 Dec 2023 03:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747333;
-	bh=8FIbPu8nE9/3RfqNvzuHVbn0UnagqtwlqKBrIaD/91c=;
+	s=korg; t=1701747336;
+	bh=tQ/tMCla90fQnqLOZZ06erXaytHHo8hGB2rCqHeafro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ro1DiGmqshCX8tOgxU5AKuxdX7HsgSkkOZV280OuZDYBVjRCf5njMdYdytLJJ+6UP
-	 MwUPMu81q4dAQSd/+xsYPnmWgAZGUh4VRSZmx+QTbTUwVtLrQFGKqhpp8n8l0FiWRV
-	 AUTPrN3j/U72FNf6K1T9iJ/jkU7xLjhxcnEELMJs=
+	b=RdJn7OqDAOC+8oMomFwVMCj2pld82QzxTl25kvthFbM1nfrpwpguUwmY6Yh30keab
+	 UB7sZjEOGyL2YcE5LZ7dyTCGtPb4cwoRdjjBJ2+LhlDa3h+e853Mc4tdaeEWstnIE0
+	 x7gGjIkLBWBFMIne6/4KzgscTa4KXzhmyCTORID0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Subject: [PATCH 5.10 002/135] PCI: keystone: Drop __init from ks_pcie_add_pcie_{ep,port}()
-Date: Tue,  5 Dec 2023 12:15:23 +0900
-Message-ID: <20231205031530.693370434@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 030/135] afs: Fix file locking on R/O volumes to operate in local mode
+Date: Tue,  5 Dec 2023 12:15:51 +0900
+Message-ID: <20231205031532.569207164@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -36,76 +37,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: David Howells <dhowells@redhat.com>
 
-This commit has no upstream equivalent.
+[ Upstream commit b590eb41be766c5a63acc7e8896a042f7a4e8293 ]
 
-After commit db5ebaeb8fda ("PCI: keystone: Don't discard .probe()
-callback") in 5.10.202, there are two modpost warnings when building with
-clang:
+AFS doesn't really do locking on R/O volumes as fileservers don't maintain
+state with each other and thus a lock on a R/O volume file on one
+fileserver will not be be visible to someone looking at the same file on
+another fileserver.
 
-  WARNING: modpost: vmlinux.o(.text+0x5aa6dc): Section mismatch in reference from the function ks_pcie_probe() to the function .init.text:ks_pcie_add_pcie_port()
-  The function ks_pcie_probe() references
-  the function __init ks_pcie_add_pcie_port().
-  This is often because ks_pcie_probe lacks a __init
-  annotation or the annotation of ks_pcie_add_pcie_port is wrong.
+Further, the server may return an error if you try it.
 
-  WARNING: modpost: vmlinux.o(.text+0x5aa6f4): Section mismatch in reference from the function ks_pcie_probe() to the function .init.text:ks_pcie_add_pcie_ep()
-  The function ks_pcie_probe() references
-  the function __init ks_pcie_add_pcie_ep().
-  This is often because ks_pcie_probe lacks a __init
-  annotation or the annotation of ks_pcie_add_pcie_ep is wrong.
+Fix this by doing what other AFS clients do and handle filelocking on R/O
+volume files entirely within the client and don't touch the server.
 
-ks_pcie_add_pcie_ep() was removed in upstream commit a0fd361db8e5 ("PCI:
-dwc: Move "dbi", "dbi2", and "addr_space" resource setup into common
-code") and ks_pcie_add_pcie_port() was removed in upstream
-commit 60f5b73fa0f2 ("PCI: dwc: Remove unnecessary wrappers around
-dw_pcie_host_init()"), both of which happened before upstream
-commit 7994db905c0f ("PCI: keystone: Don't discard .probe() callback").
-
-As neither of these removal changes are really suitable for stable, just
-remove __init from these functions in stable, as it is no longer a
-correct annotation after dropping __init from ks_pcie_probe().
-
-Fixes: 012dba0ab814 ("PCI: keystone: Don't discard .probe() callback")
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6c6c1d63c243 ("afs: Provide mount-time configurable byte-range file locking emulation")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/afs/super.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -865,8 +865,8 @@ static irqreturn_t ks_pcie_err_irq_handl
- 	return ks_pcie_handle_error_irq(ks_pcie);
- }
+diff --git a/fs/afs/super.c b/fs/afs/super.c
+index e38bb1e7a4d22..1b62a99b36731 100644
+--- a/fs/afs/super.c
++++ b/fs/afs/super.c
+@@ -406,6 +406,8 @@ static int afs_validate_fc(struct fs_context *fc)
+ 			return PTR_ERR(volume);
  
--static int __init ks_pcie_add_pcie_port(struct keystone_pcie *ks_pcie,
--					struct platform_device *pdev)
-+static int ks_pcie_add_pcie_port(struct keystone_pcie *ks_pcie,
-+				 struct platform_device *pdev)
- {
- 	struct dw_pcie *pci = ks_pcie->pci;
- 	struct pcie_port *pp = &pci->pp;
-@@ -978,8 +978,8 @@ static const struct dw_pcie_ep_ops ks_pc
- 	.get_features = &ks_pcie_am654_get_features,
- };
+ 		ctx->volume = volume;
++		if (volume->type != AFSVL_RWVOL)
++			ctx->flock_mode = afs_flock_mode_local;
+ 	}
  
--static int __init ks_pcie_add_pcie_ep(struct keystone_pcie *ks_pcie,
--				      struct platform_device *pdev)
-+static int ks_pcie_add_pcie_ep(struct keystone_pcie *ks_pcie,
-+			       struct platform_device *pdev)
- {
- 	int ret;
- 	struct dw_pcie_ep *ep;
+ 	return 0;
+-- 
+2.42.0
+
 
 
