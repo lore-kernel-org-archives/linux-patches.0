@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389DD6FB1;
-	Tue,  5 Dec 2023 03:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105426FB1;
+	Tue,  5 Dec 2023 03:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhzAJvxW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C597EC433C7;
-	Tue,  5 Dec 2023 03:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAU0buOT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2CCC433C7;
+	Tue,  5 Dec 2023 03:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747148;
-	bh=HmXeeHZOQsrmxgPMMxZWKzM0U+5i/DU+6tVIihsXv/A=;
+	s=korg; t=1701747150;
+	bh=bUs2yl1M0i/THoQs5l2tF82p/MRzJKl0JzfuLo7Lx8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhzAJvxWK5cG3MafQChZFqstqSGnywCRTN9QUShXisjWcXcztROuprIzBMSpq3XeQ
-	 nqmTVGMTNN+b46ttlCw9213F2CUO6q4to5r5YLuj2cHBdDoQx5BaQu+q/bNVV9ueBr
-	 hgeevZ0t7iIv2EluncTLF2XeewDikYgCVhwQ0Zqw=
+	b=GAU0buOTuL2lBzWBujrl05iMQW5Ve3gfCW9mZC10k2mHT1M4my9OMQXLJfOT1ebsR
+	 jYY21nZG2qc/cpc89D1BpKwiF80vEB7bOVl4NV3+idae8milKYwTKqeQjdWE5/2gwO
+	 DhQU2K8DoaDy37a75qZAI27aU/Vodz7/dJtX8BhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Haitao Shan <hshan@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/107] net: ravb: Keep reverse order of operations in ravb_remove()
-Date: Tue,  5 Dec 2023 12:16:52 +0900
-Message-ID: <20231205031536.332967162@linuxfoundation.org>
+Subject: [PATCH 6.1 078/107] KVM: x86: Fix lapic timer interrupt lost after loading a snapshot.
+Date: Tue,  5 Dec 2023 12:16:53 +0900
+Message-ID: <20231205031536.401909337@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -43,139 +42,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Haitao Shan <hshan@google.com>
 
-[ Upstream commit edf9bc396e05081ca281ffb0cd41e44db478ff26 ]
+[ Upstream commit 9cfec6d097c607e36199cf0cfbb8cf5acbd8e9b2 ]
 
-On RZ/G3S SMARC Carrier II board having RGMII connections b/w Ethernet
-MACs and PHYs it has been discovered that doing unbind/bind for ravb
-driver in a loop leads to wrong speed and duplex for Ethernet links and
-broken connectivity (the connectivity cannot be restored even with
-bringing interface down/up). Before doing unbind/bind the Ethernet
-interfaces were configured though systemd. The sh instructions used to
-do unbind/bind were:
+When running android emulator (which is based on QEMU 2.12) on
+certain Intel hosts with kernel version 6.3-rc1 or above, guest
+will freeze after loading a snapshot. This is almost 100%
+reproducible. By default, the android emulator will use snapshot
+to speed up the next launching of the same android guest. So
+this breaks the android emulator badly.
 
-$ cd /sys/bus/platform/drivers/ravb/
-$ while :; do echo 11c30000.ethernet > unbind ; \
-  echo 11c30000.ethernet > bind; done
+I tested QEMU 8.0.4 from Debian 12 with an Ubuntu 22.04 guest by
+running command "loadvm" after "savevm". The same issue is
+observed. At the same time, none of our AMD platforms is impacted.
+More experiments show that loading the KVM module with
+"enable_apicv=false" can workaround it.
 
-It has been discovered that there is a race b/w IOCTLs initialized by
-systemd at the response of success binding and the
-"ravb_write(ndev, CCC_OPC_RESET, CCC)" call in ravb_remove() as
-follows:
+The issue started to show up after commit 8e6ed96cdd50 ("KVM: x86:
+fire timer when it is migrated and expired, and in oneshot mode").
+However, as is pointed out by Sean Christopherson, it is introduced
+by commit 967235d32032 ("KVM: vmx: clear pending interrupts on
+KVM_SET_LAPIC"). commit 8e6ed96cdd50 ("KVM: x86: fire timer when
+it is migrated and expired, and in oneshot mode") just makes it
+easier to hit the issue.
 
-1/ as a result of bind success the user space open/configures the
-   interfaces tough an IOCTL; the following stack trace has been
-   identified on RZ/G3S:
+Having both commits, the oneshot lapic timer gets fired immediately
+inside the KVM_SET_LAPIC call when loading the snapshot. On Intel
+platforms with APIC virtualization and posted interrupt processing,
+this eventually leads to setting the corresponding PIR bit. However,
+the whole PIR bits get cleared later in the same KVM_SET_LAPIC call
+by apicv_post_state_restore. This leads to timer interrupt lost.
 
-Call trace:
-dump_backtrace+0x9c/0x100
-show_stack+0x20/0x38
-dump_stack_lvl+0x48/0x60
-dump_stack+0x18/0x28
-ravb_open+0x70/0xa58
-__dev_open+0xf4/0x1e8
-__dev_change_flags+0x198/0x218
-dev_change_flags+0x2c/0x80
-devinet_ioctl+0x640/0x708
-inet_ioctl+0x1e4/0x200
-sock_do_ioctl+0x50/0x108
-sock_ioctl+0x240/0x358
-__arm64_sys_ioctl+0xb0/0x100
-invoke_syscall+0x50/0x128
-el0_svc_common.constprop.0+0xc8/0xf0
-do_el0_svc+0x24/0x38
-el0_svc+0x34/0xb8
-el0t_64_sync_handler+0xc0/0xc8
-el0t_64_sync+0x190/0x198
+The fix is to move vmx_apicv_post_state_restore to the beginning of
+the KVM_SET_LAPIC call and rename to vmx_apicv_pre_state_restore.
+What vmx_apicv_post_state_restore does is actually clearing any
+former apicv state and this behavior is more suitable to carry out
+in the beginning.
 
-2/ this call may execute concurrently with ravb_remove() as the
-   unbind/bind operation was executed in a loop
-3/ if the operation mode is changed to RESET (through
-   ravb_write(ndev, CCC_OPC_RESET, CCC) call in ravb_remove())
-   while the above ravb_open() is in progress it may lead to MAC
-   (or PHY, or MAC-PHY connection, the right point hasn't been identified
-   at the moment) to be broken, thus the Ethernet connectivity fails to
-   restore.
-
-The simple fix for this is to move ravb_write(ndev, CCC_OPC_RESET, CCC))
-after unregister_netdev() to avoid resetting the controller while the
-netdev interface is still registered.
-
-To avoid future issues in ravb_remove(), the patch follows the proper order
-of operations in ravb_remove(): reverse order compared with ravb_probe().
-This avoids described races as the IOCTLs as well as unregister_netdev()
-(called now at the beginning of ravb_remove()) calls rtnl_lock() before
-continuing and IOCTLs check (though devinet_ioctl()) if device is still
-registered just after taking the lock:
-
-int devinet_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr)
-{
-	// ...
-
-        rtnl_lock();
-
-        ret = -ENODEV;
-        dev = __dev_get_by_name(net, ifr->ifr_name);
-        if (!dev)
-                goto done;
-
-	// ...
-done:
-        rtnl_unlock();
-out:
-        return ret;
-}
-
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 967235d32032 ("KVM: vmx: clear pending interrupts on KVM_SET_LAPIC")
+Cc: stable@vger.kernel.org
+Suggested-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Haitao Shan <hshan@google.com>
+Link: https://lore.kernel.org/r/20230913000215.478387-1-hshan@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ arch/x86/include/asm/kvm-x86-ops.h | 1 +
+ arch/x86/include/asm/kvm_host.h    | 1 +
+ arch/x86/kvm/lapic.c               | 4 ++++
+ arch/x86/kvm/vmx/vmx.c             | 4 ++--
+ 4 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index e1c4a0ca4493f..68cb5616ef991 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2919,22 +2919,26 @@ static int ravb_remove(struct platform_device *pdev)
- 	struct ravb_private *priv = netdev_priv(ndev);
- 	const struct ravb_hw_info *info = priv->info;
+diff --git a/arch/x86/include/asm/kvm-x86-ops.h b/arch/x86/include/asm/kvm-x86-ops.h
+index 2c6698aa218b1..abc07d0045897 100644
+--- a/arch/x86/include/asm/kvm-x86-ops.h
++++ b/arch/x86/include/asm/kvm-x86-ops.h
+@@ -106,6 +106,7 @@ KVM_X86_OP_OPTIONAL(vcpu_blocking)
+ KVM_X86_OP_OPTIONAL(vcpu_unblocking)
+ KVM_X86_OP_OPTIONAL(pi_update_irte)
+ KVM_X86_OP_OPTIONAL(pi_start_assignment)
++KVM_X86_OP_OPTIONAL(apicv_pre_state_restore)
+ KVM_X86_OP_OPTIONAL(apicv_post_state_restore)
+ KVM_X86_OP_OPTIONAL_RET0(dy_apicv_has_pending_interrupt)
+ KVM_X86_OP_OPTIONAL(set_hv_timer)
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index c1dcaa3d2d6eb..dfcdcafe3a2cd 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1603,6 +1603,7 @@ struct kvm_x86_ops {
+ 	int (*pi_update_irte)(struct kvm *kvm, unsigned int host_irq,
+ 			      uint32_t guest_irq, bool set);
+ 	void (*pi_start_assignment)(struct kvm *kvm);
++	void (*apicv_pre_state_restore)(struct kvm_vcpu *vcpu);
+ 	void (*apicv_post_state_restore)(struct kvm_vcpu *vcpu);
+ 	bool (*dy_apicv_has_pending_interrupt)(struct kvm_vcpu *vcpu);
  
--	/* Stop PTP Clock driver */
--	if (info->ccc_gac)
--		ravb_ptp_stop(ndev);
--
--	clk_disable_unprepare(priv->gptp_clk);
--	clk_disable_unprepare(priv->refclk);
--
--	/* Set reset mode */
--	ravb_write(ndev, CCC_OPC_RESET, CCC);
- 	unregister_netdev(ndev);
- 	if (info->nc_queues)
- 		netif_napi_del(&priv->napi[RAVB_NC]);
- 	netif_napi_del(&priv->napi[RAVB_BE]);
+diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
+index 4dba0a84ba2f3..edcf45e312b99 100644
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2446,6 +2446,8 @@ void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
+ 	u64 msr_val;
+ 	int i;
+ 
++	static_call_cond(kvm_x86_apicv_pre_state_restore)(vcpu);
 +
- 	ravb_mdio_release(priv);
+ 	if (!init_event) {
+ 		msr_val = APIC_DEFAULT_PHYS_BASE | MSR_IA32_APICBASE_ENABLE;
+ 		if (kvm_vcpu_is_reset_bsp(vcpu))
+@@ -2757,6 +2759,8 @@ int kvm_apic_set_state(struct kvm_vcpu *vcpu, struct kvm_lapic_state *s)
+ 	struct kvm_lapic *apic = vcpu->arch.apic;
+ 	int r;
+ 
++	static_call_cond(kvm_x86_apicv_pre_state_restore)(vcpu);
 +
-+	/* Stop PTP Clock driver */
-+	if (info->ccc_gac)
-+		ravb_ptp_stop(ndev);
-+
- 	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
- 			  priv->desc_bat_dma);
-+
-+	/* Set reset mode */
-+	ravb_write(ndev, CCC_OPC_RESET, CCC);
-+
-+	clk_disable_unprepare(priv->gptp_clk);
-+	clk_disable_unprepare(priv->refclk);
-+
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	reset_control_assert(priv->rstc);
+ 	kvm_lapic_set_base(vcpu, vcpu->arch.apic_base);
+ 	/* set SPIV separately to get count of SW disabled APICs right */
+ 	apic_set_spiv(apic, *((u32 *)(s->regs + APIC_SPIV)));
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 31a10d774df6d..98d732b9418f1 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6799,7 +6799,7 @@ static void vmx_load_eoi_exitmap(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap)
+ 	vmcs_write64(EOI_EXIT_BITMAP3, eoi_exit_bitmap[3]);
+ }
+ 
+-static void vmx_apicv_post_state_restore(struct kvm_vcpu *vcpu)
++static void vmx_apicv_pre_state_restore(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+ 
+@@ -8172,7 +8172,7 @@ static struct kvm_x86_ops vmx_x86_ops __initdata = {
+ 	.set_apic_access_page_addr = vmx_set_apic_access_page_addr,
+ 	.refresh_apicv_exec_ctrl = vmx_refresh_apicv_exec_ctrl,
+ 	.load_eoi_exitmap = vmx_load_eoi_exitmap,
+-	.apicv_post_state_restore = vmx_apicv_post_state_restore,
++	.apicv_pre_state_restore = vmx_apicv_pre_state_restore,
+ 	.check_apicv_inhibit_reasons = vmx_check_apicv_inhibit_reasons,
+ 	.hwapic_irr_update = vmx_hwapic_irr_update,
+ 	.hwapic_isr_update = vmx_hwapic_isr_update,
 -- 
 2.42.0
 
