@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8B86AA0;
-	Tue,  5 Dec 2023 03:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD806AA0;
+	Tue,  5 Dec 2023 03:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fj1Q5+Xq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6A8C433C7;
-	Tue,  5 Dec 2023 03:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcFlcy2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5CCC433C8;
+	Tue,  5 Dec 2023 03:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746408;
-	bh=S/iUYw8QHlxdu9rxsM4lDn/fFLd2TBtZCCxNRmrcRWY=;
+	s=korg; t=1701746411;
+	bh=l1WaXzmTvTcV0wxf33rR1pdinoHjqyWGoAhbVYQGKi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fj1Q5+Xq4pm6sKFz+GSdKTnFSVUmK0SVaXGrBr6k+F6pNVc7mPmnjiC/yf84BsUkW
-	 LwRVA/WIw55kSpxGzNFNDqY4Kq3liQJ1M+B0WwWtOSXbyzRc9FA4IsTIcn8btvCPxv
-	 vMEzp2qLaC/cA0xVYIk0Qhox/YEorilZzmzKIajo=
+	b=hcFlcy2KtLar0ZoUmEzJtT/86wUVhLRhRM7CgpOZ5U61uEAGWCH6IK7Ps+fT4QZ8Z
+	 QbDjRR9HA0orEQJwENPd7hSz1EtsObFsAx4i2+/DtkfcC351CEfh/IfMHYgQjsdelr
+	 v9+Cvih/6AQ3i42W5NrI8wzvUqcOJu+/Cbf3/V/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Avri Altman <avri.altman@wdc.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 014/134] mmc: block: Retry commands in CQE error recovery
-Date: Tue,  5 Dec 2023 12:14:46 +0900
-Message-ID: <20231205031536.201678292@linuxfoundation.org>
+Subject: [PATCH 6.6 015/134] mmc: block: Do not lose cache flush during CQE error recovery
+Date: Tue,  5 Dec 2023 12:14:47 +0900
+Message-ID: <20231205031536.266608529@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -44,48 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 8155d1fa3a747baad5caff5f8303321d68ddd48c upstream.
+commit 174925d340aac55296318e43fd96c0e1d196e105 upstream.
 
-It is important that MMC_CMDQ_TASK_MGMT command to discard the queue is
-successful because otherwise a subsequent reset might fail to flush the
-cache first.  Retry it and the previous STOP command.
+During CQE error recovery, error-free data commands get requeued if there
+is any data left to transfer, but non-data commands are completed even
+though they have not been processed.  Requeue them instead.
 
-Fixes: 72a5af554df8 ("mmc: core: Add support for handling CQE requests")
+Note the only non-data command is cache flush, which would have resulted in
+a cache flush being lost if it was queued at the time of CQE recovery.
+
+Fixes: 1e8e55b67030 ("mmc: block: Add CQE support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Link: https://lore.kernel.org/r/20231103084720.6886-5-adrian.hunter@intel.com
+Link: https://lore.kernel.org/r/20231103084720.6886-2-adrian.hunter@intel.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/core.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/mmc/core/block.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -551,7 +551,7 @@ int mmc_cqe_recovery(struct mmc_host *ho
- 	cmd.flags        = MMC_RSP_R1B | MMC_CMD_AC;
- 	cmd.flags       &= ~MMC_RSP_CRC; /* Ignore CRC */
- 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
--	mmc_wait_for_cmd(host, &cmd, 0);
-+	mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
- 
- 	memset(&cmd, 0, sizeof(cmd));
- 	cmd.opcode       = MMC_CMDQ_TASK_MGMT;
-@@ -559,10 +559,13 @@ int mmc_cqe_recovery(struct mmc_host *ho
- 	cmd.flags        = MMC_RSP_R1B | MMC_CMD_AC;
- 	cmd.flags       &= ~MMC_RSP_CRC; /* Ignore CRC */
- 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
--	err = mmc_wait_for_cmd(host, &cmd, 0);
-+	err = mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
- 
- 	host->cqe_ops->cqe_recovery_finish(host);
- 
-+	if (err)
-+		err = mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
-+
- 	mmc_retune_release(host);
- 
- 	return err;
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -1482,6 +1482,8 @@ static void mmc_blk_cqe_complete_rq(stru
+ 			blk_mq_requeue_request(req, true);
+ 		else
+ 			__blk_mq_end_request(req, BLK_STS_OK);
++	} else if (mq->in_recovery) {
++		blk_mq_requeue_request(req, true);
+ 	} else {
+ 		blk_mq_end_request(req, BLK_STS_OK);
+ 	}
 
 
