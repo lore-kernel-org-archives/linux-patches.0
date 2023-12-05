@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99F66FB1;
-	Tue,  5 Dec 2023 03:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F60779E3;
+	Tue,  5 Dec 2023 03:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECjASwWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDFFC433C7;
-	Tue,  5 Dec 2023 03:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDRhHQ6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96D5C433C7;
+	Tue,  5 Dec 2023 03:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747488;
-	bh=rsJhHzCfx79wJatSqZEnZ1vjhI2yLOq5h3TJW4SJhEA=;
+	s=korg; t=1701747491;
+	bh=N5MGT5ICJZc0oEgnlnbzWwo9l5PnfGiWHaZR/db3UrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ECjASwWwiaAhd7uQZRJkF80P7/1xz2kdY8yrjHkISxTOApzt49kVmibSmSW2jFugl
-	 bX/ktSoe448mgIQffaBshRg3H/zk8pDMhkCWWgi86nnzVtNNpcFkSHeuSZdwT3eH2O
-	 nk4Wq/ILS/IJmCI7O0PXsEF0m8kyVdF+yDW5Dawo=
+	b=XDRhHQ6pvTL/XW+RlNU33fKcDgRjDK6ksPRlBPs0OkAM+NMlcJt4ou02w5Zd/dXnY
+	 J7A2e2pVb+CcgBNz4HJ3yoGxEJT7+Jqf3C6Q6qhHAk+czt87rnfFpmqMS5GYhZUcbg
+	 a5zqrVvlyeKp0pOJT11NWexz7/9KVZq/mShbLRwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Willem de Bruijn <willemb@google.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Furong Xu <0x1207@gmail.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/135] selftests/net: mptcp: fix uninitialized variable warnings
-Date: Tue,  5 Dec 2023 12:16:56 +0900
-Message-ID: <20231205031536.627665608@linuxfoundation.org>
+Subject: [PATCH 5.10 096/135] net: stmmac: xgmac: Disable FPE MMC interrupts
+Date: Tue,  5 Dec 2023 12:16:57 +0900
+Message-ID: <20231205031536.692077887@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -44,76 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Furong Xu <0x1207@gmail.com>
 
-[ Upstream commit 00a4f8fd9c750f20d8fd4535c71c9caa7ef5ff2f ]
+[ Upstream commit e54d628a2721bfbb002c19f6e8ca6746cec7640f ]
 
-Same init_rng() in both tests. The function reads /dev/urandom to
-initialize srand(). In case of failure, it falls back onto the
-entropy in the uninitialized variable. Not sure if this is on purpose.
-But failure reading urandom should be rare, so just fail hard. While
-at it, convert to getrandom(). Which man 4 random suggests is simpler
-and more robust.
+Commit aeb18dd07692 ("net: stmmac: xgmac: Disable MMC interrupts
+by default") tries to disable MMC interrupts to avoid a storm of
+unhandled interrupts, but leaves the FPE(Frame Preemption) MMC
+interrupts enabled, FPE MMC interrupts can cause the same problem.
+Now we mask FPE TX and RX interrupts to disable all MMC interrupts.
 
-    mptcp_inq.c:525:6:
-    mptcp_connect.c:1131:6:
-
-    error: variable 'foo' is used uninitialized
-    whenever 'if' condition is false
-    [-Werror,-Wsometimes-uninitialized]
-
-Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
-Fixes: b51880568f20 ("selftests: mptcp: add inq test case")
-Cc: Florian Westphal <fw@strlen.de>
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-
-----
-
-When input is randomized because this is expected to meaningfully
-explore edge cases, should we also add
-1. logging the random seed to stdout and
-2. adding a command line argument to replay from a specific seed
-I can do this in net-next, if authors find it useful in this case.
-Reviewed-by: Matthieu Baerts <matttbe@kernel.org>
-
-Link: https://lore.kernel.org/r/20231124171645.1011043-5-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: aeb18dd07692 ("net: stmmac: xgmac: Disable MMC interrupts by default")
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Signed-off-by: Furong Xu <0x1207@gmail.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://lore.kernel.org/r/20231125060126.2328690-1-0x1207@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/mmc_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_connect.c b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-index 77bb62feb8726..37c1ec888ba2e 100644
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -15,6 +15,7 @@
- #include <unistd.h>
+diff --git a/drivers/net/ethernet/stmicro/stmmac/mmc_core.c b/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
+index a57b0fa815aba..a510bac0b825b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
+@@ -177,8 +177,10 @@
+ #define MMC_XGMAC_RX_DISCARD_OCT_GB	0x1b4
+ #define MMC_XGMAC_RX_ALIGN_ERR_PKT	0x1bc
  
- #include <sys/poll.h>
-+#include <sys/random.h>
- #include <sys/sendfile.h>
- #include <sys/stat.h>
- #include <sys/socket.h>
-@@ -734,15 +735,11 @@ int main_loop_s(int listensock)
- 
- static void init_rng(void)
++#define MMC_XGMAC_TX_FPE_INTR_MASK	0x204
+ #define MMC_XGMAC_TX_FPE_FRAG		0x208
+ #define MMC_XGMAC_TX_HOLD_REQ		0x20c
++#define MMC_XGMAC_RX_FPE_INTR_MASK	0x224
+ #define MMC_XGMAC_RX_PKT_ASSEMBLY_ERR	0x228
+ #define MMC_XGMAC_RX_PKT_SMD_ERR	0x22c
+ #define MMC_XGMAC_RX_PKT_ASSEMBLY_OK	0x230
+@@ -352,6 +354,8 @@ static void dwxgmac_mmc_intr_all_mask(void __iomem *mmcaddr)
  {
--	int fd = open("/dev/urandom", O_RDONLY);
- 	unsigned int foo;
+ 	writel(0x0, mmcaddr + MMC_RX_INTR_MASK);
+ 	writel(0x0, mmcaddr + MMC_TX_INTR_MASK);
++	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_TX_FPE_INTR_MASK);
++	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_RX_FPE_INTR_MASK);
+ 	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_RX_IPC_INTR_MASK);
+ }
  
--	if (fd > 0) {
--		int ret = read(fd, &foo, sizeof(foo));
--
--		if (ret < 0)
--			srand(fd + foo);
--		close(fd);
-+	if (getrandom(&foo, sizeof(foo), 0) == -1) {
-+		perror("getrandom");
-+		exit(1);
- 	}
- 
- 	srand(foo);
 -- 
 2.42.0
 
