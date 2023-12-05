@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1F86FAF;
-	Tue,  5 Dec 2023 03:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8746FAF;
+	Tue,  5 Dec 2023 03:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KG6xR6Ms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E31EC433C8;
-	Tue,  5 Dec 2023 03:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npa7/jiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EA2C433C8;
+	Tue,  5 Dec 2023 03:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746907;
-	bh=VNIF8IvsapDcMcGBOLoQzBaKutUaJwaQU+WheKfZn8w=;
+	s=korg; t=1701746910;
+	bh=L6nsT5Wy/896KbcP4TrgQtT0Fr8NtWbQNW1DHDCsdNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KG6xR6MsFW/IUV5Bh6NS0i/Ton7l3h9wgjU+WDxlkUDDhBl4V+Zb2MQPfjSdRTOfY
-	 w0tjMAtJE3b/i6s8YqWciI+1ILHMdmlV0GLrAh3nUcvuYqb1ovIFatKh/TR5EcWeFz
-	 9x9jcVN5kMnMtd3+3iUEbdONhhirKa0BJ900Slnk=
+	b=npa7/jiWeg1DUpVVdFWtOPggv5II6OfTV6X+c8YyDf2eh1pAQqik43tMVSXhctlKW
+	 9eORWLJ9C9LhRDFw/HL4lCdG5G3ZyPf9w+weUNfMrx81epD4IPID69GHURRifCu25a
+	 xWE9U4eYCwwKxNi7QwE0T1PS612w/aNUqG6/3GMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dmitry Monakhov <dmtrmonakhov@yandex-team.ru>,
+	Konstantin Khlebnikov <khlebnikov@yandex-team.ru>,
 	Amir Goldstein <amir73il@gmail.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+b42fe626038981fb7bfa@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 62/71] ima: annotate iint mutex to avoid lockdep false positive warnings
-Date: Tue,  5 Dec 2023 12:17:00 +0900
-Message-ID: <20231205031521.477996507@linuxfoundation.org>
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 63/71] ovl: skip overlayfs superblocks at global sync
+Date: Tue,  5 Dec 2023 12:17:01 +0900
+Message-ID: <20231205031521.539334896@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -43,115 +44,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
 
-[ Upstream commit e044374a8a0a99e46f4e6d6751d3042b6d9cc12e ]
+[ Upstream commit 32b1924b210a70dcacdf65abd687c5ef86a67541 ]
 
-It is not clear that IMA should be nested at all, but as long is it
-measures files both on overlayfs and on underlying fs, we need to
-annotate the iint mutex to avoid lockdep false positives related to
-IMA + overlayfs, same as overlayfs annotates the inode mutex.
+Stacked filesystems like overlayfs has no own writeback, but they have to
+forward syncfs() requests to backend for keeping data integrity.
 
-Reported-and-tested-by: syzbot+b42fe626038981fb7bfa@syzkaller.appspotmail.com
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+During global sync() each overlayfs instance calls method ->sync_fs() for
+backend although it itself is in global list of superblocks too.  As a
+result one syscall sync() could write one superblock several times and send
+multiple disk barriers.
+
+This patch adds flag SB_I_SKIP_SYNC into sb->sb_iflags to avoid that.
+
+Reported-by: Dmitry Monakhov <dmtrmonakhov@yandex-team.ru>
+Signed-off-by: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: b836c4d29f27 ("ima: detect changes to the backing overlay file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/iint.c | 48 ++++++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 11 deletions(-)
+ fs/overlayfs/super.c | 5 +++--
+ fs/sync.c            | 3 ++-
+ include/linux/fs.h   | 2 ++
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/security/integrity/iint.c b/security/integrity/iint.c
-index d5b9253ebd12b..7c751c23e7e63 100644
---- a/security/integrity/iint.c
-+++ b/security/integrity/iint.c
-@@ -69,9 +69,32 @@ struct integrity_iint_cache *integrity_iint_find(struct inode *inode)
- 	return iint;
- }
+diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
+index 1a7a1e2988855..1c1eb873e6ecc 100644
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -268,8 +268,8 @@ static int ovl_sync_fs(struct super_block *sb, int wait)
+ 		return 0;
  
--static void iint_free(struct integrity_iint_cache *iint)
-+#define IMA_MAX_NESTING (FILESYSTEM_MAX_STACK_DEPTH+1)
-+
-+/*
-+ * It is not clear that IMA should be nested at all, but as long is it measures
-+ * files both on overlayfs and on underlying fs, we need to annotate the iint
-+ * mutex to avoid lockdep false positives related to IMA + overlayfs.
-+ * See ovl_lockdep_annotate_inode_mutex_key() for more details.
-+ */
-+static inline void iint_lockdep_annotate(struct integrity_iint_cache *iint,
-+					 struct inode *inode)
-+{
-+#ifdef CONFIG_LOCKDEP
-+	static struct lock_class_key iint_mutex_key[IMA_MAX_NESTING];
-+
-+	int depth = inode->i_sb->s_stack_depth;
-+
-+	if (WARN_ON_ONCE(depth < 0 || depth >= IMA_MAX_NESTING))
-+		depth = 0;
-+
-+	lockdep_set_class(&iint->mutex, &iint_mutex_key[depth]);
-+#endif
-+}
-+
-+static void iint_init_always(struct integrity_iint_cache *iint,
-+			     struct inode *inode)
+ 	/*
+-	 * If this is a sync(2) call or an emergency sync, all the super blocks
+-	 * will be iterated, including upper_sb, so no need to do anything.
++	 * Not called for sync(2) call or an emergency sync (SB_I_SKIP_SYNC).
++	 * All the super blocks will be iterated, including upper_sb.
+ 	 *
+ 	 * If this is a syncfs(2) call, then we do need to call
+ 	 * sync_filesystem() on upper_sb, but enough if we do it when being
+@@ -1664,6 +1664,7 @@ static int ovl_fill_super(struct super_block *sb, void *data, int silent)
+ 	sb->s_xattr = ovl_xattr_handlers;
+ 	sb->s_fs_info = ofs;
+ 	sb->s_flags |= SB_POSIXACL;
++	sb->s_iflags |= SB_I_SKIP_SYNC;
+ 
+ 	err = -ENOMEM;
+ 	root_dentry = d_make_root(ovl_new_inode(sb, S_IFDIR, 0));
+diff --git a/fs/sync.c b/fs/sync.c
+index b54e0541ad899..917ebd12c2515 100644
+--- a/fs/sync.c
++++ b/fs/sync.c
+@@ -76,7 +76,8 @@ static void sync_inodes_one_sb(struct super_block *sb, void *arg)
+ 
+ static void sync_fs_one_sb(struct super_block *sb, void *arg)
  {
--	kfree(iint->ima_hash);
- 	iint->ima_hash = NULL;
- 	iint->version = 0;
- 	iint->flags = 0UL;
-@@ -83,6 +106,14 @@ static void iint_free(struct integrity_iint_cache *iint)
- 	iint->ima_creds_status = INTEGRITY_UNKNOWN;
- 	iint->evm_status = INTEGRITY_UNKNOWN;
- 	iint->measured_pcrs = 0;
-+	mutex_init(&iint->mutex);
-+	iint_lockdep_annotate(iint, inode);
-+}
+-	if (!sb_rdonly(sb) && sb->s_op->sync_fs)
++	if (!sb_rdonly(sb) && !(sb->s_iflags & SB_I_SKIP_SYNC) &&
++	    sb->s_op->sync_fs)
+ 		sb->s_op->sync_fs(sb, *(int *)arg);
+ }
+ 
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 95b8ef09b76cf..f89748aac8c32 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1351,6 +1351,8 @@ extern int send_sigurg(struct fown_struct *fown);
+ #define SB_I_IMA_UNVERIFIABLE_SIGNATURE	0x00000020
+ #define SB_I_UNTRUSTED_MOUNTER		0x00000040
+ 
++#define SB_I_SKIP_SYNC	0x00000100	/* Skip superblock at global sync */
 +
-+static void iint_free(struct integrity_iint_cache *iint)
-+{
-+	kfree(iint->ima_hash);
-+	mutex_destroy(&iint->mutex);
- 	kmem_cache_free(iint_cache, iint);
- }
- 
-@@ -107,6 +138,8 @@ struct integrity_iint_cache *integrity_inode_get(struct inode *inode)
- 	if (!iint)
- 		return NULL;
- 
-+	iint_init_always(iint, inode);
-+
- 	write_lock(&integrity_iint_lock);
- 
- 	p = &integrity_iint_tree.rb_node;
-@@ -156,25 +189,18 @@ void integrity_inode_free(struct inode *inode)
- 	iint_free(iint);
- }
- 
--static void init_once(void *foo)
-+static void iint_init_once(void *foo)
- {
- 	struct integrity_iint_cache *iint = foo;
- 
- 	memset(iint, 0, sizeof(*iint));
--	iint->ima_file_status = INTEGRITY_UNKNOWN;
--	iint->ima_mmap_status = INTEGRITY_UNKNOWN;
--	iint->ima_bprm_status = INTEGRITY_UNKNOWN;
--	iint->ima_read_status = INTEGRITY_UNKNOWN;
--	iint->ima_creds_status = INTEGRITY_UNKNOWN;
--	iint->evm_status = INTEGRITY_UNKNOWN;
--	mutex_init(&iint->mutex);
- }
- 
- static int __init integrity_iintcache_init(void)
- {
- 	iint_cache =
- 	    kmem_cache_create("iint_cache", sizeof(struct integrity_iint_cache),
--			      0, SLAB_PANIC, init_once);
-+			      0, SLAB_PANIC, iint_init_once);
- 	return 0;
- }
- security_initcall(integrity_iintcache_init);
+ /* Possible states of 'frozen' field */
+ enum {
+ 	SB_UNFROZEN = 0,		/* FS is unfrozen */
 -- 
 2.42.0
 
