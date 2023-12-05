@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0FE6FAF;
-	Tue,  5 Dec 2023 03:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203B86FB1;
+	Tue,  5 Dec 2023 03:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgALJY2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF692C433C8;
-	Tue,  5 Dec 2023 03:23:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoxnv5pM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF92C433C8;
+	Tue,  5 Dec 2023 03:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746636;
-	bh=BCE6cCf1Fzpmfap0k83PkY+nJPwmFfk+PnTfgGC7hdc=;
+	s=korg; t=1701746639;
+	bh=pkIddOl87x5w9buGM5J0axfucoL7rjEWa2PMtbleIK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgALJY2yYjRNhJl1srUNke2mli/8xQGMl1+KDdNVWlWKIwgCwhSf253ZNFBeyzmii
-	 HmYal8AboORBus+HUdaJSxnBZ9Wm+OKWWkg3Agwwx+4ayIIouoiBW85+CfTNuSXC8n
-	 xms7EdW0zrgdGEb1BC6sprBBUT169xvMWmIwnoO0=
+	b=eoxnv5pMd80oKSWPY/zxqIsp/HZh/xXYItni+hYWlMKSwhxyZphGByQjkxirxv5wB
+	 S3NhdABn1kBPb7u6XOAATmeCIHqRI3wVAwjOF/59Y48usEeX/nSMFMu2WVzN6Con4F
+	 /q8C7584gFTbU6JfWPpWn27oEFxWbr5Q9qGGoUKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 099/134] neighbour: Fix __randomize_layout crash in struct neighbour
-Date: Tue,  5 Dec 2023 12:16:11 +0900
-Message-ID: <20231205031541.718578042@linuxfoundation.org>
+Subject: [PATCH 6.6 100/134] efi/unaccepted: Fix off-by-one when checking for overlapping ranges
+Date: Tue,  5 Dec 2023 12:16:12 +0900
+Message-ID: <20231205031541.774578565@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -44,48 +44,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Michael Roth <michael.roth@amd.com>
 
-[ Upstream commit 45b3fae4675dc1d4ee2d7aefa19d85ee4f891377 ]
+[ Upstream commit 01b1e3ca0e5ce47bbae8217d47376ad01b331b07 ]
 
-Previously, one-element and zero-length arrays were treated as true
-flexible arrays, even though they are actually "fake" flex arrays.
-The __randomize_layout would leave them untouched at the end of the
-struct, similarly to proper C99 flex-array members.
+When a task needs to accept memory it will scan the accepting_list
+to see if any ranges already being processed by other tasks overlap
+with its range. Due to an off-by-one in the range comparisons, a task
+might falsely determine that an overlapping range is being accepted,
+leading to an unnecessary delay before it begins processing the range.
 
-However, this approach changed with commit 1ee60356c2dc ("gcc-plugins:
-randstruct: Only warn about true flexible arrays"). Now, only C99
-flexible-array members will remain untouched at the end of the struct,
-while one-element and zero-length arrays will be subject to randomization.
+Fix the off-by-one in the range comparison to prevent this and slightly
+improve performance.
 
-Fix a `__randomize_layout` crash in `struct neighbour` by transforming
-zero-length array `primary_key` into a proper C99 flexible-array member.
-
-Fixes: 1ee60356c2dc ("gcc-plugins: randstruct: Only warn about true flexible arrays")
-Closes: https://lore.kernel.org/linux-hardening/20231124102458.GB1503258@e124191.cambridge.arm.com/
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Tested-by: Joey Gouly <joey.gouly@arm.com>
-Link: https://lore.kernel.org/r/ZWJoRsJGnCPdJ3+2@work
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 50e782a86c98 ("efi/unaccepted: Fix soft lockups caused by parallel memory acceptance")
+Link: https://lore.kernel.org/linux-mm/20231101004523.vseyi5bezgfaht5i@amd.com/T/#me2eceb9906fcae5fe958b3fe88e41f920f8335b6
+Reviewed-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/neighbour.h | 2 +-
+ drivers/firmware/efi/unaccepted_memory.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/neighbour.h b/include/net/neighbour.h
-index 07022bb0d44d4..0d28172193fa6 100644
---- a/include/net/neighbour.h
-+++ b/include/net/neighbour.h
-@@ -162,7 +162,7 @@ struct neighbour {
- 	struct rcu_head		rcu;
- 	struct net_device	*dev;
- 	netdevice_tracker	dev_tracker;
--	u8			primary_key[0];
-+	u8			primary_key[];
- } __randomize_layout;
- 
- struct neigh_ops {
+diff --git a/drivers/firmware/efi/unaccepted_memory.c b/drivers/firmware/efi/unaccepted_memory.c
+index 135278ddaf627..79fb687bb90f9 100644
+--- a/drivers/firmware/efi/unaccepted_memory.c
++++ b/drivers/firmware/efi/unaccepted_memory.c
+@@ -100,7 +100,7 @@ void accept_memory(phys_addr_t start, phys_addr_t end)
+ 	 * overlap on physical address level.
+ 	 */
+ 	list_for_each_entry(entry, &accepting_list, list) {
+-		if (entry->end < range.start)
++		if (entry->end <= range.start)
+ 			continue;
+ 		if (entry->start >= range.end)
+ 			continue;
 -- 
 2.42.0
 
