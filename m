@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF5B6FB0;
-	Tue,  5 Dec 2023 03:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C54F6FB0;
+	Tue,  5 Dec 2023 03:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1aAOZsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E43FC433C7;
-	Tue,  5 Dec 2023 03:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeNG7S6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C843AC433C7;
+	Tue,  5 Dec 2023 03:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747991;
-	bh=K6LOPZgOjHkdV6u/esMsuKV54Lk6LfNBB0yuDhYVrXQ=;
+	s=korg; t=1701747994;
+	bh=asJvNU2od7ARZLR8fblpfvca8DtlKNd5Dfp9zFHf0+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1aAOZsFtq/7USfSZF8w1uxTepCiskFlhL8B19NqyM501weU9GvMahB0f6Pb+wRrW
-	 4ce0GOCSSTK08SvrOiuiCEHl3bHBXRA1cRX/+1de8/OX52QeEQEHT1rDreHLDcdp75
-	 Gvtna9xiu15d6GF46euWJ+wtExXDT5/PtrFs6Mwg=
+	b=GeNG7S6CsbmgH2ymcHyHAxsCgTY60G2Wedc1RNQNe9dCdMrnLpNX3FyxgyimoTboi
+	 FVV7RMRyC87NOnvjrpyT0azgQbZflJ4Q5Id11SJGeFLY/5Q1T3aLsOXsIU8O3xktkv
+	 FZ+pCrikxHjIo0IKSBRKXwMOceldSvZ0akh4mrw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lee Jones <lee@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 5.4 48/94] USB: dwc3: qcom: fix resource leaks on probe deferral
-Date: Tue,  5 Dec 2023 12:17:16 +0900
-Message-ID: <20231205031525.556100786@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Dexuan Cui <decui@microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.4 39/94] hv_netvsc: Mark VF as slave before exposing it to user-mode
+Date: Tue,  5 Dec 2023 12:17:07 +0900
+Message-ID: <20231205031525.083382777@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -43,73 +44,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Long Li <longli@microsoft.com>
 
-commit 51392a1879ff06dc21b68aef4825f6ef68a7be42 upstream.
+commit c807d6cd089d2f4951baa838081ec5ae3e2360f8 upstream.
 
-The driver needs to deregister and free the newly allocated dwc3 core
-platform device on ACPI probe errors (e.g. probe deferral) and on driver
-unbind but instead it leaked those resources while erroneously dropping
-a reference to the parent platform device which is still in use.
+When a VF is being exposed form the kernel, it should be marked as "slave"
+before exposing to the user-mode. The VF is not usable without netvsc
+running as master. The user-mode should never see a VF without the "slave"
+flag.
 
-For OF probing the driver takes a reference to the dwc3 core platform
-device which has also always been leaked.
+This commit moves the code of setting the slave flag to the time before
+VF is exposed to user-mode.
 
-Fix the broken ACPI tear down and make sure to drop the dwc3 core
-reference for both OF and ACPI.
-
-Fixes: 8fd95da2cfb5 ("usb: dwc3: qcom: Release the correct resources in dwc3_qcom_remove()")
-Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
-Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-Cc: stable@vger.kernel.org      # 4.18
-Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Lee Jones <lee@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Andrew Halaney <ahalaney@redhat.com>
-Link: https://lore.kernel.org/r/20231117173650.21161-2-johan+linaro@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: 0c195567a8f6 ("netvsc: transparent VF management")
+Signed-off-by: Long Li <longli@microsoft.com>
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Acked-by: Stephen Hemminger <stephen@networkplumber.org>
+Acked-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/hyperv/netvsc_drv.c |   32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -553,6 +553,7 @@ static int dwc3_qcom_of_register_core(st
- 	if (!qcom->dwc3) {
- 		ret = -ENODEV;
- 		dev_err(dev, "failed to get dwc3 platform device\n");
-+		of_platform_depopulate(dev);
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -2060,9 +2060,6 @@ static int netvsc_vf_join(struct net_dev
+ 		goto upper_link_failed;
  	}
  
- node_put:
-@@ -666,7 +667,7 @@ static int dwc3_qcom_probe(struct platfo
+-	/* set slave flag before open to prevent IPv6 addrconf */
+-	vf_netdev->flags |= IFF_SLAVE;
+-
+ 	schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
  
- 	if (ret) {
- 		dev_err(dev, "failed to register DWC3 Core, err=%d\n", ret);
--		goto depopulate;
-+		goto clk_disable;
+ 	call_netdevice_notifiers(NETDEV_JOIN, vf_netdev);
+@@ -2160,16 +2157,18 @@ static struct net_device *get_netvsc_bys
+ 			return hv_get_drvdata(ndev_ctx->device_ctx);
  	}
  
- 	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
-@@ -692,7 +693,8 @@ depopulate:
- 	if (np)
- 		of_platform_depopulate(&pdev->dev);
- 	else
--		platform_device_put(pdev);
-+		platform_device_del(qcom->dwc3);
-+	platform_device_put(qcom->dwc3);
- clk_disable:
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
-@@ -714,7 +716,8 @@ static int dwc3_qcom_remove(struct platf
- 	if (np)
- 		of_platform_depopulate(&pdev->dev);
- 	else
--		platform_device_put(pdev);
-+		platform_device_del(qcom->dwc3);
-+	platform_device_put(qcom->dwc3);
+-	/* Fallback path to check synthetic vf with
+-	 * help of mac addr
++	/* Fallback path to check synthetic vf with help of mac addr.
++	 * Because this function can be called before vf_netdev is
++	 * initialized (NETDEV_POST_INIT) when its perm_addr has not been copied
++	 * from dev_addr, also try to match to its dev_addr.
++	 * Note: On Hyper-V and Azure, it's not possible to set a MAC address
++	 * on a VF that matches to the MAC of a unrelated NETVSC device.
+ 	 */
+ 	list_for_each_entry(ndev_ctx, &netvsc_dev_list, list) {
+ 		ndev = hv_get_drvdata(ndev_ctx->device_ctx);
+-		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr)) {
+-			netdev_notice(vf_netdev,
+-				      "falling back to mac addr based matching\n");
++		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr) ||
++		    ether_addr_equal(vf_netdev->dev_addr, ndev->perm_addr))
+ 			return ndev;
+-		}
+ 	}
  
- 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
- 		clk_disable_unprepare(qcom->clks[i]);
+ 	netdev_notice(vf_netdev,
+@@ -2177,6 +2176,19 @@ static struct net_device *get_netvsc_bys
+ 	return NULL;
+ }
+ 
++static int netvsc_prepare_bonding(struct net_device *vf_netdev)
++{
++	struct net_device *ndev;
++
++	ndev = get_netvsc_byslot(vf_netdev);
++	if (!ndev)
++		return NOTIFY_DONE;
++
++	/* set slave flag before open to prevent IPv6 addrconf */
++	vf_netdev->flags |= IFF_SLAVE;
++	return NOTIFY_DONE;
++}
++
+ static int netvsc_register_vf(struct net_device *vf_netdev)
+ {
+ 	struct net_device_context *net_device_ctx;
+@@ -2495,6 +2507,8 @@ static int netvsc_netdev_event(struct no
+ 		return NOTIFY_DONE;
+ 
+ 	switch (event) {
++	case NETDEV_POST_INIT:
++		return netvsc_prepare_bonding(event_dev);
+ 	case NETDEV_REGISTER:
+ 		return netvsc_register_vf(event_dev);
+ 	case NETDEV_UNREGISTER:
 
 
