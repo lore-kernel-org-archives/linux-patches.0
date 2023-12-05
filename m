@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECE46FAF;
-	Tue,  5 Dec 2023 03:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750056FAF;
+	Tue,  5 Dec 2023 03:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iotn2fWE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE01C433C8;
-	Tue,  5 Dec 2023 03:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJRIBrGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E094CC433C7;
+	Tue,  5 Dec 2023 03:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746942;
-	bh=htZVP0jZEsXVZz7Y2sxLJYDzRxVc+p8R87CBpKqZ/yk=;
+	s=korg; t=1701746945;
+	bh=HztmdKZbiamG3g75jCqMv6d5HmMq4Yp3XdaxiejWNjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iotn2fWEpeC2JpkXnymtG1/U1IzXlW5L2LU4ZkJmrvYBkI9lH8IxpBH0uKNfyXVzB
-	 IOxQenUsPC+dFXg2cYt8h555vqIAPo+TSptRvO9sWZ12V9hzmkQ5QjopQI5UXzROpg
-	 I3Lwgi2i9R+Rti+Bz+8tA+F7orB4s/mM2PGI2xec=
+	b=OJRIBrGGfg47PdtUC9Ma6P0zMBfUi+7HWvwS3Ci1kGSi8va203R+uLEq2uYwqVnfe
+	 J+ucsijnWTvlldzhA2Gv4ufsZrcvsaAZrNX6L358zMJ3q/sx3s+44KZa/HktGlV/D7
+	 m8YouioWMaRXegfSOA9jgEi5a0uKkCDrEhhiDhyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 50/71] perf intel-pt: Fix async branch flags
-Date: Tue,  5 Dec 2023 12:16:48 +0900
-Message-ID: <20231205031520.780330158@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Coly Li <colyli@suse.de>,
+	Markus Weippert <markus@gekmihesg.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 4.19 41/71] bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
+Date: Tue,  5 Dec 2023 12:16:39 +0900
+Message-ID: <20231205031520.219142846@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -42,42 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Markus Weippert <markus@gekmihesg.de>
 
-[ Upstream commit f2d87895cbc4af80649850dcf5da36de6b2ed3dd ]
+commit bb6cc253861bd5a7cf8439e2118659696df9619f upstream.
 
-Ensure PERF_IP_FLAG_ASYNC is set always for asynchronous branches (i.e.
-interrupts etc).
+Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
+node allocations") replaced IS_ERR_OR_NULL by IS_ERR. This leads to a
+NULL pointer dereference.
 
-Fixes: 90e457f7be08 ("perf tools: Add Intel PT support")
+BUG: kernel NULL pointer dereference, address: 0000000000000080
+Call Trace:
+ ? __die_body.cold+0x1a/0x1f
+ ? page_fault_oops+0xd2/0x2b0
+ ? exc_page_fault+0x70/0x170
+ ? asm_exc_page_fault+0x22/0x30
+ ? btree_node_free+0xf/0x160 [bcache]
+ ? up_write+0x32/0x60
+ btree_gc_coalesce+0x2aa/0x890 [bcache]
+ ? bch_extent_bad+0x70/0x170 [bcache]
+ btree_gc_recurse+0x130/0x390 [bcache]
+ ? btree_gc_mark_node+0x72/0x230 [bcache]
+ bch_btree_gc+0x5da/0x600 [bcache]
+ ? cpuusage_read+0x10/0x10
+ ? bch_btree_gc+0x600/0x600 [bcache]
+ bch_gc_thread+0x135/0x180 [bcache]
+
+The relevant code starts with:
+
+    new_nodes[0] = NULL;
+
+    for (i = 0; i < nodes; i++) {
+        if (__bch_keylist_realloc(&keylist, bkey_u64s(&r[i].b->key)))
+            goto out_nocoalesce;
+    // ...
+out_nocoalesce:
+    // ...
+    for (i = 0; i < nodes; i++)
+        if (!IS_ERR(new_nodes[i])) {  // IS_ERR_OR_NULL before
+028ddcac477b
+            btree_node_free(new_nodes[i]);  // new_nodes[0] is NULL
+            rw_unlock(true, new_nodes[i]);
+        }
+
+This patch replaces IS_ERR() by IS_ERR_OR_NULL() to fix this.
+
+Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
+Link: https://lore.kernel.org/all/3DF4A87A-2AC1-4893-AE5F-E921478419A9@suse.de/
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20230928072953.19369-1-adrian.hunter@intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Zheng Wang <zyytlz.wz@163.com>
+Cc: Coly Li <colyli@suse.de>
+Signed-off-by: Markus Weippert <markus@gekmihesg.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/intel-pt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/bcache/btree.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
-index e073c7108c6c9..92b9921568f5d 100644
---- a/tools/perf/util/intel-pt.c
-+++ b/tools/perf/util/intel-pt.c
-@@ -901,9 +901,11 @@ static void intel_pt_sample_flags(struct intel_pt_queue *ptq)
- 	} else if (ptq->state->flags & INTEL_PT_ASYNC) {
- 		if (!ptq->state->to_ip)
- 			ptq->flags = PERF_IP_FLAG_BRANCH |
-+				     PERF_IP_FLAG_ASYNC |
- 				     PERF_IP_FLAG_TRACE_END;
- 		else if (ptq->state->from_nr && !ptq->state->to_nr)
- 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
-+				     PERF_IP_FLAG_ASYNC |
- 				     PERF_IP_FLAG_VMEXIT;
- 		else
- 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
--- 
-2.42.0
-
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -1526,7 +1526,7 @@ out_nocoalesce:
+ 			atomic_dec(&b->c->prio_blocked);
+ 
+ 	for (i = 0; i < nodes; i++)
+-		if (!IS_ERR(new_nodes[i])) {
++		if (!IS_ERR_OR_NULL(new_nodes[i])) {
+ 			btree_node_free(new_nodes[i]);
+ 			rw_unlock(true, new_nodes[i]);
+ 		}
 
 
