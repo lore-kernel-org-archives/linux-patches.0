@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355A16AC2;
-	Tue,  5 Dec 2023 03:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC670611E;
+	Tue,  5 Dec 2023 03:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OaUmHEps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3664C433C8;
-	Tue,  5 Dec 2023 03:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3nub7SI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6B9C433C8;
+	Tue,  5 Dec 2023 03:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747787;
-	bh=2zQ28N0z1RPQX+dJRaZpNCE5OKI7XxbeFOz4YfuN63k=;
+	s=korg; t=1701747790;
+	bh=4YQdi+ZCFt2HEwJghZTG9RbCZRUJAgW2fA5DOFUCbgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OaUmHEpsW5SQBruPPLAaAf9yJwqVYZ1t7zyivq5GYQ8Tl5SZETYhI7y9fBPGbPm6Z
-	 WAGJDLD1SvLC1bZb5AYQ4jdAMgiIQv6yQ2guDJHu8DdS+mDQyFzCJmSmxPfikzHHBu
-	 4+QGl3ZuQvLDANBUWPtWgGEDcUaYxVD5GWpy4EE4=
+	b=s3nub7SIPgJTov2VaWI15D+9WQ0zLVVKsXMA5C+3iEUp+CEUHpbjWySlLKCM0H2f4
+	 eBlk3ae8w7K619beLwsWIhpMrpj+prJxSPk2m5wt6/XWLS20zKUpuTncGqdjA4Z2If
+	 Kdn9caNDM4O7x+N9Cn0pz05OuK1saIv3jy8s9geo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kees Cook <keescook@chromium.org>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	Marek Vasut <marex@denx.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 33/67] uapi: propagate __struct_group() attributes to the container union
-Date: Tue,  5 Dec 2023 12:17:18 +0900
-Message-ID: <20231205031521.714412213@linuxfoundation.org>
+Subject: [PATCH 5.15 61/67] cpufreq: imx6q: Dont disable 792 Mhz OPP unnecessarily
+Date: Tue,  5 Dec 2023 12:17:46 +0900
+Message-ID: <20231205031523.390431505@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -43,77 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
-[ Upstream commit 4e86f32a13af1970d21be94f659cae56bbe487ee ]
+[ Upstream commit 2e4e0984c7d696cc74cf2fd7e7f62997f0e9ebe6 ]
 
-Recently the kernel test robot has reported an ARM-specific BUILD_BUG_ON()
-in an old and unmaintained wil6210 wireless driver. The problem comes from
-the structure packing rules of old ARM ABI ('-mabi=apcs-gnu'). For example,
-the following structure is packed to 18 bytes instead of 16:
+For a 900MHz i.MX6ULL CPU the 792MHz OPP is disabled. There is no
+convincing reason to disable this OPP. If a CPU can run at 900MHz,
+it should also be able to cope with 792MHz. Looking at the voltage
+level of 792MHz in [1] (page 24, table 10. "Operating Ranges") the
+current defined OPP is above the minimum. So the voltage level
+shouldn't be a problem. However in [2] (page 24, table 10.
+"Operating Ranges"), it is not mentioned that 792MHz OPP isn't
+allowed. Change it to only disable 792MHz OPP for i.MX6ULL types
+below 792 MHz.
 
-struct poorly_packed {
-        unsigned int a;
-        unsigned int b;
-        unsigned short c;
-        union {
-                struct {
-                        unsigned short d;
-                        unsigned int e;
-                } __attribute__((packed));
-                struct {
-                        unsigned short d;
-                        unsigned int e;
-                } __attribute__((packed)) inner;
-        };
-} __attribute__((packed));
+[1] https://www.nxp.com/docs/en/data-sheet/IMX6ULLIEC.pdf
+[2] https://www.nxp.com/docs/en/data-sheet/IMX6ULLCEC.pdf
 
-To fit it into 16 bytes, it's required to add packed attribute to the
-container union as well:
-
-struct poorly_packed {
-        unsigned int a;
-        unsigned int b;
-        unsigned short c;
-        union {
-                struct {
-                        unsigned short d;
-                        unsigned int e;
-                } __attribute__((packed));
-                struct {
-                        unsigned short d;
-                        unsigned int e;
-                } __attribute__((packed)) inner;
-        } __attribute__((packed));
-} __attribute__((packed));
-
-Thanks to Andrew Pinski of GCC team for sorting the things out at
-https://gcc.gnu.org/pipermail/gcc/2023-November/242888.html.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311150821.cI4yciFE-lkp@intel.com
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://lore.kernel.org/r/20231120110607.98956-1-dmantipov@yandex.ru
-Fixes: 50d7bd38c3aa ("stddef: Introduce struct_group() helper macro")
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Fixes: 0aa9abd4c212 ("cpufreq: imx6q: check speed grades for i.MX6ULL")
+Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Fabio Estevam <festevam@denx.de>
+[ Viresh: Edited subject ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/stddef.h | 2 +-
+ drivers/cpufreq/imx6q-cpufreq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
-index 7837ba4fe7289..dcd50fb2164a1 100644
---- a/include/uapi/linux/stddef.h
-+++ b/include/uapi/linux/stddef.h
-@@ -27,7 +27,7 @@
- 	union { \
- 		struct { MEMBERS } ATTRS; \
- 		struct TAG { MEMBERS } ATTRS NAME; \
--	}
-+	} ATTRS
+diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
+index 37d30fa2df5fa..67f98a083d223 100644
+--- a/drivers/cpufreq/imx6q-cpufreq.c
++++ b/drivers/cpufreq/imx6q-cpufreq.c
+@@ -327,7 +327,7 @@ static int imx6ul_opp_check_speed_grading(struct device *dev)
+ 			imx6x_disable_freq_in_opp(dev, 696000000);
  
- /**
-  * __DECLARE_FLEX_ARRAY() - Declare a flexible array usable in a union
+ 	if (of_machine_is_compatible("fsl,imx6ull")) {
+-		if (val != OCOTP_CFG3_6ULL_SPEED_792MHZ)
++		if (val < OCOTP_CFG3_6ULL_SPEED_792MHZ)
+ 			imx6x_disable_freq_in_opp(dev, 792000000);
+ 
+ 		if (val != OCOTP_CFG3_6ULL_SPEED_900MHZ)
 -- 
 2.42.0
 
