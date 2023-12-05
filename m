@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC33B6AC2;
-	Tue,  5 Dec 2023 03:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D0F6AC2;
+	Tue,  5 Dec 2023 03:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLWMw1Q1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27411C433C8;
-	Tue,  5 Dec 2023 03:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2gxRoEC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6BBC433C7;
+	Tue,  5 Dec 2023 03:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747744;
-	bh=Vrm/iJOnQtUA9LHP/W2tPIswOCoq0RFTnxSkuF6tB/I=;
+	s=korg; t=1701747747;
+	bh=Uwufbe2ELrcvHV3Q9D0OgKzxlbkxNglPJSFLqWbmztI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLWMw1Q1bAMIB9BqYOo09aT+VGvsvSfPRUvDoYanURd8JTEcB2bIyJ3fJ+mfTevU4
-	 yMPuyiJIcV2hkYMJ9l0pt/ta6YYJubyJfvmI2+rRkxl6sidpQfnP+Jvgrm4SCjFfhE
-	 Sy6d7tUBBw9nfOaqG3/U18r/4WepQ2hQnNfIUY6I=
+	b=o2gxRoECJEUR8hi6vgsacEX5/3hFuM599wv/VyC+E5UN3q+SZWOAwB8ed9Ax1KzYw
+	 m3BwFCmG+nbx8vwTTfbEno8CAqxzVNEOSyUL1T4qiR18fyaLRKOXwPPMU1yY41DS/7
+	 ArKZLyU18fP2HeOPWeF030ZGSiae4dsDh6maiPTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elena Salomatkina <elena.salomatkina.cmc@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 35/67] octeontx2-af: Fix possible buffer overflow
-Date: Tue,  5 Dec 2023 12:17:20 +0900
-Message-ID: <20231205031521.831017013@linuxfoundation.org>
+Subject: [PATCH 5.15 53/67] ASoC: SOF: sof-pci-dev: use community key on all Up boards
+Date: Tue,  5 Dec 2023 12:17:38 +0900
+Message-ID: <20231205031522.919009133@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -38,59 +38,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Elena Salomatkina <elena.salomatkina.cmc@gmail.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit ad31c629ca3c87f6d557488c1f9faaebfbcd203c ]
+[ Upstream commit 405e52f412b85b581899f5e1b82d25a7c8959d89 ]
 
-A loop in rvu_mbox_handler_nix_bandprof_free() contains
-a break if (idx == MAX_BANDPROF_PER_PFFUNC),
-but if idx may reach MAX_BANDPROF_PER_PFFUNC
-buffer '(*req->prof_idx)[layer]' overflow happens before that check.
+There are already 3 versions of the Up boards with support for the SOF
+community key (ApolloLake, WhiskyLake, TigerLake). Rather than
+continue to add quirks for each version, let's add a wildcard.
 
-The patch moves the break to the
-beginning of the loop.
+For WHL and TGL, the authentication supports both the SOF community
+key and the firmware signed with the Intel production key. Given two
+choices, the community key is the preferred option to allow developers
+to sign their own firmware. The firmware signed with production key
+can still be selected if needed with a kernel module
+option (snd-sof-pci.fw_path="intel/sof")
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e8e095b3b370 ("octeontx2-af: cn10k: Bandwidth profiles config support").
-Signed-off-by: Elena Salomatkina <elena.salomatkina.cmc@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://lore.kernel.org/r/20231124210802.109763-1-elena.salomatkina.cmc@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20211119231327.211946-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 7dd692217b86 ("ASoC: SOF: sof-pci-dev: Fix community key quirk detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/sof/sof-pci-dev.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 1593efc4502b5..5f9f6da5c45bb 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -5045,6 +5045,8 @@ int rvu_mbox_handler_nix_bandprof_free(struct rvu *rvu,
+diff --git a/sound/soc/sof/sof-pci-dev.c b/sound/soc/sof/sof-pci-dev.c
+index 3b4c011e02834..c1cd156996b43 100644
+--- a/sound/soc/sof/sof-pci-dev.c
++++ b/sound/soc/sof/sof-pci-dev.c
+@@ -64,17 +64,9 @@ static const struct dmi_system_id sof_tplg_table[] = {
  
- 		ipolicer = &nix_hw->ipolicer[layer];
- 		for (idx = 0; idx < req->prof_count[layer]; idx++) {
-+			if (idx == MAX_BANDPROF_PER_PFFUNC)
-+				break;
- 			prof_idx = req->prof_idx[layer][idx];
- 			if (prof_idx >= ipolicer->band_prof.max ||
- 			    ipolicer->pfvf_map[prof_idx] != pcifunc)
-@@ -5058,8 +5060,6 @@ int rvu_mbox_handler_nix_bandprof_free(struct rvu *rvu,
- 			ipolicer->pfvf_map[prof_idx] = 0x00;
- 			ipolicer->match_id[prof_idx] = 0;
- 			rvu_free_rsrc(&ipolicer->band_prof, prof_idx);
--			if (idx == MAX_BANDPROF_PER_PFFUNC)
--				break;
+ static const struct dmi_system_id community_key_platforms[] = {
+ 	{
+-		.ident = "Up Squared",
++		.ident = "Up boards",
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "AAEON"),
+-			DMI_MATCH(DMI_BOARD_NAME, "UP-APL01"),
+-		}
+-	},
+-	{
+-		.ident = "Up Extreme",
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "AAEON"),
+-			DMI_MATCH(DMI_BOARD_NAME, "UP-WHL01"),
  		}
- 	}
- 	mutex_unlock(&rvu->rsrc_lock);
+ 	},
+ 	{
 -- 
 2.42.0
 
