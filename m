@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993C679E3;
-	Tue,  5 Dec 2023 03:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F7BC8D2;
+	Tue,  5 Dec 2023 03:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ucbe58Ji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D1CC433C8;
-	Tue,  5 Dec 2023 03:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKBQjzLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17256C433C8;
+	Tue,  5 Dec 2023 03:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701748044;
-	bh=R11vu7Xn+WBHFg7SEVB1VrbAGVGy0gfMmIfgWNuHtnA=;
+	s=korg; t=1701748048;
+	bh=r5lq4aqLbOFhTAO9bYgGwr0SOmvCCAKg1ZcShSaqPoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ucbe58JiCirmbE2i1cauNLRYz++LnC8kBRsHbouO4FzYnewStqa/t6KbMDKlUYbmj
-	 v7s5ObG//4PEOzBJRDt3SlzFNWZ2IYUzHm5l2BknepfWfzMHLLcQD2TDqdIYnhMQDY
-	 068oB/sIpgKZDxRrSWiGiX/6NneBF0AD4R5c6nJI=
+	b=mKBQjzLxNug8RmB+AzMFY4CvO70Dx5hmCSkguhA4DXMYFkM7mkz9TI9uMB0uG8SbF
+	 Z/ziXBWryVV4QN1CkINcJ6VYB3e0TR1HuSPwx+B2Pnx/Wyd0ZeBpbXrK4bWkEXJqxD
+	 5iXOYMoQzpMuDs6yyK+A56wgy/5m/sfm8n6zYs3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Furong Xu <0x1207@gmail.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 91/94] mmc: cqhci: Warn of halt or task clear failure
-Date: Tue,  5 Dec 2023 12:17:59 +0900
-Message-ID: <20231205031527.874893985@linuxfoundation.org>
+Subject: [PATCH 5.4 69/94] net: stmmac: xgmac: Disable FPE MMC interrupts
+Date: Tue,  5 Dec 2023 12:17:37 +0900
+Message-ID: <20231205031526.703895162@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -43,50 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Furong Xu <0x1207@gmail.com>
 
-[ Upstream commit 35597bdb04ec27ef3b1cea007dc69f8ff5df75a5 ]
+[ Upstream commit e54d628a2721bfbb002c19f6e8ca6746cec7640f ]
 
-A correctly operating controller should successfully halt and clear tasks.
-Failure may result in errors elsewhere, so promote messages from debug to
-warnings.
+Commit aeb18dd07692 ("net: stmmac: xgmac: Disable MMC interrupts
+by default") tries to disable MMC interrupts to avoid a storm of
+unhandled interrupts, but leaves the FPE(Frame Preemption) MMC
+interrupts enabled, FPE MMC interrupts can cause the same problem.
+Now we mask FPE TX and RX interrupts to disable all MMC interrupts.
 
-Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Link: https://lore.kernel.org/r/20231103084720.6886-6-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: aeb18dd07692 ("net: stmmac: xgmac: Disable MMC interrupts by default")
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Signed-off-by: Furong Xu <0x1207@gmail.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://lore.kernel.org/r/20231125060126.2328690-1-0x1207@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/cqhci.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/mmc_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/mmc/host/cqhci.c b/drivers/mmc/host/cqhci.c
-index 42b8038f76300..29440fd4ff099 100644
---- a/drivers/mmc/host/cqhci.c
-+++ b/drivers/mmc/host/cqhci.c
-@@ -878,8 +878,8 @@ static bool cqhci_clear_all_tasks(struct mmc_host *mmc, unsigned int timeout)
- 	ret = cqhci_tasks_cleared(cq_host);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/mmc_core.c b/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
+index 252cf48c58166..5b9f344fdd32a 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
+@@ -170,8 +170,10 @@
+ #define MMC_XGMAC_RX_DISCARD_OCT_GB	0x1b4
+ #define MMC_XGMAC_RX_ALIGN_ERR_PKT	0x1bc
  
- 	if (!ret)
--		pr_debug("%s: cqhci: Failed to clear tasks\n",
--			 mmc_hostname(mmc));
-+		pr_warn("%s: cqhci: Failed to clear tasks\n",
-+			mmc_hostname(mmc));
- 
- 	return ret;
++#define MMC_XGMAC_TX_FPE_INTR_MASK	0x204
+ #define MMC_XGMAC_TX_FPE_FRAG		0x208
+ #define MMC_XGMAC_TX_HOLD_REQ		0x20c
++#define MMC_XGMAC_RX_FPE_INTR_MASK	0x224
+ #define MMC_XGMAC_RX_PKT_ASSEMBLY_ERR	0x228
+ #define MMC_XGMAC_RX_PKT_SMD_ERR	0x22c
+ #define MMC_XGMAC_RX_PKT_ASSEMBLY_OK	0x230
+@@ -336,6 +338,8 @@ static void dwxgmac_mmc_intr_all_mask(void __iomem *mmcaddr)
+ {
+ 	writel(0x0, mmcaddr + MMC_RX_INTR_MASK);
+ 	writel(0x0, mmcaddr + MMC_TX_INTR_MASK);
++	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_TX_FPE_INTR_MASK);
++	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_RX_FPE_INTR_MASK);
+ 	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_RX_IPC_INTR_MASK);
  }
-@@ -912,7 +912,7 @@ static bool cqhci_halt(struct mmc_host *mmc, unsigned int timeout)
- 	ret = cqhci_halted(cq_host);
  
- 	if (!ret)
--		pr_debug("%s: cqhci: Failed to halt\n", mmc_hostname(mmc));
-+		pr_warn("%s: cqhci: Failed to halt\n", mmc_hostname(mmc));
- 
- 	return ret;
- }
 -- 
 2.42.0
 
