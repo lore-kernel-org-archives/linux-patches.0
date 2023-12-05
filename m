@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441BF6FB1;
-	Tue,  5 Dec 2023 03:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23AA6FB1;
+	Tue,  5 Dec 2023 03:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCRd/CYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFC6C433C8;
-	Tue,  5 Dec 2023 03:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idRyJ0xl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC06C433C8;
+	Tue,  5 Dec 2023 03:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747177;
-	bh=n6A2sVOz/BD6Squ1sOHyg10NCNQQwCmyx8aBzme4E2Y=;
+	s=korg; t=1701747179;
+	bh=dyUMmz/M8qtWfQ0zQYBpej61bAsoR+SxzNmdQgnYufY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fCRd/CYGwT3oyPjrk2qSatkAPaEcj6h4PryHGKLUnUnTlXbfRHPAzh7fyYIo5GUQa
-	 TKx2pIF37Tis0J/U6ymgIsiEVkv5ZoBwMtI0DZ4BRyAO7gwOn0nB1n4lINWKoaLc1y
-	 hUaD/sYY1OmsxhahzNAqX4oceh3oeGakBow5m3SQ=
+	b=idRyJ0xlA2WJvdId6CFcLjKTcvxPPoGFA33Sivf0SKMSUZ+SA9SKiifqNBr4zEf2f
+	 0y0u16bxTrQwz5dRIJhbe4brKJE+k2Gk8ZJTBWNKHWNEyhV5pt9Ur51irKlrBpb5fU
+	 mabSXKSoG8UE+AhDuaO/Gsvmnm/39kL1f41EkNcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Hansen Dsouza <hansen.dsouza@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Elena Salomatkina <elena.salomatkina.cmc@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/107] drm/amd/display: Guard against invalid RPTR/WPTR being set
-Date: Tue,  5 Dec 2023 12:17:02 +0900
-Message-ID: <20231205031537.082682487@linuxfoundation.org>
+Subject: [PATCH 6.1 065/107] octeontx2-af: Fix possible buffer overflow
+Date: Tue,  5 Dec 2023 12:16:40 +0900
+Message-ID: <20231205031535.498012569@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -46,66 +44,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Elena Salomatkina <elena.salomatkina.cmc@gmail.com>
 
-[ Upstream commit 1ffa8602e39b89469dc703ebab7a7e44c33da0f7 ]
+[ Upstream commit ad31c629ca3c87f6d557488c1f9faaebfbcd203c ]
 
-[WHY]
-HW can return invalid values on register read, guard against these being
-set and causing us to access memory out of range and page fault.
+A loop in rvu_mbox_handler_nix_bandprof_free() contains
+a break if (idx == MAX_BANDPROF_PER_PFFUNC),
+but if idx may reach MAX_BANDPROF_PER_PFFUNC
+buffer '(*req->prof_idx)[layer]' overflow happens before that check.
 
-[HOW]
-Guard at sync_inbox1 and guard at pushing commands.
+The patch moves the break to the
+beginning of the loop.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Hansen Dsouza <hansen.dsouza@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e8e095b3b370 ("octeontx2-af: cn10k: Bandwidth profiles config support").
+Signed-off-by: Elena Salomatkina <elena.salomatkina.cmc@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Link: https://lore.kernel.org/r/20231124210802.109763-1-elena.salomatkina.cmc@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dmub/src/dmub_srv.c    | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-index 6b8bd556c872f..e951fd837aa27 100644
---- a/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dmub/src/dmub_srv.c
-@@ -675,9 +675,16 @@ enum dmub_status dmub_srv_sync_inbox1(struct dmub_srv *dmub)
- 		return DMUB_STATUS_INVALID;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 1f3a8cf42765e..7310047136986 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -5236,6 +5236,8 @@ int rvu_mbox_handler_nix_bandprof_free(struct rvu *rvu,
  
- 	if (dmub->hw_funcs.get_inbox1_rptr && dmub->hw_funcs.get_inbox1_wptr) {
--		dmub->inbox1_rb.rptr = dmub->hw_funcs.get_inbox1_rptr(dmub);
--		dmub->inbox1_rb.wrpt = dmub->hw_funcs.get_inbox1_wptr(dmub);
--		dmub->inbox1_last_wptr = dmub->inbox1_rb.wrpt;
-+		uint32_t rptr = dmub->hw_funcs.get_inbox1_rptr(dmub);
-+		uint32_t wptr = dmub->hw_funcs.get_inbox1_wptr(dmub);
-+
-+		if (rptr > dmub->inbox1_rb.capacity || wptr > dmub->inbox1_rb.capacity) {
-+			return DMUB_STATUS_HW_FAILURE;
-+		} else {
-+			dmub->inbox1_rb.rptr = rptr;
-+			dmub->inbox1_rb.wrpt = wptr;
-+			dmub->inbox1_last_wptr = dmub->inbox1_rb.wrpt;
-+		}
+ 		ipolicer = &nix_hw->ipolicer[layer];
+ 		for (idx = 0; idx < req->prof_count[layer]; idx++) {
++			if (idx == MAX_BANDPROF_PER_PFFUNC)
++				break;
+ 			prof_idx = req->prof_idx[layer][idx];
+ 			if (prof_idx >= ipolicer->band_prof.max ||
+ 			    ipolicer->pfvf_map[prof_idx] != pcifunc)
+@@ -5249,8 +5251,6 @@ int rvu_mbox_handler_nix_bandprof_free(struct rvu *rvu,
+ 			ipolicer->pfvf_map[prof_idx] = 0x00;
+ 			ipolicer->match_id[prof_idx] = 0;
+ 			rvu_free_rsrc(&ipolicer->band_prof, prof_idx);
+-			if (idx == MAX_BANDPROF_PER_PFFUNC)
+-				break;
+ 		}
  	}
- 
- 	return DMUB_STATUS_OK;
-@@ -711,6 +718,11 @@ enum dmub_status dmub_srv_cmd_queue(struct dmub_srv *dmub,
- 	if (!dmub->hw_init)
- 		return DMUB_STATUS_INVALID;
- 
-+	if (dmub->inbox1_rb.rptr > dmub->inbox1_rb.capacity ||
-+	    dmub->inbox1_rb.wrpt > dmub->inbox1_rb.capacity) {
-+		return DMUB_STATUS_HW_FAILURE;
-+	}
-+
- 	if (dmub_rb_push_front(&dmub->inbox1_rb, cmd))
- 		return DMUB_STATUS_OK;
- 
+ 	mutex_unlock(&rvu->rsrc_lock);
 -- 
 2.42.0
 
