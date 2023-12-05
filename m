@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89703A59;
-	Tue,  5 Dec 2023 03:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395416110;
+	Tue,  5 Dec 2023 03:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGCGkKmI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0515EC433C7;
-	Tue,  5 Dec 2023 03:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6rz2l27"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709AFC433C7;
+	Tue,  5 Dec 2023 03:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746748;
-	bh=w6ZTjOJPTZQXuoAWwyMtc/znKfNcGC1p6oeGUvZK6ww=;
+	s=korg; t=1701746751;
+	bh=YfhqTc/8qe+XBrebp05O5/yFvqA+1pU8BQu5NUL6Pj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qGCGkKmIvbeF/cFXL5KSC+CfuHdJZLaAtxex5eDa4yfUJWzpNi5VSiftUIR+sBM8W
-	 /E/oXVW9R0TT40I9KD/G9oOOzwjsvSZge7JlaYpWf6IRf2NlOVst/WJeBUDvRM+DOS
-	 ZRb800CvUyzA3Z80w33Rzs0f64AbygCc7KST0VoI=
+	b=D6rz2l273EfT9aDEp5JtxDSZIZa2itKsqYH1lscv3JMu5+UR/ALUWaisH6K3pKGk7
+	 iPY4+Nm410EJlR9tyRJ5SyDfLIDuxERYxbrJ5rBBv3+GNFCDsXYR0Jou1uhISz2Qzn
+	 s1X1Mn+L05PDjj5rUADhp22OxpM7LUfNTS/aVZH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.con>,
+	kernel test robot <lkp@intel.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sean Christopherson <seanjc@google.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/134] x86/xen: fix percpu vcpu_info allocation
-Date: Tue,  5 Dec 2023 12:16:45 +0900
-Message-ID: <20231205031543.874411485@linuxfoundation.org>
+Subject: [PATCH 6.6 134/134] vfio: Drop vfio_file_iommu_group() stub to fudge around a KVM wart
+Date: Tue,  5 Dec 2023 12:16:46 +0900
+Message-ID: <20231205031543.944552356@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -42,69 +46,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit db2832309a82b9acc4b8cc33a1831d36507ec13e ]
+[ Upstream commit 4ea95c04fa6b9043a1a301240996aeebe3cb28ec ]
 
-Today the percpu struct vcpu_info is allocated via DEFINE_PER_CPU(),
-meaning that it could cross a page boundary. In this case registering
-it with the hypervisor will fail, resulting in a panic().
+Drop the vfio_file_iommu_group() stub and instead unconditionally declare
+the function to fudge around a KVM wart where KVM tries to do symbol_get()
+on vfio_file_iommu_group() (and other VFIO symbols) even if CONFIG_VFIO=n.
 
-This can easily be fixed by using DEFINE_PER_CPU_ALIGNED() instead,
-as struct vcpu_info is guaranteed to have a size of 64 bytes, matching
-the cache line size of x86 64-bit processors (Xen doesn't support
-32-bit processors).
+Ensuring the symbol is always declared fixes a PPC build error when
+modules are also disabled, in which case symbol_get() simply points at the
+address of the symbol (with some attributes shenanigans).  Because KVM
+does symbol_get() instead of directly depending on VFIO, the lack of a
+fully defined symbol is not problematic (ugly, but "fine").
 
-Fixes: 5ead97c84fa7 ("xen: Core Xen implementation")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.con>
-Link: https://lore.kernel.org/r/20231124074852.25161-1-jgross@suse.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+   arch/powerpc/kvm/../../../virt/kvm/vfio.c:89:7:
+   error: attribute declaration must precede definition [-Werror,-Wignored-attributes]
+           fn = symbol_get(vfio_file_iommu_group);
+                ^
+   include/linux/module.h:805:60: note: expanded from macro 'symbol_get'
+   #define symbol_get(x) ({ extern typeof(x) x __attribute__((weak,visibility("hidden"))); &(x); })
+                                                              ^
+   include/linux/vfio.h:294:35: note: previous definition is here
+   static inline struct iommu_group *vfio_file_iommu_group(struct file *file)
+                                     ^
+   arch/powerpc/kvm/../../../virt/kvm/vfio.c:89:7:
+   error: attribute declaration must precede definition [-Werror,-Wignored-attributes]
+           fn = symbol_get(vfio_file_iommu_group);
+                ^
+   include/linux/module.h:805:65: note: expanded from macro 'symbol_get'
+   #define symbol_get(x) ({ extern typeof(x) x __attribute__((weak,visibility("hidden"))); &(x); })
+                                                                   ^
+   include/linux/vfio.h:294:35: note: previous definition is here
+   static inline struct iommu_group *vfio_file_iommu_group(struct file *file)
+                                     ^
+   2 errors generated.
+
+Although KVM is firmly in the wrong (there is zero reason for KVM to build
+virt/kvm/vfio.c when VFIO is disabled), fudge around the error in VFIO as
+the stub is unnecessary and doesn't serve its intended purpose (KVM is the
+only external user of vfio_file_iommu_group()), and there is an in-flight
+series to clean up the entire KVM<->VFIO interaction, i.e. fixing this in
+KVM would result in more churn in the long run, and the stub needs to go
+away regardless.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202308251949.5IiaV0sz-lkp@intel.com
+Closes: https://lore.kernel.org/oe-kbuild-all/202309030741.82aLACDG-lkp@intel.com
+Closes: https://lore.kernel.org/oe-kbuild-all/202309110914.QLH0LU6L-lkp@intel.com
+Link: https://lore.kernel.org/all/0-v1-08396538817d+13c5-vfio_kvm_kconfig_jgg@nvidia.com
+Link: https://lore.kernel.org/all/20230916003118.2540661-1-seanjc@google.com
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Tested-by: Michael Ellerman <mpe@ellerman.id.au>
+Fixes: c1cce6d079b8 ("vfio: Compile vfio_group infrastructure optionally")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20231130001000.543240-1-seanjc@google.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/enlighten.c | 6 +++++-
- arch/x86/xen/xen-ops.h   | 2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ include/linux/vfio.h | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/xen/enlighten.c b/arch/x86/xen/enlighten.c
-index 0337392a31214..3c61bb98c10e2 100644
---- a/arch/x86/xen/enlighten.c
-+++ b/arch/x86/xen/enlighten.c
-@@ -33,9 +33,12 @@ EXPORT_SYMBOL_GPL(hypercall_page);
-  * and xen_vcpu_setup for details. By default it points to share_info->vcpu_info
-  * but during boot it is switched to point to xen_vcpu_info.
-  * The pointer is used in xen_evtchn_do_upcall to acknowledge pending events.
-+ * Make sure that xen_vcpu_info doesn't cross a page boundary by making it
-+ * cache-line aligned (the struct is guaranteed to have a size of 64 bytes,
-+ * which matches the cache line size of 64-bit x86 processors).
+diff --git a/include/linux/vfio.h b/include/linux/vfio.h
+index 454e9295970c4..a65b2513f8cdc 100644
+--- a/include/linux/vfio.h
++++ b/include/linux/vfio.h
+@@ -289,16 +289,12 @@ void vfio_combine_iova_ranges(struct rb_root_cached *root, u32 cur_nodes,
+ /*
+  * External user API
   */
- DEFINE_PER_CPU(struct vcpu_info *, xen_vcpu);
--DEFINE_PER_CPU(struct vcpu_info, xen_vcpu_info);
-+DEFINE_PER_CPU_ALIGNED(struct vcpu_info, xen_vcpu_info);
- 
- /* Linux <-> Xen vCPU id mapping */
- DEFINE_PER_CPU(uint32_t, xen_vcpu_id);
-@@ -160,6 +163,7 @@ void xen_vcpu_setup(int cpu)
- 	int err;
- 	struct vcpu_info *vcpup;
- 
-+	BUILD_BUG_ON(sizeof(*vcpup) > SMP_CACHE_BYTES);
- 	BUG_ON(HYPERVISOR_shared_info == &xen_dummy_shared_info);
- 
- 	/*
-diff --git a/arch/x86/xen/xen-ops.h b/arch/x86/xen/xen-ops.h
-index 408a2aa66c692..a87ab36889e76 100644
---- a/arch/x86/xen/xen-ops.h
-+++ b/arch/x86/xen/xen-ops.h
-@@ -21,7 +21,7 @@ extern void *xen_initial_gdt;
- struct trap_info;
- void xen_copy_trap_info(struct trap_info *traps);
- 
--DECLARE_PER_CPU(struct vcpu_info, xen_vcpu_info);
-+DECLARE_PER_CPU_ALIGNED(struct vcpu_info, xen_vcpu_info);
- DECLARE_PER_CPU(unsigned long, xen_cr3);
- DECLARE_PER_CPU(unsigned long, xen_current_cr3);
- 
+-#if IS_ENABLED(CONFIG_VFIO_GROUP)
+ struct iommu_group *vfio_file_iommu_group(struct file *file);
++
++#if IS_ENABLED(CONFIG_VFIO_GROUP)
+ bool vfio_file_is_group(struct file *file);
+ bool vfio_file_has_dev(struct file *file, struct vfio_device *device);
+ #else
+-static inline struct iommu_group *vfio_file_iommu_group(struct file *file)
+-{
+-	return NULL;
+-}
+-
+ static inline bool vfio_file_is_group(struct file *file)
+ {
+ 	return false;
 -- 
 2.42.0
 
