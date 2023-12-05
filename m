@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4703879E3;
-	Tue,  5 Dec 2023 03:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C7F8F75;
+	Tue,  5 Dec 2023 03:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/ZQlT0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E4EC433C7;
-	Tue,  5 Dec 2023 03:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMHrybem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5D1C433C8;
+	Tue,  5 Dec 2023 03:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746782;
-	bh=vjbYDlYL5MrYze1Oh2NadVd4uxO8CDSB4eKRy7qTFuw=;
+	s=korg; t=1701746784;
+	bh=q8c1l4HNqMEMOmYcF+eIkzmcERv+I3xlUpw/48VmsP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/ZQlT0iW3qa1fTnXWSgVVuwAgEDOPSzKS204Cnpmrw5kB4Agwi2GwcIzG3WQSBC/
-	 9RhOBY3wEePZEHVTc09PDz8iDir5I2IeVB+5ZR6d9/tK4TZzmVaLjUumzv+fUQB0Kn
-	 m0TL2HZ6w8a2EN3PQL/nLhb/Io/PLxVdkYHIBZOE=
+	b=sMHrybemtlsWRMF4M2DOIJolrV4/vsZOGKCOpU8cnbW8CUqdnj7I/CCuku0t8rBmE
+	 7SIUUVL50JGF0P4h7R1oq2togRUuHpItERRBfb+VjTUR1DQkohfKTf+FM7DvKhHPXI
+	 fFObXPLigffvkcsBklF5al8uY+FTt7eSInIbfyKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Charles Yi <be286@163.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 06/71] HID: core: store the unique system identifier in hid_device
-Date: Tue,  5 Dec 2023 12:16:04 +0900
-Message-ID: <20231205031518.244565961@linuxfoundation.org>
+Subject: [PATCH 4.19 07/71] HID: fix HID device resource race between HID core and debugging support
+Date: Tue,  5 Dec 2023 12:16:05 +0900
+Message-ID: <20231205031518.288631908@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -41,58 +42,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+From: Charles Yi <be286@163.com>
 
-[ Upstream commit 1e839143d674603b0bbbc4c513bca35404967dbc ]
+[ Upstream commit fc43e9c857b7aa55efba9398419b14d9e35dcc7d ]
 
-This unique identifier is currently used only for ensuring uniqueness in
-sysfs. However, this could be handful for userspace to refer to a specific
-hid_device by this id.
+hid_debug_events_release releases resources bound to the HID device instance.
+hid_device_release releases the underlying HID device instance potentially
+before hid_debug_events_release has completed releasing debug resources bound
+to the same HID device instance.
 
-2 use cases are in my mind: LEDs (and their naming convention), and
-HID-BPF.
+Reference count to prevent the HID device instance from being torn down
+preemptively when HID debugging support is used. When count reaches zero,
+release core resources of HID device instance using hiddev_free.
 
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20220902132938.2409206-9-benjamin.tissoires@redhat.com
-Stable-dep-of: fc43e9c857b7 ("HID: fix HID device resource race between HID core and debugging support")
+The crash:
+
+[  120.728477][ T4396] kernel BUG at lib/list_debug.c:53!
+[  120.728505][ T4396] Internal error: Oops - BUG: 0 [#1] PREEMPT SMP
+[  120.739806][ T4396] Modules linked in: bcmdhd dhd_static_buf 8822cu pcie_mhi r8168
+[  120.747386][ T4396] CPU: 1 PID: 4396 Comm: hidt_bridge Not tainted 5.10.110 #257
+[  120.754771][ T4396] Hardware name: Rockchip RK3588 EVB4 LP4 V10 Board (DT)
+[  120.761643][ T4396] pstate: 60400089 (nZCv daIf +PAN -UAO -TCO BTYPE=--)
+[  120.768338][ T4396] pc : __list_del_entry_valid+0x98/0xac
+[  120.773730][ T4396] lr : __list_del_entry_valid+0x98/0xac
+[  120.779120][ T4396] sp : ffffffc01e62bb60
+[  120.783126][ T4396] x29: ffffffc01e62bb60 x28: ffffff818ce3a200
+[  120.789126][ T4396] x27: 0000000000000009 x26: 0000000000980000
+[  120.795126][ T4396] x25: ffffffc012431000 x24: ffffff802c6d4e00
+[  120.801125][ T4396] x23: ffffff8005c66f00 x22: ffffffc01183b5b8
+[  120.807125][ T4396] x21: ffffff819df2f100 x20: 0000000000000000
+[  120.813124][ T4396] x19: ffffff802c3f0700 x18: ffffffc01d2cd058
+[  120.819124][ T4396] x17: 0000000000000000 x16: 0000000000000000
+[  120.825124][ T4396] x15: 0000000000000004 x14: 0000000000003fff
+[  120.831123][ T4396] x13: ffffffc012085588 x12: 0000000000000003
+[  120.837123][ T4396] x11: 00000000ffffbfff x10: 0000000000000003
+[  120.843123][ T4396] x9 : 455103d46b329300 x8 : 455103d46b329300
+[  120.849124][ T4396] x7 : 74707572726f6320 x6 : ffffffc0124b8cb5
+[  120.855124][ T4396] x5 : ffffffffffffffff x4 : 0000000000000000
+[  120.861123][ T4396] x3 : ffffffc011cf4f90 x2 : ffffff81fee7b948
+[  120.867122][ T4396] x1 : ffffffc011cf4f90 x0 : 0000000000000054
+[  120.873122][ T4396] Call trace:
+[  120.876259][ T4396]  __list_del_entry_valid+0x98/0xac
+[  120.881304][ T4396]  hid_debug_events_release+0x48/0x12c
+[  120.886617][ T4396]  full_proxy_release+0x50/0xbc
+[  120.891323][ T4396]  __fput+0xdc/0x238
+[  120.895075][ T4396]  ____fput+0x14/0x24
+[  120.898911][ T4396]  task_work_run+0x90/0x148
+[  120.903268][ T4396]  do_exit+0x1bc/0x8a4
+[  120.907193][ T4396]  do_group_exit+0x8c/0xa4
+[  120.911458][ T4396]  get_signal+0x468/0x744
+[  120.915643][ T4396]  do_signal+0x84/0x280
+[  120.919650][ T4396]  do_notify_resume+0xd0/0x218
+[  120.924262][ T4396]  work_pending+0xc/0x3f0
+
+[ Rahul Rameshbabu <sergeantsagara@protonmail.com>: rework changelog ]
+Fixes: cd667ce24796 ("HID: use debugfs for events/reports dumping")
+Signed-off-by: Charles Yi <be286@163.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 4 +++-
- include/linux/hid.h    | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/hid/hid-core.c  | 12 ++++++++++--
+ drivers/hid/hid-debug.c |  3 +++
+ include/linux/hid.h     |  3 +++
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index c8d687f795caa..99eb26bcb1dd3 100644
+index 99eb26bcb1dd3..dd1d8d0a46d12 100644
 --- a/drivers/hid/hid-core.c
 +++ b/drivers/hid/hid-core.c
-@@ -2259,10 +2259,12 @@ int hid_add_device(struct hid_device *hdev)
- 			hid_warn(hdev, "bad device descriptor (%d)\n", ret);
- 	}
+@@ -701,15 +701,22 @@ static void hid_close_report(struct hid_device *device)
+  * Free a device structure, all reports, and all fields.
+  */
  
-+	hdev->id = atomic_inc_return(&id);
+-static void hid_device_release(struct device *dev)
++void hiddev_free(struct kref *ref)
+ {
+-	struct hid_device *hid = to_hid_device(dev);
++	struct hid_device *hid = container_of(ref, struct hid_device, ref);
+ 
+ 	hid_close_report(hid);
+ 	kfree(hid->dev_rdesc);
+ 	kfree(hid);
+ }
+ 
++static void hid_device_release(struct device *dev)
++{
++	struct hid_device *hid = to_hid_device(dev);
 +
- 	/* XXX hack, any other cleaner solution after the driver core
- 	 * is converted to allow more than 20 bytes as the device name? */
- 	dev_set_name(&hdev->dev, "%04X:%04X:%04X.%04X", hdev->bus,
--		     hdev->vendor, hdev->product, atomic_inc_return(&id));
-+		     hdev->vendor, hdev->product, hdev->id);
++	kref_put(&hid->ref, hiddev_free);
++}
++
+ /*
+  * Fetch a report description item from the data stream. We support long
+  * items, though they are not used yet.
+@@ -2307,6 +2314,7 @@ struct hid_device *hid_allocate_device(void)
+ 	spin_lock_init(&hdev->debug_list_lock);
+ 	sema_init(&hdev->driver_input_lock, 1);
+ 	mutex_init(&hdev->ll_open_lock);
++	kref_init(&hdev->ref);
  
- 	hid_debug_register(hdev, dev_name(&hdev->dev));
- 	ret = device_add(&hdev->dev);
+ 	return hdev;
+ }
+diff --git a/drivers/hid/hid-debug.c b/drivers/hid/hid-debug.c
+index 2abd30a4ff75d..64ff5bd6579e7 100644
+--- a/drivers/hid/hid-debug.c
++++ b/drivers/hid/hid-debug.c
+@@ -1096,6 +1096,7 @@ static int hid_debug_events_open(struct inode *inode, struct file *file)
+ 		goto out;
+ 	}
+ 	list->hdev = (struct hid_device *) inode->i_private;
++	kref_get(&list->hdev->ref);
+ 	file->private_data = list;
+ 	mutex_init(&list->read_mutex);
+ 
+@@ -1188,6 +1189,8 @@ static int hid_debug_events_release(struct inode *inode, struct file *file)
+ 	list_del(&list->node);
+ 	spin_unlock_irqrestore(&list->hdev->debug_list_lock, flags);
+ 	kfifo_free(&list->hid_debug_fifo);
++
++	kref_put(&list->hdev->ref, hiddev_free);
+ 	kfree(list);
+ 
+ 	return 0;
 diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 79c6c3b4e0044..10b41b2b20857 100644
+index 10b41b2b20857..63c2333a57059 100644
 --- a/include/linux/hid.h
 +++ b/include/linux/hid.h
-@@ -625,6 +625,8 @@ struct hid_device {							/* device report descriptor */
+@@ -625,10 +625,13 @@ struct hid_device {							/* device report descriptor */
  	struct list_head debug_list;
  	spinlock_t  debug_list_lock;
  	wait_queue_head_t debug_wait;
-+
-+	unsigned int id;						/* system unique id */
++	struct kref			ref;
+ 
+ 	unsigned int id;						/* system unique id */
  };
  
++void hiddev_free(struct kref *ref);
++
  #define to_hid_device(pdev) \
+ 	container_of(pdev, struct hid_device, dev)
+ 
 -- 
 2.42.0
 
