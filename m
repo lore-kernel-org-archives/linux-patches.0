@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D0F6AC2;
-	Tue,  5 Dec 2023 03:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAE96AC2;
+	Tue,  5 Dec 2023 03:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2gxRoEC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6BBC433C7;
-	Tue,  5 Dec 2023 03:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nK6zglP0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990A8C433C7;
+	Tue,  5 Dec 2023 03:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747747;
-	bh=Uwufbe2ELrcvHV3Q9D0OgKzxlbkxNglPJSFLqWbmztI=;
+	s=korg; t=1701747749;
+	bh=GA7uZVKAZnGzT0GqLcUQdIUYKMcsAyL5IQngLzft78c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2gxRoECJEUR8hi6vgsacEX5/3hFuM599wv/VyC+E5UN3q+SZWOAwB8ed9Ax1KzYw
-	 m3BwFCmG+nbx8vwTTfbEno8CAqxzVNEOSyUL1T4qiR18fyaLRKOXwPPMU1yY41DS/7
-	 ArKZLyU18fP2HeOPWeF030ZGSiae4dsDh6maiPTU=
+	b=nK6zglP0UHPOOtaMDOvJ6Cc5N4NakBgD5KJu8xo19zMK8eczfHm779h33YAGe94aN
+	 W8sYYzrCE0VI4Qh50OokqwZls9ZrstHxyYHd9uMPWR08pah4LZfi/huty7Luh9zoT3
+	 p5RLr09pS2Mtc4vK8OXWywCHm8y6eM2ljHBsJS48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Paul Olaru <paul.olaru@oss.nxp.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 53/67] ASoC: SOF: sof-pci-dev: use community key on all Up boards
-Date: Tue,  5 Dec 2023 12:17:38 +0900
-Message-ID: <20231205031522.919009133@linuxfoundation.org>
+Subject: [PATCH 5.15 54/67] ASoC: SOF: sof-pci-dev: add parameter to override topology filename
+Date: Tue,  5 Dec 2023 12:17:39 +0900
+Message-ID: <20231205031522.988901442@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -47,54 +49,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 405e52f412b85b581899f5e1b82d25a7c8959d89 ]
+[ Upstream commit 772627acfeb0e670ede534b7d5502dae9668d3ee ]
 
-There are already 3 versions of the Up boards with support for the SOF
-community key (ApolloLake, WhiskyLake, TigerLake). Rather than
-continue to add quirks for each version, let's add a wildcard.
+The existing 'tplg_path' module parameter can be used to load
+alternate firmware files, be it for development or to handle
+OEM-specific or board-specific releases. However the topology filename
+is either hard-coded in machine descriptors or modified by specific
+DMI-quirks.
 
-For WHL and TGL, the authentication supports both the SOF community
-key and the firmware signed with the Intel production key. Given two
-choices, the community key is the preferred option to allow developers
-to sign their own firmware. The firmware signed with production key
-can still be selected if needed with a kernel module
-option (snd-sof-pci.fw_path="intel/sof")
+For additional flexibility, this patch adds the 'tplg_filename' module
+parameter to override topology names.
 
-Tested-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+To avoid any confusion between DMI- and parameter-override, a variable
+rename is added.
+
 Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Reviewed-by: Paul Olaru <paul.olaru@oss.nxp.com>
 Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20211119231327.211946-1-pierre-louis.bossart@linux.intel.com
+Link: https://lore.kernel.org/r/20220414184817.362215-7-pierre-louis.bossart@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 7dd692217b86 ("ASoC: SOF: sof-pci-dev: Fix community key quirk detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/sof-pci-dev.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ sound/soc/sof/sof-pci-dev.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
 diff --git a/sound/soc/sof/sof-pci-dev.c b/sound/soc/sof/sof-pci-dev.c
-index 3b4c011e02834..c1cd156996b43 100644
+index c1cd156996b43..6b103118cfd1b 100644
 --- a/sound/soc/sof/sof-pci-dev.c
 +++ b/sound/soc/sof/sof-pci-dev.c
-@@ -64,17 +64,9 @@ static const struct dmi_system_id sof_tplg_table[] = {
+@@ -27,17 +27,21 @@ static char *tplg_path;
+ module_param(tplg_path, charp, 0444);
+ MODULE_PARM_DESC(tplg_path, "alternate path for SOF topology.");
  
- static const struct dmi_system_id community_key_platforms[] = {
- 	{
--		.ident = "Up Squared",
-+		.ident = "Up boards",
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "AAEON"),
--			DMI_MATCH(DMI_BOARD_NAME, "UP-APL01"),
--		}
--	},
--	{
--		.ident = "Up Extreme",
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "AAEON"),
--			DMI_MATCH(DMI_BOARD_NAME, "UP-WHL01"),
- 		}
- 	},
- 	{
++static char *tplg_filename;
++module_param(tplg_filename, charp, 0444);
++MODULE_PARM_DESC(tplg_filename, "alternate filename for SOF topology.");
++
+ static int sof_pci_debug;
+ module_param_named(sof_pci_debug, sof_pci_debug, int, 0444);
+ MODULE_PARM_DESC(sof_pci_debug, "SOF PCI debug options (0x0 all off)");
+ 
+-static const char *sof_override_tplg_name;
++static const char *sof_dmi_override_tplg_name;
+ 
+ #define SOF_PCI_DISABLE_PM_RUNTIME BIT(0)
+ 
+ static int sof_tplg_cb(const struct dmi_system_id *id)
+ {
+-	sof_override_tplg_name = id->driver_data;
++	sof_dmi_override_tplg_name = id->driver_data;
+ 	return 1;
+ }
+ 
+@@ -183,9 +187,20 @@ int sof_pci_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
+ 		sof_pdata->tplg_filename_prefix =
+ 			sof_pdata->desc->default_tplg_path;
+ 
+-	dmi_check_system(sof_tplg_table);
+-	if (sof_override_tplg_name)
+-		sof_pdata->tplg_filename = sof_override_tplg_name;
++	/*
++	 * the topology filename will be provided in the machine descriptor, unless
++	 * it is overridden by a module parameter or DMI quirk.
++	 */
++	if (tplg_filename) {
++		sof_pdata->tplg_filename = tplg_filename;
++
++		dev_dbg(dev, "Module parameter used, changed tplg filename to %s\n",
++			sof_pdata->tplg_filename);
++	} else {
++		dmi_check_system(sof_tplg_table);
++		if (sof_dmi_override_tplg_name)
++			sof_pdata->tplg_filename = sof_dmi_override_tplg_name;
++	}
+ 
+ 	/* set callback to be called on successful device probe to enable runtime_pm */
+ 	sof_pdata->sof_probe_complete = sof_pci_probe_complete;
 -- 
 2.42.0
 
