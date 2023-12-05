@@ -1,78 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA4669280;
-	Tue,  5 Dec 2023 17:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571A86928C;
+	Tue,  5 Dec 2023 17:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Klv1bDCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35DBC433C7;
-	Tue,  5 Dec 2023 17:06:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KS2ogpMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D457C433C7;
+	Tue,  5 Dec 2023 17:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701795970;
-	bh=6SgvmhGkAC7ViFPJylFiTyaDn+gXFAjdcjaov4tn2dw=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Klv1bDCrNMC09jDz9M17m8p16AcX3uPPWX03b3wpEiVuDJzRuMMaNXf8LHMeheV0W
-	 ZYvOs+ShE8kwK64GrkZQD3AqvclIRAvTKBk3Mrc5NWArwbW1Hq3ePuHbQcwqD5o7ik
-	 aeOMZwdm9VcMrP1CGD8NrdBqrv2+ZAp/ePENA5NCFRDiwSltpc1wp7PT9FoOhIITo1
-	 UDGusZ3MpHrQcE1zyoumCdftUd9PFkglqU59LA9e5+wcz+9YnoS+1yU2W7xUM39PiT
-	 0MvZqKzVyw2RiV3W0uk1jHP4quLo7yzrlB/hEqm0SMQjm77k/eJ2DIKe/NOLHL9C57
-	 wnwMCB1qPH35w==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 05 Dec 2023 10:05:57 -0700
-Subject: [PATCH] MAINTAINERS: Add scripts/clang-tools to Kbuild section
+	s=k20201202; t=1701796149;
+	bh=mfCTwBrNlsw0BmDAWHPnDlrs+5S5RWznuV7vJPLzxgY=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=KS2ogpMRXC3TwEhvv2sOp44ckuGKoJNmyx0vWTA79M/mc2e5zN6UYdaRcIkFjid0v
+	 pijsvfVgpB1AFy5wPUFepFY5Mu3deGInx9Eusq9+fgAfqwDfxzpKy9cScACbqXs4ub
+	 sA2Sinn3za3pqoi7SHJ45CahiHGJqs5vVNMd6DkAQ4tigGv/yj+Bdrxla71nK/SVEn
+	 mIhlVwa0v+bu3n/2UK/BRG2uQIIwHpz9/zi6si0a+dLY+N2uTXNyL8x2m0i7a14C77
+	 Qv+GQ7LlfJKNrwX2Oxkpzi9k7abELYoKnbIXfEJeHPkjxPdVlHAq8x1htiYHDDT2ne
+	 o4min16tsyhaQ==
+From: SeongJae Park <sj@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	damon@lists.linux.dev,
+	SeongJae Park <sj@kernel.org>
+Subject: Re: [PATCH 5.15 00/67] 5.15.142-rc1 review
+Date: Tue,  5 Dec 2023 17:09:06 +0000
+Message-Id: <20231205170907.2126-1-sj@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
+References: 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231205-maintainers-kbuild-clang-tools-v1-1-a646a1985300@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAHRYb2UC/x2NQQqDMBBFryKz7kCc2IC9SunC6FQH06RkbCmId
- +/g4i0ePP7fQbkKK9yaHSp/RaVkk/bSwLgMeWaUyRzIkW/JXfE1SN4Mropr/EiacEwW4lZKUux
- 9CCF25KMjsJF35af8zoP74zj+wV2icHAAAAA=
-To: masahiroy@kernel.org
-Cc: nicolas@fjasle.eu, ndesaulniers@google.com, morbo@google.com, 
- justinstitt@google.com, linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=800; i=nathan@kernel.org;
- h=from:subject:message-id; bh=6SgvmhGkAC7ViFPJylFiTyaDn+gXFAjdcjaov4tn2dw=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKn5EY395Qvqvrmx3e/LfbVqTcrHgneJpyelXvNaxp1i/
- fHkncuHOkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEmDwYGc484NM1XMCz+rfp
- PobtBvkzz+esvH6kZjnXdu5PS9u8Nj9kZHgTPmndinxOhb3OIg4qIieqWlmdkl6GvFp9fPH1B6Z
- /z3MDAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-Masahiro has always applied scripts/clang-tools patches but it is not
-included in the Kbuild section, so neither he nor linux-kbuild get cc'd
-on patches that touch those files.
+Hello,
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+On 2023-12-05T12:16:45+09:00 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 788be9ab5b73..cd9bf44dc1b3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -11526,6 +11526,7 @@ F:	scripts/*vmlinux*
- F:	scripts/Kbuild*
- F:	scripts/Makefile*
- F:	scripts/basic/
-+F:	scripts/clang-tools/
- F:	scripts/dummy-tools/
- F:	scripts/mk*
- F:	scripts/mod/
+> This is the start of the stable review cycle for the 5.15.142 release.
+> There are 67 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.142-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+
+This rc kernel passes DAMON functionality test[1] on my test machine.
+Attaching the test results summary below.  Please note that I retrieved the
+kernel from linux-stable-rc tree[2].
+
+Tested-by: SeongJae Park <sj@kernel.org>
+
+[1] https://github.com/awslabs/damon-tests/tree/next/corr
+[2] bff845be423f ("Linux 5.15.142-rc1")
+
+Thanks,
+SJ
+
+[...]
 
 ---
-base-commit: 33cc938e65a98f1d29d0a18403dbbee050dcad9a
-change-id: 20231205-maintainers-kbuild-clang-tools-93666b423b02
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+ok 1 selftests: damon: debugfs_attrs.sh
+ok 1 selftests: damon-tests: kunit.sh
+ok 2 selftests: damon-tests: huge_count_read_write.sh
+ok 3 selftests: damon-tests: buffer_overflow.sh
+ok 4 selftests: damon-tests: rm_contexts.sh
+ok 5 selftests: damon-tests: record_null_deref.sh
+ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
+ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
+ok 8 selftests: damon-tests: damo_tests.sh
+ok 9 selftests: damon-tests: masim-record.sh
+ok 10 selftests: damon-tests: build_i386.sh
+ok 11 selftests: damon-tests: build_arm64.sh
+ok 12 selftests: damon-tests: build_i386_idle_flag.sh
+ok 13 selftests: damon-tests: build_i386_highpte.sh
+ok 14 selftests: damon-tests: build_nomemcg.sh
+ [33m
+ [92mPASS [39m
