@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B616FB1;
-	Tue,  5 Dec 2023 03:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B14E6FB1;
+	Tue,  5 Dec 2023 03:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dS0Y3AIN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72993C433C8;
-	Tue,  5 Dec 2023 03:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PgL/bSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A899FC433C8;
+	Tue,  5 Dec 2023 03:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747402;
-	bh=lDT9/jJf9ZxYNhzQsdmIInzEE2tfv6ca4ILtiMH3VI0=;
+	s=korg; t=1701747405;
+	bh=rS8Bzry2R8CViC9ENfptVNd39UdwkMm5hC3t53Rj41c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dS0Y3AINUvCrJO0e9WrzrtORCgafv97tnOE9H3tdtQirjtBsruQzhirgASDQANxvR
-	 rq77zdr3S5X5aVjwZPHiSgP3OMk7g8TM7HHJL7ffHxUOnuKr4PWrEs7m6XXnwK0J9H
-	 WWmsV2/NHObCj5dl5ngBWDjbTS0mD4/RWDsehsdE=
+	b=1PgL/bSJejgSb1ECBXo4oNfHdbjt75o26egPOUIzBRoIMJl71iF1Cn+79879E0kNt
+	 i+WTpYBA0ATFHQaEsYVVhrVEVU9OybSqm9LjVhI8NqiF2uIWySiZaMtHZ/1FFd2FzR
+	 OGCn8CtmMs/+RdP8pSPhIiWyfxpqdsztaa0oVXlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Suvanto <markus.suvanto@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/135] afs: Return ENOENT if no cell DNS record can be found
-Date: Tue,  5 Dec 2023 12:15:50 +0900
-Message-ID: <20231205031532.500668739@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Dexuan Cui <decui@microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 056/135] hv_netvsc: Mark VF as slave before exposing it to user-mode
+Date: Tue,  5 Dec 2023 12:16:17 +0900
+Message-ID: <20231205031533.985121545@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -44,64 +44,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit 0167236e7d66c5e1e85d902a6abc2529b7544539 ]
+commit c807d6cd089d2f4951baa838081ec5ae3e2360f8 upstream.
 
-Make AFS return error ENOENT if no cell SRV or AFSDB DNS record (or
-cellservdb config file record) can be found rather than returning
-EDESTADDRREQ.
+When a VF is being exposed form the kernel, it should be marked as "slave"
+before exposing to the user-mode. The VF is not usable without netvsc
+running as master. The user-mode should never see a VF without the "slave"
+flag.
 
-Also add cell name lookup info to the cursor dump.
+This commit moves the code of setting the slave flag to the time before
+VF is exposed to user-mode.
 
-Fixes: d5c32c89b208 ("afs: Fix cell DNS lookup")
-Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216637
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 0c195567a8f6 ("netvsc: transparent VF management")
+Signed-off-by: Long Li <longli@microsoft.com>
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Acked-by: Stephen Hemminger <stephen@networkplumber.org>
+Acked-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/vl_rotate.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/hyperv/netvsc_drv.c |   32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
-diff --git a/fs/afs/vl_rotate.c b/fs/afs/vl_rotate.c
-index 488e58490b16e..eb415ce563600 100644
---- a/fs/afs/vl_rotate.c
-+++ b/fs/afs/vl_rotate.c
-@@ -58,6 +58,12 @@ static bool afs_start_vl_iteration(struct afs_vl_cursor *vc)
- 		}
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -2217,9 +2217,6 @@ static int netvsc_vf_join(struct net_dev
+ 		goto upper_link_failed;
+ 	}
  
- 		/* Status load is ordered after lookup counter load */
-+		if (cell->dns_status == DNS_LOOKUP_GOT_NOT_FOUND) {
-+			pr_warn("No record of cell %s\n", cell->name);
-+			vc->error = -ENOENT;
-+			return false;
-+		}
+-	/* set slave flag before open to prevent IPv6 addrconf */
+-	vf_netdev->flags |= IFF_SLAVE;
+-
+ 	schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
+ 
+ 	call_netdevice_notifiers(NETDEV_JOIN, vf_netdev);
+@@ -2317,16 +2314,18 @@ static struct net_device *get_netvsc_bys
+ 			return hv_get_drvdata(ndev_ctx->device_ctx);
+ 	}
+ 
+-	/* Fallback path to check synthetic vf with
+-	 * help of mac addr
++	/* Fallback path to check synthetic vf with help of mac addr.
++	 * Because this function can be called before vf_netdev is
++	 * initialized (NETDEV_POST_INIT) when its perm_addr has not been copied
++	 * from dev_addr, also try to match to its dev_addr.
++	 * Note: On Hyper-V and Azure, it's not possible to set a MAC address
++	 * on a VF that matches to the MAC of a unrelated NETVSC device.
+ 	 */
+ 	list_for_each_entry(ndev_ctx, &netvsc_dev_list, list) {
+ 		ndev = hv_get_drvdata(ndev_ctx->device_ctx);
+-		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr)) {
+-			netdev_notice(vf_netdev,
+-				      "falling back to mac addr based matching\n");
++		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr) ||
++		    ether_addr_equal(vf_netdev->dev_addr, ndev->perm_addr))
+ 			return ndev;
+-		}
+ 	}
+ 
+ 	netdev_notice(vf_netdev,
+@@ -2334,6 +2333,19 @@ static struct net_device *get_netvsc_bys
+ 	return NULL;
+ }
+ 
++static int netvsc_prepare_bonding(struct net_device *vf_netdev)
++{
++	struct net_device *ndev;
 +
- 		if (cell->dns_source == DNS_RECORD_UNAVAILABLE) {
- 			vc->error = -EDESTADDRREQ;
- 			return false;
-@@ -285,6 +291,7 @@ bool afs_select_vlserver(struct afs_vl_cursor *vc)
-  */
- static void afs_vl_dump_edestaddrreq(const struct afs_vl_cursor *vc)
++	ndev = get_netvsc_byslot(vf_netdev);
++	if (!ndev)
++		return NOTIFY_DONE;
++
++	/* set slave flag before open to prevent IPv6 addrconf */
++	vf_netdev->flags |= IFF_SLAVE;
++	return NOTIFY_DONE;
++}
++
+ static int netvsc_register_vf(struct net_device *vf_netdev)
  {
-+	struct afs_cell *cell = vc->cell;
- 	static int count;
- 	int i;
+ 	struct net_device_context *net_device_ctx;
+@@ -2737,6 +2749,8 @@ static int netvsc_netdev_event(struct no
+ 		return NOTIFY_DONE;
  
-@@ -294,6 +301,9 @@ static void afs_vl_dump_edestaddrreq(const struct afs_vl_cursor *vc)
- 
- 	rcu_read_lock();
- 	pr_notice("EDESTADDR occurred\n");
-+	pr_notice("CELL: %s err=%d\n", cell->name, cell->error);
-+	pr_notice("DNS: src=%u st=%u lc=%x\n",
-+		  cell->dns_source, cell->dns_status, cell->dns_lookup_count);
- 	pr_notice("VC: ut=%lx ix=%u ni=%hu fl=%hx err=%hd\n",
- 		  vc->untried, vc->index, vc->nr_iterations, vc->flags, vc->error);
- 
--- 
-2.42.0
-
+ 	switch (event) {
++	case NETDEV_POST_INIT:
++		return netvsc_prepare_bonding(event_dev);
+ 	case NETDEV_REGISTER:
+ 		return netvsc_register_vf(event_dev);
+ 	case NETDEV_UNREGISTER:
 
 
