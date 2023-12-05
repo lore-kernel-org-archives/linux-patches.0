@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9076FAF;
-	Tue,  5 Dec 2023 03:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBBF6FAF;
+	Tue,  5 Dec 2023 03:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgIb4+UV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580A9C433C8;
-	Tue,  5 Dec 2023 03:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHChwbJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BEE1C433C8;
+	Tue,  5 Dec 2023 03:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746848;
-	bh=hXYlJBagf39G3N7LFm+MLU/GL/ou50yUugRt7V+M/Qk=;
+	s=korg; t=1701746851;
+	bh=uQtblrI01nKQHYxeAWqRzMGXtWdD4ZhVgWHohs+VW1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgIb4+UV2/cpAUqaZCUIqM47supUNBY1ZCdWhdPzir/Br0hSJKTPCtHdQ4wr3F9gQ
-	 sb4khfI+q8nvV7mZ1nKzTjxcAkrvYpWuiyU1GihhpJyV1w/xyAmGekV+HUDalO3own
-	 vEztyNGtP2FsPK/Nmg1HZG+ZytILDUfNzJntPq2M=
+	b=FHChwbJBDWziKYAx/+KwWwD7tC3XKHLwa32tjqcp+SK86/o7KiPFmM6auzkP1Q8nb
+	 E8ERTk274cwMnl2NLrvU2NvEJwd00DyYJnHjA8tdh1biH7hXLxZs9m0k0gqLuNK44B
+	 05STFm5QOanYnJk4A94E1nwAVyGYwCVrNrch097k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Coly Li <colyli@suse.de>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 4.19 19/71] bcache: replace a mistaken IS_ERR() by IS_ERR_OR_NULL() in btree_gc_coalesce()
-Date: Tue,  5 Dec 2023 12:16:17 +0900
-Message-ID: <20231205031518.942838323@linuxfoundation.org>
+Subject: [PATCH 4.19 20/71] s390/dasd: protect device queue against concurrent access
+Date: Tue,  5 Dec 2023 12:16:18 +0900
+Message-ID: <20231205031519.005117461@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -36,58 +36,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Coly Li <colyli@suse.de>
+From: Jan Höppner <hoeppner@linux.ibm.com>
 
-commit f72f4312d4388376fc8a1f6cf37cb21a0d41758b upstream.
+commit db46cd1e0426f52999d50fa72cfa97fa39952885 upstream.
 
-Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
-node allocations") do the following change inside btree_gc_coalesce(),
+In dasd_profile_start() the amount of requests on the device queue are
+counted. The access to the device queue is unprotected against
+concurrent access. With a lot of parallel I/O, especially with alias
+devices enabled, the device queue can change while dasd_profile_start()
+is accessing the queue. In the worst case this leads to a kernel panic
+due to incorrect pointer accesses.
 
-31 @@ -1340,7 +1340,7 @@ static int btree_gc_coalesce(
-32         memset(new_nodes, 0, sizeof(new_nodes));
-33         closure_init_stack(&cl);
-34
-35 -       while (nodes < GC_MERGE_NODES && !IS_ERR_OR_NULL(r[nodes].b))
-36 +       while (nodes < GC_MERGE_NODES && !IS_ERR(r[nodes].b))
-37                 keys += r[nodes++].keys;
-38
-39         blocks = btree_default_blocks(b->c) * 2 / 3;
+Fix this by taking the device lock before accessing the queue and
+counting the requests. Additionally the check for a valid profile data
+pointer can be done earlier to avoid unnecessary locking in a hot path.
 
-At line 35 the original r[nodes].b is not always allocatored from
-__bch_btree_node_alloc(), and possibly initialized as NULL pointer by
-caller of btree_gc_coalesce(). Therefore the change at line 36 is not
-correct.
-
-This patch replaces the mistaken IS_ERR() by IS_ERR_OR_NULL() to avoid
-potential issue.
-
-Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
-Cc:  <stable@vger.kernel.org> # 6.5+
-Cc: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20231120052503.6122-9-colyli@suse.de
+Cc:  <stable@vger.kernel.org>
+Fixes: 4fa52aa7a82f ("[S390] dasd: add enhanced DASD statistics interface")
+Reviewed-by: Stefan Haberland <sth@linux.ibm.com>
+Signed-off-by: Jan Höppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://lore.kernel.org/r/20231025132437.1223363-3-sth@linux.ibm.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/btree.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/block/dasd.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1379,7 +1379,7 @@ static int btree_gc_coalesce(struct btre
- 	memset(new_nodes, 0, sizeof(new_nodes));
- 	closure_init_stack(&cl);
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -725,18 +725,20 @@ static void dasd_profile_start(struct da
+ 	 * we count each request only once.
+ 	 */
+ 	device = cqr->startdev;
+-	if (device->profile.data) {
+-		counter = 1; /* request is not yet queued on the start device */
+-		list_for_each(l, &device->ccw_queue)
+-			if (++counter >= 31)
+-				break;
+-	}
++	if (!device->profile.data)
++		return;
++
++	spin_lock(get_ccwdev_lock(device->cdev));
++	counter = 1; /* request is not yet queued on the start device */
++	list_for_each(l, &device->ccw_queue)
++		if (++counter >= 31)
++			break;
++	spin_unlock(get_ccwdev_lock(device->cdev));
++
+ 	spin_lock(&device->profile.lock);
+-	if (device->profile.data) {
+-		device->profile.data->dasd_io_nr_req[counter]++;
+-		if (rq_data_dir(req) == READ)
+-			device->profile.data->dasd_read_nr_req[counter]++;
+-	}
++	device->profile.data->dasd_io_nr_req[counter]++;
++	if (rq_data_dir(req) == READ)
++		device->profile.data->dasd_read_nr_req[counter]++;
+ 	spin_unlock(&device->profile.lock);
+ }
  
--	while (nodes < GC_MERGE_NODES && !IS_ERR(r[nodes].b))
-+	while (nodes < GC_MERGE_NODES && !IS_ERR_OR_NULL(r[nodes].b))
- 		keys += r[nodes++].keys;
- 
- 	blocks = btree_default_blocks(b->c) * 2 / 3;
 
 
