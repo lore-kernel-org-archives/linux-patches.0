@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE85A59;
-	Tue,  5 Dec 2023 03:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737FF4437;
+	Tue,  5 Dec 2023 03:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PABZ3lHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2EFC433C8;
-	Tue,  5 Dec 2023 03:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Af1fDDir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0712C433C8;
+	Tue,  5 Dec 2023 03:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746614;
-	bh=lbv7gN7TS4oWTdaAcjzzLozYFz/ptqBuXLCXgB5mR+8=;
+	s=korg; t=1701746617;
+	bh=SLm7pcU6EdPO6m1L3aRhoWGClHiMdMdAj2ay1hDqGCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PABZ3lHWyUL8N4MO0pWKerghHtglHWqR0vzVniqLc0bDLk3WLmy0Li7cifbRG4AfF
-	 AljzQElCyPqbQdEzOUhYIJyecNit+FMCbRlLsbJzrOjmItrqA8jh5BNbwAUgVckqo5
-	 AcNYyeO+Dj11u7RX7fAO0qlbpbTrqulFPn5AAo7Y=
+	b=Af1fDDirSDgYieE6edqLnie4PSR/J9fu/Gk2U3rSXKpoPumKOTZgCuGCY459DtbPI
+	 2DjpUcWZ2u8SwuWPYTW3Rexi3EKcf7mcZT7LLhfc2dPVB2gHAwMOtJtqhTC6d8DEBI
+	 swtnP3WIu4bCsGaAJJNxzUpRGGFW6FmITCwNJwGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/134] selftests/net: fix a char signedness issue
-Date: Tue,  5 Dec 2023 12:16:04 +0900
-Message-ID: <20231205031541.311214220@linuxfoundation.org>
+Subject: [PATCH 6.6 093/134] selftests/net: unix: fix unused variable compiler warning
+Date: Tue,  5 Dec 2023 12:16:05 +0900
+Message-ID: <20231205031541.367919490@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -44,45 +44,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 7b29828c5af6841bdeb9fafa32fdfeff7ab9c407 ]
+[ Upstream commit 59fef379d453781f0dabfa1f1a1e86e78aee919a ]
 
-Signedness of char is signed on x86_64, but unsigned on arm64.
+Remove an unused variable.
 
-Fix the warning building cmsg_sender.c on signed platforms or
-forced with -fsigned-char:
+    diag_uid.c:151:24:
+    error: unused variable 'udr'
+    [-Werror,-Wunused-variable]
 
-    msg_sender.c:455:12:
-    error: implicit conversion from 'int' to 'char'
-    changes value from 128 to -128
-    [-Werror,-Wconstant-conversion]
-        buf[0] = ICMPV6_ECHO_REQUEST;
-
-constant ICMPV6_ECHO_REQUEST is 128.
-
-Link: https://lwn.net/Articles/911914
-Fixes: de17e305a810 ("selftests: net: cmsg_sender: support icmp and raw sockets")
+Fixes: ac011361bd4f ("af_unix: Add test for sock_diag and UDIAG_SHOW_UID.")
 Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20231124171645.1011043-3-willemdebruijn.kernel@gmail.com
+Link: https://lore.kernel.org/r/20231124171645.1011043-4-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/cmsg_sender.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/af_unix/diag_uid.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/cmsg_sender.c b/tools/testing/selftests/net/cmsg_sender.c
-index 24b21b15ed3fb..6ff3e732f449f 100644
---- a/tools/testing/selftests/net/cmsg_sender.c
-+++ b/tools/testing/selftests/net/cmsg_sender.c
-@@ -416,9 +416,9 @@ int main(int argc, char *argv[])
- {
- 	struct addrinfo hints, *ai;
- 	struct iovec iov[1];
-+	unsigned char *buf;
- 	struct msghdr msg;
- 	char cbuf[1024];
--	char *buf;
- 	int err;
- 	int fd;
+diff --git a/tools/testing/selftests/net/af_unix/diag_uid.c b/tools/testing/selftests/net/af_unix/diag_uid.c
+index 5b88f7129fea4..79a3dd75590e8 100644
+--- a/tools/testing/selftests/net/af_unix/diag_uid.c
++++ b/tools/testing/selftests/net/af_unix/diag_uid.c
+@@ -148,7 +148,6 @@ void receive_response(struct __test_metadata *_metadata,
+ 		.msg_iov = &iov,
+ 		.msg_iovlen = 1
+ 	};
+-	struct unix_diag_req *udr;
+ 	struct nlmsghdr *nlh;
+ 	int ret;
  
 -- 
 2.42.0
