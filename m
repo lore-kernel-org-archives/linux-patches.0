@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B826FB1;
-	Tue,  5 Dec 2023 03:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00F26FB1;
+	Tue,  5 Dec 2023 03:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4vJumMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F57C433C7;
-	Tue,  5 Dec 2023 03:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jixFsbMS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C007C433C7;
+	Tue,  5 Dec 2023 03:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747273;
-	bh=Wd/fF6/R4JNiA+rfwGWFm59pidSlVy/jOqUPn1+TptI=;
+	s=korg; t=1701747275;
+	bh=PfBclSW4vFYaXb8Gjuq3kolKJ2o+ewTZWF8mwGhM6fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4vJumMhjaaipnPEPS+hCIoH21XwuGTdlR/C+cDvfH6QIP2a2WE7yNaPV2nULUXdo
-	 BWyr9inRfUy3hJUBjWPu/AbcCP3HCCdomBohl6atnzg0uhLc3LggAUhhc2/SUTBTuP
-	 Uuf7dQ7b6tVc48Vh596S4DE8vXecJCD65I3p/+3E=
+	b=jixFsbMSO9Z2gYtJgMlz+4oCO7N2neO32vt+Mxx7Rh3RgGCv65bGwqiaM72I7Nvkf
+	 d9+myyg8gO1GyaGc/ZnPyIkpLOepgwCdDaxhnIJ1qRNnp/t1iJ+bj36CbCI6lYA9T5
+	 cf/3zxHBWeInYRce5+3MItsVs0O77AOElj0K3HTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/135] drm/panel: simple: Fix Innolux G101ICE-L01 timings
-Date: Tue,  5 Dec 2023 12:15:36 +0900
-Message-ID: <20231205031531.491898085@linuxfoundation.org>
+Subject: [PATCH 5.10 016/135] wireguard: use DEV_STATS_INC()
+Date: Tue,  5 Dec 2023 12:15:37 +0900
+Message-ID: <20231205031531.562458349@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,54 +45,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3f9a91b6c00e655d27bd785dcda1742dbdc31bda ]
+[ Upstream commit 93da8d75a66568ba4bb5b14ad2833acd7304cd02 ]
 
-The Innolux G101ICE-L01 datasheet [1] page 17 table
-6.1 INPUT SIGNAL TIMING SPECIFICATIONS
-indicates that maximum vertical blanking time is 40 lines.
-Currently the driver uses 29 lines.
+wg_xmit() can be called concurrently, KCSAN reported [1]
+some device stats updates can be lost.
 
-Fix it, and since this panel is a DE panel, adjust the timings
-to make them less hostile to controllers which cannot do 1 px
-HSA/VSA, distribute the delays evenly between all three parts.
+Use DEV_STATS_INC() for this unlikely case.
 
-[1] https://www.data-modul.com/sites/default/files/products/G101ICE-L01-C2-specification-12042389.pdf
+[1]
+BUG: KCSAN: data-race in wg_xmit / wg_xmit
 
-Fixes: 1e29b840af9f ("drm/panel: simple: Add Innolux G101ICE-L01 panel")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231008223256.279196-1-marex@denx.de
+read-write to 0xffff888104239160 of 8 bytes by task 1375 on cpu 0:
+wg_xmit+0x60f/0x680 drivers/net/wireguard/device.c:231
+__netdev_start_xmit include/linux/netdevice.h:4918 [inline]
+netdev_start_xmit include/linux/netdevice.h:4932 [inline]
+xmit_one net/core/dev.c:3543 [inline]
+dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3559
+...
+
+read-write to 0xffff888104239160 of 8 bytes by task 1378 on cpu 1:
+wg_xmit+0x60f/0x680 drivers/net/wireguard/device.c:231
+__netdev_start_xmit include/linux/netdevice.h:4918 [inline]
+netdev_start_xmit include/linux/netdevice.h:4932 [inline]
+xmit_one net/core/dev.c:3543 [inline]
+dev_hard_start_xmit+0x11b/0x3f0 net/core/dev.c:3559
+...
+
+v2: also change wg_packet_consume_data_done() (Hangbin Liu)
+    and wg_packet_purge_staged_packets()
+
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireguard/device.c  |  4 ++--
+ drivers/net/wireguard/receive.c | 12 ++++++------
+ drivers/net/wireguard/send.c    |  3 ++-
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index 7c470b4763cb4..ee01b61a6bafa 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -2154,13 +2154,13 @@ static const struct panel_desc innolux_g070y2_l01 = {
- static const struct display_timing innolux_g101ice_l01_timing = {
- 	.pixelclock = { 60400000, 71100000, 74700000 },
- 	.hactive = { 1280, 1280, 1280 },
--	.hfront_porch = { 41, 80, 100 },
--	.hback_porch = { 40, 79, 99 },
--	.hsync_len = { 1, 1, 1 },
-+	.hfront_porch = { 30, 60, 70 },
-+	.hback_porch = { 30, 60, 70 },
-+	.hsync_len = { 22, 40, 60 },
- 	.vactive = { 800, 800, 800 },
--	.vfront_porch = { 5, 11, 14 },
--	.vback_porch = { 4, 11, 14 },
--	.vsync_len = { 1, 1, 1 },
-+	.vfront_porch = { 3, 8, 14 },
-+	.vback_porch = { 3, 8, 14 },
-+	.vsync_len = { 4, 7, 12 },
- 	.flags = DISPLAY_FLAGS_DE_HIGH,
- };
- 
+diff --git a/drivers/net/wireguard/device.c b/drivers/net/wireguard/device.c
+index e0693cd965ec4..713ca20feaef4 100644
+--- a/drivers/net/wireguard/device.c
++++ b/drivers/net/wireguard/device.c
+@@ -193,7 +193,7 @@ static netdev_tx_t wg_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	 */
+ 	while (skb_queue_len(&peer->staged_packet_queue) > MAX_STAGED_PACKETS) {
+ 		dev_kfree_skb(__skb_dequeue(&peer->staged_packet_queue));
+-		++dev->stats.tx_dropped;
++		DEV_STATS_INC(dev, tx_dropped);
+ 	}
+ 	skb_queue_splice_tail(&packets, &peer->staged_packet_queue);
+ 	spin_unlock_bh(&peer->staged_packet_queue.lock);
+@@ -211,7 +211,7 @@ static netdev_tx_t wg_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	else if (skb->protocol == htons(ETH_P_IPV6))
+ 		icmpv6_ndo_send(skb, ICMPV6_DEST_UNREACH, ICMPV6_ADDR_UNREACH, 0);
+ err:
+-	++dev->stats.tx_errors;
++	DEV_STATS_INC(dev, tx_errors);
+ 	kfree_skb(skb);
+ 	return ret;
+ }
+diff --git a/drivers/net/wireguard/receive.c b/drivers/net/wireguard/receive.c
+index f500aaf678370..d38b24339a1f9 100644
+--- a/drivers/net/wireguard/receive.c
++++ b/drivers/net/wireguard/receive.c
+@@ -423,20 +423,20 @@ static void wg_packet_consume_data_done(struct wg_peer *peer,
+ 	net_dbg_skb_ratelimited("%s: Packet has unallowed src IP (%pISc) from peer %llu (%pISpfsc)\n",
+ 				dev->name, skb, peer->internal_id,
+ 				&peer->endpoint.addr);
+-	++dev->stats.rx_errors;
+-	++dev->stats.rx_frame_errors;
++	DEV_STATS_INC(dev, rx_errors);
++	DEV_STATS_INC(dev, rx_frame_errors);
+ 	goto packet_processed;
+ dishonest_packet_type:
+ 	net_dbg_ratelimited("%s: Packet is neither ipv4 nor ipv6 from peer %llu (%pISpfsc)\n",
+ 			    dev->name, peer->internal_id, &peer->endpoint.addr);
+-	++dev->stats.rx_errors;
+-	++dev->stats.rx_frame_errors;
++	DEV_STATS_INC(dev, rx_errors);
++	DEV_STATS_INC(dev, rx_frame_errors);
+ 	goto packet_processed;
+ dishonest_packet_size:
+ 	net_dbg_ratelimited("%s: Packet has incorrect size from peer %llu (%pISpfsc)\n",
+ 			    dev->name, peer->internal_id, &peer->endpoint.addr);
+-	++dev->stats.rx_errors;
+-	++dev->stats.rx_length_errors;
++	DEV_STATS_INC(dev, rx_errors);
++	DEV_STATS_INC(dev, rx_length_errors);
+ 	goto packet_processed;
+ packet_processed:
+ 	dev_kfree_skb(skb);
+diff --git a/drivers/net/wireguard/send.c b/drivers/net/wireguard/send.c
+index 95c853b59e1da..0d48e0f4a1ba3 100644
+--- a/drivers/net/wireguard/send.c
++++ b/drivers/net/wireguard/send.c
+@@ -333,7 +333,8 @@ static void wg_packet_create_data(struct wg_peer *peer, struct sk_buff *first)
+ void wg_packet_purge_staged_packets(struct wg_peer *peer)
+ {
+ 	spin_lock_bh(&peer->staged_packet_queue.lock);
+-	peer->device->dev->stats.tx_dropped += peer->staged_packet_queue.qlen;
++	DEV_STATS_ADD(peer->device->dev, tx_dropped,
++		      peer->staged_packet_queue.qlen);
+ 	__skb_queue_purge(&peer->staged_packet_queue);
+ 	spin_unlock_bh(&peer->staged_packet_queue.lock);
+ }
 -- 
 2.42.0
 
