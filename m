@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E603E6FB1;
-	Tue,  5 Dec 2023 03:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564338BF1;
+	Tue,  5 Dec 2023 03:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2V0JlWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4C7C433C8;
-	Tue,  5 Dec 2023 03:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hywyfdkv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DDEC433C8;
+	Tue,  5 Dec 2023 03:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747042;
-	bh=sDa17mk0IBF4vOqplpiwO3Y2Z2MPBEVNtOhBIXs5uTY=;
+	s=korg; t=1701747045;
+	bh=hisTbNvmfObWzcs2erXb0jTwK+/byYKsyVl2OigjGk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P2V0JlWVB7Mlz85KmI/hhkAXt3MbuOh9WKRrKch1ynUhdLgz80ta7WJP2REecbw3I
-	 tMDFWz87HBiE8CA4yZLztMMpoxt1/JKaifBzlkIiqYO9A5hRcNpMqRNJE6V/gFqGlj
-	 ruW3ecjU5a70fwcpJSQxMLIL56WjAf/yq991A/9U=
+	b=hywyfdkvH0LRDXq7Ab6g5mdSvIUmkyyikOYe9tt06tGadvwkZQDu08Gq+SrWyE3Zl
+	 x+Y+WUM05NJE92ShjkKqadhM5btWhMmyKZJ0jAZLJUEMPFn2UrnuNzNfu5kmQJfFhR
+	 TsvNgPbvPR/5e2whHgwFs90SxrOQlcti9R+RvDrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 013/107] ALSA: hda: Disable power-save on KONTRON SinglePC
-Date: Tue,  5 Dec 2023 12:15:48 +0900
-Message-ID: <20231205031532.436242824@linuxfoundation.org>
+Subject: [PATCH 6.1 014/107] ALSA: hda/realtek: Headset Mic VREF to 100%
+Date: Tue,  5 Dec 2023 12:15:49 +0900
+Message-ID: <20231205031532.514198453@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -40,35 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kailang Yang <kailang@realtek.com>
 
-commit a337c355719c42a6c5b67e985ad753590ed844fb upstream.
+commit baaacbff64d9f34b64f294431966d035aeadb81c upstream.
 
-It's been reported that the runtime PM on KONTRON SinglePC (PCI SSID
-1734:1232) caused a stall of playback after a bunch of invocations.
-(FWIW, this looks like an timing issue, and the stall happens rather
-on the controller side.)
+This platform need to set Mic VREF to 100%.
 
-As a workaround, disable the default power-save on this platform.
-
+Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231130151321.9813-1-tiwai@suse.de
+Link: https://lore.kernel.org/r/0916af40f08a4348a3298a9a59e6967e@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_intel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2215,6 +2215,8 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x17aa, 0x36a7, "Lenovo C50 All in one", 0),
- 	/* https://bugs.launchpad.net/bugs/1821663 */
- 	SND_PCI_QUIRK(0x1631, 0xe017, "Packard Bell NEC IMEDIA 5204", 0),
-+	/* KONTRON SinglePC may cause a stall at runtime resume */
-+	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
- 	{}
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -1986,6 +1986,7 @@ enum {
+ 	ALC887_FIXUP_ASUS_AUDIO,
+ 	ALC887_FIXUP_ASUS_HMIC,
+ 	ALCS1200A_FIXUP_MIC_VREF,
++	ALC888VD_FIXUP_MIC_100VREF,
  };
- #endif /* CONFIG_PM */
+ 
+ static void alc889_fixup_coef(struct hda_codec *codec,
+@@ -2539,6 +2540,13 @@ static const struct hda_fixup alc882_fix
+ 			{}
+ 		}
+ 	},
++	[ALC888VD_FIXUP_MIC_100VREF] = {
++		.type = HDA_FIXUP_PINCTLS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x18, PIN_VREF100 }, /* headset mic */
++			{}
++		}
++	},
+ };
+ 
+ static const struct snd_pci_quirk alc882_fixup_tbl[] = {
+@@ -2608,6 +2616,7 @@ static const struct snd_pci_quirk alc882
+ 	SND_PCI_QUIRK(0x106b, 0x4a00, "Macbook 5,2", ALC889_FIXUP_MBA11_VREF),
+ 
+ 	SND_PCI_QUIRK(0x1071, 0x8258, "Evesham Voyaeger", ALC882_FIXUP_EAPD),
++	SND_PCI_QUIRK(0x10ec, 0x12d8, "iBase Elo Touch", ALC888VD_FIXUP_MIC_100VREF),
+ 	SND_PCI_QUIRK(0x13fe, 0x1009, "Advantech MIT-W101", ALC886_FIXUP_EAPD),
+ 	SND_PCI_QUIRK(0x1458, 0xa002, "Gigabyte EP45-DS3/Z87X-UD3H", ALC889_FIXUP_FRONT_HP_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1458, 0xa0b8, "Gigabyte AZ370-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
 
 
