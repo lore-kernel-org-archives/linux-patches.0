@@ -1,382 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F114437;
-	Tue,  5 Dec 2023 03:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593026FB1;
+	Tue,  5 Dec 2023 03:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQlrB7fr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B8BC433C7;
-	Tue,  5 Dec 2023 03:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r760eZn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D025AC433C7;
+	Tue,  5 Dec 2023 03:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746792;
-	bh=siivFaFJfJA1QAQwxPEulmrxH/miEftX8zC0klS+2r0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=KQlrB7frvEzGQ8gYJ9/YP6lx+C9preNjO63P4/0NhWS/aLcOWutJQqH1OlQrRYcm9
-	 N8I04Ivjpm93/mCqcc8yK4lAc0A0ZM81Y3JxFQG0fMI9inB8Gh3rpNusieK5U7Ct/B
-	 3xgypMp8zi4RuharCRwOwjMcLlhhxpzscUZp6R2I=
+	s=korg; t=1701746795;
+	bh=ByLF+/5k4Lyr4ZH++oTrEweJjrejth+DiweBzCjgO9w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=r760eZn4G8q4MMvb10OdDTsv+8bIhZT85r0/hCihL4jJ8iIW67dZZhZVFDXxgIiC5
+	 7jpALy3uOJvy/7OnBKhfCzyaf1bFk0LXx/xjeana1rEh9eUDCPBVSlHedGMvLH4yfP
+	 jAwTiVI1iR9hXpTB/Q+8UUoIyp9BNADimM1kXa7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 4.19 00/71] 4.19.301-rc1 review
-Date: Tue,  5 Dec 2023 12:15:58 +0900
-Message-ID: <20231205031517.859409664@linuxfoundation.org>
+	Andrew Murray <andrew.murray@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Zenghui Yu <yuzenghui@huawei.com>
+Subject: [PATCH 4.19 16/71] arm64: cpufeature: Extract capped perfmon fields
+Date: Tue,  5 Dec 2023 12:16:14 +0900
+Message-ID: <20231205031518.788339849@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
+References: <20231205031517.859409664@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.301-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.19.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.19.301-rc1
-X-KernelTest-Deadline: 2023-12-07T03:15+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.19.301 release.
-There are 71 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.301-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.19.301-rc1
-
-Adrian Hunter <adrian.hunter@intel.com>
-    mmc: block: Retry commands in CQE error recovery
-
-Zheng Yongjun <zhengyongjun3@huawei.com>
-    mmc: core: convert comma to semicolon
-
-Adrian Hunter <adrian.hunter@intel.com>
-    mmc: cqhci: Fix task clearing in CQE error recovery
-
-Adrian Hunter <adrian.hunter@intel.com>
-    mmc: cqhci: Warn of halt or task clear failure
-
-Adrian Hunter <adrian.hunter@intel.com>
-    mmc: cqhci: Increase recovery halt timeout
-
-Christoph Niedermaier <cniedermaier@dh-electronics.com>
-    cpufreq: imx6q: Don't disable 792 Mhz OPP unnecessarily
-
-Christoph Niedermaier <cniedermaier@dh-electronics.com>
-    cpufreq: imx6q: don't warn for disabling a non-existing frequency
-
-Mimi Zohar <zohar@linux.ibm.com>
-    ima: detect changes to the backing overlay file
-
-Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
-    ovl: skip overlayfs superblocks at global sync
-
-Amir Goldstein <amir73il@gmail.com>
-    ima: annotate iint mutex to avoid lockdep false positive warnings
-
-Helge Deller <deller@gmx.de>
-    fbdev: stifb: Make the STI next font pointer a 32-bit signed offset
-
-Linus Walleij <linus.walleij@linaro.org>
-    mtd: cfi_cmdset_0001: Byte swap OTP info
-
-Jean-Philippe Brucker <jean-philippe@linaro.org>
-    mtd: cfi_cmdset_0001: Support the absence of protection registers
-
-Heiko Carstens <hca@linux.ibm.com>
-    s390/cmma: fix detection of DAT pages
-
-Alexander Gordeev <agordeev@linux.ibm.com>
-    s390/mm: fix phys vs virt confusion in mark_kernel_pXd() functions family
-
-Heiner Kallweit <hkallweit1@gmail.com>
-    Revert "PCI/ASPM: Disable only ASPM_STATE_L1 when driver, disables L1"
-
-Ajay Agarwal <ajayagarwal@google.com>
-    PCI/ASPM: Disable only ASPM_STATE_L1 when driver disables L1
-
-Heiner Kallweit <hkallweit1@gmail.com>
-    PCI/ASPM: Add L1 PM substate support to pci_disable_link_state()
-
-Krzysztof Wilczynski <kw@linux.com>
-    PCI: Move ASPM declarations to linux/pci.h
-
-Heiner Kallweit <hkallweit1@gmail.com>
-    PCI: let pci_disable_link_state propagate errors
-
-Steve French <stfrench@microsoft.com>
-    smb3: fix touch -h of symlink
-
-Adrian Hunter <adrian.hunter@intel.com>
-    perf intel-pt: Fix async branch flags
-
-Adrian Hunter <adrian.hunter@intel.com>
-    perf intel-pt: Adjust sample flags for VM-Exit
-
-Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-    net: ravb: Start TX queues after HW initialization succeeded
-
-Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-    ravb: Fix races between ravb_tx_timeout_work() and net related ops
-
-Zhengchao Shao <shaozhengchao@huawei.com>
-    ipv4: igmp: fix refcnt uaf issue when receiving igmp query packet
-
-Max Nguyen <maxwell.nguyen@hp.com>
-    Input: xpad - add HyperX Clutch Gladiate Support
-
-Jann Horn <jannh@google.com>
-    btrfs: send: ensure send_fd is writable
-
-Filipe Manana <fdmanana@suse.com>
-    btrfs: fix off-by-one when checking chunk map includes logical address
-
-Timothy Pearson <tpearson@raptorengineering.com>
-    powerpc: Don't clobber f0/vs0 during fp|altivec register save
-
-Markus Weippert <markus@gekmihesg.de>
-    bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
-
-Wu Bo <bo.wu@vivo.com>
-    dm verity: don't perform FEC for failed readahead IO
-
-Mikulas Patocka <mpatocka@redhat.com>
-    dm-verity: align struct dm_verity_fec_io properly
-
-Kailang Yang <kailang@realtek.com>
-    ALSA: hda/realtek: Headset Mic VREF to 100%
-
-Takashi Iwai <tiwai@suse.de>
-    ALSA: hda: Disable power-save on KONTRON SinglePC
-
-Adrian Hunter <adrian.hunter@intel.com>
-    mmc: block: Do not lose cache flush during CQE error recovery
-
-Yang Yingliang <yangyingliang@huawei.com>
-    firewire: core: fix possible memory leak in create_units()
-
-Maria Yu <quic_aiquny@quicinc.com>
-    pinctrl: avoid reload of p state in list iteration
-
-Adrian Hunter <adrian.hunter@intel.com>
-    perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
-
-Johan Hovold <johan+linaro@kernel.org>
-    USB: dwc3: qcom: fix wakeup after probe deferral
-
-Ricardo Ribalda <ribalda@chromium.org>
-    usb: dwc3: set the dma max_seg_size
-
-Oliver Neukum <oneukum@suse.com>
-    USB: dwc2: write HCINT with INTMASK applied
-
-Lech Perczak <lech.perczak@gmail.com>
-    USB: serial: option: don't claim interface 4 for ZTE MF290
-
-Puliang Lu <puliang.lu@fibocom.com>
-    USB: serial: option: fix FM101R-GL defines
-
-Victor Fragoso <victorffs@hotmail.com>
-    USB: serial: option: add Fibocom L7xx modules
-
-Rand Deeb <rand.sec96@gmail.com>
-    bcache: prevent potential division by zero error
-
-Coly Li <colyli@suse.de>
-    bcache: check return value from btree_node_alloc_replacement()
-
-Mikulas Patocka <mpatocka@redhat.com>
-    dm-delay: fix a race between delay_presuspend and delay_bio
-
-Long Li <longli@microsoft.com>
-    hv_netvsc: Mark VF as slave before exposing it to user-mode
-
-Haiyang Zhang <haiyangz@microsoft.com>
-    hv_netvsc: Fix race of register_netdevice_notifier and VF register
-
-Asuna Yang <spriteovo@gmail.com>
-    USB: serial: option: add Luat Air72*U series products
-
-Jan Höppner <hoeppner@linux.ibm.com>
-    s390/dasd: protect device queue against concurrent access
-
-Coly Li <colyli@suse.de>
-    bcache: replace a mistaken IS_ERR() by IS_ERR_OR_NULL() in btree_gc_coalesce()
-
-Claire Lin <claire.lin@broadcom.com>
-    mtd: rawnand: brcmnand: Fix ecc chunk calculation for erased page bitfips
-
-Andrew Murray <andrew.murray@arm.com>
-    KVM: arm64: limit PMU version to PMUv3 for ARMv8.1
-
-Andrew Murray <andrew.murray@arm.com>
-    arm64: cpufeature: Extract capped perfmon fields
-
-Huacai Chen <chenhuacai@loongson.cn>
-    MIPS: KVM: Fix a build warning about variable set but not used
-
-Samuel Holland <samuel.holland@sifive.com>
-    net: axienet: Fix check for partial TX checksum
-
-Raju Rangoju <Raju.Rangoju@amd.com>
-    amd-xgbe: propagate the correct speed and duplex status
-
-Raju Rangoju <Raju.Rangoju@amd.com>
-    amd-xgbe: handle the corner-case during tx completion
-
-Raju Rangoju <Raju.Rangoju@amd.com>
-    amd-xgbe: handle corner-case during sfp hotplug
-
-Stefano Stabellini <sstabellini@kernel.org>
-    arm/xen: fix xen_vcpu_info allocation alignment
-
-Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-    net: usb: ax88179_178a: fix failed operations during ax88179_reset
-
-Kunwu Chan <chentao@kylinos.cn>
-    ipv4: Correct/silence an endian warning in __ip_do_redirect
-
-Charles Yi <be286@163.com>
-    HID: fix HID device resource race between HID core and debugging support
-
-Benjamin Tissoires <benjamin.tissoires@redhat.com>
-    HID: core: store the unique system identifier in hid_device
-
-Jonas Karlman <jonas@kwiboo.se>
-    drm/rockchip: vop: Fix color for RGB888/BGR888 format on VOP full
-
-Chen Ni <nichen@iscas.ac.cn>
-    ata: pata_isapnp: Add missing error check for devm_ioport_map()
-
-Marek Vasut <marex@denx.de>
-    drm/panel: simple: Fix Innolux G101ICE-L01 timings
-
-Christopher Bednarz <christopher.n.bednarz@intel.com>
-    RDMA/irdma: Prevent zero-length STAG registration
-
-Saravana Kannan <saravanak@google.com>
-    driver core: Release all resources during unbind before updating device links
-
-
--------------
-
-Diffstat:
-
- Makefile                                          |  4 +-
- arch/arm/xen/enlighten.c                          |  3 +-
- arch/arm64/include/asm/cpufeature.h               | 23 +++++++++++
- arch/arm64/include/asm/sysreg.h                   |  6 +++
- arch/arm64/kvm/sys_regs.c                         | 10 +++++
- arch/mips/kvm/mmu.c                               |  3 +-
- arch/powerpc/kernel/fpu.S                         | 13 ++++++
- arch/powerpc/kernel/vector.S                      |  2 +
- arch/s390/mm/page-states.c                        | 14 +++----
- drivers/acpi/pci_root.c                           |  1 -
- drivers/ata/pata_isapnp.c                         |  3 ++
- drivers/base/dd.c                                 |  4 +-
- drivers/char/xillybus/xillybus_pcie.c             |  1 -
- drivers/cpufreq/imx6q-cpufreq.c                   | 32 ++++++++-------
- drivers/firewire/core-device.c                    | 11 ++----
- drivers/gpu/drm/panel/panel-simple.c              | 12 +++---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c       | 14 +++++--
- drivers/hid/hid-core.c                            | 16 ++++++--
- drivers/hid/hid-debug.c                           |  3 ++
- drivers/infiniband/hw/i40iw/i40iw_ctrl.c          |  6 +++
- drivers/infiniband/hw/i40iw/i40iw_type.h          |  2 +
- drivers/infiniband/hw/i40iw/i40iw_verbs.c         | 10 ++++-
- drivers/input/joystick/xpad.c                     |  2 +
- drivers/md/bcache/btree.c                         |  6 ++-
- drivers/md/bcache/sysfs.c                         |  2 +-
- drivers/md/dm-delay.c                             | 17 +++++---
- drivers/md/dm-verity-fec.c                        |  3 +-
- drivers/md/dm-verity-target.c                     |  4 +-
- drivers/md/dm-verity.h                            |  6 ---
- drivers/mmc/core/block.c                          |  2 +
- drivers/mmc/core/core.c                           | 15 ++++---
- drivers/mmc/host/cqhci.c                          | 44 ++++++++++-----------
- drivers/mtd/chips/cfi_cmdset_0001.c               | 29 +++++++++++---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c          |  5 ++-
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c          | 14 +++++++
- drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c      | 11 ++++--
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c         | 14 ++++++-
- drivers/net/ethernet/intel/e1000e/e1000.h         |  1 -
- drivers/net/ethernet/jme.c                        |  1 -
- drivers/net/ethernet/realtek/r8169_main.c         |  1 -
- drivers/net/ethernet/renesas/ravb_main.c          | 15 +++++--
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c |  2 +-
- drivers/net/hyperv/netvsc_drv.c                   | 41 +++++++++++++------
- drivers/net/usb/ax88179_178a.c                    |  4 +-
- drivers/net/wireless/ath/ath5k/pci.c              |  1 -
- drivers/net/wireless/intel/iwlegacy/3945-mac.c    |  1 -
- drivers/net/wireless/intel/iwlegacy/4965-mac.c    |  1 -
- drivers/net/wireless/intel/iwlwifi/pcie/trans.c   |  1 -
- drivers/pci/pci-acpi.c                            |  1 -
- drivers/pci/pcie/aspm.c                           | 32 +++++++++------
- drivers/pci/quirks.c                              |  1 -
- drivers/pinctrl/core.c                            |  6 +--
- drivers/s390/block/dasd.c                         | 24 ++++++------
- drivers/scsi/aacraid/linit.c                      |  1 -
- drivers/scsi/hpsa.c                               |  1 -
- drivers/scsi/mpt3sas/mpt3sas_scsih.c              |  1 -
- drivers/usb/dwc2/hcd_intr.c                       | 15 ++++---
- drivers/usb/dwc3/core.c                           |  2 +
- drivers/usb/dwc3/dwc3-qcom.c                      |  8 ++--
- drivers/usb/serial/option.c                       | 11 ++++--
- drivers/video/fbdev/sticore.h                     |  2 +-
- fs/btrfs/send.c                                   |  2 +-
- fs/btrfs/volumes.c                                |  2 +-
- fs/cifs/cifsfs.c                                  |  1 +
- fs/overlayfs/super.c                              |  5 ++-
- fs/sync.c                                         |  3 +-
- include/linux/fs.h                                |  2 +
- include/linux/hid.h                               |  5 +++
- include/linux/pci-aspm.h                          | 35 -----------------
- include/linux/pci.h                               | 22 +++++++++++
- net/ipv4/igmp.c                                   |  6 ++-
- net/ipv4/route.c                                  |  2 +-
- security/integrity/iint.c                         | 48 +++++++++++++++++------
- security/integrity/ima/ima_api.c                  |  5 +++
- security/integrity/ima/ima_main.c                 | 16 +++++++-
- security/integrity/integrity.h                    |  2 +
- sound/pci/hda/hda_intel.c                         |  2 +
- sound/pci/hda/patch_realtek.c                     |  9 +++++
- tools/perf/util/genelf.h                          |  4 +-
- tools/perf/util/intel-pt.c                        | 13 ++++--
- 80 files changed, 489 insertions(+), 236 deletions(-)
+4.19-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Andrew Murray <andrew.murray@arm.com>
+
+commit 8e35aa642ee4dab01b16cc4b2df59d1936f3b3c2 upstream.
+
+When emulating ID registers there is often a need to cap the version
+bits of a feature such that the guest will not use features that the
+host is not aware of. For example, when KVM mediates access to the PMU
+by emulating register accesses.
+
+Let's add a helper that extracts a performance monitors ID field and
+caps the version to a given value.
+
+Fields that identify the version of the Performance Monitors Extension
+do not follow the standard ID scheme, and instead follow the scheme
+described in ARM DDI 0487E.a page D13-2825 "Alternative ID scheme used
+for the Performance Monitors Extension version". The value 0xF means an
+IMPLEMENTATION DEFINED PMU is present, and values 0x0-OxE can be treated
+the same as an unsigned field with 0x0 meaning no PMU is present.
+
+Signed-off-by: Andrew Murray <andrew.murray@arm.com>
+Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+[Mark: rework to handle perfmon fields]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/arm64/include/asm/cpufeature.h |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+--- a/arch/arm64/include/asm/cpufeature.h
++++ b/arch/arm64/include/asm/cpufeature.h
+@@ -422,6 +422,29 @@ cpuid_feature_extract_unsigned_field(u64
+ 	return cpuid_feature_extract_unsigned_field_width(features, field, 4);
+ }
+ 
++/*
++ * Fields that identify the version of the Performance Monitors Extension do
++ * not follow the standard ID scheme. See ARM DDI 0487E.a page D13-2825,
++ * "Alternative ID scheme used for the Performance Monitors Extension version".
++ */
++static inline u64 __attribute_const__
++cpuid_feature_cap_perfmon_field(u64 features, int field, u64 cap)
++{
++	u64 val = cpuid_feature_extract_unsigned_field(features, field);
++	u64 mask = GENMASK_ULL(field + 3, field);
++
++	/* Treat IMPLEMENTATION DEFINED functionality as unimplemented */
++	if (val == 0xf)
++		val = 0;
++
++	if (val > cap) {
++		features &= ~mask;
++		features |= (cap << field) & mask;
++	}
++
++	return features;
++}
++
+ static inline u64 arm64_ftr_mask(const struct arm64_ftr_bits *ftrp)
+ {
+ 	return (u64)GENMASK(ftrp->shift + ftrp->width - 1, ftrp->shift);
 
 
