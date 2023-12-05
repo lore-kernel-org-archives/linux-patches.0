@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7763A8BEA;
-	Tue,  5 Dec 2023 03:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3BB8F4E;
+	Tue,  5 Dec 2023 03:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwEMKTcv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10233C433C9;
-	Tue,  5 Dec 2023 03:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AN7QA4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD80C433C9;
+	Tue,  5 Dec 2023 03:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746594;
-	bh=irV3VRf29Vi/bza9aU7qQ0GrHVALOIGLSDLV/lFHoV0=;
+	s=korg; t=1701746596;
+	bh=FbsfmztPZPRjfZ/+e+3nWDD6H0Az4Zd5YgnCb/xKJB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwEMKTcvR8nP94/pe2yfOzJQjqnMpzi9RZ77qcWASjXa8OKHjBcirxoT0eMkJtLyo
-	 Z4TVIqPkjdW2DiFuTrFAKYK5DwUPOWwrf+tGjqpj+mNAKkCXOI0uLvZ+E1/CIuh/d0
-	 Wt0kZYtJvwY2X4p46y/kOBGpZ1yTtgdNDVIUjycU=
+	b=1AN7QA4gWuzLd+cCacswIvpXllCba7AK1YzKeRbAeNvTpV92x+EA2/SgiQwlFGXja
+	 GSdEfHTTqKWHcVHN3+ED1i6B23aD84duaxJODwEGA15OI4MPYYQF1X/+hBsid1gE6u
+	 ISUOOTG509/qEhRryu8nuqhSRC5Dmso+vPLeaGBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Bruno Haible <bruno@clisp.org>
-Subject: [PATCH 6.6 060/134] parisc: Drop the HP-UX ENOSYM and EREMOTERELEASE error codes
-Date: Tue,  5 Dec 2023 12:15:32 +0900
-Message-ID: <20231205031539.338390820@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 061/134] parisc: Mark jump_table naturally aligned
+Date: Tue,  5 Dec 2023 12:15:33 +0900
+Message-ID: <20231205031539.410844603@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -43,85 +42,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-commit e5f3e299a2b1e9c3ece24a38adfc089aef307e8a upstream.
+commit 07eecff8ae78df7f28800484d31337e1f9bfca3a upstream.
 
-Those return codes are only defined for the parisc architecture and
-are leftovers from when we wanted to be HP-UX compatible.
-
-They are not returned by any Linux kernel syscall but do trigger
-problems with the glibc strerrorname_np() and strerror() functions as
-reported in glibc issue #31080.
-
-There is no need to keep them, so simply remove them.
+The jump_table stores two 32-bit words and one 32- (on 32-bit kernel)
+or one 64-bit word (on 64-bit kernel).
+Ensure that the last word is always 64-bit aligned on a 64-bit kernel
+by aligning the whole structure on sizeof(long).
 
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: Bruno Haible <bruno@clisp.org>
-Closes: https://sourceware.org/bugzilla/show_bug.cgi?id=31080
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org   # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/uapi/asm/errno.h       |    2 --
- lib/errname.c                              |    6 ------
- tools/arch/parisc/include/uapi/asm/errno.h |    2 --
- 3 files changed, 10 deletions(-)
+ arch/parisc/include/asm/jump_label.h |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/include/uapi/asm/errno.h
-+++ b/arch/parisc/include/uapi/asm/errno.h
-@@ -75,7 +75,6 @@
+--- a/arch/parisc/include/asm/jump_label.h
++++ b/arch/parisc/include/asm/jump_label.h
+@@ -15,10 +15,12 @@ static __always_inline bool arch_static_
+ 	asm_volatile_goto("1:\n\t"
+ 		 "nop\n\t"
+ 		 ".pushsection __jump_table,  \"aw\"\n\t"
++		 ".align %1\n\t"
+ 		 ".word 1b - ., %l[l_yes] - .\n\t"
+ 		 __stringify(ASM_ULONG_INSN) " %c0 - .\n\t"
+ 		 ".popsection\n\t"
+-		 : :  "i" (&((char *)key)[branch]) :  : l_yes);
++		 : : "i" (&((char *)key)[branch]), "i" (sizeof(long))
++		 : : l_yes);
  
- /* We now return you to your regularly scheduled HPUX. */
+ 	return false;
+ l_yes:
+@@ -30,10 +32,12 @@ static __always_inline bool arch_static_
+ 	asm_volatile_goto("1:\n\t"
+ 		 "b,n %l[l_yes]\n\t"
+ 		 ".pushsection __jump_table,  \"aw\"\n\t"
++		 ".align %1\n\t"
+ 		 ".word 1b - ., %l[l_yes] - .\n\t"
+ 		 __stringify(ASM_ULONG_INSN) " %c0 - .\n\t"
+ 		 ".popsection\n\t"
+-		 : :  "i" (&((char *)key)[branch]) :  : l_yes);
++		 : : "i" (&((char *)key)[branch]), "i" (sizeof(long))
++		 : : l_yes);
  
--#define ENOSYM		215	/* symbol does not exist in executable */
- #define	ENOTSOCK	216	/* Socket operation on non-socket */
- #define	EDESTADDRREQ	217	/* Destination address required */
- #define	EMSGSIZE	218	/* Message too long */
-@@ -101,7 +100,6 @@
- #define	ETIMEDOUT	238	/* Connection timed out */
- #define	ECONNREFUSED	239	/* Connection refused */
- #define	EREFUSED	ECONNREFUSED	/* for HP's NFS apparently */
--#define	EREMOTERELEASE	240	/* Remote peer released connection */
- #define	EHOSTDOWN	241	/* Host is down */
- #define	EHOSTUNREACH	242	/* No route to host */
- 
---- a/lib/errname.c
-+++ b/lib/errname.c
-@@ -111,9 +111,6 @@ static const char *names_0[] = {
- 	E(ENOSPC),
- 	E(ENOSR),
- 	E(ENOSTR),
--#ifdef ENOSYM
--	E(ENOSYM),
--#endif
- 	E(ENOSYS),
- 	E(ENOTBLK),
- 	E(ENOTCONN),
-@@ -144,9 +141,6 @@ static const char *names_0[] = {
- #endif
- 	E(EREMOTE),
- 	E(EREMOTEIO),
--#ifdef EREMOTERELEASE
--	E(EREMOTERELEASE),
--#endif
- 	E(ERESTART),
- 	E(ERFKILL),
- 	E(EROFS),
---- a/tools/arch/parisc/include/uapi/asm/errno.h
-+++ b/tools/arch/parisc/include/uapi/asm/errno.h
-@@ -75,7 +75,6 @@
- 
- /* We now return you to your regularly scheduled HPUX. */
- 
--#define ENOSYM		215	/* symbol does not exist in executable */
- #define	ENOTSOCK	216	/* Socket operation on non-socket */
- #define	EDESTADDRREQ	217	/* Destination address required */
- #define	EMSGSIZE	218	/* Message too long */
-@@ -101,7 +100,6 @@
- #define	ETIMEDOUT	238	/* Connection timed out */
- #define	ECONNREFUSED	239	/* Connection refused */
- #define	EREFUSED	ECONNREFUSED	/* for HP's NFS apparently */
--#define	EREMOTERELEASE	240	/* Remote peer released connection */
- #define	EHOSTDOWN	241	/* Host is down */
- #define	EHOSTUNREACH	242	/* No route to host */
- 
+ 	return false;
+ l_yes:
 
 
