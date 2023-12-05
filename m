@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273326AA0;
-	Tue,  5 Dec 2023 03:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF456AA0;
+	Tue,  5 Dec 2023 03:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kM8doIrx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635BAC433C8;
-	Tue,  5 Dec 2023 03:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOxaVWPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2386C433C7;
+	Tue,  5 Dec 2023 03:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746356;
-	bh=dl4tGQZHeHw/NDgSP7t+OMYS1qLgZHjYAMPLl8ZWbNo=;
+	s=korg; t=1701746359;
+	bh=XFhKlrkfatVzLLrdD0ewoCq0dWSsxsWN6peNyipuQBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kM8doIrxYT1uBIK7yB9W256P4ramkTHsEX3YFLLhvMi/TOo7dcWdh05LvneDLFQ+x
-	 m32Lneawsvq2WFYyZ2X1heBDpn3zT3OkKT8oxlOvDHHyhZJELSTf6ZeljObcIDtA7i
-	 Fob1cxu8imO1ADYiX7munSv+OLoEOJgvhWjJWfsE=
+	b=OOxaVWPSOGBUxBmfLS0W2vk1BSXjU6Lh9/Gg9Kjv1UehOMhJN3n/GjptZwKeesUaf
+	 OK/KokAPpp1McpXhxxVPbGd1o34J99lrXkvvt511GMgCWjvL/kpMa6i4uDmHrHbbt0
+	 BQm3d8qnrddV9E1er3EEL89shO/+53rCt/W4M4sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 28/30] ravb: Fix races between ravb_tx_timeout_work() and net related ops
-Date: Tue,  5 Dec 2023 12:16:35 +0900
-Message-ID: <20231205031513.160565562@linuxfoundation.org>
+Subject: [PATCH 4.14 29/30] net: ravb: Start TX queues after HW initialization succeeded
+Date: Tue,  5 Dec 2023 12:16:36 +0900
+Message-ID: <20231205031513.229516979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031511.476698159@linuxfoundation.org>
 References: <20231205031511.476698159@linuxfoundation.org>
@@ -43,77 +44,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 9870257a0a338cd8d6c1cddab74e703f490f6779 ]
+[ Upstream commit 6f32c086602050fc11157adeafaa1c1eb393f0af ]
 
-Fix races between ravb_tx_timeout_work() and functions of net_device_ops
-and ethtool_ops by using rtnl_trylock() and rtnl_unlock(). Note that
-since ravb_close() is under the rtnl lock and calls cancel_work_sync(),
-ravb_tx_timeout_work() should calls rtnl_trylock(). Otherwise, a deadlock
-may happen in ravb_tx_timeout_work() like below:
-
-CPU0			CPU1
-			ravb_tx_timeout()
-			schedule_work()
-...
-__dev_close_many()
-// Under rtnl lock
-ravb_close()
-cancel_work_sync()
-// Waiting
-			ravb_tx_timeout_work()
-			rtnl_lock()
-			// This is possible to cause a deadlock
-
-If rtnl_trylock() fails, rescheduling the work with sleep for 1 msec.
+ravb_phy_start() may fail. If that happens, the TX queues will remain
+started. Thus, move the netif_tx_start_all_queues() after PHY is
+successfully initialized.
 
 Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://lore.kernel.org/r/20231127122420.3706751-1-yoshihiro.shimoda.uh@renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 4acea1ab60008..4db3495ef3370 100644
+index 4db3495ef3370..b97d450214dfd 100644
 --- a/drivers/net/ethernet/renesas/ravb_main.c
 +++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1484,6 +1484,12 @@ static void ravb_tx_timeout_work(struct work_struct *work)
- 	struct net_device *ndev = priv->ndev;
- 	int error;
- 
-+	if (!rtnl_trylock()) {
-+		usleep_range(1000, 2000);
-+		schedule_work(&priv->work);
-+		return;
-+	}
-+
- 	netif_tx_stop_all_queues(ndev);
- 
- 	/* Stop PTP Clock driver */
-@@ -1516,7 +1522,7 @@ static void ravb_tx_timeout_work(struct work_struct *work)
- 		 */
- 		netdev_err(ndev, "%s: ravb_dmac_init() failed, error %d\n",
- 			   __func__, error);
--		return;
-+		goto out_unlock;
- 	}
- 	ravb_emac_init(ndev);
- 
-@@ -1526,6 +1532,9 @@ static void ravb_tx_timeout_work(struct work_struct *work)
+@@ -1429,13 +1429,13 @@ static int ravb_open(struct net_device *ndev)
+ 	if (priv->chip_id == RCAR_GEN2)
  		ravb_ptp_init(ndev, priv->pdev);
  
- 	netif_tx_start_all_queues(ndev);
-+
-+out_unlock:
-+	rtnl_unlock();
- }
+-	netif_tx_start_all_queues(ndev);
+-
+ 	/* PHY control start */
+ 	error = ravb_phy_start(ndev);
+ 	if (error)
+ 		goto out_ptp_stop;
  
- /* Packet transmit function for Ethernet AVB */
++	netif_tx_start_all_queues(ndev);
++
+ 	return 0;
+ 
+ out_ptp_stop:
 -- 
 2.42.0
 
