@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FED6FB0;
-	Tue,  5 Dec 2023 03:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54986FB0;
+	Tue,  5 Dec 2023 03:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jm4eVsYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E587CC433C7;
-	Tue,  5 Dec 2023 03:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSgG0/xt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F8BC433C7;
+	Tue,  5 Dec 2023 03:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747906;
-	bh=g/cuzjCv79PE/G3g1KQRdVexXLQ2zZnw8GxsHPRtJB8=;
+	s=korg; t=1701747908;
+	bh=q+tGmGCMMJgw9NhItmZIjJWmEAH/fp5qtgFdjvRqJsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jm4eVsYmmhEn3KBabSNCHmybUmedwXduNDaJSYJl2LTGqYkVt0M4qcg9c1+1kD7TQ
-	 to4LI6upEkdg/xhQn6/BSqxqrXXfmx1m2M/xuBlXFnHm8ZbXJjIWIpIhgfvS79SMt0
-	 01c7Gov7+O6pltGqH3hql7TRvMlc8VoSfsWYkQ6Y=
+	b=nSgG0/xtybfjFhOXz/h/O5iV9noOBxia31mcMtk63zAFXzgyhinInkPJoRFC0e/E1
+	 5DLIv8Ix8qzA9FrpHSGnWTH+rH/jm3vYGkgdkOrJOUjkxeowCeEt5tbux3iU2LOxXy
+	 XeUNU+cqCfabZN5VPKOGiQCWUYAevPIt/vB8ilrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Suvanto <markus.suvanto@gmail.com>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 18/94] afs: Return ENOENT if no cell DNS record can be found
-Date: Tue,  5 Dec 2023 12:16:46 +0900
-Message-ID: <20231205031523.911738381@linuxfoundation.org>
+Subject: [PATCH 5.4 19/94] afs: Fix file locking on R/O volumes to operate in local mode
+Date: Tue,  5 Dec 2023 12:16:47 +0900
+Message-ID: <20231205031523.973840052@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -46,60 +45,40 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 0167236e7d66c5e1e85d902a6abc2529b7544539 ]
+[ Upstream commit b590eb41be766c5a63acc7e8896a042f7a4e8293 ]
 
-Make AFS return error ENOENT if no cell SRV or AFSDB DNS record (or
-cellservdb config file record) can be found rather than returning
-EDESTADDRREQ.
+AFS doesn't really do locking on R/O volumes as fileservers don't maintain
+state with each other and thus a lock on a R/O volume file on one
+fileserver will not be be visible to someone looking at the same file on
+another fileserver.
 
-Also add cell name lookup info to the cursor dump.
+Further, the server may return an error if you try it.
 
-Fixes: d5c32c89b208 ("afs: Fix cell DNS lookup")
-Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216637
+Fix this by doing what other AFS clients do and handle filelocking on R/O
+volume files entirely within the client and don't touch the server.
+
+Fixes: 6c6c1d63c243 ("afs: Provide mount-time configurable byte-range file locking emulation")
 Signed-off-by: David Howells <dhowells@redhat.com>
 Reviewed-by: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/vl_rotate.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/afs/super.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/afs/vl_rotate.c b/fs/afs/vl_rotate.c
-index 9a5ce9687779c..370c27cae2e67 100644
---- a/fs/afs/vl_rotate.c
-+++ b/fs/afs/vl_rotate.c
-@@ -58,6 +58,12 @@ static bool afs_start_vl_iteration(struct afs_vl_cursor *vc)
- 		}
+diff --git a/fs/afs/super.c b/fs/afs/super.c
+index eb04dcc543289..554119068ea44 100644
+--- a/fs/afs/super.c
++++ b/fs/afs/super.c
+@@ -391,6 +391,8 @@ static int afs_validate_fc(struct fs_context *fc)
+ 			return PTR_ERR(volume);
  
- 		/* Status load is ordered after lookup counter load */
-+		if (cell->dns_status == DNS_LOOKUP_GOT_NOT_FOUND) {
-+			pr_warn("No record of cell %s\n", cell->name);
-+			vc->error = -ENOENT;
-+			return false;
-+		}
-+
- 		if (cell->dns_source == DNS_RECORD_UNAVAILABLE) {
- 			vc->error = -EDESTADDRREQ;
- 			return false;
-@@ -276,6 +282,7 @@ bool afs_select_vlserver(struct afs_vl_cursor *vc)
-  */
- static void afs_vl_dump_edestaddrreq(const struct afs_vl_cursor *vc)
- {
-+	struct afs_cell *cell = vc->cell;
- 	static int count;
- 	int i;
+ 		ctx->volume = volume;
++		if (volume->type != AFSVL_RWVOL)
++			ctx->flock_mode = afs_flock_mode_local;
+ 	}
  
-@@ -285,6 +292,9 @@ static void afs_vl_dump_edestaddrreq(const struct afs_vl_cursor *vc)
- 
- 	rcu_read_lock();
- 	pr_notice("EDESTADDR occurred\n");
-+	pr_notice("CELL: %s err=%d\n", cell->name, cell->error);
-+	pr_notice("DNS: src=%u st=%u lc=%x\n",
-+		  cell->dns_source, cell->dns_status, cell->dns_lookup_count);
- 	pr_notice("VC: ut=%lx ix=%u ni=%hu fl=%hx err=%hd\n",
- 		  vc->untried, vc->index, vc->nr_iterations, vc->flags, vc->error);
- 
+ 	return 0;
 -- 
 2.42.0
 
