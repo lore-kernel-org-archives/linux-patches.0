@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165646AC2;
-	Tue,  5 Dec 2023 03:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099726AC2;
+	Tue,  5 Dec 2023 03:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7uUHcVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA82C433C7;
-	Tue,  5 Dec 2023 03:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTX8EH79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F4CC433C7;
+	Tue,  5 Dec 2023 03:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747738;
-	bh=gSEpqcpU+1GOtBFRA8AUoH/dcF588dfQ1pSm9Fws2QA=;
+	s=korg; t=1701747741;
+	bh=tG/HTyT1HlmWXYY+pcXEeFzO8pxuLL6WwxF7GhfgmHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7uUHcVZkBdqVnBdvqJLbNWjvBvQD11EFWfSNZUjgwJijhs40hcqEqg9XiqbBjSYv
-	 X3zswb8bfPQPZzSEPfRcHmrGSH47JvzfIUKr6C6CmI1IYOnRuNWqWXLHmEz3Vp0nDN
-	 8Jq08WspjqzjntZvB55mAamjfkSbuT1LnYZYVHXI=
+	b=UTX8EH791UEeuMh6b2T5xZplf3Od2XlXpOjvbsX/OiZOdUb5InFYvZF6TJZNJLCmW
+	 uJH+xxtLsy4ezgJQqWrvL5HgKDFoB5P/rCMJlQw0f5yam3jkBSvxXaZ6pFD2Fkm593
+	 U6cGpAetlAxbLt9PIyg/bLOYWrpWYk2SdcPtEx+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Micah Veilleux <micah.veilleux@iba-group.com>,
-	Steve French <stfrench@microsoft.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 51/67] smb3: fix touch -h of symlink
-Date: Tue,  5 Dec 2023 12:17:36 +0900
-Message-ID: <20231205031522.783365729@linuxfoundation.org>
+Subject: [PATCH 5.15 52/67] ASoC: Intel: Move soc_intel_is_foo() helpers to a generic header
+Date: Tue,  5 Dec 2023 12:17:37 +0900
+Message-ID: <20231205031522.854460385@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -43,38 +43,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 475efd9808a3094944a56240b2711349e433fb66 ]
+[ Upstream commit cd45c9bf8b43cd387e167cf166ae5c517f56d658 ]
 
-For example:
-      touch -h -t 02011200 testfile
-where testfile is a symlink would not change the timestamp, but
-      touch -t 02011200 testfile
-does work to change the timestamp of the target
+The soc_intel_is_foo() helpers from
+sound/soc/intel/common/soc-intel-quirks.h are useful outside of the
+sound subsystem too.
 
-Suggested-by: David Howells <dhowells@redhat.com>
-Reported-by: Micah Veilleux <micah.veilleux@iba-group.com>
-Closes: https://bugzilla.samba.org/show_bug.cgi?id=14476
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Move these to include/linux/platform_data/x86/soc.h, so that
+other code can use them too.
+
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20211018143324.296961-2-hdegoede@redhat.com
+Stable-dep-of: 7dd692217b86 ("ASoC: SOF: sof-pci-dev: Fix community key quirk detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/platform_data/x86/soc.h     | 65 +++++++++++++++++++++++
+ sound/soc/intel/common/soc-intel-quirks.h | 51 ++----------------
+ 2 files changed, 68 insertions(+), 48 deletions(-)
+ create mode 100644 include/linux/platform_data/x86/soc.h
 
-diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
-index b5ae209539ff1..af688e39f31ac 100644
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -1127,6 +1127,7 @@ const struct inode_operations cifs_file_inode_ops = {
+diff --git a/include/linux/platform_data/x86/soc.h b/include/linux/platform_data/x86/soc.h
+new file mode 100644
+index 0000000000000..da05f425587a0
+--- /dev/null
++++ b/include/linux/platform_data/x86/soc.h
+@@ -0,0 +1,65 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Helpers for Intel SoC model detection
++ *
++ * Copyright (c) 2019, Intel Corporation.
++ */
++
++#ifndef __PLATFORM_DATA_X86_SOC_H
++#define __PLATFORM_DATA_X86_SOC_H
++
++#if IS_ENABLED(CONFIG_X86)
++
++#include <asm/cpu_device_id.h>
++#include <asm/intel-family.h>
++
++#define SOC_INTEL_IS_CPU(soc, type)				\
++static inline bool soc_intel_is_##soc(void)			\
++{								\
++	static const struct x86_cpu_id soc##_cpu_ids[] = {	\
++		X86_MATCH_INTEL_FAM6_MODEL(type, NULL),		\
++		{}						\
++	};							\
++	const struct x86_cpu_id *id;				\
++								\
++	id = x86_match_cpu(soc##_cpu_ids);			\
++	if (id)							\
++		return true;					\
++	return false;						\
++}
++
++SOC_INTEL_IS_CPU(byt, ATOM_SILVERMONT);
++SOC_INTEL_IS_CPU(cht, ATOM_AIRMONT);
++SOC_INTEL_IS_CPU(apl, ATOM_GOLDMONT);
++SOC_INTEL_IS_CPU(glk, ATOM_GOLDMONT_PLUS);
++SOC_INTEL_IS_CPU(cml, KABYLAKE_L);
++
++#else /* IS_ENABLED(CONFIG_X86) */
++
++static inline bool soc_intel_is_byt(void)
++{
++	return false;
++}
++
++static inline bool soc_intel_is_cht(void)
++{
++	return false;
++}
++
++static inline bool soc_intel_is_apl(void)
++{
++	return false;
++}
++
++static inline bool soc_intel_is_glk(void)
++{
++	return false;
++}
++
++static inline bool soc_intel_is_cml(void)
++{
++	return false;
++}
++#endif /* IS_ENABLED(CONFIG_X86) */
++
++#endif /* __PLATFORM_DATA_X86_SOC_H */
+diff --git a/sound/soc/intel/common/soc-intel-quirks.h b/sound/soc/intel/common/soc-intel-quirks.h
+index a93987ab7f4d7..de4e550c5b34d 100644
+--- a/sound/soc/intel/common/soc-intel-quirks.h
++++ b/sound/soc/intel/common/soc-intel-quirks.h
+@@ -9,34 +9,13 @@
+ #ifndef _SND_SOC_INTEL_QUIRKS_H
+ #define _SND_SOC_INTEL_QUIRKS_H
  
- const struct inode_operations cifs_symlink_inode_ops = {
- 	.get_link = cifs_get_link,
-+	.setattr = cifs_setattr,
- 	.permission = cifs_permission,
- 	.listxattr = cifs_listxattr,
- };
++#include <linux/platform_data/x86/soc.h>
++
+ #if IS_ENABLED(CONFIG_X86)
+ 
+ #include <linux/dmi.h>
+-#include <asm/cpu_device_id.h>
+-#include <asm/intel-family.h>
+ #include <asm/iosf_mbi.h>
+ 
+-#define SOC_INTEL_IS_CPU(soc, type)				\
+-static inline bool soc_intel_is_##soc(void)			\
+-{								\
+-	static const struct x86_cpu_id soc##_cpu_ids[] = {	\
+-		X86_MATCH_INTEL_FAM6_MODEL(type, NULL),		\
+-		{}						\
+-	};							\
+-	const struct x86_cpu_id *id;				\
+-								\
+-	id = x86_match_cpu(soc##_cpu_ids);			\
+-	if (id)							\
+-		return true;					\
+-	return false;						\
+-}
+-
+-SOC_INTEL_IS_CPU(byt, ATOM_SILVERMONT);
+-SOC_INTEL_IS_CPU(cht, ATOM_AIRMONT);
+-SOC_INTEL_IS_CPU(apl, ATOM_GOLDMONT);
+-SOC_INTEL_IS_CPU(glk, ATOM_GOLDMONT_PLUS);
+-SOC_INTEL_IS_CPU(cml, KABYLAKE_L);
+-
+ static inline bool soc_intel_is_byt_cr(struct platform_device *pdev)
+ {
+ 	/*
+@@ -114,30 +93,6 @@ static inline bool soc_intel_is_byt_cr(struct platform_device *pdev)
+ 	return false;
+ }
+ 
+-static inline bool soc_intel_is_byt(void)
+-{
+-	return false;
+-}
+-
+-static inline bool soc_intel_is_cht(void)
+-{
+-	return false;
+-}
+-
+-static inline bool soc_intel_is_apl(void)
+-{
+-	return false;
+-}
+-
+-static inline bool soc_intel_is_glk(void)
+-{
+-	return false;
+-}
+-
+-static inline bool soc_intel_is_cml(void)
+-{
+-	return false;
+-}
+ #endif
+ 
+- #endif /* _SND_SOC_INTEL_QUIRKS_H */
++#endif /* _SND_SOC_INTEL_QUIRKS_H */
 -- 
 2.42.0
 
