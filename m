@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685616FAF;
-	Tue,  5 Dec 2023 03:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160076FAF;
+	Tue,  5 Dec 2023 03:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPUJRssM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40B2C433C8;
-	Tue,  5 Dec 2023 03:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZF3kfLAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A176DC433C7;
+	Tue,  5 Dec 2023 03:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746628;
-	bh=6Vs5FjlH3s/NovAXaicJvyf2H8XmyEwIxJSzS8HiCw8=;
+	s=korg; t=1701746630;
+	bh=VtkESP/eImXc3FF5qT0GLlrJqspfqTPu9kn8WvIdi7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jPUJRssM44vIwViGTjSTR820wMGooD7u9EuUTTSLZ8FyDXHXZsiAvrY8yeHOzNFt+
-	 910xhj5bvcpbKlvLic0EGw/I8vFON1Nqu7XRNPFcCi7I4mOeY1kJdQE1GnLpTsbE06
-	 kNsTnHD3hFDopxIQH60FWalWGeTbiPuEBSgeAmw0=
+	b=ZF3kfLAYbmvaPYrkBtA8gk0A/qpCDSBVO9NyOqscsqC13mOYQ+T1M1kLYm83Nrd0f
+	 +kHgdRTxtuB6mts6Kf1pEgZ0NP3yFCEWv0/qJAWnUudNgeMO9H6BNNahACKQchX9wy
+	 dtG30WjDTgKZBi8kh9bpy1rVv/kBJWQMwC1CyIpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/134] octeontx2-pf: Fix adding mbox work queue entry when num_vfs > 64
-Date: Tue,  5 Dec 2023 12:16:09 +0900
-Message-ID: <20231205031541.605383302@linuxfoundation.org>
+Subject: [PATCH 6.6 080/134] net: rswitch: Fix return value in rswitch_start_xmit()
+Date: Tue,  5 Dec 2023 12:15:52 +0900
+Message-ID: <20231205031540.547965425@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -43,49 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 51597219e0cd5157401d4d0ccb5daa4d9961676f ]
+[ Upstream commit 1aaef8634a20b322c82e84f12a9b6aec1e2fd4fa ]
 
-When more than 64 VFs are enabled for a PF then mbox communication
-between VF and PF is not working as mbox work queueing for few VFs
-are skipped due to wrong calculation of VF numbers.
+This .ndo_start_xmit() function should return netdev_tx_t value,
+not -ENOMEM. So, fix it.
 
-Fixes: d424b6c02415 ("octeontx2-pf: Enable SRIOV and added VF mbox handling")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://lore.kernel.org/r/1700930042-5400-1-git-send-email-sbhatta@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 33f5d733b589 ("net: renesas: rswitch: Improve TX timestamp accuracy")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/renesas/rswitch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index ba95ac9132746..6d56fc1918455 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -566,7 +566,9 @@ static irqreturn_t otx2_pfvf_mbox_intr_handler(int irq, void *pf_irq)
- 		otx2_write64(pf, RVU_PF_VFPF_MBOX_INTX(1), intr);
- 		otx2_queue_work(mbox, pf->mbox_pfvf_wq, 64, vfs, intr,
- 				TYPE_PFVF);
--		vfs -= 64;
-+		if (intr)
-+			trace_otx2_msg_interrupt(mbox->mbox.pdev, "VF(s) to PF", intr);
-+		vfs = 64;
- 	}
+diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
+index 898f22aa796e2..3ccf93184c9b2 100644
+--- a/drivers/net/ethernet/renesas/rswitch.c
++++ b/drivers/net/ethernet/renesas/rswitch.c
+@@ -1532,7 +1532,7 @@ static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *nd
+ 		ts_info = kzalloc(sizeof(*ts_info), GFP_ATOMIC);
+ 		if (!ts_info) {
+ 			dma_unmap_single(ndev->dev.parent, dma_addr, skb->len, DMA_TO_DEVICE);
+-			return -ENOMEM;
++			return ret;
+ 		}
  
- 	intr = otx2_read64(pf, RVU_PF_VFPF_MBOX_INTX(0));
-@@ -574,7 +576,8 @@ static irqreturn_t otx2_pfvf_mbox_intr_handler(int irq, void *pf_irq)
- 
- 	otx2_queue_work(mbox, pf->mbox_pfvf_wq, 0, vfs, intr, TYPE_PFVF);
- 
--	trace_otx2_msg_interrupt(mbox->mbox.pdev, "VF(s) to PF", intr);
-+	if (intr)
-+		trace_otx2_msg_interrupt(mbox->mbox.pdev, "VF(s) to PF", intr);
- 
- 	return IRQ_HANDLED;
- }
+ 		skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
 -- 
 2.42.0
 
