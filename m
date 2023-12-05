@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE9F6FB1;
-	Tue,  5 Dec 2023 03:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9198F6FB1;
+	Tue,  5 Dec 2023 03:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNk6MKNU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B8EC433C8;
-	Tue,  5 Dec 2023 03:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gfsez5uk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2728DC433C7;
+	Tue,  5 Dec 2023 03:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747505;
-	bh=xS80tae4Mg12m0PDB2cKc32qoYWlH5vek1zsBIlvS2Q=;
+	s=korg; t=1701747507;
+	bh=AgGfTvR3dsNM8CeDPjXi9rdCdyAEuDxRfRaEsqicgbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNk6MKNU0LY24+noKe0DvhvFyti1odmc+3RH8KkI6ScQnKogzDBRYxYuuu4BKMUkk
-	 AB5Nut0G0x+FMT6+JZX0YZXegat6TUSeXCREk9zlggg/GVSmdek3XnO3CJ/1siy0yO
-	 P0cqPUVwR76O4vj3IAfei+TbPQvLArC716GWmw1o=
+	b=Gfsez5ukipszncaVsG5o4giPZxfAWIyK0RFUmi8k/aKWMbAlmt2Gh77tAmfWs1CtR
+	 aLAsZ8ZNZ7DoBQxifTdwRNIt+KdtFTTdd03T76ZnBtyoFcoWYhya6ztvnTXuqYEkUa
+	 vHwJtDlEegwHkRV53DL07nFJ9Ba2EkswY7SwAu4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/135] net: ravb: Use pm_runtime_resume_and_get()
-Date: Tue,  5 Dec 2023 12:17:02 +0900
-Message-ID: <20231205031537.070309696@linuxfoundation.org>
+	Bragatheswaran Manickavel <bragathemanick0908@gmail.com>,
+	David Sterba <dsterba@suse.com>,
+	syzbot+d66de4cbf532749df35f@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 084/135] btrfs: ref-verify: fix memory leaks in btrfs_ref_tree_mod()
+Date: Tue,  5 Dec 2023 12:16:45 +0900
+Message-ID: <20231205031535.838699785@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -43,48 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Bragatheswaran Manickavel <bragathemanick0908@gmail.com>
 
-[ Upstream commit 88b74831faaee455c2af380382d979fc38e79270 ]
+commit f91192cd68591c6b037da345bc9fcd5e50540358 upstream.
 
-pm_runtime_get_sync() may return an error. In case it returns with an error
-dev->power.usage_count needs to be decremented. pm_runtime_resume_and_get()
-takes care of this. Thus use it.
+In btrfs_ref_tree_mod(), when !parent 're' was allocated through
+kmalloc(). In the following code, if an error occurs, the execution will
+be redirected to 'out' or 'out_unlock' and the function will be exited.
+However, on some of the paths, 're' are not deallocated and may lead to
+memory leaks.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For example: lookup_block_entry() for 'be' returns NULL, the out label
+will be invoked. During that flow ref and 'ra' are freed but not 're',
+which can potentially lead to a memory leak.
+
+CC: stable@vger.kernel.org # 5.10+
+Reported-and-tested-by: syzbot+d66de4cbf532749df35f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d66de4cbf532749df35f
+Signed-off-by: Bragatheswaran Manickavel <bragathemanick0908@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/btrfs/ref-verify.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 9d4a35f006c68..a9cd390dedbd8 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2072,7 +2072,9 @@ static int ravb_probe(struct platform_device *pdev)
- 	ndev->hw_features = NETIF_F_RXCSUM;
+--- a/fs/btrfs/ref-verify.c
++++ b/fs/btrfs/ref-verify.c
+@@ -804,6 +804,7 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
+ 			dump_ref_action(fs_info, ra);
+ 			kfree(ref);
+ 			kfree(ra);
++			kfree(re);
+ 			goto out_unlock;
+ 		} else if (be->num_refs == 0) {
+ 			btrfs_err(fs_info,
+@@ -813,6 +814,7 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
+ 			dump_ref_action(fs_info, ra);
+ 			kfree(ref);
+ 			kfree(ra);
++			kfree(re);
+ 			goto out_unlock;
+ 		}
  
- 	pm_runtime_enable(&pdev->dev);
--	pm_runtime_get_sync(&pdev->dev);
-+	error = pm_runtime_resume_and_get(&pdev->dev);
-+	if (error < 0)
-+		goto out_rpm_disable;
- 
- 	/* The Ether-specific entries in the device structure. */
- 	ndev->base_addr = res->start;
-@@ -2247,6 +2249,7 @@ static int ravb_probe(struct platform_device *pdev)
- 	free_netdev(ndev);
- 
- 	pm_runtime_put(&pdev->dev);
-+out_rpm_disable:
- 	pm_runtime_disable(&pdev->dev);
- 	return error;
- }
--- 
-2.42.0
-
 
 
