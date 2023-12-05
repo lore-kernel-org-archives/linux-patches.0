@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6946B6FB1;
-	Tue,  5 Dec 2023 03:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE546FB1;
+	Tue,  5 Dec 2023 03:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSMY+WAU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39EBC433C8;
-	Tue,  5 Dec 2023 03:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqe+1xI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA90C433C8;
+	Tue,  5 Dec 2023 03:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747417;
-	bh=su2IBED/KfxjWr0u67oCnOgD66cOFsGAr+xnmEbJKzc=;
+	s=korg; t=1701747419;
+	bh=lSoKwKJ5X6oS3WjW/z1+RgMZexPzD6ydcfX27krHZQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TSMY+WAUoyQVlW/CNSTxfVzRqJV5QaT5N+MfG6O4PiSxW8gHshqeXNvy2y4/YROxJ
-	 3UfzSuXQ7I7RSdlZaVC+2P3kg02JLX+CTluwA0wmsH8g9AnF3+5D7Mc5XrFf8o3VdT
-	 sEAwwTJAGC1AF8nfy28RoWDQhjWPaZc9NONiB3mU=
+	b=aqe+1xI2FuxTk/Pahi4CFnCfni//5WfnHohSAGG5B4qhKaS8E2LIwe6uh0WF3LLag
+	 rALUGkZmUc/cDv8BgYQ46i9ZIH8MTdg9b2rqxmSn5JsBD9DipFxE9mujK1D/xbGHin
+	 uQRem77mpZyko/20cHMViOlu5lPqAzFDaiCNLJvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 069/135] io_uring: fix off-by one bvec index
-Date: Tue,  5 Dec 2023 12:16:30 +0900
-Message-ID: <20231205031534.804689098@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Lieven Hey <lieven.hey@kdab.com>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 5.10 070/135] perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
+Date: Tue,  5 Dec 2023 12:16:31 +0900
+Message-ID: <20231205031534.880575262@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -41,35 +45,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit d6fef34ee4d102be448146f24caf96d7b4a05401 upstream.
+commit 89b15d00527b7825ff19130ed83478e80e3fae99 upstream.
 
-If the offset equals the bv_len of the first registered bvec, then the
-request does not include any of that first bvec. Skip it so that drivers
-don't have to deal with a zero length bvec, which was observed to break
-NVMe's PRP list creation.
+When a program header was added, it moved the text section but
+GEN_ELF_TEXT_OFFSET was not updated.
 
-Cc: stable@vger.kernel.org
-Fixes: bd11b3a391e3 ("io_uring: don't use iov_iter_advance() for fixed buffers")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Link: https://lore.kernel.org/r/20231120221831.2646460-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fix by adding the program header size and aligning.
+
+Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Lieven Hey <lieven.hey@kdab.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20221014170905.64069-7-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/genelf.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3149,7 +3149,7 @@ static int __io_import_fixed(struct io_k
- 		 */
- 		const struct bio_vec *bvec = imu->bvec;
+--- a/tools/perf/util/genelf.h
++++ b/tools/perf/util/genelf.h
+@@ -2,6 +2,8 @@
+ #ifndef __GENELF_H__
+ #define __GENELF_H__
  
--		if (offset <= bvec->bv_len) {
-+		if (offset < bvec->bv_len) {
- 			iov_iter_advance(iter, offset);
- 		} else {
- 			unsigned long seg_skip;
++#include <linux/math.h>
++
+ /* genelf.c */
+ int jit_write_elf(int fd, uint64_t code_addr, const char *sym,
+ 		  const void *code, int csize, void *debug, int nr_debug_entries,
+@@ -73,6 +75,6 @@ int jit_add_debug_info(Elf *e, uint64_t
+ #endif
+ 
+ /* The .text section is directly after the ELF header */
+-#define GEN_ELF_TEXT_OFFSET sizeof(Elf_Ehdr)
++#define GEN_ELF_TEXT_OFFSET round_up(sizeof(Elf_Ehdr) + sizeof(Elf_Phdr), 16)
+ 
+ #endif
 
 
