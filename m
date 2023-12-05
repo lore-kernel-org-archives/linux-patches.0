@@ -1,136 +1,158 @@
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFF92F878
-	for <patches@lists.linux.dev>; Mon,  4 Dec 2023 23:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B7F611E;
+	Tue,  5 Dec 2023 03:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BmkiEVWd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701732327; x=1733268327;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Rea7cSztxOU/Tn6j4cuH2tcjGKjYfBJMSKRByJlHmUs=;
-  b=BmkiEVWdCFSnV6+YT8CxRdhBnGVjrY8pG4HhQT67N0ifLn+lN0RIfUjY
-   0cN7OPnNKaecDWWGxiT5gG9S6l7BwHe8DcdP5fgYrcGhjg3KICX2Oa/L2
-   QpKIAMK1vvfw7UuKIP1VqyLNuSU/jQ/4BEb8W78wJ8IL5vhzKyCMT9jNo
-   YAOd5ImhFm+SQVtGsQysI6QegRPKPMNAq19Dt9K4ShACdcSlJRFG9vtgE
-   2ARi/s8zEEWybPwybzPlQN5vjSHaqWQUZ6RupWib+uKT3MyamzqthYotU
-   Ncr5LhJDWwaUGshwAwc0UcFjmK8VLy67bJrccih4u69V0Epie9At7rqrE
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="397714458"
-X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
-   d="scan'208";a="397714458"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 15:25:24 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="1018011391"
-X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
-   d="scan'208";a="1018011391"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 15:25:24 -0800
-Date: Mon, 4 Dec 2023 15:25:22 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>, Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v13 0/8] Add support for Sub-NUMA cluster (SNC) systems
-Message-ID: <ZW5f4iiNaaPqndKt@agluck-desk3>
-References: <20231130003418.89964-1-tony.luck@intel.com>
- <20231204185357.120501-1-tony.luck@intel.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URT5lPTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26669C433C7;
+	Tue,  5 Dec 2023 03:18:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1701746302;
+	bh=EDLpVzRrIf7boNLR1qFEoA3mSBPRxpxy69vbbdjWzrk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=URT5lPTU3ljBZXxADH2mVJTa3MlmsglG8PO1gDgBNjFbFy1O+fTOMON4P7l4Vqjoq
+	 vovDslzXd84gZI2UL6b7KTGLKCjtgqhn3XDPkLujKrvXuVsSq2DgXqUcbREV5E9taX
+	 vLv80/taaDbmBl66hMgqEHz1WhHey8avmX3FRQHE=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Christopher Bednarz <christopher.n.bednarz@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 4.14 01/30] RDMA/irdma: Prevent zero-length STAG registration
+Date: Tue,  5 Dec 2023 12:16:08 +0900
+Message-ID: <20231205031511.571552355@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20231205031511.476698159@linuxfoundation.org>
+References: <20231205031511.476698159@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231204185357.120501-1-tony.luck@intel.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Dec 04, 2023 at 10:53:49AM -0800, Tony Luck wrote:
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
-Boris: I've collected "Reviewed-by:" from Reinette for all patches. Babu
-sent a Tested-by for the series, and Reviewed-by for each patch just
-now.
+------------------
 
-So it's ready to got into your to-be-reviewed queue.
+From: Christopher Bednarz <christopher.n.bednarz@intel.com>
 
-Thanks
+commit bb6d73d9add68ad270888db327514384dfa44958 upstream.
 
--Tony
+Currently irdma allows zero-length STAGs to be programmed in HW during
+the kernel mode fast register flow. Zero-length MR or STAG registration
+disable HW memory length checks.
 
-> The Sub-NUMA cluster feature on some Intel processors partitions the CPUs
-> that share an L3 cache into two or more sets. This plays havoc with the
-> Resource Director Technology (RDT) monitoring features.  Prior to this
-> patch Intel has advised that SNC and RDT are incompatible.
-> 
-> Some of these CPU support an MSR that can partition the RMID counters in
-> the same way. This allows monitoring features to be used. With the caveat
-> that users must be aware that Linux may migrate tasks more frequently
-> between SNC nodes than between "regular" NUMA nodes, so reading counters
-> from all SNC nodes may be needed to get a complete picture of activity
-> for tasks.
-> 
-> Cache and memory bandwidth allocation features continue to operate at
-> the scope of the L3 cache.
-> 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
-> 
-> Changes since v12:
-> 
-> All:
-> 	Reinette - put commit tags in right order for TIP (Tested-by before
-> 	Reviewed-by)
-> 
-> Patch 7:
-> 	Fam Zheng - Check for -1 return from get_cpu_cacheinfo_id() and
-> 	increase size of bitmap tracking # of L3 instances.
-> 	Reinette - Add extra sanity checks. Note that this patch has
-> 	some additional tweaks beyond the e-mail discussion.
-> 		1) "3" is a valid return in addition to 1, 2, 4
-> 		2) Added a warning if the sanity checks fail that
-> 		prints number of CPU nodes and number of L3 cache
-> 		instances that were found.
-> 
-> Patch 8:
-> 	Babu - Fix grammar with an additional comma.
-> 
-> 
-> Tony Luck (8):
->   x86/resctrl: Prepare for new domain scope
->   x86/resctrl: Prepare to split rdt_domain structure
->   x86/resctrl: Prepare for different scope for control/monitor
->     operations
->   x86/resctrl: Split the rdt_domain and rdt_hw_domain structures
->   x86/resctrl: Add node-scope to the options for feature scope
->   x86/resctrl: Introduce snc_nodes_per_l3_cache
->   x86/resctrl: Sub NUMA Cluster detection and enable
->   x86/resctrl: Update documentation with Sub-NUMA cluster changes
-> 
->  Documentation/arch/x86/resctrl.rst        |  25 +-
->  include/linux/resctrl.h                   |  85 +++--
->  arch/x86/include/asm/msr-index.h          |   1 +
->  arch/x86/kernel/cpu/resctrl/internal.h    |  66 ++--
->  arch/x86/kernel/cpu/resctrl/core.c        | 433 +++++++++++++++++-----
->  arch/x86/kernel/cpu/resctrl/ctrlmondata.c |  58 +--
->  arch/x86/kernel/cpu/resctrl/monitor.c     |  68 ++--
->  arch/x86/kernel/cpu/resctrl/pseudo_lock.c |  26 +-
->  arch/x86/kernel/cpu/resctrl/rdtgroup.c    | 149 ++++----
->  9 files changed, 629 insertions(+), 282 deletions(-)
-> 
-> 
-> base-commit: 2cc14f52aeb78ce3f29677c2de1f06c0e91471ab
-> -- 
-> 2.41.0
-> 
+Improve gaps in bounds checking in irdma by preventing zero-length STAG or
+MR registrations except if the IB_PD_UNSAFE_GLOBAL_RKEY is set.
+
+This addresses the disclosure CVE-2023-25775.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Christopher Bednarz <christopher.n.bednarz@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20230818144838.1758-1-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/infiniband/hw/i40iw/i40iw_ctrl.c  |    6 ++++++
+ drivers/infiniband/hw/i40iw/i40iw_type.h  |    2 ++
+ drivers/infiniband/hw/i40iw/i40iw_verbs.c |   10 ++++++++--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
+
+--- a/drivers/infiniband/hw/i40iw/i40iw_ctrl.c
++++ b/drivers/infiniband/hw/i40iw/i40iw_ctrl.c
+@@ -2853,6 +2853,9 @@ static enum i40iw_status_code i40iw_sc_a
+ 	u64 header;
+ 	enum i40iw_page_size page_size;
+ 
++	if (!info->total_len && !info->all_memory)
++		return -EINVAL;
++
+ 	page_size = (info->page_size == 0x200000) ? I40IW_PAGE_SIZE_2M : I40IW_PAGE_SIZE_4K;
+ 	cqp = dev->cqp;
+ 	wqe = i40iw_sc_cqp_get_next_send_wqe(cqp, scratch);
+@@ -2911,6 +2914,9 @@ static enum i40iw_status_code i40iw_sc_m
+ 	u8 addr_type;
+ 	enum i40iw_page_size page_size;
+ 
++	if (!info->total_len && !info->all_memory)
++		return -EINVAL;
++
+ 	page_size = (info->page_size == 0x200000) ? I40IW_PAGE_SIZE_2M : I40IW_PAGE_SIZE_4K;
+ 	if (info->access_rights & (I40IW_ACCESS_FLAGS_REMOTEREAD_ONLY |
+ 				   I40IW_ACCESS_FLAGS_REMOTEWRITE_ONLY))
+--- a/drivers/infiniband/hw/i40iw/i40iw_type.h
++++ b/drivers/infiniband/hw/i40iw/i40iw_type.h
+@@ -780,6 +780,7 @@ struct i40iw_allocate_stag_info {
+ 	bool use_hmc_fcn_index;
+ 	u8 hmc_fcn_index;
+ 	bool use_pf_rid;
++	bool all_memory;
+ };
+ 
+ struct i40iw_reg_ns_stag_info {
+@@ -798,6 +799,7 @@ struct i40iw_reg_ns_stag_info {
+ 	bool use_hmc_fcn_index;
+ 	u8 hmc_fcn_index;
+ 	bool use_pf_rid;
++	bool all_memory;
+ };
+ 
+ struct i40iw_fast_reg_stag_info {
+--- a/drivers/infiniband/hw/i40iw/i40iw_verbs.c
++++ b/drivers/infiniband/hw/i40iw/i40iw_verbs.c
+@@ -1579,7 +1579,8 @@ static int i40iw_handle_q_mem(struct i40
+ static int i40iw_hw_alloc_stag(struct i40iw_device *iwdev, struct i40iw_mr *iwmr)
+ {
+ 	struct i40iw_allocate_stag_info *info;
+-	struct i40iw_pd *iwpd = to_iwpd(iwmr->ibmr.pd);
++	struct ib_pd *pd = iwmr->ibmr.pd;
++	struct i40iw_pd *iwpd = to_iwpd(pd);
+ 	enum i40iw_status_code status;
+ 	int err = 0;
+ 	struct i40iw_cqp_request *cqp_request;
+@@ -1596,6 +1597,7 @@ static int i40iw_hw_alloc_stag(struct i4
+ 	info->stag_idx = iwmr->stag >> I40IW_CQPSQ_STAG_IDX_SHIFT;
+ 	info->pd_id = iwpd->sc_pd.pd_id;
+ 	info->total_len = iwmr->length;
++	info->all_memory = pd->flags & IB_PD_UNSAFE_GLOBAL_RKEY;
+ 	info->remote_access = true;
+ 	cqp_info->cqp_cmd = OP_ALLOC_STAG;
+ 	cqp_info->post_sq = 1;
+@@ -1649,6 +1651,8 @@ static struct ib_mr *i40iw_alloc_mr(stru
+ 	iwmr->type = IW_MEMREG_TYPE_MEM;
+ 	palloc = &iwpbl->pble_alloc;
+ 	iwmr->page_cnt = max_num_sg;
++	/* Use system PAGE_SIZE as the sg page sizes are unknown at this point */
++	iwmr->length = max_num_sg * PAGE_SIZE;
+ 	mutex_lock(&iwdev->pbl_mutex);
+ 	status = i40iw_get_pble(&iwdev->sc_dev, iwdev->pble_rsrc, palloc, iwmr->page_cnt);
+ 	mutex_unlock(&iwdev->pbl_mutex);
+@@ -1745,7 +1749,8 @@ static int i40iw_hwreg_mr(struct i40iw_d
+ {
+ 	struct i40iw_pbl *iwpbl = &iwmr->iwpbl;
+ 	struct i40iw_reg_ns_stag_info *stag_info;
+-	struct i40iw_pd *iwpd = to_iwpd(iwmr->ibmr.pd);
++	struct ib_pd *pd = iwmr->ibmr.pd;
++	struct i40iw_pd *iwpd = to_iwpd(pd);
+ 	struct i40iw_pble_alloc *palloc = &iwpbl->pble_alloc;
+ 	enum i40iw_status_code status;
+ 	int err = 0;
+@@ -1765,6 +1770,7 @@ static int i40iw_hwreg_mr(struct i40iw_d
+ 	stag_info->total_len = iwmr->length;
+ 	stag_info->access_rights = access;
+ 	stag_info->pd_id = iwpd->sc_pd.pd_id;
++	stag_info->all_memory = pd->flags & IB_PD_UNSAFE_GLOBAL_RKEY;
+ 	stag_info->addr_type = I40IW_ADDR_TYPE_VA_BASED;
+ 	stag_info->page_size = iwmr->page_size;
+ 
+
+
