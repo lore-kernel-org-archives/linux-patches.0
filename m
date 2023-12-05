@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED2B6FB0;
-	Tue,  5 Dec 2023 03:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF5B6FB0;
+	Tue,  5 Dec 2023 03:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFVMhk5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F78C433C8;
-	Tue,  5 Dec 2023 03:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1aAOZsF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E43FC433C7;
+	Tue,  5 Dec 2023 03:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747989;
-	bh=K0ODbfonpLE/4cSvmAquzQ6Rgtg1OgjCvYRl6XLEkYo=;
+	s=korg; t=1701747991;
+	bh=K6LOPZgOjHkdV6u/esMsuKV54Lk6LfNBB0yuDhYVrXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFVMhk5c7NTw07FlTdRCVfPkJWMxsreAC7XfiJ+Of7fC4kB2HhwQRdlonqVt4uMCO
-	 ceUTdg+XqON6M4OKXtlanijrC0U8uBsHfET0LVEMb30bd113FaDUS3QySGCjNsy8XY
-	 OPWM7YNdJl1n3Os5Hod8a0uzFXg/ue/iDv49gGdA=
+	b=V1aAOZsFtq/7USfSZF8w1uxTepCiskFlhL8B19NqyM501weU9GvMahB0f6Pb+wRrW
+	 4ce0GOCSSTK08SvrOiuiCEHl3bHBXRA1cRX/+1de8/OX52QeEQEHT1rDreHLDcdp75
+	 Gvtna9xiu15d6GF46euWJ+wtExXDT5/PtrFs6Mwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zubin Mithra <zsm@chromium.org>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.4 47/94] usb: dwc3: set the dma max_seg_size
-Date: Tue,  5 Dec 2023 12:17:15 +0900
-Message-ID: <20231205031525.496618727@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Lee Jones <lee@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 5.4 48/94] USB: dwc3: qcom: fix resource leaks on probe deferral
+Date: Tue,  5 Dec 2023 12:17:16 +0900
+Message-ID: <20231205031525.556100786@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -42,36 +43,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 8bbae288a85abed6a1cf7d185d8b9dc2f5dcb12c upstream.
+commit 51392a1879ff06dc21b68aef4825f6ef68a7be42 upstream.
 
-Allow devices to have dma operations beyond 4K, and avoid warnings such
-as:
+The driver needs to deregister and free the newly allocated dwc3 core
+platform device on ACPI probe errors (e.g. probe deferral) and on driver
+unbind but instead it leaked those resources while erroneously dropping
+a reference to the parent platform device which is still in use.
 
-DMA-API: dwc3 a600000.usb: mapping sg segment longer than device claims to support [len=86016] [max=65536]
+For OF probing the driver takes a reference to the dwc3 core platform
+device which has also always been leaked.
 
-Cc: stable@vger.kernel.org
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Reported-by: Zubin Mithra <zsm@chromium.org>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20231026-dwc3-v2-1-1d4fd5c3e067@chromium.org
+Fix the broken ACPI tear down and make sure to drop the dwc3 core
+reference for both OF and ACPI.
+
+Fixes: 8fd95da2cfb5 ("usb: dwc3: qcom: Release the correct resources in dwc3_qcom_remove()")
+Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Cc: stable@vger.kernel.org      # 4.18
+Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Lee Jones <lee@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Acked-by: Andrew Halaney <ahalaney@redhat.com>
+Link: https://lore.kernel.org/r/20231117173650.21161-2-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc3/dwc3-qcom.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1556,6 +1556,8 @@ static int dwc3_probe(struct platform_de
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -553,6 +553,7 @@ static int dwc3_qcom_of_register_core(st
+ 	if (!qcom->dwc3) {
+ 		ret = -ENODEV;
+ 		dev_err(dev, "failed to get dwc3 platform device\n");
++		of_platform_depopulate(dev);
+ 	}
  
- 	pm_runtime_put(dev);
+ node_put:
+@@ -666,7 +667,7 @@ static int dwc3_qcom_probe(struct platfo
  
-+	dma_set_max_seg_size(dev, UINT_MAX);
-+
- 	return 0;
+ 	if (ret) {
+ 		dev_err(dev, "failed to register DWC3 Core, err=%d\n", ret);
+-		goto depopulate;
++		goto clk_disable;
+ 	}
  
- err5:
+ 	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
+@@ -692,7 +693,8 @@ depopulate:
+ 	if (np)
+ 		of_platform_depopulate(&pdev->dev);
+ 	else
+-		platform_device_put(pdev);
++		platform_device_del(qcom->dwc3);
++	platform_device_put(qcom->dwc3);
+ clk_disable:
+ 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+ 		clk_disable_unprepare(qcom->clks[i]);
+@@ -714,7 +716,8 @@ static int dwc3_qcom_remove(struct platf
+ 	if (np)
+ 		of_platform_depopulate(&pdev->dev);
+ 	else
+-		platform_device_put(pdev);
++		platform_device_del(qcom->dwc3);
++	platform_device_put(qcom->dwc3);
+ 
+ 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+ 		clk_disable_unprepare(qcom->clks[i]);
 
 
