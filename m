@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B026110;
-	Tue,  5 Dec 2023 03:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACDA6110;
+	Tue,  5 Dec 2023 03:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKCl1kzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB747C433C8;
-	Tue,  5 Dec 2023 03:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taLLLxfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEB6C433C8;
+	Tue,  5 Dec 2023 03:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746738;
-	bh=9CkyPILyCMsPA1YsXVii3q/gY+ZbABXMBDKIQCSkGU8=;
+	s=korg; t=1701746740;
+	bh=rNQ1g6z5Dk+hTp20TMWvH21vroEmqrX7tgkHaSQGkKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKCl1kzF4NrgCfanXTR0gQS/twX0DBPSH/0qYXPOPu6uG9QDIe0k24beJwYPLfXT4
-	 SCfeGOHSqGMzjRYYydUDQfH2UJg2BUqoutN88zzNwL1Enr9odJzwPFuMxmIVJhu6VT
-	 AJd8uUIv/bqxMlYyIKJTHefwvN44W/Pw7fGRWpkg=
+	b=taLLLxfIdoB16EGCuZL1fAGA8zV/t0+Ac/qB/eQwAQ2t3BdakuzM4nTSplpg4FEp9
+	 8MvInx+xyoHpL5xIf2CW+Am29B41Av3f4wDTrkTVy4Zv0pcxKwknkCFubnm7/5DFvL
+	 fpKaHK6vYh0k69La0z0VCl6IMDdCfRRI6v9E7s1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Aric Cyr <aric.cyr@amd.com>,
+	Jun Lei <jun.lei@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Ian Chen <ian.chen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 113/134] s390/cmma: fix handling of swapper_pg_dir and invalid_pg_dir
-Date: Tue,  5 Dec 2023 12:16:25 +0900
-Message-ID: <20231205031542.634391701@linuxfoundation.org>
+Subject: [PATCH 6.6 114/134] drm/amd/display: Refactor edp power control
+Date: Tue,  5 Dec 2023 12:16:26 +0900
+Message-ID: <20231205031542.702773168@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -43,48 +46,257 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Ian Chen <ian.chen@amd.com>
 
-[ Upstream commit 84bb41d5df48868055d159d9247b80927f1f70f9 ]
+[ Upstream commit 45f98fccb1f6895f527bd5f811f23478c2f920f5 ]
 
-If the cmma no-dat feature is available the kernel page tables are walked
-to identify and mark all pages which are used for address translation (all
-region, segment, and page tables). In a subsequent loop all other pages are
-marked as "no-dat" pages with the ESSA instruction.
+[Why & How]
+To organize the edp power control a bit:
 
-This information is visible to the hypervisor, so that the hypervisor can
-optimize purging of guest TLB entries. All pages used for swapper_pg_dir
-and invalid_pg_dir are incorrectly marked as no-dat, which in turn can
-result in incorrect guest TLB flushes.
+1. add flag in dc_link to indicate dc to skip all implicit eDP power control.
+2. add edp_set_panel_power link service for DM to call.
 
-Fix this by marking those pages correctly as being used for DAT.
-
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reviewed-by: Aric Cyr <aric.cyr@amd.com>
+Reviewed-by: Jun Lei <jun.lei@amd.com>
+Acked-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Ian Chen <ian.chen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: b0399e22ada0 ("drm/amd/display: Remove power sequencing check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/mm/page-states.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c      | 21 ++++++++++++++
+ drivers/gpu/drm/amd/display/dc/dc.h           |  4 +++
+ drivers/gpu/drm/amd/display/dc/dc_stream.h    |  1 -
+ .../display/dc/dce110/dce110_hw_sequencer.c   |  2 +-
+ .../drm/amd/display/dc/dcn314/dcn314_hwseq.c  |  3 +-
+ drivers/gpu/drm/amd/display/dc/inc/link.h     |  1 +
+ .../gpu/drm/amd/display/dc/link/link_dpms.c   |  9 +++---
+ .../drm/amd/display/dc/link/link_factory.c    |  1 +
+ .../display/dc/link/protocols/link_dp_phy.c   |  3 +-
+ .../link/protocols/link_edp_panel_control.c   | 29 +++++++++++++++++++
+ .../link/protocols/link_edp_panel_control.h   |  1 +
+ 11 files changed, 66 insertions(+), 9 deletions(-)
 
-diff --git a/arch/s390/mm/page-states.c b/arch/s390/mm/page-states.c
-index 00e7b0876dc50..79a037f49f707 100644
---- a/arch/s390/mm/page-states.c
-+++ b/arch/s390/mm/page-states.c
-@@ -181,6 +181,12 @@ void __init cmma_init_nodat(void)
- 		return;
- 	/* Mark pages used in kernel page tables */
- 	mark_kernel_pgd();
-+	page = virt_to_page(&swapper_pg_dir);
-+	for (i = 0; i < 4; i++)
-+		set_bit(PG_arch_1, &page[i].flags);
-+	page = virt_to_page(&invalid_pg_dir);
-+	for (i = 0; i < 4; i++)
-+		set_bit(PG_arch_1, &page[i].flags);
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 186936ad283a5..a1be93f6385c6 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -5254,3 +5254,24 @@ void dc_query_current_properties(struct dc *dc, struct dc_current_properties *pr
+ 	properties->cursor_size_limit = subvp_in_use ? 64 : dc->caps.max_cursor_size;
+ }
  
- 	/* Set all kernel pages not used for page tables to stable/no-dat */
- 	for_each_mem_pfn_range(i, MAX_NUMNODES, &start, &end, NULL) {
++/**
++ *****************************************************************************
++ * dc_set_edp_power() - DM controls eDP power to be ON/OFF
++ *
++ * Called when DM wants to power on/off eDP.
++ *     Only work on links with flag skip_implict_edp_power_control is set.
++ *
++ *****************************************************************************
++ */
++void dc_set_edp_power(const struct dc *dc, struct dc_link *edp_link,
++				 bool powerOn)
++{
++	if (edp_link->connector_signal != SIGNAL_TYPE_EDP)
++		return;
++
++	if (edp_link->skip_implict_edp_power_control == false)
++		return;
++
++	edp_link->dc->link_srv->edp_set_panel_power(edp_link, powerOn);
++}
++
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index c05e91b257ace..dd7bf31ef6b04 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1578,6 +1578,7 @@ struct dc_link {
+ 	struct phy_state phy_state;
+ 	// BW ALLOCATON USB4 ONLY
+ 	struct dc_dpia_bw_alloc dpia_bw_alloc_config;
++	bool skip_implict_edp_power_control;
+ };
+ 
+ /* Return an enumerated dc_link.
+@@ -1597,6 +1598,9 @@ void dc_get_edp_links(const struct dc *dc,
+ 		struct dc_link **edp_links,
+ 		int *edp_num);
+ 
++void dc_set_edp_power(const struct dc *dc, struct dc_link *edp_link,
++				 bool powerOn);
++
+ /* The function initiates detection handshake over the given link. It first
+  * determines if there are display connections over the link. If so it initiates
+  * detection protocols supported by the connected receiver device. The function
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_stream.h b/drivers/gpu/drm/amd/display/dc/dc_stream.h
+index 3697ea1d14c1b..d5b3e3a32cc6d 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_stream.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_stream.h
+@@ -302,7 +302,6 @@ struct dc_stream_state {
+ 	bool vblank_synchronized;
+ 	bool fpo_in_use;
+ 	struct mall_stream_config mall_stream_config;
+-	bool skip_edp_power_down;
+ };
+ 
+ #define ABM_LEVEL_IMMEDIATE_DISABLE 255
+diff --git a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+index 2a6157555fd1e..9c78e42418f34 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+@@ -1226,7 +1226,7 @@ void dce110_blank_stream(struct pipe_ctx *pipe_ctx)
+ 	struct dce_hwseq *hws = link->dc->hwseq;
+ 
+ 	if (link->local_sink && link->local_sink->sink_signal == SIGNAL_TYPE_EDP) {
+-		if (!stream->skip_edp_power_down)
++		if (!link->skip_implict_edp_power_control)
+ 			hws->funcs.edp_backlight_control(link, false);
+ 		link->dc->hwss.set_abm_immediate_disable(pipe_ctx);
+ 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c
+index 4d2820ffe4682..33a8626bda735 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c
+@@ -476,7 +476,8 @@ void dcn314_disable_link_output(struct dc_link *link,
+ 	struct dmcu *dmcu = dc->res_pool->dmcu;
+ 
+ 	if (signal == SIGNAL_TYPE_EDP &&
+-			link->dc->hwss.edp_backlight_control)
++			link->dc->hwss.edp_backlight_control &&
++			!link->skip_implict_edp_power_control)
+ 		link->dc->hwss.edp_backlight_control(link, false);
+ 	else if (dmcu != NULL && dmcu->funcs->lock_phy)
+ 		dmcu->funcs->lock_phy(dmcu);
+diff --git a/drivers/gpu/drm/amd/display/dc/inc/link.h b/drivers/gpu/drm/amd/display/dc/inc/link.h
+index e3e8c76c17cfa..d7685368140ab 100644
+--- a/drivers/gpu/drm/amd/display/dc/inc/link.h
++++ b/drivers/gpu/drm/amd/display/dc/inc/link.h
+@@ -295,6 +295,7 @@ struct link_service {
+ 	bool (*edp_receiver_ready_T9)(struct dc_link *link);
+ 	bool (*edp_receiver_ready_T7)(struct dc_link *link);
+ 	bool (*edp_power_alpm_dpcd_enable)(struct dc_link *link, bool enable);
++	void (*edp_set_panel_power)(struct dc_link *link, bool powerOn);
+ 
+ 
+ 	/*************************** DP CTS ************************************/
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index 79aef205598b7..28cb1f5a504d1 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -1930,7 +1930,8 @@ static void disable_link_dp(struct dc_link *link,
+ 	dp_disable_link_phy(link, link_res, signal);
+ 
+ 	if (link->connector_signal == SIGNAL_TYPE_EDP) {
+-		if (!link->dc->config.edp_no_power_sequencing)
++		if (!link->dc->config.edp_no_power_sequencing &&
++			!link->skip_implict_edp_power_control)
+ 			link->dc->hwss.edp_power_control(link, false);
+ 	}
+ 
+@@ -2219,7 +2220,7 @@ static enum dc_status enable_link(
+ 	 * link settings. Need to call disable first before enabling at
+ 	 * new link settings.
+ 	 */
+-	if (link->link_status.link_active && !stream->skip_edp_power_down)
++	if (link->link_status.link_active)
+ 		disable_link(link, &pipe_ctx->link_res, pipe_ctx->stream->signal);
+ 
+ 	switch (pipe_ctx->stream->signal) {
+@@ -2338,9 +2339,7 @@ void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
+ 		dc->hwss.disable_stream(pipe_ctx);
+ 	} else {
+ 		dc->hwss.disable_stream(pipe_ctx);
+-		if (!pipe_ctx->stream->skip_edp_power_down) {
+-			disable_link(pipe_ctx->stream->link, &pipe_ctx->link_res, pipe_ctx->stream->signal);
+-		}
++		disable_link(pipe_ctx->stream->link, &pipe_ctx->link_res, pipe_ctx->stream->signal);
+ 	}
+ 
+ 	if (pipe_ctx->stream->timing.flags.DSC) {
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_factory.c b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+index 0895742a31024..e406561c2c237 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_factory.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+@@ -223,6 +223,7 @@ static void construct_link_service_edp_panel_control(struct link_service *link_s
+ 	link_srv->edp_receiver_ready_T9 = edp_receiver_ready_T9;
+ 	link_srv->edp_receiver_ready_T7 = edp_receiver_ready_T7;
+ 	link_srv->edp_power_alpm_dpcd_enable = edp_power_alpm_dpcd_enable;
++	link_srv->edp_set_panel_power = edp_set_panel_power;
+ }
+ 
+ /* link dp cts implements dp compliance test automation protocols and manual
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
+index b7abba55bc2fd..0050e0a06cbc2 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_phy.c
+@@ -73,7 +73,8 @@ void dp_disable_link_phy(struct dc_link *link,
+ {
+ 	struct dc  *dc = link->ctx->dc;
+ 
+-	if (!link->wa_flags.dp_keep_receiver_powered)
++	if (!link->wa_flags.dp_keep_receiver_powered &&
++		!link->skip_implict_edp_power_control)
+ 		dpcd_write_rx_power_ctrl(link, false);
+ 
+ 	dc->hwss.disable_link_output(link, link_res, signal);
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+index 98e715aa6d8e3..24b47fa82f93c 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.c
+@@ -33,6 +33,7 @@
+ #include "link_dp_capability.h"
+ #include "dm_helpers.h"
+ #include "dal_asic_id.h"
++#include "link_dp_phy.h"
+ #include "dce/dmub_psr.h"
+ #include "dc/dc_dmub_srv.h"
+ #include "dce/dmub_replay.h"
+@@ -362,6 +363,34 @@ void edp_panel_backlight_power_on(struct dc_link *link, bool wait_for_hpd)
+ 		link->dc->hwss.edp_backlight_control(link, true);
+ }
+ 
++void edp_set_panel_power(struct dc_link *link, bool powerOn)
++{
++	if (powerOn) {
++		// 1. panel VDD on
++		if (!link->dc->config.edp_no_power_sequencing)
++			link->dc->hwss.edp_power_control(link, true);
++		link->dc->hwss.edp_wait_for_hpd_ready(link, true);
++
++		// 2. panel BL on
++		if (link->dc->hwss.edp_backlight_control)
++			link->dc->hwss.edp_backlight_control(link, true);
++
++		// 3. Rx power on
++		dpcd_write_rx_power_ctrl(link, true);
++	} else {
++		// 3. Rx power off
++		dpcd_write_rx_power_ctrl(link, false);
++
++		// 2. panel BL off
++		if (link->dc->hwss.edp_backlight_control)
++			link->dc->hwss.edp_backlight_control(link, false);
++
++		// 1. panel VDD off
++		if (!link->dc->config.edp_no_power_sequencing)
++			link->dc->hwss.edp_power_control(link, false);
++	}
++}
++
+ bool edp_wait_for_t12(struct dc_link *link)
+ {
+ 	if (link->connector_signal == SIGNAL_TYPE_EDP && link->dc->hwss.edp_wait_for_T12) {
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.h b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.h
+index 0a5bbda8c739c..20f91de852e30 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.h
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_edp_panel_control.h
+@@ -69,4 +69,5 @@ void edp_add_delay_for_T9(struct dc_link *link);
+ bool edp_receiver_ready_T9(struct dc_link *link);
+ bool edp_receiver_ready_T7(struct dc_link *link);
+ bool edp_power_alpm_dpcd_enable(struct dc_link *link, bool enable);
++void edp_set_panel_power(struct dc_link *link, bool powerOn);
+ #endif /* __DC_LINK_EDP_POWER_CONTROL_H__ */
 -- 
 2.42.0
 
