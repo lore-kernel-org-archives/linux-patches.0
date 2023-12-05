@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7566FB0;
-	Tue,  5 Dec 2023 03:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A6A6FB0;
+	Tue,  5 Dec 2023 03:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sv7B4sZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A276C433C8;
-	Tue,  5 Dec 2023 03:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wW9HWzDr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FCB7C433C8;
+	Tue,  5 Dec 2023 03:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747900;
-	bh=L6cNEjVuvHdmzdLOFRxWIjc5O/O+jDuQhybQEtQj3iI=;
+	s=korg; t=1701747903;
+	bh=DLGMhxqAteBLkywi+bzVfdpiLHF2mf8rs2l9hFNERzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sv7B4sZEDDPVLYpjPNcXP5DHm5M84sJZMZpw9etEdj9gRydJjN/INRdxSMPJDs0z0
-	 sbhYwqiDg4UuycOoT9f/umqiGEWcbiuExu711m8xH7/B+v6F0eFhMAUTeqq7FdLRgf
-	 h4ErkuO/WLJB+HUyYRbXsIp5xZ9mAM8XbmZSgwAo=
+	b=wW9HWzDr7fax8vp2Km45FoB0l8zDAf+Bwm884UPj17EuK1PRQwkGHwwc4bmBXA7Dd
+	 B5NlKKyhhvwbkv1ponTUE9Ilp83YuUdE78GDGssV5RIwfcYnjj7LWCZhzdEXrQP+Jo
+	 Ku3HMF6MrkNvAXMuI2+s4XlRFVIKQ3sIai/pA35E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 16/94] amd-xgbe: propagate the correct speed and duplex status
-Date: Tue,  5 Dec 2023 12:16:44 +0900
-Message-ID: <20231205031523.796367309@linuxfoundation.org>
+Subject: [PATCH 5.4 17/94] net: axienet: Fix check for partial TX checksum
+Date: Tue,  5 Dec 2023 12:16:45 +0900
+Message-ID: <20231205031523.846360996@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -44,49 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit 7a2323ac24a50311f64a3a9b54ed5bef5821ecae ]
+[ Upstream commit fd0413bbf8b11f56e8aa842783b0deda0dfe2926 ]
 
-xgbe_get_link_ksettings() does not propagate correct speed and duplex
-information to ethtool during cable unplug. Due to which ethtool reports
-incorrect values for speed and duplex.
+Due to a typo, the code checked the RX checksum feature in the TX path.
 
-Address this by propagating correct information.
-
-Fixes: 7c12aa08779c ("amd-xgbe: Move the PHY support into amd-xgbe")
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/20231122004219.3504219-1-samuel.holland@sifive.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-index a880f10e3e703..d74f45ce06864 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
-@@ -314,10 +314,15 @@ static int xgbe_get_link_ksettings(struct net_device *netdev,
- 
- 	cmd->base.phy_address = pdata->phy.address;
- 
--	cmd->base.autoneg = pdata->phy.autoneg;
--	cmd->base.speed = pdata->phy.speed;
--	cmd->base.duplex = pdata->phy.duplex;
-+	if (netif_carrier_ok(netdev)) {
-+		cmd->base.speed = pdata->phy.speed;
-+		cmd->base.duplex = pdata->phy.duplex;
-+	} else {
-+		cmd->base.speed = SPEED_UNKNOWN;
-+		cmd->base.duplex = DUPLEX_UNKNOWN;
-+	}
- 
-+	cmd->base.autoneg = pdata->phy.autoneg;
- 	cmd->base.port = PORT_NONE;
- 
- 	XGBE_LM_COPY(cmd, supported, lks, supported);
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 0ef806ea18327..bbc1cf288d25f 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -656,7 +656,7 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 		if (lp->features & XAE_FEATURE_FULL_TX_CSUM) {
+ 			/* Tx Full Checksum Offload Enabled */
+ 			cur_p->app0 |= 2;
+-		} else if (lp->features & XAE_FEATURE_PARTIAL_RX_CSUM) {
++		} else if (lp->features & XAE_FEATURE_PARTIAL_TX_CSUM) {
+ 			csum_start_off = skb_transport_offset(skb);
+ 			csum_index_off = csum_start_off + skb->csum_offset;
+ 			/* Tx Partial Checksum Offload Enabled */
 -- 
 2.42.0
 
