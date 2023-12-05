@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCDC6FB1;
-	Tue,  5 Dec 2023 03:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE996FB1;
+	Tue,  5 Dec 2023 03:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDDM8LkK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0552C433C7;
-	Tue,  5 Dec 2023 03:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdPhShPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D59BC433C7;
+	Tue,  5 Dec 2023 03:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747037;
-	bh=BuTYRatyuhl+l05INzKW2NDpL851cI/fxlJzY7csZuk=;
+	s=korg; t=1701747040;
+	bh=ctRONOS0brVrOLzY/0bDIWf//tlJ622M5u7DTIk9Kjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDDM8LkKKdSjOwUFoYknlgEJq3TFFxDvsxgIYlot2H+4oMc44FQa2VZmrzgBg9kHO
-	 bVdMLOk+laEQ+50r/AeVU7SeHLxUBuhdfQJ/3ovqFLptDMZWIGRy/OY86/2Bc05Rpp
-	 6uRthDmL3qbTgsuQ/Q1eBerJIkghJ0qgpYucsfXI=
+	b=kdPhShPRlu6c8r7n8aLfSb/P2MLbc0kx/GKn/EZGiXSfrGAn/DK0+4yJpp+40LjQQ
+	 9p9oOt8PXdL72oScvk1BrLzn4JKIO9jpuxTPsSR2AG/Ik/GtWACGItgw1UVX2DQJG3
+	 Bi+hfbVZE2UiyLWtKbVbjTquMklI6PPOgOi7s6y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 034/107] KVM: PPC: Book3S HV: Fix KVM_RUN clobbering FP/VEC user registers
-Date: Tue,  5 Dec 2023 12:16:09 +0900
-Message-ID: <20231205031533.636252773@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 012/107] mmc: block: Be sure to wait while busy in CQE error recovery
+Date: Tue,  5 Dec 2023 12:15:47 +0900
+Message-ID: <20231205031532.356996598@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -41,47 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit dc158d23b33df9033bcc8e7117e8591dd2f9d125 upstream.
+commit c616696a902987352426fdaeec1b0b3240949e6b upstream.
 
-Before running a guest, the host process (e.g., QEMU) FP/VEC registers
-are saved if they were being used, similarly to when the kernel uses FP
-registers. The guest values are then loaded into regs, and the host
-process registers will be restored lazily when it uses FP/VEC.
+STOP command does not guarantee to wait while busy, but subsequent command
+MMC_CMDQ_TASK_MGMT to discard the queue will fail if the card is busy, so
+be sure to wait by employing mmc_poll_for_busy().
 
-KVM HV has a bug here: the host process registers do get saved, but the
-user MSR bits remain enabled, which indicates the registers are valid
-for the process. After they are clobbered by running the guest, this
-valid indication causes the host process to take on the FP/VEC register
-values of the guest.
-
-Fixes: 34e119c96b2b ("KVM: PPC: Book3S HV P9: Reduce mtmsrd instructions required to save host SPRs")
-Cc: stable@vger.kernel.org # v5.17+
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231122025811.2973-1-npiggin@gmail.com
+Fixes: 72a5af554df8 ("mmc: core: Add support for handling CQE requests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-4-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/process.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mmc/core/core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/powerpc/kernel/process.c
-+++ b/arch/powerpc/kernel/process.c
-@@ -1163,11 +1163,11 @@ void kvmppc_save_user_regs(void)
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -554,6 +554,8 @@ int mmc_cqe_recovery(struct mmc_host *ho
+ 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
+ 	mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
  
- 	usermsr = current->thread.regs->msr;
- 
-+	/* Caller has enabled FP/VEC/VSX/TM in MSR */
- 	if (usermsr & MSR_FP)
--		save_fpu(current);
--
-+		__giveup_fpu(current);
- 	if (usermsr & MSR_VEC)
--		save_altivec(current);
-+		__giveup_altivec(current);
- 
- #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
- 	if (usermsr & MSR_TM) {
++	mmc_poll_for_busy(host->card, MMC_CQE_RECOVERY_TIMEOUT, true, MMC_BUSY_IO);
++
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.opcode       = MMC_CMDQ_TASK_MGMT;
+ 	cmd.arg          = 1; /* Discard entire queue */
 
 
