@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0E26AA0;
-	Tue,  5 Dec 2023 03:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC0D611E;
+	Tue,  5 Dec 2023 03:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayxy4AFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C3CC433C7;
-	Tue,  5 Dec 2023 03:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWdrZJWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D07DC433C8;
+	Tue,  5 Dec 2023 03:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746426;
-	bh=cro1T1Mu5sIqxCijRJAO7PnLliLrXWopztxriZw4Igs=;
+	s=korg; t=1701746428;
+	bh=e6Y8BBDWmFoxHrljY/16lKo3elzNIC6LTdVFfsm2gRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayxy4AFzCYGHx4tBk8hOLnKOdM3xP6wZ1y7agB4pxFha58JLS4YNaOcZaYU6J9gBm
-	 RsGoqSD8JZQwS9giTEdxgAL5pJxaeOVvuwhfQSfBHHIjYl/FwkmO7ALFXKxEwRRzIl
-	 uqx5hJ6ixOcdAbCCLesprdDqZ+W96isL8muY1d24=
+	b=OWdrZJWtDeFMX1E0LgGJSJrxL3UyQZ120QS7g0z8hwb03qbLl2P33AVxzBGMMohva
+	 3MYYDj5E5YaW+ynwsmdmOfKJb34h6oTqzrdcKGKZ7ojmnKN9LNeste7mZnbjeXluez
+	 oaE3mZeAL5oFh6S3HhKcIde47LxirP99p0fu26ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.com>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Rohith Surabattula <rohiths.msft@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	linux-mm@kvack.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 002/134] cifs: Fix FALLOC_FL_ZERO_RANGE by setting i_size if EOF moved
-Date: Tue,  5 Dec 2023 12:14:34 +0900
-Message-ID: <20231205031535.347165085@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 020/134] ALSA: hda/realtek: Add supported ALC257 for ChromeOS
+Date: Tue,  5 Dec 2023 12:14:52 +0900
+Message-ID: <20231205031536.622330242@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -47,55 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 83d5518b124dfd605f10a68128482c839a239f9d upstream.
+commit cae2bdb579ecc9d4219c58a7d3fde1958118dc1d upstream.
 
-Fix the cifs filesystem implementations of FALLOC_FL_ZERO_RANGE, in
-smb3_zero_range(), to set i_size after extending the file on the server.
+ChromeOS want to support ALC257.
+Add codec ID to some relation function.
 
-Fixes: 72c419d9b073 ("cifs: fix smb3_zero_range so it can expand the file-size when required")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Howells <dhowells@redhat.com>
-Acked-by: Paulo Alcantara <pc@manguebit.com>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Rohith Surabattula <rohiths.msft@gmail.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: linux-mm@kvack.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/99a88a7dbdb045fd9d934abeb6cec15f@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3305,6 +3305,7 @@ static long smb3_zero_range(struct file
- 	struct inode *inode = file_inode(file);
- 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
- 	struct cifsFileInfo *cfile = file->private_data;
-+	unsigned long long new_size;
- 	long rc;
- 	unsigned int xid;
- 	__le64 eof;
-@@ -3335,10 +3336,15 @@ static long smb3_zero_range(struct file
- 	/*
- 	 * do we also need to change the size of the file?
- 	 */
--	if (keep_size == false && i_size_read(inode) < offset + len) {
--		eof = cpu_to_le64(offset + len);
-+	new_size = offset + len;
-+	if (keep_size == false && (unsigned long long)i_size_read(inode) < new_size) {
-+		eof = cpu_to_le64(new_size);
- 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
- 				  cfile->fid.volatile_fid, cfile->pid, &eof);
-+		if (rc >= 0) {
-+			truncate_setsize(inode, new_size);
-+			fscache_resize_cookie(cifs_inode_cookie(inode), new_size);
-+		}
- 	}
- 
-  zero_range_exit:
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3264,6 +3264,7 @@ static void alc_disable_headset_jack_key
+ 	case 0x10ec0230:
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 		alc_write_coef_idx(codec, 0x48, 0x0);
+ 		alc_update_coef_idx(codec, 0x49, 0x0045, 0x0);
+@@ -3293,6 +3294,7 @@ static void alc_enable_headset_jack_key(
+ 	case 0x10ec0230:
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 		alc_write_coef_idx(codec, 0x48, 0xd011);
+ 		alc_update_coef_idx(codec, 0x49, 0x007f, 0x0045);
+@@ -6504,6 +6506,7 @@ static void alc_combo_jack_hp_jd_restart
+ 	case 0x10ec0236:
+ 	case 0x10ec0255:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 		alc_update_coef_idx(codec, 0x1b, 0x8000, 1 << 15); /* Reset HP JD */
+ 		alc_update_coef_idx(codec, 0x1b, 0x8000, 0 << 15);
 
 
