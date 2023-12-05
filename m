@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A106FB0;
-	Tue,  5 Dec 2023 03:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77DF6FB0;
+	Tue,  5 Dec 2023 03:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+8lo3Co"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04C7C433C8;
-	Tue,  5 Dec 2023 03:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyx3htMl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559ACC433C7;
+	Tue,  5 Dec 2023 03:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747963;
-	bh=tNK0gOlORZxIckMb03UbHQeJ7toTh6kpv9zvnTr1xB8=;
+	s=korg; t=1701747965;
+	bh=VHA0Cy7CfoInslozdMx+oDGIez9VTYjR8KTuTCrTmrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+8lo3CoqyOWFz8ia4WGJq7BzKkAW8+IZpFogtDG3rZNd+0YXJzXFeBKUjiKBL4sA
-	 ycIazJJHdeWwOGzv81IileyQCPqoy8CaaShKmluZZR6DaMObzvIABktKNNRMWzPrP/
-	 uH2OfMSHrPx/y31qvc1eqALztBohpwvwsUWYDVBs=
+	b=zyx3htMlPVKAAR5EYxS8RJMLWoN5qSbpCb70NrXuth3TvaBYapFwgfecdHZHAiI12
+	 9obcQ5CJ1zgpuxPMfKgN/8dmbj6SwUoAHan2jxK9Y9USevvsxk+r68RBAqvCnQDtcJ
+	 WGEFRzcdB1DjBQuVnDrSspFzigzVUmp68ZKf+WzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timothy Pearson <tpearson@raptorengineering.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.4 62/94] powerpc: Dont clobber f0/vs0 during fp|altivec register save
-Date: Tue,  5 Dec 2023 12:17:30 +0900
-Message-ID: <20231205031526.299881923@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.4 63/94] btrfs: add dmesg output for first mount and last unmount of a filesystem
+Date: Tue,  5 Dec 2023 12:17:31 +0900
+Message-ID: <20231205031526.359703653@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -42,155 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timothy Pearson <tpearson@raptorengineering.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 5e1d824f9a283cbf90f25241b66d1f69adb3835b upstream.
+commit 2db313205f8b96eea467691917138d646bb50aef upstream.
 
-During floating point and vector save to thread data f0/vs0 are
-clobbered by the FPSCR/VSCR store routine. This has been obvserved to
-lead to userspace register corruption and application data corruption
-with io-uring.
+There is a feature request to add dmesg output when unmounting a btrfs.
+There are several alternative methods to do the same thing, but with
+their own problems:
 
-Fix it by restoring f0/vs0 after FPSCR/VSCR store has completed for
-all the FP, altivec, VMX register save paths.
+- Use eBPF to watch btrfs_put_super()/open_ctree()
+  Not end user friendly, they have to dip their head into the source
+  code.
 
-Tested under QEMU in kvm mode, running on a Talos II workstation with
-dual POWER9 DD2.2 CPUs.
+- Watch for directory /sys/fs/<uuid>/
+  This is way more simple, but still requires some simple device -> uuid
+  lookups.  And a script needs to use inotify to watch /sys/fs/.
 
-Additional detail (mpe):
+Compared to all these, directly outputting the information into dmesg
+would be the most simple one, with both device and UUID included.
 
-Typically save_fpu() is called from __giveup_fpu() which saves the FP
-regs and also *turns off FP* in the tasks MSR, meaning the kernel will
-reload the FP regs from the thread struct before letting the task use FP
-again. So in that case save_fpu() is free to clobber f0 because the FP
-regs no longer hold live values for the task.
+And since we're here, also add the output when mounting a filesystem for
+the first time for parity. A more fine grained monitoring of subvolume
+mounts should be done by another layer, like audit.
 
-There is another case though, which is the path via:
-  sys_clone()
-    ...
-    copy_process()
-      dup_task_struct()
-        arch_dup_task_struct()
-          flush_all_to_thread()
-            save_all()
+Now mounting a btrfs with all default mkfs options would look like this:
 
-That path saves the FP regs but leaves them live. That's meant as an
-optimisation for a process that's using FP/VSX and then calls fork(),
-leaving the regs live means the parent process doesn't have to take a
-fault after the fork to get its FP regs back. The optimisation was added
-in commit 8792468da5e1 ("powerpc: Add the ability to save FPU without
-giving it up").
+  [81.906566] BTRFS info (device dm-8): first mount of filesystem 633b5c16-afe3-4b79-b195-138fe145e4f2
+  [81.907494] BTRFS info (device dm-8): using crc32c (crc32c-intel) checksum algorithm
+  [81.908258] BTRFS info (device dm-8): using free space tree
+  [81.912644] BTRFS info (device dm-8): auto enabling async discard
+  [81.913277] BTRFS info (device dm-8): checking UUID tree
+  [91.668256] BTRFS info (device dm-8): last unmount of filesystem 633b5c16-afe3-4b79-b195-138fe145e4f2
 
-That path does clobber f0, but f0 is volatile across function calls,
-and typically programs reach copy_process() from userspace via a syscall
-wrapper function. So in normal usage f0 being clobbered across a
-syscall doesn't cause visible data corruption.
-
-But there is now a new path, because io-uring can call copy_process()
-via create_io_thread() from the signal handling path. That's OK if the
-signal is handled as part of syscall return, but it's not OK if the
-signal is handled due to some other interrupt.
-
-That path is:
-
-interrupt_return_srr_user()
-  interrupt_exit_user_prepare()
-    interrupt_exit_user_prepare_main()
-      do_notify_resume()
-        get_signal()
-          task_work_run()
-            create_worker_cb()
-              create_io_worker()
-                copy_process()
-                  dup_task_struct()
-                    arch_dup_task_struct()
-                      flush_all_to_thread()
-                        save_all()
-                          if (tsk->thread.regs->msr & MSR_FP)
-                            save_fpu()
-                            # f0 is clobbered and potentially live in userspace
-
-Note the above discussion applies equally to save_altivec().
-
-Fixes: 8792468da5e1 ("powerpc: Add the ability to save FPU without giving it up")
-Cc: stable@vger.kernel.org # v4.6+
-Closes: https://lore.kernel.org/all/480932026.45576726.1699374859845.JavaMail.zimbra@raptorengineeringinc.com/
-Closes: https://lore.kernel.org/linuxppc-dev/480221078.47953493.1700206777956.JavaMail.zimbra@raptorengineeringinc.com/
-Tested-by: Timothy Pearson <tpearson@raptorengineering.com>
-Tested-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Timothy Pearson <tpearson@raptorengineering.com>
-[mpe: Reword change log to describe exact path of corruption & other minor tweaks]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/1921539696.48534988.1700407082933.JavaMail.zimbra@raptorengineeringinc.com
+CC: stable@vger.kernel.org # 5.4+
+Link: https://github.com/kdave/btrfs-progs/issues/689
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ update changelog ]
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/fpu.S    |   13 +++++++++++++
- arch/powerpc/kernel/vector.S |    2 ++
- 2 files changed, 15 insertions(+)
+ fs/btrfs/disk-io.c |    1 +
+ fs/btrfs/super.c   |    5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/fpu.S
-+++ b/arch/powerpc/kernel/fpu.S
-@@ -24,6 +24,15 @@
- #include <asm/feature-fixups.h>
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2829,6 +2829,7 @@ int open_ctree(struct super_block *sb,
+ 		goto fail_alloc;
+ 	}
  
- #ifdef CONFIG_VSX
-+#define __REST_1FPVSR(n,c,base)						\
-+BEGIN_FTR_SECTION							\
-+	b	2f;							\
-+END_FTR_SECTION_IFSET(CPU_FTR_VSX);					\
-+	REST_FPR(n,base);						\
-+	b	3f;							\
-+2:	REST_VSR(n,c,base);						\
-+3:
++	btrfs_info(fs_info, "first mount of filesystem %pU", disk_super->fsid);
+ 	/*
+ 	 * Verify the type first, if that or the checksum value are
+ 	 * corrupted, we'll find out
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -291,7 +291,10 @@ void __btrfs_panic(struct btrfs_fs_info
+ 
+ static void btrfs_put_super(struct super_block *sb)
+ {
+-	close_ctree(btrfs_sb(sb));
++	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
 +
- #define __REST_32FPVSRS(n,c,base)					\
- BEGIN_FTR_SECTION							\
- 	b	2f;							\
-@@ -42,9 +51,11 @@ END_FTR_SECTION_IFSET(CPU_FTR_VSX);
- 2:	SAVE_32VSRS(n,c,base);						\
- 3:
- #else
-+#define __REST_1FPVSR(n,b,base)		REST_FPR(n, base)
- #define __REST_32FPVSRS(n,b,base)	REST_32FPRS(n, base)
- #define __SAVE_32FPVSRS(n,b,base)	SAVE_32FPRS(n, base)
- #endif
-+#define REST_1FPVSR(n,c,base)   __REST_1FPVSR(n,__REG_##c,__REG_##base)
- #define REST_32FPVSRS(n,c,base) __REST_32FPVSRS(n,__REG_##c,__REG_##base)
- #define SAVE_32FPVSRS(n,c,base) __SAVE_32FPVSRS(n,__REG_##c,__REG_##base)
++	btrfs_info(fs_info, "last unmount of filesystem %pU", fs_info->fs_devices->fsid);
++	close_ctree(fs_info);
+ }
  
-@@ -68,6 +79,7 @@ _GLOBAL(store_fp_state)
- 	SAVE_32FPVSRS(0, R4, R3)
- 	mffs	fr0
- 	stfd	fr0,FPSTATE_FPSCR(r3)
-+	REST_1FPVSR(0, R4, R3)
- 	blr
- EXPORT_SYMBOL(store_fp_state)
- 
-@@ -132,6 +144,7 @@ _GLOBAL(save_fpu)
- 2:	SAVE_32FPVSRS(0, R4, R6)
- 	mffs	fr0
- 	stfd	fr0,FPSTATE_FPSCR(r6)
-+	REST_1FPVSR(0, R4, R6)
- 	blr
- 
- /*
---- a/arch/powerpc/kernel/vector.S
-+++ b/arch/powerpc/kernel/vector.S
-@@ -32,6 +32,7 @@ _GLOBAL(store_vr_state)
- 	mfvscr	v0
- 	li	r4, VRSTATE_VSCR
- 	stvx	v0, r4, r3
-+	lvx	v0, 0, r3
- 	blr
- EXPORT_SYMBOL(store_vr_state)
- 
-@@ -102,6 +103,7 @@ _GLOBAL(save_altivec)
- 	mfvscr	v0
- 	li	r4,VRSTATE_VSCR
- 	stvx	v0,r4,r7
-+	lvx	v0,0,r7
- 	blr
- 
- #ifdef CONFIG_VSX
+ enum {
 
 
