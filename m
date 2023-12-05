@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43746FAF;
-	Tue,  5 Dec 2023 03:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89996110;
+	Tue,  5 Dec 2023 03:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErIDDgVD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0ECC433C7;
-	Tue,  5 Dec 2023 03:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JokQIeQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A85C433C8;
+	Tue,  5 Dec 2023 03:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746701;
-	bh=+m3T8h7cGCUevYURK73UrdYHDGfnR+L/qIkYe2x8fb0=;
+	s=korg; t=1701746704;
+	bh=Y5S1/hE6TBPe0EnCJy+Xn5TYv8wwDBGo/OnCfiv2bFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErIDDgVDrk/3SV8p3MJ4uWK8Y9Ieg1FJ5g9adhBT0llbQw/k68ZYKvekXbBz3r7ou
-	 zcoEf+/l8iWHWtDWqN11LpnOvujC/jjXSPzN+Q9d4IeBpcOGiJ42eE7yoQISnwFaC0
-	 WYxLV2IMJzfEufWaooHvdCJjIRjgaxEz0xoTVa7w=
+	b=JokQIeQvwyzzdUkdMA6fb38z+PK5xd5oAB3nrKavnCcxEzpFeBkLWm5C5GZ8JMFNO
+	 /zhSJ8mjUIPr2D1+SDPjzaijSO04YJc5pP+eaiLy4rjENElDOV0hTCGTX0/WgifUNB
+	 Dk6526nWkCTZ8WewZ9IDGVd8q7Z2r1sEpT2bgToM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wyes Karny <wyes.karny@amd.com>,
-	Ayush Jain <ayush.jain3@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/134] cpufreq/amd-pstate: Only print supported EPP values for performance governor
-Date: Tue,  5 Dec 2023 12:16:36 +0900
-Message-ID: <20231205031543.307235753@linuxfoundation.org>
+Subject: [PATCH 6.6 107/134] net: ravb: Use pm_runtime_resume_and_get()
+Date: Tue,  5 Dec 2023 12:16:19 +0900
+Message-ID: <20231205031542.238479709@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -44,66 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ayush Jain <ayush.jain3@amd.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 142c169b31beb364ef39385b4e88735bd51d37fe ]
+[ Upstream commit 88b74831faaee455c2af380382d979fc38e79270 ]
 
-show_energy_performance_available_preferences() to show only supported
-values which is performance in performance governor policy.
+pm_runtime_get_sync() may return an error. In case it returns with an error
+dev->power.usage_count needs to be decremented. pm_runtime_resume_and_get()
+takes care of this. Thus use it.
 
--------Before--------
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_driver
-amd-pstate-epp
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-performance
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/energy_performance_preference
-performance
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/energy_performance_available_preferences
-default performance balance_performance balance_power power
-
--------After--------
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_driver
-amd-pstate-epp
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-performance
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/energy_performance_preference
-performance
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/energy_performance_available_preferences
-performance
-
-Fixes: ffa5096a7c33 ("cpufreq: amd-pstate: implement Pstate EPP support for the AMD processors")
-Suggested-by: Wyes Karny <wyes.karny@amd.com>
-Signed-off-by: Ayush Jain <ayush.jain3@amd.com>
-Reviewed-by: Wyes Karny <wyes.karny@amd.com>
-Acked-by: Huang Rui <ray.huang@amd.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 3313d1d2c6ddf..1f6186475715e 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -882,11 +882,16 @@ static ssize_t show_energy_performance_available_preferences(
- {
- 	int i = 0;
- 	int offset = 0;
-+	struct amd_cpudata *cpudata = policy->driver_data;
-+
-+	if (cpudata->policy == CPUFREQ_POLICY_PERFORMANCE)
-+		return sysfs_emit_at(buf, offset, "%s\n",
-+				energy_perf_strings[EPP_INDEX_PERFORMANCE]);
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index f76ccb543838c..cdcac7d1f93a0 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -2659,7 +2659,9 @@ static int ravb_probe(struct platform_device *pdev)
+ 		goto out_free_netdev;
  
- 	while (energy_perf_strings[i] != NULL)
- 		offset += sysfs_emit_at(buf, offset, "%s ", energy_perf_strings[i++]);
+ 	pm_runtime_enable(&pdev->dev);
+-	pm_runtime_get_sync(&pdev->dev);
++	error = pm_runtime_resume_and_get(&pdev->dev);
++	if (error < 0)
++		goto out_rpm_disable;
  
--	sysfs_emit_at(buf, offset, "\n");
-+	offset += sysfs_emit_at(buf, offset, "\n");
- 
- 	return offset;
- }
+ 	if (info->multi_irqs) {
+ 		if (info->err_mgmt_irqs)
+@@ -2885,6 +2887,7 @@ static int ravb_probe(struct platform_device *pdev)
+ 	clk_disable_unprepare(priv->refclk);
+ out_release:
+ 	pm_runtime_put(&pdev->dev);
++out_rpm_disable:
+ 	pm_runtime_disable(&pdev->dev);
+ 	reset_control_assert(rstc);
+ out_free_netdev:
 -- 
 2.42.0
 
