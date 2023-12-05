@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFC86AA0;
-	Tue,  5 Dec 2023 03:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7069B611E;
+	Tue,  5 Dec 2023 03:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qK59rnS0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52373C433C7;
-	Tue,  5 Dec 2023 03:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLtLcwq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC598C433C8;
+	Tue,  5 Dec 2023 03:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746558;
-	bh=QHfxNrTDbzlSsC3tOtofhqw4eba+DsC3W/AA4FEmKss=;
+	s=korg; t=1701746561;
+	bh=Yr12GtE8xkSbq8noYz6mWJoAa7idNC3wfZHYY0dAzwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qK59rnS06TugQbDcg1qMd2KP2cgA9ivHobaKJINglI6EuJDs/kxd5sTdt3jYK0H8j
-	 8qN+hx3Y37pVPXsYTnydxFYenHTaOT6oytI9jxeDPlGhPAub0LvavXl6NKo7M53U3W
-	 sDp0ZdYSHnpnMD+Ru9dKr2rNcVljj0+z8KlgpSwE=
+	b=cLtLcwq51sShDsPurePQxtpGww3OmXn51E4B0j5WesX/xWei6GYiLD3k00JtK/LgQ
+	 uhcxgsRijbd+s/FNuNpISXqGVyLjUfkuBq9TCnG1uR3zpmlAQxYpe+xvZHAXT9PO+z
+	 LpPiiAUUrE/SkszNgkwNe1JYDBRtFr38HQOYi0gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 070/134] btrfs: fix 64bit compat send ioctl arguments not initializing version member
-Date: Tue,  5 Dec 2023 12:15:42 +0900
-Message-ID: <20231205031539.954619160@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 071/134] io_uring: enable io_mem_alloc/free to be used in other parts
+Date: Tue,  5 Dec 2023 12:15:43 +0900
+Message-ID: <20231205031540.008875217@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -41,36 +40,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 5de0434bc064606d6b7467ec3e5ad22963a18c04 upstream.
+commit edecf1689768452ba1a64b7aaf3a47a817da651a upstream.
 
-When the send protocol versioning was added in 5.16 e77fbf990316
-("btrfs: send: prepare for v2 protocol"), the 32/64bit compat code was
-not updated (added by 2351f431f727 ("btrfs: fix send ioctl on 32bit with
-64bit kernel")), missing the version struct member. The compat code is
-probably rarely used, nobody reported any bugs.
+In preparation for using these helpers, make them non-static and add
+them to our internal header.
 
-Found by tool https://github.com/jirislaby/clang-struct .
-
-Fixes: e77fbf990316 ("btrfs: send: prepare for v2 protocol")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io_uring.c |    4 ++--
+ io_uring/io_uring.h |    3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4351,6 +4351,7 @@ static int _btrfs_ioctl_send(struct inod
- 		arg->clone_sources = compat_ptr(args32.clone_sources);
- 		arg->parent_root = args32.parent_root;
- 		arg->flags = args32.flags;
-+		arg->version = args32.version;
- 		memcpy(arg->reserved, args32.reserved,
- 		       sizeof(args32.reserved));
- #else
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2659,7 +2659,7 @@ static int io_cqring_wait(struct io_ring
+ 	return READ_ONCE(rings->cq.head) == READ_ONCE(rings->cq.tail) ? ret : 0;
+ }
+ 
+-static void io_mem_free(void *ptr)
++void io_mem_free(void *ptr)
+ {
+ 	if (!ptr)
+ 		return;
+@@ -2771,7 +2771,7 @@ static void io_rings_free(struct io_ring
+ 	}
+ }
+ 
+-static void *io_mem_alloc(size_t size)
++void *io_mem_alloc(size_t size)
+ {
+ 	gfp_t gfp = GFP_KERNEL_ACCOUNT | __GFP_ZERO | __GFP_NOWARN | __GFP_COMP;
+ 	void *ret;
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -86,6 +86,9 @@ bool __io_alloc_req_refill(struct io_rin
+ bool io_match_task_safe(struct io_kiocb *head, struct task_struct *task,
+ 			bool cancel_all);
+ 
++void *io_mem_alloc(size_t size);
++void io_mem_free(void *ptr);
++
+ #if defined(CONFIG_PROVE_LOCKING)
+ static inline void io_lockdep_assert_cq_locked(struct io_ring_ctx *ctx)
+ {
 
 
