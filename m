@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724CA6FAF;
-	Tue,  5 Dec 2023 03:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FED6110;
+	Tue,  5 Dec 2023 03:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxdHWtRn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D11C433C8;
-	Tue,  5 Dec 2023 03:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCm4IPq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18F3C433C8;
+	Tue,  5 Dec 2023 03:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746689;
-	bh=ul/emZVqheaehR4hmy0VgBgSwEBGaOS9HD6fIyLhBfc=;
+	s=korg; t=1701746692;
+	bh=CeOl36ZOAEJenHca22SHjeMIcuG6qezHJe/w38mHhws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxdHWtRnEWU5Ap6yyAzwrxYfBrMCitzyPmgRTTpduxmj1fY9sQzJGwV1u7QuSwgG5
-	 FJSuNeK+VP5T7yw3daRMNUKSgVJiz6ObLB9JBo7yVdYa6Xlt3L/eiBWTXlmrfRTmjA
-	 5vc1N2jlBqpvhAlIsRkIOi2MExvjRC/fOpofvgQs=
+	b=tCm4IPq06TKCeglXfablkSkORBSmFblWD+oZFe3ig59NIvLqwP5If5Q7q1mUNe79b
+	 YxQjzw0OOtaw/cHnvsSMz7HzPfOKb3S6p+TDH5Ii4ChT1nd3a/EtM9TkWzkLxn4+04
+	 jTv1hXRWNHybLnYGUw/Ga0/pthv+UGnF9bLB7zQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	xiazhengqiao <xiazhengqiao@huaqin.corp-partner.google.com>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/134] drm/i915/gsc: Mark internal GSC engine with reserved uabi class
-Date: Tue,  5 Dec 2023 12:16:32 +0900
-Message-ID: <20231205031543.071408679@linuxfoundation.org>
+Subject: [PATCH 6.6 121/134] drm/panel: starry-2081101qfh032011-53g: Fine tune the panel power sequence
+Date: Tue,  5 Dec 2023 12:16:33 +0900
+Message-ID: <20231205031543.126018824@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -45,117 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+From: xiazhengqiao <xiazhengqiao@huaqin.corp-partner.google.com>
 
-[ Upstream commit 503579448db93f9fbcc93cd99a1f2d5aa4b2cda6 ]
+[ Upstream commit fc1ccc16271a0526518f19f460fed63d575a8a42 ]
 
-The GSC CS is not exposed to the user, so we skipped assigning a uabi
-class number for it. However, the trace logs use the uabi class and
-instance to identify the engine, so leaving uabi class unset makes the
-GSC CS show up as the RCS in those logs.
+For the "starry, 2081101qfh032011-53g" panel, it is stipulated in the
+panel spec that MIPI needs to keep the LP11 state before the
+lcm_reset pin is pulled high.
 
-Given that the engine is not exposed to the user, we can't add a new
-case in the uabi enum, so we insted internally define a kernel
-internal class as -1.
-
-At the same time remove special handling for the name and complete
-the uabi_classes array so internal class is automatically correctly
-assigned.
-
-Engine will show as 65535:0 other0 in the logs/traces which should
-be unique enough.
-
-v2:
- * Fix uabi class u8 vs u16 type confusion.
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Fixes: 194babe26bdc ("drm/i915/mtl: don't expose GSC command streamer to the user")
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231116084456.291533-1-tvrtko.ursulin@linux.intel.com
-(cherry picked from commit dfed6b58d54f3a5d7e6bc1fb060e2c936330eba2)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixes: 6069b66cd962 ("drm/panel: support for STARRY 2081101QFH032011-53G MIPI-DSI panel")
+Signed-off-by: xiazhengqiao <xiazhengqiao@huaqin.corp-partner.google.com>
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+Link: https://lore.kernel.org/r/20231129084115.7918-1-xiazhengqiao@huaqin.corp-partner.google.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231129084115.7918-1-xiazhengqiao@huaqin.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_user.c | 39 ++++++++++++---------
- 1 file changed, 22 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_user.c b/drivers/gpu/drm/i915/gt/intel_engine_user.c
-index dcedff41a825f..d304e0a948f0d 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_user.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_user.c
-@@ -42,12 +42,15 @@ void intel_engine_add_user(struct intel_engine_cs *engine)
- 		  (struct llist_head *)&engine->i915->uabi_engines);
- }
- 
--static const u8 uabi_classes[] = {
-+#define I915_NO_UABI_CLASS ((u16)(-1))
-+
-+static const u16 uabi_classes[] = {
- 	[RENDER_CLASS] = I915_ENGINE_CLASS_RENDER,
- 	[COPY_ENGINE_CLASS] = I915_ENGINE_CLASS_COPY,
- 	[VIDEO_DECODE_CLASS] = I915_ENGINE_CLASS_VIDEO,
- 	[VIDEO_ENHANCEMENT_CLASS] = I915_ENGINE_CLASS_VIDEO_ENHANCE,
- 	[COMPUTE_CLASS] = I915_ENGINE_CLASS_COMPUTE,
-+	[OTHER_CLASS] = I915_NO_UABI_CLASS, /* Not exposed to users, no uabi class. */
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index d76a8ca9c40f8..29e63cdfb8954 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -2104,6 +2104,7 @@ static const struct panel_desc starry_qfh032011_53g_desc = {
+ 	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
+ 		      MIPI_DSI_MODE_LPM,
+ 	.init_cmds = starry_qfh032011_53g_init_cmd,
++	.lp11_before_reset = true,
  };
  
- static int engine_cmp(void *priv, const struct list_head *A,
-@@ -202,6 +205,7 @@ static void engine_rename(struct intel_engine_cs *engine, const char *name, u16
- 
- void intel_engines_driver_register(struct drm_i915_private *i915)
- {
-+	u16 name_instance, other_instance = 0;
- 	struct legacy_ring ring = {};
- 	struct list_head *it, *next;
- 	struct rb_node **p, *prev;
-@@ -219,27 +223,28 @@ void intel_engines_driver_register(struct drm_i915_private *i915)
- 		if (intel_gt_has_unrecoverable_error(engine->gt))
- 			continue; /* ignore incomplete engines */
- 
--		/*
--		 * We don't want to expose the GSC engine to the users, but we
--		 * still rename it so it is easier to identify in the debug logs
--		 */
--		if (engine->id == GSC0) {
--			engine_rename(engine, "gsc", 0);
--			continue;
--		}
--
- 		GEM_BUG_ON(engine->class >= ARRAY_SIZE(uabi_classes));
- 		engine->uabi_class = uabi_classes[engine->class];
-+		if (engine->uabi_class == I915_NO_UABI_CLASS) {
-+			name_instance = other_instance++;
-+		} else {
-+			GEM_BUG_ON(engine->uabi_class >=
-+				   ARRAY_SIZE(i915->engine_uabi_class_count));
-+			name_instance =
-+				i915->engine_uabi_class_count[engine->uabi_class]++;
-+		}
-+		engine->uabi_instance = name_instance;
- 
--		GEM_BUG_ON(engine->uabi_class >=
--			   ARRAY_SIZE(i915->engine_uabi_class_count));
--		engine->uabi_instance =
--			i915->engine_uabi_class_count[engine->uabi_class]++;
--
--		/* Replace the internal name with the final user facing name */
-+		/*
-+		 * Replace the internal name with the final user and log facing
-+		 * name.
-+		 */
- 		engine_rename(engine,
- 			      intel_engine_class_repr(engine->class),
--			      engine->uabi_instance);
-+			      name_instance);
-+
-+		if (engine->uabi_class == I915_NO_UABI_CLASS)
-+			continue;
- 
- 		rb_link_node(&engine->uabi_node, prev, p);
- 		rb_insert_color(&engine->uabi_node, &i915->uabi_engines);
+ static const struct drm_display_mode starry_himax83102_j02_default_mode = {
 -- 
 2.42.0
 
