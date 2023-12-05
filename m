@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85415C8F4;
-	Tue,  5 Dec 2023 03:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F6E6FB0;
+	Tue,  5 Dec 2023 03:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAmwvafp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F5CC433CD;
-	Tue,  5 Dec 2023 03:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GU4phIkL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C64C433C7;
+	Tue,  5 Dec 2023 03:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747853;
-	bh=Zrq0+hzgxtzCPswBIEddcB/GdzKpDgmE+KpVhgkxP4o=;
+	s=korg; t=1701747855;
+	bh=5QlOjaIoWRyJ0lKNtdI45DZO/gRNgbf03+w2yCwThYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YAmwvafpfKhWMv69Gmv85grZT7RZq27/+RxwOp+ctl/zp7ji9xAW4QHteoCeEV0ts
-	 v6FxeTV55Mc/h0CY+Bc40Y8Z1PPiHYWNLp+NFljvY8zJlXg72YAugOJy8jZxnKZ/UV
-	 JShnaP5VRLVLxZZUARsbbU1ZQeJiiySNzf6u1i68=
+	b=GU4phIkLKaD+d6T+7Cn21ONDGsnUFovUIb4FtC+hrPbYkbBXOX7cjg9KN4B1A8y6g
+	 dk74Cu0mnVIJUWT/MTc+nfJhaA8dhuakoX3jK9WUDLGCFRa9QvvjO7jq4fDGo/bHRW
+	 tWCeyl4BiYWnaDmrgk78f+aax8MQIImycYHuqg9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
 	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 23/94] ext4: add a new helper to check if es must be kept
-Date: Tue,  5 Dec 2023 12:16:51 +0900
-Message-ID: <20231205031524.218064275@linuxfoundation.org>
+Subject: [PATCH 5.4 24/94] ext4: factor out __es_alloc_extent() and __es_free_extent()
+Date: Tue,  5 Dec 2023 12:16:52 +0900
+Message-ID: <20231205031524.265497504@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -45,107 +45,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 9649eb18c6288f514cacffdd699d5cd999c2f8f6 ]
+[ Upstream commit 73a2f033656be11298912201ad50615307b4477a ]
 
-In the extent status tree, we have extents which we can just drop without
-issues and extents we must not drop - this depends on the extent's status
-- currently ext4_es_is_delayed() extents must stay, others may be dropped.
+Factor out __es_alloc_extent() and __es_free_extent(), which only allocate
+and free extent_status in these two helpers.
 
-A helper function is added to help determine if the current extent can
-be dropped, although only ext4_es_is_delayed() extents cannot be dropped
-currently.
+The ext4_es_alloc_extent() function is split into __es_alloc_extent()
+and ext4_es_init_extent(). In __es_alloc_extent() we allocate memory using
+GFP_KERNEL | __GFP_NOFAIL | __GFP_ZERO if the memory allocation cannot
+fail, otherwise we use GFP_ATOMIC. and the ext4_es_init_extent() is used to
+initialize extent_status and update related variables after a successful
+allocation.
 
-Suggested-by: Jan Kara <jack@suse.cz>
+This is to prepare for the use of pre-allocated extent_status later.
+
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230424033846.4732-3-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20230424033846.4732-4-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: 8e387c89e96b ("ext4: make sure allocate pending entry not fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents_status.c | 34 +++++++++++++++++++++-------------
- 1 file changed, 21 insertions(+), 13 deletions(-)
+ fs/ext4/extents_status.c | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
 diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index cfd05e016f181..59812c5bbe1ba 100644
+index 59812c5bbe1ba..dfabb15afd3dd 100644
 --- a/fs/ext4/extents_status.c
 +++ b/fs/ext4/extents_status.c
-@@ -439,6 +439,19 @@ static void ext4_es_list_del(struct inode *inode)
- 	spin_unlock(&sbi->s_es_lock);
+@@ -452,14 +452,17 @@ static inline bool ext4_es_must_keep(struct extent_status *es)
+ 	return false;
  }
  
-+/*
-+ * Returns true if we cannot fail to allocate memory for this extent_status
-+ * entry and cannot reclaim it until its status changes.
-+ */
-+static inline bool ext4_es_must_keep(struct extent_status *es)
+-static struct extent_status *
+-ext4_es_alloc_extent(struct inode *inode, ext4_lblk_t lblk, ext4_lblk_t len,
+-		     ext4_fsblk_t pblk)
++static inline struct extent_status *__es_alloc_extent(bool nofail)
 +{
-+	/* fiemap, bigalloc, and seek_data/hole need to use it. */
-+	if (ext4_es_is_delayed(es))
-+		return true;
++	if (!nofail)
++		return kmem_cache_alloc(ext4_es_cachep, GFP_ATOMIC);
 +
-+	return false;
++	return kmem_cache_zalloc(ext4_es_cachep, GFP_KERNEL | __GFP_NOFAIL);
 +}
 +
- static struct extent_status *
- ext4_es_alloc_extent(struct inode *inode, ext4_lblk_t lblk, ext4_lblk_t len,
- 		     ext4_fsblk_t pblk)
-@@ -451,10 +464,8 @@ ext4_es_alloc_extent(struct inode *inode, ext4_lblk_t lblk, ext4_lblk_t len,
++static void ext4_es_init_extent(struct inode *inode, struct extent_status *es,
++		ext4_lblk_t lblk, ext4_lblk_t len, ext4_fsblk_t pblk)
+ {
+-	struct extent_status *es;
+-	es = kmem_cache_alloc(ext4_es_cachep, GFP_ATOMIC);
+-	if (es == NULL)
+-		return NULL;
+ 	es->es_lblk = lblk;
  	es->es_len = len;
  	es->es_pblk = pblk;
+@@ -474,8 +477,11 @@ ext4_es_alloc_extent(struct inode *inode, ext4_lblk_t lblk, ext4_lblk_t len,
  
--	/*
--	 * We don't count delayed extent because we never try to reclaim them
--	 */
--	if (!ext4_es_is_delayed(es)) {
-+	/* We never try to reclaim a must kept extent, so we don't count it. */
-+	if (!ext4_es_must_keep(es)) {
- 		if (!EXT4_I(inode)->i_es_shk_nr++)
- 			ext4_es_list_add(inode);
- 		percpu_counter_inc(&EXT4_SB(inode->i_sb)->
-@@ -472,8 +483,8 @@ static void ext4_es_free_extent(struct inode *inode, struct extent_status *es)
- 	EXT4_I(inode)->i_es_all_nr--;
- 	percpu_counter_dec(&EXT4_SB(inode->i_sb)->s_es_stats.es_stats_all_cnt);
+ 	EXT4_I(inode)->i_es_all_nr++;
+ 	percpu_counter_inc(&EXT4_SB(inode->i_sb)->s_es_stats.es_stats_all_cnt);
++}
  
--	/* Decrease the shrink counter when this es is not delayed */
--	if (!ext4_es_is_delayed(es)) {
-+	/* Decrease the shrink counter when we can reclaim the extent. */
-+	if (!ext4_es_must_keep(es)) {
- 		BUG_ON(EXT4_I(inode)->i_es_shk_nr == 0);
- 		if (!--EXT4_I(inode)->i_es_shk_nr)
- 			ext4_es_list_del(inode);
-@@ -842,7 +853,7 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
- 	if (err == -ENOMEM && __es_shrink(EXT4_SB(inode->i_sb),
- 					  128, EXT4_I(inode)))
- 		goto retry;
--	if (err == -ENOMEM && !ext4_es_is_delayed(&newes))
-+	if (err == -ENOMEM && !ext4_es_must_keep(&newes))
- 		err = 0;
+-	return es;
++static inline void __es_free_extent(struct extent_status *es)
++{
++	kmem_cache_free(ext4_es_cachep, es);
+ }
  
- 	if (sbi->s_cluster_ratio > 1 && test_opt(inode->i_sb, DELALLOC) &&
-@@ -1683,11 +1694,8 @@ static int es_do_reclaim_extents(struct ext4_inode_info *ei, ext4_lblk_t end,
+ static void ext4_es_free_extent(struct inode *inode, struct extent_status *es)
+@@ -492,7 +498,7 @@ static void ext4_es_free_extent(struct inode *inode, struct extent_status *es)
+ 					s_es_stats.es_stats_shk_cnt);
+ 	}
  
- 		(*nr_to_scan)--;
- 		node = rb_next(&es->rb_node);
--		/*
--		 * We can't reclaim delayed extent from status tree because
--		 * fiemap, bigallic, and seek_data/hole need to use it.
--		 */
--		if (ext4_es_is_delayed(es))
-+
-+		if (ext4_es_must_keep(es))
- 			goto next;
- 		if (ext4_es_is_referenced(es)) {
- 			ext4_es_clear_referenced(es);
-@@ -1751,7 +1759,7 @@ void ext4_clear_inode_es(struct inode *inode)
- 	while (node) {
- 		es = rb_entry(node, struct extent_status, rb_node);
- 		node = rb_next(node);
--		if (!ext4_es_is_delayed(es)) {
-+		if (!ext4_es_must_keep(es)) {
- 			rb_erase(&es->rb_node, &tree->root);
- 			ext4_es_free_extent(inode, es);
+-	kmem_cache_free(ext4_es_cachep, es);
++	__es_free_extent(es);
+ }
+ 
+ /*
+@@ -794,10 +800,12 @@ static int __es_insert_extent(struct inode *inode, struct extent_status *newes)
  		}
+ 	}
+ 
+-	es = ext4_es_alloc_extent(inode, newes->es_lblk, newes->es_len,
+-				  newes->es_pblk);
++	es = __es_alloc_extent(false);
+ 	if (!es)
+ 		return -ENOMEM;
++	ext4_es_init_extent(inode, es, newes->es_lblk, newes->es_len,
++			    newes->es_pblk);
++
+ 	rb_link_node(&es->rb_node, parent, p);
+ 	rb_insert_color(&es->rb_node, &tree->root);
+ 
 -- 
 2.42.0
 
