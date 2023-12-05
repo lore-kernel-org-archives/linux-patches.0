@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAE96AC2;
-	Tue,  5 Dec 2023 03:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498F86AC2;
+	Tue,  5 Dec 2023 03:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nK6zglP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990A8C433C7;
-	Tue,  5 Dec 2023 03:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+ESN2dT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B78C433C8;
+	Tue,  5 Dec 2023 03:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747749;
-	bh=GA7uZVKAZnGzT0GqLcUQdIUYKMcsAyL5IQngLzft78c=;
+	s=korg; t=1701747753;
+	bh=gKfdn9fJaxUkEn9uINhdoUo0J4rWKr2I+vtQrEI0pyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nK6zglP0UHPOOtaMDOvJ6Cc5N4NakBgD5KJu8xo19zMK8eczfHm779h33YAGe94aN
-	 W8sYYzrCE0VI4Qh50OokqwZls9ZrstHxyYHd9uMPWR08pah4LZfi/huty7Luh9zoT3
-	 p5RLr09pS2Mtc4vK8OXWywCHm8y6eM2ljHBsJS48=
+	b=J+ESN2dTBgqSVSTMQMKHXyF6GEL+iAxq8DeetZ16pIeHQKb2l50AEMG2zso4iylCF
+	 31p5xJdmMX3031c4InF+6F7Gpy2v5jyzHQS+wdhsjgbYepBknYhO+fxVxTZjeWeRsL
+	 D0F4GBrvMnkM7Ym9mplpYUQFy2qHwtEb003qammw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Paul Olaru <paul.olaru@oss.nxp.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 54/67] ASoC: SOF: sof-pci-dev: add parameter to override topology filename
-Date: Tue,  5 Dec 2023 12:17:39 +0900
-Message-ID: <20231205031522.988901442@linuxfoundation.org>
+Subject: [PATCH 5.15 55/67] ASoC: SOF: sof-pci-dev: dont use the community key on APL Chromebooks
+Date: Tue,  5 Dec 2023 12:17:40 +0900
+Message-ID: <20231205031523.056416167@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -40,7 +38,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -49,85 +46,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 772627acfeb0e670ede534b7d5502dae9668d3ee ]
+[ Upstream commit d81e4ba5ef1c1033b6c720b22fc99feeb71e71a0 ]
 
-The existing 'tplg_path' module parameter can be used to load
-alternate firmware files, be it for development or to handle
-OEM-specific or board-specific releases. However the topology filename
-is either hard-coded in machine descriptors or modified by specific
-DMI-quirks.
+As suggested by MrChromebox, the SOF driver can be used with the SOF
+firmware binary signed with the production key. This patch adds an
+additional check for the ApolloLake SoC before modifying the default
+firmware path.
 
-For additional flexibility, this patch adds the 'tplg_filename' module
-parameter to override topology names.
-
-To avoid any confusion between DMI- and parameter-override, a variable
-rename is added.
+Note that ApolloLake Chromebooks officially ship with the Skylake
+driver, so to use SOF the users have to explicitly opt-in with
+'options intel-dspcfg dsp_driver=3'. There is no plan to change the
+default selection.
 
 Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Reviewed-by: Paul Olaru <paul.olaru@oss.nxp.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20220414184817.362215-7-pierre-louis.bossart@linux.intel.com
+Link: https://lore.kernel.org/r/20220421163358.319489-2-pierre-louis.bossart@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 7dd692217b86 ("ASoC: SOF: sof-pci-dev: Fix community key quirk detection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/sof-pci-dev.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ sound/soc/sof/sof-pci-dev.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/sound/soc/sof/sof-pci-dev.c b/sound/soc/sof/sof-pci-dev.c
-index c1cd156996b43..6b103118cfd1b 100644
+index 6b103118cfd1b..9f0732461a611 100644
 --- a/sound/soc/sof/sof-pci-dev.c
 +++ b/sound/soc/sof/sof-pci-dev.c
-@@ -27,17 +27,21 @@ static char *tplg_path;
- module_param(tplg_path, charp, 0444);
- MODULE_PARM_DESC(tplg_path, "alternate path for SOF topology.");
- 
-+static char *tplg_filename;
-+module_param(tplg_filename, charp, 0444);
-+MODULE_PARM_DESC(tplg_filename, "alternate filename for SOF topology.");
-+
- static int sof_pci_debug;
- module_param_named(sof_pci_debug, sof_pci_debug, int, 0444);
+@@ -12,6 +12,7 @@
+ #include <linux/dmi.h>
+ #include <linux/module.h>
+ #include <linux/pci.h>
++#include <linux/platform_data/x86/soc.h>
+ #include <linux/pm_runtime.h>
+ #include <sound/soc-acpi.h>
+ #include <sound/soc-acpi-intel-match.h>
+@@ -36,6 +37,7 @@ module_param_named(sof_pci_debug, sof_pci_debug, int, 0444);
  MODULE_PARM_DESC(sof_pci_debug, "SOF PCI debug options (0x0 all off)");
  
--static const char *sof_override_tplg_name;
-+static const char *sof_dmi_override_tplg_name;
+ static const char *sof_dmi_override_tplg_name;
++static bool sof_dmi_use_community_key;
  
  #define SOF_PCI_DISABLE_PM_RUNTIME BIT(0)
  
- static int sof_tplg_cb(const struct dmi_system_id *id)
- {
--	sof_override_tplg_name = id->driver_data;
-+	sof_dmi_override_tplg_name = id->driver_data;
- 	return 1;
- }
+@@ -66,15 +68,35 @@ static const struct dmi_system_id sof_tplg_table[] = {
+ 	{}
+ };
  
-@@ -183,9 +187,20 @@ int sof_pci_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
- 		sof_pdata->tplg_filename_prefix =
- 			sof_pdata->desc->default_tplg_path;
- 
--	dmi_check_system(sof_tplg_table);
--	if (sof_override_tplg_name)
--		sof_pdata->tplg_filename = sof_override_tplg_name;
-+	/*
-+	 * the topology filename will be provided in the machine descriptor, unless
-+	 * it is overridden by a module parameter or DMI quirk.
-+	 */
-+	if (tplg_filename) {
-+		sof_pdata->tplg_filename = tplg_filename;
++/* all Up boards use the community key */
++static int up_use_community_key(const struct dmi_system_id *id)
++{
++	sof_dmi_use_community_key = true;
++	return 1;
++}
 +
-+		dev_dbg(dev, "Module parameter used, changed tplg filename to %s\n",
-+			sof_pdata->tplg_filename);
-+	} else {
-+		dmi_check_system(sof_tplg_table);
-+		if (sof_dmi_override_tplg_name)
-+			sof_pdata->tplg_filename = sof_dmi_override_tplg_name;
-+	}
++/*
++ * For ApolloLake Chromebooks we want to force the use of the Intel production key.
++ * All newer platforms use the community key
++ */
++static int chromebook_use_community_key(const struct dmi_system_id *id)
++{
++	if (!soc_intel_is_apl())
++		sof_dmi_use_community_key = true;
++	return 1;
++}
++
+ static const struct dmi_system_id community_key_platforms[] = {
+ 	{
+ 		.ident = "Up boards",
++		.callback = up_use_community_key,
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "AAEON"),
+ 		}
+ 	},
+ 	{
+ 		.ident = "Google Chromebooks",
++		.callback = chromebook_use_community_key,
+ 		.matches = {
+ 			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google"),
+ 		}
+@@ -167,7 +189,7 @@ int sof_pci_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
+ 			"Module parameter used, changed fw path to %s\n",
+ 			sof_pdata->fw_filename_prefix);
  
- 	/* set callback to be called on successful device probe to enable runtime_pm */
- 	sof_pdata->sof_probe_complete = sof_pci_probe_complete;
+-	} else if (dmi_check_system(community_key_platforms)) {
++	} else if (dmi_check_system(community_key_platforms) && sof_dmi_use_community_key) {
+ 		sof_pdata->fw_filename_prefix =
+ 			devm_kasprintf(dev, GFP_KERNEL, "%s/%s",
+ 				       sof_pdata->desc->default_fw_path,
 -- 
 2.42.0
 
