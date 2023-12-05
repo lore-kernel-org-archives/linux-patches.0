@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB376FB1;
-	Tue,  5 Dec 2023 03:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3C86FB1;
+	Tue,  5 Dec 2023 03:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOGoGEc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53FEC433C7;
-	Tue,  5 Dec 2023 03:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twv2LY3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92198C433C8;
+	Tue,  5 Dec 2023 03:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747240;
-	bh=+hNOsNlTIfQ53t/kEvYdb8MTo+8zauOKBQXF93s7hIs=;
+	s=korg; t=1701747242;
+	bh=MMW7LhkIja5j0v8IFeDubQBj1CZ9YY60+9unTyscMeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOGoGEc3YpzSGAIH2PEeIKGXT0CxgTu0O/31Ra3lK9UxtCZ0xEsHNjzUAVgZmJbPl
-	 8UnVqrn/D107bDYdRHGwnH//CnzBr4DFkN+EADS3V4V8sPXXTbIdowxRR3hf4KgkCa
-	 ESwjQXU03mZY79Q75xKfpgQiplLwaJ7+63G0zA/E=
+	b=twv2LY3Bk2xPdp41/EXi443g+2714ASerqnn3qp+JummFB7NKuQC9qdJhoRFlgdU8
+	 bQQpohgyXuE27BoKXZHQCfJRcyJfJ2KjD1W/vruN9u4vE2aXza4aMXQhG12wfS4NxD
+	 vSvd/8GYH7Db9uDMQKAAYi8k6JC7kgcG/INGxhH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kevin Tian <kevin.tian@intel.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/107] iommu/vt-d: Disable PCI ATS in legacy passthrough mode
-Date: Tue,  5 Dec 2023 12:17:08 +0900
-Message-ID: <20231205031537.529943261@linuxfoundation.org>
+Subject: [PATCH 6.1 094/107] iommu/vt-d: Make context clearing consistent with context mapping
+Date: Tue,  5 Dec 2023 12:17:09 +0900
+Message-ID: <20231205031537.597921860@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -45,46 +45,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Lu Baolu <baolu.lu@linux.intel.com>
 
-[ Upstream commit da37dddcf4caf015c400a930301d2ee27a7a15fb ]
+[ Upstream commit 9a16ab9d640274b20813d2d17475e18d3e99d834 ]
 
-When IOMMU hardware operates in legacy mode, the TT field of the context
-entry determines the translation type, with three supported types (Section
-9.3 Context Entry):
+In the iommu probe_device path, domain_context_mapping() allows setting
+up the context entry for a non-PCI device. However, in the iommu
+release_device path, domain_context_clear() only clears context entries
+for PCI devices.
 
-- DMA translation without device TLB support
-- DMA translation with device TLB support
-- Passthrough mode with translated and translation requests blocked
+Make domain_context_clear() behave consistently with
+domain_context_mapping() by clearing context entries for both PCI and
+non-PCI devices.
 
-Device TLB support is absent when hardware is configured in passthrough
-mode.
-
-Disable the PCI ATS feature when IOMMU is configured for passthrough
-translation type in legacy (non-scalable) mode.
-
-Fixes: 0faa19a1515f ("iommu/vt-d: Decouple PASID & PRI enabling from SVA")
+Fixes: 579305f75d34 ("iommu/vt-d: Update to use PCI DMA aliases")
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20231114011036.70142-3-baolu.lu@linux.intel.com
+Link: https://lore.kernel.org/r/20231114011036.70142-4-baolu.lu@linux.intel.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/intel/iommu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index de76272d0fb02..807abf4707be7 100644
+index 807abf4707be7..e111b35a7aff2 100644
 --- a/drivers/iommu/intel/iommu.c
 +++ b/drivers/iommu/intel/iommu.c
-@@ -2517,7 +2517,8 @@ static int domain_add_dev_info(struct dmar_domain *domain, struct device *dev)
- 		return ret;
- 	}
+@@ -4086,8 +4086,8 @@ static int domain_context_clear_one_cb(struct pci_dev *pdev, u16 alias, void *op
+  */
+ static void domain_context_clear(struct device_domain_info *info)
+ {
+-	if (!info->iommu || !info->dev || !dev_is_pci(info->dev))
+-		return;
++	if (!dev_is_pci(info->dev))
++		domain_context_clear_one(info, info->bus, info->devfn);
  
--	iommu_enable_pci_caps(info);
-+	if (sm_supported(info->iommu) || !domain_type_is_si(info->domain))
-+		iommu_enable_pci_caps(info);
- 
- 	return 0;
- }
+ 	pci_for_each_dma_alias(to_pci_dev(info->dev),
+ 			       &domain_context_clear_one_cb, info);
 -- 
 2.42.0
 
