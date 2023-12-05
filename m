@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EBE6FB1;
-	Tue,  5 Dec 2023 03:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11676FB1;
+	Tue,  5 Dec 2023 03:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s29C82f8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856D7C433C7;
-	Tue,  5 Dec 2023 03:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyqfV1Qe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CFCC433C8;
+	Tue,  5 Dec 2023 03:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747077;
-	bh=Xstxk+IDDB/GiQ+Iu/lXeOs9aVoruyhHQbBybfJyXw4=;
+	s=korg; t=1701747080;
+	bh=V7yPsAMubyTa4VMKhM4Y8LAKr2ObLcXWO1CxAJqwPP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s29C82f8r27qfiOarezKZQIKhQApqD3H+8DdSK4Wx29bHK4uhLbH06en/B4Z2npgX
-	 tDBzNorUzE4HtdlPsqbxDYL/gbHtjOGJpN6NfxIOwhUXUxu+mn9nADHA/70gN94iz+
-	 H/YnQkML1HmVmtKurFhpY0/uuzTp3+eSZd2HX2Hk=
+	b=QyqfV1QevLai1GI+eY6WA8zxajpijVFfXcZsszKbHE1cyG6XrwIY0teBBnfY6W42X
+	 WiVBmr0xtjDMdLWrfQ/x2uTWL2rrfXCCTrEQQQ02ar7eHmhPOlLoyDCqkOlc3WSHc/
+	 gPX/9OFJUpFtEM1BdZEPsezZjNHL/tWypILK3NfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	David Reaver <me@davidreaver.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.1 051/107] auxdisplay: hd44780: move cursor home after clear display command
-Date: Tue,  5 Dec 2023 12:16:26 +0900
-Message-ID: <20231205031534.517148119@linuxfoundation.org>
+	Hui Wang <hui.wang@canonical.com>,
+	Hugo Villeneuve <hugo@hugovil.com>
+Subject: [PATCH 6.1 052/107] serial: sc16is7xx: Put IOControl register into regmap_volatile
+Date: Tue,  5 Dec 2023 12:16:27 +0900
+Message-ID: <20231205031534.586077627@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -43,56 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-commit 35b464e32c8bccef435e415db955787ead4ab44c upstream.
+commit 77a82cebf0eb023203b4cb2235cab75afc77cccf upstream.
 
-The DISPLAY_CLEAR command on the NewHaven NHD-0220DZW-AG5 display
-does NOT change the DDRAM address to 00h (home position) like the
-standard Hitachi HD44780 controller. As a consequence, the starting
-position of the initial string LCD_INIT_TEXT is not guaranteed to be
-at 0,0 depending on where the cursor was before the DISPLAY_CLEAR
-command.
+According to the IOControl register bits description in the page 31 of
+the product datasheet, we know the bit 3 of IOControl register is
+softreset, this bit will self-clearing once the reset finish.
 
-Extract of DISPLAY_CLEAR command from datasheets of:
+In the probe, the softreset bit is set, and when we read this register
+from debugfs/regmap interface, we found the softreset bit is still
+setting, this confused us for a while. Finally we found this register
+is cached, to read the real value from register, we could put it
+into the regmap_volatile().
 
-    Hitachi HD44780:
-        ... It then sets DDRAM address 0 into the address counter...
-
-    NewHaven NHD-0220DZW-AG5 datasheet:
-	... This instruction does not change the DDRAM Address
-
-Move the cursor home after sending DISPLAY_CLEAR command to support
-non-standard LCDs.
-
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Tested-by: David Reaver <me@davidreaver.com>
-Link: https://lore.kernel.org/r/20230722180925.1408885-1-hugo@hugovil.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Link: https://lore.kernel.org/r/20230724034727.17335-1-hui.wang@canonical.com
+Cc: Hugo Villeneuve <hugo@hugovil.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/auxdisplay/hd44780_common.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/tty/serial/sc16is7xx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/auxdisplay/hd44780_common.c
-+++ b/drivers/auxdisplay/hd44780_common.c
-@@ -82,7 +82,15 @@ int hd44780_common_clear_display(struct
- 	hdc->write_cmd(hdc, LCD_CMD_DISPLAY_CLEAR);
- 	/* datasheet says to wait 1,64 milliseconds */
- 	long_sleep(2);
--	return 0;
-+
-+	/*
-+	 * The Hitachi HD44780 controller (and compatible ones) reset the DDRAM
-+	 * address when executing the DISPLAY_CLEAR command, thus the
-+	 * following call is not required. However, other controllers do not
-+	 * (e.g. NewHaven NHD-0220DZW-AG5), thus move the cursor to home
-+	 * unconditionally to support both.
-+	 */
-+	return hd44780_common_home(lcd);
- }
- EXPORT_SYMBOL_GPL(hd44780_common_clear_display);
- 
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -486,6 +486,7 @@ static bool sc16is7xx_regmap_volatile(st
+ 	case SC16IS7XX_TXLVL_REG:
+ 	case SC16IS7XX_RXLVL_REG:
+ 	case SC16IS7XX_IOSTATE_REG:
++	case SC16IS7XX_IOCONTROL_REG:
+ 		return true;
+ 	default:
+ 		break;
 
 
