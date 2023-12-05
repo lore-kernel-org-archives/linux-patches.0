@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438ED8F6C;
-	Tue,  5 Dec 2023 03:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4C46FAF;
+	Tue,  5 Dec 2023 03:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YBmD1r5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C557CC433C7;
-	Tue,  5 Dec 2023 03:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+SGvYWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E85CC433C8;
+	Tue,  5 Dec 2023 03:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746607;
-	bh=0Le3UZWSYrAFajV33gcuv4SYuXr1wPvUGT5bF5E2z90=;
+	s=korg; t=1701746609;
+	bh=tzgfKl/DcFVAUrqG/LrzbQL3yneTGRA7Uz4bFt62qzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1YBmD1r5TJZ/VpQWJR9e5oYw0DpiRf3U7Ewlp1OMjOLqr1cp4tS+s7IYn7eChtewT
-	 Y7cgTkNEZP4eaZvXoASbM9YBTsM0Aal4muSM7y1I5NUvGtui+3bh+PJIO9VE7i9L0V
-	 rHrIvNPLwriHAePHfNCHPuxV+epjlkeNlU6G0KzU=
+	b=o+SGvYWKvLnQdMKyfxbs3JH2KhKE/l/ge7DmijCX/TWcRCKenO2DOp6ESLsrP7d0q
+	 wKvZ572e2oUJExNkHttQxLvehyLo+KZrQptNYl5FgEbEHp3KHl8Zc9RHVXrD4/iprF
+	 lFioN4w0m7vUaDGejDVjzmIBEJMV8AgjnvQoLLSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 089/134] bpf: Add missed allocation hint for bpf_mem_cache_alloc_flags()
-Date: Tue,  5 Dec 2023 12:16:01 +0900
-Message-ID: <20231205031541.082719903@linuxfoundation.org>
+Subject: [PATCH 6.6 090/134] uapi: propagate __struct_group() attributes to the container union
+Date: Tue,  5 Dec 2023 12:16:02 +0900
+Message-ID: <20231205031541.153920591@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -43,38 +43,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 75a442581d05edaee168222ffbe00d4389785636 ]
+[ Upstream commit 4e86f32a13af1970d21be94f659cae56bbe487ee ]
 
-bpf_mem_cache_alloc_flags() may call __alloc() directly when there is no
-free object in free list, but it doesn't initialize the allocation hint
-for the returned pointer. It may lead to bad memory dereference when
-freeing the pointer, so fix it by initializing the allocation hint.
+Recently the kernel test robot has reported an ARM-specific BUILD_BUG_ON()
+in an old and unmaintained wil6210 wireless driver. The problem comes from
+the structure packing rules of old ARM ABI ('-mabi=apcs-gnu'). For example,
+the following structure is packed to 18 bytes instead of 16:
 
-Fixes: 822fb26bdb55 ("bpf: Add a hint to allocated objects.")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20231111043821.2258513-1-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+struct poorly_packed {
+        unsigned int a;
+        unsigned int b;
+        unsigned short c;
+        union {
+                struct {
+                        unsigned short d;
+                        unsigned int e;
+                } __attribute__((packed));
+                struct {
+                        unsigned short d;
+                        unsigned int e;
+                } __attribute__((packed)) inner;
+        };
+} __attribute__((packed));
+
+To fit it into 16 bytes, it's required to add packed attribute to the
+container union as well:
+
+struct poorly_packed {
+        unsigned int a;
+        unsigned int b;
+        unsigned short c;
+        union {
+                struct {
+                        unsigned short d;
+                        unsigned int e;
+                } __attribute__((packed));
+                struct {
+                        unsigned short d;
+                        unsigned int e;
+                } __attribute__((packed)) inner;
+        } __attribute__((packed));
+} __attribute__((packed));
+
+Thanks to Andrew Pinski of GCC team for sorting the things out at
+https://gcc.gnu.org/pipermail/gcc/2023-November/242888.html.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311150821.cI4yciFE-lkp@intel.com
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://lore.kernel.org/r/20231120110607.98956-1-dmantipov@yandex.ru
+Fixes: 50d7bd38c3aa ("stddef: Introduce struct_group() helper macro")
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/memalloc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/uapi/linux/stddef.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
-index d93ddac283d40..956f80ee6f5c5 100644
---- a/kernel/bpf/memalloc.c
-+++ b/kernel/bpf/memalloc.c
-@@ -958,6 +958,8 @@ void notrace *bpf_mem_cache_alloc_flags(struct bpf_mem_alloc *ma, gfp_t flags)
- 		memcg = get_memcg(c);
- 		old_memcg = set_active_memcg(memcg);
- 		ret = __alloc(c, NUMA_NO_NODE, GFP_KERNEL | __GFP_NOWARN | __GFP_ACCOUNT);
-+		if (ret)
-+			*(struct bpf_mem_cache **)ret = c;
- 		set_active_memcg(old_memcg);
- 		mem_cgroup_put(memcg);
- 	}
+diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
+index 5c6c4269f7efe..2ec6f35cda32e 100644
+--- a/include/uapi/linux/stddef.h
++++ b/include/uapi/linux/stddef.h
+@@ -27,7 +27,7 @@
+ 	union { \
+ 		struct { MEMBERS } ATTRS; \
+ 		struct TAG { MEMBERS } ATTRS NAME; \
+-	}
++	} ATTRS
+ 
+ #ifdef __cplusplus
+ /* sizeof(struct{}) is 1 in C++, not 0, can't use C version of the macro. */
 -- 
 2.42.0
 
