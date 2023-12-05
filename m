@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B14E6FB1;
-	Tue,  5 Dec 2023 03:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAA66FB1;
+	Tue,  5 Dec 2023 03:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PgL/bSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A899FC433C8;
-	Tue,  5 Dec 2023 03:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+n6QI2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EBF4C433C8;
+	Tue,  5 Dec 2023 03:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747405;
-	bh=rS8Bzry2R8CViC9ENfptVNd39UdwkMm5hC3t53Rj41c=;
+	s=korg; t=1701747407;
+	bh=Jfap9Zzq+so1EuvlPXBtH2zdwSjplDONaf8cPvR9Jew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1PgL/bSJejgSb1ECBXo4oNfHdbjt75o26egPOUIzBRoIMJl71iF1Cn+79879E0kNt
-	 i+WTpYBA0ATFHQaEsYVVhrVEVU9OybSqm9LjVhI8NqiF2uIWySiZaMtHZ/1FFd2FzR
-	 OGCn8CtmMs/+RdP8pSPhIiWyfxpqdsztaa0oVXlM=
+	b=I+n6QI2FLKp+40OgWPufn2piAxz1qOi0WoFpdGK/Ga+nJSr8fu8Rn4pD7SSXgya7F
+	 2UtnrRr2aJLWB5ZMNeYTQjGYkovbprfweeOglrrVJ0nrwnxVNDAX5uAsVfo3KFuEwF
+	 V4k2zplbnzJwJXHq9S5sY1ZKNIAoqO+KkfzHdOnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Dexuan Cui <decui@microsoft.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 056/135] hv_netvsc: Mark VF as slave before exposing it to user-mode
-Date: Tue,  5 Dec 2023 12:16:17 +0900
-Message-ID: <20231205031533.985121545@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Ivan Ivanov <ivan.ivanov@suse.com>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 065/135] USB: dwc2: write HCINT with INTMASK applied
+Date: Tue,  5 Dec 2023 12:16:26 +0900
+Message-ID: <20231205031534.509267063@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -44,95 +43,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit c807d6cd089d2f4951baa838081ec5ae3e2360f8 upstream.
+commit 0583bc776ca5b5a3f5752869fc31cf7322df2b35 upstream.
 
-When a VF is being exposed form the kernel, it should be marked as "slave"
-before exposing to the user-mode. The VF is not usable without netvsc
-running as master. The user-mode should never see a VF without the "slave"
-flag.
+dwc2_hc_n_intr() writes back INTMASK as read but evaluates it
+with intmask applied. In stress testing this causes spurious
+interrupts like this:
 
-This commit moves the code of setting the slave flag to the time before
-VF is exposed to user-mode.
+[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 7 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:07 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 0 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_hc_chhltd_intr_dma: Channel 4 - ChHltd set, but reason is unknown
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: hcint 0x00000002, intsts 0x04600001
+[Mon Aug 14 10:51:08 2023] dwc2 3f980000.usb: dwc2_update_urb_state_abn(): trimming xfer length
 
-Cc: stable@vger.kernel.org
-Fixes: 0c195567a8f6 ("netvsc: transparent VF management")
-Signed-off-by: Long Li <longli@microsoft.com>
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Acked-by: Stephen Hemminger <stephen@networkplumber.org>
-Acked-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Applying INTMASK prevents this. The issue exists in all versions of the
+driver.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Tested-by: Ivan Ivanov <ivan.ivanov@suse.com>
+Tested-by: Andrea della Porta <andrea.porta@suse.com>
+Link: https://lore.kernel.org/r/20231115144514.15248-1-oneukum@suse.com
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/netvsc_drv.c |   32 +++++++++++++++++++++++---------
- 1 file changed, 23 insertions(+), 9 deletions(-)
+ drivers/usb/dwc2/hcd_intr.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2217,9 +2217,6 @@ static int netvsc_vf_join(struct net_dev
- 		goto upper_link_failed;
- 	}
- 
--	/* set slave flag before open to prevent IPv6 addrconf */
--	vf_netdev->flags |= IFF_SLAVE;
--
- 	schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
- 
- 	call_netdevice_notifiers(NETDEV_JOIN, vf_netdev);
-@@ -2317,16 +2314,18 @@ static struct net_device *get_netvsc_bys
- 			return hv_get_drvdata(ndev_ctx->device_ctx);
- 	}
- 
--	/* Fallback path to check synthetic vf with
--	 * help of mac addr
-+	/* Fallback path to check synthetic vf with help of mac addr.
-+	 * Because this function can be called before vf_netdev is
-+	 * initialized (NETDEV_POST_INIT) when its perm_addr has not been copied
-+	 * from dev_addr, also try to match to its dev_addr.
-+	 * Note: On Hyper-V and Azure, it's not possible to set a MAC address
-+	 * on a VF that matches to the MAC of a unrelated NETVSC device.
- 	 */
- 	list_for_each_entry(ndev_ctx, &netvsc_dev_list, list) {
- 		ndev = hv_get_drvdata(ndev_ctx->device_ctx);
--		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr)) {
--			netdev_notice(vf_netdev,
--				      "falling back to mac addr based matching\n");
-+		if (ether_addr_equal(vf_netdev->perm_addr, ndev->perm_addr) ||
-+		    ether_addr_equal(vf_netdev->dev_addr, ndev->perm_addr))
- 			return ndev;
--		}
- 	}
- 
- 	netdev_notice(vf_netdev,
-@@ -2334,6 +2333,19 @@ static struct net_device *get_netvsc_bys
- 	return NULL;
- }
- 
-+static int netvsc_prepare_bonding(struct net_device *vf_netdev)
-+{
-+	struct net_device *ndev;
-+
-+	ndev = get_netvsc_byslot(vf_netdev);
-+	if (!ndev)
-+		return NOTIFY_DONE;
-+
-+	/* set slave flag before open to prevent IPv6 addrconf */
-+	vf_netdev->flags |= IFF_SLAVE;
-+	return NOTIFY_DONE;
-+}
-+
- static int netvsc_register_vf(struct net_device *vf_netdev)
+--- a/drivers/usb/dwc2/hcd_intr.c
++++ b/drivers/usb/dwc2/hcd_intr.c
+@@ -2045,15 +2045,17 @@ static void dwc2_hc_n_intr(struct dwc2_h
  {
- 	struct net_device_context *net_device_ctx;
-@@ -2737,6 +2749,8 @@ static int netvsc_netdev_event(struct no
- 		return NOTIFY_DONE;
+ 	struct dwc2_qtd *qtd;
+ 	struct dwc2_host_chan *chan;
+-	u32 hcint, hcintmsk;
++	u32 hcint, hcintraw, hcintmsk;
  
- 	switch (event) {
-+	case NETDEV_POST_INIT:
-+		return netvsc_prepare_bonding(event_dev);
- 	case NETDEV_REGISTER:
- 		return netvsc_register_vf(event_dev);
- 	case NETDEV_UNREGISTER:
+ 	chan = hsotg->hc_ptr_array[chnum];
+ 
+-	hcint = dwc2_readl(hsotg, HCINT(chnum));
++	hcintraw = dwc2_readl(hsotg, HCINT(chnum));
+ 	hcintmsk = dwc2_readl(hsotg, HCINTMSK(chnum));
++	hcint = hcintraw & hcintmsk;
++	dwc2_writel(hsotg, hcint, HCINT(chnum));
++
+ 	if (!chan) {
+ 		dev_err(hsotg->dev, "## hc_ptr_array for channel is NULL ##\n");
+-		dwc2_writel(hsotg, hcint, HCINT(chnum));
+ 		return;
+ 	}
+ 
+@@ -2062,11 +2064,9 @@ static void dwc2_hc_n_intr(struct dwc2_h
+ 			 chnum);
+ 		dev_vdbg(hsotg->dev,
+ 			 "  hcint 0x%08x, hcintmsk 0x%08x, hcint&hcintmsk 0x%08x\n",
+-			 hcint, hcintmsk, hcint & hcintmsk);
++			 hcintraw, hcintmsk, hcint);
+ 	}
+ 
+-	dwc2_writel(hsotg, hcint, HCINT(chnum));
+-
+ 	/*
+ 	 * If we got an interrupt after someone called
+ 	 * dwc2_hcd_endpoint_disable() we don't want to crash below
+@@ -2076,8 +2076,7 @@ static void dwc2_hc_n_intr(struct dwc2_h
+ 		return;
+ 	}
+ 
+-	chan->hcint = hcint;
+-	hcint &= hcintmsk;
++	chan->hcint = hcintraw;
+ 
+ 	/*
+ 	 * If the channel was halted due to a dequeue, the qtd list might
 
 
