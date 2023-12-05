@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4606FAF;
-	Tue,  5 Dec 2023 03:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09496FAF;
+	Tue,  5 Dec 2023 03:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3kqMEFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F8CC433C7;
-	Tue,  5 Dec 2023 03:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wif4Utfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1401BC433C8;
+	Tue,  5 Dec 2023 03:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747008;
-	bh=TBm6jM/SnR2/yduG+DY6qNiVSj1N0TPyjj/Eu3t8LjE=;
+	s=korg; t=1701747011;
+	bh=45b+mT60Si3a/ccbqbaRFVK1PCEgrKSkjVWodhVIb7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3kqMEFImGBWG0STVyFQo9K1CQhd5Pq28Knuc3239fluAfTLRpwcY97oYl0jZD0GO
-	 vylDl+1oyOoKCKu27+CEzOL+neVWrGas429sk0CbCbnX2NrpThFgOsrDHYFqiLfxy8
-	 lY31Gxh/Gs3U4gTCMfJRpKl9fHQL4rzZW4sstzIU=
+	b=wif4UtfmnqiTYv/k2DjFEzEYpT0+lxsOddhyu9sEW9AVtQuXnU30/RmnmmVsoP18L
+	 6J9s3cmrZs+kfE4oYirz/pzL8XKH+a2UuPVzxx0IMBnA7+glcxKtodY/YGFiBnMh5z
+	 gN157BSdll+PftGzZX8quIU4REJ1DHiPF76KDWtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 025/107] drm/amd/display: fix ABM disablement
-Date: Tue,  5 Dec 2023 12:16:00 +0900
-Message-ID: <20231205031533.173128121@linuxfoundation.org>
+	Wu Bo <bo.wu@vivo.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.1 026/107] dm verity: initialize fec io before freeing it
+Date: Tue,  5 Dec 2023 12:16:01 +0900
+Message-ID: <20231205031533.238593545@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -42,57 +42,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Wu Bo <bo.wu@vivo.com>
 
-commit b9f46f0b98784e40288ee393f863f553fde062fa upstream.
+commit 7be05bdfb4efc1396f7692562c7161e2b9f595f1 upstream.
 
-On recent versions of DMUB firmware, if we want to completely disable
-ABM we have to pass ABM_LEVEL_IMMEDIATE_DISABLE as the requested ABM
-level to DMUB. Otherwise, LCD eDP displays are unable to reach their
-maximum brightness levels. So, to fix this whenever the user requests an
-ABM level of 0 pass ABM_LEVEL_IMMEDIATE_DISABLE to DMUB instead. Also,
-to keep the user's experience consistent map ABM_LEVEL_IMMEDIATE_DISABLE
-to 0 when a user tries to read the requested ABM level.
+If BIO error, verity_end_io() can call verity_finish_io() before
+verity_fec_init_io(). Therefore, fec_io->rs is not initialized and
+may crash when doing memory freeing in verity_fec_finish_io().
 
-Cc: stable@vger.kernel.org # 6.1+
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Crash call stack:
+ die+0x90/0x2b8
+ __do_kernel_fault+0x260/0x298
+ do_bad_area+0x2c/0xdc
+ do_translation_fault+0x3c/0x54
+ do_mem_abort+0x54/0x118
+ el1_abort+0x38/0x5c
+ el1h_64_sync_handler+0x50/0x90
+ el1h_64_sync+0x64/0x6c
+ free_rs+0x18/0xac
+ fec_rs_free+0x10/0x24
+ mempool_free+0x58/0x148
+ verity_fec_finish_io+0x4c/0xb0
+ verity_end_io+0xb8/0x150
+
+Cc: stable@vger.kernel.org      # v6.0+
+Fixes: 5721d4e5a9cd ("dm verity: Add optional "try_verify_in_tasklet" feature")
+Signed-off-by: Wu Bo <bo.wu@vivo.com>
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/md/dm-verity-target.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6149,7 +6149,7 @@ int amdgpu_dm_connector_atomic_set_prope
- 		dm_new_state->underscan_enable = val;
- 		ret = 0;
- 	} else if (property == adev->mode_info.abm_level_property) {
--		dm_new_state->abm_level = val;
-+		dm_new_state->abm_level = val ?: ABM_LEVEL_IMMEDIATE_DISABLE;
- 		ret = 0;
- 	}
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -631,7 +631,6 @@ static void verity_work(struct work_stru
  
-@@ -6194,7 +6194,8 @@ int amdgpu_dm_connector_atomic_get_prope
- 		*val = dm_state->underscan_enable;
- 		ret = 0;
- 	} else if (property == adev->mode_info.abm_level_property) {
--		*val = dm_state->abm_level;
-+		*val = (dm_state->abm_level != ABM_LEVEL_IMMEDIATE_DISABLE) ?
-+			dm_state->abm_level : 0;
- 		ret = 0;
- 	}
+ 	io->in_tasklet = false;
  
-@@ -6274,7 +6275,8 @@ void amdgpu_dm_connector_funcs_reset(str
- 		state->pbn = 0;
+-	verity_fec_init_io(io);
+ 	verity_finish_io(io, errno_to_blk_status(verity_verify_io(io)));
+ }
  
- 		if (connector->connector_type == DRM_MODE_CONNECTOR_eDP)
--			state->abm_level = amdgpu_dm_abm_level;
-+			state->abm_level = amdgpu_dm_abm_level ?:
-+				ABM_LEVEL_IMMEDIATE_DISABLE;
+@@ -779,6 +778,8 @@ static int verity_map(struct dm_target *
+ 	bio->bi_private = io;
+ 	io->iter = bio->bi_iter;
  
- 		__drm_atomic_helper_connector_reset(connector, &state->base);
- 	}
++	verity_fec_init_io(io);
++
+ 	verity_submit_prefetch(v, io);
+ 
+ 	submit_bio_noacct(bio);
 
 
