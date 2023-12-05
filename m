@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FDC6FB1;
-	Tue,  5 Dec 2023 03:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474876FB1;
+	Tue,  5 Dec 2023 03:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKnojXfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BBFC433C7;
-	Tue,  5 Dec 2023 03:37:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViXCkg+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C16C433C8;
+	Tue,  5 Dec 2023 03:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747430;
-	bh=3Bz+WL71BXHLjJSAvVR5G/DVkKMJPfZE9uq0h4HMU2g=;
+	s=korg; t=1701747433;
+	bh=gS/h23jMkNPLVEfaK2oKtgDrhiSyDGW5KxzrhjAzvs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KKnojXfocfTkLWAvecB/VLk4rwtjLR/EQAHGJc6pYKiYSKStIEat0bUTC9JurACfg
-	 K4sjpgEVkQO4wx6MTD6WBY+qaFjxVjjSIH2be6rnk0+LOb3K1aegoQIIW40UFLQCQN
-	 9r8m2vHyBQnF1uNYDQvIUqXZyW45Ac8cdpzCbfqc=
+	b=ViXCkg+acnblxVh/OAgkNgtmJ8EsRaWSk1zmDoRLvKugCfzFixB7PeMGQgKJK9SBW
+	 Rivst6wBFONJqVJ40tZ8JHjZzfJIDerNoaDhZaKf6ehDRLhYYMLujo1vdi1vPQLKtW
+	 RO9LQxaywzyX/0dHrooLxSN/58onJ9E9V8cZB+hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 074/135] ALSA: hda: Disable power-save on KONTRON SinglePC
-Date: Tue,  5 Dec 2023 12:16:35 +0900
-Message-ID: <20231205031535.159800634@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 057/135] dm-delay: fix a race between delay_presuspend and delay_bio
+Date: Tue,  5 Dec 2023 12:16:18 +0900
+Message-ID: <20231205031534.047599261@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -40,35 +42,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit a337c355719c42a6c5b67e985ad753590ed844fb upstream.
+[ Upstream commit 6fc45b6ed921dc00dfb264dc08c7d67ee63d2656 ]
 
-It's been reported that the runtime PM on KONTRON SinglePC (PCI SSID
-1734:1232) caused a stall of playback after a bunch of invocations.
-(FWIW, this looks like an timing issue, and the stall happens rather
-on the controller side.)
+In delay_presuspend, we set the atomic variable may_delay and then stop
+the timer and flush pending bios. The intention here is to prevent the
+delay target from re-arming the timer again.
 
-As a workaround, disable the default power-save on this platform.
+However, this test is racy. Suppose that one thread goes to delay_bio,
+sees that dc->may_delay is one and proceeds; now, another thread executes
+delay_presuspend, it sets dc->may_delay to zero, deletes the timer and
+flushes pending bios. Then, the first thread continues and adds the bio to
+delayed->list despite the fact that dc->may_delay is false.
 
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231130151321.9813-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this bug by changing may_delay's type from atomic_t to bool and
+only access it while holding the delayed_bios_lock mutex. Note that we
+don't have to grab the mutex in delay_resume because there are no bios
+in flight at this point.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-delay.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2278,6 +2278,8 @@ static const struct snd_pci_quirk power_
- 	SND_PCI_QUIRK(0x17aa, 0x36a7, "Lenovo C50 All in one", 0),
- 	/* https://bugs.launchpad.net/bugs/1821663 */
- 	SND_PCI_QUIRK(0x1631, 0xe017, "Packard Bell NEC IMEDIA 5204", 0),
-+	/* KONTRON SinglePC may cause a stall at runtime resume */
-+	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
- 	{}
- };
- #endif /* CONFIG_PM */
+diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
+index 2628a832787b0..d58b9ae6f2870 100644
+--- a/drivers/md/dm-delay.c
++++ b/drivers/md/dm-delay.c
+@@ -30,7 +30,7 @@ struct delay_c {
+ 	struct workqueue_struct *kdelayd_wq;
+ 	struct work_struct flush_expired_bios;
+ 	struct list_head delayed_bios;
+-	atomic_t may_delay;
++	bool may_delay;
+ 
+ 	struct delay_class read;
+ 	struct delay_class write;
+@@ -191,7 +191,7 @@ static int delay_ctr(struct dm_target *ti, unsigned int argc, char **argv)
+ 	INIT_WORK(&dc->flush_expired_bios, flush_expired_bios);
+ 	INIT_LIST_HEAD(&dc->delayed_bios);
+ 	mutex_init(&dc->timer_lock);
+-	atomic_set(&dc->may_delay, 1);
++	dc->may_delay = true;
+ 	dc->argc = argc;
+ 
+ 	ret = delay_class_ctr(ti, &dc->read, argv);
+@@ -245,7 +245,7 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
+ 	struct dm_delay_info *delayed;
+ 	unsigned long expires = 0;
+ 
+-	if (!c->delay || !atomic_read(&dc->may_delay))
++	if (!c->delay)
+ 		return DM_MAPIO_REMAPPED;
+ 
+ 	delayed = dm_per_bio_data(bio, sizeof(struct dm_delay_info));
+@@ -254,6 +254,10 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
+ 	delayed->expires = expires = jiffies + msecs_to_jiffies(c->delay);
+ 
+ 	mutex_lock(&delayed_bios_lock);
++	if (unlikely(!dc->may_delay)) {
++		mutex_unlock(&delayed_bios_lock);
++		return DM_MAPIO_REMAPPED;
++	}
+ 	c->ops++;
+ 	list_add_tail(&delayed->list, &dc->delayed_bios);
+ 	mutex_unlock(&delayed_bios_lock);
+@@ -267,7 +271,10 @@ static void delay_presuspend(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
+ 
+-	atomic_set(&dc->may_delay, 0);
++	mutex_lock(&delayed_bios_lock);
++	dc->may_delay = false;
++	mutex_unlock(&delayed_bios_lock);
++
+ 	del_timer_sync(&dc->delay_timer);
+ 	flush_bios(flush_delayed_bios(dc, 1));
+ }
+@@ -276,7 +283,7 @@ static void delay_resume(struct dm_target *ti)
+ {
+ 	struct delay_c *dc = ti->private;
+ 
+-	atomic_set(&dc->may_delay, 1);
++	dc->may_delay = true;
+ }
+ 
+ static int delay_map(struct dm_target *ti, struct bio *bio)
+-- 
+2.42.0
+
 
 
