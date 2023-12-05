@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537316FB1;
-	Tue,  5 Dec 2023 03:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30366FB1;
+	Tue,  5 Dec 2023 03:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jT6Y8Lpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B34C433C7;
-	Tue,  5 Dec 2023 03:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDT4Dic/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF81C433C8;
+	Tue,  5 Dec 2023 03:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747550;
-	bh=NSJynTGYBDVgPg2NjgP1YnVxp0SuiURav8nacd4RRFE=;
+	s=korg; t=1701747552;
+	bh=BtvYX5YfIum5A4cr2xU6+oyDV2xsWyY5ixbfNWj1W1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jT6Y8LpfcvoRK/cP+kyyR0SFFqIy0VtO66aBk/qjftOiZiMRRPwh+9qY+vNfaDtG3
-	 N+K3PXeHKiflAj+5EG2XdBxgWDnCg3N9Fr/ROI26ZP43QMFYwin68PsjyusRVo88gY
-	 7zKND07Np9tRS8LSe8C1qfdeud5qduJEGvu3JaKY=
+	b=XDT4Dic/4NzS56MuC0u1TKFItrtJapPBYAqZV76Cg0O0e+p1muROpkjqKBMKwV08i
+	 mYJp3ifA2yfMMeWZYILBJf22vrXEOR7Ah8f6esCq6uE7Gp7hrNq8HnHJU2QM9+528p
+	 LWhDpt11Z67Qg7sOTdDXUUWFWiVoX7KfhQb2eLqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/135] ASoC: SOF: sof-pci-dev: dont use the community key on APL Chromebooks
-Date: Tue,  5 Dec 2023 12:17:10 +0900
-Message-ID: <20231205031537.652853940@linuxfoundation.org>
+Subject: [PATCH 5.10 118/135] drm/amdgpu: dont use ATRM for external devices
+Date: Tue,  5 Dec 2023 12:17:19 +0900
+Message-ID: <20231205031538.287865773@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -44,96 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit d81e4ba5ef1c1033b6c720b22fc99feeb71e71a0 ]
+[ Upstream commit 432e664e7c98c243fab4c3c95bd463bea3aeed28 ]
 
-As suggested by MrChromebox, the SOF driver can be used with the SOF
-firmware binary signed with the production key. This patch adds an
-additional check for the ApolloLake SoC before modifying the default
-firmware path.
+The ATRM ACPI method is for fetching the dGPU vbios rom
+image on laptops and all-in-one systems.  It should not be
+used for external add in cards.  If the dGPU is thunderbolt
+connected, don't try ATRM.
 
-Note that ApolloLake Chromebooks officially ship with the Skylake
-driver, so to use SOF the users have to explicitly opt-in with
-'options intel-dspcfg dsp_driver=3'. There is no plan to change the
-default selection.
+v2: pci_is_thunderbolt_attached only works for Intel.  Use
+    pdev->external_facing instead.
+v3: dev_is_removable() seems to be what we want
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://lore.kernel.org/r/20220421163358.319489-2-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 7dd692217b86 ("ASoC: SOF: sof-pci-dev: Fix community key quirk detection")
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2925
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/sof-pci-dev.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/sof/sof-pci-dev.c b/sound/soc/sof/sof-pci-dev.c
-index 966bf28403475..42e1a62789bc6 100644
---- a/sound/soc/sof/sof-pci-dev.c
-+++ b/sound/soc/sof/sof-pci-dev.c
-@@ -12,6 +12,7 @@
- #include <linux/dmi.h>
- #include <linux/module.h>
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+index 4b568ee932435..02a73b9e08d7d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -29,6 +29,7 @@
+ #include "amdgpu.h"
+ #include "atom.h"
+ 
++#include <linux/device.h>
  #include <linux/pci.h>
-+#include <linux/platform_data/x86/soc.h>
- #include <linux/pm_runtime.h>
- #include <sound/intel-dsp-config.h>
- #include <sound/soc-acpi.h>
-@@ -40,6 +41,7 @@ module_param_named(sof_pci_debug, sof_pci_debug, int, 0444);
- MODULE_PARM_DESC(sof_pci_debug, "SOF PCI debug options (0x0 all off)");
+ #include <linux/slab.h>
+ #include <linux/acpi.h>
+@@ -285,6 +286,10 @@ static bool amdgpu_atrm_get_bios(struct amdgpu_device *adev)
+ 	if (adev->flags & AMD_IS_APU)
+ 		return false;
  
- static const char *sof_dmi_override_tplg_name;
-+static bool sof_dmi_use_community_key;
- 
- #define SOF_PCI_DISABLE_PM_RUNTIME BIT(0)
- 
-@@ -61,15 +63,35 @@ static const struct dmi_system_id sof_tplg_table[] = {
- 	{}
- };
- 
-+/* all Up boards use the community key */
-+static int up_use_community_key(const struct dmi_system_id *id)
-+{
-+	sof_dmi_use_community_key = true;
-+	return 1;
-+}
++	/* ATRM is for on-platform devices only */
++	if (dev_is_removable(&adev->pdev->dev))
++		return false;
 +
-+/*
-+ * For ApolloLake Chromebooks we want to force the use of the Intel production key.
-+ * All newer platforms use the community key
-+ */
-+static int chromebook_use_community_key(const struct dmi_system_id *id)
-+{
-+	if (!soc_intel_is_apl())
-+		sof_dmi_use_community_key = true;
-+	return 1;
-+}
-+
- static const struct dmi_system_id community_key_platforms[] = {
- 	{
- 		.ident = "Up boards",
-+		.callback = up_use_community_key,
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "AAEON"),
- 		}
- 	},
- 	{
- 		.ident = "Google Chromebooks",
-+		.callback = chromebook_use_community_key,
- 		.matches = {
- 			DMI_MATCH(DMI_PRODUCT_FAMILY, "Google"),
- 		}
-@@ -375,7 +397,7 @@ static int sof_pci_probe(struct pci_dev *pci,
- 			"Module parameter used, changed fw path to %s\n",
- 			sof_pdata->fw_filename_prefix);
- 
--	} else if (dmi_check_system(community_key_platforms)) {
-+	} else if (dmi_check_system(community_key_platforms) && sof_dmi_use_community_key) {
- 		sof_pdata->fw_filename_prefix =
- 			devm_kasprintf(dev, GFP_KERNEL, "%s/%s",
- 				       sof_pdata->desc->default_fw_path,
+ 	while ((pdev = pci_get_class(PCI_CLASS_DISPLAY_VGA << 8, pdev)) != NULL) {
+ 		dhandle = ACPI_HANDLE(&pdev->dev);
+ 		if (!dhandle)
 -- 
 2.42.0
 
