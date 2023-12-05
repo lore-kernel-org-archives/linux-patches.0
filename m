@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B1E6FAF;
-	Tue,  5 Dec 2023 03:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF856FAF;
+	Tue,  5 Dec 2023 03:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zG5r24QE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF9EC433C7;
-	Tue,  5 Dec 2023 03:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRwf+I43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3504C433C8;
+	Tue,  5 Dec 2023 03:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747002;
-	bh=HT5Z33ryCMxFOmyfMXQU1KRXw7msm1uVhl/3ydDbVGI=;
+	s=korg; t=1701747006;
+	bh=TwQreJSv98emWBiRnr3mrfEB+aT02kbK4lTDwWB5h8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zG5r24QEjZgMfHo1KdA4sZQdRCbpOeO1WVF6Zb5SFmb+DK1uzQFll/sPa50ICER+6
-	 9VBfDRLZqdZ/LLi/WRGihk08m9C/hDltOnL8srqYG3dxivdt4R6UaqRKBX7M/pvn6E
-	 RyXmAK//5JXjVBO7ojLJX1VSnZNi4N1QYV4H14yk=
+	b=sRwf+I433H+AUMHP+1d0xjX42m7151IifJHC+sdo7YY8qzkvFd30FcBATu+vu5IZi
+	 6yK0QllgP3FnT97tYrH/1GniiVmgQRhw+DFdwI1+z/csOna0LOXyiW/MySkr/Mq8Xn
+	 ROokaZMWje89yv6L6k1h4TVLdyj+FSZdzSTSe10w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samson Tam <samson.tam@amd.com>,
+	Syed Hassan <syed.hassan@amd.com>,
 	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 023/107] drm/amd/display: Use DRAM speed from validation for dummy p-state
-Date: Tue,  5 Dec 2023 12:15:58 +0900
-Message-ID: <20231205031533.049326735@linuxfoundation.org>
+Subject: [PATCH 6.1 024/107] drm/amd/display: Update min Z8 residency time to 2100 for DCN314
+Date: Tue,  5 Dec 2023 12:15:59 +0900
+Message-ID: <20231205031533.112008269@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -43,44 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alvin Lee <alvin.lee2@amd.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-commit 9be601135ba8ac69880c01606c82140f2dde105e upstream.
+commit 4636a211980052ca0df90265c8a3ed2d46099091 upstream.
 
-[Description]
-When choosing which dummy p-state latency to use, we
-need to use the DRAM speed from validation. The DRAMSpeed
-DML variable can change because we use different input
-params to DML when populating watermarks set B.
+[Why]
+Some panels with residency period of 2054 exhibit flickering with
+Z8 at the end of the frame.
+
+[How]
+As a workaround, increase the limit to block these panels.
 
 Cc: stable@vger.kernel.org # 6.1+
-Reviewed-by: Samson Tam <samson.tam@amd.com>
+Reviewed-by: Syed Hassan <syed.hassan@amd.com>
 Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -1788,6 +1788,7 @@ void dcn32_calculate_wm_and_dlg_fpu(stru
- 	int i, pipe_idx, vlevel_temp = 0;
- 	double dcfclk = dcn3_2_soc.clock_limits[0].dcfclk_mhz;
- 	double dcfclk_from_validation = context->bw_ctx.dml.vba.DCFCLKState[vlevel][context->bw_ctx.dml.vba.maxMpcComb];
-+	double dram_speed_from_validation = context->bw_ctx.dml.vba.DRAMSpeed;
- 	double dcfclk_from_fw_based_mclk_switching = dcfclk_from_validation;
- 	bool pstate_en = context->bw_ctx.dml.vba.DRAMClockChangeSupport[vlevel][context->bw_ctx.dml.vba.maxMpcComb] !=
- 			dm_dram_clock_change_unsupported;
-@@ -1921,7 +1922,7 @@ void dcn32_calculate_wm_and_dlg_fpu(stru
- 	}
- 
- 	if (dc->clk_mgr->bw_params->wm_table.nv_entries[WM_C].valid) {
--		min_dram_speed_mts = context->bw_ctx.dml.vba.DRAMSpeed;
-+		min_dram_speed_mts = dram_speed_from_validation;
- 		min_dram_speed_mts_margin = 160;
- 
- 		context->bw_ctx.dml.soc.dram_clock_change_latency_us =
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
+@@ -884,7 +884,7 @@ static const struct dc_plane_cap plane_c
+ static const struct dc_debug_options debug_defaults_drv = {
+ 	.disable_z10 = false,
+ 	.enable_z9_disable_interface = true,
+-	.minimum_z8_residency_time = 2000,
++	.minimum_z8_residency_time = 2100,
+ 	.psr_skip_crtc_disable = true,
+ 	.disable_dmcu = true,
+ 	.force_abm_enable = false,
 
 
