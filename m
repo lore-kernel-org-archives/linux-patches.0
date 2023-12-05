@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A8F6AC2;
-	Tue,  5 Dec 2023 03:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9A66AA0;
+	Tue,  5 Dec 2023 03:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0qa+b/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BB0C433C9;
-	Tue,  5 Dec 2023 03:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBu7RHui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88546C433C9;
+	Tue,  5 Dec 2023 03:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746589;
-	bh=GnVZ64xjuFKBeK1845AkCLgWAAYMDS6zNOEkEuruoJs=;
+	s=korg; t=1701746591;
+	bh=mrX7JmEYRkjG1hAkGlcX0YOCSU8WKJOEg/yDR+r86QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0qa+b/DXXTVlLXDRYFnnHAx+07+TyrZJYkPbbSGNRwALquBN+2tNwxLa12mvqlLr
-	 LbULp/veui3j60ha0/r9KYwx3LyTFK8xxv35QGKMbcoJoMmIxD+gxQHci830wGjluM
-	 IvWvBIrDBBn9jR2TZJSgJiKwW7aBWHxVlBJG8z3g=
+	b=YBu7RHuiiXI+rWXd1H3JnphKgKBIFcm9YCZ3pmTYQ7pkB4HjXQD/Ou7nV+cUzYOdH
+	 IYa6omINgqL6+2nhJojG860+wLDBw1JRRZoOpUFHd7HZ5zsHMdxK6mex+jgxeRKaXc
+	 q8P+Y1Tv5daswwEpwfpXjF/42vi2vu6Fy/mvNhLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 058/134] parisc: Use natural CPU alignment for bug_table
-Date: Tue,  5 Dec 2023 12:15:30 +0900
-Message-ID: <20231205031539.203038372@linuxfoundation.org>
+Subject: [PATCH 6.6 059/134] parisc: Mark lock_aligned variables 16-byte aligned on SMP
+Date: Tue,  5 Dec 2023 12:15:31 +0900
+Message-ID: <20231205031539.263147985@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -42,81 +42,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-commit fe76a1349f235969381832c83d703bc911021eb6 upstream.
+commit b28fc0d8739c03e7b6c44914a9d00d4c6dddc0ea upstream.
 
-Make sure that the __bug_table section gets 32- or 64-bit aligned,
-depending if a 32- or 64-bit kernel is being built.
-Mark it non-writeable and use .blockz instead of the .org assembler
-directive to pad the struct.
+On parisc we need 16-byte alignment for variables which are used for
+locking. Mark the __lock_aligned attribute acordingly so that the
+.data..lock_aligned section will get that alignment in the generated
+object files.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Cc: stable@vger.kernel.org   # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/bug.h |   30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ arch/parisc/include/asm/ldcw.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/parisc/include/asm/bug.h
-+++ b/arch/parisc/include/asm/bug.h
-@@ -28,13 +28,15 @@
- 	do {								\
- 		asm volatile("\n"					\
- 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
--			     "\t.pushsection __bug_table,\"aw\"\n"	\
-+			     "\t.pushsection __bug_table,\"a\"\n"	\
-+			     "\t.align %4\n"				\
- 			     "2:\t" ASM_WORD_INSN "1b, %c0\n"		\
--			     "\t.short %c1, %c2\n"			\
--			     "\t.org 2b+%c3\n"				\
-+			     "\t.short %1, %2\n"			\
-+			     "\t.blockz %3-2*%4-2*2\n"			\
- 			     "\t.popsection"				\
- 			     : : "i" (__FILE__), "i" (__LINE__),	\
--			     "i" (0), "i" (sizeof(struct bug_entry)) ); \
-+			     "i" (0), "i" (sizeof(struct bug_entry)),	\
-+			     "i" (sizeof(long)) );			\
- 		unreachable();						\
- 	} while(0)
+--- a/arch/parisc/include/asm/ldcw.h
++++ b/arch/parisc/include/asm/ldcw.h
+@@ -55,7 +55,7 @@
+ })
  
-@@ -51,27 +53,31 @@
- 	do {								\
- 		asm volatile("\n"					\
- 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
--			     "\t.pushsection __bug_table,\"aw\"\n"	\
-+			     "\t.pushsection __bug_table,\"a\"\n"	\
-+			     "\t.align %4\n"				\
- 			     "2:\t" ASM_WORD_INSN "1b, %c0\n"		\
--			     "\t.short %c1, %c2\n"			\
--			     "\t.org 2b+%c3\n"				\
-+			     "\t.short %1, %2\n"			\
-+			     "\t.blockz %3-2*%4-2*2\n"			\
- 			     "\t.popsection"				\
- 			     : : "i" (__FILE__), "i" (__LINE__),	\
- 			     "i" (BUGFLAG_WARNING|(flags)),		\
--			     "i" (sizeof(struct bug_entry)) );		\
-+			     "i" (sizeof(struct bug_entry)),		\
-+			     "i" (sizeof(long)) );			\
- 	} while(0)
- #else
- #define __WARN_FLAGS(flags)						\
- 	do {								\
- 		asm volatile("\n"					\
- 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
--			     "\t.pushsection __bug_table,\"aw\"\n"	\
-+			     "\t.pushsection __bug_table,\"a\"\n"	\
-+			     "\t.align %2\n"				\
- 			     "2:\t" ASM_WORD_INSN "1b\n"		\
--			     "\t.short %c0\n"				\
--			     "\t.org 2b+%c1\n"				\
-+			     "\t.short %0\n"				\
-+			     "\t.blockz %1-%2-2\n"			\
- 			     "\t.popsection"				\
- 			     : : "i" (BUGFLAG_WARNING|(flags)),		\
--			     "i" (sizeof(struct bug_entry)) );		\
-+			     "i" (sizeof(struct bug_entry)),		\
-+			     "i" (sizeof(long)) );			\
- 	} while(0)
+ #ifdef CONFIG_SMP
+-# define __lock_aligned __section(".data..lock_aligned")
++# define __lock_aligned __section(".data..lock_aligned") __aligned(16)
  #endif
  
+ #endif /* __PARISC_LDCW_H */
 
 
