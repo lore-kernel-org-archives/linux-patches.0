@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405996FB1;
-	Tue,  5 Dec 2023 03:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F7D6FB1;
+	Tue,  5 Dec 2023 03:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xv3RXlIp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B2BC433C8;
-	Tue,  5 Dec 2023 03:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkLzucqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF75DC433C7;
+	Tue,  5 Dec 2023 03:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747307;
-	bh=1fIaau9iiRfkCuOZH/ld1JZBNlEGNCmejYG3kuJhebc=;
+	s=korg; t=1701747310;
+	bh=kxDAObiAMRJQYj9EnoC4fqjc1PwCRCKFH0af/LidByE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xv3RXlIpxLz/NIH5R92RcSkatkE9eoATWM8zglIKt4fksGHTIYlYv9r+Ea3LgHlVT
-	 Xt9p6ajUx/nGCWSp0mjDCbMM3ETHIZymOQ8wJo7FB9qyfUQYQmq9AmviJwVd+NJwqP
-	 LyEy/aXnWju+EvTI3Oo97lPd3uNTnzr8otfXE7MY=
+	b=fkLzucqoysO0uZW86gAEBUBFm3EsCjD/cEeqP/iDA/CXQLnZwYeLY9adRtL6+6g8u
+	 +8572jRgBM8Sc7Hz5C6Un3yX9Zfoq+L1puL6Jh+PcilM9w27eISstw7nRi+krbYzRY
+	 YzEOyznESGFTnSiqSuJyNIT4KzQP0zSHle5qX21s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/135] amd-xgbe: handle the corner-case during tx completion
-Date: Tue,  5 Dec 2023 12:15:47 +0900
-Message-ID: <20231205031532.284646939@linuxfoundation.org>
+Subject: [PATCH 5.10 027/135] amd-xgbe: propagate the correct speed and duplex status
+Date: Tue,  5 Dec 2023 12:15:48 +0900
+Message-ID: <20231205031532.352956670@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -46,57 +46,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 7121205d5330c6a3cb3379348886d47c77b78d06 ]
+[ Upstream commit 7a2323ac24a50311f64a3a9b54ed5bef5821ecae ]
 
-The existing implementation uses software logic to accumulate tx
-completions until the specified time (1ms) is met and then poll them.
-However, there exists a tiny gap which leads to a race between
-resetting and checking the tx_activate flag. Due to this the tx
-completions are not reported to upper layer and tx queue timeout
-kicks-in restarting the device.
+xgbe_get_link_ksettings() does not propagate correct speed and duplex
+information to ethtool during cable unplug. Due to which ethtool reports
+incorrect values for speed and duplex.
 
-To address this, introduce a tx cleanup mechanism as part of the
-periodic maintenance process.
+Address this by propagating correct information.
 
-Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
+Fixes: 7c12aa08779c ("amd-xgbe: Move the PHY support into amd-xgbe")
 Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
 Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index a5d6faf7b89e1..23401958bc135 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -682,10 +682,24 @@ static void xgbe_service(struct work_struct *work)
- static void xgbe_service_timer(struct timer_list *t)
- {
- 	struct xgbe_prv_data *pdata = from_timer(pdata, t, service_timer);
-+	struct xgbe_channel *channel;
-+	unsigned int i;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
+index 61f39a0e04f95..64aebf922dda9 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c
+@@ -314,10 +314,15 @@ static int xgbe_get_link_ksettings(struct net_device *netdev,
  
- 	queue_work(pdata->dev_workqueue, &pdata->service_work);
+ 	cmd->base.phy_address = pdata->phy.address;
  
- 	mod_timer(&pdata->service_timer, jiffies + HZ);
-+
-+	if (!pdata->tx_usecs)
-+		return;
-+
-+	for (i = 0; i < pdata->channel_count; i++) {
-+		channel = pdata->channel[i];
-+		if (!channel->tx_ring || channel->tx_timer_active)
-+			break;
-+		channel->tx_timer_active = 1;
-+		mod_timer(&channel->tx_timer,
-+			  jiffies + usecs_to_jiffies(pdata->tx_usecs));
+-	cmd->base.autoneg = pdata->phy.autoneg;
+-	cmd->base.speed = pdata->phy.speed;
+-	cmd->base.duplex = pdata->phy.duplex;
++	if (netif_carrier_ok(netdev)) {
++		cmd->base.speed = pdata->phy.speed;
++		cmd->base.duplex = pdata->phy.duplex;
++	} else {
++		cmd->base.speed = SPEED_UNKNOWN;
++		cmd->base.duplex = DUPLEX_UNKNOWN;
 +	}
- }
  
- static void xgbe_init_timers(struct xgbe_prv_data *pdata)
++	cmd->base.autoneg = pdata->phy.autoneg;
+ 	cmd->base.port = PORT_NONE;
+ 
+ 	XGBE_LM_COPY(cmd, supported, lks, supported);
 -- 
 2.42.0
 
