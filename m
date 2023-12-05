@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944126AC2;
-	Tue,  5 Dec 2023 03:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105A36AC2;
+	Tue,  5 Dec 2023 03:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjnP0S86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FA3C433C8;
-	Tue,  5 Dec 2023 03:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nk8GKkJW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D747C433C7;
+	Tue,  5 Dec 2023 03:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747819;
-	bh=BbyWiPX7lO8Wnnmfm1lKkE/BH4c9v+q4GBJFyXecQGI=;
+	s=korg; t=1701747821;
+	bh=hDWfAfk7rYx6swDAda+kMYWzM+SjeTJg0UE02X4NTc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjnP0S86EL1d+5MQRS0tmvls/U3f/lwkUdOuvv912CMzzjTVaHHjpERsKVeEp86AE
-	 HTVPKxuKDfL38czADWA7v6IhEGzT+FBcXkFv7LRdyLN8SBws0uZkvsL3nigGsGTzPs
-	 Wjk7xC4+m/csHJQYDlTUilUDZ6TAmckWwX0jG5Sc=
+	b=Nk8GKkJWmS+bQJ3HV3pmAyTt6dzwFxazIkcUdBwIG7576xEzZ2HO0j/5b7UUPUrYC
+	 eJPHNYdQ9TT6zM+E5lDqAeBrBYgk6vDkIRzhNh/kErqgSZ1K0GFYNP7iLzjBboUIiB
+	 JYJ8+7mrvvdfWwJGFsVpQ1VaTwxBj5fcT+vhueDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Herb Wei <weihao.bj@ieisystem.com>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 11/94] ipv4: Correct/silence an endian warning in __ip_do_redirect
-Date: Tue,  5 Dec 2023 12:16:39 +0900
-Message-ID: <20231205031523.529870282@linuxfoundation.org>
+Subject: [PATCH 5.4 12/94] net: usb: ax88179_178a: fix failed operations during ax88179_reset
+Date: Tue,  5 Dec 2023 12:16:40 +0900
+Message-ID: <20231205031523.589258314@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -43,37 +43,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit c0e2926266af3b5acf28df0a8fc6e4d90effe0bb ]
+[ Upstream commit 0739af07d1d947af27c877f797cb82ceee702515 ]
 
-net/ipv4/route.c:783:46: warning: incorrect type in argument 2 (different base types)
-net/ipv4/route.c:783:46:    expected unsigned int [usertype] key
-net/ipv4/route.c:783:46:    got restricted __be32 [usertype] new_gw
+Using generic ASIX Electronics Corp. AX88179 Gigabit Ethernet device,
+the following test cycle has been implemented:
+    - power on
+    - check logs
+    - shutdown
+    - after detecting the system shutdown, disconnect power
+    - after approximately 60 seconds of sleep, power is restored
+Running some cycles, sometimes error logs like this appear:
+    kernel: ax88179_178a 2-9:1.0 (unnamed net_device) (uninitialized): Failed to write reg index 0x0001: -19
+    kernel: ax88179_178a 2-9:1.0 (unnamed net_device) (uninitialized): Failed to read reg index 0x0001: -19
+    ...
+These failed operation are happening during ax88179_reset execution, so
+the initialization could not be correct.
 
-Fixes: 969447f226b4 ("ipv4: use new_gw for redirect neigh lookup")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Link: https://lore.kernel.org/r/20231119141759.420477-1-chentao@kylinos.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+In order to avoid this, we need to increase the delay after reset and
+clock initial operations. By using these larger values, many cycles
+have been run and no failed operations appear.
+
+It would be better to check some status register to verify when the
+operation has finished, but I do not have found any available information
+(neither in the public datasheets nor in the manufacturer's driver). The
+only available information for the necessary delays is the maufacturer's
+driver (original values) but the proposed values are not enough for the
+tested devices.
+
+Fixes: e2ca90c276e1f ("ax88179_178a: ASIX AX88179_178A USB 3.0/2.0 to gigabit ethernet adapter driver")
+Reported-by: Herb Wei <weihao.bj@ieisystem.com>
+Tested-by: Herb Wei <weihao.bj@ieisystem.com>
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Link: https://lore.kernel.org/r/20231120120642.54334-1-jtornosm@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/ax88179_178a.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index f82d456afd0ed..902296ef3e5aa 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -799,7 +799,7 @@ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flow
- 			goto reject_redirect;
- 	}
+diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
+index ea9c8361bf464..84dc9fb2b1f3f 100644
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1594,11 +1594,11 @@ static int ax88179_reset(struct usbnet *dev)
  
--	n = __ipv4_neigh_lookup(rt->dst.dev, new_gw);
-+	n = __ipv4_neigh_lookup(rt->dst.dev, (__force u32)new_gw);
- 	if (!n)
- 		n = neigh_create(&arp_tbl, &new_gw, rt->dst.dev);
- 	if (!IS_ERR(n)) {
+ 	*tmp16 = AX_PHYPWR_RSTCTL_IPRL;
+ 	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_PHYPWR_RSTCTL, 2, 2, tmp16);
+-	msleep(200);
++	msleep(500);
+ 
+ 	*tmp = AX_CLK_SELECT_ACS | AX_CLK_SELECT_BCS;
+ 	ax88179_write_cmd(dev, AX_ACCESS_MAC, AX_CLK_SELECT, 1, 1, tmp);
+-	msleep(100);
++	msleep(200);
+ 
+ 	/* Ethernet PHY Auto Detach*/
+ 	ax88179_auto_detach(dev, 0);
 -- 
 2.42.0
 
