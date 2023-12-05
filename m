@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1826AC2;
-	Tue,  5 Dec 2023 03:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A066AC2;
+	Tue,  5 Dec 2023 03:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlwWSMKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161F5C433C8;
-	Tue,  5 Dec 2023 03:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkuIOklx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C73C433B9;
+	Tue,  5 Dec 2023 03:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747689;
-	bh=59aHd6q1HuFxdA91qQFKeHOTDZX+wovhqKs4w+FKqhg=;
+	s=korg; t=1701747692;
+	bh=9XVfPl3zAxcwodIY9AXoheS2T86VDrIgjqzSuhn2xAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZlwWSMKEaPZstC2Bhm2eNT61zp4kMovgvxVU4Lhl54MCMacKLkVTi2P5g7ja3W4d+
-	 zwAYN3ro0vxQngb3mU28EpD1Panm+4sDOVVaOsn7zRz+spqZRdRf4DnVeqv+OXwCBU
-	 d3Cda0MqlrPxLgwLgZzrO83qc/un3FtRN1WjbXQM=
+	b=hkuIOklxftKu9tRrtYzQPhmorpREIjumoqrgkKCE6ri+QQin/nbjwA3/ZnAJDo/dk
+	 QjJX1u+QvHRnSFgz5vG9Bn32yDTY+Q7pen6XIQabALqKoHtHamROjbMbBfZr9GcCgf
+	 +uUjZwiw27W/7ovJtxLE6jlU+udGzTRL29nZwnZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 31/67] ipv4: igmp: fix refcnt uaf issue when receiving igmp query packet
-Date: Tue,  5 Dec 2023 12:17:16 +0900
-Message-ID: <20231205031521.612012897@linuxfoundation.org>
+Subject: [PATCH 5.15 32/67] dpaa2-eth: increase the needed headroom to account for alignment
+Date: Tue,  5 Dec 2023 12:17:17 +0900
+Message-ID: <20231205031521.666875042@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -44,112 +42,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit e2b706c691905fe78468c361aaabc719d0a496f1 ]
+[ Upstream commit f422abe3f23d483cf01f386819f26fb3fe0dbb2b ]
 
-When I perform the following test operations:
-1.ip link add br0 type bridge
-2.brctl addif br0 eth0
-3.ip addr add 239.0.0.1/32 dev eth0
-4.ip addr add 239.0.0.1/32 dev br0
-5.ip addr add 224.0.0.1/32 dev br0
-6.while ((1))
-    do
-        ifconfig br0 up
-        ifconfig br0 down
-    done
-7.send IGMPv2 query packets to port eth0 continuously. For example,
-./mausezahn ethX -c 0 "01 00 5e 00 00 01 00 72 19 88 aa 02 08 00 45 00 00
-1c 00 01 00 00 01 02 0e 7f c0 a8 0a b7 e0 00 00 01 11 64 ee 9b 00 00 00 00"
+Increase the needed headroom to account for a 64 byte alignment
+restriction which, with this patch, we make mandatory on the Tx path.
+The case in which the amount of headroom needed is not available is
+already handled by the driver which instead sends a S/G frame with the
+first buffer only holding the SW and HW annotation areas.
 
-The preceding tests may trigger the refcnt uaf issue of the mc list. The
-stack is as follows:
-	refcount_t: addition on 0; use-after-free.
-	WARNING: CPU: 21 PID: 144 at lib/refcount.c:25 refcount_warn_saturate (lib/refcount.c:25)
-	CPU: 21 PID: 144 Comm: ksoftirqd/21 Kdump: loaded Not tainted 6.7.0-rc1-next-20231117-dirty #80
-	Hardware name: Red Hat KVM, BIOS 0.5.1 01/01/2011
-	RIP: 0010:refcount_warn_saturate (lib/refcount.c:25)
-	RSP: 0018:ffffb68f00657910 EFLAGS: 00010286
-	RAX: 0000000000000000 RBX: ffff8a00c3bf96c0 RCX: ffff8a07b6160908
-	RDX: 00000000ffffffd8 RSI: 0000000000000027 RDI: ffff8a07b6160900
-	RBP: ffff8a00cba36862 R08: 0000000000000000 R09: 00000000ffff7fff
-	R10: ffffb68f006577c0 R11: ffffffffb0fdcdc8 R12: ffff8a00c3bf9680
-	R13: ffff8a00c3bf96f0 R14: 0000000000000000 R15: ffff8a00d8766e00
-	FS:  0000000000000000(0000) GS:ffff8a07b6140000(0000) knlGS:0000000000000000
-	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-	CR2: 000055f10b520b28 CR3: 000000039741a000 CR4: 00000000000006f0
-	Call Trace:
-	<TASK>
-	igmp_heard_query (net/ipv4/igmp.c:1068)
-	igmp_rcv (net/ipv4/igmp.c:1132)
-	ip_protocol_deliver_rcu (net/ipv4/ip_input.c:205)
-	ip_local_deliver_finish (net/ipv4/ip_input.c:234)
-	__netif_receive_skb_one_core (net/core/dev.c:5529)
-	netif_receive_skb_internal (net/core/dev.c:5729)
-	netif_receive_skb (net/core/dev.c:5788)
-	br_handle_frame_finish (net/bridge/br_input.c:216)
-	nf_hook_bridge_pre (net/bridge/br_input.c:294)
-	__netif_receive_skb_core (net/core/dev.c:5423)
-	__netif_receive_skb_list_core (net/core/dev.c:5606)
-	__netif_receive_skb_list (net/core/dev.c:5674)
-	netif_receive_skb_list_internal (net/core/dev.c:5764)
-	napi_gro_receive (net/core/gro.c:609)
-	e1000_clean_rx_irq (drivers/net/ethernet/intel/e1000/e1000_main.c:4467)
-	e1000_clean (drivers/net/ethernet/intel/e1000/e1000_main.c:3805)
-	__napi_poll (net/core/dev.c:6533)
-	net_rx_action (net/core/dev.c:6735)
-	__do_softirq (kernel/softirq.c:554)
-	run_ksoftirqd (kernel/softirq.c:913)
-	smpboot_thread_fn (kernel/smpboot.c:164)
-	kthread (kernel/kthread.c:388)
-	ret_from_fork (arch/x86/kernel/process.c:153)
-	ret_from_fork_asm (arch/x86/entry/entry_64.S:250)
-	</TASK>
+Without this patch, we can empirically see data corruption happening
+between Tx and Tx confirmation which sometimes leads to the SW
+annotation area being overwritten.
 
-The root causes are as follows:
-Thread A					Thread B
-...						netif_receive_skb
-br_dev_stop					...
-    br_multicast_leave_snoopers			...
-        __ip_mc_dec_group			...
-            __igmp_group_dropped		igmp_rcv
-                igmp_stop_timer			    igmp_heard_query         //ref = 1
-                ip_ma_put			        igmp_mod_timer
-                    refcount_dec_and_test	            igmp_start_timer //ref = 0
-			...                                     refcount_inc //ref increases from 0
-When the device receives an IGMPv2 Query message, it starts the timer
-immediately, regardless of whether the device is running. If the device is
-down and has left the multicast group, it will cause the mc list refcount
-uaf issue.
+Since this is an old IP where the hardware team cannot help to
+understand the underlying behavior, we make the Tx alignment mandatory
+for all frames to avoid the crash on Tx conf. Also, remove the comment
+that suggested that this is just an optimization.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+This patch also sets the needed_headroom net device field to the usual
+value that the driver would need on the Tx path:
+	- 64 bytes for the software annotation area
+	- 64 bytes to account for a 64 byte aligned buffer address
+
+Fixes: 6e2387e8f19e ("staging: fsl-dpaa2/eth: Add Freescale DPAA2 Ethernet driver")
+Closes: https://lore.kernel.org/netdev/aa784d0c-85eb-4e5d-968b-c8f74fa86be6@gin.de/
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/igmp.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 8 ++++----
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
-index 1f63dc8897a40..88e780a168652 100644
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -216,8 +216,10 @@ static void igmp_start_timer(struct ip_mc_list *im, int max_delay)
- 	int tv = prandom_u32() % max_delay;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index c48d410936517..78040a09313ef 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -952,14 +952,12 @@ static int dpaa2_eth_build_single_fd(struct dpaa2_eth_priv *priv,
+ 	dma_addr_t addr;
  
- 	im->tm_running = 1;
--	if (!mod_timer(&im->timer, jiffies+tv+2))
--		refcount_inc(&im->refcnt);
-+	if (refcount_inc_not_zero(&im->refcnt)) {
-+		if (mod_timer(&im->timer, jiffies + tv + 2))
-+			ip_ma_put(im);
-+	}
- }
+ 	buffer_start = skb->data - dpaa2_eth_needed_headroom(skb);
+-
+-	/* If there's enough room to align the FD address, do it.
+-	 * It will help hardware optimize accesses.
+-	 */
+ 	aligned_start = PTR_ALIGN(buffer_start - DPAA2_ETH_TX_BUF_ALIGN,
+ 				  DPAA2_ETH_TX_BUF_ALIGN);
+ 	if (aligned_start >= skb->head)
+ 		buffer_start = aligned_start;
++	else
++		return -ENOMEM;
  
- static void igmp_gq_start_timer(struct in_device *in_dev)
+ 	/* Store a backpointer to the skb at the beginning of the buffer
+ 	 * (in the private data area) such that we can release it
+@@ -4446,6 +4444,8 @@ static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
+ 	if (err)
+ 		goto err_dl_port_add;
+ 
++	net_dev->needed_headroom = DPAA2_ETH_SWA_SIZE + DPAA2_ETH_TX_BUF_ALIGN;
++
+ 	err = register_netdev(net_dev);
+ 	if (err < 0) {
+ 		dev_err(dev, "register_netdev() failed\n");
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
+index cdb623d5f2c1a..67fd926331fed 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
+@@ -670,7 +670,7 @@ static inline bool dpaa2_eth_rx_pause_enabled(u64 link_options)
+ 
+ static inline unsigned int dpaa2_eth_needed_headroom(struct sk_buff *skb)
+ {
+-	unsigned int headroom = DPAA2_ETH_SWA_SIZE;
++	unsigned int headroom = DPAA2_ETH_SWA_SIZE + DPAA2_ETH_TX_BUF_ALIGN;
+ 
+ 	/* If we don't have an skb (e.g. XDP buffer), we only need space for
+ 	 * the software annotation area
 -- 
 2.42.0
 
