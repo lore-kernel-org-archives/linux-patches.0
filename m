@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0796FB1;
-	Tue,  5 Dec 2023 03:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4156FB1;
+	Tue,  5 Dec 2023 03:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdIKCS87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECECC433C8;
-	Tue,  5 Dec 2023 03:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNBxbeVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284A6C433C9;
+	Tue,  5 Dec 2023 03:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747515;
-	bh=JbCEGzp5QXt9kgPYUng5/q+2V4AmD5NtfrD4Ue8jLsA=;
+	s=korg; t=1701747518;
+	bh=3OqhL9HCaJyMELEuXlzifuPheHyixgdAxpV47+NuMeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zdIKCS87PWgoQAlth25sRQAKdDD0KK2IfDw9OPUondu3xYYb/Fa0Gst9ghQgacujw
-	 tED9km6PLalzS2NUjhiztq7LNKJ+5oblQwOiTzvXnT1jfM8Jh59PLhum+bqZBulk6Y
-	 XFu7is9D95xN7adONrgs999Kq3R9FxvjDaHG8HIs=
+	b=YNBxbeVxZSMtL1Y6oqndh2BCutUO3H8+0m4Y2gJ3IW13ay2PihClNFbq+czeCKjOG
+	 hlXTEn4phGZ97Txjaa0pJj2IDWX5gqLzWJdKT/YdSOZ3ai06ZmnfgDzMlLL/JB0tx3
+	 LvX7ZmHW8G5iM/KrJzdmsN7mvTbmkIF4Dk945vXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Micah Veilleux <micah.veilleux@iba-group.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 104/135] perf intel-pt: Fix async branch flags
-Date: Tue,  5 Dec 2023 12:17:05 +0900
-Message-ID: <20231205031537.289141335@linuxfoundation.org>
+Subject: [PATCH 5.10 105/135] smb3: fix touch -h of symlink
+Date: Tue,  5 Dec 2023 12:17:06 +0900
+Message-ID: <20231205031537.361029879@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,40 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit f2d87895cbc4af80649850dcf5da36de6b2ed3dd ]
+[ Upstream commit 475efd9808a3094944a56240b2711349e433fb66 ]
 
-Ensure PERF_IP_FLAG_ASYNC is set always for asynchronous branches (i.e.
-interrupts etc).
+For example:
+      touch -h -t 02011200 testfile
+where testfile is a symlink would not change the timestamp, but
+      touch -t 02011200 testfile
+does work to change the timestamp of the target
 
-Fixes: 90e457f7be08 ("perf tools: Add Intel PT support")
+Suggested-by: David Howells <dhowells@redhat.com>
+Reported-by: Micah Veilleux <micah.veilleux@iba-group.com>
+Closes: https://bugzilla.samba.org/show_bug.cgi?id=14476
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20230928072953.19369-1-adrian.hunter@intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/intel-pt.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/cifs/cifsfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
-index 918da9a430c08..a4ea962e28d18 100644
---- a/tools/perf/util/intel-pt.c
-+++ b/tools/perf/util/intel-pt.c
-@@ -1139,9 +1139,11 @@ static void intel_pt_sample_flags(struct intel_pt_queue *ptq)
- 	} else if (ptq->state->flags & INTEL_PT_ASYNC) {
- 		if (!ptq->state->to_ip)
- 			ptq->flags = PERF_IP_FLAG_BRANCH |
-+				     PERF_IP_FLAG_ASYNC |
- 				     PERF_IP_FLAG_TRACE_END;
- 		else if (ptq->state->from_nr && !ptq->state->to_nr)
- 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
-+				     PERF_IP_FLAG_ASYNC |
- 				     PERF_IP_FLAG_VMEXIT;
- 		else
- 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
+diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
+index 0d8d7b57636f7..b87d6792b14ad 100644
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -1076,6 +1076,7 @@ const struct inode_operations cifs_file_inode_ops = {
+ 
+ const struct inode_operations cifs_symlink_inode_ops = {
+ 	.get_link = cifs_get_link,
++	.setattr = cifs_setattr,
+ 	.permission = cifs_permission,
+ 	.listxattr = cifs_listxattr,
+ };
 -- 
 2.42.0
 
