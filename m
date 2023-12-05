@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8406A6FB1;
-	Tue,  5 Dec 2023 03:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633056FB1;
+	Tue,  5 Dec 2023 03:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8xVCCS7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D9FC433C7;
-	Tue,  5 Dec 2023 03:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDziGVJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79ADC433C8;
+	Tue,  5 Dec 2023 03:37:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747424;
-	bh=DLllJyi/9SboYch37H9v68hUqzl1yPw2qD5wSBNby7E=;
+	s=korg; t=1701747427;
+	bh=SuuaSgZZJpAvhFcvNQ6LFrUs9+GMCUzckpsyWRdxQVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8xVCCS7oUxLkkCvP2o8pW+Amb2d95PLBLwSg5ReUhMZ82JK+pd2gX7O3ePiRKJfU
-	 L7wFye0ghHn5s1VEZCXeO9ijHl7RdIQwjbdQwxF9UbE4+EwjaD2LH3znUuX5NmlYnu
-	 61dgGwPaWn42/5qz3+izKxeDlbCOQSAdiXWwoVr4=
+	b=KDziGVJCpH6R5lUVOJr2C8q6YNj4sDAMLGGI2KLbOCxFJ8dktagN1nZdMzCt6ztws
+	 ZeUckQLNutoy7KVxjJuGXooy+/wFbJHUJI2OCz2uNJSgE4vH8nYAKWej47qd1nnxwu
+	 PDtHVLEQ4eaesXFQQOLtQP1Jkz8cJttyli33LErU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 5.10 072/135] firewire: core: fix possible memory leak in create_units()
-Date: Tue,  5 Dec 2023 12:16:33 +0900
-Message-ID: <20231205031535.030175722@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 073/135] mmc: block: Do not lose cache flush during CQE error recovery
+Date: Tue,  5 Dec 2023 12:16:34 +0900
+Message-ID: <20231205031535.103916577@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -41,60 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 891e0eab32a57fca4d36c5162628eb0bcb1f0edf upstream.
+commit 174925d340aac55296318e43fd96c0e1d196e105 upstream.
 
-If device_register() fails, the refcount of device is not 0, the name
-allocated in dev_set_name() is leaked. To fix this by calling put_device(),
-so that it will be freed in callback function kobject_cleanup().
+During CQE error recovery, error-free data commands get requeued if there
+is any data left to transfer, but non-data commands are completed even
+though they have not been processed.  Requeue them instead.
 
-unreferenced object 0xffff9d99035c7a90 (size 8):
-  comm "systemd-udevd", pid 168, jiffies 4294672386 (age 152.089s)
-  hex dump (first 8 bytes):
-    66 77 30 2e 30 00 ff ff                          fw0.0...
-  backtrace:
-    [<00000000e1d62bac>] __kmem_cache_alloc_node+0x1e9/0x360
-    [<00000000bbeaff31>] __kmalloc_node_track_caller+0x44/0x1a0
-    [<00000000491f2fb4>] kvasprintf+0x67/0xd0
-    [<000000005b960ddc>] kobject_set_name_vargs+0x1e/0x90
-    [<00000000427ac591>] dev_set_name+0x4e/0x70
-    [<000000003b4e447d>] create_units+0xc5/0x110
+Note the only non-data command is cache flush, which would have resulted in
+a cache flush being lost if it was queued at the time of CQE recovery.
 
-fw_unit_release() will be called in the error path, move fw_device_get()
-before calling device_register() to keep balanced with fw_device_put() in
-fw_unit_release().
-
+Fixes: 1e8e55b67030 ("mmc: block: Add CQE support")
 Cc: stable@vger.kernel.org
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Fixes: a1f64819fe9f ("firewire: struct device - replace bus_id with dev_name(), dev_set_name()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-2-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/core-device.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/mmc/core/block.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/firewire/core-device.c
-+++ b/drivers/firewire/core-device.c
-@@ -719,14 +719,11 @@ static void create_units(struct fw_devic
- 					fw_unit_attributes,
- 					&unit->attribute_group);
- 
--		if (device_register(&unit->device) < 0)
--			goto skip_unit;
--
- 		fw_device_get(device);
--		continue;
--
--	skip_unit:
--		kfree(unit);
-+		if (device_register(&unit->device) < 0) {
-+			put_device(&unit->device);
-+			continue;
-+		}
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -1418,6 +1418,8 @@ static void mmc_blk_cqe_complete_rq(stru
+ 			blk_mq_requeue_request(req, true);
+ 		else
+ 			__blk_mq_end_request(req, BLK_STS_OK);
++	} else if (mq->in_recovery) {
++		blk_mq_requeue_request(req, true);
+ 	} else {
+ 		blk_mq_end_request(req, BLK_STS_OK);
  	}
- }
- 
 
 
