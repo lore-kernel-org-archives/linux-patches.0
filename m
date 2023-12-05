@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2758F62;
-	Tue,  5 Dec 2023 03:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DF4A59;
+	Tue,  5 Dec 2023 03:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3Uu0JZa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AD4C433C8;
-	Tue,  5 Dec 2023 03:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do6Kev0Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C84C433C7;
+	Tue,  5 Dec 2023 03:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747493;
-	bh=+p2+5eojcy8CvYvWw5FeeQVZ+1fr9mDL7Ve1TsAPYjk=;
+	s=korg; t=1701747496;
+	bh=fysSgXQJbRmXrxSY8aQDmTwAwzXzfoHYsrcjWeVuiMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z3Uu0JZaCoJyOdLKxN+S+ge5lZURaE6/uGFWA6GRM8gMCG8kSca5RHT1shmnzA46i
-	 epzikfgj8O9T+wz6q3TdiMk1RZnx6qmI9U9sxqWKwdMYm7kpOPYBT0xifpqTuLhVwj
-	 13YkSRVl77jCof9qx5861zZuddhFXrAqrrSFT4Yo=
+	b=Do6Kev0YL6OHFCmDgtbpMK3EKEw4/mj5SZOYcnqlJ6CK2UWCPE2Wa9yE6r8qDYvMN
+	 q7nuYNYQ2kKt0PzfIXvluw+jmgbvccZLIRNYzEKs7lKvQMsD+a0SWurEXnOWH/PXC2
+	 H3+tJeJASbrEdN1I4yemzMnG/cbhjhOFiPOCSe8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geetha sowjanya <gakula@marvell.com>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/135] octeontx2-pf: Fix adding mbox work queue entry when num_vfs > 64
-Date: Tue,  5 Dec 2023 12:16:58 +0900
-Message-ID: <20231205031536.772694055@linuxfoundation.org>
+Subject: [PATCH 5.10 098/135] Revert "workqueue: remove unused cancel_work()"
+Date: Tue,  5 Dec 2023 12:16:59 +0900
+Message-ID: <20231205031536.851621539@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -37,55 +39,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Andrey Grodzovsky <andrey.grodzovsky@amd.com>
 
-[ Upstream commit 51597219e0cd5157401d4d0ccb5daa4d9961676f ]
+[ Upstream commit 73b4b53276a1d6290cd4f47dbbc885b6e6e59ac6 ]
 
-When more than 64 VFs are enabled for a PF then mbox communication
-between VF and PF is not working as mbox work queueing for few VFs
-are skipped due to wrong calculation of VF numbers.
+This reverts commit 6417250d3f894e66a68ba1cd93676143f2376a6f.
 
-Fixes: d424b6c02415 ("octeontx2-pf: Enable SRIOV and added VF mbox handling")
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://lore.kernel.org/r/1700930042-5400-1-git-send-email-sbhatta@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+amdpgu need this function in order to prematurly stop pending
+reset works when another reset work already in progress.
+
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Andrey Grodzovsky <andrey.grodzovsky@amd.com>
+Reviewed-by: Lai Jiangshan<jiangshanlai@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 91d3d149978b ("r8169: prevent potential deadlock in rtl8169_close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/workqueue.h | 1 +
+ kernel/workqueue.c        | 9 +++++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 000dd89c4baff..d6f7a2a58aee8 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -556,7 +556,9 @@ static irqreturn_t otx2_pfvf_mbox_intr_handler(int irq, void *pf_irq)
- 		otx2_write64(pf, RVU_PF_VFPF_MBOX_INTX(1), intr);
- 		otx2_queue_work(mbox, pf->mbox_pfvf_wq, 64, vfs, intr,
- 				TYPE_PFVF);
--		vfs -= 64;
-+		if (intr)
-+			trace_otx2_msg_interrupt(mbox->mbox.pdev, "VF(s) to PF", intr);
-+		vfs = 64;
- 	}
+diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
+index 460c58fa011ae..0383fac637e19 100644
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -460,6 +460,7 @@ extern int schedule_on_each_cpu(work_func_t func);
+ int execute_in_process_context(work_func_t fn, struct execute_work *);
  
- 	intr = otx2_read64(pf, RVU_PF_VFPF_MBOX_INTX(0));
-@@ -564,7 +566,8 @@ static irqreturn_t otx2_pfvf_mbox_intr_handler(int irq, void *pf_irq)
+ extern bool flush_work(struct work_struct *work);
++extern bool cancel_work(struct work_struct *work);
+ extern bool cancel_work_sync(struct work_struct *work);
  
- 	otx2_queue_work(mbox, pf->mbox_pfvf_wq, 0, vfs, intr, TYPE_PFVF);
- 
--	trace_otx2_msg_interrupt(mbox->mbox.pdev, "VF(s) to PF", intr);
-+	if (intr)
-+		trace_otx2_msg_interrupt(mbox->mbox.pdev, "VF(s) to PF", intr);
- 
- 	return IRQ_HANDLED;
+ extern bool flush_delayed_work(struct delayed_work *dwork);
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 37d01e44d4837..63140e4dd5dfc 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -3240,6 +3240,15 @@ static bool __cancel_work(struct work_struct *work, bool is_dwork)
+ 	return ret;
  }
+ 
++/*
++ * See cancel_delayed_work()
++ */
++bool cancel_work(struct work_struct *work)
++{
++	return __cancel_work(work, false);
++}
++EXPORT_SYMBOL(cancel_work);
++
+ /**
+  * cancel_delayed_work - cancel a delayed work
+  * @dwork: delayed_work to cancel
 -- 
 2.42.0
 
