@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4799C6FB0;
-	Tue,  5 Dec 2023 03:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2045C6FB0;
+	Tue,  5 Dec 2023 03:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTsyR6ai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC14CC433C7;
-	Tue,  5 Dec 2023 03:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TN8eFlB/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C18C433C8;
+	Tue,  5 Dec 2023 03:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701748016;
-	bh=OldbwNgXntB3IhzqcSPx6orSPXddZDRZj7LCnZOm0go=;
+	s=korg; t=1701748019;
+	bh=826GaVaP7pk/OUogj7AFHZxdGzsS9bSSg+7q8f0cr0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTsyR6aiYK+Yxb3DMfiFtY1O6u9Lr7ABrAGFD2Nm1vXCuxoI58msSrrQMyDsVrsKb
-	 DdoGV7eEMF4HvbKqUVQHPePVjOhkq0MFHrR/cgbw1i4VPsFOa/RkNxg7d+2FKRDXCA
-	 iFAqk48To9N4hdX1xhxhcS+2ScF+ibYV0nlBRYMc=
+	b=TN8eFlB/Juaod3njpg8fs1zjzv7vlUWl26fZBn5kugkuWN6pmhwnQ/5y4NhhrcQtf
+	 ZTz7HBrGRiSe/wu0wMm7nxndhr39Z15POVLgOA8VU9KMH3OvCtF3nZT3NVBzEgJshX
+	 vDrFubUP5D3UQQhRjFUoeMaegwqPokPQuo0YdsII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Monakhov <dmtrmonakhov@yandex-team.ru>,
-	Konstantin Khlebnikov <khlebnikov@yandex-team.ru>,
 	Amir Goldstein <amir73il@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Eric Snowberg <eric.snowberg@oracle.com>,
+	Raul E Rangel <rrangel@chromium.org>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 82/94] ovl: skip overlayfs superblocks at global sync
-Date: Tue,  5 Dec 2023 12:17:50 +0900
-Message-ID: <20231205031527.371888236@linuxfoundation.org>
+Subject: [PATCH 5.4 83/94] ima: detect changes to the backing overlay file
+Date: Tue,  5 Dec 2023 12:17:51 +0900
+Message-ID: <20231205031527.437612919@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -44,82 +44,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
+From: Mimi Zohar <zohar@linux.ibm.com>
 
-[ Upstream commit 32b1924b210a70dcacdf65abd687c5ef86a67541 ]
+[ Upstream commit b836c4d29f2744200b2af41e14bf50758dddc818 ]
 
-Stacked filesystems like overlayfs has no own writeback, but they have to
-forward syncfs() requests to backend for keeping data integrity.
+Commit 18b44bc5a672 ("ovl: Always reevaluate the file signature for
+IMA") forced signature re-evaulation on every file access.
 
-During global sync() each overlayfs instance calls method ->sync_fs() for
-backend although it itself is in global list of superblocks too.  As a
-result one syscall sync() could write one superblock several times and send
-multiple disk barriers.
+Instead of always re-evaluating the file's integrity, detect a change
+to the backing file, by comparing the cached file metadata with the
+backing file's metadata.  Verifying just the i_version has not changed
+is insufficient.  In addition save and compare the i_ino and s_dev
+as well.
 
-This patch adds flag SB_I_SKIP_SYNC into sb->sb_iflags to avoid that.
-
-Reported-by: Dmitry Monakhov <dmtrmonakhov@yandex-team.ru>
-Signed-off-by: Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
 Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: b836c4d29f27 ("ima: detect changes to the backing overlay file")
+Tested-by: Eric Snowberg <eric.snowberg@oracle.com>
+Tested-by: Raul E Rangel <rrangel@chromium.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/super.c | 5 +++--
- fs/sync.c            | 3 ++-
- include/linux/fs.h   | 2 ++
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ security/integrity/ima/ima_api.c  |  5 +++++
+ security/integrity/ima/ima_main.c | 16 +++++++++++++++-
+ security/integrity/integrity.h    |  2 ++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index f5cf0938f298d..fcf453f7f4aef 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -263,8 +263,8 @@ static int ovl_sync_fs(struct super_block *sb, int wait)
- 		return 0;
- 
- 	/*
--	 * If this is a sync(2) call or an emergency sync, all the super blocks
--	 * will be iterated, including upper_sb, so no need to do anything.
-+	 * Not called for sync(2) call or an emergency sync (SB_I_SKIP_SYNC).
-+	 * All the super blocks will be iterated, including upper_sb.
- 	 *
- 	 * If this is a syncfs(2) call, then we do need to call
- 	 * sync_filesystem() on upper_sb, but enough if we do it when being
-@@ -1710,6 +1710,7 @@ static int ovl_fill_super(struct super_block *sb, void *data, int silent)
- 	sb->s_xattr = ovl_xattr_handlers;
- 	sb->s_fs_info = ofs;
- 	sb->s_flags |= SB_POSIXACL;
-+	sb->s_iflags |= SB_I_SKIP_SYNC;
- 
- 	err = -ENOMEM;
- 	root_dentry = d_make_root(ovl_new_inode(sb, S_IFDIR, 0));
-diff --git a/fs/sync.c b/fs/sync.c
-index 4d1ff010bc5af..16c2630ee4bf1 100644
---- a/fs/sync.c
-+++ b/fs/sync.c
-@@ -76,7 +76,8 @@ static void sync_inodes_one_sb(struct super_block *sb, void *arg)
- 
- static void sync_fs_one_sb(struct super_block *sb, void *arg)
+diff --git a/security/integrity/ima/ima_api.c b/security/integrity/ima/ima_api.c
+index 610759fe63b8a..364979233a174 100644
+--- a/security/integrity/ima/ima_api.c
++++ b/security/integrity/ima/ima_api.c
+@@ -209,6 +209,7 @@ int ima_collect_measurement(struct integrity_iint_cache *iint,
  {
--	if (!sb_rdonly(sb) && sb->s_op->sync_fs)
-+	if (!sb_rdonly(sb) && !(sb->s_iflags & SB_I_SKIP_SYNC) &&
-+	    sb->s_op->sync_fs)
- 		sb->s_op->sync_fs(sb, *(int *)arg);
- }
+ 	const char *audit_cause = "failed";
+ 	struct inode *inode = file_inode(file);
++	struct inode *real_inode = d_real_inode(file_dentry(file));
+ 	const char *filename = file->f_path.dentry->d_name.name;
+ 	int result = 0;
+ 	int length;
+@@ -259,6 +260,10 @@ int ima_collect_measurement(struct integrity_iint_cache *iint,
+ 	iint->ima_hash = tmpbuf;
+ 	memcpy(iint->ima_hash, &hash, length);
+ 	iint->version = i_version;
++	if (real_inode != inode) {
++		iint->real_ino = real_inode->i_ino;
++		iint->real_dev = real_inode->i_sb->s_dev;
++	}
  
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 4b1553f570f2c..fbbd7ef7f6535 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -1404,6 +1404,8 @@ extern int send_sigurg(struct fown_struct *fown);
- #define SB_I_IMA_UNVERIFIABLE_SIGNATURE	0x00000020
- #define SB_I_UNTRUSTED_MOUNTER		0x00000040
+ 	/* Possibly temporary failure due to type of read (eg. O_DIRECT) */
+ 	if (!result)
+diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
+index 6a2377eee03d8..09b9c2b252944 100644
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -27,6 +27,7 @@
+ #include <linux/ima.h>
+ #include <linux/iversion.h>
+ #include <linux/fs.h>
++#include <linux/iversion.h>
  
-+#define SB_I_SKIP_SYNC	0x00000100	/* Skip superblock at global sync */
+ #include "ima.h"
+ 
+@@ -193,7 +194,7 @@ static int process_measurement(struct file *file, const struct cred *cred,
+ 			       u32 secid, char *buf, loff_t size, int mask,
+ 			       enum ima_hooks func)
+ {
+-	struct inode *inode = file_inode(file);
++	struct inode *backing_inode, *inode = file_inode(file);
+ 	struct integrity_iint_cache *iint = NULL;
+ 	struct ima_template_desc *template_desc = NULL;
+ 	char *pathbuf = NULL;
+@@ -267,6 +268,19 @@ static int process_measurement(struct file *file, const struct cred *cred,
+ 		iint->measured_pcrs = 0;
+ 	}
+ 
++	/* Detect and re-evaluate changes made to the backing file. */
++	backing_inode = d_real_inode(file_dentry(file));
++	if (backing_inode != inode &&
++	    (action & IMA_DO_MASK) && (iint->flags & IMA_DONE_MASK)) {
++		if (!IS_I_VERSION(backing_inode) ||
++		    backing_inode->i_sb->s_dev != iint->real_dev ||
++		    backing_inode->i_ino != iint->real_ino ||
++		    !inode_eq_iversion(backing_inode, iint->version)) {
++			iint->flags &= ~IMA_DONE_MASK;
++			iint->measured_pcrs = 0;
++		}
++	}
 +
- /* Possible states of 'frozen' field */
- enum {
- 	SB_UNFROZEN = 0,		/* FS is unfrozen */
+ 	/* Determine if already appraised/measured based on bitmask
+ 	 * (IMA_MEASURE, IMA_MEASURED, IMA_XXXX_APPRAISE, IMA_XXXX_APPRAISED,
+ 	 *  IMA_AUDIT, IMA_AUDITED)
+diff --git a/security/integrity/integrity.h b/security/integrity/integrity.h
+index d9323d31a3a83..f63516ebec5db 100644
+--- a/security/integrity/integrity.h
++++ b/security/integrity/integrity.h
+@@ -124,6 +124,8 @@ struct integrity_iint_cache {
+ 	unsigned long flags;
+ 	unsigned long measured_pcrs;
+ 	unsigned long atomic_flags;
++	unsigned long real_ino;
++	dev_t real_dev;
+ 	enum integrity_status ima_file_status:4;
+ 	enum integrity_status ima_mmap_status:4;
+ 	enum integrity_status ima_bprm_status:4;
 -- 
 2.42.0
 
