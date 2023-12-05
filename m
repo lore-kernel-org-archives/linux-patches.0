@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243796FB0;
-	Tue,  5 Dec 2023 03:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124556FB0;
+	Tue,  5 Dec 2023 03:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNKBRBy9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96903C433C7;
-	Tue,  5 Dec 2023 03:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwUi8kXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5E2C433C7;
+	Tue,  5 Dec 2023 03:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747879;
-	bh=qxXU+0rEJr3ZPjMxJxrmzJRoojAVEUbXoiI3SkVMs1I=;
+	s=korg; t=1701747881;
+	bh=D6laREYGgLF22t1NU6VtBREv7S0nzVRwgLarPZk9cCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNKBRBy9BB7nwh5FRMuLRw1yeHEyqvRWwA3VijZ+kNWlDRE7AWI/c2U54Ti7j8xSK
-	 jZzxicyCWhDn29UsLcOS/TgSKSIwaAtcpPBOAozf7pVhIBElrRsfMMcPznzM1j8iTx
-	 /BILx7hwxkZndLDDTZN+Gp61c5nK4sEh31QJH+Qs=
+	b=EwUi8kXQ7JAgBWJe+NraTQdnxL4iTXSF6Q9kMQwMgOr5jepAaRAobbrrt+JhcqixR
+	 AJoCvgelZJ+/4WlAyFCvK+gA553PY130ptOF0pA2B9ftvUphkda50X9ovp5OfnucBj
+	 YpjLAVNS3b1wcqqISLYoPx2XRhu9tRm5RJT3+aao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Murray <andrew.murray@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Zenghui Yu <yuzenghui@huawei.com>
-Subject: [PATCH 5.4 32/94] arm64: cpufeature: Extract capped perfmon fields
-Date: Tue,  5 Dec 2023 12:17:00 +0900
-Message-ID: <20231205031524.700657475@linuxfoundation.org>
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 15/94] amd-xgbe: handle the corner-case during tx completion
+Date: Tue,  5 Dec 2023 12:16:43 +0900
+Message-ID: <20231205031523.746262792@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -44,67 +44,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Murray <andrew.murray@arm.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-commit 8e35aa642ee4dab01b16cc4b2df59d1936f3b3c2 upstream.
+[ Upstream commit 7121205d5330c6a3cb3379348886d47c77b78d06 ]
 
-When emulating ID registers there is often a need to cap the version
-bits of a feature such that the guest will not use features that the
-host is not aware of. For example, when KVM mediates access to the PMU
-by emulating register accesses.
+The existing implementation uses software logic to accumulate tx
+completions until the specified time (1ms) is met and then poll them.
+However, there exists a tiny gap which leads to a race between
+resetting and checking the tx_activate flag. Due to this the tx
+completions are not reported to upper layer and tx queue timeout
+kicks-in restarting the device.
 
-Let's add a helper that extracts a performance monitors ID field and
-caps the version to a given value.
+To address this, introduce a tx cleanup mechanism as part of the
+periodic maintenance process.
 
-Fields that identify the version of the Performance Monitors Extension
-do not follow the standard ID scheme, and instead follow the scheme
-described in ARM DDI 0487E.a page D13-2825 "Alternative ID scheme used
-for the Performance Monitors Extension version". The value 0xF means an
-IMPLEMENTATION DEFINED PMU is present, and values 0x0-OxE can be treated
-the same as an unsigned field with 0x0 meaning no PMU is present.
-
-Signed-off-by: Andrew Murray <andrew.murray@arm.com>
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-[Mark: rework to handle perfmon fields]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Zenghui Yu <yuzenghui@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cpufeature.h |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/arch/arm64/include/asm/cpufeature.h
-+++ b/arch/arm64/include/asm/cpufeature.h
-@@ -449,6 +449,29 @@ cpuid_feature_extract_unsigned_field(u64
- 	return cpuid_feature_extract_unsigned_field_width(features, field, 4);
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+index 7f705483c1c57..504fbd43be7da 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+@@ -682,10 +682,24 @@ static void xgbe_service(struct work_struct *work)
+ static void xgbe_service_timer(struct timer_list *t)
+ {
+ 	struct xgbe_prv_data *pdata = from_timer(pdata, t, service_timer);
++	struct xgbe_channel *channel;
++	unsigned int i;
+ 
+ 	queue_work(pdata->dev_workqueue, &pdata->service_work);
+ 
+ 	mod_timer(&pdata->service_timer, jiffies + HZ);
++
++	if (!pdata->tx_usecs)
++		return;
++
++	for (i = 0; i < pdata->channel_count; i++) {
++		channel = pdata->channel[i];
++		if (!channel->tx_ring || channel->tx_timer_active)
++			break;
++		channel->tx_timer_active = 1;
++		mod_timer(&channel->tx_timer,
++			  jiffies + usecs_to_jiffies(pdata->tx_usecs));
++	}
  }
  
-+/*
-+ * Fields that identify the version of the Performance Monitors Extension do
-+ * not follow the standard ID scheme. See ARM DDI 0487E.a page D13-2825,
-+ * "Alternative ID scheme used for the Performance Monitors Extension version".
-+ */
-+static inline u64 __attribute_const__
-+cpuid_feature_cap_perfmon_field(u64 features, int field, u64 cap)
-+{
-+	u64 val = cpuid_feature_extract_unsigned_field(features, field);
-+	u64 mask = GENMASK_ULL(field + 3, field);
-+
-+	/* Treat IMPLEMENTATION DEFINED functionality as unimplemented */
-+	if (val == 0xf)
-+		val = 0;
-+
-+	if (val > cap) {
-+		features &= ~mask;
-+		features |= (cap << field) & mask;
-+	}
-+
-+	return features;
-+}
-+
- static inline u64 arm64_ftr_mask(const struct arm64_ftr_bits *ftrp)
- {
- 	return (u64)GENMASK(ftrp->shift + ftrp->width - 1, ftrp->shift);
+ static void xgbe_init_timers(struct xgbe_prv_data *pdata)
+-- 
+2.42.0
+
 
 
