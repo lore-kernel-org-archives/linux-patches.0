@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BA16FB1;
-	Tue,  5 Dec 2023 03:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FF36FB1;
+	Tue,  5 Dec 2023 03:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8ew/fYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E314C433C8;
-	Tue,  5 Dec 2023 03:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3AC904V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14634C433C7;
+	Tue,  5 Dec 2023 03:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747446;
-	bh=TiyZJa+5PHN9OtxvUTqahX/ZqI2bozq21NOp4UJ4bTc=;
+	s=korg; t=1701747449;
+	bh=rzNAc5jMsHSwdW++0/Y71amW6UhMkHqcWSv4PHhmVy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8ew/fYXgnE7Py+tzoexHUZ1yLWYGHFc+eTPY6rydtPHNJb5xrTLALRbHeWqYUKlk
-	 FjVts8LW/GKZ9rgOoHlaFVUAglb+zl4vvD6wQPC8JChVnNYdv4qj1+e6bJwjbycHK+
-	 e3ziOTrznhcwx3dO4kKrZM2ImRijxZFU6dn9tbQ8=
+	b=Y3AC904VX1bLi/vi5mK3xTIc242EQgy3PHeYtK155UFFvbE3mTAUD2DF766duJ/iG
+	 +6Fn8+686VZudy7J9ZYzbAQLb+wx1xkyExP2Y6MnIHVdAWeNNld0cbNyohrglY3QNd
+	 L3pRH+YjMbPO8i/xCrEDLe60jH+YcDQZaVzS9LQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Coly Li <colyli@suse.de>,
-	Markus Weippert <markus@gekmihesg.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 079/135] bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
-Date: Tue,  5 Dec 2023 12:16:40 +0900
-Message-ID: <20231205031535.473041491@linuxfoundation.org>
+	"Abdul Halim, Mohd Syazwan" <mohd.syazwan.abdul.halim@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Abdul,
+	Halim
+Subject: [PATCH 5.10 080/135] iommu/vt-d: Add MTL to quirk list to skip TE disabling
+Date: Tue,  5 Dec 2023 12:16:41 +0900
+Message-ID: <20231205031535.539830151@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -43,72 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Weippert <markus@gekmihesg.de>
+From: Abdul Halim, Mohd Syazwan <mohd.syazwan.abdul.halim@intel.com>
 
-commit bb6cc253861bd5a7cf8439e2118659696df9619f upstream.
+commit 85b80fdffa867d75dfb9084a839e7949e29064e8 upstream.
 
-Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
-node allocations") replaced IS_ERR_OR_NULL by IS_ERR. This leads to a
-NULL pointer dereference.
+The VT-d spec requires (10.4.4 Global Command Register, TE field) that:
 
-BUG: kernel NULL pointer dereference, address: 0000000000000080
-Call Trace:
- ? __die_body.cold+0x1a/0x1f
- ? page_fault_oops+0xd2/0x2b0
- ? exc_page_fault+0x70/0x170
- ? asm_exc_page_fault+0x22/0x30
- ? btree_node_free+0xf/0x160 [bcache]
- ? up_write+0x32/0x60
- btree_gc_coalesce+0x2aa/0x890 [bcache]
- ? bch_extent_bad+0x70/0x170 [bcache]
- btree_gc_recurse+0x130/0x390 [bcache]
- ? btree_gc_mark_node+0x72/0x230 [bcache]
- bch_btree_gc+0x5da/0x600 [bcache]
- ? cpuusage_read+0x10/0x10
- ? bch_btree_gc+0x600/0x600 [bcache]
- bch_gc_thread+0x135/0x180 [bcache]
+Hardware implementations supporting DMA draining must drain any in-flight
+DMA read/write requests queued within the Root-Complex before switching
+address translation on or off and reflecting the status of the command
+through the TES field in the Global Status register.
 
-The relevant code starts with:
+Unfortunately, some integrated graphic devices fail to do so after some
+kind of power state transition. As the result, the system might stuck in
+iommu_disable_translation(), waiting for the completion of TE transition.
 
-    new_nodes[0] = NULL;
+Add MTL to the quirk list for those devices and skips TE disabling if the
+qurik hits.
 
-    for (i = 0; i < nodes; i++) {
-        if (__bch_keylist_realloc(&keylist, bkey_u64s(&r[i].b->key)))
-            goto out_nocoalesce;
-    // ...
-out_nocoalesce:
-    // ...
-    for (i = 0; i < nodes; i++)
-        if (!IS_ERR(new_nodes[i])) {  // IS_ERR_OR_NULL before
-028ddcac477b
-            btree_node_free(new_nodes[i]);  // new_nodes[0] is NULL
-            rw_unlock(true, new_nodes[i]);
-        }
-
-This patch replaces IS_ERR() by IS_ERR_OR_NULL() to fix this.
-
-Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
-Link: https://lore.kernel.org/all/3DF4A87A-2AC1-4893-AE5F-E921478419A9@suse.de/
+Fixes: b1012ca8dc4f ("iommu/vt-d: Skip TE disabling on quirky gfx dedicated iommu")
 Cc: stable@vger.kernel.org
-Cc: Zheng Wang <zyytlz.wz@163.com>
-Cc: Coly Li <colyli@suse.de>
-Signed-off-by: Markus Weippert <markus@gekmihesg.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Abdul Halim, Mohd Syazwan <mohd.syazwan.abdul.halim@intel.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20231116022324.30120-1-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/btree.c |    2 +-
+ drivers/iommu/intel/iommu.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1489,7 +1489,7 @@ out_nocoalesce:
- 	bch_keylist_free(&keylist);
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -6325,7 +6325,7 @@ static void quirk_igfx_skip_te_disable(s
+ 	ver = (dev->device >> 8) & 0xff;
+ 	if (ver != 0x45 && ver != 0x46 && ver != 0x4c &&
+ 	    ver != 0x4e && ver != 0x8a && ver != 0x98 &&
+-	    ver != 0x9a && ver != 0xa7)
++	    ver != 0x9a && ver != 0xa7 && ver != 0x7d)
+ 		return;
  
- 	for (i = 0; i < nodes; i++)
--		if (!IS_ERR(new_nodes[i])) {
-+		if (!IS_ERR_OR_NULL(new_nodes[i])) {
- 			btree_node_free(new_nodes[i]);
- 			rw_unlock(true, new_nodes[i]);
- 		}
+ 	if (risky_device(dev))
 
 
