@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395416110;
-	Tue,  5 Dec 2023 03:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72256110;
+	Tue,  5 Dec 2023 03:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6rz2l27"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709AFC433C7;
-	Tue,  5 Dec 2023 03:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NqIXxRi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D593C433C7;
+	Tue,  5 Dec 2023 03:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746751;
-	bh=YfhqTc/8qe+XBrebp05O5/yFvqA+1pU8BQu5NUL6Pj0=;
+	s=korg; t=1701746754;
+	bh=s1sRSkZB8zkiz8v15N+I4Lff+9f1CYyTgZQ7R6qgKUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6rz2l273EfT9aDEp5JtxDSZIZa2itKsqYH1lscv3JMu5+UR/ALUWaisH6K3pKGk7
-	 iPY4+Nm410EJlR9tyRJ5SyDfLIDuxERYxbrJ5rBBv3+GNFCDsXYR0Jou1uhISz2Qzn
-	 s1X1Mn+L05PDjj5rUADhp22OxpM7LUfNTS/aVZH4=
+	b=2NqIXxRipfzzjIRWeFtJYzlSTX2rPxjYMZWLUu0IEB4OH25vbYpJHl5yvOqx2b+R+
+	 MiV49oyWiU3O0Dy1WyttC1NgJcgaamMX3l/JmvujhcflJFcdQBlwb65hLHmfG6Hw4G
+	 9nA3tdVkCCxu6Bu5Jj5vOLqWclCFZq1fp4UtvT+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sean Christopherson <seanjc@google.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
 	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 134/134] vfio: Drop vfio_file_iommu_group() stub to fudge around a KVM wart
-Date: Tue,  5 Dec 2023 12:16:46 +0900
-Message-ID: <20231205031543.944552356@linuxfoundation.org>
+Subject: [PATCH 6.6 131/134] vfio/pds: Fix mutex lock->magic != lock warning
+Date: Tue,  5 Dec 2023 12:16:43 +0900
+Message-ID: <20231205031543.746314201@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -46,92 +43,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit 4ea95c04fa6b9043a1a301240996aeebe3cb28ec ]
+[ Upstream commit 91aeb563bd4332e2988f8c0f64f125c4ecb5bcb3 ]
 
-Drop the vfio_file_iommu_group() stub and instead unconditionally declare
-the function to fudge around a KVM wart where KVM tries to do symbol_get()
-on vfio_file_iommu_group() (and other VFIO symbols) even if CONFIG_VFIO=n.
+The following BUG was found when running on a kernel with
+CONFIG_DEBUG_MUTEXES=y set:
 
-Ensuring the symbol is always declared fixes a PPC build error when
-modules are also disabled, in which case symbol_get() simply points at the
-address of the symbol (with some attributes shenanigans).  Because KVM
-does symbol_get() instead of directly depending on VFIO, the lack of a
-fully defined symbol is not problematic (ugly, but "fine").
+DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+RIP: 0010:mutex_trylock+0x10d/0x120
+Call Trace:
+ <TASK>
+ ? __warn+0x85/0x140
+ ? mutex_trylock+0x10d/0x120
+ ? report_bug+0xfc/0x1e0
+ ? handle_bug+0x3f/0x70
+ ? exc_invalid_op+0x17/0x70
+ ? asm_exc_invalid_op+0x1a/0x20
+ ? mutex_trylock+0x10d/0x120
+ ? mutex_trylock+0x10d/0x120
+ pds_vfio_reset+0x3a/0x60 [pds_vfio_pci]
+ pci_reset_function+0x4b/0x70
+ reset_store+0x5b/0xa0
+ kernfs_fop_write_iter+0x137/0x1d0
+ vfs_write+0x2de/0x410
+ ksys_write+0x5d/0xd0
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-   arch/powerpc/kvm/../../../virt/kvm/vfio.c:89:7:
-   error: attribute declaration must precede definition [-Werror,-Wignored-attributes]
-           fn = symbol_get(vfio_file_iommu_group);
-                ^
-   include/linux/module.h:805:60: note: expanded from macro 'symbol_get'
-   #define symbol_get(x) ({ extern typeof(x) x __attribute__((weak,visibility("hidden"))); &(x); })
-                                                              ^
-   include/linux/vfio.h:294:35: note: previous definition is here
-   static inline struct iommu_group *vfio_file_iommu_group(struct file *file)
-                                     ^
-   arch/powerpc/kvm/../../../virt/kvm/vfio.c:89:7:
-   error: attribute declaration must precede definition [-Werror,-Wignored-attributes]
-           fn = symbol_get(vfio_file_iommu_group);
-                ^
-   include/linux/module.h:805:65: note: expanded from macro 'symbol_get'
-   #define symbol_get(x) ({ extern typeof(x) x __attribute__((weak,visibility("hidden"))); &(x); })
-                                                                   ^
-   include/linux/vfio.h:294:35: note: previous definition is here
-   static inline struct iommu_group *vfio_file_iommu_group(struct file *file)
-                                     ^
-   2 errors generated.
+As shown, lock->magic != lock. This is because
+mutex_init(&pds_vfio->state_mutex) is called in the VFIO open path. So,
+if a reset is initiated before the VFIO device is opened the mutex will
+have never been initialized. Fix this by calling
+mutex_init(&pds_vfio->state_mutex) in the VFIO init path.
 
-Although KVM is firmly in the wrong (there is zero reason for KVM to build
-virt/kvm/vfio.c when VFIO is disabled), fudge around the error in VFIO as
-the stub is unnecessary and doesn't serve its intended purpose (KVM is the
-only external user of vfio_file_iommu_group()), and there is an in-flight
-series to clean up the entire KVM<->VFIO interaction, i.e. fixing this in
-KVM would result in more churn in the long run, and the stub needs to go
-away regardless.
+Also, don't destroy the mutex on close because the device may
+be re-opened, which would cause mutex to be uninitialized. Fix this by
+implementing a driver specific vfio_device_ops.release callback that
+destroys the mutex before calling vfio_pci_core_release_dev().
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202308251949.5IiaV0sz-lkp@intel.com
-Closes: https://lore.kernel.org/oe-kbuild-all/202309030741.82aLACDG-lkp@intel.com
-Closes: https://lore.kernel.org/oe-kbuild-all/202309110914.QLH0LU6L-lkp@intel.com
-Link: https://lore.kernel.org/all/0-v1-08396538817d+13c5-vfio_kvm_kconfig_jgg@nvidia.com
-Link: https://lore.kernel.org/all/20230916003118.2540661-1-seanjc@google.com
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Tested-by: Michael Ellerman <mpe@ellerman.id.au>
-Fixes: c1cce6d079b8 ("vfio: Compile vfio_group infrastructure optionally")
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20231130001000.543240-1-seanjc@google.com
+Fixes: bb500dbe2ac6 ("vfio/pds: Add VFIO live migration support")
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Link: https://lore.kernel.org/r/20231122192532.25791-2-brett.creeley@amd.com
 Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/vfio.h | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/vfio/pci/pds/vfio_dev.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/vfio.h b/include/linux/vfio.h
-index 454e9295970c4..a65b2513f8cdc 100644
---- a/include/linux/vfio.h
-+++ b/include/linux/vfio.h
-@@ -289,16 +289,12 @@ void vfio_combine_iova_ranges(struct rb_root_cached *root, u32 cur_nodes,
- /*
-  * External user API
-  */
--#if IS_ENABLED(CONFIG_VFIO_GROUP)
- struct iommu_group *vfio_file_iommu_group(struct file *file);
+diff --git a/drivers/vfio/pci/pds/vfio_dev.c b/drivers/vfio/pci/pds/vfio_dev.c
+index 649b18ee394bb..8c9fb87b13e1d 100644
+--- a/drivers/vfio/pci/pds/vfio_dev.c
++++ b/drivers/vfio/pci/pds/vfio_dev.c
+@@ -155,6 +155,8 @@ static int pds_vfio_init_device(struct vfio_device *vdev)
+ 
+ 	pds_vfio->vf_id = vf_id;
+ 
++	mutex_init(&pds_vfio->state_mutex);
 +
-+#if IS_ENABLED(CONFIG_VFIO_GROUP)
- bool vfio_file_is_group(struct file *file);
- bool vfio_file_has_dev(struct file *file, struct vfio_device *device);
- #else
--static inline struct iommu_group *vfio_file_iommu_group(struct file *file)
--{
--	return NULL;
--}
--
- static inline bool vfio_file_is_group(struct file *file)
+ 	vdev->migration_flags = VFIO_MIGRATION_STOP_COPY | VFIO_MIGRATION_P2P;
+ 	vdev->mig_ops = &pds_vfio_lm_ops;
+ 	vdev->log_ops = &pds_vfio_log_ops;
+@@ -168,6 +170,16 @@ static int pds_vfio_init_device(struct vfio_device *vdev)
+ 	return 0;
+ }
+ 
++static void pds_vfio_release_device(struct vfio_device *vdev)
++{
++	struct pds_vfio_pci_device *pds_vfio =
++		container_of(vdev, struct pds_vfio_pci_device,
++			     vfio_coredev.vdev);
++
++	mutex_destroy(&pds_vfio->state_mutex);
++	vfio_pci_core_release_dev(vdev);
++}
++
+ static int pds_vfio_open_device(struct vfio_device *vdev)
  {
- 	return false;
+ 	struct pds_vfio_pci_device *pds_vfio =
+@@ -179,7 +191,6 @@ static int pds_vfio_open_device(struct vfio_device *vdev)
+ 	if (err)
+ 		return err;
+ 
+-	mutex_init(&pds_vfio->state_mutex);
+ 	pds_vfio->state = VFIO_DEVICE_STATE_RUNNING;
+ 	pds_vfio->deferred_reset_state = VFIO_DEVICE_STATE_RUNNING;
+ 
+@@ -199,14 +210,13 @@ static void pds_vfio_close_device(struct vfio_device *vdev)
+ 	pds_vfio_put_save_file(pds_vfio);
+ 	pds_vfio_dirty_disable(pds_vfio, true);
+ 	mutex_unlock(&pds_vfio->state_mutex);
+-	mutex_destroy(&pds_vfio->state_mutex);
+ 	vfio_pci_core_close_device(vdev);
+ }
+ 
+ static const struct vfio_device_ops pds_vfio_ops = {
+ 	.name = "pds-vfio",
+ 	.init = pds_vfio_init_device,
+-	.release = vfio_pci_core_release_dev,
++	.release = pds_vfio_release_device,
+ 	.open_device = pds_vfio_open_device,
+ 	.close_device = pds_vfio_close_device,
+ 	.ioctl = vfio_pci_core_ioctl,
 -- 
 2.42.0
 
