@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943D66FB1;
-	Tue,  5 Dec 2023 03:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCB06FB1;
+	Tue,  5 Dec 2023 03:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pz4l4h9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA6DC433C8;
-	Tue,  5 Dec 2023 03:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKiCPbst"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA82C433C8;
+	Tue,  5 Dec 2023 03:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747220;
-	bh=7aZqJopJDDcroIyECQnZxjtunXP4pM4M8I7q4ujqswI=;
+	s=korg; t=1701747223;
+	bh=CGxAxDc2vmSdGknE4eP7eyk5HJBGEf9Ml4Z3cCgqZHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pz4l4h9N7RtebcQysibMCdipk/A/a5SxbVS6vOhTysJ4yeuO6DSpk8Zk9iTL2NnkU
-	 79ZLPsHoiNB/tISr0IbPiz5chYn77u6AH3nLgQASdELqgm+PSfhBsnwRN2ZCViYZRK
-	 IUYuceDvNfUHAImdgVg6q93TUmfPOTVCAzBiuunQ=
+	b=iKiCPbstTHiyRvQOfpG8y8PKiVwZerVT3UJTJdgGTDRXbtmV10Jby5cjStB5fO7g5
+	 GUzPZ6Z+fa3RsxD4L5Ti+Ff58M8ZXOkvaW9xCpQxTR3GScs31iJcU7W0T9d2yEtPoY
+	 3Lieo3GRZr1JIb7FXTXns5bCzHsEJHO4nmzdX728=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
 	Juergen Gross <jgross@suse.com>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/107] xen: Allow platform PCI interrupt to be shared
-Date: Tue,  5 Dec 2023 12:17:19 +0900
-Message-ID: <20231205031538.283030123@linuxfoundation.org>
+Subject: [PATCH 6.1 105/107] xen: simplify evtchn_do_upcall() call maze
+Date: Tue,  5 Dec 2023 12:17:20 +0900
+Message-ID: <20231205031538.357144849@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -42,107 +43,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 3e8cd711c3da6c3d724076048038cd666bdbb2b5 ]
+[ Upstream commit 37510dd566bdbff31a769cde2fa6654bccdb8b24 ]
 
-When we don't use the per-CPU vector callback, we ask Xen to deliver event
-channel interrupts as INTx on the PCI platform device. As such, it can be
-shared with INTx on other PCI devices.
+There are several functions involved for performing the functionality
+of evtchn_do_upcall():
 
-Set IRQF_SHARED, and make it return IRQ_HANDLED or IRQ_NONE according to
-whether the evtchn_upcall_pending flag was actually set. Now I can share
-the interrupt:
+- __xen_evtchn_do_upcall() doing the real work
+- xen_hvm_evtchn_do_upcall() just being a wrapper for
+  __xen_evtchn_do_upcall(), exposed for external callers
+- xen_evtchn_do_upcall() calling __xen_evtchn_do_upcall(), too, but
+  without any user
 
- 11:         82          0   IO-APIC  11-fasteoi   xen-platform-pci, ens4
+Simplify this maze by:
 
-Drop the IRQF_TRIGGER_RISING. It has no effect when the IRQ is shared,
-and besides, the only effect it was having even beforehand was to trigger
-a debug message in both I/OAPIC and legacy PIC cases:
+- removing the unused xen_evtchn_do_upcall()
+- removing xen_hvm_evtchn_do_upcall() as the only left caller of
+  __xen_evtchn_do_upcall(), while renaming __xen_evtchn_do_upcall() to
+  xen_evtchn_do_upcall()
 
-[    0.915441] genirq: No set_type function for IRQ 11 (IO-APIC)
-[    0.951939] genirq: No set_type function for IRQ 11 (XT-PIC)
-
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/f9a29a68d05668a3636dd09acd94d970269eaec6.camel@infradead.org
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Stable-dep-of: db2832309a82 ("x86/xen: fix percpu vcpu_info allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/events/events_base.c | 9 ++++++---
- drivers/xen/platform-pci.c       | 5 ++---
- include/xen/events.h             | 2 +-
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ arch/arm/xen/enlighten.c         |  2 +-
+ arch/x86/entry/common.c          |  2 +-
+ arch/x86/xen/enlighten.c         |  2 +-
+ arch/x86/xen/enlighten_hvm.c     |  2 +-
+ drivers/xen/events/events_base.c | 21 ++-------------------
+ drivers/xen/platform-pci.c       |  2 +-
+ include/xen/events.h             |  3 +--
+ 7 files changed, 8 insertions(+), 26 deletions(-)
 
+diff --git a/arch/arm/xen/enlighten.c b/arch/arm/xen/enlighten.c
+index d12fdb9c05a89..eace3607fef41 100644
+--- a/arch/arm/xen/enlighten.c
++++ b/arch/arm/xen/enlighten.c
+@@ -204,7 +204,7 @@ static void xen_power_off(void)
+ 
+ static irqreturn_t xen_arm_callback(int irq, void *arg)
+ {
+-	xen_hvm_evtchn_do_upcall();
++	xen_evtchn_do_upcall();
+ 	return IRQ_HANDLED;
+ }
+ 
+diff --git a/arch/x86/entry/common.c b/arch/x86/entry/common.c
+index 6c2826417b337..93c60c0c9d4a7 100644
+--- a/arch/x86/entry/common.c
++++ b/arch/x86/entry/common.c
+@@ -294,7 +294,7 @@ static void __xen_pv_evtchn_do_upcall(struct pt_regs *regs)
+ 
+ 	inc_irq_stat(irq_hv_callback_count);
+ 
+-	xen_hvm_evtchn_do_upcall();
++	xen_evtchn_do_upcall();
+ 
+ 	set_irq_regs(old_regs);
+ }
+diff --git a/arch/x86/xen/enlighten.c b/arch/x86/xen/enlighten.c
+index b8db2148c07d5..0337392a31214 100644
+--- a/arch/x86/xen/enlighten.c
++++ b/arch/x86/xen/enlighten.c
+@@ -32,7 +32,7 @@ EXPORT_SYMBOL_GPL(hypercall_page);
+  * &HYPERVISOR_shared_info->vcpu_info[cpu]. See xen_hvm_init_shared_info
+  * and xen_vcpu_setup for details. By default it points to share_info->vcpu_info
+  * but during boot it is switched to point to xen_vcpu_info.
+- * The pointer is used in __xen_evtchn_do_upcall to acknowledge pending events.
++ * The pointer is used in xen_evtchn_do_upcall to acknowledge pending events.
+  */
+ DEFINE_PER_CPU(struct vcpu_info *, xen_vcpu);
+ DEFINE_PER_CPU(struct vcpu_info, xen_vcpu_info);
+diff --git a/arch/x86/xen/enlighten_hvm.c b/arch/x86/xen/enlighten_hvm.c
+index c1cd28e915a3a..c66807dd02703 100644
+--- a/arch/x86/xen/enlighten_hvm.c
++++ b/arch/x86/xen/enlighten_hvm.c
+@@ -136,7 +136,7 @@ DEFINE_IDTENTRY_SYSVEC(sysvec_xen_hvm_callback)
+ 
+ 	inc_irq_stat(irq_hv_callback_count);
+ 
+-	xen_hvm_evtchn_do_upcall();
++	xen_evtchn_do_upcall();
+ 
+ 	set_irq_regs(old_regs);
+ }
 diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
-index af9115d648092..014a83d016f59 100644
+index 014a83d016f59..00f8e349921d4 100644
 --- a/drivers/xen/events/events_base.c
 +++ b/drivers/xen/events/events_base.c
-@@ -1710,9 +1710,10 @@ void handle_irq_for_port(evtchn_port_t port, struct evtchn_loop_ctrl *ctrl)
+@@ -1710,7 +1710,7 @@ void handle_irq_for_port(evtchn_port_t port, struct evtchn_loop_ctrl *ctrl)
  	generic_handle_irq(irq);
  }
  
--static void __xen_evtchn_do_upcall(void)
-+static int __xen_evtchn_do_upcall(void)
+-static int __xen_evtchn_do_upcall(void)
++int xen_evtchn_do_upcall(void)
  {
  	struct vcpu_info *vcpu_info = __this_cpu_read(xen_vcpu);
-+	int ret = vcpu_info->evtchn_upcall_pending ? IRQ_HANDLED : IRQ_NONE;
- 	int cpu = smp_processor_id();
- 	struct evtchn_loop_ctrl ctrl = { 0 };
+ 	int ret = vcpu_info->evtchn_upcall_pending ? IRQ_HANDLED : IRQ_NONE;
+@@ -1748,24 +1748,7 @@ static int __xen_evtchn_do_upcall(void)
  
-@@ -1744,6 +1745,8 @@ static void __xen_evtchn_do_upcall(void)
- 	 * above.
- 	 */
- 	__this_cpu_inc(irq_epoch);
-+
-+	return ret;
+ 	return ret;
  }
- 
- void xen_evtchn_do_upcall(struct pt_regs *regs)
-@@ -1758,9 +1761,9 @@ void xen_evtchn_do_upcall(struct pt_regs *regs)
- 	set_irq_regs(old_regs);
- }
- 
--void xen_hvm_evtchn_do_upcall(void)
-+int xen_hvm_evtchn_do_upcall(void)
- {
+-
+-void xen_evtchn_do_upcall(struct pt_regs *regs)
+-{
+-	struct pt_regs *old_regs = set_irq_regs(regs);
+-
+-	irq_enter();
+-
 -	__xen_evtchn_do_upcall();
-+	return __xen_evtchn_do_upcall();
- }
- EXPORT_SYMBOL_GPL(xen_hvm_evtchn_do_upcall);
+-
+-	irq_exit();
+-	set_irq_regs(old_regs);
+-}
+-
+-int xen_hvm_evtchn_do_upcall(void)
+-{
+-	return __xen_evtchn_do_upcall();
+-}
+-EXPORT_SYMBOL_GPL(xen_hvm_evtchn_do_upcall);
++EXPORT_SYMBOL_GPL(xen_evtchn_do_upcall);
  
+ /* Rebind a new event channel to an existing irq. */
+ void rebind_evtchn_irq(evtchn_port_t evtchn, int irq)
 diff --git a/drivers/xen/platform-pci.c b/drivers/xen/platform-pci.c
-index cd07e3fed0faf..fcc8191315723 100644
+index fcc8191315723..544d3f9010b92 100644
 --- a/drivers/xen/platform-pci.c
 +++ b/drivers/xen/platform-pci.c
-@@ -64,14 +64,13 @@ static uint64_t get_callback_via(struct pci_dev *pdev)
+@@ -64,7 +64,7 @@ static uint64_t get_callback_via(struct pci_dev *pdev)
  
  static irqreturn_t do_hvm_evtchn_intr(int irq, void *dev_id)
  {
--	xen_hvm_evtchn_do_upcall();
--	return IRQ_HANDLED;
-+	return xen_hvm_evtchn_do_upcall();
+-	return xen_hvm_evtchn_do_upcall();
++	return xen_evtchn_do_upcall();
  }
  
  static int xen_allocate_irq(struct pci_dev *pdev)
- {
- 	return request_irq(pdev->irq, do_hvm_evtchn_intr,
--			IRQF_NOBALANCING | IRQF_TRIGGER_RISING,
-+			IRQF_NOBALANCING | IRQF_SHARED,
- 			"xen-platform-pci", pdev);
- }
- 
 diff --git a/include/xen/events.h b/include/xen/events.h
-index 344081e71584b..44c2855c76d1f 100644
+index 44c2855c76d1f..b303bd24e2a6c 100644
 --- a/include/xen/events.h
 +++ b/include/xen/events.h
-@@ -107,7 +107,7 @@ evtchn_port_t evtchn_from_irq(unsigned irq);
+@@ -106,8 +106,7 @@ int irq_from_virq(unsigned int cpu, unsigned int virq);
+ evtchn_port_t evtchn_from_irq(unsigned irq);
  
  int xen_set_callback_via(uint64_t via);
- void xen_evtchn_do_upcall(struct pt_regs *regs);
--void xen_hvm_evtchn_do_upcall(void);
-+int xen_hvm_evtchn_do_upcall(void);
+-void xen_evtchn_do_upcall(struct pt_regs *regs);
+-int xen_hvm_evtchn_do_upcall(void);
++int xen_evtchn_do_upcall(void);
  
  /* Bind a pirq for a physical interrupt to an irq. */
  int xen_bind_pirq_gsi_to_irq(unsigned gsi,
