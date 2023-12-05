@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474876FB1;
-	Tue,  5 Dec 2023 03:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2616FB1;
+	Tue,  5 Dec 2023 03:37:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViXCkg+a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C16C433C8;
-	Tue,  5 Dec 2023 03:37:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uB95/c4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE32BC433C7;
+	Tue,  5 Dec 2023 03:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747433;
-	bh=gS/h23jMkNPLVEfaK2oKtgDrhiSyDGW5KxzrhjAzvs4=;
+	s=korg; t=1701747436;
+	bh=wbIaDUEpdTTYNPkyKIfU3JW7TXKAHbaaT94KUWxQLkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ViXCkg+acnblxVh/OAgkNgtmJ8EsRaWSk1zmDoRLvKugCfzFixB7PeMGQgKJK9SBW
-	 Rivst6wBFONJqVJ40tZ8JHjZzfJIDerNoaDhZaKf6ehDRLhYYMLujo1vdi1vPQLKtW
-	 RO9LQxaywzyX/0dHrooLxSN/58onJ9E9V8cZB+hg=
+	b=uB95/c4TlaN25rkOvSIM2qfRn+d1lOFxXedw6201/B9zm7VlEfsEFqNFKmFa+LSem
+	 keUhoPb9jvRQ5csFC/8tnKbUUvaUKINg5zNhmWjRkegKkb87rnJyAT8oZ62ty24QzQ
+	 lBEoq6c+G7YjdPpfz7rW2oujsdo0jK5jaIqqF1W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 057/135] dm-delay: fix a race between delay_presuspend and delay_bio
-Date: Tue,  5 Dec 2023 12:16:18 +0900
-Message-ID: <20231205031534.047599261@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 075/135] ALSA: hda/realtek: Headset Mic VREF to 100%
+Date: Tue,  5 Dec 2023 12:16:36 +0900
+Message-ID: <20231205031535.204171329@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,98 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 6fc45b6ed921dc00dfb264dc08c7d67ee63d2656 ]
+commit baaacbff64d9f34b64f294431966d035aeadb81c upstream.
 
-In delay_presuspend, we set the atomic variable may_delay and then stop
-the timer and flush pending bios. The intention here is to prevent the
-delay target from re-arming the timer again.
+This platform need to set Mic VREF to 100%.
 
-However, this test is racy. Suppose that one thread goes to delay_bio,
-sees that dc->may_delay is one and proceeds; now, another thread executes
-delay_presuspend, it sets dc->may_delay to zero, deletes the timer and
-flushes pending bios. Then, the first thread continues and adds the bio to
-delayed->list despite the fact that dc->may_delay is false.
-
-Fix this bug by changing may_delay's type from atomic_t to bool and
-only access it while holding the delayed_bios_lock mutex. Note that we
-don't have to grab the mutex in delay_resume because there are no bios
-in flight at this point.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/0916af40f08a4348a3298a9a59e6967e@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-delay.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ sound/pci/hda/patch_realtek.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/md/dm-delay.c b/drivers/md/dm-delay.c
-index 2628a832787b0..d58b9ae6f2870 100644
---- a/drivers/md/dm-delay.c
-+++ b/drivers/md/dm-delay.c
-@@ -30,7 +30,7 @@ struct delay_c {
- 	struct workqueue_struct *kdelayd_wq;
- 	struct work_struct flush_expired_bios;
- 	struct list_head delayed_bios;
--	atomic_t may_delay;
-+	bool may_delay;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -1994,6 +1994,7 @@ enum {
+ 	ALC887_FIXUP_ASUS_AUDIO,
+ 	ALC887_FIXUP_ASUS_HMIC,
+ 	ALCS1200A_FIXUP_MIC_VREF,
++	ALC888VD_FIXUP_MIC_100VREF,
+ };
  
- 	struct delay_class read;
- 	struct delay_class write;
-@@ -191,7 +191,7 @@ static int delay_ctr(struct dm_target *ti, unsigned int argc, char **argv)
- 	INIT_WORK(&dc->flush_expired_bios, flush_expired_bios);
- 	INIT_LIST_HEAD(&dc->delayed_bios);
- 	mutex_init(&dc->timer_lock);
--	atomic_set(&dc->may_delay, 1);
-+	dc->may_delay = true;
- 	dc->argc = argc;
+ static void alc889_fixup_coef(struct hda_codec *codec,
+@@ -2547,6 +2548,13 @@ static const struct hda_fixup alc882_fix
+ 			{}
+ 		}
+ 	},
++	[ALC888VD_FIXUP_MIC_100VREF] = {
++		.type = HDA_FIXUP_PINCTLS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x18, PIN_VREF100 }, /* headset mic */
++			{}
++		}
++	},
+ };
  
- 	ret = delay_class_ctr(ti, &dc->read, argv);
-@@ -245,7 +245,7 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
- 	struct dm_delay_info *delayed;
- 	unsigned long expires = 0;
+ static const struct snd_pci_quirk alc882_fixup_tbl[] = {
+@@ -2616,6 +2624,7 @@ static const struct snd_pci_quirk alc882
+ 	SND_PCI_QUIRK(0x106b, 0x4a00, "Macbook 5,2", ALC889_FIXUP_MBA11_VREF),
  
--	if (!c->delay || !atomic_read(&dc->may_delay))
-+	if (!c->delay)
- 		return DM_MAPIO_REMAPPED;
- 
- 	delayed = dm_per_bio_data(bio, sizeof(struct dm_delay_info));
-@@ -254,6 +254,10 @@ static int delay_bio(struct delay_c *dc, struct delay_class *c, struct bio *bio)
- 	delayed->expires = expires = jiffies + msecs_to_jiffies(c->delay);
- 
- 	mutex_lock(&delayed_bios_lock);
-+	if (unlikely(!dc->may_delay)) {
-+		mutex_unlock(&delayed_bios_lock);
-+		return DM_MAPIO_REMAPPED;
-+	}
- 	c->ops++;
- 	list_add_tail(&delayed->list, &dc->delayed_bios);
- 	mutex_unlock(&delayed_bios_lock);
-@@ -267,7 +271,10 @@ static void delay_presuspend(struct dm_target *ti)
- {
- 	struct delay_c *dc = ti->private;
- 
--	atomic_set(&dc->may_delay, 0);
-+	mutex_lock(&delayed_bios_lock);
-+	dc->may_delay = false;
-+	mutex_unlock(&delayed_bios_lock);
-+
- 	del_timer_sync(&dc->delay_timer);
- 	flush_bios(flush_delayed_bios(dc, 1));
- }
-@@ -276,7 +283,7 @@ static void delay_resume(struct dm_target *ti)
- {
- 	struct delay_c *dc = ti->private;
- 
--	atomic_set(&dc->may_delay, 1);
-+	dc->may_delay = true;
- }
- 
- static int delay_map(struct dm_target *ti, struct bio *bio)
--- 
-2.42.0
-
+ 	SND_PCI_QUIRK(0x1071, 0x8258, "Evesham Voyaeger", ALC882_FIXUP_EAPD),
++	SND_PCI_QUIRK(0x10ec, 0x12d8, "iBase Elo Touch", ALC888VD_FIXUP_MIC_100VREF),
+ 	SND_PCI_QUIRK(0x13fe, 0x1009, "Advantech MIT-W101", ALC886_FIXUP_EAPD),
+ 	SND_PCI_QUIRK(0x1458, 0xa002, "Gigabyte EP45-DS3/Z87X-UD3H", ALC889_FIXUP_FRONT_HP_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1458, 0xa0b8, "Gigabyte AZ370-Gaming", ALC1220_FIXUP_GB_DUAL_CODECS),
 
 
