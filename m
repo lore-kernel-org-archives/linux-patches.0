@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F9E6FB1;
-	Tue,  5 Dec 2023 03:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BA16FB1;
+	Tue,  5 Dec 2023 03:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDeuSArF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C142AC433C8;
-	Tue,  5 Dec 2023 03:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8ew/fYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E314C433C8;
+	Tue,  5 Dec 2023 03:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747444;
-	bh=VBYYWsmujcfNLNBN0m4HcJUp0YubCxckad9cEXzCSaQ=;
+	s=korg; t=1701747446;
+	bh=TiyZJa+5PHN9OtxvUTqahX/ZqI2bozq21NOp4UJ4bTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDeuSArFeltly+loywgRsiik0PTPBiFt6Bj/FCsskBZvRImWas7SmjEUbi5dI4WLi
-	 FgPxV8G8/Jq0RIOaecDG+k0DVT9JEOSbdD/e51YxVhbbcKPQzayIUrnVwRJ4vKbpe2
-	 Dubf7ddmOJoQrru/tNuxFcE40eABHEv07I701bso=
+	b=V8ew/fYXgnE7Py+tzoexHUZ1yLWYGHFc+eTPY6rydtPHNJb5xrTLALRbHeWqYUKlk
+	 FjVts8LW/GKZ9rgOoHlaFVUAglb+zl4vvD6wQPC8JChVnNYdv4qj1+e6bJwjbycHK+
+	 e3ziOTrznhcwx3dO4kKrZM2ImRijxZFU6dn9tbQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wu Bo <bo.wu@vivo.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 078/135] dm verity: dont perform FEC for failed readahead IO
-Date: Tue,  5 Dec 2023 12:16:39 +0900
-Message-ID: <20231205031535.407067851@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Coly Li <colyli@suse.de>,
+	Markus Weippert <markus@gekmihesg.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 079/135] bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
+Date: Tue,  5 Dec 2023 12:16:40 +0900
+Message-ID: <20231205031535.473041491@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,83 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wu Bo <bo.wu@vivo.com>
+From: Markus Weippert <markus@gekmihesg.de>
 
-commit 0193e3966ceeeef69e235975918b287ab093082b upstream.
+commit bb6cc253861bd5a7cf8439e2118659696df9619f upstream.
 
-We found an issue under Android OTA scenario that many BIOs have to do
-FEC where the data under dm-verity is 100% complete and no corruption.
+Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
+node allocations") replaced IS_ERR_OR_NULL by IS_ERR. This leads to a
+NULL pointer dereference.
 
-Android OTA has many dm-block layers, from upper to lower:
-dm-verity
-dm-snapshot
-dm-origin & dm-cow
-dm-linear
-ufs
+BUG: kernel NULL pointer dereference, address: 0000000000000080
+Call Trace:
+ ? __die_body.cold+0x1a/0x1f
+ ? page_fault_oops+0xd2/0x2b0
+ ? exc_page_fault+0x70/0x170
+ ? asm_exc_page_fault+0x22/0x30
+ ? btree_node_free+0xf/0x160 [bcache]
+ ? up_write+0x32/0x60
+ btree_gc_coalesce+0x2aa/0x890 [bcache]
+ ? bch_extent_bad+0x70/0x170 [bcache]
+ btree_gc_recurse+0x130/0x390 [bcache]
+ ? btree_gc_mark_node+0x72/0x230 [bcache]
+ bch_btree_gc+0x5da/0x600 [bcache]
+ ? cpuusage_read+0x10/0x10
+ ? bch_btree_gc+0x600/0x600 [bcache]
+ bch_gc_thread+0x135/0x180 [bcache]
 
-DM tables have to change 2 times during Android OTA merging process.
-When doing table change, the dm-snapshot will be suspended for a while.
-During this interval, many readahead IOs are submitted to dm_verity
-from filesystem. Then the kverity works are busy doing FEC process
-which cost too much time to finish dm-verity IO. This causes needless
-delay which feels like system is hung.
+The relevant code starts with:
 
-After adding debugging it was found that each readahead IO needed
-around 10s to finish when this situation occurred. This is due to IO
-amplification:
+    new_nodes[0] = NULL;
 
-dm-snapshot suspend
-erofs_readahead     // 300+ io is submitted
-	dm_submit_bio (dm_verity)
-		dm_submit_bio (dm_snapshot)
-		bio return EIO
-		bio got nothing, it's empty
-	verity_end_io
-	verity_verify_io
-	forloop range(0, io->n_blocks)    // each io->nblocks ~= 20
-		verity_fec_decode
-		fec_decode_rsb
-		fec_read_bufs
-		forloop range(0, v->fec->rsn) // v->fec->rsn = 253
-			new_read
-			submit_bio (dm_snapshot)
-		end loop
-	end loop
-dm-snapshot resume
+    for (i = 0; i < nodes; i++) {
+        if (__bch_keylist_realloc(&keylist, bkey_u64s(&r[i].b->key)))
+            goto out_nocoalesce;
+    // ...
+out_nocoalesce:
+    // ...
+    for (i = 0; i < nodes; i++)
+        if (!IS_ERR(new_nodes[i])) {  // IS_ERR_OR_NULL before
+028ddcac477b
+            btree_node_free(new_nodes[i]);  // new_nodes[0] is NULL
+            rw_unlock(true, new_nodes[i]);
+        }
 
-Readahead BIOs get nothing while dm-snapshot is suspended, so all of
-them will cause verity's FEC.
-Each readahead BIO needs to verify ~20 (io->nblocks) blocks.
-Each block needs to do FEC, and every block needs to do 253
-(v->fec->rsn) reads.
-So during the suspend interval(~200ms), 300 readahead BIOs trigger
-~1518000 (300*20*253) IOs to dm-snapshot.
+This patch replaces IS_ERR() by IS_ERR_OR_NULL() to fix this.
 
-As readahead IO is not required by userspace, and to fix this issue,
-it is best to pass readahead errors to upper layer to handle it.
-
+Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
+Link: https://lore.kernel.org/all/3DF4A87A-2AC1-4893-AE5F-E921478419A9@suse.de/
 Cc: stable@vger.kernel.org
-Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
-Signed-off-by: Wu Bo <bo.wu@vivo.com>
-Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Cc: Zheng Wang <zyytlz.wz@163.com>
+Cc: Coly Li <colyli@suse.de>
+Signed-off-by: Markus Weippert <markus@gekmihesg.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/bcache/btree.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -583,7 +583,9 @@ static void verity_end_io(struct bio *bi
- 	struct dm_verity_io *io = bio->bi_private;
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -1489,7 +1489,7 @@ out_nocoalesce:
+ 	bch_keylist_free(&keylist);
  
- 	if (bio->bi_status &&
--	    (!verity_fec_is_enabled(io->v) || verity_is_system_shutting_down())) {
-+	    (!verity_fec_is_enabled(io->v) ||
-+	     verity_is_system_shutting_down() ||
-+	     (bio->bi_opf & REQ_RAHEAD))) {
- 		verity_finish_io(io, bio->bi_status);
- 		return;
- 	}
+ 	for (i = 0; i < nodes; i++)
+-		if (!IS_ERR(new_nodes[i])) {
++		if (!IS_ERR_OR_NULL(new_nodes[i])) {
+ 			btree_node_free(new_nodes[i]);
+ 			rw_unlock(true, new_nodes[i]);
+ 		}
 
 
