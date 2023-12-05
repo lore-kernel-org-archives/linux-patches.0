@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C5A79E3;
-	Tue,  5 Dec 2023 03:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3316FB1;
+	Tue,  5 Dec 2023 03:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWud+WcX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0749CC433C7;
-	Tue,  5 Dec 2023 03:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvAGKb8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA95BC433C9;
+	Tue,  5 Dec 2023 03:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747212;
-	bh=QbDyt+MCrkIDO17vFc0kCxxWCBLgwiWohC03M5AmlgE=;
+	s=korg; t=1701747215;
+	bh=AwUJDkZM/KdQq/mPiBTL/mtSy0ODIb+En9D04ZVhX3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RWud+WcXXql5eri6uY2m3186NIdJ3kX14elpJt+7MtJaVOH3Ns8ZbLdSboo9rdccB
-	 9d7Xx6UPUEtoPnlcVNOFUL+BR7zt8uR/nb/gf+kbJ9pOphJIt3L/42ilLhrt8IacYu
-	 kM7846Hp4X7YRGI4zE6f+uYmaDwcW1rrk3qm+vVg=
+	b=nvAGKb8gHFMCtaX/XGehTuMiOXZl0JjyvSLvdD5/QpAS55kIMCJaPKdJmujqqRhds
+	 tSM9/xajXzeQeMFmegraiZnIGsvVX/kkN7TBoR8nq0T0IHD7R9d/lPVIfD0UHu/oqa
+	 8KVUz/DtUfIL2p+YS5C+QrodQmkD8ClNv+3UOvic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krunoslav Kovac <krunoslav.kovac@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Ilya Bakoulin <ilya.bakoulin@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/107] drm/amd/display: Fix MPCC 1DLUT programming
-Date: Tue,  5 Dec 2023 12:17:16 +0900
-Message-ID: <20231205031538.070419313@linuxfoundation.org>
+Subject: [PATCH 6.1 102/107] r8169: disable ASPM in case of tx timeout
+Date: Tue,  5 Dec 2023 12:17:17 +0900
+Message-ID: <20231205031538.133827871@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -44,51 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Bakoulin <ilya.bakoulin@amd.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 6f395cebdd8927fbffdc3a55a14fcacf93634359 ]
+[ Upstream commit 80c0576ef179311f624bc450fede30a89afe9792 ]
 
-[Why]
-Wrong function is used to translate LUT values to HW format, leading to
-visible artifacting in some cases.
+There are still single reports of systems where ASPM incompatibilities
+cause tx timeouts. It's not clear whom to blame, so let's disable
+ASPM in case of a tx timeout.
 
-[How]
-Use the correct cm3_helper function.
+v2:
+- add one-time warning for informing the user
 
-Cc: stable@vger.kernel.org # 6.1+
-Reviewed-by: Krunoslav Kovac <krunoslav.kovac@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Ilya Bakoulin <ilya.bakoulin@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/92369a92-dc32-4529-0509-11459ba0e391@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 59d395ed606d ("r8169: fix deadlock on RTL8125 in jumbo mtu mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-index f69e7d748e68b..bd75d3cba0980 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -566,8 +566,7 @@ bool dcn32_set_mcm_luts(
- 		if (plane_state->blend_tf->type == TF_TYPE_HWPWL)
- 			lut_params = &plane_state->blend_tf->pwl;
- 		else if (plane_state->blend_tf->type == TF_TYPE_DISTRIBUTED_POINTS) {
--			cm_helper_translate_curve_to_hw_format(plane_state->ctx,
--					plane_state->blend_tf,
-+			cm3_helper_translate_curve_to_hw_format(plane_state->blend_tf,
- 					&dpp_base->regamma_params, false);
- 			lut_params = &dpp_base->regamma_params;
- 		}
-@@ -581,8 +580,7 @@ bool dcn32_set_mcm_luts(
- 		else if (plane_state->in_shaper_func->type == TF_TYPE_DISTRIBUTED_POINTS) {
- 			// TODO: dpp_base replace
- 			ASSERT(false);
--			cm_helper_translate_curve_to_hw_format(plane_state->ctx,
--					plane_state->in_shaper_func,
-+			cm3_helper_translate_curve_to_hw_format(plane_state->in_shaper_func,
- 					&dpp_base->shaper_params, true);
- 			lut_params = &dpp_base->shaper_params;
- 		}
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index d293c996252cd..7cb09ba14533c 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -576,6 +576,7 @@ struct rtl8169_tc_offsets {
+ enum rtl_flag {
+ 	RTL_FLAG_TASK_ENABLED = 0,
+ 	RTL_FLAG_TASK_RESET_PENDING,
++	RTL_FLAG_TASK_TX_TIMEOUT,
+ 	RTL_FLAG_MAX
+ };
+ 
+@@ -3943,7 +3944,7 @@ static void rtl8169_tx_timeout(struct net_device *dev, unsigned int txqueue)
+ {
+ 	struct rtl8169_private *tp = netdev_priv(dev);
+ 
+-	rtl_schedule_task(tp, RTL_FLAG_TASK_RESET_PENDING);
++	rtl_schedule_task(tp, RTL_FLAG_TASK_TX_TIMEOUT);
+ }
+ 
+ static int rtl8169_tx_map(struct rtl8169_private *tp, const u32 *opts, u32 len,
+@@ -4537,6 +4538,7 @@ static void rtl_task(struct work_struct *work)
+ {
+ 	struct rtl8169_private *tp =
+ 		container_of(work, struct rtl8169_private, wk.work);
++	int ret;
+ 
+ 	rtnl_lock();
+ 
+@@ -4544,7 +4546,17 @@ static void rtl_task(struct work_struct *work)
+ 	    !test_bit(RTL_FLAG_TASK_ENABLED, tp->wk.flags))
+ 		goto out_unlock;
+ 
++	if (test_and_clear_bit(RTL_FLAG_TASK_TX_TIMEOUT, tp->wk.flags)) {
++		/* ASPM compatibility issues are a typical reason for tx timeouts */
++		ret = pci_disable_link_state(tp->pci_dev, PCIE_LINK_STATE_L1 |
++							  PCIE_LINK_STATE_L0S);
++		if (!ret)
++			netdev_warn_once(tp->dev, "ASPM disabled on Tx timeout\n");
++		goto reset;
++	}
++
+ 	if (test_and_clear_bit(RTL_FLAG_TASK_RESET_PENDING, tp->wk.flags)) {
++reset:
+ 		rtl_reset_work(tp);
+ 		netif_wake_queue(tp->dev);
+ 	}
 -- 
 2.42.0
 
