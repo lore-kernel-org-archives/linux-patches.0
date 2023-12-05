@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFF86AA0;
-	Tue,  5 Dec 2023 03:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583626AA0;
+	Tue,  5 Dec 2023 03:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDgMpPbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA23C433C8;
-	Tue,  5 Dec 2023 03:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IppoI12G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FA9C433C8;
+	Tue,  5 Dec 2023 03:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746489;
-	bh=kt5oxSxU1jyoUm4rNETTGs3elKFBfxtOXBKFLeM0MWs=;
+	s=korg; t=1701746491;
+	bh=9t/7CfrZYK7+0OSQK1V2vPRObZ+ZCHxqVNZ4oyVTfD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDgMpPbeSHyQIPn1ux7dsY7d4HlIdTZqZpdNL7PFA0UN21k1WtSGtLBwjI7irD6Ym
-	 A9pvZa2dAb3iMbdS+I/TRRw+PDu1pOT8ixbfhf/4QnyUKe8MC3oEsoT7zE1i35I99y
-	 JM2OXKMjudKmFWiTKnEzO3lIy/1JyHjw75BzGcRA=
+	b=IppoI12GlH96DQnJlJ6n8byFzimqSgmx2nS7lm00pb83dODP7j6TyL6Uh7nXW9Ie5
+	 5x9T87lADrQpMJJiFn8DEXxpb8SpGbMMCnkusc/701TDdUJPukohxoQ2p7dL0XHb/d
+	 FmPfBTHaMsFKVMoydedzwizct7biQEW0131O6+p8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 042/134] io_uring: dont allow discontig pages for IORING_SETUP_NO_MMAP
-Date: Tue,  5 Dec 2023 12:15:14 +0900
-Message-ID: <20231205031538.207109305@linuxfoundation.org>
+	Huang Ying <ying.huang@intel.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Luo Yuzhang <yuzhang.luo@intel.com>,
+	Tony Zhu <tony.zhu@intel.com>
+Subject: [PATCH 6.6 043/134] iommu/vt-d: Fix incorrect cache invalidation for mm notification
+Date: Tue,  5 Dec 2023 12:15:15 +0900
+Message-ID: <20231205031538.277183835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -41,89 +46,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 820d070feb668aab5bc9413c285a1dda2a70e076 upstream.
+commit e7ad6c2a4b1aa710db94060b716f53c812cef565 upstream.
 
-io_sqes_map() is used rather than io_mem_alloc(), if the application
-passes in memory for mapping rather than have the kernel allocate it and
-then mmap(2) the ranges. This then calls __io_uaddr_map() to perform the
-page mapping and pinning, which checks if we end up with the same pages,
-if more than one page is mapped. But this check is incorrect and only
-checks if the first and last pages are the same, where it really should
-be checking if the mapped pages are contigous. This allows mapping a
-single normal page, or a huge page range.
+Commit 6bbd42e2df8f ("mmu_notifiers: call invalidate_range() when
+invalidating TLBs") moved the secondary TLB invalidations into the TLB
+invalidation functions to ensure that all secondary TLB invalidations
+happen at the same time as the CPU invalidation and added a flush-all
+type of secondary TLB invalidation for the batched mode, where a range
+of [0, -1UL) is used to indicates that the range extends to the end of
+the address space.
 
-Down the line we can add support for remapping pages to be virtually
-contigous, which is really all that io_uring cares about.
+However, using an end address of -1UL caused an overflow in the Intel
+IOMMU driver, where the end address was rounded up to the next page.
+As a result, both the IOTLB and device ATC were not invalidated correctly.
 
+Add a flush all helper function and call it when the invalidation range
+is from 0 to -1UL, ensuring that the entire caches are invalidated
+correctly.
+
+Fixes: 6bbd42e2df8f ("mmu_notifiers: call invalidate_range() when invalidating TLBs")
 Cc: stable@vger.kernel.org
-Fixes: 03d89a2de25b ("io_uring: support for user allocated memory for rings/sqes")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Huang Ying <ying.huang@intel.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Tested-by: Luo Yuzhang <yuzhang.luo@intel.com> # QAT
+Tested-by: Tony Zhu <tony.zhu@intel.com> # DSA
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Link: https://lore.kernel.org/r/20231117090933.75267-1-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   41 ++++++++++++++++++++++-------------------
- 1 file changed, 22 insertions(+), 19 deletions(-)
+ drivers/iommu/intel/svm.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2690,6 +2690,7 @@ static void *__io_uaddr_map(struct page
+diff --git a/drivers/iommu/intel/svm.c b/drivers/iommu/intel/svm.c
+index 50a481c895b8..ac12f76c1212 100644
+--- a/drivers/iommu/intel/svm.c
++++ b/drivers/iommu/intel/svm.c
+@@ -216,6 +216,27 @@ static void intel_flush_svm_range(struct intel_svm *svm, unsigned long address,
+ 	rcu_read_unlock();
+ }
+ 
++static void intel_flush_svm_all(struct intel_svm *svm)
++{
++	struct device_domain_info *info;
++	struct intel_svm_dev *sdev;
++
++	rcu_read_lock();
++	list_for_each_entry_rcu(sdev, &svm->devs, list) {
++		info = dev_iommu_priv_get(sdev->dev);
++
++		qi_flush_piotlb(sdev->iommu, sdev->did, svm->pasid, 0, -1UL, 0);
++		if (info->ats_enabled) {
++			qi_flush_dev_iotlb_pasid(sdev->iommu, sdev->sid, info->pfsid,
++						 svm->pasid, sdev->qdep,
++						 0, 64 - VTD_PAGE_SHIFT);
++			quirk_extra_dev_tlb_flush(info, 0, 64 - VTD_PAGE_SHIFT,
++						  svm->pasid, sdev->qdep);
++		}
++	}
++	rcu_read_unlock();
++}
++
+ /* Pages have been freed at this point */
+ static void intel_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
+ 					struct mm_struct *mm,
+@@ -223,6 +244,11 @@ static void intel_arch_invalidate_secondary_tlbs(struct mmu_notifier *mn,
  {
- 	struct page **page_array;
- 	unsigned int nr_pages;
-+	void *page_addr;
- 	int ret, i;
+ 	struct intel_svm *svm = container_of(mn, struct intel_svm, notifier);
  
- 	*npages = 0;
-@@ -2711,27 +2712,29 @@ err:
- 		io_pages_free(&page_array, ret > 0 ? ret : 0);
- 		return ret < 0 ? ERR_PTR(ret) : ERR_PTR(-EFAULT);
- 	}
--	/*
--	 * Should be a single page. If the ring is small enough that we can
--	 * use a normal page, that is fine. If we need multiple pages, then
--	 * userspace should use a huge page. That's the only way to guarantee
--	 * that we get contigious memory, outside of just being lucky or
--	 * (currently) having low memory fragmentation.
--	 */
--	if (page_array[0] != page_array[ret - 1])
--		goto err;
--
--	/*
--	 * Can't support mapping user allocated ring memory on 32-bit archs
--	 * where it could potentially reside in highmem. Just fail those with
--	 * -EINVAL, just like we did on kernels that didn't support this
--	 * feature.
--	 */
++	if (start == 0 && end == -1UL) {
++		intel_flush_svm_all(svm);
++		return;
++	}
 +
-+	page_addr = page_address(page_array[0]);
- 	for (i = 0; i < nr_pages; i++) {
--		if (PageHighMem(page_array[i])) {
--			ret = -EINVAL;
-+		ret = -EINVAL;
-+
-+		/*
-+		 * Can't support mapping user allocated ring memory on 32-bit
-+		 * archs where it could potentially reside in highmem. Just
-+		 * fail those with -EINVAL, just like we did on kernels that
-+		 * didn't support this feature.
-+		 */
-+		if (PageHighMem(page_array[i]))
-+			goto err;
-+
-+		/*
-+		 * No support for discontig pages for now, should either be a
-+		 * single normal page, or a huge page. Later on we can add
-+		 * support for remapping discontig pages, for now we will
-+		 * just fail them with EINVAL.
-+		 */
-+		if (page_address(page_array[i]) != page_addr)
- 			goto err;
--		}
-+		page_addr += PAGE_SIZE;
- 	}
- 
- 	*pages = page_array;
+ 	intel_flush_svm_range(svm, start,
+ 			      (end - start + PAGE_SIZE - 1) >> VTD_PAGE_SHIFT, 0);
+ }
+-- 
+2.43.0
+
 
 
