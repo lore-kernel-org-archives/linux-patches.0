@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB778F62;
-	Tue,  5 Dec 2023 03:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B5B6FB1;
+	Tue,  5 Dec 2023 03:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pa043cfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F48C433C9;
-	Tue,  5 Dec 2023 03:42:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYNWGyHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3E4C433C8;
+	Tue,  5 Dec 2023 03:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747729;
-	bh=fmXIySt2xnOhb+G3GXTokZB5I/SpmrDy08j+J9MHt5k=;
+	s=korg; t=1701747731;
+	bh=gUo2g4Wf+Y59ZiO/Vb4oUx8cIE7616wOT7aWoY2U45o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pa043cfjwrB+n6tvpfLx3cOjHlpq2hti32NoD6lzxytDbwanQVxAuEzEWJK6q6wri
-	 aywpi2RV3IT+Vic02mRQfWdD7qCpsAmbRx4wNhHjcC4VdkgutVE7m84VtmxKE/Ewez
-	 SCNSMSkEqI6kRE/fEWaEBIfk6y1e4Xugr733xFZw=
+	b=tYNWGyHWfQOb9HBaPlKhHDzvxSjFCEy84vTq/NVIa9UlN9Nr2yaB4my636lkRrbQN
+	 qmZ79xjgVqvSW+MPAe5no7VfY3ZDMa8+NY4CZ2laBi8vXQO3d+INwPAfE9u5aRiDsq
+	 TYFHD1TQriijHQbxRh4p+QlQgIcGMWOIbKPv9XF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 47/67] perf intel-pt: Fix async branch flags
-Date: Tue,  5 Dec 2023 12:17:32 +0900
-Message-ID: <20231205031522.535920939@linuxfoundation.org>
+Subject: [PATCH 5.15 48/67] selftests/resctrl: Add missing SPDX license to Makefile
+Date: Tue,  5 Dec 2023 12:17:33 +0900
+Message-ID: <20231205031522.587221130@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -42,40 +44,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
 
-[ Upstream commit f2d87895cbc4af80649850dcf5da36de6b2ed3dd ]
+[ Upstream commit 68c4844985d1f8c1b1a71dfcdbfacb5a30babc95 ]
 
-Ensure PERF_IP_FLAG_ASYNC is set always for asynchronous branches (i.e.
-interrupts etc).
+Add the missing SPDX(SPDX-License-Identifier) license header to
+tools/testing/selftests/resctrl/Makefile.
 
-Fixes: 90e457f7be08 ("perf tools: Add Intel PT support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20230928072953.19369-1-adrian.hunter@intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Acked-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
+Signed-off-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: 3a1e4a91aa45 ("selftests/resctrl: Move _GNU_SOURCE define into Makefile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/intel-pt.c | 2 ++
+ tools/testing/selftests/resctrl/Makefile | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
-index 7a2ce387079e3..805bad9364e94 100644
---- a/tools/perf/util/intel-pt.c
-+++ b/tools/perf/util/intel-pt.c
-@@ -1346,9 +1346,11 @@ static void intel_pt_sample_flags(struct intel_pt_queue *ptq)
- 	} else if (ptq->state->flags & INTEL_PT_ASYNC) {
- 		if (!ptq->state->to_ip)
- 			ptq->flags = PERF_IP_FLAG_BRANCH |
-+				     PERF_IP_FLAG_ASYNC |
- 				     PERF_IP_FLAG_TRACE_END;
- 		else if (ptq->state->from_nr && !ptq->state->to_nr)
- 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
-+				     PERF_IP_FLAG_ASYNC |
- 				     PERF_IP_FLAG_VMEXIT;
- 		else
- 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
+diff --git a/tools/testing/selftests/resctrl/Makefile b/tools/testing/selftests/resctrl/Makefile
+index 9cc7e0108c8b0..5073dbc961258 100644
+--- a/tools/testing/selftests/resctrl/Makefile
++++ b/tools/testing/selftests/resctrl/Makefile
+@@ -1,3 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0
++
+ CFLAGS = -g -Wall -O2 -D_FORTIFY_SOURCE=2
+ CFLAGS += $(KHDR_INCLUDES)
+ 
 -- 
 2.42.0
 
