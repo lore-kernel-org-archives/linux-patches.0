@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C7779E3;
-	Tue,  5 Dec 2023 03:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC68A59;
+	Tue,  5 Dec 2023 03:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QF53grQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D8BC433C9;
-	Tue,  5 Dec 2023 03:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8EXqwcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3339C433C8;
+	Tue,  5 Dec 2023 03:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747072;
-	bh=ZbCoe+v8/EPTiUdxu0V0P/jFY/ZzZGrhSTxTn+QC90w=;
+	s=korg; t=1701747075;
+	bh=rUkp9SYHJ13PuI6cpKpr8LH47zvk5v884MV9D7D1f8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QF53grQwVZM32FqNGdicWLLDC7805/bGY8k1XK5iusUoEjDGVO+pIUHjbU8LpMcsE
-	 ruw/ptUQnjPWuGeSSPMjguVHEpUVgVueGb5IcRynLqctimME6oVccz4ZvqqJR3dBt2
-	 3lwcXrV+80blcixdsjkTyBmQnAIgIzeInj5UhIhs=
+	b=O8EXqwcsetWt2lHSTeOY/ex463RN6uUcxdV+3Zfc18OFjJ4XlFbW3JGKYzbhbmnUs
+	 AUqm3t+XX7FUe4OVLgQF4dav7Nx2EBA562wtV6xUMTGvhLAUege36NTr1MUVKiweq5
+	 F98Aqp/ZNs2EUZXqD9WFrpuKY1KnJM2A+sNGRxco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 049/107] btrfs: fix 64bit compat send ioctl arguments not initializing version member
-Date: Tue,  5 Dec 2023 12:16:24 +0900
-Message-ID: <20231205031534.371336755@linuxfoundation.org>
+	Chris Toledanes <chris.toledanes@hp.com>,
+	Carl Ng <carl.ng@hp.com>,
+	Max Nguyen <maxwell.nguyen@hp.com>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 050/107] Input: xpad - add HyperX Clutch Gladiate Support
+Date: Tue,  5 Dec 2023 12:16:25 +0900
+Message-ID: <20231205031534.440680674@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -41,36 +44,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Max Nguyen <maxwell.nguyen@hp.com>
 
-commit 5de0434bc064606d6b7467ec3e5ad22963a18c04 upstream.
+commit e28a0974d749e5105d77233c0a84d35c37da047e upstream.
 
-When the send protocol versioning was added in 5.16 e77fbf990316
-("btrfs: send: prepare for v2 protocol"), the 32/64bit compat code was
-not updated (added by 2351f431f727 ("btrfs: fix send ioctl on 32bit with
-64bit kernel")), missing the version struct member. The compat code is
-probably rarely used, nobody reported any bugs.
+Add HyperX controller support to xpad_device and xpad_table.
 
-Found by tool https://github.com/jirislaby/clang-struct .
-
-Fixes: e77fbf990316 ("btrfs: send: prepare for v2 protocol")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Suggested-by: Chris Toledanes <chris.toledanes@hp.com>
+Reviewed-by: Carl Ng <carl.ng@hp.com>
+Signed-off-by: Max Nguyen <maxwell.nguyen@hp.com>
+Reviewed-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Link: https://lore.kernel.org/r/20230906231514.4291-1-hphyperxdev@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -5236,6 +5236,7 @@ static int _btrfs_ioctl_send(struct inod
- 		arg->clone_sources = compat_ptr(args32.clone_sources);
- 		arg->parent_root = args32.parent_root;
- 		arg->flags = args32.flags;
-+		arg->version = args32.version;
- 		memcpy(arg->reserved, args32.reserved,
- 		       sizeof(args32.reserved));
- #else
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -136,6 +136,7 @@ static const struct xpad_device {
+ 	{ 0x044f, 0x0f07, "Thrustmaster, Inc. Controller", 0, XTYPE_XBOX },
+ 	{ 0x044f, 0x0f10, "Thrustmaster Modena GT Wheel", 0, XTYPE_XBOX },
+ 	{ 0x044f, 0xb326, "Thrustmaster Gamepad GP XID", 0, XTYPE_XBOX360 },
++	{ 0x03f0, 0x0495, "HyperX Clutch Gladiate", 0, XTYPE_XBOXONE },
+ 	{ 0x045e, 0x0202, "Microsoft X-Box pad v1 (US)", 0, XTYPE_XBOX },
+ 	{ 0x045e, 0x0285, "Microsoft X-Box pad (Japan)", 0, XTYPE_XBOX },
+ 	{ 0x045e, 0x0287, "Microsoft Xbox Controller S", 0, XTYPE_XBOX },
+@@ -459,6 +460,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x0079),		/* GPD Win 2 Controller */
+ 	XPAD_XBOX360_VENDOR(0x03eb),		/* Wooting Keyboards (Legacy) */
+ 	XPAD_XBOX360_VENDOR(0x044f),		/* Thrustmaster X-Box 360 controllers */
++	XPAD_XBOXONE_VENDOR(0x03f0),		/* HP HyperX Xbox One Controllers */
+ 	XPAD_XBOX360_VENDOR(0x045e),		/* Microsoft X-Box 360 controllers */
+ 	XPAD_XBOXONE_VENDOR(0x045e),		/* Microsoft X-Box One controllers */
+ 	XPAD_XBOX360_VENDOR(0x046d),		/* Logitech X-Box 360 style controllers */
 
 
