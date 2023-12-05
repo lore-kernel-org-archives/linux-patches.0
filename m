@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF226FB1;
-	Tue,  5 Dec 2023 03:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F3A6FB1;
+	Tue,  5 Dec 2023 03:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2FWz5ZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206E6C433C8;
-	Tue,  5 Dec 2023 03:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fma4I0rB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4D1C433C8;
+	Tue,  5 Dec 2023 03:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747312;
-	bh=XtiKVDiMt8++QYCN6tPmDaxz85tWlwMAhyST/xBK2HA=;
+	s=korg; t=1701747315;
+	bh=mQr3qnWFOl9r8y8bUxkhBGx55W0Ih/5MdA86gyTRNRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R2FWz5ZYM0O6ClvHffQZCofIuOM7Ny4dUW5w1alauQJ1ESXBVfv1OFRKZbQC3CDny
-	 gFO5XyUGS7tzZcuxXq82NgLON1diU5hx3L1TEGa0hM4L7gWNuvjkWglPxC9EKW+vox
-	 u5PwFVmA151EAF1f7HkicGR6fKxCZ9BxOwpSb2F0=
+	b=Fma4I0rB7M6uaLUGpr3FMllJUHOTy/7L2OWuvInXW51lcne0TaziZaS3jVj2Kccgs
+	 EWkDntKo8NLQp59v4AAyytq5jVYVkLjdBfw7nD31LgPwybK/Lxw9taEsyVVu49BjQ7
+	 k1fSU21O4h/7AW6IRWBRAoWufl4iLJ9/VmNKn3a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Axel Lin <axel.lin@ingics.com>,
+	Boris Brezillon <boris.brezillon@free-electrons.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/135] net: axienet: Fix check for partial TX checksum
-Date: Tue,  5 Dec 2023 12:15:49 +0900
-Message-ID: <20231205031532.432929981@linuxfoundation.org>
+Subject: [PATCH 5.10 005/135] i2c: sun6i-p2wi: Prevent potential division by zero
+Date: Tue,  5 Dec 2023 12:15:26 +0900
+Message-ID: <20231205031530.863290741@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -44,36 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Axel Lin <axel.lin@ingics.com>
 
-[ Upstream commit fd0413bbf8b11f56e8aa842783b0deda0dfe2926 ]
+[ Upstream commit 5ac61d26b8baff5b2e5a9f3dc1ef63297e4b53e7 ]
 
-Due to a typo, the code checked the RX checksum feature in the TX path.
+Make sure we don't OOPS in case clock-frequency is set to 0 in a DT. The
+variable set here is later used as a divisor.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/20231122004219.3504219-1-samuel.holland@sifive.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Axel Lin <axel.lin@ingics.com>
+Acked-by: Boris Brezillon <boris.brezillon@free-electrons.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-sun6i-p2wi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 9d362283196aa..2a5a3f8761c30 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -763,7 +763,7 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- 		if (lp->features & XAE_FEATURE_FULL_TX_CSUM) {
- 			/* Tx Full Checksum Offload Enabled */
- 			cur_p->app0 |= 2;
--		} else if (lp->features & XAE_FEATURE_PARTIAL_RX_CSUM) {
-+		} else if (lp->features & XAE_FEATURE_PARTIAL_TX_CSUM) {
- 			csum_start_off = skb_transport_offset(skb);
- 			csum_index_off = csum_start_off + skb->csum_offset;
- 			/* Tx Partial Checksum Offload Enabled */
+diff --git a/drivers/i2c/busses/i2c-sun6i-p2wi.c b/drivers/i2c/busses/i2c-sun6i-p2wi.c
+index 4f7a4f5a1150a..389ca6fddc1db 100644
+--- a/drivers/i2c/busses/i2c-sun6i-p2wi.c
++++ b/drivers/i2c/busses/i2c-sun6i-p2wi.c
+@@ -206,6 +206,11 @@ static int p2wi_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 	}
+ 
++	if (clk_freq == 0) {
++		dev_err(dev, "clock-frequency is set to 0 in DT\n");
++		return -EINVAL;
++	}
++
+ 	if (of_get_child_count(np) > 1) {
+ 		dev_err(dev, "P2WI only supports one slave device\n");
+ 		return -EINVAL;
 -- 
 2.42.0
 
