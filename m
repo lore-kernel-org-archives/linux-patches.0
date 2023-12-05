@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FE16FAF;
-	Tue,  5 Dec 2023 03:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F177E6FAF;
+	Tue,  5 Dec 2023 03:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bL4GHLYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774A3C433C9;
-	Tue,  5 Dec 2023 03:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSpcyI/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5259CC433C7;
+	Tue,  5 Dec 2023 03:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746972;
-	bh=Pik5cJ7EV1AkENSPsh/Ev9YqZahugYR7PhbbOhFXKaM=;
+	s=korg; t=1701746975;
+	bh=b3+lmaKdP1hEN1sofGEGvBsbiByrQjP57+irO1ntGa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bL4GHLYQM1MvNAS2L+2HNblg00e1E1DiSbFSnTjA0sgM6ylAbXxZ7u2eUIP1T9axY
-	 XteCbyc1suSWV+d4ihSYz7ns1E5zZo26QGU2nByWGlYRCk5ZrHm1+iU5PHUmOo45cz
-	 utIdXIlmho7ppzfl0UF/RqRzclYF2qFBB0pyqSTU=
+	b=zSpcyI/WMo86ZgcVKQA2VpSMM38odQTZHCAYoa9rsJUqmbIsDMLDbD37rmik8swlm
+	 B6kiEVh60y2Wj8hsR0eR6Gz9ufNhqNM7iTr53hYZA4rksXzeJJRPQYJHvNtFrKZ9XC
+	 0qDEIKhsg9mVIB5DLHEnlJutbDUZXYkExIElbRBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 6.1 005/107] firewire: core: fix possible memory leak in create_units()
-Date: Tue,  5 Dec 2023 12:15:40 +0900
-Message-ID: <20231205031531.844422182@linuxfoundation.org>
+	=?UTF-8?q?Kornel=20Dul=C4=99ba?= <korneld@chromium.org>,
+	Sven van Ashbrook <svenva@chromium.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 006/107] mmc: sdhci-pci-gli: Disable LPM during initialization
+Date: Tue,  5 Dec 2023 12:15:41 +0900
+Message-ID: <20231205031531.912808171@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -35,66 +37,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Kornel Dulęba <korneld@chromium.org>
 
-commit 891e0eab32a57fca4d36c5162628eb0bcb1f0edf upstream.
+commit d9ed644f58670865cf067351deb71010bd87a52f upstream.
 
-If device_register() fails, the refcount of device is not 0, the name
-allocated in dev_set_name() is leaked. To fix this by calling put_device(),
-so that it will be freed in callback function kobject_cleanup().
+To address IO performance commit f9e5b33934ce
+("mmc: host: Improve I/O read/write performance for GL9763E")
+limited LPM negotiation to runtime suspend state.
+The problem is that it only flips the switch in the runtime PM
+resume/suspend logic.
 
-unreferenced object 0xffff9d99035c7a90 (size 8):
-  comm "systemd-udevd", pid 168, jiffies 4294672386 (age 152.089s)
-  hex dump (first 8 bytes):
-    66 77 30 2e 30 00 ff ff                          fw0.0...
-  backtrace:
-    [<00000000e1d62bac>] __kmem_cache_alloc_node+0x1e9/0x360
-    [<00000000bbeaff31>] __kmalloc_node_track_caller+0x44/0x1a0
-    [<00000000491f2fb4>] kvasprintf+0x67/0xd0
-    [<000000005b960ddc>] kobject_set_name_vargs+0x1e/0x90
-    [<00000000427ac591>] dev_set_name+0x4e/0x70
-    [<000000003b4e447d>] create_units+0xc5/0x110
+Disable LPM negotiation in gl9763e_add_host.
+This helps in two ways:
+1. It was found that the LPM switch stays in the same position after
+   warm reboot. Having it set in init helps with consistency.
+2. Disabling LPM during the first runtime resume leaves us susceptible
+   to the performance issue in the time window between boot and the
+   first runtime suspend.
 
-fw_unit_release() will be called in the error path, move fw_device_get()
-before calling device_register() to keep balanced with fw_device_put() in
-fw_unit_release().
-
+Fixes: f9e5b33934ce ("mmc: host: Improve I/O read/write performance for GL9763E")
 Cc: stable@vger.kernel.org
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Fixes: a1f64819fe9f ("firewire: struct device - replace bus_id with dev_name(), dev_set_name()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Kornel Dulęba <korneld@chromium.org>
+Reviewed-by: Sven van Ashbrook <svenva@chromium.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20231114115516.1585361-1-korneld@chromium.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/core-device.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/mmc/host/sdhci-pci-gli.c |   54 ++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
---- a/drivers/firewire/core-device.c
-+++ b/drivers/firewire/core-device.c
-@@ -717,14 +717,11 @@ static void create_units(struct fw_devic
- 					fw_unit_attributes,
- 					&unit->attribute_group);
- 
--		if (device_register(&unit->device) < 0)
--			goto skip_unit;
--
- 		fw_device_get(device);
--		continue;
--
--	skip_unit:
--		kfree(unit);
-+		if (device_register(&unit->device) < 0) {
-+			put_device(&unit->device);
-+			continue;
-+		}
- 	}
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -801,6 +801,32 @@ static void gl9763e_hs400_enhanced_strob
+ 	sdhci_writel(host, val, SDHCI_GLI_9763E_HS400_ES_REG);
  }
  
++static void gl9763e_set_low_power_negotiation(struct sdhci_pci_slot *slot,
++					      bool enable)
++{
++	struct pci_dev *pdev = slot->chip->pdev;
++	u32 value;
++
++	pci_read_config_dword(pdev, PCIE_GLI_9763E_VHS, &value);
++	value &= ~GLI_9763E_VHS_REV;
++	value |= FIELD_PREP(GLI_9763E_VHS_REV, GLI_9763E_VHS_REV_W);
++	pci_write_config_dword(pdev, PCIE_GLI_9763E_VHS, value);
++
++	pci_read_config_dword(pdev, PCIE_GLI_9763E_CFG, &value);
++
++	if (enable)
++		value &= ~GLI_9763E_CFG_LPSN_DIS;
++	else
++		value |= GLI_9763E_CFG_LPSN_DIS;
++
++	pci_write_config_dword(pdev, PCIE_GLI_9763E_CFG, value);
++
++	pci_read_config_dword(pdev, PCIE_GLI_9763E_VHS, &value);
++	value &= ~GLI_9763E_VHS_REV;
++	value |= FIELD_PREP(GLI_9763E_VHS_REV, GLI_9763E_VHS_REV_R);
++	pci_write_config_dword(pdev, PCIE_GLI_9763E_VHS, value);
++}
++
+ static void sdhci_set_gl9763e_signaling(struct sdhci_host *host,
+ 					unsigned int timing)
+ {
+@@ -909,6 +935,9 @@ static int gl9763e_add_host(struct sdhci
+ 	if (ret)
+ 		goto cleanup;
+ 
++	/* Disable LPM negotiation to avoid entering L1 state. */
++	gl9763e_set_low_power_negotiation(slot, false);
++
+ 	return 0;
+ 
+ cleanup:
+@@ -960,31 +989,6 @@ static void gli_set_gl9763e(struct sdhci
+ }
+ 
+ #ifdef CONFIG_PM
+-static void gl9763e_set_low_power_negotiation(struct sdhci_pci_slot *slot, bool enable)
+-{
+-	struct pci_dev *pdev = slot->chip->pdev;
+-	u32 value;
+-
+-	pci_read_config_dword(pdev, PCIE_GLI_9763E_VHS, &value);
+-	value &= ~GLI_9763E_VHS_REV;
+-	value |= FIELD_PREP(GLI_9763E_VHS_REV, GLI_9763E_VHS_REV_W);
+-	pci_write_config_dword(pdev, PCIE_GLI_9763E_VHS, value);
+-
+-	pci_read_config_dword(pdev, PCIE_GLI_9763E_CFG, &value);
+-
+-	if (enable)
+-		value &= ~GLI_9763E_CFG_LPSN_DIS;
+-	else
+-		value |= GLI_9763E_CFG_LPSN_DIS;
+-
+-	pci_write_config_dword(pdev, PCIE_GLI_9763E_CFG, value);
+-
+-	pci_read_config_dword(pdev, PCIE_GLI_9763E_VHS, &value);
+-	value &= ~GLI_9763E_VHS_REV;
+-	value |= FIELD_PREP(GLI_9763E_VHS_REV, GLI_9763E_VHS_REV_R);
+-	pci_write_config_dword(pdev, PCIE_GLI_9763E_VHS, value);
+-}
+-
+ static int gl9763e_runtime_suspend(struct sdhci_pci_chip *chip)
+ {
+ 	struct sdhci_pci_slot *slot = chip->slots[0];
 
 
