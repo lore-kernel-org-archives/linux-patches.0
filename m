@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462066FB1;
-	Tue,  5 Dec 2023 03:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0DC6FB1;
+	Tue,  5 Dec 2023 03:38:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfJzqwFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2AFEC433C9;
-	Tue,  5 Dec 2023 03:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpjRQ5a6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D7DC433C8;
+	Tue,  5 Dec 2023 03:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747510;
-	bh=cp65O0IxhoY0CRf6N/U1NAhA4YFvMfdbTOat7cMLNR0=;
+	s=korg; t=1701747512;
+	bh=9bDD3AWC2VAlFfjuuqDj94gFUGry0WmfoBNenGYUzwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfJzqwFFUYR4qgkPaeQDefxY6VooRfgyKD2TEDbRBxQR/emHIzO5YSjP9Lo0qEIB9
-	 rV2mL3Tj/7gK5uBtzzpVXGd6gcH+FhW4LWGPq3BZ0ueiiBnopSr58aqKvu347Ih/nX
-	 vZAGcU8fmYI89CvMGY2mVxWYPHsnrxrSbFg3Q3IA=
+	b=mpjRQ5a6o7cXFm4vMpQ/+c9E6UsB7D/bUM4brnaGmnS1s3duGBGG6Mtx8rwJppZE0
+	 0IqJcOgMTw99xh/d8IFOD61TBuf46bkgkgxPExG0FIy6NJmYIoN4vcRRpYKLJi1nuV
+	 wr9bVLTlsQzvU9BpsbVlCZwypFpOlsrijrpX2hHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/135] net: ravb: Start TX queues after HW initialization succeeded
-Date: Tue,  5 Dec 2023 12:17:03 +0900
-Message-ID: <20231205031537.143244175@linuxfoundation.org>
+Subject: [PATCH 5.10 103/135] perf intel-pt: Adjust sample flags for VM-Exit
+Date: Tue,  5 Dec 2023 12:17:04 +0900
+Message-ID: <20231205031537.221270550@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -44,44 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 6f32c086602050fc11157adeafaa1c1eb393f0af ]
+[ Upstream commit 695fc4510615f8db40ebaf7a2c011f0a594b5f77 ]
 
-ravb_phy_start() may fail. If that happens, the TX queues will remain
-started. Thus, move the netif_tx_start_all_queues() after PHY is
-successfully initialized.
+Use the change of NR to detect whether an asynchronous branch is a VM-Exit.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Note VM-Entry is determined from the vmlaunch or vmresume instruction,
+in which case, sample flags will show "VMentry" even if the VM-Entry fails.
+
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Acked-by: Andi Kleen <ak@linux.intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Jiri Olsa <jolsa@redhat.com>
+Link: https://lore.kernel.org/r/20210218095801.19576-10-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: f2d87895cbc4 ("perf intel-pt: Fix async branch flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/intel-pt.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index a9cd390dedbd8..f092f468016bd 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1383,13 +1383,13 @@ static int ravb_open(struct net_device *ndev)
- 	if (priv->chip_id == RCAR_GEN2)
- 		ravb_ptp_init(ndev, priv->pdev);
- 
--	netif_tx_start_all_queues(ndev);
--
- 	/* PHY control start */
- 	error = ravb_phy_start(ndev);
- 	if (error)
- 		goto out_ptp_stop;
- 
-+	netif_tx_start_all_queues(ndev);
-+
- 	return 0;
- 
- out_ptp_stop:
+diff --git a/tools/perf/util/intel-pt.c b/tools/perf/util/intel-pt.c
+index 453773ce6f455..918da9a430c08 100644
+--- a/tools/perf/util/intel-pt.c
++++ b/tools/perf/util/intel-pt.c
+@@ -1137,13 +1137,16 @@ static void intel_pt_sample_flags(struct intel_pt_queue *ptq)
+ 	if (ptq->state->flags & INTEL_PT_ABORT_TX) {
+ 		ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_TX_ABORT;
+ 	} else if (ptq->state->flags & INTEL_PT_ASYNC) {
+-		if (ptq->state->to_ip)
++		if (!ptq->state->to_ip)
++			ptq->flags = PERF_IP_FLAG_BRANCH |
++				     PERF_IP_FLAG_TRACE_END;
++		else if (ptq->state->from_nr && !ptq->state->to_nr)
++			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
++				     PERF_IP_FLAG_VMEXIT;
++		else
+ 			ptq->flags = PERF_IP_FLAG_BRANCH | PERF_IP_FLAG_CALL |
+ 				     PERF_IP_FLAG_ASYNC |
+ 				     PERF_IP_FLAG_INTERRUPT;
+-		else
+-			ptq->flags = PERF_IP_FLAG_BRANCH |
+-				     PERF_IP_FLAG_TRACE_END;
+ 		ptq->insn_len = 0;
+ 	} else {
+ 		if (ptq->state->from_ip)
 -- 
 2.42.0
 
