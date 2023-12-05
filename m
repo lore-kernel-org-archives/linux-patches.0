@@ -1,49 +1,49 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028784174B
-	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 16:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31D560B97
+	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 16:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j2dWxuyd"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6d8766f4200so2746971a34.1
-        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 08:50:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gSZ9VuQ7"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6d8162ca490so2115684a34.0
+        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 08:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701795015; x=1702399815; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1701795302; x=1702400102; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=duhFd6gUglDph6GOTzZ0Ncrj+fI8X84602btwhxZmyA=;
-        b=j2dWxuydsDzkhv8S+VWZZDV9x0uE7Gqr1z3ySKjvJDkAaxks2JAdOMFzWXaFNIYOuG
-         jEPiaLKySqwVK3k+tZ6aYz5+S9bTpdRVv4BNrQ4vFBzBvcHfOeexGqXLuX62Tlq0O0/L
-         ExKGA86FhcjvDuBRBQcm4AeaI93Op2NsG0KWucrR4mzw16zLyOjk626hJNzfKXh4xm+q
-         mxwz22J9QHcvgpN8ujIRaRhDRBUx/OGO3drHkMSbVGzze4iac1H9EOqi+yb9mbYxrK3l
-         MxSfgQ+s7r/CJEad1xXu/zeYdlKlnCk8bidK9+Mge4nvu2vy+GnSua/zuSLssIzqJGNH
-         0JHA==
+        bh=G9OxrBZgNphVEIKMq/OBJrIuosfHOMdhPrtNTXIWYyM=;
+        b=gSZ9VuQ7ZnrnvWgk7/m4qfwTuACnlt8r8EWDptnTGbMDGecoi+nbZ18ZIwaZHgQjgj
+         KKzFa5Xq0eIpZeQ512AJSRhXGkhvQz6gHXC0SXVEcKKf6sQ/XK6mnflQd46t9LkmaWDv
+         REVOaGUY2N07kVv4A7VPctOtcbwnF9GdMJPCXVl1ZmfwS7gW8GOAPh/9aadFDlOZEfES
+         jO+uUHoJI2mzX4QIIBg8rCjKLo+M2BhEA/OhYsSDToYgQO3RPv0FK15rDqIjZnedDKoF
+         tj7fqdRGDpJrzoN2x9ftQYDnOlgEb/vm7gUQI8rVIc+eP0+9PGKRCJLg3LrcB4AXku0+
+         YeLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701795015; x=1702399815;
+        d=1e100.net; s=20230601; t=1701795302; x=1702400102;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=duhFd6gUglDph6GOTzZ0Ncrj+fI8X84602btwhxZmyA=;
-        b=KQRMzcKKHLNp5iVvlKoJU0c2nXFiKZf3Amsnp5dBs2uToq2iOXUHioq0sU0WC/Fj4s
-         RJbM/QeRKZNH4BRZhZcqcXMD6Y6x0UeD9Di0cGusyJ4hAAcHhJY1CrERW45u7BlevaY6
-         Cp8tFBrMwXwc6X9n696yKqVBgLLzh50bYE9JRX5t6ClPWxt11sooUxFZufuO24tbRf4e
-         G+9W5tkvJd8XyJOFOlslTehaU4TQ/MAAF2i2BcOmFks6b6BUPSgKNnrSQSZidswr9qyV
-         G8dhl+bbROHdZnwOwiVhmZPMMK1JF6nc0akYSyedq+uFsMsTQ6QubWtWnxnw/S+C5xMR
-         q86Q==
-X-Gm-Message-State: AOJu0YwLawiOpDyRsKTnueQ6ge1+6nU57TMeKVo4C7m7lphzLjsVnIp5
-	0Z3sbCPwCyOFT81Hg8kEfjk=
-X-Google-Smtp-Source: AGHT+IHx117Oe/EFLi2x1dEEecTCdGQpyVoMB4qRs2AFafHoFU/s2HAL6C3tUrXXUAqyYHKxxditJg==
-X-Received: by 2002:a05:6870:ac92:b0:1fb:75a:de5f with SMTP id ns18-20020a056870ac9200b001fb075ade5fmr8680210oab.77.1701795014934;
-        Tue, 05 Dec 2023 08:50:14 -0800 (PST)
+        bh=G9OxrBZgNphVEIKMq/OBJrIuosfHOMdhPrtNTXIWYyM=;
+        b=Xf/z4Znk+Q2Uv0hqwNv82BreFl3LBsUiVHYfU6GIleR+o1fKfbTw/sGJRMNDoSicAf
+         eA2H30BuMX5du3vREXDzCNo9vAhnpMvzB6UhgOAHhh12/5tQ/ItnGFJz1LHeHLoM9FQG
+         2ZmKFmBWFuq2nfuV7aO+fdKogNE3DVfxICTjLnKSKNLH9xXhbXBzNOXdeTG4hyXmoUwW
+         HH0758ZQmHDPya/6zQ5bXTQjF44imqL15PpA6jdYa90YDA8YV+uyjN774nUiejYhWbNX
+         qrp3oUA77kU8/CCyGf+/OSsGPkZiKHiloVYe+gSBWUOZm9hmRKLpc1X7FFd36BWxpycA
+         YRQw==
+X-Gm-Message-State: AOJu0Ywv+HZWB7OqCPb+oPLvCs70xQ8rcA17VObvEudjnijdCWaWz+WP
+	pLjOVfrZRTQ8evq0F5sWV0Q=
+X-Google-Smtp-Source: AGHT+IEBC/Md1Vt7qRHajPubEQ4P+Al1cYnLz+7MzGO+7kte/K8NgAKU1tSgv/bPF0GNxKXuH8kqKQ==
+X-Received: by 2002:a9d:6a8e:0:b0:6d8:779a:1b1b with SMTP id l14-20020a9d6a8e000000b006d8779a1b1bmr856434otq.7.1701795301875;
+        Tue, 05 Dec 2023 08:55:01 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id on7-20020a0568715a0700b001fb42001fa7sm1206269oac.36.2023.12.05.08.50.14
+        by smtp.gmail.com with ESMTPSA id z5-20020a9d65c5000000b006d679b53e8asm2289178oth.24.2023.12.05.08.55.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 08:50:14 -0800 (PST)
+        Tue, 05 Dec 2023 08:55:01 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Tue, 5 Dec 2023 08:50:13 -0800
+Date: Tue, 5 Dec 2023 08:55:00 -0800
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -53,9 +53,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
 	allen.lkml@gmail.com
-Subject: Re: [PATCH 5.15 00/67] 5.15.142-rc1 review
-Message-ID: <9435ee4c-59a7-4956-9955-a434d467ced6@roeck-us.net>
-References: <20231205031519.853779502@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/107] 6.1.66-rc1 review
+Message-ID: <ca62c23a-ee16-404d-b983-a680857737b3@roeck-us.net>
+References: <20231205031531.426872356@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,11 +64,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
+In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 
-On Tue, Dec 05, 2023 at 12:16:45PM +0900, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.142 release.
-> There are 67 patches in this series, all will be posted as a response
+On Tue, Dec 05, 2023 at 12:15:35PM +0900, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.66 release.
+> There are 107 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -77,39 +77,39 @@ On Tue, Dec 05, 2023 at 12:16:45PM +0900, Greg Kroah-Hartman wrote:
 > 
 
 Build results:
-	total: 154 pass: 152 fail: 2
+	total: 157 pass: 146 fail: 11
 Failed builds:
 	powerpc:defconfig
 	powerpc:allmodconfig
+	riscv32:defconfig
+	riscv32:allmodconfig
+	riscv:defconfig
+	riscv:allmodconfig
+	s390:defconfig
+	s390:allmodconfig
+	s390:allnoconfig
+	s390:tinyconfig
+	s390:debug_defconfig
 Qemu test results:
-	total: 517 pass: 495 fail: 22
+	total: 537 pass: 467 fail: 70
 Failed tests:
-	ppc64:mac99:ppc64_book3s_defconfig:smp:net=ne2k_pci:initrd
-	ppc64:mac99:ppc64_book3s_defconfig:smp:net=pcnet:ide:rootfs
-	ppc64:mac99:ppc64_book3s_defconfig:smp:net=e1000:sdhci-mmc:rootfs
-	ppc64:mac99:ppc64_book3s_defconfig:smp:net=e1000e:nvme:rootfs
-	ppc64:mac99:ppc64_book3s_defconfig:smp:net=virtio-net:scsi[DC395]:rootfs
-	ppc64:pseries:pseries_defconfig:big:smp2:net=pcnet:initrd
-	ppc64:pseries:pseries_defconfig:big:tpm-spapr:net=rtl8139:scsi:rootfs
-	ppc64:pseries:pseries_defconfig:big:net=e1000e:usb:rootfs
-	ppc64:pseries:pseries_defconfig:big:net=i82559a:sdhci-mmc:rootfs
-	ppc64:pseries:pseries_defconfig:big:net=virtio-net-old:nvme:rootfs
-	ppc64:pseries:pseries_defconfig:big:net=tulip:sata-sii3112:rootfs
-	ppc64:pseries:pseries_defconfig:big:net=e1000:virtio-pci:rootfs
-	ppc64:pseries:pseries_defconfig:big:net=e1000:virtio-pci-old:rootfs
-	ppc64:pseries:pseries_defconfig:little:net=rtl8139:initrd
-	ppc64:pseries:pseries_defconfig:little:tpm-spapr:net=e1000:scsi:rootfs
-	ppc64:pseries:pseries_defconfig:little:net=pcnet:usb:rootfs
-	ppc64:pseries:pseries_defconfig:little:net=e1000e:sata-sii3112:rootfs
-	ppc64:pseries:pseries_defconfig:little:net=virtio-net:scsi[MEGASAS]:rootfs
-	ppc64:pseries:pseries_defconfig:little:net=virtio-net-old:scsi[MEGASAS]:rootfs
-	ppc64:pseries:pseries_defconfig:little:net=i82562:scsi[FUSION]:rootfs
-	ppc64:pseries:pseries_defconfig:little:net=ne2k_pci:sdhci-mmc:rootfs
-	ppc64:pseries:pseries_defconfig:little:net=usb-ohci:nvme:rootfs
+	<most ppc64>
+	<all riscv32/riscv64>
+	<all s390>
 
-As reported by others:
+powerpc:
 
 arch/powerpc/platforms/pseries/iommu.c: In function 'find_existing_ddw':
-arch/powerpc/platforms/pseries/iommu.c:908:49: error: 'struct dma_win' has no member named 'direct'
+arch/powerpc/platforms/pseries/iommu.c:926:49: error: 'struct dma_win' has no member named 'direct'
+
+riscv:
+
+drivers/perf/riscv_pmu_sbi.c: In function 'pmu_sbi_ovf_handler':
+drivers/perf/riscv_pmu_sbi.c:582:40: error: 'riscv_pmu_irq_num' undeclared
+
+s390:
+
+arch/s390/mm/page-states.c: In function 'cmma_init_nodat':
+arch/s390/mm/page-states.c:198:30: error: 'invalid_pg_dir' undeclared
 
 Guenter
