@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A00D6110;
-	Tue,  5 Dec 2023 03:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15DB6110;
+	Tue,  5 Dec 2023 03:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bg5dgASw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9280C433C8;
-	Tue,  5 Dec 2023 03:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2hLHNQzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A13EC433C7;
+	Tue,  5 Dec 2023 03:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746730;
-	bh=uOV01MfX5/ZZpwAnA9rMyBBDn1xxIyIygWuQ/Rm30JM=;
+	s=korg; t=1701746732;
+	bh=iAcHTpIb8p5X5IamhzL4ZGGuv6UJTSiw4y6EQlU3eVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bg5dgASwtUfr8/a2YpyWZlc7FEVOzrG9gzIsHjO2BTEYP3YyvL9dTYduAV2nSQeLy
-	 svq1aFdobV8LXy9j9QAmJ4bDU0JFg8A1cMmumXpXGDvJdsdcHGoJVQ0CCjZqTMpX1w
-	 oCaCyFzMufGDxqEPVy00Q3jdiCju80E6NfKwxF80=
+	b=2hLHNQzCa0ccFhU6z3u4WM5pJjOh2gykpA7Fwm030kEcGXBS10i6o1558s/FYLI0x
+	 3DJ6OYMyH0mRZXfCl6ZLNaoLLCmzX1SaQwqF8BYBHD3i4vMoihcKeeEQHDan6q6+gB
+	 IhAWtmKTXg4deqXZZGlk8sCsZOq5MNbhgHXDomM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 110/134] net: ravb: Stop DMA in case of failures on ravb_open()
-Date: Tue,  5 Dec 2023 12:16:22 +0900
-Message-ID: <20231205031542.442794824@linuxfoundation.org>
+Subject: [PATCH 6.6 111/134] net: ravb: Keep reverse order of operations in ravb_remove()
+Date: Tue,  5 Dec 2023 12:16:23 +0900
+Message-ID: <20231205031542.505173262@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -45,33 +45,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit eac16a733427ba0de2449ffc7bd3da32ddb65cb7 ]
+[ Upstream commit edf9bc396e05081ca281ffb0cd41e44db478ff26 ]
 
-In case ravb_phy_start() returns with error the settings applied in
-ravb_dmac_init() are not reverted (e.g. config mode). For this call
-ravb_stop_dma() on failure path of ravb_open().
+On RZ/G3S SMARC Carrier II board having RGMII connections b/w Ethernet
+MACs and PHYs it has been discovered that doing unbind/bind for ravb
+driver in a loop leads to wrong speed and duplex for Ethernet links and
+broken connectivity (the connectivity cannot be restored even with
+bringing interface down/up). Before doing unbind/bind the Ethernet
+interfaces were configured though systemd. The sh instructions used to
+do unbind/bind were:
 
-Fixes: a0d2f20650e8 ("Renesas Ethernet AVB PTP clock driver")
+$ cd /sys/bus/platform/drivers/ravb/
+$ while :; do echo 11c30000.ethernet > unbind ; \
+  echo 11c30000.ethernet > bind; done
+
+It has been discovered that there is a race b/w IOCTLs initialized by
+systemd at the response of success binding and the
+"ravb_write(ndev, CCC_OPC_RESET, CCC)" call in ravb_remove() as
+follows:
+
+1/ as a result of bind success the user space open/configures the
+   interfaces tough an IOCTL; the following stack trace has been
+   identified on RZ/G3S:
+
+Call trace:
+dump_backtrace+0x9c/0x100
+show_stack+0x20/0x38
+dump_stack_lvl+0x48/0x60
+dump_stack+0x18/0x28
+ravb_open+0x70/0xa58
+__dev_open+0xf4/0x1e8
+__dev_change_flags+0x198/0x218
+dev_change_flags+0x2c/0x80
+devinet_ioctl+0x640/0x708
+inet_ioctl+0x1e4/0x200
+sock_do_ioctl+0x50/0x108
+sock_ioctl+0x240/0x358
+__arm64_sys_ioctl+0xb0/0x100
+invoke_syscall+0x50/0x128
+el0_svc_common.constprop.0+0xc8/0xf0
+do_el0_svc+0x24/0x38
+el0_svc+0x34/0xb8
+el0t_64_sync_handler+0xc0/0xc8
+el0t_64_sync+0x190/0x198
+
+2/ this call may execute concurrently with ravb_remove() as the
+   unbind/bind operation was executed in a loop
+3/ if the operation mode is changed to RESET (through
+   ravb_write(ndev, CCC_OPC_RESET, CCC) call in ravb_remove())
+   while the above ravb_open() is in progress it may lead to MAC
+   (or PHY, or MAC-PHY connection, the right point hasn't been identified
+   at the moment) to be broken, thus the Ethernet connectivity fails to
+   restore.
+
+The simple fix for this is to move ravb_write(ndev, CCC_OPC_RESET, CCC))
+after unregister_netdev() to avoid resetting the controller while the
+netdev interface is still registered.
+
+To avoid future issues in ravb_remove(), the patch follows the proper order
+of operations in ravb_remove(): reverse order compared with ravb_probe().
+This avoids described races as the IOCTLs as well as unregister_netdev()
+(called now at the beginning of ravb_remove()) calls rtnl_lock() before
+continuing and IOCTLs check (though devinet_ioctl()) if device is still
+registered just after taking the lock:
+
+int devinet_ioctl(struct net *net, unsigned int cmd, struct ifreq *ifr)
+{
+	// ...
+
+        rtnl_lock();
+
+        ret = -ENODEV;
+        dev = __dev_get_by_name(net, ifr->ifr_name);
+        if (!dev)
+                goto done;
+
+	// ...
+done:
+        rtnl_unlock();
+out:
+        return ret;
+}
+
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
 Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/renesas/ravb_main.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 1b35cc216d386..0b8af7be20fab 100644
+index 0b8af7be20fab..bb56cf4090423 100644
 --- a/drivers/net/ethernet/renesas/ravb_main.c
 +++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1825,6 +1825,7 @@ static int ravb_open(struct net_device *ndev)
- 	/* Stop PTP Clock driver */
- 	if (info->gptp)
- 		ravb_ptp_stop(ndev);
-+	ravb_stop_dma(ndev);
- out_free_irq_mgmta:
- 	if (!info->multi_irqs)
- 		goto out_free_irq;
+@@ -2903,22 +2903,26 @@ static int ravb_remove(struct platform_device *pdev)
+ 	struct ravb_private *priv = netdev_priv(ndev);
+ 	const struct ravb_hw_info *info = priv->info;
+ 
+-	/* Stop PTP Clock driver */
+-	if (info->ccc_gac)
+-		ravb_ptp_stop(ndev);
+-
+-	clk_disable_unprepare(priv->gptp_clk);
+-	clk_disable_unprepare(priv->refclk);
+-
+-	/* Set reset mode */
+-	ravb_write(ndev, CCC_OPC_RESET, CCC);
+ 	unregister_netdev(ndev);
+ 	if (info->nc_queues)
+ 		netif_napi_del(&priv->napi[RAVB_NC]);
+ 	netif_napi_del(&priv->napi[RAVB_BE]);
++
+ 	ravb_mdio_release(priv);
++
++	/* Stop PTP Clock driver */
++	if (info->ccc_gac)
++		ravb_ptp_stop(ndev);
++
+ 	dma_free_coherent(ndev->dev.parent, priv->desc_bat_size, priv->desc_bat,
+ 			  priv->desc_bat_dma);
++
++	/* Set reset mode */
++	ravb_write(ndev, CCC_OPC_RESET, CCC);
++
++	clk_disable_unprepare(priv->gptp_clk);
++	clk_disable_unprepare(priv->refclk);
++
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	reset_control_assert(priv->rstc);
 -- 
 2.42.0
 
