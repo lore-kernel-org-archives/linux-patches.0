@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8CA611E;
-	Tue,  5 Dec 2023 03:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8A46FB0;
+	Tue,  5 Dec 2023 03:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMq24ixi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A28EC433CA;
-	Tue,  5 Dec 2023 03:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw1ipmJb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB35C433C8;
+	Tue,  5 Dec 2023 03:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747713;
-	bh=Z246qch1AdasOXv66rIV58XY5+wtVF725r8/Cwenijg=;
+	s=korg; t=1701747716;
+	bh=xqFIhCThst+/ofim+HZPWtqqJ+7DwltwBU8jfo2Q8ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dMq24ixiN9kB88/Jgg0qFRCYsg5uR4gqxuKKe7kUdue3gK1XoauXcw7dYMndf4Iaa
-	 qAo64ov/kOQ9LdpPsaNPD483vCUTbl52GP62WItxAMFRbsrsKOEq7P5KLN8V3aB6vI
-	 cILjiwe5qQR+fdjXmy6IPQPJyLAoZFPhBOMDLLZM=
+	b=Qw1ipmJbbPnv8Kkl7o7rrFVY9w6CXdgO4OyosR/Sl6jaHnbGmVeCxg6bkFTuDe76T
+	 5O7UtLRuQP9ZO7V3pRDKbdGPtQpie6CY/1/uaTt7sDd4bz7vMptYqe3Faj0cxdVTTE
+	 YdtC1bRkh26Mnx0kpKyXcFD2x3PFUmCl3KVq5nqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 07/67] mmc: block: Retry commands in CQE error recovery
-Date: Tue,  5 Dec 2023 12:16:52 +0900
-Message-ID: <20231205031520.262386655@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 34/67] selftests/net: ipsec: fix constant out of range
+Date: Tue,  5 Dec 2023 12:17:19 +0900
+Message-ID: <20231205031521.779621259@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -42,50 +43,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Willem de Bruijn <willemb@google.com>
 
-commit 8155d1fa3a747baad5caff5f8303321d68ddd48c upstream.
+[ Upstream commit 088559815477c6f623a5db5993491ddd7facbec7 ]
 
-It is important that MMC_CMDQ_TASK_MGMT command to discard the queue is
-successful because otherwise a subsequent reset might fail to flush the
-cache first.  Retry it and the previous STOP command.
+Fix a small compiler warning.
 
-Fixes: 72a5af554df8 ("mmc: core: Add support for handling CQE requests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Link: https://lore.kernel.org/r/20231103084720.6886-5-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+nr_process must be a signed long: it is assigned a signed long by
+strtol() and is compared against LONG_MIN and LONG_MAX.
+
+ipsec.c:2280:65:
+    error: result of comparison of constant -9223372036854775808
+    with expression of type 'unsigned int' is always false
+    [-Werror,-Wtautological-constant-out-of-range-compare]
+
+  if ((errno == ERANGE && (nr_process == LONG_MAX || nr_process == LONG_MIN))
+
+Fixes: bc2652b7ae1e ("selftest/net/xfrm: Add test for ipsec tunnel")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Link: https://lore.kernel.org/r/20231124171645.1011043-2-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/core.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/ipsec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -552,7 +552,7 @@ int mmc_cqe_recovery(struct mmc_host *ho
- 	cmd.flags        = MMC_RSP_R1B | MMC_CMD_AC;
- 	cmd.flags       &= ~MMC_RSP_CRC; /* Ignore CRC */
- 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
--	mmc_wait_for_cmd(host, &cmd, 0);
-+	mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
+diff --git a/tools/testing/selftests/net/ipsec.c b/tools/testing/selftests/net/ipsec.c
+index 3d7dde2c321b3..c5be3f390849b 100644
+--- a/tools/testing/selftests/net/ipsec.c
++++ b/tools/testing/selftests/net/ipsec.c
+@@ -2278,7 +2278,7 @@ static int check_results(void)
  
- 	memset(&cmd, 0, sizeof(cmd));
- 	cmd.opcode       = MMC_CMDQ_TASK_MGMT;
-@@ -560,10 +560,13 @@ int mmc_cqe_recovery(struct mmc_host *ho
- 	cmd.flags        = MMC_RSP_R1B | MMC_CMD_AC;
- 	cmd.flags       &= ~MMC_RSP_CRC; /* Ignore CRC */
- 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
--	err = mmc_wait_for_cmd(host, &cmd, 0);
-+	err = mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
+ int main(int argc, char **argv)
+ {
+-	unsigned int nr_process = 1;
++	long nr_process = 1;
+ 	int route_sock = -1, ret = KSFT_SKIP;
+ 	int test_desc_fd[2];
+ 	uint32_t route_seq;
+@@ -2299,7 +2299,7 @@ int main(int argc, char **argv)
+ 			exit_usage(argv);
+ 		}
  
- 	host->cqe_ops->cqe_recovery_finish(host);
- 
-+	if (err)
-+		err = mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
-+
- 	mmc_retune_release(host);
- 
- 	return err;
+-		if (nr_process > MAX_PROCESSES || !nr_process) {
++		if (nr_process > MAX_PROCESSES || nr_process < 1) {
+ 			printk("nr_process should be between [1; %u]",
+ 					MAX_PROCESSES);
+ 			exit_usage(argv);
+-- 
+2.42.0
+
 
 
