@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8CE6AA0;
-	Tue,  5 Dec 2023 03:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448D66AA0;
+	Tue,  5 Dec 2023 03:20:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGFUllPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC17C433C7;
-	Tue,  5 Dec 2023 03:20:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VydX8MOT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5374C433C8;
+	Tue,  5 Dec 2023 03:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746442;
-	bh=qpcHbnJb6UWrKvrNp3whZqBb1mgHSbxYTdSX78TZSyA=;
+	s=korg; t=1701746446;
+	bh=qV+4zjXL0TiXHvziRqiFxYdBP/t+/R2IGWMDhPZyiUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGFUllPMwDVGbehjKfW3Y0eeQo+A4OL1BZsQEewsn3lYbHYGNqoh6hdUuxqmJRDAE
-	 rGnprnDTb4nfUi6/VLi6nE3FgZv8aGlVF1kZgg71ZagE2JyNDRjnJew51yeVYMyoXA
-	 pZZIcxCh/1E+m10mH83No4bHfAHeEtrVWKw7+hrc=
+	b=VydX8MOTMvUnt9hciP15OIJEQNNaSgSXtJyUJwA17GQEcN5DQTyvLDHj5BAebJXXB
+	 opS6EO+NdDhNSUltVwlOoU7M5qD4+Hin8uyb2KD09wDXERRiOaqn0JwmtZUd3FCX+D
+	 RoK7kCxDsy2Z2aCZdH2SZmg5gFkhW3w+bW+dgRjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 025/134] scsi: ufs: core: Clear cmd if abort succeeds in MCQ mode
-Date: Tue,  5 Dec 2023 12:14:57 +0900
-Message-ID: <20231205031536.983448625@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.com>,
+	Shyam Prasad N <nspmangalore@gmail.com>,
+	Rohith Surabattula <rohiths.msft@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	linux-mm@kvack.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 003/134] cifs: Fix FALLOC_FL_INSERT_RANGE by setting i_size after EOF moved
+Date: Tue,  5 Dec 2023 12:14:35 +0900
+Message-ID: <20231205031535.410691213@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -42,58 +47,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 93e6c0e19d5bb12b49534a411c85e21d333731fa upstream.
+commit 88010155f02b2c3b03c71609ba6ceeb457ece095 upstream.
 
-In MCQ mode, if cmd is pending in device and abort succeeds, response will
-not be returned by device. So we need clear the cmd, otherwise timeout will
-happen and next time we use same tag we will get a WARN_ON(lrbp->cmd).
+Fix the cifs filesystem implementations of FALLOC_FL_INSERT_RANGE, in
+smb3_insert_range(), to set i_size after extending the file on the server
+and before we do the copy to open the gap (as we don't clean up the EOF
+marker if the copy fails).
 
-Below is error log:
-
-  <3>[ 2277.447611][T21376] ufshcd-mtk 112b0000.ufshci: ufshcd_try_to_abort_task: cmd pending in the device. tag = 7
-  <3>[ 2277.476954][T21376] ufshcd-mtk 112b0000.ufshci: Aborting tag 7 / CDB 0x2a succeeded
-  <6>[ 2307.551263][T30974] ufshcd-mtk 112b0000.ufshci: ufshcd_abort: Device abort task at tag 7
-  <4>[ 2307.623264][  T327] WARNING: CPU: 5 PID: 327 at source/drivers/ufs/core/ufshcd.c:3021 ufshcd_queuecommand+0x66c/0xe34
-
-Fixes: ab248643d3d6 ("scsi: ufs: core: Add error handling for MCQ mode")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20231115131024.15829-1-peter.wang@mediatek.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 7fe6fe95b936 ("cifs: add FALLOC_FL_INSERT_RANGE support")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Howells <dhowells@redhat.com>
+Acked-by: Paulo Alcantara <pc@manguebit.com>
+cc: Shyam Prasad N <nspmangalore@gmail.com>
+cc: Rohith Surabattula <rohiths.msft@gmail.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-cifs@vger.kernel.org
+cc: linux-mm@kvack.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/smb/client/smb2ops.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6347,11 +6347,24 @@ static bool ufshcd_abort_one(struct requ
- 	struct scsi_device *sdev = cmd->device;
- 	struct Scsi_Host *shost = sdev->host;
- 	struct ufs_hba *hba = shost_priv(shost);
-+	struct ufshcd_lrb *lrbp = &hba->lrb[tag];
-+	struct ufs_hw_queue *hwq;
-+	unsigned long flags;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3739,6 +3739,9 @@ static long smb3_insert_range(struct fil
+ 	if (rc < 0)
+ 		goto out_2;
  
- 	*ret = ufshcd_try_to_abort_task(hba, tag);
- 	dev_err(hba->dev, "Aborting tag %d / CDB %#02x %s\n", tag,
- 		hba->lrb[tag].cmd ? hba->lrb[tag].cmd->cmnd[0] : -1,
- 		*ret ? "failed" : "succeeded");
++	truncate_setsize(inode, old_eof + len);
++	fscache_resize_cookie(cifs_inode_cookie(inode), i_size_read(inode));
 +
-+	/* Release cmd in MCQ mode if abort succeeds */
-+	if (is_mcq_enabled(hba) && (*ret == 0)) {
-+		hwq = ufshcd_mcq_req_to_hwq(hba, scsi_cmd_to_rq(lrbp->cmd));
-+		spin_lock_irqsave(&hwq->cq_lock, flags);
-+		if (ufshcd_cmd_inflight(lrbp->cmd))
-+			ufshcd_release_scsi_cmd(hba, lrbp);
-+		spin_unlock_irqrestore(&hwq->cq_lock, flags);
-+	}
-+
- 	return *ret == 0;
- }
- 
+ 	rc = smb2_copychunk_range(xid, cfile, cfile, off, count, off + len);
+ 	if (rc < 0)
+ 		goto out_2;
 
 
