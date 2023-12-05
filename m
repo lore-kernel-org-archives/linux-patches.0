@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49676FB1;
-	Tue,  5 Dec 2023 03:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0E66FB1;
+	Tue,  5 Dec 2023 03:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgeXHlPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738A3C433C7;
-	Tue,  5 Dec 2023 03:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTlEgiW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BFBC433C7;
+	Tue,  5 Dec 2023 03:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747104;
-	bh=rRNO5Kf/ZTueeQ0gGXs9PuYhXmE9f2dQ0a4OnBuQNvo=;
+	s=korg; t=1701747107;
+	bh=tswMCRidaPb/E+4lnNmClmNc3suQZ8iea7jsFlytyss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgeXHlPxiCN08ICjg98qECV6i4S3tnUavpVSY+AdFttE7sTm0VUQyfIEY1d+XXCte
-	 fyMFqRA6B2eek5HXF2VnCOMDYZwmtjD4A969t0iQsBDpeRPzVxjup/RvYECvxsElFh
-	 jnRwrfghRyE4IvgY1+p7InpAP/7RU8DVvsbpK++0=
+	b=gTlEgiW31Evetc3fjGmX1eCGatpoFXsOR/L9VFr5Q1eIjcO3rMzUqLocalIDCELCE
+	 YEtSVA+BIT/260coiD5GRRrFoWjO0DvuuHDKs2MzXSusYVf32ZhwbOldyJVbT1+ITJ
+	 oSNfx1lZ2gMuVqHQpw7TCdkawm6uEkH8CK0XzxoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kees Cook <keescook@chromium.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/107] uapi: propagate __struct_group() attributes to the container union
-Date: Tue,  5 Dec 2023 12:16:35 +0900
-Message-ID: <20231205031535.169941786@linuxfoundation.org>
+Subject: [PATCH 6.1 061/107] selftests/net: ipsec: fix constant out of range
+Date: Tue,  5 Dec 2023 12:16:36 +0900
+Message-ID: <20231205031535.231908751@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -43,77 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 4e86f32a13af1970d21be94f659cae56bbe487ee ]
+[ Upstream commit 088559815477c6f623a5db5993491ddd7facbec7 ]
 
-Recently the kernel test robot has reported an ARM-specific BUILD_BUG_ON()
-in an old and unmaintained wil6210 wireless driver. The problem comes from
-the structure packing rules of old ARM ABI ('-mabi=apcs-gnu'). For example,
-the following structure is packed to 18 bytes instead of 16:
+Fix a small compiler warning.
 
-struct poorly_packed {
-        unsigned int a;
-        unsigned int b;
-        unsigned short c;
-        union {
-                struct {
-                        unsigned short d;
-                        unsigned int e;
-                } __attribute__((packed));
-                struct {
-                        unsigned short d;
-                        unsigned int e;
-                } __attribute__((packed)) inner;
-        };
-} __attribute__((packed));
+nr_process must be a signed long: it is assigned a signed long by
+strtol() and is compared against LONG_MIN and LONG_MAX.
 
-To fit it into 16 bytes, it's required to add packed attribute to the
-container union as well:
+ipsec.c:2280:65:
+    error: result of comparison of constant -9223372036854775808
+    with expression of type 'unsigned int' is always false
+    [-Werror,-Wtautological-constant-out-of-range-compare]
 
-struct poorly_packed {
-        unsigned int a;
-        unsigned int b;
-        unsigned short c;
-        union {
-                struct {
-                        unsigned short d;
-                        unsigned int e;
-                } __attribute__((packed));
-                struct {
-                        unsigned short d;
-                        unsigned int e;
-                } __attribute__((packed)) inner;
-        } __attribute__((packed));
-} __attribute__((packed));
+  if ((errno == ERANGE && (nr_process == LONG_MAX || nr_process == LONG_MIN))
 
-Thanks to Andrew Pinski of GCC team for sorting the things out at
-https://gcc.gnu.org/pipermail/gcc/2023-November/242888.html.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311150821.cI4yciFE-lkp@intel.com
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://lore.kernel.org/r/20231120110607.98956-1-dmantipov@yandex.ru
-Fixes: 50d7bd38c3aa ("stddef: Introduce struct_group() helper macro")
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Fixes: bc2652b7ae1e ("selftest/net/xfrm: Add test for ipsec tunnel")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Link: https://lore.kernel.org/r/20231124171645.1011043-2-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/stddef.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/ipsec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
-index 7837ba4fe7289..dcd50fb2164a1 100644
---- a/include/uapi/linux/stddef.h
-+++ b/include/uapi/linux/stddef.h
-@@ -27,7 +27,7 @@
- 	union { \
- 		struct { MEMBERS } ATTRS; \
- 		struct TAG { MEMBERS } ATTRS NAME; \
--	}
-+	} ATTRS
+diff --git a/tools/testing/selftests/net/ipsec.c b/tools/testing/selftests/net/ipsec.c
+index 9a8229abfa026..be4a30a0d02ae 100644
+--- a/tools/testing/selftests/net/ipsec.c
++++ b/tools/testing/selftests/net/ipsec.c
+@@ -2263,7 +2263,7 @@ static int check_results(void)
  
- /**
-  * __DECLARE_FLEX_ARRAY() - Declare a flexible array usable in a union
+ int main(int argc, char **argv)
+ {
+-	unsigned int nr_process = 1;
++	long nr_process = 1;
+ 	int route_sock = -1, ret = KSFT_SKIP;
+ 	int test_desc_fd[2];
+ 	uint32_t route_seq;
+@@ -2284,7 +2284,7 @@ int main(int argc, char **argv)
+ 			exit_usage(argv);
+ 		}
+ 
+-		if (nr_process > MAX_PROCESSES || !nr_process) {
++		if (nr_process > MAX_PROCESSES || nr_process < 1) {
+ 			printk("nr_process should be between [1; %u]",
+ 					MAX_PROCESSES);
+ 			exit_usage(argv);
 -- 
 2.42.0
 
