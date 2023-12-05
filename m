@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768DF79E3;
-	Tue,  5 Dec 2023 03:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E2FA59;
+	Tue,  5 Dec 2023 03:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eO/m8/fS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC92FC433C8;
-	Tue,  5 Dec 2023 03:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oo2zqgtn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB57C433C7;
+	Tue,  5 Dec 2023 03:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747483;
-	bh=4rCmb4wF6qnn2w3BzpiAiJPid/MnInn7vSE4pPT5YXc=;
+	s=korg; t=1701747485;
+	bh=zH/dD0zjz+ohnw+2XgeDhlJpxDIetRnbr26J2sVW5FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eO/m8/fS3/orshMtNYZwj78QYhomYwzfKfjgo6xmMEUJLSSTQuxTwvdehUPeE4K2z
-	 MLvnZ9EO+2OED1H8wMoLB76RVJJACChdxSxDo/LrTbXF7uaWj0tSKKbO/Ar1bD/7Fr
-	 q8hew49F4KrPuLdLGaRxkabStT/VEtxknsGsmYoM=
+	b=Oo2zqgtn7tHQ7dgCftP5OBNv6yQDfulVVPSDsHVy6Alj19yT6hUuVUNvvmRebNuz8
+	 9wvbM7qVIw6vxE7a1ojViAe/ANCg1AGEMjoH5nKJlnpRN8q8dJLxtoRrZcCs/mVHue
+	 EZaU7dVNhdLu23qXMZSGJjcSOtPVbZ5R3xqFB0lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Willem de Bruijn <willemb@google.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 093/135] dpaa2-eth: increase the needed headroom to account for alignment
-Date: Tue,  5 Dec 2023 12:16:54 +0900
-Message-ID: <20231205031536.502317503@linuxfoundation.org>
+Subject: [PATCH 5.10 094/135] selftests/net: ipsec: fix constant out of range
+Date: Tue,  5 Dec 2023 12:16:55 +0900
+Message-ID: <20231205031536.571764951@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,83 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit f422abe3f23d483cf01f386819f26fb3fe0dbb2b ]
+[ Upstream commit 088559815477c6f623a5db5993491ddd7facbec7 ]
 
-Increase the needed headroom to account for a 64 byte alignment
-restriction which, with this patch, we make mandatory on the Tx path.
-The case in which the amount of headroom needed is not available is
-already handled by the driver which instead sends a S/G frame with the
-first buffer only holding the SW and HW annotation areas.
+Fix a small compiler warning.
 
-Without this patch, we can empirically see data corruption happening
-between Tx and Tx confirmation which sometimes leads to the SW
-annotation area being overwritten.
+nr_process must be a signed long: it is assigned a signed long by
+strtol() and is compared against LONG_MIN and LONG_MAX.
 
-Since this is an old IP where the hardware team cannot help to
-understand the underlying behavior, we make the Tx alignment mandatory
-for all frames to avoid the crash on Tx conf. Also, remove the comment
-that suggested that this is just an optimization.
+ipsec.c:2280:65:
+    error: result of comparison of constant -9223372036854775808
+    with expression of type 'unsigned int' is always false
+    [-Werror,-Wtautological-constant-out-of-range-compare]
 
-This patch also sets the needed_headroom net device field to the usual
-value that the driver would need on the Tx path:
-	- 64 bytes for the software annotation area
-	- 64 bytes to account for a 64 byte aligned buffer address
+  if ((errno == ERANGE && (nr_process == LONG_MAX || nr_process == LONG_MIN))
 
-Fixes: 6e2387e8f19e ("staging: fsl-dpaa2/eth: Add Freescale DPAA2 Ethernet driver")
-Closes: https://lore.kernel.org/netdev/aa784d0c-85eb-4e5d-968b-c8f74fa86be6@gin.de/
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: bc2652b7ae1e ("selftest/net/xfrm: Add test for ipsec tunnel")
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Link: https://lore.kernel.org/r/20231124171645.1011043-2-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 8 ++++----
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/ipsec.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index 35401202523ef..07ba0438f9655 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -928,14 +928,12 @@ static int dpaa2_eth_build_single_fd(struct dpaa2_eth_priv *priv,
- 	dma_addr_t addr;
+diff --git a/tools/testing/selftests/net/ipsec.c b/tools/testing/selftests/net/ipsec.c
+index 17ced7d6ce259..03b048b668315 100644
+--- a/tools/testing/selftests/net/ipsec.c
++++ b/tools/testing/selftests/net/ipsec.c
+@@ -2117,7 +2117,7 @@ static int check_results(void)
  
- 	buffer_start = skb->data - dpaa2_eth_needed_headroom(skb);
--
--	/* If there's enough room to align the FD address, do it.
--	 * It will help hardware optimize accesses.
--	 */
- 	aligned_start = PTR_ALIGN(buffer_start - DPAA2_ETH_TX_BUF_ALIGN,
- 				  DPAA2_ETH_TX_BUF_ALIGN);
- 	if (aligned_start >= skb->head)
- 		buffer_start = aligned_start;
-+	else
-+		return -ENOMEM;
- 
- 	/* Store a backpointer to the skb at the beginning of the buffer
- 	 * (in the private data area) such that we can release it
-@@ -4337,6 +4335,8 @@ static int dpaa2_eth_probe(struct fsl_mc_device *dpni_dev)
- 	if (err)
- 		goto err_dl_port_add;
- 
-+	net_dev->needed_headroom = DPAA2_ETH_SWA_SIZE + DPAA2_ETH_TX_BUF_ALIGN;
-+
- 	err = register_netdev(net_dev);
- 	if (err < 0) {
- 		dev_err(dev, "register_netdev() failed\n");
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
-index d236b8695c39c..2825f53e7e9b1 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.h
-@@ -664,7 +664,7 @@ static inline bool dpaa2_eth_rx_pause_enabled(u64 link_options)
- 
- static inline unsigned int dpaa2_eth_needed_headroom(struct sk_buff *skb)
+ int main(int argc, char **argv)
  {
--	unsigned int headroom = DPAA2_ETH_SWA_SIZE;
-+	unsigned int headroom = DPAA2_ETH_SWA_SIZE + DPAA2_ETH_TX_BUF_ALIGN;
+-	unsigned int nr_process = 1;
++	long nr_process = 1;
+ 	int route_sock = -1, ret = KSFT_SKIP;
+ 	int test_desc_fd[2];
+ 	uint32_t route_seq;
+@@ -2138,7 +2138,7 @@ int main(int argc, char **argv)
+ 			exit_usage(argv);
+ 		}
  
- 	/* If we don't have an skb (e.g. XDP buffer), we only need space for
- 	 * the software annotation area
+-		if (nr_process > MAX_PROCESSES || !nr_process) {
++		if (nr_process > MAX_PROCESSES || nr_process < 1) {
+ 			printk("nr_process should be between [1; %u]",
+ 					MAX_PROCESSES);
+ 			exit_usage(argv);
 -- 
 2.42.0
 
