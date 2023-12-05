@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E86D6AA0;
-	Tue,  5 Dec 2023 03:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D202A6AA0;
+	Tue,  5 Dec 2023 03:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pehiq8IR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5414C433C8;
-	Tue,  5 Dec 2023 03:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opTnGf1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64215C433C7;
+	Tue,  5 Dec 2023 03:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746571;
-	bh=EIrEGwjW9CvhSIU1xPlQQe0ajt2XIGzwdoWYDOYbnfk=;
+	s=korg; t=1701746573;
+	bh=GtDem1sDcIf2VXPlKzOtSRk0Kb1YEMFv1K7C2YzlQ8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pehiq8IRZfBp3GGM6K17xPCdNKowt80jelksPIgI9eriBfQkWnZ8iU1b5PE1raItf
-	 Ts+ll1I6P7hxUEl3INvEBL7r7bV8Nk+2xQ6YLYE9mVu1KpDWwXWFl5FHZztNyZKOAM
-	 FVQsYsOCAx/t7PSMph4FOchPz0VRQxwBrpT2fK7k=
+	b=opTnGf1nf4tdmG5zCi1KYk4WIppYH8cVYXwxj0kBzYMVLR/+Kk3l0h+/QpQAILb28
+	 +wN2LOPEkdijHaWJJJ8RQPrERqP0CUyWOJ6EI0n99fukn8qojvmnijRZfhS3WSDCcG
+	 tLP6pCv6VKpm1WjyoM2NKTXs0vQZutmkDYeE4Lr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 074/134] wifi: cfg80211: fix CQM for non-range use
-Date: Tue,  5 Dec 2023 12:15:46 +0900
-Message-ID: <20231205031540.189275884@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	Valentin Caron <valentin.caron@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 075/134] pinctrl: stm32: Add check for devm_kcalloc
+Date: Tue,  5 Dec 2023 12:15:47 +0900
+Message-ID: <20231205031540.249346729@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -40,141 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-commit 7e7efdda6adb385fbdfd6f819d76bc68c923c394 upstream.
+[ Upstream commit b0eeba527e704d6023a6cd9103f929226e326b03 ]
 
-My prior race fix here broke CQM when ranges aren't used, as
-the reporting worker now requires the cqm_config to be set in
-the wdev, but isn't set when there's no range configured.
+Add check for the return value of devm_kcalloc() and return the error
+if it fails in order to avoid NULL pointer dereference.
 
-Rather than continuing to special-case the range version, set
-the cqm_config always and configure accordingly, also tracking
-if range was used or not to be able to clear the configuration
-appropriately with the same API, which was actually not right
-if both were implemented by a driver for some reason, as is
-the case with mac80211 (though there the implementations are
-equivalent so it doesn't matter.)
-
-Also, the original multiple-RSSI commit lost checking for the
-callback, so might have potentially crashed if a driver had
-neither implementation, and userspace tried to use it despite
-not being advertised as supported.
-
-Cc: stable@vger.kernel.org
-Fixes: 4a4b8169501b ("cfg80211: Accept multiple RSSI thresholds for CQM")
-Fixes: 37c20b2effe9 ("wifi: cfg80211: fix cqm_config access race")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 32c170ff15b0 ("pinctrl: stm32: set default gpio line names using pin names")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Acked-by: Valentin Caron <valentin.caron@foss.st.com>
+Link: https://lore.kernel.org/r/20231031080807.3600656-1-nichen@iscas.ac.cn
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.h    |    1 
- net/wireless/nl80211.c |   50 ++++++++++++++++++++++++++++++-------------------
- 2 files changed, 32 insertions(+), 19 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/wireless/core.h
-+++ b/net/wireless/core.h
-@@ -299,6 +299,7 @@ struct cfg80211_cqm_config {
- 	u32 rssi_hyst;
- 	s32 last_rssi_event_value;
- 	enum nl80211_cqm_rssi_threshold_event last_rssi_event_type;
-+	bool use_range_api;
- 	int n_rssi_thresholds;
- 	s32 rssi_thresholds[] __counted_by(n_rssi_thresholds);
- };
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -12824,10 +12824,6 @@ static int cfg80211_cqm_rssi_update(stru
- 	int i, n, low_index;
- 	int err;
- 
--	/* RSSI reporting disabled? */
--	if (!cqm_config)
--		return rdev_set_cqm_rssi_range_config(rdev, dev, 0, 0);
--
- 	/*
- 	 * Obtain current RSSI value if possible, if not and no RSSI threshold
- 	 * event has been received yet, we should receive an event after a
-@@ -12902,18 +12898,6 @@ static int nl80211_set_cqm_rssi(struct g
- 	    wdev->iftype != NL80211_IFTYPE_P2P_CLIENT)
- 		return -EOPNOTSUPP;
- 
--	if (n_thresholds <= 1 && rdev->ops->set_cqm_rssi_config) {
--		if (n_thresholds == 0 || thresholds[0] == 0) /* Disabling */
--			return rdev_set_cqm_rssi_config(rdev, dev, 0, 0);
--
--		return rdev_set_cqm_rssi_config(rdev, dev,
--						thresholds[0], hysteresis);
--	}
--
--	if (!wiphy_ext_feature_isset(&rdev->wiphy,
--				     NL80211_EXT_FEATURE_CQM_RSSI_LIST))
--		return -EOPNOTSUPP;
--
- 	if (n_thresholds == 1 && thresholds[0] == 0) /* Disabling */
- 		n_thresholds = 0;
- 
-@@ -12921,6 +12905,20 @@ static int nl80211_set_cqm_rssi(struct g
- 	old = rcu_dereference_protected(wdev->cqm_config,
- 					lockdep_is_held(&wdev->mtx));
- 
-+	/* if already disabled just succeed */
-+	if (!n_thresholds && !old)
-+		return 0;
-+
-+	if (n_thresholds > 1) {
-+		if (!wiphy_ext_feature_isset(&rdev->wiphy,
-+					     NL80211_EXT_FEATURE_CQM_RSSI_LIST) ||
-+		    !rdev->ops->set_cqm_rssi_range_config)
-+			return -EOPNOTSUPP;
-+	} else {
-+		if (!rdev->ops->set_cqm_rssi_config)
-+			return -EOPNOTSUPP;
-+	}
-+
- 	if (n_thresholds) {
- 		cqm_config = kzalloc(struct_size(cqm_config, rssi_thresholds,
- 						 n_thresholds),
-@@ -12935,13 +12933,26 @@ static int nl80211_set_cqm_rssi(struct g
- 		memcpy(cqm_config->rssi_thresholds, thresholds,
- 		       flex_array_size(cqm_config, rssi_thresholds,
- 				       n_thresholds));
-+		cqm_config->use_range_api = n_thresholds > 1 ||
-+					    !rdev->ops->set_cqm_rssi_config;
- 
- 		rcu_assign_pointer(wdev->cqm_config, cqm_config);
-+
-+		if (cqm_config->use_range_api)
-+			err = cfg80211_cqm_rssi_update(rdev, dev, cqm_config);
-+		else
-+			err = rdev_set_cqm_rssi_config(rdev, dev,
-+						       thresholds[0],
-+						       hysteresis);
- 	} else {
- 		RCU_INIT_POINTER(wdev->cqm_config, NULL);
-+		/* if enabled as range also disable via range */
-+		if (old->use_range_api)
-+			err = rdev_set_cqm_rssi_range_config(rdev, dev, 0, 0);
-+		else
-+			err = rdev_set_cqm_rssi_config(rdev, dev, 0, 0);
+diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
+index a73385a431de9..419eca49ccecb 100644
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1378,6 +1378,11 @@ static int stm32_gpiolib_register_bank(struct stm32_pinctrl *pctl, struct fwnode
  	}
  
--	err = cfg80211_cqm_rssi_update(rdev, dev, cqm_config);
- 	if (err) {
- 		rcu_assign_pointer(wdev->cqm_config, old);
- 		kfree_rcu(cqm_config, rcu_head);
-@@ -19131,10 +19142,11 @@ void cfg80211_cqm_rssi_notify_work(struc
- 	wdev_lock(wdev);
- 	cqm_config = rcu_dereference_protected(wdev->cqm_config,
- 					       lockdep_is_held(&wdev->mtx));
--	if (!wdev->cqm_config)
-+	if (!cqm_config)
- 		goto unlock;
- 
--	cfg80211_cqm_rssi_update(rdev, wdev->netdev, cqm_config);
-+	if (cqm_config->use_range_api)
-+		cfg80211_cqm_rssi_update(rdev, wdev->netdev, cqm_config);
- 
- 	rssi_level = cqm_config->last_rssi_event_value;
- 	rssi_event = cqm_config->last_rssi_event_type;
+ 	names = devm_kcalloc(dev, npins, sizeof(char *), GFP_KERNEL);
++	if (!names) {
++		err = -ENOMEM;
++		goto err_clk;
++	}
++
+ 	for (i = 0; i < npins; i++) {
+ 		stm32_pin = stm32_pctrl_get_desc_pin_from_gpio(pctl, bank, i);
+ 		if (stm32_pin && stm32_pin->pin.name)
+-- 
+2.42.0
+
 
 
