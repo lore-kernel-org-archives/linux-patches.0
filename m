@@ -1,192 +1,339 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2050.outbound.protection.outlook.com [40.107.93.50])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAED6D1C7;
-	Tue,  5 Dec 2023 19:15:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0356D1CE;
+	Tue,  5 Dec 2023 19:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="pRjZqSLe"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TWYzBeftc4Yfbu4BpA6WkVTxO+rTFEq47joOcc19jc8CuVHgx46CiSePQxJtXj9eMdnQOBw9iqwCR+GS3iq32T/l0zJk1dQOnF2M6cKAj1NTlUJNHNR//lHOeIzDNt7vOYR3AhVvx5UCX6VrRoEvfAltJmIdI7tU0cuUb6iU0w0H/rkJPQi4xnJRJaMHuDJF150pXlTbs7bLfczqWhBzxCfnfaIeTFwlwggjR58+MWFOCUx0FG1voAZ8gRytSAdiw3fDMJTrxW9uNNJONx610UuMw1Mt6/PGGZhWg+uOBHluBOoZS+AGTwEt1Ng12jXf/VaHAGRzLJwA1b9OLSY3tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1rX071TW7IHzjhqW8BaEjoxygqb/wH4pos15IYzeQ9c=;
- b=BOl0GUHe3dW3xmD9M7fBxzEaCKsfcfcqU+h8U9ppeqQmJ88197MNW+RoEjUpg1+d92N68hCIyBfNbkqKcQ+FHzIhdD9rna/DM99Ll3m4/pgRsusrsVYyAaEB+BJJEotmBmchCa/rfNk4fG+DQLj8KGQAv3UEINz6DL2h6cQfL6NFbo344eBS/cpZP9eIshJWE0ATIUU82gDGB5Ys+zy/cvtll4JoCMGszEnLtArNwqar4S7eZ4AzvuP8sJOkl7Vt8MhW7aMK1y1w2dvJs7H1lZIo55+BbK1jvoq38UsZhSMThnzBHquDfQUqX5rLHk0UAU6UDtHvNT5KsDC2hoHkwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1rX071TW7IHzjhqW8BaEjoxygqb/wH4pos15IYzeQ9c=;
- b=pRjZqSLeMwdw/QNnt2KxWOQZ8RbhgV2AXQsCK+OYu3oBQc7BzJZ4jgzxPSZdVC+qoAhOQqYFFWPEBXknHBvW81zxq5ksS0F33DIb8jSJGoKUnxzz7qeY7Jv/YTb5QJUzWBWC3DdsarRAaYFs7QvrxPz5P3MAzmYhSQy8+V2Da9efRVr+HEjot0awsw7ExZZkIp7qrKbZbdkgYiYueoI3szg+yrECJ5ymT/fNgKPdF3DCCtjJAak6ELSaR38EGg68f05yR3JAEYm+2yDkk6OzfmccsVUDoxMSGKcC5vlDoeZJ/vlUtERbrNOTDOGPhpKgDrJKk/AJKR7v1pTRAQRKVA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by PH7PR12MB6588.namprd12.prod.outlook.com (2603:10b6:510:210::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.34; Tue, 5 Dec
- 2023 19:15:01 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::60d4:c1e3:e1aa:8f93]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::60d4:c1e3:e1aa:8f93%4]) with mapi id 15.20.7046.034; Tue, 5 Dec 2023
- 19:15:01 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: Eric Auger <eric.auger@redhat.com>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAx4dtHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6947AC433C7;
+	Tue,  5 Dec 2023 19:22:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1701804132;
+	bh=m4JCb/yKb6n09zVh4sYV4pbNNQapkuetbcSA63bkdnE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=fAx4dtHlfCdb+iocn79zd0zzswbrqX9Sl9vX296xqN9nnW6p+bytEbGj5hVMAoPMP
+	 6rcfivrcQ+aPv+r9WNrC/CD4PqeaaW7LJ9Ij2Uey2N18/f76R8aXWw3P3eKcNTQ8IZ
+	 scFFk+Spwwioj8ingJ64zsOAnIG1Jhy9w1ovJFeQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Subject: [PATCH v3 11/19] iommu/arm-smmu-v3: Do not change the STE twice during arm_smmu_attach_dev()
-Date: Tue,  5 Dec 2023 15:14:43 -0400
-Message-ID: <11-v3-d794f8d934da+411a-smmuv3_newapi_p1_jgg@nvidia.com>
-In-Reply-To: <0-v3-d794f8d934da+411a-smmuv3_newapi_p1_jgg@nvidia.com>
-References:
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MN2PR15CA0042.namprd15.prod.outlook.com
- (2603:10b6:208:237::11) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: [PATCH 4.19 00/63] 4.19.301-rc2 review
+Date: Wed,  6 Dec 2023 04:22:09 +0900
+Message-ID: <20231205183236.587197010@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|PH7PR12MB6588:EE_
-X-MS-Office365-Filtering-Correlation-Id: 21cb0e12-e511-40db-1b46-08dbf5c67650
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	P9EyiQMnu31HikIjjNwrVmfW0ssT633ZXSCo42hQMPITIUeZ2orfQnkm/2bkqcqhSHbVotTGcDQqnwkyWj4BU7x2e/pBg3mgauiPGh5etw5GIdVF78OxzbK0L6c2OyyU06e/UFsruNS5YUTtRoW6rqMaKSI595lPniEhbk/T059L9wjIkPbEp2MOHapkZ97tYG7jmOs89NoId/jJcdAG98+7AbgDnMFzvewieokJSVOM5zhRJRooQPHrMF9RWd0631Rz8toFtz3ynhXFm56CwGxbtjrDjAsPOd6xdYQ4+qtoyPjRNz4YsEqqkycxmINAgriN5s5BaW26FISJ1pJnE/TPxB7JLDEqXUgiWRDFZji1GpfBsU7H7RHYgIbJ38Areemd7IylnBfBQLK6e9MIGLYzFA5s3APTyL5NmVnFmoLr5MSKozGPj3lYhSa6X4ix0WqwPoqd0K3QREMu2u3LW9cpnbMNV78UIqx2nynqr01HDrObvTZqIfRg8Tiw/Z0BqkajuDJrhjirvEgFM8jQZLVh1awQnA8VzIFBWENpV+eguroLnUxeBJAGcLlom6Nf
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(366004)(136003)(396003)(346002)(376002)(230922051799003)(1800799012)(451199024)(64100799003)(186009)(478600001)(6512007)(6506007)(8936002)(6486002)(2616005)(26005)(6666004)(54906003)(66476007)(110136005)(66556008)(8676002)(66946007)(4326008)(316002)(83380400001)(38100700002)(7416002)(36756003)(5660300002)(2906002)(86362001)(41300700001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?f2PELPqOZbcU9ApwjuXgvrJtkCSVphTzsYv7+PCTiXbmT+2b3GrB/glsuJw9?=
- =?us-ascii?Q?7iscD7xBDYs6FwErzCCsaZjHbcg0MSKHcmqOemb3+SSHvnDjd2oN3SFRpqlC?=
- =?us-ascii?Q?NMjVBUNUYAXYXKNnUvJekK8vsFgXc4SP5kHRC2BXJ7a7B1mQgQLJRJi4PtoI?=
- =?us-ascii?Q?aBOD5JxhQo2WF7xnQB7kOlvKkOJtiHnFP/6eholSZdb+sw43jbVA3QojRKN8?=
- =?us-ascii?Q?5NZLd1485LAtAPSxHcuIlLikyOP4q3kuOEifsuz5lH1xTzl8WR6Nad1sFTN9?=
- =?us-ascii?Q?XHXru1JmGxijAolmpqjT5Uhbs3HfQ0gnb7AyGI9ZZPBvQXGn5l/5npGcl1xW?=
- =?us-ascii?Q?mdk2/fl8Id/fquAlNTRqhb0GYKWN3ahPvCXHCoHbrWRNCIc60N7piiZkooRh?=
- =?us-ascii?Q?A6HY/0RXSXup6CA4Dybzb7ar8iCa9i2tvosLt7Cjbk4shr0uC1oi7nTdrU2e?=
- =?us-ascii?Q?m5f2My5QR7K3YgabUyzvsvs3YQZ7AAyZO26md5yed5KvwfDCFSwHluebJL+m?=
- =?us-ascii?Q?nnxfiWbMe+8xDL23BQxjV7zVI78VXaTTmCE5iR1jQfbBi5c5GMv1BAT12Gpi?=
- =?us-ascii?Q?pkZdQqEibqC6eD5KJSjyDpksTU1oNg/KsuOwaia6csnEUm/+ime6EXWONNgU?=
- =?us-ascii?Q?/A0og7sGMOmrFMprk9C9cvPufO8lwrd8+OFy+0iGqTgrzPd+pAPPa9KSLfPu?=
- =?us-ascii?Q?HYYf7rhjCNiogFi/AJP+PPU9T412iFoh/cuNm4XrNPOIaqVwLVJMFEnjOCov?=
- =?us-ascii?Q?CXr0vEr/kWhIAPYY/V32Sc/+Cwk7I1YL8D+RarW2PQgF79/R8aJIjbmLsNf3?=
- =?us-ascii?Q?QrZlykG8MPspZch4My5xpXWNzjY80jZWTUuJpI6TW0JeykQ9jnI2kBI25t2a?=
- =?us-ascii?Q?2LbPO2GmFf1/d8PKmU4A7eyL1tAsiu3maB+OoRTo3AK3fUdN9YsAdE3WVH2K?=
- =?us-ascii?Q?YgIGAH+y/3o5QonQTbLxxc/zbmsIg9NFAiuTqtIIv9bt3uDgSuGt4kPy6gJ0?=
- =?us-ascii?Q?Bhg1BhjRPYKVmdywXc7Yr/xyy50ujCE9oUOR+eHu1t1MvP11yqIDhbEHA98V?=
- =?us-ascii?Q?Ruy6IBeWOFce/gX3/6mfEbnmj1FQG6I2Y0zNC3vXCIq0hSCt5pIGAXKliigs?=
- =?us-ascii?Q?HhLy+cLdOLd74v/yHFfOpmuVmi9QtTlzuGHKtFlBdwa6TOYKxAUf1WbOXciU?=
- =?us-ascii?Q?MYYcIYT3ZJZjBNIbAqJEJMcj+uFUYN0Uf7pSQ17N9E/+cY2zKum3BCcPTKNG?=
- =?us-ascii?Q?BrwACdn5ZO8RsJ/Me032GpGkEoqnmGn7Z2xOmDT1mKlGHpsHkSKiD+hOoyYZ?=
- =?us-ascii?Q?jHlW2X4dW0VsJqBuEjUyBT/q19wFp3jqNsP2KHVfvJc4aukmZEZX8yq685tM?=
- =?us-ascii?Q?qLi6v3ak2lYhVNpfB+Pf8wgFXZlwOCIHubLgsk4dJVrzypN1JOy1cOFk5hwN?=
- =?us-ascii?Q?Zcgi6kONl0lQYAPyCPtfT/Lc40WO6G8FeQdoW9bkLA7NZBi03HmI+l6qfIwF?=
- =?us-ascii?Q?LPmGDbi0qSRXQBVT8wTHVvjHojcJzQiKKw/o9VfzVH3Lg7srrXJcAuIkSnIs?=
- =?us-ascii?Q?XXRKX5A2ZjU0nRmyuZygAKddbe6ZdUH4GgkhjTGT?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 21cb0e12-e511-40db-1b46-08dbf5c67650
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Dec 2023 19:14:54.1375
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XcbniNq8UpAN7E1UQsxArsD9Y+J62VXdDf57AUPEGXHfjRE71osCeByvQVOP0pBk
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6588
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.301-rc2.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.301-rc2
+X-KernelTest-Deadline: 2023-12-07T18:32+00:00
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-This was needed because the STE code required the STE to be in
-ABORT/BYPASS inorder to program a cdtable or S2 STE. Now that the STE code
-can automatically handle all transitions we can remove this step
-from the attach_dev flow.
+This is the start of the stable review cycle for the 4.19.301 release.
+There are 63 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-A few small bugs exist because of this:
+Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
+Anything received after that time might be too late.
 
-1) If the core code does BLOCKED -> UNMANAGED with disable_bypass=false
-   then there will be a moment where the STE points at BYPASS. Since
-   this can be done by VFIO/IOMMUFD it is a small security race.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.301-rc2.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
 
-2) If the core code does IDENTITY -> DMA then any IOMMU_RESV_DIRECT
-   regions will temporarily become BLOCKED. We'd like drivers to
-   work in a way that allows IOMMU_RESV_DIRECT to be continuously
-   functional during these transitions.
+thanks,
 
-Make arm_smmu_release_device() put the STE back to the correct
-ABORT/BYPASS setting. Fix a bug where a IOMMU_RESV_DIRECT was ignored on
-this path.
+greg k-h
 
-As noted before the reordering of the linked list/STE/CD changes is OK
-against concurrent arm_smmu_share_asid() because of the
-arm_smmu_asid_lock.
+-------------
+Pseudo-Shortlog of commits:
 
-Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.301-rc2
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 0c1d70b8f325ed..7b1f7fa27b3df0 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2482,7 +2482,6 @@ static void arm_smmu_disable_pasid(struct arm_smmu_master *master)
- static void arm_smmu_detach_dev(struct arm_smmu_master *master)
- {
- 	unsigned long flags;
--	struct arm_smmu_ste target;
- 	struct arm_smmu_domain *smmu_domain = master->domain;
- 
- 	if (!smmu_domain)
-@@ -2496,11 +2495,6 @@ static void arm_smmu_detach_dev(struct arm_smmu_master *master)
- 
- 	master->domain = NULL;
- 	master->ats_enabled = false;
--	if (disable_bypass)
--		arm_smmu_make_abort_ste(&target);
--	else
--		arm_smmu_make_bypass_ste(&target);
--	arm_smmu_install_ste_for_dev(master, &target);
- 	/*
- 	 * Clearing the CD entry isn't strictly required to detach the domain
- 	 * since the table is uninstalled anyway, but it helps avoid confusion
-@@ -2852,9 +2846,18 @@ static struct iommu_device *arm_smmu_probe_device(struct device *dev)
- static void arm_smmu_release_device(struct device *dev)
- {
- 	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
-+	struct arm_smmu_ste target;
- 
- 	if (WARN_ON(arm_smmu_master_sva_enabled(master)))
- 		iopf_queue_remove_device(master->smmu->evtq.iopf, dev);
-+
-+	/* Put the STE back to what arm_smmu_init_strtab() sets */
-+	if (disable_bypass && !dev->iommu->require_direct)
-+		arm_smmu_make_abort_ste(&target);
-+	else
-+		arm_smmu_make_bypass_ste(&target);
-+	arm_smmu_install_ste_for_dev(master, &target);
-+
- 	arm_smmu_detach_dev(master);
- 	arm_smmu_disable_pasid(master);
- 	arm_smmu_remove_master(master);
--- 
-2.43.0
+Adrian Hunter <adrian.hunter@intel.com>
+    mmc: block: Retry commands in CQE error recovery
+
+Zheng Yongjun <zhengyongjun3@huawei.com>
+    mmc: core: convert comma to semicolon
+
+Adrian Hunter <adrian.hunter@intel.com>
+    mmc: cqhci: Fix task clearing in CQE error recovery
+
+Adrian Hunter <adrian.hunter@intel.com>
+    mmc: cqhci: Warn of halt or task clear failure
+
+Adrian Hunter <adrian.hunter@intel.com>
+    mmc: cqhci: Increase recovery halt timeout
+
+Christoph Niedermaier <cniedermaier@dh-electronics.com>
+    cpufreq: imx6q: Don't disable 792 Mhz OPP unnecessarily
+
+Christoph Niedermaier <cniedermaier@dh-electronics.com>
+    cpufreq: imx6q: don't warn for disabling a non-existing frequency
+
+Mimi Zohar <zohar@linux.ibm.com>
+    ima: detect changes to the backing overlay file
+
+Konstantin Khlebnikov <khlebnikov@yandex-team.ru>
+    ovl: skip overlayfs superblocks at global sync
+
+Amir Goldstein <amir73il@gmail.com>
+    ima: annotate iint mutex to avoid lockdep false positive warnings
+
+Helge Deller <deller@gmx.de>
+    fbdev: stifb: Make the STI next font pointer a 32-bit signed offset
+
+Linus Walleij <linus.walleij@linaro.org>
+    mtd: cfi_cmdset_0001: Byte swap OTP info
+
+Jean-Philippe Brucker <jean-philippe@linaro.org>
+    mtd: cfi_cmdset_0001: Support the absence of protection registers
+
+Heiko Carstens <hca@linux.ibm.com>
+    s390/cmma: fix detection of DAT pages
+
+Alexander Gordeev <agordeev@linux.ibm.com>
+    s390/mm: fix phys vs virt confusion in mark_kernel_pXd() functions family
+
+Steve French <stfrench@microsoft.com>
+    smb3: fix touch -h of symlink
+
+Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+    net: ravb: Start TX queues after HW initialization succeeded
+
+Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+    ravb: Fix races between ravb_tx_timeout_work() and net related ops
+
+Zhengchao Shao <shaozhengchao@huawei.com>
+    ipv4: igmp: fix refcnt uaf issue when receiving igmp query packet
+
+Max Nguyen <maxwell.nguyen@hp.com>
+    Input: xpad - add HyperX Clutch Gladiate Support
+
+Jann Horn <jannh@google.com>
+    btrfs: send: ensure send_fd is writable
+
+Filipe Manana <fdmanana@suse.com>
+    btrfs: fix off-by-one when checking chunk map includes logical address
+
+Timothy Pearson <tpearson@raptorengineering.com>
+    powerpc: Don't clobber f0/vs0 during fp|altivec register save
+
+Markus Weippert <markus@gekmihesg.de>
+    bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
+
+Wu Bo <bo.wu@vivo.com>
+    dm verity: don't perform FEC for failed readahead IO
+
+Mikulas Patocka <mpatocka@redhat.com>
+    dm-verity: align struct dm_verity_fec_io properly
+
+Kailang Yang <kailang@realtek.com>
+    ALSA: hda/realtek: Headset Mic VREF to 100%
+
+Takashi Iwai <tiwai@suse.de>
+    ALSA: hda: Disable power-save on KONTRON SinglePC
+
+Adrian Hunter <adrian.hunter@intel.com>
+    mmc: block: Do not lose cache flush during CQE error recovery
+
+Yang Yingliang <yangyingliang@huawei.com>
+    firewire: core: fix possible memory leak in create_units()
+
+Maria Yu <quic_aiquny@quicinc.com>
+    pinctrl: avoid reload of p state in list iteration
+
+Johan Hovold <johan+linaro@kernel.org>
+    USB: dwc3: qcom: fix wakeup after probe deferral
+
+Ricardo Ribalda <ribalda@chromium.org>
+    usb: dwc3: set the dma max_seg_size
+
+Oliver Neukum <oneukum@suse.com>
+    USB: dwc2: write HCINT with INTMASK applied
+
+Lech Perczak <lech.perczak@gmail.com>
+    USB: serial: option: don't claim interface 4 for ZTE MF290
+
+Puliang Lu <puliang.lu@fibocom.com>
+    USB: serial: option: fix FM101R-GL defines
+
+Victor Fragoso <victorffs@hotmail.com>
+    USB: serial: option: add Fibocom L7xx modules
+
+Rand Deeb <rand.sec96@gmail.com>
+    bcache: prevent potential division by zero error
+
+Coly Li <colyli@suse.de>
+    bcache: check return value from btree_node_alloc_replacement()
+
+Mikulas Patocka <mpatocka@redhat.com>
+    dm-delay: fix a race between delay_presuspend and delay_bio
+
+Long Li <longli@microsoft.com>
+    hv_netvsc: Mark VF as slave before exposing it to user-mode
+
+Haiyang Zhang <haiyangz@microsoft.com>
+    hv_netvsc: Fix race of register_netdevice_notifier and VF register
+
+Asuna Yang <spriteovo@gmail.com>
+    USB: serial: option: add Luat Air72*U series products
+
+Jan Höppner <hoeppner@linux.ibm.com>
+    s390/dasd: protect device queue against concurrent access
+
+Coly Li <colyli@suse.de>
+    bcache: replace a mistaken IS_ERR() by IS_ERR_OR_NULL() in btree_gc_coalesce()
+
+Claire Lin <claire.lin@broadcom.com>
+    mtd: rawnand: brcmnand: Fix ecc chunk calculation for erased page bitfips
+
+Andrew Murray <andrew.murray@arm.com>
+    KVM: arm64: limit PMU version to PMUv3 for ARMv8.1
+
+Andrew Murray <andrew.murray@arm.com>
+    arm64: cpufeature: Extract capped perfmon fields
+
+Huacai Chen <chenhuacai@loongson.cn>
+    MIPS: KVM: Fix a build warning about variable set but not used
+
+Samuel Holland <samuel.holland@sifive.com>
+    net: axienet: Fix check for partial TX checksum
+
+Raju Rangoju <Raju.Rangoju@amd.com>
+    amd-xgbe: propagate the correct speed and duplex status
+
+Raju Rangoju <Raju.Rangoju@amd.com>
+    amd-xgbe: handle the corner-case during tx completion
+
+Raju Rangoju <Raju.Rangoju@amd.com>
+    amd-xgbe: handle corner-case during sfp hotplug
+
+Stefano Stabellini <sstabellini@kernel.org>
+    arm/xen: fix xen_vcpu_info allocation alignment
+
+Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+    net: usb: ax88179_178a: fix failed operations during ax88179_reset
+
+Kunwu Chan <chentao@kylinos.cn>
+    ipv4: Correct/silence an endian warning in __ip_do_redirect
+
+Charles Yi <be286@163.com>
+    HID: fix HID device resource race between HID core and debugging support
+
+Benjamin Tissoires <benjamin.tissoires@redhat.com>
+    HID: core: store the unique system identifier in hid_device
+
+Jonas Karlman <jonas@kwiboo.se>
+    drm/rockchip: vop: Fix color for RGB888/BGR888 format on VOP full
+
+Chen Ni <nichen@iscas.ac.cn>
+    ata: pata_isapnp: Add missing error check for devm_ioport_map()
+
+Marek Vasut <marex@denx.de>
+    drm/panel: simple: Fix Innolux G101ICE-L01 timings
+
+Christopher Bednarz <christopher.n.bednarz@intel.com>
+    RDMA/irdma: Prevent zero-length STAG registration
+
+Saravana Kannan <saravanak@google.com>
+    driver core: Release all resources during unbind before updating device links
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                          |  4 +-
+ arch/arm/xen/enlighten.c                          |  3 +-
+ arch/arm64/include/asm/cpufeature.h               | 23 +++++++++++
+ arch/arm64/include/asm/sysreg.h                   |  6 +++
+ arch/arm64/kvm/sys_regs.c                         | 10 +++++
+ arch/mips/kvm/mmu.c                               |  3 +-
+ arch/powerpc/kernel/fpu.S                         | 13 ++++++
+ arch/powerpc/kernel/vector.S                      |  2 +
+ arch/s390/mm/page-states.c                        | 14 +++----
+ drivers/ata/pata_isapnp.c                         |  3 ++
+ drivers/base/dd.c                                 |  4 +-
+ drivers/cpufreq/imx6q-cpufreq.c                   | 32 ++++++++-------
+ drivers/firewire/core-device.c                    | 11 ++----
+ drivers/gpu/drm/panel/panel-simple.c              | 12 +++---
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c       | 14 +++++--
+ drivers/hid/hid-core.c                            | 16 ++++++--
+ drivers/hid/hid-debug.c                           |  3 ++
+ drivers/infiniband/hw/i40iw/i40iw_ctrl.c          |  6 +++
+ drivers/infiniband/hw/i40iw/i40iw_type.h          |  2 +
+ drivers/infiniband/hw/i40iw/i40iw_verbs.c         | 10 ++++-
+ drivers/input/joystick/xpad.c                     |  2 +
+ drivers/md/bcache/btree.c                         |  6 ++-
+ drivers/md/bcache/sysfs.c                         |  2 +-
+ drivers/md/dm-delay.c                             | 17 +++++---
+ drivers/md/dm-verity-fec.c                        |  3 +-
+ drivers/md/dm-verity-target.c                     |  4 +-
+ drivers/md/dm-verity.h                            |  6 ---
+ drivers/mmc/core/block.c                          |  2 +
+ drivers/mmc/core/core.c                           | 15 ++++---
+ drivers/mmc/host/cqhci.c                          | 44 ++++++++++-----------
+ drivers/mtd/chips/cfi_cmdset_0001.c               | 29 +++++++++++---
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c          |  5 ++-
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c          | 14 +++++++
+ drivers/net/ethernet/amd/xgbe/xgbe-ethtool.c      | 11 ++++--
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c         | 14 ++++++-
+ drivers/net/ethernet/renesas/ravb_main.c          | 15 +++++--
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c |  2 +-
+ drivers/net/hyperv/netvsc_drv.c                   | 41 +++++++++++++------
+ drivers/net/usb/ax88179_178a.c                    |  4 +-
+ drivers/pinctrl/core.c                            |  6 +--
+ drivers/s390/block/dasd.c                         | 24 ++++++------
+ drivers/usb/dwc2/hcd_intr.c                       | 15 ++++---
+ drivers/usb/dwc3/core.c                           |  2 +
+ drivers/usb/dwc3/dwc3-qcom.c                      |  8 ++--
+ drivers/usb/serial/option.c                       | 11 ++++--
+ drivers/video/fbdev/sticore.h                     |  2 +-
+ fs/btrfs/send.c                                   |  2 +-
+ fs/btrfs/volumes.c                                |  2 +-
+ fs/cifs/cifsfs.c                                  |  1 +
+ fs/overlayfs/super.c                              |  5 ++-
+ fs/sync.c                                         |  3 +-
+ include/linux/fs.h                                |  2 +
+ include/linux/hid.h                               |  5 +++
+ net/ipv4/igmp.c                                   |  6 ++-
+ net/ipv4/route.c                                  |  2 +-
+ security/integrity/iint.c                         | 48 +++++++++++++++++------
+ security/integrity/ima/ima_api.c                  |  5 +++
+ security/integrity/ima/ima_main.c                 | 16 +++++++-
+ security/integrity/integrity.h                    |  2 +
+ sound/pci/hda/hda_intel.c                         |  2 +
+ sound/pci/hda/patch_realtek.c                     |  9 +++++
+ 61 files changed, 434 insertions(+), 171 deletions(-)
+
 
