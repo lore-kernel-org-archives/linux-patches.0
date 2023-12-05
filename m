@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A41B6FB1;
-	Tue,  5 Dec 2023 03:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B955C6FB1;
+	Tue,  5 Dec 2023 03:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i26BjfPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36EFC433C8;
-	Tue,  5 Dec 2023 03:33:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDGWlF7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B40C433C8;
+	Tue,  5 Dec 2023 03:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747199;
-	bh=NojsTa3hzw5AxRBOCIkiF0/lzb9itN6tMhz4yrblD5Q=;
+	s=korg; t=1701747201;
+	bh=NBjilbU3J1igLDc3Q9XAB4aaps6dFXfyicAheDTZil8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i26BjfPkW0urcWNQ6X1tC2n7JyghKXtmzbwunkqBcpY8n6zM1BfNXPH8PWh0ZhoxE
-	 fibtJrrnZWn3sqifv2+fUJn3VmdftGRFhGE9RpDV0hVBFOZ/bBN6wB5/NxXbCAy8YS
-	 7LU8WrBZz/nGCVF2CK8d3/EVQ05pPsJz3y/qs0OU=
+	b=sDGWlF7ZD9A+NmHkHQjzta713hmXs4DpDOPB/JpmNu7X/g51VA7gc0FBOshWqUKsU
+	 AvkxdYPdG6c7siJvUyWlL9JCrfTuEpJ87d+O/tqzfvGAtVRplssZUN0945y/TuQnCd
+	 dwNDdZ3epNkcKgyIwnGgShi6Ld6+9kNtLyGfXUO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	Marek Vasut <marex@denx.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/107] selftests/net: fix a char signedness issue
-Date: Tue,  5 Dec 2023 12:16:37 +0900
-Message-ID: <20231205031535.287764230@linuxfoundation.org>
+Subject: [PATCH 6.1 089/107] cpufreq: imx6q: Dont disable 792 Mhz OPP unnecessarily
+Date: Tue,  5 Dec 2023 12:17:04 +0900
+Message-ID: <20231205031537.236098485@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -42,48 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 
-[ Upstream commit 7b29828c5af6841bdeb9fafa32fdfeff7ab9c407 ]
+[ Upstream commit 2e4e0984c7d696cc74cf2fd7e7f62997f0e9ebe6 ]
 
-Signedness of char is signed on x86_64, but unsigned on arm64.
+For a 900MHz i.MX6ULL CPU the 792MHz OPP is disabled. There is no
+convincing reason to disable this OPP. If a CPU can run at 900MHz,
+it should also be able to cope with 792MHz. Looking at the voltage
+level of 792MHz in [1] (page 24, table 10. "Operating Ranges") the
+current defined OPP is above the minimum. So the voltage level
+shouldn't be a problem. However in [2] (page 24, table 10.
+"Operating Ranges"), it is not mentioned that 792MHz OPP isn't
+allowed. Change it to only disable 792MHz OPP for i.MX6ULL types
+below 792 MHz.
 
-Fix the warning building cmsg_sender.c on signed platforms or
-forced with -fsigned-char:
+[1] https://www.nxp.com/docs/en/data-sheet/IMX6ULLIEC.pdf
+[2] https://www.nxp.com/docs/en/data-sheet/IMX6ULLCEC.pdf
 
-    msg_sender.c:455:12:
-    error: implicit conversion from 'int' to 'char'
-    changes value from 128 to -128
-    [-Werror,-Wconstant-conversion]
-        buf[0] = ICMPV6_ECHO_REQUEST;
-
-constant ICMPV6_ECHO_REQUEST is 128.
-
-Link: https://lwn.net/Articles/911914
-Fixes: de17e305a810 ("selftests: net: cmsg_sender: support icmp and raw sockets")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20231124171645.1011043-3-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0aa9abd4c212 ("cpufreq: imx6q: check speed grades for i.MX6ULL")
+Signed-off-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Fabio Estevam <festevam@denx.de>
+[ Viresh: Edited subject ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/cmsg_sender.c | 2 +-
+ drivers/cpufreq/imx6q-cpufreq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/cmsg_sender.c b/tools/testing/selftests/net/cmsg_sender.c
-index 24b21b15ed3fb..6ff3e732f449f 100644
---- a/tools/testing/selftests/net/cmsg_sender.c
-+++ b/tools/testing/selftests/net/cmsg_sender.c
-@@ -416,9 +416,9 @@ int main(int argc, char *argv[])
- {
- 	struct addrinfo hints, *ai;
- 	struct iovec iov[1];
-+	unsigned char *buf;
- 	struct msghdr msg;
- 	char cbuf[1024];
--	char *buf;
- 	int err;
- 	int fd;
+diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
+index ae834fb9bfbd5..925fc17eaacb2 100644
+--- a/drivers/cpufreq/imx6q-cpufreq.c
++++ b/drivers/cpufreq/imx6q-cpufreq.c
+@@ -327,7 +327,7 @@ static int imx6ul_opp_check_speed_grading(struct device *dev)
+ 			imx6x_disable_freq_in_opp(dev, 696000000);
  
+ 	if (of_machine_is_compatible("fsl,imx6ull")) {
+-		if (val != OCOTP_CFG3_6ULL_SPEED_792MHZ)
++		if (val < OCOTP_CFG3_6ULL_SPEED_792MHZ)
+ 			imx6x_disable_freq_in_opp(dev, 792000000);
+ 
+ 		if (val != OCOTP_CFG3_6ULL_SPEED_900MHZ)
 -- 
 2.42.0
 
