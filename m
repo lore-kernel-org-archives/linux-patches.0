@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B9A6FB1;
-	Tue,  5 Dec 2023 03:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3710A6FB1;
+	Tue,  5 Dec 2023 03:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anB00jrV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77380C433C7;
-	Tue,  5 Dec 2023 03:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWOslLfT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411D9C433C8;
+	Tue,  5 Dec 2023 03:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747557;
-	bh=ANNWzkHcUrd9P78B/b2qxqW4FIhTUsXOLl2GzwSkkeo=;
+	s=korg; t=1701747560;
+	bh=p516HOjGGxoUvcJVqlTm6SD1ZXfZF3XmJju7ahF5NCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=anB00jrVi+k7AiFASUZ7YUIAjIvY2K2OmlbgwxWUVtk5Lp/+kCewRrpDjYC3/OY4F
-	 XjED4zYIebMYWlDab/YyjNdTUgNVe4JT+L25ZsCYLOjR9eBVYL2x8Wcq6ePlcNX33C
-	 9mWjEvudNtJEnIP3IEox0sL+uop8yAKf39Vq+9LY=
+	b=MWOslLfTulxdOsDBPHCV7fohjO1hZ1RjDTJ9kD6IJ5/rvl1s0IYHH2UCQwJFjxNsJ
+	 2MjdB7KCeHQ92xK5NIfMv3UYZieG0zP1qfEkKD/j/qgCRBOSrOFh16ZbBWW8/mWEEa
+	 y9WUoKR4E3YNiUteymas/lLilXUvolf/6yXxhcPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <stfrench@microsoft.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/135] smb3: fix caching of ctime on setxattr
-Date: Tue,  5 Dec 2023 12:17:21 +0900
-Message-ID: <20231205031538.446463318@linuxfoundation.org>
+Subject: [PATCH 5.10 121/135] scsi: core: Introduce the scsi_cmd_to_rq() function
+Date: Tue,  5 Dec 2023 12:17:22 +0900
+Message-ID: <20231205031538.507809293@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -41,41 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 5923d6686a100c2b4cabd4c2ca9d5a12579c7614 ]
+[ Upstream commit 51f3a478892873337c54068d1185bcd797000a52 ]
 
-Fixes xfstest generic/728 which had been failing due to incorrect
-ctime after setxattr and removexattr
+The 'request' member of struct scsi_cmnd is superfluous. The struct request
+and struct scsi_cmnd data structures are adjacent and hence the request
+pointer can be derived easily from a scsi_cmnd pointer. Introduce a helper
+function that performs that conversion in a type-safe way. This patch is
+the first step towards removing the request member from struct
+scsi_cmnd. Making that change has the following advantages:
 
-Update ctime on successful set of xattr
+ - This is a performance optimization since adding an offset to a pointer
+   takes less time than dereferencing a pointer.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ - struct scsi_cmnd becomes smaller.
+
+Link: https://lore.kernel.org/r/20210809230355.8186-2-bvanassche@acm.org
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 19597cad64d6 ("scsi: qla2xxx: Fix system crash due to bad pointer access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/xattr.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/scsi/scsi_cmnd.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/cifs/xattr.c b/fs/cifs/xattr.c
-index b8299173ea7e3..c6931eab3f97e 100644
---- a/fs/cifs/xattr.c
-+++ b/fs/cifs/xattr.c
-@@ -157,10 +157,13 @@ static int cifs_xattr_set(const struct xattr_handler *handler,
- 		if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_XATTR)
- 			goto out;
+diff --git a/include/scsi/scsi_cmnd.h b/include/scsi/scsi_cmnd.h
+index 4d272e834ca2e..b1c9b52876f3c 100644
+--- a/include/scsi/scsi_cmnd.h
++++ b/include/scsi/scsi_cmnd.h
+@@ -144,6 +144,12 @@ struct scsi_cmnd {
+ 	unsigned int extra_len;	/* length of alignment and padding */
+ };
  
--		if (pTcon->ses->server->ops->set_EA)
-+		if (pTcon->ses->server->ops->set_EA) {
- 			rc = pTcon->ses->server->ops->set_EA(xid, pTcon,
- 				full_path, name, value, (__u16)size,
- 				cifs_sb->local_nls, cifs_sb);
-+			if (rc == 0)
-+				inode_set_ctime_current(inode);
-+		}
- 		break;
- 
- 	case XATTR_CIFS_ACL:
++/* Variant of blk_mq_rq_from_pdu() that verifies the type of its argument. */
++static inline struct request *scsi_cmd_to_rq(struct scsi_cmnd *scmd)
++{
++	return blk_mq_rq_from_pdu(scmd);
++}
++
+ /*
+  * Return the driver private allocation behind the command.
+  * Only works if cmd_size is set in the host template.
 -- 
 2.42.0
 
