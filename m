@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3D96FB0;
-	Tue,  5 Dec 2023 03:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C3579E3;
+	Tue,  5 Dec 2023 03:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKAr+A8y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B362BC433C8;
-	Tue,  5 Dec 2023 03:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKmUzSyi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE41C433C7;
+	Tue,  5 Dec 2023 03:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747932;
-	bh=Bvq1RBshJQEkCTSQasIKkjiJm7tx36O6tBh3ptkWR+k=;
+	s=korg; t=1701747934;
+	bh=z1gl2Fb9T7C3HgCxaHA6F4DIBuWulSLeXSh7gPQUabA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKAr+A8ywMtBju1FybZHcJvi05C1XGxP1zgZ8vlNq15p97sSMrDdqvimBwY5aepCK
-	 zf36d4Yx61PU/rKzI5m/9NsE2tQL5yo7kj7NCnI1cJWdiBT1q/JEkmh6Ks0JT9SGMo
-	 fDUIrxS4mNslfj+nmiHn+jdhQDraHmKT26cs09BM=
+	b=iKmUzSyii56V5DFt8INjaGm42tpMBwQI4Q8GF+It8tALbDkIleR3wfS8buB/zo3vb
+	 Gv82S/fG6pVJiXr8TfFTK2CwCbAxKH9gQXtiHnowq9L4QVLg8KRQ90ltn8wtsKAKz7
+	 6Ne4BVOsOHYlFoZ3bTDYRZ+pl9EHndRpmA7FnBN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Lieven Hey <lieven.hey@kdab.com>,
-	Namhyung Kim <namhyung@kernel.org>
-Subject: [PATCH 5.4 51/94] perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
-Date: Tue,  5 Dec 2023 12:17:19 +0900
-Message-ID: <20231205031525.706456490@linuxfoundation.org>
+	Maria Yu <quic_aiquny@quicinc.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.4 52/94] pinctrl: avoid reload of p state in list iteration
+Date: Tue,  5 Dec 2023 12:17:20 +0900
+Message-ID: <20231205031525.754083766@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031522.815119918@linuxfoundation.org>
 References: <20231205031522.815119918@linuxfoundation.org>
@@ -45,48 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Maria Yu <quic_aiquny@quicinc.com>
 
-commit 89b15d00527b7825ff19130ed83478e80e3fae99 upstream.
+commit 4198a9b571065978632276264e01d71d68000ac5 upstream.
 
-When a program header was added, it moved the text section but
-GEN_ELF_TEXT_OFFSET was not updated.
+When in the list_for_each_entry iteration, reload of p->state->settings
+with a local setting from old_state will turn the list iteration into an
+infinite loop.
 
-Fix by adding the program header size and aligning.
+The typical symptom when the issue happens, will be a printk message like:
 
-Fixes: babd04386b1df8c3 ("perf jit: Include program header in ELF files")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Lieven Hey <lieven.hey@kdab.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20221014170905.64069-7-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
+  "not freeing pin xx (xxx) as part of deactivating group xxx - it is
+already used for some other setting".
+
+This is a compiler-dependent problem, one instance occurred using Clang
+version 10.0 on the arm64 architecture with linux version 4.19.
+
+Fixes: 6e5e959dde0d ("pinctrl: API changes to support multiple states per device")
+Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+Cc:  <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231115102824.23727-1-quic_aiquny@quicinc.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/genelf.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pinctrl/core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/perf/util/genelf.h
-+++ b/tools/perf/util/genelf.h
-@@ -2,6 +2,8 @@
- #ifndef __GENELF_H__
- #define __GENELF_H__
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -1237,17 +1237,17 @@ static void pinctrl_link_add(struct pinc
+ static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
+ {
+ 	struct pinctrl_setting *setting, *setting2;
+-	struct pinctrl_state *old_state = p->state;
++	struct pinctrl_state *old_state = READ_ONCE(p->state);
+ 	int ret;
  
-+#include <linux/math.h>
-+
- /* genelf.c */
- int jit_write_elf(int fd, uint64_t code_addr, const char *sym,
- 		  const void *code, int csize, void *debug, int nr_debug_entries,
-@@ -73,6 +75,6 @@ int jit_add_debug_info(Elf *e, uint64_t
- #endif
- 
- /* The .text section is directly after the ELF header */
--#define GEN_ELF_TEXT_OFFSET sizeof(Elf_Ehdr)
-+#define GEN_ELF_TEXT_OFFSET round_up(sizeof(Elf_Ehdr) + sizeof(Elf_Phdr), 16)
- 
- #endif
+-	if (p->state) {
++	if (old_state) {
+ 		/*
+ 		 * For each pinmux setting in the old state, forget SW's record
+ 		 * of mux owner for that pingroup. Any pingroups which are
+ 		 * still owned by the new state will be re-acquired by the call
+ 		 * to pinmux_enable_setting() in the loop below.
+ 		 */
+-		list_for_each_entry(setting, &p->state->settings, node) {
++		list_for_each_entry(setting, &old_state->settings, node) {
+ 			if (setting->type != PIN_MAP_TYPE_MUX_GROUP)
+ 				continue;
+ 			pinmux_disable_setting(setting);
 
 
