@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E06B6FAF;
-	Tue,  5 Dec 2023 03:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4AD6FAF;
+	Tue,  5 Dec 2023 03:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUpX5gkD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2433BC433C9;
-	Tue,  5 Dec 2023 03:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxjDDZTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C050AC433C8;
+	Tue,  5 Dec 2023 03:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746657;
-	bh=uBXCP5gKfzZj/yI7ZzA4S1wgd63jdzrF+qj/vg3DocU=;
+	s=korg; t=1701746660;
+	bh=pyzOfYHgxIaiUNglYHa1hu0nv8OYQS6A1kNnOw7j9TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GUpX5gkDDeN8aVVVLMrNOEnIeNDDjZycnSrwkKB8sTLYOKh1NuGr7IVtWz3jb719r
-	 7sB4RDquVJudv4Br5AUkp4aRjg8QqNTw4bhPZsTjcRnm9HS3jyT696Wzq195TNVZdO
-	 jctn5Pq2VZUfnDOARLgTQAqFhUfwTqZxnIzivltE=
+	b=NxjDDZTfqoAKV2tHQ41Jubsso0cN7F6giqM2gGhH7ehYSQWCS0WB497zmFDmL50TD
+	 2q9Ig6Fou+kHXupEy3jOcBkyLqjt9a4dSIjfhOwd0he3Y2kQB4AFvounWafElBDH5w
+	 klVFoLxE1AwZDG/5HB2GyGa2bFsN5+AcvlHSaWp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Konstantin Demin <rockdrilla@gmail.com>,
+	Koen Vandeputte <koen.vandeputte@citymesh.com>,
+	=?UTF-8?q?Old=C5=99ich=20Jedli=C4=8Dka?= <oldium.pro@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/134] wifi: iwlwifi: mvm: fix an error code in iwl_mvm_mld_add_sta()
-Date: Tue,  5 Dec 2023 12:15:55 +0900
-Message-ID: <20231205031540.740234529@linuxfoundation.org>
+Subject: [PATCH 6.6 084/134] wifi: mac80211: do not pass AP_VLAN vif pointer to drivers during flush
+Date: Tue,  5 Dec 2023 12:15:56 +0900
+Message-ID: <20231205031540.804407147@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -37,44 +38,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Oldřich Jedlička <oldium.pro@gmail.com>
 
-[ Upstream commit 71b5e40651d89a8685bea1592dfcd2aa61559628 ]
+[ Upstream commit 3e3a2b645c043f7e3e488d5011478cefb69bbe8b ]
 
-This error path should return -EINVAL instead of success.
+This fixes WARN_ONs when using AP_VLANs after station removal. The flush
+call passed AP_VLAN vif to driver, but because these vifs are virtual and
+not registered with drivers, we need to translate to the correct AP vif
+first.
 
-Fixes: 57974a55d995 ("wifi: iwlwifi: mvm: refactor iwl_mvm_mac_sta_state_common()")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/75e4ea09-db58-462f-bd4e-5ad4e5e5dcb5@moroto.mountain
+Closes: https://github.com/openwrt/openwrt/issues/12420
+Fixes: 0b75a1b1e42e ("wifi: mac80211: flush queues on STA removal")
+Fixes: d00800a289c9 ("wifi: mac80211: add flush_sta method")
+Tested-by: Konstantin Demin <rockdrilla@gmail.com>
+Tested-by: Koen Vandeputte <koen.vandeputte@citymesh.com>
+Signed-off-by: Oldřich Jedlička <oldium.pro@gmail.com>
+Link: https://lore.kernel.org/r/20231104141333.3710-1-oldium.pro@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/mac80211/driver-ops.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index 56f51344c193c..1ccbe8c1eeb42 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -705,8 +705,10 @@ int iwl_mvm_mld_add_sta(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
- 			rcu_dereference_protected(mvm_sta->link[link_id],
- 						  lockdep_is_held(&mvm->mutex));
+diff --git a/net/mac80211/driver-ops.h b/net/mac80211/driver-ops.h
+index c4505593ba7a6..2bc2fbe58f944 100644
+--- a/net/mac80211/driver-ops.h
++++ b/net/mac80211/driver-ops.h
+@@ -23,7 +23,7 @@
+ static inline struct ieee80211_sub_if_data *
+ get_bss_sdata(struct ieee80211_sub_if_data *sdata)
+ {
+-	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
++	if (sdata && sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
+ 		sdata = container_of(sdata->bss, struct ieee80211_sub_if_data,
+ 				     u.ap);
  
--		if (WARN_ON(!link_conf || !mvm_link_sta))
-+		if (WARN_ON(!link_conf || !mvm_link_sta)) {
-+			ret = -EINVAL;
- 			goto err;
-+		}
+@@ -638,10 +638,13 @@ static inline void drv_flush(struct ieee80211_local *local,
+ 			     struct ieee80211_sub_if_data *sdata,
+ 			     u32 queues, bool drop)
+ {
+-	struct ieee80211_vif *vif = sdata ? &sdata->vif : NULL;
++	struct ieee80211_vif *vif;
  
- 		ret = iwl_mvm_mld_cfg_sta(mvm, sta, vif, link_sta, link_conf,
- 					  mvm_link_sta);
+ 	might_sleep();
+ 
++	sdata = get_bss_sdata(sdata);
++	vif = sdata ? &sdata->vif : NULL;
++
+ 	if (sdata && !check_sdata_in_driver(sdata))
+ 		return;
+ 
+@@ -657,6 +660,8 @@ static inline void drv_flush_sta(struct ieee80211_local *local,
+ {
+ 	might_sleep();
+ 
++	sdata = get_bss_sdata(sdata);
++
+ 	if (sdata && !check_sdata_in_driver(sdata))
+ 		return;
+ 
 -- 
 2.42.0
 
