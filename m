@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8B46AA0;
-	Tue,  5 Dec 2023 03:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2166AA0;
+	Tue,  5 Dec 2023 03:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfDaM/mc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56483C433C7;
-	Tue,  5 Dec 2023 03:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDnM4GMh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1CDC433C7;
+	Tue,  5 Dec 2023 03:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746478;
-	bh=gzKXvcMvtnagC8FhEot55IUw9rQLh2TS/GmMTCXE6Ak=;
+	s=korg; t=1701746481;
+	bh=a52F9SnDMMi81qixtL2LSfmhWQ9mUlkyVt27SgG8mIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfDaM/mcNwUNCP63gGKEEAsKcydk7VtW9HQBiNZdQs2Qpk7+eATLSIokA8mnzkNDR
-	 iZTTuPQSipEhXeJjYAtl7LseqBUKDpk8pJexDnzGeZ1JCQ/1MXRaOQNTOZg7L+Ilx9
-	 NdDw6mx6p6N7ADhi6Qw6p/jO4JA4JR9ew81bFcys=
+	b=wDnM4GMh9SjGbjG3/Ge7w93OArPEASIaj5p/xQdqhLbwQgelascrB8RxSXGCfLfsX
+	 WygN+vYA8u1Tf4SutLclz95jo99U4hKMaPVKe1ZLd0CVUEy35nAloONdjXznGHcgK1
+	 XvIaoawyoyCAJGjyFThD4aA5HV7VQYauo6OR+tfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wu Bo <bo.wu@vivo.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.6 038/134] dm verity: dont perform FEC for failed readahead IO
-Date: Tue,  5 Dec 2023 12:15:10 +0900
-Message-ID: <20231205031537.913671615@linuxfoundation.org>
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 039/134] nvme: check for valid nvme_identify_ns() before using it
+Date: Tue,  5 Dec 2023 12:15:11 +0900
+Message-ID: <20231205031537.978659468@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -42,83 +41,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wu Bo <bo.wu@vivo.com>
+From: Ewan D. Milne <emilne@redhat.com>
 
-commit 0193e3966ceeeef69e235975918b287ab093082b upstream.
+commit d8b90d600aff181936457f032d116dbd8534db06 upstream.
 
-We found an issue under Android OTA scenario that many BIOs have to do
-FEC where the data under dm-verity is 100% complete and no corruption.
+When scanning namespaces, it is possible to get valid data from the first
+call to nvme_identify_ns() in nvme_alloc_ns(), but not from the second
+call in nvme_update_ns_info_block().  In particular, if the NSID becomes
+inactive between the two commands, a storage device may return a buffer
+filled with zero as per 4.1.5.1.  In this case, we can get a kernel crash
+due to a divide-by-zero in blk_stack_limits() because ns->lba_shift will
+be set to zero.
 
-Android OTA has many dm-block layers, from upper to lower:
-dm-verity
-dm-snapshot
-dm-origin & dm-cow
-dm-linear
-ufs
+PID: 326      TASK: ffff95fec3cd8000  CPU: 29   COMMAND: "kworker/u98:10"
+ #0 [ffffad8f8702f9e0] machine_kexec at ffffffff91c76ec7
+ #1 [ffffad8f8702fa38] __crash_kexec at ffffffff91dea4fa
+ #2 [ffffad8f8702faf8] crash_kexec at ffffffff91deb788
+ #3 [ffffad8f8702fb00] oops_end at ffffffff91c2e4bb
+ #4 [ffffad8f8702fb20] do_trap at ffffffff91c2a4ce
+ #5 [ffffad8f8702fb70] do_error_trap at ffffffff91c2a595
+ #6 [ffffad8f8702fbb0] exc_divide_error at ffffffff928506e6
+ #7 [ffffad8f8702fbd0] asm_exc_divide_error at ffffffff92a00926
+    [exception RIP: blk_stack_limits+434]
+    RIP: ffffffff92191872  RSP: ffffad8f8702fc80  RFLAGS: 00010246
+    RAX: 0000000000000000  RBX: ffff95efa0c91800  RCX: 0000000000000001
+    RDX: 0000000000000000  RSI: 0000000000000001  RDI: 0000000000000001
+    RBP: 00000000ffffffff   R8: ffff95fec7df35a8   R9: 0000000000000000
+    R10: 0000000000000000  R11: 0000000000000001  R12: 0000000000000000
+    R13: 0000000000000000  R14: 0000000000000000  R15: ffff95fed33c09a8
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+ #8 [ffffad8f8702fce0] nvme_update_ns_info_block at ffffffffc06d3533 [nvme_core]
+ #9 [ffffad8f8702fd18] nvme_scan_ns at ffffffffc06d6fa7 [nvme_core]
 
-DM tables have to change 2 times during Android OTA merging process.
-When doing table change, the dm-snapshot will be suspended for a while.
-During this interval, many readahead IOs are submitted to dm_verity
-from filesystem. Then the kverity works are busy doing FEC process
-which cost too much time to finish dm-verity IO. This causes needless
-delay which feels like system is hung.
+This happened when the check for valid data was moved out of nvme_identify_ns()
+into one of the callers.  Fix this by checking in both callers.
 
-After adding debugging it was found that each readahead IO needed
-around 10s to finish when this situation occurred. This is due to IO
-amplification:
-
-dm-snapshot suspend
-erofs_readahead     // 300+ io is submitted
-	dm_submit_bio (dm_verity)
-		dm_submit_bio (dm_snapshot)
-		bio return EIO
-		bio got nothing, it's empty
-	verity_end_io
-	verity_verify_io
-	forloop range(0, io->n_blocks)    // each io->nblocks ~= 20
-		verity_fec_decode
-		fec_decode_rsb
-		fec_read_bufs
-		forloop range(0, v->fec->rsn) // v->fec->rsn = 253
-			new_read
-			submit_bio (dm_snapshot)
-		end loop
-	end loop
-dm-snapshot resume
-
-Readahead BIOs get nothing while dm-snapshot is suspended, so all of
-them will cause verity's FEC.
-Each readahead BIO needs to verify ~20 (io->nblocks) blocks.
-Each block needs to do FEC, and every block needs to do 253
-(v->fec->rsn) reads.
-So during the suspend interval(~200ms), 300 readahead BIOs trigger
-~1518000 (300*20*253) IOs to dm-snapshot.
-
-As readahead IO is not required by userspace, and to fix this issue,
-it is best to pass readahead errors to upper layer to handle it.
-
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218186
+Fixes: 0dd6fff2aad4 ("nvme: bring back auto-removal of deleted namespaces during sequential scan")
 Cc: stable@vger.kernel.org
-Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
-Signed-off-by: Wu Bo <bo.wu@vivo.com>
-Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -667,7 +667,9 @@ static void verity_end_io(struct bio *bi
- 	struct dm_verity_io *io = bio->bi_private;
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -2026,6 +2026,13 @@ static int nvme_update_ns_info_block(str
+ 	if (ret)
+ 		return ret;
  
- 	if (bio->bi_status &&
--	    (!verity_fec_is_enabled(io->v) || verity_is_system_shutting_down())) {
-+	    (!verity_fec_is_enabled(io->v) ||
-+	     verity_is_system_shutting_down() ||
-+	     (bio->bi_opf & REQ_RAHEAD))) {
- 		verity_finish_io(io, bio->bi_status);
- 		return;
++	if (id->ncap == 0) {
++		/* namespace not allocated or attached */
++		info->is_removed = true;
++		ret = -ENODEV;
++		goto error;
++	}
++
+ 	blk_mq_freeze_queue(ns->disk->queue);
+ 	lbaf = nvme_lbaf_index(id->flbas);
+ 	ns->lba_shift = id->lbaf[lbaf].ds;
+@@ -2083,6 +2090,8 @@ out:
+ 		set_bit(NVME_NS_READY, &ns->flags);
+ 		ret = 0;
  	}
++
++error:
+ 	kfree(id);
+ 	return ret;
+ }
 
 
