@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4679379F2;
-	Tue,  5 Dec 2023 03:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B4A6AA0;
+	Tue,  5 Dec 2023 03:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwZSmBDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDABC433CB;
-	Tue,  5 Dec 2023 03:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cwOFlPbA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68ECBC433C7;
+	Tue,  5 Dec 2023 03:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746566;
-	bh=td8Yo0i+GTMDURFDXLnjYU6CvPqlCDVrz/S7Kh1BlQs=;
+	s=korg; t=1701746568;
+	bh=ri4YeSWR7w/MLtUayKh5SPeIA56egAnBT10No+XStbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwZSmBDjbHBV3H0ZAuZkINDggFJWDQdFHfyBlxQADRJrnwbL84WV0VVqNWXHq+FaN
-	 fA1HkfLfZBUrWEzLHtxtfYfcPg6UHQsgAjzrDqYic3Hy9WObmuweyrLSnWu154ktC+
-	 eArxbu7+ziFQo3FtITYq1FxHiEephAKnfPJMJ5c8=
+	b=cwOFlPbAdR4PlROxGhhzo9ZktZd2EEvjSing0clGqkso4R4PCybHJ271tGdmMbk6l
+	 ulSpJkkLx39MrrHM4TFTM7b/ecF/KgCC8nhQ/0PNaCK6t61ItfJC47IQkEZAC9vAZR
+	 1baQ5kD/pUHiEykCpiUVcB/dU/06vcs1LjnQKuh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 072/134] io_uring/kbuf: defer release of mapped buffer rings
-Date: Tue,  5 Dec 2023 12:15:44 +0900
-Message-ID: <20231205031540.069815766@linuxfoundation.org>
+Subject: [PATCH 6.6 073/134] io_uring/kbuf: recycle freed mapped buffer ring entries
+Date: Tue,  5 Dec 2023 12:15:45 +0900
+Message-ID: <20231205031540.128968428@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -43,156 +42,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit c392cbecd8eca4c53f2bf508731257d9d0a21c2d upstream.
+commit b10b73c102a2eab91e1cd62a03d6446f1dfecc64 upstream.
 
-If a provided buffer ring is setup with IOU_PBUF_RING_MMAP, then the
-kernel allocates the memory for it and the application is expected to
-mmap(2) this memory. However, io_uring uses remap_pfn_range() for this
-operation, so we cannot rely on normal munmap/release on freeing them
-for us.
+Right now we stash any potentially mmap'ed provided ring buffer range
+for freeing at release time, regardless of when they get unregistered.
+Since we're keeping track of these ranges anyway, keep track of their
+registration state as well, and use that to recycle ranges when
+appropriate rather than always allocate new ones.
 
-Stash an io_buf_free entry away for each of these, if any, and provide
-a helper to free them post ->release().
+The lookup is a basic scan of entries, checking for the best matching
+free entry.
 
-Cc: stable@vger.kernel.org
-Fixes: c56e022c0a27 ("io_uring: add support for user mapped provided buffer ring")
-Reported-by: Jann Horn <jannh@google.com>
+Fixes: c392cbecd8ec ("io_uring/kbuf: defer release of mapped buffer rings")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/io_uring_types.h |    3 ++
- io_uring/io_uring.c            |    2 +
- io_uring/kbuf.c                |   44 ++++++++++++++++++++++++++++++++++++-----
- io_uring/kbuf.h                |    2 +
- 4 files changed, 46 insertions(+), 5 deletions(-)
+ io_uring/kbuf.c |   77 ++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 66 insertions(+), 11 deletions(-)
 
---- a/include/linux/io_uring_types.h
-+++ b/include/linux/io_uring_types.h
-@@ -327,6 +327,9 @@ struct io_ring_ctx {
- 
- 	struct list_head	io_buffers_cache;
- 
-+	/* deferred free list, protected by ->uring_lock */
-+	struct hlist_head	io_buf_list;
-+
- 	/* Keep this last, we don't need it for the fast path */
- 	struct wait_queue_head		poll_wq;
- 	struct io_restriction		restrictions;
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -323,6 +323,7 @@ static __cold struct io_ring_ctx *io_rin
- 	INIT_LIST_HEAD(&ctx->sqd_list);
- 	INIT_LIST_HEAD(&ctx->cq_overflow_list);
- 	INIT_LIST_HEAD(&ctx->io_buffers_cache);
-+	INIT_HLIST_HEAD(&ctx->io_buf_list);
- 	io_alloc_cache_init(&ctx->rsrc_node_cache, IO_NODE_ALLOC_CACHE_MAX,
- 			    sizeof(struct io_rsrc_node));
- 	io_alloc_cache_init(&ctx->apoll_cache, IO_ALLOC_CACHE_MAX,
-@@ -2942,6 +2943,7 @@ static __cold void io_ring_ctx_free(stru
- 		ctx->mm_account = NULL;
- 	}
- 	io_rings_free(ctx);
-+	io_kbuf_mmap_list_free(ctx);
- 
- 	percpu_ref_exit(&ctx->refs);
- 	free_uid(ctx->user);
 --- a/io_uring/kbuf.c
 +++ b/io_uring/kbuf.c
-@@ -41,6 +41,11 @@ static struct io_buffer_list *__io_buffe
- 	return xa_load(&ctx->io_bl_xa, bgid);
+@@ -44,6 +44,8 @@ static struct io_buffer_list *__io_buffe
+ struct io_buf_free {
+ 	struct hlist_node		list;
+ 	void				*mem;
++	size_t				size;
++	int				inuse;
+ };
+ 
+ static inline struct io_buffer_list *io_buffer_get_list(struct io_ring_ctx *ctx,
+@@ -231,6 +233,24 @@ static __cold int io_init_bl_list(struct
+ 	return 0;
  }
  
-+struct io_buf_free {
-+	struct hlist_node		list;
-+	void				*mem;
-+};
++/*
++ * Mark the given mapped range as free for reuse
++ */
++static void io_kbuf_mark_free(struct io_ring_ctx *ctx, struct io_buffer_list *bl)
++{
++	struct io_buf_free *ibf;
 +
- static inline struct io_buffer_list *io_buffer_get_list(struct io_ring_ctx *ctx,
- 							unsigned int bgid)
++	hlist_for_each_entry(ibf, &ctx->io_buf_list, list) {
++		if (bl->buf_ring == ibf->mem) {
++			ibf->inuse = 0;
++			return;
++		}
++	}
++
++	/* can't happen... */
++	WARN_ON_ONCE(1);
++}
++
+ static int __io_remove_buffers(struct io_ring_ctx *ctx,
+ 			       struct io_buffer_list *bl, unsigned nbufs)
  {
-@@ -238,7 +243,10 @@ static int __io_remove_buffers(struct io
- 	if (bl->is_mapped) {
- 		i = bl->buf_ring->tail - bl->head;
- 		if (bl->is_mmap) {
--			folio_put(virt_to_folio(bl->buf_ring));
-+			/*
-+			 * io_kbuf_list_free() will free the page(s) at
-+			 * ->release() time.
-+			 */
+@@ -247,6 +267,7 @@ static int __io_remove_buffers(struct io
+ 			 * io_kbuf_list_free() will free the page(s) at
+ 			 * ->release() time.
+ 			 */
++			io_kbuf_mark_free(ctx, bl);
  			bl->buf_ring = NULL;
  			bl->is_mmap = 0;
  		} else if (bl->buf_nr_pages) {
-@@ -552,18 +560,28 @@ error_unpin:
+@@ -560,6 +581,34 @@ error_unpin:
  	return -EINVAL;
  }
  
--static int io_alloc_pbuf_ring(struct io_uring_buf_reg *reg,
-+static int io_alloc_pbuf_ring(struct io_ring_ctx *ctx,
-+			      struct io_uring_buf_reg *reg,
++/*
++ * See if we have a suitable region that we can reuse, rather than allocate
++ * both a new io_buf_free and mem region again. We leave it on the list as
++ * even a reused entry will need freeing at ring release.
++ */
++static struct io_buf_free *io_lookup_buf_free_entry(struct io_ring_ctx *ctx,
++						    size_t ring_size)
++{
++	struct io_buf_free *ibf, *best = NULL;
++	size_t best_dist;
++
++	hlist_for_each_entry(ibf, &ctx->io_buf_list, list) {
++		size_t dist;
++
++		if (ibf->inuse || ibf->size < ring_size)
++			continue;
++		dist = ibf->size - ring_size;
++		if (!best || dist < best_dist) {
++			best = ibf;
++			if (!dist)
++				break;
++			best_dist = dist;
++		}
++	}
++
++	return best;
++}
++
+ static int io_alloc_pbuf_ring(struct io_ring_ctx *ctx,
+ 			      struct io_uring_buf_reg *reg,
  			      struct io_buffer_list *bl)
- {
--	gfp_t gfp = GFP_KERNEL_ACCOUNT | __GFP_ZERO | __GFP_NOWARN | __GFP_COMP;
-+	struct io_buf_free *ibf;
- 	size_t ring_size;
+@@ -569,20 +618,26 @@ static int io_alloc_pbuf_ring(struct io_
  	void *ptr;
  
  	ring_size = reg->ring_entries * sizeof(struct io_uring_buf_ring);
--	ptr = (void *) __get_free_pages(gfp, get_order(ring_size));
-+	ptr = io_mem_alloc(ring_size);
- 	if (!ptr)
- 		return -ENOMEM;
+-	ptr = io_mem_alloc(ring_size);
+-	if (!ptr)
+-		return -ENOMEM;
  
-+	/* Allocate and store deferred free entry */
-+	ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
-+	if (!ibf) {
-+		io_mem_free(ptr);
-+		return -ENOMEM;
-+	}
-+	ibf->mem = ptr;
-+	hlist_add_head(&ibf->list, &ctx->io_buf_list);
+-	/* Allocate and store deferred free entry */
+-	ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
++	/* Reuse existing entry, if we can */
++	ibf = io_lookup_buf_free_entry(ctx, ring_size);
+ 	if (!ibf) {
+-		io_mem_free(ptr);
+-		return -ENOMEM;
++		ptr = io_mem_alloc(ring_size);
++		if (!ptr)
++			return -ENOMEM;
 +
- 	bl->buf_ring = ptr;
++		/* Allocate and store deferred free entry */
++		ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
++		if (!ibf) {
++			io_mem_free(ptr);
++			return -ENOMEM;
++		}
++		ibf->mem = ptr;
++		ibf->size = ring_size;
++		hlist_add_head(&ibf->list, &ctx->io_buf_list);
+ 	}
+-	ibf->mem = ptr;
+-	hlist_add_head(&ibf->list, &ctx->io_buf_list);
+-
+-	bl->buf_ring = ptr;
++	ibf->inuse = 1;
++	bl->buf_ring = ibf->mem;
  	bl->is_mapped = 1;
  	bl->is_mmap = 1;
-@@ -622,7 +640,7 @@ int io_register_pbuf_ring(struct io_ring
- 	if (!(reg.flags & IOU_PBUF_RING_MMAP))
- 		ret = io_pin_pbuf_ring(&reg, bl);
- 	else
--		ret = io_alloc_pbuf_ring(&reg, bl);
-+		ret = io_alloc_pbuf_ring(ctx, &reg, bl);
- 
- 	if (!ret) {
- 		bl->nr_entries = reg.ring_entries;
-@@ -682,3 +700,19 @@ void *io_pbuf_get_address(struct io_ring
- 
- 	return bl->buf_ring;
- }
-+
-+/*
-+ * Called at or after ->release(), free the mmap'ed buffers that we used
-+ * for memory mapped provided buffer rings.
-+ */
-+void io_kbuf_mmap_list_free(struct io_ring_ctx *ctx)
-+{
-+	struct io_buf_free *ibf;
-+	struct hlist_node *tmp;
-+
-+	hlist_for_each_entry_safe(ibf, tmp, &ctx->io_buf_list, list) {
-+		hlist_del(&ibf->list);
-+		io_mem_free(ibf->mem);
-+		kfree(ibf);
-+	}
-+}
---- a/io_uring/kbuf.h
-+++ b/io_uring/kbuf.h
-@@ -54,6 +54,8 @@ int io_provide_buffers(struct io_kiocb *
- int io_register_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg);
- int io_unregister_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg);
- 
-+void io_kbuf_mmap_list_free(struct io_ring_ctx *ctx);
-+
- unsigned int __io_put_kbuf(struct io_kiocb *req, unsigned issue_flags);
- 
- void io_kbuf_recycle_legacy(struct io_kiocb *req, unsigned issue_flags);
+ 	return 0;
 
 
