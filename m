@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9479B6AA0;
-	Tue,  5 Dec 2023 03:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5920A6AA0;
+	Tue,  5 Dec 2023 03:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UimgKPSM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194A7C433C7;
-	Tue,  5 Dec 2023 03:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KT3KqO3K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6D6C433C8;
+	Tue,  5 Dec 2023 03:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746473;
-	bh=e26Iqwi2oMrhAuX8N0ilSZ7lcaCWuRCxiMzdRVjyz6g=;
+	s=korg; t=1701746476;
+	bh=Bb7TZIarwP7GL3snKNUejHBfIPik4RWV2JJy6QaqZqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UimgKPSMdnriq+a0G2W3lyajSP0kHC1zOo72WuXDYRIwkI5uovWOZ+uTdOLnW0l4f
-	 RKa4UqZe533nvbBalenUiwQqiPEcPzENYFfDiE7f1ttkqpHTjMzygPiFW6zzFIk262
-	 X08r6FIQi2565rzNWlQxr5qLML6ZgHfdITa5PjrA=
+	b=KT3KqO3KV6guYWUDcMeKNJH3fjyTNo5j7YLSC4hMpoAvzKqBioFXoCpzTQFgFULxC
+	 U5+hn2mqxnQOMgqdKJ7rMjJv1ufCQtbwDJcP5chfYwiyA1xmNbkfYUlHdcev+nIKEI
+	 myi51PXRJ8adkr+AZVjE3buxcnN1nYepMqSlhZ7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Strauss <michael.strauss@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Zhongwei <zhongwei.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 036/134] drm/amd/display: force toggle rate wa for first link training for a retimer
-Date: Tue,  5 Dec 2023 12:15:08 +0900
-Message-ID: <20231205031537.777745704@linuxfoundation.org>
+	Wu Bo <bo.wu@vivo.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.6 037/134] dm verity: initialize fec io before freeing it
+Date: Tue,  5 Dec 2023 12:15:09 +0900
+Message-ID: <20231205031537.850673938@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -43,56 +42,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongwei <zhongwei.zhang@amd.com>
+From: Wu Bo <bo.wu@vivo.com>
 
-commit eb28018943fed7639dfea1c9ec9c756ec692b99a upstream.
+commit 7be05bdfb4efc1396f7692562c7161e2b9f595f1 upstream.
 
-[WHY]
-Handover from DMUB to driver does not perform link rate toggle.
-It might cause link training failure for boot up.
+If BIO error, verity_end_io() can call verity_finish_io() before
+verity_fec_init_io(). Therefore, fec_io->rs is not initialized and
+may crash when doing memory freeing in verity_fec_finish_io().
 
-[HOW]
-Force toggle rate wa for first link train.
-link->vendor_specific_lttpr_link_rate_wa should be zero then.
+Crash call stack:
+ die+0x90/0x2b8
+ __do_kernel_fault+0x260/0x298
+ do_bad_area+0x2c/0xdc
+ do_translation_fault+0x3c/0x54
+ do_mem_abort+0x54/0x118
+ el1_abort+0x38/0x5c
+ el1h_64_sync_handler+0x50/0x90
+ el1h_64_sync+0x64/0x6c
+ free_rs+0x18/0xac
+ fec_rs_free+0x10/0x24
+ mempool_free+0x58/0x148
+ verity_fec_finish_io+0x4c/0xb0
+ verity_end_io+0xb8/0x150
 
-Cc: stable@vger.kernel.org # 6.1+
-Reviewed-by: Michael Strauss <michael.strauss@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Zhongwei <zhongwei.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org      # v6.0+
+Fixes: 5721d4e5a9cd ("dm verity: Add optional "try_verify_in_tasklet" feature")
+Signed-off-by: Wu Bo <bo.wu@vivo.com>
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/dm-verity-target.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
-@@ -115,7 +115,7 @@ static enum link_training_result perform
- 		lt_settings->cr_pattern_time = 16000;
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -642,7 +642,6 @@ static void verity_work(struct work_stru
  
- 	/* Fixed VS/PE specific: Toggle link rate */
--	apply_toggle_rate_wa = (link->vendor_specific_lttpr_link_rate_wa == target_rate);
-+	apply_toggle_rate_wa = ((link->vendor_specific_lttpr_link_rate_wa == target_rate) || (link->vendor_specific_lttpr_link_rate_wa == 0));
- 	target_rate = get_dpcd_link_rate(&lt_settings->link_settings);
- 	toggle_rate = (target_rate == 0x6) ? 0xA : 0x6;
+ 	io->in_tasklet = false;
  
-@@ -271,7 +271,7 @@ enum link_training_result dp_perform_fix
- 	/* Vendor specific: Toggle link rate */
- 	toggle_rate = (rate == 0x6) ? 0xA : 0x6;
+-	verity_fec_init_io(io);
+ 	verity_finish_io(io, errno_to_blk_status(verity_verify_io(io)));
+ }
  
--	if (link->vendor_specific_lttpr_link_rate_wa == rate) {
-+	if (link->vendor_specific_lttpr_link_rate_wa == rate || link->vendor_specific_lttpr_link_rate_wa == 0) {
- 		core_link_write_dpcd(
- 				link,
- 				DP_LINK_BW_SET,
-@@ -617,7 +617,7 @@ enum link_training_result dp_perform_fix
- 	/* Vendor specific: Toggle link rate */
- 	toggle_rate = (rate == 0x6) ? 0xA : 0x6;
+@@ -792,6 +791,8 @@ static int verity_map(struct dm_target *
+ 	bio->bi_private = io;
+ 	io->iter = bio->bi_iter;
  
--	if (link->vendor_specific_lttpr_link_rate_wa == rate) {
-+	if (link->vendor_specific_lttpr_link_rate_wa == rate || link->vendor_specific_lttpr_link_rate_wa == 0) {
- 		core_link_write_dpcd(
- 				link,
- 				DP_LINK_BW_SET,
++	verity_fec_init_io(io);
++
+ 	verity_submit_prefetch(v, io);
+ 
+ 	submit_bio_noacct(bio);
 
 
