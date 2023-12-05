@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754496FB1;
-	Tue,  5 Dec 2023 03:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438ED8F6C;
+	Tue,  5 Dec 2023 03:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TV+8A9Ff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35B8C433C8;
-	Tue,  5 Dec 2023 03:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YBmD1r5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C557CC433C7;
+	Tue,  5 Dec 2023 03:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746604;
-	bh=0AagSZOtqiX6HY3uJFNduHEFXa5IC+rVPRi3pwkKAqI=;
+	s=korg; t=1701746607;
+	bh=0Le3UZWSYrAFajV33gcuv4SYuXr1wPvUGT5bF5E2z90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TV+8A9Ffo45zz7RrkV3dHlptzWXGamAFor2Kw4T63UQPYFW+ZN1bb02pQ/RxNduzT
-	 y7vda+jSjgPfo9SoTUdjAtI7ywoPpNkLLnXXfuFU1B+9DqnEVH52poyDeBSzwxWaWv
-	 dSjKd/a9Ic+VrjxFf33l2wzF9idTnc05YFOwXOqQ=
+	b=1YBmD1r5TJZ/VpQWJR9e5oYw0DpiRf3U7Ewlp1OMjOLqr1cp4tS+s7IYn7eChtewT
+	 Y7cgTkNEZP4eaZvXoASbM9YBTsM0Aal4muSM7y1I5NUvGtui+3bh+PJIO9VE7i9L0V
+	 rHrIvNPLwriHAePHfNCHPuxV+epjlkeNlU6G0KzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hou Tao <houtao1@huawei.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/134] dpaa2-eth: recycle the RX buffer only after all processing done
-Date: Tue,  5 Dec 2023 12:16:00 +0900
-Message-ID: <20231205031541.017874574@linuxfoundation.org>
+Subject: [PATCH 6.6 089/134] bpf: Add missed allocation hint for bpf_mem_cache_alloc_flags()
+Date: Tue,  5 Dec 2023 12:16:01 +0900
+Message-ID: <20231205031541.082719903@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -42,68 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit beb1930f966d1517921488bd5d64147f58f79abf ]
+[ Upstream commit 75a442581d05edaee168222ffbe00d4389785636 ]
 
-The blamed commit added support for Rx copybreak. This meant that for
-certain frame sizes, a new skb was allocated and the initial data buffer
-was recycled. Instead of waiting to recycle the Rx buffer only after all
-processing was done on it (like accessing the parse results or timestamp
-information), the code path just went ahead and re-used the buffer right
-away.
+bpf_mem_cache_alloc_flags() may call __alloc() directly when there is no
+free object in free list, but it doesn't initialize the allocation hint
+for the returned pointer. It may lead to bad memory dereference when
+freeing the pointer, so fix it by initializing the allocation hint.
 
-This sometimes lead to corrupted HW and SW annotation areas.
-Fix this by delaying the moment when the buffer is recycled.
-
-Fixes: 50f826999a80 ("dpaa2-eth: add rx copybreak support")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 822fb26bdb55 ("bpf: Add a hint to allocated objects.")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20231111043821.2258513-1-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/bpf/memalloc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index 774377db0b4bd..888509cf1f210 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -516,8 +516,6 @@ struct sk_buff *dpaa2_eth_alloc_skb(struct dpaa2_eth_priv *priv,
- 
- 	memcpy(skb->data, fd_vaddr + fd_offset, fd_length);
- 
--	dpaa2_eth_recycle_buf(priv, ch, dpaa2_fd_get_addr(fd));
--
- 	return skb;
- }
- 
-@@ -589,6 +587,7 @@ void dpaa2_eth_rx(struct dpaa2_eth_priv *priv,
- 	struct rtnl_link_stats64 *percpu_stats;
- 	struct dpaa2_eth_drv_stats *percpu_extras;
- 	struct device *dev = priv->net_dev->dev.parent;
-+	bool recycle_rx_buf = false;
- 	void *buf_data;
- 	u32 xdp_act;
- 
-@@ -618,6 +617,8 @@ void dpaa2_eth_rx(struct dpaa2_eth_priv *priv,
- 			dma_unmap_page(dev, addr, priv->rx_buf_size,
- 				       DMA_BIDIRECTIONAL);
- 			skb = dpaa2_eth_build_linear_skb(ch, fd, vaddr);
-+		} else {
-+			recycle_rx_buf = true;
- 		}
- 	} else if (fd_format == dpaa2_fd_sg) {
- 		WARN_ON(priv->xdp_prog);
-@@ -637,6 +638,9 @@ void dpaa2_eth_rx(struct dpaa2_eth_priv *priv,
- 		goto err_build_skb;
- 
- 	dpaa2_eth_receive_skb(priv, ch, fd, vaddr, fq, percpu_stats, skb);
-+
-+	if (recycle_rx_buf)
-+		dpaa2_eth_recycle_buf(priv, ch, dpaa2_fd_get_addr(fd));
- 	return;
- 
- err_build_skb:
+diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
+index d93ddac283d40..956f80ee6f5c5 100644
+--- a/kernel/bpf/memalloc.c
++++ b/kernel/bpf/memalloc.c
+@@ -958,6 +958,8 @@ void notrace *bpf_mem_cache_alloc_flags(struct bpf_mem_alloc *ma, gfp_t flags)
+ 		memcg = get_memcg(c);
+ 		old_memcg = set_active_memcg(memcg);
+ 		ret = __alloc(c, NUMA_NO_NODE, GFP_KERNEL | __GFP_NOWARN | __GFP_ACCOUNT);
++		if (ret)
++			*(struct bpf_mem_cache **)ret = c;
+ 		set_active_memcg(old_memcg);
+ 		mem_cgroup_put(memcg);
+ 	}
 -- 
 2.42.0
 
