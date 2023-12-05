@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB696FAF;
-	Tue,  5 Dec 2023 03:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E85F8C13;
+	Tue,  5 Dec 2023 03:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgoeaLQn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E16C433C8;
-	Tue,  5 Dec 2023 03:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsmGTcIQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79894C433C7;
+	Tue,  5 Dec 2023 03:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747018;
-	bh=+nes2HWEnWRxiryqUt0bAELRvgXKgkebvnfXWS1RmX0=;
+	s=korg; t=1701747020;
+	bh=2enEgm/JqbtNuZA2beX6VVYFIoiXv8VBB0HCa06ImPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgoeaLQnHoU3BcIG3ETgkC9q/uDC1xfIJzr/JyK0JFYLygdpO1cZ8VsajR+JA5vKc
-	 vPxGQ6dAfcjdcrotCKxyCKiDqe3c4lMFu7q0BfWaVNfUAyjbghIVyGyy9Cou1qgNew
-	 tEm1+DTKknvAwnYBPcnJLEn2dLXhIqJi3pDdAoNg=
+	b=QsmGTcIQr8iBFMr0EX7BJiOQm8oU7cPeR5571yDXGn6gMmzNj5wQr+H2w7tvd3MGl
+	 f7cEtKN868nOuRgL+nVkHj3VjKK/puWZ41YGqT8Gg39SNkyJIp5E6zHXCIt5dXFG6R
+	 8fxfw/wIDSrkpQ9DrkcelAPMfUF9Y6iwxRBTOjEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 028/107] nvme: check for valid nvme_identify_ns() before using it
-Date: Tue,  5 Dec 2023 12:16:03 +0900
-Message-ID: <20231205031533.329260009@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 011/107] mmc: block: Do not lose cache flush during CQE error recovery
+Date: Tue,  5 Dec 2023 12:15:46 +0900
+Message-ID: <20231205031532.280544756@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -41,75 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ewan D. Milne <emilne@redhat.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit d8b90d600aff181936457f032d116dbd8534db06 upstream.
+commit 174925d340aac55296318e43fd96c0e1d196e105 upstream.
 
-When scanning namespaces, it is possible to get valid data from the first
-call to nvme_identify_ns() in nvme_alloc_ns(), but not from the second
-call in nvme_update_ns_info_block().  In particular, if the NSID becomes
-inactive between the two commands, a storage device may return a buffer
-filled with zero as per 4.1.5.1.  In this case, we can get a kernel crash
-due to a divide-by-zero in blk_stack_limits() because ns->lba_shift will
-be set to zero.
+During CQE error recovery, error-free data commands get requeued if there
+is any data left to transfer, but non-data commands are completed even
+though they have not been processed.  Requeue them instead.
 
-PID: 326      TASK: ffff95fec3cd8000  CPU: 29   COMMAND: "kworker/u98:10"
- #0 [ffffad8f8702f9e0] machine_kexec at ffffffff91c76ec7
- #1 [ffffad8f8702fa38] __crash_kexec at ffffffff91dea4fa
- #2 [ffffad8f8702faf8] crash_kexec at ffffffff91deb788
- #3 [ffffad8f8702fb00] oops_end at ffffffff91c2e4bb
- #4 [ffffad8f8702fb20] do_trap at ffffffff91c2a4ce
- #5 [ffffad8f8702fb70] do_error_trap at ffffffff91c2a595
- #6 [ffffad8f8702fbb0] exc_divide_error at ffffffff928506e6
- #7 [ffffad8f8702fbd0] asm_exc_divide_error at ffffffff92a00926
-    [exception RIP: blk_stack_limits+434]
-    RIP: ffffffff92191872  RSP: ffffad8f8702fc80  RFLAGS: 00010246
-    RAX: 0000000000000000  RBX: ffff95efa0c91800  RCX: 0000000000000001
-    RDX: 0000000000000000  RSI: 0000000000000001  RDI: 0000000000000001
-    RBP: 00000000ffffffff   R8: ffff95fec7df35a8   R9: 0000000000000000
-    R10: 0000000000000000  R11: 0000000000000001  R12: 0000000000000000
-    R13: 0000000000000000  R14: 0000000000000000  R15: ffff95fed33c09a8
-    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
- #8 [ffffad8f8702fce0] nvme_update_ns_info_block at ffffffffc06d3533 [nvme_core]
- #9 [ffffad8f8702fd18] nvme_scan_ns at ffffffffc06d6fa7 [nvme_core]
+Note the only non-data command is cache flush, which would have resulted in
+a cache flush being lost if it was queued at the time of CQE recovery.
 
-This happened when the check for valid data was moved out of nvme_identify_ns()
-into one of the callers.  Fix this by checking in both callers.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218186
-Fixes: 0dd6fff2aad4 ("nvme: bring back auto-removal of deleted namespaces during sequential scan")
+Fixes: 1e8e55b67030 ("mmc: block: Add CQE support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-2-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/mmc/core/block.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2058,6 +2058,13 @@ static int nvme_update_ns_info_block(str
- 	if (ret)
- 		return ret;
- 
-+	if (id->ncap == 0) {
-+		/* namespace not allocated or attached */
-+		info->is_removed = true;
-+		ret = -ENODEV;
-+		goto error;
-+	}
-+
- 	blk_mq_freeze_queue(ns->disk->queue);
- 	lbaf = nvme_lbaf_index(id->flbas);
- 	ns->lba_shift = id->lbaf[lbaf].ds;
-@@ -2107,6 +2114,8 @@ out:
- 		set_bit(NVME_NS_READY, &ns->flags);
- 		ret = 0;
+--- a/drivers/mmc/core/block.c
++++ b/drivers/mmc/core/block.c
+@@ -1505,6 +1505,8 @@ static void mmc_blk_cqe_complete_rq(stru
+ 			blk_mq_requeue_request(req, true);
+ 		else
+ 			__blk_mq_end_request(req, BLK_STS_OK);
++	} else if (mq->in_recovery) {
++		blk_mq_requeue_request(req, true);
+ 	} else {
+ 		blk_mq_end_request(req, BLK_STS_OK);
  	}
-+
-+error:
- 	kfree(id);
- 	return ret;
- }
 
 
