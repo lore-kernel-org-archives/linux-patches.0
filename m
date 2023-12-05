@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0E66FB1;
-	Tue,  5 Dec 2023 03:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AB46FB1;
+	Tue,  5 Dec 2023 03:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTlEgiW3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20BFBC433C7;
-	Tue,  5 Dec 2023 03:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JX2kH57p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11D3C433C7;
+	Tue,  5 Dec 2023 03:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747107;
-	bh=tswMCRidaPb/E+4lnNmClmNc3suQZ8iea7jsFlytyss=;
+	s=korg; t=1701747110;
+	bh=2PHNkkB/AecQOvty3x82+68bKGKZe5/+HshK2Y3znpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTlEgiW31Evetc3fjGmX1eCGatpoFXsOR/L9VFr5Q1eIjcO3rMzUqLocalIDCELCE
-	 YEtSVA+BIT/260coiD5GRRrFoWjO0DvuuHDKs2MzXSusYVf32ZhwbOldyJVbT1+ITJ
-	 oSNfx1lZ2gMuVqHQpw7TCdkawm6uEkH8CK0XzxoU=
+	b=JX2kH57pJvHCvmKENuOxnUcDNdRX0OLtKsv+jEh5dSsDrevDvP8Qbtroi+/fgXzG/
+	 +wEA2gNvONceRA78fJXPFZ89i+SIM8t5SxcQYyP39D8LAfMwbPcHxOydeAGt60FvWr
+	 GbZ2Sa3OVcjLaYnYCfUjpdXg/pzvkgNYe2gZ7muc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/107] selftests/net: ipsec: fix constant out of range
-Date: Tue,  5 Dec 2023 12:16:36 +0900
-Message-ID: <20231205031535.231908751@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 038/107] parisc: Use natural CPU alignment for bug_table
+Date: Tue,  5 Dec 2023 12:16:13 +0900
+Message-ID: <20231205031533.824542180@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -43,56 +40,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 088559815477c6f623a5db5993491ddd7facbec7 ]
+commit fe76a1349f235969381832c83d703bc911021eb6 upstream.
 
-Fix a small compiler warning.
+Make sure that the __bug_table section gets 32- or 64-bit aligned,
+depending if a 32- or 64-bit kernel is being built.
+Mark it non-writeable and use .blockz instead of the .org assembler
+directive to pad the struct.
 
-nr_process must be a signed long: it is assigned a signed long by
-strtol() and is compared against LONG_MIN and LONG_MAX.
-
-ipsec.c:2280:65:
-    error: result of comparison of constant -9223372036854775808
-    with expression of type 'unsigned int' is always false
-    [-Werror,-Wtautological-constant-out-of-range-compare]
-
-  if ((errno == ERANGE && (nr_process == LONG_MAX || nr_process == LONG_MIN))
-
-Fixes: bc2652b7ae1e ("selftest/net/xfrm: Add test for ipsec tunnel")
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Dmitry Safonov <0x7f454c46@gmail.com>
-Link: https://lore.kernel.org/r/20231124171645.1011043-2-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org   # v6.0+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/ipsec.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/parisc/include/asm/bug.h | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/tools/testing/selftests/net/ipsec.c b/tools/testing/selftests/net/ipsec.c
-index 9a8229abfa026..be4a30a0d02ae 100644
---- a/tools/testing/selftests/net/ipsec.c
-+++ b/tools/testing/selftests/net/ipsec.c
-@@ -2263,7 +2263,7 @@ static int check_results(void)
+diff --git a/arch/parisc/include/asm/bug.h b/arch/parisc/include/asm/bug.h
+index 4b6d60b94124..b9cad0bb4461 100644
+--- a/arch/parisc/include/asm/bug.h
++++ b/arch/parisc/include/asm/bug.h
+@@ -28,13 +28,15 @@
+ 	do {								\
+ 		asm volatile("\n"					\
+ 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
+-			     "\t.pushsection __bug_table,\"aw\"\n"	\
++			     "\t.pushsection __bug_table,\"a\"\n"	\
++			     "\t.align %4\n"				\
+ 			     "2:\t" ASM_WORD_INSN "1b, %c0\n"		\
+-			     "\t.short %c1, %c2\n"			\
+-			     "\t.org 2b+%c3\n"				\
++			     "\t.short %1, %2\n"			\
++			     "\t.blockz %3-2*%4-2*2\n"			\
+ 			     "\t.popsection"				\
+ 			     : : "i" (__FILE__), "i" (__LINE__),	\
+-			     "i" (0), "i" (sizeof(struct bug_entry)) ); \
++			     "i" (0), "i" (sizeof(struct bug_entry)),	\
++			     "i" (sizeof(long)) );			\
+ 		unreachable();						\
+ 	} while(0)
  
- int main(int argc, char **argv)
- {
--	unsigned int nr_process = 1;
-+	long nr_process = 1;
- 	int route_sock = -1, ret = KSFT_SKIP;
- 	int test_desc_fd[2];
- 	uint32_t route_seq;
-@@ -2284,7 +2284,7 @@ int main(int argc, char **argv)
- 			exit_usage(argv);
- 		}
+@@ -51,27 +53,31 @@
+ 	do {								\
+ 		asm volatile("\n"					\
+ 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
+-			     "\t.pushsection __bug_table,\"aw\"\n"	\
++			     "\t.pushsection __bug_table,\"a\"\n"	\
++			     "\t.align %4\n"				\
+ 			     "2:\t" ASM_WORD_INSN "1b, %c0\n"		\
+-			     "\t.short %c1, %c2\n"			\
+-			     "\t.org 2b+%c3\n"				\
++			     "\t.short %1, %2\n"			\
++			     "\t.blockz %3-2*%4-2*2\n"			\
+ 			     "\t.popsection"				\
+ 			     : : "i" (__FILE__), "i" (__LINE__),	\
+ 			     "i" (BUGFLAG_WARNING|(flags)),		\
+-			     "i" (sizeof(struct bug_entry)) );		\
++			     "i" (sizeof(struct bug_entry)),		\
++			     "i" (sizeof(long)) );			\
+ 	} while(0)
+ #else
+ #define __WARN_FLAGS(flags)						\
+ 	do {								\
+ 		asm volatile("\n"					\
+ 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
+-			     "\t.pushsection __bug_table,\"aw\"\n"	\
++			     "\t.pushsection __bug_table,\"a\"\n"	\
++			     "\t.align %2\n"				\
+ 			     "2:\t" ASM_WORD_INSN "1b\n"		\
+-			     "\t.short %c0\n"				\
+-			     "\t.org 2b+%c1\n"				\
++			     "\t.short %0\n"				\
++			     "\t.blockz %1-%2-2\n"			\
+ 			     "\t.popsection"				\
+ 			     : : "i" (BUGFLAG_WARNING|(flags)),		\
+-			     "i" (sizeof(struct bug_entry)) );		\
++			     "i" (sizeof(struct bug_entry)),		\
++			     "i" (sizeof(long)) );			\
+ 	} while(0)
+ #endif
  
--		if (nr_process > MAX_PROCESSES || !nr_process) {
-+		if (nr_process > MAX_PROCESSES || nr_process < 1) {
- 			printk("nr_process should be between [1; %u]",
- 					MAX_PROCESSES);
- 			exit_usage(argv);
 -- 
-2.42.0
+2.43.0
 
 
 
