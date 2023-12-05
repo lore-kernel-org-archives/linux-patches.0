@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197FD6FB8;
-	Tue,  5 Dec 2023 03:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65A36FAF;
+	Tue,  5 Dec 2023 03:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GzJSdXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FB9C433C8;
-	Tue,  5 Dec 2023 03:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xf17h2Mq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E26DC433C7;
+	Tue,  5 Dec 2023 03:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746832;
-	bh=1PHphhekzihOm1FNRbC+kxSHvpI4HuUneoaHvZ3cDsk=;
+	s=korg; t=1701746835;
+	bh=PBxoe4FQcv/AFLSDZYTAJxDIj5CrMHmVmBZvdVAuZKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2GzJSdXxNKpVJWQjo7d0X4EoUSKzy+0fb+n7GFYeUiq6I/3P+xNdRpzY0P08JGCm3
-	 weX3wbKbg3DdvqXEEBXjKwtqIEE+vfpmkK09N3f1y4yNTHj/G4Jco8Pb5Eqk/BgOuL
-	 pSDsfa0XKmqQe1XSAXjNA4qQhVc3+rFNu9w2wiP0=
+	b=xf17h2MqrBAMb2MR2aqKOHDFGkbobfaIqFXzuYX1dpb7mx6dp002u7npqZb5fbVVw
+	 v1x98ePnTI5j5BOdJ3HRWHGvL/EQh5K8wWMfyqAQpWLxbcpqLX+LVOg5u2ujyfwK4r
+	 /vFYvhW1WTZ801IOc7i+85rWOzJBVeBO2nRjp/lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.19 36/71] mmc: block: Do not lose cache flush during CQE error recovery
-Date: Tue,  5 Dec 2023 12:16:34 +0900
-Message-ID: <20231205031519.946620920@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 37/71] ALSA: hda: Disable power-save on KONTRON SinglePC
+Date: Tue,  5 Dec 2023 12:16:35 +0900
+Message-ID: <20231205031520.005079482@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031517.859409664@linuxfoundation.org>
 References: <20231205031517.859409664@linuxfoundation.org>
@@ -42,38 +40,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 174925d340aac55296318e43fd96c0e1d196e105 upstream.
+commit a337c355719c42a6c5b67e985ad753590ed844fb upstream.
 
-During CQE error recovery, error-free data commands get requeued if there
-is any data left to transfer, but non-data commands are completed even
-though they have not been processed.  Requeue them instead.
+It's been reported that the runtime PM on KONTRON SinglePC (PCI SSID
+1734:1232) caused a stall of playback after a bunch of invocations.
+(FWIW, this looks like an timing issue, and the stall happens rather
+on the controller side.)
 
-Note the only non-data command is cache flush, which would have resulted in
-a cache flush being lost if it was queued at the time of CQE recovery.
+As a workaround, disable the default power-save on this platform.
 
-Fixes: 1e8e55b67030 ("mmc: block: Add CQE support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Avri Altman <avri.altman@wdc.com>
-Link: https://lore.kernel.org/r/20231103084720.6886-2-adrian.hunter@intel.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231130151321.9813-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |    2 ++
+ sound/pci/hda/hda_intel.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -1470,6 +1470,8 @@ static void mmc_blk_cqe_complete_rq(stru
- 			blk_mq_requeue_request(req, true);
- 		else
- 			__blk_mq_end_request(req, BLK_STS_OK);
-+	} else if (mq->in_recovery) {
-+		blk_mq_requeue_request(req, true);
- 	} else {
- 		blk_mq_end_request(req, BLK_STS_OK);
- 	}
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2371,6 +2371,8 @@ static struct snd_pci_quirk power_save_b
+ 	SND_PCI_QUIRK(0x17aa, 0x36a7, "Lenovo C50 All in one", 0),
+ 	/* https://bugs.launchpad.net/bugs/1821663 */
+ 	SND_PCI_QUIRK(0x1631, 0xe017, "Packard Bell NEC IMEDIA 5204", 0),
++	/* KONTRON SinglePC may cause a stall at runtime resume */
++	SND_PCI_QUIRK(0x1734, 0x1232, "KONTRON SinglePC", 0),
+ 	{}
+ };
+ #endif /* CONFIG_PM */
 
 
