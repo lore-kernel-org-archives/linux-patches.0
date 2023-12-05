@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1DB6AC2;
-	Tue,  5 Dec 2023 03:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4679379F2;
+	Tue,  5 Dec 2023 03:22:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbR8A0+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CABC433C8;
-	Tue,  5 Dec 2023 03:22:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwZSmBDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDABC433CB;
+	Tue,  5 Dec 2023 03:22:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746563;
-	bh=nl0DBhYHO41Kee/+8mx9asWRbKlrVkN05NUuWW2eD90=;
+	s=korg; t=1701746566;
+	bh=td8Yo0i+GTMDURFDXLnjYU6CvPqlCDVrz/S7Kh1BlQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbR8A0+O1srqNlVq/OCRAOkzUJqjYYDwduOjBhWmFAWVMZggeDcNFNOC0ZXtajhCp
-	 yukOHurPlKIJcRghkxczJWaN3W+jNbQhKI9MplcHqxVkpXpXdxfjll6oNaPW2n+GyB
-	 ehyJNCNaTHCi6Z4afFnJm5/jEBYgQJA29H3uJIQ8=
+	b=wwZSmBDjbHBV3H0ZAuZkINDggFJWDQdFHfyBlxQADRJrnwbL84WV0VVqNWXHq+FaN
+	 fA1HkfLfZBUrWEzLHtxtfYfcPg6UHQsgAjzrDqYic3Hy9WObmuweyrLSnWu154ktC+
+	 eArxbu7+ziFQo3FtITYq1FxHiEephAKnfPJMJ5c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.6 054/134] KVM: PPC: Book3S HV: Fix KVM_RUN clobbering FP/VEC user registers
-Date: Tue,  5 Dec 2023 12:15:26 +0900
-Message-ID: <20231205031538.991354086@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 072/134] io_uring/kbuf: defer release of mapped buffer rings
+Date: Tue,  5 Dec 2023 12:15:44 +0900
+Message-ID: <20231205031540.069815766@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -41,47 +41,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit dc158d23b33df9033bcc8e7117e8591dd2f9d125 upstream.
+commit c392cbecd8eca4c53f2bf508731257d9d0a21c2d upstream.
 
-Before running a guest, the host process (e.g., QEMU) FP/VEC registers
-are saved if they were being used, similarly to when the kernel uses FP
-registers. The guest values are then loaded into regs, and the host
-process registers will be restored lazily when it uses FP/VEC.
+If a provided buffer ring is setup with IOU_PBUF_RING_MMAP, then the
+kernel allocates the memory for it and the application is expected to
+mmap(2) this memory. However, io_uring uses remap_pfn_range() for this
+operation, so we cannot rely on normal munmap/release on freeing them
+for us.
 
-KVM HV has a bug here: the host process registers do get saved, but the
-user MSR bits remain enabled, which indicates the registers are valid
-for the process. After they are clobbered by running the guest, this
-valid indication causes the host process to take on the FP/VEC register
-values of the guest.
+Stash an io_buf_free entry away for each of these, if any, and provide
+a helper to free them post ->release().
 
-Fixes: 34e119c96b2b ("KVM: PPC: Book3S HV P9: Reduce mtmsrd instructions required to save host SPRs")
-Cc: stable@vger.kernel.org # v5.17+
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231122025811.2973-1-npiggin@gmail.com
+Cc: stable@vger.kernel.org
+Fixes: c56e022c0a27 ("io_uring: add support for user mapped provided buffer ring")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/process.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/io_uring_types.h |    3 ++
+ io_uring/io_uring.c            |    2 +
+ io_uring/kbuf.c                |   44 ++++++++++++++++++++++++++++++++++++-----
+ io_uring/kbuf.h                |    2 +
+ 4 files changed, 46 insertions(+), 5 deletions(-)
 
---- a/arch/powerpc/kernel/process.c
-+++ b/arch/powerpc/kernel/process.c
-@@ -1198,11 +1198,11 @@ void kvmppc_save_user_regs(void)
+--- a/include/linux/io_uring_types.h
++++ b/include/linux/io_uring_types.h
+@@ -327,6 +327,9 @@ struct io_ring_ctx {
  
- 	usermsr = current->thread.regs->msr;
+ 	struct list_head	io_buffers_cache;
  
-+	/* Caller has enabled FP/VEC/VSX/TM in MSR */
- 	if (usermsr & MSR_FP)
--		save_fpu(current);
--
-+		__giveup_fpu(current);
- 	if (usermsr & MSR_VEC)
--		save_altivec(current);
-+		__giveup_altivec(current);
++	/* deferred free list, protected by ->uring_lock */
++	struct hlist_head	io_buf_list;
++
+ 	/* Keep this last, we don't need it for the fast path */
+ 	struct wait_queue_head		poll_wq;
+ 	struct io_restriction		restrictions;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -323,6 +323,7 @@ static __cold struct io_ring_ctx *io_rin
+ 	INIT_LIST_HEAD(&ctx->sqd_list);
+ 	INIT_LIST_HEAD(&ctx->cq_overflow_list);
+ 	INIT_LIST_HEAD(&ctx->io_buffers_cache);
++	INIT_HLIST_HEAD(&ctx->io_buf_list);
+ 	io_alloc_cache_init(&ctx->rsrc_node_cache, IO_NODE_ALLOC_CACHE_MAX,
+ 			    sizeof(struct io_rsrc_node));
+ 	io_alloc_cache_init(&ctx->apoll_cache, IO_ALLOC_CACHE_MAX,
+@@ -2942,6 +2943,7 @@ static __cold void io_ring_ctx_free(stru
+ 		ctx->mm_account = NULL;
+ 	}
+ 	io_rings_free(ctx);
++	io_kbuf_mmap_list_free(ctx);
  
- #ifdef CONFIG_PPC_TRANSACTIONAL_MEM
- 	if (usermsr & MSR_TM) {
+ 	percpu_ref_exit(&ctx->refs);
+ 	free_uid(ctx->user);
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -41,6 +41,11 @@ static struct io_buffer_list *__io_buffe
+ 	return xa_load(&ctx->io_bl_xa, bgid);
+ }
+ 
++struct io_buf_free {
++	struct hlist_node		list;
++	void				*mem;
++};
++
+ static inline struct io_buffer_list *io_buffer_get_list(struct io_ring_ctx *ctx,
+ 							unsigned int bgid)
+ {
+@@ -238,7 +243,10 @@ static int __io_remove_buffers(struct io
+ 	if (bl->is_mapped) {
+ 		i = bl->buf_ring->tail - bl->head;
+ 		if (bl->is_mmap) {
+-			folio_put(virt_to_folio(bl->buf_ring));
++			/*
++			 * io_kbuf_list_free() will free the page(s) at
++			 * ->release() time.
++			 */
+ 			bl->buf_ring = NULL;
+ 			bl->is_mmap = 0;
+ 		} else if (bl->buf_nr_pages) {
+@@ -552,18 +560,28 @@ error_unpin:
+ 	return -EINVAL;
+ }
+ 
+-static int io_alloc_pbuf_ring(struct io_uring_buf_reg *reg,
++static int io_alloc_pbuf_ring(struct io_ring_ctx *ctx,
++			      struct io_uring_buf_reg *reg,
+ 			      struct io_buffer_list *bl)
+ {
+-	gfp_t gfp = GFP_KERNEL_ACCOUNT | __GFP_ZERO | __GFP_NOWARN | __GFP_COMP;
++	struct io_buf_free *ibf;
+ 	size_t ring_size;
+ 	void *ptr;
+ 
+ 	ring_size = reg->ring_entries * sizeof(struct io_uring_buf_ring);
+-	ptr = (void *) __get_free_pages(gfp, get_order(ring_size));
++	ptr = io_mem_alloc(ring_size);
+ 	if (!ptr)
+ 		return -ENOMEM;
+ 
++	/* Allocate and store deferred free entry */
++	ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
++	if (!ibf) {
++		io_mem_free(ptr);
++		return -ENOMEM;
++	}
++	ibf->mem = ptr;
++	hlist_add_head(&ibf->list, &ctx->io_buf_list);
++
+ 	bl->buf_ring = ptr;
+ 	bl->is_mapped = 1;
+ 	bl->is_mmap = 1;
+@@ -622,7 +640,7 @@ int io_register_pbuf_ring(struct io_ring
+ 	if (!(reg.flags & IOU_PBUF_RING_MMAP))
+ 		ret = io_pin_pbuf_ring(&reg, bl);
+ 	else
+-		ret = io_alloc_pbuf_ring(&reg, bl);
++		ret = io_alloc_pbuf_ring(ctx, &reg, bl);
+ 
+ 	if (!ret) {
+ 		bl->nr_entries = reg.ring_entries;
+@@ -682,3 +700,19 @@ void *io_pbuf_get_address(struct io_ring
+ 
+ 	return bl->buf_ring;
+ }
++
++/*
++ * Called at or after ->release(), free the mmap'ed buffers that we used
++ * for memory mapped provided buffer rings.
++ */
++void io_kbuf_mmap_list_free(struct io_ring_ctx *ctx)
++{
++	struct io_buf_free *ibf;
++	struct hlist_node *tmp;
++
++	hlist_for_each_entry_safe(ibf, tmp, &ctx->io_buf_list, list) {
++		hlist_del(&ibf->list);
++		io_mem_free(ibf->mem);
++		kfree(ibf);
++	}
++}
+--- a/io_uring/kbuf.h
++++ b/io_uring/kbuf.h
+@@ -54,6 +54,8 @@ int io_provide_buffers(struct io_kiocb *
+ int io_register_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg);
+ int io_unregister_pbuf_ring(struct io_ring_ctx *ctx, void __user *arg);
+ 
++void io_kbuf_mmap_list_free(struct io_ring_ctx *ctx);
++
+ unsigned int __io_put_kbuf(struct io_kiocb *req, unsigned issue_flags);
+ 
+ void io_kbuf_recycle_legacy(struct io_kiocb *req, unsigned issue_flags);
 
 
