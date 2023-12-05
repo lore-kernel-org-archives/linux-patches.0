@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FCD79E3;
-	Tue,  5 Dec 2023 03:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8C979E3;
+	Tue,  5 Dec 2023 03:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YkvEfUxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1FDC433C8;
-	Tue,  5 Dec 2023 03:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rR0dFs1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B1BC433C7;
+	Tue,  5 Dec 2023 03:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747633;
-	bh=zvcbzCEIbpEL/SovccFx9znEwRRTDaePiNC+KLX78PI=;
+	s=korg; t=1701747636;
+	bh=jPOU1Tw8nO/W4BhGZ1/rImwXWUQs2T8j7Yq5UokLHSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YkvEfUxGgrgceAudybSQcMq966yyr3GovKjcASuWh9NnKbZX4te+jyVA/e/CfWPQJ
-	 KolT/LdZ+WAjPgX5PmsMAHa0jXkCoiLidAL5WTN+oJNs5ino8eL9+gBcVgw8JL9NRT
-	 cNBrQDZWlHlu8jbQ/ie9pMLeuUGFxcUExV9W+1OY=
+	b=rR0dFs1Z7fo0KTSp+/UNziax6dxIw7r6YkTWzAc1eExY/R6IL/TswnKljYyP47aKz
+	 ep1xRSrtLhMAVqjrxx2yakGO9aFEpjqqIR6FiAlIwVJKhSTgcRUXeousmc/aIXYKZf
+	 nutMmuByKO/PY8t2Cdk9Z0RQDkSy7fXQ5U8YB2Dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 5.15 03/67] firewire: core: fix possible memory leak in create_units()
-Date: Tue,  5 Dec 2023 12:16:48 +0900
-Message-ID: <20231205031520.055356566@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 04/67] mmc: cqhci: Increase recovery halt timeout
+Date: Tue,  5 Dec 2023 12:16:49 +0900
+Message-ID: <20231205031520.106648769@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -41,60 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 891e0eab32a57fca4d36c5162628eb0bcb1f0edf upstream.
+commit b578d5d18e929aa7c007a98cce32657145dde219 upstream.
 
-If device_register() fails, the refcount of device is not 0, the name
-allocated in dev_set_name() is leaked. To fix this by calling put_device(),
-so that it will be freed in callback function kobject_cleanup().
+Failing to halt complicates the recovery. Additionally, unless the card or
+controller are stuck, which is expected to be very rare, then the halt
+should succeed, so it is better to wait. Set a large timeout.
 
-unreferenced object 0xffff9d99035c7a90 (size 8):
-  comm "systemd-udevd", pid 168, jiffies 4294672386 (age 152.089s)
-  hex dump (first 8 bytes):
-    66 77 30 2e 30 00 ff ff                          fw0.0...
-  backtrace:
-    [<00000000e1d62bac>] __kmem_cache_alloc_node+0x1e9/0x360
-    [<00000000bbeaff31>] __kmalloc_node_track_caller+0x44/0x1a0
-    [<00000000491f2fb4>] kvasprintf+0x67/0xd0
-    [<000000005b960ddc>] kobject_set_name_vargs+0x1e/0x90
-    [<00000000427ac591>] dev_set_name+0x4e/0x70
-    [<000000003b4e447d>] create_units+0xc5/0x110
-
-fw_unit_release() will be called in the error path, move fw_device_get()
-before calling device_register() to keep balanced with fw_device_put() in
-fw_unit_release().
-
+Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
 Cc: stable@vger.kernel.org
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Fixes: a1f64819fe9f ("firewire: struct device - replace bus_id with dev_name(), dev_set_name()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-3-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/core-device.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/mmc/host/cqhci-core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/firewire/core-device.c
-+++ b/drivers/firewire/core-device.c
-@@ -719,14 +719,11 @@ static void create_units(struct fw_devic
- 					fw_unit_attributes,
- 					&unit->attribute_group);
+--- a/drivers/mmc/host/cqhci-core.c
++++ b/drivers/mmc/host/cqhci-core.c
+@@ -977,10 +977,10 @@ static bool cqhci_halt(struct mmc_host *
+ /*
+  * After halting we expect to be able to use the command line. We interpret the
+  * failure to halt to mean the data lines might still be in use (and the upper
+- * layers will need to send a STOP command), so we set the timeout based on a
+- * generous command timeout.
++ * layers will need to send a STOP command), however failing to halt complicates
++ * the recovery, so set a timeout that would reasonably allow I/O to complete.
+  */
+-#define CQHCI_START_HALT_TIMEOUT	5
++#define CQHCI_START_HALT_TIMEOUT	500
  
--		if (device_register(&unit->device) < 0)
--			goto skip_unit;
--
- 		fw_device_get(device);
--		continue;
--
--	skip_unit:
--		kfree(unit);
-+		if (device_register(&unit->device) < 0) {
-+			put_device(&unit->device);
-+			continue;
-+		}
- 	}
- }
- 
+ static void cqhci_recovery_start(struct mmc_host *mmc)
+ {
 
 
