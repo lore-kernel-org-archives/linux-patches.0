@@ -1,80 +1,108 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA57D6A329;
-	Tue,  5 Dec 2023 17:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FC26A338;
+	Tue,  5 Dec 2023 18:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wT63OINb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1156C433C8;
-	Tue,  5 Dec 2023 17:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NaXHjxPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD47C433C7;
+	Tue,  5 Dec 2023 18:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701799042;
-	bh=2gbDWzlz/2HnpVET7DLNA3XD6qtbpPe9oj2Q4zkjV3M=;
+	s=korg; t=1701800135;
+	bh=bN5M5BOBJOwrIVMsNWK7bjhKGDGQO9YdEWRVdOmIYjI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wT63OINb6S5Ij848WsI6aixbKVJlhTO9f2H0Ppqr7s/mp96Ssg/qFvvnXGxwd98a4
-	 9ygGhIW9dfqPPq0vXCHkH5vu/WzpAd01068vX9XsnIepHCxr5Slzy4dVPAKTTON5b0
-	 a9RyO7xNqN7P8tlNKAdcxDalLfu3ndq9WWESrfHM=
-Date: Wed, 6 Dec 2023 02:57:15 +0900
+	b=NaXHjxPy6hTSuvkcqqcUVrH5WolUmMBjLaSob/gHuzn8gP5b/2LpDQ0CQvXNcL83c
+	 k1OVG9msLnZ8VmxaiFEGF9onp4EyIx9dGC0ljimI9F39sQBDNEV37U+nkpyyFLdwwv
+	 rIXk1ucRixyJ47l9WZVvbqIa9782k4QsTW+pRHmY=
+Date: Wed, 6 Dec 2023 03:15:33 +0900
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Jan Kara <jack@suse.cz>,
-	Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	chrubis@suse.cz, linux-ext4@vger.kernel.org,
-	Ted Tso <tytso@mit.edu>
-Subject: Re: ext4 data corruption in 6.1 stable tree (was Re: [PATCH 5.15
- 000/297] 5.15.140-rc1 review)
-Message-ID: <2023120643-evade-legal-ee74@gregkh>
-References: <20231124172000.087816911@linuxfoundation.org>
- <81a11ebe-ea47-4e21-b5eb-536b1a723168@linaro.org>
- <20231127155557.xv5ljrdxcfcigjfa@quack3>
- <CAEUSe7_PUdRgJpY36jZxy84CbNX5TTnynqU8derf0ZBSDtUOqw@mail.gmail.com>
- <20231205122122.dfhhoaswsfscuhc3@quack3>
- <4118ca20-fb7d-4e49-b08c-68fee0522d3d@roeck-us.net>
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 5.4 00/93] 5.4.263-rc2 review
+Message-ID: <2023120625-pastor-result-4424@gregkh>
+References: <20231205043618.860613563@linuxfoundation.org>
+ <9b88236c-8616-4a08-9c8e-9a6c09868360@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <4118ca20-fb7d-4e49-b08c-68fee0522d3d@roeck-us.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9b88236c-8616-4a08-9c8e-9a6c09868360@oracle.com>
 
-On Tue, Dec 05, 2023 at 09:55:08AM -0800, Guenter Roeck wrote:
-> On Tue, Dec 05, 2023 at 01:21:22PM +0100, Jan Kara wrote:
-> [ ... ]
-> > 
-> > So I've got back to this and the failure is a subtle interaction between
-> > iomap code and ext4 code. In particular that fact that commit 936e114a245b6
-> > ("iomap: update ki_pos a little later in iomap_dio_complete") is not in
-> > stable causes that file position is not updated after direct IO write and
-> > thus we direct IO writes are ending in wrong locations effectively
-> > corrupting data. The subtle detail is that before this commit if ->end_io
-> > handler returns non-zero value (which the new ext4 ->end_io handler does),
-> > file pos doesn't get updated, after this commit it doesn't get updated only
-> > if the return value is < 0.
-> > 
-> > The commit got merged in 6.5-rc1 so all stable kernels that have
-> > 91562895f803 ("ext4: properly sync file size update after O_SYNC direct
-> > IO") before 6.5 are corrupting data - I've noticed at least 6.1 is still
-> > carrying the problematic commit. Greg, please take out the commit from all
-> > stable kernels before 6.5 as soon as possible, we'll figure out proper
-> > backport once user data are not being corrupted anymore. Thanks!
-> > 
+On Tue, Dec 05, 2023 at 12:33:54PM +0530, Harshit Mogalapalli wrote:
+> Hi Greg,
 > 
-> Thanks a lot for the update.
+> On 05/12/23 10:07 am, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.4.263 release.
+> > There are 93 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 07 Dec 2023 04:35:52 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.263-rc2.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> > 
+> > Adrian Hunter <adrian.hunter@intel.com>
+> >      perf intel-pt: Fix async branch flags
+> > 
+> > Adrian Hunter <adrian.hunter@intel.com>
+> >      perf intel-pt: Adjust sample flags for VM-Exit
+> > 
+> ^^^ these both commits causing:
 > 
-> Turns out this is causing a regression in chromeos-6.1, and reverting the
-> offending patch fixes the problem. I suspect anyone running v6.1.64+ may
-> have a problem.
+> util/intel-pt.c: In function ‘intel_pt_sample_flags’:
+> util/intel-pt.c:1004:38: error: ‘const struct intel_pt_state’ has no member
+> named ‘from_nr’; did you mean ‘from_ip’?
+>  1004 |                 else if (ptq->state->from_nr && !ptq->state->to_nr)
+>       |                                      ^~~~~~~
+>       |                                      from_ip
+> util/intel-pt.c:1004:60: error: ‘const struct intel_pt_state’ has no member
+> named ‘to_nr’
+>  1004 |                 else if (ptq->state->from_nr && !ptq->state->to_nr)
+>       |                                                            ^~
+> util/intel-pt.c:1007:38: error: ‘PERF_IP_FLAG_VMEXIT’ undeclared (first use
+> in this function); did you mean ‘PERF_IP_FLAG_IN_TX’?
+>  1007 |                                      PERF_IP_FLAG_VMEXIT;
+>       |                                      ^~~~~~~~~~~~~~~~~~~
+>       |                                      PERF_IP_FLAG_IN_TX
+> 
+> 
+> I have reverted these locally and then one more build failure
+> 
+> > Adrian Hunter <adrian.hunter@intel.com>
+> >      perf inject: Fix GEN_ELF_TEXT_OFFSET for jit
+> > 
+> ^^^ This is causing:
+> 
+> In file included from util/jitdump.c:28:
+> util/genelf.h:5:10: fatal error: linux/math.h: No such file or directory
+>     5 | #include <linux/math.h>
+>       |          ^~~~~~~~~~~~~~
+> compilation terminated.
+> 
+> Reverting this as well, fixes the perf build.
 
-Jan, thanks for the report, and Guenter, thanks for letting me know as
-well.  I'll go queue up the fix now and push out new -rc releases.
+Thanks, I'll go drop all of these now.
 
 greg k-h
