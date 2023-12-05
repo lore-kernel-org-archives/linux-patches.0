@@ -1,51 +1,51 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE226DCE6
-	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 20:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4296DCE6
+	for <patches@lists.linux.dev>; Tue,  5 Dec 2023 20:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XyFKOcOp"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6d8481094f9so3694219a34.3
-        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 12:58:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fZeJrCr7"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-589d4033e84so3676468eaf.1
+        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 12:59:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701809934; x=1702414734; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1701809972; x=1702414772; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=OzWOREuSwdEoFd+CU5OTzLFsGtCD7C1zfebLpmRFAb0=;
-        b=XyFKOcOpdwjQsam/3GrZ3MOE5QZVC0R8zuhVXPqTgcDf5yojnRsYDes3Z38mIFF5yq
-         zYAgQBjs+ZVTgBpZyR7iM7PU64oVEOSrPprNaVIVZGC/SPnTG8BDdT9eJCmmbpwi2U2D
-         LIV3Ij+XN2tfYLSH1YQRtSq0AH5ScnashIdeELRn1ZJUPW/4LHURPEvdpatw6c+PV18d
-         ggRWuEk/KNKy+oiQgRJoE/YLgB0pUG7oU3l1EM2Z7smf/h6GNrgQPJJD5tDwB6ZWkn+E
-         ePwIDg3FPUQDdlCAzi65D6fxaL1z4QsIEgNjwO75xLHZKRXxdYDNiSWryTfZHK/rghep
-         9aFA==
+        bh=GoTAKWoISW3fQAGzQLAL5LAT88Q1n5cNUMG6gJC0Nbw=;
+        b=fZeJrCr7jKnXCR2YVrX2YddNjua1B8wXDjaiauUYNIPSp79OjlYUGvR+DF/9RrfKvp
+         vMAIkmNL7//AfKMi55aZzznh8hWN2BpNELTm5V4BJwv7ogLi39lCVEXN9iIyUZ553PVT
+         EpVjefLx1A5S9rU+Wk65qimJf5hRqYVH1kk2r1ap4L1vbCQDt5ZHOz8Pmyj98mUhXYbz
+         DfZ8MTg3lBdlp078R/jKjFkvZOpRB5DLN68az4prVZdGNA1Loy1ou0NLBdJKY7KIlmRu
+         zUbVgjDwxQExtYudJaeC+vW+qZNcQZwX1FmlI02oH9ME1XAUShOyeHFC9Kiy0dw5EFAY
+         vgdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701809934; x=1702414734;
+        d=1e100.net; s=20230601; t=1701809972; x=1702414772;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OzWOREuSwdEoFd+CU5OTzLFsGtCD7C1zfebLpmRFAb0=;
-        b=lM6glECuMcS8wukbXVB/5BM6J+i0qmzRC8BjwLo2pIIYaNTuOAlIKo6zs0nh9A1aWg
-         OVIQzElGblmSS1bIZ2lMVm8tulIgB+msXm5V40TtIvQHsby6Z9Vfwu1X4PXrQ0bNoduF
-         79EMvoEo/73noWgpU7wQ0jqPyy1O1Dy14yB1V9HvzNBHDMMIcKUEHBJysMfyRgfRfmjO
-         sS2lZhhTE4oyB/X82VBumMh9d1MjaCX31TvdSkB0kUgGT3ioAsKOjcenqFEhkgJRe4Sw
-         8dNr/Jd24hp8P81GdpXOrUAjPuzrJw5qHmfKgOXnXgp0QbapzP9vq+L/MnjA/4Wstn24
-         wuLQ==
-X-Gm-Message-State: AOJu0Yw1IBMmviz1zlVt3S1tBYny5BgDFcMRWxf/zjAPdsycG6Y7MHgO
-	I+UV000xv4BhGzJ+/tMwBkM=
-X-Google-Smtp-Source: AGHT+IHXExISh6TSmnzLXi6rRF2I7lXlvjcj+JdCDpo2NyImPcOemMbY0jcJgQE/wN7VZ0Qo1xX3og==
-X-Received: by 2002:a05:6870:b05:b0:1fa:f469:8565 with SMTP id lh5-20020a0568700b0500b001faf4698565mr8360128oab.17.1701809934631;
-        Tue, 05 Dec 2023 12:58:54 -0800 (PST)
+        bh=GoTAKWoISW3fQAGzQLAL5LAT88Q1n5cNUMG6gJC0Nbw=;
+        b=Ds0q460LTC/txtBqqb423VUgmsYeDOBjp3qoBu14sL1oJjwPe6a9HW7xz5kK2/q+FE
+         Z5LQjkRo7Q7+WfHETkoaq+bF5vysUjf6TgnKWKjOq6OYiTXSOaSZ6Pnamlc+AWPIXJE7
+         /9BvQgcVtiCs6NkCYOA6n752a3W5b6e2FyIja4aeSi2aGEksM0p5mUcLyAh+VMKQRu9P
+         ZZcMit32YASMd+JXZP+LBKQiKQDx5vNe+vn/CHhuDellRQszhTJXUeMNWyJGCodCXwoW
+         X2JL5lI53UP4jVLr3Y+/68LZDwjalVDBIZWvjUVoC2ucJmr/RJSMGy5Fu1lwH4xPA31f
+         rrnQ==
+X-Gm-Message-State: AOJu0Ywwv7NnTr+qRBxlIdpkTfj463itZOo2zKjtCdVsewrySdA0X2u7
+	PN7TuIAgGcPhq+qGnvW/xhE=
+X-Google-Smtp-Source: AGHT+IE4b1qjVfCnofvLbEN71Hm58ovXB+Bp2nSxmcCZOaG5DfnsqRoTdVRKS5eP0qE3NHA5D+LCuA==
+X-Received: by 2002:a05:6870:41c8:b0:1fa:efdc:b497 with SMTP id z8-20020a05687041c800b001faefdcb497mr7367246oac.46.1701809972352;
+        Tue, 05 Dec 2023 12:59:32 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id lg22-20020a0568700b9600b001fa1db68eecsm1547354oab.4.2023.12.05.12.58.53
+        by smtp.gmail.com with ESMTPSA id lg22-20020a0568700b9600b001fa1db68eecsm1547354oab.4.2023.12.05.12.59.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Dec 2023 12:58:54 -0800 (PST)
+        Tue, 05 Dec 2023 12:59:32 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <76415c2b-4e94-410f-bece-8e12552c28d2@roeck-us.net>
-Date: Tue, 5 Dec 2023 12:58:53 -0800
+Message-ID: <fea6f7af-2d88-4d39-aa47-30f2dedb1fac@roeck-us.net>
+Date: Tue, 5 Dec 2023 12:59:30 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,16 +53,16 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] usb: typec: qcom-pmic-typec: Only select
- DRM_AUX_HPD_BRIDGE with OF
+Subject: Re: [PATCH 3/3] drm/bridge: Return NULL instead of plain 0 in
+ drm_dp_hpd_bridge_register() stub
 Content-Language: en-US
 To: Nathan Chancellor <nathan@kernel.org>, dmitry.baryshkov@linaro.org
 Cc: heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
  neil.armstrong@linaro.org, bryan.odonoghue@linaro.org,
  linux-usb@vger.kernel.org, dri-devel@lists.freedesktop.org,
- patches@lists.linux.dev
+ patches@lists.linux.dev, kernel test robot <lkp@intel.com>
 References: <20231205-drm_aux_bridge-fixes-v1-0-d242a0ae9df4@kernel.org>
- <20231205-drm_aux_bridge-fixes-v1-2-d242a0ae9df4@kernel.org>
+ <20231205-drm_aux_bridge-fixes-v1-3-d242a0ae9df4@kernel.org>
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
@@ -107,24 +107,21 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20231205-drm_aux_bridge-fixes-v1-2-d242a0ae9df4@kernel.org>
+In-Reply-To: <20231205-drm_aux_bridge-fixes-v1-3-d242a0ae9df4@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 12/5/23 12:13, Nathan Chancellor wrote:
-> CONFIG_DRM_AUX_HPD_BRIDGE depends on CONFIG_OF but that dependency is
-> not included when CONFIG_TYPEC_QCOM_PMIC selects it, resulting in a
-> Kconfig warning when CONFIG_OF is disabled:
+> sparse complains:
 > 
->    WARNING: unmet direct dependencies detected for DRM_AUX_HPD_BRIDGE
->      Depends on [n]: HAS_IOMEM [=y] && DRM_BRIDGE [=y] && OF [=n]
->      Selected by [m]:
->      - TYPEC_QCOM_PMIC [=m] && USB_SUPPORT [=y] && TYPEC [=m] && TYPEC_TCPM [=m] && (ARCH_QCOM || COMPILE_TEST [=y]) && (DRM [=m] || DRM [=m]=n) && DRM_BRIDGE [=y]
+>    drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c: note: in included file:
+>    include/drm/bridge/aux-bridge.h:29:16: sparse: sparse: Using plain integer as NULL pointer
 > 
-> Only select CONFIG_DRM_AUX_HPD_BRIDGE with both CONFIG_DRM_BRIDGE and
-> CONFIG_OF to clear up the warning.
+> Return NULL to clear up the warning.
 > 
-> Fixes: 7d9f1b72b296 ("usb: typec: qcom-pmic-typec: switch to DRM_AUX_HPD_BRIDGE")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202312060025.BdeqZrWx-lkp@intel.com/
+> Fixes: e560518a6c2e ("drm/bridge: implement generic DP HPD bridge")
 > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
