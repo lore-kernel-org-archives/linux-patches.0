@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA4B6110;
-	Tue,  5 Dec 2023 03:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0F46FB1;
+	Tue,  5 Dec 2023 03:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOwI+29K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D36C433C8;
-	Tue,  5 Dec 2023 03:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWKR+Vyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20B1C433C8;
+	Tue,  5 Dec 2023 03:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746622;
-	bh=fBSRQ26nnJQZIFAmMuwYQ271X8520Wv15Wzx1tskz+A=;
+	s=korg; t=1701746625;
+	bh=KEusSJuiBavPGBBkYDFo53V8jOZ90L5GcYmWWLhdTKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOwI+29K4PUnLMRmzo1mjbdh07/cPHL3XmvMNwGSzVz+uLW0K+35HwWmdGWlc1OH8
-	 c9o724w4J7Tmi5RTC7UmwO83nJbVT+dK2znBO99SWa6Y45A4UCl8IC8YV4yaV/5mTI
-	 7jT8jMrcOI/PEOZ/B8Zw6ZR+A2CPIUjYGom2pGQc=
+	b=vWKR+Vyh4JNB7JttpJ4jCJSooywt2MiYfUEDNsMOjNPhPxuYs2iJxlYPHzstG8gFo
+	 TXrjiI8K9SA5yxlyWTD+SdFt2TT3oCIw1JATGYQ2b6pSxxpBlqkydE4w4+EeQqZa0q
+	 M5pY9j8MesWGzv+TAKo6Ln6Xi3t1AukXta0e02Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elena Salomatkina <elena.salomatkina.cmc@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Furong Xu <0x1207@gmail.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/134] octeontx2-af: Fix possible buffer overflow
-Date: Tue,  5 Dec 2023 12:16:07 +0900
-Message-ID: <20231205031541.483240435@linuxfoundation.org>
+Subject: [PATCH 6.6 096/134] net: stmmac: xgmac: Disable FPE MMC interrupts
+Date: Tue,  5 Dec 2023 12:16:08 +0900
+Message-ID: <20231205031541.552631682@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -44,53 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elena Salomatkina <elena.salomatkina.cmc@gmail.com>
+From: Furong Xu <0x1207@gmail.com>
 
-[ Upstream commit ad31c629ca3c87f6d557488c1f9faaebfbcd203c ]
+[ Upstream commit e54d628a2721bfbb002c19f6e8ca6746cec7640f ]
 
-A loop in rvu_mbox_handler_nix_bandprof_free() contains
-a break if (idx == MAX_BANDPROF_PER_PFFUNC),
-but if idx may reach MAX_BANDPROF_PER_PFFUNC
-buffer '(*req->prof_idx)[layer]' overflow happens before that check.
+Commit aeb18dd07692 ("net: stmmac: xgmac: Disable MMC interrupts
+by default") tries to disable MMC interrupts to avoid a storm of
+unhandled interrupts, but leaves the FPE(Frame Preemption) MMC
+interrupts enabled, FPE MMC interrupts can cause the same problem.
+Now we mask FPE TX and RX interrupts to disable all MMC interrupts.
 
-The patch moves the break to the
-beginning of the loop.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e8e095b3b370 ("octeontx2-af: cn10k: Bandwidth profiles config support").
-Signed-off-by: Elena Salomatkina <elena.salomatkina.cmc@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://lore.kernel.org/r/20231124210802.109763-1-elena.salomatkina.cmc@gmail.com
+Fixes: aeb18dd07692 ("net: stmmac: xgmac: Disable MMC interrupts by default")
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Signed-off-by: Furong Xu <0x1207@gmail.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://lore.kernel.org/r/20231125060126.2328690-1-0x1207@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/mmc_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 23c2f2ed2fb83..c112c71ff576f 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -5505,6 +5505,8 @@ int rvu_mbox_handler_nix_bandprof_free(struct rvu *rvu,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/mmc_core.c b/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
+index ea4910ae0921a..6a7c1d325c464 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/mmc_core.c
+@@ -177,8 +177,10 @@
+ #define MMC_XGMAC_RX_DISCARD_OCT_GB	0x1b4
+ #define MMC_XGMAC_RX_ALIGN_ERR_PKT	0x1bc
  
- 		ipolicer = &nix_hw->ipolicer[layer];
- 		for (idx = 0; idx < req->prof_count[layer]; idx++) {
-+			if (idx == MAX_BANDPROF_PER_PFFUNC)
-+				break;
- 			prof_idx = req->prof_idx[layer][idx];
- 			if (prof_idx >= ipolicer->band_prof.max ||
- 			    ipolicer->pfvf_map[prof_idx] != pcifunc)
-@@ -5518,8 +5520,6 @@ int rvu_mbox_handler_nix_bandprof_free(struct rvu *rvu,
- 			ipolicer->pfvf_map[prof_idx] = 0x00;
- 			ipolicer->match_id[prof_idx] = 0;
- 			rvu_free_rsrc(&ipolicer->band_prof, prof_idx);
--			if (idx == MAX_BANDPROF_PER_PFFUNC)
--				break;
- 		}
- 	}
- 	mutex_unlock(&rvu->rsrc_lock);
++#define MMC_XGMAC_TX_FPE_INTR_MASK	0x204
+ #define MMC_XGMAC_TX_FPE_FRAG		0x208
+ #define MMC_XGMAC_TX_HOLD_REQ		0x20c
++#define MMC_XGMAC_RX_FPE_INTR_MASK	0x224
+ #define MMC_XGMAC_RX_PKT_ASSEMBLY_ERR	0x228
+ #define MMC_XGMAC_RX_PKT_SMD_ERR	0x22c
+ #define MMC_XGMAC_RX_PKT_ASSEMBLY_OK	0x230
+@@ -352,6 +354,8 @@ static void dwxgmac_mmc_intr_all_mask(void __iomem *mmcaddr)
+ {
+ 	writel(0x0, mmcaddr + MMC_RX_INTR_MASK);
+ 	writel(0x0, mmcaddr + MMC_TX_INTR_MASK);
++	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_TX_FPE_INTR_MASK);
++	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_RX_FPE_INTR_MASK);
+ 	writel(MMC_DEFAULT_MASK, mmcaddr + MMC_XGMAC_RX_IPC_INTR_MASK);
+ }
+ 
 -- 
 2.42.0
 
