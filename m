@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BD46AA0;
-	Tue,  5 Dec 2023 03:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759C16AA0;
+	Tue,  5 Dec 2023 03:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIUENGJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27883C433C8;
-	Tue,  5 Dec 2023 03:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGoIyD0h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF232C433C8;
+	Tue,  5 Dec 2023 03:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746396;
-	bh=h4OydL9lCUr9K2UYYx0l01jqnWztSf4UEhDy0dmuwiA=;
+	s=korg; t=1701746399;
+	bh=uYMBtMW5vNFvr8oYwX3UCFhnWgZPMx0pxKKL1LlN1aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wIUENGJTUKQXdXa6+x4lLKJdT5CX5XJCBluIhyoKak0kckpwB+J7CfUwdBMWIOD+A
-	 8stFdPgFTWDsjLjTVpN4mJF104T6N874+p5zzFjjOn00HlYofU1d+N2Sb2dI0TrgmA
-	 dafxmZdJoR/IKucQkEWqLuAu5MWxwLsX9bOooVM0=
+	b=uGoIyD0hCrWisJyp7t4gbMRF/GZv3XsJkwjnp4se1MPv6SqTTB9ckLL6IEjhO9Cg8
+	 nES64bghRPobuffb7StyodhIp/x3Y8NxJPmb72lGEq1K7SiKfqv/YRD7AhopWAwcUv
+	 A3t0CYmWHHhX8S+Sq3rdK1aKCj3eWpf6x7ibTK2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Chen <wenchao.chen@unisoc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 010/134] mmc: sdhci-sprd: Fix vqmmc not shutting down after the card was pulled
-Date: Tue,  5 Dec 2023 12:14:42 +0900
-Message-ID: <20231205031535.917012245@linuxfoundation.org>
+Subject: [PATCH 6.6 011/134] mmc: cqhci: Increase recovery halt timeout
+Date: Tue,  5 Dec 2023 12:14:43 +0900
+Message-ID: <20231205031535.980707796@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -41,88 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenchao Chen <wenchao.chen@unisoc.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 477865af60b2117ceaa1d558e03559108c15c78c upstream.
+commit b578d5d18e929aa7c007a98cce32657145dde219 upstream.
 
-With cat regulator_summary, we found that vqmmc was not shutting
-down after the card was pulled.
+Failing to halt complicates the recovery. Additionally, unless the card or
+controller are stuck, which is expected to be very rare, then the halt
+should succeed, so it is better to wait. Set a large timeout.
 
-cat /sys/kernel/debug/regulator/regulator_summary
-1.before fix
-1)Insert SD card
- vddsdio		1    1  0 unknown  3500mV 0mA  1200mV  3750mV
-    71100000.mmc-vqmmc  1                         0mA  3500mV  3600mV
-
-2)Pull out the SD card
- vddsdio                1    1  0 unknown  3500mV 0mA  1200mV  3750mV
-    71100000.mmc-vqmmc  1                         0mA  3500mV  3600mV
-
-2.after fix
-1)Insert SD cardt
- vddsdio                1    1  0 unknown  3500mV 0mA  1200mV  3750mV
-    71100000.mmc-vqmmc  1                         0mA  3500mV  3600mV
-
-2)Pull out the SD card
- vddsdio		0    1  0 unknown  3500mV 0mA  1200mV  3750mV
-    71100000.mmc-vqmmc  0                         0mA  3500mV  3600mV
-
-Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
-Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
+Fixes: a4080225f51d ("mmc: cqhci: support for command queue enabled host")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231115083406.7368-1-wenchao.chen@unisoc.com
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-3-adrian.hunter@intel.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-sprd.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/mmc/host/cqhci-core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/sdhci-sprd.c
-+++ b/drivers/mmc/host/sdhci-sprd.c
-@@ -416,12 +416,33 @@ static void sdhci_sprd_request_done(stru
- 	mmc_request_done(host->mmc, mrq);
- }
+--- a/drivers/mmc/host/cqhci-core.c
++++ b/drivers/mmc/host/cqhci-core.c
+@@ -984,10 +984,10 @@ static bool cqhci_halt(struct mmc_host *
+ /*
+  * After halting we expect to be able to use the command line. We interpret the
+  * failure to halt to mean the data lines might still be in use (and the upper
+- * layers will need to send a STOP command), so we set the timeout based on a
+- * generous command timeout.
++ * layers will need to send a STOP command), however failing to halt complicates
++ * the recovery, so set a timeout that would reasonably allow I/O to complete.
+  */
+-#define CQHCI_START_HALT_TIMEOUT	5
++#define CQHCI_START_HALT_TIMEOUT	500
  
-+static void sdhci_sprd_set_power(struct sdhci_host *host, unsigned char mode,
-+				 unsigned short vdd)
-+{
-+	struct mmc_host *mmc = host->mmc;
-+
-+	switch (mode) {
-+	case MMC_POWER_OFF:
-+		mmc_regulator_set_ocr(host->mmc, mmc->supply.vmmc, 0);
-+
-+		mmc_regulator_disable_vqmmc(mmc);
-+		break;
-+	case MMC_POWER_ON:
-+		mmc_regulator_enable_vqmmc(mmc);
-+		break;
-+	case MMC_POWER_UP:
-+		mmc_regulator_set_ocr(host->mmc, mmc->supply.vmmc, vdd);
-+		break;
-+	}
-+}
-+
- static struct sdhci_ops sdhci_sprd_ops = {
- 	.read_l = sdhci_sprd_readl,
- 	.write_l = sdhci_sprd_writel,
- 	.write_w = sdhci_sprd_writew,
- 	.write_b = sdhci_sprd_writeb,
- 	.set_clock = sdhci_sprd_set_clock,
-+	.set_power = sdhci_sprd_set_power,
- 	.get_max_clock = sdhci_sprd_get_max_clock,
- 	.get_min_clock = sdhci_sprd_get_min_clock,
- 	.set_bus_width = sdhci_set_bus_width,
-@@ -823,6 +844,10 @@ static int sdhci_sprd_probe(struct platf
- 	host->caps1 &= ~(SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_SDR104 |
- 			 SDHCI_SUPPORT_DDR50);
- 
-+	ret = mmc_regulator_get_supply(host->mmc);
-+	if (ret)
-+		goto pm_runtime_disable;
-+
- 	ret = sdhci_setup_host(host);
- 	if (ret)
- 		goto pm_runtime_disable;
+ static void cqhci_recovery_start(struct mmc_host *mmc)
+ {
 
 
