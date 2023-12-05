@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4C179F2;
-	Tue,  5 Dec 2023 03:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA3FA59;
+	Tue,  5 Dec 2023 03:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L7TcrUO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B25C433C7;
-	Tue,  5 Dec 2023 03:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrZKbFbr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20798C433C7;
+	Tue,  5 Dec 2023 03:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747228;
-	bh=4scH1hXB4A3J5AuiA2otUnJoZaxR+TUA3HLZfj6DqdA=;
+	s=korg; t=1701747231;
+	bh=GywkC+3gS4Hc5v0rX3xmg/GwIwh3eaex4SwGmscHsAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0L7TcrUOu4RyFA1v1CmBkxjES/SOg68cPQMKQV+1MN2wJi9Xx79oev6iOt0uB3XUA
-	 oFVidIScSACods+sJYhJwWd8EzuEfI18kCzZ49QWWRiNxhDsleUCj6MjkFwMEukMNW
-	 n3SCuSO7jCKPursZ540bXRZEZfRsiGNAnTvKyJ6k=
+	b=lrZKbFbrhfF6dfgYahq3lQ2xub6gmwwvi84NxghrOPi22+ny5d2Cb50qhRB6pve66
+	 hlLz+XM/aKIuHufr+JExp5MZaETQ1msbLo3V0vQuF8z2ARVd54XpyztnCn2oOmfDIa
+	 yFKm0q+KTRmKbIY5NwRe7SucK5eKOYxVAI2iD9po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Koichiro Den <den@valinux.co.jp>
-Subject: [PATCH 6.1 107/107] x86/apic/msi: Fix misconfigured non-maskable MSI quirk
-Date: Tue,  5 Dec 2023 12:17:22 +0900
-Message-ID: <20231205031538.489495377@linuxfoundation.org>
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 090/107] iommu/vt-d: Omit devTLB invalidation requests when TES=0
+Date: Tue,  5 Dec 2023 12:17:05 +0900
+Message-ID: <20231205031537.305799153@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031531.426872356@linuxfoundation.org>
 References: <20231205031531.426872356@linuxfoundation.org>
@@ -41,173 +43,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit b56ebe7c896dc78b5865ec2c4b1dae3c93537517 upstream.
+[ Upstream commit 0f5432a9b839847dcfe9fa369d72e3d646102ddf ]
 
-commit ef8dd01538ea ("genirq/msi: Make interrupt allocation less
-convoluted"), reworked the code so that the x86 specific quirk for affinity
-setting of non-maskable PCI/MSI interrupts is not longer activated if
-necessary.
+The latest VT-d spec indicates that when remapping hardware is disabled
+(TES=0 in Global Status Register), upstream ATS Invalidation Completion
+requests are treated as UR (Unsupported Request).
 
-This could be solved by restoring the original logic in the core MSI code,
-but after a deeper analysis it turned out that the quirk flag is not
-required at all.
+Consequently, the spec recommends in section 4.3 Handling of Device-TLB
+Invalidations that software refrain from submitting any Device-TLB
+invalidation requests when address remapping hardware is disabled.
 
-The quirk is only required when the PCI/MSI device cannot mask the MSI
-interrupts, which in turn also prevents reservation mode from being enabled
-for the affected interrupt.
+Verify address remapping hardware is enabled prior to submitting Device-
+TLB invalidation requests.
 
-This allows ot remove the NOMASK quirk bit completely as msi_set_affinity()
-can instead check whether reservation mode is enabled for the interrupt,
-which gives exactly the same answer.
-
-Even in the momentary non-existing case that the reservation mode would be
-not set for a maskable MSI interrupt this would not cause any harm as it
-just would cause msi_set_affinity() to go needlessly through the
-functionaly equivalent slow path, which works perfectly fine with maskable
-interrupts as well.
-
-Rework msi_set_affinity() to query the reservation mode and remove all
-NOMASK quirk logic from the core code.
-
-[ tglx: Massaged changelog ]
-
-Fixes: ef8dd01538ea ("genirq/msi: Make interrupt allocation less convoluted")
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231026032036.2462428-1-den@valinux.co.jp
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 792fb43ce2c9 ("iommu/vt-d: Enable Intel IOMMU scalable mode by default")
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20231114011036.70142-2-baolu.lu@linux.intel.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/apic/msi.c |    8 +++-----
- include/linux/irq.h        |   24 +++---------------------
- kernel/irq/debugfs.c       |    1 -
- kernel/irq/msi.c           |   12 +-----------
- 4 files changed, 7 insertions(+), 38 deletions(-)
+ drivers/iommu/intel/dmar.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/arch/x86/kernel/apic/msi.c
-+++ b/arch/x86/kernel/apic/msi.c
-@@ -55,14 +55,14 @@ msi_set_affinity(struct irq_data *irqd,
- 	 * caused by the non-atomic update of the address/data pair.
- 	 *
- 	 * Direct update is possible when:
--	 * - The MSI is maskable (remapped MSI does not use this code path)).
--	 *   The quirk bit is not set in this case.
-+	 * - The MSI is maskable (remapped MSI does not use this code path).
-+	 *   The reservation mode bit is set in this case.
- 	 * - The new vector is the same as the old vector
- 	 * - The old vector is MANAGED_IRQ_SHUTDOWN_VECTOR (interrupt starts up)
- 	 * - The interrupt is not yet started up
- 	 * - The new destination CPU is the same as the old destination CPU
- 	 */
--	if (!irqd_msi_nomask_quirk(irqd) ||
-+	if (!irqd_can_reserve(irqd) ||
- 	    cfg->vector == old_cfg.vector ||
- 	    old_cfg.vector == MANAGED_IRQ_SHUTDOWN_VECTOR ||
- 	    !irqd_is_started(irqd) ||
-@@ -202,8 +202,6 @@ struct irq_domain * __init native_create
- 	if (!d) {
- 		irq_domain_free_fwnode(fn);
- 		pr_warn("Failed to initialize PCI-MSI irqdomain.\n");
--	} else {
--		d->flags |= IRQ_DOMAIN_MSI_NOMASK_QUIRK;
- 	}
- 	return d;
- }
---- a/include/linux/irq.h
-+++ b/include/linux/irq.h
-@@ -215,8 +215,6 @@ struct irq_data {
-  * IRQD_SINGLE_TARGET		- IRQ allows only a single affinity target
-  * IRQD_DEFAULT_TRIGGER_SET	- Expected trigger already been set
-  * IRQD_CAN_RESERVE		- Can use reservation mode
-- * IRQD_MSI_NOMASK_QUIRK	- Non-maskable MSI quirk for affinity change
-- *				  required
-  * IRQD_HANDLE_ENFORCE_IRQCTX	- Enforce that handle_irq_*() is only invoked
-  *				  from actual interrupt context.
-  * IRQD_AFFINITY_ON_ACTIVATE	- Affinity is set on activation. Don't call
-@@ -245,10 +243,9 @@ enum {
- 	IRQD_SINGLE_TARGET		= (1 << 24),
- 	IRQD_DEFAULT_TRIGGER_SET	= (1 << 25),
- 	IRQD_CAN_RESERVE		= (1 << 26),
--	IRQD_MSI_NOMASK_QUIRK		= (1 << 27),
--	IRQD_HANDLE_ENFORCE_IRQCTX	= (1 << 28),
--	IRQD_AFFINITY_ON_ACTIVATE	= (1 << 29),
--	IRQD_IRQ_ENABLED_ON_SUSPEND	= (1 << 30),
-+	IRQD_HANDLE_ENFORCE_IRQCTX	= (1 << 27),
-+	IRQD_AFFINITY_ON_ACTIVATE	= (1 << 28),
-+	IRQD_IRQ_ENABLED_ON_SUSPEND	= (1 << 29),
- };
- 
- #define __irqd_to_state(d) ACCESS_PRIVATE((d)->common, state_use_accessors)
-@@ -423,21 +420,6 @@ static inline bool irqd_can_reserve(stru
- 	return __irqd_to_state(d) & IRQD_CAN_RESERVE;
- }
- 
--static inline void irqd_set_msi_nomask_quirk(struct irq_data *d)
--{
--	__irqd_to_state(d) |= IRQD_MSI_NOMASK_QUIRK;
--}
--
--static inline void irqd_clr_msi_nomask_quirk(struct irq_data *d)
--{
--	__irqd_to_state(d) &= ~IRQD_MSI_NOMASK_QUIRK;
--}
--
--static inline bool irqd_msi_nomask_quirk(struct irq_data *d)
--{
--	return __irqd_to_state(d) & IRQD_MSI_NOMASK_QUIRK;
--}
--
- static inline void irqd_set_affinity_on_activate(struct irq_data *d)
+diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
+index f800989ea0462..418af1db0192d 100644
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -1495,6 +1495,15 @@ void qi_flush_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid,
  {
- 	__irqd_to_state(d) |= IRQD_AFFINITY_ON_ACTIVATE;
---- a/kernel/irq/debugfs.c
-+++ b/kernel/irq/debugfs.c
-@@ -121,7 +121,6 @@ static const struct irq_bit_descr irqdat
- 	BIT_MASK_DESCR(IRQD_AFFINITY_ON_ACTIVATE),
- 	BIT_MASK_DESCR(IRQD_MANAGED_SHUTDOWN),
- 	BIT_MASK_DESCR(IRQD_CAN_RESERVE),
--	BIT_MASK_DESCR(IRQD_MSI_NOMASK_QUIRK),
+ 	struct qi_desc desc;
  
- 	BIT_MASK_DESCR(IRQD_FORWARDED_TO_VCPU),
++	/*
++	 * VT-d spec, section 4.3:
++	 *
++	 * Software is recommended to not submit any Device-TLB invalidation
++	 * requests while address remapping hardware is disabled.
++	 */
++	if (!(iommu->gcmd & DMA_GCMD_TE))
++		return;
++
+ 	if (mask) {
+ 		addr |= (1ULL << (VTD_PAGE_SHIFT + mask - 1)) - 1;
+ 		desc.qw1 = QI_DEV_IOTLB_ADDR(addr) | QI_DEV_IOTLB_SIZE;
+@@ -1560,6 +1569,15 @@ void qi_flush_dev_iotlb_pasid(struct intel_iommu *iommu, u16 sid, u16 pfsid,
+ 	unsigned long mask = 1UL << (VTD_PAGE_SHIFT + size_order - 1);
+ 	struct qi_desc desc = {.qw1 = 0, .qw2 = 0, .qw3 = 0};
  
---- a/kernel/irq/msi.c
-+++ b/kernel/irq/msi.c
-@@ -807,7 +807,6 @@ static int msi_handle_pci_fail(struct ir
- 
- #define VIRQ_CAN_RESERVE	0x01
- #define VIRQ_ACTIVATE		0x02
--#define VIRQ_NOMASK_QUIRK	0x04
- 
- static int msi_init_virq(struct irq_domain *domain, int virq, unsigned int vflags)
- {
-@@ -816,8 +815,6 @@ static int msi_init_virq(struct irq_doma
- 
- 	if (!(vflags & VIRQ_CAN_RESERVE)) {
- 		irqd_clr_can_reserve(irqd);
--		if (vflags & VIRQ_NOMASK_QUIRK)
--			irqd_set_msi_nomask_quirk(irqd);
- 
- 		/*
- 		 * If the interrupt is managed but no CPU is available to
-@@ -877,15 +874,8 @@ int __msi_domain_alloc_irqs(struct irq_d
- 	 * Interrupt can use a reserved vector and will not occupy
- 	 * a real device vector until the interrupt is requested.
- 	 */
--	if (msi_check_reservation_mode(domain, info, dev)) {
-+	if (msi_check_reservation_mode(domain, info, dev))
- 		vflags |= VIRQ_CAN_RESERVE;
--		/*
--		 * MSI affinity setting requires a special quirk (X86) when
--		 * reservation mode is active.
--		 */
--		if (domain->flags & IRQ_DOMAIN_MSI_NOMASK_QUIRK)
--			vflags |= VIRQ_NOMASK_QUIRK;
--	}
- 
- 	msi_for_each_desc(desc, dev, MSI_DESC_NOTASSOCIATED) {
- 		ops->set_desc(&arg, desc);
++	/*
++	 * VT-d spec, section 4.3:
++	 *
++	 * Software is recommended to not submit any Device-TLB invalidation
++	 * requests while address remapping hardware is disabled.
++	 */
++	if (!(iommu->gcmd & DMA_GCMD_TE))
++		return;
++
+ 	desc.qw0 = QI_DEV_EIOTLB_PASID(pasid) | QI_DEV_EIOTLB_SID(sid) |
+ 		QI_DEV_EIOTLB_QDEP(qdep) | QI_DEIOTLB_TYPE |
+ 		QI_DEV_IOTLB_PFSID(pfsid);
+-- 
+2.42.0
+
 
 
