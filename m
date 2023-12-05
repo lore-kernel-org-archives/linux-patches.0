@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B7F611E;
-	Tue,  5 Dec 2023 03:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533096AA0;
+	Tue,  5 Dec 2023 03:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URT5lPTU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26669C433C7;
-	Tue,  5 Dec 2023 03:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPfZw8Uo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58D9C433C9;
+	Tue,  5 Dec 2023 03:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746302;
-	bh=EDLpVzRrIf7boNLR1qFEoA3mSBPRxpxy69vbbdjWzrk=;
+	s=korg; t=1701746305;
+	bh=HAs0sQDErHpzZPlI49SsXOahxqGsTMV0bgHy7AxBQBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URT5lPTU3ljBZXxADH2mVJTa3MlmsglG8PO1gDgBNjFbFy1O+fTOMON4P7l4Vqjoq
-	 vovDslzXd84gZI2UL6b7KTGLKCjtgqhn3XDPkLujKrvXuVsSq2DgXqUcbREV5E9taX
-	 vLv80/taaDbmBl66hMgqEHz1WhHey8avmX3FRQHE=
+	b=lPfZw8UoBhLubx3SjE7UmFIk2wbZ8haTpZF4j+fYvNd2odp9GjPRabwg3Gu0+8c5t
+	 cnYM8RfUBaJ10631rpZwmKoDEQdLm059orCGfRUHSt6prWfihAzNsygcvtsuMSK0jI
+	 5/ldwtD3Pn4F1aQdFFU3Mk/Ujjme9n2R2U7MCzWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Bednarz <christopher.n.bednarz@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 4.14 01/30] RDMA/irdma: Prevent zero-length STAG registration
-Date: Tue,  5 Dec 2023 12:16:08 +0900
-Message-ID: <20231205031511.571552355@linuxfoundation.org>
+	Marek Vasut <marex@denx.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 02/30] drm/panel: simple: Fix Innolux G101ICE-L01 timings
+Date: Tue,  5 Dec 2023 12:16:09 +0900
+Message-ID: <20231205031511.632251748@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031511.476698159@linuxfoundation.org>
 References: <20231205031511.476698159@linuxfoundation.org>
@@ -42,117 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Bednarz <christopher.n.bednarz@intel.com>
+From: Marek Vasut <marex@denx.de>
 
-commit bb6d73d9add68ad270888db327514384dfa44958 upstream.
+[ Upstream commit 3f9a91b6c00e655d27bd785dcda1742dbdc31bda ]
 
-Currently irdma allows zero-length STAGs to be programmed in HW during
-the kernel mode fast register flow. Zero-length MR or STAG registration
-disable HW memory length checks.
+The Innolux G101ICE-L01 datasheet [1] page 17 table
+6.1 INPUT SIGNAL TIMING SPECIFICATIONS
+indicates that maximum vertical blanking time is 40 lines.
+Currently the driver uses 29 lines.
 
-Improve gaps in bounds checking in irdma by preventing zero-length STAG or
-MR registrations except if the IB_PD_UNSAFE_GLOBAL_RKEY is set.
+Fix it, and since this panel is a DE panel, adjust the timings
+to make them less hostile to controllers which cannot do 1 px
+HSA/VSA, distribute the delays evenly between all three parts.
 
-This addresses the disclosure CVE-2023-25775.
+[1] https://www.data-modul.com/sites/default/files/products/G101ICE-L01-C2-specification-12042389.pdf
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Christopher Bednarz <christopher.n.bednarz@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20230818144838.1758-1-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1e29b840af9f ("drm/panel: simple: Add Innolux G101ICE-L01 panel")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231008223256.279196-1-marex@denx.de
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/i40iw/i40iw_ctrl.c  |    6 ++++++
- drivers/infiniband/hw/i40iw/i40iw_type.h  |    2 ++
- drivers/infiniband/hw/i40iw/i40iw_verbs.c |   10 ++++++++--
- 3 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/infiniband/hw/i40iw/i40iw_ctrl.c
-+++ b/drivers/infiniband/hw/i40iw/i40iw_ctrl.c
-@@ -2853,6 +2853,9 @@ static enum i40iw_status_code i40iw_sc_a
- 	u64 header;
- 	enum i40iw_page_size page_size;
- 
-+	if (!info->total_len && !info->all_memory)
-+		return -EINVAL;
-+
- 	page_size = (info->page_size == 0x200000) ? I40IW_PAGE_SIZE_2M : I40IW_PAGE_SIZE_4K;
- 	cqp = dev->cqp;
- 	wqe = i40iw_sc_cqp_get_next_send_wqe(cqp, scratch);
-@@ -2911,6 +2914,9 @@ static enum i40iw_status_code i40iw_sc_m
- 	u8 addr_type;
- 	enum i40iw_page_size page_size;
- 
-+	if (!info->total_len && !info->all_memory)
-+		return -EINVAL;
-+
- 	page_size = (info->page_size == 0x200000) ? I40IW_PAGE_SIZE_2M : I40IW_PAGE_SIZE_4K;
- 	if (info->access_rights & (I40IW_ACCESS_FLAGS_REMOTEREAD_ONLY |
- 				   I40IW_ACCESS_FLAGS_REMOTEWRITE_ONLY))
---- a/drivers/infiniband/hw/i40iw/i40iw_type.h
-+++ b/drivers/infiniband/hw/i40iw/i40iw_type.h
-@@ -780,6 +780,7 @@ struct i40iw_allocate_stag_info {
- 	bool use_hmc_fcn_index;
- 	u8 hmc_fcn_index;
- 	bool use_pf_rid;
-+	bool all_memory;
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 8bee025c0622f..0b50213c0d258 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1062,13 +1062,13 @@ static const struct panel_desc innolux_at070tn92 = {
+ static const struct display_timing innolux_g101ice_l01_timing = {
+ 	.pixelclock = { 60400000, 71100000, 74700000 },
+ 	.hactive = { 1280, 1280, 1280 },
+-	.hfront_porch = { 41, 80, 100 },
+-	.hback_porch = { 40, 79, 99 },
+-	.hsync_len = { 1, 1, 1 },
++	.hfront_porch = { 30, 60, 70 },
++	.hback_porch = { 30, 60, 70 },
++	.hsync_len = { 22, 40, 60 },
+ 	.vactive = { 800, 800, 800 },
+-	.vfront_porch = { 5, 11, 14 },
+-	.vback_porch = { 4, 11, 14 },
+-	.vsync_len = { 1, 1, 1 },
++	.vfront_porch = { 3, 8, 14 },
++	.vback_porch = { 3, 8, 14 },
++	.vsync_len = { 4, 7, 12 },
+ 	.flags = DISPLAY_FLAGS_DE_HIGH,
  };
  
- struct i40iw_reg_ns_stag_info {
-@@ -798,6 +799,7 @@ struct i40iw_reg_ns_stag_info {
- 	bool use_hmc_fcn_index;
- 	u8 hmc_fcn_index;
- 	bool use_pf_rid;
-+	bool all_memory;
- };
- 
- struct i40iw_fast_reg_stag_info {
---- a/drivers/infiniband/hw/i40iw/i40iw_verbs.c
-+++ b/drivers/infiniband/hw/i40iw/i40iw_verbs.c
-@@ -1579,7 +1579,8 @@ static int i40iw_handle_q_mem(struct i40
- static int i40iw_hw_alloc_stag(struct i40iw_device *iwdev, struct i40iw_mr *iwmr)
- {
- 	struct i40iw_allocate_stag_info *info;
--	struct i40iw_pd *iwpd = to_iwpd(iwmr->ibmr.pd);
-+	struct ib_pd *pd = iwmr->ibmr.pd;
-+	struct i40iw_pd *iwpd = to_iwpd(pd);
- 	enum i40iw_status_code status;
- 	int err = 0;
- 	struct i40iw_cqp_request *cqp_request;
-@@ -1596,6 +1597,7 @@ static int i40iw_hw_alloc_stag(struct i4
- 	info->stag_idx = iwmr->stag >> I40IW_CQPSQ_STAG_IDX_SHIFT;
- 	info->pd_id = iwpd->sc_pd.pd_id;
- 	info->total_len = iwmr->length;
-+	info->all_memory = pd->flags & IB_PD_UNSAFE_GLOBAL_RKEY;
- 	info->remote_access = true;
- 	cqp_info->cqp_cmd = OP_ALLOC_STAG;
- 	cqp_info->post_sq = 1;
-@@ -1649,6 +1651,8 @@ static struct ib_mr *i40iw_alloc_mr(stru
- 	iwmr->type = IW_MEMREG_TYPE_MEM;
- 	palloc = &iwpbl->pble_alloc;
- 	iwmr->page_cnt = max_num_sg;
-+	/* Use system PAGE_SIZE as the sg page sizes are unknown at this point */
-+	iwmr->length = max_num_sg * PAGE_SIZE;
- 	mutex_lock(&iwdev->pbl_mutex);
- 	status = i40iw_get_pble(&iwdev->sc_dev, iwdev->pble_rsrc, palloc, iwmr->page_cnt);
- 	mutex_unlock(&iwdev->pbl_mutex);
-@@ -1745,7 +1749,8 @@ static int i40iw_hwreg_mr(struct i40iw_d
- {
- 	struct i40iw_pbl *iwpbl = &iwmr->iwpbl;
- 	struct i40iw_reg_ns_stag_info *stag_info;
--	struct i40iw_pd *iwpd = to_iwpd(iwmr->ibmr.pd);
-+	struct ib_pd *pd = iwmr->ibmr.pd;
-+	struct i40iw_pd *iwpd = to_iwpd(pd);
- 	struct i40iw_pble_alloc *palloc = &iwpbl->pble_alloc;
- 	enum i40iw_status_code status;
- 	int err = 0;
-@@ -1765,6 +1770,7 @@ static int i40iw_hwreg_mr(struct i40iw_d
- 	stag_info->total_len = iwmr->length;
- 	stag_info->access_rights = access;
- 	stag_info->pd_id = iwpd->sc_pd.pd_id;
-+	stag_info->all_memory = pd->flags & IB_PD_UNSAFE_GLOBAL_RKEY;
- 	stag_info->addr_type = I40IW_ADDR_TYPE_VA_BASED;
- 	stag_info->page_size = iwmr->page_size;
- 
+-- 
+2.42.0
+
 
 
