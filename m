@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9206F6AC2;
-	Tue,  5 Dec 2023 03:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF6E8BF8;
+	Tue,  5 Dec 2023 03:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLogE1Xd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEF5C433C8;
-	Tue,  5 Dec 2023 03:41:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdjcjQdW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75166C433C7;
+	Tue,  5 Dec 2023 03:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747719;
-	bh=85jT6xy6QB9+Wsm8ZPLgEhGSqYKQ1uxvlibdNNOrkkM=;
+	s=korg; t=1701747721;
+	bh=WoaiVc2VXffuj5o0QsmS2WKVbfp5caJvt/Ri2za+wEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLogE1XdpJJp9FYUOdYqfhndCc87lFLH4cFnjYsNJPlBYmNNeGqpG0fxWAQD8xfU0
-	 JeeSEkJQH1VGnUOstYKpmdjB3UGa1HT/iIuUllot2YjMFrJpFr0rYc1pHABPgG0pFi
-	 ono5stFs+1YzIseqSqR6/xHI/3U6N4Vn+kJmn9No=
+	b=NdjcjQdWTglxqhj7jUoXHWF/79yw/1/qwkpVA72FljU+7R5fbi3lNopL/H5D+qXul
+	 CGeuSdDySBwwNyRtxQ58E5njHwFlHp3h3VIPOj9HYhtOsr3glej/n29enF/90JXYoD
+	 EjV00QGVLB1xRN5K8K+43VeH6MS8ddSWTyRg2uG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Phil Edworthy <phil.edworthy@renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 43/67] net: ravb: Start TX queues after HW initialization succeeded
-Date: Tue,  5 Dec 2023 12:17:28 +0900
-Message-ID: <20231205031522.318475110@linuxfoundation.org>
+Subject: [PATCH 5.15 44/67] ravb: Separate handling of irq enable/disable regs into feature
+Date: Tue,  5 Dec 2023 12:17:29 +0900
+Message-ID: <20231205031522.365127466@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031519.853779502@linuxfoundation.org>
 References: <20231205031519.853779502@linuxfoundation.org>
@@ -44,44 +44,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Phil Edworthy <phil.edworthy@renesas.com>
 
-[ Upstream commit 6f32c086602050fc11157adeafaa1c1eb393f0af ]
+[ Upstream commit cb99badde146c327f150773921ffe080abe1eb44 ]
 
-ravb_phy_start() may fail. If that happens, the TX queues will remain
-started. Thus, move the netif_tx_start_all_queues() after PHY is
-successfully initialized.
+Currently, when the HW has a single interrupt, the driver uses the
+GIC, TIC, RIC0 registers to enable and disable interrupts.
+When the HW has multiple interrupts, it uses the GIE, GID, TIE, TID,
+RIE0, RID0 registers.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+However, other devices, e.g. RZ/V2M, have multiple irqs and only have
+the GIC, TIC, RIC0 registers.
+Therefore, split this into a separate feature.
+
+Signed-off-by: Phil Edworthy <phil.edworthy@renesas.com>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
 Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: eac16a733427 ("net: ravb: Stop DMA in case of failures on ravb_open()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/renesas/ravb.h      | 1 +
+ drivers/net/ethernet/renesas/ravb_main.c | 5 +++--
+ drivers/net/ethernet/renesas/ravb_ptp.c  | 6 +++---
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
+diff --git a/drivers/net/ethernet/renesas/ravb.h b/drivers/net/ethernet/renesas/ravb.h
+index a475f54a6b63c..a3cd09c7003bf 100644
+--- a/drivers/net/ethernet/renesas/ravb.h
++++ b/drivers/net/ethernet/renesas/ravb.h
+@@ -1000,6 +1000,7 @@ struct ravb_hw_info {
+ 	unsigned internal_delay:1;	/* AVB-DMAC has internal delays */
+ 	unsigned tx_counters:1;		/* E-MAC has TX counters */
+ 	unsigned multi_irqs:1;		/* AVB-DMAC and E-MAC has multiple irqs */
++	unsigned irq_en_dis:1;		/* Has separate irq enable and disable regs */
+ 	unsigned gptp:1;		/* AVB-DMAC has gPTP support */
+ 	unsigned ccc_gac:1;		/* AVB-DMAC has gPTP support active in config mode */
+ };
 diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index a556faa47f036..0c73bc4df98d5 100644
+index 0c73bc4df98d5..57215c834188c 100644
 --- a/drivers/net/ethernet/renesas/ravb_main.c
 +++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1448,13 +1448,13 @@ static int ravb_open(struct net_device *ndev)
- 	if (info->gptp)
- 		ravb_ptp_init(ndev, priv->pdev);
+@@ -821,7 +821,7 @@ static bool ravb_queue_interrupt(struct net_device *ndev, int q)
+ 	if (((ris0 & ric0) & BIT(q)) || ((tis  & tic)  & BIT(q))) {
+ 		if (napi_schedule_prep(&priv->napi[q])) {
+ 			/* Mask RX and TX interrupts */
+-			if (!info->multi_irqs) {
++			if (!info->irq_en_dis) {
+ 				ravb_write(ndev, ric0 & ~BIT(q), RIC0);
+ 				ravb_write(ndev, tic & ~BIT(q), TIC);
+ 			} else {
+@@ -988,7 +988,7 @@ static int ravb_poll(struct napi_struct *napi, int budget)
  
--	netif_tx_start_all_queues(ndev);
--
- 	/* PHY control start */
- 	error = ravb_phy_start(ndev);
- 	if (error)
- 		goto out_ptp_stop;
+ 	/* Re-enable RX/TX interrupts */
+ 	spin_lock_irqsave(&priv->lock, flags);
+-	if (!info->multi_irqs) {
++	if (!info->irq_en_dis) {
+ 		ravb_modify(ndev, RIC0, mask, mask);
+ 		ravb_modify(ndev, TIC,  mask, mask);
+ 	} else {
+@@ -2038,6 +2038,7 @@ static const struct ravb_hw_info ravb_gen3_hw_info = {
+ 	.internal_delay = 1,
+ 	.tx_counters = 1,
+ 	.multi_irqs = 1,
++	.irq_en_dis = 1,
+ 	.ccc_gac = 1,
+ };
  
-+	netif_tx_start_all_queues(ndev);
-+
- 	return 0;
+diff --git a/drivers/net/ethernet/renesas/ravb_ptp.c b/drivers/net/ethernet/renesas/ravb_ptp.c
+index c099656dd75b6..87c4306d66ecc 100644
+--- a/drivers/net/ethernet/renesas/ravb_ptp.c
++++ b/drivers/net/ethernet/renesas/ravb_ptp.c
+@@ -198,7 +198,7 @@ static int ravb_ptp_extts(struct ptp_clock_info *ptp,
+ 	priv->ptp.extts[req->index] = on;
  
- out_ptp_stop:
+ 	spin_lock_irqsave(&priv->lock, flags);
+-	if (!info->multi_irqs)
++	if (!info->irq_en_dis)
+ 		ravb_modify(ndev, GIC, GIC_PTCE, on ? GIC_PTCE : 0);
+ 	else if (on)
+ 		ravb_write(ndev, GIE_PTCS, GIE);
+@@ -254,7 +254,7 @@ static int ravb_ptp_perout(struct ptp_clock_info *ptp,
+ 		error = ravb_ptp_update_compare(priv, (u32)start_ns);
+ 		if (!error) {
+ 			/* Unmask interrupt */
+-			if (!info->multi_irqs)
++			if (!info->irq_en_dis)
+ 				ravb_modify(ndev, GIC, GIC_PTME, GIC_PTME);
+ 			else
+ 				ravb_write(ndev, GIE_PTMS0, GIE);
+@@ -266,7 +266,7 @@ static int ravb_ptp_perout(struct ptp_clock_info *ptp,
+ 		perout->period = 0;
+ 
+ 		/* Mask interrupt */
+-		if (!info->multi_irqs)
++		if (!info->irq_en_dis)
+ 			ravb_modify(ndev, GIC, GIC_PTME, 0);
+ 		else
+ 			ravb_write(ndev, GID_PTMD0, GID);
 -- 
 2.42.0
 
