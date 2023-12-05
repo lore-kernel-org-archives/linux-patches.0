@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EAA6A35D;
-	Tue,  5 Dec 2023 18:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B7B68B93;
+	Tue,  5 Dec 2023 18:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovB12qUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFB03C433C8;
-	Tue,  5 Dec 2023 18:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eq5ubZJb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22905C433C8;
+	Tue,  5 Dec 2023 18:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701800722;
-	bh=82gXWWls9duQBXnaYQ2Y95mV1q/kD+lZQqPSDDX+/uM=;
+	s=korg; t=1701800810;
+	bh=2mfKanFkogJhg5GS7uiih9vRq6rMLvZxLLzKfDwTSOo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ovB12qUKoPmx+/3NWkFq6d8UifmEoJ0Nx/0eTX1PBatVB7SnNSvpNZGuVPxjAyh6E
-	 ueMpAUN/yhvejaDupSPr+x4Ph1WuDl41Xd12x9UAJU00h5bp4hbLf3u21cXC/F4lM4
-	 +azcMlLvymiGxzQlQYLxyMDryy4WTHChLMXGuVVM=
-Date: Wed, 6 Dec 2023 03:25:19 +0900
+	b=Eq5ubZJbG/oYLlDsgWMVhqwLT4MqfFyl2rhcyPFp8R4r5HlFMWb4FplGLSbxUaZYF
+	 8cOCvV/yeseq8r9qtQiCtVztE2UqpaKTWFylx0H/0m9u9EUiy/IA1CAQlM5M6EzyLx
+	 jFuZuQ/JnhO44O94KKn2R0OlQM28Rie5EwS6fnZg=
+Date: Wed, 6 Dec 2023 03:26:47 +0900
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Conor Dooley <conor.dooley@microchip.com>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 084/107] drivers: perf: Check find_first_bit() return
- value
-Message-ID: <2023120613-bony-feed-52d8@gregkh>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.1 000/107] 6.1.66-rc1 review
+Message-ID: <2023120628-reprint-coronary-ba73@gregkh>
 References: <20231205031531.426872356@linuxfoundation.org>
- <20231205031536.858427109@linuxfoundation.org>
- <20231205-heave-snowiness-8b0e2cb7cecd@wendy>
+ <CA+G9fYt4DSUQA-zcuZUxVnoSx+DUo0ZB1sX=d2SSwBaD0s_a+w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,76 +36,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231205-heave-snowiness-8b0e2cb7cecd@wendy>
+In-Reply-To: <CA+G9fYt4DSUQA-zcuZUxVnoSx+DUo0ZB1sX=d2SSwBaD0s_a+w@mail.gmail.com>
 
-On Tue, Dec 05, 2023 at 10:46:43AM +0000, Conor Dooley wrote:
-> On Tue, Dec 05, 2023 at 12:16:59PM +0900, Greg Kroah-Hartman wrote:
-> > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Alexandre Ghiti <alexghiti@rivosinc.com>
-> > 
-> > [ Upstream commit c6e316ac05532febb0c966fa9b55f5258ed037be ]
-> > 
-> > We must check the return value of find_first_bit() before using the
-> > return value as an index array since it happens to overflow the array
-> > and then panic:
-> > 
-> > [  107.318430] Kernel BUG [#1]
-> > [  107.319434] CPU: 3 PID: 1238 Comm: kill Tainted: G            E      6.6.0-rc6ubuntu-defconfig #2
-> > [  107.319465] Hardware name: riscv-virtio,qemu (DT)
-> > [  107.319551] epc : pmu_sbi_ovf_handler+0x3a4/0x3ae
-> > [  107.319840]  ra : pmu_sbi_ovf_handler+0x52/0x3ae
-> > [  107.319868] epc : ffffffff80a0a77c ra : ffffffff80a0a42a sp : ffffaf83fecda350
-> > [  107.319884]  gp : ffffffff823961a8 tp : ffffaf8083db1dc0 t0 : ffffaf83fecda480
-> > [  107.319899]  t1 : ffffffff80cafe62 t2 : 000000000000ff00 s0 : ffffaf83fecda520
-> > [  107.319921]  s1 : ffffaf83fecda380 a0 : 00000018fca29df0 a1 : ffffffffffffffff
-> > [  107.319936]  a2 : 0000000001073734 a3 : 0000000000000004 a4 : 0000000000000000
-> > [  107.319951]  a5 : 0000000000000040 a6 : 000000001d1c8774 a7 : 0000000000504d55
-> > [  107.319965]  s2 : ffffffff82451f10 s3 : ffffffff82724e70 s4 : 000000000000003f
-> > [  107.319980]  s5 : 0000000000000011 s6 : ffffaf8083db27c0 s7 : 0000000000000000
-> > [  107.319995]  s8 : 0000000000000001 s9 : 00007fffb45d6558 s10: 00007fffb45d81a0
-> > [  107.320009]  s11: ffffaf7ffff60000 t3 : 0000000000000004 t4 : 0000000000000000
-> > [  107.320023]  t5 : ffffaf7f80000000 t6 : ffffaf8000000000
-> > [  107.320037] status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
-> > [  107.320081] [<ffffffff80a0a77c>] pmu_sbi_ovf_handler+0x3a4/0x3ae
-> > [  107.320112] [<ffffffff800b42d0>] handle_percpu_devid_irq+0x9e/0x1a0
-> > [  107.320131] [<ffffffff800ad92c>] generic_handle_domain_irq+0x28/0x36
-> > [  107.320148] [<ffffffff8065f9f8>] riscv_intc_irq+0x36/0x4e
-> > [  107.320166] [<ffffffff80caf4a0>] handle_riscv_irq+0x54/0x86
-> > [  107.320189] [<ffffffff80cb0036>] do_irq+0x64/0x96
-> > [  107.320271] Code: 85a6 855e b097 ff7f 80e7 9220 b709 9002 4501 bbd9 (9002) 6097
-> > [  107.320585] ---[ end trace 0000000000000000 ]---
-> > [  107.320704] Kernel panic - not syncing: Fatal exception in interrupt
-> > [  107.320775] SMP: stopping secondary CPUs
-> > [  107.321219] Kernel Offset: 0x0 from 0xffffffff80000000
-> > [  107.333051] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
-> > 
-> > Fixes: 4905ec2fb7e6 ("RISC-V: Add sscofpmf extension support")
-> > Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-> > Link: https://lore.kernel.org/r/20231109082128.40777-1-alexghiti@rivosinc.com
-> > Cc: stable@vger.kernel.org
-> > Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >  drivers/perf/riscv_pmu_sbi.c | 5 +++++
-> >  1 file changed, 5 insertions(+)
-> > 
-> > diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-> > index 382fe5ee6100b..e0a84046435b1 100644
-> > --- a/drivers/perf/riscv_pmu_sbi.c
-> > +++ b/drivers/perf/riscv_pmu_sbi.c
-> > @@ -578,6 +578,11 @@ static irqreturn_t pmu_sbi_ovf_handler(int irq, void *dev)
-> >  
-> >  	/* Firmware counter don't support overflow yet */
-> >  	fidx = find_first_bit(cpu_hw_evt->used_hw_ctrs, RISCV_MAX_COUNTERS);
-> > +	if (fidx == RISCV_MAX_COUNTERS) {
-> > +		csr_clear(CSR_SIP, BIT(riscv_pmu_irq_num));
+On Tue, Dec 05, 2023 at 09:51:03PM +0530, Naresh Kamboju wrote:
+> On Tue, 5 Dec 2023 at 08:59, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.1.66 release.
+> > There are 107 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.66-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
-> This breaks the build, "riscv_pmu_irq_num" does not exist in 6.1,
-> perhaps "riscv_pmu_irq" is the right choice, but it needs a deeper look.
+> 
+> Powerpc, s390 and riscv allmodconfig failed on stable-rc linux-6.1.y
+> 
+>  - s390: gcc-13-allmodconfig: FAILED
+>  - Powerpc: gcc-13-allmodconfig: FAILED
+>  - riscv: gcc-13-allmodconfig: FAILED
+> 
+> S390 build error:
+> arch/s390/mm/page-states.c:198:23: error: 'invalid_pg_dir' undeclared
+> (first use in this function); did you mean 'is_valid_bugaddr'?
+>   page = virt_to_page(&invalid_pg_dir);
+>                        ^~~~~~~~~~~~~~
+> 
+> s390/cmma: fix handling of swapper_pg_dir and invalid_pg_dir
+>  [ Upstream commit 84bb41d5df48868055d159d9247b80927f1f70f9 ]
+> 
+> 
+> Powerpc build error:
+> arch/powerpc/platforms/pseries/iommu.c:926:28: error: 'struct dma_win'
+> has no member named 'direct'
+>     *direct_mapping = window->direct;
+>                             ^~
+> 
+> powerpc/pseries/iommu: enable_ddw incorrectly returns direct mapping
+> for SR-IOV device
+>  [ Upstream commit 3bf983e4e93ce8e6d69e9d63f52a66ec0856672e ]
+> 
+> 
+> riscv: gcc-13-allmodconfig: FAILED
+> 
+> drivers/perf/riscv_pmu_sbi.c: In function 'pmu_sbi_ovf_handler':
+> drivers/perf/riscv_pmu_sbi.c:582:40: error: 'riscv_pmu_irq_num'
+> undeclared (first use in this function); did you mean 'riscv_pmu_irq'?
+>   582 |                 csr_clear(CSR_SIP, BIT(riscv_pmu_irq_num));
+>       |                                        ^~~~~~~~~~~~~~~~~
+> 
+> drivers: perf: Check find_first_bit() return value
+>  [ Upstream commit c6e316ac05532febb0c966fa9b55f5258ed037be ]
 
-Thanks, now dropped.
+Thanks, all should now be dropped.  I'll push out new -rc releases in a
+bit...
 
 greg k-h
