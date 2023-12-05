@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C776AA0;
-	Tue,  5 Dec 2023 03:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5576AA0;
+	Tue,  5 Dec 2023 03:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDQCQWev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C4BC433C8;
-	Tue,  5 Dec 2023 03:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mc4myCHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4AEC433CB;
+	Tue,  5 Dec 2023 03:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746337;
-	bh=TWnc2ejVz9cB4DDCQSWnPD31s1QkvyQQuWyDBmbJ8vQ=;
+	s=korg; t=1701746340;
+	bh=lEwfIKL9enWD6yPpPmoJZI21YutoWQfVcUxVzvbtXhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDQCQWevO55S//4jT0ajewz0xal01d9r5dwC1OfGNB3rxe/zZ5xiKbh9gxIBxr5Gy
-	 osZa1CiseUbqtLYRG+aOjRrCrQYH7O42bbv0tHdp4FE6wEGtDfcjcV2S1Cnoe1ETQp
-	 XHPaw7Eu/w1F8IY3U3gmoZeXn1e+285JlZl9T2fQ=
+	b=Mc4myCHkIezmBvI3OuB7nJrFtQnAHkAgj/Z1ZNIlsv5poArZBvZdoSOGs+OOSTTMs
+	 w10dujcIKPW4nrG7ROCK1it7DmIUrl+525pPULvqJfS/mRrprAN0vKHJ4dtb+Dq9P4
+	 ZK8AzNnTcPesvSRdChcykQa1Kr2xBxggLYOZit4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wu Bo <bo.wu@vivo.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.14 22/30] dm-verity: align struct dm_verity_fec_io properly
-Date: Tue,  5 Dec 2023 12:16:29 +0900
-Message-ID: <20231205031512.802214057@linuxfoundation.org>
+Subject: [PATCH 4.14 23/30] dm verity: dont perform FEC for failed readahead IO
+Date: Tue,  5 Dec 2023 12:16:30 +0900
+Message-ID: <20231205031512.867706368@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031511.476698159@linuxfoundation.org>
 References: <20231205031511.476698159@linuxfoundation.org>
@@ -41,52 +42,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Wu Bo <bo.wu@vivo.com>
 
-commit 38bc1ab135db87577695816b190e7d6d8ec75879 upstream.
+commit 0193e3966ceeeef69e235975918b287ab093082b upstream.
 
-dm_verity_fec_io is placed after the end of two hash digests. If the hash
-digest has unaligned length, struct dm_verity_fec_io could be unaligned.
+We found an issue under Android OTA scenario that many BIOs have to do
+FEC where the data under dm-verity is 100% complete and no corruption.
 
-This commit fixes the placement of struct dm_verity_fec_io, so that it's
-aligned.
+Android OTA has many dm-block layers, from upper to lower:
+dm-verity
+dm-snapshot
+dm-origin & dm-cow
+dm-linear
+ufs
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+DM tables have to change 2 times during Android OTA merging process.
+When doing table change, the dm-snapshot will be suspended for a while.
+During this interval, many readahead IOs are submitted to dm_verity
+from filesystem. Then the kverity works are busy doing FEC process
+which cost too much time to finish dm-verity IO. This causes needless
+delay which feels like system is hung.
+
+After adding debugging it was found that each readahead IO needed
+around 10s to finish when this situation occurred. This is due to IO
+amplification:
+
+dm-snapshot suspend
+erofs_readahead     // 300+ io is submitted
+	dm_submit_bio (dm_verity)
+		dm_submit_bio (dm_snapshot)
+		bio return EIO
+		bio got nothing, it's empty
+	verity_end_io
+	verity_verify_io
+	forloop range(0, io->n_blocks)    // each io->nblocks ~= 20
+		verity_fec_decode
+		fec_decode_rsb
+		fec_read_bufs
+		forloop range(0, v->fec->rsn) // v->fec->rsn = 253
+			new_read
+			submit_bio (dm_snapshot)
+		end loop
+	end loop
+dm-snapshot resume
+
+Readahead BIOs get nothing while dm-snapshot is suspended, so all of
+them will cause verity's FEC.
+Each readahead BIO needs to verify ~20 (io->nblocks) blocks.
+Each block needs to do FEC, and every block needs to do 253
+(v->fec->rsn) reads.
+So during the suspend interval(~200ms), 300 readahead BIOs trigger
+~1518000 (300*20*253) IOs to dm-snapshot.
+
+As readahead IO is not required by userspace, and to fix this issue,
+it is best to pass readahead errors to upper layer to handle it.
+
 Cc: stable@vger.kernel.org
 Fixes: a739ff3f543a ("dm verity: add support for forward error correction")
+Signed-off-by: Wu Bo <bo.wu@vivo.com>
+Reviewed-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-fec.c |    3 ++-
- drivers/md/dm-verity.h     |    6 ------
- 2 files changed, 2 insertions(+), 7 deletions(-)
+ drivers/md/dm-verity-target.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -28,7 +28,8 @@ bool verity_fec_is_enabled(struct dm_ver
-  */
- static inline struct dm_verity_fec_io *fec_io(struct dm_verity_io *io)
- {
--	return (struct dm_verity_fec_io *) verity_io_digest_end(io->v, io);
-+	return (struct dm_verity_fec_io *)
-+		((char *)io + io->v->ti->per_io_data_size - sizeof(struct dm_verity_fec_io));
- }
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -588,7 +588,9 @@ static void verity_end_io(struct bio *bi
+ 	struct dm_verity_io *io = bio->bi_private;
  
- /*
---- a/drivers/md/dm-verity.h
-+++ b/drivers/md/dm-verity.h
-@@ -113,12 +113,6 @@ static inline u8 *verity_io_want_digest(
- 	return (u8 *)(io + 1) + v->ahash_reqsize + v->digest_size;
- }
- 
--static inline u8 *verity_io_digest_end(struct dm_verity *v,
--				       struct dm_verity_io *io)
--{
--	return verity_io_want_digest(v, io) + v->digest_size;
--}
--
- extern int verity_for_bv_block(struct dm_verity *v, struct dm_verity_io *io,
- 			       struct bvec_iter *iter,
- 			       int (*process)(struct dm_verity *v,
+ 	if (bio->bi_status &&
+-	    (!verity_fec_is_enabled(io->v) || verity_is_system_shutting_down())) {
++	    (!verity_fec_is_enabled(io->v) ||
++	     verity_is_system_shutting_down() ||
++	     (bio->bi_opf & REQ_RAHEAD))) {
+ 		verity_finish_io(io, bio->bi_status);
+ 		return;
+ 	}
 
 
