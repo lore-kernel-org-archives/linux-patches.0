@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDBD6AA0;
-	Tue,  5 Dec 2023 03:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6111E6AA0;
+	Tue,  5 Dec 2023 03:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYdFNaie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452EBC433C8;
-	Tue,  5 Dec 2023 03:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTB3eSII"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAED1C433C7;
+	Tue,  5 Dec 2023 03:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701746513;
-	bh=JEiLvcFT2IcWk0VeSp/I/MOGfz32MZNjLcrV82C0Qsg=;
+	s=korg; t=1701746516;
+	bh=Gvg7rFOfJsBjaJpFhK7sMYJPYT5R6VCjlKDoeZmgM+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QYdFNaieIbsksTlkP0eWIcruiT92s5Aaqmh8P39dFbvS1X68eNoguqy+5Q8O5yKs2
-	 yohFrfLmdseBZx5spQB/zXVEl+n0IdFBSFskzCI2nvy4r/+EDvD3D6Dv/twpC8AmtP
-	 +eTekFTyRIuTrIIRYkCcgbR9UmcymojeTD3Zi3wA=
+	b=XTB3eSII2U2jEOKkSYb+3m1mIh3aK/Jqp+HPhBYlgYu6cp1t2avDBLYgCZysR1Cu0
+	 CSBZipkiYv7LBGv9F5i08l6ATKJyjmQmNzz87VlIHJsTNIGg7wYWaCKXZDvAfdcCUD
+	 V/+zayFBoD1IC6oUgsKz2dEWQ6eXhrU2npjxsp00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Coly Li <colyli@suse.de>,
-	Markus Weippert <markus@gekmihesg.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 051/134] bcache: revert replacing IS_ERR_OR_NULL with IS_ERR
-Date: Tue,  5 Dec 2023 12:15:23 +0900
-Message-ID: <20231205031538.819010653@linuxfoundation.org>
+	Tim Huang <Tim.Huang@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 029/134] drm/amdgpu: fix memory overflow in the IB test
+Date: Tue,  5 Dec 2023 12:15:01 +0900
+Message-ID: <20231205031537.282009771@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 References: <20231205031535.163661217@linuxfoundation.org>
@@ -37,78 +37,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Markus Weippert <markus@gekmihesg.de>
+From: Tim Huang <Tim.Huang@amd.com>
 
-commit bb6cc253861bd5a7cf8439e2118659696df9619f upstream.
+commit 6b0b7789a7a5f3e69185449f891beea58e563f9b upstream.
 
-Commit 028ddcac477b ("bcache: Remove unnecessary NULL point check in
-node allocations") replaced IS_ERR_OR_NULL by IS_ERR. This leads to a
-NULL pointer dereference.
+Fix a memory overflow issue in the gfx IB test
+for some ASICs. At least 20 bytes are needed for
+the IB test packet.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000080
-Call Trace:
- ? __die_body.cold+0x1a/0x1f
- ? page_fault_oops+0xd2/0x2b0
- ? exc_page_fault+0x70/0x170
- ? asm_exc_page_fault+0x22/0x30
- ? btree_node_free+0xf/0x160 [bcache]
- ? up_write+0x32/0x60
- btree_gc_coalesce+0x2aa/0x890 [bcache]
- ? bch_extent_bad+0x70/0x170 [bcache]
- btree_gc_recurse+0x130/0x390 [bcache]
- ? btree_gc_mark_node+0x72/0x230 [bcache]
- bch_btree_gc+0x5da/0x600 [bcache]
- ? cpuusage_read+0x10/0x10
- ? bch_btree_gc+0x600/0x600 [bcache]
- bch_gc_thread+0x135/0x180 [bcache]
+v2: correct code indentation errors. (Christian)
 
-The relevant code starts with:
-
-    new_nodes[0] = NULL;
-
-    for (i = 0; i < nodes; i++) {
-        if (__bch_keylist_realloc(&keylist, bkey_u64s(&r[i].b->key)))
-            goto out_nocoalesce;
-    // ...
-out_nocoalesce:
-    // ...
-    for (i = 0; i < nodes; i++)
-        if (!IS_ERR(new_nodes[i])) {  // IS_ERR_OR_NULL before
-028ddcac477b
-            btree_node_free(new_nodes[i]);  // new_nodes[0] is NULL
-            rw_unlock(true, new_nodes[i]);
-        }
-
-This patch replaces IS_ERR() by IS_ERR_OR_NULL() to fix this.
-
-Fixes: 028ddcac477b ("bcache: Remove unnecessary NULL point check in node allocations")
-Link: https://lore.kernel.org/all/3DF4A87A-2AC1-4893-AE5F-E921478419A9@suse.de/
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Cc: Zheng Wang <zyytlz.wz@163.com>
-Cc: Coly Li <colyli@suse.de>
-Signed-off-by: Markus Weippert <markus@gekmihesg.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/bcache/btree.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c  |    2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c   |    4 ++--
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c   |    4 ++--
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c |    4 ++--
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1510,7 +1510,7 @@ out_nocoalesce:
- 	bch_keylist_free(&keylist);
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -398,7 +398,7 @@ static int gfx_v11_0_ring_test_ib(struct
+ 		adev->wb.wb[index] = cpu_to_le32(0xCAFEDEAD);
+ 		cpu_ptr = &adev->wb.wb[index];
  
- 	for (i = 0; i < nodes; i++)
--		if (!IS_ERR(new_nodes[i])) {
-+		if (!IS_ERR_OR_NULL(new_nodes[i])) {
- 			btree_node_free(new_nodes[i]);
- 			rw_unlock(true, new_nodes[i]);
- 		}
+-		r = amdgpu_ib_get(adev, NULL, 16, AMDGPU_IB_POOL_DIRECT, &ib);
++		r = amdgpu_ib_get(adev, NULL, 20, AMDGPU_IB_POOL_DIRECT, &ib);
+ 		if (r) {
+ 			DRM_ERROR("amdgpu: failed to get ib (%ld).\n", r);
+ 			goto err1;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+@@ -883,8 +883,8 @@ static int gfx_v8_0_ring_test_ib(struct
+ 	gpu_addr = adev->wb.gpu_addr + (index * 4);
+ 	adev->wb.wb[index] = cpu_to_le32(0xCAFEDEAD);
+ 	memset(&ib, 0, sizeof(ib));
+-	r = amdgpu_ib_get(adev, NULL, 16,
+-					AMDGPU_IB_POOL_DIRECT, &ib);
++
++	r = amdgpu_ib_get(adev, NULL, 20, AMDGPU_IB_POOL_DIRECT, &ib);
+ 	if (r)
+ 		goto err1;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -1039,8 +1039,8 @@ static int gfx_v9_0_ring_test_ib(struct
+ 	gpu_addr = adev->wb.gpu_addr + (index * 4);
+ 	adev->wb.wb[index] = cpu_to_le32(0xCAFEDEAD);
+ 	memset(&ib, 0, sizeof(ib));
+-	r = amdgpu_ib_get(adev, NULL, 16,
+-					AMDGPU_IB_POOL_DIRECT, &ib);
++
++	r = amdgpu_ib_get(adev, NULL, 20, AMDGPU_IB_POOL_DIRECT, &ib);
+ 	if (r)
+ 		goto err1;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
+@@ -296,8 +296,8 @@ static int gfx_v9_4_3_ring_test_ib(struc
+ 	gpu_addr = adev->wb.gpu_addr + (index * 4);
+ 	adev->wb.wb[index] = cpu_to_le32(0xCAFEDEAD);
+ 	memset(&ib, 0, sizeof(ib));
+-	r = amdgpu_ib_get(adev, NULL, 16,
+-			  AMDGPU_IB_POOL_DIRECT, &ib);
++
++	r = amdgpu_ib_get(adev, NULL, 20, AMDGPU_IB_POOL_DIRECT, &ib);
+ 	if (r)
+ 		goto err1;
+ 
 
 
