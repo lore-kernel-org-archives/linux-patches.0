@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF8D6FB1;
-	Tue,  5 Dec 2023 03:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2DE6FB1;
+	Tue,  5 Dec 2023 03:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdTPfPsr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7A0C433C8;
-	Tue,  5 Dec 2023 03:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFtQxIoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66960C433C7;
+	Tue,  5 Dec 2023 03:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747262;
-	bh=EOn6sZNLMuCXZ+ePECl6lnr0KIIQvr+n0HtyKP3ygr0=;
+	s=korg; t=1701747264;
+	bh=WC5aX8gNOzKuXlSQ1pGsk4ERwl1wAnY/6Fv4rcJ+fIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdTPfPsr1BSAZgPDqXcQF91gIlRaprDpircw/2fSRIVzrPNB4XEnTuVR8N7WTSeEJ
-	 msKgaOlsvjsVGa97AFLt8CqtYDwIaeZJpFVSt1Y9BZKcYeXXh8lSzSpksRghZxa54v
-	 itT6IniOM8fUjYX7p/rldsW8FHSgBhUELSwN/5K8=
+	b=fFtQxIoQanqPyJTKC473uQF6zAif/qOph980jRhmEWRQzheu0Ra4yNEEq6D+0+4AE
+	 CiPBQ958g6QgrsED3tOn2IBa/pF16YT6N9NZGxEP6TAH1EDTkWJlThqiYuhxqyk1nI
+	 OBIMN1IqWxWyxVGLvHvqO5MKIpzhH7yakaGt0Bt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Thompson <ptf@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shuijing Li <shuijing.li@mediatek.com>,
+	Xinlei Lee <xinlei.lee@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/135] net: r8169: Disable multicast filter for RTL8168H and RTL8107E
-Date: Tue,  5 Dec 2023 12:15:24 +0900
-Message-ID: <20231205031530.757497977@linuxfoundation.org>
+Subject: [PATCH 5.10 012/135] drm/panel: boe-tv101wum-nl6: Fine tune the panel power sequence
+Date: Tue,  5 Dec 2023 12:15:33 +0900
+Message-ID: <20231205031531.265809312@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -44,41 +44,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrick Thompson <ptf@google.com>
+From: Shuijing Li <shuijing.li@mediatek.com>
 
-[ Upstream commit efa5f1311c4998e9e6317c52bc5ee93b3a0f36df ]
+[ Upstream commit 812562b8d881ce6d33fed8052b3a10b718430fb5 ]
 
-RTL8168H and RTL8107E ethernet adapters erroneously filter unicast
-eapol packets unless allmulti is enabled. These devices correspond to
-RTL_GIGA_MAC_VER_46 and VER_48. Add an exception for VER_46 and VER_48
-in the same way that VER_35 has an exception.
+For "boe,tv105wum-nw0" this special panel, it is stipulated in
+the panel spec that MIPI needs to keep the LP11 state before
+the lcm_reset pin is pulled high.
 
-Fixes: 6e1d0b898818 ("r8169:add support for RTL8168H and RTL8107E")
-Signed-off-by: Patrick Thompson <ptf@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/20231030205031.177855-1-ptf@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Shuijing Li <shuijing.li@mediatek.com>
+Signed-off-by: Xinlei Lee <xinlei.lee@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230515094955.15982-3-shuijing.li@mediatek.com
+Stable-dep-of: 6965809e5269 ("drm/panel: auo,b101uan08.3: Fine tune the panel power sequence")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index ab6af1f1ad5bb..6e0fe77d1019c 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2581,7 +2581,9 @@ static void rtl_set_rx_mode(struct net_device *dev)
- 		rx_mode &= ~AcceptMulticast;
- 	} else if (netdev_mc_count(dev) > MC_FILTER_LIMIT ||
- 		   dev->flags & IFF_ALLMULTI ||
--		   tp->mac_version == RTL_GIGA_MAC_VER_35) {
-+		   tp->mac_version == RTL_GIGA_MAC_VER_35 ||
-+		   tp->mac_version == RTL_GIGA_MAC_VER_46 ||
-+		   tp->mac_version == RTL_GIGA_MAC_VER_48) {
- 		/* accept all multicasts */
- 	} else if (netdev_mc_empty(dev)) {
- 		rx_mode &= ~AcceptMulticast;
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index db9d0b86d5428..3229e5eabbd21 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -36,6 +36,7 @@ struct panel_desc {
+ 	const struct panel_init_cmd *init_cmds;
+ 	unsigned int lanes;
+ 	bool discharge_on_disable;
++	bool lp11_before_reset;
+ };
+ 
+ struct boe_panel {
+@@ -551,6 +552,10 @@ static int boe_panel_prepare(struct drm_panel *panel)
+ 
+ 	usleep_range(5000, 10000);
+ 
++	if (boe->desc->lp11_before_reset) {
++		mipi_dsi_dcs_nop(boe->dsi);
++		usleep_range(1000, 2000);
++	}
+ 	gpiod_set_value(boe->enable_gpio, 1);
+ 	usleep_range(1000, 2000);
+ 	gpiod_set_value(boe->enable_gpio, 0);
+@@ -719,6 +724,7 @@ static const struct panel_desc boe_tv105wum_nw0_desc = {
+ 	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
+ 		      MIPI_DSI_MODE_LPM,
+ 	.init_cmds = boe_init_cmd,
++	.lp11_before_reset = true,
+ };
+ 
+ static int boe_panel_get_modes(struct drm_panel *panel,
 -- 
 2.42.0
 
