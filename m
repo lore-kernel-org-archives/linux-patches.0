@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0366FB1;
-	Tue,  5 Dec 2023 03:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CD96FB1;
+	Tue,  5 Dec 2023 03:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdeWrg2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1905C433C8;
-	Tue,  5 Dec 2023 03:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHFi7XPl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0063C433C7;
+	Tue,  5 Dec 2023 03:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1701747301;
-	bh=hXSjtqkBoLIa/Xyjd964U8sbOtU3BguF6Qub0L05TkE=;
+	s=korg; t=1701747304;
+	bh=MGXHwlhGmzcXCar5N4rEwLbxSl9ktsyGnhQtVDX+z5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdeWrg2DWMFNuR+wDd4pCDmMAMcv4/Zr1A9o/661JxAyWHQV1895YkuWonTYBtbcM
-	 WGiaYZPacocWENPQrdFrSAqTjZ/bMRDZB0FdNdKeSP94Hf5nEt3DNSOYFIUeH5wImM
-	 Qh3S+KOGTi/gURetZP8R6878giTlNFRKIwW6TYX0=
+	b=EHFi7XPlAN7nVHq0bAfcekkx89hHAJuNAPBxnqkl7reQzG3PVYiA88LwcMZ3X5FgB
+	 0M00I4uSWBvu9CslmJusu4G10VCCOMpUyUxXoMzE9p4YQA9zSPeuRXOoreMsJKnOwe
+	 xL7w8GsAmXu+J/n0BRYkQTBkrt94SNt63sYlEo7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Stabellini <stefano.stabellini@amd.com>,
-	Juergen Gross <jgross@suse.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/135] arm/xen: fix xen_vcpu_info allocation alignment
-Date: Tue,  5 Dec 2023 12:15:45 +0900
-Message-ID: <20231205031532.134278878@linuxfoundation.org>
+Subject: [PATCH 5.10 025/135] amd-xgbe: handle corner-case during sfp hotplug
+Date: Tue,  5 Dec 2023 12:15:46 +0900
+Message-ID: <20231205031532.210385519@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231205031530.557782248@linuxfoundation.org>
 References: <20231205031530.557782248@linuxfoundation.org>
@@ -42,45 +44,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Stabellini <sstabellini@kernel.org>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 7bf9a6b46549852a37e6d07e52c601c3c706b562 ]
+[ Upstream commit 676ec53844cbdf2f47e68a076cdff7f0ec6cbe3f ]
 
-xen_vcpu_info is a percpu area than needs to be mapped by Xen.
-Currently, it could cross a page boundary resulting in Xen being unable
-to map it:
+Force the mode change for SFI in Fixed PHY configurations. Fixed PHY
+configurations needs PLL to be enabled while doing mode set. When the
+SFP module isn't connected during boot, driver assumes AN is ON and
+attempts auto-negotiation. However, if the connected SFP comes up in
+Fixed PHY configuration the link will not come up as PLL isn't enabled
+while the initial mode set command is issued. So, force the mode change
+for SFI in Fixed PHY configuration to fix link issues.
 
-[    0.567318] kernel BUG at arch/arm64/xen/../../arm/xen/enlighten.c:164!
-[    0.574002] Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-
-Fix the issue by using __alloc_percpu and requesting alignment for the
-memory allocation.
-
-Signed-off-by: Stefano Stabellini <stefano.stabellini@amd.com>
-
-Link: https://lore.kernel.org/r/alpine.DEB.2.22.394.2311221501340.2053963@ubuntu-linux-20-04-desktop
-Fixes: 24d5373dda7c ("arm/xen: Use alloc_percpu rather than __alloc_percpu")
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: e57f7a3feaef ("amd-xgbe: Prepare for working with more than one type of phy")
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/xen/enlighten.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/xen/enlighten.c b/arch/arm/xen/enlighten.c
-index 3d25fd615250a..518c7557f78a2 100644
---- a/arch/arm/xen/enlighten.c
-+++ b/arch/arm/xen/enlighten.c
-@@ -351,7 +351,8 @@ static int __init xen_guest_init(void)
- 	 * for secondary CPUs as they are brought up.
- 	 * For uniformity we use VCPUOP_register_vcpu_info even on cpu0.
- 	 */
--	xen_vcpu_info = alloc_percpu(struct vcpu_info);
-+	xen_vcpu_info = __alloc_percpu(sizeof(struct vcpu_info),
-+				       1 << fls(sizeof(struct vcpu_info) - 1));
- 	if (xen_vcpu_info == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index ca7372369b3e6..60be836b294bb 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -1178,7 +1178,19 @@ static int xgbe_phy_config_fixed(struct xgbe_prv_data *pdata)
+ 	if (pdata->phy.duplex != DUPLEX_FULL)
+ 		return -EINVAL;
  
+-	xgbe_set_mode(pdata, mode);
++	/* Force the mode change for SFI in Fixed PHY config.
++	 * Fixed PHY configs needs PLL to be enabled while doing mode set.
++	 * When the SFP module isn't connected during boot, driver assumes
++	 * AN is ON and attempts autonegotiation. However, if the connected
++	 * SFP comes up in Fixed PHY config, the link will not come up as
++	 * PLL isn't enabled while the initial mode set command is issued.
++	 * So, force the mode change for SFI in Fixed PHY configuration to
++	 * fix link issues.
++	 */
++	if (mode == XGBE_MODE_SFI)
++		xgbe_change_mode(pdata, mode);
++	else
++		xgbe_set_mode(pdata, mode);
+ 
+ 	return 0;
+ }
 -- 
 2.42.0
 
