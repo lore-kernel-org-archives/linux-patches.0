@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB182E3FB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D5D1A5B6
 	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 23:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rpzfC/K6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62D5C433CC;
-	Wed,  6 Dec 2023 23:17:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ldO8y0aa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3424CC433CB;
+	Wed,  6 Dec 2023 23:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1701904656;
-	bh=ez5Rw+bekRSdPyYItpCuQMs/kNPSCZ2/f2QC2C+vegs=;
+	bh=8uz7AK/6yHawqaJPcw4bg1vliKDTq/KL8xQPTh+RBhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rpzfC/K6dhFTjJlt/mON4wKyI6v+Xpwv4qUmGPFRTzsvD4c4GQpyTN6d2voIu2i7b
-	 LGJ6YLVxTMAkGnXQ9DtQnWR7ea5jke4CIOMu99xS12c8OH0kQhvmWxI0d0PGXxy+aG
-	 eLr+i2/oxqYPsN7uRGNtvrev3y+0V0clIzkucA65r66c9Nd4Pdv2PciX3syjLBSIju
-	 fnUSj4+5/55nvtwp9nu6fHsfF/pX33U28F8aQG2hEP7r7oXAyGg/PbnCjkufv+FbPD
-	 4M2RvuowvPBbkYkHyICsmVQ83zd6y/l5LYfgx+3G2jN2tQolqxiwKnKpmsuWGOHLWY
-	 byCRsWieNnF9w==
+	b=ldO8y0aaCAI30pGHZ+jGi3ri+gv6J7mHp87soVwGOCnw7hGcQgtXzAK6BzELZoYXT
+	 EkEFX2BuYSZfAhST/kM4KnpgfrUHGV4vAsB7+Ouh4jfVeliyoFM5Qhy/H7rOju9C5n
+	 fW2tyyccaFPGkmXsN/rlupyXFxMt0EKFplWPVCQy/CmqxlalQSkr7GtccdcDSbvVNR
+	 3wy2y6YX/LW2rtq8M5iliwsM/Fx8Pg4+Ge8xxfSFebR//VvU94kwwBFAKUZaoVgj79
+	 MUX+xlMD1xRnCl2NeZL2/zAlrXEnZasnuLWe3loDsHzSUMGaKwJFLs9qgItr2iDKaP
+	 ESqXecPm63nDg==
 From: Stephen Boyd <sboyd@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Fei Shao <fshao@chromium.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 4/8] spmi: Use devm_spmi_controller_alloc()
-Date: Wed,  6 Dec 2023 15:17:27 -0800
-Message-ID: <20231206231733.4031901-5-sboyd@kernel.org>
+Subject: [PATCH 5/8] spmi: mtk-pmif: Reorder driver remove sequence
+Date: Wed,  6 Dec 2023 15:17:28 -0800
+Message-ID: <20231206231733.4031901-6-sboyd@kernel.org>
 X-Mailer: git-send-email 2.43.0.rc2.451.g8631bc7472-goog
 In-Reply-To: <20231206231733.4031901-1-sboyd@kernel.org>
 References: <20231206231733.4031901-1-sboyd@kernel.org>
@@ -39,377 +39,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Fei Shao <fshao@chromium.org>
 
-Convert to the device-managed version of spmi_controller_alloc() and
-simplify the excess error handling code.
+This driver enables clocks and then adds SPMI controller in probing, so
+we expect the reversed sequence in removal.
+Fix the order in the remove callback.
 
 Signed-off-by: Fei Shao <fshao@chromium.org>
-Link: https://lore.kernel.org/r/20230824104101.4083400-3-fshao@chromium.org
+Link: https://lore.kernel.org/r/20230824104101.4083400-4-fshao@chromium.org
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/spmi/hisi-spmi-controller.c | 22 +++-----
- drivers/spmi/spmi-mtk-pmif.c        | 26 +++------
- drivers/spmi/spmi-pmic-arb.c        | 87 ++++++++++-------------------
- 3 files changed, 46 insertions(+), 89 deletions(-)
+ drivers/spmi/spmi-mtk-pmif.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spmi/hisi-spmi-controller.c b/drivers/spmi/hisi-spmi-controller.c
-index 9cbd473487cb..a5525902656a 100644
---- a/drivers/spmi/hisi-spmi-controller.c
-+++ b/drivers/spmi/hisi-spmi-controller.c
-@@ -267,10 +267,10 @@ static int spmi_controller_probe(struct platform_device *pdev)
- 	struct resource *iores;
- 	int ret;
- 
--	ctrl = spmi_controller_alloc(&pdev->dev, sizeof(*spmi_controller));
--	if (!ctrl) {
-+	ctrl = devm_spmi_controller_alloc(&pdev->dev, sizeof(*spmi_controller));
-+	if (IS_ERR(ctrl)) {
- 		dev_err(&pdev->dev, "can not allocate spmi_controller data\n");
--		return -ENOMEM;
-+		return PTR_ERR(ctrl);
- 	}
- 	spmi_controller = spmi_controller_get_drvdata(ctrl);
- 	spmi_controller->controller = ctrl;
-@@ -278,24 +278,21 @@ static int spmi_controller_probe(struct platform_device *pdev)
- 	iores = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	if (!iores) {
- 		dev_err(&pdev->dev, "can not get resource!\n");
--		ret = -EINVAL;
--		goto err_put_controller;
-+		return -EINVAL;
- 	}
- 
- 	spmi_controller->base = devm_ioremap(&pdev->dev, iores->start,
- 					     resource_size(iores));
- 	if (!spmi_controller->base) {
- 		dev_err(&pdev->dev, "can not remap base addr!\n");
--		ret = -EADDRNOTAVAIL;
--		goto err_put_controller;
-+		return -EADDRNOTAVAIL;
- 	}
- 
- 	ret = of_property_read_u32(pdev->dev.of_node, "hisilicon,spmi-channel",
- 				   &spmi_controller->channel);
- 	if (ret) {
- 		dev_err(&pdev->dev, "can not get channel\n");
--		ret = -ENODEV;
--		goto err_put_controller;
-+		return -ENODEV;
- 	}
- 
- 	platform_set_drvdata(pdev, spmi_controller);
-@@ -314,14 +311,10 @@ static int spmi_controller_probe(struct platform_device *pdev)
- 	ret = spmi_controller_add(ctrl);
- 	if (ret) {
- 		dev_err(&pdev->dev, "spmi_controller_add failed with error %d!\n", ret);
--		goto err_put_controller;
-+		return ret;
- 	}
- 
- 	return 0;
--
--err_put_controller:
--	spmi_controller_put(ctrl);
--	return ret;
- }
- 
- static void spmi_del_controller(struct platform_device *pdev)
-@@ -329,7 +322,6 @@ static void spmi_del_controller(struct platform_device *pdev)
- 	struct spmi_controller *ctrl = platform_get_drvdata(pdev);
- 
- 	spmi_controller_remove(ctrl);
--	spmi_controller_put(ctrl);
- }
- 
- static const struct of_device_id spmi_controller_match_table[] = {
 diff --git a/drivers/spmi/spmi-mtk-pmif.c b/drivers/spmi/spmi-mtk-pmif.c
-index 1261f381cae6..6ebc6901490a 100644
+index 6ebc6901490a..cc660da6a037 100644
 --- a/drivers/spmi/spmi-mtk-pmif.c
 +++ b/drivers/spmi/spmi-mtk-pmif.c
-@@ -447,29 +447,24 @@ static int mtk_spmi_probe(struct platform_device *pdev)
- 	int err, i;
- 	u32 chan_offset;
+@@ -515,9 +515,9 @@ static void mtk_spmi_remove(struct platform_device *pdev)
+ 	struct spmi_controller *ctrl = platform_get_drvdata(pdev);
+ 	struct pmif *arb = spmi_controller_get_drvdata(ctrl);
  
--	ctrl = spmi_controller_alloc(&pdev->dev, sizeof(*arb));
--	if (!ctrl)
--		return -ENOMEM;
-+	ctrl = devm_spmi_controller_alloc(&pdev->dev, sizeof(*arb));
-+	if (IS_ERR(ctrl))
-+		return PTR_ERR(ctrl);
- 
- 	arb = spmi_controller_get_drvdata(ctrl);
- 	arb->data = device_get_match_data(&pdev->dev);
- 	if (!arb->data) {
--		err = -EINVAL;
- 		dev_err(&pdev->dev, "Cannot get drv_data\n");
--		goto err_put_ctrl;
-+		return -EINVAL;
- 	}
- 
- 	arb->base = devm_platform_ioremap_resource_byname(pdev, "pmif");
--	if (IS_ERR(arb->base)) {
--		err = PTR_ERR(arb->base);
--		goto err_put_ctrl;
--	}
-+	if (IS_ERR(arb->base))
-+		return PTR_ERR(arb->base);
- 
- 	arb->spmimst_base = devm_platform_ioremap_resource_byname(pdev, "spmimst");
--	if (IS_ERR(arb->spmimst_base)) {
--		err = PTR_ERR(arb->spmimst_base);
--		goto err_put_ctrl;
--	}
-+	if (IS_ERR(arb->spmimst_base))
-+		return PTR_ERR(arb->spmimst_base);
- 
- 	arb->nclks = ARRAY_SIZE(pmif_clock_names);
- 	for (i = 0; i < arb->nclks; i++)
-@@ -478,7 +473,7 @@ static int mtk_spmi_probe(struct platform_device *pdev)
- 	err = clk_bulk_get(&pdev->dev, arb->nclks, arb->clks);
- 	if (err) {
- 		dev_err(&pdev->dev, "Failed to get clocks: %d\n", err);
--		goto err_put_ctrl;
-+		return err;
- 	}
- 
- 	err = clk_bulk_prepare_enable(arb->nclks, arb->clks);
-@@ -512,8 +507,6 @@ static int mtk_spmi_probe(struct platform_device *pdev)
- 	clk_bulk_disable_unprepare(arb->nclks, arb->clks);
- err_put_clks:
- 	clk_bulk_put(arb->nclks, arb->clks);
--err_put_ctrl:
--	spmi_controller_put(ctrl);
- 	return err;
- }
- 
-@@ -525,7 +518,6 @@ static void mtk_spmi_remove(struct platform_device *pdev)
++	spmi_controller_remove(ctrl);
  	clk_bulk_disable_unprepare(arb->nclks, arb->clks);
  	clk_bulk_put(arb->nclks, arb->clks);
- 	spmi_controller_remove(ctrl);
--	spmi_controller_put(ctrl);
+-	spmi_controller_remove(ctrl);
  }
  
  static const struct of_device_id mtk_spmi_match_table[] = {
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index dcb675d980d4..9ed1180fe31f 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1443,9 +1443,9 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 	u32 channel, ee, hw_ver;
- 	int err;
- 
--	ctrl = spmi_controller_alloc(&pdev->dev, sizeof(*pmic_arb));
--	if (!ctrl)
--		return -ENOMEM;
-+	ctrl = devm_spmi_controller_alloc(&pdev->dev, sizeof(*pmic_arb));
-+	if (IS_ERR(ctrl))
-+		return PTR_ERR(ctrl);
- 
- 	pmic_arb = spmi_controller_get_drvdata(ctrl);
- 	pmic_arb->spmic = ctrl;
-@@ -1462,20 +1462,16 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 	 */
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "core");
- 	core = devm_ioremap(&ctrl->dev, res->start, resource_size(res));
--	if (IS_ERR(core)) {
--		err = PTR_ERR(core);
--		goto err_put_ctrl;
--	}
-+	if (IS_ERR(core))
-+		return PTR_ERR(core);
- 
- 	pmic_arb->core_size = resource_size(res);
- 
- 	pmic_arb->ppid_to_apid = devm_kcalloc(&ctrl->dev, PMIC_ARB_MAX_PPID,
- 					      sizeof(*pmic_arb->ppid_to_apid),
- 					      GFP_KERNEL);
--	if (!pmic_arb->ppid_to_apid) {
--		err = -ENOMEM;
--		goto err_put_ctrl;
--	}
-+	if (!pmic_arb->ppid_to_apid)
-+		return -ENOMEM;
- 
- 	hw_ver = readl_relaxed(core + PMIC_ARB_VERSION);
- 
-@@ -1499,19 +1495,15 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 						   "obsrvr");
- 		pmic_arb->rd_base = devm_ioremap(&ctrl->dev, res->start,
- 						 resource_size(res));
--		if (IS_ERR(pmic_arb->rd_base)) {
--			err = PTR_ERR(pmic_arb->rd_base);
--			goto err_put_ctrl;
--		}
-+		if (IS_ERR(pmic_arb->rd_base))
-+			return PTR_ERR(pmic_arb->rd_base);
- 
- 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
- 						   "chnls");
- 		pmic_arb->wr_base = devm_ioremap(&ctrl->dev, res->start,
- 						 resource_size(res));
--		if (IS_ERR(pmic_arb->wr_base)) {
--			err = PTR_ERR(pmic_arb->wr_base);
--			goto err_put_ctrl;
--		}
-+		if (IS_ERR(pmic_arb->wr_base))
-+			return PTR_ERR(pmic_arb->wr_base);
- 	}
- 
- 	pmic_arb->max_periphs = PMIC_ARB_MAX_PERIPHS;
-@@ -1522,10 +1514,9 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 		of_property_read_u32(pdev->dev.of_node, "qcom,bus-id",
- 					&pmic_arb->bus_instance);
- 		if (pmic_arb->bus_instance > 1) {
--			err = -EINVAL;
- 			dev_err(&pdev->dev, "invalid bus instance (%u) specified\n",
- 				pmic_arb->bus_instance);
--			goto err_put_ctrl;
-+			return -EINVAL;
- 		}
- 
- 		if (pmic_arb->bus_instance == 0) {
-@@ -1543,10 +1534,9 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 		}
- 
- 		if (pmic_arb->base_apid + pmic_arb->apid_count > pmic_arb->max_periphs) {
--			err = -EINVAL;
- 			dev_err(&pdev->dev, "Unsupported APID count %d detected\n",
- 				pmic_arb->base_apid + pmic_arb->apid_count);
--			goto err_put_ctrl;
-+			return -EINVAL;
- 		}
- 	} else if (hw_ver >= PMIC_ARB_VERSION_V5_MIN) {
- 		pmic_arb->base_apid = 0;
-@@ -1554,55 +1544,45 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 					PMIC_ARB_FEATURES_PERIPH_MASK;
- 
- 		if (pmic_arb->apid_count > pmic_arb->max_periphs) {
--			err = -EINVAL;
- 			dev_err(&pdev->dev, "Unsupported APID count %d detected\n",
- 				pmic_arb->apid_count);
--			goto err_put_ctrl;
-+			return -EINVAL;
- 		}
- 	}
- 
- 	pmic_arb->apid_data = devm_kcalloc(&ctrl->dev, pmic_arb->max_periphs,
- 					   sizeof(*pmic_arb->apid_data),
- 					   GFP_KERNEL);
--	if (!pmic_arb->apid_data) {
--		err = -ENOMEM;
--		goto err_put_ctrl;
--	}
-+	if (!pmic_arb->apid_data)
-+		return -ENOMEM;
- 
- 	dev_info(&ctrl->dev, "PMIC arbiter version %s (0x%x)\n",
- 		 pmic_arb->ver_ops->ver_str, hw_ver);
- 
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "intr");
- 	pmic_arb->intr = devm_ioremap_resource(&ctrl->dev, res);
--	if (IS_ERR(pmic_arb->intr)) {
--		err = PTR_ERR(pmic_arb->intr);
--		goto err_put_ctrl;
--	}
-+	if (IS_ERR(pmic_arb->intr))
-+		return PTR_ERR(pmic_arb->intr);
- 
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "cnfg");
- 	pmic_arb->cnfg = devm_ioremap_resource(&ctrl->dev, res);
--	if (IS_ERR(pmic_arb->cnfg)) {
--		err = PTR_ERR(pmic_arb->cnfg);
--		goto err_put_ctrl;
--	}
-+	if (IS_ERR(pmic_arb->cnfg))
-+		return PTR_ERR(pmic_arb->cnfg);
- 
- 	pmic_arb->irq = platform_get_irq_byname(pdev, "periph_irq");
--	if (pmic_arb->irq < 0) {
--		err = pmic_arb->irq;
--		goto err_put_ctrl;
--	}
-+	if (pmic_arb->irq < 0)
-+		return pmic_arb->irq;
- 
- 	err = of_property_read_u32(pdev->dev.of_node, "qcom,channel", &channel);
- 	if (err) {
- 		dev_err(&pdev->dev, "channel unspecified.\n");
--		goto err_put_ctrl;
-+		return err;
- 	}
- 
- 	if (channel > 5) {
- 		dev_err(&pdev->dev, "invalid channel (%u) specified.\n",
- 			channel);
--		err = -EINVAL;
--		goto err_put_ctrl;
-+		return -EINVAL;
- 	}
- 
- 	pmic_arb->channel = channel;
-@@ -1610,22 +1590,19 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 	err = of_property_read_u32(pdev->dev.of_node, "qcom,ee", &ee);
- 	if (err) {
- 		dev_err(&pdev->dev, "EE unspecified.\n");
--		goto err_put_ctrl;
-+		return err;
- 	}
- 
- 	if (ee > 5) {
- 		dev_err(&pdev->dev, "invalid EE (%u) specified\n", ee);
--		err = -EINVAL;
--		goto err_put_ctrl;
-+		return -EINVAL;
- 	}
- 
- 	pmic_arb->ee = ee;
- 	mapping_table = devm_kcalloc(&ctrl->dev, pmic_arb->max_periphs,
- 					sizeof(*mapping_table), GFP_KERNEL);
--	if (!mapping_table) {
--		err = -ENOMEM;
--		goto err_put_ctrl;
--	}
-+	if (!mapping_table)
-+		return -ENOMEM;
- 
- 	pmic_arb->mapping_table = mapping_table;
- 	/* Initialize max_apid/min_apid to the opposite bounds, during
-@@ -1645,7 +1622,7 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 		if (err) {
- 			dev_err(&pdev->dev, "could not read APID->PPID mapping table, rc= %d\n",
- 				err);
--			goto err_put_ctrl;
-+			return err;
- 		}
- 	}
- 
-@@ -1654,8 +1631,7 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 					 &pmic_arb_irq_domain_ops, pmic_arb);
- 	if (!pmic_arb->domain) {
- 		dev_err(&pdev->dev, "unable to create irq_domain\n");
--		err = -ENOMEM;
--		goto err_put_ctrl;
-+		return -ENOMEM;
- 	}
- 
- 	irq_set_chained_handler_and_data(pmic_arb->irq, pmic_arb_chained_irq,
-@@ -1669,8 +1645,6 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- err_domain_remove:
- 	irq_set_chained_handler_and_data(pmic_arb->irq, NULL, NULL);
- 	irq_domain_remove(pmic_arb->domain);
--err_put_ctrl:
--	spmi_controller_put(ctrl);
- 	return err;
- }
- 
-@@ -1681,7 +1655,6 @@ static void spmi_pmic_arb_remove(struct platform_device *pdev)
- 	spmi_controller_remove(ctrl);
- 	irq_set_chained_handler_and_data(pmic_arb->irq, NULL, NULL);
- 	irq_domain_remove(pmic_arb->domain);
--	spmi_controller_put(ctrl);
- }
- 
- static const struct of_device_id spmi_pmic_arb_match_table[] = {
 -- 
 https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
