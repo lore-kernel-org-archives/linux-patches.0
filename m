@@ -1,27 +1,27 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2088.outbound.protection.outlook.com [40.107.223.88])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2044.outbound.protection.outlook.com [40.107.244.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191D967E78;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508FF697A1;
 	Wed,  6 Dec 2023 17:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CZMHOntu"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="c8l6htWN"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=H2dNAWpUrM5T0J49BYecQIk5134YDBogTUXrqBN1UadjaY0FKiol9+MZh0NMCxSJibPpzGDu/dmgOE65zYRrPtq94AICSor6+AErYwFPJplNxhBZkEsrI3ioXUXEx0rKRIKaur5UzHYRKYNzhBdHFg0sitpQ4Dlm6f6DbyndIQF7GczpvEv1dR5ygNx/wNRvHRI4h+3W+GNsfDRsAryNVeTdCbBkew6bAxs/UBfTib3thZbzKN1hGUneQis5HLzRIwJPlTmD5Bw7L1cbmX6zrrXjSShHxStgGYTeHotBmoXFthrwBr+t8hQ4eRaAXbims1mG+66lS1M6W5YZGMaXSA==
+ b=heCJ92T/gIihu2+qC/VjtewFQLJqJhssfFCJygBMuDnBpKZOOdM+YvZVFyKeOdVltdzZseoij+ZfF//2AICY4zb17cFjsXmf7x5Zyy7nIFzN4ziJjvkRw2pr3WZsOhDLbBdADicMBAVvi3U2l1tVEfrk5SX5B1vFJisgRcLjeMeXdnUW5AvLW3CgB6rbNoZILLtMAWCrJGKJdbDRiFEak/0jJkaSpUrQk8U5TSbdwW3c/ppAjuOtcXetDmF3DAdwJqWmDocwUKNqf8c1XQd7cdeg6q1nlCvMmvjIuF/WfkrbKW3Jaro+NOzlTRczdgiNXaoSemKAxFONfT0ExBB6Zw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9sjhrtrMLRm8dbYksvZfGbyaQVx7b30tXACD03u1ajc=;
- b=hnQWhNZJpW8rJqOaFgPscP7Rh4fAQI78gNt5j1DOC10Q8825dPLnvzwlwn55Hm+MRMqmc09VJoMZKXOOrMfjyl3fp31EzeFtl1Vr82JekUHDAnFsbJRUGjCj0ihfcKcRv31QQXAMD4qjeVcJNMPXNgidtIp5UrYSQM57kBnVj3eqZtS7suvnHZWTpxEKxqgiM2/iEmWOx4diZ7MJ1waYAEtYzF7IWJmgAMTBaV+ZBY4esy8MSt7FoerfL/BWS92zPH8qATGF6KObJjSA9MjhBtc8UhLkAYtkBKkzsdO/y77+XFLEflC8jUtJvlpL0vPP/oAZETKovRZQ/o9w6UO/pA==
+ bh=4vl6lp3QuHYqbaNJWw6aeMZow/i48DkCMDwU6zuHchs=;
+ b=mTqTbwia8Mxsc16Er8TpY+iTjcuXMqOn2pbDQMBk4zMyrOG3cjk0BUA+Q3olx+OwPc1ISioHYhG37ZQreIUMxwbRlpq1ptwnwrAZ/MhEJfbKk5WRu2r8s82AQn8ZK21snTGF5tnc3oD+8oC2tG7Yx5yFgXP1rKHwfrZM99h73/T+BYaNQUAIa4XVxnDvbkKWwKpSm6C147txdCT6mz/qWyHyYKhsSeNnAQS70JgkAWFy+lH0HuA5vsTdFHpXvC5WGo8CwLlSNRqOcuqnnEXMDOrq9TwpjSbPngdG46KuPQHDYC5+PW4GsZ2nZaqphsJv4rJ/QU6gE6zFKoyezKB2Lg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9sjhrtrMLRm8dbYksvZfGbyaQVx7b30tXACD03u1ajc=;
- b=CZMHOntumtRcrYWQV20libssDW3QtO5+VXNOxktxajfqRq3Y0mnc65RZ8hRFW+f3eESUe+jN5FpiPn7KTgTzYdDK60TE+uH2ivznLvbXv6VG/7JuQZiNPlrvG2W67xmGbrSBiYsW9Grb8gkTj0uRGxG2CtRN3l96ZVP/THMuzlMPBIdKvuIhpHvtcGspfhaMM+M8I6x4LvYZnZ8nI/lPbNxtQbNFhKT9ht1Dpxx3oNO3KLjRqoWMvwQcLNplVMcKtxlDBuakBGmjfg7J96dmBSwr1mhFCda4B5+6NasXiXTcS3epKqjme3Acr+75lo5Urou3skYtkphYc5ok6ijVXA==
+ bh=4vl6lp3QuHYqbaNJWw6aeMZow/i48DkCMDwU6zuHchs=;
+ b=c8l6htWNkIKwGynZNzNc4rFlHeQpo415zDO0msgaVUNnvKnyODkNK5ulZT29ZoK2gaHsnbI3z0lgQsUGx1UvAQa3h8FCbHq+YhMMRrOjDxBTvI8mo5oUM9OQ1dBzBVtQNRxPahvRKWKoTqOfRx+5JTjzQ960mx+VdJtQUlwGQ1vJnoEaHYsITAqLNSY32BV6FnCjn+T9bqeJRCx2oYhvOcdrgRQfM27Ti3TWSDpRp825qNSpEG7TdnTEu6C2EaB912GL70xfg860Qv0e+ufvdP26pegISTv20AjHxZX5Xppbca+GQxjvjFMtdqmWww/C+LDKV8aiOg0mlaunGPRd5A==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
@@ -46,15 +46,15 @@ Cc: Eric Auger <eric.auger@redhat.com>,
 	Nicolin Chen <nicolinc@nvidia.com>,
 	patches@lists.linux.dev,
 	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Subject: [PATCH v3 19/27] iommu/arm-smmu-v3: Keep track of arm_smmu_master_domain for SVA
-Date: Wed,  6 Dec 2023 13:28:25 -0400
-Message-ID: <19-v3-9083a9368a5c+23fb-smmuv3_newapi_p2_jgg@nvidia.com>
+Subject: [PATCH v3 13/27] iommu/arm-smmu-v3: Make smmu_domain->devices into an allocated list
+Date: Wed,  6 Dec 2023 13:28:19 -0400
+Message-ID: <13-v3-9083a9368a5c+23fb-smmuv3_newapi_p2_jgg@nvidia.com>
 In-Reply-To: <0-v3-9083a9368a5c+23fb-smmuv3_newapi_p2_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BL0PR1501CA0026.namprd15.prod.outlook.com
- (2603:10b6:207:17::39) To LV2PR12MB5869.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL0PR0102CA0053.prod.exchangelabs.com
+ (2603:10b6:208:25::30) To LV2PR12MB5869.namprd12.prod.outlook.com
  (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -64,109 +64,242 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|IA1PR12MB8360:EE_
-X-MS-Office365-Filtering-Correlation-Id: 688ca31d-d696-4777-cd16-08dbf680c692
+X-MS-Office365-Filtering-Correlation-Id: 4c1242ed-ee52-453c-2e27-08dbf680c6b4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	4Y1xJIXs4nY7rMnDz+4DeLCaw9LrsmCjMHZCPiOXqrBS+4djbwfH48dccPwGVdJnW+f3K4+09K3KQJwNx4dPbjWoLa7dfZAGPBZKKvD85saQc+Xm+I1WSZvS3YSEC4Xn/rZzZggthYTiIj95nmn4UlRooBRSyXRj3eK5kxD84IyOXIbv5v2mwPX2KgtlHh0kx4dlDbvWFNqqESRcsVeO4Ief9DmHodlVRlJNWNCYwXvLAzwUdnhC/4d34rBx/5KtBm8zGElHrJZ65TExFHeaUdCIsPgcKP1BdAFvwS9IqDekFhdWnHFgjHtD6dINfabZrjC1tOUG8c+6dllXb+hLm+3IQp5y28BKo0PnGYVi+Aq9lDmgxPahu8POT0PKoAYo7vuRObseF4OhRnYPv5gM9Gf8JjpfNBODwWWvgUa5RLa9lEJ5QpCZ23eGrhMNcR57OOwWjoU2t129IUDHT5K9/EsZX2YEvDqBA4dgYWTKVr1wvmR5jAaQuEre4iDSJJhXBwXkDjI/QnN7rItivfyrrhMoUH54ZaITyUf4CIPk3g+JRCPhkwY1sEd9HRBrjm50
+	dN+YB2wtAPb5f6obOuMcGbmPWrzxyOqjtsGs9iyp5P+aZJAcgp1yaORZQ0ydxTpdYU3f+WVbhvKwH2O3zy28S+LvLickeQYM1G9b2k2UiC7FNkyGgaaaDDEbcUJBZwLhQrq/y+ThY8r3C6b9GKMmbJaZMBlzxFcQlTP5QWXegDn3taFM3i5wcVQ7CcDC+Kk77RoEnQ9X+4FOeafhg7nLoBMcMfCf1dN393nBPHiLeuPXKir4K+Zidc7z1Z/aZoy+pmbPVkUDMGHjVvZvTZY8Ktkll/T8u1bfUFppIBv9mDP1/QjziNPfhI8ExxpWWf/lD11eaDx1M6ArxciiKGmJoShP5UbBIaDfGfDdgmmI+WfWcCY402NHjXQdnEsqSoTtumu6uuPGSSosQo4RZ3ZfkYkFr8oSkWX4HZCQqmzskI1shPAlIrtUuXb7BPy7wr2e3yGLgWTEa0ORxtkfJW9S0PVxSN4DGzgXnmoQOBsl/pp4az8QDXxGihtnOBcSbXjaX+VIcWY49aeC6U1bCLlTHj9rZumMD6UyrvbFA29UwLBbXvA+8xG79j+9ig9qd0X6
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(346002)(376002)(136003)(366004)(396003)(230922051799003)(186009)(64100799003)(1800799012)(451199024)(6666004)(6486002)(478600001)(38100700002)(83380400001)(66946007)(6512007)(2616005)(66476007)(6506007)(8676002)(2906002)(4326008)(54906003)(7416002)(5660300002)(86362001)(36756003)(41300700001)(66556008)(8936002)(316002)(110136005)(26005);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?/1TSTdvP01GRDCWUYfogrcfxL0T6A0s8EOvJ0MdqL6P+RTz4ThgwiRd+R53P?=
- =?us-ascii?Q?uGc8tGAvF4AevjiZ+MvuM8/dQJdV3IXeDLN8Qlxt47smxZsDpEOABF8vAkGJ?=
- =?us-ascii?Q?2g2mVOsGJPgwOHBdQkJyC5012XbX9XdzN0Wxf1nK98eRu5gjkL6A9xUT21yb?=
- =?us-ascii?Q?ISiJM0UD/1NsUXTbt8Cwf1zi4X4MQbfaLb4gHkGIyhMnHpBRpIRxm9CPmeRn?=
- =?us-ascii?Q?rPsw+WqN+/H7/a0WTSoU0CjeoT+wN8kG9cv4GgC7groIedcQ2U3p7FDCimb4?=
- =?us-ascii?Q?yzfjwqKGnChMrRZq0yRvWqNZVrNAEKRLMOQqW6Vs5LdNEE24ayuWyqpWkaIF?=
- =?us-ascii?Q?mtVHWFwHFGUmkwa48TeE39gnHgPp9g8W2VbM1GdTtXHu7FZjkESi0xF4LN5M?=
- =?us-ascii?Q?QJvivmxbqfg6oaSOyBYzOuNzJ5TCkh9lhBvxfpgz2aiNMpk43ZI5LPUsweYL?=
- =?us-ascii?Q?wQYkKEBF0vJWgxoRsMzJUKED93K4O8wIHsGj7Em6tBZweuLyqU2/wj39VhXK?=
- =?us-ascii?Q?mm4VV0sN3nVLdDj7qsb7IZdTWHy/xb5oSG2p1MXWS4IR5Y15p8UQCa/Kpgf4?=
- =?us-ascii?Q?QuFMyXDFeHpdnZFqswEQ0Hrl6US3CUpaLD8zj7sm/AaprByn+dsYIQp4GjTe?=
- =?us-ascii?Q?gTuT5e3PN+PHggVhNYyVkKJ668yWx0m3tfQtOT1C72JbJHQE2Pe3pVAjOMzK?=
- =?us-ascii?Q?MinrLhUQUfNYedY2cs+aUpPK6nWgbd/uayWr33avCfT3DtIQ3rG6PsePMX14?=
- =?us-ascii?Q?k9oHmx+CiR/cmLJ/BmQNiracT8QVrKpPiVKqFqaiMHjd/Mg4kuraM5RHCX9Z?=
- =?us-ascii?Q?tnkkzp/a6X4DHIeK41Q0dVyzyc9bILc8XXxqhbDv4Q7eH4TUuuiqDC3sqvw1?=
- =?us-ascii?Q?nxuo/TAoh4NMt+a9P1iQkBGqr6jC2UzWoOA5h4ipHPHgR2ikG2Al4KwtA3k1?=
- =?us-ascii?Q?T4YMCMGVGn3pjsE+SIaFP313SCG5mfEapjeVGiNqJg1sWKCMASQbkWN2YcYr?=
- =?us-ascii?Q?9v+we0Fh5sEbUknlNCFRvFXgaR/0cBHQ0DsQajxg5G4SsdabaFhla2ffa93e?=
- =?us-ascii?Q?XxBOava/yopYMa7tSS/EWb9GzSUZBUc4af6TKimlS5AJPDdejakGPf+7nicY?=
- =?us-ascii?Q?0YZEnChi1aFLF8acyL3/LZZfKSsuj1O/gvB/3YavCiQPWmP9NXy742ZvMXsN?=
- =?us-ascii?Q?gL+s0AwNkqAQRFMkO6p+T4s2hknu7iLwoHWZdYjXg2A48mG7drAyDXj8woQk?=
- =?us-ascii?Q?vkehDSlUT7juBeUVQkBfmqHB41ZBQiyiaZidurwVcdC5TH3K8KBZvYfEtd5S?=
- =?us-ascii?Q?22cHtRFrJJPrk2+fnOlC8Dp0eWV3g/KkMgL3BudB64n9y1TXW3kGopblujxd?=
- =?us-ascii?Q?Gn5DE6GyE6ODMmueWkjYoXV9E7EEmC4GZeA0OlKWsmAgn7Imfzhrkn+WnZ4Q?=
- =?us-ascii?Q?J3poA1r074ySPIznF52+IQPBWx9DL8oZEY6Und3ekY9pvnxBVdeyoAOxKRwA?=
- =?us-ascii?Q?d7MVWTJzjY/+I/bmSqPrrZx6MoKovl3JN5LeUVIyQhDG9ASqD83OMmSm5GZN?=
- =?us-ascii?Q?HcKrnQ1GxCN1BgM4Pw5gyo2ze3ZPYj2ywwvKW473?=
+	=?us-ascii?Q?vKYVZbIotAEcw6s8mLlw34t8s7CIpwZGo+UzWYD9xDPcR1OwwiZSawKc7SfA?=
+ =?us-ascii?Q?WlOHCLwWx5ksBGq35bawFNrmkEDtZW5437YJ+LZWwVkJ7zhJkZMEQk4zgM65?=
+ =?us-ascii?Q?G1jCKCeXanGIb686Ob5LDtG/uaUY0TtWuwJ9oVUqtXfCy7s0/dn4soUgtQRF?=
+ =?us-ascii?Q?tfAlevw+B8IH2QfP+okS82fXFQFScFSxaH6y/8msVn8KCy545gx+KqYQ7kKR?=
+ =?us-ascii?Q?1mejD77vfpJklloNHDGkXxOpxE/46LY2EMtKDF7xoCydq+8UdaUrhT5qKHnf?=
+ =?us-ascii?Q?eMm3GPu51MzqHAG78fcYS9J438/4In+rsr0KrnjtJ3GdBErqR325L77Myuv7?=
+ =?us-ascii?Q?Jf0aX3u7gd3F8EG/9wsq+YBZQ9wP3ShOy85Qux2yaS5Ftl/WvgcZc73LcTfk?=
+ =?us-ascii?Q?khJ1Z9Hiv/Icjnb70tT9bUhbJYhdzuWB4cDUXSDcTb5OZhnXNzHvxa4DVrTF?=
+ =?us-ascii?Q?e0stUSxkOjyQHLZCY/I9sq+ZtgnS4zrVkUz3v64/y13xDtafFFjeRrWMndCq?=
+ =?us-ascii?Q?hVQ8VmRD/SjRL8AOJQVxNnmYPY2l3079MMP6KwArT+K0l6fF3g6cJCu045MW?=
+ =?us-ascii?Q?E8vyTFNkAzmiPOorbfgALQU5s7yzyG9GE7UVhkME/22VQtyHYdLxW7JErhKI?=
+ =?us-ascii?Q?X/F+mSVFA6TbtVm0MjiSDDX/XjEC+mfRY2A7ysHYEdpFda7A/0YLWjd+zNjR?=
+ =?us-ascii?Q?PigucEZFRQaUgtAqbZkSozYUDgtQ9rvN7Jw77btg3og/ZCnUdC8nWKP5uVqr?=
+ =?us-ascii?Q?YyHaZxcgHY2T8FKgjLoLyqb9zugcnNC5RszImtQxmkwtuse68ewk9gw6gDxG?=
+ =?us-ascii?Q?UxmJaezbUZqIZiNFnZCNn9eHGA5iihld7WAoQ+jpejPg1vBbo0I8UP354Gf/?=
+ =?us-ascii?Q?TYPTFK0KZ34q9VXpJon6XcjNRcHZLlA8z1lVvwbVVoCVGlfnGUyCI8EaG5Ag?=
+ =?us-ascii?Q?jdFeghsm3r96d5VUlWD0EnObckt6uT1UpUdDL8NBVasmMeU9yj9ySk/stu73?=
+ =?us-ascii?Q?o5wQGx16Nt5ZUyrieoBN6XFVpiY1+olQH/29rsaqWCsFw/W2SZ71KuTcmR4C?=
+ =?us-ascii?Q?z6jDN9DkOgQgjaaqbEeR6CRiVyCLw1LSPk2dAlpGNCo5SicDhi+9ZrLjw7xV?=
+ =?us-ascii?Q?+dCHrrtXMTnDk+UeadnKR9WJDAOdQ+HEUaTW6QIyz2LqIu4pKEeV8UgfI2dC?=
+ =?us-ascii?Q?xgfljm0PuON+Bc6mWqcOY81kzPMqUmHpU6BHwNb9xbsh+VBxECzCFSwSkxaP?=
+ =?us-ascii?Q?LuRYDwrnOgvLJqN8MdhKKaMUqcDea+QtQh7JuKKXEUv9Mt32Yh3QOuG0t1Pd?=
+ =?us-ascii?Q?ouKrY2S/ZHtQ+9YUxhckYnzOEOspbTfJcdnOmTNyGVRvvYIkIpO2cooCgHf6?=
+ =?us-ascii?Q?0y6ZekXtTwF5QcSFYDAE7xXZ1qfur6q7GNPfOvJdb94hsjYVCnGmccREb4Kj?=
+ =?us-ascii?Q?7x7m2D/prmi5Tdu16loNDkmtvz47xYYVWY2gkUFP+zPexerRHhe0MeihB3Ef?=
+ =?us-ascii?Q?o4ZRrJeaM6ym7acTsEFNw0ZFChNl6jqoRYwM42zVnbd3oCNvo3rEDF/HNkbW?=
+ =?us-ascii?Q?5PYLLmGuTGqq6xroUoZPQjMb2rUD7Au3bj9T6IKa?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 688ca31d-d696-4777-cd16-08dbf680c692
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c1242ed-ee52-453c-2e27-08dbf680c6b4
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2023 17:28:35.2055
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2023 17:28:35.4629
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Djhak9lsDLU+h9aKhRqOJxctTrhYSHaJPa4xqQE+CWGiMKul4web2Vpo2FPxHAeb
+X-MS-Exchange-CrossTenant-UserPrincipalName: EWmEIwV31ETzr520bCF5O8hysEuyK1c9y3AU381hO9eie38jfOfxV8awq/a5RHpR
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8360
 
-Currently the smmu_domain->devices list is unused for SVA domains.
-Fill it in with the SSID and master of every arm_smmu_set_pasid()
-using the same logic as the RID attach.
+The next patch will need to store the same master twice (with different
+SSIDs), so allocate memory for each list element.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ .../iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c   | 11 ++++--
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 39 ++++++++++++++++---
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  7 +++-
+ 3 files changed, 47 insertions(+), 10 deletions(-)
 
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+index 29469073fc53fe..c541b94917d036 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+@@ -38,12 +38,13 @@ static DEFINE_MUTEX(sva_lock);
+ static void
+ arm_smmu_update_s1_domain_cd_entry(struct arm_smmu_domain *smmu_domain)
+ {
+-	struct arm_smmu_master *master;
++	struct arm_smmu_master_domain *master_domain;
+ 	struct arm_smmu_cd target_cd;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
+-	list_for_each_entry(master, &smmu_domain->devices, domain_head) {
++	list_for_each_entry(master_domain, &smmu_domain->devices, devices_elm) {
++		struct arm_smmu_master *master = master_domain->master;
+ 		struct arm_smmu_cd *cdptr;
+ 
+ 		/* S1 domains only support RID attachment right now */
+@@ -289,7 +290,7 @@ static void arm_smmu_mm_release(struct mmu_notifier *mn, struct mm_struct *mm)
+ {
+ 	struct arm_smmu_mmu_notifier *smmu_mn = mn_to_smmu(mn);
+ 	struct arm_smmu_domain *smmu_domain = smmu_mn->domain;
+-	struct arm_smmu_master *master;
++	struct arm_smmu_master_domain *master_domain;
+ 	unsigned long flags;
+ 
+ 	mutex_lock(&sva_lock);
+@@ -303,7 +304,9 @@ static void arm_smmu_mm_release(struct mmu_notifier *mn, struct mm_struct *mm)
+ 	 * but disable translation.
+ 	 */
+ 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
+-	list_for_each_entry(master, &smmu_domain->devices, domain_head) {
++	list_for_each_entry(master_domain, &smmu_domain->devices,
++			    devices_elm) {
++		struct arm_smmu_master *master = master_domain->master;
+ 		struct arm_smmu_cd target;
+ 		struct arm_smmu_cd *cdptr;
+ 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 5db78e6e03dcfd..10dc7edd40e1b1 100644
+index 38e83386f631f1..6a3a5df836b9c7 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -2712,6 +2712,8 @@ int arm_smmu_set_pasid(struct arm_smmu_master *master,
- 	struct arm_smmu_domain *sid_smmu_domain =
- 		to_smmu_domain_safe(iommu_get_domain_for_dev(master->dev));
- 	struct arm_smmu_cd *cdptr;
-+	struct attach_state state;
-+	int ret;
- 
- 	if (!sid_smmu_domain || sid_smmu_domain->stage != ARM_SMMU_DOMAIN_S1)
- 		return -ENODEV;
-@@ -2719,14 +2721,30 @@ int arm_smmu_set_pasid(struct arm_smmu_master *master,
- 	cdptr = arm_smmu_get_cd_ptr(master, pasid);
- 	if (!cdptr)
- 		return -ENOMEM;
-+
-+	mutex_lock(&arm_smmu_asid_lock);
-+	ret = arm_smmu_attach_prepare(master, smmu_domain, pasid, &state);
-+	if (ret)
-+		goto out_unlock;
-+
- 	arm_smmu_write_cd_entry(master, pasid, cdptr, cd);
--	return 0;
-+
-+	arm_smmu_attach_commit(master, pasid, &state);
-+
-+out_unlock:
-+	mutex_unlock(&arm_smmu_asid_lock);
-+	return ret;
- }
- 
- void arm_smmu_remove_pasid(struct arm_smmu_master *master,
- 			   struct arm_smmu_domain *smmu_domain, ioasid_t pasid)
+@@ -1968,10 +1968,10 @@ static int arm_smmu_atc_inv_master(struct arm_smmu_master *master)
+ int arm_smmu_atc_inv_domain(struct arm_smmu_domain *smmu_domain, int ssid,
+ 			    unsigned long iova, size_t size)
  {
-+	mutex_lock(&arm_smmu_asid_lock);
- 	arm_smmu_clear_cd(master, pasid);
-+	if (master->ats_enabled)
-+		arm_smmu_atc_inv_master(master, pasid);
-+	arm_smmu_remove_master_domain(master, smmu_domain, pasid);
-+	mutex_unlock(&arm_smmu_asid_lock);
++	struct arm_smmu_master_domain *master_domain;
+ 	int i;
+ 	unsigned long flags;
+ 	struct arm_smmu_cmdq_ent cmd;
+-	struct arm_smmu_master *master;
+ 	struct arm_smmu_cmdq_batch cmds;
+ 
+ 	if (!(smmu_domain->smmu->features & ARM_SMMU_FEAT_ATS))
+@@ -1999,7 +1999,10 @@ int arm_smmu_atc_inv_domain(struct arm_smmu_domain *smmu_domain, int ssid,
+ 	cmds.num = 0;
+ 
+ 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
+-	list_for_each_entry(master, &smmu_domain->devices, domain_head) {
++	list_for_each_entry(master_domain, &smmu_domain->devices,
++			    devices_elm) {
++		struct arm_smmu_master *master = master_domain->master;
++
+ 		if (!master->ats_enabled)
+ 			continue;
+ 
+@@ -2489,10 +2492,27 @@ static void arm_smmu_disable_pasid(struct arm_smmu_master *master)
+ 	pci_disable_pasid(pdev);
  }
  
- static int arm_smmu_attach_dev_ste(struct device *dev,
++static struct arm_smmu_master_domain *
++arm_smmu_find_master_domain(struct arm_smmu_domain *smmu_domain,
++			    struct arm_smmu_master *master)
++{
++	struct arm_smmu_master_domain *master_domain;
++
++	lockdep_assert_held(&smmu_domain->devices_lock);
++
++	list_for_each_entry(master_domain, &smmu_domain->devices,
++			    devices_elm) {
++		if (master_domain->master == master)
++			return master_domain;
++	}
++	return NULL;
++}
++
+ static void arm_smmu_detach_dev(struct arm_smmu_master *master)
+ {
+ 	struct arm_smmu_domain *smmu_domain =
+ 		to_smmu_domain_safe(iommu_get_domain_for_dev(master->dev));
++	struct arm_smmu_master_domain *master_domain;
+ 	unsigned long flags;
+ 
+ 	if (!smmu_domain)
+@@ -2501,7 +2521,11 @@ static void arm_smmu_detach_dev(struct arm_smmu_master *master)
+ 	arm_smmu_disable_ats(master, smmu_domain);
+ 
+ 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
+-	list_del_init(&master->domain_head);
++	master_domain = arm_smmu_find_master_domain(smmu_domain, master);
++	if (master_domain) {
++		list_del(&master_domain->devices_elm);
++		kfree(master_domain);
++	}
+ 	spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
+ 
+ 	master->ats_enabled = false;
+@@ -2515,6 +2539,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+ 	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+ 	struct arm_smmu_device *smmu;
+ 	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
++	struct arm_smmu_master_domain *master_domain;
+ 	struct arm_smmu_master *master;
+ 	struct arm_smmu_cd *cdptr;
+ 
+@@ -2551,6 +2576,11 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+ 			return -ENOMEM;
+ 	}
+ 
++	master_domain = kzalloc(sizeof(*master_domain), GFP_KERNEL);
++	if (!master_domain)
++		return -ENOMEM;
++	master_domain->master = master;
++
+ 	/*
+ 	 * Prevent arm_smmu_share_asid() from trying to change the ASID
+ 	 * of either the old or new domain while we are working on it.
+@@ -2564,7 +2594,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+ 	master->ats_enabled = arm_smmu_ats_supported(master);
+ 
+ 	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
+-	list_add(&master->domain_head, &smmu_domain->devices);
++	list_add(&master_domain->devices_elm, &smmu_domain->devices);
+ 	spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
+ 
+ 	switch (smmu_domain->stage) {
+@@ -2881,7 +2911,6 @@ static struct iommu_device *arm_smmu_probe_device(struct device *dev)
+ 	master->dev = dev;
+ 	master->smmu = smmu;
+ 	INIT_LIST_HEAD(&master->bonds);
+-	INIT_LIST_HEAD(&master->domain_head);
+ 	dev_iommu_priv_set(dev, master);
+ 
+ 	ret = arm_smmu_insert_master(smmu, master);
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+index b7a65e37c51e9e..59bb420af52e28 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+@@ -695,7 +695,6 @@ struct arm_smmu_stream {
+ struct arm_smmu_master {
+ 	struct arm_smmu_device		*smmu;
+ 	struct device			*dev;
+-	struct list_head		domain_head;
+ 	struct arm_smmu_stream		*streams;
+ 	/* Locked by the iommu core using the group mutex */
+ 	struct arm_smmu_ctx_desc_cfg	cd_table;
+@@ -729,12 +728,18 @@ struct arm_smmu_domain {
+ 
+ 	struct iommu_domain		domain;
+ 
++	/* List of struct arm_smmu_master_domain */
+ 	struct list_head		devices;
+ 	spinlock_t			devices_lock;
+ 
+ 	struct list_head		mmu_notifiers;
+ };
+ 
++struct arm_smmu_master_domain {
++	struct list_head devices_elm;
++	struct arm_smmu_master *master;
++};
++
+ static inline struct arm_smmu_domain *to_smmu_domain(struct iommu_domain *dom)
+ {
+ 	return container_of(dom, struct arm_smmu_domain, domain);
 -- 
 2.43.0
 
