@@ -1,140 +1,107 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta034.useast.a.cloudfilter.net (omta034.useast.a.cloudfilter.net [44.202.169.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB275698
-	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 02:11:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86AC5C8B
+	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 05:27:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R3d0rGbK"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-54c77d011acso3269a12.1
-        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 18:11:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1701828711; x=1702433511; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TSzJ/eDmpu5qKlh7l7ZmUhxzU0D7hwAbG/bWD2UzWAg=;
-        b=R3d0rGbKXsoCBIMxCCu/LgTLsy/L/v3bB+3U10ARG0vpM650AnxQhBJSLLBJmxA0Wc
-         iN1FLQ1W2VpDBW/llm8mOFoajbxTsEFhC54v6j0EsS+ikX6YLA56inrx4nckZXeqK9B1
-         blL3mOZehka+SM/+P40FYqRhMfY+r25qWUL68GbPYKr8gtfj1zX4V6JQTJNBr3MQ4y/X
-         U5KlQCQfPMzTyFUhNL2dzgOqh1hl3chJSDkzfu8it2k9+7y3n9VOFgfO56hznzsPUFrz
-         GDXqhvsMweHQORDgbYapesIbTigQM+XlvvQlkvxr7cwwvxzDg/mu4sAILn3e3ps8zSOh
-         MOdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701828711; x=1702433511;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TSzJ/eDmpu5qKlh7l7ZmUhxzU0D7hwAbG/bWD2UzWAg=;
-        b=nzwgrz56Xh5JbC3+yw/iP5xV9X+SLF86jjbgw1aqenPV/OsE3TrbeJDvcBWosD1HOD
-         zL3fqQBRe/TK5XhyYrfqUBUznNTVCGQXqWu6IEIcomyHTBm2acxxJju6StpY0PEFWFVd
-         +xU2nZZh3QgKteExh0P5W14ZugTGPSLLBNzhSTyR0UlteoX+7VBks78XljunL0Vvr13X
-         WGIqym9eh0aUb0jUxpXMh3YSxQ0+8PI4HfPyLUShBHYEwi1rTOp+grDEGrVwFpmj63ro
-         w7qB2NlZljvsPX6h4YEl68r+WCmVQ0YRcrMx8BV21qxUpxJJGmnJWr5IwQe7l31111Y5
-         GQTg==
-X-Gm-Message-State: AOJu0YynWBzujDMc7TbX01BV/jUg+4URITgwqwZxJ+UrPeBCQIC+Ypc1
-	9KJFox4koIQtLUHiPa4Qx2mt3iHMkQbKfwgmwHxeYg==
-X-Google-Smtp-Source: AGHT+IFzA8RIjLbgincX9lQ/PvllzQCK/mYcCDN7t80oDb+wk/rQpCEl5GkjPt8Q+5aU6plyxvR27GnuD2AjYgQfTS8=
-X-Received: by 2002:a50:9f69:0:b0:54b:6b3f:4a86 with SMTP id
- b96-20020a509f69000000b0054b6b3f4a86mr43698edf.4.1701828710837; Tue, 05 Dec
- 2023 18:11:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="DpJhC03W"
+Received: from eig-obgw-6007a.ext.cloudfilter.net ([10.0.30.247])
+	by cmsmtp with ESMTPS
+	id AYT3rizlUjtZ3AkRMrmZO2; Wed, 06 Dec 2023 05:27:20 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id AkRDrsYpcqmEoAkRErk8bL; Wed, 06 Dec 2023 05:27:12 +0000
+X-Authority-Analysis: v=2.4 cv=P+8pOwMu c=1 sm=1 tr=0 ts=65700630
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
+ a=IkcTkHD0fZMA:10 a=e2cXIFwxEfEA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=ATLCLyqtdEkl7mCwK7IA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=pO2xW5L49dy/9Rm9TCjtjs18xcEcAAzsBvc2XH40lcU=; b=DpJhC03WIoAybqnuvai09deB+8
+	AqUVbKkWCkjcU46iH+HBSQtc2xIEsUPH3p+i1Spx+90SVkwM+VqJwexEQQG6ZipYbMy9Jsu/BmSmF
+	jwxREaPEA1vaVYq9lVQ9CzDq+88s1XQf/WOHO6VNHYX2b1GRh42qDtIvYJyWu+QVSeiaoKx7REIeb
+	ox2GRIwLpUF/zNXIY9ktwhtCsEmX7E41n7iMuxqsNziRQEXJACMI74sKcCFZcAk3xvkksgHPxkUpo
+	eXKnV7iwEonittTapNEJ/5LUu59XDn8hHfzWuz6oIrU+LE3sXIUTIlGkEuW1jHbIdi01QOBxZ4Sq+
+	gAV39K+Q==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:58548 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1rAkRB-003bzr-17;
+	Tue, 05 Dec 2023 22:27:09 -0700
+Subject: Re: [PATCH 6.1 000/105] 6.1.66-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20231205183248.388576393@linuxfoundation.org>
+In-Reply-To: <20231205183248.388576393@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <841ea761-414a-cbf0-fb50-1459d8e3ca5b@w6rz.net>
+Date: Tue, 5 Dec 2023 21:27:06 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231205-riscv-restrict-dwarf5-llvm-v2-0-aedf00a382ac@kernel.org> <20231205-riscv-restrict-dwarf5-llvm-v2-2-aedf00a382ac@kernel.org>
-In-Reply-To: <20231205-riscv-restrict-dwarf5-llvm-v2-2-aedf00a382ac@kernel.org>
-From: Fangrui Song <maskray@google.com>
-Date: Tue, 5 Dec 2023 18:11:38 -0800
-Message-ID: <CAFP8O3+-YZaS01NSYt9d2cOVLS-wHk-tMjB8URA0g2GPddy4HQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] riscv: Restrict DWARF5 when building with LLVM to
- known working versions
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	conor@kernel.org, ndesaulniers@google.com, linux-riscv@lists.infradead.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1rAkRB-003bzr-17
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:58548
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfEhGPMbn2a/Eprt+IdZ0TXNj6gZlrpz5ZMZlT3P5VsavlPywxmbDDiUpwLw4YsuVPS//E8NpcuOdsR6fq4uIUz8+fqVBe+296huDsA5lYdvNGTig8E57
+ wO92SDoCM1E2oV2ZieNh28rOxGbjiyPIAzGu1XRxF1SdvDikyZ9t/oPymZIoRaxYAMCZ/URRzqziRg==
 
-On Tue, Dec 5, 2023 at 3:54=E2=80=AFPM Nathan Chancellor <nathan@kernel.org=
-> wrote:
+On 12/5/23 11:22 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.66 release.
+> There are 105 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> LLVM prior to 18.0.0 would generate incorrect debug info for DWARF5 due
-> to linker relaxation, which was worked around in clang by defaulting
-> RISC-V to DWARF4 [1]. Unfortunately, this workaround does not work for
-> the kernel because the DWARF version can be independently changed from
-> the default in Kconfig.
+> Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
+> Anything received after that time might be too late.
 >
-> Do not allow DWARF5 to be selected for RISC-V when using linker
-> relaxation (ld.lld >=3D 15.0.0) and a version of LLVM that does not have
-> the fixes (the integrated assembler [2] and ld.lld [3] < 18.0.0)
-> necessary to generate the correct debug info.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.66-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 >
-> Link: https://github.com/llvm/llvm-project/commit/bbc0f99f3bc96f1db16f649=
-fc21dd18e5b0918f6 [1]
-> Link: https://github.com/llvm/llvm-project/commit/1df5ea29b43690b6622db2c=
-ad7b745607ca4de6a [2]
-> Link: https://github.com/llvm/llvm-project/commit/7ffabb61a5569444b5ac932=
-2e22e5471cc5e4a77 [3]
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/riscv/Kconfig | 9 +++++++++
->  lib/Kconfig.debug  | 1 +
->  2 files changed, 10 insertions(+)
+> thanks,
 >
-> diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
-> index 72be1d8122a3..81b473cb47b0 100644
-> --- a/arch/riscv/Kconfig
-> +++ b/arch/riscv/Kconfig
-> @@ -186,6 +186,15 @@ config RISCV_USE_LINKER_RELAXATION
->         # https://github.com/llvm/llvm-project/commit/6611d58f5bbcbec7726=
-2d392e2923e1d680f6985
->         depends on !LD_IS_LLD || LLD_VERSION >=3D 150000
->
-> +# https://github.com/llvm/llvm-project/commit/bbc0f99f3bc96f1db16f649fc2=
-1dd18e5b0918f6
-> +config ARCH_HAS_BROKEN_DWARF5
-> +       def_bool y
-> +       depends on RISCV_USE_LINKER_RELAXATION
-> +       # https://github.com/llvm/llvm-project/commit/1df5ea29b43690b6622=
-db2cad7b745607ca4de6a
-> +       depends on AS_IS_LLVM && AS_VERSION < 180000
-> +       # https://github.com/llvm/llvm-project/commit/7ffabb61a5569444b5a=
-c9322e22e5471cc5e4a77
-> +       depends on LD_IS_LLD && LLD_VERSION < 180000
-> +
+> greg k-h
 
-LGTM.  loongarch folks can add arch/loongarch/Kconfig after they
-finish their R_LARCH_ADD_ULEB128/R_LARCH_SUB_ULEB128 toolchain work.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Reviewed-by: Fangrui Song <maskray@google.com>
+Tested-by: Ron Economos <re@w6rz.net>
 
->  config ARCH_MMAP_RND_BITS_MIN
->         default 18 if 64BIT
->         default 8
-> diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-> index cc7d53d9dc01..a0ebce05a368 100644
-> --- a/lib/Kconfig.debug
-> +++ b/lib/Kconfig.debug
-> @@ -282,6 +282,7 @@ config DEBUG_INFO_DWARF4
->  config DEBUG_INFO_DWARF5
->         bool "Generate DWARF Version 5 debuginfo"
->         select DEBUG_INFO
-> +       depends on !ARCH_HAS_BROKEN_DWARF5
->         depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION=
- >=3D 23502 && AS_HAS_NON_CONST_LEB128)
->         help
->           Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0=
-+ (gcc
->
-> --
-> 2.43.0
->
->
-
-
---=20
-=E5=AE=8B=E6=96=B9=E7=9D=BF
