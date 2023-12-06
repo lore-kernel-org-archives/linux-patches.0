@@ -1,211 +1,224 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C063066D
-	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 11:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CB431592
+	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 11:23:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="fQZ+Aujf";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="rt4EHL8f"
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B6BEH3u027267;
-	Wed, 6 Dec 2023 11:18:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=3nXRChJRlCVTZG3fRP89RGbcfXLDF9DGrneAsfq0Ctg=;
- b=fQZ+AujfX5sEu0EldFk8FUGUMO8TlaBYsYOo6EnW0uXokX60pezWYyBcbAkur42qw/Ua
- akDq4mvb43+iJ437GQab5M0ekKKO/Pf05ykVvKy52PqrXO56+IXzY5Ye+8p+ZUJnzlif
- VsUayueEFRKnqRfI30cOpVvdgoXN38TeEL8huKaWffI98CB+X2czVS3USW1SkbsNsRtN
- K0UOJUksKCmOdTrUw4mkKC9P0+g0p+keRBlAWZd3ri+Dthkrn0FpC/sl2xHra2wGfK5t
- dz+Bkpljh59Dw2wprdPUawgwy8koZzU+sl1mkmRklfQHQJ92wtmH2yv/dzBeF7FXfzQ1 Gw== 
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3utdc1960b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 06 Dec 2023 11:18:47 +0000
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 3B6A3XRK039480;
-	Wed, 6 Dec 2023 11:18:46 GMT
-Received: from nam12-mw2-obe.outbound.protection.outlook.com (mail-mw2nam12lp2041.outbound.protection.outlook.com [104.47.66.41])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3utan5qp2h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 06 Dec 2023 11:18:46 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DNlTVxRrzbYNTKvmo02OeRAF6/EC97XGcpJitUioB0k3rQsh1aWrByyeDXJWc3KvjlFVe7I2P0bAS0OpXtrsDAHJXJ+k+TVYnsfzc7Ct98qy/gNslnoNGcG0vQ7mCqy6Jkv3s0jjJ7AwsCZjTlyIYEQu7ARICXmQFXDwEJWr8wRdohRfG0CnuX8aSGKsvNiKwvsW5ZVMkn/0ru9S17jfAHNviH7vle2PkeGql/X9tjrC/T2jG1XJALgprykU3G2oUVBo3JGKFiDwL268spgNZdl/YxAJDrcBPSS5on895+YWwzT91cTBpOcxxtFsEG6gYtmSzxl/c+snEZrc7/mDWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3nXRChJRlCVTZG3fRP89RGbcfXLDF9DGrneAsfq0Ctg=;
- b=GrsLxXjBrRPfXos48huwL840dVRvp+DALrtTtcZDFNUG+1oZ6YyGJwYbMXHocWlDY+sssiXg2flLMx3X0xkZ/lUWFr5pwdF23c5L939GwUIzaiDH2mkU8SWH5Owbzvspq4kj+duUrhQFxCf0Ivr4kQ5Qj7CePHB+ODMcf9gCMKgOxNTC/EnizIFC9lgCBSEBIyZkdWrmgRSb9LR3KaiQbHtdAdK6QPAwBzqKbubYReUuiWDeo1ROh/Ommdcsjg5dSBmX4aWViFpqaj1OaHoYyJNMnec1yGI/STf3HJnzdTdCkKI6wzMTuAb3FL9EF7lea4XuGLrRnLJCODizF705Iw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oklzPMYb"
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-7c5060a9e5bso1457132241.0
+        for <patches@lists.linux.dev>; Wed, 06 Dec 2023 03:23:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3nXRChJRlCVTZG3fRP89RGbcfXLDF9DGrneAsfq0Ctg=;
- b=rt4EHL8fZAoJMDgLfi2JyUbOW9hRao/3obaL5OoHmQG/Jc8LHkf+YqDQ1wda9D4i2KG0ncCIGNg1pWTDm+qvh9PrGx0HMfti654SOn/vV/PNMgvwYN2QkKeAZld0khBe8ZEhgyr9bvyv14kIunsVyzQEmQAJQkb3DbzKLxLYF7s=
-Received: from PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
- by DS7PR10MB5231.namprd10.prod.outlook.com (2603:10b6:5:3b1::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.34; Wed, 6 Dec
- 2023 11:18:43 +0000
-Received: from PH8PR10MB6290.namprd10.prod.outlook.com
- ([fe80::b7a9:b552:a623:84a4]) by PH8PR10MB6290.namprd10.prod.outlook.com
- ([fe80::b7a9:b552:a623:84a4%4]) with mapi id 15.20.7068.025; Wed, 6 Dec 2023
- 11:18:43 +0000
-Message-ID: <8519d15a-4710-4e37-9683-888fda22e758@oracle.com>
-Date: Wed, 6 Dec 2023 16:48:36 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 00/90] 5.4.263-rc3 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-        torvalds@linux-foundation.org, akpm@linux-foundation.org,
-        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
-        rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Darren Kenny <darren.kenny@oracle.com>
-References: <20231205183241.636315882@linuxfoundation.org>
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-In-Reply-To: <20231205183241.636315882@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TYWP286CA0014.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:178::20) To SN7PR10MB6287.namprd10.prod.outlook.com
- (2603:10b6:806:26d::14)
+        d=linaro.org; s=google; t=1701861799; x=1702466599; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gliW0I2EfN36qnQKowmOwEBc+x7UD9fKDOIjdkW4NnA=;
+        b=oklzPMYbO/9gRsZYcnMEOgUgEkwoUODDNFhpFVF1ytcnYDj9xbN2aMjPdfGIxz0RyA
+         pRHI4DOyVrIXZYEYLK5N9CxGGnzLPjb1DfPK1dCQCcK266xg9iiVVAhQ/ZqGaAflFarR
+         vGimT4tU8w/zIa5mja4hysr91R5dGuaDm7JhWspmJihmSlMZqxVwYWlaWIt55iyqnMnR
+         vbGwFMHSGB8bryQXjmRfsBb7+hdvsIoilt8MR2kkVwvdMw/4S3DtokuBiQEOzwKYFW+M
+         +/DiA0ST0oQ+Nhnji36+70/6Uvh/7HlMs9LBN2IBI+aBicuyyFo7JaGQTlcI7K2wncUi
+         JcQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701861799; x=1702466599;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gliW0I2EfN36qnQKowmOwEBc+x7UD9fKDOIjdkW4NnA=;
+        b=ZklLGSivQC4eDJ2TE4iijq/nFX9lpGT2UBIZAqOpWIXGDrdbj2QwDjP+zKlSmRlua+
+         EWrQo71sLP9Gj2qSg7TFu0/UIDw1OwnnRCyzKpx5NutUousl2GavyfFJ+UaVMSJE1CSd
+         z98/jrAiyA8AXJ/ZHnwZJXJdTnELTkCx+HinHax2qYcukCJxHbwE25dq/PdRp7m9bf0T
+         SMAApg0LwzrRul+Mz9NNivI2pb1HSeBcfUT3ZyhsRJ0Zs9CfSxA5t6Q1ajUdnaxZyF3Z
+         fD/9K450UjNvzBX0FrKCYE4w/LxEc+fU6xRCC0vYzQvLPpq/btReZROadVAla+71zOVM
+         ckdg==
+X-Gm-Message-State: AOJu0Yyolg1Kw7yCaotpQMCkdaMQx8Uo0PHpEs119KJPR5SoGrSrnMeH
+	J8lBRuoZluYSL3YP1029peww/5h4Z4lGGScS87BY8Q==
+X-Google-Smtp-Source: AGHT+IGSmBwVl6smCPmKLJnEE0Yg3TaWvcZySYJu9zhZ4JV3Rfz72PbzYymCZvFv9IJuwZeHm7TJQe6PgD3T6C3zGu0=
+X-Received: by 2002:a05:6102:4404:b0:464:837e:2f84 with SMTP id
+ df4-20020a056102440400b00464837e2f84mr837945vsb.6.1701861799590; Wed, 06 Dec
+ 2023 03:23:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR10MB6290:EE_|DS7PR10MB5231:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8be3e607-7a5d-462b-704a-08dbf64d1b12
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	pmbEtWG8uibLTIlik99aeMDacTrbDVtcyNaxPQHaysIgpgMvsih7KM6pVYjBFfY2OcHU7dABIWZsyOQWCXFO9Ek+m4f/VTxjBZaO1j4DayQfdFdQF0XtRF7dO7l7FJ4wl2CYKdkYZzfg10WNICjQ2vHQzZz3aoDMxzr3w13Rh1oGD9nY8Ml8r2CmTY3X7rq4MyRxn/mqQiCQpEuX0RjBhj2DJ8LsVB1HeMcyGPECWnaSVtcJCpa26XdoMZTOJSPOueVxNG5rctECZu/zWqg1fYxbIium5yFRXtkRML/XCFFHoiF8Sgn1rB962TMLHlvWoGUYD6LhiOuRb0wBPIkeYceH0YDr72cChu9Np0gsKHe0HVKx+3CCPKcpKcyCVNAkTL5riLkMUypFJCNH7qY432y/yQOA/UveE0MRqo7MKcUuDHW3sGe8SWK1dyfwNWoiZ6AoLWUooVT/KjJgLCAGCGuAM0MUybRMU3RzSl7ozbBjYirGkVIffUkOdjEg/DO94R+ZNw6QIpfoX3EmRS3ndfeZT1tGunb1G75UPoSKhd7excfo6sejPoBQbX21IDRIxbfJzzBhC/7cWzHLTDygcIfXPGJrVDmGBl0oG/3QZmYhI5LSoRBlugPxbY3MBe+7odj/6PfO7aDaRCjbU2s0tA==
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR10MB6290.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(346002)(376002)(396003)(136003)(366004)(230922051799003)(1800799012)(186009)(64100799003)(451199024)(31696002)(107886003)(31686004)(2616005)(4326008)(8676002)(8936002)(6512007)(6506007)(53546011)(26005)(6486002)(38100700002)(478600001)(6666004)(966005)(66946007)(66556008)(316002)(66476007)(54906003)(2906002)(41300700001)(36756003)(86362001)(7416002)(5660300002)(4744005)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?aDhGdGo5K3lTd2pZTkhDdlRiM0dNRW9TanV1NXIyL1RORXVwQW1QVnc2V1VY?=
- =?utf-8?B?RmhCVXpMNW1jVVZLRmpFRkdwVGtBa1NTVW41VnBnOThuTXRvZ0NUVnJEM2o5?=
- =?utf-8?B?QzVRQ1p2SWpSdWR3N3M1N29QVkpvbk5UWWlOQUZhRWZrampUaWhJQ2lnanpU?=
- =?utf-8?B?R25reG9CRTVMMmdpWktXQk9Bdi9jUzRLcWt4aDZpWmFiZ0pmNzBacFRKMVBI?=
- =?utf-8?B?Um1rRW1jVnlibWRIMTRRanRlSXJIcTR4dDhjN0w3TE9uL3BUaUxxYjlEQTdk?=
- =?utf-8?B?dTFMekdHTE15TmlVSitXdi9zS3FLWnI5bTRJNFhROWVjK1JrOU5tQXVxMWVP?=
- =?utf-8?B?ZmRlR0UwNytXSDlQSXBYTEp3cTRHQWYzRUFaRUZZTTVtQ1Zhc2hUcllIM2dn?=
- =?utf-8?B?NCs2NnBnemNzRnd3ckZISnJkbk0wanNRSE5pK25jMm14Y0tJQ3pxdWFPek5p?=
- =?utf-8?B?WDhBbWloZXNSeDE3ZEpwd3J4T2FySlMveVZCWkU1aW4yZUYrZHBDUnZTalhO?=
- =?utf-8?B?L0tMNlVoVmoxMHN6MDlaK044NG5zRXJZMThJZ1g0aVYvamtSRFhIUEh6ZGtn?=
- =?utf-8?B?Wmo2K0RDVmtQaHVmY2ZpRVp1V3lIeE9jZlhzSUJuT3RzVGFMZDYxbUkrZFB1?=
- =?utf-8?B?QzVKZ3N0Wi9BZDdhRlpaMXNMdTJ5VzM1REdPWHI4OUJNSDVlL1B4clNFeERY?=
- =?utf-8?B?R1pkZVMvZ2ZnbnpQZzhsd1lrQWh6Qk5MbHYwU0w0ZnVYNUJBclF4WmphYWFx?=
- =?utf-8?B?TXNkR2dyUGIwVWwwTmt4Y25yUVNXN3RDdHdUa2pBRzZoOUYyejg0VjE0QUFl?=
- =?utf-8?B?UTNLRzRzUERuQThnMmhzSHV2N1BhSVFGZUc1cnI1cHVyUDVNaXBsS1JxcFdW?=
- =?utf-8?B?VU42Y1NYQzRPdHBTVVNKbzNqMlc3RThYVDBSRHZHa3ZpWkpEWXRYWVhPTHdI?=
- =?utf-8?B?UE13U2d5Uk1IU3ZjblJrVklkdkxwV1RKb3lXc0tSSFdXbWVXcGkwa01xRmY3?=
- =?utf-8?B?TGNBUHEwdDVjYTYxdENwN2xUOTZZWldaeUlJNlRVcHlaY2R6Y21VQzR0Wktt?=
- =?utf-8?B?WWJZVG5JM253TC9GQlgrSEhRSy9hOU5rOFBLUkRnSGRTM1pINjZRdXJQSFlP?=
- =?utf-8?B?VHZ4dDk5QldaL0lMbldnK0o1cXYvWkRGZlBLNnptMUlOTGs0bG5kK1Y5czk1?=
- =?utf-8?B?NGwvZVJlZjkrMjZmQkNmcVRiMWl0Q2hSQndVQmpmVDNuQ3FscURtYkY0aHZC?=
- =?utf-8?B?QmU4SWhYdUQ3eXV1eDhORG84VHNzNHVKbk9kZ3lPV1ZUektkUjdOUGFmdDJN?=
- =?utf-8?B?M0h1U0FkNmZzL2hnTUhxS0t5Vi92TVFmSENDSzFJMTdnaGMyM0svL2xJRGov?=
- =?utf-8?B?RG1kWjMyc0FwWjZFTWpDZTJ4Z2d5cmc5SVFUTklINUxYZGQ3WVdta01kZE4y?=
- =?utf-8?B?YVZ3aGNTMEppNlhNcFlGK2g4Z24yQ2FFY0Y3UHQ2YmIrY3pOZmFMVVNhRWg0?=
- =?utf-8?B?YTBXNklydXdPc2ptaFB3QXFpbEE2enE1dWgwb3o1dHJjdm1lWVUvQTQvUEZi?=
- =?utf-8?B?eE0zU1RIQkhhS2ZxUGpldHVXRFhhSG9mK2ZJQU9Sek11VDUwS0JWMUNwajZl?=
- =?utf-8?B?WEduUStraFlqYnEraHNRQzRZcUE5NkI2SEx6S1hYK21yZUtBTDBVa0UyT1Fo?=
- =?utf-8?B?ZzM0c2poUHQvZjN6UG11VnBGVEhEQjg0dk0rK1hVTVE2cCtaRFhtdE8rYlpQ?=
- =?utf-8?B?M2Y3NFNISGxuVnk4RFJMU00xdzZVQngxVEJXelVhRmx1aVJKbmpyZ1MzSVJh?=
- =?utf-8?B?SHpNVjdzclhGRnJHV1JIVnp3emlSTnAyWDJmRWZNbDFURE4vRGhobVlJdmts?=
- =?utf-8?B?UnR2NCtvc1pQNXY2NmlaYnFodWFXOVc0YnBQbTdHd3kwSVZIQzB6Rk5TcTFV?=
- =?utf-8?B?NUxqUC9RMlpwYTY2eGNaZnkxSCs0SWpIdjdUQytiODVFMG1uS1FPV2twTU5M?=
- =?utf-8?B?RHNqRU5jbTlDazB2MVhFNEUvKzIwRFQvTmJXZ0FWWXdEOFJMV2wwdzBRNVdM?=
- =?utf-8?B?ZG03OWxtSCtZMzJLcXQwV2d3dmRoYytUWGN6M1FKTU4zUzhRc0dmZW9kNVJM?=
- =?utf-8?B?VHFQbm4rM3d0OVBxdEJzWFBSZ3RuZHZhSUtuRjNXWC91d3RITWZ6LzdvY0p1?=
- =?utf-8?Q?hnBYHQtmwlrAKuffor46SGA=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	=?utf-8?B?dGVPMjdmNmlldVMxTDQ2YkRLSThmTjYwbTFuMFVpUU5PVHhCYVh5ay9wY21S?=
- =?utf-8?B?UWhuQ2hnY1NhNDJNSnE2eHpQcm9BVGY1UVRVMWZrZ0IxcVBYUDlubTEzTkI4?=
- =?utf-8?B?b1VNQ1lKRHhuaW9mYnpUZ25EVmtodFBRV3BSQWJNUjdxN0VkQlduSEthRzl3?=
- =?utf-8?B?RXB3UERiY2FoVjNUU0MyK1Rnamh1WVprWU1zL2xLbDV0M3JBTTk4YVVuV0s1?=
- =?utf-8?B?aWd1K3laVGpiQlZKZVlSaHhVbHo3S0FsdXRGNFVBVjc0bTM0RVlyNXRRTFlk?=
- =?utf-8?B?ckhMNDZ6Y2dTdW8wT3ZyMHFDOUgvSndSSlNEWVoyVktNaW55aUFzemRienZr?=
- =?utf-8?B?OTJQZUh4a1V4M2h1MDkwcGFmRmUrSUNvSnp3M0hNeXVYTHdYdTIyRGg2dURj?=
- =?utf-8?B?cHlOVjZFZ25MUElTZ0lKckt5VXNXOWUvTnhkL2xmbmMwN3psSjR2V1ZwSkh1?=
- =?utf-8?B?WWFxcjJmWlplZVFRYzd2b0FVTFBpZkFCdjNEdGo5RWlpLytyTFl4VEZQalJv?=
- =?utf-8?B?NXZEcG1sWlNhMURuWmpoU1l2dGdkMThJbTZsTkJsTlJSM1F0aFEyWmlHcmNj?=
- =?utf-8?B?ZllLOVJSY1REWTNlZFFZWEdYenBMNjBGNHgvVlNGaERDUUZLMmFiWUNyU1VS?=
- =?utf-8?B?ZUJuc0FpOHNsVTl4VGRra0oxb3lLb0ExdVlQeFg4a0tiTDA1OVIydDVFNVJa?=
- =?utf-8?B?Y0FxQzR6NnBUK1NIblRHZmtUSGp6R2JIUWlDbjJQQklsMStKQnJFaEN5MHJt?=
- =?utf-8?B?WEtXRjFpT3BFVkVxaU84WEJ0ZytZNzhKYWEyMHdWcnkxNW1GNXdFRzB5ejJX?=
- =?utf-8?B?K1oyalVxalFmQ2k2L3l0Qy8vVm9RZFBmeDA0UmlMMk9qaElEd2dGSUlScy9n?=
- =?utf-8?B?RXVJTXNyU2lsRDRVbnRCYWtVTDVnZnZIK1oxTGdvT2RSMEtqbXo0cFdDaXNK?=
- =?utf-8?B?SkkyOHArOEoyR0k0SFhVQmVLTVJqV0ZSaXpLRkROVms0aEd6THZZMnN3U0Jy?=
- =?utf-8?B?cjY3Z1JsWmFxM1owbktxN1pzbUlJY1lkNGNCWnR1MWZPQlJzV3lYVmVxYmFR?=
- =?utf-8?B?UUVyTVdoeW5hazB2ZTZQRUZLTkpOOFI1eUlubkxzZlJsaHdWU0pWZGIxVW5X?=
- =?utf-8?B?NGg0Ly8xdU5DTDBQNWhNRWtRbXR3MVNYZytQN3p1WEMwSlpFZHdqeW5sZm9B?=
- =?utf-8?B?U0t2RnZXdHp6dmRaUmI5MnVFK0VrMlExeWZFQ3h5aTFUM1QxdmdUd2ZrV1NR?=
- =?utf-8?B?bEM3K0NqUVNKWU9qVnVjaTdnTWxacUo3Z0Q1bG54MFZHaXpKa09SQURYVlhT?=
- =?utf-8?B?c0lkU3VIa2wxY1JKbGFQbk1oUDd1d1V2QzNra0R3bVlGS1p6ZnAzYW40c3Y2?=
- =?utf-8?B?U2hQYTVYblpVZEFLUHZpWEhTVWwvdHd2Y3Z1U2RqRm1saEFXNk95dWl1RDkz?=
- =?utf-8?B?MVFqTktxRlpTQ1ViMWN3c3g3OWZsNitCU2VBODhiN0RVbzg2OHppLzJuTnZI?=
- =?utf-8?B?QWlvSERWQkJlWEwzZHZtS3FWWHFLS1E4cmwxN3FId2N3UXNuV1U0SzJYMkc0?=
- =?utf-8?Q?ZWN/pnxry9g4/4KtxdM8sG9nQAbRTmRI1Gy8J5frL5+l4p?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8be3e607-7a5d-462b-704a-08dbf64d1b12
-X-MS-Exchange-CrossTenant-AuthSource: SN7PR10MB6287.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2023 11:18:43.4306
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: idi/HTxJoiWUabM6j7D/XJbWc/3bj3mW6jARE80OXJGjreBhttZOYWLQXQ6hpZiowmCr2j8LSSfGzGWhmpYLx64BxseOThXmLY2Z+nw11qebI4s52LOULEfMo9KOtAhZ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB5231
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-06_08,2023-12-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 spamscore=0 malwarescore=0
- suspectscore=0 mlxscore=0 adultscore=0 bulkscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2312060094
-X-Proofpoint-GUID: C3XLWpRRF_jImk-7jCMMR9WX_6sc_3jE
-X-Proofpoint-ORIG-GUID: C3XLWpRRF_jImk-7jCMMR9WX_6sc_3jE
+References: <20231205183238.954685317@linuxfoundation.org>
+In-Reply-To: <20231205183238.954685317@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 6 Dec 2023 16:53:08 +0530
+Message-ID: <CA+G9fYvPD35zcGHGZx8CrZ42C4sAxuA5-KnyYsD4XP6LUMfhLw@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/64] 5.15.142-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Greg,
-
-On 06/12/23 12:52 am, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.263 release.
-> There are 90 patches in this series, all will be posted as a response
+On Wed, 6 Dec 2023 at 00:52, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.142 release.
+> There are 64 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
 > Anything received after that time might be too late.
-> 
-
-No problems seen on x86_64 and aarch64 with our testing.
-
-Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-
-Thanks,
-Harshit
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.263-rc3.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.142-rc2.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
+
+
+Results from Linaro's test farm.
+No regressions on arm64, arm, x86_64, and i386.
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 5.15.142-rc2
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.15.y
+* git commit: fef113ea8057148a392215b58a5901786c11dbf7
+* git describe: v5.15.141-65-gfef113ea8057
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.141-65-gfef113ea8057
+
+## Test Regressions (compared to v5.15.141)
+
+## Metric Regressions (compared to v5.15.141)
+
+## Test Fixes (compared to v5.15.141)
+
+## Metric Fixes (compared to v5.15.141)
+
+## Test result summary
+total: 92831, pass: 73975, fail: 2202, skip: 16582, xfail: 72
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 117 total, 116 passed, 1 failed
+* arm64: 44 total, 43 passed, 1 failed
+* i386: 34 total, 34 passed, 0 failed
+* mips: 24 total, 24 passed, 0 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 26 total, 26 passed, 0 failed
+* riscv: 11 total, 11 passed, 0 failed
+* s390: 11 total, 11 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 38 total, 38 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
