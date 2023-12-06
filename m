@@ -1,219 +1,140 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2084.outbound.protection.outlook.com [40.107.212.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32795315AF
-	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 11:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07EFE3172A
+	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 11:49:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pbPdhDsM"
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-7c55a04cd9eso2185547241.0
-        for <patches@lists.linux.dev>; Wed, 06 Dec 2023 03:38:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701862685; x=1702467485; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vqiXsfY2To4PHI6eJQCHduTSebcEXd5uADmfhHEO5xo=;
-        b=pbPdhDsMTxQ37rxwPViDENwH2+ClS1LWPBhTvU17c0L8BKjq/WPNl81JFt97pLY+01
-         lxDcWR276TzDoxwiI5cny3Ug7Tz3HHWd+ZgAw4cA+eo4jQ0OOZ529q1l8vI70nKkgRr5
-         fBsjXrVf1PQzHPOy4/b2U7eb6oDumTjQ6QzhNqnScL5t6LRqPth+/6wIa8ixuyF9Jhdv
-         ZF4c33VL+JEIyARsm4mMykB8xrTRmrXg5Xc1JYH+4pmyAfEcOOKNsgLbv3wfOq1aBEtT
-         hPvr8BppCMvIvubpx7tkldIMGyFwIJzNjimj+1sYOEojSC52yKcWUEocVSas4hox3C1M
-         n4Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701862685; x=1702467485;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vqiXsfY2To4PHI6eJQCHduTSebcEXd5uADmfhHEO5xo=;
-        b=uf+iQWZsNrJ3zEuhluVo76i5LHMQdeCWxnzWZTzj5TyXhtFOQmxvPjg78HeIKJP4d0
-         pG/FR6lqaCJ3mpYLyxMQLu7WwH/QMXdmmW8BVEOfeK05Fo7POHssWDshgayImYpo6//r
-         vGoBIyOwWExEQSEmPtf3JGKDIEaf6Q4G9odbrsAgtzTtOqGuPrJUQfuJ3W/8Oo7jaZEE
-         Ox5UPfSpgGgwVjVqoS9T9LIbe2f1V2wuOpd2SXUkAaSFRojLWpwZ65qyfAPCJTj6UGdD
-         CWaO4Jsgb0CC0GRppoW8HxRRVSwOZJuZRbNPeG3+sSugOc2/jeDoycZPNMjiHVKHmmKk
-         allg==
-X-Gm-Message-State: AOJu0YxJxNYZ5YkG7pslNKJCaoGjETqGiiJ/VejmCfbhDimIYY+pQQTh
-	piXfLzHW8EBIrG2m9p6rfvrWUZE6yvzwuA4z9SQdsg==
-X-Google-Smtp-Source: AGHT+IHourNTb7WMH0K3D31guA9V35xLG/P7Tn9mTPPu0kJQ1+4eDDR2yXdz5EU4bC5uAzOSV87KWRPhW1gtjYwiyX8=
-X-Received: by 2002:a67:ee1b:0:b0:464:7f57:b474 with SMTP id
- f27-20020a67ee1b000000b004647f57b474mr567721vsp.19.1701862685076; Wed, 06 Dec
- 2023 03:38:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="go4qKEWv"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fWDLwzeRSeuhyI66R6ohDQdhFg2q+kIvTCsaZIHAum0fN2qi6vQ58SQN8aAjw3Da0TCgCuHR7hFdiqYqPW+EjNXpNFdSBY+/XWg7CKNzgz8Tid/E3gF6jpn4+PHMYHc/t254KHv7CFISCh4C+NvaqJ8NuYix+PWZyxnHw5/8GcLRp028lMWrYWrvd8IbVTKxhdT7M+dw+ZMsNIfjT9+Mw2noHhC1w5MzI43HQfosodHfynf0piaCGp9R3XgrSYOmE9dwsrxSiJ1DAYoItDtT4iOfrRNb60zo383p53dsTy7nvxRnJTh/vqZnkahJgTX+LPLk/Ls2bFPiAOY5xXvhAA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TthpMvKGWktYcfjH4mr5Jbm3HDz+hnAjUtKCGMp19bs=;
+ b=Y37FWjtz/I7u+yW2bCi8aqjQKUNNSRTy5/zD+nNmHYse9EtdZ8ZY2EPCky+dZiGn8bTalaMI37y+PYnzKn59ct0z8AVKCoyYwf6JnWZbUjffqnTLehNGWTsIA/tH68cDH8nQWh8PQcNw0hZdxCf9AbsRVT1gqaGkmcukHCVBnvwBXVMLJS9GvJeCDmBLw5EnVeTtXzIfFWXs532NHDNijU2ihmirrq6tzgsRUQBrcJ/orbo3AinRglp89zD0dEjP8al+rkXww8SgOxV+Y11lSCzY9t7jSSmoHpQegCXivlLmGAvNAXxuPBJf0v7qzzLJh8SROiA69eLSASNZ1jwVRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TthpMvKGWktYcfjH4mr5Jbm3HDz+hnAjUtKCGMp19bs=;
+ b=go4qKEWvlOJj234xlG0F4AJYu7DJGtrPlvl346LFFFZhZaML9W9hM2aWIpXwkUquqjmBNsopkD05YythexqadcigxwSN2i5AQCmb/rywugef7w6A2lheEGv6CH6l3ObsXx+vtuqufVwBZJ4D2mGNP+u/4iPtFWQGL/1SXC/9SHJpbrgcRo+H+ykZfbnUkRwodgm5iuR5JOi3XoZRpMSg0/FhHErUzKmjmQpcYFE/8PnNqSRrtbJCl/Sbs2L8ZO0EnRIfuDbTaBKRzt1DAInGscuzKdrB5zOTE2DCSDJl3MOqp0Mfuc9ldWmjmFRmZ10DocjldEN+sGBZ28Uw1Stm5g==
+Received: from CYZPR14CA0006.namprd14.prod.outlook.com (2603:10b6:930:8f::21)
+ by SJ0PR12MB6781.namprd12.prod.outlook.com (2603:10b6:a03:44b::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.34; Wed, 6 Dec
+ 2023 11:49:39 +0000
+Received: from CY4PEPF0000FCC1.namprd03.prod.outlook.com
+ (2603:10b6:930:8f:cafe::88) by CYZPR14CA0006.outlook.office365.com
+ (2603:10b6:930:8f::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.34 via Frontend
+ Transport; Wed, 6 Dec 2023 11:49:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CY4PEPF0000FCC1.mail.protection.outlook.com (10.167.242.103) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7068.26 via Frontend Transport; Wed, 6 Dec 2023 11:49:39 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Wed, 6 Dec 2023
+ 03:49:29 -0800
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.41; Wed, 6 Dec 2023 03:49:29 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
+ Transport; Wed, 6 Dec 2023 03:49:29 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 5.4 00/90] 5.4.263-rc3 review
+In-Reply-To: <20231205183241.636315882@linuxfoundation.org>
+References: <20231205183241.636315882@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231205183249.651714114@linuxfoundation.org>
-In-Reply-To: <20231205183249.651714114@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 6 Dec 2023 17:07:53 +0530
-Message-ID: <CA+G9fYsQLS9sksdRLphmSJ+K7bYDsdiq--xe+eivsOfAeM2Oxg@mail.gmail.com>
-Subject: Re: [PATCH 5.10 000/131] 5.10.203-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <7b75fa54-0a77-45d8-945e-6769b6228091@drhqmail201.nvidia.com>
+Date: Wed, 6 Dec 2023 03:49:29 -0800
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCC1:EE_|SJ0PR12MB6781:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7be5a9e5-9904-4ddd-106e-08dbf6516dcc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	r20Ff48+w47NQnt0bOGqUPgx6eqJXSavd2cHJTwdU0gNbT6bHtd31odR1mo49roe9H49dF8fhrriEulIzqPKJT1WCRJl0eQFpcSyAZrMSpKc4Dd4rqcZMN6DxpFFRf1f4Oi265b3uUGUcL+26ocZcpPnX2tB7Q++Z8+n+Oq2nJCZxdBsEVGyViNBdFREyhEIDdoiZmFYda6/zj+ax9BHGRY25XnWyXAvzbUpK6Ng3NpiLe/3NTetFq2dA5fVcla5JHGfGroPbHBup3vD6IqMLT2nX4LZCJA308wEZIS5iFx1bDIPYZpzROOT2zN7Cp0NiuQ8qeoi8gjwq8ikcv2HPMCrz/c2nx/jzcT9JilP8J4gBsiOhga0RoG3T3CaFwQn0DgEG4yRoTZTW7vlj7PCg5pkmYUARMzzpDvgx9/SsXEbuxYVpgdYHJ8+M4GfcthkyfyAqz9ryGmHfPFQgmdMNIjHsYCjxtyrOWd/9sFlh968VtpOBo0uiQ/M7FfYbbv3QTMiwTB2V5NctrK1X4Vxr+KhbroTPGYAZuATpFUmTJRVrkiBWDLVNOazlqhC2KMSwurQb5YcMiZ8EI+u1Rje/7LWAuA/V5B4SaxHl4mOB8LoxXnQ4C/7X0JRkfYrHj0tiXxn37RRQauB74zvuvWPI5Jx33IML/wWy4/iz/P8NgvZsxO/ZEcdtjT4D2uVffpeoOwsyAEA6DWb3Pftr31SfIVxrzPafzqm86vsIt+Ot4YoUaFv39Oo8lauTxN7p+kdRHaIJCjCVO4TcWK0OHJyLFUl8yRJCHJGMH4oqWGWOMg=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(39860400002)(346002)(376002)(136003)(396003)(230922051799003)(186009)(451199024)(64100799003)(1800799012)(82310400011)(36840700001)(40470700004)(46966006)(41300700001)(31696002)(7416002)(40460700003)(5660300002)(2906002)(86362001)(40480700001)(82740400003)(26005)(426003)(336012)(966005)(478600001)(47076005)(356005)(7636003)(36860700001)(31686004)(8676002)(4326008)(8936002)(6916009)(316002)(70586007)(70206006)(54906003);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2023 11:49:39.6993
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7be5a9e5-9904-4ddd-106e-08dbf6516dcc
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF0000FCC1.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6781
 
-On Wed, 6 Dec 2023 at 00:52, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.10.203 release.
-> There are 131 patches in this series, all will be posted as a response
+On Wed, 06 Dec 2023 04:22:16 +0900, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.263 release.
+> There are 90 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.203-rc3.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.263-rc3.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
 
+All tests passing for Tegra ...
 
-Results from Linaro's test farm.
-No regressions on arm64, arm, x86_64, and i386.
+Test results for stable-v5.4:
+    10 builds:	10 pass, 0 fail
+    24 boots:	24 pass, 0 fail
+    54 tests:	54 pass, 0 fail
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Linux version:	5.4.263-rc3-g97430ed51c91
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra20-ventana,
+                tegra210-p2371-2180, tegra210-p3450-0000,
+                tegra30-cardhu-a04
 
-## Build
-* kernel: 5.10.203-rc3
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.10.y
-* git commit: 3e5897d7b3637fe06435b1b778ed77c76ef7612d
-* git describe: v5.10.202-132-g3e5897d7b363
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.202-132-g3e5897d7b363
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-## Test Regressions (compared to v5.10.202)
-
-## Metric Regressions (compared to v5.10.202)
-
-## Test Fixes (compared to v5.10.202)
-
-## Metric Fixes (compared to v5.10.202)
-
-## Test result summary
-total: 86943, pass: 67634, fail: 3147, skip: 16110, xfail: 52
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 117 total, 116 passed, 1 failed
-* arm64: 44 total, 43 passed, 1 failed
-* i386: 35 total, 35 passed, 0 failed
-* mips: 24 total, 24 passed, 0 failed
-* parisc: 3 total, 0 passed, 3 failed
-* powerpc: 25 total, 25 passed, 0 failed
-* riscv: 11 total, 11 passed, 0 failed
-* s390: 12 total, 12 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 38 total, 38 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* libgpiod
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-* v4l2-compliance
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Jon
