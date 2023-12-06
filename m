@@ -1,93 +1,90 @@
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D78547772
-	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 16:31:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A117495C9;
+	Wed,  6 Dec 2023 16:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIJFGGP9"
-Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-7b442912b8bso10665739f.1
-        for <patches@lists.linux.dev>; Wed, 06 Dec 2023 08:31:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1701880310; x=1702485110; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iDgo2Cq9agN60fB44yQGuaAdYgge0fbUUX+iicw+JS4=;
-        b=OIJFGGP9a6zeOzz7ibfMOap94o3StNXytWaL7l5ZrLwxPqmydvTLWhSv1mTKD3EGTS
-         zZANv7Uure6DGMh27f8nhPjYr98QDjw49YEh3slGwjmUdDMCbXNoZGt5h7ANGjKmCZzc
-         /XkAFsDxB/1z9TZtKDKqGJ+dQuHn4/lst2x9k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701880310; x=1702485110;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iDgo2Cq9agN60fB44yQGuaAdYgge0fbUUX+iicw+JS4=;
-        b=JmtPMeGcaHK2xF03WV7x9sWvMaFrjZV/6d4xSYdHbHScvOWBOQmYWBdBQi8P3lzw81
-         NmtjSO6/7AEm4GfdrbgDMv8a2s1pbSVZQw2IM9uOv660Ur2GezDlwbgdpZ9PrX/+wdaW
-         Ks2rk2KBMnwmYSp1/aKEXh6M3gcsvT5muOvbhoIK6inCSr9MtY1lJlt/sERpOXsQpdDg
-         fVc9sgPNMJhBDwEWhncRDlsfAVG3KFRGvYbAG3XeNhRSRCQdghCLB6IVBC9IxZlo1xvH
-         xQWDx9191Nz2weRhipyYQIR1fLmflRdgz9UVhNA+pK6NHb3cl9tCXkEU2jIjYxeyX2oI
-         2Mag==
-X-Gm-Message-State: AOJu0Yw0OkunmmynKK7W+Lc8C9qGGFQtmEgrvGf7D2s0+cC7iG+tW8R8
-	lSRInrORsV5CqUIhQaVtYXCfew==
-X-Google-Smtp-Source: AGHT+IFBeELv64/d8AuOa3xLLsK3PGlt938fjaP7VdvXIOnh5ODloxlxDxRzn4vnwtsAKO4aT+uOtA==
-X-Received: by 2002:a5e:c30a:0:b0:7b3:58c4:b894 with SMTP id a10-20020a5ec30a000000b007b358c4b894mr2839717iok.1.1701880309819;
-        Wed, 06 Dec 2023 08:31:49 -0800 (PST)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id a7-20020a5d9807000000b007b3e07371bbsm3970203iol.19.2023.12.06.08.31.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Dec 2023 08:31:49 -0800 (PST)
-Message-ID: <fa221062-03b4-46d7-8708-9d3ce49961dd@linuxfoundation.org>
-Date: Wed, 6 Dec 2023 09:31:48 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X+VQxK1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6A5C433C7;
+	Wed,  6 Dec 2023 16:49:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701881396;
+	bh=NSUOAVeSOFQWxSdqEOoUPgeLtKumWFEG5ZtMNjOmQwg=;
+	h=From:Subject:Date:To:Cc:From;
+	b=X+VQxK1xzmrzWqwWzGcG/rb9BcUkRKWGvxpFySO7SPTSHFMBF6LVTTBIPT8WacvUu
+	 kTF49NDmDEQ6HaBW0DZU+M4gBDkFAfBV48JGyILbSIq2J1d/TGtK4WwwZ524+bCI5h
+	 IvOAbGNE3xosJ4nAlmIjQp2tTHDoBO0Bhfpj8rq3Bhwt2AKdmQGBjI9OxFXECM2uGR
+	 8jbgz33ObyGucgW5UumUJa/KYC1Y2/JWrQh6KE1us8qIuva4wfcDzkLbwDuacIAbpn
+	 lV2VJAIzwVYnvR4NTsNYtlCgHOkIOvklOHnzxP2TBsEnCrutOkSiMvhGVwsgQx0o1b
+	 1L6sHs2pa39lQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH v2 0/2] Enable -Wincompatible-function-pointer-types-strict
+ under W=1
+Date: Wed, 06 Dec 2023 09:49:45 -0700
+Message-Id: <20231206-enable-wincompatible-function-pointer-types-strict-w-1-v2-0-91311b4c37b0@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/131] 5.10.203-rc3 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20231205183249.651714114@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20231205183249.651714114@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACmmcGUC/6WOTQ6DIBCFr2JYdxqgarSr3qNxgTjqpBYIUK0x3
+ r3oFbp5yfeS97OxgJ4wsHu2MY8zBbImgbxkTI/KDAjUJWaSy5vgXAIa1U4ICxlt305FOqj/GB1
+ TEpwlE9FDXB0GCNGTjrCAgFwVZVvXbaXLnqVy57Gn7zn8bBKPFKL16/ljFof79+QsklS8Um1dF
+ F0uu8cLvcHpav3Amn3ffz+sMbP9AAAA
+To: masahiroy@kernel.org
+Cc: ndesaulniers@google.com, morbo@google.com, justinstitt@google.com, 
+ keescook@chromium.org, samitolvanen@google.com, nicolas@fjasle.eu, 
+ linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ kernel test robot <lkp@intel.com>, 
+ Anton Ivanov <anton.ivanov@cambridgegreys.com>, 
+ Nathan Chancellor <nathan@kernel.org>, richard@nod.at, 
+ johannes@sipsolutions.net, linux-um@lists.infradead.org
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1477; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=NSUOAVeSOFQWxSdqEOoUPgeLtKumWFEG5ZtMNjOmQwg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKkFy4zE9+79nxRYHv6xenZkNP+cmLnfvLg/FK0IdfPVd
+ Z7F15fRUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACZiZsfwVyr1cPVloQ0heyTq
+ JBvXep3p/h7kPHVnhHLZlbLbWydVxDAydP1v2HH+7MHdweePmx2+0jzlzprrR5g+P2Hi3ppzPY3
+ /MBsA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 12/5/23 12:22, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.203 release.
-> There are 131 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.203-rc3.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+-Wincompatible-function-pointer-types-strict is a warning in clang-16
+and newer that is designed to catch potential kCFI failures at runtime.
+There is one set of warnings in drivers/counter that I have not been
+able to figure out a solution for so this cannot be enabled for a
+default build but adding the warning under W=1 will allow various CI
+systems to catch and report new instances so it will be easier to
+enable in a default build in the future.
 
-Compiled. Fails to boot up. Boot hangs during systemd init sequence.
-I am debugging this and will update you.
+The kbuild test robot reported one instance in arch/um, which is cleared
+up by the first patch and has an ack from an arch/um maintainer, so this
+should be able to go in via the kbuild tree.
 
+---
+Changes in v2:
+- Rebase on latest kbuild tree.
+- Pick up Nick's reviewed-by tag.
+- Include arch/um patch with Anton's ack to clear up warning reported by
+  kbuild test robot on v1.
+- Link to v1: https://lore.kernel.org/r/20231002-enable-wincompatible-function-pointer-types-strict-w-1-v1-1-808ab955d42d@kernel.org
 
-thanks,
--- Shuah
+---
+Nathan Chancellor (2):
+      um: net: Fix return type of uml_net_start_xmit()
+      kbuild: Enable -Wincompatible-function-pointer-types-strict in W=1
+
+ arch/um/drivers/net_kern.c | 2 +-
+ scripts/Makefile.extrawarn | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+---
+base-commit: 4b391dcb7cda8d1353d3bd123d0989550d48c0c9
+change-id: 20231002-enable-wincompatible-function-pointer-types-strict-w-1-4a56b99b8c6f
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
