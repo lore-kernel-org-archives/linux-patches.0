@@ -1,55 +1,60 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F6B41850
-	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 20:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F5070986
+	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 21:42:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marliere.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="COYLUkrf"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1cf7a8ab047so1388325ad.1
-        for <patches@lists.linux.dev>; Wed, 06 Dec 2023 12:31:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1701894667; x=1702499467; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=R3qk0JEUVnfBQ7ISC6DHPH710X5ye95VfntDF5kK12g=;
-        b=COYLUkrfOHdcBo4Kn8jwMH3HYnllt9ZwzlHGA/DxOfbPnDdNIey0myXq/lgzwBqpDI
-         UHcWTz5ta0GLUvwYE3H2VQDXw7Rdz31Z+UhscPs/aBZgVjLQJ6aUGWL4XlVaZj5LKV9t
-         NNh/5DljJjYXpJRVT/5YkCYZXYuu5E1qpYMew=
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=marliere.net header.i=@marliere.net header.b="SK7ZQ7m7"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-58d12b53293so139574eaf.0
+        for <patches@lists.linux.dev>; Wed, 06 Dec 2023 13:42:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701894667; x=1702499467;
+        d=1e100.net; s=20230601; t=1701898977; x=1702503777;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R3qk0JEUVnfBQ7ISC6DHPH710X5ye95VfntDF5kK12g=;
-        b=Pfy4ZwSjrLwYt917SsbV8Y8vzr6hr453mitgx18heEaPNnpFJ9Pfr4swpNsZ22MjTg
-         q1alhGxaZeIuMyGnwyxXa+usabukrb3si5acnPJ4mVWjsPLpbM5B6U38fhaeayhAzU99
-         UWiioyhT6dSTw8oEziQn5uZaXg3dZ33g/vr+rXfA8HsEkaz0fLJh9Ij/A3SmTPfys4im
-         tz8aKfDvaNZwvtwKUIXQzdNFsxPz6cCFtJsEUdDM9I3wkRkw03fGQrqgw5Onak7entAQ
-         QKBso+XwhNHDG0zq2Q7/cXRmpzAT2DlV8uJu6fonRpyIcCn78XKM1GYbQOi4SdjnjiTy
-         M7UA==
-X-Gm-Message-State: AOJu0YygUyx/k79RXpQ+T4IbINsN502gozleI3T+3mrw6N4LGtD2aORp
-	a5Vn6FBcNAIlslNcJaYfCeQ/bQ==
-X-Google-Smtp-Source: AGHT+IFTSARJXzULUfBtkG58umPSC1L0MV7PhM+1kRcHUo2wOxQLgHWPIaFOXfo8S2iijJw0Qlgv+g==
-X-Received: by 2002:a17:902:b705:b0:1d0:6ffd:8348 with SMTP id d5-20020a170902b70500b001d06ffd8348mr891494pls.83.1701894667119;
-        Wed, 06 Dec 2023 12:31:07 -0800 (PST)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id bf12-20020a170902b90c00b001bf8779e051sm215112plb.289.2023.12.06.12.31.06
+         :subject:cc:to:from:dkim-signature:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=G+/fJM3jhJ9Ym3ibRvsgfYVd/7GnLfdEWeKgca1GSDM=;
+        b=WKOflLYuoPp1LGopNbmDWjv9qBsDZeF6WEalhUP9g6IqO5bsVJoCmIxxYo28YuSlHP
+         jdjCZIjyvUqF+eR+uNAouINMNSTMDpwsxMGcPZBNZGX2Tjf++kfSC131YzV944Jz+EmP
+         jfZgv3MmIh8OQuHwi3phs+YWBj6j9CyV+NxxxDEYOhJHebgYRWPoKu8u3G59gxzmP3ye
+         y3cklFD4PP9x6wK05ugPGccvIiG7EskLurPzGnsqhuoepLqcUyewACLWpfOsnnWhuCdf
+         JpsO4eSRrSPsk+XFA1/D/YOAW0hAFIXiMCNgWuZQBAcSrD30QXT/08YurHGTYVdmECPN
+         DzxA==
+X-Gm-Message-State: AOJu0YxQu9pS/M449Rv52nzrzYogTpHXnEPziww63gZG+4q/6fTa6xef
+	E1D/TqjyPswjSpeadV0gnZ8SNha9++LnZQ==
+X-Google-Smtp-Source: AGHT+IEGaBIM38k+345rksTXCmqkaZf55qi/QOP58bKt3rV7Q69ICIjRIzZGQ6PJVsI/HVeMIJBjZg==
+X-Received: by 2002:a05:6358:7e84:b0:170:2abc:6e34 with SMTP id o4-20020a0563587e8400b001702abc6e34mr2358249rwn.19.1701898977379;
+        Wed, 06 Dec 2023 13:42:57 -0800 (PST)
+Received: from mail.marliere.net ([24.199.118.162])
+        by smtp.gmail.com with ESMTPSA id b1-20020a056a00114100b006cb7bdbc3besm447820pfm.17.2023.12.06.13.42.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 12:31:06 -0800 (PST)
-Date: Wed, 6 Dec 2023 12:31:05 -0800
-From: Kees Cook <keescook@chromium.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: masahiroy@kernel.org, ndesaulniers@google.com, morbo@google.com,
-	justinstitt@google.com, samitolvanen@google.com, nicolas@fjasle.eu,
-	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 2/2] kbuild: Enable
- -Wincompatible-function-pointer-types-strict in W=1
-Message-ID: <202312061230.DCDD958@keescook>
-References: <20231206-enable-wincompatible-function-pointer-types-strict-w-1-v2-0-91311b4c37b0@kernel.org>
- <20231206-enable-wincompatible-function-pointer-types-strict-w-1-v2-2-91311b4c37b0@kernel.org>
+        Wed, 06 Dec 2023 13:42:56 -0800 (PST)
+Date: Wed, 6 Dec 2023 18:42:54 -0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
+	s=2023; t=1701898974;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=G+/fJM3jhJ9Ym3ibRvsgfYVd/7GnLfdEWeKgca1GSDM=;
+	b=SK7ZQ7m7+KS+DkQUUFCZ8kDv0apQxPzOOmE+WUEaUfR4yg07D0DfAWbIkfyrHlnqOkyLaA
+	u1fXezvaOIrBWqe0X38jIl2m/RnuU34waHDpBbT4cKFcFEqU/CsSA9rLoVLPSHqrN15yIr
+	TMxf4gcQuQtAVryDgbTLrBmiCUTnHMR+6GR+KL0Cq29jap+abUaz+fCUQiBoT+LJ/wLXFM
+	jFFa8l6XjypUwVNkDG+Txs76A/gkNfvS9ul/D9FaEUDHSf8huAELX5nUv1lq0+/+PCpV05
+	5XydvWtHBeFRk+/E7bBv2copG43W8KH7V6N2H5o6zrH4N/GDp+/ayiyusK7NQw==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
+From: "Ricardo B. Marliere" <ricardo@marliere.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
+	allen.lkml@gmail.com
+Subject: Re: [PATCH 6.6 000/134] 6.6.5-rc1 review
+Message-ID: <vtxguldy2soodrfvvfqrvfojlfpo66axtaodszyuguc73mfh4u@qbtwh5qxjuzz>
+References: <20231205031535.163661217@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,37 +63,28 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231206-enable-wincompatible-function-pointer-types-strict-w-1-v2-2-91311b4c37b0@kernel.org>
+In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 
-On Wed, Dec 06, 2023 at 09:49:47AM -0700, Nathan Chancellor wrote:
-> -Wincompatible-function-pointer-types-strict aims to catch clang kernel
-> Control Flow Integrity (kCFI) violations at build time (rather than run
-> time) by validating function pointer assignments against the expected
-> prototype, similar to the existing -Wincompatible-function-pointer-types
-> that is considered a hard error in the kernel. The -strict variant
-> requires the types to match exactly, as opposed to just matching in
-> terms of ABI compatibility. This is primarily visible with int/unsigned
-> int in lieu of enum types or vice versa.
+On 23/12/05 12:14PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.5 release.
+> There are 134 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> The tree is not completely clean, so this warning cannot currently be
-> enabled unconditionally. However, there are only warnings in one
-> subsystem ('drivers/counter'), so it is really close. In order to
-> benefit from CI infrastructure that tests with W=1, enable this warning
-> at that level, so that new instances have a chance of being caught and
-> fixed during development.
+> Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
+> Anything received after that time might be too late.
 > 
-> This should eventually be a hard error in a similar manner as
-> Wincompatible-function-pointer-types but some subsystems test
-> with W=1 + CONFIG_WERROR=n, so it would be rude to break their builds
-> when they do not care about warnings outside of their subsystem.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 > 
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> thanks,
 
-Keeping these from leaking in is always good. Thanks!
+No regressions on my system,
+[    0.000000] Linux version 6.6.5-rc1+ (rbmarliere@debian) (Debian clang version 16.0.6 (19), GNU ld (GNU Binutils for Debian) 2.41) #10 SMP PREEMPT_DYNAMIC Wed Dec  6 18:35:57 -03 2023
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Tested-by: Ricardo B. Marliere <ricardo@marliere.net>
 
--- 
-Kees Cook
+Thanks!
