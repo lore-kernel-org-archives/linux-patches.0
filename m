@@ -1,121 +1,234 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 898211A704;
-	Wed,  6 Dec 2023 09:26:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC0E30676
+	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 11:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="EoFWHUqK"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1701854813; x=1733390813;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=XHy/s7usIh2uxCmLk5HoCb1I1blqNWn/YNuTf1NuEXs=;
-  b=EoFWHUqKUYatpFZmjz7IxgDLiYgDvtcEcscmdzApMxh1bd958Y7L+Ruk
-   KOswZ8jdZzf4K5Ac/O9WDPGujaobk49YOW9Kroh6k0hiMWlQr80haEFSh
-   9iUug4iGbv44Siaj9eqkiBfC316VCsQbDEsKOhplFH1ENFa06A+cUriBr
-   vVKmHbgv4NtHX84jlmKTkgtsW3IsF5n8+PZKZSfk553Ewknldmm76FB6S
-   ghXR6UlI8Yx0ihEI8e6Sqn67QEkQ6WODyGqeseGQTXPSdxmtG9fXNx3YJ
-   9674W/RhidEN9BmpSKSF0PUAdLcb2aQqa1GYeFdx+APna89NeVzvTMK+C
-   g==;
-X-CSE-ConnectionGUID: O1O4e9wQSgiVhtaltz5BaA==
-X-CSE-MsgGUID: 2MFCeDcoTHqb0Vo2lm1HFg==
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=Sophos;i="6.04,254,1695711600"; 
-   d="scan'208";a="13697268"
-X-Amp-Result: SKIPPED(no attachment in message)
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa1.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 06 Dec 2023 02:25:44 -0700
-Received: from chn-vm-ex04.mchp-main.com (10.10.85.152) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 6 Dec 2023 02:25:33 -0700
-Received: from [10.171.248.78] (10.10.85.11) by chn-vm-ex04.mchp-main.com
- (10.10.85.152) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
- Transport; Wed, 6 Dec 2023 02:25:31 -0700
-Message-ID: <62b3cd0f-e71c-4d53-be87-388809b42dcc@microchip.com>
-Date: Wed, 6 Dec 2023 10:24:51 +0100
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JVNBe+ks"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-7c5a2b5e77bso1094137241.1
+        for <patches@lists.linux.dev>; Wed, 06 Dec 2023 03:12:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701861149; x=1702465949; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0UubSG//sobKoRD33O6F2nApl3ZVDUMYW81HNRkiEIo=;
+        b=JVNBe+ksdbmZlTeG2AQodjUqYvrEUs86yDJoE/oF6ReQ3XhqD6E4nNY/3vFrWXK8ri
+         Ib6dfw87DLqiyHqfo1y5sqkRbxHKn3L+xKLAt5DBtp3ZXVJM/S0340wolx0hfBGMQr6/
+         fkVR309rKWTVFb+UzDHrlYZAwkbwZJys37hZ13fmFxcHmx199He3ckozhK/hZ7EKlUMe
+         EDEMjB79ucCnYINKHlfVSgTtaJMi6yiKCQSRwRY1raGCLKFWiH7CwPpDzGzpnruZxe8U
+         5SH38oXe12Gvzyd94nQjXh5sxEtH5U915M8HMdnXBj90Qy60ZwSDtL1bFY0kxHRz4Esl
+         p4TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701861149; x=1702465949;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0UubSG//sobKoRD33O6F2nApl3ZVDUMYW81HNRkiEIo=;
+        b=hhmbXmpcyzaSkCd0oVTjLmRsqTTRgURwzmuq/MUSDfzPvSxnyYLD/NeeV50HddswzZ
+         s9rM2PYlNjy5OVYEltgvqzMdkLpOpfPwLXLuNnfRS2ycpM+mOVI9DWYrNWguLGAxc6nC
+         CAcIHEjG440+1K43KW/slZbBBB5o8PcCepfhVEpg9eV5jgWH9BdWq24SCRLjGMn74V/m
+         RR3jJFfLMY+jvB/xPdwyRQAbhRLQ1DVsROarmQ927vZACXy3KL2q+R1/c2gQnhjYovpD
+         oa/iqDJ2CDLGgmugkGxne8QwOnrRYvwLZWjazfoyTBzt0TeHBxkID3Y8FK8LaV/BZ+kc
+         kXQA==
+X-Gm-Message-State: AOJu0YyLEn6y48z4MJNAL0BA/S/cKKtwlEm6uaANosT6WHdP3+9jCSD1
+	EEWmFXstH36Xu+oR+ggnnaUlEj6lpRiLszL7KdlIkA==
+X-Google-Smtp-Source: AGHT+IEHidwbwpgNXmJ6MjWYNBfa3WUcLMr01LVFkssVIxIj415CK0pHbZj8DOAExFJwLgoQHJSK+7fccH16ZKyb5sQ=
+X-Received: by 2002:a05:6102:c87:b0:464:73d8:769a with SMTP id
+ f7-20020a0561020c8700b0046473d8769amr692447vst.26.1701861148966; Wed, 06 Dec
+ 2023 03:12:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] power: reset: at91: Drop '__init' from
- at91_wakeup_status()
-To: Nathan Chancellor <nathan@kernel.org>, <sre@kernel.org>
-CC: <alexandre.belloni@bootlin.com>, <claudiu.beznea@tuxon.dev>,
-	<u.kleine-koenig@pengutronix.de>, <linux-pm@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <llvm@lists.linux.dev>,
-	<patches@lists.linux.dev>
-References: <20231120-fix-at91-modpost-warnings-v1-1-813671933863@kernel.org>
-Content-Language: en-US, fr-FR
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
-Organization: microchip
-In-Reply-To: <20231120-fix-at91-modpost-warnings-v1-1-813671933863@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20231205183248.388576393@linuxfoundation.org>
+In-Reply-To: <20231205183248.388576393@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 6 Dec 2023 16:42:17 +0530
+Message-ID: <CA+G9fYsEnqEnPNsaV--Ugp9hAbrr7yDwdokJuZ=jpUBEgY9+EQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/105] 6.1.66-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 20/11/2023 at 23:35, Nathan Chancellor wrote:
-> When building with clang, there are two section mismatch warnings:
-> 
->    WARNING: modpost: vmlinux: section mismatch in reference: at91_poweroff_probe+0x7c (section: .text) -> at91_wakeup_status (section: .init.text)
->    WARNING: modpost: vmlinux: section mismatch in reference: at91_shdwc_probe+0xcc (section: .text) -> at91_wakeup_status (section: .init.text)
-> 
-> Drop '__init' from at91_wakeup_status() to clear up the mismatch.
-> 
-> Fixes: dde74a5de817 ("power: reset: at91-sama5d2_shdwc: Stop using module_platform_driver_probe()")
-> Fixes: 099806de68b7 ("power: reset: at91-poweroff: Stop using module_platform_driver_probe()")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On Wed, 6 Dec 2023 at 00:52, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.66 release.
+> There are 105 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.66-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Thanks, best regards,
-   Nicolas
 
-> ---
-> I suspect this is not visible for GCC due to inlining
-> at91_wakeup_status() but I did not actually check.
-> ---
->   drivers/power/reset/at91-poweroff.c      | 2 +-
->   drivers/power/reset/at91-sama5d2_shdwc.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/power/reset/at91-poweroff.c b/drivers/power/reset/at91-poweroff.c
-> index 126e774e210c..93eece027865 100644
-> --- a/drivers/power/reset/at91-poweroff.c
-> +++ b/drivers/power/reset/at91-poweroff.c
-> @@ -57,7 +57,7 @@ static struct shdwc {
->          void __iomem *mpddrc_base;
->   } at91_shdwc;
-> 
-> -static void __init at91_wakeup_status(struct platform_device *pdev)
-> +static void at91_wakeup_status(struct platform_device *pdev)
->   {
->          const char *reason;
->          u32 reg = readl(at91_shdwc.shdwc_base + AT91_SHDW_SR);
-> diff --git a/drivers/power/reset/at91-sama5d2_shdwc.c b/drivers/power/reset/at91-sama5d2_shdwc.c
-> index af95c7b39cb3..959ce0dbe91d 100644
-> --- a/drivers/power/reset/at91-sama5d2_shdwc.c
-> +++ b/drivers/power/reset/at91-sama5d2_shdwc.c
-> @@ -107,7 +107,7 @@ static const unsigned long long sdwc_dbc_period[] = {
->          0, 3, 32, 512, 4096, 32768,
->   };
-> 
-> -static void __init at91_wakeup_status(struct platform_device *pdev)
-> +static void at91_wakeup_status(struct platform_device *pdev)
->   {
->          struct shdwc *shdw = platform_get_drvdata(pdev);
->          const struct reg_config *rcfg = shdw->rcfg;
-> 
-> ---
-> base-commit: b55d073e6501dc6077edaa945a6dad8ac5c8bbab
-> change-id: 20231120-fix-at91-modpost-warnings-beabd2bac722
-> 
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
-> 
+Results from Linaro's test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+NOTE:
+Following regressions from the previous round have been fixed now.
+* ltp-syscalls
+  - preadv03
+  - preadv03_64
+
+## Build
+* kernel: 6.1.66-rc2
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.1.y
+* git commit: b22b2d52d0a36cac86d9e27a0dd7bbcfb3b36fa9
+* git describe: v6.1.65-106-gb22b2d52d0a3
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.65-106-gb22b2d52d0a3
+
+## Test Regressions (compared to v6.1.65)
+
+## Metric Regressions (compared to v6.1.65)
+
+## Test Fixes (compared to v6.1.65)
+* ltp-syscalls - all devices
+  - preadv03
+  - preadv03_64
+
+## Metric Fixes (compared to v6.1.65)
+
+## Test result summary
+total: 127405, pass: 107870, fail: 2806, skip: 16606, xfail: 123
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 130 passed, 21 failed
+* arm64: 52 total, 46 passed, 6 failed
+* i386: 39 total, 39 passed, 0 failed
+* mips: 26 total, 26 passed, 0 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 36 total, 36 passed, 0 failed
+* riscv: 15 total, 15 passed, 0 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 46 total, 46 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+
+--
+Linaro LKFT
+https://lkft.linaro.org
