@@ -1,111 +1,92 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23770FC0E
-	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 00:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536BAEBC
+	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 01:37:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dk5iDPyT"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-db4364ecd6aso3892594276.2
-        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 16:33:39 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoFdIWdP"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-7b38ff8a517so27121239f.1
+        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 17:37:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701822819; x=1702427619; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5xu9oRa8BSfMv9BLhUnnloC2Q8CY9EL7xXo54kO5COc=;
-        b=Dk5iDPyTTcNEDbYNNRuvJtuivzI1jkt0QWnvOP7nMP7qd6C/bOp1j/7QebK6/KZO6x
-         86OU0YtqD37hXoZsE2VFLZLOlAKPDC1WNSTgfWJ0h85yobVo1SAC99mMwy82L4xJO0+l
-         bvnazmlsPPWg929xkjHuzaRU8QvOTi8yj9sncLnVuM5pATVuiO7miZPoTmX1bhBwYL+f
-         HFkXWzYmGFEQbvWUXfr/CwvI8CTfxbATb5Gr6WVNlx+jRh4tfI80OUyKjec9rONuwsjU
-         1FKaFY4ANwJVhp7VrhGGrYlC9OMKkYw0R4Dn6cgohulmZ+J90ovexxdZmNVlcztF/s6V
-         vZ8A==
+        d=linuxfoundation.org; s=google; t=1701826660; x=1702431460; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nsMy7T3EG2zYRwsChqog9nsZDeN6t1YOUu6K4nSNjSI=;
+        b=FoFdIWdPE/QAnuhNZDTmEtT63hQz65VRZXwpTIPa5PCfYRtN/GA22uS/fqK29tba6d
+         hm00R3rNc2WfJDiEydB64Y76di2LJ/tHTxKlqrlEh9ej182FX8mSW2SHbc14X45BLdiR
+         f0oi2MbPVGZbRxlTan+6LK+sBfq+n3KfiTZYA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701822819; x=1702427619;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5xu9oRa8BSfMv9BLhUnnloC2Q8CY9EL7xXo54kO5COc=;
-        b=xCDBybMnwY6bp3fOf8RjuYIg1Y3rnEeVD3e7cJcslP4azOXB5f2w+c+ZiOkbW1GCvI
-         Uv6UOpBD1unK8MSdF1b+Na7eHoukHdb41J5IdaX2GiG7cYo6ZHzU/uO4D9sclFA/jTxT
-         U4RDwh2bDtDDaUJ/nAATFZVEv+Kddk+in8jprzn8JwRN60T3n3dtFw6kd0GCXYoVPxrM
-         3LeyPMEEUeUFMwn3nkRNYVW/gtGM6R3OK/kfWY+FJQ8EDDZujKTFC9A8p6PB0cEry0qO
-         JsK3ul6zJ+fGFEJIxF/pIXF0wZK+9gLns97v1Lva67U7+vrXVMPOBwNTnLK8E+hzm+Hf
-         BdOA==
-X-Gm-Message-State: AOJu0YxESOMV4eMKgMLUrv3oit9HSpipbzf9HdsaSiC8Ljy8vwxbV1iC
-	/iRTwfLCxweJwZlRAzVNlfzbCHcLSISvth/hoNI=
-X-Google-Smtp-Source: AGHT+IHonzzibf5ZZHh+7K/UVAPqQEw4hM4dQz6l5XubBlwFnIEoIIT4on/J7koxoWBpFJgXUSsCIh4tsFdmii6I7B8=
-X-Received: by 2002:a25:e613:0:b0:db7:dacf:4d6f with SMTP id
- d19-20020a25e613000000b00db7dacf4d6fmr1791ybh.107.1701822818959; Tue, 05 Dec
- 2023 16:33:38 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701826660; x=1702431460;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nsMy7T3EG2zYRwsChqog9nsZDeN6t1YOUu6K4nSNjSI=;
+        b=uzLaS5a/nPR9HQZzx82MHdXvsY6/VxG5kMmvasdKdOYJUD6a1tkF5NwyOMCPVGj5c2
+         7evVZu1iKX7HaiqSM2p/xGoSNbT/7WYHb5ZXoqTSqzVkcs3jp5xn7o9P3cTRGkvQWk2+
+         mNNOZmoSpfAJZwU1qQpXeYxm0KofHGwiAtMG26jXIctlR0yQgcne87ZSMoeCBswglsgY
+         f+gvlwPXzVPv7KMLr1gzeUV1DZlWr/vklcP4tq3/xMjlVCEaRyvY/fZyhihlZWXnmYUm
+         Z9Yq3eIq1hvpkBrruZvGwlBMWPndxc/m4VkhymTt3lr9uAq3ABjskC/X/JHmrZij1n9Z
+         h81g==
+X-Gm-Message-State: AOJu0YzuoE29DRA9VBx9h7oLjc12fYZNwKyZgCqLfMR2Lv4GkGtg5SiF
+	K7EUfF8PY6BLyLGMqE/m7rfHjQ==
+X-Google-Smtp-Source: AGHT+IHdO250DHcjWcfyqUmHLuU/KhgKLl62WKWorND1qPqtBYPDYhk8HQGQyYJRy4S6yz6f+OeeSA==
+X-Received: by 2002:a5d:8715:0:b0:7b4:520c:de0b with SMTP id u21-20020a5d8715000000b007b4520cde0bmr494655iom.1.1701826660337;
+        Tue, 05 Dec 2023 17:37:40 -0800 (PST)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id d25-20020a056602329900b007b457549001sm931003ioz.36.2023.12.05.17.37.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Dec 2023 17:37:39 -0800 (PST)
+Message-ID: <4d7e7b23-7fa7-44d1-ac5d-ea955b2aee75@linuxfoundation.org>
+Date: Tue, 5 Dec 2023 18:37:39 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231205031531.426872356@linuxfoundation.org> <20231205031534.517148119@linuxfoundation.org>
-In-Reply-To: <20231205031534.517148119@linuxfoundation.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 6 Dec 2023 01:33:27 +0100
-Message-ID: <CANiq72kuK9cFDNWszsR1jSAiQo6qV9cjduYNm+oAooGtE6mRkw@mail.gmail.com>
-Subject: Re: [PATCH 6.1 051/107] auxdisplay: hd44780: move cursor home after
- clear display command
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>, Geert Uytterhoeven <geert@linux-m68k.org>, 
-	David Reaver <me@davidreaver.com>, Miguel Ojeda <ojeda@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 000/134] 6.6.5-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20231205031535.163661217@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 5, 2023 at 4:31=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.1-stable review patch.  If anyone has any objections, please let me kno=
-w.
->
-> ------------------
->
-> From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
->
-> commit 35b464e32c8bccef435e415db955787ead4ab44c upstream.
->
-> The DISPLAY_CLEAR command on the NewHaven NHD-0220DZW-AG5 display
-> does NOT change the DDRAM address to 00h (home position) like the
-> standard Hitachi HD44780 controller. As a consequence, the starting
-> position of the initial string LCD_INIT_TEXT is not guaranteed to be
-> at 0,0 depending on where the cursor was before the DISPLAY_CLEAR
-> command.
->
-> Extract of DISPLAY_CLEAR command from datasheets of:
->
->     Hitachi HD44780:
->         ... It then sets DDRAM address 0 into the address counter...
->
->     NewHaven NHD-0220DZW-AG5 datasheet:
->         ... This instruction does not change the DDRAM Address
->
-> Move the cursor home after sending DISPLAY_CLEAR command to support
-> non-standard LCDs.
->
-> Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-> Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> Tested-by: David Reaver <me@davidreaver.com>
-> Link: https://lore.kernel.org/r/20230722180925.1408885-1-hugo@hugovil.com
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+On 12/4/23 20:14, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.5 release.
+> There are 134 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 07 Dec 2023 03:14:57 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-The commit enables more hardware to work, so it is a "feature" in
-sense. It does not break the current supported hardware (as far as we
-know -- David's `Tested-by` was on HD44780), but as usual, there is
-always a risk with any change.
+Compiled and booted on my test system. No dmesg regressions.
 
-If it is OK to take commits like this into stable or somebody wanted
-to use that hardware in 6.1, then I assume it is fine, but I wanted to
-point it out just in case.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Thanks!
-
-Cheers,
-Miguel
+thanks,
+-- Shuah
