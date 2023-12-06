@@ -1,59 +1,57 @@
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+Received: from mail-oi1-f196.google.com (mail-oi1-f196.google.com [209.85.167.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F5070986
-	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 21:42:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marliere.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DE16F636
+	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 22:34:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=marliere.net header.i=@marliere.net header.b="SK7ZQ7m7"
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-58d12b53293so139574eaf.0
-        for <patches@lists.linux.dev>; Wed, 06 Dec 2023 13:42:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701898977; x=1702503777;
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="eaKIzESi"
+Received: by mail-oi1-f196.google.com with SMTP id 5614622812f47-3b9cc78d328so237469b6e.3
+        for <patches@lists.linux.dev>; Wed, 06 Dec 2023 14:34:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1701902065; x=1702506865; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:dkim-signature:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=G+/fJM3jhJ9Ym3ibRvsgfYVd/7GnLfdEWeKgca1GSDM=;
-        b=WKOflLYuoPp1LGopNbmDWjv9qBsDZeF6WEalhUP9g6IqO5bsVJoCmIxxYo28YuSlHP
-         jdjCZIjyvUqF+eR+uNAouINMNSTMDpwsxMGcPZBNZGX2Tjf++kfSC131YzV944Jz+EmP
-         jfZgv3MmIh8OQuHwi3phs+YWBj6j9CyV+NxxxDEYOhJHebgYRWPoKu8u3G59gxzmP3ye
-         y3cklFD4PP9x6wK05ugPGccvIiG7EskLurPzGnsqhuoepLqcUyewACLWpfOsnnWhuCdf
-         JpsO4eSRrSPsk+XFA1/D/YOAW0hAFIXiMCNgWuZQBAcSrD30QXT/08YurHGTYVdmECPN
-         DzxA==
-X-Gm-Message-State: AOJu0YxQu9pS/M449Rv52nzrzYogTpHXnEPziww63gZG+4q/6fTa6xef
-	E1D/TqjyPswjSpeadV0gnZ8SNha9++LnZQ==
-X-Google-Smtp-Source: AGHT+IEGaBIM38k+345rksTXCmqkaZf55qi/QOP58bKt3rV7Q69ICIjRIzZGQ6PJVsI/HVeMIJBjZg==
-X-Received: by 2002:a05:6358:7e84:b0:170:2abc:6e34 with SMTP id o4-20020a0563587e8400b001702abc6e34mr2358249rwn.19.1701898977379;
-        Wed, 06 Dec 2023 13:42:57 -0800 (PST)
-Received: from mail.marliere.net ([24.199.118.162])
-        by smtp.gmail.com with ESMTPSA id b1-20020a056a00114100b006cb7bdbc3besm447820pfm.17.2023.12.06.13.42.56
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZLAnzUmImkhc8qIHSMyVS5GmGRI3/cRZA2cD+zeipTg=;
+        b=eaKIzESicBTzw9JY+bcxChK0WCwxcmypr8qv8qbN8Q6uYR2JixktXTgh2KiJtPZGIZ
+         pHZ53il2QJbSlDRAVboTDFmykpqheoYnLTCdYNLXww8pTIDD0nOKrDJ5Oyi9UE1NyWhw
+         CGBVmUmzlNfsJ6nbJDB0FSZB587uiFdF4SPkA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701902065; x=1702506865;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZLAnzUmImkhc8qIHSMyVS5GmGRI3/cRZA2cD+zeipTg=;
+        b=Tr0h/X+ceTPZQMD9rBQR2Uofjh65Ed4LIisBpVAaIx5wjtjxTsOMt6shVQLhH3T/VM
+         +yJGyDKvMCuvwaGlHL1KIAMsVdaqBDq1UqnHi5JNN+qlBLArhdlynL/X9JmxQh0HMAg3
+         nKSF+r9zkDMuzjtBYLm5E+NIZdSpONY17b9X7azczqZcpj9xWKcBoTdTz6L51XFXXUgd
+         Z+T2z7mvUFJCtq54FUnycwTE1wOTfKYf+etmScuxdatATd5TMxP9ZfJOLOo3lPAn/tI2
+         937B/7Aa5pxz7iBuV9QXjoNJiboe8ew4u7fRqPX4SMa8PDyqUPN9eiybbIrPxr6qtq+/
+         dhGA==
+X-Gm-Message-State: AOJu0YwQj1Z+AdGn+jyViTP2nRJjBjzEDR+1pao4KnC0qjaVVWvZVZoa
+	d86mgpnUy0PYwVP12qN2X40zZw==
+X-Google-Smtp-Source: AGHT+IF/i0+BQhG4ASvw1P/Q/HjuK2+tumaFPvDBBwN5XEKcKYVZi79XVoybw+GeboMuvgjJju3MIA==
+X-Received: by 2002:a05:6808:1aaa:b0:3b8:b063:a1e0 with SMTP id bm42-20020a0568081aaa00b003b8b063a1e0mr1464142oib.106.1701902065495;
+        Wed, 06 Dec 2023 14:34:25 -0800 (PST)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id z7-20020a056808048700b003b29c2f50f0sm11033oid.18.2023.12.06.14.34.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 13:42:56 -0800 (PST)
-Date: Wed, 6 Dec 2023 18:42:54 -0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marliere.net;
-	s=2023; t=1701898974;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=G+/fJM3jhJ9Ym3ibRvsgfYVd/7GnLfdEWeKgca1GSDM=;
-	b=SK7ZQ7m7+KS+DkQUUFCZ8kDv0apQxPzOOmE+WUEaUfR4yg07D0DfAWbIkfyrHlnqOkyLaA
-	u1fXezvaOIrBWqe0X38jIl2m/RnuU34waHDpBbT4cKFcFEqU/CsSA9rLoVLPSHqrN15yIr
-	TMxf4gcQuQtAVryDgbTLrBmiCUTnHMR+6GR+KL0Cq29jap+abUaz+fCUQiBoT+LJ/wLXFM
-	jFFa8l6XjypUwVNkDG+Txs76A/gkNfvS9ul/D9FaEUDHSf8huAELX5nUv1lq0+/+PCpV05
-	5XydvWtHBeFRk+/E7bBv2copG43W8KH7V6N2H5o6zrH4N/GDp+/ayiyusK7NQw==
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=ricardo@marliere.net smtp.mailfrom=ricardo@marliere.net
-From: "Ricardo B. Marliere" <ricardo@marliere.net>
+        Wed, 06 Dec 2023 14:34:24 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Wed, 6 Dec 2023 16:34:23 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	allen.lkml@gmail.com
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
 Subject: Re: [PATCH 6.6 000/134] 6.6.5-rc1 review
-Message-ID: <vtxguldy2soodrfvvfqrvfojlfpo66axtaodszyuguc73mfh4u@qbtwh5qxjuzz>
+Message-ID: <ZXD276eHg24P4237@fedora64.linuxtx.org>
 References: <20231205031535.163661217@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -65,7 +63,7 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20231205031535.163661217@linuxfoundation.org>
 
-On 23/12/05 12:14PM, Greg Kroah-Hartman wrote:
+On Tue, Dec 05, 2023 at 12:14:32PM +0900, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.6.5 release.
 > There are 134 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -81,10 +79,10 @@ On 23/12/05 12:14PM, Greg Kroah-Hartman wrote:
 > and the diffstat can be found below.
 > 
 > thanks,
+> 
+> greg k-h
 
-No regressions on my system,
-[    0.000000] Linux version 6.6.5-rc1+ (rbmarliere@debian) (Debian clang version 16.0.6 (19), GNU ld (GNU Binutils for Debian) 2.41) #10 SMP PREEMPT_DYNAMIC Wed Dec  6 18:35:57 -03 2023
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-Tested-by: Ricardo B. Marliere <ricardo@marliere.net>
-
-Thanks!
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
