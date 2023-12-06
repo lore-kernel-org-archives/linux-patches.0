@@ -1,105 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7476E41220;
-	Tue,  5 Dec 2023 23:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23770FC0E
+	for <patches@lists.linux.dev>; Wed,  6 Dec 2023 00:33:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ofJioA7a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1C2C43391;
-	Tue,  5 Dec 2023 23:54:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701820441;
-	bh=ba9h7X86HRdFrwM84UeL/FEcVW5UbtpdyhVkFXYpoFE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=ofJioA7ajxhroSG6pbg/v8t+WNd/24XLW0AF0EDyyzI4OweyCQPg1OC3rqxd/9aSs
-	 vdnCDjHBHy6iKqW25viUm1LzyKW7Wtzw6CKu2uWJ3rGmn8hYcTZyxkzfBewIbYn9Om
-	 v07FRFNDn/hX3VcWF8p/03ruM7F+KySYEFZFLYfm+f4uFkVGHo6YJ0S+IOG65U0L1g
-	 +RvSA5jp1INWT+ybaGEksBn4lLL8VJKrycF7vgNBFZqcuFakAoTH1isQDhKwJCx6/+
-	 39e+BrunYszmi9AmAHVfk8clcznqyz/J7huKOKJZbDwm/lwfNU17lMRYrUfZJ1MHJ8
-	 AKbgIq0y0w7+A==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 05 Dec 2023 16:53:52 -0700
-Subject: [PATCH v2 3/3] lib/Kconfig.debug: Update AS_HAS_NON_CONST_LEB128
- comment and name
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dk5iDPyT"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-db4364ecd6aso3892594276.2
+        for <patches@lists.linux.dev>; Tue, 05 Dec 2023 16:33:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701822819; x=1702427619; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5xu9oRa8BSfMv9BLhUnnloC2Q8CY9EL7xXo54kO5COc=;
+        b=Dk5iDPyTTcNEDbYNNRuvJtuivzI1jkt0QWnvOP7nMP7qd6C/bOp1j/7QebK6/KZO6x
+         86OU0YtqD37hXoZsE2VFLZLOlAKPDC1WNSTgfWJ0h85yobVo1SAC99mMwy82L4xJO0+l
+         bvnazmlsPPWg929xkjHuzaRU8QvOTi8yj9sncLnVuM5pATVuiO7miZPoTmX1bhBwYL+f
+         HFkXWzYmGFEQbvWUXfr/CwvI8CTfxbATb5Gr6WVNlx+jRh4tfI80OUyKjec9rONuwsjU
+         1FKaFY4ANwJVhp7VrhGGrYlC9OMKkYw0R4Dn6cgohulmZ+J90ovexxdZmNVlcztF/s6V
+         vZ8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701822819; x=1702427619;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5xu9oRa8BSfMv9BLhUnnloC2Q8CY9EL7xXo54kO5COc=;
+        b=xCDBybMnwY6bp3fOf8RjuYIg1Y3rnEeVD3e7cJcslP4azOXB5f2w+c+ZiOkbW1GCvI
+         Uv6UOpBD1unK8MSdF1b+Na7eHoukHdb41J5IdaX2GiG7cYo6ZHzU/uO4D9sclFA/jTxT
+         U4RDwh2bDtDDaUJ/nAATFZVEv+Kddk+in8jprzn8JwRN60T3n3dtFw6kd0GCXYoVPxrM
+         3LeyPMEEUeUFMwn3nkRNYVW/gtGM6R3OK/kfWY+FJQ8EDDZujKTFC9A8p6PB0cEry0qO
+         JsK3ul6zJ+fGFEJIxF/pIXF0wZK+9gLns97v1Lva67U7+vrXVMPOBwNTnLK8E+hzm+Hf
+         BdOA==
+X-Gm-Message-State: AOJu0YxESOMV4eMKgMLUrv3oit9HSpipbzf9HdsaSiC8Ljy8vwxbV1iC
+	/iRTwfLCxweJwZlRAzVNlfzbCHcLSISvth/hoNI=
+X-Google-Smtp-Source: AGHT+IHonzzibf5ZZHh+7K/UVAPqQEw4hM4dQz6l5XubBlwFnIEoIIT4on/J7koxoWBpFJgXUSsCIh4tsFdmii6I7B8=
+X-Received: by 2002:a25:e613:0:b0:db7:dacf:4d6f with SMTP id
+ d19-20020a25e613000000b00db7dacf4d6fmr1791ybh.107.1701822818959; Tue, 05 Dec
+ 2023 16:33:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231205-riscv-restrict-dwarf5-llvm-v2-3-aedf00a382ac@kernel.org>
-References: <20231205-riscv-restrict-dwarf5-llvm-v2-0-aedf00a382ac@kernel.org>
-In-Reply-To: <20231205-riscv-restrict-dwarf5-llvm-v2-0-aedf00a382ac@kernel.org>
-To: paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
- conor@kernel.org
-Cc: maskray@google.com, ndesaulniers@google.com, 
- linux-riscv@lists.infradead.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2652; i=nathan@kernel.org;
- h=from:subject:message-id; bh=ba9h7X86HRdFrwM84UeL/FEcVW5UbtpdyhVkFXYpoFE=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKn5O8Qtlz4tNM1ofLfhkoW1Ra3BRw8Z+ZPiPIJGdWf+3
- v9beFaxo5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAExkfx8jw0Orx23NbNlW184l
- 5S84tcruQCJzEdOSHROtlAVzt5qfO8TIMLdBiV1lV5pEhq1rolvs3x69kOiqkt8fzQ9dCpol8T6
- FBwA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20231205031531.426872356@linuxfoundation.org> <20231205031534.517148119@linuxfoundation.org>
+In-Reply-To: <20231205031534.517148119@linuxfoundation.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 6 Dec 2023 01:33:27 +0100
+Message-ID: <CANiq72kuK9cFDNWszsR1jSAiQo6qV9cjduYNm+oAooGtE6mRkw@mail.gmail.com>
+Subject: Re: [PATCH 6.1 051/107] auxdisplay: hd44780: move cursor home after
+ clear display command
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>, Geert Uytterhoeven <geert@linux-m68k.org>, 
+	David Reaver <me@davidreaver.com>, Miguel Ojeda <ojeda@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fangrui noted that the comment around CONFIG_AS_HAS_NON_CONST_LEB128
-could be made more accurate because explicit .sleb128 directives are not
-emitted, only .uleb128 directives are. Rename the symbol to
-CONFIG_AS_HAS_NON_CONST_ULEB128 as a result.
+On Tue, Dec 5, 2023 at 4:31=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 6.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>
+> ------------------
+>
+> From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+>
+> commit 35b464e32c8bccef435e415db955787ead4ab44c upstream.
+>
+> The DISPLAY_CLEAR command on the NewHaven NHD-0220DZW-AG5 display
+> does NOT change the DDRAM address to 00h (home position) like the
+> standard Hitachi HD44780 controller. As a consequence, the starting
+> position of the initial string LCD_INIT_TEXT is not guaranteed to be
+> at 0,0 depending on where the cursor was before the DISPLAY_CLEAR
+> command.
+>
+> Extract of DISPLAY_CLEAR command from datasheets of:
+>
+>     Hitachi HD44780:
+>         ... It then sets DDRAM address 0 into the address counter...
+>
+>     NewHaven NHD-0220DZW-AG5 datasheet:
+>         ... This instruction does not change the DDRAM Address
+>
+> Move the cursor home after sending DISPLAY_CLEAR command to support
+> non-standard LCDs.
+>
+> Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+> Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+> Tested-by: David Reaver <me@davidreaver.com>
+> Link: https://lore.kernel.org/r/20230722180925.1408885-1-hugo@hugovil.com
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Further clarifications include replacing "symbol deltas" with the more
-accurate "label differences", noting that this issue has been resolved
-in newer binutils (2.41+), and it only occurs when a port uses RISC-V
-style linker relaxation.
+The commit enables more hardware to work, so it is a "feature" in
+sense. It does not break the current supported hardware (as far as we
+know -- David's `Tested-by` was on HD44780), but as usual, there is
+always a risk with any change.
 
-Suggested-by: Fangrui Song <maskray@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- lib/Kconfig.debug | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+If it is OK to take commits like this into stable or somebody wanted
+to use that hardware in 6.1, then I assume it is fine, but I wanted to
+point it out just in case.
 
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index a0ebce05a368..76c2cc697573 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -231,9 +231,10 @@ config DEBUG_INFO
- 	  in the "Debug information" choice below, indicating that debug
- 	  information will be generated for build targets.
- 
--# Clang is known to generate .{s,u}leb128 with symbol deltas with DWARF5, which
--# some targets may not support: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
--config AS_HAS_NON_CONST_LEB128
-+# Clang generates .uleb128 with label differences for DWARF v5, a feature that
-+# older binutils ports do not support when utilizing RISC-V style linker
-+# relaxation: https://sourceware.org/bugzilla/show_bug.cgi?id=27215
-+config AS_HAS_NON_CONST_ULEB128
- 	def_bool $(as-instr,.uleb128 .Lexpr_end4 - .Lexpr_start3\n.Lexpr_start3:\n.Lexpr_end4:)
- 
- choice
-@@ -258,7 +259,7 @@ config DEBUG_INFO_NONE
- config DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
- 	bool "Rely on the toolchain's implicit default DWARF version"
- 	select DEBUG_INFO
--	depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 140000 || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
-+	depends on !CC_IS_CLANG || AS_IS_LLVM || CLANG_VERSION < 140000 || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_ULEB128)
- 	help
- 	  The implicit default version of DWARF debug info produced by a
- 	  toolchain changes over time.
-@@ -283,7 +284,7 @@ config DEBUG_INFO_DWARF5
- 	bool "Generate DWARF Version 5 debuginfo"
- 	select DEBUG_INFO
- 	depends on !ARCH_HAS_BROKEN_DWARF5
--	depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
-+	depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_ULEB128)
- 	help
- 	  Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
- 	  5.0+ accepts the -gdwarf-5 flag but only had partial support for some
+Thanks!
 
--- 
-2.43.0
-
+Cheers,
+Miguel
