@@ -1,36 +1,36 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC2C4E637
-	for <patches@lists.linux.dev>; Thu,  7 Dec 2023 19:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF3550246
+	for <patches@lists.linux.dev>; Thu,  7 Dec 2023 19:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CX0V91Wz"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="O/jnNIf+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701978987; x=1733514987;
+  t=1701978990; x=1733514990;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=J23aFV6iwILzuNztzQ1fpjCoJLBjXYWEnIF8zssZEKU=;
-  b=CX0V91WzhQlbu5VVqYdw/ijPjRqMaxZVI9K3ixFnz/LT8z5z08gRg+yK
-   kG9aFDD4SHx0csBiupAd9IVcHnOs/+keBYwsT3hIkTEknRSrQLIs/RM61
-   ak7no9Y816bhUN1exEBMSzF8QdSDtzV0fd35/1t13OX0/qBgQ9wtP5is2
-   q84/9kVXxCZjA+F5CJxpM3kFz4x8CPR2zgxNdgcKDswMDoUS+z6haClrU
-   c+66H3StN3H/Kr0fjx0wz4viImiyplmQUYM78j7h1llqprgFM1fCnTfQT
-   PkLC44PiBl/pymZLqBJQtCukMZDofLUkJqMcyUg2auesl1o29ntrx6m1U
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="15848937"
+  bh=7Y+W1l2QvxVLq3YI3AbXljtPrGo+7Qw1R28SArBOmbk=;
+  b=O/jnNIf+ueMolNILCA8GHbZsmbUvJsgIBP2wGTDt4d8KidxqdEesoWKo
+   fDEgkEwiJNtwqw0W8utG3x27u8g8g/8zRV3dyHBABMiQ83CZLOnpAlksT
+   2VKFvDPXsHyN6GmAf6tUV1L1nHOcYiun6eZEXg1hxJKqvorRHQnmhZzTj
+   2YwUVKFkwWi2FldrT8ih3FLmfyNjasek/2yH8dhLWyqA7tpH8nAIkM8Je
+   cQVw2OCudo/JSo7IBYN/h/gybQWoYp/3gYRm5OT0vz+sZVp2zKAlblT1A
+   T1h6sp7yJ8O+XpSsdIPW+didtHkGBOJlccQmqFwgConKjP7Xhf0XAL+bo
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="15848971"
 X-IronPort-AV: E=Sophos;i="6.04,258,1695711600"; 
-   d="scan'208";a="15848937"
+   d="scan'208";a="15848971"
 Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 11:56:23 -0800
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 11:56:24 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="889858586"
+X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="889858596"
 X-IronPort-AV: E=Sophos;i="6.04,258,1695711600"; 
-   d="scan'208";a="889858586"
+   d="scan'208";a="889858596"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 11:56:23 -0800
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 11:56:24 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -47,12 +47,13 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v6 0/3] x86/resctrl: mba_MBps enhancements
-Date: Thu,  7 Dec 2023 11:56:10 -0800
-Message-ID: <20231207195613.153980-1-tony.luck@intel.com>
+Subject: [PATCH v6 3/3] x86/resctrl: Add new "mba_MBps_event" mount option to documentation
+Date: Thu,  7 Dec 2023 11:56:13 -0800
+Message-ID: <20231207195613.153980-4-tony.luck@intel.com>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231201214737.104444-1-tony.luck@intel.com>
+In-Reply-To: <20231207195613.153980-1-tony.luck@intel.com>
 References: <20231201214737.104444-1-tony.luck@intel.com>
+ <20231207195613.153980-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,58 +62,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Two changes relating to the MBA Software Controller(mba_sc):
-
-1) Add a new mount option so the user can choose which memory
-bandwidth monitoring event to use as the input to the feedback
+New mount option may be used to choose a specific memory bandwidth
+monitoring event to feed the MBA Software Controller(mba_sc) feedback
 loop.
 
-2) Update the "mba_MBps" mount option to make use of total memory
-bandwidth event on systems that do not support local bandwidth
-event.
-
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-
 ---
-Changes since v5:
+ Documentation/arch/x86/resctrl.rst | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-Babu: Split into separate patches for the new mount option and the
-update to the exising mount option. Since this is now a series, I
-also moved the Documentation change to its own patch.
-
-Reinette: Use "mbm_local_bytes", "mbm_total_bytes" as the strings for
-the new "mba_MBps_event" option. This sets a precedent that new events
-should follow the naming convention for the monitor files for the event.
-
-Reinette: Update rdtgroup_show_options(). I'd completely missed this in
-the earlier versions. Note that when the legacy "mba_MBps" mount option
-is used, this will show in /proc as if the new option was used:
-
-	# mount -t resctrl -o mba_MBps resctrl /sys/fs/resctrl/
-	# grep resctrl /proc/mounts
-	resctrl /sys/fs/resctrl resctrl rw,relatime,mba_MBps_event=mbm_local_bytes 0 0
-
-Changing this to exacly match what the user typed would lose the detail
-of which event is being used.
-
-Reinette: More documentation needed. I added some text on why using
-total instead of local might be useful to some users.
-
-Tony Luck (3):
-  x86/resctrl: Add mount option "mba_MBps_event"
-  x86/resctrl: Use total bandwidth for mba_MBps option when local isn't
-    present
-  x86/resctrl: Add new "mba_MBps_event" mount option to documentation
-
- Documentation/arch/x86/resctrl.rst     | 16 ++++++-
- include/linux/resctrl.h                |  2 +
- arch/x86/kernel/cpu/resctrl/internal.h |  3 +-
- arch/x86/kernel/cpu/resctrl/monitor.c  | 21 ++++-----
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 63 +++++++++++++++++++++-----
- 5 files changed, 79 insertions(+), 26 deletions(-)
-
-
-base-commit: 33cc938e65a98f1d29d0a18403dbbee050dcad9a
+diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
+index a6279df64a9d..a0c521db6786 100644
+--- a/Documentation/arch/x86/resctrl.rst
++++ b/Documentation/arch/x86/resctrl.rst
+@@ -35,7 +35,8 @@ about the feature from resctrl's info directory.
+ 
+ To use the feature mount the file system::
+ 
+- # mount -t resctrl resctrl [-o cdp[,cdpl2][,mba_MBps][,debug]] /sys/fs/resctrl
++ # mount -t resctrl resctrl [-o cdp[,cdpl2][,mba_MBps] \
++ [,mba_MBps_event=[mbm_local_bytes|mbm_total_bytes]][,debug]] /sys/fs/resctrl
+ 
+ mount options are:
+ 
+@@ -45,7 +46,12 @@ mount options are:
+ 	Enable code/data prioritization in L2 cache allocations.
+ "mba_MBps":
+ 	Enable the MBA Software Controller(mba_sc) to specify MBA
+-	bandwidth in MBps
++	bandwidth in MBps. Defaults to using MBM local bandwidth,
++	but will use total bandwidth on systems that do not support
++	local bandwidth monitoring.
++"mba_MBps_event=[mbm_local_bytes|mbm_total_bytes]":
++	Enable the MBA Software Controller(mba_sc) with a specific
++	MBM event as input to the feedback loop.
+ "debug":
+ 	Make debug files accessible. Available debug files are annotated with
+ 	"Available only with debug option".
+@@ -538,6 +544,12 @@ where as user can switch to the "MBA software controller" mode using
+ a mount option 'mba_MBps'. The schemata format is specified in the below
+ sections.
+ 
++By default the software feedback mechanism uses measurement of local
++memory bandwidth to make adjustments to throttling levels. If a system
++is running applications with poor NUMA locality users may want to use
++the "mba_MBps_event=mbm_total_bytes" mount option which will use total
++memory bandwidth measurements instead of local.
++
+ L3 schemata file details (code and data prioritization disabled)
+ ----------------------------------------------------------------
+ With CDP disabled the L3 schemata format is::
 -- 
 2.41.0
 
