@@ -1,225 +1,335 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2088.outbound.protection.outlook.com [40.107.220.88])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5617E4CE14;
-	Thu,  7 Dec 2023 18:03:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197694E637
+	for <patches@lists.linux.dev>; Thu,  7 Dec 2023 19:56:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hV8r7sog"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hGhq2dr4HkZTioEHK6JRRysaSdmW7o7g+RWXbApo4mue8FC2+hsNuiOCHDdvOCO4doyNFbmbO6wr2uCMoxQ9yjmgod5eeUV9GRrTUqsB5iSilbXUEL32wLRzFAuMuuK95C9deSwHWWynltmgjUrgd8qKzUiW0EQybhdHLmXfGmTzzuf5wmF7oq8mV5+4TtaRfBnOFZL3iaj0fMy1Ir9gTSnEksoNkwaSc/YQJZW6lSRLq6CGBwTBMOzBbFGrIBSLq7vXXyZs+bejr+b5C5kZKvk5zmmr1a1jpg2+bwH5cYopovstPuF/M1YKpobaNEleSsB+WhpqjwOTDY85r7R01A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jtbACD0KyEnnKp4nvelyRe6WqB57167ZgHeXi882HwQ=;
- b=AwMZBm2O3lteoUktinnjfizcC69dGRUi1KQ6CY5dvw+COa1hyIZupXM+2uCg64WLUYTx9mbCphNBqBRFPtyrVXbJtgRXc1+SE9nGB6CziKZxFSfv75gb3+AFJknK5yNafigIq+M8COHWbLxUUJLjayCPFpB1kB6eGok6pX+EG6jz90A2Hv+X5qtAsVs0Og9IhAvz4qBapG03J3d1NNuFrBabawPrVB/56MgPEgJA3hFnGFULqFT63wcmaFyyraMBu63ysD5CcjPw3BwnAp2bBSerUwRTrUDv0llsLPIF9KekTx0JGAH9/XYPOzybpJadCyhYyJrbyaOkyAaA6D/3Kw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jtbACD0KyEnnKp4nvelyRe6WqB57167ZgHeXi882HwQ=;
- b=hV8r7sogOqrRFpg46x1a3xp18hqjpxOntAQCEf3c6LhB9vrrXefnQo02W8lKUL9renamcru5qEIOaaZYsXcBU9hBhTIMyZ816pxXeATcxRyY/0GGEReZFynq7ar5G0GH9t/X5s2fkCIrMPRfVJsLKxM9P8+AHlAPMYNqy1fdA3dZcfAY0WHB+cKKIT20nDFu6/7N9FSyEDFOq0i33SLoVcUFHcQb5ZFapUP7ZjQpCp0NLkDxJhxZhacfv5n+9WbHheUHym6r6ZyInTpkzIESyqw/tZwB4W+5cLwiKzqlT4SuGRTUIYNIHWua99HhjeJn3r7Rl5wqNpdYcqk1LUB0cg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by CH3PR12MB7667.namprd12.prod.outlook.com (2603:10b6:610:14f::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7068.25; Thu, 7 Dec
- 2023 18:03:18 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::60d4:c1e3:e1aa:8f93]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::60d4:c1e3:e1aa:8f93%4]) with mapi id 15.20.7046.038; Thu, 7 Dec 2023
- 18:03:18 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: David Airlie <airlied@gmail.com>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	asahi@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Danilo Krummrich <dakr@redhat.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Dexuan Cui <decui@microsoft.com>,
-	devicetree@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	David Woodhouse <dwmw2@infradead.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	iommu@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Karol Herbst <kherbst@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Laxman Dewangan <ldewangan@nvidia.com>,
-	Len Brown <lenb@kernel.org>,
-	linux-acpi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-hyperv@vger.kernel.org,
-	linux-mips@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-snps-arc@lists.infradead.org,
-	linux-tegra@vger.kernel.org,
-	Russell King <linux@armlinux.org.uk>,
-	Lyude Paul <lyude@redhat.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	nouveau@lists.freedesktop.org,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Vineet Gupta <vgupta@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Wei Liu <wei.liu@kernel.org>,
-	Will Deacon <will@kernel.org>
-Cc: Lu Baolu <baolu.lu@linux.intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Hector Martin <marcan@marcan.st>,
-	Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U0c69NoC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701978985; x=1733514985;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=rzvL5k6M1nGqaS/TBlqP4ZQ+wAzLxV/e2Y2+OAMN5qA=;
+  b=U0c69NoCTRmb07TMKW9YKtyYz6WF5lFrAYUv+G/JPZZ+V+L+DlB6ybTG
+   Dca+XL+ca3Ws/LVJVP5IGuvRXL6EV2t8sTYFip1s/qQlkx55JbeAn42Mo
+   TTZ/aAJQ+LtIsx5vx+msRX3fA1elQEp7RGitW0r/oiS8BwRi3HqyDW8s0
+   HxUGJ3EH22Luc4AJZgnOC5w0u3q9SRAtcYZSmXplibyfbblJaq0QKXWkC
+   zyh/wblcBuFCtv1x/f+tMkouvUYTT+EZGfOHPAz5YrhBh+IF9qB5fOFPF
+   S/YLuNmeDpsj6znkoNZSTeERstAaAWunY5YJnabbqc+KkEe8M75lyIgmo
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="15848950"
+X-IronPort-AV: E=Sophos;i="6.04,258,1695711600"; 
+   d="scan'208";a="15848950"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 11:56:23 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="889858590"
+X-IronPort-AV: E=Sophos;i="6.04,258,1695711600"; 
+   d="scan'208";a="889858590"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 11:56:23 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	x86@kernel.org
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Rob Herring <robh@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH v2 0/7] IOMMU related FW parsing cleanup
-Date: Thu,  7 Dec 2023 14:03:07 -0400
-Message-ID: <0-v2-16e4def25ebb+820-iommu_fwspec_p1_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BL1P221CA0004.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:2c5::15) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v6 1/3] x86/resctrl: Add mount option "mba_MBps_event"
+Date: Thu,  7 Dec 2023 11:56:11 -0800
+Message-ID: <20231207195613.153980-2-tony.luck@intel.com>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20231207195613.153980-1-tony.luck@intel.com>
+References: <20231201214737.104444-1-tony.luck@intel.com>
+ <20231207195613.153980-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|CH3PR12MB7667:EE_
-X-MS-Office365-Filtering-Correlation-Id: 285be75a-f859-4f0e-3cfe-08dbf74ec9e6
-X-LD-Processed: 43083d15-7273-40c1-b7db-39efd9ccc17a,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	3X5VVxjDwhiUlBSrgzeHhdzMHSXQifgBKRat8fV83G36N2R40qY1ZBmkT3DmI1lMOPyesxmDxRAzZ945RSCoSEk3lY43tE2pG4Ikmuemu9JCrsqK9ItwjD+wZbSCrqQmX9H/F/uR/zcI/S1M2LdM+xP0OxzlesH1GF7cSJEdluaYsdDLV//bMkiHM46WH2bno3GOwywNFexcpUciBwRN2CWb9bvBla5WsKCZql2+31uPNlbHiQIkbCofrHuS73nsCv4nLfR85DQhoBTmBiiOSAg5eHiZxlDask7Hw+KsG6My+r8+VU9zZayMKwxmICSVCVh59kB961/O/CMi78yxlpnJay79pia/Jpr6ulKfWSZbx7XNXOlRn3qwlT91xjanpVMVH2fhXTuplE8UDQxe6JJ8sBvCMJ8bkHnX1o46d2RrIEigh8vTwndn+xe26XgFRc7Lcu4PNwm1X5RHZ5uuD5opynraz33q9R2qf/WOGLiZo0vunUhka0EVzfCSCEPhr/EWp1r05H46mhpR9zQsX9PrnEQ1uW5SaS0thpna/8NBbaPuHVapnwgujYRhW/Ybta6l+mfZecKw6BU+FKgI7ynABVvjCOqvoNbyBXnZHSmY2HbavQRDr5Pxd1xL3foPTw627xM6UmURWh89sGX0Dw0ymFeziwtc95vm5R49h6s5ur3bO97A8LhlHBaNeyqX4XR+2RpkLSY4RP8N5o+/XQ==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(366004)(376002)(346002)(136003)(396003)(230922051799003)(186009)(1800799012)(451199024)(64100799003)(7366002)(7416002)(2906002)(7406005)(5660300002)(41300700001)(86362001)(8676002)(4326008)(8936002)(36756003)(316002)(66946007)(66556008)(66476007)(54906003)(110136005)(921008)(38100700002)(6486002)(966005)(478600001)(107886003)(66574015)(83380400001)(6666004)(6506007)(26005)(6512007)(2616005)(4216001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?okcoPJ0XqOI1ipzg/sb0cxp8/YZrP+8ayzxab131skY2FgmnVBl8yi2qqhip?=
- =?us-ascii?Q?MomIx5z7qAMNZdwKNAmfWLp7Mpf5pf8w3SUCGWrqi1g2GhZA4sHffi1V+Nk6?=
- =?us-ascii?Q?StogYPt+MHw+/gls/N8i7eaXSFSMsf0zCqK+7B/WwQQhkoWjadxZgneWT79r?=
- =?us-ascii?Q?2G2FWnNhYbUcfaoryH4aQI5do0kf7ewuNRkkvLt/WMP1p5iGP5pHj1mArts+?=
- =?us-ascii?Q?s6mQdK14u6E/EjjdzMVFtl0hAzz/SGcESL6o8uD2nkeUnmjkfYluKy4cWVS2?=
- =?us-ascii?Q?P8NlndnfIMUIB/Mm9t71b+uFNXxidf7H90dt83DbltIfmqhWIw969A2mEdgy?=
- =?us-ascii?Q?mEiDS8RcextioEaNbyfkKsxDfzASuCPEusMPoFPA29eQke67rLiALUDdKUeH?=
- =?us-ascii?Q?SMm8/kDm/0tQs19NV6Sopj5eC6w8DQZCzJK4w4kosw+hqjMMwBZ2N5VFjgsD?=
- =?us-ascii?Q?UAMF+GPmQVYDNVDg6WpQDiWXQbojYHeiWDcZnC/RS/2AQJnldm7lp6EPSYz2?=
- =?us-ascii?Q?YPFCNO7AoinbRWMB8KmRZHi7tvNGJeDGxnehfHqVehMBXAvadg2ZkisD1t+A?=
- =?us-ascii?Q?iwvLH2t5Pn6NCgkEs4z7mhJL0PGJSmXiaukPShOpwSQmNgoyOCccxriarD1h?=
- =?us-ascii?Q?xFMXr3+nICfaNjdLxoDQqO4/+Xvj0UuAfL8i+6UnOmap3FAAnfMFHSPkFqbr?=
- =?us-ascii?Q?evjj8XSvsKYJFQc96bohYnyKBwpDg2IIQSRqEAYSyfhTS8z+giTyH++sBdq9?=
- =?us-ascii?Q?AqsApMhalfJp739h2Z1T0IRJ3B0oKMpahg7P6aQ2rAofJbtUlRNjVcvDCB9I?=
- =?us-ascii?Q?qqyvspBKVgcO46QoCKDcC6y5kOA3eCxz/Wb09SshdRBl+a22d7qG299pvI4F?=
- =?us-ascii?Q?+ACLQ2fhgEDBGz5+VOCBl6Yv8oH5XX5jcAZ3gqAnprgAL3dJkboO7VVwr5k+?=
- =?us-ascii?Q?hizpH84qH5riooWSJMTF+1m/77hVK7OCa7G5lieBGnu1FRhNbIgQ0MYZwoE6?=
- =?us-ascii?Q?vcEaiLgsmx3fccF+n15Ik/U1ZlKWIqpc4dDTqH5VgrjKPyjCgCOA6Hwd4vdl?=
- =?us-ascii?Q?VV59OZ+9Z0Sjhk/VGO0doMPipIgjmBt+oBBUNfQTkPtY8kGd3cLuSobFU7G1?=
- =?us-ascii?Q?C5dx9Z28614eSkDrduu7I4nJWjVHtUcp4tFR/tDDguUGQNEYPSH/4jYiQ8Zw?=
- =?us-ascii?Q?T6ofNgMIzIvawsszq4ANIVyR5YFE005P1CTbi1syzeJDMRUy5D9M4aAp5ZQX?=
- =?us-ascii?Q?j6dU6L4D85O+qFCLTJK/3LGJH4uqPv6T9MsbqlyOhmxV3kj3qrXYNQxx0/SC?=
- =?us-ascii?Q?eLPXKHvmT133/oDFOxhRC6vXuNoPqqgaJgfE3938ngDvIOJoTx5fzcOvHwDo?=
- =?us-ascii?Q?mxbvwnluRhnqsGw5/jmofNEU0YCYPl9+Dx7W4zfOXWus2sWmmmPutxA9YhSw?=
- =?us-ascii?Q?zVptHaDMQv/Mcmdxd8c5IUooz7pHJMRnrJKqIpUn0oMtpL5gN0ZbKnkzqYmR?=
- =?us-ascii?Q?wSeCy15SXIndHimQYH/aGdCjCX5jP0gu2+KyTBQiTqfVH8YbOKAJBrWGJWdt?=
- =?us-ascii?Q?7IFeq3jCPiZ2rIokx51sR/k/AFTcWOePDR7xvxGv?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 285be75a-f859-4f0e-3cfe-08dbf74ec9e6
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Dec 2023 18:03:17.1151
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KydOSEXXbTDZ0HhJjoCqDQZzi+V5aqI07sOgi9Sj45BYVzLt2wKWz7VKySZ8wMMN
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7667
+Content-Transfer-Encoding: 8bit
 
-These are the patches from the from the prior series without the "fwspec
-polishing":
- https://lore.kernel.org/r/0-v2-36a0088ecaa7+22c6e-iommu_fwspec_jgg@nvidia.com
+The MBA Software Controller(mba_sc) is a feedback loop that uses
+measurements of local memory bandwidth to adjust MBA throttling levels
+to keep workloads in a resctrl group within a target bandwidth set in
+the schemata file.
 
-Does a few things to prepare for the next:
+Users may want to use total memory bandwidth instead of local to handle
+workloads that have poor NUMA localization.
 
-- Clean up the call chains around dma_configure so the iommu_ops isn't being
-  exposed.
+Add a new mount option "mba_MBps_event={event_name}" where event_name
+is one of "mbm_Local_bytes" or "mbm_total_bytes" that allows a user to
+specify which monitoring event to use.
 
-- Add additional lockdep annotations now that we can.
+Update the once-per-second polling code to use the chosen event (local
+or total memory bandwidth).
 
-- Fix some missed places that need to call tegra_dev_iommu_get_stream_id()
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+---
+ include/linux/resctrl.h                |  2 +
+ arch/x86/kernel/cpu/resctrl/internal.h |  3 +-
+ arch/x86/kernel/cpu/resctrl/monitor.c  | 21 +++++----
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 61 +++++++++++++++++++++-----
+ 4 files changed, 63 insertions(+), 24 deletions(-)
 
-Based on Joerg's for-next with Robin's bus changes.
-
-Robin's dma_base/size cleanup squashes the first patch, but we can't do
-the ops removal in the other parts without it, so let's keep it
-unsquashed.
-
-v2:
- - Remove comments and bracket around tegra_dev_iommu_get_stream_id()
-   in gp10b.c
- - Remove WARN_ON() in tegra186_mc_client_sid_override(), just return 0
- - Push the locking change to a later series
- - Drop the COMPILE_TEST improvement, not important enough to argue.
-v1: https://lore.kernel.org/r/0-v1-720585788a7d+811b-iommu_fwspec_p1_jgg@nvidia.com
-
-Jason Gunthorpe (7):
-  iommu: Remove struct iommu_ops *iommu from arch_setup_dma_ops()
-  iommmu/of: Do not return struct iommu_ops from of_iommu_configure()
-  iommu/of: Use -ENODEV consistently in of_iommu_configure()
-  iommu: Mark dev_iommu_get() with lockdep
-  iommu: Mark dev_iommu_priv_set() with a lockdep
-  acpi: Do not return struct iommu_ops from acpi_iommu_configure_id()
-  iommu/tegra: Use tegra_dev_iommu_get_stream_id() in the remaining
-    places
-
- arch/arc/mm/dma.c                             |  2 +-
- arch/arm/mm/dma-mapping-nommu.c               |  2 +-
- arch/arm/mm/dma-mapping.c                     | 10 +--
- arch/arm64/mm/dma-mapping.c                   |  4 +-
- arch/mips/mm/dma-noncoherent.c                |  2 +-
- arch/riscv/mm/dma-noncoherent.c               |  2 +-
- drivers/acpi/scan.c                           | 32 ++++++----
- drivers/dma/tegra186-gpc-dma.c                |  8 +--
- .../gpu/drm/nouveau/nvkm/subdev/ltc/gp10b.c   |  9 +--
- drivers/hv/hv_common.c                        |  2 +-
- drivers/iommu/amd/iommu.c                     |  2 -
- drivers/iommu/apple-dart.c                    |  1 -
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |  1 -
- drivers/iommu/arm/arm-smmu/arm-smmu.c         |  1 -
- drivers/iommu/intel/iommu.c                   |  2 -
- drivers/iommu/iommu.c                         | 11 ++++
- drivers/iommu/of_iommu.c                      | 64 ++++++++-----------
- drivers/iommu/omap-iommu.c                    |  1 -
- drivers/memory/tegra/tegra186.c               | 14 ++--
- drivers/of/device.c                           | 24 ++++---
- include/linux/dma-map-ops.h                   |  4 +-
- include/linux/iommu.h                         |  5 +-
- include/linux/of_iommu.h                      | 13 ++--
- 23 files changed, 105 insertions(+), 111 deletions(-)
-
-
-base-commit: 173ff345925a394284250bfa6e47d231e62031c7
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 66942d7fba7f..1feb3b2e64fa 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -129,6 +129,7 @@ enum membw_throttle_mode {
+  * @throttle_mode:	Bandwidth throttling mode when threads request
+  *			different memory bandwidths
+  * @mba_sc:		True if MBA software controller(mba_sc) is enabled
++ * @mba_mbps_event:	Event (local or total) for mba_sc
+  * @mb_map:		Mapping of memory B/W percentage to memory B/W delay
+  */
+ struct resctrl_membw {
+@@ -138,6 +139,7 @@ struct resctrl_membw {
+ 	bool				arch_needs_linear;
+ 	enum membw_throttle_mode	throttle_mode;
+ 	bool				mba_sc;
++	enum resctrl_event_id		mba_mbps_event;
+ 	u32				*mb_map;
+ };
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index a4f1aa15f0a2..8b9b8f664324 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -58,7 +58,8 @@ struct rdt_fs_context {
+ 	struct kernfs_fs_context	kfc;
+ 	bool				enable_cdpl2;
+ 	bool				enable_cdpl3;
+-	bool				enable_mba_mbps;
++	bool				enable_mba_mbps_local;
++	bool				enable_mba_mbps_total;
+ 	bool				enable_debug;
+ };
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index f136ac046851..d9e590f1cbc3 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -431,9 +431,10 @@ static int __mon_event_count(u32 rmid, struct rmid_read *rr)
+  */
+ static void mbm_bw_count(u32 rmid, struct rmid_read *rr)
+ {
+-	struct mbm_state *m = &rr->d->mbm_local[rmid];
+ 	u64 cur_bw, bytes, cur_bytes;
++	struct mbm_state *m;
+ 
++	m = get_mbm_state(rr->d, rmid, rr->evtid);
+ 	cur_bytes = rr->val;
+ 	bytes = cur_bytes - m->prev_bw_bytes;
+ 	m->prev_bw_bytes = cur_bytes;
+@@ -521,19 +522,21 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 	u32 closid, rmid, cur_msr_val, new_msr_val;
+ 	struct mbm_state *pmbm_data, *cmbm_data;
+ 	u32 cur_bw, delta_bw, user_bw;
++	enum resctrl_event_id evt_id;
+ 	struct rdt_resource *r_mba;
+ 	struct rdt_domain *dom_mba;
+ 	struct list_head *head;
+ 	struct rdtgroup *entry;
+ 
+-	if (!is_mbm_local_enabled())
++	if (!is_mbm_enabled())
+ 		return;
+ 
+ 	r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
++	evt_id = r_mba->membw.mba_mbps_event;
+ 
+ 	closid = rgrp->closid;
+ 	rmid = rgrp->mon.rmid;
+-	pmbm_data = &dom_mbm->mbm_local[rmid];
++	pmbm_data = get_mbm_state(dom_mbm, rmid, evt_id);
+ 
+ 	dom_mba = get_domain_from_cpu(smp_processor_id(), r_mba);
+ 	if (!dom_mba) {
+@@ -553,7 +556,7 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_domain *dom_mbm)
+ 	 */
+ 	head = &rgrp->mon.crdtgrp_list;
+ 	list_for_each_entry(entry, head, mon.crdtgrp_list) {
+-		cmbm_data = &dom_mbm->mbm_local[entry->mon.rmid];
++		cmbm_data = get_mbm_state(dom_mbm, entry->mon.rmid, evt_id);
+ 		cur_bw += cmbm_data->prev_bw;
+ 		delta_bw += cmbm_data->delta_bw;
+ 	}
+@@ -616,18 +619,14 @@ static void mbm_update(struct rdt_resource *r, struct rdt_domain *d, int rmid)
+ 		rr.evtid = QOS_L3_MBM_TOTAL_EVENT_ID;
+ 		rr.val = 0;
+ 		__mon_event_count(rmid, &rr);
++		if (is_mba_sc(NULL) && rr.evtid == r->membw.mba_mbps_event)
++			mbm_bw_count(rmid, &rr);
+ 	}
+ 	if (is_mbm_local_enabled()) {
+ 		rr.evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
+ 		rr.val = 0;
+ 		__mon_event_count(rmid, &rr);
+-
+-		/*
+-		 * Call the MBA software controller only for the
+-		 * control groups and when user has enabled
+-		 * the software controller explicitly.
+-		 */
+-		if (is_mba_sc(NULL))
++		if (is_mba_sc(NULL) && rr.evtid == r->membw.mba_mbps_event)
+ 			mbm_bw_count(rmid, &rr);
+ 	}
+ }
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 69a1de92384a..5f64a0b2597c 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2294,7 +2294,7 @@ static bool supports_mba_mbps(void)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+ 
+-	return (is_mbm_local_enabled() &&
++	return (is_mbm_enabled() &&
+ 		r->alloc_capable && is_mba_linear());
+ }
+ 
+@@ -2302,7 +2302,7 @@ static bool supports_mba_mbps(void)
+  * Enable or disable the MBA software controller
+  * which helps user specify bandwidth in MBps.
+  */
+-static int set_mba_sc(bool mba_sc)
++static int set_mba_sc(bool mba_sc, enum resctrl_event_id mba_mbps_event)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+ 	u32 num_closid = resctrl_arch_get_num_closid(r);
+@@ -2313,6 +2313,7 @@ static int set_mba_sc(bool mba_sc)
+ 		return -EINVAL;
+ 
+ 	r->membw.mba_sc = mba_sc;
++	r->membw.mba_mbps_event = mba_mbps_event;
+ 
+ 	list_for_each_entry(d, &r->domains, list) {
+ 		for (i = 0; i < num_closid; i++)
+@@ -2445,13 +2446,14 @@ static void rdt_disable_ctx(void)
+ {
+ 	resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L3, false);
+ 	resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L2, false);
+-	set_mba_sc(false);
++	set_mba_sc(false, QOS_L3_MBM_LOCAL_EVENT_ID);
+ 
+ 	resctrl_debug = false;
+ }
+ 
+ static int rdt_enable_ctx(struct rdt_fs_context *ctx)
+ {
++	enum resctrl_event_id mba_mbps_event;
+ 	int ret = 0;
+ 
+ 	if (ctx->enable_cdpl2) {
+@@ -2466,8 +2468,12 @@ static int rdt_enable_ctx(struct rdt_fs_context *ctx)
+ 			goto out_cdpl2;
+ 	}
+ 
+-	if (ctx->enable_mba_mbps) {
+-		ret = set_mba_sc(true);
++	if (ctx->enable_mba_mbps_local || ctx->enable_mba_mbps_total) {
++		if (ctx->enable_mba_mbps_total)
++			mba_mbps_event = QOS_L3_MBM_TOTAL_EVENT_ID;
++		else
++			mba_mbps_event = QOS_L3_MBM_LOCAL_EVENT_ID;
++		ret = set_mba_sc(true, mba_mbps_event);
+ 		if (ret)
+ 			goto out_cdpl3;
+ 	}
+@@ -2683,15 +2689,17 @@ enum rdt_param {
+ 	Opt_cdp,
+ 	Opt_cdpl2,
+ 	Opt_mba_mbps,
++	Opt_mba_mbps_event,
+ 	Opt_debug,
+ 	nr__rdt_params
+ };
+ 
+ static const struct fs_parameter_spec rdt_fs_parameters[] = {
+-	fsparam_flag("cdp",		Opt_cdp),
+-	fsparam_flag("cdpl2",		Opt_cdpl2),
+-	fsparam_flag("mba_MBps",	Opt_mba_mbps),
+-	fsparam_flag("debug",		Opt_debug),
++	fsparam_flag("cdp",			Opt_cdp),
++	fsparam_flag("cdpl2",			Opt_cdpl2),
++	fsparam_flag("mba_MBps",		Opt_mba_mbps),
++	fsparam_string("mba_MBps_event",	Opt_mba_mbps_event),
++	fsparam_flag("debug",			Opt_debug),
+ 	{}
+ };
+ 
+@@ -2715,7 +2723,25 @@ static int rdt_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 	case Opt_mba_mbps:
+ 		if (!supports_mba_mbps())
+ 			return -EINVAL;
+-		ctx->enable_mba_mbps = true;
++		if (is_mbm_local_enabled())
++			ctx->enable_mba_mbps_local = true;
++		else
++			return -EINVAL;
++		return 0;
++	case Opt_mba_mbps_event:
++		if (!supports_mba_mbps())
++			return -EINVAL;
++		if (!strcmp("mbm_local_bytes", param->string)) {
++			if (!is_mbm_local_enabled())
++				return -EINVAL;
++			ctx->enable_mba_mbps_local = true;
++		} else if (!strcmp("mbm_total_bytes", param->string)) {
++			if (!is_mbm_total_enabled())
++				return -EINVAL;
++			ctx->enable_mba_mbps_total = true;
++		} else {
++			return -EINVAL;
++		}
+ 		return 0;
+ 	case Opt_debug:
+ 		ctx->enable_debug = true;
+@@ -3780,16 +3806,27 @@ static int rdtgroup_rename(struct kernfs_node *kn,
+ 	return ret;
+ }
+ 
++static char *mba_sc_event_opt_name(struct rdt_resource *r)
++{
++	if (r->membw.mba_mbps_event == QOS_L3_MBM_LOCAL_EVENT_ID)
++		return ",mba_MBps_event=mbm_local_bytes";
++	else if (r->membw.mba_mbps_event == QOS_L3_MBM_TOTAL_EVENT_ID)
++		return ",mba_MBps_event=mbm_total_bytes";
++	return "";
++}
++
+ static int rdtgroup_show_options(struct seq_file *seq, struct kernfs_root *kf)
+ {
++	struct rdt_resource *r_mba = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
++
+ 	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L3))
+ 		seq_puts(seq, ",cdp");
+ 
+ 	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L2))
+ 		seq_puts(seq, ",cdpl2");
+ 
+-	if (is_mba_sc(&rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl))
+-		seq_puts(seq, ",mba_MBps");
++	if (is_mba_sc(r_mba))
++		seq_puts(seq, mba_sc_event_opt_name(r_mba));
+ 
+ 	if (resctrl_debug)
+ 		seq_puts(seq, ",debug");
 -- 
-2.43.0
+2.41.0
 
