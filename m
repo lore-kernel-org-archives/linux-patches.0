@@ -1,117 +1,77 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF3550246
-	for <patches@lists.linux.dev>; Thu,  7 Dec 2023 19:56:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B03B1171A;
+	Fri,  8 Dec 2023 06:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="O/jnNIf+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701978990; x=1733514990;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=7Y+W1l2QvxVLq3YI3AbXljtPrGo+7Qw1R28SArBOmbk=;
-  b=O/jnNIf+ueMolNILCA8GHbZsmbUvJsgIBP2wGTDt4d8KidxqdEesoWKo
-   fDEgkEwiJNtwqw0W8utG3x27u8g8g/8zRV3dyHBABMiQ83CZLOnpAlksT
-   2VKFvDPXsHyN6GmAf6tUV1L1nHOcYiun6eZEXg1hxJKqvorRHQnmhZzTj
-   2YwUVKFkwWi2FldrT8ih3FLmfyNjasek/2yH8dhLWyqA7tpH8nAIkM8Je
-   cQVw2OCudo/JSo7IBYN/h/gybQWoYp/3gYRm5OT0vz+sZVp2zKAlblT1A
-   T1h6sp7yJ8O+XpSsdIPW+didtHkGBOJlccQmqFwgConKjP7Xhf0XAL+bo
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="15848971"
-X-IronPort-AV: E=Sophos;i="6.04,258,1695711600"; 
-   d="scan'208";a="15848971"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 11:56:24 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="889858596"
-X-IronPort-AV: E=Sophos;i="6.04,258,1695711600"; 
-   d="scan'208";a="889858596"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 11:56:24 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v6 3/3] x86/resctrl: Add new "mba_MBps_event" mount option to documentation
-Date: Thu,  7 Dec 2023 11:56:13 -0800
-Message-ID: <20231207195613.153980-4-tony.luck@intel.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231207195613.153980-1-tony.luck@intel.com>
-References: <20231201214737.104444-1-tony.luck@intel.com>
- <20231207195613.153980-1-tony.luck@intel.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+/b/5P0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A3DC433C7;
+	Fri,  8 Dec 2023 06:33:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1702017215;
+	bh=Rv/ruy3db5Oz95ujeCfBD1LwNpGZWxkjI8JTNYAGUC4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=u+/b/5P0ZJHidKNaF6EmO+CJ36TT197KsvH7ahaswiveFl1rn1LJgMSLZv/JpwJ+d
+	 chenp7LAjW4vG3IrEd6Uc2CTq3s1LPFatquDMJA531E5TiHm909F2cbfcv/TxB4gWy
+	 ZMFzyCRBmA6Kl4fvPpAe94q123sCvhuN9QYRpKKQ=
+Date: Fri, 8 Dec 2023 07:33:33 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com,
+	"lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>
+Subject: Re: [PATCH 5.10 000/131] 5.10.203-rc3 review
+Message-ID: <2023120812-shrank-draw-9b9b@gregkh>
+References: <20231205183249.651714114@linuxfoundation.org>
+ <efdb0591-2259-f86c-0da4-781dfdae22e1@ispras.ru>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <efdb0591-2259-f86c-0da4-781dfdae22e1@ispras.ru>
 
-New mount option may be used to choose a specific memory bandwidth
-monitoring event to feed the MBA Software Controller(mba_sc) feedback
-loop.
+On Thu, Dec 07, 2023 at 02:00:06AM +0300, Alexey Khoroshilov wrote:
+> On 05.12.2023 22:22, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.10.203 release.
+> > There are 131 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 07 Dec 2023 18:32:16 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.203-rc3.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> 
+> It seems something is seriously broken in this release.
+> 
+> There are patches already applied in 5.10.202 that are in 5.10.203-rc3
+> transformed in some strange way, e.g.
+> 
+> Neil Armstrong <narmstrong@baylibre.com>
+>     tty: serial: meson: retrieve port FIFO size from DT
+> 
+> 
+> commit 980c3135f1ae6fe686a70c8ba78eb1bb4bde3060 in 5.10.202
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/arch/x86/resctrl.rst | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+Odd, yeah, something is off here, let me look into it after my coffee
+has kicked in...
 
-diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-index a6279df64a9d..a0c521db6786 100644
---- a/Documentation/arch/x86/resctrl.rst
-+++ b/Documentation/arch/x86/resctrl.rst
-@@ -35,7 +35,8 @@ about the feature from resctrl's info directory.
- 
- To use the feature mount the file system::
- 
-- # mount -t resctrl resctrl [-o cdp[,cdpl2][,mba_MBps][,debug]] /sys/fs/resctrl
-+ # mount -t resctrl resctrl [-o cdp[,cdpl2][,mba_MBps] \
-+ [,mba_MBps_event=[mbm_local_bytes|mbm_total_bytes]][,debug]] /sys/fs/resctrl
- 
- mount options are:
- 
-@@ -45,7 +46,12 @@ mount options are:
- 	Enable code/data prioritization in L2 cache allocations.
- "mba_MBps":
- 	Enable the MBA Software Controller(mba_sc) to specify MBA
--	bandwidth in MBps
-+	bandwidth in MBps. Defaults to using MBM local bandwidth,
-+	but will use total bandwidth on systems that do not support
-+	local bandwidth monitoring.
-+"mba_MBps_event=[mbm_local_bytes|mbm_total_bytes]":
-+	Enable the MBA Software Controller(mba_sc) with a specific
-+	MBM event as input to the feedback loop.
- "debug":
- 	Make debug files accessible. Available debug files are annotated with
- 	"Available only with debug option".
-@@ -538,6 +544,12 @@ where as user can switch to the "MBA software controller" mode using
- a mount option 'mba_MBps'. The schemata format is specified in the below
- sections.
- 
-+By default the software feedback mechanism uses measurement of local
-+memory bandwidth to make adjustments to throttling levels. If a system
-+is running applications with poor NUMA locality users may want to use
-+the "mba_MBps_event=mbm_total_bytes" mount option which will use total
-+memory bandwidth measurements instead of local.
-+
- L3 schemata file details (code and data prioritization disabled)
- ----------------------------------------------------------------
- With CDP disabled the L3 schemata format is::
--- 
-2.41.0
-
+greg k-h
