@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B03B1171A;
-	Fri,  8 Dec 2023 06:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D30263AD;
+	Fri,  8 Dec 2023 06:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+/b/5P0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A3DC433C7;
-	Fri,  8 Dec 2023 06:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grMw9MAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241D6C433C8;
+	Fri,  8 Dec 2023 06:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702017215;
-	bh=Rv/ruy3db5Oz95ujeCfBD1LwNpGZWxkjI8JTNYAGUC4=;
+	s=korg; t=1702018051;
+	bh=aVwOp1aJPsPh7+HlQ/vujBgUZmjHqe7FfCfwGE1YeZ0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=u+/b/5P0ZJHidKNaF6EmO+CJ36TT197KsvH7ahaswiveFl1rn1LJgMSLZv/JpwJ+d
-	 chenp7LAjW4vG3IrEd6Uc2CTq3s1LPFatquDMJA531E5TiHm909F2cbfcv/TxB4gWy
-	 ZMFzyCRBmA6Kl4fvPpAe94q123sCvhuN9QYRpKKQ=
-Date: Fri, 8 Dec 2023 07:33:33 +0100
+	b=grMw9MAilAqZVJpURavXBJKJpCfqFYqXS/93nfol1/6O4gqg8/TbHPtjeINDoQ3XL
+	 5o0UXU39UnthFKO8a/M6TZ5cd9D5f/5lIVWYHc3xDCUI9NjoTSRfNEWfr6eNmHJFAM
+	 G40GKVqdEDQ2ZeQYF3wiWqFQCn6t9VlU2zUH/HPM=
+Date: Fri, 8 Dec 2023 07:47:29 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Alexey Khoroshilov <khoroshilov@ispras.ru>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -26,7 +26,7 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	conor@kernel.org, allen.lkml@gmail.com,
 	"lvc-project@linuxtesting.org" <lvc-project@linuxtesting.org>
 Subject: Re: [PATCH 5.10 000/131] 5.10.203-rc3 review
-Message-ID: <2023120812-shrank-draw-9b9b@gregkh>
+Message-ID: <2023120849-catalog-pretzel-ee8f@gregkh>
 References: <20231205183249.651714114@linuxfoundation.org>
  <efdb0591-2259-f86c-0da4-781dfdae22e1@ispras.ru>
 Precedence: bulk
@@ -70,8 +70,94 @@ On Thu, Dec 07, 2023 at 02:00:06AM +0300, Alexey Khoroshilov wrote:
 > 
 > 
 > commit 980c3135f1ae6fe686a70c8ba78eb1bb4bde3060 in 5.10.202
+> 
+> diff --git a/drivers/tty/serial/meson_uart.c
+> b/drivers/tty/serial/meson_uart.c
+> index d06653493f0e..78bda91a6bf1 100644
+> --- a/drivers/tty/serial/meson_uart.c
+> +++ b/drivers/tty/serial/meson_uart.c
+> @@ -728,6 +728,7 @@ static int meson_uart_probe(struct platform_device
+> *pdev)
+>  {
+>         struct resource *res_mem, *res_irq;
+>         struct uart_port *port;
+> +       u32 fifosize = 64; /* Default is 64, 128 for EE UART_0 */
+>         int ret = 0;
+> 
+>         if (pdev->dev.of_node)
+> @@ -755,6 +756,8 @@ static int meson_uart_probe(struct platform_device
+> *pdev)
+>         if (!res_irq)
+>                 return -ENODEV;
+> 
+> +       of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
+> +
+>         if (meson_ports[pdev->id]) {
+>                 dev_err(&pdev->dev, "port %d already allocated\n",
+> pdev->id);
+>                 return -EBUSY;
+> @@ -784,7 +787,7 @@ static int meson_uart_probe(struct platform_device
+> *pdev)
+>         port->type = PORT_MESON;
+>         port->x_char = 0;
+>         port->ops = &meson_uart_ops;
+> -       port->fifosize = 64;
+> +       port->fifosize = fifosize;
+> 
+>         meson_ports[pdev->id] = port;
+>         platform_set_drvdata(pdev, port);
+> 
+> vs.
+> 
+> commit 71feab929585232694b4f2fb7d70abde4edc581e in 5.10.203-rc3
+> 
+> diff --git a/drivers/tty/serial/meson_uart.c
+> b/drivers/tty/serial/meson_uart.c
+> index bb66a3f06626..c44ab21a9b7d 100644
+> --- a/drivers/tty/serial/meson_uart.c
+> +++ b/drivers/tty/serial/meson_uart.c
+> @@ -765,6 +765,8 @@ static int meson_uart_probe(struct platform_device
+> *pdev)
+>         of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
+>         has_rtscts = of_property_read_bool(pdev->dev.of_node,
+> "uart-has-rtscts");
+> 
+> +       of_property_read_u32(pdev->dev.of_node, "fifo-size", &fifosize);
+> +
+>         if (meson_ports[pdev->id]) {
+>                 dev_err(&pdev->dev, "port %d already allocated\n",
+> pdev->id);
+>                 return -EBUSY;
+> 
+> 
+> 
+> Found by Linux Verification Center (linuxtesting.org) with SVACE
+> 
+> 
+> 
+> See also:
+> 
+> Qu Huang <qu.huang@linux.dev>
+>     drm/amdgpu: Fix a null pointer access when the smc_rreg pointer is NULL
+> 
+> Axel Lin <axel.lin@ingics.com>
+>     i2c: sun6i-p2wi: Prevent potential division by zero
+> 
+> Takashi Iwai <tiwai@suse.de>
+>     media: imon: fix access to invalid resource for the second interface
+> 
+> 
+> Also there is a strange pair:
+> 
+> Patrick Thompson <ptf@google.com>
+>     net: r8169: Disable multicast filter for RTL8168H and RTL8107E
+> 
+> Heiner Kallweit <hkallweit1@gmail.com>
+>     Revert "net: r8169: Disable multicast filter for RTL8168H and RTL8107E"
+> 
 
-Odd, yeah, something is off here, let me look into it after my coffee
-has kicked in...
+Ok, I dropped all of these and manually verified that there were no
+other duplicates.  thanks for catching them and letting us know.
+
 
 greg k-h
