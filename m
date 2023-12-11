@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C737C54BF9;
-	Mon, 11 Dec 2023 18:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09DCFBE1;
+	Mon, 11 Dec 2023 18:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGQ14T6H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B762C433C7;
-	Mon, 11 Dec 2023 18:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvZ4esd7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C011C433C7;
+	Mon, 11 Dec 2023 18:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319787;
-	bh=sG3ynemljxaafH5g5jf1WTpAiRdB+Cnh4KRjm+vAcdw=;
+	s=korg; t=1702319790;
+	bh=GEgjwz7Iljh3R9lCjpWtOutxQ6vlK2z+cr6Xgt5jDb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zGQ14T6HUBkX3JtnSsdRBIKc1DaCJZoK+dofPo3HNQBLpQtB2ZwCR88aNKTBoX/Z0
-	 VRBhukSvuvRIHLr3a2EHblrXvhYPVfzWIcemoXDmS8E18xxS2x35Bon0I5dPlFAkT+
-	 U2EL90iY9kPo642I9UjzUTuH6RmV3PrrgSEDmbE4=
+	b=KvZ4esd76vcknMnHVXr9xmEekC7H79XDZOS074ucK+yL/5SKzT9BIqMDyj28O4bY0
+	 84dQD8zkiHJxWU8mSWUF7/dAZF5LTHrrJ5mvG42EXWSzpG8/1CTiMhPuBeKStLR4Y5
+	 i3wLhO38tua7hPbyoBn8XTsWjzG69Ko3HiX9kMJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Gonda <pgonda@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 232/244] KVM: SVM: Update EFER software model on CR0 trap for SEV-ES
-Date: Mon, 11 Dec 2023 19:22:05 +0100
-Message-ID: <20231211182056.434438029@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@arm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>
+Subject: [PATCH 6.6 233/244] perf list: Fix JSON segfault by setting the used skip_duplicate_pmus callback
+Date: Mon, 11 Dec 2023 19:22:06 +0100
+Message-ID: <20231211182056.484594136@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,74 +44,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Ian Rogers <irogers@google.com>
 
-commit 4cdf351d3630a640ab6a05721ef055b9df62277f upstream.
+commit b1693747487442984050eb0f462b83a3a8307525 upstream.
 
-In general, activating long mode involves setting the EFER_LME bit in
-the EFER register and then enabling the X86_CR0_PG bit in the CR0
-register. At this point, the EFER_LMA bit will be set automatically by
-hardware.
+Json output didn't set the skip_duplicate_pmus callback yielding a
+segfault.
 
-In the case of SVM/SEV guests where writes to CR0 are intercepted, it's
-necessary for the host to set EFER_LMA on behalf of the guest since
-hardware does not see the actual CR0 write.
-
-In the case of SEV-ES guests where writes to CR0 are trapped instead of
-intercepted, the hardware *does* see/record the write to CR0 before
-exiting and passing the value on to the host, so as part of enabling
-SEV-ES support commit f1c6366e3043 ("KVM: SVM: Add required changes to
-support intercepts under SEV-ES") dropped special handling of the
-EFER_LMA bit with the understanding that it would be set automatically.
-
-However, since the guest never explicitly sets the EFER_LMA bit, the
-host never becomes aware that it has been set. This becomes problematic
-when userspace tries to get/set the EFER values via
-KVM_GET_SREGS/KVM_SET_SREGS, since the EFER contents tracked by the host
-will be missing the EFER_LMA bit, and when userspace attempts to pass
-the EFER value back via KVM_SET_SREGS it will fail a sanity check that
-asserts that EFER_LMA should always be set when X86_CR0_PG and EFER_LME
-are set.
-
-Fix this by always inferring the value of EFER_LMA based on X86_CR0_PG
-and EFER_LME, regardless of whether or not SEV-ES is enabled.
-
-Fixes: f1c6366e3043 ("KVM: SVM: Add required changes to support intercepts under SEV-ES")
-Reported-by: Peter Gonda <pgonda@google.com>
+Fixes: cd4e1efbbc40 ("perf pmus: Skip duplicate PMUs and don't print list suffix by default")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20210507165947.2502412-2-seanjc@google.com>
-[A two year old patch that was revived after we noticed the failure in
- KVM_SET_SREGS and a similar patch was posted by Michael Roth.  This is
- Sean's patch, but with Michael's more complete commit message. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20231129213428.2227448-2-irogers@google.com
+[namhyung: updated subject line according to Arnaldo]
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tools/perf/builtin-list.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1873,15 +1873,17 @@ void svm_set_cr0(struct kvm_vcpu *vcpu,
- 	bool old_paging = is_paging(vcpu);
+diff --git a/tools/perf/builtin-list.c b/tools/perf/builtin-list.c
+index a343823c8ddf..61c2c96cc070 100644
+--- a/tools/perf/builtin-list.c
++++ b/tools/perf/builtin-list.c
+@@ -434,6 +434,11 @@ static void json_print_metric(void *ps __maybe_unused, const char *group,
+ 	strbuf_release(&buf);
+ }
  
- #ifdef CONFIG_X86_64
--	if (vcpu->arch.efer & EFER_LME && !vcpu->arch.guest_state_protected) {
-+	if (vcpu->arch.efer & EFER_LME) {
- 		if (!is_paging(vcpu) && (cr0 & X86_CR0_PG)) {
- 			vcpu->arch.efer |= EFER_LMA;
--			svm->vmcb->save.efer |= EFER_LMA | EFER_LME;
-+			if (!vcpu->arch.guest_state_protected)
-+				svm->vmcb->save.efer |= EFER_LMA | EFER_LME;
- 		}
- 
- 		if (is_paging(vcpu) && !(cr0 & X86_CR0_PG)) {
- 			vcpu->arch.efer &= ~EFER_LMA;
--			svm->vmcb->save.efer &= ~(EFER_LMA | EFER_LME);
-+			if (!vcpu->arch.guest_state_protected)
-+				svm->vmcb->save.efer &= ~(EFER_LMA | EFER_LME);
- 		}
- 	}
- #endif
++static bool json_skip_duplicate_pmus(void *ps __maybe_unused)
++{
++	return false;
++}
++
+ static bool default_skip_duplicate_pmus(void *ps)
+ {
+ 	struct print_state *print_state = ps;
+@@ -503,6 +508,7 @@ int cmd_list(int argc, const char **argv)
+ 			.print_end = json_print_end,
+ 			.print_event = json_print_event,
+ 			.print_metric = json_print_metric,
++			.skip_duplicate_pmus = json_skip_duplicate_pmus,
+ 		};
+ 		ps = &json_ps;
+ 	} else {
+-- 
+2.43.0
+
 
 
