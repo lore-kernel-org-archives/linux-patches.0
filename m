@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E7151C2D;
-	Mon, 11 Dec 2023 18:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFDFC8C8;
+	Mon, 11 Dec 2023 18:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LuYOUngV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCF1C433C7;
-	Mon, 11 Dec 2023 18:46:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQGZgJ+E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11F5C433C8;
+	Mon, 11 Dec 2023 18:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320417;
-	bh=AcifiE26m425BfuBWaHnqQ6CWHatwQqIbq5dWv4lVnM=;
+	s=korg; t=1702320420;
+	bh=5MLRa4IMNl9eyyvrh/amxUN2rLQvax+lL7BeAK7Ok2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LuYOUngV/zWmpp5xlmap8NpISkkbiTcbmxpCtsrvcvFJvR1SnI2g44o26JYvw4L/T
-	 HI/v7482gVPV1wW63xF+8LOsU3O3LNWtwsUNbNlPO4T6XmaAhaTF+YWpl5+daXz9Jp
-	 jJ0kwg3RYpnBoScB8FHaK76DpS9m4d1DKn3eXEHY=
+	b=GQGZgJ+EnasUW3B9OiUEDax42QA29Q2KS/pvB3l6xSDrk93OJk4W2vXw05wvrMK4I
+	 k8/u6CXeC9shr4rrcCODu6y+0bzVaqRRl2Ja3vEnqAeBHHRQnjztPEg8fl1pN+fydQ
+	 zo1yoI5BEnMgKXNE5VtH0CHQ30Gzz7oxqFg4HEJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonglong Liu <liuyonglong@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/194] net: hns: fix fake link up on xge port
-Date: Mon, 11 Dec 2023 19:20:36 +0100
-Message-ID: <20231211182038.623468919@linuxfoundation.org>
+Subject: [PATCH 6.1 055/194] netfilter: nf_tables: bail out on mismatching dynset and set expressions
+Date: Mon, 11 Dec 2023 19:20:45 +0100
+Message-ID: <20231211182039.010726284@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -44,72 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonglong Liu <liuyonglong@huawei.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit f708aba40f9c1eeb9c7e93ed4863b5f85b09b288 ]
+[ Upstream commit 3701cd390fd731ee7ae8b8006246c8db82c72bea ]
 
-If a xge port just connect with an optical module and no fiber,
-it may have a fake link up because there may be interference on
-the hardware. This patch adds an anti-shake to avoid the problem.
-And the time of anti-shake is base on tests.
+If dynset expressions provided by userspace is larger than the declared
+set expressions, then bail out.
 
-Fixes: b917078c1c10 ("net: hns: Add ACPI support to check SFP present")
-Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 48b0ae046ee9 ("netfilter: nftables: netlink support for several set element expressions")
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns/hns_dsaf_mac.c | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ net/netfilter/nft_dynset.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-index 928d934cb21a5..f75668c479351 100644
---- a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-+++ b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-@@ -66,6 +66,27 @@ static enum mac_mode hns_get_enet_interface(const struct hns_mac_cb *mac_cb)
- 	}
- }
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index cf9a1ae87d9b1..a470e5f612843 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -279,10 +279,15 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 			priv->expr_array[i] = dynset_expr;
+ 			priv->num_exprs++;
  
-+static u32 hns_mac_link_anti_shake(struct mac_driver *mac_ctrl_drv)
-+{
-+#define HNS_MAC_LINK_WAIT_TIME 5
-+#define HNS_MAC_LINK_WAIT_CNT 40
-+
-+	u32 link_status = 0;
-+	int i;
-+
-+	if (!mac_ctrl_drv->get_link_status)
-+		return link_status;
-+
-+	for (i = 0; i < HNS_MAC_LINK_WAIT_CNT; i++) {
-+		msleep(HNS_MAC_LINK_WAIT_TIME);
-+		mac_ctrl_drv->get_link_status(mac_ctrl_drv, &link_status);
-+		if (!link_status)
-+			break;
-+	}
-+
-+	return link_status;
-+}
-+
- void hns_mac_get_link_status(struct hns_mac_cb *mac_cb, u32 *link_status)
- {
- 	struct mac_driver *mac_ctrl_drv;
-@@ -83,6 +104,14 @@ void hns_mac_get_link_status(struct hns_mac_cb *mac_cb, u32 *link_status)
- 							       &sfp_prsnt);
- 		if (!ret)
- 			*link_status = *link_status && sfp_prsnt;
-+
-+		/* for FIBER port, it may have a fake link up.
-+		 * when the link status changes from down to up, we need to do
-+		 * anti-shake. the anti-shake time is base on tests.
-+		 * only FIBER port need to do this.
-+		 */
-+		if (*link_status && !mac_cb->link)
-+			*link_status = hns_mac_link_anti_shake(mac_ctrl_drv);
- 	}
- 
- 	mac_cb->link = *link_status;
+-			if (set->num_exprs &&
+-			    dynset_expr->ops != set->exprs[i]->ops) {
+-				err = -EOPNOTSUPP;
+-				goto err_expr_free;
++			if (set->num_exprs) {
++				if (i >= set->num_exprs) {
++					err = -EINVAL;
++					goto err_expr_free;
++				}
++				if (dynset_expr->ops != set->exprs[i]->ops) {
++					err = -EOPNOTSUPP;
++					goto err_expr_free;
++				}
+ 			}
+ 			i++;
+ 		}
 -- 
 2.42.0
 
