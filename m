@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B544F212;
-	Mon, 11 Dec 2023 18:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714EA4F212;
+	Mon, 11 Dec 2023 18:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr3bPmrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4871DC433C8;
-	Mon, 11 Dec 2023 18:22:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pN74pddo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBC9C433C8;
+	Mon, 11 Dec 2023 18:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702318951;
-	bh=MSs6MYhgkPpq2egah56wkhHiFin/NNaKtvvqopigzBg=;
+	s=korg; t=1702318954;
+	bh=zBP5u8fLp3kb61uB7MOjmMemEAhyALOTDbwGjInMmh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yr3bPmrpxy/9/e5/XHrtd/Btd2w1fKIHQHtFnQyjpiz4b8PuSTsRPaU0b/2itjPVo
-	 LGKE0x9D8SEaLNaazgqYkVH8uD1ZhqC/d10WpAggpWYEyMhx/UJezFOuBHzg0jXi3x
-	 eYT4q5qWmd6vEi4ABlGOVjJn6oW7ckvL6rgnJUTw=
+	b=pN74pddoeP9YIoMTq4ThA81p6dp2rwXiqRszKQQbJ/pi7diSftx3gy5ZlUI7OEqFh
+	 7452OGvjJb0Gnj4khg0HPj4SVeZPvnWenV8YAuv2KjGZGgmNtLFura/LPSfv3A+RAj
+	 Qwfg8hMHHp2TZF4v5uLPMxsBIGh+kNwkmzOsOmik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	stable@kernel.org,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 15/25] packet: Move reference count in packet_sock to atomic_long_t
-Date: Mon, 11 Dec 2023 19:21:06 +0100
-Message-ID: <20231211182009.239323457@linuxfoundation.org>
+	Cameron Williams <cang1@live.co.uk>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Subject: [PATCH 4.14 16/25] parport: Add support for Brainboxes IX/UC/PX parallel cards
+Date: Mon, 11 Dec 2023 19:21:07 +0100
+Message-ID: <20231211182009.269803187@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182008.665944227@linuxfoundation.org>
 References: <20231211182008.665944227@linuxfoundation.org>
@@ -46,109 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Cameron Williams <cang1@live.co.uk>
 
-commit db3fadacaf0c817b222090290d06ca2a338422d0 upstream.
+commit 1a031f6edc460e9562098bdedc3918da07c30a6e upstream.
 
-In some potential instances the reference count on struct packet_sock
-could be saturated and cause overflows which gets the kernel a bit
-confused. To prevent this, move to a 64-bit atomic reference count on
-64-bit architectures to prevent the possibility of this type to overflow.
+Adds support for Intashield IX-500/IX-550, UC-146/UC-157, PX-146/PX-157,
+PX-203 and PX-475 (LPT port)
 
-Because we can not handle saturation, using refcount_t is not possible
-in this place. Maybe someday in the future if it changes it could be
-used. Also, instead of using plain atomic64_t, use atomic_long_t instead.
-32-bit machines tend to be memory-limited (i.e. anything that increases
-a reference uses so much memory that you can't actually get to 2**32
-references). 32-bit architectures also tend to have serious problems
-with 64-bit atomics. Hence, atomic_long_t is the more natural solution.
-
-Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
-Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: stable@kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231201131021.19999-1-daniel@iogearbox.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Cameron Williams <cang1@live.co.uk>
+Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://lore.kernel.org/r/AS4PR02MB790389C130410BD864C8DCC9C4A6A@AS4PR02MB7903.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   16 ++++++++--------
- net/packet/internal.h  |    2 +-
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/parport/parport_pc.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4252,7 +4252,7 @@ static void packet_mm_open(struct vm_are
- 	struct sock *sk = sock->sk;
+--- a/drivers/parport/parport_pc.c
++++ b/drivers/parport/parport_pc.c
+@@ -2647,6 +2647,8 @@ enum parport_pc_pci_cards {
+ 	netmos_9865,
+ 	quatech_sppxp100,
+ 	wch_ch382l,
++	brainboxes_uc146,
++	brainboxes_px203,
+ };
  
- 	if (sk)
--		atomic_inc(&pkt_sk(sk)->mapped);
-+		atomic_long_inc(&pkt_sk(sk)->mapped);
- }
  
- static void packet_mm_close(struct vm_area_struct *vma)
-@@ -4262,7 +4262,7 @@ static void packet_mm_close(struct vm_ar
- 	struct sock *sk = sock->sk;
+@@ -2710,6 +2712,8 @@ static struct parport_pc_pci {
+ 	/* netmos_9865 */               { 1, { { 0, -1 }, } },
+ 	/* quatech_sppxp100 */		{ 1, { { 0, 1 }, } },
+ 	/* wch_ch382l */		{ 1, { { 2, -1 }, } },
++	/* brainboxes_uc146 */	{ 1, { { 3, -1 }, } },
++	/* brainboxes_px203 */	{ 1, { { 0, -1 }, } },
+ };
  
- 	if (sk)
--		atomic_dec(&pkt_sk(sk)->mapped);
-+		atomic_long_dec(&pkt_sk(sk)->mapped);
- }
- 
- static const struct vm_operations_struct packet_mmap_ops = {
-@@ -4357,7 +4357,7 @@ static int packet_set_ring(struct sock *
- 
- 	err = -EBUSY;
- 	if (!closing) {
--		if (atomic_read(&po->mapped))
-+		if (atomic_long_read(&po->mapped))
- 			goto out;
- 		if (packet_read_pending(rb))
- 			goto out;
-@@ -4460,7 +4460,7 @@ static int packet_set_ring(struct sock *
- 
- 	err = -EBUSY;
- 	mutex_lock(&po->pg_vec_lock);
--	if (closing || atomic_read(&po->mapped) == 0) {
-+	if (closing || atomic_long_read(&po->mapped) == 0) {
- 		err = 0;
- 		spin_lock_bh(&rb_queue->lock);
- 		swap(rb->pg_vec, pg_vec);
-@@ -4478,9 +4478,9 @@ static int packet_set_ring(struct sock *
- 		po->prot_hook.func = (po->rx_ring.pg_vec) ?
- 						tpacket_rcv : packet_rcv;
- 		skb_queue_purge(rb_queue);
--		if (atomic_read(&po->mapped))
--			pr_err("packet_mmap: vma is busy: %d\n",
--			       atomic_read(&po->mapped));
-+		if (atomic_long_read(&po->mapped))
-+			pr_err("packet_mmap: vma is busy: %ld\n",
-+			       atomic_long_read(&po->mapped));
- 	}
- 	mutex_unlock(&po->pg_vec_lock);
- 
-@@ -4558,7 +4558,7 @@ static int packet_mmap(struct file *file
- 		}
- 	}
- 
--	atomic_inc(&po->mapped);
-+	atomic_long_inc(&po->mapped);
- 	vma->vm_ops = &packet_mmap_ops;
- 	err = 0;
- 
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -125,7 +125,7 @@ struct packet_sock {
- 	__be16			num;
- 	struct packet_rollover	*rollover;
- 	struct packet_mclist	*mclist;
--	atomic_t		mapped;
-+	atomic_long_t		mapped;
- 	enum tpacket_versions	tp_version;
- 	unsigned int		tp_hdrlen;
- 	unsigned int		tp_reserve;
+ static const struct pci_device_id parport_pc_pci_tbl[] = {
+@@ -2801,6 +2805,23 @@ static const struct pci_device_id parpor
+ 	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, quatech_sppxp100 },
+ 	/* WCH CH382L PCI-E single parallel port card */
+ 	{ 0x1c00, 0x3050, 0x1c00, 0x3050, 0, 0, wch_ch382l },
++	/* Brainboxes IX-500/550 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x402a,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
++	/* Brainboxes UC-146/UC-157 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x0be1,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc146 },
++	{ PCI_VENDOR_ID_INTASHIELD, 0x0be2,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc146 },
++	/* Brainboxes PX-146/PX-257 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x401c,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
++	/* Brainboxes PX-203 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x4007,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_px203 },
++	/* Brainboxes PX-475 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x401f,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
+ 	{ 0, } /* terminate list */
+ };
+ MODULE_DEVICE_TABLE(pci, parport_pc_pci_tbl);
 
 
