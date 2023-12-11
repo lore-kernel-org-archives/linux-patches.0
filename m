@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37694F212;
-	Mon, 11 Dec 2023 18:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949025101A;
+	Mon, 11 Dec 2023 18:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04MA5dAl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D1BC433C7;
-	Mon, 11 Dec 2023 18:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ai9MGJ6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AA4C433C8;
+	Mon, 11 Dec 2023 18:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702318959;
-	bh=MZ8qULQSCq1c/NcwaTopiWdLOg6s3XsjeJbXMWOOZI4=;
+	s=korg; t=1702318962;
+	bh=JEpqpOlTgzvQBYhjIBhWsuI71qDakNYaD+TZUamwVYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=04MA5dAlm48lcoHNYOUK0jun2Xjr137qSm+nkVkdhxy0bRC3Ly6RbwTR5O6VshSnt
-	 8HI20O7De9L/atU87RYRHXYFKwKmu5j2G0ZWTcBAhEz0Pzd7RgfAhp1fz3xQARb2gx
-	 pPayI3kJsu7U+qTPgbvDyty1F+dK628QymFv/0UQ=
+	b=Ai9MGJ6GEgW/xnejblHW5n1SsX+ZP/V5b5ecPbT4EUDiOaHnKh0TSxP0PdpDMJmMv
+	 jJJOJvPkNamRhBO+xwoseiWgjMY2LUvxcItTa2DHpoQh6MBdfi2tPuk5k+ZZAz/r+h
+	 Ea4MZz8ySfuGGMFypI1RdKhAsz29p3qdMGIzrlHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Mack <daniel@zonque.org>,
-	Maxim Popov <maxim.snafu@gmail.com>
-Subject: [PATCH 4.14 18/25] serial: sc16is7xx: address RX timeout interrupt errata
-Date: Mon, 11 Dec 2023 19:21:09 +0100
-Message-ID: <20231211182009.350882675@linuxfoundation.org>
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 09/25] scsi: be2iscsi: Fix a memleak in beiscsi_init_wrb_handle()
+Date: Mon, 11 Dec 2023 19:21:00 +0100
+Message-ID: <20231211182009.043362952@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182008.665944227@linuxfoundation.org>
 References: <20231211182008.665944227@linuxfoundation.org>
@@ -41,68 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Mack <daniel@zonque.org>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-commit 08ce9a1b72e38cf44c300a44ac5858533eb3c860 upstream.
+[ Upstream commit 235f2b548d7f4ac5931d834f05d3f7f5166a2e72 ]
 
-This device has a silicon bug that makes it report a timeout interrupt
-but no data in the FIFO.
+When an error occurs in the for loop of beiscsi_init_wrb_handle(), we
+should free phwi_ctxt->be_wrbq before returning an error code to prevent
+potential memleak.
 
-The datasheet states the following in the errata section 18.1.4:
-
-  "If the host reads the receive FIFO at the same time as a
-  time-out interrupt condition happens, the host might read 0xCC
-  (time-out) in the Interrupt Indication Register (IIR), but bit 0
-  of the Line Status Register (LSR) is not set (means there is no
-  data in the receive FIFO)."
-
-The errata description seems to indicate it concerns only polled mode of
-operation when reading bit 0 of the LSR register. However, tests have
-shown and NXP has confirmed that the RXLVL register also yields 0 when
-the bug is triggered, and hence the IRQ driven implementation in this
-driver is equally affected.
-
-This bug has hit us on production units and when it does, sc16is7xx_irq()
-would spin forever because sc16is7xx_port_irq() keeps seeing an
-interrupt in the IIR register that is not cleared because the driver
-does not call into sc16is7xx_handle_rx() unless the RXLVL register
-reports at least one byte in the FIFO.
-
-Fix this by always reading one byte from the FIFO when this condition
-is detected in order to clear the interrupt. This approach was
-confirmed to be correct by NXP through their support channels.
-
-Tested by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-
-Signed-off-by: Daniel Mack <daniel@zonque.org>
-Co-Developed-by: Maxim Popov <maxim.snafu@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231123072818.1394539-1-daniel@zonque.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a7909b396ba7 ("[SCSI] be2iscsi: Fix dynamic CID allocation Mechanism in driver")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Link: https://lore.kernel.org/r/20231123081941.24854-1-dinghao.liu@zju.edu.cn
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/scsi/be2iscsi/be_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -699,6 +699,18 @@ static bool sc16is7xx_port_irq(struct sc
- 		case SC16IS7XX_IIR_RTOI_SRC:
- 		case SC16IS7XX_IIR_XOFFI_SRC:
- 			rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
-+
-+			/*
-+			 * There is a silicon bug that makes the chip report a
-+			 * time-out interrupt but no data in the FIFO. This is
-+			 * described in errata section 18.1.4.
-+			 *
-+			 * When this happens, read one byte from the FIFO to
-+			 * clear the interrupt.
-+			 */
-+			if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
-+				rxlen = 1;
-+
- 			if (rxlen)
- 				sc16is7xx_handle_rx(port, rxlen, iir);
- 			break;
+diff --git a/drivers/scsi/be2iscsi/be_main.c b/drivers/scsi/be2iscsi/be_main.c
+index a1fd8a7fa48c3..ddaf2b57d9349 100644
+--- a/drivers/scsi/be2iscsi/be_main.c
++++ b/drivers/scsi/be2iscsi/be_main.c
+@@ -2687,6 +2687,7 @@ static int beiscsi_init_wrb_handle(struct beiscsi_hba *phba)
+ 		kfree(pwrb_context->pwrb_handle_base);
+ 		kfree(pwrb_context->pwrb_handle_basestd);
+ 	}
++	kfree(phwi_ctxt->be_wrbq);
+ 	return -ENOMEM;
+ }
+ 
+-- 
+2.42.0
+
 
 
