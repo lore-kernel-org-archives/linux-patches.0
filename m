@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2C7C2D0;
-	Mon, 11 Dec 2023 18:31:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0510FFBE0;
+	Mon, 11 Dec 2023 18:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRE9iTzj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953C4C433C8;
-	Mon, 11 Dec 2023 18:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8PTp0lW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4110DC433C7;
+	Mon, 11 Dec 2023 18:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319513;
-	bh=l+9ktnMuonxyNxBSJo8dYoELkLkCwH6Li83ngewwnYI=;
+	s=korg; t=1702319516;
+	bh=VGEvdebaD+KULnMknEJseH+T9aZumm9TiTCnEbs9pHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRE9iTzjEzNKzKYem/eVfqp+wQvCgjkvo3s3wEzLfe2PzGczl1RHpHO4r5hSq95yr
-	 lvj6bakpIOA0Q7sOunaGLaFLt9yqk06fyXnJJn4OELEpAz9w/1rw6NO2GlrVar4oCt
-	 xjObwaygbkgnFrdvOfWzBZafc6w+iTBpr2WJLblg=
+	b=z8PTp0lWwVfYZWjlq0AC8v/vjv7hRbBr6zsfkv1eHpqtMxYjzuHvYqONekXnlXKt2
+	 KIsoOmvz3dPXuvhUr2ZTk5lWXuOjzohYSd/vWve/W7+u/A3eJLT0caj3yATea3WN3j
+	 hL/a7D9zG5zMVmoa6xhUiPltus86pivGAnnwIPOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malcolm Hart <malcolm@5harts.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 133/244] ASoC: amd: yc: Fix non-functional mic on ASUS E1504FA
-Date: Mon, 11 Dec 2023 19:20:26 +0100
-Message-ID: <20231211182051.758590722@linuxfoundation.org>
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 107/244] ASoC: wm_adsp: fix memleak in wm_adsp_buffer_populate
+Date: Mon, 11 Dec 2023 19:20:00 +0100
+Message-ID: <20231211182050.562922714@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,41 +43,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Malcolm Hart <malcolm@5harts.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-commit b24e3590c94ab0aba6e455996b502a83baa5c31c upstream.
+[ Upstream commit 29046a78a3c0a1f8fa0427f164caa222f003cf5b ]
 
-This patch adds ASUSTeK COMPUTER INC  "E1504FA" to the quirks file acp6x-mach.c
-to enable microphone array on ASUS Vivobook GO 15.
-I have this laptop and can confirm that the patch succeeds in enabling the
-microphone array.
+When wm_adsp_buffer_read() fails, we should free buf->regions.
+Otherwise, the callers of wm_adsp_buffer_populate() will
+directly free buf on failure, which makes buf->regions a leaked
+memory.
 
-Signed-off-by: Malcolm Hart <malcolm@5harts.com>
-Cc: stable@vger.kernel.org
-Rule: add
-Link: https://lore.kernel.org/stable/875y1nt1bx.fsf%405harts.com
-Link: https://lore.kernel.org/r/871qcbszh0.fsf@5harts.com
+Fixes: a792af69b08f ("ASoC: wm_adsp: Refactor compress stream initialisation")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20231204074158.12026-1-dinghao.liu@zju.edu.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/codecs/wm_adsp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -286,6 +286,13 @@ static const struct dmi_system_id yc_acp
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "E1504FA"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 B7ED"),
- 		}
+diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
+index d1b9238d391e8..cb654f1b09f10 100644
+--- a/sound/soc/codecs/wm_adsp.c
++++ b/sound/soc/codecs/wm_adsp.c
+@@ -1451,12 +1451,12 @@ static int wm_adsp_buffer_populate(struct wm_adsp_compr_buf *buf)
+ 		ret = wm_adsp_buffer_read(buf, caps->region_defs[i].base_offset,
+ 					  &region->base_addr);
+ 		if (ret < 0)
+-			return ret;
++			goto err;
+ 
+ 		ret = wm_adsp_buffer_read(buf, caps->region_defs[i].size_offset,
+ 					  &offset);
+ 		if (ret < 0)
+-			return ret;
++			goto err;
+ 
+ 		region->cumulative_size = offset;
+ 
+@@ -1467,6 +1467,10 @@ static int wm_adsp_buffer_populate(struct wm_adsp_compr_buf *buf)
+ 	}
+ 
+ 	return 0;
++
++err:
++	kfree(buf->regions);
++	return ret;
+ }
+ 
+ static void wm_adsp_buffer_clear(struct wm_adsp_compr_buf *buf)
+-- 
+2.42.0
+
 
 
