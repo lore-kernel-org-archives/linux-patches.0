@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364F9FC06;
-	Mon, 11 Dec 2023 18:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08383FBE1;
+	Mon, 11 Dec 2023 18:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfcU6wG2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF758C433C8;
-	Mon, 11 Dec 2023 18:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKVrjjOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE09C433C8;
+	Mon, 11 Dec 2023 18:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320052;
-	bh=lQymMPfl0jdWKjNT8UXcZdofEtNSSkjjubVU3ShXm8M=;
+	s=korg; t=1702320054;
+	bh=m1TjUP3Zw3xWJP0Nf4Vw0h+6alkaYBWCXIEzSX0IddE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LfcU6wG2JP76tYQcmM+MZ0qKiw2DkM0Erc/Acii0MCxK5/KNW1rfrPgC4qkcUOak4
-	 A0czcduRD5grJsp9gtZzFG3bHu8y+Gpii+hDlBsGesROmEqsAuMzs7vDPyUtgSy+1H
-	 ZRAd/rKx3Qj3rAiV+4wjwA8CE5mVkKIm/DqDlQQI=
+	b=oKVrjjOCAchz0lVBhB3E9ye9+GKfMrGDstVpPa+cy7ll/HxXnajoQWZ7X2F75RUXe
+	 uO0HP6mSeID+9+eWUk/fsStA6ohc4+Q1x7m3t6i4++0Gh2Apz7mhClPAl37J0QT41l
+	 vyUXQc94P/21BQdSML8vI8sMLVmE6KZqMUpC/TVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 5.10 58/97] arm64: dts: mediatek: mt8173-evb: Fix regulator-fixed node names
-Date: Mon, 11 Dec 2023 19:22:01 +0100
-Message-ID: <20231211182022.218801073@linuxfoundation.org>
+	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 85/97] psample: Require CAP_NET_ADMIN when joining "packets" group
+Date: Mon, 11 Dec 2023 19:22:28 +0100
+Message-ID: <20231211182023.458608529@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -40,42 +44,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 24165c5dad7ba7c7624d05575a5e0cc851396c71 upstream.
+commit 44ec98ea5ea9cfecd31a5c4cc124703cb5442832 upstream.
 
-Fix a unit_address_vs_reg warning for the USB VBUS fixed regulators
-by renaming the regulator nodes from regulator@{0,1} to regulator-usb-p0
-and regulator-usb-p1.
+The "psample" generic netlink family notifies sampled packets over the
+"packets" multicast group. This is problematic since by default generic
+netlink allows non-root users to listen to these notifications.
 
-Cc: stable@vger.kernel.org
-Fixes: c0891284a74a ("arm64: dts: mediatek: add USB3 DRD driver")
-Link: https://lore.kernel.org/r/20231025093816.44327-8-angelogioacchino.delregno@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fix by marking the group with the 'GENL_UNS_ADMIN_PERM' flag. This will
+prevent non-root users or root without the 'CAP_NET_ADMIN' capability
+(in the user namespace owning the network namespace) from joining the
+group.
+
+Tested using [1].
+
+Before:
+
+ # capsh -- -c ./psample_repo
+ # capsh --drop=cap_net_admin -- -c ./psample_repo
+
+After:
+
+ # capsh -- -c ./psample_repo
+ # capsh --drop=cap_net_admin -- -c ./psample_repo
+ Failed to join "packets" multicast group
+
+[1]
+ $ cat psample.c
+ #include <stdio.h>
+ #include <netlink/genl/ctrl.h>
+ #include <netlink/genl/genl.h>
+ #include <netlink/socket.h>
+
+ int join_grp(struct nl_sock *sk, const char *grp_name)
+ {
+ 	int grp, err;
+
+ 	grp = genl_ctrl_resolve_grp(sk, "psample", grp_name);
+ 	if (grp < 0) {
+ 		fprintf(stderr, "Failed to resolve \"%s\" multicast group\n",
+ 			grp_name);
+ 		return grp;
+ 	}
+
+ 	err = nl_socket_add_memberships(sk, grp, NFNLGRP_NONE);
+ 	if (err) {
+ 		fprintf(stderr, "Failed to join \"%s\" multicast group\n",
+ 			grp_name);
+ 		return err;
+ 	}
+
+ 	return 0;
+ }
+
+ int main(int argc, char **argv)
+ {
+ 	struct nl_sock *sk;
+ 	int err;
+
+ 	sk = nl_socket_alloc();
+ 	if (!sk) {
+ 		fprintf(stderr, "Failed to allocate socket\n");
+ 		return -1;
+ 	}
+
+ 	err = genl_connect(sk);
+ 	if (err) {
+ 		fprintf(stderr, "Failed to connect socket\n");
+ 		return err;
+ 	}
+
+ 	err = join_grp(sk, "config");
+ 	if (err)
+ 		return err;
+
+ 	err = join_grp(sk, "packets");
+ 	if (err)
+ 		return err;
+
+ 	return 0;
+ }
+ $ gcc -I/usr/include/libnl3 -lnl-3 -lnl-genl-3 -o psample_repo psample.c
+
+Fixes: 6ae0a6286171 ("net: Introduce psample, a new genetlink channel for packet sampling")
+Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20231206213102.1824398-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173-evb.dts |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/psample/psample.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-@@ -43,7 +43,7 @@
- 		id-gpio = <&pio 16 GPIO_ACTIVE_HIGH>;
- 	};
+--- a/net/psample/psample.c
++++ b/net/psample/psample.c
+@@ -30,7 +30,8 @@ enum psample_nl_multicast_groups {
  
--	usb_p1_vbus: regulator@0 {
-+	usb_p1_vbus: regulator-usb-p1 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "usb_vbus";
- 		regulator-min-microvolt = <5000000>;
-@@ -52,7 +52,7 @@
- 		enable-active-high;
- 	};
+ static const struct genl_multicast_group psample_nl_mcgrps[] = {
+ 	[PSAMPLE_NL_MCGRP_CONFIG] = { .name = PSAMPLE_NL_MCGRP_CONFIG_NAME },
+-	[PSAMPLE_NL_MCGRP_SAMPLE] = { .name = PSAMPLE_NL_MCGRP_SAMPLE_NAME },
++	[PSAMPLE_NL_MCGRP_SAMPLE] = { .name = PSAMPLE_NL_MCGRP_SAMPLE_NAME,
++				      .flags = GENL_UNS_ADMIN_PERM },
+ };
  
--	usb_p0_vbus: regulator@1 {
-+	usb_p0_vbus: regulator-usb-p0 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vbus";
- 		regulator-min-microvolt = <5000000>;
+ static struct genl_family psample_nl_family __ro_after_init;
 
 
