@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E317DFBE1;
-	Mon, 11 Dec 2023 18:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945E6FBE1;
+	Mon, 11 Dec 2023 18:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5PTLbh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A79DC433C7;
-	Mon, 11 Dec 2023 18:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2a8D2Lt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17433C433C7;
+	Mon, 11 Dec 2023 18:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320065;
-	bh=eV/hNBn9C+GgU5SJMR1Pz19HNmuEFdB3+d57aIVjVv4=;
+	s=korg; t=1702320068;
+	bh=V95+z+Y82A/FdFpcZfgogQqt8n3wGR7uaU7dfHtpjrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5PTLbh8eMpKoPxi9A6hJ4Mej0JITIbg8FMfv5XOdt1WAPpnOKfSO2A3LGaONFB7T
-	 121bQVmM6aLBSObGqwY4rApFFXNdJ0Z1reQMKgXThUCtlnTfcPDVtVB1EifSqMbXCP
-	 jar3EIOwyrTjhqEFcw1UUCDBlrfO1V6f65VWPk8E=
+	b=m2a8D2LtyvzAh9oOnbfFib9tOQSEYiAQUtytcaZ6wkMuOolOxR0zLA8tNhu8oA5TU
+	 PEBTVM7dtbn8pcJj2Yw2SZzvlLPDLshZrs0Mao/wLrN2iRLciN6+Gq36cpsRfDvI1A
+	 QNgxj/E//yuBoB2Ezfr7IFpyVNazwVywn2sRWVjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 61/97] misc: mei: client.c: fix problem of return -EOVERFLOW in mei_cl_write
-Date: Mon, 11 Dec 2023 19:22:04 +0100
-Message-ID: <20231211182022.364143377@linuxfoundation.org>
+Subject: [PATCH 5.10 62/97] ring-buffer: Force absolute timestamp on discard of event
+Date: Mon, 11 Dec 2023 19:22:05 +0100
+Message-ID: <20231211182022.411548255@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -41,35 +44,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit ee6236027218f8531916f1c5caa5dc330379f287 ]
+[ Upstream commit b2dd797543cfa6580eac8408dd67fa02164d9e56 ]
 
-Clang static analyzer complains that value stored to 'rets' is never
-read.Let 'buf_len = -EOVERFLOW' to make sure we can return '-EOVERFLOW'.
+There's a race where if an event is discarded from the ring buffer and an
+interrupt were to happen at that time and insert an event, the time stamp
+is still used from the discarded event as an offset. This can screw up the
+timings.
 
-Fixes: 8c8d964ce90f ("mei: move hbuf_depth from the mei device to the hw modules")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20231120095523.178385-2-suhui@nfschina.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If the event is going to be discarded, set the "before_stamp" to zero.
+When a new event comes in, it compares the "before_stamp" with the
+"write_stamp" and if they are not equal, it will insert an absolute
+timestamp. This will prevent the timings from getting out of sync due to
+the discarded event.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231206100244.5130f9b3@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 6f6be606e763f ("ring-buffer: Force before_stamp and write_stamp to be different on discard")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/misc/mei/client.c b/drivers/misc/mei/client.c
-index 1c9ced7383b63..aa87542f116c2 100644
---- a/drivers/misc/mei/client.c
-+++ b/drivers/misc/mei/client.c
-@@ -1993,7 +1993,7 @@ ssize_t mei_cl_write(struct mei_cl *cl, struct mei_cl_cb *cb)
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 0938222b45988..7e1148aafd284 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2903,22 +2903,19 @@ rb_try_to_discard(struct ring_buffer_per_cpu *cpu_buffer,
+ 			local_read(&bpage->write) & ~RB_WRITE_MASK;
+ 		unsigned long event_length = rb_event_length(event);
  
- 	hbuf_slots = mei_hbuf_empty_slots(dev);
- 	if (hbuf_slots < 0) {
--		rets = -EOVERFLOW;
-+		buf_len = -EOVERFLOW;
- 		goto out;
- 	}
++		/*
++		 * For the before_stamp to be different than the write_stamp
++		 * to make sure that the next event adds an absolute
++		 * value and does not rely on the saved write stamp, which
++		 * is now going to be bogus.
++		 */
++		rb_time_set(&cpu_buffer->before_stamp, 0);
++
+ 		/* Something came in, can't discard */
+ 		if (!rb_time_cmpxchg(&cpu_buffer->write_stamp,
+ 				       write_stamp, write_stamp - delta))
+ 			return 0;
  
+-		/*
+-		 * It's possible that the event time delta is zero
+-		 * (has the same time stamp as the previous event)
+-		 * in which case write_stamp and before_stamp could
+-		 * be the same. In such a case, force before_stamp
+-		 * to be different than write_stamp. It doesn't
+-		 * matter what it is, as long as its different.
+-		 */
+-		if (!delta)
+-			rb_time_set(&cpu_buffer->before_stamp, 0);
+-
+ 		/*
+ 		 * If an event were to come in now, it would see that the
+ 		 * write_stamp and the before_stamp are different, and assume
 -- 
 2.42.0
 
