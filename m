@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5C55102A;
-	Mon, 11 Dec 2023 18:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD035102A;
+	Mon, 11 Dec 2023 18:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5M2gDx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867B9C433C7;
-	Mon, 11 Dec 2023 18:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zVx0KYHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282FEC433C8;
+	Mon, 11 Dec 2023 18:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320451;
-	bh=DUgZjC+AlwRHpSbHLw2BXIV27g4RjOJOVtLwA2c7FfQ=;
+	s=korg; t=1702320454;
+	bh=g8YwpqgTp5XhCD+VhsjxKWYee9oldiGLRl1FUczGzmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5M2gDx5MyCpMG491oSI+lUaN1D3l/vSw+q8Zvm04u7Sbx4XZFaNAMRtsto121Dk2
-	 SRjAUTPFPnjKrU9ifLKpFH8s8XAeTGkFt3ChNMKAQMbhqnvSTMC1TANnBNF5/V6Slg
-	 7TUjSfOnk6bw4FIUCJ7ydOBZaT55UZ5k9B4ai2Vo=
+	b=zVx0KYHIOFicShoF+jFMfmZxC4U4T2sgqgdUhy4yBLibFD7obYz5I5DzCioEUGRXd
+	 sO1ThfPBz7CYMncr3xFFWTaUHU2baeNq36fRXWXDgz98aPqlooXVBc2jp+NXYJR0RZ
+	 TJwWEd0r4NKHwe7+8wONAL07kvX9UQ7oVmIfKTOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mustafa Ismail <mustafa.ismail@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/194] RDMA/irdma: Add wait for suspend on SQD
-Date: Mon, 11 Dec 2023 19:20:56 +0100
-Message-ID: <20231211182039.437220049@linuxfoundation.org>
+Subject: [PATCH 6.1 067/194] arm64: dts: rockchip: Expand reg size of vdec node for RK3328
+Date: Mon, 11 Dec 2023 19:20:57 +0100
+Message-ID: <20231211182039.485674259@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,130 +42,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mustafa Ismail <mustafa.ismail@intel.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit bd6da690c27d75cae432c09162d054b34fa2156f ]
+[ Upstream commit 0b6240d697a96eaa45a2a5503a274ebb4f162fa3 ]
 
-Currently, there is no wait for the QP suspend to complete on a modify
-to SQD state. Add a wait, after the modify to SQD state, for the Suspend
-Complete AE. While we are at it, update the suspend timeout value in
-irdma_prep_tc_change to use IRDMA_EVENT_TIMEOUT_MS too.
+Expand the reg size for the vdec node to include cache/performance
+registers the rkvdec driver writes to.
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20231114170246.238-3-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 17408c9b119d ("arm64: dts: rockchip: Add vdec support for RK3328")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20231105233630.3927502-9-jonas@kwiboo.se
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/hw.c    |  6 +++++-
- drivers/infiniband/hw/irdma/main.c  |  2 +-
- drivers/infiniband/hw/irdma/main.h  |  2 +-
- drivers/infiniband/hw/irdma/verbs.c | 21 +++++++++++++++++++++
- drivers/infiniband/hw/irdma/verbs.h |  1 +
- 5 files changed, 29 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index c07ce85d243f1..027584febb8ca 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -322,7 +322,11 @@ static void irdma_process_aeq(struct irdma_pci_f *rf)
- 			break;
- 		case IRDMA_AE_QP_SUSPEND_COMPLETE:
- 			if (iwqp->iwdev->vsi.tc_change_pending) {
--				atomic_dec(&iwqp->sc_qp.vsi->qp_suspend_reqs);
-+				if (!atomic_dec_return(&qp->vsi->qp_suspend_reqs))
-+					wake_up(&iwqp->iwdev->suspend_wq);
-+			}
-+			if (iwqp->suspend_pending) {
-+				iwqp->suspend_pending = false;
- 				wake_up(&iwqp->iwdev->suspend_wq);
- 			}
- 			break;
-diff --git a/drivers/infiniband/hw/irdma/main.c b/drivers/infiniband/hw/irdma/main.c
-index 514453777e07d..be1030d1adfaf 100644
---- a/drivers/infiniband/hw/irdma/main.c
-+++ b/drivers/infiniband/hw/irdma/main.c
-@@ -48,7 +48,7 @@ static void irdma_prep_tc_change(struct irdma_device *iwdev)
- 	/* Wait for all qp's to suspend */
- 	wait_event_timeout(iwdev->suspend_wq,
- 			   !atomic_read(&iwdev->vsi.qp_suspend_reqs),
--			   IRDMA_EVENT_TIMEOUT);
-+			   msecs_to_jiffies(IRDMA_EVENT_TIMEOUT_MS));
- 	irdma_ws_reset(&iwdev->vsi);
- }
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+index 49ae15708a0b6..905a50aa5dc38 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+@@ -666,7 +666,7 @@
  
-diff --git a/drivers/infiniband/hw/irdma/main.h b/drivers/infiniband/hw/irdma/main.h
-index 9cbe64311f985..6a6b14d8fca45 100644
---- a/drivers/infiniband/hw/irdma/main.h
-+++ b/drivers/infiniband/hw/irdma/main.h
-@@ -78,7 +78,7 @@ extern struct auxiliary_driver i40iw_auxiliary_drv;
- 
- #define MAX_DPC_ITERATIONS	128
- 
--#define IRDMA_EVENT_TIMEOUT		50000
-+#define IRDMA_EVENT_TIMEOUT_MS		5000
- #define IRDMA_VCHNL_EVENT_TIMEOUT	100000
- #define IRDMA_RST_TIMEOUT_HZ		4
- 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 02015927fd046..447e1bcc82a32 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -1098,6 +1098,21 @@ static int irdma_query_pkey(struct ib_device *ibdev, u32 port, u16 index,
- 	return 0;
- }
- 
-+static int irdma_wait_for_suspend(struct irdma_qp *iwqp)
-+{
-+	if (!wait_event_timeout(iwqp->iwdev->suspend_wq,
-+				!iwqp->suspend_pending,
-+				msecs_to_jiffies(IRDMA_EVENT_TIMEOUT_MS))) {
-+		iwqp->suspend_pending = false;
-+		ibdev_warn(&iwqp->iwdev->ibdev,
-+			   "modify_qp timed out waiting for suspend. qp_id = %d, last_ae = 0x%x\n",
-+			   iwqp->ibqp.qp_num, iwqp->last_aeq);
-+		return -EBUSY;
-+	}
-+
-+	return 0;
-+}
-+
- /**
-  * irdma_modify_qp_roce - modify qp request
-  * @ibqp: qp's pointer for modify
-@@ -1359,6 +1374,7 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 
- 			info.next_iwarp_state = IRDMA_QP_STATE_SQD;
- 			issue_modify_qp = 1;
-+			iwqp->suspend_pending = true;
- 			break;
- 		case IB_QPS_SQE:
- 		case IB_QPS_ERR:
-@@ -1399,6 +1415,11 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 			ctx_info->rem_endpoint_idx = udp_info->arp_idx;
- 			if (irdma_hw_modify_qp(iwdev, iwqp, &info, true))
- 				return -EINVAL;
-+			if (info.next_iwarp_state == IRDMA_QP_STATE_SQD) {
-+				ret = irdma_wait_for_suspend(iwqp);
-+				if (ret)
-+					return ret;
-+			}
- 			spin_lock_irqsave(&iwqp->lock, flags);
- 			if (iwqp->iwarp_state == info.curr_iwarp_state) {
- 				iwqp->iwarp_state = info.next_iwarp_state;
-diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
-index a536e9fa85ebf..9f9e273bbff3e 100644
---- a/drivers/infiniband/hw/irdma/verbs.h
-+++ b/drivers/infiniband/hw/irdma/verbs.h
-@@ -193,6 +193,7 @@ struct irdma_qp {
- 	u8 flush_issued : 1;
- 	u8 sig_all : 1;
- 	u8 pau_mode : 1;
-+	u8 suspend_pending : 1;
- 	u8 rsvd : 1;
- 	u8 iwarp_state;
- 	u16 term_sq_flush_code;
+ 	vdec: video-codec@ff360000 {
+ 		compatible = "rockchip,rk3328-vdec", "rockchip,rk3399-vdec";
+-		reg = <0x0 0xff360000 0x0 0x400>;
++		reg = <0x0 0xff360000 0x0 0x480>;
+ 		interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&cru ACLK_RKVDEC>, <&cru HCLK_RKVDEC>,
+ 			 <&cru SCLK_VDEC_CABAC>, <&cru SCLK_VDEC_CORE>;
 -- 
 2.42.0
 
