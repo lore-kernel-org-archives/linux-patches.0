@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11CAFBE1;
-	Mon, 11 Dec 2023 18:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2C8FBE1;
+	Mon, 11 Dec 2023 18:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpH3q7JL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D312C433C8;
-	Mon, 11 Dec 2023 18:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdHcDTJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02034C433C7;
+	Mon, 11 Dec 2023 18:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320057;
-	bh=pHu54w7UQGI/ob/c9/uNWqSniK+LOnGi9+m6KyRK5kY=;
+	s=korg; t=1702320060;
+	bh=yBYODU0tSH9xTG9lcucRGS3ec7uvr4kqJpBY9LeGg6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RpH3q7JLbYqa2aG1eUe1j8ud+IseAxQBwsSHk8y930c9iZLQaRu86K0pSwglZbhTk
-	 Ti0+qnBGnXDK4n4mw66vUT9GuEQOh8mygqh1N9f+9rlfinuvrJeJNPYr6uDU+6umey
-	 U2FT/MP701AfVIi7RdFTIQaaMSrJMlaMyESipQvc=
+	b=vdHcDTJBHa9aB10JVsvxI/uYEGcRDkkUjiCaruIJrDIFaVy0NtsOc9cIR7vMRw7Bg
+	 DCnRe0d6wFBPpBz2I/p4Hee2G3L7M2rMHw69Kdj/zjRqqVZfnTty5AWKOR9xq46WdB
+	 OSjtKs2kM8ZRakesHlKgaXE/iBXuUDWh+Y6eLXbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 86/97] drop_monitor: Require CAP_SYS_ADMIN when joining "events" group
-Date: Mon, 11 Dec 2023 19:22:29 +0100
-Message-ID: <20231211182023.515010408@linuxfoundation.org>
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 5.10 59/97] arm64: dts: mediatek: mt8183: Fix unit address for scp reserved memory
+Date: Mon, 11 Dec 2023 19:22:02 +0100
+Message-ID: <20231211182022.268077189@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -44,155 +40,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit e03781879a0d524ce3126678d50a80484a513c4b upstream.
+commit 19cba9a6c071db57888dc6b2ec1d9bf8996ea681 upstream.
 
-The "NET_DM" generic netlink family notifies drop locations over the
-"events" multicast group. This is problematic since by default generic
-netlink allows non-root users to listen to these notifications.
+The reserved memory for scp had node name "scp_mem_region" and also
+without unit-address: change the name to "memory@(address)".
+This fixes a unit_address_vs_reg warning.
 
-Fix by adding a new field to the generic netlink multicast group
-structure that when set prevents non-root users or root without the
-'CAP_SYS_ADMIN' capability (in the user namespace owning the network
-namespace) from joining the group. Set this field for the "events"
-group. Use 'CAP_SYS_ADMIN' rather than 'CAP_NET_ADMIN' because of the
-nature of the information that is shared over this group.
-
-Note that the capability check in this case will always be performed
-against the initial user namespace since the family is not netns aware
-and only operates in the initial network namespace.
-
-A new field is added to the structure rather than using the "flags"
-field because the existing field uses uAPI flags and it is inappropriate
-to add a new uAPI flag for an internal kernel check. In net-next we can
-rework the "flags" field to use internal flags and fold the new field
-into it. But for now, in order to reduce the amount of changes, add a
-new field.
-
-Since the information can only be consumed by root, mark the control
-plane operations that start and stop the tracing as root-only using the
-'GENL_ADMIN_PERM' flag.
-
-Tested using [1].
-
-Before:
-
- # capsh -- -c ./dm_repo
- # capsh --drop=cap_sys_admin -- -c ./dm_repo
-
-After:
-
- # capsh -- -c ./dm_repo
- # capsh --drop=cap_sys_admin -- -c ./dm_repo
- Failed to join "events" multicast group
-
-[1]
- $ cat dm.c
- #include <stdio.h>
- #include <netlink/genl/ctrl.h>
- #include <netlink/genl/genl.h>
- #include <netlink/socket.h>
-
- int main(int argc, char **argv)
- {
- 	struct nl_sock *sk;
- 	int grp, err;
-
- 	sk = nl_socket_alloc();
- 	if (!sk) {
- 		fprintf(stderr, "Failed to allocate socket\n");
- 		return -1;
- 	}
-
- 	err = genl_connect(sk);
- 	if (err) {
- 		fprintf(stderr, "Failed to connect socket\n");
- 		return err;
- 	}
-
- 	grp = genl_ctrl_resolve_grp(sk, "NET_DM", "events");
- 	if (grp < 0) {
- 		fprintf(stderr,
- 			"Failed to resolve \"events\" multicast group\n");
- 		return grp;
- 	}
-
- 	err = nl_socket_add_memberships(sk, grp, NFNLGRP_NONE);
- 	if (err) {
- 		fprintf(stderr, "Failed to join \"events\" multicast group\n");
- 		return err;
- 	}
-
- 	return 0;
- }
- $ gcc -I/usr/include/libnl3 -lnl-3 -lnl-genl-3 -o dm_repo dm.c
-
-Fixes: 9a8afc8d3962 ("Network Drop Monitor: Adding drop monitor implementation & Netlink protocol")
-Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20231206213102.1824398-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 1652dbf7363a ("arm64: dts: mt8183: add scp node")
+Link: https://lore.kernel.org/r/20231025093816.44327-6-angelogioacchino.delregno@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/genetlink.h |    2 ++
- net/core/drop_monitor.c |    4 +++-
- net/netlink/genetlink.c |    3 +++
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8183-evb.dts    |    2 +-
+ arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/net/genetlink.h
-+++ b/include/net/genetlink.h
-@@ -11,10 +11,12 @@
- /**
-  * struct genl_multicast_group - generic netlink multicast group
-  * @name: name of the multicast group, names are per-family
-+ * @cap_sys_admin: whether %CAP_SYS_ADMIN is required for binding
-  */
- struct genl_multicast_group {
- 	char			name[GENL_NAMSIZ];
- 	u8			flags;
-+	u8			cap_sys_admin:1;
- };
+--- a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
+@@ -30,7 +30,7 @@
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+ 		ranges;
+-		scp_mem_reserved: scp_mem_region {
++		scp_mem_reserved: memory@50000000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0 0x50000000 0 0x2900000>;
+ 			no-map;
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+@@ -95,7 +95,7 @@
+ 		#size-cells = <2>;
+ 		ranges;
  
- struct genl_ops;
---- a/net/core/drop_monitor.c
-+++ b/net/core/drop_monitor.c
-@@ -183,7 +183,7 @@ out:
- }
- 
- static const struct genl_multicast_group dropmon_mcgrps[] = {
--	{ .name = "events", },
-+	{ .name = "events", .cap_sys_admin = 1 },
- };
- 
- static void send_dm_alert(struct work_struct *work)
-@@ -1616,11 +1616,13 @@ static const struct genl_small_ops dropm
- 		.cmd = NET_DM_CMD_START,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = net_dm_cmd_trace,
-+		.flags = GENL_ADMIN_PERM,
- 	},
- 	{
- 		.cmd = NET_DM_CMD_STOP,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = net_dm_cmd_trace,
-+		.flags = GENL_ADMIN_PERM,
- 	},
- 	{
- 		.cmd = NET_DM_CMD_CONFIG_GET,
---- a/net/netlink/genetlink.c
-+++ b/net/netlink/genetlink.c
-@@ -1387,6 +1387,9 @@ static int genl_bind(struct net *net, in
- 		if ((grp->flags & GENL_UNS_ADMIN_PERM) &&
- 		    !ns_capable(net->user_ns, CAP_NET_ADMIN))
- 			ret = -EPERM;
-+		if (grp->cap_sys_admin &&
-+		    !ns_capable(net->user_ns, CAP_SYS_ADMIN))
-+			ret = -EPERM;
- 
- 		break;
- 	}
+-		scp_mem_reserved: scp_mem_region {
++		scp_mem_reserved: memory@50000000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0 0x50000000 0 0x2900000>;
+ 			no-map;
 
 
