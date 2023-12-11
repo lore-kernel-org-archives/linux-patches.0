@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360925102A;
-	Mon, 11 Dec 2023 18:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB635102A;
+	Mon, 11 Dec 2023 18:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4k6eTLQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D75C433C7;
-	Mon, 11 Dec 2023 18:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I004xtHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876CBC433C8;
+	Mon, 11 Dec 2023 18:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320676;
-	bh=n9RnEi5RB8bQS57cR6fTxIs8mH2idzZddMYlj+CUTSU=;
+	s=korg; t=1702320678;
+	bh=2q006GvZrrL/4TXxmn6fUF7eFo/bcTg72t1hf7oBaXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4k6eTLQ2tDZ7Sk8yofQVDDIQMI9pnKV5xdSj0pEZBrmh8uwUk1uiDsijRGwQoTqk
-	 yi9TiVbyqecG6ILqiB6xdbpz0bUkdnVb432WNW5rixEbwRUjyFrSHh9fsaXv2ubC0k
-	 Ip1FJGXSp5PED/3YtSlcNEXAvJk8fD476eNgZmss=
+	b=I004xtHoU/AYzimK7j+xHRoNYQEdMm1XkWTX+Vpl82QLIXIrFjmnTBpzJWx5t0bU4
+	 NZcUD6MH6Lwf/TPXqLhCBgnQj8caNvs9JMnhRgLOcp+wVz5cw+1PzfBk+ZGdWZCRgf
+	 E6gZjlOidE+3Ox/o6xHvNzNcY3pPqKV1GaCCuQgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Bo Gan <bo.gan@broadcom.com>,
+	Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/194] perf: Fix perf_event_validate_size()
-Date: Mon, 11 Dec 2023 19:22:20 +0100
-Message-ID: <20231211182043.328601495@linuxfoundation.org>
+Subject: [PATCH 6.1 151/194] x86/sev: Fix kernel crash due to late update to read-only ghcb_version
+Date: Mon, 11 Dec 2023 19:22:21 +0100
+Message-ID: <20231211182043.380377863@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -42,133 +44,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
 
-[ Upstream commit 382c27f4ed28f803b1f1473ac2d8db0afc795a1b ]
+[ Upstream commit 27d25348d42161837be08fc63b04a2559d2e781c ]
 
-Budimir noted that perf_event_validate_size() only checks the size of
-the newly added event, even though the sizes of all existing events
-can also change due to not all events having the same read_format.
+A write-access violation page fault kernel crash was observed while running
+cpuhotplug LTP testcases on SEV-ES enabled systems. The crash was
+observed during hotplug, after the CPU was offlined and the process
+was migrated to different CPU. setup_ghcb() is called again which
+tries to update ghcb_version in sev_es_negotiate_protocol(). Ideally this
+is a read_only variable which is initialised during booting.
 
-When we attach the new event, perf_group_attach(), we do re-compute
-the size for all events.
+Trying to write it results in a pagefault:
 
-Fixes: a723968c0ed3 ("perf: Fix u16 overflows")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+  BUG: unable to handle page fault for address: ffffffffba556e70
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0003) - permissions violation
+  [ ...]
+  Call Trace:
+   <TASK>
+   ? __die_body.cold+0x1a/0x1f
+   ? __die+0x2a/0x35
+   ? page_fault_oops+0x10c/0x270
+   ? setup_ghcb+0x71/0x100
+   ? __x86_return_thunk+0x5/0x6
+   ? search_exception_tables+0x60/0x70
+   ? __x86_return_thunk+0x5/0x6
+   ? fixup_exception+0x27/0x320
+   ? kernelmode_fixup_or_oops+0xa2/0x120
+   ? __bad_area_nosemaphore+0x16a/0x1b0
+   ? kernel_exc_vmm_communication+0x60/0xb0
+   ? bad_area_nosemaphore+0x16/0x20
+   ? do_kern_addr_fault+0x7a/0x90
+   ? exc_page_fault+0xbd/0x160
+   ? asm_exc_page_fault+0x27/0x30
+   ? setup_ghcb+0x71/0x100
+   ? setup_ghcb+0xe/0x100
+   cpu_init_exception_handling+0x1b9/0x1f0
+
+The fix is to call sev_es_negotiate_protocol() only in the BSP boot phase,
+and it only needs to be done once in any case.
+
+[ mingo: Refined the changelog. ]
+
+Fixes: 95d33bfaa3e1 ("x86/sev: Register GHCB memory when SEV-SNP is active")
+Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
+Co-developed-by: Bo Gan <bo.gan@broadcom.com>
+Signed-off-by: Bo Gan <bo.gan@broadcom.com>
+Signed-off-by: Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/1701254429-18250-1-git-send-email-kashwindayan@vmware.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 61 +++++++++++++++++++++++++++-----------------
- 1 file changed, 38 insertions(+), 23 deletions(-)
+ arch/x86/kernel/sev.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 8f2b9d8b9150e..0193243f65e5c 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1812,31 +1812,34 @@ static inline void perf_event__state_init(struct perf_event *event)
- 					      PERF_EVENT_STATE_INACTIVE;
- }
+diff --git a/arch/x86/kernel/sev.c b/arch/x86/kernel/sev.c
+index 68b2a9d3dbc6b..c8dfb0fdde7f9 100644
+--- a/arch/x86/kernel/sev.c
++++ b/arch/x86/kernel/sev.c
+@@ -1279,10 +1279,6 @@ void setup_ghcb(void)
+ 	if (!cc_platform_has(CC_ATTR_GUEST_STATE_ENCRYPT))
+ 		return;
  
--static void __perf_event_read_size(struct perf_event *event, int nr_siblings)
-+static int __perf_event_read_size(u64 read_format, int nr_siblings)
- {
- 	int entry = sizeof(u64); /* value */
- 	int size = 0;
- 	int nr = 1;
- 
--	if (event->attr.read_format & PERF_FORMAT_TOTAL_TIME_ENABLED)
-+	if (read_format & PERF_FORMAT_TOTAL_TIME_ENABLED)
- 		size += sizeof(u64);
- 
--	if (event->attr.read_format & PERF_FORMAT_TOTAL_TIME_RUNNING)
-+	if (read_format & PERF_FORMAT_TOTAL_TIME_RUNNING)
- 		size += sizeof(u64);
- 
--	if (event->attr.read_format & PERF_FORMAT_ID)
-+	if (read_format & PERF_FORMAT_ID)
- 		entry += sizeof(u64);
- 
--	if (event->attr.read_format & PERF_FORMAT_LOST)
-+	if (read_format & PERF_FORMAT_LOST)
- 		entry += sizeof(u64);
- 
--	if (event->attr.read_format & PERF_FORMAT_GROUP) {
-+	if (read_format & PERF_FORMAT_GROUP) {
- 		nr += nr_siblings;
- 		size += sizeof(u64);
+-	/* First make sure the hypervisor talks a supported protocol. */
+-	if (!sev_es_negotiate_protocol())
+-		sev_es_terminate(SEV_TERM_SET_GEN, GHCB_SEV_ES_GEN_REQ);
+-
+ 	/*
+ 	 * Check whether the runtime #VC exception handler is active. It uses
+ 	 * the per-CPU GHCB page which is set up by sev_es_init_vc_handling().
+@@ -1297,6 +1293,13 @@ void setup_ghcb(void)
+ 		return;
  	}
  
--	size += entry * nr;
--	event->read_size = size;
 +	/*
-+	 * Since perf_event_validate_size() limits this to 16k and inhibits
-+	 * adding more siblings, this will never overflow.
++	 * Make sure the hypervisor talks a supported protocol.
++	 * This gets called only in the BSP boot phase.
 +	 */
-+	return size + nr * entry;
- }
- 
- static void __perf_event_header_size(struct perf_event *event, u64 sample_type)
-@@ -1886,8 +1889,9 @@ static void __perf_event_header_size(struct perf_event *event, u64 sample_type)
-  */
- static void perf_event__header_size(struct perf_event *event)
- {
--	__perf_event_read_size(event,
--			       event->group_leader->nr_siblings);
-+	event->read_size =
-+		__perf_event_read_size(event->attr.read_format,
-+				       event->group_leader->nr_siblings);
- 	__perf_event_header_size(event, event->attr.sample_type);
- }
- 
-@@ -1918,24 +1922,35 @@ static void perf_event__id_header_size(struct perf_event *event)
- 	event->id_header_size = size;
- }
- 
-+/*
-+ * Check that adding an event to the group does not result in anybody
-+ * overflowing the 64k event limit imposed by the output buffer.
-+ *
-+ * Specifically, check that the read_size for the event does not exceed 16k,
-+ * read_size being the one term that grows with groups size. Since read_size
-+ * depends on per-event read_format, also (re)check the existing events.
-+ *
-+ * This leaves 48k for the constant size fields and things like callchains,
-+ * branch stacks and register sets.
-+ */
- static bool perf_event_validate_size(struct perf_event *event)
- {
--	/*
--	 * The values computed here will be over-written when we actually
--	 * attach the event.
--	 */
--	__perf_event_read_size(event, event->group_leader->nr_siblings + 1);
--	__perf_event_header_size(event, event->attr.sample_type & ~PERF_SAMPLE_READ);
--	perf_event__id_header_size(event);
-+	struct perf_event *sibling, *group_leader = event->group_leader;
- 
--	/*
--	 * Sum the lot; should not exceed the 64k limit we have on records.
--	 * Conservative limit to allow for callchains and other variable fields.
--	 */
--	if (event->read_size + event->header_size +
--	    event->id_header_size + sizeof(struct perf_event_header) >= 16*1024)
-+	if (__perf_event_read_size(event->attr.read_format,
-+				   group_leader->nr_siblings + 1) > 16*1024)
- 		return false;
- 
-+	if (__perf_event_read_size(group_leader->attr.read_format,
-+				   group_leader->nr_siblings + 1) > 16*1024)
-+		return false;
++	if (!sev_es_negotiate_protocol())
++		sev_es_terminate(SEV_TERM_SET_GEN, GHCB_SEV_ES_GEN_REQ);
 +
-+	for_each_sibling_event(sibling, group_leader) {
-+		if (__perf_event_read_size(sibling->attr.read_format,
-+					   group_leader->nr_siblings + 1) > 16*1024)
-+			return false;
-+	}
-+
- 	return true;
- }
- 
+ 	/*
+ 	 * Clear the boot_ghcb. The first exception comes in before the bss
+ 	 * section is cleared.
 -- 
 2.42.0
 
