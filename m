@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46762321B8;
-	Mon, 11 Dec 2023 18:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF08321B8;
+	Mon, 11 Dec 2023 18:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhSocoge"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF67FC433C7;
-	Mon, 11 Dec 2023 18:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqhl2Hhc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85521C433C7;
+	Mon, 11 Dec 2023 18:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320921;
-	bh=73t4Ujm8r75Lb4qpCPzmZXB5JE1yLMTdv4s2QZvobsM=;
+	s=korg; t=1702320923;
+	bh=dQOs61cV23sIcwJAN5dqqG6Xt/0XNTMBXjXm1hJGpNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fhSocogeBDNVPdVegrfQaZJIWNyzU4axb0u5aWlrmdJ2TVKrTuvP6DpqX6P9gpFg9
-	 3dY5CaoeOM+7rTkSE7dxtYIYJRf0Jwtdz/n6t787MPODI/73C7rXAzAq73zwX8wxHe
-	 6dNKhf05FQ+6lulECeIfGSutagwLLAxTfimzXhHU=
+	b=eqhl2Hhc/l01t/rhch+Bfd18tOauzLEkAhR/Zg7/Cn+ih+PvHStFQ5yxK8GZr3RJH
+	 GXqp0OzXJvUnFH00VcgKY/Jr9xTdcnBugRF52IiK1Gr+gLxMjpKKzStGgS6IHDJ5z7
+	 St0Bd3AqAQHvG4VelhZiTBoHALp2sFjl0M1tKH+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/141] net: add missing kdoc for struct genl_multicast_group::flags
-Date: Mon, 11 Dec 2023 19:21:44 +0100
-Message-ID: <20231211182028.464276936@linuxfoundation.org>
+Subject: [PATCH 5.15 046/141] drop_monitor: Require CAP_SYS_ADMIN when joining "events" group
+Date: Mon, 11 Dec 2023 19:21:45 +0100
+Message-ID: <20231211182028.513712501@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,54 +45,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 5c221f0af68cfa9edcffd26ba6dbbc4b7ddb1700 ]
+[ Upstream commit e03781879a0d524ce3126678d50a80484a513c4b ]
 
-Multicast group flags were added in commit 4d54cc32112d ("mptcp: avoid
-lock_fast usage in accept path"), but it missed adding the kdoc.
+The "NET_DM" generic netlink family notifies drop locations over the
+"events" multicast group. This is problematic since by default generic
+netlink allows non-root users to listen to these notifications.
 
-Mention which flags go into that field, and do the same for
-op structs.
+Fix by adding a new field to the generic netlink multicast group
+structure that when set prevents non-root users or root without the
+'CAP_SYS_ADMIN' capability (in the user namespace owning the network
+namespace) from joining the group. Set this field for the "events"
+group. Use 'CAP_SYS_ADMIN' rather than 'CAP_NET_ADMIN' because of the
+nature of the information that is shared over this group.
 
-Link: https://lore.kernel.org/r/20220809232012.403730-1-kuba@kernel.org
+Note that the capability check in this case will always be performed
+against the initial user namespace since the family is not netns aware
+and only operates in the initial network namespace.
+
+A new field is added to the structure rather than using the "flags"
+field because the existing field uses uAPI flags and it is inappropriate
+to add a new uAPI flag for an internal kernel check. In net-next we can
+rework the "flags" field to use internal flags and fold the new field
+into it. But for now, in order to reduce the amount of changes, add a
+new field.
+
+Since the information can only be consumed by root, mark the control
+plane operations that start and stop the tracing as root-only using the
+'GENL_ADMIN_PERM' flag.
+
+Tested using [1].
+
+Before:
+
+ # capsh -- -c ./dm_repo
+ # capsh --drop=cap_sys_admin -- -c ./dm_repo
+
+After:
+
+ # capsh -- -c ./dm_repo
+ # capsh --drop=cap_sys_admin -- -c ./dm_repo
+ Failed to join "events" multicast group
+
+[1]
+ $ cat dm.c
+ #include <stdio.h>
+ #include <netlink/genl/ctrl.h>
+ #include <netlink/genl/genl.h>
+ #include <netlink/socket.h>
+
+ int main(int argc, char **argv)
+ {
+ 	struct nl_sock *sk;
+ 	int grp, err;
+
+ 	sk = nl_socket_alloc();
+ 	if (!sk) {
+ 		fprintf(stderr, "Failed to allocate socket\n");
+ 		return -1;
+ 	}
+
+ 	err = genl_connect(sk);
+ 	if (err) {
+ 		fprintf(stderr, "Failed to connect socket\n");
+ 		return err;
+ 	}
+
+ 	grp = genl_ctrl_resolve_grp(sk, "NET_DM", "events");
+ 	if (grp < 0) {
+ 		fprintf(stderr,
+ 			"Failed to resolve \"events\" multicast group\n");
+ 		return grp;
+ 	}
+
+ 	err = nl_socket_add_memberships(sk, grp, NFNLGRP_NONE);
+ 	if (err) {
+ 		fprintf(stderr, "Failed to join \"events\" multicast group\n");
+ 		return err;
+ 	}
+
+ 	return 0;
+ }
+ $ gcc -I/usr/include/libnl3 -lnl-3 -lnl-genl-3 -o dm_repo dm.c
+
+Fixes: 9a8afc8d3962 ("Network Drop Monitor: Adding drop monitor implementation & Netlink protocol")
+Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20231206213102.1824398-3-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e03781879a0d ("drop_monitor: Require 'CAP_SYS_ADMIN' when joining "events" group")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/genetlink.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/net/genetlink.h | 2 ++
+ net/core/drop_monitor.c | 4 +++-
+ net/netlink/genetlink.c | 3 +++
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/include/net/genetlink.h b/include/net/genetlink.h
-index 7cb3fa8310edd..56a50e1c51b97 100644
+index 56a50e1c51b97..8043594a7f84a 100644
 --- a/include/net/genetlink.h
 +++ b/include/net/genetlink.h
-@@ -11,6 +11,7 @@
- /**
+@@ -12,10 +12,12 @@
   * struct genl_multicast_group - generic netlink multicast group
   * @name: name of the multicast group, names are per-family
-+ * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
+  * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
++ * @cap_sys_admin: whether %CAP_SYS_ADMIN is required for binding
   */
  struct genl_multicast_group {
  	char			name[GENL_NAMSIZ];
-@@ -116,7 +117,7 @@ enum genl_validate_flags {
-  * struct genl_small_ops - generic netlink operations (small version)
-  * @cmd: command identifier
-  * @internal_flags: flags used by the family
-- * @flags: flags
-+ * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
-  * @validate: validation flags from enum genl_validate_flags
-  * @doit: standard command callback
-  * @dumpit: callback for dumpers
-@@ -137,7 +138,7 @@ struct genl_small_ops {
-  * struct genl_ops - generic netlink operations
-  * @cmd: command identifier
-  * @internal_flags: flags used by the family
-- * @flags: flags
-+ * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
-  * @maxattr: maximum number of attributes supported
-  * @policy: netlink policy (takes precedence over family policy)
-  * @validate: validation flags from enum genl_validate_flags
+ 	u8			flags;
++	u8			cap_sys_admin:1;
+ };
+ 
+ struct genl_ops;
+diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
+index 22015ebc1dd56..937d74aeef547 100644
+--- a/net/core/drop_monitor.c
++++ b/net/core/drop_monitor.c
+@@ -184,7 +184,7 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
+ }
+ 
+ static const struct genl_multicast_group dropmon_mcgrps[] = {
+-	{ .name = "events", },
++	{ .name = "events", .cap_sys_admin = 1 },
+ };
+ 
+ static void send_dm_alert(struct work_struct *work)
+@@ -1618,11 +1618,13 @@ static const struct genl_small_ops dropmon_ops[] = {
+ 		.cmd = NET_DM_CMD_START,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
+ 		.doit = net_dm_cmd_trace,
++		.flags = GENL_ADMIN_PERM,
+ 	},
+ 	{
+ 		.cmd = NET_DM_CMD_STOP,
+ 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
+ 		.doit = net_dm_cmd_trace,
++		.flags = GENL_ADMIN_PERM,
+ 	},
+ 	{
+ 		.cmd = NET_DM_CMD_CONFIG_GET,
+diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
+index 57010927e20a8..69b3a6b82f680 100644
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -1379,6 +1379,9 @@ static int genl_bind(struct net *net, int group)
+ 		if ((grp->flags & GENL_UNS_ADMIN_PERM) &&
+ 		    !ns_capable(net->user_ns, CAP_NET_ADMIN))
+ 			ret = -EPERM;
++		if (grp->cap_sys_admin &&
++		    !ns_capable(net->user_ns, CAP_SYS_ADMIN))
++			ret = -EPERM;
+ 
+ 		break;
+ 	}
 -- 
 2.42.0
 
