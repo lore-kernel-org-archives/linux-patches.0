@@ -1,38 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FA451C5B;
-	Mon, 11 Dec 2023 18:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D3A524D7;
+	Mon, 11 Dec 2023 18:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8XKPNBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C06C433C9;
-	Mon, 11 Dec 2023 18:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbyPbSzv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33FCC433C9;
+	Mon, 11 Dec 2023 18:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319608;
-	bh=Ntx15zgQkT/WWi8EF/UEGD+jkRyAPqMMGvpxVTYbSlU=;
+	s=korg; t=1702319611;
+	bh=cTF2GC+9aIFqD+6nB1EdY1Y6Qv+aPoLR8EYrpXfENq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8XKPNBLjTK1k1zkC1ooqLisdHwus8Y3bXRJ8iyY7CZvuaNT9diTb0Fpe5+8WAzVN
-	 bXJzfHr/GkShTUMRvsamC+VT41kkpp82or2yuAZK/HHvs65zqBRmQ3LzXMXnbVXYQb
-	 tKMoCQNcRwDyy5KFnVOxFwQtLLOwVg76jqF85ZlM=
+	b=GbyPbSzvz5975Se0ft76Hu7bM36LyjtPQ6ZUt56B2/oI66pHjQv1i0IllBJwnZSvA
+	 +5dfZ+Kwh+n3QaiAkiZ2YL6GAMK4DrQkLoXlnqSaHMsj6kIu2fdn8uPUUqi4OdkCnH
+	 ZYnWIG1Un2psubJv8Lr7UE/yIR9zkK/1ARwDdZr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Hugh Dickins <hughd@google.com>,
 	David Hildenbrand <david@redhat.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	kernel test robot <lkp@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 167/244] mm/memory_hotplug: add missing mem_hotplug_lock
-Date: Mon, 11 Dec 2023 19:21:00 +0100
-Message-ID: <20231211182053.371096092@linuxfoundation.org>
+	=?UTF-8?q?Jos=C3=A9=20Pekkarinen?= <jose.pekkarinen@foxhound.fi>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+89edd67979b52675ddec@syzkaller.appspotmail.com,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.6 168/244] mm: fix oops when filemap_map_pmd() without prealloc_pte
+Date: Mon, 11 Dec 2023 19:21:01 +0100
+Message-ID: <20231211182053.417228446@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -45,217 +41,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Hugh Dickins <hughd@google.com>
 
-commit 001002e73712cdf6b8d9a103648cda3040ad7647 upstream.
+commit 9aa1345d66b8132745ffb99b348b1492088da9e2 upstream.
 
->From Documentation/core-api/memory-hotplug.rst:
-When adding/removing/onlining/offlining memory or adding/removing
-heterogeneous/device memory, we should always hold the mem_hotplug_lock
-in write mode to serialise memory hotplug (e.g. access to global/zone
-variables).
+syzbot reports oops in lockdep's __lock_acquire(), called from
+__pte_offset_map_lock() called from filemap_map_pages(); or when I run the
+repro, the oops comes in pmd_install(), called from filemap_map_pmd()
+called from filemap_map_pages(), just before the __pte_offset_map_lock().
 
-mhp_(de)init_memmap_on_memory() functions can change zone stats and
-struct page content, but they are currently called w/o the
-mem_hotplug_lock.
+The problem is that filemap_map_pmd() has been assuming that when it finds
+pmd_none(), a page table has already been prepared in prealloc_pte; and
+indeed do_fault_around() has been careful to preallocate one there, when
+it finds pmd_none(): but what if *pmd became none in between?
 
-When memory block is being offlined and when kmemleak goes through each
-populated zone, the following theoretical race conditions could occur:
-CPU 0:					     | CPU 1:
-memory_offline()			     |
--> offline_pages()			     |
-	-> mem_hotplug_begin()		     |
-	   ...				     |
-	-> mem_hotplug_done()		     |
-					     | kmemleak_scan()
-					     | -> get_online_mems()
-					     |    ...
--> mhp_deinit_memmap_on_memory()	     |
-  [not protected by mem_hotplug_begin/done()]|
-  Marks memory section as offline,	     |   Retrieves zone_start_pfn
-  poisons vmemmap struct pages and updates   |   and struct page members.
-  the zone related data			     |
-   					     |    ...
-   					     | -> put_online_mems()
+My 6.6 mods in mm/khugepaged.c, avoiding mmap_lock for write, have made it
+easy for *pmd to be cleared while servicing a page fault; but even before
+those, a huge *pmd might be zapped while a fault is serviced.
 
-Fix this by ensuring mem_hotplug_lock is taken before performing
-mhp_init_memmap_on_memory().  Also ensure that
-mhp_deinit_memmap_on_memory() holds the lock.
+The difference in symptomatic stack traces comes from the "memory model"
+in use: pmd_install() uses pmd_populate() uses page_to_pfn(): in some
+models that is strict, and will oops on the NULL prealloc_pte; in other
+models, it will construct a bogus value to be populated into *pmd, then
+__pte_offset_map_lock() oops when trying to access split ptlock pointer
+(or some other symptom in normal case of ptlock embedded not pointer).
 
-online/offline_pages() are currently only called from
-memory_block_online/offline(), so it is safe to move the locking there.
-
-Link: https://lkml.kernel.org/r/20231120145354.308999-2-sumanthk@linux.ibm.com
-Fixes: a08a2ae34613 ("mm,memory_hotplug: allocate memmap from the added memory range")
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: kernel test robot <lkp@intel.com>
-Cc: <stable@vger.kernel.org>	[5.15+]
+Link: https://lore.kernel.org/linux-mm/20231115065506.19780-1-jose.pekkarinen@foxhound.fi/
+Link: https://lkml.kernel.org/r/6ed0c50c-78ef-0719-b3c5-60c0c010431c@google.com
+Fixes: f9ce0be71d1f ("mm: Cleanup faultaround and finish_fault() codepaths")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Reported-and-tested-by: syzbot+89edd67979b52675ddec@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-mm/0000000000005e44550608a0806c@google.com/
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Jann Horn <jannh@google.com>,
+Cc: José Pekkarinen <jose.pekkarinen@foxhound.fi>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>    [5.12+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/memory.c |   18 +++++++++++++++---
- mm/memory_hotplug.c   |   13 ++++++-------
- 2 files changed, 21 insertions(+), 10 deletions(-)
+ mm/filemap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/base/memory.c
-+++ b/drivers/base/memory.c
-@@ -180,6 +180,9 @@ static inline unsigned long memblk_nr_po
- }
- #endif
- 
-+/*
-+ * Must acquire mem_hotplug_lock in write mode.
-+ */
- static int memory_block_online(struct memory_block *mem)
- {
- 	unsigned long start_pfn = section_nr_to_pfn(mem->start_section_nr);
-@@ -204,10 +207,11 @@ static int memory_block_online(struct me
- 	if (mem->altmap)
- 		nr_vmemmap_pages = mem->altmap->free;
- 
-+	mem_hotplug_begin();
- 	if (nr_vmemmap_pages) {
- 		ret = mhp_init_memmap_on_memory(start_pfn, nr_vmemmap_pages, zone);
- 		if (ret)
--			return ret;
-+			goto out;
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3422,7 +3422,7 @@ static bool filemap_map_pmd(struct vm_fa
+ 		}
  	}
  
- 	ret = online_pages(start_pfn + nr_vmemmap_pages,
-@@ -215,7 +219,7 @@ static int memory_block_online(struct me
- 	if (ret) {
- 		if (nr_vmemmap_pages)
- 			mhp_deinit_memmap_on_memory(start_pfn, nr_vmemmap_pages);
--		return ret;
-+		goto out;
- 	}
+-	if (pmd_none(*vmf->pmd))
++	if (pmd_none(*vmf->pmd) && vmf->prealloc_pte)
+ 		pmd_install(mm, vmf->pmd, &vmf->prealloc_pte);
  
- 	/*
-@@ -227,9 +231,14 @@ static int memory_block_online(struct me
- 					  nr_vmemmap_pages);
- 
- 	mem->zone = zone;
-+out:
-+	mem_hotplug_done();
- 	return ret;
- }
- 
-+/*
-+ * Must acquire mem_hotplug_lock in write mode.
-+ */
- static int memory_block_offline(struct memory_block *mem)
- {
- 	unsigned long start_pfn = section_nr_to_pfn(mem->start_section_nr);
-@@ -247,6 +256,7 @@ static int memory_block_offline(struct m
- 	if (mem->altmap)
- 		nr_vmemmap_pages = mem->altmap->free;
- 
-+	mem_hotplug_begin();
- 	if (nr_vmemmap_pages)
- 		adjust_present_page_count(pfn_to_page(start_pfn), mem->group,
- 					  -nr_vmemmap_pages);
-@@ -258,13 +268,15 @@ static int memory_block_offline(struct m
- 		if (nr_vmemmap_pages)
- 			adjust_present_page_count(pfn_to_page(start_pfn),
- 						  mem->group, nr_vmemmap_pages);
--		return ret;
-+		goto out;
- 	}
- 
- 	if (nr_vmemmap_pages)
- 		mhp_deinit_memmap_on_memory(start_pfn, nr_vmemmap_pages);
- 
- 	mem->zone = NULL;
-+out:
-+	mem_hotplug_done();
- 	return ret;
- }
- 
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1129,6 +1129,9 @@ void mhp_deinit_memmap_on_memory(unsigne
- 	kasan_remove_zero_shadow(__va(PFN_PHYS(pfn)), PFN_PHYS(nr_pages));
- }
- 
-+/*
-+ * Must be called with mem_hotplug_lock in write mode.
-+ */
- int __ref online_pages(unsigned long pfn, unsigned long nr_pages,
- 		       struct zone *zone, struct memory_group *group)
- {
-@@ -1149,7 +1152,6 @@ int __ref online_pages(unsigned long pfn
- 			 !IS_ALIGNED(pfn + nr_pages, PAGES_PER_SECTION)))
- 		return -EINVAL;
- 
--	mem_hotplug_begin();
- 
- 	/* associate pfn range with the zone */
- 	move_pfn_range_to_zone(zone, pfn, nr_pages, NULL, MIGRATE_ISOLATE);
-@@ -1208,7 +1210,6 @@ int __ref online_pages(unsigned long pfn
- 	writeback_set_ratelimit();
- 
- 	memory_notify(MEM_ONLINE, &arg);
--	mem_hotplug_done();
- 	return 0;
- 
- failed_addition:
-@@ -1217,7 +1218,6 @@ failed_addition:
- 		 (((unsigned long long) pfn + nr_pages) << PAGE_SHIFT) - 1);
- 	memory_notify(MEM_CANCEL_ONLINE, &arg);
- 	remove_pfn_range_from_zone(zone, pfn, nr_pages);
--	mem_hotplug_done();
- 	return ret;
- }
- 
-@@ -1863,6 +1863,9 @@ static int count_system_ram_pages_cb(uns
- 	return 0;
- }
- 
-+/*
-+ * Must be called with mem_hotplug_lock in write mode.
-+ */
- int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages,
- 			struct zone *zone, struct memory_group *group)
- {
-@@ -1885,8 +1888,6 @@ int __ref offline_pages(unsigned long st
- 			 !IS_ALIGNED(start_pfn + nr_pages, PAGES_PER_SECTION)))
- 		return -EINVAL;
- 
--	mem_hotplug_begin();
--
- 	/*
- 	 * Don't allow to offline memory blocks that contain holes.
- 	 * Consequently, memory blocks with holes can never get onlined
-@@ -2027,7 +2028,6 @@ int __ref offline_pages(unsigned long st
- 
- 	memory_notify(MEM_OFFLINE, &arg);
- 	remove_pfn_range_from_zone(zone, start_pfn, nr_pages);
--	mem_hotplug_done();
- 	return 0;
- 
- failed_removal_isolated:
-@@ -2042,7 +2042,6 @@ failed_removal:
- 		 (unsigned long long) start_pfn << PAGE_SHIFT,
- 		 ((unsigned long long) end_pfn << PAGE_SHIFT) - 1,
- 		 reason);
--	mem_hotplug_done();
- 	return ret;
- }
- 
+ 	return false;
 
 
