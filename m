@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84764F212;
-	Mon, 11 Dec 2023 18:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D624F212;
+	Mon, 11 Dec 2023 18:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqQ93hp4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4825EC433C7;
-	Mon, 11 Dec 2023 18:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgqktxda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B35C433C7;
+	Mon, 11 Dec 2023 18:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319047;
-	bh=sY6jWWyDFb3J1/I0DcNvB5lHN+lK9QTUeKS0xrfhX9M=;
+	s=korg; t=1702319050;
+	bh=wszyAsbNLwP5GKixuEdhJfXEkNorm2l8bOfiKMk1BB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqQ93hp4TSM3pvxfd1lcQxTlTnxgxZFzqEjRNgJTYZaSEfgl0A528V+5GgtoTGzQ0
-	 LzKkM2u/8YdSkhaGOrlQK6Ra+SIKrIOMH5LtxxW0x6gYhOqz9ESAaY99qhvOVh+MGI
-	 ix/q7nUnWY/EQkV1I0IGyldQpx6e2r0EnTEv7vrs=
+	b=lgqktxda8++CYyy+STZnHVVIXPadDo4+6wwv1wwx+cutu0Sxo1pCFv4op5iwA6U7d
+	 HnplmIICGKuWKEpxkShHzB8KBpS68iADDQLA1fJToFE+Hz+FrvRHN4b6rIcmeV6P5O
+	 gkgBYDMIaQhcbtxkG6WjC2u8jYSdnskMRMkacKY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonglong Liu <liuyonglong@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Robin Gong <yibin.gong@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 19/55] net: hns: fix fake link up on xge port
-Date: Mon, 11 Dec 2023 19:21:29 +0100
-Message-ID: <20231211182012.934854706@linuxfoundation.org>
+Subject: [PATCH 4.19 02/55] spi: imx: move wml setting to later than setup_transfer
+Date: Mon, 11 Dec 2023 19:21:12 +0100
+Message-ID: <20231211182012.344555680@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -44,72 +42,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonglong Liu <liuyonglong@huawei.com>
+From: Robin Gong <yibin.gong@nxp.com>
 
-[ Upstream commit f708aba40f9c1eeb9c7e93ed4863b5f85b09b288 ]
+[ Upstream commit 987a2dfe3f0485a82d87106e7e1c43f35c1d3b09 ]
 
-If a xge port just connect with an optical module and no fiber,
-it may have a fake link up because there may be interference on
-the hardware. This patch adds an anti-shake to avoid the problem.
-And the time of anti-shake is base on tests.
+Current dynamic burst length is based on the whole transfer length,
+that's ok if there is only one sg, but is not right in case multi sgs
+in one transfer,because the tail data should be based on the last sg
+length instead of the whole transfer length. Move wml setting for DMA
+to the later place, thus, the next patch could get the right last sg
+length for wml setting. This patch is a preparation one, no any
+function change involved.
 
-Fixes: b917078c1c10 ("net: hns: Add ACPI support to check SFP present")
-Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 00b80ac93553 ("spi: imx: mx51-ecspi: Move some initialisation to prepare_message hook.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns/hns_dsaf_mac.c | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/spi/spi-imx.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-index cfdc92de9dc0e..d2791bcff5d49 100644
---- a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-+++ b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-@@ -70,6 +70,27 @@ static enum mac_mode hns_get_enet_interface(const struct hns_mac_cb *mac_cb)
- 	}
- }
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index eb27f47578eb9..686251e05edfe 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -64,6 +64,7 @@ struct spi_imx_devtype_data {
+ 	void (*trigger)(struct spi_imx_data *);
+ 	int (*rx_available)(struct spi_imx_data *);
+ 	void (*reset)(struct spi_imx_data *);
++	void (*setup_wml)(struct spi_imx_data *);
+ 	void (*disable)(struct spi_imx_data *);
+ 	bool has_dmamode;
+ 	bool has_slavemode;
+@@ -601,6 +602,11 @@ static int mx51_ecspi_config(struct spi_device *spi)
+ 	else			/* SCLK is _very_ slow */
+ 		usleep_range(delay, delay + 10);
  
-+static u32 hns_mac_link_anti_shake(struct mac_driver *mac_ctrl_drv)
-+{
-+#define HNS_MAC_LINK_WAIT_TIME 5
-+#define HNS_MAC_LINK_WAIT_CNT 40
-+
-+	u32 link_status = 0;
-+	int i;
-+
-+	if (!mac_ctrl_drv->get_link_status)
-+		return link_status;
-+
-+	for (i = 0; i < HNS_MAC_LINK_WAIT_CNT; i++) {
-+		msleep(HNS_MAC_LINK_WAIT_TIME);
-+		mac_ctrl_drv->get_link_status(mac_ctrl_drv, &link_status);
-+		if (!link_status)
-+			break;
-+	}
-+
-+	return link_status;
++	return 0;
 +}
 +
- void hns_mac_get_link_status(struct hns_mac_cb *mac_cb, u32 *link_status)
- {
- 	struct mac_driver *mac_ctrl_drv;
-@@ -87,6 +108,14 @@ void hns_mac_get_link_status(struct hns_mac_cb *mac_cb, u32 *link_status)
- 							       &sfp_prsnt);
- 		if (!ret)
- 			*link_status = *link_status && sfp_prsnt;
-+
-+		/* for FIBER port, it may have a fake link up.
-+		 * when the link status changes from down to up, we need to do
-+		 * anti-shake. the anti-shake time is base on tests.
-+		 * only FIBER port need to do this.
-+		 */
-+		if (*link_status && !mac_cb->link)
-+			*link_status = hns_mac_link_anti_shake(mac_ctrl_drv);
- 	}
++static void mx51_setup_wml(struct spi_imx_data *spi_imx)
++{
+ 	/*
+ 	 * Configure the DMA register: setup the watermark
+ 	 * and enable DMA request.
+@@ -611,8 +617,6 @@ static int mx51_ecspi_config(struct spi_device *spi)
+ 		MX51_ECSPI_DMA_RXT_WML(spi_imx->wml) |
+ 		MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN |
+ 		MX51_ECSPI_DMA_RXTDEN, spi_imx->base + MX51_ECSPI_DMA);
+-
+-	return 0;
+ }
  
- 	mac_cb->link = *link_status;
+ static int mx51_ecspi_rx_available(struct spi_imx_data *spi_imx)
+@@ -973,6 +977,7 @@ static struct spi_imx_devtype_data imx51_ecspi_devtype_data = {
+ 	.trigger = mx51_ecspi_trigger,
+ 	.rx_available = mx51_ecspi_rx_available,
+ 	.reset = mx51_ecspi_reset,
++	.setup_wml = mx51_setup_wml,
+ 	.fifo_size = 64,
+ 	.has_dmamode = true,
+ 	.dynamic_burst = true,
+@@ -1181,7 +1186,6 @@ static int spi_imx_setupxfer(struct spi_device *spi,
+ 				 struct spi_transfer *t)
+ {
+ 	struct spi_imx_data *spi_imx = spi_master_get_devdata(spi->master);
+-	int ret;
+ 
+ 	if (!t)
+ 		return 0;
+@@ -1222,12 +1226,6 @@ static int spi_imx_setupxfer(struct spi_device *spi,
+ 	else
+ 		spi_imx->usedma = 0;
+ 
+-	if (spi_imx->usedma) {
+-		ret = spi_imx_dma_configure(spi->master);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	if (is_imx53_ecspi(spi_imx) && spi_imx->slave_mode) {
+ 		spi_imx->rx = mx53_ecspi_rx_slave;
+ 		spi_imx->tx = mx53_ecspi_tx_slave;
+@@ -1332,6 +1330,13 @@ static int spi_imx_dma_transfer(struct spi_imx_data *spi_imx,
+ 	unsigned long timeout;
+ 	struct spi_master *master = spi_imx->bitbang.master;
+ 	struct sg_table *tx = &transfer->tx_sg, *rx = &transfer->rx_sg;
++	int ret;
++
++	ret = spi_imx_dma_configure(master);
++	if (ret)
++		return ret;
++
++	spi_imx->devtype_data->setup_wml(spi_imx);
+ 
+ 	/*
+ 	 * The TX DMA setup starts the transfer, so make sure RX is configured
 -- 
 2.42.0
 
