@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53784437B;
-	Mon, 11 Dec 2023 18:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B27B41740;
+	Mon, 11 Dec 2023 18:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2pAS79IZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54FAC433C8;
-	Mon, 11 Dec 2023 18:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgRHVGAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBB9C433C8;
+	Mon, 11 Dec 2023 18:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319418;
-	bh=XOwVRShcc1uBUxh0Frbk7cogoSEZ7mgs4FkD7AaAZZM=;
+	s=korg; t=1702319420;
+	bh=QgGDbkc3twquDtVXjG7JFw6d64MENH3ZHQ9StQBclvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2pAS79IZegjJ2e1tDRNjWIITgoawlTZkukR8D4cRfLbSUeYMx/lnMroOgl4EkPCUU
-	 WP1W3CpyNsblaLD9rJU8vVjkXHheh3A6V6C86TUG+ZE/O1zVk9WM+//R/62HMBUoQ+
-	 u5UuzecHPdPwTR+daVQXXQ61eC/w5gf/ubOx0G7A=
+	b=vgRHVGAoQ+gR+Lv4GP30lNkDrWDeyur8LMCtiU0uRenvI5BgNfmbCmy9JFlrj43kH
+	 tHMqviyrKg067Bod/3KssEy66FDOayCaeAYQik4NnlZKZUlJ/LJPWbfeybL81OAG8t
+	 xSSwZGSjhHfj3il8RIWebL5KJgKERLODhp5uHU3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/244] ARM: dts: rockchip: Fix sdmmc_pwrens pinmux setting for RK3128
-Date: Mon, 11 Dec 2023 19:19:50 +0100
-Message-ID: <20231211182050.125094650@linuxfoundation.org>
+Subject: [PATCH 6.6 098/244] ARM: dts: bcm2711-rpi-400: Fix delete-node of led_act
+Date: Mon, 11 Dec 2023 19:19:51 +0100
+Message-ID: <20231211182050.164948606@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,38 +42,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 0c349b5001f8bdcead844484c15a0c4dfb341157 ]
+[ Upstream commit dc761f11af2e39119d3a7942e3d10615f3d900e7 ]
 
-RK3128's reference design uses sdmmc_pwren pincontrol as GPIO - see [0].
+The LED ACT which is included from bcm2711-rpi-4-b doesn't exists
+on the Raspberry Pi 400. So the bcm2711-rpi-400.dts tries to
+use the delete-node directive in order to remove the complete
+node. Unfortunately the usage get broken in commit 1156e3a78bcc
+("ARM: dts: bcm283x: Move ACT LED into separate dtsi")
+and now ACT and PWR LED using the same GPIO and this prevent
+probing of led-gpios on Raspberry Pi 400:
 
-Let's change it in the SoC DT as well.
+    leds-gpio: probe of leds failed with error -16
 
-[0] https://github.com/rockchip-linux/kernel/commit/8c62deaf6025
+So fix the delete-node directive.
 
-Fixes: a0201bff6259 ("ARM: dts: rockchip: add rk3128 soc dtsi")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Link: https://lore.kernel.org/r/20231127184643.13314-2-knaerzche@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 1156e3a78bcc ("ARM: dts: bcm283x: Move ACT LED into separate dtsi")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20231118124252.14838-3-wahrenst@gmx.net
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rockchip/rk3128.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/broadcom/bcm2711-rpi-400.dts | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rockchip/rk3128.dtsi b/arch/arm/boot/dts/rockchip/rk3128.dtsi
-index 88a4b0d6d928d..80d81af5fe0ef 100644
---- a/arch/arm/boot/dts/rockchip/rk3128.dtsi
-+++ b/arch/arm/boot/dts/rockchip/rk3128.dtsi
-@@ -795,7 +795,7 @@
- 			};
+diff --git a/arch/arm/boot/dts/broadcom/bcm2711-rpi-400.dts b/arch/arm/boot/dts/broadcom/bcm2711-rpi-400.dts
+index 1ab8184302db4..5a2869a18bd55 100644
+--- a/arch/arm/boot/dts/broadcom/bcm2711-rpi-400.dts
++++ b/arch/arm/boot/dts/broadcom/bcm2711-rpi-400.dts
+@@ -36,9 +36,7 @@
+ 	gpios = <&gpio 42 GPIO_ACTIVE_HIGH>;
+ };
  
- 			sdmmc_pwren: sdmmc-pwren {
--				rockchip,pins = <1 RK_PB6 1 &pcfg_pull_default>;
-+				rockchip,pins = <1 RK_PB6 RK_FUNC_GPIO &pcfg_pull_default>;
- 			};
+-&leds {
+-	/delete-node/ led_act;
+-};
++/delete-node/ &led_act;
  
- 			sdmmc_bus4: sdmmc-bus4 {
+ &pm {
+ 	/delete-property/ system-power-controller;
 -- 
 2.42.0
 
