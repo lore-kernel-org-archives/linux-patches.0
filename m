@@ -1,38 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A47FC06;
-	Mon, 11 Dec 2023 18:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBDAFC06;
+	Mon, 11 Dec 2023 18:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymwyXaNT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D16C433C7;
-	Mon, 11 Dec 2023 18:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7fjb9YH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B310C433C8;
+	Mon, 11 Dec 2023 18:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320291;
-	bh=8NECBHC/NruzAN2opWrThISKMIQQIgP9v7YVxDd1O4A=;
+	s=korg; t=1702320293;
+	bh=REF7HPdTexmT3MUzNXhiiG5GUac8PEnIU6LBhIl/lYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ymwyXaNT1qHiPcN97uLc/6Fwlh+/U9WoJAJy/GP7qYitPys8yERkTRPp+G4M3z59l
-	 b7lgzIwztXLM7mPMqn4qmf0pLkIKqMhaVBmUizJzp7mgLVAqXg5oX0/Y8H6D6qCpWA
-	 UULgKl7d2c+tLXpWCIylscIYLfHp2P81axzEZY/U=
+	b=Q7fjb9YHjWbzbwpx4eR3OvvX7k+/ECwoSAI+Xu6a7RF/zZDkAPQmsgY+nQVErbZoa
+	 enzzMQkxxRAuYCOpZ0qz2f4qPXXiaRQ4y5L+u5nM2V6TmZ7nc+FU1a1fAM5fOSDRqQ
+	 wXexd6I+D+Cs2bpnLn5A9oBR34V2Y+jPayJWFyRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <david@fromorbit.com>,
-	Xiaoli Feng <fengxiaoli0714@gmail.com>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Rohith Surabattula <rohiths.msft@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Darrick Wong <darrick.wong@oracle.com>,
-	fstests@vger.kernel.org,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 64/67] cifs: Fix non-availability of dedup breaking generic/304
-Date: Mon, 11 Dec 2023 19:22:48 +0100
-Message-ID: <20231211182017.746054096@linuxfoundation.org>
+	Nico Boehr <nrb@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 5.4 55/67] KVM: s390/mm: Properly reset no-dat
+Date: Mon, 11 Dec 2023 19:22:39 +0100
+Message-ID: <20231211182017.344117116@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -51,56 +41,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 691a41d8da4b34fe72f09393505f55f28a8f34ec ]
+commit 27072b8e18a73ffeffb1c140939023915a35134b upstream.
 
-Deduplication isn't supported on cifs, but cifs doesn't reject it, instead
-treating it as extent duplication/cloning.  This can cause generic/304 to go
-silly and run for hours on end.
+When the CMMA state needs to be reset, the no-dat bit also needs to be
+reset. Failure to do so could cause issues in the guest, since the
+guest expects the bit to be cleared after a reset.
 
-Fix cifs to indicate EOPNOTSUPP if REMAP_FILE_DEDUP is set in
-->remap_file_range().
-
-Note that it's unclear whether or not commit b073a08016a1 is meant to cause
-cifs to return an error if REMAP_FILE_DEDUP.
-
-Fixes: b073a08016a1 ("cifs: fix that return -EINVAL when do dedupe operation")
-Cc: stable@vger.kernel.org
-Suggested-by: Dave Chinner <david@fromorbit.com>
-cc: Xiaoli Feng <fengxiaoli0714@gmail.com>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Rohith Surabattula <rohiths.msft@gmail.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Darrick Wong <darrick.wong@oracle.com>
-cc: fstests@vger.kernel.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/3876191.1701555260@warthog.procyon.org.uk/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Nico Boehr <nrb@linux.ibm.com>
+Message-ID: <20231109123624.37314-1-imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/s390/mm/pgtable.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
-index 917441e3018ad..12f632287d161 100644
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -1079,7 +1079,9 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	unsigned int xid;
- 	int rc;
- 
--	if (remap_flags & ~(REMAP_FILE_DEDUP | REMAP_FILE_ADVISORY))
-+	if (remap_flags & REMAP_FILE_DEDUP)
-+		return -EOPNOTSUPP;
-+	if (remap_flags & ~REMAP_FILE_ADVISORY)
- 		return -EINVAL;
- 
- 	cifs_dbg(FYI, "clone range\n");
--- 
-2.42.0
-
+--- a/arch/s390/mm/pgtable.c
++++ b/arch/s390/mm/pgtable.c
+@@ -699,7 +699,7 @@ void ptep_zap_unused(struct mm_struct *m
+ 		pte_clear(mm, addr, ptep);
+ 	}
+ 	if (reset)
+-		pgste_val(pgste) &= ~_PGSTE_GPS_USAGE_MASK;
++		pgste_val(pgste) &= ~(_PGSTE_GPS_USAGE_MASK | _PGSTE_GPS_NODAT);
+ 	pgste_set_unlock(ptep, pgste);
+ 	preempt_enable();
+ }
 
 
