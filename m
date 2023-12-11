@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDEA4437B;
-	Mon, 11 Dec 2023 18:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8DA4437B;
+	Mon, 11 Dec 2023 18:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plr1379r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A98C433C7;
-	Mon, 11 Dec 2023 18:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIhTX6xY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF49EC433C8;
+	Mon, 11 Dec 2023 18:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320352;
-	bh=+6ET2YV1w3nYSvqwKgV7upbn4TOcaiwgjtfimT4OLkQ=;
+	s=korg; t=1702320355;
+	bh=D28Nkyfl66WbNmJDnnyWB/7NyEgjlXWCbhO7xJb8Wjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=plr1379rv+8a7hRtNxW5d44lQAqFcckPHqGODAfPvN9wNNZPvqsW98hsSG6MRgVMd
-	 4cZF5eZx6QDYLwxpPJhSkRvqRQyjcVJpBojV8diVPP2D4ivRO8PPIencGbJJsD5Bge
-	 vTurSZVQAnYgEseGvqH9Cc6LgkfgptgzKn3TWrnE=
+	b=lIhTX6xYF1+7hJRioMeXApfNugvs2v193uw6U6dXh3CoklipOOTGmInn07pIRIfj5
+	 Ux1lqaz/ATrUzkKw/y0wOn81E26tnFc8BUHiLCS7dtqIK9Y9x9cMyPAMaOy6GEGoDb
+	 3kOeyB5iRZcQV/bRY9mmoK1nxBeWLPs1NYx31Il8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vadim Pasternak <vadimp@nvidia.com>,
 	Kunwu Chan <chentao@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/194] platform/mellanox: Add null pointer checks for devm_kasprintf()
-Date: Mon, 11 Dec 2023 19:20:20 +0100
-Message-ID: <20231211182037.934593775@linuxfoundation.org>
+Subject: [PATCH 6.1 031/194] platform/mellanox: Check devm_hwmon_device_register_with_groups() return value
+Date: Mon, 11 Dec 2023 19:20:21 +0100
+Message-ID: <20231211182037.982336609@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -46,10 +46,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 2c7c857f5fed997be93047d2de853d7f10c8defe ]
+[ Upstream commit 3494a594315b56516988afb6854d75dee5b501db ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure.
+devm_hwmon_device_register_with_groups() returns an error pointer upon
+failure. Check its return value for errors.
 
 Compile-tested only.
 
@@ -64,65 +64,20 @@ Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-pmc.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/platform/mellanox/mlxbf-pmc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
-index 2d4bbe99959ef..925bfc4aef8ce 100644
+index 925bfc4aef8ce..db7a1d360cd2c 100644
 --- a/drivers/platform/mellanox/mlxbf-pmc.c
 +++ b/drivers/platform/mellanox/mlxbf-pmc.c
-@@ -1202,6 +1202,8 @@ static int mlxbf_pmc_init_perftype_counter(struct device *dev, int blk_num)
- 	attr->dev_attr.show = mlxbf_pmc_event_list_show;
- 	attr->nr = blk_num;
- 	attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL, "event_list");
-+	if (!attr->dev_attr.attr.name)
-+		return -ENOMEM;
- 	pmc->block[blk_num].block_attr[i] = &attr->dev_attr.attr;
- 	attr = NULL;
+@@ -1454,6 +1454,8 @@ static int mlxbf_pmc_probe(struct platform_device *pdev)
  
-@@ -1214,6 +1216,8 @@ static int mlxbf_pmc_init_perftype_counter(struct device *dev, int blk_num)
- 		attr->nr = blk_num;
- 		attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL,
- 							  "enable");
-+		if (!attr->dev_attr.attr.name)
-+			return -ENOMEM;
- 		pmc->block[blk_num].block_attr[++i] = &attr->dev_attr.attr;
- 		attr = NULL;
- 	}
-@@ -1240,6 +1244,8 @@ static int mlxbf_pmc_init_perftype_counter(struct device *dev, int blk_num)
- 		attr->nr = blk_num;
- 		attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL,
- 							  "counter%d", j);
-+		if (!attr->dev_attr.attr.name)
-+			return -ENOMEM;
- 		pmc->block[blk_num].block_attr[++i] = &attr->dev_attr.attr;
- 		attr = NULL;
- 
-@@ -1251,6 +1257,8 @@ static int mlxbf_pmc_init_perftype_counter(struct device *dev, int blk_num)
- 		attr->nr = blk_num;
- 		attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL,
- 							  "event%d", j);
-+		if (!attr->dev_attr.attr.name)
-+			return -ENOMEM;
- 		pmc->block[blk_num].block_attr[++i] = &attr->dev_attr.attr;
- 		attr = NULL;
- 	}
-@@ -1283,6 +1291,8 @@ static int mlxbf_pmc_init_perftype_reg(struct device *dev, int blk_num)
- 		attr->nr = blk_num;
- 		attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL,
- 							  events[j].evt_name);
-+		if (!attr->dev_attr.attr.name)
-+			return -ENOMEM;
- 		pmc->block[blk_num].block_attr[i] = &attr->dev_attr.attr;
- 		attr = NULL;
- 		i++;
-@@ -1311,6 +1321,8 @@ static int mlxbf_pmc_create_groups(struct device *dev, int blk_num)
- 	pmc->block[blk_num].block_attr_grp.attrs = pmc->block[blk_num].block_attr;
- 	pmc->block[blk_num].block_attr_grp.name = devm_kasprintf(
- 		dev, GFP_KERNEL, pmc->block_name[blk_num]);
-+	if (!pmc->block[blk_num].block_attr_grp.name)
-+		return -ENOMEM;
- 	pmc->groups[blk_num] = &pmc->block[blk_num].block_attr_grp;
+ 	pmc->hwmon_dev = devm_hwmon_device_register_with_groups(
+ 		dev, "bfperf", pmc, pmc->groups);
++	if (IS_ERR(pmc->hwmon_dev))
++		return PTR_ERR(pmc->hwmon_dev);
+ 	platform_set_drvdata(pdev, pmc);
  
  	return 0;
 -- 
