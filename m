@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111DA5101A;
-	Mon, 11 Dec 2023 18:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08335101A;
+	Mon, 11 Dec 2023 18:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNOVrmFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86462C433C7;
-	Mon, 11 Dec 2023 18:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHXQT6cQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4458EC433C8;
+	Mon, 11 Dec 2023 18:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319251;
-	bh=nEtWdOQ9hTf6S6wF6wmyU3B0qaKOgiqnmNOxOnnm0IY=;
+	s=korg; t=1702319254;
+	bh=e9CVArW8oRLdkhCqpbxClyVN8QO4ie5LUD2PfcfiFUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNOVrmFtcLcH7nnIJuL9Udc//t6kK85Hjl49PCneJ1ummo9RIn8upJIHVCjQfgIDW
-	 qy1HDENy9c+B+WAa8QIv7EYx48qKGtY/A32dQnggS65Y2lk3B03wxxpSvA4aqf14pv
-	 qsbG7OQh9TUB6Sl8kC2qSsvdAp2P0E10Bu+BCjZY=
+	b=xHXQT6cQk4ZrcUdFJLBQAu3EsPn4lXBrkVC48R68s8eiDhZVXaTnMuRvWl2UGQXGR
+	 GB4VoWyjAUNirnMN3Wu69ciDDp+eDgLYIGVz2mov49tUN1+G9WhbEj3jKVD1iPvOoi
+	 kIgLBxppE7SgG2WbHm4wQ+l/K95vPeDguuwmUEh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grant Grundler <grundler@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Hayes Wang <hayeswang@realtek.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Alex Pakhunov <alexey.pakhunov@spacex.com>,
+	Vincent Wong <vincent.wong2@spacex.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/244] r8152: Add RTL8152_INACCESSIBLE to r8153_aldps_en()
-Date: Mon, 11 Dec 2023 19:18:49 +0100
-Message-ID: <20231211182047.428236684@linuxfoundation.org>
+Subject: [PATCH 6.6 010/244] tg3: Increment tx_dropped in tg3_tso_bug()
+Date: Mon, 11 Dec 2023 19:18:23 +0100
+Message-ID: <20231211182046.245888619@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,37 +44,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Alex Pakhunov <alexey.pakhunov@spacex.com>
 
-[ Upstream commit 79321a793945fdbff2f405f84712d0ab81bed287 ]
+[ Upstream commit 17dd5efe5f36a96bd78012594fabe21efb01186b ]
 
-Delay loops in r8152 should break out if RTL8152_INACCESSIBLE is set
-so that they don't delay too long if the device becomes
-inaccessible. Add the break to the loop in r8153_aldps_en().
+tg3_tso_bug() drops a packet if it cannot be segmented for any reason.
+The number of discarded frames should be incremented accordingly.
 
-Fixes: 4214cc550bf9 ("r8152: check if disabling ALDPS is finished")
-Reviewed-by: Grant Grundler <grundler@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Hayes Wang <hayeswang@realtek.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Alex Pakhunov <alexey.pakhunov@spacex.com>
+Signed-off-by: Vincent Wong <vincent.wong2@spacex.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20231113182350.37472-2-alexey.pakhunov@spacex.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/tg3.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 4393ffd3b2949..7611c406fdb96 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -5770,6 +5770,8 @@ static void r8153_aldps_en(struct r8152 *tp, bool enable)
- 		data &= ~EN_ALDPS;
- 		ocp_reg_write(tp, OCP_POWER_CFG, data);
- 		for (i = 0; i < 20; i++) {
-+			if (test_bit(RTL8152_INACCESSIBLE, &tp->flags))
-+				return;
- 			usleep_range(1000, 2000);
- 			if (ocp_read_word(tp, MCU_TYPE_PLA, 0xe000) & 0x0100)
- 				break;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 5c18ad10efc3e..b7acd994a393b 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -7874,8 +7874,10 @@ static int tg3_tso_bug(struct tg3 *tp, struct tg3_napi *tnapi,
+ 
+ 	segs = skb_gso_segment(skb, tp->dev->features &
+ 				    ~(NETIF_F_TSO | NETIF_F_TSO6));
+-	if (IS_ERR(segs) || !segs)
++	if (IS_ERR(segs) || !segs) {
++		tnapi->tx_dropped++;
+ 		goto tg3_tso_bug_end;
++	}
+ 
+ 	skb_list_walk_safe(segs, seg, next) {
+ 		skb_mark_not_on_list(seg);
 -- 
 2.42.0
 
