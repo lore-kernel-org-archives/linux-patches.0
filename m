@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27E5524D4;
-	Mon, 11 Dec 2023 18:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC2B524D4;
+	Mon, 11 Dec 2023 18:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zf+/6dUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2563EC433C8;
-	Mon, 11 Dec 2023 18:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6536MdT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AF9C433C8;
+	Mon, 11 Dec 2023 18:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319992;
-	bh=ImExzP2KuACY2L6nU1bVp2khXztxsFcPH7vnwIZMpaQ=;
+	s=korg; t=1702319995;
+	bh=nmGmUZ3Bv8fWSJbuiVYbVyvEhRRYFko5xyNpDof0Vas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zf+/6dUdTVvjG6BRp2qENjvD1j+dwh3sJMLg7STz+e2VcNL1if5JZtJcGKtqufD7n
-	 G0zq2qubwazzp9UGIqpszCEsmkh19EL6y0CZFBO2COlL/268b618YhTZiY2Z1xTLF5
-	 qWwGWz9jPRj/5+EQEk0HoRs2LRaOsvoeFMumXvck=
+	b=i6536MdTWOZT+qDt9VdUzjRqjG4sXRozq4hi0HJFhODMqI2OR7u124uY13krvKmVo
+	 d1ewQbqUmNP6eqjLdlgoYXy1HTdswgRoRhgskkGswQFOPaa8VdLBQzj+ueI59TPblw
+	 PhR2GOTMsES1X7FV9oLwGNCusry2usMLYNmX/Muw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	stable@kernel.org,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 56/97] packet: Move reference count in packet_sock to atomic_long_t
-Date: Mon, 11 Dec 2023 19:21:59 +0100
-Message-ID: <20231211182022.146272679@linuxfoundation.org>
+	Namhyung Kim <namhyung@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Jiri Olsa <jolsa@redhat.com>
+Subject: [PATCH 5.10 65/97] perf/core: Add a new read format to get a number of lost samples
+Date: Mon, 11 Dec 2023 19:22:08 +0100
+Message-ID: <20231211182022.546707736@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -46,109 +43,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit db3fadacaf0c817b222090290d06ca2a338422d0 upstream.
+[ Upstream commit 119a784c81270eb88e573174ed2209225d646656 ]
 
-In some potential instances the reference count on struct packet_sock
-could be saturated and cause overflows which gets the kernel a bit
-confused. To prevent this, move to a 64-bit atomic reference count on
-64-bit architectures to prevent the possibility of this type to overflow.
+Sometimes we want to know an accurate number of samples even if it's
+lost.  Currenlty PERF_RECORD_LOST is generated for a ring-buffer which
+might be shared with other events.  So it's hard to know per-event
+lost count.
 
-Because we can not handle saturation, using refcount_t is not possible
-in this place. Maybe someday in the future if it changes it could be
-used. Also, instead of using plain atomic64_t, use atomic_long_t instead.
-32-bit machines tend to be memory-limited (i.e. anything that increases
-a reference uses so much memory that you can't actually get to 2**32
-references). 32-bit architectures also tend to have serious problems
-with 64-bit atomics. Hence, atomic_long_t is the more natural solution.
+Add event->lost_samples field and PERF_FORMAT_LOST to retrieve it from
+userspace.
 
-Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
-Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: stable@kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231201131021.19999-1-daniel@iogearbox.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Original-patch-by: Jiri Olsa <jolsa@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20220616180623.1358843-1-namhyung@kernel.org
+Stable-dep-of: 382c27f4ed28 ("perf: Fix perf_event_validate_size()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c |   16 ++++++++--------
- net/packet/internal.h  |    2 +-
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ include/linux/perf_event.h      |  2 ++
+ include/uapi/linux/perf_event.h |  5 ++++-
+ kernel/events/core.c            | 21 ++++++++++++++++++---
+ kernel/events/ring_buffer.c     |  5 ++++-
+ 4 files changed, 28 insertions(+), 5 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4248,7 +4248,7 @@ static void packet_mm_open(struct vm_are
- 	struct sock *sk = sock->sk;
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index 50557d903a059..3b038a2cc0071 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -744,6 +744,8 @@ struct perf_event {
+ 	struct pid_namespace		*ns;
+ 	u64				id;
  
- 	if (sk)
--		atomic_inc(&pkt_sk(sk)->mapped);
-+		atomic_long_inc(&pkt_sk(sk)->mapped);
- }
++	atomic64_t			lost_samples;
++
+ 	u64				(*clock)(void);
+ 	perf_overflow_handler_t		overflow_handler;
+ 	void				*overflow_handler_context;
+diff --git a/include/uapi/linux/perf_event.h b/include/uapi/linux/perf_event.h
+index b95d3c485d27e..6ca63ab6bee5d 100644
+--- a/include/uapi/linux/perf_event.h
++++ b/include/uapi/linux/perf_event.h
+@@ -279,6 +279,7 @@ enum {
+  *	  { u64		time_enabled; } && PERF_FORMAT_TOTAL_TIME_ENABLED
+  *	  { u64		time_running; } && PERF_FORMAT_TOTAL_TIME_RUNNING
+  *	  { u64		id;           } && PERF_FORMAT_ID
++ *	  { u64		lost;         } && PERF_FORMAT_LOST
+  *	} && !PERF_FORMAT_GROUP
+  *
+  *	{ u64		nr;
+@@ -286,6 +287,7 @@ enum {
+  *	  { u64		time_running; } && PERF_FORMAT_TOTAL_TIME_RUNNING
+  *	  { u64		value;
+  *	    { u64	id;           } && PERF_FORMAT_ID
++ *	    { u64	lost;         } && PERF_FORMAT_LOST
+  *	  }		cntr[nr];
+  *	} && PERF_FORMAT_GROUP
+  * };
+@@ -295,8 +297,9 @@ enum perf_event_read_format {
+ 	PERF_FORMAT_TOTAL_TIME_RUNNING		= 1U << 1,
+ 	PERF_FORMAT_ID				= 1U << 2,
+ 	PERF_FORMAT_GROUP			= 1U << 3,
++	PERF_FORMAT_LOST			= 1U << 4,
  
- static void packet_mm_close(struct vm_area_struct *vma)
-@@ -4258,7 +4258,7 @@ static void packet_mm_close(struct vm_ar
- 	struct sock *sk = sock->sk;
+-	PERF_FORMAT_MAX = 1U << 4,		/* non-ABI */
++	PERF_FORMAT_MAX = 1U << 5,		/* non-ABI */
+ };
  
- 	if (sk)
--		atomic_dec(&pkt_sk(sk)->mapped);
-+		atomic_long_dec(&pkt_sk(sk)->mapped);
- }
+ #define PERF_ATTR_SIZE_VER0	64	/* sizeof first published struct */
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 5072635f0b0c1..f7ac1b24f93e0 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -1927,6 +1927,9 @@ static void __perf_event_read_size(struct perf_event *event, int nr_siblings)
+ 	if (event->attr.read_format & PERF_FORMAT_ID)
+ 		entry += sizeof(u64);
  
- static const struct vm_operations_struct packet_mmap_ops = {
-@@ -4353,7 +4353,7 @@ static int packet_set_ring(struct sock *
++	if (event->attr.read_format & PERF_FORMAT_LOST)
++		entry += sizeof(u64);
++
+ 	if (event->attr.read_format & PERF_FORMAT_GROUP) {
+ 		nr += nr_siblings;
+ 		size += sizeof(u64);
+@@ -5283,11 +5286,15 @@ static int __perf_read_group_add(struct perf_event *leader,
+ 	values[n++] += perf_event_count(leader);
+ 	if (read_format & PERF_FORMAT_ID)
+ 		values[n++] = primary_event_id(leader);
++	if (read_format & PERF_FORMAT_LOST)
++		values[n++] = atomic64_read(&leader->lost_samples);
  
- 	err = -EBUSY;
- 	if (!closing) {
--		if (atomic_read(&po->mapped))
-+		if (atomic_long_read(&po->mapped))
- 			goto out;
- 		if (packet_read_pending(rb))
- 			goto out;
-@@ -4456,7 +4456,7 @@ static int packet_set_ring(struct sock *
- 
- 	err = -EBUSY;
- 	mutex_lock(&po->pg_vec_lock);
--	if (closing || atomic_read(&po->mapped) == 0) {
-+	if (closing || atomic_long_read(&po->mapped) == 0) {
- 		err = 0;
- 		spin_lock_bh(&rb_queue->lock);
- 		swap(rb->pg_vec, pg_vec);
-@@ -4474,9 +4474,9 @@ static int packet_set_ring(struct sock *
- 		po->prot_hook.func = (po->rx_ring.pg_vec) ?
- 						tpacket_rcv : packet_rcv;
- 		skb_queue_purge(rb_queue);
--		if (atomic_read(&po->mapped))
--			pr_err("packet_mmap: vma is busy: %d\n",
--			       atomic_read(&po->mapped));
-+		if (atomic_long_read(&po->mapped))
-+			pr_err("packet_mmap: vma is busy: %ld\n",
-+			       atomic_long_read(&po->mapped));
+ 	for_each_sibling_event(sub, leader) {
+ 		values[n++] += perf_event_count(sub);
+ 		if (read_format & PERF_FORMAT_ID)
+ 			values[n++] = primary_event_id(sub);
++		if (read_format & PERF_FORMAT_LOST)
++			values[n++] = atomic64_read(&sub->lost_samples);
  	}
- 	mutex_unlock(&po->pg_vec_lock);
  
-@@ -4554,7 +4554,7 @@ static int packet_mmap(struct file *file
- 		}
+ unlock:
+@@ -5341,7 +5348,7 @@ static int perf_read_one(struct perf_event *event,
+ 				 u64 read_format, char __user *buf)
+ {
+ 	u64 enabled, running;
+-	u64 values[4];
++	u64 values[5];
+ 	int n = 0;
+ 
+ 	values[n++] = __perf_event_read_value(event, &enabled, &running);
+@@ -5351,6 +5358,8 @@ static int perf_read_one(struct perf_event *event,
+ 		values[n++] = running;
+ 	if (read_format & PERF_FORMAT_ID)
+ 		values[n++] = primary_event_id(event);
++	if (read_format & PERF_FORMAT_LOST)
++		values[n++] = atomic64_read(&event->lost_samples);
+ 
+ 	if (copy_to_user(buf, values, n * sizeof(u64)))
+ 		return -EFAULT;
+@@ -6830,7 +6839,7 @@ static void perf_output_read_one(struct perf_output_handle *handle,
+ 				 u64 enabled, u64 running)
+ {
+ 	u64 read_format = event->attr.read_format;
+-	u64 values[4];
++	u64 values[5];
+ 	int n = 0;
+ 
+ 	values[n++] = perf_event_count(event);
+@@ -6844,6 +6853,8 @@ static void perf_output_read_one(struct perf_output_handle *handle,
+ 	}
+ 	if (read_format & PERF_FORMAT_ID)
+ 		values[n++] = primary_event_id(event);
++	if (read_format & PERF_FORMAT_LOST)
++		values[n++] = atomic64_read(&event->lost_samples);
+ 
+ 	__output_copy(handle, values, n * sizeof(u64));
+ }
+@@ -6854,7 +6865,7 @@ static void perf_output_read_group(struct perf_output_handle *handle,
+ {
+ 	struct perf_event *leader = event->group_leader, *sub;
+ 	u64 read_format = event->attr.read_format;
+-	u64 values[5];
++	u64 values[6];
+ 	int n = 0;
+ 
+ 	values[n++] = 1 + leader->nr_siblings;
+@@ -6872,6 +6883,8 @@ static void perf_output_read_group(struct perf_output_handle *handle,
+ 	values[n++] = perf_event_count(leader);
+ 	if (read_format & PERF_FORMAT_ID)
+ 		values[n++] = primary_event_id(leader);
++	if (read_format & PERF_FORMAT_LOST)
++		values[n++] = atomic64_read(&leader->lost_samples);
+ 
+ 	__output_copy(handle, values, n * sizeof(u64));
+ 
+@@ -6885,6 +6898,8 @@ static void perf_output_read_group(struct perf_output_handle *handle,
+ 		values[n++] = perf_event_count(sub);
+ 		if (read_format & PERF_FORMAT_ID)
+ 			values[n++] = primary_event_id(sub);
++		if (read_format & PERF_FORMAT_LOST)
++			values[n++] = atomic64_read(&sub->lost_samples);
+ 
+ 		__output_copy(handle, values, n * sizeof(u64));
+ 	}
+diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
+index 01351e7e25435..ca27946fdaaf2 100644
+--- a/kernel/events/ring_buffer.c
++++ b/kernel/events/ring_buffer.c
+@@ -172,8 +172,10 @@ __perf_output_begin(struct perf_output_handle *handle,
+ 		goto out;
+ 
+ 	if (unlikely(rb->paused)) {
+-		if (rb->nr_pages)
++		if (rb->nr_pages) {
+ 			local_inc(&rb->lost);
++			atomic64_inc(&event->lost_samples);
++		}
+ 		goto out;
  	}
  
--	atomic_inc(&po->mapped);
-+	atomic_long_inc(&po->mapped);
- 	vma->vm_ops = &packet_mmap_ops;
- 	err = 0;
+@@ -254,6 +256,7 @@ __perf_output_begin(struct perf_output_handle *handle,
  
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -126,7 +126,7 @@ struct packet_sock {
- 	__be16			num;
- 	struct packet_rollover	*rollover;
- 	struct packet_mclist	*mclist;
--	atomic_t		mapped;
-+	atomic_long_t		mapped;
- 	enum tpacket_versions	tp_version;
- 	unsigned int		tp_hdrlen;
- 	unsigned int		tp_reserve;
+ fail:
+ 	local_inc(&rb->lost);
++	atomic64_inc(&event->lost_samples);
+ 	perf_output_put_handle(handle);
+ out:
+ 	rcu_read_unlock();
+-- 
+2.42.0
+
 
 
