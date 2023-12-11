@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E427E548;
-	Mon, 11 Dec 2023 18:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7286E548;
+	Mon, 11 Dec 2023 18:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1FPA48O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86405C433C8;
-	Mon, 11 Dec 2023 18:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQ7Vu/rq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C558C433C7;
+	Mon, 11 Dec 2023 18:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321191;
-	bh=FQ3e7LrWrx03d6rdrwuf52CaVRt+TYGI2QdTb/PoNMA=;
+	s=korg; t=1702321194;
+	bh=M5/n2E+knR48mw8Y+dzbjYtJBpFTxoCtkaIxQVwsS28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1FPA48O4NQPqyf04yWIPKYz+cu/rXVjKwjieOe1EG+OiRvLqXPopYZ+MGvARiJMQ
-	 LEHIBnF3jWnWTW0FZTrB0IZO0SJ047paQNz9wE/mTzlC8vt3EEkoPcCkO2/TTSdQSg
-	 oJe9hN08PX7TZUtmlI3+38bgBzBnNR+/i5dWNtv8=
+	b=eQ7Vu/rqTCzBSFYKGpIeWc5LSoyC1veGL38K3z68Q5GaENYnZFfktzIS779KFPNaI
+	 brNT92XvqDTjJxVY+YnKtQHQ74ReY/m1Z83gGnCvitDzvC3GShZAs0zw6o/RBH9GIF
+	 foI7fnSfATCQFVqOUUqo/0VC5iyy2VU4+Ih62MsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronald Wahl <ronald.wahl@raritan.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 131/141] serial: 8250_omap: Add earlycon support for the AM654 UART controller
-Date: Mon, 11 Dec 2023 19:23:10 +0100
-Message-ID: <20231211182032.247760313@linuxfoundation.org>
+	stable@kernel.org,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.15 132/141] x86/CPU/AMD: Check vendor in the AMD microcode callback
+Date: Mon, 11 Dec 2023 19:23:11 +0100
+Message-ID: <20231211182032.279767392@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -42,31 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Wahl <ronald.wahl@raritan.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 8e42c301ce64e0dcca547626eb486877d502d336 upstream.
+commit 9b8493dc43044376716d789d07699f17d538a7c4 upstream.
 
-Currently there is no support for earlycon on the AM654 UART
-controller. This commit adds it.
+Commit in Fixes added an AMD-specific microcode callback. However, it
+didn't check the CPU vendor the kernel runs on explicitly.
 
-Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
-Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
-Link: https://lore.kernel.org/r/20231031131242.15516-1-rwahl@gmx.de
-Cc: stable <stable@kernel.org>
+The only reason the Zenbleed check in it didn't run on other x86 vendors
+hardware was pure coincidental luck:
+
+  if (!cpu_has_amd_erratum(c, amd_zenbleed))
+	  return;
+
+gives true on other vendors because they don't have those families and
+models.
+
+However, with the removal of the cpu_has_amd_erratum() in
+
+  05f5f73936fa ("x86/CPU/AMD: Drop now unused CPU erratum checking function")
+
+that coincidental condition is gone, leading to the zenbleed check
+getting executed on other vendors too.
+
+Add the explicit vendor check for the whole callback as it should've
+been done in the first place.
+
+Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
+Cc: <stable@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20231201184226.16749-1-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_early.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/cpu/amd.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_early.c
-+++ b/drivers/tty/serial/8250/8250_early.c
-@@ -199,6 +199,7 @@ static int __init early_omap8250_setup(s
- OF_EARLYCON_DECLARE(omap8250, "ti,omap2-uart", early_omap8250_setup);
- OF_EARLYCON_DECLARE(omap8250, "ti,omap3-uart", early_omap8250_setup);
- OF_EARLYCON_DECLARE(omap8250, "ti,omap4-uart", early_omap8250_setup);
-+OF_EARLYCON_DECLARE(omap8250, "ti,am654-uart", early_omap8250_setup);
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1316,6 +1316,9 @@ static void zenbleed_check_cpu(void *unu
  
- #endif
+ void amd_check_microcode(void)
+ {
++	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD)
++		return;
++
+ 	on_each_cpu(zenbleed_check_cpu, NULL, 1);
+ }
  
 
 
