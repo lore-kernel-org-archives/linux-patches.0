@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AA7321B8;
-	Mon, 11 Dec 2023 18:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5AF321B8;
+	Mon, 11 Dec 2023 18:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOR4LGrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19215C433C7;
-	Mon, 11 Dec 2023 18:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNndfrzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6898C433C7;
+	Mon, 11 Dec 2023 18:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320967;
-	bh=Uh5YCI/hARl3MGvUPdPLAbU4kzPnQOZM5ikgtxGzpEE=;
+	s=korg; t=1702320970;
+	bh=eOxnU175kEaa4DPMGrdJSEoMPpmZIkoiGGbpPvr77qE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SOR4LGrMkj9el9gRJVh6gRgsB1z4hQM7DAWI+FtRK4q7VMrhmnAJsLGhbMpcn2uhq
-	 a8ZeW5aK2OpBeEkSILxnPBtIU1KJhR4M+6IJ8GlRAP3UsA1JroN/6wUAPCNlTK7Wg1
-	 khsCw4LLIfSoMRJYMgYyA9AG+f9p8rSck4F1blgM=
+	b=fNndfrzA5BO7m8A3/baQgYW9trX3IYgSE4OiUjS7UmZCYJMLeDXdbXrT72Jt87r6l
+	 w+UalyvRfIhVIkoguoawWWWzAEN6xHxRtVftdgxtGPVIcj8fg9RoGdgdzGLqTljkS0
+	 u9Ii286aDijmLWsYXMidJ40vNT9/6mVp9eBEdU2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aleksa Savic <savicaleksa83@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jonas Malaco <jonas@protocubo.io>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/141] ionic: fix snprintf format length warning
-Date: Mon, 11 Dec 2023 19:21:33 +0100
-Message-ID: <20231211182028.020072921@linuxfoundation.org>
+Subject: [PATCH 5.15 061/141] hwmon: (nzxt-kraken2) Fix error handling path in kraken2_probe()
+Date: Mon, 11 Dec 2023 19:22:00 +0100
+Message-ID: <20231211182029.194481918@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -45,43 +44,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 0ceb3860a67652f9d36dfdecfcd2cb3eb2f4537d ]
+[ Upstream commit 35fe2ad259a3bfca15ab78c8ffb5278cb6149c89 ]
 
-Our friendly kernel test robot has reminded us that with a new
-check we have a warning about a potential string truncation.
-In this case it really doesn't hurt anything, but it is worth
-addressing especially since there really is no reason to reserve
-so many bytes for our queue names.  It seems that cutting the
-queue name buffer length in half stops the complaint.
+There is no point in calling hid_hw_stop() if hid_hw_start() has failed.
+There is no point in calling hid_hw_close() if hid_hw_open() has failed.
 
-Fixes: c06107cabea3 ("ionic: more ionic name tweaks")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311300201.lO8v7mKU-lkp@intel.com/
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20231204192234.21017-2-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Update the error handling path accordingly.
+
+Fixes: 82e3430dfa8c ("hwmon: add driver for NZXT Kraken X42/X52/X62/X72")
+Reported-by: Aleksa Savic <savicaleksa83@gmail.com>
+Closes: https://lore.kernel.org/all/121470f0-6c1f-418a-844c-7ec2e8a54b8e@gmail.com/
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Jonas Malaco <jonas@protocubo.io>
+Link: https://lore.kernel.org/r/a768e69851a07a1f4e29f270f4e2559063f07343.1701617030.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_dev.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/nzxt-kraken2.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.h b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
-index 676c58dc19817..38f38fe8f21d9 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_dev.h
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
-@@ -208,7 +208,7 @@ struct ionic_desc_info {
- 	void *cb_arg;
- };
+diff --git a/drivers/hwmon/nzxt-kraken2.c b/drivers/hwmon/nzxt-kraken2.c
+index 89f7ea4f42d47..badbcaf01f90b 100644
+--- a/drivers/hwmon/nzxt-kraken2.c
++++ b/drivers/hwmon/nzxt-kraken2.c
+@@ -161,13 +161,13 @@ static int kraken2_probe(struct hid_device *hdev,
+ 	ret = hid_hw_start(hdev, HID_CONNECT_HIDRAW);
+ 	if (ret) {
+ 		hid_err(hdev, "hid hw start failed with %d\n", ret);
+-		goto fail_and_stop;
++		return ret;
+ 	}
  
--#define IONIC_QUEUE_NAME_MAX_SZ		32
-+#define IONIC_QUEUE_NAME_MAX_SZ		16
+ 	ret = hid_hw_open(hdev);
+ 	if (ret) {
+ 		hid_err(hdev, "hid hw open failed with %d\n", ret);
+-		goto fail_and_close;
++		goto fail_and_stop;
+ 	}
  
- struct ionic_queue {
- 	struct device *dev;
+ 	priv->hwmon_dev = hwmon_device_register_with_info(&hdev->dev, "kraken2",
 -- 
 2.42.0
 
