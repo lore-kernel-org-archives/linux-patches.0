@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A109321B8;
-	Mon, 11 Dec 2023 18:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AA7321B8;
+	Mon, 11 Dec 2023 18:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ped60zmA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CA7C433C8;
-	Mon, 11 Dec 2023 18:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOR4LGrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19215C433C7;
+	Mon, 11 Dec 2023 18:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320964;
-	bh=XrhKEn5ZBERqIdl+bayioq5xNLPXevCr4poykdVdaEo=;
+	s=korg; t=1702320967;
+	bh=Uh5YCI/hARl3MGvUPdPLAbU4kzPnQOZM5ikgtxGzpEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ped60zmADtPnk28tgXgyYDtQ00jL+S1OWQuvMumd2DJv1d+uio+2Tflbv3Kk8Ni38
-	 8/vCrZq2aXQ8bzrYM3v2d3IBTNuIPA73oReFgrSgU9nXCZZfgyzBRRlgFJMD94izhT
-	 TMo/HmVA3qBhJ/eMhEviRcU2MIPhqxPEcYbU5Wrg=
+	b=SOR4LGrMkj9el9gRJVh6gRgsB1z4hQM7DAWI+FtRK4q7VMrhmnAJsLGhbMpcn2uhq
+	 a8ZeW5aK2OpBeEkSILxnPBtIU1KJhR4M+6IJ8GlRAP3UsA1JroN/6wUAPCNlTK7Wg1
+	 khsCw4LLIfSoMRJYMgYyA9AG+f9p8rSck4F1blgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	urbinek@gmail.com,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	kernel test robot <lkp@intel.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/141] hwmon: (acpi_power_meter) Fix 4.29 MW bug
-Date: Mon, 11 Dec 2023 19:21:59 +0100
-Message-ID: <20231211182029.159489888@linuxfoundation.org>
+Subject: [PATCH 5.15 034/141] ionic: fix snprintf format length warning
+Date: Mon, 11 Dec 2023 19:21:33 +0100
+Message-ID: <20231211182028.020072921@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -43,53 +45,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 1fefca6c57fb928d2131ff365270cbf863d89c88 ]
+[ Upstream commit 0ceb3860a67652f9d36dfdecfcd2cb3eb2f4537d ]
 
-The ACPI specification says:
+Our friendly kernel test robot has reminded us that with a new
+check we have a warning about a potential string truncation.
+In this case it really doesn't hurt anything, but it is worth
+addressing especially since there really is no reason to reserve
+so many bytes for our queue names.  It seems that cutting the
+queue name buffer length in half stops the complaint.
 
-"If an error occurs while obtaining the meter reading or if the value
-is not available then an Integer with all bits set is returned"
-
-Since the "integer" is 32 bits in case of the ACPI power meter,
-userspace will get a power reading of 2^32 * 1000 miliwatts (~4.29 MW)
-in case of such an error. This was discovered due to a lm_sensors
-bugreport (https://github.com/lm-sensors/lm-sensors/issues/460).
-Fix this by returning -ENODATA instead.
-
-Tested-by: <urbinek@gmail.com>
-Fixes: de584afa5e18 ("hwmon driver for ACPI 4.0 power meters")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231124182747.13956-1-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: c06107cabea3 ("ionic: more ionic name tweaks")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311300201.lO8v7mKU-lkp@intel.com/
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20231204192234.21017-2-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/acpi_power_meter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_dev.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
-index 014505b1faf74..1336f77106177 100644
---- a/drivers/hwmon/acpi_power_meter.c
-+++ b/drivers/hwmon/acpi_power_meter.c
-@@ -31,6 +31,7 @@
- #define POWER_METER_CAN_NOTIFY	(1 << 3)
- #define POWER_METER_IS_BATTERY	(1 << 8)
- #define UNKNOWN_HYSTERESIS	0xFFFFFFFF
-+#define UNKNOWN_POWER		0xFFFFFFFF
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.h b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+index 676c58dc19817..38f38fe8f21d9 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.h
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+@@ -208,7 +208,7 @@ struct ionic_desc_info {
+ 	void *cb_arg;
+ };
  
- #define METER_NOTIFY_CONFIG	0x80
- #define METER_NOTIFY_TRIP	0x81
-@@ -348,6 +349,9 @@ static ssize_t show_power(struct device *dev,
- 	update_meter(resource);
- 	mutex_unlock(&resource->lock);
+-#define IONIC_QUEUE_NAME_MAX_SZ		32
++#define IONIC_QUEUE_NAME_MAX_SZ		16
  
-+	if (resource->power == UNKNOWN_POWER)
-+		return -ENODATA;
-+
- 	return sprintf(buf, "%llu\n", resource->power * 1000);
- }
- 
+ struct ionic_queue {
+ 	struct device *dev;
 -- 
 2.42.0
 
