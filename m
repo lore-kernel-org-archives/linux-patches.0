@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07D4524B8;
-	Mon, 11 Dec 2023 18:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBCE524B8;
+	Mon, 11 Dec 2023 18:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhCcTiCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2521AC433C7;
-	Mon, 11 Dec 2023 18:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXoVhrZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A5FC433C7;
+	Mon, 11 Dec 2023 18:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319892;
-	bh=E4LXevzt+sl2VTAf3dS477IVmgy2DVL0FkWEXBU4+Ks=;
+	s=korg; t=1702319895;
+	bh=sksOvmNATkDA9hy1WUS8CIKG1cTNUXpSR9Bc24SR0rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mhCcTiCSwj5R2u0z7Sm65dLxk6qIMCJIszbiNJ4fNjiXEh40m4JAyqdJCy16be8rd
-	 nmPwByQHbVRU7fjg/4TyuM3rHDhwfrvDNAXV8ZQ5f1iStLrzvzsG7yXOwbKwZkCio7
-	 Ry3oxP0nhumNkGv048wglS88bxYrS2vauAVElBKc=
+	b=ZXoVhrZkZvQvC+3ImgmOsz0UXsgplTbLsulxpMQSDnBbI6ABjm5zid/4UgGPXkS3Y
+	 beQ/PbQEmdluT56FCF1cfFXQaBK3+AfKGSLXxTTpVXE0eNpv8rNDtQsp4ZMTWfhyD4
+	 r3PtWaPZ7Zaa0vmAp4USFC5fayuLO5kvWYyn279k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YuanShang <YuanShang.Mao@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 07/97] drm/amdgpu: correct chunk_ptr to a pointer to chunk.
-Date: Mon, 11 Dec 2023 19:21:10 +0100
-Message-ID: <20231211182020.142206002@linuxfoundation.org>
+Subject: [PATCH 5.10 08/97] platform/x86: asus-wmi: Add support for SW_TABLET_MODE on UX360
+Date: Mon, 11 Dec 2023 19:21:11 +0100
+Message-ID: <20231211182020.181800381@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -44,35 +43,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanShang <YuanShang.Mao@amd.com>
+From: Samuel Čavoj <samuel@cavoj.net>
 
-[ Upstream commit 50d51374b498457c4dea26779d32ccfed12ddaff ]
+[ Upstream commit ea856ec266c1e6aecd2b107032d5b5d661f0686d ]
 
-The variable "chunk_ptr" should be a pointer pointing
-to a struct drm_amdgpu_cs_chunk instead of to a pointer
-of that.
+The UX360CA has a WMI device id 0x00060062, which reports whether the
+lid is flipped in tablet mode (1) or in normal laptop mode (0).
 
-Signed-off-by: YuanShang <YuanShang.Mao@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Add a quirk (quirk_asus_use_lid_flip_devid) for devices on which this
+WMI device should be used to figure out the SW_TABLET_MODE state, as
+opposed to the quirk_asus_use_kbd_dock_devid.
+
+Additionally, the device needs to be queried on resume and restore
+because the firmware does not generate an event if the laptop is put to
+sleep while in tablet mode, flipped to normal mode, and later awoken.
+
+It is assumed other UX360* models have the same WMI device. As such, the
+quirk is applied to devices with DMI_MATCH(DMI_PRODUCT_NAME, "UX360").
+More devices with this feature need to be tested and added accordingly.
+
+The reason for using an allowlist via the quirk mechanism is that the new
+WMI device (0x00060062) is also present on some models which do not have
+a 360 degree hinge (at least FX503VD and GL503VD from Hans' DSTS
+collection) and therefore its presence cannot be relied on.
+
+Signed-off-by: Samuel Čavoj <samuel@cavoj.net>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20201020220944.1075530-1-samuel@cavoj.net
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: b52cbca22cbf ("platform/x86: asus-wmi: Move i8042 filter install to shared asus-wmi code")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/asus-nb-wmi.c         | 15 ++++++++
+ drivers/platform/x86/asus-wmi.c            | 40 ++++++++++++++++++++++
+ drivers/platform/x86/asus-wmi.h            |  1 +
+ include/linux/platform_data/x86/asus-wmi.h |  1 +
+ 4 files changed, 57 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 7f2adac82e3a6..addeda42339fa 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -143,7 +143,7 @@ static int amdgpu_cs_parser_init(struct amdgpu_cs_parser *p, union drm_amdgpu_cs
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index 04503ad6c7fb0..f47b6f30599de 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -114,6 +114,11 @@ static struct quirk_entry quirk_asus_use_kbd_dock_devid = {
+ 	.use_kbd_dock_devid = true,
+ };
+ 
++static struct quirk_entry quirk_asus_use_lid_flip_devid = {
++	.wmi_backlight_set_devstate = true,
++	.use_lid_flip_devid = true,
++};
++
+ static int dmi_matched(const struct dmi_system_id *dmi)
+ {
+ 	pr_info("Identified laptop model '%s'\n", dmi->ident);
+@@ -443,6 +448,16 @@ static const struct dmi_system_id asus_quirks[] = {
+ 		},
+ 		.driver_data = &quirk_asus_use_kbd_dock_devid,
+ 	},
++	{
++		.callback = dmi_matched,
++		.ident = "ASUS ZenBook Flip UX360",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			/* Match UX360* */
++			DMI_MATCH(DMI_PRODUCT_NAME, "UX360"),
++		},
++		.driver_data = &quirk_asus_use_lid_flip_devid,
++	},
+ 	{},
+ };
+ 
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index db369cf261119..ca3b97b7a6ad8 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -63,6 +63,7 @@ MODULE_LICENSE("GPL");
+ #define NOTIFY_KBD_BRTTOGGLE		0xc7
+ #define NOTIFY_KBD_FBM			0x99
+ #define NOTIFY_KBD_TTP			0xae
++#define NOTIFY_LID_FLIP			0xfa
+ 
+ #define ASUS_WMI_FNLOCK_BIOS_DISABLED	BIT(0)
+ 
+@@ -375,6 +376,20 @@ static int asus_wmi_input_init(struct asus_wmi *asus)
+ 		}
  	}
  
- 	for (i = 0; i < p->nchunks; i++) {
--		struct drm_amdgpu_cs_chunk __user **chunk_ptr = NULL;
-+		struct drm_amdgpu_cs_chunk __user *chunk_ptr = NULL;
- 		struct drm_amdgpu_cs_chunk user_chunk;
- 		uint32_t __user *cdata;
++	if (asus->driver->quirks->use_lid_flip_devid) {
++		result = asus_wmi_get_devstate_simple(asus, ASUS_WMI_DEVID_LID_FLIP);
++		if (result < 0)
++			asus->driver->quirks->use_lid_flip_devid = 0;
++		if (result >= 0) {
++			input_set_capability(asus->inputdev, EV_SW, SW_TABLET_MODE);
++			input_report_switch(asus->inputdev, SW_TABLET_MODE, result);
++		} else if (result == -ENODEV) {
++			pr_err("This device has lid_flip quirk but got ENODEV checking it. This is a bug.");
++		} else {
++			pr_err("Error checking for lid-flip: %d\n", result);
++		}
++	}
++
+ 	err = input_register_device(asus->inputdev);
+ 	if (err)
+ 		goto err_free_dev;
+@@ -394,6 +409,18 @@ static void asus_wmi_input_exit(struct asus_wmi *asus)
+ 	asus->inputdev = NULL;
+ }
  
++/* Tablet mode ****************************************************************/
++
++static void lid_flip_tablet_mode_get_state(struct asus_wmi *asus)
++{
++	int result = asus_wmi_get_devstate_simple(asus, ASUS_WMI_DEVID_LID_FLIP);
++
++	if (result >= 0) {
++		input_report_switch(asus->inputdev, SW_TABLET_MODE, result);
++		input_sync(asus->inputdev);
++	}
++}
++
+ /* Battery ********************************************************************/
+ 
+ /* The battery maximum charging percentage */
+@@ -2130,6 +2157,11 @@ static void asus_wmi_handle_event_code(int code, struct asus_wmi *asus)
+ 		return;
+ 	}
+ 
++	if (asus->driver->quirks->use_lid_flip_devid && code == NOTIFY_LID_FLIP) {
++		lid_flip_tablet_mode_get_state(asus);
++		return;
++	}
++
+ 	if (asus->fan_boost_mode_available && code == NOTIFY_KBD_FBM) {
+ 		fan_boost_mode_switch_next(asus);
+ 		return;
+@@ -2721,6 +2753,10 @@ static int asus_hotk_resume(struct device *device)
+ 
+ 	if (asus_wmi_has_fnlock_key(asus))
+ 		asus_wmi_fnlock_update(asus);
++
++	if (asus->driver->quirks->use_lid_flip_devid)
++		lid_flip_tablet_mode_get_state(asus);
++
+ 	return 0;
+ }
+ 
+@@ -2759,6 +2795,10 @@ static int asus_hotk_restore(struct device *device)
+ 
+ 	if (asus_wmi_has_fnlock_key(asus))
+ 		asus_wmi_fnlock_update(asus);
++
++	if (asus->driver->quirks->use_lid_flip_devid)
++		lid_flip_tablet_mode_get_state(asus);
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/platform/x86/asus-wmi.h b/drivers/platform/x86/asus-wmi.h
+index 1d0b592e2651b..49f2b8f8ad3eb 100644
+--- a/drivers/platform/x86/asus-wmi.h
++++ b/drivers/platform/x86/asus-wmi.h
+@@ -34,6 +34,7 @@ struct quirk_entry {
+ 	bool wmi_backlight_set_devstate;
+ 	bool wmi_force_als_set;
+ 	bool use_kbd_dock_devid;
++	bool use_lid_flip_devid;
+ 	int wapf;
+ 	/*
+ 	 * For machines with AMD graphic chips, it will send out WMI event
+diff --git a/include/linux/platform_data/x86/asus-wmi.h b/include/linux/platform_data/x86/asus-wmi.h
+index 897b8332a39f4..2f274cf528050 100644
+--- a/include/linux/platform_data/x86/asus-wmi.h
++++ b/include/linux/platform_data/x86/asus-wmi.h
+@@ -62,6 +62,7 @@
+ 
+ /* Misc */
+ #define ASUS_WMI_DEVID_CAMERA		0x00060013
++#define ASUS_WMI_DEVID_LID_FLIP		0x00060062
+ 
+ /* Storage */
+ #define ASUS_WMI_DEVID_CARDREADER	0x00080013
 -- 
 2.42.0
 
