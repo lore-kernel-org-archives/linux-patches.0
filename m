@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DB4321B8;
-	Mon, 11 Dec 2023 18:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6E5321B8;
+	Mon, 11 Dec 2023 18:55:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+HF4rqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAA4C433C7;
-	Mon, 11 Dec 2023 18:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2TFeJI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E123C433C7;
+	Mon, 11 Dec 2023 18:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320915;
-	bh=5dFeOSxTOlnR2KaUo9fB/GuEi+haEUwOsUD0mHn03s8=;
+	s=korg; t=1702320918;
+	bh=IKNMMUcOmzwaHf+5375pBqmX9NsUx8roiXfZkAwC9Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+HF4rqMWbDBus8iCbNvEhHAThlqkqTY4HwtIfQ4A72WjnN7vS35tjE0VABUuZNVv
-	 j4n5Fl3Vi3F/kotRY8Q8kMpU3osn/+1s/+ssCwrRroKsjECMUCsRwq47kmqer0fj/z
-	 EoUqMIFKyEff4fKAtZ4JHfJIaJ0Vef0l/mxVKes0=
+	b=k2TFeJI2cwcl/Pj+Be3lG93W2K+VHZ+gWGLkuKGE4/4bU+dfq7gZPHZ7XCzwJXVqV
+	 bJ3FZ5rcSNN4f17RrnyWbIwoNVdf1P4dfAVDjDYSmbprwnNgkGum/yzKmHRFeBJj7X
+	 qA/23O7tvVKHzW5Lr7MiS9fdg2AO7GnoFZGfvKw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Fastabend <john.fastabend@gmail.com>,
+	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/141] bpf: sockmap, updating the sg structure should also update curr
-Date: Mon, 11 Dec 2023 19:21:42 +0100
-Message-ID: <20231211182028.393835510@linuxfoundation.org>
+Subject: [PATCH 5.15 044/141] psample: Require CAP_NET_ADMIN when joining "packets" group
+Date: Mon, 11 Dec 2023 19:21:43 +0100
+Message-ID: <20231211182028.432708514@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -42,72 +45,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Fastabend <john.fastabend@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit bb9aefde5bbaf6c168c77ba635c155b4980c2287 ]
+[ Upstream commit 44ec98ea5ea9cfecd31a5c4cc124703cb5442832 ]
 
-Curr pointer should be updated when the sg structure is shifted.
+The "psample" generic netlink family notifies sampled packets over the
+"packets" multicast group. This is problematic since by default generic
+netlink allows non-root users to listen to these notifications.
 
-Fixes: 7246d8ed4dcce ("bpf: helper to pop data from messages")
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20231206232706.374377-3-john.fastabend@gmail.com
+Fix by marking the group with the 'GENL_UNS_ADMIN_PERM' flag. This will
+prevent non-root users or root without the 'CAP_NET_ADMIN' capability
+(in the user namespace owning the network namespace) from joining the
+group.
+
+Tested using [1].
+
+Before:
+
+ # capsh -- -c ./psample_repo
+ # capsh --drop=cap_net_admin -- -c ./psample_repo
+
+After:
+
+ # capsh -- -c ./psample_repo
+ # capsh --drop=cap_net_admin -- -c ./psample_repo
+ Failed to join "packets" multicast group
+
+[1]
+ $ cat psample.c
+ #include <stdio.h>
+ #include <netlink/genl/ctrl.h>
+ #include <netlink/genl/genl.h>
+ #include <netlink/socket.h>
+
+ int join_grp(struct nl_sock *sk, const char *grp_name)
+ {
+ 	int grp, err;
+
+ 	grp = genl_ctrl_resolve_grp(sk, "psample", grp_name);
+ 	if (grp < 0) {
+ 		fprintf(stderr, "Failed to resolve \"%s\" multicast group\n",
+ 			grp_name);
+ 		return grp;
+ 	}
+
+ 	err = nl_socket_add_memberships(sk, grp, NFNLGRP_NONE);
+ 	if (err) {
+ 		fprintf(stderr, "Failed to join \"%s\" multicast group\n",
+ 			grp_name);
+ 		return err;
+ 	}
+
+ 	return 0;
+ }
+
+ int main(int argc, char **argv)
+ {
+ 	struct nl_sock *sk;
+ 	int err;
+
+ 	sk = nl_socket_alloc();
+ 	if (!sk) {
+ 		fprintf(stderr, "Failed to allocate socket\n");
+ 		return -1;
+ 	}
+
+ 	err = genl_connect(sk);
+ 	if (err) {
+ 		fprintf(stderr, "Failed to connect socket\n");
+ 		return err;
+ 	}
+
+ 	err = join_grp(sk, "config");
+ 	if (err)
+ 		return err;
+
+ 	err = join_grp(sk, "packets");
+ 	if (err)
+ 		return err;
+
+ 	return 0;
+ }
+ $ gcc -I/usr/include/libnl3 -lnl-3 -lnl-genl-3 -o psample_repo psample.c
+
+Fixes: 6ae0a6286171 ("net: Introduce psample, a new genetlink channel for packet sampling")
+Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20231206213102.1824398-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ net/psample/psample.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 76432aa3b717c..0f5faa876fd12 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2576,6 +2576,22 @@ BPF_CALL_2(bpf_msg_cork_bytes, struct sk_msg *, msg, u32, bytes)
- 	return 0;
- }
+diff --git a/net/psample/psample.c b/net/psample/psample.c
+index 118d5d2a81a02..0d9d9936579e0 100644
+--- a/net/psample/psample.c
++++ b/net/psample/psample.c
+@@ -31,7 +31,8 @@ enum psample_nl_multicast_groups {
  
-+static void sk_msg_reset_curr(struct sk_msg *msg)
-+{
-+	u32 i = msg->sg.start;
-+	u32 len = 0;
-+
-+	do {
-+		len += sk_msg_elem(msg, i)->length;
-+		sk_msg_iter_var_next(i);
-+		if (len >= msg->sg.size)
-+			break;
-+	} while (i != msg->sg.end);
-+
-+	msg->sg.curr = i;
-+	msg->sg.copybreak = 0;
-+}
-+
- static const struct bpf_func_proto bpf_msg_cork_bytes_proto = {
- 	.func           = bpf_msg_cork_bytes,
- 	.gpl_only       = false,
-@@ -2695,6 +2711,7 @@ BPF_CALL_4(bpf_msg_pull_data, struct sk_msg *, msg, u32, start,
- 		      msg->sg.end - shift + NR_MSG_FRAG_IDS :
- 		      msg->sg.end - shift;
- out:
-+	sk_msg_reset_curr(msg);
- 	msg->data = sg_virt(&msg->sg.data[first_sge]) + start - offset;
- 	msg->data_end = msg->data + bytes;
- 	return 0;
-@@ -2831,6 +2848,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_msg *, msg, u32, start,
- 		msg->sg.data[new] = rsge;
- 	}
+ static const struct genl_multicast_group psample_nl_mcgrps[] = {
+ 	[PSAMPLE_NL_MCGRP_CONFIG] = { .name = PSAMPLE_NL_MCGRP_CONFIG_NAME },
+-	[PSAMPLE_NL_MCGRP_SAMPLE] = { .name = PSAMPLE_NL_MCGRP_SAMPLE_NAME },
++	[PSAMPLE_NL_MCGRP_SAMPLE] = { .name = PSAMPLE_NL_MCGRP_SAMPLE_NAME,
++				      .flags = GENL_UNS_ADMIN_PERM },
+ };
  
-+	sk_msg_reset_curr(msg);
- 	sk_msg_compute_data_pointers(msg);
- 	return 0;
- }
-@@ -2999,6 +3017,7 @@ BPF_CALL_4(bpf_msg_pop_data, struct sk_msg *, msg, u32, start,
- 
- 	sk_mem_uncharge(msg->sk, len - pop);
- 	msg->sg.size -= (len - pop);
-+	sk_msg_reset_curr(msg);
- 	sk_msg_compute_data_pointers(msg);
- 	return 0;
- }
+ static struct genl_family psample_nl_family __ro_after_init;
 -- 
 2.42.0
 
