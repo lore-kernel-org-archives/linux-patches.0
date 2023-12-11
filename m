@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8A65101A;
-	Mon, 11 Dec 2023 18:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7F551034;
+	Mon, 11 Dec 2023 18:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAnriJbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADDBC433C8;
-	Mon, 11 Dec 2023 18:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhecB/T7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E984C433C7;
+	Mon, 11 Dec 2023 18:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319400;
-	bh=u/QrsSg+cXLAGuUZgZz2Bn/h5JgKsjb7SnljGX1SdmQ=;
+	s=korg; t=1702319402;
+	bh=171GxMAfcgMIZZNtxu3X552Mj8pdprLNMXs9Ep8mAa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YAnriJbG5QSnyeml8mRkto9+Kzf+BNtoKF28Ij9rooOJqeqBjoby2I8dnkmUnZj3m
-	 bfbMBrdF3+ioCtZz8ms8W46qkKcqD0I0VQTICgG5uE1NpBcTcd4MP0V1TTswWAyExC
-	 Kz6Ycgun1k7mgBZjYmWuvO8XJzN/ofHoliYeszmg=
+	b=YhecB/T7Cg7KQi8sM+4otY13fi4oifIGZLw9qifv/x60Ol8ojY7n1GIT6Fhfpa62w
+	 zTRejOzThfo3b+ZxHYAiNcldyos4EM4nccbhnuo0M6gf6IM/ZnTfYwgIoRxt86u7Js
+	 qQR2rhYUE69SARr0/07BG7E53GxAMZ+B+NQz/JaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Nyekjaer <sean@geanix.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/244] net: dsa: microchip: provide a list of valid protocols for xmit handler
-Date: Mon, 11 Dec 2023 19:19:26 +0100
-Message-ID: <20231211182049.069064984@linuxfoundation.org>
+Subject: [PATCH 6.6 091/244] RDMA/rtrs-clt: Fix the max_send_wr setting
+Date: Mon, 11 Dec 2023 19:19:44 +0100
+Message-ID: <20231211182049.871115880@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,61 +44,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Nyekjaer <sean@geanix.com>
+From: Jack Wang <jinpu.wang@ionos.com>
 
-[ Upstream commit 1499b89289bf272fd83cb296c82fb5519d0fe93f ]
+[ Upstream commit 6d09f6f7d7584e099633282ea915988914f86529 ]
 
-Provide a list of valid protocols for which the driver will provide
-it's deferred xmit handler.
+For each write request, we need Request, Response Memory Registration,
+Local Invalidate.
 
-When using DSA_TAG_PROTO_KSZ8795 protocol, it does not provide a
-"connect" method, therefor ksz_connect() is not allocating ksz_tagger_data.
-
-This avoids the following null pointer dereference:
- ksz_connect_tag_protocol from dsa_register_switch+0x9ac/0xee0
- dsa_register_switch from ksz_switch_register+0x65c/0x828
- ksz_switch_register from ksz_spi_probe+0x11c/0x168
- ksz_spi_probe from spi_probe+0x84/0xa8
- spi_probe from really_probe+0xc8/0x2d8
-
-Fixes: ab32f56a4100 ("net: dsa: microchip: ptp: add packet transmission timestamping")
-Signed-off-by: Sean Nyekjaer <sean@geanix.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20231206071655.1626479-1-sean@geanix.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
+Link: https://lore.kernel.org/r/20231120154146.920486-7-haris.iqbal@ionos.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz_common.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index 42db7679c3606..286e20f340e5c 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -2624,10 +2624,18 @@ static int ksz_connect_tag_protocol(struct dsa_switch *ds,
- {
- 	struct ksz_tagger_data *tagger_data;
- 
--	tagger_data = ksz_tagger_data(ds);
--	tagger_data->xmit_work_fn = ksz_port_deferred_xmit;
--
--	return 0;
-+	switch (proto) {
-+	case DSA_TAG_PROTO_KSZ8795:
-+		return 0;
-+	case DSA_TAG_PROTO_KSZ9893:
-+	case DSA_TAG_PROTO_KSZ9477:
-+	case DSA_TAG_PROTO_LAN937X:
-+		tagger_data = ksz_tagger_data(ds);
-+		tagger_data->xmit_work_fn = ksz_port_deferred_xmit;
-+		return 0;
-+	default:
-+		return -EPROTONOSUPPORT;
-+	}
- }
- 
- static int ksz_port_vlan_filtering(struct dsa_switch *ds, int port,
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index dc482d1872fb8..b020b97dbe679 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -1694,7 +1694,7 @@ static int create_con_cq_qp(struct rtrs_clt_con *con)
+ 		clt_path->s.dev_ref++;
+ 		max_send_wr = min_t(int, wr_limit,
+ 			      /* QD * (REQ + RSP + FR REGS or INVS) + drain */
+-			      clt_path->queue_depth * 3 + 1);
++			      clt_path->queue_depth * 4 + 1);
+ 		max_recv_wr = min_t(int, wr_limit,
+ 			      clt_path->queue_depth * 3 + 1);
+ 		max_send_sge = 2;
 -- 
 2.42.0
 
