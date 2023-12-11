@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF97951C5C;
-	Mon, 11 Dec 2023 18:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAB6524BC;
+	Mon, 11 Dec 2023 18:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbQVrYfw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A32FC433CA;
-	Mon, 11 Dec 2023 18:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5izeg6N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C414DC433CB;
+	Mon, 11 Dec 2023 18:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319684;
-	bh=MzpXPY3S9tgXQFTaaBhQY8VB2AyFZlFZEF/MM0rgKsY=;
+	s=korg; t=1702319687;
+	bh=EccqGt9ngvOByeP2yk3MKQyP7N89y7SKJRh5dBm4FNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZbQVrYfwsr5peYxvFGmowvkoGNUtbNcPStV2QPg8WEFdWtCBNT+bv35bJLwHdOORf
-	 KeXUndPuq52Az88ID2dSXTG1WlSS1plWxJWJeobmwtW/jpleWRW27Oc6IYeh8+OS14
-	 A1Z1NPYQaBXCZvBKutGFRligSMC9l3Xgwxsk02Wo=
+	b=N5izeg6NWQZVDmf27YmB0JOZrfipBqgEgd1FHnAuSYAC4N8kksuvY3pO8Fovycpzt
+	 dI7FDr4iR/3SJoyp0xNscnbH2L/mZfPF6EwgEuxQiwcqY+fqi3toCY30KmgcPKlfKi
+	 H6LJMeqIG8yXPRxSjVHz45aOWxsi4CBwcO9TwbBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Mike Leach <mike.leach@linaro.org>,
+	John Garry <john.g.garry@oracle.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 196/244] misc: mei: client.c: fix problem of return -EOVERFLOW in mei_cl_write
-Date: Mon, 11 Dec 2023 19:21:29 +0100
-Message-ID: <20231211182054.732137881@linuxfoundation.org>
+Subject: [PATCH 6.6 197/244] perf vendor events arm64: AmpereOne: Add missing DefaultMetricgroupName fields
+Date: Mon, 11 Dec 2023 19:21:30 +0100
+Message-ID: <20231211182054.781810722@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,35 +49,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Ilkka Koskinen <ilkka@os.amperecomputing.com>
 
-[ Upstream commit ee6236027218f8531916f1c5caa5dc330379f287 ]
+[ Upstream commit 90fe70d4e23cb57253d2668a171d5695c332deb7 ]
 
-Clang static analyzer complains that value stored to 'rets' is never
-read.Let 'buf_len = -EOVERFLOW' to make sure we can return '-EOVERFLOW'.
+AmpereOne metrics were missing DefaultMetricgroupName from metrics with
+"Default" in group name resulting perf to segfault. Add the missing
+field to address the issue.
 
-Fixes: 8c8d964ce90f ("mei: move hbuf_depth from the mei device to the hw modules")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20231120095523.178385-2-suhui@nfschina.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 59faeaf80d02 ("perf vendor events arm64: Fix for AmpereOne metrics")
+Signed-off-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Link: https://lore.kernel.org/r/20231201021550.1109196-2-ilkka@os.amperecomputing.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/pmu-events/arch/arm64/ampere/ampereone/metrics.json | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/misc/mei/client.c b/drivers/misc/mei/client.c
-index 75bc2a32ec0d7..32f2287823184 100644
---- a/drivers/misc/mei/client.c
-+++ b/drivers/misc/mei/client.c
-@@ -2032,7 +2032,7 @@ ssize_t mei_cl_write(struct mei_cl *cl, struct mei_cl_cb *cb, unsigned long time
- 
- 	hbuf_slots = mei_hbuf_empty_slots(dev);
- 	if (hbuf_slots < 0) {
--		rets = -EOVERFLOW;
-+		buf_len = -EOVERFLOW;
- 		goto out;
- 	}
- 
+diff --git a/tools/perf/pmu-events/arch/arm64/ampere/ampereone/metrics.json b/tools/perf/pmu-events/arch/arm64/ampere/ampereone/metrics.json
+index e2848a9d48487..afcdad58ef89c 100644
+--- a/tools/perf/pmu-events/arch/arm64/ampere/ampereone/metrics.json
++++ b/tools/perf/pmu-events/arch/arm64/ampere/ampereone/metrics.json
+@@ -231,6 +231,7 @@
+         "MetricName": "slots_lost_misspeculation_fraction",
+         "MetricExpr": "100 * ((OP_SPEC - OP_RETIRED) / (CPU_CYCLES * #slots))",
+         "BriefDescription": "Fraction of slots lost due to misspeculation",
++        "DefaultMetricgroupName": "TopdownL1",
+         "MetricGroup": "Default;TopdownL1",
+         "ScaleUnit": "1percent of slots"
+     },
+@@ -238,6 +239,7 @@
+         "MetricName": "retired_fraction",
+         "MetricExpr": "100 * (OP_RETIRED / (CPU_CYCLES * #slots))",
+         "BriefDescription": "Fraction of slots retiring, useful work",
++        "DefaultMetricgroupName": "TopdownL1",
+         "MetricGroup": "Default;TopdownL1",
+ 	"ScaleUnit": "1percent of slots"
+     },
 -- 
 2.42.0
 
