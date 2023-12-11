@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CC051C47;
-	Mon, 11 Dec 2023 18:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B1F51C50;
+	Mon, 11 Dec 2023 18:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzbR2VjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D949C433CB;
-	Mon, 11 Dec 2023 18:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/yitFYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFA6C433C7;
+	Mon, 11 Dec 2023 18:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321105;
-	bh=CS/6qCBKofk9WTr7y5UID7Xfi9oCXNZQh59JhQMpLng=;
+	s=korg; t=1702321108;
+	bh=GchLH2zTqV7nMA7tqI6YDenz8MjmATT4FeM/EDAI5lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DzbR2VjJeKOBY5/O7zfjO1i2QSGJO2HH0Q8fNcygvb2sficQjMldbjhNHhXXbmSa0
-	 +H0L0pdy2i6pJQAFZdZbeTp1xvfir1mO+11DvnfvB5ho1C5Ey1ypkmdFabE1j2VGW0
-	 jd3NXDbvr7fq2zmB3lCsqmXHaERgQA8DPDgZZa7w=
+	b=O/yitFYCM8R4t1svspjNqQawiDDymtcy/ZSOXt6r29Y7+izCueMjGYpZuDzOsu3c2
+	 YNj/XpAEn9k6U7ysZNyPYPP9Dr4dvBQ28WowIlqm72MskA+mgVZ7DVzMBjrxSFp2tk
+	 zlhHaqUVU3kMP3h3AAVdOmhDZozGCIqj1YJGSwJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/141] arm64: dts: mediatek: align thermal zone node names with dtschema
-Date: Mon, 11 Dec 2023 19:22:51 +0100
-Message-ID: <20231211182031.415828035@linuxfoundation.org>
+Subject: [PATCH 5.15 113/141] arm64: dts: mediatek: mt8183: Move thermal-zones to the root node
+Date: Mon, 11 Dec 2023 19:22:52 +0100
+Message-ID: <20231211182031.448569809@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -42,51 +41,280 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 624f1806a7c3f8061641a1f3e7c0dfa73e82fb10 ]
+[ Upstream commit 5a60d63439694590cd5ab1f998fc917ff7ba1c1d ]
 
-Align the name of thermal zone node to dtschema to fix warnings like:
+The thermal zones are not a soc bus device: move it to the root
+node to solve simple_bus_reg warnings.
 
-  arch/arm64/boot/dts/mediatek/mt8173-elm.dt.yaml:
-    thermal-zones: 'cpu_thermal' does not match any of the regexes: '^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$', 'pinctrl-[0-9]+'
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20210820081616.83674-2-krzysztof.kozlowski@canonical.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
-Stable-dep-of: 5a60d6343969 ("arm64: dts: mediatek: mt8183: Move thermal-zones to the root node")
+Cc: stable@vger.kernel.org
+Fixes: b325ce39785b ("arm64: dts: mt8183: add thermal zone node")
+Link: https://lore.kernel.org/r/20231025093816.44327-9-angelogioacchino.delregno@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173.dtsi | 2 +-
- arch/arm64/boot/dts/mediatek/mt8183.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi | 242 +++++++++++------------
+ 1 file changed, 121 insertions(+), 121 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8173.dtsi b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-index d9e005ae5bb09..c71a5155702d2 100644
---- a/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
-@@ -273,7 +273,7 @@ cpum_ck: oscillator2 {
- 	};
- 
- 	thermal-zones {
--		cpu_thermal: cpu_thermal {
-+		cpu_thermal: cpu-thermal {
- 			polling-delay-passive = <1000>; /* milliseconds */
- 			polling-delay = <1000>; /* milliseconds */
- 
 diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index 81fde34ffd52a..ac05284cce867 100644
+index ac05284cce867..2d33f4a583b48 100644
 --- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
 +++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -767,7 +767,7 @@ thermal: thermal@1100b000 {
+@@ -766,127 +766,6 @@ thermal: thermal@1100b000 {
+ 			nvmem-cell-names = "calibration-data";
  		};
  
- 		thermal_zones: thermal-zones {
--			cpu_thermal: cpu_thermal {
-+			cpu_thermal: cpu-thermal {
- 				polling-delay-passive = <100>;
- 				polling-delay = <500>;
- 				thermal-sensors = <&thermal 0>;
+-		thermal_zones: thermal-zones {
+-			cpu_thermal: cpu-thermal {
+-				polling-delay-passive = <100>;
+-				polling-delay = <500>;
+-				thermal-sensors = <&thermal 0>;
+-				sustainable-power = <5000>;
+-
+-				trips {
+-					threshold: trip-point0 {
+-						temperature = <68000>;
+-						hysteresis = <2000>;
+-						type = "passive";
+-					};
+-
+-					target: trip-point1 {
+-						temperature = <80000>;
+-						hysteresis = <2000>;
+-						type = "passive";
+-					};
+-
+-					cpu_crit: cpu-crit {
+-						temperature = <115000>;
+-						hysteresis = <2000>;
+-						type = "critical";
+-					};
+-				};
+-
+-				cooling-maps {
+-					map0 {
+-						trip = <&target>;
+-						cooling-device = <&cpu0
+-							THERMAL_NO_LIMIT
+-							THERMAL_NO_LIMIT>,
+-								 <&cpu1
+-							THERMAL_NO_LIMIT
+-							THERMAL_NO_LIMIT>,
+-								 <&cpu2
+-							THERMAL_NO_LIMIT
+-							THERMAL_NO_LIMIT>,
+-								 <&cpu3
+-							THERMAL_NO_LIMIT
+-							THERMAL_NO_LIMIT>;
+-						contribution = <3072>;
+-					};
+-					map1 {
+-						trip = <&target>;
+-						cooling-device = <&cpu4
+-							THERMAL_NO_LIMIT
+-							THERMAL_NO_LIMIT>,
+-								 <&cpu5
+-							THERMAL_NO_LIMIT
+-							THERMAL_NO_LIMIT>,
+-								 <&cpu6
+-							THERMAL_NO_LIMIT
+-							THERMAL_NO_LIMIT>,
+-								 <&cpu7
+-							THERMAL_NO_LIMIT
+-							THERMAL_NO_LIMIT>;
+-						contribution = <1024>;
+-					};
+-				};
+-			};
+-
+-			/* The tzts1 ~ tzts6 don't need to polling */
+-			/* The tzts1 ~ tzts6 don't need to thermal throttle */
+-
+-			tzts1: tzts1 {
+-				polling-delay-passive = <0>;
+-				polling-delay = <0>;
+-				thermal-sensors = <&thermal 1>;
+-				sustainable-power = <5000>;
+-				trips {};
+-				cooling-maps {};
+-			};
+-
+-			tzts2: tzts2 {
+-				polling-delay-passive = <0>;
+-				polling-delay = <0>;
+-				thermal-sensors = <&thermal 2>;
+-				sustainable-power = <5000>;
+-				trips {};
+-				cooling-maps {};
+-			};
+-
+-			tzts3: tzts3 {
+-				polling-delay-passive = <0>;
+-				polling-delay = <0>;
+-				thermal-sensors = <&thermal 3>;
+-				sustainable-power = <5000>;
+-				trips {};
+-				cooling-maps {};
+-			};
+-
+-			tzts4: tzts4 {
+-				polling-delay-passive = <0>;
+-				polling-delay = <0>;
+-				thermal-sensors = <&thermal 4>;
+-				sustainable-power = <5000>;
+-				trips {};
+-				cooling-maps {};
+-			};
+-
+-			tzts5: tzts5 {
+-				polling-delay-passive = <0>;
+-				polling-delay = <0>;
+-				thermal-sensors = <&thermal 5>;
+-				sustainable-power = <5000>;
+-				trips {};
+-				cooling-maps {};
+-			};
+-
+-			tztsABB: tztsABB {
+-				polling-delay-passive = <0>;
+-				polling-delay = <0>;
+-				thermal-sensors = <&thermal 6>;
+-				sustainable-power = <5000>;
+-				trips {};
+-				cooling-maps {};
+-			};
+-		};
+-
+ 		pwm0: pwm@1100e000 {
+ 			compatible = "mediatek,mt8183-disp-pwm";
+ 			reg = <0 0x1100e000 0 0x1000>;
+@@ -1495,4 +1374,125 @@ larb3: larb@1a002000 {
+ 			power-domains = <&spm MT8183_POWER_DOMAIN_CAM>;
+ 		};
+ 	};
++
++	thermal_zones: thermal-zones {
++		cpu_thermal: cpu-thermal {
++			polling-delay-passive = <100>;
++			polling-delay = <500>;
++			thermal-sensors = <&thermal 0>;
++			sustainable-power = <5000>;
++
++			trips {
++				threshold: trip-point0 {
++					temperature = <68000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				target: trip-point1 {
++					temperature = <80000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				cpu_crit: cpu-crit {
++					temperature = <115000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
++
++			cooling-maps {
++				map0 {
++					trip = <&target>;
++					cooling-device = <&cpu0
++						THERMAL_NO_LIMIT
++						THERMAL_NO_LIMIT>,
++							 <&cpu1
++						THERMAL_NO_LIMIT
++						THERMAL_NO_LIMIT>,
++							 <&cpu2
++						THERMAL_NO_LIMIT
++						THERMAL_NO_LIMIT>,
++							 <&cpu3
++						THERMAL_NO_LIMIT
++						THERMAL_NO_LIMIT>;
++					contribution = <3072>;
++				};
++				map1 {
++					trip = <&target>;
++					cooling-device = <&cpu4
++						THERMAL_NO_LIMIT
++						THERMAL_NO_LIMIT>,
++							 <&cpu5
++						THERMAL_NO_LIMIT
++						THERMAL_NO_LIMIT>,
++							 <&cpu6
++						THERMAL_NO_LIMIT
++						THERMAL_NO_LIMIT>,
++							 <&cpu7
++						THERMAL_NO_LIMIT
++						THERMAL_NO_LIMIT>;
++					contribution = <1024>;
++				};
++			};
++		};
++
++		/* The tzts1 ~ tzts6 don't need to polling */
++		/* The tzts1 ~ tzts6 don't need to thermal throttle */
++
++		tzts1: tzts1 {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 1>;
++			sustainable-power = <5000>;
++			trips {};
++			cooling-maps {};
++		};
++
++		tzts2: tzts2 {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 2>;
++			sustainable-power = <5000>;
++			trips {};
++			cooling-maps {};
++		};
++
++		tzts3: tzts3 {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 3>;
++			sustainable-power = <5000>;
++			trips {};
++			cooling-maps {};
++		};
++
++		tzts4: tzts4 {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 4>;
++			sustainable-power = <5000>;
++			trips {};
++			cooling-maps {};
++		};
++
++		tzts5: tzts5 {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 5>;
++			sustainable-power = <5000>;
++			trips {};
++			cooling-maps {};
++		};
++
++		tztsABB: tztsABB {
++			polling-delay-passive = <0>;
++			polling-delay = <0>;
++			thermal-sensors = <&thermal 6>;
++			sustainable-power = <5000>;
++			trips {};
++			cooling-maps {};
++		};
++	};
+ };
 -- 
 2.42.0
 
