@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F044252F89;
-	Mon, 11 Dec 2023 18:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9746252F89;
+	Mon, 11 Dec 2023 18:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLDlZxEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7293CC433C9;
-	Mon, 11 Dec 2023 18:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQmKotFh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECC4C433C9;
+	Mon, 11 Dec 2023 18:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319692;
-	bh=5LsfLEoMswwG0I7TSMnzTF02KDV/6BIB//cYPpFpNO4=;
+	s=korg; t=1702319695;
+	bh=FiZapAyIec0ZSbQR+7B81YD3EuUa2TVbFjkm0nQzD1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLDlZxEiRvaxKLhYQ5dWbFtTYv2B+GacncMvByVJmdO6aYz8YSuiNy3AVzPQjoYb6
-	 CmdvWae5salvDWMMIiYF86UhsC+8/zImYBF0MTaDSAyklVERq+6894smQhVipC4njF
-	 J45YDpJIWGgOkoo7ueJPGBvcUxZ1oToI+Fu1ynQQ=
+	b=hQmKotFhY2d1gEGgXtS90wxLttIQuU3LqxuB4p88txI+XDRusjRFR+m6547KiALwC
+	 ya6eJNeVjAKMNoZgvpPJ1ZMIxTIAKySIQKRCsnQhNfMAkOvzBR0ppmY/+oFQhRu+iz
+	 kMMwpKkrf4zB8QTmNN4b6eXA1ReXRgG+ixJCWteo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alyssa Ross <hi@alyssa.is>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.6 172/244] drm/atomic-helpers: Invoke end_fb_access while owning plane state
-Date: Mon, 11 Dec 2023 19:21:05 +0100
-Message-ID: <20231211182053.626264623@linuxfoundation.org>
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 199/244] LoongArch: BPF: Dont sign extend function return value
+Date: Mon, 11 Dec 2023 19:21:32 +0100
+Message-ID: <20231211182054.871155861@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,226 +42,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Hengqi Chen <hengqi.chen@gmail.com>
 
-commit e0f04e41e8eedd4e5a1275f2318df7e1841855f2 upstream.
+[ Upstream commit 5d47ec2e6f4c64e30e392cfe9532df98c9beb106 ]
 
-Invoke drm_plane_helper_funcs.end_fb_access before
-drm_atomic_helper_commit_hw_done(). The latter function hands over
-ownership of the plane state to the following commit, which might
-free it. Releasing resources in end_fb_access then operates on undefined
-state. This bug has been observed with non-blocking commits when they
-are being queued up quickly.
+The `cls_redirect` test triggers a kernel panic like:
 
-Here is an example stack trace from the bug report. The plane state has
-been free'd already, so the pages for drm_gem_fb_vunmap() are gone.
+  # ./test_progs -t cls_redirect
+  Can't find bpf_testmod.ko kernel module: -2
+  WARNING! Selftests relying on bpf_testmod.ko will be skipped.
+  [   30.938489] CPU 3 Unable to handle kernel paging request at virtual address fffffffffd814de0, era == ffff800002009fb8, ra == ffff800002009f9c
+  [   30.939331] Oops[#1]:
+  [   30.939513] CPU: 3 PID: 1260 Comm: test_progs Not tainted 6.7.0-rc2-loong-devel-g2f56bb0d2327 #35 a896aca3f4164f09cc346f89f2e09832e07be5f6
+  [   30.939732] Hardware name: QEMU QEMU Virtual Machine, BIOS unknown 2/2/2022
+  [   30.939901] pc ffff800002009fb8 ra ffff800002009f9c tp 9000000104da4000 sp 9000000104da7ab0
+  [   30.940038] a0 fffffffffd814de0 a1 9000000104da7a68 a2 0000000000000000 a3 9000000104da7c10
+  [   30.940183] a4 9000000104da7c14 a5 0000000000000002 a6 0000000000000021 a7 00005555904d7f90
+  [   30.940321] t0 0000000000000110 t1 0000000000000000 t2 fffffffffd814de0 t3 0004c4b400000000
+  [   30.940456] t4 ffffffffffffffff t5 00000000c3f63600 t6 0000000000000000 t7 0000000000000000
+  [   30.940590] t8 000000000006d803 u0 0000000000000020 s9 9000000104da7b10 s0 900000010504c200
+  [   30.940727] s1 fffffffffd814de0 s2 900000010504c200 s3 9000000104da7c10 s4 9000000104da7ad0
+  [   30.940866] s5 0000000000000000 s6 90000000030e65bc s7 9000000104da7b44 s8 90000000044f6fc0
+  [   30.941015]    ra: ffff800002009f9c bpf_prog_846803e5ae81417f_cls_redirect+0xa0/0x590
+  [   30.941535]   ERA: ffff800002009fb8 bpf_prog_846803e5ae81417f_cls_redirect+0xbc/0x590
+  [   30.941696]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+  [   30.942224]  PRMD: 00000004 (PPLV0 +PIE -PWE)
+  [   30.942330]  EUEN: 00000003 (+FPE +SXE -ASXE -BTE)
+  [   30.942453]  ECFG: 00071c1c (LIE=2-4,10-12 VS=7)
+  [   30.942612] ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
+  [   30.942764]  BADV: fffffffffd814de0
+  [   30.942854]  PRID: 0014c010 (Loongson-64bit, Loongson-3A5000)
+  [   30.942974] Modules linked in:
+  [   30.943078] Process test_progs (pid: 1260, threadinfo=00000000ce303226, task=000000007d10bb76)
+  [   30.943306] Stack : 900000010a064000 90000000044f6fc0 9000000104da7b48 0000000000000000
+  [   30.943495]         0000000000000000 9000000104da7c14 9000000104da7c10 900000010504c200
+  [   30.943626]         0000000000000001 ffff80001b88c000 9000000104da7b70 90000000030e6668
+  [   30.943785]         0000000000000000 9000000104da7b58 ffff80001b88c048 9000000003d05000
+  [   30.943936]         900000000303ac88 0000000000000000 0000000000000000 9000000104da7b70
+  [   30.944091]         0000000000000000 0000000000000001 0000000731eeab00 0000000000000000
+  [   30.944245]         ffff80001b88c000 0000000000000000 0000000000000000 54b99959429f83b8
+  [   30.944402]         ffff80001b88c000 90000000044f6fc0 9000000101d70000 ffff80001b88c000
+  [   30.944538]         000000000000005a 900000010504c200 900000010a064000 900000010a067000
+  [   30.944697]         9000000104da7d88 0000000000000000 9000000003d05000 90000000030e794c
+  [   30.944852]         ...
+  [   30.944924] Call Trace:
+  [   30.945120] [<ffff800002009fb8>] bpf_prog_846803e5ae81417f_cls_redirect+0xbc/0x590
+  [   30.945650] [<90000000030e6668>] bpf_test_run+0x1ec/0x2f8
+  [   30.945958] [<90000000030e794c>] bpf_prog_test_run_skb+0x31c/0x684
+  [   30.946065] [<90000000026d4f68>] __sys_bpf+0x678/0x2724
+  [   30.946159] [<90000000026d7288>] sys_bpf+0x20/0x2c
+  [   30.946253] [<90000000032dd224>] do_syscall+0x7c/0x94
+  [   30.946343] [<9000000002541c5c>] handle_syscall+0xbc/0x158
+  [   30.946492]
+  [   30.946549] Code: 0015030e  5c0009c0  5001d000 <28c00304> 02c00484  29c00304  00150009  2a42d2e4  0280200d
+  [   30.946793]
+  [   30.946971] ---[ end trace 0000000000000000 ]---
+  [   32.093225] Kernel panic - not syncing: Fatal exception in interrupt
+  [   32.093526] Kernel relocated by 0x2320000
+  [   32.093630]  .text @ 0x9000000002520000
+  [   32.093725]  .data @ 0x9000000003400000
+  [   32.093792]  .bss  @ 0x9000000004413200
+  [   34.971998] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
 
-Unable to handle kernel paging request at virtual address 0000000100000049
-[...]
- drm_gem_fb_vunmap+0x18/0x74
- drm_gem_end_shadow_fb_access+0x1c/0x2c
- drm_atomic_helper_cleanup_planes+0x58/0xd8
- drm_atomic_helper_commit_tail+0x90/0xa0
- commit_tail+0x15c/0x188
- commit_work+0x14/0x20
+This is because we signed-extend function return values. When subprog
+mode is enabled, we have:
 
-Fix this by running end_fb_access immediately after updating all planes
-in drm_atomic_helper_commit_planes(). The existing clean-up helper
-drm_atomic_helper_cleanup_planes() now only handles cleanup_fb.
+  cls_redirect()
+    -> get_global_metrics() returns pcpu ptr 0xfffffefffc00b480
 
-For aborted commits, roll back from drm_atomic_helper_prepare_planes()
-in the new helper drm_atomic_helper_unprepare_planes(). This case is
-different from regular cleanup, as we have to release the new state;
-regular cleanup releases the old state. The new helper also invokes
-cleanup_fb for all planes.
+The pointer returned is later signed-extended to 0xfffffffffc00b480 at
+`BPF_JMP | BPF_EXIT`. During BPF prog run, this triggers unhandled page
+fault and a kernel panic.
 
-The changes mostly involve DRM's atomic helpers. Only two drivers, i915
-and nouveau, implement their own commit function. Update them to invoke
-drm_atomic_helper_unprepare_planes(). Drivers with custom commit_tail
-function do not require changes.
+Drop the unnecessary signed-extension on return values like other
+architectures do.
 
-v4:
-	* fix documentation (kernel test robot)
-v3:
-	* add drm_atomic_helper_unprepare_planes() for rolling back
-	* use correct state for end_fb_access
-v2:
-	* fix test in drm_atomic_helper_cleanup_planes()
+With this change, we have:
 
-Reported-by: Alyssa Ross <hi@alyssa.is>
-Closes: https://lore.kernel.org/dri-devel/87leazm0ya.fsf@alyssa.is/
-Suggested-by: Daniel Vetter <daniel@ffwll.ch>
-Fixes: 94d879eaf7fb ("drm/atomic-helper: Add {begin,end}_fb_access to plane helpers")
-Tested-by: Alyssa Ross <hi@alyssa.is>
-Reviewed-by: Alyssa Ross <hi@alyssa.is>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: <stable@vger.kernel.org> # v6.2+
-Link: https://patchwork.freedesktop.org/patch/msgid/20231204083247.22006-1-tzimmermann@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  # ./test_progs -t cls_redirect
+  Can't find bpf_testmod.ko kernel module: -2
+  WARNING! Selftests relying on bpf_testmod.ko will be skipped.
+  #51/1    cls_redirect/cls_redirect_inlined:OK
+  #51/2    cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
+  #51/3    cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
+  #51/4    cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
+  #51/5    cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
+  #51/6    cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
+  #51/7    cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
+  #51/8    cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
+  #51/9    cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
+  #51/10   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
+  #51/11   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
+  #51/12   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
+  #51/13   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
+  #51/14   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
+  #51/15   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
+  #51/16   cls_redirect/cls_redirect_subprogs:OK
+  #51/17   cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
+  #51/18   cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
+  #51/19   cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
+  #51/20   cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
+  #51/21   cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
+  #51/22   cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
+  #51/23   cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
+  #51/24   cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
+  #51/25   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
+  #51/26   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
+  #51/27   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
+  #51/28   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
+  #51/29   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
+  #51/30   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
+  #51/31   cls_redirect/cls_redirect_dynptr:OK
+  #51/32   cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
+  #51/33   cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
+  #51/34   cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
+  #51/35   cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
+  #51/36   cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
+  #51/37   cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
+  #51/38   cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
+  #51/39   cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
+  #51/40   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
+  #51/41   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
+  #51/42   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
+  #51/43   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
+  #51/44   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
+  #51/45   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
+  #51      cls_redirect:OK
+  Summary: 1/45 PASSED, 0 SKIPPED, 0 FAILED
+
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_atomic_helper.c          |   78 ++++++++++++++++++---------
- drivers/gpu/drm/i915/display/intel_display.c |    2 
- drivers/gpu/drm/nouveau/dispnv50/disp.c      |    2 
- include/drm/drm_atomic_helper.h              |    2 
- 4 files changed, 56 insertions(+), 28 deletions(-)
+ arch/loongarch/net/bpf_jit.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -2012,7 +2012,7 @@ int drm_atomic_helper_commit(struct drm_
- 			return ret;
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index 5d02bc6acec2e..00915fb3cb82c 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -855,8 +855,6 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
  
- 		drm_atomic_helper_async_commit(dev, state);
--		drm_atomic_helper_cleanup_planes(dev, state);
-+		drm_atomic_helper_unprepare_planes(dev, state);
- 
- 		return 0;
- 	}
-@@ -2072,7 +2072,7 @@ int drm_atomic_helper_commit(struct drm_
- 	return 0;
- 
- err:
--	drm_atomic_helper_cleanup_planes(dev, state);
-+	drm_atomic_helper_unprepare_planes(dev, state);
- 	return ret;
- }
- EXPORT_SYMBOL(drm_atomic_helper_commit);
-@@ -2650,6 +2650,39 @@ fail_prepare_fb:
- }
- EXPORT_SYMBOL(drm_atomic_helper_prepare_planes);
- 
-+/**
-+ * drm_atomic_helper_unprepare_planes - release plane resources on aborts
-+ * @dev: DRM device
-+ * @state: atomic state object with old state structures
-+ *
-+ * This function cleans up plane state, specifically framebuffers, from the
-+ * atomic state. It undoes the effects of drm_atomic_helper_prepare_planes()
-+ * when aborting an atomic commit. For cleaning up after a successful commit
-+ * use drm_atomic_helper_cleanup_planes().
-+ */
-+void drm_atomic_helper_unprepare_planes(struct drm_device *dev,
-+					struct drm_atomic_state *state)
-+{
-+	struct drm_plane *plane;
-+	struct drm_plane_state *new_plane_state;
-+	int i;
-+
-+	for_each_new_plane_in_state(state, plane, new_plane_state, i) {
-+		const struct drm_plane_helper_funcs *funcs = plane->helper_private;
-+
-+		if (funcs->end_fb_access)
-+			funcs->end_fb_access(plane, new_plane_state);
-+	}
-+
-+	for_each_new_plane_in_state(state, plane, new_plane_state, i) {
-+		const struct drm_plane_helper_funcs *funcs = plane->helper_private;
-+
-+		if (funcs->cleanup_fb)
-+			funcs->cleanup_fb(plane, new_plane_state);
-+	}
-+}
-+EXPORT_SYMBOL(drm_atomic_helper_unprepare_planes);
-+
- static bool plane_crtc_active(const struct drm_plane_state *state)
- {
- 	return state->crtc && state->crtc->state->active;
-@@ -2784,6 +2817,17 @@ void drm_atomic_helper_commit_planes(str
- 
- 		funcs->atomic_flush(crtc, old_state);
- 	}
-+
-+	/*
-+	 * Signal end of framebuffer access here before hw_done. After hw_done,
-+	 * a later commit might have already released the plane state.
-+	 */
-+	for_each_old_plane_in_state(old_state, plane, old_plane_state, i) {
-+		const struct drm_plane_helper_funcs *funcs = plane->helper_private;
-+
-+		if (funcs->end_fb_access)
-+			funcs->end_fb_access(plane, old_plane_state);
-+	}
- }
- EXPORT_SYMBOL(drm_atomic_helper_commit_planes);
- 
-@@ -2911,40 +2955,22 @@ EXPORT_SYMBOL(drm_atomic_helper_disable_
-  * configuration. Hence the old configuration must be perserved in @old_state to
-  * be able to call this function.
-  *
-- * This function must also be called on the new state when the atomic update
-- * fails at any point after calling drm_atomic_helper_prepare_planes().
-+ * This function may not be called on the new state when the atomic update
-+ * fails at any point after calling drm_atomic_helper_prepare_planes(). Use
-+ * drm_atomic_helper_unprepare_planes() in this case.
-  */
- void drm_atomic_helper_cleanup_planes(struct drm_device *dev,
- 				      struct drm_atomic_state *old_state)
- {
- 	struct drm_plane *plane;
--	struct drm_plane_state *old_plane_state, *new_plane_state;
-+	struct drm_plane_state *old_plane_state;
- 	int i;
- 
--	for_each_oldnew_plane_in_state(old_state, plane, old_plane_state, new_plane_state, i) {
-+	for_each_old_plane_in_state(old_state, plane, old_plane_state, i) {
- 		const struct drm_plane_helper_funcs *funcs = plane->helper_private;
- 
--		if (funcs->end_fb_access)
--			funcs->end_fb_access(plane, new_plane_state);
--	}
+ 	/* function return */
+ 	case BPF_JMP | BPF_EXIT:
+-		emit_sext_32(ctx, regmap[BPF_REG_0], true);
 -
--	for_each_oldnew_plane_in_state(old_state, plane, old_plane_state, new_plane_state, i) {
--		const struct drm_plane_helper_funcs *funcs;
--		struct drm_plane_state *plane_state;
--
--		/*
--		 * This might be called before swapping when commit is aborted,
--		 * in which case we have to cleanup the new state.
--		 */
--		if (old_plane_state == plane->state)
--			plane_state = new_plane_state;
--		else
--			plane_state = old_plane_state;
--
--		funcs = plane->helper_private;
--
- 		if (funcs->cleanup_fb)
--			funcs->cleanup_fb(plane, plane_state);
-+			funcs->cleanup_fb(plane, old_plane_state);
- 	}
- }
- EXPORT_SYMBOL(drm_atomic_helper_cleanup_planes);
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -7279,7 +7279,7 @@ int intel_atomic_commit(struct drm_devic
- 		for_each_new_intel_crtc_in_state(state, crtc, new_crtc_state, i)
- 			intel_color_cleanup_commit(new_crtc_state);
+ 		if (i == ctx->prog->len - 1)
+ 			break;
  
--		drm_atomic_helper_cleanup_planes(dev, &state->base);
-+		drm_atomic_helper_unprepare_planes(dev, &state->base);
- 		intel_runtime_pm_put(&dev_priv->runtime_pm, state->wakeref);
- 		return ret;
- 	}
---- a/drivers/gpu/drm/nouveau/dispnv50/disp.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/disp.c
-@@ -2310,7 +2310,7 @@ nv50_disp_atomic_commit(struct drm_devic
- 
- err_cleanup:
- 	if (ret)
--		drm_atomic_helper_cleanup_planes(dev, state);
-+		drm_atomic_helper_unprepare_planes(dev, state);
- done:
- 	pm_runtime_put_autosuspend(dev->dev);
- 	return ret;
---- a/include/drm/drm_atomic_helper.h
-+++ b/include/drm/drm_atomic_helper.h
-@@ -97,6 +97,8 @@ void drm_atomic_helper_commit_modeset_en
- 
- int drm_atomic_helper_prepare_planes(struct drm_device *dev,
- 				     struct drm_atomic_state *state);
-+void drm_atomic_helper_unprepare_planes(struct drm_device *dev,
-+					struct drm_atomic_state *state);
- 
- #define DRM_PLANE_COMMIT_ACTIVE_ONLY			BIT(0)
- #define DRM_PLANE_COMMIT_NO_DISABLE_AFTER_MODESET	BIT(1)
+-- 
+2.42.0
+
 
 
