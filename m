@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5861B5101A;
-	Mon, 11 Dec 2023 18:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7E95101A;
+	Mon, 11 Dec 2023 18:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRKv5g4T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF14C433C8;
-	Mon, 11 Dec 2023 18:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RttlIwJo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9539EC433C7;
+	Mon, 11 Dec 2023 18:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319298;
-	bh=Jr1auXDIwuHnQsbfT9STI5fEA4kuff2c8k12F5n0gsw=;
+	s=korg; t=1702319301;
+	bh=L2wFki585LnZmSMlvLaVnsZeeGuIO1uaSiaBnxaT/2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRKv5g4Tx8CVJR5EbcUYXfgE12sAtzWBea9TM/KGgHDt9CGXaGCze9AhaA7XQtv3h
-	 miaSHfTHkPY9WC4168/GfOsuGvR8r5E9xBoD7Ki0Wv4D1f1Y7ttXF6YRp6+BlBgdZP
-	 tkc86WedBCvje1pH41CuXHrm1ywuUZ4AB09BMmB0=
+	b=RttlIwJowH/bSIFgnKBgbiSaqV5b2rl+qaNcZe8p/xlay5E9qpeboh7rRXlKpd1hU
+	 aQo2SBBEqVQNhGmE13jsQft8eNEFtrl7ZipuytTG4ZK5UnQC6Y+GiEFtlCbWMqliQf
+	 tTRtmYM3LHeXOQTYmth7lw8/7qxglc+AqvWGqZsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/244] net: hns: fix wrong head when modify the tx feature when sending packets
-Date: Mon, 11 Dec 2023 19:19:07 +0100
-Message-ID: <20231211182048.234190405@linuxfoundation.org>
+Subject: [PATCH 6.6 055/244] net: hns: fix fake link up on xge port
+Date: Mon, 11 Dec 2023 19:19:08 +0100
+Message-ID: <20231211182048.283660658@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -46,156 +46,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 84757d0839451b20b11e993128f0a77393ca50c1 ]
+[ Upstream commit f708aba40f9c1eeb9c7e93ed4863b5f85b09b288 ]
 
-Upon changing the tx feature, the hns driver will modify the
-maybe_stop_tx() and fill_desc() functions, if the modify happens
-during packet sending, will cause the hardware and software
-pointers do not match, and the port can not work anymore.
+If a xge port just connect with an optical module and no fiber,
+it may have a fake link up because there may be interference on
+the hardware. This patch adds an anti-shake to avoid the problem.
+And the time of anti-shake is base on tests.
 
-This patch deletes the maybe_stop_tx() and fill_desc() functions
-modification when setting tx feature, and use the skb_is_gro()
-to determine which functions to use in the tx path.
-
-Fixes: 38f616da1c28 ("net:hns: Add support of ethtool TSO set option for Hip06 in HNS")
+Fixes: b917078c1c10 ("net: hns: Add ACPI support to check SFP present")
 Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns/hns_enet.c | 53 +++++++++++--------
- drivers/net/ethernet/hisilicon/hns/hns_enet.h |  3 +-
- 2 files changed, 33 insertions(+), 23 deletions(-)
+ .../net/ethernet/hisilicon/hns/hns_dsaf_mac.c | 29 +++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns/hns_enet.c b/drivers/net/ethernet/hisilicon/hns/hns_enet.c
-index 7cf10d1e2b311..85722afe21770 100644
---- a/drivers/net/ethernet/hisilicon/hns/hns_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns/hns_enet.c
-@@ -142,7 +142,8 @@ MODULE_DEVICE_TABLE(acpi, hns_enet_acpi_match);
+diff --git a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
+index 928d934cb21a5..f75668c479351 100644
+--- a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
++++ b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
+@@ -66,6 +66,27 @@ static enum mac_mode hns_get_enet_interface(const struct hns_mac_cb *mac_cb)
+ 	}
+ }
  
- static void fill_desc(struct hnae_ring *ring, void *priv,
- 		      int size, dma_addr_t dma, int frag_end,
--		      int buf_num, enum hns_desc_type type, int mtu)
-+		      int buf_num, enum hns_desc_type type, int mtu,
-+		      bool is_gso)
++static u32 hns_mac_link_anti_shake(struct mac_driver *mac_ctrl_drv)
++{
++#define HNS_MAC_LINK_WAIT_TIME 5
++#define HNS_MAC_LINK_WAIT_CNT 40
++
++	u32 link_status = 0;
++	int i;
++
++	if (!mac_ctrl_drv->get_link_status)
++		return link_status;
++
++	for (i = 0; i < HNS_MAC_LINK_WAIT_CNT; i++) {
++		msleep(HNS_MAC_LINK_WAIT_TIME);
++		mac_ctrl_drv->get_link_status(mac_ctrl_drv, &link_status);
++		if (!link_status)
++			break;
++	}
++
++	return link_status;
++}
++
+ void hns_mac_get_link_status(struct hns_mac_cb *mac_cb, u32 *link_status)
  {
- 	struct hnae_desc *desc = &ring->desc[ring->next_to_use];
- 	struct hnae_desc_cb *desc_cb = &ring->desc_cb[ring->next_to_use];
-@@ -275,6 +276,15 @@ static int hns_nic_maybe_stop_tso(
- 	return 0;
- }
- 
-+static int hns_nic_maybe_stop_tx_v2(struct sk_buff **out_skb, int *bnum,
-+				    struct hnae_ring *ring)
-+{
-+	if (skb_is_gso(*out_skb))
-+		return hns_nic_maybe_stop_tso(out_skb, bnum, ring);
-+	else
-+		return hns_nic_maybe_stop_tx(out_skb, bnum, ring);
-+}
+ 	struct mac_driver *mac_ctrl_drv;
+@@ -83,6 +104,14 @@ void hns_mac_get_link_status(struct hns_mac_cb *mac_cb, u32 *link_status)
+ 							       &sfp_prsnt);
+ 		if (!ret)
+ 			*link_status = *link_status && sfp_prsnt;
 +
- static void fill_tso_desc(struct hnae_ring *ring, void *priv,
- 			  int size, dma_addr_t dma, int frag_end,
- 			  int buf_num, enum hns_desc_type type, int mtu)
-@@ -300,6 +310,19 @@ static void fill_tso_desc(struct hnae_ring *ring, void *priv,
- 				mtu);
- }
- 
-+static void fill_desc_v2(struct hnae_ring *ring, void *priv,
-+			 int size, dma_addr_t dma, int frag_end,
-+			 int buf_num, enum hns_desc_type type, int mtu,
-+			 bool is_gso)
-+{
-+	if (is_gso)
-+		fill_tso_desc(ring, priv, size, dma, frag_end, buf_num, type,
-+			      mtu);
-+	else
-+		fill_v2_desc(ring, priv, size, dma, frag_end, buf_num, type,
-+			     mtu);
-+}
-+
- netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
- 				struct sk_buff *skb,
- 				struct hns_nic_ring_data *ring_data)
-@@ -313,6 +336,7 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
- 	int seg_num;
- 	dma_addr_t dma;
- 	int size, next_to_use;
-+	bool is_gso;
- 	int i;
- 
- 	switch (priv->ops.maybe_stop_tx(&skb, &buf_num, ring)) {
-@@ -339,8 +363,9 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
- 		ring->stats.sw_err_cnt++;
- 		goto out_err_tx_ok;
- 	}
-+	is_gso = skb_is_gso(skb);
- 	priv->ops.fill_desc(ring, skb, size, dma, seg_num == 1 ? 1 : 0,
--			    buf_num, DESC_TYPE_SKB, ndev->mtu);
-+			    buf_num, DESC_TYPE_SKB, ndev->mtu, is_gso);
- 
- 	/* fill the fragments */
- 	for (i = 1; i < seg_num; i++) {
-@@ -354,7 +379,7 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
- 		}
- 		priv->ops.fill_desc(ring, skb_frag_page(frag), size, dma,
- 				    seg_num - 1 == i ? 1 : 0, buf_num,
--				    DESC_TYPE_PAGE, ndev->mtu);
-+				    DESC_TYPE_PAGE, ndev->mtu, is_gso);
++		/* for FIBER port, it may have a fake link up.
++		 * when the link status changes from down to up, we need to do
++		 * anti-shake. the anti-shake time is base on tests.
++		 * only FIBER port need to do this.
++		 */
++		if (*link_status && !mac_cb->link)
++			*link_status = hns_mac_link_anti_shake(mac_ctrl_drv);
  	}
  
- 	/*complete translate all packets*/
-@@ -1776,15 +1801,6 @@ static int hns_nic_set_features(struct net_device *netdev,
- 			netdev_info(netdev, "enet v1 do not support tso!\n");
- 		break;
- 	default:
--		if (features & (NETIF_F_TSO | NETIF_F_TSO6)) {
--			priv->ops.fill_desc = fill_tso_desc;
--			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tso;
--			/* The chip only support 7*4096 */
--			netif_set_tso_max_size(netdev, 7 * 4096);
--		} else {
--			priv->ops.fill_desc = fill_v2_desc;
--			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
--		}
- 		break;
- 	}
- 	netdev->features = features;
-@@ -2159,16 +2175,9 @@ static void hns_nic_set_priv_ops(struct net_device *netdev)
- 		priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
- 	} else {
- 		priv->ops.get_rxd_bnum = get_v2rx_desc_bnum;
--		if ((netdev->features & NETIF_F_TSO) ||
--		    (netdev->features & NETIF_F_TSO6)) {
--			priv->ops.fill_desc = fill_tso_desc;
--			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tso;
--			/* This chip only support 7*4096 */
--			netif_set_tso_max_size(netdev, 7 * 4096);
--		} else {
--			priv->ops.fill_desc = fill_v2_desc;
--			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
--		}
-+		priv->ops.fill_desc = fill_desc_v2;
-+		priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx_v2;
-+		netif_set_tso_max_size(netdev, 7 * 4096);
- 		/* enable tso when init
- 		 * control tso on/off through TSE bit in bd
- 		 */
-diff --git a/drivers/net/ethernet/hisilicon/hns/hns_enet.h b/drivers/net/ethernet/hisilicon/hns/hns_enet.h
-index ffa9d6573f54b..3f3ee032f631c 100644
---- a/drivers/net/ethernet/hisilicon/hns/hns_enet.h
-+++ b/drivers/net/ethernet/hisilicon/hns/hns_enet.h
-@@ -44,7 +44,8 @@ struct hns_nic_ring_data {
- struct hns_nic_ops {
- 	void (*fill_desc)(struct hnae_ring *ring, void *priv,
- 			  int size, dma_addr_t dma, int frag_end,
--			  int buf_num, enum hns_desc_type type, int mtu);
-+			  int buf_num, enum hns_desc_type type, int mtu,
-+			  bool is_gso);
- 	int (*maybe_stop_tx)(struct sk_buff **out_skb,
- 			     int *bnum, struct hnae_ring *ring);
- 	void (*get_rxd_bnum)(u32 bnum_flag, int *out_bnum);
+ 	mac_cb->link = *link_status;
 -- 
 2.42.0
 
