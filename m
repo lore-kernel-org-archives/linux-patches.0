@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEECC51C2B;
-	Mon, 11 Dec 2023 18:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43FF4437B;
+	Mon, 11 Dec 2023 18:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bzy1Z9W5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61242C433C8;
-	Mon, 11 Dec 2023 18:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZ+LAtjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1DDC433C7;
+	Mon, 11 Dec 2023 18:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319927;
-	bh=Uf7tSV1CWer6F00OcpSAtDFi4de8VIZx/hq7dnppC/s=;
+	s=korg; t=1702319930;
+	bh=qTxExh2lWElDI88pJUeeU8G9+Z5fS0m3A8xX0qtN+rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bzy1Z9W5xRTLvIK+Y3IRyFo4CrcUGkbxg18S53ITZL2CzPWOAtssDobuVvp1RtE81
-	 QRR7WAZ2OOiSvKmbIj/EgtCGr3xqXHDPLJQu9URF9r5EMeggFp+Gyv4V0hqaLKTB37
-	 nB67PYrjNEKu69UwFk9FCo77pPi60BzAgURZJn38=
+	b=DZ+LAtjOUS5ct43f6/EXr8oEE0QejI7z4Do1J7d0gW9DcpVhlS2X991buAubUfsre
+	 tR9UGxBeQHDWRU2hGL1mPFq7pwRKeuJ9859YqM1FXJWRwZjMC3Y0jYn0HUS8k28gnC
+	 54LaCBqGJKMoXcWXK1VElf1T/cSiiS6EhSeBntEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	urbinek@gmail.com,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 40/97] hwmon: (acpi_power_meter) Fix 4.29 MW bug
-Date: Mon, 11 Dec 2023 19:21:43 +0100
-Message-ID: <20231211182021.451335265@linuxfoundation.org>
+Subject: [PATCH 5.10 41/97] ASoC: wm_adsp: fix memleak in wm_adsp_buffer_populate
+Date: Mon, 11 Dec 2023 19:21:44 +0100
+Message-ID: <20231211182021.493912015@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -43,53 +43,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 1fefca6c57fb928d2131ff365270cbf863d89c88 ]
+[ Upstream commit 29046a78a3c0a1f8fa0427f164caa222f003cf5b ]
 
-The ACPI specification says:
+When wm_adsp_buffer_read() fails, we should free buf->regions.
+Otherwise, the callers of wm_adsp_buffer_populate() will
+directly free buf on failure, which makes buf->regions a leaked
+memory.
 
-"If an error occurs while obtaining the meter reading or if the value
-is not available then an Integer with all bits set is returned"
-
-Since the "integer" is 32 bits in case of the ACPI power meter,
-userspace will get a power reading of 2^32 * 1000 miliwatts (~4.29 MW)
-in case of such an error. This was discovered due to a lm_sensors
-bugreport (https://github.com/lm-sensors/lm-sensors/issues/460).
-Fix this by returning -ENODATA instead.
-
-Tested-by: <urbinek@gmail.com>
-Fixes: de584afa5e18 ("hwmon driver for ACPI 4.0 power meters")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231124182747.13956-1-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: a792af69b08f ("ASoC: wm_adsp: Refactor compress stream initialisation")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20231204074158.12026-1-dinghao.liu@zju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/acpi_power_meter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/codecs/wm_adsp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
-index a270b975e90bb..5794d44538e9c 100644
---- a/drivers/hwmon/acpi_power_meter.c
-+++ b/drivers/hwmon/acpi_power_meter.c
-@@ -32,6 +32,7 @@ ACPI_MODULE_NAME(ACPI_POWER_METER_NAME);
- #define POWER_METER_CAN_NOTIFY	(1 << 3)
- #define POWER_METER_IS_BATTERY	(1 << 8)
- #define UNKNOWN_HYSTERESIS	0xFFFFFFFF
-+#define UNKNOWN_POWER		0xFFFFFFFF
+diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
+index 10189f44af28f..ef7936fce7a23 100644
+--- a/sound/soc/codecs/wm_adsp.c
++++ b/sound/soc/codecs/wm_adsp.c
+@@ -3763,12 +3763,12 @@ static int wm_adsp_buffer_populate(struct wm_adsp_compr_buf *buf)
+ 		ret = wm_adsp_buffer_read(buf, caps->region_defs[i].base_offset,
+ 					  &region->base_addr);
+ 		if (ret < 0)
+-			return ret;
++			goto err;
  
- #define METER_NOTIFY_CONFIG	0x80
- #define METER_NOTIFY_TRIP	0x81
-@@ -343,6 +344,9 @@ static ssize_t show_power(struct device *dev,
- 	update_meter(resource);
- 	mutex_unlock(&resource->lock);
+ 		ret = wm_adsp_buffer_read(buf, caps->region_defs[i].size_offset,
+ 					  &offset);
+ 		if (ret < 0)
+-			return ret;
++			goto err;
  
-+	if (resource->power == UNKNOWN_POWER)
-+		return -ENODATA;
+ 		region->cumulative_size = offset;
+ 
+@@ -3779,6 +3779,10 @@ static int wm_adsp_buffer_populate(struct wm_adsp_compr_buf *buf)
+ 	}
+ 
+ 	return 0;
 +
- 	return sprintf(buf, "%llu\n", resource->power * 1000);
++err:
++	kfree(buf->regions);
++	return ret;
  }
  
+ static void wm_adsp_buffer_clear(struct wm_adsp_compr_buf *buf)
 -- 
 2.42.0
 
