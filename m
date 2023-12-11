@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44916C8C8;
-	Mon, 11 Dec 2023 18:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4080C8C8;
+	Mon, 11 Dec 2023 18:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhMSRXfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC92DC433C7;
-	Mon, 11 Dec 2023 18:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6gZQxBI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773A7C433C8;
+	Mon, 11 Dec 2023 18:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319587;
-	bh=jQ5klFC1N14Yl218qZ03ECHodtWZNQkBIIBTkd70xCE=;
+	s=korg; t=1702319589;
+	bh=wdUK1F1Y98+0NefYV6GW0/E3j2jO3PAvtMjSAyx7IBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhMSRXfd0cgbrHpPru312wUUfD95cXbBRtUqBFrlJvzxD8Es/SEYdTzk3If6GTQAa
-	 3dHrGfsNV79baJMx7uo3TrPyT92acvzcZaU6VM169ErZAxK77lw9EaJ2/3q+ehhGo4
-	 2m7qzAczwu+E4YieEX4Fx2b6ZPzWMFiMsuRNGhFg=
+	b=M6gZQxBIGMKcdzGTFjRBLlSxCPqfsNmvVX6X3mYgwoZOpuN43YTnbyhMd5aXd/eDE
+	 2eUXwMBiW3e84CP3Vq7JfyWzPFA2xk+KwXXj9i0jvi/hhPX5q0F4uaCIdTmc3BJGmt
+	 zLdBV22NDS7iagLWdaaiO1bA8773nw2t+bHos880=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	stable@kernel.org,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Grant Grundler <grundler@chromium.org>,
+	ChunHao Lin <hau@realtek.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 160/244] packet: Move reference count in packet_sock to atomic_long_t
-Date: Mon, 11 Dec 2023 19:20:53 +0100
-Message-ID: <20231211182053.026701701@linuxfoundation.org>
+Subject: [PATCH 6.6 161/244] r8169: fix rtl8125b PAUSE frames blasting when suspended
+Date: Mon, 11 Dec 2023 19:20:54 +0100
+Message-ID: <20231211182053.074982172@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -46,109 +44,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: ChunHao Lin <hau@realtek.com>
 
-commit db3fadacaf0c817b222090290d06ca2a338422d0 upstream.
+commit 4b0768b6556af56ee9b7cf4e68452a2b6289ae45 upstream.
 
-In some potential instances the reference count on struct packet_sock
-could be saturated and cause overflows which gets the kernel a bit
-confused. To prevent this, move to a 64-bit atomic reference count on
-64-bit architectures to prevent the possibility of this type to overflow.
+When FIFO reaches near full state, device will issue pause frame.
+If pause slot is enabled(set to 1), in this time, device will issue
+pause frame only once. But if pause slot is disabled(set to 0), device
+will keep sending pause frames until FIFO reaches near empty state.
 
-Because we can not handle saturation, using refcount_t is not possible
-in this place. Maybe someday in the future if it changes it could be
-used. Also, instead of using plain atomic64_t, use atomic_long_t instead.
-32-bit machines tend to be memory-limited (i.e. anything that increases
-a reference uses so much memory that you can't actually get to 2**32
-references). 32-bit architectures also tend to have serious problems
-with 64-bit atomics. Hence, atomic_long_t is the more natural solution.
+When pause slot is disabled, if there is no one to handle receive
+packets, device FIFO will reach near full state and keep sending
+pause frames. That will impact entire local area network.
 
-Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
-Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: stable@kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231201131021.19999-1-daniel@iogearbox.net
+This issue can be reproduced in Chromebox (not Chromebook) in
+developer mode running a test image (and v5.10 kernel):
+1) ping -f $CHROMEBOX (from workstation on same local network)
+2) run "powerd_dbus_suspend" from command line on the $CHROMEBOX
+3) ping $ROUTER (wait until ping fails from workstation)
+
+Takes about ~20-30 seconds after step 2 for the local network to
+stop working.
+
+Fix this issue by enabling pause slot to only send pause frame once
+when FIFO reaches near full state.
+
+Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
+Reported-by: Grant Grundler <grundler@chromium.org>
+Tested-by: Grant Grundler <grundler@chromium.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: ChunHao Lin <hau@realtek.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/20231129155350.5843-1-hau@realtek.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   16 ++++++++--------
- net/packet/internal.h  |    2 +-
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4300,7 +4300,7 @@ static void packet_mm_open(struct vm_are
- 	struct sock *sk = sock->sk;
- 
- 	if (sk)
--		atomic_inc(&pkt_sk(sk)->mapped);
-+		atomic_long_inc(&pkt_sk(sk)->mapped);
- }
- 
- static void packet_mm_close(struct vm_area_struct *vma)
-@@ -4310,7 +4310,7 @@ static void packet_mm_close(struct vm_ar
- 	struct sock *sk = sock->sk;
- 
- 	if (sk)
--		atomic_dec(&pkt_sk(sk)->mapped);
-+		atomic_long_dec(&pkt_sk(sk)->mapped);
- }
- 
- static const struct vm_operations_struct packet_mmap_ops = {
-@@ -4405,7 +4405,7 @@ static int packet_set_ring(struct sock *
- 
- 	err = -EBUSY;
- 	if (!closing) {
--		if (atomic_read(&po->mapped))
-+		if (atomic_long_read(&po->mapped))
- 			goto out;
- 		if (packet_read_pending(rb))
- 			goto out;
-@@ -4508,7 +4508,7 @@ static int packet_set_ring(struct sock *
- 
- 	err = -EBUSY;
- 	mutex_lock(&po->pg_vec_lock);
--	if (closing || atomic_read(&po->mapped) == 0) {
-+	if (closing || atomic_long_read(&po->mapped) == 0) {
- 		err = 0;
- 		spin_lock_bh(&rb_queue->lock);
- 		swap(rb->pg_vec, pg_vec);
-@@ -4526,9 +4526,9 @@ static int packet_set_ring(struct sock *
- 		po->prot_hook.func = (po->rx_ring.pg_vec) ?
- 						tpacket_rcv : packet_rcv;
- 		skb_queue_purge(rb_queue);
--		if (atomic_read(&po->mapped))
--			pr_err("packet_mmap: vma is busy: %d\n",
--			       atomic_read(&po->mapped));
-+		if (atomic_long_read(&po->mapped))
-+			pr_err("packet_mmap: vma is busy: %ld\n",
-+			       atomic_long_read(&po->mapped));
- 	}
- 	mutex_unlock(&po->pg_vec_lock);
- 
-@@ -4606,7 +4606,7 @@ static int packet_mmap(struct file *file
- 		}
- 	}
- 
--	atomic_inc(&po->mapped);
-+	atomic_long_inc(&po->mapped);
- 	vma->vm_ops = &packet_mmap_ops;
- 	err = 0;
- 
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -122,7 +122,7 @@ struct packet_sock {
- 	__be16			num;
- 	struct packet_rollover	*rollover;
- 	struct packet_mclist	*mclist;
--	atomic_t		mapped;
-+	atomic_long_t		mapped;
- 	enum tpacket_versions	tp_version;
- 	unsigned int		tp_hdrlen;
- 	unsigned int		tp_reserve;
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -196,6 +196,7 @@ enum rtl_registers {
+ 					/* No threshold before first PCI xfer */
+ #define	RX_FIFO_THRESH			(7 << RXCFG_FIFO_SHIFT)
+ #define	RX_EARLY_OFF			(1 << 11)
++#define	RX_PAUSE_SLOT_ON		(1 << 11)	/* 8125b and later */
+ #define	RXCFG_DMA_SHIFT			8
+ 					/* Unlimited maximum PCI burst. */
+ #define	RX_DMA_BURST			(7 << RXCFG_DMA_SHIFT)
+@@ -2306,9 +2307,13 @@ static void rtl_init_rxcfg(struct rtl816
+ 	case RTL_GIGA_MAC_VER_40 ... RTL_GIGA_MAC_VER_53:
+ 		RTL_W32(tp, RxConfig, RX128_INT_EN | RX_MULTI_EN | RX_DMA_BURST | RX_EARLY_OFF);
+ 		break;
+-	case RTL_GIGA_MAC_VER_61 ... RTL_GIGA_MAC_VER_63:
++	case RTL_GIGA_MAC_VER_61:
+ 		RTL_W32(tp, RxConfig, RX_FETCH_DFLT_8125 | RX_DMA_BURST);
+ 		break;
++	case RTL_GIGA_MAC_VER_63:
++		RTL_W32(tp, RxConfig, RX_FETCH_DFLT_8125 | RX_DMA_BURST |
++			RX_PAUSE_SLOT_ON);
++		break;
+ 	default:
+ 		RTL_W32(tp, RxConfig, RX128_INT_EN | RX_DMA_BURST);
+ 		break;
 
 
