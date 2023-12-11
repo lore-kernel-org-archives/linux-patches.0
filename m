@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7EA51C58;
-	Mon, 11 Dec 2023 18:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D26B51C58;
+	Mon, 11 Dec 2023 18:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrpQ6+AH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE21C433C8;
-	Mon, 11 Dec 2023 18:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VftowU5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47AEC433C7;
+	Mon, 11 Dec 2023 18:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319728;
-	bh=WGhIkioPyCtlSOEjBJgo7MMI35yqjcf5IAc74XB/FcM=;
+	s=korg; t=1702319731;
+	bh=ttRHmP5MVxuDiO/gw5IvjRdgw36gufPePo0bxvVNRbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SrpQ6+AHUTyTGvZ9XECXHYEPcQxsQEcBl31LqLbPbEIzqfgVH4OrXgGoIfImG99i9
-	 9PE9Ib81w2ufc5+Gg9+UT+MdYMs50eAzCgFy4v5QfOSXq+VhbBDQP2OpzDmVLe8a4K
-	 y8NATuqKSNqfwwgrawQsAyNGeZx+t7nbPaPyNCZ4=
+	b=VftowU5K6RxAi+rulpltCY9i/7HKTm0ss239kAAR0mpanQQDTycGyk4georzqANpK
+	 ncwlxzYMIeLsv25CVTvqiuaVw+MviM+PW8bJNZy9Jm52G7u9zZTJzyQX5m76Rzco3T
+	 d5r1z/qGfJgBigPslVpr82OliDJO3HBlVuIQK95M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Jacky Huang <ychuang3@nuvoton.com>
-Subject: [PATCH 6.6 213/244] serial: ma35d1: Validate console index before assignment
-Date: Mon, 11 Dec 2023 19:21:46 +0100
-Message-ID: <20231211182055.519492788@linuxfoundation.org>
+	Cameron Williams <cang1@live.co.uk>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Subject: [PATCH 6.6 214/244] parport: Add support for Brainboxes IX/UC/PX parallel cards
+Date: Mon, 11 Dec 2023 19:21:47 +0100
+Message-ID: <20231211182055.559742982@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,53 +41,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@kernel.org>
+From: Cameron Williams <cang1@live.co.uk>
 
-commit f0b9d97a77fa8f18400450713358303a435ab688 upstream.
+commit 1a031f6edc460e9562098bdedc3918da07c30a6e upstream.
 
-The console is immediately assigned to the ma35d1 port without
-checking its index. This oversight can lead to out-of-bounds
-errors when the index falls outside the valid '0' to
-MA35_UART_NR range. Such scenario trigges ran error like the
-following:
+Adds support for Intashield IX-500/IX-550, UC-146/UC-157, PX-146/PX-157,
+PX-203 and PX-475 (LPT port)
 
- UBSAN: array-index-out-of-bounds in drivers/tty/serial/ma35d1_serial.c:555:51
- index -1 is out of range for type 'uart_ma35d1_port [17]
-
-Check the index before using it and bail out with a warning.
-
-Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Cc: Jacky Huang <ychuang3@nuvoton.com>
-Cc: <stable@vger.kernel.org> # v6.5+
-Link: https://lore.kernel.org/r/20231204163804.1331415-2-andi.shyti@kernel.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Cameron Williams <cang1@live.co.uk>
+Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://lore.kernel.org/r/AS4PR02MB790389C130410BD864C8DCC9C4A6A@AS4PR02MB7903.eurprd02.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/ma35d1_serial.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/parport/parport_pc.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/drivers/tty/serial/ma35d1_serial.c
-+++ b/drivers/tty/serial/ma35d1_serial.c
-@@ -552,11 +552,19 @@ static void ma35d1serial_console_putchar
-  */
- static void ma35d1serial_console_write(struct console *co, const char *s, u32 count)
- {
--	struct uart_ma35d1_port *up = &ma35d1serial_ports[co->index];
-+	struct uart_ma35d1_port *up;
- 	unsigned long flags;
- 	int locked = 1;
- 	u32 ier;
+--- a/drivers/parport/parport_pc.c
++++ b/drivers/parport/parport_pc.c
+@@ -2658,6 +2658,8 @@ enum parport_pc_pci_cards {
+ 	asix_ax99100,
+ 	quatech_sppxp100,
+ 	wch_ch382l,
++	brainboxes_uc146,
++	brainboxes_px203,
+ };
  
-+	if ((co->index < 0) || (co->index >= MA35_UART_NR)) {
-+		pr_warn("Failed to write on ononsole port %x, out of range\n",
-+			co->index);
-+		return;
-+	}
-+
-+	up = &ma35d1serial_ports[co->index];
-+
- 	if (up->port.sysrq)
- 		locked = 0;
- 	else if (oops_in_progress)
+ 
+@@ -2737,6 +2739,8 @@ static struct parport_pc_pci {
+ 	/* asix_ax99100 */		{ 1, { { 0, 1 }, } },
+ 	/* quatech_sppxp100 */		{ 1, { { 0, 1 }, } },
+ 	/* wch_ch382l */		{ 1, { { 2, -1 }, } },
++	/* brainboxes_uc146 */	{ 1, { { 3, -1 }, } },
++	/* brainboxes_px203 */	{ 1, { { 0, -1 }, } },
+ };
+ 
+ static const struct pci_device_id parport_pc_pci_tbl[] = {
+@@ -2833,6 +2837,23 @@ static const struct pci_device_id parpor
+ 	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, quatech_sppxp100 },
+ 	/* WCH CH382L PCI-E single parallel port card */
+ 	{ 0x1c00, 0x3050, 0x1c00, 0x3050, 0, 0, wch_ch382l },
++	/* Brainboxes IX-500/550 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x402a,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
++	/* Brainboxes UC-146/UC-157 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x0be1,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc146 },
++	{ PCI_VENDOR_ID_INTASHIELD, 0x0be2,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc146 },
++	/* Brainboxes PX-146/PX-257 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x401c,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
++	/* Brainboxes PX-203 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x4007,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_px203 },
++	/* Brainboxes PX-475 */
++	{ PCI_VENDOR_ID_INTASHIELD, 0x401f,
++	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
+ 	{ 0, } /* terminate list */
+ };
+ MODULE_DEVICE_TABLE(pci, parport_pc_pci_tbl);
 
 
