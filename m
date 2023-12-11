@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B71C51C58;
-	Mon, 11 Dec 2023 18:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24790FC06;
+	Mon, 11 Dec 2023 18:38:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QN61pmbE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29FDC433C7;
-	Mon, 11 Dec 2023 18:38:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjaGcCyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7ECC433C7;
+	Mon, 11 Dec 2023 18:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319903;
-	bh=oClygh7hV3Cv4ZywstQTklsA708d6vhkes87uNmc604=;
+	s=korg; t=1702319906;
+	bh=BlvVO5cHSXQGBAQcGG+DGrO6On0lkAgMXUb+GIC2oGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QN61pmbEvVH/mb4tfOtVGhTfHrRgTPzPU5gSDDLmNGytb1ekVNhfYxXqy/JIJdQ9q
-	 XwZCVTyAXGDX+pLhQOzm7mwf0I/hNoZ2AxHpCSMGE7HgAz1uOqJNZiDYMf1W8TNvkn
-	 5jJhM6F2nkoAgcIgasTFMDWsX6Po8WWTDWlr2dSI=
+	b=yjaGcCynHVTxk5D8oYWknPvuDfKBF59FN2ayVHgxepWeX5JWASHCVt404vQ0/F0+u
+	 Rsr+5/rk1Jijvtf0gzt99FibM5UDTTGByaMnqrW0z38IM+c+wnHpzn+HMTUVCn+kK3
+	 RuHPHI25TyEbG/EcNWD41E4T5vEt7ja5XwXWPbOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Liao <liaoyu15@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Liu Tie <liutie4@huawei.com>,
+	Khalil Blaiech <kblaiech@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/97] hrtimers: Push pending hrtimers away from outgoing CPU earlier
-Date: Mon, 11 Dec 2023 19:21:04 +0100
-Message-ID: <20231211182019.881869912@linuxfoundation.org>
+Subject: [PATCH 5.10 24/97] mlxbf-bootctl: correctly identify secure boot with development keys
+Date: Mon, 11 Dec 2023 19:21:27 +0100
+Message-ID: <20231211182020.801508007@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -37,159 +37,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: David Thompson <davthompson@nvidia.com>
 
-[ Upstream commit 5c0930ccaad5a74d74e8b18b648c5eb21ed2fe94 ]
+[ Upstream commit d4eef75279f5e9d594f5785502038c763ce42268 ]
 
-2b8272ff4a70 ("cpu/hotplug: Prevent self deadlock on CPU hot-unplug")
-solved the straight forward CPU hotplug deadlock vs. the scheduler
-bandwidth timer. Yu discovered a more involved variant where a task which
-has a bandwidth timer started on the outgoing CPU holds a lock and then
-gets throttled. If the lock required by one of the CPU hotplug callbacks
-the hotplug operation deadlocks because the unthrottling timer event is not
-handled on the dying CPU and can only be recovered once the control CPU
-reaches the hotplug state which pulls the pending hrtimers from the dead
-CPU.
+The secure boot state of the BlueField SoC is represented by two bits:
+                0 = production state
+                1 = secure boot enabled
+                2 = non-secure (secure boot disabled)
+                3 = RMA state
+There is also a single bit to indicate whether production keys or
+development keys are being used when secure boot is enabled.
+This single bit (specified by MLXBF_BOOTCTL_SB_DEV_MASK) only has
+meaning if secure boot state equals 1 (secure boot enabled).
 
-Solve this by pushing the hrtimers away from the dying CPU in the dying
-callbacks. Nothing can queue a hrtimer on the dying CPU at that point because
-all other CPUs spin in stop_machine() with interrupts disabled and once the
-operation is finished the CPU is marked offline.
+The secure boot states are as follows:
+- “GA secured” is when secure boot is enabled with official production keys.
+- “Secured (development)” is when secure boot is enabled with development keys.
 
-Reported-by: Yu Liao <liaoyu15@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Liu Tie <liutie4@huawei.com>
-Link: https://lore.kernel.org/r/87a5rphara.ffs@tglx
+Without this fix “GA Secured” is displayed on development cards which is
+misleading. This patch updates the logic in "lifecycle_state_show()" to
+handle the case where the SoC is configured for secure boot and is using
+development keys.
+
+Fixes: 79e29cb8fbc5c ("platform/mellanox: Add bootctl driver for Mellanox BlueField Soc")
+Reviewed-by: Khalil Blaiech <kblaiech@nvidia.com>
+Signed-off-by: David Thompson <davthompson@nvidia.com>
+Link: https://lore.kernel.org/r/20231130183515.17214-1-davthompson@nvidia.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cpuhotplug.h |  1 +
- include/linux/hrtimer.h    |  4 ++--
- kernel/cpu.c               |  8 +++++++-
- kernel/time/hrtimer.c      | 33 ++++++++++++---------------------
- 4 files changed, 22 insertions(+), 24 deletions(-)
+ drivers/platform/mellanox/mlxbf-bootctl.c | 39 +++++++++++++++--------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index 7cc2889608e0f..f5a5df3a8cfd1 100644
---- a/include/linux/cpuhotplug.h
-+++ b/include/linux/cpuhotplug.h
-@@ -149,6 +149,7 @@ enum cpuhp_state {
- 	CPUHP_AP_ARM_CORESIGHT_CTI_STARTING,
- 	CPUHP_AP_ARM64_ISNDEP_STARTING,
- 	CPUHP_AP_SMPCFD_DYING,
-+	CPUHP_AP_HRTIMERS_DYING,
- 	CPUHP_AP_X86_TBOOT_DYING,
- 	CPUHP_AP_ARM_CACHE_B15_RAC_DYING,
- 	CPUHP_AP_ONLINE,
-diff --git a/include/linux/hrtimer.h b/include/linux/hrtimer.h
-index 7f1b8549ebcee..a88be8bd4e1d1 100644
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -526,9 +526,9 @@ extern void sysrq_timer_list_show(void);
+diff --git a/drivers/platform/mellanox/mlxbf-bootctl.c b/drivers/platform/mellanox/mlxbf-bootctl.c
+index 5d21c6adf1ab6..9911d4f854696 100644
+--- a/drivers/platform/mellanox/mlxbf-bootctl.c
++++ b/drivers/platform/mellanox/mlxbf-bootctl.c
+@@ -17,6 +17,7 @@
  
- int hrtimers_prepare_cpu(unsigned int cpu);
- #ifdef CONFIG_HOTPLUG_CPU
--int hrtimers_dead_cpu(unsigned int cpu);
-+int hrtimers_cpu_dying(unsigned int cpu);
- #else
--#define hrtimers_dead_cpu	NULL
-+#define hrtimers_cpu_dying	NULL
- #endif
+ #define MLXBF_BOOTCTL_SB_SECURE_MASK		0x03
+ #define MLXBF_BOOTCTL_SB_TEST_MASK		0x0c
++#define MLXBF_BOOTCTL_SB_DEV_MASK		BIT(4)
  
- #endif
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index 008b50da22246..abf717c4f57c2 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -1595,7 +1595,7 @@ static struct cpuhp_step cpuhp_hp_states[] = {
- 	[CPUHP_HRTIMERS_PREPARE] = {
- 		.name			= "hrtimers:prepare",
- 		.startup.single		= hrtimers_prepare_cpu,
--		.teardown.single	= hrtimers_dead_cpu,
-+		.teardown.single	= NULL,
- 	},
- 	[CPUHP_SMPCFD_PREPARE] = {
- 		.name			= "smpcfd:prepare",
-@@ -1662,6 +1662,12 @@ static struct cpuhp_step cpuhp_hp_states[] = {
- 		.startup.single		= NULL,
- 		.teardown.single	= smpcfd_dying_cpu,
- 	},
-+	[CPUHP_AP_HRTIMERS_DYING] = {
-+		.name			= "hrtimers:dying",
-+		.startup.single		= NULL,
-+		.teardown.single	= hrtimers_cpu_dying,
-+	},
+ #define MLXBF_SB_KEY_NUM			4
+ 
+@@ -37,11 +38,18 @@ static struct mlxbf_bootctl_name boot_names[] = {
+ 	{ MLXBF_BOOTCTL_NONE, "none" },
+ };
+ 
++enum {
++	MLXBF_BOOTCTL_SB_LIFECYCLE_PRODUCTION = 0,
++	MLXBF_BOOTCTL_SB_LIFECYCLE_GA_SECURE = 1,
++	MLXBF_BOOTCTL_SB_LIFECYCLE_GA_NON_SECURE = 2,
++	MLXBF_BOOTCTL_SB_LIFECYCLE_RMA = 3
++};
 +
- 	/* Entry state on starting. Interrupts enabled from here on. Transient
- 	 * state for synchronsization */
- 	[CPUHP_AP_ONLINE] = {
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 70deb2f01e97a..ede09dda36e90 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2114,29 +2114,22 @@ static void migrate_hrtimer_list(struct hrtimer_clock_base *old_base,
- 	}
- }
+ static const char * const mlxbf_bootctl_lifecycle_states[] = {
+-	[0] = "Production",
+-	[1] = "GA Secured",
+-	[2] = "GA Non-Secured",
+-	[3] = "RMA",
++	[MLXBF_BOOTCTL_SB_LIFECYCLE_PRODUCTION] = "Production",
++	[MLXBF_BOOTCTL_SB_LIFECYCLE_GA_SECURE] = "GA Secured",
++	[MLXBF_BOOTCTL_SB_LIFECYCLE_GA_NON_SECURE] = "GA Non-Secured",
++	[MLXBF_BOOTCTL_SB_LIFECYCLE_RMA] = "RMA",
+ };
  
--int hrtimers_dead_cpu(unsigned int scpu)
-+int hrtimers_cpu_dying(unsigned int dying_cpu)
+ /* ARM SMC call which is atomic and no need for lock. */
+@@ -165,25 +173,30 @@ static ssize_t second_reset_action_store(struct device *dev,
+ static ssize_t lifecycle_state_show(struct device *dev,
+ 				    struct device_attribute *attr, char *buf)
  {
- 	struct hrtimer_cpu_base *old_base, *new_base;
--	int i;
-+	int i, ncpu = cpumask_first(cpu_active_mask);
++	int status_bits;
++	int use_dev_key;
++	int test_state;
+ 	int lc_state;
  
--	BUG_ON(cpu_online(scpu));
--	tick_cancel_sched_timer(scpu);
-+	tick_cancel_sched_timer(dying_cpu);
-+
-+	old_base = this_cpu_ptr(&hrtimer_bases);
-+	new_base = &per_cpu(hrtimer_bases, ncpu);
+-	lc_state = mlxbf_bootctl_smc(MLXBF_BOOTCTL_GET_TBB_FUSE_STATUS,
+-				     MLXBF_BOOTCTL_FUSE_STATUS_LIFECYCLE);
+-	if (lc_state < 0)
+-		return lc_state;
++	status_bits = mlxbf_bootctl_smc(MLXBF_BOOTCTL_GET_TBB_FUSE_STATUS,
++					MLXBF_BOOTCTL_FUSE_STATUS_LIFECYCLE);
++	if (status_bits < 0)
++		return status_bits;
  
--	/*
--	 * this BH disable ensures that raise_softirq_irqoff() does
--	 * not wakeup ksoftirqd (and acquire the pi-lock) while
--	 * holding the cpu_base lock
--	 */
--	local_bh_disable();
--	local_irq_disable();
--	old_base = &per_cpu(hrtimer_bases, scpu);
--	new_base = this_cpu_ptr(&hrtimer_bases);
+-	lc_state &=
+-		MLXBF_BOOTCTL_SB_TEST_MASK | MLXBF_BOOTCTL_SB_SECURE_MASK;
++	use_dev_key = status_bits & MLXBF_BOOTCTL_SB_DEV_MASK;
++	test_state = status_bits & MLXBF_BOOTCTL_SB_TEST_MASK;
++	lc_state = status_bits & MLXBF_BOOTCTL_SB_SECURE_MASK;
+ 
  	/*
- 	 * The caller is globally serialized and nobody else
- 	 * takes two locks at once, deadlock is not possible.
+ 	 * If the test bits are set, we specify that the current state may be
+ 	 * due to using the test bits.
  	 */
--	raw_spin_lock(&new_base->lock);
--	raw_spin_lock_nested(&old_base->lock, SINGLE_DEPTH_NESTING);
-+	raw_spin_lock(&old_base->lock);
-+	raw_spin_lock_nested(&new_base->lock, SINGLE_DEPTH_NESTING);
+-	if (lc_state & MLXBF_BOOTCTL_SB_TEST_MASK) {
+-		lc_state &= MLXBF_BOOTCTL_SB_SECURE_MASK;
+-
++	if (test_state) {
+ 		return sprintf(buf, "%s(test)\n",
+ 			       mlxbf_bootctl_lifecycle_states[lc_state]);
++	} else if (use_dev_key &&
++		   (lc_state == MLXBF_BOOTCTL_SB_LIFECYCLE_GA_SECURE)) {
++		return sprintf(buf, "Secured (development)\n");
+ 	}
  
- 	for (i = 0; i < HRTIMER_MAX_CLOCK_BASES; i++) {
- 		migrate_hrtimer_list(&old_base->clock_base[i],
-@@ -2147,15 +2140,13 @@ int hrtimers_dead_cpu(unsigned int scpu)
- 	 * The migration might have changed the first expiring softirq
- 	 * timer on this CPU. Update it.
- 	 */
--	hrtimer_update_softirq_timer(new_base, false);
-+	__hrtimer_get_next_event(new_base, HRTIMER_ACTIVE_SOFT);
-+	/* Tell the other CPU to retrigger the next event */
-+	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
- 
--	raw_spin_unlock(&old_base->lock);
- 	raw_spin_unlock(&new_base->lock);
-+	raw_spin_unlock(&old_base->lock);
- 
--	/* Check, if we got expired work to do */
--	__hrtimer_peek_ahead_timers();
--	local_irq_enable();
--	local_bh_enable();
- 	return 0;
- }
- 
+ 	return sprintf(buf, "%s\n", mlxbf_bootctl_lifecycle_states[lc_state]);
 -- 
 2.42.0
 
