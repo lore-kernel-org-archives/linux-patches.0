@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC5FFBE1;
-	Mon, 11 Dec 2023 18:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70D0FBE1;
+	Mon, 11 Dec 2023 18:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1lrP6Ab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDF2C433C9;
-	Mon, 11 Dec 2023 18:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZBVxACw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD4AC433C8;
+	Mon, 11 Dec 2023 18:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320079;
-	bh=5mrLp0vk96ZITWgxIqxTTdFDTNSQuOjP2DVTB/ib5rc=;
+	s=korg; t=1702320082;
+	bh=aud+WJKpTjbbSlBWFrnVvTrrt6zZxAnUOoxfEX5K2pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1lrP6AbbGOkv/Q6nXDNq6c6jxXrR+dzL+EqkE6Ke3Kt+Pozq6MQWDjfvx7w8O8sF
-	 gnQD1/2QWdVsRAH5VERdffYGKxUaK9/d1DgfGe4VrSCeE39N/1ZTsGebeECHdaHXJf
-	 37dby4Hjqyd0OcGubQfLMDJHrxqaQtnBUuuR2hDQ=
+	b=lZBVxACwi1jhbgo3DnAMKHy8DevHLS8drHn2NedVE8SjWGJQqIkOIYgxvmJ8p+5rV
+	 gCkkLP62PHtCxk7r3agLXYtshk0vizMt7qmpASf3NzxPU4qEt1ukEpsSBxWaZDS5Fn
+	 4joQ85r5ZhEwHMkQ9N7KICGrD7RxwJxYbQkGsOa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.10 88/97] platform/x86: asus-wmi: Fix kbd_dock_devid tablet-switch reporting
-Date: Mon, 11 Dec 2023 19:22:31 +0100
-Message-ID: <20231211182023.609831944@linuxfoundation.org>
+	Grant Grundler <grundler@chromium.org>,
+	ChunHao Lin <hau@realtek.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 97/97] r8169: fix rtl8125b PAUSE frames blasting when suspended
+Date: Mon, 11 Dec 2023 19:22:40 +0100
+Message-ID: <20231211182023.974546975@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -40,82 +45,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: ChunHao Lin <hau@realtek.com>
 
-commit fdcc0602d64f22185f61c70747214b630049cc33 upstream.
+[ Upstream commit 4b0768b6556af56ee9b7cf4e68452a2b6289ae45 ]
 
-Commit 1ea0d3b46798 ("platform/x86: asus-wmi: Simplify tablet-mode-switch
-handling") unified the asus-wmi tablet-switch handling, but it did not take
-into account that the value returned for the kbd_dock_devid WMI method is
-inverted where as the other ones are not inverted.
+When FIFO reaches near full state, device will issue pause frame.
+If pause slot is enabled(set to 1), in this time, device will issue
+pause frame only once. But if pause slot is disabled(set to 0), device
+will keep sending pause frames until FIFO reaches near empty state.
 
-This causes asus-wmi to report an inverted tablet-switch state for devices
-which use the kbd_dock_devid, which causes libinput to ignore touchpad
-events while the affected T10x model 2-in-1s are docked.
+When pause slot is disabled, if there is no one to handle receive
+packets, device FIFO will reach near full state and keep sending
+pause frames. That will impact entire local area network.
 
-Add inverting of the return value in the kbd_dock_devid case to fix this.
+This issue can be reproduced in Chromebox (not Chromebook) in
+developer mode running a test image (and v5.10 kernel):
+1) ping -f $CHROMEBOX (from workstation on same local network)
+2) run "powerd_dbus_suspend" from command line on the $CHROMEBOX
+3) ping $ROUTER (wait until ping fails from workstation)
 
-Fixes: 1ea0d3b46798 ("platform/x86: asus-wmi: Simplify tablet-mode-switch handling")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230120143441.527334-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Takes about ~20-30 seconds after step 2 for the local network to
+stop working.
+
+Fix this issue by enabling pause slot to only send pause frame once
+when FIFO reaches near full state.
+
+Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
+Reported-by: Grant Grundler <grundler@chromium.org>
+Tested-by: Grant Grundler <grundler@chromium.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: ChunHao Lin <hau@realtek.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/20231129155350.5843-1-hau@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -202,6 +202,7 @@ struct asus_wmi {
- 
- 	int tablet_switch_event_code;
- 	u32 tablet_switch_dev_id;
-+	bool tablet_switch_inverted;
- 
- 	enum fan_type fan_type;
- 	int fan_pwm_mode;
-@@ -354,6 +355,13 @@ static bool asus_wmi_dev_is_present(stru
- }
- 
- /* Input **********************************************************************/
-+static void asus_wmi_tablet_sw_report(struct asus_wmi *asus, bool value)
-+{
-+	input_report_switch(asus->inputdev, SW_TABLET_MODE,
-+			    asus->tablet_switch_inverted ? !value : value);
-+	input_sync(asus->inputdev);
-+}
-+
- static void asus_wmi_tablet_sw_init(struct asus_wmi *asus, u32 dev_id, int event_code)
- {
- 	struct device *dev = &asus->platform_device->dev;
-@@ -362,7 +370,7 @@ static void asus_wmi_tablet_sw_init(stru
- 	result = asus_wmi_get_devstate_simple(asus, dev_id);
- 	if (result >= 0) {
- 		input_set_capability(asus->inputdev, EV_SW, SW_TABLET_MODE);
--		input_report_switch(asus->inputdev, SW_TABLET_MODE, result);
-+		asus_wmi_tablet_sw_report(asus, result);
- 		asus->tablet_switch_dev_id = dev_id;
- 		asus->tablet_switch_event_code = event_code;
- 	} else if (result == -ENODEV) {
-@@ -395,6 +403,7 @@ static int asus_wmi_input_init(struct as
- 	case asus_wmi_no_tablet_switch:
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 88253cedd9d96..c72ff0fd38c42 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -205,6 +205,7 @@ enum rtl_registers {
+ 					/* No threshold before first PCI xfer */
+ #define	RX_FIFO_THRESH			(7 << RXCFG_FIFO_SHIFT)
+ #define	RX_EARLY_OFF			(1 << 11)
++#define	RX_PAUSE_SLOT_ON		(1 << 11)	/* 8125b and later */
+ #define	RXCFG_DMA_SHIFT			8
+ 					/* Unlimited maximum PCI burst. */
+ #define	RX_DMA_BURST			(7 << RXCFG_DMA_SHIFT)
+@@ -2318,9 +2319,13 @@ static void rtl_init_rxcfg(struct rtl8169_private *tp)
+ 	case RTL_GIGA_MAC_VER_40 ... RTL_GIGA_MAC_VER_52:
+ 		RTL_W32(tp, RxConfig, RX128_INT_EN | RX_MULTI_EN | RX_DMA_BURST | RX_EARLY_OFF);
  		break;
- 	case asus_wmi_kbd_dock_devid:
-+		asus->tablet_switch_inverted = true;
- 		asus_wmi_tablet_sw_init(asus, ASUS_WMI_DEVID_KBD_DOCK, NOTIFY_KBD_DOCK_CHANGE);
+-	case RTL_GIGA_MAC_VER_60 ... RTL_GIGA_MAC_VER_63:
++	case RTL_GIGA_MAC_VER_61:
+ 		RTL_W32(tp, RxConfig, RX_FETCH_DFLT_8125 | RX_DMA_BURST);
  		break;
- 	case asus_wmi_lid_flip_devid:
-@@ -434,10 +443,8 @@ static void asus_wmi_tablet_mode_get_sta
- 		return;
- 
- 	result = asus_wmi_get_devstate_simple(asus, asus->tablet_switch_dev_id);
--	if (result >= 0) {
--		input_report_switch(asus->inputdev, SW_TABLET_MODE, result);
--		input_sync(asus->inputdev);
--	}
-+	if (result >= 0)
-+		asus_wmi_tablet_sw_report(asus, result);
- }
- 
- /* dGPU ********************************************************************/
++	case RTL_GIGA_MAC_VER_63:
++		RTL_W32(tp, RxConfig, RX_FETCH_DFLT_8125 | RX_DMA_BURST |
++			RX_PAUSE_SLOT_ON);
++		break;
+ 	default:
+ 		RTL_W32(tp, RxConfig, RX128_INT_EN | RX_DMA_BURST);
+ 		break;
+-- 
+2.42.0
+
 
 
