@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A02FC06;
-	Mon, 11 Dec 2023 18:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0924FC06;
+	Mon, 11 Dec 2023 18:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9UGY6hh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76541C433C8;
-	Mon, 11 Dec 2023 18:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnyNlEpE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36039C433C7;
+	Mon, 11 Dec 2023 18:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320179;
-	bh=tglU0y1zVntAOMJO/e24JSOEuPA61Rhqo2FU66Zatqo=;
+	s=korg; t=1702320182;
+	bh=E74r5v7lTQiDcvkw8SVetRh91pBwPiIeQ0ISBFeIOjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q9UGY6hhOCe2gssPFYxtS22dttJNGSZBGP63yuXGq5eVT+lO6d7j7/8nzZLY56QmL
-	 hrLARs1wIw3BpxBz9+ArusOr0W2JPA7bhGy6aLgR9G8J++Jjrppg3fGZZqcnk7/yKu
-	 T9C4Zyx0dYOlCei9s9uSBvcykt/WcAhZb+jjfk78=
+	b=bnyNlEpE00S0kx3BgtNOPH+pz4OMGAWZIrfA5yggrU9qt/KBfNAdsNDfnFWea4aRA
+	 cXyUte/6/ZJkGhh3hnU1XhIMVbIUBFbm4s0jd0hHo62R/NxZGqhrSEBDMkWDmloBvc
+	 uk7+cb+tghOcLzEA++amRREZ4+ImOgy6xPUKS4hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Roland Hieber <rhi@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 34/67] ARM: dts: imx7: Declare timers compatible with fsl,imx6dl-gpt
-Date: Mon, 11 Dec 2023 19:22:18 +0100
-Message-ID: <20231211182016.526622556@linuxfoundation.org>
+	Jason Zhang <jason.zhang@rock-chips.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 35/67] ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
+Date: Mon, 11 Dec 2023 19:22:19 +0100
+Message-ID: <20231211182016.562822138@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -43,65 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Zabel <p.zabel@pengutronix.de>
+From: Jason Zhang <jason.zhang@rock-chips.com>
 
-[ Upstream commit 397caf68e2d36532054cb14ae8995537f27f8b61 ]
+commit 2b3a7a302c9804e463f2ea5b54dc3a6ad106a344 upstream.
 
-The timer nodes declare compatibility with "fsl,imx6sx-gpt", which
-itself is compatible with "fsl,imx6dl-gpt". Switch the fallback
-compatible from "fsl,imx6sx-gpt" to "fsl,imx6dl-gpt".
+The pcm state can be SNDRV_PCM_STATE_DISCONNECTED at disconnect
+callback, and there is not an entry of SNDRV_PCM_STATE_DISCONNECTED
+in snd_pcm_state_names.
 
-Fixes: 949673450291 ("ARM: dts: add imx7d soc dtsi file")
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Roland Hieber <rhi@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch adds the missing entry to resolve this issue.
+
+cat /proc/asound/card2/pcm0p/sub0/status
+That results in stack traces like the following:
+
+[   99.702732][ T5171] Unexpected kernel BRK exception at EL1
+[   99.702774][ T5171] Internal error: BRK handler: f2005512 [#1] PREEMPT SMP
+[   99.703858][ T5171] Modules linked in: bcmdhd(E) (...)
+[   99.747425][ T5171] CPU: 3 PID: 5171 Comm: cat Tainted: G         C OE     5.10.189-android13-4-00003-g4a17384380d8-ab11086999 #1
+[   99.748447][ T5171] Hardware name: Rockchip RK3588 CVTE V10 Board (DT)
+[   99.749024][ T5171] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
+[   99.749616][ T5171] pc : snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.750204][ T5171] lr : snd_pcm_substream_proc_status_read+0xa4/0x2bc
+[   99.750778][ T5171] sp : ffffffc0175abae0
+[   99.751132][ T5171] x29: ffffffc0175abb80 x28: ffffffc009a2c498
+[   99.751665][ T5171] x27: 0000000000000001 x26: ffffff810cbae6e8
+[   99.752199][ T5171] x25: 0000000000400cc0 x24: ffffffc0175abc60
+[   99.752729][ T5171] x23: 0000000000000000 x22: ffffff802f558400
+[   99.753263][ T5171] x21: ffffff81d8d8ff00 x20: ffffff81020cdc00
+[   99.753795][ T5171] x19: ffffff802d110000 x18: ffffffc014fbd058
+[   99.754326][ T5171] x17: 0000000000000000 x16: 0000000000000000
+[   99.754861][ T5171] x15: 000000000000c276 x14: ffffffff9a976fda
+[   99.755392][ T5171] x13: 0000000065689089 x12: 000000000000d72e
+[   99.755923][ T5171] x11: ffffff802d110000 x10: 00000000000000e0
+[   99.756457][ T5171] x9 : 9c431600c8385d00 x8 : 0000000000000008
+[   99.756990][ T5171] x7 : 0000000000000000 x6 : 000000000000003f
+[   99.757522][ T5171] x5 : 0000000000000040 x4 : ffffffc0175abb70
+[   99.758056][ T5171] x3 : 0000000000000001 x2 : 0000000000000001
+[   99.758588][ T5171] x1 : 0000000000000000 x0 : 0000000000000000
+[   99.759123][ T5171] Call trace:
+[   99.759404][ T5171]  snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.759958][ T5171]  snd_info_seq_show+0x54/0xa4
+[   99.760370][ T5171]  seq_read_iter+0x19c/0x7d4
+[   99.760770][ T5171]  seq_read+0xf0/0x128
+[   99.761117][ T5171]  proc_reg_read+0x100/0x1f8
+[   99.761515][ T5171]  vfs_read+0xf4/0x354
+[   99.761869][ T5171]  ksys_read+0x7c/0x148
+[   99.762226][ T5171]  __arm64_sys_read+0x20/0x30
+[   99.762625][ T5171]  el0_svc_common+0xd0/0x1e4
+[   99.763023][ T5171]  el0_svc+0x28/0x98
+[   99.763358][ T5171]  el0_sync_handler+0x8c/0xf0
+[   99.763759][ T5171]  el0_sync+0x1b8/0x1c0
+[   99.764118][ T5171] Code: d65f03c0 b9406102 17ffffae 94191565 (d42aa240)
+[   99.764715][ T5171] ---[ end trace 1eeffa3e17c58e10 ]---
+[   99.780720][ T5171] Kernel panic - not syncing: BRK handler: Fatal exception
+
+Signed-off-by: Jason Zhang <jason.zhang@rock-chips.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231206013139.20506-1-jason.zhang@rock-chips.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/imx7s.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/core/pcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index f774759af1aa3..7ce541fcac767 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -447,7 +447,7 @@
- 			};
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -251,6 +251,7 @@ static char *snd_pcm_state_names[] = {
+ 	STATE(DRAINING),
+ 	STATE(PAUSED),
+ 	STATE(SUSPENDED),
++	STATE(DISCONNECTED),
+ };
  
- 			gpt1: timer@302d0000 {
--				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
-+				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x302d0000 0x10000>;
- 				interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX7D_GPT1_ROOT_CLK>,
-@@ -456,7 +456,7 @@
- 			};
- 
- 			gpt2: timer@302e0000 {
--				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
-+				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x302e0000 0x10000>;
- 				interrupts = <GIC_SPI 54 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX7D_GPT2_ROOT_CLK>,
-@@ -466,7 +466,7 @@
- 			};
- 
- 			gpt3: timer@302f0000 {
--				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
-+				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x302f0000 0x10000>;
- 				interrupts = <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX7D_GPT3_ROOT_CLK>,
-@@ -476,7 +476,7 @@
- 			};
- 
- 			gpt4: timer@30300000 {
--				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
-+				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x30300000 0x10000>;
- 				interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX7D_GPT4_ROOT_CLK>,
--- 
-2.42.0
-
+ static char *snd_pcm_access_names[] = {
 
 
