@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB17A321B8;
-	Mon, 11 Dec 2023 18:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AF4321B8;
+	Mon, 11 Dec 2023 18:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uN0BhM+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC57C433C7;
-	Mon, 11 Dec 2023 18:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Izz8to+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098E0C433C9;
+	Mon, 11 Dec 2023 18:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321143;
-	bh=vgtiyLeln55Zh+3RL05zdLdkhffXkM5unnjJyZX1qMM=;
+	s=korg; t=1702321146;
+	bh=vupaAYzXebBcU0NLJ9sY90OXGtjbDsTr1OnH0uPHr+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uN0BhM+D5DmCtV5G0K0K9y9asq4GR4DijxFZPPQJ6ZjMDCHZwSwwev9NaLJ9F9CYs
-	 eZZHDg+CugFsQmKIi/pqUxrEf1X7RKQH+q494nDfteQb3yFxwk07BqW+ZvT3b7a9FW
-	 DtqwBPZ8HJNt4LNrqQw82xxTAcRGJl2GwvpPMN48=
+	b=Izz8to+4gFd9p7ZWeeLaerUIJPPB0Uvf5DToeNl02i+wphWC1cJrnyq5p0NEL0Aif
+	 T+od7s16QIGMrkIJhR/nr5cuni6fwH1il5qgdCBPhIW5RHwuAksRzu0+KEjl6Atq+q
+	 3E6QG+wl+fSpcjy29XS1qzf6ipUt44NfthV4UtNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 125/141] Revert "xhci: Loosen RPM as default policy to cover for AMD xHC 1.1"
-Date: Mon, 11 Dec 2023 19:23:04 +0100
-Message-ID: <20231211182031.980895061@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	James Clark <james.clark@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 099/141] coresight: etm4x: Remove bogous __exit annotation for some functions
+Date: Mon, 11 Dec 2023 19:22:38 +0100
+Message-ID: <20231211182030.853467640@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -36,50 +37,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 24be0b3c40594a14b65141ced486ae327398faf8 upstream.
+[ Upstream commit 348ddab81f7b0983d9fb158df910254f08d3f887 ]
 
-This reverts commit 4baf1218150985ee3ab0a27220456a1f027ea0ac.
+etm4_platform_driver (which lives in ".data" contains a reference to
+etm4_remove_platform_dev(). So the latter must not be marked with __exit
+which results in the function being discarded for a build with
+CONFIG_CORESIGHT_SOURCE_ETM4X=y which in turn makes the remove pointer
+contain invalid data.
 
-Enabling runtime pm as default for all AMD xHC 1.1 controllers caused
-regression. An initial attempt to fix those was done in commit a5d6264b638e
-("xhci: Enable RPM on controllers that support low-power states") but new
-issues are still seen.
+etm4x_amba_driver referencing etm4_remove_amba() has the same issue.
 
-Revert this to get those AMD xHC 1.1 systems working
+Drop the __exit annotations for the two affected functions and a third
+one that is called by the other two.
 
-This patch went to stable an needs to be reverted from there as well.
+For reasons I don't understand this isn't catched by building with
+CONFIG_DEBUG_SECTION_MISMATCH=y.
 
-Fixes: 4baf12181509 ("xhci: Loosen RPM as default policy to cover for AMD xHC 1.1")
-Link: https://lore.kernel.org/linux-usb/55c50bf5-bffb-454e-906e-4408c591cb63@molgen.mpg.de
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20231205090548.1377667-1-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c23bc382ef0e ("coresight: etm4x: Refactor probing routine")
+Fixes: 5214b563588e ("coresight: etm4x: Add support for sysreg only devices")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: James Clark <james.clark@arm.com>
+Link: https://lore.kernel.org/all/20230929081540.yija47lsj35xtj4v@pengutronix.de/
+Link: https://lore.kernel.org/r/20230929081637.2377335-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -349,8 +349,6 @@ static void xhci_pci_quirks(struct devic
- 	/* xHC spec requires PCI devices to support D3hot and D3cold */
- 	if (xhci->hci_version >= 0x120)
- 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
--	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
--		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index e2cccd6ea1f1d..26d0d4485ae99 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -2041,7 +2041,7 @@ static void clear_etmdrvdata(void *info)
+ 	etmdrvdata[cpu] = NULL;
+ }
  
- 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
- 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
+-static void __exit etm4_remove_dev(struct etmv4_drvdata *drvdata)
++static void etm4_remove_dev(struct etmv4_drvdata *drvdata)
+ {
+ 	etm_perf_symlink(drvdata->csdev, false);
+ 	/*
+@@ -2064,7 +2064,7 @@ static void __exit etm4_remove_dev(struct etmv4_drvdata *drvdata)
+ 	coresight_unregister(drvdata->csdev);
+ }
+ 
+-static void __exit etm4_remove_amba(struct amba_device *adev)
++static void etm4_remove_amba(struct amba_device *adev)
+ {
+ 	struct etmv4_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+ 
+@@ -2072,7 +2072,7 @@ static void __exit etm4_remove_amba(struct amba_device *adev)
+ 		etm4_remove_dev(drvdata);
+ }
+ 
+-static int __exit etm4_remove_platform_dev(struct platform_device *pdev)
++static int etm4_remove_platform_dev(struct platform_device *pdev)
+ {
+ 	struct etmv4_drvdata *drvdata = dev_get_drvdata(&pdev->dev);
+ 
+-- 
+2.42.0
+
 
 
