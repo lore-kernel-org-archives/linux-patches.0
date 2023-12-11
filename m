@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094771D696;
-	Mon, 11 Dec 2023 18:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B304FBE1;
+	Mon, 11 Dec 2023 18:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMPAkOKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32969C433C7;
-	Mon, 11 Dec 2023 18:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9W2lOLQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F6FC433CA;
+	Mon, 11 Dec 2023 18:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319463;
-	bh=j4sCLRIBk+F0+LQqGtsnw6W5j9aOLehuA5QHwcsC338=;
+	s=korg; t=1702319466;
+	bh=FNEKQXBom0b/+ZBtkfQQtVEeKnZTi3yYrWm15VaxkjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMPAkOKGsgwC3b6J++NgqWbTE8VvndXLpEcwmRnXPmCBA8uWhx/ZloWgmVMxX4nRr
-	 fNqRS65JcLZolyA49zMr1GxIDrOdG1V6n+826xmpAMPOmfoWOxuyxe00fozotDqI3M
-	 lQGCo2Y3DWoWbPWFrCZivn5UnHq/kb+lIDbHhtLw=
+	b=q9W2lOLQ3HcB3e9oewwgAYeS4xZzO2YwgLXH7XCvJ63QAtxliLXaQ6UBWlf8ZbKz2
+	 p2VQaDBDh/MyusnB+ul9rCfg7C3va+Jp2R5CHPrbC1gndszTXz2gz/PU7OWX4OtKys
+	 fT56fSGe17/7wJ3GrB63ibxpMRiCAbHMtPTzaLVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/244] io_uring/kbuf: Fix an NULL vs IS_ERR() bug in io_alloc_pbuf_ring()
-Date: Mon, 11 Dec 2023 19:20:08 +0100
-Message-ID: <20231211182050.968292262@linuxfoundation.org>
+Subject: [PATCH 6.6 116/244] io_uring/kbuf: check for buffer list readiness after NULL check
+Date: Mon, 11 Dec 2023 19:20:09 +0100
+Message-ID: <20231211182051.002976772@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,16 +42,15 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit e53f7b54b1fdecae897f25002ff0cff04faab228 ]
+[ Upstream commit 9865346b7e8374b57f1c3ccacdc77846c6352ff4 ]
 
-The io_mem_alloc() function returns error pointers, not NULL.  Update
-the check accordingly.
+Move the buffer list 'is_ready' check below the validity check for
+the buffer list for a given group.
 
-Fixes: b10b73c102a2 ("io_uring/kbuf: recycle freed mapped buffer ring entries")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/5ed268d3-a997-4f64-bd71-47faa92101ab@moroto.mountain
+Fixes: 5cf4f52e6d8a ("io_uring: free io_buffer_list entries via RCU")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -59,20 +58,27 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
-index 012f622036049..12eec4778c5b1 100644
+index 12eec4778c5b1..e8516f3bbbaaa 100644
 --- a/io_uring/kbuf.c
 +++ b/io_uring/kbuf.c
-@@ -623,8 +623,8 @@ static int io_alloc_pbuf_ring(struct io_ring_ctx *ctx,
- 	ibf = io_lookup_buf_free_entry(ctx, ring_size);
- 	if (!ibf) {
- 		ptr = io_mem_alloc(ring_size);
--		if (!ptr)
--			return -ENOMEM;
-+		if (IS_ERR(ptr))
-+			return PTR_ERR(ptr);
+@@ -743,6 +743,8 @@ void *io_pbuf_get_address(struct io_ring_ctx *ctx, unsigned long bgid)
  
- 		/* Allocate and store deferred free entry */
- 		ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
+ 	bl = __io_buffer_get_list(ctx, smp_load_acquire(&ctx->io_bl), bgid);
+ 
++	if (!bl || !bl->is_mmap)
++		return NULL;
+ 	/*
+ 	 * Ensure the list is fully setup. Only strictly needed for RCU lookup
+ 	 * via mmap, and in that case only for the array indexed groups. For
+@@ -750,8 +752,6 @@ void *io_pbuf_get_address(struct io_ring_ctx *ctx, unsigned long bgid)
+ 	 */
+ 	if (!smp_load_acquire(&bl->is_ready))
+ 		return NULL;
+-	if (!bl || !bl->is_mmap)
+-		return NULL;
+ 
+ 	return bl->buf_ring;
+ }
 -- 
 2.42.0
 
