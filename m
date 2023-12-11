@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A470952F88;
-	Mon, 11 Dec 2023 18:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A2C51C53;
+	Mon, 11 Dec 2023 18:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opE97trc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236EEC433C8;
-	Mon, 11 Dec 2023 18:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ht7i6Ap1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D671CC433C9;
+	Mon, 11 Dec 2023 18:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320003;
-	bh=Tl9P+pg+2bUgoY/Hydl9q1j42s3O2jSB0ddGZCmKmOg=;
+	s=korg; t=1702320006;
+	bh=A+3tSeXGfn3kk1LgOkSXkYywdPZwAJxBeHnzXiLMVaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opE97trcCOY8xA5k8aC7UDFS0nfGOOErATse8Zz9XtlNGO4AoxfRqIujz8v2UJ2t+
-	 rjuRaoKLA1LpRGSRYAtiTr9KfG9wSR2bxivQ5sqF8E8QjzXhIAgpN+qlF6oerI0xWJ
-	 djntXuvjXLEf5023Y4WZiB17SSu5wDoM+5KSSYFQ=
+	b=Ht7i6Ap1qhdUo2LqDJgizGKKky620BjfkjIorgJwgoO8t74WEeFaEEhSk65nSzIfd
+	 QEfjfD1R8xTXBs0FWCVtqadZRJZ5GhpliyfuPklOFOSuk07tK55MQo0JHC37FE3otX
+	 IDHK2WSNbHwVPuqvMhYT4Dzdb6vcrp2YDJC2EBb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 68/97] drm/amdgpu: correct the amdgpu runtime dereference usage count
-Date: Mon, 11 Dec 2023 19:22:11 +0100
-Message-ID: <20231211182022.690929928@linuxfoundation.org>
+	Konstantin Aladyshev <aladyshev22@gmail.com>
+Subject: [PATCH 5.10 69/97] usb: gadget: f_hid: fix report descriptor allocation
+Date: Mon, 11 Dec 2023 19:22:12 +0100
+Message-ID: <20231211182022.737835979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -42,45 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Konstantin Aladyshev <aladyshev22@gmail.com>
 
-[ Upstream commit c6df7f313794c3ad41a49b9a7c95da369db607f3 ]
+commit 61890dc28f7d9e9aac8a9471302613824c22fae4 upstream.
 
-Fix the amdgpu runpm dereference usage count.
+The commit 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs
+cdev") has introduced a bug that leads to hid device corruption after
+the replug operation.
+Reverse device managed memory allocation for the report descriptor
+to fix the issue.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Tested:
+This change was tested on the AMD EthanolX CRB server with the BMC
+based on the OpenBMC distribution. The BMC provides KVM functionality
+via the USB gadget device:
+- before: KVM page refresh results in a broken USB device,
+- after: KVM page refresh works without any issues.
+
+Fixes: 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs cdev")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Konstantin Aladyshev <aladyshev22@gmail.com>
+Link: https://lore.kernel.org/r/20231206080744.253-2-aladyshev22@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_display.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/f_hid.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-index 7cc7af2a6822e..3671a700189d0 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-@@ -299,13 +299,11 @@ int amdgpu_display_crtc_set_config(struct drm_mode_set *set,
- 		adev->have_disp_power_ref = true;
- 		return ret;
- 	}
--	/* if we have no active crtcs, then drop the power ref
--	   we got before */
--	if (!active && adev->have_disp_power_ref) {
--		pm_runtime_put_autosuspend(dev->dev);
-+	/* if we have no active crtcs, then go to
-+	 * drop the power ref we got before
-+	 */
-+	if (!active && adev->have_disp_power_ref)
- 		adev->have_disp_power_ref = false;
--	}
--
- out:
- 	/* drop the power reference we got coming in here */
- 	pm_runtime_put_autosuspend(dev->dev);
--- 
-2.42.0
-
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -88,6 +88,7 @@ static void hidg_release(struct device *
+ {
+ 	struct f_hidg *hidg = container_of(dev, struct f_hidg, dev);
+ 
++	kfree(hidg->report_desc);
+ 	kfree(hidg->set_report_buf);
+ 	kfree(hidg);
+ }
+@@ -1287,9 +1288,9 @@ static struct usb_function *hidg_alloc(s
+ 	hidg->report_length = opts->report_length;
+ 	hidg->report_desc_length = opts->report_desc_length;
+ 	if (opts->report_desc) {
+-		hidg->report_desc = devm_kmemdup(&hidg->dev, opts->report_desc,
+-						 opts->report_desc_length,
+-						 GFP_KERNEL);
++		hidg->report_desc = kmemdup(opts->report_desc,
++					    opts->report_desc_length,
++					    GFP_KERNEL);
+ 		if (!hidg->report_desc) {
+ 			put_device(&hidg->dev);
+ 			--opts->refcnt;
 
 
