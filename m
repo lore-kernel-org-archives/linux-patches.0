@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEC0C2D0;
-	Mon, 11 Dec 2023 18:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8FBC2D0;
+	Mon, 11 Dec 2023 18:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n42WuCE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6119DC433C7;
-	Mon, 11 Dec 2023 18:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkvPpRjo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D59C433C8;
+	Mon, 11 Dec 2023 18:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319541;
-	bh=S9eAJkm0jjF4O8LvJAzSIQ0bj0FzxJkx02XaQ7G0xUo=;
+	s=korg; t=1702319544;
+	bh=oSWi/mB4fyI4tRH9AKabX8UBLbC1Ske/GgVh/WRnVcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n42WuCE9EhfewX8IFz1g3ANn1DQfb16/vaj1GPLmh3pNmI/tLGrmRI1+FMNoTCLx6
-	 /Wrb7QUZgm4SEHo+ZrWr0PQ4RdVvLcDXnZZACZnhrVQRT55j1XKRNBhfaqE9uG0YSq
-	 LLpgmSqBpAFvzFW66FldxelYq+qk1aSawpUVKfko=
+	b=QkvPpRjooT0dd1JxsylYq54em7ElQ6fkyT5isVNkWmljZIQcuTEYtb4xBCjaXKQt/
+	 py9EWb8DYWCM7Y1W9lmcN3j1A0+Hjpw9FknzPDVLmpZGLUcYMIDy1AS2tzek5O9ts9
+	 T7kRLTkq6OTTmV3Cqp3MEXLUojhp9YgJYcQWKDvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/244] firmware: arm_scmi: Fix frequency truncation by promoting multiplier type
-Date: Mon, 11 Dec 2023 19:19:57 +0100
-Message-ID: <20231211182050.427373320@linuxfoundation.org>
+	Sarah Grant <s@srd.tw>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 137/244] ALSA: usb-audio: Add Pioneer DJM-450 mixer controls
+Date: Mon, 11 Dec 2023 19:20:30 +0100
+Message-ID: <20231211182051.926952389@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,53 +41,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Sarah Grant <s@srd.tw>
 
-[ Upstream commit 8e3c98d9187e09274fc000a7d1a77b070a42d259 ]
+commit bbb8e71965c3737bdc691afd803a34bfd61cfbeb upstream.
 
-Fix the possible frequency truncation for all values equal to or greater
-4GHz on 64bit machines by updating the multiplier 'mult_factor' to
-'unsigned long' type. It is also possible that the multiplier itself can
-be greater than or equal to 2^32. So we need to also fix the equation
-computing the value of the multiplier.
+These values mirror those of the Pioneer DJM-250MK2 as the channel layout
+appears identical based on my observations. This duplication could be removed in
+later contributions if desired.
 
-Fixes: a9e3fbfaa0ff ("firmware: arm_scmi: add initial support for performance protocol")
-Reported-by: Sibi Sankar <quic_sibis@quicinc.com>
-Closes: https://lore.kernel.org/all/20231129065748.19871-3-quic_sibis@quicinc.com/
-Cc: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20231130204343.503076-1-sudeep.holla@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sarah Grant <s@srd.tw>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231201181654.5058-1-s@srd.tw
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/perf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/mixer_quirks.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-index 6677caefb36bc..7aa9b4ff48d61 100644
---- a/drivers/firmware/arm_scmi/perf.c
-+++ b/drivers/firmware/arm_scmi/perf.c
-@@ -152,7 +152,7 @@ struct perf_dom_info {
- 	u32 opp_count;
- 	u32 sustained_freq_khz;
- 	u32 sustained_perf_level;
--	u32 mult_factor;
-+	unsigned long mult_factor;
- 	struct scmi_perf_domain_info info;
- 	struct scmi_opp opp[MAX_OPPS];
- 	struct scmi_fc_info *fc_info;
-@@ -273,8 +273,8 @@ scmi_perf_domain_attributes_get(const struct scmi_protocol_handle *ph,
- 			dom_info->mult_factor =	1000;
- 		else
- 			dom_info->mult_factor =
--					(dom_info->sustained_freq_khz * 1000) /
--					dom_info->sustained_perf_level;
-+					(dom_info->sustained_freq_khz * 1000UL)
-+					/ dom_info->sustained_perf_level;
- 		strscpy(dom_info->info.name, attr->name,
- 			SCMI_SHORT_NAME_MAX_SIZE);
- 	}
--- 
-2.42.0
-
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -2978,6 +2978,7 @@ static int snd_bbfpro_controls_create(st
+ #define SND_DJM_850_IDX		0x2
+ #define SND_DJM_900NXS2_IDX	0x3
+ #define SND_DJM_750MK2_IDX	0x4
++#define SND_DJM_450_IDX		0x5
+ 
+ 
+ #define SND_DJM_CTL(_name, suffix, _default_value, _windex) { \
+@@ -3108,6 +3109,31 @@ static const struct snd_djm_ctl snd_djm_
+ };
+ 
+ 
++// DJM-450
++static const u16 snd_djm_opts_450_cap1[] = {
++	0x0103, 0x0100, 0x0106, 0x0107, 0x0108, 0x0109, 0x010d, 0x010a };
++
++static const u16 snd_djm_opts_450_cap2[] = {
++	0x0203, 0x0200, 0x0206, 0x0207, 0x0208, 0x0209, 0x020d, 0x020a };
++
++static const u16 snd_djm_opts_450_cap3[] = {
++	0x030a, 0x0311, 0x0312, 0x0307, 0x0308, 0x0309, 0x030d };
++
++static const u16 snd_djm_opts_450_pb1[] = { 0x0100, 0x0101, 0x0104 };
++static const u16 snd_djm_opts_450_pb2[] = { 0x0200, 0x0201, 0x0204 };
++static const u16 snd_djm_opts_450_pb3[] = { 0x0300, 0x0301, 0x0304 };
++
++static const struct snd_djm_ctl snd_djm_ctls_450[] = {
++	SND_DJM_CTL("Capture Level", cap_level, 0, SND_DJM_WINDEX_CAPLVL),
++	SND_DJM_CTL("Ch1 Input",   450_cap1, 2, SND_DJM_WINDEX_CAP),
++	SND_DJM_CTL("Ch2 Input",   450_cap2, 2, SND_DJM_WINDEX_CAP),
++	SND_DJM_CTL("Ch3 Input",   450_cap3, 0, SND_DJM_WINDEX_CAP),
++	SND_DJM_CTL("Ch1 Output",   450_pb1, 0, SND_DJM_WINDEX_PB),
++	SND_DJM_CTL("Ch2 Output",   450_pb2, 1, SND_DJM_WINDEX_PB),
++	SND_DJM_CTL("Ch3 Output",   450_pb3, 2, SND_DJM_WINDEX_PB)
++};
++
++
+ // DJM-750
+ static const u16 snd_djm_opts_750_cap1[] = {
+ 	0x0101, 0x0103, 0x0106, 0x0107, 0x0108, 0x0109, 0x010a, 0x010f };
+@@ -3203,6 +3229,7 @@ static const struct snd_djm_device snd_d
+ 	[SND_DJM_850_IDX] = SND_DJM_DEVICE(850),
+ 	[SND_DJM_900NXS2_IDX] = SND_DJM_DEVICE(900nxs2),
+ 	[SND_DJM_750MK2_IDX] = SND_DJM_DEVICE(750mk2),
++	[SND_DJM_450_IDX] = SND_DJM_DEVICE(450),
+ };
+ 
+ 
+@@ -3449,6 +3476,9 @@ int snd_usb_mixer_apply_create_quirk(str
+ 	case USB_ID(0x2b73, 0x0017): /* Pioneer DJ DJM-250MK2 */
+ 		err = snd_djm_controls_create(mixer, SND_DJM_250MK2_IDX);
+ 		break;
++	case USB_ID(0x2b73, 0x0013): /* Pioneer DJ DJM-450 */
++		err = snd_djm_controls_create(mixer, SND_DJM_450_IDX);
++		break;
+ 	case USB_ID(0x08e4, 0x017f): /* Pioneer DJ DJM-750 */
+ 		err = snd_djm_controls_create(mixer, SND_DJM_750_IDX);
+ 		break;
 
 
