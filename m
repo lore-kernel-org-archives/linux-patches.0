@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E336FC06;
-	Mon, 11 Dec 2023 18:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC86FC06;
+	Mon, 11 Dec 2023 18:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EhiJNYxi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95BDDC433C7;
-	Mon, 11 Dec 2023 18:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrx1Z9vS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A31C433C7;
+	Mon, 11 Dec 2023 18:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320188;
-	bh=7oNWssxWgzdnSIOnry5Zdnwoe38sBYNtP1j3/gPRvUs=;
+	s=korg; t=1702320190;
+	bh=L/qXujVDb3zBwSaL+jS/f8urFMmeV6Ry4uOV1wVGdKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhiJNYxitVR6HqaiCWYVZ8vA4V8/VPWntKpfFhZoFbwCrc3LeiwIXlfY2ogiw2LEi
-	 wqSe/3tFf+zpMXebuwTpHvkWumggINeXAUs79PDLWmf8UjL4YATd8gvzv9oqy6giJw
-	 Hv0kTMgFPOwhDx4Xt8R4XGWDGBVvZyeM+Kc5151s=
+	b=qrx1Z9vS73b7U+a8CeuqHncvhmoBmnWdOU5ms/sOMqYUmL6XGGEoXvgAUWvLnYXSL
+	 Q55wUpqd62k2Xr7V5LVqesqcweaUtA2vBVFN1PiPUZUqFdczD1utbLbZ05VfcYByKI
+	 9Naj+stPlWIzA/BZ4+sNSbT6EA7cVtOx4MxK7pak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 37/67] tracing: Always update snapshot buffer size
-Date: Mon, 11 Dec 2023 19:22:21 +0100
-Message-ID: <20231211182016.651343317@linuxfoundation.org>
+Subject: [PATCH 5.4 38/67] tracing: Fix incomplete locking when disabling buffered events
+Date: Mon, 11 Dec 2023 19:22:22 +0100
+Message-ID: <20231211182016.700348285@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -44,83 +41,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-commit 7be76461f302ec05cbd62b90b2a05c64299ca01f upstream.
+commit 7fed14f7ac9cf5e38c693836fe4a874720141845 upstream.
 
-It use to be that only the top level instance had a snapshot buffer (for
-latency tracers like wakeup and irqsoff). The update of the ring buffer
-size would check if the instance was the top level and if so, it would
-also update the snapshot buffer as it needs to be the same as the main
-buffer.
+The following warning appears when using buffered events:
 
-Now that lower level instances also has a snapshot buffer, they too need
-to update their snapshot buffer sizes when the main buffer is changed,
-otherwise the following can be triggered:
+[  203.556451] WARNING: CPU: 53 PID: 10220 at kernel/trace/ring_buffer.c:3912 ring_buffer_discard_commit+0x2eb/0x420
+[...]
+[  203.670690] CPU: 53 PID: 10220 Comm: stress-ng-sysin Tainted: G            E      6.7.0-rc2-default #4 56e6d0fcf5581e6e51eaaecbdaec2a2338c80f3a
+[  203.670704] Hardware name: Intel Corp. GROVEPORT/GROVEPORT, BIOS GVPRCRB1.86B.0016.D04.1705030402 05/03/2017
+[  203.670709] RIP: 0010:ring_buffer_discard_commit+0x2eb/0x420
+[  203.735721] Code: 4c 8b 4a 50 48 8b 42 48 49 39 c1 0f 84 b3 00 00 00 49 83 e8 01 75 b1 48 8b 42 10 f0 ff 40 08 0f 0b e9 fc fe ff ff f0 ff 47 08 <0f> 0b e9 77 fd ff ff 48 8b 42 10 f0 ff 40 08 0f 0b e9 f5 fe ff ff
+[  203.735734] RSP: 0018:ffffb4ae4f7b7d80 EFLAGS: 00010202
+[  203.735745] RAX: 0000000000000000 RBX: ffffb4ae4f7b7de0 RCX: ffff8ac10662c000
+[  203.735754] RDX: ffff8ac0c750be00 RSI: ffff8ac10662c000 RDI: ffff8ac0c004d400
+[  203.781832] RBP: ffff8ac0c039cea0 R08: 0000000000000000 R09: 0000000000000000
+[  203.781839] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
+[  203.781842] R13: ffff8ac10662c000 R14: ffff8ac0c004d400 R15: ffff8ac10662c008
+[  203.781846] FS:  00007f4cd8a67740(0000) GS:ffff8ad798880000(0000) knlGS:0000000000000000
+[  203.781851] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  203.781855] CR2: 0000559766a74028 CR3: 00000001804c4000 CR4: 00000000001506f0
+[  203.781862] Call Trace:
+[  203.781870]  <TASK>
+[  203.851949]  trace_event_buffer_commit+0x1ea/0x250
+[  203.851967]  trace_event_raw_event_sys_enter+0x83/0xe0
+[  203.851983]  syscall_trace_enter.isra.0+0x182/0x1a0
+[  203.851990]  do_syscall_64+0x3a/0xe0
+[  203.852075]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+[  203.852090] RIP: 0033:0x7f4cd870fa77
+[  203.982920] Code: 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 66 90 b8 89 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d e9 43 0e 00 f7 d8 64 89 01 48
+[  203.982932] RSP: 002b:00007fff99717dd8 EFLAGS: 00000246 ORIG_RAX: 0000000000000089
+[  203.982942] RAX: ffffffffffffffda RBX: 0000558ea1d7b6f0 RCX: 00007f4cd870fa77
+[  203.982948] RDX: 0000000000000000 RSI: 00007fff99717de0 RDI: 0000558ea1d7b6f0
+[  203.982957] RBP: 00007fff99717de0 R08: 00007fff997180e0 R09: 00007fff997180e0
+[  203.982962] R10: 00007fff997180e0 R11: 0000000000000246 R12: 00007fff99717f40
+[  204.049239] R13: 00007fff99718590 R14: 0000558e9f2127a8 R15: 00007fff997180b0
+[  204.049256]  </TASK>
 
- # cd /sys/kernel/tracing
- # echo 1500 > buffer_size_kb
- # mkdir instances/foo
- # echo irqsoff > instances/foo/current_tracer
- # echo 1000 > instances/foo/buffer_size_kb
+For instance, it can be triggered by running these two commands in
+parallel:
 
-Produces:
+ $ while true; do
+    echo hist:key=id.syscall:val=hitcount > \
+      /sys/kernel/debug/tracing/events/raw_syscalls/sys_enter/trigger;
+  done
+ $ stress-ng --sysinfo $(nproc)
 
- WARNING: CPU: 2 PID: 856 at kernel/trace/trace.c:1938 update_max_tr_single.part.0+0x27d/0x320
+The warning indicates that the current ring_buffer_per_cpu is not in the
+committing state. It happens because the active ring_buffer_event
+doesn't actually come from the ring_buffer_per_cpu but is allocated from
+trace_buffered_event.
 
-Which is:
+The bug is in function trace_buffered_event_disable() where the
+following normally happens:
 
-	ret = ring_buffer_swap_cpu(tr->max_buffer.buffer, tr->array_buffer.buffer, cpu);
+* The code invokes disable_trace_buffered_event() via
+  smp_call_function_many() and follows it by synchronize_rcu(). This
+  increments the per-CPU variable trace_buffered_event_cnt on each
+  target CPU and grants trace_buffered_event_disable() the exclusive
+  access to the per-CPU variable trace_buffered_event.
 
-	if (ret == -EBUSY) {
-		[..]
-	}
+* Maintenance is performed on trace_buffered_event, all per-CPU event
+  buffers get freed.
 
-	WARN_ON_ONCE(ret && ret != -EAGAIN && ret != -EBUSY);  <== here
+* The code invokes enable_trace_buffered_event() via
+  smp_call_function_many(). This decrements trace_buffered_event_cnt and
+  releases the access to trace_buffered_event.
 
-That's because ring_buffer_swap_cpu() has:
+A problem is that smp_call_function_many() runs a given function on all
+target CPUs except on the current one. The following can then occur:
 
-	int ret = -EINVAL;
+* Task X executing trace_buffered_event_disable() runs on CPU 0.
 
-	[..]
+* The control reaches synchronize_rcu() and the task gets rescheduled on
+  another CPU 1.
 
-	/* At least make sure the two buffers are somewhat the same */
-	if (cpu_buffer_a->nr_pages != cpu_buffer_b->nr_pages)
-		goto out;
+* The RCU synchronization finishes. At this point,
+  trace_buffered_event_disable() has the exclusive access to all
+  trace_buffered_event variables except trace_buffered_event[CPU0]
+  because trace_buffered_event_cnt[CPU0] is never incremented and if the
+  buffer is currently unused, remains set to 0.
 
-	[..]
- out:
-	return ret;
- }
+* A different task Y is scheduled on CPU 0 and hits a trace event. The
+  code in trace_event_buffer_lock_reserve() sees that
+  trace_buffered_event_cnt[CPU0] is set to 0 and decides the use the
+  buffer provided by trace_buffered_event[CPU0].
 
-Instead, update all instances' snapshot buffer sizes when their main
-buffer size is updated.
+* Task X continues its execution in trace_buffered_event_disable(). The
+  code incorrectly frees the event buffer pointed by
+  trace_buffered_event[CPU0] and resets the variable to NULL.
 
-Link: https://lkml.kernel.org/r/20231205220010.454662151@goodmis.org
+* Task Y writes event data to the now freed buffer and later detects the
+  created inconsistency.
+
+The issue is observable since commit dea499781a11 ("tracing: Fix warning
+in trace_buffered_event_disable()") which moved the call of
+trace_buffered_event_disable() in __ftrace_event_enable_disable()
+earlier, prior to invoking call->class->reg(.. TRACE_REG_UNREGISTER ..).
+The underlying problem in trace_buffered_event_disable() is however
+present since the original implementation in commit 0fc1b09ff1ff
+("tracing: Use temp buffer when filtering events").
+
+Fix the problem by replacing the two smp_call_function_many() calls with
+on_each_cpu_mask() which invokes a given callback on all CPUs.
+
+Link: https://lore.kernel.org/all/20231127151248.7232-2-petr.pavlu@suse.com/
+Link: https://lkml.kernel.org/r/20231205161736.19663-2-petr.pavlu@suse.com
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: 6d9b3fa5e7f6 ("tracing: Move tracing_max_latency into trace_array")
+Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
+Fixes: dea499781a11 ("tracing: Fix warning in trace_buffered_event_disable()")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/trace/trace.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -5597,8 +5597,7 @@ static int __tracing_resize_ring_buffer(
- 		return ret;
+@@ -2490,11 +2490,9 @@ void trace_buffered_event_disable(void)
+ 	if (--trace_buffered_event_ref)
+ 		return;
  
- #ifdef CONFIG_TRACER_MAX_TRACE
--	if (!(tr->flags & TRACE_ARRAY_FL_GLOBAL) ||
--	    !tr->current_trace->use_max_tr)
-+	if (!tr->current_trace->use_max_tr)
- 		goto out;
+-	preempt_disable();
+ 	/* For each CPU, set the buffer as used. */
+-	smp_call_function_many(tracing_buffer_mask,
+-			       disable_trace_buffered_event, NULL, 1);
+-	preempt_enable();
++	on_each_cpu_mask(tracing_buffer_mask, disable_trace_buffered_event,
++			 NULL, true);
  
- 	ret = ring_buffer_resize(tr->max_buffer.buffer, size, cpu);
+ 	/* Wait for all current users to finish */
+ 	synchronize_rcu();
+@@ -2509,11 +2507,9 @@ void trace_buffered_event_disable(void)
+ 	 */
+ 	smp_wmb();
+ 
+-	preempt_disable();
+ 	/* Do the work on each cpu */
+-	smp_call_function_many(tracing_buffer_mask,
+-			       enable_trace_buffered_event, NULL, 1);
+-	preempt_enable();
++	on_each_cpu_mask(tracing_buffer_mask, enable_trace_buffered_event, NULL,
++			 true);
+ }
+ 
+ static struct ring_buffer *temp_buffer;
 
 
