@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60672FC06;
-	Mon, 11 Dec 2023 18:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32467FC06;
+	Mon, 11 Dec 2023 18:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0JqCpLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D719EC433C8;
-	Mon, 11 Dec 2023 18:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dbj1Vm83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DF6C433C8;
+	Mon, 11 Dec 2023 18:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320256;
-	bh=ldaimszbesWT1MZFZhEk7npNjUt4KEJ5+1djyUIrFIc=;
+	s=korg; t=1702320259;
+	bh=my0+aonaHYI2MTpcAhaP3/NM8wpgE4KqOgCU9RcehLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0JqCpLmNZoDDmjhxPhf5AheE+8pOexJ3YSM3a3N7IOz6B5VeK+Eg69TkmwKiP5lW
-	 V7XGYbsho8VSSPoMzHQvYJ9vxqGgIsGQ2DY5oRXZj/JazXe8D/iL7YtkC+EDXBv0Ke
-	 k89H6WqzxdosQ+/WRKqmzF99Xut0MdH9erz9k/h8=
+	b=Dbj1Vm83EqSuFUioR7f2RxE7BAYvRDfKfwl7LtPtIeFceHpkIcF41XmltGO4A0X/i
+	 /8O7BD7yTIIIbp8fesFsOUa0EW4U+Ik1loGrcpEOj8hoiAvvxIbupTNVcJ0nghgKeD
+	 H6wmQGt+uli0gIrgu5Py/afwTE6zO8qRR7nSpLPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anson Huang <Anson.Huang@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 33/67] ARM: dts: imx: make gpt node name generic
-Date: Mon, 11 Dec 2023 19:22:17 +0100
-Message-ID: <20231211182016.492811768@linuxfoundation.org>
+Subject: [PATCH 5.4 24/67] netfilter: xt_owner: Fix for unsafe access of sk->sk_socket
+Date: Mon, 11 Dec 2023 19:22:08 +0100
+Message-ID: <20231211182016.107262740@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -42,125 +43,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anson Huang <Anson.Huang@nxp.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 7c48b086965873c0aa93d99773cf64c033b76b2f ]
+[ Upstream commit 7ae836a3d630e146b732fe8ef7d86b243748751f ]
 
-Node name should be generic, use "timer" instead of "gpt" for gpt node.
+A concurrently running sock_orphan() may NULL the sk_socket pointer in
+between check and deref. Follow other users (like nft_meta.c for
+instance) and acquire sk_callback_lock before dereferencing sk_socket.
 
-Signed-off-by: Anson Huang <Anson.Huang@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Stable-dep-of: 397caf68e2d3 ("ARM: dts: imx7: Declare timers compatible with fsl,imx6dl-gpt")
+Fixes: 0265ab44bacc ("[NETFILTER]: merge ipt_owner/ip6t_owner in xt_owner")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6qdl.dtsi | 2 +-
- arch/arm/boot/dts/imx6sl.dtsi  | 2 +-
- arch/arm/boot/dts/imx6sx.dtsi  | 2 +-
- arch/arm/boot/dts/imx6ul.dtsi  | 4 ++--
- arch/arm/boot/dts/imx7s.dtsi   | 8 ++++----
- 5 files changed, 9 insertions(+), 9 deletions(-)
+ net/netfilter/xt_owner.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6qdl.dtsi b/arch/arm/boot/dts/imx6qdl.dtsi
-index 861392ff70861..0150b2d5c534f 100644
---- a/arch/arm/boot/dts/imx6qdl.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl.dtsi
-@@ -578,7 +578,7 @@
- 				status = "disabled";
- 			};
+diff --git a/net/netfilter/xt_owner.c b/net/netfilter/xt_owner.c
+index e85ce69924aee..50332888c8d23 100644
+--- a/net/netfilter/xt_owner.c
++++ b/net/netfilter/xt_owner.c
+@@ -76,18 +76,23 @@ owner_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 		 */
+ 		return false;
  
--			gpt: gpt@2098000 {
-+			gpt: timer@2098000 {
- 				compatible = "fsl,imx6q-gpt", "fsl,imx31-gpt";
- 				reg = <0x02098000 0x4000>;
- 				interrupts = <0 55 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm/boot/dts/imx6sl.dtsi b/arch/arm/boot/dts/imx6sl.dtsi
-index 3cf1da06e7f04..fbbae0004e627 100644
---- a/arch/arm/boot/dts/imx6sl.dtsi
-+++ b/arch/arm/boot/dts/imx6sl.dtsi
-@@ -386,7 +386,7 @@
- 				clock-names = "ipg", "per";
- 			};
+-	filp = sk->sk_socket->file;
+-	if (filp == NULL)
++	read_lock_bh(&sk->sk_callback_lock);
++	filp = sk->sk_socket ? sk->sk_socket->file : NULL;
++	if (filp == NULL) {
++		read_unlock_bh(&sk->sk_callback_lock);
+ 		return ((info->match ^ info->invert) &
+ 		       (XT_OWNER_UID | XT_OWNER_GID)) == 0;
++	}
  
--			gpt: gpt@2098000 {
-+			gpt: timer@2098000 {
- 				compatible = "fsl,imx6sl-gpt";
- 				reg = <0x02098000 0x4000>;
- 				interrupts = <0 55 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm/boot/dts/imx6sx.dtsi b/arch/arm/boot/dts/imx6sx.dtsi
-index 3dc1e97e145cd..1afeae14560ad 100644
---- a/arch/arm/boot/dts/imx6sx.dtsi
-+++ b/arch/arm/boot/dts/imx6sx.dtsi
-@@ -475,7 +475,7 @@
- 				status = "disabled";
- 			};
+ 	if (info->match & XT_OWNER_UID) {
+ 		kuid_t uid_min = make_kuid(net->user_ns, info->uid_min);
+ 		kuid_t uid_max = make_kuid(net->user_ns, info->uid_max);
+ 		if ((uid_gte(filp->f_cred->fsuid, uid_min) &&
+ 		     uid_lte(filp->f_cred->fsuid, uid_max)) ^
+-		    !(info->invert & XT_OWNER_UID))
++		    !(info->invert & XT_OWNER_UID)) {
++			read_unlock_bh(&sk->sk_callback_lock);
+ 			return false;
++		}
+ 	}
  
--			gpt: gpt@2098000 {
-+			gpt: timer@2098000 {
- 				compatible = "fsl,imx6sx-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x02098000 0x4000>;
- 				interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm/boot/dts/imx6ul.dtsi b/arch/arm/boot/dts/imx6ul.dtsi
-index 5b677b66162ac..7037d2a45e60f 100644
---- a/arch/arm/boot/dts/imx6ul.dtsi
-+++ b/arch/arm/boot/dts/imx6ul.dtsi
-@@ -433,7 +433,7 @@
- 				status = "disabled";
- 			};
+ 	if (info->match & XT_OWNER_GID) {
+@@ -112,10 +117,13 @@ owner_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 			}
+ 		}
  
--			gpt1: gpt@2098000 {
-+			gpt1: timer@2098000 {
- 				compatible = "fsl,imx6ul-gpt", "fsl,imx6sx-gpt";
- 				reg = <0x02098000 0x4000>;
- 				interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
-@@ -707,7 +707,7 @@
- 				reg = <0x020e4000 0x4000>;
- 			};
+-		if (match ^ !(info->invert & XT_OWNER_GID))
++		if (match ^ !(info->invert & XT_OWNER_GID)) {
++			read_unlock_bh(&sk->sk_callback_lock);
+ 			return false;
++		}
+ 	}
  
--			gpt2: gpt@20e8000 {
-+			gpt2: timer@20e8000 {
- 				compatible = "fsl,imx6ul-gpt", "fsl,imx6sx-gpt";
- 				reg = <0x020e8000 0x4000>;
- 				interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index 791530124fb0a..f774759af1aa3 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -446,7 +446,7 @@
- 				fsl,input-sel = <&iomuxc>;
- 			};
++	read_unlock_bh(&sk->sk_callback_lock);
+ 	return true;
+ }
  
--			gpt1: gpt@302d0000 {
-+			gpt1: timer@302d0000 {
- 				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
- 				reg = <0x302d0000 0x10000>;
- 				interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
-@@ -455,7 +455,7 @@
- 				clock-names = "ipg", "per";
- 			};
- 
--			gpt2: gpt@302e0000 {
-+			gpt2: timer@302e0000 {
- 				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
- 				reg = <0x302e0000 0x10000>;
- 				interrupts = <GIC_SPI 54 IRQ_TYPE_LEVEL_HIGH>;
-@@ -465,7 +465,7 @@
- 				status = "disabled";
- 			};
- 
--			gpt3: gpt@302f0000 {
-+			gpt3: timer@302f0000 {
- 				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
- 				reg = <0x302f0000 0x10000>;
- 				interrupts = <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>;
-@@ -475,7 +475,7 @@
- 				status = "disabled";
- 			};
- 
--			gpt4: gpt@30300000 {
-+			gpt4: timer@30300000 {
- 				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
- 				reg = <0x30300000 0x10000>;
- 				interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
 -- 
 2.42.0
 
