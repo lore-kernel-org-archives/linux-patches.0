@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395A4524B1;
-	Mon, 11 Dec 2023 18:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D75FC06;
+	Mon, 11 Dec 2023 18:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdTqWQPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1788C433C8;
-	Mon, 11 Dec 2023 18:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcY0XWHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6924FC433CB;
+	Mon, 11 Dec 2023 18:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319627;
-	bh=YNNBUDX7KF4pbGXDeXOJrPdOgHIgGPFoKjgpxbBdtJ0=;
+	s=korg; t=1702319629;
+	bh=pNhvH8vJMgJulFZJZ67BbfdzSeXbNRzdv14WaYFt6LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VdTqWQPKfv+GBEBtLfB7ZyqYXf4xEGUBmgIfJ8xKRAaaYjYHaQyVkmUE+VTmpvrf5
-	 R/6GQ4wpRXTm/qtoaASOWMaiDD5rjBwL/hASAkrYleJO2g0fUBpmc5I3bEDHNdkk9J
-	 hLMwP/23HX8GLWS834LqQvLKF+OHtWq+KZPnh8R0=
+	b=VcY0XWHc76XSY8LEGA245aY7AG+uWRE40NOwbl/O6uG+hXnbLtW49TdmpZpn+nKxH
+	 bXgxW2U+cJsW+SDa0e3g6dP7HiDbyiBdJQ4rwcWlW2y58/gR2boP3sLwld1BYiErzC
+	 yjtWpPYJmO9sMSP/KxsWw80mZGFMR5yN7zmCWbvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 145/244] ring-buffer: Test last update in 32bit version of __rb_time_read()
-Date: Mon, 11 Dec 2023 19:20:38 +0100
-Message-ID: <20231211182052.293066016@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 136/244] io_uring: fix mutex_unlock with unreferenced ctx
+Date: Mon, 11 Dec 2023 19:20:29 +0100
+Message-ID: <20231211182051.884896098@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,50 +42,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit f458a1453424e03462b5bb539673c9a3cddda480 upstream.
+commit f7b32e785042d2357c5abc23ca6db1b92c91a070 upstream.
 
-Since 64 bit cmpxchg() is very expensive on 32bit architectures, the
-timestamp used by the ring buffer does some interesting tricks to be able
-to still have an atomic 64 bit number. It originally just used 60 bits and
-broke it up into two 32 bit words where the extra 2 bits were used for
-synchronization. But this was not enough for all use cases, and all 64
-bits were required.
+Callers of mutex_unlock() have to make sure that the mutex stays alive
+for the whole duration of the function call. For io_uring that means
+that the following pattern is not valid unless we ensure that the
+context outlives the mutex_unlock() call.
 
-The 32bit version of the ring buffer timestamp was then broken up into 3
-32bit words using the same counter trick. But one update was not done. The
-check to see if the read operation was done without interruption only
-checked the first two words and not last one (like it had before this
-update). Fix it by making sure all three updates happen without
-interruption by comparing the initial counter with the last updated
-counter.
+mutex_lock(&ctx->uring_lock);
+req_put(req); // typically via io_req_task_submit()
+mutex_unlock(&ctx->uring_lock);
 
-Link: https://lore.kernel.org/linux-trace-kernel/20231206100050.3100b7bb@gandalf.local.home
+Most contexts are fine: io-wq pins requests, syscalls hold the file,
+task works are taking ctx references and so on. However, the task work
+fallback path doesn't follow the rule.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: f03f2abce4f39 ("ring-buffer: Have 32 bit time stamps use all 64 bits")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc:  <stable@vger.kernel.org>
+Fixes: 04fc6c802d ("io_uring: save ctx put/get for task_work submit")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/io-uring/CAG48ez3xSoYb+45f1RLtktROJrpiDQ1otNvdR+YLQf7m+Krj5Q@mail.gmail.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -644,8 +644,8 @@ static inline bool __rb_time_read(rb_tim
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -269,6 +269,7 @@ static __cold void io_fallback_req_func(
+ 	struct io_kiocb *req, *tmp;
+ 	struct io_tw_state ts = { .locked = true, };
  
- 	*cnt = rb_time_cnt(top);
++	percpu_ref_get(&ctx->refs);
+ 	mutex_lock(&ctx->uring_lock);
+ 	llist_for_each_entry_safe(req, tmp, node, io_task_work.node)
+ 		req->io_task_work.func(req, &ts);
+@@ -276,6 +277,7 @@ static __cold void io_fallback_req_func(
+ 		return;
+ 	io_submit_flush_completions(ctx);
+ 	mutex_unlock(&ctx->uring_lock);
++	percpu_ref_put(&ctx->refs);
+ }
  
--	/* If top and bottom counts don't match, this interrupted a write */
--	if (*cnt != rb_time_cnt(bottom))
-+	/* If top and msb counts don't match, this interrupted a write */
-+	if (*cnt != rb_time_cnt(msb))
- 		return false;
- 
- 	/* The shift to msb will lose its cnt bits */
+ static int io_alloc_hash_table(struct io_hash_table *table, unsigned bits)
+@@ -3138,12 +3140,7 @@ static __cold void io_ring_exit_work(str
+ 	init_completion(&exit.completion);
+ 	init_task_work(&exit.task_work, io_tctx_exit_cb);
+ 	exit.ctx = ctx;
+-	/*
+-	 * Some may use context even when all refs and requests have been put,
+-	 * and they are free to do so while still holding uring_lock or
+-	 * completion_lock, see io_req_task_submit(). Apart from other work,
+-	 * this lock/unlock section also waits them to finish.
+-	 */
++
+ 	mutex_lock(&ctx->uring_lock);
+ 	while (!list_empty(&ctx->tctx_list)) {
+ 		WARN_ON_ONCE(time_after(jiffies, timeout));
 
 
