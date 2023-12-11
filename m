@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5855FEEB8;
-	Mon, 11 Dec 2023 18:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5202E1D696;
+	Mon, 11 Dec 2023 18:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiFZ4KTL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFD3C433C8;
-	Mon, 11 Dec 2023 18:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGCzdwlJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C363C433C7;
+	Mon, 11 Dec 2023 18:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319434;
-	bh=mcDp1oTI91lJUHMy9Mo/OglR/LOxLKR6vwzEDCbcRPc=;
+	s=korg; t=1702319436;
+	bh=PdGCJ6wWx2KY+PqJMUXNNVAY6UQgpn3YKsyq0vgorg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FiFZ4KTLpqh8KJO1QccXq/yhwxqoKaSATk/HomvsY6TCO5/s66+BEjBMKpW9MzqzB
-	 Cjxkqn8Hg1naRGTEs1FaUaXZ4XhpWXZp0UL78rqvh7nZZGy3twCdb5brcNKhbK98iP
-	 7lZv/03AEwJbUE6O16EjVBRzdIUAywI1HNYKNHjM=
+	b=yGCzdwlJUat6k4LcW4duKBECKuM2n3oJ6GyKSEiwVLEx3+0ByGF2Q49rqbxEutTG3
+	 nIh+GDUT9jtBHdHayPnqYHnupjPjQsdhaKjEOq/prYIZt0ydw3nhMYVetXE3AIJQ+f
+	 y0veqFZDZhWD5hjkWy3WhsMIlteRXFgEXEOlfqBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/244] firmware: arm_scmi: Extend perf protocol ops to get number of domains
-Date: Mon, 11 Dec 2023 19:19:55 +0100
-Message-ID: <20231211182050.361350527@linuxfoundation.org>
+Subject: [PATCH 6.6 103/244] firmware: arm_scmi: Extend perf protocol ops to get information of a domain
+Date: Mon, 11 Dec 2023 19:19:56 +0100
+Message-ID: <20231211182050.394352099@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,66 +44,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit e9090e70e618cd62ab7bf2914511e5eea31a2535 ]
+[ Upstream commit 3d99ed60721bf2e108c8fc660775766057689a92 ]
 
 Similar to other protocol ops, it's useful for an scmi module driver to get
-the number of supported performance domains, hence let's make this
-available by adding a new perf protocol callback. Note that, a user is
-being added from subsequent changes.
+some generic information of a performance domain. Therefore, let's add a
+new callback to provide this information. The information is currently
+limited to the name of the performance domain and whether the set-level
+operation is supported, although this can easily be extended if we find the
+need for it.
 
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://lore.kernel.org/r/20230825112633.236607-2-ulf.hansson@linaro.org
+Link: https://lore.kernel.org/r/20230825112633.236607-3-ulf.hansson@linaro.org
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Stable-dep-of: 8e3c98d9187e ("firmware: arm_scmi: Fix frequency truncation by promoting multiplier type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/perf.c | 8 ++++++++
- include/linux/scmi_protocol.h    | 2 ++
- 2 files changed, 10 insertions(+)
+ drivers/firmware/arm_scmi/perf.c | 47 ++++++++++++++++++++------------
+ include/linux/scmi_protocol.h    |  8 ++++++
+ 2 files changed, 38 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-index 30dedd6ebfde6..da901c65388a6 100644
+index da901c65388a6..6677caefb36bc 100644
 --- a/drivers/firmware/arm_scmi/perf.c
 +++ b/drivers/firmware/arm_scmi/perf.c
-@@ -423,6 +423,13 @@ scmi_perf_describe_levels_get(const struct scmi_protocol_handle *ph,
- 	return ret;
+@@ -145,7 +145,6 @@ struct scmi_msg_resp_perf_describe_levels_v4 {
+ struct perf_dom_info {
+ 	u32 id;
+ 	bool set_limits;
+-	bool set_perf;
+ 	bool perf_limit_notify;
+ 	bool perf_level_notify;
+ 	bool perf_fastchannels;
+@@ -154,7 +153,7 @@ struct perf_dom_info {
+ 	u32 sustained_freq_khz;
+ 	u32 sustained_perf_level;
+ 	u32 mult_factor;
+-	char name[SCMI_MAX_STR_SIZE];
++	struct scmi_perf_domain_info info;
+ 	struct scmi_opp opp[MAX_OPPS];
+ 	struct scmi_fc_info *fc_info;
+ 	struct xarray opps_by_idx;
+@@ -257,7 +256,7 @@ scmi_perf_domain_attributes_get(const struct scmi_protocol_handle *ph,
+ 		flags = le32_to_cpu(attr->flags);
+ 
+ 		dom_info->set_limits = SUPPORTS_SET_LIMITS(flags);
+-		dom_info->set_perf = SUPPORTS_SET_PERF_LVL(flags);
++		dom_info->info.set_perf = SUPPORTS_SET_PERF_LVL(flags);
+ 		dom_info->perf_limit_notify = SUPPORTS_PERF_LIMIT_NOTIFY(flags);
+ 		dom_info->perf_level_notify = SUPPORTS_PERF_LEVEL_NOTIFY(flags);
+ 		dom_info->perf_fastchannels = SUPPORTS_PERF_FASTCHANNELS(flags);
+@@ -276,7 +275,8 @@ scmi_perf_domain_attributes_get(const struct scmi_protocol_handle *ph,
+ 			dom_info->mult_factor =
+ 					(dom_info->sustained_freq_khz * 1000) /
+ 					dom_info->sustained_perf_level;
+-		strscpy(dom_info->name, attr->name, SCMI_SHORT_NAME_MAX_SIZE);
++		strscpy(dom_info->info.name, attr->name,
++			SCMI_SHORT_NAME_MAX_SIZE);
+ 	}
+ 
+ 	ph->xops->xfer_put(ph, t);
+@@ -288,7 +288,7 @@ scmi_perf_domain_attributes_get(const struct scmi_protocol_handle *ph,
+ 	if (!ret && PROTOCOL_REV_MAJOR(version) >= 0x3 &&
+ 	    SUPPORTS_EXTENDED_NAMES(flags))
+ 		ph->hops->extended_name_get(ph, PERF_DOMAIN_NAME_GET,
+-					    dom_info->id, dom_info->name,
++					    dom_info->id, dom_info->info.name,
+ 					    SCMI_MAX_STR_SIZE);
+ 
+ 	if (dom_info->level_indexing_mode) {
+@@ -430,6 +430,29 @@ static int scmi_perf_num_domains_get(const struct scmi_protocol_handle *ph)
+ 	return pi->num_domains;
  }
  
-+static int scmi_perf_num_domains_get(const struct scmi_protocol_handle *ph)
++static inline struct perf_dom_info *
++scmi_perf_domain_lookup(const struct scmi_protocol_handle *ph, u32 domain)
 +{
 +	struct scmi_perf_info *pi = ph->get_priv(ph);
 +
-+	return pi->num_domains;
++	if (domain >= pi->num_domains)
++		return ERR_PTR(-EINVAL);
++
++	return pi->dom_info + domain;
++}
++
++static const struct scmi_perf_domain_info *
++scmi_perf_info_get(const struct scmi_protocol_handle *ph, u32 domain)
++{
++	struct perf_dom_info *dom;
++
++	dom = scmi_perf_domain_lookup(ph, domain);
++	if (IS_ERR(dom))
++		return ERR_PTR(-EINVAL);
++
++	return &dom->info;
 +}
 +
  static int scmi_perf_msg_limits_set(const struct scmi_protocol_handle *ph,
  				    u32 domain, u32 max_perf, u32 min_perf)
  {
-@@ -948,6 +955,7 @@ scmi_power_scale_get(const struct scmi_protocol_handle *ph)
+@@ -453,17 +476,6 @@ static int scmi_perf_msg_limits_set(const struct scmi_protocol_handle *ph,
+ 	return ret;
  }
  
+-static inline struct perf_dom_info *
+-scmi_perf_domain_lookup(const struct scmi_protocol_handle *ph, u32 domain)
+-{
+-	struct scmi_perf_info *pi = ph->get_priv(ph);
+-
+-	if (domain >= pi->num_domains)
+-		return ERR_PTR(-EINVAL);
+-
+-	return pi->dom_info + domain;
+-}
+-
+ static int __scmi_perf_limits_set(const struct scmi_protocol_handle *ph,
+ 				  struct perf_dom_info *dom, u32 max_perf,
+ 				  u32 min_perf)
+@@ -819,7 +831,7 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
+ 		}
+ 
+ 		dev_dbg(dev, "[%d][%s]:: Registered OPP[%d] %lu\n",
+-			domain, dom->name, idx, freq);
++			domain, dom->info.name, idx, freq);
+ 	}
+ 	return 0;
+ }
+@@ -956,6 +968,7 @@ scmi_power_scale_get(const struct scmi_protocol_handle *ph)
+ 
  static const struct scmi_perf_proto_ops perf_proto_ops = {
-+	.num_domains_get = scmi_perf_num_domains_get,
+ 	.num_domains_get = scmi_perf_num_domains_get,
++	.info_get = scmi_perf_info_get,
  	.limits_set = scmi_perf_limits_set,
  	.limits_get = scmi_perf_limits_get,
  	.level_set = scmi_perf_level_set,
 diff --git a/include/linux/scmi_protocol.h b/include/linux/scmi_protocol.h
-index e6fe4f73ffe62..71b39cbbdace0 100644
+index 71b39cbbdace0..71923ae63b014 100644
 --- a/include/linux/scmi_protocol.h
 +++ b/include/linux/scmi_protocol.h
-@@ -101,6 +101,7 @@ struct scmi_clk_proto_ops {
+@@ -97,11 +97,17 @@ struct scmi_clk_proto_ops {
+ 			      u32 clk_id);
+ };
+ 
++struct scmi_perf_domain_info {
++	char name[SCMI_MAX_STR_SIZE];
++	bool set_perf;
++};
++
+ /**
   * struct scmi_perf_proto_ops - represents the various operations provided
   *	by SCMI Performance Protocol
   *
-+ * @num_domains_get: gets the number of supported performance domains
+  * @num_domains_get: gets the number of supported performance domains
++ * @info_get: get the information of a performance domain
   * @limits_set: sets limits on the performance level of a domain
   * @limits_get: gets limits on the performance level of a domain
   * @level_set: sets the performance level of a domain
-@@ -120,6 +121,7 @@ struct scmi_clk_proto_ops {
-  *	or in some other (abstract) scale
+@@ -122,6 +128,8 @@ struct scmi_clk_proto_ops {
   */
  struct scmi_perf_proto_ops {
-+	int (*num_domains_get)(const struct scmi_protocol_handle *ph);
+ 	int (*num_domains_get)(const struct scmi_protocol_handle *ph);
++	const struct scmi_perf_domain_info __must_check *(*info_get)
++		(const struct scmi_protocol_handle *ph, u32 domain);
  	int (*limits_set)(const struct scmi_protocol_handle *ph, u32 domain,
  			  u32 max_perf, u32 min_perf);
  	int (*limits_get)(const struct scmi_protocol_handle *ph, u32 domain,
