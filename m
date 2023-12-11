@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3557AFC06;
-	Mon, 11 Dec 2023 18:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7101FC06;
+	Mon, 11 Dec 2023 18:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdPK4bTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE347C433C8;
-	Mon, 11 Dec 2023 18:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtSJ+SlR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE29C433C7;
+	Mon, 11 Dec 2023 18:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320196;
-	bh=IEmsFLawdV1RUUcD2cLNkPOO/EREVPZzvjiRGF4UsJ4=;
+	s=korg; t=1702320198;
+	bh=iag247i25e/DlP8GtbCYcH/fZRRdbCXB2kYBU+QonXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdPK4bTNxE1miOE6iHVgPgDi0CQW/PGkLNVBMYp+KqscJTXbIE1uOJ0p6/pwxSG3T
-	 +hfKiVjjaO1Xube+dYZnOnGsWyTQY84/ZDqnhmMWQ36EltgNlFZOU6Z3IlL4Zi19ze
-	 O2nZFLet/UAm5LyZwYfjGf+DofGWtI3NRaNZ4E7k=
+	b=gtSJ+SlRCebcwemM+yiqs0fzZgjQnDTfyiOnGzYCkjwYhAtGq+R9cjGA2qgNNDhT5
+	 +bNQt4997ajUk80lA5bx1U1yzYrwc+SKF9sIYwKqXeSg0RBU8mCCxE11y2iS3S4i94
+	 w+EBF5cUDd0cx2Pi5XPB9YYcCHa66Ybcl62mZT7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	stable@kernel.org,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 40/67] packet: Move reference count in packet_sock to atomic_long_t
-Date: Mon, 11 Dec 2023 19:22:24 +0100
-Message-ID: <20231211182016.771772776@linuxfoundation.org>
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 5.4 41/67] arm64: dts: mediatek: mt7622: fix memory node warning check
+Date: Mon, 11 Dec 2023 19:22:25 +0100
+Message-ID: <20231211182016.806760186@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -46,109 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Eugen Hristev <eugen.hristev@collabora.com>
 
-commit db3fadacaf0c817b222090290d06ca2a338422d0 upstream.
+commit 8e6ecbfd44b5542a7598c1c5fc9c6dcb5d367f2a upstream.
 
-In some potential instances the reference count on struct packet_sock
-could be saturated and cause overflows which gets the kernel a bit
-confused. To prevent this, move to a 64-bit atomic reference count on
-64-bit architectures to prevent the possibility of this type to overflow.
+dtbs_check throws a warning at the memory node:
+Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name
 
-Because we can not handle saturation, using refcount_t is not possible
-in this place. Maybe someday in the future if it changes it could be
-used. Also, instead of using plain atomic64_t, use atomic_long_t instead.
-32-bit machines tend to be memory-limited (i.e. anything that increases
-a reference uses so much memory that you can't actually get to 2**32
-references). 32-bit architectures also tend to have serious problems
-with 64-bit atomics. Hence, atomic_long_t is the more natural solution.
+fix by adding the address into the node name.
 
-Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
-Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: stable@kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20231201131021.19999-1-daniel@iogearbox.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 0b6286dd96c0 ("arm64: dts: mt7622: add bananapi BPI-R64 board")
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230814065042.4973-1-eugen.hristev@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   16 ++++++++--------
- net/packet/internal.h  |    2 +-
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts |    2 +-
+ arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts             |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4240,7 +4240,7 @@ static void packet_mm_open(struct vm_are
- 	struct sock *sk = sock->sk;
+--- a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
++++ b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
+@@ -69,7 +69,7 @@
+ 		};
+ 	};
  
- 	if (sk)
--		atomic_inc(&pkt_sk(sk)->mapped);
-+		atomic_long_inc(&pkt_sk(sk)->mapped);
- }
+-	memory {
++	memory@40000000 {
+ 		reg = <0 0x40000000 0 0x40000000>;
+ 	};
  
- static void packet_mm_close(struct vm_area_struct *vma)
-@@ -4250,7 +4250,7 @@ static void packet_mm_close(struct vm_ar
- 	struct sock *sk = sock->sk;
+--- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
++++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
+@@ -55,7 +55,7 @@
+ 		};
+ 	};
  
- 	if (sk)
--		atomic_dec(&pkt_sk(sk)->mapped);
-+		atomic_long_dec(&pkt_sk(sk)->mapped);
- }
+-	memory {
++	memory@40000000 {
+ 		reg = <0 0x40000000 0 0x20000000>;
+ 	};
  
- static const struct vm_operations_struct packet_mmap_ops = {
-@@ -4345,7 +4345,7 @@ static int packet_set_ring(struct sock *
- 
- 	err = -EBUSY;
- 	if (!closing) {
--		if (atomic_read(&po->mapped))
-+		if (atomic_long_read(&po->mapped))
- 			goto out;
- 		if (packet_read_pending(rb))
- 			goto out;
-@@ -4448,7 +4448,7 @@ static int packet_set_ring(struct sock *
- 
- 	err = -EBUSY;
- 	mutex_lock(&po->pg_vec_lock);
--	if (closing || atomic_read(&po->mapped) == 0) {
-+	if (closing || atomic_long_read(&po->mapped) == 0) {
- 		err = 0;
- 		spin_lock_bh(&rb_queue->lock);
- 		swap(rb->pg_vec, pg_vec);
-@@ -4466,9 +4466,9 @@ static int packet_set_ring(struct sock *
- 		po->prot_hook.func = (po->rx_ring.pg_vec) ?
- 						tpacket_rcv : packet_rcv;
- 		skb_queue_purge(rb_queue);
--		if (atomic_read(&po->mapped))
--			pr_err("packet_mmap: vma is busy: %d\n",
--			       atomic_read(&po->mapped));
-+		if (atomic_long_read(&po->mapped))
-+			pr_err("packet_mmap: vma is busy: %ld\n",
-+			       atomic_long_read(&po->mapped));
- 	}
- 	mutex_unlock(&po->pg_vec_lock);
- 
-@@ -4546,7 +4546,7 @@ static int packet_mmap(struct file *file
- 		}
- 	}
- 
--	atomic_inc(&po->mapped);
-+	atomic_long_inc(&po->mapped);
- 	vma->vm_ops = &packet_mmap_ops;
- 	err = 0;
- 
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -125,7 +125,7 @@ struct packet_sock {
- 	__be16			num;
- 	struct packet_rollover	*rollover;
- 	struct packet_mclist	*mclist;
--	atomic_t		mapped;
-+	atomic_long_t		mapped;
- 	enum tpacket_versions	tp_version;
- 	unsigned int		tp_hdrlen;
- 	unsigned int		tp_reserve;
 
 
