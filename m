@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D462D045;
-	Mon, 11 Dec 2023 18:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EED2D045;
+	Mon, 11 Dec 2023 18:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmX3dsbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E901BC433C7;
-	Mon, 11 Dec 2023 18:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GlQr4ZeS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD96C433C7;
+	Mon, 11 Dec 2023 18:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319176;
-	bh=nx/GS2bI32WagwugZm7WNota23QwFZyaEl+OYRgJGKc=;
+	s=korg; t=1702319179;
+	bh=tpwllllC5snPuk1qo8jLCDQFiMmNGN7t0Bpt5FZKiKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmX3dsbmkLEZD46wEcWW2iJcwLVv5hvuigNwrXrF5dpZC7fOehjTDEsykBrm80EPp
-	 Bg2glns4P0dVeD6vIYpa3mD88lEw4Otzyi6K2EZoTAXK62K+JjGSz4Wm8L800mzv0c
-	 eduEZ17mzD7RpMlxKJIODXAy7m14eZX5WRpCvLsg=
+	b=GlQr4ZeST6CP8lpV2mEWf3HuxV9pFDl4nWu1zGYL5vMRZdXRE7pmtj1tmqFpt2bIL
+	 eQiHlZVj0MGz/apF/ga4jVqRn5L5Xpp/dX90o9sZfBGY4rv0LYR3ZcTuoAr1/+zuJO
+	 x5J1/yArIl1o0DaQDaMKL9IgEDkq52NbPaxCT5gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Martin Wilck <mwilck@suse.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yu Liao <liaoyu15@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Liu Tie <liutie4@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/244] scsi: sd: Fix sshdr use in sd_suspend_common()
-Date: Mon, 11 Dec 2023 19:18:15 +0100
-Message-ID: <20231211182045.908592858@linuxfoundation.org>
+Subject: [PATCH 6.6 003/244] hrtimers: Push pending hrtimers away from outgoing CPU earlier
+Date: Mon, 11 Dec 2023 19:18:16 +0100
+Message-ID: <20231211182045.941055174@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -45,144 +43,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 3b83486399a6a9feb9c681b74c21a227d48d7020 ]
+[ Upstream commit 5c0930ccaad5a74d74e8b18b648c5eb21ed2fe94 ]
 
-If scsi_execute_cmd() returns < 0, it doesn't initialize the sshdr, so we
-shouldn't access the sshdr. If it returns 0, then the cmd executed
-successfully, so there is no need to check the sshdr. sd_sync_cache() will
-only access the sshdr if it's been setup because it calls
-scsi_status_is_check_condition() before accessing it. However, the
-sd_sync_cache() caller, sd_suspend_common(), does not check.
+2b8272ff4a70 ("cpu/hotplug: Prevent self deadlock on CPU hot-unplug")
+solved the straight forward CPU hotplug deadlock vs. the scheduler
+bandwidth timer. Yu discovered a more involved variant where a task which
+has a bandwidth timer started on the outgoing CPU holds a lock and then
+gets throttled. If the lock required by one of the CPU hotplug callbacks
+the hotplug operation deadlocks because the unthrottling timer event is not
+handled on the dying CPU and can only be recovered once the control CPU
+reaches the hotplug state which pulls the pending hrtimers from the dead
+CPU.
 
-sd_suspend_common() is only checking for ILLEGAL_REQUEST which it's using
-to determine if the command is supported. If it's not it just ignores the
-error. So to fix its sshdr use this patch just moves that check to
-sd_sync_cache() where it converts ILLEGAL_REQUEST to success/0.
-sd_suspend_common() was ignoring that error and sd_shutdown() doesn't check
-for errors so there will be no behavior changes.
+Solve this by pushing the hrtimers away from the dying CPU in the dying
+callbacks. Nothing can queue a hrtimer on the dying CPU at that point because
+all other CPUs spin in stop_machine() with interrupts disabled and once the
+operation is finished the CPU is marked offline.
 
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20231106231304.5694-2-michael.christie@oracle.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Martin Wilck <mwilck@suse.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Yu Liao <liaoyu15@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Liu Tie <liutie4@huawei.com>
+Link: https://lore.kernel.org/r/87a5rphara.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c | 53 ++++++++++++++++++++---------------------------
- 1 file changed, 23 insertions(+), 30 deletions(-)
+ include/linux/cpuhotplug.h |  1 +
+ include/linux/hrtimer.h    |  4 ++--
+ kernel/cpu.c               |  8 +++++++-
+ kernel/time/hrtimer.c      | 33 ++++++++++++---------------------
+ 4 files changed, 22 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index e17509f0b3fa8..c2e8d9e27749b 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -1642,24 +1642,21 @@ static unsigned int sd_check_events(struct gendisk *disk, unsigned int clearing)
- 	return disk_changed ? DISK_EVENT_MEDIA_CHANGE : 0;
+diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
+index 28c1d3d77b70f..624d4a38c358a 100644
+--- a/include/linux/cpuhotplug.h
++++ b/include/linux/cpuhotplug.h
+@@ -194,6 +194,7 @@ enum cpuhp_state {
+ 	CPUHP_AP_ARM_CORESIGHT_CTI_STARTING,
+ 	CPUHP_AP_ARM64_ISNDEP_STARTING,
+ 	CPUHP_AP_SMPCFD_DYING,
++	CPUHP_AP_HRTIMERS_DYING,
+ 	CPUHP_AP_X86_TBOOT_DYING,
+ 	CPUHP_AP_ARM_CACHE_B15_RAC_DYING,
+ 	CPUHP_AP_ONLINE,
+diff --git a/include/linux/hrtimer.h b/include/linux/hrtimer.h
+index 0ee140176f102..f2044d5a652b5 100644
+--- a/include/linux/hrtimer.h
++++ b/include/linux/hrtimer.h
+@@ -531,9 +531,9 @@ extern void sysrq_timer_list_show(void);
+ 
+ int hrtimers_prepare_cpu(unsigned int cpu);
+ #ifdef CONFIG_HOTPLUG_CPU
+-int hrtimers_dead_cpu(unsigned int cpu);
++int hrtimers_cpu_dying(unsigned int cpu);
+ #else
+-#define hrtimers_dead_cpu	NULL
++#define hrtimers_cpu_dying	NULL
+ #endif
+ 
+ #endif
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index 303cb0591b4b1..72e0f5380bf68 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2109,7 +2109,7 @@ static struct cpuhp_step cpuhp_hp_states[] = {
+ 	[CPUHP_HRTIMERS_PREPARE] = {
+ 		.name			= "hrtimers:prepare",
+ 		.startup.single		= hrtimers_prepare_cpu,
+-		.teardown.single	= hrtimers_dead_cpu,
++		.teardown.single	= NULL,
+ 	},
+ 	[CPUHP_SMPCFD_PREPARE] = {
+ 		.name			= "smpcfd:prepare",
+@@ -2201,6 +2201,12 @@ static struct cpuhp_step cpuhp_hp_states[] = {
+ 		.startup.single		= NULL,
+ 		.teardown.single	= smpcfd_dying_cpu,
+ 	},
++	[CPUHP_AP_HRTIMERS_DYING] = {
++		.name			= "hrtimers:dying",
++		.startup.single		= NULL,
++		.teardown.single	= hrtimers_cpu_dying,
++	},
++
+ 	/* Entry state on starting. Interrupts enabled from here on. Transient
+ 	 * state for synchronsization */
+ 	[CPUHP_AP_ONLINE] = {
+diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
+index 238262e4aba7e..760793998cdd7 100644
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -2219,29 +2219,22 @@ static void migrate_hrtimer_list(struct hrtimer_clock_base *old_base,
+ 	}
  }
  
--static int sd_sync_cache(struct scsi_disk *sdkp, struct scsi_sense_hdr *sshdr)
-+static int sd_sync_cache(struct scsi_disk *sdkp)
+-int hrtimers_dead_cpu(unsigned int scpu)
++int hrtimers_cpu_dying(unsigned int dying_cpu)
  {
- 	int retries, res;
- 	struct scsi_device *sdp = sdkp->device;
- 	const int timeout = sdp->request_queue->rq_timeout
- 		* SD_FLUSH_TIMEOUT_MULTIPLIER;
--	struct scsi_sense_hdr my_sshdr;
-+	struct scsi_sense_hdr sshdr;
- 	const struct scsi_exec_args exec_args = {
- 		.req_flags = BLK_MQ_REQ_PM,
--		/* caller might not be interested in sense, but we need it */
--		.sshdr = sshdr ? : &my_sshdr,
-+		.sshdr = &sshdr,
- 	};
+ 	struct hrtimer_cpu_base *old_base, *new_base;
+-	int i;
++	int i, ncpu = cpumask_first(cpu_active_mask);
  
- 	if (!scsi_device_online(sdp))
- 		return -ENODEV;
+-	BUG_ON(cpu_online(scpu));
+-	tick_cancel_sched_timer(scpu);
++	tick_cancel_sched_timer(dying_cpu);
++
++	old_base = this_cpu_ptr(&hrtimer_bases);
++	new_base = &per_cpu(hrtimer_bases, ncpu);
  
--	sshdr = exec_args.sshdr;
--
- 	for (retries = 3; retries > 0; --retries) {
- 		unsigned char cmd[16] = { 0 };
+-	/*
+-	 * this BH disable ensures that raise_softirq_irqoff() does
+-	 * not wakeup ksoftirqd (and acquire the pi-lock) while
+-	 * holding the cpu_base lock
+-	 */
+-	local_bh_disable();
+-	local_irq_disable();
+-	old_base = &per_cpu(hrtimer_bases, scpu);
+-	new_base = this_cpu_ptr(&hrtimer_bases);
+ 	/*
+ 	 * The caller is globally serialized and nobody else
+ 	 * takes two locks at once, deadlock is not possible.
+ 	 */
+-	raw_spin_lock(&new_base->lock);
+-	raw_spin_lock_nested(&old_base->lock, SINGLE_DEPTH_NESTING);
++	raw_spin_lock(&old_base->lock);
++	raw_spin_lock_nested(&new_base->lock, SINGLE_DEPTH_NESTING);
  
-@@ -1684,15 +1681,23 @@ static int sd_sync_cache(struct scsi_disk *sdkp, struct scsi_sense_hdr *sshdr)
- 			return res;
+ 	for (i = 0; i < HRTIMER_MAX_CLOCK_BASES; i++) {
+ 		migrate_hrtimer_list(&old_base->clock_base[i],
+@@ -2252,15 +2245,13 @@ int hrtimers_dead_cpu(unsigned int scpu)
+ 	 * The migration might have changed the first expiring softirq
+ 	 * timer on this CPU. Update it.
+ 	 */
+-	hrtimer_update_softirq_timer(new_base, false);
++	__hrtimer_get_next_event(new_base, HRTIMER_ACTIVE_SOFT);
++	/* Tell the other CPU to retrigger the next event */
++	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
  
- 		if (scsi_status_is_check_condition(res) &&
--		    scsi_sense_valid(sshdr)) {
--			sd_print_sense_hdr(sdkp, sshdr);
-+		    scsi_sense_valid(&sshdr)) {
-+			sd_print_sense_hdr(sdkp, &sshdr);
+-	raw_spin_unlock(&old_base->lock);
+ 	raw_spin_unlock(&new_base->lock);
++	raw_spin_unlock(&old_base->lock);
  
- 			/* we need to evaluate the error return  */
--			if (sshdr->asc == 0x3a ||	/* medium not present */
--			    sshdr->asc == 0x20 ||	/* invalid command */
--			    (sshdr->asc == 0x74 && sshdr->ascq == 0x71))	/* drive is password locked */
-+			if (sshdr.asc == 0x3a ||	/* medium not present */
-+			    sshdr.asc == 0x20 ||	/* invalid command */
-+			    (sshdr.asc == 0x74 && sshdr.ascq == 0x71))	/* drive is password locked */
- 				/* this is no error here */
- 				return 0;
-+			/*
-+			 * This drive doesn't support sync and there's not much
-+			 * we can do because this is called during shutdown
-+			 * or suspend so just return success so those operations
-+			 * can proceed.
-+			 */
-+			if (sshdr.sense_key == ILLEGAL_REQUEST)
-+				return 0;
- 		}
+-	/* Check, if we got expired work to do */
+-	__hrtimer_peek_ahead_timers();
+-	local_irq_enable();
+-	local_bh_enable();
+ 	return 0;
+ }
  
- 		switch (host_byte(res)) {
-@@ -3847,7 +3852,7 @@ static void sd_shutdown(struct device *dev)
- 
- 	if (sdkp->WCE && sdkp->media_present) {
- 		sd_printk(KERN_NOTICE, sdkp, "Synchronizing SCSI cache\n");
--		sd_sync_cache(sdkp, NULL);
-+		sd_sync_cache(sdkp);
- 	}
- 
- 	if ((system_state != SYSTEM_RESTART &&
-@@ -3868,7 +3873,6 @@ static inline bool sd_do_start_stop(struct scsi_device *sdev, bool runtime)
- static int sd_suspend_common(struct device *dev, bool runtime)
- {
- 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
--	struct scsi_sense_hdr sshdr;
- 	int ret = 0;
- 
- 	if (!sdkp)	/* E.g.: runtime suspend following sd_remove() */
-@@ -3877,24 +3881,13 @@ static int sd_suspend_common(struct device *dev, bool runtime)
- 	if (sdkp->WCE && sdkp->media_present) {
- 		if (!sdkp->device->silence_suspend)
- 			sd_printk(KERN_NOTICE, sdkp, "Synchronizing SCSI cache\n");
--		ret = sd_sync_cache(sdkp, &sshdr);
--
--		if (ret) {
--			/* ignore OFFLINE device */
--			if (ret == -ENODEV)
--				return 0;
--
--			if (!scsi_sense_valid(&sshdr) ||
--			    sshdr.sense_key != ILLEGAL_REQUEST)
--				return ret;
-+		ret = sd_sync_cache(sdkp);
-+		/* ignore OFFLINE device */
-+		if (ret == -ENODEV)
-+			return 0;
- 
--			/*
--			 * sshdr.sense_key == ILLEGAL_REQUEST means this drive
--			 * doesn't support sync. There's not much to do and
--			 * suspend shouldn't fail.
--			 */
--			ret = 0;
--		}
-+		if (ret)
-+			return ret;
- 	}
- 
- 	if (sd_do_start_stop(sdkp->device, runtime)) {
 -- 
 2.42.0
 
