@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D3FE548;
-	Mon, 11 Dec 2023 18:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C84524B3;
+	Mon, 11 Dec 2023 18:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0171J4i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B416C433C8;
-	Mon, 11 Dec 2023 18:56:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3cj7LgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D92C433C7;
+	Mon, 11 Dec 2023 18:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321014;
-	bh=eoKRJOZlbCiDQeZ2naPXjEu8LkZ3bx6om3/mey7i83I=;
+	s=korg; t=1702321018;
+	bh=MlF2aBU5WEzaXkd4IEPiaZLWm8lyXS2LheiLSdcfPQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0171J4iyMUrRzS5f0sZ9hbxThTJMAA3yvIw3QOD0qqa9qqAMkYphh/4e13I2W+WY
-	 gQbJ47CuYlSSzJldGzNdShazypHC0pg5/1m7+XNNxL1yMQ9pPLOsbM1AUD8N3mccUp
-	 zlOvOALL8x9F5N8BitJHMPJTW/4u6uwmmuYwC+Gs=
+	b=b3cj7LgO2tYN0X8qCgdDW7tHJ94Q7I1PBZG3+7IXYuolhsuFzYhY8jx2BJjlDzVnP
+	 cEo7N8zthFqd+cPwpHo/VXj6onbX1UhyPp8PYVdjIEcZKUXgIg6ST41I2G17cmJEYx
+	 biDUKZ5eoQ0pUQ1VM90yWEKUH2nLeeaRuQ5gCjKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarah Grant <s@srd.tw>,
+	Jason Zhang <jason.zhang@rock-chips.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 079/141] ALSA: usb-audio: Add Pioneer DJM-450 mixer controls
-Date: Mon, 11 Dec 2023 19:22:18 +0100
-Message-ID: <20231211182029.977938827@linuxfoundation.org>
+Subject: [PATCH 5.15 080/141] ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
+Date: Mon, 11 Dec 2023 19:22:19 +0100
+Message-ID: <20231211182030.029427448@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,82 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarah Grant <s@srd.tw>
+From: Jason Zhang <jason.zhang@rock-chips.com>
 
-commit bbb8e71965c3737bdc691afd803a34bfd61cfbeb upstream.
+commit 2b3a7a302c9804e463f2ea5b54dc3a6ad106a344 upstream.
 
-These values mirror those of the Pioneer DJM-250MK2 as the channel layout
-appears identical based on my observations. This duplication could be removed in
-later contributions if desired.
+The pcm state can be SNDRV_PCM_STATE_DISCONNECTED at disconnect
+callback, and there is not an entry of SNDRV_PCM_STATE_DISCONNECTED
+in snd_pcm_state_names.
 
-Signed-off-by: Sarah Grant <s@srd.tw>
+This patch adds the missing entry to resolve this issue.
+
+cat /proc/asound/card2/pcm0p/sub0/status
+That results in stack traces like the following:
+
+[   99.702732][ T5171] Unexpected kernel BRK exception at EL1
+[   99.702774][ T5171] Internal error: BRK handler: f2005512 [#1] PREEMPT SMP
+[   99.703858][ T5171] Modules linked in: bcmdhd(E) (...)
+[   99.747425][ T5171] CPU: 3 PID: 5171 Comm: cat Tainted: G         C OE     5.10.189-android13-4-00003-g4a17384380d8-ab11086999 #1
+[   99.748447][ T5171] Hardware name: Rockchip RK3588 CVTE V10 Board (DT)
+[   99.749024][ T5171] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
+[   99.749616][ T5171] pc : snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.750204][ T5171] lr : snd_pcm_substream_proc_status_read+0xa4/0x2bc
+[   99.750778][ T5171] sp : ffffffc0175abae0
+[   99.751132][ T5171] x29: ffffffc0175abb80 x28: ffffffc009a2c498
+[   99.751665][ T5171] x27: 0000000000000001 x26: ffffff810cbae6e8
+[   99.752199][ T5171] x25: 0000000000400cc0 x24: ffffffc0175abc60
+[   99.752729][ T5171] x23: 0000000000000000 x22: ffffff802f558400
+[   99.753263][ T5171] x21: ffffff81d8d8ff00 x20: ffffff81020cdc00
+[   99.753795][ T5171] x19: ffffff802d110000 x18: ffffffc014fbd058
+[   99.754326][ T5171] x17: 0000000000000000 x16: 0000000000000000
+[   99.754861][ T5171] x15: 000000000000c276 x14: ffffffff9a976fda
+[   99.755392][ T5171] x13: 0000000065689089 x12: 000000000000d72e
+[   99.755923][ T5171] x11: ffffff802d110000 x10: 00000000000000e0
+[   99.756457][ T5171] x9 : 9c431600c8385d00 x8 : 0000000000000008
+[   99.756990][ T5171] x7 : 0000000000000000 x6 : 000000000000003f
+[   99.757522][ T5171] x5 : 0000000000000040 x4 : ffffffc0175abb70
+[   99.758056][ T5171] x3 : 0000000000000001 x2 : 0000000000000001
+[   99.758588][ T5171] x1 : 0000000000000000 x0 : 0000000000000000
+[   99.759123][ T5171] Call trace:
+[   99.759404][ T5171]  snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.759958][ T5171]  snd_info_seq_show+0x54/0xa4
+[   99.760370][ T5171]  seq_read_iter+0x19c/0x7d4
+[   99.760770][ T5171]  seq_read+0xf0/0x128
+[   99.761117][ T5171]  proc_reg_read+0x100/0x1f8
+[   99.761515][ T5171]  vfs_read+0xf4/0x354
+[   99.761869][ T5171]  ksys_read+0x7c/0x148
+[   99.762226][ T5171]  __arm64_sys_read+0x20/0x30
+[   99.762625][ T5171]  el0_svc_common+0xd0/0x1e4
+[   99.763023][ T5171]  el0_svc+0x28/0x98
+[   99.763358][ T5171]  el0_sync_handler+0x8c/0xf0
+[   99.763759][ T5171]  el0_sync+0x1b8/0x1c0
+[   99.764118][ T5171] Code: d65f03c0 b9406102 17ffffae 94191565 (d42aa240)
+[   99.764715][ T5171] ---[ end trace 1eeffa3e17c58e10 ]---
+[   99.780720][ T5171] Kernel panic - not syncing: BRK handler: Fatal exception
+
+Signed-off-by: Jason Zhang <jason.zhang@rock-chips.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231201181654.5058-1-s@srd.tw
+Link: https://lore.kernel.org/r/20231206013139.20506-1-jason.zhang@rock-chips.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ sound/core/pcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -2796,6 +2796,7 @@ static int snd_bbfpro_controls_create(st
- #define SND_DJM_850_IDX		0x2
- #define SND_DJM_900NXS2_IDX	0x3
- #define SND_DJM_750MK2_IDX	0x4
-+#define SND_DJM_450_IDX		0x5
- 
- 
- #define SND_DJM_CTL(_name, suffix, _default_value, _windex) { \
-@@ -2926,6 +2927,31 @@ static const struct snd_djm_ctl snd_djm_
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -251,6 +251,7 @@ static const char * const snd_pcm_state_
+ 	STATE(DRAINING),
+ 	STATE(PAUSED),
+ 	STATE(SUSPENDED),
++	STATE(DISCONNECTED),
  };
  
- 
-+// DJM-450
-+static const u16 snd_djm_opts_450_cap1[] = {
-+	0x0103, 0x0100, 0x0106, 0x0107, 0x0108, 0x0109, 0x010d, 0x010a };
-+
-+static const u16 snd_djm_opts_450_cap2[] = {
-+	0x0203, 0x0200, 0x0206, 0x0207, 0x0208, 0x0209, 0x020d, 0x020a };
-+
-+static const u16 snd_djm_opts_450_cap3[] = {
-+	0x030a, 0x0311, 0x0312, 0x0307, 0x0308, 0x0309, 0x030d };
-+
-+static const u16 snd_djm_opts_450_pb1[] = { 0x0100, 0x0101, 0x0104 };
-+static const u16 snd_djm_opts_450_pb2[] = { 0x0200, 0x0201, 0x0204 };
-+static const u16 snd_djm_opts_450_pb3[] = { 0x0300, 0x0301, 0x0304 };
-+
-+static const struct snd_djm_ctl snd_djm_ctls_450[] = {
-+	SND_DJM_CTL("Capture Level", cap_level, 0, SND_DJM_WINDEX_CAPLVL),
-+	SND_DJM_CTL("Ch1 Input",   450_cap1, 2, SND_DJM_WINDEX_CAP),
-+	SND_DJM_CTL("Ch2 Input",   450_cap2, 2, SND_DJM_WINDEX_CAP),
-+	SND_DJM_CTL("Ch3 Input",   450_cap3, 0, SND_DJM_WINDEX_CAP),
-+	SND_DJM_CTL("Ch1 Output",   450_pb1, 0, SND_DJM_WINDEX_PB),
-+	SND_DJM_CTL("Ch2 Output",   450_pb2, 1, SND_DJM_WINDEX_PB),
-+	SND_DJM_CTL("Ch3 Output",   450_pb3, 2, SND_DJM_WINDEX_PB)
-+};
-+
-+
- // DJM-750
- static const u16 snd_djm_opts_750_cap1[] = {
- 	0x0101, 0x0103, 0x0106, 0x0107, 0x0108, 0x0109, 0x010a, 0x010f };
-@@ -3021,6 +3047,7 @@ static const struct snd_djm_device snd_d
- 	[SND_DJM_850_IDX] = SND_DJM_DEVICE(850),
- 	[SND_DJM_900NXS2_IDX] = SND_DJM_DEVICE(900nxs2),
- 	[SND_DJM_750MK2_IDX] = SND_DJM_DEVICE(750mk2),
-+	[SND_DJM_450_IDX] = SND_DJM_DEVICE(450),
- };
- 
- 
-@@ -3263,6 +3290,9 @@ int snd_usb_mixer_apply_create_quirk(str
- 	case USB_ID(0x2b73, 0x0017): /* Pioneer DJ DJM-250MK2 */
- 		err = snd_djm_controls_create(mixer, SND_DJM_250MK2_IDX);
- 		break;
-+	case USB_ID(0x2b73, 0x0013): /* Pioneer DJ DJM-450 */
-+		err = snd_djm_controls_create(mixer, SND_DJM_450_IDX);
-+		break;
- 	case USB_ID(0x08e4, 0x017f): /* Pioneer DJ DJM-750 */
- 		err = snd_djm_controls_create(mixer, SND_DJM_750_IDX);
- 		break;
+ static const char * const snd_pcm_access_names[] = {
 
 
