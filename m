@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF5E52F88;
-	Mon, 11 Dec 2023 18:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4108F52F88;
+	Mon, 11 Dec 2023 18:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FULVTUXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DEEC433C9;
-	Mon, 11 Dec 2023 18:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ST8OA4vM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC614C433C7;
+	Mon, 11 Dec 2023 18:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320014;
-	bh=SmSG7+P2fMBbQEfaQF41chgt4bHJSqPA21lc7huFEJ0=;
+	s=korg; t=1702320017;
+	bh=dtMaDyiC9WycpVjvi4oaHgRkr156SsaKaeb7WJQ0gVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FULVTUXvn55hVkRWnQMe4erVk5n911vpdC+vLoX8XZx2qxoITNCwAV5Y3VlPEX5/6
-	 awd653iyD4UWbr/tv7qRXQloigZ/Lt3/Fu3Mi7glXaSsKweN7WsXzdBbQ3aEzDRuW4
-	 nQYDBNzUdbHsHlIn9PfQh1XSqU/eHphR3bqseoRU=
+	b=ST8OA4vMTmgsd86MPUohXpT9hfPMQjKWWab86EHle4klFkuvJhMcSqQZpKD2EydWs
+	 5hoi4Ot/hTBta1jObgm/8kJRc5cpEpZh+KK/PmwV2FpfqjJGpTU3969IO0H/uCkfkY
+	 RldBEtp1S38lJH3Qb1COeuqxQnMiZ6m80lGuX208=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 72/97] usb: typec: class: fix typec_altmode_put_partner to put plugs
-Date: Mon, 11 Dec 2023 19:22:15 +0100
-Message-ID: <20231211182022.879063891@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.10 73/97] ARM: PL011: Fix DMA support
+Date: Mon, 11 Dec 2023 19:22:16 +0100
+Message-ID: <20231211182022.930219074@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -41,51 +42,335 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit b17b7fe6dd5c6ff74b38b0758ca799cdbb79e26e upstream.
+commit 58ac1b3799799069d53f5bf95c093f2fe8dd3cc5 upstream.
 
-When typec_altmode_put_partner is called by a plug altmode upon release,
-the port altmode the plug belongs to will not remove its reference to the
-plug. The check to see if the altmode being released evaluates against the
-released altmode's partner instead of the calling altmode itself, so change
-adev in typec_altmode_put_partner to properly refer to the altmode being
-released.
+Since there is no guarantee that the memory returned by
+dma_alloc_coherent() is associated with a 'struct page', using the
+architecture specific phys_to_page() is wrong, but using
+virt_to_page() would be as well.
 
-typec_altmode_set_partner is not run for port altmodes, so also add a check
-in typec_altmode_release to prevent typec_altmode_put_partner() calls on
-port altmode release.
+Stop using sg lists altogether and just use the *_single() functions
+instead. This also simplifies the code a bit since the scatterlists in
+this driver always have only one entry anyway.
 
-Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
-Cc: stable@vger.kernel.org
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231129192349.1773623-2-rdbabiera@google.com
+https://lore.kernel.org/lkml/86db0fe5-930d-4cbb-bd7d-03367da38951@app.fastmail.com/
+    Use consistent names for dma buffers
+
+gc: Add a commit log from the initial thread:
+https://lore.kernel.org/lkml/86db0fe5-930d-4cbb-bd7d-03367da38951@app.fastmail.com/
+    Use consistent names for dma buffers
+
+Fixes: cb06ff102e2d7 ("ARM: PL011: Add support for Rx DMA buffer polling.")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20231122171503.235649-1-gregory.clement@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/tty/serial/amba-pl011.c |  112 +++++++++++++++++++---------------------
+ 1 file changed, 54 insertions(+), 58 deletions(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -194,7 +194,7 @@ static void typec_altmode_put_partner(st
- 	if (!partner)
- 		return;
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -222,17 +222,18 @@ static struct vendor_data vendor_zte = {
  
--	adev = &partner->adev;
-+	adev = &altmode->adev;
+ /* Deals with DMA transactions */
  
- 	if (is_typec_plug(adev->dev.parent)) {
- 		struct typec_plug *plug = to_typec_plug(adev->dev.parent);
-@@ -424,7 +424,8 @@ static void typec_altmode_release(struct
+-struct pl011_sgbuf {
+-	struct scatterlist sg;
+-	char *buf;
++struct pl011_dmabuf {
++	dma_addr_t		dma;
++	size_t			len;
++	char			*buf;
+ };
+ 
+ struct pl011_dmarx_data {
+ 	struct dma_chan		*chan;
+ 	struct completion	complete;
+ 	bool			use_buf_b;
+-	struct pl011_sgbuf	sgbuf_a;
+-	struct pl011_sgbuf	sgbuf_b;
++	struct pl011_dmabuf	dbuf_a;
++	struct pl011_dmabuf	dbuf_b;
+ 	dma_cookie_t		cookie;
+ 	bool			running;
+ 	struct timer_list	timer;
+@@ -245,7 +246,8 @@ struct pl011_dmarx_data {
+ 
+ struct pl011_dmatx_data {
+ 	struct dma_chan		*chan;
+-	struct scatterlist	sg;
++	dma_addr_t		dma;
++	size_t			len;
+ 	char			*buf;
+ 	bool			queued;
+ };
+@@ -366,32 +368,24 @@ static int pl011_fifo_to_tty(struct uart
+ 
+ #define PL011_DMA_BUFFER_SIZE PAGE_SIZE
+ 
+-static int pl011_sgbuf_init(struct dma_chan *chan, struct pl011_sgbuf *sg,
++static int pl011_dmabuf_init(struct dma_chan *chan, struct pl011_dmabuf *db,
+ 	enum dma_data_direction dir)
  {
- 	struct altmode *alt = to_altmode(to_typec_altmode(dev));
+-	dma_addr_t dma_addr;
+-
+-	sg->buf = dma_alloc_coherent(chan->device->dev,
+-		PL011_DMA_BUFFER_SIZE, &dma_addr, GFP_KERNEL);
+-	if (!sg->buf)
++	db->buf = dma_alloc_coherent(chan->device->dev, PL011_DMA_BUFFER_SIZE,
++				     &db->dma, GFP_KERNEL);
++	if (!db->buf)
+ 		return -ENOMEM;
+-
+-	sg_init_table(&sg->sg, 1);
+-	sg_set_page(&sg->sg, phys_to_page(dma_addr),
+-		PL011_DMA_BUFFER_SIZE, offset_in_page(dma_addr));
+-	sg_dma_address(&sg->sg) = dma_addr;
+-	sg_dma_len(&sg->sg) = PL011_DMA_BUFFER_SIZE;
++	db->len = PL011_DMA_BUFFER_SIZE;
  
--	typec_altmode_put_partner(alt);
-+	if (!is_typec_port(dev->parent))
-+		typec_altmode_put_partner(alt);
+ 	return 0;
+ }
  
- 	altmode_id_remove(alt->adev.dev.parent, alt->id);
- 	kfree(alt);
+-static void pl011_sgbuf_free(struct dma_chan *chan, struct pl011_sgbuf *sg,
++static void pl011_dmabuf_free(struct dma_chan *chan, struct pl011_dmabuf *db,
+ 	enum dma_data_direction dir)
+ {
+-	if (sg->buf) {
++	if (db->buf) {
+ 		dma_free_coherent(chan->device->dev,
+-			PL011_DMA_BUFFER_SIZE, sg->buf,
+-			sg_dma_address(&sg->sg));
++				  PL011_DMA_BUFFER_SIZE, db->buf, db->dma);
+ 	}
+ }
+ 
+@@ -552,8 +546,8 @@ static void pl011_dma_tx_callback(void *
+ 
+ 	spin_lock_irqsave(&uap->port.lock, flags);
+ 	if (uap->dmatx.queued)
+-		dma_unmap_sg(dmatx->chan->device->dev, &dmatx->sg, 1,
+-			     DMA_TO_DEVICE);
++		dma_unmap_single(dmatx->chan->device->dev, dmatx->dma,
++				dmatx->len, DMA_TO_DEVICE);
+ 
+ 	dmacr = uap->dmacr;
+ 	uap->dmacr = dmacr & ~UART011_TXDMAE;
+@@ -639,18 +633,19 @@ static int pl011_dma_tx_refill(struct ua
+ 			memcpy(&dmatx->buf[first], &xmit->buf[0], second);
+ 	}
+ 
+-	dmatx->sg.length = count;
+-
+-	if (dma_map_sg(dma_dev->dev, &dmatx->sg, 1, DMA_TO_DEVICE) != 1) {
++	dmatx->len = count;
++	dmatx->dma = dma_map_single(dma_dev->dev, dmatx->buf, count,
++				    DMA_TO_DEVICE);
++	if (dmatx->dma == DMA_MAPPING_ERROR) {
+ 		uap->dmatx.queued = false;
+ 		dev_dbg(uap->port.dev, "unable to map TX DMA\n");
+ 		return -EBUSY;
+ 	}
+ 
+-	desc = dmaengine_prep_slave_sg(chan, &dmatx->sg, 1, DMA_MEM_TO_DEV,
++	desc = dmaengine_prep_slave_single(chan, dmatx->dma, dmatx->len, DMA_MEM_TO_DEV,
+ 					     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+ 	if (!desc) {
+-		dma_unmap_sg(dma_dev->dev, &dmatx->sg, 1, DMA_TO_DEVICE);
++		dma_unmap_single(dma_dev->dev, dmatx->dma, dmatx->len, DMA_TO_DEVICE);
+ 		uap->dmatx.queued = false;
+ 		/*
+ 		 * If DMA cannot be used right now, we complete this
+@@ -814,8 +809,8 @@ __acquires(&uap->port.lock)
+ 	dmaengine_terminate_async(uap->dmatx.chan);
+ 
+ 	if (uap->dmatx.queued) {
+-		dma_unmap_sg(uap->dmatx.chan->device->dev, &uap->dmatx.sg, 1,
+-			     DMA_TO_DEVICE);
++		dma_unmap_single(uap->dmatx.chan->device->dev, uap->dmatx.dma,
++				 uap->dmatx.len, DMA_TO_DEVICE);
+ 		uap->dmatx.queued = false;
+ 		uap->dmacr &= ~UART011_TXDMAE;
+ 		pl011_write(uap->dmacr, uap, REG_DMACR);
+@@ -829,15 +824,15 @@ static int pl011_dma_rx_trigger_dma(stru
+ 	struct dma_chan *rxchan = uap->dmarx.chan;
+ 	struct pl011_dmarx_data *dmarx = &uap->dmarx;
+ 	struct dma_async_tx_descriptor *desc;
+-	struct pl011_sgbuf *sgbuf;
++	struct pl011_dmabuf *dbuf;
+ 
+ 	if (!rxchan)
+ 		return -EIO;
+ 
+ 	/* Start the RX DMA job */
+-	sgbuf = uap->dmarx.use_buf_b ?
+-		&uap->dmarx.sgbuf_b : &uap->dmarx.sgbuf_a;
+-	desc = dmaengine_prep_slave_sg(rxchan, &sgbuf->sg, 1,
++	dbuf = uap->dmarx.use_buf_b ?
++		&uap->dmarx.dbuf_b : &uap->dmarx.dbuf_a;
++	desc = dmaengine_prep_slave_single(rxchan, dbuf->dma, dbuf->len,
+ 					DMA_DEV_TO_MEM,
+ 					DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+ 	/*
+@@ -877,8 +872,8 @@ static void pl011_dma_rx_chars(struct ua
+ 			       bool readfifo)
+ {
+ 	struct tty_port *port = &uap->port.state->port;
+-	struct pl011_sgbuf *sgbuf = use_buf_b ?
+-		&uap->dmarx.sgbuf_b : &uap->dmarx.sgbuf_a;
++	struct pl011_dmabuf *dbuf = use_buf_b ?
++		&uap->dmarx.dbuf_b : &uap->dmarx.dbuf_a;
+ 	int dma_count = 0;
+ 	u32 fifotaken = 0; /* only used for vdbg() */
+ 
+@@ -887,7 +882,7 @@ static void pl011_dma_rx_chars(struct ua
+ 
+ 	if (uap->dmarx.poll_rate) {
+ 		/* The data can be taken by polling */
+-		dmataken = sgbuf->sg.length - dmarx->last_residue;
++		dmataken = dbuf->len - dmarx->last_residue;
+ 		/* Recalculate the pending size */
+ 		if (pending >= dmataken)
+ 			pending -= dmataken;
+@@ -901,7 +896,7 @@ static void pl011_dma_rx_chars(struct ua
+ 		 * Note that tty_insert_flip_buf() tries to take as many chars
+ 		 * as it can.
+ 		 */
+-		dma_count = tty_insert_flip_string(port, sgbuf->buf + dmataken,
++		dma_count = tty_insert_flip_string(port, dbuf->buf + dmataken,
+ 				pending);
+ 
+ 		uap->port.icount.rx += dma_count;
+@@ -912,7 +907,7 @@ static void pl011_dma_rx_chars(struct ua
+ 
+ 	/* Reset the last_residue for Rx DMA poll */
+ 	if (uap->dmarx.poll_rate)
+-		dmarx->last_residue = sgbuf->sg.length;
++		dmarx->last_residue = dbuf->len;
+ 
+ 	/*
+ 	 * Only continue with trying to read the FIFO if all DMA chars have
+@@ -949,8 +944,8 @@ static void pl011_dma_rx_irq(struct uart
+ {
+ 	struct pl011_dmarx_data *dmarx = &uap->dmarx;
+ 	struct dma_chan *rxchan = dmarx->chan;
+-	struct pl011_sgbuf *sgbuf = dmarx->use_buf_b ?
+-		&dmarx->sgbuf_b : &dmarx->sgbuf_a;
++	struct pl011_dmabuf *dbuf = dmarx->use_buf_b ?
++		&dmarx->dbuf_b : &dmarx->dbuf_a;
+ 	size_t pending;
+ 	struct dma_tx_state state;
+ 	enum dma_status dmastat;
+@@ -972,7 +967,7 @@ static void pl011_dma_rx_irq(struct uart
+ 	pl011_write(uap->dmacr, uap, REG_DMACR);
+ 	uap->dmarx.running = false;
+ 
+-	pending = sgbuf->sg.length - state.residue;
++	pending = dbuf->len - state.residue;
+ 	BUG_ON(pending > PL011_DMA_BUFFER_SIZE);
+ 	/* Then we terminate the transfer - we now know our residue */
+ 	dmaengine_terminate_all(rxchan);
+@@ -999,8 +994,8 @@ static void pl011_dma_rx_callback(void *
+ 	struct pl011_dmarx_data *dmarx = &uap->dmarx;
+ 	struct dma_chan *rxchan = dmarx->chan;
+ 	bool lastbuf = dmarx->use_buf_b;
+-	struct pl011_sgbuf *sgbuf = dmarx->use_buf_b ?
+-		&dmarx->sgbuf_b : &dmarx->sgbuf_a;
++	struct pl011_dmabuf *dbuf = dmarx->use_buf_b ?
++		&dmarx->dbuf_b : &dmarx->dbuf_a;
+ 	size_t pending;
+ 	struct dma_tx_state state;
+ 	int ret;
+@@ -1018,7 +1013,7 @@ static void pl011_dma_rx_callback(void *
+ 	 * the DMA irq handler. So we check the residue here.
+ 	 */
+ 	rxchan->device->device_tx_status(rxchan, dmarx->cookie, &state);
+-	pending = sgbuf->sg.length - state.residue;
++	pending = dbuf->len - state.residue;
+ 	BUG_ON(pending > PL011_DMA_BUFFER_SIZE);
+ 	/* Then we terminate the transfer - we now know our residue */
+ 	dmaengine_terminate_all(rxchan);
+@@ -1070,16 +1065,16 @@ static void pl011_dma_rx_poll(struct tim
+ 	unsigned long flags = 0;
+ 	unsigned int dmataken = 0;
+ 	unsigned int size = 0;
+-	struct pl011_sgbuf *sgbuf;
++	struct pl011_dmabuf *dbuf;
+ 	int dma_count;
+ 	struct dma_tx_state state;
+ 
+-	sgbuf = dmarx->use_buf_b ? &uap->dmarx.sgbuf_b : &uap->dmarx.sgbuf_a;
++	dbuf = dmarx->use_buf_b ? &uap->dmarx.dbuf_b : &uap->dmarx.dbuf_a;
+ 	rxchan->device->device_tx_status(rxchan, dmarx->cookie, &state);
+ 	if (likely(state.residue < dmarx->last_residue)) {
+-		dmataken = sgbuf->sg.length - dmarx->last_residue;
++		dmataken = dbuf->len - dmarx->last_residue;
+ 		size = dmarx->last_residue - state.residue;
+-		dma_count = tty_insert_flip_string(port, sgbuf->buf + dmataken,
++		dma_count = tty_insert_flip_string(port, dbuf->buf + dmataken,
+ 				size);
+ 		if (dma_count == size)
+ 			dmarx->last_residue =  state.residue;
+@@ -1126,7 +1121,7 @@ static void pl011_dma_startup(struct uar
+ 		return;
+ 	}
+ 
+-	sg_init_one(&uap->dmatx.sg, uap->dmatx.buf, PL011_DMA_BUFFER_SIZE);
++	uap->dmatx.len = PL011_DMA_BUFFER_SIZE;
+ 
+ 	/* The DMA buffer is now the FIFO the TTY subsystem can use */
+ 	uap->port.fifosize = PL011_DMA_BUFFER_SIZE;
+@@ -1136,7 +1131,7 @@ static void pl011_dma_startup(struct uar
+ 		goto skip_rx;
+ 
+ 	/* Allocate and map DMA RX buffers */
+-	ret = pl011_sgbuf_init(uap->dmarx.chan, &uap->dmarx.sgbuf_a,
++	ret = pl011_dmabuf_init(uap->dmarx.chan, &uap->dmarx.dbuf_a,
+ 			       DMA_FROM_DEVICE);
+ 	if (ret) {
+ 		dev_err(uap->port.dev, "failed to init DMA %s: %d\n",
+@@ -1144,12 +1139,12 @@ static void pl011_dma_startup(struct uar
+ 		goto skip_rx;
+ 	}
+ 
+-	ret = pl011_sgbuf_init(uap->dmarx.chan, &uap->dmarx.sgbuf_b,
++	ret = pl011_dmabuf_init(uap->dmarx.chan, &uap->dmarx.dbuf_b,
+ 			       DMA_FROM_DEVICE);
+ 	if (ret) {
+ 		dev_err(uap->port.dev, "failed to init DMA %s: %d\n",
+ 			"RX buffer B", ret);
+-		pl011_sgbuf_free(uap->dmarx.chan, &uap->dmarx.sgbuf_a,
++		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_a,
+ 				 DMA_FROM_DEVICE);
+ 		goto skip_rx;
+ 	}
+@@ -1203,8 +1198,9 @@ static void pl011_dma_shutdown(struct ua
+ 		/* In theory, this should already be done by pl011_dma_flush_buffer */
+ 		dmaengine_terminate_all(uap->dmatx.chan);
+ 		if (uap->dmatx.queued) {
+-			dma_unmap_sg(uap->dmatx.chan->device->dev, &uap->dmatx.sg, 1,
+-				     DMA_TO_DEVICE);
++			dma_unmap_single(uap->dmatx.chan->device->dev,
++					 uap->dmatx.dma, uap->dmatx.len,
++					 DMA_TO_DEVICE);
+ 			uap->dmatx.queued = false;
+ 		}
+ 
+@@ -1215,8 +1211,8 @@ static void pl011_dma_shutdown(struct ua
+ 	if (uap->using_rx_dma) {
+ 		dmaengine_terminate_all(uap->dmarx.chan);
+ 		/* Clean up the RX DMA */
+-		pl011_sgbuf_free(uap->dmarx.chan, &uap->dmarx.sgbuf_a, DMA_FROM_DEVICE);
+-		pl011_sgbuf_free(uap->dmarx.chan, &uap->dmarx.sgbuf_b, DMA_FROM_DEVICE);
++		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_a, DMA_FROM_DEVICE);
++		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_b, DMA_FROM_DEVICE);
+ 		if (uap->dmarx.poll_rate)
+ 			del_timer_sync(&uap->dmarx.timer);
+ 		uap->using_rx_dma = false;
 
 
