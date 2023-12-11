@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A1FFBE1;
-	Mon, 11 Dec 2023 18:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6718A524CF;
+	Mon, 11 Dec 2023 18:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTUDTIWg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE550C433C8;
-	Mon, 11 Dec 2023 18:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1F1lDBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBB8C433C7;
+	Mon, 11 Dec 2023 18:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319796;
-	bh=iBnSiHaPK0kQzYz1Oqgiay8I4ygWnWuqZyn6ktNb3Z4=;
+	s=korg; t=1702319799;
+	bh=0gs6iQHc54PKz5d596BrL+yYCRyM/fEGoPnraEwOCk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTUDTIWggyIp8Y3fS3fcvdLFbBpkXPflomKomn/K0jucjOdqAP+SjWLo2ZbfK8tS4
-	 +q7QNKVGGTVFlDE8ClEdIDVr0+u3DmcBwa6c5RFP+LIVxT4bJSIwAf06bKO9p6Pj7c
-	 LBbOfJhF2vXxwRwoL91anKUmU+sukLJbUGTednLE=
+	b=f1F1lDBoKV/JhIlqy4XvmnnP+I1Podbdx5CTJOpuCLLcTBa5C01wc5PV9Ntc8QGq1
+	 Sa/0Hpop6T8HaPMCbfUJ8GHKbwkK8WJK8nTQMpx90lh1KfnRZ2Onq4J62Y0wMmxHN1
+	 zIukFAv4IC6OC+NlUfMptZkeSCs1mZNHw+NztitU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Bo Gan <bo.gan@broadcom.com>,
-	Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Boerge Struempfel <boerge.struempfel@gmail.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 206/244] x86/sev: Fix kernel crash due to late update to read-only ghcb_version
-Date: Mon, 11 Dec 2023 19:21:39 +0100
-Message-ID: <20231211182055.193449907@linuxfoundation.org>
+Subject: [PATCH 6.6 207/244] gpiolib: sysfs: Fix error handling on failed export
+Date: Mon, 11 Dec 2023 19:21:40 +0100
+Message-ID: <20231211182055.243437236@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,91 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
+From: Boerge Struempfel <boerge.struempfel@gmail.com>
 
-[ Upstream commit 27d25348d42161837be08fc63b04a2559d2e781c ]
+[ Upstream commit 95dd1e34ff5bbee93a28ff3947eceaf6de811b1a ]
 
-A write-access violation page fault kernel crash was observed while running
-cpuhotplug LTP testcases on SEV-ES enabled systems. The crash was
-observed during hotplug, after the CPU was offlined and the process
-was migrated to different CPU. setup_ghcb() is called again which
-tries to update ghcb_version in sev_es_negotiate_protocol(). Ideally this
-is a read_only variable which is initialised during booting.
+If gpio_set_transitory() fails, we should free the GPIO again. Most
+notably, the flag FLAG_REQUESTED has previously been set in
+gpiod_request_commit(), and should be reset on failure.
 
-Trying to write it results in a pagefault:
+To my knowledge, this does not affect any current users, since the
+gpio_set_transitory() mainly returns 0 and -ENOTSUPP, which is converted
+to 0. However the gpio_set_transitory() function calles the .set_config()
+function of the corresponding GPIO chip and there are some GPIO drivers in
+which some (unlikely) branches return other values like -EPROBE_DEFER,
+and -EINVAL. In these cases, the above mentioned FLAG_REQUESTED would not
+be reset, which results in the pin being blocked until the next reboot.
 
-  BUG: unable to handle page fault for address: ffffffffba556e70
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0003) - permissions violation
-  [ ...]
-  Call Trace:
-   <TASK>
-   ? __die_body.cold+0x1a/0x1f
-   ? __die+0x2a/0x35
-   ? page_fault_oops+0x10c/0x270
-   ? setup_ghcb+0x71/0x100
-   ? __x86_return_thunk+0x5/0x6
-   ? search_exception_tables+0x60/0x70
-   ? __x86_return_thunk+0x5/0x6
-   ? fixup_exception+0x27/0x320
-   ? kernelmode_fixup_or_oops+0xa2/0x120
-   ? __bad_area_nosemaphore+0x16a/0x1b0
-   ? kernel_exc_vmm_communication+0x60/0xb0
-   ? bad_area_nosemaphore+0x16/0x20
-   ? do_kern_addr_fault+0x7a/0x90
-   ? exc_page_fault+0xbd/0x160
-   ? asm_exc_page_fault+0x27/0x30
-   ? setup_ghcb+0x71/0x100
-   ? setup_ghcb+0xe/0x100
-   cpu_init_exception_handling+0x1b9/0x1f0
-
-The fix is to call sev_es_negotiate_protocol() only in the BSP boot phase,
-and it only needs to be done once in any case.
-
-[ mingo: Refined the changelog. ]
-
-Fixes: 95d33bfaa3e1 ("x86/sev: Register GHCB memory when SEV-SNP is active")
-Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
-Co-developed-by: Bo Gan <bo.gan@broadcom.com>
-Signed-off-by: Bo Gan <bo.gan@broadcom.com>
-Signed-off-by: Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/1701254429-18250-1-git-send-email-kashwindayan@vmware.com
+Fixes: e10f72bf4b3e ("gpio: gpiolib: Generalise state persistence beyond sleep")
+Signed-off-by: Boerge Struempfel <boerge.struempfel@gmail.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/sev.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpio/gpiolib-sysfs.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kernel/sev.c b/arch/x86/kernel/sev.c
-index 6395bfd87b68b..d87c6ff1f5136 100644
---- a/arch/x86/kernel/sev.c
-+++ b/arch/x86/kernel/sev.c
-@@ -1234,10 +1234,6 @@ void setup_ghcb(void)
- 	if (!cc_platform_has(CC_ATTR_GUEST_STATE_ENCRYPT))
- 		return;
+diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
+index 50503a4525eb0..c7c5c19ebc66f 100644
+--- a/drivers/gpio/gpiolib-sysfs.c
++++ b/drivers/gpio/gpiolib-sysfs.c
+@@ -474,14 +474,17 @@ static ssize_t export_store(const struct class *class,
+ 		goto done;
  
--	/* First make sure the hypervisor talks a supported protocol. */
--	if (!sev_es_negotiate_protocol())
--		sev_es_terminate(SEV_TERM_SET_GEN, GHCB_SEV_ES_GEN_REQ);
--
- 	/*
- 	 * Check whether the runtime #VC exception handler is active. It uses
- 	 * the per-CPU GHCB page which is set up by sev_es_init_vc_handling().
-@@ -1254,6 +1250,13 @@ void setup_ghcb(void)
- 		return;
+ 	status = gpiod_set_transitory(desc, false);
+-	if (!status) {
+-		status = gpiod_export(desc, true);
+-		if (status < 0)
+-			gpiod_free(desc);
+-		else
+-			set_bit(FLAG_SYSFS, &desc->flags);
++	if (status) {
++		gpiod_free(desc);
++		goto done;
  	}
  
-+	/*
-+	 * Make sure the hypervisor talks a supported protocol.
-+	 * This gets called only in the BSP boot phase.
-+	 */
-+	if (!sev_es_negotiate_protocol())
-+		sev_es_terminate(SEV_TERM_SET_GEN, GHCB_SEV_ES_GEN_REQ);
++	status = gpiod_export(desc, true);
++	if (status < 0)
++		gpiod_free(desc);
++	else
++		set_bit(FLAG_SYSFS, &desc->flags);
 +
- 	/*
- 	 * Clear the boot_ghcb. The first exception comes in before the bss
- 	 * section is cleared.
+ done:
+ 	if (status)
+ 		pr_debug("%s: status %d\n", __func__, status);
 -- 
 2.42.0
 
