@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B81D51C2D;
-	Mon, 11 Dec 2023 18:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C505102A;
+	Mon, 11 Dec 2023 18:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONZSAdpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60260C433CA;
-	Mon, 11 Dec 2023 18:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCVGSk8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F57C433C7;
+	Mon, 11 Dec 2023 18:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320609;
-	bh=+Zx38CsGvvfbxeV7Wn67nB2BcrovlAarP5v4XgXfXYA=;
+	s=korg; t=1702320612;
+	bh=/n2cot85qd07o5WP8O1H2rTucFw2h1KknEF34yk6jOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ONZSAdpPZzKXOhvTI+Sh0iE/gO583ivEei0I1Y2gWceP+wJO/Q433LV6eIEBWYRh1
-	 r+cALNJg8bjYGOjQvDTeuOg4P2ldqQzMG9+dEaVCzvNTY05IZvJ3h2NWL3Th1My+yt
-	 YsTufp5AhHf7N++GclLtxptjKpseNDRoD10+/NZ0=
+	b=YCVGSk8F4IsnOUVte+u/Ya+PW8LCEauZih4sRBHHxFZ59t69d7afUaGjpoWhUuX+/
+	 rR/NFKYjXqfwuyvzwbmPF0xCPblO0DYctJ1hSrbqvGTDaNss7UIAxZN1hp2WCtRrFm
+	 MsBXuQgdXHJYTAy38eeOoeIUUy1O0CExC6kCrEQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 125/194] powercap: DTPM: Fix missing cpufreq_cpu_put() calls
-Date: Mon, 11 Dec 2023 19:21:55 +0100
-Message-ID: <20231211182042.108602502@linuxfoundation.org>
+	David Jeffery <djeffery@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.1 126/194] md/raid6: use valid sector values to determine if an I/O should wait on the reshape
+Date: Mon, 11 Dec 2023 19:21:56 +0100
+Message-ID: <20231211182042.157472190@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -41,74 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Luba <lukasz.luba@arm.com>
+From: David Jeffery <djeffery@redhat.com>
 
-commit bdefd9913bdd453991ef756b6f7176e8ad80d786 upstream.
+commit c467e97f079f0019870c314996fae952cc768e82 upstream.
 
-The policy returned by cpufreq_cpu_get() has to be released with
-the help of cpufreq_cpu_put() to balance its kobject reference counter
-properly.
+During a reshape or a RAID6 array such as expanding by adding an additional
+disk, I/Os to the region of the array which have not yet been reshaped can
+stall indefinitely. This is from errors in the stripe_ahead_of_reshape
+function causing md to think the I/O is to a region in the actively
+undergoing the reshape.
 
-Add the missing calls to cpufreq_cpu_put() in the code.
+stripe_ahead_of_reshape fails to account for the q disk having a sector
+value of 0. By not excluding the q disk from the for loop, raid6 will always
+generate a min_sector value of 0, causing a return value which stalls.
 
-Fixes: 0aea2e4ec2a2 ("powercap/dtpm_cpu: Reset per_cpu variable in the release function")
-Fixes: 0e8f68d7f048 ("powercap/drivers/dtpm: Add CPU energy model based support")
-Cc: v5.16+ <stable@vger.kernel.org> # v5.16+
-Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The function's max_sector calculation also uses min() when it should use
+max(), causing the max_sector value to always be 0. During a backwards
+rebuild this can cause the opposite problem where it allows I/O to advance
+when it should wait.
+
+Fixing these errors will allow safe I/O to advance in a timely manner and
+delay only I/O which is unsafe due to stripes in the middle of undergoing
+the reshape.
+
+Fixes: 486f60558607 ("md/raid5: Check all disks in a stripe_head for reshape progress")
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Tested-by: Laurence Oberman <loberman@redhat.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231128181233.6187-1-djeffery@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/powercap/dtpm_cpu.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/md/raid5.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/powercap/dtpm_cpu.c
-+++ b/drivers/powercap/dtpm_cpu.c
-@@ -140,6 +140,8 @@ static void pd_release(struct dtpm *dtpm
- 	if (policy) {
- 		for_each_cpu(dtpm_cpu->cpu, policy->related_cpus)
- 			per_cpu(dtpm_per_cpu, dtpm_cpu->cpu) = NULL;
-+
-+		cpufreq_cpu_put(policy);
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5905,11 +5905,11 @@ static bool stripe_ahead_of_reshape(stru
+ 	int dd_idx;
+ 
+ 	for (dd_idx = 0; dd_idx < sh->disks; dd_idx++) {
+-		if (dd_idx == sh->pd_idx)
++		if (dd_idx == sh->pd_idx || dd_idx == sh->qd_idx)
+ 			continue;
+ 
+ 		min_sector = min(min_sector, sh->dev[dd_idx].sector);
+-		max_sector = min(max_sector, sh->dev[dd_idx].sector);
++		max_sector = max(max_sector, sh->dev[dd_idx].sector);
  	}
- 	
- 	kfree(dtpm_cpu);
-@@ -191,12 +193,16 @@ static int __dtpm_cpu_setup(int cpu, str
- 		return 0;
  
- 	pd = em_cpu_get(cpu);
--	if (!pd || em_is_artificial(pd))
--		return -EINVAL;
-+	if (!pd || em_is_artificial(pd)) {
-+		ret = -EINVAL;
-+		goto release_policy;
-+	}
- 
- 	dtpm_cpu = kzalloc(sizeof(*dtpm_cpu), GFP_KERNEL);
--	if (!dtpm_cpu)
--		return -ENOMEM;
-+	if (!dtpm_cpu) {
-+		ret = -ENOMEM;
-+		goto release_policy;
-+	}
- 
- 	dtpm_init(&dtpm_cpu->dtpm, &dtpm_ops);
- 	dtpm_cpu->cpu = cpu;
-@@ -216,6 +222,7 @@ static int __dtpm_cpu_setup(int cpu, str
- 	if (ret)
- 		goto out_dtpm_unregister;
- 
-+	cpufreq_cpu_put(policy);
- 	return 0;
- 
- out_dtpm_unregister:
-@@ -227,6 +234,8 @@ out_kfree_dtpm_cpu:
- 		per_cpu(dtpm_per_cpu, cpu) = NULL;
- 	kfree(dtpm_cpu);
- 
-+release_policy:
-+	cpufreq_cpu_put(policy);
- 	return ret;
- }
- 
+ 	spin_lock_irq(&conf->device_lock);
 
 
