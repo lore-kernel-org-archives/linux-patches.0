@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7135102A;
-	Mon, 11 Dec 2023 18:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5531E5102A;
+	Mon, 11 Dec 2023 18:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmy2nqjv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A95C433C8;
-	Mon, 11 Dec 2023 18:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiOePv4F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4F8C433CA;
+	Mon, 11 Dec 2023 18:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320556;
-	bh=7uw0Z/Dw1y86q6ECovCLba/NuATNlXsPy8r5oN8Kteg=;
+	s=korg; t=1702320558;
+	bh=neeZJKKaO7tR5ozd+188NUy7RRC+1rY8Vs+Dy7f47uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmy2nqjvyT59WT0qjNzmc9QPFxUqb3E2L7uXIHYWQzFTFIlYfrqK6x8dWArXHzc3c
-	 wFdRzr1UtFXIBQPMfBEaWk2pPfJZP5n4B4GAr+LYjhesz9+PtiKcG86rCMv6jZ0ui2
-	 8gjOiuyezbz5q0NYic9gYmIFLzvU6FmM3kaU7Ol8=
+	b=ZiOePv4FXGsnrV3yhKCkaiZT9WOOZL5qDGsVScMnzXPOMm4UusZXia3u718ZT+ZDQ
+	 s4y6enX/XQMQFBHmItceOoxwNpQFS3X3zqR3Z/VFHo/7pH/8tPdiBf0MS0wjhZRXvE
+	 Aojjk/I+xpi6FoqkB6BPtPpMJ6tjFJyYLR3/UM9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 104/194] io_uring: fix mutex_unlock with unreferenced ctx
-Date: Mon, 11 Dec 2023 19:21:34 +0100
-Message-ID: <20231211182041.083044695@linuxfoundation.org>
+	Sarah Grant <s@srd.tw>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 105/194] ALSA: usb-audio: Add Pioneer DJM-450 mixer controls
+Date: Mon, 11 Dec 2023 19:21:35 +0100
+Message-ID: <20231211182041.135149631@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -42,65 +41,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Sarah Grant <s@srd.tw>
 
-commit f7b32e785042d2357c5abc23ca6db1b92c91a070 upstream.
+commit bbb8e71965c3737bdc691afd803a34bfd61cfbeb upstream.
 
-Callers of mutex_unlock() have to make sure that the mutex stays alive
-for the whole duration of the function call. For io_uring that means
-that the following pattern is not valid unless we ensure that the
-context outlives the mutex_unlock() call.
+These values mirror those of the Pioneer DJM-250MK2 as the channel layout
+appears identical based on my observations. This duplication could be removed in
+later contributions if desired.
 
-mutex_lock(&ctx->uring_lock);
-req_put(req); // typically via io_req_task_submit()
-mutex_unlock(&ctx->uring_lock);
-
-Most contexts are fine: io-wq pins requests, syscalls hold the file,
-task works are taking ctx references and so on. However, the task work
-fallback path doesn't follow the rule.
-
-Cc:  <stable@vger.kernel.org>
-Fixes: 04fc6c802d ("io_uring: save ctx put/get for task_work submit")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/io-uring/CAG48ez3xSoYb+45f1RLtktROJrpiDQ1otNvdR+YLQf7m+Krj5Q@mail.gmail.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sarah Grant <s@srd.tw>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231201181654.5058-1-s@srd.tw
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ sound/usb/mixer_quirks.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1377,6 +1377,7 @@ static __cold void io_iopoll_try_reap_ev
- 	if (!(ctx->flags & IORING_SETUP_IOPOLL))
- 		return;
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -2978,6 +2978,7 @@ static int snd_bbfpro_controls_create(st
+ #define SND_DJM_850_IDX		0x2
+ #define SND_DJM_900NXS2_IDX	0x3
+ #define SND_DJM_750MK2_IDX	0x4
++#define SND_DJM_450_IDX		0x5
  
-+	percpu_ref_get(&ctx->refs);
- 	mutex_lock(&ctx->uring_lock);
- 	while (!wq_list_empty(&ctx->iopoll_list)) {
- 		/* let it sleep and repeat later if can't complete a request */
-@@ -1394,6 +1395,7 @@ static __cold void io_iopoll_try_reap_ev
- 		}
- 	}
- 	mutex_unlock(&ctx->uring_lock);
-+	percpu_ref_put(&ctx->refs);
- }
  
- static int io_iopoll_check(struct io_ring_ctx *ctx, long min)
-@@ -2800,12 +2802,7 @@ static __cold void io_ring_exit_work(str
- 	init_completion(&exit.completion);
- 	init_task_work(&exit.task_work, io_tctx_exit_cb);
- 	exit.ctx = ctx;
--	/*
--	 * Some may use context even when all refs and requests have been put,
--	 * and they are free to do so while still holding uring_lock or
--	 * completion_lock, see io_req_task_submit(). Apart from other work,
--	 * this lock/unlock section also waits them to finish.
--	 */
+ #define SND_DJM_CTL(_name, suffix, _default_value, _windex) { \
+@@ -3108,6 +3109,31 @@ static const struct snd_djm_ctl snd_djm_
+ };
+ 
+ 
++// DJM-450
++static const u16 snd_djm_opts_450_cap1[] = {
++	0x0103, 0x0100, 0x0106, 0x0107, 0x0108, 0x0109, 0x010d, 0x010a };
 +
- 	mutex_lock(&ctx->uring_lock);
- 	while (!list_empty(&ctx->tctx_list)) {
- 		WARN_ON_ONCE(time_after(jiffies, timeout));
++static const u16 snd_djm_opts_450_cap2[] = {
++	0x0203, 0x0200, 0x0206, 0x0207, 0x0208, 0x0209, 0x020d, 0x020a };
++
++static const u16 snd_djm_opts_450_cap3[] = {
++	0x030a, 0x0311, 0x0312, 0x0307, 0x0308, 0x0309, 0x030d };
++
++static const u16 snd_djm_opts_450_pb1[] = { 0x0100, 0x0101, 0x0104 };
++static const u16 snd_djm_opts_450_pb2[] = { 0x0200, 0x0201, 0x0204 };
++static const u16 snd_djm_opts_450_pb3[] = { 0x0300, 0x0301, 0x0304 };
++
++static const struct snd_djm_ctl snd_djm_ctls_450[] = {
++	SND_DJM_CTL("Capture Level", cap_level, 0, SND_DJM_WINDEX_CAPLVL),
++	SND_DJM_CTL("Ch1 Input",   450_cap1, 2, SND_DJM_WINDEX_CAP),
++	SND_DJM_CTL("Ch2 Input",   450_cap2, 2, SND_DJM_WINDEX_CAP),
++	SND_DJM_CTL("Ch3 Input",   450_cap3, 0, SND_DJM_WINDEX_CAP),
++	SND_DJM_CTL("Ch1 Output",   450_pb1, 0, SND_DJM_WINDEX_PB),
++	SND_DJM_CTL("Ch2 Output",   450_pb2, 1, SND_DJM_WINDEX_PB),
++	SND_DJM_CTL("Ch3 Output",   450_pb3, 2, SND_DJM_WINDEX_PB)
++};
++
++
+ // DJM-750
+ static const u16 snd_djm_opts_750_cap1[] = {
+ 	0x0101, 0x0103, 0x0106, 0x0107, 0x0108, 0x0109, 0x010a, 0x010f };
+@@ -3203,6 +3229,7 @@ static const struct snd_djm_device snd_d
+ 	[SND_DJM_850_IDX] = SND_DJM_DEVICE(850),
+ 	[SND_DJM_900NXS2_IDX] = SND_DJM_DEVICE(900nxs2),
+ 	[SND_DJM_750MK2_IDX] = SND_DJM_DEVICE(750mk2),
++	[SND_DJM_450_IDX] = SND_DJM_DEVICE(450),
+ };
+ 
+ 
+@@ -3449,6 +3476,9 @@ int snd_usb_mixer_apply_create_quirk(str
+ 	case USB_ID(0x2b73, 0x0017): /* Pioneer DJ DJM-250MK2 */
+ 		err = snd_djm_controls_create(mixer, SND_DJM_250MK2_IDX);
+ 		break;
++	case USB_ID(0x2b73, 0x0013): /* Pioneer DJ DJM-450 */
++		err = snd_djm_controls_create(mixer, SND_DJM_450_IDX);
++		break;
+ 	case USB_ID(0x08e4, 0x017f): /* Pioneer DJ DJM-750 */
+ 		err = snd_djm_controls_create(mixer, SND_DJM_750_IDX);
+ 		break;
 
 
