@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D575102A;
-	Mon, 11 Dec 2023 18:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188805102A;
+	Mon, 11 Dec 2023 18:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSZ+PhfK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DAFC433C7;
-	Mon, 11 Dec 2023 18:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FO0jkaGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC97C433C8;
+	Mon, 11 Dec 2023 18:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320652;
-	bh=KgbcT2893yHJCTDwrXtjJN9FjH04v3Uma/fHv6ZkwYg=;
+	s=korg; t=1702320654;
+	bh=m9+IDtmWisLJhm1dhhPlL4a2XcVeU6bQhnc2tFnQM/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vSZ+PhfKwvmqb24gquR5j5HEXzkTnBtKrYqj4novurW9ig3mwJiKI5u7Jxxu4s7A7
-	 7BBMbOQRjLr96wrx8Lrzoxjh6za9+9xUk4pZzOYV8dfxcu/yccHojxig3ZIDVoIR2t
-	 +QHe/4UbyTtWk42ewbYw3Gy+b+sJIgG9hYPiR9Yc=
+	b=FO0jkaGhhI6ez4kxfMIQklVR90EtVG/gJZIeBWa3rPwUS3u/wXPIz/3sW6n0DSdWB
+	 HQknG2qkTBj5KPtz3nzCi/W/EbQEMHk9Ju2IuF2rmHH4JmQphDiBKu+Q3yTn+bj5HD
+	 3cIWK1bdKi5kwN41BajiL+SF82/iKqrs00a9fmU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+14e9f834f6ddecece094@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 111/194] nilfs2: fix missing error check for sb_set_blocksize call
-Date: Mon, 11 Dec 2023 19:21:41 +0100
-Message-ID: <20231211182041.444078290@linuxfoundation.org>
+Subject: [PATCH 6.1 112/194] nilfs2: prevent WARNING in nilfs_sufile_set_segment_usage()
+Date: Mon, 11 Dec 2023 19:21:42 +0100
+Message-ID: <20231211182041.496989911@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,77 +44,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit d61d0ab573649789bf9eb909c89a1a193b2e3d10 upstream.
+commit 675abf8df1353e0e3bde314993e0796c524cfbf0 upstream.
 
-When mounting a filesystem image with a block size larger than the page
-size, nilfs2 repeatedly outputs long error messages with stack traces to
-the kernel log, such as the following:
+If nilfs2 reads a disk image with corrupted segment usage metadata, and
+its segment usage information is marked as an error for the segment at the
+write location, nilfs_sufile_set_segment_usage() can trigger WARN_ONs
+during log writing.
 
- getblk(): invalid block size 8192 requested
- logical block size: 512
- ...
- Call Trace:
-  dump_stack_lvl+0x92/0xd4
-  dump_stack+0xd/0x10
-  bdev_getblk+0x33a/0x354
-  __breadahead+0x11/0x80
-  nilfs_search_super_root+0xe2/0x704 [nilfs2]
-  load_nilfs+0x72/0x504 [nilfs2]
-  nilfs_mount+0x30f/0x518 [nilfs2]
-  legacy_get_tree+0x1b/0x40
-  vfs_get_tree+0x18/0xc4
-  path_mount+0x786/0xa88
-  __ia32_sys_mount+0x147/0x1a8
-  __do_fast_syscall_32+0x56/0xc8
-  do_fast_syscall_32+0x29/0x58
-  do_SYSENTER_32+0x15/0x18
-  entry_SYSENTER_32+0x98/0xf1
- ...
+Segments newly allocated for writing with nilfs_sufile_alloc() will not
+have this error flag set, but this unexpected situation will occur if the
+segment indexed by either nilfs->ns_segnum or nilfs->ns_nextnum (active
+segment) was marked in error.
 
-This overloads the system logger.  And to make matters worse, it sometimes
-crashes the kernel with a memory access violation.
+Fix this issue by inserting a sanity check to treat it as a file system
+corruption.
 
-This is because the return value of the sb_set_blocksize() call, which
-should be checked for errors, is not checked.
+Since error returns are not allowed during the execution phase where
+nilfs_sufile_set_segment_usage() is used, this inserts the sanity check
+into nilfs_sufile_mark_dirty() which pre-reads the buffer containing the
+segment usage record to be updated and sets it up in a dirty state for
+writing.
 
-The latter issue is due to out-of-buffer memory being accessed based on a
-large block size that caused sb_set_blocksize() to fail for buffers read
-with the initial minimum block size that remained unupdated in the
-super_block structure.
+In addition, nilfs_sufile_set_segment_usage() is also called when
+canceling log writing and undoing segment usage update, so in order to
+avoid issuing the same kernel warning in that case, in case of
+cancellation, avoid checking the error flag in
+nilfs_sufile_set_segment_usage().
 
-Since nilfs2 mkfs tool does not accept block sizes larger than the system
-page size, this has been overlooked.  However, it is possible to create
-this situation by intentionally modifying the tool or by passing a
-filesystem image created on a system with a large page size to a system
-with a smaller page size and mounting it.
-
-Fix this issue by inserting the expected error handling for the call to
-sb_set_blocksize().
-
-Link: https://lkml.kernel.org/r/20231129141547.4726-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20231205085947.4431-1-konishi.ryusuke@gmail.com
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+14e9f834f6ddecece094@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=14e9f834f6ddecece094
 Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/the_nilfs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/nilfs2/sufile.c |   42 +++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 35 insertions(+), 7 deletions(-)
 
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -716,7 +716,11 @@ int init_nilfs(struct the_nilfs *nilfs,
- 			goto failed_sbh;
- 		}
- 		nilfs_release_super_block(nilfs);
--		sb_set_blocksize(sb, blocksize);
-+		if (!sb_set_blocksize(sb, blocksize)) {
-+			nilfs_err(sb, "bad blocksize %d", blocksize);
-+			err = -EINVAL;
-+			goto out;
-+		}
+--- a/fs/nilfs2/sufile.c
++++ b/fs/nilfs2/sufile.c
+@@ -501,15 +501,38 @@ int nilfs_sufile_mark_dirty(struct inode
  
- 		err = nilfs_load_super_block(nilfs, sb, blocksize, &sbp);
- 		if (err)
+ 	down_write(&NILFS_MDT(sufile)->mi_sem);
+ 	ret = nilfs_sufile_get_segment_usage_block(sufile, segnum, 0, &bh);
+-	if (!ret) {
+-		mark_buffer_dirty(bh);
+-		nilfs_mdt_mark_dirty(sufile);
+-		kaddr = kmap_atomic(bh->b_page);
+-		su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
++	if (ret)
++		goto out_sem;
++
++	kaddr = kmap_atomic(bh->b_page);
++	su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
++	if (unlikely(nilfs_segment_usage_error(su))) {
++		struct the_nilfs *nilfs = sufile->i_sb->s_fs_info;
++
++		kunmap_atomic(kaddr);
++		brelse(bh);
++		if (nilfs_segment_is_active(nilfs, segnum)) {
++			nilfs_error(sufile->i_sb,
++				    "active segment %llu is erroneous",
++				    (unsigned long long)segnum);
++		} else {
++			/*
++			 * Segments marked erroneous are never allocated by
++			 * nilfs_sufile_alloc(); only active segments, ie,
++			 * the segments indexed by ns_segnum or ns_nextnum,
++			 * can be erroneous here.
++			 */
++			WARN_ON_ONCE(1);
++		}
++		ret = -EIO;
++	} else {
+ 		nilfs_segment_usage_set_dirty(su);
+ 		kunmap_atomic(kaddr);
++		mark_buffer_dirty(bh);
++		nilfs_mdt_mark_dirty(sufile);
+ 		brelse(bh);
+ 	}
++out_sem:
+ 	up_write(&NILFS_MDT(sufile)->mi_sem);
+ 	return ret;
+ }
+@@ -536,9 +559,14 @@ int nilfs_sufile_set_segment_usage(struc
+ 
+ 	kaddr = kmap_atomic(bh->b_page);
+ 	su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
+-	WARN_ON(nilfs_segment_usage_error(su));
+-	if (modtime)
++	if (modtime) {
++		/*
++		 * Check segusage error and set su_lastmod only when updating
++		 * this entry with a valid timestamp, not for cancellation.
++		 */
++		WARN_ON_ONCE(nilfs_segment_usage_error(su));
+ 		su->su_lastmod = cpu_to_le64(modtime);
++	}
+ 	su->su_nblocks = cpu_to_le32(nblocks);
+ 	kunmap_atomic(kaddr);
+ 
 
 
