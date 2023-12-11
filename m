@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC18B524D1;
-	Mon, 11 Dec 2023 18:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D395380F;
+	Mon, 11 Dec 2023 18:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzZYi3J1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE7CC433C8;
-	Mon, 11 Dec 2023 18:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFygRZe6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1865DC433BD;
+	Mon, 11 Dec 2023 18:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319560;
-	bh=XCXNP4xRu65TsGJluZhzmt9e/SneuWlVWh64iLAc5O0=;
+	s=korg; t=1702319563;
+	bh=yW1qp/bUmAjM28kQHNqbyts1ZUE/Lvbn8VFpLtTLuaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WzZYi3J1rDyHna5kz1a0d1PwGsBQAc1MtQUWKNaDOgI6FK4cRg9q4sYdoFm21SIie
-	 7vV0hWxSvU0KGPcAy3v/bP9CFFCs0yGPnOtJ+aAmsX1nBaP0IlJdzpA431jS8fOOqf
-	 eLChvGERB7SQVyjd46ags5U0SO8fgRxUAQmeOVgE=
+	b=YFygRZe6+fRZBEHuksBtAa54LFe35gbHS5i45BPOdK4BvPR1rJzxe2XU/ivA/t5aR
+	 QvjcXdQWCMcUOALoDU2LqSW14lgvam1e5XCUo9c+veKSIfepal7QvzdAXkom8djOZp
+	 EaqG5jY9HueD7jXtEBZk0wIdloZeAWSBQ5A3Ayvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Van Patten <timvp@google.com>,
-	Mark Hasemeyer <markhas@chromium.org>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 151/244] cgroup_freezer: cgroup_freezing: Check if not frozen
-Date: Mon, 11 Dec 2023 19:20:44 +0100
-Message-ID: <20231211182052.589573124@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Maninder Singh <maninder1.s@samsung.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Vaneet Narang <v.narang@samsung.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 152/244] checkstack: fix printed address
+Date: Mon, 11 Dec 2023 19:20:45 +0100
+Message-ID: <20231211182052.640063890@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,62 +44,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Van Patten <timvp@google.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit cff5f49d433fcd0063c8be7dd08fa5bf190c6c37 upstream.
+commit ee34db3f271cea4d4252048617919c2caafe698b upstream.
 
-__thaw_task() was recently updated to warn if the task being thawed was
-part of a freezer cgroup that is still currently freezing:
+All addresses printed by checkstack have an extra incorrect 0 appended at
+the end.
 
-	void __thaw_task(struct task_struct *p)
-	{
-	...
-		if (WARN_ON_ONCE(freezing(p)))
-			goto unlock;
+This was introduced with commit 677f1410e058 ("scripts/checkstack.pl: don't
+display $dre as different entity"): since then the address is taken from
+the line which contains the function name, instead of the line which
+contains stack consumption. E.g. on s390:
 
-This has exposed a bug in cgroup1 freezing where when CGROUP_FROZEN is
-asserted, the CGROUP_FREEZING bits are not also cleared at the same
-time. Meaning, when a cgroup is marked FROZEN it continues to be marked
-FREEZING as well. This causes the WARNING to trigger, because
-cgroup_freezing() thinks the cgroup is still freezing.
+0000000000100a30 <do_one_initcall>:
+...
+  100a44:       e3 f0 ff 70 ff 71       lay     %r15,-144(%r15)
 
-There are two ways to fix this:
+So the used regex which matches spaces and hexadecimal numbers to extract
+an address now matches a different substring. Subsequently replacing spaces
+with 0 appends a zero at the and, instead of replacing leading spaces.
 
-1. Whenever FROZEN is set, clear FREEZING for the cgroup and all
-children cgroups.
-2. Update cgroup_freezing() to also verify that FROZEN is not set.
+Fix this by using the proper regex, and simplify the code a bit.
 
-This patch implements option (2), since it's smaller and more
-straightforward.
-
-Signed-off-by: Tim Van Patten <timvp@google.com>
-Tested-by: Mark Hasemeyer <markhas@chromium.org>
-Fixes: f5d39b020809 ("freezer,sched: Rewrite core freezer logic")
-Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Link: https://lkml.kernel.org/r/20231120183719.2188479-2-hca@linux.ibm.com
+Fixes: 677f1410e058 ("scripts/checkstack.pl: don't display $dre as different entity")
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: Maninder Singh <maninder1.s@samsung.com>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Vaneet Narang <v.narang@samsung.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/legacy_freezer.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ scripts/checkstack.pl |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/kernel/cgroup/legacy_freezer.c
-+++ b/kernel/cgroup/legacy_freezer.c
-@@ -66,9 +66,15 @@ static struct freezer *parent_freezer(st
- bool cgroup_freezing(struct task_struct *task)
- {
- 	bool ret;
-+	unsigned int state;
- 
- 	rcu_read_lock();
--	ret = task_freezer(task)->state & CGROUP_FREEZING;
-+	/* Check if the cgroup is still FREEZING, but not FROZEN. The extra
-+	 * !FROZEN check is required, because the FREEZING bit is not cleared
-+	 * when the state FROZEN is reached.
-+	 */
-+	state = task_freezer(task)->state;
-+	ret = (state & CGROUP_FREEZING) && !(state & CGROUP_FROZEN);
- 	rcu_read_unlock();
- 
- 	return ret;
+--- a/scripts/checkstack.pl
++++ b/scripts/checkstack.pl
+@@ -139,15 +139,11 @@ $total_size = 0;
+ while (my $line = <STDIN>) {
+ 	if ($line =~ m/$funcre/) {
+ 		$func = $1;
+-		next if $line !~ m/^($xs*)/;
++		next if $line !~ m/^($x*)/;
+ 		if ($total_size > $min_stack) {
+ 			push @stack, "$intro$total_size\n";
+ 		}
+-
+-		$addr = $1;
+-		$addr =~ s/ /0/g;
+-		$addr = "0x$addr";
+-
++		$addr = "0x$1";
+ 		$intro = "$addr $func [$file]:";
+ 		my $padlen = 56 - length($intro);
+ 		while ($padlen > 0) {
 
 
