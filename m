@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8FBC2D0;
-	Mon, 11 Dec 2023 18:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AA1C2D0;
+	Mon, 11 Dec 2023 18:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkvPpRjo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D59C433C8;
-	Mon, 11 Dec 2023 18:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBWSBrVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A34C433C8;
+	Mon, 11 Dec 2023 18:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319544;
-	bh=oSWi/mB4fyI4tRH9AKabX8UBLbC1Ske/GgVh/WRnVcw=;
+	s=korg; t=1702319547;
+	bh=dLEs1T7oNvvxZz+6/nm+GWjOXqJZBtxfFfQAa8/UdR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkvPpRjooT0dd1JxsylYq54em7ElQ6fkyT5isVNkWmljZIQcuTEYtb4xBCjaXKQt/
-	 py9EWb8DYWCM7Y1W9lmcN3j1A0+Hjpw9FknzPDVLmpZGLUcYMIDy1AS2tzek5O9ts9
-	 T7kRLTkq6OTTmV3Cqp3MEXLUojhp9YgJYcQWKDvw=
+	b=ZBWSBrVDvpi+ALY1JTOEFOLJCrPzG8X4rXdby6cJx4BUjGhuU2/sQAKLZ79y0A+G0
+	 Y9H/fK0xKMfcOWz2c0xrwuGP0mCjUN3jW6va/MIEi3dQnZ0SeF9EuHFHBiGiPvBTve
+	 raxWypf+H5TaxSzQkei7NOTAY/puj3n5THOMPriA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarah Grant <s@srd.tw>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 137/244] ALSA: usb-audio: Add Pioneer DJM-450 mixer controls
-Date: Mon, 11 Dec 2023 19:20:30 +0100
-Message-ID: <20231211182051.926952389@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 146/244] ring-buffer: Force absolute timestamp on discard of event
+Date: Mon, 11 Dec 2023 19:20:39 +0100
+Message-ID: <20231211182052.347360487@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,82 +43,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarah Grant <s@srd.tw>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit bbb8e71965c3737bdc691afd803a34bfd61cfbeb upstream.
+commit b2dd797543cfa6580eac8408dd67fa02164d9e56 upstream.
 
-These values mirror those of the Pioneer DJM-250MK2 as the channel layout
-appears identical based on my observations. This duplication could be removed in
-later contributions if desired.
+There's a race where if an event is discarded from the ring buffer and an
+interrupt were to happen at that time and insert an event, the time stamp
+is still used from the discarded event as an offset. This can screw up the
+timings.
 
-Signed-off-by: Sarah Grant <s@srd.tw>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231201181654.5058-1-s@srd.tw
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If the event is going to be discarded, set the "before_stamp" to zero.
+When a new event comes in, it compares the "before_stamp" with the
+"write_stamp" and if they are not equal, it will insert an absolute
+timestamp. This will prevent the timings from getting out of sync due to
+the discarded event.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231206100244.5130f9b3@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 6f6be606e763f ("ring-buffer: Force before_stamp and write_stamp to be different on discard")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ kernel/trace/ring_buffer.c |   19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -2978,6 +2978,7 @@ static int snd_bbfpro_controls_create(st
- #define SND_DJM_850_IDX		0x2
- #define SND_DJM_900NXS2_IDX	0x3
- #define SND_DJM_750MK2_IDX	0x4
-+#define SND_DJM_450_IDX		0x5
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -3030,23 +3030,20 @@ rb_try_to_discard(struct ring_buffer_per
+ 			local_read(&bpage->write) & ~RB_WRITE_MASK;
+ 		unsigned long event_length = rb_event_length(event);
  
++		/*
++		 * For the before_stamp to be different than the write_stamp
++		 * to make sure that the next event adds an absolute
++		 * value and does not rely on the saved write stamp, which
++		 * is now going to be bogus.
++		 */
++		rb_time_set(&cpu_buffer->before_stamp, 0);
++
+ 		/* Something came in, can't discard */
+ 		if (!rb_time_cmpxchg(&cpu_buffer->write_stamp,
+ 				       write_stamp, write_stamp - delta))
+ 			return false;
  
- #define SND_DJM_CTL(_name, suffix, _default_value, _windex) { \
-@@ -3108,6 +3109,31 @@ static const struct snd_djm_ctl snd_djm_
- };
- 
- 
-+// DJM-450
-+static const u16 snd_djm_opts_450_cap1[] = {
-+	0x0103, 0x0100, 0x0106, 0x0107, 0x0108, 0x0109, 0x010d, 0x010a };
-+
-+static const u16 snd_djm_opts_450_cap2[] = {
-+	0x0203, 0x0200, 0x0206, 0x0207, 0x0208, 0x0209, 0x020d, 0x020a };
-+
-+static const u16 snd_djm_opts_450_cap3[] = {
-+	0x030a, 0x0311, 0x0312, 0x0307, 0x0308, 0x0309, 0x030d };
-+
-+static const u16 snd_djm_opts_450_pb1[] = { 0x0100, 0x0101, 0x0104 };
-+static const u16 snd_djm_opts_450_pb2[] = { 0x0200, 0x0201, 0x0204 };
-+static const u16 snd_djm_opts_450_pb3[] = { 0x0300, 0x0301, 0x0304 };
-+
-+static const struct snd_djm_ctl snd_djm_ctls_450[] = {
-+	SND_DJM_CTL("Capture Level", cap_level, 0, SND_DJM_WINDEX_CAPLVL),
-+	SND_DJM_CTL("Ch1 Input",   450_cap1, 2, SND_DJM_WINDEX_CAP),
-+	SND_DJM_CTL("Ch2 Input",   450_cap2, 2, SND_DJM_WINDEX_CAP),
-+	SND_DJM_CTL("Ch3 Input",   450_cap3, 0, SND_DJM_WINDEX_CAP),
-+	SND_DJM_CTL("Ch1 Output",   450_pb1, 0, SND_DJM_WINDEX_PB),
-+	SND_DJM_CTL("Ch2 Output",   450_pb2, 1, SND_DJM_WINDEX_PB),
-+	SND_DJM_CTL("Ch3 Output",   450_pb3, 2, SND_DJM_WINDEX_PB)
-+};
-+
-+
- // DJM-750
- static const u16 snd_djm_opts_750_cap1[] = {
- 	0x0101, 0x0103, 0x0106, 0x0107, 0x0108, 0x0109, 0x010a, 0x010f };
-@@ -3203,6 +3229,7 @@ static const struct snd_djm_device snd_d
- 	[SND_DJM_850_IDX] = SND_DJM_DEVICE(850),
- 	[SND_DJM_900NXS2_IDX] = SND_DJM_DEVICE(900nxs2),
- 	[SND_DJM_750MK2_IDX] = SND_DJM_DEVICE(750mk2),
-+	[SND_DJM_450_IDX] = SND_DJM_DEVICE(450),
- };
- 
- 
-@@ -3449,6 +3476,9 @@ int snd_usb_mixer_apply_create_quirk(str
- 	case USB_ID(0x2b73, 0x0017): /* Pioneer DJ DJM-250MK2 */
- 		err = snd_djm_controls_create(mixer, SND_DJM_250MK2_IDX);
- 		break;
-+	case USB_ID(0x2b73, 0x0013): /* Pioneer DJ DJM-450 */
-+		err = snd_djm_controls_create(mixer, SND_DJM_450_IDX);
-+		break;
- 	case USB_ID(0x08e4, 0x017f): /* Pioneer DJ DJM-750 */
- 		err = snd_djm_controls_create(mixer, SND_DJM_750_IDX);
- 		break;
+ 		/*
+-		 * It's possible that the event time delta is zero
+-		 * (has the same time stamp as the previous event)
+-		 * in which case write_stamp and before_stamp could
+-		 * be the same. In such a case, force before_stamp
+-		 * to be different than write_stamp. It doesn't
+-		 * matter what it is, as long as its different.
+-		 */
+-		if (!delta)
+-			rb_time_set(&cpu_buffer->before_stamp, 0);
+-
+-		/*
+ 		 * If an event were to come in now, it would see that the
+ 		 * write_stamp and the before_stamp are different, and assume
+ 		 * that this event just added itself before updating
 
 
