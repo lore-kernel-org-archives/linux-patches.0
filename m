@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C761C51C2D;
-	Mon, 11 Dec 2023 18:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8C851C2D;
+	Mon, 11 Dec 2023 18:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXNNsbqb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F46FC433C7;
-	Mon, 11 Dec 2023 18:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+VuI2tb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AFEC433C7;
+	Mon, 11 Dec 2023 18:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320689;
-	bh=x5J98ZRkj5tF1IhgCzuhMB3i0MYJL1IX3BS70UzTzd4=;
+	s=korg; t=1702320692;
+	bh=SQRBGoDlY4Vh1pBkYilD01QpOtHTuGZZ9RR9okf52G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXNNsbqbTQPiX640TheSgtFy11CuT3RUDREGD1FNsNwC/mEpjhF4HJwQTsdCsIxm1
-	 AhmJmh4SQsLGpKWljRfsZD7SsO3gKYWEmKqcSXk+Ca3DHHIM8jKDtIvhuZ3kt58Oxb
-	 OMDJix7AnBm1h39zDKawgNSlFBGZAeVLNrGNUJUM=
+	b=N+VuI2tbx3CI3CbWb0o5SY8OOW+YtnusG6RmKmu2aWD6HzzIItO5aQ8fKXKlM5046
+	 IW3moCxVmck9LqTWPIfeIHbsNs4CHztb0zp2/HxiwQqqg+sgQrlfo7T1B5LPq9TmPs
+	 s9sOuQ+4xWZag6R1apUarzNsEo3Rbpo+2wwZDYQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
+	Candice Li <candice.li@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/194] drm/amdgpu: correct the amdgpu runtime dereference usage count
-Date: Mon, 11 Dec 2023 19:22:25 +0100
-Message-ID: <20231211182043.567280428@linuxfoundation.org>
+Subject: [PATCH 6.1 156/194] drm/amdgpu: Update ras eeprom support for smu v13_0_0 and v13_0_10
+Date: Mon, 11 Dec 2023 19:22:26 +0100
+Message-ID: <20231211182043.606951026@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -42,43 +43,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Candice Li <candice.li@amd.com>
 
-[ Upstream commit c6df7f313794c3ad41a49b9a7c95da369db607f3 ]
+[ Upstream commit bc22f8ec464af9e14263c3ed6a1c2be86618c804 ]
 
-Fix the amdgpu runpm dereference usage count.
+Enable RAS EEPROM support for smu v13_0_0 and v13_0_10.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Stable-dep-of: e0409021e34a ("drm/amdgpu: Update EEPROM I2C address for smu v13_0_0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_display.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-index ee528ed639568..aabde6ebb190e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-@@ -304,14 +304,11 @@ int amdgpu_display_crtc_set_config(struct drm_mode_set *set,
- 		adev->have_disp_power_ref = true;
- 		return ret;
- 	}
--	/* if we have no active crtcs, then drop the power ref
--	 * we got before
-+	/* if we have no active crtcs, then go to
-+	 * drop the power ref we got before
- 	 */
--	if (!active && adev->have_disp_power_ref) {
--		pm_runtime_put_autosuspend(dev->dev);
-+	if (!active && adev->have_disp_power_ref)
- 		adev->have_disp_power_ref = false;
--	}
--
- out:
- 	/* drop the power reference we got coming in here */
- 	pm_runtime_put_autosuspend(dev->dev);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
+index 84c241b9a2a13..7dc39154822c5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
+@@ -90,6 +90,16 @@
+ 
+ static bool __is_ras_eeprom_supported(struct amdgpu_device *adev)
+ {
++	if (adev->asic_type == CHIP_IP_DISCOVERY) {
++		switch (adev->ip_versions[MP1_HWIP][0]) {
++		case IP_VERSION(13, 0, 0):
++		case IP_VERSION(13, 0, 10):
++			return true;
++		default:
++			return false;
++		}
++	}
++
+ 	return  adev->asic_type == CHIP_VEGA20 ||
+ 		adev->asic_type == CHIP_ARCTURUS ||
+ 		adev->asic_type == CHIP_SIENNA_CICHLID ||
 -- 
 2.42.0
 
