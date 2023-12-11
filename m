@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73650C2D0;
-	Mon, 11 Dec 2023 18:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5824741740;
+	Mon, 11 Dec 2023 18:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQJJmF0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7CCC433C7;
-	Mon, 11 Dec 2023 18:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COGw+jVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74F4C433CB;
+	Mon, 11 Dec 2023 18:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319555;
-	bh=4rY+/M+3FlrgeMGFy0TVj67GM5XJd6BmSny/nVadHz4=;
+	s=korg; t=1702319558;
+	bh=Yn6UfjUckU/JhrKoId/6d44YvOlaQGqmsruEzUxuV4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQJJmF0THOk6x8SHeCg7aHMCGG53dET4Wr6g1TwsZKMtjx211UREo3/YVg/ef5XnJ
-	 FwDuDA6ghbSUAao2x6DUJ7E9XnIpPgovXgCWhy8zGKi+82qPoUFDe6Lx/zYTK6Q+fN
-	 dGg5tUNjntSP/SRYHBAUgD1MPJ6sNbf8zVZuxSx4=
+	b=COGw+jVuLQo9ZDd7e17rjsv6dISf+BXLE7DlbU0bdnIOXhcsi0IShm9yJf0IBhfeM
+	 XksPkDVnokTRYlL+YExnNQBgpC8tj2xDwpaD8ISEKHAA7SO5yyhAKfqkoccsjagBy0
+	 3BM+s+dxtMAC2Ftl8mG4er8Ia4EWnXf6t2JuvOcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+14e9f834f6ddecece094@syzkaller.appspotmail.com,
+	Ming Lei <ming.lei@redhat.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 149/244] nilfs2: prevent WARNING in nilfs_sufile_set_segment_usage()
-Date: Mon, 11 Dec 2023 19:20:42 +0100
-Message-ID: <20231211182052.503975261@linuxfoundation.org>
+Subject: [PATCH 6.6 150/244] lib/group_cpus.c: avoid acquiring cpu hotplug lock in group_cpus_evenly
+Date: Mon, 11 Dec 2023 19:20:43 +0100
+Message-ID: <20231211182052.548629645@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,109 +46,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 675abf8df1353e0e3bde314993e0796c524cfbf0 upstream.
+commit 0263f92fadbb9d294d5971ac57743f882c93b2b3 upstream.
 
-If nilfs2 reads a disk image with corrupted segment usage metadata, and
-its segment usage information is marked as an error for the segment at the
-write location, nilfs_sufile_set_segment_usage() can trigger WARN_ONs
-during log writing.
+group_cpus_evenly() could be part of storage driver's error handler, such
+as nvme driver, when may happen during CPU hotplug, in which storage queue
+has to drain its pending IOs because all CPUs associated with the queue
+are offline and the queue is becoming inactive.  And handling IO needs
+error handler to provide forward progress.
 
-Segments newly allocated for writing with nilfs_sufile_alloc() will not
-have this error flag set, but this unexpected situation will occur if the
-segment indexed by either nilfs->ns_segnum or nilfs->ns_nextnum (active
-segment) was marked in error.
+Then deadlock is caused:
 
-Fix this issue by inserting a sanity check to treat it as a file system
-corruption.
+1) inside CPU hotplug handler, CPU hotplug lock is held, and blk-mq's
+   handler is waiting for inflight IO
 
-Since error returns are not allowed during the execution phase where
-nilfs_sufile_set_segment_usage() is used, this inserts the sanity check
-into nilfs_sufile_mark_dirty() which pre-reads the buffer containing the
-segment usage record to be updated and sets it up in a dirty state for
-writing.
+2) error handler is waiting for CPU hotplug lock
 
-In addition, nilfs_sufile_set_segment_usage() is also called when
-canceling log writing and undoing segment usage update, so in order to
-avoid issuing the same kernel warning in that case, in case of
-cancellation, avoid checking the error flag in
-nilfs_sufile_set_segment_usage().
+3) inflight IO can't be completed in blk-mq's CPU hotplug handler
+   because error handling can't provide forward progress.
 
-Link: https://lkml.kernel.org/r/20231205085947.4431-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+14e9f834f6ddecece094@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=14e9f834f6ddecece094
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Solve the deadlock by not holding CPU hotplug lock in group_cpus_evenly(),
+in which two stage spreads are taken: 1) the 1st stage is over all present
+CPUs; 2) the end stage is over all other CPUs.
+
+Turns out the two stage spread just needs consistent 'cpu_present_mask',
+and remove the CPU hotplug lock by storing it into one local cache.  This
+way doesn't change correctness, because all CPUs are still covered.
+
+Link: https://lkml.kernel.org/r/20231120083559.285174-1-ming.lei@redhat.com
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Reported-by: Guangwu Zhang <guazhang@redhat.com>
+Tested-by: Guangwu Zhang <guazhang@redhat.com>
+Reviewed-by: Chengming Zhou <zhouchengming@bytedance.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Cc: Keith Busch <kbusch@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/sufile.c |   42 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 35 insertions(+), 7 deletions(-)
+ lib/group_cpus.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/fs/nilfs2/sufile.c
-+++ b/fs/nilfs2/sufile.c
-@@ -501,15 +501,38 @@ int nilfs_sufile_mark_dirty(struct inode
+--- a/lib/group_cpus.c
++++ b/lib/group_cpus.c
+@@ -366,13 +366,25 @@ struct cpumask *group_cpus_evenly(unsign
+ 	if (!masks)
+ 		goto fail_node_to_cpumask;
  
- 	down_write(&NILFS_MDT(sufile)->mi_sem);
- 	ret = nilfs_sufile_get_segment_usage_block(sufile, segnum, 0, &bh);
--	if (!ret) {
--		mark_buffer_dirty(bh);
--		nilfs_mdt_mark_dirty(sufile);
--		kaddr = kmap_atomic(bh->b_page);
--		su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
-+	if (ret)
-+		goto out_sem;
-+
-+	kaddr = kmap_atomic(bh->b_page);
-+	su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
-+	if (unlikely(nilfs_segment_usage_error(su))) {
-+		struct the_nilfs *nilfs = sufile->i_sb->s_fs_info;
-+
-+		kunmap_atomic(kaddr);
-+		brelse(bh);
-+		if (nilfs_segment_is_active(nilfs, segnum)) {
-+			nilfs_error(sufile->i_sb,
-+				    "active segment %llu is erroneous",
-+				    (unsigned long long)segnum);
-+		} else {
-+			/*
-+			 * Segments marked erroneous are never allocated by
-+			 * nilfs_sufile_alloc(); only active segments, ie,
-+			 * the segments indexed by ns_segnum or ns_nextnum,
-+			 * can be erroneous here.
-+			 */
-+			WARN_ON_ONCE(1);
-+		}
-+		ret = -EIO;
-+	} else {
- 		nilfs_segment_usage_set_dirty(su);
- 		kunmap_atomic(kaddr);
-+		mark_buffer_dirty(bh);
-+		nilfs_mdt_mark_dirty(sufile);
- 		brelse(bh);
- 	}
-+out_sem:
- 	up_write(&NILFS_MDT(sufile)->mi_sem);
- 	return ret;
- }
-@@ -536,9 +559,14 @@ int nilfs_sufile_set_segment_usage(struc
+-	/* Stabilize the cpumasks */
+-	cpus_read_lock();
+ 	build_node_to_cpumask(node_to_cpumask);
  
- 	kaddr = kmap_atomic(bh->b_page);
- 	su = nilfs_sufile_block_get_segment_usage(sufile, segnum, bh, kaddr);
--	WARN_ON(nilfs_segment_usage_error(su));
--	if (modtime)
-+	if (modtime) {
-+		/*
-+		 * Check segusage error and set su_lastmod only when updating
-+		 * this entry with a valid timestamp, not for cancellation.
-+		 */
-+		WARN_ON_ONCE(nilfs_segment_usage_error(su));
- 		su->su_lastmod = cpu_to_le64(modtime);
-+	}
- 	su->su_nblocks = cpu_to_le32(nblocks);
- 	kunmap_atomic(kaddr);
++	/*
++	 * Make a local cache of 'cpu_present_mask', so the two stages
++	 * spread can observe consistent 'cpu_present_mask' without holding
++	 * cpu hotplug lock, then we can reduce deadlock risk with cpu
++	 * hotplug code.
++	 *
++	 * Here CPU hotplug may happen when reading `cpu_present_mask`, and
++	 * we can live with the case because it only affects that hotplug
++	 * CPU is handled in the 1st or 2nd stage, and either way is correct
++	 * from API user viewpoint since 2-stage spread is sort of
++	 * optimization.
++	 */
++	cpumask_copy(npresmsk, data_race(cpu_present_mask));
++
+ 	/* grouping present CPUs first */
+ 	ret = __group_cpus_evenly(curgrp, numgrps, node_to_cpumask,
+-				  cpu_present_mask, nmsk, masks);
++				  npresmsk, nmsk, masks);
+ 	if (ret < 0)
+ 		goto fail_build_affinity;
+ 	nr_present = ret;
+@@ -387,15 +399,13 @@ struct cpumask *group_cpus_evenly(unsign
+ 		curgrp = 0;
+ 	else
+ 		curgrp = nr_present;
+-	cpumask_andnot(npresmsk, cpu_possible_mask, cpu_present_mask);
++	cpumask_andnot(npresmsk, cpu_possible_mask, npresmsk);
+ 	ret = __group_cpus_evenly(curgrp, numgrps, node_to_cpumask,
+ 				  npresmsk, nmsk, masks);
+ 	if (ret >= 0)
+ 		nr_others = ret;
+ 
+  fail_build_affinity:
+-	cpus_read_unlock();
+-
+ 	if (ret >= 0)
+ 		WARN_ON(nr_present + nr_others < numgrps);
  
 
 
