@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F9C4F212;
-	Mon, 11 Dec 2023 18:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EAD4F212;
+	Mon, 11 Dec 2023 18:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWUUfwul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BA8C433C7;
-	Mon, 11 Dec 2023 18:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEOnJYLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA79C433C7;
+	Mon, 11 Dec 2023 18:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319019;
-	bh=rMN7QoxVwmNgMZwloy8rcbgGUXhXNLlav5jGEz3CR68=;
+	s=korg; t=1702319022;
+	bh=6bgtMAZVKawyusdL66RWjXjkUMPeWZSJ5T6cr7ndN+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWUUfwulafkY+B07+CeqLxuKlMjKk5Hx+2e0/1mSRT+2mfSPsQdDeGRFzx2cHu5vx
-	 CBt1idl6yWKZq4eKCeD5P+Lu5NeQno7JihDVNsZIQa0vQ/jnPGCCLVAgxjdmi30GZw
-	 9rRp6s/rJfs40ul8E+hWfcAtwmHIfRgXsdUVaQRI=
+	b=LEOnJYLTYJqk2HTQi7CsjY3bJ/zzd7cK85g+m8dK/WYrvdEBgabk6hzOI4wNyFuLE
+	 DDj2UuJBf2fzIeuSeGTxAJImGK2pOsUcAYlsv9z5jCc60QSDUwufldgbONfR34WeaR
+	 5B6hu+TzaD4Si5pFmlcwd/4WHT47OP7424xvvulQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Pakhunov <alexey.pakhunov@spacex.com>,
+	Vincent Wong <vincent.wong2@spacex.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 01/55] spi: imx: add a device specific prepare_message callback
-Date: Mon, 11 Dec 2023 19:21:11 +0100
-Message-ID: <20231211182012.314171089@linuxfoundation.org>
+Subject: [PATCH 4.19 10/55] tg3: Increment tx_dropped in tg3_tso_bug()
+Date: Mon, 11 Dec 2023 19:21:20 +0100
+Message-ID: <20231211182012.590773724@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -36,164 +38,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Alex Pakhunov <alexey.pakhunov@spacex.com>
 
-[ Upstream commit e697271c4e2987b333148e16a2eb8b5b924fd40a ]
+[ Upstream commit 17dd5efe5f36a96bd78012594fabe21efb01186b ]
 
-This is just preparatory work which allows to move some initialisation
-that currently is done in the per transfer hook .config to an earlier
-point in time in the next few patches. There is no change in behaviour
-introduced by this patch.
+tg3_tso_bug() drops a packet if it cannot be segmented for any reason.
+The number of discarded frames should be incremented accordingly.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alex Pakhunov <alexey.pakhunov@spacex.com>
+Signed-off-by: Vincent Wong <vincent.wong2@spacex.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20231113182350.37472-2-alexey.pakhunov@spacex.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 40 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 1ad4b69292ad8..eb27f47578eb9 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -59,6 +59,7 @@ struct spi_imx_data;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 84a5bddf614c8..68bb4a2ff7cee 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -7889,8 +7889,10 @@ static int tg3_tso_bug(struct tg3 *tp, struct tg3_napi *tnapi,
  
- struct spi_imx_devtype_data {
- 	void (*intctrl)(struct spi_imx_data *, int);
-+	int (*prepare_message)(struct spi_imx_data *, struct spi_message *);
- 	int (*config)(struct spi_device *);
- 	void (*trigger)(struct spi_imx_data *);
- 	int (*rx_available)(struct spi_imx_data *);
-@@ -502,6 +503,12 @@ static void mx51_ecspi_disable(struct spi_imx_data *spi_imx)
- 	writel(ctrl, spi_imx->base + MX51_ECSPI_CTRL);
- }
- 
-+static int mx51_ecspi_prepare_message(struct spi_imx_data *spi_imx,
-+				      struct spi_message *msg)
-+{
-+	return 0;
-+}
-+
- static int mx51_ecspi_config(struct spi_device *spi)
- {
- 	struct spi_imx_data *spi_imx = spi_master_get_devdata(spi->master);
-@@ -672,6 +679,12 @@ static void mx31_trigger(struct spi_imx_data *spi_imx)
- 	writel(reg, spi_imx->base + MXC_CSPICTRL);
- }
- 
-+static int mx31_prepare_message(struct spi_imx_data *spi_imx,
-+				struct spi_message *msg)
-+{
-+	return 0;
-+}
-+
- static int mx31_config(struct spi_device *spi)
- {
- 	struct spi_imx_data *spi_imx = spi_master_get_devdata(spi->master);
-@@ -768,6 +781,12 @@ static void mx21_trigger(struct spi_imx_data *spi_imx)
- 	writel(reg, spi_imx->base + MXC_CSPICTRL);
- }
- 
-+static int mx21_prepare_message(struct spi_imx_data *spi_imx,
-+				struct spi_message *msg)
-+{
-+	return 0;
-+}
-+
- static int mx21_config(struct spi_device *spi)
- {
- 	struct spi_imx_data *spi_imx = spi_master_get_devdata(spi->master);
-@@ -837,6 +856,12 @@ static void mx1_trigger(struct spi_imx_data *spi_imx)
- 	writel(reg, spi_imx->base + MXC_CSPICTRL);
- }
- 
-+static int mx1_prepare_message(struct spi_imx_data *spi_imx,
-+			       struct spi_message *msg)
-+{
-+	return 0;
-+}
-+
- static int mx1_config(struct spi_device *spi)
- {
- 	struct spi_imx_data *spi_imx = spi_master_get_devdata(spi->master);
-@@ -871,6 +896,7 @@ static void mx1_reset(struct spi_imx_data *spi_imx)
- 
- static struct spi_imx_devtype_data imx1_cspi_devtype_data = {
- 	.intctrl = mx1_intctrl,
-+	.prepare_message = mx1_prepare_message,
- 	.config = mx1_config,
- 	.trigger = mx1_trigger,
- 	.rx_available = mx1_rx_available,
-@@ -884,6 +910,7 @@ static struct spi_imx_devtype_data imx1_cspi_devtype_data = {
- 
- static struct spi_imx_devtype_data imx21_cspi_devtype_data = {
- 	.intctrl = mx21_intctrl,
-+	.prepare_message = mx21_prepare_message,
- 	.config = mx21_config,
- 	.trigger = mx21_trigger,
- 	.rx_available = mx21_rx_available,
-@@ -898,6 +925,7 @@ static struct spi_imx_devtype_data imx21_cspi_devtype_data = {
- static struct spi_imx_devtype_data imx27_cspi_devtype_data = {
- 	/* i.mx27 cspi shares the functions with i.mx21 one */
- 	.intctrl = mx21_intctrl,
-+	.prepare_message = mx21_prepare_message,
- 	.config = mx21_config,
- 	.trigger = mx21_trigger,
- 	.rx_available = mx21_rx_available,
-@@ -911,6 +939,7 @@ static struct spi_imx_devtype_data imx27_cspi_devtype_data = {
- 
- static struct spi_imx_devtype_data imx31_cspi_devtype_data = {
- 	.intctrl = mx31_intctrl,
-+	.prepare_message = mx31_prepare_message,
- 	.config = mx31_config,
- 	.trigger = mx31_trigger,
- 	.rx_available = mx31_rx_available,
-@@ -925,6 +954,7 @@ static struct spi_imx_devtype_data imx31_cspi_devtype_data = {
- static struct spi_imx_devtype_data imx35_cspi_devtype_data = {
- 	/* i.mx35 and later cspi shares the functions with i.mx31 one */
- 	.intctrl = mx31_intctrl,
-+	.prepare_message = mx31_prepare_message,
- 	.config = mx31_config,
- 	.trigger = mx31_trigger,
- 	.rx_available = mx31_rx_available,
-@@ -938,6 +968,7 @@ static struct spi_imx_devtype_data imx35_cspi_devtype_data = {
- 
- static struct spi_imx_devtype_data imx51_ecspi_devtype_data = {
- 	.intctrl = mx51_ecspi_intctrl,
-+	.prepare_message = mx51_ecspi_prepare_message,
- 	.config = mx51_ecspi_config,
- 	.trigger = mx51_ecspi_trigger,
- 	.rx_available = mx51_ecspi_rx_available,
-@@ -952,6 +983,7 @@ static struct spi_imx_devtype_data imx51_ecspi_devtype_data = {
- 
- static struct spi_imx_devtype_data imx53_ecspi_devtype_data = {
- 	.intctrl = mx51_ecspi_intctrl,
-+	.prepare_message = mx51_ecspi_prepare_message,
- 	.config = mx51_ecspi_config,
- 	.trigger = mx51_ecspi_trigger,
- 	.rx_available = mx51_ecspi_rx_available,
-@@ -1486,7 +1518,13 @@ spi_imx_prepare_message(struct spi_master *master, struct spi_message *msg)
- 		return ret;
- 	}
- 
--	return 0;
-+	ret = spi_imx->devtype_data->prepare_message(spi_imx, msg);
-+	if (ret) {
-+		clk_disable(spi_imx->clk_ipg);
-+		clk_disable(spi_imx->clk_per);
+ 	segs = skb_gso_segment(skb, tp->dev->features &
+ 				    ~(NETIF_F_TSO | NETIF_F_TSO6));
+-	if (IS_ERR(segs) || !segs)
++	if (IS_ERR(segs) || !segs) {
++		tnapi->tx_dropped++;
+ 		goto tg3_tso_bug_end;
 +	}
-+
-+	return ret;
- }
  
- static int
+ 	do {
+ 		nskb = segs;
 -- 
 2.42.0
 
