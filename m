@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D682351C53;
-	Mon, 11 Dec 2023 18:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D4551C53;
+	Mon, 11 Dec 2023 18:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5e1Wyej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D266C433C8;
-	Mon, 11 Dec 2023 18:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6c1PihG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22205C433C9;
+	Mon, 11 Dec 2023 18:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319828;
-	bh=WLC6oy7pu499G9BR4ZMFSMb5S+vkSxu9uRl+Uxc5wcc=;
+	s=korg; t=1702319831;
+	bh=+z3Zflr3hkOuymA9vBtcu5skzPc/W7sIGYa+WceYtjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5e1WyejOB0LUCdYBAc/g4XZC+/60hPAb4xWnHuNxzxXK5MHzl0CUST3Thcuee/HV
-	 hqg6u2JPiB2KTUzJNO9bC63J/nRG0HnIomdFys8mqSiCt6YqHSdEBSu2rB/GhY34Pj
-	 ciGSBr6j7mi9iK6TqfjwjxsxbbkpdQQ2QHc0NMJE=
+	b=D6c1PihGjopPqaOUDehb/NZvWtsDdOg3jKZz0AW4zEOscjpHlisNssJsEleL9DofN
+	 VwREelXxlAvFSH21zS7ijhuwXpNgyBNkuGvXtKd5ULywf0/Gg5wGWeYB/RqIlpz6Pt
+	 muCD7ErGf9X9KpnHdLxwQPESAy1v7ytuWbYtv1mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jie Ho <jiajie.ho@starfivetech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Nam Cao <namcao@linutronix.de>
-Subject: [PATCH 6.6 241/244] riscv: Kconfig: Add select ARM_AMBA to SOC_STARFIVE
-Date: Mon, 11 Dec 2023 19:22:14 +0100
-Message-ID: <20231211182056.821816763@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 242/244] drm/amdgpu: Fix refclk reporting for SMU v13.0.6
+Date: Mon, 11 Dec 2023 19:22:15 +0100
+Message-ID: <20231211182056.871611043@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,31 +43,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jie Ho <jiajie.ho@starfivetech.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit 78a03b9f8e6b317f7c65738a3fc60e1e85106a64 upstream.
+[ Upstream commit 6b7d211740da2c3a7656be8cbb36f32e6d9c6cbd ]
 
-Selects ARM_AMBA platform support for StarFive SoCs required by spi and
-crypto dma engine.
+SMU v13.0.6 SOCs have 100MHz reference clock.
 
-Signed-off-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Cc: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 6fce23a4d8c5 ("drm/amdgpu: Restrict extended wait to PSP v13.0.6")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/Kconfig.socs |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/soc15.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/Kconfig.socs
-+++ b/arch/riscv/Kconfig.socs
-@@ -29,6 +29,7 @@ config SOC_STARFIVE
- 	bool "StarFive SoCs"
- 	select PINCTRL
- 	select RESET_CONTROLLER
-+	select ARM_AMBA
- 	help
- 	  This enables support for StarFive SoC platform hardware.
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc15.c b/drivers/gpu/drm/amd/amdgpu/soc15.c
+index f5be40d7ba367..28094cd7d9c21 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc15.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc15.c
+@@ -325,7 +325,8 @@ static u32 soc15_get_xclk(struct amdgpu_device *adev)
+ 	u32 reference_clock = adev->clock.spll.reference_freq;
  
+ 	if (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(12, 0, 0) ||
+-	    adev->ip_versions[MP1_HWIP][0] == IP_VERSION(12, 0, 1))
++	    adev->ip_versions[MP1_HWIP][0] == IP_VERSION(12, 0, 1) ||
++	    adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 6))
+ 		return 10000;
+ 	if (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(10, 0, 0) ||
+ 	    adev->ip_versions[MP1_HWIP][0] == IP_VERSION(10, 0, 1))
+-- 
+2.42.0
+
 
 
