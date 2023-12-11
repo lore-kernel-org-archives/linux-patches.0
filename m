@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F6BFC06;
-	Mon, 11 Dec 2023 18:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A02FC06;
+	Mon, 11 Dec 2023 18:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE+bXbYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BB4C433C8;
-	Mon, 11 Dec 2023 18:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9UGY6hh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76541C433C8;
+	Mon, 11 Dec 2023 18:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320177;
-	bh=g0NzX8155paULXE2y7WUN6AK4SxFUpdBVZOnfj8kuhA=;
+	s=korg; t=1702320179;
+	bh=tglU0y1zVntAOMJO/e24JSOEuPA61Rhqo2FU66Zatqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TE+bXbYHCAbS8Wt2chpTHO6UHZDhJu+3BifcJmJRzg1tUfj4BCJmxehlBpVsQhTjX
-	 Xl1yrToS7snJau7UfrFd89Y7BxvYMamMx1DGXP+Qi892ocOR0BU2XO4B4BWWhYtpJ5
-	 M3idJmJDORhnJYFAUuxotQsvZpyxK9i8ygJlZssw=
+	b=Q9UGY6hhOCe2gssPFYxtS22dttJNGSZBGP63yuXGq5eVT+lO6d7j7/8nzZLY56QmL
+	 hrLARs1wIw3BpxBz9+ArusOr0W2JPA7bhGy6aLgR9G8J++Jjrppg3fGZZqcnk7/yKu
+	 T9C4Zyx0dYOlCei9s9uSBvcykt/WcAhZb+jjfk78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Yepeng Pan <yepeng.pan@cispa.de>,
-	Christian Rossow <rossow@cispa.de>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Roland Hieber <rhi@pengutronix.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/67] tcp: do not accept ACK of bytes we never sent
-Date: Mon, 11 Dec 2023 19:22:09 +0100
-Message-ID: <20231211182016.141855913@linuxfoundation.org>
+Subject: [PATCH 5.4 34/67] ARM: dts: imx7: Declare timers compatible with fsl,imx6dl-gpt
+Date: Mon, 11 Dec 2023 19:22:18 +0100
+Message-ID: <20231211182016.526622556@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -45,104 +43,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit 3d501dd326fb1c73f1b8206d4c6e1d7b15c07e27 ]
+[ Upstream commit 397caf68e2d36532054cb14ae8995537f27f8b61 ]
 
-This patch is based on a detailed report and ideas from Yepeng Pan
-and Christian Rossow.
+The timer nodes declare compatibility with "fsl,imx6sx-gpt", which
+itself is compatible with "fsl,imx6dl-gpt". Switch the fallback
+compatible from "fsl,imx6sx-gpt" to "fsl,imx6dl-gpt".
 
-ACK seq validation is currently following RFC 5961 5.2 guidelines:
-
-   The ACK value is considered acceptable only if
-   it is in the range of ((SND.UNA - MAX.SND.WND) <= SEG.ACK <=
-   SND.NXT).  All incoming segments whose ACK value doesn't satisfy the
-   above condition MUST be discarded and an ACK sent back.  It needs to
-   be noted that RFC 793 on page 72 (fifth check) says: "If the ACK is a
-   duplicate (SEG.ACK < SND.UNA), it can be ignored.  If the ACK
-   acknowledges something not yet sent (SEG.ACK > SND.NXT) then send an
-   ACK, drop the segment, and return".  The "ignored" above implies that
-   the processing of the incoming data segment continues, which means
-   the ACK value is treated as acceptable.  This mitigation makes the
-   ACK check more stringent since any ACK < SND.UNA wouldn't be
-   accepted, instead only ACKs that are in the range ((SND.UNA -
-   MAX.SND.WND) <= SEG.ACK <= SND.NXT) get through.
-
-This can be refined for new (and possibly spoofed) flows,
-by not accepting ACK for bytes that were never sent.
-
-This greatly improves TCP security at a little cost.
-
-I added a Fixes: tag to make sure this patch will reach stable trees,
-even if the 'blamed' patch was adhering to the RFC.
-
-tp->bytes_acked was added in linux-4.2
-
-Following packetdrill test (courtesy of Yepeng Pan) shows
-the issue at hand:
-
-0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
-+0 setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-+0 bind(3, ..., ...) = 0
-+0 listen(3, 1024) = 0
-
-// ---------------- Handshake ------------------- //
-
-// when window scale is set to 14 the window size can be extended to
-// 65535 * (2^14) = 1073725440. Linux would accept an ACK packet
-// with ack number in (Server_ISN+1-1073725440. Server_ISN+1)
-// ,though this ack number acknowledges some data never
-// sent by the server.
-
-+0 < S 0:0(0) win 65535 <mss 1400,nop,wscale 14>
-+0 > S. 0:0(0) ack 1 <...>
-+0 < . 1:1(0) ack 1 win 65535
-+0 accept(3, ..., ...) = 4
-
-// For the established connection, we send an ACK packet,
-// the ack packet uses ack number 1 - 1073725300 + 2^32,
-// where 2^32 is used to wrap around.
-// Note: we used 1073725300 instead of 1073725440 to avoid possible
-// edge cases.
-// 1 - 1073725300 + 2^32 = 3221241997
-
-// Oops, old kernels happily accept this packet.
-+0 < . 1:1001(1000) ack 3221241997 win 65535
-
-// After the kernel fix the following will be replaced by a challenge ACK,
-// and prior malicious frame would be dropped.
-+0 > . 1:1(0) ack 1001
-
-Fixes: 354e4aa391ed ("tcp: RFC 5961 5.2 Blind Data Injection Attack Mitigation")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Yepeng Pan <yepeng.pan@cispa.de>
-Reported-by: Christian Rossow <rossow@cispa.de>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20231205161841.2702925-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 949673450291 ("ARM: dts: add imx7d soc dtsi file")
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Roland Hieber <rhi@pengutronix.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/imx7s.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index fe5ef114beba5..982fe464156a4 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3657,8 +3657,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
- 	 * then we can probably ignore it.
- 	 */
- 	if (before(ack, prior_snd_una)) {
-+		u32 max_window;
-+
-+		/* do not accept ACK for bytes we never sent. */
-+		max_window = min_t(u64, tp->max_window, tp->bytes_acked);
- 		/* RFC 5961 5.2 [Blind Data Injection Attack].[Mitigation] */
--		if (before(ack, prior_snd_una - tp->max_window)) {
-+		if (before(ack, prior_snd_una - max_window)) {
- 			if (!(flag & FLAG_NO_CHALLENGE_ACK))
- 				tcp_send_challenge_ack(sk, skb);
- 			return -1;
+diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
+index f774759af1aa3..7ce541fcac767 100644
+--- a/arch/arm/boot/dts/imx7s.dtsi
++++ b/arch/arm/boot/dts/imx7s.dtsi
+@@ -447,7 +447,7 @@
+ 			};
+ 
+ 			gpt1: timer@302d0000 {
+-				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
++				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
+ 				reg = <0x302d0000 0x10000>;
+ 				interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&clks IMX7D_GPT1_ROOT_CLK>,
+@@ -456,7 +456,7 @@
+ 			};
+ 
+ 			gpt2: timer@302e0000 {
+-				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
++				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
+ 				reg = <0x302e0000 0x10000>;
+ 				interrupts = <GIC_SPI 54 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&clks IMX7D_GPT2_ROOT_CLK>,
+@@ -466,7 +466,7 @@
+ 			};
+ 
+ 			gpt3: timer@302f0000 {
+-				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
++				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
+ 				reg = <0x302f0000 0x10000>;
+ 				interrupts = <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&clks IMX7D_GPT3_ROOT_CLK>,
+@@ -476,7 +476,7 @@
+ 			};
+ 
+ 			gpt4: timer@30300000 {
+-				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
++				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
+ 				reg = <0x30300000 0x10000>;
+ 				interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&clks IMX7D_GPT4_ROOT_CLK>,
 -- 
 2.42.0
 
