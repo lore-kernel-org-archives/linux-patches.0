@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCEE5102A;
-	Mon, 11 Dec 2023 18:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51B85102A;
+	Mon, 11 Dec 2023 18:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P01Iphn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64AEC433C7;
-	Mon, 11 Dec 2023 18:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9yZt+lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E56FC433C9;
+	Mon, 11 Dec 2023 18:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320496;
-	bh=7F9rTWOEco+yUe7rKtRkaOux2+BGpmQiJT+mn4mGtI4=;
+	s=korg; t=1702320498;
+	bh=RI80OW0DhfiMt05YshyCRFIp2AzTW+KHeBlJLidlvk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P01Iphn1CJi4toOOklRWKffigtoFnu5ewR9n/BYr38L0jpLxppkjrC9cHoJhmYShn
-	 +w86jnR847N7eOi4higIKdU3Td1rHVRUWxO3YptlMWcQZxnB+kJVrFYK4Ul2Yzl54R
-	 qXkSxZTeh/WBK8I160fogi3qBcNDrrXyGWjGfb68=
+	b=B9yZt+lhQFFS2TYz8AtHIJ+43eQtfmN+po57OP/fOpK2fSceGoVR1o8m0U7zx4e1e
+	 lF5qJZyRJVrQ+CvAM0Lm1EKl9XFLS6pdUqp1EU3Azv4mGrgME5ShuX4rgrmdW1VKox
+	 Vb1dUjo88aBktrHM5u3qoKrclS5Qde+6M1RCL39k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <zenczykowski@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yonglong Liu <liuyonglong@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/194] netfilter: nf_tables: fix exist matching on bigendian arches
-Date: Mon, 11 Dec 2023 19:20:44 +0100
-Message-ID: <20231211182038.961340979@linuxfoundation.org>
+Subject: [PATCH 6.1 045/194] net: hns: fix wrong head when modify the tx feature when sending packets
+Date: Mon, 11 Dec 2023 19:20:35 +0100
+Message-ID: <20231211182038.581526535@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -38,96 +38,164 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit 63331e37fb227e796894b31d713697612c8dee7f ]
+[ Upstream commit 84757d0839451b20b11e993128f0a77393ca50c1 ]
 
-Maze reports "tcp option fastopen exists" fails to match on
-OpenWrt 22.03.5, r20134-5f15225c1e (5.10.176) router.
+Upon changing the tx feature, the hns driver will modify the
+maybe_stop_tx() and fill_desc() functions, if the modify happens
+during packet sending, will cause the hardware and software
+pointers do not match, and the port can not work anymore.
 
-"tcp option fastopen exists" translates to:
-inet
-  [ exthdr load tcpopt 1b @ 34 + 0 present => reg 1 ]
-  [ cmp eq reg 1 0x00000001 ]
+This patch deletes the maybe_stop_tx() and fill_desc() functions
+modification when setting tx feature, and use the skb_is_gro()
+to determine which functions to use in the tx path.
 
-.. but existing nft userspace generates a 1-byte compare.
-
-On LSB (x86), "*reg32 = 1" is identical to nft_reg_store8(reg32, 1), but
-not on MSB, which will place the 1 last. IOW, on bigendian aches the cmp8
-is awalys false.
-
-Make sure we store this in a consistent fashion, so existing userspace
-will also work on MSB (bigendian).
-
-Regardless of this patch we can also change nft userspace to generate
-'reg32 == 0' and 'reg32 != 0' instead of u8 == 0 // u8 == 1 when
-adding 'option x missing/exists' expressions as well.
-
-Fixes: 3c1fece8819e ("netfilter: nft_exthdr: Allow checking TCP option presence, too")
-Fixes: b9f9a485fb0e ("netfilter: nft_exthdr: add boolean DCCP option matching")
-Fixes: 055c4b34b94f ("netfilter: nft_fib: Support existence check")
-Reported-by: Maciej Żenczykowski <zenczykowski@gmail.com>
-Closes: https://lore.kernel.org/netfilter-devel/CAHo-OozyEqHUjL2-ntATzeZOiuftLWZ_HU6TOM_js4qLfDEAJg@mail.gmail.com/
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Acked-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 38f616da1c28 ("net:hns: Add support of ethtool TSO set option for Hip06 in HNS")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_exthdr.c | 4 ++--
- net/netfilter/nft_fib.c    | 8 ++++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/hisilicon/hns/hns_enet.c | 53 +++++++++++--------
+ drivers/net/ethernet/hisilicon/hns/hns_enet.h |  3 +-
+ 2 files changed, 33 insertions(+), 23 deletions(-)
 
-diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index f96706de1ad05..de588f7b69c45 100644
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -215,7 +215,7 @@ static void nft_exthdr_tcp_eval(const struct nft_expr *expr,
+diff --git a/drivers/net/ethernet/hisilicon/hns/hns_enet.c b/drivers/net/ethernet/hisilicon/hns/hns_enet.c
+index 7cf10d1e2b311..85722afe21770 100644
+--- a/drivers/net/ethernet/hisilicon/hns/hns_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns/hns_enet.c
+@@ -142,7 +142,8 @@ MODULE_DEVICE_TABLE(acpi, hns_enet_acpi_match);
  
- 		offset = i + priv->offset;
- 		if (priv->flags & NFT_EXTHDR_F_PRESENT) {
--			*dest = 1;
-+			nft_reg_store8(dest, 1);
- 		} else {
- 			if (priv->len % NFT_REG32_SIZE)
- 				dest[priv->len / NFT_REG32_SIZE] = 0;
-@@ -462,7 +462,7 @@ static void nft_exthdr_dccp_eval(const struct nft_expr *expr,
- 		type = bufp[0];
+ static void fill_desc(struct hnae_ring *ring, void *priv,
+ 		      int size, dma_addr_t dma, int frag_end,
+-		      int buf_num, enum hns_desc_type type, int mtu)
++		      int buf_num, enum hns_desc_type type, int mtu,
++		      bool is_gso)
+ {
+ 	struct hnae_desc *desc = &ring->desc[ring->next_to_use];
+ 	struct hnae_desc_cb *desc_cb = &ring->desc_cb[ring->next_to_use];
+@@ -275,6 +276,15 @@ static int hns_nic_maybe_stop_tso(
+ 	return 0;
+ }
  
- 		if (type == priv->type) {
--			*dest = 1;
-+			nft_reg_store8(dest, 1);
- 			return;
- 		}
- 
-diff --git a/net/netfilter/nft_fib.c b/net/netfilter/nft_fib.c
-index 1f12d7ade606c..5748415f74d0b 100644
---- a/net/netfilter/nft_fib.c
-+++ b/net/netfilter/nft_fib.c
-@@ -144,11 +144,15 @@ void nft_fib_store_result(void *reg, const struct nft_fib *priv,
- 	switch (priv->result) {
- 	case NFT_FIB_RESULT_OIF:
- 		index = dev ? dev->ifindex : 0;
--		*dreg = (priv->flags & NFTA_FIB_F_PRESENT) ? !!index : index;
-+		if (priv->flags & NFTA_FIB_F_PRESENT)
-+			nft_reg_store8(dreg, !!index);
-+		else
-+			*dreg = index;
++static int hns_nic_maybe_stop_tx_v2(struct sk_buff **out_skb, int *bnum,
++				    struct hnae_ring *ring)
++{
++	if (skb_is_gso(*out_skb))
++		return hns_nic_maybe_stop_tso(out_skb, bnum, ring);
++	else
++		return hns_nic_maybe_stop_tx(out_skb, bnum, ring);
++}
 +
+ static void fill_tso_desc(struct hnae_ring *ring, void *priv,
+ 			  int size, dma_addr_t dma, int frag_end,
+ 			  int buf_num, enum hns_desc_type type, int mtu)
+@@ -300,6 +310,19 @@ static void fill_tso_desc(struct hnae_ring *ring, void *priv,
+ 				mtu);
+ }
+ 
++static void fill_desc_v2(struct hnae_ring *ring, void *priv,
++			 int size, dma_addr_t dma, int frag_end,
++			 int buf_num, enum hns_desc_type type, int mtu,
++			 bool is_gso)
++{
++	if (is_gso)
++		fill_tso_desc(ring, priv, size, dma, frag_end, buf_num, type,
++			      mtu);
++	else
++		fill_v2_desc(ring, priv, size, dma, frag_end, buf_num, type,
++			     mtu);
++}
++
+ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
+ 				struct sk_buff *skb,
+ 				struct hns_nic_ring_data *ring_data)
+@@ -313,6 +336,7 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
+ 	int seg_num;
+ 	dma_addr_t dma;
+ 	int size, next_to_use;
++	bool is_gso;
+ 	int i;
+ 
+ 	switch (priv->ops.maybe_stop_tx(&skb, &buf_num, ring)) {
+@@ -339,8 +363,9 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
+ 		ring->stats.sw_err_cnt++;
+ 		goto out_err_tx_ok;
+ 	}
++	is_gso = skb_is_gso(skb);
+ 	priv->ops.fill_desc(ring, skb, size, dma, seg_num == 1 ? 1 : 0,
+-			    buf_num, DESC_TYPE_SKB, ndev->mtu);
++			    buf_num, DESC_TYPE_SKB, ndev->mtu, is_gso);
+ 
+ 	/* fill the fragments */
+ 	for (i = 1; i < seg_num; i++) {
+@@ -354,7 +379,7 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
+ 		}
+ 		priv->ops.fill_desc(ring, skb_frag_page(frag), size, dma,
+ 				    seg_num - 1 == i ? 1 : 0, buf_num,
+-				    DESC_TYPE_PAGE, ndev->mtu);
++				    DESC_TYPE_PAGE, ndev->mtu, is_gso);
+ 	}
+ 
+ 	/*complete translate all packets*/
+@@ -1776,15 +1801,6 @@ static int hns_nic_set_features(struct net_device *netdev,
+ 			netdev_info(netdev, "enet v1 do not support tso!\n");
  		break;
- 	case NFT_FIB_RESULT_OIFNAME:
- 		if (priv->flags & NFTA_FIB_F_PRESENT)
--			*dreg = !!dev;
-+			nft_reg_store8(dreg, !!dev);
- 		else
- 			strncpy(reg, dev ? dev->name : "", IFNAMSIZ);
+ 	default:
+-		if (features & (NETIF_F_TSO | NETIF_F_TSO6)) {
+-			priv->ops.fill_desc = fill_tso_desc;
+-			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tso;
+-			/* The chip only support 7*4096 */
+-			netif_set_tso_max_size(netdev, 7 * 4096);
+-		} else {
+-			priv->ops.fill_desc = fill_v2_desc;
+-			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
+-		}
  		break;
+ 	}
+ 	netdev->features = features;
+@@ -2159,16 +2175,9 @@ static void hns_nic_set_priv_ops(struct net_device *netdev)
+ 		priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
+ 	} else {
+ 		priv->ops.get_rxd_bnum = get_v2rx_desc_bnum;
+-		if ((netdev->features & NETIF_F_TSO) ||
+-		    (netdev->features & NETIF_F_TSO6)) {
+-			priv->ops.fill_desc = fill_tso_desc;
+-			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tso;
+-			/* This chip only support 7*4096 */
+-			netif_set_tso_max_size(netdev, 7 * 4096);
+-		} else {
+-			priv->ops.fill_desc = fill_v2_desc;
+-			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
+-		}
++		priv->ops.fill_desc = fill_desc_v2;
++		priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx_v2;
++		netif_set_tso_max_size(netdev, 7 * 4096);
+ 		/* enable tso when init
+ 		 * control tso on/off through TSE bit in bd
+ 		 */
+diff --git a/drivers/net/ethernet/hisilicon/hns/hns_enet.h b/drivers/net/ethernet/hisilicon/hns/hns_enet.h
+index ffa9d6573f54b..3f3ee032f631c 100644
+--- a/drivers/net/ethernet/hisilicon/hns/hns_enet.h
++++ b/drivers/net/ethernet/hisilicon/hns/hns_enet.h
+@@ -44,7 +44,8 @@ struct hns_nic_ring_data {
+ struct hns_nic_ops {
+ 	void (*fill_desc)(struct hnae_ring *ring, void *priv,
+ 			  int size, dma_addr_t dma, int frag_end,
+-			  int buf_num, enum hns_desc_type type, int mtu);
++			  int buf_num, enum hns_desc_type type, int mtu,
++			  bool is_gso);
+ 	int (*maybe_stop_tx)(struct sk_buff **out_skb,
+ 			     int *bnum, struct hnae_ring *ring);
+ 	void (*get_rxd_bnum)(u32 bnum_flag, int *out_bnum);
 -- 
 2.42.0
 
