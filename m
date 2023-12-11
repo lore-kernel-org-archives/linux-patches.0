@@ -1,35 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79E51D696;
-	Mon, 11 Dec 2023 18:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0731D696;
+	Mon, 11 Dec 2023 18:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRjNmCyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AAB5C433C7;
-	Mon, 11 Dec 2023 18:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qN1+tcA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F6CC433C7;
+	Mon, 11 Dec 2023 18:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320112;
-	bh=qofyb2HQFnTqX/Fj5m3KJI9QxJ4SwKsQ8miayq51oxQ=;
+	s=korg; t=1702320115;
+	bh=T86tbj5s9xUJcLdssQN7h6/NX0YSeU7p2ZotsVPV1X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRjNmCyCx/MgWxQsj0m8yiUx/CYqgRUYGSpbHvYMl2v/XczrCLS9sDL4sVyZS2OhK
-	 5V7xR0xqlwLGPE+m13Ch1UT67MV2dJsMbFXQklE/W3RQPjHz0Kk8NdZcqUCINkqLPF
-	 vqSUswXfmpLBCqLUHpCGnEC2goa+vuRevChFa97A=
+	b=qN1+tcA+0LP9sqh2GvR1QJPnoaw99XVJK8beBHxN27x1J2nHGC4mhapCMRr8Yfb02
+	 ukYYSvASN4XBo9qpiQAX87tC0OfsMmen19Z+JmXz+lHrjLU0NgEbb6jTI5X9TDqlco
+	 8cvGnzOkQeWu5hs3ZYzvGJp5GbFyiNBeS6ndaCzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Diana Craciun <diana.craciun@oss.nxp.com>,
 	Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
 	Rob Herring <robh@kernel.org>,
-	Joerg Roedel <jroedel@suse.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Rob Herring <robh+dt@kernel.org>,
-	Joerg Roedel <joro@8bytes.org>,
-	Robin Murphy <robin.murphy@arm.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 10/67] of/iommu: Make of_map_rid() PCI agnostic
-Date: Mon, 11 Dec 2023 19:21:54 +0100
-Message-ID: <20231211182015.523558653@linuxfoundation.org>
+Subject: [PATCH 5.4 11/67] of/irq: make of_msi_map_get_device_domain() bus agnostic
+Date: Mon, 11 Dec 2023 19:21:55 +0100
+Message-ID: <20231211182015.571003692@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -48,198 +47,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+From: Diana Craciun <diana.craciun@oss.nxp.com>
 
-[ Upstream commit 746a71d02b5d15817fcb13c956ba999a87773952 ]
+[ Upstream commit 6f881aba01109a01a43e4f135673c19190f61133 ]
 
-There is nothing PCI specific (other than the RID - requester ID)
-in the of_map_rid() implementation, so the same function can be
-reused for input/output IDs mapping for other busses just as well.
+of_msi_map_get_device_domain() is PCI specific but it need not be and
+can be easily changed to be bus agnostic in order to be used by other
+busses by adding an IRQ domain bus token as an input parameter.
 
-Rename the RID instances/names to a generic "id" tag.
-
-No functionality change intended.
-
+Signed-off-by: Diana Craciun <diana.craciun@oss.nxp.com>
 Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
 Reviewed-by: Rob Herring <robh@kernel.org>
-Acked-by: Joerg Roedel <jroedel@suse.de>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>   # pci/msi.c
+Cc: Bjorn Helgaas <bhelgaas@google.com>
 Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
 Cc: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20200619082013.13661-7-lorenzo.pieralisi@arm.com
+Link: https://lore.kernel.org/r/20200619082013.13661-10-lorenzo.pieralisi@arm.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Stable-dep-of: d79972789d17 ("of: dynamic: Fix of_reconfig_get_state_change() return value documentation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/of_iommu.c |  4 ++--
- drivers/of/base.c        | 42 ++++++++++++++++++++--------------------
- drivers/of/irq.c         |  2 +-
- include/linux/of.h       |  4 ++--
- 4 files changed, 26 insertions(+), 26 deletions(-)
+ drivers/of/irq.c       | 8 +++++---
+ drivers/pci/msi.c      | 2 +-
+ include/linux/of_irq.h | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
-index 614a93aa5305a..656939ed842e7 100644
---- a/drivers/iommu/of_iommu.c
-+++ b/drivers/iommu/of_iommu.c
-@@ -121,7 +121,7 @@ static int of_pci_iommu_init(struct pci_dev *pdev, u16 alias, void *data)
- 	struct of_phandle_args iommu_spec = { .args_count = 1 };
- 	int err;
+diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+index d632bc5b3a2de..1005e4f349ef6 100644
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -613,18 +613,20 @@ u32 of_msi_map_rid(struct device *dev, struct device_node *msi_np, u32 rid_in)
+  * of_msi_map_get_device_domain - Use msi-map to find the relevant MSI domain
+  * @dev: device for which the mapping is to be done.
+  * @rid: Requester ID for the device.
++ * @bus_token: Bus token
+  *
+  * Walk up the device hierarchy looking for devices with a "msi-map"
+  * property.
+  *
+  * Returns: the MSI domain for this device (or NULL on failure)
+  */
+-struct irq_domain *of_msi_map_get_device_domain(struct device *dev, u32 rid)
++struct irq_domain *of_msi_map_get_device_domain(struct device *dev, u32 id,
++						u32 bus_token)
+ {
+ 	struct device_node *np = NULL;
  
--	err = of_map_rid(info->np, alias, "iommu-map", "iommu-map-mask",
-+	err = of_map_id(info->np, alias, "iommu-map", "iommu-map-mask",
- 			 &iommu_spec.np, iommu_spec.args);
- 	if (err)
- 		return err == -ENODEV ? NO_IOMMU : err;
-@@ -137,7 +137,7 @@ static int of_fsl_mc_iommu_init(struct fsl_mc_device *mc_dev,
- 	struct of_phandle_args iommu_spec = { .args_count = 1 };
- 	int err;
- 
--	err = of_map_rid(master_np, mc_dev->icid, "iommu-map",
-+	err = of_map_id(master_np, mc_dev->icid, "iommu-map",
- 			 "iommu-map-mask", &iommu_spec.np,
- 			 iommu_spec.args);
- 	if (err)
-diff --git a/drivers/of/base.c b/drivers/of/base.c
-index 3f13b982e8b53..5c97366628b13 100644
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -2280,15 +2280,15 @@ int of_find_last_cache_level(unsigned int cpu)
+-	__of_msi_map_rid(dev, &np, rid);
+-	return irq_find_matching_host(np, DOMAIN_BUS_PCI_MSI);
++	__of_msi_map_rid(dev, &np, id);
++	return irq_find_matching_host(np, bus_token);
  }
  
  /**
-- * of_map_rid - Translate a requester ID through a downstream mapping.
-+ * of_map_id - Translate an ID through a downstream mapping.
-  * @np: root complex device node.
-- * @rid: device requester ID to map.
-+ * @id: device ID to map.
-  * @map_name: property name of the map to use.
-  * @map_mask_name: optional property name of the mask to use.
-  * @target: optional pointer to a target device node.
-  * @id_out: optional pointer to receive the translated ID.
-  *
-- * Given a device requester ID, look up the appropriate implementation-defined
-+ * Given a device ID, look up the appropriate implementation-defined
-  * platform ID and/or the target device which receives transactions on that
-  * ID, as per the "iommu-map" and "msi-map" bindings. Either of @target or
-  * @id_out may be NULL if only the other is required. If @target points to
-@@ -2298,11 +2298,11 @@ int of_find_last_cache_level(unsigned int cpu)
-  *
-  * Return: 0 on success or a standard error code on failure.
-  */
--int of_map_rid(struct device_node *np, u32 rid,
-+int of_map_id(struct device_node *np, u32 id,
- 	       const char *map_name, const char *map_mask_name,
- 	       struct device_node **target, u32 *id_out)
- {
--	u32 map_mask, masked_rid;
-+	u32 map_mask, masked_id;
- 	int map_len;
- 	const __be32 *map = NULL;
+diff --git a/drivers/pci/msi.c b/drivers/pci/msi.c
+index cc863cdd5cc74..392d2ecf7dc89 100644
+--- a/drivers/pci/msi.c
++++ b/drivers/pci/msi.c
+@@ -1624,7 +1624,7 @@ struct irq_domain *pci_msi_get_device_domain(struct pci_dev *pdev)
+ 	u32 rid = pci_dev_id(pdev);
  
-@@ -2314,7 +2314,7 @@ int of_map_rid(struct device_node *np, u32 rid,
- 		if (target)
- 			return -ENODEV;
- 		/* Otherwise, no map implies no translation */
--		*id_out = rid;
-+		*id_out = id;
- 		return 0;
- 	}
- 
-@@ -2334,22 +2334,22 @@ int of_map_rid(struct device_node *np, u32 rid,
- 	if (map_mask_name)
- 		of_property_read_u32(np, map_mask_name, &map_mask);
- 
--	masked_rid = map_mask & rid;
-+	masked_id = map_mask & id;
- 	for ( ; map_len > 0; map_len -= 4 * sizeof(*map), map += 4) {
- 		struct device_node *phandle_node;
--		u32 rid_base = be32_to_cpup(map + 0);
-+		u32 id_base = be32_to_cpup(map + 0);
- 		u32 phandle = be32_to_cpup(map + 1);
- 		u32 out_base = be32_to_cpup(map + 2);
--		u32 rid_len = be32_to_cpup(map + 3);
-+		u32 id_len = be32_to_cpup(map + 3);
- 
--		if (rid_base & ~map_mask) {
--			pr_err("%pOF: Invalid %s translation - %s-mask (0x%x) ignores rid-base (0x%x)\n",
-+		if (id_base & ~map_mask) {
-+			pr_err("%pOF: Invalid %s translation - %s-mask (0x%x) ignores id-base (0x%x)\n",
- 				np, map_name, map_name,
--				map_mask, rid_base);
-+				map_mask, id_base);
- 			return -EFAULT;
- 		}
- 
--		if (masked_rid < rid_base || masked_rid >= rid_base + rid_len)
-+		if (masked_id < id_base || masked_id >= id_base + id_len)
- 			continue;
- 
- 		phandle_node = of_find_node_by_phandle(phandle);
-@@ -2367,20 +2367,20 @@ int of_map_rid(struct device_node *np, u32 rid,
- 		}
- 
- 		if (id_out)
--			*id_out = masked_rid - rid_base + out_base;
-+			*id_out = masked_id - id_base + out_base;
- 
--		pr_debug("%pOF: %s, using mask %08x, rid-base: %08x, out-base: %08x, length: %08x, rid: %08x -> %08x\n",
--			np, map_name, map_mask, rid_base, out_base,
--			rid_len, rid, masked_rid - rid_base + out_base);
-+		pr_debug("%pOF: %s, using mask %08x, id-base: %08x, out-base: %08x, length: %08x, id: %08x -> %08x\n",
-+			np, map_name, map_mask, id_base, out_base,
-+			id_len, id, masked_id - id_base + out_base);
- 		return 0;
- 	}
- 
--	pr_info("%pOF: no %s translation for rid 0x%x on %pOF\n", np, map_name,
--		rid, target && *target ? *target : NULL);
-+	pr_info("%pOF: no %s translation for id 0x%x on %pOF\n", np, map_name,
-+		id, target && *target ? *target : NULL);
- 
- 	/* Bypasses translation */
- 	if (id_out)
--		*id_out = rid;
-+		*id_out = id;
- 	return 0;
+ 	pci_for_each_dma_alias(pdev, get_msi_id_cb, &rid);
+-	dom = of_msi_map_get_device_domain(&pdev->dev, rid);
++	dom = of_msi_map_get_device_domain(&pdev->dev, rid, DOMAIN_BUS_PCI_MSI);
+ 	if (!dom)
+ 		dom = iort_get_device_domain(&pdev->dev, rid,
+ 					     DOMAIN_BUS_PCI_MSI);
+diff --git a/include/linux/of_irq.h b/include/linux/of_irq.h
+index 1214cabb22479..7142a37227584 100644
+--- a/include/linux/of_irq.h
++++ b/include/linux/of_irq.h
+@@ -52,7 +52,8 @@ extern struct irq_domain *of_msi_get_domain(struct device *dev,
+ 					    struct device_node *np,
+ 					    enum irq_domain_bus_token token);
+ extern struct irq_domain *of_msi_map_get_device_domain(struct device *dev,
+-						       u32 rid);
++							u32 id,
++							u32 bus_token);
+ extern void of_msi_configure(struct device *dev, struct device_node *np);
+ u32 of_msi_map_rid(struct device *dev, struct device_node *msi_np, u32 rid_in);
+ #else
+@@ -85,7 +86,7 @@ static inline struct irq_domain *of_msi_get_domain(struct device *dev,
+ 	return NULL;
  }
--EXPORT_SYMBOL_GPL(of_map_rid);
-+EXPORT_SYMBOL_GPL(of_map_id);
-diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-index a296eaf52a5b2..d632bc5b3a2de 100644
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -587,7 +587,7 @@ static u32 __of_msi_map_rid(struct device *dev, struct device_node **np,
- 	 * "msi-map" property.
- 	 */
- 	for (parent_dev = dev; parent_dev; parent_dev = parent_dev->parent)
--		if (!of_map_rid(parent_dev->of_node, rid_in, "msi-map",
-+		if (!of_map_id(parent_dev->of_node, rid_in, "msi-map",
- 				"msi-map-mask", np, &rid_out))
- 			break;
- 	return rid_out;
-diff --git a/include/linux/of.h b/include/linux/of.h
-index e29b341598e99..e070c5ed62a09 100644
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -554,7 +554,7 @@ bool of_console_check(struct device_node *dn, char *name, int index);
- 
- extern int of_cpu_node_to_id(struct device_node *np);
- 
--int of_map_rid(struct device_node *np, u32 rid,
-+int of_map_id(struct device_node *np, u32 id,
- 	       const char *map_name, const char *map_mask_name,
- 	       struct device_node **target, u32 *id_out);
- 
-@@ -978,7 +978,7 @@ static inline int of_cpu_node_to_id(struct device_node *np)
- 	return -ENODEV;
- }
- 
--static inline int of_map_rid(struct device_node *np, u32 rid,
-+static inline int of_map_id(struct device_node *np, u32 id,
- 			     const char *map_name, const char *map_mask_name,
- 			     struct device_node **target, u32 *id_out)
+ static inline struct irq_domain *of_msi_map_get_device_domain(struct device *dev,
+-							      u32 rid)
++						u32 id, u32 bus_token)
  {
+ 	return NULL;
+ }
 -- 
 2.42.0
 
