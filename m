@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4F651C37;
-	Mon, 11 Dec 2023 18:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DE551C37;
+	Mon, 11 Dec 2023 18:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Znll7w8b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35399C433C8;
-	Mon, 11 Dec 2023 18:53:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7bhlqVZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8765C433C7;
+	Mon, 11 Dec 2023 18:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320792;
-	bh=y7U6hfN1oUFFzgMhaoQDflETNZ/H91VX3zkYIdt1YBw=;
+	s=korg; t=1702320795;
+	bh=GBBanfGrPibinXgODNc9nRM7YQ/BcdEOJVZUsXJJTIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Znll7w8bYYE3vzDI24uQ+iN3TpU8/+ai+LtScqQCVZxGLLXljZT0Dd3yadVQxyFDa
-	 xGNYCxUtflQQsllIZpygdyC8JPw32sWSWZE/+tIe3zr2oNfvnah+MoCFfkQT5iOCB7
-	 Ozx7AxF8kvb8LX+A/ovU+78TM50KVYeDbsZ8VlLo=
+	b=O7bhlqVZT5SWLanJ3colhLSCO6zDl+djT5rmay7aa2vtudzEzb2X+c0rAN7bm8tAJ
+	 a6RGYO72EoiGSiwbVJJJuLf8J1s0AO8lBwO4gxpXjgJwbYMf31PbGMyOzojzYPh9gw
+	 szoAudJ66cDWX07Ac4tTwD6mRd0BDoM9b5P0BJGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 192/194] drm/i915/lvds: Use REG_BIT() & co.
-Date: Mon, 11 Dec 2023 19:23:02 +0100
-Message-ID: <20231211182045.277199661@linuxfoundation.org>
+Subject: [PATCH 6.1 193/194] drm/i915/sdvo: stop caching has_hdmi_monitor in struct intel_sdvo
+Date: Mon, 11 Dec 2023 19:23:03 +0100
+Message-ID: <20231211182045.318966195@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -36,132 +36,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 9dd56e979cb69f5cd904574c852b620777a2f69f ]
+[ Upstream commit f2f9c8cb6421429ef166d6404426693212d0ca07 ]
 
-Use REG_BIT() & co. for the LVDS port register.
+Use the information stored in display info.
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230130180540.8972-4-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/3e9e1dcd554d470bdf474891a431b15e1880f9a0.1685437500.git.jani.nikula@intel.com
 Stable-dep-of: 20c2dbff342a ("drm/i915: Skip some timing checks on BXT/GLK DSI transcoders")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_lvds.c |  4 +-
- drivers/gpu/drm/i915/i915_reg.h           | 46 +++++++++++------------
- 2 files changed, 24 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/i915/display/intel_sdvo.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_lvds.c b/drivers/gpu/drm/i915/display/intel_lvds.c
-index a749a5a66d624..e4606d9a25edb 100644
---- a/drivers/gpu/drm/i915/display/intel_lvds.c
-+++ b/drivers/gpu/drm/i915/display/intel_lvds.c
-@@ -92,9 +92,9 @@ bool intel_lvds_port_enabled(struct drm_i915_private *dev_priv,
+diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
+index 2c2e0f041f869..c1a85128911e1 100644
+--- a/drivers/gpu/drm/i915/display/intel_sdvo.c
++++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
+@@ -115,7 +115,6 @@ struct intel_sdvo {
  
- 	/* asserts want to know the pipe even if the port is disabled */
- 	if (HAS_PCH_CPT(dev_priv))
--		*pipe = (val & LVDS_PIPE_SEL_MASK_CPT) >> LVDS_PIPE_SEL_SHIFT_CPT;
-+		*pipe = REG_FIELD_GET(LVDS_PIPE_SEL_MASK_CPT, val);
- 	else
--		*pipe = (val & LVDS_PIPE_SEL_MASK) >> LVDS_PIPE_SEL_SHIFT;
-+		*pipe = REG_FIELD_GET(LVDS_PIPE_SEL_MASK, val);
+ 	enum port port;
  
- 	return val & LVDS_PORT_EN;
+-	bool has_hdmi_monitor;
+ 	bool has_hdmi_audio;
+ 
+ 	/* DDC bus used by this SDVO encoder */
+@@ -1278,10 +1277,13 @@ static void i9xx_adjust_sdvo_tv_clock(struct intel_crtc_state *pipe_config)
+ 	pipe_config->clock_set = true;
  }
-diff --git a/drivers/gpu/drm/i915/i915_reg.h b/drivers/gpu/drm/i915/i915_reg.h
-index 25015996f627a..c6766704340eb 100644
---- a/drivers/gpu/drm/i915/i915_reg.h
-+++ b/drivers/gpu/drm/i915/i915_reg.h
-@@ -2681,52 +2681,50 @@
-  * Enables the LVDS port.  This bit must be set before DPLLs are enabled, as
-  * the DPLL semantics change when the LVDS is assigned to that pipe.
-  */
--#define   LVDS_PORT_EN			(1 << 31)
-+#define   LVDS_PORT_EN			REG_BIT(31)
- /* Selects pipe B for LVDS data.  Must be set on pre-965. */
--#define   LVDS_PIPE_SEL_SHIFT		30
--#define   LVDS_PIPE_SEL_MASK		(1 << 30)
--#define   LVDS_PIPE_SEL(pipe)		((pipe) << 30)
--#define   LVDS_PIPE_SEL_SHIFT_CPT	29
--#define   LVDS_PIPE_SEL_MASK_CPT	(3 << 29)
--#define   LVDS_PIPE_SEL_CPT(pipe)	((pipe) << 29)
-+#define   LVDS_PIPE_SEL_MASK		REG_BIT(30)
-+#define   LVDS_PIPE_SEL(pipe)		REG_FIELD_PREP(LVDS_PIPE_SEL_MASK, (pipe))
-+#define   LVDS_PIPE_SEL_MASK_CPT	REG_GENMASK(30, 29)
-+#define   LVDS_PIPE_SEL_CPT(pipe)	REG_FIELD_PREP(LVDS_PIPE_SEL_MASK_CPT, (pipe))
- /* LVDS dithering flag on 965/g4x platform */
--#define   LVDS_ENABLE_DITHER		(1 << 25)
-+#define   LVDS_ENABLE_DITHER		REG_BIT(25)
- /* LVDS sync polarity flags. Set to invert (i.e. negative) */
--#define   LVDS_VSYNC_POLARITY		(1 << 21)
--#define   LVDS_HSYNC_POLARITY		(1 << 20)
-+#define   LVDS_VSYNC_POLARITY		REG_BIT(21)
-+#define   LVDS_HSYNC_POLARITY		REG_BIT(20)
  
- /* Enable border for unscaled (or aspect-scaled) display */
--#define   LVDS_BORDER_ENABLE		(1 << 15)
-+#define   LVDS_BORDER_ENABLE		REG_BIT(15)
- /*
-  * Enables the A0-A2 data pairs and CLKA, containing 18 bits of color data per
-  * pixel.
-  */
--#define   LVDS_A0A2_CLKA_POWER_MASK	(3 << 8)
--#define   LVDS_A0A2_CLKA_POWER_DOWN	(0 << 8)
--#define   LVDS_A0A2_CLKA_POWER_UP	(3 << 8)
-+#define   LVDS_A0A2_CLKA_POWER_MASK	REG_GENMASK(9, 8)
-+#define   LVDS_A0A2_CLKA_POWER_DOWN	REG_FIELD_PREP(LVDS_A0A2_CLKA_POWER_MASK, 0)
-+#define   LVDS_A0A2_CLKA_POWER_UP	REG_FIELD_PREP(LVDS_A0A2_CLKA_POWER_MASK, 3)
- /*
-  * Controls the A3 data pair, which contains the additional LSBs for 24 bit
-  * mode.  Only enabled if LVDS_A0A2_CLKA_POWER_UP also indicates it should be
-  * on.
-  */
--#define   LVDS_A3_POWER_MASK		(3 << 6)
--#define   LVDS_A3_POWER_DOWN		(0 << 6)
--#define   LVDS_A3_POWER_UP		(3 << 6)
-+#define   LVDS_A3_POWER_MASK		REG_GENMASK(7, 6)
-+#define   LVDS_A3_POWER_DOWN		REG_FIELD_PREP(LVDS_A3_POWER_MASK, 0)
-+#define   LVDS_A3_POWER_UP		REG_FIELD_PREP(LVDS_A3_POWER_MASK, 3)
- /*
-  * Controls the CLKB pair.  This should only be set when LVDS_B0B3_POWER_UP
-  * is set.
-  */
--#define   LVDS_CLKB_POWER_MASK		(3 << 4)
--#define   LVDS_CLKB_POWER_DOWN		(0 << 4)
--#define   LVDS_CLKB_POWER_UP		(3 << 4)
-+#define   LVDS_CLKB_POWER_MASK		REG_GENMASK(5, 4)
-+#define   LVDS_CLKB_POWER_DOWN		REG_FIELD_PREP(LVDS_CLKB_POWER_MASK, 0)
-+#define   LVDS_CLKB_POWER_UP		REG_FIELD_PREP(LVDS_CLKB_POWER_MASK, 3)
- /*
-  * Controls the B0-B3 data pairs.  This must be set to match the DPLL p2
-  * setting for whether we are in dual-channel mode.  The B3 pair will
-  * additionally only be powered up when LVDS_A3_POWER_UP is set.
-  */
--#define   LVDS_B0B3_POWER_MASK		(3 << 2)
--#define   LVDS_B0B3_POWER_DOWN		(0 << 2)
--#define   LVDS_B0B3_POWER_UP		(3 << 2)
-+#define   LVDS_B0B3_POWER_MASK		REG_GENMASK(3, 2)
-+#define   LVDS_B0B3_POWER_DOWN		REG_FIELD_PREP(LVDS_B0B3_POWER_MASK, 0)
-+#define   LVDS_B0B3_POWER_UP		REG_FIELD_PREP(LVDS_B0B3_POWER_MASK, 3)
+-static bool intel_has_hdmi_sink(struct intel_sdvo *sdvo,
++static bool intel_has_hdmi_sink(struct intel_sdvo_connector *intel_sdvo_connector,
+ 				const struct drm_connector_state *conn_state)
+ {
+-	return sdvo->has_hdmi_monitor &&
++	struct drm_connector *connector = conn_state->connector;
++
++	return intel_sdvo_connector->is_hdmi &&
++		connector->display_info.is_hdmi &&
+ 		READ_ONCE(to_intel_digital_connector_state(conn_state)->force_audio) != HDMI_AUDIO_OFF_DVI;
+ }
  
- /* Video Data Island Packet control */
- #define VIDEO_DIP_DATA		_MMIO(0x61178)
-@@ -6461,7 +6459,7 @@
- #define FDI_PLL_CTL_2           _MMIO(0xfe004)
+@@ -1360,7 +1362,7 @@ static int intel_sdvo_compute_config(struct intel_encoder *encoder,
+ 	pipe_config->pixel_multiplier =
+ 		intel_sdvo_get_pixel_multiplier(adjusted_mode);
  
- #define PCH_LVDS	_MMIO(0xe1180)
--#define  LVDS_DETECTED	(1 << 1)
-+#define   LVDS_DETECTED	REG_BIT(1)
+-	pipe_config->has_hdmi_sink = intel_has_hdmi_sink(intel_sdvo, conn_state);
++	pipe_config->has_hdmi_sink = intel_has_hdmi_sink(intel_sdvo_connector, conn_state);
  
- #define _PCH_DP_B		0xe4100
- #define PCH_DP_B		_MMIO(_PCH_DP_B)
+ 	if (pipe_config->has_hdmi_sink) {
+ 		if (intel_sdvo_state->base.force_audio == HDMI_AUDIO_AUTO)
+@@ -1875,7 +1877,7 @@ intel_sdvo_mode_valid(struct drm_connector *connector,
+ 	struct intel_sdvo_connector *intel_sdvo_connector =
+ 		to_intel_sdvo_connector(connector);
+ 	int max_dotclk = to_i915(connector->dev)->max_dotclk_freq;
+-	bool has_hdmi_sink = intel_has_hdmi_sink(intel_sdvo, connector->state);
++	bool has_hdmi_sink = intel_has_hdmi_sink(intel_sdvo_connector, connector->state);
+ 	int clock = mode->clock;
+ 
+ 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
+@@ -2064,7 +2066,6 @@ intel_sdvo_tmds_sink_detect(struct drm_connector *connector)
+ 		if (edid->input & DRM_EDID_INPUT_DIGITAL) {
+ 			status = connector_status_connected;
+ 			if (intel_sdvo_connector->is_hdmi) {
+-				intel_sdvo->has_hdmi_monitor = drm_detect_hdmi_monitor(edid);
+ 				intel_sdvo->has_hdmi_audio = drm_detect_monitor_audio(edid);
+ 			}
+ 		} else
+@@ -2116,7 +2117,6 @@ intel_sdvo_detect(struct drm_connector *connector, bool force)
+ 
+ 	intel_sdvo->attached_output = response;
+ 
+-	intel_sdvo->has_hdmi_monitor = false;
+ 	intel_sdvo->has_hdmi_audio = false;
+ 
+ 	if ((intel_sdvo_connector->output_flag & response) == 0)
 -- 
 2.42.0
 
