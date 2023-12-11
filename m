@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240DCFBE0;
-	Mon, 11 Dec 2023 18:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0AEFBE0;
+	Mon, 11 Dec 2023 18:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMpoMfCI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E073C433C8;
-	Mon, 11 Dec 2023 18:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtYqEZ0K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B680C433C7;
+	Mon, 11 Dec 2023 18:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319660;
-	bh=zjIQWzd1ZIHQCgGY5opte3ZPShNG+zLUjv7oaXP26Rc=;
+	s=korg; t=1702319662;
+	bh=yS0l554uQ0ZhX+muyA0lLqzpN7bOfIK5IHpVxOsCqdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BMpoMfCIZv7Qv2z1VU6Z1Ru4tPq5bZWNAzKICA1X0URKOdVSygWem3HFps/BD3GEJ
-	 bbx5xixco+OaMF1QrecPfV2CoHnhjeunSkuMOjeyrEq8Yn47fA7qSyPWCVCMgPPeTw
-	 eSN112s7IkmuvGE30ZqpxzAe+QilAy1z4cVQ3mYE=
+	b=LtYqEZ0Ka8JfX14wfU8pRGgi4XkvVOyLX8ZlgQbyU3IqoUbQUqi3UD/c8AI4fbg9o
+	 wOaklEUbG1w0NBbkPKe8qxcPM//nmaHyiBmFZBmubSpxNvzKq+hdp7yaQW4k1XVYo2
+	 KGzwuEftJ/0L/RBdV/9hRUMR9E4r4do0uGO5+Vpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.6 188/244] arm64: dts: mediatek: mt8186: Change gpu speedbin nvmem cell name
-Date: Mon, 11 Dec 2023 19:21:21 +0100
-Message-ID: <20231211182054.373950393@linuxfoundation.org>
+	David Jeffery <djeffery@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.6 171/244] md/raid6: use valid sector values to determine if an I/O should wait on the reshape
+Date: Mon, 11 Dec 2023 19:21:04 +0100
+Message-ID: <20231211182053.576662361@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,36 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: David Jeffery <djeffery@redhat.com>
 
-commit 59fa1e51ba54e1f513985a8177969b62973f7fd5 upstream.
+commit c467e97f079f0019870c314996fae952cc768e82 upstream.
 
-MT8186's GPU speedbin value must be interpreted, or the value will not
-be meaningful.
-Use the correct "gpu-speedbin" nvmem cell name for the GPU speedbin to
-allow triggering the cell info fixup handler, hence feeding the right
-speedbin number to the users.
+During a reshape or a RAID6 array such as expanding by adding an additional
+disk, I/Os to the region of the array which have not yet been reshaped can
+stall indefinitely. This is from errors in the stripe_ahead_of_reshape
+function causing md to think the I/O is to a region in the actively
+undergoing the reshape.
 
-Cc: stable@vger.kernel.org
-Fixes: 263d2fd02afc ("arm64: dts: mediatek: mt8186: Add GPU speed bin NVMEM cells")
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20231005151150.355536-1-angelogioacchino.delregno@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+stripe_ahead_of_reshape fails to account for the q disk having a sector
+value of 0. By not excluding the q disk from the for loop, raid6 will always
+generate a min_sector value of 0, causing a return value which stalls.
+
+The function's max_sector calculation also uses min() when it should use
+max(), causing the max_sector value to always be 0. During a backwards
+rebuild this can cause the opposite problem where it allows I/O to advance
+when it should wait.
+
+Fixing these errors will allow safe I/O to advance in a timely manner and
+delay only I/O which is unsafe due to stripes in the middle of undergoing
+the reshape.
+
+Fixes: 486f60558607 ("md/raid5: Check all disks in a stripe_head for reshape progress")
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Tested-by: Laurence Oberman <loberman@redhat.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231128181233.6187-1-djeffery@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8186.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid5.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt8186.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186.dtsi
-@@ -1668,7 +1668,7 @@
- 			#address-cells = <1>;
- 			#size-cells = <1>;
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5892,11 +5892,11 @@ static bool stripe_ahead_of_reshape(stru
+ 	int dd_idx;
  
--			gpu_speedbin: gpu-speed-bin@59c {
-+			gpu_speedbin: gpu-speedbin@59c {
- 				reg = <0x59c 0x4>;
- 				bits = <0 3>;
- 			};
+ 	for (dd_idx = 0; dd_idx < sh->disks; dd_idx++) {
+-		if (dd_idx == sh->pd_idx)
++		if (dd_idx == sh->pd_idx || dd_idx == sh->qd_idx)
+ 			continue;
+ 
+ 		min_sector = min(min_sector, sh->dev[dd_idx].sector);
+-		max_sector = min(max_sector, sh->dev[dd_idx].sector);
++		max_sector = max(max_sector, sh->dev[dd_idx].sector);
+ 	}
+ 
+ 	spin_lock_irq(&conf->device_lock);
 
 
