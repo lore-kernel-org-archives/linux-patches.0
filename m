@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8167A52F9B;
-	Mon, 11 Dec 2023 18:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16263524B8;
+	Mon, 11 Dec 2023 18:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bI9Ob7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A565C433C7;
-	Mon, 11 Dec 2023 18:33:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUIscgpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91832C433CB;
+	Mon, 11 Dec 2023 18:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319616;
-	bh=8QciebrFikU2oH+3ZC6xU/yT8EghEWJZsPtJAaei40c=;
+	s=korg; t=1702319618;
+	bh=p+sr3coFEfmsTAa0RMHhto+Xq6bxA4yJ9tMMve845/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bI9Ob7stoxEuqcjLzHsfT7cz7mknt89YNsQMMfTeX+XD4fTnjshYDSKwz+B5M9rz
-	 4RIGmhuzhmp3wR+m74y7GbucPCDw5H6PoHd7LKRjA7ARz4Ovn448HdNG/imFQDWnVd
-	 +BCcZvuzos987M3ZyZHYRd3ypbcAPw7/se0njVMg=
+	b=mUIscgpLAt8h1D7wOEuKKGm82QXslgT5sSA0tga1O/mOmauHeVAasdKXXSQDoCD/x
+	 v4Jt/JedjFvmbkGEvCbqTgi9/skLE5rEm05jCc1zhG7BFkkalQx0qiFcFo0ceBEuZL
+	 P2RSwpZxIguvzd6q0cUZFIQF5sqTWVe8p3mBSKnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Li <bin.li@canonical.com>,
+	Tim Bosse <flinn@timbos.se>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 141/244] ALSA: hda/realtek: Enable headset on Lenovo M90 Gen5
-Date: Mon, 11 Dec 2023 19:20:34 +0100
-Message-ID: <20231211182052.109711200@linuxfoundation.org>
+Subject: [PATCH 6.6 142/244] ALSA: hda/realtek: add new Framework laptop to quirks
+Date: Mon, 11 Dec 2023 19:20:35 +0100
+Message-ID: <20231211182052.153747368@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,16 +41,19 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Li <bin.li@canonical.com>
+From: Tim Bosse <flinn@timbos.se>
 
-commit 6f7e4664e597440dfbdb8b2931c561b717030d07 upstream.
+commit 33038efb64f7576bac635164021f5c984d4c755f upstream.
 
-Lenovo M90 Gen5 is equipped with ALC897, and it needs
-ALC897_FIXUP_HEADSET_MIC_PIN quirk to make its headset mic work.
+The Framework Laptop 13 (AMD Ryzen 7040Series) has an ALC295 with
+a disconnected or faulty headset mic presence detect similar to the
+previous models.  It works with the same quirk chain as
+309d7363ca3d9fcdb92ff2d958be14d7e8707f68.  This model has a VID:PID
+of f111:0006.
 
-Signed-off-by: Bin Li <bin.li@canonical.com>
+Signed-off-by: Tim Bosse <flinn@timbos.se>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231204100450.642783-1-bin.li@canonical.com
+Link: https://lore.kernel.org/r/20231206142629.388615-1-flinn@timbos.se
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -59,13 +62,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -12107,6 +12107,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3321, "Lenovo ThinkCentre M70 Gen4", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x331b, "Lenovo ThinkCentre M90 Gen4", ALC897_FIXUP_HEADSET_MIC_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3364, "Lenovo ThinkCentre M90 Gen5", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
+@@ -10182,6 +10182,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+ 	SND_PCI_QUIRK(0x8086, 0x3038, "Intel NUC 13", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 
+ #if 0
+ 	/* Below is a quirk table taken from the old code.
 
 
