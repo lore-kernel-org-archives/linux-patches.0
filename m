@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929F7FBE1;
-	Mon, 11 Dec 2023 18:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC85FBE1;
+	Mon, 11 Dec 2023 18:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCZMA7gj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1900CC433C8;
-	Mon, 11 Dec 2023 18:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5TVULot"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A82C433C7;
+	Mon, 11 Dec 2023 18:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319471;
-	bh=C7C5FOREJD0sQ01PTu1QMm9UkXbJkwNrr8omFM55U6c=;
+	s=korg; t=1702319474;
+	bh=75UYJQIGRXmJtrUf7d+nqvraSoBs5yW78KJ0uS/m+wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iCZMA7gjxYA+4ploLCBAwe0rdfAjOPUbpMjytI91ZcGpoSIdpWK9L4WJeXSFtZyHC
-	 8ghAG9fjUldfqTzRwQ+GaHt1aV7hvPhwndAsoI7OWZ1IYn4+7M+nXWR+aFkiNVARhL
-	 2RmSv7E7wK72MfZb71ynqDjqtIU0fBjGHJS/a4eg=
+	b=B5TVULotKq9mrzrP/zPafKN95jZYcaPZBDdynV0XcnZ2y/2BqypQkB+T+C3I5sTQt
+	 NrYPJ62kT8BiucveKH6GtM2YAAwspaZQlpGCqAyc+VD65Nm+wKgF4ai2wW6f3HQw+5
+	 lHxfmx9uKPqBx9UVT6yvG2rU2jEZ/55znEwTw6YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 118/244] scsi: be2iscsi: Fix a memleak in beiscsi_init_wrb_handle()
-Date: Mon, 11 Dec 2023 19:20:11 +0100
-Message-ID: <20231211182051.092867378@linuxfoundation.org>
+Subject: [PATCH 6.6 119/244] arm64: dts: imx8-ss-lsio: Add PWM interrupts
+Date: Mon, 11 Dec 2023 19:20:12 +0100
+Message-ID: <20231211182051.145316201@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,35 +42,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 235f2b548d7f4ac5931d834f05d3f7f5166a2e72 ]
+[ Upstream commit 6c32f75d67a8c1ea94295234db7c11a29c189e6f ]
 
-When an error occurs in the for loop of beiscsi_init_wrb_handle(), we
-should free phwi_ctxt->be_wrbq before returning an error code to prevent
-potential memleak.
+The PWM interrupt is mandatory per imx-pwm.yaml.
 
-Fixes: a7909b396ba7 ("[SCSI] be2iscsi: Fix dynamic CID allocation Mechanism in driver")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20231123081941.24854-1-dinghao.liu@zju.edu.cn
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Add them.
+
+This also fixes the followig schema warning:
+
+imx8qm-apalis-v1.1-ixora-v1.2.dtb: pwm@5d000000: 'oneOf' conditional failed, one must be fixed:
+	'interrupts' is a required property
+	'interrupts-extended' is a required property
+	from schema $id: http://devicetree.org/schemas/pwm/imx-pwm.yaml#
+
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Stable-dep-of: d863a2f4f475 ("arm64: dts: freescale: imx8-ss-lsio: Fix #pwm-cells")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/be2iscsi/be_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/scsi/be2iscsi/be_main.c b/drivers/scsi/be2iscsi/be_main.c
-index e48f14ad6dfd8..06acb5ff609ee 100644
---- a/drivers/scsi/be2iscsi/be_main.c
-+++ b/drivers/scsi/be2iscsi/be_main.c
-@@ -2710,6 +2710,7 @@ static int beiscsi_init_wrb_handle(struct beiscsi_hba *phba)
- 		kfree(pwrb_context->pwrb_handle_base);
- 		kfree(pwrb_context->pwrb_handle_basestd);
- 	}
-+	kfree(phwi_ctxt->be_wrbq);
- 	return -ENOMEM;
- }
+diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi
+index ea8c93757521b..7b8bbf5e6a867 100644
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-lsio.dtsi
+@@ -37,6 +37,7 @@ lsio_subsys: bus@5d000000 {
+ 		assigned-clocks = <&clk IMX_SC_R_PWM_0 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+ 		#pwm-cells = <2>;
++		interrupts = <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -49,6 +50,7 @@ lsio_subsys: bus@5d000000 {
+ 		assigned-clocks = <&clk IMX_SC_R_PWM_1 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+ 		#pwm-cells = <2>;
++		interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -61,6 +63,7 @@ lsio_subsys: bus@5d000000 {
+ 		assigned-clocks = <&clk IMX_SC_R_PWM_2 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+ 		#pwm-cells = <2>;
++		interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
+ 		status = "disabled";
+ 	};
+ 
+@@ -73,6 +76,7 @@ lsio_subsys: bus@5d000000 {
+ 		assigned-clocks = <&clk IMX_SC_R_PWM_3 IMX_SC_PM_CLK_PER>;
+ 		assigned-clock-rates = <24000000>;
+ 		#pwm-cells = <2>;
++		interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
+ 		status = "disabled";
+ 	};
  
 -- 
 2.42.0
