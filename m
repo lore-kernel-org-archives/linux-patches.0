@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE545101A;
-	Mon, 11 Dec 2023 18:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5861B5101A;
+	Mon, 11 Dec 2023 18:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPILb3bu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF5DC433C8;
-	Mon, 11 Dec 2023 18:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRKv5g4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF14C433C8;
+	Mon, 11 Dec 2023 18:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319295;
-	bh=yGDRNJywu4UU1bVLozROzbUQIVfS7ylUkEr3tkjYq0Y=;
+	s=korg; t=1702319298;
+	bh=Jr1auXDIwuHnQsbfT9STI5fEA4kuff2c8k12F5n0gsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPILb3bujeehoVOh2n9bF12Qsg3DbUwbhxKk2FWHkDo4RK7bueVdVhk91AIAwB0we
-	 7+5kE6VeAnMD2ew0jJQTkFyZklXtGJOXp/qfouhdMwdrX/Y44ShOGtXNGMai/HdkNn
-	 I54oHRgOZOOS7h4jUsRZJXNHDBbHgWRoX8g/YuaU=
+	b=XRKv5g4Tx8CVJR5EbcUYXfgE12sAtzWBea9TM/KGgHDt9CGXaGCze9AhaA7XQtv3h
+	 miaSHfTHkPY9WC4168/GfOsuGvR8r5E9xBoD7Ki0Wv4D1f1Y7ttXF6YRp6+BlBgdZP
+	 tkc86WedBCvje1pH41CuXHrm1ywuUZ4AB09BMmB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Maximov <daniil31415it@gmail.com>,
-	Igor Russkikh <irusskikh@marvell.com>,
+	Yonglong Liu <liuyonglong@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/244] net: atlantic: Fix NULL dereference of skb pointer in
-Date: Mon, 11 Dec 2023 19:19:06 +0100
-Message-ID: <20231211182048.189301612@linuxfoundation.org>
+Subject: [PATCH 6.6 054/244] net: hns: fix wrong head when modify the tx feature when sending packets
+Date: Mon, 11 Dec 2023 19:19:07 +0100
+Message-ID: <20231211182048.234190405@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,146 +44,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Maximov <daniil31415it@gmail.com>
+From: Yonglong Liu <liuyonglong@huawei.com>
 
-[ Upstream commit cbe860be36095e68e4e5561ab43610982fb429fd ]
+[ Upstream commit 84757d0839451b20b11e993128f0a77393ca50c1 ]
 
-If is_ptp_ring == true in the loop of __aq_ring_xdp_clean function,
-then a timestamp is stored from a packet in a field of skb object,
-which is not allocated at the moment of the call (skb == NULL).
+Upon changing the tx feature, the hns driver will modify the
+maybe_stop_tx() and fill_desc() functions, if the modify happens
+during packet sending, will cause the hardware and software
+pointers do not match, and the port can not work anymore.
 
-Generalize aq_ptp_extract_ts and other affected functions so they don't
-work with struct sk_buff*, but with struct skb_shared_hwtstamps*.
+This patch deletes the maybe_stop_tx() and fill_desc() functions
+modification when setting tx feature, and use the skb_is_gro()
+to determine which functions to use in the tx path.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE
-
-Fixes: 26efaef759a1 ("net: atlantic: Implement xdp data plane")
-Signed-off-by: Daniil Maximov <daniil31415it@gmail.com>
-Reviewed-by: Igor Russkikh <irusskikh@marvell.com>
-Link: https://lore.kernel.org/r/20231204085810.1681386-1-daniil31415it@gmail.com
+Fixes: 38f616da1c28 ("net:hns: Add support of ethtool TSO set option for Hip06 in HNS")
+Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/aquantia/atlantic/aq_ptp.c    | 10 +++++-----
- .../net/ethernet/aquantia/atlantic/aq_ptp.h    |  4 ++--
- .../net/ethernet/aquantia/atlantic/aq_ring.c   | 18 ++++++++++++------
- 3 files changed, 19 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/hisilicon/hns/hns_enet.c | 53 +++++++++++--------
+ drivers/net/ethernet/hisilicon/hns/hns_enet.h |  3 +-
+ 2 files changed, 33 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
-index 80b44043e6c53..28c9b6f1a54f1 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
-@@ -553,17 +553,17 @@ void aq_ptp_tx_hwtstamp(struct aq_nic_s *aq_nic, u64 timestamp)
+diff --git a/drivers/net/ethernet/hisilicon/hns/hns_enet.c b/drivers/net/ethernet/hisilicon/hns/hns_enet.c
+index 7cf10d1e2b311..85722afe21770 100644
+--- a/drivers/net/ethernet/hisilicon/hns/hns_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns/hns_enet.c
+@@ -142,7 +142,8 @@ MODULE_DEVICE_TABLE(acpi, hns_enet_acpi_match);
  
- /* aq_ptp_rx_hwtstamp - utility function which checks for RX time stamp
-  * @adapter: pointer to adapter struct
-- * @skb: particular skb to send timestamp with
-+ * @shhwtstamps: particular skb_shared_hwtstamps to save timestamp
-  *
-  * if the timestamp is valid, we convert it into the timecounter ns
-  * value, then store that result into the hwtstamps structure which
-  * is passed up the network stack
-  */
--static void aq_ptp_rx_hwtstamp(struct aq_ptp_s *aq_ptp, struct sk_buff *skb,
-+static void aq_ptp_rx_hwtstamp(struct aq_ptp_s *aq_ptp, struct skb_shared_hwtstamps *shhwtstamps,
- 			       u64 timestamp)
+ static void fill_desc(struct hnae_ring *ring, void *priv,
+ 		      int size, dma_addr_t dma, int frag_end,
+-		      int buf_num, enum hns_desc_type type, int mtu)
++		      int buf_num, enum hns_desc_type type, int mtu,
++		      bool is_gso)
  {
- 	timestamp -= atomic_read(&aq_ptp->offset_ingress);
--	aq_ptp_convert_to_hwtstamp(aq_ptp, skb_hwtstamps(skb), timestamp);
-+	aq_ptp_convert_to_hwtstamp(aq_ptp, shhwtstamps, timestamp);
- }
- 
- void aq_ptp_hwtstamp_config_get(struct aq_ptp_s *aq_ptp,
-@@ -639,7 +639,7 @@ bool aq_ptp_ring(struct aq_nic_s *aq_nic, struct aq_ring_s *ring)
- 	       &aq_ptp->ptp_rx == ring || &aq_ptp->hwts_rx == ring;
- }
- 
--u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct sk_buff *skb, u8 *p,
-+u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct skb_shared_hwtstamps *shhwtstamps, u8 *p,
- 		      unsigned int len)
- {
- 	struct aq_ptp_s *aq_ptp = aq_nic->aq_ptp;
-@@ -648,7 +648,7 @@ u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct sk_buff *skb, u8 *p,
- 						   p, len, &timestamp);
- 
- 	if (ret > 0)
--		aq_ptp_rx_hwtstamp(aq_ptp, skb, timestamp);
-+		aq_ptp_rx_hwtstamp(aq_ptp, shhwtstamps, timestamp);
- 
- 	return ret;
- }
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.h b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.h
-index 28ccb7ca2df9e..210b723f22072 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.h
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.h
-@@ -67,7 +67,7 @@ int aq_ptp_hwtstamp_config_set(struct aq_ptp_s *aq_ptp,
- /* Return either ring is belong to PTP or not*/
- bool aq_ptp_ring(struct aq_nic_s *aq_nic, struct aq_ring_s *ring);
- 
--u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct sk_buff *skb, u8 *p,
-+u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct skb_shared_hwtstamps *shhwtstamps, u8 *p,
- 		      unsigned int len);
- 
- struct ptp_clock *aq_ptp_get_ptp_clock(struct aq_ptp_s *aq_ptp);
-@@ -143,7 +143,7 @@ static inline bool aq_ptp_ring(struct aq_nic_s *aq_nic, struct aq_ring_s *ring)
- }
- 
- static inline u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic,
--				    struct sk_buff *skb, u8 *p,
-+				    struct skb_shared_hwtstamps *shhwtstamps, u8 *p,
- 				    unsigned int len)
- {
+ 	struct hnae_desc *desc = &ring->desc[ring->next_to_use];
+ 	struct hnae_desc_cb *desc_cb = &ring->desc_cb[ring->next_to_use];
+@@ -275,6 +276,15 @@ static int hns_nic_maybe_stop_tso(
  	return 0;
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-index 4de22eed099a8..694daeaf3e615 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -647,7 +647,7 @@ static int __aq_ring_rx_clean(struct aq_ring_s *self, struct napi_struct *napi,
- 		}
- 		if (is_ptp_ring)
- 			buff->len -=
--				aq_ptp_extract_ts(self->aq_nic, skb,
-+				aq_ptp_extract_ts(self->aq_nic, skb_hwtstamps(skb),
- 						  aq_buf_vaddr(&buff->rxdata),
- 						  buff->len);
+ }
  
-@@ -742,6 +742,8 @@ static int __aq_ring_xdp_clean(struct aq_ring_s *rx_ring,
- 		struct aq_ring_buff_s *buff = &rx_ring->buff_ring[rx_ring->sw_head];
- 		bool is_ptp_ring = aq_ptp_ring(rx_ring->aq_nic, rx_ring);
- 		struct aq_ring_buff_s *buff_ = NULL;
-+		u16 ptp_hwtstamp_len = 0;
-+		struct skb_shared_hwtstamps shhwtstamps;
- 		struct sk_buff *skb = NULL;
- 		unsigned int next_ = 0U;
- 		struct xdp_buff xdp;
-@@ -810,11 +812,12 @@ static int __aq_ring_xdp_clean(struct aq_ring_s *rx_ring,
- 		hard_start = page_address(buff->rxdata.page) +
- 			     buff->rxdata.pg_off - rx_ring->page_offset;
- 
--		if (is_ptp_ring)
--			buff->len -=
--				aq_ptp_extract_ts(rx_ring->aq_nic, skb,
--						  aq_buf_vaddr(&buff->rxdata),
--						  buff->len);
-+		if (is_ptp_ring) {
-+			ptp_hwtstamp_len = aq_ptp_extract_ts(rx_ring->aq_nic, &shhwtstamps,
-+							     aq_buf_vaddr(&buff->rxdata),
-+							     buff->len);
-+			buff->len -= ptp_hwtstamp_len;
-+		}
- 
- 		xdp_init_buff(&xdp, frame_sz, &rx_ring->xdp_rxq);
- 		xdp_prepare_buff(&xdp, hard_start, rx_ring->page_offset,
-@@ -834,6 +837,9 @@ static int __aq_ring_xdp_clean(struct aq_ring_s *rx_ring,
- 		if (IS_ERR(skb) || !skb)
- 			continue;
- 
-+		if (ptp_hwtstamp_len > 0)
-+			*skb_hwtstamps(skb) = shhwtstamps;
++static int hns_nic_maybe_stop_tx_v2(struct sk_buff **out_skb, int *bnum,
++				    struct hnae_ring *ring)
++{
++	if (skb_is_gso(*out_skb))
++		return hns_nic_maybe_stop_tso(out_skb, bnum, ring);
++	else
++		return hns_nic_maybe_stop_tx(out_skb, bnum, ring);
++}
 +
- 		if (buff->is_vlan)
- 			__vlan_hwaccel_put_tag(skb, htons(ETH_P_8021Q),
- 					       buff->vlan_rx_tag);
+ static void fill_tso_desc(struct hnae_ring *ring, void *priv,
+ 			  int size, dma_addr_t dma, int frag_end,
+ 			  int buf_num, enum hns_desc_type type, int mtu)
+@@ -300,6 +310,19 @@ static void fill_tso_desc(struct hnae_ring *ring, void *priv,
+ 				mtu);
+ }
+ 
++static void fill_desc_v2(struct hnae_ring *ring, void *priv,
++			 int size, dma_addr_t dma, int frag_end,
++			 int buf_num, enum hns_desc_type type, int mtu,
++			 bool is_gso)
++{
++	if (is_gso)
++		fill_tso_desc(ring, priv, size, dma, frag_end, buf_num, type,
++			      mtu);
++	else
++		fill_v2_desc(ring, priv, size, dma, frag_end, buf_num, type,
++			     mtu);
++}
++
+ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
+ 				struct sk_buff *skb,
+ 				struct hns_nic_ring_data *ring_data)
+@@ -313,6 +336,7 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
+ 	int seg_num;
+ 	dma_addr_t dma;
+ 	int size, next_to_use;
++	bool is_gso;
+ 	int i;
+ 
+ 	switch (priv->ops.maybe_stop_tx(&skb, &buf_num, ring)) {
+@@ -339,8 +363,9 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
+ 		ring->stats.sw_err_cnt++;
+ 		goto out_err_tx_ok;
+ 	}
++	is_gso = skb_is_gso(skb);
+ 	priv->ops.fill_desc(ring, skb, size, dma, seg_num == 1 ? 1 : 0,
+-			    buf_num, DESC_TYPE_SKB, ndev->mtu);
++			    buf_num, DESC_TYPE_SKB, ndev->mtu, is_gso);
+ 
+ 	/* fill the fragments */
+ 	for (i = 1; i < seg_num; i++) {
+@@ -354,7 +379,7 @@ netdev_tx_t hns_nic_net_xmit_hw(struct net_device *ndev,
+ 		}
+ 		priv->ops.fill_desc(ring, skb_frag_page(frag), size, dma,
+ 				    seg_num - 1 == i ? 1 : 0, buf_num,
+-				    DESC_TYPE_PAGE, ndev->mtu);
++				    DESC_TYPE_PAGE, ndev->mtu, is_gso);
+ 	}
+ 
+ 	/*complete translate all packets*/
+@@ -1776,15 +1801,6 @@ static int hns_nic_set_features(struct net_device *netdev,
+ 			netdev_info(netdev, "enet v1 do not support tso!\n");
+ 		break;
+ 	default:
+-		if (features & (NETIF_F_TSO | NETIF_F_TSO6)) {
+-			priv->ops.fill_desc = fill_tso_desc;
+-			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tso;
+-			/* The chip only support 7*4096 */
+-			netif_set_tso_max_size(netdev, 7 * 4096);
+-		} else {
+-			priv->ops.fill_desc = fill_v2_desc;
+-			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
+-		}
+ 		break;
+ 	}
+ 	netdev->features = features;
+@@ -2159,16 +2175,9 @@ static void hns_nic_set_priv_ops(struct net_device *netdev)
+ 		priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
+ 	} else {
+ 		priv->ops.get_rxd_bnum = get_v2rx_desc_bnum;
+-		if ((netdev->features & NETIF_F_TSO) ||
+-		    (netdev->features & NETIF_F_TSO6)) {
+-			priv->ops.fill_desc = fill_tso_desc;
+-			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tso;
+-			/* This chip only support 7*4096 */
+-			netif_set_tso_max_size(netdev, 7 * 4096);
+-		} else {
+-			priv->ops.fill_desc = fill_v2_desc;
+-			priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx;
+-		}
++		priv->ops.fill_desc = fill_desc_v2;
++		priv->ops.maybe_stop_tx = hns_nic_maybe_stop_tx_v2;
++		netif_set_tso_max_size(netdev, 7 * 4096);
+ 		/* enable tso when init
+ 		 * control tso on/off through TSE bit in bd
+ 		 */
+diff --git a/drivers/net/ethernet/hisilicon/hns/hns_enet.h b/drivers/net/ethernet/hisilicon/hns/hns_enet.h
+index ffa9d6573f54b..3f3ee032f631c 100644
+--- a/drivers/net/ethernet/hisilicon/hns/hns_enet.h
++++ b/drivers/net/ethernet/hisilicon/hns/hns_enet.h
+@@ -44,7 +44,8 @@ struct hns_nic_ring_data {
+ struct hns_nic_ops {
+ 	void (*fill_desc)(struct hnae_ring *ring, void *priv,
+ 			  int size, dma_addr_t dma, int frag_end,
+-			  int buf_num, enum hns_desc_type type, int mtu);
++			  int buf_num, enum hns_desc_type type, int mtu,
++			  bool is_gso);
+ 	int (*maybe_stop_tx)(struct sk_buff **out_skb,
+ 			     int *bnum, struct hnae_ring *ring);
+ 	void (*get_rxd_bnum)(u32 bnum_flag, int *out_bnum);
 -- 
 2.42.0
 
