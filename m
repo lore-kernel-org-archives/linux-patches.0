@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFF35102A;
-	Mon, 11 Dec 2023 18:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCEE5102A;
+	Mon, 11 Dec 2023 18:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLJECWRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1414AC433C7;
-	Mon, 11 Dec 2023 18:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P01Iphn1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64AEC433C7;
+	Mon, 11 Dec 2023 18:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320493;
-	bh=O/wXbY0A7F1klIb2R4ofANJA6t6nQHXV4++AyfPz3nQ=;
+	s=korg; t=1702320496;
+	bh=7F9rTWOEco+yUe7rKtRkaOux2+BGpmQiJT+mn4mGtI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLJECWRY/rUu2gOYe0mTTXTVx5TLgyeXYzUwp+9PYGMOu22FZDTgW9cHQP2pJKi/o
-	 yL8bS2iE3w6JVI24iPhEMDrV5+W9QT8CsCmi60djSiefa2ysYAc0GH6rF31pUnpUG+
-	 /4wmsiJ9De2TB7GrHijj52gPyMIfuoeSov8lL3XA=
+	b=P01Iphn1CJi4toOOklRWKffigtoFnu5ewR9n/BYr38L0jpLxppkjrC9cHoJhmYShn
+	 +w86jnR847N7eOi4higIKdU3Td1rHVRUWxO3YptlMWcQZxnB+kJVrFYK4Ul2Yzl54R
+	 qXkSxZTeh/WBK8I160fogi3qBcNDrrXyGWjGfb68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Sowden <jeremy@azazel.net>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <zenczykowski@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/194] netfilter: nft_exthdr: add boolean DCCP option matching
-Date: Mon, 11 Dec 2023 19:20:43 +0100
-Message-ID: <20231211182038.915845900@linuxfoundation.org>
+Subject: [PATCH 6.1 054/194] netfilter: nf_tables: fix exist matching on bigendian arches
+Date: Mon, 11 Dec 2023 19:20:44 +0100
+Message-ID: <20231211182038.961340979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -36,194 +38,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeremy Sowden <jeremy@azazel.net>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit b9f9a485fb0eb80b0e2b90410b28cbb9b0e85687 ]
+[ Upstream commit 63331e37fb227e796894b31d713697612c8dee7f ]
 
-The xt_dccp iptables module supports the matching of DCCP packets based
-on the presence or absence of DCCP options.  Extend nft_exthdr to add
-this functionality to nftables.
+Maze reports "tcp option fastopen exists" fails to match on
+OpenWrt 22.03.5, r20134-5f15225c1e (5.10.176) router.
 
-Link: https://bugzilla.netfilter.org/show_bug.cgi?id=930
-Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+"tcp option fastopen exists" translates to:
+inet
+  [ exthdr load tcpopt 1b @ 34 + 0 present => reg 1 ]
+  [ cmp eq reg 1 0x00000001 ]
+
+.. but existing nft userspace generates a 1-byte compare.
+
+On LSB (x86), "*reg32 = 1" is identical to nft_reg_store8(reg32, 1), but
+not on MSB, which will place the 1 last. IOW, on bigendian aches the cmp8
+is awalys false.
+
+Make sure we store this in a consistent fashion, so existing userspace
+will also work on MSB (bigendian).
+
+Regardless of this patch we can also change nft userspace to generate
+'reg32 == 0' and 'reg32 != 0' instead of u8 == 0 // u8 == 1 when
+adding 'option x missing/exists' expressions as well.
+
+Fixes: 3c1fece8819e ("netfilter: nft_exthdr: Allow checking TCP option presence, too")
+Fixes: b9f9a485fb0e ("netfilter: nft_exthdr: add boolean DCCP option matching")
+Fixes: 055c4b34b94f ("netfilter: nft_fib: Support existence check")
+Reported-by: Maciej Żenczykowski <zenczykowski@gmail.com>
+Closes: https://lore.kernel.org/netfilter-devel/CAHo-OozyEqHUjL2-ntATzeZOiuftLWZ_HU6TOM_js4qLfDEAJg@mail.gmail.com/
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 63331e37fb22 ("netfilter: nf_tables: fix 'exist' matching on bigendian arches")
+Acked-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/netfilter/nf_tables.h |   2 +
- net/netfilter/nft_exthdr.c               | 106 +++++++++++++++++++++++
- 2 files changed, 108 insertions(+)
+ net/netfilter/nft_exthdr.c | 4 ++--
+ net/netfilter/nft_fib.c    | 8 ++++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/include/uapi/linux/netfilter/nf_tables.h b/include/uapi/linux/netfilter/nf_tables.h
-index 466fd3f4447c2..af8f4c304d272 100644
---- a/include/uapi/linux/netfilter/nf_tables.h
-+++ b/include/uapi/linux/netfilter/nf_tables.h
-@@ -816,12 +816,14 @@ enum nft_exthdr_flags {
-  * @NFT_EXTHDR_OP_TCP: match against tcp options
-  * @NFT_EXTHDR_OP_IPV4: match against ipv4 options
-  * @NFT_EXTHDR_OP_SCTP: match against sctp chunks
-+ * @NFT_EXTHDR_OP_DCCP: match against dccp otions
-  */
- enum nft_exthdr_op {
- 	NFT_EXTHDR_OP_IPV6,
- 	NFT_EXTHDR_OP_TCPOPT,
- 	NFT_EXTHDR_OP_IPV4,
- 	NFT_EXTHDR_OP_SCTP,
-+	NFT_EXTHDR_OP_DCCP,
- 	__NFT_EXTHDR_OP_MAX
- };
- #define NFT_EXTHDR_OP_MAX	(__NFT_EXTHDR_OP_MAX - 1)
 diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index efb50c2b41f32..f96706de1ad05 100644
+index f96706de1ad05..de588f7b69c45 100644
 --- a/net/netfilter/nft_exthdr.c
 +++ b/net/netfilter/nft_exthdr.c
-@@ -10,6 +10,7 @@
- #include <linux/netlink.h>
- #include <linux/netfilter.h>
- #include <linux/netfilter/nf_tables.h>
-+#include <linux/dccp.h>
- #include <linux/sctp.h>
- #include <net/netfilter/nf_tables_core.h>
- #include <net/netfilter/nf_tables.h>
-@@ -409,6 +410,82 @@ static void nft_exthdr_sctp_eval(const struct nft_expr *expr,
- 		regs->verdict.code = NFT_BREAK;
- }
+@@ -215,7 +215,7 @@ static void nft_exthdr_tcp_eval(const struct nft_expr *expr,
  
-+static void nft_exthdr_dccp_eval(const struct nft_expr *expr,
-+				 struct nft_regs *regs,
-+				 const struct nft_pktinfo *pkt)
-+{
-+	struct nft_exthdr *priv = nft_expr_priv(expr);
-+	unsigned int thoff, dataoff, optoff, optlen, i;
-+	u32 *dest = &regs->data[priv->dreg];
-+	const struct dccp_hdr *dh;
-+	struct dccp_hdr _dh;
-+
-+	if (pkt->tprot != IPPROTO_DCCP || pkt->fragoff)
-+		goto err;
-+
-+	thoff = nft_thoff(pkt);
-+
-+	dh = skb_header_pointer(pkt->skb, thoff, sizeof(_dh), &_dh);
-+	if (!dh)
-+		goto err;
-+
-+	dataoff = dh->dccph_doff * sizeof(u32);
-+	optoff = __dccp_hdr_len(dh);
-+	if (dataoff <= optoff)
-+		goto err;
-+
-+	optlen = dataoff - optoff;
-+
-+	for (i = 0; i < optlen; ) {
-+		/* Options 0 (DCCPO_PADDING) - 31 (DCCPO_MAX_RESERVED) are 1B in
-+		 * the length; the remaining options are at least 2B long.  In
-+		 * all cases, the first byte contains the option type.  In
-+		 * multi-byte options, the second byte contains the option
-+		 * length, which must be at least two: 1 for the type plus 1 for
-+		 * the length plus 0-253 for any following option data.  We
-+		 * aren't interested in the option data, only the type and the
-+		 * length, so we don't need to read more than two bytes at a
-+		 * time.
-+		 */
-+		unsigned int buflen = optlen - i;
-+		u8 buf[2], *bufp;
-+		u8 type, len;
-+
-+		if (buflen > sizeof(buf))
-+			buflen = sizeof(buf);
-+
-+		bufp = skb_header_pointer(pkt->skb, thoff + optoff + i, buflen,
-+					  &buf);
-+		if (!bufp)
-+			goto err;
-+
-+		type = bufp[0];
-+
-+		if (type == priv->type) {
-+			*dest = 1;
-+			return;
-+		}
-+
-+		if (type <= DCCPO_MAX_RESERVED) {
-+			i++;
-+			continue;
-+		}
-+
-+		if (buflen < 2)
-+			goto err;
-+
-+		len = bufp[1];
-+
-+		if (len < 2)
-+			goto err;
-+
-+		i += len;
-+	}
-+
-+err:
-+	*dest = 0;
-+}
-+
- static const struct nla_policy nft_exthdr_policy[NFTA_EXTHDR_MAX + 1] = {
- 	[NFTA_EXTHDR_DREG]		= { .type = NLA_U32 },
- 	[NFTA_EXTHDR_TYPE]		= { .type = NLA_U8 },
-@@ -560,6 +637,22 @@ static int nft_exthdr_ipv4_init(const struct nft_ctx *ctx,
- 	return 0;
- }
+ 		offset = i + priv->offset;
+ 		if (priv->flags & NFT_EXTHDR_F_PRESENT) {
+-			*dest = 1;
++			nft_reg_store8(dest, 1);
+ 		} else {
+ 			if (priv->len % NFT_REG32_SIZE)
+ 				dest[priv->len / NFT_REG32_SIZE] = 0;
+@@ -462,7 +462,7 @@ static void nft_exthdr_dccp_eval(const struct nft_expr *expr,
+ 		type = bufp[0];
  
-+static int nft_exthdr_dccp_init(const struct nft_ctx *ctx,
-+				const struct nft_expr *expr,
-+				const struct nlattr * const tb[])
-+{
-+	struct nft_exthdr *priv = nft_expr_priv(expr);
-+	int err = nft_exthdr_init(ctx, expr, tb);
-+
-+	if (err < 0)
-+		return err;
-+
-+	if (!(priv->flags & NFT_EXTHDR_F_PRESENT))
-+		return -EOPNOTSUPP;
-+
-+	return 0;
-+}
-+
- static int nft_exthdr_dump_common(struct sk_buff *skb, const struct nft_exthdr *priv)
- {
- 	if (nla_put_u8(skb, NFTA_EXTHDR_TYPE, priv->type))
-@@ -686,6 +779,15 @@ static const struct nft_expr_ops nft_exthdr_sctp_ops = {
- 	.reduce		= nft_exthdr_reduce,
- };
+ 		if (type == priv->type) {
+-			*dest = 1;
++			nft_reg_store8(dest, 1);
+ 			return;
+ 		}
  
-+static const struct nft_expr_ops nft_exthdr_dccp_ops = {
-+	.type		= &nft_exthdr_type,
-+	.size		= NFT_EXPR_SIZE(sizeof(struct nft_exthdr)),
-+	.eval		= nft_exthdr_dccp_eval,
-+	.init		= nft_exthdr_dccp_init,
-+	.dump		= nft_exthdr_dump,
-+	.reduce		= nft_exthdr_reduce,
-+};
+diff --git a/net/netfilter/nft_fib.c b/net/netfilter/nft_fib.c
+index 1f12d7ade606c..5748415f74d0b 100644
+--- a/net/netfilter/nft_fib.c
++++ b/net/netfilter/nft_fib.c
+@@ -144,11 +144,15 @@ void nft_fib_store_result(void *reg, const struct nft_fib *priv,
+ 	switch (priv->result) {
+ 	case NFT_FIB_RESULT_OIF:
+ 		index = dev ? dev->ifindex : 0;
+-		*dreg = (priv->flags & NFTA_FIB_F_PRESENT) ? !!index : index;
++		if (priv->flags & NFTA_FIB_F_PRESENT)
++			nft_reg_store8(dreg, !!index);
++		else
++			*dreg = index;
 +
- static const struct nft_expr_ops *
- nft_exthdr_select_ops(const struct nft_ctx *ctx,
- 		      const struct nlattr * const tb[])
-@@ -720,6 +822,10 @@ nft_exthdr_select_ops(const struct nft_ctx *ctx,
- 		if (tb[NFTA_EXTHDR_DREG])
- 			return &nft_exthdr_sctp_ops;
  		break;
-+	case NFT_EXTHDR_OP_DCCP:
-+		if (tb[NFTA_EXTHDR_DREG])
-+			return &nft_exthdr_dccp_ops;
-+		break;
- 	}
- 
- 	return ERR_PTR(-EOPNOTSUPP);
+ 	case NFT_FIB_RESULT_OIFNAME:
+ 		if (priv->flags & NFTA_FIB_F_PRESENT)
+-			*dreg = !!dev;
++			nft_reg_store8(dreg, !!dev);
+ 		else
+ 			strncpy(reg, dev ? dev->name : "", IFNAMSIZ);
+ 		break;
 -- 
 2.42.0
 
