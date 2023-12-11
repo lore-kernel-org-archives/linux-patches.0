@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC599524B0;
-	Mon, 11 Dec 2023 18:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CC051C47;
+	Mon, 11 Dec 2023 18:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHWD0HwE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C646C433CD;
-	Mon, 11 Dec 2023 18:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzbR2VjJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D949C433CB;
+	Mon, 11 Dec 2023 18:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321102;
-	bh=vW2KpRBg2icfGq0yyYJha14PqXKRvP83KkIQQK2FqNc=;
+	s=korg; t=1702321105;
+	bh=CS/6qCBKofk9WTr7y5UID7Xfi9oCXNZQh59JhQMpLng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eHWD0HwEbeRjiw84Z8VNyMQF+9Cs9jpCi/JSSrRr9YtmnbJwxAx6InlUqOYjScyIi
-	 P0ULpPlCDnecTvE5f8bXMnVKek7kaItVkL2wpdgILU/cxumh3utRr+IjPMBqCWRbbe
-	 lsIQg+HXg1a87Ro7r//6kZLzukphKWA6NDffZL00=
+	b=DzbR2VjJeKOBY5/O7zfjO1i2QSGJO2HH0Q8fNcygvb2sficQjMldbjhNHhXXbmSa0
+	 +H0L0pdy2i6pJQAFZdZbeTp1xvfir1mO+11DvnfvB5ho1C5Ey1ypkmdFabE1j2VGW0
+	 jd3NXDbvr7fq2zmB3lCsqmXHaERgQA8DPDgZZa7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 5.15 111/141] tools headers UAPI: Sync linux/perf_event.h with the kernel sources
-Date: Mon, 11 Dec 2023 19:22:50 +0100
-Message-ID: <20231211182031.367754771@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 112/141] arm64: dts: mediatek: align thermal zone node names with dtschema
+Date: Mon, 11 Dec 2023 19:22:51 +0100
+Message-ID: <20231211182031.415828035@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -45,54 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 65ba872a6971c11ceb342c3330f059289c0e6bdb upstream.
+[ Upstream commit 624f1806a7c3f8061641a1f3e7c0dfa73e82fb10 ]
 
-To pick the trivial change in:
+Align the name of thermal zone node to dtschema to fix warnings like:
 
-  119a784c81270eb8 ("perf/core: Add a new read format to get a number of lost samples")
+  arch/arm64/boot/dts/mediatek/mt8173-elm.dt.yaml:
+    thermal-zones: 'cpu_thermal' does not match any of the regexes: '^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$', 'pinctrl-[0-9]+'
 
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220819003644.508916-2-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20210820081616.83674-2-krzysztof.kozlowski@canonical.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Stable-dep-of: 5a60d6343969 ("arm64: dts: mediatek: mt8183: Move thermal-zones to the root node")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/uapi/linux/perf_event.h |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8173.dtsi | 2 +-
+ arch/arm64/boot/dts/mediatek/mt8183.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/include/uapi/linux/perf_event.h
-+++ b/tools/include/uapi/linux/perf_event.h
-@@ -301,6 +301,7 @@ enum {
-  *	  { u64		time_enabled; } && PERF_FORMAT_TOTAL_TIME_ENABLED
-  *	  { u64		time_running; } && PERF_FORMAT_TOTAL_TIME_RUNNING
-  *	  { u64		id;           } && PERF_FORMAT_ID
-+ *	  { u64		lost;         } && PERF_FORMAT_LOST
-  *	} && !PERF_FORMAT_GROUP
-  *
-  *	{ u64		nr;
-@@ -308,6 +309,7 @@ enum {
-  *	  { u64		time_running; } && PERF_FORMAT_TOTAL_TIME_RUNNING
-  *	  { u64		value;
-  *	    { u64	id;           } && PERF_FORMAT_ID
-+ *	    { u64	lost;         } && PERF_FORMAT_LOST
-  *	  }		cntr[nr];
-  *	} && PERF_FORMAT_GROUP
-  * };
-@@ -317,8 +319,9 @@ enum perf_event_read_format {
- 	PERF_FORMAT_TOTAL_TIME_RUNNING		= 1U << 1,
- 	PERF_FORMAT_ID				= 1U << 2,
- 	PERF_FORMAT_GROUP			= 1U << 3,
-+	PERF_FORMAT_LOST			= 1U << 4,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8173.dtsi b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
+index d9e005ae5bb09..c71a5155702d2 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8173.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8173.dtsi
+@@ -273,7 +273,7 @@ cpum_ck: oscillator2 {
+ 	};
  
--	PERF_FORMAT_MAX = 1U << 4,		/* non-ABI */
-+	PERF_FORMAT_MAX = 1U << 5,		/* non-ABI */
- };
+ 	thermal-zones {
+-		cpu_thermal: cpu_thermal {
++		cpu_thermal: cpu-thermal {
+ 			polling-delay-passive = <1000>; /* milliseconds */
+ 			polling-delay = <1000>; /* milliseconds */
  
- #define PERF_ATTR_SIZE_VER0	64	/* sizeof first published struct */
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+index 81fde34ffd52a..ac05284cce867 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
+@@ -767,7 +767,7 @@ thermal: thermal@1100b000 {
+ 		};
+ 
+ 		thermal_zones: thermal-zones {
+-			cpu_thermal: cpu_thermal {
++			cpu_thermal: cpu-thermal {
+ 				polling-delay-passive = <100>;
+ 				polling-delay = <500>;
+ 				thermal-sensors = <&thermal 0>;
+-- 
+2.42.0
+
 
 
