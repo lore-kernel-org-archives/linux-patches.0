@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2804EE548;
-	Mon, 11 Dec 2023 18:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DC0E548;
+	Mon, 11 Dec 2023 18:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpXIlSE0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9BAC433C8;
-	Mon, 11 Dec 2023 18:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rupMDrg5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6869EC433C9;
+	Mon, 11 Dec 2023 18:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321021;
-	bh=EYEg22JL8xf0vwJba+jmG7mUI9QKhGthnOP9M0CltN0=;
+	s=korg; t=1702321023;
+	bh=680zqvatG+07b8rk5/l2DDjQ+fYCfxzkl9rOX+sagg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PpXIlSE04e0+kTmbrhFYRcSbx33kcO6vXUxqgIQQZAhWd2CTAyQSDxQfKK4edBYr6
-	 T/vJb3IQVVW7nEz2ORtbaBPc8wpHt80ORrSFwwqsSK25ejYjqTazi/vKM/eo89JShy
-	 fKxRuEU/Nk8MJDc9jH2NeQ3U24kfNln9Uqmf4ZJ4=
+	b=rupMDrg59yFdJjFOqZY57q99jAKhkXGtWsl2SlLfxfJfghit7WLTTkdXAu6pMIzzK
+	 yQLaN+241JCikvtdkglL6x761ObrV9ZloDGyev3nAEOAB+uMkTn1/zBfordWhhyvdn
+	 MQdtSKumPq78/+gPXCz2n2yoD5weOE+mIci/RNMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Li <bin.li@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 081/141] ALSA: hda/realtek: Enable headset on Lenovo M90 Gen5
-Date: Mon, 11 Dec 2023 19:22:20 +0100
-Message-ID: <20231211182030.068865298@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 082/141] nilfs2: fix missing error check for sb_set_blocksize call
+Date: Mon, 11 Dec 2023 19:22:21 +0100
+Message-ID: <20231211182030.110300726@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,31 +41,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Li <bin.li@canonical.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 6f7e4664e597440dfbdb8b2931c561b717030d07 upstream.
+commit d61d0ab573649789bf9eb909c89a1a193b2e3d10 upstream.
 
-Lenovo M90 Gen5 is equipped with ALC897, and it needs
-ALC897_FIXUP_HEADSET_MIC_PIN quirk to make its headset mic work.
+When mounting a filesystem image with a block size larger than the page
+size, nilfs2 repeatedly outputs long error messages with stack traces to
+the kernel log, such as the following:
 
-Signed-off-by: Bin Li <bin.li@canonical.com>
+ getblk(): invalid block size 8192 requested
+ logical block size: 512
+ ...
+ Call Trace:
+  dump_stack_lvl+0x92/0xd4
+  dump_stack+0xd/0x10
+  bdev_getblk+0x33a/0x354
+  __breadahead+0x11/0x80
+  nilfs_search_super_root+0xe2/0x704 [nilfs2]
+  load_nilfs+0x72/0x504 [nilfs2]
+  nilfs_mount+0x30f/0x518 [nilfs2]
+  legacy_get_tree+0x1b/0x40
+  vfs_get_tree+0x18/0xc4
+  path_mount+0x786/0xa88
+  __ia32_sys_mount+0x147/0x1a8
+  __do_fast_syscall_32+0x56/0xc8
+  do_fast_syscall_32+0x29/0x58
+  do_SYSENTER_32+0x15/0x18
+  entry_SYSENTER_32+0x98/0xf1
+ ...
+
+This overloads the system logger.  And to make matters worse, it sometimes
+crashes the kernel with a memory access violation.
+
+This is because the return value of the sb_set_blocksize() call, which
+should be checked for errors, is not checked.
+
+The latter issue is due to out-of-buffer memory being accessed based on a
+large block size that caused sb_set_blocksize() to fail for buffers read
+with the initial minimum block size that remained unupdated in the
+super_block structure.
+
+Since nilfs2 mkfs tool does not accept block sizes larger than the system
+page size, this has been overlooked.  However, it is possible to create
+this situation by intentionally modifying the tool or by passing a
+filesystem image created on a system with a large page size to a system
+with a smaller page size and mounting it.
+
+Fix this issue by inserting the expected error handling for the call to
+sb_set_blocksize().
+
+Link: https://lkml.kernel.org/r/20231129141547.4726-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231204100450.642783-1-bin.li@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nilfs2/the_nilfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11317,6 +11317,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3321, "Lenovo ThinkCentre M70 Gen4", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x331b, "Lenovo ThinkCentre M90 Gen4", ALC897_FIXUP_HEADSET_MIC_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3364, "Lenovo ThinkCentre M90 Gen5", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -717,7 +717,11 @@ int init_nilfs(struct the_nilfs *nilfs,
+ 			goto failed_sbh;
+ 		}
+ 		nilfs_release_super_block(nilfs);
+-		sb_set_blocksize(sb, blocksize);
++		if (!sb_set_blocksize(sb, blocksize)) {
++			nilfs_err(sb, "bad blocksize %d", blocksize);
++			err = -EINVAL;
++			goto out;
++		}
+ 
+ 		err = nilfs_load_super_block(nilfs, sb, blocksize, &sbp);
+ 		if (err)
 
 
