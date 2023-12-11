@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89EAD4F212;
-	Mon, 11 Dec 2023 18:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9954F212;
+	Mon, 11 Dec 2023 18:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEOnJYLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA79C433C7;
-	Mon, 11 Dec 2023 18:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDS40jNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78CCC433C7;
+	Mon, 11 Dec 2023 18:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319022;
-	bh=6bgtMAZVKawyusdL66RWjXjkUMPeWZSJ5T6cr7ndN+k=;
+	s=korg; t=1702319025;
+	bh=ir97ZksHb7HOVN832tzzkSg5J5sD3YsfEH4YFjqu5Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEOnJYLTYJqk2HTQi7CsjY3bJ/zzd7cK85g+m8dK/WYrvdEBgabk6hzOI4wNyFuLE
-	 DDj2UuJBf2fzIeuSeGTxAJImGK2pOsUcAYlsv9z5jCc60QSDUwufldgbONfR34WeaR
-	 5B6hu+TzaD4Si5pFmlcwd/4WHT47OP7424xvvulQ=
+	b=BDS40jNiq5QvIqE7voA+3zqSpV3bNwditrxTfwFKq94MFo1CLWMrtBzkrHliLMHjz
+	 FXu4jR4C6GeCHthZT3TuioiA8gwNiYi1FJ4g/S/ThKxWTbB3j19BatShcrJBEwy03J
+	 9zgK2g99kM1RZ9vJ3y3iE4bJ0QrJx++IDX94WNNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Pakhunov <alexey.pakhunov@spacex.com>,
-	Vincent Wong <vincent.wong2@spacex.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 10/55] tg3: Increment tx_dropped in tg3_tso_bug()
-Date: Mon, 11 Dec 2023 19:21:20 +0100
-Message-ID: <20231211182012.590773724@linuxfoundation.org>
+Subject: [PATCH 4.19 11/55] kconfig: fix memory leak from range properties
+Date: Mon, 11 Dec 2023 19:21:21 +0100
+Message-ID: <20231211182012.630779262@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -44,39 +41,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Pakhunov <alexey.pakhunov@spacex.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 17dd5efe5f36a96bd78012594fabe21efb01186b ]
+[ Upstream commit ae1eff0349f2e908fc083630e8441ea6dc434dc0 ]
 
-tg3_tso_bug() drops a packet if it cannot be segmented for any reason.
-The number of discarded frames should be incremented accordingly.
+Currently, sym_validate_range() duplicates the range string using
+xstrdup(), which is overwritten by a subsequent sym_calc_value() call.
+It results in a memory leak.
 
-Signed-off-by: Alex Pakhunov <alexey.pakhunov@spacex.com>
-Signed-off-by: Vincent Wong <vincent.wong2@spacex.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20231113182350.37472-2-alexey.pakhunov@spacex.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Instead, only the pointer should be copied.
+
+Below is a test case, with a summary from Valgrind.
+
+[Test Kconfig]
+
+  config FOO
+          int "foo"
+          range 10 20
+
+[Test .config]
+
+  CONFIG_FOO=0
+
+[Before]
+
+  LEAK SUMMARY:
+     definitely lost: 3 bytes in 1 blocks
+     indirectly lost: 0 bytes in 0 blocks
+       possibly lost: 0 bytes in 0 blocks
+     still reachable: 17,465 bytes in 21 blocks
+          suppressed: 0 bytes in 0 blocks
+
+[After]
+
+  LEAK SUMMARY:
+     definitely lost: 0 bytes in 0 blocks
+     indirectly lost: 0 bytes in 0 blocks
+       possibly lost: 0 bytes in 0 blocks
+     still reachable: 17,462 bytes in 20 blocks
+          suppressed: 0 bytes in 0 blocks
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ scripts/kconfig/symbol.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 84a5bddf614c8..68bb4a2ff7cee 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -7889,8 +7889,10 @@ static int tg3_tso_bug(struct tg3 *tp, struct tg3_napi *tnapi,
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index 703b9b899ee9c..5adb60b7e12f3 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -119,9 +119,9 @@ static long long sym_get_range_val(struct symbol *sym, int base)
+ static void sym_validate_range(struct symbol *sym)
+ {
+ 	struct property *prop;
++	struct symbol *range_sym;
+ 	int base;
+ 	long long val, val2;
+-	char str[64];
  
- 	segs = skb_gso_segment(skb, tp->dev->features &
- 				    ~(NETIF_F_TSO | NETIF_F_TSO6));
--	if (IS_ERR(segs) || !segs)
-+	if (IS_ERR(segs) || !segs) {
-+		tnapi->tx_dropped++;
- 		goto tg3_tso_bug_end;
-+	}
+ 	switch (sym->type) {
+ 	case S_INT:
+@@ -137,17 +137,15 @@ static void sym_validate_range(struct symbol *sym)
+ 	if (!prop)
+ 		return;
+ 	val = strtoll(sym->curr.val, NULL, base);
+-	val2 = sym_get_range_val(prop->expr->left.sym, base);
++	range_sym = prop->expr->left.sym;
++	val2 = sym_get_range_val(range_sym, base);
+ 	if (val >= val2) {
+-		val2 = sym_get_range_val(prop->expr->right.sym, base);
++		range_sym = prop->expr->right.sym;
++		val2 = sym_get_range_val(range_sym, base);
+ 		if (val <= val2)
+ 			return;
+ 	}
+-	if (sym->type == S_INT)
+-		sprintf(str, "%lld", val2);
+-	else
+-		sprintf(str, "0x%llx", val2);
+-	sym->curr.val = xstrdup(str);
++	sym->curr.val = range_sym->curr.val;
+ }
  
- 	do {
- 		nskb = segs;
+ static void sym_set_changed(struct symbol *sym)
 -- 
 2.42.0
 
