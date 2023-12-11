@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEE5321B8;
-	Mon, 11 Dec 2023 18:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A3B321B8;
+	Mon, 11 Dec 2023 18:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHVZEpQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859C0C433C9;
-	Mon, 11 Dec 2023 18:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYMoNx2+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AD1C433C8;
+	Mon, 11 Dec 2023 18:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321061;
-	bh=baSBiECMwlDXsZYP0YqMRHnOQj47FZT8nq4pEncwKZM=;
+	s=korg; t=1702321064;
+	bh=2gTKUZZT497uWHZL0yyeSkgjLpL3a58Sm2a0QFRHSEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHVZEpQ+KmAwIflgr71Lq8DXy6tkSeKJu1/GciDtGQAZWO7Pe01Eg0cjtkpx50g1/
-	 JHxPYEUb4e83sK2NQa3EEevnWCEUTye/RKCgl+yjE/ZSonKfAkEM+pDCA/ZstBrj73
-	 9TybnjqHSLtB9s5RR8QMVTgFsZTBeyIfAB5ra3/4=
+	b=FYMoNx2+NsxBA0XliodXP9OjxHgFzjMEd/TZKJ+PrS7AuMlyZN+v8O0RS5oYRQYI6
+	 pOU11fF07so6HlZCYRcfscsNavtoyOA6pcq1JZWVBzrv7IGeZByTkWBALvJhgME8Bl
+	 rmfYsT7jF+3of6oN3IZbdEu/0e03bLNjQL3Gs4Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 5.15 094/141] arm64: dts: mediatek: mt8173-evb: Fix regulator-fixed node names
-Date: Mon, 11 Dec 2023 19:22:33 +0100
-Message-ID: <20231211182030.632777284@linuxfoundation.org>
+Subject: [PATCH 5.15 095/141] arm64: dts: mediatek: mt8183: Fix unit address for scp reserved memory
+Date: Mon, 11 Dec 2023 19:22:34 +0100
+Message-ID: <20231211182030.675166455@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -42,40 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit 24165c5dad7ba7c7624d05575a5e0cc851396c71 upstream.
+commit 19cba9a6c071db57888dc6b2ec1d9bf8996ea681 upstream.
 
-Fix a unit_address_vs_reg warning for the USB VBUS fixed regulators
-by renaming the regulator nodes from regulator@{0,1} to regulator-usb-p0
-and regulator-usb-p1.
+The reserved memory for scp had node name "scp_mem_region" and also
+without unit-address: change the name to "memory@(address)".
+This fixes a unit_address_vs_reg warning.
 
 Cc: stable@vger.kernel.org
-Fixes: c0891284a74a ("arm64: dts: mediatek: add USB3 DRD driver")
-Link: https://lore.kernel.org/r/20231025093816.44327-8-angelogioacchino.delregno@collabora.com
+Fixes: 1652dbf7363a ("arm64: dts: mt8183: add scp node")
+Link: https://lore.kernel.org/r/20231025093816.44327-6-angelogioacchino.delregno@collabora.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173-evb.dts |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-evb.dts    |    2 +-
+ arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
-@@ -43,7 +43,7 @@
- 		id-gpio = <&pio 16 GPIO_ACTIVE_HIGH>;
- 	};
+--- a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
+@@ -30,7 +30,7 @@
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+ 		ranges;
+-		scp_mem_reserved: scp_mem_region {
++		scp_mem_reserved: memory@50000000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0 0x50000000 0 0x2900000>;
+ 			no-map;
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+@@ -108,7 +108,7 @@
+ 		#size-cells = <2>;
+ 		ranges;
  
--	usb_p1_vbus: regulator@0 {
-+	usb_p1_vbus: regulator-usb-p1 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "usb_vbus";
- 		regulator-min-microvolt = <5000000>;
-@@ -52,7 +52,7 @@
- 		enable-active-high;
- 	};
- 
--	usb_p0_vbus: regulator@1 {
-+	usb_p0_vbus: regulator-usb-p0 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vbus";
- 		regulator-min-microvolt = <5000000>;
+-		scp_mem_reserved: scp_mem_region {
++		scp_mem_reserved: memory@50000000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0 0x50000000 0 0x2900000>;
+ 			no-map;
 
 
