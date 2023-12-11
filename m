@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B38E548;
-	Mon, 11 Dec 2023 18:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EF8E548;
+	Mon, 11 Dec 2023 18:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2rt0B8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19D5C433C8;
-	Mon, 11 Dec 2023 18:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seHoOax2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CAE0C433C7;
+	Mon, 11 Dec 2023 18:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321070;
-	bh=k4EYvvGHysU7eyRb2IcTmj+iehsjiGiIeV7CpWyNxWA=;
+	s=korg; t=1702321072;
+	bh=imJxDkv/OBoOAQGdpRU+GoKR5ZkM+u3TsKbjzWR/5fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A2rt0B8cxNcHYD1NhocyVSdw8S1Nt4xNYmEtDJcazR/Uh8PuF+fO4l38oGYwDLaXS
-	 HQcPot0WFgpciuFZQ0GLR7dJJQgJeiBbsyt0CyOLTVWDcCuO26aRCRiTDowtfEMkBD
-	 LrIO5OjrqbmVDtHr0DO5DVqMNN1Z1KI0ywE7s+I0=
+	b=seHoOax2WdMiZijP+mptL4EdvjKqnriSEtFrjHs+rFNW4Py74z+mxZDKBh36tvXlf
+	 0d6XWIw1m/pOeZ7shemBM/f7beXj5BEbQZJbkQ/6EiqtjaNLnrSU+Wgi9GuvuXZE69
+	 kLtz+jQuTSdJ/2G4X4Ci3hYTYuCb1wHerDp4KWBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/141] tracing: Fix a warning when allocating buffered events fails
-Date: Mon, 11 Dec 2023 19:22:07 +0100
-Message-ID: <20231211182029.499933506@linuxfoundation.org>
+Subject: [PATCH 5.15 069/141] scsi: be2iscsi: Fix a memleak in beiscsi_init_wrb_handle()
+Date: Mon, 11 Dec 2023 19:22:08 +0100
+Message-ID: <20231211182029.549732598@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -42,81 +43,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 34209fe83ef8404353f91ab4ea4035dbc9922d04 ]
+[ Upstream commit 235f2b548d7f4ac5931d834f05d3f7f5166a2e72 ]
 
-Function trace_buffered_event_disable() produces an unexpected warning
-when the previous call to trace_buffered_event_enable() fails to
-allocate pages for buffered events.
+When an error occurs in the for loop of beiscsi_init_wrb_handle(), we
+should free phwi_ctxt->be_wrbq before returning an error code to prevent
+potential memleak.
 
-The situation can occur as follows:
-
-* The counter trace_buffered_event_ref is at 0.
-
-* The soft mode gets enabled for some event and
-  trace_buffered_event_enable() is called. The function increments
-  trace_buffered_event_ref to 1 and starts allocating event pages.
-
-* The allocation fails for some page and trace_buffered_event_disable()
-  is called for cleanup.
-
-* Function trace_buffered_event_disable() decrements
-  trace_buffered_event_ref back to 0, recognizes that it was the last
-  use of buffered events and frees all allocated pages.
-
-* The control goes back to trace_buffered_event_enable() which returns.
-  The caller of trace_buffered_event_enable() has no information that
-  the function actually failed.
-
-* Some time later, the soft mode is disabled for the same event.
-  Function trace_buffered_event_disable() is called. It warns on
-  "WARN_ON_ONCE(!trace_buffered_event_ref)" and returns.
-
-Buffered events are just an optimization and can handle failures. Make
-trace_buffered_event_enable() exit on the first failure and left any
-cleanup later to when trace_buffered_event_disable() is called.
-
-Link: https://lore.kernel.org/all/20231127151248.7232-2-petr.pavlu@suse.com/
-Link: https://lkml.kernel.org/r/20231205161736.19663-3-petr.pavlu@suse.com
-
-Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: a7909b396ba7 ("[SCSI] be2iscsi: Fix dynamic CID allocation Mechanism in driver")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Link: https://lore.kernel.org/r/20231123081941.24854-1-dinghao.liu@zju.edu.cn
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/scsi/be2iscsi/be_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index c35c805e4ab15..171efe3f29db4 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -2692,8 +2692,11 @@ void trace_buffered_event_enable(void)
- 	for_each_tracing_cpu(cpu) {
- 		page = alloc_pages_node(cpu_to_node(cpu),
- 					GFP_KERNEL | __GFP_NORETRY, 0);
--		if (!page)
--			goto failed;
-+		/* This is just an optimization and can handle failures */
-+		if (!page) {
-+			pr_err("Failed to allocate event buffer\n");
-+			break;
-+		}
- 
- 		event = page_address(page);
- 		memset(event, 0, sizeof(*event));
-@@ -2707,10 +2710,6 @@ void trace_buffered_event_enable(void)
- 			WARN_ON_ONCE(1);
- 		preempt_enable();
+diff --git a/drivers/scsi/be2iscsi/be_main.c b/drivers/scsi/be2iscsi/be_main.c
+index 7974c1326d461..27e73cd54beaa 100644
+--- a/drivers/scsi/be2iscsi/be_main.c
++++ b/drivers/scsi/be2iscsi/be_main.c
+@@ -2691,6 +2691,7 @@ static int beiscsi_init_wrb_handle(struct beiscsi_hba *phba)
+ 		kfree(pwrb_context->pwrb_handle_base);
+ 		kfree(pwrb_context->pwrb_handle_basestd);
  	}
--
--	return;
-- failed:
--	trace_buffered_event_disable();
++	kfree(phwi_ctxt->be_wrbq);
+ 	return -ENOMEM;
  }
  
- static void enable_trace_buffered_event(void *data)
 -- 
 2.42.0
 
