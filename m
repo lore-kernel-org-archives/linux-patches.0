@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149085103A;
-	Mon, 11 Dec 2023 18:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7EA524C6;
+	Mon, 11 Dec 2023 18:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7FVA1p2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB30C433C7;
-	Mon, 11 Dec 2023 18:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6pKoMMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCFF0C433C8;
+	Mon, 11 Dec 2023 18:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320561;
-	bh=HX/WtPygJxqdxTZsL6/J2gODpq8CHdAM38n8zzuFkFA=;
+	s=korg; t=1702320564;
+	bh=K3zg6Bn82KVP9RTYib7q/hyfJBFdsYYwKY7RJDK3na4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7FVA1p2CC9y4an4Qn5aEjiueqftit4XE2l5H6fEdxEoBbsksDrpwOmfMqAOaVd5v
-	 UXdU+FB5Hz3VDhIm/U2H3MhE/MQSXgttVu+8rFICT6MaqAH4jx0cBR1xcuu4uvcpcc
-	 Xz5M3vpdUHU1pyF+UGnSa9c3fJZkbxbuRkxhKduw=
+	b=S6pKoMMKtSDwWW0eYSHwvsdMUc9SeR7Yq+z3VxI23hNk+R3PiHOkFd3T1tMtwy+bR
+	 X1uesD5/SNGA87ylEKhbg9cak3abp1sjyT8L6h+ejxInUNqDpqEciYCoTEYM83bmm4
+	 cNloNdcLzx/Go65lu+PG+IaRX1LIC8xup7M/Zrls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shifeng Li <lishifeng1992@126.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/194] RDMA/irdma: Fix UAF in irdma_sc_ccq_get_cqe_info()
-Date: Mon, 11 Dec 2023 19:21:09 +0100
-Message-ID: <20231211182040.016362506@linuxfoundation.org>
+	Jason Zhang <jason.zhang@rock-chips.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 106/194] ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
+Date: Mon, 11 Dec 2023 19:21:36 +0100
+Message-ID: <20231211182041.186278542@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,76 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shifeng Li <lishifeng1992@126.com>
+From: Jason Zhang <jason.zhang@rock-chips.com>
 
-[ Upstream commit 2b78832f50c4d711e161b166d7d8790968051546 ]
+commit 2b3a7a302c9804e463f2ea5b54dc3a6ad106a344 upstream.
 
-When removing the irdma driver or unplugging its aux device, the ccq
-queue is released before destorying the cqp_cmpl_wq queue.
-But in the window, there may still be completion events for wqes. That
-will cause a UAF in irdma_sc_ccq_get_cqe_info().
+The pcm state can be SNDRV_PCM_STATE_DISCONNECTED at disconnect
+callback, and there is not an entry of SNDRV_PCM_STATE_DISCONNECTED
+in snd_pcm_state_names.
 
-[34693.333191] BUG: KASAN: use-after-free in irdma_sc_ccq_get_cqe_info+0x82f/0x8c0 [irdma]
-[34693.333194] Read of size 8 at addr ffff889097f80818 by task kworker/u67:1/26327
-[34693.333194]
-[34693.333199] CPU: 9 PID: 26327 Comm: kworker/u67:1 Kdump: loaded Tainted: G           O     --------- -t - 4.18.0 #1
-[34693.333200] Hardware name: SANGFOR Inspur/NULL, BIOS 4.1.13 08/01/2016
-[34693.333211] Workqueue: cqp_cmpl_wq cqp_compl_worker [irdma]
-[34693.333213] Call Trace:
-[34693.333220]  dump_stack+0x71/0xab
-[34693.333226]  print_address_description+0x6b/0x290
-[34693.333238]  ? irdma_sc_ccq_get_cqe_info+0x82f/0x8c0 [irdma]
-[34693.333240]  kasan_report+0x14a/0x2b0
-[34693.333251]  irdma_sc_ccq_get_cqe_info+0x82f/0x8c0 [irdma]
-[34693.333264]  ? irdma_free_cqp_request+0x151/0x1e0 [irdma]
-[34693.333274]  irdma_cqp_ce_handler+0x1fb/0x3b0 [irdma]
-[34693.333285]  ? irdma_ctrl_init_hw+0x2c20/0x2c20 [irdma]
-[34693.333290]  ? __schedule+0x836/0x1570
-[34693.333293]  ? strscpy+0x83/0x180
-[34693.333296]  process_one_work+0x56a/0x11f0
-[34693.333298]  worker_thread+0x8f/0xf40
-[34693.333301]  ? __kthread_parkme+0x78/0xf0
-[34693.333303]  ? rescuer_thread+0xc50/0xc50
-[34693.333305]  kthread+0x2a0/0x390
-[34693.333308]  ? kthread_destroy_worker+0x90/0x90
-[34693.333310]  ret_from_fork+0x1f/0x40
+This patch adds the missing entry to resolve this issue.
 
-Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
-Signed-off-by: Shifeng Li <lishifeng1992@126.com>
-Link: https://lore.kernel.org/r/20231121101236.581694-1-lishifeng1992@126.com
-Acked-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+cat /proc/asound/card2/pcm0p/sub0/status
+That results in stack traces like the following:
+
+[   99.702732][ T5171] Unexpected kernel BRK exception at EL1
+[   99.702774][ T5171] Internal error: BRK handler: f2005512 [#1] PREEMPT SMP
+[   99.703858][ T5171] Modules linked in: bcmdhd(E) (...)
+[   99.747425][ T5171] CPU: 3 PID: 5171 Comm: cat Tainted: G         C OE     5.10.189-android13-4-00003-g4a17384380d8-ab11086999 #1
+[   99.748447][ T5171] Hardware name: Rockchip RK3588 CVTE V10 Board (DT)
+[   99.749024][ T5171] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
+[   99.749616][ T5171] pc : snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.750204][ T5171] lr : snd_pcm_substream_proc_status_read+0xa4/0x2bc
+[   99.750778][ T5171] sp : ffffffc0175abae0
+[   99.751132][ T5171] x29: ffffffc0175abb80 x28: ffffffc009a2c498
+[   99.751665][ T5171] x27: 0000000000000001 x26: ffffff810cbae6e8
+[   99.752199][ T5171] x25: 0000000000400cc0 x24: ffffffc0175abc60
+[   99.752729][ T5171] x23: 0000000000000000 x22: ffffff802f558400
+[   99.753263][ T5171] x21: ffffff81d8d8ff00 x20: ffffff81020cdc00
+[   99.753795][ T5171] x19: ffffff802d110000 x18: ffffffc014fbd058
+[   99.754326][ T5171] x17: 0000000000000000 x16: 0000000000000000
+[   99.754861][ T5171] x15: 000000000000c276 x14: ffffffff9a976fda
+[   99.755392][ T5171] x13: 0000000065689089 x12: 000000000000d72e
+[   99.755923][ T5171] x11: ffffff802d110000 x10: 00000000000000e0
+[   99.756457][ T5171] x9 : 9c431600c8385d00 x8 : 0000000000000008
+[   99.756990][ T5171] x7 : 0000000000000000 x6 : 000000000000003f
+[   99.757522][ T5171] x5 : 0000000000000040 x4 : ffffffc0175abb70
+[   99.758056][ T5171] x3 : 0000000000000001 x2 : 0000000000000001
+[   99.758588][ T5171] x1 : 0000000000000000 x0 : 0000000000000000
+[   99.759123][ T5171] Call trace:
+[   99.759404][ T5171]  snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.759958][ T5171]  snd_info_seq_show+0x54/0xa4
+[   99.760370][ T5171]  seq_read_iter+0x19c/0x7d4
+[   99.760770][ T5171]  seq_read+0xf0/0x128
+[   99.761117][ T5171]  proc_reg_read+0x100/0x1f8
+[   99.761515][ T5171]  vfs_read+0xf4/0x354
+[   99.761869][ T5171]  ksys_read+0x7c/0x148
+[   99.762226][ T5171]  __arm64_sys_read+0x20/0x30
+[   99.762625][ T5171]  el0_svc_common+0xd0/0x1e4
+[   99.763023][ T5171]  el0_svc+0x28/0x98
+[   99.763358][ T5171]  el0_sync_handler+0x8c/0xf0
+[   99.763759][ T5171]  el0_sync+0x1b8/0x1c0
+[   99.764118][ T5171] Code: d65f03c0 b9406102 17ffffae 94191565 (d42aa240)
+[   99.764715][ T5171] ---[ end trace 1eeffa3e17c58e10 ]---
+[   99.780720][ T5171] Kernel panic - not syncing: BRK handler: Fatal exception
+
+Signed-off-by: Jason Zhang <jason.zhang@rock-chips.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231206013139.20506-1-jason.zhang@rock-chips.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/hw.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/core/pcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index 8aa507e87df37..9399d82560c92 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -578,9 +578,6 @@ static void irdma_destroy_cqp(struct irdma_pci_f *rf)
- 	struct irdma_cqp *cqp = &rf->cqp;
- 	int status = 0;
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -253,6 +253,7 @@ static const char * const snd_pcm_state_
+ 	STATE(DRAINING),
+ 	STATE(PAUSED),
+ 	STATE(SUSPENDED),
++	STATE(DISCONNECTED),
+ };
  
--	if (rf->cqp_cmpl_wq)
--		destroy_workqueue(rf->cqp_cmpl_wq);
--
- 	status = irdma_sc_cqp_destroy(dev->cqp);
- 	if (status)
- 		ibdev_dbg(to_ibdev(dev), "ERR: Destroy CQP failed %d\n", status);
-@@ -745,6 +742,9 @@ static void irdma_destroy_ccq(struct irdma_pci_f *rf)
- 	struct irdma_ccq *ccq = &rf->ccq;
- 	int status = 0;
- 
-+	if (rf->cqp_cmpl_wq)
-+		destroy_workqueue(rf->cqp_cmpl_wq);
-+
- 	if (!rf->reset)
- 		status = irdma_sc_ccq_destroy(dev->ccq, 0, true);
- 	if (status)
--- 
-2.42.0
-
+ static const char * const snd_pcm_access_names[] = {
 
 
