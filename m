@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFDE5102A;
-	Mon, 11 Dec 2023 18:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8905102A;
+	Mon, 11 Dec 2023 18:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0bANbu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524D4C433C7;
-	Mon, 11 Dec 2023 18:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAP+fwfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9827C433C8;
+	Mon, 11 Dec 2023 18:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320446;
-	bh=inS2QoHBWE1yVnA8S525lGYPQ/S1cMEGB+dcMfx4vZE=;
+	s=korg; t=1702320449;
+	bh=VTxY5FWrd9v515GSR10u6m+OxbU9oWmbQQ0M3PCrUo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0bANbu7UB/aX0TxxYKgTsjMVjXeEEKVoq5MxOjS4Au6nJnZsVcSl1illP58B7K7e
-	 fGO8YNFsZQFuuvEFQc4NbgKMMFQq/cnFtrsj2kexZlcKnQUMyaV3fq61/Oh4TPLNpR
-	 /Z8t+R8ESrJPxR4wFpDveAsmgKaW3pgRolhx+GgE=
+	b=TAP+fwfWp2jy99Dv9OStL8riIu/Kl9X//w6ybkyLz0BnAW4Q5Vdp37FLmlpZdGk0Z
+	 qbiZrAOKf4b8Fv7/qA8IdArPnax/35HzZIUuwWGCIcszYsCGKBx+mkBYDemsUwFBVc
+	 a6NhyL07owhHL01xMIH3o9e0EMfEKkVvpRSzStOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nithin Dabilpuram <ndabilpuram@marvell.com>,
-	Geetha sowjanya <gakula@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/194] octeontx2-af: Adjust Tx credits when MCS external bypass is disabled
-Date: Mon, 11 Dec 2023 19:20:37 +0100
-Message-ID: <20231211182038.663487585@linuxfoundation.org>
+Subject: [PATCH 6.1 065/194] RDMA/irdma: Do not modify to SQD on error
+Date: Mon, 11 Dec 2023 19:20:55 +0100
+Message-ID: <20231211182039.397037244@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -45,151 +43,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nithin Dabilpuram <ndabilpuram@marvell.com>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-[ Upstream commit dca6fa8644b89f54345e55501b1419316ba5cb29 ]
+[ Upstream commit ba12ab66aa83a2340a51ad6e74b284269745138c ]
 
-When MCS external bypass is disabled, MCS returns additional
-2 credits(32B) for every packet Tx'ed on LMAC. To account for
-these extra credits, NIX_AF_TX_LINKX_NORM_CREDIT.CC_MCS_CNT
-needs to be configured as otherwise NIX Tx credits would overflow
-and will never be returned to idle state credit count
-causing issues with credit control and MTU change.
+Remove the modify to SQD before going to ERROR state. It is not needed.
 
-This patch fixes the same by configuring CC_MCS_CNT at probe
-time for MCS enabled SoC's
-
-Fixes: bd69476e86fc ("octeontx2-af: cn10k: mcs: Install a default TCAM for normal traffic")
-Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20231114170246.238-2-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/mcs.c    | 14 +++++++++++++-
- drivers/net/ethernet/marvell/octeontx2/af/mcs.h    |  2 ++
- drivers/net/ethernet/marvell/octeontx2/af/rvu.h    |  1 +
- .../net/ethernet/marvell/octeontx2/af/rvu_nix.c    |  8 ++++++++
- .../net/ethernet/marvell/octeontx2/af/rvu_reg.h    |  1 +
- 5 files changed, 25 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-index c43f19dfbd744..bd87507cf8eaa 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-@@ -1219,6 +1219,17 @@ struct mcs *mcs_get_pdata(int mcs_id)
- 	return NULL;
- }
- 
-+bool is_mcs_bypass(int mcs_id)
-+{
-+	struct mcs *mcs_dev;
-+
-+	list_for_each_entry(mcs_dev, &mcs_list, mcs_list) {
-+		if (mcs_dev->mcs_id == mcs_id)
-+			return mcs_dev->bypass;
-+	}
-+	return true;
-+}
-+
- void mcs_set_port_cfg(struct mcs *mcs, struct mcs_port_cfg_set_req *req)
- {
- 	u64 val = 0;
-@@ -1436,7 +1447,7 @@ static int mcs_x2p_calibration(struct mcs *mcs)
- 	return err;
- }
- 
--static void mcs_set_external_bypass(struct mcs *mcs, u8 bypass)
-+static void mcs_set_external_bypass(struct mcs *mcs, bool bypass)
- {
- 	u64 val;
- 
-@@ -1447,6 +1458,7 @@ static void mcs_set_external_bypass(struct mcs *mcs, u8 bypass)
- 	else
- 		val &= ~BIT_ULL(6);
- 	mcs_reg_write(mcs, MCSX_MIL_GLOBAL, val);
-+	mcs->bypass = bypass;
- }
- 
- static void mcs_global_cfg(struct mcs *mcs)
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.h b/drivers/net/ethernet/marvell/octeontx2/af/mcs.h
-index 0f89dcb764654..f927cc61dfd21 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.h
-@@ -149,6 +149,7 @@ struct mcs {
- 	u16			num_vec;
- 	void			*rvu;
- 	u16			*tx_sa_active;
-+	bool                      bypass;
- };
- 
- struct mcs_ops {
-@@ -206,6 +207,7 @@ void mcs_get_custom_tag_cfg(struct mcs *mcs, struct mcs_custom_tag_cfg_get_req *
- int mcs_alloc_ctrlpktrule(struct rsrc_bmap *rsrc, u16 *pf_map, u16 offset, u16 pcifunc);
- int mcs_free_ctrlpktrule(struct mcs *mcs, struct mcs_free_ctrl_pkt_rule_req *req);
- int mcs_ctrlpktrule_write(struct mcs *mcs, struct mcs_ctrl_pkt_rule_write_req *req);
-+bool is_mcs_bypass(int mcs_id);
- 
- /* CN10K-B APIs */
- void cn10kb_mcs_set_hw_capabilities(struct mcs *mcs);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index a3346ea7876c5..95a7bc396e8ea 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -325,6 +325,7 @@ struct nix_hw {
- 	struct nix_txvlan txvlan;
- 	struct nix_ipolicer *ipolicer;
- 	u64    *tx_credits;
-+	u8	cc_mcs_cnt;
- };
- 
- /* RVU block's capabilities or functionality,
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 7310047136986..959f36efdc4a6 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -12,6 +12,7 @@
- #include "rvu_reg.h"
- #include "rvu.h"
- #include "npc.h"
-+#include "mcs.h"
- #include "cgx.h"
- #include "lmac_common.h"
- #include "rvu_npc_hash.h"
-@@ -4164,6 +4165,12 @@ static void nix_link_config(struct rvu *rvu, int blkaddr,
- 			    SDP_HW_MAX_FRS << 16 | NIC_HW_MIN_FRS);
- 	}
- 
-+	/* Get MCS external bypass status for CN10K-B */
-+	if (mcs_get_blkcnt() == 1) {
-+		/* Adjust for 2 credits when external bypass is disabled */
-+		nix_hw->cc_mcs_cnt = is_mcs_bypass(0) ? 0 : 2;
-+	}
-+
- 	/* Set credits for Tx links assuming max packet length allowed.
- 	 * This will be reconfigured based on MTU set for PF/VF.
- 	 */
-@@ -4187,6 +4194,7 @@ static void nix_link_config(struct rvu *rvu, int blkaddr,
- 			tx_credits = (lmac_fifo_len - lmac_max_frs) / 16;
- 			/* Enable credits and set credit pkt count to max allowed */
- 			cfg =  (tx_credits << 12) | (0x1FF << 2) | BIT_ULL(1);
-+			cfg |= FIELD_PREP(NIX_AF_LINKX_MCS_CNT_MASK, nix_hw->cc_mcs_cnt);
- 
- 			link = iter + slink;
- 			nix_hw->tx_credits[link] = tx_credits;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
-index 39f7a7cb27558..b690e5566f12a 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.h
-@@ -434,6 +434,7 @@
- 
- #define NIX_AF_LINKX_BASE_MASK		GENMASK_ULL(11, 0)
- #define NIX_AF_LINKX_RANGE_MASK		GENMASK_ULL(19, 16)
-+#define NIX_AF_LINKX_MCS_CNT_MASK	GENMASK_ULL(33, 32)
- 
- /* SSO */
- #define SSO_AF_CONST			(0x1000)
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 3b8b2341981ea..02015927fd046 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -1363,13 +1363,6 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 		case IB_QPS_SQE:
+ 		case IB_QPS_ERR:
+ 		case IB_QPS_RESET:
+-			if (iwqp->iwarp_state == IRDMA_QP_STATE_RTS) {
+-				spin_unlock_irqrestore(&iwqp->lock, flags);
+-				info.next_iwarp_state = IRDMA_QP_STATE_SQD;
+-				irdma_hw_modify_qp(iwdev, iwqp, &info, true);
+-				spin_lock_irqsave(&iwqp->lock, flags);
+-			}
+-
+ 			if (iwqp->iwarp_state == IRDMA_QP_STATE_ERROR) {
+ 				spin_unlock_irqrestore(&iwqp->lock, flags);
+ 				if (udata && udata->inlen) {
 -- 
 2.42.0
 
