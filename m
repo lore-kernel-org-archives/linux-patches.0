@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592294F212;
-	Mon, 11 Dec 2023 18:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179F54F212;
+	Mon, 11 Dec 2023 18:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRWsP6V9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08DCC433C7;
-	Mon, 11 Dec 2023 18:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmintPy/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E30C433C7;
+	Mon, 11 Dec 2023 18:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319157;
-	bh=SqHyzgK57PNy1KOHaBxffY84Y5i6ZyR5vFrgV0AUhJ4=;
+	s=korg; t=1702319159;
+	bh=JN6/GT0BuNZgyODgn/NXjBZw2wvQyF/0tlAHd9mwtv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRWsP6V9kU1+rV4mNzJXjJh2VIcxnKRoopds0AYNeCxu3x+jcNB4G/ByQdgsIoQjh
-	 /kkPKsCUgB0/SdTZx3zfonucmD5OcOkL3htAbsdaIvst+UCynnv3j/paaPHREiKiPS
-	 1/85nfrNFcy2ZZnXv0OxiDu+XB+qb8V2b+m71nLA=
+	b=qmintPy/XlsXde5jAyYtRJzV+/N5Y6Zy58T2NOPdlWqcaH84SEadkWobAuIoMzx3T
+	 2HCv+Ar7/LGp58tVqU7E2buAQVhqMvHUuYJitmqCcaDzSGWj62g45UiLCTUnR22xMa
+	 aKUz/+48m2ylxBwz1CVTiJ6mKNiMfbp64kI633kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Zhang <jason.zhang@rock-chips.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 30/55] ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
-Date: Mon, 11 Dec 2023 19:21:40 +0100
-Message-ID: <20231211182013.348490491@linuxfoundation.org>
+	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	stable@kernel.org,
+	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 31/55] packet: Move reference count in packet_sock to atomic_long_t
+Date: Mon, 11 Dec 2023 19:21:41 +0100
+Message-ID: <20231211182013.377951509@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -41,78 +46,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Zhang <jason.zhang@rock-chips.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 2b3a7a302c9804e463f2ea5b54dc3a6ad106a344 upstream.
+commit db3fadacaf0c817b222090290d06ca2a338422d0 upstream.
 
-The pcm state can be SNDRV_PCM_STATE_DISCONNECTED at disconnect
-callback, and there is not an entry of SNDRV_PCM_STATE_DISCONNECTED
-in snd_pcm_state_names.
+In some potential instances the reference count on struct packet_sock
+could be saturated and cause overflows which gets the kernel a bit
+confused. To prevent this, move to a 64-bit atomic reference count on
+64-bit architectures to prevent the possibility of this type to overflow.
 
-This patch adds the missing entry to resolve this issue.
+Because we can not handle saturation, using refcount_t is not possible
+in this place. Maybe someday in the future if it changes it could be
+used. Also, instead of using plain atomic64_t, use atomic_long_t instead.
+32-bit machines tend to be memory-limited (i.e. anything that increases
+a reference uses so much memory that you can't actually get to 2**32
+references). 32-bit architectures also tend to have serious problems
+with 64-bit atomics. Hence, atomic_long_t is the more natural solution.
 
-cat /proc/asound/card2/pcm0p/sub0/status
-That results in stack traces like the following:
-
-[   99.702732][ T5171] Unexpected kernel BRK exception at EL1
-[   99.702774][ T5171] Internal error: BRK handler: f2005512 [#1] PREEMPT SMP
-[   99.703858][ T5171] Modules linked in: bcmdhd(E) (...)
-[   99.747425][ T5171] CPU: 3 PID: 5171 Comm: cat Tainted: G         C OE     5.10.189-android13-4-00003-g4a17384380d8-ab11086999 #1
-[   99.748447][ T5171] Hardware name: Rockchip RK3588 CVTE V10 Board (DT)
-[   99.749024][ T5171] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
-[   99.749616][ T5171] pc : snd_pcm_substream_proc_status_read+0x264/0x2bc
-[   99.750204][ T5171] lr : snd_pcm_substream_proc_status_read+0xa4/0x2bc
-[   99.750778][ T5171] sp : ffffffc0175abae0
-[   99.751132][ T5171] x29: ffffffc0175abb80 x28: ffffffc009a2c498
-[   99.751665][ T5171] x27: 0000000000000001 x26: ffffff810cbae6e8
-[   99.752199][ T5171] x25: 0000000000400cc0 x24: ffffffc0175abc60
-[   99.752729][ T5171] x23: 0000000000000000 x22: ffffff802f558400
-[   99.753263][ T5171] x21: ffffff81d8d8ff00 x20: ffffff81020cdc00
-[   99.753795][ T5171] x19: ffffff802d110000 x18: ffffffc014fbd058
-[   99.754326][ T5171] x17: 0000000000000000 x16: 0000000000000000
-[   99.754861][ T5171] x15: 000000000000c276 x14: ffffffff9a976fda
-[   99.755392][ T5171] x13: 0000000065689089 x12: 000000000000d72e
-[   99.755923][ T5171] x11: ffffff802d110000 x10: 00000000000000e0
-[   99.756457][ T5171] x9 : 9c431600c8385d00 x8 : 0000000000000008
-[   99.756990][ T5171] x7 : 0000000000000000 x6 : 000000000000003f
-[   99.757522][ T5171] x5 : 0000000000000040 x4 : ffffffc0175abb70
-[   99.758056][ T5171] x3 : 0000000000000001 x2 : 0000000000000001
-[   99.758588][ T5171] x1 : 0000000000000000 x0 : 0000000000000000
-[   99.759123][ T5171] Call trace:
-[   99.759404][ T5171]  snd_pcm_substream_proc_status_read+0x264/0x2bc
-[   99.759958][ T5171]  snd_info_seq_show+0x54/0xa4
-[   99.760370][ T5171]  seq_read_iter+0x19c/0x7d4
-[   99.760770][ T5171]  seq_read+0xf0/0x128
-[   99.761117][ T5171]  proc_reg_read+0x100/0x1f8
-[   99.761515][ T5171]  vfs_read+0xf4/0x354
-[   99.761869][ T5171]  ksys_read+0x7c/0x148
-[   99.762226][ T5171]  __arm64_sys_read+0x20/0x30
-[   99.762625][ T5171]  el0_svc_common+0xd0/0x1e4
-[   99.763023][ T5171]  el0_svc+0x28/0x98
-[   99.763358][ T5171]  el0_sync_handler+0x8c/0xf0
-[   99.763759][ T5171]  el0_sync+0x1b8/0x1c0
-[   99.764118][ T5171] Code: d65f03c0 b9406102 17ffffae 94191565 (d42aa240)
-[   99.764715][ T5171] ---[ end trace 1eeffa3e17c58e10 ]---
-[   99.780720][ T5171] Kernel panic - not syncing: BRK handler: Fatal exception
-
-Signed-off-by: Jason Zhang <jason.zhang@rock-chips.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231206013139.20506-1-jason.zhang@rock-chips.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
+Co-developed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20231201131021.19999-1-daniel@iogearbox.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/packet/af_packet.c |   16 ++++++++--------
+ net/packet/internal.h  |    2 +-
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -266,6 +266,7 @@ static char *snd_pcm_state_names[] = {
- 	STATE(DRAINING),
- 	STATE(PAUSED),
- 	STATE(SUSPENDED),
-+	STATE(DISCONNECTED),
- };
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -4214,7 +4214,7 @@ static void packet_mm_open(struct vm_are
+ 	struct sock *sk = sock->sk;
  
- static char *snd_pcm_access_names[] = {
+ 	if (sk)
+-		atomic_inc(&pkt_sk(sk)->mapped);
++		atomic_long_inc(&pkt_sk(sk)->mapped);
+ }
+ 
+ static void packet_mm_close(struct vm_area_struct *vma)
+@@ -4224,7 +4224,7 @@ static void packet_mm_close(struct vm_ar
+ 	struct sock *sk = sock->sk;
+ 
+ 	if (sk)
+-		atomic_dec(&pkt_sk(sk)->mapped);
++		atomic_long_dec(&pkt_sk(sk)->mapped);
+ }
+ 
+ static const struct vm_operations_struct packet_mmap_ops = {
+@@ -4319,7 +4319,7 @@ static int packet_set_ring(struct sock *
+ 
+ 	err = -EBUSY;
+ 	if (!closing) {
+-		if (atomic_read(&po->mapped))
++		if (atomic_long_read(&po->mapped))
+ 			goto out;
+ 		if (packet_read_pending(rb))
+ 			goto out;
+@@ -4422,7 +4422,7 @@ static int packet_set_ring(struct sock *
+ 
+ 	err = -EBUSY;
+ 	mutex_lock(&po->pg_vec_lock);
+-	if (closing || atomic_read(&po->mapped) == 0) {
++	if (closing || atomic_long_read(&po->mapped) == 0) {
+ 		err = 0;
+ 		spin_lock_bh(&rb_queue->lock);
+ 		swap(rb->pg_vec, pg_vec);
+@@ -4440,9 +4440,9 @@ static int packet_set_ring(struct sock *
+ 		po->prot_hook.func = (po->rx_ring.pg_vec) ?
+ 						tpacket_rcv : packet_rcv;
+ 		skb_queue_purge(rb_queue);
+-		if (atomic_read(&po->mapped))
+-			pr_err("packet_mmap: vma is busy: %d\n",
+-			       atomic_read(&po->mapped));
++		if (atomic_long_read(&po->mapped))
++			pr_err("packet_mmap: vma is busy: %ld\n",
++			       atomic_long_read(&po->mapped));
+ 	}
+ 	mutex_unlock(&po->pg_vec_lock);
+ 
+@@ -4520,7 +4520,7 @@ static int packet_mmap(struct file *file
+ 		}
+ 	}
+ 
+-	atomic_inc(&po->mapped);
++	atomic_long_inc(&po->mapped);
+ 	vma->vm_ops = &packet_mmap_ops;
+ 	err = 0;
+ 
+--- a/net/packet/internal.h
++++ b/net/packet/internal.h
+@@ -125,7 +125,7 @@ struct packet_sock {
+ 	__be16			num;
+ 	struct packet_rollover	*rollover;
+ 	struct packet_mclist	*mclist;
+-	atomic_t		mapped;
++	atomic_long_t		mapped;
+ 	enum tpacket_versions	tp_version;
+ 	unsigned int		tp_hdrlen;
+ 	unsigned int		tp_reserve;
 
 
