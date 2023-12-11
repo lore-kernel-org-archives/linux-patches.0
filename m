@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B1F51C50;
-	Mon, 11 Dec 2023 18:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A9952F8A;
+	Mon, 11 Dec 2023 18:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/yitFYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFA6C433C7;
-	Mon, 11 Dec 2023 18:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vpbu0OV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C15FC433C9;
+	Mon, 11 Dec 2023 18:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321108;
-	bh=GchLH2zTqV7nMA7tqI6YDenz8MjmATT4FeM/EDAI5lY=;
+	s=korg; t=1702321110;
+	bh=82CFL+zOt9uXyhlYa+xShGlLOlwZk+rPMBYYUJC390o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/yitFYCM8R4t1svspjNqQawiDDymtcy/ZSOXt6r29Y7+izCueMjGYpZuDzOsu3c2
-	 YNj/XpAEn9k6U7ysZNyPYPP9Dr4dvBQ28WowIlqm72MskA+mgVZ7DVzMBjrxSFp2tk
-	 zlhHaqUVU3kMP3h3AAVdOmhDZozGCIqj1YJGSwJY=
+	b=Vpbu0OV66tL+RWKxPlN2y/pEgoKXKxbbShmFz7uCCHjfZYk6ou8vbHN3uR+5pVEnP
+	 8EIYb/8oiA18vAx6ktQ88g2PW8Vod/1ddhYklGBD6rlCMbrp7fJjl1Kcrz7W8FpFZX
+	 XRwJZ88zqJXEulPKh9Iqi24fgpH6qIM0RIJQdqJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/141] arm64: dts: mediatek: mt8183: Move thermal-zones to the root node
-Date: Mon, 11 Dec 2023 19:22:52 +0100
-Message-ID: <20231211182031.448569809@linuxfoundation.org>
+Subject: [PATCH 5.15 114/141] arm64: dts: mediatek: add missing space before {
+Date: Mon, 11 Dec 2023 19:22:53 +0100
+Message-ID: <20231211182031.487943159@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,280 +42,275 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 5a60d63439694590cd5ab1f998fc917ff7ba1c1d ]
+[ Upstream commit a9c740c57f977deb41bc53c02d0dae3d0e2f191a ]
 
-The thermal zones are not a soc bus device: move it to the root
-node to solve simple_bus_reg warnings.
+Add missing whitespace between node name/label and opening {.
 
-Cc: stable@vger.kernel.org
-Fixes: b325ce39785b ("arm64: dts: mt8183: add thermal zone node")
-Link: https://lore.kernel.org/r/20231025093816.44327-9-angelogioacchino.delregno@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230705150006.293690-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: 8980c30141d3 ("arm64: dts: mt8183: kukui: Fix underscores in node names")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183.dtsi | 242 +++++++++++------------
- 1 file changed, 121 insertions(+), 121 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-evb.dts   | 48 +++++++++----------
+ .../arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 12 ++---
+ .../boot/dts/mediatek/mt8183-pumpkin.dts      | 12 ++---
+ 3 files changed, 36 insertions(+), 36 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183.dtsi b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-index ac05284cce867..2d33f4a583b48 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183.dtsi
-@@ -766,127 +766,6 @@ thermal: thermal@1100b000 {
- 			nvmem-cell-names = "calibration-data";
- 		};
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
+index 3023bef2200aa..69aee79d36d48 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
+@@ -131,8 +131,8 @@ &mmc1 {
+ };
  
--		thermal_zones: thermal-zones {
--			cpu_thermal: cpu-thermal {
--				polling-delay-passive = <100>;
--				polling-delay = <500>;
--				thermal-sensors = <&thermal 0>;
--				sustainable-power = <5000>;
--
--				trips {
--					threshold: trip-point0 {
--						temperature = <68000>;
--						hysteresis = <2000>;
--						type = "passive";
--					};
--
--					target: trip-point1 {
--						temperature = <80000>;
--						hysteresis = <2000>;
--						type = "passive";
--					};
--
--					cpu_crit: cpu-crit {
--						temperature = <115000>;
--						hysteresis = <2000>;
--						type = "critical";
--					};
--				};
--
--				cooling-maps {
--					map0 {
--						trip = <&target>;
--						cooling-device = <&cpu0
--							THERMAL_NO_LIMIT
--							THERMAL_NO_LIMIT>,
--								 <&cpu1
--							THERMAL_NO_LIMIT
--							THERMAL_NO_LIMIT>,
--								 <&cpu2
--							THERMAL_NO_LIMIT
--							THERMAL_NO_LIMIT>,
--								 <&cpu3
--							THERMAL_NO_LIMIT
--							THERMAL_NO_LIMIT>;
--						contribution = <3072>;
--					};
--					map1 {
--						trip = <&target>;
--						cooling-device = <&cpu4
--							THERMAL_NO_LIMIT
--							THERMAL_NO_LIMIT>,
--								 <&cpu5
--							THERMAL_NO_LIMIT
--							THERMAL_NO_LIMIT>,
--								 <&cpu6
--							THERMAL_NO_LIMIT
--							THERMAL_NO_LIMIT>,
--								 <&cpu7
--							THERMAL_NO_LIMIT
--							THERMAL_NO_LIMIT>;
--						contribution = <1024>;
--					};
--				};
--			};
--
--			/* The tzts1 ~ tzts6 don't need to polling */
--			/* The tzts1 ~ tzts6 don't need to thermal throttle */
--
--			tzts1: tzts1 {
--				polling-delay-passive = <0>;
--				polling-delay = <0>;
--				thermal-sensors = <&thermal 1>;
--				sustainable-power = <5000>;
--				trips {};
--				cooling-maps {};
--			};
--
--			tzts2: tzts2 {
--				polling-delay-passive = <0>;
--				polling-delay = <0>;
--				thermal-sensors = <&thermal 2>;
--				sustainable-power = <5000>;
--				trips {};
--				cooling-maps {};
--			};
--
--			tzts3: tzts3 {
--				polling-delay-passive = <0>;
--				polling-delay = <0>;
--				thermal-sensors = <&thermal 3>;
--				sustainable-power = <5000>;
--				trips {};
--				cooling-maps {};
--			};
--
--			tzts4: tzts4 {
--				polling-delay-passive = <0>;
--				polling-delay = <0>;
--				thermal-sensors = <&thermal 4>;
--				sustainable-power = <5000>;
--				trips {};
--				cooling-maps {};
--			};
--
--			tzts5: tzts5 {
--				polling-delay-passive = <0>;
--				polling-delay = <0>;
--				thermal-sensors = <&thermal 5>;
--				sustainable-power = <5000>;
--				trips {};
--				cooling-maps {};
--			};
--
--			tztsABB: tztsABB {
--				polling-delay-passive = <0>;
--				polling-delay = <0>;
--				thermal-sensors = <&thermal 6>;
--				sustainable-power = <5000>;
--				trips {};
--				cooling-maps {};
--			};
--		};
--
- 		pwm0: pwm@1100e000 {
- 			compatible = "mediatek,mt8183-disp-pwm";
- 			reg = <0 0x1100e000 0 0x1000>;
-@@ -1495,4 +1374,125 @@ larb3: larb@1a002000 {
- 			power-domains = <&spm MT8183_POWER_DOMAIN_CAM>;
+ &pio {
+-	i2c_pins_0: i2c0{
+-		pins_i2c{
++	i2c_pins_0: i2c0 {
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO82__FUNC_SDA0>,
+ 				 <PINMUX_GPIO83__FUNC_SCL0>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -140,8 +140,8 @@ pins_i2c{
  		};
  	};
-+
-+	thermal_zones: thermal-zones {
-+		cpu_thermal: cpu-thermal {
-+			polling-delay-passive = <100>;
-+			polling-delay = <500>;
-+			thermal-sensors = <&thermal 0>;
-+			sustainable-power = <5000>;
-+
-+			trips {
-+				threshold: trip-point0 {
-+					temperature = <68000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				target: trip-point1 {
-+					temperature = <80000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				cpu_crit: cpu-crit {
-+					temperature = <115000>;
-+					hysteresis = <2000>;
-+					type = "critical";
-+				};
-+			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&target>;
-+					cooling-device = <&cpu0
-+						THERMAL_NO_LIMIT
-+						THERMAL_NO_LIMIT>,
-+							 <&cpu1
-+						THERMAL_NO_LIMIT
-+						THERMAL_NO_LIMIT>,
-+							 <&cpu2
-+						THERMAL_NO_LIMIT
-+						THERMAL_NO_LIMIT>,
-+							 <&cpu3
-+						THERMAL_NO_LIMIT
-+						THERMAL_NO_LIMIT>;
-+					contribution = <3072>;
-+				};
-+				map1 {
-+					trip = <&target>;
-+					cooling-device = <&cpu4
-+						THERMAL_NO_LIMIT
-+						THERMAL_NO_LIMIT>,
-+							 <&cpu5
-+						THERMAL_NO_LIMIT
-+						THERMAL_NO_LIMIT>,
-+							 <&cpu6
-+						THERMAL_NO_LIMIT
-+						THERMAL_NO_LIMIT>,
-+							 <&cpu7
-+						THERMAL_NO_LIMIT
-+						THERMAL_NO_LIMIT>;
-+					contribution = <1024>;
-+				};
-+			};
-+		};
-+
-+		/* The tzts1 ~ tzts6 don't need to polling */
-+		/* The tzts1 ~ tzts6 don't need to thermal throttle */
-+
-+		tzts1: tzts1 {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 1>;
-+			sustainable-power = <5000>;
-+			trips {};
-+			cooling-maps {};
-+		};
-+
-+		tzts2: tzts2 {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 2>;
-+			sustainable-power = <5000>;
-+			trips {};
-+			cooling-maps {};
-+		};
-+
-+		tzts3: tzts3 {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 3>;
-+			sustainable-power = <5000>;
-+			trips {};
-+			cooling-maps {};
-+		};
-+
-+		tzts4: tzts4 {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 4>;
-+			sustainable-power = <5000>;
-+			trips {};
-+			cooling-maps {};
-+		};
-+
-+		tzts5: tzts5 {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 5>;
-+			sustainable-power = <5000>;
-+			trips {};
-+			cooling-maps {};
-+		};
-+
-+		tztsABB: tztsABB {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&thermal 6>;
-+			sustainable-power = <5000>;
-+			trips {};
-+			cooling-maps {};
-+		};
-+	};
- };
+ 
+-	i2c_pins_1: i2c1{
+-		pins_i2c{
++	i2c_pins_1: i2c1 {
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO81__FUNC_SDA1>,
+ 				 <PINMUX_GPIO84__FUNC_SCL1>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -149,8 +149,8 @@ pins_i2c{
+ 		};
+ 	};
+ 
+-	i2c_pins_2: i2c2{
+-		pins_i2c{
++	i2c_pins_2: i2c2 {
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO103__FUNC_SCL2>,
+ 				 <PINMUX_GPIO104__FUNC_SDA2>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -158,8 +158,8 @@ pins_i2c{
+ 		};
+ 	};
+ 
+-	i2c_pins_3: i2c3{
+-		pins_i2c{
++	i2c_pins_3: i2c3 {
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO50__FUNC_SCL3>,
+ 				 <PINMUX_GPIO51__FUNC_SDA3>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -167,8 +167,8 @@ pins_i2c{
+ 		};
+ 	};
+ 
+-	i2c_pins_4: i2c4{
+-		pins_i2c{
++	i2c_pins_4: i2c4 {
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO105__FUNC_SCL4>,
+ 				 <PINMUX_GPIO106__FUNC_SDA4>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -176,8 +176,8 @@ pins_i2c{
+ 		};
+ 	};
+ 
+-	i2c_pins_5: i2c5{
+-		pins_i2c{
++	i2c_pins_5: i2c5 {
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO48__FUNC_SCL5>,
+ 				 <PINMUX_GPIO49__FUNC_SDA5>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -185,8 +185,8 @@ pins_i2c{
+ 		};
+ 	};
+ 
+-	spi_pins_0: spi0{
+-		pins_spi{
++	spi_pins_0: spi0 {
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO85__FUNC_SPI0_MI>,
+ 				 <PINMUX_GPIO86__FUNC_SPI0_CSB>,
+ 				 <PINMUX_GPIO87__FUNC_SPI0_MO>,
+@@ -300,8 +300,8 @@ pins_clk {
+ 		};
+ 	};
+ 
+-	spi_pins_1: spi1{
+-		pins_spi{
++	spi_pins_1: spi1 {
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO161__FUNC_SPI1_A_MI>,
+ 				 <PINMUX_GPIO162__FUNC_SPI1_A_CSB>,
+ 				 <PINMUX_GPIO163__FUNC_SPI1_A_MO>,
+@@ -310,8 +310,8 @@ pins_spi{
+ 		};
+ 	};
+ 
+-	spi_pins_2: spi2{
+-		pins_spi{
++	spi_pins_2: spi2 {
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO0__FUNC_SPI2_CSB>,
+ 				 <PINMUX_GPIO1__FUNC_SPI2_MO>,
+ 				 <PINMUX_GPIO2__FUNC_SPI2_CLK>,
+@@ -320,8 +320,8 @@ pins_spi{
+ 		};
+ 	};
+ 
+-	spi_pins_3: spi3{
+-		pins_spi{
++	spi_pins_3: spi3 {
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO21__FUNC_SPI3_MI>,
+ 				 <PINMUX_GPIO22__FUNC_SPI3_CSB>,
+ 				 <PINMUX_GPIO23__FUNC_SPI3_MO>,
+@@ -330,8 +330,8 @@ pins_spi{
+ 		};
+ 	};
+ 
+-	spi_pins_4: spi4{
+-		pins_spi{
++	spi_pins_4: spi4 {
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO17__FUNC_SPI4_MI>,
+ 				 <PINMUX_GPIO18__FUNC_SPI4_CSB>,
+ 				 <PINMUX_GPIO19__FUNC_SPI4_MO>,
+@@ -340,8 +340,8 @@ pins_spi{
+ 		};
+ 	};
+ 
+-	spi_pins_5: spi5{
+-		pins_spi{
++	spi_pins_5: spi5 {
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO13__FUNC_SPI5_MI>,
+ 				 <PINMUX_GPIO14__FUNC_SPI5_CSB>,
+ 				 <PINMUX_GPIO15__FUNC_SPI5_MO>,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+index 5950601813196..bc583a1da9060 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
+@@ -619,7 +619,7 @@ pins_scp_uart {
+ 	};
+ 
+ 	spi0_pins: spi0 {
+-		pins_spi{
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO85__FUNC_SPI0_MI>,
+ 				 <PINMUX_GPIO86__FUNC_GPIO86>,
+ 				 <PINMUX_GPIO87__FUNC_SPI0_MO>,
+@@ -629,7 +629,7 @@ pins_spi{
+ 	};
+ 
+ 	spi1_pins: spi1 {
+-		pins_spi{
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO161__FUNC_SPI1_A_MI>,
+ 				 <PINMUX_GPIO162__FUNC_SPI1_A_CSB>,
+ 				 <PINMUX_GPIO163__FUNC_SPI1_A_MO>,
+@@ -639,7 +639,7 @@ pins_spi{
+ 	};
+ 
+ 	spi2_pins: spi2 {
+-		pins_spi{
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO0__FUNC_SPI2_CSB>,
+ 				 <PINMUX_GPIO1__FUNC_SPI2_MO>,
+ 				 <PINMUX_GPIO2__FUNC_SPI2_CLK>;
+@@ -652,7 +652,7 @@ pins_spi_mi {
+ 	};
+ 
+ 	spi3_pins: spi3 {
+-		pins_spi{
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO21__FUNC_SPI3_MI>,
+ 				 <PINMUX_GPIO22__FUNC_SPI3_CSB>,
+ 				 <PINMUX_GPIO23__FUNC_SPI3_MO>,
+@@ -662,7 +662,7 @@ pins_spi{
+ 	};
+ 
+ 	spi4_pins: spi4 {
+-		pins_spi{
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO17__FUNC_SPI4_MI>,
+ 				 <PINMUX_GPIO18__FUNC_SPI4_CSB>,
+ 				 <PINMUX_GPIO19__FUNC_SPI4_MO>,
+@@ -672,7 +672,7 @@ pins_spi{
+ 	};
+ 
+ 	spi5_pins: spi5 {
+-		pins_spi{
++		pins_spi {
+ 			pinmux = <PINMUX_GPIO13__FUNC_SPI5_MI>,
+ 				 <PINMUX_GPIO14__FUNC_SPI5_CSB>,
+ 				 <PINMUX_GPIO15__FUNC_SPI5_MO>,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
+index ee912825cfc60..b7f3c266d3dd2 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
+@@ -165,7 +165,7 @@ &mmc1 {
+ 
+ &pio {
+ 	i2c_pins_0: i2c0 {
+-		pins_i2c{
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO82__FUNC_SDA0>,
+ 				 <PINMUX_GPIO83__FUNC_SCL0>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -174,7 +174,7 @@ pins_i2c{
+ 	};
+ 
+ 	i2c_pins_1: i2c1 {
+-		pins_i2c{
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO81__FUNC_SDA1>,
+ 				 <PINMUX_GPIO84__FUNC_SCL1>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -183,7 +183,7 @@ pins_i2c{
+ 	};
+ 
+ 	i2c_pins_2: i2c2 {
+-		pins_i2c{
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO103__FUNC_SCL2>,
+ 				 <PINMUX_GPIO104__FUNC_SDA2>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -192,7 +192,7 @@ pins_i2c{
+ 	};
+ 
+ 	i2c_pins_3: i2c3 {
+-		pins_i2c{
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO50__FUNC_SCL3>,
+ 				 <PINMUX_GPIO51__FUNC_SDA3>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -201,7 +201,7 @@ pins_i2c{
+ 	};
+ 
+ 	i2c_pins_4: i2c4 {
+-		pins_i2c{
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO105__FUNC_SCL4>,
+ 				 <PINMUX_GPIO106__FUNC_SDA4>;
+ 			mediatek,pull-up-adv = <3>;
+@@ -210,7 +210,7 @@ pins_i2c{
+ 	};
+ 
+ 	i2c_pins_5: i2c5 {
+-		pins_i2c{
++		pins_i2c {
+ 			pinmux = <PINMUX_GPIO48__FUNC_SCL5>,
+ 				 <PINMUX_GPIO49__FUNC_SDA5>;
+ 			mediatek,pull-up-adv = <3>;
 -- 
 2.42.0
 
