@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD666FC06;
-	Mon, 11 Dec 2023 18:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CDCFC06;
+	Mon, 11 Dec 2023 18:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cuk998u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F10C433C7;
-	Mon, 11 Dec 2023 18:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljW3V8pd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D975CC433C7;
+	Mon, 11 Dec 2023 18:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320296;
-	bh=WAroYLBmB69/bsjbIR1oZ/Vt0HKyE7fHuhZxiCarldA=;
+	s=korg; t=1702320299;
+	bh=BENXmjO2N8ichrAopCJ+VleRkRQF3LcfdvKFoGiDWmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2cuk998uEAaUiXMla6CyMiCSQiSYT6d0E6WYTlXJbZ1my4JPPZ1B4z4NR+4yUSV6I
-	 AOVfPPxSdiSpFArvHYe2tlU0EfG64MtlAtNne/21WjVMOFJWrasiaT5h8SuhKQOS0m
-	 v5/G9+w2fv08xBLhJ2svLqzFOQfgAJcnwLaWV5lE=
+	b=ljW3V8pdOp266R1iakcCyqU45BagYkQiQUcIvHMynIM6Nu86ZoFCzlZITk1CGvjXi
+	 R+UcYbZuXht+EEqLf9mm7+QsPepJArIjRjR7SqAWW1eKB2fxCZOqlS85+A0+sqpBK0
+	 CekVcQPSMk4YOEbs6flZz9t06Y9a5DmazMT79KVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Sistare <steven.sistare@oracle.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/194] vdpa/mlx5: preserve CVQ vringh index
-Date: Mon, 11 Dec 2023 19:19:51 +0100
-Message-ID: <20231211182036.667748912@linuxfoundation.org>
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 010/194] x86: Introduce ia32_enabled()
+Date: Mon, 11 Dec 2023 19:20:00 +0100
+Message-ID: <20231211182037.065164611@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -38,70 +35,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Nikolay Borisov <nik.borisov@suse.com>
 
-[ Upstream commit 480b3e73720f6b5d76bef2387b1f9d19ed67573b ]
+[ upstream commit 1da5c9bc119d3a749b519596b93f9b2667e93c4a ]
 
-mlx5_vdpa does not preserve userland's view of vring base for the control
-queue in the following sequence:
+IA32 support on 64bit kernels depends on whether CONFIG_IA32_EMULATION
+is selected or not. As it is a compile time option it doesn't
+provide the flexibility to have distributions set their own policy for
+IA32 support and give the user the flexibility to override it.
 
-ioctl VHOST_SET_VRING_BASE
-ioctl VHOST_VDPA_SET_STATUS VIRTIO_CONFIG_S_DRIVER_OK
-  mlx5_vdpa_set_status()
-    setup_cvq_vring()
-      vringh_init_iotlb()
-        vringh_init_kern()
-          vrh->last_avail_idx = 0;
-ioctl VHOST_GET_VRING_BASE
+As a first step introduce ia32_enabled() which abstracts whether IA32
+compat is turned on or off. Upcoming patches will implement
+the ability to set IA32 compat state at boot time.
 
-To fix, restore the value of cvq->vring.last_avail_idx after calling
-vringh_init_iotlb.
-
-Fixes: 5262912ef3cf ("vdpa/mlx5: Add support for control VQ and MAC setting")
-
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <1699014387-194368-1-git-send-email-steven.sistare@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230623111409.3047467-2-nik.borisov@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/mlx5/net/mlx5_vnet.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/entry/common.c     |    4 ++++
+ arch/x86/include/asm/ia32.h |   16 +++++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-index bf99654371b35..2b7e796c48897 100644
---- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
-+++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-@@ -2508,13 +2508,18 @@ static int setup_cvq_vring(struct mlx5_vdpa_dev *mvdev)
- 	struct mlx5_control_vq *cvq = &mvdev->cvq;
- 	int err = 0;
- 
--	if (mvdev->actual_features & BIT_ULL(VIRTIO_NET_F_CTRL_VQ))
-+	if (mvdev->actual_features & BIT_ULL(VIRTIO_NET_F_CTRL_VQ)) {
-+		u16 idx = cvq->vring.last_avail_idx;
-+
- 		err = vringh_init_iotlb(&cvq->vring, mvdev->actual_features,
- 					MLX5_CVQ_MAX_ENT, false,
- 					(struct vring_desc *)(uintptr_t)cvq->desc_addr,
- 					(struct vring_avail *)(uintptr_t)cvq->driver_addr,
- 					(struct vring_used *)(uintptr_t)cvq->device_addr);
- 
-+		if (!err)
-+			cvq->vring.last_avail_idx = cvq->vring.last_used_idx = idx;
-+	}
- 	return err;
+--- a/arch/x86/entry/common.c
++++ b/arch/x86/entry/common.c
+@@ -96,6 +96,10 @@ static __always_inline int syscall_32_en
+ 	return (int)regs->orig_ax;
  }
  
--- 
-2.42.0
-
++#ifdef CONFIG_IA32_EMULATION
++bool __ia32_enabled __ro_after_init = true;
++#endif
++
+ /*
+  * Invoke a 32-bit syscall.  Called with IRQs on in CONTEXT_KERNEL.
+  */
+--- a/arch/x86/include/asm/ia32.h
++++ b/arch/x86/include/asm/ia32.h
+@@ -68,6 +68,20 @@ extern void ia32_pick_mmap_layout(struct
+ 
+ #endif
+ 
+-#endif /* CONFIG_IA32_EMULATION */
++extern bool __ia32_enabled;
++
++static inline bool ia32_enabled(void)
++{
++	return __ia32_enabled;
++}
++
++#else /* !CONFIG_IA32_EMULATION */
++
++static inline bool ia32_enabled(void)
++{
++	return IS_ENABLED(CONFIG_X86_32);
++}
++
++#endif
+ 
+ #endif /* _ASM_X86_IA32_H */
 
 
