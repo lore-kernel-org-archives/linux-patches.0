@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1B1FC06;
-	Mon, 11 Dec 2023 18:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20849FC06;
+	Mon, 11 Dec 2023 18:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7qsSWBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E457AC433C8;
-	Mon, 11 Dec 2023 18:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUl2BvyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8F3C433C8;
+	Mon, 11 Dec 2023 18:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320141;
-	bh=DN6dRBGOtqmvjWVDbXLT5T54vzivuC+Yxuj/t3uj724=;
+	s=korg; t=1702320143;
+	bh=KkfQjITq/nggrnRzVmwKTlqJF6+L5RQ/Uu7Wmx9vNwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7qsSWBJQcwy5M/8p9K1omDIK25h1tnkb7dg+ZDnEYKqjPr9uRrPsMrXCBy7Lssn9
-	 GJDvb8CQxdpqpPJxhU6GWUGtyX0BMdDeCNPyZl00MrLXJkG+m483jRuBxaxf0d4RML
-	 uCGngA43cAIga2RLFIwxv7bZzeiM44sYvCH8D62Y=
+	b=cUl2BvyKrglncc/nyVc9NUVWP8btlkfyXkT5/5QYsmVl6L1+0XVsFTwrlnqCInHrA
+	 6rViv17vbq2BnxnmYQwsWktthuY3WVgzb6bMvXrLqcXNUvq7fEKqvBLddRH9IpbLEB
+	 wKEMx/pbku+WgeAKNMjkX7aVNjzQkOFYrDbrMcyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Tong Zhang <ztong0001@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 02/67] netfilter: ipset: fix race condition between swap/destroy and kernel side add/del/test
-Date: Mon, 11 Dec 2023 19:21:46 +0100
-Message-ID: <20231211182015.166903114@linuxfoundation.org>
+Subject: [PATCH 5.4 20/67] net: arcnet: com20020 fix error handling
+Date: Mon, 11 Dec 2023 19:22:04 +0100
+Message-ID: <20231211182015.955987464@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -42,100 +42,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: Tong Zhang <ztong0001@gmail.com>
 
-[ Upstream commit 28628fa952fefc7f2072ce6e8016968cc452b1ba ]
+[ Upstream commit 6577b9a551aedb86bca6d4438c28386361845108 ]
 
-Linkui Xiao reported that there's a race condition when ipset swap and destroy is
-called, which can lead to crash in add/del/test element operations. Swap then
-destroy are usual operations to replace a set with another one in a production
-system. The issue can in some cases be reproduced with the script:
+There are two issues when handling error case in com20020pci_probe()
 
-ipset create hash_ip1 hash:net family inet hashsize 1024 maxelem 1048576
-ipset add hash_ip1 172.20.0.0/16
-ipset add hash_ip1 192.168.0.0/16
-iptables -A INPUT -m set --match-set hash_ip1 src -j ACCEPT
-while [ 1 ]
-do
-	# ... Ongoing traffic...
-        ipset create hash_ip2 hash:net family inet hashsize 1024 maxelem 1048576
-        ipset add hash_ip2 172.20.0.0/16
-        ipset swap hash_ip1 hash_ip2
-        ipset destroy hash_ip2
-        sleep 0.05
-done
+1. priv might be not initialized yet when calling com20020pci_remove()
+from com20020pci_probe(), since the priv is set at the very last but it
+can jump to error handling in the middle and priv remains NULL.
+2. memory leak - the net device is allocated in alloc_arcdev but not
+properly released if error happens in the middle of the big for loop
 
-In the race case the possible order of the operations are
+[    1.529110] BUG: kernel NULL pointer dereference, address: 0000000000000008
+[    1.531447] RIP: 0010:com20020pci_remove+0x15/0x60 [com20020_pci]
+[    1.536805] Call Trace:
+[    1.536939]  com20020pci_probe+0x3f2/0x48c [com20020_pci]
+[    1.537226]  local_pci_probe+0x48/0x80
+[    1.539918]  com20020pci_init+0x3f/0x1000 [com20020_pci]
 
-	CPU0			CPU1
-	ip_set_test
-				ipset swap hash_ip1 hash_ip2
-				ipset destroy hash_ip2
-	hash_net_kadt
-
-Swap replaces hash_ip1 with hash_ip2 and then destroy removes hash_ip2 which
-is the original hash_ip1. ip_set_test was called on hash_ip1 and because destroy
-removed it, hash_net_kadt crashes.
-
-The fix is to force ip_set_swap() to wait for all readers to finish accessing the
-old set pointers by calling synchronize_rcu().
-
-The first version of the patch was written by Linkui Xiao <xiaolinkui@kylinos.cn>.
-
-v2: synchronize_rcu() is moved into ip_set_swap() in order not to burden
-    ip_set_destroy() unnecessarily when all sets are destroyed.
-v3: Florian Westphal pointed out that all netfilter hooks run with rcu_read_lock() held
-    and em_ipset.c wraps the entire ip_set_test() in rcu read lock/unlock pair.
-    So there's no need to extend the rcu read locked area in ipset itself.
-
-Closes: https://lore.kernel.org/all/69e7963b-e7f8-3ad0-210-7b86eebf7f78@netfilter.org/
-Reported by: Linkui Xiao <xiaolinkui@kylinos.cn>
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Tong Zhang <ztong0001@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 6b17a597fc2f ("arcnet: restoring support for multiple Sohard Arcnet cards")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/arcnet/com20020-pci.c | 34 +++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index d3be0d0b0bdad..d4feda487e5e6 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -61,6 +61,8 @@ MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_IPSET);
- 	ip_set_dereference((inst)->ip_set_list)[id]
- #define ip_set_ref_netlink(inst,id)	\
- 	rcu_dereference_raw((inst)->ip_set_list)[id]
-+#define ip_set_dereference_nfnl(p)	\
-+	rcu_dereference_check(p, lockdep_nfnl_is_held(NFNL_SUBSYS_IPSET))
+diff --git a/drivers/net/arcnet/com20020-pci.c b/drivers/net/arcnet/com20020-pci.c
+index b4f8798d8c509..28dccbc0e8d8f 100644
+--- a/drivers/net/arcnet/com20020-pci.c
++++ b/drivers/net/arcnet/com20020-pci.c
+@@ -127,6 +127,8 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 	int i, ioaddr, ret;
+ 	struct resource *r;
  
- /* The set types are implemented in modules and registered set types
-  * can be found in ip_set_type_list. Adding/deleting types is
-@@ -556,15 +558,10 @@ __ip_set_put_netlink(struct ip_set *set)
- static inline struct ip_set *
- ip_set_rcu_get(struct net *net, ip_set_id_t index)
- {
--	struct ip_set *set;
- 	struct ip_set_net *inst = ip_set_pernet(net);
- 
--	rcu_read_lock();
--	/* ip_set_list itself needs to be protected */
--	set = rcu_dereference(inst->ip_set_list)[index];
--	rcu_read_unlock();
--
--	return set;
-+	/* ip_set_list and the set pointer need to be protected */
-+	return ip_set_dereference_nfnl(inst->ip_set_list)[index];
- }
- 
- static inline void
-@@ -1255,6 +1252,9 @@ static int ip_set_swap(struct net *net, struct sock *ctnl, struct sk_buff *skb,
- 	ip_set(inst, to_id) = from;
- 	write_unlock_bh(&ip_set_ref_lock);
- 
-+	/* Make sure all readers of the old set pointers are completed. */
-+	synchronize_rcu();
++	ret = 0;
 +
- 	return 0;
+ 	if (pci_enable_device(pdev))
+ 		return -EIO;
+ 
+@@ -142,6 +144,8 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 	priv->ci = ci;
+ 	mm = &ci->misc_map;
+ 
++	pci_set_drvdata(pdev, priv);
++
+ 	INIT_LIST_HEAD(&priv->list_dev);
+ 
+ 	if (mm->size) {
+@@ -164,7 +168,7 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 		dev = alloc_arcdev(device);
+ 		if (!dev) {
+ 			ret = -ENOMEM;
+-			goto out_port;
++			break;
+ 		}
+ 		dev->dev_port = i;
+ 
+@@ -181,7 +185,7 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 			pr_err("IO region %xh-%xh already allocated\n",
+ 			       ioaddr, ioaddr + cm->size - 1);
+ 			ret = -EBUSY;
+-			goto out_port;
++			goto err_free_arcdev;
+ 		}
+ 
+ 		/* Dummy access after Reset
+@@ -219,18 +223,18 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 		if (arcnet_inb(ioaddr, COM20020_REG_R_STATUS) == 0xFF) {
+ 			pr_err("IO address %Xh is empty!\n", ioaddr);
+ 			ret = -EIO;
+-			goto out_port;
++			goto err_free_arcdev;
+ 		}
+ 		if (com20020_check(dev)) {
+ 			ret = -EIO;
+-			goto out_port;
++			goto err_free_arcdev;
+ 		}
+ 
+ 		card = devm_kzalloc(&pdev->dev, sizeof(struct com20020_dev),
+ 				    GFP_KERNEL);
+ 		if (!card) {
+ 			ret = -ENOMEM;
+-			goto out_port;
++			goto err_free_arcdev;
+ 		}
+ 
+ 		card->index = i;
+@@ -256,29 +260,29 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 
+ 		ret = devm_led_classdev_register(&pdev->dev, &card->tx_led);
+ 		if (ret)
+-			goto out_port;
++			goto err_free_arcdev;
+ 
+ 		ret = devm_led_classdev_register(&pdev->dev, &card->recon_led);
+ 		if (ret)
+-			goto out_port;
++			goto err_free_arcdev;
+ 
+ 		dev_set_drvdata(&dev->dev, card);
+ 
+ 		ret = com20020_found(dev, IRQF_SHARED);
+ 		if (ret)
+-			goto out_port;
++			goto err_free_arcdev;
+ 
+ 		devm_arcnet_led_init(dev, dev->dev_id, i);
+ 
+ 		list_add(&card->list, &priv->list_dev);
+-	}
++		continue;
+ 
+-	pci_set_drvdata(pdev, priv);
+-
+-	return 0;
+-
+-out_port:
+-	com20020pci_remove(pdev);
++err_free_arcdev:
++		free_arcdev(dev);
++		break;
++	}
++	if (ret)
++		com20020pci_remove(pdev);
+ 	return ret;
  }
  
 -- 
