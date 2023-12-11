@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77F2E548;
-	Mon, 11 Dec 2023 18:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD8FE548;
+	Mon, 11 Dec 2023 18:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3+JaXX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1CDC433C8;
-	Mon, 11 Dec 2023 18:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9g5tRRl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EA7C433C8;
+	Mon, 11 Dec 2023 18:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321124;
-	bh=zHASkbDmvrGzjgR/SbHz1Grl/bbHaQM4F/TYJUeUqvE=;
+	s=korg; t=1702321127;
+	bh=ftLwvQ+V4Kb0tg2ypGpoc3mCSiqkOZK7SZkE7ZtNYzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3+JaXX3rhvl+PdDCxux1NkN81LlQitARgmvqnTqFSE8B9H2hFmrmEl+xSZfQNYoS
-	 TV2HIjnxZsWyPYOw3Vev6/NZqenYK4UzXdcRdQ2YqB7jTaRWlxIkd9I1q1QbOosViX
-	 ZMIuWm/HEUagpAB1bPHmh6B/Nt0LE0CjNGj00EGU=
+	b=L9g5tRRl8YzfmBbULFwL1gGzlnLAETW+mKMqyL34qdlO0qIJv3Lts23cTerSOKtKu
+	 kyMAf59uhjqDQIN1JtTd32vXGN+eeo4aV8hSb2Nx6JyLytDXs9XFrMVA0QG3txkhEe
+	 JfBYl5CMpxgm8e8HlFQApWi6ylS33/9haov4cDR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boerge Struempfel <boerge.struempfel@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/141] gpiolib: sysfs: Fix error handling on failed export
-Date: Mon, 11 Dec 2023 19:22:57 +0100
-Message-ID: <20231211182031.679929645@linuxfoundation.org>
+Subject: [PATCH 5.15 119/141] drm/amd/amdgpu: Fix warnings in amdgpu/amdgpu_display.c
+Date: Mon, 11 Dec 2023 19:22:58 +0100
+Message-ID: <20231211182031.730133634@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -37,65 +37,182 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boerge Struempfel <boerge.struempfel@gmail.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 95dd1e34ff5bbee93a28ff3947eceaf6de811b1a ]
+[ Upstream commit 93125cb704919f572c01e02ef64923caff1c3164 ]
 
-If gpio_set_transitory() fails, we should free the GPIO again. Most
-notably, the flag FLAG_REQUESTED has previously been set in
-gpiod_request_commit(), and should be reset on failure.
+Fixes the below checkpatch.pl warnings:
 
-To my knowledge, this does not affect any current users, since the
-gpio_set_transitory() mainly returns 0 and -ENOTSUPP, which is converted
-to 0. However the gpio_set_transitory() function calles the .set_config()
-function of the corresponding GPIO chip and there are some GPIO drivers in
-which some (unlikely) branches return other values like -EPROBE_DEFER,
-and -EINVAL. In these cases, the above mentioned FLAG_REQUESTED would not
-be reset, which results in the pin being blocked until the next reboot.
+WARNING: Block comments use * on subsequent lines
+WARNING: Block comments use a trailing */ on a separate line
+WARNING: suspect code indent for conditional statements (8, 12)
+WARNING: braces {} are not necessary for single statement blocks
 
-Fixes: e10f72bf4b3e ("gpio: gpiolib: Generalise state persistence beyond sleep")
-Signed-off-by: Boerge Struempfel <boerge.struempfel@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: c6df7f313794 ("drm/amdgpu: correct the amdgpu runtime dereference usage count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-sysfs.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_display.c | 42 ++++++++++++---------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
-index 44c1ad51b3fe9..95bd1a4a08d11 100644
---- a/drivers/gpio/gpiolib-sysfs.c
-+++ b/drivers/gpio/gpiolib-sysfs.c
-@@ -480,14 +480,17 @@ static ssize_t export_store(struct class *class,
- 		goto done;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+index d2286a83e302f..2952f89734487 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
+@@ -80,7 +80,7 @@ static void amdgpu_display_flip_work_func(struct work_struct *__work)
  
- 	status = gpiod_set_transitory(desc, false);
--	if (!status) {
--		status = gpiod_export(desc, true);
--		if (status < 0)
--			gpiod_free(desc);
--		else
--			set_bit(FLAG_SYSFS, &desc->flags);
-+	if (status) {
-+		gpiod_free(desc);
-+		goto done;
+ 	struct drm_crtc *crtc = &amdgpu_crtc->base;
+ 	unsigned long flags;
+-	unsigned i;
++	unsigned int i;
+ 	int vpos, hpos;
+ 
+ 	if (amdgpu_display_flip_handle_fence(work, &work->excl))
+@@ -159,7 +159,7 @@ int amdgpu_display_crtc_page_flip_target(struct drm_crtc *crtc,
+ 	u64 tiling_flags;
+ 	int i, r;
+ 
+-	work = kzalloc(sizeof *work, GFP_KERNEL);
++	work = kzalloc(sizeof(*work), GFP_KERNEL);
+ 	if (work == NULL)
+ 		return -ENOMEM;
+ 
+@@ -290,13 +290,15 @@ int amdgpu_display_crtc_set_config(struct drm_mode_set *set,
+ 
+ 	adev = drm_to_adev(dev);
+ 	/* if we have active crtcs and we don't have a power ref,
+-	   take the current one */
++	 * take the current one
++	 */
+ 	if (active && !adev->have_disp_power_ref) {
+ 		adev->have_disp_power_ref = true;
+ 		return ret;
+ 	}
+ 	/* if we have no active crtcs, then drop the power ref
+-	   we got before */
++	 * we got before
++	 */
+ 	if (!active && adev->have_disp_power_ref) {
+ 		pm_runtime_put_autosuspend(dev->dev);
+ 		adev->have_disp_power_ref = false;
+@@ -465,11 +467,10 @@ bool amdgpu_display_ddc_probe(struct amdgpu_connector *amdgpu_connector,
+ 	if (amdgpu_connector->router.ddc_valid)
+ 		amdgpu_i2c_router_select_ddc_port(amdgpu_connector);
+ 
+-	if (use_aux) {
++	if (use_aux)
+ 		ret = i2c_transfer(&amdgpu_connector->ddc_bus->aux.ddc, msgs, 2);
+-	} else {
++	else
+ 		ret = i2c_transfer(&amdgpu_connector->ddc_bus->adapter, msgs, 2);
+-	}
+ 
+ 	if (ret != 2)
+ 		/* Couldn't find an accessible DDC on this connector */
+@@ -478,10 +479,12 @@ bool amdgpu_display_ddc_probe(struct amdgpu_connector *amdgpu_connector,
+ 	 * EDID header starts with:
+ 	 * 0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00.
+ 	 * Only the first 6 bytes must be valid as
+-	 * drm_edid_block_valid() can fix the last 2 bytes */
++	 * drm_edid_block_valid() can fix the last 2 bytes
++	 */
+ 	if (drm_edid_header_is_valid(buf) < 6) {
+ 		/* Couldn't find an accessible EDID on this
+-		 * connector */
++		 * connector
++		 */
+ 		return false;
+ 	}
+ 	return true;
+@@ -1189,8 +1192,10 @@ amdgpu_display_user_framebuffer_create(struct drm_device *dev,
+ 
+ 	obj = drm_gem_object_lookup(file_priv, mode_cmd->handles[0]);
+ 	if (obj ==  NULL) {
+-		drm_dbg_kms(dev, "No GEM object associated to handle 0x%08X, "
+-			    "can't create framebuffer\n", mode_cmd->handles[0]);
++		drm_dbg_kms(dev,
++			    "No GEM object associated to handle 0x%08X, can't create framebuffer\n",
++			    mode_cmd->handles[0]);
++
+ 		return ERR_PTR(-ENOENT);
  	}
  
-+	status = gpiod_export(desc, true);
-+	if (status < 0)
-+		gpiod_free(desc);
-+	else
-+		set_bit(FLAG_SYSFS, &desc->flags);
+@@ -1384,6 +1389,7 @@ bool amdgpu_display_crtc_scaling_mode_fixup(struct drm_crtc *crtc,
+ 	}
+ 	if (amdgpu_crtc->rmx_type != RMX_OFF) {
+ 		fixed20_12 a, b;
 +
- done:
- 	if (status)
- 		pr_debug("%s: status %d\n", __func__, status);
+ 		a.full = dfixed_const(src_v);
+ 		b.full = dfixed_const(dst_v);
+ 		amdgpu_crtc->vsc.full = dfixed_div(a, b);
+@@ -1403,7 +1409,7 @@ bool amdgpu_display_crtc_scaling_mode_fixup(struct drm_crtc *crtc,
+  *
+  * \param dev Device to query.
+  * \param pipe Crtc to query.
+- * \param flags Flags from caller (DRM_CALLED_FROM_VBLIRQ or 0).
++ * \param flags from caller (DRM_CALLED_FROM_VBLIRQ or 0).
+  *              For driver internal use only also supports these flags:
+  *
+  *              USE_REAL_VBLANKSTART to use the real start of vblank instead
+@@ -1479,8 +1485,8 @@ int amdgpu_display_get_crtc_scanoutpos(struct drm_device *dev,
+ 
+ 	/* Called from driver internal vblank counter query code? */
+ 	if (flags & GET_DISTANCE_TO_VBLANKSTART) {
+-	    /* Caller wants distance from real vbl_start in *hpos */
+-	    *hpos = *vpos - vbl_start;
++		/* Caller wants distance from real vbl_start in *hpos */
++		*hpos = *vpos - vbl_start;
+ 	}
+ 
+ 	/* Fudge vblank to start a few scanlines earlier to handle the
+@@ -1502,7 +1508,7 @@ int amdgpu_display_get_crtc_scanoutpos(struct drm_device *dev,
+ 
+ 	/* In vblank? */
+ 	if (in_vbl)
+-	    ret |= DRM_SCANOUTPOS_IN_VBLANK;
++		ret |= DRM_SCANOUTPOS_IN_VBLANK;
+ 
+ 	/* Called from driver internal vblank counter query code? */
+ 	if (flags & GET_DISTANCE_TO_VBLANKSTART) {
+@@ -1593,6 +1599,7 @@ int amdgpu_display_suspend_helper(struct amdgpu_device *adev)
+ 
+ 		if (amdgpu_crtc->cursor_bo && !adev->enable_virtual_display) {
+ 			struct amdgpu_bo *aobj = gem_to_amdgpu_bo(amdgpu_crtc->cursor_bo);
++
+ 			r = amdgpu_bo_reserve(aobj, true);
+ 			if (r == 0) {
+ 				amdgpu_bo_unpin(aobj);
+@@ -1600,9 +1607,9 @@ int amdgpu_display_suspend_helper(struct amdgpu_device *adev)
+ 			}
+ 		}
+ 
+-		if (fb == NULL || fb->obj[0] == NULL) {
++		if (!fb || !fb->obj[0])
+ 			continue;
+-		}
++
+ 		robj = gem_to_amdgpu_bo(fb->obj[0]);
+ 		/* don't unpin kernel fb objects */
+ 		if (!amdgpu_fbdev_robj_is_fb(adev, robj)) {
+@@ -1630,6 +1637,7 @@ int amdgpu_display_resume_helper(struct amdgpu_device *adev)
+ 
+ 		if (amdgpu_crtc->cursor_bo && !adev->enable_virtual_display) {
+ 			struct amdgpu_bo *aobj = gem_to_amdgpu_bo(amdgpu_crtc->cursor_bo);
++
+ 			r = amdgpu_bo_reserve(aobj, true);
+ 			if (r == 0) {
+ 				r = amdgpu_bo_pin(aobj, AMDGPU_GEM_DOMAIN_VRAM);
 -- 
 2.42.0
 
