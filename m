@@ -1,37 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F2B51C58;
-	Mon, 11 Dec 2023 18:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FB351C58;
+	Mon, 11 Dec 2023 18:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moVwCp+k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65EF2C433C9;
-	Mon, 11 Dec 2023 18:35:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaWJZLnY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0B4C433CC;
+	Mon, 11 Dec 2023 18:35:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319733;
-	bh=/s7gEbdJwaHW0VD1uv7csXpND0bUYxljaP+fhJAoeWA=;
+	s=korg; t=1702319736;
+	bh=Mtgf33RDmWecyxflz2NU8RmyT+0828vrWVXhGXYUTV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=moVwCp+kTMLRyAK/s97NqVHKFGNLsPdMo6Zx629W8EzuZQ8fQrMYYBvbCfnkRjciy
-	 XuSruE+wSwhajrKvOFpH9fVQlT5adBVk3C5mBLYGHFKzhazijd/2943RJtSY6KSgts
-	 aU/lxkRwmHYjds1wXU8h5NQNCXxeTZ+8nanYz180=
+	b=BaWJZLnYo55T4atBZUIyYlBEojJlZ0KQgk3wi7Q00iv66RdpKl8BrpEiRnCk67DnE
+	 xRfpiOXCT+MUAHSssit/UI1ks71sRNNkqMTCtsfFJy5oA0fJ776AAVAwuCthE6kOcW
+	 oyv4JhXTBKQAZkX2+6B3SqxXsIJ2mXnDRiQIdDcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <david@fromorbit.com>,
-	Xiaoli Feng <fengxiaoli0714@gmail.com>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Rohith Surabattula <rohiths.msft@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Darrick Wong <darrick.wong@oracle.com>,
-	fstests@vger.kernel.org,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 215/244] cifs: Fix non-availability of dedup breaking generic/304
-Date: Mon, 11 Dec 2023 19:21:48 +0100
-Message-ID: <20231211182055.610436726@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.6 216/244] Revert "xhci: Loosen RPM as default policy to cover for AMD xHC 1.1"
+Date: Mon, 11 Dec 2023 19:21:49 +0100
+Message-ID: <20231211182055.659390582@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -50,51 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 691a41d8da4b34fe72f09393505f55f28a8f34ec upstream.
+commit 24be0b3c40594a14b65141ced486ae327398faf8 upstream.
 
-Deduplication isn't supported on cifs, but cifs doesn't reject it, instead
-treating it as extent duplication/cloning.  This can cause generic/304 to go
-silly and run for hours on end.
+This reverts commit 4baf1218150985ee3ab0a27220456a1f027ea0ac.
 
-Fix cifs to indicate EOPNOTSUPP if REMAP_FILE_DEDUP is set in
-->remap_file_range().
+Enabling runtime pm as default for all AMD xHC 1.1 controllers caused
+regression. An initial attempt to fix those was done in commit a5d6264b638e
+("xhci: Enable RPM on controllers that support low-power states") but new
+issues are still seen.
 
-Note that it's unclear whether or not commit b073a08016a1 is meant to cause
-cifs to return an error if REMAP_FILE_DEDUP.
+Revert this to get those AMD xHC 1.1 systems working
 
-Fixes: b073a08016a1 ("cifs: fix that return -EINVAL when do dedupe operation")
+This patch went to stable an needs to be reverted from there as well.
+
+Fixes: 4baf12181509 ("xhci: Loosen RPM as default policy to cover for AMD xHC 1.1")
+Link: https://lore.kernel.org/linux-usb/55c50bf5-bffb-454e-906e-4408c591cb63@molgen.mpg.de
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 Cc: stable@vger.kernel.org
-Suggested-by: Dave Chinner <david@fromorbit.com>
-cc: Xiaoli Feng <fengxiaoli0714@gmail.com>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Rohith Surabattula <rohiths.msft@gmail.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Darrick Wong <darrick.wong@oracle.com>
-cc: fstests@vger.kernel.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/3876191.1701555260@warthog.procyon.org.uk/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20231205090548.1377667-1-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-pci.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -1208,7 +1208,9 @@ static loff_t cifs_remap_file_range(stru
- 	unsigned int xid;
- 	int rc;
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -535,8 +535,6 @@ static void xhci_pci_quirks(struct devic
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+-	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
+-		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
  
--	if (remap_flags & ~(REMAP_FILE_DEDUP | REMAP_FILE_ADVISORY))
-+	if (remap_flags & REMAP_FILE_DEDUP)
-+		return -EOPNOTSUPP;
-+	if (remap_flags & ~REMAP_FILE_ADVISORY)
- 		return -EINVAL;
- 
- 	cifs_dbg(FYI, "clone range\n");
+ 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
+ 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
 
 
