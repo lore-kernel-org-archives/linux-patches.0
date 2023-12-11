@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2C84F212;
-	Mon, 11 Dec 2023 18:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2903C4F212;
+	Mon, 11 Dec 2023 18:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njUtISy/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01A0C433C8;
-	Mon, 11 Dec 2023 18:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcvLCc/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F35C433C7;
+	Mon, 11 Dec 2023 18:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319083;
-	bh=2lYJ72Dc9j6OBEQ5HWSAKMic0j0yRDcgO/a41lP/b3g=;
+	s=korg; t=1702319086;
+	bh=KSddwmdkjwKWJq6rGwXz2hmrUnxDinyULUxkOYZ1kyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njUtISy/PZ4v3Z/W5YQJX6hutTAx5i2qlQAmW90nb4qyIv1dm1vsRgZfkh+Mj6oAD
-	 gStRQFT1fMhIm8zCy1GLckxbF1mZhO7S+vR1l3UI5C/K8+ChY4CQpfch3zx302luSO
-	 nitG1jNjAv4DHUU9lPgkyTae1iOXHplXUEmLo1zk=
+	b=FcvLCc/NyJrPXG3GjY9aJ5xMeEHp9lAQ3E+iiBzMTE3U6DPeQFAd2RbFKIl+r5MEn
+	 ZjpIb2woM7C3WNV6k9WQ5smZacu7tHi4lsBKFMcHwZ0n8BO5hz88a3vG6AvsM+idh+
+	 uNqmO+IBJydsWyZ2HZMXsAgiLdH9kKhJvH2HtUHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	urbinek@gmail.com,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 24/55] hwmon: (acpi_power_meter) Fix 4.29 MW bug
-Date: Mon, 11 Dec 2023 19:21:34 +0100
-Message-ID: <20231211182013.095155575@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 4.19 33/55] tracing: Always update snapshot buffer size
+Date: Mon, 11 Dec 2023 19:21:43 +0100
+Message-ID: <20231211182013.458334330@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -43,55 +44,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 1fefca6c57fb928d2131ff365270cbf863d89c88 ]
+commit 7be76461f302ec05cbd62b90b2a05c64299ca01f upstream.
 
-The ACPI specification says:
+It use to be that only the top level instance had a snapshot buffer (for
+latency tracers like wakeup and irqsoff). The update of the ring buffer
+size would check if the instance was the top level and if so, it would
+also update the snapshot buffer as it needs to be the same as the main
+buffer.
 
-"If an error occurs while obtaining the meter reading or if the value
-is not available then an Integer with all bits set is returned"
+Now that lower level instances also has a snapshot buffer, they too need
+to update their snapshot buffer sizes when the main buffer is changed,
+otherwise the following can be triggered:
 
-Since the "integer" is 32 bits in case of the ACPI power meter,
-userspace will get a power reading of 2^32 * 1000 miliwatts (~4.29 MW)
-in case of such an error. This was discovered due to a lm_sensors
-bugreport (https://github.com/lm-sensors/lm-sensors/issues/460).
-Fix this by returning -ENODATA instead.
+ # cd /sys/kernel/tracing
+ # echo 1500 > buffer_size_kb
+ # mkdir instances/foo
+ # echo irqsoff > instances/foo/current_tracer
+ # echo 1000 > instances/foo/buffer_size_kb
 
-Tested-by: <urbinek@gmail.com>
-Fixes: de584afa5e18 ("hwmon driver for ACPI 4.0 power meters")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231124182747.13956-1-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/hwmon/acpi_power_meter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Produces:
 
-diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
-index 2f40da04a9445..b1e5ad59ec718 100644
---- a/drivers/hwmon/acpi_power_meter.c
-+++ b/drivers/hwmon/acpi_power_meter.c
-@@ -45,6 +45,7 @@ ACPI_MODULE_NAME(ACPI_POWER_METER_NAME);
- #define POWER_METER_CAN_NOTIFY	(1 << 3)
- #define POWER_METER_IS_BATTERY	(1 << 8)
- #define UNKNOWN_HYSTERESIS	0xFFFFFFFF
-+#define UNKNOWN_POWER		0xFFFFFFFF
- 
- #define METER_NOTIFY_CONFIG	0x80
- #define METER_NOTIFY_TRIP	0x81
-@@ -356,6 +357,9 @@ static ssize_t show_power(struct device *dev,
- 	update_meter(resource);
- 	mutex_unlock(&resource->lock);
- 
-+	if (resource->power == UNKNOWN_POWER)
-+		return -ENODATA;
-+
- 	return sprintf(buf, "%llu\n", resource->power * 1000);
+ WARNING: CPU: 2 PID: 856 at kernel/trace/trace.c:1938 update_max_tr_single.part.0+0x27d/0x320
+
+Which is:
+
+	ret = ring_buffer_swap_cpu(tr->max_buffer.buffer, tr->array_buffer.buffer, cpu);
+
+	if (ret == -EBUSY) {
+		[..]
+	}
+
+	WARN_ON_ONCE(ret && ret != -EAGAIN && ret != -EBUSY);  <== here
+
+That's because ring_buffer_swap_cpu() has:
+
+	int ret = -EINVAL;
+
+	[..]
+
+	/* At least make sure the two buffers are somewhat the same */
+	if (cpu_buffer_a->nr_pages != cpu_buffer_b->nr_pages)
+		goto out;
+
+	[..]
+ out:
+	return ret;
  }
- 
--- 
-2.42.0
 
+Instead, update all instances' snapshot buffer sizes when their main
+buffer size is updated.
+
+Link: https://lkml.kernel.org/r/20231205220010.454662151@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6d9b3fa5e7f6 ("tracing: Move tracing_max_latency into trace_array")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ kernel/trace/trace.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5258,8 +5258,7 @@ static int __tracing_resize_ring_buffer(
+ 		return ret;
+ 
+ #ifdef CONFIG_TRACER_MAX_TRACE
+-	if (!(tr->flags & TRACE_ARRAY_FL_GLOBAL) ||
+-	    !tr->current_trace->use_max_tr)
++	if (!tr->current_trace->use_max_tr)
+ 		goto out;
+ 
+ 	ret = ring_buffer_resize(tr->max_buffer.buffer, size, cpu);
 
 
