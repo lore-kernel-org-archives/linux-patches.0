@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15713C8C8;
-	Mon, 11 Dec 2023 18:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17F0C8C8;
+	Mon, 11 Dec 2023 18:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1x9JVcUD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EADDC433C7;
-	Mon, 11 Dec 2023 18:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgkAxEqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47853C433CA;
+	Mon, 11 Dec 2023 18:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320378;
-	bh=e1SVf7fLveMGTgddg556JNZjGnk/wXDgLRAxn3JFbp4=;
+	s=korg; t=1702320381;
+	bh=TGzXTfEICl/VoO7YSi5M/+zHWoYDYxCKb4aPeBAGL/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1x9JVcUD12TirRoVF9CL3ot+qZle1RLh5QwJw/H9YXDvThJi/mJGXgvi376IdFs6P
-	 BzGzZzpMm8b2raxlW/45aAscy3SmxhWmKQt320Sej5QeUQzsEHYVlacctB8UNo9eFG
-	 zfH5nR/FEwv6+6k/TPonPUyZQD4elRtvpE8xPoDk=
+	b=bgkAxEqQKzrtFavhsHFEVVF5O84tufq1V/0kB7uPjv/ik5NYX86V8FYmv6mPeUBXa
+	 hl20zN2WwF6W4X8XT4/Z0gJUaewT2Ck7vE4pwynFkHN7dkQD9wgqpibZGOZynl0DxH
+	 CiHMg925XZFXBEIUPtSbsjNLVIcq66r/mhKyNaGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
+	David Gibson <david@gibson.dropbear.id.au>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/194] net: bnxt: fix a potential use-after-free in bnxt_init_tc
-Date: Mon, 11 Dec 2023 19:20:29 +0100
-Message-ID: <20231211182038.323502788@linuxfoundation.org>
+Subject: [PATCH 6.1 040/194] tcp: fix mid stream window clamp.
+Date: Mon, 11 Dec 2023 19:20:30 +0100
+Message-ID: <20231211182038.374626631@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -45,41 +45,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit d007caaaf052f82ca2340d4c7b32d04a3f5dbf3f ]
+[ Upstream commit 58d3aade20cdddbac6c9707ac0f3f5f8c1278b74 ]
 
-When flow_indr_dev_register() fails, bnxt_init_tc will free
-bp->tc_info through kfree(). However, the caller function
-bnxt_init_one() will ignore this failure and call
-bnxt_shutdown_tc() on failure of bnxt_dl_register(), where
-a use-after-free happens. Fix this issue by setting
-bp->tc_info to NULL after kfree().
+After the blamed commit below, if the user-space application performs
+window clamping when tp->rcv_wnd is 0, the TCP socket will never be
+able to announce a non 0 receive window, even after completely emptying
+the receive buffer and re-setting the window clamp to higher values.
 
-Fixes: 627c89d00fb9 ("bnxt_en: flow_offload: offload tunnel decap rules via indirect callbacks")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Link: https://lore.kernel.org/r/20231204024004.8245-1-dinghao.liu@zju.edu.cn
+Refactor tcp_set_window_clamp() to address the issue: when the user
+decreases the current clamp value, set rcv_ssthresh according to the
+same logic used at buffer initialization, but ensuring reserved mem
+provisioning.
+
+To avoid code duplication factor-out the relevant bits from
+tcp_adjust_rcv_ssthresh() in a new helper and reuse it in the above
+scenario.
+
+When increasing the clamp value, give the rcv_ssthresh a chance to grow
+according to previously implemented heuristic.
+
+Fixes: 3aa7857fe1d7 ("tcp: enable mid stream window clamp")
+Reported-by: David Gibson <david@gibson.dropbear.id.au>
+Reported-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/705dad54e6e6e9a010e571bf58e0b35a8ae70503.1701706073.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/tcp.h |  9 +++++++--
+ net/ipv4/tcp.c    | 22 +++++++++++++++++++---
+ 2 files changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-index d8afcf8d6b30e..4d6663ff84722 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_tc.c
-@@ -2075,6 +2075,7 @@ int bnxt_init_tc(struct bnxt *bp)
- 	rhashtable_destroy(&tc_info->flow_table);
- free_tc_info:
- 	kfree(tc_info);
-+	bp->tc_info = NULL;
- 	return rc;
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 19646fdec23dc..c3d56b337f358 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -1460,17 +1460,22 @@ static inline int tcp_full_space(const struct sock *sk)
+ 	return tcp_win_from_space(sk, READ_ONCE(sk->sk_rcvbuf));
  }
  
+-static inline void tcp_adjust_rcv_ssthresh(struct sock *sk)
++static inline void __tcp_adjust_rcv_ssthresh(struct sock *sk, u32 new_ssthresh)
+ {
+ 	int unused_mem = sk_unused_reserved_mem(sk);
+ 	struct tcp_sock *tp = tcp_sk(sk);
+ 
+-	tp->rcv_ssthresh = min(tp->rcv_ssthresh, 4U * tp->advmss);
++	tp->rcv_ssthresh = min(tp->rcv_ssthresh, new_ssthresh);
+ 	if (unused_mem)
+ 		tp->rcv_ssthresh = max_t(u32, tp->rcv_ssthresh,
+ 					 tcp_win_from_space(sk, unused_mem));
+ }
+ 
++static inline void tcp_adjust_rcv_ssthresh(struct sock *sk)
++{
++	__tcp_adjust_rcv_ssthresh(sk, 4U * tcp_sk(sk)->advmss);
++}
++
+ void tcp_cleanup_rbuf(struct sock *sk, int copied);
+ void __tcp_cleanup_rbuf(struct sock *sk, int copied);
+ 
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 288678f17ccaf..58409ea2da0af 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3473,9 +3473,25 @@ int tcp_set_window_clamp(struct sock *sk, int val)
+ 			return -EINVAL;
+ 		tp->window_clamp = 0;
+ 	} else {
+-		tp->window_clamp = val < SOCK_MIN_RCVBUF / 2 ?
+-			SOCK_MIN_RCVBUF / 2 : val;
+-		tp->rcv_ssthresh = min(tp->rcv_wnd, tp->window_clamp);
++		u32 new_rcv_ssthresh, old_window_clamp = tp->window_clamp;
++		u32 new_window_clamp = val < SOCK_MIN_RCVBUF / 2 ?
++						SOCK_MIN_RCVBUF / 2 : val;
++
++		if (new_window_clamp == old_window_clamp)
++			return 0;
++
++		tp->window_clamp = new_window_clamp;
++		if (new_window_clamp < old_window_clamp) {
++			/* need to apply the reserved mem provisioning only
++			 * when shrinking the window clamp
++			 */
++			__tcp_adjust_rcv_ssthresh(sk, tp->window_clamp);
++
++		} else {
++			new_rcv_ssthresh = min(tp->rcv_wnd, tp->window_clamp);
++			tp->rcv_ssthresh = max(new_rcv_ssthresh,
++					       tp->rcv_ssthresh);
++		}
+ 	}
+ 	return 0;
+ }
 -- 
 2.42.0
 
