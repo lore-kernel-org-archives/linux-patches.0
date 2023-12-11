@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96965102A;
-	Mon, 11 Dec 2023 18:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBCD5102A;
+	Mon, 11 Dec 2023 18:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1ygOJZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16542C433C8;
-	Mon, 11 Dec 2023 18:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOkOLHWJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA28C433CA;
+	Mon, 11 Dec 2023 18:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320620;
-	bh=WTWnPUGjS4qmHNzolL5kZY0jmk8FoKjS+qWjWCm72KU=;
+	s=korg; t=1702320623;
+	bh=3QrsrMS+488wnhLZruCz5gmHPr3pr9t3KhhwIWchBok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1ygOJZG+Zj+VYDru/R5RB4GCuVH050hZYuZL+KtqP5pc3Q727Kblgh0bI8aPUiRo
-	 BZI31yFNKAb/aG4/L6ppLcePmgpW52/UmoPxQWYzRn6UB4Prhkpp42uggHRbwXJeiA
-	 F5lHSugWPX7iYjGd4jdeJOSbq1U+KCyytV647a0M=
+	b=HOkOLHWJWE5QRqOx8rX9ZwGUsDqgBx1355ro2YtjDJMXUWMt3FWgE2E3xQrwgl7CW
+	 YHZXfG8buiA6fKx1uZBPm7boHB0Knfci9yD+LFfcQaB9a6x3mxxh2/gAIi/jC3MjMM
+	 Kf4SQ/8cDCbocbkUTIjC+13RBqX9GYVadqIfrOPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <eugen.hristev@collabora.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.1 128/194] arm64: dts: mediatek: mt8183-kukui-jacuzzi: fix dsi unnecessary cells properties
-Date: Mon, 11 Dec 2023 19:21:58 +0100
-Message-ID: <20231211182042.247322877@linuxfoundation.org>
+Subject: [PATCH 6.1 129/194] arm64: dts: mediatek: cherry: Fix interrupt cells for MT6360 on I2C7
+Date: Mon, 11 Dec 2023 19:21:59 +0100
+Message-ID: <20231211182042.285034297@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -41,41 +40,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugen Hristev <eugen.hristev@collabora.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit 74543b303a9abfe4fa253d1fa215281baa05ff3a upstream.
+commit 5943b8f7449df9881b273db07bdde1e7120dccf0 upstream.
 
-dtbs_check throws a warning at the dsi node:
-Warning (avoid_unnecessary_addr_size): /soc/dsi@14014000: unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
-
-Other DTS have a panel child node with a reg, so the parent dtsi
-must have the address-cells and size-cells, however this specific DT
-has the panel removed, but not the cells, hence the warning above.
-
-If panel is deleted then the cells must also be deleted since they are
-tied together, as the child node in this DT does not have a reg.
+Change interrupt cells to 2 to suppress interrupts_property warning.
 
 Cc: stable@vger.kernel.org
-Fixes: cabc71b08eb5 ("arm64: dts: mt8183: Add kukui-jacuzzi-damu board")
-Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230814071053.5459-1-eugen.hristev@collabora.com
+Fixes: 0de0fe950f1b ("arm64: dts: mediatek: cherry: Enable MT6360 sub-pmic on I2C7")
+Link: https://lore.kernel.org/r/20231127132026.165027-1-angelogioacchino.delregno@collabora.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-@@ -101,6 +101,8 @@
+--- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+@@ -207,7 +207,7 @@
+ 	pinctrl-0 = <&i2c7_pins>;
  
- &dsi0 {
- 	status = "okay";
-+	/delete-property/#size-cells;
-+	/delete-property/#address-cells;
- 	/delete-node/panel@0;
- 	ports {
- 		port {
+ 	pmic@34 {
+-		#interrupt-cells = <1>;
++		#interrupt-cells = <2>;
+ 		compatible = "mediatek,mt6360";
+ 		reg = <0x34>;
+ 		interrupt-controller;
 
 
