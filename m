@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48362321B8;
-	Mon, 11 Dec 2023 18:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035DF321B8;
+	Mon, 11 Dec 2023 18:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eS5n+W+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE851C433C7;
-	Mon, 11 Dec 2023 18:59:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWPw6BuS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFE7C433C7;
+	Mon, 11 Dec 2023 18:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321149;
-	bh=HEjWKPHCterRtoTm5BmWnGUay5ITqajUBvwp3E7/nHI=;
+	s=korg; t=1702321151;
+	bh=H7MxcTR1rPdaLyZ8rq3u1jgzPqvGj7MY7BEfjQPuGww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eS5n+W+ZF3NsjVrxK8ml0dr+4DdKqqxyvqXb8dSC3HNJm8LQc/CLvSxQrzu4e0ndm
-	 I65FT+XevfgcXHQM+9/ww00yZ6wTZ1pyVY5jc0/N0X0StRPZDbF9dv/IHamDgwhIkg
-	 6bV6uNWQ0M7AJ+TA1mSlZN0CE0GkWSnYSTcq85L8=
+	b=jWPw6BuSH1JNVf4nep0DUSE3Rf+v3I5hs901VFJkTYo6SsuwQd69ISKSqk4jZYiq6
+	 j/DEWwQMplH1qj9nSBwLu+/tjrSby0iInw8afqLoLVcuDdf5EFdC4Le+f7aT/Smtlr
+	 FT7WxS/zhRh1oWvqEG/5Jv1xILZHz6ALTMYykx+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	RD Babiera <rdbabiera@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 126/141] usb: typec: class: fix typec_altmode_put_partner to put plugs
-Date: Mon, 11 Dec 2023 19:23:05 +0100
-Message-ID: <20231211182032.029422052@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 100/141] misc: mei: client.c: return negative error code in mei_cl_write
+Date: Mon, 11 Dec 2023 19:22:39 +0100
+Message-ID: <20231211182030.902271829@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,51 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: RD Babiera <rdbabiera@google.com>
+From: Su Hui <suhui@nfschina.com>
 
-commit b17b7fe6dd5c6ff74b38b0758ca799cdbb79e26e upstream.
+[ Upstream commit 8f06aee8089cf42fd99a20184501bd1347ce61b9 ]
 
-When typec_altmode_put_partner is called by a plug altmode upon release,
-the port altmode the plug belongs to will not remove its reference to the
-plug. The check to see if the altmode being released evaluates against the
-released altmode's partner instead of the calling altmode itself, so change
-adev in typec_altmode_put_partner to properly refer to the altmode being
-released.
+mei_msg_hdr_init() return negative error code, rets should be
+'PTR_ERR(mei_hdr)' rather than '-PTR_ERR(mei_hdr)'.
 
-typec_altmode_set_partner is not run for port altmodes, so also add a check
-in typec_altmode_release to prevent typec_altmode_put_partner() calls on
-port altmode release.
-
-Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
-Cc: stable@vger.kernel.org
-Signed-off-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20231129192349.1773623-2-rdbabiera@google.com
+Fixes: 0cd7c01a60f8 ("mei: add support for mei extended header.")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20231120095523.178385-1-suhui@nfschina.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/class.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/misc/mei/client.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -265,7 +265,7 @@ static void typec_altmode_put_partner(st
- 	if (!partner)
- 		return;
+diff --git a/drivers/misc/mei/client.c b/drivers/misc/mei/client.c
+index 96f4e59c32a54..9fc58e4032295 100644
+--- a/drivers/misc/mei/client.c
++++ b/drivers/misc/mei/client.c
+@@ -1975,7 +1975,7 @@ ssize_t mei_cl_write(struct mei_cl *cl, struct mei_cl_cb *cb)
  
--	adev = &partner->adev;
-+	adev = &altmode->adev;
- 
- 	if (is_typec_plug(adev->dev.parent)) {
- 		struct typec_plug *plug = to_typec_plug(adev->dev.parent);
-@@ -495,7 +495,8 @@ static void typec_altmode_release(struct
- {
- 	struct altmode *alt = to_altmode(to_typec_altmode(dev));
- 
--	typec_altmode_put_partner(alt);
-+	if (!is_typec_port(dev->parent))
-+		typec_altmode_put_partner(alt);
- 
- 	altmode_id_remove(alt->adev.dev.parent, alt->id);
- 	kfree(alt);
+ 	mei_hdr = mei_msg_hdr_init(cb);
+ 	if (IS_ERR(mei_hdr)) {
+-		rets = -PTR_ERR(mei_hdr);
++		rets = PTR_ERR(mei_hdr);
+ 		mei_hdr = NULL;
+ 		goto err;
+ 	}
+-- 
+2.42.0
+
 
 
