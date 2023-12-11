@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA42FBE1;
-	Mon, 11 Dec 2023 18:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E317DFBE1;
+	Mon, 11 Dec 2023 18:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/nhJ79L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35B4C433C8;
-	Mon, 11 Dec 2023 18:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5PTLbh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A79DC433C7;
+	Mon, 11 Dec 2023 18:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320063;
-	bh=pNUNc7dI8n8ajq/kVKWt3l+A71f2qyNVjYf3eZM7lys=;
+	s=korg; t=1702320065;
+	bh=eV/hNBn9C+GgU5SJMR1Pz19HNmuEFdB3+d57aIVjVv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/nhJ79LpYxVXxTTG0FibM6Fzyfw+siQgSIyfPL/h+9F1wBRirosvdvXOzQm83a89
-	 8BFhrnOuaWZf05U0zmngu52ktGdxlDxsb81cGYLImp+0ChWBGfprnHx4d/HOaJ65RZ
-	 wHEBkUFCzFpM5q5SW6OruxNAAlWCG2QZQLWDNFwE=
+	b=J5PTLbh8eMpKoPxi9A6hJ4Mej0JITIbg8FMfv5XOdt1WAPpnOKfSO2A3LGaONFB7T
+	 121bQVmM6aLBSObGqwY4rApFFXNdJ0Z1reQMKgXThUCtlnTfcPDVtVB1EifSqMbXCP
+	 jar3EIOwyrTjhqEFcw1UUCDBlrfO1V6f65VWPk8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Su Hui <suhui@nfschina.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 60/97] misc: mei: client.c: return negative error code in mei_cl_write
-Date: Mon, 11 Dec 2023 19:22:03 +0100
-Message-ID: <20231211182022.309297468@linuxfoundation.org>
+Subject: [PATCH 5.10 61/97] misc: mei: client.c: fix problem of return -EOVERFLOW in mei_cl_write
+Date: Mon, 11 Dec 2023 19:22:04 +0100
+Message-ID: <20231211182022.364143377@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -43,14 +43,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 8f06aee8089cf42fd99a20184501bd1347ce61b9 ]
+[ Upstream commit ee6236027218f8531916f1c5caa5dc330379f287 ]
 
-mei_msg_hdr_init() return negative error code, rets should be
-'PTR_ERR(mei_hdr)' rather than '-PTR_ERR(mei_hdr)'.
+Clang static analyzer complains that value stored to 'rets' is never
+read.Let 'buf_len = -EOVERFLOW' to make sure we can return '-EOVERFLOW'.
 
-Fixes: 0cd7c01a60f8 ("mei: add support for mei extended header.")
+Fixes: 8c8d964ce90f ("mei: move hbuf_depth from the mei device to the hw modules")
 Signed-off-by: Su Hui <suhui@nfschina.com>
-Link: https://lore.kernel.org/r/20231120095523.178385-1-suhui@nfschina.com
+Link: https://lore.kernel.org/r/20231120095523.178385-2-suhui@nfschina.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -58,18 +58,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/misc/mei/client.c b/drivers/misc/mei/client.c
-index d5c3f7d54634c..1c9ced7383b63 100644
+index 1c9ced7383b63..aa87542f116c2 100644
 --- a/drivers/misc/mei/client.c
 +++ b/drivers/misc/mei/client.c
-@@ -1969,7 +1969,7 @@ ssize_t mei_cl_write(struct mei_cl *cl, struct mei_cl_cb *cb)
+@@ -1993,7 +1993,7 @@ ssize_t mei_cl_write(struct mei_cl *cl, struct mei_cl_cb *cb)
  
- 	mei_hdr = mei_msg_hdr_init(cb);
- 	if (IS_ERR(mei_hdr)) {
--		rets = -PTR_ERR(mei_hdr);
-+		rets = PTR_ERR(mei_hdr);
- 		mei_hdr = NULL;
- 		goto err;
+ 	hbuf_slots = mei_hbuf_empty_slots(dev);
+ 	if (hbuf_slots < 0) {
+-		rets = -EOVERFLOW;
++		buf_len = -EOVERFLOW;
+ 		goto out;
  	}
+ 
 -- 
 2.42.0
 
