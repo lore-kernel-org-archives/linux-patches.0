@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B7A5102A;
-	Mon, 11 Dec 2023 18:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A09E5102A;
+	Mon, 11 Dec 2023 18:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2g0Hm7Vb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D930C433C7;
-	Mon, 11 Dec 2023 18:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzOV7Kf7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10849C433C8;
+	Mon, 11 Dec 2023 18:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320523;
-	bh=YMMEJvVrM0kXfQsfmG+5ZmQxs2EhhOlHnpUFIqMDtl8=;
+	s=korg; t=1702320526;
+	bh=IUDbDBvyS6k1gJIZsxJfitIoD5t6F6WnLhtw7IlUMgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2g0Hm7VbG0DMc2EEvgkRzRPailFDVCHOUqlLT/n7NKuPcQc5XG6tAw/9qVyeDRI+V
-	 DBIf+g/+9EPsbB6wf/hoQg9O/gWJjfHwemLo1uuAdUUTkS2YhXTrrOVrT5yQiGwgrl
-	 h30KnGTSA8UvWBjZgY6kTfwDf4HVcEOjtn8l9r8o=
+	b=DzOV7Kf778QFtKt25aWnseolcLr2tNtNqR6xY3/NHPKLuvzHKjdfnsq7M41uiluer
+	 sZOpi4ctq41w/wFO7ZlBdz3mJZSQp9yWWg1UBFcLkpfEINX2UPtLtj6/SqA8PYjy6E
+	 sLhZRIZVPrGaD/9Hun3ITtMQy+tY3Y60m7GE97Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Roland Hieber <rhi@pengutronix.de>,
+	Fabio Estevam <festevam@denx.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/194] ARM: dts: imx7: Declare timers compatible with fsl,imx6dl-gpt
-Date: Mon, 11 Dec 2023 19:21:23 +0100
-Message-ID: <20231211182040.615878298@linuxfoundation.org>
+Subject: [PATCH 6.1 094/194] ARM: dts: imx28-xea: Pass the model property
+Date: Mon, 11 Dec 2023 19:21:24 +0100
+Message-ID: <20231211182040.665711500@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,63 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Zabel <p.zabel@pengutronix.de>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 397caf68e2d36532054cb14ae8995537f27f8b61 ]
+[ Upstream commit 63ef8fc9bcee6b73ca445a19a7ac6bd544723c9f ]
 
-The timer nodes declare compatibility with "fsl,imx6sx-gpt", which
-itself is compatible with "fsl,imx6dl-gpt". Switch the fallback
-compatible from "fsl,imx6sx-gpt" to "fsl,imx6dl-gpt".
+Per root-node.yaml, 'model' is a required property.
 
-Fixes: 949673450291 ("ARM: dts: add imx7d soc dtsi file")
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
-Signed-off-by: Roland Hieber <rhi@pengutronix.de>
+Pass it to fix the following dt-schema warning:
+
+imx28-xea.dtb: /: 'model' is a required property
+	from schema $id: http://devicetree.org/schemas/root-node.yaml#
+
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Fixes: 445ae16ac1c5 ("ARM: dts: imx28: Add DTS description of imx28 based XEA board")
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx7s.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/imx28-xea.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index 667568aa4326a..45947707134b8 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -454,7 +454,7 @@
- 			};
+diff --git a/arch/arm/boot/dts/imx28-xea.dts b/arch/arm/boot/dts/imx28-xea.dts
+index a400c108f66a2..6c5e6856648af 100644
+--- a/arch/arm/boot/dts/imx28-xea.dts
++++ b/arch/arm/boot/dts/imx28-xea.dts
+@@ -8,6 +8,7 @@
+ #include "imx28-lwe.dtsi"
  
- 			gpt1: timer@302d0000 {
--				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
-+				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x302d0000 0x10000>;
- 				interrupts = <GIC_SPI 55 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX7D_GPT1_ROOT_CLK>,
-@@ -463,7 +463,7 @@
- 			};
+ / {
++	model = "Liebherr XEA board";
+ 	compatible = "lwn,imx28-xea", "fsl,imx28";
+ };
  
- 			gpt2: timer@302e0000 {
--				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
-+				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x302e0000 0x10000>;
- 				interrupts = <GIC_SPI 54 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX7D_GPT2_ROOT_CLK>,
-@@ -473,7 +473,7 @@
- 			};
- 
- 			gpt3: timer@302f0000 {
--				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
-+				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x302f0000 0x10000>;
- 				interrupts = <GIC_SPI 53 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX7D_GPT3_ROOT_CLK>,
-@@ -483,7 +483,7 @@
- 			};
- 
- 			gpt4: timer@30300000 {
--				compatible = "fsl,imx7d-gpt", "fsl,imx6sx-gpt";
-+				compatible = "fsl,imx7d-gpt", "fsl,imx6dl-gpt";
- 				reg = <0x30300000 0x10000>;
- 				interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
- 				clocks = <&clks IMX7D_GPT4_ROOT_CLK>,
 -- 
 2.42.0
 
