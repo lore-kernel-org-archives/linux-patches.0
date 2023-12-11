@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F4F5102A;
-	Mon, 11 Dec 2023 18:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958755102A;
+	Mon, 11 Dec 2023 18:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvQPCIGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F401EC433CA;
-	Mon, 11 Dec 2023 18:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQajK6Gx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F52CC433C9;
+	Mon, 11 Dec 2023 18:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320542;
-	bh=/5N5nUh8IAdRZ99HHJkaH5f0ejuwBdi2J53DZoxSB9Y=;
+	s=korg; t=1702320545;
+	bh=hre3BnKEXX7UNdBZ9BSr8BAKc1nXG0ys+LJ2/aw9CfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvQPCIGC0oKIPEhapCAj872auHMQg3csN0N73nx9fCp0mbt6qW1bA8T6k0PU8sDgz
-	 U7SGxxcay+bB08a/Eb0nzgoxwIu8F6qA+JZeBHUSONHm2stegkJgcbAf4Kh/lVXRLg
-	 cZ3LpVzahNrrXa93vST7XURRZerrMSW10sGtWxwg=
+	b=ZQajK6Gx+GYcl2msW8havVrEuxqKgTpyeq3kpGmVJAwFfGwlsmnF9YSlEQaLUXs9Y
+	 0KZ4sbgimhWT8o3T7nhrUM09scnid0oyWhw6nNzr80eEPthP34cowBi7vpjM9+sRFu
+	 yuhtVSsLzPWwMVPX1mLpPBiaG8NRYn1dAJCC4LxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	JP Kobryn <inwardvessel@gmail.com>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.1 099/194] rethook: Use __rcu pointer for rethook::handler
-Date: Mon, 11 Dec 2023 19:21:29 +0100
-Message-ID: <20231211182040.865904838@linuxfoundation.org>
+Subject: [PATCH 6.1 100/194] kprobes: consistent rcu api usage for kretprobe holder
+Date: Mon, 11 Dec 2023 19:21:30 +0100
+Message-ID: <20231211182040.905902024@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -42,139 +41,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: JP Kobryn <inwardvessel@gmail.com>
 
-commit a1461f1fd6cfdc4b8917c9d4a91e92605d1f28dc upstream.
+commit d839a656d0f3caca9f96e9bf912fd394ac6a11bc upstream.
 
-Since the rethook::handler is an RCU-maganged pointer so that it will
-notice readers the rethook is stopped (unregistered) or not, it should
-be an __rcu pointer and use appropriate functions to be accessed. This
-will use appropriate memory barrier when accessing it. OTOH,
-rethook::data is never changed, so we don't need to check it in
-get_kretprobe().
+It seems that the pointer-to-kretprobe "rp" within the kretprobe_holder is
+RCU-managed, based on the (non-rethook) implementation of get_kretprobe().
+The thought behind this patch is to make use of the RCU API where possible
+when accessing this pointer so that the needed barriers are always in place
+and to self-document the code.
 
-NOTE: To avoid sparse warning, rethook::handler is defined by a raw
-function pointer type with __rcu instead of rethook_handler_t.
+The __rcu annotation to "rp" allows for sparse RCU checking. Plain writes
+done to the "rp" pointer are changed to make use of the RCU macro for
+assignment. For the single read, the implementation of get_kretprobe()
+is simplified by making use of an RCU macro which accomplishes the same,
+but note that the log warning text will be more generic.
 
-Link: https://lore.kernel.org/all/170126066201.398836.837498688669005979.stgit@devnote2/
+I did find that there is a difference in assembly generated between the
+usage of the RCU macros vs without. For example, on arm64, when using
+rcu_assign_pointer(), the corresponding store instruction is a
+store-release (STLR) which has an implicit barrier. When normal assignment
+is done, a regular store (STR) is found. In the macro case, this seems to
+be a result of rcu_assign_pointer() using smp_store_release() when the
+value to write is not NULL.
 
-Fixes: 54ecbe6f1ed5 ("rethook: Add a generic return hook")
+Link: https://lore.kernel.org/all/20231122132058.3359-1-inwardvessel@gmail.com/
+
+Fixes: d741bf41d7c7 ("kprobes: Remove kretprobe hash")
 Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311241808.rv9ceuAh-lkp@intel.com/
-Tested-by: JP Kobryn <inwardvessel@gmail.com>
+Signed-off-by: JP Kobryn <inwardvessel@gmail.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kprobes.h |    6 ++----
- include/linux/rethook.h |    7 ++++++-
- kernel/trace/rethook.c  |   23 ++++++++++++++---------
- 3 files changed, 22 insertions(+), 14 deletions(-)
+ include/linux/kprobes.h |    7 ++-----
+ kernel/kprobes.c        |    4 ++--
+ 2 files changed, 4 insertions(+), 7 deletions(-)
 
 --- a/include/linux/kprobes.h
 +++ b/include/linux/kprobes.h
-@@ -202,10 +202,8 @@ extern int arch_trampoline_kprobe(struct
- #ifdef CONFIG_KRETPROBE_ON_RETHOOK
+@@ -140,7 +140,7 @@ static inline bool kprobe_ftrace(struct
+  *
+  */
+ struct kretprobe_holder {
+-	struct kretprobe	*rp;
++	struct kretprobe __rcu *rp;
+ 	refcount_t		ref;
+ };
+ 
+@@ -248,10 +248,7 @@ unsigned long kretprobe_trampoline_handl
+ 
  static nokprobe_inline struct kretprobe *get_kretprobe(struct kretprobe_instance *ri)
  {
 -	RCU_LOCKDEP_WARN(!rcu_read_lock_any_held(),
 -		"Kretprobe is accessed from instance under preemptive context");
 -
--	return (struct kretprobe *)READ_ONCE(ri->node.rethook->data);
-+	/* rethook::data is non-changed field, so that you can access it freely. */
-+	return (struct kretprobe *)ri->node.rethook->data;
+-	return READ_ONCE(ri->rph->rp);
++	return rcu_dereference_check(ri->rph->rp, rcu_read_lock_any_held());
  }
+ 
  static nokprobe_inline unsigned long get_kretprobe_retaddr(struct kretprobe_instance *ri)
- {
---- a/include/linux/rethook.h
-+++ b/include/linux/rethook.h
-@@ -29,7 +29,12 @@ typedef void (*rethook_handler_t) (struc
-  */
- struct rethook {
- 	void			*data;
--	rethook_handler_t	handler;
-+	/*
-+	 * To avoid sparse warnings, this uses a raw function pointer with
-+	 * __rcu, instead of rethook_handler_t. But this must be same as
-+	 * rethook_handler_t.
-+	 */
-+	void (__rcu *handler) (struct rethook_node *, void *, struct pt_regs *);
- 	struct freelist_head	pool;
- 	refcount_t		ref;
- 	struct rcu_head		rcu;
---- a/kernel/trace/rethook.c
-+++ b/kernel/trace/rethook.c
-@@ -63,7 +63,7 @@ static void rethook_free_rcu(struct rcu_
-  */
- void rethook_stop(struct rethook *rh)
- {
--	WRITE_ONCE(rh->handler, NULL);
-+	rcu_assign_pointer(rh->handler, NULL);
- }
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -2253,7 +2253,7 @@ int register_kretprobe(struct kretprobe
+ 	if (!rp->rph)
+ 		return -ENOMEM;
  
- /**
-@@ -78,11 +78,17 @@ void rethook_stop(struct rethook *rh)
-  */
- void rethook_free(struct rethook *rh)
- {
--	WRITE_ONCE(rh->handler, NULL);
-+	rethook_stop(rh);
- 
- 	call_rcu(&rh->rcu, rethook_free_rcu);
- }
- 
-+static inline rethook_handler_t rethook_get_handler(struct rethook *rh)
-+{
-+	return (rethook_handler_t)rcu_dereference_check(rh->handler,
-+							rcu_read_lock_any_held());
-+}
-+
- /**
-  * rethook_alloc() - Allocate struct rethook.
-  * @data: a data to pass the @handler when hooking the return.
-@@ -102,7 +108,7 @@ struct rethook *rethook_alloc(void *data
+-	rp->rph->rp = rp;
++	rcu_assign_pointer(rp->rph->rp, rp);
+ 	for (i = 0; i < rp->maxactive; i++) {
+ 		inst = kzalloc(sizeof(struct kretprobe_instance) +
+ 			       rp->data_size, GFP_KERNEL);
+@@ -2314,7 +2314,7 @@ void unregister_kretprobes(struct kretpr
+ #ifdef CONFIG_KRETPROBE_ON_RETHOOK
+ 		rethook_free(rps[i]->rh);
+ #else
+-		rps[i]->rph->rp = NULL;
++		rcu_assign_pointer(rps[i]->rph->rp, NULL);
+ #endif
  	}
- 
- 	rh->data = data;
--	rh->handler = handler;
-+	rcu_assign_pointer(rh->handler, handler);
- 	rh->pool.head = NULL;
- 	refcount_set(&rh->ref, 1);
- 
-@@ -142,9 +148,10 @@ static void free_rethook_node_rcu(struct
-  */
- void rethook_recycle(struct rethook_node *node)
- {
--	lockdep_assert_preemption_disabled();
-+	rethook_handler_t handler;
- 
--	if (likely(READ_ONCE(node->rethook->handler)))
-+	handler = rethook_get_handler(node->rethook);
-+	if (likely(handler))
- 		freelist_add(&node->freelist, &node->rethook->pool);
- 	else
- 		call_rcu(&node->rcu, free_rethook_node_rcu);
-@@ -160,11 +167,9 @@ NOKPROBE_SYMBOL(rethook_recycle);
-  */
- struct rethook_node *rethook_try_get(struct rethook *rh)
- {
--	rethook_handler_t handler = READ_ONCE(rh->handler);
-+	rethook_handler_t handler = rethook_get_handler(rh);
- 	struct freelist_node *fn;
- 
--	lockdep_assert_preemption_disabled();
--
- 	/* Check whether @rh is going to be freed. */
- 	if (unlikely(!handler))
- 		return NULL;
-@@ -312,7 +317,7 @@ unsigned long rethook_trampoline_handler
- 		rhn = container_of(first, struct rethook_node, llist);
- 		if (WARN_ON_ONCE(rhn->frame != frame))
- 			break;
--		handler = READ_ONCE(rhn->rethook->handler);
-+		handler = rethook_get_handler(rhn->rethook);
- 		if (handler)
- 			handler(rhn, rhn->rethook->data, regs);
- 
+ 	mutex_unlock(&kprobe_mutex);
 
 
