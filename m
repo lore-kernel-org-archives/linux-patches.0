@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B7851C3E;
-	Mon, 11 Dec 2023 18:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739E920DDE;
+	Mon, 11 Dec 2023 18:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXeVWRty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A713C433C8;
-	Mon, 11 Dec 2023 18:39:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipIIaV2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AB4C433C9;
+	Mon, 11 Dec 2023 18:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319946;
-	bh=mjREjfuY2F51oEo0495QwIFzwZb1OCKBzMchyN4P7KQ=;
+	s=korg; t=1702319949;
+	bh=tOdGxcoBLEQm/u4w6792X3BwCcjDwCKv5IHMjYT1KxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gXeVWRtyQq1kEhUUXR/hhSe2x4t2+PW3elCMKze3otmZ0T3fGrs+PQtwtGgvGGgp1
-	 LycK/9ECa25hDQWqcxl8+Zsfy1u/eP00HsqGUXph1tI0EXMX9UtaRV6Lonsg8UVlMv
-	 PQmEAEMiyAy45AAYmnuJx3w94MNOUNizHixkonVc=
+	b=ipIIaV2jDeHiEqpKkxzSU8TdyhiNbYJYbLoRj3wdi7WnUUJFRBwcGvFP7nLbibYDZ
+	 gRi2q8teAcYbEk8p5PlYorLWHxdyHPmr00KcRu0H9Fck++TeMXXWwe9WMKhjtdnEiY
+	 /jabtTBG6PcDOVpslY4VXvWceuavVhT+jnT1LOkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 46/97] riscv: fix misaligned access handling of C.SWSP and C.SDSP
-Date: Mon, 11 Dec 2023 19:21:49 +0100
-Message-ID: <20231211182021.684380764@linuxfoundation.org>
+	Jason Zhang <jason.zhang@rock-chips.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 47/97] ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
+Date: Mon, 11 Dec 2023 19:21:50 +0100
+Message-ID: <20231211182021.732192129@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -36,60 +35,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Jason Zhang <jason.zhang@rock-chips.com>
 
-[ Upstream commit 22e0eb04837a63af111fae35a92f7577676b9bc8 ]
+commit 2b3a7a302c9804e463f2ea5b54dc3a6ad106a344 upstream.
 
-This is a backport of a fix that was done in OpenSBI: ec0559eb315b
-("lib: sbi_misaligned_ldst: Fix handling of C.SWSP and C.SDSP").
+The pcm state can be SNDRV_PCM_STATE_DISCONNECTED at disconnect
+callback, and there is not an entry of SNDRV_PCM_STATE_DISCONNECTED
+in snd_pcm_state_names.
 
-Unlike C.LWSP/C.LDSP, these encodings can be used with the zero
-register, so checking that the rs2 field is non-zero is unnecessary.
+This patch adds the missing entry to resolve this issue.
 
-Additionally, the previous check was incorrect since it was checking
-the immediate field of the instruction instead of the rs2 field.
+cat /proc/asound/card2/pcm0p/sub0/status
+That results in stack traces like the following:
 
-Fixes: 956d705dd279 ("riscv: Unaligned load/store handling for M_MODE")
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Link: https://lore.kernel.org/r/20231103090223.702340-1-cleger@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[   99.702732][ T5171] Unexpected kernel BRK exception at EL1
+[   99.702774][ T5171] Internal error: BRK handler: f2005512 [#1] PREEMPT SMP
+[   99.703858][ T5171] Modules linked in: bcmdhd(E) (...)
+[   99.747425][ T5171] CPU: 3 PID: 5171 Comm: cat Tainted: G         C OE     5.10.189-android13-4-00003-g4a17384380d8-ab11086999 #1
+[   99.748447][ T5171] Hardware name: Rockchip RK3588 CVTE V10 Board (DT)
+[   99.749024][ T5171] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
+[   99.749616][ T5171] pc : snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.750204][ T5171] lr : snd_pcm_substream_proc_status_read+0xa4/0x2bc
+[   99.750778][ T5171] sp : ffffffc0175abae0
+[   99.751132][ T5171] x29: ffffffc0175abb80 x28: ffffffc009a2c498
+[   99.751665][ T5171] x27: 0000000000000001 x26: ffffff810cbae6e8
+[   99.752199][ T5171] x25: 0000000000400cc0 x24: ffffffc0175abc60
+[   99.752729][ T5171] x23: 0000000000000000 x22: ffffff802f558400
+[   99.753263][ T5171] x21: ffffff81d8d8ff00 x20: ffffff81020cdc00
+[   99.753795][ T5171] x19: ffffff802d110000 x18: ffffffc014fbd058
+[   99.754326][ T5171] x17: 0000000000000000 x16: 0000000000000000
+[   99.754861][ T5171] x15: 000000000000c276 x14: ffffffff9a976fda
+[   99.755392][ T5171] x13: 0000000065689089 x12: 000000000000d72e
+[   99.755923][ T5171] x11: ffffff802d110000 x10: 00000000000000e0
+[   99.756457][ T5171] x9 : 9c431600c8385d00 x8 : 0000000000000008
+[   99.756990][ T5171] x7 : 0000000000000000 x6 : 000000000000003f
+[   99.757522][ T5171] x5 : 0000000000000040 x4 : ffffffc0175abb70
+[   99.758056][ T5171] x3 : 0000000000000001 x2 : 0000000000000001
+[   99.758588][ T5171] x1 : 0000000000000000 x0 : 0000000000000000
+[   99.759123][ T5171] Call trace:
+[   99.759404][ T5171]  snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.759958][ T5171]  snd_info_seq_show+0x54/0xa4
+[   99.760370][ T5171]  seq_read_iter+0x19c/0x7d4
+[   99.760770][ T5171]  seq_read+0xf0/0x128
+[   99.761117][ T5171]  proc_reg_read+0x100/0x1f8
+[   99.761515][ T5171]  vfs_read+0xf4/0x354
+[   99.761869][ T5171]  ksys_read+0x7c/0x148
+[   99.762226][ T5171]  __arm64_sys_read+0x20/0x30
+[   99.762625][ T5171]  el0_svc_common+0xd0/0x1e4
+[   99.763023][ T5171]  el0_svc+0x28/0x98
+[   99.763358][ T5171]  el0_sync_handler+0x8c/0xf0
+[   99.763759][ T5171]  el0_sync+0x1b8/0x1c0
+[   99.764118][ T5171] Code: d65f03c0 b9406102 17ffffae 94191565 (d42aa240)
+[   99.764715][ T5171] ---[ end trace 1eeffa3e17c58e10 ]---
+[   99.780720][ T5171] Kernel panic - not syncing: BRK handler: Fatal exception
+
+Signed-off-by: Jason Zhang <jason.zhang@rock-chips.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231206013139.20506-1-jason.zhang@rock-chips.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/traps_misaligned.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/core/pcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index 46c4dafe3ba0e..b246c3dc69930 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -344,16 +344,14 @@ int handle_misaligned_store(struct pt_regs *regs)
- 	} else if ((insn & INSN_MASK_C_SD) == INSN_MATCH_C_SD) {
- 		len = 8;
- 		val.data_ulong = GET_RS2S(insn, regs);
--	} else if ((insn & INSN_MASK_C_SDSP) == INSN_MATCH_C_SDSP &&
--		   ((insn >> SH_RD) & 0x1f)) {
-+	} else if ((insn & INSN_MASK_C_SDSP) == INSN_MATCH_C_SDSP) {
- 		len = 8;
- 		val.data_ulong = GET_RS2C(insn, regs);
- #endif
- 	} else if ((insn & INSN_MASK_C_SW) == INSN_MATCH_C_SW) {
- 		len = 4;
- 		val.data_ulong = GET_RS2S(insn, regs);
--	} else if ((insn & INSN_MASK_C_SWSP) == INSN_MATCH_C_SWSP &&
--		   ((insn >> SH_RD) & 0x1f)) {
-+	} else if ((insn & INSN_MASK_C_SWSP) == INSN_MATCH_C_SWSP) {
- 		len = 4;
- 		val.data_ulong = GET_RS2C(insn, regs);
- 	} else {
--- 
-2.42.0
-
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -251,6 +251,7 @@ static const char * const snd_pcm_state_
+ 	STATE(DRAINING),
+ 	STATE(PAUSED),
+ 	STATE(SUSPENDED),
++	STATE(DISCONNECTED),
+ };
+ 
+ static const char * const snd_pcm_access_names[] = {
 
 
