@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5938051C3B;
-	Mon, 11 Dec 2023 18:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C737C54BF9;
+	Mon, 11 Dec 2023 18:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdjqN8+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8291EC433C8;
-	Mon, 11 Dec 2023 18:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGQ14T6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B762C433C7;
+	Mon, 11 Dec 2023 18:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319784;
-	bh=RsUiTDF2ZhmpczDOk+7qcKU6MuM1hLoN0hNqiqvdVR8=;
+	s=korg; t=1702319787;
+	bh=sG3ynemljxaafH5g5jf1WTpAiRdB+Cnh4KRjm+vAcdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdjqN8+6M7Kgo07XI1GKs42eUBpJdFMR0wYQFUTwLAb+l7Ew9hpQk6mEGPHyxPCLJ
-	 CXNNAtY0Q0iHKXhz/FZZAvu6f/a285MULkEC3gSUKvbUCq7QUeongUxIfOrkl5mWrP
-	 GGq3Iw9ByTJX0sbdbaLMmsbjOw7MM6NfA60JpoUg=
+	b=zGQ14T6HUBkX3JtnSsdRBIKc1DaCJZoK+dofPo3HNQBLpQtB2ZwCR88aNKTBoX/Z0
+	 VRBhukSvuvRIHLr3a2EHblrXvhYPVfzWIcemoXDmS8E18xxS2x35Bon0I5dPlFAkT+
+	 U2EL90iY9kPo642I9UjzUTuH6RmV3PrrgSEDmbE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 205/244] perf: Fix perf_event_validate_size()
-Date: Mon, 11 Dec 2023 19:21:38 +0100
-Message-ID: <20231211182055.143470548@linuxfoundation.org>
+	Peter Gonda <pgonda@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 232/244] KVM: SVM: Update EFER software model on CR0 trap for SEV-ES
+Date: Mon, 11 Dec 2023 19:22:05 +0100
+Message-ID: <20231211182056.434438029@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,135 +42,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 382c27f4ed28f803b1f1473ac2d8db0afc795a1b ]
+commit 4cdf351d3630a640ab6a05721ef055b9df62277f upstream.
 
-Budimir noted that perf_event_validate_size() only checks the size of
-the newly added event, even though the sizes of all existing events
-can also change due to not all events having the same read_format.
+In general, activating long mode involves setting the EFER_LME bit in
+the EFER register and then enabling the X86_CR0_PG bit in the CR0
+register. At this point, the EFER_LMA bit will be set automatically by
+hardware.
 
-When we attach the new event, perf_group_attach(), we do re-compute
-the size for all events.
+In the case of SVM/SEV guests where writes to CR0 are intercepted, it's
+necessary for the host to set EFER_LMA on behalf of the guest since
+hardware does not see the actual CR0 write.
 
-Fixes: a723968c0ed3 ("perf: Fix u16 overflows")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In the case of SEV-ES guests where writes to CR0 are trapped instead of
+intercepted, the hardware *does* see/record the write to CR0 before
+exiting and passing the value on to the host, so as part of enabling
+SEV-ES support commit f1c6366e3043 ("KVM: SVM: Add required changes to
+support intercepts under SEV-ES") dropped special handling of the
+EFER_LMA bit with the understanding that it would be set automatically.
+
+However, since the guest never explicitly sets the EFER_LMA bit, the
+host never becomes aware that it has been set. This becomes problematic
+when userspace tries to get/set the EFER values via
+KVM_GET_SREGS/KVM_SET_SREGS, since the EFER contents tracked by the host
+will be missing the EFER_LMA bit, and when userspace attempts to pass
+the EFER value back via KVM_SET_SREGS it will fail a sanity check that
+asserts that EFER_LMA should always be set when X86_CR0_PG and EFER_LME
+are set.
+
+Fix this by always inferring the value of EFER_LMA based on X86_CR0_PG
+and EFER_LME, regardless of whether or not SEV-ES is enabled.
+
+Fixes: f1c6366e3043 ("KVM: SVM: Add required changes to support intercepts under SEV-ES")
+Reported-by: Peter Gonda <pgonda@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20210507165947.2502412-2-seanjc@google.com>
+[A two year old patch that was revived after we noticed the failure in
+ KVM_SET_SREGS and a similar patch was posted by Michael Roth.  This is
+ Sean's patch, but with Michael's more complete commit message. - Paolo]
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c | 61 +++++++++++++++++++++++++++-----------------
- 1 file changed, 38 insertions(+), 23 deletions(-)
+ arch/x86/kvm/svm/svm.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 6dbb03c532375..252387b6ac8d6 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1814,31 +1814,34 @@ static inline void perf_event__state_init(struct perf_event *event)
- 					      PERF_EVENT_STATE_INACTIVE;
- }
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -1873,15 +1873,17 @@ void svm_set_cr0(struct kvm_vcpu *vcpu,
+ 	bool old_paging = is_paging(vcpu);
  
--static void __perf_event_read_size(struct perf_event *event, int nr_siblings)
-+static int __perf_event_read_size(u64 read_format, int nr_siblings)
- {
- 	int entry = sizeof(u64); /* value */
- 	int size = 0;
- 	int nr = 1;
+ #ifdef CONFIG_X86_64
+-	if (vcpu->arch.efer & EFER_LME && !vcpu->arch.guest_state_protected) {
++	if (vcpu->arch.efer & EFER_LME) {
+ 		if (!is_paging(vcpu) && (cr0 & X86_CR0_PG)) {
+ 			vcpu->arch.efer |= EFER_LMA;
+-			svm->vmcb->save.efer |= EFER_LMA | EFER_LME;
++			if (!vcpu->arch.guest_state_protected)
++				svm->vmcb->save.efer |= EFER_LMA | EFER_LME;
+ 		}
  
--	if (event->attr.read_format & PERF_FORMAT_TOTAL_TIME_ENABLED)
-+	if (read_format & PERF_FORMAT_TOTAL_TIME_ENABLED)
- 		size += sizeof(u64);
- 
--	if (event->attr.read_format & PERF_FORMAT_TOTAL_TIME_RUNNING)
-+	if (read_format & PERF_FORMAT_TOTAL_TIME_RUNNING)
- 		size += sizeof(u64);
- 
--	if (event->attr.read_format & PERF_FORMAT_ID)
-+	if (read_format & PERF_FORMAT_ID)
- 		entry += sizeof(u64);
- 
--	if (event->attr.read_format & PERF_FORMAT_LOST)
-+	if (read_format & PERF_FORMAT_LOST)
- 		entry += sizeof(u64);
- 
--	if (event->attr.read_format & PERF_FORMAT_GROUP) {
-+	if (read_format & PERF_FORMAT_GROUP) {
- 		nr += nr_siblings;
- 		size += sizeof(u64);
+ 		if (is_paging(vcpu) && !(cr0 & X86_CR0_PG)) {
+ 			vcpu->arch.efer &= ~EFER_LMA;
+-			svm->vmcb->save.efer &= ~(EFER_LMA | EFER_LME);
++			if (!vcpu->arch.guest_state_protected)
++				svm->vmcb->save.efer &= ~(EFER_LMA | EFER_LME);
+ 		}
  	}
- 
--	size += entry * nr;
--	event->read_size = size;
-+	/*
-+	 * Since perf_event_validate_size() limits this to 16k and inhibits
-+	 * adding more siblings, this will never overflow.
-+	 */
-+	return size + nr * entry;
- }
- 
- static void __perf_event_header_size(struct perf_event *event, u64 sample_type)
-@@ -1888,8 +1891,9 @@ static void __perf_event_header_size(struct perf_event *event, u64 sample_type)
-  */
- static void perf_event__header_size(struct perf_event *event)
- {
--	__perf_event_read_size(event,
--			       event->group_leader->nr_siblings);
-+	event->read_size =
-+		__perf_event_read_size(event->attr.read_format,
-+				       event->group_leader->nr_siblings);
- 	__perf_event_header_size(event, event->attr.sample_type);
- }
- 
-@@ -1920,24 +1924,35 @@ static void perf_event__id_header_size(struct perf_event *event)
- 	event->id_header_size = size;
- }
- 
-+/*
-+ * Check that adding an event to the group does not result in anybody
-+ * overflowing the 64k event limit imposed by the output buffer.
-+ *
-+ * Specifically, check that the read_size for the event does not exceed 16k,
-+ * read_size being the one term that grows with groups size. Since read_size
-+ * depends on per-event read_format, also (re)check the existing events.
-+ *
-+ * This leaves 48k for the constant size fields and things like callchains,
-+ * branch stacks and register sets.
-+ */
- static bool perf_event_validate_size(struct perf_event *event)
- {
--	/*
--	 * The values computed here will be over-written when we actually
--	 * attach the event.
--	 */
--	__perf_event_read_size(event, event->group_leader->nr_siblings + 1);
--	__perf_event_header_size(event, event->attr.sample_type & ~PERF_SAMPLE_READ);
--	perf_event__id_header_size(event);
-+	struct perf_event *sibling, *group_leader = event->group_leader;
- 
--	/*
--	 * Sum the lot; should not exceed the 64k limit we have on records.
--	 * Conservative limit to allow for callchains and other variable fields.
--	 */
--	if (event->read_size + event->header_size +
--	    event->id_header_size + sizeof(struct perf_event_header) >= 16*1024)
-+	if (__perf_event_read_size(event->attr.read_format,
-+				   group_leader->nr_siblings + 1) > 16*1024)
- 		return false;
- 
-+	if (__perf_event_read_size(group_leader->attr.read_format,
-+				   group_leader->nr_siblings + 1) > 16*1024)
-+		return false;
-+
-+	for_each_sibling_event(sibling, group_leader) {
-+		if (__perf_event_read_size(sibling->attr.read_format,
-+					   group_leader->nr_siblings + 1) > 16*1024)
-+			return false;
-+	}
-+
- 	return true;
- }
- 
--- 
-2.42.0
-
+ #endif
 
 
