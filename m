@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0994F212;
-	Mon, 11 Dec 2023 18:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F984F212;
+	Mon, 11 Dec 2023 18:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1G5KQbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECA8C433C8;
-	Mon, 11 Dec 2023 18:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRn9zsAW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA5CC433C8;
+	Mon, 11 Dec 2023 18:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319099;
-	bh=zcu1BurnRjCXwQLxoETEYQmguxxo52mWRtyoK/8TYVU=;
+	s=korg; t=1702319102;
+	bh=P36echdtyrAZuzeL4JXtYTOlrOHgG1UBY/96Yh6pL3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U1G5KQbWS7eDIxKcgmnOHE3vYVraxCD8ttMD4TEGS0EM0c9gScAytYG0MxeCLD6vc
-	 zgZGgUy3DHtisbVeGlcGgW9V61eJn4IRFhOl7KbxayrREzHtS9o1hUxgpiazA2xm83
-	 GG6+4ZE/5iPwEYDz/m7M0FpdcOfi1vKXmNwSPdak=
+	b=IRn9zsAWmrafaKcDr3JkdmdFK6n7YgP7FU+cbwGaZsrVKPu/gWxsk0NWzz5N98hHf
+	 XxQegbccLW0/nuVaLyI0uVZ1wR17PvbEeFLofBEvrqky3p0cQZO0WuoHETHVqq3oT6
+	 +hGTHmq8BSlc4qT07G3RZZa8y3Q9hiax34Bixa2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boerge Struempfel <boerge.struempfel@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 38/55] gpiolib: sysfs: Fix error handling on failed export
-Date: Mon, 11 Dec 2023 19:21:48 +0100
-Message-ID: <20231211182013.671484691@linuxfoundation.org>
+	Konstantin Aladyshev <aladyshev22@gmail.com>
+Subject: [PATCH 4.19 39/55] usb: gadget: f_hid: fix report descriptor allocation
+Date: Mon, 11 Dec 2023 19:21:49 +0100
+Message-ID: <20231211182013.701659023@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -43,61 +40,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boerge Struempfel <boerge.struempfel@gmail.com>
+From: Konstantin Aladyshev <aladyshev22@gmail.com>
 
-[ Upstream commit 95dd1e34ff5bbee93a28ff3947eceaf6de811b1a ]
+commit 61890dc28f7d9e9aac8a9471302613824c22fae4 upstream.
 
-If gpio_set_transitory() fails, we should free the GPIO again. Most
-notably, the flag FLAG_REQUESTED has previously been set in
-gpiod_request_commit(), and should be reset on failure.
+The commit 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs
+cdev") has introduced a bug that leads to hid device corruption after
+the replug operation.
+Reverse device managed memory allocation for the report descriptor
+to fix the issue.
 
-To my knowledge, this does not affect any current users, since the
-gpio_set_transitory() mainly returns 0 and -ENOTSUPP, which is converted
-to 0. However the gpio_set_transitory() function calles the .set_config()
-function of the corresponding GPIO chip and there are some GPIO drivers in
-which some (unlikely) branches return other values like -EPROBE_DEFER,
-and -EINVAL. In these cases, the above mentioned FLAG_REQUESTED would not
-be reset, which results in the pin being blocked until the next reboot.
+Tested:
+This change was tested on the AMD EthanolX CRB server with the BMC
+based on the OpenBMC distribution. The BMC provides KVM functionality
+via the USB gadget device:
+- before: KVM page refresh results in a broken USB device,
+- after: KVM page refresh works without any issues.
 
-Fixes: e10f72bf4b3e ("gpio: gpiolib: Generalise state persistence beyond sleep")
-Signed-off-by: Boerge Struempfel <boerge.struempfel@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs cdev")
+Cc: stable@vger.kernel.org
+Signed-off-by: Konstantin Aladyshev <aladyshev22@gmail.com>
+Link: https://lore.kernel.org/r/20231206080744.253-2-aladyshev22@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-sysfs.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/f_hid.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
-index e0ccc79b239a5..7a8dfc36a6c15 100644
---- a/drivers/gpio/gpiolib-sysfs.c
-+++ b/drivers/gpio/gpiolib-sysfs.c
-@@ -495,14 +495,17 @@ static ssize_t export_store(struct class *class,
- 	}
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -88,6 +88,7 @@ static void hidg_release(struct device *
+ {
+ 	struct f_hidg *hidg = container_of(dev, struct f_hidg, dev);
  
- 	status = gpiod_set_transitory(desc, false);
--	if (!status) {
--		status = gpiod_export(desc, true);
--		if (status < 0)
--			gpiod_free(desc);
--		else
--			set_bit(FLAG_SYSFS, &desc->flags);
-+	if (status) {
-+		gpiod_free(desc);
-+		goto done;
- 	}
- 
-+	status = gpiod_export(desc, true);
-+	if (status < 0)
-+		gpiod_free(desc);
-+	else
-+		set_bit(FLAG_SYSFS, &desc->flags);
-+
- done:
- 	if (status)
- 		pr_debug("%s: status %d\n", __func__, status);
--- 
-2.42.0
-
++	kfree(hidg->report_desc);
+ 	kfree(hidg->set_report_buf);
+ 	kfree(hidg);
+ }
+@@ -1293,9 +1294,9 @@ static struct usb_function *hidg_alloc(s
+ 	hidg->report_length = opts->report_length;
+ 	hidg->report_desc_length = opts->report_desc_length;
+ 	if (opts->report_desc) {
+-		hidg->report_desc = devm_kmemdup(&hidg->dev, opts->report_desc,
+-						 opts->report_desc_length,
+-						 GFP_KERNEL);
++		hidg->report_desc = kmemdup(opts->report_desc,
++					    opts->report_desc_length,
++					    GFP_KERNEL);
+ 		if (!hidg->report_desc) {
+ 			put_device(&hidg->dev);
+ 			--opts->refcnt;
 
 
