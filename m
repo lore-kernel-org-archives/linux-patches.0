@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FB351C58;
-	Mon, 11 Dec 2023 18:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3A151C44;
+	Mon, 11 Dec 2023 18:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BaWJZLnY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0B4C433CC;
-	Mon, 11 Dec 2023 18:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcVKHhJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DABC433C8;
+	Mon, 11 Dec 2023 18:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319736;
-	bh=Mtgf33RDmWecyxflz2NU8RmyT+0828vrWVXhGXYUTV0=;
+	s=korg; t=1702319740;
+	bh=vlCvCJhf/WMqkFMk0veq9HJdr72l2PJVk2IfyDk/31A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BaWJZLnYo55T4atBZUIyYlBEojJlZ0KQgk3wi7Q00iv66RdpKl8BrpEiRnCk67DnE
-	 xRfpiOXCT+MUAHSssit/UI1ks71sRNNkqMTCtsfFJy5oA0fJ776AAVAwuCthE6kOcW
-	 oyv4JhXTBKQAZkX2+6B3SqxXsIJ2mXnDRiQIdDcY=
+	b=wcVKHhJYacRwWdJ8FbOx8C9cKG9qOz6BVsP3Dgw3RxNm0ZL0RkRH8m4YIXb6V+pJQ
+	 kf8qyuGD25tRIEzo+uMI789/+ww62Yef5TlJcJPWJyK3uLgmsQ5o56ZGdtcFMqpIYT
+	 jPMOJNMxhHPditx37NdrS7YD+QhDXAZzTJxdLhSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 216/244] Revert "xhci: Loosen RPM as default policy to cover for AMD xHC 1.1"
-Date: Mon, 11 Dec 2023 19:21:49 +0100
-Message-ID: <20231211182055.659390582@linuxfoundation.org>
+	Robert Morris <rtm@csail.mit.edu>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 217/244] smb: client: fix potential NULL deref in parse_dfs_referrals()
+Date: Mon, 11 Dec 2023 19:21:50 +0100
+Message-ID: <20231211182055.711924453@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,44 +42,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit 24be0b3c40594a14b65141ced486ae327398faf8 upstream.
+commit 92414333eb375ed64f4ae92d34d579e826936480 upstream.
 
-This reverts commit 4baf1218150985ee3ab0a27220456a1f027ea0ac.
+If server returned no data for FSCTL_DFS_GET_REFERRALS, @dfs_rsp will
+remain NULL and then parse_dfs_referrals() will dereference it.
 
-Enabling runtime pm as default for all AMD xHC 1.1 controllers caused
-regression. An initial attempt to fix those was done in commit a5d6264b638e
-("xhci: Enable RPM on controllers that support low-power states") but new
-issues are still seen.
+Fix this by returning -EIO when no output data is returned.
 
-Revert this to get those AMD xHC 1.1 systems working
+Besides, we can't fix it in SMB2_ioctl() as some FSCTLs are allowed to
+return no data as per MS-SMB2 2.2.32.
 
-This patch went to stable an needs to be reverted from there as well.
-
-Fixes: 4baf12181509 ("xhci: Loosen RPM as default policy to cover for AMD xHC 1.1")
-Link: https://lore.kernel.org/linux-usb/55c50bf5-bffb-454e-906e-4408c591cb63@molgen.mpg.de
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Fixes: 9d49640a21bf ("CIFS: implement get_dfs_refer for SMB2+")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20231205090548.1377667-1-mathias.nyman@linux.intel.com
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    2 --
- 1 file changed, 2 deletions(-)
+ fs/smb/client/smb2ops.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -535,8 +535,6 @@ static void xhci_pci_quirks(struct devic
- 	/* xHC spec requires PCI devices to support D3hot and D3cold */
- 	if (xhci->hci_version >= 0x120)
- 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
--	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
--		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -2834,6 +2834,8 @@ smb2_get_dfs_refer(const unsigned int xi
+ 		usleep_range(512, 2048);
+ 	} while (++retry_count < 5);
  
- 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
- 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
++	if (!rc && !dfs_rsp)
++		rc = -EIO;
+ 	if (rc) {
+ 		if (!is_retryable_error(rc) && rc != -ENOENT && rc != -EOPNOTSUPP)
+ 			cifs_tcon_dbg(VFS, "%s: ioctl error: rc=%d\n", __func__, rc);
 
 
