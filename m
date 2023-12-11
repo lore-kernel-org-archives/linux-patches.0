@@ -1,31 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30177524D4;
-	Mon, 11 Dec 2023 18:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7807524D4;
+	Mon, 11 Dec 2023 18:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWUj+MRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8110C433C8;
-	Mon, 11 Dec 2023 18:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dC9qB/KH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662B7C433C7;
+	Mon, 11 Dec 2023 18:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319987;
-	bh=vatcabIuw1BBJKtSZ+YpgeAaTfENvLhnCX4iT7VEEng=;
+	s=korg; t=1702319989;
+	bh=huU9pSf9X0bSVZtw5n7GaY2jk7gmJF+ECQfn/ienCOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWUj+MRXPneRMhSeowc9X3p9PAyjdESjZoO0OBC1yh93BNvYHOpBIgEGR0omLgbIf
-	 G/H6qqA909VriU6isDwiT0EN88OsZ3fs4SlORzDk0eLLByiDMLaXJqrr2Sny1sQSTE
-	 BmweY7wqMZdwOifc+dULKpvaYzTYByRqQXqPttAw=
+	b=dC9qB/KHYlJXW6Nv3rnh4b3hwsItQ4Jy/heQ94lmya72wbqKRhFTaKmQhVWtCiuk+
+	 WmkybZvpXq057YYPihW1nmpozcNkn1FIrmanwvWYzQiv5Ce/NHLQrqc/lgLAi9lVQL
+	 a/9fhUaeOrBZ4jCcweoFq131g+3BtcyGAJ90tl0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonglong Liu <liuyonglong@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Dexuan Cui <decui@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 32/97] net: hns: fix fake link up on xge port
-Date: Mon, 11 Dec 2023 19:21:35 +0100
-Message-ID: <20231211182021.139013089@linuxfoundation.org>
+Subject: [PATCH 5.10 23/97] hv_netvsc: rndis_filter needs to select NLS
+Date: Mon, 11 Dec 2023 19:21:26 +0100
+Message-ID: <20231211182020.758669319@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -44,72 +48,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonglong Liu <liuyonglong@huawei.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit f708aba40f9c1eeb9c7e93ed4863b5f85b09b288 ]
+[ Upstream commit 6c89f49964375c904cea33c0247467873f4daf2c ]
 
-If a xge port just connect with an optical module and no fiber,
-it may have a fake link up because there may be interference on
-the hardware. This patch adds an anti-shake to avoid the problem.
-And the time of anti-shake is base on tests.
+rndis_filter uses utf8s_to_utf16s() which is provided by setting
+NLS, so select NLS to fix the build error:
 
-Fixes: b917078c1c10 ("net: hns: Add ACPI support to check SFP present")
-Signed-off-by: Yonglong Liu <liuyonglong@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+ERROR: modpost: "utf8s_to_utf16s" [drivers/net/hyperv/hv_netvsc.ko] undefined!
+
+Fixes: 1ce09e899d28 ("hyperv: Add support for setting MAC from within guests")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Haiyang Zhang <haiyangz@microsoft.com>
+Cc: K. Y. Srinivasan <kys@microsoft.com>
+Cc: Wei Liu <wei.liu@kernel.org>
+Cc: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20231130055853.19069-1-rdunlap@infradead.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns/hns_dsaf_mac.c | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/net/hyperv/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-index 4a448138b4ec1..1f44a6463f45b 100644
---- a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-+++ b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-@@ -66,6 +66,27 @@ static enum mac_mode hns_get_enet_interface(const struct hns_mac_cb *mac_cb)
- 	}
- }
- 
-+static u32 hns_mac_link_anti_shake(struct mac_driver *mac_ctrl_drv)
-+{
-+#define HNS_MAC_LINK_WAIT_TIME 5
-+#define HNS_MAC_LINK_WAIT_CNT 40
-+
-+	u32 link_status = 0;
-+	int i;
-+
-+	if (!mac_ctrl_drv->get_link_status)
-+		return link_status;
-+
-+	for (i = 0; i < HNS_MAC_LINK_WAIT_CNT; i++) {
-+		msleep(HNS_MAC_LINK_WAIT_TIME);
-+		mac_ctrl_drv->get_link_status(mac_ctrl_drv, &link_status);
-+		if (!link_status)
-+			break;
-+	}
-+
-+	return link_status;
-+}
-+
- void hns_mac_get_link_status(struct hns_mac_cb *mac_cb, u32 *link_status)
- {
- 	struct mac_driver *mac_ctrl_drv;
-@@ -83,6 +104,14 @@ void hns_mac_get_link_status(struct hns_mac_cb *mac_cb, u32 *link_status)
- 							       &sfp_prsnt);
- 		if (!ret)
- 			*link_status = *link_status && sfp_prsnt;
-+
-+		/* for FIBER port, it may have a fake link up.
-+		 * when the link status changes from down to up, we need to do
-+		 * anti-shake. the anti-shake time is base on tests.
-+		 * only FIBER port need to do this.
-+		 */
-+		if (*link_status && !mac_cb->link)
-+			*link_status = hns_mac_link_anti_shake(mac_ctrl_drv);
- 	}
- 
- 	mac_cb->link = *link_status;
+diff --git a/drivers/net/hyperv/Kconfig b/drivers/net/hyperv/Kconfig
+index ca7bf7f897d36..c8cbd85adcf99 100644
+--- a/drivers/net/hyperv/Kconfig
++++ b/drivers/net/hyperv/Kconfig
+@@ -3,5 +3,6 @@ config HYPERV_NET
+ 	tristate "Microsoft Hyper-V virtual network driver"
+ 	depends on HYPERV
+ 	select UCS2_STRING
++	select NLS
+ 	help
+ 	  Select this option to enable the Hyper-V virtual network driver.
 -- 
 2.42.0
 
