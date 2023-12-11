@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2E55102A;
-	Mon, 11 Dec 2023 18:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7135102A;
+	Mon, 11 Dec 2023 18:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TJd1Sdn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1402FC433C8;
-	Mon, 11 Dec 2023 18:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmy2nqjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A95C433C8;
+	Mon, 11 Dec 2023 18:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320553;
-	bh=hLzipm9a3OYejDEnw3bN+moiLmrMTRM9QNyvnppFxBE=;
+	s=korg; t=1702320556;
+	bh=7uw0Z/Dw1y86q6ECovCLba/NuATNlXsPy8r5oN8Kteg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2TJd1Sdn1b4i5/MU1czz39oTd5oBmgnenQUHepKl+C7HInEC1WcPL3YDafTzWqoTj
-	 ztCXqYUNB1iLavepBeyRxeCAJdyBkciePQz+Frp3kMvQbZX7OUXib+rzLKAX0bMSZ0
-	 cv4u9VxeI/EWyT5M1sH1QKchESJ6xwJLJjg+/k4o=
+	b=fmy2nqjvyT59WT0qjNzmc9QPFxUqb3E2L7uXIHYWQzFTFIlYfrqK6x8dWArXHzc3c
+	 wFdRzr1UtFXIBQPMfBEaWk2pPfJZP5n4B4GAr+LYjhesz9+PtiKcG86rCMv6jZ0ui2
+	 8gjOiuyezbz5q0NYic9gYmIFLzvU6FmM3kaU7Ol8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Georg Gottleuber <ggo@tuxedocomputers.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 103/194] nvme-pci: Add sleep quirk for Kingston drives
-Date: Mon, 11 Dec 2023 19:21:33 +0100
-Message-ID: <20231211182041.039145874@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 104/194] io_uring: fix mutex_unlock with unreferenced ctx
+Date: Mon, 11 Dec 2023 19:21:34 +0100
+Message-ID: <20231211182041.083044695@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,72 +42,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georg Gottleuber <ggo@tuxedocomputers.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 107b4e063d78c300b21e2d5291b1aa94c514ea5b upstream.
+commit f7b32e785042d2357c5abc23ca6db1b92c91a070 upstream.
 
-Some Kingston NV1 and A2000 are wasting a lot of power on specific TUXEDO
-platforms in s2idle sleep if 'Simple Suspend' is used.
+Callers of mutex_unlock() have to make sure that the mutex stays alive
+for the whole duration of the function call. For io_uring that means
+that the following pattern is not valid unless we ensure that the
+context outlives the mutex_unlock() call.
 
-This patch applies a new quirk 'Force No Simple Suspend' to achieve a
-low power sleep without 'Simple Suspend'.
+mutex_lock(&ctx->uring_lock);
+req_put(req); // typically via io_req_task_submit()
+mutex_unlock(&ctx->uring_lock);
 
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Signed-off-by: Georg Gottleuber <ggo@tuxedocomputers.com>
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Most contexts are fine: io-wq pins requests, syscalls hold the file,
+task works are taking ctx references and so on. However, the task work
+fallback path doesn't follow the rule.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 04fc6c802d ("io_uring: save ctx put/get for task_work submit")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/io-uring/CAG48ez3xSoYb+45f1RLtktROJrpiDQ1otNvdR+YLQf7m+Krj5Q@mail.gmail.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/nvme.h |    5 +++++
- drivers/nvme/host/pci.c  |   16 +++++++++++++++-
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -154,6 +154,11 @@ enum nvme_quirks {
- 	 * No temperature thresholds for channels other than 0 (Composite).
- 	 */
- 	NVME_QUIRK_NO_SECONDARY_TEMP_THRESH	= (1 << 19),
-+
-+	/*
-+	 * Disables simple suspend/resume path.
-+	 */
-+	NVME_QUIRK_FORCE_NO_SIMPLE_SUSPEND	= (1 << 20),
- };
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1377,6 +1377,7 @@ static __cold void io_iopoll_try_reap_ev
+ 	if (!(ctx->flags & IORING_SETUP_IOPOLL))
+ 		return;
  
- /*
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3093,6 +3093,18 @@ static unsigned long check_vendor_combin
- 		if ((dmi_match(DMI_BOARD_VENDOR, "LENOVO")) &&
- 		     dmi_match(DMI_BOARD_NAME, "LNVNB161216"))
- 			return NVME_QUIRK_SIMPLE_SUSPEND;
-+	} else if (pdev->vendor == 0x2646 && (pdev->device == 0x2263 ||
-+		   pdev->device == 0x500f)) {
-+		/*
-+		 * Exclude some Kingston NV1 and A2000 devices from
-+		 * NVME_QUIRK_SIMPLE_SUSPEND. Do a full suspend to save a
-+		 * lot fo energy with s2idle sleep on some TUXEDO platforms.
-+		 */
-+		if (dmi_match(DMI_BOARD_NAME, "NS5X_NS7XAU") ||
-+		    dmi_match(DMI_BOARD_NAME, "NS5x_7xAU") ||
-+		    dmi_match(DMI_BOARD_NAME, "NS5x_7xPU") ||
-+		    dmi_match(DMI_BOARD_NAME, "PH4PRX1_PH6PRX1"))
-+			return NVME_QUIRK_FORCE_NO_SIMPLE_SUSPEND;
++	percpu_ref_get(&ctx->refs);
+ 	mutex_lock(&ctx->uring_lock);
+ 	while (!wq_list_empty(&ctx->iopoll_list)) {
+ 		/* let it sleep and repeat later if can't complete a request */
+@@ -1394,6 +1395,7 @@ static __cold void io_iopoll_try_reap_ev
+ 		}
  	}
+ 	mutex_unlock(&ctx->uring_lock);
++	percpu_ref_put(&ctx->refs);
+ }
  
- 	return 0;
-@@ -3133,7 +3145,9 @@ static struct nvme_dev *nvme_pci_alloc_d
- 	dev->dev = get_device(&pdev->dev);
- 
- 	quirks |= check_vendor_combination_bug(pdev);
--	if (!noacpi && acpi_storage_d3(&pdev->dev)) {
-+	if (!noacpi &&
-+	    !(quirks & NVME_QUIRK_FORCE_NO_SIMPLE_SUSPEND) &&
-+	    acpi_storage_d3(&pdev->dev)) {
- 		/*
- 		 * Some systems use a bios work around to ask for D3 on
- 		 * platforms that support kernel managed suspend.
+ static int io_iopoll_check(struct io_ring_ctx *ctx, long min)
+@@ -2800,12 +2802,7 @@ static __cold void io_ring_exit_work(str
+ 	init_completion(&exit.completion);
+ 	init_task_work(&exit.task_work, io_tctx_exit_cb);
+ 	exit.ctx = ctx;
+-	/*
+-	 * Some may use context even when all refs and requests have been put,
+-	 * and they are free to do so while still holding uring_lock or
+-	 * completion_lock, see io_req_task_submit(). Apart from other work,
+-	 * this lock/unlock section also waits them to finish.
+-	 */
++
+ 	mutex_lock(&ctx->uring_lock);
+ 	while (!list_empty(&ctx->tctx_list)) {
+ 		WARN_ON_ONCE(time_after(jiffies, timeout));
 
 
