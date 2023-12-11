@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6520DFC06;
-	Mon, 11 Dec 2023 18:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BD7FC06;
+	Mon, 11 Dec 2023 18:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rO6NWUma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3ABC433C8;
-	Mon, 11 Dec 2023 18:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJEiAYmu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE22C433C8;
+	Mon, 11 Dec 2023 18:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320044;
-	bh=L4FnMn1QSf9lVRaeHHiF1aXTitz+EMgUW1fI/sdzQpw=;
+	s=korg; t=1702320046;
+	bh=JS6pC5AonGpFj0iCtkxVZN6wgkcL1XNeMcE9+KppEAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rO6NWUma4Ex+JAd8aYtf9GTpGpITHZoeX77eATlKpgHwAZrpIuFJywQS3R250WeOt
-	 OEJhL5JRh1wef0WTAzSd32IOXLmg0Auib0kdW8YHPGwyqhoQwr6vkp/ktEPGsg6bEe
-	 PsNYLDxcmEHZUxnwzWKBbrRV0TPmOW25M/MlOsJA=
+	b=lJEiAYmuzmisgHY5VfqUWePkOo/fwrrwFiAgqHLhSb56gZztPdtMvxCLdITND7uYZ
+	 iFjFg7W+rTTYJz2T2lexOdrvG3XLt1egIawTkZZZ8sTxTbcdi4IzF//BWqGwQjrja/
+	 rN7Om4GgczV4L4pnoIzuZSIb7bzJDyKGebMajBp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 5.10 82/97] io_uring/af_unix: disable sending io_uring over sockets
-Date: Mon, 11 Dec 2023 19:22:25 +0100
-Message-ID: <20231211182023.320090340@linuxfoundation.org>
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sean Tranchetti <stranche@codeaurora.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Ido Schimmel <idosch@nvidia.com>
+Subject: [PATCH 5.10 83/97] netlink: dont call ->netlink_bind with table lock held
+Date: Mon, 11 Dec 2023 19:22:26 +0100
+Message-ID: <20231211182023.369050678@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -42,128 +48,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 705318a99a138c29a512a72c3e0043b3cd7f55f4 upstream.
+From: Florian Westphal <fw@strlen.de>
 
-File reference cycles have caused lots of problems for io_uring
-in the past, and it still doesn't work exactly right and races with
-unix_stream_read_generic(). The safest fix would be to completely
-disallow sending io_uring files via sockets via SCM_RIGHT, so there
-are no possible cycles invloving registered files and thus rendering
-SCM accounting on the io_uring side unnecessary.
+commit f2764bd4f6a8dffaec3e220728385d9756b3c2cb upstream.
 
-Cc:  <stable@vger.kernel.org>
-Fixes: 0091bfc81741b ("io_uring/af_unix: defer registered files gc to io_uring release")
-Reported-and-suggested-by: Jann Horn <jannh@google.com>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/c716c88321939156909cfa1bd8b0faaf1c804103.1701868795.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+When I added support to allow generic netlink multicast groups to be
+restricted to subscribers with CAP_NET_ADMIN I was unaware that a
+genl_bind implementation already existed in the past.
+
+It was reverted due to ABBA deadlock:
+
+1. ->netlink_bind gets called with the table lock held.
+2. genetlink bind callback is invoked, it grabs the genl lock.
+
+But when a new genl subsystem is (un)registered, these two locks are
+taken in reverse order.
+
+One solution would be to revert again and add a comment in genl
+referring 1e82a62fec613, "genetlink: remove genl_bind").
+
+This would need a second change in mptcp to not expose the raw token
+value anymore, e.g.  by hashing the token with a secret key so userspace
+can still associate subflow events with the correct mptcp connection.
+
+However, Paolo Abeni reminded me to double-check why the netlink table is
+locked in the first place.
+
+I can't find one.  netlink_bind() is already called without this lock
+when userspace joins a group via NETLINK_ADD_MEMBERSHIP setsockopt.
+Same holds for the netlink_unbind operation.
+
+Digging through the history, commit f773608026ee1
+("netlink: access nlk groups safely in netlink bind and getname")
+expanded the lock scope.
+
+commit 3a20773beeeeade ("net: netlink: cap max groups which will be considered in netlink_bind()")
+... removed the nlk->ngroups access that the lock scope
+extension was all about.
+
+Reduce the lock scope again and always call ->netlink_bind without
+the table lock.
+
+The Fixes tag should be vs. the patch mentioned in the link below,
+but that one got squash-merged into the patch that came earlier in the
+series.
+
+Fixes: 4d54cc32112d8d ("mptcp: avoid lock_fast usage in accept path")
+Link: https://lore.kernel.org/mptcp/20210213000001.379332-8-mathew.j.martineau@linux.intel.com/T/#u
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Xin Long <lucien.xin@gmail.com>
+Cc: Johannes Berg <johannes.berg@intel.com>
+Cc: Sean Tranchetti <stranche@codeaurora.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   55 ----------------------------------------------------
- net/core/scm.c      |    6 +++++
- 2 files changed, 6 insertions(+), 55 deletions(-)
+ net/netlink/af_netlink.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -8452,49 +8452,6 @@ out_free:
- 	return ret;
- }
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1021,7 +1021,6 @@ static int netlink_bind(struct socket *s
+ 			return -EINVAL;
+ 	}
  
--static int io_sqe_file_register(struct io_ring_ctx *ctx, struct file *file,
--				int index)
--{
--#if defined(CONFIG_UNIX)
--	struct sock *sock = ctx->ring_sock->sk;
--	struct sk_buff_head *head = &sock->sk_receive_queue;
--	struct sk_buff *skb;
--
--	/*
--	 * See if we can merge this file into an existing skb SCM_RIGHTS
--	 * file set. If there's no room, fall back to allocating a new skb
--	 * and filling it in.
--	 */
--	spin_lock_irq(&head->lock);
--	skb = skb_peek(head);
--	if (skb) {
--		struct scm_fp_list *fpl = UNIXCB(skb).fp;
--
--		if (fpl->count < SCM_MAX_FD) {
--			__skb_unlink(skb, head);
--			spin_unlock_irq(&head->lock);
--			fpl->fp[fpl->count] = get_file(file);
--			unix_inflight(fpl->user, fpl->fp[fpl->count]);
--			fpl->count++;
--			spin_lock_irq(&head->lock);
--			__skb_queue_head(head, skb);
--		} else {
--			skb = NULL;
--		}
--	}
--	spin_unlock_irq(&head->lock);
--
--	if (skb) {
--		fput(file);
--		return 0;
--	}
--
--	return __io_sqe_files_scm(ctx, 1, index);
--#else
--	return 0;
--#endif
--}
--
- static int io_queue_rsrc_removal(struct io_rsrc_data *data, unsigned idx,
- 				 struct io_rsrc_node *node, void *rsrc)
- {
-@@ -8552,12 +8509,6 @@ static int io_install_fixed_file(struct
+-	netlink_lock_table();
+ 	if (nlk->netlink_bind && groups) {
+ 		int group;
  
- 	*io_get_tag_slot(ctx->file_data, slot_index) = 0;
- 	io_fixed_file_set(file_slot, file);
--	ret = io_sqe_file_register(ctx, file, slot_index);
--	if (ret) {
--		file_slot->file_ptr = 0;
--		goto err;
--	}
--
- 	ret = 0;
- err:
- 	if (needs_switch)
-@@ -8671,12 +8622,6 @@ static int __io_sqe_files_update(struct
- 			}
- 			*io_get_tag_slot(data, i) = tag;
- 			io_fixed_file_set(file_slot, file);
--			err = io_sqe_file_register(ctx, file, i);
--			if (err) {
--				file_slot->file_ptr = 0;
--				fput(file);
--				break;
--			}
+@@ -1033,13 +1032,14 @@ static int netlink_bind(struct socket *s
+ 			if (!err)
+ 				continue;
+ 			netlink_undo_bind(group, groups, sk);
+-			goto unlock;
++			return err;
  		}
  	}
  
---- a/net/core/scm.c
-+++ b/net/core/scm.c
-@@ -26,6 +26,7 @@
- #include <linux/nsproxy.h>
- #include <linux/slab.h>
- #include <linux/errqueue.h>
-+#include <linux/io_uring.h>
- 
- #include <linux/uaccess.h>
- 
-@@ -103,6 +104,11 @@ static int scm_fp_copy(struct cmsghdr *c
- 
- 		if (fd < 0 || !(file = fget_raw(fd)))
- 			return -EBADF;
-+		/* don't allow io_uring files */
-+		if (io_uring_get_socket(file)) {
-+			fput(file);
-+			return -EINVAL;
-+		}
- 		*fpp++ = file;
- 		fpl->count++;
- 	}
+ 	/* No need for barriers here as we return to user-space without
+ 	 * using any of the bound attributes.
+ 	 */
++	netlink_lock_table();
+ 	if (!bound) {
+ 		err = nladdr->nl_pid ?
+ 			netlink_insert(sk, nladdr->nl_pid) :
 
 
