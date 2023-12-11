@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B73251C53;
-	Mon, 11 Dec 2023 18:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D682351C53;
+	Mon, 11 Dec 2023 18:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOSKfmzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74EAC433C8;
-	Mon, 11 Dec 2023 18:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5e1Wyej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D266C433C8;
+	Mon, 11 Dec 2023 18:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319826;
-	bh=VXw9Bli5bYbwjTD12tBM4zC6OHZ4Tt4x1DB48KZ7sEc=;
+	s=korg; t=1702319828;
+	bh=WLC6oy7pu499G9BR4ZMFSMb5S+vkSxu9uRl+Uxc5wcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LOSKfmzcEmehguwpNhgrksk2UMgCdw3l+gMmj4Ur3CAMVPSDLVx8ZbwRoK3GMNGnS
-	 B5eXM0AAPaaq7w55/ZY98uWAGmmyezQazMq1RxTCoUApL4V9+Ej+Xrk1rolAYQ67Bt
-	 mhDJzgXigSKOkrqgbv//FGc+tf1nm/oiK8PTV3qc=
+	b=q5e1WyejOB0LUCdYBAc/g4XZC+/60hPAb4xWnHuNxzxXK5MHzl0CUST3Thcuee/HV
+	 hqg6u2JPiB2KTUzJNO9bC63J/nRG0HnIomdFys8mqSiCt6YqHSdEBSu2rB/GhY34Pj
+	 ciGSBr6j7mi9iK6TqfjwjxsxbbkpdQQ2QHc0NMJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.6 240/244] gcc-plugins: randstruct: Update code comment in relayout_struct()
-Date: Mon, 11 Dec 2023 19:22:13 +0100
-Message-ID: <20231211182056.775314401@linuxfoundation.org>
+	Jia Jie Ho <jiajie.ho@starfivetech.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Nam Cao <namcao@linutronix.de>
+Subject: [PATCH 6.6 241/244] riscv: Kconfig: Add select ARM_AMBA to SOC_STARFIVE
+Date: Mon, 11 Dec 2023 19:22:14 +0100
+Message-ID: <20231211182056.821816763@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,35 +43,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 
-commit d71f22365a9caca82d424f3a33445de46567e198 upstream.
+commit 78a03b9f8e6b317f7c65738a3fc60e1e85106a64 upstream.
 
-Update code comment to clarify that the only element whose layout is
-not randomized is a proper C99 flexible-array member. This update is
-complementary to commit 1ee60356c2dc ("gcc-plugins: randstruct: Only
-warn about true flexible arrays")
+Selects ARM_AMBA platform support for StarFive SoCs required by spi and
+crypto dma engine.
 
-Signed-off-by: "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/ZWJr2MWDjXLHE8ap@work
-Fixes: 1ee60356c2dc ("gcc-plugins: randstruct: Only warn about true flexible arrays")
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Cc: Nam Cao <namcao@linutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gcc-plugins/randomize_layout_plugin.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/riscv/Kconfig.socs |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/scripts/gcc-plugins/randomize_layout_plugin.c
-+++ b/scripts/gcc-plugins/randomize_layout_plugin.c
-@@ -339,8 +339,7 @@ static int relayout_struct(tree type)
+--- a/arch/riscv/Kconfig.socs
++++ b/arch/riscv/Kconfig.socs
+@@ -29,6 +29,7 @@ config SOC_STARFIVE
+ 	bool "StarFive SoCs"
+ 	select PINCTRL
+ 	select RESET_CONTROLLER
++	select ARM_AMBA
+ 	help
+ 	  This enables support for StarFive SoC platform hardware.
  
- 	/*
- 	 * enforce that we don't randomize the layout of the last
--	 * element of a struct if it's a 0 or 1-length array
--	 * or a proper flexible array
-+	 * element of a struct if it's a proper flexible array
- 	 */
- 	if (is_flexible_array(newtree[num_fields - 1])) {
- 		has_flexarray = true;
 
 
