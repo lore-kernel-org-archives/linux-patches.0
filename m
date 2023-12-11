@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D75FC06;
-	Mon, 11 Dec 2023 18:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCF7FC06;
+	Mon, 11 Dec 2023 18:33:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcY0XWHc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6924FC433CB;
-	Mon, 11 Dec 2023 18:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sg7GA/nX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4403DC433CA;
+	Mon, 11 Dec 2023 18:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319629;
-	bh=pNhvH8vJMgJulFZJZ67BbfdzSeXbNRzdv14WaYFt6LE=;
+	s=korg; t=1702319632;
+	bh=dk3tG5QGaH+N+9SOrPR8Eiwzk6Fkr12BE/7EJPKC7Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VcY0XWHc76XSY8LEGA245aY7AG+uWRE40NOwbl/O6uG+hXnbLtW49TdmpZpn+nKxH
-	 bXgxW2U+cJsW+SDa0e3g6dP7HiDbyiBdJQ4rwcWlW2y58/gR2boP3sLwld1BYiErzC
-	 yjtWpPYJmO9sMSP/KxsWw80mZGFMR5yN7zmCWbvQ=
+	b=Sg7GA/nX02tqfdrdeDKc/yCnVnWiCoBvVczXUGWRzqPyZbQY87+A1gRUfssDm/3A9
+	 g6X++uW6uNJi6WBy9MRH24+WHl1V3bASI0Gkx0Rjehbks2SKsS4VcTdcUiJh/4aaD9
+	 RA2TMYnupUcplKpPHjRUimdZXLaDcfkqE3/Pyx4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 136/244] io_uring: fix mutex_unlock with unreferenced ctx
-Date: Mon, 11 Dec 2023 19:20:29 +0100
-Message-ID: <20231211182051.884896098@linuxfoundation.org>
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 170/244] powercap: DTPM: Fix missing cpufreq_cpu_put() calls
+Date: Mon, 11 Dec 2023 19:21:03 +0100
+Message-ID: <20231211182053.522286720@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,65 +41,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Lukasz Luba <lukasz.luba@arm.com>
 
-commit f7b32e785042d2357c5abc23ca6db1b92c91a070 upstream.
+commit bdefd9913bdd453991ef756b6f7176e8ad80d786 upstream.
 
-Callers of mutex_unlock() have to make sure that the mutex stays alive
-for the whole duration of the function call. For io_uring that means
-that the following pattern is not valid unless we ensure that the
-context outlives the mutex_unlock() call.
+The policy returned by cpufreq_cpu_get() has to be released with
+the help of cpufreq_cpu_put() to balance its kobject reference counter
+properly.
 
-mutex_lock(&ctx->uring_lock);
-req_put(req); // typically via io_req_task_submit()
-mutex_unlock(&ctx->uring_lock);
+Add the missing calls to cpufreq_cpu_put() in the code.
 
-Most contexts are fine: io-wq pins requests, syscalls hold the file,
-task works are taking ctx references and so on. However, the task work
-fallback path doesn't follow the rule.
-
-Cc:  <stable@vger.kernel.org>
-Fixes: 04fc6c802d ("io_uring: save ctx put/get for task_work submit")
-Reported-by: Jann Horn <jannh@google.com>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/io-uring/CAG48ez3xSoYb+45f1RLtktROJrpiDQ1otNvdR+YLQf7m+Krj5Q@mail.gmail.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0aea2e4ec2a2 ("powercap/dtpm_cpu: Reset per_cpu variable in the release function")
+Fixes: 0e8f68d7f048 ("powercap/drivers/dtpm: Add CPU energy model based support")
+Cc: v5.16+ <stable@vger.kernel.org> # v5.16+
+Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/powercap/dtpm_cpu.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -269,6 +269,7 @@ static __cold void io_fallback_req_func(
- 	struct io_kiocb *req, *tmp;
- 	struct io_tw_state ts = { .locked = true, };
+--- a/drivers/powercap/dtpm_cpu.c
++++ b/drivers/powercap/dtpm_cpu.c
+@@ -140,6 +140,8 @@ static void pd_release(struct dtpm *dtpm
+ 	if (policy) {
+ 		for_each_cpu(dtpm_cpu->cpu, policy->related_cpus)
+ 			per_cpu(dtpm_per_cpu, dtpm_cpu->cpu) = NULL;
++
++		cpufreq_cpu_put(policy);
+ 	}
+ 	
+ 	kfree(dtpm_cpu);
+@@ -191,12 +193,16 @@ static int __dtpm_cpu_setup(int cpu, str
+ 		return 0;
  
-+	percpu_ref_get(&ctx->refs);
- 	mutex_lock(&ctx->uring_lock);
- 	llist_for_each_entry_safe(req, tmp, node, io_task_work.node)
- 		req->io_task_work.func(req, &ts);
-@@ -276,6 +277,7 @@ static __cold void io_fallback_req_func(
- 		return;
- 	io_submit_flush_completions(ctx);
- 	mutex_unlock(&ctx->uring_lock);
-+	percpu_ref_put(&ctx->refs);
+ 	pd = em_cpu_get(cpu);
+-	if (!pd || em_is_artificial(pd))
+-		return -EINVAL;
++	if (!pd || em_is_artificial(pd)) {
++		ret = -EINVAL;
++		goto release_policy;
++	}
+ 
+ 	dtpm_cpu = kzalloc(sizeof(*dtpm_cpu), GFP_KERNEL);
+-	if (!dtpm_cpu)
+-		return -ENOMEM;
++	if (!dtpm_cpu) {
++		ret = -ENOMEM;
++		goto release_policy;
++	}
+ 
+ 	dtpm_init(&dtpm_cpu->dtpm, &dtpm_ops);
+ 	dtpm_cpu->cpu = cpu;
+@@ -216,6 +222,7 @@ static int __dtpm_cpu_setup(int cpu, str
+ 	if (ret)
+ 		goto out_dtpm_unregister;
+ 
++	cpufreq_cpu_put(policy);
+ 	return 0;
+ 
+ out_dtpm_unregister:
+@@ -227,6 +234,8 @@ out_kfree_dtpm_cpu:
+ 		per_cpu(dtpm_per_cpu, cpu) = NULL;
+ 	kfree(dtpm_cpu);
+ 
++release_policy:
++	cpufreq_cpu_put(policy);
+ 	return ret;
  }
  
- static int io_alloc_hash_table(struct io_hash_table *table, unsigned bits)
-@@ -3138,12 +3140,7 @@ static __cold void io_ring_exit_work(str
- 	init_completion(&exit.completion);
- 	init_task_work(&exit.task_work, io_tctx_exit_cb);
- 	exit.ctx = ctx;
--	/*
--	 * Some may use context even when all refs and requests have been put,
--	 * and they are free to do so while still holding uring_lock or
--	 * completion_lock, see io_req_task_submit(). Apart from other work,
--	 * this lock/unlock section also waits them to finish.
--	 */
-+
- 	mutex_lock(&ctx->uring_lock);
- 	while (!list_empty(&ctx->tctx_list)) {
- 		WARN_ON_ONCE(time_after(jiffies, timeout));
 
 
