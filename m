@@ -1,32 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B18DFC06;
-	Mon, 11 Dec 2023 18:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B24FC06;
+	Mon, 11 Dec 2023 18:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgbpxuYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADEEC433C8;
-	Mon, 11 Dec 2023 18:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h458EXRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65255C433C8;
+	Mon, 11 Dec 2023 18:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320131;
-	bh=hp43HvYHHmTQOHELwYCxNv5/zUYPOv7GxUI22xPay+E=;
+	s=korg; t=1702320135;
+	bh=GezmwpaEFXymmsuY3XQA+6rAPKCuyuUXTfCX6A4ngHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgbpxuYG/7h7IGfhboapk1jDwqIiTHkQC9djDO1EVfuCAo4TVuPpXazEyg0/kunsr
-	 8IWXLj8vJ3nrEKG9skitEiJoT99nbD1rg4pUpMbCKRYYmT8evFWxq/kCeNkMRjsoSS
-	 MhLHL0Al/kU/lJRT1HWQaspDTLkra5X4Wjm/9AqM=
+	b=h458EXRzYYk9BCyTUhviAyL7M5QaDnByUeovTmBJL685r79OQLhdOKOAoQXON8jir
+	 Uxsgtl+sLgUvpxmzyl6qz9ik2UKI1uUKgQSBI3CxwJHqK1RDwXqAn8J7jLN3BUyelI
+	 UypPRj4+j0x2UOjGOLXP8vrMutR5tctN1qgNUgVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Wei Wang <weiwan@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Dexuan Cui <decui@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Michael Kelley <mikelley@microsoft.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 17/67] ipv6: fix potential NULL deref in fib6_add()
-Date: Mon, 11 Dec 2023 19:22:01 +0100
-Message-ID: <20231211182015.825941788@linuxfoundation.org>
+Subject: [PATCH 5.4 18/67] hv_netvsc: rndis_filter needs to select NLS
+Date: Mon, 11 Dec 2023 19:22:02 +0100
+Message-ID: <20231211182015.873111928@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -45,77 +48,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 75475bb51e78a3f54ad2f69380f2a1c985e85f2d ]
+[ Upstream commit 6c89f49964375c904cea33c0247467873f4daf2c ]
 
-If fib6_find_prefix() returns NULL, we should silently fallback
-using fib6_null_entry regardless of RT6_DEBUG value.
+rndis_filter uses utf8s_to_utf16s() which is provided by setting
+NLS, so select NLS to fix the build error:
 
-syzbot reported:
+ERROR: modpost: "utf8s_to_utf16s" [drivers/net/hyperv/hv_netvsc.ko] undefined!
 
-WARNING: CPU: 0 PID: 5477 at net/ipv6/ip6_fib.c:1516 fib6_add+0x310d/0x3fa0 net/ipv6/ip6_fib.c:1516
-Modules linked in:
-CPU: 0 PID: 5477 Comm: syz-executor.0 Not tainted 6.7.0-rc2-syzkaller-00029-g9b6de136b5f0 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
-RIP: 0010:fib6_add+0x310d/0x3fa0 net/ipv6/ip6_fib.c:1516
-Code: 00 48 8b 54 24 68 e8 42 22 00 00 48 85 c0 74 14 49 89 c6 e8 d5 d3 c2 f7 eb 5d e8 ce d3 c2 f7 e9 ca 00 00 00 e8 c4 d3 c2 f7 90 <0f> 0b 90 48 b8 00 00 00 00 00 fc ff df 48 8b 4c 24 38 80 3c 01 00
-RSP: 0018:ffffc90005067740 EFLAGS: 00010293
-RAX: ffffffff89cba5bc RBX: ffffc90005067ab0 RCX: ffff88801a2e9dc0
-RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000000
-RBP: ffffc90005067980 R08: ffffffff89cbca85 R09: 1ffff110040d4b85
-R10: dffffc0000000000 R11: ffffed10040d4b86 R12: 00000000ffffffff
-R13: 1ffff110051c3904 R14: ffff8880206a5c00 R15: ffff888028e1c820
-FS: 00007f763783c6c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f763783bff8 CR3: 000000007f74d000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-__ip6_ins_rt net/ipv6/route.c:1303 [inline]
-ip6_route_add+0x88/0x120 net/ipv6/route.c:3847
-ipv6_route_ioctl+0x525/0x7b0 net/ipv6/route.c:4467
-inet6_ioctl+0x21a/0x270 net/ipv6/af_inet6.c:575
-sock_do_ioctl+0x152/0x460 net/socket.c:1220
-sock_ioctl+0x615/0x8c0 net/socket.c:1339
-vfs_ioctl fs/ioctl.c:51 [inline]
-__do_sys_ioctl fs/ioctl.c:871 [inline]
-__se_sys_ioctl+0xf8/0x170 fs/ioctl.c:857
-do_syscall_x64 arch/x86/entry/common.c:51 [inline]
-do_syscall_64+0x45/0x110 arch/x86/entry/common.c:82
-
-Fixes: 7bbfe00e0252 ("ipv6: fix general protection fault in fib6_add()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Wei Wang <weiwan@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20231129160630.3509216-1-edumazet@google.com
+Fixes: 1ce09e899d28 ("hyperv: Add support for setting MAC from within guests")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Haiyang Zhang <haiyangz@microsoft.com>
+Cc: K. Y. Srinivasan <kys@microsoft.com>
+Cc: Wei Liu <wei.liu@kernel.org>
+Cc: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/20231130055853.19069-1-rdunlap@infradead.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/hyperv/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index ef55489651f87..d74a825c50f0c 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1433,13 +1433,9 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
- 			if (!pn_leaf && !(pn->fn_flags & RTN_RTINFO)) {
- 				pn_leaf = fib6_find_prefix(info->nl_net, table,
- 							   pn);
--#if RT6_DEBUG >= 2
--				if (!pn_leaf) {
--					WARN_ON(!pn_leaf);
-+				if (!pn_leaf)
- 					pn_leaf =
- 					    info->nl_net->ipv6.fib6_null_entry;
--				}
--#endif
- 				fib6_info_hold(pn_leaf);
- 				rcu_assign_pointer(pn->leaf, pn_leaf);
- 			}
+diff --git a/drivers/net/hyperv/Kconfig b/drivers/net/hyperv/Kconfig
+index ca7bf7f897d36..c8cbd85adcf99 100644
+--- a/drivers/net/hyperv/Kconfig
++++ b/drivers/net/hyperv/Kconfig
+@@ -3,5 +3,6 @@ config HYPERV_NET
+ 	tristate "Microsoft Hyper-V virtual network driver"
+ 	depends on HYPERV
+ 	select UCS2_STRING
++	select NLS
+ 	help
+ 	  Select this option to enable the Hyper-V virtual network driver.
 -- 
 2.42.0
 
