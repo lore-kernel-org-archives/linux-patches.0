@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3A151C44;
-	Mon, 11 Dec 2023 18:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314A151C44;
+	Mon, 11 Dec 2023 18:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcVKHhJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DABC433C8;
-	Mon, 11 Dec 2023 18:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdL3ZcIp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC87C433CA;
+	Mon, 11 Dec 2023 18:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319740;
-	bh=vlCvCJhf/WMqkFMk0veq9HJdr72l2PJVk2IfyDk/31A=;
+	s=korg; t=1702319743;
+	bh=O8TtMAaHMXSq/9ASMljXoENnGItLO2lVUCLc1TmD5ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcVKHhJYacRwWdJ8FbOx8C9cKG9qOz6BVsP3Dgw3RxNm0ZL0RkRH8m4YIXb6V+pJQ
-	 kf8qyuGD25tRIEzo+uMI789/+ww62Yef5TlJcJPWJyK3uLgmsQ5o56ZGdtcFMqpIYT
-	 jPMOJNMxhHPditx37NdrS7YD+QhDXAZzTJxdLhSY=
+	b=jdL3ZcIplBMBdMpbaxpm6RonrDQevjYPsjmeM5b2V1d19ucWQGMp4fvJ/7F1YcV/F
+	 CEJ3qJYNbzqSDEUw5YoWGKfccu8Mol8bq5Ud13f9A2ZGNJlvtAb4pCjrq7ZmQXjn+0
+	 X/GZRv7/bZP3qP1dIk/3nVpm6ZmO6moDCMqdHnm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 217/244] smb: client: fix potential NULL deref in parse_dfs_referrals()
-Date: Mon, 11 Dec 2023 19:21:50 +0100
-Message-ID: <20231211182055.711924453@linuxfoundation.org>
+	RD Babiera <rdbabiera@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 218/244] usb: typec: class: fix typec_altmode_put_partner to put plugs
+Date: Mon, 11 Dec 2023 19:21:51 +0100
+Message-ID: <20231211182055.761638564@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,38 +41,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: RD Babiera <rdbabiera@google.com>
 
-commit 92414333eb375ed64f4ae92d34d579e826936480 upstream.
+commit b17b7fe6dd5c6ff74b38b0758ca799cdbb79e26e upstream.
 
-If server returned no data for FSCTL_DFS_GET_REFERRALS, @dfs_rsp will
-remain NULL and then parse_dfs_referrals() will dereference it.
+When typec_altmode_put_partner is called by a plug altmode upon release,
+the port altmode the plug belongs to will not remove its reference to the
+plug. The check to see if the altmode being released evaluates against the
+released altmode's partner instead of the calling altmode itself, so change
+adev in typec_altmode_put_partner to properly refer to the altmode being
+released.
 
-Fix this by returning -EIO when no output data is returned.
+typec_altmode_set_partner is not run for port altmodes, so also add a check
+in typec_altmode_release to prevent typec_altmode_put_partner() calls on
+port altmode release.
 
-Besides, we can't fix it in SMB2_ioctl() as some FSCTLs are allowed to
-return no data as per MS-SMB2 2.2.32.
-
-Fixes: 9d49640a21bf ("CIFS: implement get_dfs_refer for SMB2+")
+Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
 Cc: stable@vger.kernel.org
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: RD Babiera <rdbabiera@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20231129192349.1773623-2-rdbabiera@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/class.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -2834,6 +2834,8 @@ smb2_get_dfs_refer(const unsigned int xi
- 		usleep_range(512, 2048);
- 	} while (++retry_count < 5);
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -266,7 +266,7 @@ static void typec_altmode_put_partner(st
+ 	if (!partner)
+ 		return;
  
-+	if (!rc && !dfs_rsp)
-+		rc = -EIO;
- 	if (rc) {
- 		if (!is_retryable_error(rc) && rc != -ENOENT && rc != -EOPNOTSUPP)
- 			cifs_tcon_dbg(VFS, "%s: ioctl error: rc=%d\n", __func__, rc);
+-	adev = &partner->adev;
++	adev = &altmode->adev;
+ 
+ 	if (is_typec_plug(adev->dev.parent)) {
+ 		struct typec_plug *plug = to_typec_plug(adev->dev.parent);
+@@ -496,7 +496,8 @@ static void typec_altmode_release(struct
+ {
+ 	struct altmode *alt = to_altmode(to_typec_altmode(dev));
+ 
+-	typec_altmode_put_partner(alt);
++	if (!is_typec_port(dev->parent))
++		typec_altmode_put_partner(alt);
+ 
+ 	altmode_id_remove(alt->adev.dev.parent, alt->id);
+ 	kfree(alt);
 
 
