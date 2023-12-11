@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01A051C2D;
-	Mon, 11 Dec 2023 18:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E4A51C2D;
+	Mon, 11 Dec 2023 18:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lV/mtzoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E951C433C7;
-	Mon, 11 Dec 2023 18:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egkCO4av"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B73DC433C9;
+	Mon, 11 Dec 2023 18:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320773;
-	bh=NLbExeE614rK7LvcprAG9PQh3cj/BlXXtS69dXIayGY=;
+	s=korg; t=1702320776;
+	bh=VqXSvnAkUnLdJeHvJpUP25C2/P+8Ok/z9yn2mgwoiww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lV/mtzoFYbh9h5H3XIOrYFdoQjV4y3xMlNTlnUn4QtbWjmiHy7T3u5IiH2qRnlyNp
-	 7m/j/5UlKRR5ygDPC/V/8cRgl6621bRzVo1USKmLSRimEywWSq9G/QC5yNTkoAo5ab
-	 vwJVCfcCEjZdyvXYimy+Ecj7uaYLQazcT0FEqon0=
+	b=egkCO4avJ3CqylULYurX2V7vBsI217EuHnmpRYFTLVWKePLUjMeIn/tpNWaPtvTBR
+	 WA1+XGV5jfmS5A/vHiQZxUL5OY5gmK+yg9sD8xPvwwtSqOkNOK0JTH8/UczgHm1TOq
+	 5zNIGIVETWIKDaR1Ea8FsgivT5P8u0sxbvkECuoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 186/194] MIPS: Loongson64: Reserve vgabios memory on boot
-Date: Mon, 11 Dec 2023 19:22:56 +0100
-Message-ID: <20231211182044.985005232@linuxfoundation.org>
+Subject: [PATCH 6.1 187/194] MIPS: Loongson64: Handle more memory types passed from firmware
+Date: Mon, 11 Dec 2023 19:22:57 +0100
+Message-ID: <20231211182045.034087927@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,41 +43,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 8f7aa77a463f47c9e00592d02747a9fcf2271543 upstream.
+commit c7206e7bd214ebb3ca6fa474a4423662327d9beb upstream.
 
-vgabios is passed from firmware to kernel on Loongson64 systems.
-Sane firmware will keep this pointer in reserved memory space
-passed from the firmware but insane firmware keeps it in low
-memory before kernel entry that is not reserved.
+There are many types of revsered memory passed from firmware
+that should be reserved in memblock, and UMA memory passed
+from firmware that should be added to system memory for system
+to use.
 
-Previously kernel won't try to allocate memory from low memory
-before kernel entry on boot, but after converting to memblock
-it will do that.
+Also for memblock there is no need to align those space into page,
+which actually cause problems.
 
-Fix by resversing those memory on early boot.
+Handle them properly to prevent memory corruption on some systems.
 
 Cc: stable@vger.kernel.org
-Fixes: a94e4f24ec83 ("MIPS: init: Drop boot_mem_map")
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/loongson64/init.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/mips/include/asm/mach-loongson64/boot_param.h |    6 ++-
+ arch/mips/loongson64/init.c                        |   42 +++++++++++++--------
+ 2 files changed, 31 insertions(+), 17 deletions(-)
 
+--- a/arch/mips/include/asm/mach-loongson64/boot_param.h
++++ b/arch/mips/include/asm/mach-loongson64/boot_param.h
+@@ -14,7 +14,11 @@
+ #define ADAPTER_ROM		8
+ #define ACPI_TABLE		9
+ #define SMBIOS_TABLE		10
+-#define MAX_MEMORY_TYPE		11
++#define UMA_VIDEO_RAM		11
++#define VUMA_VIDEO_RAM		12
++#define MAX_MEMORY_TYPE		13
++
++#define MEM_SIZE_IS_IN_BYTES	(1 << 31)
+ 
+ #define LOONGSON3_BOOT_MEM_MAP_MAX 128
+ struct efi_memory_map_loongson {
 --- a/arch/mips/loongson64/init.c
 +++ b/arch/mips/loongson64/init.c
-@@ -88,6 +88,11 @@ void __init szmem(unsigned int node)
+@@ -49,8 +49,7 @@ void virtual_early_config(void)
+ void __init szmem(unsigned int node)
+ {
+ 	u32 i, mem_type;
+-	static unsigned long num_physpages;
+-	u64 node_id, node_psize, start_pfn, end_pfn, mem_start, mem_size;
++	phys_addr_t node_id, mem_start, mem_size;
+ 
+ 	/* Otherwise come from DTB */
+ 	if (loongson_sysconf.fw_interface != LOONGSON_LEFI)
+@@ -64,27 +63,38 @@ void __init szmem(unsigned int node)
+ 
+ 		mem_type = loongson_memmap->map[i].mem_type;
+ 		mem_size = loongson_memmap->map[i].mem_size;
+-		mem_start = loongson_memmap->map[i].mem_start;
++
++		/* Memory size comes in MB if MEM_SIZE_IS_IN_BYTES not set */
++		if (mem_size & MEM_SIZE_IS_IN_BYTES)
++			mem_size &= ~MEM_SIZE_IS_IN_BYTES;
++		else
++			mem_size = mem_size << 20;
++
++		mem_start = (node_id << 44) | loongson_memmap->map[i].mem_start;
+ 
+ 		switch (mem_type) {
+ 		case SYSTEM_RAM_LOW:
+ 		case SYSTEM_RAM_HIGH:
+-			start_pfn = ((node_id << 44) + mem_start) >> PAGE_SHIFT;
+-			node_psize = (mem_size << 20) >> PAGE_SHIFT;
+-			end_pfn  = start_pfn + node_psize;
+-			num_physpages += node_psize;
+-			pr_info("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
+-				(u32)node_id, mem_type, mem_start, mem_size);
+-			pr_info("       start_pfn:0x%llx, end_pfn:0x%llx, num_physpages:0x%lx\n",
+-				start_pfn, end_pfn, num_physpages);
+-			memblock_add_node(PFN_PHYS(start_pfn),
+-					  PFN_PHYS(node_psize), node,
++		case UMA_VIDEO_RAM:
++			pr_info("Node %d, mem_type:%d\t[%pa], %pa bytes usable\n",
++				(u32)node_id, mem_type, &mem_start, &mem_size);
++			memblock_add_node(mem_start, mem_size, node,
+ 					  MEMBLOCK_NONE);
+ 			break;
+ 		case SYSTEM_RAM_RESERVED:
+-			pr_info("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
+-				(u32)node_id, mem_type, mem_start, mem_size);
+-			memblock_reserve(((node_id << 44) + mem_start), mem_size << 20);
++		case VIDEO_ROM:
++		case ADAPTER_ROM:
++		case ACPI_TABLE:
++		case SMBIOS_TABLE:
++			pr_info("Node %d, mem_type:%d\t[%pa], %pa bytes reserved\n",
++				(u32)node_id, mem_type, &mem_start, &mem_size);
++			memblock_reserve(mem_start, mem_size);
++			break;
++		/* We should not reserve VUMA_VIDEO_RAM as it overlaps with MMIO */
++		case VUMA_VIDEO_RAM:
++		default:
++			pr_info("Node %d, mem_type:%d\t[%pa], %pa bytes unhandled\n",
++				(u32)node_id, mem_type, &mem_start, &mem_size);
  			break;
  		}
  	}
-+
-+	/* Reserve vgabios if it comes from firmware */
-+	if (loongson_sysconf.vgabios_addr)
-+		memblock_reserve(virt_to_phys((void *)loongson_sysconf.vgabios_addr),
-+				SZ_256K);
- }
- 
- #ifndef CONFIG_NUMA
 
 
