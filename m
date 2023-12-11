@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6E5321B8;
-	Mon, 11 Dec 2023 18:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46762321B8;
+	Mon, 11 Dec 2023 18:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2TFeJI2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E123C433C7;
-	Mon, 11 Dec 2023 18:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhSocoge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF67FC433C7;
+	Mon, 11 Dec 2023 18:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320918;
-	bh=IKNMMUcOmzwaHf+5375pBqmX9NsUx8roiXfZkAwC9Xk=;
+	s=korg; t=1702320921;
+	bh=73t4Ujm8r75Lb4qpCPzmZXB5JE1yLMTdv4s2QZvobsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2TFeJI2cwcl/Pj+Be3lG93W2K+VHZ+gWGLkuKGE4/4bU+dfq7gZPHZ7XCzwJXVqV
-	 bJ3FZ5rcSNN4f17RrnyWbIwoNVdf1P4dfAVDjDYSmbprwnNgkGum/yzKmHRFeBJj7X
-	 qA/23O7tvVKHzW5Lr7MiS9fdg2AO7GnoFZGfvKw4=
+	b=fhSocogeBDNVPdVegrfQaZJIWNyzU4axb0u5aWlrmdJ2TVKrTuvP6DpqX6P9gpFg9
+	 3dY5CaoeOM+7rTkSE7dxtYIYJRf0Jwtdz/n6t787MPODI/73C7rXAzAq73zwX8wxHe
+	 6dNKhf05FQ+6lulECeIfGSutagwLLAxTfimzXhHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/141] psample: Require CAP_NET_ADMIN when joining "packets" group
-Date: Mon, 11 Dec 2023 19:21:43 +0100
-Message-ID: <20231211182028.432708514@linuxfoundation.org>
+Subject: [PATCH 5.15 045/141] net: add missing kdoc for struct genl_multicast_group::flags
+Date: Mon, 11 Dec 2023 19:21:44 +0100
+Message-ID: <20231211182028.464276936@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -45,115 +41,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 44ec98ea5ea9cfecd31a5c4cc124703cb5442832 ]
+[ Upstream commit 5c221f0af68cfa9edcffd26ba6dbbc4b7ddb1700 ]
 
-The "psample" generic netlink family notifies sampled packets over the
-"packets" multicast group. This is problematic since by default generic
-netlink allows non-root users to listen to these notifications.
+Multicast group flags were added in commit 4d54cc32112d ("mptcp: avoid
+lock_fast usage in accept path"), but it missed adding the kdoc.
 
-Fix by marking the group with the 'GENL_UNS_ADMIN_PERM' flag. This will
-prevent non-root users or root without the 'CAP_NET_ADMIN' capability
-(in the user namespace owning the network namespace) from joining the
-group.
+Mention which flags go into that field, and do the same for
+op structs.
 
-Tested using [1].
-
-Before:
-
- # capsh -- -c ./psample_repo
- # capsh --drop=cap_net_admin -- -c ./psample_repo
-
-After:
-
- # capsh -- -c ./psample_repo
- # capsh --drop=cap_net_admin -- -c ./psample_repo
- Failed to join "packets" multicast group
-
-[1]
- $ cat psample.c
- #include <stdio.h>
- #include <netlink/genl/ctrl.h>
- #include <netlink/genl/genl.h>
- #include <netlink/socket.h>
-
- int join_grp(struct nl_sock *sk, const char *grp_name)
- {
- 	int grp, err;
-
- 	grp = genl_ctrl_resolve_grp(sk, "psample", grp_name);
- 	if (grp < 0) {
- 		fprintf(stderr, "Failed to resolve \"%s\" multicast group\n",
- 			grp_name);
- 		return grp;
- 	}
-
- 	err = nl_socket_add_memberships(sk, grp, NFNLGRP_NONE);
- 	if (err) {
- 		fprintf(stderr, "Failed to join \"%s\" multicast group\n",
- 			grp_name);
- 		return err;
- 	}
-
- 	return 0;
- }
-
- int main(int argc, char **argv)
- {
- 	struct nl_sock *sk;
- 	int err;
-
- 	sk = nl_socket_alloc();
- 	if (!sk) {
- 		fprintf(stderr, "Failed to allocate socket\n");
- 		return -1;
- 	}
-
- 	err = genl_connect(sk);
- 	if (err) {
- 		fprintf(stderr, "Failed to connect socket\n");
- 		return err;
- 	}
-
- 	err = join_grp(sk, "config");
- 	if (err)
- 		return err;
-
- 	err = join_grp(sk, "packets");
- 	if (err)
- 		return err;
-
- 	return 0;
- }
- $ gcc -I/usr/include/libnl3 -lnl-3 -lnl-genl-3 -o psample_repo psample.c
-
-Fixes: 6ae0a6286171 ("net: Introduce psample, a new genetlink channel for packet sampling")
-Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20231206213102.1824398-2-idosch@nvidia.com
+Link: https://lore.kernel.org/r/20220809232012.403730-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e03781879a0d ("drop_monitor: Require 'CAP_SYS_ADMIN' when joining "events" group")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/psample/psample.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/genetlink.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/psample/psample.c b/net/psample/psample.c
-index 118d5d2a81a02..0d9d9936579e0 100644
---- a/net/psample/psample.c
-+++ b/net/psample/psample.c
-@@ -31,7 +31,8 @@ enum psample_nl_multicast_groups {
- 
- static const struct genl_multicast_group psample_nl_mcgrps[] = {
- 	[PSAMPLE_NL_MCGRP_CONFIG] = { .name = PSAMPLE_NL_MCGRP_CONFIG_NAME },
--	[PSAMPLE_NL_MCGRP_SAMPLE] = { .name = PSAMPLE_NL_MCGRP_SAMPLE_NAME },
-+	[PSAMPLE_NL_MCGRP_SAMPLE] = { .name = PSAMPLE_NL_MCGRP_SAMPLE_NAME,
-+				      .flags = GENL_UNS_ADMIN_PERM },
- };
- 
- static struct genl_family psample_nl_family __ro_after_init;
+diff --git a/include/net/genetlink.h b/include/net/genetlink.h
+index 7cb3fa8310edd..56a50e1c51b97 100644
+--- a/include/net/genetlink.h
++++ b/include/net/genetlink.h
+@@ -11,6 +11,7 @@
+ /**
+  * struct genl_multicast_group - generic netlink multicast group
+  * @name: name of the multicast group, names are per-family
++ * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
+  */
+ struct genl_multicast_group {
+ 	char			name[GENL_NAMSIZ];
+@@ -116,7 +117,7 @@ enum genl_validate_flags {
+  * struct genl_small_ops - generic netlink operations (small version)
+  * @cmd: command identifier
+  * @internal_flags: flags used by the family
+- * @flags: flags
++ * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
+  * @validate: validation flags from enum genl_validate_flags
+  * @doit: standard command callback
+  * @dumpit: callback for dumpers
+@@ -137,7 +138,7 @@ struct genl_small_ops {
+  * struct genl_ops - generic netlink operations
+  * @cmd: command identifier
+  * @internal_flags: flags used by the family
+- * @flags: flags
++ * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
+  * @maxattr: maximum number of attributes supported
+  * @policy: netlink policy (takes precedence over family policy)
+  * @validate: validation flags from enum genl_validate_flags
 -- 
 2.42.0
 
