@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADDC524CF;
-	Mon, 11 Dec 2023 18:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECB2524B1;
+	Mon, 11 Dec 2023 18:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w12KarOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303FFC433C8;
-	Mon, 11 Dec 2023 18:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="co6KPXPJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB30AC433C7;
+	Mon, 11 Dec 2023 18:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319812;
-	bh=cFL2JlvVvZXwynxobGN+oJvMGNujdPwiA+o+FP8+2TU=;
+	s=korg; t=1702319815;
+	bh=yeWu/AXYAq4wqnavzoye7p/TwNGyHOYMopF+bW0CZZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w12KarOMbOwdiKwHkdZlIGqbRKdRjPcWB+N2XPG6xWl5CnqyM+DfkZiktP7hPJ1i4
-	 UddLviuSBbPTDh3SIzbd/qDosqqHBB7OLOQENgW6lTjV+/7DUi8XovsIvPH5Lg2d5y
-	 hjwQCdHIdUfiWp3Ft4zRCL0U8GfWPSvc1LUKC3DI=
+	b=co6KPXPJ/CwgmKg/EhsA1oO8oy/TGykSnW06pVTDK3Be9WOiwboh9+EK1QbbvHXKq
+	 jMp2+bbeUroLAe/EhzlRoTcd2k/E61m3l3+yfMoW/xfkmtwErSOklVNp5Ke2wxnOUy
+	 zNKdYqgteww20xycBBQHVx8TXY/kFtDMPddrNkh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 202/244] arm64: dts: mediatek: add missing space before {
-Date: Mon, 11 Dec 2023 19:21:35 +0100
-Message-ID: <20231211182055.006408766@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.6 236/244] MIPS: Loongson64: Handle more memory types passed from firmware
+Date: Mon, 11 Dec 2023 19:22:09 +0100
+Message-ID: <20231211182056.611928003@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,277 +41,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit a9c740c57f977deb41bc53c02d0dae3d0e2f191a ]
+commit c7206e7bd214ebb3ca6fa474a4423662327d9beb upstream.
 
-Add missing whitespace between node name/label and opening {.
+There are many types of revsered memory passed from firmware
+that should be reserved in memblock, and UMA memory passed
+from firmware that should be added to system memory for system
+to use.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230705150006.293690-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Stable-dep-of: 8980c30141d3 ("arm64: dts: mt8183: kukui: Fix underscores in node names")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also for memblock there is no need to align those space into page,
+which actually cause problems.
+
+Handle them properly to prevent memory corruption on some systems.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-evb.dts   | 48 +++++++++----------
- .../arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 12 ++---
- .../boot/dts/mediatek/mt8183-pumpkin.dts      | 12 ++---
- 3 files changed, 36 insertions(+), 36 deletions(-)
+ arch/mips/include/asm/mach-loongson64/boot_param.h |    6 ++-
+ arch/mips/loongson64/init.c                        |   42 +++++++++++++--------
+ 2 files changed, 31 insertions(+), 17 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
-index a27d906db7ea0..77f9ab94c00bd 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-evb.dts
-@@ -155,8 +155,8 @@ &mt6358_vsram_gpu_reg {
- };
+--- a/arch/mips/include/asm/mach-loongson64/boot_param.h
++++ b/arch/mips/include/asm/mach-loongson64/boot_param.h
+@@ -14,7 +14,11 @@
+ #define ADAPTER_ROM		8
+ #define ACPI_TABLE		9
+ #define SMBIOS_TABLE		10
+-#define MAX_MEMORY_TYPE		11
++#define UMA_VIDEO_RAM		11
++#define VUMA_VIDEO_RAM		12
++#define MAX_MEMORY_TYPE		13
++
++#define MEM_SIZE_IS_IN_BYTES	(1 << 31)
  
- &pio {
--	i2c_pins_0: i2c0{
--		pins_i2c{
-+	i2c_pins_0: i2c0 {
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO82__FUNC_SDA0>,
- 				 <PINMUX_GPIO83__FUNC_SCL0>;
- 			mediatek,pull-up-adv = <3>;
-@@ -164,8 +164,8 @@ pins_i2c{
- 		};
- 	};
+ #define LOONGSON3_BOOT_MEM_MAP_MAX 128
+ struct efi_memory_map_loongson {
+--- a/arch/mips/loongson64/init.c
++++ b/arch/mips/loongson64/init.c
+@@ -49,8 +49,7 @@ void virtual_early_config(void)
+ void __init szmem(unsigned int node)
+ {
+ 	u32 i, mem_type;
+-	static unsigned long num_physpages;
+-	u64 node_id, node_psize, start_pfn, end_pfn, mem_start, mem_size;
++	phys_addr_t node_id, mem_start, mem_size;
  
--	i2c_pins_1: i2c1{
--		pins_i2c{
-+	i2c_pins_1: i2c1 {
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO81__FUNC_SDA1>,
- 				 <PINMUX_GPIO84__FUNC_SCL1>;
- 			mediatek,pull-up-adv = <3>;
-@@ -173,8 +173,8 @@ pins_i2c{
- 		};
- 	};
+ 	/* Otherwise come from DTB */
+ 	if (loongson_sysconf.fw_interface != LOONGSON_LEFI)
+@@ -64,27 +63,38 @@ void __init szmem(unsigned int node)
  
--	i2c_pins_2: i2c2{
--		pins_i2c{
-+	i2c_pins_2: i2c2 {
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO103__FUNC_SCL2>,
- 				 <PINMUX_GPIO104__FUNC_SDA2>;
- 			mediatek,pull-up-adv = <3>;
-@@ -182,8 +182,8 @@ pins_i2c{
- 		};
- 	};
+ 		mem_type = loongson_memmap->map[i].mem_type;
+ 		mem_size = loongson_memmap->map[i].mem_size;
+-		mem_start = loongson_memmap->map[i].mem_start;
++
++		/* Memory size comes in MB if MEM_SIZE_IS_IN_BYTES not set */
++		if (mem_size & MEM_SIZE_IS_IN_BYTES)
++			mem_size &= ~MEM_SIZE_IS_IN_BYTES;
++		else
++			mem_size = mem_size << 20;
++
++		mem_start = (node_id << 44) | loongson_memmap->map[i].mem_start;
  
--	i2c_pins_3: i2c3{
--		pins_i2c{
-+	i2c_pins_3: i2c3 {
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO50__FUNC_SCL3>,
- 				 <PINMUX_GPIO51__FUNC_SDA3>;
- 			mediatek,pull-up-adv = <3>;
-@@ -191,8 +191,8 @@ pins_i2c{
- 		};
- 	};
- 
--	i2c_pins_4: i2c4{
--		pins_i2c{
-+	i2c_pins_4: i2c4 {
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO105__FUNC_SCL4>,
- 				 <PINMUX_GPIO106__FUNC_SDA4>;
- 			mediatek,pull-up-adv = <3>;
-@@ -200,8 +200,8 @@ pins_i2c{
- 		};
- 	};
- 
--	i2c_pins_5: i2c5{
--		pins_i2c{
-+	i2c_pins_5: i2c5 {
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO48__FUNC_SCL5>,
- 				 <PINMUX_GPIO49__FUNC_SDA5>;
- 			mediatek,pull-up-adv = <3>;
-@@ -209,8 +209,8 @@ pins_i2c{
- 		};
- 	};
- 
--	spi_pins_0: spi0{
--		pins_spi{
-+	spi_pins_0: spi0 {
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO85__FUNC_SPI0_MI>,
- 				 <PINMUX_GPIO86__FUNC_SPI0_CSB>,
- 				 <PINMUX_GPIO87__FUNC_SPI0_MO>,
-@@ -324,8 +324,8 @@ pins_clk {
- 		};
- 	};
- 
--	spi_pins_1: spi1{
--		pins_spi{
-+	spi_pins_1: spi1 {
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO161__FUNC_SPI1_A_MI>,
- 				 <PINMUX_GPIO162__FUNC_SPI1_A_CSB>,
- 				 <PINMUX_GPIO163__FUNC_SPI1_A_MO>,
-@@ -334,8 +334,8 @@ pins_spi{
- 		};
- 	};
- 
--	spi_pins_2: spi2{
--		pins_spi{
-+	spi_pins_2: spi2 {
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO0__FUNC_SPI2_CSB>,
- 				 <PINMUX_GPIO1__FUNC_SPI2_MO>,
- 				 <PINMUX_GPIO2__FUNC_SPI2_CLK>,
-@@ -344,8 +344,8 @@ pins_spi{
- 		};
- 	};
- 
--	spi_pins_3: spi3{
--		pins_spi{
-+	spi_pins_3: spi3 {
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO21__FUNC_SPI3_MI>,
- 				 <PINMUX_GPIO22__FUNC_SPI3_CSB>,
- 				 <PINMUX_GPIO23__FUNC_SPI3_MO>,
-@@ -354,8 +354,8 @@ pins_spi{
- 		};
- 	};
- 
--	spi_pins_4: spi4{
--		pins_spi{
-+	spi_pins_4: spi4 {
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO17__FUNC_SPI4_MI>,
- 				 <PINMUX_GPIO18__FUNC_SPI4_CSB>,
- 				 <PINMUX_GPIO19__FUNC_SPI4_MO>,
-@@ -364,8 +364,8 @@ pins_spi{
- 		};
- 	};
- 
--	spi_pins_5: spi5{
--		pins_spi{
-+	spi_pins_5: spi5 {
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO13__FUNC_SPI5_MI>,
- 				 <PINMUX_GPIO14__FUNC_SPI5_CSB>,
- 				 <PINMUX_GPIO15__FUNC_SPI5_MO>,
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index a3add21602337..9a6bfa5882e31 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -692,7 +692,7 @@ pins_scp_uart {
- 	};
- 
- 	spi0_pins: spi0 {
--		pins_spi{
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO85__FUNC_SPI0_MI>,
- 				 <PINMUX_GPIO86__FUNC_GPIO86>,
- 				 <PINMUX_GPIO87__FUNC_SPI0_MO>,
-@@ -702,7 +702,7 @@ pins_spi{
- 	};
- 
- 	spi1_pins: spi1 {
--		pins_spi{
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO161__FUNC_SPI1_A_MI>,
- 				 <PINMUX_GPIO162__FUNC_SPI1_A_CSB>,
- 				 <PINMUX_GPIO163__FUNC_SPI1_A_MO>,
-@@ -712,7 +712,7 @@ pins_spi{
- 	};
- 
- 	spi2_pins: spi2 {
--		pins_spi{
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO0__FUNC_SPI2_CSB>,
- 				 <PINMUX_GPIO1__FUNC_SPI2_MO>,
- 				 <PINMUX_GPIO2__FUNC_SPI2_CLK>;
-@@ -725,7 +725,7 @@ pins_spi_mi {
- 	};
- 
- 	spi3_pins: spi3 {
--		pins_spi{
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO21__FUNC_SPI3_MI>,
- 				 <PINMUX_GPIO22__FUNC_SPI3_CSB>,
- 				 <PINMUX_GPIO23__FUNC_SPI3_MO>,
-@@ -735,7 +735,7 @@ pins_spi{
- 	};
- 
- 	spi4_pins: spi4 {
--		pins_spi{
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO17__FUNC_SPI4_MI>,
- 				 <PINMUX_GPIO18__FUNC_SPI4_CSB>,
- 				 <PINMUX_GPIO19__FUNC_SPI4_MO>,
-@@ -745,7 +745,7 @@ pins_spi{
- 	};
- 
- 	spi5_pins: spi5 {
--		pins_spi{
-+		pins_spi {
- 			pinmux = <PINMUX_GPIO13__FUNC_SPI5_MI>,
- 				 <PINMUX_GPIO14__FUNC_SPI5_CSB>,
- 				 <PINMUX_GPIO15__FUNC_SPI5_MO>,
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts b/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
-index 526bcae7a3f8f..b5784a60c315d 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-pumpkin.dts
-@@ -193,7 +193,7 @@ &mt6358_vsram_gpu_reg {
- 
- &pio {
- 	i2c_pins_0: i2c0 {
--		pins_i2c{
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO82__FUNC_SDA0>,
- 				 <PINMUX_GPIO83__FUNC_SCL0>;
- 			mediatek,pull-up-adv = <3>;
-@@ -202,7 +202,7 @@ pins_i2c{
- 	};
- 
- 	i2c_pins_1: i2c1 {
--		pins_i2c{
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO81__FUNC_SDA1>,
- 				 <PINMUX_GPIO84__FUNC_SCL1>;
- 			mediatek,pull-up-adv = <3>;
-@@ -211,7 +211,7 @@ pins_i2c{
- 	};
- 
- 	i2c_pins_2: i2c2 {
--		pins_i2c{
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO103__FUNC_SCL2>,
- 				 <PINMUX_GPIO104__FUNC_SDA2>;
- 			mediatek,pull-up-adv = <3>;
-@@ -220,7 +220,7 @@ pins_i2c{
- 	};
- 
- 	i2c_pins_3: i2c3 {
--		pins_i2c{
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO50__FUNC_SCL3>,
- 				 <PINMUX_GPIO51__FUNC_SDA3>;
- 			mediatek,pull-up-adv = <3>;
-@@ -229,7 +229,7 @@ pins_i2c{
- 	};
- 
- 	i2c_pins_4: i2c4 {
--		pins_i2c{
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO105__FUNC_SCL4>,
- 				 <PINMUX_GPIO106__FUNC_SDA4>;
- 			mediatek,pull-up-adv = <3>;
-@@ -238,7 +238,7 @@ pins_i2c{
- 	};
- 
- 	i2c_pins_5: i2c5 {
--		pins_i2c{
-+		pins_i2c {
- 			pinmux = <PINMUX_GPIO48__FUNC_SCL5>,
- 				 <PINMUX_GPIO49__FUNC_SDA5>;
- 			mediatek,pull-up-adv = <3>;
--- 
-2.42.0
-
+ 		switch (mem_type) {
+ 		case SYSTEM_RAM_LOW:
+ 		case SYSTEM_RAM_HIGH:
+-			start_pfn = ((node_id << 44) + mem_start) >> PAGE_SHIFT;
+-			node_psize = (mem_size << 20) >> PAGE_SHIFT;
+-			end_pfn  = start_pfn + node_psize;
+-			num_physpages += node_psize;
+-			pr_info("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
+-				(u32)node_id, mem_type, mem_start, mem_size);
+-			pr_info("       start_pfn:0x%llx, end_pfn:0x%llx, num_physpages:0x%lx\n",
+-				start_pfn, end_pfn, num_physpages);
+-			memblock_add_node(PFN_PHYS(start_pfn),
+-					  PFN_PHYS(node_psize), node,
++		case UMA_VIDEO_RAM:
++			pr_info("Node %d, mem_type:%d\t[%pa], %pa bytes usable\n",
++				(u32)node_id, mem_type, &mem_start, &mem_size);
++			memblock_add_node(mem_start, mem_size, node,
+ 					  MEMBLOCK_NONE);
+ 			break;
+ 		case SYSTEM_RAM_RESERVED:
+-			pr_info("Node%d: mem_type:%d, mem_start:0x%llx, mem_size:0x%llx MB\n",
+-				(u32)node_id, mem_type, mem_start, mem_size);
+-			memblock_reserve(((node_id << 44) + mem_start), mem_size << 20);
++		case VIDEO_ROM:
++		case ADAPTER_ROM:
++		case ACPI_TABLE:
++		case SMBIOS_TABLE:
++			pr_info("Node %d, mem_type:%d\t[%pa], %pa bytes reserved\n",
++				(u32)node_id, mem_type, &mem_start, &mem_size);
++			memblock_reserve(mem_start, mem_size);
++			break;
++		/* We should not reserve VUMA_VIDEO_RAM as it overlaps with MMIO */
++		case VUMA_VIDEO_RAM:
++		default:
++			pr_info("Node %d, mem_type:%d\t[%pa], %pa bytes unhandled\n",
++				(u32)node_id, mem_type, &mem_start, &mem_size);
+ 			break;
+ 		}
+ 	}
 
 
