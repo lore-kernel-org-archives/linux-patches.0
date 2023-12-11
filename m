@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A100A537E4;
-	Mon, 11 Dec 2023 18:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE9851C2B;
+	Mon, 11 Dec 2023 18:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGFbstDO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FC8C433C8;
-	Mon, 11 Dec 2023 18:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPt1lSeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9077C433C7;
+	Mon, 11 Dec 2023 18:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319919;
-	bh=HEEU/MkTfDafDyv1BoF1UjEZhCMEddUJMpLqVVjwm8k=;
+	s=korg; t=1702319922;
+	bh=Vrd1wYGF3OnyJ4KONLwQUw7vPRZv8CSQ49y7gjBR4TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGFbstDOgoeKiXXxg7DxCvBR9hwUm7Zg7x44t3xAxO2a7f+uuapRVu6NzWeZL8eNm
-	 xoqyMVrTewTY2p6JE+saeBOzlPWBEZyJolOladapVrH+35iWADb7mI6rX1yJSe3gfn
-	 wgsRUo7hVgMx8FKYJ9w1NOBriN57W/BSTkE/Uksg=
+	b=lPt1lSeYDrrbvWhkw5KQB0h58x44BGhpAZdQMSEEK7iv3Utaao715c2VQapgOMWNM
+	 Tp3shmLQEXg2XoYK+DfWAfLKSPQ2rBmeyTbis3wJ4hcbl/3lVA6f3QZMnwr9H/Ft0e
+	 HUqB43nY+Sk3vb+w1Id27J527bqiLj38qS4nmk7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Bee <knaerzche@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 37/97] arm64: dts: rockchip: Expand reg size of vdec node for RK3399
-Date: Mon, 11 Dec 2023 19:21:40 +0100
-Message-ID: <20231211182021.342706220@linuxfoundation.org>
+Subject: [PATCH 5.10 38/97] RDMA/rtrs-clt: Remove the warnings for req in_use check
+Date: Mon, 11 Dec 2023 19:21:41 +0100
+Message-ID: <20231211182021.371987607@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -43,48 +44,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Bee <knaerzche@gmail.com>
+From: Jack Wang <jinpu.wang@ionos.com>
 
-[ Upstream commit 35938c18291b5da7422b2fac6dac0af11aa8d0d7 ]
+[ Upstream commit 0c8bb6eb70ca41031f663b4481aac9ac78b53bc6 ]
 
-Expand the reg size for the vdec node to include cache/performance
-registers the rkvdec driver writes to. Also add missing clocks to the
-related power-domain.
+As we chain the WR during write request: memory registration,
+rdma write, local invalidate, if only the last WR fail to send due
+to send queue overrun, the server can send back the reply, while
+client mark the req->in_use to false in case of error in rtrs_clt_req
+when error out from rtrs_post_rdma_write_sg.
 
-Fixes: cbd7214402ec ("arm64: dts: rockchip: Define the rockchip Video Decoder node on rk3399")
-Signed-off-by: Alex Bee <knaerzche@gmail.com>
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20231105233630.3927502-10-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
+Link: https://lore.kernel.org/r/20231120154146.920486-8-haris.iqbal@ionos.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399.dtsi | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399.dtsi b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-index c5f3d4f8f4d21..3180f576ed02e 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-@@ -1022,7 +1022,9 @@
- 			power-domain@RK3399_PD_VDU {
- 				reg = <RK3399_PD_VDU>;
- 				clocks = <&cru ACLK_VDU>,
--					 <&cru HCLK_VDU>;
-+					 <&cru HCLK_VDU>,
-+					 <&cru SCLK_VDU_CA>,
-+					 <&cru SCLK_VDU_CORE>;
- 				pm_qos = <&qos_video_m1_r>,
- 					 <&qos_video_m1_w>;
- 			};
-@@ -1276,7 +1278,7 @@
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index 1a5805260778b..e8b2b58cc9bc6 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -387,7 +387,7 @@ static void complete_rdma_req(struct rtrs_clt_io_req *req, int errno,
+ 	struct rtrs_clt_sess *sess;
+ 	int err;
  
- 	vdec: video-codec@ff660000 {
- 		compatible = "rockchip,rk3399-vdec";
--		reg = <0x0 0xff660000 0x0 0x400>;
-+		reg = <0x0 0xff660000 0x0 0x480>;
- 		interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH 0>;
- 		clocks = <&cru ACLK_VDU>, <&cru HCLK_VDU>,
- 			 <&cru SCLK_VDU_CA>, <&cru SCLK_VDU_CORE>;
+-	if (WARN_ON(!req->in_use))
++	if (!req->in_use)
+ 		return;
+ 	if (WARN_ON(!req->con))
+ 		return;
 -- 
 2.42.0
 
