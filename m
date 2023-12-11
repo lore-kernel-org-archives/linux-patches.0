@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4FD20DDE;
-	Mon, 11 Dec 2023 18:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771BC20DDE;
+	Mon, 11 Dec 2023 18:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgXhKqMf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E77BC433C7;
-	Mon, 11 Dec 2023 18:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3pVGmR4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0088C433C9;
+	Mon, 11 Dec 2023 18:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319981;
-	bh=w4qOdwL3vE9UILr8Zncn77vMS6ZQZE2qtHR7MWPau1A=;
+	s=korg; t=1702319984;
+	bh=C4YWKODLZ4TF/f58BzT0bPjv9dGodLDbDn7PYm0nwyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgXhKqMf6KVU/apIsxsxNk3r5vx6hUmqgHozpS4FCINDp0v9GP9o+GLYSbFNTbNVk
-	 49fILlW1+rrAlfkJv5fq4ovgeiaoTwRgSu7SvbNdpkKQ88jEq2mOv0NM65hNSUSk6/
-	 zUIxcOEveXO2kAQEp1ez+e5R3umNWdiVJILqd5qE=
+	b=Y3pVGmR4z8KDJW7wLexU065JtkGjQ+3xlbMJdyUTYCToldshNbdB2pV7mbptVqSTw
+	 Zr0o5dyl3yMVrTkm/YYr7h3rkTTreL//fULlDWk9UFQBwNYA/PSuDpyDibmR7KU1II
+	 9Zu5bqVVUlmiaJJIkk39rrV4Go+g2WZOIHqSb5N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@amd.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Suman Ghosh <sumang@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 30/97] ionic: Fix dim work handling in split interrupt mode
-Date: Mon, 11 Dec 2023 19:21:33 +0100
-Message-ID: <20231211182021.062975719@linuxfoundation.org>
+Subject: [PATCH 5.10 31/97] ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()
+Date: Mon, 11 Dec 2023 19:21:34 +0100
+Message-ID: <20231211182021.100322203@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -44,65 +44,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 4115ba677c35f694b62298e55f0e04ce84eed469 ]
+[ Upstream commit 80d875cfc9d3711a029f234ef7d680db79e8fa4b ]
 
-Currently ionic_dim_work() is incorrect when in
-split interrupt mode. This is because the interrupt
-rate is only being changed for the Rx side even for
-dim running on Tx. Fix this by using the qcq from
-the container_of macro. Also, introduce some local
-variables for a bit of cleanup.
+In ipgre_xmit(), skb_pull() may fail even if pskb_inet_may_pull() returns
+true. For example, applications can use PF_PACKET to create a malformed
+packet with no IP header. This type of packet causes a problem such as
+uninit-value access.
 
-Fixes: a6ff85e0a2d9 ("ionic: remove intr coalesce update from napi")
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20231204192234.21017-3-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch ensures that skb_pull() can pull the required size by checking
+the skb with pskb_network_may_pull() before skb_pull().
+
+Fixes: c54419321455 ("GRE: Refactor GRE tunneling code.")
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Suman Ghosh <sumang@marvell.com>
+Link: https://lore.kernel.org/r/20231202161441.221135-1-syoshida@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ net/ipv4/ip_gre.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index 098772601df8c..49c28134ac2cc 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -45,24 +45,24 @@ static void ionic_lif_queue_identify(struct ionic_lif *lif);
- static void ionic_dim_work(struct work_struct *work)
- {
- 	struct dim *dim = container_of(work, struct dim, work);
-+	struct ionic_intr_info *intr;
- 	struct dim_cq_moder cur_moder;
- 	struct ionic_qcq *qcq;
-+	struct ionic_lif *lif;
- 	u32 new_coal;
- 
- 	cur_moder = net_dim_get_rx_moderation(dim->mode, dim->profile_ix);
- 	qcq = container_of(dim, struct ionic_qcq, dim);
--	new_coal = ionic_coal_usec_to_hw(qcq->q.lif->ionic, cur_moder.usec);
-+	lif = qcq->q.lif;
-+	new_coal = ionic_coal_usec_to_hw(lif->ionic, cur_moder.usec);
- 	new_coal = new_coal ? new_coal : 1;
- 
--	if (qcq->intr.dim_coal_hw != new_coal) {
--		unsigned int qi = qcq->cq.bound_q->index;
--		struct ionic_lif *lif = qcq->q.lif;
--
--		qcq->intr.dim_coal_hw = new_coal;
-+	intr = &qcq->intr;
-+	if (intr->dim_coal_hw != new_coal) {
-+		intr->dim_coal_hw = new_coal;
- 
- 		ionic_intr_coal_init(lif->ionic->idev.intr_ctrl,
--				     lif->rxqcqs[qi]->intr.index,
--				     qcq->intr.dim_coal_hw);
-+				     intr->index, intr->dim_coal_hw);
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index 9d1a506571043..a6ad0fe1387c0 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -629,15 +629,18 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
  	}
  
- 	dim->state = DIM_START_MEASURE;
+ 	if (dev->header_ops) {
++		int pull_len = tunnel->hlen + sizeof(struct iphdr);
++
+ 		if (skb_cow_head(skb, 0))
+ 			goto free_skb;
+ 
+ 		tnl_params = (const struct iphdr *)skb->data;
+ 
+-		/* Pull skb since ip_tunnel_xmit() needs skb->data pointing
+-		 * to gre header.
+-		 */
+-		skb_pull(skb, tunnel->hlen + sizeof(struct iphdr));
++		if (!pskb_network_may_pull(skb, pull_len))
++			goto free_skb;
++
++		/* ip_tunnel_xmit() needs skb->data pointing to gre header. */
++		skb_pull(skb, pull_len);
+ 		skb_reset_mac_header(skb);
+ 
+ 		if (skb->ip_summed == CHECKSUM_PARTIAL &&
 -- 
 2.42.0
 
