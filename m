@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5384F212;
-	Mon, 11 Dec 2023 18:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37E54F212;
+	Mon, 11 Dec 2023 18:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a11834iW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F58C433C7;
-	Mon, 11 Dec 2023 18:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqssIgX2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49C5C433C8;
+	Mon, 11 Dec 2023 18:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319124;
-	bh=5OM9A2xnSJbAVoO/yDRQccSdbzdwsW8+SQh6V/IU32s=;
+	s=korg; t=1702319127;
+	bh=hky5CJNCwuTP802x2q39ngLq5U6p4bxuxS2B6Iuo82A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a11834iWmMqABcB4IqZgIhvPGYP8ah7QL/M4z3z4KPbaNwpZMVxAvadj5O+Hf6OQB
-	 CX45mvikjca1x3xk6ceQbOS7T+S5IImlPk0Hog1H9669PZMsc+SBhWeUR2hP81FGCk
-	 N+SitMLOncS0Gt1JJxxv6hcUKIU40uy1doT2FR4E=
+	b=aqssIgX2B1wOTjSqUbz1aPl5VAy+oVs58dp22Mg+7IZAiaeNlucFKvQRVTMmYFRXL
+	 NDz/rTlO7Pm0gAXEfBY943qBEC3rYTcK/K3/RLFkPu/5ffwY9w9hDeiX69WA62uG6b
+	 +XVTAfrqqgsFMogsRNvjXjb/cSyfWog4nwGN52rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nico Boehr <nrb@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 4.19 46/55] KVM: s390/mm: Properly reset no-dat
-Date: Mon, 11 Dec 2023 19:21:56 +0100
-Message-ID: <20231211182013.947761048@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 47/55] nilfs2: fix missing error check for sb_set_blocksize call
+Date: Mon, 11 Dec 2023 19:21:57 +0100
+Message-ID: <20231211182013.988723609@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -41,33 +41,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudio Imbrenda <imbrenda@linux.ibm.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 27072b8e18a73ffeffb1c140939023915a35134b upstream.
+commit d61d0ab573649789bf9eb909c89a1a193b2e3d10 upstream.
 
-When the CMMA state needs to be reset, the no-dat bit also needs to be
-reset. Failure to do so could cause issues in the guest, since the
-guest expects the bit to be cleared after a reset.
+When mounting a filesystem image with a block size larger than the page
+size, nilfs2 repeatedly outputs long error messages with stack traces to
+the kernel log, such as the following:
 
+ getblk(): invalid block size 8192 requested
+ logical block size: 512
+ ...
+ Call Trace:
+  dump_stack_lvl+0x92/0xd4
+  dump_stack+0xd/0x10
+  bdev_getblk+0x33a/0x354
+  __breadahead+0x11/0x80
+  nilfs_search_super_root+0xe2/0x704 [nilfs2]
+  load_nilfs+0x72/0x504 [nilfs2]
+  nilfs_mount+0x30f/0x518 [nilfs2]
+  legacy_get_tree+0x1b/0x40
+  vfs_get_tree+0x18/0xc4
+  path_mount+0x786/0xa88
+  __ia32_sys_mount+0x147/0x1a8
+  __do_fast_syscall_32+0x56/0xc8
+  do_fast_syscall_32+0x29/0x58
+  do_SYSENTER_32+0x15/0x18
+  entry_SYSENTER_32+0x98/0xf1
+ ...
+
+This overloads the system logger.  And to make matters worse, it sometimes
+crashes the kernel with a memory access violation.
+
+This is because the return value of the sb_set_blocksize() call, which
+should be checked for errors, is not checked.
+
+The latter issue is due to out-of-buffer memory being accessed based on a
+large block size that caused sb_set_blocksize() to fail for buffers read
+with the initial minimum block size that remained unupdated in the
+super_block structure.
+
+Since nilfs2 mkfs tool does not accept block sizes larger than the system
+page size, this has been overlooked.  However, it is possible to create
+this situation by intentionally modifying the tool or by passing a
+filesystem image created on a system with a large page size to a system
+with a smaller page size and mounting it.
+
+Fix this issue by inserting the expected error handling for the call to
+sb_set_blocksize().
+
+Link: https://lkml.kernel.org/r/20231129141547.4726-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
-Reviewed-by: Nico Boehr <nrb@linux.ibm.com>
-Message-ID: <20231109123624.37314-1-imbrenda@linux.ibm.com>
-Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/pgtable.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/the_nilfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/s390/mm/pgtable.c
-+++ b/arch/s390/mm/pgtable.c
-@@ -699,7 +699,7 @@ void ptep_zap_unused(struct mm_struct *m
- 		pte_clear(mm, addr, ptep);
- 	}
- 	if (reset)
--		pgste_val(pgste) &= ~_PGSTE_GPS_USAGE_MASK;
-+		pgste_val(pgste) &= ~(_PGSTE_GPS_USAGE_MASK | _PGSTE_GPS_NODAT);
- 	pgste_set_unlock(ptep, pgste);
- 	preempt_enable();
- }
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -688,7 +688,11 @@ int init_nilfs(struct the_nilfs *nilfs,
+ 			goto failed_sbh;
+ 		}
+ 		nilfs_release_super_block(nilfs);
+-		sb_set_blocksize(sb, blocksize);
++		if (!sb_set_blocksize(sb, blocksize)) {
++			nilfs_msg(sb, KERN_ERR, "bad blocksize %d", blocksize);
++			err = -EINVAL;
++			goto out;
++		}
+ 
+ 		err = nilfs_load_super_block(nilfs, sb, blocksize, &sbp);
+ 		if (err)
 
 
