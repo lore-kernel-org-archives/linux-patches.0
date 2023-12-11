@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4558452F89;
-	Mon, 11 Dec 2023 18:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D667C321B8;
+	Mon, 11 Dec 2023 18:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2K9gFFOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B6EC433C8;
-	Mon, 11 Dec 2023 18:59:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UO00Wzcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E22BC433C7;
+	Mon, 11 Dec 2023 18:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321168;
-	bh=XacQL7F5NxV5EqCeqnbMhAR/Yek3e0v4KaLT+oB/99w=;
+	s=korg; t=1702321170;
+	bh=bvk+iANAVnAt8vZ0aFJu6GUsT8NnrOvVxJJ2V8FDGmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2K9gFFOM6uE8L8kk9joDVVEdmtScMJkEI9UazfL1wVuQf/++sK2ZUTFP9vgJyatVR
-	 Zc0xKcJaT7UAMU9l1uJIIkVHqKheOD7GOisQZKxdQpELfzKvazW3xTk3SjIEZipahE
-	 W3cRvoWi7240iPW6WRC7RoHTv51b+FJggwPs31lg=
+	b=UO00Wzccjxa1PvF00g92R0SNUqi8uqs8oM6QuveIgskHXgR7mAHpc1JCbrPxMfIg8
+	 ttAm+srl4rl11erzFCf4eLZe/Q9ZF2BfnXFMjVH/wHhm+uaQyUOePkv+WCWxRTfEWN
+	 lbVDzU/Z1o001FyNaGXcwRCU72A1bfiijjF3fFZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7f10c1653e35933c0f1e@syzkaller.appspotmail.com,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Todd Kjos <tkjos@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/141] binder: fix memory leaks of spam and pending work
-Date: Mon, 11 Dec 2023 19:22:35 +0100
-Message-ID: <20231211182030.717031479@linuxfoundation.org>
+	Daniel Mack <daniel@zonque.org>,
+	Maxim Popov <maxim.snafu@gmail.com>
+Subject: [PATCH 5.15 128/141] serial: sc16is7xx: address RX timeout interrupt errata
+Date: Mon, 11 Dec 2023 19:23:07 +0100
+Message-ID: <20231211182032.117284143@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -44,77 +41,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Daniel Mack <daniel@zonque.org>
 
-commit 1aa3aaf8953c84bad398adf6c3cabc9d6685bf7d upstream
+commit 08ce9a1b72e38cf44c300a44ac5858533eb3c860 upstream.
 
-A transaction complete work is allocated and queued for each
-transaction. Under certain conditions the work->type might be marked as
-BINDER_WORK_TRANSACTION_ONEWAY_SPAM_SUSPECT to notify userspace about
-potential spamming threads or as BINDER_WORK_TRANSACTION_PENDING when
-the target is currently frozen.
+This device has a silicon bug that makes it report a timeout interrupt
+but no data in the FIFO.
 
-However, these work types are not being handled in binder_release_work()
-so they will leak during a cleanup. This was reported by syzkaller with
-the following kmemleak dump:
+The datasheet states the following in the errata section 18.1.4:
 
-BUG: memory leak
-unreferenced object 0xffff88810e2d6de0 (size 32):
-  comm "syz-executor338", pid 5046, jiffies 4294968230 (age 13.590s)
-  hex dump (first 32 bytes):
-    e0 6d 2d 0e 81 88 ff ff e0 6d 2d 0e 81 88 ff ff  .m-......m-.....
-    04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff81573b75>] kmalloc_trace+0x25/0x90 mm/slab_common.c:1114
-    [<ffffffff83d41873>] kmalloc include/linux/slab.h:599 [inline]
-    [<ffffffff83d41873>] kzalloc include/linux/slab.h:720 [inline]
-    [<ffffffff83d41873>] binder_transaction+0x573/0x4050 drivers/android/binder.c:3152
-    [<ffffffff83d45a05>] binder_thread_write+0x6b5/0x1860 drivers/android/binder.c:4010
-    [<ffffffff83d486dc>] binder_ioctl_write_read drivers/android/binder.c:5066 [inline]
-    [<ffffffff83d486dc>] binder_ioctl+0x1b2c/0x3cf0 drivers/android/binder.c:5352
-    [<ffffffff816b25f2>] vfs_ioctl fs/ioctl.c:51 [inline]
-    [<ffffffff816b25f2>] __do_sys_ioctl fs/ioctl.c:871 [inline]
-    [<ffffffff816b25f2>] __se_sys_ioctl fs/ioctl.c:857 [inline]
-    [<ffffffff816b25f2>] __x64_sys_ioctl+0xf2/0x140 fs/ioctl.c:857
-    [<ffffffff84b30008>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<ffffffff84b30008>] do_syscall_64+0x38/0xb0 arch/x86/entry/common.c:80
-    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  "If the host reads the receive FIFO at the same time as a
+  time-out interrupt condition happens, the host might read 0xCC
+  (time-out) in the Interrupt Indication Register (IIR), but bit 0
+  of the Line Status Register (LSR) is not set (means there is no
+  data in the receive FIFO)."
 
-Fix the leaks by kfreeing these work types in binder_release_work() and
-handle them as a BINDER_WORK_TRANSACTION_COMPLETE cleanup.
+The errata description seems to indicate it concerns only polled mode of
+operation when reading bit 0 of the LSR register. However, tests have
+shown and NXP has confirmed that the RXLVL register also yields 0 when
+the bug is triggered, and hence the IRQ driven implementation in this
+driver is equally affected.
 
+This bug has hit us on production units and when it does, sc16is7xx_irq()
+would spin forever because sc16is7xx_port_irq() keeps seeing an
+interrupt in the IIR register that is not cleared because the driver
+does not call into sc16is7xx_handle_rx() unless the RXLVL register
+reports at least one byte in the FIFO.
+
+Fix this by always reading one byte from the FIFO when this condition
+is detected in order to clear the interrupt. This approach was
+confirmed to be correct by NXP through their support channels.
+
+Tested by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+
+Signed-off-by: Daniel Mack <daniel@zonque.org>
+Co-Developed-by: Maxim Popov <maxim.snafu@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: a7dc1e6f99df ("binder: tell userspace to dump current backtrace when detected oneway spamming")
-Reported-by: syzbot+7f10c1653e35933c0f1e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7f10c1653e35933c0f1e
-Suggested-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Todd Kjos <tkjos@google.com>
-Link: https://lore.kernel.org/r/20230922175138.230331-1-cmllamas@google.com
+Link: https://lore.kernel.org/r/20231123072818.1394539-1-daniel@zonque.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[cmllamas: backport to v5.15 by dropping BINDER_WORK_TRANSACTION_PENDING
- as commit 0567461a7a6e is not present. Remove fixes tag accordingly.]
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binder.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/android/binder.c b/drivers/android/binder.c
-index cbbed43baf056..b63322e7e1011 100644
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -4620,6 +4620,7 @@ static void binder_release_work(struct binder_proc *proc,
- 				"undelivered TRANSACTION_ERROR: %u\n",
- 				e->cmd);
- 		} break;
-+		case BINDER_WORK_TRANSACTION_ONEWAY_SPAM_SUSPECT:
- 		case BINDER_WORK_TRANSACTION_COMPLETE: {
- 			binder_debug(BINDER_DEBUG_DEAD_TRANSACTION,
- 				"undelivered TRANSACTION_COMPLETE\n");
--- 
-2.42.0
-
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -694,6 +694,18 @@ static bool sc16is7xx_port_irq(struct sc
+ 		case SC16IS7XX_IIR_RTOI_SRC:
+ 		case SC16IS7XX_IIR_XOFFI_SRC:
+ 			rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
++
++			/*
++			 * There is a silicon bug that makes the chip report a
++			 * time-out interrupt but no data in the FIFO. This is
++			 * described in errata section 18.1.4.
++			 *
++			 * When this happens, read one byte from the FIFO to
++			 * clear the interrupt.
++			 */
++			if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
++				rxlen = 1;
++
+ 			if (rxlen)
+ 				sc16is7xx_handle_rx(port, rxlen, iir);
+ 			break;
 
 
