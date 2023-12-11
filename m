@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2A75101A;
-	Mon, 11 Dec 2023 18:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BED25101A;
+	Mon, 11 Dec 2023 18:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2kK3BEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDD6C433C7;
-	Mon, 11 Dec 2023 18:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIVjToD9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6809C433C8;
+	Mon, 11 Dec 2023 18:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319356;
-	bh=WE99ykXMlddoHyiF/D7HMfHu2FjH8IrZ3sFD4ww2Rxk=;
+	s=korg; t=1702319359;
+	bh=AMFH4FUGPzQT00qqOVBRAlhMGA4kSIwGzrX54NadCeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2kK3BEs4KgI/qUNI5fKVjYnBnhb7QdYyAKh+/OEwGNRUhz49fT3rXZKE40f+5Al0
-	 X40+UPvoO/Va1w1TZhDFAOi9QSLAZIfwDQrQExP7i5zWX1poPPumdo+KtaB2Yzsx8F
-	 6MaiDragw53Fza9vGvNDM/ENtMsXOGaesIR6WWfA=
+	b=ZIVjToD9ogu0KY+uMh6gKtq4x4ungdi+s6HO3+G3LME05RiJB/98RZbmaLrgSbTfm
+	 9FdtoWjvaVc8lcbXZrWolokH7L9bIkERcE32rUoYkyBKhoXJoeg00nIka+fl+J/7CN
+	 AU8n/G4roOXiLosp9Q8EpzhDMVFtiqY4dw77fgPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Ivan Vecera <ivecera@redhat.com>,
 	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/244] ice: Restore fix disabling RX VLAN filtering
-Date: Mon, 11 Dec 2023 19:18:58 +0100
-Message-ID: <20231211182047.850995069@linuxfoundation.org>
+Subject: [PATCH 6.6 046/244] i40e: Fix unexpected MFS warning message
+Date: Mon, 11 Dec 2023 19:18:59 +0100
+Message-ID: <20231211182047.897423592@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -45,73 +43,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcin Szycik <marcin.szycik@linux.intel.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 4e7f0087b058cc3cab8f3c32141b51aa5457d298 ]
+[ Upstream commit 7d9f22b3d3ef379ed05bd3f3e2de83dfa8da8258 ]
 
-Fix setting dis_rx_filtering depending on whether port vlan is being
-turned on or off. This was originally fixed in commit c793f8ea15e3 ("ice:
-Fix disabling Rx VLAN filtering with port VLAN enabled"), but while
-refactoring ice_vf_vsi_init_vlan_ops(), the fix has been lost. Restore the
-fix along with the original comment from that change.
+Commit 3a2c6ced90e1 ("i40e: Add a check to see if MFS is set") added
+a warning message that reports unexpected size of port's MFS (max
+frame size) value. This message use for the port number local
+variable 'i' that is wrong.
+In i40e_probe() this 'i' variable is used only to iterate VSIs
+to find FDIR VSI:
 
-Also delete duplicate lines in ice_port_vlan_on().
+<code>
+...
+/* if FDIR VSI was set up, start it now */
+        for (i = 0; i < pf->num_alloc_vsi; i++) {
+                if (pf->vsi[i] && pf->vsi[i]->type == I40E_VSI_FDIR) {
+                        i40e_vsi_open(pf->vsi[i]);
+                        break;
+                }
+        }
+...
+</code>
 
-Fixes: 2946204b3fa8 ("ice: implement bridge port vlan")
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+So the warning message use for the port number index of FDIR VSI
+if this exists or pf->num_alloc_vsi if not.
+
+Fix the message by using 'pf->hw.port' for the port number.
+
+Fixes: 3a2c6ced90e1 ("i40e: Add a check to see if MFS is set")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-index d7b10dc67f035..80dc4bcdd3a41 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-@@ -32,7 +32,6 @@ static void ice_port_vlan_on(struct ice_vsi *vsi)
- 		/* setup outer VLAN ops */
- 		vlan_ops->set_port_vlan = ice_vsi_set_outer_port_vlan;
- 		vlan_ops->clear_port_vlan = ice_vsi_clear_outer_port_vlan;
--		vlan_ops->clear_port_vlan = ice_vsi_clear_outer_port_vlan;
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 00ca2b88165cb..a9f5a8a7d3f05 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -16195,7 +16195,7 @@ static int i40e_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	       I40E_PRTGL_SAH_MFS_MASK) >> I40E_PRTGL_SAH_MFS_SHIFT;
+ 	if (val < MAX_FRAME_SIZE_DEFAULT)
+ 		dev_warn(&pdev->dev, "MFS for port %x has been set below the default: %x\n",
+-			 i, val);
++			 pf->hw.port, val);
  
- 		/* setup inner VLAN ops */
- 		vlan_ops = &vsi->inner_vlan_ops;
-@@ -47,8 +46,13 @@ static void ice_port_vlan_on(struct ice_vsi *vsi)
- 
- 		vlan_ops->set_port_vlan = ice_vsi_set_inner_port_vlan;
- 		vlan_ops->clear_port_vlan = ice_vsi_clear_inner_port_vlan;
--		vlan_ops->clear_port_vlan = ice_vsi_clear_inner_port_vlan;
- 	}
-+
-+	/* all Rx traffic should be in the domain of the assigned port VLAN,
-+	 * so prevent disabling Rx VLAN filtering
-+	 */
-+	vlan_ops->dis_rx_filtering = noop_vlan;
-+
- 	vlan_ops->ena_rx_filtering = ice_vsi_ena_rx_vlan_filtering;
- }
- 
-@@ -77,6 +81,8 @@ static void ice_port_vlan_off(struct ice_vsi *vsi)
- 		vlan_ops->del_vlan = ice_vsi_del_vlan;
- 	}
- 
-+	vlan_ops->dis_rx_filtering = ice_vsi_dis_rx_vlan_filtering;
-+
- 	if (!test_bit(ICE_FLAG_VF_VLAN_PRUNING, pf->flags))
- 		vlan_ops->ena_rx_filtering = noop_vlan;
- 	else
-@@ -141,7 +147,6 @@ void ice_vf_vsi_init_vlan_ops(struct ice_vsi *vsi)
- 		&vsi->outer_vlan_ops : &vsi->inner_vlan_ops;
- 
- 	vlan_ops->add_vlan = ice_vsi_add_vlan;
--	vlan_ops->dis_rx_filtering = ice_vsi_dis_rx_vlan_filtering;
- 	vlan_ops->ena_tx_filtering = ice_vsi_ena_tx_vlan_filtering;
- 	vlan_ops->dis_tx_filtering = ice_vsi_dis_tx_vlan_filtering;
- }
+ 	/* Add a filter to drop all Flow control frames from any VSI from being
+ 	 * transmitted. By doing so we stop a malicious VF from sending out
 -- 
 2.42.0
 
