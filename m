@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F935101A;
-	Mon, 11 Dec 2023 18:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002185101A;
+	Mon, 11 Dec 2023 18:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwHFjEvH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0AD3C433C8;
-	Mon, 11 Dec 2023 18:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQiFZtl3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB80C433C8;
+	Mon, 11 Dec 2023 18:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319213;
-	bh=/WuL7+HNtnJ2vt8Hcaqs59KQgUNqv1IFkuH5KhtD9k4=;
+	s=korg; t=1702319215;
+	bh=7JnKe2SCBgsP097BFOIn0JVqBC9hw8Ex3Opx4/Z4f50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dwHFjEvHSayCN/oknZFe3LcppmJqDDC2o1KPyM0Rw0fU+ho5T3rDf5dRg+bJ73Fj1
-	 U5wHfuaPNmycj8uJMr3XCiBx9LGwfJnofP/VJ0omJrqhUXB0ExOLmYzMNfGMEhVhA7
-	 opmWcpUSXAYc9W+1GdmFT780HnJlMEt9O1Lu5SvU=
+	b=tQiFZtl3zYe3fhkr/YL1TfdILFVcgvOyH1vxP7+rZqzxHrZvIs8asWK7YDdRDorGh
+	 15yHTCdvLbAFVL+abuyLHCGbgHZpc450gy5IMjLo7m9eyLrnpiWEe3tduF6/maSdd4
+	 FA+dAbxVhN77tBLSmxdnwHg2jGyTvVvh+gVdrmXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aishwarya TCV <aishwarya.tcv@arm.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Rob Herring <robh@kernel.org>,
+	Oleksij Rempel <linux@rempel-privat.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/244] dt: dt-extract-compatibles: Dont follow symlinks when walking tree
-Date: Mon, 11 Dec 2023 19:18:36 +0100
-Message-ID: <20231211182046.837005252@linuxfoundation.org>
+Subject: [PATCH 6.6 024/244] platform/x86: asus-wmi: Move i8042 filter install to shared asus-wmi code
+Date: Mon, 11 Dec 2023 19:18:37 +0100
+Message-ID: <20231211182046.887621628@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,70 +44,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 8f51593cdcab82fb23ef2e1a0010b2e6f99aae02 ]
+[ Upstream commit b52cbca22cbf6c9d2700c1e576d0ddcc670e49d5 ]
 
-The iglob function, which we use to find C source files in the kernel
-tree, always follows symbolic links. This can cause unintentional
-recursions whenever a symbolic link points to a parent directory. A
-common scenario is building the kernel with the output set to a
-directory inside the kernel tree, which will contain such a symlink.
+asus-nb-wmi calls i8042_install_filter() in some cases, but it never
+calls i8042_remove_filter(). This means that a dangling pointer to
+the filter function is left after rmmod leading to crashes.
 
-Instead of using the iglob function, use os.walk to traverse the
-directory tree, which by default doesn't follow symbolic links. fnmatch
-is then used to match the glob on the filename, as well as ignore hidden
-files (which were ignored by default with iglob).
+Fix this by moving the i8042-filter installation to the shared
+asus-wmi code and also remove it from the shared code on driver unbind.
 
-This approach runs just as fast as using iglob.
-
-Fixes: b6acf8073517 ("dt: Add a check for undocumented compatible strings in kernel")
-Reported-by: Aishwarya TCV <aishwarya.tcv@arm.com>
-Closes: https://lore.kernel.org/all/e90cb52f-d55b-d3ba-3933-6cc7b43fcfbc@arm.com
-Signed-off-by: "Nícolas F. R. A. Prado" <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20231107225624.9811-1-nfraprado@collabora.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: b5643539b825 ("platform/x86: asus-wmi: Filter buggy scan codes on ASUS Q500A")
+Cc: Oleksij Rempel <linux@rempel-privat.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231120154235.610808-2-hdegoede@redhat.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/dtc/dt-extract-compatibles | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/platform/x86/Kconfig       |  2 +-
+ drivers/platform/x86/asus-nb-wmi.c | 11 -----------
+ drivers/platform/x86/asus-wmi.c    |  8 ++++++++
+ 3 files changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/scripts/dtc/dt-extract-compatibles b/scripts/dtc/dt-extract-compatibles
-index 2b6d228602e85..2f9d0eb59f5b7 100755
---- a/scripts/dtc/dt-extract-compatibles
-+++ b/scripts/dtc/dt-extract-compatibles
-@@ -1,8 +1,8 @@
- #!/usr/bin/env python3
- # SPDX-License-Identifier: GPL-2.0-only
+diff --git a/drivers/platform/x86/Kconfig b/drivers/platform/x86/Kconfig
+index 2a10705433911..07eea525091b0 100644
+--- a/drivers/platform/x86/Kconfig
++++ b/drivers/platform/x86/Kconfig
+@@ -263,6 +263,7 @@ config ASUS_WMI
+ 	depends on RFKILL || RFKILL = n
+ 	depends on HOTPLUG_PCI
+ 	depends on ACPI_VIDEO || ACPI_VIDEO = n
++	depends on SERIO_I8042 || SERIO_I8042 = n
+ 	select INPUT_SPARSEKMAP
+ 	select LEDS_CLASS
+ 	select NEW_LEDS
+@@ -279,7 +280,6 @@ config ASUS_WMI
+ config ASUS_NB_WMI
+ 	tristate "Asus Notebook WMI Driver"
+ 	depends on ASUS_WMI
+-	depends on SERIO_I8042 || SERIO_I8042 = n
+ 	help
+ 	  This is a driver for newer Asus notebooks. It adds extra features
+ 	  like wireless radio and bluetooth control, leds, hotkeys, backlight...
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index df1db54d4e183..af3da303e2b15 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -501,8 +501,6 @@ static const struct dmi_system_id asus_quirks[] = {
  
-+import fnmatch
- import os
--import glob
- import re
- import argparse
+ static void asus_nb_wmi_quirks(struct asus_wmi_driver *driver)
+ {
+-	int ret;
+-
+ 	quirks = &quirk_asus_unknown;
+ 	dmi_check_system(asus_quirks);
  
-@@ -49,10 +49,20 @@ def print_compat(filename, compatibles):
- 	else:
- 		print(*compatibles, sep='\n')
+@@ -517,15 +515,6 @@ static void asus_nb_wmi_quirks(struct asus_wmi_driver *driver)
  
-+def glob_without_symlinks(root, glob):
-+	for path, dirs, files in os.walk(root):
-+		# Ignore hidden directories
-+		for d in dirs:
-+			if fnmatch.fnmatch(d, ".*"):
-+				dirs.remove(d)
-+		for f in files:
-+			if fnmatch.fnmatch(f, glob):
-+				yield os.path.join(path, f)
+ 	if (tablet_mode_sw != -1)
+ 		quirks->tablet_switch_mode = tablet_mode_sw;
+-
+-	if (quirks->i8042_filter) {
+-		ret = i8042_install_filter(quirks->i8042_filter);
+-		if (ret) {
+-			pr_warn("Unable to install key filter\n");
+-			return;
+-		}
+-		pr_info("Using i8042 filter function for receiving events\n");
+-	}
+ }
+ 
+ static const struct key_entry asus_nb_wmi_keymap[] = {
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 19bfd30861aa8..9c6321c2fc3c5 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -4437,6 +4437,12 @@ static int asus_wmi_add(struct platform_device *pdev)
+ 		goto fail_wmi_handler;
+ 	}
+ 
++	if (asus->driver->quirks->i8042_filter) {
++		err = i8042_install_filter(asus->driver->quirks->i8042_filter);
++		if (err)
++			pr_warn("Unable to install key filter - %d\n", err);
++	}
 +
- def files_to_parse(path_args):
- 	for f in path_args:
- 		if os.path.isdir(f):
--			for filename in glob.iglob(f + "/**/*.c", recursive=True):
-+			for filename in glob_without_symlinks(f, "*.c"):
- 				yield filename
- 		else:
- 			yield f
+ 	asus_wmi_battery_init(asus);
+ 
+ 	asus_wmi_debugfs_init(asus);
+@@ -4471,6 +4477,8 @@ static int asus_wmi_remove(struct platform_device *device)
+ 	struct asus_wmi *asus;
+ 
+ 	asus = platform_get_drvdata(device);
++	if (asus->driver->quirks->i8042_filter)
++		i8042_remove_filter(asus->driver->quirks->i8042_filter);
+ 	wmi_remove_notify_handler(asus->driver->event_guid);
+ 	asus_wmi_backlight_exit(asus);
+ 	asus_wmi_input_exit(asus);
 -- 
 2.42.0
 
