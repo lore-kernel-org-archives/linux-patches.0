@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069184F212;
-	Mon, 11 Dec 2023 18:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14D74F213;
+	Mon, 11 Dec 2023 18:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7IORsU7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A80C433C7;
-	Mon, 11 Dec 2023 18:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnPdfixB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC6BC433C8;
+	Mon, 11 Dec 2023 18:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319066;
-	bh=FMyzI7x4DGZhDTNnvRl//7LqgH4YHz6+H+WeF0j4/SU=;
+	s=korg; t=1702319069;
+	bh=5tuNGEUGwKMsG8l4WxgV6/kqCSjNP35Xd1Lp6ZAIgKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7IORsU7vorVrZ3RZj+W8DxnvIj8q7P8p7mK8vVstiwT0sA6kJXJ/t8JLdUKgGUtT
-	 hioazMwLMmDnboCaTupOJ7abdTJ+fNxb91EkH8V7JuAcR9MruVgb53jkDhBdRGoMf9
-	 gEEEH9ZVdse+4Fzfqe4oF5gLYGSS2Ruv3Ln3Mi94=
+	b=SnPdfixBROG9f8R5ieAKbV74X+CL1DWdvjiuTNBZ6iuwI79i10AyudUBbB4hmQDN9
+	 mMmN3tUgqjIt4ROYZLzltZwPOd7f10h8/2tqqV2D4zuV0dbczfK13uuQBrdKJYHXax
+	 InwaE33tB07D2wVRm7kfCgx6KZPmJz4kzHqU4GqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evgeny Novikov <novikov@ispras.ru>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Omar Sandoval <osandov@fb.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 05/55] media: davinci: vpif_capture: fix potential double free
-Date: Mon, 11 Dec 2023 19:21:15 +0100
-Message-ID: <20231211182012.436414667@linuxfoundation.org>
+Subject: [PATCH 4.19 06/55] block: introduce multi-page bvec helpers
+Date: Mon, 11 Dec 2023 19:21:16 +0100
+Message-ID: <20231211182012.465741504@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -43,38 +44,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evgeny Novikov <novikov@ispras.ru>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 602649eadaa0c977e362e641f51ec306bc1d365d ]
+[ Upstream commit 3d75ca0adef4280650c6690a0c4702a74a6f3c95 ]
 
-In case of errors vpif_probe_complete() releases memory for vpif_obj.sd
-and unregisters the V4L2 device. But then this is done again by
-vpif_probe() itself. The patch removes the cleaning from
-vpif_probe_complete().
+This patch introduces helpers of 'mp_bvec_iter_*' for multi-page bvec
+support.
 
-Found by Linux Driver Verification project (linuxtesting.org).
+The introduced helpers treate one bvec as real multi-page segment,
+which may include more than one pages.
 
-Signed-off-by: Evgeny Novikov <novikov@ispras.ru>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+The existed helpers of bvec_iter_* are interfaces for supporting current
+bvec iterator which is thought as single-page by drivers, fs, dm and
+etc. These introduced helpers will build single-page bvec in flight, so
+this way won't break current bio/bvec users, which needn't any change.
+
+Follows some multi-page bvec background:
+
+- bvecs stored in bio->bi_io_vec is always multi-page style
+
+- bvec(struct bio_vec) represents one physically contiguous I/O
+  buffer, now the buffer may include more than one page after
+  multi-page bvec is supported, and all these pages represented
+  by one bvec is physically contiguous. Before multi-page bvec
+  support, at most one page is included in one bvec, we call it
+  single-page bvec.
+
+- .bv_page of the bvec points to the 1st page in the multi-page bvec
+
+- .bv_offset of the bvec is the offset of the buffer in the bvec
+
+The effect on the current drivers/filesystem/dm/bcache/...:
+
+- almost everyone supposes that one bvec only includes one single
+  page, so we keep the sp interface not changed, for example,
+  bio_for_each_segment() still returns single-page bvec
+
+- bio_for_each_segment_all() will return single-page bvec too
+
+- during iterating, iterator variable(struct bvec_iter) is always
+  updated in multi-page bvec style, and bvec_iter_advance() is kept
+  not changed
+
+- returned(copied) single-page bvec is built in flight by bvec
+  helpers from the stored multi-page bvec
+
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Omar Sandoval <osandov@fb.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/davinci/vpif_capture.c | 2 --
- 1 file changed, 2 deletions(-)
+ include/linux/bvec.h | 30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/davinci/vpif_capture.c b/drivers/media/platform/davinci/vpif_capture.c
-index a96f53ce80886..cf1d11e6dd8c4 100644
---- a/drivers/media/platform/davinci/vpif_capture.c
-+++ b/drivers/media/platform/davinci/vpif_capture.c
-@@ -1489,8 +1489,6 @@ static int vpif_probe_complete(void)
- 		/* Unregister video device */
- 		video_unregister_device(&ch->video_dev);
- 	}
--	kfree(vpif_obj.sd);
--	v4l2_device_unregister(&vpif_obj.v4l2_dev);
+diff --git a/include/linux/bvec.h b/include/linux/bvec.h
+index bc1f16e9f3f4d..cd43c03e31129 100644
+--- a/include/linux/bvec.h
++++ b/include/linux/bvec.h
+@@ -23,6 +23,7 @@
+ #include <linux/kernel.h>
+ #include <linux/bug.h>
+ #include <linux/errno.h>
++#include <linux/mm.h>
  
- 	return err;
- }
+ /*
+  * was unsigned short, but we might as well be ready for > 64kB I/O pages
+@@ -52,16 +53,39 @@ struct bvec_iter {
+  */
+ #define __bvec_iter_bvec(bvec, iter)	(&(bvec)[(iter).bi_idx])
+ 
+-#define bvec_iter_page(bvec, iter)				\
++/* multi-page (mp_bvec) helpers */
++#define mp_bvec_iter_page(bvec, iter)				\
+ 	(__bvec_iter_bvec((bvec), (iter))->bv_page)
+ 
+-#define bvec_iter_len(bvec, iter)				\
++#define mp_bvec_iter_len(bvec, iter)				\
+ 	min((iter).bi_size,					\
+ 	    __bvec_iter_bvec((bvec), (iter))->bv_len - (iter).bi_bvec_done)
+ 
+-#define bvec_iter_offset(bvec, iter)				\
++#define mp_bvec_iter_offset(bvec, iter)				\
+ 	(__bvec_iter_bvec((bvec), (iter))->bv_offset + (iter).bi_bvec_done)
+ 
++#define mp_bvec_iter_page_idx(bvec, iter)			\
++	(mp_bvec_iter_offset((bvec), (iter)) / PAGE_SIZE)
++
++#define mp_bvec_iter_bvec(bvec, iter)				\
++((struct bio_vec) {						\
++	.bv_page	= mp_bvec_iter_page((bvec), (iter)),	\
++	.bv_len		= mp_bvec_iter_len((bvec), (iter)),	\
++	.bv_offset	= mp_bvec_iter_offset((bvec), (iter)),	\
++})
++
++/* For building single-page bvec in flight */
++ #define bvec_iter_offset(bvec, iter)				\
++	(mp_bvec_iter_offset((bvec), (iter)) % PAGE_SIZE)
++
++#define bvec_iter_len(bvec, iter)				\
++	min_t(unsigned, mp_bvec_iter_len((bvec), (iter)),		\
++	      PAGE_SIZE - bvec_iter_offset((bvec), (iter)))
++
++#define bvec_iter_page(bvec, iter)				\
++	nth_page(mp_bvec_iter_page((bvec), (iter)),		\
++		 mp_bvec_iter_page_idx((bvec), (iter)))
++
+ #define bvec_iter_bvec(bvec, iter)				\
+ ((struct bio_vec) {						\
+ 	.bv_page	= bvec_iter_page((bvec), (iter)),	\
 -- 
 2.42.0
 
