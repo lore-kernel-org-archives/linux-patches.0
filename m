@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03345101A;
-	Mon, 11 Dec 2023 18:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE545101A;
+	Mon, 11 Dec 2023 18:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBhgS38p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6034CC433C7;
-	Mon, 11 Dec 2023 18:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPILb3bu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF5DC433C8;
+	Mon, 11 Dec 2023 18:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319292;
-	bh=nCQFPeXCuyLYgaZqEb0d/GT+jH4YuXayyyCc/nj5aWY=;
+	s=korg; t=1702319295;
+	bh=yGDRNJywu4UU1bVLozROzbUQIVfS7ylUkEr3tkjYq0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBhgS38pCVKJpN+RKXtbKGtAdQAkS/JkIuUprXfLbeSH/rTO9mDbQvpKqC9SovYL1
-	 6Dg4N/IeKf0KNAiWVmwEoy08LrlLwGQvSjdOZG9r0bLSqog4WpoHi7iPEKmaBcj37U
-	 kLjAAsJJGcA//kpzLmz2iajZux11XdKWeS9wLpwg=
+	b=KPILb3bujeehoVOh2n9bF12Qsg3DbUwbhxKk2FWHkDo4RK7bueVdVhk91AIAwB0we
+	 7+5kE6VeAnMD2ew0jJQTkFyZklXtGJOXp/qfouhdMwdrX/Y44ShOGtXNGMai/HdkNn
+	 I54oHRgOZOOS7h4jUsRZJXNHDBbHgWRoX8g/YuaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Suman Ghosh <sumang@marvell.com>,
+	Daniil Maximov <daniil31415it@gmail.com>,
+	Igor Russkikh <irusskikh@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/244] ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()
-Date: Mon, 11 Dec 2023 19:19:05 +0100
-Message-ID: <20231211182048.154994978@linuxfoundation.org>
+Subject: [PATCH 6.6 053/244] net: atlantic: Fix NULL dereference of skb pointer in
+Date: Mon, 11 Dec 2023 19:19:06 +0100
+Message-ID: <20231211182048.189301612@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,56 +43,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Daniil Maximov <daniil31415it@gmail.com>
 
-[ Upstream commit 80d875cfc9d3711a029f234ef7d680db79e8fa4b ]
+[ Upstream commit cbe860be36095e68e4e5561ab43610982fb429fd ]
 
-In ipgre_xmit(), skb_pull() may fail even if pskb_inet_may_pull() returns
-true. For example, applications can use PF_PACKET to create a malformed
-packet with no IP header. This type of packet causes a problem such as
-uninit-value access.
+If is_ptp_ring == true in the loop of __aq_ring_xdp_clean function,
+then a timestamp is stored from a packet in a field of skb object,
+which is not allocated at the moment of the call (skb == NULL).
 
-This patch ensures that skb_pull() can pull the required size by checking
-the skb with pskb_network_may_pull() before skb_pull().
+Generalize aq_ptp_extract_ts and other affected functions so they don't
+work with struct sk_buff*, but with struct skb_shared_hwtstamps*.
 
-Fixes: c54419321455 ("GRE: Refactor GRE tunneling code.")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Suman Ghosh <sumang@marvell.com>
-Link: https://lore.kernel.org/r/20231202161441.221135-1-syoshida@redhat.com
+Found by Linux Verification Center (linuxtesting.org) with SVACE
+
+Fixes: 26efaef759a1 ("net: atlantic: Implement xdp data plane")
+Signed-off-by: Daniil Maximov <daniil31415it@gmail.com>
+Reviewed-by: Igor Russkikh <irusskikh@marvell.com>
+Link: https://lore.kernel.org/r/20231204085810.1681386-1-daniil31415it@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ .../net/ethernet/aquantia/atlantic/aq_ptp.c    | 10 +++++-----
+ .../net/ethernet/aquantia/atlantic/aq_ptp.h    |  4 ++--
+ .../net/ethernet/aquantia/atlantic/aq_ring.c   | 18 ++++++++++++------
+ 3 files changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 22a26d1d29a09..5169c3c72cffe 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -635,15 +635,18 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 	}
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
+index 80b44043e6c53..28c9b6f1a54f1 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
+@@ -553,17 +553,17 @@ void aq_ptp_tx_hwtstamp(struct aq_nic_s *aq_nic, u64 timestamp)
  
- 	if (dev->header_ops) {
-+		int pull_len = tunnel->hlen + sizeof(struct iphdr);
+ /* aq_ptp_rx_hwtstamp - utility function which checks for RX time stamp
+  * @adapter: pointer to adapter struct
+- * @skb: particular skb to send timestamp with
++ * @shhwtstamps: particular skb_shared_hwtstamps to save timestamp
+  *
+  * if the timestamp is valid, we convert it into the timecounter ns
+  * value, then store that result into the hwtstamps structure which
+  * is passed up the network stack
+  */
+-static void aq_ptp_rx_hwtstamp(struct aq_ptp_s *aq_ptp, struct sk_buff *skb,
++static void aq_ptp_rx_hwtstamp(struct aq_ptp_s *aq_ptp, struct skb_shared_hwtstamps *shhwtstamps,
+ 			       u64 timestamp)
+ {
+ 	timestamp -= atomic_read(&aq_ptp->offset_ingress);
+-	aq_ptp_convert_to_hwtstamp(aq_ptp, skb_hwtstamps(skb), timestamp);
++	aq_ptp_convert_to_hwtstamp(aq_ptp, shhwtstamps, timestamp);
+ }
+ 
+ void aq_ptp_hwtstamp_config_get(struct aq_ptp_s *aq_ptp,
+@@ -639,7 +639,7 @@ bool aq_ptp_ring(struct aq_nic_s *aq_nic, struct aq_ring_s *ring)
+ 	       &aq_ptp->ptp_rx == ring || &aq_ptp->hwts_rx == ring;
+ }
+ 
+-u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct sk_buff *skb, u8 *p,
++u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct skb_shared_hwtstamps *shhwtstamps, u8 *p,
+ 		      unsigned int len)
+ {
+ 	struct aq_ptp_s *aq_ptp = aq_nic->aq_ptp;
+@@ -648,7 +648,7 @@ u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct sk_buff *skb, u8 *p,
+ 						   p, len, &timestamp);
+ 
+ 	if (ret > 0)
+-		aq_ptp_rx_hwtstamp(aq_ptp, skb, timestamp);
++		aq_ptp_rx_hwtstamp(aq_ptp, shhwtstamps, timestamp);
+ 
+ 	return ret;
+ }
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.h b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.h
+index 28ccb7ca2df9e..210b723f22072 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.h
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.h
+@@ -67,7 +67,7 @@ int aq_ptp_hwtstamp_config_set(struct aq_ptp_s *aq_ptp,
+ /* Return either ring is belong to PTP or not*/
+ bool aq_ptp_ring(struct aq_nic_s *aq_nic, struct aq_ring_s *ring);
+ 
+-u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct sk_buff *skb, u8 *p,
++u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic, struct skb_shared_hwtstamps *shhwtstamps, u8 *p,
+ 		      unsigned int len);
+ 
+ struct ptp_clock *aq_ptp_get_ptp_clock(struct aq_ptp_s *aq_ptp);
+@@ -143,7 +143,7 @@ static inline bool aq_ptp_ring(struct aq_nic_s *aq_nic, struct aq_ring_s *ring)
+ }
+ 
+ static inline u16 aq_ptp_extract_ts(struct aq_nic_s *aq_nic,
+-				    struct sk_buff *skb, u8 *p,
++				    struct skb_shared_hwtstamps *shhwtstamps, u8 *p,
+ 				    unsigned int len)
+ {
+ 	return 0;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+index 4de22eed099a8..694daeaf3e615 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -647,7 +647,7 @@ static int __aq_ring_rx_clean(struct aq_ring_s *self, struct napi_struct *napi,
+ 		}
+ 		if (is_ptp_ring)
+ 			buff->len -=
+-				aq_ptp_extract_ts(self->aq_nic, skb,
++				aq_ptp_extract_ts(self->aq_nic, skb_hwtstamps(skb),
+ 						  aq_buf_vaddr(&buff->rxdata),
+ 						  buff->len);
+ 
+@@ -742,6 +742,8 @@ static int __aq_ring_xdp_clean(struct aq_ring_s *rx_ring,
+ 		struct aq_ring_buff_s *buff = &rx_ring->buff_ring[rx_ring->sw_head];
+ 		bool is_ptp_ring = aq_ptp_ring(rx_ring->aq_nic, rx_ring);
+ 		struct aq_ring_buff_s *buff_ = NULL;
++		u16 ptp_hwtstamp_len = 0;
++		struct skb_shared_hwtstamps shhwtstamps;
+ 		struct sk_buff *skb = NULL;
+ 		unsigned int next_ = 0U;
+ 		struct xdp_buff xdp;
+@@ -810,11 +812,12 @@ static int __aq_ring_xdp_clean(struct aq_ring_s *rx_ring,
+ 		hard_start = page_address(buff->rxdata.page) +
+ 			     buff->rxdata.pg_off - rx_ring->page_offset;
+ 
+-		if (is_ptp_ring)
+-			buff->len -=
+-				aq_ptp_extract_ts(rx_ring->aq_nic, skb,
+-						  aq_buf_vaddr(&buff->rxdata),
+-						  buff->len);
++		if (is_ptp_ring) {
++			ptp_hwtstamp_len = aq_ptp_extract_ts(rx_ring->aq_nic, &shhwtstamps,
++							     aq_buf_vaddr(&buff->rxdata),
++							     buff->len);
++			buff->len -= ptp_hwtstamp_len;
++		}
+ 
+ 		xdp_init_buff(&xdp, frame_sz, &rx_ring->xdp_rxq);
+ 		xdp_prepare_buff(&xdp, hard_start, rx_ring->page_offset,
+@@ -834,6 +837,9 @@ static int __aq_ring_xdp_clean(struct aq_ring_s *rx_ring,
+ 		if (IS_ERR(skb) || !skb)
+ 			continue;
+ 
++		if (ptp_hwtstamp_len > 0)
++			*skb_hwtstamps(skb) = shhwtstamps;
 +
- 		if (skb_cow_head(skb, 0))
- 			goto free_skb;
- 
- 		tnl_params = (const struct iphdr *)skb->data;
- 
--		/* Pull skb since ip_tunnel_xmit() needs skb->data pointing
--		 * to gre header.
--		 */
--		skb_pull(skb, tunnel->hlen + sizeof(struct iphdr));
-+		if (!pskb_network_may_pull(skb, pull_len))
-+			goto free_skb;
-+
-+		/* ip_tunnel_xmit() needs skb->data pointing to gre header. */
-+		skb_pull(skb, pull_len);
- 		skb_reset_mac_header(skb);
- 
- 		if (skb->ip_summed == CHECKSUM_PARTIAL &&
+ 		if (buff->is_vlan)
+ 			__vlan_hwaccel_put_tag(skb, htons(ETH_P_8021Q),
+ 					       buff->vlan_rx_tag);
 -- 
 2.42.0
 
