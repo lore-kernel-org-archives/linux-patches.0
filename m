@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F9D5102A;
-	Mon, 11 Dec 2023 18:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FBC5102A;
+	Mon, 11 Dec 2023 18:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtKo+4Y8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B2EC433C8;
-	Mon, 11 Dec 2023 18:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpENR452"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8187AC433C7;
+	Mon, 11 Dec 2023 18:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320513;
-	bh=IuclpyUtpwEs5y3H1KadFzVzk38yMoSlEi16NdlUkLk=;
+	s=korg; t=1702320515;
+	bh=MWAO75snP/z8MzPch9qrTJ/cBixUixeSJUaOhbab7m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtKo+4Y8azkaPkoJYafce2cNeucDp8h6NJ4jP34bAsLIiW3X6q5EkGemMCey6qXVE
-	 6JodnEPvonSrWLlC531umIpLXrNI3o4JiE3bJrQitGuN2n/viWRm1YLcIkGC5FAIgA
-	 pdSY5/0/TstFoqfcSOiby4Oe+RIOJgySAM8H8DfM=
+	b=IpENR452n8VgkY6Bj2Ccdm1ukZGKfX8iu/Alw000RpsQrmuxikMPqGFD7zp0VYl1k
+	 OwfRS2y7bS7A5UOfHiZVyZ8lLyx/gu7mrmRXo4iUNfWQvtKPkyH58ijFdQoGZx/cSt
+	 9QhPiDp6im3inIC6iGNU3RV7frUamGkLFr+Xxyhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/194] ARM: dts: imx6ul-pico: Describe the Ethernet PHY clock
-Date: Mon, 11 Dec 2023 19:21:19 +0100
-Message-ID: <20231211182040.435302220@linuxfoundation.org>
+Subject: [PATCH 6.1 090/194] tracing: Fix a warning when allocating buffered events fails
+Date: Mon, 11 Dec 2023 19:21:20 +0100
+Message-ID: <20231211182040.471364742@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,41 +42,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit d951f8f5f23a9417b7952f22b33784c73caa1ebb ]
+[ Upstream commit 34209fe83ef8404353f91ab4ea4035dbc9922d04 ]
 
-Since commit c7e73b5051d6 ("ARM: imx: mach-imx6ul: remove 14x14 EVK
-specific PHY fixup")thet Ethernet PHY is no longer configured via code
-in board file.
+Function trace_buffered_event_disable() produces an unexpected warning
+when the previous call to trace_buffered_event_enable() fails to
+allocate pages for buffered events.
 
-This caused Ethernet to stop working.
+The situation can occur as follows:
 
-Fix this problem by describing the clocks and clock-names to the
-Ethernet PHY node so that the KSZ8081 chip can be clocked correctly.
+* The counter trace_buffered_event_ref is at 0.
 
-Fixes: c7e73b5051d6 ("ARM: imx: mach-imx6ul: remove 14x14 EVK specific PHY fixup")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+* The soft mode gets enabled for some event and
+  trace_buffered_event_enable() is called. The function increments
+  trace_buffered_event_ref to 1 and starts allocating event pages.
+
+* The allocation fails for some page and trace_buffered_event_disable()
+  is called for cleanup.
+
+* Function trace_buffered_event_disable() decrements
+  trace_buffered_event_ref back to 0, recognizes that it was the last
+  use of buffered events and frees all allocated pages.
+
+* The control goes back to trace_buffered_event_enable() which returns.
+  The caller of trace_buffered_event_enable() has no information that
+  the function actually failed.
+
+* Some time later, the soft mode is disabled for the same event.
+  Function trace_buffered_event_disable() is called. It warns on
+  "WARN_ON_ONCE(!trace_buffered_event_ref)" and returns.
+
+Buffered events are just an optimization and can handle failures. Make
+trace_buffered_event_enable() exit on the first failure and left any
+cleanup later to when trace_buffered_event_disable() is called.
+
+Link: https://lore.kernel.org/all/20231127151248.7232-2-petr.pavlu@suse.com/
+Link: https://lkml.kernel.org/r/20231205161736.19663-3-petr.pavlu@suse.com
+
+Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6ul-pico.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6ul-pico.dtsi b/arch/arm/boot/dts/imx6ul-pico.dtsi
-index 357ffb2f5ad61..dd6790852b0d6 100644
---- a/arch/arm/boot/dts/imx6ul-pico.dtsi
-+++ b/arch/arm/boot/dts/imx6ul-pico.dtsi
-@@ -121,6 +121,8 @@
- 			max-speed = <100>;
- 			interrupt-parent = <&gpio5>;
- 			interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
-+			clocks = <&clks IMX6UL_CLK_ENET_REF>;
-+			clock-names = "rmii-ref";
- 		};
- 	};
- };
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index ddcfc78e93e00..f65d2649fd9bc 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -2707,8 +2707,11 @@ void trace_buffered_event_enable(void)
+ 	for_each_tracing_cpu(cpu) {
+ 		page = alloc_pages_node(cpu_to_node(cpu),
+ 					GFP_KERNEL | __GFP_NORETRY, 0);
+-		if (!page)
+-			goto failed;
++		/* This is just an optimization and can handle failures */
++		if (!page) {
++			pr_err("Failed to allocate event buffer\n");
++			break;
++		}
+ 
+ 		event = page_address(page);
+ 		memset(event, 0, sizeof(*event));
+@@ -2722,10 +2725,6 @@ void trace_buffered_event_enable(void)
+ 			WARN_ON_ONCE(1);
+ 		preempt_enable();
+ 	}
+-
+-	return;
+- failed:
+-	trace_buffered_event_disable();
+ }
+ 
+ static void enable_trace_buffered_event(void *data)
 -- 
 2.42.0
 
