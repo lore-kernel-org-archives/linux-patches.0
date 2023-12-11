@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35471321B8;
-	Mon, 11 Dec 2023 18:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8657321B8;
+	Mon, 11 Dec 2023 18:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nz6VbPPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE414C433C8;
-	Mon, 11 Dec 2023 18:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RT4MVcwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8C3C433C7;
+	Mon, 11 Dec 2023 18:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320894;
-	bh=hufsaDOvbstc51PLLngKgMVK/SakMkT6+oyo4kPi38w=;
+	s=korg; t=1702320896;
+	bh=oyJLw5zaHieYPoKbPVBfgK4joVF2pmB8YtIcu9o/k8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nz6VbPPbtcCqUpkC7pTlSIAA7gcbogC+GUGsqTrbSLLI1hvWwX0Y9ZK2hOAD++Iv3
-	 aCEB5iFml3PrbWg4Uma6UwpUiufbVYS3O5l1Pg3WTZKS3I8G98+D9qPWHGsm01m3K7
-	 wALknF/GzE+gZfYHuMfSS0JyZFh84LIA+9hpo2BE=
+	b=RT4MVcwV1vaMbCkil7lwH4Yer5vdERB6oyddFF/oQ8PmN2egacFx0+aJkC5bf909L
+	 3eIOkkcNXBo2LKtUj978z8bKatjx7CuaSRtM1oLwwOgh+uwLXxTIFpVzyvx8GsG9wk
+	 rRyOwMlfdrGmKa9Gks87+kc9jrrLf4AU11R5jdns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Pakhunov <alexey.pakhunov@spacex.com>,
-	Vincent Wong <vincent.wong2@spacex.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/141] tg3: Increment tx_dropped in tg3_tso_bug()
-Date: Mon, 11 Dec 2023 19:21:05 +0100
-Message-ID: <20231211182026.769785042@linuxfoundation.org>
+Subject: [PATCH 5.15 007/141] kconfig: fix memory leak from range properties
+Date: Mon, 11 Dec 2023 19:21:06 +0100
+Message-ID: <20231211182026.810937021@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -44,39 +41,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Pakhunov <alexey.pakhunov@spacex.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 17dd5efe5f36a96bd78012594fabe21efb01186b ]
+[ Upstream commit ae1eff0349f2e908fc083630e8441ea6dc434dc0 ]
 
-tg3_tso_bug() drops a packet if it cannot be segmented for any reason.
-The number of discarded frames should be incremented accordingly.
+Currently, sym_validate_range() duplicates the range string using
+xstrdup(), which is overwritten by a subsequent sym_calc_value() call.
+It results in a memory leak.
 
-Signed-off-by: Alex Pakhunov <alexey.pakhunov@spacex.com>
-Signed-off-by: Vincent Wong <vincent.wong2@spacex.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20231113182350.37472-2-alexey.pakhunov@spacex.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Instead, only the pointer should be copied.
+
+Below is a test case, with a summary from Valgrind.
+
+[Test Kconfig]
+
+  config FOO
+          int "foo"
+          range 10 20
+
+[Test .config]
+
+  CONFIG_FOO=0
+
+[Before]
+
+  LEAK SUMMARY:
+     definitely lost: 3 bytes in 1 blocks
+     indirectly lost: 0 bytes in 0 blocks
+       possibly lost: 0 bytes in 0 blocks
+     still reachable: 17,465 bytes in 21 blocks
+          suppressed: 0 bytes in 0 blocks
+
+[After]
+
+  LEAK SUMMARY:
+     definitely lost: 0 bytes in 0 blocks
+     indirectly lost: 0 bytes in 0 blocks
+       possibly lost: 0 bytes in 0 blocks
+     still reachable: 17,462 bytes in 20 blocks
+          suppressed: 0 bytes in 0 blocks
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ scripts/kconfig/symbol.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 946b4decac0ce..fc487a6f050a2 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -7880,8 +7880,10 @@ static int tg3_tso_bug(struct tg3 *tp, struct tg3_napi *tnapi,
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index 5844d636d38f4..7f8013dcef002 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -122,9 +122,9 @@ static long long sym_get_range_val(struct symbol *sym, int base)
+ static void sym_validate_range(struct symbol *sym)
+ {
+ 	struct property *prop;
++	struct symbol *range_sym;
+ 	int base;
+ 	long long val, val2;
+-	char str[64];
  
- 	segs = skb_gso_segment(skb, tp->dev->features &
- 				    ~(NETIF_F_TSO | NETIF_F_TSO6));
--	if (IS_ERR(segs) || !segs)
-+	if (IS_ERR(segs) || !segs) {
-+		tnapi->tx_dropped++;
- 		goto tg3_tso_bug_end;
-+	}
+ 	switch (sym->type) {
+ 	case S_INT:
+@@ -140,17 +140,15 @@ static void sym_validate_range(struct symbol *sym)
+ 	if (!prop)
+ 		return;
+ 	val = strtoll(sym->curr.val, NULL, base);
+-	val2 = sym_get_range_val(prop->expr->left.sym, base);
++	range_sym = prop->expr->left.sym;
++	val2 = sym_get_range_val(range_sym, base);
+ 	if (val >= val2) {
+-		val2 = sym_get_range_val(prop->expr->right.sym, base);
++		range_sym = prop->expr->right.sym;
++		val2 = sym_get_range_val(range_sym, base);
+ 		if (val <= val2)
+ 			return;
+ 	}
+-	if (sym->type == S_INT)
+-		sprintf(str, "%lld", val2);
+-	else
+-		sprintf(str, "0x%llx", val2);
+-	sym->curr.val = xstrdup(str);
++	sym->curr.val = range_sym->curr.val;
+ }
  
- 	skb_list_walk_safe(segs, seg, next) {
- 		skb_mark_not_on_list(seg);
+ static void sym_set_changed(struct symbol *sym)
 -- 
 2.42.0
 
