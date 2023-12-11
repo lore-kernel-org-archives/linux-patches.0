@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF08321B8;
-	Mon, 11 Dec 2023 18:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4944321B8;
+	Mon, 11 Dec 2023 18:55:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqhl2Hhc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85521C433C7;
-	Mon, 11 Dec 2023 18:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMzxFxTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC02C433CB;
+	Mon, 11 Dec 2023 18:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320923;
-	bh=dQOs61cV23sIcwJAN5dqqG6Xt/0XNTMBXjXm1hJGpNQ=;
+	s=korg; t=1702320926;
+	bh=lJowAujO62qOOQWL3FoZBj0AgbcJVwIVtS4H1i7+RAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqhl2Hhc/l01t/rhch+Bfd18tOauzLEkAhR/Zg7/Cn+ih+PvHStFQ5yxK8GZr3RJH
-	 GXqp0OzXJvUnFH00VcgKY/Jr9xTdcnBugRF52IiK1Gr+gLxMjpKKzStGgS6IHDJ5z7
-	 St0Bd3AqAQHvG4VelhZiTBoHALp2sFjl0M1tKH+M=
+	b=xMzxFxTrzr8M02IjXYF9ea7jEHH7jE5umdHQGl195ejB7PddSVyNK03K4cnEfLdwt
+	 K3ObfKb1vG2x4O4hrTHjjWkXImQs1ulFk2Y+T+46bsBsEiLZ139yFOrJVH8O5N8M5k
+	 vj3iMAPooNcgZHLAlBiq9+3kALnTWeA6ZcibW8CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"The UKs National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Jerome Forissier <jerome.forissier@linaro.org>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/141] drop_monitor: Require CAP_SYS_ADMIN when joining "events" group
-Date: Mon, 11 Dec 2023 19:21:45 +0100
-Message-ID: <20231211182028.513712501@linuxfoundation.org>
+Subject: [PATCH 5.15 047/141] tee: optee: Fix supplicant based device enumeration
+Date: Mon, 11 Dec 2023 19:21:46 +0100
+Message-ID: <20231211182028.566905190@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -45,161 +45,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-[ Upstream commit e03781879a0d524ce3126678d50a80484a513c4b ]
+[ Upstream commit 7269cba53d906cf257c139d3b3a53ad272176bca ]
 
-The "NET_DM" generic netlink family notifies drop locations over the
-"events" multicast group. This is problematic since by default generic
-netlink allows non-root users to listen to these notifications.
+Currently supplicant dependent optee device enumeration only registers
+devices whenever tee-supplicant is invoked for the first time. But it
+forgets to remove devices when tee-supplicant daemon stops running and
+closes its context gracefully. This leads to following error for fTPM
+driver during reboot/shutdown:
 
-Fix by adding a new field to the generic netlink multicast group
-structure that when set prevents non-root users or root without the
-'CAP_SYS_ADMIN' capability (in the user namespace owning the network
-namespace) from joining the group. Set this field for the "events"
-group. Use 'CAP_SYS_ADMIN' rather than 'CAP_NET_ADMIN' because of the
-nature of the information that is shared over this group.
+[   73.466791] tpm tpm0: ftpm_tee_tpm_op_send: SUBMIT_COMMAND invoke error: 0xffff3024
 
-Note that the capability check in this case will always be performed
-against the initial user namespace since the family is not netns aware
-and only operates in the initial network namespace.
+Fix this by adding an attribute for supplicant dependent devices so that
+the user-space service can detect and detach supplicant devices before
+closing the supplicant:
 
-A new field is added to the structure rather than using the "flags"
-field because the existing field uses uAPI flags and it is inappropriate
-to add a new uAPI flag for an internal kernel check. In net-next we can
-rework the "flags" field to use internal flags and fold the new field
-into it. But for now, in order to reduce the amount of changes, add a
-new field.
+$ for dev in /sys/bus/tee/devices/*; do if [[ -f "$dev/need_supplicant" && -f "$dev/driver/unbind" ]]; \
+      then echo $(basename "$dev") > $dev/driver/unbind; fi done
 
-Since the information can only be consumed by root, mark the control
-plane operations that start and stop the tracing as root-only using the
-'GENL_ADMIN_PERM' flag.
-
-Tested using [1].
-
-Before:
-
- # capsh -- -c ./dm_repo
- # capsh --drop=cap_sys_admin -- -c ./dm_repo
-
-After:
-
- # capsh -- -c ./dm_repo
- # capsh --drop=cap_sys_admin -- -c ./dm_repo
- Failed to join "events" multicast group
-
-[1]
- $ cat dm.c
- #include <stdio.h>
- #include <netlink/genl/ctrl.h>
- #include <netlink/genl/genl.h>
- #include <netlink/socket.h>
-
- int main(int argc, char **argv)
- {
- 	struct nl_sock *sk;
- 	int grp, err;
-
- 	sk = nl_socket_alloc();
- 	if (!sk) {
- 		fprintf(stderr, "Failed to allocate socket\n");
- 		return -1;
- 	}
-
- 	err = genl_connect(sk);
- 	if (err) {
- 		fprintf(stderr, "Failed to connect socket\n");
- 		return err;
- 	}
-
- 	grp = genl_ctrl_resolve_grp(sk, "NET_DM", "events");
- 	if (grp < 0) {
- 		fprintf(stderr,
- 			"Failed to resolve \"events\" multicast group\n");
- 		return grp;
- 	}
-
- 	err = nl_socket_add_memberships(sk, grp, NFNLGRP_NONE);
- 	if (err) {
- 		fprintf(stderr, "Failed to join \"events\" multicast group\n");
- 		return err;
- 	}
-
- 	return 0;
- }
- $ gcc -I/usr/include/libnl3 -lnl-3 -lnl-genl-3 -o dm_repo dm.c
-
-Fixes: 9a8afc8d3962 ("Network Drop Monitor: Adding drop monitor implementation & Netlink protocol")
-Reported-by: "The UK's National Cyber Security Centre (NCSC)" <security@ncsc.gov.uk>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20231206213102.1824398-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Jan Kiszka <jan.kiszka@siemens.com>
+Closes: https://github.com/OP-TEE/optee_os/issues/6094
+Fixes: 5f178bb71e3a ("optee: enable support for multi-stage bus enumeration")
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Acked-by: Jerome Forissier <jerome.forissier@linaro.org>
+[jw: fixed up Date documentation]
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/genetlink.h | 2 ++
- net/core/drop_monitor.c | 4 +++-
- net/netlink/genetlink.c | 3 +++
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ .../ABI/testing/sysfs-bus-optee-devices         |  9 +++++++++
+ drivers/tee/optee/device.c                      | 17 +++++++++++++++--
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/genetlink.h b/include/net/genetlink.h
-index 56a50e1c51b97..8043594a7f84a 100644
---- a/include/net/genetlink.h
-+++ b/include/net/genetlink.h
-@@ -12,10 +12,12 @@
-  * struct genl_multicast_group - generic netlink multicast group
-  * @name: name of the multicast group, names are per-family
-  * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
-+ * @cap_sys_admin: whether %CAP_SYS_ADMIN is required for binding
-  */
- struct genl_multicast_group {
- 	char			name[GENL_NAMSIZ];
- 	u8			flags;
-+	u8			cap_sys_admin:1;
- };
- 
- struct genl_ops;
-diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index 22015ebc1dd56..937d74aeef547 100644
---- a/net/core/drop_monitor.c
-+++ b/net/core/drop_monitor.c
-@@ -184,7 +184,7 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
+diff --git a/Documentation/ABI/testing/sysfs-bus-optee-devices b/Documentation/ABI/testing/sysfs-bus-optee-devices
+index 0f58701367b66..af31e5a22d89f 100644
+--- a/Documentation/ABI/testing/sysfs-bus-optee-devices
++++ b/Documentation/ABI/testing/sysfs-bus-optee-devices
+@@ -6,3 +6,12 @@ Description:
+ 		OP-TEE bus provides reference to registered drivers under this directory. The <uuid>
+ 		matches Trusted Application (TA) driver and corresponding TA in secure OS. Drivers
+ 		are free to create needed API under optee-ta-<uuid> directory.
++
++What:		/sys/bus/tee/devices/optee-ta-<uuid>/need_supplicant
++Date:		November 2023
++KernelVersion:	6.7
++Contact:	op-tee@lists.trustedfirmware.org
++Description:
++		Allows to distinguish whether an OP-TEE based TA/device requires user-space
++		tee-supplicant to function properly or not. This attribute will be present for
++		devices which depend on tee-supplicant to be running.
+diff --git a/drivers/tee/optee/device.c b/drivers/tee/optee/device.c
+index a74d82e230e36..8957065ea7307 100644
+--- a/drivers/tee/optee/device.c
++++ b/drivers/tee/optee/device.c
+@@ -60,7 +60,16 @@ static void optee_release_device(struct device *dev)
+ 	kfree(optee_device);
  }
  
- static const struct genl_multicast_group dropmon_mcgrps[] = {
--	{ .name = "events", },
-+	{ .name = "events", .cap_sys_admin = 1 },
- };
+-static int optee_register_device(const uuid_t *device_uuid)
++static ssize_t need_supplicant_show(struct device *dev,
++				    struct device_attribute *attr,
++				    char *buf)
++{
++	return 0;
++}
++
++static DEVICE_ATTR_RO(need_supplicant);
++
++static int optee_register_device(const uuid_t *device_uuid, u32 func)
+ {
+ 	struct tee_client_device *optee_device = NULL;
+ 	int rc;
+@@ -83,6 +92,10 @@ static int optee_register_device(const uuid_t *device_uuid)
+ 		put_device(&optee_device->dev);
+ 	}
  
- static void send_dm_alert(struct work_struct *work)
-@@ -1618,11 +1618,13 @@ static const struct genl_small_ops dropmon_ops[] = {
- 		.cmd = NET_DM_CMD_START,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = net_dm_cmd_trace,
-+		.flags = GENL_ADMIN_PERM,
- 	},
- 	{
- 		.cmd = NET_DM_CMD_STOP,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = net_dm_cmd_trace,
-+		.flags = GENL_ADMIN_PERM,
- 	},
- 	{
- 		.cmd = NET_DM_CMD_CONFIG_GET,
-diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
-index 57010927e20a8..69b3a6b82f680 100644
---- a/net/netlink/genetlink.c
-+++ b/net/netlink/genetlink.c
-@@ -1379,6 +1379,9 @@ static int genl_bind(struct net *net, int group)
- 		if ((grp->flags & GENL_UNS_ADMIN_PERM) &&
- 		    !ns_capable(net->user_ns, CAP_NET_ADMIN))
- 			ret = -EPERM;
-+		if (grp->cap_sys_admin &&
-+		    !ns_capable(net->user_ns, CAP_SYS_ADMIN))
-+			ret = -EPERM;
++	if (func == PTA_CMD_GET_DEVICES_SUPP)
++		device_create_file(&optee_device->dev,
++				   &dev_attr_need_supplicant);
++
+ 	return rc;
+ }
  
- 		break;
+@@ -143,7 +156,7 @@ static int __optee_enumerate_devices(u32 func)
+ 	num_devices = shm_size / sizeof(uuid_t);
+ 
+ 	for (idx = 0; idx < num_devices; idx++) {
+-		rc = optee_register_device(&device_uuid[idx]);
++		rc = optee_register_device(&device_uuid[idx], func);
+ 		if (rc)
+ 			goto out_shm;
  	}
 -- 
 2.42.0
