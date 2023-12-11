@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B239537E3;
-	Mon, 11 Dec 2023 18:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E3820DDE;
+	Mon, 11 Dec 2023 18:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfwZc6TP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAD0C433C8;
-	Mon, 11 Dec 2023 18:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHXQ4eJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA73C433CC;
+	Mon, 11 Dec 2023 18:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319764;
-	bh=254I5tzdEY3fkwQTigYRpt3hBzirTI0xoStIELeWHts=;
+	s=korg; t=1702319767;
+	bh=7yyyWODgq1ERBqUuVDi8Dej8grb+5Vv1mzXDE26sRQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KfwZc6TPy8Rog0azNS9FUzD4Bnsr79wh52V16rzlOJ5PqCOClnEDSXIFbk5vPMSir
-	 QBWTy+jakJYJT2U5C7r81mTnc+XHJASTE6xFzOXSNpRQDAsbj3m2NYC+MBqF9tw9QC
-	 95EVzetwjxqxT+oXBihRYyB9PmkZWJjFsZAujXZg=
+	b=iHXQ4eJgSyNWFaCvpl+9D/ropAwR9bm2WkGuR+VqXch4vGOQxqb6HjJuVlJrYl/2o
+	 fOI0ULs+YumhS3umsCUNvsCGG7ilv97goTca8eaqTXkigs4VChEYkxGcZfPEKuWOgC
+	 eRspBpstLk9cH34i3hWkjnBNpc684hAUqD7tcAe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.6 225/244] x86/CPU/AMD: Check vendor in the AMD microcode callback
-Date: Mon, 11 Dec 2023 19:21:58 +0100
-Message-ID: <20231211182056.101338336@linuxfoundation.org>
+	Naveen N Rao <naveen@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.6 226/244] powerpc/ftrace: Fix stack teardown in ftrace_no_trace
+Date: Mon, 11 Dec 2023 19:21:59 +0100
+Message-ID: <20231211182056.147858026@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,52 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Naveen N Rao <naveen@kernel.org>
 
-commit 9b8493dc43044376716d789d07699f17d538a7c4 upstream.
+commit 4b3338aaa74d7d4ec5b6734dc298f0db94ec83d2 upstream.
 
-Commit in Fixes added an AMD-specific microcode callback. However, it
-didn't check the CPU vendor the kernel runs on explicitly.
+Commit 41a506ef71eb ("powerpc/ftrace: Create a dummy stackframe to fix
+stack unwind") added use of a new stack frame on ftrace entry to fix
+stack unwind. However, the commit missed updating the offset used while
+tearing down the ftrace stack when ftrace is disabled. Fix the same.
 
-The only reason the Zenbleed check in it didn't run on other x86 vendors
-hardware was pure coincidental luck:
+In addition, the commit missed saving the correct stack pointer in
+pt_regs. Update the same.
 
-  if (!cpu_has_amd_erratum(c, amd_zenbleed))
-	  return;
-
-gives true on other vendors because they don't have those families and
-models.
-
-However, with the removal of the cpu_has_amd_erratum() in
-
-  05f5f73936fa ("x86/CPU/AMD: Drop now unused CPU erratum checking function")
-
-that coincidental condition is gone, leading to the zenbleed check
-getting executed on other vendors too.
-
-Add the explicit vendor check for the whole callback as it should've
-been done in the first place.
-
-Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
-Cc: <stable@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20231201184226.16749-1-bp@alien8.de
+Fixes: 41a506ef71eb ("powerpc/ftrace: Create a dummy stackframe to fix stack unwind")
+Cc: stable@vger.kernel.org # v6.5+
+Signed-off-by: Naveen N Rao <naveen@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231130065947.2188860-1-naveen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/powerpc/kernel/trace/ftrace_entry.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1315,6 +1315,9 @@ static void zenbleed_check_cpu(void *unu
+--- a/arch/powerpc/kernel/trace/ftrace_entry.S
++++ b/arch/powerpc/kernel/trace/ftrace_entry.S
+@@ -62,7 +62,7 @@
+ 	.endif
  
- void amd_check_microcode(void)
- {
-+	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD)
-+		return;
-+
- 	on_each_cpu(zenbleed_check_cpu, NULL, 1);
- }
+ 	/* Save previous stack pointer (r1) */
+-	addi	r8, r1, SWITCH_FRAME_SIZE
++	addi	r8, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
+ 	PPC_STL	r8, GPR1(r1)
  
+ 	.if \allregs == 1
+@@ -182,7 +182,7 @@ ftrace_no_trace:
+ 	mflr	r3
+ 	mtctr	r3
+ 	REST_GPR(3, r1)
+-	addi	r1, r1, SWITCH_FRAME_SIZE
++	addi	r1, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
+ 	mtlr	r0
+ 	bctr
+ #endif
 
 
