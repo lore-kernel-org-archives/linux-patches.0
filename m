@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AF4321B8;
-	Mon, 11 Dec 2023 18:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48362321B8;
+	Mon, 11 Dec 2023 18:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Izz8to+4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098E0C433C9;
-	Mon, 11 Dec 2023 18:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eS5n+W+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE851C433C7;
+	Mon, 11 Dec 2023 18:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321146;
-	bh=vupaAYzXebBcU0NLJ9sY90OXGtjbDsTr1OnH0uPHr+Q=;
+	s=korg; t=1702321149;
+	bh=HEjWKPHCterRtoTm5BmWnGUay5ITqajUBvwp3E7/nHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Izz8to+4gFd9p7ZWeeLaerUIJPPB0Uvf5DToeNl02i+wphWC1cJrnyq5p0NEL0Aif
-	 T+od7s16QIGMrkIJhR/nr5cuni6fwH1il5qgdCBPhIW5RHwuAksRzu0+KEjl6Atq+q
-	 3E6QG+wl+fSpcjy29XS1qzf6ipUt44NfthV4UtNk=
+	b=eS5n+W+ZF3NsjVrxK8ml0dr+4DdKqqxyvqXb8dSC3HNJm8LQc/CLvSxQrzu4e0ndm
+	 I65FT+XevfgcXHQM+9/ww00yZ6wTZ1pyVY5jc0/N0X0StRPZDbF9dv/IHamDgwhIkg
+	 6bV6uNWQ0M7AJ+TA1mSlZN0CE0GkWSnYSTcq85L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/141] coresight: etm4x: Remove bogous __exit annotation for some functions
-Date: Mon, 11 Dec 2023 19:22:38 +0100
-Message-ID: <20231211182030.853467640@linuxfoundation.org>
+	RD Babiera <rdbabiera@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.15 126/141] usb: typec: class: fix typec_altmode_put_partner to put plugs
+Date: Mon, 11 Dec 2023 19:23:05 +0100
+Message-ID: <20231211182032.029422052@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -37,76 +35,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: RD Babiera <rdbabiera@google.com>
 
-[ Upstream commit 348ddab81f7b0983d9fb158df910254f08d3f887 ]
+commit b17b7fe6dd5c6ff74b38b0758ca799cdbb79e26e upstream.
 
-etm4_platform_driver (which lives in ".data" contains a reference to
-etm4_remove_platform_dev(). So the latter must not be marked with __exit
-which results in the function being discarded for a build with
-CONFIG_CORESIGHT_SOURCE_ETM4X=y which in turn makes the remove pointer
-contain invalid data.
+When typec_altmode_put_partner is called by a plug altmode upon release,
+the port altmode the plug belongs to will not remove its reference to the
+plug. The check to see if the altmode being released evaluates against the
+released altmode's partner instead of the calling altmode itself, so change
+adev in typec_altmode_put_partner to properly refer to the altmode being
+released.
 
-etm4x_amba_driver referencing etm4_remove_amba() has the same issue.
+typec_altmode_set_partner is not run for port altmodes, so also add a check
+in typec_altmode_release to prevent typec_altmode_put_partner() calls on
+port altmode release.
 
-Drop the __exit annotations for the two affected functions and a third
-one that is called by the other two.
-
-For reasons I don't understand this isn't catched by building with
-CONFIG_DEBUG_SECTION_MISMATCH=y.
-
-Fixes: c23bc382ef0e ("coresight: etm4x: Refactor probing routine")
-Fixes: 5214b563588e ("coresight: etm4x: Add support for sysreg only devices")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: James Clark <james.clark@arm.com>
-Link: https://lore.kernel.org/all/20230929081540.yija47lsj35xtj4v@pengutronix.de/
-Link: https://lore.kernel.org/r/20230929081637.2377335-1-u.kleine-koenig@pengutronix.de
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
+Cc: stable@vger.kernel.org
+Signed-off-by: RD Babiera <rdbabiera@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20231129192349.1773623-2-rdbabiera@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/typec/class.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index e2cccd6ea1f1d..26d0d4485ae99 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -2041,7 +2041,7 @@ static void clear_etmdrvdata(void *info)
- 	etmdrvdata[cpu] = NULL;
- }
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -265,7 +265,7 @@ static void typec_altmode_put_partner(st
+ 	if (!partner)
+ 		return;
  
--static void __exit etm4_remove_dev(struct etmv4_drvdata *drvdata)
-+static void etm4_remove_dev(struct etmv4_drvdata *drvdata)
+-	adev = &partner->adev;
++	adev = &altmode->adev;
+ 
+ 	if (is_typec_plug(adev->dev.parent)) {
+ 		struct typec_plug *plug = to_typec_plug(adev->dev.parent);
+@@ -495,7 +495,8 @@ static void typec_altmode_release(struct
  {
- 	etm_perf_symlink(drvdata->csdev, false);
- 	/*
-@@ -2064,7 +2064,7 @@ static void __exit etm4_remove_dev(struct etmv4_drvdata *drvdata)
- 	coresight_unregister(drvdata->csdev);
- }
+ 	struct altmode *alt = to_altmode(to_typec_altmode(dev));
  
--static void __exit etm4_remove_amba(struct amba_device *adev)
-+static void etm4_remove_amba(struct amba_device *adev)
- {
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(&adev->dev);
+-	typec_altmode_put_partner(alt);
++	if (!is_typec_port(dev->parent))
++		typec_altmode_put_partner(alt);
  
-@@ -2072,7 +2072,7 @@ static void __exit etm4_remove_amba(struct amba_device *adev)
- 		etm4_remove_dev(drvdata);
- }
- 
--static int __exit etm4_remove_platform_dev(struct platform_device *pdev)
-+static int etm4_remove_platform_dev(struct platform_device *pdev)
- {
- 	struct etmv4_drvdata *drvdata = dev_get_drvdata(&pdev->dev);
- 
--- 
-2.42.0
-
+ 	altmode_id_remove(alt->adev.dev.parent, alt->id);
+ 	kfree(alt);
 
 
