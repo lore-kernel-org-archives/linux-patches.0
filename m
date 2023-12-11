@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8BD321B8;
-	Mon, 11 Dec 2023 18:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC776E548;
+	Mon, 11 Dec 2023 18:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAq/Esfi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79385C433C8;
-	Mon, 11 Dec 2023 18:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2ZJ4Xqr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44898C433C8;
+	Mon, 11 Dec 2023 18:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321176;
-	bh=30XXDdWmj0e19sZG+Zen0i8d9uyhtB2aNJrO599Ta7Y=;
+	s=korg; t=1702321178;
+	bh=cAXtNz5qdw/mtkzv1Isgo8dQqYbtPZ7E5fsuBLQ7tfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAq/EsfifH4qskHexjR5X/LPhT3n6T0zVgW96xoHIbuSB9V0P/L6Ihqxowdh9nsVA
-	 lbrR1FveGgliRFsKUUm/Z/asMXr/THd9ivRrV6f6GmBUeeIXN54wJTSOimn2+i5dLI
-	 SHVEK/v4bVM8Qicx34OfqNUwTn7OvjYkMmdHs+EU=
+	b=D2ZJ4Xqri5yNYFkZFYuwcXkiYKWTCZUgJ7NhmDj7o13ihkeoonrIRpTA4QEJybRnX
+	 2p3MWG4caI1zvceRQixN9N2+72msO3bI9JrccJtr6rARTWNxM9DaA2bfNoW8oypp9y
+	 C+ttI9pyDR5SO6s0wBgCgHNXMgnERk9Yc4caVkIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <david@fromorbit.com>,
-	Xiaoli Feng <fengxiaoli0714@gmail.com>,
-	Shyam Prasad N <nspmangalore@gmail.com>,
-	Rohith Surabattula <rohiths.msft@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Darrick Wong <darrick.wong@oracle.com>,
-	fstests@vger.kernel.org,
-	linux-cifs@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	David Howells <dhowells@redhat.com>,
+	Robert Morris <rtm@csail.mit.edu>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/141] cifs: Fix non-availability of dedup breaking generic/304
-Date: Mon, 11 Dec 2023 19:23:17 +0100
-Message-ID: <20231211182032.604454432@linuxfoundation.org>
+Subject: [PATCH 5.15 139/141] smb: client: fix potential NULL deref in parse_dfs_referrals()
+Date: Mon, 11 Dec 2023 19:23:18 +0100
+Message-ID: <20231211182032.656086152@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -51,54 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 691a41d8da4b34fe72f09393505f55f28a8f34ec ]
+[ Upstream commit 92414333eb375ed64f4ae92d34d579e826936480 ]
 
-Deduplication isn't supported on cifs, but cifs doesn't reject it, instead
-treating it as extent duplication/cloning.  This can cause generic/304 to go
-silly and run for hours on end.
+If server returned no data for FSCTL_DFS_GET_REFERRALS, @dfs_rsp will
+remain NULL and then parse_dfs_referrals() will dereference it.
 
-Fix cifs to indicate EOPNOTSUPP if REMAP_FILE_DEDUP is set in
-->remap_file_range().
+Fix this by returning -EIO when no output data is returned.
 
-Note that it's unclear whether or not commit b073a08016a1 is meant to cause
-cifs to return an error if REMAP_FILE_DEDUP.
+Besides, we can't fix it in SMB2_ioctl() as some FSCTLs are allowed to
+return no data as per MS-SMB2 2.2.32.
 
-Fixes: b073a08016a1 ("cifs: fix that return -EINVAL when do dedupe operation")
+Fixes: 9d49640a21bf ("CIFS: implement get_dfs_refer for SMB2+")
 Cc: stable@vger.kernel.org
-Suggested-by: Dave Chinner <david@fromorbit.com>
-cc: Xiaoli Feng <fengxiaoli0714@gmail.com>
-cc: Shyam Prasad N <nspmangalore@gmail.com>
-cc: Rohith Surabattula <rohiths.msft@gmail.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: Darrick Wong <darrick.wong@oracle.com>
-cc: fstests@vger.kernel.org
-cc: linux-cifs@vger.kernel.org
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/3876191.1701555260@warthog.procyon.org.uk/
-Signed-off-by: David Howells <dhowells@redhat.com>
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/cifs/smb2ops.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/cifs/cifsfs.c b/fs/cifs/cifsfs.c
-index af688e39f31ac..9bbead15a0287 100644
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -1144,7 +1144,9 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	unsigned int xid;
- 	int rc;
+diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
+index d8ce079ba9091..7c2ecbb17f542 100644
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -2926,6 +2926,8 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
+ 		usleep_range(512, 2048);
+ 	} while (++retry_count < 5);
  
--	if (remap_flags & ~(REMAP_FILE_DEDUP | REMAP_FILE_ADVISORY))
-+	if (remap_flags & REMAP_FILE_DEDUP)
-+		return -EOPNOTSUPP;
-+	if (remap_flags & ~REMAP_FILE_ADVISORY)
- 		return -EINVAL;
- 
- 	cifs_dbg(FYI, "clone range\n");
++	if (!rc && !dfs_rsp)
++		rc = -EIO;
+ 	if (rc) {
+ 		if (!is_retryable_error(rc) && rc != -ENOENT && rc != -EOPNOTSUPP)
+ 			cifs_tcon_dbg(VFS, "%s: ioctl error: rc=%d\n", __func__, rc);
 -- 
 2.42.0
 
