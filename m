@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115241D696;
-	Mon, 11 Dec 2023 18:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70551D696;
+	Mon, 11 Dec 2023 18:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRSWXVEA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F3EC433C9;
-	Mon, 11 Dec 2023 18:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjcLFTwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC9BC433C8;
+	Mon, 11 Dec 2023 18:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320098;
-	bh=PlCACUQw9d3JP8VAh9cQ9qKUTLao52L9aYiUSdr/ZTs=;
+	s=korg; t=1702320101;
+	bh=cXpSMEvtKsa2Te9e8cqtH/rObwSHUKOjBVdUQ9gDvvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aRSWXVEAN2j8hXvGPHxgzcTg0MxGzFeaqncsEiBm3PpwA6evplv6B0m8wNmU7WahL
-	 1MzuOM5UvnQ1GommUNSnriGoHyhpzIkMHEYQ01EdMs15uwomolV5gs0SWgigXjAXQp
-	 F7Se4NuRoWJPgBChXq7DPY0EH7dI8dOI+QxzXwt4=
+	b=kjcLFTwbnQITleV074B25eK8GIKhSdZ4aYi+/iiyKPHv68HbVfgSMVS8gf9FigeHX
+	 2gYL56PG/KuZeOH5FGCxgZtGWNMyfMJVUB64Yo3Lr9Uo58mUzkliU0dHonqoMgouW1
+	 qWdJIRkLi3VWxYoIdo4fOoEG4kkgWKAOC+9RBBzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 94/97] smb: client: fix potential NULL deref in parse_dfs_referrals()
-Date: Mon, 11 Dec 2023 19:22:37 +0100
-Message-ID: <20231211182023.867440600@linuxfoundation.org>
+Subject: [PATCH 5.10 95/97] devcoredump : Serialize devcd_del work
+Date: Mon, 11 Dec 2023 19:22:38 +0100
+Message-ID: <20231211182023.905295581@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -43,41 +41,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
 
-[ Upstream commit 92414333eb375ed64f4ae92d34d579e826936480 ]
+[ Upstream commit 01daccf748323dfc61112f474cf2ba81015446b0 ]
 
-If server returned no data for FSCTL_DFS_GET_REFERRALS, @dfs_rsp will
-remain NULL and then parse_dfs_referrals() will dereference it.
+In following scenario(diagram), when one thread X running dev_coredumpm()
+adds devcd device to the framework which sends uevent notification to
+userspace and another thread Y reads this uevent and call to
+devcd_data_write() which eventually try to delete the queued timer that
+is not initialized/queued yet.
 
-Fix this by returning -EIO when no output data is returned.
+So, debug object reports some warning and in the meantime, timer is
+initialized and queued from X path. and from Y path, it gets reinitialized
+again and timer->entry.pprev=NULL and try_to_grab_pending() stucks.
 
-Besides, we can't fix it in SMB2_ioctl() as some FSCTLs are allowed to
-return no data as per MS-SMB2 2.2.32.
+To fix this, introduce mutex and a boolean flag to serialize the behaviour.
 
-Fixes: 9d49640a21bf ("CIFS: implement get_dfs_refer for SMB2+")
-Cc: stable@vger.kernel.org
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ 	cpu0(X)			                cpu1(Y)
+
+    dev_coredump() uevent sent to user space
+    device_add()  ======================> user space process Y reads the
+                                          uevents writes to devcd fd
+                                          which results into writes to
+
+                                         devcd_data_write()
+                                           mod_delayed_work()
+                                             try_to_grab_pending()
+                                               del_timer()
+                                                 debug_assert_init()
+   INIT_DELAYED_WORK()
+   schedule_delayed_work()
+                                                   debug_object_fixup()
+                                                     timer_fixup_assert_init()
+                                                       timer_setup()
+                                                         do_init_timer()
+                                                       /*
+                                                        Above call reinitializes
+                                                        the timer to
+                                                        timer->entry.pprev=NULL
+                                                        and this will be checked
+                                                        later in timer_pending() call.
+                                                       */
+                                                 timer_pending()
+                                                  !hlist_unhashed_lockless(&timer->entry)
+                                                    !h->pprev
+                                                /*
+                                                  del_timer() checks h->pprev and finds
+                                                  it to be NULL due to which
+                                                  try_to_grab_pending() stucks.
+                                                */
+
+Link: https://lore.kernel.org/lkml/2e1f81e2-428c-f11f-ce92-eb11048cb271@quicinc.com/
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Link: https://lore.kernel.org/r/1663073424-13663-1-git-send-email-quic_mojha@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: af54d778a038 ("devcoredump: Send uevent once devcd is ready")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/devcoredump.c | 83 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 81 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index 015b7b37edee5..e58525a958270 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -2765,6 +2765,8 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
- 				(char **)&dfs_rsp, &dfs_rsp_size);
- 	} while (rc == -EAGAIN);
+diff --git a/drivers/base/devcoredump.c b/drivers/base/devcoredump.c
+index 9243468e2c99f..ef23c1c33eb2c 100644
+--- a/drivers/base/devcoredump.c
++++ b/drivers/base/devcoredump.c
+@@ -29,6 +29,47 @@ struct devcd_entry {
+ 	struct device devcd_dev;
+ 	void *data;
+ 	size_t datalen;
++	/*
++	 * Here, mutex is required to serialize the calls to del_wk work between
++	 * user/kernel space which happens when devcd is added with device_add()
++	 * and that sends uevent to user space. User space reads the uevents,
++	 * and calls to devcd_data_write() which try to modify the work which is
++	 * not even initialized/queued from devcoredump.
++	 *
++	 *
++	 *
++	 *        cpu0(X)                                 cpu1(Y)
++	 *
++	 *        dev_coredump() uevent sent to user space
++	 *        device_add()  ======================> user space process Y reads the
++	 *                                              uevents writes to devcd fd
++	 *                                              which results into writes to
++	 *
++	 *                                             devcd_data_write()
++	 *                                               mod_delayed_work()
++	 *                                                 try_to_grab_pending()
++	 *                                                   del_timer()
++	 *                                                     debug_assert_init()
++	 *       INIT_DELAYED_WORK()
++	 *       schedule_delayed_work()
++	 *
++	 *
++	 * Also, mutex alone would not be enough to avoid scheduling of
++	 * del_wk work after it get flush from a call to devcd_free()
++	 * mentioned as below.
++	 *
++	 *	disabled_store()
++	 *        devcd_free()
++	 *          mutex_lock()             devcd_data_write()
++	 *          flush_delayed_work()
++	 *          mutex_unlock()
++	 *                                   mutex_lock()
++	 *                                   mod_delayed_work()
++	 *                                   mutex_unlock()
++	 * So, delete_work flag is required.
++	 */
++	struct mutex mutex;
++	bool delete_work;
+ 	struct module *owner;
+ 	ssize_t (*read)(char *buffer, loff_t offset, size_t count,
+ 			void *data, size_t datalen);
+@@ -88,7 +129,12 @@ static ssize_t devcd_data_write(struct file *filp, struct kobject *kobj,
+ 	struct device *dev = kobj_to_dev(kobj);
+ 	struct devcd_entry *devcd = dev_to_devcd(dev);
  
-+	if (!rc && !dfs_rsp)
-+		rc = -EIO;
- 	if (rc) {
- 		if ((rc != -ENOENT) && (rc != -EOPNOTSUPP))
- 			cifs_tcon_dbg(VFS, "ioctl error in %s rc=%d\n", __func__, rc);
+-	mod_delayed_work(system_wq, &devcd->del_wk, 0);
++	mutex_lock(&devcd->mutex);
++	if (!devcd->delete_work) {
++		devcd->delete_work = true;
++		mod_delayed_work(system_wq, &devcd->del_wk, 0);
++	}
++	mutex_unlock(&devcd->mutex);
+ 
+ 	return count;
+ }
+@@ -116,7 +162,12 @@ static int devcd_free(struct device *dev, void *data)
+ {
+ 	struct devcd_entry *devcd = dev_to_devcd(dev);
+ 
++	mutex_lock(&devcd->mutex);
++	if (!devcd->delete_work)
++		devcd->delete_work = true;
++
+ 	flush_delayed_work(&devcd->del_wk);
++	mutex_unlock(&devcd->mutex);
+ 	return 0;
+ }
+ 
+@@ -126,6 +177,30 @@ static ssize_t disabled_show(struct class *class, struct class_attribute *attr,
+ 	return sysfs_emit(buf, "%d\n", devcd_disabled);
+ }
+ 
++/*
++ *
++ *	disabled_store()                                	worker()
++ *	 class_for_each_device(&devcd_class,
++ *		NULL, NULL, devcd_free)
++ *         ...
++ *         ...
++ *	   while ((dev = class_dev_iter_next(&iter))
++ *                                                             devcd_del()
++ *                                                               device_del()
++ *                                                                 put_device() <- last reference
++ *             error = fn(dev, data)                           devcd_dev_release()
++ *             devcd_free(dev, data)                           kfree(devcd)
++ *             mutex_lock(&devcd->mutex);
++ *
++ *
++ * In the above diagram, It looks like disabled_store() would be racing with parallely
++ * running devcd_del() and result in memory abort while acquiring devcd->mutex which
++ * is called after kfree of devcd memory  after dropping its last reference with
++ * put_device(). However, this will not happens as fn(dev, data) runs
++ * with its own reference to device via klist_node so it is not its last reference.
++ * so, above situation would not occur.
++ */
++
+ static ssize_t disabled_store(struct class *class, struct class_attribute *attr,
+ 			      const char *buf, size_t count)
+ {
+@@ -282,13 +357,16 @@ void dev_coredumpm(struct device *dev, struct module *owner,
+ 	devcd->read = read;
+ 	devcd->free = free;
+ 	devcd->failing_dev = get_device(dev);
++	devcd->delete_work = false;
+ 
++	mutex_init(&devcd->mutex);
+ 	device_initialize(&devcd->devcd_dev);
+ 
+ 	dev_set_name(&devcd->devcd_dev, "devcd%d",
+ 		     atomic_inc_return(&devcd_count));
+ 	devcd->devcd_dev.class = &devcd_class;
+ 
++	mutex_lock(&devcd->mutex);
+ 	if (device_add(&devcd->devcd_dev))
+ 		goto put_device;
+ 
+@@ -302,10 +380,11 @@ void dev_coredumpm(struct device *dev, struct module *owner,
+ 
+ 	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
+ 	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
+-
++	mutex_unlock(&devcd->mutex);
+ 	return;
+  put_device:
+ 	put_device(&devcd->devcd_dev);
++	mutex_unlock(&devcd->mutex);
+  put_module:
+ 	module_put(owner);
+  free:
 -- 
 2.42.0
 
