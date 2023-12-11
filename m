@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A2420DDE;
-	Mon, 11 Dec 2023 18:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B56C20DDE;
+	Mon, 11 Dec 2023 18:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WS0ZXsED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC109C433C8;
-	Mon, 11 Dec 2023 18:39:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="097K0VRm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DF3C433C8;
+	Mon, 11 Dec 2023 18:39:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319965;
-	bh=EgEf4YpEiz97lPGJLn/cwskl5NERjQ2asbNWlvc0pt0=;
+	s=korg; t=1702319968;
+	bh=GcawYejRx5O0dtA37411PpsnsVVQxeGARDFb05JM4eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WS0ZXsED5E14npdHvX+3QE9YebBDgyyKWxr1jGUpNk/pvl+uRfmHRJ3ptXz0JgLmd
-	 Oc8FGB2T8kNodZJKmufabKFvgc7mZftQJ5fFZELFeq49nq/s0H6kJHLWFRsZg1au/A
-	 BMrjXI5pTgfadnOd0msidIhQQ0bQjGOKyALr3uCo=
+	b=097K0VRm+xPT1EVOk2I2awNeEfjmVffqzokHZH3adP3gN0xgGIZTLJSKUcZAspIkn
+	 Z/USMXsLyYCO9Pd5PlX1RT+XmOuUUZKXgVMOb5p1PywtAoxx5C/IUGYDa5jScdELnT
+	 DgQwOiV+YUVGXursAroQdjGQ9XHMiCZ106dL+7lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Reichinger <thomas.reichinger@sohard.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 26/97] arcnet: restoring support for multiple Sohard Arcnet cards
-Date: Mon, 11 Dec 2023 19:21:29 +0100
-Message-ID: <20231211182020.883573728@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 53/97] tracing: Disable snapshot buffer when stopping instance tracers
+Date: Mon, 11 Dec 2023 19:21:56 +0100
+Message-ID: <20231211182022.007193824@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -42,216 +44,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Reichinger <thomas.reichinger@sohard.de>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 6b17a597fc2f13aaaa0a2780eb7edb9ae7ac9aea ]
+commit b538bf7d0ec11ca49f536dfda742a5f6db90a798 upstream.
 
-Probe of Sohard Arcnet cards fails,
-if 2 or more cards are installed in a system.
-See kernel log:
-[    2.759203] arcnet: arcnet loaded
-[    2.763648] arcnet:com20020: COM20020 chipset support (by David Woodhouse et al.)
-[    2.770585] arcnet:com20020_pci: COM20020 PCI support
-[    2.772295] com20020 0000:02:00.0: enabling device (0000 -> 0003)
-[    2.772354] (unnamed net_device) (uninitialized): PLX-PCI Controls
-...
-[    3.071301] com20020 0000:02:00.0 arc0-0 (uninitialized): PCI COM20020: station FFh found at F080h, IRQ 101.
-[    3.071305] com20020 0000:02:00.0 arc0-0 (uninitialized): Using CKP 64 - data rate 2.5 Mb/s
-[    3.071534] com20020 0000:07:00.0: enabling device (0000 -> 0003)
-[    3.071581] (unnamed net_device) (uninitialized): PLX-PCI Controls
-...
-[    3.369501] com20020 0000:07:00.0: Led pci:green:tx:0-0 renamed to pci:green:tx:0-0_1 due to name collision
-[    3.369535] com20020 0000:07:00.0: Led pci:red:recon:0-0 renamed to pci:red:recon:0-0_1 due to name collision
-[    3.370586] com20020 0000:07:00.0 arc0-0 (uninitialized): PCI COM20020: station E1h found at C000h, IRQ 35.
-[    3.370589] com20020 0000:07:00.0 arc0-0 (uninitialized): Using CKP 64 - data rate 2.5 Mb/s
-[    3.370608] com20020: probe of 0000:07:00.0 failed with error -5
+It use to be that only the top level instance had a snapshot buffer (for
+latency tracers like wakeup and irqsoff). When stopping a tracer in an
+instance would not disable the snapshot buffer. This could have some
+unintended consequences if the irqsoff tracer is enabled.
 
-commit 5ef216c1f848 ("arcnet: com20020-pci: add rotary index support")
-changes the device name of all COM20020 based PCI cards,
-even if only some cards support this:
-	snprintf(dev->name, sizeof(dev->name), "arc%d-%d", dev->dev_id, i);
+Consolidate the tracing_start/stop() with tracing_start/stop_tr() so that
+all instances behave the same. The tracing_start/stop() functions will
+just call their respective tracing_start/stop_tr() with the global_array
+passed in.
 
-The error happens because all Sohard Arcnet cards would be called arc0-0,
-since the Sohard Arcnet cards don't have a PLX rotary coder.
-I.e. EAE Arcnet cards have a PLX rotary coder,
-which sets the first decimal, ensuring unique devices names.
+Link: https://lkml.kernel.org/r/20231205220011.041220035@goodmis.org
 
-This patch adds two new card feature flags to indicate
-which cards support LEDs and the PLX rotary coder.
-For EAE based cards the names still depend on the PLX rotary coder
-(untested, since missing EAE hardware).
-For Sohard based cards, this patch will result in devices
-being called arc0, arc1, ... (tested).
-
-Signed-off-by: Thomas Reichinger <thomas.reichinger@sohard.de>
-Fixes: 5ef216c1f848 ("arcnet: com20020-pci: add rotary index support")
-Link: https://lore.kernel.org/r/20231130113503.6812-1-thomas.reichinger@sohard.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6d9b3fa5e7f6 ("tracing: Move tracing_max_latency into trace_array")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/arcnet/arcdevice.h    |  2 +
- drivers/net/arcnet/com20020-pci.c | 89 ++++++++++++++++---------------
- 2 files changed, 48 insertions(+), 43 deletions(-)
+ kernel/trace/trace.c |  110 +++++++++++++++------------------------------------
+ 1 file changed, 34 insertions(+), 76 deletions(-)
 
-diff --git a/drivers/net/arcnet/arcdevice.h b/drivers/net/arcnet/arcdevice.h
-index 5d4a4c7efbbff..deeabd6ec2e81 100644
---- a/drivers/net/arcnet/arcdevice.h
-+++ b/drivers/net/arcnet/arcdevice.h
-@@ -186,6 +186,8 @@ do {									\
- #define ARC_IS_5MBIT    1   /* card default speed is 5MBit */
- #define ARC_CAN_10MBIT  2   /* card uses COM20022, supporting 10MBit,
- 				 but default is 2.5MBit. */
-+#define ARC_HAS_LED     4   /* card has software controlled LEDs */
-+#define ARC_HAS_ROTARY  8   /* card has rotary encoder */
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -2287,13 +2287,7 @@ int is_tracing_stopped(void)
+ 	return global_trace.stop_count;
+ }
  
- /* information needed to define an encapsulation driver */
- struct ArcProto {
-diff --git a/drivers/net/arcnet/com20020-pci.c b/drivers/net/arcnet/com20020-pci.c
-index 28dccbc0e8d8f..9d9e4200064f9 100644
---- a/drivers/net/arcnet/com20020-pci.c
-+++ b/drivers/net/arcnet/com20020-pci.c
-@@ -213,12 +213,13 @@ static int com20020pci_probe(struct pci_dev *pdev,
- 		if (!strncmp(ci->name, "EAE PLX-PCI FB2", 15))
- 			lp->backplane = 1;
+-/**
+- * tracing_start - quick start of the tracer
+- *
+- * If tracing is enabled but was stopped by tracing_stop,
+- * this will start the tracer back up.
+- */
+-void tracing_start(void)
++static void tracing_start_tr(struct trace_array *tr)
+ {
+ 	struct trace_buffer *buffer;
+ 	unsigned long flags;
+@@ -2301,119 +2295,83 @@ void tracing_start(void)
+ 	if (tracing_disabled)
+ 		return;
  
--		/* Get the dev_id from the PLX rotary coder */
--		if (!strncmp(ci->name, "EAE PLX-PCI MA1", 15))
--			dev_id_mask = 0x3;
--		dev->dev_id = (inb(priv->misc + ci->rotary) >> 4) & dev_id_mask;
--
--		snprintf(dev->name, sizeof(dev->name), "arc%d-%d", dev->dev_id, i);
-+		if (ci->flags & ARC_HAS_ROTARY) {
-+			/* Get the dev_id from the PLX rotary coder */
-+			if (!strncmp(ci->name, "EAE PLX-PCI MA1", 15))
-+				dev_id_mask = 0x3;
-+			dev->dev_id = (inb(priv->misc + ci->rotary) >> 4) & dev_id_mask;
-+			snprintf(dev->name, sizeof(dev->name), "arc%d-%d", dev->dev_id, i);
-+		}
- 
- 		if (arcnet_inb(ioaddr, COM20020_REG_R_STATUS) == 0xFF) {
- 			pr_err("IO address %Xh is empty!\n", ioaddr);
-@@ -230,6 +231,10 @@ static int com20020pci_probe(struct pci_dev *pdev,
- 			goto err_free_arcdev;
+-	raw_spin_lock_irqsave(&global_trace.start_lock, flags);
+-	if (--global_trace.stop_count) {
+-		if (global_trace.stop_count < 0) {
++	raw_spin_lock_irqsave(&tr->start_lock, flags);
++	if (--tr->stop_count) {
++		if (WARN_ON_ONCE(tr->stop_count < 0)) {
+ 			/* Someone screwed up their debugging */
+-			WARN_ON_ONCE(1);
+-			global_trace.stop_count = 0;
++			tr->stop_count = 0;
  		}
+ 		goto out;
+ 	}
  
-+		ret = com20020_found(dev, IRQF_SHARED);
-+		if (ret)
-+			goto err_free_arcdev;
-+
- 		card = devm_kzalloc(&pdev->dev, sizeof(struct com20020_dev),
- 				    GFP_KERNEL);
- 		if (!card) {
-@@ -239,41 +244,39 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 	/* Prevent the buffers from switching */
+-	arch_spin_lock(&global_trace.max_lock);
++	arch_spin_lock(&tr->max_lock);
  
- 		card->index = i;
- 		card->pci_priv = priv;
--		card->tx_led.brightness_set = led_tx_set;
--		card->tx_led.default_trigger = devm_kasprintf(&pdev->dev,
--						GFP_KERNEL, "arc%d-%d-tx",
--						dev->dev_id, i);
--		card->tx_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
--						"pci:green:tx:%d-%d",
--						dev->dev_id, i);
+-	buffer = global_trace.array_buffer.buffer;
++	buffer = tr->array_buffer.buffer;
+ 	if (buffer)
+ 		ring_buffer_record_enable(buffer);
+ 
+ #ifdef CONFIG_TRACER_MAX_TRACE
+-	buffer = global_trace.max_buffer.buffer;
++	buffer = tr->max_buffer.buffer;
+ 	if (buffer)
+ 		ring_buffer_record_enable(buffer);
+ #endif
+ 
+-	arch_spin_unlock(&global_trace.max_lock);
 -
--		card->tx_led.dev = &dev->dev;
--		card->recon_led.brightness_set = led_recon_set;
--		card->recon_led.default_trigger = devm_kasprintf(&pdev->dev,
--						GFP_KERNEL, "arc%d-%d-recon",
--						dev->dev_id, i);
--		card->recon_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
--						"pci:red:recon:%d-%d",
--						dev->dev_id, i);
--		card->recon_led.dev = &dev->dev;
--		card->dev = dev;
+- out:
+-	raw_spin_unlock_irqrestore(&global_trace.start_lock, flags);
+-}
 -
--		ret = devm_led_classdev_register(&pdev->dev, &card->tx_led);
--		if (ret)
--			goto err_free_arcdev;
- 
--		ret = devm_led_classdev_register(&pdev->dev, &card->recon_led);
--		if (ret)
--			goto err_free_arcdev;
+-static void tracing_start_tr(struct trace_array *tr)
+-{
+-	struct trace_buffer *buffer;
+-	unsigned long flags;
 -
--		dev_set_drvdata(&dev->dev, card);
+-	if (tracing_disabled)
+-		return;
 -
--		ret = com20020_found(dev, IRQF_SHARED);
--		if (ret)
--			goto err_free_arcdev;
+-	/* If global, we need to also start the max tracer */
+-	if (tr->flags & TRACE_ARRAY_FL_GLOBAL)
+-		return tracing_start();
 -
--		devm_arcnet_led_init(dev, dev->dev_id, i);
-+		if (ci->flags & ARC_HAS_LED) {
-+			card->tx_led.brightness_set = led_tx_set;
-+			card->tx_led.default_trigger = devm_kasprintf(&pdev->dev,
-+							GFP_KERNEL, "arc%d-%d-tx",
-+							dev->dev_id, i);
-+			card->tx_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-+							"pci:green:tx:%d-%d",
-+							dev->dev_id, i);
+-	raw_spin_lock_irqsave(&tr->start_lock, flags);
+-
+-	if (--tr->stop_count) {
+-		if (tr->stop_count < 0) {
+-			/* Someone screwed up their debugging */
+-			WARN_ON_ONCE(1);
+-			tr->stop_count = 0;
+-		}
+-		goto out;
+-	}
+-
+-	buffer = tr->array_buffer.buffer;
+-	if (buffer)
+-		ring_buffer_record_enable(buffer);
++	arch_spin_unlock(&tr->max_lock);
+ 
+  out:
+ 	raw_spin_unlock_irqrestore(&tr->start_lock, flags);
+ }
+ 
+ /**
+- * tracing_stop - quick stop of the tracer
++ * tracing_start - quick start of the tracer
+  *
+- * Light weight way to stop tracing. Use in conjunction with
+- * tracing_start.
++ * If tracing is enabled but was stopped by tracing_stop,
++ * this will start the tracer back up.
+  */
+-void tracing_stop(void)
++void tracing_start(void)
 +
-+			card->tx_led.dev = &dev->dev;
-+			card->recon_led.brightness_set = led_recon_set;
-+			card->recon_led.default_trigger = devm_kasprintf(&pdev->dev,
-+							GFP_KERNEL, "arc%d-%d-recon",
-+							dev->dev_id, i);
-+			card->recon_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
-+							"pci:red:recon:%d-%d",
-+							dev->dev_id, i);
-+			card->recon_led.dev = &dev->dev;
++{
++	return tracing_start_tr(&global_trace);
++}
 +
-+			ret = devm_led_classdev_register(&pdev->dev, &card->tx_led);
-+			if (ret)
-+				goto err_free_arcdev;
-+
-+			ret = devm_led_classdev_register(&pdev->dev, &card->recon_led);
-+			if (ret)
-+				goto err_free_arcdev;
-+
-+			dev_set_drvdata(&dev->dev, card);
-+			devm_arcnet_led_init(dev, dev->dev_id, i);
-+		}
++static void tracing_stop_tr(struct trace_array *tr)
+ {
+ 	struct trace_buffer *buffer;
+ 	unsigned long flags;
  
-+		card->dev = dev;
- 		list_add(&card->list, &priv->list_dev);
- 		continue;
+-	raw_spin_lock_irqsave(&global_trace.start_lock, flags);
+-	if (global_trace.stop_count++)
++	raw_spin_lock_irqsave(&tr->start_lock, flags);
++	if (tr->stop_count++)
+ 		goto out;
  
-@@ -329,7 +332,7 @@ static struct com20020_pci_card_info card_info_5mbit = {
- };
+ 	/* Prevent the buffers from switching */
+-	arch_spin_lock(&global_trace.max_lock);
++	arch_spin_lock(&tr->max_lock);
  
- static struct com20020_pci_card_info card_info_sohard = {
--	.name = "PLX-PCI",
-+	.name = "SOHARD SH ARC-PCI",
- 	.devcount = 1,
- 	/* SOHARD needs PCI base addr 4 */
- 	.chan_map_tbl = {
-@@ -364,7 +367,7 @@ static struct com20020_pci_card_info card_info_eae_arc1 = {
- 		},
- 	},
- 	.rotary = 0x0,
--	.flags = ARC_CAN_10MBIT,
-+	.flags = ARC_HAS_ROTARY | ARC_HAS_LED | ARC_CAN_10MBIT,
- };
+-	buffer = global_trace.array_buffer.buffer;
++	buffer = tr->array_buffer.buffer;
+ 	if (buffer)
+ 		ring_buffer_record_disable(buffer);
  
- static struct com20020_pci_card_info card_info_eae_ma1 = {
-@@ -396,7 +399,7 @@ static struct com20020_pci_card_info card_info_eae_ma1 = {
- 		},
- 	},
- 	.rotary = 0x0,
--	.flags = ARC_CAN_10MBIT,
-+	.flags = ARC_HAS_ROTARY | ARC_HAS_LED | ARC_CAN_10MBIT,
- };
+ #ifdef CONFIG_TRACER_MAX_TRACE
+-	buffer = global_trace.max_buffer.buffer;
++	buffer = tr->max_buffer.buffer;
+ 	if (buffer)
+ 		ring_buffer_record_disable(buffer);
+ #endif
  
- static struct com20020_pci_card_info card_info_eae_fb2 = {
-@@ -421,7 +424,7 @@ static struct com20020_pci_card_info card_info_eae_fb2 = {
- 		},
- 	},
- 	.rotary = 0x0,
--	.flags = ARC_CAN_10MBIT,
-+	.flags = ARC_HAS_ROTARY | ARC_HAS_LED | ARC_CAN_10MBIT,
- };
+-	arch_spin_unlock(&global_trace.max_lock);
++	arch_spin_unlock(&tr->max_lock);
  
- static const struct pci_device_id com20020pci_id_table[] = {
--- 
-2.42.0
-
+  out:
+-	raw_spin_unlock_irqrestore(&global_trace.start_lock, flags);
++	raw_spin_unlock_irqrestore(&tr->start_lock, flags);
+ }
+ 
+-static void tracing_stop_tr(struct trace_array *tr)
++/**
++ * tracing_stop - quick stop of the tracer
++ *
++ * Light weight way to stop tracing. Use in conjunction with
++ * tracing_start.
++ */
++void tracing_stop(void)
+ {
+-	struct trace_buffer *buffer;
+-	unsigned long flags;
+-
+-	/* If global, we need to also stop the max tracer */
+-	if (tr->flags & TRACE_ARRAY_FL_GLOBAL)
+-		return tracing_stop();
+-
+-	raw_spin_lock_irqsave(&tr->start_lock, flags);
+-	if (tr->stop_count++)
+-		goto out;
+-
+-	buffer = tr->array_buffer.buffer;
+-	if (buffer)
+-		ring_buffer_record_disable(buffer);
+-
+- out:
+-	raw_spin_unlock_irqrestore(&tr->start_lock, flags);
++	return tracing_stop_tr(&global_trace);
+ }
+ 
+ static int trace_save_cmdline(struct task_struct *tsk)
 
 
