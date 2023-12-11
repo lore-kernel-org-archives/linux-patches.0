@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E685101A;
-	Mon, 11 Dec 2023 18:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9245101A;
+	Mon, 11 Dec 2023 18:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHFi1LsW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD575C433C7;
-	Mon, 11 Dec 2023 18:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7i97IYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9192EC433C7;
+	Mon, 11 Dec 2023 18:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319279;
-	bh=dIDlgcPhrGKjG4o5jxoAsz4A9Sl5Wi854liE3AtQnII=;
+	s=korg; t=1702319281;
+	bh=NIRuOxEWUVxSh/5rEK3kRS9VdxQtAZH4SWnVzfzPUAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iHFi1LsWDyBccfG+AqcS/tXqL8bfiw0+srilw4tvRdOZe0c1e2p7l7jRBZfbu7qPH
-	 t9L7CbJQzOqNhPkq/j6rBegVdHiALi8OxmcsA7zPOm8VXgtWBxegWR6e2VrJ0euz0G
-	 hzerj04OLmTcSLjQHNSvUln6EiN04mQzMjauJy7o=
+	b=G7i97IYmxS+IjZ4fyaKFn/z4kJorz/Z5rPPvaWPRyWrzvRecliJh2fuNXDbBVwGun
+	 CxGRe4Gl8QtwXfZ2/cDI3RZU9lJWwAP4WgsMuILQUP6qAUapr1uYf1KZCP4AKnmcsQ
+	 LOn8Wx9W8sVMflTSynppI7GZj427bd6CIa/lliok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Thomas Reichinger <thomas.reichinger@sohard.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/244] nouveau: use an rwlock for the event lock.
-Date: Mon, 11 Dec 2023 19:18:20 +0100
-Message-ID: <20231211182046.113179976@linuxfoundation.org>
+Subject: [PATCH 6.6 040/244] arcnet: restoring support for multiple Sohard Arcnet cards
+Date: Mon, 11 Dec 2023 19:18:53 +0100
+Message-ID: <20231211182047.618816324@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,224 +42,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Thomas Reichinger <thomas.reichinger@sohard.de>
 
-[ Upstream commit a2e36cd56041e277d7d81d35638fd8d9731e21f5 ]
+[ Upstream commit 6b17a597fc2f13aaaa0a2780eb7edb9ae7ac9aea ]
 
-This allows it to break the following circular locking dependency.
+Probe of Sohard Arcnet cards fails,
+if 2 or more cards are installed in a system.
+See kernel log:
+[    2.759203] arcnet: arcnet loaded
+[    2.763648] arcnet:com20020: COM20020 chipset support (by David Woodhouse et al.)
+[    2.770585] arcnet:com20020_pci: COM20020 PCI support
+[    2.772295] com20020 0000:02:00.0: enabling device (0000 -> 0003)
+[    2.772354] (unnamed net_device) (uninitialized): PLX-PCI Controls
+...
+[    3.071301] com20020 0000:02:00.0 arc0-0 (uninitialized): PCI COM20020: station FFh found at F080h, IRQ 101.
+[    3.071305] com20020 0000:02:00.0 arc0-0 (uninitialized): Using CKP 64 - data rate 2.5 Mb/s
+[    3.071534] com20020 0000:07:00.0: enabling device (0000 -> 0003)
+[    3.071581] (unnamed net_device) (uninitialized): PLX-PCI Controls
+...
+[    3.369501] com20020 0000:07:00.0: Led pci:green:tx:0-0 renamed to pci:green:tx:0-0_1 due to name collision
+[    3.369535] com20020 0000:07:00.0: Led pci:red:recon:0-0 renamed to pci:red:recon:0-0_1 due to name collision
+[    3.370586] com20020 0000:07:00.0 arc0-0 (uninitialized): PCI COM20020: station E1h found at C000h, IRQ 35.
+[    3.370589] com20020 0000:07:00.0 arc0-0 (uninitialized): Using CKP 64 - data rate 2.5 Mb/s
+[    3.370608] com20020: probe of 0000:07:00.0 failed with error -5
 
-Aug 10 07:01:29 dg1test kernel: ======================================================
-Aug 10 07:01:29 dg1test kernel: WARNING: possible circular locking dependency detected
-Aug 10 07:01:29 dg1test kernel: 6.4.0-rc7+ #10 Not tainted
-Aug 10 07:01:29 dg1test kernel: ------------------------------------------------------
-Aug 10 07:01:29 dg1test kernel: wireplumber/2236 is trying to acquire lock:
-Aug 10 07:01:29 dg1test kernel: ffff8fca5320da18 (&fctx->lock){-...}-{2:2}, at: nouveau_fence_wait_uevent_handler+0x2b/0x100 [nouveau]
-Aug 10 07:01:29 dg1test kernel:
-                                but task is already holding lock:
-Aug 10 07:01:29 dg1test kernel: ffff8fca41208610 (&event->list_lock#2){-...}-{2:2}, at: nvkm_event_ntfy+0x50/0xf0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:
-                                which lock already depends on the new lock.
-Aug 10 07:01:29 dg1test kernel:
-                                the existing dependency chain (in reverse order) is:
-Aug 10 07:01:29 dg1test kernel:
-                                -> #3 (&event->list_lock#2){-...}-{2:2}:
-Aug 10 07:01:29 dg1test kernel:        _raw_spin_lock_irqsave+0x4b/0x70
-Aug 10 07:01:29 dg1test kernel:        nvkm_event_ntfy+0x50/0xf0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        ga100_fifo_nonstall_intr+0x24/0x30 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_intr+0x12c/0x240 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        __handle_irq_event_percpu+0x88/0x240
-Aug 10 07:01:29 dg1test kernel:        handle_irq_event+0x38/0x80
-Aug 10 07:01:29 dg1test kernel:        handle_edge_irq+0xa3/0x240
-Aug 10 07:01:29 dg1test kernel:        __common_interrupt+0x72/0x160
-Aug 10 07:01:29 dg1test kernel:        common_interrupt+0x60/0xe0
-Aug 10 07:01:29 dg1test kernel:        asm_common_interrupt+0x26/0x40
-Aug 10 07:01:29 dg1test kernel:
-                                -> #2 (&device->intr.lock){-...}-{2:2}:
-Aug 10 07:01:29 dg1test kernel:        _raw_spin_lock_irqsave+0x4b/0x70
-Aug 10 07:01:29 dg1test kernel:        nvkm_inth_allow+0x2c/0x80 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_event_ntfy_state+0x181/0x250 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_event_ntfy_allow+0x63/0xd0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_uevent_mthd+0x4d/0x70 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_ioctl+0x10b/0x250 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvif_object_mthd+0xa8/0x1f0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvif_event_allow+0x2a/0xa0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nouveau_fence_enable_signaling+0x78/0x80 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        __dma_fence_enable_signaling+0x5e/0x100
-Aug 10 07:01:29 dg1test kernel:        dma_fence_add_callback+0x4b/0xd0
-Aug 10 07:01:29 dg1test kernel:        nouveau_cli_work_queue+0xae/0x110 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nouveau_gem_object_close+0x1d1/0x2a0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        drm_gem_handle_delete+0x70/0xe0 [drm]
-Aug 10 07:01:29 dg1test kernel:        drm_ioctl_kernel+0xa5/0x150 [drm]
-Aug 10 07:01:29 dg1test kernel:        drm_ioctl+0x256/0x490 [drm]
-Aug 10 07:01:29 dg1test kernel:        nouveau_drm_ioctl+0x5a/0xb0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        __x64_sys_ioctl+0x91/0xd0
-Aug 10 07:01:29 dg1test kernel:        do_syscall_64+0x3c/0x90
-Aug 10 07:01:29 dg1test kernel:        entry_SYSCALL_64_after_hwframe+0x72/0xdc
-Aug 10 07:01:29 dg1test kernel:
-                                -> #1 (&event->refs_lock#4){....}-{2:2}:
-Aug 10 07:01:29 dg1test kernel:        _raw_spin_lock_irqsave+0x4b/0x70
-Aug 10 07:01:29 dg1test kernel:        nvkm_event_ntfy_state+0x37/0x250 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_event_ntfy_allow+0x63/0xd0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_uevent_mthd+0x4d/0x70 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_ioctl+0x10b/0x250 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvif_object_mthd+0xa8/0x1f0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvif_event_allow+0x2a/0xa0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nouveau_fence_enable_signaling+0x78/0x80 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        __dma_fence_enable_signaling+0x5e/0x100
-Aug 10 07:01:29 dg1test kernel:        dma_fence_add_callback+0x4b/0xd0
-Aug 10 07:01:29 dg1test kernel:        nouveau_cli_work_queue+0xae/0x110 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nouveau_gem_object_close+0x1d1/0x2a0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        drm_gem_handle_delete+0x70/0xe0 [drm]
-Aug 10 07:01:29 dg1test kernel:        drm_ioctl_kernel+0xa5/0x150 [drm]
-Aug 10 07:01:29 dg1test kernel:        drm_ioctl+0x256/0x490 [drm]
-Aug 10 07:01:29 dg1test kernel:        nouveau_drm_ioctl+0x5a/0xb0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        __x64_sys_ioctl+0x91/0xd0
-Aug 10 07:01:29 dg1test kernel:        do_syscall_64+0x3c/0x90
-Aug 10 07:01:29 dg1test kernel:        entry_SYSCALL_64_after_hwframe+0x72/0xdc
-Aug 10 07:01:29 dg1test kernel:
-                                -> #0 (&fctx->lock){-...}-{2:2}:
-Aug 10 07:01:29 dg1test kernel:        __lock_acquire+0x14e3/0x2240
-Aug 10 07:01:29 dg1test kernel:        lock_acquire+0xc8/0x2a0
-Aug 10 07:01:29 dg1test kernel:        _raw_spin_lock_irqsave+0x4b/0x70
-Aug 10 07:01:29 dg1test kernel:        nouveau_fence_wait_uevent_handler+0x2b/0x100 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_client_event+0xf/0x20 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_event_ntfy+0x9b/0xf0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        ga100_fifo_nonstall_intr+0x24/0x30 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        nvkm_intr+0x12c/0x240 [nouveau]
-Aug 10 07:01:29 dg1test kernel:        __handle_irq_event_percpu+0x88/0x240
-Aug 10 07:01:29 dg1test kernel:        handle_irq_event+0x38/0x80
-Aug 10 07:01:29 dg1test kernel:        handle_edge_irq+0xa3/0x240
-Aug 10 07:01:29 dg1test kernel:        __common_interrupt+0x72/0x160
-Aug 10 07:01:29 dg1test kernel:        common_interrupt+0x60/0xe0
-Aug 10 07:01:29 dg1test kernel:        asm_common_interrupt+0x26/0x40
-Aug 10 07:01:29 dg1test kernel:
-                                other info that might help us debug this:
-Aug 10 07:01:29 dg1test kernel: Chain exists of:
-                                  &fctx->lock --> &device->intr.lock --> &event->list_lock#2
-Aug 10 07:01:29 dg1test kernel:  Possible unsafe locking scenario:
-Aug 10 07:01:29 dg1test kernel:        CPU0                    CPU1
-Aug 10 07:01:29 dg1test kernel:        ----                    ----
-Aug 10 07:01:29 dg1test kernel:   lock(&event->list_lock#2);
-Aug 10 07:01:29 dg1test kernel:                                lock(&device->intr.lock);
-Aug 10 07:01:29 dg1test kernel:                                lock(&event->list_lock#2);
-Aug 10 07:01:29 dg1test kernel:   lock(&fctx->lock);
-Aug 10 07:01:29 dg1test kernel:
-                                 *** DEADLOCK ***
-Aug 10 07:01:29 dg1test kernel: 2 locks held by wireplumber/2236:
-Aug 10 07:01:29 dg1test kernel:  #0: ffff8fca53177bf8 (&device->intr.lock){-...}-{2:2}, at: nvkm_intr+0x29/0x240 [nouveau]
-Aug 10 07:01:29 dg1test kernel:  #1: ffff8fca41208610 (&event->list_lock#2){-...}-{2:2}, at: nvkm_event_ntfy+0x50/0xf0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:
-                                stack backtrace:
-Aug 10 07:01:29 dg1test kernel: CPU: 6 PID: 2236 Comm: wireplumber Not tainted 6.4.0-rc7+ #10
-Aug 10 07:01:29 dg1test kernel: Hardware name: Gigabyte Technology Co., Ltd. Z390 I AORUS PRO WIFI/Z390 I AORUS PRO WIFI-CF, BIOS F8 11/05/2021
-Aug 10 07:01:29 dg1test kernel: Call Trace:
-Aug 10 07:01:29 dg1test kernel:  <TASK>
-Aug 10 07:01:29 dg1test kernel:  dump_stack_lvl+0x5b/0x90
-Aug 10 07:01:29 dg1test kernel:  check_noncircular+0xe2/0x110
-Aug 10 07:01:29 dg1test kernel:  __lock_acquire+0x14e3/0x2240
-Aug 10 07:01:29 dg1test kernel:  lock_acquire+0xc8/0x2a0
-Aug 10 07:01:29 dg1test kernel:  ? nouveau_fence_wait_uevent_handler+0x2b/0x100 [nouveau]
-Aug 10 07:01:29 dg1test kernel:  ? lock_acquire+0xc8/0x2a0
-Aug 10 07:01:29 dg1test kernel:  _raw_spin_lock_irqsave+0x4b/0x70
-Aug 10 07:01:29 dg1test kernel:  ? nouveau_fence_wait_uevent_handler+0x2b/0x100 [nouveau]
-Aug 10 07:01:29 dg1test kernel:  nouveau_fence_wait_uevent_handler+0x2b/0x100 [nouveau]
-Aug 10 07:01:29 dg1test kernel:  nvkm_client_event+0xf/0x20 [nouveau]
-Aug 10 07:01:29 dg1test kernel:  nvkm_event_ntfy+0x9b/0xf0 [nouveau]
-Aug 10 07:01:29 dg1test kernel:  ga100_fifo_nonstall_intr+0x24/0x30 [nouveau]
-Aug 10 07:01:29 dg1test kernel:  nvkm_intr+0x12c/0x240 [nouveau]
-Aug 10 07:01:29 dg1test kernel:  __handle_irq_event_percpu+0x88/0x240
-Aug 10 07:01:29 dg1test kernel:  handle_irq_event+0x38/0x80
-Aug 10 07:01:29 dg1test kernel:  handle_edge_irq+0xa3/0x240
-Aug 10 07:01:29 dg1test kernel:  __common_interrupt+0x72/0x160
-Aug 10 07:01:29 dg1test kernel:  common_interrupt+0x60/0xe0
-Aug 10 07:01:29 dg1test kernel:  asm_common_interrupt+0x26/0x40
-Aug 10 07:01:29 dg1test kernel: RIP: 0033:0x7fb66174d700
-Aug 10 07:01:29 dg1test kernel: Code: c1 e2 05 29 ca 8d 0c 10 0f be 07 84 c0 75 eb 89 c8 c3 0f 1f 84 00 00 00 00 00 f3 0f 1e fa e9 d7 0f fc ff 0f 1f 80 00 00 00 00 <f3> 0f 1e fa e9 c7 0f fc>
-Aug 10 07:01:29 dg1test kernel: RSP: 002b:00007ffdd3c48438 EFLAGS: 00000206
-Aug 10 07:01:29 dg1test kernel: RAX: 000055bb758763c0 RBX: 000055bb758752c0 RCX: 00000000000028b0
-Aug 10 07:01:29 dg1test kernel: RDX: 000055bb758752c0 RSI: 000055bb75887490 RDI: 000055bb75862950
-Aug 10 07:01:29 dg1test kernel: RBP: 00007ffdd3c48490 R08: 000055bb75873b10 R09: 0000000000000001
-Aug 10 07:01:29 dg1test kernel: R10: 0000000000000004 R11: 000055bb7587f000 R12: 000055bb75887490
-Aug 10 07:01:29 dg1test kernel: R13: 000055bb757f6280 R14: 000055bb758875c0 R15: 000055bb757f6280
-Aug 10 07:01:29 dg1test kernel:  </TASK>
+commit 5ef216c1f848 ("arcnet: com20020-pci: add rotary index support")
+changes the device name of all COM20020 based PCI cards,
+even if only some cards support this:
+	snprintf(dev->name, sizeof(dev->name), "arc%d-%d", dev->dev_id, i);
 
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Tested-by: Danilo Krummrich <dakr@redhat.com>
-Reviewed-by: Danilo Krummrich <dakr@redhat.com>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231107053255.2257079-1-airlied@gmail.com
+The error happens because all Sohard Arcnet cards would be called arc0-0,
+since the Sohard Arcnet cards don't have a PLX rotary coder.
+I.e. EAE Arcnet cards have a PLX rotary coder,
+which sets the first decimal, ensuring unique devices names.
+
+This patch adds two new card feature flags to indicate
+which cards support LEDs and the PLX rotary coder.
+For EAE based cards the names still depend on the PLX rotary coder
+(untested, since missing EAE hardware).
+For Sohard based cards, this patch will result in devices
+being called arc0, arc1, ... (tested).
+
+Signed-off-by: Thomas Reichinger <thomas.reichinger@sohard.de>
+Fixes: 5ef216c1f848 ("arcnet: com20020-pci: add rotary index support")
+Link: https://lore.kernel.org/r/20231130113503.6812-1-thomas.reichinger@sohard.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/include/nvkm/core/event.h |  4 ++--
- drivers/gpu/drm/nouveau/nvkm/core/event.c         | 12 ++++++------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/arcnet/arcdevice.h    |  2 +
+ drivers/net/arcnet/com20020-pci.c | 89 ++++++++++++++++---------------
+ 2 files changed, 48 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/include/nvkm/core/event.h b/drivers/gpu/drm/nouveau/include/nvkm/core/event.h
-index 82b267c111470..460459af272d6 100644
---- a/drivers/gpu/drm/nouveau/include/nvkm/core/event.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/core/event.h
-@@ -14,7 +14,7 @@ struct nvkm_event {
- 	int index_nr;
+diff --git a/drivers/net/arcnet/arcdevice.h b/drivers/net/arcnet/arcdevice.h
+index 19e996a829c9d..b54275389f8ac 100644
+--- a/drivers/net/arcnet/arcdevice.h
++++ b/drivers/net/arcnet/arcdevice.h
+@@ -186,6 +186,8 @@ do {									\
+ #define ARC_IS_5MBIT    1   /* card default speed is 5MBit */
+ #define ARC_CAN_10MBIT  2   /* card uses COM20022, supporting 10MBit,
+ 				 but default is 2.5MBit. */
++#define ARC_HAS_LED     4   /* card has software controlled LEDs */
++#define ARC_HAS_ROTARY  8   /* card has rotary encoder */
  
- 	spinlock_t refs_lock;
--	spinlock_t list_lock;
-+	rwlock_t list_lock;
- 	int *refs;
+ /* information needed to define an encapsulation driver */
+ struct ArcProto {
+diff --git a/drivers/net/arcnet/com20020-pci.c b/drivers/net/arcnet/com20020-pci.c
+index c580acb8b1d34..7b5c8bb02f119 100644
+--- a/drivers/net/arcnet/com20020-pci.c
++++ b/drivers/net/arcnet/com20020-pci.c
+@@ -213,12 +213,13 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 		if (!strncmp(ci->name, "EAE PLX-PCI FB2", 15))
+ 			lp->backplane = 1;
  
- 	struct list_head ntfy;
-@@ -38,7 +38,7 @@ nvkm_event_init(const struct nvkm_event_func *func, struct nvkm_subdev *subdev,
- 		int types_nr, int index_nr, struct nvkm_event *event)
- {
- 	spin_lock_init(&event->refs_lock);
--	spin_lock_init(&event->list_lock);
-+	rwlock_init(&event->list_lock);
- 	return __nvkm_event_init(func, subdev, types_nr, index_nr, event);
- }
+-		/* Get the dev_id from the PLX rotary coder */
+-		if (!strncmp(ci->name, "EAE PLX-PCI MA1", 15))
+-			dev_id_mask = 0x3;
+-		dev->dev_id = (inb(priv->misc + ci->rotary) >> 4) & dev_id_mask;
+-
+-		snprintf(dev->name, sizeof(dev->name), "arc%d-%d", dev->dev_id, i);
++		if (ci->flags & ARC_HAS_ROTARY) {
++			/* Get the dev_id from the PLX rotary coder */
++			if (!strncmp(ci->name, "EAE PLX-PCI MA1", 15))
++				dev_id_mask = 0x3;
++			dev->dev_id = (inb(priv->misc + ci->rotary) >> 4) & dev_id_mask;
++			snprintf(dev->name, sizeof(dev->name), "arc%d-%d", dev->dev_id, i);
++		}
  
-diff --git a/drivers/gpu/drm/nouveau/nvkm/core/event.c b/drivers/gpu/drm/nouveau/nvkm/core/event.c
-index a6c877135598f..61fed7792e415 100644
---- a/drivers/gpu/drm/nouveau/nvkm/core/event.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/core/event.c
-@@ -81,17 +81,17 @@ nvkm_event_ntfy_state(struct nvkm_event_ntfy *ntfy)
- static void
- nvkm_event_ntfy_remove(struct nvkm_event_ntfy *ntfy)
- {
--	spin_lock_irq(&ntfy->event->list_lock);
-+	write_lock_irq(&ntfy->event->list_lock);
- 	list_del_init(&ntfy->head);
--	spin_unlock_irq(&ntfy->event->list_lock);
-+	write_unlock_irq(&ntfy->event->list_lock);
- }
- 
- static void
- nvkm_event_ntfy_insert(struct nvkm_event_ntfy *ntfy)
- {
--	spin_lock_irq(&ntfy->event->list_lock);
-+	write_lock_irq(&ntfy->event->list_lock);
- 	list_add_tail(&ntfy->head, &ntfy->event->ntfy);
--	spin_unlock_irq(&ntfy->event->list_lock);
-+	write_unlock_irq(&ntfy->event->list_lock);
- }
- 
- static void
-@@ -176,7 +176,7 @@ nvkm_event_ntfy(struct nvkm_event *event, int id, u32 bits)
- 		return;
- 
- 	nvkm_trace(event->subdev, "event: ntfy %08x on %d\n", bits, id);
--	spin_lock_irqsave(&event->list_lock, flags);
-+	read_lock_irqsave(&event->list_lock, flags);
- 
- 	list_for_each_entry_safe(ntfy, ntmp, &event->ntfy, head) {
- 		if (ntfy->id == id && ntfy->bits & bits) {
-@@ -185,7 +185,7 @@ nvkm_event_ntfy(struct nvkm_event *event, int id, u32 bits)
+ 		if (arcnet_inb(ioaddr, COM20020_REG_R_STATUS) == 0xFF) {
+ 			pr_err("IO address %Xh is empty!\n", ioaddr);
+@@ -230,6 +231,10 @@ static int com20020pci_probe(struct pci_dev *pdev,
+ 			goto err_free_arcdev;
  		}
- 	}
  
--	spin_unlock_irqrestore(&event->list_lock, flags);
-+	read_unlock_irqrestore(&event->list_lock, flags);
- }
++		ret = com20020_found(dev, IRQF_SHARED);
++		if (ret)
++			goto err_free_arcdev;
++
+ 		card = devm_kzalloc(&pdev->dev, sizeof(struct com20020_dev),
+ 				    GFP_KERNEL);
+ 		if (!card) {
+@@ -239,41 +244,39 @@ static int com20020pci_probe(struct pci_dev *pdev,
  
- void
+ 		card->index = i;
+ 		card->pci_priv = priv;
+-		card->tx_led.brightness_set = led_tx_set;
+-		card->tx_led.default_trigger = devm_kasprintf(&pdev->dev,
+-						GFP_KERNEL, "arc%d-%d-tx",
+-						dev->dev_id, i);
+-		card->tx_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+-						"pci:green:tx:%d-%d",
+-						dev->dev_id, i);
+-
+-		card->tx_led.dev = &dev->dev;
+-		card->recon_led.brightness_set = led_recon_set;
+-		card->recon_led.default_trigger = devm_kasprintf(&pdev->dev,
+-						GFP_KERNEL, "arc%d-%d-recon",
+-						dev->dev_id, i);
+-		card->recon_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
+-						"pci:red:recon:%d-%d",
+-						dev->dev_id, i);
+-		card->recon_led.dev = &dev->dev;
+-		card->dev = dev;
+-
+-		ret = devm_led_classdev_register(&pdev->dev, &card->tx_led);
+-		if (ret)
+-			goto err_free_arcdev;
+ 
+-		ret = devm_led_classdev_register(&pdev->dev, &card->recon_led);
+-		if (ret)
+-			goto err_free_arcdev;
+-
+-		dev_set_drvdata(&dev->dev, card);
+-
+-		ret = com20020_found(dev, IRQF_SHARED);
+-		if (ret)
+-			goto err_free_arcdev;
+-
+-		devm_arcnet_led_init(dev, dev->dev_id, i);
++		if (ci->flags & ARC_HAS_LED) {
++			card->tx_led.brightness_set = led_tx_set;
++			card->tx_led.default_trigger = devm_kasprintf(&pdev->dev,
++							GFP_KERNEL, "arc%d-%d-tx",
++							dev->dev_id, i);
++			card->tx_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
++							"pci:green:tx:%d-%d",
++							dev->dev_id, i);
++
++			card->tx_led.dev = &dev->dev;
++			card->recon_led.brightness_set = led_recon_set;
++			card->recon_led.default_trigger = devm_kasprintf(&pdev->dev,
++							GFP_KERNEL, "arc%d-%d-recon",
++							dev->dev_id, i);
++			card->recon_led.name = devm_kasprintf(&pdev->dev, GFP_KERNEL,
++							"pci:red:recon:%d-%d",
++							dev->dev_id, i);
++			card->recon_led.dev = &dev->dev;
++
++			ret = devm_led_classdev_register(&pdev->dev, &card->tx_led);
++			if (ret)
++				goto err_free_arcdev;
++
++			ret = devm_led_classdev_register(&pdev->dev, &card->recon_led);
++			if (ret)
++				goto err_free_arcdev;
++
++			dev_set_drvdata(&dev->dev, card);
++			devm_arcnet_led_init(dev, dev->dev_id, i);
++		}
+ 
++		card->dev = dev;
+ 		list_add(&card->list, &priv->list_dev);
+ 		continue;
+ 
+@@ -329,7 +332,7 @@ static struct com20020_pci_card_info card_info_5mbit = {
+ };
+ 
+ static struct com20020_pci_card_info card_info_sohard = {
+-	.name = "PLX-PCI",
++	.name = "SOHARD SH ARC-PCI",
+ 	.devcount = 1,
+ 	/* SOHARD needs PCI base addr 4 */
+ 	.chan_map_tbl = {
+@@ -364,7 +367,7 @@ static struct com20020_pci_card_info card_info_eae_arc1 = {
+ 		},
+ 	},
+ 	.rotary = 0x0,
+-	.flags = ARC_CAN_10MBIT,
++	.flags = ARC_HAS_ROTARY | ARC_HAS_LED | ARC_CAN_10MBIT,
+ };
+ 
+ static struct com20020_pci_card_info card_info_eae_ma1 = {
+@@ -396,7 +399,7 @@ static struct com20020_pci_card_info card_info_eae_ma1 = {
+ 		},
+ 	},
+ 	.rotary = 0x0,
+-	.flags = ARC_CAN_10MBIT,
++	.flags = ARC_HAS_ROTARY | ARC_HAS_LED | ARC_CAN_10MBIT,
+ };
+ 
+ static struct com20020_pci_card_info card_info_eae_fb2 = {
+@@ -421,7 +424,7 @@ static struct com20020_pci_card_info card_info_eae_fb2 = {
+ 		},
+ 	},
+ 	.rotary = 0x0,
+-	.flags = ARC_CAN_10MBIT,
++	.flags = ARC_HAS_ROTARY | ARC_HAS_LED | ARC_CAN_10MBIT,
+ };
+ 
+ static const struct pci_device_id com20020pci_id_table[] = {
 -- 
 2.42.0
 
