@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0525102A;
-	Mon, 11 Dec 2023 18:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A9E5102A;
+	Mon, 11 Dec 2023 18:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI3WlwDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACCDC433C8;
-	Mon, 11 Dec 2023 18:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkpUxU1K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C00C433C8;
+	Mon, 11 Dec 2023 18:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320668;
-	bh=SoyIY+PkTb5pgcQh+715b2+Eroz9SmwTbBQrLYJZRQU=;
+	s=korg; t=1702320670;
+	bh=ZuHIe+Y9nKGikK4NklBgJYjjXzx5Eg+cu5TBIBDCM04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fI3WlwDsOFfLnKH3gn710eokLKLYpaDGN084jga0/fs7dKOrwMY3+A823idacFwWF
-	 csmCD76/LsoNWLVFpahNRrn8lzXluRrH5R9jZpVeISLb6TbqqRJ6/PKLPwJ6zC0pi6
-	 XtQrkx9ix1otAHQDJpdbjjEyNRdUWi+M/KLDwYXk=
+	b=GkpUxU1KKwwvgBzebyRiQC02P3gFGgLe3EEizFlGyq6arP4fn06pSU3r9Jh1gDv4N
+	 okMEDI+CH1n7ZPlQvlDqyF5OMMLzsCh8h+pbAEJq1jCU/TMFY4BU4br+GuFfx7gDj+
+	 MWsqpeo9VEPBMfeVze0S4aFNclPZSeNt1T2BFQFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Li <bin.li@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 107/194] ALSA: hda/realtek: Enable headset on Lenovo M90 Gen5
-Date: Mon, 11 Dec 2023 19:21:37 +0100
-Message-ID: <20231211182041.235185690@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 140/194] misc: mei: client.c: fix problem of return -EOVERFLOW in mei_cl_write
+Date: Mon, 11 Dec 2023 19:22:10 +0100
+Message-ID: <20231211182042.851781704@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -41,31 +41,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bin Li <bin.li@canonical.com>
+From: Su Hui <suhui@nfschina.com>
 
-commit 6f7e4664e597440dfbdb8b2931c561b717030d07 upstream.
+[ Upstream commit ee6236027218f8531916f1c5caa5dc330379f287 ]
 
-Lenovo M90 Gen5 is equipped with ALC897, and it needs
-ALC897_FIXUP_HEADSET_MIC_PIN quirk to make its headset mic work.
+Clang static analyzer complains that value stored to 'rets' is never
+read.Let 'buf_len = -EOVERFLOW' to make sure we can return '-EOVERFLOW'.
 
-Signed-off-by: Bin Li <bin.li@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231204100450.642783-1-bin.li@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8c8d964ce90f ("mei: move hbuf_depth from the mei device to the hw modules")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20231120095523.178385-2-suhui@nfschina.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/mei/client.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -11952,6 +11952,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3321, "Lenovo ThinkCentre M70 Gen4", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x331b, "Lenovo ThinkCentre M90 Gen4", ALC897_FIXUP_HEADSET_MIC_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3364, "Lenovo ThinkCentre M90 Gen5", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
+diff --git a/drivers/misc/mei/client.c b/drivers/misc/mei/client.c
+index 77501e392cdeb..c70c89209fe55 100644
+--- a/drivers/misc/mei/client.c
++++ b/drivers/misc/mei/client.c
+@@ -2002,7 +2002,7 @@ ssize_t mei_cl_write(struct mei_cl *cl, struct mei_cl_cb *cb)
+ 
+ 	hbuf_slots = mei_hbuf_empty_slots(dev);
+ 	if (hbuf_slots < 0) {
+-		rets = -EOVERFLOW;
++		buf_len = -EOVERFLOW;
+ 		goto out;
+ 	}
+ 
+-- 
+2.42.0
+
 
 
