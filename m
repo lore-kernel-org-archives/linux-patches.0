@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C154E51C38;
-	Mon, 11 Dec 2023 18:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F7551C38;
+	Mon, 11 Dec 2023 18:53:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPzJGxte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4487BC433C8;
-	Mon, 11 Dec 2023 18:53:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGDGvqat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EBBC433C8;
+	Mon, 11 Dec 2023 18:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320811;
-	bh=uZCdrJvkrbTdqleIclHCwBkNMt0S1YJBbjwGVOeNHMk=;
+	s=korg; t=1702320814;
+	bh=ILv7/WMTSy9FjuUoZK9dB2miNXSWjdhovwJh/HJS35E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPzJGxteDZYVIu4hv9OZGApxOdpJgqLnH0zKhcvoNNXycVSncBL2D/cJhof+i4PRC
-	 rekLMLhwaZd/sWUCWJKeX7FF7jx1nvZa7wziZmn6+wqg6Q+IKDSYFtlCqCvgJi4Jbw
-	 ySf0Vo8/dviZzmSf2QDaahhQ3GQDhjKTn4+aXIlQ=
+	b=aGDGvqatzt1cO/1sB7Yp6IxTZe+mCm1ARAVf8xxRGA/Z0P+TI8bPNU7LIuavgeM6n
+	 /+jLBwT+aV0kuvjHAPcJjbxOUtYQZAMXXzvsOu0ygSNt0igxtvAYzhIQzhq/IFO4kt
+	 TpcWocgNaIz/9590/tcsAFYQJglTyG4ki1AQ1AWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronald Wahl <ronald.wahl@raritan.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.1 177/194] serial: 8250_omap: Add earlycon support for the AM654 UART controller
-Date: Mon, 11 Dec 2023 19:22:47 +0100
-Message-ID: <20231211182044.562250335@linuxfoundation.org>
+	Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH 6.1 178/194] devcoredump: Send uevent once devcd is ready
+Date: Mon, 11 Dec 2023 19:22:48 +0100
+Message-ID: <20231211182044.604697574@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -42,31 +40,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ronald Wahl <ronald.wahl@raritan.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
 
-commit 8e42c301ce64e0dcca547626eb486877d502d336 upstream.
+commit af54d778a03853801d681c98c0c2a6c316ef9ca7 upstream.
 
-Currently there is no support for earlycon on the AM654 UART
-controller. This commit adds it.
+dev_coredumpm() creates a devcoredump device and adds it
+to the core kernel framework which eventually end up
+sending uevent to the user space and later creates a
+symbolic link to the failed device. An application
+running in userspace may be interested in this symbolic
+link to get the name of the failed device.
 
-Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
-Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
-Link: https://lore.kernel.org/r/20231031131242.15516-1-rwahl@gmx.de
-Cc: stable <stable@kernel.org>
+In a issue scenario, once uevent sent to the user space
+it start reading '/sys/class/devcoredump/devcdX/failing_device'
+to get the actual name of the device which might not been
+created and it is in its path of creation.
+
+To fix this, suppress sending uevent till the failing device
+symbolic link gets created and send uevent once symbolic
+link is created successfully.
+
+Fixes: 833c95456a70 ("device coredump: add new device coredump class")
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/1700232572-25823-1-git-send-email-quic_mojha@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_early.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/devcoredump.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_early.c
-+++ b/drivers/tty/serial/8250/8250_early.c
-@@ -197,6 +197,7 @@ static int __init early_omap8250_setup(s
- OF_EARLYCON_DECLARE(omap8250, "ti,omap2-uart", early_omap8250_setup);
- OF_EARLYCON_DECLARE(omap8250, "ti,omap3-uart", early_omap8250_setup);
- OF_EARLYCON_DECLARE(omap8250, "ti,omap4-uart", early_omap8250_setup);
-+OF_EARLYCON_DECLARE(omap8250, "ti,am654-uart", early_omap8250_setup);
+--- a/drivers/base/devcoredump.c
++++ b/drivers/base/devcoredump.c
+@@ -363,6 +363,7 @@ void dev_coredumpm(struct device *dev, s
+ 	devcd->devcd_dev.class = &devcd_class;
  
- #endif
+ 	mutex_lock(&devcd->mutex);
++	dev_set_uevent_suppress(&devcd->devcd_dev, true);
+ 	if (device_add(&devcd->devcd_dev))
+ 		goto put_device;
  
+@@ -377,6 +378,8 @@ void dev_coredumpm(struct device *dev, s
+ 		              "devcoredump"))
+ 		dev_warn(dev, "devcoredump create_link failed\n");
+ 
++	dev_set_uevent_suppress(&devcd->devcd_dev, false);
++	kobject_uevent(&devcd->devcd_dev.kobj, KOBJ_ADD);
+ 	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
+ 	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
+ 	mutex_unlock(&devcd->mutex);
 
 
