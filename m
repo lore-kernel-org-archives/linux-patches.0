@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76A351C2C;
-	Mon, 11 Dec 2023 18:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835F65102A;
+	Mon, 11 Dec 2023 18:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOYKJqdV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D43FC433C7;
-	Mon, 11 Dec 2023 18:51:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1U5GOH1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AB0C433C8;
+	Mon, 11 Dec 2023 18:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320681;
-	bh=MzaTm0vdPClxzY+mhqWf95MVUD51K7E2IO+pSzkcAeA=;
+	s=korg; t=1702320684;
+	bh=n8KWG4ToQwMdY5zPQwM4iRBXobbHpfA2awrwaGZKHVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOYKJqdV2wLSt6pfphl8RIJApaxOdC2HcxDxxM4M6cMT/tjEhlfKF+f29Ss2hXzSF
-	 mPzDOxUCXmKT61x9KR9IoJZKiGKSiI94PZCiLtw/zXKVGnbG7YfzxqN+xEAIKhT4nI
-	 6+ejmZD319AXYkvW8XFDft4RN1pJFqi7jfoekxdw=
+	b=1U5GOH1uoQkbteMEKVmcdS8kxyEgBpdeBG+HvwzmDpcbbAblJ+j1Z9Qxk0JuuMTjI
+	 D9iaswh7vBRPXFF+4Rf7c1U4QDR7DN76vKVaXKikq7Z3Euvl7r9dS12vq4dZhLjhGY
+	 sHgLEyYvooSlEvZMEGbu+Zc6O/jqBuZTV/lM+S/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boerge Struempfel <boerge.struempfel@gmail.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Tim Huang <Tim.Huang@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/194] gpiolib: sysfs: Fix error handling on failed export
-Date: Mon, 11 Dec 2023 19:22:22 +0100
-Message-ID: <20231211182043.433794820@linuxfoundation.org>
+Subject: [PATCH 6.1 153/194] drm/amdgpu: fix memory overflow in the IB test
+Date: Mon, 11 Dec 2023 19:22:23 +0100
+Message-ID: <20231211182043.481747623@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -37,65 +38,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boerge Struempfel <boerge.struempfel@gmail.com>
+From: Tim Huang <Tim.Huang@amd.com>
 
-[ Upstream commit 95dd1e34ff5bbee93a28ff3947eceaf6de811b1a ]
+[ Upstream commit 6b0b7789a7a5f3e69185449f891beea58e563f9b ]
 
-If gpio_set_transitory() fails, we should free the GPIO again. Most
-notably, the flag FLAG_REQUESTED has previously been set in
-gpiod_request_commit(), and should be reset on failure.
+Fix a memory overflow issue in the gfx IB test
+for some ASICs. At least 20 bytes are needed for
+the IB test packet.
 
-To my knowledge, this does not affect any current users, since the
-gpio_set_transitory() mainly returns 0 and -ENOTSUPP, which is converted
-to 0. However the gpio_set_transitory() function calles the .set_config()
-function of the corresponding GPIO chip and there are some GPIO drivers in
-which some (unlikely) branches return other values like -EPROBE_DEFER,
-and -EINVAL. In these cases, the above mentioned FLAG_REQUESTED would not
-be reset, which results in the pin being blocked until the next reboot.
+v2: correct code indentation errors. (Christian)
 
-Fixes: e10f72bf4b3e ("gpio: gpiolib: Generalise state persistence beyond sleep")
-Signed-off-by: Boerge Struempfel <boerge.struempfel@gmail.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Tim Huang <Tim.Huang@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-sysfs.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c  | 4 ++--
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c  | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
-index cd27bf173dec8..a64648682c72c 100644
---- a/drivers/gpio/gpiolib-sysfs.c
-+++ b/drivers/gpio/gpiolib-sysfs.c
-@@ -463,14 +463,17 @@ static ssize_t export_store(struct class *class,
- 		goto done;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index 23e7e5126eae6..66a6f7a37ebcf 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -397,7 +397,7 @@ static int gfx_v11_0_ring_test_ib(struct amdgpu_ring *ring, long timeout)
+ 		adev->wb.wb[index] = cpu_to_le32(0xCAFEDEAD);
+ 		cpu_ptr = &adev->wb.wb[index];
  
- 	status = gpiod_set_transitory(desc, false);
--	if (!status) {
--		status = gpiod_export(desc, true);
--		if (status < 0)
--			gpiod_free(desc);
--		else
--			set_bit(FLAG_SYSFS, &desc->flags);
-+	if (status) {
-+		gpiod_free(desc);
-+		goto done;
- 	}
- 
-+	status = gpiod_export(desc, true);
-+	if (status < 0)
-+		gpiod_free(desc);
-+	else
-+		set_bit(FLAG_SYSFS, &desc->flags);
+-		r = amdgpu_ib_get(adev, NULL, 16, AMDGPU_IB_POOL_DIRECT, &ib);
++		r = amdgpu_ib_get(adev, NULL, 20, AMDGPU_IB_POOL_DIRECT, &ib);
+ 		if (r) {
+ 			DRM_ERROR("amdgpu: failed to get ib (%ld).\n", r);
+ 			goto err1;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+index 7f0b18b0d4c48..71ef25425c7f6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+@@ -883,8 +883,8 @@ static int gfx_v8_0_ring_test_ib(struct amdgpu_ring *ring, long timeout)
+ 	gpu_addr = adev->wb.gpu_addr + (index * 4);
+ 	adev->wb.wb[index] = cpu_to_le32(0xCAFEDEAD);
+ 	memset(&ib, 0, sizeof(ib));
+-	r = amdgpu_ib_get(adev, NULL, 16,
+-					AMDGPU_IB_POOL_DIRECT, &ib);
 +
- done:
- 	if (status)
- 		pr_debug("%s: status %d\n", __func__, status);
++	r = amdgpu_ib_get(adev, NULL, 20, AMDGPU_IB_POOL_DIRECT, &ib);
+ 	if (r)
+ 		goto err1;
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index fe371022e5104..84ca601f7d5f3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -1034,8 +1034,8 @@ static int gfx_v9_0_ring_test_ib(struct amdgpu_ring *ring, long timeout)
+ 	gpu_addr = adev->wb.gpu_addr + (index * 4);
+ 	adev->wb.wb[index] = cpu_to_le32(0xCAFEDEAD);
+ 	memset(&ib, 0, sizeof(ib));
+-	r = amdgpu_ib_get(adev, NULL, 16,
+-					AMDGPU_IB_POOL_DIRECT, &ib);
++
++	r = amdgpu_ib_get(adev, NULL, 20, AMDGPU_IB_POOL_DIRECT, &ib);
+ 	if (r)
+ 		goto err1;
+ 
 -- 
 2.42.0
 
