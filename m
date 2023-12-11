@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA568C2D0;
-	Mon, 11 Dec 2023 18:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FA451C5B;
+	Mon, 11 Dec 2023 18:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7IK4w4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54806C433C7;
-	Mon, 11 Dec 2023 18:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8XKPNBL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C06C433C9;
+	Mon, 11 Dec 2023 18:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319605;
-	bh=SpamuoVu2Z/um0LBBfzH1CbRyqyKzv6L7Z25ESgfIE0=;
+	s=korg; t=1702319608;
+	bh=Ntx15zgQkT/WWi8EF/UEGD+jkRyAPqMMGvpxVTYbSlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7IK4w4sgbsYLfD3yaXw4Zn/RKWbu0BQs7HqJHKJToxM9aAFm1zjUTPNyfe4l7qtJ
-	 r+FfDosqr8455EPUuclBBHB+WGKg3/TeaP4P8FJASBcDvd1SA0448x6FAZeWDnU3dK
-	 bcL75318ODMYpG+1fge2sUVAfAqF7fwedh7Nmawc=
+	b=x8XKPNBLjTK1k1zkC1ooqLisdHwus8Y3bXRJ8iyY7CZvuaNT9diTb0Fpe5+8WAzVN
+	 bXJzfHr/GkShTUMRvsamC+VT41kkpp82or2yuAZK/HHvs65zqBRmQ3LzXMXnbVXYQb
+	 tKMoCQNcRwDyy5KFnVOxFwQtLLOwVg76jqF85ZlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Eric DeVolder <eric_devolder@yahoo.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Ignat Korchagin <ignat@cloudflare.com>
-Subject: [PATCH 6.6 166/244] drivers/base/cpu: crash data showing should depends on KEXEC_CORE
-Date: Mon, 11 Dec 2023 19:20:59 +0100
-Message-ID: <20231211182053.326787795@linuxfoundation.org>
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	kernel test robot <lkp@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 167/244] mm/memory_hotplug: add missing mem_hotplug_lock
+Date: Mon, 11 Dec 2023 19:21:00 +0100
+Message-ID: <20231211182053.371096092@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,81 +51,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 4e9e2e4c65136dfd32dd0afe555961433d1cf906 upstream.
+commit 001002e73712cdf6b8d9a103648cda3040ad7647 upstream.
 
-After commit 88a6f8994421 ("crash: memory and CPU hotplug sysfs
-attributes"), on x86_64, if only below kernel configs related to kdump are
-set, compiling error are triggered.
+>From Documentation/core-api/memory-hotplug.rst:
+When adding/removing/onlining/offlining memory or adding/removing
+heterogeneous/device memory, we should always hold the mem_hotplug_lock
+in write mode to serialise memory hotplug (e.g. access to global/zone
+variables).
 
-----
-CONFIG_CRASH_CORE=y
-CONFIG_KEXEC_CORE=y
-CONFIG_CRASH_DUMP=y
-CONFIG_CRASH_HOTPLUG=y
-------
+mhp_(de)init_memmap_on_memory() functions can change zone stats and
+struct page content, but they are currently called w/o the
+mem_hotplug_lock.
 
-------------------------------------------------------
-drivers/base/cpu.c: In function `crash_hotplug_show':
-drivers/base/cpu.c:309:40: error: implicit declaration of function `crash_hotplug_cpu_support'; did you mean `crash_hotplug_show'? [-Werror=implicit-function-declaration]
-  309 |         return sysfs_emit(buf, "%d\n", crash_hotplug_cpu_support());
-      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~
-      |                                        crash_hotplug_show
-cc1: some warnings being treated as errors
-------------------------------------------------------
+When memory block is being offlined and when kmemleak goes through each
+populated zone, the following theoretical race conditions could occur:
+CPU 0:					     | CPU 1:
+memory_offline()			     |
+-> offline_pages()			     |
+	-> mem_hotplug_begin()		     |
+	   ...				     |
+	-> mem_hotplug_done()		     |
+					     | kmemleak_scan()
+					     | -> get_online_mems()
+					     |    ...
+-> mhp_deinit_memmap_on_memory()	     |
+  [not protected by mem_hotplug_begin/done()]|
+  Marks memory section as offline,	     |   Retrieves zone_start_pfn
+  poisons vmemmap struct pages and updates   |   and struct page members.
+  the zone related data			     |
+   					     |    ...
+   					     | -> put_online_mems()
 
-CONFIG_KEXEC is used to enable kexec_load interface, the
-crash_notes/crash_notes_size/crash_hotplug showing depends on
-CONFIG_KEXEC is incorrect. It should depend on KEXEC_CORE instead.
+Fix this by ensuring mem_hotplug_lock is taken before performing
+mhp_init_memmap_on_memory().  Also ensure that
+mhp_deinit_memmap_on_memory() holds the lock.
 
-Fix it now.
+online/offline_pages() are currently only called from
+memory_block_online/offline(), so it is safe to move the locking there.
 
-Link: https://lkml.kernel.org/r/20231128055248.659808-1-bhe@redhat.com
-Fixes: 88a6f8994421 ("crash: memory and CPU hotplug sysfs attributes")
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Tested-by: Ignat Korchagin <ignat@cloudflare.com>	[compile-time only]
-Tested-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reviewed-by: Eric DeVolder <eric_devolder@yahoo.com>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20231120145354.308999-2-sumanthk@linux.ibm.com
+Fixes: a08a2ae34613 ("mm,memory_hotplug: allocate memmap from the added memory range")
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: kernel test robot <lkp@intel.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/cpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/base/memory.c |   18 +++++++++++++++---
+ mm/memory_hotplug.c   |   13 ++++++-------
+ 2 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/base/cpu.c b/drivers/base/cpu.c
-index 9ea22e165acd..548491de818e 100644
---- a/drivers/base/cpu.c
-+++ b/drivers/base/cpu.c
-@@ -144,7 +144,7 @@ static DEVICE_ATTR(release, S_IWUSR, NULL, cpu_release_store);
- #endif /* CONFIG_ARCH_CPU_PROBE_RELEASE */
- #endif /* CONFIG_HOTPLUG_CPU */
- 
--#ifdef CONFIG_KEXEC
-+#ifdef CONFIG_KEXEC_CORE
- #include <linux/kexec.h>
- 
- static ssize_t crash_notes_show(struct device *dev,
-@@ -189,14 +189,14 @@ static const struct attribute_group crash_note_cpu_attr_group = {
+--- a/drivers/base/memory.c
++++ b/drivers/base/memory.c
+@@ -180,6 +180,9 @@ static inline unsigned long memblk_nr_po
+ }
  #endif
  
- static const struct attribute_group *common_cpu_attr_groups[] = {
--#ifdef CONFIG_KEXEC
-+#ifdef CONFIG_KEXEC_CORE
- 	&crash_note_cpu_attr_group,
- #endif
- 	NULL
- };
++/*
++ * Must acquire mem_hotplug_lock in write mode.
++ */
+ static int memory_block_online(struct memory_block *mem)
+ {
+ 	unsigned long start_pfn = section_nr_to_pfn(mem->start_section_nr);
+@@ -204,10 +207,11 @@ static int memory_block_online(struct me
+ 	if (mem->altmap)
+ 		nr_vmemmap_pages = mem->altmap->free;
  
- static const struct attribute_group *hotplugable_cpu_attr_groups[] = {
--#ifdef CONFIG_KEXEC
-+#ifdef CONFIG_KEXEC_CORE
- 	&crash_note_cpu_attr_group,
- #endif
- 	NULL
--- 
-2.43.0
-
++	mem_hotplug_begin();
+ 	if (nr_vmemmap_pages) {
+ 		ret = mhp_init_memmap_on_memory(start_pfn, nr_vmemmap_pages, zone);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	}
+ 
+ 	ret = online_pages(start_pfn + nr_vmemmap_pages,
+@@ -215,7 +219,7 @@ static int memory_block_online(struct me
+ 	if (ret) {
+ 		if (nr_vmemmap_pages)
+ 			mhp_deinit_memmap_on_memory(start_pfn, nr_vmemmap_pages);
+-		return ret;
++		goto out;
+ 	}
+ 
+ 	/*
+@@ -227,9 +231,14 @@ static int memory_block_online(struct me
+ 					  nr_vmemmap_pages);
+ 
+ 	mem->zone = zone;
++out:
++	mem_hotplug_done();
+ 	return ret;
+ }
+ 
++/*
++ * Must acquire mem_hotplug_lock in write mode.
++ */
+ static int memory_block_offline(struct memory_block *mem)
+ {
+ 	unsigned long start_pfn = section_nr_to_pfn(mem->start_section_nr);
+@@ -247,6 +256,7 @@ static int memory_block_offline(struct m
+ 	if (mem->altmap)
+ 		nr_vmemmap_pages = mem->altmap->free;
+ 
++	mem_hotplug_begin();
+ 	if (nr_vmemmap_pages)
+ 		adjust_present_page_count(pfn_to_page(start_pfn), mem->group,
+ 					  -nr_vmemmap_pages);
+@@ -258,13 +268,15 @@ static int memory_block_offline(struct m
+ 		if (nr_vmemmap_pages)
+ 			adjust_present_page_count(pfn_to_page(start_pfn),
+ 						  mem->group, nr_vmemmap_pages);
+-		return ret;
++		goto out;
+ 	}
+ 
+ 	if (nr_vmemmap_pages)
+ 		mhp_deinit_memmap_on_memory(start_pfn, nr_vmemmap_pages);
+ 
+ 	mem->zone = NULL;
++out:
++	mem_hotplug_done();
+ 	return ret;
+ }
+ 
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1129,6 +1129,9 @@ void mhp_deinit_memmap_on_memory(unsigne
+ 	kasan_remove_zero_shadow(__va(PFN_PHYS(pfn)), PFN_PHYS(nr_pages));
+ }
+ 
++/*
++ * Must be called with mem_hotplug_lock in write mode.
++ */
+ int __ref online_pages(unsigned long pfn, unsigned long nr_pages,
+ 		       struct zone *zone, struct memory_group *group)
+ {
+@@ -1149,7 +1152,6 @@ int __ref online_pages(unsigned long pfn
+ 			 !IS_ALIGNED(pfn + nr_pages, PAGES_PER_SECTION)))
+ 		return -EINVAL;
+ 
+-	mem_hotplug_begin();
+ 
+ 	/* associate pfn range with the zone */
+ 	move_pfn_range_to_zone(zone, pfn, nr_pages, NULL, MIGRATE_ISOLATE);
+@@ -1208,7 +1210,6 @@ int __ref online_pages(unsigned long pfn
+ 	writeback_set_ratelimit();
+ 
+ 	memory_notify(MEM_ONLINE, &arg);
+-	mem_hotplug_done();
+ 	return 0;
+ 
+ failed_addition:
+@@ -1217,7 +1218,6 @@ failed_addition:
+ 		 (((unsigned long long) pfn + nr_pages) << PAGE_SHIFT) - 1);
+ 	memory_notify(MEM_CANCEL_ONLINE, &arg);
+ 	remove_pfn_range_from_zone(zone, pfn, nr_pages);
+-	mem_hotplug_done();
+ 	return ret;
+ }
+ 
+@@ -1863,6 +1863,9 @@ static int count_system_ram_pages_cb(uns
+ 	return 0;
+ }
+ 
++/*
++ * Must be called with mem_hotplug_lock in write mode.
++ */
+ int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages,
+ 			struct zone *zone, struct memory_group *group)
+ {
+@@ -1885,8 +1888,6 @@ int __ref offline_pages(unsigned long st
+ 			 !IS_ALIGNED(start_pfn + nr_pages, PAGES_PER_SECTION)))
+ 		return -EINVAL;
+ 
+-	mem_hotplug_begin();
+-
+ 	/*
+ 	 * Don't allow to offline memory blocks that contain holes.
+ 	 * Consequently, memory blocks with holes can never get onlined
+@@ -2027,7 +2028,6 @@ int __ref offline_pages(unsigned long st
+ 
+ 	memory_notify(MEM_OFFLINE, &arg);
+ 	remove_pfn_range_from_zone(zone, start_pfn, nr_pages);
+-	mem_hotplug_done();
+ 	return 0;
+ 
+ failed_removal_isolated:
+@@ -2042,7 +2042,6 @@ failed_removal:
+ 		 (unsigned long long) start_pfn << PAGE_SHIFT,
+ 		 ((unsigned long long) end_pfn << PAGE_SHIFT) - 1,
+ 		 reason);
+-	mem_hotplug_done();
+ 	return ret;
+ }
+ 
 
 
