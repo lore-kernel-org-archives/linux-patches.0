@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422B2C8C8;
-	Mon, 11 Dec 2023 18:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25A2C8C8;
+	Mon, 11 Dec 2023 18:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyNAozVi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF88DC433C7;
-	Mon, 11 Dec 2023 18:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoSXGYc8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0A3C433C8;
+	Mon, 11 Dec 2023 18:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319595;
-	bh=jBWgQCEBDdMu32Kw5Ju/5fllb5Sze/LzgUCrmbJyE00=;
+	s=korg; t=1702319597;
+	bh=Eqfgi9WX1khHc5MGFTMkuXlInAgIdO3YKx17aNnfsdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KyNAozVim7XwdhEhVNLLA89Ge2edJTl/vRrcJqJhM1zZGsTIDOJbhtOavHvSvYJEL
-	 vXc2eWh8YV7XTgjG9x4ZpDRW3CVXX0QqFrq6dzcc0NXV3f7Ge5U23niMIEcyu+4Em7
-	 SOSTTsnxukQilDGJp59AqwBViRMtWWB+vj2hWlPw=
+	b=HoSXGYc8Xnu82+2nkOWfp0Vbd39Gw8CWTSw8Q3CofeiScOuF9Wl4CmWHOOUUgndGv
+	 eoIyLOBPf/22x5KOUUYmQaHHyXw2s5q8OktD80/iUFvDfUqgCOWx72HYTPFZ964/+x
+	 cHoNIcL7isBqR+xHE15tIuGgNiRgF/rcEzpuoh88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 163/244] platform/surface: aggregator: fix recv_buf() return value
-Date: Mon, 11 Dec 2023 19:20:56 +0100
-Message-ID: <20231211182053.178174439@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Yong He <alexyonghe@tencent.com>
+Subject: [PATCH 6.6 164/244] workqueue: Make sure that wq_unbound_cpumask is never empty
+Date: Mon, 11 Dec 2023 19:20:57 +0100
+Message-ID: <20231211182053.226058711@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -36,53 +36,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit c8820c92caf0770bec976b01fa9e82bb993c5865 upstream.
+commit 4a6c5607d4502ccd1b15b57d57f17d12b6f257a7 upstream.
 
-Serdev recv_buf() callback is supposed to return the amount of bytes
-consumed, therefore an int in between 0 and count.
+During boot, depending on how the housekeeping and workqueue.unbound_cpus
+masks are set, wq_unbound_cpumask can end up empty. Since 8639ecebc9b1
+("workqueue: Implement non-strict affinity scope for unbound workqueues"),
+this may end up feeding -1 as a CPU number into scheduler leading to oopses.
 
-Do not return negative number in case of issue, when
-ssam_controller_receive_buf() returns ESHUTDOWN just returns 0, e.g. no
-bytes consumed, this keep the exact same behavior as it was before.
+  BUG: unable to handle page fault for address: ffffffff8305e9c0
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  ...
+  Call Trace:
+   <TASK>
+   select_idle_sibling+0x79/0xaf0
+   select_task_rq_fair+0x1cb/0x7b0
+   try_to_wake_up+0x29c/0x5c0
+   wake_up_process+0x19/0x20
+   kick_pool+0x5e/0xb0
+   __queue_work+0x119/0x430
+   queue_work_on+0x29/0x30
+  ...
 
-This fixes a potential WARN in serdev-ttyport.c:ttyport_receive_buf().
+An empty wq_unbound_cpumask is a clear misconfiguration and already
+disallowed once system is booted up. Let's warn on and ignore
+unbound_cpumask restrictions which lead to no unbound cpus. While at it,
+also remove now unncessary empty check on wq_unbound_cpumask in
+wq_select_unbound_cpu().
 
-Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20231128194935.11350-1-francesco@dolcini.it
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-and-Tested-by: Yong He <alexyonghe@tencent.com>
+Link: http://lkml.kernel.org/r/20231120121623.119780-1-alexyonghe@tencent.com
+Fixes: 8639ecebc9b1 ("workqueue: Implement non-strict affinity scope for unbound workqueues")
+Cc: stable@vger.kernel.org # v6.6+
+Reviewed-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/surface/aggregator/core.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/workqueue.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
---- a/drivers/platform/surface/aggregator/core.c
-+++ b/drivers/platform/surface/aggregator/core.c
-@@ -231,9 +231,12 @@ static int ssam_receive_buf(struct serde
- 			    size_t n)
- {
- 	struct ssam_controller *ctrl;
-+	int ret;
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 6e578f576a6f..2989b57e154a 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -1684,9 +1684,6 @@ static int wq_select_unbound_cpu(int cpu)
+ 		pr_warn_once("workqueue: round-robin CPU selection forced, expect performance impact\n");
+ 	}
  
- 	ctrl = serdev_device_get_drvdata(dev);
--	return ssam_controller_receive_buf(ctrl, buf, n);
-+	ret = ssam_controller_receive_buf(ctrl, buf, n);
+-	if (cpumask_empty(wq_unbound_cpumask))
+-		return cpu;
+-
+ 	new_cpu = __this_cpu_read(wq_rr_cpu_last);
+ 	new_cpu = cpumask_next_and(new_cpu, wq_unbound_cpumask, cpu_online_mask);
+ 	if (unlikely(new_cpu >= nr_cpu_ids)) {
+@@ -6515,6 +6512,17 @@ static inline void wq_watchdog_init(void) { }
+ 
+ #endif	/* CONFIG_WQ_WATCHDOG */
+ 
++static void __init restrict_unbound_cpumask(const char *name, const struct cpumask *mask)
++{
++	if (!cpumask_intersects(wq_unbound_cpumask, mask)) {
++		pr_warn("workqueue: Restricting unbound_cpumask (%*pb) with %s (%*pb) leaves no CPU, ignoring\n",
++			cpumask_pr_args(wq_unbound_cpumask), name, cpumask_pr_args(mask));
++		return;
++	}
 +
-+	return ret < 0 ? 0 : ret;
- }
++	cpumask_and(wq_unbound_cpumask, wq_unbound_cpumask, mask);
++}
++
+ /**
+  * workqueue_init_early - early init for workqueue subsystem
+  *
+@@ -6534,11 +6542,11 @@ void __init workqueue_init_early(void)
+ 	BUILD_BUG_ON(__alignof__(struct pool_workqueue) < __alignof__(long long));
  
- static void ssam_write_wakeup(struct serdev_device *dev)
+ 	BUG_ON(!alloc_cpumask_var(&wq_unbound_cpumask, GFP_KERNEL));
+-	cpumask_copy(wq_unbound_cpumask, housekeeping_cpumask(HK_TYPE_WQ));
+-	cpumask_and(wq_unbound_cpumask, wq_unbound_cpumask, housekeeping_cpumask(HK_TYPE_DOMAIN));
+-
++	cpumask_copy(wq_unbound_cpumask, cpu_possible_mask);
++	restrict_unbound_cpumask("HK_TYPE_WQ", housekeeping_cpumask(HK_TYPE_WQ));
++	restrict_unbound_cpumask("HK_TYPE_DOMAIN", housekeeping_cpumask(HK_TYPE_DOMAIN));
+ 	if (!cpumask_empty(&wq_cmdline_cpumask))
+-		cpumask_and(wq_unbound_cpumask, wq_unbound_cpumask, &wq_cmdline_cpumask);
++		restrict_unbound_cpumask("workqueue.unbound_cpus", &wq_cmdline_cpumask);
+ 
+ 	pwq_cache = KMEM_CACHE(pool_workqueue, SLAB_PANIC);
+ 
+-- 
+2.43.0
+
 
 
