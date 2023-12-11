@@ -1,375 +1,150 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF12FC06;
-	Mon, 11 Dec 2023 18:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F6BFC06;
+	Mon, 11 Dec 2023 18:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/t+lJBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD22DC433C8;
-	Mon, 11 Dec 2023 18:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE+bXbYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BB4C433C8;
+	Mon, 11 Dec 2023 18:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320174;
-	bh=PpksGrSnsbl7NvnLFOoRUn/7YNNa2ndyMrsLfjhggXk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=n/t+lJBl80dIEzfnpv1D7l6q2Jz2jaRYVHh/ch+Kn3T7FhfjPvqiVbW4/ntmZ5Z8+
-	 agzlYVx8v7JBcKdmClXbNiUNJ3YN5jeUasf468FskqoGoGJiQ/Sm4dFIHWVrOjKOaz
-	 wxh6q9FuZlToOb543v/n5bd3mepNiPv4lK3t8E0w=
+	s=korg; t=1702320177;
+	bh=g0NzX8155paULXE2y7WUN6AK4SxFUpdBVZOnfj8kuhA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=TE+bXbYHCAbS8Wt2chpTHO6UHZDhJu+3BifcJmJRzg1tUfj4BCJmxehlBpVsQhTjX
+	 Xl1yrToS7snJau7UfrFd89Y7BxvYMamMx1DGXP+Qi892ocOR0BU2XO4B4BWWhYtpJ5
+	 M3idJmJDORhnJYFAUuxotQsvZpyxK9i8ygJlZssw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 5.4 00/67] 5.4.264-rc1 review
-Date: Mon, 11 Dec 2023 19:21:44 +0100
-Message-ID: <20231211182015.049134368@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Yepeng Pan <yepeng.pan@cispa.de>,
+	Christian Rossow <rossow@cispa.de>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 25/67] tcp: do not accept ACK of bytes we never sent
+Date: Mon, 11 Dec 2023 19:22:09 +0100
+Message-ID: <20231211182016.141855913@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
+References: <20231211182015.049134368@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.264-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.264-rc1
-X-KernelTest-Deadline: 2023-12-13T18:20+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.4.264 release.
-There are 67 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Eric Dumazet <edumazet@google.com>
+
+[ Upstream commit 3d501dd326fb1c73f1b8206d4c6e1d7b15c07e27 ]
+
+This patch is based on a detailed report and ideas from Yepeng Pan
+and Christian Rossow.
+
+ACK seq validation is currently following RFC 5961 5.2 guidelines:
+
+   The ACK value is considered acceptable only if
+   it is in the range of ((SND.UNA - MAX.SND.WND) <= SEG.ACK <=
+   SND.NXT).  All incoming segments whose ACK value doesn't satisfy the
+   above condition MUST be discarded and an ACK sent back.  It needs to
+   be noted that RFC 793 on page 72 (fifth check) says: "If the ACK is a
+   duplicate (SEG.ACK < SND.UNA), it can be ignored.  If the ACK
+   acknowledges something not yet sent (SEG.ACK > SND.NXT) then send an
+   ACK, drop the segment, and return".  The "ignored" above implies that
+   the processing of the incoming data segment continues, which means
+   the ACK value is treated as acceptable.  This mitigation makes the
+   ACK check more stringent since any ACK < SND.UNA wouldn't be
+   accepted, instead only ACKs that are in the range ((SND.UNA -
+   MAX.SND.WND) <= SEG.ACK <= SND.NXT) get through.
+
+This can be refined for new (and possibly spoofed) flows,
+by not accepting ACK for bytes that were never sent.
+
+This greatly improves TCP security at a little cost.
+
+I added a Fixes: tag to make sure this patch will reach stable trees,
+even if the 'blamed' patch was adhering to the RFC.
+
+tp->bytes_acked was added in linux-4.2
+
+Following packetdrill test (courtesy of Yepeng Pan) shows
+the issue at hand:
+
+0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
++0 setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
++0 bind(3, ..., ...) = 0
++0 listen(3, 1024) = 0
+
+// ---------------- Handshake ------------------- //
+
+// when window scale is set to 14 the window size can be extended to
+// 65535 * (2^14) = 1073725440. Linux would accept an ACK packet
+// with ack number in (Server_ISN+1-1073725440. Server_ISN+1)
+// ,though this ack number acknowledges some data never
+// sent by the server.
+
++0 < S 0:0(0) win 65535 <mss 1400,nop,wscale 14>
++0 > S. 0:0(0) ack 1 <...>
++0 < . 1:1(0) ack 1 win 65535
++0 accept(3, ..., ...) = 4
+
+// For the established connection, we send an ACK packet,
+// the ack packet uses ack number 1 - 1073725300 + 2^32,
+// where 2^32 is used to wrap around.
+// Note: we used 1073725300 instead of 1073725440 to avoid possible
+// edge cases.
+// 1 - 1073725300 + 2^32 = 3221241997
+
+// Oops, old kernels happily accept this packet.
++0 < . 1:1001(1000) ack 3221241997 win 65535
+
+// After the kernel fix the following will be replaced by a challenge ACK,
+// and prior malicious frame would be dropped.
++0 > . 1:1(0) ack 1001
+
+Fixes: 354e4aa391ed ("tcp: RFC 5961 5.2 Blind Data Injection Attack Mitigation")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Yepeng Pan <yepeng.pan@cispa.de>
+Reported-by: Christian Rossow <rossow@cispa.de>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20231205161841.2702925-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/ipv4/tcp_input.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index fe5ef114beba5..982fe464156a4 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -3657,8 +3657,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+ 	 * then we can probably ignore it.
+ 	 */
+ 	if (before(ack, prior_snd_una)) {
++		u32 max_window;
++
++		/* do not accept ACK for bytes we never sent. */
++		max_window = min_t(u64, tp->max_window, tp->bytes_acked);
+ 		/* RFC 5961 5.2 [Blind Data Injection Attack].[Mitigation] */
+-		if (before(ack, prior_snd_una - tp->max_window)) {
++		if (before(ack, prior_snd_una - max_window)) {
+ 			if (!(flag & FLAG_NO_CHALLENGE_ACK))
+ 				tcp_send_challenge_ack(sk, skb);
+ 			return -1;
+-- 
+2.42.0
 
-Responses should be made by Wed, 13 Dec 2023 18:19:59 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.264-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.264-rc1
-
-Mukesh Ojha <quic_mojha@quicinc.com>
-    devcoredump: Send uevent once devcd is ready
-
-Mukesh Ojha <quic_mojha@quicinc.com>
-    devcoredump : Serialize devcd_del work
-
-Paulo Alcantara <pc@manguebit.com>
-    smb: client: fix potential NULL deref in parse_dfs_referrals()
-
-David Howells <dhowells@redhat.com>
-    cifs: Fix non-availability of dedup breaking generic/304
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "btrfs: add dmesg output for first mount and last unmount of a filesystem"
-
-Namhyung Kim <namhyung@kernel.org>
-    tools headers UAPI: Sync linux/perf_event.h with the kernel sources
-
-Ido Schimmel <idosch@nvidia.com>
-    drop_monitor: Require 'CAP_SYS_ADMIN' when joining "events" group
-
-Ido Schimmel <idosch@nvidia.com>
-    psample: Require 'CAP_NET_ADMIN' when joining "packets" group
-
-Ido Schimmel <idosch@nvidia.com>
-    genetlink: add CAP_NET_ADMIN test for multicast bind
-
-Ido Schimmel <idosch@nvidia.com>
-    netlink: don't call ->netlink_bind with table lock held
-
-Pavel Begunkov <asml.silence@gmail.com>
-    io_uring/af_unix: disable sending io_uring over sockets
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: fix missing error check for sb_set_blocksize call
-
-Claudio Imbrenda <imbrenda@linux.ibm.com>
-    KVM: s390/mm: Properly reset no-dat
-
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/CPU/AMD: Check vendor in the AMD microcode callback
-
-Ronald Wahl <ronald.wahl@raritan.com>
-    serial: 8250_omap: Add earlycon support for the AM654 UART controller
-
-Daniel Mack <daniel@zonque.org>
-    serial: sc16is7xx: address RX timeout interrupt errata
-
-Arnd Bergmann <arnd@arndb.de>
-    ARM: PL011: Fix DMA support
-
-RD Babiera <rdbabiera@google.com>
-    usb: typec: class: fix typec_altmode_put_partner to put plugs
-
-Cameron Williams <cang1@live.co.uk>
-    parport: Add support for Brainboxes IX/UC/PX parallel cards
-
-Konstantin Aladyshev <aladyshev22@gmail.com>
-    usb: gadget: f_hid: fix report descriptor allocation
-
-Wenchao Chen <wenchao.chen@unisoc.com>
-    mmc: sdhci-sprd: Fix vqmmc not shutting down after the card was pulled
-
-Heiner Kallweit <hkallweit1@gmail.com>
-    mmc: core: add helpers mmc_regulator_enable/disable_vqmmc
-
-Boerge Struempfel <boerge.struempfel@gmail.com>
-    gpiolib: sysfs: Fix error handling on failed export
-
-Peter Zijlstra <peterz@infradead.org>
-    perf: Fix perf_event_validate_size()
-
-Namhyung Kim <namhyung@kernel.org>
-    perf/core: Add a new read format to get a number of lost samples
-
-AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-    arm64: dts: mediatek: mt8173-evb: Fix regulator-fixed node names
-
-Eugen Hristev <eugen.hristev@collabora.com>
-    arm64: dts: mediatek: mt7622: fix memory node warning check
-
-Daniel Borkmann <daniel@iogearbox.net>
-    packet: Move reference count in packet_sock to atomic_long_t
-
-Petr Pavlu <petr.pavlu@suse.com>
-    tracing: Fix a possible race when disabling buffered events
-
-Petr Pavlu <petr.pavlu@suse.com>
-    tracing: Fix incomplete locking when disabling buffered events
-
-Steven Rostedt (Google) <rostedt@goodmis.org>
-    tracing: Always update snapshot buffer size
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: prevent WARNING in nilfs_sufile_set_segment_usage()
-
-Jason Zhang <jason.zhang@rock-chips.com>
-    ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
-
-Philipp Zabel <p.zabel@pengutronix.de>
-    ARM: dts: imx7: Declare timers compatible with fsl,imx6dl-gpt
-
-Anson Huang <Anson.Huang@nxp.com>
-    ARM: dts: imx: make gpt node name generic
-
-Kunwu Chan <chentao@kylinos.cn>
-    ARM: imx: Check return value of devm_kasprintf in imx_mmdc_perf_init
-
-Dinghao Liu <dinghao.liu@zju.edu.cn>
-    scsi: be2iscsi: Fix a memleak in beiscsi_init_wrb_handle()
-
-Petr Pavlu <petr.pavlu@suse.com>
-    tracing: Fix a warning when allocating buffered events fails
-
-Dinghao Liu <dinghao.liu@zju.edu.cn>
-    ASoC: wm_adsp: fix memleak in wm_adsp_buffer_populate
-
-Armin Wolf <W_Armin@gmx.de>
-    hwmon: (acpi_power_meter) Fix 4.29 MW bug
-
-Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-    RDMA/bnxt_re: Correct module description string
-
-John Fastabend <john.fastabend@gmail.com>
-    bpf: sockmap, updating the sg structure should also update curr
-
-Eric Dumazet <edumazet@google.com>
-    tcp: do not accept ACK of bytes we never sent
-
-Phil Sutter <phil@nwl.cc>
-    netfilter: xt_owner: Fix for unsafe access of sk->sk_socket
-
-Yonglong Liu <liuyonglong@huawei.com>
-    net: hns: fix fake link up on xge port
-
-Shigeru Yoshida <syoshida@redhat.com>
-    ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()
-
-Thomas Reichinger <thomas.reichinger@sohard.de>
-    arcnet: restoring support for multiple Sohard Arcnet cards
-
-Tong Zhang <ztong0001@gmail.com>
-    net: arcnet: com20020 fix error handling
-
-Ahmed S. Darwish <a.darwish@linutronix.de>
-    net: arcnet: Fix RESET flag handling
-
-Randy Dunlap <rdunlap@infradead.org>
-    hv_netvsc: rndis_filter needs to select NLS
-
-Eric Dumazet <edumazet@google.com>
-    ipv6: fix potential NULL deref in fib6_add()
-
-Luca Ceresoli <luca.ceresoli@bootlin.com>
-    of: dynamic: Fix of_reconfig_get_state_change() return value documentation
-
-Rob Herring <robh@kernel.org>
-    of: Add missing 'Return' section in kerneldoc comments
-
-Rob Herring <robh@kernel.org>
-    of: Fix kerneldoc output formatting
-
-Lee Jones <lee.jones@linaro.org>
-    of: base: Fix some formatting issues and provide missing descriptions
-
-Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-    of/irq: Make of_msi_map_rid() PCI bus agnostic
-
-Diana Craciun <diana.craciun@oss.nxp.com>
-    of/irq: make of_msi_map_get_device_domain() bus agnostic
-
-Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-    of/iommu: Make of_map_rid() PCI agnostic
-
-Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-    ACPI/IORT: Make iort_msi_map_rid() PCI agnostic
-
-Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-    ACPI/IORT: Make iort_get_device_domain IRQ domain agnostic
-
-Ulf Hansson <ulf.hansson@linaro.org>
-    of: base: Add of_get_cpu_state_node() to get idle states for a CPU node
-
-YuanShang <YuanShang.Mao@amd.com>
-    drm/amdgpu: correct chunk_ptr to a pointer to chunk.
-
-Masahiro Yamada <masahiroy@kernel.org>
-    kconfig: fix memory leak from range properties
-
-Alex Pakhunov <alexey.pakhunov@spacex.com>
-    tg3: Increment tx_dropped in tg3_tso_bug()
-
-Alex Pakhunov <alexey.pakhunov@spacex.com>
-    tg3: Move the [rt]x_dropped counters to tg3_napi
-
-Jozsef Kadlecsik <kadlec@netfilter.org>
-    netfilter: ipset: fix race condition between swap/destroy and kernel side add/del/test
-
-Thomas Gleixner <tglx@linutronix.de>
-    hrtimers: Push pending hrtimers away from outgoing CPU earlier
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/arm/boot/dts/imx6qdl.dtsi                     |   2 +-
- arch/arm/boot/dts/imx6sl.dtsi                      |   2 +-
- arch/arm/boot/dts/imx6sx.dtsi                      |   2 +-
- arch/arm/boot/dts/imx6ul.dtsi                      |   4 +-
- arch/arm/boot/dts/imx7s.dtsi                       |  16 +-
- arch/arm/mach-imx/mmdc.c                           |   7 +-
- .../boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts  |   2 +-
- arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts       |   2 +-
- arch/arm64/boot/dts/mediatek/mt8173-evb.dts        |   4 +-
- arch/s390/mm/pgtable.c                             |   2 +-
- arch/x86/kernel/cpu/amd.c                          |   3 +
- drivers/acpi/arm64/iort.c                          |  26 +-
- drivers/base/devcoredump.c                         |  86 ++++-
- drivers/gpio/gpiolib-sysfs.c                       |  15 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c             |   2 +-
- drivers/hwmon/acpi_power_meter.c                   |   4 +
- drivers/infiniband/hw/bnxt_re/main.c               |   2 +-
- drivers/iommu/of_iommu.c                           |   4 +-
- drivers/mmc/core/regulator.c                       |  41 +++
- drivers/mmc/host/sdhci-sprd.c                      |  25 ++
- drivers/net/arcnet/arc-rimi.c                      |   4 +-
- drivers/net/arcnet/arcdevice.h                     |   8 +
- drivers/net/arcnet/arcnet.c                        |  66 +++-
- drivers/net/arcnet/com20020-isa.c                  |   4 +-
- drivers/net/arcnet/com20020-pci.c                  | 119 ++++---
- drivers/net/arcnet/com20020_cs.c                   |   2 +-
- drivers/net/arcnet/com90io.c                       |   4 +-
- drivers/net/arcnet/com90xx.c                       |   4 +-
- drivers/net/ethernet/broadcom/tg3.c                |  42 ++-
- drivers/net/ethernet/broadcom/tg3.h                |   4 +-
- drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c  |  29 ++
- drivers/net/hyperv/Kconfig                         |   1 +
- drivers/of/base.c                                  | 394 ++++++++++++---------
- drivers/of/dynamic.c                               |  22 +-
- drivers/of/fdt.c                                   |  17 +-
- drivers/of/irq.c                                   |  46 +--
- drivers/of/overlay.c                               |  16 +-
- drivers/of/platform.c                              |  10 +-
- drivers/of/property.c                              |  66 ++--
- drivers/parport/parport_pc.c                       |  21 ++
- drivers/pci/msi.c                                  |   9 +-
- drivers/scsi/be2iscsi/be_main.c                    |   1 +
- drivers/tty/serial/8250/8250_early.c               |   1 +
- drivers/tty/serial/amba-pl011.c                    | 112 +++---
- drivers/tty/serial/sc16is7xx.c                     |  12 +
- drivers/usb/gadget/function/f_hid.c                |   7 +-
- drivers/usb/typec/class.c                          |   5 +-
- fs/btrfs/disk-io.c                                 |   1 -
- fs/btrfs/super.c                                   |   5 +-
- fs/cifs/cifsfs.c                                   |   4 +-
- fs/cifs/smb2ops.c                                  |   2 +
- fs/io_uring.c                                      | 101 +-----
- fs/nilfs2/sufile.c                                 |  44 ++-
- fs/nilfs2/the_nilfs.c                              |   6 +-
- include/linux/acpi_iort.h                          |  13 +-
- include/linux/cpuhotplug.h                         |   1 +
- include/linux/hrtimer.h                            |   4 +-
- include/linux/mmc/host.h                           |   3 +
- include/linux/of.h                                 |  75 ++--
- include/linux/of_irq.h                             |  13 +-
- include/linux/perf_event.h                         |   2 +
- include/net/genetlink.h                            |   3 +
- include/uapi/linux/perf_event.h                    |   5 +-
- kernel/cpu.c                                       |   8 +-
- kernel/events/core.c                               |  80 +++--
- kernel/events/ring_buffer.c                        |   5 +-
- kernel/time/hrtimer.c                              |  33 +-
- kernel/trace/trace.c                               |  42 ++-
- net/core/drop_monitor.c                            |   4 +-
- net/core/filter.c                                  |  19 +
- net/core/scm.c                                     |   6 +
- net/ipv4/ip_gre.c                                  |  11 +-
- net/ipv4/tcp_input.c                               |   6 +-
- net/ipv6/ip6_fib.c                                 |   6 +-
- net/netfilter/ipset/ip_set_core.c                  |  14 +-
- net/netfilter/xt_owner.c                           |  16 +-
- net/netlink/af_netlink.c                           |   4 +-
- net/netlink/genetlink.c                            |  35 ++
- net/packet/af_packet.c                             |  16 +-
- net/packet/internal.h                              |   2 +-
- net/psample/psample.c                              |   3 +-
- scripts/kconfig/symbol.c                           |  14 +-
- sound/core/pcm.c                                   |   1 +
- sound/soc/codecs/wm_adsp.c                         |   8 +-
- tools/include/uapi/linux/perf_event.h              |   5 +-
- 86 files changed, 1191 insertions(+), 710 deletions(-)
 
 
