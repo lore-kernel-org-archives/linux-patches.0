@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257464F212;
-	Mon, 11 Dec 2023 18:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9874B4F212;
+	Mon, 11 Dec 2023 18:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+p1IRas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57525C433C8;
-	Mon, 11 Dec 2023 18:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3VsbCo2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBE1C433C8;
+	Mon, 11 Dec 2023 18:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702318926;
-	bh=O7BQTvfEUGVxlJx88nsj0hU6qpz4SCzDG0SgcqKMOL4=;
+	s=korg; t=1702318929;
+	bh=LVAGB0uNRA4DnScU+iGR4q5VPMuI5M9ihxSBWDpCrgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+p1IRasxX/7i1EqhwtR55K28GynyD1mKtd6Ejhcs3/rdvZOndlOqGY+N6LX/Bzs3
-	 qQWKU9E7hCpJpYN+Rnxzuq02yF3KwBcUCQeD90xxkKc6QDJOYW5z/3Z7WfdE/ksis7
-	 60g78zD6X88GcWFuHsaz5GsJUXrAjaiu1ugGzRyM=
+	b=H3VsbCo226fv8ZDTVEhrCLa99cCnRcKxEjLUjlxhFnWhGUZr2wUiWqwA/2tauUWI6
+	 +HU1B2bz5fl5Ha0wLwLeFdHMFFgITPT8f0zhb0US+VcPaUDIUHMq/R4BfGPmEnTMim
+	 EobotQotiP/+opmi6Fq2aEL02liFXTlxbgLKav7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 21/25] nilfs2: fix missing error check for sb_set_blocksize call
-Date: Mon, 11 Dec 2023 19:21:12 +0100
-Message-ID: <20231211182009.466378698@linuxfoundation.org>
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sean Tranchetti <stranche@codeaurora.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Ido Schimmel <idosch@nvidia.com>
+Subject: [PATCH 4.14 22/25] netlink: dont call ->netlink_bind with table lock held
+Date: Mon, 11 Dec 2023 19:21:13 +0100
+Message-ID: <20231211182009.500641653@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182008.665944227@linuxfoundation.org>
 References: <20231211182008.665944227@linuxfoundation.org>
@@ -41,79 +48,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit d61d0ab573649789bf9eb909c89a1a193b2e3d10 upstream.
+From: Florian Westphal <fw@strlen.de>
 
-When mounting a filesystem image with a block size larger than the page
-size, nilfs2 repeatedly outputs long error messages with stack traces to
-the kernel log, such as the following:
+commit f2764bd4f6a8dffaec3e220728385d9756b3c2cb upstream.
 
- getblk(): invalid block size 8192 requested
- logical block size: 512
- ...
- Call Trace:
-  dump_stack_lvl+0x92/0xd4
-  dump_stack+0xd/0x10
-  bdev_getblk+0x33a/0x354
-  __breadahead+0x11/0x80
-  nilfs_search_super_root+0xe2/0x704 [nilfs2]
-  load_nilfs+0x72/0x504 [nilfs2]
-  nilfs_mount+0x30f/0x518 [nilfs2]
-  legacy_get_tree+0x1b/0x40
-  vfs_get_tree+0x18/0xc4
-  path_mount+0x786/0xa88
-  __ia32_sys_mount+0x147/0x1a8
-  __do_fast_syscall_32+0x56/0xc8
-  do_fast_syscall_32+0x29/0x58
-  do_SYSENTER_32+0x15/0x18
-  entry_SYSENTER_32+0x98/0xf1
- ...
+When I added support to allow generic netlink multicast groups to be
+restricted to subscribers with CAP_NET_ADMIN I was unaware that a
+genl_bind implementation already existed in the past.
 
-This overloads the system logger.  And to make matters worse, it sometimes
-crashes the kernel with a memory access violation.
+It was reverted due to ABBA deadlock:
 
-This is because the return value of the sb_set_blocksize() call, which
-should be checked for errors, is not checked.
+1. ->netlink_bind gets called with the table lock held.
+2. genetlink bind callback is invoked, it grabs the genl lock.
 
-The latter issue is due to out-of-buffer memory being accessed based on a
-large block size that caused sb_set_blocksize() to fail for buffers read
-with the initial minimum block size that remained unupdated in the
-super_block structure.
+But when a new genl subsystem is (un)registered, these two locks are
+taken in reverse order.
 
-Since nilfs2 mkfs tool does not accept block sizes larger than the system
-page size, this has been overlooked.  However, it is possible to create
-this situation by intentionally modifying the tool or by passing a
-filesystem image created on a system with a large page size to a system
-with a smaller page size and mounting it.
+One solution would be to revert again and add a comment in genl
+referring 1e82a62fec613, "genetlink: remove genl_bind").
 
-Fix this issue by inserting the expected error handling for the call to
-sb_set_blocksize().
+This would need a second change in mptcp to not expose the raw token
+value anymore, e.g.  by hashing the token with a secret key so userspace
+can still associate subflow events with the correct mptcp connection.
 
-Link: https://lkml.kernel.org/r/20231129141547.4726-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+However, Paolo Abeni reminded me to double-check why the netlink table is
+locked in the first place.
+
+I can't find one.  netlink_bind() is already called without this lock
+when userspace joins a group via NETLINK_ADD_MEMBERSHIP setsockopt.
+Same holds for the netlink_unbind operation.
+
+Digging through the history, commit f773608026ee1
+("netlink: access nlk groups safely in netlink bind and getname")
+expanded the lock scope.
+
+commit 3a20773beeeeade ("net: netlink: cap max groups which will be considered in netlink_bind()")
+... removed the nlk->ngroups access that the lock scope
+extension was all about.
+
+Reduce the lock scope again and always call ->netlink_bind without
+the table lock.
+
+The Fixes tag should be vs. the patch mentioned in the link below,
+but that one got squash-merged into the patch that came earlier in the
+series.
+
+Fixes: 4d54cc32112d8d ("mptcp: avoid lock_fast usage in accept path")
+Link: https://lore.kernel.org/mptcp/20210213000001.379332-8-mathew.j.martineau@linux.intel.com/T/#u
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Xin Long <lucien.xin@gmail.com>
+Cc: Johannes Berg <johannes.berg@intel.com>
+Cc: Sean Tranchetti <stranche@codeaurora.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/the_nilfs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netlink/af_netlink.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -697,7 +697,11 @@ int init_nilfs(struct the_nilfs *nilfs,
- 			goto failed_sbh;
- 		}
- 		nilfs_release_super_block(nilfs);
--		sb_set_blocksize(sb, blocksize);
-+		if (!sb_set_blocksize(sb, blocksize)) {
-+			nilfs_msg(sb, KERN_ERR, "bad blocksize %d", blocksize);
-+			err = -EINVAL;
-+			goto out;
-+		}
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1001,7 +1001,6 @@ static int netlink_bind(struct socket *s
+ 			return -EINVAL;
+ 	}
  
- 		err = nilfs_load_super_block(nilfs, sb, blocksize, &sbp);
- 		if (err)
+-	netlink_lock_table();
+ 	if (nlk->netlink_bind && groups) {
+ 		int group;
+ 
+@@ -1013,13 +1012,14 @@ static int netlink_bind(struct socket *s
+ 			if (!err)
+ 				continue;
+ 			netlink_undo_bind(group, groups, sk);
+-			goto unlock;
++			return err;
+ 		}
+ 	}
+ 
+ 	/* No need for barriers here as we return to user-space without
+ 	 * using any of the bound attributes.
+ 	 */
++	netlink_lock_table();
+ 	if (!bound) {
+ 		err = nladdr->nl_pid ?
+ 			netlink_insert(sk, nladdr->nl_pid) :
 
 
