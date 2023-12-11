@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8BBEEB8;
-	Mon, 11 Dec 2023 18:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094771D696;
+	Mon, 11 Dec 2023 18:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9YMXKfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87373C433C8;
-	Mon, 11 Dec 2023 18:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMPAkOKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32969C433C7;
+	Mon, 11 Dec 2023 18:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319460;
-	bh=SqWo7Uap2ygveIExh+8xv+YP8J/atHs8EHoKVILrb6Q=;
+	s=korg; t=1702319463;
+	bh=j4sCLRIBk+F0+LQqGtsnw6W5j9aOLehuA5QHwcsC338=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9YMXKfXChm0Tq3kbCdNdg7Lza3muWkT+dlPNqoIIOym927p6yivqkOSKhJK+G8By
-	 wV33WdKJuz2AQHslM3247yHLMPzKYHrngTn873h9umh1buWXZbyuqJqGpGX/L9BrHK
-	 hH/9QGqpIwpayncNuOSjOlZsodRX2MS9liv4oWPw=
+	b=uMPAkOKGsgwC3b6J++NgqWbTE8VvndXLpEcwmRnXPmCBA8uWhx/ZloWgmVMxX4nRr
+	 fNqRS65JcLZolyA49zMr1GxIDrOdG1V6n+826xmpAMPOmfoWOxuyxe00fozotDqI3M
+	 lQGCo2Y3DWoWbPWFrCZivn5UnHq/kb+lIDbHhtLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 114/244] ARM: dts: imx6ul-pico: Describe the Ethernet PHY clock
-Date: Mon, 11 Dec 2023 19:20:07 +0100
-Message-ID: <20231211182050.916346526@linuxfoundation.org>
+Subject: [PATCH 6.6 115/244] io_uring/kbuf: Fix an NULL vs IS_ERR() bug in io_alloc_pbuf_ring()
+Date: Mon, 11 Dec 2023 19:20:08 +0100
+Message-ID: <20231211182050.968292262@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,41 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d951f8f5f23a9417b7952f22b33784c73caa1ebb ]
+[ Upstream commit e53f7b54b1fdecae897f25002ff0cff04faab228 ]
 
-Since commit c7e73b5051d6 ("ARM: imx: mach-imx6ul: remove 14x14 EVK
-specific PHY fixup")thet Ethernet PHY is no longer configured via code
-in board file.
+The io_mem_alloc() function returns error pointers, not NULL.  Update
+the check accordingly.
 
-This caused Ethernet to stop working.
-
-Fix this problem by describing the clocks and clock-names to the
-Ethernet PHY node so that the KSZ8081 chip can be clocked correctly.
-
-Fixes: c7e73b5051d6 ("ARM: imx: mach-imx6ul: remove 14x14 EVK specific PHY fixup")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: b10b73c102a2 ("io_uring/kbuf: recycle freed mapped buffer ring entries")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/5ed268d3-a997-4f64-bd71-47faa92101ab@moroto.mountain
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx6ul-pico.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/kbuf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx6ul-pico.dtsi b/arch/arm/boot/dts/nxp/imx/imx6ul-pico.dtsi
-index 4ffe99ed55ca2..07dcecbe485dc 100644
---- a/arch/arm/boot/dts/nxp/imx/imx6ul-pico.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6ul-pico.dtsi
-@@ -121,6 +121,8 @@
- 			max-speed = <100>;
- 			interrupt-parent = <&gpio5>;
- 			interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
-+			clocks = <&clks IMX6UL_CLK_ENET_REF>;
-+			clock-names = "rmii-ref";
- 		};
- 	};
- };
+diff --git a/io_uring/kbuf.c b/io_uring/kbuf.c
+index 012f622036049..12eec4778c5b1 100644
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -623,8 +623,8 @@ static int io_alloc_pbuf_ring(struct io_ring_ctx *ctx,
+ 	ibf = io_lookup_buf_free_entry(ctx, ring_size);
+ 	if (!ibf) {
+ 		ptr = io_mem_alloc(ring_size);
+-		if (!ptr)
+-			return -ENOMEM;
++		if (IS_ERR(ptr))
++			return PTR_ERR(ptr);
+ 
+ 		/* Allocate and store deferred free entry */
+ 		ibf = kmalloc(sizeof(*ibf), GFP_KERNEL_ACCOUNT);
 -- 
 2.42.0
 
