@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B53FBE1;
-	Mon, 11 Dec 2023 18:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B36FBE1;
+	Mon, 11 Dec 2023 18:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deruj+OW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06727C433C7;
-	Mon, 11 Dec 2023 18:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fetjdHej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC12C433C7;
+	Mon, 11 Dec 2023 18:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320074;
-	bh=jnsUAuPr/EUgf04L19JUFtOz4VpRm0uSp/v7Bi4rLZE=;
+	s=korg; t=1702320077;
+	bh=8Qfot6uudY+/1L5JKqB8JCVgYgr5Bdbd4LS/mt78EXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deruj+OW85EkulAwYRECjHaGzEsItHj7T4cn62VuUIxjI5vftRSlmosMfeodsztLC
-	 gEV6L5G+7+wWCCVcMe+xOD14lstdnN9M5PH34HXJLPROTI7MH/cF55UhzJibIPpuqd
-	 4AbmyA9fhf9AGALeVaUIilT1P4OEABhb/drq6p4M=
+	b=fetjdHej1KGWnCb33uc7HJgj6Hr4yyLSO5V1UmbuFqtQVkWVbeeBKV65YAiVFwlHb
+	 7x6ypv2TsAdzJ6cr6oWXh+VMDFYyUnGigJE9O+c/+0nmjDrQNK7L8C3nLrBffoAzxR
+	 oMdy/c9zI6rAMPst+u1RZkCy4rEYT5OoZK2Hzuyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 64/97] tracing: Stop current tracer when resizing buffer
-Date: Mon, 11 Dec 2023 19:22:07 +0100
-Message-ID: <20231211182022.501116437@linuxfoundation.org>
+	Petr Pavlu <petr.pavlu@suse.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 55/97] tracing: Fix a possible race when disabling buffered events
+Date: Mon, 11 Dec 2023 19:21:58 +0100
+Message-ID: <20231211182022.096555507@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -45,73 +41,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit d78ab792705c7be1b91243b2544d1a79406a2ad7 ]
+commit c0591b1cccf708a47bc465c62436d669a4213323 upstream.
 
-When the ring buffer is being resized, it can cause side effects to the
-running tracer. For instance, there's a race with irqsoff tracer that
-swaps individual per cpu buffers between the main buffer and the snapshot
-buffer. The resize operation modifies the main buffer and then the
-snapshot buffer. If a swap happens in between those two operations it will
-break the tracer.
+Function trace_buffered_event_disable() is responsible for freeing pages
+backing buffered events and this process can run concurrently with
+trace_event_buffer_lock_reserve().
 
-Simply stop the running tracer before resizing the buffers and enable it
-again when finished.
+The following race is currently possible:
 
-Link: https://lkml.kernel.org/r/20231205220010.748996423@goodmis.org
+* Function trace_buffered_event_disable() is called on CPU 0. It
+  increments trace_buffered_event_cnt on each CPU and waits via
+  synchronize_rcu() for each user of trace_buffered_event to complete.
+
+* After synchronize_rcu() is finished, function
+  trace_buffered_event_disable() has the exclusive access to
+  trace_buffered_event. All counters trace_buffered_event_cnt are at 1
+  and all pointers trace_buffered_event are still valid.
+
+* At this point, on a different CPU 1, the execution reaches
+  trace_event_buffer_lock_reserve(). The function calls
+  preempt_disable_notrace() and only now enters an RCU read-side
+  critical section. The function proceeds and reads a still valid
+  pointer from trace_buffered_event[CPU1] into the local variable
+  "entry". However, it doesn't yet read trace_buffered_event_cnt[CPU1]
+  which happens later.
+
+* Function trace_buffered_event_disable() continues. It frees
+  trace_buffered_event[CPU1] and decrements
+  trace_buffered_event_cnt[CPU1] back to 0.
+
+* Function trace_event_buffer_lock_reserve() continues. It reads and
+  increments trace_buffered_event_cnt[CPU1] from 0 to 1. This makes it
+  believe that it can use the "entry" that it already obtained but the
+  pointer is now invalid and any access results in a use-after-free.
+
+Fix the problem by making a second synchronize_rcu() call after all
+trace_buffered_event values are set to NULL. This waits on all potential
+users in trace_event_buffer_lock_reserve() that still read a previous
+pointer from trace_buffered_event.
+
+Link: https://lore.kernel.org/all/20231127151248.7232-2-petr.pavlu@suse.com/
+Link: https://lkml.kernel.org/r/20231205161736.19663-4-petr.pavlu@suse.com
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: 3928a8a2d9808 ("ftrace: make work with new ring buffer")
+Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ kernel/trace/trace.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 2c9769e1f7652..4e0411b19ef96 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -5905,9 +5905,12 @@ static int __tracing_resize_ring_buffer(struct trace_array *tr,
- 	if (!tr->array_buffer.buffer)
- 		return 0;
- 
-+	/* Do not allow tracing while resizng ring buffer */
-+	tracing_stop_tr(tr);
-+
- 	ret = ring_buffer_resize(tr->array_buffer.buffer, size, cpu);
- 	if (ret < 0)
--		return ret;
-+		goto out_start;
- 
- #ifdef CONFIG_TRACER_MAX_TRACE
- 	if (!tr->current_trace->use_max_tr)
-@@ -5935,7 +5938,7 @@ static int __tracing_resize_ring_buffer(struct trace_array *tr,
- 			WARN_ON(1);
- 			tracing_disabled = 1;
- 		}
--		return ret;
-+		goto out_start;
+@@ -2708,13 +2708,17 @@ void trace_buffered_event_disable(void)
+ 		free_page((unsigned long)per_cpu(trace_buffered_event, cpu));
+ 		per_cpu(trace_buffered_event, cpu) = NULL;
  	}
++
+ 	/*
+-	 * Make sure trace_buffered_event is NULL before clearing
+-	 * trace_buffered_event_cnt.
++	 * Wait for all CPUs that potentially started checking if they can use
++	 * their event buffer only after the previous synchronize_rcu() call and
++	 * they still read a valid pointer from trace_buffered_event. It must be
++	 * ensured they don't see cleared trace_buffered_event_cnt else they
++	 * could wrongly decide to use the pointed-to buffer which is now freed.
+ 	 */
+-	smp_wmb();
++	synchronize_rcu();
  
- 	update_buffer_entries(&tr->max_buffer, cpu);
-@@ -5944,7 +5947,8 @@ static int __tracing_resize_ring_buffer(struct trace_array *tr,
- #endif /* CONFIG_TRACER_MAX_TRACE */
- 
- 	update_buffer_entries(&tr->array_buffer, cpu);
--
-+ out_start:
-+	tracing_start_tr(tr);
- 	return ret;
+-	/* Do the work on each cpu */
++	/* For each CPU, relinquish the buffer */
+ 	on_each_cpu_mask(tracing_buffer_mask, enable_trace_buffered_event, NULL,
+ 			 true);
  }
- 
--- 
-2.42.0
-
 
 
