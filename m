@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2EE2D045;
-	Mon, 11 Dec 2023 18:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEEE2D045;
+	Mon, 11 Dec 2023 18:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8KIgNfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A66C433C8;
-	Mon, 11 Dec 2023 18:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YPwzNyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DEEC433C8;
+	Mon, 11 Dec 2023 18:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319184;
-	bh=tDOZfgySwEUR5REtIiGiiMXpj2lWqyYUg8lkoyOtWVo=;
+	s=korg; t=1702319187;
+	bh=h63JOTu55Ly9BLmwq//mZ06ByNikYw0xQqrVa8pCZvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W8KIgNfqcJrZpXy38Dj78v/kELBmV0wPhcJMwvMX7SU5uiqwRmboJl6JWlkRMk6kH
-	 sdUa0YFh9Yw+TzflQHwo0Q/G4nxmWRA2yHRBDTFPmETQmT3A0JdaaA7r+PI4E+pCNg
-	 8BXioWzpmMCxkP1FEnWHOzDXIFXEMyUtqJ0aKEPg=
+	b=0YPwzNyWxAJyJ5GakgnfeiRxAvsHurUdfrZxzuXi2CJp45lnwA50ak1bV2UU/ceyD
+	 hpM++t+XwIyzY2m0jPpU7V37kSgTah/v4r2xwdwK0T63ey2ckqp588LUKFh8ScHUYw
+	 FgXAaEEIxpTyE6RUpWnARMl/NFKmbk+HKVP/nEFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/244] i2c: ocores: Move system PM hooks to the NOIRQ phase
-Date: Mon, 11 Dec 2023 19:18:18 +0100
-Message-ID: <20231211182046.041527270@linuxfoundation.org>
+Subject: [PATCH 6.6 006/244] netfilter: ipset: fix race condition between swap/destroy and kernel side add/del/test
+Date: Mon, 11 Dec 2023 19:18:19 +0100
+Message-ID: <20231211182046.074738800@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,39 +42,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 382561d16854a747e6df71034da08d20d6013dfe ]
+[ Upstream commit 28628fa952fefc7f2072ce6e8016968cc452b1ba ]
 
-When an I2C device contains a wake IRQ subordinate to a regmap-irq chip,
-the regmap-irq code must be able to perform I2C transactions during
-suspend_device_irqs() and resume_device_irqs(). Therefore, the bus must
-be suspended/resumed during the NOIRQ phase.
+Linkui Xiao reported that there's a race condition when ipset swap and destroy is
+called, which can lead to crash in add/del/test element operations. Swap then
+destroy are usual operations to replace a set with another one in a production
+system. The issue can in some cases be reproduced with the script:
 
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+ipset create hash_ip1 hash:net family inet hashsize 1024 maxelem 1048576
+ipset add hash_ip1 172.20.0.0/16
+ipset add hash_ip1 192.168.0.0/16
+iptables -A INPUT -m set --match-set hash_ip1 src -j ACCEPT
+while [ 1 ]
+do
+	# ... Ongoing traffic...
+        ipset create hash_ip2 hash:net family inet hashsize 1024 maxelem 1048576
+        ipset add hash_ip2 172.20.0.0/16
+        ipset swap hash_ip1 hash_ip2
+        ipset destroy hash_ip2
+        sleep 0.05
+done
+
+In the race case the possible order of the operations are
+
+	CPU0			CPU1
+	ip_set_test
+				ipset swap hash_ip1 hash_ip2
+				ipset destroy hash_ip2
+	hash_net_kadt
+
+Swap replaces hash_ip1 with hash_ip2 and then destroy removes hash_ip2 which
+is the original hash_ip1. ip_set_test was called on hash_ip1 and because destroy
+removed it, hash_net_kadt crashes.
+
+The fix is to force ip_set_swap() to wait for all readers to finish accessing the
+old set pointers by calling synchronize_rcu().
+
+The first version of the patch was written by Linkui Xiao <xiaolinkui@kylinos.cn>.
+
+v2: synchronize_rcu() is moved into ip_set_swap() in order not to burden
+    ip_set_destroy() unnecessarily when all sets are destroyed.
+v3: Florian Westphal pointed out that all netfilter hooks run with rcu_read_lock() held
+    and em_ipset.c wraps the entire ip_set_test() in rcu read lock/unlock pair.
+    So there's no need to extend the rcu read locked area in ipset itself.
+
+Closes: https://lore.kernel.org/all/69e7963b-e7f8-3ad0-210-7b86eebf7f78@netfilter.org/
+Reported by: Linkui Xiao <xiaolinkui@kylinos.cn>
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-ocores.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/ipset/ip_set_core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-ocores.c b/drivers/i2c/busses/i2c-ocores.c
-index 041a76f71a49c..e106af83cef4d 100644
---- a/drivers/i2c/busses/i2c-ocores.c
-+++ b/drivers/i2c/busses/i2c-ocores.c
-@@ -771,8 +771,8 @@ static int ocores_i2c_resume(struct device *dev)
- 	return ocores_init(dev, i2c);
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index 35d2f9c9ada02..4c133e06be1de 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -61,6 +61,8 @@ MODULE_ALIAS_NFNL_SUBSYS(NFNL_SUBSYS_IPSET);
+ 	ip_set_dereference((inst)->ip_set_list)[id]
+ #define ip_set_ref_netlink(inst,id)	\
+ 	rcu_dereference_raw((inst)->ip_set_list)[id]
++#define ip_set_dereference_nfnl(p)	\
++	rcu_dereference_check(p, lockdep_nfnl_is_held(NFNL_SUBSYS_IPSET))
+ 
+ /* The set types are implemented in modules and registered set types
+  * can be found in ip_set_type_list. Adding/deleting types is
+@@ -708,15 +710,10 @@ __ip_set_put_netlink(struct ip_set *set)
+ static struct ip_set *
+ ip_set_rcu_get(struct net *net, ip_set_id_t index)
+ {
+-	struct ip_set *set;
+ 	struct ip_set_net *inst = ip_set_pernet(net);
+ 
+-	rcu_read_lock();
+-	/* ip_set_list itself needs to be protected */
+-	set = rcu_dereference(inst->ip_set_list)[index];
+-	rcu_read_unlock();
+-
+-	return set;
++	/* ip_set_list and the set pointer need to be protected */
++	return ip_set_dereference_nfnl(inst->ip_set_list)[index];
  }
  
--static DEFINE_SIMPLE_DEV_PM_OPS(ocores_i2c_pm,
--				ocores_i2c_suspend, ocores_i2c_resume);
-+static DEFINE_NOIRQ_DEV_PM_OPS(ocores_i2c_pm,
-+			       ocores_i2c_suspend, ocores_i2c_resume);
+ static inline void
+@@ -1397,6 +1394,9 @@ static int ip_set_swap(struct sk_buff *skb, const struct nfnl_info *info,
+ 	ip_set(inst, to_id) = from;
+ 	write_unlock_bh(&ip_set_ref_lock);
  
- static struct platform_driver ocores_i2c_driver = {
- 	.probe   = ocores_i2c_probe,
++	/* Make sure all readers of the old set pointers are completed. */
++	synchronize_rcu();
++
+ 	return 0;
+ }
+ 
 -- 
 2.42.0
 
