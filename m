@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830844F212;
-	Mon, 11 Dec 2023 18:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7C54F212;
+	Mon, 11 Dec 2023 18:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T54fjr4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABACDC433C9;
-	Mon, 11 Dec 2023 18:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcCmY71R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC2DC433C8;
+	Mon, 11 Dec 2023 18:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319130;
-	bh=CZjr4B5J1HKMR2RpsiaPa1rQb7UgdgNLYGwDGwI9Ua4=;
+	s=korg; t=1702319132;
+	bh=Z35YUxHsu9c0ZV8nLrwNsOR7DqlUkPMe6uVCGuLibgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T54fjr4felVZ2X6FH/JQgnwSrJ220f4V0Ozw5y4AwpDNv/ezYLLQiu7btlDrtJK3n
-	 FF3/6g8olzyVCKfBzbOFGtduguzfgw7NWQkPgZwTWxMNsCDH11Ch85BH44W4guB07s
-	 ezDfWTLlAO34cpRJJJukpS0g5vWB+G1m3kL8bdjw=
+	b=rcCmY71RMb6uUr3Pbw8Vjd5C6LKGAtbTBQCSOcUO/V2NTdgN9Nc1nWd3VThsEtl4J
+	 QhPTYj9fpRiullatn73CYKUUNrqxnGT+UD91Q298iK/2xAO2GMFUfxcRA8Ll/Eb4zn
+	 N/y/RU/EGW7kQvUasxZsx/PzJKbyfOnn14H6Owm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sean Tranchetti <stranche@codeaurora.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	"David S. Miller" <davem@davemloft.net>,
 	Ido Schimmel <idosch@nvidia.com>
-Subject: [PATCH 4.19 48/55] netlink: dont call ->netlink_bind with table lock held
-Date: Mon, 11 Dec 2023 19:21:58 +0100
-Message-ID: <20231211182014.029735340@linuxfoundation.org>
+Subject: [PATCH 4.19 49/55] genetlink: add CAP_NET_ADMIN test for multicast bind
+Date: Mon, 11 Dec 2023 19:21:59 +0100
+Message-ID: <20231211182014.071875524@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -50,92 +42,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-From: Florian Westphal <fw@strlen.de>
+This is a partial backport of upstream commit 4d54cc32112d ("mptcp:
+avoid lock_fast usage in accept path"). It is only a partial backport
+because the patch in the link below was erroneously squash-merged into
+upstream commit 4d54cc32112d ("mptcp: avoid lock_fast usage in accept
+path"). Below is the original patch description from Florian Westphal:
 
-commit f2764bd4f6a8dffaec3e220728385d9756b3c2cb upstream.
+"
+genetlink sets NL_CFG_F_NONROOT_RECV for its netlink socket so anyone can
+subscribe to multicast messages.
 
-When I added support to allow generic netlink multicast groups to be
-restricted to subscribers with CAP_NET_ADMIN I was unaware that a
-genl_bind implementation already existed in the past.
+rtnetlink doesn't allow this unconditionally,  rtnetlink_bind() restricts
+bind requests to CAP_NET_ADMIN for a few groups.
 
-It was reverted due to ABBA deadlock:
+This allows to set GENL_UNS_ADMIN_PERM flag on genl mcast groups to
+mandate CAP_NET_ADMIN.
 
-1. ->netlink_bind gets called with the table lock held.
-2. genetlink bind callback is invoked, it grabs the genl lock.
+This will be used by the upcoming mptcp netlink event facility which
+exposes the token (mptcp connection identifier) to userspace.
+"
 
-But when a new genl subsystem is (un)registered, these two locks are
-taken in reverse order.
-
-One solution would be to revert again and add a comment in genl
-referring 1e82a62fec613, "genetlink: remove genl_bind").
-
-This would need a second change in mptcp to not expose the raw token
-value anymore, e.g.  by hashing the token with a secret key so userspace
-can still associate subflow events with the correct mptcp connection.
-
-However, Paolo Abeni reminded me to double-check why the netlink table is
-locked in the first place.
-
-I can't find one.  netlink_bind() is already called without this lock
-when userspace joins a group via NETLINK_ADD_MEMBERSHIP setsockopt.
-Same holds for the netlink_unbind operation.
-
-Digging through the history, commit f773608026ee1
-("netlink: access nlk groups safely in netlink bind and getname")
-expanded the lock scope.
-
-commit 3a20773beeeeade ("net: netlink: cap max groups which will be considered in netlink_bind()")
-... removed the nlk->ngroups access that the lock scope
-extension was all about.
-
-Reduce the lock scope again and always call ->netlink_bind without
-the table lock.
-
-The Fixes tag should be vs. the patch mentioned in the link below,
-but that one got squash-merged into the patch that came earlier in the
-series.
-
-Fixes: 4d54cc32112d8d ("mptcp: avoid lock_fast usage in accept path")
-Link: https://lore.kernel.org/mptcp/20210213000001.379332-8-mathew.j.martineau@linux.intel.com/T/#u
-Cc: Cong Wang <xiyou.wangcong@gmail.com>
-Cc: Xin Long <lucien.xin@gmail.com>
-Cc: Johannes Berg <johannes.berg@intel.com>
-Cc: Sean Tranchetti <stranche@codeaurora.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/mptcp/20210213000001.379332-8-mathew.j.martineau@linux.intel.com/
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlink/af_netlink.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/genetlink.h |    1 +
+ net/netlink/genetlink.c |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
 
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1030,7 +1030,6 @@ static int netlink_bind(struct socket *s
- 			return -EINVAL;
- 	}
+--- a/include/net/genetlink.h
++++ b/include/net/genetlink.h
+@@ -14,6 +14,7 @@
+  */
+ struct genl_multicast_group {
+ 	char			name[GENL_NAMSIZ];
++	u8			flags;
+ };
  
--	netlink_lock_table();
- 	if (nlk->netlink_bind && groups) {
- 		int group;
+ struct genl_ops;
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -961,11 +961,43 @@ static struct genl_family genl_ctrl __ro
+ 	.netnsok = true,
+ };
  
-@@ -1042,13 +1041,14 @@ static int netlink_bind(struct socket *s
- 			if (!err)
- 				continue;
- 			netlink_undo_bind(group, groups, sk);
--			goto unlock;
-+			return err;
- 		}
- 	}
++static int genl_bind(struct net *net, int group)
++{
++	const struct genl_family *family;
++	unsigned int id;
++	int ret = 0;
++
++	genl_lock_all();
++
++	idr_for_each_entry(&genl_fam_idr, family, id) {
++		const struct genl_multicast_group *grp;
++		int i;
++
++		if (family->n_mcgrps == 0)
++			continue;
++
++		i = group - family->mcgrp_offset;
++		if (i < 0 || i >= family->n_mcgrps)
++			continue;
++
++		grp = &family->mcgrps[i];
++		if ((grp->flags & GENL_UNS_ADMIN_PERM) &&
++		    !ns_capable(net->user_ns, CAP_NET_ADMIN))
++			ret = -EPERM;
++
++		break;
++	}
++
++	genl_unlock_all();
++	return ret;
++}
++
+ static int __net_init genl_pernet_init(struct net *net)
+ {
+ 	struct netlink_kernel_cfg cfg = {
+ 		.input		= genl_rcv,
+ 		.flags		= NL_CFG_F_NONROOT_RECV,
++		.bind		= genl_bind,
+ 	};
  
- 	/* No need for barriers here as we return to user-space without
- 	 * using any of the bound attributes.
- 	 */
-+	netlink_lock_table();
- 	if (!bound) {
- 		err = nladdr->nl_pid ?
- 			netlink_insert(sk, nladdr->nl_pid) :
+ 	/* we'll bump the group number right afterwards */
 
 
