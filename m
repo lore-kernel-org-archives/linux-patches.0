@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D667C321B8;
-	Mon, 11 Dec 2023 18:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B880321B8;
+	Mon, 11 Dec 2023 18:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UO00Wzcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E22BC433C7;
-	Mon, 11 Dec 2023 18:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okv5kfuE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015AFC433C9;
+	Mon, 11 Dec 2023 18:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321170;
-	bh=bvk+iANAVnAt8vZ0aFJu6GUsT8NnrOvVxJJ2V8FDGmI=;
+	s=korg; t=1702321173;
+	bh=TyuDYpkrpaOwaFgBNofnT2NBVqPjB/JRcKYJPJZtMpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UO00Wzccjxa1PvF00g92R0SNUqi8uqs8oM6QuveIgskHXgR7mAHpc1JCbrPxMfIg8
-	 ttAm+srl4rl11erzFCf4eLZe/Q9ZF2BfnXFMjVH/wHhm+uaQyUOePkv+WCWxRTfEWN
-	 lbVDzU/Z1o001FyNaGXcwRCU72A1bfiijjF3fFZs=
+	b=okv5kfuE5DV83gO5PDAmEiJNepbmr5o9czVznowKuRzLIdR4Qeo7NnJilgh8b5QpM
+	 GtY3KjoI62G2KKcn9qNzNcTcUQ+px1jQ/uLYIRgADaUkoq3Vw/XPOgW0GpWPJBKSKb
+	 LZWfB12XsBhNm5yxBAV4umI+w1p2pLwV1toutS5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Mack <daniel@zonque.org>,
-	Maxim Popov <maxim.snafu@gmail.com>
-Subject: [PATCH 5.15 128/141] serial: sc16is7xx: address RX timeout interrupt errata
-Date: Mon, 11 Dec 2023 19:23:07 +0100
-Message-ID: <20231211182032.117284143@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 137/141] Revert "btrfs: add dmesg output for first mount and last unmount of a filesystem"
+Date: Mon, 11 Dec 2023 19:23:16 +0100
+Message-ID: <20231211182032.553634388@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,68 +44,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Mack <daniel@zonque.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 08ce9a1b72e38cf44c300a44ac5858533eb3c860 upstream.
+This reverts commit a480eb262b178e2baffa758b9cd5bde2d8470287 which is
+commit 2db313205f8b96eea467691917138d646bb50aef upstream.
 
-This device has a silicon bug that makes it report a timeout interrupt
-but no data in the FIFO.
+As pointed out by many, the disk_super structure is NOT initialized
+before it is dereferenced in the function
+fs/btrfs/disk-io.c:open_ctree() that this commit adds, so something went
+wrong here.
 
-The datasheet states the following in the errata section 18.1.4:
+Revert it for now until it gets straightened out.
 
-  "If the host reads the receive FIFO at the same time as a
-  time-out interrupt condition happens, the host might read 0xCC
-  (time-out) in the Interrupt Indication Register (IIR), but bit 0
-  of the Line Status Register (LSR) is not set (means there is no
-  data in the receive FIFO)."
-
-The errata description seems to indicate it concerns only polled mode of
-operation when reading bit 0 of the LSR register. However, tests have
-shown and NXP has confirmed that the RXLVL register also yields 0 when
-the bug is triggered, and hence the IRQ driven implementation in this
-driver is equally affected.
-
-This bug has hit us on production units and when it does, sc16is7xx_irq()
-would spin forever because sc16is7xx_port_irq() keeps seeing an
-interrupt in the IIR register that is not cleared because the driver
-does not call into sc16is7xx_handle_rx() unless the RXLVL register
-reports at least one byte in the FIFO.
-
-Fix this by always reading one byte from the FIFO when this condition
-is detected in order to clear the interrupt. This approach was
-confirmed to be correct by NXP through their support channels.
-
-Tested by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-
-Signed-off-by: Daniel Mack <daniel@zonque.org>
-Co-Developed-by: Maxim Popov <maxim.snafu@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231123072818.1394539-1-daniel@zonque.org
+Link: https://lore.kernel.org/r/5b0eb360-3765-40e1-854a-9da6d97eb405@roeck-us.net
+Link: https://lore.kernel.org/r/20231209172836.GA2154579@dev-arch.thelio-3990X
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Cc: Anand Jain <anand.jain@oracle.com>
+Cc: Qu Wenruo <wqu@suse.com>
+Cc: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/btrfs/disk-io.c |    1 -
+ fs/btrfs/super.c   |    5 +----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -694,6 +694,18 @@ static bool sc16is7xx_port_irq(struct sc
- 		case SC16IS7XX_IIR_RTOI_SRC:
- 		case SC16IS7XX_IIR_XOFFI_SRC:
- 			rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
-+
-+			/*
-+			 * There is a silicon bug that makes the chip report a
-+			 * time-out interrupt but no data in the FIFO. This is
-+			 * described in errata section 18.1.4.
-+			 *
-+			 * When this happens, read one byte from the FIFO to
-+			 * clear the interrupt.
-+			 */
-+			if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
-+				rxlen = 1;
-+
- 			if (rxlen)
- 				sc16is7xx_handle_rx(port, rxlen, iir);
- 			break;
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3204,7 +3204,6 @@ int __cold open_ctree(struct super_block
+ 		goto fail_alloc;
+ 	}
+ 
+-	btrfs_info(fs_info, "first mount of filesystem %pU", disk_super->fsid);
+ 	/*
+ 	 * Verify the type first, if that or the checksum value are
+ 	 * corrupted, we'll find out
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -337,10 +337,7 @@ void __btrfs_panic(struct btrfs_fs_info
+ 
+ static void btrfs_put_super(struct super_block *sb)
+ {
+-	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
+-
+-	btrfs_info(fs_info, "last unmount of filesystem %pU", fs_info->fs_devices->fsid);
+-	close_ctree(fs_info);
++	close_ctree(btrfs_sb(sb));
+ }
+ 
+ enum {
 
 
