@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410CB51C2D;
-	Mon, 11 Dec 2023 18:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF95C51C2D;
+	Mon, 11 Dec 2023 18:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBbvZ4qc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7D3C433C8;
-	Mon, 11 Dec 2023 18:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMtuR/1G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B3CC433C7;
+	Mon, 11 Dec 2023 18:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320727;
-	bh=cP3Nkp0ccNWcxL34iDTw9t/PSZJiVYCyjWa0iLFSPBg=;
+	s=korg; t=1702320729;
+	bh=RQ7yjP+lfO2oPc6tz971ACKnJMzZuouv3JvTOyIXlOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBbvZ4qcs5o9TKLEEjotY4HPsQmK7RnG0iRAcxZ+dYPK7CJ5lo+97AuvG9CmgiXWs
-	 gMxjbM+hB0d9U17tETu1gKQdZKjLdG/kIsd57T3vtBD54pAcNSHwnc5APQ/bnk5kXD
-	 cCsw01a5x9FmVbvHjYCLuKfs6SjMKfUaX+7wETkA=
+	b=wMtuR/1GQazA8iQnb+lZ1WIdM8NisXKaOZFosKuubSCmbCvwrColpZQ7T7wSyC/PW
+	 0U6Qh8LRw/8P0+kdWm9rL7EMs2tuYURd4kzpzjVvyPmKwtovGcFUWG/NaeVpK6ma4a
+	 bKdyVwji53exnS0kT8KBH7mZ/vtGXMOACiU3bois=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH 6.1 168/194] parport: Add support for Brainboxes IX/UC/PX parallel cards
-Date: Mon, 11 Dec 2023 19:22:38 +0100
-Message-ID: <20231211182044.146746840@linuxfoundation.org>
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 142/194] LoongArch: BPF: Dont sign extend function return value
+Date: Mon, 11 Dec 2023 19:22:12 +0100
+Message-ID: <20231211182042.958353980@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -41,65 +42,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Hengqi Chen <hengqi.chen@gmail.com>
 
-commit 1a031f6edc460e9562098bdedc3918da07c30a6e upstream.
+[ Upstream commit 5d47ec2e6f4c64e30e392cfe9532df98c9beb106 ]
 
-Adds support for Intashield IX-500/IX-550, UC-146/UC-157, PX-146/PX-157,
-PX-203 and PX-475 (LPT port)
+The `cls_redirect` test triggers a kernel panic like:
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://lore.kernel.org/r/AS4PR02MB790389C130410BD864C8DCC9C4A6A@AS4PR02MB7903.eurprd02.prod.outlook.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  # ./test_progs -t cls_redirect
+  Can't find bpf_testmod.ko kernel module: -2
+  WARNING! Selftests relying on bpf_testmod.ko will be skipped.
+  [   30.938489] CPU 3 Unable to handle kernel paging request at virtual address fffffffffd814de0, era == ffff800002009fb8, ra == ffff800002009f9c
+  [   30.939331] Oops[#1]:
+  [   30.939513] CPU: 3 PID: 1260 Comm: test_progs Not tainted 6.7.0-rc2-loong-devel-g2f56bb0d2327 #35 a896aca3f4164f09cc346f89f2e09832e07be5f6
+  [   30.939732] Hardware name: QEMU QEMU Virtual Machine, BIOS unknown 2/2/2022
+  [   30.939901] pc ffff800002009fb8 ra ffff800002009f9c tp 9000000104da4000 sp 9000000104da7ab0
+  [   30.940038] a0 fffffffffd814de0 a1 9000000104da7a68 a2 0000000000000000 a3 9000000104da7c10
+  [   30.940183] a4 9000000104da7c14 a5 0000000000000002 a6 0000000000000021 a7 00005555904d7f90
+  [   30.940321] t0 0000000000000110 t1 0000000000000000 t2 fffffffffd814de0 t3 0004c4b400000000
+  [   30.940456] t4 ffffffffffffffff t5 00000000c3f63600 t6 0000000000000000 t7 0000000000000000
+  [   30.940590] t8 000000000006d803 u0 0000000000000020 s9 9000000104da7b10 s0 900000010504c200
+  [   30.940727] s1 fffffffffd814de0 s2 900000010504c200 s3 9000000104da7c10 s4 9000000104da7ad0
+  [   30.940866] s5 0000000000000000 s6 90000000030e65bc s7 9000000104da7b44 s8 90000000044f6fc0
+  [   30.941015]    ra: ffff800002009f9c bpf_prog_846803e5ae81417f_cls_redirect+0xa0/0x590
+  [   30.941535]   ERA: ffff800002009fb8 bpf_prog_846803e5ae81417f_cls_redirect+0xbc/0x590
+  [   30.941696]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+  [   30.942224]  PRMD: 00000004 (PPLV0 +PIE -PWE)
+  [   30.942330]  EUEN: 00000003 (+FPE +SXE -ASXE -BTE)
+  [   30.942453]  ECFG: 00071c1c (LIE=2-4,10-12 VS=7)
+  [   30.942612] ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
+  [   30.942764]  BADV: fffffffffd814de0
+  [   30.942854]  PRID: 0014c010 (Loongson-64bit, Loongson-3A5000)
+  [   30.942974] Modules linked in:
+  [   30.943078] Process test_progs (pid: 1260, threadinfo=00000000ce303226, task=000000007d10bb76)
+  [   30.943306] Stack : 900000010a064000 90000000044f6fc0 9000000104da7b48 0000000000000000
+  [   30.943495]         0000000000000000 9000000104da7c14 9000000104da7c10 900000010504c200
+  [   30.943626]         0000000000000001 ffff80001b88c000 9000000104da7b70 90000000030e6668
+  [   30.943785]         0000000000000000 9000000104da7b58 ffff80001b88c048 9000000003d05000
+  [   30.943936]         900000000303ac88 0000000000000000 0000000000000000 9000000104da7b70
+  [   30.944091]         0000000000000000 0000000000000001 0000000731eeab00 0000000000000000
+  [   30.944245]         ffff80001b88c000 0000000000000000 0000000000000000 54b99959429f83b8
+  [   30.944402]         ffff80001b88c000 90000000044f6fc0 9000000101d70000 ffff80001b88c000
+  [   30.944538]         000000000000005a 900000010504c200 900000010a064000 900000010a067000
+  [   30.944697]         9000000104da7d88 0000000000000000 9000000003d05000 90000000030e794c
+  [   30.944852]         ...
+  [   30.944924] Call Trace:
+  [   30.945120] [<ffff800002009fb8>] bpf_prog_846803e5ae81417f_cls_redirect+0xbc/0x590
+  [   30.945650] [<90000000030e6668>] bpf_test_run+0x1ec/0x2f8
+  [   30.945958] [<90000000030e794c>] bpf_prog_test_run_skb+0x31c/0x684
+  [   30.946065] [<90000000026d4f68>] __sys_bpf+0x678/0x2724
+  [   30.946159] [<90000000026d7288>] sys_bpf+0x20/0x2c
+  [   30.946253] [<90000000032dd224>] do_syscall+0x7c/0x94
+  [   30.946343] [<9000000002541c5c>] handle_syscall+0xbc/0x158
+  [   30.946492]
+  [   30.946549] Code: 0015030e  5c0009c0  5001d000 <28c00304> 02c00484  29c00304  00150009  2a42d2e4  0280200d
+  [   30.946793]
+  [   30.946971] ---[ end trace 0000000000000000 ]---
+  [   32.093225] Kernel panic - not syncing: Fatal exception in interrupt
+  [   32.093526] Kernel relocated by 0x2320000
+  [   32.093630]  .text @ 0x9000000002520000
+  [   32.093725]  .data @ 0x9000000003400000
+  [   32.093792]  .bss  @ 0x9000000004413200
+  [   34.971998] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
+
+This is because we signed-extend function return values. When subprog
+mode is enabled, we have:
+
+  cls_redirect()
+    -> get_global_metrics() returns pcpu ptr 0xfffffefffc00b480
+
+The pointer returned is later signed-extended to 0xfffffffffc00b480 at
+`BPF_JMP | BPF_EXIT`. During BPF prog run, this triggers unhandled page
+fault and a kernel panic.
+
+Drop the unnecessary signed-extension on return values like other
+architectures do.
+
+With this change, we have:
+
+  # ./test_progs -t cls_redirect
+  Can't find bpf_testmod.ko kernel module: -2
+  WARNING! Selftests relying on bpf_testmod.ko will be skipped.
+  #51/1    cls_redirect/cls_redirect_inlined:OK
+  #51/2    cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
+  #51/3    cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
+  #51/4    cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
+  #51/5    cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
+  #51/6    cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
+  #51/7    cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
+  #51/8    cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
+  #51/9    cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
+  #51/10   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
+  #51/11   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
+  #51/12   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
+  #51/13   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
+  #51/14   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
+  #51/15   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
+  #51/16   cls_redirect/cls_redirect_subprogs:OK
+  #51/17   cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
+  #51/18   cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
+  #51/19   cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
+  #51/20   cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
+  #51/21   cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
+  #51/22   cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
+  #51/23   cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
+  #51/24   cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
+  #51/25   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
+  #51/26   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
+  #51/27   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
+  #51/28   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
+  #51/29   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
+  #51/30   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
+  #51/31   cls_redirect/cls_redirect_dynptr:OK
+  #51/32   cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
+  #51/33   cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
+  #51/34   cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
+  #51/35   cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
+  #51/36   cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
+  #51/37   cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
+  #51/38   cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
+  #51/39   cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
+  #51/40   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
+  #51/41   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
+  #51/42   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
+  #51/43   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
+  #51/44   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
+  #51/45   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
+  #51      cls_redirect:OK
+  Summary: 1/45 PASSED, 0 SKIPPED, 0 FAILED
+
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parport/parport_pc.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ arch/loongarch/net/bpf_jit.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/parport/parport_pc.c
-+++ b/drivers/parport/parport_pc.c
-@@ -2614,6 +2614,8 @@ enum parport_pc_pci_cards {
- 	netmos_9865,
- 	quatech_sppxp100,
- 	wch_ch382l,
-+	brainboxes_uc146,
-+	brainboxes_px203,
- };
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index 20ad5f3a9bf94..40ed49d9adff5 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -796,8 +796,6 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
  
+ 	/* function return */
+ 	case BPF_JMP | BPF_EXIT:
+-		emit_sext_32(ctx, regmap[BPF_REG_0], true);
+-
+ 		if (i == ctx->prog->len - 1)
+ 			break;
  
-@@ -2678,6 +2680,8 @@ static struct parport_pc_pci {
- 	/* netmos_9865 */               { 1, { { 0, -1 }, } },
- 	/* quatech_sppxp100 */		{ 1, { { 0, 1 }, } },
- 	/* wch_ch382l */		{ 1, { { 2, -1 }, } },
-+	/* brainboxes_uc146 */	{ 1, { { 3, -1 }, } },
-+	/* brainboxes_px203 */	{ 1, { { 0, -1 }, } },
- };
- 
- static const struct pci_device_id parport_pc_pci_tbl[] = {
-@@ -2771,6 +2775,23 @@ static const struct pci_device_id parpor
- 	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, quatech_sppxp100 },
- 	/* WCH CH382L PCI-E single parallel port card */
- 	{ 0x1c00, 0x3050, 0x1c00, 0x3050, 0, 0, wch_ch382l },
-+	/* Brainboxes IX-500/550 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x402a,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
-+	/* Brainboxes UC-146/UC-157 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0be1,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc146 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0be2,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc146 },
-+	/* Brainboxes PX-146/PX-257 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x401c,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
-+	/* Brainboxes PX-203 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x4007,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_px203 },
-+	/* Brainboxes PX-475 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x401f,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
- 	{ 0, } /* terminate list */
- };
- MODULE_DEVICE_TABLE(pci, parport_pc_pci_tbl);
+-- 
+2.42.0
+
 
 
