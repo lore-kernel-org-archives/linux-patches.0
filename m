@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E575102A;
-	Mon, 11 Dec 2023 18:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D575102A;
+	Mon, 11 Dec 2023 18:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VaNpBPN8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CF24C433C7;
-	Mon, 11 Dec 2023 18:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSZ+PhfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DAFC433C7;
+	Mon, 11 Dec 2023 18:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320649;
-	bh=nyoCfCXj0wHu91lOzSIfB/cExWZqbn8aMUvgSxBNJsI=;
+	s=korg; t=1702320652;
+	bh=KgbcT2893yHJCTDwrXtjJN9FjH04v3Uma/fHv6ZkwYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VaNpBPN8gqA2NzoKlbjIvEZLlN67DaauKBIG6rIs/Ug1+GE9WjISrUJXh85A1d82e
-	 jRuVPOApKTynvB7k5ZU9EzxIePDKq9gUF2uE8KwAMkwHUXRNSOQdNZnGXaC+8GyBPC
-	 4bzstAqS6o651pVx3lt7vSrIsVJe+zN1E76uf/I8=
+	b=vSZ+PhfKwvmqb24gquR5j5HEXzkTnBtKrYqj4novurW9ig3mwJiKI5u7Jxxu4s7A7
+	 7BBMbOQRjLr96wrx8Lrzoxjh6za9+9xUk4pZzOYV8dfxcu/yccHojxig3ZIDVoIR2t
+	 +QHe/4UbyTtWk42ewbYw3Gy+b+sJIgG9hYPiR9Yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/194] hwtracing: hisi_ptt: Add dummy callback pmu::read()
-Date: Mon, 11 Dec 2023 19:22:08 +0100
-Message-ID: <20231211182042.760627226@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 111/194] nilfs2: fix missing error check for sb_set_blocksize call
+Date: Mon, 11 Dec 2023 19:21:41 +0100
+Message-ID: <20231211182041.444078290@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -44,51 +41,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 55e0a2fb0cb5ab7c9c99c1ad4d3e6954de8b73a0 ]
+commit d61d0ab573649789bf9eb909c89a1a193b2e3d10 upstream.
 
-When start trace with perf option "-C $cpu" and immediately stop it
-with SIGTERM or others, the perf core will invoke pmu::read() while
-the driver doesn't implement it. Add a dummy pmu::read() to avoid
-any issues.
+When mounting a filesystem image with a block size larger than the page
+size, nilfs2 repeatedly outputs long error messages with stack traces to
+the kernel log, such as the following:
 
-Fixes: ff0de066b463 ("hwtracing: hisi_ptt: Add trace function support for HiSilicon PCIe Tune and Trace device")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20231010084731.30450-6-yangyicong@huawei.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ getblk(): invalid block size 8192 requested
+ logical block size: 512
+ ...
+ Call Trace:
+  dump_stack_lvl+0x92/0xd4
+  dump_stack+0xd/0x10
+  bdev_getblk+0x33a/0x354
+  __breadahead+0x11/0x80
+  nilfs_search_super_root+0xe2/0x704 [nilfs2]
+  load_nilfs+0x72/0x504 [nilfs2]
+  nilfs_mount+0x30f/0x518 [nilfs2]
+  legacy_get_tree+0x1b/0x40
+  vfs_get_tree+0x18/0xc4
+  path_mount+0x786/0xa88
+  __ia32_sys_mount+0x147/0x1a8
+  __do_fast_syscall_32+0x56/0xc8
+  do_fast_syscall_32+0x29/0x58
+  do_SYSENTER_32+0x15/0x18
+  entry_SYSENTER_32+0x98/0xf1
+ ...
+
+This overloads the system logger.  And to make matters worse, it sometimes
+crashes the kernel with a memory access violation.
+
+This is because the return value of the sb_set_blocksize() call, which
+should be checked for errors, is not checked.
+
+The latter issue is due to out-of-buffer memory being accessed based on a
+large block size that caused sb_set_blocksize() to fail for buffers read
+with the initial minimum block size that remained unupdated in the
+super_block structure.
+
+Since nilfs2 mkfs tool does not accept block sizes larger than the system
+page size, this has been overlooked.  However, it is possible to create
+this situation by intentionally modifying the tool or by passing a
+filesystem image created on a system with a large page size to a system
+with a smaller page size and mounting it.
+
+Fix this issue by inserting the expected error handling for the call to
+sb_set_blocksize().
+
+Link: https://lkml.kernel.org/r/20231129141547.4726-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/ptt/hisi_ptt.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nilfs2/the_nilfs.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/ptt/hisi_ptt.c b/drivers/hwtracing/ptt/hisi_ptt.c
-index 4140efd664097..016220ba0addd 100644
---- a/drivers/hwtracing/ptt/hisi_ptt.c
-+++ b/drivers/hwtracing/ptt/hisi_ptt.c
-@@ -837,6 +837,10 @@ static void hisi_ptt_pmu_del(struct perf_event *event, int flags)
- 	hisi_ptt_pmu_stop(event, PERF_EF_UPDATE);
- }
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -716,7 +716,11 @@ int init_nilfs(struct the_nilfs *nilfs,
+ 			goto failed_sbh;
+ 		}
+ 		nilfs_release_super_block(nilfs);
+-		sb_set_blocksize(sb, blocksize);
++		if (!sb_set_blocksize(sb, blocksize)) {
++			nilfs_err(sb, "bad blocksize %d", blocksize);
++			err = -EINVAL;
++			goto out;
++		}
  
-+static void hisi_ptt_pmu_read(struct perf_event *event)
-+{
-+}
-+
- static void hisi_ptt_remove_cpuhp_instance(void *hotplug_node)
- {
- 	cpuhp_state_remove_instance_nocalls(hisi_ptt_pmu_online, hotplug_node);
-@@ -880,6 +884,7 @@ static int hisi_ptt_register_pmu(struct hisi_ptt *hisi_ptt)
- 		.stop		= hisi_ptt_pmu_stop,
- 		.add		= hisi_ptt_pmu_add,
- 		.del		= hisi_ptt_pmu_del,
-+		.read		= hisi_ptt_pmu_read,
- 	};
- 
- 	reg = readl(hisi_ptt->iobase + HISI_PTT_LOCATION);
--- 
-2.42.0
-
+ 		err = nilfs_load_super_block(nilfs, sb, blocksize, &sbp);
+ 		if (err)
 
 
