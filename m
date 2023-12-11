@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6874F213;
-	Mon, 11 Dec 2023 18:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0524F213;
+	Mon, 11 Dec 2023 18:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmljom0U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE4FC433C7;
-	Mon, 11 Dec 2023 18:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqW+BEF+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A0BC433C9;
+	Mon, 11 Dec 2023 18:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702318918;
-	bh=uiuKK44iravI3NY2kBFCtVY0hC/XB3BEUt7uKlyhhNA=;
+	s=korg; t=1702318921;
+	bh=TScLGhxLqQ1B+unqo42uXwXMBjeBy1ozoq0HOT8VOYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tmljom0UGrJNynFX/J4hvYqd8ySNeCvggNNSwmPldIKWNym+NiaQc0S2H+fr3gIA1
-	 Y/XHp+LNlSZjhHOCKpHxkVeR3/2q47ezYOPDdzKEJxgNsAK0pntRXCZ2JUreP27bwg
-	 PWlNVtlRxT29SUVQ2sr56+gou3rswUY1eNlwp0kE=
+	b=AqW+BEF+gWCLI0qeICDqXgvs4An4aCUNz3UpFk6RqILUF6ygnEt0+qL2fURVJ1y/i
+	 KYCMQ+fNA2J29E2w9wQYxpkprPagbQICxC334GQIxHzWRR9vMqMz7PufF1q+wp62HM
+	 ESYIfQAYGebeLF1hUHQYsHIwOzmzHuaE8S+UX/KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Zhang <jason.zhang@rock-chips.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.14 10/25] ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
-Date: Mon, 11 Dec 2023 19:21:01 +0100
-Message-ID: <20231211182009.073954391@linuxfoundation.org>
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 4.14 19/25] serial: 8250_omap: Add earlycon support for the AM654 UART controller
+Date: Mon, 11 Dec 2023 19:21:10 +0100
+Message-ID: <20231211182009.396825544@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182008.665944227@linuxfoundation.org>
 References: <20231211182008.665944227@linuxfoundation.org>
@@ -41,78 +42,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Zhang <jason.zhang@rock-chips.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-commit 2b3a7a302c9804e463f2ea5b54dc3a6ad106a344 upstream.
+commit 8e42c301ce64e0dcca547626eb486877d502d336 upstream.
 
-The pcm state can be SNDRV_PCM_STATE_DISCONNECTED at disconnect
-callback, and there is not an entry of SNDRV_PCM_STATE_DISCONNECTED
-in snd_pcm_state_names.
+Currently there is no support for earlycon on the AM654 UART
+controller. This commit adds it.
 
-This patch adds the missing entry to resolve this issue.
-
-cat /proc/asound/card2/pcm0p/sub0/status
-That results in stack traces like the following:
-
-[   99.702732][ T5171] Unexpected kernel BRK exception at EL1
-[   99.702774][ T5171] Internal error: BRK handler: f2005512 [#1] PREEMPT SMP
-[   99.703858][ T5171] Modules linked in: bcmdhd(E) (...)
-[   99.747425][ T5171] CPU: 3 PID: 5171 Comm: cat Tainted: G         C OE     5.10.189-android13-4-00003-g4a17384380d8-ab11086999 #1
-[   99.748447][ T5171] Hardware name: Rockchip RK3588 CVTE V10 Board (DT)
-[   99.749024][ T5171] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
-[   99.749616][ T5171] pc : snd_pcm_substream_proc_status_read+0x264/0x2bc
-[   99.750204][ T5171] lr : snd_pcm_substream_proc_status_read+0xa4/0x2bc
-[   99.750778][ T5171] sp : ffffffc0175abae0
-[   99.751132][ T5171] x29: ffffffc0175abb80 x28: ffffffc009a2c498
-[   99.751665][ T5171] x27: 0000000000000001 x26: ffffff810cbae6e8
-[   99.752199][ T5171] x25: 0000000000400cc0 x24: ffffffc0175abc60
-[   99.752729][ T5171] x23: 0000000000000000 x22: ffffff802f558400
-[   99.753263][ T5171] x21: ffffff81d8d8ff00 x20: ffffff81020cdc00
-[   99.753795][ T5171] x19: ffffff802d110000 x18: ffffffc014fbd058
-[   99.754326][ T5171] x17: 0000000000000000 x16: 0000000000000000
-[   99.754861][ T5171] x15: 000000000000c276 x14: ffffffff9a976fda
-[   99.755392][ T5171] x13: 0000000065689089 x12: 000000000000d72e
-[   99.755923][ T5171] x11: ffffff802d110000 x10: 00000000000000e0
-[   99.756457][ T5171] x9 : 9c431600c8385d00 x8 : 0000000000000008
-[   99.756990][ T5171] x7 : 0000000000000000 x6 : 000000000000003f
-[   99.757522][ T5171] x5 : 0000000000000040 x4 : ffffffc0175abb70
-[   99.758056][ T5171] x3 : 0000000000000001 x2 : 0000000000000001
-[   99.758588][ T5171] x1 : 0000000000000000 x0 : 0000000000000000
-[   99.759123][ T5171] Call trace:
-[   99.759404][ T5171]  snd_pcm_substream_proc_status_read+0x264/0x2bc
-[   99.759958][ T5171]  snd_info_seq_show+0x54/0xa4
-[   99.760370][ T5171]  seq_read_iter+0x19c/0x7d4
-[   99.760770][ T5171]  seq_read+0xf0/0x128
-[   99.761117][ T5171]  proc_reg_read+0x100/0x1f8
-[   99.761515][ T5171]  vfs_read+0xf4/0x354
-[   99.761869][ T5171]  ksys_read+0x7c/0x148
-[   99.762226][ T5171]  __arm64_sys_read+0x20/0x30
-[   99.762625][ T5171]  el0_svc_common+0xd0/0x1e4
-[   99.763023][ T5171]  el0_svc+0x28/0x98
-[   99.763358][ T5171]  el0_sync_handler+0x8c/0xf0
-[   99.763759][ T5171]  el0_sync+0x1b8/0x1c0
-[   99.764118][ T5171] Code: d65f03c0 b9406102 17ffffae 94191565 (d42aa240)
-[   99.764715][ T5171] ---[ end trace 1eeffa3e17c58e10 ]---
-[   99.780720][ T5171] Kernel panic - not syncing: BRK handler: Fatal exception
-
-Signed-off-by: Jason Zhang <jason.zhang@rock-chips.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231206013139.20506-1-jason.zhang@rock-chips.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
+Link: https://lore.kernel.org/r/20231031131242.15516-1-rwahl@gmx.de
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm.c |    1 +
+ drivers/tty/serial/8250/8250_early.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -266,6 +266,7 @@ static char *snd_pcm_state_names[] = {
- 	STATE(DRAINING),
- 	STATE(PAUSED),
- 	STATE(SUSPENDED),
-+	STATE(DISCONNECTED),
- };
+--- a/drivers/tty/serial/8250/8250_early.c
++++ b/drivers/tty/serial/8250/8250_early.c
+@@ -179,6 +179,7 @@ static int __init early_omap8250_setup(s
+ OF_EARLYCON_DECLARE(omap8250, "ti,omap2-uart", early_omap8250_setup);
+ OF_EARLYCON_DECLARE(omap8250, "ti,omap3-uart", early_omap8250_setup);
+ OF_EARLYCON_DECLARE(omap8250, "ti,omap4-uart", early_omap8250_setup);
++OF_EARLYCON_DECLARE(omap8250, "ti,am654-uart", early_omap8250_setup);
  
- static char *snd_pcm_access_names[] = {
+ #endif
+ 
 
 
