@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F85C8C8;
-	Mon, 11 Dec 2023 18:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A147C8C8;
+	Mon, 11 Dec 2023 18:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzz1g89u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF60C433C7;
-	Mon, 11 Dec 2023 18:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnehwB1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68B4C433C9;
+	Mon, 11 Dec 2023 18:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319571;
-	bh=9utmfqStnHpWeodMryHJRk4JCr27g/dNfcnjPgpgtk4=;
+	s=korg; t=1702319574;
+	bh=Qt0XRihgkbyuIc1NY82wYTm5ZPGlwYm5NLMdkAeENGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzz1g89uNnYz76EvYHzPhNcxx+am513CON0hfbn4XG27hLIgyNPrACXAN7Ow6l52l
-	 Yq81nI82ucyPqOvdMNtW6pt2AcG7LW8nHtLZh2p34BssPQpHXrJTujSFVklNl2uKfx
-	 +guqY5wdS9MnuXQ7knaT/xQDSVfVbhkTYKiQNOxE=
+	b=EnehwB1owt0BySM8t8eURasA2gkOvCo2gz1+G9/3aMPT2UPwq3ibQk2w1pFmVUsNd
+	 LGwx8l2pahCEUECHkQAP29k+Sd0UG+eLrjP7YkWvBakl3wnyPqxHnmsrZXZ2GGaRoR
+	 LTqIafY35Lfjjnu+J/hzbfTHrUI8kqcn2gVbo5Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 155/244] tracing: Disable snapshot buffer when stopping instance tracers
-Date: Mon, 11 Dec 2023 19:20:48 +0100
-Message-ID: <20231211182052.787171236@linuxfoundation.org>
+	Jason Zhang <jason.zhang@rock-chips.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 138/244] ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
+Date: Mon, 11 Dec 2023 19:20:31 +0100
+Message-ID: <20231211182051.979786010@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,203 +41,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Jason Zhang <jason.zhang@rock-chips.com>
 
-commit b538bf7d0ec11ca49f536dfda742a5f6db90a798 upstream.
+commit 2b3a7a302c9804e463f2ea5b54dc3a6ad106a344 upstream.
 
-It use to be that only the top level instance had a snapshot buffer (for
-latency tracers like wakeup and irqsoff). When stopping a tracer in an
-instance would not disable the snapshot buffer. This could have some
-unintended consequences if the irqsoff tracer is enabled.
+The pcm state can be SNDRV_PCM_STATE_DISCONNECTED at disconnect
+callback, and there is not an entry of SNDRV_PCM_STATE_DISCONNECTED
+in snd_pcm_state_names.
 
-Consolidate the tracing_start/stop() with tracing_start/stop_tr() so that
-all instances behave the same. The tracing_start/stop() functions will
-just call their respective tracing_start/stop_tr() with the global_array
-passed in.
+This patch adds the missing entry to resolve this issue.
 
-Link: https://lkml.kernel.org/r/20231205220011.041220035@goodmis.org
+cat /proc/asound/card2/pcm0p/sub0/status
+That results in stack traces like the following:
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: 6d9b3fa5e7f6 ("tracing: Move tracing_max_latency into trace_array")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[   99.702732][ T5171] Unexpected kernel BRK exception at EL1
+[   99.702774][ T5171] Internal error: BRK handler: f2005512 [#1] PREEMPT SMP
+[   99.703858][ T5171] Modules linked in: bcmdhd(E) (...)
+[   99.747425][ T5171] CPU: 3 PID: 5171 Comm: cat Tainted: G         C OE     5.10.189-android13-4-00003-g4a17384380d8-ab11086999 #1
+[   99.748447][ T5171] Hardware name: Rockchip RK3588 CVTE V10 Board (DT)
+[   99.749024][ T5171] pstate: 60400005 (nZCv daif +PAN -UAO -TCO BTYPE=--)
+[   99.749616][ T5171] pc : snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.750204][ T5171] lr : snd_pcm_substream_proc_status_read+0xa4/0x2bc
+[   99.750778][ T5171] sp : ffffffc0175abae0
+[   99.751132][ T5171] x29: ffffffc0175abb80 x28: ffffffc009a2c498
+[   99.751665][ T5171] x27: 0000000000000001 x26: ffffff810cbae6e8
+[   99.752199][ T5171] x25: 0000000000400cc0 x24: ffffffc0175abc60
+[   99.752729][ T5171] x23: 0000000000000000 x22: ffffff802f558400
+[   99.753263][ T5171] x21: ffffff81d8d8ff00 x20: ffffff81020cdc00
+[   99.753795][ T5171] x19: ffffff802d110000 x18: ffffffc014fbd058
+[   99.754326][ T5171] x17: 0000000000000000 x16: 0000000000000000
+[   99.754861][ T5171] x15: 000000000000c276 x14: ffffffff9a976fda
+[   99.755392][ T5171] x13: 0000000065689089 x12: 000000000000d72e
+[   99.755923][ T5171] x11: ffffff802d110000 x10: 00000000000000e0
+[   99.756457][ T5171] x9 : 9c431600c8385d00 x8 : 0000000000000008
+[   99.756990][ T5171] x7 : 0000000000000000 x6 : 000000000000003f
+[   99.757522][ T5171] x5 : 0000000000000040 x4 : ffffffc0175abb70
+[   99.758056][ T5171] x3 : 0000000000000001 x2 : 0000000000000001
+[   99.758588][ T5171] x1 : 0000000000000000 x0 : 0000000000000000
+[   99.759123][ T5171] Call trace:
+[   99.759404][ T5171]  snd_pcm_substream_proc_status_read+0x264/0x2bc
+[   99.759958][ T5171]  snd_info_seq_show+0x54/0xa4
+[   99.760370][ T5171]  seq_read_iter+0x19c/0x7d4
+[   99.760770][ T5171]  seq_read+0xf0/0x128
+[   99.761117][ T5171]  proc_reg_read+0x100/0x1f8
+[   99.761515][ T5171]  vfs_read+0xf4/0x354
+[   99.761869][ T5171]  ksys_read+0x7c/0x148
+[   99.762226][ T5171]  __arm64_sys_read+0x20/0x30
+[   99.762625][ T5171]  el0_svc_common+0xd0/0x1e4
+[   99.763023][ T5171]  el0_svc+0x28/0x98
+[   99.763358][ T5171]  el0_sync_handler+0x8c/0xf0
+[   99.763759][ T5171]  el0_sync+0x1b8/0x1c0
+[   99.764118][ T5171] Code: d65f03c0 b9406102 17ffffae 94191565 (d42aa240)
+[   99.764715][ T5171] ---[ end trace 1eeffa3e17c58e10 ]---
+[   99.780720][ T5171] Kernel panic - not syncing: BRK handler: Fatal exception
+
+Signed-off-by: Jason Zhang <jason.zhang@rock-chips.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20231206013139.20506-1-jason.zhang@rock-chips.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |  110 +++++++++++++++------------------------------------
- 1 file changed, 34 insertions(+), 76 deletions(-)
+ sound/core/pcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -2359,13 +2359,7 @@ int is_tracing_stopped(void)
- 	return global_trace.stop_count;
- }
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -253,6 +253,7 @@ static const char * const snd_pcm_state_
+ 	STATE(DRAINING),
+ 	STATE(PAUSED),
+ 	STATE(SUSPENDED),
++	STATE(DISCONNECTED),
+ };
  
--/**
-- * tracing_start - quick start of the tracer
-- *
-- * If tracing is enabled but was stopped by tracing_stop,
-- * this will start the tracer back up.
-- */
--void tracing_start(void)
-+static void tracing_start_tr(struct trace_array *tr)
- {
- 	struct trace_buffer *buffer;
- 	unsigned long flags;
-@@ -2373,119 +2367,83 @@ void tracing_start(void)
- 	if (tracing_disabled)
- 		return;
- 
--	raw_spin_lock_irqsave(&global_trace.start_lock, flags);
--	if (--global_trace.stop_count) {
--		if (global_trace.stop_count < 0) {
-+	raw_spin_lock_irqsave(&tr->start_lock, flags);
-+	if (--tr->stop_count) {
-+		if (WARN_ON_ONCE(tr->stop_count < 0)) {
- 			/* Someone screwed up their debugging */
--			WARN_ON_ONCE(1);
--			global_trace.stop_count = 0;
-+			tr->stop_count = 0;
- 		}
- 		goto out;
- 	}
- 
- 	/* Prevent the buffers from switching */
--	arch_spin_lock(&global_trace.max_lock);
-+	arch_spin_lock(&tr->max_lock);
- 
--	buffer = global_trace.array_buffer.buffer;
-+	buffer = tr->array_buffer.buffer;
- 	if (buffer)
- 		ring_buffer_record_enable(buffer);
- 
- #ifdef CONFIG_TRACER_MAX_TRACE
--	buffer = global_trace.max_buffer.buffer;
-+	buffer = tr->max_buffer.buffer;
- 	if (buffer)
- 		ring_buffer_record_enable(buffer);
- #endif
- 
--	arch_spin_unlock(&global_trace.max_lock);
--
-- out:
--	raw_spin_unlock_irqrestore(&global_trace.start_lock, flags);
--}
--
--static void tracing_start_tr(struct trace_array *tr)
--{
--	struct trace_buffer *buffer;
--	unsigned long flags;
--
--	if (tracing_disabled)
--		return;
--
--	/* If global, we need to also start the max tracer */
--	if (tr->flags & TRACE_ARRAY_FL_GLOBAL)
--		return tracing_start();
--
--	raw_spin_lock_irqsave(&tr->start_lock, flags);
--
--	if (--tr->stop_count) {
--		if (tr->stop_count < 0) {
--			/* Someone screwed up their debugging */
--			WARN_ON_ONCE(1);
--			tr->stop_count = 0;
--		}
--		goto out;
--	}
--
--	buffer = tr->array_buffer.buffer;
--	if (buffer)
--		ring_buffer_record_enable(buffer);
-+	arch_spin_unlock(&tr->max_lock);
- 
-  out:
- 	raw_spin_unlock_irqrestore(&tr->start_lock, flags);
- }
- 
- /**
-- * tracing_stop - quick stop of the tracer
-+ * tracing_start - quick start of the tracer
-  *
-- * Light weight way to stop tracing. Use in conjunction with
-- * tracing_start.
-+ * If tracing is enabled but was stopped by tracing_stop,
-+ * this will start the tracer back up.
-  */
--void tracing_stop(void)
-+void tracing_start(void)
-+
-+{
-+	return tracing_start_tr(&global_trace);
-+}
-+
-+static void tracing_stop_tr(struct trace_array *tr)
- {
- 	struct trace_buffer *buffer;
- 	unsigned long flags;
- 
--	raw_spin_lock_irqsave(&global_trace.start_lock, flags);
--	if (global_trace.stop_count++)
-+	raw_spin_lock_irqsave(&tr->start_lock, flags);
-+	if (tr->stop_count++)
- 		goto out;
- 
- 	/* Prevent the buffers from switching */
--	arch_spin_lock(&global_trace.max_lock);
-+	arch_spin_lock(&tr->max_lock);
- 
--	buffer = global_trace.array_buffer.buffer;
-+	buffer = tr->array_buffer.buffer;
- 	if (buffer)
- 		ring_buffer_record_disable(buffer);
- 
- #ifdef CONFIG_TRACER_MAX_TRACE
--	buffer = global_trace.max_buffer.buffer;
-+	buffer = tr->max_buffer.buffer;
- 	if (buffer)
- 		ring_buffer_record_disable(buffer);
- #endif
- 
--	arch_spin_unlock(&global_trace.max_lock);
-+	arch_spin_unlock(&tr->max_lock);
- 
-  out:
--	raw_spin_unlock_irqrestore(&global_trace.start_lock, flags);
-+	raw_spin_unlock_irqrestore(&tr->start_lock, flags);
- }
- 
--static void tracing_stop_tr(struct trace_array *tr)
-+/**
-+ * tracing_stop - quick stop of the tracer
-+ *
-+ * Light weight way to stop tracing. Use in conjunction with
-+ * tracing_start.
-+ */
-+void tracing_stop(void)
- {
--	struct trace_buffer *buffer;
--	unsigned long flags;
--
--	/* If global, we need to also stop the max tracer */
--	if (tr->flags & TRACE_ARRAY_FL_GLOBAL)
--		return tracing_stop();
--
--	raw_spin_lock_irqsave(&tr->start_lock, flags);
--	if (tr->stop_count++)
--		goto out;
--
--	buffer = tr->array_buffer.buffer;
--	if (buffer)
--		ring_buffer_record_disable(buffer);
--
-- out:
--	raw_spin_unlock_irqrestore(&tr->start_lock, flags);
-+	return tracing_stop_tr(&global_trace);
- }
- 
- static int trace_save_cmdline(struct task_struct *tsk)
+ static const char * const snd_pcm_access_names[] = {
 
 
