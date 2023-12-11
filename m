@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D96E548;
-	Mon, 11 Dec 2023 18:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B83F321B8;
+	Mon, 11 Dec 2023 18:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzuueHBI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EBAC433C7;
-	Mon, 11 Dec 2023 18:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19G+vveh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14A4C433C8;
+	Mon, 11 Dec 2023 18:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321086;
-	bh=X84ZF5T71LVyraLX8VOOH+b+ICJgIGXXLtYVOoaS3wM=;
+	s=korg; t=1702321089;
+	bh=TRP6M+HnC1osYzuU0GUng75RXD0M68GpOIE+Tq+MGhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzuueHBIHLfoAI4TU3NvduYXZCtZE1TVCvkkwAXjVeJNjU5+Xcai5tdjqS3MiQhsJ
-	 OW24QUL2lMBr8jLCh+5rn+5OZovMtzGKbbPwDg/Bevb7O8Jj/eHSFd7w+TFckAyRXA
-	 fs5Lukl1uN6hQEvEVCO6Dsi0rNO6dLvb+AB0LVvE=
+	b=19G+vvehsMTaQWg6i413w5v0swvHlmQtHwsXLhKyNc9fkQHS8cL9ZiiI+neUMTGis
+	 SlaMz7vXP60YmMAwmX/u1+3qGjvkp8fnPbN8Lo1y32vy7sBX+hY6UgOiUPOAmWRVkO
+	 fqaLVq0EeaUbBe5h0iN+fsh5Brtwv6swtvOn4lck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/141] kallsyms: Make kallsyms_on_each_symbol generally available
-Date: Mon, 11 Dec 2023 19:22:36 +0100
-Message-ID: <20231211182030.765085672@linuxfoundation.org>
+	Hugh Dickins <hughd@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	=?UTF-8?q?Jos=C3=A9=20Pekkarinen?= <jose.pekkarinen@foxhound.fi>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+89edd67979b52675ddec@syzkaller.appspotmail.com,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 5.15 106/141] mm: fix oops when filemap_map_pmd() without prealloc_pte
+Date: Mon, 11 Dec 2023 19:22:45 +0100
+Message-ID: <20231211182031.140194721@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -38,84 +41,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Hugh Dickins <hughd@google.com>
 
-[ Upstream commit d721def7392a7348ffb9f3583b264239cbd3702c ]
+commit 9aa1345d66b8132745ffb99b348b1492088da9e2 upstream.
 
-Making kallsyms_on_each_symbol generally available, so it can be
-used outside CONFIG_LIVEPATCH option in following changes.
+syzbot reports oops in lockdep's __lock_acquire(), called from
+__pte_offset_map_lock() called from filemap_map_pages(); or when I run the
+repro, the oops comes in pmd_install(), called from filemap_map_pmd()
+called from filemap_map_pages(), just before the __pte_offset_map_lock().
 
-Rather than adding another ifdef option let's make the function
-generally available (when CONFIG_KALLSYMS option is defined).
+The problem is that filemap_map_pmd() has been assuming that when it finds
+pmd_none(), a page table has already been prepared in prealloc_pte; and
+indeed do_fault_around() has been careful to preallocate one there, when
+it finds pmd_none(): but what if *pmd became none in between?
 
-Cc: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Masami Hiramatsu <mhiramat@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20220510122616.2652285-2-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+My 6.6 mods in mm/khugepaged.c, avoiding mmap_lock for write, have made it
+easy for *pmd to be cleared while servicing a page fault; but even before
+those, a huge *pmd might be zapped while a fault is serviced.
+
+The difference in symptomatic stack traces comes from the "memory model"
+in use: pmd_install() uses pmd_populate() uses page_to_pfn(): in some
+models that is strict, and will oops on the NULL prealloc_pte; in other
+models, it will construct a bogus value to be populated into *pmd, then
+__pte_offset_map_lock() oops when trying to access split ptlock pointer
+(or some other symptom in normal case of ptlock embedded not pointer).
+
+Link: https://lore.kernel.org/linux-mm/20231115065506.19780-1-jose.pekkarinen@foxhound.fi/
+Link: https://lkml.kernel.org/r/6ed0c50c-78ef-0719-b3c5-60c0c010431c@google.com
+Fixes: f9ce0be71d1f ("mm: Cleanup faultaround and finish_fault() codepaths")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Reported-and-tested-by: syzbot+89edd67979b52675ddec@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-mm/0000000000005e44550608a0806c@google.com/
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Jann Horn <jannh@google.com>,
+Cc: José Pekkarinen <jose.pekkarinen@foxhound.fi>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: <stable@vger.kernel.org>    [5.12+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/kallsyms.h | 7 ++++++-
- kernel/kallsyms.c        | 2 --
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ mm/filemap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/kallsyms.h b/include/linux/kallsyms.h
-index a1d6fc82d7f06..eae9f423bd648 100644
---- a/include/linux/kallsyms.h
-+++ b/include/linux/kallsyms.h
-@@ -74,11 +74,11 @@ static inline void *dereference_symbol_descriptor(void *ptr)
- 	return ptr;
- }
- 
-+#ifdef CONFIG_KALLSYMS
- int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct module *,
- 				      unsigned long),
- 			    void *data);
- 
--#ifdef CONFIG_KALLSYMS
- /* Lookup the address for a symbol. Returns 0 if not found. */
- unsigned long kallsyms_lookup_name(const char *name);
- 
-@@ -172,6 +172,11 @@ static inline bool kallsyms_show_value(const struct cred *cred)
- 	return false;
- }
- 
-+static inline int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct module *,
-+					  unsigned long), void *data)
-+{
-+	return -EOPNOTSUPP;
-+}
- #endif /*CONFIG_KALLSYMS*/
- 
- static inline void print_ip_sym(const char *loglvl, unsigned long ip)
-diff --git a/kernel/kallsyms.c b/kernel/kallsyms.c
-index 0ba87982d017f..e0d9f77cf2d4b 100644
---- a/kernel/kallsyms.c
-+++ b/kernel/kallsyms.c
-@@ -204,7 +204,6 @@ unsigned long kallsyms_lookup_name(const char *name)
- 	return module_kallsyms_lookup_name(name);
- }
- 
--#ifdef CONFIG_LIVEPATCH
- /*
-  * Iterate over all symbols in vmlinux.  For symbols from modules use
-  * module_kallsyms_on_each_symbol instead.
-@@ -226,7 +225,6 @@ int kallsyms_on_each_symbol(int (*fn)(void *, const char *, struct module *,
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3209,7 +3209,7 @@ static bool filemap_map_pmd(struct vm_fa
+ 	    }
  	}
- 	return 0;
- }
--#endif /* CONFIG_LIVEPATCH */
  
- static unsigned long get_symbol_pos(unsigned long addr,
- 				    unsigned long *symbolsize,
--- 
-2.42.0
-
+-	if (pmd_none(*vmf->pmd)) {
++	if (pmd_none(*vmf->pmd) && vmf->prealloc_pte) {
+ 		vmf->ptl = pmd_lock(mm, vmf->pmd);
+ 		if (likely(pmd_none(*vmf->pmd))) {
+ 			mm_inc_nr_ptes(mm);
 
 
