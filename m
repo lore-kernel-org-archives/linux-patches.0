@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF7A5102D;
-	Mon, 11 Dec 2023 18:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17C651029;
+	Mon, 11 Dec 2023 18:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H80p4M9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9551AC433C8;
-	Mon, 11 Dec 2023 18:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pa8co72o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4607BC433C7;
+	Mon, 11 Dec 2023 18:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319223;
-	bh=qpoz9gXjAXsqKB4yKdu/nEjP8Hpzz7GdkfR+vfHUZR0=;
+	s=korg; t=1702319226;
+	bh=HWdA5px7W890j+uewOH5o3TBzQ35legJ5DIMcJutJ9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H80p4M9j3l3wqaN1xftwPOFYlk/pGcTX9rMtiPGa4MBCcPyccipvaEc5bswxjeDea
-	 A9fpFS0HxfBj7Nj3XBQQ33XW9KwHlt/Ng8b6eEmPEXyItxMnys18WEzKgaxuNO+DPj
-	 bwRpWYxyProzImAEeP81FNctGfVSID07ADFNnCoY=
+	b=pa8co72odQIsN8VWHJfiz9hsSOl8zQEz9xlkYS7Q0qp34xaaxWPeZKXOd8TUctTEb
+	 QgXs8xrLNR16uEPWReQFdBnYgURTeQRETwwu9ik+Dt+0+OC5ZUNuYiVPRDKTEJXUhF
+	 cMnx2VJe8nE14rVOoeHJcA4DoSg31Cv2B3moyFkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Pakhunov <alexey.pakhunov@spacex.com>,
-	Vincent Wong <vincent.wong2@spacex.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Wei Wang <weiwan@google.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 009/244] tg3: Move the [rt]x_dropped counters to tg3_napi
-Date: Mon, 11 Dec 2023 19:18:22 +0100
-Message-ID: <20231211182046.195545733@linuxfoundation.org>
+Subject: [PATCH 6.6 027/244] ipv6: fix potential NULL deref in fib6_add()
+Date: Mon, 11 Dec 2023 19:18:40 +0100
+Message-ID: <20231211182047.022982643@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -44,137 +45,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Pakhunov <alexey.pakhunov@spacex.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 907d1bdb8b2cc0357d03a1c34d2a08d9943760b1 ]
+[ Upstream commit 75475bb51e78a3f54ad2f69380f2a1c985e85f2d ]
 
-This change moves [rt]x_dropped counters to tg3_napi so that they can be
-updated by a single writer, race-free.
+If fib6_find_prefix() returns NULL, we should silently fallback
+using fib6_null_entry regardless of RT6_DEBUG value.
 
-Signed-off-by: Alex Pakhunov <alexey.pakhunov@spacex.com>
-Signed-off-by: Vincent Wong <vincent.wong2@spacex.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20231113182350.37472-1-alexey.pakhunov@spacex.com
+syzbot reported:
+
+WARNING: CPU: 0 PID: 5477 at net/ipv6/ip6_fib.c:1516 fib6_add+0x310d/0x3fa0 net/ipv6/ip6_fib.c:1516
+Modules linked in:
+CPU: 0 PID: 5477 Comm: syz-executor.0 Not tainted 6.7.0-rc2-syzkaller-00029-g9b6de136b5f0 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
+RIP: 0010:fib6_add+0x310d/0x3fa0 net/ipv6/ip6_fib.c:1516
+Code: 00 48 8b 54 24 68 e8 42 22 00 00 48 85 c0 74 14 49 89 c6 e8 d5 d3 c2 f7 eb 5d e8 ce d3 c2 f7 e9 ca 00 00 00 e8 c4 d3 c2 f7 90 <0f> 0b 90 48 b8 00 00 00 00 00 fc ff df 48 8b 4c 24 38 80 3c 01 00
+RSP: 0018:ffffc90005067740 EFLAGS: 00010293
+RAX: ffffffff89cba5bc RBX: ffffc90005067ab0 RCX: ffff88801a2e9dc0
+RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000000
+RBP: ffffc90005067980 R08: ffffffff89cbca85 R09: 1ffff110040d4b85
+R10: dffffc0000000000 R11: ffffed10040d4b86 R12: 00000000ffffffff
+R13: 1ffff110051c3904 R14: ffff8880206a5c00 R15: ffff888028e1c820
+FS: 00007f763783c6c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f763783bff8 CR3: 000000007f74d000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+__ip6_ins_rt net/ipv6/route.c:1303 [inline]
+ip6_route_add+0x88/0x120 net/ipv6/route.c:3847
+ipv6_route_ioctl+0x525/0x7b0 net/ipv6/route.c:4467
+inet6_ioctl+0x21a/0x270 net/ipv6/af_inet6.c:575
+sock_do_ioctl+0x152/0x460 net/socket.c:1220
+sock_ioctl+0x615/0x8c0 net/socket.c:1339
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:871 [inline]
+__se_sys_ioctl+0xf8/0x170 fs/ioctl.c:857
+do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+do_syscall_64+0x45/0x110 arch/x86/entry/common.c:82
+
+Fixes: 7bbfe00e0252 ("ipv6: fix general protection fault in fib6_add()")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Wei Wang <weiwan@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20231129160630.3509216-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 38 +++++++++++++++++++++++++----
- drivers/net/ethernet/broadcom/tg3.h |  4 +--
- 2 files changed, 35 insertions(+), 7 deletions(-)
+ net/ipv6/ip6_fib.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 22b00912f7ac8..5c18ad10efc3e 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -6845,7 +6845,7 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
- 				       desc_idx, *post_ptr);
- 		drop_it_no_recycle:
- 			/* Other statistics kept track of by card. */
--			tp->rx_dropped++;
-+			tnapi->rx_dropped++;
- 			goto next_pkt;
- 		}
- 
-@@ -8146,7 +8146,7 @@ static netdev_tx_t tg3_start_xmit(struct sk_buff *skb, struct net_device *dev)
- drop:
- 	dev_kfree_skb_any(skb);
- drop_nofree:
--	tp->tx_dropped++;
-+	tnapi->tx_dropped++;
- 	return NETDEV_TX_OK;
- }
- 
-@@ -9325,7 +9325,7 @@ static void __tg3_set_rx_mode(struct net_device *);
- /* tp->lock is held. */
- static int tg3_halt(struct tg3 *tp, int kind, bool silent)
- {
--	int err;
-+	int err, i;
- 
- 	tg3_stop_fw(tp);
- 
-@@ -9346,6 +9346,13 @@ static int tg3_halt(struct tg3 *tp, int kind, bool silent)
- 
- 		/* And make sure the next sample is new data */
- 		memset(tp->hw_stats, 0, sizeof(struct tg3_hw_stats));
-+
-+		for (i = 0; i < TG3_IRQ_MAX_VECS; ++i) {
-+			struct tg3_napi *tnapi = &tp->napi[i];
-+
-+			tnapi->rx_dropped = 0;
-+			tnapi->tx_dropped = 0;
-+		}
- 	}
- 
- 	return err;
-@@ -11895,6 +11902,9 @@ static void tg3_get_nstats(struct tg3 *tp, struct rtnl_link_stats64 *stats)
- {
- 	struct rtnl_link_stats64 *old_stats = &tp->net_stats_prev;
- 	struct tg3_hw_stats *hw_stats = tp->hw_stats;
-+	unsigned long rx_dropped;
-+	unsigned long tx_dropped;
-+	int i;
- 
- 	stats->rx_packets = old_stats->rx_packets +
- 		get_stat64(&hw_stats->rx_ucast_packets) +
-@@ -11941,8 +11951,26 @@ static void tg3_get_nstats(struct tg3 *tp, struct rtnl_link_stats64 *stats)
- 	stats->rx_missed_errors = old_stats->rx_missed_errors +
- 		get_stat64(&hw_stats->rx_discards);
- 
--	stats->rx_dropped = tp->rx_dropped;
--	stats->tx_dropped = tp->tx_dropped;
-+	/* Aggregate per-queue counters. The per-queue counters are updated
-+	 * by a single writer, race-free. The result computed by this loop
-+	 * might not be 100% accurate (counters can be updated in the middle of
-+	 * the loop) but the next tg3_get_nstats() will recompute the current
-+	 * value so it is acceptable.
-+	 *
-+	 * Note that these counters wrap around at 4G on 32bit machines.
-+	 */
-+	rx_dropped = (unsigned long)(old_stats->rx_dropped);
-+	tx_dropped = (unsigned long)(old_stats->tx_dropped);
-+
-+	for (i = 0; i < tp->irq_cnt; i++) {
-+		struct tg3_napi *tnapi = &tp->napi[i];
-+
-+		rx_dropped += tnapi->rx_dropped;
-+		tx_dropped += tnapi->tx_dropped;
-+	}
-+
-+	stats->rx_dropped = rx_dropped;
-+	stats->tx_dropped = tx_dropped;
- }
- 
- static int tg3_get_regs_len(struct net_device *dev)
-diff --git a/drivers/net/ethernet/broadcom/tg3.h b/drivers/net/ethernet/broadcom/tg3.h
-index 1000c894064f0..8d753f8c5b065 100644
---- a/drivers/net/ethernet/broadcom/tg3.h
-+++ b/drivers/net/ethernet/broadcom/tg3.h
-@@ -3018,6 +3018,7 @@ struct tg3_napi {
- 	u16				*rx_rcb_prod_idx;
- 	struct tg3_rx_prodring_set	prodring;
- 	struct tg3_rx_buffer_desc	*rx_rcb;
-+	unsigned long			rx_dropped;
- 
- 	u32				tx_prod	____cacheline_aligned;
- 	u32				tx_cons;
-@@ -3026,6 +3027,7 @@ struct tg3_napi {
- 	u32				prodmbox;
- 	struct tg3_tx_buffer_desc	*tx_ring;
- 	struct tg3_tx_ring_info		*tx_buffers;
-+	unsigned long			tx_dropped;
- 
- 	dma_addr_t			status_mapping;
- 	dma_addr_t			rx_rcb_mapping;
-@@ -3219,8 +3221,6 @@ struct tg3 {
- 
- 
- 	/* begin "everything else" cacheline(s) section */
--	unsigned long			rx_dropped;
--	unsigned long			tx_dropped;
- 	struct rtnl_link_stats64	net_stats_prev;
- 	struct tg3_ethtool_stats	estats_prev;
- 
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 28b01a068412a..7772f42ff2b94 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -1511,13 +1511,9 @@ int fib6_add(struct fib6_node *root, struct fib6_info *rt,
+ 			if (!pn_leaf && !(pn->fn_flags & RTN_RTINFO)) {
+ 				pn_leaf = fib6_find_prefix(info->nl_net, table,
+ 							   pn);
+-#if RT6_DEBUG >= 2
+-				if (!pn_leaf) {
+-					WARN_ON(!pn_leaf);
++				if (!pn_leaf)
+ 					pn_leaf =
+ 					    info->nl_net->ipv6.fib6_null_entry;
+-				}
+-#endif
+ 				fib6_info_hold(pn_leaf);
+ 				rcu_assign_pointer(pn->leaf, pn_leaf);
+ 			}
 -- 
 2.42.0
 
