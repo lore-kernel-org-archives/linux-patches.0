@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC672E548;
-	Mon, 11 Dec 2023 18:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9E7E548;
+	Mon, 11 Dec 2023 18:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQtzRd68"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74772C433C7;
-	Mon, 11 Dec 2023 18:59:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iefLURH8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2342CC433C7;
+	Mon, 11 Dec 2023 18:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321183;
-	bh=ZAdf5vD8JdoEoD7+lhk/+N8So+ubHbZfjFLGcrC/q2s=;
+	s=korg; t=1702321186;
+	bh=wfXppJ2n0XVTOFm0HCZDPernRUBi9npJoUjNOLRE/TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQtzRd681RSHYZguTtzo2vk42N8igKF0BueaE0o+hrCH45se8M9Rj4Vqs3/Xdo6RW
-	 uBceeAe8aR7tTUKSRAr3MLPY2QPOOzMvmIlpWqkKajx6a/ppcJl7f0ROILQFZ79gLC
-	 VIQqRRSPlsiHwTPtTCmbaZUuZAworbiyya/MrdVM=
+	b=iefLURH82zGNycOya7vTJKZZoKF3sN8dfK6ewobvA0eFbkRJ5KWs49IDnNVR4VEkB
+	 QX9SZmeb89wOWrP8l+jCJ/ATKchCOT54+DJWacqAudL2lMs9TZqdt3egHWEtcaWpTi
+	 NYC8J8OFrltgli/xwWKWpaXwK7x0NX4nHs+3yJgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 141/141] devcoredump: Send uevent once devcd is ready
-Date: Mon, 11 Dec 2023 19:23:20 +0100
-Message-ID: <20231211182032.736257674@linuxfoundation.org>
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 5.15 129/141] serial: 8250: 8250_omap: Clear UART_HAS_RHR_IT_DIS bit
+Date: Mon, 11 Dec 2023 19:23:08 +0100
+Message-ID: <20231211182032.160476599@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,59 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-[ Upstream commit af54d778a03853801d681c98c0c2a6c316ef9ca7 ]
+commit 8973ab7a2441b286218f4a5c4c33680e2f139996 upstream.
 
-dev_coredumpm() creates a devcoredump device and adds it
-to the core kernel framework which eventually end up
-sending uevent to the user space and later creates a
-symbolic link to the failed device. An application
-running in userspace may be interested in this symbolic
-link to get the name of the failed device.
+This fixes commit 439c7183e5b9 ("serial: 8250: 8250_omap: Disable RX
+interrupt after DMA enable") which unfortunately set the
+UART_HAS_RHR_IT_DIS bit in the UART_OMAP_IER2 register and never
+cleared it.
 
-In a issue scenario, once uevent sent to the user space
-it start reading '/sys/class/devcoredump/devcdX/failing_device'
-to get the actual name of the device which might not been
-created and it is in its path of creation.
-
-To fix this, suppress sending uevent till the failing device
-symbolic link gets created and send uevent once symbolic
-link is created successfully.
-
-Fixes: 833c95456a70 ("device coredump: add new device coredump class")
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1700232572-25823-1-git-send-email-quic_mojha@quicinc.com
+Fixes: 439c7183e5b9 ("serial: 8250: 8250_omap: Disable RX interrupt after DMA enable")
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
+Link: https://lore.kernel.org/r/20231031110909.11695-1-rwahl@gmx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/devcoredump.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/8250/8250_omap.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/devcoredump.c b/drivers/base/devcoredump.c
-index 1c06781f71148..f3bd9f104bd12 100644
---- a/drivers/base/devcoredump.c
-+++ b/drivers/base/devcoredump.c
-@@ -363,6 +363,7 @@ void dev_coredumpm(struct device *dev, struct module *owner,
- 	devcd->devcd_dev.class = &devcd_class;
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -839,7 +839,7 @@ static void __dma_rx_do_complete(struct
+ 	if (priv->habit & UART_HAS_RHR_IT_DIS) {
+ 		reg = serial_in(p, UART_OMAP_IER2);
+ 		reg &= ~UART_OMAP_IER2_RHR_IT_DIS;
+-		serial_out(p, UART_OMAP_IER2, UART_OMAP_IER2_RHR_IT_DIS);
++		serial_out(p, UART_OMAP_IER2, reg);
+ 	}
  
- 	mutex_lock(&devcd->mutex);
-+	dev_set_uevent_suppress(&devcd->devcd_dev, true);
- 	if (device_add(&devcd->devcd_dev))
- 		goto put_device;
+ 	dmaengine_tx_status(rxchan, cookie, &state);
+@@ -981,7 +981,7 @@ static int omap_8250_rx_dma(struct uart_
+ 	if (priv->habit & UART_HAS_RHR_IT_DIS) {
+ 		reg = serial_in(p, UART_OMAP_IER2);
+ 		reg |= UART_OMAP_IER2_RHR_IT_DIS;
+-		serial_out(p, UART_OMAP_IER2, UART_OMAP_IER2_RHR_IT_DIS);
++		serial_out(p, UART_OMAP_IER2, reg);
+ 	}
  
-@@ -377,6 +378,8 @@ void dev_coredumpm(struct device *dev, struct module *owner,
- 		              "devcoredump"))
- 		dev_warn(dev, "devcoredump create_link failed\n");
- 
-+	dev_set_uevent_suppress(&devcd->devcd_dev, false);
-+	kobject_uevent(&devcd->devcd_dev.kobj, KOBJ_ADD);
- 	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
- 	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
- 	mutex_unlock(&devcd->mutex);
--- 
-2.42.0
-
+ 	dma_async_issue_pending(dma->rxchan);
 
 
