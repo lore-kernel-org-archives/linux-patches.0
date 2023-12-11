@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F7551C38;
-	Mon, 11 Dec 2023 18:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3805151C38;
+	Mon, 11 Dec 2023 18:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGDGvqat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EBBC433C8;
-	Mon, 11 Dec 2023 18:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwzGLsu5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19AFC433C7;
+	Mon, 11 Dec 2023 18:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320814;
-	bh=ILv7/WMTSy9FjuUoZK9dB2miNXSWjdhovwJh/HJS35E=;
+	s=korg; t=1702320817;
+	bh=Yz8+XiRiywrSJ8ZAWhJjMUpfXqKkJ0WVSM5oWA1lc6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGDGvqatzt1cO/1sB7Yp6IxTZe+mCm1ARAVf8xxRGA/Z0P+TI8bPNU7LIuavgeM6n
-	 /+jLBwT+aV0kuvjHAPcJjbxOUtYQZAMXXzvsOu0ygSNt0igxtvAYzhIQzhq/IFO4kt
-	 TpcWocgNaIz/9590/tcsAFYQJglTyG4ki1AQ1AWs=
+	b=zwzGLsu51Am5vDSwqsLkDnyXNGCcuzblvKlRkWZOpThHDCTZvoYSJbG39b/+vTJyZ
+	 bp3VYdIpcK6vwd7EJ3A0g3LRXH5Y72nzDgyCnhzLo3K/PowGx1sefcbPK4+t3pC71F
+	 /j82RSeXt3L45YVjvg9Cl15Ymog2n0w4JQ4F4u7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [PATCH 6.1 178/194] devcoredump: Send uevent once devcd is ready
-Date: Mon, 11 Dec 2023 19:22:48 +0100
-Message-ID: <20231211182044.604697574@linuxfoundation.org>
+	stable@kernel.org,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 179/194] x86/CPU/AMD: Check vendor in the AMD microcode callback
+Date: Mon, 11 Dec 2023 19:22:49 +0100
+Message-ID: <20231211182044.651221008@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -40,53 +41,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit af54d778a03853801d681c98c0c2a6c316ef9ca7 upstream.
+commit 9b8493dc43044376716d789d07699f17d538a7c4 upstream.
 
-dev_coredumpm() creates a devcoredump device and adds it
-to the core kernel framework which eventually end up
-sending uevent to the user space and later creates a
-symbolic link to the failed device. An application
-running in userspace may be interested in this symbolic
-link to get the name of the failed device.
+Commit in Fixes added an AMD-specific microcode callback. However, it
+didn't check the CPU vendor the kernel runs on explicitly.
 
-In a issue scenario, once uevent sent to the user space
-it start reading '/sys/class/devcoredump/devcdX/failing_device'
-to get the actual name of the device which might not been
-created and it is in its path of creation.
+The only reason the Zenbleed check in it didn't run on other x86 vendors
+hardware was pure coincidental luck:
 
-To fix this, suppress sending uevent till the failing device
-symbolic link gets created and send uevent once symbolic
-link is created successfully.
+  if (!cpu_has_amd_erratum(c, amd_zenbleed))
+	  return;
 
-Fixes: 833c95456a70 ("device coredump: add new device coredump class")
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1700232572-25823-1-git-send-email-quic_mojha@quicinc.com
+gives true on other vendors because they don't have those families and
+models.
+
+However, with the removal of the cpu_has_amd_erratum() in
+
+  05f5f73936fa ("x86/CPU/AMD: Drop now unused CPU erratum checking function")
+
+that coincidental condition is gone, leading to the zenbleed check
+getting executed on other vendors too.
+
+Add the explicit vendor check for the whole callback as it should've
+been done in the first place.
+
+Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
+Cc: <stable@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20231201184226.16749-1-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/devcoredump.c |    3 +++
+ arch/x86/kernel/cpu/amd.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/base/devcoredump.c
-+++ b/drivers/base/devcoredump.c
-@@ -363,6 +363,7 @@ void dev_coredumpm(struct device *dev, s
- 	devcd->devcd_dev.class = &devcd_class;
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1291,6 +1291,9 @@ static void zenbleed_check_cpu(void *unu
  
- 	mutex_lock(&devcd->mutex);
-+	dev_set_uevent_suppress(&devcd->devcd_dev, true);
- 	if (device_add(&devcd->devcd_dev))
- 		goto put_device;
+ void amd_check_microcode(void)
+ {
++	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD)
++		return;
++
+ 	on_each_cpu(zenbleed_check_cpu, NULL, 1);
+ }
  
-@@ -377,6 +378,8 @@ void dev_coredumpm(struct device *dev, s
- 		              "devcoredump"))
- 		dev_warn(dev, "devcoredump create_link failed\n");
- 
-+	dev_set_uevent_suppress(&devcd->devcd_dev, false);
-+	kobject_uevent(&devcd->devcd_dev.kobj, KOBJ_ADD);
- 	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
- 	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
- 	mutex_unlock(&devcd->mutex);
 
 
