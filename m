@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B05A5103A;
-	Mon, 11 Dec 2023 18:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122AD51C3C;
+	Mon, 11 Dec 2023 18:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfOEEB7/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950F5C433C8;
-	Mon, 11 Dec 2023 18:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YbTuQD6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442AEC433C7;
+	Mon, 11 Dec 2023 18:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320478;
-	bh=IN5e6uJNguvrNTSyvoOovy3M+ylzY3UEJ+gw5wfLe1k=;
+	s=korg; t=1702320481;
+	bh=l9uU1/cV5uHmUWRFAluGln70bTdxYwdfHu8H8JXeiAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kfOEEB7/G0amy4pEGkIEwHpVduR0Q2aAl0p/wKvY+p+Gm4Cu0g302W/4adgfK4bCe
-	 67UQwGqx87MV4qUZKJ/XrOyzrAEVazlk0dEhU3MnG1XE7bfjFtoa91KWquATe7pAMH
-	 3PAdvrEMaRp7BQ1DnV74V6L2DFAb4OC0Tfu9do7M=
+	b=YbTuQD6rg4xQRNLL8J6DbPTHSp460IHqy1rtQ1ksQkvmzgyx/qSBqBlOCxFg6uqsU
+	 kYqB+5hoyd//GY3jYoIyOT90DBVuCXFIs6FeeXVjgqmtrvIwswlpV1N2KM6Cffh764
+	 l0ADcGg+XW/VwgwJYnMvJsukO3CFXHAl899ny55E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/194] RDMA/rtrs-clt: Fix the max_send_wr setting
-Date: Mon, 11 Dec 2023 19:21:05 +0100
-Message-ID: <20231211182039.844427411@linuxfoundation.org>
+Subject: [PATCH 6.1 049/194] octeontx2-af: Fix mcs stats register address
+Date: Mon, 11 Dec 2023 19:20:39 +0100
+Message-ID: <20231211182038.752933434@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -44,37 +43,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 6d09f6f7d7584e099633282ea915988914f86529 ]
+[ Upstream commit 3ba98a8c6f8ceb4e01a78f973d8d9017020bbd57 ]
 
-For each write request, we need Request, Response Memory Registration,
-Local Invalidate.
+This patch adds the miss mcs stats register
+for mcs supported platforms.
 
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
-Link: https://lore.kernel.org/r/20231120154146.920486-7-haris.iqbal@ionos.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 9312150af8da ("octeontx2-af: cn10k: mcs: Support for stats collection")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/af/mcs.c   |  4 +--
+ .../ethernet/marvell/octeontx2/af/mcs_reg.h   | 31 ++++++++++++++++---
+ 2 files changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index 1bad7fc3231f4..c0781d4279cb2 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -1694,7 +1694,7 @@ static int create_con_cq_qp(struct rtrs_clt_con *con)
- 		clt_path->s.dev_ref++;
- 		max_send_wr = min_t(int, wr_limit,
- 			      /* QD * (REQ + RSP + FR REGS or INVS) + drain */
--			      clt_path->queue_depth * 3 + 1);
-+			      clt_path->queue_depth * 4 + 1);
- 		max_recv_wr = min_t(int, wr_limit,
- 			      clt_path->queue_depth * 3 + 1);
- 		max_send_sge = 2;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
+index bd87507cf8eaa..c1775bd01c2b4 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
+@@ -117,7 +117,7 @@ void mcs_get_rx_secy_stats(struct mcs *mcs, struct mcs_secy_stats *stats, int id
+ 	reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYTAGGEDCTLX(id);
+ 	stats->pkt_tagged_ctl_cnt = mcs_reg_read(mcs, reg);
+ 
+-	reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYUNTAGGEDORNOTAGX(id);
++	reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYUNTAGGEDX(id);
+ 	stats->pkt_untaged_cnt = mcs_reg_read(mcs, reg);
+ 
+ 	reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYCTLX(id);
+@@ -215,7 +215,7 @@ void mcs_get_sc_stats(struct mcs *mcs, struct mcs_sc_stats *stats,
+ 		reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSCNOTVALIDX(id);
+ 		stats->pkt_notvalid_cnt = mcs_reg_read(mcs, reg);
+ 
+-		reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSCUNCHECKEDOROKX(id);
++		reg = MCSX_CSE_RX_MEM_SLAVE_INPKTSSCUNCHECKEDX(id);
+ 		stats->pkt_unchecked_cnt = mcs_reg_read(mcs, reg);
+ 
+ 		if (mcs->hw->mcs_blks > 1) {
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs_reg.h b/drivers/net/ethernet/marvell/octeontx2/af/mcs_reg.h
+index f3ab01fc363c8..f4c6de89002c1 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mcs_reg.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs_reg.h
+@@ -810,14 +810,37 @@
+ 		offset = 0x9d8ull;			\
+ 	offset; })
+ 
++#define MCSX_CSE_RX_MEM_SLAVE_INPKTSSCUNCHECKEDX(a) ({	\
++	u64 offset;					\
++							\
++	offset = 0xee80ull;				\
++	if (mcs->hw->mcs_blks > 1)			\
++		offset = 0xe818ull;			\
++	offset += (a) * 0x8ull;				\
++	offset; })
++
++#define MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYUNTAGGEDX(a) ({	\
++	u64 offset;					\
++							\
++	offset = 0xa680ull;				\
++	if (mcs->hw->mcs_blks > 1)			\
++		offset = 0xd018ull;			\
++	offset += (a) * 0x8ull;				\
++	offset; })
++
++#define MCSX_CSE_RX_MEM_SLAVE_INPKTSSCLATEORDELAYEDX(a)	({	\
++	u64 offset;						\
++								\
++	offset = 0xf680ull;					\
++	if (mcs->hw->mcs_blks > 1)				\
++		offset = 0xe018ull;				\
++	offset += (a) * 0x8ull;					\
++	offset; })
++
+ #define MCSX_CSE_RX_MEM_SLAVE_INOCTETSSCDECRYPTEDX(a)	(0xe680ull + (a) * 0x8ull)
+ #define MCSX_CSE_RX_MEM_SLAVE_INOCTETSSCVALIDATEX(a)	(0xde80ull + (a) * 0x8ull)
+-#define MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYUNTAGGEDORNOTAGX(a)	(0xa680ull + (a) * 0x8ull)
+ #define MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYNOTAGX(a)	(0xd218 + (a) * 0x8ull)
+-#define MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYUNTAGGEDX(a)	(0xd018ull + (a) * 0x8ull)
+-#define MCSX_CSE_RX_MEM_SLAVE_INPKTSSCUNCHECKEDOROKX(a)	(0xee80ull + (a) * 0x8ull)
+ #define MCSX_CSE_RX_MEM_SLAVE_INPKTSSECYCTLX(a)		(0xb680ull + (a) * 0x8ull)
+-#define MCSX_CSE_RX_MEM_SLAVE_INPKTSSCLATEORDELAYEDX(a) (0xf680ull + (a) * 0x8ull)
+ #define MCSX_CSE_RX_MEM_SLAVE_INPKTSSAINVALIDX(a)	(0x12680ull + (a) * 0x8ull)
+ #define MCSX_CSE_RX_MEM_SLAVE_INPKTSSANOTUSINGSAERRORX(a) (0x15680ull + (a) * 0x8ull)
+ #define MCSX_CSE_RX_MEM_SLAVE_INPKTSSANOTVALIDX(a)	(0x13680ull + (a) * 0x8ull)
 -- 
 2.42.0
 
