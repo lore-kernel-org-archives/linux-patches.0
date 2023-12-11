@@ -1,182 +1,319 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA99E4F212;
-	Mon, 11 Dec 2023 18:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37884F212;
+	Mon, 11 Dec 2023 18:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjMnprCz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705ABC433C8;
-	Mon, 11 Dec 2023 18:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mshk76gZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3A88C433C8;
+	Mon, 11 Dec 2023 18:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319077;
-	bh=e6uu0GQdi+jZYg84AxJwE7SHJ6tG1tI6j6CxCAT+cFs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjMnprCzIxu1zz/+8KFMOglNRfG9MLcmR2myG/MdcVvduf6sChCFb012htDCgOSkS
-	 /ABs/RguYxtvKwN+MMcZGUNybXyXWS0GfeRAlHd/IPt0Of9+29qDzWLtwS9XiiNZ3K
-	 zPJvuoQfm5nHTMffkU9qIo4pMG33Zc9vnBckoRT0=
+	s=korg; t=1702319080;
+	bh=lfdTPsWR0dAnVHXeGQrdQ1mzOu4hD/IUBB7OI8/ipiM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Mshk76gZrCOOnp+x19lvfmGdL0vICafWSUk/UnexQ2/1gGO4qV+9XGsH1bZ8xvjMS
+	 EFkygNksxeIM93+hJg/MpX/X/xgo9bz9wquGum3HrFNvudDjKUImxTI6ZRl87do3Jv
+	 5MUzC1LGMyY+EYkjtotXj5R+3lQTn4a8MqWoobs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Pakhunov <alexey.pakhunov@spacex.com>,
-	Vincent Wong <vincent.wong2@spacex.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 09/55] tg3: Move the [rt]x_dropped counters to tg3_napi
-Date: Mon, 11 Dec 2023 19:21:19 +0100
-Message-ID: <20231211182012.561648925@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: [PATCH 4.19 00/55] 4.19.302-rc1 review
+Date: Mon, 11 Dec 2023 19:21:10 +0100
+Message-ID: <20231211182012.263036284@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
-References: <20231211182012.263036284@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.302-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.302-rc1
+X-KernelTest-Deadline: 2023-12-13T18:20+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 4.19.302 release.
+There are 55 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Wed, 13 Dec 2023 18:19:59 +0000.
+Anything received after that time might be too late.
 
-From: Alex Pakhunov <alexey.pakhunov@spacex.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.302-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
 
-[ Upstream commit 907d1bdb8b2cc0357d03a1c34d2a08d9943760b1 ]
+thanks,
 
-This change moves [rt]x_dropped counters to tg3_napi so that they can be
-updated by a single writer, race-free.
+greg k-h
 
-Signed-off-by: Alex Pakhunov <alexey.pakhunov@spacex.com>
-Signed-off-by: Vincent Wong <vincent.wong2@spacex.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20231113182350.37472-1-alexey.pakhunov@spacex.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/broadcom/tg3.c | 38 +++++++++++++++++++++++++----
- drivers/net/ethernet/broadcom/tg3.h |  4 +--
- 2 files changed, 35 insertions(+), 7 deletions(-)
+-------------
+Pseudo-Shortlog of commits:
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index f0b5c8a4d29f5..84a5bddf614c8 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -6859,7 +6859,7 @@ static int tg3_rx(struct tg3_napi *tnapi, int budget)
- 				       desc_idx, *post_ptr);
- 		drop_it_no_recycle:
- 			/* Other statistics kept track of by card. */
--			tp->rx_dropped++;
-+			tnapi->rx_dropped++;
- 			goto next_pkt;
- 		}
- 
-@@ -8163,7 +8163,7 @@ static netdev_tx_t tg3_start_xmit(struct sk_buff *skb, struct net_device *dev)
- drop:
- 	dev_kfree_skb_any(skb);
- drop_nofree:
--	tp->tx_dropped++;
-+	tnapi->tx_dropped++;
- 	return NETDEV_TX_OK;
- }
- 
-@@ -9342,7 +9342,7 @@ static void __tg3_set_rx_mode(struct net_device *);
- /* tp->lock is held. */
- static int tg3_halt(struct tg3 *tp, int kind, bool silent)
- {
--	int err;
-+	int err, i;
- 
- 	tg3_stop_fw(tp);
- 
-@@ -9363,6 +9363,13 @@ static int tg3_halt(struct tg3 *tp, int kind, bool silent)
- 
- 		/* And make sure the next sample is new data */
- 		memset(tp->hw_stats, 0, sizeof(struct tg3_hw_stats));
-+
-+		for (i = 0; i < TG3_IRQ_MAX_VECS; ++i) {
-+			struct tg3_napi *tnapi = &tp->napi[i];
-+
-+			tnapi->rx_dropped = 0;
-+			tnapi->tx_dropped = 0;
-+		}
- 	}
- 
- 	return err;
-@@ -11919,6 +11926,9 @@ static void tg3_get_nstats(struct tg3 *tp, struct rtnl_link_stats64 *stats)
- {
- 	struct rtnl_link_stats64 *old_stats = &tp->net_stats_prev;
- 	struct tg3_hw_stats *hw_stats = tp->hw_stats;
-+	unsigned long rx_dropped;
-+	unsigned long tx_dropped;
-+	int i;
- 
- 	stats->rx_packets = old_stats->rx_packets +
- 		get_stat64(&hw_stats->rx_ucast_packets) +
-@@ -11965,8 +11975,26 @@ static void tg3_get_nstats(struct tg3 *tp, struct rtnl_link_stats64 *stats)
- 	stats->rx_missed_errors = old_stats->rx_missed_errors +
- 		get_stat64(&hw_stats->rx_discards);
- 
--	stats->rx_dropped = tp->rx_dropped;
--	stats->tx_dropped = tp->tx_dropped;
-+	/* Aggregate per-queue counters. The per-queue counters are updated
-+	 * by a single writer, race-free. The result computed by this loop
-+	 * might not be 100% accurate (counters can be updated in the middle of
-+	 * the loop) but the next tg3_get_nstats() will recompute the current
-+	 * value so it is acceptable.
-+	 *
-+	 * Note that these counters wrap around at 4G on 32bit machines.
-+	 */
-+	rx_dropped = (unsigned long)(old_stats->rx_dropped);
-+	tx_dropped = (unsigned long)(old_stats->tx_dropped);
-+
-+	for (i = 0; i < tp->irq_cnt; i++) {
-+		struct tg3_napi *tnapi = &tp->napi[i];
-+
-+		rx_dropped += tnapi->rx_dropped;
-+		tx_dropped += tnapi->tx_dropped;
-+	}
-+
-+	stats->rx_dropped = rx_dropped;
-+	stats->tx_dropped = tx_dropped;
- }
- 
- static int tg3_get_regs_len(struct net_device *dev)
-diff --git a/drivers/net/ethernet/broadcom/tg3.h b/drivers/net/ethernet/broadcom/tg3.h
-index a772a33b685c5..b8cc8ff4e8782 100644
---- a/drivers/net/ethernet/broadcom/tg3.h
-+++ b/drivers/net/ethernet/broadcom/tg3.h
-@@ -3018,6 +3018,7 @@ struct tg3_napi {
- 	u16				*rx_rcb_prod_idx;
- 	struct tg3_rx_prodring_set	prodring;
- 	struct tg3_rx_buffer_desc	*rx_rcb;
-+	unsigned long			rx_dropped;
- 
- 	u32				tx_prod	____cacheline_aligned;
- 	u32				tx_cons;
-@@ -3026,6 +3027,7 @@ struct tg3_napi {
- 	u32				prodmbox;
- 	struct tg3_tx_buffer_desc	*tx_ring;
- 	struct tg3_tx_ring_info		*tx_buffers;
-+	unsigned long			tx_dropped;
- 
- 	dma_addr_t			status_mapping;
- 	dma_addr_t			rx_rcb_mapping;
-@@ -3219,8 +3221,6 @@ struct tg3 {
- 
- 
- 	/* begin "everything else" cacheline(s) section */
--	unsigned long			rx_dropped;
--	unsigned long			tx_dropped;
- 	struct rtnl_link_stats64	net_stats_prev;
- 	struct tg3_ethtool_stats	estats_prev;
- 
--- 
-2.42.0
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.302-rc1
 
+Mukesh Ojha <quic_mojha@quicinc.com>
+    devcoredump: Send uevent once devcd is ready
+
+Mukesh Ojha <quic_mojha@quicinc.com>
+    devcoredump : Serialize devcd_del work
+
+Sagi Grimberg <sagi@grimberg.me>
+    IB/isert: Fix unaligned immediate-data handling
+
+Namhyung Kim <namhyung@kernel.org>
+    tools headers UAPI: Sync linux/perf_event.h with the kernel sources
+
+Ido Schimmel <idosch@nvidia.com>
+    drop_monitor: Require 'CAP_SYS_ADMIN' when joining "events" group
+
+Ido Schimmel <idosch@nvidia.com>
+    psample: Require 'CAP_NET_ADMIN' when joining "packets" group
+
+Ido Schimmel <idosch@nvidia.com>
+    genetlink: add CAP_NET_ADMIN test for multicast bind
+
+Ido Schimmel <idosch@nvidia.com>
+    netlink: don't call ->netlink_bind with table lock held
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: fix missing error check for sb_set_blocksize call
+
+Claudio Imbrenda <imbrenda@linux.ibm.com>
+    KVM: s390/mm: Properly reset no-dat
+
+Borislav Petkov (AMD) <bp@alien8.de>
+    x86/CPU/AMD: Check vendor in the AMD microcode callback
+
+Ronald Wahl <ronald.wahl@raritan.com>
+    serial: 8250_omap: Add earlycon support for the AM654 UART controller
+
+Daniel Mack <daniel@zonque.org>
+    serial: sc16is7xx: address RX timeout interrupt errata
+
+Arnd Bergmann <arnd@arndb.de>
+    ARM: PL011: Fix DMA support
+
+RD Babiera <rdbabiera@google.com>
+    usb: typec: class: fix typec_altmode_put_partner to put plugs
+
+Cameron Williams <cang1@live.co.uk>
+    parport: Add support for Brainboxes IX/UC/PX parallel cards
+
+Konstantin Aladyshev <aladyshev22@gmail.com>
+    usb: gadget: f_hid: fix report descriptor allocation
+
+Boerge Struempfel <boerge.struempfel@gmail.com>
+    gpiolib: sysfs: Fix error handling on failed export
+
+Peter Zijlstra <peterz@infradead.org>
+    perf: Fix perf_event_validate_size()
+
+Namhyung Kim <namhyung@kernel.org>
+    perf/core: Add a new read format to get a number of lost samples
+
+Petr Pavlu <petr.pavlu@suse.com>
+    tracing: Fix a possible race when disabling buffered events
+
+Petr Pavlu <petr.pavlu@suse.com>
+    tracing: Fix incomplete locking when disabling buffered events
+
+Steven Rostedt (Google) <rostedt@goodmis.org>
+    tracing: Always update snapshot buffer size
+
+Ryusuke Konishi <konishi.ryusuke@gmail.com>
+    nilfs2: prevent WARNING in nilfs_sufile_set_segment_usage()
+
+Daniel Borkmann <daniel@iogearbox.net>
+    packet: Move reference count in packet_sock to atomic_long_t
+
+Jason Zhang <jason.zhang@rock-chips.com>
+    ALSA: pcm: fix out-of-bounds in snd_pcm_state_names
+
+Philipp Zabel <p.zabel@pengutronix.de>
+    ARM: dts: imx7: Declare timers compatible with fsl,imx6dl-gpt
+
+Anson Huang <Anson.Huang@nxp.com>
+    ARM: dts: imx: make gpt node name generic
+
+Kunwu Chan <chentao@kylinos.cn>
+    ARM: imx: Check return value of devm_kasprintf in imx_mmdc_perf_init
+
+Dinghao Liu <dinghao.liu@zju.edu.cn>
+    scsi: be2iscsi: Fix a memleak in beiscsi_init_wrb_handle()
+
+Petr Pavlu <petr.pavlu@suse.com>
+    tracing: Fix a warning when allocating buffered events fails
+
+Armin Wolf <W_Armin@gmx.de>
+    hwmon: (acpi_power_meter) Fix 4.29 MW bug
+
+Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+    RDMA/bnxt_re: Correct module description string
+
+Eric Dumazet <edumazet@google.com>
+    tcp: do not accept ACK of bytes we never sent
+
+Phil Sutter <phil@nwl.cc>
+    netfilter: xt_owner: Fix for unsafe access of sk->sk_socket
+
+Lukasz Pawelczyk <l.pawelczyk@samsung.com>
+    netfilter: xt_owner: Add supplementary groups option
+
+Yonglong Liu <liuyonglong@huawei.com>
+    net: hns: fix fake link up on xge port
+
+Shigeru Yoshida <syoshida@redhat.com>
+    ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()
+
+Thomas Reichinger <thomas.reichinger@sohard.de>
+    arcnet: restoring support for multiple Sohard Arcnet cards
+
+Tong Zhang <ztong0001@gmail.com>
+    net: arcnet: com20020 fix error handling
+
+Ahmed S. Darwish <a.darwish@linutronix.de>
+    net: arcnet: Fix RESET flag handling
+
+Randy Dunlap <rdunlap@infradead.org>
+    hv_netvsc: rndis_filter needs to select NLS
+
+Eric Dumazet <edumazet@google.com>
+    ipv6: fix potential NULL deref in fib6_add()
+
+YuanShang <YuanShang.Mao@amd.com>
+    drm/amdgpu: correct chunk_ptr to a pointer to chunk.
+
+Masahiro Yamada <masahiroy@kernel.org>
+    kconfig: fix memory leak from range properties
+
+Alex Pakhunov <alexey.pakhunov@spacex.com>
+    tg3: Increment tx_dropped in tg3_tso_bug()
+
+Alex Pakhunov <alexey.pakhunov@spacex.com>
+    tg3: Move the [rt]x_dropped counters to tg3_napi
+
+Jozsef Kadlecsik <kadlec@netfilter.org>
+    netfilter: ipset: fix race condition between swap/destroy and kernel side add/del/test
+
+Thomas Gleixner <tglx@linutronix.de>
+    hrtimers: Push pending hrtimers away from outgoing CPU earlier
+
+Ming Lei <ming.lei@redhat.com>
+    block: introduce multi-page bvec helpers
+
+Evgeny Novikov <novikov@ispras.ru>
+    media: davinci: vpif_capture: fix potential double free
+
+Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+    spi: imx: mx51-ecspi: Move some initialisation to prepare_message hook.
+
+Robin Gong <yibin.gong@nxp.com>
+    spi: imx: correct wml as the last sg length
+
+Robin Gong <yibin.gong@nxp.com>
+    spi: imx: move wml setting to later than setup_transfer
+
+Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+    spi: imx: add a device specific prepare_message callback
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                          |   4 +-
+ arch/arm/boot/dts/imx6qdl.dtsi                    |   2 +-
+ arch/arm/boot/dts/imx6sl.dtsi                     |   2 +-
+ arch/arm/boot/dts/imx6sx.dtsi                     |   2 +-
+ arch/arm/boot/dts/imx6ul.dtsi                     |   4 +-
+ arch/arm/boot/dts/imx7s.dtsi                      |  16 +--
+ arch/arm/mach-imx/mmdc.c                          |   7 +-
+ arch/s390/mm/pgtable.c                            |   2 +-
+ arch/x86/kernel/cpu/amd.c                         |   3 +
+ drivers/base/devcoredump.c                        |  86 +++++++++++-
+ drivers/gpio/gpiolib-sysfs.c                      |  15 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c            |   2 +-
+ drivers/hwmon/acpi_power_meter.c                  |   4 +
+ drivers/infiniband/hw/bnxt_re/main.c              |   2 +-
+ drivers/infiniband/ulp/isert/ib_isert.c           |  93 ++++++-------
+ drivers/infiniband/ulp/isert/ib_isert.h           |  41 ++++--
+ drivers/media/platform/davinci/vpif_capture.c     |   2 -
+ drivers/net/arcnet/arc-rimi.c                     |   4 +-
+ drivers/net/arcnet/arcdevice.h                    |   8 ++
+ drivers/net/arcnet/arcnet.c                       |  66 +++++++++-
+ drivers/net/arcnet/com20020-isa.c                 |   4 +-
+ drivers/net/arcnet/com20020-pci.c                 | 119 +++++++++--------
+ drivers/net/arcnet/com20020_cs.c                  |   2 +-
+ drivers/net/arcnet/com90io.c                      |   4 +-
+ drivers/net/arcnet/com90xx.c                      |   4 +-
+ drivers/net/ethernet/broadcom/tg3.c               |  42 +++++-
+ drivers/net/ethernet/broadcom/tg3.h               |   4 +-
+ drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c |  29 +++++
+ drivers/net/hyperv/Kconfig                        |   1 +
+ drivers/parport/parport_pc.c                      |  21 +++
+ drivers/scsi/be2iscsi/be_main.c                   |   1 +
+ drivers/spi/spi-imx.c                             | 151 ++++++++++++++++------
+ drivers/tty/serial/8250/8250_early.c              |   1 +
+ drivers/tty/serial/amba-pl011.c                   | 112 ++++++++--------
+ drivers/tty/serial/sc16is7xx.c                    |  12 ++
+ drivers/usb/gadget/function/f_hid.c               |   7 +-
+ drivers/usb/typec/class.c                         |   5 +-
+ fs/nilfs2/sufile.c                                |  44 +++++--
+ fs/nilfs2/the_nilfs.c                             |   6 +-
+ include/linux/bvec.h                              |  30 ++++-
+ include/linux/cpuhotplug.h                        |   1 +
+ include/linux/hrtimer.h                           |   4 +-
+ include/linux/perf_event.h                        |   2 +
+ include/net/genetlink.h                           |   3 +
+ include/uapi/linux/netfilter/xt_owner.h           |   7 +-
+ include/uapi/linux/perf_event.h                   |   5 +-
+ kernel/cpu.c                                      |   8 +-
+ kernel/events/core.c                              |  80 ++++++++----
+ kernel/events/ring_buffer.c                       |   5 +-
+ kernel/time/hrtimer.c                             |  33 ++---
+ kernel/trace/trace.c                              |  42 +++---
+ net/core/drop_monitor.c                           |   4 +-
+ net/ipv4/ip_gre.c                                 |  11 +-
+ net/ipv4/tcp_input.c                              |   6 +-
+ net/ipv6/ip6_fib.c                                |   6 +-
+ net/netfilter/ipset/ip_set_core.c                 |  14 +-
+ net/netfilter/xt_owner.c                          |  37 +++++-
+ net/netlink/af_netlink.c                          |   4 +-
+ net/netlink/genetlink.c                           |  35 +++++
+ net/packet/af_packet.c                            |  16 +--
+ net/packet/internal.h                             |   2 +-
+ net/psample/psample.c                             |   3 +-
+ scripts/kconfig/symbol.c                          |  14 +-
+ sound/core/pcm.c                                  |   1 +
+ tools/include/uapi/linux/perf_event.h             |   5 +-
+ 65 files changed, 911 insertions(+), 401 deletions(-)
 
 
