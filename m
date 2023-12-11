@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D411D696;
-	Mon, 11 Dec 2023 18:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942A71D696;
+	Mon, 11 Dec 2023 18:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LfxoBxM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D85C433C9;
-	Mon, 11 Dec 2023 18:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMNm/NcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40EAC433C7;
+	Mon, 11 Dec 2023 18:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320104;
-	bh=RZp2u+hnz2S50vDzQBFJZ7tfO6/MycQg1yuhfIGoG4s=;
+	s=korg; t=1702320107;
+	bh=AjsxVRU2HKRpzL3OJcXR7WphM/5gx86Q96sN9KHNy0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LfxoBxM79Dz/tggTTAV2WlriKCk4waRP8IbBTaV9mnNU91bnMNvu751NKZy5ZWUGL
-	 0BYWORnXORc0XIzJcCAvh/dVevGlZZ46ofrYX8SYwzyrSidrBhk7LXHrP7ptDaeK36
-	 5LF/QqDjSZE411tm/sVWppWjfenS8M2WoMQOPV6o=
+	b=TMNm/NcZ09HcFljYy9Mk9EekRk+T4ppMKXqOi3BjQrXiP+bTGgOYrIHjz3wqZXos2
+	 09GOyahHHoZIzzH1sxqLTXbhRXOJDlasC2gwh9LOZHZQtQcgyVq7MMJSBQPmkBY81g
+	 TlHDa4Zyb5AP9dPEtbp7KUkc44cv0MV/zZas1914=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 96/97] devcoredump: Send uevent once devcd is ready
-Date: Mon, 11 Dec 2023 19:22:39 +0100
-Message-ID: <20231211182023.935468752@linuxfoundation.org>
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 87/97] netfilter: nft_set_pipapo: skip inactive elements during set walk
+Date: Mon, 11 Dec 2023 19:22:30 +0100
+Message-ID: <20231211182023.568514756@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -41,59 +42,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit af54d778a03853801d681c98c0c2a6c316ef9ca7 ]
+commit 317eb9685095678f2c9f5a8189de698c5354316a upstream.
 
-dev_coredumpm() creates a devcoredump device and adds it
-to the core kernel framework which eventually end up
-sending uevent to the user space and later creates a
-symbolic link to the failed device. An application
-running in userspace may be interested in this symbolic
-link to get the name of the failed device.
+Otherwise set elements can be deactivated twice which will cause a crash.
 
-In a issue scenario, once uevent sent to the user space
-it start reading '/sys/class/devcoredump/devcdX/failing_device'
-to get the actual name of the device which might not been
-created and it is in its path of creation.
-
-To fix this, suppress sending uevent till the failing device
-symbolic link gets created and send uevent once symbolic
-link is created successfully.
-
-Fixes: 833c95456a70 ("device coredump: add new device coredump class")
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1700232572-25823-1-git-send-email-quic_mojha@quicinc.com
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/devcoredump.c | 3 +++
+ net/netfilter/nft_set_pipapo.c |    3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/base/devcoredump.c b/drivers/base/devcoredump.c
-index ef23c1c33eb2c..4d725d1fd61ae 100644
---- a/drivers/base/devcoredump.c
-+++ b/drivers/base/devcoredump.c
-@@ -367,6 +367,7 @@ void dev_coredumpm(struct device *dev, struct module *owner,
- 	devcd->devcd_dev.class = &devcd_class;
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -2028,6 +2028,9 @@ static void nft_pipapo_walk(const struct
  
- 	mutex_lock(&devcd->mutex);
-+	dev_set_uevent_suppress(&devcd->devcd_dev, true);
- 	if (device_add(&devcd->devcd_dev))
- 		goto put_device;
+ 		e = f->mt[r].e;
  
-@@ -378,6 +379,8 @@ void dev_coredumpm(struct device *dev, struct module *owner,
- 			      "devcoredump"))
- 		/* nothing - symlink will be missing */;
++		if (!nft_set_elem_active(&e->ext, iter->genmask))
++			goto cont;
++
+ 		elem.priv = e;
  
-+	dev_set_uevent_suppress(&devcd->devcd_dev, false);
-+	kobject_uevent(&devcd->devcd_dev.kobj, KOBJ_ADD);
- 	INIT_DELAYED_WORK(&devcd->del_wk, devcd_del);
- 	schedule_delayed_work(&devcd->del_wk, DEVCD_TIMEOUT);
- 	mutex_unlock(&devcd->mutex);
--- 
-2.42.0
-
+ 		iter->err = iter->fn(ctx, set, iter, &elem);
 
 
