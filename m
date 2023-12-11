@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE17D51C38;
-	Mon, 11 Dec 2023 18:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239E651C38;
+	Mon, 11 Dec 2023 18:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aa813i70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D90C433C8;
-	Mon, 11 Dec 2023 18:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxYFnvv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B31DC433C8;
+	Mon, 11 Dec 2023 18:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320883;
-	bh=eoInFT9KqWix7ASw2aRdu4Yex4iF8abJM6kZQRXOSWg=;
+	s=korg; t=1702320886;
+	bh=Ww8afnFuJveYYAw8wfHKC/LixNJGptBQFB3ctuH4My0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aa813i70YAJOsTLiZMcDADdnln1YdUBxC8PTL/W5Bd8jJSqlTXDhwfL/DRt2cZlpd
-	 bzOC3ch4b5pU5LvZFz5THp20xSYUR4ZMiXBIEUYWudDfK40x9YgMxzsW9eXHRc3ssP
-	 4dlQhLGIikvK8nywoR8ATEYWXtxnv/hFaU4J0bao=
+	b=bxYFnvv8wswLrKer1qEVSjzvilUDJGgRzkpr84lbqex1mQ4OVwKNMcydXP0c/8cKj
+	 Oor+hDRA+OkRc1OdVbs/MWFZ6VFHApa25DjgiblzvlTQH0ppt3iOI2TKFGFSdbwMVf
+	 gbhfWnpFohzDIhBrVZ/KWuhCDgW3vhAkwl0MomTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Bottorff <janb@os.amperecomputing.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
 	Serge Semin <fancer.lancer@gmail.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Jianheng Zhang <Jianheng.Zhang@synopsys.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/141] i2c: designware: Fix corrupted memory seen in the ISR
-Date: Mon, 11 Dec 2023 19:21:02 +0100
-Message-ID: <20231211182026.640375623@linuxfoundation.org>
+Subject: [PATCH 5.15 030/141] net: stmmac: fix FPE events losing
+Date: Mon, 11 Dec 2023 19:21:29 +0100
+Message-ID: <20231211182027.838417357@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -44,106 +43,241 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Bottorff <janb@os.amperecomputing.com>
+From: Jianheng Zhang <Jianheng.Zhang@synopsys.com>
 
-[ Upstream commit f726eaa787e9f9bc858c902d18a09af6bcbfcdaf ]
+[ Upstream commit 37e4b8df27bc68340f3fc80dbb27e3549c7f881c ]
 
-When running on a many core ARM64 server, errors were
-happening in the ISR that looked like corrupted memory. These
-corruptions would fix themselves if small delays were inserted
-in the ISR. Errors reported by the driver included "i2c_designware
-APMC0D0F:00: i2c_dw_xfer_msg: invalid target address" and
-"i2c_designware APMC0D0F:00:controller timed out" during
-in-band IPMI SSIF stress tests.
+The status bits of register MAC_FPE_CTRL_STS are clear on read. Using
+32-bit read for MAC_FPE_CTRL_STS in dwmac5_fpe_configure() and
+dwmac5_fpe_send_mpacket() clear the status bits. Then the stmmac interrupt
+handler missing FPE event status and leads to FPE handshaking failure and
+retries.
+To avoid clear status bits of MAC_FPE_CTRL_STS in dwmac5_fpe_configure()
+and dwmac5_fpe_send_mpacket(), add fpe_csr to stmmac_fpe_cfg structure to
+cache the control bits of MAC_FPE_CTRL_STS and to avoid reading
+MAC_FPE_CTRL_STS in those methods.
 
-The problem was determined to be memory writes in the driver were not
-becoming visible to all cores when execution rapidly shifted between
-cores, like when a register write immediately triggers an ISR.
-Processors with weak memory ordering, like ARM64, make no
-guarantees about the order normal memory writes become globally
-visible, unless barrier instructions are used to control ordering.
-
-To solve this, regmap accessor functions configured by this driver
-were changed to use non-relaxed forms of the low-level register
-access functions, which include a barrier on platforms that require
-it. This assures memory writes before a controller register access are
-visible to all cores. The community concluded defaulting to correct
-operation outweighed defaulting to the small performance gains from
-using relaxed access functions. Being a low speed device added weight to
-this choice of default register access behavior.
-
-Signed-off-by: Jan Bottorff <janb@os.amperecomputing.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Tested-by: Serge Semin <fancer.lancer@gmail.com>
+Fixes: 5a5586112b92 ("net: stmmac: support FPE link partner hand-shaking procedure")
 Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Jianheng Zhang <Jianheng.Zhang@synopsys.com>
+Link: https://lore.kernel.org/r/CY5PR12MB637225A7CF529D5BE0FBE59CBF81A@CY5PR12MB6372.namprd12.prod.outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-common.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac5.c  | 45 ++++++++-----------
+ drivers/net/ethernet/stmicro/stmmac/dwmac5.h  |  4 +-
+ .../ethernet/stmicro/stmmac/dwxgmac2_core.c   |  3 +-
+ drivers/net/ethernet/stmicro/stmmac/hwif.h    |  4 +-
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c |  8 +++-
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c   |  1 +
+ include/linux/stmmac.h                        |  1 +
+ 7 files changed, 36 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
-index 4e752321b95e0..cb1d8d192ac0c 100644
---- a/drivers/i2c/busses/i2c-designware-common.c
-+++ b/drivers/i2c/busses/i2c-designware-common.c
-@@ -63,7 +63,7 @@ static int dw_reg_read(void *context, unsigned int reg, unsigned int *val)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
+index e95d35f1e5a0c..8fd167501fa0e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
+@@ -710,28 +710,22 @@ void dwmac5_est_irq_status(void __iomem *ioaddr, struct net_device *dev,
+ 	}
+ }
+ 
+-void dwmac5_fpe_configure(void __iomem *ioaddr, u32 num_txq, u32 num_rxq,
++void dwmac5_fpe_configure(void __iomem *ioaddr, struct stmmac_fpe_cfg *cfg,
++			  u32 num_txq, u32 num_rxq,
+ 			  bool enable)
  {
- 	struct dw_i2c_dev *dev = context;
+ 	u32 value;
  
--	*val = readl_relaxed(dev->base + reg);
-+	*val = readl(dev->base + reg);
+-	if (!enable) {
+-		value = readl(ioaddr + MAC_FPE_CTRL_STS);
+-
+-		value &= ~EFPE;
+-
+-		writel(value, ioaddr + MAC_FPE_CTRL_STS);
+-		return;
++	if (enable) {
++		cfg->fpe_csr = EFPE;
++		value = readl(ioaddr + GMAC_RXQ_CTRL1);
++		value &= ~GMAC_RXQCTRL_FPRQ;
++		value |= (num_rxq - 1) << GMAC_RXQCTRL_FPRQ_SHIFT;
++		writel(value, ioaddr + GMAC_RXQ_CTRL1);
++	} else {
++		cfg->fpe_csr = 0;
+ 	}
+-
+-	value = readl(ioaddr + GMAC_RXQ_CTRL1);
+-	value &= ~GMAC_RXQCTRL_FPRQ;
+-	value |= (num_rxq - 1) << GMAC_RXQCTRL_FPRQ_SHIFT;
+-	writel(value, ioaddr + GMAC_RXQ_CTRL1);
+-
+-	value = readl(ioaddr + MAC_FPE_CTRL_STS);
+-	value |= EFPE;
+-	writel(value, ioaddr + MAC_FPE_CTRL_STS);
++	writel(cfg->fpe_csr, ioaddr + MAC_FPE_CTRL_STS);
+ }
  
+ int dwmac5_fpe_irq_status(void __iomem *ioaddr, struct net_device *dev)
+@@ -741,6 +735,9 @@ int dwmac5_fpe_irq_status(void __iomem *ioaddr, struct net_device *dev)
+ 
+ 	status = FPE_EVENT_UNKNOWN;
+ 
++	/* Reads from the MAC_FPE_CTRL_STS register should only be performed
++	 * here, since the status flags of MAC_FPE_CTRL_STS are "clear on read"
++	 */
+ 	value = readl(ioaddr + MAC_FPE_CTRL_STS);
+ 
+ 	if (value & TRSP) {
+@@ -766,19 +763,15 @@ int dwmac5_fpe_irq_status(void __iomem *ioaddr, struct net_device *dev)
+ 	return status;
+ }
+ 
+-void dwmac5_fpe_send_mpacket(void __iomem *ioaddr, enum stmmac_mpacket_type type)
++void dwmac5_fpe_send_mpacket(void __iomem *ioaddr, struct stmmac_fpe_cfg *cfg,
++			     enum stmmac_mpacket_type type)
+ {
+-	u32 value;
++	u32 value = cfg->fpe_csr;
+ 
+-	value = readl(ioaddr + MAC_FPE_CTRL_STS);
+-
+-	if (type == MPACKET_VERIFY) {
+-		value &= ~SRSP;
++	if (type == MPACKET_VERIFY)
+ 		value |= SVER;
+-	} else {
+-		value &= ~SVER;
++	else if (type == MPACKET_RESPONSE)
+ 		value |= SRSP;
+-	}
+ 
+ 	writel(value, ioaddr + MAC_FPE_CTRL_STS);
+ }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac5.h b/drivers/net/ethernet/stmicro/stmmac/dwmac5.h
+index 53c138d0ff480..34e620790eb37 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.h
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.h
+@@ -153,9 +153,11 @@ int dwmac5_est_configure(void __iomem *ioaddr, struct stmmac_est *cfg,
+ 			 unsigned int ptp_rate);
+ void dwmac5_est_irq_status(void __iomem *ioaddr, struct net_device *dev,
+ 			   struct stmmac_extra_stats *x, u32 txqcnt);
+-void dwmac5_fpe_configure(void __iomem *ioaddr, u32 num_txq, u32 num_rxq,
++void dwmac5_fpe_configure(void __iomem *ioaddr, struct stmmac_fpe_cfg *cfg,
++			  u32 num_txq, u32 num_rxq,
+ 			  bool enable);
+ void dwmac5_fpe_send_mpacket(void __iomem *ioaddr,
++			     struct stmmac_fpe_cfg *cfg,
+ 			     enum stmmac_mpacket_type type);
+ int dwmac5_fpe_irq_status(void __iomem *ioaddr, struct net_device *dev);
+ 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+index 54aa0fbd1bf63..3568bf3ccfbe7 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -1440,7 +1440,8 @@ static int dwxgmac3_est_configure(void __iomem *ioaddr, struct stmmac_est *cfg,
  	return 0;
  }
-@@ -72,7 +72,7 @@ static int dw_reg_write(void *context, unsigned int reg, unsigned int val)
+ 
+-static void dwxgmac3_fpe_configure(void __iomem *ioaddr, u32 num_txq,
++static void dwxgmac3_fpe_configure(void __iomem *ioaddr, struct stmmac_fpe_cfg *cfg,
++				   u32 num_txq,
+ 				   u32 num_rxq, bool enable)
  {
- 	struct dw_i2c_dev *dev = context;
+ 	u32 value;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index fe2660d5694d7..cc229ccd5d81d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -395,9 +395,11 @@ struct stmmac_ops {
+ 			     unsigned int ptp_rate);
+ 	void (*est_irq_status)(void __iomem *ioaddr, struct net_device *dev,
+ 			       struct stmmac_extra_stats *x, u32 txqcnt);
+-	void (*fpe_configure)(void __iomem *ioaddr, u32 num_txq, u32 num_rxq,
++	void (*fpe_configure)(void __iomem *ioaddr, struct stmmac_fpe_cfg *cfg,
++			      u32 num_txq, u32 num_rxq,
+ 			      bool enable);
+ 	void (*fpe_send_mpacket)(void __iomem *ioaddr,
++				 struct stmmac_fpe_cfg *cfg,
+ 				 enum stmmac_mpacket_type type);
+ 	int (*fpe_irq_status)(void __iomem *ioaddr, struct net_device *dev);
+ };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 2b4c30a5ffcd9..7042abc6979a9 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1054,7 +1054,8 @@ static void stmmac_fpe_link_state_handle(struct stmmac_priv *priv, bool is_up)
+ 	bool *hs_enable = &fpe_cfg->hs_enable;
  
--	writel_relaxed(val, dev->base + reg);
-+	writel(val, dev->base + reg);
+ 	if (is_up && *hs_enable) {
+-		stmmac_fpe_send_mpacket(priv, priv->ioaddr, MPACKET_VERIFY);
++		stmmac_fpe_send_mpacket(priv, priv->ioaddr, fpe_cfg,
++					MPACKET_VERIFY);
+ 	} else {
+ 		*lo_state = FPE_STATE_OFF;
+ 		*lp_state = FPE_STATE_OFF;
+@@ -5621,6 +5622,7 @@ static void stmmac_fpe_event_status(struct stmmac_priv *priv, int status)
+ 		/* If user has requested FPE enable, quickly response */
+ 		if (*hs_enable)
+ 			stmmac_fpe_send_mpacket(priv, priv->ioaddr,
++						fpe_cfg,
+ 						MPACKET_RESPONSE);
+ 	}
  
- 	return 0;
- }
-@@ -81,7 +81,7 @@ static int dw_reg_read_swab(void *context, unsigned int reg, unsigned int *val)
- {
- 	struct dw_i2c_dev *dev = context;
+@@ -6958,6 +6960,7 @@ static void stmmac_fpe_lp_task(struct work_struct *work)
+ 		if (*lo_state == FPE_STATE_ENTERING_ON &&
+ 		    *lp_state == FPE_STATE_ENTERING_ON) {
+ 			stmmac_fpe_configure(priv, priv->ioaddr,
++					     fpe_cfg,
+ 					     priv->plat->tx_queues_to_use,
+ 					     priv->plat->rx_queues_to_use,
+ 					     *enable);
+@@ -6976,6 +6979,7 @@ static void stmmac_fpe_lp_task(struct work_struct *work)
+ 			netdev_info(priv->dev, SEND_VERIFY_MPAKCET_FMT,
+ 				    *lo_state, *lp_state);
+ 			stmmac_fpe_send_mpacket(priv, priv->ioaddr,
++						fpe_cfg,
+ 						MPACKET_VERIFY);
+ 		}
+ 		/* Sleep then retry */
+@@ -6990,6 +6994,7 @@ void stmmac_fpe_handshake(struct stmmac_priv *priv, bool enable)
+ 	if (priv->plat->fpe_cfg->hs_enable != enable) {
+ 		if (enable) {
+ 			stmmac_fpe_send_mpacket(priv, priv->ioaddr,
++						priv->plat->fpe_cfg,
+ 						MPACKET_VERIFY);
+ 		} else {
+ 			priv->plat->fpe_cfg->lo_fpe_state = FPE_STATE_OFF;
+@@ -7399,6 +7404,7 @@ int stmmac_suspend(struct device *dev)
+ 	if (priv->dma_cap.fpesel) {
+ 		/* Disable FPE */
+ 		stmmac_fpe_configure(priv, priv->ioaddr,
++				     priv->plat->fpe_cfg,
+ 				     priv->plat->tx_queues_to_use,
+ 				     priv->plat->rx_queues_to_use, false);
  
--	*val = swab32(readl_relaxed(dev->base + reg));
-+	*val = swab32(readl(dev->base + reg));
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index d0a2b289f4603..08cffc0558743 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -952,6 +952,7 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
  
- 	return 0;
- }
-@@ -90,7 +90,7 @@ static int dw_reg_write_swab(void *context, unsigned int reg, unsigned int val)
- {
- 	struct dw_i2c_dev *dev = context;
+ 	priv->plat->fpe_cfg->enable = false;
+ 	stmmac_fpe_configure(priv, priv->ioaddr,
++			     priv->plat->fpe_cfg,
+ 			     priv->plat->tx_queues_to_use,
+ 			     priv->plat->rx_queues_to_use,
+ 			     false);
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index 24bc3f7967c3b..a266e11525220 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -172,6 +172,7 @@ struct stmmac_fpe_cfg {
+ 	bool hs_enable;				/* FPE handshake enable */
+ 	enum stmmac_fpe_state lp_fpe_state;	/* Link Partner FPE state */
+ 	enum stmmac_fpe_state lo_fpe_state;	/* Local station FPE state */
++	u32 fpe_csr;				/* MAC_FPE_CTRL_STS reg cache */
+ };
  
--	writel_relaxed(swab32(val), dev->base + reg);
-+	writel(swab32(val), dev->base + reg);
- 
- 	return 0;
- }
-@@ -99,8 +99,8 @@ static int dw_reg_read_word(void *context, unsigned int reg, unsigned int *val)
- {
- 	struct dw_i2c_dev *dev = context;
- 
--	*val = readw_relaxed(dev->base + reg) |
--		(readw_relaxed(dev->base + reg + 2) << 16);
-+	*val = readw(dev->base + reg) |
-+		(readw(dev->base + reg + 2) << 16);
- 
- 	return 0;
- }
-@@ -109,8 +109,8 @@ static int dw_reg_write_word(void *context, unsigned int reg, unsigned int val)
- {
- 	struct dw_i2c_dev *dev = context;
- 
--	writew_relaxed(val, dev->base + reg);
--	writew_relaxed(val >> 16, dev->base + reg + 2);
-+	writew(val, dev->base + reg);
-+	writew(val >> 16, dev->base + reg + 2);
- 
- 	return 0;
- }
+ struct stmmac_safety_feature_cfg {
 -- 
 2.42.0
 
