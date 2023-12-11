@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2F0FBE0;
-	Mon, 11 Dec 2023 18:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC33755C12;
+	Mon, 11 Dec 2023 18:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dr3rXShu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7111BC433C9;
-	Mon, 11 Dec 2023 18:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoYK6b2B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBD0C433CC;
+	Mon, 11 Dec 2023 18:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319703;
-	bh=43fTJj/43snBKMkAwo6gX6ODXMml8tP/9BUsHQ/Y600=;
+	s=korg; t=1702319706;
+	bh=VbGgsFu0kUEeKO0TYgdv/Qji4/P+cs3xXmCFkj6x+sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dr3rXShuZaYb44KA8SN24XY/MZamr89/+4BF+9vcE8b5CxTvkRtzV0O+CIhulBD77
-	 F4bYKV8bRAjSs226fkJuBRJe8FItbQXG78P39QmF/CBHQ+kGoulf0uBtJlXxbtG1Lx
-	 7HKz74iSKx1zd/nKr1bz8c7PsleSliXu7UqaPSgk=
+	b=CoYK6b2BkSY0DBFDy0tTiQ43ua3d12q/RDSWFvoS2u8NQ3rwmN0lBiB/EQb2Nv+9k
+	 gg777friqZ8bQ0dHj+azrE3qYP2RdSo8xZ1g1enI4G4XKdjHOlPfHRt7vsApOVM0de
+	 9wctZppPWUTZfC6n57rU+n7rwl1plzX5P1Vt5VFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 173/244] drm/i915/mst: Fix .mode_valid_ctx() return values
-Date: Mon, 11 Dec 2023 19:21:06 +0100
-Message-ID: <20231211182053.677981640@linuxfoundation.org>
+Subject: [PATCH 6.6 174/244] drm/i915/mst: Reject modes that require the bigjoiner
+Date: Mon, 11 Dec 2023 19:21:07 +0100
+Message-ID: <20231211182053.729498669@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -45,45 +45,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 7cf82b25dd91d7f330d9df2de868caca14289ba1 upstream.
+commit dd7eb65c493615fda7d459501c3d4a46e00ea5ba upstream.
 
-.mode_valid_ctx() returns an errno, not the mode status. Fix
-the code to do the right thing.
+We have no bigjoiner support in the MST code, so .mode_valid()
+pretending otherwise is just going to result black screens for
+users. Reject any mode that needs the joiner.
 
 Cc: stable@vger.kernel.org
 Cc: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
 Fixes: d51f25eb479a ("drm/i915: Add DSC support to MST path")
 Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231127145028.4899-2-ville.syrjala@linux.intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20231127145028.4899-3-ville.syrjala@linux.intel.com
 Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit c1799032d2ef6616113b733428dfaa2199a5604b)
+(cherry picked from commit 9c058492b16f90bb772cb0dad567e8acc68e155d)
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_mst.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp_mst.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
 +++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -988,11 +988,15 @@ intel_dp_mst_mode_valid_ctx(struct drm_c
- 	 * Big joiner configuration needs DSC for TGL which is not true for
- 	 * XE_LPD where uncompressed joiner is supported.
- 	 */
--	if (DISPLAY_VER(dev_priv) < 13 && bigjoiner && !dsc)
--		return MODE_CLOCK_HIGH;
-+	if (DISPLAY_VER(dev_priv) < 13 && bigjoiner && !dsc) {
+@@ -955,6 +955,10 @@ intel_dp_mst_mode_valid_ctx(struct drm_c
+ 	if (intel_dp_need_bigjoiner(intel_dp, mode->hdisplay, target_clock)) {
+ 		bigjoiner = true;
+ 		max_dotclk *= 2;
++
++		/* TODO: add support for bigjoiner */
 +		*status = MODE_CLOCK_HIGH;
 +		return 0;
-+	}
+ 	}
  
--	if (mode_rate > max_rate && !dsc)
--		return MODE_CLOCK_HIGH;
-+	if (mode_rate > max_rate && !dsc) {
-+		*status = MODE_CLOCK_HIGH;
-+		return 0;
-+	}
- 
- 	*status = intel_mode_valid_max_plane_size(dev_priv, mode, false);
- 	return 0;
+ 	if (DISPLAY_VER(dev_priv) >= 10 &&
 
 
