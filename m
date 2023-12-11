@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E550451C37;
-	Mon, 11 Dec 2023 18:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32CF51C37;
+	Mon, 11 Dec 2023 18:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tw70ANe4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD07C433C8;
-	Mon, 11 Dec 2023 18:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZtsH2uL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DC4C433C8;
+	Mon, 11 Dec 2023 18:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320797;
-	bh=b9yN0ETCg6H9f7VxAx/nIsWofeAMFoZ1kdEXDsZnx/g=;
+	s=korg; t=1702320800;
+	bh=mpCfntzVNUvHGw/N48yG7hFp6LawMFpIiLiLPh653zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tw70ANe4/JV4ozWYiNi6dGymnwCqEBhJwM7MPuyHttbNePdD44Ei/Jd0unL3HSt68
-	 JzcfXk5HmyR/r/Q4tA2mPCTiTBfrmnltqimD/F97DZ3ZVnvKa6ygI9ZugSOXlHQ+5v
-	 EaJKe69dtpu4TOCYEFW9yFWZii3HU5u9kiBckEug=
+	b=RZtsH2uLzj5QvbJoXcV3JbNDnrT1E1M/5SH+adKYnKRMk2hPGle05j/O6RPoCGMgf
+	 HIVkge65gdyc6PjsWfj/znM3ZWn9sPx9YSDinCIxZwoBsTBlMvOE6G3+ur0ZIe/SIe
+	 ESOEst65KrWJqPa861+kjCaPyim2waugkjoJHUT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 194/194] drm/i915: Skip some timing checks on BXT/GLK DSI transcoders
-Date: Mon, 11 Dec 2023 19:23:04 +0100
-Message-ID: <20231211182045.361769302@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 173/194] ARM: PL011: Fix DMA support
+Date: Mon, 11 Dec 2023 19:22:43 +0100
+Message-ID: <20231211182044.392158879@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -36,288 +36,341 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 20c2dbff342aec13bf93c2f6c951da198916a455 ]
+commit 58ac1b3799799069d53f5bf95c093f2fe8dd3cc5 upstream.
 
-Apparently some BXT/GLK systems have DSI panels whose timings
-don't agree with the normal cpu transcoder hblank>=32 limitation.
-This is perhaps fine as there are no specific hblank/etc. limits
-listed for the BXT/GLK DSI transcoders.
+Since there is no guarantee that the memory returned by
+dma_alloc_coherent() is associated with a 'struct page', using the
+architecture specific phys_to_page() is wrong, but using
+virt_to_page() would be as well.
 
-Move those checks out from the global intel_mode_valid() into
-into connector specific .mode_valid() hooks, skipping BXT/GLK
-DSI connectors. We'll leave the basic [hv]display/[hv]total
-checks in intel_mode_valid() as those seem like sensible upper
-limits regardless of the transcoder used.
+Stop using sg lists altogether and just use the *_single() functions
+instead. This also simplifies the code a bit since the scatterlists in
+this driver always have only one entry anyway.
 
-Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/9720
-Fixes: 8f4b1068e7fc ("drm/i915: Check some transcoder timing minimum limits")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231127145028.4899-1-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit e0ef2daa8ca8ce4dbc2fd0959e383b753a87fd7d)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+https://lore.kernel.org/lkml/86db0fe5-930d-4cbb-bd7d-03367da38951@app.fastmail.com/
+    Use consistent names for dma buffers
+
+gc: Add a commit log from the initial thread:
+https://lore.kernel.org/lkml/86db0fe5-930d-4cbb-bd7d-03367da38951@app.fastmail.com/
+    Use consistent names for dma buffers
+
+Fixes: cb06ff102e2d7 ("ARM: PL011: Add support for Rx DMA buffer polling.")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20231122171503.235649-1-gregory.clement@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/icl_dsi.c       |  7 +++++++
- drivers/gpu/drm/i915/display/intel_crt.c     |  5 +++++
- drivers/gpu/drm/i915/display/intel_display.c | 10 ++++++++++
- drivers/gpu/drm/i915/display/intel_display.h |  3 +++
- drivers/gpu/drm/i915/display/intel_dp.c      |  4 ++++
- drivers/gpu/drm/i915/display/intel_dp_mst.c  |  4 ++++
- drivers/gpu/drm/i915/display/intel_dvo.c     |  6 ++++++
- drivers/gpu/drm/i915/display/intel_hdmi.c    |  4 ++++
- drivers/gpu/drm/i915/display/intel_lvds.c    |  5 +++++
- drivers/gpu/drm/i915/display/intel_sdvo.c    |  8 +++++++-
- drivers/gpu/drm/i915/display/intel_tv.c      |  8 +++++++-
- drivers/gpu/drm/i915/display/vlv_dsi.c       | 18 +++++++++++++++++-
- 12 files changed, 79 insertions(+), 3 deletions(-)
+ drivers/tty/serial/amba-pl011.c |  112 +++++++++++++++++++---------------------
+ 1 file changed, 54 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/icl_dsi.c b/drivers/gpu/drm/i915/display/icl_dsi.c
-index 8219310025de5..f7422f0cf579d 100644
---- a/drivers/gpu/drm/i915/display/icl_dsi.c
-+++ b/drivers/gpu/drm/i915/display/icl_dsi.c
-@@ -1500,6 +1500,13 @@ static void gen11_dsi_post_disable(struct intel_atomic_state *state,
- static enum drm_mode_status gen11_dsi_mode_valid(struct drm_connector *connector,
- 						 struct drm_display_mode *mode)
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -218,17 +218,18 @@ static struct vendor_data vendor_st = {
+ 
+ /* Deals with DMA transactions */
+ 
+-struct pl011_sgbuf {
+-	struct scatterlist sg;
+-	char *buf;
++struct pl011_dmabuf {
++	dma_addr_t		dma;
++	size_t			len;
++	char			*buf;
+ };
+ 
+ struct pl011_dmarx_data {
+ 	struct dma_chan		*chan;
+ 	struct completion	complete;
+ 	bool			use_buf_b;
+-	struct pl011_sgbuf	sgbuf_a;
+-	struct pl011_sgbuf	sgbuf_b;
++	struct pl011_dmabuf	dbuf_a;
++	struct pl011_dmabuf	dbuf_b;
+ 	dma_cookie_t		cookie;
+ 	bool			running;
+ 	struct timer_list	timer;
+@@ -241,7 +242,8 @@ struct pl011_dmarx_data {
+ 
+ struct pl011_dmatx_data {
+ 	struct dma_chan		*chan;
+-	struct scatterlist	sg;
++	dma_addr_t		dma;
++	size_t			len;
+ 	char			*buf;
+ 	bool			queued;
+ };
+@@ -365,32 +367,24 @@ static int pl011_fifo_to_tty(struct uart
+ 
+ #define PL011_DMA_BUFFER_SIZE PAGE_SIZE
+ 
+-static int pl011_sgbuf_init(struct dma_chan *chan, struct pl011_sgbuf *sg,
++static int pl011_dmabuf_init(struct dma_chan *chan, struct pl011_dmabuf *db,
+ 	enum dma_data_direction dir)
  {
-+	struct drm_i915_private *i915 = to_i915(connector->dev);
-+	enum drm_mode_status status;
-+
-+	status = intel_cpu_transcoder_mode_valid(i915, mode);
-+	if (status != MODE_OK)
-+		return status;
-+
- 	/* FIXME: DSC? */
- 	return intel_dsi_mode_valid(connector, mode);
+-	dma_addr_t dma_addr;
+-
+-	sg->buf = dma_alloc_coherent(chan->device->dev,
+-		PL011_DMA_BUFFER_SIZE, &dma_addr, GFP_KERNEL);
+-	if (!sg->buf)
++	db->buf = dma_alloc_coherent(chan->device->dev, PL011_DMA_BUFFER_SIZE,
++				     &db->dma, GFP_KERNEL);
++	if (!db->buf)
+ 		return -ENOMEM;
+-
+-	sg_init_table(&sg->sg, 1);
+-	sg_set_page(&sg->sg, phys_to_page(dma_addr),
+-		PL011_DMA_BUFFER_SIZE, offset_in_page(dma_addr));
+-	sg_dma_address(&sg->sg) = dma_addr;
+-	sg_dma_len(&sg->sg) = PL011_DMA_BUFFER_SIZE;
++	db->len = PL011_DMA_BUFFER_SIZE;
+ 
+ 	return 0;
  }
-diff --git a/drivers/gpu/drm/i915/display/intel_crt.c b/drivers/gpu/drm/i915/display/intel_crt.c
-index 4a8ff2f976085..e60b2cf84b851 100644
---- a/drivers/gpu/drm/i915/display/intel_crt.c
-+++ b/drivers/gpu/drm/i915/display/intel_crt.c
-@@ -343,8 +343,13 @@ intel_crt_mode_valid(struct drm_connector *connector,
- 	struct drm_device *dev = connector->dev;
- 	struct drm_i915_private *dev_priv = to_i915(dev);
- 	int max_dotclk = dev_priv->max_dotclk_freq;
-+	enum drm_mode_status status;
- 	int max_clock;
  
-+	status = intel_cpu_transcoder_mode_valid(dev_priv, mode);
-+	if (status != MODE_OK)
-+		return status;
-+
- 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
- 		return MODE_NO_DBLESCAN;
+-static void pl011_sgbuf_free(struct dma_chan *chan, struct pl011_sgbuf *sg,
++static void pl011_dmabuf_free(struct dma_chan *chan, struct pl011_dmabuf *db,
+ 	enum dma_data_direction dir)
+ {
+-	if (sg->buf) {
++	if (db->buf) {
+ 		dma_free_coherent(chan->device->dev,
+-			PL011_DMA_BUFFER_SIZE, sg->buf,
+-			sg_dma_address(&sg->sg));
++				  PL011_DMA_BUFFER_SIZE, db->buf, db->dma);
+ 	}
+ }
  
-diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index 96e679a176e94..1777a12f2f421 100644
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -8229,6 +8229,16 @@ intel_mode_valid(struct drm_device *dev,
- 	    mode->vtotal > vtotal_max)
- 		return MODE_V_ILLEGAL;
+@@ -551,8 +545,8 @@ static void pl011_dma_tx_callback(void *
  
-+	return MODE_OK;
-+}
-+
-+enum drm_mode_status intel_cpu_transcoder_mode_valid(struct drm_i915_private *dev_priv,
-+						     const struct drm_display_mode *mode)
-+{
-+	/*
-+	 * Additional transcoder timing limits,
-+	 * excluding BXT/GLK DSI transcoders.
-+	 */
- 	if (DISPLAY_VER(dev_priv) >= 5) {
- 		if (mode->hdisplay < 64 ||
- 		    mode->htotal - mode->hdisplay < 32)
-diff --git a/drivers/gpu/drm/i915/display/intel_display.h b/drivers/gpu/drm/i915/display/intel_display.h
-index 884e8e67b17c7..b4f941674357b 100644
---- a/drivers/gpu/drm/i915/display/intel_display.h
-+++ b/drivers/gpu/drm/i915/display/intel_display.h
-@@ -554,6 +554,9 @@ enum drm_mode_status
- intel_mode_valid_max_plane_size(struct drm_i915_private *dev_priv,
- 				const struct drm_display_mode *mode,
- 				bool bigjoiner);
-+enum drm_mode_status
-+intel_cpu_transcoder_mode_valid(struct drm_i915_private *i915,
-+				const struct drm_display_mode *mode);
- enum phy intel_port_to_phy(struct drm_i915_private *i915, enum port port);
- bool is_trans_port_sync_mode(const struct intel_crtc_state *state);
- bool intel_crtc_is_bigjoiner_slave(const struct intel_crtc_state *crtc_state);
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index fd7c360bb44d7..5970f4149090f 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -973,6 +973,10 @@ intel_dp_mode_valid(struct drm_connector *_connector,
- 	enum drm_mode_status status;
- 	bool dsc = false, bigjoiner = false;
+ 	spin_lock_irqsave(&uap->port.lock, flags);
+ 	if (uap->dmatx.queued)
+-		dma_unmap_sg(dmatx->chan->device->dev, &dmatx->sg, 1,
+-			     DMA_TO_DEVICE);
++		dma_unmap_single(dmatx->chan->device->dev, dmatx->dma,
++				dmatx->len, DMA_TO_DEVICE);
  
-+	status = intel_cpu_transcoder_mode_valid(dev_priv, mode);
-+	if (status != MODE_OK)
-+		return status;
-+
- 	if (mode->flags & DRM_MODE_FLAG_DBLCLK)
- 		return MODE_H_ILLEGAL;
- 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp_mst.c b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-index 9a6822256ddf6..eec32f682012c 100644
---- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
-@@ -703,6 +703,10 @@ intel_dp_mst_mode_valid_ctx(struct drm_connector *connector,
- 		return 0;
+ 	dmacr = uap->dmacr;
+ 	uap->dmacr = dmacr & ~UART011_TXDMAE;
+@@ -638,18 +632,19 @@ static int pl011_dma_tx_refill(struct ua
+ 			memcpy(&dmatx->buf[first], &xmit->buf[0], second);
  	}
  
-+	*status = intel_cpu_transcoder_mode_valid(dev_priv, mode);
-+	if (*status != MODE_OK)
-+		return 0;
-+
- 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN) {
- 		*status = MODE_NO_DBLESCAN;
- 		return 0;
-diff --git a/drivers/gpu/drm/i915/display/intel_dvo.c b/drivers/gpu/drm/i915/display/intel_dvo.c
-index 5572e43026e4d..511c589070087 100644
---- a/drivers/gpu/drm/i915/display/intel_dvo.c
-+++ b/drivers/gpu/drm/i915/display/intel_dvo.c
-@@ -225,10 +225,16 @@ intel_dvo_mode_valid(struct drm_connector *connector,
+-	dmatx->sg.length = count;
+-
+-	if (dma_map_sg(dma_dev->dev, &dmatx->sg, 1, DMA_TO_DEVICE) != 1) {
++	dmatx->len = count;
++	dmatx->dma = dma_map_single(dma_dev->dev, dmatx->buf, count,
++				    DMA_TO_DEVICE);
++	if (dmatx->dma == DMA_MAPPING_ERROR) {
+ 		uap->dmatx.queued = false;
+ 		dev_dbg(uap->port.dev, "unable to map TX DMA\n");
+ 		return -EBUSY;
+ 	}
+ 
+-	desc = dmaengine_prep_slave_sg(chan, &dmatx->sg, 1, DMA_MEM_TO_DEV,
++	desc = dmaengine_prep_slave_single(chan, dmatx->dma, dmatx->len, DMA_MEM_TO_DEV,
+ 					     DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+ 	if (!desc) {
+-		dma_unmap_sg(dma_dev->dev, &dmatx->sg, 1, DMA_TO_DEVICE);
++		dma_unmap_single(dma_dev->dev, dmatx->dma, dmatx->len, DMA_TO_DEVICE);
+ 		uap->dmatx.queued = false;
+ 		/*
+ 		 * If DMA cannot be used right now, we complete this
+@@ -813,8 +808,8 @@ __acquires(&uap->port.lock)
+ 	dmaengine_terminate_async(uap->dmatx.chan);
+ 
+ 	if (uap->dmatx.queued) {
+-		dma_unmap_sg(uap->dmatx.chan->device->dev, &uap->dmatx.sg, 1,
+-			     DMA_TO_DEVICE);
++		dma_unmap_single(uap->dmatx.chan->device->dev, uap->dmatx.dma,
++				 uap->dmatx.len, DMA_TO_DEVICE);
+ 		uap->dmatx.queued = false;
+ 		uap->dmacr &= ~UART011_TXDMAE;
+ 		pl011_write(uap->dmacr, uap, REG_DMACR);
+@@ -828,15 +823,15 @@ static int pl011_dma_rx_trigger_dma(stru
+ 	struct dma_chan *rxchan = uap->dmarx.chan;
+ 	struct pl011_dmarx_data *dmarx = &uap->dmarx;
+ 	struct dma_async_tx_descriptor *desc;
+-	struct pl011_sgbuf *sgbuf;
++	struct pl011_dmabuf *dbuf;
+ 
+ 	if (!rxchan)
+ 		return -EIO;
+ 
+ 	/* Start the RX DMA job */
+-	sgbuf = uap->dmarx.use_buf_b ?
+-		&uap->dmarx.sgbuf_b : &uap->dmarx.sgbuf_a;
+-	desc = dmaengine_prep_slave_sg(rxchan, &sgbuf->sg, 1,
++	dbuf = uap->dmarx.use_buf_b ?
++		&uap->dmarx.dbuf_b : &uap->dmarx.dbuf_a;
++	desc = dmaengine_prep_slave_single(rxchan, dbuf->dma, dbuf->len,
+ 					DMA_DEV_TO_MEM,
+ 					DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
+ 	/*
+@@ -876,8 +871,8 @@ static void pl011_dma_rx_chars(struct ua
+ 			       bool readfifo)
  {
- 	struct intel_connector *intel_connector = to_intel_connector(connector);
- 	struct intel_dvo *intel_dvo = intel_attached_dvo(intel_connector);
-+	struct drm_i915_private *i915 = to_i915(intel_connector->base.dev);
- 	const struct drm_display_mode *fixed_mode =
- 		intel_panel_fixed_mode(intel_connector, mode);
- 	int max_dotclk = to_i915(connector->dev)->max_dotclk_freq;
- 	int target_clock = mode->clock;
-+	enum drm_mode_status status;
-+
-+	status = intel_cpu_transcoder_mode_valid(i915, mode);
-+	if (status != MODE_OK)
-+		return status;
+ 	struct tty_port *port = &uap->port.state->port;
+-	struct pl011_sgbuf *sgbuf = use_buf_b ?
+-		&uap->dmarx.sgbuf_b : &uap->dmarx.sgbuf_a;
++	struct pl011_dmabuf *dbuf = use_buf_b ?
++		&uap->dmarx.dbuf_b : &uap->dmarx.dbuf_a;
+ 	int dma_count = 0;
+ 	u32 fifotaken = 0; /* only used for vdbg() */
  
- 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
- 		return MODE_NO_DBLESCAN;
-diff --git a/drivers/gpu/drm/i915/display/intel_hdmi.c b/drivers/gpu/drm/i915/display/intel_hdmi.c
-index 4f31355d09a4e..2600019fc8b96 100644
---- a/drivers/gpu/drm/i915/display/intel_hdmi.c
-+++ b/drivers/gpu/drm/i915/display/intel_hdmi.c
-@@ -1987,6 +1987,10 @@ intel_hdmi_mode_valid(struct drm_connector *connector,
- 	bool has_hdmi_sink = intel_has_hdmi_sink(hdmi, connector->state);
- 	bool ycbcr_420_only;
+@@ -886,7 +881,7 @@ static void pl011_dma_rx_chars(struct ua
  
-+	status = intel_cpu_transcoder_mode_valid(dev_priv, mode);
-+	if (status != MODE_OK)
-+		return status;
-+
- 	if ((mode->flags & DRM_MODE_FLAG_3D_MASK) == DRM_MODE_FLAG_3D_FRAME_PACKING)
- 		clock *= 2;
+ 	if (uap->dmarx.poll_rate) {
+ 		/* The data can be taken by polling */
+-		dmataken = sgbuf->sg.length - dmarx->last_residue;
++		dmataken = dbuf->len - dmarx->last_residue;
+ 		/* Recalculate the pending size */
+ 		if (pending >= dmataken)
+ 			pending -= dmataken;
+@@ -900,7 +895,7 @@ static void pl011_dma_rx_chars(struct ua
+ 		 * Note that tty_insert_flip_buf() tries to take as many chars
+ 		 * as it can.
+ 		 */
+-		dma_count = tty_insert_flip_string(port, sgbuf->buf + dmataken,
++		dma_count = tty_insert_flip_string(port, dbuf->buf + dmataken,
+ 				pending);
  
-diff --git a/drivers/gpu/drm/i915/display/intel_lvds.c b/drivers/gpu/drm/i915/display/intel_lvds.c
-index e4606d9a25edb..40b5d3d3c7e14 100644
---- a/drivers/gpu/drm/i915/display/intel_lvds.c
-+++ b/drivers/gpu/drm/i915/display/intel_lvds.c
-@@ -389,11 +389,16 @@ intel_lvds_mode_valid(struct drm_connector *connector,
- 		      struct drm_display_mode *mode)
+ 		uap->port.icount.rx += dma_count;
+@@ -911,7 +906,7 @@ static void pl011_dma_rx_chars(struct ua
+ 
+ 	/* Reset the last_residue for Rx DMA poll */
+ 	if (uap->dmarx.poll_rate)
+-		dmarx->last_residue = sgbuf->sg.length;
++		dmarx->last_residue = dbuf->len;
+ 
+ 	/*
+ 	 * Only continue with trying to read the FIFO if all DMA chars have
+@@ -946,8 +941,8 @@ static void pl011_dma_rx_irq(struct uart
  {
- 	struct intel_connector *intel_connector = to_intel_connector(connector);
-+	struct drm_i915_private *i915 = to_i915(intel_connector->base.dev);
- 	const struct drm_display_mode *fixed_mode =
- 		intel_panel_fixed_mode(intel_connector, mode);
- 	int max_pixclk = to_i915(connector->dev)->max_dotclk_freq;
- 	enum drm_mode_status status;
+ 	struct pl011_dmarx_data *dmarx = &uap->dmarx;
+ 	struct dma_chan *rxchan = dmarx->chan;
+-	struct pl011_sgbuf *sgbuf = dmarx->use_buf_b ?
+-		&dmarx->sgbuf_b : &dmarx->sgbuf_a;
++	struct pl011_dmabuf *dbuf = dmarx->use_buf_b ?
++		&dmarx->dbuf_b : &dmarx->dbuf_a;
+ 	size_t pending;
+ 	struct dma_tx_state state;
+ 	enum dma_status dmastat;
+@@ -969,7 +964,7 @@ static void pl011_dma_rx_irq(struct uart
+ 	pl011_write(uap->dmacr, uap, REG_DMACR);
+ 	uap->dmarx.running = false;
  
-+	status = intel_cpu_transcoder_mode_valid(i915, mode);
-+	if (status != MODE_OK)
-+		return status;
-+
- 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
- 		return MODE_NO_DBLESCAN;
+-	pending = sgbuf->sg.length - state.residue;
++	pending = dbuf->len - state.residue;
+ 	BUG_ON(pending > PL011_DMA_BUFFER_SIZE);
+ 	/* Then we terminate the transfer - we now know our residue */
+ 	dmaengine_terminate_all(rxchan);
+@@ -996,8 +991,8 @@ static void pl011_dma_rx_callback(void *
+ 	struct pl011_dmarx_data *dmarx = &uap->dmarx;
+ 	struct dma_chan *rxchan = dmarx->chan;
+ 	bool lastbuf = dmarx->use_buf_b;
+-	struct pl011_sgbuf *sgbuf = dmarx->use_buf_b ?
+-		&dmarx->sgbuf_b : &dmarx->sgbuf_a;
++	struct pl011_dmabuf *dbuf = dmarx->use_buf_b ?
++		&dmarx->dbuf_b : &dmarx->dbuf_a;
+ 	size_t pending;
+ 	struct dma_tx_state state;
+ 	int ret;
+@@ -1015,7 +1010,7 @@ static void pl011_dma_rx_callback(void *
+ 	 * the DMA irq handler. So we check the residue here.
+ 	 */
+ 	rxchan->device->device_tx_status(rxchan, dmarx->cookie, &state);
+-	pending = sgbuf->sg.length - state.residue;
++	pending = dbuf->len - state.residue;
+ 	BUG_ON(pending > PL011_DMA_BUFFER_SIZE);
+ 	/* Then we terminate the transfer - we now know our residue */
+ 	dmaengine_terminate_all(rxchan);
+@@ -1067,16 +1062,16 @@ static void pl011_dma_rx_poll(struct tim
+ 	unsigned long flags;
+ 	unsigned int dmataken = 0;
+ 	unsigned int size = 0;
+-	struct pl011_sgbuf *sgbuf;
++	struct pl011_dmabuf *dbuf;
+ 	int dma_count;
+ 	struct dma_tx_state state;
  
-diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
-index c1a85128911e1..8294dddfd9de8 100644
---- a/drivers/gpu/drm/i915/display/intel_sdvo.c
-+++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
-@@ -1873,13 +1873,19 @@ static enum drm_mode_status
- intel_sdvo_mode_valid(struct drm_connector *connector,
- 		      struct drm_display_mode *mode)
- {
-+	struct drm_i915_private *i915 = to_i915(connector->dev);
- 	struct intel_sdvo *intel_sdvo = intel_attached_sdvo(to_intel_connector(connector));
- 	struct intel_sdvo_connector *intel_sdvo_connector =
- 		to_intel_sdvo_connector(connector);
--	int max_dotclk = to_i915(connector->dev)->max_dotclk_freq;
- 	bool has_hdmi_sink = intel_has_hdmi_sink(intel_sdvo_connector, connector->state);
-+	int max_dotclk = i915->max_dotclk_freq;
-+	enum drm_mode_status status;
- 	int clock = mode->clock;
+-	sgbuf = dmarx->use_buf_b ? &uap->dmarx.sgbuf_b : &uap->dmarx.sgbuf_a;
++	dbuf = dmarx->use_buf_b ? &uap->dmarx.dbuf_b : &uap->dmarx.dbuf_a;
+ 	rxchan->device->device_tx_status(rxchan, dmarx->cookie, &state);
+ 	if (likely(state.residue < dmarx->last_residue)) {
+-		dmataken = sgbuf->sg.length - dmarx->last_residue;
++		dmataken = dbuf->len - dmarx->last_residue;
+ 		size = dmarx->last_residue - state.residue;
+-		dma_count = tty_insert_flip_string(port, sgbuf->buf + dmataken,
++		dma_count = tty_insert_flip_string(port, dbuf->buf + dmataken,
+ 				size);
+ 		if (dma_count == size)
+ 			dmarx->last_residue =  state.residue;
+@@ -1123,7 +1118,7 @@ static void pl011_dma_startup(struct uar
+ 		return;
+ 	}
  
-+	status = intel_cpu_transcoder_mode_valid(i915, mode);
-+	if (status != MODE_OK)
-+		return status;
-+
- 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
- 		return MODE_NO_DBLESCAN;
+-	sg_init_one(&uap->dmatx.sg, uap->dmatx.buf, PL011_DMA_BUFFER_SIZE);
++	uap->dmatx.len = PL011_DMA_BUFFER_SIZE;
  
-diff --git a/drivers/gpu/drm/i915/display/intel_tv.c b/drivers/gpu/drm/i915/display/intel_tv.c
-index dcf89d701f0f6..fb25be800e753 100644
---- a/drivers/gpu/drm/i915/display/intel_tv.c
-+++ b/drivers/gpu/drm/i915/display/intel_tv.c
-@@ -956,8 +956,14 @@ static enum drm_mode_status
- intel_tv_mode_valid(struct drm_connector *connector,
- 		    struct drm_display_mode *mode)
- {
-+	struct drm_i915_private *i915 = to_i915(connector->dev);
- 	const struct tv_mode *tv_mode = intel_tv_mode_find(connector->state);
--	int max_dotclk = to_i915(connector->dev)->max_dotclk_freq;
-+	int max_dotclk = i915->max_dotclk_freq;
-+	enum drm_mode_status status;
-+
-+	status = intel_cpu_transcoder_mode_valid(i915, mode);
-+	if (status != MODE_OK)
-+		return status;
+ 	/* The DMA buffer is now the FIFO the TTY subsystem can use */
+ 	uap->port.fifosize = PL011_DMA_BUFFER_SIZE;
+@@ -1133,7 +1128,7 @@ static void pl011_dma_startup(struct uar
+ 		goto skip_rx;
  
- 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
- 		return MODE_NO_DBLESCAN;
-diff --git a/drivers/gpu/drm/i915/display/vlv_dsi.c b/drivers/gpu/drm/i915/display/vlv_dsi.c
-index 00c80f29ad999..114088ca59ed4 100644
---- a/drivers/gpu/drm/i915/display/vlv_dsi.c
-+++ b/drivers/gpu/drm/i915/display/vlv_dsi.c
-@@ -1627,9 +1627,25 @@ static const struct drm_encoder_funcs intel_dsi_funcs = {
- 	.destroy = intel_dsi_encoder_destroy,
- };
+ 	/* Allocate and map DMA RX buffers */
+-	ret = pl011_sgbuf_init(uap->dmarx.chan, &uap->dmarx.sgbuf_a,
++	ret = pl011_dmabuf_init(uap->dmarx.chan, &uap->dmarx.dbuf_a,
+ 			       DMA_FROM_DEVICE);
+ 	if (ret) {
+ 		dev_err(uap->port.dev, "failed to init DMA %s: %d\n",
+@@ -1141,12 +1136,12 @@ static void pl011_dma_startup(struct uar
+ 		goto skip_rx;
+ 	}
  
-+static enum drm_mode_status vlv_dsi_mode_valid(struct drm_connector *connector,
-+					       struct drm_display_mode *mode)
-+{
-+	struct drm_i915_private *i915 = to_i915(connector->dev);
-+
-+	if (IS_VALLEYVIEW(i915) || IS_CHERRYVIEW(i915)) {
-+		enum drm_mode_status status;
-+
-+		status = intel_cpu_transcoder_mode_valid(i915, mode);
-+		if (status != MODE_OK)
-+			return status;
-+	}
-+
-+	return intel_dsi_mode_valid(connector, mode);
-+}
-+
- static const struct drm_connector_helper_funcs intel_dsi_connector_helper_funcs = {
- 	.get_modes = intel_dsi_get_modes,
--	.mode_valid = intel_dsi_mode_valid,
-+	.mode_valid = vlv_dsi_mode_valid,
- 	.atomic_check = intel_digital_connector_atomic_check,
- };
+-	ret = pl011_sgbuf_init(uap->dmarx.chan, &uap->dmarx.sgbuf_b,
++	ret = pl011_dmabuf_init(uap->dmarx.chan, &uap->dmarx.dbuf_b,
+ 			       DMA_FROM_DEVICE);
+ 	if (ret) {
+ 		dev_err(uap->port.dev, "failed to init DMA %s: %d\n",
+ 			"RX buffer B", ret);
+-		pl011_sgbuf_free(uap->dmarx.chan, &uap->dmarx.sgbuf_a,
++		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_a,
+ 				 DMA_FROM_DEVICE);
+ 		goto skip_rx;
+ 	}
+@@ -1200,8 +1195,9 @@ static void pl011_dma_shutdown(struct ua
+ 		/* In theory, this should already be done by pl011_dma_flush_buffer */
+ 		dmaengine_terminate_all(uap->dmatx.chan);
+ 		if (uap->dmatx.queued) {
+-			dma_unmap_sg(uap->dmatx.chan->device->dev, &uap->dmatx.sg, 1,
+-				     DMA_TO_DEVICE);
++			dma_unmap_single(uap->dmatx.chan->device->dev,
++					 uap->dmatx.dma, uap->dmatx.len,
++					 DMA_TO_DEVICE);
+ 			uap->dmatx.queued = false;
+ 		}
  
--- 
-2.42.0
-
+@@ -1212,8 +1208,8 @@ static void pl011_dma_shutdown(struct ua
+ 	if (uap->using_rx_dma) {
+ 		dmaengine_terminate_all(uap->dmarx.chan);
+ 		/* Clean up the RX DMA */
+-		pl011_sgbuf_free(uap->dmarx.chan, &uap->dmarx.sgbuf_a, DMA_FROM_DEVICE);
+-		pl011_sgbuf_free(uap->dmarx.chan, &uap->dmarx.sgbuf_b, DMA_FROM_DEVICE);
++		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_a, DMA_FROM_DEVICE);
++		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_b, DMA_FROM_DEVICE);
+ 		if (uap->dmarx.poll_rate)
+ 			del_timer_sync(&uap->dmarx.timer);
+ 		uap->using_rx_dma = false;
 
 
