@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6445101A;
-	Mon, 11 Dec 2023 18:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3E05101A;
+	Mon, 11 Dec 2023 18:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQQmFE1w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50495C433C9;
-	Mon, 11 Dec 2023 18:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkKJqQ/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CA4C433C8;
+	Mon, 11 Dec 2023 18:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319284;
-	bh=tUwKuYpOIUZ1kWCjW0tQq93Z0TTALEyAPratAYLtZF4=;
+	s=korg; t=1702319287;
+	bh=i+v0seUUowaJHzp/bMktDBPDqlxqPEIwKaHd39sEmKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQQmFE1wDMGI9/ppXTayooqFsiKDnlIU1HK9CF7S6ZVGOATQwsRDc6PLVfUbJLT4T
-	 UhR23gP+p4beJA+WQ10KjzRMgbLJiRFiW0saj3SpCqlre8OTI3aDQmqLKQ0d3oW6Vr
-	 /q5I6yDy0wkkp30hWJ7LahxpopLvNfrtXQfO9p40=
+	b=AkKJqQ/byl02i3vq7i9uEuSbcBUvnFlYp3dA09/mZsMgfoyNRKIGrQzREMHrAWAno
+	 fs2zKNBfSDL+mDE27Fi3U/Z/bW74fl6CF5bMX33lAna7Lx+1y6HatoqPQsNirtCu6W
+	 ixHlqFrVqHCuMGUoMjHTTteZ5SoiveHRVB8/JLN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gibson <david@gibson.dropbear.id.au>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
+	kernel test robot <lkp@intel.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/244] tcp: fix mid stream window clamp.
-Date: Mon, 11 Dec 2023 19:19:02 +0100
-Message-ID: <20231211182048.036785831@linuxfoundation.org>
+Subject: [PATCH 6.6 050/244] ionic: fix snprintf format length warning
+Date: Mon, 11 Dec 2023 19:19:03 +0100
+Message-ID: <20231211182048.083014135@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -45,102 +45,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 58d3aade20cdddbac6c9707ac0f3f5f8c1278b74 ]
+[ Upstream commit 0ceb3860a67652f9d36dfdecfcd2cb3eb2f4537d ]
 
-After the blamed commit below, if the user-space application performs
-window clamping when tp->rcv_wnd is 0, the TCP socket will never be
-able to announce a non 0 receive window, even after completely emptying
-the receive buffer and re-setting the window clamp to higher values.
+Our friendly kernel test robot has reminded us that with a new
+check we have a warning about a potential string truncation.
+In this case it really doesn't hurt anything, but it is worth
+addressing especially since there really is no reason to reserve
+so many bytes for our queue names.  It seems that cutting the
+queue name buffer length in half stops the complaint.
 
-Refactor tcp_set_window_clamp() to address the issue: when the user
-decreases the current clamp value, set rcv_ssthresh according to the
-same logic used at buffer initialization, but ensuring reserved mem
-provisioning.
-
-To avoid code duplication factor-out the relevant bits from
-tcp_adjust_rcv_ssthresh() in a new helper and reuse it in the above
-scenario.
-
-When increasing the clamp value, give the rcv_ssthresh a chance to grow
-according to previously implemented heuristic.
-
-Fixes: 3aa7857fe1d7 ("tcp: enable mid stream window clamp")
-Reported-by: David Gibson <david@gibson.dropbear.id.au>
-Reported-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/705dad54e6e6e9a010e571bf58e0b35a8ae70503.1701706073.git.pabeni@redhat.com
+Fixes: c06107cabea3 ("ionic: more ionic name tweaks")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311300201.lO8v7mKU-lkp@intel.com/
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20231204192234.21017-2-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h |  9 +++++++--
- net/ipv4/tcp.c    | 22 +++++++++++++++++++---
- 2 files changed, 26 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_dev.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 0239e815edf71..a88bf8f6db235 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1480,17 +1480,22 @@ static inline int tcp_full_space(const struct sock *sk)
- 	return tcp_win_from_space(sk, READ_ONCE(sk->sk_rcvbuf));
- }
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.h b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+index aae4131f146a8..bd2d4a26f5438 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.h
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+@@ -222,7 +222,7 @@ struct ionic_desc_info {
+ 	void *cb_arg;
+ };
  
--static inline void tcp_adjust_rcv_ssthresh(struct sock *sk)
-+static inline void __tcp_adjust_rcv_ssthresh(struct sock *sk, u32 new_ssthresh)
- {
- 	int unused_mem = sk_unused_reserved_mem(sk);
- 	struct tcp_sock *tp = tcp_sk(sk);
+-#define IONIC_QUEUE_NAME_MAX_SZ		32
++#define IONIC_QUEUE_NAME_MAX_SZ		16
  
--	tp->rcv_ssthresh = min(tp->rcv_ssthresh, 4U * tp->advmss);
-+	tp->rcv_ssthresh = min(tp->rcv_ssthresh, new_ssthresh);
- 	if (unused_mem)
- 		tp->rcv_ssthresh = max_t(u32, tp->rcv_ssthresh,
- 					 tcp_win_from_space(sk, unused_mem));
- }
- 
-+static inline void tcp_adjust_rcv_ssthresh(struct sock *sk)
-+{
-+	__tcp_adjust_rcv_ssthresh(sk, 4U * tcp_sk(sk)->advmss);
-+}
-+
- void tcp_cleanup_rbuf(struct sock *sk, int copied);
- void __tcp_cleanup_rbuf(struct sock *sk, int copied);
- 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 3d3a24f795734..ec46d74c20938 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3368,9 +3368,25 @@ int tcp_set_window_clamp(struct sock *sk, int val)
- 			return -EINVAL;
- 		tp->window_clamp = 0;
- 	} else {
--		tp->window_clamp = val < SOCK_MIN_RCVBUF / 2 ?
--			SOCK_MIN_RCVBUF / 2 : val;
--		tp->rcv_ssthresh = min(tp->rcv_wnd, tp->window_clamp);
-+		u32 new_rcv_ssthresh, old_window_clamp = tp->window_clamp;
-+		u32 new_window_clamp = val < SOCK_MIN_RCVBUF / 2 ?
-+						SOCK_MIN_RCVBUF / 2 : val;
-+
-+		if (new_window_clamp == old_window_clamp)
-+			return 0;
-+
-+		tp->window_clamp = new_window_clamp;
-+		if (new_window_clamp < old_window_clamp) {
-+			/* need to apply the reserved mem provisioning only
-+			 * when shrinking the window clamp
-+			 */
-+			__tcp_adjust_rcv_ssthresh(sk, tp->window_clamp);
-+
-+		} else {
-+			new_rcv_ssthresh = min(tp->rcv_wnd, tp->window_clamp);
-+			tp->rcv_ssthresh = max(new_rcv_ssthresh,
-+					       tp->rcv_ssthresh);
-+		}
- 	}
- 	return 0;
- }
+ struct ionic_queue {
+ 	struct device *dev;
 -- 
 2.42.0
 
