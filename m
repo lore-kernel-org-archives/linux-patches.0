@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1664C4437B;
-	Mon, 11 Dec 2023 18:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDEA4437B;
+	Mon, 11 Dec 2023 18:45:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOoU/gAj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E9AC433C7;
-	Mon, 11 Dec 2023 18:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plr1379r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A98C433C7;
+	Mon, 11 Dec 2023 18:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320349;
-	bh=jn+7mdVmmch0Ob26MPR9+VXTgiTtmpHGccVXLtzPKaE=;
+	s=korg; t=1702320352;
+	bh=+6ET2YV1w3nYSvqwKgV7upbn4TOcaiwgjtfimT4OLkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mOoU/gAjz8oKggKpuBqkCx2TFMRpCUY2NvTQm+xL88N6r/Cmtf4fVFpe2/oQ75h0m
-	 b9msZMfysGtIXa1wmcfC9DGZ7+t3tNTpDh1vdJ6/nehYbmOTqu8HXDyO+p1pejzcBo
-	 IdzXrOQ4plknWpEqa6DCUWK+DHFhFfzkXJBo5vqg=
+	b=plr1379rv+8a7hRtNxW5d44lQAqFcckPHqGODAfPvN9wNNZPvqsW98hsSG6MRgVMd
+	 4cZF5eZx6QDYLwxpPJhSkRvqRQyjcVJpBojV8diVPP2D4ivRO8PPIencGbJJsD5Bge
+	 vTurSZVQAnYgEseGvqH9Cc6LgkfgptgzKn3TWrnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khalil Blaiech <kblaiech@nvidia.com>,
-	David Thompson <davthompson@nvidia.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Vadim Pasternak <vadimp@nvidia.com>,
+	Kunwu Chan <chentao@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/194] mlxbf-bootctl: correctly identify secure boot with development keys
-Date: Mon, 11 Dec 2023 19:20:19 +0100
-Message-ID: <20231211182037.882013641@linuxfoundation.org>
+Subject: [PATCH 6.1 030/194] platform/mellanox: Add null pointer checks for devm_kasprintf()
+Date: Mon, 11 Dec 2023 19:20:20 +0100
+Message-ID: <20231211182037.934593775@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -44,115 +44,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit d4eef75279f5e9d594f5785502038c763ce42268 ]
+[ Upstream commit 2c7c857f5fed997be93047d2de853d7f10c8defe ]
 
-The secure boot state of the BlueField SoC is represented by two bits:
-                0 = production state
-                1 = secure boot enabled
-                2 = non-secure (secure boot disabled)
-                3 = RMA state
-There is also a single bit to indicate whether production keys or
-development keys are being used when secure boot is enabled.
-This single bit (specified by MLXBF_BOOTCTL_SB_DEV_MASK) only has
-meaning if secure boot state equals 1 (secure boot enabled).
+devm_kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure.
 
-The secure boot states are as follows:
-- “GA secured” is when secure boot is enabled with official production keys.
-- “Secured (development)” is when secure boot is enabled with development keys.
+Compile-tested only.
 
-Without this fix “GA Secured” is displayed on development cards which is
-misleading. This patch updates the logic in "lifecycle_state_show()" to
-handle the case where the SoC is configured for secure boot and is using
-development keys.
-
-Fixes: 79e29cb8fbc5c ("platform/mellanox: Add bootctl driver for Mellanox BlueField Soc")
-Reviewed-by: Khalil Blaiech <kblaiech@nvidia.com>
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/20231130183515.17214-1-davthompson@nvidia.com
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Suggested-by: Vadim Pasternak <vadimp@nvidia.com>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Reviewed-by: Vadim Pasternak <vadimp@nvidia.com>
+Link: https://lore.kernel.org/r/20231201055447.2356001-1-chentao@kylinos.cn
+[ij: split the change into two]
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-bootctl.c | 39 +++++++++++++++--------
- 1 file changed, 26 insertions(+), 13 deletions(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/platform/mellanox/mlxbf-bootctl.c b/drivers/platform/mellanox/mlxbf-bootctl.c
-index 1c7a288b59a5c..6a171a4f9dc68 100644
---- a/drivers/platform/mellanox/mlxbf-bootctl.c
-+++ b/drivers/platform/mellanox/mlxbf-bootctl.c
-@@ -17,6 +17,7 @@
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 2d4bbe99959ef..925bfc4aef8ce 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -1202,6 +1202,8 @@ static int mlxbf_pmc_init_perftype_counter(struct device *dev, int blk_num)
+ 	attr->dev_attr.show = mlxbf_pmc_event_list_show;
+ 	attr->nr = blk_num;
+ 	attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL, "event_list");
++	if (!attr->dev_attr.attr.name)
++		return -ENOMEM;
+ 	pmc->block[blk_num].block_attr[i] = &attr->dev_attr.attr;
+ 	attr = NULL;
  
- #define MLXBF_BOOTCTL_SB_SECURE_MASK		0x03
- #define MLXBF_BOOTCTL_SB_TEST_MASK		0x0c
-+#define MLXBF_BOOTCTL_SB_DEV_MASK		BIT(4)
- 
- #define MLXBF_SB_KEY_NUM			4
- 
-@@ -37,11 +38,18 @@ static struct mlxbf_bootctl_name boot_names[] = {
- 	{ MLXBF_BOOTCTL_NONE, "none" },
- };
- 
-+enum {
-+	MLXBF_BOOTCTL_SB_LIFECYCLE_PRODUCTION = 0,
-+	MLXBF_BOOTCTL_SB_LIFECYCLE_GA_SECURE = 1,
-+	MLXBF_BOOTCTL_SB_LIFECYCLE_GA_NON_SECURE = 2,
-+	MLXBF_BOOTCTL_SB_LIFECYCLE_RMA = 3
-+};
-+
- static const char * const mlxbf_bootctl_lifecycle_states[] = {
--	[0] = "Production",
--	[1] = "GA Secured",
--	[2] = "GA Non-Secured",
--	[3] = "RMA",
-+	[MLXBF_BOOTCTL_SB_LIFECYCLE_PRODUCTION] = "Production",
-+	[MLXBF_BOOTCTL_SB_LIFECYCLE_GA_SECURE] = "GA Secured",
-+	[MLXBF_BOOTCTL_SB_LIFECYCLE_GA_NON_SECURE] = "GA Non-Secured",
-+	[MLXBF_BOOTCTL_SB_LIFECYCLE_RMA] = "RMA",
- };
- 
- /* ARM SMC call which is atomic and no need for lock. */
-@@ -165,25 +173,30 @@ static ssize_t second_reset_action_store(struct device *dev,
- static ssize_t lifecycle_state_show(struct device *dev,
- 				    struct device_attribute *attr, char *buf)
- {
-+	int status_bits;
-+	int use_dev_key;
-+	int test_state;
- 	int lc_state;
- 
--	lc_state = mlxbf_bootctl_smc(MLXBF_BOOTCTL_GET_TBB_FUSE_STATUS,
--				     MLXBF_BOOTCTL_FUSE_STATUS_LIFECYCLE);
--	if (lc_state < 0)
--		return lc_state;
-+	status_bits = mlxbf_bootctl_smc(MLXBF_BOOTCTL_GET_TBB_FUSE_STATUS,
-+					MLXBF_BOOTCTL_FUSE_STATUS_LIFECYCLE);
-+	if (status_bits < 0)
-+		return status_bits;
- 
--	lc_state &=
--		MLXBF_BOOTCTL_SB_TEST_MASK | MLXBF_BOOTCTL_SB_SECURE_MASK;
-+	use_dev_key = status_bits & MLXBF_BOOTCTL_SB_DEV_MASK;
-+	test_state = status_bits & MLXBF_BOOTCTL_SB_TEST_MASK;
-+	lc_state = status_bits & MLXBF_BOOTCTL_SB_SECURE_MASK;
- 
- 	/*
- 	 * If the test bits are set, we specify that the current state may be
- 	 * due to using the test bits.
- 	 */
--	if (lc_state & MLXBF_BOOTCTL_SB_TEST_MASK) {
--		lc_state &= MLXBF_BOOTCTL_SB_SECURE_MASK;
--
-+	if (test_state) {
- 		return sprintf(buf, "%s(test)\n",
- 			       mlxbf_bootctl_lifecycle_states[lc_state]);
-+	} else if (use_dev_key &&
-+		   (lc_state == MLXBF_BOOTCTL_SB_LIFECYCLE_GA_SECURE)) {
-+		return sprintf(buf, "Secured (development)\n");
+@@ -1214,6 +1216,8 @@ static int mlxbf_pmc_init_perftype_counter(struct device *dev, int blk_num)
+ 		attr->nr = blk_num;
+ 		attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL,
+ 							  "enable");
++		if (!attr->dev_attr.attr.name)
++			return -ENOMEM;
+ 		pmc->block[blk_num].block_attr[++i] = &attr->dev_attr.attr;
+ 		attr = NULL;
  	}
+@@ -1240,6 +1244,8 @@ static int mlxbf_pmc_init_perftype_counter(struct device *dev, int blk_num)
+ 		attr->nr = blk_num;
+ 		attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL,
+ 							  "counter%d", j);
++		if (!attr->dev_attr.attr.name)
++			return -ENOMEM;
+ 		pmc->block[blk_num].block_attr[++i] = &attr->dev_attr.attr;
+ 		attr = NULL;
  
- 	return sprintf(buf, "%s\n", mlxbf_bootctl_lifecycle_states[lc_state]);
+@@ -1251,6 +1257,8 @@ static int mlxbf_pmc_init_perftype_counter(struct device *dev, int blk_num)
+ 		attr->nr = blk_num;
+ 		attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL,
+ 							  "event%d", j);
++		if (!attr->dev_attr.attr.name)
++			return -ENOMEM;
+ 		pmc->block[blk_num].block_attr[++i] = &attr->dev_attr.attr;
+ 		attr = NULL;
+ 	}
+@@ -1283,6 +1291,8 @@ static int mlxbf_pmc_init_perftype_reg(struct device *dev, int blk_num)
+ 		attr->nr = blk_num;
+ 		attr->dev_attr.attr.name = devm_kasprintf(dev, GFP_KERNEL,
+ 							  events[j].evt_name);
++		if (!attr->dev_attr.attr.name)
++			return -ENOMEM;
+ 		pmc->block[blk_num].block_attr[i] = &attr->dev_attr.attr;
+ 		attr = NULL;
+ 		i++;
+@@ -1311,6 +1321,8 @@ static int mlxbf_pmc_create_groups(struct device *dev, int blk_num)
+ 	pmc->block[blk_num].block_attr_grp.attrs = pmc->block[blk_num].block_attr;
+ 	pmc->block[blk_num].block_attr_grp.name = devm_kasprintf(
+ 		dev, GFP_KERNEL, pmc->block_name[blk_num]);
++	if (!pmc->block[blk_num].block_attr_grp.name)
++		return -ENOMEM;
+ 	pmc->groups[blk_num] = &pmc->block[blk_num].block_attr_grp;
+ 
+ 	return 0;
 -- 
 2.42.0
 
