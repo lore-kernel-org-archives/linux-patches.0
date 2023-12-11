@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45555102A;
-	Mon, 11 Dec 2023 18:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C42D5102A;
+	Mon, 11 Dec 2023 18:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OA6Y89y+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C5E1C433C7;
-	Mon, 11 Dec 2023 18:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSa5Fx72"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E344BC433CB;
+	Mon, 11 Dec 2023 18:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320473;
-	bh=jnQ2J7AQgssEzVkT3yus6SHmP1Uf4zmxRHmp/t56gao=;
+	s=korg; t=1702320476;
+	bh=JVAqluIet7FjaNf40KX/xzeRn4b5pPB/U9FAaCQ8C+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OA6Y89y+RefcszDc2Oa5G0cqHE9CxtKppdzqkmXDlf4xwlnwGect2nP56e11GhbD/
-	 7rlUU9EQGBmQkMnk2j58T/d3roCiOQPu8wr+J2lnNLKry6+4rv1oKe9UrIpVUdk17S
-	 VtYKZp5iQmEb7pR/2Ac1tOif7pHZt6pzZ7YWejUs=
+	b=dSa5Fx72QxSLYU0G1KjcDp2KtXhQ8HBGbYIfDOzP8BWnGa61BofskxG/EX9ENXr1G
+	 6Jz96zSeEKcgpYC1Pw/PU4Shxb28WTDm4kVn55L/1DhRDEMtLGSVOuMFMZ+/2M8abS
+	 nFX03QQHF1u1aAZRv5PqdlFM7VoRgfy/ARuWds0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Santosh Kumar Pradhan <santosh.pradhan@ionos.com>,
-	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/194] RDMA/rtrs-srv: Destroy path files after making sure no IOs in-flight
-Date: Mon, 11 Dec 2023 19:21:04 +0100
-Message-ID: <20231211182039.797838738@linuxfoundation.org>
+Subject: [PATCH 6.1 048/194] octeontx2-af: Fix mcs sa cam entries size
+Date: Mon, 11 Dec 2023 19:20:38 +0100
+Message-ID: <20231211182038.703133623@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -44,54 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Md Haris Iqbal <haris.iqbal@ionos.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit c4d32e77fc1006f99eeb78417efc3d81a384072a ]
+[ Upstream commit 9723b2cca1f0e980c53156b52ea73b93966b3c8a ]
 
-Destroying path files may lead to the freeing of rdma_stats. This creates
-the following race.
+On latest silicon versions SA cam entries increased to 256.
+This patch fixes the datatype of sa_entries in mcs_hw_info
+struct to u16 to hold 256 entries.
 
-An IO is in-flight, or has just passed the session state check in
-process_read/process_write. The close_work gets triggered and the function
-rtrs_srv_close_work() starts and does destroy path which frees the
-rdma_stats. After this the function process_read/process_write resumes and
-tries to update the stats through the function rtrs_srv_update_rdma_stats
-
-This commit solves the problem by moving the destroy path function to a
-later point. This point makes sure any inflights are completed. This is
-done by qp drain, and waiting for all in-flights through ops_id.
-
-Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
-Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Santosh Kumar Pradhan <santosh.pradhan@ionos.com>
-Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
-Link: https://lore.kernel.org/r/20231120154146.920486-6-haris.iqbal@ionos.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 080bbd19c9dd ("octeontx2-af: cn10k: mcs: Add mailboxes for port related operations")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/mbox.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index 091db0853a6fb..e978ee4bb73ae 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -1537,7 +1537,6 @@ static void rtrs_srv_close_work(struct work_struct *work)
- 
- 	srv_path = container_of(work, typeof(*srv_path), close_work);
- 
--	rtrs_srv_destroy_path_files(srv_path);
- 	rtrs_srv_stop_hb(srv_path);
- 
- 	for (i = 0; i < srv_path->s.con_num; i++) {
-@@ -1557,6 +1556,8 @@ static void rtrs_srv_close_work(struct work_struct *work)
- 	/* Wait for all completion */
- 	wait_for_completion(&srv_path->complete_done);
- 
-+	rtrs_srv_destroy_path_files(srv_path);
-+
- 	/* Notify upper layer if we are the last path */
- 	rtrs_srv_path_down(srv_path);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+index a0c31f5b2ce05..03ebabd616353 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+@@ -1877,7 +1877,7 @@ struct mcs_hw_info {
+ 	u8 tcam_entries;	/* RX/TX Tcam entries per mcs block */
+ 	u8 secy_entries;	/* RX/TX SECY entries per mcs block */
+ 	u8 sc_entries;		/* RX/TX SC CAM entries per mcs block */
+-	u8 sa_entries;		/* PN table entries = SA entries */
++	u16 sa_entries;		/* PN table entries = SA entries */
+ 	u64 rsvd[16];
+ };
  
 -- 
 2.42.0
