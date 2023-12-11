@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9579D5101A;
-	Mon, 11 Dec 2023 18:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E3C5101A;
+	Mon, 11 Dec 2023 18:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vkuES+e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 129ACC433C8;
-	Mon, 11 Dec 2023 18:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKoB2PWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE651C433C9;
+	Mon, 11 Dec 2023 18:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319337;
-	bh=12Myw5QvnsGx9sYH9RrfW3toNdN5W6NcX5fGsSGuLOY=;
+	s=korg; t=1702319340;
+	bh=Ue0n3hDCFnFqRGfccqTge09Sj1kjMN7Tx3KDjDbXugA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vkuES+ebmHconSNBk0elLcmNGdj1V15be2DDDOG9kihecASnd2g1Kd6e3b51Ng+/
-	 g5qivIHfcgAxNUS9WLg7fQO6u78kiqmir1zYEovnQeuRuAhLTLilstpunIHaNckVBC
-	 9QG0DBCr4KWM54wmHdRsWbc+Fzcn8cKLu+P98DdQ=
+	b=vKoB2PWnC9Id8K7pA7TdPgHUsCG3+dbpGpowJ6v5OEbpqPWbqKx3ilLvWNrCyioxj
+	 /McK7K1zhDEfifQd97uyJB+XVTKLLc8YCmZk9iJ7z+lYQGr0IBL4KF4upIzPDH9o71
+	 MSeyra8tfd/9/cCJTN1Nb9VXZMZbTsWrW7/gMVC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Yepeng Pan <yepeng.pan@cispa.de>,
-	Christian Rossow <rossow@cispa.de>,
-	Neal Cardwell <ncardwell@google.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Michal Smulski <michal.smulski@ooma.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Tobias Waldekranz <tobias@waldekranz.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/244] tcp: do not accept ACK of bytes we never sent
-Date: Mon, 11 Dec 2023 19:19:20 +0100
-Message-ID: <20231211182048.805668377@linuxfoundation.org>
+Subject: [PATCH 6.6 068/244] net: dsa: mv88e6xxx: Restore USXGMII support for 6393X
+Date: Mon, 11 Dec 2023 19:19:21 +0100
+Message-ID: <20231211182048.855547006@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -45,104 +45,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tobias Waldekranz <tobias@waldekranz.com>
 
-[ Upstream commit 3d501dd326fb1c73f1b8206d4c6e1d7b15c07e27 ]
+[ Upstream commit 0c7ed1f9197aecada33a08b022e484a97bf584ba ]
 
-This patch is based on a detailed report and ideas from Yepeng Pan
-and Christian Rossow.
+In 4a56212774ac, USXGMII support was added for 6393X, but this was
+lost in the PCS conversion (the blamed commit), most likely because
+these efforts where more or less done in parallel.
 
-ACK seq validation is currently following RFC 5961 5.2 guidelines:
+Restore this feature by porting Michal's patch to fit the new
+implementation.
 
-   The ACK value is considered acceptable only if
-   it is in the range of ((SND.UNA - MAX.SND.WND) <= SEG.ACK <=
-   SND.NXT).  All incoming segments whose ACK value doesn't satisfy the
-   above condition MUST be discarded and an ACK sent back.  It needs to
-   be noted that RFC 793 on page 72 (fifth check) says: "If the ACK is a
-   duplicate (SEG.ACK < SND.UNA), it can be ignored.  If the ACK
-   acknowledges something not yet sent (SEG.ACK > SND.NXT) then send an
-   ACK, drop the segment, and return".  The "ignored" above implies that
-   the processing of the incoming data segment continues, which means
-   the ACK value is treated as acceptable.  This mitigation makes the
-   ACK check more stringent since any ACK < SND.UNA wouldn't be
-   accepted, instead only ACKs that are in the range ((SND.UNA -
-   MAX.SND.WND) <= SEG.ACK <= SND.NXT) get through.
-
-This can be refined for new (and possibly spoofed) flows,
-by not accepting ACK for bytes that were never sent.
-
-This greatly improves TCP security at a little cost.
-
-I added a Fixes: tag to make sure this patch will reach stable trees,
-even if the 'blamed' patch was adhering to the RFC.
-
-tp->bytes_acked was added in linux-4.2
-
-Following packetdrill test (courtesy of Yepeng Pan) shows
-the issue at hand:
-
-0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
-+0 setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-+0 bind(3, ..., ...) = 0
-+0 listen(3, 1024) = 0
-
-// ---------------- Handshake ------------------- //
-
-// when window scale is set to 14 the window size can be extended to
-// 65535 * (2^14) = 1073725440. Linux would accept an ACK packet
-// with ack number in (Server_ISN+1-1073725440. Server_ISN+1)
-// ,though this ack number acknowledges some data never
-// sent by the server.
-
-+0 < S 0:0(0) win 65535 <mss 1400,nop,wscale 14>
-+0 > S. 0:0(0) ack 1 <...>
-+0 < . 1:1(0) ack 1 win 65535
-+0 accept(3, ..., ...) = 4
-
-// For the established connection, we send an ACK packet,
-// the ack packet uses ack number 1 - 1073725300 + 2^32,
-// where 2^32 is used to wrap around.
-// Note: we used 1073725300 instead of 1073725440 to avoid possible
-// edge cases.
-// 1 - 1073725300 + 2^32 = 3221241997
-
-// Oops, old kernels happily accept this packet.
-+0 < . 1:1001(1000) ack 3221241997 win 65535
-
-// After the kernel fix the following will be replaced by a challenge ACK,
-// and prior malicious frame would be dropped.
-+0 > . 1:1(0) ack 1001
-
-Fixes: 354e4aa391ed ("tcp: RFC 5961 5.2 Blind Data Injection Attack Mitigation")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Yepeng Pan <yepeng.pan@cispa.de>
-Reported-by: Christian Rossow <rossow@cispa.de>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20231205161841.2702925-1-edumazet@google.com
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Tested-by: Michal Smulski <michal.smulski@ooma.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Fixes: e5b732a275f5 ("net: dsa: mv88e6xxx: convert 88e639x to phylink_pcs")
+Signed-off-by: Tobias Waldekranz <tobias@waldekranz.com>
+Link: https://lore.kernel.org/r/20231205221359.3926018-1-tobias@waldekranz.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/pcs-639x.c | 31 ++++++++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 1f9d1d445fb3b..e6c4929549428 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3809,8 +3809,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
- 	 * then we can probably ignore it.
- 	 */
- 	if (before(ack, prior_snd_una)) {
-+		u32 max_window;
+diff --git a/drivers/net/dsa/mv88e6xxx/pcs-639x.c b/drivers/net/dsa/mv88e6xxx/pcs-639x.c
+index ba373656bfe14..c31f0e54f1e64 100644
+--- a/drivers/net/dsa/mv88e6xxx/pcs-639x.c
++++ b/drivers/net/dsa/mv88e6xxx/pcs-639x.c
+@@ -465,6 +465,7 @@ mv88e639x_pcs_select(struct mv88e6xxx_chip *chip, int port,
+ 	case PHY_INTERFACE_MODE_10GBASER:
+ 	case PHY_INTERFACE_MODE_XAUI:
+ 	case PHY_INTERFACE_MODE_RXAUI:
++	case PHY_INTERFACE_MODE_USXGMII:
+ 		return &mpcs->xg_pcs;
+ 
+ 	default:
+@@ -873,7 +874,8 @@ static int mv88e6393x_xg_pcs_post_config(struct phylink_pcs *pcs,
+ 	struct mv88e639x_pcs *mpcs = xg_pcs_to_mv88e639x_pcs(pcs);
+ 	int err;
+ 
+-	if (interface == PHY_INTERFACE_MODE_10GBASER) {
++	if (interface == PHY_INTERFACE_MODE_10GBASER ||
++	    interface == PHY_INTERFACE_MODE_USXGMII) {
+ 		err = mv88e6393x_erratum_5_2(mpcs);
+ 		if (err)
+ 			return err;
+@@ -886,12 +888,37 @@ static int mv88e6393x_xg_pcs_post_config(struct phylink_pcs *pcs,
+ 	return mv88e639x_xg_pcs_enable(mpcs);
+ }
+ 
++static void mv88e6393x_xg_pcs_get_state(struct phylink_pcs *pcs,
++					struct phylink_link_state *state)
++{
++	struct mv88e639x_pcs *mpcs = xg_pcs_to_mv88e639x_pcs(pcs);
++	u16 status, lp_status;
++	int err;
 +
-+		/* do not accept ACK for bytes we never sent. */
-+		max_window = min_t(u64, tp->max_window, tp->bytes_acked);
- 		/* RFC 5961 5.2 [Blind Data Injection Attack].[Mitigation] */
--		if (before(ack, prior_snd_una - tp->max_window)) {
-+		if (before(ack, prior_snd_una - max_window)) {
- 			if (!(flag & FLAG_NO_CHALLENGE_ACK))
- 				tcp_send_challenge_ack(sk);
- 			return -SKB_DROP_REASON_TCP_TOO_OLD_ACK;
++	if (state->interface != PHY_INTERFACE_MODE_USXGMII)
++		return mv88e639x_xg_pcs_get_state(pcs, state);
++
++	state->link = false;
++
++	err = mv88e639x_read(mpcs, MV88E6390_USXGMII_PHY_STATUS, &status);
++	err = err ? : mv88e639x_read(mpcs, MV88E6390_USXGMII_LP_STATUS, &lp_status);
++	if (err) {
++		dev_err(mpcs->mdio.dev.parent,
++			"can't read USXGMII status: %pe\n", ERR_PTR(err));
++		return;
++	}
++
++	state->link = !!(status & MDIO_USXGMII_LINK);
++	state->an_complete = state->link;
++	phylink_decode_usxgmii_word(state, lp_status);
++}
++
+ static const struct phylink_pcs_ops mv88e6393x_xg_pcs_ops = {
+ 	.pcs_enable = mv88e6393x_xg_pcs_enable,
+ 	.pcs_disable = mv88e6393x_xg_pcs_disable,
+ 	.pcs_pre_config = mv88e6393x_xg_pcs_pre_config,
+ 	.pcs_post_config = mv88e6393x_xg_pcs_post_config,
+-	.pcs_get_state = mv88e639x_xg_pcs_get_state,
++	.pcs_get_state = mv88e6393x_xg_pcs_get_state,
+ 	.pcs_config = mv88e639x_xg_pcs_config,
+ };
+ 
 -- 
 2.42.0
 
