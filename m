@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E6E5102A;
-	Mon, 11 Dec 2023 18:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB585102A;
+	Mon, 11 Dec 2023 18:49:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4Sl1RoC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E43CC433C7;
-	Mon, 11 Dec 2023 18:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gm00eMV/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F6FC433C7;
+	Mon, 11 Dec 2023 18:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320577;
-	bh=Km8Q0f3ugCEF4HE2A0wR8ogjDsqIhO1dXghbiUGNJxU=;
+	s=korg; t=1702320580;
+	bh=LqJyPARUB5vi+WEeVVfo6prJzZEWCKTWDvbiBpFuqYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4Sl1RoCRsy4XBQ6ojVxCaup1u3Pu23/GRffI5m/naDls5ocjIIltX6QsSOcZmX8T
-	 S3W8BYy6DPKHIIAfFlexdD/OWkTeiNuvC7B613F6YD1C2HUm+nMiMonS2x8va9w2+h
-	 gAxF1Ml+pdFCzvLmtU1zi0NDfHCWuNuDpgzSRwKc=
+	b=Gm00eMV/bHRmX9KZzpAdUQDM3xgq+VBAoLmODMKY8ihOQq+vrbKcnMcFPCjH6UY/W
+	 UXGJSc1vm39u9ykl4ykQkk2TzvHlN2ldfLAuU60X0u5xBkLkBY4Xa6i0k8glfqQA1t
+	 GfQn/yLJnYwNodJgsAqg/YKzL7fL8hFWaN7egQZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Marciniszyn <mike.marciniszyn@intel.com>,
+	"Ismail, Mustafa" <mustafa.ismail@intel.com>,
+	Shifeng Li <lishifeng@sangfor.com.cn>,
 	Shiraz Saleem <shiraz.saleem@intel.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/194] RDMA/core: Fix umem iterator when PAGE_SIZE is greater then HCA pgsz
-Date: Mon, 11 Dec 2023 19:21:14 +0100
-Message-ID: <20231211182040.225975662@linuxfoundation.org>
+Subject: [PATCH 6.1 085/194] RDMA/irdma: Avoid free the non-cqp_request scratch
+Date: Mon, 11 Dec 2023 19:21:15 +0100
+Message-ID: <20231211182040.271004235@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,143 +44,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Marciniszyn <mike.marciniszyn@intel.com>
+From: Shifeng Li <lishifeng@sangfor.com.cn>
 
-[ Upstream commit 4fbc3a52cd4d14de3793f4b2c721d7306ea84cf9 ]
+[ Upstream commit e3e82fcb79eeb3f1a88a89f676831773caff514a ]
 
-64k pages introduce the situation in this diagram when the HCA 4k page
-size is being used:
+When creating ceq_0 during probing irdma, cqp.sc_cqp will be sent as a
+cqp_request to cqp->sc_cqp.sq_ring. If the request is pending when
+removing the irdma driver or unplugging its aux device, cqp.sc_cqp will be
+dereferenced as wrong struct in irdma_free_pending_cqp_request().
 
- +-------------------------------------------+ <--- 64k aligned VA
- |                                           |
- |              HCA 4k page                  |
- |                                           |
- +-------------------------------------------+
- |                   o                       |
- |                                           |
- |                   o                       |
- |                                           |
- |                   o                       |
- +-------------------------------------------+
- |                                           |
- |              HCA 4k page                  |
- |                                           |
- +-------------------------------------------+ <--- Live HCA page
- |OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO| <--- offset
- |                                           | <--- VA
- |                MR data                    |
- +-------------------------------------------+
- |                                           |
- |              HCA 4k page                  |
- |                                           |
- +-------------------------------------------+
- |                   o                       |
- |                                           |
- |                   o                       |
- |                                           |
- |                   o                       |
- +-------------------------------------------+
- |                                           |
- |              HCA 4k page                  |
- |                                           |
- +-------------------------------------------+
+  PID: 3669   TASK: ffff88aef892c000  CPU: 28  COMMAND: "kworker/28:0"
+   #0 [fffffe0000549e38] crash_nmi_callback at ffffffff810e3a34
+   #1 [fffffe0000549e40] nmi_handle at ffffffff810788b2
+   #2 [fffffe0000549ea0] default_do_nmi at ffffffff8107938f
+   #3 [fffffe0000549eb8] do_nmi at ffffffff81079582
+   #4 [fffffe0000549ef0] end_repeat_nmi at ffffffff82e016b4
+      [exception RIP: native_queued_spin_lock_slowpath+1291]
+      RIP: ffffffff8127e72b  RSP: ffff88aa841ef778  RFLAGS: 00000046
+      RAX: 0000000000000000  RBX: ffff88b01f849700  RCX: ffffffff8127e47e
+      RDX: 0000000000000000  RSI: 0000000000000004  RDI: ffffffff83857ec0
+      RBP: ffff88afe3e4efc8   R8: ffffed15fc7c9dfa   R9: ffffed15fc7c9dfa
+      R10: 0000000000000001  R11: ffffed15fc7c9df9  R12: 0000000000740000
+      R13: ffff88b01f849708  R14: 0000000000000003  R15: ffffed1603f092e1
+      ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0000
+  -- <NMI exception stack> --
+   #5 [ffff88aa841ef778] native_queued_spin_lock_slowpath at ffffffff8127e72b
+   #6 [ffff88aa841ef7b0] _raw_spin_lock_irqsave at ffffffff82c22aa4
+   #7 [ffff88aa841ef7c8] __wake_up_common_lock at ffffffff81257363
+   #8 [ffff88aa841ef888] irdma_free_pending_cqp_request at ffffffffa0ba12cc [irdma]
+   #9 [ffff88aa841ef958] irdma_cleanup_pending_cqp_op at ffffffffa0ba1469 [irdma]
+   #10 [ffff88aa841ef9c0] irdma_ctrl_deinit_hw at ffffffffa0b2989f [irdma]
+   #11 [ffff88aa841efa28] irdma_remove at ffffffffa0b252df [irdma]
+   #12 [ffff88aa841efae8] auxiliary_bus_remove at ffffffff8219afdb
+   #13 [ffff88aa841efb00] device_release_driver_internal at ffffffff821882e6
+   #14 [ffff88aa841efb38] bus_remove_device at ffffffff82184278
+   #15 [ffff88aa841efb88] device_del at ffffffff82179d23
+   #16 [ffff88aa841efc48] ice_unplug_aux_dev at ffffffffa0eb1c14 [ice]
+   #17 [ffff88aa841efc68] ice_service_task at ffffffffa0d88201 [ice]
+   #18 [ffff88aa841efde8] process_one_work at ffffffff811c589a
+   #19 [ffff88aa841efe60] worker_thread at ffffffff811c71ff
+   #20 [ffff88aa841eff10] kthread at ffffffff811d87a0
+   #21 [ffff88aa841eff50] ret_from_fork at ffffffff82e0022f
 
-The VA addresses are coming from rdma-core in this diagram can be
-arbitrary, but for 64k pages, the VA may be offset by some number of HCA
-4k pages and followed by some number of HCA 4k pages.
-
-The current iterator doesn't account for either the preceding 4k pages or
-the following 4k pages.
-
-Fix the issue by extending the ib_block_iter to contain the number of DMA
-pages like comment [1] says and by using __sg_advance to start the
-iterator at the first live HCA page.
-
-The changes are contained in a parallel set of iterator start and next
-functions that are umem aware and specific to umem since there is one user
-of the rdma_for_each_block() without umem.
-
-These two fixes prevents the extra pages before and after the user MR
-data.
-
-Fix the preceding pages by using the __sq_advance field to start at the
-first 4k page containing MR data.
-
-Fix the following pages by saving the number of pgsz blocks in the
-iterator state and downcounting on each next.
-
-This fix allows for the elimination of the small page crutch noted in the
-Fixes.
-
-Fixes: 10c75ccb54e4 ("RDMA/umem: Prevent small pages from being returned by ib_umem_find_best_pgsz()")
-Link: https://lore.kernel.org/r/20231129202143.1434-2-shiraz.saleem@intel.com
-Signed-off-by: Mike Marciniszyn <mike.marciniszyn@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
+Link: https://lore.kernel.org/r/20231130081415.891006-1-lishifeng@sangfor.com.cn
+Suggested-by: "Ismail, Mustafa" <mustafa.ismail@intel.com>
+Signed-off-by: Shifeng Li <lishifeng@sangfor.com.cn>
+Reviewed-by: Shiraz Saleem <shiraz.saleem@intel.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/umem.c | 6 ------
- include/rdma/ib_umem.h         | 9 ++++++++-
- include/rdma/ib_verbs.h        | 1 +
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/irdma/hw.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/core/umem.c b/drivers/infiniband/core/umem.c
-index 957634eceba8f..8ce569bf7525e 100644
---- a/drivers/infiniband/core/umem.c
-+++ b/drivers/infiniband/core/umem.c
-@@ -96,12 +96,6 @@ unsigned long ib_umem_find_best_pgsz(struct ib_umem *umem,
- 		return page_size;
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index 9399d82560c92..311a1138e838d 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -1170,7 +1170,6 @@ static int irdma_create_ceq(struct irdma_pci_f *rf, struct irdma_ceq *iwceq,
+ 	int status;
+ 	struct irdma_ceq_init_info info = {};
+ 	struct irdma_sc_dev *dev = &rf->sc_dev;
+-	u64 scratch;
+ 	u32 ceq_size;
+ 
+ 	info.ceq_id = ceq_id;
+@@ -1191,14 +1190,13 @@ static int irdma_create_ceq(struct irdma_pci_f *rf, struct irdma_ceq *iwceq,
+ 	iwceq->sc_ceq.ceq_id = ceq_id;
+ 	info.dev = dev;
+ 	info.vsi = vsi;
+-	scratch = (uintptr_t)&rf->cqp.sc_cqp;
+ 	status = irdma_sc_ceq_init(&iwceq->sc_ceq, &info);
+ 	if (!status) {
+ 		if (dev->ceq_valid)
+ 			status = irdma_cqp_ceq_cmd(&rf->sc_dev, &iwceq->sc_ceq,
+ 						   IRDMA_OP_CEQ_CREATE);
+ 		else
+-			status = irdma_sc_cceq_create(&iwceq->sc_ceq, scratch);
++			status = irdma_sc_cceq_create(&iwceq->sc_ceq, 0);
  	}
  
--	/* rdma_for_each_block() has a bug if the page size is smaller than the
--	 * page size used to build the umem. For now prevent smaller page sizes
--	 * from being returned.
--	 */
--	pgsz_bitmap &= GENMASK(BITS_PER_LONG - 1, PAGE_SHIFT);
--
- 	/* The best result is the smallest page size that results in the minimum
- 	 * number of required pages. Compute the largest page size that could
- 	 * work based on VA address bits that don't change.
-diff --git a/include/rdma/ib_umem.h b/include/rdma/ib_umem.h
-index 92a673cd9b4fd..77b83ea62dd69 100644
---- a/include/rdma/ib_umem.h
-+++ b/include/rdma/ib_umem.h
-@@ -78,6 +78,13 @@ static inline void __rdma_umem_block_iter_start(struct ib_block_iter *biter,
- {
- 	__rdma_block_iter_start(biter, umem->sgt_append.sgt.sgl,
- 				umem->sgt_append.sgt.nents, pgsz);
-+	biter->__sg_advance = ib_umem_offset(umem) & ~(pgsz - 1);
-+	biter->__sg_numblocks = ib_umem_num_dma_blocks(umem, pgsz);
-+}
-+
-+static inline bool __rdma_umem_block_iter_next(struct ib_block_iter *biter)
-+{
-+	return __rdma_block_iter_next(biter) && biter->__sg_numblocks--;
- }
- 
- /**
-@@ -93,7 +100,7 @@ static inline void __rdma_umem_block_iter_start(struct ib_block_iter *biter,
-  */
- #define rdma_umem_for_each_dma_block(umem, biter, pgsz)                        \
- 	for (__rdma_umem_block_iter_start(biter, umem, pgsz);                  \
--	     __rdma_block_iter_next(biter);)
-+	     __rdma_umem_block_iter_next(biter);)
- 
- #ifdef CONFIG_INFINIBAND_USER_MEM
- 
-diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
-index 975d6e9efbcb4..5582509003264 100644
---- a/include/rdma/ib_verbs.h
-+++ b/include/rdma/ib_verbs.h
-@@ -2835,6 +2835,7 @@ struct ib_block_iter {
- 	/* internal states */
- 	struct scatterlist *__sg;	/* sg holding the current aligned block */
- 	dma_addr_t __dma_addr;		/* unaligned DMA address of this block */
-+	size_t __sg_numblocks;		/* ib_umem_num_dma_blocks() */
- 	unsigned int __sg_nents;	/* number of SG entries */
- 	unsigned int __sg_advance;	/* number of bytes to advance in sg in next step */
- 	unsigned int __pg_bit;		/* alignment of current block */
+ 	if (status) {
 -- 
 2.42.0
 
