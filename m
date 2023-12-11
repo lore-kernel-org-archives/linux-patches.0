@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBCD5102A;
-	Mon, 11 Dec 2023 18:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89235102A;
+	Mon, 11 Dec 2023 18:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOkOLHWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA28C433CA;
-	Mon, 11 Dec 2023 18:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+e60upV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E660C433C8;
+	Mon, 11 Dec 2023 18:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320623;
-	bh=3QrsrMS+488wnhLZruCz5gmHPr3pr9t3KhhwIWchBok=;
+	s=korg; t=1702320625;
+	bh=RAsx1MYKagDxB2huMEhFKqEShRSgLtHi0e3bgF7bVoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOkOLHWJWE5QRqOx8rX9ZwGUsDqgBx1355ro2YtjDJMXUWMt3FWgE2E3xQrwgl7CW
-	 YHZXfG8buiA6fKx1uZBPm7boHB0Knfci9yD+LFfcQaB9a6x3mxxh2/gAIi/jC3MjMM
-	 Kf4SQ/8cDCbocbkUTIjC+13RBqX9GYVadqIfrOPY=
+	b=P+e60upVIzbOHFWv0orxHAziZuDb2CjB6A8VPuxIXXVPuWerfbr2e/BmHxy8+dJ3i
+	 q4VQV20ufM4QfDvpB+e3L0MJU118Mj0CT+3h7Pss6FCeiCIz2Af33HP+DxNmWBfGC4
+	 NQl4z9GJixWGb2aVMe0vBkZoW0qndY31pdC/N5no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.1 129/194] arm64: dts: mediatek: cherry: Fix interrupt cells for MT6360 on I2C7
-Date: Mon, 11 Dec 2023 19:21:59 +0100
-Message-ID: <20231211182042.285034297@linuxfoundation.org>
+Subject: [PATCH 6.1 130/194] arm64: dts: mediatek: mt8173-evb: Fix regulator-fixed node names
+Date: Mon, 11 Dec 2023 19:22:00 +0100
+Message-ID: <20231211182042.324989694@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -42,29 +42,40 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-commit 5943b8f7449df9881b273db07bdde1e7120dccf0 upstream.
+commit 24165c5dad7ba7c7624d05575a5e0cc851396c71 upstream.
 
-Change interrupt cells to 2 to suppress interrupts_property warning.
+Fix a unit_address_vs_reg warning for the USB VBUS fixed regulators
+by renaming the regulator nodes from regulator@{0,1} to regulator-usb-p0
+and regulator-usb-p1.
 
 Cc: stable@vger.kernel.org
-Fixes: 0de0fe950f1b ("arm64: dts: mediatek: cherry: Enable MT6360 sub-pmic on I2C7")
-Link: https://lore.kernel.org/r/20231127132026.165027-1-angelogioacchino.delregno@collabora.com
+Fixes: c0891284a74a ("arm64: dts: mediatek: add USB3 DRD driver")
+Link: https://lore.kernel.org/r/20231025093816.44327-8-angelogioacchino.delregno@collabora.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8173-evb.dts |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-@@ -207,7 +207,7 @@
- 	pinctrl-0 = <&i2c7_pins>;
+--- a/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt8173-evb.dts
+@@ -43,7 +43,7 @@
+ 		id-gpio = <&pio 16 GPIO_ACTIVE_HIGH>;
+ 	};
  
- 	pmic@34 {
--		#interrupt-cells = <1>;
-+		#interrupt-cells = <2>;
- 		compatible = "mediatek,mt6360";
- 		reg = <0x34>;
- 		interrupt-controller;
+-	usb_p1_vbus: regulator@0 {
++	usb_p1_vbus: regulator-usb-p1 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "usb_vbus";
+ 		regulator-min-microvolt = <5000000>;
+@@ -52,7 +52,7 @@
+ 		enable-active-high;
+ 	};
+ 
+-	usb_p0_vbus: regulator@1 {
++	usb_p0_vbus: regulator-usb-p0 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vbus";
+ 		regulator-min-microvolt = <5000000>;
 
 
