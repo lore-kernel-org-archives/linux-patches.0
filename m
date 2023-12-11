@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99CF1D696;
-	Mon, 11 Dec 2023 18:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79E51D696;
+	Mon, 11 Dec 2023 18:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j4DOjDog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC2FC433C8;
-	Mon, 11 Dec 2023 18:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRjNmCyC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AAB5C433C7;
+	Mon, 11 Dec 2023 18:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320109;
-	bh=hDA3ZczulW/mSS6laLzRry0ZEBRskSYwdmbrXFlDyvQ=;
+	s=korg; t=1702320112;
+	bh=qofyb2HQFnTqX/Fj5m3KJI9QxJ4SwKsQ8miayq51oxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j4DOjDogFZf4CQwgfv5t5zeND1e1yzfrGqZKv8XGYjn27x2Ua2VwqyllQJtTMmm21
-	 Az8hE1N7pibx/Kb84YWp165GVGjdXx8ZpzBIyQ05Rs1oldiQKsUCoADVqIhptYplHh
-	 VDXXWHtRie8XWIXCjg4qyy7uMpzOIsTuzAYfEL/M=
+	b=PRjNmCyCx/MgWxQsj0m8yiUx/CYqgRUYGSpbHvYMl2v/XczrCLS9sDL4sVyZS2OhK
+	 5V7xR0xqlwLGPE+m13Ch1UT67MV2dJsMbFXQklE/W3RQPjHz0Kk8NdZcqUCINkqLPF
+	 vqSUswXfmpLBCqLUHpCGnEC2goa+vuRevChFa97A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Liao <liaoyu15@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Liu Tie <liutie4@huawei.com>,
+	Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Joerg Roedel <jroedel@suse.de>,
+	Rob Herring <robh+dt@kernel.org>,
+	Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 01/67] hrtimers: Push pending hrtimers away from outgoing CPU earlier
-Date: Mon, 11 Dec 2023 19:21:45 +0100
-Message-ID: <20231211182015.116511505@linuxfoundation.org>
+Subject: [PATCH 5.4 10/67] of/iommu: Make of_map_rid() PCI agnostic
+Date: Mon, 11 Dec 2023 19:21:54 +0100
+Message-ID: <20231211182015.523558653@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -43,153 +48,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
 
-[ Upstream commit 5c0930ccaad5a74d74e8b18b648c5eb21ed2fe94 ]
+[ Upstream commit 746a71d02b5d15817fcb13c956ba999a87773952 ]
 
-2b8272ff4a70 ("cpu/hotplug: Prevent self deadlock on CPU hot-unplug")
-solved the straight forward CPU hotplug deadlock vs. the scheduler
-bandwidth timer. Yu discovered a more involved variant where a task which
-has a bandwidth timer started on the outgoing CPU holds a lock and then
-gets throttled. If the lock required by one of the CPU hotplug callbacks
-the hotplug operation deadlocks because the unthrottling timer event is not
-handled on the dying CPU and can only be recovered once the control CPU
-reaches the hotplug state which pulls the pending hrtimers from the dead
-CPU.
+There is nothing PCI specific (other than the RID - requester ID)
+in the of_map_rid() implementation, so the same function can be
+reused for input/output IDs mapping for other busses just as well.
 
-Solve this by pushing the hrtimers away from the dying CPU in the dying
-callbacks. Nothing can queue a hrtimer on the dying CPU at that point because
-all other CPUs spin in stop_machine() with interrupts disabled and once the
-operation is finished the CPU is marked offline.
+Rename the RID instances/names to a generic "id" tag.
 
-Reported-by: Yu Liao <liaoyu15@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Liu Tie <liutie4@huawei.com>
-Link: https://lore.kernel.org/r/87a5rphara.ffs@tglx
+No functionality change intended.
+
+Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: Joerg Roedel <jroedel@suse.de>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20200619082013.13661-7-lorenzo.pieralisi@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Stable-dep-of: d79972789d17 ("of: dynamic: Fix of_reconfig_get_state_change() return value documentation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cpuhotplug.h |  1 +
- include/linux/hrtimer.h    |  4 ++--
- kernel/cpu.c               |  8 +++++++-
- kernel/time/hrtimer.c      | 33 ++++++++++++---------------------
- 4 files changed, 22 insertions(+), 24 deletions(-)
+ drivers/iommu/of_iommu.c |  4 ++--
+ drivers/of/base.c        | 42 ++++++++++++++++++++--------------------
+ drivers/of/irq.c         |  2 +-
+ include/linux/of.h       |  4 ++--
+ 4 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index 8134cc3b99cdc..206d7ac411b88 100644
---- a/include/linux/cpuhotplug.h
-+++ b/include/linux/cpuhotplug.h
-@@ -141,6 +141,7 @@ enum cpuhp_state {
- 	CPUHP_AP_ARM_CORESIGHT_STARTING,
- 	CPUHP_AP_ARM64_ISNDEP_STARTING,
- 	CPUHP_AP_SMPCFD_DYING,
-+	CPUHP_AP_HRTIMERS_DYING,
- 	CPUHP_AP_X86_TBOOT_DYING,
- 	CPUHP_AP_ARM_CACHE_B15_RAC_DYING,
- 	CPUHP_AP_ONLINE,
-diff --git a/include/linux/hrtimer.h b/include/linux/hrtimer.h
-index 48be92aded5ee..16c68a7287bc4 100644
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -526,9 +526,9 @@ extern void sysrq_timer_list_show(void);
+diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
+index 614a93aa5305a..656939ed842e7 100644
+--- a/drivers/iommu/of_iommu.c
++++ b/drivers/iommu/of_iommu.c
+@@ -121,7 +121,7 @@ static int of_pci_iommu_init(struct pci_dev *pdev, u16 alias, void *data)
+ 	struct of_phandle_args iommu_spec = { .args_count = 1 };
+ 	int err;
  
- int hrtimers_prepare_cpu(unsigned int cpu);
- #ifdef CONFIG_HOTPLUG_CPU
--int hrtimers_dead_cpu(unsigned int cpu);
-+int hrtimers_cpu_dying(unsigned int cpu);
- #else
--#define hrtimers_dead_cpu	NULL
-+#define hrtimers_cpu_dying	NULL
- #endif
+-	err = of_map_rid(info->np, alias, "iommu-map", "iommu-map-mask",
++	err = of_map_id(info->np, alias, "iommu-map", "iommu-map-mask",
+ 			 &iommu_spec.np, iommu_spec.args);
+ 	if (err)
+ 		return err == -ENODEV ? NO_IOMMU : err;
+@@ -137,7 +137,7 @@ static int of_fsl_mc_iommu_init(struct fsl_mc_device *mc_dev,
+ 	struct of_phandle_args iommu_spec = { .args_count = 1 };
+ 	int err;
  
- #endif
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index c08456af0c7fe..ba579bb6b8978 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -1473,7 +1473,7 @@ static struct cpuhp_step cpuhp_hp_states[] = {
- 	[CPUHP_HRTIMERS_PREPARE] = {
- 		.name			= "hrtimers:prepare",
- 		.startup.single		= hrtimers_prepare_cpu,
--		.teardown.single	= hrtimers_dead_cpu,
-+		.teardown.single	= NULL,
- 	},
- 	[CPUHP_SMPCFD_PREPARE] = {
- 		.name			= "smpcfd:prepare",
-@@ -1540,6 +1540,12 @@ static struct cpuhp_step cpuhp_hp_states[] = {
- 		.startup.single		= NULL,
- 		.teardown.single	= smpcfd_dying_cpu,
- 	},
-+	[CPUHP_AP_HRTIMERS_DYING] = {
-+		.name			= "hrtimers:dying",
-+		.startup.single		= NULL,
-+		.teardown.single	= hrtimers_cpu_dying,
-+	},
-+
- 	/* Entry state on starting. Interrupts enabled from here on. Transient
- 	 * state for synchronsization */
- 	[CPUHP_AP_ONLINE] = {
-diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 8e3c9228aec97..e2a055e462551 100644
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2105,29 +2105,22 @@ static void migrate_hrtimer_list(struct hrtimer_clock_base *old_base,
- 	}
+-	err = of_map_rid(master_np, mc_dev->icid, "iommu-map",
++	err = of_map_id(master_np, mc_dev->icid, "iommu-map",
+ 			 "iommu-map-mask", &iommu_spec.np,
+ 			 iommu_spec.args);
+ 	if (err)
+diff --git a/drivers/of/base.c b/drivers/of/base.c
+index 3f13b982e8b53..5c97366628b13 100644
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -2280,15 +2280,15 @@ int of_find_last_cache_level(unsigned int cpu)
  }
  
--int hrtimers_dead_cpu(unsigned int scpu)
-+int hrtimers_cpu_dying(unsigned int dying_cpu)
+ /**
+- * of_map_rid - Translate a requester ID through a downstream mapping.
++ * of_map_id - Translate an ID through a downstream mapping.
+  * @np: root complex device node.
+- * @rid: device requester ID to map.
++ * @id: device ID to map.
+  * @map_name: property name of the map to use.
+  * @map_mask_name: optional property name of the mask to use.
+  * @target: optional pointer to a target device node.
+  * @id_out: optional pointer to receive the translated ID.
+  *
+- * Given a device requester ID, look up the appropriate implementation-defined
++ * Given a device ID, look up the appropriate implementation-defined
+  * platform ID and/or the target device which receives transactions on that
+  * ID, as per the "iommu-map" and "msi-map" bindings. Either of @target or
+  * @id_out may be NULL if only the other is required. If @target points to
+@@ -2298,11 +2298,11 @@ int of_find_last_cache_level(unsigned int cpu)
+  *
+  * Return: 0 on success or a standard error code on failure.
+  */
+-int of_map_rid(struct device_node *np, u32 rid,
++int of_map_id(struct device_node *np, u32 id,
+ 	       const char *map_name, const char *map_mask_name,
+ 	       struct device_node **target, u32 *id_out)
  {
- 	struct hrtimer_cpu_base *old_base, *new_base;
--	int i;
-+	int i, ncpu = cpumask_first(cpu_active_mask);
+-	u32 map_mask, masked_rid;
++	u32 map_mask, masked_id;
+ 	int map_len;
+ 	const __be32 *map = NULL;
  
--	BUG_ON(cpu_online(scpu));
--	tick_cancel_sched_timer(scpu);
-+	tick_cancel_sched_timer(dying_cpu);
-+
-+	old_base = this_cpu_ptr(&hrtimer_bases);
-+	new_base = &per_cpu(hrtimer_bases, ncpu);
+@@ -2314,7 +2314,7 @@ int of_map_rid(struct device_node *np, u32 rid,
+ 		if (target)
+ 			return -ENODEV;
+ 		/* Otherwise, no map implies no translation */
+-		*id_out = rid;
++		*id_out = id;
+ 		return 0;
+ 	}
  
--	/*
--	 * this BH disable ensures that raise_softirq_irqoff() does
--	 * not wakeup ksoftirqd (and acquire the pi-lock) while
--	 * holding the cpu_base lock
--	 */
--	local_bh_disable();
--	local_irq_disable();
--	old_base = &per_cpu(hrtimer_bases, scpu);
--	new_base = this_cpu_ptr(&hrtimer_bases);
- 	/*
- 	 * The caller is globally serialized and nobody else
- 	 * takes two locks at once, deadlock is not possible.
- 	 */
--	raw_spin_lock(&new_base->lock);
--	raw_spin_lock_nested(&old_base->lock, SINGLE_DEPTH_NESTING);
-+	raw_spin_lock(&old_base->lock);
-+	raw_spin_lock_nested(&new_base->lock, SINGLE_DEPTH_NESTING);
+@@ -2334,22 +2334,22 @@ int of_map_rid(struct device_node *np, u32 rid,
+ 	if (map_mask_name)
+ 		of_property_read_u32(np, map_mask_name, &map_mask);
  
- 	for (i = 0; i < HRTIMER_MAX_CLOCK_BASES; i++) {
- 		migrate_hrtimer_list(&old_base->clock_base[i],
-@@ -2138,15 +2131,13 @@ int hrtimers_dead_cpu(unsigned int scpu)
- 	 * The migration might have changed the first expiring softirq
- 	 * timer on this CPU. Update it.
- 	 */
--	hrtimer_update_softirq_timer(new_base, false);
-+	__hrtimer_get_next_event(new_base, HRTIMER_ACTIVE_SOFT);
-+	/* Tell the other CPU to retrigger the next event */
-+	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
+-	masked_rid = map_mask & rid;
++	masked_id = map_mask & id;
+ 	for ( ; map_len > 0; map_len -= 4 * sizeof(*map), map += 4) {
+ 		struct device_node *phandle_node;
+-		u32 rid_base = be32_to_cpup(map + 0);
++		u32 id_base = be32_to_cpup(map + 0);
+ 		u32 phandle = be32_to_cpup(map + 1);
+ 		u32 out_base = be32_to_cpup(map + 2);
+-		u32 rid_len = be32_to_cpup(map + 3);
++		u32 id_len = be32_to_cpup(map + 3);
  
--	raw_spin_unlock(&old_base->lock);
- 	raw_spin_unlock(&new_base->lock);
-+	raw_spin_unlock(&old_base->lock);
+-		if (rid_base & ~map_mask) {
+-			pr_err("%pOF: Invalid %s translation - %s-mask (0x%x) ignores rid-base (0x%x)\n",
++		if (id_base & ~map_mask) {
++			pr_err("%pOF: Invalid %s translation - %s-mask (0x%x) ignores id-base (0x%x)\n",
+ 				np, map_name, map_name,
+-				map_mask, rid_base);
++				map_mask, id_base);
+ 			return -EFAULT;
+ 		}
  
--	/* Check, if we got expired work to do */
--	__hrtimer_peek_ahead_timers();
--	local_irq_enable();
--	local_bh_enable();
+-		if (masked_rid < rid_base || masked_rid >= rid_base + rid_len)
++		if (masked_id < id_base || masked_id >= id_base + id_len)
+ 			continue;
+ 
+ 		phandle_node = of_find_node_by_phandle(phandle);
+@@ -2367,20 +2367,20 @@ int of_map_rid(struct device_node *np, u32 rid,
+ 		}
+ 
+ 		if (id_out)
+-			*id_out = masked_rid - rid_base + out_base;
++			*id_out = masked_id - id_base + out_base;
+ 
+-		pr_debug("%pOF: %s, using mask %08x, rid-base: %08x, out-base: %08x, length: %08x, rid: %08x -> %08x\n",
+-			np, map_name, map_mask, rid_base, out_base,
+-			rid_len, rid, masked_rid - rid_base + out_base);
++		pr_debug("%pOF: %s, using mask %08x, id-base: %08x, out-base: %08x, length: %08x, id: %08x -> %08x\n",
++			np, map_name, map_mask, id_base, out_base,
++			id_len, id, masked_id - id_base + out_base);
+ 		return 0;
+ 	}
+ 
+-	pr_info("%pOF: no %s translation for rid 0x%x on %pOF\n", np, map_name,
+-		rid, target && *target ? *target : NULL);
++	pr_info("%pOF: no %s translation for id 0x%x on %pOF\n", np, map_name,
++		id, target && *target ? *target : NULL);
+ 
+ 	/* Bypasses translation */
+ 	if (id_out)
+-		*id_out = rid;
++		*id_out = id;
  	return 0;
  }
+-EXPORT_SYMBOL_GPL(of_map_rid);
++EXPORT_SYMBOL_GPL(of_map_id);
+diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+index a296eaf52a5b2..d632bc5b3a2de 100644
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -587,7 +587,7 @@ static u32 __of_msi_map_rid(struct device *dev, struct device_node **np,
+ 	 * "msi-map" property.
+ 	 */
+ 	for (parent_dev = dev; parent_dev; parent_dev = parent_dev->parent)
+-		if (!of_map_rid(parent_dev->of_node, rid_in, "msi-map",
++		if (!of_map_id(parent_dev->of_node, rid_in, "msi-map",
+ 				"msi-map-mask", np, &rid_out))
+ 			break;
+ 	return rid_out;
+diff --git a/include/linux/of.h b/include/linux/of.h
+index e29b341598e99..e070c5ed62a09 100644
+--- a/include/linux/of.h
++++ b/include/linux/of.h
+@@ -554,7 +554,7 @@ bool of_console_check(struct device_node *dn, char *name, int index);
  
+ extern int of_cpu_node_to_id(struct device_node *np);
+ 
+-int of_map_rid(struct device_node *np, u32 rid,
++int of_map_id(struct device_node *np, u32 id,
+ 	       const char *map_name, const char *map_mask_name,
+ 	       struct device_node **target, u32 *id_out);
+ 
+@@ -978,7 +978,7 @@ static inline int of_cpu_node_to_id(struct device_node *np)
+ 	return -ENODEV;
+ }
+ 
+-static inline int of_map_rid(struct device_node *np, u32 rid,
++static inline int of_map_id(struct device_node *np, u32 id,
+ 			     const char *map_name, const char *map_mask_name,
+ 			     struct device_node **target, u32 *id_out)
+ {
 -- 
 2.42.0
 
