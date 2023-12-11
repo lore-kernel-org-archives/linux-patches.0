@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C0EFC06;
-	Mon, 11 Dec 2023 18:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF8DFC06;
+	Mon, 11 Dec 2023 18:33:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Kptb2X9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A41C433C7;
-	Mon, 11 Dec 2023 18:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dk/xw2M2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8177C433C7;
+	Mon, 11 Dec 2023 18:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319635;
-	bh=AKzVPYlgxOeDP/r2pcuSh1S3Mtbg97pt6JnWdjdMpAM=;
+	s=korg; t=1702319638;
+	bh=5PnVgIhtpX6qEq47F1gohtk55as6KO8WVBZYDNNT3FM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Kptb2X9PVWSJpQuiICgaQXtt91+GHtJkLoUL88i1GOMDNpIoWfwugkfo6EWuB7Gb
-	 MGU/OawwxfCJI9m4aiuZAL18wV54BYPM0ynNTLojeGSo/18Ed8VTr4t/roky9q+jJP
-	 ru+V8Sknjzluu3VMN0vwQzr+Z2MlO6NDtiY6wPC0=
+	b=Dk/xw2M2OYeFYcBhH0SeM9WWda7jr6ETILg4PZbl62vpOKpt70/lEo7Yv2+dnQYjX
+	 VQaC7+eZjx58iNEL1CuGDNOgaxHMNm/5/mA4cZ4hDzOC/g7eryCmKXzxD/xMezJRYn
+	 FmYQJhf5xxJ+2p/KnT7Hw/q1W5BpanSqVqfrPZfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eugen Hristev <eugen.hristev@collabora.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 6.6 179/244] arm64: dts: mediatek: mt7622: fix memory node warning check
-Date: Mon, 11 Dec 2023 19:21:12 +0100
-Message-ID: <20231211182053.968899384@linuxfoundation.org>
+Subject: [PATCH 6.6 180/244] arm64: dts: mediatek: mt8183-kukui-jacuzzi: fix dsi unnecessary cells properties
+Date: Mon, 11 Dec 2023 19:21:13 +0100
+Message-ID: <20231211182054.017160375@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,46 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Eugen Hristev <eugen.hristev@collabora.com>
 
-commit 8e6ecbfd44b5542a7598c1c5fc9c6dcb5d367f2a upstream.
+commit 74543b303a9abfe4fa253d1fa215281baa05ff3a upstream.
 
-dtbs_check throws a warning at the memory node:
-Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name
+dtbs_check throws a warning at the dsi node:
+Warning (avoid_unnecessary_addr_size): /soc/dsi@14014000: unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
 
-fix by adding the address into the node name.
+Other DTS have a panel child node with a reg, so the parent dtsi
+must have the address-cells and size-cells, however this specific DT
+has the panel removed, but not the cells, hence the warning above.
+
+If panel is deleted then the cells must also be deleted since they are
+tied together, as the child node in this DT does not have a reg.
 
 Cc: stable@vger.kernel.org
-Fixes: 0b6286dd96c0 ("arm64: dts: mt7622: add bananapi BPI-R64 board")
+Fixes: cabc71b08eb5 ("arm64: dts: mt8183: Add kukui-jacuzzi-damu board")
 Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230814065042.4973-1-eugen.hristev@collabora.com
+Link: https://lore.kernel.org/r/20230814071053.5459-1-eugen.hristev@collabora.com
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts |    2 +-
- arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts             |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-@@ -73,7 +73,7 @@
- 		};
- 	};
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
+@@ -91,6 +91,8 @@
  
--	memory {
-+	memory@40000000 {
- 		reg = <0 0x40000000 0 0x40000000>;
- 	};
- 
---- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-@@ -55,7 +55,7 @@
- 		};
- 	};
- 
--	memory {
-+	memory@40000000 {
- 		reg = <0 0x40000000 0 0x20000000>;
- 	};
- 
+ &dsi0 {
+ 	status = "okay";
++	/delete-property/#size-cells;
++	/delete-property/#address-cells;
+ 	/delete-node/panel@0;
+ 	ports {
+ 		port {
 
 
