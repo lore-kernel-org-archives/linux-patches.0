@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A81DFBE0;
-	Mon, 11 Dec 2023 18:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098B551C39;
+	Mon, 11 Dec 2023 18:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrG1OGGE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D663EC433C8;
-	Mon, 11 Dec 2023 18:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E29yFDCr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A82C433C8;
+	Mon, 11 Dec 2023 18:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319579;
-	bh=HeVcsTwKmIQT6fk95AxYAGpW88iMClirm1goAC5aAmk=;
+	s=korg; t=1702319581;
+	bh=9n8tiKmxTdJdfgAWFSRcAYpgzmlnw1x3cLGgDMCp14k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FrG1OGGE9mvMf3VurgaUcc/sVPvIr75OWOXxkaduPgn2iw0xBjlZyVyOvVGs5OV1D
-	 +HSOvp4KBxz5n0CUO8DVAz3TFFyXSuv5Kn+iIW9f2/jpxnbK9lX0QA/vPp+AFfo7br
-	 c7648gz1ZJl4/kDKVLJMs1ml/Tje8KY9oWOo+nUk=
+	b=E29yFDCrVCsXQILOnjrsU+ojsx+aCk4luBxereJmYFwgTEKITqT+QrbAhCPj83PPB
+	 SBHm46yAqyyCMyL6jmseN3N+AZMTsTTnNBflcuKOp+kcRJbyhqOqyJFNrBfJQ32ZWT
+	 ojfz+EhbKAoaAwwk6TwGtE/wAu8BnU4riUb4xFWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 157/244] tracing: Fix a possible race when disabling buffered events
-Date: Mon, 11 Dec 2023 19:20:50 +0100
-Message-ID: <20231211182052.880395809@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Lee Jones <lee@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 158/244] leds: trigger: netdev: fix RTNL handling to prevent potential deadlock
+Date: Mon, 11 Dec 2023 19:20:51 +0100
+Message-ID: <20231211182052.933257669@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,82 +43,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit c0591b1cccf708a47bc465c62436d669a4213323 upstream.
+commit fe2b1226656afae56702d1d84c6900f6b67df297 upstream.
 
-Function trace_buffered_event_disable() is responsible for freeing pages
-backing buffered events and this process can run concurrently with
-trace_event_buffer_lock_reserve().
+When working on LED support for r8169 I got the following lockdep
+warning. Easiest way to prevent this scenario seems to be to take
+the RTNL lock before the trigger_data lock in set_device_name().
 
-The following race is currently possible:
+======================================================
+WARNING: possible circular locking dependency detected
+6.7.0-rc2-next-20231124+ #2 Not tainted
+------------------------------------------------------
+bash/383 is trying to acquire lock:
+ffff888103aa1c68 (&trigger_data->lock){+.+.}-{3:3}, at: netdev_trig_notify+0xec/0x190 [ledtrig_netdev]
 
-* Function trace_buffered_event_disable() is called on CPU 0. It
-  increments trace_buffered_event_cnt on each CPU and waits via
-  synchronize_rcu() for each user of trace_buffered_event to complete.
+but task is already holding lock:
+ffffffff8cddf808 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_lock+0x12/0x20
 
-* After synchronize_rcu() is finished, function
-  trace_buffered_event_disable() has the exclusive access to
-  trace_buffered_event. All counters trace_buffered_event_cnt are at 1
-  and all pointers trace_buffered_event are still valid.
+which lock already depends on the new lock.
 
-* At this point, on a different CPU 1, the execution reaches
-  trace_event_buffer_lock_reserve(). The function calls
-  preempt_disable_notrace() and only now enters an RCU read-side
-  critical section. The function proceeds and reads a still valid
-  pointer from trace_buffered_event[CPU1] into the local variable
-  "entry". However, it doesn't yet read trace_buffered_event_cnt[CPU1]
-  which happens later.
+the existing dependency chain (in reverse order) is:
 
-* Function trace_buffered_event_disable() continues. It frees
-  trace_buffered_event[CPU1] and decrements
-  trace_buffered_event_cnt[CPU1] back to 0.
+-> #1 (rtnl_mutex){+.+.}-{3:3}:
+       __mutex_lock+0x9b/0xb50
+       mutex_lock_nested+0x16/0x20
+       rtnl_lock+0x12/0x20
+       set_device_name+0xa9/0x120 [ledtrig_netdev]
+       netdev_trig_activate+0x1a1/0x230 [ledtrig_netdev]
+       led_trigger_set+0x172/0x2c0
+       led_trigger_write+0xf1/0x140
+       sysfs_kf_bin_write+0x5d/0x80
+       kernfs_fop_write_iter+0x15d/0x210
+       vfs_write+0x1f0/0x510
+       ksys_write+0x6c/0xf0
+       __x64_sys_write+0x14/0x20
+       do_syscall_64+0x3f/0xf0
+       entry_SYSCALL_64_after_hwframe+0x6c/0x74
 
-* Function trace_event_buffer_lock_reserve() continues. It reads and
-  increments trace_buffered_event_cnt[CPU1] from 0 to 1. This makes it
-  believe that it can use the "entry" that it already obtained but the
-  pointer is now invalid and any access results in a use-after-free.
+-> #0 (&trigger_data->lock){+.+.}-{3:3}:
+       __lock_acquire+0x1459/0x25a0
+       lock_acquire+0xc8/0x2d0
+       __mutex_lock+0x9b/0xb50
+       mutex_lock_nested+0x16/0x20
+       netdev_trig_notify+0xec/0x190 [ledtrig_netdev]
+       call_netdevice_register_net_notifiers+0x5a/0x100
+       register_netdevice_notifier+0x85/0x120
+       netdev_trig_activate+0x1d4/0x230 [ledtrig_netdev]
+       led_trigger_set+0x172/0x2c0
+       led_trigger_write+0xf1/0x140
+       sysfs_kf_bin_write+0x5d/0x80
+       kernfs_fop_write_iter+0x15d/0x210
+       vfs_write+0x1f0/0x510
+       ksys_write+0x6c/0xf0
+       __x64_sys_write+0x14/0x20
+       do_syscall_64+0x3f/0xf0
+       entry_SYSCALL_64_after_hwframe+0x6c/0x74
 
-Fix the problem by making a second synchronize_rcu() call after all
-trace_buffered_event values are set to NULL. This waits on all potential
-users in trace_event_buffer_lock_reserve() that still read a previous
-pointer from trace_buffered_event.
+other info that might help us debug this:
 
-Link: https://lore.kernel.org/all/20231127151248.7232-2-petr.pavlu@suse.com/
-Link: https://lkml.kernel.org/r/20231205161736.19663-4-petr.pavlu@suse.com
+ Possible unsafe locking scenario:
 
+       CPU0                    CPU1
+       ----                    ----
+  lock(rtnl_mutex);
+                               lock(&trigger_data->lock);
+                               lock(rtnl_mutex);
+  lock(&trigger_data->lock);
+
+ *** DEADLOCK ***
+
+8 locks held by bash/383:
+ #0: ffff888103ff33f0 (sb_writers#3){.+.+}-{0:0}, at: ksys_write+0x6c/0xf0
+ #1: ffff888103aa1e88 (&of->mutex){+.+.}-{3:3}, at: kernfs_fop_write_iter+0x114/0x210
+ #2: ffff8881036f1890 (kn->active#82){.+.+}-{0:0}, at: kernfs_fop_write_iter+0x11d/0x210
+ #3: ffff888108e2c358 (&led_cdev->led_access){+.+.}-{3:3}, at: led_trigger_write+0x30/0x140
+ #4: ffffffff8cdd9e10 (triggers_list_lock){++++}-{3:3}, at: led_trigger_write+0x75/0x140
+ #5: ffff888108e2c270 (&led_cdev->trigger_lock){++++}-{3:3}, at: led_trigger_write+0xe3/0x140
+ #6: ffffffff8cdde3d0 (pernet_ops_rwsem){++++}-{3:3}, at: register_netdevice_notifier+0x1c/0x120
+ #7: ffffffff8cddf808 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_lock+0x12/0x20
+
+stack backtrace:
+CPU: 0 PID: 383 Comm: bash Not tainted 6.7.0-rc2-next-20231124+ #2
+Hardware name: Default string Default string/Default string, BIOS ADLN.M6.SODIMM.ZB.CY.015 08/08/2023
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x5c/0xd0
+ dump_stack+0x10/0x20
+ print_circular_bug+0x2dd/0x410
+ check_noncircular+0x131/0x150
+ __lock_acquire+0x1459/0x25a0
+ lock_acquire+0xc8/0x2d0
+ ? netdev_trig_notify+0xec/0x190 [ledtrig_netdev]
+ __mutex_lock+0x9b/0xb50
+ ? netdev_trig_notify+0xec/0x190 [ledtrig_netdev]
+ ? __this_cpu_preempt_check+0x13/0x20
+ ? netdev_trig_notify+0xec/0x190 [ledtrig_netdev]
+ ? __cancel_work_timer+0x11c/0x1b0
+ ? __mutex_lock+0x123/0xb50
+ mutex_lock_nested+0x16/0x20
+ ? mutex_lock_nested+0x16/0x20
+ netdev_trig_notify+0xec/0x190 [ledtrig_netdev]
+ call_netdevice_register_net_notifiers+0x5a/0x100
+ register_netdevice_notifier+0x85/0x120
+ netdev_trig_activate+0x1d4/0x230 [ledtrig_netdev]
+ led_trigger_set+0x172/0x2c0
+ ? preempt_count_add+0x49/0xc0
+ led_trigger_write+0xf1/0x140
+ sysfs_kf_bin_write+0x5d/0x80
+ kernfs_fop_write_iter+0x15d/0x210
+ vfs_write+0x1f0/0x510
+ ksys_write+0x6c/0xf0
+ __x64_sys_write+0x14/0x20
+ do_syscall_64+0x3f/0xf0
+ entry_SYSCALL_64_after_hwframe+0x6c/0x74
+RIP: 0033:0x7f269055d034
+Code: c7 00 16 00 00 00 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 80 3d 35 c3 0d 00 00 74 13 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 54 c3 0f 1f 00 48 83 ec 28 48 89 54 24 18 48
+RSP: 002b:00007ffddb7ef748 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000000000000007 RCX: 00007f269055d034
+RDX: 0000000000000007 RSI: 000055bf5f4af3c0 RDI: 0000000000000001
+RBP: 000055bf5f4af3c0 R08: 0000000000000073 R09: 0000000000000001
+R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000007
+R13: 00007f26906325c0 R14: 00007f269062ff20 R15: 0000000000000000
+ </TASK>
+
+Fixes: d5e01266e7f5 ("leds: trigger: netdev: add additional specific link speed mode")
 Cc: stable@vger.kernel.org
-Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/fb5c8294-2a10-4bf5-8f10-3d2b77d2757e@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/leds/trigger/ledtrig-netdev.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -2790,13 +2790,17 @@ void trace_buffered_event_disable(void)
- 		free_page((unsigned long)per_cpu(trace_buffered_event, cpu));
- 		per_cpu(trace_buffered_event, cpu) = NULL;
- 	}
-+
- 	/*
--	 * Make sure trace_buffered_event is NULL before clearing
--	 * trace_buffered_event_cnt.
-+	 * Wait for all CPUs that potentially started checking if they can use
-+	 * their event buffer only after the previous synchronize_rcu() call and
-+	 * they still read a valid pointer from trace_buffered_event. It must be
-+	 * ensured they don't see cleared trace_buffered_event_cnt else they
-+	 * could wrongly decide to use the pointed-to buffer which is now freed.
- 	 */
--	smp_wmb();
-+	synchronize_rcu();
+diff --git a/drivers/leds/trigger/ledtrig-netdev.c b/drivers/leds/trigger/ledtrig-netdev.c
+index e358e77e4b38..d76214fa9ad8 100644
+--- a/drivers/leds/trigger/ledtrig-netdev.c
++++ b/drivers/leds/trigger/ledtrig-netdev.c
+@@ -226,6 +226,11 @@ static int set_device_name(struct led_netdev_data *trigger_data,
  
--	/* Do the work on each cpu */
-+	/* For each CPU, relinquish the buffer */
- 	on_each_cpu_mask(tracing_buffer_mask, enable_trace_buffered_event, NULL,
- 			 true);
+ 	cancel_delayed_work_sync(&trigger_data->work);
+ 
++	/*
++	 * Take RTNL lock before trigger_data lock to prevent potential
++	 * deadlock with netdev notifier registration.
++	 */
++	rtnl_lock();
+ 	mutex_lock(&trigger_data->lock);
+ 
+ 	if (trigger_data->net_dev) {
+@@ -245,16 +250,14 @@ static int set_device_name(struct led_netdev_data *trigger_data,
+ 	trigger_data->carrier_link_up = false;
+ 	trigger_data->link_speed = SPEED_UNKNOWN;
+ 	trigger_data->duplex = DUPLEX_UNKNOWN;
+-	if (trigger_data->net_dev != NULL) {
+-		rtnl_lock();
++	if (trigger_data->net_dev)
+ 		get_device_state(trigger_data);
+-		rtnl_unlock();
+-	}
+ 
+ 	trigger_data->last_activity = 0;
+ 
+ 	set_baseline_state(trigger_data);
+ 	mutex_unlock(&trigger_data->lock);
++	rtnl_unlock();
+ 
+ 	return 0;
  }
+-- 
+2.43.0
+
 
 
