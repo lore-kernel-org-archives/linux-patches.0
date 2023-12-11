@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FD6FC06;
-	Mon, 11 Dec 2023 18:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6520DFC06;
+	Mon, 11 Dec 2023 18:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh0dx6Ro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8E6C433C8;
-	Mon, 11 Dec 2023 18:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rO6NWUma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3ABC433C8;
+	Mon, 11 Dec 2023 18:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320041;
-	bh=f5I3w+Z2Pj85YjZcGfJq+sVz5l6ZP5AQHlOWPZOR8n8=;
+	s=korg; t=1702320044;
+	bh=L4FnMn1QSf9lVRaeHHiF1aXTitz+EMgUW1fI/sdzQpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fh0dx6RoWMENZjERX+Z53eyq/51ANP1iULW73klUrqb7N48b8zl+Pz1ohooRJ+7un
-	 7zrXUwyH4D1p1EUtUfoHbFpYq+HcApaECpItJjpxOYMEu8OcrEWJLHmcukLVT57Z8F
-	 Ot01MTOHowz2qOF4Wfwk1lks9Gt4hLLsDiR6jo70=
+	b=rO6NWUma4Ex+JAd8aYtf9GTpGpITHZoeX77eATlKpgHwAZrpIuFJywQS3R250WeOt
+	 OEJhL5JRh1wef0WTAzSd32IOXLmg0Auib0kdW8YHPGwyqhoQwr6vkp/ktEPGsg6bEe
+	 PsNYLDxcmEHZUxnwzWKBbrRV0TPmOW25M/MlOsJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.10 81/97] MIPS: Loongson64: Enable DMA noncoherent support
-Date: Mon, 11 Dec 2023 19:22:24 +0100
-Message-ID: <20231211182023.277870337@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 5.10 82/97] io_uring/af_unix: disable sending io_uring over sockets
+Date: Mon, 11 Dec 2023 19:22:25 +0100
+Message-ID: <20231211182023.320090340@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -41,87 +42,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit edc0378eee00200a5bedf1bb9f00ad390e0d1bd4 upstream.
+commit 705318a99a138c29a512a72c3e0043b3cd7f55f4 upstream.
 
-There are some Loongson64 systems come with broken coherent DMA
-support, firmware will set a bit in boot_param and pass nocoherentio
-in cmdline.
+File reference cycles have caused lots of problems for io_uring
+in the past, and it still doesn't work exactly right and races with
+unix_stream_read_generic(). The safest fix would be to completely
+disallow sending io_uring files via sockets via SCM_RIGHT, so there
+are no possible cycles invloving registered files and thus rendering
+SCM accounting on the io_uring side unnecessary.
 
-However nonconherent support was missed out when spin off Loongson-2EF
-form Loongson64, and that boot_param change never made itself into
-upstream.
-
-Support DMA noncoherent properly to get those systems working.
-
-Cc: stable@vger.kernel.org
-Fixes: 71e2f4dd5a65 ("MIPS: Fork loongson2ef from loongson64")
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc:  <stable@vger.kernel.org>
+Fixes: 0091bfc81741b ("io_uring/af_unix: defer registered files gc to io_uring release")
+Reported-and-suggested-by: Jann Horn <jannh@google.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/c716c88321939156909cfa1bd8b0faaf1c804103.1701868795.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/Kconfig                                  |    2 ++
- arch/mips/include/asm/mach-loongson64/boot_param.h |    3 ++-
- arch/mips/loongson64/env.c                         |   10 +++++++++-
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |   55 ----------------------------------------------------
+ net/core/scm.c      |    6 +++++
+ 2 files changed, 6 insertions(+), 55 deletions(-)
 
---- a/arch/mips/Kconfig
-+++ b/arch/mips/Kconfig
-@@ -468,6 +468,7 @@ config MACH_LOONGSON2EF
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -8452,49 +8452,6 @@ out_free:
+ 	return ret;
+ }
  
- config MACH_LOONGSON64
- 	bool "Loongson 64-bit family of machines"
-+	select ARCH_DMA_DEFAULT_COHERENT
- 	select ARCH_SPARSEMEM_ENABLE
- 	select ARCH_MIGHT_HAVE_PC_PARPORT
- 	select ARCH_MIGHT_HAVE_PC_SERIO
-@@ -1379,6 +1380,7 @@ config CPU_LOONGSON64
- 	select CPU_SUPPORTS_MSA
- 	select CPU_DIEI_BROKEN if !LOONGSON3_ENHANCEMENT
- 	select CPU_MIPSR2_IRQ_VI
-+	select DMA_NONCOHERENT
- 	select WEAK_ORDERING
- 	select WEAK_REORDERING_BEYOND_LLSC
- 	select MIPS_ASID_BITS_VARIABLE
---- a/arch/mips/include/asm/mach-loongson64/boot_param.h
-+++ b/arch/mips/include/asm/mach-loongson64/boot_param.h
-@@ -117,7 +117,8 @@ struct irq_source_routing_table {
- 	u64 pci_io_start_addr;
- 	u64 pci_io_end_addr;
- 	u64 pci_config_addr;
--	u32 dma_mask_bits;
-+	u16 dma_mask_bits;
-+	u16 dma_noncoherent;
- } __packed;
+-static int io_sqe_file_register(struct io_ring_ctx *ctx, struct file *file,
+-				int index)
+-{
+-#if defined(CONFIG_UNIX)
+-	struct sock *sock = ctx->ring_sock->sk;
+-	struct sk_buff_head *head = &sock->sk_receive_queue;
+-	struct sk_buff *skb;
+-
+-	/*
+-	 * See if we can merge this file into an existing skb SCM_RIGHTS
+-	 * file set. If there's no room, fall back to allocating a new skb
+-	 * and filling it in.
+-	 */
+-	spin_lock_irq(&head->lock);
+-	skb = skb_peek(head);
+-	if (skb) {
+-		struct scm_fp_list *fpl = UNIXCB(skb).fp;
+-
+-		if (fpl->count < SCM_MAX_FD) {
+-			__skb_unlink(skb, head);
+-			spin_unlock_irq(&head->lock);
+-			fpl->fp[fpl->count] = get_file(file);
+-			unix_inflight(fpl->user, fpl->fp[fpl->count]);
+-			fpl->count++;
+-			spin_lock_irq(&head->lock);
+-			__skb_queue_head(head, skb);
+-		} else {
+-			skb = NULL;
+-		}
+-	}
+-	spin_unlock_irq(&head->lock);
+-
+-	if (skb) {
+-		fput(file);
+-		return 0;
+-	}
+-
+-	return __io_sqe_files_scm(ctx, 1, index);
+-#else
+-	return 0;
+-#endif
+-}
+-
+ static int io_queue_rsrc_removal(struct io_rsrc_data *data, unsigned idx,
+ 				 struct io_rsrc_node *node, void *rsrc)
+ {
+@@ -8552,12 +8509,6 @@ static int io_install_fixed_file(struct
  
- struct interface_info {
---- a/arch/mips/loongson64/env.c
-+++ b/arch/mips/loongson64/env.c
-@@ -13,6 +13,8 @@
-  * Copyright (C) 2009 Lemote Inc.
-  * Author: Wu Zhangjin, wuzhangjin@gmail.com
-  */
-+
-+#include <linux/dma-map-ops.h>
- #include <linux/export.h>
- #include <linux/pci_ids.h>
- #include <asm/bootinfo.h>
-@@ -131,8 +133,14 @@ void __init prom_init_env(void)
- 	loongson_sysconf.pci_io_base = eirq_source->pci_io_start_addr;
- 	loongson_sysconf.dma_mask_bits = eirq_source->dma_mask_bits;
- 	if (loongson_sysconf.dma_mask_bits < 32 ||
--		loongson_sysconf.dma_mask_bits > 64)
-+			loongson_sysconf.dma_mask_bits > 64) {
- 		loongson_sysconf.dma_mask_bits = 32;
-+		dma_default_coherent = true;
-+	} else {
-+		dma_default_coherent = !eirq_source->dma_noncoherent;
-+	}
-+
-+	pr_info("Firmware: Coherent DMA: %s\n", dma_default_coherent ? "on" : "off");
+ 	*io_get_tag_slot(ctx->file_data, slot_index) = 0;
+ 	io_fixed_file_set(file_slot, file);
+-	ret = io_sqe_file_register(ctx, file, slot_index);
+-	if (ret) {
+-		file_slot->file_ptr = 0;
+-		goto err;
+-	}
+-
+ 	ret = 0;
+ err:
+ 	if (needs_switch)
+@@ -8671,12 +8622,6 @@ static int __io_sqe_files_update(struct
+ 			}
+ 			*io_get_tag_slot(data, i) = tag;
+ 			io_fixed_file_set(file_slot, file);
+-			err = io_sqe_file_register(ctx, file, i);
+-			if (err) {
+-				file_slot->file_ptr = 0;
+-				fput(file);
+-				break;
+-			}
+ 		}
+ 	}
  
- 	loongson_sysconf.restart_addr = boot_p->reset_system.ResetWarm;
- 	loongson_sysconf.poweroff_addr = boot_p->reset_system.Shutdown;
+--- a/net/core/scm.c
++++ b/net/core/scm.c
+@@ -26,6 +26,7 @@
+ #include <linux/nsproxy.h>
+ #include <linux/slab.h>
+ #include <linux/errqueue.h>
++#include <linux/io_uring.h>
+ 
+ #include <linux/uaccess.h>
+ 
+@@ -103,6 +104,11 @@ static int scm_fp_copy(struct cmsghdr *c
+ 
+ 		if (fd < 0 || !(file = fget_raw(fd)))
+ 			return -EBADF;
++		/* don't allow io_uring files */
++		if (io_uring_get_socket(file)) {
++			fput(file);
++			return -EINVAL;
++		}
+ 		*fpp++ = file;
+ 		fpl->count++;
+ 	}
 
 
