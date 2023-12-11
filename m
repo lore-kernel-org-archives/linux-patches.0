@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B3AFBE0;
-	Mon, 11 Dec 2023 18:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E41FBE0;
+	Mon, 11 Dec 2023 18:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+efys7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEAE1C433CC;
-	Mon, 11 Dec 2023 18:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecz8vQci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AAFC433CB;
+	Mon, 11 Dec 2023 18:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319679;
-	bh=LhMD8eeS8TWSGObLHV3Gswfmd9kXx72MlyIYNKFMVNg=;
+	s=korg; t=1702319681;
+	bh=sanb910JaUr6BiSCVWs+wRokJUQRJ96KLFaCw8Wp1bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+efys7GFuv5X3OvVD+Ia3ELMXukKXKaGInIsZ8MdllV1xFgVaBS29d02aTpoe5nJ
-	 +z2+iAlaEtC8UTaUsnqp3oijXyniOSO1BYoRbTE4/bJMRpHsCJ6R85ZslaQY5lJs7f
-	 BZLn0HmC7gQN1My3yVLWB1KbKJ1+p+JCD5rh9dGI=
+	b=ecz8vQciSKDGTE0h1cyAWJ59hlPXuZEk+PMp69oA3bxNZl4qObJ+JkTeKLVhNn5rL
+	 zaXFXC0PBaUT8EJ7dSb9PlSrxyqCW/vK/jmLea31trMZUFZJObYeFXwKJ/aRCRQk6n
+	 X8JqudEzCEgnXw11a5pHAnz09TxWv8dQYnEdW4kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Su Hui <suhui@nfschina.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/244] coresight: ultrasoc-smb: Fix uninitialized before use buf_hw_base
-Date: Mon, 11 Dec 2023 19:21:27 +0100
-Message-ID: <20231211182054.631990164@linuxfoundation.org>
+Subject: [PATCH 6.6 195/244] misc: mei: client.c: return negative error code in mei_cl_write
+Date: Mon, 11 Dec 2023 19:21:28 +0100
+Message-ID: <20231211182054.681701265@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,45 +41,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 862c135bde8bc185e8aae2110374175e6a1b6ed5 ]
+[ Upstream commit 8f06aee8089cf42fd99a20184501bd1347ce61b9 ]
 
-In smb_reset_buffer, the sdb->buf_hw_base variable is uninitialized
-before use, which initializes it in smb_init_data_buffer. And the SMB
-regiester are set in smb_config_inport.
-So move the call after smb_config_inport.
+mei_msg_hdr_init() return negative error code, rets should be
+'PTR_ERR(mei_hdr)' rather than '-PTR_ERR(mei_hdr)'.
 
-Fixes: 06f5c2926aaa ("drivers/coresight: Add UltraSoc System Memory Buffer driver")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20231114133346.30489-4-hejunhao3@huawei.com
+Fixes: 0cd7c01a60f8 ("mei: add support for mei extended header.")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20231120095523.178385-1-suhui@nfschina.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/ultrasoc-smb.c | 2 +-
+ drivers/misc/mei/client.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/ultrasoc-smb.c b/drivers/hwtracing/coresight/ultrasoc-smb.c
-index 2f2aba90a5148..6e32d31a95fe0 100644
---- a/drivers/hwtracing/coresight/ultrasoc-smb.c
-+++ b/drivers/hwtracing/coresight/ultrasoc-smb.c
-@@ -477,7 +477,6 @@ static int smb_init_data_buffer(struct platform_device *pdev,
- static void smb_init_hw(struct smb_drv_data *drvdata)
- {
- 	smb_disable_hw(drvdata);
--	smb_reset_buffer(drvdata);
+diff --git a/drivers/misc/mei/client.c b/drivers/misc/mei/client.c
+index 5c19097266fe0..75bc2a32ec0d7 100644
+--- a/drivers/misc/mei/client.c
++++ b/drivers/misc/mei/client.c
+@@ -2011,7 +2011,7 @@ ssize_t mei_cl_write(struct mei_cl *cl, struct mei_cl_cb *cb, unsigned long time
  
- 	writel(SMB_LB_CFG_LO_DEFAULT, drvdata->base + SMB_LB_CFG_LO_REG);
- 	writel(SMB_LB_CFG_HI_DEFAULT, drvdata->base + SMB_LB_CFG_HI_REG);
-@@ -587,6 +586,7 @@ static int smb_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
-+	smb_reset_buffer(drvdata);
- 	platform_set_drvdata(pdev, drvdata);
- 	spin_lock_init(&drvdata->spinlock);
- 	drvdata->pid = -1;
+ 	mei_hdr = mei_msg_hdr_init(cb);
+ 	if (IS_ERR(mei_hdr)) {
+-		rets = -PTR_ERR(mei_hdr);
++		rets = PTR_ERR(mei_hdr);
+ 		mei_hdr = NULL;
+ 		goto err;
+ 	}
 -- 
 2.42.0
 
