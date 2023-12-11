@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B092C4F212;
-	Mon, 11 Dec 2023 18:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D6F4F212;
+	Mon, 11 Dec 2023 18:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZmVjJ2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D5DC433C8;
-	Mon, 11 Dec 2023 18:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEkMz6e4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BBCC433C8;
+	Mon, 11 Dec 2023 18:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319113;
-	bh=4lKra4jQp5ko7EPXD/Q931Jf3RMYx5uUsaKPKzhbeWo=;
+	s=korg; t=1702319116;
+	bh=wNTQzeasTywsUCNrCQAboPHw/CAHAVDmfdQxqELLIq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AZmVjJ2yOON3cLP9NPwBVj9SiyFsrveZE5QC2Z2I0PGOSkrzt+w0Ok70f7ChD4hug
-	 jzzyBcuc/qZ4hjWTrEb3h/VK4s9a9CrrS4RRJV2CKckLoHfmzjfXs+6HriFesAo1FE
-	 13g95RrvfvmsXlhChtO3EpNIFPcxcVG5M3AX4Hvo=
+	b=QEkMz6e4fbHXOi09q4qadkfb9rtzVVVuMCE3i4jdzgwmg/qYsBGhPiM5ZeVQKXf58
+	 Pmz7Y7KMwtD6KDxMcdVlNJn6pKMu68xR/Red//5ZJXZhv0P5eOwpiUgK1COpmkcN39
+	 +5RcxQImXWMCS2K7rtdZvVZJ7QmD/s8k+GbV6Tss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 25/55] tracing: Fix a warning when allocating buffered events fails
-Date: Mon, 11 Dec 2023 19:21:35 +0100
-Message-ID: <20231211182013.134512535@linuxfoundation.org>
+	Daniel Mack <daniel@zonque.org>,
+	Maxim Popov <maxim.snafu@gmail.com>
+Subject: [PATCH 4.19 43/55] serial: sc16is7xx: address RX timeout interrupt errata
+Date: Mon, 11 Dec 2023 19:21:53 +0100
+Message-ID: <20231211182013.840137655@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -42,83 +41,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Daniel Mack <daniel@zonque.org>
 
-[ Upstream commit 34209fe83ef8404353f91ab4ea4035dbc9922d04 ]
+commit 08ce9a1b72e38cf44c300a44ac5858533eb3c860 upstream.
 
-Function trace_buffered_event_disable() produces an unexpected warning
-when the previous call to trace_buffered_event_enable() fails to
-allocate pages for buffered events.
+This device has a silicon bug that makes it report a timeout interrupt
+but no data in the FIFO.
 
-The situation can occur as follows:
+The datasheet states the following in the errata section 18.1.4:
 
-* The counter trace_buffered_event_ref is at 0.
+  "If the host reads the receive FIFO at the same time as a
+  time-out interrupt condition happens, the host might read 0xCC
+  (time-out) in the Interrupt Indication Register (IIR), but bit 0
+  of the Line Status Register (LSR) is not set (means there is no
+  data in the receive FIFO)."
 
-* The soft mode gets enabled for some event and
-  trace_buffered_event_enable() is called. The function increments
-  trace_buffered_event_ref to 1 and starts allocating event pages.
+The errata description seems to indicate it concerns only polled mode of
+operation when reading bit 0 of the LSR register. However, tests have
+shown and NXP has confirmed that the RXLVL register also yields 0 when
+the bug is triggered, and hence the IRQ driven implementation in this
+driver is equally affected.
 
-* The allocation fails for some page and trace_buffered_event_disable()
-  is called for cleanup.
+This bug has hit us on production units and when it does, sc16is7xx_irq()
+would spin forever because sc16is7xx_port_irq() keeps seeing an
+interrupt in the IIR register that is not cleared because the driver
+does not call into sc16is7xx_handle_rx() unless the RXLVL register
+reports at least one byte in the FIFO.
 
-* Function trace_buffered_event_disable() decrements
-  trace_buffered_event_ref back to 0, recognizes that it was the last
-  use of buffered events and frees all allocated pages.
+Fix this by always reading one byte from the FIFO when this condition
+is detected in order to clear the interrupt. This approach was
+confirmed to be correct by NXP through their support channels.
 
-* The control goes back to trace_buffered_event_enable() which returns.
-  The caller of trace_buffered_event_enable() has no information that
-  the function actually failed.
+Tested by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-* Some time later, the soft mode is disabled for the same event.
-  Function trace_buffered_event_disable() is called. It warns on
-  "WARN_ON_ONCE(!trace_buffered_event_ref)" and returns.
-
-Buffered events are just an optimization and can handle failures. Make
-trace_buffered_event_enable() exit on the first failure and left any
-cleanup later to when trace_buffered_event_disable() is called.
-
-Link: https://lore.kernel.org/all/20231127151248.7232-2-petr.pavlu@suse.com/
-Link: https://lkml.kernel.org/r/20231205161736.19663-3-petr.pavlu@suse.com
-
-Fixes: 0fc1b09ff1ff ("tracing: Use temp buffer when filtering events")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Daniel Mack <daniel@zonque.org>
+Co-Developed-by: Maxim Popov <maxim.snafu@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231123072818.1394539-1-daniel@zonque.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index f44c8f1fd3ec5..a6d84349bcc48 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -2209,8 +2209,11 @@ void trace_buffered_event_enable(void)
- 	for_each_tracing_cpu(cpu) {
- 		page = alloc_pages_node(cpu_to_node(cpu),
- 					GFP_KERNEL | __GFP_NORETRY, 0);
--		if (!page)
--			goto failed;
-+		/* This is just an optimization and can handle failures */
-+		if (!page) {
-+			pr_err("Failed to allocate event buffer\n");
-+			break;
-+		}
- 
- 		event = page_address(page);
- 		memset(event, 0, sizeof(*event));
-@@ -2224,10 +2227,6 @@ void trace_buffered_event_enable(void)
- 			WARN_ON_ONCE(1);
- 		preempt_enable();
- 	}
--
--	return;
-- failed:
--	trace_buffered_event_disable();
- }
- 
- static void enable_trace_buffered_event(void *data)
--- 
-2.42.0
-
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -694,6 +694,18 @@ static bool sc16is7xx_port_irq(struct sc
+ 		case SC16IS7XX_IIR_RTOI_SRC:
+ 		case SC16IS7XX_IIR_XOFFI_SRC:
+ 			rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
++
++			/*
++			 * There is a silicon bug that makes the chip report a
++			 * time-out interrupt but no data in the FIFO. This is
++			 * described in errata section 18.1.4.
++			 *
++			 * When this happens, read one byte from the FIFO to
++			 * clear the interrupt.
++			 */
++			if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
++				rxlen = 1;
++
+ 			if (rxlen)
+ 				sc16is7xx_handle_rx(port, rxlen, iir);
+ 			break;
 
 
