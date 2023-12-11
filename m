@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B83F321B8;
-	Mon, 11 Dec 2023 18:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A95E548;
+	Mon, 11 Dec 2023 18:58:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19G+vveh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14A4C433C8;
-	Mon, 11 Dec 2023 18:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNT76YXt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F7DC433C8;
+	Mon, 11 Dec 2023 18:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321089;
-	bh=TRP6M+HnC1osYzuU0GUng75RXD0M68GpOIE+Tq+MGhE=;
+	s=korg; t=1702321091;
+	bh=o4wuwDeDGJZ3HEXeVWHA+VNUFbX3EXIErUpmVj9MUTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19G+vvehsMTaQWg6i413w5v0swvHlmQtHwsXLhKyNc9fkQHS8cL9ZiiI+neUMTGis
-	 SlaMz7vXP60YmMAwmX/u1+3qGjvkp8fnPbN8Lo1y32vy7sBX+hY6UgOiUPOAmWRVkO
-	 fqaLVq0EeaUbBe5h0iN+fsh5Brtwv6swtvOn4lck=
+	b=NNT76YXtot7M7eByBEf8zNMTMHSi/9DereYMUb8yvvjyG9ODKyDewoHWxif4L+7d2
+	 QBE02uND1sVUy1++O7kOdmL13LV1YEzwKh+xWGaFUeDfpCfWsAqnFAQdHKCcOZsory
+	 oqaiTQT86IfbDhX9u3kzmEJfzTgway276QJT4Ffw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	=?UTF-8?q?Jos=C3=A9=20Pekkarinen?= <jose.pekkarinen@foxhound.fi>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+89edd67979b52675ddec@syzkaller.appspotmail.com,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Jann Horn <jannh@google.com>
-Subject: [PATCH 5.15 106/141] mm: fix oops when filemap_map_pmd() without prealloc_pte
-Date: Mon, 11 Dec 2023 19:22:45 +0100
-Message-ID: <20231211182031.140194721@linuxfoundation.org>
+Subject: [PATCH 5.15 107/141] io_uring/af_unix: disable sending io_uring over sockets
+Date: Mon, 11 Dec 2023 19:22:46 +0100
+Message-ID: <20231211182031.183041859@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,67 +36,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 9aa1345d66b8132745ffb99b348b1492088da9e2 upstream.
+commit 705318a99a138c29a512a72c3e0043b3cd7f55f4 upstream.
 
-syzbot reports oops in lockdep's __lock_acquire(), called from
-__pte_offset_map_lock() called from filemap_map_pages(); or when I run the
-repro, the oops comes in pmd_install(), called from filemap_map_pmd()
-called from filemap_map_pages(), just before the __pte_offset_map_lock().
+File reference cycles have caused lots of problems for io_uring
+in the past, and it still doesn't work exactly right and races with
+unix_stream_read_generic(). The safest fix would be to completely
+disallow sending io_uring files via sockets via SCM_RIGHT, so there
+are no possible cycles invloving registered files and thus rendering
+SCM accounting on the io_uring side unnecessary.
 
-The problem is that filemap_map_pmd() has been assuming that when it finds
-pmd_none(), a page table has already been prepared in prealloc_pte; and
-indeed do_fault_around() has been careful to preallocate one there, when
-it finds pmd_none(): but what if *pmd became none in between?
-
-My 6.6 mods in mm/khugepaged.c, avoiding mmap_lock for write, have made it
-easy for *pmd to be cleared while servicing a page fault; but even before
-those, a huge *pmd might be zapped while a fault is serviced.
-
-The difference in symptomatic stack traces comes from the "memory model"
-in use: pmd_install() uses pmd_populate() uses page_to_pfn(): in some
-models that is strict, and will oops on the NULL prealloc_pte; in other
-models, it will construct a bogus value to be populated into *pmd, then
-__pte_offset_map_lock() oops when trying to access split ptlock pointer
-(or some other symptom in normal case of ptlock embedded not pointer).
-
-Link: https://lore.kernel.org/linux-mm/20231115065506.19780-1-jose.pekkarinen@foxhound.fi/
-Link: https://lkml.kernel.org/r/6ed0c50c-78ef-0719-b3c5-60c0c010431c@google.com
-Fixes: f9ce0be71d1f ("mm: Cleanup faultaround and finish_fault() codepaths")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Reported-and-tested-by: syzbot+89edd67979b52675ddec@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-mm/0000000000005e44550608a0806c@google.com/
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: Jann Horn <jannh@google.com>,
-Cc: José Pekkarinen <jose.pekkarinen@foxhound.fi>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>    [5.12+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Hugh Dickins <hughd@google.com>
+Cc:  <stable@vger.kernel.org>
+Fixes: 0091bfc81741b ("io_uring/af_unix: defer registered files gc to io_uring release")
+Reported-and-suggested-by: Jann Horn <jannh@google.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/c716c88321939156909cfa1bd8b0faaf1c804103.1701868795.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c |   55 ----------------------------------------------------
+ net/core/scm.c      |    6 +++++
+ 2 files changed, 6 insertions(+), 55 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3209,7 +3209,7 @@ static bool filemap_map_pmd(struct vm_fa
- 	    }
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -8627,49 +8627,6 @@ out_free:
+ 	return ret;
+ }
+ 
+-static int io_sqe_file_register(struct io_ring_ctx *ctx, struct file *file,
+-				int index)
+-{
+-#if defined(CONFIG_UNIX)
+-	struct sock *sock = ctx->ring_sock->sk;
+-	struct sk_buff_head *head = &sock->sk_receive_queue;
+-	struct sk_buff *skb;
+-
+-	/*
+-	 * See if we can merge this file into an existing skb SCM_RIGHTS
+-	 * file set. If there's no room, fall back to allocating a new skb
+-	 * and filling it in.
+-	 */
+-	spin_lock_irq(&head->lock);
+-	skb = skb_peek(head);
+-	if (skb) {
+-		struct scm_fp_list *fpl = UNIXCB(skb).fp;
+-
+-		if (fpl->count < SCM_MAX_FD) {
+-			__skb_unlink(skb, head);
+-			spin_unlock_irq(&head->lock);
+-			fpl->fp[fpl->count] = get_file(file);
+-			unix_inflight(fpl->user, fpl->fp[fpl->count]);
+-			fpl->count++;
+-			spin_lock_irq(&head->lock);
+-			__skb_queue_head(head, skb);
+-		} else {
+-			skb = NULL;
+-		}
+-	}
+-	spin_unlock_irq(&head->lock);
+-
+-	if (skb) {
+-		fput(file);
+-		return 0;
+-	}
+-
+-	return __io_sqe_files_scm(ctx, 1, index);
+-#else
+-	return 0;
+-#endif
+-}
+-
+ static int io_queue_rsrc_removal(struct io_rsrc_data *data, unsigned idx,
+ 				 struct io_rsrc_node *node, void *rsrc)
+ {
+@@ -8727,12 +8684,6 @@ static int io_install_fixed_file(struct
+ 
+ 	*io_get_tag_slot(ctx->file_data, slot_index) = 0;
+ 	io_fixed_file_set(file_slot, file);
+-	ret = io_sqe_file_register(ctx, file, slot_index);
+-	if (ret) {
+-		file_slot->file_ptr = 0;
+-		goto err;
+-	}
+-
+ 	ret = 0;
+ err:
+ 	if (needs_switch)
+@@ -8846,12 +8797,6 @@ static int __io_sqe_files_update(struct
+ 			}
+ 			*io_get_tag_slot(data, i) = tag;
+ 			io_fixed_file_set(file_slot, file);
+-			err = io_sqe_file_register(ctx, file, i);
+-			if (err) {
+-				file_slot->file_ptr = 0;
+-				fput(file);
+-				break;
+-			}
+ 		}
  	}
  
--	if (pmd_none(*vmf->pmd)) {
-+	if (pmd_none(*vmf->pmd) && vmf->prealloc_pte) {
- 		vmf->ptl = pmd_lock(mm, vmf->pmd);
- 		if (likely(pmd_none(*vmf->pmd))) {
- 			mm_inc_nr_ptes(mm);
+--- a/net/core/scm.c
++++ b/net/core/scm.c
+@@ -26,6 +26,7 @@
+ #include <linux/nsproxy.h>
+ #include <linux/slab.h>
+ #include <linux/errqueue.h>
++#include <linux/io_uring.h>
+ 
+ #include <linux/uaccess.h>
+ 
+@@ -103,6 +104,11 @@ static int scm_fp_copy(struct cmsghdr *c
+ 
+ 		if (fd < 0 || !(file = fget_raw(fd)))
+ 			return -EBADF;
++		/* don't allow io_uring files */
++		if (io_uring_get_socket(file)) {
++			fput(file);
++			return -EINVAL;
++		}
+ 		*fpp++ = file;
+ 		fpl->count++;
+ 	}
 
 
