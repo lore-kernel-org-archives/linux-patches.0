@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB86D2D045;
-	Mon, 11 Dec 2023 18:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D462D045;
+	Mon, 11 Dec 2023 18:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dS2cmE7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1DBC433C8;
-	Mon, 11 Dec 2023 18:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmX3dsbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E901BC433C7;
+	Mon, 11 Dec 2023 18:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319173;
-	bh=nY77CdM1kfYbsvY7/anWXHl1qDoQKR0b+IO9+0U6O5Q=;
+	s=korg; t=1702319176;
+	bh=nx/GS2bI32WagwugZm7WNota23QwFZyaEl+OYRgJGKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dS2cmE7kXUOgBg1zwoGzebW8KQJVOqxYaZvR2IYFncjkKs+XVwoGyTekiCazKOAGw
-	 ePZ6+Pg9deIroy/VURnB1f57ycyyoucYUbnSdgOD62k4sJwBnNkrIagK1AVWGVw5DP
-	 1ZJQMoUD4VESp1wn33fGy5yjZRe61h2HpoqLmPPY=
+	b=GmX3dsbmkLEZD46wEcWW2iJcwLVv5hvuigNwrXrF5dpZC7fOehjTDEsykBrm80EPp
+	 Bg2glns4P0dVeD6vIYpa3mD88lEw4Otzyi6K2EZoTAXK62K+JjGSz4Wm8L800mzv0c
+	 eduEZ17mzD7RpMlxKJIODXAy7m14eZX5WRpCvLsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Sistare <steven.sistare@oracle.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Martin Wilck <mwilck@suse.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/244] vdpa/mlx5: preserve CVQ vringh index
-Date: Mon, 11 Dec 2023 19:18:14 +0100
-Message-ID: <20231211182045.867328342@linuxfoundation.org>
+Subject: [PATCH 6.6 002/244] scsi: sd: Fix sshdr use in sd_suspend_common()
+Date: Mon, 11 Dec 2023 19:18:15 +0100
+Message-ID: <20231211182045.908592858@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -38,68 +39,150 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steve Sistare <steven.sistare@oracle.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 480b3e73720f6b5d76bef2387b1f9d19ed67573b ]
+[ Upstream commit 3b83486399a6a9feb9c681b74c21a227d48d7020 ]
 
-mlx5_vdpa does not preserve userland's view of vring base for the control
-queue in the following sequence:
+If scsi_execute_cmd() returns < 0, it doesn't initialize the sshdr, so we
+shouldn't access the sshdr. If it returns 0, then the cmd executed
+successfully, so there is no need to check the sshdr. sd_sync_cache() will
+only access the sshdr if it's been setup because it calls
+scsi_status_is_check_condition() before accessing it. However, the
+sd_sync_cache() caller, sd_suspend_common(), does not check.
 
-ioctl VHOST_SET_VRING_BASE
-ioctl VHOST_VDPA_SET_STATUS VIRTIO_CONFIG_S_DRIVER_OK
-  mlx5_vdpa_set_status()
-    setup_cvq_vring()
-      vringh_init_iotlb()
-        vringh_init_kern()
-          vrh->last_avail_idx = 0;
-ioctl VHOST_GET_VRING_BASE
+sd_suspend_common() is only checking for ILLEGAL_REQUEST which it's using
+to determine if the command is supported. If it's not it just ignores the
+error. So to fix its sshdr use this patch just moves that check to
+sd_sync_cache() where it converts ILLEGAL_REQUEST to success/0.
+sd_suspend_common() was ignoring that error and sd_shutdown() doesn't check
+for errors so there will be no behavior changes.
 
-To fix, restore the value of cvq->vring.last_avail_idx after calling
-vringh_init_iotlb.
-
-Fixes: 5262912ef3cf ("vdpa/mlx5: Add support for control VQ and MAC setting")
-
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <1699014387-194368-1-git-send-email-steven.sistare@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20231106231304.5694-2-michael.christie@oracle.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin Wilck <mwilck@suse.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/net/mlx5_vnet.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/scsi/sd.c | 53 ++++++++++++++++++++---------------------------
+ 1 file changed, 23 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-index 946488b8989f4..ca972af3c89a2 100644
---- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
-+++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-@@ -2795,13 +2795,18 @@ static int setup_cvq_vring(struct mlx5_vdpa_dev *mvdev)
- 	struct mlx5_control_vq *cvq = &mvdev->cvq;
- 	int err = 0;
- 
--	if (mvdev->actual_features & BIT_ULL(VIRTIO_NET_F_CTRL_VQ))
-+	if (mvdev->actual_features & BIT_ULL(VIRTIO_NET_F_CTRL_VQ)) {
-+		u16 idx = cvq->vring.last_avail_idx;
-+
- 		err = vringh_init_iotlb(&cvq->vring, mvdev->actual_features,
- 					MLX5_CVQ_MAX_ENT, false,
- 					(struct vring_desc *)(uintptr_t)cvq->desc_addr,
- 					(struct vring_avail *)(uintptr_t)cvq->driver_addr,
- 					(struct vring_used *)(uintptr_t)cvq->device_addr);
- 
-+		if (!err)
-+			cvq->vring.last_avail_idx = cvq->vring.last_used_idx = idx;
-+	}
- 	return err;
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index e17509f0b3fa8..c2e8d9e27749b 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -1642,24 +1642,21 @@ static unsigned int sd_check_events(struct gendisk *disk, unsigned int clearing)
+ 	return disk_changed ? DISK_EVENT_MEDIA_CHANGE : 0;
  }
  
+-static int sd_sync_cache(struct scsi_disk *sdkp, struct scsi_sense_hdr *sshdr)
++static int sd_sync_cache(struct scsi_disk *sdkp)
+ {
+ 	int retries, res;
+ 	struct scsi_device *sdp = sdkp->device;
+ 	const int timeout = sdp->request_queue->rq_timeout
+ 		* SD_FLUSH_TIMEOUT_MULTIPLIER;
+-	struct scsi_sense_hdr my_sshdr;
++	struct scsi_sense_hdr sshdr;
+ 	const struct scsi_exec_args exec_args = {
+ 		.req_flags = BLK_MQ_REQ_PM,
+-		/* caller might not be interested in sense, but we need it */
+-		.sshdr = sshdr ? : &my_sshdr,
++		.sshdr = &sshdr,
+ 	};
+ 
+ 	if (!scsi_device_online(sdp))
+ 		return -ENODEV;
+ 
+-	sshdr = exec_args.sshdr;
+-
+ 	for (retries = 3; retries > 0; --retries) {
+ 		unsigned char cmd[16] = { 0 };
+ 
+@@ -1684,15 +1681,23 @@ static int sd_sync_cache(struct scsi_disk *sdkp, struct scsi_sense_hdr *sshdr)
+ 			return res;
+ 
+ 		if (scsi_status_is_check_condition(res) &&
+-		    scsi_sense_valid(sshdr)) {
+-			sd_print_sense_hdr(sdkp, sshdr);
++		    scsi_sense_valid(&sshdr)) {
++			sd_print_sense_hdr(sdkp, &sshdr);
+ 
+ 			/* we need to evaluate the error return  */
+-			if (sshdr->asc == 0x3a ||	/* medium not present */
+-			    sshdr->asc == 0x20 ||	/* invalid command */
+-			    (sshdr->asc == 0x74 && sshdr->ascq == 0x71))	/* drive is password locked */
++			if (sshdr.asc == 0x3a ||	/* medium not present */
++			    sshdr.asc == 0x20 ||	/* invalid command */
++			    (sshdr.asc == 0x74 && sshdr.ascq == 0x71))	/* drive is password locked */
+ 				/* this is no error here */
+ 				return 0;
++			/*
++			 * This drive doesn't support sync and there's not much
++			 * we can do because this is called during shutdown
++			 * or suspend so just return success so those operations
++			 * can proceed.
++			 */
++			if (sshdr.sense_key == ILLEGAL_REQUEST)
++				return 0;
+ 		}
+ 
+ 		switch (host_byte(res)) {
+@@ -3847,7 +3852,7 @@ static void sd_shutdown(struct device *dev)
+ 
+ 	if (sdkp->WCE && sdkp->media_present) {
+ 		sd_printk(KERN_NOTICE, sdkp, "Synchronizing SCSI cache\n");
+-		sd_sync_cache(sdkp, NULL);
++		sd_sync_cache(sdkp);
+ 	}
+ 
+ 	if ((system_state != SYSTEM_RESTART &&
+@@ -3868,7 +3873,6 @@ static inline bool sd_do_start_stop(struct scsi_device *sdev, bool runtime)
+ static int sd_suspend_common(struct device *dev, bool runtime)
+ {
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+-	struct scsi_sense_hdr sshdr;
+ 	int ret = 0;
+ 
+ 	if (!sdkp)	/* E.g.: runtime suspend following sd_remove() */
+@@ -3877,24 +3881,13 @@ static int sd_suspend_common(struct device *dev, bool runtime)
+ 	if (sdkp->WCE && sdkp->media_present) {
+ 		if (!sdkp->device->silence_suspend)
+ 			sd_printk(KERN_NOTICE, sdkp, "Synchronizing SCSI cache\n");
+-		ret = sd_sync_cache(sdkp, &sshdr);
+-
+-		if (ret) {
+-			/* ignore OFFLINE device */
+-			if (ret == -ENODEV)
+-				return 0;
+-
+-			if (!scsi_sense_valid(&sshdr) ||
+-			    sshdr.sense_key != ILLEGAL_REQUEST)
+-				return ret;
++		ret = sd_sync_cache(sdkp);
++		/* ignore OFFLINE device */
++		if (ret == -ENODEV)
++			return 0;
+ 
+-			/*
+-			 * sshdr.sense_key == ILLEGAL_REQUEST means this drive
+-			 * doesn't support sync. There's not much to do and
+-			 * suspend shouldn't fail.
+-			 */
+-			ret = 0;
+-		}
++		if (ret)
++			return ret;
+ 	}
+ 
+ 	if (sd_do_start_stop(sdkp->device, runtime)) {
 -- 
 2.42.0
 
