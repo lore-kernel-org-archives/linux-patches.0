@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1B71D696;
-	Mon, 11 Dec 2023 18:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F57653803;
+	Mon, 11 Dec 2023 18:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q28eq0GW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBF2C433C7;
-	Mon, 11 Dec 2023 18:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1SrblGSY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA664C433CD;
+	Mon, 11 Dec 2023 18:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320022;
-	bh=RcCcQ1nbHAYLO6SWvQiGJIVl/DApMyvtUmdf6EQXygY=;
+	s=korg; t=1702320025;
+	bh=fmxw9kINYEEK2zUimhS4cmSej82+G6P4qc4X7KSeaWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q28eq0GW4cw1u0NSAAHo7EjQJapD3qwt3Tdh7tBzwVhMIVZ6f21xtVLsjFTs8waDr
-	 SYJ+S1J4Q9pHbbDgHrwR4qJXQSvEl5gr09P79tof1iWDj89VUXJOdvQOe8MKCmk6I8
-	 1Vg6461BKMdYRA9ywpbDEaoP8qsk7dn4b/itpDjA=
+	b=1SrblGSY7mUkR2JfllPWMOHsG+4tGxJWl9EQA11X6ySlt1gPNLhp2jt59w9Z5t104
+	 8YcAPRmpJTgerdnC6vcALD9lDQx55z/cVGEpBNRh1exKbf47++LmIFBz2wfdAWJ8Zh
+	 V/ugtGQXH7YpqvkeR7jFYSVqATzw5/vw9/NkHl1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <eugen.hristev@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Subject: [PATCH 5.10 57/97] arm64: dts: mediatek: mt7622: fix memory node warning check
-Date: Mon, 11 Dec 2023 19:22:00 +0100
-Message-ID: <20231211182022.178022031@linuxfoundation.org>
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>
+Subject: [PATCH 5.10 75/97] serial: 8250: 8250_omap: Clear UART_HAS_RHR_IT_DIS bit
+Date: Mon, 11 Dec 2023 19:22:18 +0100
+Message-ID: <20231211182023.008274351@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -41,48 +41,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugen Hristev <eugen.hristev@collabora.com>
+From: Ronald Wahl <ronald.wahl@raritan.com>
 
-commit 8e6ecbfd44b5542a7598c1c5fc9c6dcb5d367f2a upstream.
+commit 8973ab7a2441b286218f4a5c4c33680e2f139996 upstream.
 
-dtbs_check throws a warning at the memory node:
-Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name
-
-fix by adding the address into the node name.
+This fixes commit 439c7183e5b9 ("serial: 8250: 8250_omap: Disable RX
+interrupt after DMA enable") which unfortunately set the
+UART_HAS_RHR_IT_DIS bit in the UART_OMAP_IER2 register and never
+cleared it.
 
 Cc: stable@vger.kernel.org
-Fixes: 0b6286dd96c0 ("arm64: dts: mt7622: add bananapi BPI-R64 board")
-Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230814065042.4973-1-eugen.hristev@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 439c7183e5b9 ("serial: 8250: 8250_omap: Disable RX interrupt after DMA enable")
+Signed-off-by: Ronald Wahl <ronald.wahl@raritan.com>
+Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
+Link: https://lore.kernel.org/r/20231031110909.11695-1-rwahl@gmx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts |    2 +-
- arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts             |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_omap.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-@@ -69,7 +69,7 @@
- 		};
- 	};
+--- a/drivers/tty/serial/8250/8250_omap.c
++++ b/drivers/tty/serial/8250/8250_omap.c
+@@ -844,7 +844,7 @@ static void __dma_rx_do_complete(struct
+ 	if (priv->habit & UART_HAS_RHR_IT_DIS) {
+ 		reg = serial_in(p, UART_OMAP_IER2);
+ 		reg &= ~UART_OMAP_IER2_RHR_IT_DIS;
+-		serial_out(p, UART_OMAP_IER2, UART_OMAP_IER2_RHR_IT_DIS);
++		serial_out(p, UART_OMAP_IER2, reg);
+ 	}
  
--	memory {
-+	memory@40000000 {
- 		reg = <0 0x40000000 0 0x40000000>;
- 	};
+ 	dmaengine_tx_status(rxchan, cookie, &state);
+@@ -986,7 +986,7 @@ static int omap_8250_rx_dma(struct uart_
+ 	if (priv->habit & UART_HAS_RHR_IT_DIS) {
+ 		reg = serial_in(p, UART_OMAP_IER2);
+ 		reg |= UART_OMAP_IER2_RHR_IT_DIS;
+-		serial_out(p, UART_OMAP_IER2, UART_OMAP_IER2_RHR_IT_DIS);
++		serial_out(p, UART_OMAP_IER2, reg);
+ 	}
  
---- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-@@ -55,7 +55,7 @@
- 		};
- 	};
- 
--	memory {
-+	memory@40000000 {
- 		reg = <0 0x40000000 0 0x20000000>;
- 	};
- 
+ 	dma_async_issue_pending(dma->rxchan);
 
 
