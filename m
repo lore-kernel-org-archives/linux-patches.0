@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8864FC06;
-	Mon, 11 Dec 2023 18:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401A0FC06;
+	Mon, 11 Dec 2023 18:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1QNNHg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31227C433C9;
-	Mon, 11 Dec 2023 18:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yiBmW86W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3D7C433C8;
+	Mon, 11 Dec 2023 18:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320272;
-	bh=uoNjS8QDAfixy5pyBv+vt8P8cdcfhyFn1jP5gCmWB24=;
+	s=korg; t=1702320275;
+	bh=bOSwlyvi0jlQXhN6JT13bAngwarbnZpI8v1XejfIZxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z1QNNHg1EM741tkI73nBf0ByYYwqPZ75HUczHy/KluGa6DyZxsF3+vn1E8WTVSVIE
-	 29vR6edi+LZtH3708kh4A0a7i0QPA37PPdD6aN77V1Gy087zSJAyqCqkCws2ZgQS9Y
-	 EsRvhLnRrU0TLUbMAVtZe/+cw9HKjOIf7AX7QqOU=
+	b=yiBmW86WrSXrz24iVlOUaZmu6YG5UCwl4smgvW6kKUhInJ2zFl+W/gZjLa4C1PogZ
+	 suF5CpnopiGVRTGl7FiUAGksSFb86EuqNBaRBGLtMLLEKNQMx7tSK1b5JXMcQQ3h86
+	 izqhk74B/2l2J0hgg7f87ajGwHB8h/6dY6FLK6D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 5.4 57/67] io_uring/af_unix: disable sending io_uring over sockets
-Date: Mon, 11 Dec 2023 19:22:41 +0100
-Message-ID: <20231211182017.420293556@linuxfoundation.org>
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sean Tranchetti <stranche@codeaurora.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Ido Schimmel <idosch@nvidia.com>
+Subject: [PATCH 5.4 58/67] netlink: dont call ->netlink_bind with table lock held
+Date: Mon, 11 Dec 2023 19:22:42 +0100
+Message-ID: <20231211182017.460154714@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182015.049134368@linuxfoundation.org>
 References: <20231211182015.049134368@linuxfoundation.org>
@@ -42,167 +48,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 705318a99a138c29a512a72c3e0043b3cd7f55f4 upstream.
+From: Florian Westphal <fw@strlen.de>
 
-File reference cycles have caused lots of problems for io_uring
-in the past, and it still doesn't work exactly right and races with
-unix_stream_read_generic(). The safest fix would be to completely
-disallow sending io_uring files via sockets via SCM_RIGHT, so there
-are no possible cycles invloving registered files and thus rendering
-SCM accounting on the io_uring side unnecessary.
+commit f2764bd4f6a8dffaec3e220728385d9756b3c2cb upstream.
 
-Cc:  <stable@vger.kernel.org>
-Fixes: 0091bfc81741b ("io_uring/af_unix: defer registered files gc to io_uring release")
-Reported-and-suggested-by: Jann Horn <jannh@google.com>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/c716c88321939156909cfa1bd8b0faaf1c804103.1701868795.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+When I added support to allow generic netlink multicast groups to be
+restricted to subscribers with CAP_NET_ADMIN I was unaware that a
+genl_bind implementation already existed in the past.
+
+It was reverted due to ABBA deadlock:
+
+1. ->netlink_bind gets called with the table lock held.
+2. genetlink bind callback is invoked, it grabs the genl lock.
+
+But when a new genl subsystem is (un)registered, these two locks are
+taken in reverse order.
+
+One solution would be to revert again and add a comment in genl
+referring 1e82a62fec613, "genetlink: remove genl_bind").
+
+This would need a second change in mptcp to not expose the raw token
+value anymore, e.g.  by hashing the token with a secret key so userspace
+can still associate subflow events with the correct mptcp connection.
+
+However, Paolo Abeni reminded me to double-check why the netlink table is
+locked in the first place.
+
+I can't find one.  netlink_bind() is already called without this lock
+when userspace joins a group via NETLINK_ADD_MEMBERSHIP setsockopt.
+Same holds for the netlink_unbind operation.
+
+Digging through the history, commit f773608026ee1
+("netlink: access nlk groups safely in netlink bind and getname")
+expanded the lock scope.
+
+commit 3a20773beeeeade ("net: netlink: cap max groups which will be considered in netlink_bind()")
+... removed the nlk->ngroups access that the lock scope
+extension was all about.
+
+Reduce the lock scope again and always call ->netlink_bind without
+the table lock.
+
+The Fixes tag should be vs. the patch mentioned in the link below,
+but that one got squash-merged into the patch that came earlier in the
+series.
+
+Fixes: 4d54cc32112d8d ("mptcp: avoid lock_fast usage in accept path")
+Link: https://lore.kernel.org/mptcp/20210213000001.379332-8-mathew.j.martineau@linux.intel.com/T/#u
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Xin Long <lucien.xin@gmail.com>
+Cc: Johannes Berg <johannes.berg@intel.com>
+Cc: Sean Tranchetti <stranche@codeaurora.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/io_uring.c  |  101 ---------------------------------------------------------
- net/core/scm.c |    6 +++
- 2 files changed, 7 insertions(+), 100 deletions(-)
+ net/netlink/af_netlink.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/io_uring.c
-+++ b/fs/io_uring.c
-@@ -3137,101 +3137,6 @@ static void io_finish_async(struct io_ri
- 	}
- }
- 
--#if defined(CONFIG_UNIX)
--static void io_destruct_skb(struct sk_buff *skb)
--{
--	struct io_ring_ctx *ctx = skb->sk->sk_user_data;
--	int i;
--
--	for (i = 0; i < ARRAY_SIZE(ctx->sqo_wq); i++)
--		if (ctx->sqo_wq[i])
--			flush_workqueue(ctx->sqo_wq[i]);
--
--	unix_destruct_scm(skb);
--}
--
--/*
-- * Ensure the UNIX gc is aware of our file set, so we are certain that
-- * the io_uring can be safely unregistered on process exit, even if we have
-- * loops in the file referencing.
-- */
--static int __io_sqe_files_scm(struct io_ring_ctx *ctx, int nr, int offset)
--{
--	struct sock *sk = ctx->ring_sock->sk;
--	struct scm_fp_list *fpl;
--	struct sk_buff *skb;
--	int i;
--
--	fpl = kzalloc(sizeof(*fpl), GFP_KERNEL);
--	if (!fpl)
--		return -ENOMEM;
--
--	skb = alloc_skb(0, GFP_KERNEL);
--	if (!skb) {
--		kfree(fpl);
--		return -ENOMEM;
--	}
--
--	skb->sk = sk;
--	skb->scm_io_uring = 1;
--	skb->destructor = io_destruct_skb;
--
--	fpl->user = get_uid(ctx->user);
--	for (i = 0; i < nr; i++) {
--		fpl->fp[i] = get_file(ctx->user_files[i + offset]);
--		unix_inflight(fpl->user, fpl->fp[i]);
--	}
--
--	fpl->max = fpl->count = nr;
--	UNIXCB(skb).fp = fpl;
--	refcount_add(skb->truesize, &sk->sk_wmem_alloc);
--	skb_queue_head(&sk->sk_receive_queue, skb);
--
--	for (i = 0; i < nr; i++)
--		fput(fpl->fp[i]);
--
--	return 0;
--}
--
--/*
-- * If UNIX sockets are enabled, fd passing can cause a reference cycle which
-- * causes regular reference counting to break down. We rely on the UNIX
-- * garbage collection to take care of this problem for us.
-- */
--static int io_sqe_files_scm(struct io_ring_ctx *ctx)
--{
--	unsigned left, total;
--	int ret = 0;
--
--	total = 0;
--	left = ctx->nr_user_files;
--	while (left) {
--		unsigned this_files = min_t(unsigned, left, SCM_MAX_FD);
--
--		ret = __io_sqe_files_scm(ctx, this_files, total);
--		if (ret)
--			break;
--		left -= this_files;
--		total += this_files;
--	}
--
--	if (!ret)
--		return 0;
--
--	while (total < ctx->nr_user_files) {
--		fput(ctx->user_files[total]);
--		total++;
--	}
--
--	return ret;
--}
--#else
--static int io_sqe_files_scm(struct io_ring_ctx *ctx)
--{
--	return 0;
--}
--#endif
--
- static int io_sqe_files_register(struct io_ring_ctx *ctx, void __user *arg,
- 				 unsigned nr_args)
- {
-@@ -3285,11 +3190,7 @@ static int io_sqe_files_register(struct
- 		return ret;
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1020,7 +1020,6 @@ static int netlink_bind(struct socket *s
+ 			return -EINVAL;
  	}
  
--	ret = io_sqe_files_scm(ctx);
--	if (ret)
--		io_sqe_files_unregister(ctx);
--
--	return ret;
-+	return 0;
- }
+-	netlink_lock_table();
+ 	if (nlk->netlink_bind && groups) {
+ 		int group;
  
- static int io_sq_offload_start(struct io_ring_ctx *ctx,
---- a/net/core/scm.c
-+++ b/net/core/scm.c
-@@ -26,6 +26,7 @@
- #include <linux/nsproxy.h>
- #include <linux/slab.h>
- #include <linux/errqueue.h>
-+#include <linux/io_uring.h>
- 
- #include <linux/uaccess.h>
- 
-@@ -103,6 +104,11 @@ static int scm_fp_copy(struct cmsghdr *c
- 
- 		if (fd < 0 || !(file = fget_raw(fd)))
- 			return -EBADF;
-+		/* don't allow io_uring files */
-+		if (io_uring_get_socket(file)) {
-+			fput(file);
-+			return -EINVAL;
-+		}
- 		*fpp++ = file;
- 		fpl->count++;
+@@ -1032,13 +1031,14 @@ static int netlink_bind(struct socket *s
+ 			if (!err)
+ 				continue;
+ 			netlink_undo_bind(group, groups, sk);
+-			goto unlock;
++			return err;
+ 		}
  	}
+ 
+ 	/* No need for barriers here as we return to user-space without
+ 	 * using any of the bound attributes.
+ 	 */
++	netlink_lock_table();
+ 	if (!bound) {
+ 		err = nladdr->nl_pid ?
+ 			netlink_insert(sk, nladdr->nl_pid) :
 
 
