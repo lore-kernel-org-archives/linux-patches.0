@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B988251C2D;
-	Mon, 11 Dec 2023 18:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7927651C37;
+	Mon, 11 Dec 2023 18:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+8y2wNg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442CBC433C8;
-	Mon, 11 Dec 2023 18:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EX+t3fOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F295CC433C8;
+	Mon, 11 Dec 2023 18:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320737;
-	bh=ZRVjUnex08DMKUHpg8q737YltNIDvitXBS85VP4xhxE=;
+	s=korg; t=1702320741;
+	bh=bWX/HUoxtTJ4ANCku19NTNJ+4sX86vOZkTxH+ZaMekw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q+8y2wNgh43qWpxEzLzxVjhAQT8VIWKUu5SQHgbm/Svs6nj7FLhq3UHrjCvOGXZRm
-	 ecC/zSGgVflFHPKTwA2XTecmn9w71COf92ayNng2Lfsxjr4AB8dN5UaDuF2i54W0lN
-	 fklJPQAKamDBEDm47E0qTklac7swHdu2TX3QRj9g=
+	b=EX+t3fOQlg0OtJczAzKqHRe+A9dnlxEyYeAJv64OXNMs6c856D0bB5ufXsZo2WOrh
+	 7ZkqyyD4LkhxJQAudhFpTky9JdRl1AfdjEo8x4reb6tuxYJFHeraWYTn9nrN15j7HD
+	 7iVLR5iMHWCKG/ql5G8zTquK3hyPAvM0HKUkVykM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/194] tracing: Set actual size after ring buffer resize
-Date: Mon, 11 Dec 2023 19:22:14 +0100
-Message-ID: <20231211182043.053446362@linuxfoundation.org>
+Subject: [PATCH 6.1 145/194] tracing: Stop current tracer when resizing buffer
+Date: Mon, 11 Dec 2023 19:22:15 +0100
+Message-ID: <20231211182043.089150597@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,68 +45,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 6d98a0f2ac3c021d21be66fa34e992137cd25bcb ]
+[ Upstream commit d78ab792705c7be1b91243b2544d1a79406a2ad7 ]
 
-Currently we can resize trace ringbuffer by writing a value into file
-'buffer_size_kb', then by reading the file, we get the value that is
-usually what we wrote. However, this value may be not actual size of
-trace ring buffer because of the round up when doing resize in kernel,
-and the actual size would be more useful.
+When the ring buffer is being resized, it can cause side effects to the
+running tracer. For instance, there's a race with irqsoff tracer that
+swaps individual per cpu buffers between the main buffer and the snapshot
+buffer. The resize operation modifies the main buffer and then the
+snapshot buffer. If a swap happens in between those two operations it will
+break the tracer.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230705002705.576633-1-zhengyejian1@huawei.com
+Simply stop the running tracer before resizing the buffers and enable it
+again when finished.
 
-Cc: <mhiramat@kernel.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Link: https://lkml.kernel.org/r/20231205220010.748996423@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3928a8a2d9808 ("ftrace: make work with new ring buffer")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: d78ab792705c ("tracing: Stop current tracer when resizing buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ kernel/trace/trace.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 2e1c6fd0d3f17..048728807f265 100644
+index 048728807f265..d2db4d6f0f2fd 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
-@@ -6215,6 +6215,15 @@ static void set_buffer_entries(struct array_buffer *buf, unsigned long val)
- 		per_cpu_ptr(buf->data, cpu)->entries = val;
- }
+@@ -6268,9 +6268,12 @@ static int __tracing_resize_ring_buffer(struct trace_array *tr,
+ 	if (!tr->array_buffer.buffer)
+ 		return 0;
  
-+static void update_buffer_entries(struct array_buffer *buf, int cpu)
-+{
-+	if (cpu == RING_BUFFER_ALL_CPUS) {
-+		set_buffer_entries(buf, ring_buffer_size(buf->buffer, 0));
-+	} else {
-+		per_cpu_ptr(buf->data, cpu)->entries = ring_buffer_size(buf->buffer, cpu);
-+	}
-+}
++	/* Do not allow tracing while resizng ring buffer */
++	tracing_stop_tr(tr);
 +
+ 	ret = ring_buffer_resize(tr->array_buffer.buffer, size, cpu);
+ 	if (ret < 0)
+-		return ret;
++		goto out_start;
+ 
  #ifdef CONFIG_TRACER_MAX_TRACE
- /* resize @tr's buffer to the size of @size_tr's entries */
- static int resize_buffer_duplicate_size(struct array_buffer *trace_buf,
-@@ -6292,18 +6301,12 @@ static int __tracing_resize_ring_buffer(struct trace_array *tr,
- 		return ret;
+ 	if (!tr->current_trace->use_max_tr)
+@@ -6298,7 +6301,7 @@ static int __tracing_resize_ring_buffer(struct trace_array *tr,
+ 			WARN_ON(1);
+ 			tracing_disabled = 1;
+ 		}
+-		return ret;
++		goto out_start;
  	}
  
--	if (cpu == RING_BUFFER_ALL_CPUS)
--		set_buffer_entries(&tr->max_buffer, size);
--	else
--		per_cpu_ptr(tr->max_buffer.data, cpu)->entries = size;
-+	update_buffer_entries(&tr->max_buffer, cpu);
- 
-  out:
+ 	update_buffer_entries(&tr->max_buffer, cpu);
+@@ -6307,7 +6310,8 @@ static int __tracing_resize_ring_buffer(struct trace_array *tr,
  #endif /* CONFIG_TRACER_MAX_TRACE */
  
--	if (cpu == RING_BUFFER_ALL_CPUS)
--		set_buffer_entries(&tr->array_buffer, size);
--	else
--		per_cpu_ptr(tr->array_buffer.data, cpu)->entries = size;
-+	update_buffer_entries(&tr->array_buffer, cpu);
- 
+ 	update_buffer_entries(&tr->array_buffer, cpu);
+-
++ out_start:
++	tracing_start_tr(tr);
  	return ret;
  }
+ 
 -- 
 2.42.0
 
