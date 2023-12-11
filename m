@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58AF321B8;
-	Mon, 11 Dec 2023 18:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FDC321B8;
+	Mon, 11 Dec 2023 18:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZn7rETp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7A3C433C9;
-	Mon, 11 Dec 2023 18:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3qJVG5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01302C433C8;
+	Mon, 11 Dec 2023 18:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320907;
-	bh=2/jMo8Uz6PPb99etoqvP0FtPAiip3yy5prma95TSPHs=;
+	s=korg; t=1702320910;
+	bh=J7v0fIHwe4SZmQkVeqddgxQPc1T3gYDW2qpR0bD/hFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZn7rETpB/mXXUYM28CpiTOb3fcuedAJ6RQk8cYHVs9Z/JBAM0Jo6GTctwDjD5rVB
-	 K6rMrJzP8KOk86mgblwaYmUSTC3jkbnHLKPOgmWNp+oKXwANc12s2CrKAAo2MxMLXJ
-	 9JY0VqI7YQZFhsueEs6eg2F4e527FEXTWfdQAki4=
+	b=Y3qJVG5U3Ttg2rnaZWTAkzv0YQdWfmrMqeXyzB8rUQ22KLMRKgCID0i+5WtiWjC9X
+	 OnLjokVjhcQEVyqQlYk2LvzSweucbtZeIEgKi0IaAvySdpR//bpZ2QyU6wNfifOgSj
+	 VC1zTqXb6dDLj+AN5h0oUCpZNgf86M2GvmeTDDyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jann Horn <jannh@google.com>,
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/141] i40e: Fix unexpected MFS warning message
-Date: Mon, 11 Dec 2023 19:21:31 +0100
-Message-ID: <20231211182027.938040171@linuxfoundation.org>
+Subject: [PATCH 5.15 041/141] netfilter: xt_owner: Fix for unsafe access of sk->sk_socket
+Date: Mon, 11 Dec 2023 19:21:40 +0100
+Message-ID: <20231211182028.323409654@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -43,56 +43,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 7d9f22b3d3ef379ed05bd3f3e2de83dfa8da8258 ]
+[ Upstream commit 7ae836a3d630e146b732fe8ef7d86b243748751f ]
 
-Commit 3a2c6ced90e1 ("i40e: Add a check to see if MFS is set") added
-a warning message that reports unexpected size of port's MFS (max
-frame size) value. This message use for the port number local
-variable 'i' that is wrong.
-In i40e_probe() this 'i' variable is used only to iterate VSIs
-to find FDIR VSI:
+A concurrently running sock_orphan() may NULL the sk_socket pointer in
+between check and deref. Follow other users (like nft_meta.c for
+instance) and acquire sk_callback_lock before dereferencing sk_socket.
 
-<code>
-...
-/* if FDIR VSI was set up, start it now */
-        for (i = 0; i < pf->num_alloc_vsi; i++) {
-                if (pf->vsi[i] && pf->vsi[i]->type == I40E_VSI_FDIR) {
-                        i40e_vsi_open(pf->vsi[i]);
-                        break;
-                }
-        }
-...
-</code>
-
-So the warning message use for the port number index of FDIR VSI
-if this exists or pf->num_alloc_vsi if not.
-
-Fix the message by using 'pf->hw.port' for the port number.
-
-Fixes: 3a2c6ced90e1 ("i40e: Add a check to see if MFS is set")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 0265ab44bacc ("[NETFILTER]: merge ipt_owner/ip6t_owner in xt_owner")
+Reported-by: Jann Horn <jannh@google.com>
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/xt_owner.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 20e26aa5b81c8..cf085bd8d790f 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -16132,7 +16132,7 @@ static int i40e_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	       I40E_PRTGL_SAH_MFS_MASK) >> I40E_PRTGL_SAH_MFS_SHIFT;
- 	if (val < MAX_FRAME_SIZE_DEFAULT)
- 		dev_warn(&pdev->dev, "MFS for port %x has been set below the default: %x\n",
--			 i, val);
-+			 pf->hw.port, val);
+diff --git a/net/netfilter/xt_owner.c b/net/netfilter/xt_owner.c
+index e85ce69924aee..50332888c8d23 100644
+--- a/net/netfilter/xt_owner.c
++++ b/net/netfilter/xt_owner.c
+@@ -76,18 +76,23 @@ owner_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 		 */
+ 		return false;
  
- 	/* Add a filter to drop all Flow control frames from any VSI from being
- 	 * transmitted. By doing so we stop a malicious VF from sending out
+-	filp = sk->sk_socket->file;
+-	if (filp == NULL)
++	read_lock_bh(&sk->sk_callback_lock);
++	filp = sk->sk_socket ? sk->sk_socket->file : NULL;
++	if (filp == NULL) {
++		read_unlock_bh(&sk->sk_callback_lock);
+ 		return ((info->match ^ info->invert) &
+ 		       (XT_OWNER_UID | XT_OWNER_GID)) == 0;
++	}
+ 
+ 	if (info->match & XT_OWNER_UID) {
+ 		kuid_t uid_min = make_kuid(net->user_ns, info->uid_min);
+ 		kuid_t uid_max = make_kuid(net->user_ns, info->uid_max);
+ 		if ((uid_gte(filp->f_cred->fsuid, uid_min) &&
+ 		     uid_lte(filp->f_cred->fsuid, uid_max)) ^
+-		    !(info->invert & XT_OWNER_UID))
++		    !(info->invert & XT_OWNER_UID)) {
++			read_unlock_bh(&sk->sk_callback_lock);
+ 			return false;
++		}
+ 	}
+ 
+ 	if (info->match & XT_OWNER_GID) {
+@@ -112,10 +117,13 @@ owner_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 			}
+ 		}
+ 
+-		if (match ^ !(info->invert & XT_OWNER_GID))
++		if (match ^ !(info->invert & XT_OWNER_GID)) {
++			read_unlock_bh(&sk->sk_callback_lock);
+ 			return false;
++		}
+ 	}
+ 
++	read_unlock_bh(&sk->sk_callback_lock);
+ 	return true;
+ }
+ 
 -- 
 2.42.0
 
