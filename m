@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EE65101A;
-	Mon, 11 Dec 2023 18:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7D65101A;
+	Mon, 11 Dec 2023 18:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYY9ptVt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E34FC433C7;
-	Mon, 11 Dec 2023 18:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3l6NjD5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47296C433C7;
+	Mon, 11 Dec 2023 18:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319378;
-	bh=GKaZxoSZW/MPBPaXpzOLVVMeqaQLtZKx4REJBvbRtzI=;
+	s=korg; t=1702319380;
+	bh=Cgni1RmIAfoSFK4xWdOJGvdbCwADGEwvyW1ypo2GNig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYY9ptVt+qMH6bBjGyYc44coOEP49/BhrbVi7l0aS8vMgbwoBjYjwlu5BOz2n7Zdy
-	 7Oz13f8mrlDgQPcOOcQnWCprIQOfpqBN3fRUyla9hRcWoNKGgUu0dJx4GM9yPp2L/8
-	 HmizysCF5ZBSX7whTbq5Th03u37xdlJdbebovaKE=
+	b=I3l6NjD5rdtMO+B57BYUz49eA3b5BuX59Z+1hS8PgNxEVIj1IxWXhOcpiNLXqdnV6
+	 EG84nuDlCefLFm7DT/Fc9phQjI3iXsMT2qO+uJmaxf106e03wk3BZ+LkiaLPcEZ6FI
+	 FSI7ehdPQfT/jgqsDAk7qfSBLLA4fT5prLami/Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alex Bee <knaerzche@gmail.com>,
 	Jonas Karlman <jonas@kwiboo.se>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/244] arm64: dts: rockchip: Expand reg size of vdec node for RK3328
-Date: Mon, 11 Dec 2023 19:19:36 +0100
-Message-ID: <20231211182049.499891625@linuxfoundation.org>
+Subject: [PATCH 6.6 084/244] arm64: dts: rockchip: Expand reg size of vdec node for RK3399
+Date: Mon, 11 Dec 2023 19:19:37 +0100
+Message-ID: <20231211182049.533107926@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,35 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Alex Bee <knaerzche@gmail.com>
 
-[ Upstream commit 0b6240d697a96eaa45a2a5503a274ebb4f162fa3 ]
+[ Upstream commit 35938c18291b5da7422b2fac6dac0af11aa8d0d7 ]
 
 Expand the reg size for the vdec node to include cache/performance
-registers the rkvdec driver writes to.
+registers the rkvdec driver writes to. Also add missing clocks to the
+related power-domain.
 
-Fixes: 17408c9b119d ("arm64: dts: rockchip: Add vdec support for RK3328")
+Fixes: cbd7214402ec ("arm64: dts: rockchip: Define the rockchip Video Decoder node on rk3399")
+Signed-off-by: Alex Bee <knaerzche@gmail.com>
 Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20231105233630.3927502-9-jonas@kwiboo.se
+Link: https://lore.kernel.org/r/20231105233630.3927502-10-jonas@kwiboo.se
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3328.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3399.dtsi | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-index e729e7a22b23a..cc8209795c3e5 100644
---- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-@@ -668,7 +668,7 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399.dtsi b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
+index 5bc2d4faeea6d..4a3d0af5ecfe2 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
+@@ -1109,7 +1109,9 @@
+ 			power-domain@RK3399_PD_VDU {
+ 				reg = <RK3399_PD_VDU>;
+ 				clocks = <&cru ACLK_VDU>,
+-					 <&cru HCLK_VDU>;
++					 <&cru HCLK_VDU>,
++					 <&cru SCLK_VDU_CA>,
++					 <&cru SCLK_VDU_CORE>;
+ 				pm_qos = <&qos_video_m1_r>,
+ 					 <&qos_video_m1_w>;
+ 				#power-domain-cells = <0>;
+@@ -1385,7 +1387,7 @@
  
- 	vdec: video-codec@ff360000 {
- 		compatible = "rockchip,rk3328-vdec", "rockchip,rk3399-vdec";
--		reg = <0x0 0xff360000 0x0 0x400>;
-+		reg = <0x0 0xff360000 0x0 0x480>;
- 		interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
- 		clocks = <&cru ACLK_RKVDEC>, <&cru HCLK_RKVDEC>,
- 			 <&cru SCLK_VDEC_CABAC>, <&cru SCLK_VDEC_CORE>;
+ 	vdec: video-codec@ff660000 {
+ 		compatible = "rockchip,rk3399-vdec";
+-		reg = <0x0 0xff660000 0x0 0x400>;
++		reg = <0x0 0xff660000 0x0 0x480>;
+ 		interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH 0>;
+ 		clocks = <&cru ACLK_VDU>, <&cru HCLK_VDU>,
+ 			 <&cru SCLK_VDU_CA>, <&cru SCLK_VDU_CORE>;
 -- 
 2.42.0
 
