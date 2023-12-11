@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9746252F89;
-	Mon, 11 Dec 2023 18:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6010352F8A;
+	Mon, 11 Dec 2023 18:34:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQmKotFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECC4C433C9;
-	Mon, 11 Dec 2023 18:34:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAmPkCm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6698C433C7;
+	Mon, 11 Dec 2023 18:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319695;
-	bh=FiZapAyIec0ZSbQR+7B81YD3EuUa2TVbFjkm0nQzD1I=;
+	s=korg; t=1702319698;
+	bh=7frsDhZ7ezF9JIrn3xAjZkI9JdlES4rP8oQoO3gpgNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQmKotFhY2d1gEGgXtS90wxLttIQuU3LqxuB4p88txI+XDRusjRFR+m6547KiALwC
-	 ya6eJNeVjAKMNoZgvpPJ1ZMIxTIAKySIQKRCsnQhNfMAkOvzBR0ppmY/+oFQhRu+iz
-	 kMMwpKkrf4zB8QTmNN4b6eXA1ReXRgG+ixJCWteo=
+	b=bAmPkCm+LEapMzM0MN9rRCIe70CEc59or18uA7h2BvynQlYneOliDRhyGy7UF0/Ba
+	 u79ZepDTAhlLDeMWH7S8dpsNO49ok/uj5Jizljsz6xJk4SvepIYFcxXAkSab99PhJq
+	 +Lk7vnmOxuTfNQqhAlH790aA003X+ql3IPM/paQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengqi Chen <hengqi.chen@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 199/244] LoongArch: BPF: Dont sign extend function return value
-Date: Mon, 11 Dec 2023 19:21:32 +0100
-Message-ID: <20231211182054.871155861@linuxfoundation.org>
+Subject: [PATCH 6.6 200/244] parisc: Reduce size of the bug_table on 64-bit kernel by half
+Date: Mon, 11 Dec 2023 19:21:33 +0100
+Message-ID: <20231211182054.915407488@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -42,154 +41,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengqi Chen <hengqi.chen@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 5d47ec2e6f4c64e30e392cfe9532df98c9beb106 ]
+[ Upstream commit 43266838515d30dc0c45d5c7e6e7edacee6cce92 ]
 
-The `cls_redirect` test triggers a kernel panic like:
+Enable GENERIC_BUG_RELATIVE_POINTERS which will store 32-bit relative
+offsets to the bug address and the source file name instead of 64-bit
+absolute addresses. This effectively reduces the size of the
+bug_table[] array by half on 64-bit kernels.
 
-  # ./test_progs -t cls_redirect
-  Can't find bpf_testmod.ko kernel module: -2
-  WARNING! Selftests relying on bpf_testmod.ko will be skipped.
-  [   30.938489] CPU 3 Unable to handle kernel paging request at virtual address fffffffffd814de0, era == ffff800002009fb8, ra == ffff800002009f9c
-  [   30.939331] Oops[#1]:
-  [   30.939513] CPU: 3 PID: 1260 Comm: test_progs Not tainted 6.7.0-rc2-loong-devel-g2f56bb0d2327 #35 a896aca3f4164f09cc346f89f2e09832e07be5f6
-  [   30.939732] Hardware name: QEMU QEMU Virtual Machine, BIOS unknown 2/2/2022
-  [   30.939901] pc ffff800002009fb8 ra ffff800002009f9c tp 9000000104da4000 sp 9000000104da7ab0
-  [   30.940038] a0 fffffffffd814de0 a1 9000000104da7a68 a2 0000000000000000 a3 9000000104da7c10
-  [   30.940183] a4 9000000104da7c14 a5 0000000000000002 a6 0000000000000021 a7 00005555904d7f90
-  [   30.940321] t0 0000000000000110 t1 0000000000000000 t2 fffffffffd814de0 t3 0004c4b400000000
-  [   30.940456] t4 ffffffffffffffff t5 00000000c3f63600 t6 0000000000000000 t7 0000000000000000
-  [   30.940590] t8 000000000006d803 u0 0000000000000020 s9 9000000104da7b10 s0 900000010504c200
-  [   30.940727] s1 fffffffffd814de0 s2 900000010504c200 s3 9000000104da7c10 s4 9000000104da7ad0
-  [   30.940866] s5 0000000000000000 s6 90000000030e65bc s7 9000000104da7b44 s8 90000000044f6fc0
-  [   30.941015]    ra: ffff800002009f9c bpf_prog_846803e5ae81417f_cls_redirect+0xa0/0x590
-  [   30.941535]   ERA: ffff800002009fb8 bpf_prog_846803e5ae81417f_cls_redirect+0xbc/0x590
-  [   30.941696]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
-  [   30.942224]  PRMD: 00000004 (PPLV0 +PIE -PWE)
-  [   30.942330]  EUEN: 00000003 (+FPE +SXE -ASXE -BTE)
-  [   30.942453]  ECFG: 00071c1c (LIE=2-4,10-12 VS=7)
-  [   30.942612] ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
-  [   30.942764]  BADV: fffffffffd814de0
-  [   30.942854]  PRID: 0014c010 (Loongson-64bit, Loongson-3A5000)
-  [   30.942974] Modules linked in:
-  [   30.943078] Process test_progs (pid: 1260, threadinfo=00000000ce303226, task=000000007d10bb76)
-  [   30.943306] Stack : 900000010a064000 90000000044f6fc0 9000000104da7b48 0000000000000000
-  [   30.943495]         0000000000000000 9000000104da7c14 9000000104da7c10 900000010504c200
-  [   30.943626]         0000000000000001 ffff80001b88c000 9000000104da7b70 90000000030e6668
-  [   30.943785]         0000000000000000 9000000104da7b58 ffff80001b88c048 9000000003d05000
-  [   30.943936]         900000000303ac88 0000000000000000 0000000000000000 9000000104da7b70
-  [   30.944091]         0000000000000000 0000000000000001 0000000731eeab00 0000000000000000
-  [   30.944245]         ffff80001b88c000 0000000000000000 0000000000000000 54b99959429f83b8
-  [   30.944402]         ffff80001b88c000 90000000044f6fc0 9000000101d70000 ffff80001b88c000
-  [   30.944538]         000000000000005a 900000010504c200 900000010a064000 900000010a067000
-  [   30.944697]         9000000104da7d88 0000000000000000 9000000003d05000 90000000030e794c
-  [   30.944852]         ...
-  [   30.944924] Call Trace:
-  [   30.945120] [<ffff800002009fb8>] bpf_prog_846803e5ae81417f_cls_redirect+0xbc/0x590
-  [   30.945650] [<90000000030e6668>] bpf_test_run+0x1ec/0x2f8
-  [   30.945958] [<90000000030e794c>] bpf_prog_test_run_skb+0x31c/0x684
-  [   30.946065] [<90000000026d4f68>] __sys_bpf+0x678/0x2724
-  [   30.946159] [<90000000026d7288>] sys_bpf+0x20/0x2c
-  [   30.946253] [<90000000032dd224>] do_syscall+0x7c/0x94
-  [   30.946343] [<9000000002541c5c>] handle_syscall+0xbc/0x158
-  [   30.946492]
-  [   30.946549] Code: 0015030e  5c0009c0  5001d000 <28c00304> 02c00484  29c00304  00150009  2a42d2e4  0280200d
-  [   30.946793]
-  [   30.946971] ---[ end trace 0000000000000000 ]---
-  [   32.093225] Kernel panic - not syncing: Fatal exception in interrupt
-  [   32.093526] Kernel relocated by 0x2320000
-  [   32.093630]  .text @ 0x9000000002520000
-  [   32.093725]  .data @ 0x9000000003400000
-  [   32.093792]  .bss  @ 0x9000000004413200
-  [   34.971998] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
-
-This is because we signed-extend function return values. When subprog
-mode is enabled, we have:
-
-  cls_redirect()
-    -> get_global_metrics() returns pcpu ptr 0xfffffefffc00b480
-
-The pointer returned is later signed-extended to 0xfffffffffc00b480 at
-`BPF_JMP | BPF_EXIT`. During BPF prog run, this triggers unhandled page
-fault and a kernel panic.
-
-Drop the unnecessary signed-extension on return values like other
-architectures do.
-
-With this change, we have:
-
-  # ./test_progs -t cls_redirect
-  Can't find bpf_testmod.ko kernel module: -2
-  WARNING! Selftests relying on bpf_testmod.ko will be skipped.
-  #51/1    cls_redirect/cls_redirect_inlined:OK
-  #51/2    cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
-  #51/3    cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
-  #51/4    cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
-  #51/5    cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
-  #51/6    cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
-  #51/7    cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
-  #51/8    cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
-  #51/9    cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
-  #51/10   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
-  #51/11   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
-  #51/12   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
-  #51/13   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
-  #51/14   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
-  #51/15   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
-  #51/16   cls_redirect/cls_redirect_subprogs:OK
-  #51/17   cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
-  #51/18   cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
-  #51/19   cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
-  #51/20   cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
-  #51/21   cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
-  #51/22   cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
-  #51/23   cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
-  #51/24   cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
-  #51/25   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
-  #51/26   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
-  #51/27   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
-  #51/28   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
-  #51/29   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
-  #51/30   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
-  #51/31   cls_redirect/cls_redirect_dynptr:OK
-  #51/32   cls_redirect/IPv4 TCP accept unknown (no hops, flags: SYN):OK
-  #51/33   cls_redirect/IPv6 TCP accept unknown (no hops, flags: SYN):OK
-  #51/34   cls_redirect/IPv4 TCP accept unknown (no hops, flags: ACK):OK
-  #51/35   cls_redirect/IPv6 TCP accept unknown (no hops, flags: ACK):OK
-  #51/36   cls_redirect/IPv4 TCP forward unknown (one hop, flags: ACK):OK
-  #51/37   cls_redirect/IPv6 TCP forward unknown (one hop, flags: ACK):OK
-  #51/38   cls_redirect/IPv4 TCP accept known (one hop, flags: ACK):OK
-  #51/39   cls_redirect/IPv6 TCP accept known (one hop, flags: ACK):OK
-  #51/40   cls_redirect/IPv4 UDP accept unknown (no hops, flags: none):OK
-  #51/41   cls_redirect/IPv6 UDP accept unknown (no hops, flags: none):OK
-  #51/42   cls_redirect/IPv4 UDP forward unknown (one hop, flags: none):OK
-  #51/43   cls_redirect/IPv6 UDP forward unknown (one hop, flags: none):OK
-  #51/44   cls_redirect/IPv4 UDP accept known (one hop, flags: none):OK
-  #51/45   cls_redirect/IPv6 UDP accept known (one hop, flags: none):OK
-  #51      cls_redirect:OK
-  Summary: 1/45 PASSED, 0 SKIPPED, 0 FAILED
-
-Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
-Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: 487635756198 ("parisc: Fix asm operand number out of range build error in bug table")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/net/bpf_jit.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/parisc/Kconfig           |  7 +++++--
+ arch/parisc/include/asm/bug.h | 34 +++++++++++++++++-----------------
+ 2 files changed, 22 insertions(+), 19 deletions(-)
 
-diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
-index 5d02bc6acec2e..00915fb3cb82c 100644
---- a/arch/loongarch/net/bpf_jit.c
-+++ b/arch/loongarch/net/bpf_jit.c
-@@ -855,8 +855,6 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx, bool ext
+diff --git a/arch/parisc/Kconfig b/arch/parisc/Kconfig
+index 68cbe666510a3..8c45b98dfe0e4 100644
+--- a/arch/parisc/Kconfig
++++ b/arch/parisc/Kconfig
+@@ -113,9 +113,12 @@ config ARCH_HAS_ILOG2_U64
+ 	default n
  
- 	/* function return */
- 	case BPF_JMP | BPF_EXIT:
--		emit_sext_32(ctx, regmap[BPF_REG_0], true);
--
- 		if (i == ctx->prog->len - 1)
- 			break;
+ config GENERIC_BUG
+-	bool
+-	default y
++	def_bool y
+ 	depends on BUG
++	select GENERIC_BUG_RELATIVE_POINTERS if 64BIT
++
++config GENERIC_BUG_RELATIVE_POINTERS
++	bool
+ 
+ config GENERIC_HWEIGHT
+ 	bool
+diff --git a/arch/parisc/include/asm/bug.h b/arch/parisc/include/asm/bug.h
+index b9cad0bb4461b..1641ff9a8b83e 100644
+--- a/arch/parisc/include/asm/bug.h
++++ b/arch/parisc/include/asm/bug.h
+@@ -17,26 +17,27 @@
+ #define	PARISC_BUG_BREAK_ASM	"break 0x1f, 0x1fff"
+ #define	PARISC_BUG_BREAK_INSN	0x03ffe01f  /* PARISC_BUG_BREAK_ASM */
+ 
+-#if defined(CONFIG_64BIT)
+-#define ASM_WORD_INSN		".dword\t"
++#ifdef CONFIG_GENERIC_BUG_RELATIVE_POINTERS
++# define __BUG_REL(val) ".word " __stringify(val) " - ."
+ #else
+-#define ASM_WORD_INSN		".word\t"
++# define __BUG_REL(val) ".word " __stringify(val)
+ #endif
+ 
++
+ #ifdef CONFIG_DEBUG_BUGVERBOSE
+ #define BUG()								\
+ 	do {								\
+ 		asm volatile("\n"					\
+ 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
+ 			     "\t.pushsection __bug_table,\"a\"\n"	\
+-			     "\t.align %4\n"				\
+-			     "2:\t" ASM_WORD_INSN "1b, %c0\n"		\
++			     "\t.align 4\n"				\
++			     "2:\t" __BUG_REL(1b) "\n"			\
++			     "\t" __BUG_REL(%c0)  "\n"			\
+ 			     "\t.short %1, %2\n"			\
+-			     "\t.blockz %3-2*%4-2*2\n"			\
++			     "\t.blockz %3-2*4-2*2\n"			\
+ 			     "\t.popsection"				\
+ 			     : : "i" (__FILE__), "i" (__LINE__),	\
+-			     "i" (0), "i" (sizeof(struct bug_entry)),	\
+-			     "i" (sizeof(long)) );			\
++			     "i" (0), "i" (sizeof(struct bug_entry)) );	\
+ 		unreachable();						\
+ 	} while(0)
+ 
+@@ -54,15 +55,15 @@
+ 		asm volatile("\n"					\
+ 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
+ 			     "\t.pushsection __bug_table,\"a\"\n"	\
+-			     "\t.align %4\n"				\
+-			     "2:\t" ASM_WORD_INSN "1b, %c0\n"		\
++			     "\t.align 4\n"				\
++			     "2:\t" __BUG_REL(1b) "\n"			\
++			     "\t" __BUG_REL(%c0)  "\n"			\
+ 			     "\t.short %1, %2\n"			\
+-			     "\t.blockz %3-2*%4-2*2\n"			\
++			     "\t.blockz %3-2*4-2*2\n"			\
+ 			     "\t.popsection"				\
+ 			     : : "i" (__FILE__), "i" (__LINE__),	\
+ 			     "i" (BUGFLAG_WARNING|(flags)),		\
+-			     "i" (sizeof(struct bug_entry)),		\
+-			     "i" (sizeof(long)) );			\
++			     "i" (sizeof(struct bug_entry)) );		\
+ 	} while(0)
+ #else
+ #define __WARN_FLAGS(flags)						\
+@@ -71,13 +72,12 @@
+ 			     "1:\t" PARISC_BUG_BREAK_ASM "\n"		\
+ 			     "\t.pushsection __bug_table,\"a\"\n"	\
+ 			     "\t.align %2\n"				\
+-			     "2:\t" ASM_WORD_INSN "1b\n"		\
++			     "2:\t" __BUG_REL(1b) "\n"			\
+ 			     "\t.short %0\n"				\
+-			     "\t.blockz %1-%2-2\n"			\
++			     "\t.blockz %1-4-2\n"			\
+ 			     "\t.popsection"				\
+ 			     : : "i" (BUGFLAG_WARNING|(flags)),		\
+-			     "i" (sizeof(struct bug_entry)),		\
+-			     "i" (sizeof(long)) );			\
++			     "i" (sizeof(struct bug_entry)) );		\
+ 	} while(0)
+ #endif
  
 -- 
 2.42.0
