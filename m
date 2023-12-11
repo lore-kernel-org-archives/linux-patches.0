@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0867C524B8;
-	Mon, 11 Dec 2023 18:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AFB51C44;
+	Mon, 11 Dec 2023 18:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbDYa1eJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80486C433C7;
-	Mon, 11 Dec 2023 18:56:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvd0vzMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3909DC433C8;
+	Mon, 11 Dec 2023 18:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320972;
-	bh=7c58Wem5h9/YuGidsiMsEJOgJlX2saxGP+Ny68OGtbQ=;
+	s=korg; t=1702320975;
+	bh=uImUUe/Mw89v78Q3ahIW5cr+knatHoDamtvh4xtrxzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbDYa1eJrb+KP8torbKfFMVX8nhzJtn//Iyt1zMppDYsXNvPMFYl8GmaU3udwK4Wv
-	 49qBOpjdBwVPqNbbWHPCXl7EJbTZ9tMRhXZCrtz+wFX0JW0eXmNTR7dDqiuIW0LlII
-	 gTuXjyw3iURRRJyG9lTbYFoAJ+wf5dpUHlcuI4DI=
+	b=lvd0vzMPnEzLMUJWUmqAdzBjno40DEyivO7cEtZrE/ju5VHI0ryLU03oJDEssW8BT
+	 nn/F2YtyS2a71R6JwbDuRe0SainvajywhfiiQ4WbFuK+NVj4Rj9CnBLCyaxeJi9l37
+	 LTyPBDrHdKhWBjwIEiEdxjKmJnX9nf4Y0k8CSOrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/141] ASoC: wm_adsp: fix memleak in wm_adsp_buffer_populate
-Date: Mon, 11 Dec 2023 19:22:01 +0100
-Message-ID: <20231211182029.236655370@linuxfoundation.org>
+Subject: [PATCH 5.15 035/141] ionic: Fix dim work handling in split interrupt mode
+Date: Mon, 11 Dec 2023 19:21:34 +0100
+Message-ID: <20231211182028.057552715@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -43,55 +44,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit 29046a78a3c0a1f8fa0427f164caa222f003cf5b ]
+[ Upstream commit 4115ba677c35f694b62298e55f0e04ce84eed469 ]
 
-When wm_adsp_buffer_read() fails, we should free buf->regions.
-Otherwise, the callers of wm_adsp_buffer_populate() will
-directly free buf on failure, which makes buf->regions a leaked
-memory.
+Currently ionic_dim_work() is incorrect when in
+split interrupt mode. This is because the interrupt
+rate is only being changed for the Rx side even for
+dim running on Tx. Fix this by using the qcq from
+the container_of macro. Also, introduce some local
+variables for a bit of cleanup.
 
-Fixes: a792af69b08f ("ASoC: wm_adsp: Refactor compress stream initialisation")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20231204074158.12026-1-dinghao.liu@zju.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a6ff85e0a2d9 ("ionic: remove intr coalesce update from napi")
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20231204192234.21017-3-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm_adsp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
-index 08fc1a025b1a9..df86cf4f4caed 100644
---- a/sound/soc/codecs/wm_adsp.c
-+++ b/sound/soc/codecs/wm_adsp.c
-@@ -3766,12 +3766,12 @@ static int wm_adsp_buffer_populate(struct wm_adsp_compr_buf *buf)
- 		ret = wm_adsp_buffer_read(buf, caps->region_defs[i].base_offset,
- 					  &region->base_addr);
- 		if (ret < 0)
--			return ret;
-+			goto err;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index 2cc126d378353..63181866809fd 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -44,24 +44,24 @@ static void ionic_lif_queue_identify(struct ionic_lif *lif);
+ static void ionic_dim_work(struct work_struct *work)
+ {
+ 	struct dim *dim = container_of(work, struct dim, work);
++	struct ionic_intr_info *intr;
+ 	struct dim_cq_moder cur_moder;
+ 	struct ionic_qcq *qcq;
++	struct ionic_lif *lif;
+ 	u32 new_coal;
  
- 		ret = wm_adsp_buffer_read(buf, caps->region_defs[i].size_offset,
- 					  &offset);
- 		if (ret < 0)
--			return ret;
-+			goto err;
+ 	cur_moder = net_dim_get_rx_moderation(dim->mode, dim->profile_ix);
+ 	qcq = container_of(dim, struct ionic_qcq, dim);
+-	new_coal = ionic_coal_usec_to_hw(qcq->q.lif->ionic, cur_moder.usec);
++	lif = qcq->q.lif;
++	new_coal = ionic_coal_usec_to_hw(lif->ionic, cur_moder.usec);
+ 	new_coal = new_coal ? new_coal : 1;
  
- 		region->cumulative_size = offset;
+-	if (qcq->intr.dim_coal_hw != new_coal) {
+-		unsigned int qi = qcq->cq.bound_q->index;
+-		struct ionic_lif *lif = qcq->q.lif;
+-
+-		qcq->intr.dim_coal_hw = new_coal;
++	intr = &qcq->intr;
++	if (intr->dim_coal_hw != new_coal) {
++		intr->dim_coal_hw = new_coal;
  
-@@ -3782,6 +3782,10 @@ static int wm_adsp_buffer_populate(struct wm_adsp_compr_buf *buf)
+ 		ionic_intr_coal_init(lif->ionic->idev.intr_ctrl,
+-				     lif->rxqcqs[qi]->intr.index,
+-				     qcq->intr.dim_coal_hw);
++				     intr->index, intr->dim_coal_hw);
  	}
  
- 	return 0;
-+
-+err:
-+	kfree(buf->regions);
-+	return ret;
- }
- 
- static void wm_adsp_buffer_clear(struct wm_adsp_compr_buf *buf)
+ 	dim->state = DIM_START_MEASURE;
 -- 
 2.42.0
 
