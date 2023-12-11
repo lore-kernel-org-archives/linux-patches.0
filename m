@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A231321B8;
-	Mon, 11 Dec 2023 18:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB17A321B8;
+	Mon, 11 Dec 2023 18:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmgePFPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F7EC433C7;
-	Mon, 11 Dec 2023 18:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uN0BhM+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC57C433C7;
+	Mon, 11 Dec 2023 18:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702321140;
-	bh=5ZgA6Gy8YijPX0/G5aVZOdjRCgLD5lMkyk+BcIAvkSw=;
+	s=korg; t=1702321143;
+	bh=vgtiyLeln55Zh+3RL05zdLdkhffXkM5unnjJyZX1qMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmgePFPnZ6BPclaejeD6Jt6uL9qPEQha2F2UnQKQcm1vFx7EkE/ABvBOCcFBQF+8m
-	 A5xYX70dOcB5BPt9UfPPHC1Ic8DVxzhNB5S+mb/Ri3VeqjbnTA6U3HqFIkcnIQzZzg
-	 d4du49nbUJ+rdvRERCVqYxvLu+oTtpgchPAOOecc=
+	b=uN0BhM+D5DmCtV5G0K0K9y9asq4GR4DijxFZPPQJ6ZjMDCHZwSwwev9NaLJ9F9CYs
+	 eZZHDg+CugFsQmKIi/pqUxrEf1X7RKQH+q494nDfteQb3yFxwk07BqW+ZvT3b7a9FW
+	 DtqwBPZ8HJNt4LNrqQw82xxTAcRGJl2GwvpPMN48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cameron Williams <cang1@live.co.uk>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH 5.15 124/141] parport: Add support for Brainboxes IX/UC/PX parallel cards
-Date: Mon, 11 Dec 2023 19:23:03 +0100
-Message-ID: <20231211182031.941466722@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 125/141] Revert "xhci: Loosen RPM as default policy to cover for AMD xHC 1.1"
+Date: Mon, 11 Dec 2023 19:23:04 +0100
+Message-ID: <20231211182031.980895061@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -41,65 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cameron Williams <cang1@live.co.uk>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 1a031f6edc460e9562098bdedc3918da07c30a6e upstream.
+commit 24be0b3c40594a14b65141ced486ae327398faf8 upstream.
 
-Adds support for Intashield IX-500/IX-550, UC-146/UC-157, PX-146/PX-157,
-PX-203 and PX-475 (LPT port)
+This reverts commit 4baf1218150985ee3ab0a27220456a1f027ea0ac.
 
+Enabling runtime pm as default for all AMD xHC 1.1 controllers caused
+regression. An initial attempt to fix those was done in commit a5d6264b638e
+("xhci: Enable RPM on controllers that support low-power states") but new
+issues are still seen.
+
+Revert this to get those AMD xHC 1.1 systems working
+
+This patch went to stable an needs to be reverted from there as well.
+
+Fixes: 4baf12181509 ("xhci: Loosen RPM as default policy to cover for AMD xHC 1.1")
+Link: https://lore.kernel.org/linux-usb/55c50bf5-bffb-454e-906e-4408c591cb63@molgen.mpg.de
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Cameron Williams <cang1@live.co.uk>
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://lore.kernel.org/r/AS4PR02MB790389C130410BD864C8DCC9C4A6A@AS4PR02MB7903.eurprd02.prod.outlook.com
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20231205090548.1377667-1-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parport/parport_pc.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/usb/host/xhci-pci.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/parport/parport_pc.c
-+++ b/drivers/parport/parport_pc.c
-@@ -2613,6 +2613,8 @@ enum parport_pc_pci_cards {
- 	netmos_9865,
- 	quatech_sppxp100,
- 	wch_ch382l,
-+	brainboxes_uc146,
-+	brainboxes_px203,
- };
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -349,8 +349,6 @@ static void xhci_pci_quirks(struct devic
+ 	/* xHC spec requires PCI devices to support D3hot and D3cold */
+ 	if (xhci->hci_version >= 0x120)
+ 		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
+-	else if (pdev->vendor == PCI_VENDOR_ID_AMD && xhci->hci_version >= 0x110)
+-		xhci->quirks |= XHCI_DEFAULT_PM_RUNTIME_ALLOW;
  
- 
-@@ -2676,6 +2678,8 @@ static struct parport_pc_pci {
- 	/* netmos_9865 */               { 1, { { 0, -1 }, } },
- 	/* quatech_sppxp100 */		{ 1, { { 0, 1 }, } },
- 	/* wch_ch382l */		{ 1, { { 2, -1 }, } },
-+	/* brainboxes_uc146 */	{ 1, { { 3, -1 }, } },
-+	/* brainboxes_px203 */	{ 1, { { 0, -1 }, } },
- };
- 
- static const struct pci_device_id parport_pc_pci_tbl[] = {
-@@ -2767,6 +2771,23 @@ static const struct pci_device_id parpor
- 	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, quatech_sppxp100 },
- 	/* WCH CH382L PCI-E single parallel port card */
- 	{ 0x1c00, 0x3050, 0x1c00, 0x3050, 0, 0, wch_ch382l },
-+	/* Brainboxes IX-500/550 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x402a,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
-+	/* Brainboxes UC-146/UC-157 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0be1,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc146 },
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x0be2,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_uc146 },
-+	/* Brainboxes PX-146/PX-257 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x401c,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
-+	/* Brainboxes PX-203 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x4007,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, brainboxes_px203 },
-+	/* Brainboxes PX-475 */
-+	{ PCI_VENDOR_ID_INTASHIELD, 0x401f,
-+	  PCI_ANY_ID, PCI_ANY_ID, 0, 0, oxsemi_pcie_pport },
- 	{ 0, } /* terminate list */
- };
- MODULE_DEVICE_TABLE(pci, parport_pc_pci_tbl);
+ 	if (xhci->quirks & XHCI_RESET_ON_RESUME)
+ 		xhci_dbg_trace(xhci, trace_xhci_dbg_quirks,
 
 
