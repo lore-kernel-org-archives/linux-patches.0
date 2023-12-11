@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59A24F212;
-	Mon, 11 Dec 2023 18:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABCC5102D;
+	Mon, 11 Dec 2023 18:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4yEzs8L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39898C433C8;
-	Mon, 11 Dec 2023 18:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwepdCfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34A0C433C8;
+	Mon, 11 Dec 2023 18:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319058;
-	bh=zKMvuAUqEVymUHReL4yxVKut6ZJOds/vvpxrSsioDb0=;
+	s=korg; t=1702319061;
+	bh=puEfbKJ1S+bQpS/fz3EJIYwpzdRO9ypSfxpzHZn8hto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4yEzs8LhRlekA6Ln8AAk0vulwj3A6J2ynPi0ToT+HExx1pVkb5PfqXOT0pRYfO0U
-	 DaMWHf43dN6S00sfO/llbq+luKjK/i7S1YApRZpsPsilXL59fo9Yzi/0tXeDi12IxW
-	 EEJLtc1b9w/AIv2Kqy6iSOQP2nnJ2aGpnuQP5+9I=
+	b=dwepdCfNNZhfEucxBqNgc0CCA3S+dEmfrcjiLNrF9mRQuhCUcYOgS2KUi7TIDd3Qs
+	 oXxi/nAt1uxT3RMVx47qGgjwgiID/CuFrk0/8lnP0JqXkDmb7M3JqoyK6A7xSL8SW2
+	 xnP8NrJrVtxd5RPtwqoaAfpyFhp/U/zi7cve6UVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Yepeng Pan <yepeng.pan@cispa.de>,
-	Christian Rossow <rossow@cispa.de>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Robin Gong <yibin.gong@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 22/55] tcp: do not accept ACK of bytes we never sent
-Date: Mon, 11 Dec 2023 19:21:32 +0100
-Message-ID: <20231211182013.033093862@linuxfoundation.org>
+Subject: [PATCH 4.19 03/55] spi: imx: correct wml as the last sg length
+Date: Mon, 11 Dec 2023 19:21:13 +0100
+Message-ID: <20231211182012.375843644@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -45,104 +42,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Robin Gong <yibin.gong@nxp.com>
 
-[ Upstream commit 3d501dd326fb1c73f1b8206d4c6e1d7b15c07e27 ]
+[ Upstream commit 5ba5a3730639caddf42af11c60f3f3d99d9a5f00 ]
 
-This patch is based on a detailed report and ideas from Yepeng Pan
-and Christian Rossow.
+Correct wml as the last rx sg length instead of the whole transfer
+length. Otherwise, mtd_stresstest will be failed as below:
 
-ACK seq validation is currently following RFC 5961 5.2 guidelines:
+insmod mtd_stresstest.ko dev=0
+=================================================
+mtd_stresstest: MTD device: 0
+mtd_stresstest: not NAND flash, assume page size is 512 bytes.
+mtd_stresstest: MTD device size 4194304, eraseblock size 65536, page size 512, count of eraseblocks 64, pa0
+mtd_stresstest: doing operations
+mtd_stresstest: 0 operations done
+mtd_test: mtd_read from 1ff532, size 880
+mtd_test: mtd_read from 20c267, size 64998
+spi_master spi0: I/O Error in DMA RX
+m25p80 spi0.0: SPI transfer failed: -110
+spi_master spi0: failed to transfer one message from queue
+mtd_test: error: read failed at 0x20c267
+mtd_stresstest: error -110 occurred
+=================================================
+insmod: ERROR: could not insert module mtd_stresstest.ko: Connection timed out
 
-   The ACK value is considered acceptable only if
-   it is in the range of ((SND.UNA - MAX.SND.WND) <= SEG.ACK <=
-   SND.NXT).  All incoming segments whose ACK value doesn't satisfy the
-   above condition MUST be discarded and an ACK sent back.  It needs to
-   be noted that RFC 793 on page 72 (fifth check) says: "If the ACK is a
-   duplicate (SEG.ACK < SND.UNA), it can be ignored.  If the ACK
-   acknowledges something not yet sent (SEG.ACK > SND.NXT) then send an
-   ACK, drop the segment, and return".  The "ignored" above implies that
-   the processing of the incoming data segment continues, which means
-   the ACK value is treated as acceptable.  This mitigation makes the
-   ACK check more stringent since any ACK < SND.UNA wouldn't be
-   accepted, instead only ACKs that are in the range ((SND.UNA -
-   MAX.SND.WND) <= SEG.ACK <= SND.NXT) get through.
-
-This can be refined for new (and possibly spoofed) flows,
-by not accepting ACK for bytes that were never sent.
-
-This greatly improves TCP security at a little cost.
-
-I added a Fixes: tag to make sure this patch will reach stable trees,
-even if the 'blamed' patch was adhering to the RFC.
-
-tp->bytes_acked was added in linux-4.2
-
-Following packetdrill test (courtesy of Yepeng Pan) shows
-the issue at hand:
-
-0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
-+0 setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-+0 bind(3, ..., ...) = 0
-+0 listen(3, 1024) = 0
-
-// ---------------- Handshake ------------------- //
-
-// when window scale is set to 14 the window size can be extended to
-// 65535 * (2^14) = 1073725440. Linux would accept an ACK packet
-// with ack number in (Server_ISN+1-1073725440. Server_ISN+1)
-// ,though this ack number acknowledges some data never
-// sent by the server.
-
-+0 < S 0:0(0) win 65535 <mss 1400,nop,wscale 14>
-+0 > S. 0:0(0) ack 1 <...>
-+0 < . 1:1(0) ack 1 win 65535
-+0 accept(3, ..., ...) = 4
-
-// For the established connection, we send an ACK packet,
-// the ack packet uses ack number 1 - 1073725300 + 2^32,
-// where 2^32 is used to wrap around.
-// Note: we used 1073725300 instead of 1073725440 to avoid possible
-// edge cases.
-// 1 - 1073725300 + 2^32 = 3221241997
-
-// Oops, old kernels happily accept this packet.
-+0 < . 1:1001(1000) ack 3221241997 win 65535
-
-// After the kernel fix the following will be replaced by a challenge ACK,
-// and prior malicious frame would be dropped.
-+0 > . 1:1(0) ack 1001
-
-Fixes: 354e4aa391ed ("tcp: RFC 5961 5.2 Blind Data Injection Attack Mitigation")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Yepeng Pan <yepeng.pan@cispa.de>
-Reported-by: Christian Rossow <rossow@cispa.de>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20231205161841.2702925-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Robin Gong <yibin.gong@nxp.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 00b80ac93553 ("spi: imx: mx51-ecspi: Move some initialisation to prepare_message hook.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/spi/spi-imx.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 0052a6194cc1a..407ad07dc5985 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -3640,8 +3640,12 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
- 	 * then we can probably ignore it.
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 686251e05edfe..139127e27a147 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -218,7 +218,6 @@ static bool spi_imx_can_dma(struct spi_master *master, struct spi_device *spi,
+ 			 struct spi_transfer *transfer)
+ {
+ 	struct spi_imx_data *spi_imx = spi_master_get_devdata(master);
+-	unsigned int bytes_per_word, i;
+ 
+ 	if (!master->dma_rx)
+ 		return false;
+@@ -226,14 +225,6 @@ static bool spi_imx_can_dma(struct spi_master *master, struct spi_device *spi,
+ 	if (spi_imx->slave_mode)
+ 		return false;
+ 
+-	bytes_per_word = spi_imx_bytes_per_word(transfer->bits_per_word);
+-
+-	for (i = spi_imx->devtype_data->fifo_size / 2; i > 0; i--) {
+-		if (!(transfer->len % (i * bytes_per_word)))
+-			break;
+-	}
+-
+-	spi_imx->wml = i;
+ 	spi_imx->dynamic_burst = 0;
+ 
+ 	return true;
+@@ -612,7 +603,7 @@ static void mx51_setup_wml(struct spi_imx_data *spi_imx)
+ 	 * and enable DMA request.
  	 */
- 	if (before(ack, prior_snd_una)) {
-+		u32 max_window;
+ 
+-	writel(MX51_ECSPI_DMA_RX_WML(spi_imx->wml) |
++	writel(MX51_ECSPI_DMA_RX_WML(spi_imx->wml - 1) |
+ 		MX51_ECSPI_DMA_TX_WML(spi_imx->wml) |
+ 		MX51_ECSPI_DMA_RXT_WML(spi_imx->wml) |
+ 		MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN |
+@@ -1330,12 +1321,30 @@ static int spi_imx_dma_transfer(struct spi_imx_data *spi_imx,
+ 	unsigned long timeout;
+ 	struct spi_master *master = spi_imx->bitbang.master;
+ 	struct sg_table *tx = &transfer->tx_sg, *rx = &transfer->rx_sg;
++	struct scatterlist *last_sg = sg_last(rx->sgl, rx->nents);
++	unsigned int bytes_per_word, i;
+ 	int ret;
+ 
++	/* Get the right burst length from the last sg to ensure no tail data */
++	bytes_per_word = spi_imx_bytes_per_word(transfer->bits_per_word);
++	for (i = spi_imx->devtype_data->fifo_size / 2; i > 0; i--) {
++		if (!(sg_dma_len(last_sg) % (i * bytes_per_word)))
++			break;
++	}
++	/* Use 1 as wml in case no available burst length got */
++	if (i == 0)
++		i = 1;
 +
-+		/* do not accept ACK for bytes we never sent. */
-+		max_window = min_t(u64, tp->max_window, tp->bytes_acked);
- 		/* RFC 5961 5.2 [Blind Data Injection Attack].[Mitigation] */
--		if (before(ack, prior_snd_una - tp->max_window)) {
-+		if (before(ack, prior_snd_una - max_window)) {
- 			if (!(flag & FLAG_NO_CHALLENGE_ACK))
- 				tcp_send_challenge_ack(sk, skb);
- 			return -1;
++	spi_imx->wml =  i;
++
+ 	ret = spi_imx_dma_configure(master);
+ 	if (ret)
+ 		return ret;
+ 
++	if (!spi_imx->devtype_data->setup_wml) {
++		dev_err(spi_imx->dev, "No setup_wml()?\n");
++		return -EINVAL;
++	}
+ 	spi_imx->devtype_data->setup_wml(spi_imx);
+ 
+ 	/*
 -- 
 2.42.0
 
