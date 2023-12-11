@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4641051C5D;
-	Mon, 11 Dec 2023 18:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E776151C5D;
+	Mon, 11 Dec 2023 18:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkD8hDL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD93CC433C8;
-	Mon, 11 Dec 2023 18:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVUhsGeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A4AEC433C9;
+	Mon, 11 Dec 2023 18:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319845;
-	bh=A6Kmq//rdU3Gik06d2yMC0+hAIt2xIC7YdriIx3vAwQ=;
+	s=korg; t=1702319847;
+	bh=WkchvXqGehoh48nGNHjgdSvx78IJ2msGLOck9OxZtbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AkD8hDL3slXDRmUHclnTNxOUmVZKstxc2wrVKg61fFcVNkro2icjRExBqB/TLtpL3
-	 Azj2fvmohikMfmfgrDUC0kXJXGkEDhi1nuZPwPU79cNsjBNBA0Z23+okHIxACbLKbV
-	 lEc9Q6Icezm7kS5WB/OZNZlUy6zpGZXsoM/PT1ac=
+	b=ZVUhsGeGdjdZReLBwWi5iOMcDa+naRO5F5gb8JhD3S6fASO/p5BXuA5GKrvRFQlMT
+	 5857do2kOU3tPmxF42t5jQyVACgiNMvpo5ynyygCCgXetP1KTvQyoySnpTf5luygPa
+	 VxoGV3gmSGvsvaE8ryghylWfiUUHunhQJwvHXUGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Bottorff <janb@os.amperecomputing.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 02/97] i2c: designware: Fix corrupted memory seen in the ISR
-Date: Mon, 11 Dec 2023 19:21:05 +0100
-Message-ID: <20231211182019.916937041@linuxfoundation.org>
+Subject: [PATCH 5.10 11/97] asus-wmi: Add dgpu disable method
+Date: Mon, 11 Dec 2023 19:21:14 +0100
+Message-ID: <20231211182020.303342402@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 References: <20231211182019.802717483@linuxfoundation.org>
@@ -44,106 +42,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Bottorff <janb@os.amperecomputing.com>
+From: Luke D. Jones <luke@ljones.dev>
 
-[ Upstream commit f726eaa787e9f9bc858c902d18a09af6bcbfcdaf ]
+[ Upstream commit 98829e84dc67630efb7de675f0a70066620468a3 ]
 
-When running on a many core ARM64 server, errors were
-happening in the ISR that looked like corrupted memory. These
-corruptions would fix themselves if small delays were inserted
-in the ISR. Errors reported by the driver included "i2c_designware
-APMC0D0F:00: i2c_dw_xfer_msg: invalid target address" and
-"i2c_designware APMC0D0F:00:controller timed out" during
-in-band IPMI SSIF stress tests.
+In Windows the ASUS Armory Crate program can enable or disable the
+dGPU via a WMI call. This functions much the same as various Linux
+methods in software where the dGPU is removed from the device tree.
 
-The problem was determined to be memory writes in the driver were not
-becoming visible to all cores when execution rapidly shifted between
-cores, like when a register write immediately triggers an ISR.
-Processors with weak memory ordering, like ARM64, make no
-guarantees about the order normal memory writes become globally
-visible, unless barrier instructions are used to control ordering.
+However the WMI call saves the state of dGPU (enabled or not) and
+this then changes the dGPU visibility in Linux with no way for
+Linux users to re-enable it. We expose the WMI method so users can
+see and change the dGPU ACPI state.
 
-To solve this, regmap accessor functions configured by this driver
-were changed to use non-relaxed forms of the low-level register
-access functions, which include a barrier on platforms that require
-it. This assures memory writes before a controller register access are
-visible to all cores. The community concluded defaulting to correct
-operation outweighed defaulting to the small performance gains from
-using relaxed access functions. Being a low speed device added weight to
-this choice of default register access behavior.
-
-Signed-off-by: Jan Bottorff <janb@os.amperecomputing.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Tested-by: Serge Semin <fancer.lancer@gmail.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Link: https://lore.kernel.org/r/20210807023656.25020-3-luke@ljones.dev
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: b52cbca22cbf ("platform/x86: asus-wmi: Move i8042 filter install to shared asus-wmi code")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-common.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/platform/x86/asus-wmi.c            | 98 ++++++++++++++++++++++
+ include/linux/platform_data/x86/asus-wmi.h |  3 +
+ 2 files changed, 101 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
-index 682fffaab2b40..c9f7783ac7cb1 100644
---- a/drivers/i2c/busses/i2c-designware-common.c
-+++ b/drivers/i2c/busses/i2c-designware-common.c
-@@ -63,7 +63,7 @@ static int dw_reg_read(void *context, unsigned int reg, unsigned int *val)
- {
- 	struct dw_i2c_dev *dev = context;
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index ca3b97b7a6ad8..93b4c61130837 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -207,6 +207,9 @@ struct asus_wmi {
+ 	u8 fan_boost_mode_mask;
+ 	u8 fan_boost_mode;
  
--	*val = readl_relaxed(dev->base + reg);
-+	*val = readl(dev->base + reg);
++	bool dgpu_disable_available;
++	bool dgpu_disable;
++
+ 	bool throttle_thermal_policy_available;
+ 	u8 throttle_thermal_policy_mode;
  
- 	return 0;
+@@ -421,6 +424,93 @@ static void lid_flip_tablet_mode_get_state(struct asus_wmi *asus)
+ 	}
  }
-@@ -72,7 +72,7 @@ static int dw_reg_write(void *context, unsigned int reg, unsigned int val)
- {
- 	struct dw_i2c_dev *dev = context;
  
--	writel_relaxed(val, dev->base + reg);
-+	writel(val, dev->base + reg);
++/* dGPU ********************************************************************/
++static int dgpu_disable_check_present(struct asus_wmi *asus)
++{
++	u32 result;
++	int err;
++
++	asus->dgpu_disable_available = false;
++
++	err = asus_wmi_get_devstate(asus, ASUS_WMI_DEVID_DGPU, &result);
++	if (err) {
++		if (err == -ENODEV)
++			return 0;
++		return err;
++	}
++
++	if (result & ASUS_WMI_DSTS_PRESENCE_BIT) {
++		asus->dgpu_disable_available = true;
++		asus->dgpu_disable = result & ASUS_WMI_DSTS_STATUS_BIT;
++	}
++
++	return 0;
++}
++
++static int dgpu_disable_write(struct asus_wmi *asus)
++{
++	u32 retval;
++	u8 value;
++	int err;
++
++	/* Don't rely on type conversion */
++	value = asus->dgpu_disable ? 1 : 0;
++
++	err = asus_wmi_set_devstate(ASUS_WMI_DEVID_DGPU, value, &retval);
++	if (err) {
++		pr_warn("Failed to set dgpu disable: %d\n", err);
++		return err;
++	}
++
++	if (retval > 1 || retval < 0) {
++		pr_warn("Failed to set dgpu disable (retval): 0x%x\n", retval);
++		return -EIO;
++	}
++
++	sysfs_notify(&asus->platform_device->dev.kobj, NULL, "dgpu_disable");
++
++	return 0;
++}
++
++static ssize_t dgpu_disable_show(struct device *dev,
++				   struct device_attribute *attr, char *buf)
++{
++	struct asus_wmi *asus = dev_get_drvdata(dev);
++	u8 mode = asus->dgpu_disable;
++
++	return sysfs_emit(buf, "%d\n", mode);
++}
++
++/*
++ * A user may be required to store the value twice, typcial store first, then
++ * rescan PCI bus to activate power, then store a second time to save correctly.
++ * The reason for this is that an extra code path in the ACPI is enabled when
++ * the device and bus are powered.
++ */
++static ssize_t dgpu_disable_store(struct device *dev,
++				    struct device_attribute *attr,
++				    const char *buf, size_t count)
++{
++	bool disable;
++	int result;
++
++	struct asus_wmi *asus = dev_get_drvdata(dev);
++
++	result = kstrtobool(buf, &disable);
++	if (result)
++		return result;
++
++	asus->dgpu_disable = disable;
++
++	result = dgpu_disable_write(asus);
++	if (result)
++		return result;
++
++	return count;
++}
++
++static DEVICE_ATTR_RW(dgpu_disable);
++
+ /* Battery ********************************************************************/
  
- 	return 0;
- }
-@@ -81,7 +81,7 @@ static int dw_reg_read_swab(void *context, unsigned int reg, unsigned int *val)
- {
- 	struct dw_i2c_dev *dev = context;
+ /* The battery maximum charging percentage */
+@@ -2319,6 +2409,7 @@ static struct attribute *platform_attributes[] = {
+ 	&dev_attr_camera.attr,
+ 	&dev_attr_cardr.attr,
+ 	&dev_attr_touchpad.attr,
++	&dev_attr_dgpu_disable.attr,
+ 	&dev_attr_lid_resume.attr,
+ 	&dev_attr_als_enable.attr,
+ 	&dev_attr_fan_boost_mode.attr,
+@@ -2344,6 +2435,8 @@ static umode_t asus_sysfs_is_visible(struct kobject *kobj,
+ 		devid = ASUS_WMI_DEVID_LID_RESUME;
+ 	else if (attr == &dev_attr_als_enable.attr)
+ 		devid = ASUS_WMI_DEVID_ALS_ENABLE;
++	else if (attr == &dev_attr_dgpu_disable.attr)
++		ok = asus->dgpu_disable_available;
+ 	else if (attr == &dev_attr_fan_boost_mode.attr)
+ 		ok = asus->fan_boost_mode_available;
+ 	else if (attr == &dev_attr_throttle_thermal_policy.attr)
+@@ -2603,6 +2696,10 @@ static int asus_wmi_add(struct platform_device *pdev)
+ 	if (err)
+ 		goto fail_platform;
  
--	*val = swab32(readl_relaxed(dev->base + reg));
-+	*val = swab32(readl(dev->base + reg));
++	err = dgpu_disable_check_present(asus);
++	if (err)
++		goto fail_dgpu_disable;
++
+ 	err = fan_boost_mode_check_present(asus);
+ 	if (err)
+ 		goto fail_fan_boost_mode;
+@@ -2699,6 +2796,7 @@ static int asus_wmi_add(struct platform_device *pdev)
+ fail_sysfs:
+ fail_throttle_thermal_policy:
+ fail_fan_boost_mode:
++fail_dgpu_disable:
+ fail_platform:
+ 	kfree(asus);
+ 	return err;
+diff --git a/include/linux/platform_data/x86/asus-wmi.h b/include/linux/platform_data/x86/asus-wmi.h
+index 2f274cf528050..7d8d3e9c45d62 100644
+--- a/include/linux/platform_data/x86/asus-wmi.h
++++ b/include/linux/platform_data/x86/asus-wmi.h
+@@ -89,6 +89,9 @@
+ /* Keyboard dock */
+ #define ASUS_WMI_DEVID_KBD_DOCK		0x00120063
  
- 	return 0;
- }
-@@ -90,7 +90,7 @@ static int dw_reg_write_swab(void *context, unsigned int reg, unsigned int val)
- {
- 	struct dw_i2c_dev *dev = context;
- 
--	writel_relaxed(swab32(val), dev->base + reg);
-+	writel(swab32(val), dev->base + reg);
- 
- 	return 0;
- }
-@@ -99,8 +99,8 @@ static int dw_reg_read_word(void *context, unsigned int reg, unsigned int *val)
- {
- 	struct dw_i2c_dev *dev = context;
- 
--	*val = readw_relaxed(dev->base + reg) |
--		(readw_relaxed(dev->base + reg + 2) << 16);
-+	*val = readw(dev->base + reg) |
-+		(readw(dev->base + reg + 2) << 16);
- 
- 	return 0;
- }
-@@ -109,8 +109,8 @@ static int dw_reg_write_word(void *context, unsigned int reg, unsigned int val)
- {
- 	struct dw_i2c_dev *dev = context;
- 
--	writew_relaxed(val, dev->base + reg);
--	writew_relaxed(val >> 16, dev->base + reg + 2);
-+	writew(val, dev->base + reg);
-+	writew(val >> 16, dev->base + reg + 2);
- 
- 	return 0;
- }
++/* dgpu on/off */
++#define ASUS_WMI_DEVID_DGPU		0x00090020
++
+ /* DSTS masks */
+ #define ASUS_WMI_DSTS_STATUS_BIT	0x00000001
+ #define ASUS_WMI_DSTS_UNKNOWN_BIT	0x00000002
 -- 
 2.42.0
 
