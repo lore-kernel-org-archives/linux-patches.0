@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C5B5102A;
-	Mon, 11 Dec 2023 18:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00335102A;
+	Mon, 11 Dec 2023 18:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7ZXiqYJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB23C433C9;
-	Mon, 11 Dec 2023 18:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jgm8SCZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B5FC433C8;
+	Mon, 11 Dec 2023 18:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320566;
-	bh=CBwq/L8/T1wptKzJuFPxhGXrhgXQtUBWVhMhb+JRjzc=;
+	s=korg; t=1702320569;
+	bh=I/JkLiPUPxvIMEryG+S71Gu8X9e78S0Q89VsCBDfHe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7ZXiqYJChC90vuiWm05E5gEacwbp15rsTB40ZsmLsHrLz8clCN4TToREkbWLBRAQ
-	 3BnOwAv/nabX7qgNoaiswiYRtHMAwDp0KMV1EYLDlr+Zs5h5DDEz++Uxk5c1EykuMT
-	 YdHc6GLJRrSHOwhjOSA4lFNVpaupMxnsMwDHa874=
+	b=Jgm8SCZ8XYyyH2Cnum1GptXq+OH6cAlCvKlzMiZCQw1Lhzm7PCKCbtjZH93oCQcfv
+	 pMSUE55TLM6F/a7MQb+FDjfqK1NK5zkQ/TSdvv4cz4LJXgwrmjcfM/Rms1AvqL3fMF
+	 gqWPWVTtoitqWFbbav3r59sLHQ5itXIhvNCRXeXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	urbinek@gmail.com,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/194] hwmon: (acpi_power_meter) Fix 4.29 MW bug
-Date: Mon, 11 Dec 2023 19:21:10 +0100
-Message-ID: <20231211182040.048013997@linuxfoundation.org>
+Subject: [PATCH 6.1 081/194] ASoC: codecs: lpass-tx-macro: set active_decimator correct default value
+Date: Mon, 11 Dec 2023 19:21:11 +0100
+Message-ID: <20231211182040.096167349@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -43,53 +42,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 1fefca6c57fb928d2131ff365270cbf863d89c88 ]
+[ Upstream commit a2f35ed1d237c459100adb0c39bb811d7f170977 ]
 
-The ACPI specification says:
+The -1 value for active_decimator[dai_id] is considered as "not set",
+but at probe the table is initialized a 0, this prevents enabling the
+DEC0 Mixer since it will be considered as already set.
 
-"If an error occurs while obtaining the meter reading or if the value
-is not available then an Integer with all bits set is returned"
+Initialize the table entries as -1 to fix tx_macro_tx_mixer_put().
 
-Since the "integer" is 32 bits in case of the ACPI power meter,
-userspace will get a power reading of 2^32 * 1000 miliwatts (~4.29 MW)
-in case of such an error. This was discovered due to a lm_sensors
-bugreport (https://github.com/lm-sensors/lm-sensors/issues/460).
-Fix this by returning -ENODATA instead.
-
-Tested-by: <urbinek@gmail.com>
-Fixes: de584afa5e18 ("hwmon driver for ACPI 4.0 power meters")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20231124182747.13956-1-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 1c6a7f5250ce ("ASoC: codecs: tx-macro: fix active_decimator array")
+Fixes: c1057a08af43 ("ASoC: codecs: tx-macro: fix kcontrol put")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20231116-topic-sm8x50-upstream-tx-macro-fix-active-decimator-set-v1-1-6edf402f4b6f@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/acpi_power_meter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/codecs/lpass-tx-macro.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
-index 0962c12eba5a0..2147afb725581 100644
---- a/drivers/hwmon/acpi_power_meter.c
-+++ b/drivers/hwmon/acpi_power_meter.c
-@@ -31,6 +31,7 @@
- #define POWER_METER_CAN_NOTIFY	(1 << 3)
- #define POWER_METER_IS_BATTERY	(1 << 8)
- #define UNKNOWN_HYSTERESIS	0xFFFFFFFF
-+#define UNKNOWN_POWER		0xFFFFFFFF
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 9f59518005a5f..840bbe991cd3a 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1871,6 +1871,11 @@ static int tx_macro_probe(struct platform_device *pdev)
  
- #define METER_NOTIFY_CONFIG	0x80
- #define METER_NOTIFY_TRIP	0x81
-@@ -348,6 +349,9 @@ static ssize_t show_power(struct device *dev,
- 	update_meter(resource);
- 	mutex_unlock(&resource->lock);
+ 	tx->dev = dev;
  
-+	if (resource->power == UNKNOWN_POWER)
-+		return -ENODATA;
++	/* Set active_decimator default value */
++	tx->active_decimator[TX_MACRO_AIF1_CAP] = -1;
++	tx->active_decimator[TX_MACRO_AIF2_CAP] = -1;
++	tx->active_decimator[TX_MACRO_AIF3_CAP] = -1;
 +
- 	return sprintf(buf, "%llu\n", resource->power * 1000);
- }
- 
+ 	/* set MCLK and NPL rates */
+ 	clk_set_rate(tx->mclk, MCLK_FREQ);
+ 	clk_set_rate(tx->npl, MCLK_FREQ);
 -- 
 2.42.0
 
