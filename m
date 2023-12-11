@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E631D52F8C;
-	Mon, 11 Dec 2023 18:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A9551C44;
+	Mon, 11 Dec 2023 18:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeGYdT3x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6F3C433C8;
-	Mon, 11 Dec 2023 18:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AZhOAml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C08DC433C8;
+	Mon, 11 Dec 2023 18:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320983;
-	bh=iy036cu2yNjeMHKxnbJblGKbDVwk4ONI4MaMlaqh1Bk=;
+	s=korg; t=1702320986;
+	bh=yNLHBb+zF8S1fdMY7wzRIewYnx3BoEfOzXKNdOhcjow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eeGYdT3xs130Vun9NIcXk6L93Hbe7gihaMW3G1LAdOdyZDJts6+SOvanoWIyN8E/O
-	 SSTpFABoITiIgclfXJarcIRJgzfR9TGj7CKy/KZzhD/EjB5PjFAvEWwF1rW379YD24
-	 f7iZnSuoVppXLNYHcoaI9D67y4iWh0le+PSLxFeI=
+	b=0AZhOAmlwtOSFfzIMeDeuH7C0HTnqcstsEW4rns31dCPcQC+PILcwCw9vrJj1jZcV
+	 Zy1Tr8MpZrfyFRp3sVcxbHy8pi3G42H2uqCpW6GRFHBYHKRgj92SoUP5DPx028McBd
+	 +uHi4viLno8gUNwG9yUHarkGiKwK9QuYip8eGhXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Bhansali <rbhansali@marvell.com>,
-	Geetha sowjanya <gakula@marvell.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 038/141] octeontx2-af: Update Tx link register range
-Date: Mon, 11 Dec 2023 19:21:37 +0100
-Message-ID: <20231211182028.177099027@linuxfoundation.org>
+Subject: [PATCH 5.15 039/141] netfilter: nf_tables: bail out on mismatching dynset and set expressions
+Date: Mon, 11 Dec 2023 19:21:38 +0100
+Message-ID: <20231211182028.225627628@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182026.503492284@linuxfoundation.org>
 References: <20231211182026.503492284@linuxfoundation.org>
@@ -44,39 +42,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Bhansali <rbhansali@marvell.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 7336fc196748f82646b630d5a2e9d283e200b988 ]
+[ Upstream commit 3701cd390fd731ee7ae8b8006246c8db82c72bea ]
 
-On new silicons the TX channels for transmit level has increased.
-This patch fixes the respective register offset range to
-configure the newly added channels.
+If dynset expressions provided by userspace is larger than the declared
+set expressions, then bail out.
 
-Fixes: b279bbb3314e ("octeontx2-af: NIX Tx scheduler queue config support")
-Signed-off-by: Rahul Bhansali <rbhansali@marvell.com>
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 48b0ae046ee9 ("netfilter: nftables: netlink support for several set element expressions")
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_dynset.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.c
-index b3150f0532919..d46ac29adb966 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_reg.c
-@@ -31,8 +31,8 @@ static struct hw_reg_map txsch_reg_map[NIX_TXSCH_LVL_CNT] = {
- 	{NIX_TXSCH_LVL_TL4, 3, 0xFFFF, {{0x0B00, 0x0B08}, {0x0B10, 0x0B18},
- 			      {0x1200, 0x12E0} } },
- 	{NIX_TXSCH_LVL_TL3, 4, 0xFFFF, {{0x1000, 0x10E0}, {0x1600, 0x1608},
--			      {0x1610, 0x1618}, {0x1700, 0x17B0} } },
--	{NIX_TXSCH_LVL_TL2, 2, 0xFFFF, {{0x0E00, 0x0EE0}, {0x1700, 0x17B0} } },
-+			      {0x1610, 0x1618}, {0x1700, 0x17C8} } },
-+	{NIX_TXSCH_LVL_TL2, 2, 0xFFFF, {{0x0E00, 0x0EE0}, {0x1700, 0x17C8} } },
- 	{NIX_TXSCH_LVL_TL1, 1, 0xFFFF, {{0x0C00, 0x0D98} } },
- };
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index 73e606372b05d..e714e0efa7363 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -279,10 +279,15 @@ static int nft_dynset_init(const struct nft_ctx *ctx,
+ 			priv->expr_array[i] = dynset_expr;
+ 			priv->num_exprs++;
  
+-			if (set->num_exprs &&
+-			    dynset_expr->ops != set->exprs[i]->ops) {
+-				err = -EOPNOTSUPP;
+-				goto err_expr_free;
++			if (set->num_exprs) {
++				if (i >= set->num_exprs) {
++					err = -EINVAL;
++					goto err_expr_free;
++				}
++				if (dynset_expr->ops != set->exprs[i]->ops) {
++					err = -EOPNOTSUPP;
++					goto err_expr_free;
++				}
+ 			}
+ 			i++;
+ 		}
 -- 
 2.42.0
 
