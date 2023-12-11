@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A075101A;
-	Mon, 11 Dec 2023 18:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2A75101A;
+	Mon, 11 Dec 2023 18:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2AkDxgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA34C433C7;
-	Mon, 11 Dec 2023 18:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2kK3BEs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDD6C433C7;
+	Mon, 11 Dec 2023 18:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319353;
-	bh=GNApzdaPjvHSixD/pyfZzjSe5ByNyJIlLFbP385SVUk=;
+	s=korg; t=1702319356;
+	bh=WE99ykXMlddoHyiF/D7HMfHu2FjH8IrZ3sFD4ww2Rxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2AkDxgxtcKy53uQyX/GDTGy1weLyk74HJHObY2pMtyBIah1RVJ13woH06rW6GQjb
-	 /j8a51nwB/6F3CjUOWI5shN4JJB2qkxz2vBxkaJs7F1FKqZjxAdh0ko8xMWGU6i7jw
-	 Pa/4p97i2LL6qufM++wDH6VosQzVKz73180KTvwo=
+	b=J2kK3BEs4KgI/qUNI5fKVjYnBnhb7QdYyAKh+/OEwGNRUhz49fT3rXZKE40f+5Al0
+	 X40+UPvoO/Va1w1TZhDFAOi9QSLAZIfwDQrQExP7i5zWX1poPPumdo+KtaB2Yzsx8F
+	 6MaiDragw53Fza9vGvNDM/ENtMsXOGaesIR6WWfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Geethasowjanya Akula <gakula@marvell.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/244] octeontx2-af: fix a use-after-free in rvu_npa_register_reporters
-Date: Mon, 11 Dec 2023 19:18:57 +0100
-Message-ID: <20231211182047.797737041@linuxfoundation.org>
+Subject: [PATCH 6.6 045/244] ice: Restore fix disabling RX VLAN filtering
+Date: Mon, 11 Dec 2023 19:18:58 +0100
+Message-ID: <20231211182047.850995069@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -43,59 +45,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Marcin Szycik <marcin.szycik@linux.intel.com>
 
-[ Upstream commit 3c91c909f13f0c32b0d54d75c3f798479b1a84f5 ]
+[ Upstream commit 4e7f0087b058cc3cab8f3c32141b51aa5457d298 ]
 
-The rvu_dl will be freed in rvu_npa_health_reporters_destroy(rvu_dl)
-after the create_workqueue fails, and after that free, the rvu_dl will
-be translate back through rvu_npa_health_reporters_create,
-rvu_health_reporters_create, and rvu_register_dl. Finally it goes to the
-err_dl_health label, being freed again in
-rvu_health_reporters_destroy(rvu) by rvu_npa_health_reporters_destroy.
-In the second calls of rvu_npa_health_reporters_destroy, however,
-it uses rvu_dl->rvu_npa_health_reporter, which is already freed at
-the end of rvu_npa_health_reporters_destroy in the first call.
+Fix setting dis_rx_filtering depending on whether port vlan is being
+turned on or off. This was originally fixed in commit c793f8ea15e3 ("ice:
+Fix disabling Rx VLAN filtering with port VLAN enabled"), but while
+refactoring ice_vf_vsi_init_vlan_ops(), the fix has been lost. Restore the
+fix along with the original comment from that change.
 
-So this patch prevents the first destroy by instantly returning -ENONMEN
-when create_workqueue fails. In addition, since the failure of
-create_workqueue is the only entrence of label err, it has been
-integrated into the error-handling path of create_workqueue.
+Also delete duplicate lines in ice_port_vlan_on().
 
-Fixes: f1168d1e207c ("octeontx2-af: Add devlink health reporters for NPA")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Acked-by: Geethasowjanya Akula <gakula@marvell.com>
-Link: https://lore.kernel.org/r/20231202095902.3264863-1-alexious@zju.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 2946204b3fa8 ("ice: implement bridge port vlan")
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-index 41df5ac23f927..058f75dc4c8a5 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-@@ -1285,7 +1285,7 @@ static int rvu_npa_register_reporters(struct rvu_devlink *rvu_dl)
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
+index d7b10dc67f035..80dc4bcdd3a41 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
++++ b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
+@@ -32,7 +32,6 @@ static void ice_port_vlan_on(struct ice_vsi *vsi)
+ 		/* setup outer VLAN ops */
+ 		vlan_ops->set_port_vlan = ice_vsi_set_outer_port_vlan;
+ 		vlan_ops->clear_port_vlan = ice_vsi_clear_outer_port_vlan;
+-		vlan_ops->clear_port_vlan = ice_vsi_clear_outer_port_vlan;
  
- 	rvu_dl->devlink_wq = create_workqueue("rvu_devlink_wq");
- 	if (!rvu_dl->devlink_wq)
--		goto err;
-+		return -ENOMEM;
+ 		/* setup inner VLAN ops */
+ 		vlan_ops = &vsi->inner_vlan_ops;
+@@ -47,8 +46,13 @@ static void ice_port_vlan_on(struct ice_vsi *vsi)
  
- 	INIT_WORK(&rvu_reporters->intr_work, rvu_npa_intr_work);
- 	INIT_WORK(&rvu_reporters->err_work, rvu_npa_err_work);
-@@ -1293,9 +1293,6 @@ static int rvu_npa_register_reporters(struct rvu_devlink *rvu_dl)
- 	INIT_WORK(&rvu_reporters->ras_work, rvu_npa_ras_work);
- 
- 	return 0;
--err:
--	rvu_npa_health_reporters_destroy(rvu_dl);
--	return -ENOMEM;
+ 		vlan_ops->set_port_vlan = ice_vsi_set_inner_port_vlan;
+ 		vlan_ops->clear_port_vlan = ice_vsi_clear_inner_port_vlan;
+-		vlan_ops->clear_port_vlan = ice_vsi_clear_inner_port_vlan;
+ 	}
++
++	/* all Rx traffic should be in the domain of the assigned port VLAN,
++	 * so prevent disabling Rx VLAN filtering
++	 */
++	vlan_ops->dis_rx_filtering = noop_vlan;
++
+ 	vlan_ops->ena_rx_filtering = ice_vsi_ena_rx_vlan_filtering;
  }
  
- static int rvu_npa_health_reporters_create(struct rvu_devlink *rvu_dl)
+@@ -77,6 +81,8 @@ static void ice_port_vlan_off(struct ice_vsi *vsi)
+ 		vlan_ops->del_vlan = ice_vsi_del_vlan;
+ 	}
+ 
++	vlan_ops->dis_rx_filtering = ice_vsi_dis_rx_vlan_filtering;
++
+ 	if (!test_bit(ICE_FLAG_VF_VLAN_PRUNING, pf->flags))
+ 		vlan_ops->ena_rx_filtering = noop_vlan;
+ 	else
+@@ -141,7 +147,6 @@ void ice_vf_vsi_init_vlan_ops(struct ice_vsi *vsi)
+ 		&vsi->outer_vlan_ops : &vsi->inner_vlan_ops;
+ 
+ 	vlan_ops->add_vlan = ice_vsi_add_vlan;
+-	vlan_ops->dis_rx_filtering = ice_vsi_dis_rx_vlan_filtering;
+ 	vlan_ops->ena_tx_filtering = ice_vsi_ena_tx_vlan_filtering;
+ 	vlan_ops->dis_tx_filtering = ice_vsi_dis_tx_vlan_filtering;
+ }
 -- 
 2.42.0
 
