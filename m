@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B19A5102A;
-	Mon, 11 Dec 2023 18:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64265102A;
+	Mon, 11 Dec 2023 18:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaLBqZm+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4248C433C7;
-	Mon, 11 Dec 2023 18:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KKdKrw66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4BBC433C8;
+	Mon, 11 Dec 2023 18:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320537;
-	bh=L8PqZ3d27QGyH5D4hDFF4lUjLefey8wK1mVSwwbgQM8=;
+	s=korg; t=1702320539;
+	bh=Q0vNbTJylSnT/noXcRtOMwdcqpynSbX+8gfe2lSJZaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xaLBqZm+MVQhfffPwKwq02xPDMc3OW6rBJnY8ZdhdbTFunmnvtfDrQNv8Oi0qW/yp
-	 QNIUoyEbAW2D6gevWJBJZY6U1Q/iwul622QqIvUHOoJmbJg6d01w/rXKsgBZ9cRPn2
-	 4yRplN159qEeCVp8So2Z4JB7eSlt4Gj9/WW62kOU=
+	b=KKdKrw66clPhLYt1Vm5g7pWLQ1iMTZ+2FpRI2Xg20gAF/623+H4jCa4sBUwkgMJvX
+	 vWnRMZKZHhmR0GhUiVBUbg5VGp7qquv4q8PD/4vdEYedSBdPz+hlXlqNTeO795y0qn
+	 lxljD/ldsWq1c9jutOAM7MyO2V96bTsy7dcsgFjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Xiao Ni <xni@redhat.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/194] md: dont leave MD_RECOVERY_FROZEN in error path of md_set_readonly()
-Date: Mon, 11 Dec 2023 19:21:27 +0100
-Message-ID: <20231211182040.784484555@linuxfoundation.org>
+	Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.1 098/194] iommu: Avoid more races around device probe
+Date: Mon, 11 Dec 2023 19:21:28 +0100
+Message-ID: <20231211182040.824741249@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -37,96 +37,183 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit c9f7cb5b2bc968adcdc686c197ed108f47fd8eb0 ]
+commit a2e7e59a94269484a83386972ca07c22fd188854 upstream.
 
-If md_set_readonly() failed, the array could still be read-write, however
-'MD_RECOVERY_FROZEN' could still be set, which leave the array in an
-abnormal state that sync or recovery can't continue anymore.
-Hence make sure the flag is cleared after md_set_readonly() returns.
+It turns out there are more subtle races beyond just the main part of
+__iommu_probe_device() itself running in parallel - the dev_iommu_free()
+on the way out of an unsuccessful probe can still manage to trip up
+concurrent accesses to a device's fwspec. Thus, extend the scope of
+iommu_probe_device_lock() to also serialise fwspec creation and initial
+retrieval.
 
-Fixes: 88724bfa68be ("md: wait for pending superblock updates before switching to read-only")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Acked-by: Xiao Ni <xni@redhat.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20231205094215.1824240-3-yukuai1@huaweicloud.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+Link: https://lore.kernel.org/linux-iommu/e2e20e1c-6450-4ac5-9804-b0000acdf7de@quicinc.com/
+Fixes: 01657bc14a39 ("iommu: Avoid races around device probe")
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: André Draszik <andre.draszik@linaro.org>
+Tested-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/16f433658661d7cadfea51e7c65da95826112a2b.1700071477.git.robin.murphy@arm.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/acpi/scan.c      |    7 ++++++-
+ drivers/iommu/iommu.c    |   19 +++++++++----------
+ drivers/iommu/of_iommu.c |   12 +++++++++---
+ include/linux/iommu.h    |    1 +
+ 4 files changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 246af78c05dd1..0c2801d770901 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -6314,6 +6314,9 @@ static int md_set_readonly(struct mddev *mddev, struct block_device *bdev)
- 	int err = 0;
- 	int did_freeze = 0;
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -1563,17 +1563,22 @@ static const struct iommu_ops *acpi_iomm
+ 	int err;
+ 	const struct iommu_ops *ops;
  
-+	if (mddev->external && test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags))
-+		return -EBUSY;
-+
- 	if (!test_bit(MD_RECOVERY_FROZEN, &mddev->recovery)) {
- 		did_freeze = 1;
- 		set_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
-@@ -6326,8 +6329,6 @@ static int md_set_readonly(struct mddev *mddev, struct block_device *bdev)
- 		 * which will now never happen */
- 		wake_up_process(mddev->sync_thread->tsk);
- 
--	if (mddev->external && test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags))
--		return -EBUSY;
- 	mddev_unlock(mddev);
- 	wait_event(resync_wait, !test_bit(MD_RECOVERY_RUNNING,
- 					  &mddev->recovery));
-@@ -6340,29 +6341,30 @@ static int md_set_readonly(struct mddev *mddev, struct block_device *bdev)
- 	    mddev->sync_thread ||
- 	    test_bit(MD_RECOVERY_RUNNING, &mddev->recovery)) {
- 		pr_warn("md: %s still in use.\n",mdname(mddev));
--		if (did_freeze) {
--			clear_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
--			set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
--			md_wakeup_thread(mddev->thread);
--		}
- 		err = -EBUSY;
- 		goto out;
- 	}
-+
- 	if (mddev->pers) {
- 		__md_stop_writes(mddev);
- 
--		err  = -ENXIO;
--		if (mddev->ro == MD_RDONLY)
-+		if (mddev->ro == MD_RDONLY) {
-+			err  = -ENXIO;
- 			goto out;
-+		}
-+
- 		mddev->ro = MD_RDONLY;
- 		set_disk_ro(mddev->gendisk, 1);
++	/* Serialise to make dev->iommu stable under our potential fwspec */
++	mutex_lock(&iommu_probe_device_lock);
+ 	/*
+ 	 * If we already translated the fwspec there is nothing left to do,
+ 	 * return the iommu_ops.
+ 	 */
+ 	ops = acpi_iommu_fwspec_ops(dev);
+-	if (ops)
++	if (ops) {
++		mutex_unlock(&iommu_probe_device_lock);
+ 		return ops;
 +	}
-+
-+out:
-+	if ((mddev->pers && !err) || did_freeze) {
- 		clear_bit(MD_RECOVERY_FROZEN, &mddev->recovery);
- 		set_bit(MD_RECOVERY_NEEDED, &mddev->recovery);
- 		md_wakeup_thread(mddev->thread);
- 		sysfs_notify_dirent_safe(mddev->sysfs_state);
--		err = 0;
- 	}
--out:
-+
- 	mutex_unlock(&mddev->open_mutex);
- 	return err;
+ 
+ 	err = iort_iommu_configure_id(dev, id_in);
+ 	if (err && err != -EPROBE_DEFER)
+ 		err = viot_iommu_configure(dev);
++	mutex_unlock(&iommu_probe_device_lock);
+ 
+ 	/*
+ 	 * If we have reason to believe the IOMMU driver missed the initial
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -278,12 +278,13 @@ static void dev_iommu_free(struct device
+ 	kfree(param);
  }
--- 
-2.42.0
-
+ 
++DEFINE_MUTEX(iommu_probe_device_lock);
++
+ static int __iommu_probe_device(struct device *dev, struct list_head *group_list)
+ {
+ 	const struct iommu_ops *ops = dev->bus->iommu_ops;
+ 	struct iommu_device *iommu_dev;
+ 	struct iommu_group *group;
+-	static DEFINE_MUTEX(iommu_probe_device_lock);
+ 	int ret;
+ 
+ 	if (!ops)
+@@ -295,11 +296,9 @@ static int __iommu_probe_device(struct d
+ 	 * probably be able to use device_lock() here to minimise the scope,
+ 	 * but for now enforcing a simple global ordering is fine.
+ 	 */
+-	mutex_lock(&iommu_probe_device_lock);
+-	if (!dev_iommu_get(dev)) {
+-		ret = -ENOMEM;
+-		goto err_unlock;
+-	}
++	lockdep_assert_held(&iommu_probe_device_lock);
++	if (!dev_iommu_get(dev))
++		return -ENOMEM;
+ 
+ 	if (!try_module_get(ops->owner)) {
+ 		ret = -EINVAL;
+@@ -326,7 +325,6 @@ static int __iommu_probe_device(struct d
+ 	mutex_unlock(&group->mutex);
+ 	iommu_group_put(group);
+ 
+-	mutex_unlock(&iommu_probe_device_lock);
+ 	iommu_device_link(iommu_dev, dev);
+ 
+ 	return 0;
+@@ -341,9 +339,6 @@ out_module_put:
+ err_free:
+ 	dev_iommu_free(dev);
+ 
+-err_unlock:
+-	mutex_unlock(&iommu_probe_device_lock);
+-
+ 	return ret;
+ }
+ 
+@@ -353,7 +348,9 @@ int iommu_probe_device(struct device *de
+ 	struct iommu_group *group;
+ 	int ret;
+ 
++	mutex_lock(&iommu_probe_device_lock);
+ 	ret = __iommu_probe_device(dev, NULL);
++	mutex_unlock(&iommu_probe_device_lock);
+ 	if (ret)
+ 		goto err_out;
+ 
+@@ -1684,7 +1681,9 @@ static int probe_iommu_group(struct devi
+ 		return 0;
+ 	}
+ 
++	mutex_lock(&iommu_probe_device_lock);
+ 	ret = __iommu_probe_device(dev, group_list);
++	mutex_unlock(&iommu_probe_device_lock);
+ 	if (ret == -ENODEV)
+ 		ret = 0;
+ 
+--- a/drivers/iommu/of_iommu.c
++++ b/drivers/iommu/of_iommu.c
+@@ -112,16 +112,20 @@ const struct iommu_ops *of_iommu_configu
+ 					   const u32 *id)
+ {
+ 	const struct iommu_ops *ops = NULL;
+-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
++	struct iommu_fwspec *fwspec;
+ 	int err = NO_IOMMU;
+ 
+ 	if (!master_np)
+ 		return NULL;
+ 
++	/* Serialise to make dev->iommu stable under our potential fwspec */
++	mutex_lock(&iommu_probe_device_lock);
++	fwspec = dev_iommu_fwspec_get(dev);
+ 	if (fwspec) {
+-		if (fwspec->ops)
++		if (fwspec->ops) {
++			mutex_unlock(&iommu_probe_device_lock);
+ 			return fwspec->ops;
+-
++		}
+ 		/* In the deferred case, start again from scratch */
+ 		iommu_fwspec_free(dev);
+ 	}
+@@ -155,6 +159,8 @@ const struct iommu_ops *of_iommu_configu
+ 		fwspec = dev_iommu_fwspec_get(dev);
+ 		ops    = fwspec->ops;
+ 	}
++	mutex_unlock(&iommu_probe_device_lock);
++
+ 	/*
+ 	 * If we have reason to believe the IOMMU driver missed the initial
+ 	 * probe for dev, replay it to get things in order.
+--- a/include/linux/iommu.h
++++ b/include/linux/iommu.h
+@@ -657,6 +657,7 @@ static inline void dev_iommu_priv_set(st
+ 	dev->iommu->priv = priv;
+ }
+ 
++extern struct mutex iommu_probe_device_lock;
+ int iommu_probe_device(struct device *dev);
+ void iommu_release_device(struct device *dev);
+ 
 
 
