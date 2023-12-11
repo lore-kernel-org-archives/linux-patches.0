@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCF7FC06;
-	Mon, 11 Dec 2023 18:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C0EFC06;
+	Mon, 11 Dec 2023 18:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sg7GA/nX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4403DC433CA;
-	Mon, 11 Dec 2023 18:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Kptb2X9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A41C433C7;
+	Mon, 11 Dec 2023 18:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319632;
-	bh=dk3tG5QGaH+N+9SOrPR8Eiwzk6Fkr12BE/7EJPKC7Bg=;
+	s=korg; t=1702319635;
+	bh=AKzVPYlgxOeDP/r2pcuSh1S3Mtbg97pt6JnWdjdMpAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sg7GA/nX02tqfdrdeDKc/yCnVnWiCoBvVczXUGWRzqPyZbQY87+A1gRUfssDm/3A9
-	 g6X++uW6uNJi6WBy9MRH24+WHl1V3bASI0Gkx0Rjehbks2SKsS4VcTdcUiJh/4aaD9
-	 RA2TMYnupUcplKpPHjRUimdZXLaDcfkqE3/Pyx4o=
+	b=1Kptb2X9PVWSJpQuiICgaQXtt91+GHtJkLoUL88i1GOMDNpIoWfwugkfo6EWuB7Gb
+	 MGU/OawwxfCJI9m4aiuZAL18wV54BYPM0ynNTLojeGSo/18Ed8VTr4t/roky9q+jJP
+	 ru+V8Sknjzluu3VMN0vwQzr+Z2MlO6NDtiY6wPC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 170/244] powercap: DTPM: Fix missing cpufreq_cpu_put() calls
-Date: Mon, 11 Dec 2023 19:21:03 +0100
-Message-ID: <20231211182053.522286720@linuxfoundation.org>
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Subject: [PATCH 6.6 179/244] arm64: dts: mediatek: mt7622: fix memory node warning check
+Date: Mon, 11 Dec 2023 19:21:12 +0100
+Message-ID: <20231211182053.968899384@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182045.784881756@linuxfoundation.org>
 References: <20231211182045.784881756@linuxfoundation.org>
@@ -41,74 +41,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukasz Luba <lukasz.luba@arm.com>
+From: Eugen Hristev <eugen.hristev@collabora.com>
 
-commit bdefd9913bdd453991ef756b6f7176e8ad80d786 upstream.
+commit 8e6ecbfd44b5542a7598c1c5fc9c6dcb5d367f2a upstream.
 
-The policy returned by cpufreq_cpu_get() has to be released with
-the help of cpufreq_cpu_put() to balance its kobject reference counter
-properly.
+dtbs_check throws a warning at the memory node:
+Warning (unit_address_vs_reg): /memory: node has a reg or ranges property, but no unit name
 
-Add the missing calls to cpufreq_cpu_put() in the code.
+fix by adding the address into the node name.
 
-Fixes: 0aea2e4ec2a2 ("powercap/dtpm_cpu: Reset per_cpu variable in the release function")
-Fixes: 0e8f68d7f048 ("powercap/drivers/dtpm: Add CPU energy model based support")
-Cc: v5.16+ <stable@vger.kernel.org> # v5.16+
-Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 0b6286dd96c0 ("arm64: dts: mt7622: add bananapi BPI-R64 board")
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20230814065042.4973-1-eugen.hristev@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/powercap/dtpm_cpu.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts |    2 +-
+ arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts             |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/powercap/dtpm_cpu.c
-+++ b/drivers/powercap/dtpm_cpu.c
-@@ -140,6 +140,8 @@ static void pd_release(struct dtpm *dtpm
- 	if (policy) {
- 		for_each_cpu(dtpm_cpu->cpu, policy->related_cpus)
- 			per_cpu(dtpm_per_cpu, dtpm_cpu->cpu) = NULL;
-+
-+		cpufreq_cpu_put(policy);
- 	}
- 	
- 	kfree(dtpm_cpu);
-@@ -191,12 +193,16 @@ static int __dtpm_cpu_setup(int cpu, str
- 		return 0;
+--- a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
++++ b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
+@@ -73,7 +73,7 @@
+ 		};
+ 	};
  
- 	pd = em_cpu_get(cpu);
--	if (!pd || em_is_artificial(pd))
--		return -EINVAL;
-+	if (!pd || em_is_artificial(pd)) {
-+		ret = -EINVAL;
-+		goto release_policy;
-+	}
+-	memory {
++	memory@40000000 {
+ 		reg = <0 0x40000000 0 0x40000000>;
+ 	};
  
- 	dtpm_cpu = kzalloc(sizeof(*dtpm_cpu), GFP_KERNEL);
--	if (!dtpm_cpu)
--		return -ENOMEM;
-+	if (!dtpm_cpu) {
-+		ret = -ENOMEM;
-+		goto release_policy;
-+	}
+--- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
++++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
+@@ -55,7 +55,7 @@
+ 		};
+ 	};
  
- 	dtpm_init(&dtpm_cpu->dtpm, &dtpm_ops);
- 	dtpm_cpu->cpu = cpu;
-@@ -216,6 +222,7 @@ static int __dtpm_cpu_setup(int cpu, str
- 	if (ret)
- 		goto out_dtpm_unregister;
- 
-+	cpufreq_cpu_put(policy);
- 	return 0;
- 
- out_dtpm_unregister:
-@@ -227,6 +234,8 @@ out_kfree_dtpm_cpu:
- 		per_cpu(dtpm_per_cpu, cpu) = NULL;
- 	kfree(dtpm_cpu);
- 
-+release_policy:
-+	cpufreq_cpu_put(policy);
- 	return ret;
- }
+-	memory {
++	memory@40000000 {
+ 		reg = <0 0x40000000 0 0x20000000>;
+ 	};
  
 
 
