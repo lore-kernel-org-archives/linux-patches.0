@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDDB4F212;
-	Mon, 11 Dec 2023 18:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5384F212;
+	Mon, 11 Dec 2023 18:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtAo18og"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7226BC433C8;
-	Mon, 11 Dec 2023 18:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a11834iW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F58C433C7;
+	Mon, 11 Dec 2023 18:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702319121;
-	bh=fMvnVTxS7i5zsoaztKBWaTPWTibGFzfDifk3MWskGPc=;
+	s=korg; t=1702319124;
+	bh=5OM9A2xnSJbAVoO/yDRQccSdbzdwsW8+SQh6V/IU32s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtAo18og/iRcIqw+9S2OnMhpnbpZ7injzAeg7QituqbM2ysm9sQogdTm68zcVZRaN
-	 NWzvY95MVjmyHmAbSqd7xBnIJOXkFjTDmauzF1RK3mvtt6y7QguRJIRAr/RN1vuyID
-	 Q2cuznPONgxY1D3TmT0i1TlT6IeqRzguVisYyRdc=
+	b=a11834iWmMqABcB4IqZgIhvPGYP8ah7QL/M4z3z4KPbaNwpZMVxAvadj5O+Hf6OQB
+	 CX45mvikjca1x3xk6ceQbOS7T+S5IImlPk0Hog1H9669PZMsc+SBhWeUR2hP81FGCk
+	 N+SitMLOncS0Gt1JJxxv6hcUKIU40uy1doT2FR4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 4.19 45/55] x86/CPU/AMD: Check vendor in the AMD microcode callback
-Date: Mon, 11 Dec 2023 19:21:55 +0100
-Message-ID: <20231211182013.911762155@linuxfoundation.org>
+	Nico Boehr <nrb@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>
+Subject: [PATCH 4.19 46/55] KVM: s390/mm: Properly reset no-dat
+Date: Mon, 11 Dec 2023 19:21:56 +0100
+Message-ID: <20231211182013.947761048@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182012.263036284@linuxfoundation.org>
 References: <20231211182012.263036284@linuxfoundation.org>
@@ -41,51 +41,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-commit 9b8493dc43044376716d789d07699f17d538a7c4 upstream.
+commit 27072b8e18a73ffeffb1c140939023915a35134b upstream.
 
-Commit in Fixes added an AMD-specific microcode callback. However, it
-didn't check the CPU vendor the kernel runs on explicitly.
+When the CMMA state needs to be reset, the no-dat bit also needs to be
+reset. Failure to do so could cause issues in the guest, since the
+guest expects the bit to be cleared after a reset.
 
-The only reason the Zenbleed check in it didn't run on other x86 vendors
-hardware was pure coincidental luck:
-
-  if (!cpu_has_amd_erratum(c, amd_zenbleed))
-	  return;
-
-gives true on other vendors because they don't have those families and
-models.
-
-However, with the removal of the cpu_has_amd_erratum() in
-
-  05f5f73936fa ("x86/CPU/AMD: Drop now unused CPU erratum checking function")
-
-that coincidental condition is gone, leading to the zenbleed check
-getting executed on other vendors too.
-
-Add the explicit vendor check for the whole callback as it should've
-been done in the first place.
-
-Fixes: 522b1d69219d ("x86/cpu/amd: Add a Zenbleed fix")
-Cc: <stable@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20231201184226.16749-1-bp@alien8.de
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Nico Boehr <nrb@linux.ibm.com>
+Message-ID: <20231109123624.37314-1-imbrenda@linux.ibm.com>
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/s390/mm/pgtable.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -1253,5 +1253,8 @@ static void zenbleed_check_cpu(void *unu
- 
- void amd_check_microcode(void)
- {
-+	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD)
-+		return;
-+
- 	on_each_cpu(zenbleed_check_cpu, NULL, 1);
+--- a/arch/s390/mm/pgtable.c
++++ b/arch/s390/mm/pgtable.c
+@@ -699,7 +699,7 @@ void ptep_zap_unused(struct mm_struct *m
+ 		pte_clear(mm, addr, ptep);
+ 	}
+ 	if (reset)
+-		pgste_val(pgste) &= ~_PGSTE_GPS_USAGE_MASK;
++		pgste_val(pgste) &= ~(_PGSTE_GPS_USAGE_MASK | _PGSTE_GPS_NODAT);
+ 	pgste_set_unlock(ptep, pgste);
+ 	preempt_enable();
  }
 
 
