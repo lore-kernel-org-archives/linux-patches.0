@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7D351C2D;
-	Mon, 11 Dec 2023 18:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29DB51C2D;
+	Mon, 11 Dec 2023 18:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8aNOlCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F41C433C7;
-	Mon, 11 Dec 2023 18:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WC6QRNIf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E49C433C8;
+	Mon, 11 Dec 2023 18:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702320710;
-	bh=foMup+bY4E6hFoJEnsjMGPMzcRpW/H7OHHsZXQQgIGA=;
+	s=korg; t=1702320713;
+	bh=wPKTliAX0d9yq66RTNaWiPVR4ECGsw9evyB0Lter8z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8aNOlCN4EVSGrQ5IXuBrK+X+ScxhYSGGA8iVhe2X1cYcV0b/DtRIzBJMlef3UM/7
-	 mlptBIgFA/gPMqLkqPdObTAYa56sfFzBejhm7iVEQsaCutSkDR6jmlbfTEKPId5LCz
-	 K3UQRbvwIC+6lTIcYM7eG5aIDltXjtB8dmU92e4Y=
+	b=WC6QRNIfMlbTEcafj+k47/uBmseK837+qq6ZEtYQAaNx+PeCyLB1glRML9nNW91L+
+	 JcCoqiL9zpF/qH6hHzXIFrsIrACuJdldFaCcEX1xqmM6ObZDwzjF3wCS32tJpFouaQ
+	 4DmsqSA7AFMwVjoyseVdDp928d8n7yMlGw/7KmOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <Alexander.Deucher@amd.com>,
 	Luben Tuikov <luben.tuikov@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/194] drm/amdgpu: Return from switch early for EEPROM I2C address
-Date: Mon, 11 Dec 2023 19:22:32 +0100
-Message-ID: <20231211182043.870961002@linuxfoundation.org>
+Subject: [PATCH 6.1 163/194] drm/amdgpu: simplify amdgpu_ras_eeprom.c
+Date: Mon, 11 Dec 2023 19:22:33 +0100
+Message-ID: <20231211182043.921313420@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231211182036.606660304@linuxfoundation.org>
 References: <20231211182036.606660304@linuxfoundation.org>
@@ -45,68 +42,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luben Tuikov <luben.tuikov@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 8782007b5f5795f118c5167f46d8c8142abcc92f ]
+[ Upstream commit 6246059a19d4cd32ef1af42a6ab016b779cd68c4 ]
 
-As soon as control->i2c_address is set, return; remove the "break;" from the
-switch--it is unnecessary. This mimics what happens when for some cases in the
-switch, we call helper functions with "return <helper function>".
+All chips that support RAS also support IP discovery, so
+use the IP versions rather than a mix of IP versions and
+asic types.  Checking the validity of the atom_ctx pointer
+is not required as the vbios is already fetched at this
+point.
 
-Remove final function "return true;" to indicate that the switch is final and
-terminal, and that there should be no code after the switch.
+v2: add comments to id asic types based on feedback from Luben
 
-Cc: Candice Li <candice.li@amd.com>
-Cc: Kent Russell <kent.russell@amd.com>
-Cc: Alex Deucher <Alexander.Deucher@amd.com>
-Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
-Reviewed-by: Alex Deucher <Alexander.Deucher@amd.com>
+Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Luben Tuikov <luben.tuikov@amd.com>
 Stable-dep-of: e0409021e34a ("drm/amdgpu: Update EEPROM I2C address for smu v13_0_0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c    | 72 ++++++-------------
+ 1 file changed, 20 insertions(+), 52 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-index b908d575b5a98..40cd9d8c4e870 100644
+index 40cd9d8c4e870..c2827edb9d3d9 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-@@ -181,14 +181,14 @@ static bool __get_eeprom_i2c_addr(struct amdgpu_device *adev,
- 	switch (adev->asic_type) {
- 	case CHIP_VEGA20:
+@@ -106,48 +106,13 @@
+ #define to_amdgpu_device(x) (container_of(x, struct amdgpu_ras, eeprom_control))->adev
+ 
+ static bool __is_ras_eeprom_supported(struct amdgpu_device *adev)
+-{
+-	if (adev->asic_type == CHIP_IP_DISCOVERY) {
+-		switch (adev->ip_versions[MP1_HWIP][0]) {
+-		case IP_VERSION(13, 0, 0):
+-		case IP_VERSION(13, 0, 10):
+-			return true;
+-		default:
+-			return false;
+-		}
+-	}
+-
+-	return  adev->asic_type == CHIP_VEGA20 ||
+-		adev->asic_type == CHIP_ARCTURUS ||
+-		adev->asic_type == CHIP_SIENNA_CICHLID ||
+-		adev->asic_type == CHIP_ALDEBARAN;
+-}
+-
+-static bool __get_eeprom_i2c_addr_arct(struct amdgpu_device *adev,
+-				       struct amdgpu_ras_eeprom_control *control)
+-{
+-	struct atom_context *atom_ctx = adev->mode_info.atom_context;
+-
+-	if (!control || !atom_ctx)
+-		return false;
+-
+-	if (strnstr(atom_ctx->vbios_version,
+-	            "D342",
+-		    sizeof(atom_ctx->vbios_version)))
+-		control->i2c_address = EEPROM_I2C_MADDR_0;
+-	else
+-		control->i2c_address = EEPROM_I2C_MADDR_4;
+-
+-	return true;
+-}
+-
+-static bool __get_eeprom_i2c_addr_ip_discovery(struct amdgpu_device *adev,
+-				       struct amdgpu_ras_eeprom_control *control)
+ {
+ 	switch (adev->ip_versions[MP1_HWIP][0]) {
++	case IP_VERSION(11, 0, 2): /* VEGA20 and ARCTURUS */
++	case IP_VERSION(11, 0, 7): /* Sienna cichlid */
+ 	case IP_VERSION(13, 0, 0):
++	case IP_VERSION(13, 0, 2): /* Aldebaran */
+ 	case IP_VERSION(13, 0, 10):
+-		control->i2c_address = EEPROM_I2C_MADDR_4;
+ 		return true;
+ 	default:
+ 		return false;
+@@ -178,29 +143,32 @@ static bool __get_eeprom_i2c_addr(struct amdgpu_device *adev,
+ 		return true;
+ 	}
+ 
+-	switch (adev->asic_type) {
+-	case CHIP_VEGA20:
+-		control->i2c_address = EEPROM_I2C_MADDR_0;
++	switch (adev->ip_versions[MP1_HWIP][0]) {
++	case IP_VERSION(11, 0, 2):
++		/* VEGA20 and ARCTURUS */
++		if (adev->asic_type == CHIP_VEGA20)
++			control->i2c_address = EEPROM_I2C_MADDR_0;
++		else if (strnstr(atom_ctx->vbios_version,
++				 "D342",
++				 sizeof(atom_ctx->vbios_version)))
++			control->i2c_address = EEPROM_I2C_MADDR_0;
++		else
++			control->i2c_address = EEPROM_I2C_MADDR_4;
+ 		return true;
+-
+-	case CHIP_ARCTURUS:
+-		return __get_eeprom_i2c_addr_arct(adev, control);
+-
+-	case CHIP_SIENNA_CICHLID:
++	case IP_VERSION(11, 0, 7):
  		control->i2c_address = EEPROM_I2C_MADDR_0;
--		break;
-+		return true;
- 
- 	case CHIP_ARCTURUS:
- 		return __get_eeprom_i2c_addr_arct(adev, control);
- 
- 	case CHIP_SIENNA_CICHLID:
- 		control->i2c_address = EEPROM_I2C_MADDR_0;
--		break;
-+		return true;
- 
- 	case CHIP_ALDEBARAN:
+ 		return true;
+-
+-	case CHIP_ALDEBARAN:
++	case IP_VERSION(13, 0, 2):
  		if (strnstr(atom_ctx->vbios_version, "D673",
-@@ -196,7 +196,7 @@ static bool __get_eeprom_i2c_addr(struct amdgpu_device *adev,
+ 			    sizeof(atom_ctx->vbios_version)))
  			control->i2c_address = EEPROM_I2C_MADDR_4;
  		else
  			control->i2c_address = EEPROM_I2C_MADDR_0;
--		break;
+ 		return true;
+-
+-	case CHIP_IP_DISCOVERY:
+-		return __get_eeprom_i2c_addr_ip_discovery(adev, control);
+-
++	case IP_VERSION(13, 0, 0):
++	case IP_VERSION(13, 0, 10):
++		control->i2c_address = EEPROM_I2C_MADDR_4;
 +		return true;
- 
- 	case CHIP_IP_DISCOVERY:
- 		return __get_eeprom_i2c_addr_ip_discovery(adev, control);
-@@ -204,8 +204,6 @@ static bool __get_eeprom_i2c_addr(struct amdgpu_device *adev,
  	default:
  		return false;
  	}
--
--	return true;
- }
- 
- static void
 -- 
 2.42.0
 
