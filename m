@@ -1,60 +1,92 @@
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2055.outbound.protection.outlook.com [40.107.95.55])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD867D8AD;
-	Tue, 12 Dec 2023 18:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A6A7F57B
+	for <patches@lists.linux.dev>; Tue, 12 Dec 2023 18:59:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FVUNZuR1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="A8Vst7R9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1702407573; x=1733943573;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=AAHvt7i8Qk1Ihl9Q43MEZoNtXmyDI5nYhoTSbhJpa1A=;
+  b=A8Vst7R9fA53r/0SK+pCbYI4jeiIQDduaJFY02w1c8HxNfUjNEyMgobM
+   h57uYsgVYjgS6TUvOM038/OMMpgBf6kILCmYyyiZgFFAuxqpIVk45Efk1
+   C9Py0QwNpsunpF+z/cfjuO2eYIJYzuJ3aShQ8PFSp3l5U40+T/U79qf0f
+   IrDvgl0mmT5T8f9VmdF2YYmJqAxgQiuVLP1qfaNYaXpFsA2b5DYXbamZw
+   +W4q0HzPS39IoGezb9rx7p1MkgTKVhUiaP66A+1vlCY6Bn3YCu3I3Of+w
+   fNDJAmULeQbi/ymxNLF6/0mvka4bcTJoYKOuaYl25JurhpevmzGvfJPMQ
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10922"; a="8218416"
+X-IronPort-AV: E=Sophos;i="6.04,271,1695711600"; 
+   d="scan'208";a="8218416"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Dec 2023 10:59:31 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10922"; a="917382958"
+X-IronPort-AV: E=Sophos;i="6.04,271,1695711600"; 
+   d="scan'208";a="917382958"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+  by fmsmga001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 12 Dec 2023 10:59:30 -0800
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Tue, 12 Dec 2023 10:59:29 -0800
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Tue, 12 Dec 2023 10:59:29 -0800
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.168)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 12 Dec 2023 10:59:24 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Fqd5Qt7z5vWzZIqdfI6NOTPb7XtN0nHliCZT1F/76ygMvgW82AU8g9Zn0H/CEfnhoce8PQzaX+U6wwyV+ciCCddmDHUg7UZCOgBECxTMLhGlCjHscqF+BJCEgNZwR+gZmPW2QGij9lDvA9TrHCncP+G6Dr19jdtU3EOFY9ijtosHhBHLmvZkSfCm010fRUnLpxC36Ly8aNe2cu3OItBxX2a0s/Rhwo9cajtcKAeU6IebEJwSuLgcQK07k5H+LJHWgZRbDKX9D/PSQ/J7zGDeRWMRg1N3NOBeCAzwVfZh9S6RKZDBZZlO/WPLuDMhtGX7WKoht8BG+gxfHG2qcjT2Iw==
+ b=dBiqpG8GWt/mdJDC9Y/cBqaZgGElOjMffnJmNISlLjUq9TuVbXad+EWuuTMle9oTcQcnXHFanmIayr3+fff0n7ppYssGK/dDJIoHeAN8WYKkgPJaYy7qCH1Cr+JS+tKfGeCaiyB+9Ltarcd84zlsyoW9/R3BQeX7TSxHPlaEv2ELr1QDbgj+f+9gDq93UM1mWXEpKcn9oBL5n0EsL5ZngcxXtk7YGtg2Y/EYOypu3wZntRbPFDls/Mui0zUKdjE/G4Sv8dICney/EvguMewTf3X1hXd6xiw67BUJYZinzE019xfXmETCr6vxN8Pa7wxe8yppIb6nvsLHQPz384bDRQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Icz8h3TOK6uQrmJc+rd+YXAREL4mGBsYycE4/sdxiF0=;
- b=MxVyPBhUFEDMhi4ii7ZKwHuYvnXmDUWk6qEPg07Sg/z3VU0OkM4i/ldpjPlRIo+U6/qtHn+nN/pNIuqGz5xfqJ8lxcUEehBP1izKpPneZCJ0Gb+nCkHOz/NPi158WKd+I5z7EeWKbGhqVPQvfhr+mWQ+IfE6TETrPh8ujuq84NZRTl4qIa6CmAdIwETTnaMIfkm4oLiPfZlVMmo28lUWow6bC+88uKOSx8cwbVAlXtQkeAIAdFtAv8J0tofsNXlHmS8tpnuaYBjT+lZUtpJQ54kwUJBgVM+aZnFaJD0dOKrwN1F66Nr3IcCnZNKJ5GLreqRLVMr9A3Oulirte1EVEQ==
+ bh=o2RVoeclIc3TsEE6EsLWuSSg/V9hSJVRi/DsqNJ5+vE=;
+ b=bpOcUbezzL1Y852Nyhl7ef+kYGT9Q8gGhJSSVT5oNMG+snzYvSb/qq8qspxPCnplo+/Acxhn6JvZmBNgW36R3148o/k20zay61YCWE9+cAs+YmNl4wo5LGObNXYTjQSDKZp30RuG4Uxr6uMBOKbPYfRWyWloSpoholvRmd4n6ILicoxoAyjFY/kSBaXzIyjVldsHx06firdRTGGfgYCclZbxjtY3up0dzajsuyKezyaeQiyVbfkfXlHv801FCaF6BR4+U6uvhY3ZKCYfRqEH4jeQMhKR5Hgp21lTkE38QDqEh2Zzv1cPoefJChfXaHJHcxfDIHuWcuUcQGb7nDyuXw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Icz8h3TOK6uQrmJc+rd+YXAREL4mGBsYycE4/sdxiF0=;
- b=FVUNZuR1+Dk8GS8IsJxcgcCyaSvOMihrAOg+8cSmpYm+qTpClDTyURO1j0K6HFPwbDYrzwrj8aH2JMSTW7Vl/hG/FaV9Ob69hdD/94hOTZzXZNtlQIzq+fpUPkWFPT4I+u8oFEwFEU/77TtI/SOWBCLeAd7zWlgBnaFW7bImNMKwYVhWKACaOWoxHtR8x/62jMo5kCKEzdGqVTr4Y0kicz33KzQUOkFbMYMgVvlD1mOXZ6lmRZMVp8mj/ls9xyUsNPTR5zJugmwLtsgE2XsghPrKJFYV2++1EemOL3AT20sHEqNbsDredkTSx4ENMwai6jLDR2u9ff6X0AZJfGvXdw==
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by BY5PR12MB4936.namprd12.prod.outlook.com (2603:10b6:a03:1d4::13) with
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by MN0PR11MB5963.namprd11.prod.outlook.com (2603:10b6:208:372::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7068.33; Tue, 12 Dec
- 2023 18:04:27 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::60d4:c1e3:e1aa:8f93]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::60d4:c1e3:e1aa:8f93%4]) with mapi id 15.20.7091.022; Tue, 12 Dec 2023
- 18:04:27 +0000
-Date: Tue, 12 Dec 2023 14:04:26 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Will Deacon <will@kernel.org>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Eric Auger <eric.auger@redhat.com>, Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v3 04/19] iommu/arm-smmu-v3: Make STE programming
- independent of the callers
-Message-ID: <20231212180426.GN3014157@nvidia.com>
-References: <0-v3-d794f8d934da+411a-smmuv3_newapi_p1_jgg@nvidia.com>
- <4-v3-d794f8d934da+411a-smmuv3_newapi_p1_jgg@nvidia.com>
- <20231212162353.GA29871@willie-the-truck>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231212162353.GA29871@willie-the-truck>
-X-ClientProxiedBy: BL0PR02CA0126.namprd02.prod.outlook.com
- (2603:10b6:208:35::31) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7068.32; Tue, 12 Dec
+ 2023 18:59:23 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::6710:537d:b74:f1e5]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::6710:537d:b74:f1e5%5]) with mapi id 15.20.7068.025; Tue, 12 Dec 2023
+ 18:59:22 +0000
+Message-ID: <53c6b75e-836e-45ba-8d16-017f907c3c3b@intel.com>
+Date: Tue, 12 Dec 2023 10:59:20 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/3] x86/resctrl: Add mount option "mba_MBps_event"
+Content-Language: en-US
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, "Peter
+ Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, Shuah
+ Khan <skhan@linuxfoundation.org>, <x86@kernel.org>
+CC: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
+	<james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, Babu Moger
+	<babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
+	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+	<patches@lists.linux.dev>
+References: <20231201214737.104444-1-tony.luck@intel.com>
+ <20231207195613.153980-1-tony.luck@intel.com>
+ <20231207195613.153980-2-tony.luck@intel.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <20231207195613.153980-2-tony.luck@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR04CA0049.namprd04.prod.outlook.com
+ (2603:10b6:303:6a::24) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,329 +94,95 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|BY5PR12MB4936:EE_
-X-MS-Office365-Filtering-Correlation-Id: 992a8249-8754-409f-de10-08dbfb3cc813
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|MN0PR11MB5963:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8be7b280-fce5-4847-e68b-08dbfb44740d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	8EzX/yLTGdI8qI9ZLc8FC7KtMrnyhMkUhkED8/pAra75TQNxqeVepgU3E6kqQwJoyAV3xwN9rDdNAlPZYHkFptqX15fd8OOFvDh0mATBDhzTYfS5dgpYv8R72dmzGFBr6OsMSD8rB6nIRPMgp9sL6qtUaiCjaFoPVB7mU81nNV6Ek4+YmjT7fdgCM7HPZdzf0pQ2rexcF3U2G7MnQJGTZiTJpNtYRjFBtFla+heTa0M659F4dCQ/npt2dBRs/MzE9ODYP6KGAedvgFhtb2KtYMrgkUpcMKiaHCVGgy0NVMvVSi6xJFxsAb7JHX8K444XIk6pNBBoDOa2q8uA7fVOl+GYaTA2sm+TXU+Tn0BNaFkSwnEJMSzIhbCOMS4KKo+M555/1INdJsYk7+JWveZGVU5SQQkYchNYYdQDH4hY2oS+qzUXHimw6HzGUIQR9gCBjBlnIvT7JKbOEcH3M0EAFJ93hUGuVa8hHSQLDub6Gq8tAqRyd8M9dFelSxtgdUFQRgmq5VEXoJIKyXAjCtX8aFMXYSoidItTV/Te+iXuZhkTr8uMnDJtavvyDl00VHMEIXUs4ceSqClEGwRZ5JHVlRSnFc4Ta4tdrESP3kS0VoY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(396003)(376002)(366004)(39860400002)(346002)(230922051799003)(451199024)(186009)(64100799003)(1800799012)(83380400001)(6506007)(1076003)(6512007)(2616005)(8676002)(4326008)(5660300002)(41300700001)(8936002)(7416002)(30864003)(478600001)(2906002)(966005)(6486002)(316002)(26005)(38100700002)(86362001)(54906003)(66476007)(6916009)(66556008)(33656002)(66946007)(36756003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: dq1P3m4SGe92tPG2mDXM7NuE73CdM9OZXGE9YBUfkG/CDDhK1Hz7M80WHGc5JFmbPWBUQr4KpunR5m0NDYzzip0bUX7oXJXhH+r24FcDlV5Wm+22lDgy+bi5mC7NNjlnJxxmE6eNJyH4oL14OloVwuk2uK6RG/b6Q8A4ccuKXKyg+pH20eERC5DeFLIysSZohQcFYWs5+a489rrWMx4VxntQjYt+WC+WxZ+OsU1Fp/2Zr3kaCxOjZCkQBSwgseiNvF81zV8ahx+RMZmv/RdA4dqOaLK5Wb71WGdkuVVBttY0fa6QKovXvXEdooyZCJXGOx6ETGhVv1trNf1PorF8Dz4m7S9gzzpLB3ncX3s//Ftl5EDznNcGnAgKPco7aDdeBd1dg6YHE+oUCY7Ir1Hc+2t+5HSfiyLWx9L9xg4J9/A8EBxew1VTgB74ZIVKJXEH+1kBkZvXMf2m1MWfW8fl5M3AWk/5KF0KDmp8h4lJKgHFQ2Ny52RTP9TXhez7TWalXEllZqzuwj5qccdZmRd3WDtm/33UeUkkpUO+zf7Y4MpDyhYG+m80c/ZGAhsE8SkPTMrzr0xckVGiagVWpdkCKJjy5IgN766dPPnkb7huyvCIrmCsJU4p0RKKohS9hvRMqYeBrNBY4r8Drtx/rItmNw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(376002)(39860400002)(136003)(366004)(396003)(230922051799003)(1800799012)(186009)(451199024)(64100799003)(2906002)(4744005)(7416002)(41300700001)(38100700002)(31696002)(82960400001)(110136005)(36756003)(86362001)(2616005)(6486002)(26005)(83380400001)(53546011)(6506007)(478600001)(6512007)(44832011)(54906003)(4326008)(5660300002)(316002)(8936002)(66556008)(66476007)(66946007)(8676002)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?upaB8VYkftBSI0KpgrlI/fQG5P89YswCfogT2i3rgTjKToOLgsgGq/GneuCT?=
- =?us-ascii?Q?AwayckLFLRVpflhisz/0QHz6D8hiKajkySt1LBo3vmiws3E1MdMYOdVNTHYY?=
- =?us-ascii?Q?nyDIEy29lDsRCBgCAdtjZRhkXh0bza0KVk9F7pmoJzogn5HsMlVWG1PvQSGF?=
- =?us-ascii?Q?IZ/w55gsBdfQK7J50Am1eQlDXiSGeNkNe4QOglisysR8GavyZLz0QMyiIXV0?=
- =?us-ascii?Q?CvMWOlFgUEuG5Z17T/QUNtH8Kn+IlVPa4t/zXN6x7b/VDNTfCc+HBRavOBXc?=
- =?us-ascii?Q?C8YB+DcC05StFjaXqfc+uaw514YZekCM8VNkaAaKR//JLo1XgR+S0Yu9v2FJ?=
- =?us-ascii?Q?VdiiMl27O2YUBj6r8EMI1F2IA8JEk7JUzrFmWnLPPMtaLy7tc4dSrPKI0kxV?=
- =?us-ascii?Q?FHO5ym5l4tjAM/yCVhtq+WNwKsNypkhW4Y7lDqKP5PUCg52BstC30BkTO/VG?=
- =?us-ascii?Q?flHPDt0frzKiiYzCLVFlA8f93Esrp8r6bnRX3o9L6oRjtGCPev9KIus0qoBz?=
- =?us-ascii?Q?qs/w3jajbdxHeMhmIDOxY83RIts9CJRuaT5ZWSwKUDZA4rZu5xc5MdRkDcMG?=
- =?us-ascii?Q?okPWBKrOncy2bnhqdTszxuMAURZairbTnxCiu/SttlyzNdKWfICAQOU2i7Gt?=
- =?us-ascii?Q?KOYcwaHVb913tSYndLd82LbMU1FEO3yc5n+AHC+uGUfp0siJNXLHTK1p+Gdg?=
- =?us-ascii?Q?gtqETPkZsyns6m5OjkPrM9hpiKoSZ5hiuakSyDGdxba44SKxJH4gCIzrPfqG?=
- =?us-ascii?Q?wE8AoRvpPHfZ+NbGNbvYOHgYZQaJd4tSl09Qm16naj9lUIKIE21jS/o6kzSl?=
- =?us-ascii?Q?DpHecdRXmen8k7AhgCkNGkE9izQH5xAaHrrV2f91BeV9OgP1THq8MvWwTy6D?=
- =?us-ascii?Q?7o6fe2++FiOqj4TWj6YsWVNDZ/pq1N3BlqRVDzDlK0pb5H3iD2oIzCHT6qCr?=
- =?us-ascii?Q?2s5H7mUJu8E8uFkEzVNTq12rUaaajvRHZcoGsILFaMsHknjtJzQk2B5hmwj3?=
- =?us-ascii?Q?KTfbrll4fi3yR1pavcOhf214KCyW9Ig8APEo3zwpSqHNsYaHqumoQxhGG1um?=
- =?us-ascii?Q?NJYpq9+lwjTbWBHtXxnSm5QiqzockSV+pJlNQeriqPIuUehV4l8SoB55NzkX?=
- =?us-ascii?Q?Lic2IwVn9aAgjSqUb3LVfU9ucx31Dyp0eZcvNr8b7UGuEHyU4p4s8P7aGWtF?=
- =?us-ascii?Q?cY0ndAm5wJ+6t1pebbdSp+t3DjUAA+dfHneem+shucHAYUBmsEQRYJIiaByO?=
- =?us-ascii?Q?8DcYX6P5CvweMi7xi5LiQLdQ33xWVzMzSqgw1JTsRjkaNsRMzKXNwSXmNg7r?=
- =?us-ascii?Q?TnOL/6XuVe8UGxi4q8S964V9U0wX0jIcoBb7RDpP2ZRH3VvmvdcPdE9LrjHN?=
- =?us-ascii?Q?tkzsdTNSlurzjWs8CyYV4V6wxK7+bHRlWmf96BSNEVNwdlHVr/XNGa7D92wV?=
- =?us-ascii?Q?M9VjLg/kRlm9yRlOZHrc/VcuCjWXZ/VUjCFm11SZyPw2ebQ1daXZnBdf5pHk?=
- =?us-ascii?Q?hyS+gtkoVz/frrjJV88UDMxfWBBtvF86lmCHOKmk8ArJHDGLsdPLZ8LGpvfP?=
- =?us-ascii?Q?g5Q4Lx3h2ZCI5r+de8mgfgbHjiHwUFFyijCek56F?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 992a8249-8754-409f-de10-08dbfb3cc813
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UE43ZmYxOUJKNEs5SDdlZE5nc2FtMXJtQ1VHdXVnL1R1bDhKTkVuOXFXZmVM?=
+ =?utf-8?B?TzVzb0JVTXBPUGt3cmZCd0E5c2tlbXFkb1NCU2ZDR2x4bEUvNUdady9WMks0?=
+ =?utf-8?B?RXJwQ0c2N090VFV5QjFCdUxVeTJDS3cxSHd0U0hJdGQ5VlV0RmFsQTNmYWdq?=
+ =?utf-8?B?WWlqVUtmRWFTQkNacXRhNlpiRlRqVFk2azFEQml4aFhYYmhOMWZxc0t2NmhD?=
+ =?utf-8?B?emtuT3FqemRnNkp5dnNnRkdUUlYwbisvd1FzbVNLQkNOWDQwdjVpcHZ6OTNl?=
+ =?utf-8?B?RklraGpuaGlHKzA1Y25qYkwzd1RrdkFLNE9IZ0IyY0pvblZNR0pjWWVtTmRw?=
+ =?utf-8?B?SDM2Ni9EN3I2K2h2NGFNTHNPY0xyZVM3UWsxa2RkTHNzS0pWb0M2ZHJ3YU1w?=
+ =?utf-8?B?T1lBSVFxR0Qya2t1YU0rRm5hc28xbkNTWGUxUVMzRDRSUmN1SGs4UnRLcUVq?=
+ =?utf-8?B?LzY5cmtCZkU5Vno3WjdkeW1LT0dmRTdZZnE2WnlPUDFyYmlIQUpFcFlJTmNP?=
+ =?utf-8?B?MnlnUmxlbUIyT2VpWFFXVW9QSVpVMEVSQkVnNjZpMUN2UzYxeHF1WGZwQjg5?=
+ =?utf-8?B?VUtnSGY1OHY3KzQxRS8xd3hDQ0lIbGw3V3NlNFplcTBKQ0FZc001N01lOUdH?=
+ =?utf-8?B?TFVHQ09uRE42ODlEay90YUtFUW9mUGNaZ0Ixb2R6UndFSmZIWGM2emlYNE90?=
+ =?utf-8?B?S0FNYTZNTUZQR0s4OTNKVkhMRnl1WjlQYU1UNDl4Mmh3aUNndjdvTElOaHBT?=
+ =?utf-8?B?Mmx3bjUwMDhoQmdFN2l2aFVwRnVyUjk4dlp1ak1vWndJcWM5Q1JVWW9RT0E4?=
+ =?utf-8?B?blpWQ0dzOHJ4NURyYXdxQldCSEpEQ0hlNEVOeVgrK1Y1Mm1BTUliR21venoy?=
+ =?utf-8?B?MDNlUEd4Tk1uQ2t1K3FNRW5QOHJZd21CSTUyTUExZkVESFVrdmZPbGxxWThE?=
+ =?utf-8?B?RGdBUVByYlhZYUFWY2lLTUJBZXh3ZzQ0aU50b05vWjhBM3g3aGZNTGdlU3ZE?=
+ =?utf-8?B?SU1XSHBSb29LVEJwcERGbUZ5dlRNQk9DSDdoYmlkMVRtdnpvU2ZCY0p2cUxu?=
+ =?utf-8?B?UGtySVN5WVlLQzRsZGN4N2ZtSndCeVJ3RTFSVGRrYUJpR2s3U3Z2K2FxUGgx?=
+ =?utf-8?B?d3gyOW5sRGdyTnFaM3hMbkwwcEJyK0VWd2lXWC9QbjRSTjk4SHBDbTU3VlBv?=
+ =?utf-8?B?WTQvamxkRWRHMnJoVkVVYkRybEhCUHFVemZUZEkrbmF5Zzk3emlNUWxseXFy?=
+ =?utf-8?B?OVhTeVRvRUgyWnJVWTdFcGxvUXZoNnM3ZUZVUVpxZmNFZ3B1MlJ6QkM4UFZ1?=
+ =?utf-8?B?dlJQZlZ6VlQweGhFUzR3eGdZdWdjYTV6aDNiMWxCdmFXaUtsT2JlNEFaazRQ?=
+ =?utf-8?B?Wll1c0E2S04vY3Z6bHJpVmZuZm5vSC96eGVuMlJyYjdXT3ZYdFljK1ZiS1Q5?=
+ =?utf-8?B?NkJYYjFRdUtzMHJuUC84YTNpeFk3V2pwM0xLVUpTa1Q2MXBac3dDa20ydWQx?=
+ =?utf-8?B?cUY0SEhxb2NBMWFXSXVBdjJhT2o0VDhEYTJ3Z3VDczhQTndGZk9VK0phSUdW?=
+ =?utf-8?B?OFhvVHR3enBqT3JCbWxFWGVYSFZLRWRVUHYwdjl0Ui9vTUlRbWJQNWdvTXJJ?=
+ =?utf-8?B?UGh2N2xYQ3FpRnNBbFF4NFZXNE9ZdHMrTkJnVktCL04wM0RUWEZ3UnRjNGpt?=
+ =?utf-8?B?eVJrTFU0aEtxVGZZT3BxR0VYODFja1hiMzBBcUdpdG13VGthVDhIYXF0clMw?=
+ =?utf-8?B?YzRqSXd1K2RpWlRQRHZUV3oyVTlTU242Z0E2TXJHbjZyN0FtYU04WmxKYWk3?=
+ =?utf-8?B?WUNlSUJyME10cWh4RGJPdVZoZ0RENzVZZjh1WTZCMCtwRndNUzFteWM0RDlp?=
+ =?utf-8?B?eC9IVUpRSlFMcWNMM1R6aVRCN096NjFOcTRMWEFQazlpNWk1WHZ6a1J0RGwx?=
+ =?utf-8?B?bENxWnRzcUp1YnpBdGxJdGk4bUs2U1JDTUlaSGhlNUdyRmM0WUs5MDFyV2RR?=
+ =?utf-8?B?cGI5RTF3bmlxOFdIb3J2ZGdLOENmMkVTQVpUcVh0RFlyWTA0MHluM2dMOVQ1?=
+ =?utf-8?B?NmhoVjN5UFhQTThjU0pzZ3RMSzdac0RMSHdYM0lXTGFYZVdFM25IWHhVVlBN?=
+ =?utf-8?B?Z1EvM1BsQnoveUU0QW5TVjJEYjZ6MWdsMWxFYXU0a0lSYmpweWhPbGF3NU95?=
+ =?utf-8?B?dkE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8be7b280-fce5-4847-e68b-08dbfb44740d
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Dec 2023 18:04:27.8231
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Dec 2023 18:59:22.8471
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fGwlS9FMLTA08EVCGv5xcDWuMmuz+7Z91+xBSbre7nJtcPlRFuSwrf30Ledm1PjP
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4936
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1aVcX+L3fq4DAGP4E73iPsxqYwU6CHixfJKc4k7YPAPxbiRBXAyFcCGWpj40jGQid8R9//k0b+FLUBUQr6j4jxkFijJV1kRTR0J5g6vcdl0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR11MB5963
+X-OriginatorOrg: intel.com
 
-On Tue, Dec 12, 2023 at 04:23:53PM +0000, Will Deacon wrote:
-> > At this point it generates the same sequence of updates as the current
-> > code, except that zeroing the VMID on entry to BYPASS/ABORT will do an
-> > extra sync (this seems to be an existing bug).
-> 
-> This is certainly very clever, but at the same time I can't help but feel
-> that it's slightly over-engineered to solve the general case, whereas I'm
-> struggling to see why such a level of complexity is necessary.
+Hi Tony,
 
-I'm open to any alternative that accomplishes the same outcome of
-decoupling the STE programming from the STE state and adding the API
-required hitless transitions.
+I'm just adding a few minor comments to the bigger items already
+mentioned ...
 
-This is a really important part of all of this work.
+On 12/7/2023 11:56 AM, Tony Luck wrote:
 
-IMHO this is inherently complex. The SMMU spec devotes several pages
-to describing how to do tearless updates. However, that text does not
-even consider the need for hitless updates. It only contemplates the
-V=0 flow.
+...
+> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> index 66942d7fba7f..1feb3b2e64fa 100644
+> --- a/include/linux/resctrl.h
+> +++ b/include/linux/resctrl.h
+> @@ -129,6 +129,7 @@ enum membw_throttle_mode {
+>   * @throttle_mode:	Bandwidth throttling mode when threads request
+>   *			different memory bandwidths
+>   * @mba_sc:		True if MBA software controller(mba_sc) is enabled
+> + * @mba_mbps_event:	Event (local or total) for mba_sc
 
-Here we are very much adding hitless and intending to do so.
+This is quite cryptic and does not add more than the variable name and type.
+One example could be:
+	"Monitoring event guiding feedback loop when @mba_sc is true."
 
-> In the comment, you say:
-> 
-> > + * In the most general case we can make any update in three steps:
-> > + *  - Disrupting the entry (V=0)
-> > + *  - Fill now unused bits, all bits except V
-> > + *  - Make valid (V=1), single 64 bit store
-> > + *
-> > + * However this disrupts the HW while it is happening. There are several
-> > + * interesting cases where a STE/CD can be updated without disturbing the HW
-> > + * because only a small number of bits are changing (S1DSS, CONFIG, etc) or
-> > + * because the used bits don't intersect. We can detect this by calculating how
-> > + * many 64 bit values need update after adjusting the unused bits and skip the
-> > + * V=0 process.
-> 
-> Please can you spell out these "interesting cases"? For cases where we're
-> changing CONFIG, I'd have thought it would be perfectly fine to go via an
-> invalid STE. What am I missing?
+Please feel free to improve.
 
-The modern IOMMU driver API requires hitless transitions in a bunch of
-cases. I think I explained it in an email to Michael:
+...
 
-https://lore.kernel.org/linux-iommu/20231012121616.GF3952@nvidia.com/
+> @@ -3780,16 +3806,27 @@ static int rdtgroup_rename(struct kernfs_node *kn,
+>  	return ret;
+>  }
+>  
+> +static char *mba_sc_event_opt_name(struct rdt_resource *r)
 
- - IDENTIY -> DMA -> IDENTITY hitless with RESV_DIRECT
- - STE -> S1DSS -> STE hitless (PASID upgrade)
- - S1 -> BLOCKING -> S1 with active PASID hitless (iommufd case)
- - NESTING -> NESTING (eg to change S1DSS, change CD table pointers, etc)
- - CD ASID change hitless (BTM S1 replacement)
- - CD quiet_cd hitless (SVA mm release)
+This can be "const char *".
 
-I will add that list to the commit message, the cover letter talks
-about it a bit too.
-
-To properly implement the API the driver has to support this.
-Rather than try to just target those few cases (and hope I even know
-all the needed cases) I just did everything.
-
-"Everything" was a reaction to the complexity, at the end of part 3 we
-have 7 different categories of STEs:
- - IDENTITY
- - BLOCKING
- - S2 domain
- - IDENTITY w/ PASID
- - BLOCKING w/ PASID
- - S1 domain
- - S1 domain nested on S2 domain
-
-(plus a bunch of those have ATS and !ATS variations, and the nesting
-has its own sub types..)
-
-Which is 42 different permutations of transitions (plus the CD
-stuff). Even if we want to just special case the sequences above we
-still have to identify them and open code the arcs. Then the next
-person along has to understand why those specific arcs are special
-which is a complex and subtle argument based on the spec saying the HW
-does not read certain bits.
-
-Finally, there is a VM emulation reason - we don't know what the VM
-will do so it may be assuming hitless changes. To actually correctly
-emulate this we do need this general approach. Otherwise we have a
-weird emulation gap where STE sequences generated by a VM that should
-be hitless on real HW (eg the ones above, perhaps) will not
-work. Indeed a VM running kernels with all three parts of this will be
-doing and expecting hitless STE updates!
-
-While this is perhaps not a real world functional concern it falls
-under the usual rubrik of accurate VM emulation.
-
-So, to my mind ignoring the general case and just doing V=0 all the
-time is not OK.
-
-> Generally, I like where the later patches in the series take things, but
-> I'd really like to reduce the complexity of the strtab updating code to
-> what is absolutely required.
-
-This is the sort of thing where the algorithm in
-arm_smmu_write_entry_step() is perhaps complex, but the ongoing
-support of it is not. Just update the used bits function when new STE
-features are (rarely) introduced.
-
-> I've left some minor comments on the code below, but I'd really like to
-> see this whole thing simplified if possible.
-
-I have no particularly goood ideas on this front, sorry. I did try
-several other things. Many thoughts were so difficult I couldn't even
-write them down correctly :(
-
-> > + */
-> > +static bool arm_smmu_write_entry_step(__le64 *cur, const __le64 *cur_used,
-> > +				      const __le64 *target,
-> > +				      const __le64 *target_used, __le64 *step,
-> > +				      __le64 v_bit,
-> > +				      unsigned int len)
-> > +{
-> > +	u8 step_used_diff = 0;
-> > +	u8 step_change = 0;
-> > +	unsigned int i;
-> > +
-> > +	/*
-> > +	 * Compute a step that has all the bits currently unused by HW set to
-> > +	 * their target values.
-> > +	 */
-> 
-> Well, ok, I do have a cosmetic nit here: using 'step' for both "STE pointer"
-> and "incremental change" is perhaps, err, a step too far ;)
-
-Ok.. I'll call it arm_smmu_write_entry_next()
-
-> > +	for (i = 0; i != len; i++) {
-> > +		step[i] = (cur[i] & cur_used[i]) | (target[i] & ~cur_used[i]);
-> 
-> Isn't 'cur[i] & cur_used[i]' always cur[i]?
-
-No. The routine is called iteratively as the comment explained. The
-first iteration may set unused bits to their target values, so we have
-to mask them away again here during the second iteration. Later
-iterations may change, eg the config, which means again we will have
-unused values set from the prior config.
-
-> > +	} else if (!step_change) {
-> > +		/* cur == target, so all done */
-> > +		if (memcmp(cur, target, len * sizeof(*cur)) == 0)
-> > +			return true;
-> > +
-> > +		/*
-> > +		 * All the used HW bits match, but unused bits are different.
-> > +		 * Set them as well. Technically this isn't necessary but it
-> > +		 * brings the entry to the full target state, so if there are
-> > +		 * bugs in the mask calculation this will obscure them.
-> > +		 */
-> > +		memcpy(step, target, len * sizeof(*step));
-> 
-> Bah, I'm not a huge fan of this sort of defensive programming. I'd prefer
-> to propagate the error rather than quietly try to cover it up.
-
-There is no error.
-
-This is adjusting the unused bits that were left over from the prior
-config to 0, it is a similar answer to the 'cur[i]' question above.
-
-The defensiveness is only a decision that the installed STE should
-fully match the given target STE.
-
-In principle the HW doesn't read unused bits in the target STE so we
-could leave them set to 1 instead of fully matching.
-
-"bugs in the mask calculation" means everything from the "HW should
-not look at bit X but does" to "the spec was misread and the HW does
-look at bit X"
-
-> > +/*
-> > + * Based on the value of ent report which bits of the STE the HW will access. It
-> > + * would be nice if this was complete according to the spec, but minimally it
-> > + * has to capture the bits this driver uses.
-> > + */
-> > +static void arm_smmu_get_ste_used(const struct arm_smmu_ste *ent,
-> > +				  struct arm_smmu_ste *used_bits)
-> > +{
-> > +	memset(used_bits, 0, sizeof(*used_bits));
-> > +
-> > +	used_bits->data[0] = cpu_to_le64(STRTAB_STE_0_V);
-> > +	if (!(ent->data[0] & cpu_to_le64(STRTAB_STE_0_V)))
-> > +		return;
-> > +
-> > +	/*
-> > +	 * If S1 is enabled S1DSS is valid, see 13.5 Summary of
-> > +	 * attribute/permission configuration fields for the SHCFG behavior.
-> > +	 */
-> > +	if (FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(ent->data[0])) & 1 &&
-> > +	    FIELD_GET(STRTAB_STE_1_S1DSS, le64_to_cpu(ent->data[1])) ==
-> > +		    STRTAB_STE_1_S1DSS_BYPASS)
-> > +		used_bits->data[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
-> > +
-> > +	used_bits->data[0] |= cpu_to_le64(STRTAB_STE_0_CFG);
-> > +	switch (FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(ent->data[0]))) {
-> > +	case STRTAB_STE_0_CFG_ABORT:
-> > +		break;
-> > +	case STRTAB_STE_0_CFG_BYPASS:
-> > +		used_bits->data[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
-> > +		break;
-> > +	case STRTAB_STE_0_CFG_S1_TRANS:
-> > +		used_bits->data[0] |= cpu_to_le64(STRTAB_STE_0_S1FMT |
-> > +						  STRTAB_STE_0_S1CTXPTR_MASK |
-> > +						  STRTAB_STE_0_S1CDMAX);
-> > +		used_bits->data[1] |=
-> > +			cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |
-> > +				    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |
-> > +				    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_STRW);
-> > +		used_bits->data[1] |= cpu_to_le64(STRTAB_STE_1_EATS);
-> > +		break;
-> > +	case STRTAB_STE_0_CFG_S2_TRANS:
-> > +		used_bits->data[1] |=
-> > +			cpu_to_le64(STRTAB_STE_1_EATS | STRTAB_STE_1_SHCFG);
-> > +		used_bits->data[2] |=
-> > +			cpu_to_le64(STRTAB_STE_2_S2VMID | STRTAB_STE_2_VTCR |
-> > +				    STRTAB_STE_2_S2AA64 | STRTAB_STE_2_S2ENDI |
-> > +				    STRTAB_STE_2_S2PTW | STRTAB_STE_2_S2R);
-> > +		used_bits->data[3] |= cpu_to_le64(STRTAB_STE_3_S2TTB_MASK);
-> > +		break;
-> 
-> I think this is going to be a pain to maintain :/
-
-Ah, but not your pain :)
-
-Some day someone adds a new STE bit, they don't understand this so
-they just change one of the make functions.
-
-They test and hit the WARN_ON, which brings them here. Then they
-hopefully realize they need to read the spec and understand the new
-bit so they do that and make a try at the right conditions.
-
-Reviewer sees the new hunk in this function and double-checks that the
-conditions for the new bit are correct. Reviewer needs to consider if
-any hitless flows become broken (and I've considered adding an
-explicit self test for this)
-
-The hard work of reviewing the spec and deciding how a new STE bit is
-processed cannot be skipped, but we can make it harder to notice that
-it has been skipped. I think the current design makes skipping this
-work too easy.
-
-So you are calling it a "pain to maintain" I'm calling it an "enforced
-rigor" going forward. Like type safety.
-
-> > +static void arm_smmu_write_ste(struct arm_smmu_device *smmu, u32 sid,
-> > +			       struct arm_smmu_ste *ste,
-> > +			       const struct arm_smmu_ste *target)
-> > +{
-> > +	struct arm_smmu_ste target_used;
-> > +	int i;
-> > +
-> > +	arm_smmu_get_ste_used(target, &target_used);
-> > +	/* Masks in arm_smmu_get_ste_used() are up to date */
-> > +	for (i = 0; i != ARRAY_SIZE(target->data); i++)
-> > +		WARN_ON_ONCE(target->data[i] & ~target_used.data[i]);
-> 
-> That's a runtime cost on every single STE update for what would be a driver
-> bug.
-
-See above. STE programming is not critical path, and I think this
-series makes it faster overall anyhow.
-
-> > +	while (true) {
-> > +		if (arm_smmu_write_ste_step(ste, target, &target_used))
-> > +			break;
-> > +		arm_smmu_sync_ste_for_sid(smmu, sid);
-> > +	}
-> 
-> This really should be bounded...
-
-Sure, I think the bound is 4 but I will check.
-
-Thanks,
-Jason
+Reinette
