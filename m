@@ -1,213 +1,164 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D6880059
-	for <patches@lists.linux.dev>; Tue, 12 Dec 2023 19:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FC36359B
+	for <patches@lists.linux.dev>; Tue, 12 Dec 2023 20:02:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="cE1o6eH0";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="GOP2Lyxa"
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3BCDitnv020899;
-	Tue, 12 Dec 2023 19:30:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=Ww2/Pb/oQ0bl8B8/2UJkiBSBy05ZLFRk5/59UtWkePo=;
- b=cE1o6eH01l6Lp1dibP2sMptA5J46YThSlFT/8+nrtLOFAkm7LFVfcGOtFWKkNxrnrzbz
- Ml/sqL9u5Ztnzwv6WPBNKSrDVTDguWSd20lXWtWHmoxLh8VKu4GgU4SEz1p17PD1V7AW
- L650fWoEQ/eoEJLElSpdbMZ80DSXxay3DRfVHZNFuaXrWh/pmPl7Vn1Ew5YhwKEMzWhZ
- e/B7HY5JOY3L9G59W0Yoy+MbiGYL5GMObO9tfEuJOnIVz8Kc0Flc4y4kXhhi0DUUCLa1
- yVV807w1snsiXPlpCp7tUYlA5GBn0O4SiG87mgTE6/R+FutgmaN6CVr4Q+cz9lliM5iR nA== 
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3uvf5c6hwj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 12 Dec 2023 19:30:21 +0000
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 3BCIPgu6009868;
-	Tue, 12 Dec 2023 19:30:19 GMT
-Received: from nam11-bn8-obe.outbound.protection.outlook.com (mail-bn8nam11lp2169.outbound.protection.outlook.com [104.47.58.169])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3uvep734wt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 12 Dec 2023 19:30:19 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nVU9r0niuZ1plrRDVvxq5QMZ0qXYKpYb5sLjmnAtvPB6hO/NK0KSAZapgfrnDJvOMHofqrzmlwXvIJo6SGUcAH/AplAxtIwWAlo6TxRPMht1rkZIvoFjw+IwBLwkbroJlEPhZ0GPPE26dJDurKE9hX540Rpmir0l/3A0mMEgPEMZoYaLtZRvS25L8yt8NOjjQmqPrXk7vWap0AbTQ7r5hQsm1WlJniLk8m1VFZ5cSu/lW3RQCYZKCXxvhlw2iDzNYQN4iqHien/iFotZTosWJFTLxZtAL7u5ka/FYuzK+yhSI7ApboMDgYeW1xowJ9Z/OtGe4z4LiXgPVsw/CeoBtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ww2/Pb/oQ0bl8B8/2UJkiBSBy05ZLFRk5/59UtWkePo=;
- b=esosBLsFsUUQwxS4/2YLQl4IBME8jF4DgIMw2DJQuAU9Tulw9cPaXiTqQ72LDiiPnOf+XDm6j76YT73v9JE831ZYvsQ6YronPOie1dRs6Apyy2fvZd7zkj4z3NPLU3dDB8D7EFos50Z+uJFV0wDe8imvVIdY/prpehBSO7rvDERT/stZIXhcINJQ4/8ov/4y1sYaXCfxlEztGhmASezjrCrXCEMA3R0dJn7TxZgBcmFEzAQ2+/e50mAm6Xis7b+oQF9jVSfrMncRv0uTbbQW1cH02OaDpxZa/tmcY5nAGWmqPTx5VkSdwKaMzWrI5LvLONAfbZecAW7JUWm5cj9yyw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ww2/Pb/oQ0bl8B8/2UJkiBSBy05ZLFRk5/59UtWkePo=;
- b=GOP2Lyxaa7zRdjAmsVMW7tM7awFU/x4ZuOY+XEAPjKBHX7ndnUW9L+m5U3o5l060l+1/0SPE/KxsQnZ+Jy/LaotjneV8AT+tX0gOKni3vqVi5BXh2Qn3bMazOEfuxOqoQ6CVNt2bQCxEFomY3RuMT6mZ3pm+JeenD7IWi2ZDjDg=
-Received: from PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
- by MW4PR10MB5679.namprd10.prod.outlook.com (2603:10b6:303:18d::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7068.36; Tue, 12 Dec
- 2023 19:30:17 +0000
-Received: from PH8PR10MB6290.namprd10.prod.outlook.com
- ([fe80::b7a9:b552:a623:84a4]) by PH8PR10MB6290.namprd10.prod.outlook.com
- ([fe80::b7a9:b552:a623:84a4%4]) with mapi id 15.20.7068.033; Tue, 12 Dec 2023
- 19:30:17 +0000
-Message-ID: <4eda1915-983e-4910-a4be-16c1950a3e5a@oracle.com>
-Date: Wed, 13 Dec 2023 01:00:05 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/139] 5.15.143-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-        torvalds@linux-foundation.org, akpm@linux-foundation.org,
-        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
-        rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Darren Kenny <darren.kenny@oracle.com>
-References: <20231212120210.556388977@linuxfoundation.org>
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-In-Reply-To: <20231212120210.556388977@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TYCP301CA0029.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:400:381::15) To PH8PR10MB6290.namprd10.prod.outlook.com
- (2603:10b6:510:1c1::7)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DhzVaL1L"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1702411337; x=1733947337;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=KAnG3YVV07ZIrxW3h036E4sox/rMCvD6OghTCdFsjyM=;
+  b=DhzVaL1L3dnRidSVmvpcyDIMlcxokCblrBgMaIrpzvbsvmed/Lqriy1n
+   dpRyc2S9byUaQUGz/yNwbr13/utUpJpUkqGUoBjf5vPd2L1Q3F6Bh1DHG
+   qU3EzHa+9V8RuiL+dmygPNATLuB9MbaQUPVdkKj0pHH7Qktx9WuEr8liO
+   LtrdF+ViboYgUYoN1XCgamWBU+oZtKWSKCLGThvvQm6R79+dmwxaCYT3W
+   tcD30pounz+BlBIAfHebZkKVOkpqAYz3E8q8bIXMFBoGKaw2cbiw4X1rj
+   UmoK/YGkWU9RXY461wsBW6H+OqZryfEHc2QDQpEuqpwc+rDc4RdnymANv
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10922"; a="379856081"
+X-IronPort-AV: E=Sophos;i="6.04,271,1695711600"; 
+   d="scan'208";a="379856081"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Dec 2023 12:02:16 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10922"; a="777215190"
+X-IronPort-AV: E=Sophos;i="6.04,271,1695711600"; 
+   d="scan'208";a="777215190"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Dec 2023 12:02:16 -0800
+Date: Tue, 12 Dec 2023 12:02:14 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Peter Newman <peternewman@google.com>,
+	Fenghua Yu <fenghua.yu@intel.com>, Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org,
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v6 1/3] x86/resctrl: Add mount option "mba_MBps_event"
+Message-ID: <ZXi8Rj3znA6lmjE9@agluck-desk3>
+References: <20231201214737.104444-1-tony.luck@intel.com>
+ <20231207195613.153980-1-tony.luck@intel.com>
+ <20231207195613.153980-2-tony.luck@intel.com>
+ <CALPaoCji1yzfkA=tms3LhYMvRB+wSJQM3qzPKrHNEa7a+KduTA@mail.gmail.com>
+ <ZXORTTIUKWXOsd9p@agluck-desk3>
+ <CALPaoCj_OvMzD8W9+jEORewwDquM6F-sOW32Ngcy+Gm6A1+OcQ@mail.gmail.com>
+ <2377bfb8-00bc-4863-8d70-425cb70c9c0b@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR10MB6290:EE_|MW4PR10MB5679:EE_
-X-MS-Office365-Filtering-Correlation-Id: 090a0a5c-6d17-4575-466c-08dbfb48c55c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	uQvTKjAFxurwLAEWrjYZxuSbAqQlA8wVEWCNXl277tQygfH4yyWxu2CwhYPKgPkmShb0WUTGHi/9cvQnSKvYR8mbn/6gLhD1fOHfXHNz+9Ap+CvELoZtEdZKBBcGYEmfEOgnIizQOmF//Vg78/uhBGYJ3uH2rC0YMal+cmcskEVMF/94D8n7DAchtJ+/+SdFzrbC+kR9oX1FjWn7Q7+x/XwnNyFn/ichv+JuOWUtSU+pNkt0bAwtUZAPKhOJ6WqGPwE/2+Jicwequ5UDc7kMxgdNhS2iqw0tb4vJrtFmU5FnHnbM7TVBmuW4aHjnHeEetezxoH4tib0MAGc3hZt6PA7IM28NJt/2AHFQwsbuMEWwtMQGkNgBTtZj3kvYoyJy8iPFfnETHfr8qe9c69/Dqs53X1sgAHSeWtNw98KVDLYf9q3TPxhVNto6ThkNbJkWffO6SYXdOYBLvIBWje9XrXhjuSQUl9miBq6wTvKFsnLvzRhyrc0acSOulJT5hZUNUKWX0btFqcAPnajY1MlEPzyPmGa4mBvKC3s0NNlkQFVboLwXFwqUwoHmBEbniJjXwMC6BTI/4H1BVtvIcna1CEIcG/dsQaHuu5jFQISPDrbgRS5pGI3BGgSrI9EC1515x5Ozz3f1gJhQs9RsTBQAVQ==
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR10MB6290.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(376002)(346002)(366004)(396003)(136003)(230922051799003)(1800799012)(186009)(64100799003)(451199024)(4326008)(8936002)(8676002)(31686004)(4744005)(7416002)(2906002)(316002)(5660300002)(66556008)(66946007)(66476007)(54906003)(478600001)(6486002)(966005)(26005)(36756003)(6506007)(6512007)(6666004)(53546011)(41300700001)(107886003)(2616005)(31696002)(86362001)(38100700002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?Y2ExTzVIb2ZUbExoTXcwZmx5dHVnd08zbXc1Z3ZIdjdRYUFYTHY5dUZWbGFC?=
- =?utf-8?B?WW55cW5iS2VCdkxzWjFRQ2hPSGZzNExQK3MybGRmL2tOQkZaREcxcjFxRGk1?=
- =?utf-8?B?aU1OZ1lXM2FHOENJNnQyVmxNMEtqUlBBSnh6ZGRzZGs3VmdrVXhYTTBFTTNH?=
- =?utf-8?B?Y2xKYjRSYThDbWNlZGlkVkRxSUNqbFYweTFGNGl3U3J2Vk5tWnRMRXNabzRE?=
- =?utf-8?B?Um5lTEI2QVF6TU4xUFNLQlZaOFduS3RScW5RQzE5VHlVSTZBNWlMKzA5U2Jh?=
- =?utf-8?B?Vm43RDVCZWlVNGNPTGc3REhFSHlXNUNZWTF0TWQwM2ZTVzNsRGorMUtsdVFF?=
- =?utf-8?B?bzdhcmc2RC9PTHB4L0owMTYyRWcrVlFUdXI5Ynp2Y0plSGo3bHpFOEI4dmZW?=
- =?utf-8?B?RjAzZ2RxYUFuWk05WWIzb0dncnMrVTFiMnd6YU53YXpraXVjdkVZaEczbGox?=
- =?utf-8?B?SW56a2g4ZDJJS2NVdi9vMldpa1BINnpIemNYeXlCUjJvN1pyQThMSVgrZFdG?=
- =?utf-8?B?bU1BaE1CdFF4Y3NFdW55SlowNjZCWUlLbTl3bnZSNGREb2VCVG51NWJueDBY?=
- =?utf-8?B?dy9TRmhtODNvd3ppYWZUTTY4ZGtDY2VLV0hQbTRPbTVBRG1qZmdzT2tuaUNB?=
- =?utf-8?B?cGk0QlNOVTlIVkNNU3YrL2wyOVkwVURsN0lEbmFvZHg1YUoweXZjRzJqTFZh?=
- =?utf-8?B?aDNSQmtld1VFQlNGVFhVNVBvQXNEYmJ3b1MyWG8vZC8xc0VPZjZoUkVvblNh?=
- =?utf-8?B?S2diMit1VDI3bFI5UnpvZDRGVGpSZkZ5UjM1OHVtVU1PSG9mSGJGZ2VDTWZJ?=
- =?utf-8?B?YU14UUZ4ZFVCTTN4R3A4czRlRlRPWHBSK1pNYXk5TEtHcUIyc3FybGZsZWov?=
- =?utf-8?B?dzExNjlQTXJhdkZLdUlmQlFIQ3lJZ1dnektCb0R4VUZsbHlmWGpnL1lBSXRL?=
- =?utf-8?B?OUpZaFhUZUZ3SFRrcTFyeFlyN2tZS0VxeVRHTnVFc29EKzJrMmNGYlU1dkFj?=
- =?utf-8?B?QnJ3NXdYUzhlblNTaVFHMW1jYXdPMDZ4VjA0UFozWjFITTNwSDRnWlVEWW9N?=
- =?utf-8?B?MWkyVGZkcmdlK3Z5cGZWb21SRk9LMlRZMi9rY0llOXNRSW5ZU1ZoRmlCeTkv?=
- =?utf-8?B?YmhDUm96dmw1ZzlqQ0E0Y0JoWWhYUnZCZHNHTG9pSlZrKzlCaFRDbEEzYVVB?=
- =?utf-8?B?enhvSElWYXhjMzh3YlUzUTZnbFQ4WHFyZkZsdk9sUExHK1FNaGdWdHBmUHE5?=
- =?utf-8?B?S3o5MmJ6bk9iVk1oN2R1Mm9rcXhMdmlaMEF4T2NQbkpHU2xOUE9uQmdIbXJh?=
- =?utf-8?B?T05yRk5vNHpORU5FdEIxZjRQK2JTc2tkc1lTUXhJQjZheWNndEtHQU92bmVH?=
- =?utf-8?B?aFEzYjhVZ2lzcndKVndkVXVIM2txeXN6K1JFKytDWWQrVUovaC9qVlA1VHJv?=
- =?utf-8?B?Lzhyb3ppSUZQMVlybUxFRzFRT2Eyb1h0MGk5ZU1LendqbVpuSTRvVitETy8x?=
- =?utf-8?B?ZDBZNXNobVFYc3lPZmlPVXlENGhLcDQ0bkluSGxJYzNDd2xzZEFqdW8wYW1x?=
- =?utf-8?B?QlgzQVEwQkRPR1ZDR0VEeTJUVzF2bFdhSDJJRWhTbkV4YjNCZU4vQzZ0Uk81?=
- =?utf-8?B?MVhmM0ZtaVN6clRERXlHejB2eUFSbElBZ1pwREoxSkRlaDJFdUVHNTY1Zy9Y?=
- =?utf-8?B?Q1FkSlpYblhwRmJ1Qk9VM2x0Y2pTME9JcFVvZDFwL2dZR0lWamIzSXpYTUlH?=
- =?utf-8?B?YmZsUHpWd0ZqTlZONDNhVW90TXU1TmdQNlhuZU5paFE0MXFPaWJiVUVPUmt5?=
- =?utf-8?B?aldhRWVENXpzT1lORG5IMGtGaEFyd1MyNnQ5eXZwMk1ldkNMaVhPOXp5Mi81?=
- =?utf-8?B?NGpTa25zU1BaVEdZRDcybzYwQS9OT0x3OU9jaXM4QncwTzN4VzdIalZReDcv?=
- =?utf-8?B?akRyZm8rZEM4SmZUU09Ub3JKZGhLZ3lqS243SVZvU1l3VmVDMWE1ZUIyR3pQ?=
- =?utf-8?B?M1dHb2dnTW1wTVZzaFpURnZCU0QrcDlVNmdsYWZCU2VjQ2YyK3l1bWgyZHRS?=
- =?utf-8?B?algvaXZ5T1o1VXhxSkU5ZzZ4SUNnVFRFdThnRjJMZkpONTJZNjFVWEYxMmpL?=
- =?utf-8?B?UHBnUHVFN0ZhcHF4TzNVUnN5ZEVVM1dCNDJWdWFMVmdKV3c5Q09mQnp1aEpD?=
- =?utf-8?Q?oyLOHDaD2zAzUM6j5Hwsvrs=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	=?utf-8?B?LzhQVUJLUmQxZmUwS0J0cWlsenphY1FlVEJyZWhUc3pvN1dCYnk5Q2NkV21Y?=
- =?utf-8?B?Ly80MUVyM2RuR09uTnp4UFR4VHBMYkRUSTBtS1l3MlI2bTZGdElRMlhrSHNQ?=
- =?utf-8?B?V3FkRXJlT3d2MGc1ZVhGYTFsRlVmRGNma2tQODlGL3FDS3pkRHpyazYzWHRZ?=
- =?utf-8?B?K3M4QWF6T3dEZXNjU0FKeG9yVzJST2p2NkJOVThsSkh5aVVnUWtNdy90M2Zj?=
- =?utf-8?B?MW1yR1JGaTJqbmFCL0dXOVJKYklMd2owcUZKTzluR3cyd1hacnpvMW84azhE?=
- =?utf-8?B?RnB2KzdYa053b2lXNmI4a2t5Nzh1OXJUMUJ5c09zWmpwNk5TTnhXU200ekhy?=
- =?utf-8?B?VzB0WDRuZU9LRXh3cnI0VHBtektMYzZuZVVjN0trNDlvNzJNRXVCQzExS3RR?=
- =?utf-8?B?UTh1SFQvdXBBWERCQTdyc2RBS3V5RnNIbktsK0wwRTBMVGJza3JDWk1xbnZo?=
- =?utf-8?B?WkVlQytZTGdTbWJMWlZmTmFMdlVWWlZmRGUrUlZZMGhRZDNZMGFKUGlVOEVT?=
- =?utf-8?B?QWlYNEdmNUdVVExWU0pnbDlycFZQajZCMU9WME95eHNQdVROMjFVQkpTdVg5?=
- =?utf-8?B?VHo3NGhkR2JCUG5NY2VDVWFWU2dVSjNMbW5EbE1NMk1SZzVUWTQxRWhXaTJS?=
- =?utf-8?B?ZjZwSVVnTk1hMktJUWh4MFFWNUEwdkk5NS9vK0dyM3N1V3AvNExNRmxuYnNG?=
- =?utf-8?B?YytmUmlLdWV3N3UyV2RKWmtVUFIzMXE3VGpXSUlOcmVZZVV1R2ZYSmVTNFZF?=
- =?utf-8?B?aFVLOWZxMk9VU2ZBT2tjY3NOckJTZjRVY2tDYndOVHBxSE5qMFRRcG1XczRl?=
- =?utf-8?B?T25wL0ZwRHZBbTgvZmtHMFg1V1IzU1lXbWx4cGdQR0FjTmJSRXZRdkViWTR0?=
- =?utf-8?B?azNDaURBTlhiK2dONGJRL2pyWWRjaVlKempWMTRwbVFDcnFBN3djVDl3T0Ns?=
- =?utf-8?B?WGE2c2Y5Z0hDb0RrZXNYaS8yeVI1b3c3NnVabnNudzA4REtGRnU0akV0b2lX?=
- =?utf-8?B?blF5aE5rZEsyQitlWjJKNGZzek9BWVRuTmxTa0Nsc2NBUWF6VEpTdEFBYUJ2?=
- =?utf-8?B?ek9RNzExWHpMSzRtMEJGRzNsN1JiVmthSU5rajdhM1pSNFVtVWcvZjlLbFYr?=
- =?utf-8?B?RWRuN29FR3BlMU5XdDcwR1F3ZENWWEZ0ak1GWGhmWVd3dWlBdDcyQ0N6amJC?=
- =?utf-8?B?N1paM3ZTZzlkamxVMnVhd08rcWFKUzhwd0pSKzBlWURrYUxabDVjc2J5SkFL?=
- =?utf-8?B?ZTg1VTNZVFAybkkzbEw0Qk0xeENma3pSNTY1Tzg2MlQ1Z296UEE0RHJ2eGxK?=
- =?utf-8?B?aE5CYVpvc2xScHNnVitTazlCSi9LZ2hxR0tOTjdmUktKakRPUDYxOTV6N3pz?=
- =?utf-8?B?bzNiNFVHSVp5QWxhckRSQnpSWUpqRXRzOVZPQVladzNyL3MybWM5ckJaSTlr?=
- =?utf-8?B?NDRKeGNJK0NOWWxSSEhLd0pBc2xmZnNLZG1kSnJQRytWMU4vZCt0NlJoZE9z?=
- =?utf-8?B?NGJQRVNRckZyZnVCS2s2YlVqR2xDdjhKQnJ0SFRwVTNNVnoydExLQWp5VnZ4?=
- =?utf-8?Q?VG/qzqOg1qPkJ0aOSHldpliBK+0hQ8cVzaOmntACFLMflX?=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 090a0a5c-6d17-4575-466c-08dbfb48c55c
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR10MB6290.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Dec 2023 19:30:17.2772
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: V3ZfL7/4H95AF3Ui9ntWZAkDlNGw8k20+gs/jk4NaYdsammZQxc0Sj67Y6H8e7HA5GkzyO/rAtvXBP5KkaEBeFo+LBOqv9zieYyBJJboItXAMMnrKCcQJnCbUQh1DMgb
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR10MB5679
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-12_12,2023-12-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 suspectscore=0
- phishscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312120149
-X-Proofpoint-ORIG-GUID: fAhDW-qiqYugl2U60E-CI6_PCtjD9uoP
-X-Proofpoint-GUID: fAhDW-qiqYugl2U60E-CI6_PCtjD9uoP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2377bfb8-00bc-4863-8d70-425cb70c9c0b@intel.com>
 
-Hi Greg,
-
-On 12/12/23 5:34 pm, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.143 release.
-> There are 139 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Dec 12, 2023 at 09:54:38AM -0800, Reinette Chatre wrote:
 > 
-> Responses should be made by Thu, 14 Dec 2023 12:01:32 +0000.
-> Anything received after that time might be too late.
+> On 12/8/2023 2:09 PM, Peter Newman wrote:
+> > On Fri, Dec 8, 2023 at 1:57 PM Tony Luck <tony.luck@intel.com> wrote:
+> >>
+> >> On Fri, Dec 08, 2023 at 10:17:08AM -0800, Peter Newman wrote:
+> >>> Hi Tony,
+> >>>
+> >>> On Thu, Dec 7, 2023 at 11:56 AM Tony Luck <tony.luck@intel.com> wrote:
+> >>>> @@ -2715,7 +2723,25 @@ static int rdt_parse_param(struct fs_context *fc, struct fs_parameter *param)
+> >>>>         case Opt_mba_mbps:
+> >>>>                 if (!supports_mba_mbps())
+> >>>>                         return -EINVAL;
+> >>>> -               ctx->enable_mba_mbps = true;
+> >>>> +               if (is_mbm_local_enabled())
+> >>>> +                       ctx->enable_mba_mbps_local = true;
+> >>>> +               else
+> >>>> +                       return -EINVAL;
+> >>>> +               return 0;
+> >>>> +       case Opt_mba_mbps_event:
+> >>>> +               if (!supports_mba_mbps())
+> >>>> +                       return -EINVAL;
+> >>>> +               if (!strcmp("mbm_local_bytes", param->string)) {
+> >>>> +                       if (!is_mbm_local_enabled())
+> >>>> +                               return -EINVAL;
+> >>>> +                       ctx->enable_mba_mbps_local = true;
+> >>>> +               } else if (!strcmp("mbm_total_bytes", param->string)) {
+> >>>> +                       if (!is_mbm_total_enabled())
+> >>>> +                               return -EINVAL;
+> >>>> +                       ctx->enable_mba_mbps_total = true;
+> >>>> +               } else {
+> >>>> +                       return -EINVAL;
+> >>>
+> >>> It looks like if I pass
+> >>> "mba_MBps_event=mbm_total_bytes,mba_MBps_event=mbm_local_bytes" I can
+> >>> set both flags true.
+> >>
+> >> That's going to be confusing. I'll add code to stop the user from
+> >> passing both options.
+> > 
+> > Also kind of confusing, after reading the second patch, I realized
+> > "mba_MBps_event=mbm_total_bytes,mba_MBps" also results in both being
+> > set. If you're able to fail the mount operation if both flags somehow
+> > get set, that would address this one too.
 > 
+> Are two separate flags required? All existing options within struct rdt_fs_context
+> are of type bool but that does not imply that it is the required type for
+> all. 
 
-No problems seen on x86_64 and aarch64 with our testing.
+Reinette,
 
-Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Maybe a flag and a value?  The structure becomes:
 
-Thanks,
-Harshit
+struct rdt_fs_context {
+	struct kernfs_fs_context	kfc;
+	bool				enable_cdpl2;
+	bool				enable_cdpl3;
+	bool				enable_mba_mbps;
+	enum resctrl_event_id		mba_mbps_event;
+	bool				enable_debug;
+};
 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.143-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Mount option parsing (including blocking user from setting the options
+multiple times):
+
+	case Opt_mba_mbps:
+		if (!supports_mba_mbps() || ctx->enable_mba_mbps)
+			return -EINVAL;
+		if (is_mbm_local_enabled())
+			ctx->mba_mbps_event = QOS_L3_MBM_LOCAL_EVENT_ID;
+		else if (is_mbm_total_enabled())
+			ctx->mba_mbps_event = QOS_L3_MBM_TOTAL_EVENT_ID;
+		else
+			return -EINVAL;
+		ctx->enable_mba_mbps = true;
+		return 0;
+	case Opt_mba_mbps_event:
+		if (!supports_mba_mbps() || ctx->enable_mba_mbps)
+			return -EINVAL;
+		if (!strcmp("mbm_local_bytes", param->string))
+			ctx->mba_mbps_event = QOS_L3_MBM_LOCAL_EVENT_ID;
+		else if (!strcmp("mbm_total_bytes", param->string))
+			ctx->mba_mbps_event = QOS_L3_MBM_TOTAL_EVENT_ID;
+		else
+			return -EINVAL;
+		ctx->enable_mba_mbps = true;
+		return 0;
+
+
+and use of the options to enable the feature:
+
+	if (ctx->enable_mba_mbps) {
+		r->membw.mba_mbps_event = ctx->mba_mbps_event;
+		ret = set_mba_sc(true);
+		if (ret)
+			goto out_cdpl3;
+	}
+
+-Tony
