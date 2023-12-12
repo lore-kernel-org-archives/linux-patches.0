@@ -1,273 +1,223 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4812A7765B;
-	Tue, 12 Dec 2023 16:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78AC745C4
+	for <patches@lists.linux.dev>; Tue, 12 Dec 2023 16:29:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GZvxvHGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC153C433C7;
-	Tue, 12 Dec 2023 16:23:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702398239;
-	bh=N0YmmaPyPHajCi7Js8VUkU8lZscCx1Z3LEh9ObmNJEI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GZvxvHGMzD2IIvqekKK+8Kb5nnpZy/d+JSwmW2ve9Cwkblr3KvjmHQhH06fmhDcIa
-	 EybIxvmVTJNYZoCaAicDoVJVs1WOEAKhgR7QtUo6KpMeKC+prINe2+l4TK2qQ99Qvz
-	 8DCm+DH27pZYrBxaRp8HJKpz8aBABgfGVIoceSNlQ5sehXDUZl8BSMyqAn6NvWn1lE
-	 IS0thKG1hYrg3hzZ08QglVZEbGrUGPg/I5jKSHTFWW++qyXTggBSXX/SBxWl+j4Avv
-	 GBN0VtwzMmB2voUSuVFBOlK3x7NEZprE+At3V6I7fAjcpk+jd/mPCw4bF27IcC7A7A
-	 H8Oc3tNooJsFg==
-Date: Tue, 12 Dec 2023 16:23:53 +0000
-From: Will Deacon <will@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Eric Auger <eric.auger@redhat.com>, Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v3 04/19] iommu/arm-smmu-v3: Make STE programming
- independent of the callers
-Message-ID: <20231212162353.GA29871@willie-the-truck>
-References: <0-v3-d794f8d934da+411a-smmuv3_newapi_p1_jgg@nvidia.com>
- <4-v3-d794f8d934da+411a-smmuv3_newapi_p1_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Zub2e5xH"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-7c522ea69e8so1507193241.0
+        for <patches@lists.linux.dev>; Tue, 12 Dec 2023 08:29:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702398555; x=1703003355; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ySNEeZzkT5HeoVN/1lYVLQEQlZebmBvQl/23qCP/8ME=;
+        b=Zub2e5xHN0UiykxNMrwpVKk1siO6U06SoXU+wzhNoGS7lvMpRsCqN6tpj2JlqbgXXA
+         IRjFp8PB0SzifGTnF49cutx6Yk6hdRYVee03YFO29B8XfRBKA/UITjuytyM2++ccCWG9
+         LAAOdtAbpa3bxipZL5JxNAzq3CR2tpOTjWzQHmL+SKyMxZ4uwS3jUosrsJ9eO3W8tJiw
+         AGu0sX+bqQtCIbGzvWLpk07tYTK5bih8+NCe3oyEUIAZyoxk50tPousnB4JKJelGrQFC
+         UlQOJv2TV9jWb5n4NeUabp6mgY8yOs7C9Ist45o7+bWCz9iiY5iBnMRoiA05a53dXynE
+         Mu9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702398555; x=1703003355;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ySNEeZzkT5HeoVN/1lYVLQEQlZebmBvQl/23qCP/8ME=;
+        b=QpNNi+pmjODF3lH0vztBAzPh6xtzjy7+LNudi3jxLn1vaOMUmZ5FddBoQhgoBD78z8
+         cpjuReh5pU/0iKC2zcVLiHDklRga2wg4ll8vz3bYI5zBK1TSw0IbCW+B3YSx6JpCNShO
+         SZKpXFQlQUmJgph92SFXv7g9OA1Y5UTBtBfJA89gGNQDxTg1q4zEz9bHLZNHDE60l+Bo
+         DTcC6V57zFyteFJkIXy/VcEkkYRkFRnk78AK5kTuRM8kwIafFOxevXbdtMnJy0ROPhPv
+         dojwbZpjksDgMsEBmd2mQ5OG6ANk0a+aPMa0HoSpUDnDVzgtl6+MG7uL0BDHFd4SgU47
+         SRCQ==
+X-Gm-Message-State: AOJu0YxMuoR28yh4U+ynerfId2MlFptHImyJtQK3jKJk6V9lM2BJU3ZP
+	EqSL1apiTd3cBdNFmdUEy07Bvh3oO4C3T9FklWKLLg==
+X-Google-Smtp-Source: AGHT+IEeCdPmkS9YxQ3As9yyYKrZVxVAaQFrNJwqjtaPRa68f+SpKBnM0iLrZSbgFfbsfqiDcisLSTDDOCVZEegmouM=
+X-Received: by 2002:a67:b403:0:b0:464:7ce6:9ba5 with SMTP id
+ x3-20020a67b403000000b004647ce69ba5mr4240246vsl.32.1702398555322; Tue, 12 Dec
+ 2023 08:29:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4-v3-d794f8d934da+411a-smmuv3_newapi_p1_jgg@nvidia.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20231211182019.802717483@linuxfoundation.org>
+In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 12 Dec 2023 21:59:04 +0530
+Message-ID: <CA+G9fYv24ydc8gV9u7O24hQFKscFF1cnWvbAzaWWcM2DyLxGfA@mail.gmail.com>
+Subject: Re: [PATCH 5.10 00/97] 5.10.204-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Jason,
+On Tue, 12 Dec 2023 at 00:07, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.10.204 release.
+> There are 97 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 13 Dec 2023 18:19:59 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.10.204-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-On Tue, Dec 05, 2023 at 03:14:36PM -0400, Jason Gunthorpe wrote:
-> As the comment in arm_smmu_write_strtab_ent() explains, this routine has
-> been limited to only work correctly in certain scenarios that the caller
-> must ensure. Generally the caller must put the STE into ABORT or BYPASS
-> before attempting to program it to something else.
-> 
-> The next patches/series are going to start removing some of this logic
-> from the callers, and add more complex state combinations than currently.
-> 
-> Thus, consolidate all the complexity here. Callers do not have to care
-> about what STE transition they are doing, this function will handle
-> everything optimally.
-> 
-> Revise arm_smmu_write_strtab_ent() so it algorithmically computes the
-> required programming sequence to avoid creating an incoherent 'torn' STE
-> in the HW caches. The update algorithm follows the same design that the
-> driver already uses: it is safe to change bits that HW doesn't currently
-> use and then do a single 64 bit update, with sync's in between.
-> 
-> The basic idea is to express in a bitmask what bits the HW is actually
-> using based on the V and CFG bits. Based on that mask we know what STE
-> changes are safe and which are disruptive. We can count how many 64 bit
-> QWORDS need a disruptive update and know if a step with V=0 is required.
-> 
-> This gives two basic flows through the algorithm.
-> 
-> If only a single 64 bit quantity needs disruptive replacement:
->  - Write the target value into all currently unused bits
->  - Write the single 64 bit quantity
->  - Zero the remaining different bits
-> 
-> If multiple 64 bit quantities need disruptive replacement then do:
->  - Write V=0 to QWORD 0
->  - Write the entire STE except QWORD 0
->  - Write QWORD 0
-> 
-> With HW flushes at each step, that can be skipped if the STE didn't change
-> in that step.
-> 
-> At this point it generates the same sequence of updates as the current
-> code, except that zeroing the VMID on entry to BYPASS/ABORT will do an
-> extra sync (this seems to be an existing bug).
 
-This is certainly very clever, but at the same time I can't help but feel
-that it's slightly over-engineered to solve the general case, whereas I'm
-struggling to see why such a level of complexity is necessary.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-In the comment, you say:
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> + * In the most general case we can make any update in three steps:
-> + *  - Disrupting the entry (V=0)
-> + *  - Fill now unused bits, all bits except V
-> + *  - Make valid (V=1), single 64 bit store
-> + *
-> + * However this disrupts the HW while it is happening. There are several
-> + * interesting cases where a STE/CD can be updated without disturbing the HW
-> + * because only a small number of bits are changing (S1DSS, CONFIG, etc) or
-> + * because the used bits don't intersect. We can detect this by calculating how
-> + * many 64 bit values need update after adjusting the unused bits and skip the
-> + * V=0 process.
+## Build
+* kernel: 5.10.204-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.10.y
+* git commit: 670205df0377e191c0a123ecce9257eba333bbc5
+* git describe: v5.10.203-98-g670205df0377
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.203-98-g670205df0377
 
-Please can you spell out these "interesting cases"? For cases where we're
-changing CONFIG, I'd have thought it would be perfectly fine to go via an
-invalid STE. What am I missing?
+## Test Regressions (compared to v5.10.203)
 
-Generally, I like where the later patches in the series take things, but
-I'd really like to reduce the complexity of the strtab updating code to
-what is absolutely required.
+## Metric Regressions (compared to v5.10.203)
 
-I've left some minor comments on the code below, but I'd really like to
-see this whole thing simplified if possible.
+## Test Fixes (compared to v5.10.203)
 
-> + */
-> +static bool arm_smmu_write_entry_step(__le64 *cur, const __le64 *cur_used,
-> +				      const __le64 *target,
-> +				      const __le64 *target_used, __le64 *step,
-> +				      __le64 v_bit,
-> +				      unsigned int len)
-> +{
-> +	u8 step_used_diff = 0;
-> +	u8 step_change = 0;
-> +	unsigned int i;
-> +
-> +	/*
-> +	 * Compute a step that has all the bits currently unused by HW set to
-> +	 * their target values.
-> +	 */
+## Metric Fixes (compared to v5.10.203)
 
-Well, ok, I do have a cosmetic nit here: using 'step' for both "STE pointer"
-and "incremental change" is perhaps, err, a step too far ;)
+## Test result summary
+total: 89128, pass: 67943, fail: 3495, skip: 17631, xfail: 59
 
-> +	for (i = 0; i != len; i++) {
-> +		step[i] = (cur[i] & cur_used[i]) | (target[i] & ~cur_used[i]);
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 117 total, 117 passed, 0 failed
+* arm64: 44 total, 44 passed, 0 failed
+* i386: 35 total, 35 passed, 0 failed
+* mips: 24 total, 24 passed, 0 failed
+* parisc: 3 total, 0 passed, 3 failed
+* powerpc: 25 total, 25 passed, 0 failed
+* riscv: 11 total, 11 passed, 0 failed
+* s390: 12 total, 12 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 38 total, 38 passed, 0 failed
 
-Isn't 'cur[i] & cur_used[i]' always cur[i]?
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* libgpiod
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
 
-> +		if (cur[i] != step[i])
-> +			step_change |= 1 << i;
-> +		/*
-> +		 * Each bit indicates if the step is incorrect compared to the
-> +		 * target, considering only the used bits in the target
-> +		 */
-> +		if ((step[i] & target_used[i]) != (target[i] & target_used[i]))
-> +			step_used_diff |= 1 << i;
-> +	}
-> +
-> +	if (hweight8(step_used_diff) > 1) {
-> +		/*
-> +		 * More than 1 qword is mismatched, this cannot be done without
-> +		 * a break. Clear the V bit and go again.
-> +		 */
-> +		step[0] &= ~v_bit;
-> +	} else if (!step_change && step_used_diff) {
-> +		/*
-> +		 * Have exactly one critical qword, all the other qwords are set
-> +		 * correctly, so we can set this qword now.
-> +		 */
-> +		i = ffs(step_used_diff) - 1;
-> +		step[i] = target[i];
-> +	} else if (!step_change) {
-> +		/* cur == target, so all done */
-> +		if (memcmp(cur, target, len * sizeof(*cur)) == 0)
-> +			return true;
-> +
-> +		/*
-> +		 * All the used HW bits match, but unused bits are different.
-> +		 * Set them as well. Technically this isn't necessary but it
-> +		 * brings the entry to the full target state, so if there are
-> +		 * bugs in the mask calculation this will obscure them.
-> +		 */
-> +		memcpy(step, target, len * sizeof(*step));
-
-Bah, I'm not a huge fan of this sort of defensive programming. I'd prefer
-to propagate the error rather than quietly try to cover it up.
-
-> +/*
-> + * Based on the value of ent report which bits of the STE the HW will access. It
-> + * would be nice if this was complete according to the spec, but minimally it
-> + * has to capture the bits this driver uses.
-> + */
-> +static void arm_smmu_get_ste_used(const struct arm_smmu_ste *ent,
-> +				  struct arm_smmu_ste *used_bits)
-> +{
-> +	memset(used_bits, 0, sizeof(*used_bits));
-> +
-> +	used_bits->data[0] = cpu_to_le64(STRTAB_STE_0_V);
-> +	if (!(ent->data[0] & cpu_to_le64(STRTAB_STE_0_V)))
-> +		return;
-> +
-> +	/*
-> +	 * If S1 is enabled S1DSS is valid, see 13.5 Summary of
-> +	 * attribute/permission configuration fields for the SHCFG behavior.
-> +	 */
-> +	if (FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(ent->data[0])) & 1 &&
-> +	    FIELD_GET(STRTAB_STE_1_S1DSS, le64_to_cpu(ent->data[1])) ==
-> +		    STRTAB_STE_1_S1DSS_BYPASS)
-> +		used_bits->data[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
-> +
-> +	used_bits->data[0] |= cpu_to_le64(STRTAB_STE_0_CFG);
-> +	switch (FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(ent->data[0]))) {
-> +	case STRTAB_STE_0_CFG_ABORT:
-> +		break;
-> +	case STRTAB_STE_0_CFG_BYPASS:
-> +		used_bits->data[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
-> +		break;
-> +	case STRTAB_STE_0_CFG_S1_TRANS:
-> +		used_bits->data[0] |= cpu_to_le64(STRTAB_STE_0_S1FMT |
-> +						  STRTAB_STE_0_S1CTXPTR_MASK |
-> +						  STRTAB_STE_0_S1CDMAX);
-> +		used_bits->data[1] |=
-> +			cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |
-> +				    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |
-> +				    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_STRW);
-> +		used_bits->data[1] |= cpu_to_le64(STRTAB_STE_1_EATS);
-> +		break;
-> +	case STRTAB_STE_0_CFG_S2_TRANS:
-> +		used_bits->data[1] |=
-> +			cpu_to_le64(STRTAB_STE_1_EATS | STRTAB_STE_1_SHCFG);
-> +		used_bits->data[2] |=
-> +			cpu_to_le64(STRTAB_STE_2_S2VMID | STRTAB_STE_2_VTCR |
-> +				    STRTAB_STE_2_S2AA64 | STRTAB_STE_2_S2ENDI |
-> +				    STRTAB_STE_2_S2PTW | STRTAB_STE_2_S2R);
-> +		used_bits->data[3] |= cpu_to_le64(STRTAB_STE_3_S2TTB_MASK);
-> +		break;
-
-I think this is going to be a pain to maintain :/
-
-> +static bool arm_smmu_write_ste_step(struct arm_smmu_ste *cur,
-> +				    const struct arm_smmu_ste *target,
-> +				    const struct arm_smmu_ste *target_used)
-> +{
-> +	struct arm_smmu_ste cur_used;
-> +	struct arm_smmu_ste step;
-> +
-> +	arm_smmu_get_ste_used(cur, &cur_used);
-> +	return arm_smmu_write_entry_step(cur->data, cur_used.data, target->data,
-> +					 target_used->data, step.data,
-> +					 cpu_to_le64(STRTAB_STE_0_V),
-> +					 ARRAY_SIZE(cur->data));
-> +}
-> +
-> +static void arm_smmu_write_ste(struct arm_smmu_device *smmu, u32 sid,
-> +			       struct arm_smmu_ste *ste,
-> +			       const struct arm_smmu_ste *target)
-> +{
-> +	struct arm_smmu_ste target_used;
-> +	int i;
-> +
-> +	arm_smmu_get_ste_used(target, &target_used);
-> +	/* Masks in arm_smmu_get_ste_used() are up to date */
-> +	for (i = 0; i != ARRAY_SIZE(target->data); i++)
-> +		WARN_ON_ONCE(target->data[i] & ~target_used.data[i]);
-
-That's a runtime cost on every single STE update for what would be a driver
-bug.
-
-> +
-> +	while (true) {
-> +		if (arm_smmu_write_ste_step(ste, target, &target_used))
-> +			break;
-> +		arm_smmu_sync_ste_for_sid(smmu, sid);
-> +	}
-
-This really should be bounded...
-
-Will
+--
+Linaro LKFT
+https://lkft.linaro.org
