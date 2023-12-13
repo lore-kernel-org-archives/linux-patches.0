@@ -1,49 +1,49 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C13C1D681
-	for <patches@lists.linux.dev>; Wed, 13 Dec 2023 14:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9BDBE66
+	for <patches@lists.linux.dev>; Wed, 13 Dec 2023 14:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eH6k2AhK"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6d0985c70ffso1994969b3a.2
-        for <patches@lists.linux.dev>; Wed, 13 Dec 2023 06:30:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHsGUazK"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-28abb389323so1320602a91.2
+        for <patches@lists.linux.dev>; Wed, 13 Dec 2023 06:31:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702477839; x=1703082639; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1702477869; x=1703082669; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QLer1SF7EpDgV5wwruLn7G1R9ug5hXuliPpWU0a6AFE=;
-        b=eH6k2AhKrHHWoHzTyJI8thcnVLfTtOhMb2VJEbtMwjkHgi0zlCvdR79quZ3ww2Kvgt
-         ZIhLdrMhn6G6nyVMO4DYr5LwrSiyA2rrJurp/d2ngdox9fpfdMDmxUCcUBpNs4JW9gi3
-         LEAUbqgvoryHb2eccdI2ZzE2H5WGHSisdqEF7x1AiRCX+VPAJeb9w7WJVeEBxgaTU1bW
-         cDnreLGs6ng8t6TC6DMqp6IqhJozHAcde8YKzEbKPZuGrQw0xrghaJyFsC4dRGOF6DXA
-         s95Fc1Q6ueyyQlfUWqvbli5QF3D36F0fRnzYJjRl5/l1SOzJAN2weFtGN7hyAImCcejr
-         Nt4g==
+        bh=V7cxGDpyTU0G2lgbj2ZNrA+U3QoFsrWoQUXlkBO5j1M=;
+        b=iHsGUazK+FM2ZVg49ml98WPWU+iOOktE2BJAZ0oLN2ojiSRpKMgLLwQpObklLeHUrD
+         KdN4iAoy85Lolbd1dkXLXGEOYSeBPCS1duBnTlk37UZq1g/DJoQ7pun0mFJI046uJ68p
+         xjk0twRgldz+CW0HzufUdVB30JkA1MPITLAB5my80MjCF1pkjWynT0vv7izB6+TDBKw/
+         Q6sP9O80izsSXE0kRiM3rZ2w0WHRWyB+L7LtlZ33M7h1rZh1BU/Bz0ry5f+P2Fy+7sSE
+         DXaASsEyMlp5j54iJNV6W01+SZneeDsqruEIOMJyWRLlNm55mhfwc+U9bRuCIZcA+BYx
+         tBPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702477839; x=1703082639;
+        d=1e100.net; s=20230601; t=1702477869; x=1703082669;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QLer1SF7EpDgV5wwruLn7G1R9ug5hXuliPpWU0a6AFE=;
-        b=IF8VsKxV9mF73bpdzLyc9HylPfZ4v0FN8iV5gajD8LyJLaX5NCvlIIzFw9gTuSZe56
-         bEB2ujaAue1Vge/QhNDYxei4AFJV/qhrECuJnyoYUYcypLyqkbyc7ZkLr6zvFFRDp7ta
-         dywFaxWDGJ05iTVHAGYXaVhjMDpDmZosQplsuJB7gxUfBDBlHORA3EfvLRyXIsVcshMR
-         PIpp4F7yNoo6XxhltfNp8sscl/McMN7m364t54pGhJRK6bEHIpaxaHUSvVEBDbEZFxSG
-         i3wb3PMB5y0aOekcn0BAMaXigpYBlB3yEmf1XyvZ0BzIY9cmvxxb5SqrM3ZfRE3Z3Gx1
-         +mug==
-X-Gm-Message-State: AOJu0Yx8RdLKUHOyFv7Uy5ZLH1WnYgQyq70rNBmYTcY7oO8OoxZEg8Ut
-	aB5f2GmCmdzrJP/2UqPH0E8=
-X-Google-Smtp-Source: AGHT+IFLSrUkVbTFTgvCJSNuu8ML3O5t98F48xqf1rkoyPc0reME2OknOSdN7K8VoNkJsq5+v0a6ow==
-X-Received: by 2002:a05:6a00:3305:b0:6ce:6007:9bb with SMTP id cq5-20020a056a00330500b006ce600709bbmr4451522pfb.60.1702477838995;
-        Wed, 13 Dec 2023 06:30:38 -0800 (PST)
+        bh=V7cxGDpyTU0G2lgbj2ZNrA+U3QoFsrWoQUXlkBO5j1M=;
+        b=qzwT5IE7BsSdC3tbHqijuuHCuhkTuDEfbpR2WhcNgQXiMogySOuwd16ixzLtE1Ncvu
+         Et1dNdS1iM1wIPbNLlX+lxesbPikA2VEBt2DQZau1CLBWE+ofmhVYvZ0z1/by1sS6xij
+         lAWIKoTUkhlo50N2A32x/JniU+QNMtVJxj+O66Ps62t02w2N+0PFL+oF/vFibi1E4k+i
+         eNKeZ2mdfs61q3Crgiqxbk3BIBF1Wr22rt9mcW4x55ipl5gwCakEEOeLiN1NHhlZVUO6
+         uLrfqyN5E+VjIbYIyxXoGPaSQVtWgP/B7hHxu34bFIzYGfQ8StsxYVuPFxtDo8NYY8Zg
+         wvtw==
+X-Gm-Message-State: AOJu0YwS1CTImOmRrAB/xSzVLBgR1ZgMcjxC1cT/IXo1cJ7ta5tzfMvW
+	WGgwsEN1DaKthkE+YshZgn8=
+X-Google-Smtp-Source: AGHT+IGSQmA9WJzh0JjBuy+h+XO1/qpBe/PJbDadqbdnMqnIBKqgHDtrPiXZp8yg5oxNLJD6dWtauQ==
+X-Received: by 2002:a17:90a:d242:b0:28a:f301:be16 with SMTP id o2-20020a17090ad24200b0028af301be16mr210730pjw.56.1702477868922;
+        Wed, 13 Dec 2023 06:31:08 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id z17-20020aa785d1000000b006ce5bb61a5fsm10102920pfn.3.2023.12.13.06.30.38
+        by smtp.gmail.com with ESMTPSA id ft22-20020a17090b0f9600b0028ad9d801e3sm1418395pjb.46.2023.12.13.06.31.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Dec 2023 06:30:38 -0800 (PST)
+        Wed, 13 Dec 2023 06:31:08 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 13 Dec 2023 06:30:37 -0800
+Date: Wed, 13 Dec 2023 06:31:07 -0800
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -53,9 +53,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
 	allen.lkml@gmail.com
-Subject: Re: [PATCH 4.19 00/53] 4.19.302-rc2 review
-Message-ID: <9137cfe5-83b1-4307-9943-77e8367ecc64@roeck-us.net>
-References: <20231212120154.063773918@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 000/139] 5.15.143-rc2 review
+Message-ID: <a798a295-9e44-4d30-9069-59fcc57c33c9@roeck-us.net>
+References: <20231212120210.556388977@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -64,22 +64,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231212120154.063773918@linuxfoundation.org>
+In-Reply-To: <20231212120210.556388977@linuxfoundation.org>
 
-On Tue, Dec 12, 2023 at 01:05:09PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.302 release.
-> There are 53 patches in this series, all will be posted as a response
+On Tue, Dec 12, 2023 at 01:04:56PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.143 release.
+> There are 139 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Thu, 14 Dec 2023 12:01:29 +0000.
+> Responses should be made by Thu, 14 Dec 2023 12:01:32 +0000.
 > Anything received after that time might be too late.
 > 
 
 Build results:
-	total: 147 pass: 147 fail: 0
+	total: 158 pass: 158 fail: 0
 Qemu test results:
-	total: 441 pass: 441 fail: 0
+	total: 525 pass: 525 fail: 0
 
 Tested-by: Guenter Roeck <linux@roeck-us.net>
 
