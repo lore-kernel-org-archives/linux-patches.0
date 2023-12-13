@@ -1,107 +1,84 @@
-Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
+Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9950123AD
-	for <patches@lists.linux.dev>; Wed, 13 Dec 2023 03:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E599469
+	for <patches@lists.linux.dev>; Wed, 13 Dec 2023 03:43:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="RdbMOYnx"
-Received: from eig-obgw-6002a.ext.cloudfilter.net ([10.0.30.222])
-	by cmsmtp with ESMTPS
-	id D6n3r5YjdgpyEDFUerVKfO; Wed, 13 Dec 2023 03:01:04 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id DFUdr3s9TM0U2DFUerm58N; Wed, 13 Dec 2023 03:01:04 +0000
-X-Authority-Analysis: v=2.4 cv=BuKOfKb5 c=1 sm=1 tr=0 ts=65791e70
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=OWjo9vPv0XrRhIrVQ50Ab3nP57M=:19 a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19
- a=IkcTkHD0fZMA:10 a=e2cXIFwxEfEA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=2SA1H0gNNTX1gE9MOmMA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=gbNxPHSj4xxqAJgtk4Y4EHrvPUIwaT3LyX2jo27M0xc=; b=RdbMOYnx4EVgtSQWb/yoF9LItL
-	gLrvHUV8d/DtDOfuk7wi1T5u8195lKsIvtlZzozs3tytgDcBOPcI2bOA11yiWMBxxpklNmtv8q8UY
-	upxnEXPcz5S/lT36ypra38gr7zYJjrs1XME4DHQPI7IM4IIGAzycAohGpVj5fDQ/K+UQEa5+HN7Pk
-	+YEXuMKOO/QlitF+/JjHTBrhIoavj1n9AX+DkCphSNcnpoW6Gu5N1l9183WiBdtABkeEtTXWWMV7T
-	mIG1XHMYAcOzDaO4IKc/IRZDVP49nr0Q2me0/vkv76bQgtl5h1TPMGzjDk+JuYjJrGmB8PWUc0wBu
-	u3WB0KuQ==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:59642 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1rDFUb-002YNG-1B;
-	Tue, 12 Dec 2023 20:01:01 -0700
-Subject: Re: [PATCH 5.15 000/139] 5.15.143-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-References: <20231212120210.556388977@linuxfoundation.org>
-In-Reply-To: <20231212120210.556388977@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <be0b6665-5330-255d-31a6-f3bbe4e6b1a0@w6rz.net>
-Date: Tue, 12 Dec 2023 19:00:58 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="PrOdtmp9";
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="S8DFaLiu"
+Received: by nautica.notk.org (Postfix, from userid 108)
+	id 7A246C021; Wed, 13 Dec 2023 04:43:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1702439026; bh=UrKlhox60uGLohgaxY79+fFkJthdoBHo15vb6K7U5+E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PrOdtmp94HQBa6JPqH/g58XIY8nszdp6O5q36tKX8JrxRSPptUV9ZCBZauXJ7HVJX
+	 PMB0jO4t2wpyihLu68M9CEWFMxZHw8AM2M7YGo/b9tPddSgfYH4rkIR8zh4zLnK6sU
+	 f0A78NIfXAvcqESXpfho20ar5rC3v88SbOcORcSja8iqKNp5mgZXUENTOZWwh/sgwm
+	 mw5B4+mliOcq3Sv+mj1ZJTiRKPNERZ7XnJgU/H4MDEvXXLXgzSD05AEbVa8kbC5NbH
+	 TL73LQx2PeG56spQ8Q3lyMNOMJLxNPTXXrxzhaI6OigVpbkAgk+CW8wQKstURHOdYq
+	 yG30T8XZZjxQQ==
+X-Spam-Level: 
+Received: from gaia (localhost [127.0.0.1])
+	by nautica.notk.org (Postfix) with ESMTPS id 60CA8C009;
+	Wed, 13 Dec 2023 04:43:39 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1702439024; bh=UrKlhox60uGLohgaxY79+fFkJthdoBHo15vb6K7U5+E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=S8DFaLiuaLbooMkwxcLBi6WBNIlmW3sCXRBVaf8PezEwpgvyy6ObyI4iWQ0epBE1I
+	 mQBQtbe9gf4GX5zZXdjiW9Scsk9p8IqLwGHotUY9/GD5kpWnyDZVsaUwDWEDsDCaWr
+	 xKEBRXmkmRIGjcOP1EQ508w3VKLhJLorPDLxjrEaSq+bB9kiJAeyNNcHq0O5Cmj1V/
+	 9iHramo3q+nyTI0OKe/yeKdfpEZYIwzCeuH1MGBq/X+Y68WL1kGuNwRDy9wNCptN4F
+	 3U9ppGHWHPwbmUQdE60qnYNcNE9BXbUXeM+HhAxnN/hf3wH+pwwvoqkVlX1i8j9Pb9
+	 JR7twfXwQXz7w==
+Received: from localhost (gaia [local])
+	by gaia (OpenSMTPD) with ESMTPA id 4bd87644;
+	Wed, 13 Dec 2023 03:43:36 +0000 (UTC)
+Date: Wed, 13 Dec 2023 12:43:21 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 5.10 00/97] 5.10.204-rc1 review
+Message-ID: <ZXkoWdKza5SLvjm0@codewreck.org>
+References: <20231211182019.802717483@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1rDFUb-002YNG-1B
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:59642
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfCQg+w/2EFVlYQNhD5fuAv6oXvwGwPaThMDMK8ez5xoG2HgrUu+nt7xLhh7S/7mXQNlsR9R37wPnLVthHqxRSpyogYjZQpXKzq/odu++BWD3MC0LPfB7
- Lm8HU9k4vxgxVfw6TnqWD/CYsEJmyLZSgijuWVGNr9IhNyzoInPz0DP4kP4MDZG/GjRUoVnC5C36YQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231211182019.802717483@linuxfoundation.org>
 
-On 12/12/23 4:04 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.143 release.
-> There are 139 patches in this series, all will be posted as a response
+Greg Kroah-Hartman wrote on Mon, Dec 11, 2023 at 07:21:03PM +0100:
+> This is the start of the stable review cycle for the 5.10.204 release.
+> There are 97 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Thu, 14 Dec 2023 12:01:32 +0000.
+> 
+> Responses should be made by Wed, 13 Dec 2023 18:19:59 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.143-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.204-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Tested 670205df0377 ("Linux 5.10.204-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
 
-Tested-by: Ron Economos <re@w6rz.net>
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
+-- 
+Dominique Martinet | Asmadeus
