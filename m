@@ -1,98 +1,88 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD0E1EB39;
-	Wed, 13 Dec 2023 08:50:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgmB2XqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D695DC433C8;
-	Wed, 13 Dec 2023 08:50:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702457410;
-	bh=841xqb9Awis9Dqn7Pj9/egR+I9vPc7qKv1YXESMWaLg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VgmB2XqIL7yh0oYhsiQJgDFaTJcjP5cVU6YRkvcdGYy2tuXFg/sWkt4ZEadZyercJ
-	 Yf6oDkaEdRYMvPLA3qCULR9nDuvsT355Wr4HJSTjPEh4qKEcb8FRJbJXGsa79K9Z1G
-	 AysYL3xPIW+lQBWn7saYOfl+vPRdS2I3fz+JHpCo=
-Date: Wed, 13 Dec 2023 09:50:07 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pavel Machek <pavel@denx.de>
-Cc: Guenter Roeck <linux@roeck-us.net>, dianders@chromium.org,
-	grundler@chromium.org, davem@davemloft.net, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: Re: RTL8152_INACCESSIBLE was Re: [PATCH 6.1 000/194] 6.1.68-rc1
- review
-Message-ID: <2023121342-wanted-overarch-84a7@gregkh>
-References: <20231211182036.606660304@linuxfoundation.org>
- <ZXi9wyS7vjGyUWU8@duo.ucw.cz>
- <a6af01bf-7785-4531-8514-8e5eb09e207e@roeck-us.net>
- <ZXliuTqyO_IjlIz7@amd.ucw.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E802943C
+	for <patches@lists.linux.dev>; Wed, 13 Dec 2023 12:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-20320077ac8so12644fac.0
+        for <patches@lists.linux.dev>; Wed, 13 Dec 2023 04:51:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702471915; x=1703076715;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6ZdG9f53iWojvJlp0dRw/Gg/hPo7SN2nW69zkEzGkVc=;
+        b=QjezS6DpUfABFAjKWmHCi7+/NZImChP6scRtNxuDA95F8gOWWUDAFkAlYmCvHqo9cI
+         w2wLenu2Zjy+0Ztn2ff4p/S7g9hFD2QA8Rs9liKpzjHAIoBlh30mf/H/DGideb3cPIQj
+         /LNW08KCfdWLfQMxMZdRd9EhWZbrKjybA7ryEVfZXRMguS3zNEy3fLRtyQj9hQWf7h4E
+         zcFkBJzARFql3B273QP5kcfi+eZIPPhGSngjV98PElulew07qa54SZ6//5d/8FvWD+0F
+         3jdljvs6mZIyYSqCE1CCdLif6MOWFRH11ZHJIr+UsTRLPuqDqHAbGc8cf7A0sl34F0Rl
+         /bTg==
+X-Gm-Message-State: AOJu0YxZ/BR8GxckGR1vHVpmdsR5KMIUK4uAZyBy1jbM5442CaKGKtnH
+	Rk9F63oKiz6tdsqFHqQgYchFrI6f3l/dZ4eDy10=
+X-Google-Smtp-Source: AGHT+IF2GvASrlb2vnHcx3R+WpqWs3lUMJPslS5M8PZ2C1ZfKJahHhmnOrKvbW6AXAX5qntO0Ob2wHWnBjSLO13DsHc=
+X-Received: by 2002:a05:6870:f6aa:b0:1fb:10e7:4f00 with SMTP id
+ el42-20020a056870f6aa00b001fb10e74f00mr14653654oab.4.1702471914679; Wed, 13
+ Dec 2023 04:51:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZXliuTqyO_IjlIz7@amd.ucw.cz>
+References: <20231212212239.8971-1-tony.luck@intel.com>
+In-Reply-To: <20231212212239.8971-1-tony.luck@intel.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Wed, 13 Dec 2023 13:51:43 +0100
+Message-ID: <CAJZ5v0j4djPUdJ3pdzH+E0npJHxMCHFYj4sG2-=S50=XyX_0qg@mail.gmail.com>
+Subject: Re: [PATCH] ACPI: extlog: Clear Extended Error Log status when
+ RAS_CEC handled the error
+To: Tony Luck <tony.luck@intel.com>
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, Erwin Tsaur <erwin.tsaur@intel.com>, 
+	Borislav Petkov <bp@alien8.de>, linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 13, 2023 at 08:52:25AM +0100, Pavel Machek wrote:
-> Hi!
-> 
-> > > > This is the start of the stable review cycle for the 6.1.68 release.
-> > > > There are 194 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > 
-> > > 
-> > > > Douglas Anderson <dianders@chromium.org>
-> > > >      r8152: Add RTL8152_INACCESSIBLE to r8153_aldps_en()
-> > > > 
-> > > > Douglas Anderson <dianders@chromium.org>
-> > > >      r8152: Add RTL8152_INACCESSIBLE to r8153_pre_firmware_1()
-> > > > 
-> > > > Douglas Anderson <dianders@chromium.org>
-> > > >      r8152: Add RTL8152_INACCESSIBLE to r8156b_wait_loading_flash()
-> > > > 
-> > > > Douglas Anderson <dianders@chromium.org>
-> > > >      r8152: Add RTL8152_INACCESSIBLE checks to more loops
-> > > > 
-> > > > Douglas Anderson <dianders@chromium.org>
-> > > >      r8152: Rename RTL8152_UNPLUG to RTL8152_INACCESSIBLE
-> > > 
-> > > Central patch that actually fixes something is:
-> > > 
-> > > commit d9962b0d42029bcb40fe3c38bce06d1870fa4df4
-> > > Author: Douglas Anderson <dianders@chromium.org>
-> > > Date:   Fri Oct 20 14:06:59 2023 -0700
-> > > 
-> > >      r8152: Block future register access if register access fails
-> > > 
-> > > ...but we don't have that in 6.1. So we should not need the rest,
-> > > either.
-> > > 
-> > 
-> > Also, the missing patch is fixed subsequently by another patch, so it can not
-> > be added on its own.
-> 
-> For the record I'm trying to advocate "drop all patches listed as they
-> don't fix the bug", not "add more", as this does not meet stable
-> criteria.
+On Tue, Dec 12, 2023 at 10:22=E2=80=AFPM Tony Luck <tony.luck@intel.com> wr=
+ote:
+>
+> When both CONFIG_RAS_CEC and CONFIG_ACPI_EXTLOG are enabled, Linux does
+> not clear the status word of the BIOS supplied error record for corrected
+> errors. This may prevent logging of subsequent uncorrected errors.
+>
+> Fix by clearing the status.
+>
+> Fixes: 23ba710a0864 ("x86/mce: Fix all mce notifiers to update the mce->k=
+flags bitmask")
+> Reported-by: Erwin Tsaur <erwin.tsaur@intel.com>
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  drivers/acpi/acpi_extlog.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/acpi/acpi_extlog.c b/drivers/acpi/acpi_extlog.c
+> index e120a96e1eae..71e8d4e7a36c 100644
+> --- a/drivers/acpi/acpi_extlog.c
+> +++ b/drivers/acpi/acpi_extlog.c
+> @@ -145,9 +145,14 @@ static int extlog_print(struct notifier_block *nb, u=
+nsigned long val,
+>         static u32 err_seq;
+>
+>         estatus =3D extlog_elog_entry_check(cpu, bank);
+> -       if (estatus =3D=3D NULL || (mce->kflags & MCE_HANDLED_CEC))
+> +       if (!estatus)
+>                 return NOTIFY_DONE;
+>
+> +       if (mce->kflags & MCE_HANDLED_CEC) {
+> +               estatus->block_status =3D 0;
+> +               return NOTIFY_DONE;
+> +       }
+> +
+>         memcpy(elog_buf, (void *)estatus, ELOG_ENTRY_LEN);
+>         /* clear record status to enable BIOS to update it again */
+>         estatus->block_status =3D 0;
+> --
 
-But the original commit here does say it fixes a bug, see the text of
-the commits listed above.  So perhaps someone got this all wrong when
-they wrote the original commits that got merged into 6.7-rc?  Otherwise
-this seems like they are sane to keep for now, unless the original
-author says they should be dropped, or someone who can test this driver
-says something went wrong.
-
-thanks,
-
-greg k-h
+Applied as 6.8 material, thanks!
