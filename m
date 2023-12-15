@@ -1,145 +1,285 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DB047F76
-	for <patches@lists.linux.dev>; Fri, 15 Dec 2023 21:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D24818ED4;
+	Fri, 15 Dec 2023 23:54:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Cc3qIS4P"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-552e4a68de0so1019571a12.0
-        for <patches@lists.linux.dev>; Fri, 15 Dec 2023 13:28:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1702675718; x=1703280518; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cC1bTSXVCMzouBImm4Lunm53BHd7q+29uIzARRshG/Q=;
-        b=Cc3qIS4PEWDLwVhvmZ215vv5FXj4WeLECHp2BlNO1n1gb/Qvw3ohixWNbuz6c/4DoL
-         wCi47sfBNVe95Dd3VhQ2oAkeIR3DDXYcDeSJSVFlFcE41CLMy5WqbLdVGKf8DkLPplSO
-         4j1OYN6JlrfOeVDQS2qEtL7xtnS70A13EA8y/qrMK+8EeK0MOOkJZSH/3WB6kj2vQA03
-         1P3GgCPRGR1MInbLVz+v+SPjMy9FdtRLLesyy4zI6CvpLVesDRB0pqU/egEs73l12KCM
-         wjeFeTacj8y50cv/+0ntgpL43q76/X3LUDIiJ2OneSTedwuEnWAtJo93wS2TGCqUFncy
-         vENA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702675718; x=1703280518;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cC1bTSXVCMzouBImm4Lunm53BHd7q+29uIzARRshG/Q=;
-        b=ITL0u39hYCPFIbZDshEfumjEa3rOy9cwXKGRXN1XKKgsaGXNgrO6bPmf1px0v8al/e
-         XDc9+YJDocRhwYmjqePDUmdRBT/Glox1pWdhU0nKpB5rwRwedYju7G6ehif1I3JUZb6r
-         z8wcT7fWieDahHwdUtkVRP7tb6k9GEaKsJsZdzL7IyPbvsNm+5uVJIsGqUm/uQh5hQsP
-         Xq2seJPBqIyYwr0XaaHzqc7CsDxfNIYuf8Wct4bEThbFylrhlA20GbpvUz7dZfT8pN0c
-         Sv17a+8MbvEPa3KaAThgknKontlf/424C1Ay4VQB2C3Uv0KT1yB1rNLBlZmMoBZJnjtc
-         8vmw==
-X-Gm-Message-State: AOJu0YwRpvuMNrkDhXIVkstSrSUINf7keHEv69kzud9PNrvsn4Njy8kf
-	JRx41YvHloso/CXq4eKHUaZWZ4wE/80NTSCKTfv4Eg==
-X-Google-Smtp-Source: AGHT+IE2mXg2+E2jLeKihSLfRCnuQkYt+4zI+WvSBMFz2WgpbdwhTo/O+qkSxIF4jSezpRGJphrMSKQXA2O0/0ant9E=
-X-Received: by 2002:a50:cd53:0:b0:551:cfab:5538 with SMTP id
- d19-20020a50cd53000000b00551cfab5538mr6411620edj.32.1702675718126; Fri, 15
- Dec 2023 13:28:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e+H1+RoN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F32C433C7;
+	Fri, 15 Dec 2023 23:54:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702684483;
+	bh=5EwYYWA8F0fFdNa4JLidqy5d/b0oDQvF9+4yyxXbMQ0=;
+	h=From:To:Cc:Subject:Date:From;
+	b=e+H1+RoNu20ySnrW/QcRqEgNPKscVc2hnDyrfmzdHfrt8dZDVf29ewaCQtP+NbkwG
+	 yHNqfHSo1/Wyzc+8pEsszU0a2AxkI705LozazQvf04+8wVF5fkHtUbc+bSUJDMa7/6
+	 +a/h5PauT625HrTbtxxu7ISmsmiJm7S78ElNPgqKh7dpJ7vVIXR4cLv8M6zxy4nWw7
+	 zCs/ZamfNfbn9g4zkvFVGVOGZ4QKvY2m85f2RhW9RcuW3M7piTHb0Qt2jm4erZCjyl
+	 ht1IIfpYJ2oOLsNmY21kAju+LATYcuQKnTRfqn2xj38eo3fPb3OfifqRnEgz62f05F
+	 YYLDy7qXWdlTQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>
+Subject: [PATCH] rust: support `srctree`-relative links
+Date: Sat, 16 Dec 2023 00:54:28 +0100
+Message-ID: <20231215235428.243211-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231215124751.175191-1-ojeda@kernel.org>
-In-Reply-To: <20231215124751.175191-1-ojeda@kernel.org>
-From: Justin Stitt <justinstitt@google.com>
-Date: Fri, 15 Dec 2023 13:28:26 -0800
-Message-ID: <CAFhGd8pHtfuMYfx=uEzssvesQDZ-BS0BzPwn06WbasXKUfPBJg@mail.gmail.com>
-Subject: Re: [PATCH] docs: rust: remove `CC=clang` mentions
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Jonathan Corbet <corbet@lwn.net>, Nathan Chancellor <nathan@kernel.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, linux-doc@vger.kernel.org, 
-	llvm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi,
+Some of our links use relative paths in order to point to files in the
+source tree, e.g.:
 
-On Fri, Dec 15, 2023 at 4:48=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Nowadays all architectures except s390 recommend using `LLVM=3D1` instead=
- of
-> `CC=3Dclang`, and since commit a3c6bfba4429 ("Documentation/llvm: refresh
-> docs") the Kbuild LLVM documentation makes `LLVM=3D1` the way to go:
->
->     We want to encourage the use of ``LLVM=3D1`` rather than just
->     ``CC=3Dclang``. Make that suggestion "above the fold" and "front and
->     center" in our docs.
->
-> In particular, that commit removes the examples with `CC=3Dclang`.
->
-> Thus do the same in the Rust Quick Start guide, i.e. remove the `CC=3Dcla=
-ng`
-> mentions, especially since the architectures that have had their Rust
-> support upstreamed (or soon to be upstreamed) are all `LLVM=3D1` ones
-> anyway. And perhaps by the time Rust is supported for s390 (or new
-> architectures), it may have moved to `LLVM=3D1` anyway. Otherwise,
-> this can be added back if needed (or perhaps an extra link to
-> Documentation/kbuild/llvm.rst).
->
-> This should also help avoiding potential confusion around `CC=3Dclang` [1=
-].
->
+    //! C header: [`include/linux/printk.h`](../../../../include/linux/printk.h)
+    /// [`struct mutex`]: ../../../../include/linux/mutex.h
 
-Yes!
+These are problematic because they are hard to maintain and do not support
+`O=` builds.
 
+Instead, provide support for `srctree`-relative links, e.g.:
 
-> Link: https://lore.kernel.org/rust-for-linux/6df6e8e5-8d5b-4d3d-91b5-bc0e=
-90c424ea@nvidia.com/ [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+    //! C header: [`include/linux/printk.h`](srctree/include/linux/printk.h)
+    /// [`struct mutex`]: srctree/include/linux/mutex.h
 
-Reviewed-by: Justin Stitt <justinstitt@google.com>
+The links are fixed after `rustdoc` generation to be based on the absolute
+path to the source tree.
 
-> ---
->  Documentation/rust/quick-start.rst | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
->
-> diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quic=
-k-start.rst
-> index f382914f4191..75faa987079a 100644
-> --- a/Documentation/rust/quick-start.rst
-> +++ b/Documentation/rust/quick-start.rst
-> @@ -76,7 +76,7 @@ libclang
->
->  ``libclang`` (part of LLVM) is used by ``bindgen`` to understand the C c=
-ode
->  in the kernel, which means LLVM needs to be installed; like when the ker=
-nel
-> -is compiled with ``CC=3Dclang`` or ``LLVM=3D1``.
-> +is compiled with ``LLVM=3D1``.
->
->  Linux distributions are likely to have a suitable one available, so it i=
-s
->  best to check that first.
-> @@ -229,10 +229,6 @@ at the moment. That is::
->
->         make LLVM=3D1
->
-> -For architectures that do not support a full LLVM toolchain, use::
-> -
-> -       make CC=3Dclang
-> -
->  Using GCC also works for some configurations, but it is very experimenta=
-l at
->  the moment.
->
->
-> base-commit: a39b6ac3781d46ba18193c9dbb2110f31e9bffe9
-> --
-> 2.43.0
->
+Essentially, this is the automatic version of Tomonori's fix [1],
+suggested by Gary [2].
 
-Thanks
-Justin
+Suggested-by: Gary Guo <gary@garyguo.net>
+Reported-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Closes: https://lore.kernel.org/r/20231026.204058.2167744626131849993.fujita.tomonori@gmail.com [1]
+Fixes: 48fadf440075 ("docs: Move rustdoc output, cross-reference it")
+Link: https://lore.kernel.org/rust-for-linux/20231026154525.6d14b495@eugeo/ [2]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ Documentation/rust/coding-guidelines.rst | 13 +++++++++++++
+ rust/Makefile                            |  3 ++-
+ rust/kernel/error.rs                     |  2 +-
+ rust/kernel/ioctl.rs                     |  2 +-
+ rust/kernel/kunit.rs                     |  2 +-
+ rust/kernel/print.rs                     |  8 ++++----
+ rust/kernel/sync/condvar.rs              |  2 +-
+ rust/kernel/sync/lock/mutex.rs           |  2 +-
+ rust/kernel/sync/lock/spinlock.rs        |  2 +-
+ rust/kernel/task.rs                      |  2 +-
+ rust/kernel/workqueue.rs                 |  2 +-
+ rust/macros/lib.rs                       |  2 +-
+ 12 files changed, 28 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/rust/coding-guidelines.rst b/Documentation/rust/coding-guidelines.rst
+index aa8ed082613e..05542840b16c 100644
+--- a/Documentation/rust/coding-guidelines.rst
++++ b/Documentation/rust/coding-guidelines.rst
+@@ -177,6 +177,19 @@ please take a look at the ``rustdoc`` book at:
+ 
+ 	https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html
+ 
++In addition, the kernel supports creating links relative to the source tree by
++prefixing the link destination with ``srctree/``. For instance:
++
++.. code-block:: rust
++
++	//! C header: [`include/linux/printk.h`](srctree/include/linux/printk.h)
++
++or:
++
++.. code-block:: rust
++
++	/// [`struct mutex`]: srctree/include/linux/mutex.h
++
+ 
+ Naming
+ ------
+diff --git a/rust/Makefile b/rust/Makefile
+index 543b37f6c77f..73ea24117f07 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -98,7 +98,8 @@ rustdoc: rustdoc-core rustdoc-macros rustdoc-compiler_builtins \
+ 	$(Q)find $(rustdoc_output) -name '*.html' -type f -print0 | xargs -0 sed -Ei \
+ 		-e 's:rust-logo-[0-9a-f]+\.svg:logo.svg:g' \
+ 		-e 's:favicon-[0-9a-f]+\.svg:logo.svg:g' \
+-		-e 's:<link rel="alternate icon" type="image/png" href="[/.]+/static\.files/favicon-(16x16|32x32)-[0-9a-f]+\.png">::g'
++		-e 's:<link rel="alternate icon" type="image/png" href="[/.]+/static\.files/favicon-(16x16|32x32)-[0-9a-f]+\.png">::g' \
++		-e 's:<a href="srctree/([^"]+)">:<a href="$(abs_srctree)/\1">:g'
+ 	$(Q)for f in $(rustdoc_output)/static.files/rustdoc-*.css; do \
+ 		echo ".logo-container > img { object-fit: contain; }" >> $$f; done
+ 
+diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
+index 032b64543953..abd06afb2d76 100644
+--- a/rust/kernel/error.rs
++++ b/rust/kernel/error.rs
+@@ -2,7 +2,7 @@
+ 
+ //! Kernel errors.
+ //!
+-//! C header: [`include/uapi/asm-generic/errno-base.h`](../../../include/uapi/asm-generic/errno-base.h)
++//! C header: [`include/uapi/asm-generic/errno-base.h`](srctree/include/uapi/asm-generic/errno-base.h)
+ 
+ use crate::str::CStr;
+ 
+diff --git a/rust/kernel/ioctl.rs b/rust/kernel/ioctl.rs
+index c49e1a8d3fd0..f1d42ab69972 100644
+--- a/rust/kernel/ioctl.rs
++++ b/rust/kernel/ioctl.rs
+@@ -2,7 +2,7 @@
+ 
+ //! ioctl() number definitions
+ //!
+-//! C header: [`include/asm-generic/ioctl.h`](../../../../include/asm-generic/ioctl.h)
++//! C header: [`include/asm-generic/ioctl.h`](srctree/include/asm-generic/ioctl.h)
+ 
+ #![allow(non_snake_case)]
+ 
+diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
+index 722655b2d62d..0ba77276ae7e 100644
+--- a/rust/kernel/kunit.rs
++++ b/rust/kernel/kunit.rs
+@@ -2,7 +2,7 @@
+ 
+ //! KUnit-based macros for Rust unit tests.
+ //!
+-//! C header: [`include/kunit/test.h`](../../../../../include/kunit/test.h)
++//! C header: [`include/kunit/test.h`](srctree/include/kunit/test.h)
+ //!
+ //! Reference: <https://docs.kernel.org/dev-tools/kunit/index.html>
+ 
+diff --git a/rust/kernel/print.rs b/rust/kernel/print.rs
+index f48926e3e9fe..9b13aca832c2 100644
+--- a/rust/kernel/print.rs
++++ b/rust/kernel/print.rs
+@@ -2,7 +2,7 @@
+ 
+ //! Printing facilities.
+ //!
+-//! C header: [`include/linux/printk.h`](../../../../include/linux/printk.h)
++//! C header: [`include/linux/printk.h`](srctree/include/linux/printk.h)
+ //!
+ //! Reference: <https://www.kernel.org/doc/html/latest/core-api/printk-basics.html>
+ 
+@@ -48,7 +48,7 @@ pub mod format_strings {
+     /// The format string is always the same for a given level, i.e. for a
+     /// given `prefix`, which are the kernel's `KERN_*` constants.
+     ///
+-    /// [`_printk`]: ../../../../include/linux/printk.h
++    /// [`_printk`]: srctree/include/linux/printk.h
+     const fn generate(is_cont: bool, prefix: &[u8; 3]) -> [u8; LENGTH] {
+         // Ensure the `KERN_*` macros are what we expect.
+         assert!(prefix[0] == b'\x01');
+@@ -97,7 +97,7 @@ pub mod format_strings {
+ /// The format string must be one of the ones in [`format_strings`], and
+ /// the module name must be null-terminated.
+ ///
+-/// [`_printk`]: ../../../../include/linux/_printk.h
++/// [`_printk`]: srctree/include/linux/_printk.h
+ #[doc(hidden)]
+ #[cfg_attr(not(CONFIG_PRINTK), allow(unused_variables))]
+ pub unsafe fn call_printk(
+@@ -120,7 +120,7 @@ pub unsafe fn call_printk(
+ ///
+ /// Public but hidden since it should only be used from public macros.
+ ///
+-/// [`_printk`]: ../../../../include/linux/printk.h
++/// [`_printk`]: srctree/include/linux/printk.h
+ #[doc(hidden)]
+ #[cfg_attr(not(CONFIG_PRINTK), allow(unused_variables))]
+ pub fn call_printk_cont(args: fmt::Arguments<'_>) {
+diff --git a/rust/kernel/sync/condvar.rs b/rust/kernel/sync/condvar.rs
+index b679b6f6dbeb..f568802d4f8a 100644
+--- a/rust/kernel/sync/condvar.rs
++++ b/rust/kernel/sync/condvar.rs
+@@ -69,7 +69,7 @@ macro_rules! new_condvar {
+ /// }
+ /// ```
+ ///
+-/// [`struct wait_queue_head`]: ../../../include/linux/wait.h
++/// [`struct wait_queue_head`]: srctree/include/linux/wait.h
+ #[pin_data]
+ pub struct CondVar {
+     #[pin]
+diff --git a/rust/kernel/sync/lock/mutex.rs b/rust/kernel/sync/lock/mutex.rs
+index 09276fedc091..8c524a3ec45a 100644
+--- a/rust/kernel/sync/lock/mutex.rs
++++ b/rust/kernel/sync/lock/mutex.rs
+@@ -84,7 +84,7 @@ macro_rules! new_mutex {
+ /// }
+ /// ```
+ ///
+-/// [`struct mutex`]: ../../../../include/linux/mutex.h
++/// [`struct mutex`]: srctree/include/linux/mutex.h
+ pub type Mutex<T> = super::Lock<T, MutexBackend>;
+ 
+ /// A kernel `struct mutex` lock backend.
+diff --git a/rust/kernel/sync/lock/spinlock.rs b/rust/kernel/sync/lock/spinlock.rs
+index 91eb2c9e9123..068535ce1b29 100644
+--- a/rust/kernel/sync/lock/spinlock.rs
++++ b/rust/kernel/sync/lock/spinlock.rs
+@@ -82,7 +82,7 @@ macro_rules! new_spinlock {
+ /// }
+ /// ```
+ ///
+-/// [`spinlock_t`]: ../../../../include/linux/spinlock.h
++/// [`spinlock_t`]: srctree/include/linux/spinlock.h
+ pub type SpinLock<T> = super::Lock<T, SpinLockBackend>;
+ 
+ /// A kernel `spinlock_t` lock backend.
+diff --git a/rust/kernel/task.rs b/rust/kernel/task.rs
+index b2299bc7ac1f..9451932d5d86 100644
+--- a/rust/kernel/task.rs
++++ b/rust/kernel/task.rs
+@@ -2,7 +2,7 @@
+ 
+ //! Tasks (threads and processes).
+ //!
+-//! C header: [`include/linux/sched.h`](../../../../include/linux/sched.h).
++//! C header: [`include/linux/sched.h`](srctree/include/linux/sched.h).
+ 
+ use crate::{bindings, types::Opaque};
+ use core::{marker::PhantomData, ops::Deref, ptr};
+diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
+index b67fb1ba168e..498397877376 100644
+--- a/rust/kernel/workqueue.rs
++++ b/rust/kernel/workqueue.rs
+@@ -132,7 +132,7 @@
+ //! }
+ //! ```
+ //!
+-//! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
++//! C header: [`include/linux/workqueue.h`](srctree/include/linux/workqueue.h)
+ 
+ use crate::{bindings, prelude::*, sync::Arc, sync::LockClassKey, types::Opaque};
+ use alloc::alloc::AllocError;
+diff --git a/rust/macros/lib.rs b/rust/macros/lib.rs
+index c42105c2ff96..3e3cb7449e58 100644
+--- a/rust/macros/lib.rs
++++ b/rust/macros/lib.rs
+@@ -20,7 +20,7 @@
+ /// The `type` argument should be a type which implements the [`Module`]
+ /// trait. Also accepts various forms of kernel metadata.
+ ///
+-/// C header: [`include/linux/moduleparam.h`](../../../include/linux/moduleparam.h)
++/// C header: [`include/linux/moduleparam.h`](srctree/include/linux/moduleparam.h)
+ ///
+ /// [`Module`]: ../kernel/trait.Module.html
+ ///
+
+base-commit: a39b6ac3781d46ba18193c9dbb2110f31e9bffe9
+-- 
+2.43.0
+
