@@ -1,130 +1,105 @@
-Received: from aer-iport-4.cisco.com (aer-iport-4.cisco.com [173.38.203.54])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8722231734;
-	Fri, 15 Dec 2023 14:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cisco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cisco.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FF13A8F0;
+	Fri, 15 Dec 2023 16:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cisco.com header.i=@cisco.com header.b="g5/declT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=cisco.com; i=@cisco.com; l=1242; q=dns/txt; s=iport;
-  t=1702650516; x=1703860116;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rtGpcSBAa+bZIu1Cx5ZRUunKjM+Koy2IkGWED7zM6Sw=;
-  b=g5/declTbySEJ59Elpm8Uzt8Dt6HpOEiox8Sbl1KBoHtZu3h3uuJhGlJ
-   xQRhIWs/Qq+jRM13gfuT0fQHotq6QGRCEkS3jYFdtuTq0y+gg4pq0sG2R
-   9nJIbGYbj3EZf9RhBgWGmD6gO6dr1+3PKlmbVs0XFce0si/GbYr5vLtqU
-   g=;
-X-CSE-ConnectionGUID: Ea8JoieSQcKM1hK/F0wyog==
-X-CSE-MsgGUID: 2lIXEF/3RZmN8Lx+OVNwdA==
-X-IPAS-Result: =?us-ascii?q?A0AbAQADYnxllxbLJq1aHgEBCxIMQIFEC4IRgSNWLhJIB?=
- =?us-ascii?q?I1KiGqSWoslgSUDVg8BAQENAQE7CQQBAYUGAocxJzQJDgECBAEBAQEDAgMBA?=
- =?us-ascii?q?QEBAQEBAQYBAQUBAQECAQcEFAEBAQEBAQEBNwUQNYVoDYZGAQIDOj8QCxguV?=
- =?us-ascii?q?wYTCIJ4AYJeAxGuO3iBNIEBg2sPrzKBYwaBSIgbAYogQoFJRIEVgyo+imQiB?=
- =?us-ascii?q?IZ7gh4HMoEJDAmBA4MmKZFrWyJGcBsDBwN/DysHBDAbBwYJFBgVIwZQAgIoI?=
- =?us-ascii?q?QkTEkCBXYFSCn4/Dw4Rgj4oNjYZSIJaFQw0SnUQKgQUF4ESBGobEh4SJREQF?=
- =?us-ascii?q?w0DCHQdAjI8AwUDBDMKEg0LIQUUQgNCBkkLAwIaBQMDBIEwBQ0eAhAaBgwnA?=
- =?us-ascii?q?wMSSQIQFAMeHQMDBgMKMQMwgRkMTwNsHzIJPA8MGwI5DScjAixWBRACFgMkG?=
- =?us-ascii?q?jYRCQsHIQMsBjgCEwwGBgleJhYJBCcDCAQDVAMjdxEDBAwDFwcLB1cDRB1AA?=
- =?us-ascii?q?3g9NRQbbaJSgTYBgxtZUIEaExcpliMBrwyEGYwFlSJJA5cZklmYRY1omkoCB?=
- =?us-ascii?q?AYFAhaBYzqBWzMaCBsVgyISQBkPjjmBEwEIh1eKZ0IyAjkCBwsBAQMJimEBA?=
- =?us-ascii?q?Q?=
-IronPort-Data: A9a23:JeBLWKts0qdEzzBx6FishubU9ufnVL9ZMUV32f8akzHdYApBsoF/q
- tZmKWmBO/7eYGT9KNF/O4zgoxtX6JLXzINkQQs9qSk2RS9HgMeUXt7xwmUckM+xwmwvaGo9s
- q3yv/GZdJhcokf0/0rrav656yAkiclkf5KkYMbcICd9WAR4fykojBNnioYRj5Vh6TSDK1vlV
- eja/YuHZDdJ5xYuajhPsvja9Us21BjPkGpwUmIWNKgjUGD2zxH5PLpHTYmtIn3xRJVjH+LSb
- 44vG5ngows1Vz90Yj+Uuu6Tnn8iG9Y+DiDS4pZiYJVOtzAZzsAEPgnXA9JHAatfo23hc9mcU
- 7yhv7ToIesiFvWkdOjwz3C0HgkmVZCq9oMrLlCSuJyxyEzLSELn4NA3DGJxE9UH6+F4VDQmG
- fwwcFjhbziKivjzy7WhR6wwwM8iN8LseogYvxmMzxmAUq1gGsCFGf2Ro4UCtNszrpgm8fL2b
- s8YYidrZQ/oaBxUMVBRA5U79AutriiuKWYC9wj9SawfuWzy/CFfl+PXAt/zKviaBuJruFmUj
- zeTl4j+KkpHbIPEk2XtHmiXruvLgybTXIMJCKb+8v9snU3VymENYDUSVF2msby1jUWWRd1SM
- QoX9zAooKx081akJvH/QgakoXifoh8AR/JfFOo17AzLwa3Riy6cAXIOSRZOb9spsMJwTjsvv
- nePk97yDCFrtryYU2m1+bCToje/fyMSKAcqYyYYTQIDy9ruuoc+ilTIVNkLOKWylNf4BRn03
- DbMqiUi750LhNIA16ig1VTGmC634JzISBMloAnaQAqN6gJ/eZ7gZIGy71XfxehPIZzfTVSbu
- nUA3c+E44gmF4yWiGmDR/9IGLCv+uatLjLRmxhsEoMn+jDr/GSsFahZ5DB1KV14MsIsdjjub
- 0ve/whW4fd7NT2qbKl7aYWrBOwxxK37CNLqEPvTa7JmaJV3cgjB+CZ1fk+W93j3l1Qrl+c6N
- P+ze8SrF3BBPqtn5CKsQPsa17oixyR4zmTWLbj0xg62+bWXfm+aVLBDNlaSBsgz67qZpkPb/
- tBQH8SPwhRbFub5Z0H/+IoePRYFJGk9AorepMled+rFKQ1jcEk+BvPKxrUodaRqmq1UkqHD+
- XTVckhaxVb2rX7KMwOHbjZkcryHYHpkhXs2J2ktJVGyxz0laJrp56YEfJxxdr4inAB+8RJqZ
- 9QMK+eHA/l0cz/k3m0dTt7T9JNzcxv+0GpiIBGZSDQ4epdhQSnA9dnlYhbj+UEy4syf65NWT
- 1qIiFuzfHYTezmOGvo6f9qJ6zuMUZkhdABaAhCgzjp7IRmEHG1Wx8vZ1KNfHi30AU+frgZ2L
- i7PafvimcHDopUu7P7Cjr2eooGiHoNWRxUCRTSEvejpbHWKrwJPJLOsts7WJFgxs0uqoc2fi
- Rl9lqiU3AAvxQ8V7NQkS96HM4pktoWxz1Ol8uiUNC6WNwvwUOwIzoiu1shUvaoF3a5CpQazQ
- QqO/NIcUYhly+u7eGP90DENN7zZvdlNw2G6xa1scC3HCNpfoePvvbN6ZELX1kSw7dJdbesY/
- AvWkJVMsFzj10tyYozuY+I93z3kE0Hsmp4P7vkyaLIHQCJyor2eSfQw0hPL3aw=
-IronPort-HdrOrdr: A9a23:Jf+cha+mPhaclPTgDcJuk+D3I+orL9Y04lQ7vn2ZhyY7TiW9rb
- HKoB17726XtN9/YhsdcLy7VZVoBEmskaKdgrNhXotKPjOGhILAFugLhrcKgQeBJ8SUzIBgPM
- lbH5RWOZnZEUV6gcHm4AOxDtoshOWc/LvAv5a485+oJjsaEp2JKGxCe2CmLnE=
-X-Talos-CUID: =?us-ascii?q?9a23=3ABTKwDGkwtJoYBvThQlyoJrOhjnzXOVDUnFXXIkK?=
- =?us-ascii?q?DMG1KbeSVahi+oLx1lMU7zg=3D=3D?=
-X-Talos-MUID: =?us-ascii?q?9a23=3ArQek7w0rU18T4A+NZln6zXWjLzUjuaCPOG0j1s4?=
- =?us-ascii?q?8icyiZQhgeBCjqiu7a9py?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-AV: E=Sophos;i="6.04,278,1695686400"; 
-   d="scan'208";a="9923272"
-Received: from aer-iport-nat.cisco.com (HELO aer-core-4.cisco.com) ([173.38.203.22])
-  by aer-iport-4.cisco.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Dec 2023 14:27:05 +0000
-Received: from localhost (ams3-vpn-dhcp3724.cisco.com [10.61.78.140])
-	(authenticated bits=0)
-	by aer-core-4.cisco.com (8.15.2/8.15.2) with ESMTPSA id 3BFER4AZ022079
-	(version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Fri, 15 Dec 2023 14:27:04 GMT
-Date: Fri, 15 Dec 2023 16:27:03 +0200
-From: Ariel Miculas <amiculas@cisco.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-        Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
-        Gary Guo <gary@garyguo.net>,
-        =?utf-8?B?QmrDtnJu?= Roy Baron <bjorn3_gh@protonmail.com>,
-        Benno Lossin <benno.lossin@proton.me>,
-        Andreas Hindborg <a.hindborg@samsung.com>,
-        Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
-        linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-        Jonathan Corbet <corbet@lwn.net>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Bill Wendling <morbo@google.com>,
-        Justin Stitt <justinstitt@google.com>, linux-doc@vger.kernel.org,
-        llvm@lists.linux.dev
-Subject: Re: [PATCH] docs: rust: remove `CC=clang` mentions
-Message-ID: <am3aewoqtx2tzcdn55lzhqszhmtfqx5phwufo4bwinrslwe3ft@jahi4gp25sqf>
-References: <20231215124751.175191-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYiCweUb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7EAC433C8;
+	Fri, 15 Dec 2023 16:12:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1702656752;
+	bh=aUbwALdJfaWsm15Cj8LhFXmdPuNIvb9+6Oi7fbKXNsI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=zYiCweUbM8g2af0YAsMrv7bIPEAGKCuq6oHuWVmRWmu6ag0JqMS8UsxXju64J9R/j
+	 trhkjsyi3nh8XO6FTVRIncvKZO6aHr8wMj0FSEOqWxSL8wYhDF/aXlWNQkPZo/BOry
+	 9plBZ+1F+mim8IHeDnYZaALgwgBHLc2iCT0j2N7M=
+Date: Fri, 15 Dec 2023 17:12:29 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: =?iso-8859-1?Q?N=EDcolas_F=2E_R=2E_A=2E?= Prado <nfraprado@collabora.com>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>
+Subject: Re: [PATCH 1/8] spmi: mtk-pmif: Serialize PMIF status check and
+ command submission
+Message-ID: <2023121518-borax-wham-3d0e@gregkh>
+References: <20231206231733.4031901-1-sboyd@kernel.org>
+ <20231206231733.4031901-2-sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20231215124751.175191-1-ojeda@kernel.org>
-X-Authenticated-User: amiculas@cisco.com
-X-Outbound-SMTP-Client: 10.61.78.140, ams3-vpn-dhcp3724.cisco.com
-X-Outbound-Node: aer-core-4.cisco.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231206231733.4031901-2-sboyd@kernel.org>
 
-On 23/12/15 01:47PM, Miguel Ojeda wrote:
-> Nowadays all architectures except s390 recommend using `LLVM=1` instead of
-> `CC=clang`, and since commit a3c6bfba4429 ("Documentation/llvm: refresh
-> docs") the Kbuild LLVM documentation makes `LLVM=1` the way to go:
+On Wed, Dec 06, 2023 at 03:17:24PM -0800, Stephen Boyd wrote:
+> From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 > 
->     We want to encourage the use of ``LLVM=1`` rather than just
->     ``CC=clang``. Make that suggestion "above the fold" and "front and
->     center" in our docs.
+> Before writing the read or write command to the SPMI arbiter through the
+> PMIF interface, the current status of the channel is checked to ensure
+> it is idle. However, since the status only changes from idle when the
+> command is written, it is possible for two concurrent calls to determine
+> that the channel is idle and simultaneously send their commands. At this
+> point the PMIF interface hangs, with the status register no longer being
+> updated, and thus causing all subsequent operations to time out.
 > 
-> In particular, that commit removes the examples with `CC=clang`.
+> This was observed on the mt8195-cherry-tomato-r2 machine, particularly
+> after commit 46600ab142f8 ("regulator: Set PROBE_PREFER_ASYNCHRONOUS for
+> drivers between 5.10 and 5.15") was applied, since then the two MT6315
+> devices present on the SPMI bus would probe assynchronously and
+> sometimes (during probe or at a later point) read the bus
+> simultaneously, breaking the PMIF interface and consequently slowing
+> down the whole system.
 > 
-> Thus do the same in the Rust Quick Start guide, i.e. remove the `CC=clang`
-> mentions, especially since the architectures that have had their Rust
-> support upstreamed (or soon to be upstreamed) are all `LLVM=1` ones
-> anyway. And perhaps by the time Rust is supported for s390 (or new
-> architectures), it may have moved to `LLVM=1` anyway. Otherwise,
-> this can be added back if needed (or perhaps an extra link to
-> Documentation/kbuild/llvm.rst).
+> To fix the issue at its root cause, introduce locking around the channel
+> status check and the command write, so that both become an atomic
+> operation, preventing race conditions between two (or more) SPMI bus
+> read/write operations. A spinlock is used since this is a fast bus, as
+> indicated by the usage of the atomic variant of readl_poll, and
+> '.fast_io = true' being used in the mt6315 driver, so spinlocks are
+> already used for the regmap access.
 > 
-> This should also help avoiding potential confusion around `CC=clang` [1].
-> 
-> Link: https://lore.kernel.org/rust-for-linux/6df6e8e5-8d5b-4d3d-91b5-bc0e90c424ea@nvidia.com/ [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Ariel Miculas <amiculas@cisco.com>
+> Fixes: b45b3ccef8c0 ("spmi: mediatek: Add support for MT6873/8192")
+> Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+> Link: https://lore.kernel.org/r/20230724154739.493724-1-nfraprado@collabora.com
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
+>  drivers/spmi/spmi-mtk-pmif.c | 20 ++++++++++++++++----
+>  1 file changed, 16 insertions(+), 4 deletions(-)
+
+Hi,
+
+This is the friendly patch-bot of Greg Kroah-Hartman.  You have sent him
+a patch that has triggered this response.  He used to manually respond
+to these common problems, but in order to save his sanity (he kept
+writing the same thing over and over, yet to different people), I was
+created.  Hopefully you will not take offence and will fix the problem
+in your patch and resubmit it so that it can be accepted into the Linux
+kernel tree.
+
+You are receiving this message because of the following common error(s)
+as indicated below:
+
+- You have marked a patch with a "Fixes:" tag for a commit that is in an
+  older released kernel, yet you do not have a cc: stable line in the
+  signed-off-by area at all, which means that the patch will not be
+  applied to any older kernel releases.  To properly fix this, please
+  follow the documented rules in the
+  Documentation/process/stable-kernel-rules.rst file for how to resolve
+  this.
+
+If you wish to discuss this problem further, or you have questions about
+how to resolve this issue, please feel free to respond to this email and
+Greg will reply once he has dug out from the pending patches received
+from other developers.
+
+thanks,
+
+greg k-h's patch email bot
