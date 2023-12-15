@@ -1,172 +1,106 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DEDDDC1
-	for <patches@lists.linux.dev>; Fri, 15 Dec 2023 07:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4675A10785
+	for <patches@lists.linux.dev>; Fri, 15 Dec 2023 07:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gVDfMOL/"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-548ae9a5eeaso5146a12.1
-        for <patches@lists.linux.dev>; Thu, 14 Dec 2023 23:32:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dK15kZ8A"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-54744e66d27so8896a12.0
+        for <patches@lists.linux.dev>; Thu, 14 Dec 2023 23:38:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1702625540; x=1703230340; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1702625894; x=1703230694; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WBgQ0RRzgqnmZ3XZ9HE9mOgeSOlW1hZnBjKkbHULK9A=;
-        b=gVDfMOL/mpYl70ToFtaTMuIKLf96vqvsIgn9bvdxw9auYbX8YJH4/pnfaQUhRoxw/e
-         xSo/EohchCt2iUWBXno+IxC3cWN8Q8Ah5LqAfEFBu6t98QPn904pImBlULroL3kuCZ79
-         RM57hIWTeCQIHKFqs/Jzi4uTAxQHW8a3eaC29KJ0Mnsdnh2X7V7pum19HC6Gs6O8xy+m
-         XR/aoeprJPY+RbbBotf7i72F6u13clkOEjvjh+iOA5aX7h7GJjYDh2aMJ/Y/3XPpOAVv
-         l9c0ew4sbYwD9XVK1lLRA0rVe8a3weUDS4RLyNMDtG5roKsC7VxA59UkE5vd7i+zNa8Q
-         LYVA==
+        bh=HoW7TyhHSLhysHnwFvHVAkyp8pUdpOxXxjRhU6WofEc=;
+        b=dK15kZ8AyeYb6AfOvojqKqIsRml5HcCnCT+nnVnKXFsLA6pQVv7MqaQuoJlP0gxw2a
+         pAWe1tIgS8H0AQXbcufzWS10atHBOuExCPaqw177YyyvupxsVest4aawGixOkKDT+v4i
+         l+rtTYEHWyBuSCUMZ2psxyDlhY09YM/Bzai9mwgz+7hgRMstp6HZL2QwTSZkz6X5rQhb
+         paZBVCCWz5hmmnKZNiKivYuKDtJpoCfPSiSKMe5gX5PgKKT6gYy4HMOPTLeltntSlDdH
+         qjyXE0sTWzyo+ApNNzlHR8L5qS1dE5xEg5+T2p8LEDWVS9UuHl1CGg18J1840YN2dn8Y
+         tCZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702625540; x=1703230340;
+        d=1e100.net; s=20230601; t=1702625894; x=1703230694;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WBgQ0RRzgqnmZ3XZ9HE9mOgeSOlW1hZnBjKkbHULK9A=;
-        b=MpMMGNn3WjoXGL1TqMq2lj3z4vLEWT6H7fYPRyRjCM/SDqeWJ3d5wPxyBysFyWSemk
-         rjiDEqbVe3vLmP4A118mMGJQqhuV3yu/UqB0/RdZfgTsJUkxFP04flL3fqp9yo9S8Gxn
-         e45lRWFwITnBYpnG0zV01sJKuTBYJfVvk6IAqmmyltZG8kTFWPvI8vnFStqrF3PVc9MO
-         E10ovLhCFYHbEr5DqUfI6kIhJW8eYq9u5TJ+8ec9r9UcEJaJxq3KyELlbmgpNjR7ZotY
-         O7csDxeTQdKJn5WaTxEtp4cXURH6FcnslIen1h5hF7CNZpK25CfREfLAdO0+diiQ9hRm
-         jUCw==
-X-Gm-Message-State: AOJu0YzdS8FDaWV7B7824VbHiJnYHsY53i9sa0+0zzs6RT5QZghgtbVM
-	pQIPyyTfMa7cwHGYKGbxsNoJQ2V1lyS7FF2TZAVJJg==
-X-Google-Smtp-Source: AGHT+IGesnjLVLJ84vFW1jXverm9Mnye7w53Deyh36eervZHBV0YODyv1sStVxPb2jQ6aAQFJ03uRrFulM2921ax9Y8=
-X-Received: by 2002:a50:d7ca:0:b0:54a:ee8b:7a8c with SMTP id
- m10-20020a50d7ca000000b0054aee8b7a8cmr748714edj.0.1702625539704; Thu, 14 Dec
- 2023 23:32:19 -0800 (PST)
+        bh=HoW7TyhHSLhysHnwFvHVAkyp8pUdpOxXxjRhU6WofEc=;
+        b=ad4119m9wU41Nk9LBveQVwKJeHeFxAkTysywtsDRyacJoMl5dS/TuMFOMkWg2XFBtc
+         wI5PhfI/rxyI4hulIUFbn1vMrGimI3d7ZV840kk0jOfFvyV/yETbyS4//ph73X8c7prd
+         6fstu7FIZXHjYjz8PZLJAL98IlXaKvt29okpH2pgQjJ9CHVpFq+GLdvLqOABB/LLe2U5
+         ADYIsJ1o169pgWGHVm44XgDgPVebSoH8yscAwbxjJeGh6iBr79u54qUfVHHpOeqnh9dx
+         H75SyiLUc6fmGhtOTHVcuad21aNWghaLYt2i1aSBf7HazysOnf14bTgAEPivSW3I7c5L
+         Yjvg==
+X-Gm-Message-State: AOJu0Yy6ifDKcDhYQLjcugj8sQ2F9fjpzetAuStldiFaECSexYmgpEjU
+	oE7AmcwOVSlSZeczU1bNoW5lum+bvRpTltcR5XPqPw==
+X-Google-Smtp-Source: AGHT+IGuKD8/K8QHuIrmhpW/HWQLJC4iHqFx5iDM3NmkE9E1DPd/Nvr1t6IDBqinCWl+DX+wkHEL48t/nKlN6ozsIZA=
+X-Received: by 2002:a50:ccde:0:b0:54c:384b:e423 with SMTP id
+ b30-20020a50ccde000000b0054c384be423mr713272edj.5.1702625894495; Thu, 14 Dec
+ 2023 23:38:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231214092958.377061-1-ojeda@kernel.org>
-In-Reply-To: <20231214092958.377061-1-ojeda@kernel.org>
+References: <20231214222253.116734-1-ojeda@kernel.org>
+In-Reply-To: <20231214222253.116734-1-ojeda@kernel.org>
 From: David Gow <davidgow@google.com>
-Date: Fri, 15 Dec 2023 15:32:06 +0800
-Message-ID: <CABVgOSkyZ1fi2nRdPvwvq0vSzkT7Fo5ycoSuQ5Qzb9a9oaFCGA@mail.gmail.com>
-Subject: Re: [PATCH] rust: upgrade to Rust 1.74.1
+Date: Fri, 15 Dec 2023 15:38:02 +0800
+Message-ID: <CABVgOS=LXUzRD-c63sxn0FMfGWvxCPP1t_8nY5Xgk30Y9qMAcw@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: add `rustupoverride` target
 To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+Cc: Masahiro Yamada <masahiroy@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Nick Desaulniers <ndesaulniers@google.com>, Nicolas Schier <nicolas@fjasle.eu>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+	Alice Ryhl <aliceryhl@google.com>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000816006060c8766a7"
+	boundary="000000000000a7021a060c877b65"
 
---000000000000816006060c8766a7
+--000000000000a7021a060c877b65
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 14 Dec 2023 at 17:30, Miguel Ojeda <ojeda@kernel.org> wrote:
+On Fri, 15 Dec 2023 at 06:23, Miguel Ojeda <ojeda@kernel.org> wrote:
 >
-> This is the next upgrade to the Rust toolchain, from 1.73.0 to 1.74.1
-> (i.e. the latest) [1].
+> When setting up the Rust support via `rustup`, one may use an override
+> in order to select the right version of the Rust toolchain.
 >
-> See the upgrade policy [2] and the comments on the first upgrade in
-> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
+> The current instructions at Documentation/rust/quick-start.rst assume
+> one is using an in-tree kernel build (i.e. no `O=`) [1]. We would like
+> to provide also the way to do so for `O=` builds, but ideally in a way
+> that keeps the one-liner copy-pastable and without duplication [2].
 >
-> # Unstable features
+> Thus provide a new Make target, `rustupoverride`, that sets it up for
+> the user given their build options/variables.
 >
-> No unstable features (that we use) were stabilized.
->
-> Therefore, the only unstable features allowed to be used outside the
-> `kernel` crate are still `new_uninit,offset_of`, though other code to
-> be upstreamed may increase the list (e.g. `offset_of` was added recently).
->
-> Please see [3] for details.
->
-> # Other improvements
->
-> Rust 1.74.0 allows to use `#[repr(Rust)]` explicitly [4], which can be
-> useful to be explicit about particular cases that would normally use
-> e.g. the C representation, such as silencing lints like the upcoming
-> additions we requested [5] to the `no_mangle_with_rust_abi` Clippy lint
-> (which in turn triggered the `#[repr(Rust)]` addition).
->
-> Rust 1.74.0 includes a fix for one of the false negative cases we reported
-> in Clippy's `disallowed_macros` lint [6] that we would like to use in
-> the future.
->
-> Rust 1.74.1 fixes an ICE that the Apple AGX GPU driver was hitting [7].
->
-> # Required changes
->
-> For this upgrade, no changes were required (i.e. on our side).
->
-> # `alloc` upgrade and reviewing
->
-> The vast majority of changes are due to our `alloc` fork being upgraded
-> at once.
->
-> There are two kinds of changes to be aware of: the ones coming from
-> upstream, which we should follow as closely as possible, and the updates
-> needed in our added fallible APIs to keep them matching the newer
-> infallible APIs coming from upstream.
->
-> Instead of taking a look at the diff of this patch, an alternative
-> approach is reviewing a diff of the changes between upstream `alloc` and
-> the kernel's. This allows to easily inspect the kernel additions only,
-> especially to check if the fallible methods we already have still match
-> the infallible ones in the new version coming from upstream.
->
-> Another approach is reviewing the changes introduced in the additions in
-> the kernel fork between the two versions. This is useful to spot
-> potentially unintended changes to our additions.
->
-> To apply these approaches, one may follow steps similar to the following
-> to generate a pair of patches that show the differences between upstream
-> Rust and the kernel (for the subset of `alloc` we use) before and after
-> applying this patch:
->
->     # Get the difference with respect to the old version.
->     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->         cut -d/ -f3- |
->         grep -Fv README.md |
->         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->     git -C linux diff --patch-with-stat --summary -R > old.patch
->     git -C linux restore rust/alloc
->
->     # Apply this patch.
->     git -C linux am rust-upgrade.patch
->
->     # Get the difference with respect to the new version.
->     git -C rust checkout $(linux/scripts/min-tool-version.sh rustc)
->     git -C linux ls-tree -r --name-only HEAD -- rust/alloc |
->         cut -d/ -f3- |
->         grep -Fv README.md |
->         xargs -IPATH cp rust/library/alloc/src/PATH linux/rust/alloc/PATH
->     git -C linux diff --patch-with-stat --summary -R > new.patch
->     git -C linux restore rust/alloc
->
-> Now one may check the `new.patch` to take a look at the additions (first
-> approach) or at the difference between those two patches (second
-> approach). For the latter, a side-by-side tool is recommended.
->
-> Link: https://github.com/rust-lang/rust/blob/stable/RELEASES.md#version-1741-2023-12-07 [1]
-> Link: https://rust-for-linux.com/rust-version-policy [2]
-> Link: https://github.com/Rust-for-Linux/linux/issues/2 [3]
-> Link: https://github.com/rust-lang/rust/pull/114201 [4]
-> Link: https://github.com/rust-lang/rust-clippy/issues/11219 [5]
-> Link: https://github.com/rust-lang/rust-clippy/issues/11431 [6]
-> Link: https://github.com/rust-lang/rust/issues/117976#issuecomment-1822225691 [7]
+> Link: https://lore.kernel.org/rust-for-linux/20231207084846.faset66xzuoyvdlg@vireshk-i7/ [1]
+> Link: https://lore.kernel.org/rust-for-linux/CANiq72=mvca8PXoxwzSao+QFbAHDCecSKCDtV+ffd+YgZNFaww@mail.gmail.com/ [2]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > ---
+> Viresh may send a patch on top of this to refer to `rustupoverride`
+> from the Quick Start guide in `Documentation/rust` -- that one should
+> probably be applied right after this one.
+>
 
-KUnit tests pass on x86_64 and UML.
+This worked fine for me testing the 1.74.1 upgrade, thanks.
 
 Tested-by: David Gow <davidgow@google.com>
+
+Would having similar targets for bindgen help? What about having this
+install rust-src? Updating / installing those required a lot more
+looking up of documentation (and then adding --force), so it'd be nice
+if there were some way to do a similar override or make target.
 
 Cheers,
 -- David
 
---000000000000816006060c8766a7
+--000000000000a7021a060c877b65
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="smime.p7s"
@@ -233,14 +167,14 @@ impZAng7ccvvK09K3ZuhwTIxJMsPXCZYsrXWORTw5sczRAP6XvKbPBJnsJoSTe5dFBPBHOQJOGhU
 qWfEfWnWMJPF3LxSGLpLFQXO3RwQqmxv08avwXfVPouh1xuB3FX7rpDabT8YDhu9JgIZkLEKko7L
 yQt6zWwng7k8YF/jGbiAta6VMYICajCCAmYCAQEwaDBUMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQ
 R2xvYmFsU2lnbiBudi1zYTEqMCgGA1UEAxMhR2xvYmFsU2lnbiBBdGxhcyBSMyBTTUlNRSBDQSAy
-MDIwAhABzgV+4+mJnUzG7XDy6d2uMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCAC
-M38eg4Seni29aYkYGqng9kqeTWsutLtzL05Ba87C6zAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
-MBwGCSqGSIb3DQEJBTEPFw0yMzEyMTUwNzMyMjBaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
+MDIwAhABzgV+4+mJnUzG7XDy6d2uMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBv
+K70fp4h+NvoXty1u+Alo7x0G7/f89jXXkpOSYk5EdzAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
+MBwGCSqGSIb3DQEJBTEPFw0yMzEyMTUwNzM4MTRaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
 BAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsG
-CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEASFmgrfkaSQpzpfFhUkpS
-FLY+2dg9geYTk9jx42UwdDnGLEzBvBiZki7i7rAUbl+YYLFkgv1D3PH5kwlWjfNShCmfFgcRk7fB
-CRVwWrwIGiVDIny0Cuprfwdy8609e7K8ClWuujqYZJDEyr+EGe9FOIPljFqE3JfEpNG3oiKC8TxS
-U+62rLwC1qI/+GsVXQC+RZx0PxYlnJrQlLJFxBGDP11arVKFQitnr4KEA33YYy8lSQCHgMy9d73N
-CMfQFZLXYcskB/jfI14dtacWeYVy6EzilnNdy3dVsBTudjB5K7J4Z24N8D2jO+7Moq28d0GsDG9K
-ju3ASAx0D6u8Zb9Brw==
---000000000000816006060c8766a7--
+CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAnVeSOEQHgKgcGxZD8nrk
+U9Pak2WVtzMkSnVyM+FEogLy0PX+EpgFb5OmgkcPsmWVUtA4p876QjvxCoxjeHo7KgIg815ahX5H
+qe15VT8lqP2sq3fMsonoqL0t/pOJsCMGZnIpG7BNhdksnN+V7c8Jey/w6H6UbFZ4wn354vmImCRR
+mYDbEeAzM76IVgw/lkhO+y9Rh+1/JxEMm0ZocfAEFKgAWsJ5OKoRx2cilvSAhtKdM9nUL6Swwqsh
+18soblkmbodMOuBODSWP/plqoD+2zyKIiunq2oywRQlDOiyqnhJsP7RdY/iLMLv7nzqwtEp9HoB2
+YRwuYVWwlqRvuMnMkg==
+--000000000000a7021a060c877b65--
