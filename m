@@ -1,73 +1,242 @@
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0B04A28
-	for <patches@lists.linux.dev>; Sat, 16 Dec 2023 00:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499E713FEE
+	for <patches@lists.linux.dev>; Sat, 16 Dec 2023 08:07:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T9c3HEQZ"
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-da7ea62e76cso1114508276.3
-        for <patches@lists.linux.dev>; Fri, 15 Dec 2023 16:02:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Y10gnIgn"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-548ae9a5eeaso3906a12.1
+        for <patches@lists.linux.dev>; Sat, 16 Dec 2023 00:07:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702684956; x=1703289756; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HUP3bpCvVKirlUHMbPP+Vvn/KkPpGHwcdqXev2j/lBA=;
-        b=T9c3HEQZOQ9U9vHMbweNzGPsQHKbRmyNrJtWYvOHH1dZkI75JtRLS76KCT+CwfFP0H
-         o+ktW5BmEYgtFqAh390CQNCVqR6r1KhtI/dBxOOb5/7qI2/R5YWXxYdQsKkmjrF7FiW6
-         d/Cq1y60sEKH1JbGg1v3o5k1pEj8/ugiwXz8Ls1RFekl2YhcyC35wowyFxJdwfkts4c0
-         cTiSVR352LfdaGbZe50S4uDn9fpO0mgFq5guPPriOFsygc+rFxrLR99Uk2ZSfSypWFTh
-         clX2/asHTy++UI1gbCDfs1xCTB627nJr7jrB3TH+T+X9n9eKVbALB2SErF9R0zYOf0Im
-         +X2A==
+        d=google.com; s=20230601; t=1702714033; x=1703318833; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tYPR+0HANHSDB/ptoLeltzWuqlj2Wfyava8pDjUoCWI=;
+        b=Y10gnIgnQYsZZJ23y6r4G7V9RZyQcN6WZT6BfvK9v38lY79TJqx9OIMg8qhWwaNOyH
+         qRU2ZEqdRJ/rh6rACe2ydE735DwwnSxlqp8DkLRcN6SagAfkAKyQ0bnnfSIPwGLVJ0Dg
+         lK7KGjY38/rueMklgynY84H4GGBak+7vGI6+Gt7+ziPLcCtrPBcSpT8aR81P4aD0r43J
+         7iaOXN/+gM7OB9G1zyMI8/QFku1cKAilLeQ+jvB3fjG+R6gUMLm1gVllX1Y/yGJlYeXx
+         r3CBn3S26Bja9XJwudZsMohj63BcoxC9Kq4PVLISlIvRi4tuVLAQb4cHgoTX2dNxCaSV
+         SXLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702684956; x=1703289756;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HUP3bpCvVKirlUHMbPP+Vvn/KkPpGHwcdqXev2j/lBA=;
-        b=NLv9ohAMwOgx2I73lCTzrnSydMEvIJTAq1rrDSflA4ZYpejUIrzUo/NWcHYTj/Dk+9
-         adb0+jRGu9bLlZIuTCA/pjKqPTdjq62Dk6fIgcG+6cnIX9Wa1JrmOZ+Ry/a+FMdBdVUY
-         2pB0xQIVZ0g6EUdQZSl6M0kM/o2fwOCUYH7Z7pdZ4od8c5mYTmW2vtNUK8Q6de+0sjts
-         CzpIvA8fP/9f+nvN9H1cn7ybEuNZLEJeJ5WWcD12XGZkpPEUQM2OYyEzWVc7rRUodBC9
-         f8QyLtgHnLZ5rpuvcMnIeZn/Pu5FIbuk0R8DSvH3uOUY31jZ0YmsYufAOax2O7BPIci+
-         ogBg==
-X-Gm-Message-State: AOJu0YyeWkX+0igsPXAFevHbrlUrhVou9pPbsKMjEeAHN+HH8EgdrupS
-	plgMBFL8/KYgIf7pPBdLFaDgp8KkVO6LBJdGzlY=
-X-Google-Smtp-Source: AGHT+IGvPfH0mpoBG1iug8UwmNxFRI3F59+AybxidcQnROd3JXcSiY/aigPxSIwnvGkPkOjXOxZBO+SEVyrpS16B2bw=
-X-Received: by 2002:a25:dcd1:0:b0:dbc:e53f:8705 with SMTP id
- y200-20020a25dcd1000000b00dbce53f8705mr2535065ybe.81.1702684955826; Fri, 15
- Dec 2023 16:02:35 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702714033; x=1703318833;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tYPR+0HANHSDB/ptoLeltzWuqlj2Wfyava8pDjUoCWI=;
+        b=PLeOGnmN/g7RNnQ9Tgj66yBVbhpQaXbnzGxdT+H3Q0QisSMfYBUntI/liL2T7txWHx
+         YT7tbjExgWsXr+h4KnkoS3v+gGjNPkygf6/y3h7lRnh0C0AYkdYfxBhCGBLUhYat4Bq6
+         /LDlBghCcTAuEKokPem0ZjajGBn9DtKxlRms0FHvjfjKkaLRuD2Asl2Fql14oqg6ER71
+         tPrwolkz6/jNFo5CCzV1IiRLXEFWZ3l5zeqB5gxPvlepBYrFdS4N5pk7Ia5TQV5oRtL6
+         LmY1aT41ywGBp8QvEVox3qSJWodH4y5KfBOC9pJKqEVVWFWbTkOY3NrszBPgT7xfGwvd
+         kEOg==
+X-Gm-Message-State: AOJu0YzDwozC62yqh/xt5gBPfwJ4Htcltz4f3xoFI+bYFaBGFIMqX5j2
+	9AuzD3ztbGv+gwcY/UQJcuB7gLvPcp8XU3aQ/xFf2WaYBKwq
+X-Google-Smtp-Source: AGHT+IH624vssEfVdRoc0VJoUxvMXtz5Z/2ynvAcMILH0wJzVP0Evgf/Gkm1sK+eCX9eoi7Hq8kDczWgZx2mxd4JT3U=
+X-Received: by 2002:a50:d756:0:b0:552:365c:6962 with SMTP id
+ i22-20020a50d756000000b00552365c6962mr89366edj.2.1702714033302; Sat, 16 Dec
+ 2023 00:07:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231215235428.243211-1-ojeda@kernel.org>
-In-Reply-To: <20231215235428.243211-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sat, 16 Dec 2023 01:02:24 +0100
-Message-ID: <CANiq72mvspvQ_0Mr6TAw55sa_GUM6FRSYb_1JU67hwT+PzLZkg@mail.gmail.com>
-Subject: Re: [PATCH] rust: support `srctree`-relative links
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+References: <20231214222253.116734-1-ojeda@kernel.org> <CABVgOS=LXUzRD-c63sxn0FMfGWvxCPP1t_8nY5Xgk30Y9qMAcw@mail.gmail.com>
+ <CANiq72kw326HyrDM0v0mFNu5jfb=eL1a+k-idr-5Vbc6_gmY2A@mail.gmail.com>
+In-Reply-To: <CANiq72kw326HyrDM0v0mFNu5jfb=eL1a+k-idr-5Vbc6_gmY2A@mail.gmail.com>
+From: David Gow <davidgow@google.com>
+Date: Sat, 16 Dec 2023 16:07:00 +0800
+Message-ID: <CABVgOSm5ByYGZwYoNaXO92HkvJD6zSLjk=WjkQMoRdURqX38pw@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: add `rustupoverride` target
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
 	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	FUJITA Tomonori <fujita.tomonori@gmail.com>
+	Alice Ryhl <aliceryhl@google.com>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="000000000000230716060c9c0111"
+
+--000000000000230716060c9c0111
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Dec 16, 2023 at 12:54=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
+On Fri, 15 Dec 2023 at 19:27, Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
 >
-> Instead, provide support for `srctree`-relative links, e.g.:
+> On Fri, Dec 15, 2023 at 8:38=E2=80=AFAM David Gow <davidgow@google.com> w=
+rote:
+> >
+> > Would having similar targets for bindgen help? What about having this
+> > install rust-src? Updating / installing those required a lot more
+> > looking up of documentation (and then adding --force), so it'd be nice
+> > if there were some way to do a similar override or make target.
+>
+> Which docs did you need to check? i.e. we have the commands for those
+> steps in the Quick Start guide. I think you may be referring to the
+> case when switching between LTS and mainline, due to the `bindgen-cli`
+> vs. `bindgen` name change that the tool did (since that is where
+> `--force` is required, not for normal upgrading or downgrading). That
+> is definitely a bit painful :-( At least `cargo` mentions the need for
+> `--force` in that case. Or are you referring to something else?
 
-If we decide to go this way, then I plan to send this to stable later on.
+Yeah, I only needed to check the Quick Start guide, but had to look at
+all three sections (rustc, rust-src, bindgen), which
+
+And yes, it looks like the bindgen/bindgen-cli name change was what
+was causing my issues. If that's only a one-off, then we should be
+fine. (
+
+> I considered having a `rustupsetup` target (or script) instead that
+> does everything (with a `BUILDONLY=3D1` option or similar, given some
+> dependencies are not strictly needed for building), since having all
+> this "switching logic" is useful, but then:
+>
+>   - I am not sure we should "hide" the details of the setup too much:
+> I thought `rustupoverride` would be OK-ish because the output
+> directory is needed (so it is justified) and the command is
+> straightforward, but the others do not "need" that information.
+
+Yeah; I'm a bit conflicted here as well. A part of me thinks that, if
+we're adding make targets, doing them for everything would be more
+consistent, but it does add some 'unnecessary' targets, which is
+probably not worth it just to look nice.
+
+>   - If we include `bindgen` there, it wouldn't be `rustup`-only
+> anymore, so perhaps we would need another name like `rustsetup`. But
+> that may mislead others (e.g. those looking at the Make help), because
+> it is just one way of setting things up and it is not required.
+> Perhaps this can be alleviated by not including it in the `make help`,
+> so that everybody comes from the Quick Start guide and thus hopefully
+> they have read the document at least diagonally :)
+
+Personally, I'd love a 'make rustsetup' or similar, but I do agree it
+could be misleading, particularly long-term.
+
+The real advantage to it is while we're depending on unstable things
+and changing versions regularly. I don't think the one-off setup is
+tricky (and the documentation is good), it's the need to upgrade
+regularly (and, for per-directory overrides, possibly on several
+different checkouts). Having a script to 'upgrade everything to the
+required version' would be really convenient.
+
+>   - Given there are different ways to set different sub-steps, and the
+> fact that we don't have such a script for C does not have (please
+> correct me if I am wrong -- I am aware of Thorsten's recent guide,
+> which covers `apt` etc., but that is a Quick Start-like approach
+> rather than automated script), I am not sure it would be welcome as a
+> Make target (but perhaps it would be fine as a script?). Masahiro may
+> have some guidelines here.
+>
+>   - In the future we may have to change how the setup works or add
+> steps, i.e. it is not 100% settled. Thus I am concerned about adding
+> complex Make targets that users may start to depend on (i.e. with
+> particular/complex semantics), vs. just having docs that are manual.
+> For `rustupoverride`, it thought it could be OK-ish because it is just
+> a single command and unlikely that it will change (and if we stop
+> using it, we can make it empty with a warning and then remove it
+> eventually; while it gets harder for more complex ones).
+>
+> What do you think?
+
+Yeah, on reflection it's definitely not a good long-term solution, as
+ideally people will be able to just use whatever rustc version they
+have lying around (be it via rustup, or distro packages).
+
+Maybe what we need in the short term is an 'update-rust' script
+(possibly living in scripts/, possibly hosted elsewhere, like the
+rust-for-linux website), which just does all the steps from the Quick
+Start guide automatically? (Even if that's not a good solution
+overall, I'll probably throw one together myself just to keep my own
+systems up-to-date.)
+
+Still -- none of this is a blocker for this patch.
 
 Cheers,
-Miguel
+-- David
+
+--000000000000230716060c9c0111
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+MIIPnwYJKoZIhvcNAQcCoIIPkDCCD4wCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
+ggz5MIIEtjCCA56gAwIBAgIQeAMYYHb81ngUVR0WyMTzqzANBgkqhkiG9w0BAQsFADBMMSAwHgYD
+VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
+AxMKR2xvYmFsU2lnbjAeFw0yMDA3MjgwMDAwMDBaFw0yOTAzMTgwMDAwMDBaMFQxCzAJBgNVBAYT
+AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMSowKAYDVQQDEyFHbG9iYWxTaWduIEF0bGFz
+IFIzIFNNSU1FIENBIDIwMjAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCvLe9xPU9W
+dpiHLAvX7kFnaFZPuJLey7LYaMO8P/xSngB9IN73mVc7YiLov12Fekdtn5kL8PjmDBEvTYmWsuQS
+6VBo3vdlqqXZ0M9eMkjcKqijrmDRleudEoPDzTumwQ18VB/3I+vbN039HIaRQ5x+NHGiPHVfk6Rx
+c6KAbYceyeqqfuJEcq23vhTdium/Bf5hHqYUhuJwnBQ+dAUcFndUKMJrth6lHeoifkbw2bv81zxJ
+I9cvIy516+oUekqiSFGfzAqByv41OrgLV4fLGCDH3yRh1tj7EtV3l2TngqtrDLUs5R+sWIItPa/4
+AJXB1Q3nGNl2tNjVpcSn0uJ7aFPbAgMBAAGjggGKMIIBhjAOBgNVHQ8BAf8EBAMCAYYwHQYDVR0l
+BBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFHzM
+CmjXouseLHIb0c1dlW+N+/JjMB8GA1UdIwQYMBaAFI/wS3+oLkUkrk1Q+mOai97i3Ru8MHsGCCsG
+AQUFBwEBBG8wbTAuBggrBgEFBQcwAYYiaHR0cDovL29jc3AyLmdsb2JhbHNpZ24uY29tL3Jvb3Ry
+MzA7BggrBgEFBQcwAoYvaHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvcm9vdC1y
+My5jcnQwNgYDVR0fBC8wLTAroCmgJ4YlaHR0cDovL2NybC5nbG9iYWxzaWduLmNvbS9yb290LXIz
+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
+ddIn9n5Jt6Z1o79zxraLMEwGA1UdIARFMEMwQQYJKwYBBAGgMgEoMDQwMgYIKwYBBQUHAgEWJmh0
+dHBzOi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9zaXRvcnkvMAwGA1UdEwEB/wQCMAAwgZoGCCsG
+AQUFBwEBBIGNMIGKMD4GCCsGAQUFBzABhjJodHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9jYS9n
+c2F0bGFzcjNzbWltZWNhMjAyMDBIBggrBgEFBQcwAoY8aHR0cDovL3NlY3VyZS5nbG9iYWxzaWdu
+LmNvbS9jYWNlcnQvZ3NhdGxhc3Izc21pbWVjYTIwMjAuY3J0MB8GA1UdIwQYMBaAFHzMCmjXouse
+LHIb0c1dlW+N+/JjMEYGA1UdHwQ/MD0wO6A5oDeGNWh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20v
+Y2EvZ3NhdGxhc3Izc21pbWVjYTIwMjAuY3JsMA0GCSqGSIb3DQEBCwUAA4IBAQBtHFwIgQZjer5K
+H+4Q+wns10k7qN+4wN2Uf+JsyOYjukaMEgdLErfA1wwtQ9uHkoYQZcWBuVVkQFa5hI+sqI2m1Weq
+riMCFSiU38s1tADdMX12IMfJRN60Nznhrw+nPyDRZqRhUTW24TwnHorkDnFPW8PHo7fAw4FrpI0n
+impZAng7ccvvK09K3ZuhwTIxJMsPXCZYsrXWORTw5sczRAP6XvKbPBJnsJoSTe5dFBPBHOQJOGhU
+qWfEfWnWMJPF3LxSGLpLFQXO3RwQqmxv08avwXfVPouh1xuB3FX7rpDabT8YDhu9JgIZkLEKko7L
+yQt6zWwng7k8YF/jGbiAta6VMYICajCCAmYCAQEwaDBUMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQ
+R2xvYmFsU2lnbiBudi1zYTEqMCgGA1UEAxMhR2xvYmFsU2lnbiBBdGxhcyBSMyBTTUlNRSBDQSAy
+MDIwAhABzgV+4+mJnUzG7XDy6d2uMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCB6
+jQTDjJoBw+Ov3pb3xbojPxYVvfaFVLOduyuY7+7l+jAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcB
+MBwGCSqGSIb3DQEJBTEPFw0yMzEyMTYwODA3MTNaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUD
+BAEqMAsGCWCGSAFlAwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsG
+CSqGSIb3DQEBBzALBglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAAw/O69K6CbpaW+dDhOTW
+m2K6v+gUtXOasClwrwOEOx/B9Phs7bcVfRIFn2qvF9inHUAkCqcZWLleqIpvz/OcwrFAqW9F3/It
+HukTmIGdO1wHei5Osp5GOQYgIBw+N6hiHGhXBi418BPaxLtxK1cSftCUZEqeJXjYKOqQqj9Vd+TH
+CB+5S1NC+y53wQnZvHzSRdijWK1MR79IueXC7VuyBd4SKwoenmZfANeG5NYk49wDGu9c7a4EYy5a
+PwClr4NOZjWJR90YoJr4G+E3Au+TQSXVRxe/cU12hc471U/WXBgz6uAcMSbFMAaXrMGn1G42t/xp
+v0V1gzyhL5CJRaVHjQ==
+--000000000000230716060c9c0111--
