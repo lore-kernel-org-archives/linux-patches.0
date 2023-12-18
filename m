@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F664236E;
-	Mon, 18 Dec 2023 14:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A810D4237C;
+	Mon, 18 Dec 2023 14:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3yU6NHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AA0C433C7;
-	Mon, 18 Dec 2023 14:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bg0AHjwC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5E0C433C8;
+	Mon, 18 Dec 2023 14:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908089;
-	bh=6kSaOTwoPxMRpb4yqWDSimg721AZOG2xix0eD2FHE8E=;
+	s=korg; t=1702908092;
+	bh=14/mg4LGQzWN4qxSajDjlKZNJ1p9vERVMgoCCdzKeB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3yU6NHoVAlxVLp329GThXvYAcFF5EJZrFaFqwnahZSLUkYDspKLQe62nSB2nD/BQ
-	 ZKxodXh90alLa2fkYPphNSt/tS27C24NiUJk5Zchk9j3633eyNBlhmcW7H13iDJBNa
-	 oWceJUHb4Lcz59XODlLFAgp8eeu8J/DoOzd87XQw=
+	b=Bg0AHjwC3klF+sg82X1wNsi5tb3YUDhVGXY9s5mWbAxV+S3eR0LUcTdhKAV3ub6eO
+	 fOPSPwsfAKC//yIXjXWS68sYo05tN+ThKjXsc4VuvBW+t2Bx3hPrPq+fIvTGhIdCB6
+	 OqDUG/cxaqihLmZMGleRYt388G9YN+3IttpL3+Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yusong Gao <a869920004@gmail.com>,
-	Juerg Haefliger <juerg.haefliger@canonical.com>,
-	David Howells <dhowells@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/166] sign-file: Fix incorrect return values check
-Date: Mon, 18 Dec 2023 14:50:15 +0100
-Message-ID: <20231218135107.203894632@linuxfoundation.org>
+Subject: [PATCH 6.6 050/166] vsock/virtio: Fix unsigned integer wrap around in virtio_transport_has_space()
+Date: Mon, 18 Dec 2023 14:50:16 +0100
+Message-ID: <20231218135107.251018931@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -44,77 +43,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yusong Gao <a869920004@gmail.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-[ Upstream commit 829649443e78d85db0cff0c37cadb28fbb1a5f6f ]
+[ Upstream commit 60316d7f10b17a7ebb1ead0642fee8710e1560e0 ]
 
-There are some wrong return values check in sign-file when call OpenSSL
-API. The ERR() check cond is wrong because of the program only check the
-return value is < 0 which ignored the return val is 0. For example:
-1. CMS_final() return 1 for success or 0 for failure.
-2. i2d_CMS_bio_stream() returns 1 for success or 0 for failure.
-3. i2d_TYPEbio() return 1 for success and 0 for failure.
-4. BIO_free() return 1 for success and 0 for failure.
+We need to do signed arithmetic if we expect condition
+`if (bytes < 0)` to be possible
 
-Link: https://www.openssl.org/docs/manmaster/man3/
-Fixes: e5a2e3c84782 ("scripts/sign-file.c: Add support for signing with a raw signature")
-Signed-off-by: Yusong Gao <a869920004@gmail.com>
-Reviewed-by: Juerg Haefliger <juerg.haefliger@canonical.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20231213024405.624692-1-a869920004@gmail.com/ # v5
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE
+
+Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://lore.kernel.org/r/20231211162317.4116625-1-kniv@yandex-team.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/sign-file.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/sign-file.c b/scripts/sign-file.c
-index 598ef5465f825..3edb156ae52c3 100644
---- a/scripts/sign-file.c
-+++ b/scripts/sign-file.c
-@@ -322,7 +322,7 @@ int main(int argc, char **argv)
- 				     CMS_NOSMIMECAP | use_keyid |
- 				     use_signed_attrs),
- 		    "CMS_add1_signer");
--		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) < 0,
-+		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) != 1,
- 		    "CMS_final");
+diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
+index 8bc272b6003bb..4084578b0b911 100644
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -679,7 +679,7 @@ static s64 virtio_transport_has_space(struct vsock_sock *vsk)
+ 	struct virtio_vsock_sock *vvs = vsk->trans;
+ 	s64 bytes;
  
- #else
-@@ -341,10 +341,10 @@ int main(int argc, char **argv)
- 			b = BIO_new_file(sig_file_name, "wb");
- 			ERR(!b, "%s", sig_file_name);
- #ifndef USE_PKCS7
--			ERR(i2d_CMS_bio_stream(b, cms, NULL, 0) < 0,
-+			ERR(i2d_CMS_bio_stream(b, cms, NULL, 0) != 1,
- 			    "%s", sig_file_name);
- #else
--			ERR(i2d_PKCS7_bio(b, pkcs7) < 0,
-+			ERR(i2d_PKCS7_bio(b, pkcs7) != 1,
- 			    "%s", sig_file_name);
- #endif
- 			BIO_free(b);
-@@ -374,9 +374,9 @@ int main(int argc, char **argv)
+-	bytes = vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
++	bytes = (s64)vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
+ 	if (bytes < 0)
+ 		bytes = 0;
  
- 	if (!raw_sig) {
- #ifndef USE_PKCS7
--		ERR(i2d_CMS_bio_stream(bd, cms, NULL, 0) < 0, "%s", dest_name);
-+		ERR(i2d_CMS_bio_stream(bd, cms, NULL, 0) != 1, "%s", dest_name);
- #else
--		ERR(i2d_PKCS7_bio(bd, pkcs7) < 0, "%s", dest_name);
-+		ERR(i2d_PKCS7_bio(bd, pkcs7) != 1, "%s", dest_name);
- #endif
- 	} else {
- 		BIO *b;
-@@ -396,7 +396,7 @@ int main(int argc, char **argv)
- 	ERR(BIO_write(bd, &sig_info, sizeof(sig_info)) < 0, "%s", dest_name);
- 	ERR(BIO_write(bd, magic_number, sizeof(magic_number) - 1) < 0, "%s", dest_name);
- 
--	ERR(BIO_free(bd) < 0, "%s", dest_name);
-+	ERR(BIO_free(bd) != 1, "%s", dest_name);
- 
- 	/* Finally, if we're signing in place, replace the original. */
- 	if (replace_orig)
 -- 
 2.43.0
 
