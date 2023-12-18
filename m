@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EC837895;
-	Mon, 18 Dec 2023 14:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AE23789C;
+	Mon, 18 Dec 2023 14:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3jyBb9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB354C433C9;
-	Mon, 18 Dec 2023 14:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUDNKw1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00FCC433C7;
+	Mon, 18 Dec 2023 14:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908937;
-	bh=+saVtGwY2zV5YYJWl2Y4QMTdHoa0mHdzuz6XCwlSdds=;
+	s=korg; t=1702908940;
+	bh=+/hFgDHT5qOa6bYvRLGoTLgYWyDr1RpgCiWL6bZFcEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3jyBb9TycEWR3K8aYbB8PJeIrbcEnQ1mnVig+2VWf50HVi5iOcnAliUVZO2Ne6R5
-	 1rcPbmsjjpwYdv29sEaa1vuTNkU5K3I6dzoMXt/LwgSu0T5xHBL0MH4otJpGAFy2Gq
-	 moMsiWOJnbB8hmVUtnh8Xf0XA78/EeYzz6EtLjfA=
+	b=qUDNKw1/dYfh8Qb6CI8h2aESQM2jalEsBa0Tb6r6/ZMCi+HAfjfeuMPaB00dKvNjZ
+	 RexJZFUpQSXkAb+SOLDNMfiUREaplfgJSWLLC42pIdmuaHJZCuChR8CbNUHLRsF4Zh
+	 rua683KBoyUrC6UlUMjAHO6VY+GndfZCZzRJESMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 64/83] soundwire: stream: fix NULL pointer dereference for multi_link
-Date: Mon, 18 Dec 2023 14:52:25 +0100
-Message-ID: <20231218135052.555754076@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.15 65/83] ext4: prevent the normalized size from exceeding EXT_MAX_BLOCKS
+Date: Mon, 18 Dec 2023 14:52:26 +0100
+Message-ID: <20231218135052.606400191@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -42,76 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit e199bf52ffda8f98f129728d57244a9cd9ad5623 upstream.
+commit 2dcf5fde6dffb312a4bfb8ef940cea2d1f402e32 upstream.
 
-If bus is marked as multi_link, but number of masters in the stream is
-not higher than bus->hw_sync_min_links (bus->multi_link && m_rt_count >=
-bus->hw_sync_min_links), bank switching should not happen.  The first
-part of do_bank_switch() code properly takes these conditions into
-account, but second part (sdw_ml_sync_bank_switch()) relies purely on
-bus->multi_link property.  This is not balanced and leads to NULL
-pointer dereference:
+For files with logical blocks close to EXT_MAX_BLOCKS, the file size
+predicted in ext4_mb_normalize_request() may exceed EXT_MAX_BLOCKS.
+This can cause some blocks to be preallocated that will not be used.
+And after [Fixes], the following issue may be triggered:
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  ...
-  Call trace:
-   wait_for_completion_timeout+0x124/0x1f0
-   do_bank_switch+0x370/0x6f8
-   sdw_prepare_stream+0x2d0/0x438
-   qcom_snd_sdw_prepare+0xa0/0x118
-   sm8450_snd_prepare+0x128/0x148
-   snd_soc_link_prepare+0x5c/0xe8
-   __soc_pcm_prepare+0x28/0x1ec
-   dpcm_be_dai_prepare+0x1e0/0x2c0
-   dpcm_fe_dai_prepare+0x108/0x28c
-   snd_pcm_do_prepare+0x44/0x68
-   snd_pcm_action_single+0x54/0xc0
-   snd_pcm_action_nonatomic+0xe4/0xec
-   snd_pcm_prepare+0xc4/0x114
-   snd_pcm_common_ioctl+0x1154/0x1cc0
-   snd_pcm_ioctl+0x54/0x74
+=========================================================
+ kernel BUG at fs/ext4/mballoc.c:4653!
+ Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
+ CPU: 1 PID: 2357 Comm: xfs_io 6.7.0-rc2-00195-g0f5cc96c367f
+ Hardware name: linux,dummy-virt (DT)
+ pc : ext4_mb_use_inode_pa+0x148/0x208
+ lr : ext4_mb_use_inode_pa+0x98/0x208
+ Call trace:
+  ext4_mb_use_inode_pa+0x148/0x208
+  ext4_mb_new_inode_pa+0x240/0x4a8
+  ext4_mb_use_best_found+0x1d4/0x208
+  ext4_mb_try_best_found+0xc8/0x110
+  ext4_mb_regular_allocator+0x11c/0xf48
+  ext4_mb_new_blocks+0x790/0xaa8
+  ext4_ext_map_blocks+0x7cc/0xd20
+  ext4_map_blocks+0x170/0x600
+  ext4_iomap_begin+0x1c0/0x348
+=========================================================
 
-Fixes: ce6e74d008ff ("soundwire: Add support for multi link bank switch")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20231124180136.390621-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Here is a calculation when adjusting ac_b_ex in ext4_mb_new_inode_pa():
+
+	ex.fe_logical = orig_goal_end - EXT4_C2B(sbi, ex.fe_len);
+	if (ac->ac_o_ex.fe_logical >= ex.fe_logical)
+		goto adjust_bex;
+
+The problem is that when orig_goal_end is subtracted from ac_b_ex.fe_len
+it is still greater than EXT_MAX_BLOCKS, which causes ex.fe_logical to
+overflow to a very small value, which ultimately triggers a BUG_ON in
+ext4_mb_new_inode_pa() because pa->pa_free < len.
+
+The last logical block of an actual write request does not exceed
+EXT_MAX_BLOCKS, so in ext4_mb_normalize_request() also avoids normalizing
+the last logical block to exceed EXT_MAX_BLOCKS to avoid the above issue.
+
+The test case in [Link] can reproduce the above issue with 64k block size.
+
+Link: https://patchwork.kernel.org/project/fstests/list/?series=804003
+Cc:  <stable@kernel.org> # 6.4
+Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231127063313.3734294-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/stream.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/ext4/mballoc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -744,14 +744,15 @@ error_1:
-  * sdw_ml_sync_bank_switch: Multilink register bank switch
-  *
-  * @bus: SDW bus instance
-+ * @multi_link: whether this is a multi-link stream with hardware-based sync
-  *
-  * Caller function should free the buffers on error
-  */
--static int sdw_ml_sync_bank_switch(struct sdw_bus *bus)
-+static int sdw_ml_sync_bank_switch(struct sdw_bus *bus, bool multi_link)
- {
- 	unsigned long time_left;
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -4137,6 +4137,10 @@ ext4_mb_normalize_request(struct ext4_al
+ 	start = max(start, rounddown(ac->ac_o_ex.fe_logical,
+ 			(ext4_lblk_t)EXT4_BLOCKS_PER_GROUP(ac->ac_sb)));
  
--	if (!bus->multi_link)
-+	if (!multi_link)
- 		return 0;
- 
- 	/* Wait for completion of transfer */
-@@ -847,7 +848,7 @@ static int do_bank_switch(struct sdw_str
- 			bus->bank_switch_timeout = DEFAULT_BANK_SWITCH_TIMEOUT;
- 
- 		/* Check if bank switch was successful */
--		ret = sdw_ml_sync_bank_switch(bus);
-+		ret = sdw_ml_sync_bank_switch(bus, multi_link);
- 		if (ret < 0) {
- 			dev_err(bus->dev,
- 				"multi link bank switch failed: %d\n", ret);
++	/* avoid unnecessary preallocation that may trigger assertions */
++	if (start + size > EXT_MAX_BLOCKS)
++		size = EXT_MAX_BLOCKS - start;
++
+ 	/* don't cover already allocated blocks in selected range */
+ 	if (ar->pleft && start <= ar->lleft) {
+ 		size -= ar->lleft + 1 - start;
 
 
