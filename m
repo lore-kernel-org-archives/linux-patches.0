@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69761D123;
-	Mon, 18 Dec 2023 14:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD5B37868;
+	Mon, 18 Dec 2023 14:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu5eGzwM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256DAC433C7;
-	Mon, 18 Dec 2023 14:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGUcmRWP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F54C433C8;
+	Mon, 18 Dec 2023 14:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908171;
-	bh=o6iNYpoeFKjYAUBYyNr6dB11cqcUCfVtnf26h73RfJM=;
+	s=korg; t=1702908174;
+	bh=aRUDmhu58qsXbvDsdDRgzrAiNvqewPAx+eYtfIzQZMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fu5eGzwMbLa9kSPHIwGjKNu6bAu8bx9Ygjm9H/s8hyH4BZJRh7so3d0ZCqCUyO3f5
-	 XFCskdsG4hrL/TD0VkhTSRF9Z9Mq3J5OrAG7CjlsN+BXsrcnESirdRv+iQXsAmZtZi
-	 jPEsePUyJtaT82ug6K0eIIJ0DnWdLhWhf+atgdhg=
+	b=AGUcmRWPsqx1iprsst5jGZX61ieBiey1sBYI4NS1rnHqXOgMtJIJz08zV69pkhtxn
+	 r4xmLIP9ryLUvwiKlubnQcKidQLGPlyByLeKWEdJXd1Oyx89hFp4e1VSDXgMwjqQd3
+	 3mkJqSX3zCpy7uhEXRBVswOORCobCqqOslqHXRpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Fei Shao <fshao@chromium.org>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/166] drm/mediatek: Add spinlock for setting vblank event in atomic_begin
-Date: Mon, 18 Dec 2023 14:50:45 +0100
-Message-ID: <20231218135108.567384562@linuxfoundation.org>
+Subject: [PATCH 6.6 080/166] accel/ivpu: Print information about used workarounds
+Date: Mon, 18 Dec 2023 14:50:46 +0100
+Message-ID: <20231218135108.615694722@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -46,52 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
 
-[ Upstream commit fe4c5f662097978b6c91c23a13c24ed92339a180 ]
+[ Upstream commit eefa13a69053a09f20b2d1c00dda59be9c98cfe9 ]
 
-Add spinlock protection to avoid race condition on vblank event
-between mtk_drm_crtc_atomic_begin() and mtk_drm_finish_page_flip().
+Use ivpu_dbg(MISC) to print information about workarounds.
 
-Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Tested-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230920090658.31181-1-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230901094957.168898-6-stanislaw.gruszka@linux.intel.com
+Stable-dep-of: 35c49cfc8b70 ("accel/ivpu/37xx: Fix interrupt_clear_with_0 WA initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/accel/ivpu/ivpu_drv.h     | 5 +++++
+ drivers/accel/ivpu/ivpu_hw_37xx.c | 5 +++++
+ drivers/accel/ivpu/ivpu_hw_40xx.c | 4 ++++
+ 3 files changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-index 0a511d7688a3a..a033da279a943 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -747,6 +747,7 @@ static void mtk_drm_crtc_atomic_begin(struct drm_crtc *crtc,
- 									  crtc);
- 	struct mtk_crtc_state *mtk_crtc_state = to_mtk_crtc_state(crtc_state);
- 	struct mtk_drm_crtc *mtk_crtc = to_mtk_crtc(crtc);
-+	unsigned long flags;
+diff --git a/drivers/accel/ivpu/ivpu_drv.h b/drivers/accel/ivpu/ivpu_drv.h
+index 2adc349126bb6..6853dfe1c7e58 100644
+--- a/drivers/accel/ivpu/ivpu_drv.h
++++ b/drivers/accel/ivpu/ivpu_drv.h
+@@ -76,6 +76,11 @@
  
- 	if (mtk_crtc->event && mtk_crtc_state->base.event)
- 		DRM_ERROR("new event while there is still a pending event\n");
-@@ -754,7 +755,11 @@ static void mtk_drm_crtc_atomic_begin(struct drm_crtc *crtc,
- 	if (mtk_crtc_state->base.event) {
- 		mtk_crtc_state->base.event->pipe = drm_crtc_index(crtc);
- 		WARN_ON(drm_crtc_vblank_get(crtc) != 0);
+ #define IVPU_WA(wa_name) (vdev->wa.wa_name)
+ 
++#define IVPU_PRINT_WA(wa_name) do {					\
++	if (IVPU_WA(wa_name))						\
++		ivpu_dbg(vdev, MISC, "Using WA: " #wa_name "\n");	\
++} while (0)
 +
-+		spin_lock_irqsave(&crtc->dev->event_lock, flags);
- 		mtk_crtc->event = mtk_crtc_state->base.event;
-+		spin_unlock_irqrestore(&crtc->dev->event_lock, flags);
+ struct ivpu_wa_table {
+ 	bool punit_disabled;
+ 	bool clear_runtime_mem;
+diff --git a/drivers/accel/ivpu/ivpu_hw_37xx.c b/drivers/accel/ivpu/ivpu_hw_37xx.c
+index b8010c07eec17..2409ff0dda619 100644
+--- a/drivers/accel/ivpu/ivpu_hw_37xx.c
++++ b/drivers/accel/ivpu/ivpu_hw_37xx.c
+@@ -104,6 +104,11 @@ static void ivpu_hw_wa_init(struct ivpu_device *vdev)
+ 
+ 	if (ivpu_device_id(vdev) == PCI_DEVICE_ID_MTL && ivpu_revision(vdev) < 4)
+ 		vdev->wa.interrupt_clear_with_0 = true;
 +
- 		mtk_crtc_state->base.event = NULL;
- 	}
++	IVPU_PRINT_WA(punit_disabled);
++	IVPU_PRINT_WA(clear_runtime_mem);
++	IVPU_PRINT_WA(d3hot_after_power_off);
++	IVPU_PRINT_WA(interrupt_clear_with_0);
  }
+ 
+ static void ivpu_hw_timeouts_init(struct ivpu_device *vdev)
+diff --git a/drivers/accel/ivpu/ivpu_hw_40xx.c b/drivers/accel/ivpu/ivpu_hw_40xx.c
+index 7c3ff25232a2c..03600a7a5aca8 100644
+--- a/drivers/accel/ivpu/ivpu_hw_40xx.c
++++ b/drivers/accel/ivpu/ivpu_hw_40xx.c
+@@ -125,6 +125,10 @@ static void ivpu_hw_wa_init(struct ivpu_device *vdev)
+ 
+ 	if (ivpu_hw_gen(vdev) == IVPU_HW_40XX)
+ 		vdev->wa.disable_clock_relinquish = true;
++
++	IVPU_PRINT_WA(punit_disabled);
++	IVPU_PRINT_WA(clear_runtime_mem);
++	IVPU_PRINT_WA(disable_clock_relinquish);
+ }
+ 
+ static void ivpu_hw_timeouts_init(struct ivpu_device *vdev)
 -- 
 2.43.0
 
