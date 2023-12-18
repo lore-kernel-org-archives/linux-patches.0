@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4537869;
-	Mon, 18 Dec 2023 14:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AAD37869;
+	Mon, 18 Dec 2023 14:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjcQuqSN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891ADC433C7;
-	Mon, 18 Dec 2023 14:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNGB4/L7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A355C433C7;
+	Mon, 18 Dec 2023 14:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908814;
-	bh=eQUvUCfb8eHFAypmFIOUb5oMZu20zlwqfAONWLl5lPc=;
+	s=korg; t=1702908817;
+	bh=fM1/LN3R+juOLSaQjCTmQLVDFg73Edp73OPB3toIjJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hjcQuqSNdxY4Gm4/Kbk+EMrfCxZSmFgXTNhly9syUh0MmrgAXHVGI31hbjaSDVFfa
-	 GPogBWw/ZCvGcVVtS/a+uE8lCCwQuS4g/B6hrqqTSWIoRKeM60bmusWPsdjkjL8t9x
-	 LzdQ/nOESZGLxW9tPixz9B4w1ZYrhv0UU6dQNAAM=
+	b=bNGB4/L7JTSeZCG4OUGlJn1aJ/IyWMxam1ZlWFYwetUaO4xpHyRttvN9SSfvbj0p9
+	 ihS386eiUQFgD58IOY/Ovhp/Y2oNK5Aqjls8w+VN43XCkuk3FC+Ts7bYEbB68DR/KC
+	 04oZrGQFYOL3MbdMcKns1SV2NAUfjGhTkrWJrTNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 5.15 44/83] PCI: loongson: Limit MRRS to 256
-Date: Mon, 18 Dec 2023 14:52:05 +0100
-Message-ID: <20231218135051.701672288@linuxfoundation.org>
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Fei Shao <fshao@chromium.org>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 45/83] drm/mediatek: Add spinlock for setting vblank event in atomic_begin
+Date: Mon, 18 Dec 2023 14:52:06 +0100
+Message-ID: <20231218135051.741033878@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -42,106 +46,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-commit ef61a0405742a9f7f6051bc6fd2f017d87d07911 upstream.
+[ Upstream commit fe4c5f662097978b6c91c23a13c24ed92339a180 ]
 
-This is a partial revert of 8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS
-increases") for MIPS-based Loongson.
+Add spinlock protection to avoid race condition on vblank event
+between mtk_drm_crtc_atomic_begin() and mtk_drm_finish_page_flip().
 
-Some MIPS Loongson systems don't support arbitrary Max_Read_Request_Size
-(MRRS) settings.  8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS
-increases") worked around that by (1) assuming that firmware configured
-MRRS to the maximum supported value and (2) preventing the PCI core from
-increasing MRRS.
-
-Unfortunately, some firmware doesn't set that maximum MRRS correctly, which
-results in devices not being initialized correctly.  One symptom, from the
-Debian report below, is this:
-
-  ata4.00: exception Emask 0x0 SAct 0x20000000 SErr 0x0 action 0x6 frozen
-  ata4.00: failed command: WRITE FPDMA QUEUED
-  ata4.00: cmd 61/20:e8:00:f0:e1/00:00:00:00:00/40 tag 29 ncq dma 16384 out
-           res 40/00:00:00:00:00/00:00:00:00:00/00 Emask 0x4 (timeout)
-  ata4.00: status: { DRDY }
-  ata4: hard resetting link
-
-Limit MRRS to 256 because MIPS Loongson with higher MRRS support is
-considered rare.
-
-This must be done at device enablement stage because the MRRS setting may
-get lost if PCI_COMMAND_MASTER on the parent bridge is cleared, and we are
-only sure parent bridge is enabled at this point.
-
-Fixes: 8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS increases")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217680
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1035587
-Link: https://lore.kernel.org/r/20231201115028.84351-1-jiaxun.yang@flygoat.com
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Huacai Chen <chenhuacai@loongson.cn>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Reviewed-by: Fei Shao <fshao@chromium.org>
+Tested-by: Fei Shao <fshao@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230920090658.31181-1-jason-jh.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-loongson.c |   46 ++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/pci/controller/pci-loongson.c
-+++ b/drivers/pci/controller/pci-loongson.c
-@@ -65,13 +65,49 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LO
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
- 			DEV_LS7A_LPC, system_bus_quirk);
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+index f2264633be1b7..d6781e54b3356 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+@@ -680,6 +680,7 @@ static void mtk_drm_crtc_atomic_begin(struct drm_crtc *crtc,
+ 									  crtc);
+ 	struct mtk_crtc_state *mtk_crtc_state = to_mtk_crtc_state(crtc_state);
+ 	struct mtk_drm_crtc *mtk_crtc = to_mtk_crtc(crtc);
++	unsigned long flags;
  
-+/*
-+ * Some Loongson PCIe ports have hardware limitations on their Maximum Read
-+ * Request Size. They can't handle anything larger than this.  Sane
-+ * firmware will set proper MRRS at boot, so we only need no_inc_mrrs for
-+ * bridges. However, some MIPS Loongson firmware doesn't set MRRS properly,
-+ * so we have to enforce maximum safe MRRS, which is 256 bytes.
-+ */
-+#ifdef CONFIG_MIPS
-+static void loongson_set_min_mrrs_quirk(struct pci_dev *pdev)
-+{
-+	struct pci_bus *bus = pdev->bus;
-+	struct pci_dev *bridge;
-+	static const struct pci_device_id bridge_devids[] = {
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS2K_PCIE_PORT0) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT0) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT1) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT2) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT3) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT4) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT5) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT6) },
-+		{ 0, },
-+	};
+ 	if (mtk_crtc->event && mtk_crtc_state->base.event)
+ 		DRM_ERROR("new event while there is still a pending event\n");
+@@ -687,7 +688,11 @@ static void mtk_drm_crtc_atomic_begin(struct drm_crtc *crtc,
+ 	if (mtk_crtc_state->base.event) {
+ 		mtk_crtc_state->base.event->pipe = drm_crtc_index(crtc);
+ 		WARN_ON(drm_crtc_vblank_get(crtc) != 0);
 +
-+	/* look for the matching bridge */
-+	while (!pci_is_root_bus(bus)) {
-+		bridge = bus->self;
-+		bus = bus->parent;
++		spin_lock_irqsave(&crtc->dev->event_lock, flags);
+ 		mtk_crtc->event = mtk_crtc_state->base.event;
++		spin_unlock_irqrestore(&crtc->dev->event_lock, flags);
 +
-+		if (pci_match_id(bridge_devids, bridge)) {
-+			if (pcie_get_readrq(pdev) > 256) {
-+				pci_info(pdev, "limiting MRRS to 256\n");
-+				pcie_set_readrq(pdev, 256);
-+			}
-+			break;
-+		}
-+	}
-+}
-+DECLARE_PCI_FIXUP_ENABLE(PCI_ANY_ID, PCI_ANY_ID, loongson_set_min_mrrs_quirk);
-+#endif
-+
- static void loongson_mrrs_quirk(struct pci_dev *pdev)
- {
--	/*
--	 * Some Loongson PCIe ports have h/w limitations of maximum read
--	 * request size. They can't handle anything larger than this. So
--	 * force this limit on any devices attached under these ports.
--	 */
- 	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
- 
- 	bridge->no_inc_mrrs = 1;
+ 		mtk_crtc_state->base.event = NULL;
+ 	}
+ }
+-- 
+2.43.0
+
 
 
