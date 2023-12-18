@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5179129ECF;
-	Mon, 18 Dec 2023 14:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0442129ECF;
+	Mon, 18 Dec 2023 14:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uW3hK++r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5913BC433C7;
-	Mon, 18 Dec 2023 14:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQ16iQrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F83C433C7;
+	Mon, 18 Dec 2023 14:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908653;
-	bh=/6Q+VK804OfFmcEC+oBkWOCyER/k421SlIJByGHbohA=;
+	s=korg; t=1702908656;
+	bh=NerHoujqa6Eu3vimk9EviGVmCsle3TFs37e0drDoC2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uW3hK++rUnR8KyHF9fotu62lX6DYUVh1KSAMKrj6iS8LPa7NupDlXfr+Wg/Uo8H66
-	 leyV0JRhSp3kfOW6/9xqf0IQ22WNBmvPwd264nXZaX5yvBHug/b0jYFaRu1dWzgSR7
-	 uDctQMXH/ZfdVAGsMoRq0sRiCHZRmU8WW2yGLMiY=
+	b=cQ16iQrV7TV/c5rDt874HSS73El9ghvifVFDIPoqap7nM+LZfuKPsqNCYRFMdWbpW
+	 nxMf1qIuQTFIZgoHzl36iLvP8mLBfY6A8SnpxN3o2iF5wqISJAE7a0QfywobCLdVjF
+	 /+cB8ezT/tKsfyb4Emm73fDDE2Vhto7Y+JVfSzrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Denis Benato <benato.denis96@gmail.com>,
+	"Luke D. Jones" <luke@ljones.dev>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 26/40] HID: add ALWAYS_POLL quirk for Apple kb
-Date: Mon, 18 Dec 2023 14:52:21 +0100
-Message-ID: <20231218135043.689556466@linuxfoundation.org>
+Subject: [PATCH 5.4 27/40] HID: hid-asus: reset the backlight brightness level on resume
+Date: Mon, 18 Dec 2023 14:52:22 +0100
+Message-ID: <20231218135043.730935023@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135042.748715259@linuxfoundation.org>
 References: <20231218135042.748715259@linuxfoundation.org>
@@ -42,32 +43,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Denis Benato <benato.denis96@gmail.com>
 
-[ Upstream commit c55092187d9ad7b2f8f5a8645286fa03997d442f ]
+[ Upstream commit 546edbd26cff7ae990e480a59150e801a06f77b1 ]
 
-These devices disconnect if suspended without remote wakeup. They can operate
-with the standard driver.
+Some devices managed by this driver automatically set brightness to 0
+before entering a suspended state and reset it back to a default
+brightness level after the resume:
+this has the effect of having the kernel report wrong brightness
+status after a sleep, and on some devices (like the Asus RC71L) that
+brightness is the intensity of LEDs directly facing the user.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Fix the above issue by setting back brightness to the level it had
+before entering a sleep state.
+
+Signed-off-by: Denis Benato <benato.denis96@gmail.com>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-quirks.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-asus.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index fae784df084d5..fd84661df5fa7 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -33,6 +33,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AKAI, USB_DEVICE_ID_AKAI_MPKMINI2), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ALPS, USB_DEVICE_ID_IBM_GAMEPAD), HID_QUIRK_BADPAD },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_AMI, USB_DEVICE_ID_AMI_VIRT_KEYBOARD_AND_MOUSE), HID_QUIRK_ALWAYS_POLL },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_REVB_ANSI), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_2PORTKVM), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_4PORTKVMC), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_4PORTKVM), HID_QUIRK_NOGET },
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index e15ba7f5fe0a0..ce0fade00a183 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -908,6 +908,24 @@ static int asus_start_multitouch(struct hid_device *hdev)
+ 	return 0;
+ }
+ 
++static int __maybe_unused asus_resume(struct hid_device *hdev) {
++	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
++	int ret = 0;
++
++	if (drvdata->kbd_backlight) {
++		const u8 buf[] = { FEATURE_KBD_REPORT_ID, 0xba, 0xc5, 0xc4,
++				drvdata->kbd_backlight->cdev.brightness };
++		ret = asus_kbd_set_report(hdev, buf, sizeof(buf));
++		if (ret < 0) {
++			hid_err(hdev, "Asus failed to set keyboard backlight: %d\n", ret);
++			goto asus_resume_err;
++		}
++	}
++
++asus_resume_err:
++	return ret;
++}
++
+ static int __maybe_unused asus_reset_resume(struct hid_device *hdev)
+ {
+ 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
+@@ -1185,6 +1203,7 @@ static struct hid_driver asus_driver = {
+ 	.input_configured       = asus_input_configured,
+ #ifdef CONFIG_PM
+ 	.reset_resume           = asus_reset_resume,
++	.resume					= asus_resume,
+ #endif
+ 	.event			= asus_event,
+ 	.raw_event		= asus_raw_event
 -- 
 2.43.0
 
