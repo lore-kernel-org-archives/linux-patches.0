@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2CD1D157;
-	Mon, 18 Dec 2023 13:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDAE6101D4;
+	Mon, 18 Dec 2023 13:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8ZaNEFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D863C433CD;
-	Mon, 18 Dec 2023 13:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvcJbzJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12463C433C8;
+	Mon, 18 Dec 2023 13:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907908;
-	bh=fTH1acTvrKYJSd8eDEB1k+kOfNAWBTQDOoiJjhVueb0=;
+	s=korg; t=1702907911;
+	bh=XC/MHePzhWvDchayA8T9D3ZGOEe0d88NLs06X3vlzuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t8ZaNEFZ0ywWMoWiaSF5ewrarPyzfFC46jzbUUOBo64Ve5VDccO4m5fitN++Yya9l
-	 anBFhe1lL+bEQ8QtC6aEJj+ppJzXTC9RvPBcMzv1mBLGIOLlLD5VNkIA5Tqum5DDKR
-	 ItoauiDRYCLGKocwVmHe73CMuTdQQ45yWV0moj+U=
+	b=gvcJbzJ8Ue0wbkfuwAhH0NL1mTGY547f7bbhDgcNMM11K8JFz8acclVbdfsqNalmN
+	 oglqSA7mhMVwPztrXaVSVHsQ7OqyMnhkPyvOiXcJuOb7Y+XewLxo7s4hbfP9Wb12bA
+	 19B7eIAKibXvzcKC7jvQ7Akq5GktnaZcfD9aTC/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	aaron.ma@canonical.com,
-	binli@gnome.org,
-	Marc Rossi <Marc.Rossi@amd.com>,
-	Hamza Mahfooz <Hamza.Mahfooz@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>
-Subject: [PATCH 6.1 090/106] drm/amd/display: Disable PSR-SU on Parade 0803 TCON again
-Date: Mon, 18 Dec 2023 14:51:44 +0100
-Message-ID: <20231218135058.922019610@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 064/106] selftests/bpf: fix bpf_loop_bench for new callback verification scheme
+Date: Mon, 18 Dec 2023 14:51:18 +0100
+Message-ID: <20231218135057.787712268@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -40,54 +37,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit e7ab758741672acb21c5d841a9f0309d30e48a06 upstream.
+[ Upstream commit f40bfd1679446b22d321e64a1fa98b7d07d2be08 ]
 
-When screen brightness is rapidly changed and PSR-SU is enabled the
-display hangs on panels with this TCON even on the latest DCN 3.1.4
-microcode (0x8002a81 at this time).
+This is a preparatory change. A follow-up patch "bpf: verify callbacks
+as if they are called unknown number of times" changes logic for
+callbacks handling. While previously callbacks were verified as a
+single function call, new scheme takes into account that callbacks
+could be executed unknown number of times.
 
-This was disabled previously as commit 072030b17830 ("drm/amd: Disable
-PSR-SU on Parade 0803 TCON") but reverted as commit 1e66a17ce546 ("Revert
-"drm/amd: Disable PSR-SU on Parade 0803 TCON"") in favor of testing for
-a new enough microcode (commit cd2e31a9ab93 ("drm/amd/display: Set minimum
-requirement for using PSR-SU on Phoenix")).
+This has dire implications for bpf_loop_bench:
 
-As hangs are still happening specifically with this TCON, disable PSR-SU
-again for it until it can be root caused.
+    SEC("fentry/" SYS_PREFIX "sys_getpgid")
+    int benchmark(void *ctx)
+    {
+            for (int i = 0; i < 1000; i++) {
+                    bpf_loop(nr_loops, empty_callback, NULL, 0);
+                    __sync_add_and_fetch(&hits, nr_loops);
+            }
+            return 0;
+    }
 
-Cc: stable@vger.kernel.org
-Cc: aaron.ma@canonical.com
-Cc: binli@gnome.org
-Cc: Marc Rossi <Marc.Rossi@amd.com>
-Cc: Hamza Mahfooz <Hamza.Mahfooz@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2046131
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+W/o callbacks change verifier sees it as a 1000 calls to
+empty_callback(). However, with callbacks change things become
+exponential:
+- i=0: state exploring empty_callback is scheduled with i=0 (a);
+- i=1: state exploring empty_callback is scheduled with i=1;
+  ...
+- i=999: state exploring empty_callback is scheduled with i=999;
+- state (a) is popped from stack;
+- i=1: state exploring empty_callback is scheduled with i=1;
+  ...
+
+Avoid this issue by rewriting outer loop as bpf_loop().
+Unfortunately, this adds a function call to a loop at runtime, which
+negatively affects performance:
+
+            throughput               latency
+   before:  149.919 ± 0.168 M ops/s, 6.670 ns/op
+   after :  137.040 ± 0.187 M ops/s, 7.297 ns/op
+
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20231121020701.26440-4-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/power/power_helpers.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/bpf/progs/bpf_loop_bench.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-+++ b/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-@@ -816,6 +816,8 @@ bool is_psr_su_specific_panel(struct dc_
- 				((dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x08) ||
- 				(dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x07)))
- 				isPSRSUSupported = false;
-+			else if (dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x03)
-+				isPSRSUSupported = false;
- 			else if (dpcd_caps->psr_info.force_psrsu_cap == 0x1)
- 				isPSRSUSupported = true;
- 		}
+diff --git a/tools/testing/selftests/bpf/progs/bpf_loop_bench.c b/tools/testing/selftests/bpf/progs/bpf_loop_bench.c
+index 4ce76eb064c41..d461746fd3c1e 100644
+--- a/tools/testing/selftests/bpf/progs/bpf_loop_bench.c
++++ b/tools/testing/selftests/bpf/progs/bpf_loop_bench.c
+@@ -15,13 +15,16 @@ static int empty_callback(__u32 index, void *data)
+ 	return 0;
+ }
+ 
++static int outer_loop(__u32 index, void *data)
++{
++	bpf_loop(nr_loops, empty_callback, NULL, 0);
++	__sync_add_and_fetch(&hits, nr_loops);
++	return 0;
++}
++
+ SEC("fentry/" SYS_PREFIX "sys_getpgid")
+ int benchmark(void *ctx)
+ {
+-	for (int i = 0; i < 1000; i++) {
+-		bpf_loop(nr_loops, empty_callback, NULL, 0);
+-
+-		__sync_add_and_fetch(&hits, nr_loops);
+-	}
++	bpf_loop(1000, outer_loop, NULL, 0);
+ 	return 0;
+ }
+-- 
+2.43.0
+
 
 
