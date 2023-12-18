@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BAB1D12B;
-	Mon, 18 Dec 2023 13:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056EC1D127;
+	Mon, 18 Dec 2023 13:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sP+7YiUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41DFC433C8;
-	Mon, 18 Dec 2023 13:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXQVtctR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE22C433C8;
+	Mon, 18 Dec 2023 13:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907914;
-	bh=7FeqhaqAhztYOUw/1mp3qy9yQOFbAxSQ3bGW3hLu9t4=;
+	s=korg; t=1702907916;
+	bh=aXjIL5Snv57/dQi/nT58X83ZGvLoL0urGLC0JP2ZYHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sP+7YiUAWKSjkZg8lGxa/j8xLJEuwhAKec0m7C695TqcwRzkGWIcVMm6qjsYVlc9f
-	 SgXbooV3iSmTMIIP/u/aJhOOgRem0pB7luYY3mFOvb4W8TNzxoX8o4n0lThic4C8Bx
-	 uhJ7Fjf0TlXltHTZWLLsFrl4FW0vZVYkYs1MmO4M=
+	b=DXQVtctRPWHIgo0iw1p5VE44NYPLfRj1QonilstXWouXlxsHHgfdO/qSPXgfMAbYE
+	 HVyhbxttFywWfl8qMipOMSOaK6ZY8kiqGvqQFkZdB2J2utb60o/85ZRXSPbrZxyOFB
+	 4mqk3FWrKaMiKoT6/gShkMIicgWoQXhwmnZzIIi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 091/106] drm/i915: Fix remapped stride with CCS on ADL+
-Date: Mon, 18 Dec 2023 14:51:45 +0100
-Message-ID: <20231218135058.953583590@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 065/106] LoongArch: Add dependency between vmlinuz.efi and vmlinux.efi
+Date: Mon, 18 Dec 2023 14:51:19 +0100
+Message-ID: <20231218135057.826944339@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -44,64 +43,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 0ccd963fe555451b1f84e6d14d2b3ef03dd5c947 upstream.
+[ Upstream commit d3ec75bc635cb0cb8185b63293d33a3d1b942d22 ]
 
-On ADL+ the hardware automagically calculates the CCS AUX surface
-stride from the main surface stride, so when remapping we can't
-really play a lot of tricks with the main surface stride, or else
-the AUX surface stride would get miscalculated and no longer
-match the actual data layout in memory.
+A common issue in Makefile is a race in parallel building.
 
-Supposedly we could remap in 256 main surface tile units
-(AUX page(4096)/cachline(64)*4(4x1 main surface tiles per
-AUX cacheline)=256 main surface tiles), but the extra complexity
-is probably not worth the hassle.
+You need to be careful to prevent multiple threads from writing to the
+same file simultaneously.
 
-So let's just make sure our mapping stride is calculated from
-the full framebuffer stride (instead of the framebuffer width).
-This way the stride we program into PLANE_STRIDE will be the
-original framebuffer stride, and thus there will be no change
-to the AUX stride/layout.
+Commit 3939f3345050 ("ARM: 8418/1: add boot image dependencies to not
+generate invalid images") addressed such a bad scenario.
 
-Cc: stable@vger.kernel.org
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231205180308.7505-1-ville.syrjala@linux.intel.com
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-(cherry picked from commit 2c12eb36f849256f5eb00ffaee9bf99396fd3814)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+A similar symptom occurs with the following command:
+
+  $ make -j$(nproc) ARCH=loongarch vmlinux.efi vmlinuz.efi
+    [ snip ]
+    SORTTAB vmlinux
+    OBJCOPY arch/loongarch/boot/vmlinux.efi
+    OBJCOPY arch/loongarch/boot/vmlinux.efi
+    PAD     arch/loongarch/boot/vmlinux.bin
+    GZIP    arch/loongarch/boot/vmlinuz
+    OBJCOPY arch/loongarch/boot/vmlinuz.o
+    LD      arch/loongarch/boot/vmlinuz.efi.elf
+    OBJCOPY arch/loongarch/boot/vmlinuz.efi
+
+The log "OBJCOPY arch/loongarch/boot/vmlinux.efi" is displayed twice.
+
+It indicates that two threads simultaneously enter arch/loongarch/boot/
+and write to arch/loongarch/boot/vmlinux.efi.
+
+It occasionally leads to a build failure:
+
+  $ make -j$(nproc) ARCH=loongarch vmlinux.efi vmlinuz.efi
+    [ snip ]
+    SORTTAB vmlinux
+    OBJCOPY arch/loongarch/boot/vmlinux.efi
+    PAD     arch/loongarch/boot/vmlinux.bin
+  truncate: Invalid number: ‘arch/loongarch/boot/vmlinux.bin’
+  make[2]: *** [drivers/firmware/efi/libstub/Makefile.zboot:13:
+  arch/loongarch/boot/vmlinux.bin] Error 1
+  make[2]: *** Deleting file 'arch/loongarch/boot/vmlinux.bin'
+  make[1]: *** [arch/loongarch/Makefile:146: vmlinuz.efi] Error 2
+  make[1]: *** Waiting for unfinished jobs....
+  make: *** [Makefile:234: __sub-make] Error 2
+
+vmlinuz.efi depends on vmlinux.efi, but such a dependency is not
+specified in arch/loongarch/Makefile.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_fb.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ arch/loongarch/Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_fb.c
-+++ b/drivers/gpu/drm/i915/display/intel_fb.c
-@@ -1441,8 +1441,20 @@ static u32 calc_plane_remap_info(const s
+diff --git a/arch/loongarch/Makefile b/arch/loongarch/Makefile
+index 01b57b7263225..ed47a3a87768e 100644
+--- a/arch/loongarch/Makefile
++++ b/arch/loongarch/Makefile
+@@ -116,6 +116,8 @@ vdso_install:
  
- 			size += remap_info->size;
- 		} else {
--			unsigned int dst_stride = plane_view_dst_stride_tiles(fb, color_plane,
--									      remap_info->width);
-+			unsigned int dst_stride;
-+
-+			/*
-+			 * The hardware automagically calculates the CCS AUX surface
-+			 * stride from the main surface stride so can't really remap a
-+			 * smaller subset (unless we'd remap in whole AUX page units).
-+			 */
-+			if (intel_fb_needs_pot_stride_remap(fb) &&
-+			    intel_fb_is_ccs_modifier(fb->base.modifier))
-+				dst_stride = remap_info->src_stride;
-+			else
-+				dst_stride = remap_info->width;
-+
-+			dst_stride = plane_view_dst_stride_tiles(fb, color_plane, dst_stride);
+ all:	$(notdir $(KBUILD_IMAGE))
  
- 			assign_chk_ovf(i915, remap_info->dst_stride, dst_stride);
- 			color_plane_info->mapping_stride = dst_stride *
++vmlinuz.efi: vmlinux.efi
++
+ vmlinux.elf vmlinux.efi vmlinuz.efi: vmlinux
+ 	$(Q)$(MAKE) $(build)=$(boot) $(bootvars-y) $(boot)/$@
+ 
+-- 
+2.43.0
+
 
 
