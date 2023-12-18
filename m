@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEE837879;
-	Mon, 18 Dec 2023 14:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE48129EDD;
+	Mon, 18 Dec 2023 14:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OylJZP3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02556C433C8;
-	Mon, 18 Dec 2023 14:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXbeg/Xc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B497FC433C7;
+	Mon, 18 Dec 2023 14:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908922;
-	bh=ywh/neVr/R+yk4T1bubVeGcOAZSxgUtube+PMRKQhbU=;
+	s=korg; t=1702908925;
+	bh=bIFirJQcXjlXjZXjeI5tK8JyfPr4T6jpYPcrspx8VFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OylJZP3m/HfyMN14RC4wzAFOnI9Bun1ROmklfTsOKf+Nryb82zVWFPQMJvSEw7Lmz
-	 /+tz4ZHpxI7DY0orIOgLqFZDH6u7p4C7FQy250QdF/cd9bErISGYHNgazmZu/l+R99
-	 /UUFUv18TfYg58JjkFfIXSIrngP8wgH265eKm03s=
+	b=nXbeg/XcFmeLzpaq4dbOzbopaEPj0HN1c7q+KwIGbo1lYysY5ji06aQ5cPpBixHwu
+	 FBT9dil14U+ZSOxf+7TGMn4bNo0xe6ZYK2ErIYH6mwEhKTmvsVvjH2v3+btLGWD6Lo
+	 Z59t3fu/XAfttNcRhcga/PSL9H/qoRpAODgOVmZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hayes Wang <hayeswang@realtek.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 82/83] r8152: remove rtl_vendor_mode function
-Date: Mon, 18 Dec 2023 14:52:43 +0100
-Message-ID: <20231218135053.360240382@linuxfoundation.org>
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 83/83] r8152: fix the autosuspend doesnt work
+Date: Mon, 18 Dec 2023 14:52:44 +0100
+Message-ID: <20231218135053.398963816@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -43,74 +43,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Hayes Wang <hayeswang@realtek.com>
 
-commit 95a4c1d617b92cdc4522297741b56e8f6cd01a1e upstream.
+commit 0fbd79c01a9a657348f7032df70c57a406468c86 upstream.
 
-After commit ec51fbd1b8a2 ("r8152: add USB device driver for
-config selection"), the code about changing USB configuration
-in rtl_vendor_mode() wouldn't be run anymore. Therefore, the
-function could be removed.
+Set supports_autosuspend = 1 for the rtl8152_cfgselector_driver.
 
+Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
 Signed-off-by: Hayes Wang <hayeswang@realtek.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/r8152.c |   39 +--------------------------------------
- 1 file changed, 1 insertion(+), 38 deletions(-)
+ drivers/net/usb/r8152.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/net/usb/r8152.c
 +++ b/drivers/net/usb/r8152.c
-@@ -8281,43 +8281,6 @@ static bool rtl_check_vendor_ok(struct u
- 	return true;
- }
+@@ -9913,6 +9913,7 @@ static struct usb_device_driver rtl8152_
+ 	.probe =	rtl8152_cfgselector_probe,
+ 	.id_table =	rtl8152_table,
+ 	.generic_subclass = 1,
++	.supports_autosuspend = 1,
+ };
  
--static bool rtl_vendor_mode(struct usb_interface *intf)
--{
--	struct usb_host_interface *alt = intf->cur_altsetting;
--	struct usb_device *udev;
--	struct usb_host_config *c;
--	int i, num_configs;
--
--	if (alt->desc.bInterfaceClass == USB_CLASS_VENDOR_SPEC)
--		return rtl_check_vendor_ok(intf);
--
--	/* The vendor mode is not always config #1, so to find it out. */
--	udev = interface_to_usbdev(intf);
--	c = udev->config;
--	num_configs = udev->descriptor.bNumConfigurations;
--	if (num_configs < 2)
--		return false;
--
--	for (i = 0; i < num_configs; (i++, c++)) {
--		struct usb_interface_descriptor	*desc = NULL;
--
--		if (c->desc.bNumInterfaces > 0)
--			desc = &c->intf_cache[0]->altsetting->desc;
--		else
--			continue;
--
--		if (desc->bInterfaceClass == USB_CLASS_VENDOR_SPEC) {
--			usb_driver_set_configuration(udev, c->desc.bConfigurationValue);
--			break;
--		}
--	}
--
--	if (i == num_configs)
--		dev_err(&intf->dev, "Unexpected Device\n");
--
--	return false;
--}
--
- static int rtl8152_pre_reset(struct usb_interface *intf)
- {
- 	struct r8152 *tp = usb_get_intfdata(intf);
-@@ -9650,7 +9613,7 @@ static int rtl8152_probe(struct usb_inte
- 	if (intf->cur_altsetting->desc.bInterfaceClass != USB_CLASS_VENDOR_SPEC)
- 		return -ENODEV;
- 
--	if (!rtl_vendor_mode(intf))
-+	if (!rtl_check_vendor_ok(intf))
- 		return -ENODEV;
- 
- 	usb_reset_device(udev);
+ static int __init rtl8152_driver_init(void)
 
 
