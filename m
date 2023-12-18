@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03A8101D4;
-	Mon, 18 Dec 2023 13:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1E3129EF7;
+	Mon, 18 Dec 2023 13:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igi7kQL/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1758BC433C7;
-	Mon, 18 Dec 2023 13:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEfjWxMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A99C433C7;
+	Mon, 18 Dec 2023 13:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907892;
-	bh=rv0f392ADzGv4+tHISvNcSBxPP5h2yuT96wOaZiQbOs=;
+	s=korg; t=1702907895;
+	bh=c9AIcKz2cyup4cbhsA+faUul1IYNciyPM2HEoIfpyPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igi7kQL/jdv0zTfvGiJ1uaGrePdFNJKF75kKYxtEYItrfT9vK1Hhinyf3M20LtQj2
-	 pwPbEaxnEKqa/+3iPII7IK1BVpcqR5bz7Xnz22JGvs+k6JRd7DPCwH3xLKKm2LbTuv
-	 qveu4bWPKeECGVIP7uMPuNmjcnDb4A2/r6ppjfZc=
+	b=YEfjWxMR3EaC8KNQ8alvgKM16SXDx4iRKkDUbAxztRycoxOOcNLdzKNP6M/60oa7S
+	 QFrNp4zhrGO6HUg4yXMwWqMwoTRE3IE9Sx6znARCenlE2oEwYvByHlhW2ZJ13fvIoQ
+	 bD7pkWv29rDi3fpnftTXP0lWk24b0DoyRHVomNO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	kernel test robot <lkp@intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 084/106] dmaengine: stm32-dma: avoid bitfield overflow assertion
-Date: Mon, 18 Dec 2023 14:51:38 +0100
-Message-ID: <20231218135058.662094090@linuxfoundation.org>
+	Yu Zhao <yuzhao@google.com>,
+	Charan Teja Kalla <quic_charante@quicinc.com>,
+	Kalesh Singh <kaleshsingh@google.com>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Kairui Song <ryncsn@gmail.com>,
+	Hillf Danton <hdanton@sina.com>,
+	Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 085/106] mm/mglru: fix underprotected page cache
+Date: Mon, 18 Dec 2023 14:51:39 +0100
+Message-ID: <20231218135058.709778525@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -43,78 +47,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Yu Zhao <yuzhao@google.com>
 
-commit 54bed6bafa0f38daf9697af50e3aff5ff1354fe1 upstream.
+commit 081488051d28d32569ebb7c7a23572778b2e7d57 upstream.
 
-stm32_dma_get_burst() returns a negative error for invalid input, which
-gets turned into a large u32 value in stm32_dma_prep_dma_memcpy() that
-in turn triggers an assertion because it does not fit into a two-bit field:
-drivers/dma/stm32-dma.c: In function 'stm32_dma_prep_dma_memcpy':
-include/linux/compiler_types.h:354:38: error: call to '__compiletime_assert_282' declared with attribute error: FIELD_PREP: value too large for the field
-     _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-                                         ^
-   include/linux/compiler_types.h:335:4: note: in definition of macro '__compiletime_assert'
-       prefix ## suffix();    \
-       ^~~~~~
-   include/linux/compiler_types.h:354:2: note: in expansion of macro '_compiletime_assert'
-     _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-     ^~~~~~~~~~~~~~~~~~~
-   include/linux/build_bug.h:39:37: note: in expansion of macro 'compiletime_assert'
-    #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
-                                        ^~~~~~~~~~~~~~~~~~
-   include/linux/bitfield.h:68:3: note: in expansion of macro 'BUILD_BUG_ON_MSG'
-      BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?  \
-      ^~~~~~~~~~~~~~~~
-   include/linux/bitfield.h:114:3: note: in expansion of macro '__BF_FIELD_CHECK'
-      __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: "); \
-      ^~~~~~~~~~~~~~~~
-   drivers/dma/stm32-dma.c:1237:4: note: in expansion of macro 'FIELD_PREP'
-       FIELD_PREP(STM32_DMA_SCR_PBURST_MASK, dma_burst) |
-       ^~~~~~~~~~
+Unmapped folios accessed through file descriptors can be underprotected.
+Those folios are added to the oldest generation based on:
 
-As an easy workaround, assume the error can happen, so try to handle this
-by failing stm32_dma_prep_dma_memcpy() before the assertion. It replicates
-what is done in stm32_dma_set_xfer_param() where stm32_dma_get_burst() is
-also used.
+1. The fact that they are less costly to reclaim (no need to walk the
+   rmap and flush the TLB) and have less impact on performance (don't
+   cause major PFs and can be non-blocking if needed again).
+2. The observation that they are likely to be single-use. E.g., for
+   client use cases like Android, its apps parse configuration files
+   and store the data in heap (anon); for server use cases like MySQL,
+   it reads from InnoDB files and holds the cached data for tables in
+   buffer pools (anon).
 
-Fixes: 1c32d6c37cc2 ("dmaengine: stm32-dma: use bitfield helpers")
-Fixes: a2b6103b7a8a ("dmaengine: stm32-dma: Improve memory burst management")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311060135.Q9eMnpCL-lkp@intel.com/
-Link: https://lore.kernel.org/r/20231106134832.1470305-1-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+However, the oldest generation can be very short lived, and if so, it
+doesn't provide the PID controller with enough time to respond to a surge
+of refaults.  (Note that the PID controller uses weighted refaults and
+those from evicted generations only take a half of the whole weight.) In
+other words, for a short lived generation, the moving average smooths out
+the spike quickly.
+
+To fix the problem:
+1. For folios that are already on LRU, if they can be beyond the
+   tracking range of tiers, i.e., five accesses through file
+   descriptors, move them to the second oldest generation to give them
+   more time to age. (Note that tiers are used by the PID controller
+   to statistically determine whether folios accessed multiple times
+   through file descriptors are worth protecting.)
+2. When adding unmapped folios to LRU, adjust the placement of them so
+   that they are not too close to the tail. The effect of this is
+   similar to the above.
+
+On Android, launching 55 apps sequentially:
+                           Before     After      Change
+  workingset_refault_anon  25641024   25598972   0%
+  workingset_refault_file  115016834  106178438  -8%
+
+Link: https://lkml.kernel.org/r/20231208061407.2125867-1-yuzhao@google.com
+Fixes: ac35a4902374 ("mm: multi-gen LRU: minimal implementation")
+Signed-off-by: Yu Zhao <yuzhao@google.com>
+Reported-by: Charan Teja Kalla <quic_charante@quicinc.com>
+Tested-by: Kalesh Singh <kaleshsingh@google.com>
+Cc: T.J. Mercier <tjmercier@google.com>
+Cc: Kairui Song <ryncsn@gmail.com>
+Cc: Hillf Danton <hdanton@sina.com>
+Cc: Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32-dma.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/linux/mm_inline.h |   23 ++++++++++++++---------
+ mm/vmscan.c               |    2 +-
+ mm/workingset.c           |    6 +++---
+ 3 files changed, 18 insertions(+), 13 deletions(-)
 
---- a/drivers/dma/stm32-dma.c
-+++ b/drivers/dma/stm32-dma.c
-@@ -1249,8 +1249,8 @@ static struct dma_async_tx_descriptor *s
- 	enum dma_slave_buswidth max_width;
- 	struct stm32_dma_desc *desc;
- 	size_t xfer_count, offset;
--	u32 num_sgs, best_burst, dma_burst, threshold;
--	int i;
-+	u32 num_sgs, best_burst, threshold;
-+	int dma_burst, i;
+--- a/include/linux/mm_inline.h
++++ b/include/linux/mm_inline.h
+@@ -231,22 +231,27 @@ static inline bool lru_gen_add_folio(str
+ 	if (folio_test_unevictable(folio) || !lrugen->enabled)
+ 		return false;
+ 	/*
+-	 * There are three common cases for this page:
+-	 * 1. If it's hot, e.g., freshly faulted in or previously hot and
+-	 *    migrated, add it to the youngest generation.
+-	 * 2. If it's cold but can't be evicted immediately, i.e., an anon page
+-	 *    not in swapcache or a dirty page pending writeback, add it to the
+-	 *    second oldest generation.
+-	 * 3. Everything else (clean, cold) is added to the oldest generation.
++	 * There are four common cases for this page:
++	 * 1. If it's hot, i.e., freshly faulted in, add it to the youngest
++	 *    generation, and it's protected over the rest below.
++	 * 2. If it can't be evicted immediately, i.e., a dirty page pending
++	 *    writeback, add it to the second youngest generation.
++	 * 3. If it should be evicted first, e.g., cold and clean from
++	 *    folio_rotate_reclaimable(), add it to the oldest generation.
++	 * 4. Everything else falls between 2 & 3 above and is added to the
++	 *    second oldest generation if it's considered inactive, or the
++	 *    oldest generation otherwise. See lru_gen_is_active().
+ 	 */
+ 	if (folio_test_active(folio))
+ 		seq = lrugen->max_seq;
+ 	else if ((type == LRU_GEN_ANON && !folio_test_swapcache(folio)) ||
+ 		 (folio_test_reclaim(folio) &&
+ 		  (folio_test_dirty(folio) || folio_test_writeback(folio))))
+-		seq = lrugen->min_seq[type] + 1;
+-	else
++		seq = lrugen->max_seq - 1;
++	else if (reclaiming || lrugen->min_seq[type] + MIN_NR_GENS >= lrugen->max_seq)
+ 		seq = lrugen->min_seq[type];
++	else
++		seq = lrugen->min_seq[type] + 1;
  
- 	num_sgs = DIV_ROUND_UP(len, STM32_DMA_ALIGNED_MAX_DATA_ITEMS);
- 	desc = kzalloc(struct_size(desc, sg_req, num_sgs), GFP_NOWAIT);
-@@ -1268,6 +1268,10 @@ static struct dma_async_tx_descriptor *s
- 		best_burst = stm32_dma_get_best_burst(len, STM32_DMA_MAX_BURST,
- 						      threshold, max_width);
- 		dma_burst = stm32_dma_get_burst(chan, best_burst);
-+		if (dma_burst < 0) {
-+			kfree(desc);
-+			return NULL;
-+		}
+ 	gen = lru_gen_from_seq(seq);
+ 	flags = (gen + 1UL) << LRU_GEN_PGOFF;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4770,7 +4770,7 @@ static bool sort_folio(struct lruvec *lr
+ 	}
  
- 		stm32_dma_clear_reg(&desc->sg_req[i].chan_reg);
- 		desc->sg_req[i].chan_reg.dma_scr =
+ 	/* protected */
+-	if (tier > tier_idx) {
++	if (tier > tier_idx || refs == BIT(LRU_REFS_WIDTH)) {
+ 		int hist = lru_hist_from_seq(lrugen->min_seq[type]);
+ 
+ 		gen = folio_inc_gen(lruvec, folio, false);
+--- a/mm/workingset.c
++++ b/mm/workingset.c
+@@ -289,10 +289,10 @@ static void lru_gen_refault(struct folio
+ 	 * 1. For pages accessed through page tables, hotter pages pushed out
+ 	 *    hot pages which refaulted immediately.
+ 	 * 2. For pages accessed multiple times through file descriptors,
+-	 *    numbers of accesses might have been out of the range.
++	 *    they would have been protected by sort_folio().
+ 	 */
+-	if (lru_gen_in_fault() || refs == BIT(LRU_REFS_WIDTH)) {
+-		folio_set_workingset(folio);
++	if (lru_gen_in_fault() || refs >= BIT(LRU_REFS_WIDTH) - 1) {
++		set_mask_bits(&folio->flags, 0, LRU_REFS_MASK | BIT(PG_workingset));
+ 		mod_lruvec_state(lruvec, WORKINGSET_RESTORE_BASE + type, delta);
+ 	}
+ unlock:
 
 
