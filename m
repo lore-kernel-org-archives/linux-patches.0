@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5BE1D142;
-	Mon, 18 Dec 2023 14:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5460D1D12F;
+	Mon, 18 Dec 2023 14:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JLl9Rmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411E4C433C8;
-	Mon, 18 Dec 2023 14:07:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cQUTtCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A72C433C8;
+	Mon, 18 Dec 2023 14:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908470;
-	bh=5nJSxEUNXIHwEH7WcFTtKjueoZeWOgaBPcPbxO7SzVw=;
+	s=korg; t=1702908473;
+	bh=ysd2qaLnRkqtIaObJKllPxwJmbWt+9CBELZS4m3t3Bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1JLl9Rmg0EXDbeOs119vjb32tyrm52obi9V9t7iMKaw/YWKeIBvKYKz2wrBDPC0yv
-	 l2KsUnlLeEXpjuyxeJeJcFg7O92TrRK1CMjpBYKFm5mkbOHLGVD7rR+PATazngVJJI
-	 wmOHiVmyEbjz2kVna9rb/BU+w4uPjsZcl8H6ylIM=
+	b=2cQUTtCABfjIswhN2gWdl5D2JhtyPxxMbO4L04LItaigv//DaRwroKoQRqiOYGusM
+	 wd26Uc8p1+w88sANOHsb0UrG6jmBCDvPckRki24pbwAndXBx3eoUGKc7Qii4j1zWfn
+	 gESMJv6QVxjXefOGhu+hZpG+1Gq0O2AUE7DxS1ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Igor Russkikh <irusskikh@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 22/62] appletalk: Fix Use-After-Free in atalk_ioctl
-Date: Mon, 18 Dec 2023 14:51:46 +0100
-Message-ID: <20231218135047.221519772@linuxfoundation.org>
+Subject: [PATCH 5.10 23/62] net: atlantic: fix double free in ring reinit logic
+Date: Mon, 18 Dec 2023 14:51:47 +0100
+Message-ID: <20231218135047.269890692@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -42,53 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Igor Russkikh <irusskikh@marvell.com>
 
-[ Upstream commit 189ff16722ee36ced4d2a2469d4ab65a8fee4198 ]
+[ Upstream commit 7bb26ea74aa86fdf894b7dbd8c5712c5b4187da7 ]
 
-Because atalk_ioctl() accesses sk->sk_receive_queue
-without holding a sk->sk_receive_queue.lock, it can
-cause a race with atalk_recvmsg().
-A use-after-free for skb occurs with the following flow.
-```
-atalk_ioctl() -> skb_peek()
-atalk_recvmsg() -> skb_recv_datagram() -> skb_free_datagram()
-```
-Add sk->sk_receive_queue.lock to atalk_ioctl() to fix this issue.
+Driver has a logic leak in ring data allocation/free,
+where double free may happen in aq_ring_free if system is under
+stress and driver init/deinit is happening.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Link: https://lore.kernel.org/r/20231213041056.GA519680@v4bel-B760M-AORUS-ELITE-AX
+The probability is higher to get this during suspend/resume cycle.
+
+Verification was done simulating same conditions with
+
+    stress -m 2000 --vm-bytes 20M --vm-hang 10 --backoff 1000
+    while true; do sudo ifconfig enp1s0 down; sudo ifconfig enp1s0 up; done
+
+Fixed by explicitly clearing pointers to NULL on deallocation
+
+Fixes: 018423e90bee ("net: ethernet: aquantia: Add ring support code")
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Closes: https://lore.kernel.org/netdev/CAHk-=wiZZi7FcvqVSUirHBjx0bBUZ4dFrMDVLc3+3HCrtq0rBA@mail.gmail.com/
+Signed-off-by: Igor Russkikh <irusskikh@marvell.com>
+Link: https://lore.kernel.org/r/20231213094044.22988-1-irusskikh@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/appletalk/ddp.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/appletalk/ddp.c b/net/appletalk/ddp.c
-index c94b212d8e7ca..46adb8cefccf2 100644
---- a/net/appletalk/ddp.c
-+++ b/net/appletalk/ddp.c
-@@ -1811,15 +1811,14 @@ static int atalk_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 		break;
- 	}
- 	case TIOCINQ: {
--		/*
--		 * These two are safe on a single CPU system as only
--		 * user tasks fiddle here
--		 */
--		struct sk_buff *skb = skb_peek(&sk->sk_receive_queue);
-+		struct sk_buff *skb;
- 		long amount = 0;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+index e9c6f1fa0b1a7..98e8997f80366 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -577,11 +577,14 @@ void aq_ring_free(struct aq_ring_s *self)
+ 		return;
  
-+		spin_lock_irq(&sk->sk_receive_queue.lock);
-+		skb = skb_peek(&sk->sk_receive_queue);
- 		if (skb)
- 			amount = skb->len - sizeof(struct ddpehdr);
-+		spin_unlock_irq(&sk->sk_receive_queue.lock);
- 		rc = put_user(amount, (int __user *)argp);
- 		break;
- 	}
+ 	kfree(self->buff_ring);
++	self->buff_ring = NULL;
+ 
+-	if (self->dx_ring)
++	if (self->dx_ring) {
+ 		dma_free_coherent(aq_nic_get_dev(self->aq_nic),
+ 				  self->size * self->dx_size, self->dx_ring,
+ 				  self->dx_ring_pa);
++		self->dx_ring = NULL;
++	}
+ }
+ 
+ unsigned int aq_ring_fill_stats_data(struct aq_ring_s *self, u64 *data)
 -- 
 2.43.0
 
