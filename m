@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6FB3786D;
-	Mon, 18 Dec 2023 14:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930B91D122;
+	Mon, 18 Dec 2023 14:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r67LJCH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC47C433C8;
-	Mon, 18 Dec 2023 14:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cE/Bc9sG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A724C433C7;
+	Mon, 18 Dec 2023 14:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908563;
-	bh=sX8ZqyHQwCZ0sbOS2WCx0FBbSM2RYH67uHbohwuUmRo=;
+	s=korg; t=1702908566;
+	bh=usnmf4l9PMLFLwaXl+K8R7On1t/Sh/79Wx9dgu6RQrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r67LJCH9OyKbYtmU4i+zWr4KO+l8B/NH84ZMNZIy/s4r6dPOuVqprJSdi1t4+787F
-	 8cxDTf+zQ7qMzebfPpKN/20DklqIoYqACsW8M6vYCfsZEWghHaeWvl1PekDuuCSSaB
-	 fG15cUU0PIKSSnmNQJHzoq9OvZ1C4DSjnEWbsiqg=
+	b=cE/Bc9sGh2Scdhft0p9Oi+S2zIjpagCxtw6+4KpF23Lw8i9Wyct+gg4FdhDDgDllv
+	 8dCfoXMWGPHip6VhfGAw/A8SjpRTyFRXdK6tVZqx/XONPa+aN5AetmFR+Sk1rtHliY
+	 Q/ejKpGArgK5nUjKYiiqK4V6YElgBw0ZRDgUk4gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 56/62] ring-buffer: Fix a race in rb_time_cmpxchg() for 32 bit archs
-Date: Mon, 18 Dec 2023 14:52:20 +0100
-Message-ID: <20231218135048.703406757@linuxfoundation.org>
+	Roy Luo <royluo@google.com>
+Subject: [PATCH 5.10 57/62] USB: gadget: core: adjust uevent timing on gadget unbind
+Date: Mon, 18 Dec 2023 14:52:21 +0100
+Message-ID: <20231218135048.734995339@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -43,74 +40,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Roy Luo <royluo@google.com>
 
-commit fff88fa0fbc7067ba46dde570912d63da42c59a9 upstream.
+commit 73ea73affe8622bdf292de898da869d441da6a9d upstream.
 
-Mathieu Desnoyers pointed out an issue in the rb_time_cmpxchg() for 32 bit
-architectures. That is:
+The KOBJ_CHANGE uevent is sent before gadget unbind is actually
+executed, resulting in inaccurate uevent emitted at incorrect timing
+(the uevent would have USB_UDC_DRIVER variable set while it would
+soon be removed).
+Move the KOBJ_CHANGE uevent to the end of the unbind function so that
+uevent is sent only after the change has been made.
 
- static bool rb_time_cmpxchg(rb_time_t *t, u64 expect, u64 set)
- {
-	unsigned long cnt, top, bottom, msb;
-	unsigned long cnt2, top2, bottom2, msb2;
-	u64 val;
-
-	/* The cmpxchg always fails if it interrupted an update */
-	 if (!__rb_time_read(t, &val, &cnt2))
-		 return false;
-
-	 if (val != expect)
-		 return false;
-
-<<<< interrupted here!
-
-	 cnt = local_read(&t->cnt);
-
-The problem is that the synchronization counter in the rb_time_t is read
-*after* the value of the timestamp is read. That means if an interrupt
-were to come in between the value being read and the counter being read,
-it can change the value and the counter and the interrupted process would
-be clueless about it!
-
-The counter needs to be read first and then the value. That way it is easy
-to tell if the value is stale or not. If the counter hasn't been updated,
-then the value is still good.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231211201324.652870-1-mathieu.desnoyers@efficios.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20231212115301.7a9c9a64@gandalf.local.home
-
+Fixes: 2ccea03a8f7e ("usb: gadget: introduce UDC Class")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Fixes: 10464b4aa605e ("ring-buffer: Add rb_time_t 64 bit operations for speeding up 32 bit")
-Reported-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Roy Luo <royluo@google.com>
+Link: https://lore.kernel.org/r/20231128221756.2591158-1-royluo@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -703,6 +703,9 @@ static int rb_time_cmpxchg(rb_time_t *t,
- 	unsigned long cnt2, top2, bottom2;
- 	u64 val;
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -1353,8 +1353,6 @@ static void usb_gadget_remove_driver(str
+ 	dev_dbg(&udc->dev, "unregistering UDC driver [%s]\n",
+ 			udc->driver->function);
  
-+	/* Any interruptions in this function should cause a failure */
-+	cnt = local_read(&t->cnt);
+-	kobject_uevent(&udc->dev.kobj, KOBJ_CHANGE);
+-
+ 	usb_gadget_disconnect(udc->gadget);
+ 	if (udc->gadget->irq)
+ 		synchronize_irq(udc->gadget->irq);
+@@ -1363,6 +1361,8 @@ static void usb_gadget_remove_driver(str
+ 
+ 	udc->driver = NULL;
+ 	udc->gadget->dev.driver = NULL;
 +
- 	/* The cmpxchg always fails if it interrupted an update */
- 	 if (!__rb_time_read(t, &val, &cnt2))
- 		 return false;
-@@ -710,7 +713,6 @@ static int rb_time_cmpxchg(rb_time_t *t,
- 	 if (val != expect)
- 		 return false;
++	kobject_uevent(&udc->dev.kobj, KOBJ_CHANGE);
+ }
  
--	 cnt = local_read(&t->cnt);
- 	 if ((cnt & 3) != cnt2)
- 		 return false;
- 
+ /**
 
 
