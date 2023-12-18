@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700383786D;
-	Mon, 18 Dec 2023 14:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8D737888;
+	Mon, 18 Dec 2023 14:09:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOrv20aF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F65C433C8;
-	Mon, 18 Dec 2023 14:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1Dd91PE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5088BC433C8;
+	Mon, 18 Dec 2023 14:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908572;
-	bh=cHVO6q3z83E4RLApUiWJsEMM5a/9kTbTBoVvenj1MxE=;
+	s=korg; t=1702908574;
+	bh=va7HNli8k/oOFrgKty+EEZ40BqXlHHt3xvDsEG5wl+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOrv20aFwkHkiI2GHqEbm42+EK96fK/tDzVa7Rw9P377a2hvjWhjtuANXqQx66Yr0
-	 5/wNonvtQQFwHp2kITpP1P8h45YPMBVbg7lSd94hsbYdJ2gzNhQeMiaVEvIuwvT4gV
-	 FQQgGUibyhIUP1oTW3E1+ZtX6y/APuOsbqeoX1nk=
+	b=A1Dd91PEgslvJHfhHQRRgRgeG5qopEo8ZX1v+DHYk3aw0pzu9tttTBEs7Bnoc4g7W
+	 r3akW+Eq9fDKRPM/M+f81S6nxGOG3PAU/xcrm+OzS6A/GNU9cow65Mx5LAObIj0ynR
+	 oAkkhodC5zZbBxLfxi0DjOOndjI6T1OdgaFc3FLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jslaby@suse.cz>,
-	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
-Subject: [PATCH 5.10 59/62] tty: n_gsm, remove duplicates of parameters
-Date: Mon, 18 Dec 2023 14:52:23 +0100
-Message-ID: <20231218135048.796377822@linuxfoundation.org>
+	Mazin Al Haddad <mazinalhaddad05@gmail.com>,
+	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
+	syzbot+e3563f0c94e188366dbb@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 60/62] tty: n_gsm: add sanity check for gsm->receive in gsm_receive_buf()
+Date: Mon, 18 Dec 2023 14:52:24 +0100
+Message-ID: <20231218135048.826699791@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -41,56 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: Mazin Al Haddad <mazinalhaddad05@gmail.com>
 
-commit b93db97e1ca08e500305bc46b08c72e2232c4be1 upstream.
+commit f16c6d2e58a4c2b972efcf9eb12390ee0ba3befb upstream
 
-dp, f, and i are only duplicates of gsmld_receive_buf's parameters. Use
-the parameters directly (cp, fp, and count) and delete these local
-variables.
+A null pointer dereference can happen when attempting to access the
+"gsm->receive()" function in gsmld_receive_buf(). Currently, the code
+assumes that gsm->receive is only called after MUX activation.
+Since the gsmld_receive_buf() function can be accessed without the need to
+initialize the MUX, the gsm->receive() function will not be set and a
+NULL pointer dereference will occur.
 
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Link: https://lore.kernel.org/r/20210302062214.29627-41-jslaby@suse.cz
+Fix this by avoiding the call to "gsm->receive()" in case the function is
+not initialized by adding a sanity check.
+
+Call Trace:
+ <TASK>
+ gsmld_receive_buf+0x1c2/0x2f0 drivers/tty/n_gsm.c:2861
+ tiocsti drivers/tty/tty_io.c:2293 [inline]
+ tty_ioctl+0xa75/0x15d0 drivers/tty/tty_io.c:2692
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Link: https://syzkaller.appspot.com/bug?id=bdf035c61447f8c6e0e6920315d577cb5cc35ac5
+Fixes: 01aecd917114 ("tty: n_gsm: fix tty registration before control channel open")
+Reported-and-tested-by: syzbot+e3563f0c94e188366dbb@syzkaller.appspotmail.com
+Signed-off-by: Mazin Al Haddad <mazinalhaddad05@gmail.com>
+Link: https://lore.kernel.org/r/20220814015211.84180-1-mazinalhaddad05@gmail.com
 Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/n_gsm.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/tty/n_gsm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/drivers/tty/n_gsm.c
 +++ b/drivers/tty/n_gsm.c
-@@ -2577,27 +2577,24 @@ static void gsmld_receive_buf(struct tty
- 			      char *fp, int count)
- {
- 	struct gsm_mux *gsm = tty->disc_data;
--	const unsigned char *dp;
--	char *f;
--	int i;
- 	char flags = TTY_NORMAL;
- 
- 	if (debug & 4)
- 		print_hex_dump_bytes("gsmld_receive: ", DUMP_PREFIX_OFFSET,
- 				     cp, count);
- 
--	for (i = count, dp = cp, f = fp; i; i--, dp++) {
--		if (f)
--			flags = *f++;
-+	for (; count; count--, cp++) {
-+		if (fp)
-+			flags = *fp++;
+@@ -2588,7 +2588,8 @@ static void gsmld_receive_buf(struct tty
+ 			flags = *fp++;
  		switch (flags) {
  		case TTY_NORMAL:
--			gsm->receive(gsm, *dp);
-+			gsm->receive(gsm, *cp);
+-			gsm->receive(gsm, *cp);
++			if (gsm->receive)
++				gsm->receive(gsm, *cp);
  			break;
  		case TTY_OVERRUN:
  		case TTY_BREAK:
- 		case TTY_PARITY:
- 		case TTY_FRAME:
--			gsm_error(gsm, *dp, flags);
-+			gsm_error(gsm, *cp, flags);
- 			break;
- 		default:
- 			WARN_ONCE(1, "%s: unknown flag %d\n",
 
 
