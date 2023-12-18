@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A92498BC;
-	Mon, 18 Dec 2023 14:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1578A4FF78;
+	Mon, 18 Dec 2023 14:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRLlEcSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90BEFC433C9;
-	Mon, 18 Dec 2023 14:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mLoXQret"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516CCC433C7;
+	Mon, 18 Dec 2023 14:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908374;
-	bh=tBT+lI24uOyp1aD3CNMMaZ+3U2aOAIrI8bsnWzRQi2E=;
+	s=korg; t=1702908377;
+	bh=4qcJMFl3Yy7AUMFnBzhN7T3B/1nhDtMU5lmEfm8hpUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRLlEcSRgvz5RG840aibGUkH5UF2dKTV5B95+u18Op4wKVAbzsEvx7slGgDJegUjp
-	 F+0h6OeymTxYV5LWI2keOy6yhed+HqaJGWRF50E16gZttBUvDV6NWx5w1W8nDeS4Sk
-	 iI5C5ltslf4DdRZYq9S3TmFvP4JPdW8ygBRlbBbI=
+	b=mLoXQrethFaovjEFiZ/RWkKtMInKZwBHFAwEz7+h13C5tFdAj0f1G7dOd6/P6i6yn
+	 ynjtdVAavr+cZPcF0icl85rukIVSElTHxdFYvSD/ex/meLeXQvpLA/mZn+n6fF1Oww
+	 lYEt9HArMKVSz9O1/zJnOsLQB1EuW1txwPCcTROk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 125/166] perf: Fix perf_event_validate_size() lockdep splat
-Date: Mon, 18 Dec 2023 14:51:31 +0100
-Message-ID: <20231218135110.658410572@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 116/166] scripts/checkstack.pl: match all stack sizes for s390
+Date: Mon, 18 Dec 2023 14:51:22 +0100
+Message-ID: <20231218135110.227554906@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -43,58 +42,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 7e2c1e4b34f07d9aa8937fab88359d4a0fce468e upstream.
+[ Upstream commit aab1f809d7540def24498e81347740a7239a74d5 ]
 
-When lockdep is enabled, the for_each_sibling_event(sibling, event)
-macro checks that event->ctx->mutex is held. When creating a new group
-leader event, we call perf_event_validate_size() on a partially
-initialized event where event->ctx is NULL, and so when
-for_each_sibling_event() attempts to check event->ctx->mutex, we get a
-splat, as reported by Lucas De Marchi:
+For some unknown reason the regular expression for checkstack only matches
+three digit numbers starting with the number "3", or any higher
+number. Which means that it skips any stack sizes smaller than 304
+bytes. This makes the checkstack script a bit less useful than it could be.
 
-  WARNING: CPU: 8 PID: 1471 at kernel/events/core.c:1950 __do_sys_perf_event_open+0xf37/0x1080
+Change the script to match any number. To be filtered out stack sizes
+can be configured with the min_stack variable, which omits any stack
+frame sizes smaller than 100 bytes by default.
 
-This only happens for a new event which is its own group_leader, and in
-this case there cannot be any sibling events. Thus it's safe to skip the
-check for siblings, which avoids having to make invasive and ugly
-changes to for_each_sibling_event().
-
-Avoid the splat by bailing out early when the new event is its own
-group_leader.
-
-Fixes: 382c27f4ed28f803 ("perf: Fix perf_event_validate_size()")
-Closes: https://lore.kernel.org/lkml/20231214000620.3081018-1-lucas.demarchi@intel.com/
-Closes: https://lore.kernel.org/lkml/ZXpm6gQ%2Fd59jGsuW@xpf.sh.intel.com/
-Reported-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20231215112450.3972309-1-mark.rutland@arm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Tested-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ scripts/checkstack.pl | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1947,6 +1947,16 @@ static bool perf_event_validate_size(str
- 				   group_leader->nr_siblings + 1) > 16*1024)
- 		return false;
- 
-+	/*
-+	 * When creating a new group leader, group_leader->ctx is initialized
-+	 * after the size has been validated, but we cannot safely use
-+	 * for_each_sibling_event() until group_leader->ctx is set. A new group
-+	 * leader cannot have any siblings yet, so we can safely skip checking
-+	 * the non-existent siblings.
-+	 */
-+	if (event == group_leader)
-+		return true;
-+
- 	for_each_sibling_event(sibling, group_leader) {
- 		if (__perf_event_read_size(sibling->attr.read_format,
- 					   group_leader->nr_siblings + 1) > 16*1024)
+diff --git a/scripts/checkstack.pl b/scripts/checkstack.pl
+index ac74f8629ceac..f27d552aec43f 100755
+--- a/scripts/checkstack.pl
++++ b/scripts/checkstack.pl
+@@ -97,8 +97,7 @@ my (@stack, $re, $dre, $sub, $x, $xs, $funcre, $min_stack);
+ 		#   11160:       a7 fb ff 60             aghi   %r15,-160
+ 		# or
+ 		#  100092:	 e3 f0 ff c8 ff 71	 lay	 %r15,-56(%r15)
+-		$re = qr/.*(?:lay|ag?hi).*\%r15,-(([0-9]{2}|[3-9])[0-9]{2})
+-		      (?:\(\%r15\))?$/ox;
++		$re = qr/.*(?:lay|ag?hi).*\%r15,-([0-9]+)(?:\(\%r15\))?$/o;
+ 	} elsif ($arch eq 'sparc' || $arch eq 'sparc64') {
+ 		# f0019d10:       9d e3 bf 90     save  %sp, -112, %sp
+ 		$re = qr/.*save.*%sp, -(([0-9]{2}|[3-9])[0-9]{2}), %sp/o;
+-- 
+2.43.0
+
 
 
