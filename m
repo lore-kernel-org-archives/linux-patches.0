@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE4C42387;
-	Mon, 18 Dec 2023 14:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD30949897;
+	Mon, 18 Dec 2023 14:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLCQ3y5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822B6C433C8;
-	Mon, 18 Dec 2023 14:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UX5Zc7kH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41EA1C433C8;
+	Mon, 18 Dec 2023 14:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908355;
-	bh=6hTBAX3uM8T3ZSOzMHVZVTonmzPVHcj03HDdMAR19wU=;
+	s=korg; t=1702908358;
+	bh=DEV9pM3+KTR6xwGabJSKCskp1Yq547HqHQeOv5depVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CLCQ3y5S9hov8ja7+kEbSjVv+jCXyV/f0Ik+PZ4SH/tCeI9HPoA4liD4U1lmxIcPY
-	 RLMPTADofmfhwpJC3AQUO0brMCwOPhO808n+GIVbDKTboQN0mPqYlfYbhj6rdcABxm
-	 BTQSuqC53Ek4P14JaSy43u5VUwbZi+QuvlosUrnw=
+	b=UX5Zc7kHeZXNGxJOs8w9NPaLm5XmelJbvVN9oWphpKXti6HRtrqq2H/7EXks0kkAL
+	 RxqZCPuKOfNJXmhpbHSsvZWf4VBcW+Y/zUpUl6EHWcF9Ohtmwlu01TNb6ZQwkGK4qb
+	 1TiOPkuww7lkdHwttArvkq7cXExIUQ1gZ6jfWce0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Lech Perczak <lech.perczak@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/166] net: usb: qmi_wwan: claim interface 4 for ZTE MF290
-Date: Mon, 18 Dec 2023 14:51:25 +0100
-Message-ID: <20231218135110.363488566@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 146/166] drm/amdgpu: fix tear down order in amdgpu_vm_pt_free
+Date: Mon, 18 Dec 2023 14:51:52 +0100
+Message-ID: <20231218135111.655356149@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -44,65 +42,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lech Perczak <lech.perczak@gmail.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 99360d9620f09fb8bc15548d855011bbb198c680 ]
+commit ceb9a321e7639700844aa3bf234a4e0884f13b77 upstream.
 
-Interface 4 is used by for QMI interface in stock firmware of MF28D, the
-router which uses MF290 modem. Rebind it to qmi_wwan after freeing it up
-from option driver.
-The proper configuration is:
+When freeing PD/PT with shadows it can happen that the shadow
+destruction races with detaching the PD/PT from the VM causing a NULL
+pointer dereference in the invalidation code.
 
-Interface mapping is:
-0: QCDM, 1: (unknown), 2: AT (PCUI), 2: AT (Modem), 4: QMI
+Fix this by detaching the the PD/PT from the VM first and then
+freeing the shadow instead.
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  4 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=19d2 ProdID=0189 Rev= 0.00
-S:  Manufacturer=ZTE, Incorporated
-S:  Product=ZTE LTE Technologies MSM
-C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-
-Cc: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Lech Perczak <lech.perczak@gmail.com>
-Link: https://lore.kernel.org/r/20231117231918.100278-3-lech.perczak@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: https://gitlab.freedesktop.org/drm/amd/-/issues/2867
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 344af3c5c8366..e2e181378f412 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1289,6 +1289,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x19d2, 0x0168, 4)},
- 	{QMI_FIXED_INTF(0x19d2, 0x0176, 3)},
- 	{QMI_FIXED_INTF(0x19d2, 0x0178, 3)},
-+	{QMI_FIXED_INTF(0x19d2, 0x0189, 4)},    /* ZTE MF290 */
- 	{QMI_FIXED_INTF(0x19d2, 0x0191, 4)},	/* ZTE EuFi890 */
- 	{QMI_FIXED_INTF(0x19d2, 0x0199, 1)},	/* ZTE MF820S */
- 	{QMI_FIXED_INTF(0x19d2, 0x0200, 1)},
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -642,13 +642,14 @@ static void amdgpu_vm_pt_free(struct amd
+ 
+ 	if (!entry->bo)
+ 		return;
++
++	entry->bo->vm_bo = NULL;
+ 	shadow = amdgpu_bo_shadowed(entry->bo);
+ 	if (shadow) {
+ 		ttm_bo_set_bulk_move(&shadow->tbo, NULL);
+ 		amdgpu_bo_unref(&shadow);
+ 	}
+ 	ttm_bo_set_bulk_move(&entry->bo->tbo, NULL);
+-	entry->bo->vm_bo = NULL;
+ 
+ 	spin_lock(&entry->vm->status_lock);
+ 	list_del(&entry->vm_status);
 
 
