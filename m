@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CDD101D4;
-	Mon, 18 Dec 2023 13:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7487F129EFE;
+	Mon, 18 Dec 2023 13:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRxyoj66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ABCC433C7;
-	Mon, 18 Dec 2023 13:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NRthHLEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D89C433C7;
+	Mon, 18 Dec 2023 13:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907536;
-	bh=L0a0yCbmJVW6w7PHQTTpy7yyTTY86fa0nHS8g+ZOEO4=;
+	s=korg; t=1702907539;
+	bh=qBsJG1x6nXis7EZX+xrPra7qYfciIiE0GOU+U8nQ5vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRxyoj66NfcU9X2rsOMi88Aj31HbjYfvB38Q2mxwQwTbjAoPbxTBVrGFATPqWNUYk
-	 mQnQwgaCJdDFWhhv30BubHs0pr9OvsWTneGYLuuYWvjkY4qOcbLA9SFnrdteyTdII6
-	 tSCEhPcSyFut1YKtxAfWAeBUtKpjIJGRhIsD/1Vs=
+	b=NRthHLEWzN35n0UqFgsaVwvj5hb7nSN9DxN6NZGXFZalHgHMB893waS6qh9SkrAJH
+	 /YGj5zAj3k/x+Vijy2H/isGBpU8nlV1ZCUo8uGrqj72R6vueqaXU02zzm5bH1G+1zM
+	 Bn6QWuVwms0RM/SL//QPTibcl60+3UZh6C9sTDXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 4.14 22/26] ext4: prevent the normalized size from exceeding EXT_MAX_BLOCKS
-Date: Mon, 18 Dec 2023 14:51:24 +0100
-Message-ID: <20231218135041.496210573@linuxfoundation.org>
+	Florent Revest <revest@chromium.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.14 23/26] team: Fix use-after-free when an option instance allocation fails
+Date: Mon, 18 Dec 2023 14:51:25 +0100
+Message-ID: <20231218135041.526707882@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
 References: <20231218135040.665690087@linuxfoundation.org>
@@ -43,75 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Florent Revest <revest@chromium.org>
 
-commit 2dcf5fde6dffb312a4bfb8ef940cea2d1f402e32 upstream.
+commit c12296bbecc488623b7d1932080e394d08f3226b upstream.
 
-For files with logical blocks close to EXT_MAX_BLOCKS, the file size
-predicted in ext4_mb_normalize_request() may exceed EXT_MAX_BLOCKS.
-This can cause some blocks to be preallocated that will not be used.
-And after [Fixes], the following issue may be triggered:
+In __team_options_register, team_options are allocated and appended to
+the team's option_list.
+If one option instance allocation fails, the "inst_rollback" cleanup
+path frees the previously allocated options but doesn't remove them from
+the team's option_list.
+This leaves dangling pointers that can be dereferenced later by other
+parts of the team driver that iterate over options.
 
-=========================================================
- kernel BUG at fs/ext4/mballoc.c:4653!
- Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
- CPU: 1 PID: 2357 Comm: xfs_io 6.7.0-rc2-00195-g0f5cc96c367f
- Hardware name: linux,dummy-virt (DT)
- pc : ext4_mb_use_inode_pa+0x148/0x208
- lr : ext4_mb_use_inode_pa+0x98/0x208
- Call trace:
-  ext4_mb_use_inode_pa+0x148/0x208
-  ext4_mb_new_inode_pa+0x240/0x4a8
-  ext4_mb_use_best_found+0x1d4/0x208
-  ext4_mb_try_best_found+0xc8/0x110
-  ext4_mb_regular_allocator+0x11c/0xf48
-  ext4_mb_new_blocks+0x790/0xaa8
-  ext4_ext_map_blocks+0x7cc/0xd20
-  ext4_map_blocks+0x170/0x600
-  ext4_iomap_begin+0x1c0/0x348
-=========================================================
+This patch fixes the cleanup path to remove the dangling pointers from
+the list.
 
-Here is a calculation when adjusting ac_b_ex in ext4_mb_new_inode_pa():
+As far as I can tell, this uaf doesn't have much security implications
+since it would be fairly hard to exploit (an attacker would need to make
+the allocation of that specific small object fail) but it's still nice
+to fix.
 
-	ex.fe_logical = orig_goal_end - EXT4_C2B(sbi, ex.fe_len);
-	if (ac->ac_o_ex.fe_logical >= ex.fe_logical)
-		goto adjust_bex;
-
-The problem is that when orig_goal_end is subtracted from ac_b_ex.fe_len
-it is still greater than EXT_MAX_BLOCKS, which causes ex.fe_logical to
-overflow to a very small value, which ultimately triggers a BUG_ON in
-ext4_mb_new_inode_pa() because pa->pa_free < len.
-
-The last logical block of an actual write request does not exceed
-EXT_MAX_BLOCKS, so in ext4_mb_normalize_request() also avoids normalizing
-the last logical block to exceed EXT_MAX_BLOCKS to avoid the above issue.
-
-The test case in [Link] can reproduce the above issue with 64k block size.
-
-Link: https://patchwork.kernel.org/project/fstests/list/?series=804003
-Cc:  <stable@kernel.org> # 6.4
-Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231127063313.3734294-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
+Fixes: 80f7c6683fe0 ("team: add support for per-port options")
+Signed-off-by: Florent Revest <revest@chromium.org>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20231206123719.1963153-1-revest@chromium.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/team/team.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3207,6 +3207,10 @@ ext4_mb_normalize_request(struct ext4_al
- 	start = max(start, rounddown(ac->ac_o_ex.fe_logical,
- 			(ext4_lblk_t)EXT4_BLOCKS_PER_GROUP(ac->ac_sb)));
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -296,8 +296,10 @@ static int __team_options_register(struc
+ 	return 0;
  
-+	/* avoid unnecessary preallocation that may trigger assertions */
-+	if (start + size > EXT_MAX_BLOCKS)
-+		size = EXT_MAX_BLOCKS - start;
-+
- 	/* don't cover already allocated blocks in selected range */
- 	if (ar->pleft && start <= ar->lleft) {
- 		size -= ar->lleft + 1 - start;
+ inst_rollback:
+-	for (i--; i >= 0; i--)
++	for (i--; i >= 0; i--) {
+ 		__team_option_inst_del_option(team, dst_opts[i]);
++		list_del(&dst_opts[i]->list);
++	}
+ 
+ 	i = option_count;
+ alloc_rollback:
 
 
