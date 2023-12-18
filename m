@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7021D127;
-	Mon, 18 Dec 2023 14:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BBB129ECF;
+	Mon, 18 Dec 2023 14:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UlKGFEx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408EBC433C8;
-	Mon, 18 Dec 2023 14:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gja+/K3q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9CEC433C9;
+	Mon, 18 Dec 2023 14:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908645;
-	bh=cWxUGUuuZMzkn8hHEoJzz98rgibLQu9MabIwuOIrHEg=;
+	s=korg; t=1702908648;
+	bh=ThPnzp48ABqVrTIQJrSNkXVvqmGwLUEM8mmThbT2DB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0UlKGFEx1JnWhxQgx0SjATwcUV/V7lJBFMqt2sboETP1A10llEp13DDoe/R9iZmaj
-	 PlwsAzSdfmA1gK0O7aicEboSZRsipKaHpZRWL6eN2nj22Y/iLVkfVygyb7E6VFrRj4
-	 Y7HpAjXMIZQoJ3ChNlpitOde+sd2eLIfnVpZXe14=
+	b=Gja+/K3qYJ9g+ScJsDTb7a4GMpfHxgAy/yRWAEjv3ce18lTw1vTduWtz9mp11yF07
+	 McvRvtdUvp8DM2BA9UZRiWpYFAg8wy+wGELWlERz5UG/OiEGV+XLG6DzwQ+Y9jVZCE
+	 cFL8wFSTHqiVe9xw93Z+yqlGXmCNBALJzgP/JSWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Coly Li <colyli@suse.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 23/40] bcache: add code comments for bch_btree_node_get() and __bch_btree_node_alloc()
-Date: Mon, 18 Dec 2023 14:52:18 +0100
-Message-ID: <20231218135043.560019644@linuxfoundation.org>
+Subject: [PATCH 5.4 24/40] bcache: avoid NULL checking to c->root in run_cache_set()
+Date: Mon, 18 Dec 2023 14:52:19 +0100
+Message-ID: <20231218135043.600128158@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135042.748715259@linuxfoundation.org>
 References: <20231218135042.748715259@linuxfoundation.org>
@@ -44,45 +44,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Coly Li <colyli@suse.de>
 
-[ Upstream commit 31f5b956a197d4ec25c8a07cb3a2ab69d0c0b82f ]
+[ Upstream commit 3eba5e0b2422aec3c9e79822029599961fdcab97 ]
 
-This patch adds code comments to bch_btree_node_get() and
-__bch_btree_node_alloc() that NULL pointer will not be returned and it
-is unnecessary to check NULL pointer by the callers of these routines.
+In run_cache_set() after c->root returned from bch_btree_node_get(), it
+is checked by IS_ERR_OR_NULL(). Indeed it is unncessary to check NULL
+because bch_btree_node_get() will not return NULL pointer to caller.
+
+This patch replaces IS_ERR_OR_NULL() by IS_ERR() for the above reason.
 
 Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20231120052503.6122-10-colyli@suse.de
+Link: https://lore.kernel.org/r/20231120052503.6122-11-colyli@suse.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/btree.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/md/bcache/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/bcache/btree.c b/drivers/md/bcache/btree.c
-index ad1faee2e186b..5db893d6a824e 100644
---- a/drivers/md/bcache/btree.c
-+++ b/drivers/md/bcache/btree.c
-@@ -1020,6 +1020,9 @@ static struct btree *mca_alloc(struct cache_set *c, struct btree_op *op,
-  *
-  * The btree node will have either a read or a write lock held, depending on
-  * level and op->lock.
-+ *
-+ * Note: Only error code or btree pointer will be returned, it is unncessary
-+ *       for callers to check NULL pointer.
-  */
- struct btree *bch_btree_node_get(struct cache_set *c, struct btree_op *op,
- 				 struct bkey *k, int level, bool write,
-@@ -1132,6 +1135,10 @@ static void btree_node_free(struct btree *b)
- 	mutex_unlock(&b->c->bucket_lock);
- }
+diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
+index d5f57a9551dda..5d1a4eb816694 100644
+--- a/drivers/md/bcache/super.c
++++ b/drivers/md/bcache/super.c
+@@ -1908,7 +1908,7 @@ static int run_cache_set(struct cache_set *c)
+ 		c->root = bch_btree_node_get(c, NULL, k,
+ 					     j->btree_level,
+ 					     true, NULL);
+-		if (IS_ERR_OR_NULL(c->root))
++		if (IS_ERR(c->root))
+ 			goto err;
  
-+/*
-+ * Only error code or btree pointer will be returned, it is unncessary for
-+ * callers to check NULL pointer.
-+ */
- struct btree *__bch_btree_node_alloc(struct cache_set *c, struct btree_op *op,
- 				     int level, bool wait,
- 				     struct btree *parent)
+ 		list_del_init(&c->root->list);
 -- 
 2.43.0
 
