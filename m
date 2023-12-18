@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68951D13A;
-	Mon, 18 Dec 2023 13:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C391D13A;
+	Mon, 18 Dec 2023 13:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZl0ImaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCC0C433C7;
-	Mon, 18 Dec 2023 13:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2PJ95uS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2E7C433C8;
+	Mon, 18 Dec 2023 13:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907961;
-	bh=bMcqL8Ojjr4fbUvEFNn5c1lzgEBjqyXKg41KlUAnQu4=;
+	s=korg; t=1702907964;
+	bh=NgIOGYmcULwxmCpLCYpndBc6zRp0or7xjCTClGwkdaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HZl0ImaVFgOIViI0gFFyCDIiVrroOALJHxhUXgwbHydUt2eqVwLAJIDrDU7drn8vb
-	 XJRArsGrcNXFJo56JEsgPyaQP/+mdqthxu5Rzp7cv3cOYEww0ZJ26Np1Bek++bjm5n
-	 CsbDoz/f5c4qAxFy0feGAzMkVqu/EZn9TD12U3OU=
+	b=j2PJ95uSfGJT/nxEEf1/+rxNoST3guohwUo/FLPE45TDoNzecee2e4qEj86X9JWgx
+	 44H5uOmBnRUNzARfcXyUomzs3J2zrjiSxtNYvkhSMrTL63TV0L3LtLojIRhjY5PdzR
+	 ugUWFKK9zOy2M75wSsk7Kqnr2AuxVV1LWHei+Hqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 097/106] ring-buffer: Do not update before stamp when switching sub-buffers
-Date: Mon, 18 Dec 2023 14:51:51 +0100
-Message-ID: <20231218135059.199953469@linuxfoundation.org>
+Subject: [PATCH 6.1 098/106] ring-buffer: Have saved event hold the entire event
+Date: Mon, 18 Dec 2023 14:51:52 +0100
+Message-ID: <20231218135059.250473915@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -45,58 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 9e45e39dc249c970d99d2681f6bcb55736fd725c upstream.
+commit b049525855fdd0024881c9b14b8fbec61c3f53d3 upstream.
 
-The ring buffer timestamps are synchronized by two timestamp placeholders.
-One is the "before_stamp" and the other is the "write_stamp" (sometimes
-referred to as the "after stamp" but only in the comments. These two
-stamps are key to knowing how to handle nested events coming in with a
-lockless system.
+For the ring buffer iterator (non-consuming read), the event needs to be
+copied into the iterator buffer to make sure that a writer does not
+overwrite it while the user is reading it. If a write happens during the
+copy, the buffer is simply discarded.
 
-When moving across sub-buffers, the before stamp is updated but the write
-stamp is not. There's an effort to put back the before stamp to something
-that seems logical in case there's nested events. But as the current event
-is about to cross sub-buffers, and so will any new nested event that happens,
-updating the before stamp is useless, and could even introduce new race
-conditions.
+But the temp buffer itself was not big enough. The allocation of the
+buffer was only BUF_MAX_DATA_SIZE, which is the maximum data size that can
+be passed into the ring buffer and saved. But the temp buffer needs to
+hold the meta data as well. That would be BUF_PAGE_SIZE and not
+BUF_MAX_DATA_SIZE.
 
-The first event on a sub-buffer simply uses the sub-buffer's timestamp
-and keeps a "delta" of zero. The "before_stamp" and "write_stamp" are not
-used in the algorithm in this case. There's no reason to try to fix the
-before_stamp when this happens.
-
-As a bonus, it removes a cmpxchg() when crossing sub-buffers!
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231211114420.36dde01b@gandalf.local.home
+Link: https://lore.kernel.org/linux-trace-kernel/20231212072558.61f76493@gandalf.local.home
 
 Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: a389d86f7fd09 ("ring-buffer: Have nested events still record running time stamp")
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 785888c544e04 ("ring-buffer: Have rb_iter_head_event() handle concurrent writer")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ kernel/trace/ring_buffer.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/kernel/trace/ring_buffer.c
 +++ b/kernel/trace/ring_buffer.c
-@@ -3601,14 +3601,7 @@ __rb_reserve_next(struct ring_buffer_per
+@@ -2403,7 +2403,7 @@ rb_iter_head_event(struct ring_buffer_it
+ 	 */
+ 	barrier();
  
- 	/* See if we shot pass the end of this buffer page */
- 	if (unlikely(write > BUF_PAGE_SIZE)) {
--		/* before and after may now different, fix it up*/
--		b_ok = rb_time_read(&cpu_buffer->before_stamp, &info->before);
--		a_ok = rb_time_read(&cpu_buffer->write_stamp, &info->after);
--		if (a_ok && b_ok && info->before != info->after)
--			(void)rb_time_cmpxchg(&cpu_buffer->before_stamp,
--					      info->before, info->after);
--		if (a_ok && b_ok)
--			check_buffer(cpu_buffer, info, CHECK_FULL_PAGE);
-+		check_buffer(cpu_buffer, info, CHECK_FULL_PAGE);
- 		return rb_move_tail(cpu_buffer, tail, info);
- 	}
+-	if ((iter->head + length) > commit || length > BUF_MAX_DATA_SIZE)
++	if ((iter->head + length) > commit || length > BUF_PAGE_SIZE)
+ 		/* Writer corrupted the read? */
+ 		goto reset;
  
+@@ -5113,7 +5113,8 @@ ring_buffer_read_prepare(struct trace_bu
+ 	if (!iter)
+ 		return NULL;
+ 
+-	iter->event = kmalloc(BUF_MAX_DATA_SIZE, flags);
++	/* Holds the entire event: data and meta data */
++	iter->event = kmalloc(BUF_PAGE_SIZE, flags);
+ 	if (!iter->event) {
+ 		kfree(iter);
+ 		return NULL;
 
 
