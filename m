@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55359498BA;
-	Mon, 18 Dec 2023 14:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAA8129EFB;
+	Mon, 18 Dec 2023 14:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IxoO4QB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72F85C433C8;
-	Mon, 18 Dec 2023 14:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xFyQfmxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3082BC433C8;
+	Mon, 18 Dec 2023 14:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908157;
-	bh=yg1wNAkOHX+KCv+PBXiRvibKO7B7nhOJiOSno6bsVaw=;
+	s=korg; t=1702908160;
+	bh=Z4dmaTdmDWsY9nietSOPQXWIoy/ikZKFGdorlM+yUPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IxoO4QBLPNc1yX3hfEULmThoQy2JcI9NCwoGqesTXESYPrWiGSCgByA31Gxjxffz
-	 26FCsY8Oz4WwRx+MdLnHIpL9a1Va1zzdY5wlOpTwDKdamxIWpmBzRHJWNtivJ3KbBo
-	 8gjLUO7YuIGybiiJLATaPjTxYZOH3/z4juyWHa/g=
+	b=xFyQfmxJpSwJ2PQSWicb51DcK4T87G2DvmcwmY6YHmIWQBNIpzkYKv9aB1FEyIHRu
+	 ZFLfjEOG+sAozDL64yXLjUztYZX4nrI3Wj0PRgYCB5eSCdccbkfR5t3lsZzkFiNJaB
+	 YyK47kkGgPiJrIgwit+xRSxXtxWsEaE8xDslvU2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 074/166] PCI: loongson: Limit MRRS to 256
-Date: Mon, 18 Dec 2023 14:50:40 +0100
-Message-ID: <20231218135108.370530046@linuxfoundation.org>
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Michael Bottini <michael.a.bottini@linux.intel.com>,
+	"David E. Box" <david.e.box@linux.intel.com>
+Subject: [PATCH 6.6 075/166] PCI/ASPM: Add pci_enable_link_state_locked()
+Date: Mon, 18 Dec 2023 14:50:41 +0100
+Message-ID: <20231218135108.402889951@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -42,106 +44,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit ef61a0405742a9f7f6051bc6fd2f017d87d07911 upstream.
+commit 718ab8226636a1a3a7d281f5d6a7ad7c925efe5a upstream.
 
-This is a partial revert of 8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS
-increases") for MIPS-based Loongson.
+Add pci_enable_link_state_locked() for enabling link states that can be
+used in contexts where a pci_bus_sem read lock is already held (e.g. from
+pci_walk_bus()).
 
-Some MIPS Loongson systems don't support arbitrary Max_Read_Request_Size
-(MRRS) settings.  8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS
-increases") worked around that by (1) assuming that firmware configured
-MRRS to the maximum supported value and (2) preventing the PCI core from
-increasing MRRS.
+This helper will be used to fix a couple of potential deadlocks where
+the current helper is called with the lock already held, hence the CC
+stable tag.
 
-Unfortunately, some firmware doesn't set that maximum MRRS correctly, which
-results in devices not being initialized correctly.  One symptom, from the
-Debian report below, is this:
-
-  ata4.00: exception Emask 0x0 SAct 0x20000000 SErr 0x0 action 0x6 frozen
-  ata4.00: failed command: WRITE FPDMA QUEUED
-  ata4.00: cmd 61/20:e8:00:f0:e1/00:00:00:00:00/40 tag 29 ncq dma 16384 out
-           res 40/00:00:00:00:00/00:00:00:00:00/00 Emask 0x4 (timeout)
-  ata4.00: status: { DRDY }
-  ata4: hard resetting link
-
-Limit MRRS to 256 because MIPS Loongson with higher MRRS support is
-considered rare.
-
-This must be done at device enablement stage because the MRRS setting may
-get lost if PCI_COMMAND_MASTER on the parent bridge is cleared, and we are
-only sure parent bridge is enabled at this point.
-
-Fixes: 8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS increases")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217680
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1035587
-Link: https://lore.kernel.org/r/20231201115028.84351-1-jiaxun.yang@flygoat.com
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Fixes: f492edb40b54 ("PCI: vmd: Add quirk to configure PCIe ASPM and LTR")
+Link: https://lore.kernel.org/r/20231128081512.19387-2-johan+linaro@kernel.org
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+[bhelgaas: include helper name in subject, commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Huacai Chen <chenhuacai@loongson.cn>
-Cc: stable@vger.kernel.org
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: <stable@vger.kernel.org>	# 6.3
+Cc: Michael Bottini <michael.a.bottini@linux.intel.com>
+Cc: David E. Box <david.e.box@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-loongson.c |   46 ++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 5 deletions(-)
+ drivers/pci/pcie/aspm.c |   53 ++++++++++++++++++++++++++++++++++++------------
+ include/linux/pci.h     |    3 ++
+ 2 files changed, 43 insertions(+), 13 deletions(-)
 
---- a/drivers/pci/controller/pci-loongson.c
-+++ b/drivers/pci/controller/pci-loongson.c
-@@ -80,13 +80,49 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LO
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
- 			DEV_LS7A_LPC, system_bus_quirk);
+--- a/drivers/pci/pcie/aspm.c
++++ b/drivers/pci/pcie/aspm.c
+@@ -1102,17 +1102,7 @@ int pci_disable_link_state(struct pci_de
+ }
+ EXPORT_SYMBOL(pci_disable_link_state);
  
-+/*
-+ * Some Loongson PCIe ports have hardware limitations on their Maximum Read
-+ * Request Size. They can't handle anything larger than this.  Sane
-+ * firmware will set proper MRRS at boot, so we only need no_inc_mrrs for
-+ * bridges. However, some MIPS Loongson firmware doesn't set MRRS properly,
-+ * so we have to enforce maximum safe MRRS, which is 256 bytes.
-+ */
-+#ifdef CONFIG_MIPS
-+static void loongson_set_min_mrrs_quirk(struct pci_dev *pdev)
-+{
-+	struct pci_bus *bus = pdev->bus;
-+	struct pci_dev *bridge;
-+	static const struct pci_device_id bridge_devids[] = {
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS2K_PCIE_PORT0) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT0) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT1) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT2) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT3) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT4) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT5) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT6) },
-+		{ 0, },
-+	};
-+
-+	/* look for the matching bridge */
-+	while (!pci_is_root_bus(bus)) {
-+		bridge = bus->self;
-+		bus = bus->parent;
-+
-+		if (pci_match_id(bridge_devids, bridge)) {
-+			if (pcie_get_readrq(pdev) > 256) {
-+				pci_info(pdev, "limiting MRRS to 256\n");
-+				pcie_set_readrq(pdev, 256);
-+			}
-+			break;
-+		}
-+	}
-+}
-+DECLARE_PCI_FIXUP_ENABLE(PCI_ANY_ID, PCI_ANY_ID, loongson_set_min_mrrs_quirk);
-+#endif
-+
- static void loongson_mrrs_quirk(struct pci_dev *pdev)
+-/**
+- * pci_enable_link_state - Clear and set the default device link state so that
+- * the link may be allowed to enter the specified states. Note that if the
+- * BIOS didn't grant ASPM control to the OS, this does nothing because we can't
+- * touch the LNKCTL register. Also note that this does not enable states
+- * disabled by pci_disable_link_state(). Return 0 or a negative errno.
+- *
+- * @pdev: PCI device
+- * @state: Mask of ASPM link states to enable
+- */
+-int pci_enable_link_state(struct pci_dev *pdev, int state)
++static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
  {
--	/*
--	 * Some Loongson PCIe ports have h/w limitations of maximum read
--	 * request size. They can't handle anything larger than this. So
--	 * force this limit on any devices attached under these ports.
--	 */
- 	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
+ 	struct pcie_link_state *link = pcie_aspm_get_link(pdev);
  
- 	bridge->no_inc_mrrs = 1;
+@@ -1129,7 +1119,8 @@ int pci_enable_link_state(struct pci_dev
+ 		return -EPERM;
+ 	}
+ 
+-	down_read(&pci_bus_sem);
++	if (!locked)
++		down_read(&pci_bus_sem);
+ 	mutex_lock(&aspm_lock);
+ 	link->aspm_default = 0;
+ 	if (state & PCIE_LINK_STATE_L0S)
+@@ -1150,12 +1141,48 @@ int pci_enable_link_state(struct pci_dev
+ 	link->clkpm_default = (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
+ 	pcie_set_clkpm(link, policy_to_clkpm_state(link));
+ 	mutex_unlock(&aspm_lock);
+-	up_read(&pci_bus_sem);
++	if (!locked)
++		up_read(&pci_bus_sem);
+ 
+ 	return 0;
+ }
++
++/**
++ * pci_enable_link_state - Clear and set the default device link state so that
++ * the link may be allowed to enter the specified states. Note that if the
++ * BIOS didn't grant ASPM control to the OS, this does nothing because we can't
++ * touch the LNKCTL register. Also note that this does not enable states
++ * disabled by pci_disable_link_state(). Return 0 or a negative errno.
++ *
++ * @pdev: PCI device
++ * @state: Mask of ASPM link states to enable
++ */
++int pci_enable_link_state(struct pci_dev *pdev, int state)
++{
++	return __pci_enable_link_state(pdev, state, false);
++}
+ EXPORT_SYMBOL(pci_enable_link_state);
+ 
++/**
++ * pci_enable_link_state_locked - Clear and set the default device link state
++ * so that the link may be allowed to enter the specified states. Note that if
++ * the BIOS didn't grant ASPM control to the OS, this does nothing because we
++ * can't touch the LNKCTL register. Also note that this does not enable states
++ * disabled by pci_disable_link_state(). Return 0 or a negative errno.
++ *
++ * @pdev: PCI device
++ * @state: Mask of ASPM link states to enable
++ *
++ * Context: Caller holds pci_bus_sem read lock.
++ */
++int pci_enable_link_state_locked(struct pci_dev *pdev, int state)
++{
++	lockdep_assert_held_read(&pci_bus_sem);
++
++	return __pci_enable_link_state(pdev, state, true);
++}
++EXPORT_SYMBOL(pci_enable_link_state_locked);
++
+ static int pcie_aspm_set_policy(const char *val,
+ 				const struct kernel_param *kp)
+ {
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1803,6 +1803,7 @@ extern bool pcie_ports_native;
+ int pci_disable_link_state(struct pci_dev *pdev, int state);
+ int pci_disable_link_state_locked(struct pci_dev *pdev, int state);
+ int pci_enable_link_state(struct pci_dev *pdev, int state);
++int pci_enable_link_state_locked(struct pci_dev *pdev, int state);
+ void pcie_no_aspm(void);
+ bool pcie_aspm_support_enabled(void);
+ bool pcie_aspm_enabled(struct pci_dev *pdev);
+@@ -1813,6 +1814,8 @@ static inline int pci_disable_link_state
+ { return 0; }
+ static inline int pci_enable_link_state(struct pci_dev *pdev, int state)
+ { return 0; }
++static inline int pci_enable_link_state_locked(struct pci_dev *pdev, int state)
++{ return 0; }
+ static inline void pcie_no_aspm(void) { }
+ static inline bool pcie_aspm_support_enabled(void) { return false; }
+ static inline bool pcie_aspm_enabled(struct pci_dev *pdev) { return false; }
 
 
