@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5871D14F;
-	Mon, 18 Dec 2023 14:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5691D122;
+	Mon, 18 Dec 2023 14:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2D7ILA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16516C433C8;
-	Mon, 18 Dec 2023 14:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIOxhIJp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0080C433C7;
+	Mon, 18 Dec 2023 14:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908686;
-	bh=Aneo/Tg1CoZGr2a/8lEvfjmtF9fi2HXi5xrcfX6Q+iA=;
+	s=korg; t=1702908689;
+	bh=7FRUCdXn/Hy8VPYagjtNnp7jUnbQIXHjlzTpob+ogWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l2D7ILA20dgekC9NG2eFG/ctExhHfiU0pEHj+0QZuseoglfuNyUS0EVz8e8NlR87M
-	 IDOCemOk4aP8BipWWnuXrcycIV4rk0FOuWKrX457mMkpOMT6JvA6EkR2zA0twLcH5g
-	 0FX750ZN34QJFc9iAxPPw3dDXjefjGNBnnhsN+6s=
+	b=pIOxhIJpvmi0OnAghCINeMflIZpa90JNr85TEPKJyx8rKx/Y2cyUlebV1I7QYQJvZ
+	 E3hMeKLiGXa4ftKJE1oGZHrJOIzx1u+IjHJUHkr2izaeHesO/FEitoIKTEeE335wo8
+	 1Tugv+xcRfjTv2u0Zc3JQum/DYCW59gxBqwpLEd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 37/40] ring-buffer: Fix memory leak of free page
-Date: Mon, 18 Dec 2023 14:52:32 +0100
-Message-ID: <20231218135044.166150764@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 38/40] mmc: block: Be sure to wait while busy in CQE error recovery
+Date: Mon, 18 Dec 2023 14:52:33 +0100
+Message-ID: <20231218135044.217362346@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135042.748715259@linuxfoundation.org>
 References: <20231218135042.748715259@linuxfoundation.org>
@@ -43,48 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 17d801758157bec93f26faaf5ff1a8b9a552d67a upstream.
+commit c616696a902987352426fdaeec1b0b3240949e6b upstream.
 
-Reading the ring buffer does a swap of a sub-buffer within the ring buffer
-with a empty sub-buffer. This allows the reader to have full access to the
-content of the sub-buffer that was swapped out without having to worry
-about contention with the writer.
+STOP command does not guarantee to wait while busy, but subsequent command
+MMC_CMDQ_TASK_MGMT to discard the queue will fail if the card is busy, so
+be sure to wait by employing mmc_poll_for_busy().
 
-The readers call ring_buffer_alloc_read_page() to allocate a page that
-will be used to swap with the ring buffer. When the code is finished with
-the reader page, it calls ring_buffer_free_read_page(). Instead of freeing
-the page, it stores it as a spare. Then next call to
-ring_buffer_alloc_read_page() will return this spare instead of calling
-into the memory management system to allocate a new page.
-
-Unfortunately, on freeing of the ring buffer, this spare page is not
-freed, and causes a memory leak.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231210221250.7b9cc83c@rorschach.local.home
-
+Fixes: 72a5af554df8 ("mmc: core: Add support for handling CQE requests")
 Cc: stable@vger.kernel.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 73a757e63114d ("ring-buffer: Return reader page back into existing ring buffer")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-4-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Tested-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/core/core.c    |    2 ++
+ drivers/mmc/core/mmc_ops.c |    5 +++--
+ drivers/mmc/core/mmc_ops.h |    2 ++
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1414,6 +1414,8 @@ static void rb_free_cpu_buffer(struct ri
- 		free_buffer_page(bpage);
- 	}
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -570,6 +570,8 @@ int mmc_cqe_recovery(struct mmc_host *ho
+ 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
+ 	mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
  
-+	free_page((unsigned long)cpu_buffer->free_page);
++	mmc_poll_for_busy(host->card, MMC_CQE_RECOVERY_TIMEOUT, true, true);
 +
- 	kfree(cpu_buffer);
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.opcode       = MMC_CMDQ_TASK_MGMT;
+ 	cmd.arg          = 1; /* Discard entire queue */
+--- a/drivers/mmc/core/mmc_ops.c
++++ b/drivers/mmc/core/mmc_ops.c
+@@ -450,8 +450,8 @@ int mmc_switch_status(struct mmc_card *c
+ 	return __mmc_switch_status(card, true);
  }
  
+-static int mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
+-			bool send_status, bool retry_crc_err)
++int mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
++		      bool send_status, bool retry_crc_err)
+ {
+ 	struct mmc_host *host = card->host;
+ 	int err;
+@@ -504,6 +504,7 @@ static int mmc_poll_for_busy(struct mmc_
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mmc_poll_for_busy);
+ 
+ /**
+  *	__mmc_switch - modify EXT_CSD register
+--- a/drivers/mmc/core/mmc_ops.h
++++ b/drivers/mmc/core/mmc_ops.h
+@@ -31,6 +31,8 @@ int mmc_can_ext_csd(struct mmc_card *car
+ int mmc_get_ext_csd(struct mmc_card *card, u8 **new_ext_csd);
+ int mmc_switch_status(struct mmc_card *card);
+ int __mmc_switch_status(struct mmc_card *card, bool crc_err_fatal);
++int mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
++		      bool send_status, bool retry_crc_err);
+ int __mmc_switch(struct mmc_card *card, u8 set, u8 index, u8 value,
+ 		unsigned int timeout_ms, unsigned char timing,
+ 		bool use_busy_signal, bool send_status,	bool retry_crc_err);
 
 
