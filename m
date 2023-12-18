@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203CF129EF7;
-	Mon, 18 Dec 2023 13:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6B4129EC8;
+	Mon, 18 Dec 2023 13:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eEu6T0Q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97CAFC433C7;
-	Mon, 18 Dec 2023 13:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUI6kxCu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4139EC433C8;
+	Mon, 18 Dec 2023 13:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907832;
-	bh=UdBTnl6M5upBHTYKzuwulZ1QSae5At2lewOV+j24r+E=;
+	s=korg; t=1702907834;
+	bh=eNyj66gX066jB/dJiawrOowG6euyfmsRQYRle+3gojs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eEu6T0Q7mKK4p8BGXjiqLw+qOq8hl7w06WaCxucWJRhcT+U86EZMrRjWZ83Kkfdx8
-	 Cxr1x7S0iG7Q1XOlCLp/ofV/hzU851ApSNZ7uFJTAMKob+TAfzOV7KYdrJCbktIgFW
-	 C9Uv2N4X9IEOC7UIpa96vI4GI6iZOQfHFE76XQro=
+	b=VUI6kxCuE/DQBqT7yli9y1laTLjnoI0bOu8RxqRuIm+AR38ZJCxXjPCxgFk9rXo0j
+	 W72qBG5Vk6iEXwo6e5IOOgALtpuGo9cM6QnD/HvGXCbssSptBi6tVsPJ0YpoFE4Rvc
+	 E+r4F3mKi0OBBj3QKPRHXBW1RxoKOOUoNjeub+lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Agroskin <shayagr@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Feiyang Chen <chenfeiyang@loongson.cn>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/106] net: ena: Fix XDP redirection error
-Date: Mon, 18 Dec 2023 14:50:48 +0100
-Message-ID: <20231218135056.500914456@linuxfoundation.org>
+Subject: [PATCH 6.1 035/106] stmmac: dwmac-loongson: Make sure MDIO is initialized before use
+Date: Mon, 18 Dec 2023 14:50:49 +0100
+Message-ID: <20231218135056.539273642@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -43,41 +44,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Arinzon <darinzon@amazon.com>
+From: Yanteng Si <siyanteng@loongson.cn>
 
-[ Upstream commit 4ab138ca0a340e6d6e7a6a9bd5004bd8f83127ca ]
+[ Upstream commit e87d3a1370ce9f04770d789bcf7cce44865d2e8d ]
 
-When sending TX packets, the meta descriptor can be all zeroes
-as no meta information is required (as in XDP).
+Generic code will use mdio. If it is not initialized before use,
+the kernel will Oops.
 
-This patch removes the validity check, as when
-`disable_meta_caching` is enabled, such TX packets will be
-dropped otherwise.
-
-Fixes: 0e3a3f6dacf0 ("net: ena: support new LLQ acceleration mode")
-Signed-off-by: Shay Agroskin <shayagr@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Link: https://lore.kernel.org/r/20231211062801.27891-5-darinzon@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 30bba69d7db4 ("stmmac: pci: Add dwmac support for Loongson")
+Signed-off-by: Yanteng Si <siyanteng@loongson.cn>
+Signed-off-by: Feiyang Chen <chenfeiyang@loongson.cn>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_eth_com.c | 3 ---
- 1 file changed, 3 deletions(-)
+ .../net/ethernet/stmicro/stmmac/dwmac-loongson.c   | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_eth_com.c b/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-index 3d6f0a466a9ed..f9f886289b970 100644
---- a/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-@@ -328,9 +328,6 @@ static int ena_com_create_and_store_tx_meta_desc(struct ena_com_io_sq *io_sq,
- 	 * compare it to the stored version, just create the meta
- 	 */
- 	if (io_sq->disable_meta_caching) {
--		if (unlikely(!ena_tx_ctx->meta_valid))
--			return -EINVAL;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+index a25c187d31853..49c7aa86faaa8 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+@@ -68,17 +68,15 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
+ 	if (!plat)
+ 		return -ENOMEM;
+ 
++	plat->mdio_bus_data = devm_kzalloc(&pdev->dev,
++					   sizeof(*plat->mdio_bus_data),
++					   GFP_KERNEL);
++	if (!plat->mdio_bus_data)
++		return -ENOMEM;
++
+ 	plat->mdio_node = of_get_child_by_name(np, "mdio");
+ 	if (plat->mdio_node) {
+ 		dev_info(&pdev->dev, "Found MDIO subnode\n");
 -
- 		*have_meta = true;
- 		return ena_com_create_meta(io_sq, ena_meta);
+-		plat->mdio_bus_data = devm_kzalloc(&pdev->dev,
+-						   sizeof(*plat->mdio_bus_data),
+-						   GFP_KERNEL);
+-		if (!plat->mdio_bus_data) {
+-			ret = -ENOMEM;
+-			goto err_put_node;
+-		}
+ 		plat->mdio_bus_data->needs_reset = true;
  	}
+ 
 -- 
 2.43.0
 
