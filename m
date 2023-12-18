@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF4D1D127;
-	Mon, 18 Dec 2023 13:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68951D13A;
+	Mon, 18 Dec 2023 13:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tnpdm+XZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910E5C433C8;
-	Mon, 18 Dec 2023 13:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZl0ImaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCC0C433C7;
+	Mon, 18 Dec 2023 13:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907958;
-	bh=Xm6b1MT/7vuP4yOAf/cQLQ1GbMybGUCRJ0RnGDn9oSg=;
+	s=korg; t=1702907961;
+	bh=bMcqL8Ojjr4fbUvEFNn5c1lzgEBjqyXKg41KlUAnQu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tnpdm+XZOKB23BQ57FR8eEaqZpct68hFmw35rtR8/CQZRp6KF4cEVoBGVfRFUbtE4
-	 jljFHwYNiU8Yu6ZmHSLzRVFhGsCfzCI0bxVU+TdfnBS21s24BHNPEV5vsgp/vPm9Il
-	 WEPoGQ5fTa+Za5VbOCJ9EKAesRPlhg4NYgqKjWu0=
+	b=HZl0ImaVFgOIViI0gFFyCDIiVrroOALJHxhUXgwbHydUt2eqVwLAJIDrDU7drn8vb
+	 XJRArsGrcNXFJo56JEsgPyaQP/+mdqthxu5Rzp7cv3cOYEww0ZJ26Np1Bek++bjm5n
+	 CsbDoz/f5c4qAxFy0feGAzMkVqu/EZn9TD12U3OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 096/106] tracing: Update snapshot buffer on resize if it is allocated
-Date: Mon, 18 Dec 2023 14:51:50 +0100
-Message-ID: <20231218135059.165518868@linuxfoundation.org>
+Subject: [PATCH 6.1 097/106] ring-buffer: Do not update before stamp when switching sub-buffers
+Date: Mon, 18 Dec 2023 14:51:51 +0100
+Message-ID: <20231218135059.199953469@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -45,57 +45,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit d06aff1cb13d2a0d52b48e605462518149c98c81 upstream.
+commit 9e45e39dc249c970d99d2681f6bcb55736fd725c upstream.
 
-The snapshot buffer is to mimic the main buffer so that when a snapshot is
-needed, the snapshot and main buffer are swapped. When the snapshot buffer
-is allocated, it is set to the minimal size that the ring buffer may be at
-and still functional. When it is allocated it becomes the same size as the
-main ring buffer, and when the main ring buffer changes in size, it should
-do.
+The ring buffer timestamps are synchronized by two timestamp placeholders.
+One is the "before_stamp" and the other is the "write_stamp" (sometimes
+referred to as the "after stamp" but only in the comments. These two
+stamps are key to knowing how to handle nested events coming in with a
+lockless system.
 
-Currently, the resize only updates the snapshot buffer if it's used by the
-current tracer (ie. the preemptirqsoff tracer). But it needs to be updated
-anytime it is allocated.
+When moving across sub-buffers, the before stamp is updated but the write
+stamp is not. There's an effort to put back the before stamp to something
+that seems logical in case there's nested events. But as the current event
+is about to cross sub-buffers, and so will any new nested event that happens,
+updating the before stamp is useless, and could even introduce new race
+conditions.
 
-When changing the size of the main buffer, instead of looking to see if
-the current tracer is utilizing the snapshot buffer, just check if it is
-allocated to know if it should be updated or not.
+The first event on a sub-buffer simply uses the sub-buffer's timestamp
+and keeps a "delta" of zero. The "before_stamp" and "write_stamp" are not
+used in the algorithm in this case. There's no reason to try to fix the
+before_stamp when this happens.
 
-Also fix typo in comment just above the code change.
+As a bonus, it removes a cmpxchg() when crossing sub-buffers!
 
-Link: https://lore.kernel.org/linux-trace-kernel/20231210225447.48476a6a@rorschach.local.home
+Link: https://lore.kernel.org/linux-trace-kernel/20231211114420.36dde01b@gandalf.local.home
 
 Cc: stable@vger.kernel.org
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: ad909e21bbe69 ("tracing: Add internal tracing_snapshot() functions")
+Fixes: a389d86f7fd09 ("ring-buffer: Have nested events still record running time stamp")
 Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6268,7 +6268,7 @@ static int __tracing_resize_ring_buffer(
- 	if (!tr->array_buffer.buffer)
- 		return 0;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -3601,14 +3601,7 @@ __rb_reserve_next(struct ring_buffer_per
  
--	/* Do not allow tracing while resizng ring buffer */
-+	/* Do not allow tracing while resizing ring buffer */
- 	tracing_stop_tr(tr);
+ 	/* See if we shot pass the end of this buffer page */
+ 	if (unlikely(write > BUF_PAGE_SIZE)) {
+-		/* before and after may now different, fix it up*/
+-		b_ok = rb_time_read(&cpu_buffer->before_stamp, &info->before);
+-		a_ok = rb_time_read(&cpu_buffer->write_stamp, &info->after);
+-		if (a_ok && b_ok && info->before != info->after)
+-			(void)rb_time_cmpxchg(&cpu_buffer->before_stamp,
+-					      info->before, info->after);
+-		if (a_ok && b_ok)
+-			check_buffer(cpu_buffer, info, CHECK_FULL_PAGE);
++		check_buffer(cpu_buffer, info, CHECK_FULL_PAGE);
+ 		return rb_move_tail(cpu_buffer, tail, info);
+ 	}
  
- 	ret = ring_buffer_resize(tr->array_buffer.buffer, size, cpu);
-@@ -6276,7 +6276,7 @@ static int __tracing_resize_ring_buffer(
- 		goto out_start;
- 
- #ifdef CONFIG_TRACER_MAX_TRACE
--	if (!tr->current_trace->use_max_tr)
-+	if (!tr->allocated_snapshot)
- 		goto out;
- 
- 	ret = ring_buffer_resize(tr->max_buffer.buffer, size, cpu);
 
 
