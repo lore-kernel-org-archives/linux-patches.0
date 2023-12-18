@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A810D4237C;
-	Mon, 18 Dec 2023 14:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D38B1D159;
+	Mon, 18 Dec 2023 14:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bg0AHjwC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5E0C433C8;
-	Mon, 18 Dec 2023 14:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyiA9A5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1DEC433C8;
+	Mon, 18 Dec 2023 14:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908092;
-	bh=14/mg4LGQzWN4qxSajDjlKZNJ1p9vERVMgoCCdzKeB8=;
+	s=korg; t=1702908095;
+	bh=NCWPLqLCOFhTvew9IxOBayJ62A8vXGdJZQE/mVQI03Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bg0AHjwC3klF+sg82X1wNsi5tb3YUDhVGXY9s5mWbAxV+S3eR0LUcTdhKAV3ub6eO
-	 fOPSPwsfAKC//yIXjXWS68sYo05tN+ThKjXsc4VuvBW+t2Bx3hPrPq+fIvTGhIdCB6
-	 OqDUG/cxaqihLmZMGleRYt388G9YN+3IttpL3+Ww=
+	b=hyiA9A5WKRE+l2A6pKa75hYjKmOloGXbNG+czyekuXqXX05Zpj//cE0p4d4sx5eUr
+	 wfq9I4K7s2QskLS4mnQNU6saZx8q7c9nVEZVNj7viLclNwB1VJQs96Q8XZfFqyNL3F
+	 lFLmdGX5RwC3eTdVTvIRPlimOu+adR5R8FcqIWac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kuratov <kniv@yandex-team.ru>,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Ajit Khaparde <ajit.khaparde@broadcom.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/166] vsock/virtio: Fix unsigned integer wrap around in virtio_transport_has_space()
-Date: Mon, 18 Dec 2023 14:50:16 +0100
-Message-ID: <20231218135107.251018931@linuxfoundation.org>
+Subject: [PATCH 6.6 024/166] bnxt_en: Clear resource reservation during resume
+Date: Mon, 18 Dec 2023 14:49:50 +0100
+Message-ID: <20231218135106.016234558@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -43,38 +46,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: Somnath Kotur <somnath.kotur@broadcom.com>
 
-[ Upstream commit 60316d7f10b17a7ebb1ead0642fee8710e1560e0 ]
+[ Upstream commit 9ef7c58f5abe41e6d91f37f28fe2d851ffedd92a ]
 
-We need to do signed arithmetic if we expect condition
-`if (bytes < 0)` to be possible
+We are issuing HWRM_FUNC_RESET cmd to reset the device including
+all reserved resources, but not clearing the reservations
+within the driver struct. As a result, when the driver re-initializes
+as part of resume, it believes that there is no need to do any
+resource reservation and goes ahead and tries to allocate rings
+which will eventually fail beyond a certain number pre-reserved by
+the firmware.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE
-
-Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://lore.kernel.org/r/20231211162317.4116625-1-kniv@yandex-team.ru
+Fixes: 674f50a5b026 ("bnxt_en: Implement new method to reserve rings.")
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20231208001658.14230-2-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 8bc272b6003bb..4084578b0b911 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -679,7 +679,7 @@ static s64 virtio_transport_has_space(struct vsock_sock *vsk)
- 	struct virtio_vsock_sock *vvs = vsk->trans;
- 	s64 bytes;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 7551aa8068f8f..4d2296f201adb 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -13897,6 +13897,8 @@ static int bnxt_resume(struct device *device)
+ 	if (rc)
+ 		goto resume_exit;
  
--	bytes = vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
-+	bytes = (s64)vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
- 	if (bytes < 0)
- 		bytes = 0;
- 
++	bnxt_clear_reservations(bp, true);
++
+ 	if (bnxt_hwrm_func_drv_rgtr(bp, NULL, 0, false)) {
+ 		rc = -ENODEV;
+ 		goto resume_exit;
 -- 
 2.43.0
 
