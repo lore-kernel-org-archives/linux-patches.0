@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35BD1D12A;
-	Mon, 18 Dec 2023 14:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FC3129EF9;
+	Mon, 18 Dec 2023 14:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jROeVSPB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FACC433C7;
-	Mon, 18 Dec 2023 14:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI3ltvvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA685C433C7;
+	Mon, 18 Dec 2023 14:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908907;
-	bh=EBauG6L/PeW4o1yrqf0FqCD67IMM5xmggefVZJT0kOw=;
+	s=korg; t=1702908911;
+	bh=ncJSjUkBwCjAOSV750X0AWjuad/KRcwFiQjUcxaixXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jROeVSPBjdMOW1NU3gCv9S8ghFtmSfZukwpoAma4rjVE8w5CJaEapI+68uQcb587p
-	 m087Y4IaGE2CCMaUdsZzFkY/K+gTcpDrl5RlUEWr+U0QVuU17GZfbD9hzHNSaKFAse
-	 +MFRp9pTVbomnMbNW7Y5MyM5L8KHHc4ymVCJnbNA=
+	b=fI3ltvvWCo3N3SJRk/1qWGbk00CbCXkSanTD+wW2GcRdBbs0WLmJrF7ULlkHTPbBm
+	 mfkAKhYFqcmeRuiM0AkzeCqNlDXNUtPFl3dAdVEDOco6ca8K/wKEvNdBzodWtCdSa3
+	 Xwkq30FDPor/V/A65xKzPqDVm0Wymvr6qh4ta18Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Lech Perczak <lech.perczak@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 60/83] net: usb: qmi_wwan: claim interface 4 for ZTE MF290
-Date: Mon, 18 Dec 2023 14:52:21 +0100
-Message-ID: <20231218135052.372118812@linuxfoundation.org>
+	Naveen N Rao <naveen@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.15 78/83] powerpc/ftrace: Create a dummy stackframe to fix stack unwind
+Date: Mon, 18 Dec 2023 14:52:39 +0100
+Message-ID: <20231218135053.171011854@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -37,72 +35,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lech Perczak <lech.perczak@gmail.com>
+From: Naveen N Rao <naveen@kernel.org>
 
-[ Upstream commit 99360d9620f09fb8bc15548d855011bbb198c680 ]
+commit 41a506ef71eb38d94fe133f565c87c3e06ccc072 upstream.
 
-Interface 4 is used by for QMI interface in stock firmware of MF28D, the
-router which uses MF290 modem. Rebind it to qmi_wwan after freeing it up
-from option driver.
-The proper configuration is:
+With ppc64 -mprofile-kernel and ppc32 -pg, profiling instructions to
+call into ftrace are emitted right at function entry. The instruction
+sequence used is minimal to reduce overhead. Crucially, a stackframe is
+not created for the function being traced. This breaks stack unwinding
+since the function being traced does not have a stackframe for itself.
+As such, it never shows up in the backtrace:
 
-Interface mapping is:
-0: QCDM, 1: (unknown), 2: AT (PCUI), 2: AT (Modem), 4: QMI
+/sys/kernel/debug/tracing # echo 1 > /proc/sys/kernel/stack_tracer_enabled
+/sys/kernel/debug/tracing # cat stack_trace
+        Depth    Size   Location    (17 entries)
+        -----    ----   --------
+  0)     4144      32   ftrace_call+0x4/0x44
+  1)     4112     432   get_page_from_freelist+0x26c/0x1ad0
+  2)     3680     496   __alloc_pages+0x290/0x1280
+  3)     3184     336   __folio_alloc+0x34/0x90
+  4)     2848     176   vma_alloc_folio+0xd8/0x540
+  5)     2672     272   __handle_mm_fault+0x700/0x1cc0
+  6)     2400     208   handle_mm_fault+0xf0/0x3f0
+  7)     2192      80   ___do_page_fault+0x3e4/0xbe0
+  8)     2112     160   do_page_fault+0x30/0xc0
+  9)     1952     256   data_access_common_virt+0x210/0x220
+ 10)     1696     400   0xc00000000f16b100
+ 11)     1296     384   load_elf_binary+0x804/0x1b80
+ 12)      912     208   bprm_execve+0x2d8/0x7e0
+ 13)      704      64   do_execveat_common+0x1d0/0x2f0
+ 14)      640     160   sys_execve+0x54/0x70
+ 15)      480      64   system_call_exception+0x138/0x350
+ 16)      416     416   system_call_common+0x160/0x2c4
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  4 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=19d2 ProdID=0189 Rev= 0.00
-S:  Manufacturer=ZTE, Incorporated
-S:  Product=ZTE LTE Technologies MSM
-C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
+Fix this by having ftrace create a dummy stackframe for the function
+being traced. With this, backtraces now capture the function being
+traced:
 
-Cc: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Lech Perczak <lech.perczak@gmail.com>
-Link: https://lore.kernel.org/r/20231117231918.100278-3-lech.perczak@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+/sys/kernel/debug/tracing # cat stack_trace
+        Depth    Size   Location    (17 entries)
+        -----    ----   --------
+  0)     3888      32   _raw_spin_trylock+0x8/0x70
+  1)     3856     576   get_page_from_freelist+0x26c/0x1ad0
+  2)     3280      64   __alloc_pages+0x290/0x1280
+  3)     3216     336   __folio_alloc+0x34/0x90
+  4)     2880     176   vma_alloc_folio+0xd8/0x540
+  5)     2704     416   __handle_mm_fault+0x700/0x1cc0
+  6)     2288      96   handle_mm_fault+0xf0/0x3f0
+  7)     2192      48   ___do_page_fault+0x3e4/0xbe0
+  8)     2144     192   do_page_fault+0x30/0xc0
+  9)     1952     608   data_access_common_virt+0x210/0x220
+ 10)     1344      16   0xc0000000334bbb50
+ 11)     1328     416   load_elf_binary+0x804/0x1b80
+ 12)      912      64   bprm_execve+0x2d8/0x7e0
+ 13)      848     176   do_execveat_common+0x1d0/0x2f0
+ 14)      672     192   sys_execve+0x54/0x70
+ 15)      480      64   system_call_exception+0x138/0x350
+ 16)      416     416   system_call_common+0x160/0x2c4
+
+This results in two additional stores in the ftrace entry code, but
+produces reliable backtraces.
+
+Fixes: 153086644fd1 ("powerpc/ftrace: Add support for -mprofile-kernel ftrace ABI")
+Cc: stable@vger.kernel.org
+Signed-off-by: Naveen N Rao <naveen@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230621051349.759567-1-naveen@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kernel/trace/ftrace_64_mprofile.S |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 5c516bf4d3a5f..846ace9830d3b 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1286,6 +1286,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x19d2, 0x0168, 4)},
- 	{QMI_FIXED_INTF(0x19d2, 0x0176, 3)},
- 	{QMI_FIXED_INTF(0x19d2, 0x0178, 3)},
-+	{QMI_FIXED_INTF(0x19d2, 0x0189, 4)},    /* ZTE MF290 */
- 	{QMI_FIXED_INTF(0x19d2, 0x0191, 4)},	/* ZTE EuFi890 */
- 	{QMI_FIXED_INTF(0x19d2, 0x0199, 1)},	/* ZTE MF820S */
- 	{QMI_FIXED_INTF(0x19d2, 0x0200, 1)},
--- 
-2.43.0
-
+--- a/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
++++ b/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
+@@ -36,6 +36,9 @@ _GLOBAL(ftrace_regs_caller)
+ 	/* Save the original return address in A's stack frame */
+ 	std	r0,LRSAVE(r1)
+ 
++	/* Create a minimal stack frame for representing B */
++	stdu	r1, -STACK_FRAME_MIN_SIZE(r1)
++
+ 	/* Create our stack frame + pt_regs */
+ 	stdu	r1,-SWITCH_FRAME_SIZE(r1)
+ 
+@@ -64,6 +67,8 @@ _GLOBAL(ftrace_regs_caller)
+ 	mflr	r7
+ 	/* Save it as pt_regs->nip */
+ 	std     r7, _NIP(r1)
++	/* Also save it in B's stackframe header for proper unwind */
++	std	r7, LRSAVE+SWITCH_FRAME_SIZE(r1)
+ 	/* Save the read LR in pt_regs->link */
+ 	std     r0, _LINK(r1)
+ 
+@@ -118,7 +123,7 @@ ftrace_regs_call:
+ 	ld	r2, 24(r1)
+ 
+ 	/* Pop our stack frame */
+-	addi r1, r1, SWITCH_FRAME_SIZE
++	addi r1, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
+ 
+ #ifdef CONFIG_LIVEPATCH
+         /* Based on the cmpd above, if the NIP was altered handle livepatch */
+@@ -150,6 +155,9 @@ _GLOBAL(ftrace_caller)
+ 	/* Save the original return address in A's stack frame */
+ 	std	r0, LRSAVE(r1)
+ 
++	/* Create a minimal stack frame for representing B */
++	stdu	r1, -STACK_FRAME_MIN_SIZE(r1)
++
+ 	/* Create our stack frame + pt_regs */
+ 	stdu	r1, -SWITCH_FRAME_SIZE(r1)
+ 
+@@ -163,6 +171,7 @@ _GLOBAL(ftrace_caller)
+ 	/* Get the _mcount() call site out of LR */
+ 	mflr	r7
+ 	std     r7, _NIP(r1)
++	std	r7, LRSAVE+SWITCH_FRAME_SIZE(r1)
+ 
+ 	/* Save callee's TOC in the ABI compliant location */
+ 	std	r2, 24(r1)
+@@ -197,7 +206,7 @@ ftrace_call:
+ 	ld	r2, 24(r1)
+ 
+ 	/* Pop our stack frame */
+-	addi	r1, r1, SWITCH_FRAME_SIZE
++	addi	r1, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
+ 
+ 	/* Reload original LR */
+ 	ld	r0, LRSAVE(r1)
 
 
