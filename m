@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B5537860;
-	Mon, 18 Dec 2023 14:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D928129EF9;
+	Mon, 18 Dec 2023 14:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFiJ9Dz6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBFFC433C8;
-	Mon, 18 Dec 2023 14:08:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zH3zEwU9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B41C433C7;
+	Mon, 18 Dec 2023 14:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908506;
-	bh=tIszlihkCH2NgkLcV2VdavAXxiJ3WktnmETTeSPtatE=;
+	s=korg; t=1702908508;
+	bh=oY5+xR3Wkj6UpIfsYkpxiv0FXo8d6LnLJCd3B6Dacfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFiJ9Dz6hw/U3Qj0p8JJ4Jq8H06mLTxD0zuIeWRXOiUcfosoMm00qQCIXwytZMxQa
-	 FIlrGq2m06zJTI3QV1R4Nmt/X1/7qXuNgbCMmoNlQkdfD+91OAkkZviG6sEJcGhKns
-	 5w1PHPLD9eQLN8IiLd13pLhb4HhgnaWNr3CMJRPs=
+	b=zH3zEwU9z7tsMZDV7klWzkzNLwaMrI6ANwmHppCC1V2ICS8E4v+sfAMGSkD/V5gxf
+	 EiMkX8umz1zAFoMwZQiS1wBQAfmCCQ0pwlcvx0CtiazuH98Cqzjdc2Qn28yR6VJNOs
+	 HBxmfmUPEmBNyhOVSUaQJj4kOFXQpL/Vc/YadvSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changhui Zhong <czhong@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
+	Andrea Tomassetti <andrea.tomassetti-opensource@devo.com>,
+	Coly Li <colyli@suse.de>,
+	Eric Wheeler <bcache@lists.ewheeler.net>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 34/62] blk-throttle: fix lockdep warning of "cgroup_mutex or RCU read lock required!"
-Date: Mon, 18 Dec 2023 14:51:58 +0100
-Message-ID: <20231218135047.789078447@linuxfoundation.org>
+Subject: [PATCH 5.10 35/62] bcache: avoid oversize memory allocation by small stripe_size
+Date: Mon, 18 Dec 2023 14:51:59 +0100
+Message-ID: <20231218135047.829998376@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -43,46 +44,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Coly Li <colyli@suse.de>
 
-[ Upstream commit 27b13e209ddca5979847a1b57890e0372c1edcee ]
+[ Upstream commit baf8fb7e0e5ec54ea0839f0c534f2cdcd79bea9c ]
 
-Inside blkg_for_each_descendant_pre(), both
-css_for_each_descendant_pre() and blkg_lookup() requires RCU read lock,
-and either cgroup_assert_mutex_or_rcu_locked() or rcu_read_lock_held()
-is called.
+Arraies bcache->stripe_sectors_dirty and bcache->full_dirty_stripes are
+used for dirty data writeback, their sizes are decided by backing device
+capacity and stripe size. Larger backing device capacity or smaller
+stripe size make these two arraies occupies more dynamic memory space.
 
-Fix the warning by adding rcu read lock.
+Currently bcache->stripe_size is directly inherited from
+queue->limits.io_opt of underlying storage device. For normal hard
+drives, its limits.io_opt is 0, and bcache sets the corresponding
+stripe_size to 1TB (1<<31 sectors), it works fine 10+ years. But for
+devices do declare value for queue->limits.io_opt, small stripe_size
+(comparing to 1TB) becomes an issue for oversize memory allocations of
+bcache->stripe_sectors_dirty and bcache->full_dirty_stripes, while the
+capacity of hard drives gets much larger in recent decade.
 
-Reported-by: Changhui Zhong <czhong@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20231117023527.3188627-2-ming.lei@redhat.com
+For example a raid5 array assembled by three 20TB hardrives, the raid
+device capacity is 40TB with typical 512KB limits.io_opt. After the math
+calculation in bcache code, these two arraies will occupy 400MB dynamic
+memory. Even worse Andrea Tomassetti reports that a 4KB limits.io_opt is
+declared on a new 2TB hard drive, then these two arraies request 2GB and
+512MB dynamic memory from kzalloc(). The result is that bcache device
+always fails to initialize on his system.
+
+To avoid the oversize memory allocation, bcache->stripe_size should not
+directly inherited by queue->limits.io_opt from the underlying device.
+This patch defines BCH_MIN_STRIPE_SZ (4MB) as minimal bcache stripe size
+and set bcache device's stripe size against the declared limits.io_opt
+value from the underlying storage device,
+- If the declared limits.io_opt > BCH_MIN_STRIPE_SZ, bcache device will
+  set its stripe size directly by this limits.io_opt value.
+- If the declared limits.io_opt < BCH_MIN_STRIPE_SZ, bcache device will
+  set its stripe size by a value multiplying limits.io_opt and euqal or
+  large than BCH_MIN_STRIPE_SZ.
+
+Then the minimal stripe size of a bcache device will always be >= 4MB.
+For a 40TB raid5 device with 512KB limits.io_opt, memory occupied by
+bcache->stripe_sectors_dirty and bcache->full_dirty_stripes will be 50MB
+in total. For a 2TB hard drive with 4KB limits.io_opt, memory occupied
+by these two arraies will be 2.5MB in total.
+
+Such mount of memory allocated for bcache->stripe_sectors_dirty and
+bcache->full_dirty_stripes is reasonable for most of storage devices.
+
+Reported-by: Andrea Tomassetti <andrea.tomassetti-opensource@devo.com>
+Signed-off-by: Coly Li <colyli@suse.de>
+Reviewed-by: Eric Wheeler <bcache@lists.ewheeler.net>
+Link: https://lore.kernel.org/r/20231120052503.6122-2-colyli@suse.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-throttle.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/bcache/bcache.h | 1 +
+ drivers/md/bcache/super.c  | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index c526fdd0a7b90..4bf514a7bd82c 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -1409,6 +1409,7 @@ static void tg_conf_updated(struct throtl_grp *tg, bool global)
- 		   tg_bps_limit(tg, READ), tg_bps_limit(tg, WRITE),
- 		   tg_iops_limit(tg, READ), tg_iops_limit(tg, WRITE));
+diff --git a/drivers/md/bcache/bcache.h b/drivers/md/bcache/bcache.h
+index e8bf4f752e8be..5804a8e6e215a 100644
+--- a/drivers/md/bcache/bcache.h
++++ b/drivers/md/bcache/bcache.h
+@@ -265,6 +265,7 @@ struct bcache_device {
+ #define BCACHE_DEV_WB_RUNNING		3
+ #define BCACHE_DEV_RATE_DW_RUNNING	4
+ 	int			nr_stripes;
++#define BCH_MIN_STRIPE_SZ		((4 << 20) >> SECTOR_SHIFT)
+ 	unsigned int		stripe_size;
+ 	atomic_t		*stripe_sectors_dirty;
+ 	unsigned long		*full_dirty_stripes;
+diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
+index e8c8077667f9e..9c3e1632568c3 100644
+--- a/drivers/md/bcache/super.c
++++ b/drivers/md/bcache/super.c
+@@ -917,6 +917,8 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
  
-+	rcu_read_lock();
- 	/*
- 	 * Update has_rules[] flags for the updated tg's subtree.  A tg is
- 	 * considered to have rules if either the tg itself or any of its
-@@ -1436,6 +1437,7 @@ static void tg_conf_updated(struct throtl_grp *tg, bool global)
- 		this_tg->latency_target = max(this_tg->latency_target,
- 				parent_tg->latency_target);
- 	}
-+	rcu_read_unlock();
+ 	if (!d->stripe_size)
+ 		d->stripe_size = 1 << 31;
++	else if (d->stripe_size < BCH_MIN_STRIPE_SZ)
++		d->stripe_size = roundup(BCH_MIN_STRIPE_SZ, d->stripe_size);
  
- 	/*
- 	 * We're already holding queue_lock and know @tg is valid.  Let's
+ 	n = DIV_ROUND_UP_ULL(sectors, d->stripe_size);
+ 	if (!n || n > max_stripes) {
 -- 
 2.43.0
 
