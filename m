@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB29F129EFE;
-	Mon, 18 Dec 2023 13:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07F6129EFB;
+	Mon, 18 Dec 2023 13:52:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voRnqc6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70468C433C7;
-	Mon, 18 Dec 2023 13:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPcDjVPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA21C433C8;
+	Mon, 18 Dec 2023 13:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907541;
-	bh=i0xEiF8Br2pmjYpOadwuYMiy9yVhh2dmVlGYFQhWnTk=;
+	s=korg; t=1702907544;
+	bh=I9IIdpzQrdyxmr0ZaIHzhF++kcvY4cIbmqZbph0xyHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voRnqc6i6A06lYSWjZC9E2+zdO7f/RGjZzKUxjnR0H01JpXxZuxpwVPn3OXxOP2Wa
-	 NTA44gghwR1+6qVCYHW3G9E/ip3blkrRPHRF7wpNO235FABI5KvuU8T10ZF8So2w11
-	 dVUB4FDxDUrf6iPfIQBgx/+wqYkZn7xRBUxClK/A=
+	b=BPcDjVPE9fGzSs68aGDWUqBQbJdBJGVrJzBefslDkleUuwrlnn1N8yF/tJiNQ0EbX
+	 BtscP86oBPxrNMk38hy5PvWenhmPs6+6nQ621GnDJLSJWyEF51f4scTO1VFob+ggRP
+	 G/dP1eyfDYKXtHKIvw2A/TBkms1ao1oZodtVcxyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.14 24/26] ring-buffer: Fix memory leak of free page
-Date: Mon, 18 Dec 2023 14:51:26 +0100
-Message-ID: <20231218135041.563841107@linuxfoundation.org>
+	Naveen N Rao <naveen@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 4.14 25/26] powerpc/ftrace: Create a dummy stackframe to fix stack unwind
+Date: Mon, 18 Dec 2023 14:51:27 +0100
+Message-ID: <20231218135041.599580301@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
 References: <20231218135040.665690087@linuxfoundation.org>
@@ -43,48 +41,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Naveen N Rao <naveen@kernel.org>
 
-commit 17d801758157bec93f26faaf5ff1a8b9a552d67a upstream.
+commit 41a506ef71eb38d94fe133f565c87c3e06ccc072 upstream.
 
-Reading the ring buffer does a swap of a sub-buffer within the ring buffer
-with a empty sub-buffer. This allows the reader to have full access to the
-content of the sub-buffer that was swapped out without having to worry
-about contention with the writer.
+With ppc64 -mprofile-kernel and ppc32 -pg, profiling instructions to
+call into ftrace are emitted right at function entry. The instruction
+sequence used is minimal to reduce overhead. Crucially, a stackframe is
+not created for the function being traced. This breaks stack unwinding
+since the function being traced does not have a stackframe for itself.
+As such, it never shows up in the backtrace:
 
-The readers call ring_buffer_alloc_read_page() to allocate a page that
-will be used to swap with the ring buffer. When the code is finished with
-the reader page, it calls ring_buffer_free_read_page(). Instead of freeing
-the page, it stores it as a spare. Then next call to
-ring_buffer_alloc_read_page() will return this spare instead of calling
-into the memory management system to allocate a new page.
+/sys/kernel/debug/tracing # echo 1 > /proc/sys/kernel/stack_tracer_enabled
+/sys/kernel/debug/tracing # cat stack_trace
+        Depth    Size   Location    (17 entries)
+        -----    ----   --------
+  0)     4144      32   ftrace_call+0x4/0x44
+  1)     4112     432   get_page_from_freelist+0x26c/0x1ad0
+  2)     3680     496   __alloc_pages+0x290/0x1280
+  3)     3184     336   __folio_alloc+0x34/0x90
+  4)     2848     176   vma_alloc_folio+0xd8/0x540
+  5)     2672     272   __handle_mm_fault+0x700/0x1cc0
+  6)     2400     208   handle_mm_fault+0xf0/0x3f0
+  7)     2192      80   ___do_page_fault+0x3e4/0xbe0
+  8)     2112     160   do_page_fault+0x30/0xc0
+  9)     1952     256   data_access_common_virt+0x210/0x220
+ 10)     1696     400   0xc00000000f16b100
+ 11)     1296     384   load_elf_binary+0x804/0x1b80
+ 12)      912     208   bprm_execve+0x2d8/0x7e0
+ 13)      704      64   do_execveat_common+0x1d0/0x2f0
+ 14)      640     160   sys_execve+0x54/0x70
+ 15)      480      64   system_call_exception+0x138/0x350
+ 16)      416     416   system_call_common+0x160/0x2c4
 
-Unfortunately, on freeing of the ring buffer, this spare page is not
-freed, and causes a memory leak.
+Fix this by having ftrace create a dummy stackframe for the function
+being traced. With this, backtraces now capture the function being
+traced:
 
-Link: https://lore.kernel.org/linux-trace-kernel/20231210221250.7b9cc83c@rorschach.local.home
+/sys/kernel/debug/tracing # cat stack_trace
+        Depth    Size   Location    (17 entries)
+        -----    ----   --------
+  0)     3888      32   _raw_spin_trylock+0x8/0x70
+  1)     3856     576   get_page_from_freelist+0x26c/0x1ad0
+  2)     3280      64   __alloc_pages+0x290/0x1280
+  3)     3216     336   __folio_alloc+0x34/0x90
+  4)     2880     176   vma_alloc_folio+0xd8/0x540
+  5)     2704     416   __handle_mm_fault+0x700/0x1cc0
+  6)     2288      96   handle_mm_fault+0xf0/0x3f0
+  7)     2192      48   ___do_page_fault+0x3e4/0xbe0
+  8)     2144     192   do_page_fault+0x30/0xc0
+  9)     1952     608   data_access_common_virt+0x210/0x220
+ 10)     1344      16   0xc0000000334bbb50
+ 11)     1328     416   load_elf_binary+0x804/0x1b80
+ 12)      912      64   bprm_execve+0x2d8/0x7e0
+ 13)      848     176   do_execveat_common+0x1d0/0x2f0
+ 14)      672     192   sys_execve+0x54/0x70
+ 15)      480      64   system_call_exception+0x138/0x350
+ 16)      416     416   system_call_common+0x160/0x2c4
 
+This results in two additional stores in the ftrace entry code, but
+produces reliable backtraces.
+
+Fixes: 153086644fd1 ("powerpc/ftrace: Add support for -mprofile-kernel ftrace ABI")
 Cc: stable@vger.kernel.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 73a757e63114d ("ring-buffer: Return reader page back into existing ring buffer")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Naveen N Rao <naveen@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230621051349.759567-1-naveen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/kernel/trace/ftrace_64_mprofile.S |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1287,6 +1287,8 @@ static void rb_free_cpu_buffer(struct ri
- 		free_buffer_page(bpage);
- 	}
+--- a/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
++++ b/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
+@@ -41,6 +41,9 @@ _GLOBAL(ftrace_caller)
+ 	/* Save the original return address in A's stack frame */
+ 	std	r0,LRSAVE(r1)
  
-+	free_page((unsigned long)cpu_buffer->free_page);
++	/* Create a minimal stack frame for representing B */
++	stdu	r1, -STACK_FRAME_MIN_SIZE(r1)
 +
- 	kfree(cpu_buffer);
- }
+ 	/* Create our stack frame + pt_regs */
+ 	stdu	r1,-SWITCH_FRAME_SIZE(r1)
  
+@@ -64,6 +67,8 @@ _GLOBAL(ftrace_caller)
+ 	mflr	r7
+ 	/* Save it as pt_regs->nip */
+ 	std     r7, _NIP(r1)
++	/* Also save it in B's stackframe header for proper unwind */
++	std	r7, LRSAVE+SWITCH_FRAME_SIZE(r1)
+ 	/* Save the read LR in pt_regs->link */
+ 	std     r0, _LINK(r1)
+ 
+@@ -146,7 +151,7 @@ ftrace_call:
+ 	ld	r2, 24(r1)
+ 
+ 	/* Pop our stack frame */
+-	addi r1, r1, SWITCH_FRAME_SIZE
++	addi r1, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
+ 
+ #ifdef CONFIG_LIVEPATCH
+         /*
 
 
