@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BBB129ECF;
-	Mon, 18 Dec 2023 14:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E97129ECF;
+	Mon, 18 Dec 2023 14:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gja+/K3q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9CEC433C9;
-	Mon, 18 Dec 2023 14:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0390O1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF33C433C8;
+	Mon, 18 Dec 2023 14:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908648;
-	bh=ThPnzp48ABqVrTIQJrSNkXVvqmGwLUEM8mmThbT2DB0=;
+	s=korg; t=1702908650;
+	bh=aYR87cHzz/wGtC79skjh0R2p+5QDk0vTzDqJG14xyb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gja+/K3qYJ9g+ScJsDTb7a4GMpfHxgAy/yRWAEjv3ce18lTw1vTduWtz9mp11yF07
-	 McvRvtdUvp8DM2BA9UZRiWpYFAg8wy+wGELWlERz5UG/OiEGV+XLG6DzwQ+Y9jVZCE
-	 cFL8wFSTHqiVe9xw93Z+yqlGXmCNBALJzgP/JSWY=
+	b=Y0390O1MGuoNwEaRPvzR+VtohxJqAmZxNXF2DCSeA0dL1WGVJ48aH2X+hkeVF3See
+	 g9a1KyAlYtCWQEfR3C6NLo1Hrne4xGejbp253mSenfkbWDRDiBYtU1v8WiRLwSqTj/
+	 sGZGYq7gyuHZ6sDFrIXLWtrEmyjyVZVAzyxKrebo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coly Li <colyli@suse.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	kernel test robot <lkp@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 24/40] bcache: avoid NULL checking to c->root in run_cache_set()
-Date: Mon, 18 Dec 2023 14:52:19 +0100
-Message-ID: <20231218135043.600128158@linuxfoundation.org>
+Subject: [PATCH 5.4 25/40] platform/x86: intel_telemetry: Fix kernel doc descriptions
+Date: Mon, 18 Dec 2023 14:52:20 +0100
+Message-ID: <20231218135043.638419215@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135042.748715259@linuxfoundation.org>
 References: <20231218135042.748715259@linuxfoundation.org>
@@ -36,43 +38,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Coly Li <colyli@suse.de>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 3eba5e0b2422aec3c9e79822029599961fdcab97 ]
+[ Upstream commit a6584711e64d9d12ab79a450ec3628fd35e4f476 ]
 
-In run_cache_set() after c->root returned from bch_btree_node_get(), it
-is checked by IS_ERR_OR_NULL(). Indeed it is unncessary to check NULL
-because bch_btree_node_get() will not return NULL pointer to caller.
+LKP found issues with a kernel doc in the driver:
 
-This patch replaces IS_ERR_OR_NULL() by IS_ERR() for the above reason.
+core.c:116: warning: Function parameter or member 'ioss_evtconfig' not described in 'telemetry_update_events'
+core.c:188: warning: Function parameter or member 'ioss_evtconfig' not described in 'telemetry_get_eventconfig'
 
-Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20231120052503.6122-11-colyli@suse.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+It looks like it were copy'n'paste typos when these descriptions
+had been introduced. Fix the typos.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310070743.WALmRGSY-lkp@intel.com/
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20231120150756.1661425-1-andriy.shevchenko@linux.intel.com
+Reviewed-by: Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel_telemetry_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
-index d5f57a9551dda..5d1a4eb816694 100644
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -1908,7 +1908,7 @@ static int run_cache_set(struct cache_set *c)
- 		c->root = bch_btree_node_get(c, NULL, k,
- 					     j->btree_level,
- 					     true, NULL);
--		if (IS_ERR_OR_NULL(c->root))
-+		if (IS_ERR(c->root))
- 			goto err;
- 
- 		list_del_init(&c->root->list);
+diff --git a/drivers/platform/x86/intel_telemetry_core.c b/drivers/platform/x86/intel_telemetry_core.c
+index d4040bb222b48..59fc6624b1ac9 100644
+--- a/drivers/platform/x86/intel_telemetry_core.c
++++ b/drivers/platform/x86/intel_telemetry_core.c
+@@ -102,7 +102,7 @@ static const struct telemetry_core_ops telm_defpltops = {
+ /**
+  * telemetry_update_events() - Update telemetry Configuration
+  * @pss_evtconfig: PSS related config. No change if num_evts = 0.
+- * @pss_evtconfig: IOSS related config. No change if num_evts = 0.
++ * @ioss_evtconfig: IOSS related config. No change if num_evts = 0.
+  *
+  * This API updates the IOSS & PSS Telemetry configuration. Old config
+  * is overwritten. Call telemetry_reset_events when logging is over
+@@ -176,7 +176,7 @@ EXPORT_SYMBOL_GPL(telemetry_reset_events);
+ /**
+  * telemetry_get_eventconfig() - Returns the pss and ioss events enabled
+  * @pss_evtconfig: Pointer to PSS related configuration.
+- * @pss_evtconfig: Pointer to IOSS related configuration.
++ * @ioss_evtconfig: Pointer to IOSS related configuration.
+  * @pss_len:	   Number of u32 elements allocated for pss_evtconfig array
+  * @ioss_len:	   Number of u32 elements allocated for ioss_evtconfig array
+  *
 -- 
 2.43.0
 
