@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B4A129EC7;
-	Mon, 18 Dec 2023 14:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629143A1AF;
+	Mon, 18 Dec 2023 14:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc+2O8oj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2046EC433C8;
-	Mon, 18 Dec 2023 14:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNKs3yCz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3016C433C7;
+	Mon, 18 Dec 2023 14:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908437;
-	bh=obD+QrZjilhrMIwHeDTmIP9QZuu3oA4O4aL10Aovaws=;
+	s=korg; t=1702908440;
+	bh=8AWkbRW1YSAnb4q9/CSvAMwc+vpKhn2dVpHlBqboIkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fc+2O8oj6pCo+xrpHvdgwvwNQhAt1hu+0yZWB3TQvZ9noSMvcv8W+FCpoB5z+s6dp
-	 S9mdLMeqAchBjmS7GREdkimi4+BII1m0XxIXbFq1mPgmhywKfJ/0wgmDVL6g7qKVR6
-	 3ZRcptxJK53W0cVcnpbBYMWEc5279HmyNfiK4NYM=
+	b=GNKs3yCzDxFH1sTXH7FC75mRDzVyQ7FO1gi33beCQFdjx5XELbl1zY4ih+NLQC27l
+	 86XlCabkvyCRkn+bfbhdQnxU/rKN9YP6gbc7DkGqYIHY+iVOyz4TNOKJdzwQJ9403e
+	 KzsYIOHkQCU8K/3fFnYs5L7tcCLjxsQIj6oBw3po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Bill MacAllister <bill@ca-zephyr.org>,
+	Jeffrey E Altman <jaltman@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 10/62] net: vlan: introduce skb_vlan_eth_hdr()
-Date: Mon, 18 Dec 2023 14:51:34 +0100
-Message-ID: <20231218135046.673898624@linuxfoundation.org>
+Subject: [PATCH 5.10 02/62] afs: Fix refcount underflow from error handling race
+Date: Mon, 18 Dec 2023 14:51:26 +0100
+Message-ID: <20231218135046.279081936@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -45,247 +46,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 1f5020acb33f926030f62563c86dffca35c7b701 ]
+[ Upstream commit 52bf9f6c09fca8c74388cd41cc24e5d1bff812a9 ]
 
-Similar to skb_eth_hdr() introduced in commit 96cc4b69581d ("macvlan: do
-not assume mac_header is set in macvlan_broadcast()"), let's introduce a
-skb_vlan_eth_hdr() helper which can be used in TX-only code paths to get
-to the VLAN header based on skb->data rather than based on the
-skb_mac_header(skb).
+If an AFS cell that has an unreachable (eg. ENETUNREACH) server listed (VL
+server or fileserver), an asynchronous probe to one of its addresses may
+fail immediately because sendmsg() returns an error.  When this happens, a
+refcount underflow can happen if certain events hit a very small window.
 
-We also consolidate the drivers that dereference skb->data to go through
-this helper.
+The way this occurs is:
 
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 9fc95fe95c3e ("net: fec: correct queue selection")
+ (1) There are two levels of "call" object, the afs_call and the
+     rxrpc_call.  Each of them can be transitioned to a "completed" state
+     in the event of success or failure.
+
+ (2) Asynchronous afs_calls are self-referential whilst they are active to
+     prevent them from evaporating when they're not being processed.  This
+     reference is disposed of when the afs_call is completed.
+
+     Note that an afs_call may only be completed once; once completed
+     completing it again will do nothing.
+
+ (3) When a call transmission is made, the app-side rxrpc code queues a Tx
+     buffer for the rxrpc I/O thread to transmit.  The I/O thread invokes
+     sendmsg() to transmit it - and in the case of failure, it transitions
+     the rxrpc_call to the completed state.
+
+ (4) When an rxrpc_call is completed, the app layer is notified.  In this
+     case, the app is kafs and it schedules a work item to process events
+     pertaining to an afs_call.
+
+ (5) When the afs_call event processor is run, it goes down through the
+     RPC-specific handler to afs_extract_data() to retrieve data from rxrpc
+     - and, in this case, it picks up the error from the rxrpc_call and
+     returns it.
+
+     The error is then propagated to the afs_call and that is completed
+     too.  At this point the self-reference is released.
+
+ (6) If the rxrpc I/O thread manages to complete the rxrpc_call within the
+     window between rxrpc_send_data() queuing the request packet and
+     checking for call completion on the way out, then
+     rxrpc_kernel_send_data() will return the error from sendmsg() to the
+     app.
+
+ (7) Then afs_make_call() will see an error and will jump to the error
+     handling path which will attempt to clean up the afs_call.
+
+ (8) The problem comes when the error handling path in afs_make_call()
+     tries to unconditionally drop an async afs_call's self-reference.
+     This self-reference, however, may already have been dropped by
+     afs_extract_data() completing the afs_call
+
+ (9) The refcount underflows when we return to afs_do_probe_vlserver() and
+     that tries to drop its reference on the afs_call.
+
+Fix this by making afs_make_call() attempt to complete the afs_call rather
+than unconditionally putting it.  That way, if afs_extract_data() manages
+to complete the call first, afs_make_call() won't do anything.
+
+The bug can be forced by making do_udp_sendmsg() return -ENETUNREACH and
+sticking an msleep() in rxrpc_send_data() after the 'success:' label to
+widen the race window.
+
+The error message looks something like:
+
+    refcount_t: underflow; use-after-free.
+    WARNING: CPU: 3 PID: 720 at lib/refcount.c:28 refcount_warn_saturate+0xba/0x110
+    ...
+    RIP: 0010:refcount_warn_saturate+0xba/0x110
+    ...
+    afs_put_call+0x1dc/0x1f0 [kafs]
+    afs_fs_get_capabilities+0x8b/0xe0 [kafs]
+    afs_fs_probe_fileserver+0x188/0x1e0 [kafs]
+    afs_lookup_server+0x3bf/0x3f0 [kafs]
+    afs_alloc_server_list+0x130/0x2e0 [kafs]
+    afs_create_volume+0x162/0x400 [kafs]
+    afs_get_tree+0x266/0x410 [kafs]
+    vfs_get_tree+0x25/0xc0
+    fc_mount+0xe/0x40
+    afs_d_automount+0x1b3/0x390 [kafs]
+    __traverse_mounts+0x8f/0x210
+    step_into+0x340/0x760
+    path_openat+0x13a/0x1260
+    do_filp_open+0xaf/0x160
+    do_sys_openat2+0xaf/0x170
+
+or something like:
+
+    refcount_t: underflow; use-after-free.
+    ...
+    RIP: 0010:refcount_warn_saturate+0x99/0xda
+    ...
+    afs_put_call+0x4a/0x175
+    afs_send_vl_probes+0x108/0x172
+    afs_select_vlserver+0xd6/0x311
+    afs_do_cell_detect_alias+0x5e/0x1e9
+    afs_cell_detect_alias+0x44/0x92
+    afs_validate_fc+0x9d/0x134
+    afs_get_tree+0x20/0x2e6
+    vfs_get_tree+0x1d/0xc9
+    fc_mount+0xe/0x33
+    afs_d_automount+0x48/0x9d
+    __traverse_mounts+0xe0/0x166
+    step_into+0x140/0x274
+    open_last_lookups+0x1c1/0x1df
+    path_openat+0x138/0x1c3
+    do_filp_open+0x55/0xb4
+    do_sys_openat2+0x6c/0xb6
+
+Fixes: 34fa47612bfe ("afs: Fix race in async call refcounting")
+Reported-by: Bill MacAllister <bill@ca-zephyr.org>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1052304
+Suggested-by: Jeffrey E Altman <jaltman@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/2633992.1702073229@warthog.procyon.org.uk/ # v1
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c      |  3 +--
- drivers/net/ethernet/emulex/benet/be_main.c          |  2 +-
- drivers/net/ethernet/hisilicon/hns3/hns3_enet.c      |  2 +-
- drivers/net/ethernet/intel/i40e/i40e_txrx.c          |  2 +-
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c        |  2 +-
- drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c |  2 +-
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c       |  4 ++--
- drivers/net/ethernet/sfc/tx_tso.c                    |  2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c    |  7 ++-----
- drivers/staging/gdm724x/gdm_lte.c                    |  4 ++--
- include/linux/if_vlan.h                              | 12 ++++++++++--
- net/batman-adv/soft-interface.c                      |  2 +-
- 12 files changed, 24 insertions(+), 20 deletions(-)
+ fs/afs/rxrpc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-index 4f669e7c75587..4509a29ff73f9 100644
---- a/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-+++ b/drivers/net/ethernet/broadcom/bnx2x/bnx2x_cmn.c
-@@ -1924,8 +1924,7 @@ u16 bnx2x_select_queue(struct net_device *dev, struct sk_buff *skb,
- 
- 		/* Skip VLAN tag if present */
- 		if (ether_type == ETH_P_8021Q) {
--			struct vlan_ethhdr *vhdr =
--				(struct vlan_ethhdr *)skb->data;
-+			struct vlan_ethhdr *vhdr = skb_vlan_eth_hdr(skb);
- 
- 			ether_type = ntohs(vhdr->h_vlan_encapsulated_proto);
- 		}
-diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
-index 52b399aa3213d..edd4dd73b3e32 100644
---- a/drivers/net/ethernet/emulex/benet/be_main.c
-+++ b/drivers/net/ethernet/emulex/benet/be_main.c
-@@ -1125,7 +1125,7 @@ static struct sk_buff *be_lancer_xmit_workarounds(struct be_adapter *adapter,
- 						  struct be_wrb_params
- 						  *wrb_params)
- {
--	struct vlan_ethhdr *veh = (struct vlan_ethhdr *)skb->data;
-+	struct vlan_ethhdr *veh = skb_vlan_eth_hdr(skb);
- 	unsigned int eth_hdr_len;
- 	struct iphdr *ip;
- 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index 4df5e91e86ce7..a4ab3e7efa5e4 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -1002,7 +1002,7 @@ static int hns3_handle_vtags(struct hns3_enet_ring *tx_ring,
- 	if (unlikely(rc < 0))
- 		return rc;
- 
--	vhdr = (struct vlan_ethhdr *)skb->data;
-+	vhdr = skb_vlan_eth_hdr(skb);
- 	vhdr->h_vlan_TCI |= cpu_to_be16((skb->priority << VLAN_PRIO_SHIFT)
- 					 & VLAN_PRIO_MASK);
- 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-index 88d8f17cefd8e..57667ccc28f54 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-@@ -2879,7 +2879,7 @@ static inline int i40e_tx_prepare_vlan_flags(struct sk_buff *skb,
- 			rc = skb_cow_head(skb, 0);
- 			if (rc < 0)
- 				return rc;
--			vhdr = (struct vlan_ethhdr *)skb->data;
-+			vhdr = skb_vlan_eth_hdr(skb);
- 			vhdr->h_vlan_TCI = htons(tx_flags >>
- 						 I40E_TX_FLAGS_VLAN_SHIFT);
- 		} else {
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index 2b100b7b325a5..5829d81f2cb11 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -8707,7 +8707,7 @@ netdev_tx_t ixgbe_xmit_frame_ring(struct sk_buff *skb,
- 
- 			if (skb_cow_head(skb, 0))
- 				goto out_drop;
--			vhdr = (struct vlan_ethhdr *)skb->data;
-+			vhdr = skb_vlan_eth_hdr(skb);
- 			vhdr->h_vlan_TCI = htons(tx_flags >>
- 						 IXGBE_TX_FLAGS_VLAN_SHIFT);
- 		} else {
-diff --git a/drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c b/drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c
-index e2046b6d65a30..2c54600835643 100644
---- a/drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c
-+++ b/drivers/net/ethernet/qlogic/netxen/netxen_nic_main.c
-@@ -1861,7 +1861,7 @@ netxen_tso_check(struct net_device *netdev,
- 
- 	if (protocol == cpu_to_be16(ETH_P_8021Q)) {
- 
--		vh = (struct vlan_ethhdr *)skb->data;
-+		vh = skb_vlan_eth_hdr(skb);
- 		protocol = vh->h_vlan_encapsulated_proto;
- 		flags = FLAGS_VLAN_TAGGED;
- 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c
-index bdf15d2a64313..7260e57d79f2e 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_io.c
-@@ -317,7 +317,7 @@ static void qlcnic_send_filter(struct qlcnic_adapter *adapter,
- 
- 	if (adapter->flags & QLCNIC_VLAN_FILTERING) {
- 		if (protocol == ETH_P_8021Q) {
--			vh = (struct vlan_ethhdr *)skb->data;
-+			vh = skb_vlan_eth_hdr(skb);
- 			vlan_id = ntohs(vh->h_vlan_TCI);
- 		} else if (skb_vlan_tag_present(skb)) {
- 			vlan_id = skb_vlan_tag_get(skb);
-@@ -467,7 +467,7 @@ static int qlcnic_tx_pkt(struct qlcnic_adapter *adapter,
- 	u32 producer = tx_ring->producer;
- 
- 	if (protocol == ETH_P_8021Q) {
--		vh = (struct vlan_ethhdr *)skb->data;
-+		vh = skb_vlan_eth_hdr(skb);
- 		flags = QLCNIC_FLAGS_VLAN_TAGGED;
- 		vlan_tci = ntohs(vh->h_vlan_TCI);
- 		protocol = ntohs(vh->h_vlan_encapsulated_proto);
-diff --git a/drivers/net/ethernet/sfc/tx_tso.c b/drivers/net/ethernet/sfc/tx_tso.c
-index 898e5c61d9086..d381d8164f07c 100644
---- a/drivers/net/ethernet/sfc/tx_tso.c
-+++ b/drivers/net/ethernet/sfc/tx_tso.c
-@@ -147,7 +147,7 @@ static __be16 efx_tso_check_protocol(struct sk_buff *skb)
- 	EFX_WARN_ON_ONCE_PARANOID(((struct ethhdr *)skb->data)->h_proto !=
- 				  protocol);
- 	if (protocol == htons(ETH_P_8021Q)) {
--		struct vlan_ethhdr *veh = (struct vlan_ethhdr *)skb->data;
-+		struct vlan_ethhdr *veh = skb_vlan_eth_hdr(skb);
- 
- 		protocol = veh->h_vlan_encapsulated_proto;
- 	}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 59a07a01e80ca..709bd81fde2a8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3660,13 +3660,10 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- static void stmmac_rx_vlan(struct net_device *dev, struct sk_buff *skb)
- {
--	struct vlan_ethhdr *veth;
--	__be16 vlan_proto;
-+	struct vlan_ethhdr *veth = skb_vlan_eth_hdr(skb);
-+	__be16 vlan_proto = veth->h_vlan_proto;
- 	u16 vlanid;
- 
--	veth = (struct vlan_ethhdr *)skb->data;
--	vlan_proto = veth->h_vlan_proto;
--
- 	if ((vlan_proto == htons(ETH_P_8021Q) &&
- 	     dev->features & NETIF_F_HW_VLAN_CTAG_RX) ||
- 	    (vlan_proto == htons(ETH_P_8021AD) &&
-diff --git a/drivers/staging/gdm724x/gdm_lte.c b/drivers/staging/gdm724x/gdm_lte.c
-index de30262c3fae0..e0787647093d1 100644
---- a/drivers/staging/gdm724x/gdm_lte.c
-+++ b/drivers/staging/gdm724x/gdm_lte.c
-@@ -350,7 +350,7 @@ static s32 gdm_lte_tx_nic_type(struct net_device *dev, struct sk_buff *skb)
- 	/* Get ethernet protocol */
- 	eth = (struct ethhdr *)skb->data;
- 	if (ntohs(eth->h_proto) == ETH_P_8021Q) {
--		vlan_eth = (struct vlan_ethhdr *)skb->data;
-+		vlan_eth = skb_vlan_eth_hdr(skb);
- 		mac_proto = ntohs(vlan_eth->h_vlan_encapsulated_proto);
- 		network_data = skb->data + VLAN_ETH_HLEN;
- 		nic_type |= NIC_TYPE_F_VLAN;
-@@ -436,7 +436,7 @@ static netdev_tx_t gdm_lte_tx(struct sk_buff *skb, struct net_device *dev)
- 	 * driver based on the NIC mac
- 	 */
- 	if (nic_type & NIC_TYPE_F_VLAN) {
--		struct vlan_ethhdr *vlan_eth = (struct vlan_ethhdr *)skb->data;
-+		struct vlan_ethhdr *vlan_eth = skb_vlan_eth_hdr(skb);
- 
- 		nic->vlan_id = ntohs(vlan_eth->h_vlan_TCI) & VLAN_VID_MASK;
- 		data_buf = skb->data + (VLAN_ETH_HLEN - ETH_HLEN);
-diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
-index 4e7e72f3da5bd..ce6714bec65fd 100644
---- a/include/linux/if_vlan.h
-+++ b/include/linux/if_vlan.h
-@@ -60,6 +60,14 @@ static inline struct vlan_ethhdr *vlan_eth_hdr(const struct sk_buff *skb)
- 	return (struct vlan_ethhdr *)skb_mac_header(skb);
- }
- 
-+/* Prefer this version in TX path, instead of
-+ * skb_reset_mac_header() + vlan_eth_hdr()
-+ */
-+static inline struct vlan_ethhdr *skb_vlan_eth_hdr(const struct sk_buff *skb)
-+{
-+	return (struct vlan_ethhdr *)skb->data;
-+}
-+
- #define VLAN_PRIO_MASK		0xe000 /* Priority Code Point */
- #define VLAN_PRIO_SHIFT		13
- #define VLAN_CFI_MASK		0x1000 /* Canonical Format Indicator / Drop Eligible Indicator */
-@@ -526,7 +534,7 @@ static inline void __vlan_hwaccel_put_tag(struct sk_buff *skb,
-  */
- static inline int __vlan_get_tag(const struct sk_buff *skb, u16 *vlan_tci)
- {
--	struct vlan_ethhdr *veth = (struct vlan_ethhdr *)skb->data;
-+	struct vlan_ethhdr *veth = skb_vlan_eth_hdr(skb);
- 
- 	if (!eth_type_vlan(veth->h_vlan_proto))
- 		return -EINVAL;
-@@ -727,7 +735,7 @@ static inline bool skb_vlan_tagged_multi(struct sk_buff *skb)
- 		if (unlikely(!pskb_may_pull(skb, VLAN_ETH_HLEN)))
- 			return false;
- 
--		veh = (struct vlan_ethhdr *)skb->data;
-+		veh = skb_vlan_eth_hdr(skb);
- 		protocol = veh->h_vlan_encapsulated_proto;
+diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
+index 535d28b44bca3..1820b53657a6c 100644
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -491,7 +491,7 @@ void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
+ 	if (call->async) {
+ 		if (cancel_work_sync(&call->async_work))
+ 			afs_put_call(call);
+-		afs_put_call(call);
++		afs_set_call_complete(call, ret, 0);
  	}
  
-diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
-index 7ac16d7b94a2f..0e6d0a5e68413 100644
---- a/net/batman-adv/soft-interface.c
-+++ b/net/batman-adv/soft-interface.c
-@@ -454,7 +454,7 @@ void batadv_interface_rx(struct net_device *soft_iface,
- 		if (!pskb_may_pull(skb, VLAN_ETH_HLEN))
- 			goto dropped;
- 
--		vhdr = (struct vlan_ethhdr *)skb->data;
-+		vhdr = skb_vlan_eth_hdr(skb);
- 
- 		/* drop batman-in-batman packets to prevent loops */
- 		if (vhdr->h_vlan_encapsulated_proto != htons(ETH_P_BATMAN))
+ 	ac->error = ret;
 -- 
 2.43.0
 
