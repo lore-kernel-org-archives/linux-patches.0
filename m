@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9421D145;
-	Mon, 18 Dec 2023 14:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71478129ED2;
+	Mon, 18 Dec 2023 14:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4Wi2jIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0211FC433C7;
-	Mon, 18 Dec 2023 14:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iv/YD1fG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92341C433C9;
+	Mon, 18 Dec 2023 14:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908599;
-	bh=n3LKda7BGUDAAe8ZgS9mGgnNTIvuUS6bbIExC4tmX0c=;
+	s=korg; t=1702908601;
+	bh=dCwce8vLrcVgzZ4Tdt+g/Qz5ONfgchO9rPOtn6PIDEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4Wi2jIxohCxHys667/p/6pnTlm76JG9GJzkcTKuN4ajh7l7hd7BRa5iXicwAtYgk
-	 gEfxMK5IZoMwx33G8/Cx3/lXGgcY7VvaOKBNB+7TEZ4IZVKx1W7wI1+eeuMdbNW4Yz
-	 /stnmOHaiIZv/ZljWO7jriEoFWFaY6CdTzxgpVDU=
+	b=iv/YD1fGmuXqyzyrdrk0ojF0DknEE6dBNYqXKeJlVcwUikTLHPA0pOxRURgLMFmpE
+	 kHQs2h1Je+uxoYgF+wZh+329uBNPZwWawRVcccg//TEEpdC0/cQHVFZ83Jq4jC2G1a
+	 uHJ9ijzeKXaPyuYVF6mE4WsTV7DBWecmZeWJrD1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 51/62] team: Fix use-after-free when an option instance allocation fails
-Date: Mon, 18 Dec 2023 14:52:15 +0100
-Message-ID: <20231218135048.506707578@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 52/62] ring-buffer: Fix memory leak of free page
+Date: Mon, 18 Dec 2023 14:52:16 +0100
+Message-ID: <20231218135048.543644154@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -43,51 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florent Revest <revest@chromium.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit c12296bbecc488623b7d1932080e394d08f3226b upstream.
+commit 17d801758157bec93f26faaf5ff1a8b9a552d67a upstream.
 
-In __team_options_register, team_options are allocated and appended to
-the team's option_list.
-If one option instance allocation fails, the "inst_rollback" cleanup
-path frees the previously allocated options but doesn't remove them from
-the team's option_list.
-This leaves dangling pointers that can be dereferenced later by other
-parts of the team driver that iterate over options.
+Reading the ring buffer does a swap of a sub-buffer within the ring buffer
+with a empty sub-buffer. This allows the reader to have full access to the
+content of the sub-buffer that was swapped out without having to worry
+about contention with the writer.
 
-This patch fixes the cleanup path to remove the dangling pointers from
-the list.
+The readers call ring_buffer_alloc_read_page() to allocate a page that
+will be used to swap with the ring buffer. When the code is finished with
+the reader page, it calls ring_buffer_free_read_page(). Instead of freeing
+the page, it stores it as a spare. Then next call to
+ring_buffer_alloc_read_page() will return this spare instead of calling
+into the memory management system to allocate a new page.
 
-As far as I can tell, this uaf doesn't have much security implications
-since it would be fairly hard to exploit (an attacker would need to make
-the allocation of that specific small object fail) but it's still nice
-to fix.
+Unfortunately, on freeing of the ring buffer, this spare page is not
+freed, and causes a memory leak.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231210221250.7b9cc83c@rorschach.local.home
 
 Cc: stable@vger.kernel.org
-Fixes: 80f7c6683fe0 ("team: add support for per-port options")
-Signed-off-by: Florent Revest <revest@chromium.org>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20231206123719.1963153-1-revest@chromium.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 73a757e63114d ("ring-buffer: Return reader page back into existing ring buffer")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/team/team.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -284,8 +284,10 @@ static int __team_options_register(struc
- 	return 0;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1667,6 +1667,8 @@ static void rb_free_cpu_buffer(struct ri
+ 		free_buffer_page(bpage);
+ 	}
  
- inst_rollback:
--	for (i--; i >= 0; i--)
-+	for (i--; i >= 0; i--) {
- 		__team_option_inst_del_option(team, dst_opts[i]);
-+		list_del(&dst_opts[i]->list);
-+	}
++	free_page((unsigned long)cpu_buffer->free_page);
++
+ 	kfree(cpu_buffer);
+ }
  
- 	i = option_count;
- alloc_rollback:
 
 
