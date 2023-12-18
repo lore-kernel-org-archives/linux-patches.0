@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C391D13A;
-	Mon, 18 Dec 2023 13:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A3A101D4;
+	Mon, 18 Dec 2023 13:59:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2PJ95uS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2E7C433C8;
-	Mon, 18 Dec 2023 13:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4DzuFCU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE35C433C7;
+	Mon, 18 Dec 2023 13:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907964;
-	bh=NgIOGYmcULwxmCpLCYpndBc6zRp0or7xjCTClGwkdaw=;
+	s=korg; t=1702907967;
+	bh=3V+k4ddL8JEsdUomZAe6sfJoOATv4iF/jdimPkVcCfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2PJ95uSfGJT/nxEEf1/+rxNoST3guohwUo/FLPE45TDoNzecee2e4qEj86X9JWgx
-	 44H5uOmBnRUNzARfcXyUomzs3J2zrjiSxtNYvkhSMrTL63TV0L3LtLojIRhjY5PdzR
-	 ugUWFKK9zOy2M75wSsk7Kqnr2AuxVV1LWHei+Hqw=
+	b=q4DzuFCUknrsIcwElUWnLJpZOhay+KIhMmePdShBHh2S+Psf1Am3/s/y3QNzYu8k0
+	 PemILUU6iNtBLVwWCFdeNunJziS0wWQ58PYpOSLWb07tZQi369P78d+OXhvcktYl0z
+	 UqY2GQRnaE75UNtQwtgkOFBm8Wx22pb1GfRF1wMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 098/106] ring-buffer: Have saved event hold the entire event
-Date: Mon, 18 Dec 2023 14:51:52 +0100
-Message-ID: <20231218135059.250473915@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>
+Subject: [PATCH 6.1 099/106] ring-buffer: Fix writing to the buffer with max_data_size
+Date: Mon, 18 Dec 2023 14:51:53 +0100
+Message-ID: <20231218135059.287999336@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -45,52 +46,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit b049525855fdd0024881c9b14b8fbec61c3f53d3 upstream.
+commit b3ae7b67b87fed771fa5bf95389df06b0433603e upstream.
 
-For the ring buffer iterator (non-consuming read), the event needs to be
-copied into the iterator buffer to make sure that a writer does not
-overwrite it while the user is reading it. If a write happens during the
-copy, the buffer is simply discarded.
+The maximum ring buffer data size is the maximum size of data that can be
+recorded on the ring buffer. Events must be smaller than the sub buffer
+data size minus any meta data. This size is checked before trying to
+allocate from the ring buffer because the allocation assumes that the size
+will fit on the sub buffer.
 
-But the temp buffer itself was not big enough. The allocation of the
-buffer was only BUF_MAX_DATA_SIZE, which is the maximum data size that can
-be passed into the ring buffer and saved. But the temp buffer needs to
-hold the meta data as well. That would be BUF_PAGE_SIZE and not
-BUF_MAX_DATA_SIZE.
+The maximum size was calculated as the size of a sub buffer page (which is
+currently PAGE_SIZE minus the sub buffer header) minus the size of the
+meta data of an individual event. But it missed the possible adding of a
+time stamp for events that are added long enough apart that the event meta
+data can't hold the time delta.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20231212072558.61f76493@gandalf.local.home
+When an event is added that is greater than the current BUF_MAX_DATA_SIZE
+minus the size of a time stamp, but still less than or equal to
+BUF_MAX_DATA_SIZE, the ring buffer would go into an infinite loop, looking
+for a page that can hold the event. Luckily, there's a check for this loop
+and after 1000 iterations and a warning is emitted and the ring buffer is
+disabled. But this should never happen.
+
+This can happen when a large event is added first, or after a long period
+where an absolute timestamp is prefixed to the event, increasing its size
+by 8 bytes. This passes the check and then goes into the algorithm that
+causes the infinite loop.
+
+For events that are the first event on the sub-buffer, it does not need to
+add a timestamp, because the sub-buffer itself contains an absolute
+timestamp, and adding one is redundant.
+
+The fix is to check if the event is to be the first event on the
+sub-buffer, and if it is, then do not add a timestamp.
+
+This also fixes 32 bit adding a timestamp when a read of before_stamp or
+write_stamp is interrupted. There's still no need to add that timestamp if
+the event is going to be the first event on the sub buffer.
+
+Also, if the buffer has "time_stamp_abs" set, then also check if the
+length plus the timestamp is greater than the BUF_MAX_DATA_SIZE.
+
+Link: https://lore.kernel.org/all/20231212104549.58863438@gandalf.local.home/
+Link: https://lore.kernel.org/linux-trace-kernel/20231212071837.5fdd6c13@gandalf.local.home
+Link: https://lore.kernel.org/linux-trace-kernel/20231212111617.39e02849@gandalf.local.home
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 785888c544e04 ("ring-buffer: Have rb_iter_head_event() handle concurrent writer")
+Fixes: a4543a2fa9ef3 ("ring-buffer: Get timestamp after event is allocated")
+Fixes: 58fbc3c63275c ("ring-buffer: Consolidate add_timestamp to remove some branches")
+Reported-by: Kent Overstreet <kent.overstreet@linux.dev> # (on IRC)
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/kernel/trace/ring_buffer.c
 +++ b/kernel/trace/ring_buffer.c
-@@ -2403,7 +2403,7 @@ rb_iter_head_event(struct ring_buffer_it
- 	 */
- 	barrier();
- 
--	if ((iter->head + length) > commit || length > BUF_MAX_DATA_SIZE)
-+	if ((iter->head + length) > commit || length > BUF_PAGE_SIZE)
- 		/* Writer corrupted the read? */
- 		goto reset;
- 
-@@ -5113,7 +5113,8 @@ ring_buffer_read_prepare(struct trace_bu
- 	if (!iter)
- 		return NULL;
- 
--	iter->event = kmalloc(BUF_MAX_DATA_SIZE, flags);
-+	/* Holds the entire event: data and meta data */
-+	iter->event = kmalloc(BUF_PAGE_SIZE, flags);
- 	if (!iter->event) {
- 		kfree(iter);
- 		return NULL;
+@@ -3578,7 +3578,10 @@ __rb_reserve_next(struct ring_buffer_per
+ 		 * absolute timestamp.
+ 		 * Don't bother if this is the start of a new page (w == 0).
+ 		 */
+-		if (unlikely(!a_ok || !b_ok || (info->before != info->after && w))) {
++		if (!w) {
++			/* Use the sub-buffer timestamp */
++			info->delta = 0;
++		} else if (unlikely(!a_ok || !b_ok || info->before != info->after)) {
+ 			info->add_timestamp |= RB_ADD_STAMP_FORCE | RB_ADD_STAMP_EXTEND;
+ 			info->length += RB_LEN_TIME_EXTEND;
+ 		} else {
+@@ -3729,6 +3732,8 @@ rb_reserve_next_event(struct trace_buffe
+ 	if (ring_buffer_time_stamp_abs(cpu_buffer->buffer)) {
+ 		add_ts_default = RB_ADD_STAMP_ABSOLUTE;
+ 		info.length += RB_LEN_TIME_EXTEND;
++		if (info.length > BUF_MAX_DATA_SIZE)
++			goto out_fail;
+ 	} else {
+ 		add_ts_default = RB_ADD_STAMP_NONE;
+ 	}
 
 
