@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E97129ECF;
-	Mon, 18 Dec 2023 14:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5179129ECF;
+	Mon, 18 Dec 2023 14:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0390O1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF33C433C8;
-	Mon, 18 Dec 2023 14:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uW3hK++r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5913BC433C7;
+	Mon, 18 Dec 2023 14:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908650;
-	bh=aYR87cHzz/wGtC79skjh0R2p+5QDk0vTzDqJG14xyb4=;
+	s=korg; t=1702908653;
+	bh=/6Q+VK804OfFmcEC+oBkWOCyER/k421SlIJByGHbohA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0390O1MGuoNwEaRPvzR+VtohxJqAmZxNXF2DCSeA0dL1WGVJ48aH2X+hkeVF3See
-	 g9a1KyAlYtCWQEfR3C6NLo1Hrne4xGejbp253mSenfkbWDRDiBYtU1v8WiRLwSqTj/
-	 sGZGYq7gyuHZ6sDFrIXLWtrEmyjyVZVAzyxKrebo=
+	b=uW3hK++rUnR8KyHF9fotu62lX6DYUVh1KSAMKrj6iS8LPa7NupDlXfr+Wg/Uo8H66
+	 leyV0JRhSp3kfOW6/9xqf0IQ22WNBmvPwd264nXZaX5yvBHug/b0jYFaRu1dWzgSR7
+	 uDctQMXH/ZfdVAGsMoRq0sRiCHZRmU8WW2yGLMiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/40] platform/x86: intel_telemetry: Fix kernel doc descriptions
-Date: Mon, 18 Dec 2023 14:52:20 +0100
-Message-ID: <20231218135043.638419215@linuxfoundation.org>
+Subject: [PATCH 5.4 26/40] HID: add ALWAYS_POLL quirk for Apple kb
+Date: Mon, 18 Dec 2023 14:52:21 +0100
+Message-ID: <20231218135043.689556466@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135042.748715259@linuxfoundation.org>
 References: <20231218135042.748715259@linuxfoundation.org>
@@ -38,59 +36,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit a6584711e64d9d12ab79a450ec3628fd35e4f476 ]
+[ Upstream commit c55092187d9ad7b2f8f5a8645286fa03997d442f ]
 
-LKP found issues with a kernel doc in the driver:
+These devices disconnect if suspended without remote wakeup. They can operate
+with the standard driver.
 
-core.c:116: warning: Function parameter or member 'ioss_evtconfig' not described in 'telemetry_update_events'
-core.c:188: warning: Function parameter or member 'ioss_evtconfig' not described in 'telemetry_get_eventconfig'
-
-It looks like it were copy'n'paste typos when these descriptions
-had been introduced. Fix the typos.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310070743.WALmRGSY-lkp@intel.com/
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231120150756.1661425-1-andriy.shevchenko@linux.intel.com
-Reviewed-by: Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel_telemetry_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-quirks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/intel_telemetry_core.c b/drivers/platform/x86/intel_telemetry_core.c
-index d4040bb222b48..59fc6624b1ac9 100644
---- a/drivers/platform/x86/intel_telemetry_core.c
-+++ b/drivers/platform/x86/intel_telemetry_core.c
-@@ -102,7 +102,7 @@ static const struct telemetry_core_ops telm_defpltops = {
- /**
-  * telemetry_update_events() - Update telemetry Configuration
-  * @pss_evtconfig: PSS related config. No change if num_evts = 0.
-- * @pss_evtconfig: IOSS related config. No change if num_evts = 0.
-+ * @ioss_evtconfig: IOSS related config. No change if num_evts = 0.
-  *
-  * This API updates the IOSS & PSS Telemetry configuration. Old config
-  * is overwritten. Call telemetry_reset_events when logging is over
-@@ -176,7 +176,7 @@ EXPORT_SYMBOL_GPL(telemetry_reset_events);
- /**
-  * telemetry_get_eventconfig() - Returns the pss and ioss events enabled
-  * @pss_evtconfig: Pointer to PSS related configuration.
-- * @pss_evtconfig: Pointer to IOSS related configuration.
-+ * @ioss_evtconfig: Pointer to IOSS related configuration.
-  * @pss_len:	   Number of u32 elements allocated for pss_evtconfig array
-  * @ioss_len:	   Number of u32 elements allocated for ioss_evtconfig array
-  *
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index fae784df084d5..fd84661df5fa7 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -33,6 +33,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AKAI, USB_DEVICE_ID_AKAI_MPKMINI2), HID_QUIRK_NO_INIT_REPORTS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ALPS, USB_DEVICE_ID_IBM_GAMEPAD), HID_QUIRK_BADPAD },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_AMI, USB_DEVICE_ID_AMI_VIRT_KEYBOARD_AND_MOUSE), HID_QUIRK_ALWAYS_POLL },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_REVB_ANSI), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_2PORTKVM), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_4PORTKVMC), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ATEN, USB_DEVICE_ID_ATEN_4PORTKVM), HID_QUIRK_NOGET },
 -- 
 2.43.0
 
