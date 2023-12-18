@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5E51D14F;
-	Mon, 18 Dec 2023 13:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A561D12F;
+	Mon, 18 Dec 2023 13:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohTx+hJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8E5C433C7;
-	Mon, 18 Dec 2023 13:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrGdorMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA48C433C9;
+	Mon, 18 Dec 2023 13:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907930;
-	bh=qBIj06KYRWNeXX8eKC3B3uUUTCDGQwt2BtEqHD/4VYc=;
+	s=korg; t=1702907933;
+	bh=G+37oQYWHMXq6Uo7bnOnjtPGUSe8tPxly6oqW9jpJxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohTx+hJlNnnN52rHsZjrc2B5fy1gi0Z6hnTY9NpVS9DhBEQuHm3eyHXPtdOcgCoNZ
-	 SdjMarzrwgmfL/MyOJDhHHRGnQtSKWf5XWki1xUSMyPpVT+WJ13Da3qXYU19dPooPX
-	 c7XJ/mNDdTZYRZWzgDTrVbP7WPxNUQk5XEfyx2Xo=
+	b=nrGdorMp/ZqWLIR4DJoCoK4gn9yno44bebVcSwY+foRUuTNrifd/N7H2xFwDiZRrc
+	 nmyjtJRpqrW8QBxQs9Be5ztbdNNndeeZ0BB07TIGZi/ROe3s42pkV5mPZUKhJzyGHg
+	 zH/dJ74h4jdnmtzq6ylddyOA+DMNFZ+ooDOKYZj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Ming Lei <ming.lei@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/106] nbd: pass nbd_sock to nbd_read_reply() instead of index
-Date: Mon, 18 Dec 2023 14:51:24 +0100
-Message-ID: <20231218135058.046358475@linuxfoundation.org>
+Subject: [PATCH 6.1 061/106] nbd: fold nbd config initialization into nbd_alloc_config()
+Date: Mon, 18 Dec 2023 14:51:15 +0100
+Message-ID: <20231218135057.656835344@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -46,213 +45,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 98c598afc22d4e43c2ad91860b65996d0c099a5d ]
+[ Upstream commit 1b59860540a4018e8071dc18d4893ec389506b7d ]
 
-If a socket is processing ioctl 'NBD_SET_SOCK', config->socks might be
-krealloc in nbd_add_socket(), and a garbage request is received now, a UAF
-may occurs.
-
-  T1
-  nbd_ioctl
-   __nbd_ioctl
-    nbd_add_socket
-     blk_mq_freeze_queue
-				T2
-  				recv_work
-  				 nbd_read_reply
-  				  sock_xmit
-     krealloc config->socks
-				   def config->socks
-
-Pass nbd_sock to nbd_read_reply(). And introduce a new function
-sock_xmit_recv(), which differs from sock_xmit only in the way it get
-socket.
-
-==================================================================
-BUG: KASAN: use-after-free in sock_xmit+0x525/0x550
-Read of size 8 at addr ffff8880188ec428 by task kworker/u12:1/18779
-
-Workqueue: knbd4-recv recv_work
-Call Trace:
- __dump_stack
- dump_stack+0xbe/0xfd
- print_address_description.constprop.0+0x19/0x170
- __kasan_report.cold+0x6c/0x84
- kasan_report+0x3a/0x50
- sock_xmit+0x525/0x550
- nbd_read_reply+0xfe/0x2c0
- recv_work+0x1c2/0x750
- process_one_work+0x6b6/0xf10
- worker_thread+0xdd/0xd80
- kthread+0x30a/0x410
- ret_from_fork+0x22/0x30
-
-Allocated by task 18784:
- kasan_save_stack+0x1b/0x40
- kasan_set_track
- set_alloc_info
- __kasan_kmalloc
- __kasan_kmalloc.constprop.0+0xf0/0x130
- slab_post_alloc_hook
- slab_alloc_node
- slab_alloc
- __kmalloc_track_caller+0x157/0x550
- __do_krealloc
- krealloc+0x37/0xb0
- nbd_add_socket
- +0x2d3/0x880
- __nbd_ioctl
- nbd_ioctl+0x584/0x8e0
- __blkdev_driver_ioctl
- blkdev_ioctl+0x2a0/0x6e0
- block_ioctl+0xee/0x130
- vfs_ioctl
- __do_sys_ioctl
- __se_sys_ioctl+0x138/0x190
- do_syscall_64+0x33/0x40
- entry_SYSCALL_64_after_hwframe+0x61/0xc6
-
-Freed by task 18784:
- kasan_save_stack+0x1b/0x40
- kasan_set_track+0x1c/0x30
- kasan_set_free_info+0x20/0x40
- __kasan_slab_free.part.0+0x13f/0x1b0
- slab_free_hook
- slab_free_freelist_hook
- slab_free
- kfree+0xcb/0x6c0
- krealloc+0x56/0xb0
- nbd_add_socket+0x2d3/0x880
- __nbd_ioctl
- nbd_ioctl+0x584/0x8e0
- __blkdev_driver_ioctl
- blkdev_ioctl+0x2a0/0x6e0
- block_ioctl+0xee/0x130
- vfs_ioctl
- __do_sys_ioctl
- __se_sys_ioctl+0x138/0x190
- do_syscall_64+0x33/0x40
- entry_SYSCALL_64_after_hwframe+0x61/0xc6
+There are no functional changes, make the code cleaner and prepare to
+fix null-ptr-dereference while accessing 'nbd->config'.
 
 Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20230911023308.3467802-1-linan666@huaweicloud.com
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://lore.kernel.org/r/20231116162316.1740402-2-linan666@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 35 ++++++++++++++++++++++-------------
- 1 file changed, 22 insertions(+), 13 deletions(-)
+ drivers/block/nbd.c | 41 +++++++++++++++++++----------------------
+ 1 file changed, 19 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index e70733c76e884..8037aaefeb2ed 100644
+index e94d2ff6b1223..e70733c76e884 100644
 --- a/drivers/block/nbd.c
 +++ b/drivers/block/nbd.c
-@@ -67,6 +67,7 @@ struct nbd_sock {
- struct recv_thread_args {
- 	struct work_struct work;
- 	struct nbd_device *nbd;
-+	struct nbd_sock *nsock;
- 	int index;
- };
- 
-@@ -489,15 +490,9 @@ static enum blk_eh_timer_return nbd_xmit_timeout(struct request *req)
- 	return BLK_EH_DONE;
+@@ -1530,17 +1530,20 @@ static int nbd_ioctl(struct block_device *bdev, fmode_t mode,
+ 	return error;
  }
  
--/*
-- *  Send or receive packet. Return a positive value on success and
-- *  negtive value on failue, and never return 0.
-- */
--static int sock_xmit(struct nbd_device *nbd, int index, int send,
--		     struct iov_iter *iter, int msg_flags, int *sent)
-+static int __sock_xmit(struct nbd_device *nbd, struct socket *sock, int send,
-+		       struct iov_iter *iter, int msg_flags, int *sent)
+-static struct nbd_config *nbd_alloc_config(void)
++static int nbd_alloc_and_init_config(struct nbd_device *nbd)
  {
--	struct nbd_config *config = nbd->config;
--	struct socket *sock = config->socks[index]->sock;
- 	int result;
- 	struct msghdr msg;
- 	unsigned int noreclaim_flag;
-@@ -539,6 +534,19 @@ static int sock_xmit(struct nbd_device *nbd, int index, int send,
- 	return result;
- }
+ 	struct nbd_config *config;
  
-+/*
-+ *  Send or receive packet. Return a positive value on success and
-+ *  negtive value on failure, and never return 0.
-+ */
-+static int sock_xmit(struct nbd_device *nbd, int index, int send,
-+		     struct iov_iter *iter, int msg_flags, int *sent)
-+{
-+	struct nbd_config *config = nbd->config;
-+	struct socket *sock = config->socks[index]->sock;
++	if (WARN_ON(nbd->config))
++		return -EINVAL;
 +
-+	return __sock_xmit(nbd, sock, send, iter, msg_flags, sent);
-+}
-+
- /*
-  * Different settings for sk->sk_sndtimeo can result in different return values
-  * if there is a signal pending when we enter sendmsg, because reasons?
-@@ -695,7 +703,7 @@ static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
- 	return 0;
- }
+ 	if (!try_module_get(THIS_MODULE))
+-		return ERR_PTR(-ENODEV);
++		return -ENODEV;
  
--static int nbd_read_reply(struct nbd_device *nbd, int index,
-+static int nbd_read_reply(struct nbd_device *nbd, struct socket *sock,
- 			  struct nbd_reply *reply)
- {
- 	struct kvec iov = {.iov_base = reply, .iov_len = sizeof(*reply)};
-@@ -704,7 +712,7 @@ static int nbd_read_reply(struct nbd_device *nbd, int index,
- 
- 	reply->magic = 0;
- 	iov_iter_kvec(&to, ITER_DEST, &iov, 1, sizeof(*reply));
--	result = sock_xmit(nbd, index, 0, &to, MSG_WAITALL, NULL);
-+	result = __sock_xmit(nbd, sock, 0, &to, MSG_WAITALL, NULL);
- 	if (result < 0) {
- 		if (!nbd_disconnected(nbd->config))
- 			dev_err(disk_to_dev(nbd->disk),
-@@ -828,14 +836,14 @@ static void recv_work(struct work_struct *work)
- 	struct nbd_device *nbd = args->nbd;
- 	struct nbd_config *config = nbd->config;
- 	struct request_queue *q = nbd->disk->queue;
--	struct nbd_sock *nsock;
-+	struct nbd_sock *nsock = args->nsock;
- 	struct nbd_cmd *cmd;
- 	struct request *rq;
- 
- 	while (1) {
- 		struct nbd_reply reply;
- 
--		if (nbd_read_reply(nbd, args->index, &reply))
-+		if (nbd_read_reply(nbd, nsock->sock, &reply))
- 			break;
- 
- 		/*
-@@ -870,7 +878,6 @@ static void recv_work(struct work_struct *work)
- 		percpu_ref_put(&q->q_usage_counter);
+ 	config = kzalloc(sizeof(struct nbd_config), GFP_NOFS);
+ 	if (!config) {
+ 		module_put(THIS_MODULE);
+-		return ERR_PTR(-ENOMEM);
++		return -ENOMEM;
  	}
  
--	nsock = config->socks[args->index];
- 	mutex_lock(&nsock->tx_lock);
- 	nbd_mark_nsock_dead(nbd, nsock, 1);
- 	mutex_unlock(&nsock->tx_lock);
-@@ -1214,6 +1221,7 @@ static int nbd_reconnect_socket(struct nbd_device *nbd, unsigned long arg)
- 		INIT_WORK(&args->work, recv_work);
- 		args->index = i;
- 		args->nbd = nbd;
-+		args->nsock = nsock;
- 		nsock->cookie++;
- 		mutex_unlock(&nsock->tx_lock);
- 		sockfd_put(old);
-@@ -1396,6 +1404,7 @@ static int nbd_start_device(struct nbd_device *nbd)
- 		refcount_inc(&nbd->config_refs);
- 		INIT_WORK(&args->work, recv_work);
- 		args->nbd = nbd;
-+		args->nsock = config->socks[i];
- 		args->index = i;
- 		queue_work(nbd->recv_workq, &args->work);
+ 	atomic_set(&config->recv_threads, 0);
+@@ -1548,7 +1551,10 @@ static struct nbd_config *nbd_alloc_config(void)
+ 	init_waitqueue_head(&config->conn_wait);
+ 	config->blksize_bits = NBD_DEF_BLKSIZE_BITS;
+ 	atomic_set(&config->live_connections, 0);
+-	return config;
++	nbd->config = config;
++	refcount_set(&nbd->config_refs, 1);
++
++	return 0;
+ }
+ 
+ static int nbd_open(struct block_device *bdev, fmode_t mode)
+@@ -1567,21 +1573,17 @@ static int nbd_open(struct block_device *bdev, fmode_t mode)
+ 		goto out;
  	}
+ 	if (!refcount_inc_not_zero(&nbd->config_refs)) {
+-		struct nbd_config *config;
+-
+ 		mutex_lock(&nbd->config_lock);
+ 		if (refcount_inc_not_zero(&nbd->config_refs)) {
+ 			mutex_unlock(&nbd->config_lock);
+ 			goto out;
+ 		}
+-		config = nbd_alloc_config();
+-		if (IS_ERR(config)) {
+-			ret = PTR_ERR(config);
++		ret = nbd_alloc_and_init_config(nbd);
++		if (ret) {
+ 			mutex_unlock(&nbd->config_lock);
+ 			goto out;
+ 		}
+-		nbd->config = config;
+-		refcount_set(&nbd->config_refs, 1);
++
+ 		refcount_inc(&nbd->refs);
+ 		mutex_unlock(&nbd->config_lock);
+ 		if (max_part)
+@@ -1990,22 +1992,17 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
+ 		pr_err("nbd%d already in use\n", index);
+ 		return -EBUSY;
+ 	}
+-	if (WARN_ON(nbd->config)) {
+-		mutex_unlock(&nbd->config_lock);
+-		nbd_put(nbd);
+-		return -EINVAL;
+-	}
+-	config = nbd_alloc_config();
+-	if (IS_ERR(config)) {
++
++	ret = nbd_alloc_and_init_config(nbd);
++	if (ret) {
+ 		mutex_unlock(&nbd->config_lock);
+ 		nbd_put(nbd);
+ 		pr_err("couldn't allocate config\n");
+-		return PTR_ERR(config);
++		return ret;
+ 	}
+-	nbd->config = config;
+-	refcount_set(&nbd->config_refs, 1);
+-	set_bit(NBD_RT_BOUND, &config->runtime_flags);
+ 
++	config = nbd->config;
++	set_bit(NBD_RT_BOUND, &config->runtime_flags);
+ 	ret = nbd_genl_size_set(info, nbd);
+ 	if (ret)
+ 		goto out;
 -- 
 2.43.0
 
