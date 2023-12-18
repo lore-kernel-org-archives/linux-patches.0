@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090161D137;
-	Mon, 18 Dec 2023 13:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE04A1D14B;
+	Mon, 18 Dec 2023 13:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xd4iS+9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8239BC433C8;
-	Mon, 18 Dec 2023 13:58:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lx3WrA3C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407F8C433C7;
+	Mon, 18 Dec 2023 13:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907936;
-	bh=1UF6TYxtyRwvCgf4QMSHs+jSNYL7r5AX+voZDxN1/ys=;
+	s=korg; t=1702907939;
+	bh=H0kSUVIuYXQ3OyDTc0K3CqC0CJOV2R1amVpcJqMcwQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xd4iS+9eECX9aEPj8wYg78mYQMAU3gRii7q6mhfIiBj3QwbRKMRnniRc+W6T3yJEY
-	 cG4LJai6/RPB5z3hgORozjWU4Ex2z2OthvgDkRY4/mlL9TPJ0UnP4XleIjKJHgEqA+
-	 FR1bf4U+GAkFJEKCC4MqL9L43406x7lOL2KYVqpA=
+	b=Lx3WrA3C72Z71b/U/JSsj3hoGXDab95HkdmTPBXnO0i+WYQe2Do5y380oKlOYJSSF
+	 0RkrWqxI1JwgNP3PiLFFlu/1MEqtr1OwqaB19dlZX1vTC5ccvT0WDoOTaKvuxQ8AFS
+	 cet6yWm36SlnRwStILqSCJpJtKrUi+0/ojfij/Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 093/106] smb: client: fix NULL deref in asn1_ber_decoder()
-Date: Mon, 18 Dec 2023 14:51:47 +0100
-Message-ID: <20231218135059.037243106@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 102/106] ring-buffer: Have rb_time_cmpxchg() set the msb counter too
+Date: Mon, 18 Dec 2023 14:51:56 +0100
+Message-ID: <20231218135059.419964503@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -42,131 +43,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 90d025c2e953c11974e76637977c473200593a46 upstream.
+commit 0aa0e5289cfe984a8a9fdd79ccf46ccf080151f7 upstream.
 
-If server replied SMB2_NEGOTIATE with a zero SecurityBufferOffset,
-smb2_get_data_area() sets @len to non-zero but return NULL, so
-decode_negTokeninit() ends up being called with a NULL @security_blob:
+The rb_time_cmpxchg() on 32-bit architectures requires setting three
+32-bit words to represent the 64-bit timestamp, with some salt for
+synchronization. Those are: msb, top, and bottom
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 2 PID: 871 Comm: mount.cifs Not tainted 6.7.0-rc4 #2
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-  RIP: 0010:asn1_ber_decoder+0x173/0xc80
-  Code: 01 4c 39 2c 24 75 09 45 84 c9 0f 85 2f 03 00 00 48 8b 14 24 4c 29 ea 48 83 fa 01 0f 86 1e 07 00 00 48 8b 74 24 28 4d 8d 5d 01 <42> 0f b6 3c 2e 89 fa 40 88 7c 24 5c f7 d2 83 e2 1f 0f 84 3d 07 00
-  RSP: 0018:ffffc9000063f950 EFLAGS: 00010202
-  RAX: 0000000000000002 RBX: 0000000000000000 RCX: 000000000000004a
-  RDX: 000000000000004a RSI: 0000000000000000 RDI: 0000000000000000
-  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000002 R11: 0000000000000001 R12: 0000000000000000
-  R13: 0000000000000000 R14: 000000000000004d R15: 0000000000000000
-  FS:  00007fce52b0fbc0(0000) GS:ffff88806ba00000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000000000000 CR3: 000000001ae64000 CR4: 0000000000750ef0
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   ? __die+0x23/0x70
-   ? page_fault_oops+0x181/0x480
-   ? __stack_depot_save+0x1e6/0x480
-   ? exc_page_fault+0x6f/0x1c0
-   ? asm_exc_page_fault+0x26/0x30
-   ? asn1_ber_decoder+0x173/0xc80
-   ? check_object+0x40/0x340
-   decode_negTokenInit+0x1e/0x30 [cifs]
-   SMB2_negotiate+0xc99/0x17c0 [cifs]
-   ? smb2_negotiate+0x46/0x60 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   smb2_negotiate+0x46/0x60 [cifs]
-   cifs_negotiate_protocol+0xae/0x130 [cifs]
-   cifs_get_smb_ses+0x517/0x1040 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? queue_delayed_work_on+0x5d/0x90
-   cifs_mount_get_session+0x78/0x200 [cifs]
-   dfs_mount_share+0x13a/0x9f0 [cifs]
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? lock_acquire+0xbf/0x2b0
-   ? find_nls+0x16/0x80
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   cifs_mount+0x7e/0x350 [cifs]
-   cifs_smb3_do_mount+0x128/0x780 [cifs]
-   smb3_get_tree+0xd9/0x290 [cifs]
-   vfs_get_tree+0x2c/0x100
-   ? capable+0x37/0x70
-   path_mount+0x2d7/0xb80
-   ? srso_alias_return_thunk+0x5/0xfbef5
-   ? _raw_spin_unlock_irqrestore+0x44/0x60
-   __x64_sys_mount+0x11a/0x150
-   do_syscall_64+0x47/0xf0
-   entry_SYSCALL_64_after_hwframe+0x6f/0x77
-  RIP: 0033:0x7fce52c2ab1e
+The issue is, the rb_time_cmpxchg() did not properly salt the msb portion,
+and the msb that was written was stale.
 
-Fix this by setting @len to zero when @off == 0 so callers won't
-attempt to dereference non-existing data areas.
+Link: https://lore.kernel.org/linux-trace-kernel/20231215084114.20899342@rorschach.local.home
 
-Reported-by: Robert Morris <rtm@csail.mit.edu>
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: f03f2abce4f39 ("ring-buffer: Have 32 bit time stamps use all 64 bits")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2misc.c |   26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ kernel/trace/ring_buffer.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/smb2misc.c
-+++ b/fs/smb/client/smb2misc.c
-@@ -313,6 +313,9 @@ static const bool has_smb2_data_area[NUM
- char *
- smb2_get_data_area_len(int *off, int *len, struct smb2_hdr *shdr)
- {
-+	const int max_off = 4096;
-+	const int max_len = 128 * 1024;
-+
- 	*off = 0;
- 	*len = 0;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -727,10 +727,12 @@ static int rb_time_cmpxchg(rb_time_t *t,
+ 	 cnt2 = cnt + 1;
  
-@@ -384,29 +387,20 @@ smb2_get_data_area_len(int *off, int *le
- 	 * Invalid length or offset probably means data area is invalid, but
- 	 * we have little choice but to ignore the data area in this case.
- 	 */
--	if (*off > 4096) {
--		cifs_dbg(VFS, "offset %d too large, data area ignored\n", *off);
--		*len = 0;
--		*off = 0;
--	} else if (*off < 0) {
--		cifs_dbg(VFS, "negative offset %d to data invalid ignore data area\n",
--			 *off);
-+	if (unlikely(*off < 0 || *off > max_off ||
-+		     *len < 0 || *len > max_len)) {
-+		cifs_dbg(VFS, "%s: invalid data area (off=%d len=%d)\n",
-+			 __func__, *off, *len);
- 		*off = 0;
- 		*len = 0;
--	} else if (*len < 0) {
--		cifs_dbg(VFS, "negative data length %d invalid, data area ignored\n",
--			 *len);
--		*len = 0;
--	} else if (*len > 128 * 1024) {
--		cifs_dbg(VFS, "data area larger than 128K: %d\n", *len);
-+	} else if (*off == 0) {
- 		*len = 0;
- 	}
+ 	 rb_time_split(val, &top, &bottom, &msb);
++	 msb = rb_time_val_cnt(msb, cnt);
+ 	 top = rb_time_val_cnt(top, cnt);
+ 	 bottom = rb_time_val_cnt(bottom, cnt);
  
- 	/* return pointer to beginning of data area, ie offset from SMB start */
--	if ((*off != 0) && (*len != 0))
-+	if (*off > 0 && *len > 0)
- 		return (char *)shdr + *off;
--	else
--		return NULL;
-+	return NULL;
- }
+ 	 rb_time_split(set, &top2, &bottom2, &msb2);
++	 msb2 = rb_time_val_cnt(msb2, cnt);
+ 	 top2 = rb_time_val_cnt(top2, cnt2);
+ 	 bottom2 = rb_time_val_cnt(bottom2, cnt2);
  
- /*
 
 
