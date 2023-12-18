@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFA4129ED2;
-	Mon, 18 Dec 2023 13:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03A8101D4;
+	Mon, 18 Dec 2023 13:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H13sTDAh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719E6C433C7;
-	Mon, 18 Dec 2023 13:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igi7kQL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1758BC433C7;
+	Mon, 18 Dec 2023 13:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907889;
-	bh=2RyKfIABJYfiGivOleoEUw4SXtlF9pqNf3OMS2AcgwI=;
+	s=korg; t=1702907892;
+	bh=rv0f392ADzGv4+tHISvNcSBxPP5h2yuT96wOaZiQbOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H13sTDAhv6iaWF5Vr2si5ifVa5iF9dGtvqFgR6yF/dYzAbQT2LmrnFPkreB1UIzSk
-	 m8FVX7322LTQ/jNfiCg+Kb2ngWiaTmAA9cAUTeAt8ZyscO8Gt1aIUTH1PYMO7rJeV/
-	 Z+tRJXDb+yA/yqjX/fEsKW/WyecOVJWX6V0f7GvY=
+	b=igi7kQL/jdv0zTfvGiJ1uaGrePdFNJKF75kKYxtEYItrfT9vK1Hhinyf3M20LtQj2
+	 pwPbEaxnEKqa/+3iPII7IK1BVpcqR5bz7Xnz22JGvs+k6JRd7DPCwH3xLKKm2LbTuv
+	 qveu4bWPKeECGVIP7uMPuNmjcnDb4A2/r6ppjfZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 083/106] drm/amdgpu/sdma5.2: add begin/end_use ring callbacks
-Date: Mon, 18 Dec 2023 14:51:37 +0100
-Message-ID: <20231218135058.610562881@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	kernel test robot <lkp@intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 084/106] dmaengine: stm32-dma: avoid bitfield overflow assertion
+Date: Mon, 18 Dec 2023 14:51:38 +0100
+Message-ID: <20231218135058.662094090@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -36,85 +37,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-commit ab4750332dbe535243def5dcebc24ca00c1f98ac upstream.
+commit 54bed6bafa0f38daf9697af50e3aff5ff1354fe1 upstream.
 
-Add begin/end_use ring callbacks to disallow GFXOFF when
-SDMA work is submitted and allow it again afterward.
+stm32_dma_get_burst() returns a negative error for invalid input, which
+gets turned into a large u32 value in stm32_dma_prep_dma_memcpy() that
+in turn triggers an assertion because it does not fit into a two-bit field:
+drivers/dma/stm32-dma.c: In function 'stm32_dma_prep_dma_memcpy':
+include/linux/compiler_types.h:354:38: error: call to '__compiletime_assert_282' declared with attribute error: FIELD_PREP: value too large for the field
+     _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+                                         ^
+   include/linux/compiler_types.h:335:4: note: in definition of macro '__compiletime_assert'
+       prefix ## suffix();    \
+       ^~~~~~
+   include/linux/compiler_types.h:354:2: note: in expansion of macro '_compiletime_assert'
+     _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+     ^~~~~~~~~~~~~~~~~~~
+   include/linux/build_bug.h:39:37: note: in expansion of macro 'compiletime_assert'
+    #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+                                        ^~~~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:68:3: note: in expansion of macro 'BUILD_BUG_ON_MSG'
+      BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?  \
+      ^~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:114:3: note: in expansion of macro '__BF_FIELD_CHECK'
+      __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: "); \
+      ^~~~~~~~~~~~~~~~
+   drivers/dma/stm32-dma.c:1237:4: note: in expansion of macro 'FIELD_PREP'
+       FIELD_PREP(STM32_DMA_SCR_PBURST_MASK, dma_burst) |
+       ^~~~~~~~~~
 
-This should avoid corner cases where GFXOFF is erroneously
-entered when SDMA is still active.  For now just allow/disallow
-GFXOFF in the begin and end helpers until we root cause the
-issue.  This should not impact power as SDMA usage is pretty
-minimal and GFXOSS should not be active when SDMA is active
-anyway, this just makes it explicit.
+As an easy workaround, assume the error can happen, so try to handle this
+by failing stm32_dma_prep_dma_memcpy() before the assertion. It replicates
+what is done in stm32_dma_set_xfer_param() where stm32_dma_get_burst() is
+also used.
 
-v2: move everything into sdma5.2 code.  No reason for this
-to be generic at this point.
-v3: Add comments in new code
-
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2220
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com> (v1)
-Tested-by: Mario Limonciello <mario.limonciello@amd.com> (v1)
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 5.15+
+Fixes: 1c32d6c37cc2 ("dmaengine: stm32-dma: use bitfield helpers")
+Fixes: a2b6103b7a8a ("dmaengine: stm32-dma: Improve memory burst management")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311060135.Q9eMnpCL-lkp@intel.com/
+Link: https://lore.kernel.org/r/20231106134832.1470305-1-amelie.delaunay@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/dma/stm32-dma.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-@@ -1690,6 +1690,32 @@ static void sdma_v5_2_get_clockgating_st
- 		*flags |= AMD_CG_SUPPORT_SDMA_LS;
- }
+--- a/drivers/dma/stm32-dma.c
++++ b/drivers/dma/stm32-dma.c
+@@ -1249,8 +1249,8 @@ static struct dma_async_tx_descriptor *s
+ 	enum dma_slave_buswidth max_width;
+ 	struct stm32_dma_desc *desc;
+ 	size_t xfer_count, offset;
+-	u32 num_sgs, best_burst, dma_burst, threshold;
+-	int i;
++	u32 num_sgs, best_burst, threshold;
++	int dma_burst, i;
  
-+static void sdma_v5_2_ring_begin_use(struct amdgpu_ring *ring)
-+{
-+	struct amdgpu_device *adev = ring->adev;
-+
-+	/* SDMA 5.2.3 (RMB) FW doesn't seem to properly
-+	 * disallow GFXOFF in some cases leading to
-+	 * hangs in SDMA.  Disallow GFXOFF while SDMA is active.
-+	 * We can probably just limit this to 5.2.3,
-+	 * but it shouldn't hurt for other parts since
-+	 * this GFXOFF will be disallowed anyway when SDMA is
-+	 * active, this just makes it explicit.
-+	 */
-+	amdgpu_gfx_off_ctrl(adev, false);
-+}
-+
-+static void sdma_v5_2_ring_end_use(struct amdgpu_ring *ring)
-+{
-+	struct amdgpu_device *adev = ring->adev;
-+
-+	/* SDMA 5.2.3 (RMB) FW doesn't seem to properly
-+	 * disallow GFXOFF in some cases leading to
-+	 * hangs in SDMA.  Allow GFXOFF when SDMA is complete.
-+	 */
-+	amdgpu_gfx_off_ctrl(adev, true);
-+}
-+
- const struct amd_ip_funcs sdma_v5_2_ip_funcs = {
- 	.name = "sdma_v5_2",
- 	.early_init = sdma_v5_2_early_init,
-@@ -1738,6 +1764,8 @@ static const struct amdgpu_ring_funcs sd
- 	.test_ib = sdma_v5_2_ring_test_ib,
- 	.insert_nop = sdma_v5_2_ring_insert_nop,
- 	.pad_ib = sdma_v5_2_ring_pad_ib,
-+	.begin_use = sdma_v5_2_ring_begin_use,
-+	.end_use = sdma_v5_2_ring_end_use,
- 	.emit_wreg = sdma_v5_2_ring_emit_wreg,
- 	.emit_reg_wait = sdma_v5_2_ring_emit_reg_wait,
- 	.emit_reg_write_reg_wait = sdma_v5_2_ring_emit_reg_write_reg_wait,
+ 	num_sgs = DIV_ROUND_UP(len, STM32_DMA_ALIGNED_MAX_DATA_ITEMS);
+ 	desc = kzalloc(struct_size(desc, sg_req, num_sgs), GFP_NOWAIT);
+@@ -1268,6 +1268,10 @@ static struct dma_async_tx_descriptor *s
+ 		best_burst = stm32_dma_get_best_burst(len, STM32_DMA_MAX_BURST,
+ 						      threshold, max_width);
+ 		dma_burst = stm32_dma_get_burst(chan, best_burst);
++		if (dma_burst < 0) {
++			kfree(desc);
++			return NULL;
++		}
+ 
+ 		stm32_dma_clear_reg(&desc->sg_req[i].chan_reg);
+ 		desc->sg_req[i].chan_reg.dma_scr =
 
 
