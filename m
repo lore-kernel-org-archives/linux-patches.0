@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688F714F63;
-	Mon, 18 Dec 2023 14:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B5537860;
+	Mon, 18 Dec 2023 14:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGs5pmlT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE7BC433C7;
-	Mon, 18 Dec 2023 14:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFiJ9Dz6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BBFFC433C8;
+	Mon, 18 Dec 2023 14:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908503;
-	bh=yiHRoC1r1lBxKJb/hoKSSfnFzbFIisABglpp7zhNDdU=;
+	s=korg; t=1702908506;
+	bh=tIszlihkCH2NgkLcV2VdavAXxiJ3WktnmETTeSPtatE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGs5pmlTlDhr82zG5k7uWi4GimepkuesHny8DmM5YwM1VeZqsJ9s/vPzOf3FYk2R2
-	 AWFUKkQoa5HYt8TwsuWrqBgs9DBE+JktGBVA75xZLcKMtm7HLGsju95s2xpKtujqgJ
-	 2Xhg4LsyaN7AXcO0zjCgtGqNK9yAaGZZdSEAyUuY=
+	b=YFiJ9Dz6hw/U3Qj0p8JJ4Jq8H06mLTxD0zuIeWRXOiUcfosoMm00qQCIXwytZMxQa
+	 FIlrGq2m06zJTI3QV1R4Nmt/X1/7qXuNgbCMmoNlQkdfD+91OAkkZviG6sEJcGhKns
+	 5w1PHPLD9eQLN8IiLd13pLhb4HhgnaWNr3CMJRPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Changhui Zhong <czhong@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 33/62] usb: aqc111: check packet for fixup for true limit
-Date: Mon, 18 Dec 2023 14:51:57 +0100
-Message-ID: <20231218135047.749876426@linuxfoundation.org>
+Subject: [PATCH 5.10 34/62] blk-throttle: fix lockdep warning of "cgroup_mutex or RCU read lock required!"
+Date: Mon, 18 Dec 2023 14:51:58 +0100
+Message-ID: <20231218135047.789078447@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -42,56 +43,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit ccab434e674ca95d483788b1895a70c21b7f016a ]
+[ Upstream commit 27b13e209ddca5979847a1b57890e0372c1edcee ]
 
-If a device sends a packet that is inbetween 0
-and sizeof(u64) the value passed to skb_trim()
-as length will wrap around ending up as some very
-large value.
+Inside blkg_for_each_descendant_pre(), both
+css_for_each_descendant_pre() and blkg_lookup() requires RCU read lock,
+and either cgroup_assert_mutex_or_rcu_locked() or rcu_read_lock_held()
+is called.
 
-The driver will then proceed to parse the header
-located at that position, which will either oops or
-process some random value.
+Fix the warning by adding rcu read lock.
 
-The fix is to check against sizeof(u64) rather than
-0, which the driver currently does. The issue exists
-since the introduction of the driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Changhui Zhong <czhong@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20231117023527.3188627-2-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ block/blk-throttle.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
-index c9c4095181744..4ea02116be182 100644
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -1079,17 +1079,17 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 	u16 pkt_count = 0;
- 	u64 desc_hdr = 0;
- 	u16 vlan_tag = 0;
--	u32 skb_len = 0;
-+	u32 skb_len;
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index c526fdd0a7b90..4bf514a7bd82c 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -1409,6 +1409,7 @@ static void tg_conf_updated(struct throtl_grp *tg, bool global)
+ 		   tg_bps_limit(tg, READ), tg_bps_limit(tg, WRITE),
+ 		   tg_iops_limit(tg, READ), tg_iops_limit(tg, WRITE));
  
- 	if (!skb)
- 		goto err;
++	rcu_read_lock();
+ 	/*
+ 	 * Update has_rules[] flags for the updated tg's subtree.  A tg is
+ 	 * considered to have rules if either the tg itself or any of its
+@@ -1436,6 +1437,7 @@ static void tg_conf_updated(struct throtl_grp *tg, bool global)
+ 		this_tg->latency_target = max(this_tg->latency_target,
+ 				parent_tg->latency_target);
+ 	}
++	rcu_read_unlock();
  
--	if (skb->len == 0)
-+	skb_len = skb->len;
-+	if (skb_len < sizeof(desc_hdr))
- 		goto err;
- 
--	skb_len = skb->len;
- 	/* RX Descriptor Header */
--	skb_trim(skb, skb->len - sizeof(desc_hdr));
-+	skb_trim(skb, skb_len - sizeof(desc_hdr));
- 	desc_hdr = le64_to_cpup((u64 *)skb_tail_pointer(skb));
- 
- 	/* Check these packets */
+ 	/*
+ 	 * We're already holding queue_lock and know @tg is valid.  Let's
 -- 
 2.43.0
 
