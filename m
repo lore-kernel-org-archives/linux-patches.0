@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975EB37883;
-	Mon, 18 Dec 2023 14:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5052337884;
+	Mon, 18 Dec 2023 14:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRuhg8hI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDBCC433C8;
-	Mon, 18 Dec 2023 14:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J69AW12X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E78C433C7;
+	Mon, 18 Dec 2023 14:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908319;
-	bh=hEOgg5hc+x9KbQ8aB9+CABH2yPTUxd1t7cvHSODWjk8=;
+	s=korg; t=1702908322;
+	bh=91zZPdVcqptxp+QoCMFuBC6p8rZ8R0amXAfGtEUxBCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FRuhg8hIMVb27Gfd1ttPKA3kGev8my7SV/5hK2jOvHczzxol11nbOWNuiJc8tlPG4
-	 XijBjJYqJY6blnUKZTmqAkNuCoMVnNkH0PbaUt8XVG6i2pm1D1VAhM6vl/rEFkQ1gs
-	 MytH4szD4pndTRy4zpIWrPFuFO/28IoPmVm4jbcg=
+	b=J69AW12XgCsLqo0ulAsfsaIaZhYVbrpt5pFZs4BTqLMET+bT8MHSwjDxP9pyyuFl3
+	 tssSIjnnhcFgPdCiI4+ZtS3FUU649R+YbXLvWOcoh2JBR7b6dpPCHtWTATz2Wh8IDr
+	 tXkCi/zgwRqPabTrXO8kXAGaCSHa20AUvQE3e4lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stuart Lee <stuart.lee@mediatek.com>,
-	AngeloGioacchino DEl Regno <angelogioacchino.delregno@collabora.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Subject: [PATCH 6.6 134/166] drm/mediatek: Fix access violation in mtk_drm_crtc_dma_dev_get
-Date: Mon, 18 Dec 2023 14:51:40 +0100
-Message-ID: <20231218135111.080041709@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	kernel test robot <lkp@intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 135/166] dmaengine: stm32-dma: avoid bitfield overflow assertion
+Date: Mon, 18 Dec 2023 14:51:41 +0100
+Message-ID: <20231218135111.131395020@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -43,47 +43,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stuart Lee <stuart.lee@mediatek.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-commit b6961d187fcd138981b8707dac87b9fcdbfe75d1 upstream.
+commit 54bed6bafa0f38daf9697af50e3aff5ff1354fe1 upstream.
 
-Add error handling to check NULL input in
-mtk_drm_crtc_dma_dev_get function.
+stm32_dma_get_burst() returns a negative error for invalid input, which
+gets turned into a large u32 value in stm32_dma_prep_dma_memcpy() that
+in turn triggers an assertion because it does not fit into a two-bit field:
+drivers/dma/stm32-dma.c: In function 'stm32_dma_prep_dma_memcpy':
+include/linux/compiler_types.h:354:38: error: call to '__compiletime_assert_282' declared with attribute error: FIELD_PREP: value too large for the field
+     _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+                                         ^
+   include/linux/compiler_types.h:335:4: note: in definition of macro '__compiletime_assert'
+       prefix ## suffix();    \
+       ^~~~~~
+   include/linux/compiler_types.h:354:2: note: in expansion of macro '_compiletime_assert'
+     _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+     ^~~~~~~~~~~~~~~~~~~
+   include/linux/build_bug.h:39:37: note: in expansion of macro 'compiletime_assert'
+    #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+                                        ^~~~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:68:3: note: in expansion of macro 'BUILD_BUG_ON_MSG'
+      BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?  \
+      ^~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:114:3: note: in expansion of macro '__BF_FIELD_CHECK'
+      __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: "); \
+      ^~~~~~~~~~~~~~~~
+   drivers/dma/stm32-dma.c:1237:4: note: in expansion of macro 'FIELD_PREP'
+       FIELD_PREP(STM32_DMA_SCR_PBURST_MASK, dma_burst) |
+       ^~~~~~~~~~
 
-While display path is not configured correctly, none of crtc is
-established. So the caller of mtk_drm_crtc_dma_dev_get may pass
-input parameter *crtc as NULL, Which may cause coredump when
-we try to get the container of NULL pointer.
+As an easy workaround, assume the error can happen, so try to handle this
+by failing stm32_dma_prep_dma_memcpy() before the assertion. It replicates
+what is done in stm32_dma_set_xfer_param() where stm32_dma_get_burst() is
+also used.
 
-Fixes: cb1d6bcca542 ("drm/mediatek: Add dma dev get function")
-Signed-off-by: Stuart Lee <stuart.lee@mediatek.com>
+Fixes: 1c32d6c37cc2 ("dmaengine: stm32-dma: use bitfield helpers")
+Fixes: a2b6103b7a8a ("dmaengine: stm32-dma: Improve memory burst management")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: AngeloGioacchino DEl Regno <angelogioacchino.delregno@collabora.com>
-Tested-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20231110012914.14884-2-stuart.lee@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311060135.Q9eMnpCL-lkp@intel.com/
+Link: https://lore.kernel.org/r/20231106134832.1470305-1-amelie.delaunay@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/dma/stm32-dma.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -885,7 +885,14 @@ static int mtk_drm_crtc_init_comp_planes
+--- a/drivers/dma/stm32-dma.c
++++ b/drivers/dma/stm32-dma.c
+@@ -1249,8 +1249,8 @@ static struct dma_async_tx_descriptor *s
+ 	enum dma_slave_buswidth max_width;
+ 	struct stm32_dma_desc *desc;
+ 	size_t xfer_count, offset;
+-	u32 num_sgs, best_burst, dma_burst, threshold;
+-	int i;
++	u32 num_sgs, best_burst, threshold;
++	int dma_burst, i;
  
- struct device *mtk_drm_crtc_dma_dev_get(struct drm_crtc *crtc)
- {
--	struct mtk_drm_crtc *mtk_crtc = to_mtk_crtc(crtc);
-+	struct mtk_drm_crtc *mtk_crtc = NULL;
-+
-+	if (!crtc)
-+		return NULL;
-+
-+	mtk_crtc = to_mtk_crtc(crtc);
-+	if (!mtk_crtc)
-+		return NULL;
+ 	num_sgs = DIV_ROUND_UP(len, STM32_DMA_ALIGNED_MAX_DATA_ITEMS);
+ 	desc = kzalloc(struct_size(desc, sg_req, num_sgs), GFP_NOWAIT);
+@@ -1268,6 +1268,10 @@ static struct dma_async_tx_descriptor *s
+ 		best_burst = stm32_dma_get_best_burst(len, STM32_DMA_MAX_BURST,
+ 						      threshold, max_width);
+ 		dma_burst = stm32_dma_get_burst(chan, best_burst);
++		if (dma_burst < 0) {
++			kfree(desc);
++			return NULL;
++		}
  
- 	return mtk_crtc->dma_dev;
- }
+ 		stm32_dma_clear_reg(&desc->sg_req[i].chan_reg);
+ 		desc->sg_req[i].chan_reg.dma_scr =
 
 
