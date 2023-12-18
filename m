@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BF11D14B;
-	Mon, 18 Dec 2023 14:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3E937898;
+	Mon, 18 Dec 2023 14:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhnMLTQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7B2C433C9;
-	Mon, 18 Dec 2023 14:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuldTJgu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30011C433C8;
+	Mon, 18 Dec 2023 14:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908059;
-	bh=ErCfcdSn2WYk4EJnw0F11OaIxbKRb8cC4ROsTcwKCeI=;
+	s=korg; t=1702908062;
+	bh=stjxwB6NO3mmof5+Nq4aNRdfVZtVuom+VHP2CMgBJjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhnMLTQme0PLvrZTGy7IQCSUZeMeQaBymfNrN3itLEzGnlkj/HV14wm3XAjWJv+DO
-	 IKt65JqLhkcRoBf2qiHUznSNsD2SvMi6bhIiDWgS8cLIp+2sA8Ohj7eufBXo+5+ZCf
-	 L2HHXy+QNzmaowTJRojcIrU52SSfh2w/YTtjoj+Y=
+	b=QuldTJguPT4rMRyF7Md18yrmrMNTLipkagxIFftZhLQ1oFs3dEACg6LV3B3eEjtW6
+	 89eMNMYGuWSs+wRZbeb99bp+lE85E1DZynk3WtHhjJDN4n/Biyfq3eTWg3nVR73ozB
+	 0nnL5jCs+UFv0b4UXsvNON0gqyqGSxsKG2OOX/Tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -24,9 +24,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/166] iavf: Introduce new state machines for flow director
-Date: Mon, 18 Dec 2023 14:50:05 +0100
-Message-ID: <20231218135106.742565608@linuxfoundation.org>
+Subject: [PATCH 6.6 040/166] iavf: Handle ntuple on/off based on new state machines for flow director
+Date: Mon, 18 Dec 2023 14:50:06 +0100
+Message-ID: <20231218135106.786019459@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -47,55 +47,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Piotr Gardocki <piotrx.gardocki@intel.com>
 
-[ Upstream commit 3a0b5a2929fdeda63fc921c2dbed237059acf732 ]
+[ Upstream commit 09d23b8918f9ab0f8114f6b94f2faf8bde3fb52a ]
 
-New states introduced:
-
- IAVF_FDIR_FLTR_DIS_REQUEST
- IAVF_FDIR_FLTR_DIS_PENDING
- IAVF_FDIR_FLTR_INACTIVE
-
-Current FDIR state machines (SM) are not adequate to handle a few
-scenarios in the link DOWN/UP event, reset event and ntuple-feature.
-
-For example, when VF link goes DOWN and comes back UP administratively,
-the expectation is that previously installed filters should also be
-restored. But with current SM, filters are not restored.
-So with new SM, during link DOWN filters are marked as INACTIVE in
-the iavf list but removed from PF. After link UP, SM will transition
-from INACTIVE to ADD_REQUEST to restore the filter.
-
-Similarly, with VF reset, filters will be removed from the PF, but
-marked as INACTIVE in the iavf list. Filters will be restored after
-reset completion.
+ntuple-filter feature on/off:
+Default is on. If turned off, the filters will be removed from both
+PF and iavf list. The removal is irrespective of current filter state.
 
 Steps to reproduce:
 -------------------
 
-1. Create a VF. Here VF is enp8s0.
+1. Ensure ntuple is on.
 
-2. Assign IP addresses to VF and link partner and ping continuously
-from remote. Here remote IP is 1.1.1.1.
+ethtool -K enp8s0 ntuple-filters on
 
-3. Check default RX Queue of traffic.
-
-ethtool -S enp8s0 | grep -E "rx-[[:digit:]]+\.packets"
-
-4. Add filter - change default RX Queue (to 15 here)
-
-ethtool -U ens8s0 flow-type ip4 src-ip 1.1.1.1 action 15 loc 5
-
-5. Ensure filter gets added and traffic is received on RX queue 15 now.
-
-Link event testing:
--------------------
-6. Bring VF link down and up. If traffic flows to configured queue 15,
-test is success, otherwise it is a failure.
-
-Reset event testing:
---------------------
-7. Reset the VF. If traffic flows to configured queue 15, test is success,
-otherwise it is a failure.
+2. Create a filter to receive the traffic into non-default rx-queue like 15
+and ensure traffic is flowing into queue into 15.
+Now, turn off ntuple. Traffic should not flow to configured queue 15.
+It should flow to default RX queue.
 
 Fixes: 0dbfbabb840d ("iavf: Add framework to enable ethtool ntuple filters")
 Signed-off-by: Piotr Gardocki <piotrx.gardocki@intel.com>
@@ -105,345 +73,100 @@ Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf.h        |  1 +
- .../net/ethernet/intel/iavf/iavf_ethtool.c    | 27 ++++---
- drivers/net/ethernet/intel/iavf/iavf_fdir.h   | 15 +++-
- drivers/net/ethernet/intel/iavf/iavf_main.c   | 48 ++++++++++---
- .../net/ethernet/intel/iavf/iavf_virtchnl.c   | 71 +++++++++++++++++--
- 5 files changed, 139 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 59 +++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
-index d8d7b62ceb24e..431d9d62c8c66 100644
---- a/drivers/net/ethernet/intel/iavf/iavf.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf.h
-@@ -303,6 +303,7 @@ struct iavf_adapter {
- #define IAVF_FLAG_QUEUES_DISABLED		BIT(17)
- #define IAVF_FLAG_SETUP_NETDEV_FEATURES		BIT(18)
- #define IAVF_FLAG_REINIT_MSIX_NEEDED		BIT(20)
-+#define IAVF_FLAG_FDIR_ENABLED			BIT(21)
- /* duplicates for common code */
- #define IAVF_FLAG_DCB_ENABLED			0
- 	/* flags for admin queue service task */
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-index 1b412754aa422..892c6a4f03bb8 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-@@ -1063,7 +1063,7 @@ iavf_get_ethtool_fdir_entry(struct iavf_adapter *adapter,
- 	struct iavf_fdir_fltr *rule = NULL;
- 	int ret = 0;
- 
--	if (!FDIR_FLTR_SUPPORT(adapter))
-+	if (!(adapter->flags & IAVF_FLAG_FDIR_ENABLED))
- 		return -EOPNOTSUPP;
- 
- 	spin_lock_bh(&adapter->fdir_fltr_lock);
-@@ -1205,7 +1205,7 @@ iavf_get_fdir_fltr_ids(struct iavf_adapter *adapter, struct ethtool_rxnfc *cmd,
- 	unsigned int cnt = 0;
- 	int val = 0;
- 
--	if (!FDIR_FLTR_SUPPORT(adapter))
-+	if (!(adapter->flags & IAVF_FLAG_FDIR_ENABLED))
- 		return -EOPNOTSUPP;
- 
- 	cmd->data = IAVF_MAX_FDIR_FILTERS;
-@@ -1397,7 +1397,7 @@ static int iavf_add_fdir_ethtool(struct iavf_adapter *adapter, struct ethtool_rx
- 	int count = 50;
- 	int err;
- 
--	if (!FDIR_FLTR_SUPPORT(adapter))
-+	if (!(adapter->flags & IAVF_FLAG_FDIR_ENABLED))
- 		return -EOPNOTSUPP;
- 
- 	if (fsp->flow_type & FLOW_MAC_EXT)
-@@ -1438,12 +1438,16 @@ static int iavf_add_fdir_ethtool(struct iavf_adapter *adapter, struct ethtool_rx
- 	spin_lock_bh(&adapter->fdir_fltr_lock);
- 	iavf_fdir_list_add_fltr(adapter, fltr);
- 	adapter->fdir_active_fltr++;
--	fltr->state = IAVF_FDIR_FLTR_ADD_REQUEST;
--	adapter->aq_required |= IAVF_FLAG_AQ_ADD_FDIR_FILTER;
-+	if (adapter->link_up) {
-+		fltr->state = IAVF_FDIR_FLTR_ADD_REQUEST;
-+		adapter->aq_required |= IAVF_FLAG_AQ_ADD_FDIR_FILTER;
-+	} else {
-+		fltr->state = IAVF_FDIR_FLTR_INACTIVE;
-+	}
- 	spin_unlock_bh(&adapter->fdir_fltr_lock);
- 
--	mod_delayed_work(adapter->wq, &adapter->watchdog_task, 0);
--
-+	if (adapter->link_up)
-+		mod_delayed_work(adapter->wq, &adapter->watchdog_task, 0);
- ret:
- 	if (err && fltr)
- 		kfree(fltr);
-@@ -1465,7 +1469,7 @@ static int iavf_del_fdir_ethtool(struct iavf_adapter *adapter, struct ethtool_rx
- 	struct iavf_fdir_fltr *fltr = NULL;
- 	int err = 0;
- 
--	if (!FDIR_FLTR_SUPPORT(adapter))
-+	if (!(adapter->flags & IAVF_FLAG_FDIR_ENABLED))
- 		return -EOPNOTSUPP;
- 
- 	spin_lock_bh(&adapter->fdir_fltr_lock);
-@@ -1474,6 +1478,11 @@ static int iavf_del_fdir_ethtool(struct iavf_adapter *adapter, struct ethtool_rx
- 		if (fltr->state == IAVF_FDIR_FLTR_ACTIVE) {
- 			fltr->state = IAVF_FDIR_FLTR_DEL_REQUEST;
- 			adapter->aq_required |= IAVF_FLAG_AQ_DEL_FDIR_FILTER;
-+		} else if (fltr->state == IAVF_FDIR_FLTR_INACTIVE) {
-+			list_del(&fltr->list);
-+			kfree(fltr);
-+			adapter->fdir_active_fltr--;
-+			fltr = NULL;
- 		} else {
- 			err = -EBUSY;
- 		}
-@@ -1782,7 +1791,7 @@ static int iavf_get_rxnfc(struct net_device *netdev, struct ethtool_rxnfc *cmd,
- 		ret = 0;
- 		break;
- 	case ETHTOOL_GRXCLSRLCNT:
--		if (!FDIR_FLTR_SUPPORT(adapter))
-+		if (!(adapter->flags & IAVF_FLAG_FDIR_ENABLED))
- 			break;
- 		spin_lock_bh(&adapter->fdir_fltr_lock);
- 		cmd->rule_cnt = adapter->fdir_active_fltr;
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_fdir.h b/drivers/net/ethernet/intel/iavf/iavf_fdir.h
-index 9eb9f73f6adf3..d31bd923ba8cb 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_fdir.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf_fdir.h
-@@ -6,12 +6,25 @@
- 
- struct iavf_adapter;
- 
--/* State of Flow Director filter */
-+/* State of Flow Director filter
-+ *
-+ * *_REQUEST states are used to mark filter to be sent to PF driver to perform
-+ * an action (either add or delete filter). *_PENDING states are an indication
-+ * that request was sent to PF and the driver is waiting for response.
-+ *
-+ * Both DELETE and DISABLE states are being used to delete a filter in PF.
-+ * The difference is that after a successful response filter in DEL_PENDING
-+ * state is being deleted from VF driver as well and filter in DIS_PENDING state
-+ * is being changed to INACTIVE state.
-+ */
- enum iavf_fdir_fltr_state_t {
- 	IAVF_FDIR_FLTR_ADD_REQUEST,	/* User requests to add filter */
- 	IAVF_FDIR_FLTR_ADD_PENDING,	/* Filter pending add by the PF */
- 	IAVF_FDIR_FLTR_DEL_REQUEST,	/* User requests to delete filter */
- 	IAVF_FDIR_FLTR_DEL_PENDING,	/* Filter pending delete by the PF */
-+	IAVF_FDIR_FLTR_DIS_REQUEST,	/* Filter scheduled to be disabled */
-+	IAVF_FDIR_FLTR_DIS_PENDING,	/* Filter pending disable by the PF */
-+	IAVF_FDIR_FLTR_INACTIVE,	/* Filter inactive on link down */
- 	IAVF_FDIR_FLTR_ACTIVE,		/* Filter is active */
- };
- 
 diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 68783a7b70962..5158addc0aa96 100644
+index 5158addc0aa96..af8eb27a3615c 100644
 --- a/drivers/net/ethernet/intel/iavf/iavf_main.c
 +++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -1356,18 +1356,20 @@ static void iavf_clear_cloud_filters(struct iavf_adapter *adapter)
-  **/
- static void iavf_clear_fdir_filters(struct iavf_adapter *adapter)
- {
--	struct iavf_fdir_fltr *fdir, *fdirtmp;
-+	struct iavf_fdir_fltr *fdir;
- 
- 	/* remove all Flow Director filters */
- 	spin_lock_bh(&adapter->fdir_fltr_lock);
--	list_for_each_entry_safe(fdir, fdirtmp, &adapter->fdir_list_head,
--				 list) {
-+	list_for_each_entry(fdir, &adapter->fdir_list_head, list) {
- 		if (fdir->state == IAVF_FDIR_FLTR_ADD_REQUEST) {
--			list_del(&fdir->list);
--			kfree(fdir);
--			adapter->fdir_active_fltr--;
--		} else {
--			fdir->state = IAVF_FDIR_FLTR_DEL_REQUEST;
-+			/* Cancel a request, keep filter as inactive */
-+			fdir->state = IAVF_FDIR_FLTR_INACTIVE;
-+		} else if (fdir->state == IAVF_FDIR_FLTR_ADD_PENDING ||
-+			 fdir->state == IAVF_FDIR_FLTR_ACTIVE) {
-+			/* Disable filters which are active or have a pending
-+			 * request to PF to be added
-+			 */
-+			fdir->state = IAVF_FDIR_FLTR_DIS_REQUEST;
- 		}
- 	}
- 	spin_unlock_bh(&adapter->fdir_fltr_lock);
-@@ -4174,6 +4176,33 @@ static int iavf_setup_tc(struct net_device *netdev, enum tc_setup_type type,
- 	}
+@@ -4409,6 +4409,49 @@ static int iavf_change_mtu(struct net_device *netdev, int new_mtu)
+ 	return ret;
  }
  
 +/**
-+ * iavf_restore_fdir_filters
++ * iavf_disable_fdir - disable Flow Director and clear existing filters
 + * @adapter: board private structure
-+ *
-+ * Restore existing FDIR filters when VF netdev comes back up.
 + **/
-+static void iavf_restore_fdir_filters(struct iavf_adapter *adapter)
++static void iavf_disable_fdir(struct iavf_adapter *adapter)
 +{
-+	struct iavf_fdir_fltr *f;
++	struct iavf_fdir_fltr *fdir, *fdirtmp;
++	bool del_filters = false;
 +
++	adapter->flags &= ~IAVF_FLAG_FDIR_ENABLED;
++
++	/* remove all Flow Director filters */
 +	spin_lock_bh(&adapter->fdir_fltr_lock);
-+	list_for_each_entry(f, &adapter->fdir_list_head, list) {
-+		if (f->state == IAVF_FDIR_FLTR_DIS_REQUEST) {
-+			/* Cancel a request, keep filter as active */
-+			f->state = IAVF_FDIR_FLTR_ACTIVE;
-+		} else if (f->state == IAVF_FDIR_FLTR_DIS_PENDING ||
-+			   f->state == IAVF_FDIR_FLTR_INACTIVE) {
-+			/* Add filters which are inactive or have a pending
-+			 * request to PF to be deleted
++	list_for_each_entry_safe(fdir, fdirtmp, &adapter->fdir_list_head,
++				 list) {
++		if (fdir->state == IAVF_FDIR_FLTR_ADD_REQUEST ||
++		    fdir->state == IAVF_FDIR_FLTR_INACTIVE) {
++			/* Delete filters not registered in PF */
++			list_del(&fdir->list);
++			kfree(fdir);
++			adapter->fdir_active_fltr--;
++		} else if (fdir->state == IAVF_FDIR_FLTR_ADD_PENDING ||
++			   fdir->state == IAVF_FDIR_FLTR_DIS_REQUEST ||
++			   fdir->state == IAVF_FDIR_FLTR_ACTIVE) {
++			/* Filters registered in PF, schedule their deletion */
++			fdir->state = IAVF_FDIR_FLTR_DEL_REQUEST;
++			del_filters = true;
++		} else if (fdir->state == IAVF_FDIR_FLTR_DIS_PENDING) {
++			/* Request to delete filter already sent to PF, change
++			 * state to DEL_PENDING to delete filter after PF's
++			 * response, not set as INACTIVE
 +			 */
-+			f->state = IAVF_FDIR_FLTR_ADD_REQUEST;
-+			adapter->aq_required |= IAVF_FLAG_AQ_ADD_FDIR_FILTER;
++			fdir->state = IAVF_FDIR_FLTR_DEL_PENDING;
 +		}
 +	}
 +	spin_unlock_bh(&adapter->fdir_fltr_lock);
++
++	if (del_filters) {
++		adapter->aq_required |= IAVF_FLAG_AQ_DEL_FDIR_FILTER;
++		mod_delayed_work(adapter->wq, &adapter->watchdog_task, 0);
++	}
 +}
 +
- /**
-  * iavf_open - Called when a network interface is made active
-  * @netdev: network interface device structure
-@@ -4241,8 +4270,9 @@ static int iavf_open(struct net_device *netdev)
+ #define NETIF_VLAN_OFFLOAD_FEATURES	(NETIF_F_HW_VLAN_CTAG_RX | \
+ 					 NETIF_F_HW_VLAN_CTAG_TX | \
+ 					 NETIF_F_HW_VLAN_STAG_RX | \
+@@ -4431,6 +4474,13 @@ static int iavf_set_features(struct net_device *netdev,
+ 		iavf_set_vlan_offload_features(adapter, netdev->features,
+ 					       features);
  
- 	spin_unlock_bh(&adapter->mac_vlan_list_lock);
- 
--	/* Restore VLAN filters that were removed with IFF_DOWN */
-+	/* Restore filters that were removed with IFF_DOWN */
- 	iavf_restore_filters(adapter);
-+	iavf_restore_fdir_filters(adapter);
- 
- 	iavf_configure(adapter);
- 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index 0b97b424e487a..b95a4f903204b 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -1738,8 +1738,8 @@ void iavf_add_fdir_filter(struct iavf_adapter *adapter)
-  **/
- void iavf_del_fdir_filter(struct iavf_adapter *adapter)
- {
-+	struct virtchnl_fdir_del f = {};
- 	struct iavf_fdir_fltr *fdir;
--	struct virtchnl_fdir_del f;
- 	bool process_fltr = false;
- 	int len;
- 
-@@ -1756,11 +1756,16 @@ void iavf_del_fdir_filter(struct iavf_adapter *adapter)
- 	list_for_each_entry(fdir, &adapter->fdir_list_head, list) {
- 		if (fdir->state == IAVF_FDIR_FLTR_DEL_REQUEST) {
- 			process_fltr = true;
--			memset(&f, 0, len);
- 			f.vsi_id = fdir->vc_add_msg.vsi_id;
- 			f.flow_id = fdir->flow_id;
- 			fdir->state = IAVF_FDIR_FLTR_DEL_PENDING;
- 			break;
-+		} else if (fdir->state == IAVF_FDIR_FLTR_DIS_REQUEST) {
-+			process_fltr = true;
-+			f.vsi_id = fdir->vc_add_msg.vsi_id;
-+			f.flow_id = fdir->flow_id;
-+			fdir->state = IAVF_FDIR_FLTR_DIS_PENDING;
-+			break;
- 		}
- 	}
- 	spin_unlock_bh(&adapter->fdir_fltr_lock);
-@@ -1904,6 +1909,48 @@ static void iavf_netdev_features_vlan_strip_set(struct net_device *netdev,
- 		netdev->features &= ~NETIF_F_HW_VLAN_CTAG_RX;
++	if ((netdev->features & NETIF_F_NTUPLE) ^ (features & NETIF_F_NTUPLE)) {
++		if (features & NETIF_F_NTUPLE)
++			adapter->flags |= IAVF_FLAG_FDIR_ENABLED;
++		else
++			iavf_disable_fdir(adapter);
++	}
++
+ 	return 0;
  }
  
-+/**
-+ * iavf_activate_fdir_filters - Reactivate all FDIR filters after a reset
-+ * @adapter: private adapter structure
-+ *
-+ * Called after a reset to re-add all FDIR filters and delete some of them
-+ * if they were pending to be deleted.
-+ */
-+static void iavf_activate_fdir_filters(struct iavf_adapter *adapter)
-+{
-+	struct iavf_fdir_fltr *f, *ftmp;
-+	bool add_filters = false;
+@@ -4726,6 +4776,9 @@ static netdev_features_t iavf_fix_features(struct net_device *netdev,
+ {
+ 	struct iavf_adapter *adapter = netdev_priv(netdev);
+ 
++	if (!FDIR_FLTR_SUPPORT(adapter))
++		features &= ~NETIF_F_NTUPLE;
 +
-+	spin_lock_bh(&adapter->fdir_fltr_lock);
-+	list_for_each_entry_safe(f, ftmp, &adapter->fdir_list_head, list) {
-+		if (f->state == IAVF_FDIR_FLTR_ADD_REQUEST ||
-+		    f->state == IAVF_FDIR_FLTR_ADD_PENDING ||
-+		    f->state == IAVF_FDIR_FLTR_ACTIVE) {
-+			/* All filters and requests have been removed in PF,
-+			 * restore them
-+			 */
-+			f->state = IAVF_FDIR_FLTR_ADD_REQUEST;
-+			add_filters = true;
-+		} else if (f->state == IAVF_FDIR_FLTR_DIS_REQUEST ||
-+			   f->state == IAVF_FDIR_FLTR_DIS_PENDING) {
-+			/* Link down state, leave filters as inactive */
-+			f->state = IAVF_FDIR_FLTR_INACTIVE;
-+		} else if (f->state == IAVF_FDIR_FLTR_DEL_REQUEST ||
-+			   f->state == IAVF_FDIR_FLTR_DEL_PENDING) {
-+			/* Delete filters that were pending to be deleted, the
-+			 * list on PF is already cleared after a reset
-+			 */
-+			list_del(&f->list);
-+			kfree(f);
-+			adapter->fdir_active_fltr--;
-+		}
+ 	return iavf_fix_netdev_vlan_features(adapter, features);
+ }
+ 
+@@ -4843,6 +4896,12 @@ int iavf_process_config(struct iavf_adapter *adapter)
+ 	if (vfres->vf_cap_flags & VIRTCHNL_VF_OFFLOAD_VLAN)
+ 		netdev->features |= NETIF_F_HW_VLAN_CTAG_FILTER;
+ 
++	if (FDIR_FLTR_SUPPORT(adapter)) {
++		netdev->hw_features |= NETIF_F_NTUPLE;
++		netdev->features |= NETIF_F_NTUPLE;
++		adapter->flags |= IAVF_FLAG_FDIR_ENABLED;
 +	}
-+	spin_unlock_bh(&adapter->fdir_fltr_lock);
 +
-+	if (add_filters)
-+		adapter->aq_required |= IAVF_FLAG_AQ_ADD_FDIR_FILTER;
-+}
-+
- /**
-  * iavf_virtchnl_completion
-  * @adapter: adapter structure
-@@ -2081,7 +2128,8 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 			spin_lock_bh(&adapter->fdir_fltr_lock);
- 			list_for_each_entry(fdir, &adapter->fdir_list_head,
- 					    list) {
--				if (fdir->state == IAVF_FDIR_FLTR_DEL_PENDING) {
-+				if (fdir->state == IAVF_FDIR_FLTR_DEL_PENDING ||
-+				    fdir->state == IAVF_FDIR_FLTR_DIS_PENDING) {
- 					fdir->state = IAVF_FDIR_FLTR_ACTIVE;
- 					dev_info(&adapter->pdev->dev, "Failed to del Flow Director filter, error %s\n",
- 						 iavf_stat_str(&adapter->hw,
-@@ -2217,6 +2265,8 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
+ 	netdev->priv_flags |= IFF_UNICAST_FLT;
  
- 		spin_unlock_bh(&adapter->mac_vlan_list_lock);
- 
-+		iavf_activate_fdir_filters(adapter);
-+
- 		iavf_parse_vf_resource_msg(adapter);
- 
- 		/* negotiated VIRTCHNL_VF_OFFLOAD_VLAN_V2, so wait for the
-@@ -2406,7 +2456,9 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 		list_for_each_entry_safe(fdir, fdir_tmp, &adapter->fdir_list_head,
- 					 list) {
- 			if (fdir->state == IAVF_FDIR_FLTR_DEL_PENDING) {
--				if (del_fltr->status == VIRTCHNL_FDIR_SUCCESS) {
-+				if (del_fltr->status == VIRTCHNL_FDIR_SUCCESS ||
-+				    del_fltr->status ==
-+				    VIRTCHNL_FDIR_FAILURE_RULE_NONEXIST) {
- 					dev_info(&adapter->pdev->dev, "Flow Director filter with location %u is deleted\n",
- 						 fdir->loc);
- 					list_del(&fdir->list);
-@@ -2418,6 +2470,17 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 						 del_fltr->status);
- 					iavf_print_fdir_fltr(adapter, fdir);
- 				}
-+			} else if (fdir->state == IAVF_FDIR_FLTR_DIS_PENDING) {
-+				if (del_fltr->status == VIRTCHNL_FDIR_SUCCESS ||
-+				    del_fltr->status ==
-+				    VIRTCHNL_FDIR_FAILURE_RULE_NONEXIST) {
-+					fdir->state = IAVF_FDIR_FLTR_INACTIVE;
-+				} else {
-+					fdir->state = IAVF_FDIR_FLTR_ACTIVE;
-+					dev_info(&adapter->pdev->dev, "Failed to disable Flow Director filter with status: %d\n",
-+						 del_fltr->status);
-+					iavf_print_fdir_fltr(adapter, fdir);
-+				}
- 			}
- 		}
- 		spin_unlock_bh(&adapter->fdir_fltr_lock);
+ 	/* Do not turn on offloads when they are requested to be turned off.
 -- 
 2.43.0
 
