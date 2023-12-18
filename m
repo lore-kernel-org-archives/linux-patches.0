@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C71C37889;
-	Mon, 18 Dec 2023 14:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EB8129EC8;
+	Mon, 18 Dec 2023 14:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKg8Jmg2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82DFC433C7;
-	Mon, 18 Dec 2023 14:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cg2UoC4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F94C433C8;
+	Mon, 18 Dec 2023 14:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908705;
-	bh=g10qMAFJquXgG+WzgYJTfUD3l16xq6VVYMKtk4oDlHM=;
+	s=korg; t=1702908709;
+	bh=gc5/VSEXLM2363bviogqr11x8b3GCoKpoVNUAqMmF+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKg8Jmg2BvbkVrJ0fKwG8LNA42NNmf8CaBoXsuVyJXI99351IAMSNINk4yU+kTmsi
-	 I7OeXYy7bmBEFFoFKlc8KEZ4VLVcO2lLkoHNS+bOPbN1EZBQG1GLc44GrQdEUGBKTT
-	 6kt4vhv6dDjAgQoTeQ5TvEqk0vGWk1PnLtp+NJQA=
+	b=cg2UoC4N/CPTROCdcQEWCeb53o/aiMM7BQ6BGHb8u9k/MJCYF9io02+xIGLNY9H3I
+	 tjA97ez4ExVPN+omCTsiO2pUeF+MP+l3ov012nMaHEX9JIy4hA60STM61l7Tkcwl3X
+	 km8NVG+/d8f2Ia7oAUQMeWy62nQTWeHxut0ki7MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Saarinen <jani.saarinen@intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 18/40] ALSA: hda/hdmi: add force-connect quirks for ASUSTeK Z170 variants
-Date: Mon, 18 Dec 2023 14:52:13 +0100
-Message-ID: <20231218135043.374123193@linuxfoundation.org>
+	Fiona Ebner <f.ebner@proxmox.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Jonathan Woithe <jwoithe@just42.net>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Igor Mammedov <imammedo@redhat.com>
+Subject: [PATCH 5.4 19/40] Revert "PCI: acpiphp: Reassign resources on bridge if necessary"
+Date: Mon, 18 Dec 2023 14:52:14 +0100
+Message-ID: <20231218135043.408995873@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135042.748715259@linuxfoundation.org>
 References: <20231218135042.748715259@linuxfoundation.org>
@@ -37,47 +39,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-commit 924f5ca2975b2993ee81a7ecc3c809943a70f334 upstream.
+commit 5df12742b7e3aae2594a30a9d14d5d6e9e7699f4 upstream.
 
-On ASUSTeK Z170M PLUS and Z170 PRO GAMING systems, the display codec
-pins are not registered properly without the force-connect quirk. The
-codec will report only one pin as having external connectivity, but i915
-finds all three connectors on the system, so the two drivers are not
-in sync.
+This reverts commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 and the
+subsequent fix to it:
 
-Issue found with DRM igt-gpu-tools test kms_hdmi_inject@inject-audio.
+  cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus")
 
-Link: https://gitlab.freedesktop.org/drm/intel/-/issues/9801
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Jani Saarinen <jani.saarinen@intel.com>
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+40613da52b13 fixed a problem where hot-adding a device with large BARs
+failed if the bridge windows programmed by firmware were not large enough.
+
+cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources()
+only for non-root bus") fixed a problem with 40613da52b13: an ACPI hot-add
+of a device on a PCI root bus (common in the virt world) or firmware
+sending ACPI Bus Check to non-existent Root Ports (e.g., on Dell Inspiron
+7352/0W6WV0) caused a NULL pointer dereference and suspend/resume hangs.
+
+Unfortunately the combination of 40613da52b13 and cc22522fd55e caused other
+problems:
+
+  - Fiona reported that hot-add of SCSI disks in QEMU virtual machine fails
+    sometimes.
+
+  - Dongli reported a similar problem with hot-add of SCSI disks.
+
+  - Jonathan reported a console freeze during boot on bare metal due to an
+    error in radeon GPU initialization.
+
+Revert both patches to avoid adding these problems.  This means we will
+again see the problems with hot-adding devices with large BARs and the NULL
+pointer dereferences and suspend/resume issues that 40613da52b13 and
+cc22522fd55e were intended to fix.
+
+Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
+Fixes: cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus")
+Reported-by: Fiona Ebner <f.ebner@proxmox.com>
+Closes: https://lore.kernel.org/r/9eb669c0-d8f2-431d-a700-6da13053ae54@proxmox.com
+Reported-by: Dongli Zhang <dongli.zhang@oracle.com>
+Closes: https://lore.kernel.org/r/3c4a446a-b167-11b8-f36f-d3c1b49b42e9@oracle.com
+Reported-by: Jonathan Woithe <jwoithe@just42.net>
+Closes: https://lore.kernel.org/r/ZXpaNCLiDM+Kv38H@marvin.atrad.com.au
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231208132127.2438067-3-kai.vehmanen@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/hotplug/acpiphp_glue.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1822,6 +1822,8 @@ static const struct snd_pci_quirk force_
- 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x8715, "HP", 1),
-+	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
-+	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
- 	{}
- };
+--- a/drivers/pci/hotplug/acpiphp_glue.c
++++ b/drivers/pci/hotplug/acpiphp_glue.c
+@@ -510,15 +510,12 @@ static void enable_slot(struct acpiphp_s
+ 				if (pass && dev->subordinate) {
+ 					check_hotplug_bridge(slot, dev);
+ 					pcibios_resource_survey_bus(dev->subordinate);
+-					if (pci_is_root_bus(bus))
+-						__pci_bus_size_bridges(dev->subordinate, &add_list);
++					__pci_bus_size_bridges(dev->subordinate,
++							       &add_list);
+ 				}
+ 			}
+ 		}
+-		if (pci_is_root_bus(bus))
+-			__pci_bus_assign_resources(bus, &add_list, NULL);
+-		else
+-			pci_assign_unassigned_bridge_resources(bus->self);
++		__pci_bus_assign_resources(bus, &add_list, NULL);
+ 	}
+ 
+ 	acpiphp_sanitize_bus(bus);
 
 
