@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D941D137;
-	Mon, 18 Dec 2023 14:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F7437897;
+	Mon, 18 Dec 2023 14:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuXq4oN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2F0C433C7;
-	Mon, 18 Dec 2023 14:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8e+8EgH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23B2C433C7;
+	Mon, 18 Dec 2023 14:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908248;
-	bh=0nCuLDes+MM7CLZ2OwszjSyoYu4jjOJ9oMAVMyVQk68=;
+	s=korg; t=1702908251;
+	bh=L4KdS2q/BQKJc2utAD2glC/wSpcsycSc7YM35kTRvcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OuXq4oN0+sEOUDJis0CtnD0cQtqAurBbwBCn8mzVlxdSzJUSADPK/1y3oISvetJqF
-	 EZ6yh1rjtqIX8aSBUO49ycrhg2eX5PjLop+UwXFCgM+8qAoSUXTBG40wja/Lo9VA8e
-	 xQJO8JPscfwexqo1uWn4OHN9EU5wLbMVF1vM+wmI=
+	b=D8e+8EgH4/8owAq9tjgkEGvuYXTiD3gSBD/ekCocmZGnezRxQBtopl7ccRS78oiht
+	 yjs1HTrZQzuu4VXaPZ5BajiNleVMT8VzWGtJWnB8ec5IcqLzkE2E/sva/RntRA4/kw
+	 FE6Z/FoggN+x0gZaOlNahnfLtlsSWWeG8wdPlzjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hamish Martin <hamish.martin@alliedtelesis.co.nz>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/166] HID: mcp2221: Set driver data before I2C adapter add
-Date: Mon, 18 Dec 2023 14:51:13 +0100
-Message-ID: <20231218135109.810276930@linuxfoundation.org>
+Subject: [PATCH 6.6 108/166] HID: mcp2221: Allow IO to start during probe
+Date: Mon, 18 Dec 2023 14:51:14 +0100
+Message-ID: <20231218135109.860006601@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -44,43 +44,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
 
-[ Upstream commit f2d4a5834638bbc967371b9168c0b481519f7c5e ]
+[ Upstream commit 73ce9f1f2741a38f5d27393e627702ae2c46e6f2 ]
 
-The process of adding an I2C adapter can invoke I2C accesses on that new
-adapter (see i2c_detect()).
+During the probe we add an I2C adapter and as soon as we add that adapter
+it may be used for a transfer (e.g via the code in i2cdetect()).
+Those transfers are not able to complete and time out. This is because the
+HID raw_event callback (mcp2221_raw_event) will not be invoked until the
+HID device's 'driver_input_lock' is marked up at the completion of the
+probe in hid_device_probe(). This starves the driver of the responses it
+is waiting for.
+In order to allow the I2C transfers to complete while we are still in the
+probe, start the IO once we have completed init of the HID device.
 
-Ensure we have set the adapter's driver data to avoid null pointer
-dereferences in the xfer functions during the adapter add.
-
-This has been noted in the past and the same fix proposed but not
-completed. See:
-https://lore.kernel.org/lkml/ef597e73-ed71-168e-52af-0d19b03734ac@vigem.de/
+This issue seems to have been seen before and a patch was submitted but
+it seems it was never accepted. See:
+https://lore.kernel.org/all/20221103222714.21566-3-Enrik.Berkhan@inka.de/
 
 Signed-off-by: Hamish Martin <hamish.martin@alliedtelesis.co.nz>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-mcp2221.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-mcp2221.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
-index 72883e0ce7575..b95f31cf0fa21 100644
+index b95f31cf0fa21..aef0785c91cc2 100644
 --- a/drivers/hid/hid-mcp2221.c
 +++ b/drivers/hid/hid-mcp2221.c
-@@ -1157,12 +1157,12 @@ static int mcp2221_probe(struct hid_device *hdev,
- 	snprintf(mcp->adapter.name, sizeof(mcp->adapter.name),
- 			"MCP2221 usb-i2c bridge");
- 
-+	i2c_set_adapdata(&mcp->adapter, mcp);
- 	ret = devm_i2c_add_adapter(&hdev->dev, &mcp->adapter);
- 	if (ret) {
- 		hid_err(hdev, "can't add usb-i2c adapter: %d\n", ret);
+@@ -1142,6 +1142,8 @@ static int mcp2221_probe(struct hid_device *hdev,
+ 	if (ret)
  		return ret;
- 	}
--	i2c_set_adapdata(&mcp->adapter, mcp);
  
- #if IS_REACHABLE(CONFIG_GPIOLIB)
- 	/* Setup GPIO chip */
++	hid_device_io_start(hdev);
++
+ 	/* Set I2C bus clock diviser */
+ 	if (i2c_clk_freq > 400)
+ 		i2c_clk_freq = 400;
 -- 
 2.43.0
 
