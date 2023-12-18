@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0717215AC0;
-	Mon, 18 Dec 2023 13:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B899B1D127;
+	Mon, 18 Dec 2023 13:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rqJf+yQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E56C433C7;
-	Mon, 18 Dec 2023 13:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dl3zL+yj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A81C433C9;
+	Mon, 18 Dec 2023 13:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907643;
-	bh=jPqNNIaVBIseiHooJpVp7tWvV7+lO/OzJwDEX6FRJ8w=;
+	s=korg; t=1702907646;
+	bh=x++un3CT69lmn6HEujGzNIkWRlD2RIrTz2RnMSNTJfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1rqJf+yQZE00IMlQJxAqN4WXso7If+StY3qKxgAG7LQ8Vr+bVt57N6JxUuI0ZrjhV
-	 eap4qKpZZ4QTiVwxesWvblkV0J2r38505+ExCzXuSbOSYEqFLaFhX5o4bA03JOKQJ7
-	 GDUsLVT7M2Qf4gYRvyV8kwU+bgJrvE1opDtBQtcM=
+	b=dl3zL+yjCMSyi55+ebk1NSZ1RyS8ji8Ll8hlmZPDOGSJQ+R2rQfMJ/9w+qex28N80
+	 L4wrXHRNWenNZabMGT8KtH733A6SMBAEF7YiMzK3zWPvAiEBE+w2cMpiK+G+vFd2Do
+	 VfI7TIe0GO50S9nI5FI4ju8s8jngYbHa/iLxgFAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 4.19 30/36] ext4: prevent the normalized size from exceeding EXT_MAX_BLOCKS
-Date: Mon, 18 Dec 2023 14:51:40 +0100
-Message-ID: <20231218135042.908823420@linuxfoundation.org>
+	James Houghton <jthoughton@google.com>,
+	Will Deacon <will@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 4.19 31/36] arm64: mm: Always make sw-dirty PTEs hw-dirty in pte_modify
+Date: Mon, 18 Dec 2023 14:51:41 +0100
+Message-ID: <20231218135042.943369042@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
 References: <20231218135041.876499958@linuxfoundation.org>
@@ -43,75 +43,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: James Houghton <jthoughton@google.com>
 
-commit 2dcf5fde6dffb312a4bfb8ef940cea2d1f402e32 upstream.
+commit 3c0696076aad60a2f04c019761921954579e1b0e upstream.
 
-For files with logical blocks close to EXT_MAX_BLOCKS, the file size
-predicted in ext4_mb_normalize_request() may exceed EXT_MAX_BLOCKS.
-This can cause some blocks to be preallocated that will not be used.
-And after [Fixes], the following issue may be triggered:
+It is currently possible for a userspace application to enter an
+infinite page fault loop when using HugeTLB pages implemented with
+contiguous PTEs when HAFDBS is not available. This happens because:
 
-=========================================================
- kernel BUG at fs/ext4/mballoc.c:4653!
- Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
- CPU: 1 PID: 2357 Comm: xfs_io 6.7.0-rc2-00195-g0f5cc96c367f
- Hardware name: linux,dummy-virt (DT)
- pc : ext4_mb_use_inode_pa+0x148/0x208
- lr : ext4_mb_use_inode_pa+0x98/0x208
- Call trace:
-  ext4_mb_use_inode_pa+0x148/0x208
-  ext4_mb_new_inode_pa+0x240/0x4a8
-  ext4_mb_use_best_found+0x1d4/0x208
-  ext4_mb_try_best_found+0xc8/0x110
-  ext4_mb_regular_allocator+0x11c/0xf48
-  ext4_mb_new_blocks+0x790/0xaa8
-  ext4_ext_map_blocks+0x7cc/0xd20
-  ext4_map_blocks+0x170/0x600
-  ext4_iomap_begin+0x1c0/0x348
-=========================================================
+1. The kernel may sometimes write PTEs that are sw-dirty but hw-clean
+   (PTE_DIRTY | PTE_RDONLY | PTE_WRITE).
 
-Here is a calculation when adjusting ac_b_ex in ext4_mb_new_inode_pa():
+2. If, during a write, the CPU uses a sw-dirty, hw-clean PTE in handling
+   the memory access on a system without HAFDBS, we will get a page
+   fault.
 
-	ex.fe_logical = orig_goal_end - EXT4_C2B(sbi, ex.fe_len);
-	if (ac->ac_o_ex.fe_logical >= ex.fe_logical)
-		goto adjust_bex;
+3. HugeTLB will check if it needs to update the dirty bits on the PTE.
+   For contiguous PTEs, it will check to see if the pgprot bits need
+   updating. In this case, HugeTLB wants to write a sequence of
+   sw-dirty, hw-dirty PTEs, but it finds that all the PTEs it is about
+   to overwrite are all pte_dirty() (pte_sw_dirty() => pte_dirty()),
+   so it thinks no update is necessary.
 
-The problem is that when orig_goal_end is subtracted from ac_b_ex.fe_len
-it is still greater than EXT_MAX_BLOCKS, which causes ex.fe_logical to
-overflow to a very small value, which ultimately triggers a BUG_ON in
-ext4_mb_new_inode_pa() because pa->pa_free < len.
+We can get the kernel to write a sw-dirty, hw-clean PTE with the
+following steps (showing the relevant VMA flags and pgprot bits):
 
-The last logical block of an actual write request does not exceed
-EXT_MAX_BLOCKS, so in ext4_mb_normalize_request() also avoids normalizing
-the last logical block to exceed EXT_MAX_BLOCKS to avoid the above issue.
+i.   Create a valid, writable contiguous PTE.
+       VMA vmflags:     VM_SHARED | VM_READ | VM_WRITE
+       VMA pgprot bits: PTE_RDONLY | PTE_WRITE
+       PTE pgprot bits: PTE_DIRTY | PTE_WRITE
 
-The test case in [Link] can reproduce the above issue with 64k block size.
+ii.  mprotect the VMA to PROT_NONE.
+       VMA vmflags:     VM_SHARED
+       VMA pgprot bits: PTE_RDONLY
+       PTE pgprot bits: PTE_DIRTY | PTE_RDONLY
 
-Link: https://patchwork.kernel.org/project/fstests/list/?series=804003
-Cc:  <stable@kernel.org> # 6.4
-Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231127063313.3734294-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+iii. mprotect the VMA back to PROT_READ | PROT_WRITE.
+       VMA vmflags:     VM_SHARED | VM_READ | VM_WRITE
+       VMA pgprot bits: PTE_RDONLY | PTE_WRITE
+       PTE pgprot bits: PTE_DIRTY | PTE_WRITE | PTE_RDONLY
+
+Make it impossible to create a writeable sw-dirty, hw-clean PTE with
+pte_modify(). Such a PTE should be impossible to create, and there may
+be places that assume that pte_dirty() implies pte_hw_dirty().
+
+Signed-off-by: James Houghton <jthoughton@google.com>
+Fixes: 031e6e6b4e12 ("arm64: hugetlb: Avoid unnecessary clearing in huge_ptep_set_access_flags")
+Cc: <stable@vger.kernel.org>
+Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
+Link: https://lore.kernel.org/r/20231204172646.2541916-3-jthoughton@google.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/include/asm/pgtable.h |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3181,6 +3181,10 @@ ext4_mb_normalize_request(struct ext4_al
- 	start = max(start, rounddown(ac->ac_o_ex.fe_logical,
- 			(ext4_lblk_t)EXT4_BLOCKS_PER_GROUP(ac->ac_sb)));
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -595,6 +595,12 @@ static inline pte_t pte_modify(pte_t pte
+ 	if (pte_hw_dirty(pte))
+ 		pte = pte_mkdirty(pte);
+ 	pte_val(pte) = (pte_val(pte) & ~mask) | (pgprot_val(newprot) & mask);
++	/*
++	 * If we end up clearing hw dirtiness for a sw-dirty PTE, set hardware
++	 * dirtiness again.
++	 */
++	if (pte_sw_dirty(pte))
++		pte = pte_mkdirty(pte);
+ 	return pte;
+ }
  
-+	/* avoid unnecessary preallocation that may trigger assertions */
-+	if (start + size > EXT_MAX_BLOCKS)
-+		size = EXT_MAX_BLOCKS - start;
-+
- 	/* don't cover already allocated blocks in selected range */
- 	if (ar->pleft && start <= ar->lleft) {
- 		size -= ar->lleft + 1 - start;
 
 
