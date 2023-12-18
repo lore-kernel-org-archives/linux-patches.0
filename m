@@ -1,115 +1,100 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140431D12F;
-	Mon, 18 Dec 2023 18:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CB348784;
+	Mon, 18 Dec 2023 20:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="riIBUN3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B6FC433C8;
-	Mon, 18 Dec 2023 18:50:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702925443;
-	bh=mAyzULUQ/2cIyFdm96bPlxnFOJOxBk1kSyPiwW8z2kw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=riIBUN3UXO4MtI4onPLdmXLWlRLMFLJu6TEA/D7TTt9WOwRzQLObhB4f8tWsAG8D0
-	 AqXslIaj1ET98YTmkyH3u6R9fldkP1vbyTPdwQwtIZdbowf8jDdF3/Dz8KZF5aCcUg
-	 8lWsiGG8KU4Gl5Z5Vaz/n8EqOLNaIRQPBkh37vjQQzKMpDErZ3sEGbYnGY3hUCq9x4
-	 ZFiN0dKAy1Wbb9jp0VFG9c0eHVWPn6mvCMwDAX4WR2vn8ua2sULUuhOxLlvZCHRO0D
-	 /5+zFpIrn5KdCYz1dwOdP3A3RVSHfGkj5fUPq+L8h7MGJ3wimtKIC5ntDVf3SqO30X
-	 6OCtR+TUDapxQ==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/166] 6.6.8-rc1 review
-Date: Mon, 18 Dec 2023 18:50:41 +0000
-Message-Id: <20231218185041.100034-1-sj@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
-References: 
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKmhIaq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1E2C433C8;
+	Mon, 18 Dec 2023 20:25:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1702931105;
+	bh=aNcZ8KCjQ4wTA3LAgkU+9PTng+8ysyMp8kqdwJLg4TY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DKmhIaq3UNnEUf+MSprOgUlHYZe3L1heaVCV9khnZR5Rn4MiNcWXh6QXfq4Hu3Ava
+	 /4mgdH9O8Yxc5xV+jzquXW/UtTXf/1QFu2PYkLtvpPfXeAimaaMf5vZYHlTHut+aRk
+	 AVUjBQe3DbKd4zvg6+pYSJ8v+2/HS0sxmTgmlUYA=
+Date: Mon, 18 Dec 2023 21:25:02 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 4.19 13/36] net: stmmac: use dev_err_probe() for
+ reporting mdio bus registration failure
+Message-ID: <2023121847-surfacing-hardhead-78ab@gregkh>
+References: <20231218135041.876499958@linuxfoundation.org>
+ <20231218135042.347406314@linuxfoundation.org>
+ <6299a661-5ae5-4f7c-9fa7-96c4e7ae39eb@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <6299a661-5ae5-4f7c-9fa7-96c4e7ae39eb@linaro.org>
 
-Hello,
-
-On Mon, 18 Dec 2023 14:49:26 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.6.8 release.
-> There are 166 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, Dec 18, 2023 at 12:45:42PM -0600, Daniel Díaz wrote:
+> Hello!
 > 
-> Responses should be made by Wed, 20 Dec 2023 13:50:31 +0000.
-> Anything received after that time might be too late.
+> On 18/12/23 7:51 a. m., Greg Kroah-Hartman wrote:
+> > 4.19-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+> > 
+> > [ Upstream commit 839612d23ffd933174db911ce56dc3f3ca883ec5 ]
+> > 
+> > I have a board where these two lines are always printed during boot:
+> > 
+> >     imx-dwmac 30bf0000.ethernet: Cannot register the MDIO bus
+> >     imx-dwmac 30bf0000.ethernet: stmmac_dvr_probe: MDIO bus (id: 1) registration failed
+> > 
+> > It's perfectly fine, and the device is successfully (and silently, as
+> > far as the console goes) probed later.
+> > 
+> > Use dev_err_probe() instead, which will demote these messages to debug
+> > level (thus removing the alarming messages from the console) when the
+> > error is -EPROBE_DEFER, and also has the advantage of including the
+> > error code if/when it happens to be something other than -EPROBE_DEFER.
+> > 
+> > While here, add the missing \n to one of the format strings.
+> > 
+> > Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+> > Link: https://lore.kernel.org/r/20220602074840.1143360-1-linux@rasmusvillemoes.dk
+> > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> > Stable-dep-of: e23c0d21ce92 ("net: stmmac: Handle disabled MDIO busses from devicetree")
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > ---
+> >   drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+> > @@ -4428,7 +4428,7 @@ int stmmac_dvr_probe(struct device *devi
+> >   		ret = stmmac_mdio_register(ndev);
+> >   		if (ret < 0) {
+> >   			dev_err(priv->device,
+> > -				"%s: MDIO bus (id: %d) registration failed",
+> > +				"%s: MDIO bus (id: %d) registration failed\n",
+> >   				__func__, priv->plat->bus_id);
+> >   			goto error_mdio_register;
+> >   		}
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.8-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
+> This patch doesn't do what it says it does.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Hah, it really doesn't, good catch.  I removed dev_err_probe() from the
+4.19 tree as it didn't make sense to backport it so late in the release
+cycle of it (and it required many other follow-on fixes.)  and so I
+fixed up this commit to build properly, but I didn't realize that all I
+did was properly add a \n to the string, the rest of the commit faded
+away.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+I'll just go drop this entirely, thanks for the review!
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] aa90f2b75bff ("Linux 6.6.8-rc1")
-
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_i386_idle_flag.sh
-ok 13 selftests: damon-tests: build_i386_highpte.sh
-ok 14 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+greg k-h
