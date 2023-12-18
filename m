@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6426737860;
-	Mon, 18 Dec 2023 13:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A32E1D15F;
+	Mon, 18 Dec 2023 13:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="velREpN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96CCC433C7;
-	Mon, 18 Dec 2023 13:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlKrFdxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBC4C433C9;
+	Mon, 18 Dec 2023 13:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907687;
-	bh=b6Hx+jZWJyRXUpcHBOxHQcEtf5DhZvK1zH5la3iLen4=;
+	s=korg; t=1702907690;
+	bh=EN8byMA/K1IOTX1GiWsW6yElJFwnZTftUUE8s0p1doI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=velREpN0HmtT1V6etd2EcjaApp9c6UNicazYQkVyuHKPu1SS8/jY5t0usg2+CaqhX
-	 pEwMvbyS7qpOMLfv8ovsrqLe0LqbNGlSHYPTF7XWrY/WdhaBx9shY/jyjoHJhgRsg/
-	 4WKuBW1s9xizQXtfSY4FDT/0pFQz1ztYNAUJNDvQ=
+	b=qlKrFdxl3hpQuKOkLiNJUP7YOBETvh/njKI04OhxlGjhYUP1WxN7RDySWAo51xyKS
+	 mFPpokxiBPNMp8J20xeoFqdS5DUIxqdzoSHlsFh0sQ8L/hS5LvBla3NkQ7RLyB16v8
+	 DK2yYH1AJlgXnYgOFcMwrffwy8HAtQwcofgDvHiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/106] net/mlx5e: Fix possible deadlock on mlx5e_tx_timeout_work
-Date: Mon, 18 Dec 2023 14:50:24 +0100
-Message-ID: <20231218135055.428609983@linuxfoundation.org>
+Subject: [PATCH 6.1 011/106] net: ipv6: support reporting otherwise unknown prefix flags in RTM_NEWPREFIX
+Date: Mon, 18 Dec 2023 14:50:25 +0100
+Message-ID: <20231218135055.458128178@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -37,247 +38,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit eab0da38912ebdad922ed0388209f7eb0a5163cd ]
+[ Upstream commit bd4a816752bab609dd6d65ae021387beb9e2ddbd ]
 
-Due to the cited patch, devlink health commands take devlink lock and
-this may result in deadlock for mlx5e_tx_reporter as it takes local
-state_lock before calling devlink health report and on the other hand
-devlink health commands such as diagnose for same reporter take local
-state_lock after taking devlink lock (see kernel log below).
+Lorenzo points out that we effectively clear all unknown
+flags from PIO when copying them to userspace in the netlink
+RTM_NEWPREFIX notification.
 
-To fix it, remove local state_lock from mlx5e_tx_timeout_work() before
-calling devlink_health_report() and take care to cancel the work before
-any call to close channels, which may free the SQs that should be
-handled by the work. Before cancel_work_sync(), use current_work() to
-check we are not calling it from within the work, as
-mlx5e_tx_timeout_work() itself may close the channels and reopen as part
-of recovery flow.
+We could fix this one at a time as new flags are defined,
+or in one fell swoop - I choose the latter.
 
-While removing state_lock from mlx5e_tx_timeout_work() keep rtnl_lock to
-ensure no change in netdev->real_num_tx_queues, but use rtnl_trylock()
-and a flag to avoid deadlock by calling cancel_work_sync() before
-closing the channels while holding rtnl_lock too.
+We could either define 6 new reserved flags (reserved1..6) and handle
+them individually (and rename them as new flags are defined), or we
+could simply copy the entire unmodified byte over - I choose the latter.
 
-Kernel log:
-======================================================
-WARNING: possible circular locking dependency detected
-6.0.0-rc3_for_upstream_debug_2022_08_30_13_10 #1 Not tainted
-------------------------------------------------------
-kworker/u16:2/65 is trying to acquire lock:
-ffff888122f6c2f8 (&devlink->lock_key#2){+.+.}-{3:3}, at: devlink_health_report+0x2f1/0x7e0
+This unfortunately requires some anonymous union/struct magic,
+so we add a static assert on the struct size for a little extra safety.
 
-but task is already holding lock:
-ffff888121d20be0 (&priv->state_lock){+.+.}-{3:3}, at: mlx5e_tx_timeout_work+0x70/0x280 [mlx5_core]
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (&priv->state_lock){+.+.}-{3:3}:
-       __mutex_lock+0x12c/0x14b0
-       mlx5e_rx_reporter_diagnose+0x71/0x700 [mlx5_core]
-       devlink_nl_cmd_health_reporter_diagnose_doit+0x212/0xa50
-       genl_family_rcv_msg_doit+0x1e9/0x2f0
-       genl_rcv_msg+0x2e9/0x530
-       netlink_rcv_skb+0x11d/0x340
-       genl_rcv+0x24/0x40
-       netlink_unicast+0x438/0x710
-       netlink_sendmsg+0x788/0xc40
-       sock_sendmsg+0xb0/0xe0
-       __sys_sendto+0x1c1/0x290
-       __x64_sys_sendto+0xdd/0x1b0
-       do_syscall_64+0x3d/0x90
-       entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
--> #0 (&devlink->lock_key#2){+.+.}-{3:3}:
-       __lock_acquire+0x2c8a/0x6200
-       lock_acquire+0x1c1/0x550
-       __mutex_lock+0x12c/0x14b0
-       devlink_health_report+0x2f1/0x7e0
-       mlx5e_health_report+0xc9/0xd7 [mlx5_core]
-       mlx5e_reporter_tx_timeout+0x2ab/0x3d0 [mlx5_core]
-       mlx5e_tx_timeout_work+0x1c1/0x280 [mlx5_core]
-       process_one_work+0x7c2/0x1340
-       worker_thread+0x59d/0xec0
-       kthread+0x28f/0x330
-       ret_from_fork+0x1f/0x30
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&priv->state_lock);
-                               lock(&devlink->lock_key#2);
-                               lock(&priv->state_lock);
-  lock(&devlink->lock_key#2);
-
- *** DEADLOCK ***
-
-4 locks held by kworker/u16:2/65:
- #0: ffff88811a55b138 ((wq_completion)mlx5e#2){+.+.}-{0:0}, at: process_one_work+0x6e2/0x1340
- #1: ffff888101de7db8 ((work_completion)(&priv->tx_timeout_work)){+.+.}-{0:0}, at: process_one_work+0x70f/0x1340
- #2: ffffffff84ce8328 (rtnl_mutex){+.+.}-{3:3}, at: mlx5e_tx_timeout_work+0x53/0x280 [mlx5_core]
- #3: ffff888121d20be0 (&priv->state_lock){+.+.}-{3:3}, at: mlx5e_tx_timeout_work+0x70/0x280 [mlx5_core]
-
-stack backtrace:
-CPU: 1 PID: 65 Comm: kworker/u16:2 Not tainted 6.0.0-rc3_for_upstream_debug_2022_08_30_13_10 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Workqueue: mlx5e mlx5e_tx_timeout_work [mlx5_core]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x57/0x7d
- check_noncircular+0x278/0x300
- ? print_circular_bug+0x460/0x460
- ? find_held_lock+0x2d/0x110
- ? __stack_depot_save+0x24c/0x520
- ? alloc_chain_hlocks+0x228/0x700
- __lock_acquire+0x2c8a/0x6200
- ? register_lock_class+0x1860/0x1860
- ? kasan_save_stack+0x1e/0x40
- ? kasan_set_free_info+0x20/0x30
- ? ____kasan_slab_free+0x11d/0x1b0
- ? kfree+0x1ba/0x520
- ? devlink_health_do_dump.part.0+0x171/0x3a0
- ? devlink_health_report+0x3d5/0x7e0
- lock_acquire+0x1c1/0x550
- ? devlink_health_report+0x2f1/0x7e0
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? find_held_lock+0x2d/0x110
- __mutex_lock+0x12c/0x14b0
- ? devlink_health_report+0x2f1/0x7e0
- ? devlink_health_report+0x2f1/0x7e0
- ? mutex_lock_io_nested+0x1320/0x1320
- ? trace_hardirqs_on+0x2d/0x100
- ? bit_wait_io_timeout+0x170/0x170
- ? devlink_health_do_dump.part.0+0x171/0x3a0
- ? kfree+0x1ba/0x520
- ? devlink_health_do_dump.part.0+0x171/0x3a0
- devlink_health_report+0x2f1/0x7e0
- mlx5e_health_report+0xc9/0xd7 [mlx5_core]
- mlx5e_reporter_tx_timeout+0x2ab/0x3d0 [mlx5_core]
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? mlx5e_reporter_tx_err_cqe+0x1b0/0x1b0 [mlx5_core]
- ? mlx5e_tx_reporter_timeout_dump+0x70/0x70 [mlx5_core]
- ? mlx5e_tx_reporter_dump_sq+0x320/0x320 [mlx5_core]
- ? mlx5e_tx_timeout_work+0x70/0x280 [mlx5_core]
- ? mutex_lock_io_nested+0x1320/0x1320
- ? process_one_work+0x70f/0x1340
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? lock_downgrade+0x6e0/0x6e0
- mlx5e_tx_timeout_work+0x1c1/0x280 [mlx5_core]
- process_one_work+0x7c2/0x1340
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? pwq_dec_nr_in_flight+0x230/0x230
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x59d/0xec0
- ? process_one_work+0x1340/0x1340
- kthread+0x28f/0x330
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: c90005b5f75c ("devlink: Hold the instance lock in health callbacks")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h  |  1 +
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 27 ++++++++++++++++---
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ include/net/addrconf.h | 12 ++++++++++--
+ include/net/if_inet6.h |  4 ----
+ net/ipv6/addrconf.c    |  6 +-----
+ 3 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index bc76fe6b06230..0ee456480a488 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -847,6 +847,7 @@ enum {
- 	MLX5E_STATE_DESTROYING,
- 	MLX5E_STATE_XDP_TX_ENABLED,
- 	MLX5E_STATE_XDP_ACTIVE,
-+	MLX5E_STATE_CHANNELS_ACTIVE,
+diff --git a/include/net/addrconf.h b/include/net/addrconf.h
+index c04f359655b86..86eb2aba1479c 100644
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -31,17 +31,22 @@ struct prefix_info {
+ 	__u8			length;
+ 	__u8			prefix_len;
+ 
++	union __packed {
++		__u8		flags;
++		struct __packed {
+ #if defined(__BIG_ENDIAN_BITFIELD)
+-	__u8			onlink : 1,
++			__u8	onlink : 1,
+ 			 	autoconf : 1,
+ 				reserved : 6;
+ #elif defined(__LITTLE_ENDIAN_BITFIELD)
+-	__u8			reserved : 6,
++			__u8	reserved : 6,
+ 				autoconf : 1,
+ 				onlink : 1;
+ #else
+ #error "Please fix <asm/byteorder.h>"
+ #endif
++		};
++	};
+ 	__be32			valid;
+ 	__be32			prefered;
+ 	__be32			reserved2;
+@@ -49,6 +54,9 @@ struct prefix_info {
+ 	struct in6_addr		prefix;
  };
  
- struct mlx5e_modify_sq_param {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 42e6f2fcf5f59..9910a0480f589 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -2586,6 +2586,7 @@ void mlx5e_close_channels(struct mlx5e_channels *chs)
- {
- 	int i;
- 
-+	ASSERT_RTNL();
- 	if (chs->ptp) {
- 		mlx5e_ptp_close(chs->ptp);
- 		chs->ptp = NULL;
-@@ -2865,17 +2866,29 @@ void mlx5e_activate_priv_channels(struct mlx5e_priv *priv)
- 	if (mlx5e_is_vport_rep(priv))
- 		mlx5e_rep_activate_channels(priv);
- 
-+	set_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state);
++/* rfc4861 4.6.2: IPv6 PIO is 32 bytes in size */
++static_assert(sizeof(struct prefix_info) == 32);
 +
- 	mlx5e_wait_channels_min_rx_wqes(&priv->channels);
+ #include <linux/ipv6.h>
+ #include <linux/netdevice.h>
+ #include <net/if_inet6.h>
+diff --git a/include/net/if_inet6.h b/include/net/if_inet6.h
+index c8490729b4aea..31bf475eca762 100644
+--- a/include/net/if_inet6.h
++++ b/include/net/if_inet6.h
+@@ -22,10 +22,6 @@
+ #define IF_RS_SENT	0x10
+ #define IF_READY	0x80000000
  
- 	if (priv->rx_res)
- 		mlx5e_rx_res_channels_activate(priv->rx_res, &priv->channels);
- }
+-/* prefix flags */
+-#define IF_PREFIX_ONLINK	0x01
+-#define IF_PREFIX_AUTOCONF	0x02
+-
+ enum {
+ 	INET6_IFADDR_STATE_PREDAD,
+ 	INET6_IFADDR_STATE_DAD,
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index c63ccd39fc552..b8dc20fe7a4e2 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -6105,11 +6105,7 @@ static int inet6_fill_prefix(struct sk_buff *skb, struct inet6_dev *idev,
+ 	pmsg->prefix_len = pinfo->prefix_len;
+ 	pmsg->prefix_type = pinfo->type;
+ 	pmsg->prefix_pad3 = 0;
+-	pmsg->prefix_flags = 0;
+-	if (pinfo->onlink)
+-		pmsg->prefix_flags |= IF_PREFIX_ONLINK;
+-	if (pinfo->autoconf)
+-		pmsg->prefix_flags |= IF_PREFIX_AUTOCONF;
++	pmsg->prefix_flags = pinfo->flags;
  
-+static void mlx5e_cancel_tx_timeout_work(struct mlx5e_priv *priv)
-+{
-+	WARN_ON_ONCE(test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state));
-+	if (current_work() != &priv->tx_timeout_work)
-+		cancel_work_sync(&priv->tx_timeout_work);
-+}
-+
- void mlx5e_deactivate_priv_channels(struct mlx5e_priv *priv)
- {
- 	if (priv->rx_res)
- 		mlx5e_rx_res_channels_deactivate(priv->rx_res);
- 
-+	clear_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state);
-+	mlx5e_cancel_tx_timeout_work(priv);
-+
- 	if (mlx5e_is_vport_rep(priv))
- 		mlx5e_rep_deactivate_channels(priv);
- 
-@@ -4617,8 +4630,17 @@ static void mlx5e_tx_timeout_work(struct work_struct *work)
- 	struct net_device *netdev = priv->netdev;
- 	int i;
- 
--	rtnl_lock();
--	mutex_lock(&priv->state_lock);
-+	/* Take rtnl_lock to ensure no change in netdev->real_num_tx_queues
-+	 * through this flow. However, channel closing flows have to wait for
-+	 * this work to finish while holding rtnl lock too. So either get the
-+	 * lock or find that channels are being closed for other reason and
-+	 * this work is not relevant anymore.
-+	 */
-+	while (!rtnl_trylock()) {
-+		if (!test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state))
-+			return;
-+		msleep(20);
-+	}
- 
- 	if (!test_bit(MLX5E_STATE_OPENED, &priv->state))
- 		goto unlock;
-@@ -4637,7 +4659,6 @@ static void mlx5e_tx_timeout_work(struct work_struct *work)
- 	}
- 
- unlock:
--	mutex_unlock(&priv->state_lock);
- 	rtnl_unlock();
- }
- 
+ 	if (nla_put(skb, PREFIX_ADDRESS, sizeof(pinfo->prefix), &pinfo->prefix))
+ 		goto nla_put_failure;
 -- 
 2.43.0
 
