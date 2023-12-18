@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF1715AC0;
-	Mon, 18 Dec 2023 14:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1451D136;
+	Mon, 18 Dec 2023 14:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdEzwYIn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F51C433C8;
-	Mon, 18 Dec 2023 14:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FX1g8eb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02424C433C7;
+	Mon, 18 Dec 2023 14:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908877;
-	bh=Mmuc3G+JT02VWOsPTJzA+rxkmsX5MGUXQxt73RrJ7cc=;
+	s=korg; t=1702908880;
+	bh=U36Fmca3fYV7urzJy3WHYo/KFajkF8j68ZKIuZJP+mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdEzwYIn97EJknIrG+9/BBrOHRJr6e0L0dV8vw5OKcehrAXyeAxuy6V19xemeyQKl
-	 cJCweIaQo2evHkfc1vsH2OHtTn2/zQhqNmkNtFhAihIGyTCjaNeRFtmX8C7gPYs8xP
-	 zk424C34+uyX0ZbRwew6lApamioxowYw1aFqBbSI=
+	b=FX1g8eb6Ox3gjKEl9ASn/Ly9CAFFqwzohmyozh0xz6s7CNHnLTOTYzAxWNE6JP9nq
+	 uQsSd7qHEhURmaIOiGY8bf7JUDgnqCCIH1goDYyDdHkgI9C5KX/kBaKVDSqTs84OZh
+	 8A7QYn8WT0ADSSGWUyStQ6wb0H9/w2nVK/iVLGvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 59/83] asm-generic: qspinlock: fix queued_spin_value_unlocked() implementation
-Date: Mon, 18 Dec 2023 14:52:20 +0100
-Message-ID: <20231218135052.331751079@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.15 68/83] drm/amdgpu/sdma5.2: add begin/end_use ring callbacks
+Date: Mon, 18 Dec 2023 14:52:29 +0100
+Message-ID: <20231218135052.736319722@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -38,56 +36,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 125b0bb95dd6bec81b806b997a4ccb026eeecf8f ]
+commit ab4750332dbe535243def5dcebc24ca00c1f98ac upstream.
 
-We really don't want to do atomic_read() or anything like that, since we
-already have the value, not the lock.  The whole point of this is that
-we've loaded the lock from memory, and we want to check whether the
-value we loaded was a locked one or not.
+Add begin/end_use ring callbacks to disallow GFXOFF when
+SDMA work is submitted and allow it again afterward.
 
-The main use of this is the lockref code, which loads both the lock and
-the reference count in one atomic operation, and then works on that
-combined value.  With the atomic_read(), the compiler would pointlessly
-spill the value to the stack, in order to then be able to read it back
-"atomically".
+This should avoid corner cases where GFXOFF is erroneously
+entered when SDMA is still active.  For now just allow/disallow
+GFXOFF in the begin and end helpers until we root cause the
+issue.  This should not impact power as SDMA usage is pretty
+minimal and GFXOSS should not be active when SDMA is active
+anyway, this just makes it explicit.
 
-This is the qspinlock version of commit c6f4a9002252 ("asm-generic:
-ticket-lock: Optimize arch_spin_value_unlocked()") which fixed this same
-bug for ticket locks.
+v2: move everything into sdma5.2 code.  No reason for this
+to be generic at this point.
+v3: Add comments in new code
 
-Cc: Guo Ren <guoren@kernel.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Link: https://lore.kernel.org/all/CAHk-=whNRv0v6kQiV5QO6DJhjH4KEL36vWQ6Re8Csrnh4zbRkQ@mail.gmail.com/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2220
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com> (v1)
+Tested-by: Mario Limonciello <mario.limonciello@amd.com> (v1)
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 5.15+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/qspinlock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/include/asm-generic/qspinlock.h b/include/asm-generic/qspinlock.h
-index d74b138255014..95cfcfb8a3b4d 100644
---- a/include/asm-generic/qspinlock.h
-+++ b/include/asm-generic/qspinlock.h
-@@ -41,7 +41,7 @@ static __always_inline int queued_spin_is_locked(struct qspinlock *lock)
-  */
- static __always_inline int queued_spin_value_unlocked(struct qspinlock lock)
- {
--	return !atomic_read(&lock.val);
-+	return !lock.val.counter;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
+@@ -1660,6 +1660,32 @@ static void sdma_v5_2_get_clockgating_st
+ 		*flags |= AMD_CG_SUPPORT_SDMA_LS;
  }
  
- /**
--- 
-2.43.0
-
++static void sdma_v5_2_ring_begin_use(struct amdgpu_ring *ring)
++{
++	struct amdgpu_device *adev = ring->adev;
++
++	/* SDMA 5.2.3 (RMB) FW doesn't seem to properly
++	 * disallow GFXOFF in some cases leading to
++	 * hangs in SDMA.  Disallow GFXOFF while SDMA is active.
++	 * We can probably just limit this to 5.2.3,
++	 * but it shouldn't hurt for other parts since
++	 * this GFXOFF will be disallowed anyway when SDMA is
++	 * active, this just makes it explicit.
++	 */
++	amdgpu_gfx_off_ctrl(adev, false);
++}
++
++static void sdma_v5_2_ring_end_use(struct amdgpu_ring *ring)
++{
++	struct amdgpu_device *adev = ring->adev;
++
++	/* SDMA 5.2.3 (RMB) FW doesn't seem to properly
++	 * disallow GFXOFF in some cases leading to
++	 * hangs in SDMA.  Allow GFXOFF when SDMA is complete.
++	 */
++	amdgpu_gfx_off_ctrl(adev, true);
++}
++
+ const struct amd_ip_funcs sdma_v5_2_ip_funcs = {
+ 	.name = "sdma_v5_2",
+ 	.early_init = sdma_v5_2_early_init,
+@@ -1707,6 +1733,8 @@ static const struct amdgpu_ring_funcs sd
+ 	.test_ib = sdma_v5_2_ring_test_ib,
+ 	.insert_nop = sdma_v5_2_ring_insert_nop,
+ 	.pad_ib = sdma_v5_2_ring_pad_ib,
++	.begin_use = sdma_v5_2_ring_begin_use,
++	.end_use = sdma_v5_2_ring_end_use,
+ 	.emit_wreg = sdma_v5_2_ring_emit_wreg,
+ 	.emit_reg_wait = sdma_v5_2_ring_emit_reg_wait,
+ 	.emit_reg_write_reg_wait = sdma_v5_2_ring_emit_reg_write_reg_wait,
 
 
