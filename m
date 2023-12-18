@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C1D3A1CF;
-	Mon, 18 Dec 2023 14:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CF137883;
+	Mon, 18 Dec 2023 14:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxj75awj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64C6C433C8;
-	Mon, 18 Dec 2023 14:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkJPAXVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2B8C433C8;
+	Mon, 18 Dec 2023 14:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908106;
-	bh=WIxCydUFKUWJAdy8VGTsVZYb8Y58xHP1digFacdDa8w=;
+	s=korg; t=1702908108;
+	bh=0C4cVdfyPjUld4QZWL1c/rKdGh/iwGruLYdaD8SqKG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxj75awj42+rQUQsIjo3dhd/fGP4cfTkgskQ5JrPPUQfSJbEizS5bdufh3/+hWNAg
-	 qQvIOEsa8tIjoVhGZNKj4rEwhePhXNtJ4q0IU7TVIz8jnwZWfgQ/5Qb5UA+/f4APE1
-	 I8hFwUchCGRJMaRW5kdX7G7QInKE50Y/A3HRrY7c=
+	b=jkJPAXVGDK7Lyr325pKd2tWswA8BQgkeUuo06pbbZbTblP+TR4Gz72+M/2mxGy6RS
+	 tNgagzxVTizIlgISY+dZ+NPtTrF7y2wxbI3Tm8TO+tGzeCKU6lC+X8V51evBvA/jxr
+	 xMt0hs2RgBgn6u2egpBFmD/RFKN0kxY4srcyCVzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/166] bnxt_en: Fix HWTSTAMP_FILTER_ALL packet timestamp logic
-Date: Mon, 18 Dec 2023 14:49:53 +0100
-Message-ID: <20231218135106.158570645@linuxfoundation.org>
+Subject: [PATCH 6.6 028/166] atm: solos-pci: Fix potential deadlock on &cli_queue_lock
+Date: Mon, 18 Dec 2023 14:49:54 +0100
+Message-ID: <20231218135106.208068057@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -44,104 +42,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit c13e268c0768659cdaae4bfe2fb24860bcc8ddb4 ]
+[ Upstream commit d5dba32b8f6cb39be708b726044ba30dbc088b30 ]
 
-When the chip is configured to timestamp all receive packets, the
-timestamp in the RX completion is only valid if the metadata
-present flag is not set for packets received on the wire.  In
-addition, internal loopback packets will never have a valid timestamp
-and the timestamp field will always be zero.  We must exclude
-any 0 value in the timestamp field because there is no way to
-determine if it is a loopback packet or not.
+As &card->cli_queue_lock is acquired under softirq context along the
+following call chain from solos_bh(), other acquisition of the same
+lock inside process context should disable at least bh to avoid double
+lock.
 
-Add a new function bnxt_rx_ts_valid() to check for all timestamp
-valid conditions.
+<deadlock #1>
+console_show()
+--> spin_lock(&card->cli_queue_lock)
+<interrupt>
+   --> solos_bh()
+   --> spin_lock(&card->cli_queue_lock)
 
-Fixes: 66ed81dcedc6 ("bnxt_en: Enable packet timestamping for all RX packets")
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://lore.kernel.org/r/20231208001658.14230-5-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This flaw was found by an experimental static analysis tool I am
+developing for irq-related deadlock.
+
+To prevent the potential deadlock, the patch uses spin_lock_bh()
+on the card->cli_queue_lock under process context code consistently
+to prevent the possible deadlock scenario.
+
+Fixes: 9c54004ea717 ("atm: Driver for Solos PCI ADSL2+ card.")
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 20 +++++++++++++++++---
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |  8 +++++++-
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ drivers/atm/solos-pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 4ce34a39bb5ee..f811d59fd71fd 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1760,6 +1760,21 @@ static void bnxt_deliver_skb(struct bnxt *bp, struct bnxt_napi *bnapi,
- 	napi_gro_receive(&bnapi->napi, skb);
- }
- 
-+static bool bnxt_rx_ts_valid(struct bnxt *bp, u32 flags,
-+			     struct rx_cmp_ext *rxcmp1, u32 *cmpl_ts)
-+{
-+	u32 ts = le32_to_cpu(rxcmp1->rx_cmp_timestamp);
-+
-+	if (BNXT_PTP_RX_TS_VALID(flags))
-+		goto ts_valid;
-+	if (!bp->ptp_all_rx_tstamp || !ts || !BNXT_ALL_RX_TS_VALID(flags))
-+		return false;
-+
-+ts_valid:
-+	*cmpl_ts = ts;
-+	return true;
-+}
-+
- /* returns the following:
-  * 1       - 1 packet successfully received
-  * 0       - successful TPA_START, packet not completed yet
-@@ -1785,6 +1800,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+diff --git a/drivers/atm/solos-pci.c b/drivers/atm/solos-pci.c
+index 94fbc3abe60e6..95f768b28a5e6 100644
+--- a/drivers/atm/solos-pci.c
++++ b/drivers/atm/solos-pci.c
+@@ -449,9 +449,9 @@ static ssize_t console_show(struct device *dev, struct device_attribute *attr,
  	struct sk_buff *skb;
- 	struct xdp_buff xdp;
- 	u32 flags, misc;
-+	u32 cmpl_ts;
- 	void *data;
- 	int rc = 0;
+ 	unsigned int len;
  
-@@ -2007,10 +2023,8 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
- 		}
- 	}
- 
--	if (unlikely((flags & RX_CMP_FLAGS_ITYPES_MASK) ==
--		     RX_CMP_FLAGS_ITYPE_PTP_W_TS) || bp->ptp_all_rx_tstamp) {
-+	if (bnxt_rx_ts_valid(bp, flags, rxcmp1, &cmpl_ts)) {
- 		if (bp->flags & BNXT_FLAG_CHIP_P5) {
--			u32 cmpl_ts = le32_to_cpu(rxcmp1->rx_cmp_timestamp);
- 			u64 ns, ts;
- 
- 			if (!bnxt_get_rx_ts_p5(bp, &ts, cmpl_ts)) {
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index ea0f47eceea7c..0116f67593e3a 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -161,7 +161,7 @@ struct rx_cmp {
- 	#define RX_CMP_FLAGS_ERROR				(1 << 6)
- 	#define RX_CMP_FLAGS_PLACEMENT				(7 << 7)
- 	#define RX_CMP_FLAGS_RSS_VALID				(1 << 10)
--	#define RX_CMP_FLAGS_UNUSED				(1 << 11)
-+	#define RX_CMP_FLAGS_PKT_METADATA_PRESENT		(1 << 11)
- 	 #define RX_CMP_FLAGS_ITYPES_SHIFT			 12
- 	 #define RX_CMP_FLAGS_ITYPES_MASK			 0xf000
- 	 #define RX_CMP_FLAGS_ITYPE_UNKNOWN			 (0 << 12)
-@@ -188,6 +188,12 @@ struct rx_cmp {
- 	__le32 rx_cmp_rss_hash;
- };
- 
-+#define BNXT_PTP_RX_TS_VALID(flags)				\
-+	(((flags) & RX_CMP_FLAGS_ITYPES_MASK) == RX_CMP_FLAGS_ITYPE_PTP_W_TS)
-+
-+#define BNXT_ALL_RX_TS_VALID(flags)				\
-+	!((flags) & RX_CMP_FLAGS_PKT_METADATA_PRESENT)
-+
- #define RX_CMP_HASH_VALID(rxcmp)				\
- 	((rxcmp)->rx_cmp_len_flags_type & cpu_to_le32(RX_CMP_FLAGS_RSS_VALID))
+-	spin_lock(&card->cli_queue_lock);
++	spin_lock_bh(&card->cli_queue_lock);
+ 	skb = skb_dequeue(&card->cli_queue[SOLOS_CHAN(atmdev)]);
+-	spin_unlock(&card->cli_queue_lock);
++	spin_unlock_bh(&card->cli_queue_lock);
+ 	if(skb == NULL)
+ 		return sprintf(buf, "No data.\n");
  
 -- 
 2.43.0
