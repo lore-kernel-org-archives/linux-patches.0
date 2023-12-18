@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369913A1BB;
-	Mon, 18 Dec 2023 14:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C293D54B;
+	Mon, 18 Dec 2023 14:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G28OK3By"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA00BC433C8;
-	Mon, 18 Dec 2023 14:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AsYpPVvI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BEEC433C8;
+	Mon, 18 Dec 2023 14:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908465;
-	bh=D7l+T8Y/cY0zw5a7gnp+K3Y815ZpgBhYfPby/96KLO8=;
+	s=korg; t=1702908467;
+	bh=qyrDsr5GNBFrM6kMe5gOqXCKt96WqCg1Xpwj7ESu968=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G28OK3ByeW5HdTyhHByp8+3I75ZlfkIZwWuflgwDXM8ubAV/D+MBmrZsDRwRVHEBL
-	 YFos2AX7nLVWXJmwnni92YvgnDf4Iu4+5TNag/L8XvB9hD44xJ7/usW86wMoH/Vp/P
-	 J/5MOSZY5GoYRGABDt/xeWPvYz8a+yehFv5tgQds=
+	b=AsYpPVvINFMYgJUCv8Ggdm2+ynMmFTiIrr5g9zZ/elaY8xlTBLc76RcGLuiJ3hOs6
+	 aWfImNuxBaJtdK59G45S3eVh9MxeQu9aRlauxGINo6uDVB1iML0+LSQ8CDRQ+7Xodb
+	 hVd7L+5JKIVcrjKHUV7M1/b09Tk6uNat4ouvGFdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 12/62] atm: Fix Use-After-Free in do_vcc_ioctl
-Date: Mon, 18 Dec 2023 14:51:36 +0100
-Message-ID: <20231218135046.765183531@linuxfoundation.org>
+Subject: [PATCH 5.10 21/62] net: stmmac: Handle disabled MDIO busses from devicetree
+Date: Mon, 18 Dec 2023 14:51:45 +0100
+Message-ID: <20231218135047.172746765@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -42,53 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit 24e90b9e34f9e039f56b5f25f6e6eb92cdd8f4b3 ]
+[ Upstream commit e23c0d21ce9234fbc31ece35663ababbb83f9347 ]
 
-Because do_vcc_ioctl() accesses sk->sk_receive_queue
-without holding a sk->sk_receive_queue.lock, it can
-cause a race with vcc_recvmsg().
-A use-after-free for skb occurs with the following flow.
-```
-do_vcc_ioctl() -> skb_peek()
-vcc_recvmsg() -> skb_recv_datagram() -> skb_free_datagram()
-```
-Add sk->sk_receive_queue.lock to do_vcc_ioctl() to fix this issue.
+Many hardware configurations have the MDIO bus disabled, and are instead
+using some other MDIO bus to talk to the MAC's phy.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Link: https://lore.kernel.org/r/20231209094210.GA403126@v4bel-B760M-AORUS-ELITE-AX
+of_mdiobus_register() returns -ENODEV in this case. Let's handle it
+gracefully instead of failing to probe the MAC.
+
+Fixes: 47dd7a540b8a ("net: add support for STMicroelectronics Ethernet controllers.")
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Link: https://lore.kernel.org/r/20231212-b4-stmmac-handle-mdio-enodev-v2-1-600171acf79f@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/ioctl.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/atm/ioctl.c b/net/atm/ioctl.c
-index 838ebf0cabbfb..f81f8d56f5c0c 100644
---- a/net/atm/ioctl.c
-+++ b/net/atm/ioctl.c
-@@ -73,14 +73,17 @@ static int do_vcc_ioctl(struct socket *sock, unsigned int cmd,
- 	case SIOCINQ:
- 	{
- 		struct sk_buff *skb;
-+		int amount;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
+index ecc7f4842f849..d9b76e1e09493 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
+@@ -459,7 +459,11 @@ int stmmac_mdio_register(struct net_device *ndev)
+ 	new_bus->parent = priv->device;
  
- 		if (sock->state != SS_CONNECTED) {
- 			error = -EINVAL;
- 			goto done;
- 		}
-+		spin_lock_irq(&sk->sk_receive_queue.lock);
- 		skb = skb_peek(&sk->sk_receive_queue);
--		error = put_user(skb ? skb->len : 0,
--				 (int __user *)argp) ? -EFAULT : 0;
-+		amount = skb ? skb->len : 0;
-+		spin_unlock_irq(&sk->sk_receive_queue.lock);
-+		error = put_user(amount, (int __user *)argp) ? -EFAULT : 0;
- 		goto done;
+ 	err = of_mdiobus_register(new_bus, mdio_node);
+-	if (err != 0) {
++	if (err == -ENODEV) {
++		err = 0;
++		dev_info(dev, "MDIO bus is disabled\n");
++		goto bus_register_fail;
++	} else if (err) {
+ 		dev_err_probe(dev, err, "Cannot register the MDIO bus\n");
+ 		goto bus_register_fail;
  	}
- 	case ATM_SETSC:
 -- 
 2.43.0
 
