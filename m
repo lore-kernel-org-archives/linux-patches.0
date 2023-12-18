@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D3914F63;
-	Mon, 18 Dec 2023 14:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28260129EF9;
+	Mon, 18 Dec 2023 14:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBF0TrKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD8EC433C7;
-	Mon, 18 Dec 2023 14:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYTPJGiS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC10C433C8;
+	Mon, 18 Dec 2023 14:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908511;
-	bh=kW8sK3uwuNb9sHrLNj2Zp36BQVJcSGMSa0bMUgdKGOM=;
+	s=korg; t=1702908514;
+	bh=9M7DKFhaq7bQzkIGRiZplpXq+6Nx7AG37SBANOZAkJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YBF0TrKdAkLf0er+1BQAAYDx7UXExbrUCce36SnFDtr8kLNhIvWtE/ycXhw9EEZOk
-	 QTg7D05CiABXTuXkV29Y9/LkForAxEcXiFc+J0747XTy7YZKa/EbpYX47NtQULO2eX
-	 jv/RAtvGvKbP5O1sMcM+a97T12uptxo81GF76TeI=
+	b=xYTPJGiS2D5KDlfCdiR1UuDE/2viE1RZ+wxJq1b/UwxMTGmE0TMDhX9q1uHbRgWSl
+	 d2jEBluk+BB3xPuwMUvn8rsR1sEnP3qEA0uxx6FT1WRkq5xN7AbiUQRwUhb6UBk3mw
+	 +01HoqKr/J+DYyQZyrpX3Dbo8ikT07SPcWKQtBDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
 	Coly Li <colyli@suse.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 36/62] bcache: remove redundant assignment to variable cur_idx
-Date: Mon, 18 Dec 2023 14:52:00 +0100
-Message-ID: <20231218135047.877246513@linuxfoundation.org>
+Subject: [PATCH 5.10 37/62] bcache: add code comments for bch_btree_node_get() and __bch_btree_node_alloc()
+Date: Mon, 18 Dec 2023 14:52:01 +0100
+Message-ID: <20231218135047.907937171@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -43,40 +42,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: Coly Li <colyli@suse.de>
 
-[ Upstream commit be93825f0e6428c2d3f03a6e4d447dc48d33d7ff ]
+[ Upstream commit 31f5b956a197d4ec25c8a07cb3a2ab69d0c0b82f ]
 
-Variable cur_idx is being initialized with a value that is never read,
-it is being re-assigned later in a while-loop. Remove the redundant
-assignment. Cleans up clang scan build warning:
+This patch adds code comments to bch_btree_node_get() and
+__bch_btree_node_alloc() that NULL pointer will not be returned and it
+is unnecessary to check NULL pointer by the callers of these routines.
 
-drivers/md/bcache/writeback.c:916:2: warning: Value stored to 'cur_idx'
-is never read [deadcode.DeadStores]
-
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Reviewed-by: Coly Li <colyli@suse.de>
 Signed-off-by: Coly Li <colyli@suse.de>
-Link: https://lore.kernel.org/r/20231120052503.6122-4-colyli@suse.de
+Link: https://lore.kernel.org/r/20231120052503.6122-10-colyli@suse.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/writeback.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/bcache/btree.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/md/bcache/writeback.c b/drivers/md/bcache/writeback.c
-index 94e899ce38554..8e3f5f004c397 100644
---- a/drivers/md/bcache/writeback.c
-+++ b/drivers/md/bcache/writeback.c
-@@ -857,7 +857,7 @@ static int bch_dirty_init_thread(void *arg)
- 	int cur_idx, prev_idx, skip_nr;
+diff --git a/drivers/md/bcache/btree.c b/drivers/md/bcache/btree.c
+index 3d6a7fbcbb15e..1a1a9554474ae 100644
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -974,6 +974,9 @@ static struct btree *mca_alloc(struct cache_set *c, struct btree_op *op,
+  *
+  * The btree node will have either a read or a write lock held, depending on
+  * level and op->lock.
++ *
++ * Note: Only error code or btree pointer will be returned, it is unncessary
++ *       for callers to check NULL pointer.
+  */
+ struct btree *bch_btree_node_get(struct cache_set *c, struct btree_op *op,
+ 				 struct bkey *k, int level, bool write,
+@@ -1085,6 +1088,10 @@ static void btree_node_free(struct btree *b)
+ 	mutex_unlock(&b->c->bucket_lock);
+ }
  
- 	k = p = NULL;
--	cur_idx = prev_idx = 0;
-+	prev_idx = 0;
- 
- 	bch_btree_iter_init(&c->root->keys, &iter, NULL);
- 	k = bch_btree_iter_next_filter(&iter, &c->root->keys, bch_ptr_bad);
++/*
++ * Only error code or btree pointer will be returned, it is unncessary for
++ * callers to check NULL pointer.
++ */
+ struct btree *__bch_btree_node_alloc(struct cache_set *c, struct btree_op *op,
+ 				     int level, bool wait,
+ 				     struct btree *parent)
 -- 
 2.43.0
 
