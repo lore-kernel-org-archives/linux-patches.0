@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27AD498A5;
-	Mon, 18 Dec 2023 14:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F691D126;
+	Mon, 18 Dec 2023 14:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HibILd5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170BCC433C7;
-	Mon, 18 Dec 2023 14:02:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlfglKxb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A86C433C7;
+	Mon, 18 Dec 2023 14:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908152;
-	bh=HQiph81ZCQJci884uXhvr0dKiQu1oD+ncMr7OM1wU+Y=;
+	s=korg; t=1702908155;
+	bh=6CJ8+R5oSKkx3E9h7ZxF8MmzCMCWF+Z2EGg5SB5JSDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HibILd5nr0euAppXPoN4X1lYfBIq5YGZlhkx/yCCziniqU1xNpd9PVTHKZFtO8RlI
-	 zb87ff9dGc102VqXx3PFp4eCQ0lcOhfOmZEAo1vEYnmeE0z7XKxa7/IZHC0Q2LxK8V
-	 L3EYiKQ5HWi7/V5GEo+/M4+zb9TMLfeCDC1iBhUY=
+	b=XlfglKxbZ6xeHYcf7VubDexi8o8JmsU+ooCxUC0Rm10OlmhhtFJrf/Y/QeD6dmfOl
+	 YuL70pBOgOJQ1uPDPZxXvjfxZTxkKRY8+ef+TiCkbhHKyKQmH0R6O/xK915gbDLijV
+	 1DETzjpD2zY3FBmyN4tAQzNUhIYlqMU/+OhXwrTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 072/166] ALSA: hda/tas2781: reset the amp before component_add
-Date: Mon, 18 Dec 2023 14:50:38 +0100
-Message-ID: <20231218135108.277664451@linuxfoundation.org>
+	Fiona Ebner <f.ebner@proxmox.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Jonathan Woithe <jwoithe@just42.net>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Igor Mammedov <imammedo@redhat.com>
+Subject: [PATCH 6.6 073/166] Revert "PCI: acpiphp: Reassign resources on bridge if necessary"
+Date: Mon, 18 Dec 2023 14:50:39 +0100
+Message-ID: <20231218135108.328710223@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -41,51 +45,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-commit 315deab289924c83ab1ded50022e8db95d6e428b upstream.
+commit 5df12742b7e3aae2594a30a9d14d5d6e9e7699f4 upstream.
 
-Calling component_add starts loading the firmware, the callback function
-writes the program to the amplifiers. If the module resets the
-amplifiers after component_add, it happens that one of the amplifiers
-does not work because the reset and program writing are interleaving.
+This reverts commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 and the
+subsequent fix to it:
 
-Call tas2781_reset before component_add to ensure reliable
-initialization.
+  cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus")
 
-Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
-CC: stable@vger.kernel.org
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Link: https://lore.kernel.org/r/4d23bf58558e23ee8097de01f70f1eb8d9de2d15.1702511246.git.soyer@irl.hu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+40613da52b13 fixed a problem where hot-adding a device with large BARs
+failed if the bridge windows programmed by firmware were not large enough.
+
+cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources()
+only for non-root bus") fixed a problem with 40613da52b13: an ACPI hot-add
+of a device on a PCI root bus (common in the virt world) or firmware
+sending ACPI Bus Check to non-existent Root Ports (e.g., on Dell Inspiron
+7352/0W6WV0) caused a NULL pointer dereference and suspend/resume hangs.
+
+Unfortunately the combination of 40613da52b13 and cc22522fd55e caused other
+problems:
+
+  - Fiona reported that hot-add of SCSI disks in QEMU virtual machine fails
+    sometimes.
+
+  - Dongli reported a similar problem with hot-add of SCSI disks.
+
+  - Jonathan reported a console freeze during boot on bare metal due to an
+    error in radeon GPU initialization.
+
+Revert both patches to avoid adding these problems.  This means we will
+again see the problems with hot-adding devices with large BARs and the NULL
+pointer dereferences and suspend/resume issues that 40613da52b13 and
+cc22522fd55e were intended to fix.
+
+Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
+Fixes: cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus")
+Reported-by: Fiona Ebner <f.ebner@proxmox.com>
+Closes: https://lore.kernel.org/r/9eb669c0-d8f2-431d-a700-6da13053ae54@proxmox.com
+Reported-by: Dongli Zhang <dongli.zhang@oracle.com>
+Closes: https://lore.kernel.org/r/3c4a446a-b167-11b8-f36f-d3c1b49b42e9@oracle.com
+Reported-by: Jonathan Woithe <jwoithe@just42.net>
+Closes: https://lore.kernel.org/r/ZXpaNCLiDM+Kv38H@marvin.atrad.com.au
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/tas2781_hda_i2c.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/hotplug/acpiphp_glue.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
-index c8ee5f809c38..63a90c7e8976 100644
---- a/sound/pci/hda/tas2781_hda_i2c.c
-+++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -674,14 +674,14 @@ static int tas2781_hda_i2c_probe(struct i2c_client *clt)
- 
- 	pm_runtime_put_autosuspend(tas_priv->dev);
- 
-+	tas2781_reset(tas_priv);
-+
- 	ret = component_add(tas_priv->dev, &tas2781_hda_comp_ops);
- 	if (ret) {
- 		dev_err(tas_priv->dev, "Register component failed: %d\n", ret);
- 		pm_runtime_disable(tas_priv->dev);
--		goto err;
+--- a/drivers/pci/hotplug/acpiphp_glue.c
++++ b/drivers/pci/hotplug/acpiphp_glue.c
+@@ -512,15 +512,12 @@ static void enable_slot(struct acpiphp_s
+ 				if (pass && dev->subordinate) {
+ 					check_hotplug_bridge(slot, dev);
+ 					pcibios_resource_survey_bus(dev->subordinate);
+-					if (pci_is_root_bus(bus))
+-						__pci_bus_size_bridges(dev->subordinate, &add_list);
++					__pci_bus_size_bridges(dev->subordinate,
++							       &add_list);
+ 				}
+ 			}
+ 		}
+-		if (pci_is_root_bus(bus))
+-			__pci_bus_assign_resources(bus, &add_list, NULL);
+-		else
+-			pci_assign_unassigned_bridge_resources(bus->self);
++		__pci_bus_assign_resources(bus, &add_list, NULL);
  	}
  
--	tas2781_reset(tas_priv);
- err:
- 	if (ret)
- 		tas2781_hda_remove(&clt->dev);
--- 
-2.43.0
-
+ 	acpiphp_sanitize_bus(bus);
 
 
