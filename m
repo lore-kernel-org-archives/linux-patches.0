@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AAD37869;
-	Mon, 18 Dec 2023 14:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5901D14F;
+	Mon, 18 Dec 2023 14:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNGB4/L7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A355C433C7;
-	Mon, 18 Dec 2023 14:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+Ij7nqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077F5C433C7;
+	Mon, 18 Dec 2023 14:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908817;
-	bh=fM1/LN3R+juOLSaQjCTmQLVDFg73Edp73OPB3toIjJg=;
+	s=korg; t=1702908820;
+	bh=1Q1RfpzNouIx+mfyP+xg9W+WfHNyXrTHy0N4jP1EzBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNGB4/L7JTSeZCG4OUGlJn1aJ/IyWMxam1ZlWFYwetUaO4xpHyRttvN9SSfvbj0p9
-	 ihS386eiUQFgD58IOY/Ovhp/Y2oNK5Aqjls8w+VN43XCkuk3FC+Ts7bYEbB68DR/KC
-	 04oZrGQFYOL3MbdMcKns1SV2NAUfjGhTkrWJrTNs=
+	b=x+Ij7nqTSu1EtP1C44UbY4FJcg4D5do5xdB0oR9EZDqTSCFmzmwVQl5s0aTYkFLUq
+	 zzMOE3UwRMC2D+qRSMgN/8ayh/gkl2XYQCzvL4Y9kw7oN8H68BMn0gyQ+jmDaXzkJr
+	 YDWHGIixIrq233BC0hG6N/6M4hBfDmkC+0h4LOZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Fei Shao <fshao@chromium.org>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 45/83] drm/mediatek: Add spinlock for setting vblank event in atomic_begin
-Date: Mon, 18 Dec 2023 14:52:06 +0100
-Message-ID: <20231218135051.741033878@linuxfoundation.org>
+Subject: [PATCH 5.15 46/83] usb: aqc111: check packet for fixup for true limit
+Date: Mon, 18 Dec 2023 14:52:07 +0100
+Message-ID: <20231218135051.780819334@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -46,52 +42,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit fe4c5f662097978b6c91c23a13c24ed92339a180 ]
+[ Upstream commit ccab434e674ca95d483788b1895a70c21b7f016a ]
 
-Add spinlock protection to avoid race condition on vblank event
-between mtk_drm_crtc_atomic_begin() and mtk_drm_finish_page_flip().
+If a device sends a packet that is inbetween 0
+and sizeof(u64) the value passed to skb_trim()
+as length will wrap around ending up as some very
+large value.
 
-Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Tested-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20230920090658.31181-1-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+The driver will then proceed to parse the header
+located at that position, which will either oops or
+process some random value.
+
+The fix is to check against sizeof(u64) rather than
+0, which the driver currently does. The issue exists
+since the introduction of the driver.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_crtc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/usb/aqc111.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-index f2264633be1b7..d6781e54b3356 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
-@@ -680,6 +680,7 @@ static void mtk_drm_crtc_atomic_begin(struct drm_crtc *crtc,
- 									  crtc);
- 	struct mtk_crtc_state *mtk_crtc_state = to_mtk_crtc_state(crtc_state);
- 	struct mtk_drm_crtc *mtk_crtc = to_mtk_crtc(crtc);
-+	unsigned long flags;
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index e8d49886d6953..bc5e3f45c499e 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -1079,17 +1079,17 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 	u16 pkt_count = 0;
+ 	u64 desc_hdr = 0;
+ 	u16 vlan_tag = 0;
+-	u32 skb_len = 0;
++	u32 skb_len;
  
- 	if (mtk_crtc->event && mtk_crtc_state->base.event)
- 		DRM_ERROR("new event while there is still a pending event\n");
-@@ -687,7 +688,11 @@ static void mtk_drm_crtc_atomic_begin(struct drm_crtc *crtc,
- 	if (mtk_crtc_state->base.event) {
- 		mtk_crtc_state->base.event->pipe = drm_crtc_index(crtc);
- 		WARN_ON(drm_crtc_vblank_get(crtc) != 0);
-+
-+		spin_lock_irqsave(&crtc->dev->event_lock, flags);
- 		mtk_crtc->event = mtk_crtc_state->base.event;
-+		spin_unlock_irqrestore(&crtc->dev->event_lock, flags);
-+
- 		mtk_crtc_state->base.event = NULL;
- 	}
- }
+ 	if (!skb)
+ 		goto err;
+ 
+-	if (skb->len == 0)
++	skb_len = skb->len;
++	if (skb_len < sizeof(desc_hdr))
+ 		goto err;
+ 
+-	skb_len = skb->len;
+ 	/* RX Descriptor Header */
+-	skb_trim(skb, skb->len - sizeof(desc_hdr));
++	skb_trim(skb, skb_len - sizeof(desc_hdr));
+ 	desc_hdr = le64_to_cpup((u64 *)skb_tail_pointer(skb));
+ 
+ 	/* Check these packets */
 -- 
 2.43.0
 
