@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478034FF6A;
-	Mon, 18 Dec 2023 14:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4594FF94;
+	Mon, 18 Dec 2023 14:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwYQDxZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C854C433CB;
-	Mon, 18 Dec 2023 14:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kMa9MdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B2CC433C7;
+	Mon, 18 Dec 2023 14:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908007;
-	bh=yR1yBxX14RpRr+RD6LEy9x2JLPh8wcxuOZLGTZBX9ME=;
+	s=korg; t=1702908010;
+	bh=FLoKPZz+YHlpNg7eri2OZjVhqb3/dnJ2RskbMRnk0x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwYQDxZEMdSbK92Cfo6A0dxqPRLV4V9BoZuAbNjpSshqhdKXHEtgsIk5JUEBCsqUm
-	 MorVQ8OJromoKFcMZ1oUtyXjMme4pTEwYLKpLSZO4GZrURS5dzpDr3Kv3ctPVxBy5M
-	 wfeKkBSu5XEkhqSjPuaAZWtL5/w/C+1/PXDmKw3w=
+	b=2kMa9MdXTs8B5aB6l8Pmta8xHT7mkIJ6YTPIWITxjPkPie3szuyzRZG9qw0Hlx2kJ
+	 xYeKmyMznDGLEg0Qn2hft0EOHDuIKGQH7/JdGjO9BE/NyqH0RAXtfEWnQ9oC+Awl/Y
+	 lquzYJHozQbnpBuYhySqTA/sCbHQBwtHLK/f1S6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+47479b71cdfc78f56d30@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	David Ahern <dsahern@kernel.org>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/166] ext4: fix warning in ext4_dio_write_end_io()
-Date: Mon, 18 Dec 2023 14:49:28 +0100
-Message-ID: <20231218135105.044912570@linuxfoundation.org>
+Subject: [PATCH 6.6 020/166] net: ipv6: support reporting otherwise unknown prefix flags in RTM_NEWPREFIX
+Date: Mon, 18 Dec 2023 14:49:46 +0100
+Message-ID: <20231218135105.840712260@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -38,73 +38,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit 619f75dae2cf117b1d07f27b046b9ffb071c4685 ]
+[ Upstream commit bd4a816752bab609dd6d65ae021387beb9e2ddbd ]
 
-The syzbot has reported that it can hit the warning in
-ext4_dio_write_end_io() because i_size < i_disksize. Indeed the
-reproducer creates a race between DIO IO completion and truncate
-expanding the file and thus ext4_dio_write_end_io() sees an inconsistent
-inode state where i_disksize is already updated but i_size is not
-updated yet. Since we are careful when setting up DIO write and consider
-it extending (and thus performing the IO synchronously with i_rwsem held
-exclusively) whenever it goes past either of i_size or i_disksize, we
-can use the same test during IO completion without risking entering
-ext4_handle_inode_extension() without i_rwsem held. This way we make it
-obvious both i_size and i_disksize are large enough when we report DIO
-completion without relying on unreliable WARN_ON.
+Lorenzo points out that we effectively clear all unknown
+flags from PIO when copying them to userspace in the netlink
+RTM_NEWPREFIX notification.
 
-Reported-by:  <syzbot+47479b71cdfc78f56d30@syzkaller.appspotmail.com>
-Fixes: 91562895f803 ("ext4: properly sync file size update after O_SYNC direct IO")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20231130095653.22679-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+We could fix this one at a time as new flags are defined,
+or in one fell swoop - I choose the latter.
+
+We could either define 6 new reserved flags (reserved1..6) and handle
+them individually (and rename them as new flags are defined), or we
+could simply copy the entire unmodified byte over - I choose the latter.
+
+This unfortunately requires some anonymous union/struct magic,
+so we add a static assert on the struct size for a little extra safety.
+
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/file.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ include/net/addrconf.h | 12 ++++++++++--
+ include/net/if_inet6.h |  4 ----
+ net/ipv6/addrconf.c    |  6 +-----
+ 3 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/fs/ext4/file.c b/fs/ext4/file.c
-index 0166bb9ca160b..6aa15dafc6778 100644
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -349,9 +349,10 @@ static void ext4_inode_extension_cleanup(struct inode *inode, ssize_t count)
- 		return;
- 	}
- 	/*
--	 * If i_disksize got extended due to writeback of delalloc blocks while
--	 * the DIO was running we could fail to cleanup the orphan list in
--	 * ext4_handle_inode_extension(). Do it now.
-+	 * If i_disksize got extended either due to writeback of delalloc
-+	 * blocks or extending truncate while the DIO was running we could fail
-+	 * to cleanup the orphan list in ext4_handle_inode_extension(). Do it
-+	 * now.
- 	 */
- 	if (!list_empty(&EXT4_I(inode)->i_orphan) && inode->i_nlink) {
- 		handle_t *handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
-@@ -386,10 +387,11 @@ static int ext4_dio_write_end_io(struct kiocb *iocb, ssize_t size,
- 	 * blocks. But the code in ext4_iomap_alloc() is careful to use
- 	 * zeroed/unwritten extents if this is possible; thus we won't leave
- 	 * uninitialized blocks in a file even if we didn't succeed in writing
--	 * as much as we intended.
-+	 * as much as we intended. Also we can race with truncate or write
-+	 * expanding the file so we have to be a bit careful here.
- 	 */
--	WARN_ON_ONCE(i_size_read(inode) < READ_ONCE(EXT4_I(inode)->i_disksize));
--	if (pos + size <= READ_ONCE(EXT4_I(inode)->i_disksize))
-+	if (pos + size <= READ_ONCE(EXT4_I(inode)->i_disksize) &&
-+	    pos + size <= i_size_read(inode))
- 		return size;
- 	return ext4_handle_inode_extension(inode, pos, size);
- }
+diff --git a/include/net/addrconf.h b/include/net/addrconf.h
+index 82da55101b5a3..61ebe723ee4d5 100644
+--- a/include/net/addrconf.h
++++ b/include/net/addrconf.h
+@@ -31,17 +31,22 @@ struct prefix_info {
+ 	__u8			length;
+ 	__u8			prefix_len;
+ 
++	union __packed {
++		__u8		flags;
++		struct __packed {
+ #if defined(__BIG_ENDIAN_BITFIELD)
+-	__u8			onlink : 1,
++			__u8	onlink : 1,
+ 			 	autoconf : 1,
+ 				reserved : 6;
+ #elif defined(__LITTLE_ENDIAN_BITFIELD)
+-	__u8			reserved : 6,
++			__u8	reserved : 6,
+ 				autoconf : 1,
+ 				onlink : 1;
+ #else
+ #error "Please fix <asm/byteorder.h>"
+ #endif
++		};
++	};
+ 	__be32			valid;
+ 	__be32			prefered;
+ 	__be32			reserved2;
+@@ -49,6 +54,9 @@ struct prefix_info {
+ 	struct in6_addr		prefix;
+ };
+ 
++/* rfc4861 4.6.2: IPv6 PIO is 32 bytes in size */
++static_assert(sizeof(struct prefix_info) == 32);
++
+ #include <linux/ipv6.h>
+ #include <linux/netdevice.h>
+ #include <net/if_inet6.h>
+diff --git a/include/net/if_inet6.h b/include/net/if_inet6.h
+index c8490729b4aea..31bf475eca762 100644
+--- a/include/net/if_inet6.h
++++ b/include/net/if_inet6.h
+@@ -22,10 +22,6 @@
+ #define IF_RS_SENT	0x10
+ #define IF_READY	0x80000000
+ 
+-/* prefix flags */
+-#define IF_PREFIX_ONLINK	0x01
+-#define IF_PREFIX_AUTOCONF	0x02
+-
+ enum {
+ 	INET6_IFADDR_STATE_PREDAD,
+ 	INET6_IFADDR_STATE_DAD,
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 0b6ee962c84e2..b007d098ffe2e 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -6137,11 +6137,7 @@ static int inet6_fill_prefix(struct sk_buff *skb, struct inet6_dev *idev,
+ 	pmsg->prefix_len = pinfo->prefix_len;
+ 	pmsg->prefix_type = pinfo->type;
+ 	pmsg->prefix_pad3 = 0;
+-	pmsg->prefix_flags = 0;
+-	if (pinfo->onlink)
+-		pmsg->prefix_flags |= IF_PREFIX_ONLINK;
+-	if (pinfo->autoconf)
+-		pmsg->prefix_flags |= IF_PREFIX_AUTOCONF;
++	pmsg->prefix_flags = pinfo->flags;
+ 
+ 	if (nla_put(skb, PREFIX_ADDRESS, sizeof(pinfo->prefix), &pinfo->prefix))
+ 		goto nla_put_failure;
 -- 
 2.43.0
 
