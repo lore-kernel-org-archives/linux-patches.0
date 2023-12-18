@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5901D14F;
-	Mon, 18 Dec 2023 14:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E56D3788E;
+	Mon, 18 Dec 2023 14:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+Ij7nqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077F5C433C7;
-	Mon, 18 Dec 2023 14:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrPSCJts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DA6C433C7;
+	Mon, 18 Dec 2023 14:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908820;
-	bh=1Q1RfpzNouIx+mfyP+xg9W+WfHNyXrTHy0N4jP1EzBE=;
+	s=korg; t=1702908823;
+	bh=9ifVjPq0pctY5h9WjhOLzm10chlVYwa8NL/crdKvjwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+Ij7nqTSu1EtP1C44UbY4FJcg4D5do5xdB0oR9EZDqTSCFmzmwVQl5s0aTYkFLUq
-	 zzMOE3UwRMC2D+qRSMgN/8ayh/gkl2XYQCzvL4Y9kw7oN8H68BMn0gyQ+jmDaXzkJr
-	 YDWHGIixIrq233BC0hG6N/6M4hBfDmkC+0h4LOZE=
+	b=lrPSCJtsTFBRjBaUOAw9bdhi4lUCfoVaSXw74r0JxH/q6sWefcWFZMqjlGw6o9JiQ
+	 BKplatF0tAHDjj5cILXQcKK7o9/66TDQJ0pdBfZhTRXadK+nGIRHN5AZp6rjfIXn8M
+	 WuxNt4ofT4qNTMANW+NKextlBNz/bUstGYSTvbZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shay Agroskin <shayagr@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 46/83] usb: aqc111: check packet for fixup for true limit
-Date: Mon, 18 Dec 2023 14:52:07 +0100
-Message-ID: <20231218135051.780819334@linuxfoundation.org>
+Subject: [PATCH 5.15 29/83] net: ena: Fix XDP redirection error
+Date: Mon, 18 Dec 2023 14:51:50 +0100
+Message-ID: <20231218135051.026671815@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -42,56 +43,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit ccab434e674ca95d483788b1895a70c21b7f016a ]
+[ Upstream commit 4ab138ca0a340e6d6e7a6a9bd5004bd8f83127ca ]
 
-If a device sends a packet that is inbetween 0
-and sizeof(u64) the value passed to skb_trim()
-as length will wrap around ending up as some very
-large value.
+When sending TX packets, the meta descriptor can be all zeroes
+as no meta information is required (as in XDP).
 
-The driver will then proceed to parse the header
-located at that position, which will either oops or
-process some random value.
+This patch removes the validity check, as when
+`disable_meta_caching` is enabled, such TX packets will be
+dropped otherwise.
 
-The fix is to check against sizeof(u64) rather than
-0, which the driver currently does. The issue exists
-since the introduction of the driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0e3a3f6dacf0 ("net: ena: support new LLQ acceleration mode")
+Signed-off-by: Shay Agroskin <shayagr@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Link: https://lore.kernel.org/r/20231211062801.27891-5-darinzon@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_eth_com.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
-index e8d49886d6953..bc5e3f45c499e 100644
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -1079,17 +1079,17 @@ static int aqc111_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 	u16 pkt_count = 0;
- 	u64 desc_hdr = 0;
- 	u16 vlan_tag = 0;
--	u32 skb_len = 0;
-+	u32 skb_len;
- 
- 	if (!skb)
- 		goto err;
- 
--	if (skb->len == 0)
-+	skb_len = skb->len;
-+	if (skb_len < sizeof(desc_hdr))
- 		goto err;
- 
--	skb_len = skb->len;
- 	/* RX Descriptor Header */
--	skb_trim(skb, skb->len - sizeof(desc_hdr));
-+	skb_trim(skb, skb_len - sizeof(desc_hdr));
- 	desc_hdr = le64_to_cpup((u64 *)skb_tail_pointer(skb));
- 
- 	/* Check these packets */
+diff --git a/drivers/net/ethernet/amazon/ena/ena_eth_com.c b/drivers/net/ethernet/amazon/ena/ena_eth_com.c
+index 3d6f0a466a9ed..f9f886289b970 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_eth_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_eth_com.c
+@@ -328,9 +328,6 @@ static int ena_com_create_and_store_tx_meta_desc(struct ena_com_io_sq *io_sq,
+ 	 * compare it to the stored version, just create the meta
+ 	 */
+ 	if (io_sq->disable_meta_caching) {
+-		if (unlikely(!ena_tx_ctx->meta_valid))
+-			return -EINVAL;
+-
+ 		*have_meta = true;
+ 		return ena_com_create_meta(io_sq, ena_meta);
+ 	}
 -- 
 2.43.0
 
