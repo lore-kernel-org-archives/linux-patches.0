@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E56D3788E;
-	Mon, 18 Dec 2023 14:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8FD3788E;
+	Mon, 18 Dec 2023 14:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrPSCJts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DA6C433C7;
-	Mon, 18 Dec 2023 14:13:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGD/Ublw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61918C433C8;
+	Mon, 18 Dec 2023 14:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908823;
-	bh=9ifVjPq0pctY5h9WjhOLzm10chlVYwa8NL/crdKvjwE=;
+	s=korg; t=1702908825;
+	bh=gP8huWIXAV2Jw9Mxb8CN5AC+1Ghta9ZJssYXrRiAQLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrPSCJtsTFBRjBaUOAw9bdhi4lUCfoVaSXw74r0JxH/q6sWefcWFZMqjlGw6o9JiQ
-	 BKplatF0tAHDjj5cILXQcKK7o9/66TDQJ0pdBfZhTRXadK+nGIRHN5AZp6rjfIXn8M
-	 WuxNt4ofT4qNTMANW+NKextlBNz/bUstGYSTvbZc=
+	b=eGD/UblwmhoM+bMxMizrUxocruvxeceT8X0edSi5UyqUmRb8Sgqb5WDY3c+dm5dFR
+	 2H/RUq4BC7NoUHcZmygzBRfed5O/uRJ8LwDFmld6plBnKbVYpJUVhjK4OvIdE24+hD
+	 bTD2xUQ3sn5AFPLVhwAn0lEdml1BFxCPKq7DByDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Agroskin <shayagr@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jean Delvare <jdelvare@suse.de>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 29/83] net: ena: Fix XDP redirection error
-Date: Mon, 18 Dec 2023 14:51:50 +0100
-Message-ID: <20231218135051.026671815@linuxfoundation.org>
+Subject: [PATCH 5.15 47/83] stmmac: dwmac-loongson: Add architecture dependency
+Date: Mon, 18 Dec 2023 14:52:08 +0100
+Message-ID: <20231218135051.817725970@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -43,41 +44,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Arinzon <darinzon@amazon.com>
+From: Jean Delvare <jdelvare@suse.de>
 
-[ Upstream commit 4ab138ca0a340e6d6e7a6a9bd5004bd8f83127ca ]
+[ Upstream commit 7fbd5fc2b35a8f559a6b380dfa9bcd964a758186 ]
 
-When sending TX packets, the meta descriptor can be all zeroes
-as no meta information is required (as in XDP).
+Only present the DWMAC_LOONGSON option on architectures where it can
+actually be used.
 
-This patch removes the validity check, as when
-`disable_meta_caching` is enabled, such TX packets will be
-dropped otherwise.
+This follows the same logic as the DWMAC_INTEL option.
 
-Fixes: 0e3a3f6dacf0 ("net: ena: support new LLQ acceleration mode")
-Signed-off-by: Shay Agroskin <shayagr@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Link: https://lore.kernel.org/r/20231211062801.27891-5-darinzon@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Cc: Keguang Zhang <keguang.zhang@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_eth_com.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_eth_com.c b/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-index 3d6f0a466a9ed..f9f886289b970 100644
---- a/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_eth_com.c
-@@ -328,9 +328,6 @@ static int ena_com_create_and_store_tx_meta_desc(struct ena_com_io_sq *io_sq,
- 	 * compare it to the stored version, just create the meta
- 	 */
- 	if (io_sq->disable_meta_caching) {
--		if (unlikely(!ena_tx_ctx->meta_valid))
--			return -EINVAL;
--
- 		*have_meta = true;
- 		return ena_com_create_meta(io_sq, ena_meta);
- 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+index 929cfc22cd0cf..d19844be9fe50 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
++++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+@@ -253,7 +253,7 @@ config DWMAC_INTEL
+ config DWMAC_LOONGSON
+ 	tristate "Loongson PCI DWMAC support"
+ 	default MACH_LOONGSON64
+-	depends on STMMAC_ETH && PCI
++	depends on (MACH_LOONGSON64 || COMPILE_TEST) && STMMAC_ETH && PCI
+ 	depends on COMMON_CLK
+ 	help
+ 	  This selects the LOONGSON PCI bus support for the stmmac driver,
 -- 
 2.43.0
 
