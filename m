@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A491D137;
-	Mon, 18 Dec 2023 13:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EE7129EFE;
+	Mon, 18 Dec 2023 13:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfEA/SVp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54831C433C7;
-	Mon, 18 Dec 2023 13:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pw7gid3f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35193C433C7;
+	Mon, 18 Dec 2023 13:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907508;
-	bh=vdN9fiENPJ92iHAF8BUwdIqAKDd3SedC2Rs4xW1PBFI=;
+	s=korg; t=1702907511;
+	bh=ZmzK/NeyK20zdoDZEPxFIw7EyY1zlvqtSq91O/fcpsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JfEA/SVpY0BL4xzBB+eAlQkMjysiWZSvMrD5XzM4BSAhUlB29VlXU5Q7duSO/DHpL
-	 xs0XASVrHBhbW3WjuPDEUjLSHuvjxZla3tUo5npj6WCGavx+COoTI7ZeU9V6LLZPaQ
-	 BUm41sxjwtuLx5dfmwPEP6pOLPOnZYtmKvvLG4CU=
+	b=Pw7gid3f2D++1RkCjsZOFDRXTKLcVIaD7E1kU8DVjsYRNG7Yba3moDHmiOqeCTdJU
+	 jxVkf8DBzowvUhtozdgawQxTxOxDM/i/KdkeYaT1g7dEHpo6H88oVKUT+3IT/XCZqa
+	 wy2mkgnMc4IKBupvebBHgVRf9CeFtP5rqBkZjCjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Changhui Zhong <czhong@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.14 13/26] cred: switch to using atomic_long_t
-Date: Mon, 18 Dec 2023 14:51:15 +0100
-Message-ID: <20231218135041.169661224@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 14/26] blk-throttle: fix lockdep warning of "cgroup_mutex or RCU read lock required!"
+Date: Mon, 18 Dec 2023 14:51:16 +0100
+Message-ID: <20231218135041.199566056@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
 References: <20231218135040.665690087@linuxfoundation.org>
@@ -41,246 +43,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit f8fa5d76925991976b3e7076f9d1052515ec1fca upstream.
+[ Upstream commit 27b13e209ddca5979847a1b57890e0372c1edcee ]
 
-There are multiple ways to grab references to credentials, and the only
-protection we have against overflowing it is the memory required to do
-so.
+Inside blkg_for_each_descendant_pre(), both
+css_for_each_descendant_pre() and blkg_lookup() requires RCU read lock,
+and either cgroup_assert_mutex_or_rcu_locked() or rcu_read_lock_held()
+is called.
 
-With memory sizes only moving in one direction, let's bump the reference
-count to 64-bit and move it outside the realm of feasibly overflowing.
+Fix the warning by adding rcu read lock.
 
+Reported-by: Changhui Zhong <czhong@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20231117023527.3188627-2-ming.lei@redhat.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cred.h |    6 ++--
- kernel/cred.c        |   66 +++++++++++++++++++++++++--------------------------
- 2 files changed, 36 insertions(+), 36 deletions(-)
+ block/blk-throttle.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/cred.h
-+++ b/include/linux/cred.h
-@@ -109,7 +109,7 @@ extern void groups_sort(struct group_inf
-  * same context as task->real_cred.
-  */
- struct cred {
--	atomic_t	usage;
-+	atomic_long_t	usage;
- #ifdef CONFIG_DEBUG_CREDENTIALS
- 	atomic_t	subscribers;	/* number of processes subscribed */
- 	void		*put_addr;
-@@ -226,7 +226,7 @@ static inline bool cap_ambient_invariant
-  */
- static inline struct cred *get_new_cred(struct cred *cred)
- {
--	atomic_inc(&cred->usage);
-+	atomic_long_inc(&cred->usage);
- 	return cred;
- }
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index fcbbe2e45a2bb..e52a9632993a7 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -1391,6 +1391,7 @@ static void tg_conf_updated(struct throtl_grp *tg, bool global)
+ 		   tg_bps_limit(tg, READ), tg_bps_limit(tg, WRITE),
+ 		   tg_iops_limit(tg, READ), tg_iops_limit(tg, WRITE));
  
-@@ -270,7 +270,7 @@ static inline void put_cred(const struct
- 
- 	if (cred) {
- 		validate_creds(cred);
--		if (atomic_dec_and_test(&(cred)->usage))
-+		if (atomic_long_dec_and_test(&(cred)->usage))
- 			__put_cred(cred);
++	rcu_read_lock();
+ 	/*
+ 	 * Update has_rules[] flags for the updated tg's subtree.  A tg is
+ 	 * considered to have rules if either the tg itself or any of its
+@@ -1418,6 +1419,7 @@ static void tg_conf_updated(struct throtl_grp *tg, bool global)
+ 		this_tg->latency_target = max(this_tg->latency_target,
+ 				parent_tg->latency_target);
  	}
- }
---- a/kernel/cred.c
-+++ b/kernel/cred.c
-@@ -101,17 +101,17 @@ static void put_cred_rcu(struct rcu_head
++	rcu_read_unlock();
  
- #ifdef CONFIG_DEBUG_CREDENTIALS
- 	if (cred->magic != CRED_MAGIC_DEAD ||
--	    atomic_read(&cred->usage) != 0 ||
-+	    atomic_long_read(&cred->usage) != 0 ||
- 	    read_cred_subscribers(cred) != 0)
- 		panic("CRED: put_cred_rcu() sees %p with"
--		      " mag %x, put %p, usage %d, subscr %d\n",
-+		      " mag %x, put %p, usage %ld, subscr %d\n",
- 		      cred, cred->magic, cred->put_addr,
--		      atomic_read(&cred->usage),
-+		      atomic_long_read(&cred->usage),
- 		      read_cred_subscribers(cred));
- #else
--	if (atomic_read(&cred->usage) != 0)
--		panic("CRED: put_cred_rcu() sees %p with usage %d\n",
--		      cred, atomic_read(&cred->usage));
-+	if (atomic_long_read(&cred->usage) != 0)
-+		panic("CRED: put_cred_rcu() sees %p with usage %ld\n",
-+		      cred, atomic_long_read(&cred->usage));
- #endif
- 
- 	security_cred_free(cred);
-@@ -134,11 +134,11 @@ static void put_cred_rcu(struct rcu_head
-  */
- void __put_cred(struct cred *cred)
- {
--	kdebug("__put_cred(%p{%d,%d})", cred,
--	       atomic_read(&cred->usage),
-+	kdebug("__put_cred(%p{%ld,%d})", cred,
-+	       atomic_long_read(&cred->usage),
- 	       read_cred_subscribers(cred));
- 
--	BUG_ON(atomic_read(&cred->usage) != 0);
-+	BUG_ON(atomic_long_read(&cred->usage) != 0);
- #ifdef CONFIG_DEBUG_CREDENTIALS
- 	BUG_ON(read_cred_subscribers(cred) != 0);
- 	cred->magic = CRED_MAGIC_DEAD;
-@@ -161,8 +161,8 @@ void exit_creds(struct task_struct *tsk)
- {
- 	struct cred *cred;
- 
--	kdebug("exit_creds(%u,%p,%p,{%d,%d})", tsk->pid, tsk->real_cred, tsk->cred,
--	       atomic_read(&tsk->cred->usage),
-+	kdebug("exit_creds(%u,%p,%p,{%ld,%d})", tsk->pid, tsk->real_cred, tsk->cred,
-+	       atomic_long_read(&tsk->cred->usage),
- 	       read_cred_subscribers(tsk->cred));
- 
- 	cred = (struct cred *) tsk->real_cred;
-@@ -197,7 +197,7 @@ const struct cred *get_task_cred(struct
- 	do {
- 		cred = __task_cred((task));
- 		BUG_ON(!cred);
--	} while (!atomic_inc_not_zero(&((struct cred *)cred)->usage));
-+	} while (!atomic_long_inc_not_zero(&((struct cred *)cred)->usage));
- 
- 	rcu_read_unlock();
- 	return cred;
-@@ -215,7 +215,7 @@ struct cred *cred_alloc_blank(void)
- 	if (!new)
- 		return NULL;
- 
--	atomic_set(&new->usage, 1);
-+	atomic_long_set(&new->usage, 1);
- #ifdef CONFIG_DEBUG_CREDENTIALS
- 	new->magic = CRED_MAGIC;
- #endif
-@@ -262,7 +262,7 @@ struct cred *prepare_creds(void)
- 	memcpy(new, old, sizeof(struct cred));
- 
- 	new->non_rcu = 0;
--	atomic_set(&new->usage, 1);
-+	atomic_long_set(&new->usage, 1);
- 	set_cred_subscribers(new, 0);
- 	get_group_info(new->group_info);
- 	get_uid(new->user);
-@@ -338,8 +338,8 @@ int copy_creds(struct task_struct *p, un
- 		p->real_cred = get_cred(p->cred);
- 		get_cred(p->cred);
- 		alter_cred_subscribers(p->cred, 2);
--		kdebug("share_creds(%p{%d,%d})",
--		       p->cred, atomic_read(&p->cred->usage),
-+		kdebug("share_creds(%p{%ld,%d})",
-+		       p->cred, atomic_long_read(&p->cred->usage),
- 		       read_cred_subscribers(p->cred));
- 		atomic_inc(&p->cred->user->processes);
- 		return 0;
-@@ -429,8 +429,8 @@ int commit_creds(struct cred *new)
- 	struct task_struct *task = current;
- 	const struct cred *old = task->real_cred;
- 
--	kdebug("commit_creds(%p{%d,%d})", new,
--	       atomic_read(&new->usage),
-+	kdebug("commit_creds(%p{%ld,%d})", new,
-+	       atomic_long_read(&new->usage),
- 	       read_cred_subscribers(new));
- 
- 	BUG_ON(task->cred != old);
-@@ -439,7 +439,7 @@ int commit_creds(struct cred *new)
- 	validate_creds(old);
- 	validate_creds(new);
- #endif
--	BUG_ON(atomic_read(&new->usage) < 1);
-+	BUG_ON(atomic_long_read(&new->usage) < 1);
- 
- 	get_cred(new); /* we will require a ref for the subj creds too */
- 
-@@ -512,14 +512,14 @@ EXPORT_SYMBOL(commit_creds);
-  */
- void abort_creds(struct cred *new)
- {
--	kdebug("abort_creds(%p{%d,%d})", new,
--	       atomic_read(&new->usage),
-+	kdebug("abort_creds(%p{%ld,%d})", new,
-+	       atomic_long_read(&new->usage),
- 	       read_cred_subscribers(new));
- 
- #ifdef CONFIG_DEBUG_CREDENTIALS
- 	BUG_ON(read_cred_subscribers(new) != 0);
- #endif
--	BUG_ON(atomic_read(&new->usage) < 1);
-+	BUG_ON(atomic_long_read(&new->usage) < 1);
- 	put_cred(new);
- }
- EXPORT_SYMBOL(abort_creds);
-@@ -535,8 +535,8 @@ const struct cred *override_creds(const
- {
- 	const struct cred *old = current->cred;
- 
--	kdebug("override_creds(%p{%d,%d})", new,
--	       atomic_read(&new->usage),
-+	kdebug("override_creds(%p{%ld,%d})", new,
-+	       atomic_long_read(&new->usage),
- 	       read_cred_subscribers(new));
- 
- 	validate_creds(old);
-@@ -558,8 +558,8 @@ const struct cred *override_creds(const
- 	rcu_assign_pointer(current->cred, new);
- 	alter_cred_subscribers(old, -1);
- 
--	kdebug("override_creds() = %p{%d,%d}", old,
--	       atomic_read(&old->usage),
-+	kdebug("override_creds() = %p{%ld,%d}", old,
-+	       atomic_long_read(&old->usage),
- 	       read_cred_subscribers(old));
- 	return old;
- }
-@@ -576,8 +576,8 @@ void revert_creds(const struct cred *old
- {
- 	const struct cred *override = current->cred;
- 
--	kdebug("revert_creds(%p{%d,%d})", old,
--	       atomic_read(&old->usage),
-+	kdebug("revert_creds(%p{%ld,%d})", old,
-+	       atomic_long_read(&old->usage),
- 	       read_cred_subscribers(old));
- 
- 	validate_creds(old);
-@@ -637,7 +637,7 @@ struct cred *prepare_kernel_cred(struct
- 
- 	*new = *old;
- 	new->non_rcu = 0;
--	atomic_set(&new->usage, 1);
-+	atomic_long_set(&new->usage, 1);
- 	set_cred_subscribers(new, 0);
- 	get_uid(new->user);
- 	get_user_ns(new->user_ns);
-@@ -760,8 +760,8 @@ static void dump_invalid_creds(const str
- 	       cred == tsk->cred ? "[eff]" : "");
- 	printk(KERN_ERR "CRED: ->magic=%x, put_addr=%p\n",
- 	       cred->magic, cred->put_addr);
--	printk(KERN_ERR "CRED: ->usage=%d, subscr=%d\n",
--	       atomic_read(&cred->usage),
-+	printk(KERN_ERR "CRED: ->usage=%ld, subscr=%d\n",
-+	       atomic_long_read(&cred->usage),
- 	       read_cred_subscribers(cred));
- 	printk(KERN_ERR "CRED: ->*uid = { %d,%d,%d,%d }\n",
- 		from_kuid_munged(&init_user_ns, cred->uid),
-@@ -833,9 +833,9 @@ EXPORT_SYMBOL(__validate_process_creds);
-  */
- void validate_creds_for_do_exit(struct task_struct *tsk)
- {
--	kdebug("validate_creds_for_do_exit(%p,%p{%d,%d})",
-+	kdebug("validate_creds_for_do_exit(%p,%p{%ld,%d})",
- 	       tsk->real_cred, tsk->cred,
--	       atomic_read(&tsk->cred->usage),
-+	       atomic_long_read(&tsk->cred->usage),
- 	       read_cred_subscribers(tsk->cred));
- 
- 	__validate_process_creds(tsk, __FILE__, __LINE__);
+ 	/*
+ 	 * We're already holding queue_lock and know @tg is valid.  Let's
+-- 
+2.43.0
+
 
 
