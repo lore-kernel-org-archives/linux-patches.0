@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF21037883;
-	Mon, 18 Dec 2023 14:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975EB37883;
+	Mon, 18 Dec 2023 14:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgFDcH2q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64ED8C433C8;
-	Mon, 18 Dec 2023 14:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRuhg8hI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DDBCC433C8;
+	Mon, 18 Dec 2023 14:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908316;
-	bh=bdsGh2VfCQOpeRbZHOikMMHG4MzxJs/rPinuY30R3WI=;
+	s=korg; t=1702908319;
+	bh=hEOgg5hc+x9KbQ8aB9+CABH2yPTUxd1t7cvHSODWjk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgFDcH2qQBDz+2ZuGaM/mKKTfUfPQhH7QFDKKu9mp1FAJcXZyao2+E7dTxD33beUg
-	 h65s00+Oyf7XKvXT6xtNXbvIlgefYyZGmLyEaixVsOI11YmHEfrvIYPrBnTk6+sFLy
-	 9B69wMSF4vFBGnzieC5H5k5P8C38sXkEC8qMqsAA=
+	b=FRuhg8hIMVb27Gfd1ttPKA3kGev8my7SV/5hK2jOvHczzxol11nbOWNuiJc8tlPG4
+	 XijBjJYqJY6blnUKZTmqAkNuCoMVnNkH0PbaUt8XVG6i2pm1D1VAhM6vl/rEFkQ1gs
+	 MytH4szD4pndTRy4zpIWrPFuFO/28IoPmVm4jbcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.6 133/166] drm/amdgpu/sdma5.2: add begin/end_use ring callbacks
-Date: Mon, 18 Dec 2023 14:51:39 +0100
-Message-ID: <20231218135111.044925342@linuxfoundation.org>
+	Stuart Lee <stuart.lee@mediatek.com>,
+	AngeloGioacchino DEl Regno <angelogioacchino.delregno@collabora.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.6 134/166] drm/mediatek: Fix access violation in mtk_drm_crtc_dma_dev_get
+Date: Mon, 18 Dec 2023 14:51:40 +0100
+Message-ID: <20231218135111.080041709@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -36,85 +37,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Stuart Lee <stuart.lee@mediatek.com>
 
-commit ab4750332dbe535243def5dcebc24ca00c1f98ac upstream.
+commit b6961d187fcd138981b8707dac87b9fcdbfe75d1 upstream.
 
-Add begin/end_use ring callbacks to disallow GFXOFF when
-SDMA work is submitted and allow it again afterward.
+Add error handling to check NULL input in
+mtk_drm_crtc_dma_dev_get function.
 
-This should avoid corner cases where GFXOFF is erroneously
-entered when SDMA is still active.  For now just allow/disallow
-GFXOFF in the begin and end helpers until we root cause the
-issue.  This should not impact power as SDMA usage is pretty
-minimal and GFXOSS should not be active when SDMA is active
-anyway, this just makes it explicit.
+While display path is not configured correctly, none of crtc is
+established. So the caller of mtk_drm_crtc_dma_dev_get may pass
+input parameter *crtc as NULL, Which may cause coredump when
+we try to get the container of NULL pointer.
 
-v2: move everything into sdma5.2 code.  No reason for this
-to be generic at this point.
-v3: Add comments in new code
-
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2220
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com> (v1)
-Tested-by: Mario Limonciello <mario.limonciello@amd.com> (v1)
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 5.15+
+Fixes: cb1d6bcca542 ("drm/mediatek: Add dma dev get function")
+Signed-off-by: Stuart Lee <stuart.lee@mediatek.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: AngeloGioacchino DEl Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20231110012914.14884-2-stuart.lee@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_drm_crtc.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-@@ -1651,6 +1651,32 @@ static void sdma_v5_2_get_clockgating_st
- 		*flags |= AMD_CG_SUPPORT_SDMA_LS;
- }
+--- a/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_crtc.c
+@@ -885,7 +885,14 @@ static int mtk_drm_crtc_init_comp_planes
  
-+static void sdma_v5_2_ring_begin_use(struct amdgpu_ring *ring)
-+{
-+	struct amdgpu_device *adev = ring->adev;
+ struct device *mtk_drm_crtc_dma_dev_get(struct drm_crtc *crtc)
+ {
+-	struct mtk_drm_crtc *mtk_crtc = to_mtk_crtc(crtc);
++	struct mtk_drm_crtc *mtk_crtc = NULL;
 +
-+	/* SDMA 5.2.3 (RMB) FW doesn't seem to properly
-+	 * disallow GFXOFF in some cases leading to
-+	 * hangs in SDMA.  Disallow GFXOFF while SDMA is active.
-+	 * We can probably just limit this to 5.2.3,
-+	 * but it shouldn't hurt for other parts since
-+	 * this GFXOFF will be disallowed anyway when SDMA is
-+	 * active, this just makes it explicit.
-+	 */
-+	amdgpu_gfx_off_ctrl(adev, false);
-+}
++	if (!crtc)
++		return NULL;
 +
-+static void sdma_v5_2_ring_end_use(struct amdgpu_ring *ring)
-+{
-+	struct amdgpu_device *adev = ring->adev;
-+
-+	/* SDMA 5.2.3 (RMB) FW doesn't seem to properly
-+	 * disallow GFXOFF in some cases leading to
-+	 * hangs in SDMA.  Allow GFXOFF when SDMA is complete.
-+	 */
-+	amdgpu_gfx_off_ctrl(adev, true);
-+}
-+
- const struct amd_ip_funcs sdma_v5_2_ip_funcs = {
- 	.name = "sdma_v5_2",
- 	.early_init = sdma_v5_2_early_init,
-@@ -1698,6 +1724,8 @@ static const struct amdgpu_ring_funcs sd
- 	.test_ib = sdma_v5_2_ring_test_ib,
- 	.insert_nop = sdma_v5_2_ring_insert_nop,
- 	.pad_ib = sdma_v5_2_ring_pad_ib,
-+	.begin_use = sdma_v5_2_ring_begin_use,
-+	.end_use = sdma_v5_2_ring_end_use,
- 	.emit_wreg = sdma_v5_2_ring_emit_wreg,
- 	.emit_reg_wait = sdma_v5_2_ring_emit_reg_wait,
- 	.emit_reg_write_reg_wait = sdma_v5_2_ring_emit_reg_write_reg_wait,
++	mtk_crtc = to_mtk_crtc(crtc);
++	if (!mtk_crtc)
++		return NULL;
+ 
+ 	return mtk_crtc->dma_dev;
+ }
 
 
