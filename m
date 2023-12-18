@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75C41D122;
-	Mon, 18 Dec 2023 14:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEE837879;
+	Mon, 18 Dec 2023 14:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sc5uQl9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D0DC433C8;
-	Mon, 18 Dec 2023 14:15:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OylJZP3m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02556C433C8;
+	Mon, 18 Dec 2023 14:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908919;
-	bh=IYMuoySWyvcRWaK80mnO4wULxkhbRlYMoA3NFsAgHn0=;
+	s=korg; t=1702908922;
+	bh=ywh/neVr/R+yk4T1bubVeGcOAZSxgUtube+PMRKQhbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sc5uQl9VqE0uFqS+ji2fzLEPToP3/mYqHMV4fHylHt9cLhq3kBSEJiLonmbASpKoI
-	 et+52bTpMxrpxRbiPmDiW2zRi/YpTlSdU37PfkDCKfx33M8XcN8ukIWEdZpGRTFJtI
-	 XIwuXr3dlBRffy8d6yY0RUIVLvnUW1z/qH7vpdkc=
+	b=OylJZP3m/HfyMN14RC4wzAFOnI9Bun1ROmklfTsOKf+Nryb82zVWFPQMJvSEw7Lmz
+	 /+tz4ZHpxI7DY0orIOgLqFZDH6u7p4C7FQy250QdF/cd9bErISGYHNgazmZu/l+R99
+	 /UUFUv18TfYg58JjkFfIXSIrngP8wgH265eKm03s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hayes Wang <hayeswang@realtek.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 81/83] r8152: avoid to change cfg for all devices
-Date: Mon, 18 Dec 2023 14:52:42 +0100
-Message-ID: <20231218135053.305272706@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 82/83] r8152: remove rtl_vendor_mode function
+Date: Mon, 18 Dec 2023 14:52:43 +0100
+Message-ID: <20231218135053.360240382@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -44,67 +43,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Hayes Wang <hayeswang@realtek.com>
 
-commit 0d4cda805a183bbe523f2407edb5c14ade50b841 upstream.
+commit 95a4c1d617b92cdc4522297741b56e8f6cd01a1e upstream.
 
-The rtl8152_cfgselector_probe() should set the USB configuration to the
-vendor mode only for the devices which the driver (r8152) supports.
-Otherwise, no driver would be used for such devices.
+After commit ec51fbd1b8a2 ("r8152: add USB device driver for
+config selection"), the code about changing USB configuration
+in rtl_vendor_mode() wouldn't be run anymore. Therefore, the
+function could be removed.
 
-Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
 Signed-off-by: Hayes Wang <hayeswang@realtek.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/r8152.c |   20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/net/usb/r8152.c |   39 +--------------------------------------
+ 1 file changed, 1 insertion(+), 38 deletions(-)
 
 --- a/drivers/net/usb/r8152.c
 +++ b/drivers/net/usb/r8152.c
-@@ -9545,9 +9545,8 @@ static int rtl_fw_init(struct r8152 *tp)
- 	return 0;
+@@ -8281,43 +8281,6 @@ static bool rtl_check_vendor_ok(struct u
+ 	return true;
  }
  
--u8 rtl8152_get_version(struct usb_interface *intf)
-+static u8 __rtl_get_hw_ver(struct usb_device *udev)
+-static bool rtl_vendor_mode(struct usb_interface *intf)
+-{
+-	struct usb_host_interface *alt = intf->cur_altsetting;
+-	struct usb_device *udev;
+-	struct usb_host_config *c;
+-	int i, num_configs;
+-
+-	if (alt->desc.bInterfaceClass == USB_CLASS_VENDOR_SPEC)
+-		return rtl_check_vendor_ok(intf);
+-
+-	/* The vendor mode is not always config #1, so to find it out. */
+-	udev = interface_to_usbdev(intf);
+-	c = udev->config;
+-	num_configs = udev->descriptor.bNumConfigurations;
+-	if (num_configs < 2)
+-		return false;
+-
+-	for (i = 0; i < num_configs; (i++, c++)) {
+-		struct usb_interface_descriptor	*desc = NULL;
+-
+-		if (c->desc.bNumInterfaces > 0)
+-			desc = &c->intf_cache[0]->altsetting->desc;
+-		else
+-			continue;
+-
+-		if (desc->bInterfaceClass == USB_CLASS_VENDOR_SPEC) {
+-			usb_driver_set_configuration(udev, c->desc.bConfigurationValue);
+-			break;
+-		}
+-	}
+-
+-	if (i == num_configs)
+-		dev_err(&intf->dev, "Unexpected Device\n");
+-
+-	return false;
+-}
+-
+ static int rtl8152_pre_reset(struct usb_interface *intf)
  {
--	struct usb_device *udev = interface_to_usbdev(intf);
- 	u32 ocp_data = 0;
- 	__le32 *tmp;
- 	u8 version;
-@@ -9617,10 +9616,19 @@ u8 rtl8152_get_version(struct usb_interf
- 		break;
- 	default:
- 		version = RTL_VER_UNKNOWN;
--		dev_info(&intf->dev, "Unknown version 0x%04x\n", ocp_data);
-+		dev_info(&udev->dev, "Unknown version 0x%04x\n", ocp_data);
- 		break;
- 	}
+ 	struct r8152 *tp = usb_get_intfdata(intf);
+@@ -9650,7 +9613,7 @@ static int rtl8152_probe(struct usb_inte
+ 	if (intf->cur_altsetting->desc.bInterfaceClass != USB_CLASS_VENDOR_SPEC)
+ 		return -ENODEV;
  
-+	return version;
-+}
-+
-+u8 rtl8152_get_version(struct usb_interface *intf)
-+{
-+	u8 version;
-+
-+	version = __rtl_get_hw_ver(interface_to_usbdev(intf));
-+
- 	dev_dbg(&intf->dev, "Detected version 0x%04x\n", version);
+-	if (!rtl_vendor_mode(intf))
++	if (!rtl_check_vendor_ok(intf))
+ 		return -ENODEV;
  
- 	return version;
-@@ -9906,6 +9914,12 @@ static int rtl8152_cfgselector_probe(str
- 	struct usb_host_config *c;
- 	int i, num_configs;
- 
-+	/* Switch the device to vendor mode, if and only if the vendor mode
-+	 * driver supports it.
-+	 */
-+	if (__rtl_get_hw_ver(udev) == RTL_VER_UNKNOWN)
-+		return 0;
-+
- 	/* The vendor mode is not always config #1, so to find it out. */
- 	c = udev->config;
- 	num_configs = udev->descriptor.bNumConfigurations;
+ 	usb_reset_device(udev);
 
 
