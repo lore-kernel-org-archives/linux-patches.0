@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A457129EF7;
-	Mon, 18 Dec 2023 14:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF21037883;
+	Mon, 18 Dec 2023 14:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EL4esRLQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6983C433C8;
-	Mon, 18 Dec 2023 14:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgFDcH2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64ED8C433C8;
+	Mon, 18 Dec 2023 14:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908314;
-	bh=3ry8tT3fXKMbWtw9Xm3ieXUUvIvirqsmI9uCC7NOmpY=;
+	s=korg; t=1702908316;
+	bh=bdsGh2VfCQOpeRbZHOikMMHG4MzxJs/rPinuY30R3WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EL4esRLQiEiTv3hwA4q/13d4hfZwIf7UJBsqId5SJWmgrTwp8+YRd4qrCH4tvk25l
-	 z9NFIMQnImJh6btjkgFHENsgfFQHK1Nrfif+bpGwPKMqI0tCb/bPETJq0vFnj3EOWA
-	 5tGNlamVHNou2P3qiZjysg81VB6tkw6xUcZ5J9u8=
+	b=tgFDcH2qQBDz+2ZuGaM/mKKTfUfPQhH7QFDKKu9mp1FAJcXZyao2+E7dTxD33beUg
+	 h65s00+Oyf7XKvXT6xtNXbvIlgefYyZGmLyEaixVsOI11YmHEfrvIYPrBnTk6+sFLy
+	 9B69wMSF4vFBGnzieC5H5k5P8C38sXkEC8qMqsAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 132/166] team: Fix use-after-free when an option instance allocation fails
-Date: Mon, 18 Dec 2023 14:51:38 +0100
-Message-ID: <20231218135110.997479166@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.6 133/166] drm/amdgpu/sdma5.2: add begin/end_use ring callbacks
+Date: Mon, 18 Dec 2023 14:51:39 +0100
+Message-ID: <20231218135111.044925342@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -37,57 +36,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florent Revest <revest@chromium.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit c12296bbecc488623b7d1932080e394d08f3226b upstream.
+commit ab4750332dbe535243def5dcebc24ca00c1f98ac upstream.
 
-In __team_options_register, team_options are allocated and appended to
-the team's option_list.
-If one option instance allocation fails, the "inst_rollback" cleanup
-path frees the previously allocated options but doesn't remove them from
-the team's option_list.
-This leaves dangling pointers that can be dereferenced later by other
-parts of the team driver that iterate over options.
+Add begin/end_use ring callbacks to disallow GFXOFF when
+SDMA work is submitted and allow it again afterward.
 
-This patch fixes the cleanup path to remove the dangling pointers from
-the list.
+This should avoid corner cases where GFXOFF is erroneously
+entered when SDMA is still active.  For now just allow/disallow
+GFXOFF in the begin and end helpers until we root cause the
+issue.  This should not impact power as SDMA usage is pretty
+minimal and GFXOSS should not be active when SDMA is active
+anyway, this just makes it explicit.
 
-As far as I can tell, this uaf doesn't have much security implications
-since it would be fairly hard to exploit (an attacker would need to make
-the allocation of that specific small object fail) but it's still nice
-to fix.
+v2: move everything into sdma5.2 code.  No reason for this
+to be generic at this point.
+v3: Add comments in new code
 
-Cc: stable@vger.kernel.org
-Fixes: 80f7c6683fe0 ("team: add support for per-port options")
-Signed-off-by: Florent Revest <revest@chromium.org>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20231206123719.1963153-1-revest@chromium.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2220
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com> (v1)
+Tested-by: Mario Limonciello <mario.limonciello@amd.com> (v1)
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 5.15+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/team/team.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -281,8 +281,10 @@ static int __team_options_register(struc
- 	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
+@@ -1651,6 +1651,32 @@ static void sdma_v5_2_get_clockgating_st
+ 		*flags |= AMD_CG_SUPPORT_SDMA_LS;
+ }
  
- inst_rollback:
--	for (i--; i >= 0; i--)
-+	for (i--; i >= 0; i--) {
- 		__team_option_inst_del_option(team, dst_opts[i]);
-+		list_del(&dst_opts[i]->list);
-+	}
- 
- 	i = option_count;
- alloc_rollback:
++static void sdma_v5_2_ring_begin_use(struct amdgpu_ring *ring)
++{
++	struct amdgpu_device *adev = ring->adev;
++
++	/* SDMA 5.2.3 (RMB) FW doesn't seem to properly
++	 * disallow GFXOFF in some cases leading to
++	 * hangs in SDMA.  Disallow GFXOFF while SDMA is active.
++	 * We can probably just limit this to 5.2.3,
++	 * but it shouldn't hurt for other parts since
++	 * this GFXOFF will be disallowed anyway when SDMA is
++	 * active, this just makes it explicit.
++	 */
++	amdgpu_gfx_off_ctrl(adev, false);
++}
++
++static void sdma_v5_2_ring_end_use(struct amdgpu_ring *ring)
++{
++	struct amdgpu_device *adev = ring->adev;
++
++	/* SDMA 5.2.3 (RMB) FW doesn't seem to properly
++	 * disallow GFXOFF in some cases leading to
++	 * hangs in SDMA.  Allow GFXOFF when SDMA is complete.
++	 */
++	amdgpu_gfx_off_ctrl(adev, true);
++}
++
+ const struct amd_ip_funcs sdma_v5_2_ip_funcs = {
+ 	.name = "sdma_v5_2",
+ 	.early_init = sdma_v5_2_early_init,
+@@ -1698,6 +1724,8 @@ static const struct amdgpu_ring_funcs sd
+ 	.test_ib = sdma_v5_2_ring_test_ib,
+ 	.insert_nop = sdma_v5_2_ring_insert_nop,
+ 	.pad_ib = sdma_v5_2_ring_pad_ib,
++	.begin_use = sdma_v5_2_ring_begin_use,
++	.end_use = sdma_v5_2_ring_end_use,
+ 	.emit_wreg = sdma_v5_2_ring_emit_wreg,
+ 	.emit_reg_wait = sdma_v5_2_ring_emit_reg_wait,
+ 	.emit_reg_write_reg_wait = sdma_v5_2_ring_emit_reg_write_reg_wait,
 
 
