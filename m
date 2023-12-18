@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0899D1D13B;
-	Mon, 18 Dec 2023 13:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0717215AC0;
+	Mon, 18 Dec 2023 13:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2A56sGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E0CC433C7;
-	Mon, 18 Dec 2023 13:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rqJf+yQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E56C433C7;
+	Mon, 18 Dec 2023 13:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907640;
-	bh=x1hRkBZWMj8ltHQr0+fRfL+TmqAnaEW4UejNAW7Jjns=;
+	s=korg; t=1702907643;
+	bh=jPqNNIaVBIseiHooJpVp7tWvV7+lO/OzJwDEX6FRJ8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2A56sGke1GJ9XOlO9rpwmIBgQi59JLBX/bUZn4jVP60AyrCJugBRQMtNfI1f/kHb
-	 uC/EH282rHNsUs75urVlVhLJnBsvOR8aEl9KYPRoVathoUnQMembZJp40EREpz5QIl
-	 qfHTkBcFnZjYRBqaGSBGzcixl7mjuVrCYFQSQC/w=
+	b=1rqJf+yQZE00IMlQJxAqN4WXso7If+StY3qKxgAG7LQ8Vr+bVt57N6JxUuI0ZrjhV
+	 eap4qKpZZ4QTiVwxesWvblkV0J2r38505+ExCzXuSbOSYEqFLaFhX5o4bA03JOKQJ7
+	 GDUsLVT7M2Qf4gYRvyV8kwU+bgJrvE1opDtBQtcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 4.19 29/36] perf: Fix perf_event_validate_size() lockdep splat
-Date: Mon, 18 Dec 2023 14:51:39 +0100
-Message-ID: <20231218135042.878912328@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 4.19 30/36] ext4: prevent the normalized size from exceeding EXT_MAX_BLOCKS
+Date: Mon, 18 Dec 2023 14:51:40 +0100
+Message-ID: <20231218135042.908823420@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
 References: <20231218135041.876499958@linuxfoundation.org>
@@ -43,58 +43,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 7e2c1e4b34f07d9aa8937fab88359d4a0fce468e upstream.
+commit 2dcf5fde6dffb312a4bfb8ef940cea2d1f402e32 upstream.
 
-When lockdep is enabled, the for_each_sibling_event(sibling, event)
-macro checks that event->ctx->mutex is held. When creating a new group
-leader event, we call perf_event_validate_size() on a partially
-initialized event where event->ctx is NULL, and so when
-for_each_sibling_event() attempts to check event->ctx->mutex, we get a
-splat, as reported by Lucas De Marchi:
+For files with logical blocks close to EXT_MAX_BLOCKS, the file size
+predicted in ext4_mb_normalize_request() may exceed EXT_MAX_BLOCKS.
+This can cause some blocks to be preallocated that will not be used.
+And after [Fixes], the following issue may be triggered:
 
-  WARNING: CPU: 8 PID: 1471 at kernel/events/core.c:1950 __do_sys_perf_event_open+0xf37/0x1080
+=========================================================
+ kernel BUG at fs/ext4/mballoc.c:4653!
+ Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
+ CPU: 1 PID: 2357 Comm: xfs_io 6.7.0-rc2-00195-g0f5cc96c367f
+ Hardware name: linux,dummy-virt (DT)
+ pc : ext4_mb_use_inode_pa+0x148/0x208
+ lr : ext4_mb_use_inode_pa+0x98/0x208
+ Call trace:
+  ext4_mb_use_inode_pa+0x148/0x208
+  ext4_mb_new_inode_pa+0x240/0x4a8
+  ext4_mb_use_best_found+0x1d4/0x208
+  ext4_mb_try_best_found+0xc8/0x110
+  ext4_mb_regular_allocator+0x11c/0xf48
+  ext4_mb_new_blocks+0x790/0xaa8
+  ext4_ext_map_blocks+0x7cc/0xd20
+  ext4_map_blocks+0x170/0x600
+  ext4_iomap_begin+0x1c0/0x348
+=========================================================
 
-This only happens for a new event which is its own group_leader, and in
-this case there cannot be any sibling events. Thus it's safe to skip the
-check for siblings, which avoids having to make invasive and ugly
-changes to for_each_sibling_event().
+Here is a calculation when adjusting ac_b_ex in ext4_mb_new_inode_pa():
 
-Avoid the splat by bailing out early when the new event is its own
-group_leader.
+	ex.fe_logical = orig_goal_end - EXT4_C2B(sbi, ex.fe_len);
+	if (ac->ac_o_ex.fe_logical >= ex.fe_logical)
+		goto adjust_bex;
 
-Fixes: 382c27f4ed28f803 ("perf: Fix perf_event_validate_size()")
-Closes: https://lore.kernel.org/lkml/20231214000620.3081018-1-lucas.demarchi@intel.com/
-Closes: https://lore.kernel.org/lkml/ZXpm6gQ%2Fd59jGsuW@xpf.sh.intel.com/
-Reported-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20231215112450.3972309-1-mark.rutland@arm.com
+The problem is that when orig_goal_end is subtracted from ac_b_ex.fe_len
+it is still greater than EXT_MAX_BLOCKS, which causes ex.fe_logical to
+overflow to a very small value, which ultimately triggers a BUG_ON in
+ext4_mb_new_inode_pa() because pa->pa_free < len.
+
+The last logical block of an actual write request does not exceed
+EXT_MAX_BLOCKS, so in ext4_mb_normalize_request() also avoids normalizing
+the last logical block to exceed EXT_MAX_BLOCKS to avoid the above issue.
+
+The test case in [Link] can reproduce the above issue with 64k block size.
+
+Link: https://patchwork.kernel.org/project/fstests/list/?series=804003
+Cc:  <stable@kernel.org> # 6.4
+Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231127063313.3734294-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ext4/mballoc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -1834,6 +1834,16 @@ static bool perf_event_validate_size(str
- 				   group_leader->nr_siblings + 1) > 16*1024)
- 		return false;
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3181,6 +3181,10 @@ ext4_mb_normalize_request(struct ext4_al
+ 	start = max(start, rounddown(ac->ac_o_ex.fe_logical,
+ 			(ext4_lblk_t)EXT4_BLOCKS_PER_GROUP(ac->ac_sb)));
  
-+	/*
-+	 * When creating a new group leader, group_leader->ctx is initialized
-+	 * after the size has been validated, but we cannot safely use
-+	 * for_each_sibling_event() until group_leader->ctx is set. A new group
-+	 * leader cannot have any siblings yet, so we can safely skip checking
-+	 * the non-existent siblings.
-+	 */
-+	if (event == group_leader)
-+		return true;
++	/* avoid unnecessary preallocation that may trigger assertions */
++	if (start + size > EXT_MAX_BLOCKS)
++		size = EXT_MAX_BLOCKS - start;
 +
- 	for_each_sibling_event(sibling, group_leader) {
- 		if (__perf_event_read_size(sibling->attr.read_format,
- 					   group_leader->nr_siblings + 1) > 16*1024)
+ 	/* don't cover already allocated blocks in selected range */
+ 	if (ar->pleft && start <= ar->lleft) {
+ 		size -= ar->lleft + 1 - start;
 
 
