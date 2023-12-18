@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A92E42384;
-	Mon, 18 Dec 2023 14:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EAAC42391;
+	Mon, 18 Dec 2023 14:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfFsn+aU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E98C433C7;
-	Mon, 18 Dec 2023 14:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQDO2FXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F02C433C8;
+	Mon, 18 Dec 2023 14:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908555;
-	bh=EDU0KAQ3Odb/gR9zBE6VlII3ZiDYQVYHV3osG4kAkI8=;
+	s=korg; t=1702908557;
+	bh=nyFees8tTvoFfO1ykMPBMswkWTCqbIF8mqEkPiYvslU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZfFsn+aUc1t1/gx5ruiyJNqxzUEFUNSWOSfivAOPi8N4A5wD52+X1Ct0YvnkZCEmP
-	 h4B5QMCP0A9FY8WzTi9X3gSnd8as72DaHoszKAWX+EUy+a3dngF/CrSkE6QJQule3W
-	 rSUGE+ae6zMHe0ji3JiekmhikmxL+idwOIvblom0=
+	b=sQDO2FXAHlA/u48JdzEB1YdRonSaRXczpbd7ZQfFoca6yGPwf8+qIglvLu4A+eBgL
+	 OVirxqKnYDxQhY/3f/hCWNGHNmoMdc3hsU8B5gLaGcLIWRjjC0SdjhvJx5utPKmX7P
+	 siIMqT5OfDpHgr/g+laclcFkZJvs0FR+tn7EYRPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 53/62] tracing: Update snapshot buffer on resize if it is allocated
-Date: Mon, 18 Dec 2023 14:52:17 +0100
-Message-ID: <20231218135048.592785400@linuxfoundation.org>
+Subject: [PATCH 5.10 54/62] ring-buffer: Have saved event hold the entire event
+Date: Mon, 18 Dec 2023 14:52:18 +0100
+Message-ID: <20231218135048.622448843@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -45,57 +45,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit d06aff1cb13d2a0d52b48e605462518149c98c81 upstream.
+commit b049525855fdd0024881c9b14b8fbec61c3f53d3 upstream.
 
-The snapshot buffer is to mimic the main buffer so that when a snapshot is
-needed, the snapshot and main buffer are swapped. When the snapshot buffer
-is allocated, it is set to the minimal size that the ring buffer may be at
-and still functional. When it is allocated it becomes the same size as the
-main ring buffer, and when the main ring buffer changes in size, it should
-do.
+For the ring buffer iterator (non-consuming read), the event needs to be
+copied into the iterator buffer to make sure that a writer does not
+overwrite it while the user is reading it. If a write happens during the
+copy, the buffer is simply discarded.
 
-Currently, the resize only updates the snapshot buffer if it's used by the
-current tracer (ie. the preemptirqsoff tracer). But it needs to be updated
-anytime it is allocated.
+But the temp buffer itself was not big enough. The allocation of the
+buffer was only BUF_MAX_DATA_SIZE, which is the maximum data size that can
+be passed into the ring buffer and saved. But the temp buffer needs to
+hold the meta data as well. That would be BUF_PAGE_SIZE and not
+BUF_MAX_DATA_SIZE.
 
-When changing the size of the main buffer, instead of looking to see if
-the current tracer is utilizing the snapshot buffer, just check if it is
-allocated to know if it should be updated or not.
-
-Also fix typo in comment just above the code change.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231210225447.48476a6a@rorschach.local.home
+Link: https://lore.kernel.org/linux-trace-kernel/20231212072558.61f76493@gandalf.local.home
 
 Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: ad909e21bbe69 ("tracing: Add internal tracing_snapshot() functions")
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 785888c544e04 ("ring-buffer: Have rb_iter_head_event() handle concurrent writer")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5905,7 +5905,7 @@ static int __tracing_resize_ring_buffer(
- 	if (!tr->array_buffer.buffer)
- 		return 0;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2275,7 +2275,7 @@ rb_iter_head_event(struct ring_buffer_it
+ 	 */
+ 	barrier();
  
--	/* Do not allow tracing while resizng ring buffer */
-+	/* Do not allow tracing while resizing ring buffer */
- 	tracing_stop_tr(tr);
+-	if ((iter->head + length) > commit || length > BUF_MAX_DATA_SIZE)
++	if ((iter->head + length) > commit || length > BUF_PAGE_SIZE)
+ 		/* Writer corrupted the read? */
+ 		goto reset;
  
- 	ret = ring_buffer_resize(tr->array_buffer.buffer, size, cpu);
-@@ -5913,7 +5913,7 @@ static int __tracing_resize_ring_buffer(
- 		goto out_start;
+@@ -4836,7 +4836,8 @@ ring_buffer_read_prepare(struct trace_bu
+ 	if (!iter)
+ 		return NULL;
  
- #ifdef CONFIG_TRACER_MAX_TRACE
--	if (!tr->current_trace->use_max_tr)
-+	if (!tr->allocated_snapshot)
- 		goto out;
- 
- 	ret = ring_buffer_resize(tr->max_buffer.buffer, size, cpu);
+-	iter->event = kmalloc(BUF_MAX_DATA_SIZE, flags);
++	/* Holds the entire event: data and meta data */
++	iter->event = kmalloc(BUF_PAGE_SIZE, flags);
+ 	if (!iter->event) {
+ 		kfree(iter);
+ 		return NULL;
 
 
