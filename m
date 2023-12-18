@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D086C5D72E;
-	Mon, 18 Dec 2023 14:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358F23A1B9;
+	Mon, 18 Dec 2023 14:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLJTEUx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E706DC433C8;
-	Mon, 18 Dec 2023 14:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pwlq5eJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC5EC433C7;
+	Mon, 18 Dec 2023 14:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908043;
-	bh=p5nT8riswv396fP98IB2TlKX+S+Ie56eGAAPVfqKHo4=;
+	s=korg; t=1702908046;
+	bh=Eo8wuhbmPBkuMcZbTjVAeIK2rmQU6+SySjuq8Wkuy+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLJTEUx29KWDWtUOTdUA4XiEtZetPVVir2hYRzX5nUl0FmuGCsuKcS8++aQXEDHmP
-	 sC+kds4WFbLsya7etEnJ8HPPE+bvnpipotnaZRD4bdwduZT1qHqGzhUXjBgoDXkXJm
-	 Vo0N9ny5mGWMQrXDo2hN7WO5dqT/2ldZsF+JsuR0=
+	b=Pwlq5eJwLE2c4qdqW+sYZFjUjU9OGMN+3Rb8lcg0SviFtDooMmh8AqqNyjPKtC/U4
+	 ldc9mX+v/yihWKF2STdy+hTqBUTW6m449sT6a3z5iEwrQJNmWIlPAP3lMZj4qSBaek
+	 AKJNlSRYP+I6/v6/zxMhURwY4xJ3LQvIkiaqzevI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinas Rasheed <srasheed@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/166] octeon_ep: explicitly test for firmware ready value
-Date: Mon, 18 Dec 2023 14:49:59 +0100
-Message-ID: <20231218135106.452361420@linuxfoundation.org>
+Subject: [PATCH 6.6 034/166] octeontx2-pf: Fix promisc mcam entry action
+Date: Mon, 18 Dec 2023 14:50:00 +0100
+Message-ID: <20231218135106.502657837@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -43,39 +43,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shinas Rasheed <srasheed@marvell.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 284f717622417cb267e344a9174f8e5698d1e3c1 ]
+[ Upstream commit dbda436824ded8ef6a05bb82cd9baa8d42377a49 ]
 
-The firmware ready value is 1, and get firmware ready status
-function should explicitly test for that value. The firmware
-ready value read will be 2 after driver load, and on unbind
-till firmware rewrites the firmware ready back to 0, the value
-seen by driver will be 2, which should be regarded as not ready.
+Current implementation is such that, promisc mcam entry action
+is set as multicast even when there are no trusted VFs. multicast
+action causes the hardware to copy packet data, which reduces
+the performance.
 
-Fixes: 10c073e40469 ("octeon_ep: defer probe if firmware not ready")
-Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+This patch fixes this issue by setting the promisc mcam entry action to
+unicast instead of multicast when there are no trusted VFs. The same
+change is made for the 'allmulti' mcam entry action.
+
+Fixes: ffd2f89ad05c ("octeontx2-pf: Enable promisc/allmulti match MCAM entries.")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeon_ep/octep_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../ethernet/marvell/octeontx2/nic/otx2_pf.c  | 25 ++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-index 5b46ca47c8e59..2ee1374db4c06 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-@@ -1076,7 +1076,8 @@ static bool get_fw_ready_status(struct pci_dev *pdev)
- 
- 		pci_read_config_byte(pdev, (pos + 8), &status);
- 		dev_info(&pdev->dev, "Firmware ready status = %u\n", status);
--		return status;
-+#define FW_STATUS_READY 1ULL
-+		return status == FW_STATUS_READY;
- 	}
- 	return false;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index 0c17ebdda1487..a57455aebff6f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -1650,6 +1650,21 @@ static void otx2_free_hw_resources(struct otx2_nic *pf)
+ 	mutex_unlock(&mbox->lock);
  }
+ 
++static bool otx2_promisc_use_mce_list(struct otx2_nic *pfvf)
++{
++	int vf;
++
++	/* The AF driver will determine whether to allow the VF netdev or not */
++	if (is_otx2_vf(pfvf->pcifunc))
++		return true;
++
++	/* check if there are any trusted VFs associated with the PF netdev */
++	for (vf = 0; vf < pci_num_vf(pfvf->pdev); vf++)
++		if (pfvf->vf_configs[vf].trusted)
++			return true;
++	return false;
++}
++
+ static void otx2_do_set_rx_mode(struct otx2_nic *pf)
+ {
+ 	struct net_device *netdev = pf->netdev;
+@@ -1682,7 +1697,8 @@ static void otx2_do_set_rx_mode(struct otx2_nic *pf)
+ 	if (netdev->flags & (IFF_ALLMULTI | IFF_MULTICAST))
+ 		req->mode |= NIX_RX_MODE_ALLMULTI;
+ 
+-	req->mode |= NIX_RX_MODE_USE_MCE;
++	if (otx2_promisc_use_mce_list(pf))
++		req->mode |= NIX_RX_MODE_USE_MCE;
+ 
+ 	otx2_sync_mbox_msg(&pf->mbox);
+ 	mutex_unlock(&pf->mbox.lock);
+@@ -2691,11 +2707,14 @@ static int otx2_ndo_set_vf_trust(struct net_device *netdev, int vf,
+ 	pf->vf_configs[vf].trusted = enable;
+ 	rc = otx2_set_vf_permissions(pf, vf, OTX2_TRUSTED_VF);
+ 
+-	if (rc)
++	if (rc) {
+ 		pf->vf_configs[vf].trusted = !enable;
+-	else
++	} else {
+ 		netdev_info(pf->netdev, "VF %d is %strusted\n",
+ 			    vf, enable ? "" : "not ");
++		otx2_set_rx_mode(netdev);
++	}
++
+ 	return rc;
+ }
+ 
 -- 
 2.43.0
 
