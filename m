@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5511D13A;
-	Mon, 18 Dec 2023 13:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2BE1D122;
+	Mon, 18 Dec 2023 13:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y69/7JsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3E0C433C7;
-	Mon, 18 Dec 2023 13:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAsW+sR8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8A0C433C8;
+	Mon, 18 Dec 2023 13:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907676;
-	bh=gG9qCcgMlVUOJf0TCn+qShp0q+KueRd5lItTUCK9x5w=;
+	s=korg; t=1702907679;
+	bh=6f85c8T7FLA1lQ9kguUUk7+MMAZZ/zyfxySdW97IRoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y69/7JsU1VPxpYWtmoWuiGaoeI1snE1napZXgnDrjpUwKYSQGcjRdj1F8dL4//oqw
-	 39gNgRdKd7m71+I/AbzNF6W0jUAFghPBK0bFcid62OF/OIvfkWODvrK8j5nC4ZrC/v
-	 HDJasDMBlC3ypNSGfJk4xbDeE2JRKRPzZ4MypNYY=
+	b=KAsW+sR8WmZvtt4QFwdG3feFVpFCmtrOF2Wk6b+aYmhklb8t2ZcEC9y1f5ZXvGX1M
+	 GzbCL/M8hXMFbzu/FMggzbjExw0lQr590tkGH1d+LeFo0vTd3NdpjXGzYu3hKurnN2
+	 jh1HPPV1xYz/9WnvYRaI1tM7phq/kts0Aa33yN1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 04/36] atm: solos-pci: Fix potential deadlock on &cli_queue_lock
-Date: Mon, 18 Dec 2023 14:51:14 +0100
-Message-ID: <20231218135042.038346379@linuxfoundation.org>
+	Naveen N Rao <naveen@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 4.19 36/36] powerpc/ftrace: Fix stack teardown in ftrace_no_trace
+Date: Mon, 18 Dec 2023 14:51:46 +0100
+Message-ID: <20231218135043.104321977@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
 References: <20231218135041.876499958@linuxfoundation.org>
@@ -42,55 +41,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Naveen N Rao <naveen@kernel.org>
 
-[ Upstream commit d5dba32b8f6cb39be708b726044ba30dbc088b30 ]
+commit 4b3338aaa74d7d4ec5b6734dc298f0db94ec83d2 upstream.
 
-As &card->cli_queue_lock is acquired under softirq context along the
-following call chain from solos_bh(), other acquisition of the same
-lock inside process context should disable at least bh to avoid double
-lock.
+Commit 41a506ef71eb ("powerpc/ftrace: Create a dummy stackframe to fix
+stack unwind") added use of a new stack frame on ftrace entry to fix
+stack unwind. However, the commit missed updating the offset used while
+tearing down the ftrace stack when ftrace is disabled. Fix the same.
 
-<deadlock #1>
-console_show()
---> spin_lock(&card->cli_queue_lock)
-<interrupt>
-   --> solos_bh()
-   --> spin_lock(&card->cli_queue_lock)
+In addition, the commit missed saving the correct stack pointer in
+pt_regs. Update the same.
 
-This flaw was found by an experimental static analysis tool I am
-developing for irq-related deadlock.
-
-To prevent the potential deadlock, the patch uses spin_lock_bh()
-on the card->cli_queue_lock under process context code consistently
-to prevent the possible deadlock scenario.
-
-Fixes: 9c54004ea717 ("atm: Driver for Solos PCI ADSL2+ card.")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 41a506ef71eb ("powerpc/ftrace: Create a dummy stackframe to fix stack unwind")
+Cc: stable@vger.kernel.org # v6.5+
+Signed-off-by: Naveen N Rao <naveen@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231130065947.2188860-1-naveen@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/atm/solos-pci.c | 4 ++--
+ arch/powerpc/kernel/trace/ftrace_64_mprofile.S |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/atm/solos-pci.c b/drivers/atm/solos-pci.c
-index 17283018269f0..95d8f1b8cf75f 100644
---- a/drivers/atm/solos-pci.c
-+++ b/drivers/atm/solos-pci.c
-@@ -458,9 +458,9 @@ static ssize_t console_show(struct device *dev, struct device_attribute *attr,
- 	struct sk_buff *skb;
- 	unsigned int len;
+--- a/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
++++ b/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
+@@ -59,7 +59,7 @@ _GLOBAL(ftrace_regs_caller)
+ 	SAVE_10GPRS(22, r1)
  
--	spin_lock(&card->cli_queue_lock);
-+	spin_lock_bh(&card->cli_queue_lock);
- 	skb = skb_dequeue(&card->cli_queue[SOLOS_CHAN(atmdev)]);
--	spin_unlock(&card->cli_queue_lock);
-+	spin_unlock_bh(&card->cli_queue_lock);
- 	if(skb == NULL)
- 		return sprintf(buf, "No data.\n");
+ 	/* Save previous stack pointer (r1) */
+-	addi	r8, r1, SWITCH_FRAME_SIZE
++	addi	r8, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
+ 	std	r8, GPR1(r1)
  
--- 
-2.43.0
-
+ 	/* Load special regs for save below */
+@@ -154,7 +154,7 @@ ftrace_no_trace:
+ 	mflr	r3
+ 	mtctr	r3
+ 	REST_GPR(3, r1)
+-	addi	r1, r1, SWITCH_FRAME_SIZE
++	addi	r1, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
+ 	mtlr	r0
+ 	bctr
+ 
 
 
