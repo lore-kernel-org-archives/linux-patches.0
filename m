@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8174239A;
-	Mon, 18 Dec 2023 14:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8858F4988C;
+	Mon, 18 Dec 2023 14:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECQFNFa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4188FC433C7;
-	Mon, 18 Dec 2023 14:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Zi+YO1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F8BC433C7;
+	Mon, 18 Dec 2023 14:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908141;
-	bh=Cyh7sk08CQuIcgErgOvYlmKbjPX9M9Jg3VoJxaPhKMU=;
+	s=korg; t=1702908144;
+	bh=qLEH8d4xFJQ4x1A754AyiuwNkXmyIqZH/756St9gz9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ECQFNFa1PkYbGeCNqGJDvU78RsudAihpV3b0HhTCGQwQVRxma2E1OCpeDnzApXDFa
-	 kT5ADdWBi/41I310Z0nZKZT4f7GrXTxBdZo+J2QEvIejnb6BWeIUA28PmjuqL5O2SM
-	 fmqkFgvlLOH2lukAos92HvbQ/kYYQpPWYN28Ed2c=
+	b=1Zi+YO1Xfk331jMVlT4NOz00wsuYnEoH4acLn3pk6wi5R9MARiQvkW2qCN7PuUYDm
+	 /g7cN8LlyizDmosFGPPpNvgBdqxh7UY0nxOasX7vNoGP1cHQ5VUUBo9YsrFv8ESzJ9
+	 O9z72BNPpMUFAGVTWsr8vHl/Lmlmt/IBnD64imYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gergo Koteles <soyer@irl.hu>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 069/166] ALSA: hda/tas2781: leave hda_component in usable state
-Date: Mon, 18 Dec 2023 14:50:35 +0100
-Message-ID: <20231218135108.141191345@linuxfoundation.org>
+Subject: [PATCH 6.6 070/166] ALSA: hda/tas2781: handle missing EFI calibration data
+Date: Mon, 18 Dec 2023 14:50:36 +0100
+Message-ID: <20231218135108.187493198@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -43,63 +43,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Gergo Koteles <soyer@irl.hu>
 
-commit 75a25d31b80770485641ad2789a854955f5c1e40 upstream.
+commit 33071422714a4c9587753b0ccc130ca59323bf42 upstream.
 
-Unloading then loading the module causes a NULL ponter dereference.
+The code does not properly check whether the calibration variable is
+available in the EFI. If it is not available, it causes a NULL pointer
+dereference.
 
-The hda_unbind zeroes the hda_component, later the hda_bind tries
-to dereference the codec field.
+Check the return value of the first get_variable call also.
 
-The hda_component is only initialized once by tas2781_generic_fixup.
-
-Set only previously modified fields to NULL.
-
-BUG: kernel NULL pointer dereference, address: 0000000000000322
+BUG: kernel NULL pointer dereference, address: 0000000000000000
 Call Trace:
  <TASK>
  ? __die+0x23/0x70
  ? page_fault_oops+0x171/0x4e0
+ ? srso_alias_return_thunk+0x5/0x7f
+ ? schedule+0x5e/0xd0
  ? exc_page_fault+0x7f/0x180
  ? asm_exc_page_fault+0x26/0x30
- ? tas2781_hda_bind+0x59/0x140 [snd_hda_scodec_tas2781_i2c]
- component_bind_all+0xf3/0x240
- try_to_bring_up_aggregate_device+0x1c3/0x270
- __component_add+0xbc/0x1a0
- tas2781_hda_i2c_probe+0x289/0x3a0 [snd_hda_scodec_tas2781_i2c]
- i2c_device_probe+0x136/0x2e0
+ ? crc32_body+0x2c/0x120
+ ? tas2781_save_calibration+0xe4/0x220 [snd_hda_scodec_tas2781_i2c]
+ tasdev_fw_ready+0x1af/0x280 [snd_hda_scodec_tas2781_i2c]
+ request_firmware_work_func+0x59/0xa0
 
 Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
-Cc: stable@vger.kernel.org
+CC: stable@vger.kernel.org
 Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Link: https://lore.kernel.org/r/8b8ed2bd5f75fbb32e354a3226c2f966fa85b46b.1702156522.git.soyer@irl.hu
+Link: https://lore.kernel.org/r/f1f6583bda918f78556f67d522ca7b3b91cebbd5.1702251102.git.soyer@irl.hu
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/tas2781_hda_i2c.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/pci/hda/tas2781_hda_i2c.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/tas2781_hda_i2c.c b/sound/pci/hda/tas2781_hda_i2c.c
-index fb802802939e..b42837105c22 100644
 --- a/sound/pci/hda/tas2781_hda_i2c.c
 +++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -612,9 +612,13 @@ static void tas2781_hda_unbind(struct device *dev,
- {
- 	struct tasdevice_priv *tas_priv = dev_get_drvdata(dev);
- 	struct hda_component *comps = master_data;
-+	comps = &comps[tas_priv->index];
+@@ -455,9 +455,9 @@ static int tas2781_save_calibration(stru
+ 		status = efi.get_variable(efi_name, &efi_guid, &attr,
+ 			&tas_priv->cali_data.total_sz,
+ 			tas_priv->cali_data.data);
+-		if (status != EFI_SUCCESS)
+-			return -EINVAL;
+ 	}
++	if (status != EFI_SUCCESS)
++		return -EINVAL;
  
--	if (comps[tas_priv->index].dev == dev)
--		memset(&comps[tas_priv->index], 0, sizeof(*comps));
-+	if (comps->dev == dev) {
-+		comps->dev = NULL;
-+		memset(comps->name, 0, sizeof(comps->name));
-+		comps->playback_hook = NULL;
-+	}
+ 	tmp_val = (unsigned int *)tas_priv->cali_data.data;
  
- 	tasdevice_config_info_remove(tas_priv);
- 	tasdevice_dsp_remove(tas_priv);
--- 
-2.43.0
-
 
 
