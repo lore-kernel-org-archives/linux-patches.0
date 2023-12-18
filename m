@@ -1,137 +1,165 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1348E2C689
-	for <patches@lists.linux.dev>; Sat, 16 Dec 2023 13:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AFD4EB2F
+	for <patches@lists.linux.dev>; Mon, 18 Dec 2023 12:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c5BKjgdH"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-6cea2a38b48so1519394b3a.3
-        for <patches@lists.linux.dev>; Sat, 16 Dec 2023 05:56:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702734991; x=1703339791; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=d+QKSwtAIEuecoULCNbymDGc4MmnFHIZxwHr8KNV/bw=;
-        b=c5BKjgdHB3M6WLwm1E+6XEmNAXODqOqZR7O0JG+tRbNcvxeMikYLEqeSN7PN/PSitz
-         bckf1mE/AYLleHMQgDNU4MpYv6hoh7wqOAyeTrnUS9CzfY3+M0K4C1H76SsDgRWr9Dgh
-         dFyG4JblxNZOsJwQElMmRBkbahjRe8pXawSgU2kdgLP8riPfRwmx78JwLSTzVesgMYTS
-         SpqC+ahosMOnkk8P568O6cMh13cJ1mIc195LocAqLNkxjE7E2q2/RMg+XAtnfg7Un9an
-         feF69IJtrvigojE2uIh9Tjsu/pCkTGyemEgDtrM5qqPtHiM6tixyRCpQ7deWqrkRWIXo
-         pNWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702734991; x=1703339791;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d+QKSwtAIEuecoULCNbymDGc4MmnFHIZxwHr8KNV/bw=;
-        b=ezJbBu0tlVdPO5Tu53zS75l1WHC1RwcwEbfnHDudNJ6injakQad2k4IAPS3KJk6WZ8
-         tQ668w0enOTOYjgJlZyhYiVNkg/yjsCNHho81/MoaHV0iBgYN/phXBK3p8aSqm57WSoQ
-         rnlJd0YDoZN9KuvyE0DhPIDnaDf5RdFNBHh7ZSrAuspOraZHQfeIs2gJXIJsKedPuQOW
-         H5lQ4KB3ToyJ8mBZMks/ILB9S0hhyL5K3g+rMP3KpZS8tBdWGFy6phvyH216uSuV+RIH
-         j8OxQf+JFLkSAg7Tmv4wdhziRUrUop6NZ9gzctjC5ZWG4+ROXU5YLrZ0hGwq8Qh16cQY
-         J3ug==
-X-Gm-Message-State: AOJu0YxE1XaBzFVQfj6nP/hWPJcXAUAki679QYgLFxd+U50UdfQWuLNE
-	OSdnIVQHhmLTJegDdrujiiY=
-X-Google-Smtp-Source: AGHT+IEvyd9u/4I3Ib/Kj8Ccrn9JnHOTcgSpSuZTPny6sk8cJ2XeXf+zI8WOCSUg/vamTGy38bBXqw==
-X-Received: by 2002:a05:6a20:54a9:b0:190:1c0:1c25 with SMTP id i41-20020a056a2054a900b0019001c01c25mr17329292pzk.91.1702734991213;
-        Sat, 16 Dec 2023 05:56:31 -0800 (PST)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id kb1-20020a17090ae7c100b00286e9bec1efsm18039549pjb.33.2023.12.16.05.56.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Dec 2023 05:56:30 -0800 (PST)
-Message-ID: <08b3f964-a66e-483d-81dd-4f6f8f61bdbd@gmail.com>
-Date: Sat, 16 Dec 2023 10:56:25 -0300
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VMt5W2sj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41ECC433C9
+	for <patches@lists.linux.dev>; Mon, 18 Dec 2023 12:10:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702901412;
+	bh=dVhbJOfI8GErd5dfLBSnmMb7qs6cI4l8iJg2KjHOMTw=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=VMt5W2sjKUFRbmlF0uFTyH5aFKb5Dg3BXypmyT9/0lPMZxs/w7zE9tnZEociYvRD8
+	 Weo9zfxOvZXT48e47NOG58a08J7S9gWE24Q4BPlIkiYXQmb3dOramC1NjiCQ1r52s0
+	 0oDJPMUccdKYjsdMHRNORc60OdGKrtimY/S2va9WAVssULJY6fZ8OFwlPU/AXNz0Q9
+	 F8dFXVthcguRVQa7nk3EtX+92U85Ftd/lvmbzUZ+IQQVxC058HE7p7eILnY/JEXFcf
+	 qH3Y9Aa0i3gWlmiriwRY/XFcZi/pGT0ieu2OXZIrPfCwgd5hku0oJOvq1QhiJ9Byx+
+	 kOEtts5GoGUow==
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3b9e2a5e8faso1261363b6e.1
+        for <patches@lists.linux.dev>; Mon, 18 Dec 2023 04:10:12 -0800 (PST)
+X-Gm-Message-State: AOJu0YzeoAT2+oj5pHy2Cm0/MOE0zsymx4qIsDVlUkUFbvEvKmrqKcqx
+	AuzQi9lPLzMz7kGojZ0vd/IVGqAY86aKpLsU96g=
+X-Google-Smtp-Source: AGHT+IEZW3FQNw/4Vt+xM4dZm5GhhaMkBP3+ahQQDb7BO00WfUFjHcGrZ093eN/yg5n2w9j+/L5OcrfKTE6mzJ7gtRA=
+X-Received: by 2002:a05:6808:f8b:b0:3ba:2508:abb1 with SMTP id
+ o11-20020a0568080f8b00b003ba2508abb1mr3648183oiw.55.1702901412011; Mon, 18
+ Dec 2023 04:10:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rust: support `srctree`-relative links
-Content-Language: en-US
-To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
- <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl
- <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- FUJITA Tomonori <fujita.tomonori@gmail.com>
-References: <20231215235428.243211-1-ojeda@kernel.org>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20231215235428.243211-1-ojeda@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20231214222253.116734-1-ojeda@kernel.org> <CABVgOS=LXUzRD-c63sxn0FMfGWvxCPP1t_8nY5Xgk30Y9qMAcw@mail.gmail.com>
+ <CANiq72kw326HyrDM0v0mFNu5jfb=eL1a+k-idr-5Vbc6_gmY2A@mail.gmail.com>
+In-Reply-To: <CANiq72kw326HyrDM0v0mFNu5jfb=eL1a+k-idr-5Vbc6_gmY2A@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Mon, 18 Dec 2023 21:09:34 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQ7A79fMg3Teh7H+NRwnztrNU73s5C_fybUVH+vEX0YeQ@mail.gmail.com>
+Message-ID: <CAK7LNAQ7A79fMg3Teh7H+NRwnztrNU73s5C_fybUVH+vEX0YeQ@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: add `rustupoverride` target
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: David Gow <davidgow@google.com>, Miguel Ojeda <ojeda@kernel.org>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, linux-kbuild@vger.kernel.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/15/23 20:54, Miguel Ojeda wrote:
-> Some of our links use relative paths in order to point to files in the
-> source tree, e.g.:
-> 
->      //! C header: [`include/linux/printk.h`](../../../../include/linux/printk.h)
->      /// [`struct mutex`]: ../../../../include/linux/mutex.h
-> 
-> These are problematic because they are hard to maintain and do not support
-> `O=` builds.
-> 
-> Instead, provide support for `srctree`-relative links, e.g.:
-> 
->      //! C header: [`include/linux/printk.h`](srctree/include/linux/printk.h)
->      /// [`struct mutex`]: srctree/include/linux/mutex.h
-> 
-> The links are fixed after `rustdoc` generation to be based on the absolute
-> path to the source tree.
-> 
-> Essentially, this is the automatic version of Tomonori's fix [1],
-> suggested by Gary [2].
-> 
-> Suggested-by: Gary Guo <gary@garyguo.net>
-> Reported-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
-> Closes: https://lore.kernel.org/r/20231026.204058.2167744626131849993.fujita.tomonori@gmail.com [1]
-> Fixes: 48fadf440075 ("docs: Move rustdoc output, cross-reference it")
-> Link: https://lore.kernel.org/rust-for-linux/20231026154525.6d14b495@eugeo/ [2]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->   Documentation/rust/coding-guidelines.rst | 13 +++++++++++++
->   rust/Makefile                            |  3 ++-
->   rust/kernel/error.rs                     |  2 +-
->   rust/kernel/ioctl.rs                     |  2 +-
->   rust/kernel/kunit.rs                     |  2 +-
->   rust/kernel/print.rs                     |  8 ++++----
->   rust/kernel/sync/condvar.rs              |  2 +-
->   rust/kernel/sync/lock/mutex.rs           |  2 +-
->   rust/kernel/sync/lock/spinlock.rs        |  2 +-
->   rust/kernel/task.rs                      |  2 +-
->   rust/kernel/workqueue.rs                 |  2 +-
->   rust/macros/lib.rs                       |  2 +-
->   12 files changed, 28 insertions(+), 14 deletions(-)
-> 
-> diff --git a/Documentation/rust/coding-guidelines.rst b/Documentation/rust/coding-guidelines.rst
-> index aa8ed082613e..05542840b16c 100644
-> [...]
-> diff --git a/rust/Makefile b/rust/Makefile
-> index 543b37f6c77f..73ea24117f07 100644
-> --- a/rust/Makefile
-> +++ b/rust/Makefile
-> @@ -98,7 +98,8 @@ rustdoc: rustdoc-core rustdoc-macros rustdoc-compiler_builtins \
->   	$(Q)find $(rustdoc_output) -name '*.html' -type f -print0 | xargs -0 sed -Ei \
->   		-e 's:rust-logo-[0-9a-f]+\.svg:logo.svg:g' \
->   		-e 's:favicon-[0-9a-f]+\.svg:logo.svg:g' \
-> -		-e 's:<link rel="alternate icon" type="image/png" href="[/.]+/static\.files/favicon-(16x16|32x32)-[0-9a-f]+\.png">::g'
-> +		-e 's:<link rel="alternate icon" type="image/png" href="[/.]+/static\.files/favicon-(16x16|32x32)-[0-9a-f]+\.png">::g' \
-> +		-e 's:<a href="srctree/([^"]+)">:<a href="$(abs_srctree)/\1">:g'
+On Fri, Dec 15, 2023 at 8:27=E2=80=AFPM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+> On Fri, Dec 15, 2023 at 8:38=E2=80=AFAM David Gow <davidgow@google.com> w=
+rote:
+> >
+> > Would having similar targets for bindgen help? What about having this
+> > install rust-src? Updating / installing those required a lot more
+> > looking up of documentation (and then adding --force), so it'd be nice
+> > if there were some way to do a similar override or make target.
+>
+> Which docs did you need to check? i.e. we have the commands for those
+> steps in the Quick Start guide. I think you may be referring to the
+> case when switching between LTS and mainline, due to the `bindgen-cli`
+> vs. `bindgen` name change that the tool did (since that is where
+> `--force` is required, not for normal upgrading or downgrading). That
+> is definitely a bit painful :-( At least `cargo` mentions the need for
+> `--force` in that case. Or are you referring to something else?
+>
+> I considered having a `rustupsetup` target (or script) instead that
+> does everything (with a `BUILDONLY=3D1` option or similar, given some
+> dependencies are not strictly needed for building), since having all
+> this "switching logic" is useful, but then:
+>
+>   - I am not sure we should "hide" the details of the setup too much:
+> I thought `rustupoverride` would be OK-ish because the output
+> directory is needed (so it is justified) and the command is
+> straightforward, but the others do not "need" that information.
+>
+>   - If we include `bindgen` there, it wouldn't be `rustup`-only
+> anymore, so perhaps we would need another name like `rustsetup`. But
+> that may mislead others (e.g. those looking at the Make help), because
+> it is just one way of setting things up and it is not required.
+> Perhaps this can be alleviated by not including it in the `make help`,
+> so that everybody comes from the Quick Start guide and thus hopefully
+> they have read the document at least diagonally :)
+>
+>   - Given there are different ways to set different sub-steps, and the
+> fact that we don't have such a script for C does not have (please
+> correct me if I am wrong -- I am aware of Thorsten's recent guide,
+> which covers `apt` etc., but that is a Quick Start-like approach
+> rather than automated script), I am not sure it would be welcome as a
+> Make target (but perhaps it would be fine as a script?). Masahiro may
+> have some guidelines here.
 
-Another way would be to not put `srctree` in the link and add
-`abs_srctree` here to directories that are in `srctree`. But that might
-be too wonky to rely on so this will be the way to go.
 
->   	$(Q)for f in $(rustdoc_output)/static.files/rustdoc-*.css; do \
->   		echo ".logo-container > img { object-fit: contain; }" >> $$f; done
->   
-> [...]
 
-Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
+'make rustupoverride' potentially requires internet connection
+if the required rustc version is not yet installed on the system.
+
+Even if it is already installed, it changes ~/.rustup/settings.toml.
+
+
+If I do rustupoverride per-directory,
+
+$ make O=3D~/kernel/build0 rustupoverride
+$ make O=3D~/kernel/build1 rustupoverride
+$ make O=3D~/kernel/build2 rustupoverride
+
+it would accumulate the overrides entries in ~/.rustup/settings.toml
+
+
+Rather, I will manually do this one time for the parent directory:
+
+$ rustup override set --path=3D/~kernel $(scripts/min-tool-version.sh rustc=
+)
+
+
+and use ~/kernel/build0, ~/kernel/build1, ~/kernel/build2
+as output directories.
+
+
+
+In principle, Kbuild does not require internet connection,
+or proactively change the system setting.
+
+If you want to provide a way for automated settings,
+you can do it in a script you maintain.
+
+
+
+
+
+
+
+
+>   - In the future we may have to change how the setup works or add
+> steps, i.e. it is not 100% settled. Thus I am concerned about adding
+> complex Make targets that users may start to depend on (i.e. with
+> particular/complex semantics), vs. just having docs that are manual.
+> For `rustupoverride`, it thought it could be OK-ish because it is just
+> a single command and unlikely that it will change (and if we stop
+> using it, we can make it empty with a warning and then remove it
+> eventually; while it gets harder for more complex ones).
+>
+> What do you think?
+>
+> Cheers,
+> Miguel
+
+
+
+
+
+
+
+
+
+--
+Best Regards
+Masahiro Yamada
