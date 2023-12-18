@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981CE4FF62;
-	Mon, 18 Dec 2023 14:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFB15A879;
+	Mon, 18 Dec 2023 14:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oN3yL5XB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F128C433C8;
-	Mon, 18 Dec 2023 14:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwq4CCX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E074EC433C7;
+	Mon, 18 Dec 2023 14:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908204;
-	bh=CkmSpMUOvBFFDGJ7dkBTVpZQ+DP8w1RnTDZNVSmGFds=;
+	s=korg; t=1702908207;
+	bh=Rtnr8q/i9qbVmi0uSnPP7VwC/eh/H1L/1XwEQxo0OtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oN3yL5XBSUgy/CQ5Rx+sn0p4Uz05DTYcyt7BaEDcP5HDt0/7H4b5QetkGMXdJejo1
-	 zAO1kA8nNuV5C9GPo/PDObTKxeOhJNHOtbtJz+S8Jx1DJEUnzErGBkfPVRC1NOXLbI
-	 HyMjg+8JywCkC3Rcmthj++6XGGK6e3tT8bC2AWHU=
+	b=kwq4CCX68nfWo0vfCEc262LzOmm4IJpk51hx/qus7spszD1GxvQIxD4lsNmu5Y+WA
+	 gNPYbzoA5PJ5RAb5FcWdeNzqTJjYnYtVBIP6uYaydBq+BWAyTqsa4ELiiFpzR1GnSG
+	 K0kXKKpQnhFjjCzRqovXPkUediaQnwsZVIyLYQGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/166] dpaa2-switch: do not ask for MDB, VLAN and FDB replay
-Date: Mon, 18 Dec 2023 14:50:18 +0100
-Message-ID: <20231218135107.347941528@linuxfoundation.org>
+Subject: [PATCH 6.6 085/166] x86/hyperv: Fix the detection of E820_TYPE_PRAM in a Gen2 VM
+Date: Mon, 18 Dec 2023 14:50:51 +0100
+Message-ID: <20231218135108.801414162@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -42,83 +43,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit f24a49a375f65e8e75ee1b19d806f46dbaae57fd ]
+[ Upstream commit 7e8037b099c0bbe8f2109dc452dbcab8d400fc53 ]
 
-Starting with commit 4e51bf44a03a ("net: bridge: move the switchdev
-object replay helpers to "push" mode") the switchdev_bridge_port_offload()
-helper was extended with the intention to provide switchdev drivers easy
-access to object addition and deletion replays. This works by calling
-the replay helpers with non-NULL notifier blocks.
+A Gen2 VM doesn't support legacy PCI/PCIe, so both raw_pci_ops and
+raw_pci_ext_ops are NULL, and pci_subsys_init() -> pcibios_init()
+doesn't call pcibios_resource_survey() -> e820__reserve_resources_late();
+as a result, any emulated persistent memory of E820_TYPE_PRAM (12) via
+the kernel parameter memmap=nn[KMG]!ss is not added into iomem_resource
+and hence can't be detected by register_e820_pmem().
 
-In the same commit, the dpaa2-switch driver was updated so that it
-passes valid notifier blocks to the helper. At that moment, no
-regression was identified through testing.
+Fix this by directly calling e820__reserve_resources_late() in
+hv_pci_init(), which is called from arch_initcall(pci_arch_init).
 
-In the meantime, the blamed commit changed the behavior in terms of
-which ports get hit by the replay. Before this commit, only the initial
-port which identified itself as offloaded through
-switchdev_bridge_port_offload() got a replay of all port objects and
-FDBs. After this, the newly joining port will trigger a replay of
-objects on all bridge ports and on the bridge itself.
+It's ok to move a Gen2 VM's e820__reserve_resources_late() from
+subsys_initcall(pci_subsys_init) to arch_initcall(pci_arch_init) because
+the code in-between doesn't depend on the E820 resources.
+e820__reserve_resources_late() depends on e820__reserve_resources(),
+which has been called earlier from setup_arch().
 
-This behavior leads to errors in dpaa2_switch_port_vlans_add() when a
-VLAN gets installed on the same interface multiple times.
+For a Gen-2 VM, the new hv_pci_init() also adds any memory of
+E820_TYPE_PMEM (7) into iomem_resource, and acpi_nfit_register_region() ->
+acpi_nfit_insert_resource() -> region_intersects() returns
+REGION_INTERSECTS, so the memory of E820_TYPE_PMEM won't get added twice.
 
-The intended mechanism to address this is to pass a non-NULL ctx to the
-switchdev_bridge_port_offload() helper and then check it against the
-port's private structure. But since the driver does not have any use for
-the replayed port objects and FDBs until it gains support for LAG
-offload, it's better to fix the issue by reverting the dpaa2-switch
-driver to not ask for replay. The pointers will be added back when we
-are prepared to ignore replays on unrelated ports.
+Changed the local variable "int gen2vm" to "bool gen2vm".
 
-Fixes: b28d580e2939 ("net: bridge: switchdev: replay all VLAN groups")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20231212164326.2753457-3-ioana.ciornei@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <1699691867-9827-1-git-send-email-ssengar@linux.microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ arch/x86/hyperv/hv_init.c | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index 97d3151076d53..e01a246124ac6 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -1998,9 +1998,6 @@ static int dpaa2_switch_port_attr_set_event(struct net_device *netdev,
- 	return notifier_from_errno(err);
- }
+diff --git a/arch/x86/hyperv/hv_init.c b/arch/x86/hyperv/hv_init.c
+index 21556ad87f4ba..8f3a4d16bb791 100644
+--- a/arch/x86/hyperv/hv_init.c
++++ b/arch/x86/hyperv/hv_init.c
+@@ -15,6 +15,7 @@
+ #include <linux/io.h>
+ #include <asm/apic.h>
+ #include <asm/desc.h>
++#include <asm/e820/api.h>
+ #include <asm/sev.h>
+ #include <asm/ibt.h>
+ #include <asm/hypervisor.h>
+@@ -286,15 +287,31 @@ static int hv_cpu_die(unsigned int cpu)
  
--static struct notifier_block dpaa2_switch_port_switchdev_nb;
--static struct notifier_block dpaa2_switch_port_switchdev_blocking_nb;
--
- static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
- 					 struct net_device *upper_dev,
- 					 struct netlink_ext_ack *extack)
-@@ -2043,9 +2040,7 @@ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
- 		goto err_egress_flood;
- 
- 	err = switchdev_bridge_port_offload(netdev, netdev, NULL,
--					    &dpaa2_switch_port_switchdev_nb,
--					    &dpaa2_switch_port_switchdev_blocking_nb,
--					    false, extack);
-+					    NULL, NULL, false, extack);
- 	if (err)
- 		goto err_switchdev_offload;
- 
-@@ -2079,9 +2074,7 @@ static int dpaa2_switch_port_restore_rxvlan(struct net_device *vdev, int vid, vo
- 
- static void dpaa2_switch_port_pre_bridge_leave(struct net_device *netdev)
+ static int __init hv_pci_init(void)
  {
--	switchdev_bridge_port_unoffload(netdev, NULL,
--					&dpaa2_switch_port_switchdev_nb,
--					&dpaa2_switch_port_switchdev_blocking_nb);
-+	switchdev_bridge_port_unoffload(netdev, NULL, NULL, NULL);
- }
+-	int gen2vm = efi_enabled(EFI_BOOT);
++	bool gen2vm = efi_enabled(EFI_BOOT);
  
- static int dpaa2_switch_port_bridge_leave(struct net_device *netdev)
+ 	/*
+-	 * For Generation-2 VM, we exit from pci_arch_init() by returning 0.
+-	 * The purpose is to suppress the harmless warning:
++	 * A Generation-2 VM doesn't support legacy PCI/PCIe, so both
++	 * raw_pci_ops and raw_pci_ext_ops are NULL, and pci_subsys_init() ->
++	 * pcibios_init() doesn't call pcibios_resource_survey() ->
++	 * e820__reserve_resources_late(); as a result, any emulated persistent
++	 * memory of E820_TYPE_PRAM (12) via the kernel parameter
++	 * memmap=nn[KMG]!ss is not added into iomem_resource and hence can't be
++	 * detected by register_e820_pmem(). Fix this by directly calling
++	 * e820__reserve_resources_late() here: e820__reserve_resources_late()
++	 * depends on e820__reserve_resources(), which has been called earlier
++	 * from setup_arch(). Note: e820__reserve_resources_late() also adds
++	 * any memory of E820_TYPE_PMEM (7) into iomem_resource, and
++	 * acpi_nfit_register_region() -> acpi_nfit_insert_resource() ->
++	 * region_intersects() returns REGION_INTERSECTS, so the memory of
++	 * E820_TYPE_PMEM won't get added twice.
++	 *
++	 * We return 0 here so that pci_arch_init() won't print the warning:
+ 	 * "PCI: Fatal: No config space access function found"
+ 	 */
+-	if (gen2vm)
++	if (gen2vm) {
++		e820__reserve_resources_late();
+ 		return 0;
++	}
+ 
+ 	/* For Generation-1 VM, we'll proceed in pci_arch_init().  */
+ 	return 1;
 -- 
 2.43.0
 
