@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060D5129EC8;
-	Mon, 18 Dec 2023 13:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084F4129EC8;
+	Mon, 18 Dec 2023 13:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJ2Pu3fL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB95C433C7;
-	Mon, 18 Dec 2023 13:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tf7nLXOl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2620AC433C8;
+	Mon, 18 Dec 2023 13:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907878;
-	bh=10UncFFhK69rKroDb+8MjGXFC0vVUlhZV8ajIaAQ2pU=;
+	s=korg; t=1702907881;
+	bh=7m6wrCx9eGiGjJlT+VeX2yFp9foCpwAMudc54Q7EtkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJ2Pu3fLQx2xDdUIjflpm7nX2NuSyvA+SUOTsr0iSLLlnmue+spq5PgmOFhpuhFEI
-	 Sqm2c54SWsqr0DzvuOBIID0nmt63BQsTWxmBAvmoB2DEMRehsmwZpxlUjPQW7qhcIb
-	 eORTuvn3oG4q8virGxWgeaM9HCVvu6L1kpfWzLBY=
+	b=Tf7nLXOlum+49I6BV2DUiQC3YaUHU5LWXj1BCbq4j9RfdFPSAAlsHCwOZlKmwN3/U
+	 FMGuV08pbjjy5ea7SM7bJoteOzZAWVx3fjr4nptmwP+I2RTPFX102SUNuZymTXDQ8X
+	 sor4mwqcUvtPdDdmjL+ZKeHPqSvPKMlwm+MrpczQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 080/106] ext4: prevent the normalized size from exceeding EXT_MAX_BLOCKS
-Date: Mon, 18 Dec 2023 14:51:34 +0100
-Message-ID: <20231218135058.489389353@linuxfoundation.org>
+	Hannes Reinecke <hare@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 063/106] nvme: catch errors from nvme_configure_metadata()
+Date: Mon, 18 Dec 2023 14:51:17 +0100
+Message-ID: <20231218135057.756020527@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -43,75 +42,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Hannes Reinecke <hare@suse.de>
 
-commit 2dcf5fde6dffb312a4bfb8ef940cea2d1f402e32 upstream.
+[ Upstream commit cd9aed606088d36a7ffff3e808db4e76b1854285 ]
 
-For files with logical blocks close to EXT_MAX_BLOCKS, the file size
-predicted in ext4_mb_normalize_request() may exceed EXT_MAX_BLOCKS.
-This can cause some blocks to be preallocated that will not be used.
-And after [Fixes], the following issue may be triggered:
+nvme_configure_metadata() is issuing I/O, so we might incur an I/O
+error which will cause the connection to be reset.
+But in that case any further probing will race with reset and
+cause UAF errors.
+So return a status from nvme_configure_metadata() and abort
+probing if there was an I/O error.
 
-=========================================================
- kernel BUG at fs/ext4/mballoc.c:4653!
- Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
- CPU: 1 PID: 2357 Comm: xfs_io 6.7.0-rc2-00195-g0f5cc96c367f
- Hardware name: linux,dummy-virt (DT)
- pc : ext4_mb_use_inode_pa+0x148/0x208
- lr : ext4_mb_use_inode_pa+0x98/0x208
- Call trace:
-  ext4_mb_use_inode_pa+0x148/0x208
-  ext4_mb_new_inode_pa+0x240/0x4a8
-  ext4_mb_use_best_found+0x1d4/0x208
-  ext4_mb_try_best_found+0xc8/0x110
-  ext4_mb_regular_allocator+0x11c/0xf48
-  ext4_mb_new_blocks+0x790/0xaa8
-  ext4_ext_map_blocks+0x7cc/0xd20
-  ext4_map_blocks+0x170/0x600
-  ext4_iomap_begin+0x1c0/0x348
-=========================================================
-
-Here is a calculation when adjusting ac_b_ex in ext4_mb_new_inode_pa():
-
-	ex.fe_logical = orig_goal_end - EXT4_C2B(sbi, ex.fe_len);
-	if (ac->ac_o_ex.fe_logical >= ex.fe_logical)
-		goto adjust_bex;
-
-The problem is that when orig_goal_end is subtracted from ac_b_ex.fe_len
-it is still greater than EXT_MAX_BLOCKS, which causes ex.fe_logical to
-overflow to a very small value, which ultimately triggers a BUG_ON in
-ext4_mb_new_inode_pa() because pa->pa_free < len.
-
-The last logical block of an actual write request does not exceed
-EXT_MAX_BLOCKS, so in ext4_mb_normalize_request() also avoids normalizing
-the last logical block to exceed EXT_MAX_BLOCKS to avoid the above issue.
-
-The test case in [Link] can reproduce the above issue with 64k block size.
-
-Link: https://patchwork.kernel.org/project/fstests/list/?series=804003
-Cc:  <stable@kernel.org> # 6.4
-Fixes: 93cdf49f6eca ("ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231127063313.3734294-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/host/core.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -4110,6 +4110,10 @@ ext4_mb_normalize_request(struct ext4_al
- 	start = max(start, rounddown(ac->ac_o_ex.fe_logical,
- 			(ext4_lblk_t)EXT4_BLOCKS_PER_GROUP(ac->ac_sb)));
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 5b156c5bc04a5..eb7c87b344b8f 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1845,16 +1845,18 @@ static int nvme_init_ms(struct nvme_ns *ns, struct nvme_id_ns *id)
+ 	return ret;
+ }
  
-+	/* avoid unnecessary preallocation that may trigger assertions */
-+	if (start + size > EXT_MAX_BLOCKS)
-+		size = EXT_MAX_BLOCKS - start;
-+
- 	/* don't cover already allocated blocks in selected range */
- 	if (ar->pleft && start <= ar->lleft) {
- 		size -= ar->lleft + 1 - start;
+-static void nvme_configure_metadata(struct nvme_ns *ns, struct nvme_id_ns *id)
++static int nvme_configure_metadata(struct nvme_ns *ns, struct nvme_id_ns *id)
+ {
+ 	struct nvme_ctrl *ctrl = ns->ctrl;
++	int ret;
+ 
+-	if (nvme_init_ms(ns, id))
+-		return;
++	ret = nvme_init_ms(ns, id);
++	if (ret)
++		return ret;
+ 
+ 	ns->features &= ~(NVME_NS_METADATA_SUPPORTED | NVME_NS_EXT_LBAS);
+ 	if (!ns->ms || !(ctrl->ops->flags & NVME_F_METADATA_SUPPORTED))
+-		return;
++		return 0;
+ 
+ 	if (ctrl->ops->flags & NVME_F_FABRICS) {
+ 		/*
+@@ -1863,7 +1865,7 @@ static void nvme_configure_metadata(struct nvme_ns *ns, struct nvme_id_ns *id)
+ 		 * remap the separate metadata buffer from the block layer.
+ 		 */
+ 		if (WARN_ON_ONCE(!(id->flbas & NVME_NS_FLBAS_META_EXT)))
+-			return;
++			return 0;
+ 
+ 		ns->features |= NVME_NS_EXT_LBAS;
+ 
+@@ -1890,6 +1892,7 @@ static void nvme_configure_metadata(struct nvme_ns *ns, struct nvme_id_ns *id)
+ 		else
+ 			ns->features |= NVME_NS_METADATA_SUPPORTED;
+ 	}
++	return 0;
+ }
+ 
+ static void nvme_set_queue_limits(struct nvme_ctrl *ctrl,
+@@ -2070,7 +2073,11 @@ static int nvme_update_ns_info_block(struct nvme_ns *ns,
+ 	ns->lba_shift = id->lbaf[lbaf].ds;
+ 	nvme_set_queue_limits(ns->ctrl, ns->queue);
+ 
+-	nvme_configure_metadata(ns, id);
++	ret = nvme_configure_metadata(ns, id);
++	if (ret < 0) {
++		blk_mq_unfreeze_queue(ns->disk->queue);
++		goto out;
++	}
+ 	nvme_set_chunk_sectors(ns, id);
+ 	nvme_update_disk_info(ns->disk, ns, id);
+ 
+-- 
+2.43.0
+
 
 
