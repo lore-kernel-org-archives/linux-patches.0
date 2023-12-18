@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68093129ED2;
-	Mon, 18 Dec 2023 13:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D96129EC8;
+	Mon, 18 Dec 2023 13:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBjf7WVc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18ABC433C7;
-	Mon, 18 Dec 2023 13:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKqg5MN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1411C433C7;
+	Mon, 18 Dec 2023 13:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907903;
-	bh=gAzkmycIOzFBdTutH2EuA4ebp0oAfxGV/8oyX1uz3BU=;
+	s=korg; t=1702907906;
+	bh=BtDB6dSF3Mb4TJKjxalxFPIAV7YoPxTQfqQizzyUhH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBjf7WVctiti+FvuxqcyDAuXBnedagN48+PT29HGhfAIQ80nkBIXzzaTjPdh2bbU6
-	 xEtWbHY1ja9Af+Fk2T4SSTH2G2bG71idB4EK/2XRr/RlshNcEN2UllodyX4x8nYxZp
-	 eY5dEvxqx20O5b0fViVh7kH//zdorhgAMz0UQAME=
+	b=qKqg5MN2dj5x98WHReGJfy9zr0OAfHwqU6t4XV/5u2VRjL/csvKZtisu1vIaLtDVr
+	 BOFzSjPrpLCTNrjWVuIHPBJIHZ9ISImgayJsHck6LZji78yxEn1nq7BysWjxg3CYOh
+	 kx6SwDUXv0gsRXj9iFiYGcrOiG31PhV4FKEAlFhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 088/106] btrfs: dont clear qgroup reserved bit in release_folio
-Date: Mon, 18 Dec 2023 14:51:42 +0100
-Message-ID: <20231218135058.837802827@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 089/106] drm/amdgpu: fix tear down order in amdgpu_vm_pt_free
+Date: Mon, 18 Dec 2023 14:51:43 +0100
+Message-ID: <20231218135058.882974768@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -36,44 +35,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Christian König <christian.koenig@amd.com>
 
-commit a86805504b88f636a6458520d85afdf0634e3c6b upstream.
+commit ceb9a321e7639700844aa3bf234a4e0884f13b77 upstream.
 
-The EXTENT_QGROUP_RESERVED bit is used to "lock" regions of the file for
-duplicate reservations. That is two writes to that range in one
-transaction shouldn't create two reservations, as the reservation will
-only be freed once when the write finally goes down. Therefore, it is
-never OK to clear that bit without freeing the associated qgroup
-reserve. At this point, we don't want to be freeing the reserve, so mask
-off the bit.
+When freeing PD/PT with shadows it can happen that the shadow
+destruction races with detaching the PD/PT from the VM causing a NULL
+pointer dereference in the invalidation code.
 
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fix this by detaching the the PD/PT from the VM first and then
+freeing the shadow instead.
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: https://gitlab.freedesktop.org/drm/amd/-/issues/2867
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -3390,7 +3390,8 @@ static int try_release_extent_state(stru
- 		ret = 0;
- 	} else {
- 		u32 clear_bits = ~(EXTENT_LOCKED | EXTENT_NODATASUM |
--				   EXTENT_DELALLOC_NEW | EXTENT_CTLBITS);
-+				   EXTENT_DELALLOC_NEW | EXTENT_CTLBITS |
-+				   EXTENT_QGROUP_RESERVED);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -631,13 +631,14 @@ static void amdgpu_vm_pt_free(struct amd
  
- 		/*
- 		 * At this point we can safely clear everything except the
+ 	if (!entry->bo)
+ 		return;
++
++	entry->bo->vm_bo = NULL;
+ 	shadow = amdgpu_bo_shadowed(entry->bo);
+ 	if (shadow) {
+ 		ttm_bo_set_bulk_move(&shadow->tbo, NULL);
+ 		amdgpu_bo_unref(&shadow);
+ 	}
+ 	ttm_bo_set_bulk_move(&entry->bo->tbo, NULL);
+-	entry->bo->vm_bo = NULL;
+ 
+ 	spin_lock(&entry->vm->status_lock);
+ 	list_del(&entry->vm_status);
 
 
