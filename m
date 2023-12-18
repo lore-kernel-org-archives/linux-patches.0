@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1395A42377;
-	Mon, 18 Dec 2023 14:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4F13786D;
+	Mon, 18 Dec 2023 14:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnYPCHGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E56FC433C8;
-	Mon, 18 Dec 2023 14:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZJfTqgh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350D9C433C8;
+	Mon, 18 Dec 2023 14:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908546;
-	bh=m5XzBC+Ixgucdl3BdsVfo/uPRuiRQuWDGbev37uwegU=;
+	s=korg; t=1702908549;
+	bh=Fqm3pFWIdBkcN8YcDHfCefWVJGnhSccRqzn6OLvw2/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnYPCHGiU26GjZbdp4hd8e50qHLNxEhGuKi/KpIL/XeN23GMJSEKKgcudLKrVFQwR
-	 p3Q/UC+xHLYd6OsNkzhyBf4Xxk61rLIlEWGCOGwMMviuPB7yUSMkKIY65GyKPslolw
-	 hUPOyOAQycZ2GSjwky/ivGVHHmjBPNwZt2Asx810=
+	b=yZJfTqghZ5KYSpO9Zm6/9HCWyywYAq+WxSeG/qvEc56Z5Gd6IpFcmyTAoKrh65X7S
+	 Snm+BWEMnNUCpIMB/kp6bJ1XVhD3UhX16lk7HzVeC1QuFsmfsSVZA07v2qi2pvbN8i
+	 JNnu9JKTWhGO7c1WCg9XzocI0lVKs1lEy7mWY7Lc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Radu Bulie <radu-andrei.bulie@nxp.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/62] net: stmmac: use dev_err_probe() for reporting mdio bus registration failure
-Date: Mon, 18 Dec 2023 14:51:44 +0100
-Message-ID: <20231218135047.123727189@linuxfoundation.org>
+Subject: [PATCH 5.10 11/62] net: fec: correct queue selection
+Date: Mon, 18 Dec 2023 14:51:35 +0100
+Message-ID: <20231218135046.716575313@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -42,65 +43,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Radu Bulie <radu-andrei.bulie@nxp.com>
 
-[ Upstream commit 839612d23ffd933174db911ce56dc3f3ca883ec5 ]
+[ Upstream commit 9fc95fe95c3e2a63ced8eeca4b256518ab204b63 ]
 
-I have a board where these two lines are always printed during boot:
+The old implementation extracted VLAN TCI info from the payload
+before the VLAN tag has been pushed in the payload.
 
-   imx-dwmac 30bf0000.ethernet: Cannot register the MDIO bus
-   imx-dwmac 30bf0000.ethernet: stmmac_dvr_probe: MDIO bus (id: 1) registration failed
+Another problem was that the VLAN TCI was extracted even if the
+packet did not have VLAN protocol header.
 
-It's perfectly fine, and the device is successfully (and silently, as
-far as the console goes) probed later.
+This resulted in invalid VLAN TCI and as a consequence a random
+queue was computed.
 
-Use dev_err_probe() instead, which will demote these messages to debug
-level (thus removing the alarming messages from the console) when the
-error is -EPROBE_DEFER, and also has the advantage of including the
-error code if/when it happens to be something other than -EPROBE_DEFER.
+This patch fixes the above issues and use the VLAN TCI from the
+skb if it is present or VLAN TCI from payload if present. If no
+VLAN header is present queue 0 is selected.
 
-While here, add the missing \n to one of the format strings.
-
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Link: https://lore.kernel.org/r/20220602074840.1143360-1-linux@rasmusvillemoes.dk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e23c0d21ce92 ("net: stmmac: Handle disabled MDIO busses from devicetree")
+Fixes: 52c4a1a85f4b ("net: fec: add ndo_select_queue to fix TX bandwidth fluctuations")
+Signed-off-by: Radu Bulie <radu-andrei.bulie@nxp.com>
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 +++---
- drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 27 +++++++++--------------
+ 1 file changed, 11 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 709bd81fde2a8..8416a186cd7f3 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5187,9 +5187,9 @@ int stmmac_dvr_probe(struct device *device,
- 		/* MDIO bus Registration */
- 		ret = stmmac_mdio_register(ndev);
- 		if (ret < 0) {
--			dev_err(priv->device,
--				"%s: MDIO bus (id: %d) registration failed",
--				__func__, priv->plat->bus_id);
-+			dev_err_probe(priv->device, ret,
-+				      "%s: MDIO bus (id: %d) registration failed\n",
-+				      __func__, priv->plat->bus_id);
- 			goto error_mdio_register;
- 		}
- 	}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-index 7c1a14b256da3..ecc7f4842f849 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-@@ -460,7 +460,7 @@ int stmmac_mdio_register(struct net_device *ndev)
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index e18b3b72fc0df..4ce913559c91d 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3266,31 +3266,26 @@ static int fec_set_features(struct net_device *netdev,
+ 	return 0;
+ }
  
- 	err = of_mdiobus_register(new_bus, mdio_node);
- 	if (err != 0) {
--		dev_err(dev, "Cannot register the MDIO bus\n");
-+		dev_err_probe(dev, err, "Cannot register the MDIO bus\n");
- 		goto bus_register_fail;
- 	}
+-static u16 fec_enet_get_raw_vlan_tci(struct sk_buff *skb)
+-{
+-	struct vlan_ethhdr *vhdr;
+-	unsigned short vlan_TCI = 0;
+-
+-	if (skb->protocol == htons(ETH_P_ALL)) {
+-		vhdr = (struct vlan_ethhdr *)(skb->data);
+-		vlan_TCI = ntohs(vhdr->h_vlan_TCI);
+-	}
+-
+-	return vlan_TCI;
+-}
+-
+ static u16 fec_enet_select_queue(struct net_device *ndev, struct sk_buff *skb,
+ 				 struct net_device *sb_dev)
+ {
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
+-	u16 vlan_tag;
++	u16 vlan_tag = 0;
  
+ 	if (!(fep->quirks & FEC_QUIRK_HAS_AVB))
+ 		return netdev_pick_tx(ndev, skb, NULL);
+ 
+-	vlan_tag = fec_enet_get_raw_vlan_tci(skb);
+-	if (!vlan_tag)
++	/* VLAN is present in the payload.*/
++	if (eth_type_vlan(skb->protocol)) {
++		struct vlan_ethhdr *vhdr = skb_vlan_eth_hdr(skb);
++
++		vlan_tag = ntohs(vhdr->h_vlan_TCI);
++	/*  VLAN is present in the skb but not yet pushed in the payload.*/
++	} else if (skb_vlan_tag_present(skb)) {
++		vlan_tag = skb->vlan_tci;
++	} else {
+ 		return vlan_tag;
++	}
+ 
+ 	return fec_enet_vlan_pri_to_queue[vlan_tag >> 13];
+ }
 -- 
 2.43.0
 
