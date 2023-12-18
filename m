@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B766129ED2;
-	Mon, 18 Dec 2023 13:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F519129ED2;
+	Mon, 18 Dec 2023 13:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2kplZ4w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7ABC433C7;
-	Mon, 18 Dec 2023 13:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xo1MjN2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F71C433C8;
+	Mon, 18 Dec 2023 13:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907555;
-	bh=H79vucaDcN2cN8yzJnL0xU4hGTsqsBeCmvDCVJebpX4=;
+	s=korg; t=1702907558;
+	bh=YzVponcZ24teLN8wzxDvEplvgyub0tHMHn9Y0lv/vo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v2kplZ4w6mnAj+IoHIkVzEfaUQCyEePCGs19DCtHTmKUSUrZUNzLevW/UPZNjvvau
-	 m9zQnO4xk1LreHOtozXb5kyA5IpmG5Ikxcf6KL528OZ6xfdqA2b7eAwaCX2VFOdcPi
-	 t/uwQNjD+TQ58sd/SHqzBCYUbvHVeJEUBchcj7Ow=
+	b=Xo1MjN2PCUkWFWMwYFUgbmRkPjIG0T9rtSKR1lHzIyu8s+ecKAP4UWGgmX/Ex4zLX
+	 YtdwJ8D9PDzFw52ZdIYEF1LrBb3p8jMI7Q5jn+iWzEba12Ngd3Kz801c50+vHEu/5v
+	 /lnrGSpRM0QS0hbaIzgG9MChPyaNxTHd2SvP3XU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Hyunwoo Kim <v4bel@theori.io>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 05/26] atm: solos-pci: Fix potential deadlock on &tx_queue_lock
-Date: Mon, 18 Dec 2023 14:51:07 +0100
-Message-ID: <20231218135040.860983335@linuxfoundation.org>
+Subject: [PATCH 4.14 06/26] atm: Fix Use-After-Free in do_vcc_ioctl
+Date: Mon, 18 Dec 2023 14:51:08 +0100
+Message-ID: <20231218135040.902192753@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
 References: <20231218135040.665690087@linuxfoundation.org>
@@ -42,59 +42,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Hyunwoo Kim <v4bel@theori.io>
 
-[ Upstream commit 15319a4e8ee4b098118591c6ccbd17237f841613 ]
+[ Upstream commit 24e90b9e34f9e039f56b5f25f6e6eb92cdd8f4b3 ]
 
-As &card->tx_queue_lock is acquired under softirq context along the
-following call chain from solos_bh(), other acquisition of the same
-lock inside process context should disable at least bh to avoid double
-lock.
+Because do_vcc_ioctl() accesses sk->sk_receive_queue
+without holding a sk->sk_receive_queue.lock, it can
+cause a race with vcc_recvmsg().
+A use-after-free for skb occurs with the following flow.
+```
+do_vcc_ioctl() -> skb_peek()
+vcc_recvmsg() -> skb_recv_datagram() -> skb_free_datagram()
+```
+Add sk->sk_receive_queue.lock to do_vcc_ioctl() to fix this issue.
 
-<deadlock #2>
-pclose()
---> spin_lock(&card->tx_queue_lock)
-<interrupt>
-   --> solos_bh()
-   --> fpga_tx()
-   --> spin_lock(&card->tx_queue_lock)
-
-This flaw was found by an experimental static analysis tool I am
-developing for irq-related deadlock.
-
-To prevent the potential deadlock, the patch uses spin_lock_bh()
-on &card->tx_queue_lock under process context code consistently to
-prevent the possible deadlock scenario.
-
-Fixes: 213e85d38912 ("solos-pci: clean up pclose() function")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
+Link: https://lore.kernel.org/r/20231209094210.GA403126@v4bel-B760M-AORUS-ELITE-AX
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/atm/solos-pci.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/atm/ioctl.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/atm/solos-pci.c b/drivers/atm/solos-pci.c
-index 3a115c7f224fb..07a136cc20ab5 100644
---- a/drivers/atm/solos-pci.c
-+++ b/drivers/atm/solos-pci.c
-@@ -968,14 +968,14 @@ static void pclose(struct atm_vcc *vcc)
- 	struct pkt_hdr *header;
+diff --git a/net/atm/ioctl.c b/net/atm/ioctl.c
+index 2ff0e5e470e3d..38f7f164e4848 100644
+--- a/net/atm/ioctl.c
++++ b/net/atm/ioctl.c
+@@ -71,14 +71,17 @@ static int do_vcc_ioctl(struct socket *sock, unsigned int cmd,
+ 	case SIOCINQ:
+ 	{
+ 		struct sk_buff *skb;
++		int amount;
  
- 	/* Remove any yet-to-be-transmitted packets from the pending queue */
--	spin_lock(&card->tx_queue_lock);
-+	spin_lock_bh(&card->tx_queue_lock);
- 	skb_queue_walk_safe(&card->tx_queue[port], skb, tmpskb) {
- 		if (SKB_CB(skb)->vcc == vcc) {
- 			skb_unlink(skb, &card->tx_queue[port]);
- 			solos_pop(vcc, skb);
+ 		if (sock->state != SS_CONNECTED) {
+ 			error = -EINVAL;
+ 			goto done;
  		}
++		spin_lock_irq(&sk->sk_receive_queue.lock);
+ 		skb = skb_peek(&sk->sk_receive_queue);
+-		error = put_user(skb ? skb->len : 0,
+-				 (int __user *)argp) ? -EFAULT : 0;
++		amount = skb ? skb->len : 0;
++		spin_unlock_irq(&sk->sk_receive_queue.lock);
++		error = put_user(amount, (int __user *)argp) ? -EFAULT : 0;
+ 		goto done;
  	}
--	spin_unlock(&card->tx_queue_lock);
-+	spin_unlock_bh(&card->tx_queue_lock);
- 
- 	skb = alloc_skb(sizeof(*header), GFP_KERNEL);
- 	if (!skb) {
+ 	case SIOCGSTAMP: /* borrowed from IP */
 -- 
 2.43.0
 
