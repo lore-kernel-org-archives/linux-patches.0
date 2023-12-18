@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A567129EC8;
-	Mon, 18 Dec 2023 13:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1810129EC8;
+	Mon, 18 Dec 2023 13:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ge9c8wci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6E8C433C8;
-	Mon, 18 Dec 2023 13:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oj54fNRb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B597C433C8;
+	Mon, 18 Dec 2023 13:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907842;
-	bh=KB3TEh+xP/If4h/ej6qsEpnAupc5f7B9LZloRlaydZw=;
+	s=korg; t=1702907845;
+	bh=jZ1HEnjWeslorziwnbN61AU0OCo6icilpHf8y+cAZgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ge9c8wciORPnlK/dtntM5twxVkQgxtuY/CPOX6cwkoEuL7iu8Y6KRKVXYxeX6IHD6
-	 zj+xBh5H/GaKPFb73sZcFrwChSz5K9Ge32RYHbG6I23Jnat18ar/QDux57tPvEhB6N
-	 J0GHRAHCk9WZ5evQXKxCOz8Az7OyOE2n271W2itg=
+	b=Oj54fNRb64ORgWAv4wJhlyG2tSf7np2+rtDIlAeO5NWSUt8Bb5LEO3bADZTdR4zxT
+	 ZFzceOvkIlzx9w1MAX2EVVwNsL82rmIByjOA2I/zswgcAIcKrJvJSj/BpdQOhJu5EN
+	 qEVKtHJiyMabWrYDfa40YDLxiHBRZx7A1tqzZG00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/106] dpaa2-switch: fix size of the dma_unmap
-Date: Mon, 18 Dec 2023 14:50:52 +0100
-Message-ID: <20231218135056.669961997@linuxfoundation.org>
+Subject: [PATCH 6.1 039/106] dpaa2-switch: do not ask for MDB, VLAN and FDB replay
+Date: Mon, 18 Dec 2023 14:50:53 +0100
+Message-ID: <20231218135056.707965075@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -44,46 +44,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 2aad7d4189a923b24efa8ea6ad09059882b1bfe4 ]
+[ Upstream commit f24a49a375f65e8e75ee1b19d806f46dbaae57fd ]
 
-The size of the DMA unmap was wrongly put as a sizeof of a pointer.
-Change the value of the DMA unmap to be the actual macro used for the
-allocation and the DMA map.
+Starting with commit 4e51bf44a03a ("net: bridge: move the switchdev
+object replay helpers to "push" mode") the switchdev_bridge_port_offload()
+helper was extended with the intention to provide switchdev drivers easy
+access to object addition and deletion replays. This works by calling
+the replay helpers with non-NULL notifier blocks.
 
-Fixes: 1110318d83e8 ("dpaa2-switch: add tc flower hardware offload on ingress traffic")
+In the same commit, the dpaa2-switch driver was updated so that it
+passes valid notifier blocks to the helper. At that moment, no
+regression was identified through testing.
+
+In the meantime, the blamed commit changed the behavior in terms of
+which ports get hit by the replay. Before this commit, only the initial
+port which identified itself as offloaded through
+switchdev_bridge_port_offload() got a replay of all port objects and
+FDBs. After this, the newly joining port will trigger a replay of
+objects on all bridge ports and on the bridge itself.
+
+This behavior leads to errors in dpaa2_switch_port_vlans_add() when a
+VLAN gets installed on the same interface multiple times.
+
+The intended mechanism to address this is to pass a non-NULL ctx to the
+switchdev_bridge_port_offload() helper and then check it against the
+port's private structure. But since the driver does not have any use for
+the replayed port objects and FDBs until it gains support for LAG
+offload, it's better to fix the issue by reverting the dpaa2-switch
+driver to not ask for replay. The pointers will be added back when we
+are prepared to ignore replays on unrelated ports.
+
+Fixes: b28d580e2939 ("net: bridge: switchdev: replay all VLAN groups")
 Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20231212164326.2753457-2-ioana.ciornei@nxp.com
+Link: https://lore.kernel.org/r/20231212164326.2753457-3-ioana.ciornei@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
-index c39b866e2582d..16d3c3610720b 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
-@@ -139,7 +139,8 @@ int dpaa2_switch_acl_entry_add(struct dpaa2_switch_filter_block *filter_block,
- 	err = dpsw_acl_add_entry(ethsw->mc_io, 0, ethsw->dpsw_handle,
- 				 filter_block->acl_id, acl_entry_cfg);
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index 2b5909fa93cfa..b98ef4ba172f6 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -1978,9 +1978,6 @@ static int dpaa2_switch_port_attr_set_event(struct net_device *netdev,
+ 	return notifier_from_errno(err);
+ }
  
--	dma_unmap_single(dev, acl_entry_cfg->key_iova, sizeof(cmd_buff),
-+	dma_unmap_single(dev, acl_entry_cfg->key_iova,
-+			 DPAA2_ETHSW_PORT_ACL_CMD_BUF_SIZE,
- 			 DMA_TO_DEVICE);
- 	if (err) {
- 		dev_err(dev, "dpsw_acl_add_entry() failed %d\n", err);
-@@ -181,8 +182,8 @@ dpaa2_switch_acl_entry_remove(struct dpaa2_switch_filter_block *block,
- 	err = dpsw_acl_remove_entry(ethsw->mc_io, 0, ethsw->dpsw_handle,
- 				    block->acl_id, acl_entry_cfg);
+-static struct notifier_block dpaa2_switch_port_switchdev_nb;
+-static struct notifier_block dpaa2_switch_port_switchdev_blocking_nb;
+-
+ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
+ 					 struct net_device *upper_dev,
+ 					 struct netlink_ext_ack *extack)
+@@ -2023,9 +2020,7 @@ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
+ 		goto err_egress_flood;
  
--	dma_unmap_single(dev, acl_entry_cfg->key_iova, sizeof(cmd_buff),
--			 DMA_TO_DEVICE);
-+	dma_unmap_single(dev, acl_entry_cfg->key_iova,
-+			 DPAA2_ETHSW_PORT_ACL_CMD_BUF_SIZE, DMA_TO_DEVICE);
- 	if (err) {
- 		dev_err(dev, "dpsw_acl_remove_entry() failed %d\n", err);
- 		kfree(cmd_buff);
+ 	err = switchdev_bridge_port_offload(netdev, netdev, NULL,
+-					    &dpaa2_switch_port_switchdev_nb,
+-					    &dpaa2_switch_port_switchdev_blocking_nb,
+-					    false, extack);
++					    NULL, NULL, false, extack);
+ 	if (err)
+ 		goto err_switchdev_offload;
+ 
+@@ -2059,9 +2054,7 @@ static int dpaa2_switch_port_restore_rxvlan(struct net_device *vdev, int vid, vo
+ 
+ static void dpaa2_switch_port_pre_bridge_leave(struct net_device *netdev)
+ {
+-	switchdev_bridge_port_unoffload(netdev, NULL,
+-					&dpaa2_switch_port_switchdev_nb,
+-					&dpaa2_switch_port_switchdev_blocking_nb);
++	switchdev_bridge_port_unoffload(netdev, NULL, NULL, NULL);
+ }
+ 
+ static int dpaa2_switch_port_bridge_leave(struct net_device *netdev)
 -- 
 2.43.0
 
