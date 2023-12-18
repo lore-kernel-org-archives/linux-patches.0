@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655FD1D15C;
-	Mon, 18 Dec 2023 14:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D69E3A1CD;
+	Mon, 18 Dec 2023 14:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaUgc091"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD80AC433C7;
-	Mon, 18 Dec 2023 14:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zkg8fqYv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866B3C433C8;
+	Mon, 18 Dec 2023 14:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908763;
-	bh=Z6v0K0FcWn53BzdSesnj8EsBjOk5B4QbABeZt/0C6wY=;
+	s=korg; t=1702908765;
+	bh=gw9x+3+5o7Gb5u4XOjhrY6nsDGQYs8rFRJxbbGy0W+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oaUgc091haB9wW5uuIToaAeJwlijlTJl9Hmkdzz5zjfF0SHDc2+M1DPJJDp6cKCC7
-	 Za1f86OtQjBP6s06a6ANPWkaCuC8xIX6xb/sWpVdcCFK5t9RjfUlDgM4ACbzX4hM/I
-	 IsMxwfHsfIpaC0N6/hr+2ldLrG2H1p9FiQY1DQIo=
+	b=Zkg8fqYvu7KKK/L5S8Ob+vDDAXgvhGRHE4Fn+0NGsVRXIndjXHez2Qkc0jZ7yu9Rp
+	 s4yGXaihCmdXDRdXypDIg9cc3cfTBFtq6ugVA18cToqz8awLhEoLjaZULKOKh19yb6
+	 MUK9zySjZNhvtY7Nwt1vTYtgrYxrWPNhkrV5uQfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/83] net/rose: Fix Use-After-Free in rose_ioctl
-Date: Mon, 18 Dec 2023 14:51:45 +0100
-Message-ID: <20231218135050.811396659@linuxfoundation.org>
+Subject: [PATCH 5.15 25/83] qed: Fix a potential use-after-free in qed_cxt_tables_alloc
+Date: Mon, 18 Dec 2023 14:51:46 +0100
+Message-ID: <20231218135050.858110261@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -42,46 +43,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 810c38a369a0a0ce625b5c12169abce1dd9ccd53 ]
+[ Upstream commit b65d52ac9c085c0c52dee012a210d4e2f352611b ]
 
-Because rose_ioctl() accesses sk->sk_receive_queue
-without holding a sk->sk_receive_queue.lock, it can
-cause a race with rose_accept().
-A use-after-free for skb occurs with the following flow.
-```
-rose_ioctl() -> skb_peek()
-rose_accept() -> skb_dequeue() -> kfree_skb()
-```
-Add sk->sk_receive_queue.lock to rose_ioctl() to fix this issue.
+qed_ilt_shadow_alloc() will call qed_ilt_shadow_free() to
+free p_hwfn->p_cxt_mngr->ilt_shadow on error. However,
+qed_cxt_tables_alloc() accesses the freed pointer on failure
+of qed_ilt_shadow_alloc() through calling qed_cxt_mngr_free(),
+which may lead to use-after-free. Fix this issue by setting
+p_mngr->ilt_shadow to NULL in qed_ilt_shadow_free().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Link: https://lore.kernel.org/r/20231209100538.GA407321@v4bel-B760M-AORUS-ELITE-AX
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: fe56b9e6a8d9 ("qed: Add module with basic common support")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Link: https://lore.kernel.org/r/20231210045255.21383-1-dinghao.liu@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qed/qed_cxt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 86c93cf1744b0..b3e7a92f1ec19 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -1307,9 +1307,11 @@ static int rose_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 	case TIOCINQ: {
- 		struct sk_buff *skb;
- 		long amount = 0L;
--		/* These two are safe on a single CPU system as only user tasks fiddle here */
-+
-+		spin_lock_irq(&sk->sk_receive_queue.lock);
- 		if ((skb = skb_peek(&sk->sk_receive_queue)) != NULL)
- 			amount = skb->len;
-+		spin_unlock_irq(&sk->sk_receive_queue.lock);
- 		return put_user(amount, (unsigned int __user *) argp);
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_cxt.c b/drivers/net/ethernet/qlogic/qed/qed_cxt.c
+index cb0f2a3a1ac98..7d8401da6f226 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_cxt.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_cxt.c
+@@ -933,6 +933,7 @@ static void qed_ilt_shadow_free(struct qed_hwfn *p_hwfn)
+ 		p_dma->virt_addr = NULL;
  	}
+ 	kfree(p_mngr->ilt_shadow);
++	p_mngr->ilt_shadow = NULL;
+ }
  
+ static int qed_ilt_blk_alloc(struct qed_hwfn *p_hwfn,
 -- 
 2.43.0
 
