@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2735129ED2;
-	Mon, 18 Dec 2023 13:52:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C103C129EF7;
+	Mon, 18 Dec 2023 13:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uLlMEMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B62C433C7;
-	Mon, 18 Dec 2023 13:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fS4/qcww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B40C433C8;
+	Mon, 18 Dec 2023 13:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907566;
-	bh=EG6kwFKSPsKZ46NZiZwDtp4u3ymSnCPaAnvSltuK1bU=;
+	s=korg; t=1702907572;
+	bh=kplAT9pAQPUsnLJWXUpnEDFxOUe4SGdYBftxCm5Ws8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1uLlMEMuOpznEloPQWN5lI/YQOKmyqr209itfYNf9fo5t8B+tl0CNfIgZ+z9e5blh
-	 TEteDnfidyhImwAM0J44z/73s7x+tlMoytgx/iVmD1yZ41PVHsrpuxqEpwNuZGQYo+
-	 JJs6p1iNEREsRXqb0N4Tv/nizXWV4QpYTyerwK1E=
+	b=fS4/qcwwAsRhSW0H5RkFYYc64m92M8D7NnA0uvq1ch8FuShMNMRY2sYFerSxuTdsj
+	 sYJ8xs2fMmrlVGid5No5wTu/lScCock98TmOoRW7BzLQ0k0eG/uysqmT0YVOCbkKuw
+	 jpg1DiPDhRiD2IdkKAT31Ah7OiiVkJu91B8+vkVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 09/26] net: Remove acked SYN flag from packet in the transmit queue correctly
+Subject: [PATCH 4.19 01/36] qca_debug: Prevent crash on TX ring changes
 Date: Mon, 18 Dec 2023 14:51:11 +0100
-Message-ID: <20231218135041.019056309@linuxfoundation.org>
+Message-ID: <20231218135041.940809063@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
-References: <20231218135040.665690087@linuxfoundation.org>
+In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
+References: <20231218135041.876499958@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -39,112 +38,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.14-stable review patch.  If anyone has any objections, please let me know.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit f99cd56230f56c8b6b33713c5be4da5d6766be1f ]
+[ Upstream commit f4e6064c97c050bd9904925ff7d53d0c9954fc7b ]
 
-syzkaller report:
+The qca_spi driver stop and restart the SPI kernel thread
+(via ndo_stop & ndo_open) in case of TX ring changes. This is
+a big issue because it allows userspace to prevent restart of
+the SPI kernel thread (via signals). A subsequent change of
+TX ring wrongly assume a valid spi_thread pointer which result
+in a crash.
 
- kernel BUG at net/core/skbuff.c:3452!
- invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
- CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.7.0-rc4-00009-gbee0e7762ad2-dirty #135
- RIP: 0010:skb_copy_and_csum_bits (net/core/skbuff.c:3452)
- Call Trace:
- icmp_glue_bits (net/ipv4/icmp.c:357)
- __ip_append_data.isra.0 (net/ipv4/ip_output.c:1165)
- ip_append_data (net/ipv4/ip_output.c:1362 net/ipv4/ip_output.c:1341)
- icmp_push_reply (net/ipv4/icmp.c:370)
- __icmp_send (./include/net/route.h:252 net/ipv4/icmp.c:772)
- ip_fragment.constprop.0 (./include/linux/skbuff.h:1234 net/ipv4/ip_output.c:592 net/ipv4/ip_output.c:577)
- __ip_finish_output (net/ipv4/ip_output.c:311 net/ipv4/ip_output.c:295)
- ip_output (net/ipv4/ip_output.c:427)
- __ip_queue_xmit (net/ipv4/ip_output.c:535)
- __tcp_transmit_skb (net/ipv4/tcp_output.c:1462)
- __tcp_retransmit_skb (net/ipv4/tcp_output.c:3387)
- tcp_retransmit_skb (net/ipv4/tcp_output.c:3404)
- tcp_retransmit_timer (net/ipv4/tcp_timer.c:604)
- tcp_write_timer (./include/linux/spinlock.h:391 net/ipv4/tcp_timer.c:716)
+So prevent this by stopping the network traffic handling and
+temporary park the SPI thread.
 
-The panic issue was trigered by tcp simultaneous initiation.
-The initiation process is as follows:
-
-      TCP A                                            TCP B
-
-  1.  CLOSED                                           CLOSED
-
-  2.  SYN-SENT     --> <SEQ=100><CTL=SYN>              ...
-
-  3.  SYN-RECEIVED <-- <SEQ=300><CTL=SYN>              <-- SYN-SENT
-
-  4.               ... <SEQ=100><CTL=SYN>              --> SYN-RECEIVED
-
-  5.  SYN-RECEIVED --> <SEQ=100><ACK=301><CTL=SYN,ACK> ...
-
-  // TCP B: not send challenge ack for ack limit or packet loss
-  // TCP A: close
-	tcp_close
-	   tcp_send_fin
-              if (!tskb && tcp_under_memory_pressure(sk))
-                  tskb = skb_rb_last(&sk->tcp_rtx_queue); //pick SYN_ACK packet
-           TCP_SKB_CB(tskb)->tcp_flags |= TCPHDR_FIN;  // set FIN flag
-
-  6.  FIN_WAIT_1  --> <SEQ=100><ACK=301><END_SEQ=102><CTL=SYN,FIN,ACK> ...
-
-  // TCP B: send challenge ack to SYN_FIN_ACK
-
-  7.               ... <SEQ=301><ACK=101><CTL=ACK>   <-- SYN-RECEIVED //challenge ack
-
-  // TCP A:  <SND.UNA=101>
-
-  8.  FIN_WAIT_1 --> <SEQ=101><ACK=301><END_SEQ=102><CTL=SYN,FIN,ACK> ... // retransmit panic
-
-	__tcp_retransmit_skb  //skb->len=0
-	    tcp_trim_head
-		len = tp->snd_una - TCP_SKB_CB(skb)->seq // len=101-100
-		    __pskb_trim_head
-			skb->data_len -= len // skb->len=-1, wrap around
-	    ... ...
-	    ip_fragment
-		icmp_glue_bits //BUG_ON
-
-If we use tcp_trim_head() to remove acked SYN from packet that contains data
-or other flags, skb->len will be incorrectly decremented. We can remove SYN
-flag that has been acked from rtx_queue earlier than tcp_trim_head(), which
-can fix the problem mentioned above.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-developed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Link: https://lore.kernel.org/r/20231210020200.1539875-1-dongchenchen2@huawei.com
+Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20231206141222.52029-2-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_output.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/qualcomm/qca_debug.c |  9 ++++-----
+ drivers/net/ethernet/qualcomm/qca_spi.c   | 12 ++++++++++++
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 67636017f275a..2a07a167124c4 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -2883,7 +2883,13 @@ int __tcp_retransmit_skb(struct sock *sk, struct sk_buff *skb, int segs)
- 	if (skb_still_in_host_queue(sk, skb))
- 		return -EBUSY;
+diff --git a/drivers/net/ethernet/qualcomm/qca_debug.c b/drivers/net/ethernet/qualcomm/qca_debug.c
+index 51d89c86e60f5..26b0ca7a7b43d 100644
+--- a/drivers/net/ethernet/qualcomm/qca_debug.c
++++ b/drivers/net/ethernet/qualcomm/qca_debug.c
+@@ -275,7 +275,6 @@ qcaspi_get_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
+ static int
+ qcaspi_set_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
+ {
+-	const struct net_device_ops *ops = dev->netdev_ops;
+ 	struct qcaspi *qca = netdev_priv(dev);
  
-+start:
- 	if (before(TCP_SKB_CB(skb)->seq, tp->snd_una)) {
-+		if (unlikely(TCP_SKB_CB(skb)->tcp_flags & TCPHDR_SYN)) {
-+			TCP_SKB_CB(skb)->tcp_flags &= ~TCPHDR_SYN;
-+			TCP_SKB_CB(skb)->seq++;
-+			goto start;
+ 	if ((ring->rx_pending) ||
+@@ -283,14 +282,14 @@ qcaspi_set_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
+ 	    (ring->rx_jumbo_pending))
+ 		return -EINVAL;
+ 
+-	if (netif_running(dev))
+-		ops->ndo_stop(dev);
++	if (qca->spi_thread)
++		kthread_park(qca->spi_thread);
+ 
+ 	qca->txr.count = max_t(u32, ring->tx_pending, TX_RING_MIN_LEN);
+ 	qca->txr.count = min_t(u16, qca->txr.count, TX_RING_MAX_LEN);
+ 
+-	if (netif_running(dev))
+-		ops->ndo_open(dev);
++	if (qca->spi_thread)
++		kthread_unpark(qca->spi_thread);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
+index 3e6095f0cb5f5..656e2955fb792 100644
+--- a/drivers/net/ethernet/qualcomm/qca_spi.c
++++ b/drivers/net/ethernet/qualcomm/qca_spi.c
+@@ -552,6 +552,18 @@ qcaspi_spi_thread(void *data)
+ 	netdev_info(qca->net_dev, "SPI thread created\n");
+ 	while (!kthread_should_stop()) {
+ 		set_current_state(TASK_INTERRUPTIBLE);
++		if (kthread_should_park()) {
++			netif_tx_disable(qca->net_dev);
++			netif_carrier_off(qca->net_dev);
++			qcaspi_flush_tx_ring(qca);
++			kthread_parkme();
++			if (qca->sync == QCASPI_SYNC_READY) {
++				netif_carrier_on(qca->net_dev);
++				netif_wake_queue(qca->net_dev);
++			}
++			continue;
 +		}
- 		if (unlikely(before(TCP_SKB_CB(skb)->end_seq, tp->snd_una))) {
- 			WARN_ON_ONCE(1);
- 			return -EINVAL;
++
+ 		if ((qca->intr_req == qca->intr_svc) &&
+ 		    !qca->txr.skb[qca->txr.head])
+ 			schedule();
 -- 
 2.43.0
 
