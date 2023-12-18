@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5052337884;
-	Mon, 18 Dec 2023 14:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA571D146;
+	Mon, 18 Dec 2023 14:05:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J69AW12X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E78C433C7;
-	Mon, 18 Dec 2023 14:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pe/xqRyE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D8BC433C7;
+	Mon, 18 Dec 2023 14:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908322;
-	bh=91zZPdVcqptxp+QoCMFuBC6p8rZ8R0amXAfGtEUxBCw=;
+	s=korg; t=1702908324;
+	bh=FSvqXxyoEW1Uc+TxL94rdIeRKxVRTOi+HnX1MzJDmwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J69AW12XgCsLqo0ulAsfsaIaZhYVbrpt5pFZs4BTqLMET+bT8MHSwjDxP9pyyuFl3
-	 tssSIjnnhcFgPdCiI4+ZtS3FUU649R+YbXLvWOcoh2JBR7b6dpPCHtWTATz2Wh8IDr
-	 tXkCi/zgwRqPabTrXO8kXAGaCSHa20AUvQE3e4lw=
+	b=Pe/xqRyEfxlW9FVzyRK3dfCJPBzSwvKSSLTBC2tjzAxHHjoqZ6hkmgNmBg0EyYWH1
+	 js6DEXehs6MeGs6jLZmABD1fvThmrNf8sKTUl6LqAy3zBHqu1BJy2HXX9EkZlAOd4H
+	 Zf1mwiPImGu4/rN5ceYDzXg05mbimZI3nq2No9VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	kernel test robot <lkp@intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 135/166] dmaengine: stm32-dma: avoid bitfield overflow assertion
-Date: Mon, 18 Dec 2023 14:51:41 +0100
-Message-ID: <20231218135111.131395020@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 118/166] eventfs: Do not allow NULL parent to eventfs_start_creating()
+Date: Mon, 18 Dec 2023 14:51:24 +0100
+Message-ID: <20231218135110.314728459@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -43,78 +45,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 54bed6bafa0f38daf9697af50e3aff5ff1354fe1 upstream.
+[ Upstream commit fc4561226feaad5fcdcb55646c348d77b8ee69c5 ]
 
-stm32_dma_get_burst() returns a negative error for invalid input, which
-gets turned into a large u32 value in stm32_dma_prep_dma_memcpy() that
-in turn triggers an assertion because it does not fit into a two-bit field:
-drivers/dma/stm32-dma.c: In function 'stm32_dma_prep_dma_memcpy':
-include/linux/compiler_types.h:354:38: error: call to '__compiletime_assert_282' declared with attribute error: FIELD_PREP: value too large for the field
-     _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-                                         ^
-   include/linux/compiler_types.h:335:4: note: in definition of macro '__compiletime_assert'
-       prefix ## suffix();    \
-       ^~~~~~
-   include/linux/compiler_types.h:354:2: note: in expansion of macro '_compiletime_assert'
-     _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
-     ^~~~~~~~~~~~~~~~~~~
-   include/linux/build_bug.h:39:37: note: in expansion of macro 'compiletime_assert'
-    #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
-                                        ^~~~~~~~~~~~~~~~~~
-   include/linux/bitfield.h:68:3: note: in expansion of macro 'BUILD_BUG_ON_MSG'
-      BUILD_BUG_ON_MSG(__builtin_constant_p(_val) ?  \
-      ^~~~~~~~~~~~~~~~
-   include/linux/bitfield.h:114:3: note: in expansion of macro '__BF_FIELD_CHECK'
-      __BF_FIELD_CHECK(_mask, 0ULL, _val, "FIELD_PREP: "); \
-      ^~~~~~~~~~~~~~~~
-   drivers/dma/stm32-dma.c:1237:4: note: in expansion of macro 'FIELD_PREP'
-       FIELD_PREP(STM32_DMA_SCR_PBURST_MASK, dma_burst) |
-       ^~~~~~~~~~
+The eventfs directory is dynamically created via the meta data supplied by
+the existing trace events. All files and directories in eventfs has a
+parent. Do not allow NULL to be passed into eventfs_start_creating() as
+the parent because that should never happen. Warn if it does.
 
-As an easy workaround, assume the error can happen, so try to handle this
-by failing stm32_dma_prep_dma_memcpy() before the assertion. It replicates
-what is done in stm32_dma_set_xfer_param() where stm32_dma_get_burst() is
-also used.
+Link: https://lkml.kernel.org/r/20231121231112.693841807@goodmis.org
 
-Fixes: 1c32d6c37cc2 ("dmaengine: stm32-dma: use bitfield helpers")
-Fixes: a2b6103b7a8a ("dmaengine: stm32-dma: Improve memory burst management")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202311060135.Q9eMnpCL-lkp@intel.com/
-Link: https://lore.kernel.org/r/20231106134832.1470305-1-amelie.delaunay@foss.st.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/stm32-dma.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/tracefs/inode.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
---- a/drivers/dma/stm32-dma.c
-+++ b/drivers/dma/stm32-dma.c
-@@ -1249,8 +1249,8 @@ static struct dma_async_tx_descriptor *s
- 	enum dma_slave_buswidth max_width;
- 	struct stm32_dma_desc *desc;
- 	size_t xfer_count, offset;
--	u32 num_sgs, best_burst, dma_burst, threshold;
--	int i;
-+	u32 num_sgs, best_burst, threshold;
-+	int dma_burst, i;
+diff --git a/fs/tracefs/inode.c b/fs/tracefs/inode.c
+index 891653ba9cf35..0292c6a2bed9f 100644
+--- a/fs/tracefs/inode.c
++++ b/fs/tracefs/inode.c
+@@ -509,20 +509,15 @@ struct dentry *eventfs_start_creating(const char *name, struct dentry *parent)
+ 	struct dentry *dentry;
+ 	int error;
  
- 	num_sgs = DIV_ROUND_UP(len, STM32_DMA_ALIGNED_MAX_DATA_ITEMS);
- 	desc = kzalloc(struct_size(desc, sg_req, num_sgs), GFP_NOWAIT);
-@@ -1268,6 +1268,10 @@ static struct dma_async_tx_descriptor *s
- 		best_burst = stm32_dma_get_best_burst(len, STM32_DMA_MAX_BURST,
- 						      threshold, max_width);
- 		dma_burst = stm32_dma_get_burst(chan, best_burst);
-+		if (dma_burst < 0) {
-+			kfree(desc);
-+			return NULL;
-+		}
++	/* Must always have a parent. */
++	if (WARN_ON_ONCE(!parent))
++		return ERR_PTR(-EINVAL);
++
+ 	error = simple_pin_fs(&trace_fs_type, &tracefs_mount,
+ 			      &tracefs_mount_count);
+ 	if (error)
+ 		return ERR_PTR(error);
  
- 		stm32_dma_clear_reg(&desc->sg_req[i].chan_reg);
- 		desc->sg_req[i].chan_reg.dma_scr =
+-	/*
+-	 * If the parent is not specified, we create it in the root.
+-	 * We need the root dentry to do this, which is in the super
+-	 * block. A pointer to that is in the struct vfsmount that we
+-	 * have around.
+-	 */
+-	if (!parent)
+-		parent = tracefs_mount->mnt_root;
+-
+ 	if (unlikely(IS_DEADDIR(parent->d_inode)))
+ 		dentry = ERR_PTR(-ENOENT);
+ 	else
+-- 
+2.43.0
+
 
 
