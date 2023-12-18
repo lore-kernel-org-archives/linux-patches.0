@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308DA1D122;
-	Mon, 18 Dec 2023 13:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D969C129EE3;
+	Mon, 18 Dec 2023 13:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQIZrVrK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAEC6C433C7;
-	Mon, 18 Dec 2023 13:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMmwVEnd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD09C433C7;
+	Mon, 18 Dec 2023 13:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907794;
-	bh=3A9PwI5hNGCFPXZgLvTdtVYgHWQYBa+jHDeNZyLD0tc=;
+	s=korg; t=1702907796;
+	bh=+3cHdfIMFUdHsZ5mCbqDdCHl0qMf+5sd6hpnrnvIjhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQIZrVrKeOlhr4MfeoaLAtdaS4Jg/HTEbqjJee2yUvkocb5MZSkRJBaFzbK8fiQwQ
-	 wnURgc8Cz+mFYj7zyZP28N5454zIBp6PYp3eMhDT+75utnS2/n+OCgnz2yEzeEPMNo
-	 OEoMJphnFfhlGfOeXbUnocSHgTXOvXqXFoF7mw4s=
+	b=LMmwVEndIlv9KX6DzajY4KDQ4RhJoyXJTHtVeonwJgW6j9VKTubr8Gp55CjW/E0eU
+	 DgFN0iONDCbJkLZpgr7WA9y8gHpvGyIYCw4U40PP4BtQ9CEif9/9/pAioAl5l19o4e
+	 zBEqt1lG3kXTpnJVIYrlH3/MTP+ViA8iTY6fQeQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 049/106] PCI: loongson: Limit MRRS to 256
-Date: Mon, 18 Dec 2023 14:51:03 +0100
-Message-ID: <20231218135057.143020385@linuxfoundation.org>
+	Shahar Itzko <itzko@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 032/106] net: ena: Destroy correct number of xdp queues upon failure
+Date: Mon, 18 Dec 2023 14:50:46 +0100
+Message-ID: <20231218135056.327528253@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -42,106 +43,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: David Arinzon <darinzon@amazon.com>
 
-commit ef61a0405742a9f7f6051bc6fd2f017d87d07911 upstream.
+[ Upstream commit 41db6f99b5489a0d2ef26afe816ef0c6118d1d47 ]
 
-This is a partial revert of 8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS
-increases") for MIPS-based Loongson.
+The ena_setup_and_create_all_xdp_queues() function freed all the
+resources upon failure, after creating only xdp_num_queues queues,
+instead of freeing just the created ones.
 
-Some MIPS Loongson systems don't support arbitrary Max_Read_Request_Size
-(MRRS) settings.  8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS
-increases") worked around that by (1) assuming that firmware configured
-MRRS to the maximum supported value and (2) preventing the PCI core from
-increasing MRRS.
+In this patch, the only resources that are freed, are the ones
+allocated right before the failure occurs.
 
-Unfortunately, some firmware doesn't set that maximum MRRS correctly, which
-results in devices not being initialized correctly.  One symptom, from the
-Debian report below, is this:
-
-  ata4.00: exception Emask 0x0 SAct 0x20000000 SErr 0x0 action 0x6 frozen
-  ata4.00: failed command: WRITE FPDMA QUEUED
-  ata4.00: cmd 61/20:e8:00:f0:e1/00:00:00:00:00/40 tag 29 ncq dma 16384 out
-           res 40/00:00:00:00:00/00:00:00:00:00/00 Emask 0x4 (timeout)
-  ata4.00: status: { DRDY }
-  ata4: hard resetting link
-
-Limit MRRS to 256 because MIPS Loongson with higher MRRS support is
-considered rare.
-
-This must be done at device enablement stage because the MRRS setting may
-get lost if PCI_COMMAND_MASTER on the parent bridge is cleared, and we are
-only sure parent bridge is enabled at this point.
-
-Fixes: 8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS increases")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217680
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1035587
-Link: https://lore.kernel.org/r/20231201115028.84351-1-jiaxun.yang@flygoat.com
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Huacai Chen <chenhuacai@loongson.cn>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
+Signed-off-by: Shahar Itzko <itzko@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Link: https://lore.kernel.org/r/20231211062801.27891-2-darinzon@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-loongson.c |   46 ++++++++++++++++++++++++++++++----
- 1 file changed, 41 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/controller/pci-loongson.c
-+++ b/drivers/pci/controller/pci-loongson.c
-@@ -80,13 +80,49 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LO
- DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
- 			DEV_LS7A_LPC, system_bus_quirk);
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 42a66b74c1e5b..d7392dabde1e3 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -74,6 +74,8 @@ static void ena_unmap_tx_buff(struct ena_ring *tx_ring,
+ 			      struct ena_tx_buffer *tx_info);
+ static int ena_create_io_tx_queues_in_range(struct ena_adapter *adapter,
+ 					    int first_index, int count);
++static void ena_free_all_io_tx_resources_in_range(struct ena_adapter *adapter,
++						  int first_index, int count);
  
-+/*
-+ * Some Loongson PCIe ports have hardware limitations on their Maximum Read
-+ * Request Size. They can't handle anything larger than this.  Sane
-+ * firmware will set proper MRRS at boot, so we only need no_inc_mrrs for
-+ * bridges. However, some MIPS Loongson firmware doesn't set MRRS properly,
-+ * so we have to enforce maximum safe MRRS, which is 256 bytes.
-+ */
-+#ifdef CONFIG_MIPS
-+static void loongson_set_min_mrrs_quirk(struct pci_dev *pdev)
-+{
-+	struct pci_bus *bus = pdev->bus;
-+	struct pci_dev *bridge;
-+	static const struct pci_device_id bridge_devids[] = {
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS2K_PCIE_PORT0) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT0) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT1) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT2) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT3) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT4) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT5) },
-+		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT6) },
-+		{ 0, },
-+	};
-+
-+	/* look for the matching bridge */
-+	while (!pci_is_root_bus(bus)) {
-+		bridge = bus->self;
-+		bus = bus->parent;
-+
-+		if (pci_match_id(bridge_devids, bridge)) {
-+			if (pcie_get_readrq(pdev) > 256) {
-+				pci_info(pdev, "limiting MRRS to 256\n");
-+				pcie_set_readrq(pdev, 256);
-+			}
-+			break;
-+		}
-+	}
-+}
-+DECLARE_PCI_FIXUP_ENABLE(PCI_ANY_ID, PCI_ANY_ID, loongson_set_min_mrrs_quirk);
-+#endif
-+
- static void loongson_mrrs_quirk(struct pci_dev *pdev)
+ /* Increase a stat by cnt while holding syncp seqlock on 32bit machines */
+ static void ena_increase_stat(u64 *statp, u64 cnt,
+@@ -457,23 +459,22 @@ static void ena_init_all_xdp_queues(struct ena_adapter *adapter)
+ 
+ static int ena_setup_and_create_all_xdp_queues(struct ena_adapter *adapter)
  {
--	/*
--	 * Some Loongson PCIe ports have h/w limitations of maximum read
--	 * request size. They can't handle anything larger than this. So
--	 * force this limit on any devices attached under these ports.
--	 */
- 	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
++	u32 xdp_first_ring = adapter->xdp_first_ring;
++	u32 xdp_num_queues = adapter->xdp_num_queues;
+ 	int rc = 0;
  
- 	bridge->no_inc_mrrs = 1;
+-	rc = ena_setup_tx_resources_in_range(adapter, adapter->xdp_first_ring,
+-					     adapter->xdp_num_queues);
++	rc = ena_setup_tx_resources_in_range(adapter, xdp_first_ring, xdp_num_queues);
+ 	if (rc)
+ 		goto setup_err;
+ 
+-	rc = ena_create_io_tx_queues_in_range(adapter,
+-					      adapter->xdp_first_ring,
+-					      adapter->xdp_num_queues);
++	rc = ena_create_io_tx_queues_in_range(adapter, xdp_first_ring, xdp_num_queues);
+ 	if (rc)
+ 		goto create_err;
+ 
+ 	return 0;
+ 
+ create_err:
+-	ena_free_all_io_tx_resources(adapter);
++	ena_free_all_io_tx_resources_in_range(adapter, xdp_first_ring, xdp_num_queues);
+ setup_err:
+ 	return rc;
+ }
+-- 
+2.43.0
+
 
 
