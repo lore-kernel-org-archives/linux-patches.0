@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E74C1D139;
-	Mon, 18 Dec 2023 13:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F06415AC0;
+	Mon, 18 Dec 2023 13:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOopV0CL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6463FC433C7;
-	Mon, 18 Dec 2023 13:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxWfy0T3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D74C433C7;
+	Mon, 18 Dec 2023 13:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907654;
-	bh=5OoTVlK+b2RZnnA0gFY4q0yogKDpEDn1PbZJuTc8z+s=;
+	s=korg; t=1702907657;
+	bh=jg5zOsamOWfWCaMicVKi+XBC/txQQwORn2/8fbIWx4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOopV0CLeA/runnEEIgRnDSj8VDNoFM3bCnLIizOgyBsDaPTeea2CQmzVOnOpA6N0
-	 o2hxnbuVSl3hYPFAn6D/JhvQRPngIz1KDWDN1XGUpe0zhXZ57O/3E3uLhCXUPfu5nY
-	 SU8oQRG8Jrw2sz6Ex35Ve5QrnpALBeYvIucb8UX4=
+	b=GxWfy0T3GhUjl5m281OimzLFftFIBhElWnRLzn26t9uajTluZ/ILTKJQRqiHdx7dg
+	 5WH5FdQWxszy/tr69rAAM3WyLiroiPurkLmMvma8JEpVnQ3UtM436Fi1uvOHOffmNT
+	 5NFnXIMGS78uCDAGQVtJkbrtZnMhfh9Ue5xrITuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 07/36] net/rose: Fix Use-After-Free in rose_ioctl
-Date: Mon, 18 Dec 2023 14:51:17 +0100
-Message-ID: <20231218135042.161469214@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 4.19 34/36] mmc: block: Be sure to wait while busy in CQE error recovery
+Date: Mon, 18 Dec 2023 14:51:44 +0100
+Message-ID: <20231218135043.040078332@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
 References: <20231218135041.876499958@linuxfoundation.org>
@@ -42,48 +43,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 810c38a369a0a0ce625b5c12169abce1dd9ccd53 ]
+commit c616696a902987352426fdaeec1b0b3240949e6b upstream.
 
-Because rose_ioctl() accesses sk->sk_receive_queue
-without holding a sk->sk_receive_queue.lock, it can
-cause a race with rose_accept().
-A use-after-free for skb occurs with the following flow.
-```
-rose_ioctl() -> skb_peek()
-rose_accept() -> skb_dequeue() -> kfree_skb()
-```
-Add sk->sk_receive_queue.lock to rose_ioctl() to fix this issue.
+STOP command does not guarantee to wait while busy, but subsequent command
+MMC_CMDQ_TASK_MGMT to discard the queue will fail if the card is busy, so
+be sure to wait by employing mmc_poll_for_busy().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Link: https://lore.kernel.org/r/20231209100538.GA407321@v4bel-B760M-AORUS-ELITE-AX
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 72a5af554df8 ("mmc: core: Add support for handling CQE requests")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://lore.kernel.org/r/20231103084720.6886-4-adrian.hunter@intel.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Tested-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rose/af_rose.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/core/core.c    |    2 ++
+ drivers/mmc/core/mmc_ops.c |    5 +++--
+ drivers/mmc/core/mmc_ops.h |    2 ++
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 4edd127bb8928..d32fb40650a75 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -1308,9 +1308,11 @@ static int rose_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
- 	case TIOCINQ: {
- 		struct sk_buff *skb;
- 		long amount = 0L;
--		/* These two are safe on a single CPU system as only user tasks fiddle here */
-+
-+		spin_lock_irq(&sk->sk_receive_queue.lock);
- 		if ((skb = skb_peek(&sk->sk_receive_queue)) != NULL)
- 			amount = skb->len;
-+		spin_unlock_irq(&sk->sk_receive_queue.lock);
- 		return put_user(amount, (unsigned int __user *) argp);
- 	}
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -573,6 +573,8 @@ int mmc_cqe_recovery(struct mmc_host *ho
+ 	cmd.busy_timeout = MMC_CQE_RECOVERY_TIMEOUT;
+ 	mmc_wait_for_cmd(host, &cmd, MMC_CMD_RETRIES);
  
--- 
-2.43.0
-
++	mmc_poll_for_busy(host->card, MMC_CQE_RECOVERY_TIMEOUT, true, true);
++
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.opcode       = MMC_CMDQ_TASK_MGMT;
+ 	cmd.arg          = 1; /* Discard entire queue */
+--- a/drivers/mmc/core/mmc_ops.c
++++ b/drivers/mmc/core/mmc_ops.c
+@@ -448,8 +448,8 @@ int mmc_switch_status(struct mmc_card *c
+ 	return __mmc_switch_status(card, true);
+ }
+ 
+-static int mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
+-			bool send_status, bool retry_crc_err)
++int mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
++		      bool send_status, bool retry_crc_err)
+ {
+ 	struct mmc_host *host = card->host;
+ 	int err;
+@@ -502,6 +502,7 @@ static int mmc_poll_for_busy(struct mmc_
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mmc_poll_for_busy);
+ 
+ /**
+  *	__mmc_switch - modify EXT_CSD register
+--- a/drivers/mmc/core/mmc_ops.h
++++ b/drivers/mmc/core/mmc_ops.h
+@@ -35,6 +35,8 @@ int mmc_can_ext_csd(struct mmc_card *car
+ int mmc_get_ext_csd(struct mmc_card *card, u8 **new_ext_csd);
+ int mmc_switch_status(struct mmc_card *card);
+ int __mmc_switch_status(struct mmc_card *card, bool crc_err_fatal);
++int mmc_poll_for_busy(struct mmc_card *card, unsigned int timeout_ms,
++		      bool send_status, bool retry_crc_err);
+ int __mmc_switch(struct mmc_card *card, u8 set, u8 index, u8 value,
+ 		unsigned int timeout_ms, unsigned char timing,
+ 		bool use_busy_signal, bool send_status,	bool retry_crc_err);
 
 
