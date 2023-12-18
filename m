@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062FF1D14B;
-	Mon, 18 Dec 2023 14:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED383129EF9;
+	Mon, 18 Dec 2023 14:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNshknXZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3F0C433C7;
-	Mon, 18 Dec 2023 14:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="se24t4CE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3D8C433C7;
+	Mon, 18 Dec 2023 14:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908866;
-	bh=QyWtR8HCmaxUvB6yfd0eqt3RDwjqLsHgXOMM1UvHgOs=;
+	s=korg; t=1702908869;
+	bh=mY7xpmMRn26KR9oIm1SLC7phoMtarcYtQDGtYAiVvnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNshknXZ5iZg92C5DfqfuBIPUTDhQ552pRwRjNPPgRG8N5aSRB1LkICeMvG/sb7fa
-	 T89s9S3NaXqWAoSpp5hxwohUNx0Afb4/jtkF5FS8ROvT4WFGgqwdPdj7XBbA3PLMUx
-	 danE5wqSpsR1HmQxg6h9Yjp0A/QjFpvCvna+jpMI=
+	b=se24t4CE/atk7NmbosokT4Wsny8o51xNMsfDTp2HQ1mXW4kf5+kKfnQcGHUIGzXA6
+	 kXI8ddc4jq2vPV7aijnk5m6zuUK8LpOYKlKe6gVolMffH3FKGTU3fJBhUl5ICgpYC6
+	 XBxnUCDQTABfsm8pbqlnn9Y4ZNBG80y++kvMBEYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 34/83] net: stmmac: use dev_err_probe() for reporting mdio bus registration failure
-Date: Mon, 18 Dec 2023 14:51:55 +0100
-Message-ID: <20231218135051.253224606@linuxfoundation.org>
+Subject: [PATCH 5.15 35/83] net: stmmac: Handle disabled MDIO busses from devicetree
+Date: Mon, 18 Dec 2023 14:51:56 +0100
+Message-ID: <20231218135051.286306697@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -42,65 +43,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit 839612d23ffd933174db911ce56dc3f3ca883ec5 ]
+[ Upstream commit e23c0d21ce9234fbc31ece35663ababbb83f9347 ]
 
-I have a board where these two lines are always printed during boot:
+Many hardware configurations have the MDIO bus disabled, and are instead
+using some other MDIO bus to talk to the MAC's phy.
 
-   imx-dwmac 30bf0000.ethernet: Cannot register the MDIO bus
-   imx-dwmac 30bf0000.ethernet: stmmac_dvr_probe: MDIO bus (id: 1) registration failed
+of_mdiobus_register() returns -ENODEV in this case. Let's handle it
+gracefully instead of failing to probe the MAC.
 
-It's perfectly fine, and the device is successfully (and silently, as
-far as the console goes) probed later.
-
-Use dev_err_probe() instead, which will demote these messages to debug
-level (thus removing the alarming messages from the console) when the
-error is -EPROBE_DEFER, and also has the advantage of including the
-error code if/when it happens to be something other than -EPROBE_DEFER.
-
-While here, add the missing \n to one of the format strings.
-
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Link: https://lore.kernel.org/r/20220602074840.1143360-1-linux@rasmusvillemoes.dk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e23c0d21ce92 ("net: stmmac: Handle disabled MDIO busses from devicetree")
+Fixes: 47dd7a540b8a ("net: add support for STMicroelectronics Ethernet controllers.")
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Link: https://lore.kernel.org/r/20231212-b4-stmmac-handle-mdio-enodev-v2-1-600171acf79f@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 +++---
- drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 91d6be7ade1bd..08693d7458d15 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7239,9 +7239,9 @@ int stmmac_dvr_probe(struct device *device,
- 		/* MDIO bus Registration */
- 		ret = stmmac_mdio_register(ndev);
- 		if (ret < 0) {
--			dev_err(priv->device,
--				"%s: MDIO bus (id: %d) registration failed",
--				__func__, priv->plat->bus_id);
-+			dev_err_probe(priv->device, ret,
-+				      "%s: MDIO bus (id: %d) registration failed\n",
-+				      __func__, priv->plat->bus_id);
- 			goto error_mdio_register;
- 		}
- 	}
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-index a5d150c5f3d8c..19694b3a1fb9e 100644
+index 19694b3a1fb9e..94f731f1d936e 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-@@ -490,7 +490,7 @@ int stmmac_mdio_register(struct net_device *ndev)
+@@ -489,7 +489,11 @@ int stmmac_mdio_register(struct net_device *ndev)
+ 	new_bus->parent = priv->device;
  
  	err = of_mdiobus_register(new_bus, mdio_node);
- 	if (err != 0) {
--		dev_err(dev, "Cannot register the MDIO bus\n");
-+		dev_err_probe(dev, err, "Cannot register the MDIO bus\n");
+-	if (err != 0) {
++	if (err == -ENODEV) {
++		err = 0;
++		dev_info(dev, "MDIO bus is disabled\n");
++		goto bus_register_fail;
++	} else if (err) {
+ 		dev_err_probe(dev, err, "Cannot register the MDIO bus\n");
  		goto bus_register_fail;
  	}
- 
 -- 
 2.43.0
 
