@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6536129ED2;
-	Mon, 18 Dec 2023 13:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68093129ED2;
+	Mon, 18 Dec 2023 13:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNfjqvGz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9D2C433C8;
-	Mon, 18 Dec 2023 13:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBjf7WVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18ABC433C7;
+	Mon, 18 Dec 2023 13:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907900;
-	bh=SV0J3CCoA4Np0A6Hvy5ILqO+K4kvJEPVLZIwfWKuYWM=;
+	s=korg; t=1702907903;
+	bh=gAzkmycIOzFBdTutH2EuA4ebp0oAfxGV/8oyX1uz3BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNfjqvGzT+sVehjGW1u4EsVmzZNF6XX6DBm58UGGDQKQXwqpemouNLLXMf1dCY/0n
-	 LU8tahFF6carPaWWmG/rpuKjmA2rhORvfSBWcY5+XwlsgITs9eV1qZKCFYTTxpimke
-	 3/BI1Jefa/F889o0c8zv6M/WVxJtyZv2fU4QYCUQ=
+	b=ZBjf7WVctiti+FvuxqcyDAuXBnedagN48+PT29HGhfAIQ80nkBIXzzaTjPdh2bbU6
+	 xEtWbHY1ja9Af+Fk2T4SSTH2G2bG71idB4EK/2XRr/RlshNcEN2UllodyX4x8nYxZp
+	 eY5dEvxqx20O5b0fViVh7kH//zdorhgAMz0UQAME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qu Wenruo <wqu@suse.com>,
 	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 087/106] btrfs: free qgroup reserve when ORDERED_IOERR is set
-Date: Mon, 18 Dec 2023 14:51:41 +0100
-Message-ID: <20231218135058.794976771@linuxfoundation.org>
+Subject: [PATCH 6.1 088/106] btrfs: dont clear qgroup reserved bit in release_folio
+Date: Mon, 18 Dec 2023 14:51:42 +0100
+Message-ID: <20231218135058.837802827@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -44,36 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Boris Burkov <boris@bur.io>
 
-commit f63e1164b90b385cd832ff0fdfcfa76c3cc15436 upstream.
+commit a86805504b88f636a6458520d85afdf0634e3c6b upstream.
 
-An ordered extent completing is a critical moment in qgroup reserve
-handling, as the ownership of the reservation is handed off from the
-ordered extent to the delayed ref. In the happy path we release (unlock)
-but do not free (decrement counter) the reservation, and the delayed ref
-drives the free. However, on an error, we don't create a delayed ref,
-since there is no ref to add. Therefore, free on the error path.
+The EXTENT_QGROUP_RESERVED bit is used to "lock" regions of the file for
+duplicate reservations. That is two writes to that range in one
+transaction shouldn't create two reservations, as the reservation will
+only be freed once when the write finally goes down. Therefore, it is
+never OK to clear that bit without freeing the associated qgroup
+reserve. At this point, we don't want to be freeing the reserve, so mask
+off the bit.
 
-CC: stable@vger.kernel.org # 6.1+
+CC: stable@vger.kernel.org # 5.15+
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ordered-data.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/extent_io.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/ordered-data.c
-+++ b/fs/btrfs/ordered-data.c
-@@ -544,7 +544,9 @@ void btrfs_remove_ordered_extent(struct
- 			release = entry->disk_num_bytes;
- 		else
- 			release = entry->num_bytes;
--		btrfs_delalloc_release_metadata(btrfs_inode, release, false);
-+		btrfs_delalloc_release_metadata(btrfs_inode, release,
-+						test_bit(BTRFS_ORDERED_IOERR,
-+							 &entry->flags));
- 	}
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -3390,7 +3390,8 @@ static int try_release_extent_state(stru
+ 		ret = 0;
+ 	} else {
+ 		u32 clear_bits = ~(EXTENT_LOCKED | EXTENT_NODATASUM |
+-				   EXTENT_DELALLOC_NEW | EXTENT_CTLBITS);
++				   EXTENT_DELALLOC_NEW | EXTENT_CTLBITS |
++				   EXTENT_QGROUP_RESERVED);
  
- 	percpu_counter_add_batch(&fs_info->ordered_bytes, -entry->num_bytes,
+ 		/*
+ 		 * At this point we can safely clear everything except the
 
 
