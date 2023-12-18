@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8578C3D576;
-	Mon, 18 Dec 2023 14:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F664236E;
+	Mon, 18 Dec 2023 14:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIFXVp5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1ECDC433C8;
-	Mon, 18 Dec 2023 14:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3yU6NHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AA0C433C7;
+	Mon, 18 Dec 2023 14:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908087;
-	bh=FqL4+sHx7F8Ge5zU8Ds6+oF41PGK/wKOxvWznFCn8VE=;
+	s=korg; t=1702908089;
+	bh=6kSaOTwoPxMRpb4yqWDSimg721AZOG2xix0eD2FHE8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIFXVp5l7Lop00B5Ho3a9Nsyv2YUfDZgEGZgdrvFT/GP9Poakg2Wpru8CQhgyQ54y
-	 xguRKdkUBrn87XqiZBGnk0bCMMOESQt9Q6an9KNT7g6lGyxXWNZRXV2JwMDLg1DWGN
-	 5E7Hsyb5YzGQuPpS6n1xqeWGJU1EHUl6TYRj4vLM=
+	b=e3yU6NHoVAlxVLp329GThXvYAcFF5EJZrFaFqwnahZSLUkYDspKLQe62nSB2nD/BQ
+	 ZKxodXh90alLa2fkYPphNSt/tS27C24NiUJk5Zchk9j3633eyNBlhmcW7H13iDJBNa
+	 oWceJUHb4Lcz59XODlLFAgp8eeu8J/DoOzd87XQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Feiyang Chen <chenfeiyang@loongson.cn>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yusong Gao <a869920004@gmail.com>,
+	Juerg Haefliger <juerg.haefliger@canonical.com>,
+	David Howells <dhowells@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/166] stmmac: dwmac-loongson: Make sure MDIO is initialized before use
-Date: Mon, 18 Dec 2023 14:50:14 +0100
-Message-ID: <20231218135107.160939807@linuxfoundation.org>
+Subject: [PATCH 6.6 049/166] sign-file: Fix incorrect return values check
+Date: Mon, 18 Dec 2023 14:50:15 +0100
+Message-ID: <20231218135107.203894632@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -44,51 +44,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yanteng Si <siyanteng@loongson.cn>
+From: Yusong Gao <a869920004@gmail.com>
 
-[ Upstream commit e87d3a1370ce9f04770d789bcf7cce44865d2e8d ]
+[ Upstream commit 829649443e78d85db0cff0c37cadb28fbb1a5f6f ]
 
-Generic code will use mdio. If it is not initialized before use,
-the kernel will Oops.
+There are some wrong return values check in sign-file when call OpenSSL
+API. The ERR() check cond is wrong because of the program only check the
+return value is < 0 which ignored the return val is 0. For example:
+1. CMS_final() return 1 for success or 0 for failure.
+2. i2d_CMS_bio_stream() returns 1 for success or 0 for failure.
+3. i2d_TYPEbio() return 1 for success and 0 for failure.
+4. BIO_free() return 1 for success and 0 for failure.
 
-Fixes: 30bba69d7db4 ("stmmac: pci: Add dwmac support for Loongson")
-Signed-off-by: Yanteng Si <siyanteng@loongson.cn>
-Signed-off-by: Feiyang Chen <chenfeiyang@loongson.cn>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://www.openssl.org/docs/manmaster/man3/
+Fixes: e5a2e3c84782 ("scripts/sign-file.c: Add support for signing with a raw signature")
+Signed-off-by: Yusong Gao <a869920004@gmail.com>
+Reviewed-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20231213024405.624692-1-a869920004@gmail.com/ # v5
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac-loongson.c   | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ scripts/sign-file.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-index 2cd6fce5c9934..e7701326adc6a 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -68,17 +68,15 @@ static int loongson_dwmac_probe(struct pci_dev *pdev, const struct pci_device_id
- 	if (!plat)
- 		return -ENOMEM;
+diff --git a/scripts/sign-file.c b/scripts/sign-file.c
+index 598ef5465f825..3edb156ae52c3 100644
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -322,7 +322,7 @@ int main(int argc, char **argv)
+ 				     CMS_NOSMIMECAP | use_keyid |
+ 				     use_signed_attrs),
+ 		    "CMS_add1_signer");
+-		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) < 0,
++		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) != 1,
+ 		    "CMS_final");
  
-+	plat->mdio_bus_data = devm_kzalloc(&pdev->dev,
-+					   sizeof(*plat->mdio_bus_data),
-+					   GFP_KERNEL);
-+	if (!plat->mdio_bus_data)
-+		return -ENOMEM;
-+
- 	plat->mdio_node = of_get_child_by_name(np, "mdio");
- 	if (plat->mdio_node) {
- 		dev_info(&pdev->dev, "Found MDIO subnode\n");
--
--		plat->mdio_bus_data = devm_kzalloc(&pdev->dev,
--						   sizeof(*plat->mdio_bus_data),
--						   GFP_KERNEL);
--		if (!plat->mdio_bus_data) {
--			ret = -ENOMEM;
--			goto err_put_node;
--		}
- 		plat->mdio_bus_data->needs_reset = true;
- 	}
+ #else
+@@ -341,10 +341,10 @@ int main(int argc, char **argv)
+ 			b = BIO_new_file(sig_file_name, "wb");
+ 			ERR(!b, "%s", sig_file_name);
+ #ifndef USE_PKCS7
+-			ERR(i2d_CMS_bio_stream(b, cms, NULL, 0) < 0,
++			ERR(i2d_CMS_bio_stream(b, cms, NULL, 0) != 1,
+ 			    "%s", sig_file_name);
+ #else
+-			ERR(i2d_PKCS7_bio(b, pkcs7) < 0,
++			ERR(i2d_PKCS7_bio(b, pkcs7) != 1,
+ 			    "%s", sig_file_name);
+ #endif
+ 			BIO_free(b);
+@@ -374,9 +374,9 @@ int main(int argc, char **argv)
  
+ 	if (!raw_sig) {
+ #ifndef USE_PKCS7
+-		ERR(i2d_CMS_bio_stream(bd, cms, NULL, 0) < 0, "%s", dest_name);
++		ERR(i2d_CMS_bio_stream(bd, cms, NULL, 0) != 1, "%s", dest_name);
+ #else
+-		ERR(i2d_PKCS7_bio(bd, pkcs7) < 0, "%s", dest_name);
++		ERR(i2d_PKCS7_bio(bd, pkcs7) != 1, "%s", dest_name);
+ #endif
+ 	} else {
+ 		BIO *b;
+@@ -396,7 +396,7 @@ int main(int argc, char **argv)
+ 	ERR(BIO_write(bd, &sig_info, sizeof(sig_info)) < 0, "%s", dest_name);
+ 	ERR(BIO_write(bd, magic_number, sizeof(magic_number) - 1) < 0, "%s", dest_name);
+ 
+-	ERR(BIO_free(bd) < 0, "%s", dest_name);
++	ERR(BIO_free(bd) != 1, "%s", dest_name);
+ 
+ 	/* Finally, if we're signing in place, replace the original. */
+ 	if (replace_orig)
 -- 
 2.43.0
 
