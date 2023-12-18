@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F2942387;
-	Mon, 18 Dec 2023 14:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AF642399;
+	Mon, 18 Dec 2023 14:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t42bLf6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18239C433C7;
-	Mon, 18 Dec 2023 14:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLj3Xxd5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C374AC433C7;
+	Mon, 18 Dec 2023 14:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908350;
-	bh=nAhMKVVEqpBXdZoFilqWJtq529iYpex9HXGBoCyjO2Q=;
+	s=korg; t=1702908353;
+	bh=JHboRZeNvG+HDIWvxLXdjx2gRnN4+QlKLU2V0bgiK7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t42bLf6oEDRUtra9iUWzgbdIBIzlBCR96NTRK02aNROyRGVbON2ec0CU4oLsORnV5
-	 vEw5XgigahWIW5+GVTZLUC5djExIU7yUNJ1tBec5uYeSYg7gyw3jeMWBE8Q9tQRBPU
-	 TSLaqlEo8YWywAzgFxw0OGPc94ITKsBBqsnQVDlI=
+	b=yLj3Xxd5sMz3ES1mOI03D7oBCMVNevxsJrNGDDLNl69BRF1VRoFLB8At9S9Ba1Vy7
+	 EGKtnt32+AutBxC3vt74FfIrUGe/2YzebOm0ASnhOxjbNNr6aLAiSALrcpnr5iI6Zm
+	 JK/6+7iKGTF9mWRu3Sol2EUdvTmzX6nPHes/2OXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qu Wenruo <wqu@suse.com>,
 	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 144/166] btrfs: fix qgroup_free_reserved_data int overflow
-Date: Mon, 18 Dec 2023 14:51:50 +0100
-Message-ID: <20231218135111.564907318@linuxfoundation.org>
+Subject: [PATCH 6.6 145/166] btrfs: dont clear qgroup reserved bit in release_folio
+Date: Mon, 18 Dec 2023 14:51:51 +0100
+Message-ID: <20231218135111.613446757@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -44,252 +44,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Boris Burkov <boris@bur.io>
 
-commit 9e65bfca24cf1d77e4a5c7a170db5867377b3fe7 upstream.
+commit a86805504b88f636a6458520d85afdf0634e3c6b upstream.
 
-The reserved data counter and input parameter is a u64, but we
-inadvertently accumulate it in an int. Overflowing that int results in
-freeing the wrong amount of data and breaking reserve accounting.
+The EXTENT_QGROUP_RESERVED bit is used to "lock" regions of the file for
+duplicate reservations. That is two writes to that range in one
+transaction shouldn't create two reservations, as the reservation will
+only be freed once when the write finally goes down. Therefore, it is
+never OK to clear that bit without freeing the associated qgroup
+reserve. At this point, we don't want to be freeing the reserve, so mask
+off the bit.
 
-Unfortunately, this overflow rot spreads from there, as the qgroup
-release/free functions rely on returning an int to take advantage of
-negative values for error codes.
-
-Therefore, the full fix is to return the "released" or "freed" amount by
-a u64 argument and to return 0 or negative error code via the return
-value.
-
-Most of the call sites simply ignore the return value, though some
-of them handle the error and count the returned bytes. Change all of
-them accordingly.
-
-CC: stable@vger.kernel.org # 6.1+
+CC: stable@vger.kernel.org # 5.15+
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/delalloc-space.c |    2 +-
- fs/btrfs/file.c           |    2 +-
- fs/btrfs/inode.c          |   16 ++++++++--------
- fs/btrfs/ordered-data.c   |    7 ++++---
- fs/btrfs/qgroup.c         |   25 +++++++++++++++----------
- fs/btrfs/qgroup.h         |    4 ++--
- 6 files changed, 31 insertions(+), 25 deletions(-)
+ fs/btrfs/extent_io.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/delalloc-space.c
-+++ b/fs/btrfs/delalloc-space.c
-@@ -199,7 +199,7 @@ void btrfs_free_reserved_data_space(stru
- 	start = round_down(start, fs_info->sectorsize);
- 
- 	btrfs_free_reserved_data_space_noquota(fs_info, len);
--	btrfs_qgroup_free_data(inode, reserved, start, len);
-+	btrfs_qgroup_free_data(inode, reserved, start, len, NULL);
- }
- 
- /*
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -3187,7 +3187,7 @@ static long btrfs_fallocate(struct file
- 			qgroup_reserved -= range->len;
- 		} else if (qgroup_reserved > 0) {
- 			btrfs_qgroup_free_data(BTRFS_I(inode), data_reserved,
--					       range->start, range->len);
-+					       range->start, range->len, NULL);
- 			qgroup_reserved -= range->len;
- 		}
- 		list_del(&range->list);
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -687,7 +687,7 @@ out:
- 	 * And at reserve time, it's always aligned to page size, so
- 	 * just free one page here.
- 	 */
--	btrfs_qgroup_free_data(inode, NULL, 0, PAGE_SIZE);
-+	btrfs_qgroup_free_data(inode, NULL, 0, PAGE_SIZE, NULL);
- 	btrfs_free_path(path);
- 	btrfs_end_transaction(trans);
- 	return ret;
-@@ -5129,7 +5129,7 @@ static void evict_inode_truncate_pages(s
- 		 */
- 		if (state_flags & EXTENT_DELALLOC)
- 			btrfs_qgroup_free_data(BTRFS_I(inode), NULL, start,
--					       end - start + 1);
-+					       end - start + 1, NULL);
- 
- 		clear_extent_bit(io_tree, start, end,
- 				 EXTENT_CLEAR_ALL_BITS | EXTENT_DO_ACCOUNTING,
-@@ -8051,7 +8051,7 @@ next:
- 		 *    reserved data space.
- 		 *    Since the IO will never happen for this page.
- 		 */
--		btrfs_qgroup_free_data(inode, NULL, cur, range_end + 1 - cur);
-+		btrfs_qgroup_free_data(inode, NULL, cur, range_end + 1 - cur, NULL);
- 		if (!inode_evicting) {
- 			clear_extent_bit(tree, cur, range_end, EXTENT_LOCKED |
- 				 EXTENT_DELALLOC | EXTENT_UPTODATE |
-@@ -9481,7 +9481,7 @@ static struct btrfs_trans_handle *insert
- 	struct btrfs_path *path;
- 	u64 start = ins->objectid;
- 	u64 len = ins->offset;
--	int qgroup_released;
-+	u64 qgroup_released = 0;
- 	int ret;
- 
- 	memset(&stack_fi, 0, sizeof(stack_fi));
-@@ -9494,9 +9494,9 @@ static struct btrfs_trans_handle *insert
- 	btrfs_set_stack_file_extent_compression(&stack_fi, BTRFS_COMPRESS_NONE);
- 	/* Encryption and other encoding is reserved and all 0 */
- 
--	qgroup_released = btrfs_qgroup_release_data(inode, file_offset, len);
--	if (qgroup_released < 0)
--		return ERR_PTR(qgroup_released);
-+	ret = btrfs_qgroup_release_data(inode, file_offset, len, &qgroup_released);
-+	if (ret < 0)
-+		return ERR_PTR(ret);
- 
- 	if (trans) {
- 		ret = insert_reserved_file_extent(trans, inode,
-@@ -10391,7 +10391,7 @@ out_delalloc_release:
- 	btrfs_delalloc_release_metadata(inode, disk_num_bytes, ret < 0);
- out_qgroup_free_data:
- 	if (ret < 0)
--		btrfs_qgroup_free_data(inode, data_reserved, start, num_bytes);
-+		btrfs_qgroup_free_data(inode, data_reserved, start, num_bytes, NULL);
- out_free_data_space:
- 	/*
- 	 * If btrfs_reserve_extent() succeeded, then we already decremented
---- a/fs/btrfs/ordered-data.c
-+++ b/fs/btrfs/ordered-data.c
-@@ -153,11 +153,12 @@ static struct btrfs_ordered_extent *allo
- {
- 	struct btrfs_ordered_extent *entry;
- 	int ret;
-+	u64 qgroup_rsv = 0;
- 
- 	if (flags &
- 	    ((1 << BTRFS_ORDERED_NOCOW) | (1 << BTRFS_ORDERED_PREALLOC))) {
- 		/* For nocow write, we can release the qgroup rsv right now */
--		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes);
-+		ret = btrfs_qgroup_free_data(inode, NULL, file_offset, num_bytes, &qgroup_rsv);
- 		if (ret < 0)
- 			return ERR_PTR(ret);
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -2303,7 +2303,8 @@ static int try_release_extent_state(stru
+ 		ret = 0;
  	} else {
-@@ -165,7 +166,7 @@ static struct btrfs_ordered_extent *allo
- 		 * The ordered extent has reserved qgroup space, release now
- 		 * and pass the reserved number for qgroup_record to free.
- 		 */
--		ret = btrfs_qgroup_release_data(inode, file_offset, num_bytes);
-+		ret = btrfs_qgroup_release_data(inode, file_offset, num_bytes, &qgroup_rsv);
- 		if (ret < 0)
- 			return ERR_PTR(ret);
- 	}
-@@ -183,7 +184,7 @@ static struct btrfs_ordered_extent *allo
- 	entry->inode = igrab(&inode->vfs_inode);
- 	entry->compress_type = compress_type;
- 	entry->truncated_len = (u64)-1;
--	entry->qgroup_rsv = ret;
-+	entry->qgroup_rsv = qgroup_rsv;
- 	entry->flags = flags;
- 	refcount_set(&entry->refs, 1);
- 	init_waitqueue_head(&entry->wait);
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -3855,13 +3855,14 @@ int btrfs_qgroup_reserve_data(struct btr
+ 		u32 clear_bits = ~(EXTENT_LOCKED | EXTENT_NODATASUM |
+-				   EXTENT_DELALLOC_NEW | EXTENT_CTLBITS);
++				   EXTENT_DELALLOC_NEW | EXTENT_CTLBITS |
++				   EXTENT_QGROUP_RESERVED);
  
- /* Free ranges specified by @reserved, normally in error path */
- static int qgroup_free_reserved_data(struct btrfs_inode *inode,
--			struct extent_changeset *reserved, u64 start, u64 len)
-+				     struct extent_changeset *reserved,
-+				     u64 start, u64 len, u64 *freed_ret)
- {
- 	struct btrfs_root *root = inode->root;
- 	struct ulist_node *unode;
- 	struct ulist_iterator uiter;
- 	struct extent_changeset changeset;
--	int freed = 0;
-+	u64 freed = 0;
- 	int ret;
- 
- 	extent_changeset_init(&changeset);
-@@ -3902,7 +3903,9 @@ static int qgroup_free_reserved_data(str
- 	}
- 	btrfs_qgroup_free_refroot(root->fs_info, root->root_key.objectid, freed,
- 				  BTRFS_QGROUP_RSV_DATA);
--	ret = freed;
-+	if (freed_ret)
-+		*freed_ret = freed;
-+	ret = 0;
- out:
- 	extent_changeset_release(&changeset);
- 	return ret;
-@@ -3910,7 +3913,7 @@ out:
- 
- static int __btrfs_qgroup_release_data(struct btrfs_inode *inode,
- 			struct extent_changeset *reserved, u64 start, u64 len,
--			int free)
-+			u64 *released, int free)
- {
- 	struct extent_changeset changeset;
- 	int trace_op = QGROUP_RELEASE;
-@@ -3922,7 +3925,7 @@ static int __btrfs_qgroup_release_data(s
- 	/* In release case, we shouldn't have @reserved */
- 	WARN_ON(!free && reserved);
- 	if (free && reserved)
--		return qgroup_free_reserved_data(inode, reserved, start, len);
-+		return qgroup_free_reserved_data(inode, reserved, start, len, released);
- 	extent_changeset_init(&changeset);
- 	ret = clear_record_extent_bits(&inode->io_tree, start, start + len -1,
- 				       EXTENT_QGROUP_RESERVED, &changeset);
-@@ -3937,7 +3940,8 @@ static int __btrfs_qgroup_release_data(s
- 		btrfs_qgroup_free_refroot(inode->root->fs_info,
- 				inode->root->root_key.objectid,
- 				changeset.bytes_changed, BTRFS_QGROUP_RSV_DATA);
--	ret = changeset.bytes_changed;
-+	if (released)
-+		*released = changeset.bytes_changed;
- out:
- 	extent_changeset_release(&changeset);
- 	return ret;
-@@ -3956,9 +3960,10 @@ out:
-  * NOTE: This function may sleep for memory allocation.
-  */
- int btrfs_qgroup_free_data(struct btrfs_inode *inode,
--			struct extent_changeset *reserved, u64 start, u64 len)
-+			   struct extent_changeset *reserved,
-+			   u64 start, u64 len, u64 *freed)
- {
--	return __btrfs_qgroup_release_data(inode, reserved, start, len, 1);
-+	return __btrfs_qgroup_release_data(inode, reserved, start, len, freed, 1);
- }
- 
- /*
-@@ -3976,9 +3981,9 @@ int btrfs_qgroup_free_data(struct btrfs_
-  *
-  * NOTE: This function may sleep for memory allocation.
-  */
--int btrfs_qgroup_release_data(struct btrfs_inode *inode, u64 start, u64 len)
-+int btrfs_qgroup_release_data(struct btrfs_inode *inode, u64 start, u64 len, u64 *released)
- {
--	return __btrfs_qgroup_release_data(inode, NULL, start, len, 0);
-+	return __btrfs_qgroup_release_data(inode, NULL, start, len, released, 0);
- }
- 
- static void add_root_meta_rsv(struct btrfs_root *root, int num_bytes,
---- a/fs/btrfs/qgroup.h
-+++ b/fs/btrfs/qgroup.h
-@@ -363,10 +363,10 @@ int btrfs_verify_qgroup_counts(struct bt
- /* New io_tree based accurate qgroup reserve API */
- int btrfs_qgroup_reserve_data(struct btrfs_inode *inode,
- 			struct extent_changeset **reserved, u64 start, u64 len);
--int btrfs_qgroup_release_data(struct btrfs_inode *inode, u64 start, u64 len);
-+int btrfs_qgroup_release_data(struct btrfs_inode *inode, u64 start, u64 len, u64 *released);
- int btrfs_qgroup_free_data(struct btrfs_inode *inode,
- 			   struct extent_changeset *reserved, u64 start,
--			   u64 len);
-+			   u64 len, u64 *freed);
- int btrfs_qgroup_reserve_meta(struct btrfs_root *root, int num_bytes,
- 			      enum btrfs_qgroup_rsv_type type, bool enforce);
- int __btrfs_qgroup_reserve_meta(struct btrfs_root *root, int num_bytes,
+ 		/*
+ 		 * At this point we can safely clear everything except the
 
 
