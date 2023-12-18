@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB611D157;
-	Mon, 18 Dec 2023 13:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E74C1D139;
+	Mon, 18 Dec 2023 13:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaO6UpKE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801D1C433C8;
-	Mon, 18 Dec 2023 13:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOopV0CL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6463FC433C7;
+	Mon, 18 Dec 2023 13:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907651;
-	bh=jK1U0O97SnJn3HRjr+JoGsQBrE/n8fEs/ZkJEFYoyFA=;
+	s=korg; t=1702907654;
+	bh=5OoTVlK+b2RZnnA0gFY4q0yogKDpEDn1PbZJuTc8z+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yaO6UpKEPNLgu97vcB8NbWGqqONbnaL+nOv6q7RyPQZMzCAmZn8uJoDzLQ7ovZH0/
-	 JMnRF6hz6p1f+CBFWMKIPUNBeU7RaaygypFJDVPXWfC5tkZJwU6mf9mKFLn6MM9OW4
-	 v6l9b+uvG1BB/enG1rvjTZKIpIViQ82JvEnKLdMI=
+	b=HOopV0CLeA/runnEEIgRnDSj8VDNoFM3bCnLIizOgyBsDaPTeea2CQmzVOnOpA6N0
+	 o2hxnbuVSl3hYPFAn6D/JhvQRPngIz1KDWDN1XGUpe0zhXZ57O/3E3uLhCXUPfu5nY
+	 SU8oQRG8Jrw2sz6Ex35Ve5QrnpALBeYvIucb8UX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 33/36] ring-buffer: Fix memory leak of free page
-Date: Mon, 18 Dec 2023 14:51:43 +0100
-Message-ID: <20231218135043.010564567@linuxfoundation.org>
+	Hyunwoo Kim <v4bel@theori.io>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 07/36] net/rose: Fix Use-After-Free in rose_ioctl
+Date: Mon, 18 Dec 2023 14:51:17 +0100
+Message-ID: <20231218135042.161469214@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
 References: <20231218135041.876499958@linuxfoundation.org>
@@ -43,48 +42,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Hyunwoo Kim <v4bel@theori.io>
 
-commit 17d801758157bec93f26faaf5ff1a8b9a552d67a upstream.
+[ Upstream commit 810c38a369a0a0ce625b5c12169abce1dd9ccd53 ]
 
-Reading the ring buffer does a swap of a sub-buffer within the ring buffer
-with a empty sub-buffer. This allows the reader to have full access to the
-content of the sub-buffer that was swapped out without having to worry
-about contention with the writer.
+Because rose_ioctl() accesses sk->sk_receive_queue
+without holding a sk->sk_receive_queue.lock, it can
+cause a race with rose_accept().
+A use-after-free for skb occurs with the following flow.
+```
+rose_ioctl() -> skb_peek()
+rose_accept() -> skb_dequeue() -> kfree_skb()
+```
+Add sk->sk_receive_queue.lock to rose_ioctl() to fix this issue.
 
-The readers call ring_buffer_alloc_read_page() to allocate a page that
-will be used to swap with the ring buffer. When the code is finished with
-the reader page, it calls ring_buffer_free_read_page(). Instead of freeing
-the page, it stores it as a spare. Then next call to
-ring_buffer_alloc_read_page() will return this spare instead of calling
-into the memory management system to allocate a new page.
-
-Unfortunately, on freeing of the ring buffer, this spare page is not
-freed, and causes a memory leak.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231210221250.7b9cc83c@rorschach.local.home
-
-Cc: stable@vger.kernel.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Fixes: 73a757e63114d ("ring-buffer: Return reader page back into existing ring buffer")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
+Link: https://lore.kernel.org/r/20231209100538.GA407321@v4bel-B760M-AORUS-ELITE-AX
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/rose/af_rose.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1344,6 +1344,8 @@ static void rb_free_cpu_buffer(struct ri
- 		free_buffer_page(bpage);
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 4edd127bb8928..d32fb40650a75 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -1308,9 +1308,11 @@ static int rose_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 	case TIOCINQ: {
+ 		struct sk_buff *skb;
+ 		long amount = 0L;
+-		/* These two are safe on a single CPU system as only user tasks fiddle here */
++
++		spin_lock_irq(&sk->sk_receive_queue.lock);
+ 		if ((skb = skb_peek(&sk->sk_receive_queue)) != NULL)
+ 			amount = skb->len;
++		spin_unlock_irq(&sk->sk_receive_queue.lock);
+ 		return put_user(amount, (unsigned int __user *) argp);
  	}
  
-+	free_page((unsigned long)cpu_buffer->free_page);
-+
- 	kfree(cpu_buffer);
- }
- 
+-- 
+2.43.0
+
 
 
