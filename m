@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17B41D144;
-	Mon, 18 Dec 2023 13:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFCC1D127;
+	Mon, 18 Dec 2023 13:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0rZzT6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A04C433C8;
-	Mon, 18 Dec 2023 13:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVRXhJoO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A92C433C7;
+	Mon, 18 Dec 2023 13:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907919;
-	bh=3rjXSeeDIHDPhI1edmHgM2pj11NQ3Mw+eTXFU554vcM=;
+	s=korg; t=1702907922;
+	bh=zYyx6cvEr9tR3mHde3Vt31/+WB2E/z3RhuQIlQYV3Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0rZzT6gWoyW6FrO9YmuR6bDT2u0hIA8T0QZLPatOJa9rSfqJDLuIEayFJqBwd40U
-	 ovrIodQ4bchWr5lC3XsMFLxkNi7JF8cOEyf0CQXKRunaO6zg/bzUrLRu29zAYtR3so
-	 hptaTVCAiNgOz55mUHhdCZsPCb65kVIjxd/eL6/Q=
+	b=eVRXhJoOnQrA1mU8QVIKNpVHIh1ghGXpCxAOL807K38MsVmxkUN8Z0o1tWoGMwXFv
+	 IKIt1z13KoKhRamGxBn2jGxkE6FqQc310Tj/IC+3b20xAhXklfElAa9gOKT/m9z5Gb
+	 XaYMTwyDOXOucrAP9dxIdQF9FmBBjfpnHcJ4+fHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WANG Xuerui <git@xen0n.name>,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	kernel test robot <lkp@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/106] LoongArch: Implement constant timer shutdown interface
-Date: Mon, 18 Dec 2023 14:51:20 +0100
-Message-ID: <20231218135057.876021544@linuxfoundation.org>
+Subject: [PATCH 6.1 067/106] platform/x86: intel_telemetry: Fix kernel doc descriptions
+Date: Mon, 18 Dec 2023 14:51:21 +0100
+Message-ID: <20231218135057.923883737@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -37,98 +38,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit d43f37b73468c172bc89ac4824a1511b411f0778 ]
+[ Upstream commit a6584711e64d9d12ab79a450ec3628fd35e4f476 ]
 
-When a cpu is hot-unplugged, it is put in idle state and the function
-arch_cpu_idle_dead() is called. The timer interrupt for this processor
-should be disabled, otherwise there will be pending timer interrupt for
-the unplugged cpu, so that vcpu is prevented from giving up scheduling
-when system is running in vm mode.
+LKP found issues with a kernel doc in the driver:
 
-This patch implements the timer shutdown interface so that the constant
-timer will be properly disabled when a CPU is hot-unplugged.
+core.c:116: warning: Function parameter or member 'ioss_evtconfig' not described in 'telemetry_update_events'
+core.c:188: warning: Function parameter or member 'ioss_evtconfig' not described in 'telemetry_get_eventconfig'
 
-Reviewed-by: WANG Xuerui <git@xen0n.name>
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+It looks like it were copy'n'paste typos when these descriptions
+had been introduced. Fix the typos.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202310070743.WALmRGSY-lkp@intel.com/
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20231120150756.1661425-1-andriy.shevchenko@linux.intel.com
+Reviewed-by: Rajneesh Bhardwaj <irenic.rajneesh@gmail.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/time.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ drivers/platform/x86/intel/telemetry/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/loongarch/kernel/time.c b/arch/loongarch/kernel/time.c
-index d2b7d5df132a9..150df6e17bb6a 100644
---- a/arch/loongarch/kernel/time.c
-+++ b/arch/loongarch/kernel/time.c
-@@ -58,14 +58,16 @@ static int constant_set_state_oneshot(struct clock_event_device *evt)
- 	return 0;
- }
- 
--static int constant_set_state_oneshot_stopped(struct clock_event_device *evt)
-+static int constant_set_state_periodic(struct clock_event_device *evt)
- {
-+	unsigned long period;
- 	unsigned long timer_config;
- 
- 	raw_spin_lock(&state_lock);
- 
--	timer_config = csr_read64(LOONGARCH_CSR_TCFG);
--	timer_config &= ~CSR_TCFG_EN;
-+	period = const_clock_freq / HZ;
-+	timer_config = period & CSR_TCFG_VAL;
-+	timer_config |= (CSR_TCFG_PERIOD | CSR_TCFG_EN);
- 	csr_write64(timer_config, LOONGARCH_CSR_TCFG);
- 
- 	raw_spin_unlock(&state_lock);
-@@ -73,16 +75,14 @@ static int constant_set_state_oneshot_stopped(struct clock_event_device *evt)
- 	return 0;
- }
- 
--static int constant_set_state_periodic(struct clock_event_device *evt)
-+static int constant_set_state_shutdown(struct clock_event_device *evt)
- {
--	unsigned long period;
- 	unsigned long timer_config;
- 
- 	raw_spin_lock(&state_lock);
- 
--	period = const_clock_freq / HZ;
--	timer_config = period & CSR_TCFG_VAL;
--	timer_config |= (CSR_TCFG_PERIOD | CSR_TCFG_EN);
-+	timer_config = csr_read64(LOONGARCH_CSR_TCFG);
-+	timer_config &= ~CSR_TCFG_EN;
- 	csr_write64(timer_config, LOONGARCH_CSR_TCFG);
- 
- 	raw_spin_unlock(&state_lock);
-@@ -90,11 +90,6 @@ static int constant_set_state_periodic(struct clock_event_device *evt)
- 	return 0;
- }
- 
--static int constant_set_state_shutdown(struct clock_event_device *evt)
--{
--	return 0;
--}
--
- static int constant_timer_next_event(unsigned long delta, struct clock_event_device *evt)
- {
- 	unsigned long timer_config;
-@@ -156,7 +151,7 @@ int constant_clockevent_init(void)
- 	cd->rating = 320;
- 	cd->cpumask = cpumask_of(cpu);
- 	cd->set_state_oneshot = constant_set_state_oneshot;
--	cd->set_state_oneshot_stopped = constant_set_state_oneshot_stopped;
-+	cd->set_state_oneshot_stopped = constant_set_state_shutdown;
- 	cd->set_state_periodic = constant_set_state_periodic;
- 	cd->set_state_shutdown = constant_set_state_shutdown;
- 	cd->set_next_event = constant_timer_next_event;
+diff --git a/drivers/platform/x86/intel/telemetry/core.c b/drivers/platform/x86/intel/telemetry/core.c
+index fdf55b5d69480..e4be40f73eebf 100644
+--- a/drivers/platform/x86/intel/telemetry/core.c
++++ b/drivers/platform/x86/intel/telemetry/core.c
+@@ -102,7 +102,7 @@ static const struct telemetry_core_ops telm_defpltops = {
+ /**
+  * telemetry_update_events() - Update telemetry Configuration
+  * @pss_evtconfig: PSS related config. No change if num_evts = 0.
+- * @pss_evtconfig: IOSS related config. No change if num_evts = 0.
++ * @ioss_evtconfig: IOSS related config. No change if num_evts = 0.
+  *
+  * This API updates the IOSS & PSS Telemetry configuration. Old config
+  * is overwritten. Call telemetry_reset_events when logging is over
+@@ -176,7 +176,7 @@ EXPORT_SYMBOL_GPL(telemetry_reset_events);
+ /**
+  * telemetry_get_eventconfig() - Returns the pss and ioss events enabled
+  * @pss_evtconfig: Pointer to PSS related configuration.
+- * @pss_evtconfig: Pointer to IOSS related configuration.
++ * @ioss_evtconfig: Pointer to IOSS related configuration.
+  * @pss_len:	   Number of u32 elements allocated for pss_evtconfig array
+  * @ioss_len:	   Number of u32 elements allocated for ioss_evtconfig array
+  *
 -- 
 2.43.0
 
