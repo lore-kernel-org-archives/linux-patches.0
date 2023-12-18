@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F0F129EF7;
-	Mon, 18 Dec 2023 13:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D18F129EFE;
+	Mon, 18 Dec 2023 13:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3+LlcVw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F5CC433C7;
-	Mon, 18 Dec 2023 13:52:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eXstDKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDCBC433C8;
+	Mon, 18 Dec 2023 13:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907528;
-	bh=NQRYXf5cqNCEYT/+RaEhDyOD/tbMt6IXk4b3PJPMisI=;
+	s=korg; t=1702907530;
+	bh=bGUztfR660oGge2ycD4uZmqiIJDLmOPXHJxkIeAk1JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3+LlcVwMUNHbxz7Nyw1TiMyvRFRy9jiSg+V9ioUx1Bj0k3+YGZBAQUCkg+kO77yL
-	 WFNSSGIdFz9peEK3XK/Kxafd/Hd3RBLZO8JF9FLdqlTo2r9aCgULBY36uuBxM/2oez
-	 GAwcTPYVt5u49VRChMPHt649Zv0rfsG7QFAKq3z4=
+	b=0eXstDKDDAhEpNxx5I8vipDw1Mras+yZGpk5/tmUx3a1IAPM2K82WaJ5QhzhIUQgw
+	 L8uJUXiZiUWyg2PrWouMkxpsyxhDJC9ckBBYVwW7J0+TVEl+qOKCGw7i0aw0FzrIL7
+	 jbSJxXaP+Ygf1kE2ksc1QnBpJMNipVe1tSkG6cJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Lech Perczak <lech.perczak@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 02/26] qca_debug: Fix ethtool -G iface tx behavior
-Date: Mon, 18 Dec 2023 14:51:04 +0100
-Message-ID: <20231218135040.742748687@linuxfoundation.org>
+Subject: [PATCH 4.14 20/26] net: usb: qmi_wwan: claim interface 4 for ZTE MF290
+Date: Mon, 18 Dec 2023 14:51:22 +0100
+Message-ID: <20231218135041.438323926@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
 References: <20231218135040.665690087@linuxfoundation.org>
@@ -37,84 +37,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.14-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Lech Perczak <lech.perczak@gmail.com>
 
-[ Upstream commit 96a7e861d9e04d07febd3011c30cd84cd141d81f ]
+[ Upstream commit 99360d9620f09fb8bc15548d855011bbb198c680 ]
 
-After calling ethtool -g it was not possible to adjust the TX ring
-size again:
+Interface 4 is used by for QMI interface in stock firmware of MF28D, the
+router which uses MF290 modem. Rebind it to qmi_wwan after freeing it up
+from option driver.
+The proper configuration is:
 
-  # ethtool -g eth1
-  Ring parameters for eth1:
-  Pre-set maximums:
-  RX:		4
-  RX Mini:	n/a
-  RX Jumbo:	n/a
-  TX:		10
-  Current hardware settings:
-  RX:		4
-  RX Mini:	n/a
-  RX Jumbo:	n/a
-  TX:		10
-  # ethtool -G eth1 tx 8
-  netlink error: Invalid argument
+Interface mapping is:
+0: QCDM, 1: (unknown), 2: AT (PCUI), 2: AT (Modem), 4: QMI
 
-The reason for this is that the readonly setting rx_pending get
-initialized and after that the range check in qcaspi_set_ringparam()
-fails regardless of the provided parameter. So fix this by accepting
-the exposed RX defaults. Instead of adding another magic number
-better use a new define here.
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  4 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=19d2 ProdID=0189 Rev= 0.00
+S:  Manufacturer=ZTE, Incorporated
+S:  Product=ZTE LTE Technologies MSM
+C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
+E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
 
-Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20231206141222.52029-3-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Bjørn Mork <bjorn@mork.no>
+Signed-off-by: Lech Perczak <lech.perczak@gmail.com>
+Link: https://lore.kernel.org/r/20231117231918.100278-3-lech.perczak@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/qca_debug.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/qualcomm/qca_debug.c b/drivers/net/ethernet/qualcomm/qca_debug.c
-index 858c39cdae08a..acb60721991d8 100644
---- a/drivers/net/ethernet/qualcomm/qca_debug.c
-+++ b/drivers/net/ethernet/qualcomm/qca_debug.c
-@@ -30,6 +30,8 @@
- 
- #define QCASPI_MAX_REGS 0x20
- 
-+#define QCASPI_RX_MAX_FRAMES 4
-+
- static const u16 qcaspi_spi_regs[] = {
- 	SPI_REG_BFR_SIZE,
- 	SPI_REG_WRBUF_SPC_AVA,
-@@ -266,9 +268,9 @@ qcaspi_get_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
- {
- 	struct qcaspi *qca = netdev_priv(dev);
- 
--	ring->rx_max_pending = 4;
-+	ring->rx_max_pending = QCASPI_RX_MAX_FRAMES;
- 	ring->tx_max_pending = TX_RING_MAX_LEN;
--	ring->rx_pending = 4;
-+	ring->rx_pending = QCASPI_RX_MAX_FRAMES;
- 	ring->tx_pending = qca->txr.count;
- }
- 
-@@ -277,7 +279,7 @@ qcaspi_set_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
- {
- 	struct qcaspi *qca = netdev_priv(dev);
- 
--	if ((ring->rx_pending) ||
-+	if (ring->rx_pending != QCASPI_RX_MAX_FRAMES ||
- 	    (ring->rx_mini_pending) ||
- 	    (ring->rx_jumbo_pending))
- 		return -EINVAL;
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 880aa7f6a779c..c6a1129d6274e 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1242,6 +1242,7 @@ static const struct usb_device_id products[] = {
+ 	{QMI_FIXED_INTF(0x19d2, 0x0168, 4)},
+ 	{QMI_FIXED_INTF(0x19d2, 0x0176, 3)},
+ 	{QMI_FIXED_INTF(0x19d2, 0x0178, 3)},
++	{QMI_FIXED_INTF(0x19d2, 0x0189, 4)},    /* ZTE MF290 */
+ 	{QMI_FIXED_INTF(0x19d2, 0x0191, 4)},	/* ZTE EuFi890 */
+ 	{QMI_FIXED_INTF(0x19d2, 0x0199, 1)},	/* ZTE MF820S */
+ 	{QMI_FIXED_INTF(0x19d2, 0x0200, 1)},
 -- 
 2.43.0
 
