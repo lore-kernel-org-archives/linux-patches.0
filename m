@@ -1,127 +1,190 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5694B129EF7;
-	Mon, 18 Dec 2023 13:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213431D12F;
+	Mon, 18 Dec 2023 13:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBeqFDaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C10C433C8;
-	Mon, 18 Dec 2023 13:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3DtA0nl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA44C433C8;
+	Mon, 18 Dec 2023 13:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907492;
-	bh=MBpoM3H3lX/EydImaLRu1cOTOGzRKFE049VrfEm9FEw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBeqFDaUDWlQt3MQiQJqrDmy1ERBAVHoU2skPnXMXHbEd9+OixnaphEXIDs+p332j
-	 8PSmjGNUSPi+GMAj9WszB1A0R9r7827gTt+6oXWvJDP02tB4MMskRsSTYQoJeV27Uu
-	 likQES+R+ce10jBxMNcrd3ipxtnYHJTA/MUDI70A=
+	s=korg; t=1702907495;
+	bh=eZKmGMJ7sIrZOFHe3BiyHmtwQb8aCdsQ155Btda4VcU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=J3DtA0nlwasLFxiVBY8KXWrSQwRb/VXkOf+RjrNe1dwDm0478d4CoW4oxbLvCvkSd
+	 H2wEfhKrxOClIKOxiPfy7LsDqgh5kX0MV1vg54cKXHAcF7Jl64Vwgy5/D1vYG5eZKG
+	 JxGLGmeBCt3e4x2cVyiqnK7jslpsO9bBWbKCuxAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 01/26] qca_debug: Prevent crash on TX ring changes
-Date: Mon, 18 Dec 2023 14:51:03 +0100
-Message-ID: <20231218135040.713232953@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: [PATCH 4.14 00/26] 4.14.334-rc1 review
+Date: Mon, 18 Dec 2023 14:51:02 +0100
+Message-ID: <20231218135040.665690087@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
-References: <20231218135040.665690087@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.334-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.334-rc1
+X-KernelTest-Deadline: 2023-12-20T13:50+00:00
 Content-Transfer-Encoding: 8bit
 
-4.14-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 4.14.334 release.
+There are 26 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Wed, 20 Dec 2023 13:50:31 +0000.
+Anything received after that time might be too late.
 
-From: Stefan Wahren <wahrenst@gmx.net>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.334-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-[ Upstream commit f4e6064c97c050bd9904925ff7d53d0c9954fc7b ]
+thanks,
 
-The qca_spi driver stop and restart the SPI kernel thread
-(via ndo_stop & ndo_open) in case of TX ring changes. This is
-a big issue because it allows userspace to prevent restart of
-the SPI kernel thread (via signals). A subsequent change of
-TX ring wrongly assume a valid spi_thread pointer which result
-in a crash.
+greg k-h
 
-So prevent this by stopping the network traffic handling and
-temporary park the SPI thread.
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20231206141222.52029-2-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/qualcomm/qca_debug.c |  9 ++++-----
- drivers/net/ethernet/qualcomm/qca_spi.c   | 12 ++++++++++++
- 2 files changed, 16 insertions(+), 5 deletions(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.334-rc1
 
-diff --git a/drivers/net/ethernet/qualcomm/qca_debug.c b/drivers/net/ethernet/qualcomm/qca_debug.c
-index 92b6be9c44296..858c39cdae08a 100644
---- a/drivers/net/ethernet/qualcomm/qca_debug.c
-+++ b/drivers/net/ethernet/qualcomm/qca_debug.c
-@@ -275,7 +275,6 @@ qcaspi_get_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
- static int
- qcaspi_set_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
- {
--	const struct net_device_ops *ops = dev->netdev_ops;
- 	struct qcaspi *qca = netdev_priv(dev);
- 
- 	if ((ring->rx_pending) ||
-@@ -283,14 +282,14 @@ qcaspi_set_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
- 	    (ring->rx_jumbo_pending))
- 		return -EINVAL;
- 
--	if (netif_running(dev))
--		ops->ndo_stop(dev);
-+	if (qca->spi_thread)
-+		kthread_park(qca->spi_thread);
- 
- 	qca->txr.count = max_t(u32, ring->tx_pending, TX_RING_MIN_LEN);
- 	qca->txr.count = min_t(u16, qca->txr.count, TX_RING_MAX_LEN);
- 
--	if (netif_running(dev))
--		ops->ndo_open(dev);
-+	if (qca->spi_thread)
-+		kthread_unpark(qca->spi_thread);
- 
- 	return 0;
- }
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
-index 0c454eeb3bd8e..4142554dc29e3 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.c
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.c
-@@ -552,6 +552,18 @@ qcaspi_spi_thread(void *data)
- 	netdev_info(qca->net_dev, "SPI thread created\n");
- 	while (!kthread_should_stop()) {
- 		set_current_state(TASK_INTERRUPTIBLE);
-+		if (kthread_should_park()) {
-+			netif_tx_disable(qca->net_dev);
-+			netif_carrier_off(qca->net_dev);
-+			qcaspi_flush_tx_ring(qca);
-+			kthread_parkme();
-+			if (qca->sync == QCASPI_SYNC_READY) {
-+				netif_carrier_on(qca->net_dev);
-+				netif_wake_queue(qca->net_dev);
-+			}
-+			continue;
-+		}
-+
- 		if ((qca->intr_req == qca->intr_svc) &&
- 		    !qca->txr.skb[qca->txr.head])
- 			schedule();
--- 
-2.43.0
+Naveen N Rao <naveen@kernel.org>
+    powerpc/ftrace: Fix stack teardown in ftrace_no_trace
 
+Naveen N Rao <naveen@kernel.org>
+    powerpc/ftrace: Create a dummy stackframe to fix stack unwind
+
+Steven Rostedt (Google) <rostedt@goodmis.org>
+    ring-buffer: Fix memory leak of free page
+
+Florent Revest <revest@chromium.org>
+    team: Fix use-after-free when an option instance allocation fails
+
+Baokun Li <libaokun1@huawei.com>
+    ext4: prevent the normalized size from exceeding EXT_MAX_BLOCKS
+
+Denis Benato <benato.denis96@gmail.com>
+    HID: hid-asus: add const to read-only outgoing usb buffer
+
+Lech Perczak <lech.perczak@gmail.com>
+    net: usb: qmi_wwan: claim interface 4 for ZTE MF290
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    asm-generic: qspinlock: fix queued_spin_value_unlocked() implementation
+
+Aoba K <nexp_0x17@outlook.com>
+    HID: multitouch: Add quirk for HONOR GLO-GXXX touchpad
+
+Denis Benato <benato.denis96@gmail.com>
+    HID: hid-asus: reset the backlight brightness level on resume
+
+Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+    platform/x86: intel_telemetry: Fix kernel doc descriptions
+
+Coly Li <colyli@suse.de>
+    bcache: add code comments for bch_btree_node_get() and __bch_btree_node_alloc()
+
+Ming Lei <ming.lei@redhat.com>
+    blk-throttle: fix lockdep warning of "cgroup_mutex or RCU read lock required!"
+
+Jens Axboe <axboe@kernel.dk>
+    cred: switch to using atomic_long_t
+
+Hyunwoo Kim <v4bel@theori.io>
+    appletalk: Fix Use-After-Free in atalk_ioctl
+
+Nikolay Kuratov <kniv@yandex-team.ru>
+    vsock/virtio: Fix unsigned integer wrap around in virtio_transport_has_space()
+
+Yusong Gao <a869920004@gmail.com>
+    sign-file: Fix incorrect return values check
+
+Dong Chenchen <dongchenchen2@huawei.com>
+    net: Remove acked SYN flag from packet in the transmit queue correctly
+
+Dinghao Liu <dinghao.liu@zju.edu.cn>
+    qed: Fix a potential use-after-free in qed_cxt_tables_alloc
+
+Hyunwoo Kim <v4bel@theori.io>
+    net/rose: Fix Use-After-Free in rose_ioctl
+
+Hyunwoo Kim <v4bel@theori.io>
+    atm: Fix Use-After-Free in do_vcc_ioctl
+
+Chengfeng Ye <dg573847474@gmail.com>
+    atm: solos-pci: Fix potential deadlock on &tx_queue_lock
+
+Chengfeng Ye <dg573847474@gmail.com>
+    atm: solos-pci: Fix potential deadlock on &cli_queue_lock
+
+Stefan Wahren <wahrenst@gmx.net>
+    qca_spi: Fix reset behavior
+
+Stefan Wahren <wahrenst@gmx.net>
+    qca_debug: Fix ethtool -G iface tx behavior
+
+Stefan Wahren <wahrenst@gmx.net>
+    qca_debug: Prevent crash on TX ring changes
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                       |  4 +-
+ arch/powerpc/kernel/trace/ftrace_64_mprofile.S |  9 +++-
+ block/blk-throttle.c                           |  2 +
+ drivers/atm/solos-pci.c                        |  8 ++--
+ drivers/hid/hid-asus.c                         | 25 ++++++++--
+ drivers/hid/hid-multitouch.c                   |  5 ++
+ drivers/md/bcache/btree.c                      |  7 +++
+ drivers/net/ethernet/qlogic/qed/qed_cxt.c      |  1 +
+ drivers/net/ethernet/qualcomm/qca_debug.c      | 17 +++----
+ drivers/net/ethernet/qualcomm/qca_spi.c        | 20 +++++++-
+ drivers/net/team/team.c                        |  4 +-
+ drivers/net/usb/qmi_wwan.c                     |  1 +
+ drivers/platform/x86/intel_telemetry_core.c    |  4 +-
+ fs/ext4/mballoc.c                              |  4 ++
+ include/asm-generic/qspinlock.h                |  2 +-
+ include/linux/cred.h                           |  6 +--
+ kernel/cred.c                                  | 66 +++++++++++++-------------
+ kernel/trace/ring_buffer.c                     |  2 +
+ net/appletalk/ddp.c                            |  9 ++--
+ net/atm/ioctl.c                                |  7 ++-
+ net/ipv4/tcp_output.c                          |  6 +++
+ net/rose/af_rose.c                             |  4 +-
+ net/vmw_vsock/virtio_transport_common.c        |  2 +-
+ scripts/sign-file.c                            | 12 ++---
+ 24 files changed, 152 insertions(+), 75 deletions(-)
 
 
