@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568BC129EFB;
-	Mon, 18 Dec 2023 13:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C79B129ED2;
+	Mon, 18 Dec 2023 13:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHfq9v+8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07DBC433C7;
-	Mon, 18 Dec 2023 13:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPNlOVrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D68C433C8;
+	Mon, 18 Dec 2023 13:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907547;
-	bh=fv1LUMeHn87FoDiC57ATkI2zkABPI0peecSWZ0LtO6Q=;
+	s=korg; t=1702907549;
+	bh=nrd24P3XkG4XpB80ROyM3Gr5HVMzCLsWZRyBAMnuZCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHfq9v+8piXfmYtxuRZ+QC6/ayMjJXqEIGqKbqGk/WehyynWXt7bti+XQoOpfOjWP
-	 PaC3Sf0IX7Z4KwgSAWumtwgCvZWlkMPsazSaP9qGnmP5BYH7SoX8z0AhOUHqmPnIYD
-	 OJxYDmgkLENHPNdIfSW4IDzrj3SG24d+zFrnKnv4=
+	b=IPNlOVrVpeK/LK3VaqnoLlfgAOOmQzkJgmXOzO7XLnzYfYYRAag+a3Hwmo+pwQqF0
+	 iceika/6wL9MRQpfjLHID1qMr+zc8rEwP2yVzHySQ5Qq7VZ1rGDWjygZEmanBZMJ26
+	 j1WuDf5g/E0Xz41UnMjPx36ArD3VU3fOtMbT/RLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen N Rao <naveen@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 4.14 26/26] powerpc/ftrace: Fix stack teardown in ftrace_no_trace
-Date: Mon, 18 Dec 2023 14:51:28 +0100
-Message-ID: <20231218135041.635307293@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 03/26] qca_spi: Fix reset behavior
+Date: Mon, 18 Dec 2023 14:51:05 +0100
+Message-ID: <20231218135040.782213156@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
 References: <20231218135040.665690087@linuxfoundation.org>
@@ -41,38 +42,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit 4b3338aaa74d7d4ec5b6734dc298f0db94ec83d2 upstream.
+[ Upstream commit 1057812d146dd658c9a9a96d869c2551150207b5 ]
 
-Commit 41a506ef71eb ("powerpc/ftrace: Create a dummy stackframe to fix
-stack unwind") added use of a new stack frame on ftrace entry to fix
-stack unwind. However, the commit missed updating the offset used while
-tearing down the ftrace stack when ftrace is disabled. Fix the same.
+In case of a reset triggered by the QCA7000 itself, the behavior of the
+qca_spi driver was not quite correct:
+- in case of a pending RX frame decoding the drop counter must be
+  incremented and decoding state machine reseted
+- also the reset counter must always be incremented regardless of sync
+  state
 
-In addition, the commit missed saving the correct stack pointer in
-pt_regs. Update the same.
-
-Fixes: 41a506ef71eb ("powerpc/ftrace: Create a dummy stackframe to fix stack unwind")
-Cc: stable@vger.kernel.org # v6.5+
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231130065947.2188860-1-naveen@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20231206141222.52029-4-wahrenst@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/trace/ftrace_64_mprofile.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/qualcomm/qca_spi.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
-+++ b/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
-@@ -54,7 +54,7 @@ _GLOBAL(ftrace_caller)
- 	SAVE_10GPRS(22, r1)
+diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
+index 4142554dc29e3..201da9fba72a6 100644
+--- a/drivers/net/ethernet/qualcomm/qca_spi.c
++++ b/drivers/net/ethernet/qualcomm/qca_spi.c
+@@ -592,11 +592,17 @@ qcaspi_spi_thread(void *data)
+ 			if (intr_cause & SPI_INT_CPU_ON) {
+ 				qcaspi_qca7k_sync(qca, QCASPI_EVENT_CPUON);
  
- 	/* Save previous stack pointer (r1) */
--	addi	r8, r1, SWITCH_FRAME_SIZE
-+	addi	r8, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
- 	std	r8, GPR1(r1)
++				/* Frame decoding in progress */
++				if (qca->frm_handle.state != qca->frm_handle.init)
++					qca->net_dev->stats.rx_dropped++;
++
++				qcafrm_fsm_init_spi(&qca->frm_handle);
++				qca->stats.device_reset++;
++
+ 				/* not synced. */
+ 				if (qca->sync != QCASPI_SYNC_READY)
+ 					continue;
  
- 	/* Load special regs for save below */
+-				qca->stats.device_reset++;
+ 				netif_wake_queue(qca->net_dev);
+ 				netif_carrier_on(qca->net_dev);
+ 			}
+-- 
+2.43.0
+
 
 
