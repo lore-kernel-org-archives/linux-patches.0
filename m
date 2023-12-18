@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B5337871;
-	Mon, 18 Dec 2023 14:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A92E42384;
+	Mon, 18 Dec 2023 14:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBdwmVee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D76C433C8;
-	Mon, 18 Dec 2023 14:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfFsn+aU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E98C433C7;
+	Mon, 18 Dec 2023 14:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908552;
-	bh=FzZxogXq5csbRhOmfjycI53Se0IVMut74hIZg+YWJ8U=;
+	s=korg; t=1702908555;
+	bh=EDU0KAQ3Odb/gR9zBE6VlII3ZiDYQVYHV3osG4kAkI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eBdwmVeeK889xQW8H3ivs6jKyH5dJu4uQL1ReS2v6boJxV/1Vq07PIN4DOsqxwlPc
-	 TAcOXAi1tiVoKVnbKsAnNaqsSJi0+bMG5+g0kGw94FBDttBvY63WCB3OQykwBoTn58
-	 s334ReFGh0LD2HfdSJej83Lb4tB0dNQUI9pfzpoc=
+	b=ZfFsn+aUc1t1/gx5ruiyJNqxzUEFUNSWOSfivAOPi8N4A5wD52+X1Ct0YvnkZCEmP
+	 h4B5QMCP0A9FY8WzTi9X3gSnd8as72DaHoszKAWX+EUy+a3dngF/CrSkE6QJQule3W
+	 rSUGE+ae6zMHe0ji3JiekmhikmxL+idwOIvblom0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 44/62] asm-generic: qspinlock: fix queued_spin_value_unlocked() implementation
-Date: Mon, 18 Dec 2023 14:52:08 +0100
-Message-ID: <20231218135048.207439819@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 53/62] tracing: Update snapshot buffer on resize if it is allocated
+Date: Mon, 18 Dec 2023 14:52:17 +0100
+Message-ID: <20231218135048.592785400@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -44,50 +43,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 125b0bb95dd6bec81b806b997a4ccb026eeecf8f ]
+commit d06aff1cb13d2a0d52b48e605462518149c98c81 upstream.
 
-We really don't want to do atomic_read() or anything like that, since we
-already have the value, not the lock.  The whole point of this is that
-we've loaded the lock from memory, and we want to check whether the
-value we loaded was a locked one or not.
+The snapshot buffer is to mimic the main buffer so that when a snapshot is
+needed, the snapshot and main buffer are swapped. When the snapshot buffer
+is allocated, it is set to the minimal size that the ring buffer may be at
+and still functional. When it is allocated it becomes the same size as the
+main ring buffer, and when the main ring buffer changes in size, it should
+do.
 
-The main use of this is the lockref code, which loads both the lock and
-the reference count in one atomic operation, and then works on that
-combined value.  With the atomic_read(), the compiler would pointlessly
-spill the value to the stack, in order to then be able to read it back
-"atomically".
+Currently, the resize only updates the snapshot buffer if it's used by the
+current tracer (ie. the preemptirqsoff tracer). But it needs to be updated
+anytime it is allocated.
 
-This is the qspinlock version of commit c6f4a9002252 ("asm-generic:
-ticket-lock: Optimize arch_spin_value_unlocked()") which fixed this same
-bug for ticket locks.
+When changing the size of the main buffer, instead of looking to see if
+the current tracer is utilizing the snapshot buffer, just check if it is
+allocated to know if it should be updated or not.
 
-Cc: Guo Ren <guoren@kernel.org>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Link: https://lore.kernel.org/all/CAHk-=whNRv0v6kQiV5QO6DJhjH4KEL36vWQ6Re8Csrnh4zbRkQ@mail.gmail.com/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also fix typo in comment just above the code change.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20231210225447.48476a6a@rorschach.local.home
+
+Cc: stable@vger.kernel.org
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: ad909e21bbe69 ("tracing: Add internal tracing_snapshot() functions")
+Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/qspinlock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/asm-generic/qspinlock.h b/include/asm-generic/qspinlock.h
-index 4fe7fd0fe834d..d1ddbcf71791d 100644
---- a/include/asm-generic/qspinlock.h
-+++ b/include/asm-generic/qspinlock.h
-@@ -41,7 +41,7 @@ static __always_inline int queued_spin_is_locked(struct qspinlock *lock)
-  */
- static __always_inline int queued_spin_value_unlocked(struct qspinlock lock)
- {
--	return !atomic_read(&lock.val);
-+	return !lock.val.counter;
- }
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5905,7 +5905,7 @@ static int __tracing_resize_ring_buffer(
+ 	if (!tr->array_buffer.buffer)
+ 		return 0;
  
- /**
--- 
-2.43.0
-
+-	/* Do not allow tracing while resizng ring buffer */
++	/* Do not allow tracing while resizing ring buffer */
+ 	tracing_stop_tr(tr);
+ 
+ 	ret = ring_buffer_resize(tr->array_buffer.buffer, size, cpu);
+@@ -5913,7 +5913,7 @@ static int __tracing_resize_ring_buffer(
+ 		goto out_start;
+ 
+ #ifdef CONFIG_TRACER_MAX_TRACE
+-	if (!tr->current_trace->use_max_tr)
++	if (!tr->allocated_snapshot)
+ 		goto out;
+ 
+ 	ret = ring_buffer_resize(tr->max_buffer.buffer, size, cpu);
 
 
