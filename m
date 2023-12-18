@@ -1,30 +1,44 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AFD4EB2F
-	for <patches@lists.linux.dev>; Mon, 18 Dec 2023 12:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D4C129ECC
+	for <patches@lists.linux.dev>; Mon, 18 Dec 2023 13:33:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VMt5W2sj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41ECC433C9
-	for <patches@lists.linux.dev>; Mon, 18 Dec 2023 12:10:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702901412;
-	bh=dVhbJOfI8GErd5dfLBSnmMb7qs6cI4l8iJg2KjHOMTw=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=VMt5W2sjKUFRbmlF0uFTyH5aFKb5Dg3BXypmyT9/0lPMZxs/w7zE9tnZEociYvRD8
-	 Weo9zfxOvZXT48e47NOG58a08J7S9gWE24Q4BPlIkiYXQmb3dOramC1NjiCQ1r52s0
-	 0oDJPMUccdKYjsdMHRNORc60OdGKrtimY/S2va9WAVssULJY6fZ8OFwlPU/AXNz0Q9
-	 F8dFXVthcguRVQa7nk3EtX+92U85Ftd/lvmbzUZ+IQQVxC058HE7p7eILnY/JEXFcf
-	 qH3Y9Aa0i3gWlmiriwRY/XFcZi/pGT0ieu2OXZIrPfCwgd5hku0oJOvq1QhiJ9Byx+
-	 kOEtts5GoGUow==
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3b9e2a5e8faso1261363b6e.1
-        for <patches@lists.linux.dev>; Mon, 18 Dec 2023 04:10:12 -0800 (PST)
-X-Gm-Message-State: AOJu0YzeoAT2+oj5pHy2Cm0/MOE0zsymx4qIsDVlUkUFbvEvKmrqKcqx
-	AuzQi9lPLzMz7kGojZ0vd/IVGqAY86aKpLsU96g=
-X-Google-Smtp-Source: AGHT+IEZW3FQNw/4Vt+xM4dZm5GhhaMkBP3+ahQQDb7BO00WfUFjHcGrZ093eN/yg5n2w9j+/L5OcrfKTE6mzJ7gtRA=
-X-Received: by 2002:a05:6808:f8b:b0:3ba:2508:abb1 with SMTP id
- o11-20020a0568080f8b00b003ba2508abb1mr3648183oiw.55.1702901412011; Mon, 18
- Dec 2023 04:10:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PytwWA3v"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-5e7415df4d6so1620567b3.0
+        for <patches@lists.linux.dev>; Mon, 18 Dec 2023 05:33:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702906414; x=1703511214; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/XTxombejJvrSz1c0NBYh3w/CnJqcWskHUIi/zqhoTE=;
+        b=PytwWA3vXuk5YqIDqehfJfxLN3kwmnV9dKspBI60h2682LLP5xjSLOXkFjyhJ/v052
+         Gh+jUZo+NwcHjCcwKzdDjJzE3t8WRJni1Vce+ySMChdXsW9B+VQEcgUBVZ8TDAAa/Ihb
+         2hMjv6kDZW/KA7L2A5nicQDK5jXxMML+76pUSfhy+5fOjbz9WnDY/YG4XzQLYK5zoZ+M
+         xd9RFEsJIs6cuIJDRgpAmdTt3WFA7CwpOfulI/4TaQBAh/hW7waGkuL68V/6cBwiCJGi
+         ERNKwdQ0T0jIBstmZj5gKd1qbZZEZF3Yd7lDbUNSxRdNKjHPg7v7/KtnrBdETYkz4/08
+         38pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702906414; x=1703511214;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/XTxombejJvrSz1c0NBYh3w/CnJqcWskHUIi/zqhoTE=;
+        b=LtccQ3kOAPnEi6UNbXjORGjsbSvW/osEOEYPSdsOW2LJmJ44juj+0ZnJ1ySMdxPIdB
+         qgrnGm48ZSwD3YIxuDVttPFSK1TEjQ019SbD7OJDyTWogl+WCRltu2MrViEESwEi4ASH
+         6cv9r0Ii/NFyC+Ncl9vBBZAGWG+QnuM4TQ2dx0xJZcjQ1WM/zLDmgoHkq2OVQ5jyAXbH
+         Hxvw9bXIJ3Ysq5EPBfYIXoEavXWeut5f2hy1NgsFyTrHH/Miqm2RlmMuGfGANDsjleUg
+         +4sxrmHxLkHeUEuzz/nf4Bif1IEtKJ7IseW2dOdMm/YdsiJV9YMxC47MWUUOx0si8VbJ
+         MP2g==
+X-Gm-Message-State: AOJu0YxHusnlpsczMkvFNHqGnPhkKX68/w6KrORQKn950LjIdTaup86A
+	Z/GuWeUTSu7to0Ut03tJqR2Y2SO6gxSQsiIW05g=
+X-Google-Smtp-Source: AGHT+IEgynr5hzCh0Yha5bdcybxD+4XDoDnyLoi/Bwrt1GyqD5BuO0u/e2Nyf02WVuvJdzMUrAZd3A7000NFrBCts2s=
+X-Received: by 2002:a0d:d241:0:b0:5d7:1a33:5ad7 with SMTP id
+ u62-20020a0dd241000000b005d71a335ad7mr10904091ywd.36.1702906414703; Mon, 18
+ Dec 2023 05:33:34 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -32,14 +46,13 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20231214222253.116734-1-ojeda@kernel.org> <CABVgOS=LXUzRD-c63sxn0FMfGWvxCPP1t_8nY5Xgk30Y9qMAcw@mail.gmail.com>
- <CANiq72kw326HyrDM0v0mFNu5jfb=eL1a+k-idr-5Vbc6_gmY2A@mail.gmail.com>
-In-Reply-To: <CANiq72kw326HyrDM0v0mFNu5jfb=eL1a+k-idr-5Vbc6_gmY2A@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Mon, 18 Dec 2023 21:09:34 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAQ7A79fMg3Teh7H+NRwnztrNU73s5C_fybUVH+vEX0YeQ@mail.gmail.com>
-Message-ID: <CAK7LNAQ7A79fMg3Teh7H+NRwnztrNU73s5C_fybUVH+vEX0YeQ@mail.gmail.com>
+ <CANiq72kw326HyrDM0v0mFNu5jfb=eL1a+k-idr-5Vbc6_gmY2A@mail.gmail.com> <CAK7LNAQ7A79fMg3Teh7H+NRwnztrNU73s5C_fybUVH+vEX0YeQ@mail.gmail.com>
+In-Reply-To: <CAK7LNAQ7A79fMg3Teh7H+NRwnztrNU73s5C_fybUVH+vEX0YeQ@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 18 Dec 2023 14:33:23 +0100
+Message-ID: <CANiq72mjSVqLNrdhK6H+X2=9ydwzX3RM2jBf1AwRFngSJ2kQ9Q@mail.gmail.com>
 Subject: Re: [PATCH] kbuild: rust: add `rustupoverride` target
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+To: Masahiro Yamada <masahiroy@kernel.org>
 Cc: David Gow <davidgow@google.com>, Miguel Ojeda <ojeda@kernel.org>, 
 	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
@@ -52,114 +65,31 @@ Cc: David Gow <davidgow@google.com>, Miguel Ojeda <ojeda@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 15, 2023 at 8:27=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
+On Mon, Dec 18, 2023 at 1:10=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.o=
+rg> wrote:
 >
-> On Fri, Dec 15, 2023 at 8:38=E2=80=AFAM David Gow <davidgow@google.com> w=
-rote:
-> >
-> > Would having similar targets for bindgen help? What about having this
-> > install rust-src? Updating / installing those required a lot more
-> > looking up of documentation (and then adding --force), so it'd be nice
-> > if there were some way to do a similar override or make target.
->
-> Which docs did you need to check? i.e. we have the commands for those
-> steps in the Quick Start guide. I think you may be referring to the
-> case when switching between LTS and mainline, due to the `bindgen-cli`
-> vs. `bindgen` name change that the tool did (since that is where
-> `--force` is required, not for normal upgrading or downgrading). That
-> is definitely a bit painful :-( At least `cargo` mentions the need for
-> `--force` in that case. Or are you referring to something else?
->
-> I considered having a `rustupsetup` target (or script) instead that
-> does everything (with a `BUILDONLY=3D1` option or similar, given some
-> dependencies are not strictly needed for building), since having all
-> this "switching logic" is useful, but then:
->
->   - I am not sure we should "hide" the details of the setup too much:
-> I thought `rustupoverride` would be OK-ish because the output
-> directory is needed (so it is justified) and the command is
-> straightforward, but the others do not "need" that information.
->
->   - If we include `bindgen` there, it wouldn't be `rustup`-only
-> anymore, so perhaps we would need another name like `rustsetup`. But
-> that may mislead others (e.g. those looking at the Make help), because
-> it is just one way of setting things up and it is not required.
-> Perhaps this can be alleviated by not including it in the `make help`,
-> so that everybody comes from the Quick Start guide and thus hopefully
-> they have read the document at least diagonally :)
->
->   - Given there are different ways to set different sub-steps, and the
-> fact that we don't have such a script for C does not have (please
-> correct me if I am wrong -- I am aware of Thorsten's recent guide,
-> which covers `apt` etc., but that is a Quick Start-like approach
-> rather than automated script), I am not sure it would be welcome as a
-> Make target (but perhaps it would be fine as a script?). Masahiro may
-> have some guidelines here.
+> In principle, Kbuild does not require internet connection,
+> or proactively change the system setting.
 
+Yeah, that was what I thought. I agree it can be surprising to have
+Make targets that modify environment/system-level bits (i.e. affecting
+things outside the build).
 
+> Rather, I will manually do this one time for the parent directory:
 
-'make rustupoverride' potentially requires internet connection
-if the required rustc version is not yet installed on the system.
+That can work for many people, yeah. Though I imagine some people may
+want to keep builds (and sources) of different kernel versions in the
+same parent folder (or even other projects). But one can use nested
+overrides too.
 
-Even if it is already installed, it changes ~/.rustup/settings.toml.
+> If you want to provide a way for automated settings,
+> you can do it in a script you maintain.
 
+Sounds good. In that case, we can send to the list your patch from the
+`rust` branch if that is OK with you (i.e. I understand you would
+prefer to avoid not just `rustsetup` but also `rustupoverride`).
 
-If I do rustupoverride per-directory,
+Thanks Masahiro!
 
-$ make O=3D~/kernel/build0 rustupoverride
-$ make O=3D~/kernel/build1 rustupoverride
-$ make O=3D~/kernel/build2 rustupoverride
-
-it would accumulate the overrides entries in ~/.rustup/settings.toml
-
-
-Rather, I will manually do this one time for the parent directory:
-
-$ rustup override set --path=3D/~kernel $(scripts/min-tool-version.sh rustc=
-)
-
-
-and use ~/kernel/build0, ~/kernel/build1, ~/kernel/build2
-as output directories.
-
-
-
-In principle, Kbuild does not require internet connection,
-or proactively change the system setting.
-
-If you want to provide a way for automated settings,
-you can do it in a script you maintain.
-
-
-
-
-
-
-
-
->   - In the future we may have to change how the setup works or add
-> steps, i.e. it is not 100% settled. Thus I am concerned about adding
-> complex Make targets that users may start to depend on (i.e. with
-> particular/complex semantics), vs. just having docs that are manual.
-> For `rustupoverride`, it thought it could be OK-ish because it is just
-> a single command and unlikely that it will change (and if we stop
-> using it, we can make it empty with a warning and then remove it
-> eventually; while it gets harder for more complex ones).
->
-> What do you think?
->
-> Cheers,
-> Miguel
-
-
-
-
-
-
-
-
-
---
-Best Regards
-Masahiro Yamada
+Cheers,
+Miguel
