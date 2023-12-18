@@ -1,111 +1,73 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8298442392;
-	Mon, 18 Dec 2023 16:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E7A5A84D
+	for <patches@lists.linux.dev>; Mon, 18 Dec 2023 17:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YUa8SDEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F56EC433CA;
-	Mon, 18 Dec 2023 16:55:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702918556;
-	bh=XxYFNWhdg6eNVhPoZXUc3S141TGv0s2xTcNREUNTq7o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YUa8SDEL75yXavrxPAYBpehaZiKrcorHkBA1Wj8WefvK3li6SRC3XDFYV8QlYMW76
-	 tvULE9CwNEEMCIV6xWZvLTW8tfqKlMrPClyWKdzVbtH8goOiTK0Zwc6y4PuYOAabpY
-	 o/EDHdfU4h0GyMMMzpO3Qxcx+tBfLtlasauNZIeTki4FRxoIyLTlpG19dhMX3SmPew
-	 gOTbIlydNrIMoe7742V2XU/zikhBTBNM1GVq4GaCG4eOhExNYD9M7grJuLO5BvRBP9
-	 /flc7yzO1Pv1ru47bpeCszg73rfq0qcks2W58H1adz2cNgC07y73x3ApVDQQ2vsOVT
-	 oNMYBCsdW8WBg==
-Date: Mon, 18 Dec 2023 09:55:52 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Jonathan Corbet <corbet@lwn.net>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>, linux-doc@vger.kernel.org,
-	llvm@lists.linux.dev
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="dvw7r8bf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1702919170; x=1703178370;
+	bh=9+oJSvHYfmmWkH0v3Kj/FSy5h0xeDG9NE3IKj0YFeAU=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=dvw7r8bflGnMjCwV15sMdAHT08G5ZCxzOa8HuR48P7KHI1+HiD0Esoc9UUJPXpPJj
+	 9DhQ62QEAc92fg+JcgMDwmYSe9zv+CHig6mAa+94o1SoB2qP30l368kyWxTw1NcHZ/
+	 E0bGHXQ54djCerYJL1PT5t629FkpbutGqYIwGjjab33fLy51p6IEDVROXCz0w5O9Av
+	 fyubdSV2ZTIQC76rF0XdscX5rdZaKZFtGSYl/oFHWPXNJ1xj8Og7WnIyR7O2NDa/yy
+	 sxfRtX5ROH+GmpDlyzsiCcxsa9FF58Z9e1CO8pVZqIJtx9FFjIAsk5fekTPAyCwiFl
+	 6Ib6BFIP57lMA==
+Date: Mon, 18 Dec 2023 17:05:43 +0000
+To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Jonathan Corbet <corbet@lwn.net>, Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, linux-doc@vger.kernel.org, llvm@lists.linux.dev
 Subject: Re: [PATCH] docs: rust: remove `CC=clang` mentions
-Message-ID: <20231218165552.GA601326@dev-arch.thelio-3990X>
+Message-ID: <ba93a851-aed0-4208-b720-d74bc52c62e5@proton.me>
+In-Reply-To: <20231215124751.175191-1-ojeda@kernel.org>
 References: <20231215124751.175191-1-ojeda@kernel.org>
+Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231215124751.175191-1-ojeda@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 15, 2023 at 01:47:51PM +0100, Miguel Ojeda wrote:
-> Nowadays all architectures except s390 recommend using `LLVM=1` instead of
-> `CC=clang`, and since commit a3c6bfba4429 ("Documentation/llvm: refresh
-> docs") the Kbuild LLVM documentation makes `LLVM=1` the way to go:
-> 
->     We want to encourage the use of ``LLVM=1`` rather than just
->     ``CC=clang``. Make that suggestion "above the fold" and "front and
+On 12/15/23 13:47, Miguel Ojeda wrote:
+> Nowadays all architectures except s390 recommend using `LLVM=3D1` instead=
+ of
+> `CC=3Dclang`, and since commit a3c6bfba4429 ("Documentation/llvm: refresh
+> docs") the Kbuild LLVM documentation makes `LLVM=3D1` the way to go:
+>=20
+>     We want to encourage the use of ``LLVM=3D1`` rather than just
+>     ``CC=3Dclang``. Make that suggestion "above the fold" and "front and
 >     center" in our docs.
-> 
-> In particular, that commit removes the examples with `CC=clang`.
-> 
-> Thus do the same in the Rust Quick Start guide, i.e. remove the `CC=clang`
+>=20
+> In particular, that commit removes the examples with `CC=3Dclang`.
+>=20
+> Thus do the same in the Rust Quick Start guide, i.e. remove the `CC=3Dcla=
+ng`
 > mentions, especially since the architectures that have had their Rust
-> support upstreamed (or soon to be upstreamed) are all `LLVM=1` ones
+> support upstreamed (or soon to be upstreamed) are all `LLVM=3D1` ones
 > anyway. And perhaps by the time Rust is supported for s390 (or new
-> architectures), it may have moved to `LLVM=1` anyway. Otherwise,
+> architectures), it may have moved to `LLVM=3D1` anyway. Otherwise,
 > this can be added back if needed (or perhaps an extra link to
 > Documentation/kbuild/llvm.rst).
-> 
-> This should also help avoiding potential confusion around `CC=clang` [1].
-> 
-> Link: https://lore.kernel.org/rust-for-linux/6df6e8e5-8d5b-4d3d-91b5-bc0e90c424ea@nvidia.com/ [1]
+>=20
+> This should also help avoiding potential confusion around `CC=3Dclang` [1=
+].
+>=20
+> Link: https://lore.kernel.org/rust-for-linux/6df6e8e5-8d5b-4d3d-91b5-bc0e=
+90c424ea@nvidia.com/ [1]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Yes, the fact that no architecture that CONFIG_RUST supports requires
-CC=clang seems reason enough for this to be eliminated from the Rust
-documentation.
+Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+--=20
+Cheers,
+Benno
 
-> ---
->  Documentation/rust/quick-start.rst | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
-> index f382914f4191..75faa987079a 100644
-> --- a/Documentation/rust/quick-start.rst
-> +++ b/Documentation/rust/quick-start.rst
-> @@ -76,7 +76,7 @@ libclang
->  
->  ``libclang`` (part of LLVM) is used by ``bindgen`` to understand the C code
->  in the kernel, which means LLVM needs to be installed; like when the kernel
-> -is compiled with ``CC=clang`` or ``LLVM=1``.
-> +is compiled with ``LLVM=1``.
->  
->  Linux distributions are likely to have a suitable one available, so it is
->  best to check that first.
-> @@ -229,10 +229,6 @@ at the moment. That is::
->  
->  	make LLVM=1
->  
-> -For architectures that do not support a full LLVM toolchain, use::
-> -
-> -	make CC=clang
-> -
->  Using GCC also works for some configurations, but it is very experimental at
->  the moment.
->  
-> 
-> base-commit: a39b6ac3781d46ba18193c9dbb2110f31e9bffe9
-> -- 
-> 2.43.0
-> 
