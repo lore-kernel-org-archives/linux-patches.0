@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A89C129EC7;
-	Mon, 18 Dec 2023 14:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CE7129EC7;
+	Mon, 18 Dec 2023 14:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+bXIRqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798E9C433C8;
-	Mon, 18 Dec 2023 14:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wK8JRL1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3672EC433C8;
+	Mon, 18 Dec 2023 14:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908730;
-	bh=ujaXOElD79h/TLmHlahZgPddl8Idr2Wdc8VyRiznCLI=;
+	s=korg; t=1702908733;
+	bh=EylXFISy4rGI93RIRU46J1eWNz0ZY1N5EOseK8/xG30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+bXIRqyBv/hHHRmw7y439+u8BT/bRj41rYKRwjrJfkZaI50kjHVYsH6Toi0K70IT
-	 r4ImYtVQp1F6jHB4Tz5MbcfSWXuBincalES5PXw0ZUWe6EtRx8fPglH2CTc4j/u8ls
-	 x4K5/vRoti6fVVCv7zOZQDWw+FihxNivR3fmxoiw=
+	b=wK8JRL1ShzYfdCV1ZoRja0g4Gh9TQoOrrQoo6BfKYTxnamFgFUwa+dLhWM46udchP
+	 l9Sia8TpuOcEekvS2RRWQE4ic0Nw21vyjHhhLMf/9g+yeTV7mcNohNmlb9F0tV3Vj+
+	 JYP+ghXiUTwOkptXTZYuiuMFxvQfbUhIMeJctJMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paolo Abeni <pabeni@redhat.com>,
 	Stefan Wahren <wahrenst@gmx.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/83] qca_debug: Prevent crash on TX ring changes
-Date: Mon, 18 Dec 2023 14:51:34 +0100
-Message-ID: <20231218135050.359181721@linuxfoundation.org>
+Subject: [PATCH 5.15 14/83] qca_debug: Fix ethtool -G iface tx behavior
+Date: Mon, 18 Dec 2023 14:51:35 +0100
+Message-ID: <20231218135050.396722513@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -44,82 +45,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit f4e6064c97c050bd9904925ff7d53d0c9954fc7b ]
+[ Upstream commit 96a7e861d9e04d07febd3011c30cd84cd141d81f ]
 
-The qca_spi driver stop and restart the SPI kernel thread
-(via ndo_stop & ndo_open) in case of TX ring changes. This is
-a big issue because it allows userspace to prevent restart of
-the SPI kernel thread (via signals). A subsequent change of
-TX ring wrongly assume a valid spi_thread pointer which result
-in a crash.
+After calling ethtool -g it was not possible to adjust the TX ring
+size again:
 
-So prevent this by stopping the network traffic handling and
-temporary park the SPI thread.
+  # ethtool -g eth1
+  Ring parameters for eth1:
+  Pre-set maximums:
+  RX:		4
+  RX Mini:	n/a
+  RX Jumbo:	n/a
+  TX:		10
+  Current hardware settings:
+  RX:		4
+  RX Mini:	n/a
+  RX Jumbo:	n/a
+  TX:		10
+  # ethtool -G eth1 tx 8
+  netlink error: Invalid argument
+
+The reason for this is that the readonly setting rx_pending get
+initialized and after that the range check in qcaspi_set_ringparam()
+fails regardless of the provided parameter. So fix this by accepting
+the exposed RX defaults. Instead of adding another magic number
+better use a new define here.
 
 Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20231206141222.52029-2-wahrenst@gmx.net
+Link: https://lore.kernel.org/r/20231206141222.52029-3-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/qca_debug.c |  9 ++++-----
- drivers/net/ethernet/qualcomm/qca_spi.c   | 12 ++++++++++++
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/qualcomm/qca_debug.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/qualcomm/qca_debug.c b/drivers/net/ethernet/qualcomm/qca_debug.c
-index d59fff2fbcc63..061b08b91d1be 100644
+index 061b08b91d1be..8b61bebd96e4b 100644
 --- a/drivers/net/ethernet/qualcomm/qca_debug.c
 +++ b/drivers/net/ethernet/qualcomm/qca_debug.c
-@@ -259,7 +259,6 @@ qcaspi_get_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
- static int
- qcaspi_set_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
+@@ -30,6 +30,8 @@
+ 
+ #define QCASPI_MAX_REGS 0x20
+ 
++#define QCASPI_RX_MAX_FRAMES 4
++
+ static const u16 qcaspi_spi_regs[] = {
+ 	SPI_REG_BFR_SIZE,
+ 	SPI_REG_WRBUF_SPC_AVA,
+@@ -250,9 +252,9 @@ qcaspi_get_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
  {
--	const struct net_device_ops *ops = dev->netdev_ops;
  	struct qcaspi *qca = netdev_priv(dev);
  
- 	if ((ring->rx_pending) ||
-@@ -267,14 +266,14 @@ qcaspi_set_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
+-	ring->rx_max_pending = 4;
++	ring->rx_max_pending = QCASPI_RX_MAX_FRAMES;
+ 	ring->tx_max_pending = TX_RING_MAX_LEN;
+-	ring->rx_pending = 4;
++	ring->rx_pending = QCASPI_RX_MAX_FRAMES;
+ 	ring->tx_pending = qca->txr.count;
+ }
+ 
+@@ -261,7 +263,7 @@ qcaspi_set_ringparam(struct net_device *dev, struct ethtool_ringparam *ring)
+ {
+ 	struct qcaspi *qca = netdev_priv(dev);
+ 
+-	if ((ring->rx_pending) ||
++	if (ring->rx_pending != QCASPI_RX_MAX_FRAMES ||
+ 	    (ring->rx_mini_pending) ||
  	    (ring->rx_jumbo_pending))
  		return -EINVAL;
- 
--	if (netif_running(dev))
--		ops->ndo_stop(dev);
-+	if (qca->spi_thread)
-+		kthread_park(qca->spi_thread);
- 
- 	qca->txr.count = max_t(u32, ring->tx_pending, TX_RING_MIN_LEN);
- 	qca->txr.count = min_t(u16, qca->txr.count, TX_RING_MAX_LEN);
- 
--	if (netif_running(dev))
--		ops->ndo_open(dev);
-+	if (qca->spi_thread)
-+		kthread_unpark(qca->spi_thread);
- 
- 	return 0;
- }
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
-index a047bab1d7c7e..c8d8b85c09e85 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.c
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.c
-@@ -581,6 +581,18 @@ qcaspi_spi_thread(void *data)
- 	netdev_info(qca->net_dev, "SPI thread created\n");
- 	while (!kthread_should_stop()) {
- 		set_current_state(TASK_INTERRUPTIBLE);
-+		if (kthread_should_park()) {
-+			netif_tx_disable(qca->net_dev);
-+			netif_carrier_off(qca->net_dev);
-+			qcaspi_flush_tx_ring(qca);
-+			kthread_parkme();
-+			if (qca->sync == QCASPI_SYNC_READY) {
-+				netif_carrier_on(qca->net_dev);
-+				netif_wake_queue(qca->net_dev);
-+			}
-+			continue;
-+		}
-+
- 		if ((qca->intr_req == qca->intr_svc) &&
- 		    !qca->txr.skb[qca->txr.head])
- 			schedule();
 -- 
 2.43.0
 
