@@ -1,30 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8185137870;
-	Mon, 18 Dec 2023 13:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4C53A1AC;
+	Mon, 18 Dec 2023 13:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYzN2kle"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC65C433CA;
-	Mon, 18 Dec 2023 13:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vf/fTf6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75894C433CA;
+	Mon, 18 Dec 2023 13:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907994;
-	bh=VyU2zZ9dP+KQNsnUuDN02c+MwnF44kLiVHvoh/dFFg8=;
+	s=korg; t=1702907996;
+	bh=Ki5aaABXz7nyoA95nmejE5AIGCP2PGD7QjMc9f0RhLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYzN2kle3ODQqCJTuAGTnLgdz0EQKg14h4YKrD7zmEoK0MLGBczj6FNtlr+Yb9USH
-	 ZfGBBOW5Uu1AG41IEJKJ9h2OSuMIMIZa1YM8yVdSfSPMmLWmrM5Tpx4d440amw8P9O
-	 eVW/hSVOn/8Tp8nXYfRv9mpkp3TQlhHT/H/+y3ds=
+	b=vf/fTf6F2pdKX0kVzgggQ7pa5Wq/gU10D8cFsldZOXdlS4cSkz7+bFVvyq1gUkjKv
+	 VloTcloN1PQfd932uQ/RlH/+EaCMut226byOODuK4O205Tto/E2p99eVfoqmb/WfqI
+	 yaJ28XgcIOzFdTgXiPAvJ5s3dTdHd87OhBlbyADo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Chris Mi <cmi@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
+	Automatic Verification <verifier@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Shachar Kagan <skagan@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/166] net/mlx5e: Fix possible deadlock on mlx5e_tx_timeout_work
-Date: Mon, 18 Dec 2023 14:49:41 +0100
-Message-ID: <20231218135105.633036596@linuxfoundation.org>
+Subject: [PATCH 6.6 016/166] net/mlx5e: TC, Dont offload post action rule if not supported
+Date: Mon, 18 Dec 2023 14:49:42 +0100
+Message-ID: <20231218135105.670178789@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -43,241 +49,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Chris Mi <cmi@nvidia.com>
 
-[ Upstream commit eab0da38912ebdad922ed0388209f7eb0a5163cd ]
+[ Upstream commit ccbe33003b109f14c4dde2a4fca9c2a50c423601 ]
 
-Due to the cited patch, devlink health commands take devlink lock and
-this may result in deadlock for mlx5e_tx_reporter as it takes local
-state_lock before calling devlink health report and on the other hand
-devlink health commands such as diagnose for same reporter take local
-state_lock after taking devlink lock (see kernel log below).
+If post action is not supported, eg. ignore_flow_level is not
+supported, don't offload post action rule. Otherwise, will hit
+panic [1].
 
-To fix it, remove local state_lock from mlx5e_tx_timeout_work() before
-calling devlink_health_report() and take care to cancel the work before
-any call to close channels, which may free the SQs that should be
-handled by the work. Before cancel_work_sync(), use current_work() to
-check we are not calling it from within the work, as
-mlx5e_tx_timeout_work() itself may close the channels and reopen as part
-of recovery flow.
+Fix it by checking if post action table is valid or not.
 
-While removing state_lock from mlx5e_tx_timeout_work() keep rtnl_lock to
-ensure no change in netdev->real_num_tx_queues, but use rtnl_trylock()
-and a flag to avoid deadlock by calling cancel_work_sync() before
-closing the channels while holding rtnl_lock too.
+[1]
+[445537.863880] BUG: unable to handle page fault for address: ffffffffffffffb1
+[445537.864617] #PF: supervisor read access in kernel mode
+[445537.865244] #PF: error_code(0x0000) - not-present page
+[445537.865860] PGD 70683a067 P4D 70683a067 PUD 70683c067 PMD 0
+[445537.866497] Oops: 0000 [#1] PREEMPT SMP NOPTI
+[445537.867077] CPU: 19 PID: 248742 Comm: tc Kdump: loaded Tainted: G           O       6.5.0+ #1
+[445537.867888] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+[445537.868834] RIP: 0010:mlx5e_tc_post_act_add+0x51/0x130 [mlx5_core]
+[445537.869635] Code: c0 0d 00 00 e8 20 96 c6 d3 48 85 c0 0f 84 e5 00 00 00 c7 83 b0 01 00 00 00 00 00 00 49 89 c5 31 c0 31 d2 66 89 83 b4 01 00 00 <49> 8b 44 24 10 83 23 df 83 8b d8 01 00 00 04 48 89 83 c0 01 00 00
+[445537.871318] RSP: 0018:ffffb98741cef428 EFLAGS: 00010246
+[445537.871962] RAX: 0000000000000000 RBX: ffff8df341167000 RCX: 0000000000000001
+[445537.872704] RDX: 0000000000000000 RSI: ffffffff954844e1 RDI: ffffffff9546e9cb
+[445537.873430] RBP: ffffb98741cef448 R08: 0000000000000020 R09: 0000000000000246
+[445537.874160] R10: 0000000000000000 R11: ffffffff943f73ff R12: ffffffffffffffa1
+[445537.874893] R13: ffff8df36d336c20 R14: ffffffffffffffa1 R15: ffff8df341167000
+[445537.875628] FS:  00007fcd6564f800(0000) GS:ffff8dfa9ea00000(0000) knlGS:0000000000000000
+[445537.876425] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[445537.877090] CR2: ffffffffffffffb1 CR3: 00000003b5884001 CR4: 0000000000770ee0
+[445537.877832] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[445537.878564] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[445537.879300] PKRU: 55555554
+[445537.879797] Call Trace:
+[445537.880263]  <TASK>
+[445537.880713]  ? show_regs+0x6e/0x80
+[445537.881232]  ? __die+0x29/0x70
+[445537.881731]  ? page_fault_oops+0x85/0x160
+[445537.882276]  ? search_exception_tables+0x65/0x70
+[445537.882852]  ? kernelmode_fixup_or_oops+0xa2/0x120
+[445537.883432]  ? __bad_area_nosemaphore+0x18b/0x250
+[445537.884019]  ? bad_area_nosemaphore+0x16/0x20
+[445537.884566]  ? do_kern_addr_fault+0x8b/0xa0
+[445537.885105]  ? exc_page_fault+0xf5/0x1c0
+[445537.885623]  ? asm_exc_page_fault+0x2b/0x30
+[445537.886149]  ? __kmem_cache_alloc_node+0x1df/0x2a0
+[445537.886717]  ? mlx5e_tc_post_act_add+0x51/0x130 [mlx5_core]
+[445537.887431]  ? mlx5e_tc_post_act_add+0x30/0x130 [mlx5_core]
+[445537.888172]  alloc_flow_post_acts+0xfb/0x1c0 [mlx5_core]
+[445537.888849]  parse_tc_actions+0x582/0x5c0 [mlx5_core]
+[445537.889505]  parse_tc_fdb_actions+0xd7/0x1f0 [mlx5_core]
+[445537.890175]  __mlx5e_add_fdb_flow+0x1ab/0x2b0 [mlx5_core]
+[445537.890843]  mlx5e_add_fdb_flow+0x56/0x120 [mlx5_core]
+[445537.891491]  ? debug_smp_processor_id+0x1b/0x30
+[445537.892037]  mlx5e_tc_add_flow+0x79/0x90 [mlx5_core]
+[445537.892676]  mlx5e_configure_flower+0x305/0x450 [mlx5_core]
+[445537.893341]  mlx5e_rep_setup_tc_cls_flower+0x3d/0x80 [mlx5_core]
+[445537.894037]  mlx5e_rep_setup_tc_cb+0x5c/0xa0 [mlx5_core]
+[445537.894693]  tc_setup_cb_add+0xdc/0x220
+[445537.895177]  fl_hw_replace_filter+0x15f/0x220 [cls_flower]
+[445537.895767]  fl_change+0xe87/0x1190 [cls_flower]
+[445537.896302]  tc_new_tfilter+0x484/0xa50
 
-Kernel log:
-======================================================
-WARNING: possible circular locking dependency detected
-6.0.0-rc3_for_upstream_debug_2022_08_30_13_10 #1 Not tainted
-------------------------------------------------------
-kworker/u16:2/65 is trying to acquire lock:
-ffff888122f6c2f8 (&devlink->lock_key#2){+.+.}-{3:3}, at: devlink_health_report+0x2f1/0x7e0
-
-but task is already holding lock:
-ffff888121d20be0 (&priv->state_lock){+.+.}-{3:3}, at: mlx5e_tx_timeout_work+0x70/0x280 [mlx5_core]
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (&priv->state_lock){+.+.}-{3:3}:
-       __mutex_lock+0x12c/0x14b0
-       mlx5e_rx_reporter_diagnose+0x71/0x700 [mlx5_core]
-       devlink_nl_cmd_health_reporter_diagnose_doit+0x212/0xa50
-       genl_family_rcv_msg_doit+0x1e9/0x2f0
-       genl_rcv_msg+0x2e9/0x530
-       netlink_rcv_skb+0x11d/0x340
-       genl_rcv+0x24/0x40
-       netlink_unicast+0x438/0x710
-       netlink_sendmsg+0x788/0xc40
-       sock_sendmsg+0xb0/0xe0
-       __sys_sendto+0x1c1/0x290
-       __x64_sys_sendto+0xdd/0x1b0
-       do_syscall_64+0x3d/0x90
-       entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
--> #0 (&devlink->lock_key#2){+.+.}-{3:3}:
-       __lock_acquire+0x2c8a/0x6200
-       lock_acquire+0x1c1/0x550
-       __mutex_lock+0x12c/0x14b0
-       devlink_health_report+0x2f1/0x7e0
-       mlx5e_health_report+0xc9/0xd7 [mlx5_core]
-       mlx5e_reporter_tx_timeout+0x2ab/0x3d0 [mlx5_core]
-       mlx5e_tx_timeout_work+0x1c1/0x280 [mlx5_core]
-       process_one_work+0x7c2/0x1340
-       worker_thread+0x59d/0xec0
-       kthread+0x28f/0x330
-       ret_from_fork+0x1f/0x30
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&priv->state_lock);
-                               lock(&devlink->lock_key#2);
-                               lock(&priv->state_lock);
-  lock(&devlink->lock_key#2);
-
- *** DEADLOCK ***
-
-4 locks held by kworker/u16:2/65:
- #0: ffff88811a55b138 ((wq_completion)mlx5e#2){+.+.}-{0:0}, at: process_one_work+0x6e2/0x1340
- #1: ffff888101de7db8 ((work_completion)(&priv->tx_timeout_work)){+.+.}-{0:0}, at: process_one_work+0x70f/0x1340
- #2: ffffffff84ce8328 (rtnl_mutex){+.+.}-{3:3}, at: mlx5e_tx_timeout_work+0x53/0x280 [mlx5_core]
- #3: ffff888121d20be0 (&priv->state_lock){+.+.}-{3:3}, at: mlx5e_tx_timeout_work+0x70/0x280 [mlx5_core]
-
-stack backtrace:
-CPU: 1 PID: 65 Comm: kworker/u16:2 Not tainted 6.0.0-rc3_for_upstream_debug_2022_08_30_13_10 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-Workqueue: mlx5e mlx5e_tx_timeout_work [mlx5_core]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x57/0x7d
- check_noncircular+0x278/0x300
- ? print_circular_bug+0x460/0x460
- ? find_held_lock+0x2d/0x110
- ? __stack_depot_save+0x24c/0x520
- ? alloc_chain_hlocks+0x228/0x700
- __lock_acquire+0x2c8a/0x6200
- ? register_lock_class+0x1860/0x1860
- ? kasan_save_stack+0x1e/0x40
- ? kasan_set_free_info+0x20/0x30
- ? ____kasan_slab_free+0x11d/0x1b0
- ? kfree+0x1ba/0x520
- ? devlink_health_do_dump.part.0+0x171/0x3a0
- ? devlink_health_report+0x3d5/0x7e0
- lock_acquire+0x1c1/0x550
- ? devlink_health_report+0x2f1/0x7e0
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? find_held_lock+0x2d/0x110
- __mutex_lock+0x12c/0x14b0
- ? devlink_health_report+0x2f1/0x7e0
- ? devlink_health_report+0x2f1/0x7e0
- ? mutex_lock_io_nested+0x1320/0x1320
- ? trace_hardirqs_on+0x2d/0x100
- ? bit_wait_io_timeout+0x170/0x170
- ? devlink_health_do_dump.part.0+0x171/0x3a0
- ? kfree+0x1ba/0x520
- ? devlink_health_do_dump.part.0+0x171/0x3a0
- devlink_health_report+0x2f1/0x7e0
- mlx5e_health_report+0xc9/0xd7 [mlx5_core]
- mlx5e_reporter_tx_timeout+0x2ab/0x3d0 [mlx5_core]
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? mlx5e_reporter_tx_err_cqe+0x1b0/0x1b0 [mlx5_core]
- ? mlx5e_tx_reporter_timeout_dump+0x70/0x70 [mlx5_core]
- ? mlx5e_tx_reporter_dump_sq+0x320/0x320 [mlx5_core]
- ? mlx5e_tx_timeout_work+0x70/0x280 [mlx5_core]
- ? mutex_lock_io_nested+0x1320/0x1320
- ? process_one_work+0x70f/0x1340
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? lock_downgrade+0x6e0/0x6e0
- mlx5e_tx_timeout_work+0x1c1/0x280 [mlx5_core]
- process_one_work+0x7c2/0x1340
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? pwq_dec_nr_in_flight+0x230/0x230
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x59d/0xec0
- ? process_one_work+0x1340/0x1340
- kthread+0x28f/0x330
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: c90005b5f75c ("devlink: Hold the instance lock in health callbacks")
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Fixes: f0da4daa3413 ("net/mlx5e: Refactor ct to use post action infrastructure")
+Signed-off-by: Chris Mi <cmi@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Automatic Verification <verifier@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Shachar Kagan <skagan@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h  |  1 +
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 27 ++++++++++++++++---
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ .../mellanox/mlx5/core/en/tc/post_act.c       |  6 +++++
+ .../net/ethernet/mellanox/mlx5/core/en_tc.c   | 25 ++++++++++++++++---
+ 2 files changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index 86f2690c5e015..20a6bc1a234f4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -818,6 +818,7 @@ enum {
- 	MLX5E_STATE_DESTROYING,
- 	MLX5E_STATE_XDP_TX_ENABLED,
- 	MLX5E_STATE_XDP_ACTIVE,
-+	MLX5E_STATE_CHANNELS_ACTIVE,
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.c
+index 4e923a2874aef..86bf007fd05b7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.c
+@@ -83,6 +83,9 @@ mlx5e_tc_post_act_offload(struct mlx5e_post_act *post_act,
+ 	struct mlx5_flow_spec *spec;
+ 	int err;
  
- struct mlx5e_modify_sq_param {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index acb40770cf0cf..c3961c2bbc57c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -2668,6 +2668,7 @@ void mlx5e_close_channels(struct mlx5e_channels *chs)
- {
- 	int i;
- 
-+	ASSERT_RTNL();
- 	if (chs->ptp) {
- 		mlx5e_ptp_close(chs->ptp);
- 		chs->ptp = NULL;
-@@ -2945,17 +2946,29 @@ void mlx5e_activate_priv_channels(struct mlx5e_priv *priv)
- 	if (mlx5e_is_vport_rep(priv))
- 		mlx5e_rep_activate_channels(priv);
- 
-+	set_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state);
++	if (IS_ERR(post_act))
++		return PTR_ERR(post_act);
 +
- 	mlx5e_wait_channels_min_rx_wqes(&priv->channels);
+ 	spec = kvzalloc(sizeof(*spec), GFP_KERNEL);
+ 	if (!spec)
+ 		return -ENOMEM;
+@@ -111,6 +114,9 @@ mlx5e_tc_post_act_add(struct mlx5e_post_act *post_act, struct mlx5_flow_attr *po
+ 	struct mlx5e_post_act_handle *handle;
+ 	int err;
  
- 	if (priv->rx_res)
- 		mlx5e_rx_res_channels_activate(priv->rx_res, &priv->channels);
++	if (IS_ERR(post_act))
++		return ERR_CAST(post_act);
++
+ 	handle = kzalloc(sizeof(*handle), GFP_KERNEL);
+ 	if (!handle)
+ 		return ERR_PTR(-ENOMEM);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index b62fd37493410..1bead98f73bf5 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -444,6 +444,9 @@ mlx5e_tc_add_flow_meter(struct mlx5e_priv *priv,
+ 	struct mlx5e_flow_meter_handle *meter;
+ 	enum mlx5e_post_meter_type type;
+ 
++	if (IS_ERR(post_act))
++		return PTR_ERR(post_act);
++
+ 	meter = mlx5e_tc_meter_replace(priv->mdev, &attr->meter_attr.params);
+ 	if (IS_ERR(meter)) {
+ 		mlx5_core_err(priv->mdev, "Failed to get flow meter\n");
+@@ -3736,6 +3739,20 @@ alloc_flow_post_acts(struct mlx5e_tc_flow *flow, struct netlink_ext_ack *extack)
+ 	return err;
  }
  
-+static void mlx5e_cancel_tx_timeout_work(struct mlx5e_priv *priv)
++static int
++set_branch_dest_ft(struct mlx5e_priv *priv, struct mlx5_flow_attr *attr)
 +{
-+	WARN_ON_ONCE(test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state));
-+	if (current_work() != &priv->tx_timeout_work)
-+		cancel_work_sync(&priv->tx_timeout_work);
++	struct mlx5e_post_act *post_act = get_post_action(priv);
++
++	if (IS_ERR(post_act))
++		return PTR_ERR(post_act);
++
++	attr->action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
++	attr->dest_ft = mlx5e_tc_post_act_get_ft(post_act);
++
++	return 0;
 +}
 +
- void mlx5e_deactivate_priv_channels(struct mlx5e_priv *priv)
- {
- 	if (priv->rx_res)
- 		mlx5e_rx_res_channels_deactivate(priv->rx_res);
- 
-+	clear_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state);
-+	mlx5e_cancel_tx_timeout_work(priv);
-+
- 	if (mlx5e_is_vport_rep(priv))
- 		mlx5e_rep_deactivate_channels(priv);
- 
-@@ -4734,8 +4747,17 @@ static void mlx5e_tx_timeout_work(struct work_struct *work)
- 	struct net_device *netdev = priv->netdev;
- 	int i;
- 
--	rtnl_lock();
--	mutex_lock(&priv->state_lock);
-+	/* Take rtnl_lock to ensure no change in netdev->real_num_tx_queues
-+	 * through this flow. However, channel closing flows have to wait for
-+	 * this work to finish while holding rtnl lock too. So either get the
-+	 * lock or find that channels are being closed for other reason and
-+	 * this work is not relevant anymore.
-+	 */
-+	while (!rtnl_trylock()) {
-+		if (!test_bit(MLX5E_STATE_CHANNELS_ACTIVE, &priv->state))
-+			return;
-+		msleep(20);
-+	}
- 
- 	if (!test_bit(MLX5E_STATE_OPENED, &priv->state))
- 		goto unlock;
-@@ -4754,7 +4776,6 @@ static void mlx5e_tx_timeout_work(struct work_struct *work)
- 	}
- 
- unlock:
--	mutex_unlock(&priv->state_lock);
- 	rtnl_unlock();
- }
- 
+ static int
+ alloc_branch_attr(struct mlx5e_tc_flow *flow,
+ 		  struct mlx5e_tc_act_branch_ctrl *cond,
+@@ -3759,8 +3776,8 @@ alloc_branch_attr(struct mlx5e_tc_flow *flow,
+ 		break;
+ 	case FLOW_ACTION_ACCEPT:
+ 	case FLOW_ACTION_PIPE:
+-		attr->action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
+-		attr->dest_ft = mlx5e_tc_post_act_get_ft(get_post_action(flow->priv));
++		if (set_branch_dest_ft(flow->priv, attr))
++			goto out_err;
+ 		break;
+ 	case FLOW_ACTION_JUMP:
+ 		if (*jump_count) {
+@@ -3769,8 +3786,8 @@ alloc_branch_attr(struct mlx5e_tc_flow *flow,
+ 			goto out_err;
+ 		}
+ 		*jump_count = cond->extval;
+-		attr->action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
+-		attr->dest_ft = mlx5e_tc_post_act_get_ft(get_post_action(flow->priv));
++		if (set_branch_dest_ft(flow->priv, attr))
++			goto out_err;
+ 		break;
+ 	default:
+ 		err = -EOPNOTSUPP;
 -- 
 2.43.0
 
