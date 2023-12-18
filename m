@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594891D14F;
-	Mon, 18 Dec 2023 13:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAD0129EF7;
+	Mon, 18 Dec 2023 13:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyn/1b7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAE3C433C8;
-	Mon, 18 Dec 2023 13:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7CKOHlV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418F9C433C8;
+	Mon, 18 Dec 2023 13:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907624;
-	bh=4Pf9/NDpUXQXOlOD2mPL0naLtHx+vnm4nYMmUTFOqLU=;
+	s=korg; t=1702907627;
+	bh=jWP+VNzg0OeHsA0ljtuNt04CiaEMjkszKRt5tU6kB1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yyn/1b7wjoOK0iSSzBke7X6aamBClczWh4canuTMqz6KcZVs7YBhgoatZoFDpoJiW
-	 w8zsiQQIJsJu7XqpgxUyA7sENo0+hwe32EmFOY7o/yGgxMWIS5oIyvgXSRx4Su1jLr
-	 pZuTmspNkVVdlBk2RCQzX4S+OY4hOMZpq14Xd918=
+	b=q7CKOHlVmiLON4ePSnTPMYwZLuWLUTVNjU/4usTNvFycARnuaCzm7J1PsUCrjFwVt
+	 z0ro8n5P0NqOx8cUNDTDSEgdKwEZ3oSO4u76aQWcWAesos4+tLVTQzyaqJL+fyX62Q
+	 qFKXmo122wKsdOpsmySdRqRVjHWHQ0vh+2Cmc4aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Denis Benato <benato.denis96@gmail.com>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 06/36] atm: Fix Use-After-Free in do_vcc_ioctl
-Date: Mon, 18 Dec 2023 14:51:16 +0100
-Message-ID: <20231218135042.122542421@linuxfoundation.org>
+Subject: [PATCH 4.19 24/36] HID: hid-asus: reset the backlight brightness level on resume
+Date: Mon, 18 Dec 2023 14:51:34 +0100
+Message-ID: <20231218135042.705051349@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
 References: <20231218135041.876499958@linuxfoundation.org>
@@ -42,53 +43,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Denis Benato <benato.denis96@gmail.com>
 
-[ Upstream commit 24e90b9e34f9e039f56b5f25f6e6eb92cdd8f4b3 ]
+[ Upstream commit 546edbd26cff7ae990e480a59150e801a06f77b1 ]
 
-Because do_vcc_ioctl() accesses sk->sk_receive_queue
-without holding a sk->sk_receive_queue.lock, it can
-cause a race with vcc_recvmsg().
-A use-after-free for skb occurs with the following flow.
-```
-do_vcc_ioctl() -> skb_peek()
-vcc_recvmsg() -> skb_recv_datagram() -> skb_free_datagram()
-```
-Add sk->sk_receive_queue.lock to do_vcc_ioctl() to fix this issue.
+Some devices managed by this driver automatically set brightness to 0
+before entering a suspended state and reset it back to a default
+brightness level after the resume:
+this has the effect of having the kernel report wrong brightness
+status after a sleep, and on some devices (like the Asus RC71L) that
+brightness is the intensity of LEDs directly facing the user.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Link: https://lore.kernel.org/r/20231209094210.GA403126@v4bel-B760M-AORUS-ELITE-AX
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix the above issue by setting back brightness to the level it had
+before entering a sleep state.
+
+Signed-off-by: Denis Benato <benato.denis96@gmail.com>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/atm/ioctl.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/hid/hid-asus.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/net/atm/ioctl.c b/net/atm/ioctl.c
-index 2ff0e5e470e3d..38f7f164e4848 100644
---- a/net/atm/ioctl.c
-+++ b/net/atm/ioctl.c
-@@ -71,14 +71,17 @@ static int do_vcc_ioctl(struct socket *sock, unsigned int cmd,
- 	case SIOCINQ:
- 	{
- 		struct sk_buff *skb;
-+		int amount;
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 4dddf3ce32d73..12ad6493be8f4 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -614,6 +614,24 @@ static int asus_start_multitouch(struct hid_device *hdev)
+ 	return 0;
+ }
  
- 		if (sock->state != SS_CONNECTED) {
- 			error = -EINVAL;
- 			goto done;
- 		}
-+		spin_lock_irq(&sk->sk_receive_queue.lock);
- 		skb = skb_peek(&sk->sk_receive_queue);
--		error = put_user(skb ? skb->len : 0,
--				 (int __user *)argp) ? -EFAULT : 0;
-+		amount = skb ? skb->len : 0;
-+		spin_unlock_irq(&sk->sk_receive_queue.lock);
-+		error = put_user(amount, (int __user *)argp) ? -EFAULT : 0;
- 		goto done;
- 	}
- 	case SIOCGSTAMP: /* borrowed from IP */
++static int __maybe_unused asus_resume(struct hid_device *hdev) {
++	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
++	int ret = 0;
++
++	if (drvdata->kbd_backlight) {
++		const u8 buf[] = { FEATURE_KBD_REPORT_ID, 0xba, 0xc5, 0xc4,
++				drvdata->kbd_backlight->cdev.brightness };
++		ret = asus_kbd_set_report(hdev, buf, sizeof(buf));
++		if (ret < 0) {
++			hid_err(hdev, "Asus failed to set keyboard backlight: %d\n", ret);
++			goto asus_resume_err;
++		}
++	}
++
++asus_resume_err:
++	return ret;
++}
++
+ static int __maybe_unused asus_reset_resume(struct hid_device *hdev)
+ {
+ 	struct asus_drvdata *drvdata = hid_get_drvdata(hdev);
+@@ -831,6 +849,7 @@ static struct hid_driver asus_driver = {
+ 	.input_configured       = asus_input_configured,
+ #ifdef CONFIG_PM
+ 	.reset_resume           = asus_reset_resume,
++	.resume					= asus_resume,
+ #endif
+ 	.raw_event		= asus_raw_event
+ };
 -- 
 2.43.0
 
