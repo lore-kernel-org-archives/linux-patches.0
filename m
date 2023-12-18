@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C821D132;
-	Mon, 18 Dec 2023 13:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEB01D132;
+	Mon, 18 Dec 2023 13:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XV4X0XX/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80122C433C9;
-	Mon, 18 Dec 2023 13:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znxvP322"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1DFC433C8;
+	Mon, 18 Dec 2023 13:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907681;
-	bh=2SrkWiym+hR2SDr2irpsU7S9tLiJ2NyxCrdezYKa5ck=;
+	s=korg; t=1702907684;
+	bh=l9oVIQ7VDE3gf62dwR3zvfux84lqSDElHSZVwiJfPP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XV4X0XX/8huT+tUsg9hIl9dvQPgcjIXTdT8evR1UQ7ydRZgf/qz5Fq8yYYRLbDSPN
-	 DWgeWCefUZ0FM0yD0wwuENTuzKrab2GRkYUL5mg8QLvtxE60zgo9ALCGvbojCh75Vq
-	 KRION7eslIzyN3KdTNrJobrRHDM75crS+LDwbm80=
+	b=znxvP322Tri8Fki0nLedvSr03mAF6dl9jueadypwoGtFvhqJA/mutp4r2Rn2vcTjg
+	 pwP+rcnGwjL5v3dvo5dIvPaPaco3TGvP/PZTfwHk+E9Hkh6nsfDJAnBSj3ul4Da4iV
+	 BRFUHIHid1KWl3Zcgl3QU+Hm2FQ7z8VsF3xipyDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen N Rao <naveen@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 4.19 35/36] powerpc/ftrace: Create a dummy stackframe to fix stack unwind
-Date: Mon, 18 Dec 2023 14:51:45 +0100
-Message-ID: <20231218135043.075137950@linuxfoundation.org>
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Mahmoud Adam <mngyadam@amazon.com>
+Subject: [PATCH 6.1 001/106] perf/x86/uncore: Dont WARN_ON_ONCE() for a broken discovery table
+Date: Mon, 18 Dec 2023 14:50:15 +0100
+Message-ID: <20231218135055.075595459@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
-References: <20231218135041.876499958@linuxfoundation.org>
+In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
+References: <20231218135055.005497074@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -37,137 +39,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit 41a506ef71eb38d94fe133f565c87c3e06ccc072 upstream.
+commit 5d515ee40cb57ea5331998f27df7946a69f14dc3 upstream.
 
-With ppc64 -mprofile-kernel and ppc32 -pg, profiling instructions to
-call into ftrace are emitted right at function entry. The instruction
-sequence used is minimal to reduce overhead. Crucially, a stackframe is
-not created for the function being traced. This breaks stack unwinding
-since the function being traced does not have a stackframe for itself.
-As such, it never shows up in the backtrace:
+The kernel warning message is triggered, when SPR MCC is used.
 
-/sys/kernel/debug/tracing # echo 1 > /proc/sys/kernel/stack_tracer_enabled
-/sys/kernel/debug/tracing # cat stack_trace
-        Depth    Size   Location    (17 entries)
-        -----    ----   --------
-  0)     4144      32   ftrace_call+0x4/0x44
-  1)     4112     432   get_page_from_freelist+0x26c/0x1ad0
-  2)     3680     496   __alloc_pages+0x290/0x1280
-  3)     3184     336   __folio_alloc+0x34/0x90
-  4)     2848     176   vma_alloc_folio+0xd8/0x540
-  5)     2672     272   __handle_mm_fault+0x700/0x1cc0
-  6)     2400     208   handle_mm_fault+0xf0/0x3f0
-  7)     2192      80   ___do_page_fault+0x3e4/0xbe0
-  8)     2112     160   do_page_fault+0x30/0xc0
-  9)     1952     256   data_access_common_virt+0x210/0x220
- 10)     1696     400   0xc00000000f16b100
- 11)     1296     384   load_elf_binary+0x804/0x1b80
- 12)      912     208   bprm_execve+0x2d8/0x7e0
- 13)      704      64   do_execveat_common+0x1d0/0x2f0
- 14)      640     160   sys_execve+0x54/0x70
- 15)      480      64   system_call_exception+0x138/0x350
- 16)      416     416   system_call_common+0x160/0x2c4
+[   17.945331] ------------[ cut here ]------------
+[   17.946305] WARNING: CPU: 65 PID: 1 at
+arch/x86/events/intel/uncore_discovery.c:184
+intel_uncore_has_discovery_tables+0x4c0/0x65c
+[   17.946305] Modules linked in:
+[   17.946305] CPU: 65 PID: 1 Comm: swapper/0 Not tainted
+5.4.17-2136.313.1-X10-2c+ #4
 
-Fix this by having ftrace create a dummy stackframe for the function
-being traced. With this, backtraces now capture the function being
-traced:
+It's caused by the broken discovery table of UPI.
 
-/sys/kernel/debug/tracing # cat stack_trace
-        Depth    Size   Location    (17 entries)
-        -----    ----   --------
-  0)     3888      32   _raw_spin_trylock+0x8/0x70
-  1)     3856     576   get_page_from_freelist+0x26c/0x1ad0
-  2)     3280      64   __alloc_pages+0x290/0x1280
-  3)     3216     336   __folio_alloc+0x34/0x90
-  4)     2880     176   vma_alloc_folio+0xd8/0x540
-  5)     2704     416   __handle_mm_fault+0x700/0x1cc0
-  6)     2288      96   handle_mm_fault+0xf0/0x3f0
-  7)     2192      48   ___do_page_fault+0x3e4/0xbe0
-  8)     2144     192   do_page_fault+0x30/0xc0
-  9)     1952     608   data_access_common_virt+0x210/0x220
- 10)     1344      16   0xc0000000334bbb50
- 11)     1328     416   load_elf_binary+0x804/0x1b80
- 12)      912      64   bprm_execve+0x2d8/0x7e0
- 13)      848     176   do_execveat_common+0x1d0/0x2f0
- 14)      672     192   sys_execve+0x54/0x70
- 15)      480      64   system_call_exception+0x138/0x350
- 16)      416     416   system_call_common+0x160/0x2c4
+The discovery tables are from hardware. Except for dropping the broken
+information, there is nothing Linux can do. Using WARN_ON_ONCE() is
+overkilled.
 
-This results in two additional stores in the ftrace entry code, but
-produces reliable backtraces.
+Use the pr_info() to replace WARN_ON_ONCE(), and specify what uncore unit
+is dropped and the reason.
 
-Fixes: 153086644fd1 ("powerpc/ftrace: Add support for -mprofile-kernel ftrace ABI")
-Cc: stable@vger.kernel.org
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230621051349.759567-1-naveen@kernel.org
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Michael Petlan <mpetlan@redhat.com>
+Link: https://lore.kernel.org/r/20230112200105.733466-6-kan.liang@linux.intel.com
+Cc: Mahmoud Adam <mngyadam@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/trace/ftrace_64_mprofile.S |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/uncore_discovery.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
-+++ b/arch/powerpc/kernel/trace/ftrace_64_mprofile.S
-@@ -40,6 +40,9 @@ _GLOBAL(ftrace_regs_caller)
- 	/* Save the original return address in A's stack frame */
- 	std	r0,LRSAVE(r1)
+--- a/arch/x86/events/intel/uncore_discovery.c
++++ b/arch/x86/events/intel/uncore_discovery.c
+@@ -140,13 +140,21 @@ uncore_insert_box_info(struct uncore_uni
+ 	unsigned int *box_offset, *ids;
+ 	int i;
  
-+	/* Create a minimal stack frame for representing B */
-+	stdu	r1, -STACK_FRAME_MIN_SIZE(r1)
-+
- 	/* Create our stack frame + pt_regs */
- 	stdu	r1,-SWITCH_FRAME_SIZE(r1)
+-	if (WARN_ON_ONCE(!unit->ctl || !unit->ctl_offset || !unit->ctr_offset))
++	if (!unit->ctl || !unit->ctl_offset || !unit->ctr_offset) {
++		pr_info("Invalid address is detected for uncore type %d box %d, "
++			"Disable the uncore unit.\n",
++			unit->box_type, unit->box_id);
+ 		return;
++	}
  
-@@ -69,6 +72,8 @@ _GLOBAL(ftrace_regs_caller)
- 	mflr	r7
- 	/* Save it as pt_regs->nip */
- 	std     r7, _NIP(r1)
-+	/* Also save it in B's stackframe header for proper unwind */
-+	std	r7, LRSAVE+SWITCH_FRAME_SIZE(r1)
- 	/* Save the read LR in pt_regs->link */
- 	std     r0, _LINK(r1)
+ 	if (parsed) {
+ 		type = search_uncore_discovery_type(unit->box_type);
+-		if (WARN_ON_ONCE(!type))
++		if (!type) {
++			pr_info("A spurious uncore type %d is detected, "
++				"Disable the uncore type.\n",
++				unit->box_type);
+ 			return;
++		}
+ 		/* Store the first box of each die */
+ 		if (!type->box_ctrl_die[die])
+ 			type->box_ctrl_die[die] = unit->ctl;
+@@ -181,8 +189,12 @@ uncore_insert_box_info(struct uncore_uni
+ 		ids[i] = type->ids[i];
+ 		box_offset[i] = type->box_offset[i];
  
-@@ -125,7 +130,7 @@ ftrace_regs_call:
- 	ld	r2, 24(r1)
- 
- 	/* Pop our stack frame */
--	addi r1, r1, SWITCH_FRAME_SIZE
-+	addi r1, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
- 
- #ifdef CONFIG_LIVEPATCH
-         /* Based on the cmpd above, if the NIP was altered handle livepatch */
-@@ -157,6 +162,9 @@ _GLOBAL(ftrace_caller)
- 	/* Save the original return address in A's stack frame */
- 	std	r0, LRSAVE(r1)
- 
-+	/* Create a minimal stack frame for representing B */
-+	stdu	r1, -STACK_FRAME_MIN_SIZE(r1)
-+
- 	/* Create our stack frame + pt_regs */
- 	stdu	r1, -SWITCH_FRAME_SIZE(r1)
- 
-@@ -170,6 +178,7 @@ _GLOBAL(ftrace_caller)
- 	/* Get the _mcount() call site out of LR */
- 	mflr	r7
- 	std     r7, _NIP(r1)
-+	std	r7, LRSAVE+SWITCH_FRAME_SIZE(r1)
- 
- 	/* Save callee's TOC in the ABI compliant location */
- 	std	r2, 24(r1)
-@@ -204,7 +213,7 @@ ftrace_call:
- 	ld	r2, 24(r1)
- 
- 	/* Pop our stack frame */
--	addi	r1, r1, SWITCH_FRAME_SIZE
-+	addi	r1, r1, SWITCH_FRAME_SIZE+STACK_FRAME_MIN_SIZE
- 
- 	/* Reload original LR */
- 	ld	r0, LRSAVE(r1)
+-		if (WARN_ON_ONCE(unit->box_id == ids[i]))
++		if (unit->box_id == ids[i]) {
++			pr_info("Duplicate uncore type %d box ID %d is detected, "
++				"Drop the duplicate uncore unit.\n",
++				unit->box_type, unit->box_id);
+ 			goto free_ids;
++		}
+ 	}
+ 	ids[i] = unit->box_id;
+ 	box_offset[i] = unit->ctl - type->box_ctrl;
 
 
