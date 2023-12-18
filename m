@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8E63A1D0;
-	Mon, 18 Dec 2023 14:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB2637884;
+	Mon, 18 Dec 2023 14:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+vy3hEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844ADC433C8;
-	Mon, 18 Dec 2023 14:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOSQpgWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D91C433C8;
+	Mon, 18 Dec 2023 14:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908792;
-	bh=9GLFVoFzvItoG/728pD6guthJ8HDrl3XY4zRplATp74=;
+	s=korg; t=1702908795;
+	bh=d3Iu5H+jAW8V/g0yZsvMPtgAo3EA3QtEycMXmEkDavE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+vy3hEHV2rDhixfsKgpq2dUJ9PGkArY8HdPhIlGnaJ49zHpIFHC22b2gczQJNkFb
-	 a7KIBwa5g0q6M40X5SrwxRgHX3tXEvqjsRKF8Q4MBh2Gw2IneEAQ+qDSWv+wo+YaBJ
-	 BuIryT/sJaLRbQKv1/ozFmGL9v1GPDSGtM3lLBms=
+	b=zOSQpgWVEjSXtywaHtq3K7JXqpRq+3aXgrqQYWLGfDM1OAyiR6XbpQY8UtKZ8Y7EX
+	 e6+NnNvw4+5ztKNv+cY9flv2smCEuP75k7R8w7UGuyF3VRQVSrwtugTrhnB10sxZmm
+	 IZSdQYi4fM9vNpRyf7KMT4q/m1TzeYyhQSsJzm6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Kiyanovski <akiyano@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Igor Russkikh <irusskikh@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 28/83] net: ena: Fix xdp drops handling due to multibuf packets
-Date: Mon, 18 Dec 2023 14:51:49 +0100
-Message-ID: <20231218135050.978326675@linuxfoundation.org>
+Subject: [PATCH 5.15 37/83] net: atlantic: fix double free in ring reinit logic
+Date: Mon, 18 Dec 2023 14:51:58 +0100
+Message-ID: <20231218135051.382476600@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -43,75 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Arinzon <darinzon@amazon.com>
+From: Igor Russkikh <irusskikh@marvell.com>
 
-[ Upstream commit 505b1a88d311ff6f8c44a34f94e3be21745cce6f ]
+[ Upstream commit 7bb26ea74aa86fdf894b7dbd8c5712c5b4187da7 ]
 
-Current xdp code drops packets larger than ENA_XDP_MAX_MTU.
-This is an incorrect condition since the problem is not the
-size of the packet, rather the number of buffers it contains.
+Driver has a logic leak in ring data allocation/free,
+where double free may happen in aq_ring_free if system is under
+stress and driver init/deinit is happening.
 
-This commit:
+The probability is higher to get this during suspend/resume cycle.
 
-1. Identifies and drops XDP multi-buffer packets at the
-   beginning of the function.
-2. Increases the xdp drop statistic when this drop occurs.
-3. Adds a one-time print that such drops are happening to
-   give better indication to the user.
+Verification was done simulating same conditions with
 
-Fixes: 838c93dc5449 ("net: ena: implement XDP drop support")
-Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Link: https://lore.kernel.org/r/20231211062801.27891-3-darinzon@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    stress -m 2000 --vm-bytes 20M --vm-hang 10 --backoff 1000
+    while true; do sudo ifconfig enp1s0 down; sudo ifconfig enp1s0 up; done
+
+Fixed by explicitly clearing pointers to NULL on deallocation
+
+Fixes: 018423e90bee ("net: ethernet: aquantia: Add ring support code")
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Closes: https://lore.kernel.org/netdev/CAHk-=wiZZi7FcvqVSUirHBjx0bBUZ4dFrMDVLc3+3HCrtq0rBA@mail.gmail.com/
+Signed-off-by: Igor Russkikh <irusskikh@marvell.com>
+Link: https://lore.kernel.org/r/20231213094044.22988-1-irusskikh@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index da83580a11391..7d4b862be783d 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -1626,20 +1626,23 @@ static void ena_set_rx_hash(struct ena_ring *rx_ring,
- 	}
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+index e9c6f1fa0b1a7..98e8997f80366 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -577,11 +577,14 @@ void aq_ring_free(struct aq_ring_s *self)
+ 		return;
+ 
+ 	kfree(self->buff_ring);
++	self->buff_ring = NULL;
+ 
+-	if (self->dx_ring)
++	if (self->dx_ring) {
+ 		dma_free_coherent(aq_nic_get_dev(self->aq_nic),
+ 				  self->size * self->dx_size, self->dx_ring,
+ 				  self->dx_ring_pa);
++		self->dx_ring = NULL;
++	}
  }
  
--static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp)
-+static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp, u16 num_descs)
- {
- 	struct ena_rx_buffer *rx_info;
- 	int ret;
- 
-+	/* XDP multi-buffer packets not supported */
-+	if (unlikely(num_descs > 1)) {
-+		netdev_err_once(rx_ring->adapter->netdev,
-+				"xdp: dropped unsupported multi-buffer packets\n");
-+		ena_increase_stat(&rx_ring->rx_stats.xdp_drop, 1, &rx_ring->syncp);
-+		return ENA_XDP_DROP;
-+	}
-+
- 	rx_info = &rx_ring->rx_buffer_info[rx_ring->ena_bufs[0].req_id];
- 	xdp_prepare_buff(xdp, page_address(rx_info->page),
- 			 rx_info->page_offset,
- 			 rx_ring->ena_bufs[0].len, false);
--	/* If for some reason we received a bigger packet than
--	 * we expect, then we simply drop it
--	 */
--	if (unlikely(rx_ring->ena_bufs[0].len > ENA_XDP_MAX_MTU))
--		return ENA_XDP_DROP;
- 
- 	ret = ena_xdp_execute(rx_ring, xdp);
- 
-@@ -1708,7 +1711,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
- 			  ena_rx_ctx.l4_proto, ena_rx_ctx.hash);
- 
- 		if (ena_xdp_present_ring(rx_ring))
--			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp);
-+			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp, ena_rx_ctx.descs);
- 
- 		/* allocate skb and fill it */
- 		if (xdp_verdict == ENA_XDP_PASS)
+ unsigned int aq_ring_fill_stats_data(struct aq_ring_s *self, u64 *data)
 -- 
 2.43.0
 
