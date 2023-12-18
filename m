@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4001D144;
-	Mon, 18 Dec 2023 14:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7021D127;
+	Mon, 18 Dec 2023 14:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AA58klrT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858DAC433C7;
-	Mon, 18 Dec 2023 14:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UlKGFEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408EBC433C8;
+	Mon, 18 Dec 2023 14:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908642;
-	bh=Q3VoitlyE9SS/8pW3h8IHJsKaDC7EoIKNEr1bATgDW4=;
+	s=korg; t=1702908645;
+	bh=cWxUGUuuZMzkn8hHEoJzz98rgibLQu9MabIwuOIrHEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AA58klrT1JBhghHFxA//np3hLMMswkX5S3Hk/5CLSXMosEeBApn87G9+HVSFfSwGi
-	 upfJGv9AN5kCCOZEAdWa5B1OfMXz/cgIYNxWVC0X5auiHGn8AIv6GyI8M3Ed2uMpSr
-	 I3SWT2bpNnZCES1vM2uOzeT3OLyPxxUEasZdD6sY=
+	b=0UlKGFEx1JnWhxQgx0SjATwcUV/V7lJBFMqt2sboETP1A10llEp13DDoe/R9iZmaj
+	 PlwsAzSdfmA1gK0O7aicEboSZRsipKaHpZRWL6eN2nj22Y/iLVkfVygyb7E6VFrRj4
+	 Y7HpAjXMIZQoJ3ChNlpitOde+sd2eLIfnVpZXe14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Tomassetti <andrea.tomassetti-opensource@devo.com>,
 	Coly Li <colyli@suse.de>,
-	Eric Wheeler <bcache@lists.ewheeler.net>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 22/40] bcache: avoid oversize memory allocation by small stripe_size
-Date: Mon, 18 Dec 2023 14:52:17 +0100
-Message-ID: <20231218135043.522049425@linuxfoundation.org>
+Subject: [PATCH 5.4 23/40] bcache: add code comments for bch_btree_node_get() and __bch_btree_node_alloc()
+Date: Mon, 18 Dec 2023 14:52:18 +0100
+Message-ID: <20231218135043.560019644@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135042.748715259@linuxfoundation.org>
 References: <20231218135042.748715259@linuxfoundation.org>
@@ -46,86 +44,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Coly Li <colyli@suse.de>
 
-[ Upstream commit baf8fb7e0e5ec54ea0839f0c534f2cdcd79bea9c ]
+[ Upstream commit 31f5b956a197d4ec25c8a07cb3a2ab69d0c0b82f ]
 
-Arraies bcache->stripe_sectors_dirty and bcache->full_dirty_stripes are
-used for dirty data writeback, their sizes are decided by backing device
-capacity and stripe size. Larger backing device capacity or smaller
-stripe size make these two arraies occupies more dynamic memory space.
+This patch adds code comments to bch_btree_node_get() and
+__bch_btree_node_alloc() that NULL pointer will not be returned and it
+is unnecessary to check NULL pointer by the callers of these routines.
 
-Currently bcache->stripe_size is directly inherited from
-queue->limits.io_opt of underlying storage device. For normal hard
-drives, its limits.io_opt is 0, and bcache sets the corresponding
-stripe_size to 1TB (1<<31 sectors), it works fine 10+ years. But for
-devices do declare value for queue->limits.io_opt, small stripe_size
-(comparing to 1TB) becomes an issue for oversize memory allocations of
-bcache->stripe_sectors_dirty and bcache->full_dirty_stripes, while the
-capacity of hard drives gets much larger in recent decade.
-
-For example a raid5 array assembled by three 20TB hardrives, the raid
-device capacity is 40TB with typical 512KB limits.io_opt. After the math
-calculation in bcache code, these two arraies will occupy 400MB dynamic
-memory. Even worse Andrea Tomassetti reports that a 4KB limits.io_opt is
-declared on a new 2TB hard drive, then these two arraies request 2GB and
-512MB dynamic memory from kzalloc(). The result is that bcache device
-always fails to initialize on his system.
-
-To avoid the oversize memory allocation, bcache->stripe_size should not
-directly inherited by queue->limits.io_opt from the underlying device.
-This patch defines BCH_MIN_STRIPE_SZ (4MB) as minimal bcache stripe size
-and set bcache device's stripe size against the declared limits.io_opt
-value from the underlying storage device,
-- If the declared limits.io_opt > BCH_MIN_STRIPE_SZ, bcache device will
-  set its stripe size directly by this limits.io_opt value.
-- If the declared limits.io_opt < BCH_MIN_STRIPE_SZ, bcache device will
-  set its stripe size by a value multiplying limits.io_opt and euqal or
-  large than BCH_MIN_STRIPE_SZ.
-
-Then the minimal stripe size of a bcache device will always be >= 4MB.
-For a 40TB raid5 device with 512KB limits.io_opt, memory occupied by
-bcache->stripe_sectors_dirty and bcache->full_dirty_stripes will be 50MB
-in total. For a 2TB hard drive with 4KB limits.io_opt, memory occupied
-by these two arraies will be 2.5MB in total.
-
-Such mount of memory allocated for bcache->stripe_sectors_dirty and
-bcache->full_dirty_stripes is reasonable for most of storage devices.
-
-Reported-by: Andrea Tomassetti <andrea.tomassetti-opensource@devo.com>
 Signed-off-by: Coly Li <colyli@suse.de>
-Reviewed-by: Eric Wheeler <bcache@lists.ewheeler.net>
-Link: https://lore.kernel.org/r/20231120052503.6122-2-colyli@suse.de
+Link: https://lore.kernel.org/r/20231120052503.6122-10-colyli@suse.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/bcache.h | 1 +
- drivers/md/bcache/super.c  | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/md/bcache/btree.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/md/bcache/bcache.h b/drivers/md/bcache/bcache.h
-index 1dd9298cb0e02..7bce582788458 100644
---- a/drivers/md/bcache/bcache.h
-+++ b/drivers/md/bcache/bcache.h
-@@ -265,6 +265,7 @@ struct bcache_device {
- #define BCACHE_DEV_WB_RUNNING		3
- #define BCACHE_DEV_RATE_DW_RUNNING	4
- 	int			nr_stripes;
-+#define BCH_MIN_STRIPE_SZ		((4 << 20) >> SECTOR_SHIFT)
- 	unsigned int		stripe_size;
- 	atomic_t		*stripe_sectors_dirty;
- 	unsigned long		*full_dirty_stripes;
-diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
-index 6afaa5e852837..d5f57a9551dda 100644
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -822,6 +822,8 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
+diff --git a/drivers/md/bcache/btree.c b/drivers/md/bcache/btree.c
+index ad1faee2e186b..5db893d6a824e 100644
+--- a/drivers/md/bcache/btree.c
++++ b/drivers/md/bcache/btree.c
+@@ -1020,6 +1020,9 @@ static struct btree *mca_alloc(struct cache_set *c, struct btree_op *op,
+  *
+  * The btree node will have either a read or a write lock held, depending on
+  * level and op->lock.
++ *
++ * Note: Only error code or btree pointer will be returned, it is unncessary
++ *       for callers to check NULL pointer.
+  */
+ struct btree *bch_btree_node_get(struct cache_set *c, struct btree_op *op,
+ 				 struct bkey *k, int level, bool write,
+@@ -1132,6 +1135,10 @@ static void btree_node_free(struct btree *b)
+ 	mutex_unlock(&b->c->bucket_lock);
+ }
  
- 	if (!d->stripe_size)
- 		d->stripe_size = 1 << 31;
-+	else if (d->stripe_size < BCH_MIN_STRIPE_SZ)
-+		d->stripe_size = roundup(BCH_MIN_STRIPE_SZ, d->stripe_size);
- 
- 	n = DIV_ROUND_UP_ULL(sectors, d->stripe_size);
- 	if (!n || n > max_stripes) {
++/*
++ * Only error code or btree pointer will be returned, it is unncessary for
++ * callers to check NULL pointer.
++ */
+ struct btree *__bch_btree_node_alloc(struct cache_set *c, struct btree_op *op,
+ 				     int level, bool wait,
+ 				     struct btree *parent)
 -- 
 2.43.0
 
