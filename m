@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4687D129EF7;
-	Mon, 18 Dec 2023 13:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2231129EC8;
+	Mon, 18 Dec 2023 13:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdtEhzQv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23DAC433C7;
-	Mon, 18 Dec 2023 13:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDva4ewK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7754FC433C8;
+	Mon, 18 Dec 2023 13:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907975;
-	bh=+ab/kW6/P5Po4KMjpLW/NHy/poFlg1ZUjQL3Ke2FrFI=;
+	s=korg; t=1702907977;
+	bh=u5x69zbIV5u0TxMxi6pOc0BkJkm6bvEZhAWdZ0YFGkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KdtEhzQv0Sxuy49iglica1vufbwwFQZkLBz7ta3STgR/91IyQ1jG5LtZ1wioFyXDS
-	 KLXNtg/wQpHf2wn5cWQr3B+4Y0QGvLTG1nkfhITEQks9HXxuysgafldg1lt+s/ll31
-	 NF3nfF9jrVQzhFK8D012vdG9AS1RmmJv7VhJWlH0=
+	b=GDva4ewKljI6TXRzGEPKPIdaBzwdbXIQxOyJ2CMOAudR6jXQ5hN8WePompEMa3bwH
+	 HAbtqP53jRMVe8baEw5gaOldoN/j/nkgIaa40MlzZYDYGpD+Ne6pQ0qNkXdRbKhCrc
+	 YSNBQKxV/iivFK0FYCW8ikaXlZfZMA19tHD9PLIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 092/106] smb: client: fix OOB in receive_encrypted_standard()
-Date: Mon, 18 Dec 2023 14:51:46 +0100
-Message-ID: <20231218135058.995875170@linuxfoundation.org>
+	Kelly Kane <kelly@hawknetworks.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/166] r8152: add vendor/device ID pair for ASUS USB-C2500
+Date: Mon, 18 Dec 2023 14:49:27 +0100
+Message-ID: <20231218135104.996315721@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
-References: <20231218135055.005497074@linuxfoundation.org>
+In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
+References: <20231218135104.927894164@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -38,68 +38,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Kelly Kane <kelly@hawknetworks.com>
 
-commit eec04ea119691e65227a97ce53c0da6b9b74b0b7 upstream.
+[ Upstream commit 7037d95a047cd89b1f680eed253c6ab586bef1ed ]
 
-Fix potential OOB in receive_encrypted_standard() if server returned a
-large shdr->NextCommand that would end up writing off the end of
-@next_buffer.
+The ASUS USB-C2500 is an RTL8156 based 2.5G Ethernet controller.
 
-Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
-Cc: stable@vger.kernel.org
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add the vendor and product ID values to the driver. This makes Ethernet
+work with the adapter.
+
+Signed-off-by: Kelly Kane <kelly@hawknetworks.com>
+Link: https://lore.kernel.org/r/20231203011712.6314-1-kelly@hawknetworks.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/usb/r8152.c   | 1 +
+ include/linux/usb/r8152.h | 1 +
+ 2 files changed, 2 insertions(+)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -5065,6 +5065,7 @@ receive_encrypted_standard(struct TCP_Se
- 	struct smb2_hdr *shdr;
- 	unsigned int pdu_length = server->pdu_size;
- 	unsigned int buf_size;
-+	unsigned int next_cmd;
- 	struct mid_q_entry *mid_entry;
- 	int next_is_large;
- 	char *next_buffer = NULL;
-@@ -5093,14 +5094,15 @@ receive_encrypted_standard(struct TCP_Se
- 	next_is_large = server->large_buf;
- one_more:
- 	shdr = (struct smb2_hdr *)buf;
--	if (shdr->NextCommand) {
-+	next_cmd = le32_to_cpu(shdr->NextCommand);
-+	if (next_cmd) {
-+		if (WARN_ON_ONCE(next_cmd > pdu_length))
-+			return -1;
- 		if (next_is_large)
- 			next_buffer = (char *)cifs_buf_get();
- 		else
- 			next_buffer = (char *)cifs_small_buf_get();
--		memcpy(next_buffer,
--		       buf + le32_to_cpu(shdr->NextCommand),
--		       pdu_length - le32_to_cpu(shdr->NextCommand));
-+		memcpy(next_buffer, buf + next_cmd, pdu_length - next_cmd);
- 	}
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 7611c406fdb96..127b34dcc5b37 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -10016,6 +10016,7 @@ static const struct usb_device_id rtl8152_table[] = {
+ 	{ USB_DEVICE(VENDOR_ID_NVIDIA,  0x09ff) },
+ 	{ USB_DEVICE(VENDOR_ID_TPLINK,  0x0601) },
+ 	{ USB_DEVICE(VENDOR_ID_DLINK,   0xb301) },
++	{ USB_DEVICE(VENDOR_ID_ASUS,    0x1976) },
+ 	{}
+ };
  
- 	mid_entry = smb2_find_mid(server, buf);
-@@ -5124,8 +5126,8 @@ one_more:
- 	else
- 		ret = cifs_handle_standard(server, mid_entry);
+diff --git a/include/linux/usb/r8152.h b/include/linux/usb/r8152.h
+index 287e9d83fb8bc..33a4c146dc19c 100644
+--- a/include/linux/usb/r8152.h
++++ b/include/linux/usb/r8152.h
+@@ -30,6 +30,7 @@
+ #define VENDOR_ID_NVIDIA		0x0955
+ #define VENDOR_ID_TPLINK		0x2357
+ #define VENDOR_ID_DLINK			0x2001
++#define VENDOR_ID_ASUS			0x0b05
  
--	if (ret == 0 && shdr->NextCommand) {
--		pdu_length -= le32_to_cpu(shdr->NextCommand);
-+	if (ret == 0 && next_cmd) {
-+		pdu_length -= next_cmd;
- 		server->large_buf = next_is_large;
- 		if (next_is_large)
- 			server->bigbuf = buf = next_buffer;
+ #if IS_REACHABLE(CONFIG_USB_RTL8152)
+ extern u8 rtl8152_get_version(struct usb_interface *intf);
+-- 
+2.43.0
+
 
 
