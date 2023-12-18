@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E13F3A1C6;
-	Mon, 18 Dec 2023 14:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B92437874;
+	Mon, 18 Dec 2023 14:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05QdF8SY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01FA0C433C7;
-	Mon, 18 Dec 2023 14:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3yv2ahV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38D5C433C8;
+	Mon, 18 Dec 2023 14:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908185;
-	bh=gq5qG6dluvApFjD7wF0TRrrQ0B3igRkpw9KgZ0iCL3M=;
+	s=korg; t=1702908188;
+	bh=PlExB3ozq55ucMSlw+lK+hccKjEjJpW0uUNwUl+o+ZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=05QdF8SYw7immsI2lRM9Z9eeBkh5CnIl+AnMjtdqgaoitnHVacNYR/4X31/J8cPXa
-	 G+15vfxRkBdh67KsRqingLGXKp6nTLF/VQ60ge2BpEoV96jwVDFJSsp/jlwOxmDPh3
-	 S6LCQfBC+4Lz2/Uhx7eeZOCS1msGFnRMFhD8jFrk=
+	b=m3yv2ahVa4ZnbvqybhmAlmv9xl/JBYfjBXlZKwPDM0viikICNwEaY8FaukUZaxz2C
+	 MMdBLq7kpa1Qpup5SiKNsbseqd7KTM6xNFrkXcjWKXLvZ2vhr2oFphVExuGJtuLc7Y
+	 iBx18zGtYNtokrfnw8X4XmofQfmUrYqCSyEAFqCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Alan Previn Teres Alexis <alan.previn.teres.alexis@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Igor Russkikh <irusskikh@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/166] drm/i915: Use internal class when counting engine resets
-Date: Mon, 18 Dec 2023 14:50:49 +0100
-Message-ID: <20231218135108.718831379@linuxfoundation.org>
+Subject: [PATCH 6.6 056/166] net: atlantic: fix double free in ring reinit logic
+Date: Mon, 18 Dec 2023 14:50:22 +0100
+Message-ID: <20231218135107.541543336@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -44,117 +43,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+From: Igor Russkikh <irusskikh@marvell.com>
 
-[ Upstream commit 1f721a93a528268fa97875cff515d1fcb69f4f44 ]
+[ Upstream commit 7bb26ea74aa86fdf894b7dbd8c5712c5b4187da7 ]
 
-Commit 503579448db9 ("drm/i915/gsc: Mark internal GSC engine with reserved uabi class")
-made the GSC0 engine not have a valid uabi class and so broke the engine
-reset counting, which in turn was made class based in cb823ed9915b ("drm/i915/gt: Use intel_gt as the primary object for handling resets").
+Driver has a logic leak in ring data allocation/free,
+where double free may happen in aq_ring_free if system is under
+stress and driver init/deinit is happening.
 
-Despite the title and commit text of the latter is not mentioning it (and
-has left the storage array incorrectly sized), tracking by class, despite
-it adding aliasing in hypthotetical multi-tile systems, is handy for
-virtual engines which for instance do not have a valid engine->id.
+The probability is higher to get this during suspend/resume cycle.
 
-Therefore we keep that but just change it to use the internal class which
-is always valid. We also add a helper to increment the count, which
-aligns with the existing getter.
+Verification was done simulating same conditions with
 
-What was broken without this fix were out of bounds reads every time a
-reset would happen on the GSC0 engine, or during selftests when storing
-and cross-checking the counts in igt_live_test_begin and
-igt_live_test_end.
+    stress -m 2000 --vm-bytes 20M --vm-hang 10 --backoff 1000
+    while true; do sudo ifconfig enp1s0 down; sudo ifconfig enp1s0 up; done
 
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Fixes: 503579448db9 ("drm/i915/gsc: Mark internal GSC engine with reserved uabi class")
-[tursulin: fixed Fixes tag]
-Reported-by: Alan Previn Teres Alexis <alan.previn.teres.alexis@intel.com>
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231201122109.729006-2-tvrtko.ursulin@linux.intel.com
-(cherry picked from commit cf9cb028ac56696ff879af1154c4b2f0b12701fd)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Fixed by explicitly clearing pointers to NULL on deallocation
+
+Fixes: 018423e90bee ("net: ethernet: aquantia: Add ring support code")
+Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
+Closes: https://lore.kernel.org/netdev/CAHk-=wiZZi7FcvqVSUirHBjx0bBUZ4dFrMDVLc3+3HCrtq0rBA@mail.gmail.com/
+Signed-off-by: Igor Russkikh <irusskikh@marvell.com>
+Link: https://lore.kernel.org/r/20231213094044.22988-1-irusskikh@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_reset.c             |  2 +-
- drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c |  5 +++--
- drivers/gpu/drm/i915/i915_gpu_error.h             | 12 ++++++++++--
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_reset.c b/drivers/gpu/drm/i915/gt/intel_reset.c
-index cc6bd21a3e51f..5fa57a34cf4bb 100644
---- a/drivers/gpu/drm/i915/gt/intel_reset.c
-+++ b/drivers/gpu/drm/i915/gt/intel_reset.c
-@@ -1297,7 +1297,7 @@ int __intel_engine_reset_bh(struct intel_engine_cs *engine, const char *msg)
- 	if (msg)
- 		drm_notice(&engine->i915->drm,
- 			   "Resetting %s for %s\n", engine->name, msg);
--	atomic_inc(&engine->i915->gpu_error.reset_engine_count[engine->uabi_class]);
-+	i915_increase_reset_engine_count(&engine->i915->gpu_error, engine);
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+index 694daeaf3e615..e1885c1eb100a 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -938,11 +938,14 @@ void aq_ring_free(struct aq_ring_s *self)
+ 		return;
  
- 	ret = intel_gt_reset_engine(engine);
- 	if (ret) {
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-index dc7b40e06e38a..836e4d9d65ef6 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -4774,7 +4774,8 @@ static void capture_error_state(struct intel_guc *guc,
- 			if (match) {
- 				intel_engine_set_hung_context(e, ce);
- 				engine_mask |= e->mask;
--				atomic_inc(&i915->gpu_error.reset_engine_count[e->uabi_class]);
-+				i915_increase_reset_engine_count(&i915->gpu_error,
-+								 e);
- 			}
- 		}
+ 	kfree(self->buff_ring);
++	self->buff_ring = NULL;
  
-@@ -4786,7 +4787,7 @@ static void capture_error_state(struct intel_guc *guc,
- 	} else {
- 		intel_engine_set_hung_context(ce->engine, ce);
- 		engine_mask = ce->engine->mask;
--		atomic_inc(&i915->gpu_error.reset_engine_count[ce->engine->uabi_class]);
-+		i915_increase_reset_engine_count(&i915->gpu_error, ce->engine);
- 	}
- 
- 	with_intel_runtime_pm(&i915->runtime_pm, wakeref)
-diff --git a/drivers/gpu/drm/i915/i915_gpu_error.h b/drivers/gpu/drm/i915/i915_gpu_error.h
-index 9f5971f5e9801..48f6c00402c47 100644
---- a/drivers/gpu/drm/i915/i915_gpu_error.h
-+++ b/drivers/gpu/drm/i915/i915_gpu_error.h
-@@ -16,6 +16,7 @@
- 
- #include "display/intel_display_device.h"
- #include "gt/intel_engine.h"
-+#include "gt/intel_engine_types.h"
- #include "gt/intel_gt_types.h"
- #include "gt/uc/intel_uc_fw.h"
- 
-@@ -232,7 +233,7 @@ struct i915_gpu_error {
- 	atomic_t reset_count;
- 
- 	/** Number of times an engine has been reset */
--	atomic_t reset_engine_count[I915_NUM_ENGINES];
-+	atomic_t reset_engine_count[MAX_ENGINE_CLASS];
- };
- 
- struct drm_i915_error_state_buf {
-@@ -255,7 +256,14 @@ static inline u32 i915_reset_count(struct i915_gpu_error *error)
- static inline u32 i915_reset_engine_count(struct i915_gpu_error *error,
- 					  const struct intel_engine_cs *engine)
- {
--	return atomic_read(&error->reset_engine_count[engine->uabi_class]);
-+	return atomic_read(&error->reset_engine_count[engine->class]);
-+}
-+
-+static inline void
-+i915_increase_reset_engine_count(struct i915_gpu_error *error,
-+				 const struct intel_engine_cs *engine)
-+{
-+	atomic_inc(&error->reset_engine_count[engine->class]);
+-	if (self->dx_ring)
++	if (self->dx_ring) {
+ 		dma_free_coherent(aq_nic_get_dev(self->aq_nic),
+ 				  self->size * self->dx_size, self->dx_ring,
+ 				  self->dx_ring_pa);
++		self->dx_ring = NULL;
++	}
  }
  
- #define CORE_DUMP_FLAG_NONE           0x0
+ unsigned int aq_ring_fill_stats_data(struct aq_ring_s *self, u64 *data)
 -- 
 2.43.0
 
