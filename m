@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9887B3A1B9;
-	Mon, 18 Dec 2023 14:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225FF1D157;
+	Mon, 18 Dec 2023 14:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEh7qc6N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B28C433C8;
-	Mon, 18 Dec 2023 14:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfzpxXgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52769C433CA;
+	Mon, 18 Dec 2023 14:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908079;
-	bh=Oy+kVcY7kXwy3FYP7wg69PvUVCfHqoeD+n3VAhZ19Hg=;
+	s=korg; t=1702908081;
+	bh=NTue5DdLPl9rddN4WOocw721iU5BempdJlC8q/c+NQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEh7qc6NhMStFq6YHieIer0U8Y4YcvLf+O1VZo6KAW3aXvMxYZC3ZvrnoI9CTTgEB
-	 VMj1nJW/U8ea3CJZ9pgqnwxZrpdHIBGtJkFoDoPtqU5+BVwH6cgU6owfV1Pd1ZkaQc
-	 UlaxpI4m2DtggaMOxYxiUxoseaU/84kH0Whrj1Ao=
+	b=bfzpxXgx+8+51CU2w/d5S+kmEVrr5H79skzAeuLlH3pdrFNoHfUECGV63nALk+IvA
+	 AjMUCB3vCn11K7vAnWrPSXWe0MXUhki/5f8xYpC8uHlolGNPsZ2jTr6L1KOL4frTX+
+	 2XclzRoJws65AlDZH+FuROCbELJAD1AxJcyFb5ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Arinzon <darinzon@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/166] net: ena: Fix xdp drops handling due to multibuf packets
-Date: Mon, 18 Dec 2023 14:50:11 +0100
-Message-ID: <20231218135107.026941145@linuxfoundation.org>
+Subject: [PATCH 6.6 046/166] net: ena: Fix DMA syncing in XDP path when SWIOTLB is on
+Date: Mon, 18 Dec 2023 14:50:12 +0100
+Message-ID: <20231218135107.076766125@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -45,73 +45,178 @@ Content-Transfer-Encoding: 8bit
 
 From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 505b1a88d311ff6f8c44a34f94e3be21745cce6f ]
+[ Upstream commit d760117060cf2e90b5c59c5492cab179a4dbce01 ]
 
-Current xdp code drops packets larger than ENA_XDP_MAX_MTU.
-This is an incorrect condition since the problem is not the
-size of the packet, rather the number of buffers it contains.
+This patch fixes two issues:
 
-This commit:
+Issue 1
+-------
+Description
+```````````
+Current code does not call dma_sync_single_for_cpu() to sync data from
+the device side memory to the CPU side memory before the XDP code path
+uses the CPU side data.
+This causes the XDP code path to read the unset garbage data in the CPU
+side memory, resulting in incorrect handling of the packet by XDP.
 
-1. Identifies and drops XDP multi-buffer packets at the
-   beginning of the function.
-2. Increases the xdp drop statistic when this drop occurs.
-3. Adds a one-time print that such drops are happening to
-   give better indication to the user.
+Solution
+````````
+1. Add a call to dma_sync_single_for_cpu() before the XDP code starts to
+   use the data in the CPU side memory.
+2. The XDP code verdict can be XDP_PASS, in which case there is a
+   fallback to the non-XDP code, which also calls
+   dma_sync_single_for_cpu().
+   To avoid calling dma_sync_single_for_cpu() twice:
+2.1. Put the dma_sync_single_for_cpu() in the code in such a place where
+     it happens before XDP and non-XDP code.
+2.2. Remove the calls to dma_sync_single_for_cpu() in the non-XDP code
+     for the first buffer only (rx_copybreak and non-rx_copybreak
+     cases), since the new call that was added covers these cases.
+     The call to dma_sync_single_for_cpu() for the second buffer and on
+     stays because only the first buffer is handled by the newly added
+     dma_sync_single_for_cpu(). And there is no need for special
+     handling of the second buffer and on for the XDP path since
+     currently the driver supports only single buffer packets.
 
-Fixes: 838c93dc5449 ("net: ena: implement XDP drop support")
+Issue 2
+-------
+Description
+```````````
+In case the XDP code forwarded the packet (ENA_XDP_FORWARDED),
+ena_unmap_rx_buff_attrs() is called with attrs set to 0.
+This means that before unmapping the buffer, the internal function
+dma_unmap_page_attrs() will also call dma_sync_single_for_cpu() on
+the whole buffer (not only on the data part of it).
+This sync is both wasteful (since a sync was already explicitly
+called before) and also causes a bug, which will be explained
+using the below diagram.
+
+The following diagram shows the flow of events causing the bug.
+The order of events is (1)-(4) as shown in the diagram.
+
+CPU side memory area
+
+     (3)convert_to_xdp_frame() initializes the
+        headroom with xdpf metadata
+                      ||
+                      \/
+          ___________________________________
+         |                                   |
+ 0       |                                   V                       4K
+ ---------------------------------------------------------------------
+ | xdpf->data      | other xdpf       |   < data >   | tailroom ||...|
+ |                 | fields           |              | GARBAGE  ||   |
+ ---------------------------------------------------------------------
+
+                   /\                        /\
+                   ||                        ||
+   (4)ena_unmap_rx_buff_attrs() calls     (2)dma_sync_single_for_cpu()
+      dma_sync_single_for_cpu() on the       copies data from device
+      whole buffer page, overwriting         side to CPU side memory
+      the xdpf->data with GARBAGE.           ||
+ 0                                                                   4K
+ ---------------------------------------------------------------------
+ | headroom                           |   < data >   | tailroom ||...|
+ | GARBAGE                            |              | GARBAGE  ||   |
+ ---------------------------------------------------------------------
+
+Device side memory area                      /\
+                                             ||
+                               (1) device writes RX packet data
+
+After the call to ena_unmap_rx_buff_attrs() in (4), the xdpf->data
+becomes corrupted, and so when it is later accessed in
+ena_clean_xdp_irq()->xdp_return_frame(), it causes a page fault,
+crashing the kernel.
+
+Solution
+````````
+Explicitly tell ena_unmap_rx_buff_attrs() not to call
+dma_sync_single_for_cpu() by passing it the ENA_DMA_ATTR_SKIP_CPU_SYNC
+flag.
+
+Fixes: f7d625adeb7b ("net: ena: Add dynamic recycling mechanism for rx buffers")
 Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
 Signed-off-by: David Arinzon <darinzon@amazon.com>
-Link: https://lore.kernel.org/r/20231211062801.27891-3-darinzon@amazon.com
+Link: https://lore.kernel.org/r/20231211062801.27891-4-darinzon@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 23 ++++++++------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 098025d292473..b638e1d3d151a 100644
+index b638e1d3d151a..14e41eb57731b 100644
 --- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
 +++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -1672,20 +1672,23 @@ static void ena_set_rx_hash(struct ena_ring *rx_ring,
- 	}
- }
+@@ -1493,11 +1493,6 @@ static struct sk_buff *ena_rx_skb(struct ena_ring *rx_ring,
+ 		if (unlikely(!skb))
+ 			return NULL;
  
--static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp)
-+static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp, u16 num_descs)
- {
- 	struct ena_rx_buffer *rx_info;
- 	int ret;
+-		/* sync this buffer for CPU use */
+-		dma_sync_single_for_cpu(rx_ring->dev,
+-					dma_unmap_addr(&rx_info->ena_buf, paddr) + pkt_offset,
+-					len,
+-					DMA_FROM_DEVICE);
+ 		skb_copy_to_linear_data(skb, buf_addr + buf_offset, len);
+ 		dma_sync_single_for_device(rx_ring->dev,
+ 					   dma_unmap_addr(&rx_info->ena_buf, paddr) + pkt_offset,
+@@ -1516,17 +1511,10 @@ static struct sk_buff *ena_rx_skb(struct ena_ring *rx_ring,
  
-+	/* XDP multi-buffer packets not supported */
-+	if (unlikely(num_descs > 1)) {
-+		netdev_err_once(rx_ring->adapter->netdev,
-+				"xdp: dropped unsupported multi-buffer packets\n");
-+		ena_increase_stat(&rx_ring->rx_stats.xdp_drop, 1, &rx_ring->syncp);
-+		return ENA_XDP_DROP;
-+	}
-+
- 	rx_info = &rx_ring->rx_buffer_info[rx_ring->ena_bufs[0].req_id];
- 	xdp_prepare_buff(xdp, page_address(rx_info->page),
- 			 rx_info->buf_offset,
- 			 rx_ring->ena_bufs[0].len, false);
--	/* If for some reason we received a bigger packet than
--	 * we expect, then we simply drop it
--	 */
--	if (unlikely(rx_ring->ena_bufs[0].len > ENA_XDP_MAX_MTU))
--		return ENA_XDP_DROP;
+ 	buf_len = SKB_DATA_ALIGN(len + buf_offset + tailroom);
  
- 	ret = ena_xdp_execute(rx_ring, xdp);
+-	pre_reuse_paddr = dma_unmap_addr(&rx_info->ena_buf, paddr);
+-
+ 	/* If XDP isn't loaded try to reuse part of the RX buffer */
+ 	reuse_rx_buf_page = !is_xdp_loaded &&
+ 			    ena_try_rx_buf_page_reuse(rx_info, buf_len, len, pkt_offset);
  
-@@ -1754,7 +1757,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+-	dma_sync_single_for_cpu(rx_ring->dev,
+-				pre_reuse_paddr + pkt_offset,
+-				len,
+-				DMA_FROM_DEVICE);
+-
+ 	if (!reuse_rx_buf_page)
+ 		ena_unmap_rx_buff_attrs(rx_ring, rx_info, DMA_ATTR_SKIP_CPU_SYNC);
+ 
+@@ -1723,6 +1711,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 	int xdp_flags = 0;
+ 	int total_len = 0;
+ 	int xdp_verdict;
++	u8 pkt_offset;
+ 	int rc = 0;
+ 	int i;
+ 
+@@ -1749,13 +1738,19 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 
+ 		/* First descriptor might have an offset set by the device */
+ 		rx_info = &rx_ring->rx_buffer_info[rx_ring->ena_bufs[0].req_id];
+-		rx_info->buf_offset += ena_rx_ctx.pkt_offset;
++		pkt_offset = ena_rx_ctx.pkt_offset;
++		rx_info->buf_offset += pkt_offset;
+ 
+ 		netif_dbg(rx_ring->adapter, rx_status, rx_ring->netdev,
+ 			  "rx_poll: q %d got packet from ena. descs #: %d l3 proto %d l4 proto %d hash: %x\n",
+ 			  rx_ring->qid, ena_rx_ctx.descs, ena_rx_ctx.l3_proto,
  			  ena_rx_ctx.l4_proto, ena_rx_ctx.hash);
  
++		dma_sync_single_for_cpu(rx_ring->dev,
++					dma_unmap_addr(&rx_info->ena_buf, paddr) + pkt_offset,
++					rx_ring->ena_bufs[0].len,
++					DMA_FROM_DEVICE);
++
  		if (ena_xdp_present_ring(rx_ring))
--			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp);
-+			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp, ena_rx_ctx.descs);
+ 			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp, ena_rx_ctx.descs);
  
- 		/* allocate skb and fill it */
- 		if (xdp_verdict == ENA_XDP_PASS)
+@@ -1781,7 +1776,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 				if (xdp_verdict & ENA_XDP_FORWARDED) {
+ 					ena_unmap_rx_buff_attrs(rx_ring,
+ 								&rx_ring->rx_buffer_info[req_id],
+-								0);
++								DMA_ATTR_SKIP_CPU_SYNC);
+ 					rx_ring->rx_buffer_info[req_id].page = NULL;
+ 				}
+ 			}
 -- 
 2.43.0
 
