@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD5B37868;
-	Mon, 18 Dec 2023 14:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83956498A5;
+	Mon, 18 Dec 2023 14:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGUcmRWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F54C433C8;
-	Mon, 18 Dec 2023 14:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAZHVh+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F90C433C9;
+	Mon, 18 Dec 2023 14:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908174;
-	bh=aRUDmhu58qsXbvDsdDRgzrAiNvqewPAx+eYtfIzQZMk=;
+	s=korg; t=1702908177;
+	bh=t8s/MQ6K38Z2BBdrz6CHA8TiwwXIA2DvB6jHj/PW+rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGUcmRWPsqx1iprsst5jGZX61ieBiey1sBYI4NS1rnHqXOgMtJIJz08zV69pkhtxn
-	 r4xmLIP9ryLUvwiKlubnQcKidQLGPlyByLeKWEdJXd1Oyx89hFp4e1VSDXgMwjqQd3
-	 3mkJqSX3zCpy7uhEXRBVswOORCobCqqOslqHXRpg=
+	b=KAZHVh+RTUzNHLu6voeF89wHSRoSKv+pdMUSu2MF+/oPDq4501iW6rei5CH7yWaCl
+	 JLQQ1UaAahuNwSXD+GxvAadzmjgtvR5CiRONwyyPHP5xLnZ7mcM+6PWKH8boYyo7Lq
+	 ETPyGhoirEMRDHu6fuLGkjY/61wFeMzC5yZh2vUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
 	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/166] accel/ivpu: Print information about used workarounds
-Date: Mon, 18 Dec 2023 14:50:46 +0100
-Message-ID: <20231218135108.615694722@linuxfoundation.org>
+Subject: [PATCH 6.6 081/166] accel/ivpu/37xx: Fix interrupt_clear_with_0 WA initialization
+Date: Mon, 18 Dec 2023 14:50:47 +0100
+Message-ID: <20231218135108.645369456@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -43,71 +43,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+From: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
 
-[ Upstream commit eefa13a69053a09f20b2d1c00dda59be9c98cfe9 ]
+[ Upstream commit 35c49cfc8b702eda7a0d3f05497b16f81b69e289 ]
 
-Use ivpu_dbg(MISC) to print information about workarounds.
+Using PCI Device ID/Revision to initialize the interrupt_clear_with_0
+workaround is problematic - there are many pre-production
+steppings with different behavior, even with the same PCI ID/Revision
 
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Instead of checking for PCI Device ID/Revision, check the VPU
+buttress interrupt status register behavior - if this register
+is not zero after writing 1s it means there register is RW
+instead of RW1C and we need to enable the interrupt_clear_with_0
+workaround.
+
+Fixes: 7f34e01f77f8 ("accel/ivpu: Clear specific interrupt status bits on C0")
+Signed-off-by: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230901094957.168898-6-stanislaw.gruszka@linux.intel.com
-Stable-dep-of: 35c49cfc8b70 ("accel/ivpu/37xx: Fix interrupt_clear_with_0 WA initialization")
+Link: https://lore.kernel.org/all/20231204122331.40560-1-jacek.lawrynowicz@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_drv.h     | 5 +++++
- drivers/accel/ivpu/ivpu_hw_37xx.c | 5 +++++
- drivers/accel/ivpu/ivpu_hw_40xx.c | 4 ++++
- 3 files changed, 14 insertions(+)
+ drivers/accel/ivpu/ivpu_hw_37xx.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_drv.h b/drivers/accel/ivpu/ivpu_drv.h
-index 2adc349126bb6..6853dfe1c7e58 100644
---- a/drivers/accel/ivpu/ivpu_drv.h
-+++ b/drivers/accel/ivpu/ivpu_drv.h
-@@ -76,6 +76,11 @@
- 
- #define IVPU_WA(wa_name) (vdev->wa.wa_name)
- 
-+#define IVPU_PRINT_WA(wa_name) do {					\
-+	if (IVPU_WA(wa_name))						\
-+		ivpu_dbg(vdev, MISC, "Using WA: " #wa_name "\n");	\
-+} while (0)
-+
- struct ivpu_wa_table {
- 	bool punit_disabled;
- 	bool clear_runtime_mem;
 diff --git a/drivers/accel/ivpu/ivpu_hw_37xx.c b/drivers/accel/ivpu/ivpu_hw_37xx.c
-index b8010c07eec17..2409ff0dda619 100644
+index 2409ff0dda619..ddf03498fd4c1 100644
 --- a/drivers/accel/ivpu/ivpu_hw_37xx.c
 +++ b/drivers/accel/ivpu/ivpu_hw_37xx.c
-@@ -104,6 +104,11 @@ static void ivpu_hw_wa_init(struct ivpu_device *vdev)
+@@ -53,10 +53,12 @@
  
- 	if (ivpu_device_id(vdev) == PCI_DEVICE_ID_MTL && ivpu_revision(vdev) < 4)
+ #define ICB_0_1_IRQ_MASK ((((u64)ICB_1_IRQ_MASK) << 32) | ICB_0_IRQ_MASK)
+ 
+-#define BUTTRESS_IRQ_MASK ((REG_FLD(VPU_37XX_BUTTRESS_INTERRUPT_STAT, FREQ_CHANGE)) | \
+-			   (REG_FLD(VPU_37XX_BUTTRESS_INTERRUPT_STAT, ATS_ERR)) | \
++#define BUTTRESS_IRQ_MASK ((REG_FLD(VPU_37XX_BUTTRESS_INTERRUPT_STAT, ATS_ERR)) | \
+ 			   (REG_FLD(VPU_37XX_BUTTRESS_INTERRUPT_STAT, UFI_ERR)))
+ 
++#define BUTTRESS_ALL_IRQ_MASK (BUTTRESS_IRQ_MASK | \
++			       (REG_FLD(VPU_37XX_BUTTRESS_INTERRUPT_STAT, FREQ_CHANGE)))
++
+ #define BUTTRESS_IRQ_ENABLE_MASK ((u32)~BUTTRESS_IRQ_MASK)
+ #define BUTTRESS_IRQ_DISABLE_MASK ((u32)-1)
+ 
+@@ -102,8 +104,12 @@ static void ivpu_hw_wa_init(struct ivpu_device *vdev)
+ 	vdev->wa.clear_runtime_mem = false;
+ 	vdev->wa.d3hot_after_power_off = true;
+ 
+-	if (ivpu_device_id(vdev) == PCI_DEVICE_ID_MTL && ivpu_revision(vdev) < 4)
++	REGB_WR32(VPU_37XX_BUTTRESS_INTERRUPT_STAT, BUTTRESS_ALL_IRQ_MASK);
++	if (REGB_RD32(VPU_37XX_BUTTRESS_INTERRUPT_STAT) == BUTTRESS_ALL_IRQ_MASK) {
++		/* Writing 1s does not clear the interrupt status register */
  		vdev->wa.interrupt_clear_with_0 = true;
-+
-+	IVPU_PRINT_WA(punit_disabled);
-+	IVPU_PRINT_WA(clear_runtime_mem);
-+	IVPU_PRINT_WA(d3hot_after_power_off);
-+	IVPU_PRINT_WA(interrupt_clear_with_0);
- }
++		REGB_WR32(VPU_37XX_BUTTRESS_INTERRUPT_STAT, 0x0);
++	}
  
- static void ivpu_hw_timeouts_init(struct ivpu_device *vdev)
-diff --git a/drivers/accel/ivpu/ivpu_hw_40xx.c b/drivers/accel/ivpu/ivpu_hw_40xx.c
-index 7c3ff25232a2c..03600a7a5aca8 100644
---- a/drivers/accel/ivpu/ivpu_hw_40xx.c
-+++ b/drivers/accel/ivpu/ivpu_hw_40xx.c
-@@ -125,6 +125,10 @@ static void ivpu_hw_wa_init(struct ivpu_device *vdev)
- 
- 	if (ivpu_hw_gen(vdev) == IVPU_HW_40XX)
- 		vdev->wa.disable_clock_relinquish = true;
-+
-+	IVPU_PRINT_WA(punit_disabled);
-+	IVPU_PRINT_WA(clear_runtime_mem);
-+	IVPU_PRINT_WA(disable_clock_relinquish);
- }
- 
- static void ivpu_hw_timeouts_init(struct ivpu_device *vdev)
+ 	IVPU_PRINT_WA(punit_disabled);
+ 	IVPU_PRINT_WA(clear_runtime_mem);
 -- 
 2.43.0
 
