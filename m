@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A561D12F;
-	Mon, 18 Dec 2023 13:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090161D137;
+	Mon, 18 Dec 2023 13:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrGdorMp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA48C433C9;
-	Mon, 18 Dec 2023 13:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xd4iS+9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8239BC433C8;
+	Mon, 18 Dec 2023 13:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907933;
-	bh=G+37oQYWHMXq6Uo7bnOnjtPGUSe8tPxly6oqW9jpJxY=;
+	s=korg; t=1702907936;
+	bh=1UF6TYxtyRwvCgf4QMSHs+jSNYL7r5AX+voZDxN1/ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrGdorMp/ZqWLIR4DJoCoK4gn9yno44bebVcSwY+foRUuTNrifd/N7H2xFwDiZRrc
-	 nmyjtJRpqrW8QBxQs9Be5ztbdNNndeeZ0BB07TIGZi/ROe3s42pkV5mPZUKhJzyGHg
-	 zH/dJ74h4jdnmtzq6ylddyOA+DMNFZ+ooDOKYZj0=
+	b=Xd4iS+9eECX9aEPj8wYg78mYQMAU3gRii7q6mhfIiBj3QwbRKMRnniRc+W6T3yJEY
+	 cG4LJai6/RPB5z3hgORozjWU4Ex2z2OthvgDkRY4/mlL9TPJ0UnP4XleIjKJHgEqA+
+	 FR1bf4U+GAkFJEKCC4MqL9L43406x7lOL2KYVqpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/106] nbd: fold nbd config initialization into nbd_alloc_config()
-Date: Mon, 18 Dec 2023 14:51:15 +0100
-Message-ID: <20231218135057.656835344@linuxfoundation.org>
+	Robert Morris <rtm@csail.mit.edu>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 093/106] smb: client: fix NULL deref in asn1_ber_decoder()
+Date: Mon, 18 Dec 2023 14:51:47 +0100
+Message-ID: <20231218135059.037243106@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -43,118 +42,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 1b59860540a4018e8071dc18d4893ec389506b7d ]
+commit 90d025c2e953c11974e76637977c473200593a46 upstream.
 
-There are no functional changes, make the code cleaner and prepare to
-fix null-ptr-dereference while accessing 'nbd->config'.
+If server replied SMB2_NEGOTIATE with a zero SecurityBufferOffset,
+smb2_get_data_area() sets @len to non-zero but return NULL, so
+decode_negTokeninit() ends up being called with a NULL @security_blob:
 
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://lore.kernel.org/r/20231116162316.1740402-2-linan666@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 2 PID: 871 Comm: mount.cifs Not tainted 6.7.0-rc4 #2
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+  RIP: 0010:asn1_ber_decoder+0x173/0xc80
+  Code: 01 4c 39 2c 24 75 09 45 84 c9 0f 85 2f 03 00 00 48 8b 14 24 4c 29 ea 48 83 fa 01 0f 86 1e 07 00 00 48 8b 74 24 28 4d 8d 5d 01 <42> 0f b6 3c 2e 89 fa 40 88 7c 24 5c f7 d2 83 e2 1f 0f 84 3d 07 00
+  RSP: 0018:ffffc9000063f950 EFLAGS: 00010202
+  RAX: 0000000000000002 RBX: 0000000000000000 RCX: 000000000000004a
+  RDX: 000000000000004a RSI: 0000000000000000 RDI: 0000000000000000
+  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000002 R11: 0000000000000001 R12: 0000000000000000
+  R13: 0000000000000000 R14: 000000000000004d R15: 0000000000000000
+  FS:  00007fce52b0fbc0(0000) GS:ffff88806ba00000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000000000000 CR3: 000000001ae64000 CR4: 0000000000750ef0
+  PKRU: 55555554
+  Call Trace:
+   <TASK>
+   ? __die+0x23/0x70
+   ? page_fault_oops+0x181/0x480
+   ? __stack_depot_save+0x1e6/0x480
+   ? exc_page_fault+0x6f/0x1c0
+   ? asm_exc_page_fault+0x26/0x30
+   ? asn1_ber_decoder+0x173/0xc80
+   ? check_object+0x40/0x340
+   decode_negTokenInit+0x1e/0x30 [cifs]
+   SMB2_negotiate+0xc99/0x17c0 [cifs]
+   ? smb2_negotiate+0x46/0x60 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   smb2_negotiate+0x46/0x60 [cifs]
+   cifs_negotiate_protocol+0xae/0x130 [cifs]
+   cifs_get_smb_ses+0x517/0x1040 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? queue_delayed_work_on+0x5d/0x90
+   cifs_mount_get_session+0x78/0x200 [cifs]
+   dfs_mount_share+0x13a/0x9f0 [cifs]
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? lock_acquire+0xbf/0x2b0
+   ? find_nls+0x16/0x80
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   cifs_mount+0x7e/0x350 [cifs]
+   cifs_smb3_do_mount+0x128/0x780 [cifs]
+   smb3_get_tree+0xd9/0x290 [cifs]
+   vfs_get_tree+0x2c/0x100
+   ? capable+0x37/0x70
+   path_mount+0x2d7/0xb80
+   ? srso_alias_return_thunk+0x5/0xfbef5
+   ? _raw_spin_unlock_irqrestore+0x44/0x60
+   __x64_sys_mount+0x11a/0x150
+   do_syscall_64+0x47/0xf0
+   entry_SYSCALL_64_after_hwframe+0x6f/0x77
+  RIP: 0033:0x7fce52c2ab1e
+
+Fix this by setting @len to zero when @off == 0 so callers won't
+attempt to dereference non-existing data areas.
+
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/nbd.c | 41 +++++++++++++++++++----------------------
- 1 file changed, 19 insertions(+), 22 deletions(-)
+ fs/smb/client/smb2misc.c |   26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index e94d2ff6b1223..e70733c76e884 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -1530,17 +1530,20 @@ static int nbd_ioctl(struct block_device *bdev, fmode_t mode,
- 	return error;
- }
- 
--static struct nbd_config *nbd_alloc_config(void)
-+static int nbd_alloc_and_init_config(struct nbd_device *nbd)
+--- a/fs/smb/client/smb2misc.c
++++ b/fs/smb/client/smb2misc.c
+@@ -313,6 +313,9 @@ static const bool has_smb2_data_area[NUM
+ char *
+ smb2_get_data_area_len(int *off, int *len, struct smb2_hdr *shdr)
  {
- 	struct nbd_config *config;
- 
-+	if (WARN_ON(nbd->config))
-+		return -EINVAL;
++	const int max_off = 4096;
++	const int max_len = 128 * 1024;
 +
- 	if (!try_module_get(THIS_MODULE))
--		return ERR_PTR(-ENODEV);
-+		return -ENODEV;
+ 	*off = 0;
+ 	*len = 0;
  
- 	config = kzalloc(sizeof(struct nbd_config), GFP_NOFS);
- 	if (!config) {
- 		module_put(THIS_MODULE);
--		return ERR_PTR(-ENOMEM);
-+		return -ENOMEM;
+@@ -384,29 +387,20 @@ smb2_get_data_area_len(int *off, int *le
+ 	 * Invalid length or offset probably means data area is invalid, but
+ 	 * we have little choice but to ignore the data area in this case.
+ 	 */
+-	if (*off > 4096) {
+-		cifs_dbg(VFS, "offset %d too large, data area ignored\n", *off);
+-		*len = 0;
+-		*off = 0;
+-	} else if (*off < 0) {
+-		cifs_dbg(VFS, "negative offset %d to data invalid ignore data area\n",
+-			 *off);
++	if (unlikely(*off < 0 || *off > max_off ||
++		     *len < 0 || *len > max_len)) {
++		cifs_dbg(VFS, "%s: invalid data area (off=%d len=%d)\n",
++			 __func__, *off, *len);
+ 		*off = 0;
+ 		*len = 0;
+-	} else if (*len < 0) {
+-		cifs_dbg(VFS, "negative data length %d invalid, data area ignored\n",
+-			 *len);
+-		*len = 0;
+-	} else if (*len > 128 * 1024) {
+-		cifs_dbg(VFS, "data area larger than 128K: %d\n", *len);
++	} else if (*off == 0) {
+ 		*len = 0;
  	}
  
- 	atomic_set(&config->recv_threads, 0);
-@@ -1548,7 +1551,10 @@ static struct nbd_config *nbd_alloc_config(void)
- 	init_waitqueue_head(&config->conn_wait);
- 	config->blksize_bits = NBD_DEF_BLKSIZE_BITS;
- 	atomic_set(&config->live_connections, 0);
--	return config;
-+	nbd->config = config;
-+	refcount_set(&nbd->config_refs, 1);
-+
-+	return 0;
+ 	/* return pointer to beginning of data area, ie offset from SMB start */
+-	if ((*off != 0) && (*len != 0))
++	if (*off > 0 && *len > 0)
+ 		return (char *)shdr + *off;
+-	else
+-		return NULL;
++	return NULL;
  }
  
- static int nbd_open(struct block_device *bdev, fmode_t mode)
-@@ -1567,21 +1573,17 @@ static int nbd_open(struct block_device *bdev, fmode_t mode)
- 		goto out;
- 	}
- 	if (!refcount_inc_not_zero(&nbd->config_refs)) {
--		struct nbd_config *config;
--
- 		mutex_lock(&nbd->config_lock);
- 		if (refcount_inc_not_zero(&nbd->config_refs)) {
- 			mutex_unlock(&nbd->config_lock);
- 			goto out;
- 		}
--		config = nbd_alloc_config();
--		if (IS_ERR(config)) {
--			ret = PTR_ERR(config);
-+		ret = nbd_alloc_and_init_config(nbd);
-+		if (ret) {
- 			mutex_unlock(&nbd->config_lock);
- 			goto out;
- 		}
--		nbd->config = config;
--		refcount_set(&nbd->config_refs, 1);
-+
- 		refcount_inc(&nbd->refs);
- 		mutex_unlock(&nbd->config_lock);
- 		if (max_part)
-@@ -1990,22 +1992,17 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
- 		pr_err("nbd%d already in use\n", index);
- 		return -EBUSY;
- 	}
--	if (WARN_ON(nbd->config)) {
--		mutex_unlock(&nbd->config_lock);
--		nbd_put(nbd);
--		return -EINVAL;
--	}
--	config = nbd_alloc_config();
--	if (IS_ERR(config)) {
-+
-+	ret = nbd_alloc_and_init_config(nbd);
-+	if (ret) {
- 		mutex_unlock(&nbd->config_lock);
- 		nbd_put(nbd);
- 		pr_err("couldn't allocate config\n");
--		return PTR_ERR(config);
-+		return ret;
- 	}
--	nbd->config = config;
--	refcount_set(&nbd->config_refs, 1);
--	set_bit(NBD_RT_BOUND, &config->runtime_flags);
- 
-+	config = nbd->config;
-+	set_bit(NBD_RT_BOUND, &config->runtime_flags);
- 	ret = nbd_genl_size_set(info, nbd);
- 	if (ret)
- 		goto out;
--- 
-2.43.0
-
+ /*
 
 
