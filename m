@@ -1,190 +1,122 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213431D12F;
-	Mon, 18 Dec 2023 13:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B50F1D15F;
+	Mon, 18 Dec 2023 13:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3DtA0nl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA44C433C8;
-	Mon, 18 Dec 2023 13:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jv8mXMTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4606FC433C7;
+	Mon, 18 Dec 2023 13:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907495;
-	bh=eZKmGMJ7sIrZOFHe3BiyHmtwQb8aCdsQ155Btda4VcU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=J3DtA0nlwasLFxiVBY8KXWrSQwRb/VXkOf+RjrNe1dwDm0478d4CoW4oxbLvCvkSd
-	 H2wEfhKrxOClIKOxiPfy7LsDqgh5kX0MV1vg54cKXHAcF7Jl64Vwgy5/D1vYG5eZKG
-	 JxGLGmeBCt3e4x2cVyiqnK7jslpsO9bBWbKCuxAM=
+	s=korg; t=1702907500;
+	bh=YrS57CcnYZ48/ycUITLOlc7lHxsTNR5u7FztyjtikfA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jv8mXMTEXWfmfnfjA9bhSxbcI2olajFEVoh5X0wHMF9TIxNAQtpc2W5xWGaDkEnwy
+	 oeH9JjATxi1bA3CYy6c7k2BowR/yyu61Rzseb8lhQtA87M6gco3jt85O+g7mTSRCwP
+	 ABuKIPUjn+FkDSxt++02omDoFbyJENR1ErQ820nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 4.14 00/26] 4.14.334-rc1 review
-Date: Mon, 18 Dec 2023 14:51:02 +0100
-Message-ID: <20231218135040.665690087@linuxfoundation.org>
+	Yusong Gao <a869920004@gmail.com>,
+	Juerg Haefliger <juerg.haefliger@canonical.com>,
+	David Howells <dhowells@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 10/26] sign-file: Fix incorrect return values check
+Date: Mon, 18 Dec 2023 14:51:12 +0100
+Message-ID: <20231218135041.068371524@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20231218135040.665690087@linuxfoundation.org>
+References: <20231218135040.665690087@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.334-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.334-rc1
-X-KernelTest-Deadline: 2023-12-20T13:50+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.14.334 release.
-There are 26 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+4.14-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Wed, 20 Dec 2023 13:50:31 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.334-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+From: Yusong Gao <a869920004@gmail.com>
 
-thanks,
+[ Upstream commit 829649443e78d85db0cff0c37cadb28fbb1a5f6f ]
 
-greg k-h
+There are some wrong return values check in sign-file when call OpenSSL
+API. The ERR() check cond is wrong because of the program only check the
+return value is < 0 which ignored the return val is 0. For example:
+1. CMS_final() return 1 for success or 0 for failure.
+2. i2d_CMS_bio_stream() returns 1 for success or 0 for failure.
+3. i2d_TYPEbio() return 1 for success and 0 for failure.
+4. BIO_free() return 1 for success and 0 for failure.
 
--------------
-Pseudo-Shortlog of commits:
+Link: https://www.openssl.org/docs/manmaster/man3/
+Fixes: e5a2e3c84782 ("scripts/sign-file.c: Add support for signing with a raw signature")
+Signed-off-by: Yusong Gao <a869920004@gmail.com>
+Reviewed-by: Juerg Haefliger <juerg.haefliger@canonical.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20231213024405.624692-1-a869920004@gmail.com/ # v5
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ scripts/sign-file.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.334-rc1
+diff --git a/scripts/sign-file.c b/scripts/sign-file.c
+index 7434e9ea926e2..12acc70e5a7a5 100644
+--- a/scripts/sign-file.c
++++ b/scripts/sign-file.c
+@@ -322,7 +322,7 @@ int main(int argc, char **argv)
+ 				     CMS_NOSMIMECAP | use_keyid |
+ 				     use_signed_attrs),
+ 		    "CMS_add1_signer");
+-		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) < 0,
++		ERR(CMS_final(cms, bm, NULL, CMS_NOCERTS | CMS_BINARY) != 1,
+ 		    "CMS_final");
+ 
+ #else
+@@ -341,10 +341,10 @@ int main(int argc, char **argv)
+ 			b = BIO_new_file(sig_file_name, "wb");
+ 			ERR(!b, "%s", sig_file_name);
+ #ifndef USE_PKCS7
+-			ERR(i2d_CMS_bio_stream(b, cms, NULL, 0) < 0,
++			ERR(i2d_CMS_bio_stream(b, cms, NULL, 0) != 1,
+ 			    "%s", sig_file_name);
+ #else
+-			ERR(i2d_PKCS7_bio(b, pkcs7) < 0,
++			ERR(i2d_PKCS7_bio(b, pkcs7) != 1,
+ 			    "%s", sig_file_name);
+ #endif
+ 			BIO_free(b);
+@@ -374,9 +374,9 @@ int main(int argc, char **argv)
+ 
+ 	if (!raw_sig) {
+ #ifndef USE_PKCS7
+-		ERR(i2d_CMS_bio_stream(bd, cms, NULL, 0) < 0, "%s", dest_name);
++		ERR(i2d_CMS_bio_stream(bd, cms, NULL, 0) != 1, "%s", dest_name);
+ #else
+-		ERR(i2d_PKCS7_bio(bd, pkcs7) < 0, "%s", dest_name);
++		ERR(i2d_PKCS7_bio(bd, pkcs7) != 1, "%s", dest_name);
+ #endif
+ 	} else {
+ 		BIO *b;
+@@ -396,7 +396,7 @@ int main(int argc, char **argv)
+ 	ERR(BIO_write(bd, &sig_info, sizeof(sig_info)) < 0, "%s", dest_name);
+ 	ERR(BIO_write(bd, magic_number, sizeof(magic_number) - 1) < 0, "%s", dest_name);
+ 
+-	ERR(BIO_free(bd) < 0, "%s", dest_name);
++	ERR(BIO_free(bd) != 1, "%s", dest_name);
+ 
+ 	/* Finally, if we're signing in place, replace the original. */
+ 	if (replace_orig)
+-- 
+2.43.0
 
-Naveen N Rao <naveen@kernel.org>
-    powerpc/ftrace: Fix stack teardown in ftrace_no_trace
-
-Naveen N Rao <naveen@kernel.org>
-    powerpc/ftrace: Create a dummy stackframe to fix stack unwind
-
-Steven Rostedt (Google) <rostedt@goodmis.org>
-    ring-buffer: Fix memory leak of free page
-
-Florent Revest <revest@chromium.org>
-    team: Fix use-after-free when an option instance allocation fails
-
-Baokun Li <libaokun1@huawei.com>
-    ext4: prevent the normalized size from exceeding EXT_MAX_BLOCKS
-
-Denis Benato <benato.denis96@gmail.com>
-    HID: hid-asus: add const to read-only outgoing usb buffer
-
-Lech Perczak <lech.perczak@gmail.com>
-    net: usb: qmi_wwan: claim interface 4 for ZTE MF290
-
-Linus Torvalds <torvalds@linux-foundation.org>
-    asm-generic: qspinlock: fix queued_spin_value_unlocked() implementation
-
-Aoba K <nexp_0x17@outlook.com>
-    HID: multitouch: Add quirk for HONOR GLO-GXXX touchpad
-
-Denis Benato <benato.denis96@gmail.com>
-    HID: hid-asus: reset the backlight brightness level on resume
-
-Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-    platform/x86: intel_telemetry: Fix kernel doc descriptions
-
-Coly Li <colyli@suse.de>
-    bcache: add code comments for bch_btree_node_get() and __bch_btree_node_alloc()
-
-Ming Lei <ming.lei@redhat.com>
-    blk-throttle: fix lockdep warning of "cgroup_mutex or RCU read lock required!"
-
-Jens Axboe <axboe@kernel.dk>
-    cred: switch to using atomic_long_t
-
-Hyunwoo Kim <v4bel@theori.io>
-    appletalk: Fix Use-After-Free in atalk_ioctl
-
-Nikolay Kuratov <kniv@yandex-team.ru>
-    vsock/virtio: Fix unsigned integer wrap around in virtio_transport_has_space()
-
-Yusong Gao <a869920004@gmail.com>
-    sign-file: Fix incorrect return values check
-
-Dong Chenchen <dongchenchen2@huawei.com>
-    net: Remove acked SYN flag from packet in the transmit queue correctly
-
-Dinghao Liu <dinghao.liu@zju.edu.cn>
-    qed: Fix a potential use-after-free in qed_cxt_tables_alloc
-
-Hyunwoo Kim <v4bel@theori.io>
-    net/rose: Fix Use-After-Free in rose_ioctl
-
-Hyunwoo Kim <v4bel@theori.io>
-    atm: Fix Use-After-Free in do_vcc_ioctl
-
-Chengfeng Ye <dg573847474@gmail.com>
-    atm: solos-pci: Fix potential deadlock on &tx_queue_lock
-
-Chengfeng Ye <dg573847474@gmail.com>
-    atm: solos-pci: Fix potential deadlock on &cli_queue_lock
-
-Stefan Wahren <wahrenst@gmx.net>
-    qca_spi: Fix reset behavior
-
-Stefan Wahren <wahrenst@gmx.net>
-    qca_debug: Fix ethtool -G iface tx behavior
-
-Stefan Wahren <wahrenst@gmx.net>
-    qca_debug: Prevent crash on TX ring changes
-
-
--------------
-
-Diffstat:
-
- Makefile                                       |  4 +-
- arch/powerpc/kernel/trace/ftrace_64_mprofile.S |  9 +++-
- block/blk-throttle.c                           |  2 +
- drivers/atm/solos-pci.c                        |  8 ++--
- drivers/hid/hid-asus.c                         | 25 ++++++++--
- drivers/hid/hid-multitouch.c                   |  5 ++
- drivers/md/bcache/btree.c                      |  7 +++
- drivers/net/ethernet/qlogic/qed/qed_cxt.c      |  1 +
- drivers/net/ethernet/qualcomm/qca_debug.c      | 17 +++----
- drivers/net/ethernet/qualcomm/qca_spi.c        | 20 +++++++-
- drivers/net/team/team.c                        |  4 +-
- drivers/net/usb/qmi_wwan.c                     |  1 +
- drivers/platform/x86/intel_telemetry_core.c    |  4 +-
- fs/ext4/mballoc.c                              |  4 ++
- include/asm-generic/qspinlock.h                |  2 +-
- include/linux/cred.h                           |  6 +--
- kernel/cred.c                                  | 66 +++++++++++++-------------
- kernel/trace/ring_buffer.c                     |  2 +
- net/appletalk/ddp.c                            |  9 ++--
- net/atm/ioctl.c                                |  7 ++-
- net/ipv4/tcp_output.c                          |  6 +++
- net/rose/af_rose.c                             |  4 +-
- net/vmw_vsock/virtio_transport_common.c        |  2 +-
- scripts/sign-file.c                            | 12 ++---
- 24 files changed, 152 insertions(+), 75 deletions(-)
 
 
