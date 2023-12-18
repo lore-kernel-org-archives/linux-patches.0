@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5F21D13B;
-	Mon, 18 Dec 2023 13:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78ABE1D139;
+	Mon, 18 Dec 2023 13:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNvVwOiN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F58C433C7;
-	Mon, 18 Dec 2023 13:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4o6oH1M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D4CC433C8;
+	Mon, 18 Dec 2023 13:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907635;
-	bh=Vor2npV/17soOnKet2UWWJ3t5Eu2tCjYKnblLjz787g=;
+	s=korg; t=1702907638;
+	bh=jn9t9439oyLO5dZN5oWqfP2jVF2TEknFIZuN22eCEME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNvVwOiNgPufQJ62QNr0xiezl1K6A3YclMSRZvobaF3/hdja4YpHG+yBfcneqd4sT
-	 8go9y7vL0iXS8UmAIfG1rMUzHrvGRMDi91eJ3AxYRlkTlOk70hqhuKq/oIzS3PX1AO
-	 Jwo4zoIfWnxUgcgeXODDpxLZsDYdBVtqoQ6tD4dM=
+	b=t4o6oH1M2DlfWWRrM4PKuqWnWBDWo9MfBSDzhCmXJF8hD26TTwLZ5R50vVpBb8wXu
+	 muPLmkD+9oM3rSAxRy288rD+q4SaMZ7zMkiXwuJ6GXOiaQg9K9pty/aExqdPUYiwqi
+	 cyLK0Os+e7aWXFzgdPh5VdqQoarX7zlsZtxG98+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Lech Perczak <lech.perczak@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Denis Benato <benato.denis96@gmail.com>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 27/36] net: usb: qmi_wwan: claim interface 4 for ZTE MF290
-Date: Mon, 18 Dec 2023 14:51:37 +0100
-Message-ID: <20231218135042.812352499@linuxfoundation.org>
+Subject: [PATCH 4.19 28/36] HID: hid-asus: add const to read-only outgoing usb buffer
+Date: Mon, 18 Dec 2023 14:51:38 +0100
+Message-ID: <20231218135042.849763341@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
 References: <20231218135041.876499958@linuxfoundation.org>
@@ -37,70 +37,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lech Perczak <lech.perczak@gmail.com>
+From: Denis Benato <benato.denis96@gmail.com>
 
-[ Upstream commit 99360d9620f09fb8bc15548d855011bbb198c680 ]
+[ Upstream commit 06ae5afce8cc1f7621cc5c7751e449ce20d68af7 ]
 
-Interface 4 is used by for QMI interface in stock firmware of MF28D, the
-router which uses MF290 modem. Rebind it to qmi_wwan after freeing it up
-from option driver.
-The proper configuration is:
+In the function asus_kbd_set_report the parameter buf is read-only
+as it gets copied in a memory portion suitable for USB transfer,
+but the parameter is not marked as const: add the missing const and mark
+const immutable buffers passed to that function.
 
-Interface mapping is:
-0: QCDM, 1: (unknown), 2: AT (PCUI), 2: AT (Modem), 4: QMI
-
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  4 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=19d2 ProdID=0189 Rev= 0.00
-S:  Manufacturer=ZTE, Incorporated
-S:  Product=ZTE LTE Technologies MSM
-C:* #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=2ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=4ms
-
-Cc: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: Lech Perczak <lech.perczak@gmail.com>
-Link: https://lore.kernel.org/r/20231117231918.100278-3-lech.perczak@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Denis Benato <benato.denis96@gmail.com>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-asus.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index aefa57e726954..f787b9a4f9a9e 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1250,6 +1250,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x19d2, 0x0168, 4)},
- 	{QMI_FIXED_INTF(0x19d2, 0x0176, 3)},
- 	{QMI_FIXED_INTF(0x19d2, 0x0178, 3)},
-+	{QMI_FIXED_INTF(0x19d2, 0x0189, 4)},    /* ZTE MF290 */
- 	{QMI_FIXED_INTF(0x19d2, 0x0191, 4)},	/* ZTE EuFi890 */
- 	{QMI_FIXED_INTF(0x19d2, 0x0199, 1)},	/* ZTE MF820S */
- 	{QMI_FIXED_INTF(0x19d2, 0x0200, 1)},
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 12ad6493be8f4..0842d7bdcbc7e 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -252,7 +252,7 @@ static int asus_raw_event(struct hid_device *hdev,
+ 	return 0;
+ }
+ 
+-static int asus_kbd_set_report(struct hid_device *hdev, u8 *buf, size_t buf_size)
++static int asus_kbd_set_report(struct hid_device *hdev, const u8 *buf, size_t buf_size)
+ {
+ 	unsigned char *dmabuf;
+ 	int ret;
+@@ -271,7 +271,7 @@ static int asus_kbd_set_report(struct hid_device *hdev, u8 *buf, size_t buf_size
+ 
+ static int asus_kbd_init(struct hid_device *hdev)
+ {
+-	u8 buf[] = { FEATURE_KBD_REPORT_ID, 0x41, 0x53, 0x55, 0x53, 0x20, 0x54,
++	const u8 buf[] = { FEATURE_KBD_REPORT_ID, 0x41, 0x53, 0x55, 0x53, 0x20, 0x54,
+ 		     0x65, 0x63, 0x68, 0x2e, 0x49, 0x6e, 0x63, 0x2e, 0x00 };
+ 	int ret;
+ 
+@@ -285,7 +285,7 @@ static int asus_kbd_init(struct hid_device *hdev)
+ static int asus_kbd_get_functions(struct hid_device *hdev,
+ 				  unsigned char *kbd_func)
+ {
+-	u8 buf[] = { FEATURE_KBD_REPORT_ID, 0x05, 0x20, 0x31, 0x00, 0x08 };
++	const u8 buf[] = { FEATURE_KBD_REPORT_ID, 0x05, 0x20, 0x31, 0x00, 0x08 };
+ 	u8 *readbuf;
+ 	int ret;
+ 
 -- 
 2.43.0
 
