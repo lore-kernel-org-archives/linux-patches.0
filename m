@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA53129EF7;
-	Mon, 18 Dec 2023 13:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78596129EF7;
+	Mon, 18 Dec 2023 13:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3klO7Nd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F30C433C8;
-	Mon, 18 Dec 2023 13:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvtFSlOV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5FFC433C7;
+	Mon, 18 Dec 2023 13:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907826;
-	bh=pQzU8pyGHu0Qv4CIe4v/kgIFsNn0uyHGF1IXApoz+Vw=;
+	s=korg; t=1702907829;
+	bh=3oe6SyjOQjRGuAnPgtOhaNmPP4iMEX7I9xxBO4YPsgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3klO7NdUMX31HwgFmyeNiaRhpiOUg7uqFA9E5BruHM8f0FAV2WfK3VHrzZv18hay
-	 tSrShVM4X8IAivbfZ3D7KVyYaSo7WWII2/iYLGk3ziYz5HuwFCygrklVMThB+yTGWf
-	 obrD3MbttgwSKSq/7tdrRJsES54+BS9dM5r/ojn4=
+	b=SvtFSlOVhvivUgCZmnn/tLt2Iy3xUE6mUo6376LGGJYO3HJxRIQyy/owGsjmKpe5w
+	 8HwuwH3xyyiCjSp5aZ0rHyONJJCG1YoqYYZR8nNptqmzyZWkuowudXNj+QoN29mWZc
+	 Ls36unqzLAFH6KMTlPbSN/5+lkOMMEOrSNennDZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arthur Kiyanovski <akiyano@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Coly Li <colyli@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/106] net: ena: Fix xdp drops handling due to multibuf packets
-Date: Mon, 18 Dec 2023 14:50:47 +0100
-Message-ID: <20231218135056.450506129@linuxfoundation.org>
+Subject: [PATCH 6.1 060/106] bcache: avoid NULL checking to c->root in run_cache_set()
+Date: Mon, 18 Dec 2023 14:51:14 +0100
+Message-ID: <20231218135057.608740582@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135055.005497074@linuxfoundation.org>
 References: <20231218135055.005497074@linuxfoundation.org>
@@ -43,75 +42,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Arinzon <darinzon@amazon.com>
+From: Coly Li <colyli@suse.de>
 
-[ Upstream commit 505b1a88d311ff6f8c44a34f94e3be21745cce6f ]
+[ Upstream commit 3eba5e0b2422aec3c9e79822029599961fdcab97 ]
 
-Current xdp code drops packets larger than ENA_XDP_MAX_MTU.
-This is an incorrect condition since the problem is not the
-size of the packet, rather the number of buffers it contains.
+In run_cache_set() after c->root returned from bch_btree_node_get(), it
+is checked by IS_ERR_OR_NULL(). Indeed it is unncessary to check NULL
+because bch_btree_node_get() will not return NULL pointer to caller.
 
-This commit:
+This patch replaces IS_ERR_OR_NULL() by IS_ERR() for the above reason.
 
-1. Identifies and drops XDP multi-buffer packets at the
-   beginning of the function.
-2. Increases the xdp drop statistic when this drop occurs.
-3. Adds a one-time print that such drops are happening to
-   give better indication to the user.
-
-Fixes: 838c93dc5449 ("net: ena: implement XDP drop support")
-Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Link: https://lore.kernel.org/r/20231211062801.27891-3-darinzon@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Coly Li <colyli@suse.de>
+Link: https://lore.kernel.org/r/20231120052503.6122-11-colyli@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/md/bcache/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index d7392dabde1e3..044b8afde69a0 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -1618,20 +1618,23 @@ static void ena_set_rx_hash(struct ena_ring *rx_ring,
- 	}
- }
+diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
+index 525871380f442..70e5bd8961d2f 100644
+--- a/drivers/md/bcache/super.c
++++ b/drivers/md/bcache/super.c
+@@ -2019,7 +2019,7 @@ static int run_cache_set(struct cache_set *c)
+ 		c->root = bch_btree_node_get(c, NULL, k,
+ 					     j->btree_level,
+ 					     true, NULL);
+-		if (IS_ERR_OR_NULL(c->root))
++		if (IS_ERR(c->root))
+ 			goto err;
  
--static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp)
-+static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp, u16 num_descs)
- {
- 	struct ena_rx_buffer *rx_info;
- 	int ret;
- 
-+	/* XDP multi-buffer packets not supported */
-+	if (unlikely(num_descs > 1)) {
-+		netdev_err_once(rx_ring->adapter->netdev,
-+				"xdp: dropped unsupported multi-buffer packets\n");
-+		ena_increase_stat(&rx_ring->rx_stats.xdp_drop, 1, &rx_ring->syncp);
-+		return ENA_XDP_DROP;
-+	}
-+
- 	rx_info = &rx_ring->rx_buffer_info[rx_ring->ena_bufs[0].req_id];
- 	xdp_prepare_buff(xdp, page_address(rx_info->page),
- 			 rx_info->page_offset,
- 			 rx_ring->ena_bufs[0].len, false);
--	/* If for some reason we received a bigger packet than
--	 * we expect, then we simply drop it
--	 */
--	if (unlikely(rx_ring->ena_bufs[0].len > ENA_XDP_MAX_MTU))
--		return ENA_XDP_DROP;
- 
- 	ret = ena_xdp_execute(rx_ring, xdp);
- 
-@@ -1700,7 +1703,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
- 			  ena_rx_ctx.l4_proto, ena_rx_ctx.hash);
- 
- 		if (ena_xdp_present_ring(rx_ring))
--			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp);
-+			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp, ena_rx_ctx.descs);
- 
- 		/* allocate skb and fill it */
- 		if (xdp_verdict == ENA_XDP_PASS)
+ 		list_del_init(&c->root->list);
 -- 
 2.43.0
 
