@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B463D54A;
-	Mon, 18 Dec 2023 14:08:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B1F3787E;
+	Mon, 18 Dec 2023 14:08:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZTioSP5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B76BC433C8;
-	Mon, 18 Dec 2023 14:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VffCo3X6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07547C433C7;
+	Mon, 18 Dec 2023 14:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908486;
-	bh=4gzGtNXmVO7WLdQFo+j/n5Y7dHDimWqKppKnZlezGkc=;
+	s=korg; t=1702908489;
+	bh=vM3LpWf9Rfre6VQp6EK8VmPGCMi4BGSfz2H4XpENRM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZTioSP5GyJquT9faSJI31lnQZkWP2zv2qgsKMEAubmQ8zN4k4GB+HZgo9NWLkoYy
-	 jkB3hcf/kulA6CJPeJl7XVqeY0cKqWJeXTxEIxtSaxI0HZCsdFrI4tFyi23b9xOILu
-	 KG51QwyCEB1dyE4xLXqBSne2H/l5aLKR1O0kH9V0=
+	b=VffCo3X675wVlKzWs+wixhLLxAf4QwNlu7NkYIP3ExNN3quj9gPCaBiqe3fda8M0Q
+	 r67v/2j5IjvGuMq7+hOvcoCmn7xH342dqwIE4b87OsdaNn9VY2sMXDsx5/+raNd8sg
+	 bDxMZkFvzZaPORaRNUtcgO/7zutfCKRaF2MlKRHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Ebner <f.ebner@proxmox.com>,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Jonathan Woithe <jwoithe@just42.net>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Igor Mammedov <imammedo@redhat.com>
-Subject: [PATCH 5.10 28/62] Revert "PCI: acpiphp: Reassign resources on bridge if necessary"
-Date: Mon, 18 Dec 2023 14:51:52 +0100
-Message-ID: <20231218135047.509886464@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 5.10 29/62] PCI: loongson: Limit MRRS to 256
+Date: Mon, 18 Dec 2023 14:51:53 +0100
+Message-ID: <20231218135047.556740924@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135046.178317233@linuxfoundation.org>
 References: <20231218135046.178317233@linuxfoundation.org>
@@ -45,77 +42,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 5df12742b7e3aae2594a30a9d14d5d6e9e7699f4 upstream.
+commit ef61a0405742a9f7f6051bc6fd2f017d87d07911 upstream.
 
-This reverts commit 40613da52b13fb21c5566f10b287e0ca8c12c4e9 and the
-subsequent fix to it:
+This is a partial revert of 8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS
+increases") for MIPS-based Loongson.
 
-  cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus")
+Some MIPS Loongson systems don't support arbitrary Max_Read_Request_Size
+(MRRS) settings.  8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS
+increases") worked around that by (1) assuming that firmware configured
+MRRS to the maximum supported value and (2) preventing the PCI core from
+increasing MRRS.
 
-40613da52b13 fixed a problem where hot-adding a device with large BARs
-failed if the bridge windows programmed by firmware were not large enough.
+Unfortunately, some firmware doesn't set that maximum MRRS correctly, which
+results in devices not being initialized correctly.  One symptom, from the
+Debian report below, is this:
 
-cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources()
-only for non-root bus") fixed a problem with 40613da52b13: an ACPI hot-add
-of a device on a PCI root bus (common in the virt world) or firmware
-sending ACPI Bus Check to non-existent Root Ports (e.g., on Dell Inspiron
-7352/0W6WV0) caused a NULL pointer dereference and suspend/resume hangs.
+  ata4.00: exception Emask 0x0 SAct 0x20000000 SErr 0x0 action 0x6 frozen
+  ata4.00: failed command: WRITE FPDMA QUEUED
+  ata4.00: cmd 61/20:e8:00:f0:e1/00:00:00:00:00/40 tag 29 ncq dma 16384 out
+           res 40/00:00:00:00:00/00:00:00:00:00/00 Emask 0x4 (timeout)
+  ata4.00: status: { DRDY }
+  ata4: hard resetting link
 
-Unfortunately the combination of 40613da52b13 and cc22522fd55e caused other
-problems:
+Limit MRRS to 256 because MIPS Loongson with higher MRRS support is
+considered rare.
 
-  - Fiona reported that hot-add of SCSI disks in QEMU virtual machine fails
-    sometimes.
+This must be done at device enablement stage because the MRRS setting may
+get lost if PCI_COMMAND_MASTER on the parent bridge is cleared, and we are
+only sure parent bridge is enabled at this point.
 
-  - Dongli reported a similar problem with hot-add of SCSI disks.
-
-  - Jonathan reported a console freeze during boot on bare metal due to an
-    error in radeon GPU initialization.
-
-Revert both patches to avoid adding these problems.  This means we will
-again see the problems with hot-adding devices with large BARs and the NULL
-pointer dereferences and suspend/resume issues that 40613da52b13 and
-cc22522fd55e were intended to fix.
-
-Fixes: 40613da52b13 ("PCI: acpiphp: Reassign resources on bridge if necessary")
-Fixes: cc22522fd55e ("PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-root bus")
-Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-Closes: https://lore.kernel.org/r/9eb669c0-d8f2-431d-a700-6da13053ae54@proxmox.com
-Reported-by: Dongli Zhang <dongli.zhang@oracle.com>
-Closes: https://lore.kernel.org/r/3c4a446a-b167-11b8-f36f-d3c1b49b42e9@oracle.com
-Reported-by: Jonathan Woithe <jwoithe@just42.net>
-Closes: https://lore.kernel.org/r/ZXpaNCLiDM+Kv38H@marvin.atrad.com.au
+Fixes: 8b3517f88ff2 ("PCI: loongson: Prevent LS7A MRRS increases")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217680
+Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1035587
+Link: https://lore.kernel.org/r/20231201115028.84351-1-jiaxun.yang@flygoat.com
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Cc: <stable@vger.kernel.org>
+Acked-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/acpiphp_glue.c |    9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/pci/controller/pci-loongson.c |   46 ++++++++++++++++++++++++++++++----
+ 1 file changed, 41 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/hotplug/acpiphp_glue.c
-+++ b/drivers/pci/hotplug/acpiphp_glue.c
-@@ -503,15 +503,12 @@ static void enable_slot(struct acpiphp_s
- 				if (pass && dev->subordinate) {
- 					check_hotplug_bridge(slot, dev);
- 					pcibios_resource_survey_bus(dev->subordinate);
--					if (pci_is_root_bus(bus))
--						__pci_bus_size_bridges(dev->subordinate, &add_list);
-+					__pci_bus_size_bridges(dev->subordinate,
-+							       &add_list);
- 				}
- 			}
- 		}
--		if (pci_is_root_bus(bus))
--			__pci_bus_assign_resources(bus, &add_list, NULL);
--		else
--			pci_assign_unassigned_bridge_resources(bus->self);
-+		__pci_bus_assign_resources(bus, &add_list, NULL);
- 	}
+--- a/drivers/pci/controller/pci-loongson.c
++++ b/drivers/pci/controller/pci-loongson.c
+@@ -65,13 +65,49 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LO
+ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_LOONGSON,
+ 			DEV_LS7A_LPC, system_bus_quirk);
  
- 	acpiphp_sanitize_bus(bus);
++/*
++ * Some Loongson PCIe ports have hardware limitations on their Maximum Read
++ * Request Size. They can't handle anything larger than this.  Sane
++ * firmware will set proper MRRS at boot, so we only need no_inc_mrrs for
++ * bridges. However, some MIPS Loongson firmware doesn't set MRRS properly,
++ * so we have to enforce maximum safe MRRS, which is 256 bytes.
++ */
++#ifdef CONFIG_MIPS
++static void loongson_set_min_mrrs_quirk(struct pci_dev *pdev)
++{
++	struct pci_bus *bus = pdev->bus;
++	struct pci_dev *bridge;
++	static const struct pci_device_id bridge_devids[] = {
++		{ PCI_VDEVICE(LOONGSON, DEV_LS2K_PCIE_PORT0) },
++		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT0) },
++		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT1) },
++		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT2) },
++		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT3) },
++		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT4) },
++		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT5) },
++		{ PCI_VDEVICE(LOONGSON, DEV_LS7A_PCIE_PORT6) },
++		{ 0, },
++	};
++
++	/* look for the matching bridge */
++	while (!pci_is_root_bus(bus)) {
++		bridge = bus->self;
++		bus = bus->parent;
++
++		if (pci_match_id(bridge_devids, bridge)) {
++			if (pcie_get_readrq(pdev) > 256) {
++				pci_info(pdev, "limiting MRRS to 256\n");
++				pcie_set_readrq(pdev, 256);
++			}
++			break;
++		}
++	}
++}
++DECLARE_PCI_FIXUP_ENABLE(PCI_ANY_ID, PCI_ANY_ID, loongson_set_min_mrrs_quirk);
++#endif
++
+ static void loongson_mrrs_quirk(struct pci_dev *pdev)
+ {
+-	/*
+-	 * Some Loongson PCIe ports have h/w limitations of maximum read
+-	 * request size. They can't handle anything larger than this. So
+-	 * force this limit on any devices attached under these ports.
+-	 */
+ 	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
+ 
+ 	bridge->no_inc_mrrs = 1;
 
 
