@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD65722091;
-	Mon, 18 Dec 2023 14:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5151D13D;
+	Mon, 18 Dec 2023 14:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wwa04Qns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347A1C433C8;
-	Mon, 18 Dec 2023 14:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HcnM//1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62E0C433C8;
+	Mon, 18 Dec 2023 14:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908418;
-	bh=1huDvhIjScAu22KJewC4fN5f1drcV3396PN2ZPOG6gk=;
+	s=korg; t=1702908421;
+	bh=omeTZ6uE+n/0+oxBogml4YcHM9L6C1EohKHtyDYOIf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wwa04Qnscy7YkxAfe6wx58qGzL0pmgsLjq15n3qKIcrDEXE3CY55uEYjfoaYALUs5
-	 R5vWjAQfJDmStu91yPbFyt9gTvrHgY3Zi8yNNKjurjwZlWvDtXx1W9EYf/uAQjlX6s
-	 uUKXl8WFot2F21z7h4CgN6RbEvBPGR0DMZFdpP64=
+	b=HcnM//1PkdfIThjICmdNVZfSLd/D9pOpxAkO/I5nm8/pf/cw1kzEIpULTY7/6qdOX
+	 GYDvpIXREVJ1Ae8fjOR/4zDJn8t/VQgwGIOqe22BLLlM8PP/6SsFnc5R5HxCi/MbcH
+	 KjePu80WlbdgpxAWT/aBQ51zxVQQjWO6c6mDi9Oo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.6 152/166] drm/i915: Fix remapped stride with CCS on ADL+
-Date: Mon, 18 Dec 2023 14:51:58 +0100
-Message-ID: <20231218135111.926079005@linuxfoundation.org>
+	Robert Morris <rtm@csail.mit.edu>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 153/166] smb: client: fix OOB in receive_encrypted_standard()
+Date: Mon, 18 Dec 2023 14:51:59 +0100
+Message-ID: <20231218135111.974068748@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -37,71 +36,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit 0ccd963fe555451b1f84e6d14d2b3ef03dd5c947 upstream.
+commit eec04ea119691e65227a97ce53c0da6b9b74b0b7 upstream.
 
-On ADL+ the hardware automagically calculates the CCS AUX surface
-stride from the main surface stride, so when remapping we can't
-really play a lot of tricks with the main surface stride, or else
-the AUX surface stride would get miscalculated and no longer
-match the actual data layout in memory.
+Fix potential OOB in receive_encrypted_standard() if server returned a
+large shdr->NextCommand that would end up writing off the end of
+@next_buffer.
 
-Supposedly we could remap in 256 main surface tile units
-(AUX page(4096)/cachline(64)*4(4x1 main surface tiles per
-AUX cacheline)=256 main surface tiles), but the extra complexity
-is probably not worth the hassle.
-
-So let's just make sure our mapping stride is calculated from
-the full framebuffer stride (instead of the framebuffer width).
-This way the stride we program into PLANE_STRIDE will be the
-original framebuffer stride, and thus there will be no change
-to the AUX stride/layout.
-
+Fixes: b24df3e30cbf ("cifs: update receive_encrypted_standard to handle compounded responses")
 Cc: stable@vger.kernel.org
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Juha-Pekka Heikkila <juhapekka.heikkila@gmail.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231205180308.7505-1-ville.syrjala@linux.intel.com
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-(cherry picked from commit 2c12eb36f849256f5eb00ffaee9bf99396fd3814)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_fb.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_fb.c
-+++ b/drivers/gpu/drm/i915/display/intel_fb.c
-@@ -1498,8 +1498,20 @@ static u32 calc_plane_remap_info(const s
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4941,6 +4941,7 @@ receive_encrypted_standard(struct TCP_Se
+ 	struct smb2_hdr *shdr;
+ 	unsigned int pdu_length = server->pdu_size;
+ 	unsigned int buf_size;
++	unsigned int next_cmd;
+ 	struct mid_q_entry *mid_entry;
+ 	int next_is_large;
+ 	char *next_buffer = NULL;
+@@ -4969,14 +4970,15 @@ receive_encrypted_standard(struct TCP_Se
+ 	next_is_large = server->large_buf;
+ one_more:
+ 	shdr = (struct smb2_hdr *)buf;
+-	if (shdr->NextCommand) {
++	next_cmd = le32_to_cpu(shdr->NextCommand);
++	if (next_cmd) {
++		if (WARN_ON_ONCE(next_cmd > pdu_length))
++			return -1;
+ 		if (next_is_large)
+ 			next_buffer = (char *)cifs_buf_get();
+ 		else
+ 			next_buffer = (char *)cifs_small_buf_get();
+-		memcpy(next_buffer,
+-		       buf + le32_to_cpu(shdr->NextCommand),
+-		       pdu_length - le32_to_cpu(shdr->NextCommand));
++		memcpy(next_buffer, buf + next_cmd, pdu_length - next_cmd);
+ 	}
  
- 			size += remap_info->size;
- 		} else {
--			unsigned int dst_stride = plane_view_dst_stride_tiles(fb, color_plane,
--									      remap_info->width);
-+			unsigned int dst_stride;
-+
-+			/*
-+			 * The hardware automagically calculates the CCS AUX surface
-+			 * stride from the main surface stride so can't really remap a
-+			 * smaller subset (unless we'd remap in whole AUX page units).
-+			 */
-+			if (intel_fb_needs_pot_stride_remap(fb) &&
-+			    intel_fb_is_ccs_modifier(fb->base.modifier))
-+				dst_stride = remap_info->src_stride;
-+			else
-+				dst_stride = remap_info->width;
-+
-+			dst_stride = plane_view_dst_stride_tiles(fb, color_plane, dst_stride);
+ 	mid_entry = smb2_find_mid(server, buf);
+@@ -5000,8 +5002,8 @@ one_more:
+ 	else
+ 		ret = cifs_handle_standard(server, mid_entry);
  
- 			assign_chk_ovf(i915, remap_info->dst_stride, dst_stride);
- 			color_plane_info->mapping_stride = dst_stride *
+-	if (ret == 0 && shdr->NextCommand) {
+-		pdu_length -= le32_to_cpu(shdr->NextCommand);
++	if (ret == 0 && next_cmd) {
++		pdu_length -= next_cmd;
+ 		server->large_buf = next_is_large;
+ 		if (next_is_large)
+ 			server->bigbuf = buf = next_buffer;
 
 
