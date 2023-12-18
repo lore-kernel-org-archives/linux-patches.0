@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D1F129EDD;
-	Mon, 18 Dec 2023 14:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135E91D14F;
+	Mon, 18 Dec 2023 14:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1m1TgT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B20C433C8;
-	Mon, 18 Dec 2023 14:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmnWw/M4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DCA1C433C7;
+	Mon, 18 Dec 2023 14:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908670;
-	bh=M8ZZr0/aZS2Tp5aaMiEDnlAQw8ZRcxReES3zep/8Rbo=;
+	s=korg; t=1702908672;
+	bh=0TJ8fAu5e8DBeJFHjNKSaJaKSE3125SsKhdpVkpFMTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1m1TgT5Ivfxx4v4VdhPWUX14yC/ttb8AoK7uMmRnOl7IgCgwKeSWWbseku5exbcw
-	 +Txpc4+EU18Sz6XV+lnkIcSO6KeLBXEJyzmgqEj9jowqcuqIUsYAs8383I9pzDbCw+
-	 UWD0ujOcyLocK3+dLJgS7PBdUrjMtYPdjQX0xaHo=
+	b=tmnWw/M405OKwsEgQblDiImlbpOrvetLroM2fXJjeGYaTgsZNVdfCGQXkFvBvka+N
+	 n4USRk8eyt5vjcTp1SewJjjCuQkSS2RiO7/m5QveO13MPpkGDdvM0onXYMDGVg3xiC
+	 GMtmAsSmDSRDYkhsMFB49NSl/Sz9QLfyAXIi9Xbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 14/40] net: stmmac: use dev_err_probe() for reporting mdio bus registration failure
-Date: Mon, 18 Dec 2023 14:52:09 +0100
-Message-ID: <20231218135043.234860944@linuxfoundation.org>
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Pengfei Xu <pengfei.xu@intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.4 32/40] perf: Fix perf_event_validate_size() lockdep splat
+Date: Mon, 18 Dec 2023 14:52:27 +0100
+Message-ID: <20231218135043.959659230@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135042.748715259@linuxfoundation.org>
 References: <20231218135042.748715259@linuxfoundation.org>
@@ -42,67 +43,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 839612d23ffd933174db911ce56dc3f3ca883ec5 ]
+commit 7e2c1e4b34f07d9aa8937fab88359d4a0fce468e upstream.
 
-I have a board where these two lines are always printed during boot:
+When lockdep is enabled, the for_each_sibling_event(sibling, event)
+macro checks that event->ctx->mutex is held. When creating a new group
+leader event, we call perf_event_validate_size() on a partially
+initialized event where event->ctx is NULL, and so when
+for_each_sibling_event() attempts to check event->ctx->mutex, we get a
+splat, as reported by Lucas De Marchi:
 
-   imx-dwmac 30bf0000.ethernet: Cannot register the MDIO bus
-   imx-dwmac 30bf0000.ethernet: stmmac_dvr_probe: MDIO bus (id: 1) registration failed
+  WARNING: CPU: 8 PID: 1471 at kernel/events/core.c:1950 __do_sys_perf_event_open+0xf37/0x1080
 
-It's perfectly fine, and the device is successfully (and silently, as
-far as the console goes) probed later.
+This only happens for a new event which is its own group_leader, and in
+this case there cannot be any sibling events. Thus it's safe to skip the
+check for siblings, which avoids having to make invasive and ugly
+changes to for_each_sibling_event().
 
-Use dev_err_probe() instead, which will demote these messages to debug
-level (thus removing the alarming messages from the console) when the
-error is -EPROBE_DEFER, and also has the advantage of including the
-error code if/when it happens to be something other than -EPROBE_DEFER.
+Avoid the splat by bailing out early when the new event is its own
+group_leader.
 
-While here, add the missing \n to one of the format strings.
-
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Link: https://lore.kernel.org/r/20220602074840.1143360-1-linux@rasmusvillemoes.dk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e23c0d21ce92 ("net: stmmac: Handle disabled MDIO busses from devicetree")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 382c27f4ed28f803 ("perf: Fix perf_event_validate_size()")
+Closes: https://lore.kernel.org/lkml/20231214000620.3081018-1-lucas.demarchi@intel.com/
+Closes: https://lore.kernel.org/lkml/ZXpm6gQ%2Fd59jGsuW@xpf.sh.intel.com/
+Reported-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20231215112450.3972309-1-mark.rutland@arm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 +++---
- drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ kernel/events/core.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 4eaa65e8d58f2..ee48283b2d967 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4691,9 +4691,9 @@ int stmmac_dvr_probe(struct device *device,
- 		/* MDIO bus Registration */
- 		ret = stmmac_mdio_register(ndev);
- 		if (ret < 0) {
--			dev_err(priv->device,
--				"%s: MDIO bus (id: %d) registration failed",
--				__func__, priv->plat->bus_id);
-+			dev_err_probe(priv->device, ret,
-+				      "%s: MDIO bus (id: %d) registration failed\n",
-+				      __func__, priv->plat->bus_id);
- 			goto error_mdio_register;
- 		}
- 	}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-index 40c42637ad755..846bf51f77b61 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-@@ -359,7 +359,7 @@ int stmmac_mdio_register(struct net_device *ndev)
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -1835,6 +1835,16 @@ static bool perf_event_validate_size(str
+ 				   group_leader->nr_siblings + 1) > 16*1024)
+ 		return false;
  
- 	err = of_mdiobus_register(new_bus, mdio_node);
- 	if (err != 0) {
--		dev_err(dev, "Cannot register the MDIO bus\n");
-+		dev_err_probe(dev, err, "Cannot register the MDIO bus\n");
- 		goto bus_register_fail;
- 	}
- 
--- 
-2.43.0
-
++	/*
++	 * When creating a new group leader, group_leader->ctx is initialized
++	 * after the size has been validated, but we cannot safely use
++	 * for_each_sibling_event() until group_leader->ctx is set. A new group
++	 * leader cannot have any siblings yet, so we can safely skip checking
++	 * the non-existent siblings.
++	 */
++	if (event == group_leader)
++		return true;
++
+ 	for_each_sibling_event(sibling, group_leader) {
+ 		if (__perf_event_read_size(sibling->attr.read_format,
+ 					   group_leader->nr_siblings + 1) > 16*1024)
 
 
