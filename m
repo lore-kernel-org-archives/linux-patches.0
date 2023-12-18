@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2093A1CF;
-	Mon, 18 Dec 2023 14:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F40498A9;
+	Mon, 18 Dec 2023 14:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x06Jn/BT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55069C433C8;
-	Mon, 18 Dec 2023 14:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UH5++R5e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18667C433C7;
+	Mon, 18 Dec 2023 14:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908896;
-	bh=mzyGjVSwkma9ZOoOzaV7LX7hge8g8aMWAsk2A5yTdNY=;
+	s=korg; t=1702908899;
+	bh=ru/oaNVhPmXYN51SN54fth0VDYPxftKEVbuxNm/BPgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x06Jn/BToGWABjtIhR18dP6W+1tEqZkSnvIncKHLOVV+V5c/91AnhmM6xnM2bMRaI
-	 DIIvASKSTciC7YOlb/MG6CsjMGbpHr2a6udzB/Xml+auknU+y4cqvhZ8yGhUxovMc2
-	 BrJiUbopjzlhIjvTP5OnK0aEdTBlzwMT/UM+iRo0=
+	b=UH5++R5eF6uqpq17oXDj7PKsdxLr+bLQrKXTaB8ks4DvNrR5D4hSxGQQJ1HpRd9vF
+	 MH7WiyxlYeEDmYxVPWftsidOiRzanR1Zm9/rpWEJLgAv4jt+L6Gnt8EriGiSF4e2ue
+	 tlWwEk4R3UEXa0Grw3HPPRPfhnZ8rTiTqudXGYI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,10 +21,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 74/83] ring-buffer: Fix a race in rb_time_cmpxchg() for 32 bit archs
-Date: Mon, 18 Dec 2023 14:52:35 +0100
-Message-ID: <20231218135052.989558835@linuxfoundation.org>
+Subject: [PATCH 5.15 75/83] ring-buffer: Do not try to put back write_stamp
+Date: Mon, 18 Dec 2023 14:52:36 +0100
+Message-ID: <20231218135053.037922855@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -45,72 +47,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit fff88fa0fbc7067ba46dde570912d63da42c59a9 upstream.
+commit dd939425707898da992e59ab0fcfae4652546910 upstream.
 
-Mathieu Desnoyers pointed out an issue in the rb_time_cmpxchg() for 32 bit
-architectures. That is:
+If an update to an event is interrupted by another event between the time
+the initial event allocated its buffer and where it wrote to the
+write_stamp, the code try to reset the write stamp back to the what it had
+just overwritten. It knows that it was overwritten via checking the
+before_stamp, and if it didn't match what it wrote to the before_stamp
+before it allocated its space, it knows it was overwritten.
 
- static bool rb_time_cmpxchg(rb_time_t *t, u64 expect, u64 set)
- {
-	unsigned long cnt, top, bottom, msb;
-	unsigned long cnt2, top2, bottom2, msb2;
-	u64 val;
+To put back the write_stamp, it uses the before_stamp it read. The problem
+here is that by writing the before_stamp to the write_stamp it makes the
+two equal again, which means that the write_stamp can be considered valid
+as the last timestamp written to the ring buffer. But this is not
+necessarily true. The event that interrupted the event could have been
+interrupted in a way that it was interrupted as well, and can end up
+leaving with an invalid write_stamp. But if this happens and returns to
+this context that uses the before_stamp to update the write_stamp again,
+it can possibly incorrectly make it valid, causing later events to have in
+correct time stamps.
 
-	/* The cmpxchg always fails if it interrupted an update */
-	 if (!__rb_time_read(t, &val, &cnt2))
-		 return false;
+As it is OK to leave this function with an invalid write_stamp (one that
+doesn't match the before_stamp), there's no reason to try to make it valid
+again in this case. If this race happens, then just leave with the invalid
+write_stamp and the next event to come along will just add a absolute
+timestamp and validate everything again.
 
-	 if (val != expect)
-		 return false;
+Bonus points: This gets rid of another cmpxchg64!
 
-<<<< interrupted here!
-
-	 cnt = local_read(&t->cnt);
-
-The problem is that the synchronization counter in the rb_time_t is read
-*after* the value of the timestamp is read. That means if an interrupt
-were to come in between the value being read and the counter being read,
-it can change the value and the counter and the interrupted process would
-be clueless about it!
-
-The counter needs to be read first and then the value. That way it is easy
-to tell if the value is stale or not. If the counter hasn't been updated,
-then the value is still good.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20231211201324.652870-1-mathieu.desnoyers@efficios.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20231212115301.7a9c9a64@gandalf.local.home
+Link: https://lore.kernel.org/linux-trace-kernel/20231214222921.193037a7@gandalf.local.home
 
 Cc: stable@vger.kernel.org
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
-Fixes: 10464b4aa605e ("ring-buffer: Add rb_time_t 64 bit operations for speeding up 32 bit")
-Reported-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: Vincent Donnefort <vdonnefort@google.com>
+Fixes: a389d86f7fd09 ("ring-buffer: Have nested events still record running time stamp")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |   29 ++++++-----------------------
+ 1 file changed, 6 insertions(+), 23 deletions(-)
 
 --- a/kernel/trace/ring_buffer.c
 +++ b/kernel/trace/ring_buffer.c
-@@ -697,6 +697,9 @@ static int rb_time_cmpxchg(rb_time_t *t,
- 	unsigned long cnt2, top2, bottom2;
- 	u64 val;
+@@ -3568,14 +3568,14 @@ __rb_reserve_next(struct ring_buffer_per
+ 	}
  
-+	/* Any interruptions in this function should cause a failure */
-+	cnt = local_read(&t->cnt);
-+
- 	/* The cmpxchg always fails if it interrupted an update */
- 	 if (!__rb_time_read(t, &val, &cnt2))
- 		 return false;
-@@ -704,7 +707,6 @@ static int rb_time_cmpxchg(rb_time_t *t,
- 	 if (val != expect)
- 		 return false;
- 
--	 cnt = local_read(&t->cnt);
- 	 if ((cnt & 3) != cnt2)
- 		 return false;
- 
+ 	if (likely(tail == w)) {
+-		u64 save_before;
+-		bool s_ok;
+-
+ 		/* Nothing interrupted us between A and C */
+  /*D*/		rb_time_set(&cpu_buffer->write_stamp, info->ts);
+-		barrier();
+- /*E*/		s_ok = rb_time_read(&cpu_buffer->before_stamp, &save_before);
+-		RB_WARN_ON(cpu_buffer, !s_ok);
++		/*
++		 * If something came in between C and D, the write stamp
++		 * may now not be in sync. But that's fine as the before_stamp
++		 * will be different and then next event will just be forced
++		 * to use an absolute timestamp.
++		 */
+ 		if (likely(!(info->add_timestamp &
+ 			     (RB_ADD_STAMP_FORCE | RB_ADD_STAMP_ABSOLUTE))))
+ 			/* This did not interrupt any time update */
+@@ -3583,24 +3583,7 @@ __rb_reserve_next(struct ring_buffer_per
+ 		else
+ 			/* Just use full timestamp for interrupting event */
+ 			info->delta = info->ts;
+-		barrier();
+ 		check_buffer(cpu_buffer, info, tail);
+-		if (unlikely(info->ts != save_before)) {
+-			/* SLOW PATH - Interrupted between C and E */
+-
+-			a_ok = rb_time_read(&cpu_buffer->write_stamp, &info->after);
+-			RB_WARN_ON(cpu_buffer, !a_ok);
+-
+-			/* Write stamp must only go forward */
+-			if (save_before > info->after) {
+-				/*
+-				 * We do not care about the result, only that
+-				 * it gets updated atomically.
+-				 */
+-				(void)rb_time_cmpxchg(&cpu_buffer->write_stamp,
+-						      info->after, save_before);
+-			}
+-		}
+ 	} else {
+ 		u64 ts;
+ 		/* SLOW PATH - Interrupted between A and C */
 
 
