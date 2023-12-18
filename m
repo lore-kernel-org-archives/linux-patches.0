@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA24E129EFE;
-	Mon, 18 Dec 2023 13:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5511D13A;
+	Mon, 18 Dec 2023 13:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sC2DRMtO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A18C433C9;
-	Mon, 18 Dec 2023 13:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y69/7JsU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3E0C433C7;
+	Mon, 18 Dec 2023 13:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702907673;
-	bh=oW4+LXlorb6SANWjhSkZElqQaUeJydqtlYOWVkRRsMw=;
+	s=korg; t=1702907676;
+	bh=gG9qCcgMlVUOJf0TCn+qShp0q+KueRd5lItTUCK9x5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sC2DRMtOtTyK37SqfTpiEWgogMlarzDJ04ixqSMSHuNq4/3XxHYMx/T5DrcdjyGdw
-	 OcOw2P/YTxH5viIN1xKUgZIh4vfYorSJioIDL+2KFzh/U4NVrOAxoVw+i57BaBWss3
-	 nhBvyL5QgZCxX2qJcqgw3Q/TZVELdzZWPXKTlE+0=
+	b=y69/7JsU1VPxpYWtmoWuiGaoeI1snE1napZXgnDrjpUwKYSQGcjRdj1F8dL4//oqw
+	 39gNgRdKd7m71+I/AbzNF6W0jUAFghPBK0bFcid62OF/OIvfkWODvrK8j5nC4ZrC/v
+	 HDJasDMBlC3ypNSGfJk4xbDeE2JRKRPzZ4MypNYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chengfeng Ye <dg573847474@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 13/36] net: stmmac: use dev_err_probe() for reporting mdio bus registration failure
-Date: Mon, 18 Dec 2023 14:51:23 +0100
-Message-ID: <20231218135042.347406314@linuxfoundation.org>
+Subject: [PATCH 4.19 04/36] atm: solos-pci: Fix potential deadlock on &cli_queue_lock
+Date: Mon, 18 Dec 2023 14:51:14 +0100
+Message-ID: <20231218135042.038346379@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
 References: <20231218135041.876499958@linuxfoundation.org>
@@ -42,45 +42,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 839612d23ffd933174db911ce56dc3f3ca883ec5 ]
+[ Upstream commit d5dba32b8f6cb39be708b726044ba30dbc088b30 ]
 
-I have a board where these two lines are always printed during boot:
+As &card->cli_queue_lock is acquired under softirq context along the
+following call chain from solos_bh(), other acquisition of the same
+lock inside process context should disable at least bh to avoid double
+lock.
 
-   imx-dwmac 30bf0000.ethernet: Cannot register the MDIO bus
-   imx-dwmac 30bf0000.ethernet: stmmac_dvr_probe: MDIO bus (id: 1) registration failed
+<deadlock #1>
+console_show()
+--> spin_lock(&card->cli_queue_lock)
+<interrupt>
+   --> solos_bh()
+   --> spin_lock(&card->cli_queue_lock)
 
-It's perfectly fine, and the device is successfully (and silently, as
-far as the console goes) probed later.
+This flaw was found by an experimental static analysis tool I am
+developing for irq-related deadlock.
 
-Use dev_err_probe() instead, which will demote these messages to debug
-level (thus removing the alarming messages from the console) when the
-error is -EPROBE_DEFER, and also has the advantage of including the
-error code if/when it happens to be something other than -EPROBE_DEFER.
+To prevent the potential deadlock, the patch uses spin_lock_bh()
+on the card->cli_queue_lock under process context code consistently
+to prevent the possible deadlock scenario.
 
-While here, add the missing \n to one of the format strings.
-
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Link: https://lore.kernel.org/r/20220602074840.1143360-1-linux@rasmusvillemoes.dk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e23c0d21ce92 ("net: stmmac: Handle disabled MDIO busses from devicetree")
+Fixes: 9c54004ea717 ("atm: Driver for Solos PCI ADSL2+ card.")
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/atm/solos-pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4428,7 +4428,7 @@ int stmmac_dvr_probe(struct device *devi
- 		ret = stmmac_mdio_register(ndev);
- 		if (ret < 0) {
- 			dev_err(priv->device,
--				"%s: MDIO bus (id: %d) registration failed",
-+				"%s: MDIO bus (id: %d) registration failed\n",
- 				__func__, priv->plat->bus_id);
- 			goto error_mdio_register;
- 		}
+diff --git a/drivers/atm/solos-pci.c b/drivers/atm/solos-pci.c
+index 17283018269f0..95d8f1b8cf75f 100644
+--- a/drivers/atm/solos-pci.c
++++ b/drivers/atm/solos-pci.c
+@@ -458,9 +458,9 @@ static ssize_t console_show(struct device *dev, struct device_attribute *attr,
+ 	struct sk_buff *skb;
+ 	unsigned int len;
+ 
+-	spin_lock(&card->cli_queue_lock);
++	spin_lock_bh(&card->cli_queue_lock);
+ 	skb = skb_dequeue(&card->cli_queue[SOLOS_CHAN(atmdev)]);
+-	spin_unlock(&card->cli_queue_lock);
++	spin_unlock_bh(&card->cli_queue_lock);
+ 	if(skb == NULL)
+ 		return sprintf(buf, "No data.\n");
+ 
+-- 
+2.43.0
+
 
 
