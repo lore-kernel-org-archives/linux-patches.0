@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A1B4FF7B;
-	Mon, 18 Dec 2023 14:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E229542396;
+	Mon, 18 Dec 2023 14:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmZS/0Bf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A984AC433C8;
-	Mon, 18 Dec 2023 14:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1u83H/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F91C433C8;
+	Mon, 18 Dec 2023 14:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908166;
-	bh=e1hDEaP4ud1tjf7gNWmjw/dJVt//ty/k2fmV0Xc4D5k=;
+	s=korg; t=1702908168;
+	bh=Rg9ExuYnb+aM7Su8YeskNJIp+V/wMNTBIrKKRWsEajA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nmZS/0Bfr3e8g9gUNFq4nHYTo5BX70K5bp1kg8RYP5SzDVgvIRqpYXayiHFte7Td9
-	 ZLkZXliQooYm78VOyS+WpZ5UiZGqqUObIqeU3JaTglar5F0WX0mgNpgdEFRbNhAHBy
-	 YMYTTZVr3qMCoL7H8V7wP9lOj1BI0MUWaFjAqs4Y=
+	b=t1u83H/E30jAugSoK2lXjoRaKy10Xgpl2EPRrVl3/awuyifVw3+mUWnkV2xOk1I+H
+	 fh22n+iqhqj949rvCHGhz3N6XmCpr8avS4NvGIHLYfzr0Qdnxtlp46IBHjlacglk5d
+	 t6T0tXRJeCA+MSCiUUfAnHdjE9casU6MkIU0nUQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Michael Bottini <michael.a.bottini@linux.intel.com>,
-	"David E. Box" <david.e.box@linux.intel.com>
-Subject: [PATCH 6.6 077/166] PCI: vmd: Fix potential deadlock when enabling ASPM
-Date: Mon, 18 Dec 2023 14:50:43 +0100
-Message-ID: <20231218135108.481814039@linuxfoundation.org>
+	Michael Walle <mwalle@kernel.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 078/166] drm/mediatek: fix kernel oops if no crtc is found
+Date: Mon, 18 Dec 2023 14:50:44 +0100
+Message-ID: <20231218135108.528906417@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -38,52 +39,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Michael Walle <mwalle@kernel.org>
 
-commit 49de0dc87965079a8e2803ee4b39f9d946259423 upstream.
+[ Upstream commit 4662817aed5a9d6c695658d0105d8ff4b84ac6cb ]
 
-The vmd_pm_enable_quirk() helper is called from pci_walk_bus() during
-probe to enable ASPM for controllers with VMD_FEAT_BIOS_PM_QUIRK set.
+drm_crtc_from_index(0) might return NULL if there are no CRTCs
+registered at all which will lead to a kernel oops in
+mtk_drm_crtc_dma_dev_get(). Add the missing return value check.
 
-Since pci_walk_bus() already holds a pci_bus_sem read lock, use
-pci_enable_link_state_locked() to enable link states in order to avoid a
-potential deadlock (e.g. in case someone takes a write lock before
-reacquiring the read lock).
-
-Fixes: f492edb40b54 ("PCI: vmd: Add quirk to configure PCIe ASPM and LTR")
-Link: https://lore.kernel.org/r/20231128081512.19387-3-johan+linaro@kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-[bhelgaas: add "potential" in subject since the deadlock has only been
-reported by lockdep, include helper name in commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: <stable@vger.kernel.org>	# 6.3
-Cc: Michael Bottini <michael.a.bottini@linux.intel.com>
-Cc: David E. Box <david.e.box@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0d9eee9118b7 ("drm/mediatek: Add drm ovl_adaptor sub driver for MT8195")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Tested-by: Eugen Hristev <eugen.hristev@collabora.com>
+Reviewed-by: Eugen Hristev <eugen.hristev@collabora.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20230905084922.3908121-1-mwalle@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_drm_drv.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index 94ba61fe1c44..0452cbc362ee 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -751,7 +751,7 @@ static int vmd_pm_enable_quirk(struct pci_dev *pdev, void *userdata)
- 	if (!(features & VMD_FEAT_BIOS_PM_QUIRK))
- 		return 0;
+diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+index 2d6a979afe8f9..cdd506c803733 100644
+--- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
++++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+@@ -421,6 +421,7 @@ static int mtk_drm_kms_init(struct drm_device *drm)
+ 	struct mtk_drm_private *private = drm->dev_private;
+ 	struct mtk_drm_private *priv_n;
+ 	struct device *dma_dev = NULL;
++	struct drm_crtc *crtc;
+ 	int ret, i, j;
  
--	pci_enable_link_state(pdev, PCIE_LINK_STATE_ALL);
-+	pci_enable_link_state_locked(pdev, PCIE_LINK_STATE_ALL);
+ 	if (drm_firmware_drivers_only())
+@@ -495,7 +496,9 @@ static int mtk_drm_kms_init(struct drm_device *drm)
+ 	}
  
- 	pos = pci_find_ext_capability(pdev, PCI_EXT_CAP_ID_LTR);
- 	if (!pos)
+ 	/* Use OVL device for all DMA memory allocations */
+-	dma_dev = mtk_drm_crtc_dma_dev_get(drm_crtc_from_index(drm, 0));
++	crtc = drm_crtc_from_index(drm, 0);
++	if (crtc)
++		dma_dev = mtk_drm_crtc_dma_dev_get(crtc);
+ 	if (!dma_dev) {
+ 		ret = -ENODEV;
+ 		dev_err(drm->dev, "Need at least one OVL device\n");
 -- 
 2.43.0
 
