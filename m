@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9C11D14B;
-	Mon, 18 Dec 2023 14:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062FF1D14B;
+	Mon, 18 Dec 2023 14:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6sl8dn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB332C433C8;
-	Mon, 18 Dec 2023 14:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNshknXZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3F0C433C7;
+	Mon, 18 Dec 2023 14:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908864;
-	bh=dFj6mNYeryg8pPPGTLGLMCS1MV69JtkHlEP8wjTKwN0=;
+	s=korg; t=1702908866;
+	bh=QyWtR8HCmaxUvB6yfd0eqt3RDwjqLsHgXOMM1UvHgOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6sl8dn687nPz/UZGZhDRKrFlo40CXGzleiF1IXVgN+Kh8LbrAD40Oq2qqzfRRzx+
-	 4xz0C9OfModKFW7dzr6bdvgbkS6PpXPDbLoPCHa9fAZ7vvXc4Px5PRI4L+vP0J49pY
-	 ZIHkJp9VQSme4Kn0iOxwqRg6oXzJCVuBy/1rpT1s=
+	b=LNshknXZ5iZg92C5DfqfuBIPUTDhQ552pRwRjNPPgRG8N5aSRB1LkICeMvG/sb7fa
+	 T89s9S3NaXqWAoSpp5hxwohUNx0Afb4/jtkF5FS8ROvT4WFGgqwdPdj7XBbA3PLMUx
+	 danE5wqSpsR1HmQxg6h9Yjp0A/QjFpvCvna+jpMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 33/83] dpaa2-switch: fix size of the dma_unmap
-Date: Mon, 18 Dec 2023 14:51:54 +0100
-Message-ID: <20231218135051.203397096@linuxfoundation.org>
+Subject: [PATCH 5.15 34/83] net: stmmac: use dev_err_probe() for reporting mdio bus registration failure
+Date: Mon, 18 Dec 2023 14:51:55 +0100
+Message-ID: <20231218135051.253224606@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -42,48 +42,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit 2aad7d4189a923b24efa8ea6ad09059882b1bfe4 ]
+[ Upstream commit 839612d23ffd933174db911ce56dc3f3ca883ec5 ]
 
-The size of the DMA unmap was wrongly put as a sizeof of a pointer.
-Change the value of the DMA unmap to be the actual macro used for the
-allocation and the DMA map.
+I have a board where these two lines are always printed during boot:
 
-Fixes: 1110318d83e8 ("dpaa2-switch: add tc flower hardware offload on ingress traffic")
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20231212164326.2753457-2-ioana.ciornei@nxp.com
+   imx-dwmac 30bf0000.ethernet: Cannot register the MDIO bus
+   imx-dwmac 30bf0000.ethernet: stmmac_dvr_probe: MDIO bus (id: 1) registration failed
+
+It's perfectly fine, and the device is successfully (and silently, as
+far as the console goes) probed later.
+
+Use dev_err_probe() instead, which will demote these messages to debug
+level (thus removing the alarming messages from the console) when the
+error is -EPROBE_DEFER, and also has the advantage of including the
+error code if/when it happens to be something other than -EPROBE_DEFER.
+
+While here, add the missing \n to one of the format strings.
+
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Link: https://lore.kernel.org/r/20220602074840.1143360-1-linux@rasmusvillemoes.dk
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e23c0d21ce92 ("net: stmmac: Handle disabled MDIO busses from devicetree")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 6 +++---
+ drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
-index c39b866e2582d..16d3c3610720b 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch-flower.c
-@@ -139,7 +139,8 @@ int dpaa2_switch_acl_entry_add(struct dpaa2_switch_filter_block *filter_block,
- 	err = dpsw_acl_add_entry(ethsw->mc_io, 0, ethsw->dpsw_handle,
- 				 filter_block->acl_id, acl_entry_cfg);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 91d6be7ade1bd..08693d7458d15 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7239,9 +7239,9 @@ int stmmac_dvr_probe(struct device *device,
+ 		/* MDIO bus Registration */
+ 		ret = stmmac_mdio_register(ndev);
+ 		if (ret < 0) {
+-			dev_err(priv->device,
+-				"%s: MDIO bus (id: %d) registration failed",
+-				__func__, priv->plat->bus_id);
++			dev_err_probe(priv->device, ret,
++				      "%s: MDIO bus (id: %d) registration failed\n",
++				      __func__, priv->plat->bus_id);
+ 			goto error_mdio_register;
+ 		}
+ 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
+index a5d150c5f3d8c..19694b3a1fb9e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
+@@ -490,7 +490,7 @@ int stmmac_mdio_register(struct net_device *ndev)
  
--	dma_unmap_single(dev, acl_entry_cfg->key_iova, sizeof(cmd_buff),
-+	dma_unmap_single(dev, acl_entry_cfg->key_iova,
-+			 DPAA2_ETHSW_PORT_ACL_CMD_BUF_SIZE,
- 			 DMA_TO_DEVICE);
- 	if (err) {
- 		dev_err(dev, "dpsw_acl_add_entry() failed %d\n", err);
-@@ -181,8 +182,8 @@ dpaa2_switch_acl_entry_remove(struct dpaa2_switch_filter_block *block,
- 	err = dpsw_acl_remove_entry(ethsw->mc_io, 0, ethsw->dpsw_handle,
- 				    block->acl_id, acl_entry_cfg);
+ 	err = of_mdiobus_register(new_bus, mdio_node);
+ 	if (err != 0) {
+-		dev_err(dev, "Cannot register the MDIO bus\n");
++		dev_err_probe(dev, err, "Cannot register the MDIO bus\n");
+ 		goto bus_register_fail;
+ 	}
  
--	dma_unmap_single(dev, acl_entry_cfg->key_iova, sizeof(cmd_buff),
--			 DMA_TO_DEVICE);
-+	dma_unmap_single(dev, acl_entry_cfg->key_iova,
-+			 DPAA2_ETHSW_PORT_ACL_CMD_BUF_SIZE, DMA_TO_DEVICE);
- 	if (err) {
- 		dev_err(dev, "dpsw_acl_remove_entry() failed %d\n", err);
- 		kfree(cmd_buff);
 -- 
 2.43.0
 
