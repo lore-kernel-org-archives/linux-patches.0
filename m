@@ -1,31 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5A414F63;
-	Mon, 18 Dec 2023 14:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E893A1CD;
+	Mon, 18 Dec 2023 14:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5yvDeoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795D0C433C7;
-	Mon, 18 Dec 2023 14:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/Gd7aDd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07632C433C7;
+	Mon, 18 Dec 2023 14:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908776;
-	bh=MnOTRwtmUrYup380UuAnj13vSehLpo7OZvNNdoQzOxU=;
+	s=korg; t=1702908779;
+	bh=0tN1aTYg83dKsuf5k85G6TRH3e4EBhsxIJ9BMHVV5RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5yvDeoWoD7ZqUH+RLLo1/OoGHSi4tF+4dMovEf5eoKgPsG0aOKe/dpLWENdrTBmn
-	 9cE5A+4FNBHd+mscdG75Xx1p/mvtB6tXeGxXi8+wZpPqrYzyLjsn1Nz2E4t9NwKWAV
-	 CEEutIiRYobCJmL6JUD7e4e9da9T+BXbK+kdnPBE=
+	b=W/Gd7aDd6ewBHPFLjxZz7mIiZkOxzgW5RZvmYBDUNr4U1fObsATijDAf+J13UWDeC
+	 lsj9BY8WuDU1zjCmPLJI82FVZcKQxEZrdP249B6upR+DE6R2xrHgV3oFjRg/ieDuA9
+	 lsTNVm+S1//k5LPhrgBxvFKKC77DqMHv0ZoLi4/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <zenczykowski@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	David Hildenbrand <david@redhat.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Jianyong Wu <Jianyong.Wu@arm.com>,
+	"Aneesh Kumar K . V" <aneesh.kumar@linux.ibm.com>,
+	Vineet Gupta <vgupta@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@de.ibm.com>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Shahab Vahedi <shahab@synopsys.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/83] netfilter: nf_tables: fix exist matching on bigendian arches
-Date: Mon, 18 Dec 2023 14:51:26 +0100
-Message-ID: <20231218135049.989536347@linuxfoundation.org>
+Subject: [PATCH 5.15 06/83] mm/memory_hotplug: handle memblock_add_node() failures in add_memory_resource()
+Date: Mon, 18 Dec 2023 14:51:27 +0100
+Message-ID: <20231218135050.029727472@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135049.738602288@linuxfoundation.org>
 References: <20231218135049.738602288@linuxfoundation.org>
@@ -38,87 +53,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 63331e37fb227e796894b31d713697612c8dee7f ]
+[ Upstream commit 53d38316ab2017a7c0d733765b521700aa357ec9 ]
 
-Maze reports "tcp option fastopen exists" fails to match on
-OpenWrt 22.03.5, r20134-5f15225c1e (5.10.176) router.
+Patch series "mm/memory_hotplug: full support for add_memory_driver_managed() with CONFIG_ARCH_KEEP_MEMBLOCK", v2.
 
-"tcp option fastopen exists" translates to:
-inet
-  [ exthdr load tcpopt 1b @ 34 + 0 present => reg 1 ]
-  [ cmp eq reg 1 0x00000001 ]
+Architectures that require CONFIG_ARCH_KEEP_MEMBLOCK=y, such as arm64,
+don't cleanly support add_memory_driver_managed() yet.  Most
+prominently, kexec_file can still end up placing kexec images on such
+driver-managed memory, resulting in undesired behavior, for example,
+having kexec images located on memory not part of the firmware-provided
+memory map.
 
-.. but existing nft userspace generates a 1-byte compare.
+Teaching kexec to not place images on driver-managed memory is
+especially relevant for virtio-mem.  Details can be found in commit
+7b7b27214bba ("mm/memory_hotplug: introduce
+add_memory_driver_managed()").
 
-On LSB (x86), "*reg32 = 1" is identical to nft_reg_store8(reg32, 1), but
-not on MSB, which will place the 1 last. IOW, on bigendian aches the cmp8
-is awalys false.
+Extend memblock with a new flag and set it from memory hotplug code when
+applicable.  This is required to fully support virtio-mem on arm64,
+making also kexec_file behave like on x86-64.
 
-Make sure we store this in a consistent fashion, so existing userspace
-will also work on MSB (bigendian).
+This patch (of 2):
 
-Regardless of this patch we can also change nft userspace to generate
-'reg32 == 0' and 'reg32 != 0' instead of u8 == 0 // u8 == 1 when
-adding 'option x missing/exists' expressions as well.
+If memblock_add_node() fails, we're most probably running out of memory.
+While this is unlikely to happen, it can happen and having memory added
+without a memblock can be problematic for architectures that use
+memblock to detect valid memory.  Let's fail in a nice way instead of
+silently ignoring the error.
 
-Fixes: 3c1fece8819e ("netfilter: nft_exthdr: Allow checking TCP option presence, too")
-Fixes: b9f9a485fb0e ("netfilter: nft_exthdr: add boolean DCCP option matching")
-Fixes: 055c4b34b94f ("netfilter: nft_fib: Support existence check")
-Reported-by: Maciej Żenczykowski <zenczykowski@gmail.com>
-Closes: https://lore.kernel.org/netfilter-devel/CAHo-OozyEqHUjL2-ntATzeZOiuftLWZ_HU6TOM_js4qLfDEAJg@mail.gmail.com/
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Acked-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lkml.kernel.org/r/20211004093605.5830-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20211004093605.5830-2-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Jianyong Wu <Jianyong.Wu@arm.com>
+Cc: "Aneesh Kumar K . V" <aneesh.kumar@linux.ibm.com>
+Cc: Vineet Gupta <vgupta@kernel.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@de.ibm.com>
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Shahab Vahedi <shahab@synopsys.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: c7206e7bd214 ("MIPS: Loongson64: Handle more memory types passed from firmware")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_exthdr.c | 2 +-
- net/netfilter/nft_fib.c    | 8 ++++++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ mm/memory_hotplug.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index daee46cf62abb..d1dcf5b2e92e1 100644
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -214,7 +214,7 @@ static void nft_exthdr_tcp_eval(const struct nft_expr *expr,
+diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
+index bf611c55fc66b..bc52a9d201ea6 100644
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1384,8 +1384,11 @@ int __ref add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags)
  
- 		offset = i + priv->offset;
- 		if (priv->flags & NFT_EXTHDR_F_PRESENT) {
--			*dest = 1;
-+			nft_reg_store8(dest, 1);
- 		} else {
- 			if (priv->len % NFT_REG32_SIZE)
- 				dest[priv->len / NFT_REG32_SIZE] = 0;
-diff --git a/net/netfilter/nft_fib.c b/net/netfilter/nft_fib.c
-index b10ce732b337c..1fd4b2054e8f7 100644
---- a/net/netfilter/nft_fib.c
-+++ b/net/netfilter/nft_fib.c
-@@ -140,11 +140,15 @@ void nft_fib_store_result(void *reg, const struct nft_fib *priv,
- 	switch (priv->result) {
- 	case NFT_FIB_RESULT_OIF:
- 		index = dev ? dev->ifindex : 0;
--		*dreg = (priv->flags & NFTA_FIB_F_PRESENT) ? !!index : index;
-+		if (priv->flags & NFTA_FIB_F_PRESENT)
-+			nft_reg_store8(dreg, !!index);
-+		else
-+			*dreg = index;
-+
- 		break;
- 	case NFT_FIB_RESULT_OIFNAME:
- 		if (priv->flags & NFTA_FIB_F_PRESENT)
--			*dreg = !!dev;
-+			nft_reg_store8(dreg, !!dev);
- 		else
- 			strncpy(reg, dev ? dev->name : "", IFNAMSIZ);
- 		break;
+ 	mem_hotplug_begin();
+ 
+-	if (IS_ENABLED(CONFIG_ARCH_KEEP_MEMBLOCK))
+-		memblock_add_node(start, size, nid);
++	if (IS_ENABLED(CONFIG_ARCH_KEEP_MEMBLOCK)) {
++		ret = memblock_add_node(start, size, nid);
++		if (ret)
++			goto error_mem_hotplug_end;
++	}
+ 
+ 	ret = __try_online_node(nid, false);
+ 	if (ret < 0)
+@@ -1458,6 +1461,7 @@ int __ref add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags)
+ 		rollback_node_hotadd(nid);
+ 	if (IS_ENABLED(CONFIG_ARCH_KEEP_MEMBLOCK))
+ 		memblock_remove(start, size);
++error_mem_hotplug_end:
+ 	mem_hotplug_done();
+ 	return ret;
+ }
 -- 
 2.43.0
 
