@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20ED63787B;
-	Mon, 18 Dec 2023 14:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981CE4FF62;
+	Mon, 18 Dec 2023 14:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WI0cAqbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63261C433C8;
-	Mon, 18 Dec 2023 14:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oN3yL5XB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F128C433C8;
+	Mon, 18 Dec 2023 14:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702908201;
-	bh=O563ZjFazYgIHLKNvwPVMVNrDskgfJm7AuF8Nsf9X7M=;
+	s=korg; t=1702908204;
+	bh=CkmSpMUOvBFFDGJ7dkBTVpZQ+DP8w1RnTDZNVSmGFds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WI0cAqbelghOtlO6Ri4qAmVrTfzR59Y/sKOeUR8pnZc8wURyW+izzZbGDQ3UIPlXc
-	 mADHb++CjPMIfDh09lbXGTcGvfd4qwI4SQGLph25r06p+3mbA3sDtZk4Pgptzwrm0r
-	 chODE+aG+pVIg/QglHjeK1ohcoLMPTHEqDULZ2Ew=
+	b=oN3yL5XBSUgy/CQ5Rx+sn0p4Uz05DTYcyt7BaEDcP5HDt0/7H4b5QetkGMXdJejo1
+	 zAO1kA8nNuV5C9GPo/PDObTKxeOhJNHOtbtJz+S8Jx1DJEUnzErGBkfPVRC1NOXLbI
+	 HyMjg+8JywCkC3Rcmthj++6XGGK6e3tT8bC2AWHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyler Fanelli <tfanelli@redhat.com>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.6 061/166] fuse: Rename DIRECT_IO_RELAX to DIRECT_IO_ALLOW_MMAP
-Date: Mon, 18 Dec 2023 14:50:27 +0100
-Message-ID: <20231218135107.781960134@linuxfoundation.org>
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 052/166] dpaa2-switch: do not ask for MDB, VLAN and FDB replay
+Date: Mon, 18 Dec 2023 14:50:18 +0100
+Message-ID: <20231218135107.347941528@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231218135104.927894164@linuxfoundation.org>
 References: <20231218135104.927894164@linuxfoundation.org>
@@ -41,123 +42,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyler Fanelli <tfanelli@redhat.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-commit c55e0a55b165202f18cbc4a20650d2e1becd5507 upstream.
+[ Upstream commit f24a49a375f65e8e75ee1b19d806f46dbaae57fd ]
 
-Although DIRECT_IO_RELAX's initial usage is to allow shared mmap, its
-description indicates a purpose of reducing memory footprint. This
-may imply that it could be further used to relax other DIRECT_IO
-operations in the future.
+Starting with commit 4e51bf44a03a ("net: bridge: move the switchdev
+object replay helpers to "push" mode") the switchdev_bridge_port_offload()
+helper was extended with the intention to provide switchdev drivers easy
+access to object addition and deletion replays. This works by calling
+the replay helpers with non-NULL notifier blocks.
 
-Replace it with a flag DIRECT_IO_ALLOW_MMAP which does only one thing,
-allow shared mmap of DIRECT_IO files while still bypassing the cache
-on regular reads and writes.
+In the same commit, the dpaa2-switch driver was updated so that it
+passes valid notifier blocks to the helper. At that moment, no
+regression was identified through testing.
 
-[Miklos] Also Keep DIRECT_IO_RELAX definition for backward compatibility.
+In the meantime, the blamed commit changed the behavior in terms of
+which ports get hit by the replay. Before this commit, only the initial
+port which identified itself as offloaded through
+switchdev_bridge_port_offload() got a replay of all port objects and
+FDBs. After this, the newly joining port will trigger a replay of
+objects on all bridge ports and on the bridge itself.
 
-Signed-off-by: Tyler Fanelli <tfanelli@redhat.com>
-Fixes: e78662e818f9 ("fuse: add a new fuse init flag to relax restrictions in no cache mode")
-Cc: <stable@vger.kernel.org> # v6.6
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This behavior leads to errors in dpaa2_switch_port_vlans_add() when a
+VLAN gets installed on the same interface multiple times.
+
+The intended mechanism to address this is to pass a non-NULL ctx to the
+switchdev_bridge_port_offload() helper and then check it against the
+port's private structure. But since the driver does not have any use for
+the replayed port objects and FDBs until it gains support for LAG
+offload, it's better to fix the issue by reverting the dpaa2-switch
+driver to not ask for replay. The pointers will be added back when we
+are prepared to ignore replays on unrelated ports.
+
+Fixes: b28d580e2939 ("net: bridge: switchdev: replay all VLAN groups")
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20231212164326.2753457-3-ioana.ciornei@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c            |    6 +++---
- fs/fuse/fuse_i.h          |    4 ++--
- fs/fuse/inode.c           |    6 +++---
- include/uapi/linux/fuse.h |   10 ++++++----
- 4 files changed, 14 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -1448,7 +1448,7 @@ ssize_t fuse_direct_io(struct fuse_io_pr
- 	if (!ia)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index 97d3151076d53..e01a246124ac6 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -1998,9 +1998,6 @@ static int dpaa2_switch_port_attr_set_event(struct net_device *netdev,
+ 	return notifier_from_errno(err);
+ }
  
--	if (fopen_direct_io && fc->direct_io_relax) {
-+	if (fopen_direct_io && fc->direct_io_allow_mmap) {
- 		res = filemap_write_and_wait_range(mapping, pos, pos + count - 1);
- 		if (res) {
- 			fuse_io_free(ia);
-@@ -2466,9 +2466,9 @@ static int fuse_file_mmap(struct file *f
+-static struct notifier_block dpaa2_switch_port_switchdev_nb;
+-static struct notifier_block dpaa2_switch_port_switchdev_blocking_nb;
+-
+ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
+ 					 struct net_device *upper_dev,
+ 					 struct netlink_ext_ack *extack)
+@@ -2043,9 +2040,7 @@ static int dpaa2_switch_port_bridge_join(struct net_device *netdev,
+ 		goto err_egress_flood;
  
- 	if (ff->open_flags & FOPEN_DIRECT_IO) {
- 		/* Can't provide the coherency needed for MAP_SHARED
--		 * if FUSE_DIRECT_IO_RELAX isn't set.
-+		 * if FUSE_DIRECT_IO_ALLOW_MMAP isn't set.
- 		 */
--		if ((vma->vm_flags & VM_MAYSHARE) && !fc->direct_io_relax)
-+		if ((vma->vm_flags & VM_MAYSHARE) && !fc->direct_io_allow_mmap)
- 			return -ENODEV;
+ 	err = switchdev_bridge_port_offload(netdev, netdev, NULL,
+-					    &dpaa2_switch_port_switchdev_nb,
+-					    &dpaa2_switch_port_switchdev_blocking_nb,
+-					    false, extack);
++					    NULL, NULL, false, extack);
+ 	if (err)
+ 		goto err_switchdev_offload;
  
- 		invalidate_inode_pages2(file->f_mapping);
---- a/fs/fuse/fuse_i.h
-+++ b/fs/fuse/fuse_i.h
-@@ -797,8 +797,8 @@ struct fuse_conn {
- 	/* Is tmpfile not implemented by fs? */
- 	unsigned int no_tmpfile:1;
+@@ -2079,9 +2074,7 @@ static int dpaa2_switch_port_restore_rxvlan(struct net_device *vdev, int vid, vo
  
--	/* relax restrictions in FOPEN_DIRECT_IO mode */
--	unsigned int direct_io_relax:1;
-+	/* Relax restrictions to allow shared mmap in FOPEN_DIRECT_IO mode */
-+	unsigned int direct_io_allow_mmap:1;
+ static void dpaa2_switch_port_pre_bridge_leave(struct net_device *netdev)
+ {
+-	switchdev_bridge_port_unoffload(netdev, NULL,
+-					&dpaa2_switch_port_switchdev_nb,
+-					&dpaa2_switch_port_switchdev_blocking_nb);
++	switchdev_bridge_port_unoffload(netdev, NULL, NULL, NULL);
+ }
  
- 	/* Is statx not implemented by fs? */
- 	unsigned int no_statx:1;
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -1232,8 +1232,8 @@ static void process_init_reply(struct fu
- 				fc->init_security = 1;
- 			if (flags & FUSE_CREATE_SUPP_GROUP)
- 				fc->create_supp_group = 1;
--			if (flags & FUSE_DIRECT_IO_RELAX)
--				fc->direct_io_relax = 1;
-+			if (flags & FUSE_DIRECT_IO_ALLOW_MMAP)
-+				fc->direct_io_allow_mmap = 1;
- 		} else {
- 			ra_pages = fc->max_read / PAGE_SIZE;
- 			fc->no_lock = 1;
-@@ -1280,7 +1280,7 @@ void fuse_send_init(struct fuse_mount *f
- 		FUSE_NO_OPENDIR_SUPPORT | FUSE_EXPLICIT_INVAL_DATA |
- 		FUSE_HANDLE_KILLPRIV_V2 | FUSE_SETXATTR_EXT | FUSE_INIT_EXT |
- 		FUSE_SECURITY_CTX | FUSE_CREATE_SUPP_GROUP |
--		FUSE_HAS_EXPIRE_ONLY | FUSE_DIRECT_IO_RELAX;
-+		FUSE_HAS_EXPIRE_ONLY | FUSE_DIRECT_IO_ALLOW_MMAP;
- #ifdef CONFIG_FUSE_DAX
- 	if (fm->fc->dax)
- 		flags |= FUSE_MAP_ALIGNMENT;
---- a/include/uapi/linux/fuse.h
-+++ b/include/uapi/linux/fuse.h
-@@ -209,7 +209,7 @@
-  *  - add FUSE_HAS_EXPIRE_ONLY
-  *
-  *  7.39
-- *  - add FUSE_DIRECT_IO_RELAX
-+ *  - add FUSE_DIRECT_IO_ALLOW_MMAP
-  *  - add FUSE_STATX and related structures
-  */
- 
-@@ -409,8 +409,7 @@ struct fuse_file_lock {
-  * FUSE_CREATE_SUPP_GROUP: add supplementary group info to create, mkdir,
-  *			symlink and mknod (single group that matches parent)
-  * FUSE_HAS_EXPIRE_ONLY: kernel supports expiry-only entry invalidation
-- * FUSE_DIRECT_IO_RELAX: relax restrictions in FOPEN_DIRECT_IO mode, for now
-- *                       allow shared mmap
-+ * FUSE_DIRECT_IO_ALLOW_MMAP: allow shared mmap in FOPEN_DIRECT_IO mode.
-  */
- #define FUSE_ASYNC_READ		(1 << 0)
- #define FUSE_POSIX_LOCKS	(1 << 1)
-@@ -449,7 +448,10 @@ struct fuse_file_lock {
- #define FUSE_HAS_INODE_DAX	(1ULL << 33)
- #define FUSE_CREATE_SUPP_GROUP	(1ULL << 34)
- #define FUSE_HAS_EXPIRE_ONLY	(1ULL << 35)
--#define FUSE_DIRECT_IO_RELAX	(1ULL << 36)
-+#define FUSE_DIRECT_IO_ALLOW_MMAP (1ULL << 36)
-+
-+/* Obsolete alias for FUSE_DIRECT_IO_ALLOW_MMAP */
-+#define FUSE_DIRECT_IO_RELAX	FUSE_DIRECT_IO_ALLOW_MMAP
- 
- /**
-  * CUSE INIT request/reply flags
+ static int dpaa2_switch_port_bridge_leave(struct net_device *netdev)
+-- 
+2.43.0
+
 
 
