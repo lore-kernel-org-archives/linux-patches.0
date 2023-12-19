@@ -1,106 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D186912B60;
-	Tue, 19 Dec 2023 07:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A984B14002;
+	Tue, 19 Dec 2023 07:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGYJiQVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A49C433C8;
-	Tue, 19 Dec 2023 07:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7kIdKys"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984A4C433C8;
+	Tue, 19 Dec 2023 07:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1702970599;
-	bh=5YOdQKhD83mQjSzjOFpWP6ZK3wwnQuCrw8yf9SpIq6Y=;
+	s=korg; t=1702970961;
+	bh=y6RBCIu9OY3HOVOGUQg3W1nyYZAoT5q8bmoyUiYZ9ls=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QGYJiQVPWcJysW7lz9PfDgoKBiEmK6o1Qj0WUvDQuKfEm9Ahw4Yy7/hi2H5b+aZ4U
-	 B74l2XQIIvUexTR2uIeOsVmIIOWffMeSZItoLFle+w+fjf+OssV8BcMqbDdC0a3Knd
-	 3I639xCv6hU57Ay+cziYxRpNVBUqCSrAphQ3GNd0=
-Date: Tue, 19 Dec 2023 08:23:16 +0100
+	b=g7kIdKysYjh1FddlkGPrnR24C9vihgrdtdAXuRUtvanGhYya58+wah0ILnQBQ7zzT
+	 QOtr/ZcH/dfvDFRf/DzzeYWKa8EiG8Cp945+QyUMbjAYPHI4vsmguW/tu2BHLEb5hO
+	 xZMrVTYq4G12N99X877RFH2CDTtuFNJZm9wAMXpc=
+Date: Tue, 19 Dec 2023 08:29:18 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 4.19 13/36] net: stmmac: use dev_err_probe() for
- reporting mdio bus registration failure
-Message-ID: <2023121945-hatred-revoke-8f86@gregkh>
-References: <20231218135041.876499958@linuxfoundation.org>
- <20231218135042.347406314@linuxfoundation.org>
- <6299a661-5ae5-4f7c-9fa7-96c4e7ae39eb@linaro.org>
- <2023121847-surfacing-hardhead-78ab@gregkh>
+To: Dominique Martinet <asmadeus@codewreck.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, Maxime Ripard <maxime@cerno.tech>,
+	Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 5.10 00/62] 5.10.205-rc1 review
+Message-ID: <2023121951-cement-repaying-f524@gregkh>
+References: <20231218135046.178317233@linuxfoundation.org>
+ <CA+G9fYszCtMbbrurrjqpDzSa20ZX5mVdQ+RZv-KdiyLU4o5=0Q@mail.gmail.com>
+ <ZYDp1XeCrTlaOrIF@codewreck.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2023121847-surfacing-hardhead-78ab@gregkh>
+In-Reply-To: <ZYDp1XeCrTlaOrIF@codewreck.org>
 
-On Mon, Dec 18, 2023 at 09:25:02PM +0100, Greg Kroah-Hartman wrote:
-> On Mon, Dec 18, 2023 at 12:45:42PM -0600, Daniel Díaz wrote:
-> > Hello!
-> > 
-> > On 18/12/23 7:51 a. m., Greg Kroah-Hartman wrote:
-> > > 4.19-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-> > > 
-> > > [ Upstream commit 839612d23ffd933174db911ce56dc3f3ca883ec5 ]
-> > > 
-> > > I have a board where these two lines are always printed during boot:
-> > > 
-> > >     imx-dwmac 30bf0000.ethernet: Cannot register the MDIO bus
-> > >     imx-dwmac 30bf0000.ethernet: stmmac_dvr_probe: MDIO bus (id: 1) registration failed
-> > > 
-> > > It's perfectly fine, and the device is successfully (and silently, as
-> > > far as the console goes) probed later.
-> > > 
-> > > Use dev_err_probe() instead, which will demote these messages to debug
-> > > level (thus removing the alarming messages from the console) when the
-> > > error is -EPROBE_DEFER, and also has the advantage of including the
-> > > error code if/when it happens to be something other than -EPROBE_DEFER.
-> > > 
-> > > While here, add the missing \n to one of the format strings.
-> > > 
-> > > Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-> > > Link: https://lore.kernel.org/r/20220602074840.1143360-1-linux@rasmusvillemoes.dk
-> > > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> > > Stable-dep-of: e23c0d21ce92 ("net: stmmac: Handle disabled MDIO busses from devicetree")
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > ---
-> > >   drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    2 +-
-> > >   1 file changed, 1 insertion(+), 1 deletion(-)
-> > > 
-> > > --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> > > +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> > > @@ -4428,7 +4428,7 @@ int stmmac_dvr_probe(struct device *devi
-> > >   		ret = stmmac_mdio_register(ndev);
-> > >   		if (ret < 0) {
-> > >   			dev_err(priv->device,
-> > > -				"%s: MDIO bus (id: %d) registration failed",
-> > > +				"%s: MDIO bus (id: %d) registration failed\n",
-> > >   				__func__, priv->plat->bus_id);
-> > >   			goto error_mdio_register;
-> > >   		}
-> > 
-> > This patch doesn't do what it says it does.
+On Tue, Dec 19, 2023 at 09:54:45AM +0900, Dominique Martinet wrote:
+> Naresh Kamboju wrote on Mon, Dec 18, 2023 at 08:54:13PM +0530:
+> > commit that is causing build failure,
+> > drm/atomic: Pass the full state to CRTC atomic begin and flush
+> > [ Upstream commit f6ebe9f9c9233a6114eb922aba9a0c9ccc2d2e14 ]
 > 
-> Hah, it really doesn't, good catch.  I removed dev_err_probe() from the
-> 4.19 tree as it didn't make sense to backport it so late in the release
-> cycle of it (and it required many other follow-on fixes.)  and so I
-> fixed up this commit to build properly, but I didn't realize that all I
-> did was properly add a \n to the string, the rest of the commit faded
-> away.
+> I also had to fix up a few nxp-provided drivers because of this commits,
+> it seems a bit heavy-handed for stable trees when users can have a
+> couple of out of tree modules.
 > 
-> I'll just go drop this entirely, thanks for the review!
+> It's marked as a stable dep of fe4c5f662097 ("drm/mediatek: Add spinlock
+> for setting vblank event in atomic_begin") but that looks like it's only
+> because of the context and it should be easy to backport that commit
+> without the crtc atomic begin/flush rework -- what do you think?
 
-Also, it was only added because of the need for it for the next patch in
-the series, which I had already fixed up to work properly, so this realy
-isn't needed at all.  I'll go drop it now, thanks.
+Good catch, I've dropped those two larger dependent patches now and
+fixed up the spinlock patch by hand to work properly.
+
+I'll push out a -rc2 now, thanks!
 
 greg k-h
