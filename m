@@ -1,92 +1,82 @@
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from nautica.notk.org (nautica.notk.org [91.121.71.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1B7368
-	for <patches@lists.linux.dev>; Tue, 19 Dec 2023 00:05:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68B44439
+	for <patches@lists.linux.dev>; Tue, 19 Dec 2023 00:55:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxft64uL"
-Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-7b714a7835cso46339339f.0
-        for <patches@lists.linux.dev>; Mon, 18 Dec 2023 16:05:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1702944343; x=1703549143; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2ASVO3g6/SUkBVBnev9A1RPubmA9KlOdv0JVABQZqVc=;
-        b=gxft64uLzWeqCPPcHnDEsxP+l7kDnOJhQ0zXXt70bRvyxt+jiZLkEI6Gqip0EA5xmU
-         0DjyUxVZgN3vkOisQPDjf0zA1RtSWPyhJVJLgfeXYV+IxTmFRSXL6egsHnAApTxJ3sLw
-         KZaEjNlbtHn57wPRkLXP42SfAiV4e8PfD6vvE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702944343; x=1703549143;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2ASVO3g6/SUkBVBnev9A1RPubmA9KlOdv0JVABQZqVc=;
-        b=IUVTt3k5jPZIM9K07kvDItuyZcczI2gmpeOUhlHr9b6JRR7bjHuO4Bzhwlf4UShi+Q
-         Gj8iFP78Irzqyz09744UACIrBI/qlSWi98bUBdTBUz+jVHx3KSYoBDp6BGb2GxD/f1Qg
-         VVD/Xg2VN0KWAzJjH5Q+mSuqjnDn1fU7O46kdCXmkOkoYlfqZr2Y6o4IThcLuk2PgUqM
-         5wsqY8CQiNOBepf2OluGb40wB2xK8s0KTI1RGFjYWAlHWVIj7h4f3y75hHd4inkqIUHN
-         6E8WYqeYUnF09mhnTvus9/cNnpCv3ENsfVRO0saKiRPzH8RfAl+c4mJca4pG/XE7z2zy
-         tsVA==
-X-Gm-Message-State: AOJu0Yzjfn3qqsLh177KteSBKI6Y59K2Wi0g770nVeCjd+kC3Kt+MvFD
-	M1On8BxB1X4AJNCUj8qHyqhlwQ==
-X-Google-Smtp-Source: AGHT+IHX+IYcIQTYnX65LVEa5z67GrV2LmbPR3MOFrcjtLCdraPQGV1DyNYjiqydFVLzbDh5RfA02w==
-X-Received: by 2002:a05:6e02:1b08:b0:35f:b559:c2c7 with SMTP id i8-20020a056e021b0800b0035fb559c2c7mr3484991ilv.3.1702944343011;
-        Mon, 18 Dec 2023 16:05:43 -0800 (PST)
-Received: from [192.168.1.128] ([38.175.170.29])
-        by smtp.gmail.com with ESMTPSA id x7-20020a056e021bc700b0035f73763259sm1977748ilv.69.2023.12.18.16.05.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Dec 2023 16:05:42 -0800 (PST)
-Message-ID: <e112680a-2efe-4c29-96dd-0b8261bb72b1@linuxfoundation.org>
-Date: Mon, 18 Dec 2023 17:05:41 -0700
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="zeuBa88q";
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="pR0hDy50"
+Received: by nautica.notk.org (Postfix, from userid 108)
+	id 28AEDC01A; Tue, 19 Dec 2023 01:55:11 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1702947311; bh=DXKTDlU/3ggaxpCA7PFEN3qYdi3PnWhgCPh7ujkXnls=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=zeuBa88qZfOpxn85WJOfE/jJhV98foy+EG8TNmmyyQ3JauyNrP6fltbPnBeCtSYvX
+	 g0iEGUTtaIIVtHLgNNZjsCQLTCtx7fBdt6TmSYQvJAYuIVspuip2quKsbmqraZQc2a
+	 FVmjfBU6esuluZlcubqK7/oBRutf6et76YvNnWsPp6Hztvgi3qtpa773tgcbs6QDzv
+	 /e0wilvexFxjnt/J/8YNThJAhxaFvqVPN6/HRRNcRYZfu2kXt4SfMlYfAJt6HEFCt3
+	 TIbAuyXdAAl4sbZh+HyEpkZG5IrTFRwi2Jzms0Tj7J9im65w58oZS6KfoN1ft4N00n
+	 MWY8h5CpG4QoQ==
+X-Spam-Level: 
+Received: from gaia (localhost [127.0.0.1])
+	by nautica.notk.org (Postfix) with ESMTPS id 73A8AC009;
+	Tue, 19 Dec 2023 01:55:03 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1702947310; bh=DXKTDlU/3ggaxpCA7PFEN3qYdi3PnWhgCPh7ujkXnls=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pR0hDy506GBvxJNN44FwI3d76mKE8H8JV1pvxf1tpG0VNGM2YZ61Mqb4Ulh1ZMnSV
+	 rBQD35Iji37xfXcOAJwjqJzKcwrB0L4tG8wCM269K+6XLQIj+kaA1wNc9bCIQexgis
+	 1l4J2wpZ+zfVPb7A4Wd16+UDeSvKZti6McIGjPqGwIedhfPQQ9HEb/YOTJvZ/q9uFQ
+	 8zgxvV8k438c70RsDxJoYDfjqZ7QdRkBmWyBp4M3CrKO0Y7wj3Uwow1amWcm0L2tr8
+	 Ihe5NPp1il6Zbe8YCiDtULw/fuYI+I23gJCuMpBkWVrYxv/608fY8GooJV2JuMq3eA
+	 ooj5v/MCg8BIw==
+Received: from localhost (gaia [local])
+	by gaia (OpenSMTPD) with ESMTPA id b0e52337;
+	Tue, 19 Dec 2023 00:55:00 +0000 (UTC)
+Date: Tue, 19 Dec 2023 09:54:45 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, Maxime Ripard <maxime@cerno.tech>,
+	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 5.10 00/62] 5.10.205-rc1 review
+Message-ID: <ZYDp1XeCrTlaOrIF@codewreck.org>
+References: <20231218135046.178317233@linuxfoundation.org>
+ <CA+G9fYszCtMbbrurrjqpDzSa20ZX5mVdQ+RZv-KdiyLU4o5=0Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4.19 00/36] 4.19.303-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20231218135041.876499958@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20231218135041.876499958@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYszCtMbbrurrjqpDzSa20ZX5mVdQ+RZv-KdiyLU4o5=0Q@mail.gmail.com>
 
-On 12/18/23 06:51, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.303 release.
-> There are 36 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 20 Dec 2023 13:50:31 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.303-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+Naresh Kamboju wrote on Mon, Dec 18, 2023 at 08:54:13PM +0530:
+> commit that is causing build failure,
+> drm/atomic: Pass the full state to CRTC atomic begin and flush
+> [ Upstream commit f6ebe9f9c9233a6114eb922aba9a0c9ccc2d2e14 ]
 
-Compiled and booted on my test system. No dmesg regressions.
+I also had to fix up a few nxp-provided drivers because of this commits,
+it seems a bit heavy-handed for stable trees when users can have a
+couple of out of tree modules.
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+It's marked as a stable dep of fe4c5f662097 ("drm/mediatek: Add spinlock
+for setting vblank event in atomic_begin") but that looks like it's only
+because of the context and it should be easy to backport that commit
+without the crtc atomic begin/flush rework -- what do you think?
 
-thanks,
--- Shuah
+-- 
+Dominique
