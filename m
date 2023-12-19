@@ -1,111 +1,67 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7A114F78
-	for <patches@lists.linux.dev>; Tue, 19 Dec 2023 11:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alyssa.is
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alyssa.is
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A1F1802A
+	for <patches@lists.linux.dev>; Tue, 19 Dec 2023 11:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=alyssa.is header.i=@alyssa.is header.b="ED7AnB+s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="028A4u2c"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 3C5055C01B7;
-	Tue, 19 Dec 2023 06:04:58 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 19 Dec 2023 06:04:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1702983898; x=
-	1703070298; bh=m4Z+VKHHsae02fFGB3BbUo/6jFQdJ2209z+YSIF4ZRw=; b=E
-	D7AnB+sZornLD5hqzRjlx8HI3l7H727URpjX+XdjV7p7NTO6YLWUJAH0aGTaN49H
-	0YKgrJ1bWj3+Gb0AdF8z7sVuCtXa6L7SBTy4h47rpsDQvfsxUNJ72C/tPEDtGtwW
-	f4rj81GH7KKdQ2XldUVdzoCnBN+Ukjagjqkxe8O3ScPj7UYEQKwF101GuE8Zp8CK
-	SYyujLEFtJXi8D8V/mg0MN+4FaT4IpVaIKE0TL0JkfZAcMQpknGx00lCrcAzuxPG
-	21ljpEMnufa07GrCGL+PtG0Y6wihQkNqcqZph4nDzIqciy7Zl00vKd86VSpVszQJ
-	oj8uTQyb5jfIgsc9++l1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1702983898; x=
-	1703070298; bh=m4Z+VKHHsae02fFGB3BbUo/6jFQdJ2209z+YSIF4ZRw=; b=0
-	28A4u2cDa+pbGXlqzGZunNlN5EsUg1//UpiHHdrwUbLnMa7Q74YNpgz6/XxVJlYi
-	9CXNsBhfrUf//o3jBMkRZzcp+9x3hlIkH66AUK1B34VXIF9VsFM3PDrJqh9OZ+Uj
-	Z4iqAc/DW2PSr5Dd22ey9RDMNiCl3q2sb2+MiGPx2rSESibzUmqv2nOGW0GeYjS5
-	6J51Ei39bmka+QVoj2uIQF3+TbKxD2ZDXVsMaYv0xc8i8v0BolmLnx7TGItPes1E
-	XX3ABaVJ+xpDGzt7IX1y1f1sjkQTdrTrU4aUN2hZNPPXvB9FdTnhKyyoddWAvLyy
-	E/KZoNItcVLGZmyqAz1Zw==
-X-ME-Sender: <xms:2XiBZTkpNqx8-N9AhuS_wwbDNHjhLtqG_VIL2bozwxzHN1_xtKyAug>
-    <xme:2XiBZW3fmrIWQF2EI71Rrt5rCkxzo44JjkQB3w2Jv2TXWVCpLWqvuEI9YAoZ6AenJ
-    50Kj0rNs4TAvdE88A>
-X-ME-Received: <xmr:2XiBZZpniaYJATN0HNtVQzioRfxfz_fu-Kd7thw7YYr26of2Pk2DPmHF8TlFSvuIrd4Qwy7evcJkN8XpL4a4YNyVnznQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvddutddgvdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomheptehlhihs
-    shgrucftohhsshcuoehhihesrghlhihsshgrrdhisheqnecuggftrfgrthhtvghrnhepve
-    ejtefftdelgeffvefhheefkeefueevjefgjedvteeljeefkedvtefftdevudeunecuffho
-    mhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrdhish
-X-ME-Proxy: <xmx:2XiBZbnkcK5J5AJAbEOwn2vV8nVHPDMKuGb5vOjyxDcogRDrvDHFmg>
-    <xmx:2XiBZR1dXzjqsRDBE6rf7XU-EId5c5sAFDqvZ1ooUR3JhbDTeWs21w>
-    <xmx:2XiBZatP5StTGVQEyh8A7zmzAA-0dLTvJ6WcVKV4_-eGFXHihtRaXA>
-    <xmx:2niBZfAQHLQ0z4RJa7W0Z7t2aHhpPlAcRHFCt9wXSm_7hCj7eJ-BnQ>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Dec 2023 06:04:57 -0500 (EST)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
-	id 90C6998D5; Tue, 19 Dec 2023 12:04:55 +0100 (CET)
-From: Alyssa Ross <hi@alyssa.is>
-To: bpf@vger.kernel.org,
-	Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Cc: patches@lists.linux.dev,
-	Sergei Trofimovich <slyich@gmail.com>
-Subject: [PATCH] libbpf: skip DWARF sections in linker sanity check
-Date: Tue, 19 Dec 2023 12:03:24 +0100
-Message-ID: <20231219110324.8989-1-hi@alyssa.is>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <CAEf4BzbN7cUVQgd7nUAsmAQMmCpz7O9v+r3iyiUfa_FK6WMY-w@mail.gmail.com>
-References: <CAEf4BzbN7cUVQgd7nUAsmAQMmCpz7O9v+r3iyiUfa_FK6WMY-w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ze0y6cBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8207EC433C8
+	for <patches@lists.linux.dev>; Tue, 19 Dec 2023 11:20:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702984836;
+	bh=u/Gx4/EWK+SES7Afvs++3jRiipFZvGhlSsdRsoGcCmM=;
+	h=In-Reply-To:References:From:Date:Subject:To:Cc:From;
+	b=Ze0y6cBNfd00ot9+Q+ea6jCb+7AtYekTMkE4PZbgjyCLtAGo7C2jPyuoLaLJofk3N
+	 NR3zNgRrjH30pMffk4qLhI4/BliW5f/6VdrIah9HPGnKPaE9cuhwrjcv/lp1gJcYmn
+	 /sHtTbWRbAo13cpT2+EsyTMVc1Y3R6DCOLngeEUwDJcPI46cCQLg4LvX4aUfXejdhP
+	 jvdrISD3pyLP+dIK1Q/4Xc4kfWg3oxHkB6g1XXhFzQ5xA2sdBkk3q/aU1BYNIEiqiB
+	 hKWqQLvYsCgLcZxnoVFeTsV599Oc44Ve1eCzkmyDDA08QysoqEZHIOJufglUbi+4o3
+	 oZgWWtJOCGwjg==
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-591dfa6cb73so1534360eaf.2
+        for <patches@lists.linux.dev>; Tue, 19 Dec 2023 03:20:36 -0800 (PST)
+X-Gm-Message-State: AOJu0Yw3y8UcfHNHKRdS58Q0kMSVCRZeukcmZZXAv0cFsXPO6Q0udcJt
+	wuvst4I3277ij0wgzPbSUTqLNmeNhH/TYHiOCW0=
+X-Google-Smtp-Source: AGHT+IFYqMJMvjidgbQxM2UPu1GVlgtaSEUWlERC7v7yGodRBFSKtfUsZlz7vxAu3362oPz0xtaMkX/VIr8A8WgAB/A=
+X-Received: by 2002:a05:6820:551:b0:590:96a7:34c2 with SMTP id
+ n17-20020a056820055100b0059096a734c2mr13756995ooj.14.1702984835836; Tue, 19
+ Dec 2023 03:20:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a8a:746:0:b0:507:5de0:116e with HTTP; Tue, 19 Dec 2023
+ 03:20:34 -0800 (PST)
+In-Reply-To: <2023121933-bunkhouse-snack-8ae5@gregkh>
+References: <20231218135049.738602288@linuxfoundation.org> <20231218135053.258325456@linuxfoundation.org>
+ <CAKYAXd952=Y54gwM4KBDca52ZFcg+yjJeuiy+6o3jG+zYYUF1w@mail.gmail.com> <2023121933-bunkhouse-snack-8ae5@gregkh>
+From: Namjae Jeon <linkinjeon@kernel.org>
+Date: Tue, 19 Dec 2023 20:20:34 +0900
+X-Gmail-Original-Message-ID: <CAKYAXd_v8tFQgKMWR3LXcHZj-bXKZmJxnUXD2k6NwDaudWr=TA@mail.gmail.com>
+Message-ID: <CAKYAXd_v8tFQgKMWR3LXcHZj-bXKZmJxnUXD2k6NwDaudWr=TA@mail.gmail.com>
+Subject: Re: [PATCH 5.15 80/83] ksmbd: Mark as BROKEN in the 5.15.y kernel
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Sergey Senozhatsky <senozhatsky@chromium.org>, Steve French <sfrench@samba.org>, 
+	Hyunchul Lee <hyc.lee@gmail.com>, linux-cifs@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-clang can generate (with -g -Wa,--compress-debug-sections) 4-byte
-aligned DWARF sections that declare themselves to be 8-byte aligned in
-the section header.  Since DWARF sections are dropped during linking
-anyway, just skip running the sanity checks on them.
-
-Reported-by: Sergei Trofimovich <slyich@gmail.com>
-Suggested-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Closes: https://lore.kernel.org/bpf/ZXcFRJVKbKxtEL5t@nz.home/
-Signed-off-by: Alyssa Ross <hi@alyssa.is>
----
- tools/lib/bpf/linker.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index 52a2901e8bd0..16bca56002ab 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -719,6 +719,9 @@ static int linker_sanity_check_elf(struct src_obj *obj)
- 			return -EINVAL;
- 		}
- 
-+		if (is_dwarf_sec_name(sec->sec_name))
-+			continue;
-+
- 		if (sec->shdr->sh_addralign && !is_pow_of_2(sec->shdr->sh_addralign)) {
- 			pr_warn("ELF section #%zu alignment %llu is non pow-of-2 alignment in %s\n",
- 				sec->sec_idx, (long long unsigned)sec->shdr->sh_addralign,
-
-base-commit: 733763285acfe8dffd6e39ad2ed3d1222b32a901
--- 
-2.42.0
-
+2023-12-19 16:47 GMT+09:00, Greg Kroah-Hartman <gregkh@linuxfoundation.org>:
+> On Tue, Dec 19, 2023 at 12:54:25AM +0900, Namjae Jeon wrote:
+>> 2023-12-18 22:52 GMT+09:00, Greg Kroah-Hartman
+>> <gregkh@linuxfoundation.org>:
+>> > 5.15-stable review patch.  If anyone has any objections, please let me
+>> > know.
+>> Hi Greg,
+>>
+>> It took some time as there were a lot of backport patches and testing,
+>> but I just sent the patchset to you and stable list. Could you please
+>> remove this patch in your queue ?
+>
+> Now dropped, thanks.  I'll look at your backports after this round of
+> stable releases happen in a day or so, thanks.
+Okay:) Thank you!
+>
+> greg k-h
+>
