@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A5648786;
-	Wed, 20 Dec 2023 16:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3BD48788;
+	Wed, 20 Dec 2023 16:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZYnqbGHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AEB1C433C7;
-	Wed, 20 Dec 2023 16:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR6zIr8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC6CC433C8;
+	Wed, 20 Dec 2023 16:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088817;
-	bh=XQxt7+J5VyGZnSiZJqcIA3Lyd2Ylnnem4jLQu4wKMfE=;
+	s=korg; t=1703088820;
+	bh=weQerJI+UrqcCmL2Wu8pF+Z409uA9pcVQr0cKbCasZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYnqbGHuhsw9BrFzoBm+bqV2tRIEKrXjwYiUcgJEJMcXJ3PJyT7tPrfFtrnraAbpW
-	 HYjC3rwEZeQ8EZm6HlzJfuJa7WeyEQWXPLZtqYh3jWonPOMhyMm7KsjjYY/7jtK+Qo
-	 m1xdiQc7ekFsWLxCWhdqFtpWi91N+FsMlgXytQRo=
+	b=TR6zIr8ebmJnW2udcWtr/7aLlcpjGEEKQ1tNqa3inOdHMRVZT7yvEab4XIvrbXS5p
+	 ElIAREA2Dwd2JaW8cBHStfuOGuCjiMgtFK3nhBR5+H5/llXgqkKOX5EMNQBa+8KKez
+	 D4hHKBYdbb4kiDqUb4TDiw6gakDu989HKEQZAc3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dawei Li <set_pte_at@outlook.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 070/159] ksmbd: Implements sess->ksmbd_chann_list as xarray
-Date: Wed, 20 Dec 2023 17:08:55 +0100
-Message-ID: <20231220160934.633061439@linuxfoundation.org>
+Subject: [PATCH 5.15 071/159] ksmbd: Implements sess->rpc_handle_list as xarray
+Date: Wed, 20 Dec 2023 17:08:56 +0100
+Message-ID: <20231220160934.683237563@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -44,265 +44,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Dawei Li <set_pte_at@outlook.com>
 
-[ Upstream commit 1d9c4172110e645b383ff13eee759728d74f1a5d ]
+[ Upstream commit b685757c7b08d5073046fb379be965fd6c06aafc ]
 
-For some ops on channel:
-1. lookup_chann_list(), possibly on high frequency.
-2. ksmbd_chann_del().
+For some ops on rpc handle:
+1. ksmbd_session_rpc_method(), possibly on high frequency.
+2. ksmbd_session_rpc_close().
 
-Connection is used as indexing key to lookup channel, in that case,
+id is used as indexing key to lookup channel, in that case,
 linear search based on list may suffer a bit for performance.
 
-Implements sess->ksmbd_chann_list as xarray.
+Implements sess->rpc_handle_list as xarray.
 
 Signed-off-by: Dawei Li <set_pte_at@outlook.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/mgmt/user_session.c |   59 ++++++++++++++++---------------------------
- fs/ksmbd/mgmt/user_session.h |    4 --
- fs/ksmbd/smb2pdu.c           |   34 +++---------------------
- 3 files changed, 29 insertions(+), 68 deletions(-)
+ fs/ksmbd/mgmt/user_session.c |   37 ++++++++++++++-----------------------
+ fs/ksmbd/mgmt/user_session.h |    2 +-
+ 2 files changed, 15 insertions(+), 24 deletions(-)
 
 --- a/fs/ksmbd/mgmt/user_session.c
 +++ b/fs/ksmbd/mgmt/user_session.c
-@@ -30,15 +30,15 @@ struct ksmbd_session_rpc {
- 
- static void free_channel_list(struct ksmbd_session *sess)
- {
--	struct channel *chann, *tmp;
-+	struct channel *chann;
-+	unsigned long index;
- 
--	write_lock(&sess->chann_lock);
--	list_for_each_entry_safe(chann, tmp, &sess->ksmbd_chann_list,
--				 chann_list) {
--		list_del(&chann->chann_list);
-+	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
-+		xa_erase(&sess->ksmbd_chann_list, index);
- 		kfree(chann);
- 	}
--	write_unlock(&sess->chann_lock);
-+
-+	xa_destroy(&sess->ksmbd_chann_list);
- }
- 
- static void __session_rpc_close(struct ksmbd_session *sess,
-@@ -190,21 +190,15 @@ int ksmbd_session_register(struct ksmbd_
- 
- static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
- {
--	struct channel *chann, *tmp;
-+	struct channel *chann;
- 
--	write_lock(&sess->chann_lock);
--	list_for_each_entry_safe(chann, tmp, &sess->ksmbd_chann_list,
--				 chann_list) {
--		if (chann->conn == conn) {
--			list_del(&chann->chann_list);
--			kfree(chann);
--			write_unlock(&sess->chann_lock);
--			return 0;
--		}
--	}
--	write_unlock(&sess->chann_lock);
-+	chann = xa_erase(&sess->ksmbd_chann_list, (long)conn);
-+	if (!chann)
-+		return -ENOENT;
-+
-+	kfree(chann);
- 
--	return -ENOENT;
-+	return 0;
- }
- 
- void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
-@@ -234,7 +228,7 @@ void ksmbd_sessions_deregister(struct ks
- 	return;
- 
- sess_destroy:
--	if (list_empty(&sess->ksmbd_chann_list)) {
-+	if (xa_empty(&sess->ksmbd_chann_list)) {
- 		xa_erase(&conn->sessions, sess->id);
- 		ksmbd_session_destroy(sess);
- 	}
-@@ -320,6 +314,9 @@ static struct ksmbd_session *__session_c
- 	struct ksmbd_session *sess;
- 	int ret;
- 
-+	if (protocol != CIFDS_SESSION_FLAG_SMB2)
-+		return NULL;
-+
- 	sess = kzalloc(sizeof(struct ksmbd_session), GFP_KERNEL);
- 	if (!sess)
- 		return NULL;
-@@ -329,30 +326,20 @@ static struct ksmbd_session *__session_c
- 
- 	set_session_flag(sess, protocol);
- 	xa_init(&sess->tree_conns);
--	INIT_LIST_HEAD(&sess->ksmbd_chann_list);
-+	xa_init(&sess->ksmbd_chann_list);
- 	INIT_LIST_HEAD(&sess->rpc_handle_list);
- 	sess->sequence_number = 1;
--	rwlock_init(&sess->chann_lock);
--
--	switch (protocol) {
--	case CIFDS_SESSION_FLAG_SMB2:
--		ret = __init_smb2_session(sess);
--		break;
--	default:
--		ret = -EINVAL;
--		break;
--	}
- 
-+	ret = __init_smb2_session(sess);
- 	if (ret)
- 		goto error;
- 
- 	ida_init(&sess->tree_conn_ida);
- 
--	if (protocol == CIFDS_SESSION_FLAG_SMB2) {
--		down_write(&sessions_table_lock);
--		hash_add(sessions_table, &sess->hlist, sess->id);
--		up_write(&sessions_table_lock);
--	}
-+	down_write(&sessions_table_lock);
-+	hash_add(sessions_table, &sess->hlist, sess->id);
-+	up_write(&sessions_table_lock);
-+
- 	return sess;
- 
- error:
---- a/fs/ksmbd/mgmt/user_session.h
-+++ b/fs/ksmbd/mgmt/user_session.h
-@@ -21,7 +21,6 @@ struct ksmbd_file_table;
- struct channel {
- 	__u8			smb3signingkey[SMB3_SIGN_KEY_SIZE];
- 	struct ksmbd_conn	*conn;
--	struct list_head	chann_list;
+@@ -25,7 +25,6 @@ static DECLARE_RWSEM(sessions_table_lock
+ struct ksmbd_session_rpc {
+ 	int			id;
+ 	unsigned int		method;
+-	struct list_head	list;
  };
  
- struct preauth_session {
-@@ -50,8 +49,7 @@ struct ksmbd_session {
- 	char				sess_key[CIFS_KEY_SIZE];
- 
- 	struct hlist_node		hlist;
--	rwlock_t			chann_lock;
--	struct list_head		ksmbd_chann_list;
-+	struct xarray			ksmbd_chann_list;
- 	struct xarray			tree_conns;
- 	struct ida			tree_conn_ida;
- 	struct list_head		rpc_handle_list;
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -75,14 +75,7 @@ static inline bool check_session_id(stru
- 
- struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn *conn)
+ static void free_channel_list(struct ksmbd_session *sess)
+@@ -58,15 +57,14 @@ static void __session_rpc_close(struct k
+ static void ksmbd_session_rpc_clear_list(struct ksmbd_session *sess)
  {
--	struct channel *chann;
--
--	list_for_each_entry(chann, &sess->ksmbd_chann_list, chann_list) {
--		if (chann->conn == conn)
--			return chann;
--	}
--
--	return NULL;
-+	return xa_load(&sess->ksmbd_chann_list, (long)conn);
- }
- 
- /**
-@@ -626,6 +619,7 @@ static void destroy_previous_session(str
- 	struct ksmbd_session *prev_sess = ksmbd_session_lookup_slowpath(id);
- 	struct ksmbd_user *prev_user;
- 	struct channel *chann;
+ 	struct ksmbd_session_rpc *entry;
 +	long index;
  
- 	if (!prev_sess)
- 		return;
-@@ -639,10 +633,8 @@ static void destroy_previous_session(str
- 		return;
- 
- 	prev_sess->state = SMB2_SESSION_EXPIRED;
--	write_lock(&prev_sess->chann_lock);
--	list_for_each_entry(chann, &prev_sess->ksmbd_chann_list, chann_list)
-+	xa_for_each(&prev_sess->ksmbd_chann_list, index, chann)
- 		chann->conn->status = KSMBD_SESS_EXITING;
--	write_unlock(&prev_sess->chann_lock);
+-	while (!list_empty(&sess->rpc_handle_list)) {
+-		entry = list_entry(sess->rpc_handle_list.next,
+-				   struct ksmbd_session_rpc,
+-				   list);
+-
+-		list_del(&entry->list);
++	xa_for_each(&sess->rpc_handle_list, index, entry) {
++		xa_erase(&sess->rpc_handle_list, index);
+ 		__session_rpc_close(sess, entry);
+ 	}
++
++	xa_destroy(&sess->rpc_handle_list);
  }
  
- /**
-@@ -1549,19 +1541,14 @@ static int ntlm_authenticate(struct ksmb
+ static int __rpc_method(char *rpc_name)
+@@ -102,13 +100,13 @@ int ksmbd_session_rpc_open(struct ksmbd_
  
- binding_session:
- 	if (conn->dialect >= SMB30_PROT_ID) {
--		read_lock(&sess->chann_lock);
- 		chann = lookup_chann_list(sess, conn);
--		read_unlock(&sess->chann_lock);
- 		if (!chann) {
- 			chann = kmalloc(sizeof(struct channel), GFP_KERNEL);
- 			if (!chann)
- 				return -ENOMEM;
+ 	entry = kzalloc(sizeof(struct ksmbd_session_rpc), GFP_KERNEL);
+ 	if (!entry)
+-		return -EINVAL;
++		return -ENOMEM;
  
- 			chann->conn = conn;
--			INIT_LIST_HEAD(&chann->chann_list);
--			write_lock(&sess->chann_lock);
--			list_add(&chann->chann_list, &sess->ksmbd_chann_list);
--			write_unlock(&sess->chann_lock);
-+			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, GFP_KERNEL);
- 		}
- 	}
+-	list_add(&entry->list, &sess->rpc_handle_list);
+ 	entry->method = method;
+ 	entry->id = ksmbd_ipc_id_alloc();
+ 	if (entry->id < 0)
+ 		goto free_entry;
++	xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
  
-@@ -1636,19 +1623,14 @@ static int krb5_authenticate(struct ksmb
- 	}
+ 	resp = ksmbd_rpc_open(sess, entry->id);
+ 	if (!resp)
+@@ -117,9 +115,9 @@ int ksmbd_session_rpc_open(struct ksmbd_
+ 	kvfree(resp);
+ 	return entry->id;
+ free_id:
++	xa_erase(&sess->rpc_handle_list, entry->id);
+ 	ksmbd_rpc_id_free(entry->id);
+ free_entry:
+-	list_del(&entry->list);
+ 	kfree(entry);
+ 	return -EINVAL;
+ }
+@@ -128,24 +126,17 @@ void ksmbd_session_rpc_close(struct ksmb
+ {
+ 	struct ksmbd_session_rpc *entry;
  
- 	if (conn->dialect >= SMB30_PROT_ID) {
--		read_lock(&sess->chann_lock);
- 		chann = lookup_chann_list(sess, conn);
--		read_unlock(&sess->chann_lock);
- 		if (!chann) {
- 			chann = kmalloc(sizeof(struct channel), GFP_KERNEL);
- 			if (!chann)
- 				return -ENOMEM;
+-	list_for_each_entry(entry, &sess->rpc_handle_list, list) {
+-		if (entry->id == id) {
+-			list_del(&entry->list);
+-			__session_rpc_close(sess, entry);
+-			break;
+-		}
+-	}
++	entry = xa_erase(&sess->rpc_handle_list, id);
++	if (entry)
++		__session_rpc_close(sess, entry);
+ }
  
- 			chann->conn = conn;
--			INIT_LIST_HEAD(&chann->chann_list);
--			write_lock(&sess->chann_lock);
--			list_add(&chann->chann_list, &sess->ksmbd_chann_list);
--			write_unlock(&sess->chann_lock);
-+			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, GFP_KERNEL);
- 		}
- 	}
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+ {
+ 	struct ksmbd_session_rpc *entry;
  
-@@ -8463,14 +8445,11 @@ int smb3_check_sign_req(struct ksmbd_wor
- 	if (le16_to_cpu(hdr->Command) == SMB2_SESSION_SETUP_HE) {
- 		signing_key = work->sess->smb3signingkey;
- 	} else {
--		read_lock(&work->sess->chann_lock);
- 		chann = lookup_chann_list(work->sess, conn);
- 		if (!chann) {
--			read_unlock(&work->sess->chann_lock);
- 			return 0;
- 		}
- 		signing_key = chann->smb3signingkey;
--		read_unlock(&work->sess->chann_lock);
- 	}
+-	list_for_each_entry(entry, &sess->rpc_handle_list, list) {
+-		if (entry->id == id)
+-			return entry->method;
+-	}
+-	return 0;
++	entry = xa_load(&sess->rpc_handle_list, id);
++	return entry ? entry->method : 0;
+ }
  
- 	if (!signing_key) {
-@@ -8530,14 +8509,11 @@ void smb3_set_sign_rsp(struct ksmbd_work
- 	    le16_to_cpu(hdr->Command) == SMB2_SESSION_SETUP_HE) {
- 		signing_key = work->sess->smb3signingkey;
- 	} else {
--		read_lock(&work->sess->chann_lock);
- 		chann = lookup_chann_list(work->sess, work->conn);
- 		if (!chann) {
--			read_unlock(&work->sess->chann_lock);
- 			return;
- 		}
- 		signing_key = chann->smb3signingkey;
--		read_unlock(&work->sess->chann_lock);
- 	}
+ void ksmbd_session_destroy(struct ksmbd_session *sess)
+@@ -327,7 +318,7 @@ static struct ksmbd_session *__session_c
+ 	set_session_flag(sess, protocol);
+ 	xa_init(&sess->tree_conns);
+ 	xa_init(&sess->ksmbd_chann_list);
+-	INIT_LIST_HEAD(&sess->rpc_handle_list);
++	xa_init(&sess->rpc_handle_list);
+ 	sess->sequence_number = 1;
  
- 	if (!signing_key)
+ 	ret = __init_smb2_session(sess);
+--- a/fs/ksmbd/mgmt/user_session.h
++++ b/fs/ksmbd/mgmt/user_session.h
+@@ -52,7 +52,7 @@ struct ksmbd_session {
+ 	struct xarray			ksmbd_chann_list;
+ 	struct xarray			tree_conns;
+ 	struct ida			tree_conn_ida;
+-	struct list_head		rpc_handle_list;
++	struct xarray			rpc_handle_list;
+ 
+ 	__u8				smb3encryptionkey[SMB3_ENC_DEC_KEY_SIZE];
+ 	__u8				smb3decryptionkey[SMB3_ENC_DEC_KEY_SIZE];
 
 
