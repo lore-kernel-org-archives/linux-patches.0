@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA5D4779A;
-	Wed, 20 Dec 2023 16:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9310447A6B;
+	Wed, 20 Dec 2023 16:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAknty+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E608BC433C7;
-	Wed, 20 Dec 2023 16:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK521XxI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63B3C433C8;
+	Wed, 20 Dec 2023 16:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088656;
-	bh=LH5Epen+O8TIOCjJlkoSfgdRLLZoBJe3CK2Br9mWinw=;
+	s=korg; t=1703088659;
+	bh=J35li6fPDT3lcYJ2rgNVgmXfq+H/a7XWf9/EvpHBMNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YAknty+Cq63kyv83dYwL2JD+hyvm2BNUCmegstd8zx0o0uRj3Qgk1qRWFpqlycLHr
-	 XRoRyY35zy2YkzEa2mv0gIviM4zI7uk09rraV1XaFQcTR05hN5gfyi1tHb4j47cCE0
-	 XgH1SQB+QGPeaRXXGOPSZlme/eH8RYOUlBWVaQjo=
+	b=PK521XxIh45ImmeLJuh626AXKscciL0QXZVJClDpsFFC2IHOwo2e3tgMk4ZcMhwTX
+	 TBJKQ35dATZhf6iNfqhhv1H8JOtiSa77Y0RLpQ2Gj2LfaUMpXSRPqcNg+RNp5EKpRi
+	 th4GFk8nx07vpO8S9j+nDwOGk2k8LE8DZU8lxtxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Abaci Robot <abaci@linux.alibaba.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	Yang Li <yang.lee@linux.alibaba.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 011/159] ksmbd: set both ipv4 and ipv6 in FSCTL_QUERY_NETWORK_INTERFACE_INFO
-Date: Wed, 20 Dec 2023 17:07:56 +0100
-Message-ID: <20231220160931.815239095@linuxfoundation.org>
+Subject: [PATCH 5.15 012/159] ksmbd: Fix buffer_check_err() kernel-doc comment
+Date: Wed, 20 Dec 2023 17:07:57 +0100
+Message-ID: <20231220160931.860732315@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -41,81 +43,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Yang Li <yang.lee@linux.alibaba.com>
 
-[ Upstream commit a58b45a4dbfd0bf2ebb157789da4d8e6368afb1b ]
+[ Upstream commit e230d013378489bcd4b5589ca1d2a5b91ff8d098 ]
 
-Set ipv4 and ipv6 address in FSCTL_QUERY_NETWORK_INTERFACE_INFO.
+Add the description of @rsp_org in buffer_check_err() kernel-doc comment
+to remove a warning found by running scripts/kernel-doc, which is caused
+by using 'make W=1'.
+fs/ksmbd/smb2pdu.c:4028: warning: Function parameter or member 'rsp_org'
+not described in 'buffer_check_err'
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Fixes: cb4517201b8a ("ksmbd: remove smb2_buf_length in smb2_hdr")
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |   22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ fs/ksmbd/smb2pdu.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/fs/ksmbd/smb2pdu.c
 +++ b/fs/ksmbd/smb2pdu.c
-@@ -7328,15 +7328,10 @@ static int fsctl_query_iface_info_ioctl(
- 	struct sockaddr_storage_rsp *sockaddr_storage;
- 	unsigned int flags;
- 	unsigned long long speed;
--	struct sockaddr_in6 *csin6 = (struct sockaddr_in6 *)&conn->peer_addr;
- 
- 	rtnl_lock();
- 	for_each_netdev(&init_net, netdev) {
--		if (out_buf_len <
--		    nbytes + sizeof(struct network_interface_info_ioctl_rsp)) {
--			rtnl_unlock();
--			return -ENOSPC;
--		}
-+		bool ipv4_set = false;
- 
- 		if (netdev->type == ARPHRD_LOOPBACK)
- 			continue;
-@@ -7344,6 +7339,12 @@ static int fsctl_query_iface_info_ioctl(
- 		flags = dev_get_flags(netdev);
- 		if (!(flags & IFF_RUNNING))
- 			continue;
-+ipv6_retry:
-+		if (out_buf_len <
-+		    nbytes + sizeof(struct network_interface_info_ioctl_rsp)) {
-+			rtnl_unlock();
-+			return -ENOSPC;
-+		}
- 
- 		nii_rsp = (struct network_interface_info_ioctl_rsp *)
- 				&rsp->Buffer[nbytes];
-@@ -7376,8 +7377,7 @@ static int fsctl_query_iface_info_ioctl(
- 					nii_rsp->SockAddr_Storage;
- 		memset(sockaddr_storage, 0, 128);
- 
--		if (conn->peer_addr.ss_family == PF_INET ||
--		    ipv6_addr_v4mapped(&csin6->sin6_addr)) {
-+		if (!ipv4_set) {
- 			struct in_device *idev;
- 
- 			sockaddr_storage->Family = cpu_to_le16(INTERNETWORK);
-@@ -7388,6 +7388,9 @@ static int fsctl_query_iface_info_ioctl(
- 				continue;
- 			sockaddr_storage->addr4.IPv4address =
- 						idev_ipv4_address(idev);
-+			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
-+			ipv4_set = true;
-+			goto ipv6_retry;
- 		} else {
- 			struct inet6_dev *idev6;
- 			struct inet6_ifaddr *ifa;
-@@ -7409,9 +7412,8 @@ static int fsctl_query_iface_info_ioctl(
- 				break;
- 			}
- 			sockaddr_storage->addr6.ScopeId = 0;
-+			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
- 		}
--
--		nbytes += sizeof(struct network_interface_info_ioctl_rsp);
- 	}
- 	rtnl_unlock();
- 
+@@ -4101,6 +4101,7 @@ err_out2:
+  * buffer_check_err() - helper function to check buffer errors
+  * @reqOutputBufferLength:	max buffer length expected in command response
+  * @rsp:		query info response buffer contains output buffer length
++ * @rsp_org:		base response buffer pointer in case of chained response
+  * @infoclass_size:	query info class response buffer size
+  *
+  * Return:	0 on success, otherwise error
 
 
