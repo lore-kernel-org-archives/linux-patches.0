@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D65648788;
-	Wed, 20 Dec 2023 16:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05004B5A0;
+	Wed, 20 Dec 2023 16:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txdnlv2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943DBC433C8;
-	Wed, 20 Dec 2023 16:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjtLuQNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4466CC433C8;
+	Wed, 20 Dec 2023 16:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088847;
-	bh=S8kSRL9UWqk0q5r5AAzXukSNOtspw3rd3XAlNiGF/HA=;
+	s=korg; t=1703088850;
+	bh=AlkJNwi7zVWvLQfgDK8QWJAyw1hIAcvd0Ud2jIQDIyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txdnlv2/NfqV8li6Ze+ZBdDc1IbgfRf6f7iCGuEHyO/wuyRBlOPSqb1Qstu+PMISu
-	 AbSNA/24agy0xDBHQqTzvw4FeWqxMnRQepuB6ZWFRKXmGubfXFgH7pIejiKXI5Mzze
-	 RVDdY93uenQ9MSCVutPjAYj62Xclk1uwRVLK39dg=
+	b=IjtLuQNdzIZuizAxy4YK5wvf/FwH1URMIIudLo65Ims0vG2b/6SGPL2EX8udeUA7E
+	 TSK8BUKVsq5FYBoVQxjPQSa697NIJksoIrBIwFzUS+c6bgiHHyc7MDC0TkyPZLjuIf
+	 y9HrctQQd3FQPaEHoWnyPCGIIdePU0YIFfjYtC+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 080/159] ksmbd: delete asynchronous work from list
-Date: Wed, 20 Dec 2023 17:09:05 +0100
-Message-ID: <20231220160935.111292504@linuxfoundation.org>
+Subject: [PATCH 5.15 081/159] ksmbd: fix slab-out-of-bounds in init_smb2_rsp_hdr
+Date: Wed, 20 Dec 2023 17:09:06 +0100
+Message-ID: <20231220160935.163550353@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,159 +43,277 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 3a9b557f44ea8f216aab515a7db20e23f0eb51b9 ]
+[ Upstream commit dc8289f912387c3bcfbc5d2db29c8947fa207c11 ]
 
-When smb2_lock request is canceled by smb2_cancel or smb2_close(),
-ksmbd is missing deleting async_request_entry async_requests list.
-Because calling init_smb2_rsp_hdr() in smb2_lock() mark ->synchronous
-as true and then it will not be deleted in
-ksmbd_conn_try_dequeue_request(). This patch add release_async_work() to
-release the ones allocated for async work.
+When smb1 mount fails, KASAN detect slab-out-of-bounds in
+init_smb2_rsp_hdr like the following one.
+For smb1 negotiate(56bytes) , init_smb2_rsp_hdr() for smb2 is called.
+The issue occurs while handling smb1 negotiate as smb2 server operations.
+Add smb server operations for smb1 (get_cmd_val, init_rsp_hdr,
+allocate_rsp_buf, check_user_session) to handle smb1 negotiate so that
+smb2 server operation does not handle it.
 
+[  411.400423] CIFS: VFS: Use of the less secure dialect vers=1.0 is
+not recommended unless required for access to very old servers
+[  411.400452] CIFS: Attempting to mount \\192.168.45.139\homes
+[  411.479312] ksmbd: init_smb2_rsp_hdr : 492
+[  411.479323] ==================================================================
+[  411.479327] BUG: KASAN: slab-out-of-bounds in
+init_smb2_rsp_hdr+0x1e2/0x1f4 [ksmbd]
+[  411.479369] Read of size 16 at addr ffff888488ed0734 by task kworker/14:1/199
+
+[  411.479379] CPU: 14 PID: 199 Comm: kworker/14:1 Tainted: G
+ OE      6.1.21 #3
+[  411.479386] Hardware name: ASUSTeK COMPUTER INC. Z10PA-D8
+Series/Z10PA-D8 Series, BIOS 3801 08/23/2019
+[  411.479390] Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
+[  411.479425] Call Trace:
+[  411.479428]  <TASK>
+[  411.479432]  dump_stack_lvl+0x49/0x63
+[  411.479444]  print_report+0x171/0x4a8
+[  411.479452]  ? kasan_complete_mode_report_info+0x3c/0x200
+[  411.479463]  ? init_smb2_rsp_hdr+0x1e2/0x1f4 [ksmbd]
+[  411.479497]  kasan_report+0xb4/0x130
+[  411.479503]  ? init_smb2_rsp_hdr+0x1e2/0x1f4 [ksmbd]
+[  411.479537]  kasan_check_range+0x149/0x1e0
+[  411.479543]  memcpy+0x24/0x70
+[  411.479550]  init_smb2_rsp_hdr+0x1e2/0x1f4 [ksmbd]
+[  411.479585]  handle_ksmbd_work+0x109/0x760 [ksmbd]
+[  411.479616]  ? _raw_spin_unlock_irqrestore+0x50/0x50
+[  411.479624]  ? smb3_encrypt_resp+0x340/0x340 [ksmbd]
+[  411.479656]  process_one_work+0x49c/0x790
+[  411.479667]  worker_thread+0x2b1/0x6e0
+[  411.479674]  ? process_one_work+0x790/0x790
+[  411.479680]  kthread+0x177/0x1b0
+[  411.479686]  ? kthread_complete_and_exit+0x30/0x30
+[  411.479692]  ret_from_fork+0x22/0x30
+[  411.479702]  </TASK>
+
+Fixes: 39b291b86b59 ("ksmbd: return unsupported error on smb1 mount")
 Cc: stable@vger.kernel.org
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |   12 +++++-------
- fs/ksmbd/ksmbd_work.h |    2 +-
- fs/ksmbd/smb2pdu.c    |   33 +++++++++++++++++++++------------
- fs/ksmbd/smb2pdu.h    |    1 +
- 4 files changed, 28 insertions(+), 20 deletions(-)
+ fs/ksmbd/server.c     |    5 -
+ fs/ksmbd/smb2pdu.c    |    3 -
+ fs/ksmbd/smb_common.c |  138 +++++++++++++++++++++++++++++++++++++++-----------
+ fs/ksmbd/smb_common.h |    2 
+ 4 files changed, 111 insertions(+), 37 deletions(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -112,10 +112,8 @@ void ksmbd_conn_enqueue_request(struct k
- 	struct ksmbd_conn *conn = work->conn;
- 	struct list_head *requests_queue = NULL;
+--- a/fs/ksmbd/server.c
++++ b/fs/ksmbd/server.c
+@@ -296,10 +296,7 @@ static int queue_ksmbd_work(struct ksmbd
+ 	work->request_buf = conn->request_buf;
+ 	conn->request_buf = NULL;
  
--	if (conn->ops->get_cmd_val(work) != SMB2_CANCEL_HE) {
-+	if (conn->ops->get_cmd_val(work) != SMB2_CANCEL_HE)
- 		requests_queue = &conn->requests;
--		work->synchronous = true;
+-	if (ksmbd_init_smb_server(work)) {
+-		ksmbd_free_work_struct(work);
+-		return -EINVAL;
 -	}
++	ksmbd_init_smb_server(work);
  
- 	if (requests_queue) {
- 		atomic_inc(&conn->req_running);
-@@ -136,14 +134,14 @@ int ksmbd_conn_try_dequeue_request(struc
- 
- 	if (!work->multiRsp)
- 		atomic_dec(&conn->req_running);
--	spin_lock(&conn->request_lock);
- 	if (!work->multiRsp) {
-+		spin_lock(&conn->request_lock);
- 		list_del_init(&work->request_entry);
--		if (!work->synchronous)
--			list_del_init(&work->async_request_entry);
-+		spin_unlock(&conn->request_lock);
-+		if (work->asynchronous)
-+			release_async_work(work);
- 		ret = 0;
- 	}
--	spin_unlock(&conn->request_lock);
- 
- 	wake_up_all(&conn->req_running_q);
- 	return ret;
---- a/fs/ksmbd/ksmbd_work.h
-+++ b/fs/ksmbd/ksmbd_work.h
-@@ -68,7 +68,7 @@ struct ksmbd_work {
- 	/* Request is encrypted */
- 	bool                            encrypted:1;
- 	/* Is this SYNC or ASYNC ksmbd_work */
--	bool                            synchronous:1;
-+	bool                            asynchronous:1;
- 	bool                            need_invalidate_rkey:1;
- 
- 	unsigned int                    remote_key;
+ 	ksmbd_conn_enqueue_request(work);
+ 	atomic_inc(&conn->r_count);
 --- a/fs/ksmbd/smb2pdu.c
 +++ b/fs/ksmbd/smb2pdu.c
-@@ -512,12 +512,6 @@ int init_smb2_rsp_hdr(struct ksmbd_work
- 	rsp_hdr->SessionId = rcv_hdr->SessionId;
- 	memcpy(rsp_hdr->Signature, rcv_hdr->Signature, 16);
+@@ -246,9 +246,6 @@ int init_smb2_neg_rsp(struct ksmbd_work
+ 	struct smb2_negotiate_rsp *rsp;
+ 	struct ksmbd_conn *conn = work->conn;
  
--	work->synchronous = true;
--	if (work->async_id) {
--		ksmbd_release_id(&conn->async_ida, work->async_id);
--		work->async_id = 0;
--	}
+-	if (conn->need_neg == false)
+-		return -EINVAL;
 -
- 	return 0;
+ 	*(__be32 *)work->response_buf =
+ 		cpu_to_be32(conn->vals->header_size);
+ 
+--- a/fs/ksmbd/smb_common.c
++++ b/fs/ksmbd/smb_common.c
+@@ -283,20 +283,121 @@ err_out:
+ 	return BAD_PROT_ID;
  }
  
-@@ -675,7 +669,7 @@ int setup_async_work(struct ksmbd_work *
- 		pr_err("Failed to alloc async message id\n");
- 		return id;
- 	}
--	work->synchronous = false;
-+	work->asynchronous = true;
- 	work->async_id = id;
- 	rsp_hdr->Id.AsyncId = cpu_to_le64(id);
+-int ksmbd_init_smb_server(struct ksmbd_work *work)
++#define SMB_COM_NEGOTIATE_EX	0x0
++
++/**
++ * get_smb1_cmd_val() - get smb command value from smb header
++ * @work:	smb work containing smb header
++ *
++ * Return:      smb command value
++ */
++static u16 get_smb1_cmd_val(struct ksmbd_work *work)
+ {
+-	struct ksmbd_conn *conn = work->conn;
++	return SMB_COM_NEGOTIATE_EX;
++}
  
-@@ -695,6 +689,24 @@ int setup_async_work(struct ksmbd_work *
- 	return 0;
- }
- 
-+void release_async_work(struct ksmbd_work *work)
+-	if (conn->need_neg == false)
++/**
++ * init_smb1_rsp_hdr() - initialize smb negotiate response header
++ * @work:	smb work containing smb request
++ *
++ * Return:      0 on success, otherwise -EINVAL
++ */
++static int init_smb1_rsp_hdr(struct ksmbd_work *work)
 +{
-+	struct ksmbd_conn *conn = work->conn;
++	struct smb_hdr *rsp_hdr = (struct smb_hdr *)work->response_buf;
++	struct smb_hdr *rcv_hdr = (struct smb_hdr *)work->request_buf;
 +
-+	spin_lock(&conn->request_lock);
-+	list_del_init(&work->async_request_entry);
-+	spin_unlock(&conn->request_lock);
++	/*
++	 * Remove 4 byte direct TCP header.
++	 */
++	*(__be32 *)work->response_buf =
++		cpu_to_be32(sizeof(struct smb_hdr) - 4);
 +
-+	work->asynchronous = 0;
-+	work->cancel_fn = NULL;
-+	kfree(work->cancel_argv);
-+	work->cancel_argv = NULL;
-+	if (work->async_id) {
-+		ksmbd_release_id(&conn->async_ida, work->async_id);
-+		work->async_id = 0;
-+	}
++	rsp_hdr->Command = SMB_COM_NEGOTIATE;
++	*(__le32 *)rsp_hdr->Protocol = SMB1_PROTO_NUMBER;
++	rsp_hdr->Flags = SMBFLG_RESPONSE;
++	rsp_hdr->Flags2 = SMBFLG2_UNICODE | SMBFLG2_ERR_STATUS |
++		SMBFLG2_EXT_SEC | SMBFLG2_IS_LONG_NAME;
++	rsp_hdr->Pid = rcv_hdr->Pid;
++	rsp_hdr->Mid = rcv_hdr->Mid;
++	return 0;
 +}
 +
- void smb2_send_interim_resp(struct ksmbd_work *work, __le32 status)
- {
- 	struct smb2_hdr *rsp_hdr;
-@@ -7090,13 +7102,9 @@ skip:
- 
- 				ksmbd_vfs_posix_lock_wait(flock);
- 
--				spin_lock(&work->conn->request_lock);
- 				spin_lock(&fp->f_lock);
- 				list_del(&work->fp_entry);
--				work->cancel_fn = NULL;
--				kfree(argv);
- 				spin_unlock(&fp->f_lock);
--				spin_unlock(&work->conn->request_lock);
- 
- 				if (work->state != KSMBD_WORK_ACTIVE) {
- 					list_del(&smb_lock->llist);
-@@ -7114,6 +7122,7 @@ skip:
- 						work->send_no_response = 1;
- 						goto out;
- 					}
++/**
++ * smb1_check_user_session() - check for valid session for a user
++ * @work:	smb work containing smb request buffer
++ *
++ * Return:      0 on success, otherwise error
++ */
++static int smb1_check_user_session(struct ksmbd_work *work)
++{
++	unsigned int cmd = work->conn->ops->get_cmd_val(work);
 +
- 					init_smb2_rsp_hdr(work);
- 					smb2_set_err_rsp(work);
- 					rsp->hdr.Status =
-@@ -7126,7 +7135,7 @@ skip:
- 				spin_lock(&work->conn->llist_lock);
- 				list_del(&smb_lock->clist);
- 				spin_unlock(&work->conn->llist_lock);
++	if (cmd == SMB_COM_NEGOTIATE_EX)
+ 		return 0;
+ 
+-	init_smb3_11_server(conn);
++	return -EINVAL;
++}
++
++/**
++ * smb1_allocate_rsp_buf() - allocate response buffer for a command
++ * @work:	smb work containing smb request
++ *
++ * Return:      0 on success, otherwise -ENOMEM
++ */
++static int smb1_allocate_rsp_buf(struct ksmbd_work *work)
++{
++	work->response_buf = kmalloc(MAX_CIFS_SMALL_BUFFER_SIZE,
++			GFP_KERNEL | __GFP_ZERO);
++	work->response_sz = MAX_CIFS_SMALL_BUFFER_SIZE;
++
++	if (!work->response_buf) {
++		pr_err("Failed to allocate %u bytes buffer\n",
++				MAX_CIFS_SMALL_BUFFER_SIZE);
++		return -ENOMEM;
++	}
+ 
+-	if (conn->ops->get_cmd_val(work) != SMB_COM_NEGOTIATE)
+-		conn->need_neg = false;
+ 	return 0;
+ }
+ 
++static struct smb_version_ops smb1_server_ops = {
++	.get_cmd_val = get_smb1_cmd_val,
++	.init_rsp_hdr = init_smb1_rsp_hdr,
++	.allocate_rsp_buf = smb1_allocate_rsp_buf,
++	.check_user_session = smb1_check_user_session,
++};
++
++static int smb1_negotiate(struct ksmbd_work *work)
++{
++	return ksmbd_smb_negotiate_common(work, SMB_COM_NEGOTIATE);
++}
++
++static struct smb_version_cmds smb1_server_cmds[1] = {
++	[SMB_COM_NEGOTIATE_EX]	= { .proc = smb1_negotiate, },
++};
++
++static void init_smb1_server(struct ksmbd_conn *conn)
++{
++	conn->ops = &smb1_server_ops;
++	conn->cmds = smb1_server_cmds;
++	conn->max_cmds = ARRAY_SIZE(smb1_server_cmds);
++}
++
++void ksmbd_init_smb_server(struct ksmbd_work *work)
++{
++	struct ksmbd_conn *conn = work->conn;
++	__le32 proto;
++
++	if (conn->need_neg == false)
++		return;
++
++	proto = *(__le32 *)((struct smb_hdr *)work->request_buf)->Protocol;
++	if (proto == SMB1_PROTO_NUMBER)
++		init_smb1_server(conn);
++	else
++		init_smb3_11_server(conn);
++}
++
+ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work, int info_level,
+ 				      struct ksmbd_file *dir,
+ 				      struct ksmbd_dir_info *d_info,
+@@ -444,20 +545,10 @@ static int smb_handle_negotiate(struct k
+ 
+ 	ksmbd_debug(SMB, "Unsupported SMB1 protocol\n");
+ 
+-	/*
+-	 * Remove 4 byte direct TCP header, add 2 byte bcc and
+-	 * 2 byte DialectIndex.
+-	 */
+-	*(__be32 *)work->response_buf =
+-		cpu_to_be32(sizeof(struct smb_hdr) - 4 + 2 + 2);
++	/* Add 2 byte bcc and 2 byte DialectIndex. */
++	inc_rfc1001_len(work->response_buf, 4);
+ 	neg_rsp->hdr.Status.CifsError = STATUS_SUCCESS;
+ 
+-	neg_rsp->hdr.Command = SMB_COM_NEGOTIATE;
+-	*(__le32 *)neg_rsp->hdr.Protocol = SMB1_PROTO_NUMBER;
+-	neg_rsp->hdr.Flags = SMBFLG_RESPONSE;
+-	neg_rsp->hdr.Flags2 = SMBFLG2_UNICODE | SMBFLG2_ERR_STATUS |
+-		SMBFLG2_EXT_SEC | SMBFLG2_IS_LONG_NAME;
 -
-+				release_async_work(work);
- 				goto retry;
- 			} else if (!rc) {
- 				spin_lock(&work->conn->llist_lock);
---- a/fs/ksmbd/smb2pdu.h
-+++ b/fs/ksmbd/smb2pdu.h
-@@ -1663,6 +1663,7 @@ int find_matching_smb2_dialect(int start
- struct file_lock *smb_flock_init(struct file *f);
- int setup_async_work(struct ksmbd_work *work, void (*fn)(void **),
- 		     void **arg);
-+void release_async_work(struct ksmbd_work *work);
- void smb2_send_interim_resp(struct ksmbd_work *work, __le32 status);
- struct channel *lookup_chann_list(struct ksmbd_session *sess,
- 				  struct ksmbd_conn *conn);
+ 	neg_rsp->hdr.WordCount = 1;
+ 	neg_rsp->DialectIndex = cpu_to_le16(work->conn->dialect);
+ 	neg_rsp->ByteCount = 0;
+@@ -474,23 +565,12 @@ int ksmbd_smb_negotiate_common(struct ks
+ 	ksmbd_debug(SMB, "conn->dialect 0x%x\n", conn->dialect);
+ 
+ 	if (command == SMB2_NEGOTIATE_HE) {
+-		struct smb2_hdr *smb2_hdr = smb2_get_msg(work->request_buf);
+-
+-		if (smb2_hdr->ProtocolId != SMB2_PROTO_NUMBER) {
+-			ksmbd_debug(SMB, "Downgrade to SMB1 negotiation\n");
+-			command = SMB_COM_NEGOTIATE;
+-		}
+-	}
+-
+-	if (command == SMB2_NEGOTIATE_HE) {
+ 		ret = smb2_handle_negotiate(work);
+-		init_smb2_neg_rsp(work);
+ 		return ret;
+ 	}
+ 
+ 	if (command == SMB_COM_NEGOTIATE) {
+ 		if (__smb2_negotiate(conn)) {
+-			conn->need_neg = true;
+ 			init_smb3_11_server(conn);
+ 			init_smb2_neg_rsp(work);
+ 			ksmbd_debug(SMB, "Upgrade to SMB2 negotiation\n");
+--- a/fs/ksmbd/smb_common.h
++++ b/fs/ksmbd/smb_common.h
+@@ -474,7 +474,7 @@ bool ksmbd_smb_request(struct ksmbd_conn
+ 
+ int ksmbd_lookup_dialect_by_id(__le16 *cli_dialects, __le16 dialects_count);
+ 
+-int ksmbd_init_smb_server(struct ksmbd_work *work);
++void ksmbd_init_smb_server(struct ksmbd_work *work);
+ 
+ struct ksmbd_kstat;
+ int ksmbd_populate_dot_dotdot_entries(struct ksmbd_work *work,
 
 
