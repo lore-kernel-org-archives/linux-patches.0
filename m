@@ -1,19 +1,19 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D12482F8;
-	Wed, 20 Dec 2023 16:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8011A4B138;
+	Wed, 20 Dec 2023 16:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewaO2Ns7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14F4CC433C8;
-	Wed, 20 Dec 2023 16:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAsDkx69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A71C433C8;
+	Wed, 20 Dec 2023 16:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088798;
-	bh=VyjR1efKzSeGbteHwwX5uWtn6fOp848Oo9XW7hSTsSY=;
+	s=korg; t=1703088801;
+	bh=gvpB2jPLDvjnbzXzsmWuNsevI0sya5LlYeaoJDBnTBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewaO2Ns7Kecl6h9qgcTOprQvkUurrX9fny1F+MDNsslPG7qRy9rF0nEo02c7sJTb9
-	 h/PZYuf4S697wZDvIXUSP8bMikqsfZWeSFSZOdyAzWStMRU81KnFlEwArtZgHduqYV
-	 1DXEsBKMScgY0XkfzuzOgy9rHjsr1A5mEFLN0Dlo=
+	b=PAsDkx69o6VztcHniZOenEYfbI0Sj2JXU0Fm7Js5eEQTf93uzikU8d7vF1ZnBCeUF
+	 KPh/SwHhitTN+tL7bfzKuZ3KaW1aukBOEefGLSYgFPxpG2pK/f1v0shVLH8mRFsOfp
+	 NFkfclAn6jgvKqRjmIvVArSGDUxJWod8YhmnoNSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 033/159] ksmbd: smbd: change prototypes of RDMA read/write related functions
-Date: Wed, 20 Dec 2023 17:08:18 +0100
-Message-ID: <20231220160932.831363995@linuxfoundation.org>
+Subject: [PATCH 5.15 034/159] ksmbd: smbd: introduce read/write credits for RDMA read/write
+Date: Wed, 20 Dec 2023 17:08:19 +0100
+Message-ID: <20231220160932.873418693@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -44,245 +44,285 @@ Content-Transfer-Encoding: 8bit
 
 From: Hyunchul Lee <hyc.lee@gmail.com>
 
-[ Upstream commit 1807abcf8778bcbbf584fe54da9ccbe9029c49bb ]
+[ Upstream commit ddbdc861e37c168cf2fb8a7b7477f5d18b4daf76 ]
 
-Change the prototypes of RDMA read/write
-operations to accept a pointer and length
-of buffer descriptors.
+SMB2_READ/SMB2_WRITE request has to be granted the number
+of rw credits, the pages the request wants to transfer
+/ the maximum pages which can be registered with one
+MR to read and write a file.
+And allocate enough RDMA resources for the maximum
+number of rw credits allowed by ksmbd.
 
 Signed-off-by: Hyunchul Lee <hyc.lee@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c     |   20 ++++++++++----------
- fs/ksmbd/connection.h     |   27 ++++++++++++++++-----------
- fs/ksmbd/smb2pdu.c        |   23 ++++++++---------------
- fs/ksmbd/transport_rdma.c |   30 +++++++++++++++++-------------
- 4 files changed, 51 insertions(+), 49 deletions(-)
+ fs/ksmbd/transport_rdma.c |  118 +++++++++++++++++++++++++++-------------------
+ 1 file changed, 70 insertions(+), 48 deletions(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -206,31 +206,31 @@ int ksmbd_conn_write(struct ksmbd_work *
- 	return 0;
- }
- 
--int ksmbd_conn_rdma_read(struct ksmbd_conn *conn, void *buf,
--			 unsigned int buflen, u32 remote_key, u64 remote_offset,
--			 u32 remote_len)
-+int ksmbd_conn_rdma_read(struct ksmbd_conn *conn,
-+			 void *buf, unsigned int buflen,
-+			 struct smb2_buffer_desc_v1 *desc,
-+			 unsigned int desc_len)
- {
- 	int ret = -EINVAL;
- 
- 	if (conn->transport->ops->rdma_read)
- 		ret = conn->transport->ops->rdma_read(conn->transport,
- 						      buf, buflen,
--						      remote_key, remote_offset,
--						      remote_len);
-+						      desc, desc_len);
- 	return ret;
- }
- 
--int ksmbd_conn_rdma_write(struct ksmbd_conn *conn, void *buf,
--			  unsigned int buflen, u32 remote_key,
--			  u64 remote_offset, u32 remote_len)
-+int ksmbd_conn_rdma_write(struct ksmbd_conn *conn,
-+			  void *buf, unsigned int buflen,
-+			  struct smb2_buffer_desc_v1 *desc,
-+			  unsigned int desc_len)
- {
- 	int ret = -EINVAL;
- 
- 	if (conn->transport->ops->rdma_write)
- 		ret = conn->transport->ops->rdma_write(conn->transport,
- 						       buf, buflen,
--						       remote_key, remote_offset,
--						       remote_len);
-+						       desc, desc_len);
- 	return ret;
- }
- 
---- a/fs/ksmbd/connection.h
-+++ b/fs/ksmbd/connection.h
-@@ -116,11 +116,14 @@ struct ksmbd_transport_ops {
- 	int (*writev)(struct ksmbd_transport *t, struct kvec *iovs, int niov,
- 		      int size, bool need_invalidate_rkey,
- 		      unsigned int remote_key);
--	int (*rdma_read)(struct ksmbd_transport *t, void *buf, unsigned int len,
--			 u32 remote_key, u64 remote_offset, u32 remote_len);
--	int (*rdma_write)(struct ksmbd_transport *t, void *buf,
--			  unsigned int len, u32 remote_key, u64 remote_offset,
--			  u32 remote_len);
-+	int (*rdma_read)(struct ksmbd_transport *t,
-+			 void *buf, unsigned int len,
-+			 struct smb2_buffer_desc_v1 *desc,
-+			 unsigned int desc_len);
-+	int (*rdma_write)(struct ksmbd_transport *t,
-+			  void *buf, unsigned int len,
-+			  struct smb2_buffer_desc_v1 *desc,
-+			  unsigned int desc_len);
- };
- 
- struct ksmbd_transport {
-@@ -142,12 +145,14 @@ struct ksmbd_conn *ksmbd_conn_alloc(void
- void ksmbd_conn_free(struct ksmbd_conn *conn);
- bool ksmbd_conn_lookup_dialect(struct ksmbd_conn *c);
- int ksmbd_conn_write(struct ksmbd_work *work);
--int ksmbd_conn_rdma_read(struct ksmbd_conn *conn, void *buf,
--			 unsigned int buflen, u32 remote_key, u64 remote_offset,
--			 u32 remote_len);
--int ksmbd_conn_rdma_write(struct ksmbd_conn *conn, void *buf,
--			  unsigned int buflen, u32 remote_key, u64 remote_offset,
--			  u32 remote_len);
-+int ksmbd_conn_rdma_read(struct ksmbd_conn *conn,
-+			 void *buf, unsigned int buflen,
-+			 struct smb2_buffer_desc_v1 *desc,
-+			 unsigned int desc_len);
-+int ksmbd_conn_rdma_write(struct ksmbd_conn *conn,
-+			  void *buf, unsigned int buflen,
-+			  struct smb2_buffer_desc_v1 *desc,
-+			  unsigned int desc_len);
- void ksmbd_conn_enqueue_request(struct ksmbd_work *work);
- int ksmbd_conn_try_dequeue_request(struct ksmbd_work *work);
- void ksmbd_conn_init_server_callbacks(struct ksmbd_conn_ops *ops);
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -6193,7 +6193,6 @@ out:
- static int smb2_set_remote_key_for_rdma(struct ksmbd_work *work,
- 					struct smb2_buffer_desc_v1 *desc,
- 					__le32 Channel,
--					__le16 ChannelInfoOffset,
- 					__le16 ChannelInfoLength)
- {
- 	unsigned int i, ch_count;
-@@ -6219,7 +6218,8 @@ static int smb2_set_remote_key_for_rdma(
- 
- 	work->need_invalidate_rkey =
- 		(Channel == SMB2_CHANNEL_RDMA_V1_INVALIDATE);
--	work->remote_key = le32_to_cpu(desc->token);
-+	if (Channel == SMB2_CHANNEL_RDMA_V1_INVALIDATE)
-+		work->remote_key = le32_to_cpu(desc->token);
- 	return 0;
- }
- 
-@@ -6227,14 +6227,12 @@ static ssize_t smb2_read_rdma_channel(st
- 				      struct smb2_read_req *req, void *data_buf,
- 				      size_t length)
- {
--	struct smb2_buffer_desc_v1 *desc =
--		(struct smb2_buffer_desc_v1 *)&req->Buffer[0];
- 	int err;
- 
- 	err = ksmbd_conn_rdma_write(work->conn, data_buf, length,
--				    le32_to_cpu(desc->token),
--				    le64_to_cpu(desc->offset),
--				    le32_to_cpu(desc->length));
-+				    (struct smb2_buffer_desc_v1 *)
-+				    ((char *)req + le16_to_cpu(req->ReadChannelInfoOffset)),
-+				    le16_to_cpu(req->ReadChannelInfoLength));
- 	if (err)
- 		return err;
- 
-@@ -6283,7 +6281,6 @@ int smb2_read(struct ksmbd_work *work)
- 						   (struct smb2_buffer_desc_v1 *)
- 						   ((char *)req + ch_offset),
- 						   req->Channel,
--						   req->ReadChannelInfoOffset,
- 						   req->ReadChannelInfoLength);
- 		if (err)
- 			goto out;
-@@ -6461,21 +6458,18 @@ static ssize_t smb2_write_rdma_channel(s
- 				       struct ksmbd_file *fp,
- 				       loff_t offset, size_t length, bool sync)
- {
--	struct smb2_buffer_desc_v1 *desc;
- 	char *data_buf;
- 	int ret;
- 	ssize_t nbytes;
- 
--	desc = (struct smb2_buffer_desc_v1 *)&req->Buffer[0];
--
- 	data_buf = kvmalloc(length, GFP_KERNEL | __GFP_ZERO);
- 	if (!data_buf)
- 		return -ENOMEM;
- 
- 	ret = ksmbd_conn_rdma_read(work->conn, data_buf, length,
--				   le32_to_cpu(desc->token),
--				   le64_to_cpu(desc->offset),
--				   le32_to_cpu(desc->length));
-+				   (struct smb2_buffer_desc_v1 *)
-+				   ((char *)req + le16_to_cpu(req->WriteChannelInfoOffset)),
-+				   le16_to_cpu(req->WriteChannelInfoLength));
- 	if (ret < 0) {
- 		kvfree(data_buf);
- 		return ret;
-@@ -6527,7 +6521,6 @@ int smb2_write(struct ksmbd_work *work)
- 						   (struct smb2_buffer_desc_v1 *)
- 						   ((char *)req + ch_offset),
- 						   req->Channel,
--						   req->WriteChannelInfoOffset,
- 						   req->WriteChannelInfoLength);
- 		if (err)
- 			goto out;
 --- a/fs/ksmbd/transport_rdma.c
 +++ b/fs/ksmbd/transport_rdma.c
-@@ -1357,14 +1357,18 @@ static void write_done(struct ib_cq *cq,
- 	read_write_done(cq, wc, DMA_TO_DEVICE);
+@@ -82,8 +82,6 @@ static int smb_direct_max_receive_size =
+ 
+ static int smb_direct_max_read_write_size = SMBD_DEFAULT_IOSIZE;
+ 
+-static int smb_direct_max_outstanding_rw_ops = 8;
+-
+ static LIST_HEAD(smb_direct_device_list);
+ static DEFINE_RWLOCK(smb_direct_device_lock);
+ 
+@@ -147,10 +145,12 @@ struct smb_direct_transport {
+ 	atomic_t		send_credits;
+ 	spinlock_t		lock_new_recv_credits;
+ 	int			new_recv_credits;
+-	atomic_t		rw_avail_ops;
++	int			max_rw_credits;
++	int			pages_per_rw_credit;
++	atomic_t		rw_credits;
+ 
+ 	wait_queue_head_t	wait_send_credits;
+-	wait_queue_head_t	wait_rw_avail_ops;
++	wait_queue_head_t	wait_rw_credits;
+ 
+ 	mempool_t		*sendmsg_mempool;
+ 	struct kmem_cache	*sendmsg_cache;
+@@ -383,7 +383,7 @@ static struct smb_direct_transport *allo
+ 	t->reassembly_queue_length = 0;
+ 	init_waitqueue_head(&t->wait_reassembly_queue);
+ 	init_waitqueue_head(&t->wait_send_credits);
+-	init_waitqueue_head(&t->wait_rw_avail_ops);
++	init_waitqueue_head(&t->wait_rw_credits);
+ 
+ 	spin_lock_init(&t->receive_credit_lock);
+ 	spin_lock_init(&t->recvmsg_queue_lock);
+@@ -989,18 +989,19 @@ static int smb_direct_flush_send_list(st
  }
  
--static int smb_direct_rdma_xmit(struct smb_direct_transport *t, void *buf,
--				int buf_len, u32 remote_key, u64 remote_offset,
--				u32 remote_len, bool is_read)
-+static int smb_direct_rdma_xmit(struct smb_direct_transport *t,
-+				void *buf, int buf_len,
-+				struct smb2_buffer_desc_v1 *desc,
-+				unsigned int desc_len,
-+				bool is_read)
+ static int wait_for_credits(struct smb_direct_transport *t,
+-			    wait_queue_head_t *waitq, atomic_t *credits)
++			    wait_queue_head_t *waitq, atomic_t *total_credits,
++			    int needed)
  {
- 	struct smb_direct_rdma_rw_msg *msg;
  	int ret;
- 	DECLARE_COMPLETION_ONSTACK(completion);
- 	struct ib_send_wr *first_wr = NULL;
-+	u32 remote_key = le32_to_cpu(desc[0].token);
-+	u64 remote_offset = le64_to_cpu(desc[0].offset);
  
- 	ret = wait_for_credits(t, &t->wait_rw_avail_ops, &t->rw_avail_ops);
+ 	do {
+-		if (atomic_dec_return(credits) >= 0)
++		if (atomic_sub_return(needed, total_credits) >= 0)
+ 			return 0;
+ 
+-		atomic_inc(credits);
++		atomic_add(needed, total_credits);
+ 		ret = wait_event_interruptible(*waitq,
+-					       atomic_read(credits) > 0 ||
+-						t->status != SMB_DIRECT_CS_CONNECTED);
++					       atomic_read(total_credits) >= needed ||
++					       t->status != SMB_DIRECT_CS_CONNECTED);
+ 
+ 		if (t->status != SMB_DIRECT_CS_CONNECTED)
+ 			return -ENOTCONN;
+@@ -1021,7 +1022,19 @@ static int wait_for_send_credits(struct
+ 			return ret;
+ 	}
+ 
+-	return wait_for_credits(t, &t->wait_send_credits, &t->send_credits);
++	return wait_for_credits(t, &t->wait_send_credits, &t->send_credits, 1);
++}
++
++static int wait_for_rw_credits(struct smb_direct_transport *t, int credits)
++{
++	return wait_for_credits(t, &t->wait_rw_credits, &t->rw_credits, credits);
++}
++
++static int calc_rw_credits(struct smb_direct_transport *t,
++			   char *buf, unsigned int len)
++{
++	return DIV_ROUND_UP(get_buf_page_count(buf, len),
++			    t->pages_per_rw_credit);
+ }
+ 
+ static int smb_direct_create_header(struct smb_direct_transport *t,
+@@ -1337,8 +1350,8 @@ static void read_write_done(struct ib_cq
+ 		smb_direct_disconnect_rdma_connection(t);
+ 	}
+ 
+-	if (atomic_inc_return(&t->rw_avail_ops) > 0)
+-		wake_up(&t->wait_rw_avail_ops);
++	if (atomic_inc_return(&t->rw_credits) > 0)
++		wake_up(&t->wait_rw_credits);
+ 
+ 	rdma_rw_ctx_destroy(&msg->rw_ctx, t->qp, t->qp->port,
+ 			    msg->sg_list, msg->sgt.nents, dir);
+@@ -1369,8 +1382,10 @@ static int smb_direct_rdma_xmit(struct s
+ 	struct ib_send_wr *first_wr = NULL;
+ 	u32 remote_key = le32_to_cpu(desc[0].token);
+ 	u64 remote_offset = le64_to_cpu(desc[0].offset);
++	int credits_needed;
+ 
+-	ret = wait_for_credits(t, &t->wait_rw_avail_ops, &t->rw_avail_ops);
++	credits_needed = calc_rw_credits(t, buf, buf_len);
++	ret = wait_for_rw_credits(t, credits_needed);
  	if (ret < 0)
-@@ -1429,22 +1433,22 @@ err:
+ 		return ret;
+ 
+@@ -1378,7 +1393,7 @@ static int smb_direct_rdma_xmit(struct s
+ 	msg = kmalloc(offsetof(struct smb_direct_rdma_rw_msg, sg_list) +
+ 		      sizeof(struct scatterlist) * SG_CHUNK_SIZE, GFP_KERNEL);
+ 	if (!msg) {
+-		atomic_inc(&t->rw_avail_ops);
++		atomic_add(credits_needed, &t->rw_credits);
+ 		return -ENOMEM;
+ 	}
+ 
+@@ -1387,7 +1402,7 @@ static int smb_direct_rdma_xmit(struct s
+ 				     get_buf_page_count(buf, buf_len),
+ 				     msg->sg_list, SG_CHUNK_SIZE);
+ 	if (ret) {
+-		atomic_inc(&t->rw_avail_ops);
++		atomic_add(credits_needed, &t->rw_credits);
+ 		kfree(msg);
+ 		return -ENOMEM;
+ 	}
+@@ -1423,7 +1438,7 @@ static int smb_direct_rdma_xmit(struct s
+ 	return 0;
+ 
+ err:
+-	atomic_inc(&t->rw_avail_ops);
++	atomic_add(credits_needed, &t->rw_credits);
+ 	if (first_wr)
+ 		rdma_rw_ctx_destroy(&msg->rw_ctx, t->qp, t->qp->port,
+ 				    msg->sg_list, msg->sgt.nents,
+@@ -1648,11 +1663,19 @@ out_err:
  	return ret;
  }
  
--static int smb_direct_rdma_write(struct ksmbd_transport *t, void *buf,
--				 unsigned int buflen, u32 remote_key,
--				 u64 remote_offset, u32 remote_len)
-+static int smb_direct_rdma_write(struct ksmbd_transport *t,
-+				 void *buf, unsigned int buflen,
-+				 struct smb2_buffer_desc_v1 *desc,
-+				 unsigned int desc_len)
++static unsigned int smb_direct_get_max_fr_pages(struct smb_direct_transport *t)
++{
++	return min_t(unsigned int,
++		     t->cm_id->device->attrs.max_fast_reg_page_list_len,
++		     256);
++}
++
+ static int smb_direct_init_params(struct smb_direct_transport *t,
+ 				  struct ib_qp_cap *cap)
  {
- 	return smb_direct_rdma_xmit(smb_trans_direct_transfort(t), buf, buflen,
--				    remote_key, remote_offset,
--				    remote_len, false);
-+				    desc, desc_len, false);
+ 	struct ib_device *device = t->cm_id->device;
+-	int max_send_sges, max_pages, max_rw_wrs, max_send_wrs;
++	int max_send_sges, max_rw_wrs, max_send_wrs;
++	unsigned int max_sge_per_wr, wrs_per_credit;
+ 
+ 	/* need 2 more sge. because a SMB_DIRECT header will be mapped,
+ 	 * and maybe a send buffer could be not page aligned.
+@@ -1664,25 +1687,31 @@ static int smb_direct_init_params(struct
+ 		return -EINVAL;
+ 	}
+ 
+-	/*
+-	 * allow smb_direct_max_outstanding_rw_ops of in-flight RDMA
+-	 * read/writes. HCA guarantees at least max_send_sge of sges for
+-	 * a RDMA read/write work request, and if memory registration is used,
+-	 * we need reg_mr, local_inv wrs for each read/write.
++	/* Calculate the number of work requests for RDMA R/W.
++	 * The maximum number of pages which can be registered
++	 * with one Memory region can be transferred with one
++	 * R/W credit. And at least 4 work requests for each credit
++	 * are needed for MR registration, RDMA R/W, local & remote
++	 * MR invalidation.
+ 	 */
+ 	t->max_rdma_rw_size = smb_direct_max_read_write_size;
+-	max_pages = DIV_ROUND_UP(t->max_rdma_rw_size, PAGE_SIZE) + 1;
+-	max_rw_wrs = DIV_ROUND_UP(max_pages, SMB_DIRECT_MAX_SEND_SGES);
+-	max_rw_wrs += rdma_rw_mr_factor(device, t->cm_id->port_num,
+-			max_pages) * 2;
+-	max_rw_wrs *= smb_direct_max_outstanding_rw_ops;
++	t->pages_per_rw_credit = smb_direct_get_max_fr_pages(t);
++	t->max_rw_credits = DIV_ROUND_UP(t->max_rdma_rw_size,
++					 (t->pages_per_rw_credit - 1) *
++					 PAGE_SIZE);
++
++	max_sge_per_wr = min_t(unsigned int, device->attrs.max_send_sge,
++			       device->attrs.max_sge_rd);
++	wrs_per_credit = max_t(unsigned int, 4,
++			       DIV_ROUND_UP(t->pages_per_rw_credit,
++					    max_sge_per_wr) + 1);
++	max_rw_wrs = t->max_rw_credits * wrs_per_credit;
+ 
+ 	max_send_wrs = smb_direct_send_credit_target + max_rw_wrs;
+ 	if (max_send_wrs > device->attrs.max_cqe ||
+ 	    max_send_wrs > device->attrs.max_qp_wr) {
+-		pr_err("consider lowering send_credit_target = %d, or max_outstanding_rw_ops = %d\n",
+-		       smb_direct_send_credit_target,
+-		       smb_direct_max_outstanding_rw_ops);
++		pr_err("consider lowering send_credit_target = %d\n",
++		       smb_direct_send_credit_target);
+ 		pr_err("Possible CQE overrun, device reporting max_cqe %d max_qp_wr %d\n",
+ 		       device->attrs.max_cqe, device->attrs.max_qp_wr);
+ 		return -EINVAL;
+@@ -1717,7 +1746,7 @@ static int smb_direct_init_params(struct
+ 
+ 	t->send_credit_target = smb_direct_send_credit_target;
+ 	atomic_set(&t->send_credits, 0);
+-	atomic_set(&t->rw_avail_ops, smb_direct_max_outstanding_rw_ops);
++	atomic_set(&t->rw_credits, t->max_rw_credits);
+ 
+ 	t->max_send_size = smb_direct_max_send_size;
+ 	t->max_recv_size = smb_direct_max_receive_size;
+@@ -1725,12 +1754,10 @@ static int smb_direct_init_params(struct
+ 
+ 	cap->max_send_wr = max_send_wrs;
+ 	cap->max_recv_wr = t->recv_credit_max;
+-	cap->max_send_sge = SMB_DIRECT_MAX_SEND_SGES;
++	cap->max_send_sge = max_sge_per_wr;
+ 	cap->max_recv_sge = SMB_DIRECT_MAX_RECV_SGES;
+ 	cap->max_inline_data = 0;
+-	cap->max_rdma_ctxs =
+-		rdma_rw_mr_factor(device, t->cm_id->port_num, max_pages) *
+-		smb_direct_max_outstanding_rw_ops;
++	cap->max_rdma_ctxs = t->max_rw_credits;
+ 	return 0;
  }
  
--static int smb_direct_rdma_read(struct ksmbd_transport *t, void *buf,
--				unsigned int buflen, u32 remote_key,
--				u64 remote_offset, u32 remote_len)
-+static int smb_direct_rdma_read(struct ksmbd_transport *t,
-+				void *buf, unsigned int buflen,
-+				struct smb2_buffer_desc_v1 *desc,
-+				unsigned int desc_len)
- {
- 	return smb_direct_rdma_xmit(smb_trans_direct_transfort(t), buf, buflen,
--				    remote_key, remote_offset,
--				    remote_len, true);
-+				    desc, desc_len, true);
- }
+@@ -1823,7 +1850,8 @@ static int smb_direct_create_qpair(struc
+ 	}
  
- static void smb_direct_disconnect(struct ksmbd_transport *t)
+ 	t->send_cq = ib_alloc_cq(t->cm_id->device, t,
+-				 t->send_credit_target, 0, IB_POLL_WORKQUEUE);
++				 smb_direct_send_credit_target + cap->max_rdma_ctxs,
++				 0, IB_POLL_WORKQUEUE);
+ 	if (IS_ERR(t->send_cq)) {
+ 		pr_err("Can't create RDMA send CQ\n");
+ 		ret = PTR_ERR(t->send_cq);
+@@ -1832,8 +1860,7 @@ static int smb_direct_create_qpair(struc
+ 	}
+ 
+ 	t->recv_cq = ib_alloc_cq(t->cm_id->device, t,
+-				 cap->max_send_wr + cap->max_rdma_ctxs,
+-				 0, IB_POLL_WORKQUEUE);
++				 t->recv_credit_max, 0, IB_POLL_WORKQUEUE);
+ 	if (IS_ERR(t->recv_cq)) {
+ 		pr_err("Can't create RDMA recv CQ\n");
+ 		ret = PTR_ERR(t->recv_cq);
+@@ -1862,17 +1889,12 @@ static int smb_direct_create_qpair(struc
+ 
+ 	pages_per_rw = DIV_ROUND_UP(t->max_rdma_rw_size, PAGE_SIZE) + 1;
+ 	if (pages_per_rw > t->cm_id->device->attrs.max_sgl_rd) {
+-		int pages_per_mr, mr_count;
+-
+-		pages_per_mr = min_t(int, pages_per_rw,
+-				     t->cm_id->device->attrs.max_fast_reg_page_list_len);
+-		mr_count = DIV_ROUND_UP(pages_per_rw, pages_per_mr) *
+-			atomic_read(&t->rw_avail_ops);
+-		ret = ib_mr_pool_init(t->qp, &t->qp->rdma_mrs, mr_count,
+-				      IB_MR_TYPE_MEM_REG, pages_per_mr, 0);
++		ret = ib_mr_pool_init(t->qp, &t->qp->rdma_mrs,
++				      t->max_rw_credits, IB_MR_TYPE_MEM_REG,
++				      t->pages_per_rw_credit, 0);
+ 		if (ret) {
+ 			pr_err("failed to init mr pool count %d pages %d\n",
+-			       mr_count, pages_per_mr);
++			       t->max_rw_credits, t->pages_per_rw_credit);
+ 			goto err;
+ 		}
+ 	}
 
 
