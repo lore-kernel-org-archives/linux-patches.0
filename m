@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8D847A4D;
-	Wed, 20 Dec 2023 16:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FEE482D4;
+	Wed, 20 Dec 2023 16:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxTVbXGA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A350C433C7;
-	Wed, 20 Dec 2023 16:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVhsAEgk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633A9C433C7;
+	Wed, 20 Dec 2023 16:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088972;
-	bh=AoPD5bPBspOw/zY6MP8AnuIaVH7Tb3niSFJp+DULjZs=;
+	s=korg; t=1703088974;
+	bh=AlUhzcAQv25XVPktrtoYbnZeYVSrFGXsXbicWmvP0hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QxTVbXGAcGm/uCjqbA93SlUVjUe4Tw3ZpaEDrk5bxrrxRldW4+6G/xS++oqb6OfZA
-	 bxJWwAXGZPSMHzYBzF2fu3nsFm0sW1Zgja9XuyOdcNBBdVre+Ew4W3KkRX4QQD+2xa
-	 u2kpPjCx0Sjtd4aZAKXVd9NK6zzTbr5yd8mSzBUk=
+	b=rVhsAEgktCuAYG8dv1FRwtWwQl0SwMILdP2HWDKyvXLgPHtuM+08CGON+3WRPpfio
+	 z8YySfYsGGcruOSQqA438ejosaHVwiC/MtMjgZs61LpxKQwQQP9bEtL6JleHZnWLKF
+	 JzqLeY/t1xDVuEmxjGc+aIB8xWQg0B8TufA92Dbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kuan-Ting Chen <h3xrabbit@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 122/159] ksmbd: reduce descriptor size if remaining bytes is less than request size
-Date: Wed, 20 Dec 2023 17:09:47 +0100
-Message-ID: <20231220160937.021750907@linuxfoundation.org>
+Subject: [PATCH 5.15 095/159] ksmbd: fix multiple out-of-bounds read during context decoding
+Date: Wed, 20 Dec 2023 17:09:20 +0100
+Message-ID: <20231220160935.780181039@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -41,104 +42,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Kuan-Ting Chen <h3xrabbit@gmail.com>
 
-[ Upstream commit e628bf939aafb61fbc56e9bdac8795cea5127e25 ]
+[ Upstream commit 0512a5f89e1fae74251fde6893ff634f1c96c6fb ]
 
-Create 3 kinds of files to reproduce this problem.
-
-dd if=/dev/urandom of=127k.bin bs=1024 count=127
-dd if=/dev/urandom of=128k.bin bs=1024 count=128
-dd if=/dev/urandom of=129k.bin bs=1024 count=129
-
-When copying files from ksmbd share to windows or cifs.ko, The following
-error message happen from windows client.
-
-"The file '129k.bin' is too large for the destination filesystem."
-
-We can see the error logs from ksmbd debug prints
-
-[48394.611537] ksmbd: RDMA r/w request 0x0: token 0x669d, length 0x20000
-[48394.612054] ksmbd: smb_direct: RDMA write, len 0x20000, needed credits 0x1
-[48394.612572] ksmbd: filename 129k.bin, offset 131072, len 131072
-[48394.614189] ksmbd: nbytes 1024, offset 132096 mincount 0
-[48394.614585] ksmbd: Failed to process 8 [-22]
-
-And we can reproduce it with cifs.ko,
-e.g. dd if=129k.bin of=/dev/null bs=128KB count=2
-
-This problem is that ksmbd rdma return error if remaining bytes is less
-than Length of Buffer Descriptor V1 Structure.
-
-smb_direct_rdma_xmit()
-...
-     if (desc_buf_len == 0 || total_length > buf_len ||
-           total_length > t->max_rdma_rw_size)
-               return -EINVAL;
-
-This patch reduce descriptor size with remaining bytes and remove the
-check for total_length and buf_len.
+Check the remaining data length before accessing the context structure
+to ensure that the entire structure is contained within the packet.
+Additionally, since the context data length `ctxt_len` has already been
+checked against the total packet length `len_of_ctxts`, update the
+comparison to use `ctxt_len`.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Kuan-Ting Chen <h3xrabbit@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_rdma.c |   25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ fs/ksmbd/smb2pdu.c |   53 ++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 34 insertions(+), 19 deletions(-)
 
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -1364,24 +1364,35 @@ static int smb_direct_rdma_xmit(struct s
- 	LIST_HEAD(msg_list);
- 	char *desc_buf;
- 	int credits_needed;
--	unsigned int desc_buf_len;
--	size_t total_length = 0;
-+	unsigned int desc_buf_len, desc_num = 0;
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -879,13 +879,14 @@ static void assemble_neg_contexts(struct
  
- 	if (t->status != SMB_DIRECT_CS_CONNECTED)
- 		return -ENOTCONN;
+ static __le32 decode_preauth_ctxt(struct ksmbd_conn *conn,
+ 				  struct smb2_preauth_neg_context *pneg_ctxt,
+-				  int len_of_ctxts)
++				  int ctxt_len)
+ {
+ 	/*
+ 	 * sizeof(smb2_preauth_neg_context) assumes SMB311_SALT_SIZE Salt,
+ 	 * which may not be present. Only check for used HashAlgorithms[1].
+ 	 */
+-	if (len_of_ctxts < 6)
++	if (ctxt_len <
++	    sizeof(struct smb2_neg_context) + 6)
+ 		return STATUS_INVALID_PARAMETER;
  
-+	if (buf_len > t->max_rdma_rw_size)
-+		return -EINVAL;
-+
- 	/* calculate needed credits */
- 	credits_needed = 0;
- 	desc_buf = buf;
- 	for (i = 0; i < desc_len / sizeof(*desc); i++) {
-+		if (!buf_len)
-+			break;
-+
- 		desc_buf_len = le32_to_cpu(desc[i].length);
-+		if (!desc_buf_len)
-+			return -EINVAL;
-+
-+		if (desc_buf_len > buf_len) {
-+			desc_buf_len = buf_len;
-+			desc[i].length = cpu_to_le32(desc_buf_len);
-+			buf_len = 0;
-+		}
+ 	if (pneg_ctxt->HashAlgorithms != SMB2_PREAUTH_INTEGRITY_SHA512)
+@@ -897,15 +898,23 @@ static __le32 decode_preauth_ctxt(struct
  
- 		credits_needed += calc_rw_credits(t, desc_buf, desc_buf_len);
- 		desc_buf += desc_buf_len;
--		total_length += desc_buf_len;
--		if (desc_buf_len == 0 || total_length > buf_len ||
--		    total_length > t->max_rdma_rw_size)
--			return -EINVAL;
-+		buf_len -= desc_buf_len;
-+		desc_num++;
+ static void decode_encrypt_ctxt(struct ksmbd_conn *conn,
+ 				struct smb2_encryption_neg_context *pneg_ctxt,
+-				int len_of_ctxts)
++				int ctxt_len)
+ {
+-	int cph_cnt = le16_to_cpu(pneg_ctxt->CipherCount);
+-	int i, cphs_size = cph_cnt * sizeof(__le16);
++	int cph_cnt;
++	int i, cphs_size;
++
++	if (sizeof(struct smb2_encryption_neg_context) > ctxt_len) {
++		pr_err("Invalid SMB2_ENCRYPTION_CAPABILITIES context size\n");
++		return;
++	}
+ 
+ 	conn->cipher_type = 0;
+ 
++	cph_cnt = le16_to_cpu(pneg_ctxt->CipherCount);
++	cphs_size = cph_cnt * sizeof(__le16);
++
+ 	if (sizeof(struct smb2_encryption_neg_context) + cphs_size >
+-	    len_of_ctxts) {
++	    ctxt_len) {
+ 		pr_err("Invalid cipher count(%d)\n", cph_cnt);
+ 		return;
  	}
+@@ -953,15 +962,22 @@ static void decode_compress_ctxt(struct
  
- 	ksmbd_debug(RDMA, "RDMA %s, len %#x, needed credits %#x\n",
-@@ -1393,7 +1404,7 @@ static int smb_direct_rdma_xmit(struct s
+ static void decode_sign_cap_ctxt(struct ksmbd_conn *conn,
+ 				 struct smb2_signing_capabilities *pneg_ctxt,
+-				 int len_of_ctxts)
++				 int ctxt_len)
+ {
+-	int sign_algo_cnt = le16_to_cpu(pneg_ctxt->SigningAlgorithmCount);
+-	int i, sign_alos_size = sign_algo_cnt * sizeof(__le16);
++	int sign_algo_cnt;
++	int i, sign_alos_size;
++
++	if (sizeof(struct smb2_signing_capabilities) > ctxt_len) {
++		pr_err("Invalid SMB2_SIGNING_CAPABILITIES context length\n");
++		return;
++	}
  
- 	/* build rdma_rw_ctx for each descriptor */
- 	desc_buf = buf;
--	for (i = 0; i < desc_len / sizeof(*desc); i++) {
-+	for (i = 0; i < desc_num; i++) {
- 		msg = kzalloc(offsetof(struct smb_direct_rdma_rw_msg, sg_list) +
- 			      sizeof(struct scatterlist) * SG_CHUNK_SIZE, GFP_KERNEL);
- 		if (!msg) {
+ 	conn->signing_negotiated = false;
++	sign_algo_cnt = le16_to_cpu(pneg_ctxt->SigningAlgorithmCount);
++	sign_alos_size = sign_algo_cnt * sizeof(__le16);
+ 
+ 	if (sizeof(struct smb2_signing_capabilities) + sign_alos_size >
+-	    len_of_ctxts) {
++	    ctxt_len) {
+ 		pr_err("Invalid signing algorithm count(%d)\n", sign_algo_cnt);
+ 		return;
+ 	}
+@@ -999,18 +1015,16 @@ static __le32 deassemble_neg_contexts(st
+ 	len_of_ctxts = len_of_smb - offset;
+ 
+ 	while (i++ < neg_ctxt_cnt) {
+-		int clen;
+-
+-		/* check that offset is not beyond end of SMB */
+-		if (len_of_ctxts == 0)
+-			break;
++		int clen, ctxt_len;
+ 
+ 		if (len_of_ctxts < sizeof(struct smb2_neg_context))
+ 			break;
+ 
+ 		pctx = (struct smb2_neg_context *)((char *)pctx + offset);
+ 		clen = le16_to_cpu(pctx->DataLength);
+-		if (clen + sizeof(struct smb2_neg_context) > len_of_ctxts)
++		ctxt_len = clen + sizeof(struct smb2_neg_context);
++
++		if (ctxt_len > len_of_ctxts)
+ 			break;
+ 
+ 		if (pctx->ContextType == SMB2_PREAUTH_INTEGRITY_CAPABILITIES) {
+@@ -1021,7 +1035,7 @@ static __le32 deassemble_neg_contexts(st
+ 
+ 			status = decode_preauth_ctxt(conn,
+ 						     (struct smb2_preauth_neg_context *)pctx,
+-						     len_of_ctxts);
++						     ctxt_len);
+ 			if (status != STATUS_SUCCESS)
+ 				break;
+ 		} else if (pctx->ContextType == SMB2_ENCRYPTION_CAPABILITIES) {
+@@ -1032,7 +1046,7 @@ static __le32 deassemble_neg_contexts(st
+ 
+ 			decode_encrypt_ctxt(conn,
+ 					    (struct smb2_encryption_neg_context *)pctx,
+-					    len_of_ctxts);
++					    ctxt_len);
+ 		} else if (pctx->ContextType == SMB2_COMPRESSION_CAPABILITIES) {
+ 			ksmbd_debug(SMB,
+ 				    "deassemble SMB2_COMPRESSION_CAPABILITIES context\n");
+@@ -1051,9 +1065,10 @@ static __le32 deassemble_neg_contexts(st
+ 		} else if (pctx->ContextType == SMB2_SIGNING_CAPABILITIES) {
+ 			ksmbd_debug(SMB,
+ 				    "deassemble SMB2_SIGNING_CAPABILITIES context\n");
++
+ 			decode_sign_cap_ctxt(conn,
+ 					     (struct smb2_signing_capabilities *)pctx,
+-					     len_of_ctxts);
++					     ctxt_len);
+ 		}
+ 
+ 		/* offsets must be 8 byte aligned */
 
 
