@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1579B48788;
-	Wed, 20 Dec 2023 16:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9244D48788;
+	Wed, 20 Dec 2023 16:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wzwfhkh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55958C433C8;
-	Wed, 20 Dec 2023 16:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INM6yPbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15690C433C7;
+	Wed, 20 Dec 2023 16:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088839;
-	bh=lDwjWk81w3q6Ts9nrifdAKbaAlO7QZ3msDlCjBpiwjk=;
+	s=korg; t=1703088842;
+	bh=Tg0wCLeTTuFQ3DbjT3ddNQoG/9Vo7pRmwruY4N3P0ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wzwfhkh7uxrmrvuKVJAXzrPvSKUaIMHBEj3WTXMKlsfCw2kOvDm12mKDUBQLfbchl
-	 vdGTmX7/NAIxu8D549eS/7EA9Qu5GJEhpByP08dai0A0c29rdPVagroWohiEGqNPpA
-	 OCuySPgBu0laqiFsZw/sp65CoZ+OH6dxS2x5vAtk=
+	b=INM6yPbhBjrgaHqyBlB/D08IyaMY7JrabIGiriFogROT+OH8xGaE7c7IlumY/hZkV
+	 JvO9LxH9YKKxMXKJcaUlh5eqvfwAzxq9FmKhFed26j1akl3h2L3yfikvA/7hgmCTFW
+	 gcJvDjsg1ANLqTBN1/vQnR5gk1ExNSPPKtNThtPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Lihua <441884205@qq.com>,
+	=?UTF-8?q?Atte=20Heikkil=C3=A4?= <atteh.mailbox@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 078/159] ksmbd: fix wrong signingkey creation when encryption is AES256
-Date: Wed, 20 Dec 2023 17:09:03 +0100
-Message-ID: <20231220160935.012171393@linuxfoundation.org>
+Subject: [PATCH 5.15 061/159] ksmbd: make utf-8 file name comparison work in __caseless_lookup()
+Date: Wed, 20 Dec 2023 17:08:46 +0100
+Message-ID: <20231220160934.195728280@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -36,48 +36,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Atte Heikkilä <atteh.mailbox@gmail.com>
 
-[ Upstream commit 7a891d4b62d62566323676cb0e922ded4f37afe1 ]
+[ Upstream commit dbab80e2071ad8c702e50dab43326608a127d27b ]
 
-MacOS and Win11 support AES256 encrytion and it is included in the cipher
-array of encryption context. Especially on macOS, The most preferred
-cipher is AES256. Connecting to ksmbd fails on newer MacOS clients that
-support AES256 encryption. MacOS send disconnect request after receiving
-final session setup response from ksmbd. Because final session setup is
-signed with signing key was generated incorrectly.
-For signging key, 'L' value should be initialized to 128 if key size is
-16bytes.
+Case-insensitive file name lookups with __caseless_lookup() use
+strncasecmp() for file name comparison. strncasecmp() assumes an
+ISO8859-1-compatible encoding, which is not the case here as UTF-8
+is always used. As such, use of strncasecmp() here produces correct
+results only if both strings use characters in the ASCII range only.
+Fix this by using utf8_strncasecmp() if CONFIG_UNICODE is set. On
+failure or if CONFIG_UNICODE is not set, fallback to strncasecmp().
+Also, as we are adding an include for `linux/unicode.h', include it
+in `fs/ksmbd/connection.h' as well since it should be explicit there.
 
-Cc: stable@vger.kernel.org
-Reported-by: Miao Lihua <441884205@qq.com>
-Tested-by: Miao Lihua <441884205@qq.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Atte Heikkilä <atteh.mailbox@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/auth.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ksmbd/connection.h |    1 +
+ fs/ksmbd/vfs.c        |   20 +++++++++++++++++---
+ fs/ksmbd/vfs.h        |    2 ++
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
---- a/fs/ksmbd/auth.c
-+++ b/fs/ksmbd/auth.c
-@@ -730,8 +730,9 @@ static int generate_key(struct ksmbd_con
- 		goto smb3signkey_ret;
- 	}
+--- a/fs/ksmbd/connection.h
++++ b/fs/ksmbd/connection.h
+@@ -14,6 +14,7 @@
+ #include <net/request_sock.h>
+ #include <linux/kthread.h>
+ #include <linux/nls.h>
++#include <linux/unicode.h>
  
--	if (conn->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
--	    conn->cipher_type == SMB2_ENCRYPTION_AES256_GCM)
-+	if (key_size == SMB3_ENC_DEC_KEY_SIZE &&
-+	    (conn->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
-+	     conn->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
- 		rc = crypto_shash_update(CRYPTO_HMACSHA256(ctx), L256, 4);
- 	else
- 		rc = crypto_shash_update(CRYPTO_HMACSHA256(ctx), L128, 4);
+ #include "smb_common.h"
+ #include "ksmbd_work.h"
+--- a/fs/ksmbd/vfs.c
++++ b/fs/ksmbd/vfs.c
+@@ -1144,12 +1144,23 @@ static int __caseless_lookup(struct dir_
+ 			     unsigned int d_type)
+ {
+ 	struct ksmbd_readdir_data *buf;
++	int cmp = -EINVAL;
+ 
+ 	buf = container_of(ctx, struct ksmbd_readdir_data, ctx);
+ 
+ 	if (buf->used != namlen)
+ 		return 0;
+-	if (!strncasecmp((char *)buf->private, name, namlen)) {
++	if (IS_ENABLED(CONFIG_UNICODE) && buf->um) {
++		const struct qstr q_buf = {.name = buf->private,
++					   .len = buf->used};
++		const struct qstr q_name = {.name = name,
++					    .len = namlen};
++
++		cmp = utf8_strncasecmp(buf->um, &q_buf, &q_name);
++	}
++	if (cmp < 0)
++		cmp = strncasecmp((char *)buf->private, name, namlen);
++	if (!cmp) {
+ 		memcpy((char *)buf->private, name, namlen);
+ 		buf->dirent_count = 1;
+ 		return -EEXIST;
+@@ -1165,7 +1176,8 @@ static int __caseless_lookup(struct dir_
+  *
+  * Return:	0 on success, otherwise error
+  */
+-static int ksmbd_vfs_lookup_in_dir(const struct path *dir, char *name, size_t namelen)
++static int ksmbd_vfs_lookup_in_dir(const struct path *dir, char *name,
++				   size_t namelen, struct unicode_map *um)
+ {
+ 	int ret;
+ 	struct file *dfilp;
+@@ -1175,6 +1187,7 @@ static int ksmbd_vfs_lookup_in_dir(const
+ 		.private	= name,
+ 		.used		= namelen,
+ 		.dirent_count	= 0,
++		.um		= um,
+ 	};
+ 
+ 	dfilp = dentry_open(dir, flags, current_cred());
+@@ -1237,7 +1250,8 @@ int ksmbd_vfs_kern_path(struct ksmbd_wor
+ 				break;
+ 
+ 			err = ksmbd_vfs_lookup_in_dir(&parent, filename,
+-						      filename_len);
++						      filename_len,
++						      work->conn->um);
+ 			path_put(&parent);
+ 			if (err)
+ 				goto out;
+--- a/fs/ksmbd/vfs.h
++++ b/fs/ksmbd/vfs.h
+@@ -12,6 +12,7 @@
+ #include <linux/namei.h>
+ #include <uapi/linux/xattr.h>
+ #include <linux/posix_acl.h>
++#include <linux/unicode.h>
+ 
+ #include "smbacl.h"
+ #include "xattr.h"
+@@ -99,6 +100,7 @@ struct ksmbd_readdir_data {
+ 	unsigned int		used;
+ 	unsigned int		dirent_count;
+ 	unsigned int		file_attr;
++	struct unicode_map	*um;
+ };
+ 
+ /* ksmbd kstat wrapper to get valid create time when reading dir entry */
 
 
