@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68C441C96;
-	Wed, 20 Dec 2023 16:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463CF46525;
+	Wed, 20 Dec 2023 16:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvQeDkwv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B932C433C8;
-	Wed, 20 Dec 2023 16:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgoIXW+E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB44C433C7;
+	Wed, 20 Dec 2023 16:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088890;
-	bh=6GpR7vqAgW9Hl2dzvICBWmHTrTJFbOgyCOADBSvQ1Xw=;
+	s=korg; t=1703088893;
+	bh=MsG8Cbiw5/DMWa3I5pY/L1ynV2/2TtW8i4NFf504vMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvQeDkwvbemJUGNaH8eHvbBFly5agV+5/fx7Eqlz4+IPrl6ojpQFfNysmOSs8cL5o
-	 wq/fm+7TMGd1y2PYHo6ejvs419Xpy/0m2x7tcQ1hMK7cDLiOaBL7oLDLnADfECR9rw
-	 MaT5yjDB+pWFxwy/rmX/UDZX3ErGvLeI4wCQ6Elw=
+	b=wgoIXW+EQsCqUJoaHHBLG/WJTg2Ht9nj70zWN45SZLl/+H7yIkkdb4GgKghcCa4zv
+	 oOLvtYpqn7lgOOuRTsPlH3e7AfDV1rHrSRLul47UWNirxkLDM74fJiFCYJc+cPfTV+
+	 eyFDRF9XYF3NBinIBaXleMsUHC1p+hdqGX5Wbai4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
+	Marios Makassikis <mmakassikis@freebox.fr>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 066/159] ksmbd: use F_SETLK when unlocking a file
-Date: Wed, 20 Dec 2023 17:08:51 +0100
-Message-ID: <20231220160934.448747631@linuxfoundation.org>
+Subject: [PATCH 5.15 067/159] ksmbd: Fix resource leak in smb2_lock()
+Date: Wed, 20 Dec 2023 17:08:52 +0100
+Message-ID: <20231220160934.489973485@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -43,45 +42,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-[ Upstream commit 7ecbe92696bb7fe32c80b6cf64736a0d157717a9 ]
+[ Upstream commit 01f6c61bae3d658058ee6322af77acea26a5ee3a ]
 
-ksmbd seems to be trying to use a cmd value of 0 when unlocking a file.
-That activity requires a type of F_UNLCK with a cmd of F_SETLK. For
-local POSIX locking, it doesn't matter much since vfs_lock_file ignores
-@cmd, but filesystems that define their own ->lock operation expect to
-see it set sanely.
+"flock" is leaked if an error happens before smb2_lock_init(), as the
+lock is not added to the lock_list to be cleaned up.
 
-Cc: David Howells <dhowells@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/fs/ksmbd/smb2pdu.c
 +++ b/fs/ksmbd/smb2pdu.c
-@@ -6803,7 +6803,7 @@ static int smb2_set_flock_flags(struct f
- 	case SMB2_LOCKFLAG_UNLOCK:
- 		ksmbd_debug(SMB, "received unlock request\n");
- 		flock->fl_type = F_UNLCK;
--		cmd = 0;
-+		cmd = F_SETLK;
- 		break;
+@@ -6907,6 +6907,7 @@ int smb2_lock(struct ksmbd_work *work)
+ 		if (lock_start > U64_MAX - lock_length) {
+ 			pr_err("Invalid lock range requested\n");
+ 			rsp->hdr.Status = STATUS_INVALID_LOCK_RANGE;
++			locks_free_lock(flock);
+ 			goto out;
+ 		}
+ 
+@@ -6926,6 +6927,7 @@ int smb2_lock(struct ksmbd_work *work)
+ 				    "the end offset(%llx) is smaller than the start offset(%llx)\n",
+ 				    flock->fl_end, flock->fl_start);
+ 			rsp->hdr.Status = STATUS_INVALID_LOCK_RANGE;
++			locks_free_lock(flock);
+ 			goto out;
+ 		}
+ 
+@@ -6937,6 +6939,7 @@ int smb2_lock(struct ksmbd_work *work)
+ 				    flock->fl_type != F_UNLCK) {
+ 					pr_err("conflict two locks in one request\n");
+ 					err = -EINVAL;
++					locks_free_lock(flock);
+ 					goto out;
+ 				}
+ 			}
+@@ -6945,6 +6948,7 @@ int smb2_lock(struct ksmbd_work *work)
+ 		smb_lock = smb2_lock_init(flock, cmd, flags, &lock_list);
+ 		if (!smb_lock) {
+ 			err = -EINVAL;
++			locks_free_lock(flock);
+ 			goto out;
+ 		}
  	}
- 
-@@ -7182,7 +7182,7 @@ out:
- 		rlock->fl_start = smb_lock->start;
- 		rlock->fl_end = smb_lock->end;
- 
--		rc = vfs_lock_file(filp, 0, rlock, NULL);
-+		rc = vfs_lock_file(filp, F_SETLK, rlock, NULL);
- 		if (rc)
- 			pr_err("rollback unlock fail : %d\n", rc);
- 
 
 
