@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DF341841;
-	Wed, 20 Dec 2023 16:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3D43F8D6;
+	Wed, 20 Dec 2023 16:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrWV1t8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1028C433C7;
-	Wed, 20 Dec 2023 16:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnXxlTkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8212C433C7;
+	Wed, 20 Dec 2023 16:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1703088939;
-	bh=rMP7WDWaQChh4/xMFJyuFdrnz+8+C88BTfvTIUvIqJ4=;
+	s=korg; t=1703088942;
+	bh=QMNqwAf8J0Qv/L5nWjdLSnh5DRO5AMGO6VzJIalYiFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrWV1t8j/R07dLbMGO65A33IAzrSzEbezsuAy0GqTQc/TP2VrABB0CwetHdGVC3/2
-	 437DCpMQSAXSGiwOhXHRMll3cngAl3UKV9vehnd16ui/d4uyTxzQjaio/9JFTy30n7
-	 azjp53ltZcMm8AIEB2AXR4MCQP9bYoXpMaB23CQE=
+	b=VnXxlTkUoxo+ffRxdWMkWc2HWke5XL+2pvpFBN7qZYoGahg6r+S8Tg1s41snbOklT
+	 AxJ2onOxVW7Or1xah6PzsmkqT7uIDgoesa8whazU1YjkJYj7uK8Nb9BZYmQT4Eq7bo
+	 /Fl8UIjksKgYSr93m0DJQVSiBtnAlY9Nwez7cByk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Wang Ming <machel@vivo.com>,
+	Tom Talpey <tom@talpey.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 113/159] ksmbd: Replace one-element array with flexible-array member
-Date: Wed, 20 Dec 2023 17:09:38 +0100
-Message-ID: <20231220160936.616014116@linuxfoundation.org>
+Subject: [PATCH 5.15 114/159] ksmbd: Fix unsigned expression compared with zero
+Date: Wed, 20 Dec 2023 17:09:39 +0100
+Message-ID: <20231220160936.658898527@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231220160931.251686445@linuxfoundation.org>
 References: <20231220160931.251686445@linuxfoundation.org>
@@ -44,38 +43,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+From: Wang Ming <machel@vivo.com>
 
-[ Upstream commit 11d5e2061e973a8d4ff2b95a114b4b8ef8652633 ]
+[ Upstream commit 0266a2f791294e0b4ba36f4a1d89b8615ea3cac0 ]
 
-One-element arrays are deprecated, and we are replacing them with flexible
-array members instead. So, replace one-element array with flexible-array
-member in struct smb_negotiate_req.
+The return value of the ksmbd_vfs_getcasexattr() is signed.
+However, the return value is being assigned to an unsigned
+variable and subsequently recasted, causing warnings. Use
+a signed type.
 
-This results in no differences in binary output.
-
-Link: https://github.com/KSPP/linux/issues/79
-Link: https://github.com/KSPP/linux/issues/317
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Wang Ming <machel@vivo.com>
+Acked-by: Tom Talpey <tom@talpey.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb_common.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/vfs.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/ksmbd/smb_common.h
-+++ b/fs/ksmbd/smb_common.h
-@@ -247,7 +247,7 @@ struct smb_hdr {
- struct smb_negotiate_req {
- 	struct smb_hdr hdr;     /* wct = 0 */
- 	__le16 ByteCount;
--	unsigned char DialectsArray[1];
-+	unsigned char DialectsArray[];
- } __packed;
+--- a/fs/ksmbd/vfs.c
++++ b/fs/ksmbd/vfs.c
+@@ -412,7 +412,8 @@ static int ksmbd_vfs_stream_write(struct
+ {
+ 	char *stream_buf = NULL, *wbuf;
+ 	struct user_namespace *user_ns = file_mnt_user_ns(fp->filp);
+-	size_t size, v_len;
++	size_t size;
++	ssize_t v_len;
+ 	int err = 0;
  
- struct smb_negotiate_rsp {
+ 	ksmbd_debug(VFS, "write stream data pos : %llu, count : %zd\n",
+@@ -429,9 +430,9 @@ static int ksmbd_vfs_stream_write(struct
+ 				       fp->stream.name,
+ 				       fp->stream.size,
+ 				       &stream_buf);
+-	if ((int)v_len < 0) {
++	if (v_len < 0) {
+ 		pr_err("not found stream in xattr : %zd\n", v_len);
+-		err = (int)v_len;
++		err = v_len;
+ 		goto out;
+ 	}
+ 
 
 
